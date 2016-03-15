@@ -922,7 +922,7 @@ ul.et2_link_string {
 .et2_taglist div.ms-sel-ctn .ms-close-btn {
     width: 10px;
     height: 10px;
-	background-position-y: -10px;
+	background-position: 0px -10px;
 	background-size: cover;
 	background-repeat: no-repeat;
 	margin: 2px -16px 0 10px;
