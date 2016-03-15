@@ -160,7 +160,7 @@ app.classes.infolog = AppJS.extend(
 		var et2 = etemplate2.getById('infolog-index');
 		if(et2)
 		{
-			var content = this.et2.getArrayMgr('content');
+			var content = et2.widgetContainer.getArrayMgr('content');
 			nm = content && content.data && content.data.nm ? content.data.nm: {};
 		}
 
