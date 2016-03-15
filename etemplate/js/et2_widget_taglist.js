@@ -141,7 +141,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			},this))
 			.appendTo(this.div);
 		this._multiple = false;
-		
+
 		// magicSuggest object
 		this.taglist = null;
 
@@ -246,7 +246,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		}
 
 		this._set_multiple(this.options.multiple);
-		
+
 		// AJAX _and_ select options - use custom function
 		if(this.options.autocomplete_url && !jQuery.isEmptyObject(this.options.select_options))
 		{
@@ -292,14 +292,14 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 				}
 			})
 		// Position absolute to break out of containers
-			.on('expand', jQuery.proxy(function(c) {			
+			.on('expand', jQuery.proxy(function(c) {
 				var taglist = this.taglist;
 				this.div.addClass('expanded');
 				var background = this.taglist.combobox.css('background');
 				var wrapper = jQuery(document.createElement('div'))
 					// Keep any additional classes
 					.addClass(this.div.attr('class'))
-				
+
 					.css({
 						'position': 'absolute',
 						'width': 'auto'
@@ -311,14 +311,14 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 					.width(this.taglist.container.innerWidth())
 					.appendTo(wrapper)
 					.css('background', background);
-				
+
 				// Make sure it doesn't go out of the window
 				var bottom = (wrapper.offset().top + this.taglist.combobox.outerHeight(true));
 				if(bottom > $j(window).height())
 				{
 					this.taglist.combobox.height(this.taglist.combobox.height() - (bottom - $j(window).height()) - 5);
 				}
-				
+
 				// Close dropdown if click elsewhere, but wait until after or it
 				// will close immediately
 				window.setTimeout(function() {
@@ -551,7 +551,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			var border = this.taglist !== null ?
 				this.div.outerHeight(true) - this.taglist.container.innerHeight() :
 				0;
-			
+
 			var max = (25 * _rows) + _rows + border;
 			css['max-height'] = max+'px';
 			if(this._multiple)
@@ -715,7 +715,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 					label: v
 				};
 			}
-			else if (
+			else if (this.taglist && 
 				// Check current selection to avoid going back to server
 				(result = $j.grep(this.taglist.getSelection(), function(e) {
 					return e.id == v;
@@ -772,7 +772,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		this.div.off('.small_size');
 
 		this.div.removeClass('et2_taglist_small');
-		
+
 		// How much space is needed for first one?
 		var min_width = $j('.ms-sel-item',this.div ).first().outerWidth() || this.div.children().first().width();
 
@@ -783,7 +783,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		min_width += this.taglist.trigger ? this.taglist.trigger.outerWidth(true) : 0;
 
 		// Not enough for one
-		if(min_width > this.div.width() || 
+		if(min_width > this.div.width() ||
 			this.taglist.container.width() > this.div.width() || this.taglist.container.height() > this.div.height()
 		)
 		{
