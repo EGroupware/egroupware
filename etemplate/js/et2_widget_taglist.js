@@ -328,9 +328,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 					this.taglist.combobox.height(this.taglist.combobox.height() - (bottom - $j(window).height()) - 5);
 				}
 
-				// Close dropdown if click elsewhere, but wait until after or it
-				// will close immediately
+				// Close dropdown if click elsewhere or scroll the sidebox,
+				// but wait until after or it will close immediately
 				window.setTimeout(function() {
+					$j('.egw_fw_ui_scrollarea').one('scroll mousewheel', function() {
+						taglist.collapse();
+					});
 					$j('body').one('click',function() {
 						taglist.collapse();
 					});},1
