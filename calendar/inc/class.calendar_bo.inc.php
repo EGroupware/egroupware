@@ -1517,7 +1517,7 @@ class calendar_bo
 		static $id2email = array();
 
 		if ($use_type && $use_type != 'u') $id = $use_type.$id;
-		if($id == 0 || $id == '0') $id = $this->user;
+		if($id === 0 || $id === '0') $id = $this->user;
 
 		if (!isset($id2lid[$id]))
 		{
