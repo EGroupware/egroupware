@@ -79,13 +79,26 @@ class Html
 			$NotHTTP = '(?<!:\/\/|" target=\"_blank\">)';	//	avoid running again on http://www links already handled above
 			$Domain2 = 'www(\.[\w-.]+)';
 			$Subdir2 = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
-			$optBracket = '(>|&gt;)?';
+			$optBracket = '(>|&gt;|&gt|;)?';
 			$Expr = '/' .$optBracket0. $NotAnchor . $NotHTTP . $Domain2 . $Subdir2 .$optBracket. '/i';
 			//$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . $optBracket . '/i';
+			// use preg_replace_callback as we experienced problems with links such as <www.example.tld/pfad/zu/einer/pdf-Datei.pdf>
+			$result4 = preg_replace_callback( $Expr, function ($match) {
+					//error_log(__METHOD__.__LINE__.array2string($match));
+					if ($match[4]==';' && (strlen($match[3])-4) >=0 && strpos($match[3],'&gt',strlen($match[3])-4)!==false)
+					{
+						$match[3] = substr($match[3],0,strpos($match[3],'&gt',strlen($match[3])-4));
+						$match[4] = "&gt;";
+					}
+					if ($match[4]==';'&&$match[3]=="&gt")
+					{
+						$match[3] ='';
+						$match[4] = "&gt;";
+					}
+					//error_log(__METHOD__.__LINE__.array2string($match));
+					return $match[1]."<a href=\"http://www".$match[2].$match[3]."\" target=\"_blank\">"."www".$match[2].$match[3]."</a>".$match[4];
+				}, $result3 );
 		}
-		$result4 = preg_replace( $Expr, "$1<a href=\"http://www$2$3$4$5\" target=\"_blank\">www$2$3$4$5</a>$6", $result3 );
-
-		//return preg_replace( $Expr, "<a href=\"http://www$1$2\" target=\"_blank\">www$1$2</a>$3 ", $result );
 		return $result4;
 	}
 
