@@ -41,7 +41,7 @@ class Content
 	public static function safe(&$content, $path, &$mime='', &$length=0, $nocache=true, $force_download=true, $no_content_type=false)
 	{
 		// change old/aliased mime-types to new one, eg. image/pdf to application/pdf
-		$mime = Api\Api\MimeMagic::fix_mime_type($mime);
+		$mime = Api\MimeMagic::fix_mime_type($mime);
 
 		// mitigate risk of serving javascript or css via webdav from our domain,
 		// which will get around same origin policy and CSP
