@@ -121,6 +121,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			type: "string",
 			default: null,
 			description: "group results by given JSON attribute"
+		},
+		minChars: {
+			name: "chars to start query",
+			type: "integer",
+			default: 3,
+			description: "minimum number of characters before expanding the combo"
 		}
 	},
 
@@ -233,7 +239,8 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			width: this.options.width,	// propagate width
 			highlight: false,	// otherwise renderer have to return strings
 			selectFirst: true,
-			groupBy: this.options.groupBy && typeof this.options.groupBy == 'string' ? this.options.groupBy : null
+			groupBy: this.options.groupBy && typeof this.options.groupBy == 'string' ? this.options.groupBy : null,
+			minChars: parseInt(this.options.minChars) ? parseInt(this.options.minChars) : 0
 		}, this.lib_options);
 
 		if(this.options.height) {
@@ -278,8 +285,10 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		// Bind keyup so we can start ajax search when we like
 			.on('keyup.start_search', jQuery.proxy(this._keyup, this))
 			.on('blur', jQuery.proxy(function() {
-				this.div.removeClass('ui-state-active');
-				this.resize();
+				if (this.div) {
+					this.div.removeClass('ui-state-active');
+					this.resize();
+				}
 			}, this))
 		// Hide tooltip when you're editing, it can get annoying otherwise
 			.on('focus', function() {
@@ -517,6 +526,21 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 	},
 
 	/**
+	 * Set autocomplete parameters
+	 *
+	 * @param {object} _params
+	 */
+	set_autocomplete_params: function(_params)
+	{
+		if (this.options.autocomplate_params != _params)
+		{
+			this.options.autocomplate_params = _params;
+
+			if (this.taglist) this.taglist.setDataUrlParams(_params);
+		}
+	},
+
+	/**
 	 * Set the list of suggested options to a static list.
 	 *
 	 * @param {array} _options usual format see _options2data
@@ -727,7 +751,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 					label: v
 				};
 			}
-			else if (this.taglist && 
+			else if (this.taglist &&
 				// Check current selection to avoid going back to server
 				(result = $j.grep(this.taglist.getSelection(), function(e) {
 					return e.id == v;
