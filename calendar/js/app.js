@@ -1641,6 +1641,13 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		}
 		if(changed.length && !this.state_update_in_progress)
 		{
+			// This activates calendar app if you call setState from a different app
+			// such as home.  If we change state while not active, sizing is wrong.
+			if(framework && framework.applications.calendar && framework.applications.calendar.hasSideboxMenuContent)
+			{
+				framework.setActiveApp(framework.applications.calendar);
+			}
+
 			console.log('Calendar state changed',changed.join("\n"));
 			// Log
 			this.egw.debug('navigation','Calendar state changed', changed.join("\n"));
@@ -1708,11 +1715,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 */
 	setState: function setState(state)
 	{
-		if(framework && framework.applications.calendar && framework.applications.calendar.hasSideboxMenuContent)
-		{
-			framework.setActiveApp(framework.applications.calendar);
-		}
-
 		// State should be an object, not a string, but we'll parse
 		if(typeof state == "string")
 		{
