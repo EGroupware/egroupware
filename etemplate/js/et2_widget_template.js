@@ -83,6 +83,14 @@ var et2_template = (function(){ "use strict"; return et2_DOMWidget.extend(
 		// Deferred object so we can load via AJAX
 		this.loading = jQuery.Deferred();
 
+		// run transformAttributes now, to get server-side modifications (url!)
+		if (_attrs.template)
+		{
+			this.id = _attrs.template;
+			this.transformAttributes(_attrs);
+			this.options = et2_cloneObject(_attrs);
+			_attrs = {};
+		}
 		if (this.id != "" || this.options.template)
 		{
 			var parts = (this.options.template || this.id).split('?');

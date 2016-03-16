@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-11 by RalfBecker@outdoor-training.de
+ * @copyright 2002-16 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -248,6 +248,20 @@ class etemplate_widget_template extends etemplate_widget
 			parent::run($method_name, $params, $respect_disabled);
 		}
 		$params[0] = $old_cname;
+	}
+
+	/**
+	 * Fill type options in self::$request->sel_options to be used on the client
+	 *
+	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 */
+	public function beforeSendToClient($cname, array $expand=null)
+	{
+		//error_log(__METHOD__."('$cname') this->id=$this->id, this->type=$this->type, this->attrs=".array2string($this->attrs));
+		$form_name = self::form_name($cname, $this->id, $expand);
+
+		self::setElementAttribute($form_name, 'url', self::rel2url($this->rel_path));
 	}
 }
 
