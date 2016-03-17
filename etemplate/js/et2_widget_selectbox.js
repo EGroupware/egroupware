@@ -751,7 +751,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		else
 		{
 			this.value = this._super.apply(this, arguments);
-			if (this.value === null) this.value = [];	// do NOT return null, as it does not get transmitted to server
+			if (this.value === null) this.value = this.options.multiple ? [] : "";	// do NOT return null, as it does not get transmitted to server
 		}
 		return this.value;
 	},
