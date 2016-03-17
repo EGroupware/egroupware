@@ -227,9 +227,9 @@
 
 		// instanciate app object
 		var appname = window.egw_appName;
-		if (window.app && typeof window.app[appname] != 'object' && typeof window.app.classes[appname] == 'function')
+		if (app && typeof app[appname] != 'object' && typeof app.classes[appname] == 'function')
 		{
-			window.app[appname] = new window.app.classes[appname]();
+			app[appname] = new app.classes[appname]();
 		}
 
 		// set sidebox for tabed templates
@@ -392,9 +392,9 @@ function et2_call(_func)
 				parent = parent[parts[i]];
 			}
 			// check if we need a not yet instanciated app.js object --> instanciate it now
-			else if (i == 1 && parts[0] == 'app' && typeof window.app.classes[parts[1]] == 'function')
+			else if (i == 1 && parts[0] == 'app' && typeof app.classes[parts[1]] == 'function')
 			{
-				parent = parent[parts[1]] = new window.app.classes[parts[1]]();
+				parent = parent[parts[1]] = new app.classes[parts[1]]();
 			}
 		}
 		if (typeof parent[func] == 'function')

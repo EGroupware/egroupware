@@ -75,7 +75,7 @@ app.classes.infolog = AppJS.extend(
 				}
 				else
 				{
-					// Trigger print command if the infolog oppend for printing porpuse
+					// Trigger print command if the infolog oppend for printing purpose
 					this.infolog_print_preview_onload();
 				}
 				break;
@@ -766,6 +766,9 @@ app.classes.infolog = AppJS.extend(
 	 */
 	_get_stylite: function(callback,attrs)
 	{
+		// use app object from etemplate2, which might be private and not just window.app
+		var app = this.et2.getInstanceManager().app_obj;
+
 		if (!app.stylite)
 		{
 			var self = this;

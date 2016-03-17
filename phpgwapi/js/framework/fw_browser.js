@@ -130,10 +130,10 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 	browse: function(_url)
 	{
 		// check if app has its own linkHandler and it accepts the link (returns true), or returns different url instead
-		if (typeof window.app == 'object' && typeof window.app[this.app.appName] == 'object' &&
-				typeof window.app[this.app.appName].linkHandler == 'function')
+		if (typeof app == 'object' && typeof app[this.app.appName] == 'object' &&
+				typeof app[this.app.appName].linkHandler == 'function')
 		{
-			var ret = window.app[this.app.appName].linkHandler.call(window.app[this.app.appName], _url);
+			var ret = app[this.app.appName].linkHandler.call(app[this.app.appName], _url);
 			{
 				if (ret === true) return this.loadingDeferred.promise();
 				if (typeof ret === 'string')
@@ -195,9 +195,9 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 		}
 
 		// Destroy application js
-		if(window.app[this.app.appName] && window.app[this.app.appName].destroy)
+		if(app[this.app.appName] && app[this.app.appName].destroy)
 		{
-			window.app[this.app.appName].destroy();
+			app[this.app.appName].destroy();
 		}
 
 		// Unload etemplate2, if there

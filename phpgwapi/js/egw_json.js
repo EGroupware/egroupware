@@ -481,22 +481,22 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							}
 							hasResponse = true;
 						} else if (typeof res.data.func == "string" &&
-								 res.data.func.substr(0,4) == "app." && window.app)
+								 res.data.func.substr(0,4) == "app." && app)
 						{
 
 							var parts = res.data.func.split(".");
 							// check if we need a not yet instanciated app.js object --> instanciate it now
-							if (parts.length == 3 && typeof window.app[parts[1]] == 'undefined' &&
-								typeof window.app.classes[parts[1]] == 'function')
+							if (parts.length == 3 && typeof app[parts[1]] == 'undefined' &&
+								typeof app.classes[parts[1]] == 'function')
 							{
-								window.app[parts[1]] = new window.app.classes[parts[1]]();
+								app[parts[1]] = new app.classes[parts[1]]();
 							}
-							if(parts.length == 3 && typeof window.app[parts[1]] == "object" &&
-								typeof window.app[parts[1]][parts[2]] == "function")
+							if(parts.length == 3 && typeof app[parts[1]] == "object" &&
+								typeof app[parts[1]][parts[2]] == "function")
 							{
 								try
 								{
-									this.context = window.app[parts[1]][parts[2]].apply(window.app[parts[1]], res.data.parms);
+									this.context = app[parts[1]][parts[2]].apply(app[parts[1]], res.data.parms);
 								}
 								catch (e)
 								{

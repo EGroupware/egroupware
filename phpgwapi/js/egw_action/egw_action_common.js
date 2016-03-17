@@ -236,7 +236,7 @@ egwEventQueue.prototype.queue = function(_proc, _context, _args, _id)
 
 	var key = "";
 
-	// _id must be a string and evaluate to true - if this is not 
+	// _id must be a string and evaluate to true - if this is not
 	// generate an unique key.
 	if (typeof _id != "string" || !_id)
 	{
@@ -366,10 +366,10 @@ egwFnct.prototype.setValue = function(_value)
 	{
 		this.fnct = _value;
 	}
-	
+
 	// Global function (on window)
 	else if (typeof _value == "string" &&
-	         _value.substr(0,11) == "javaScript:" && 
+	         _value.substr(0,11) == "javaScript:" &&
 	         typeof window[_value.substr(11)] == "function")
 	{
 		this.fnct = window[_value.substr(11)];
@@ -379,20 +379,20 @@ egwFnct.prototype.setValue = function(_value)
 	{
 		this.value = _value;
 	}
-	
+
 	// egw application specific function
 	else if (typeof _value == "string" &&
-	         _value.substr(0,15) == "javaScript:app." && window.app)
+	         _value.substr(0,15) == "javaScript:app." && app)
 	{
 		var parts = _value.split(".");
-		if(parts.length == 3 && typeof window.app[parts[1]] == "object" && 
-			typeof window.app[parts[1]][parts[2]] == "function")
+		if(parts.length == 3 && typeof app[parts[1]] == "object" &&
+			typeof app[parts[1]][parts[2]] == "function")
 		{
-			this.fnct = window.app[parts[1]][parts[2]];
-			this.context = window.app[parts[1]];
+			this.fnct = app[parts[1]][parts[2]];
+			this.context = app[parts[1]];
 		}
 	}
-	
+
 	// Something, but could not figure it out
 	else if (_value)
 	{

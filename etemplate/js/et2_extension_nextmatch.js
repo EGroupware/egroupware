@@ -544,10 +544,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			// Highlight matching favorite in sidebox
 			if(this.getInstanceManager().app)
 			{
-				var app = this.getInstanceManager().app;
-				if(window.app[app] && window.app[app].highlight_favorite)
+				var appname = this.getInstanceManager().app;
+				if(app[appname] && app[appname].highlight_favorite)
 				{
-					window.app[app].highlight_favorite();
+					app[appname].highlight_favorite();
 				}
 			}
 		}

@@ -353,6 +353,12 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app)
 
 	egw().debug("info", "Loaded data", _data);
 	var currentapp = this.app = _data.currentapp || egw().app_name();
+	var appname = _name.split('.')[0];
+	// if no app object provided and template app is not currentapp (eg. infolog CRM view)
+	// create private app object / closure with just classes / prototypes
+	if (!_app && appname && appname != currentapp) app = { classes: window.app.classes };
+	// remember used app object, to eg. use: onchange="widget.getInstanceMgr().app_object[app].callback()"
+	this.app_obj = app;
 
 	// extract $content['msg'] and call egw.message() with it
 	var msg = _data.content.msg;
@@ -390,10 +396,6 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app)
 	if (!$j.isArray(_data.langRequire)) _data.langRequire = [];
 	egw(currentapp, window).langRequire(window, _data.langRequire, function()
 	{
-		// Appname should be first part of the template name
-		var split = _name.split('.');
-		var appname = split[0];
-
 		// Initialize application js
 		var app_callback = null;
 		// Only initialize once
@@ -407,7 +409,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app)
 		{
 			(function() { new app[appname]();}).call();
 		}
-		else if (typeof app[appname] !== "object")
+		else if (appname && typeof app[appname] !== "object")
 		{
 			egw.debug("warn", "Did not load '%s' JS object",appname);
 		}
@@ -531,11 +533,11 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app)
 				{
 					app_callback.call(window,this,_name);
 				}
-				if(appname != this.app && typeof window.app[this.app] == "object")
+				if(appname && appname != this.app && typeof app[this.app] == "object")
 				{
 					// Loaded a template from a different application?
 					// Let the application that loaded it know too
-					window.app[this.app].et2_ready(this, this.name);
+					app[this.app].et2_ready(this, this.name);
 				}
 
 				$j(this.DOMContainer).trigger('load', this);

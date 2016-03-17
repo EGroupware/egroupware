@@ -28,8 +28,8 @@
 	* - window.open() replaces it with egw_openWindowCentered2()
 	* - xajax_doXMLHTTP('etemplate. replace ajax calls in widgets with special handler not requiring etemplate run rights
 	*
-	* @param string _val onclick, onchange, ... action
-	* @param string _cname name-prefix / name-space
+	* @param {string} _val onclick, onchange, ... action
+	* @param {et2_widget} widget
 	* @ToDo replace xajax_doXMLHTTP with egw.json()
 	* @ToDo replace (common) cases of confirm with new dialog, idea: calling function supplys function to call after confirm
 	* @ToDo template::styles(name) inserts the styles of a named template
@@ -131,6 +131,9 @@
 			{
 				_code += '(ev,widget)';
 			}
+			// use app object from etemplate2, which might be private and not just window.app
+			_code = _code.replace(/(window\.)?app\./, 'widget.getInstanceManager().app_obj.');
+
 			var func = new Function('ev', 'widget', _code);
 		} catch(e) {
 			_widget.egw().debug('error', 'Error while compiling JS code ', _code);

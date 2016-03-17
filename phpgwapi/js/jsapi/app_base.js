@@ -117,8 +117,6 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 * is not yet ready.
 	 */
 	init: function() {
-		window.app[this.appname] = this;
-
 		this.egw = egw(this.appname, window);
 
 		// Initialize sidebox for non-popups.
@@ -132,7 +130,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
 			}
 			// Make sure we're running in the top window when we init sidebox
-			if(window.top.app[this.appname] !== this && window.top.app[this.appname])
+			if(window.app[this.appname] === this && window.top.app[this.appname] !== this && window.top.app[this.appname])
 			{
 				window.top.app[this.appname]._init_sidebox(sidebox);
 			}
@@ -145,14 +143,14 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 
 	/**
 	 * Clean up any created objects & references
-	 * @param {pbject} _app local app object
+	 * @param {object} _app local app object
 	 */
 	destroy: function(_app) {
 		delete this.et2;
 		if (this.sidebox)
 			this.sidebox.off();
 		delete this.sidebox;
-		if (!_app) delete window.app[this.appname];
+		if (!_app) delete app[this.appname];
 	},
 
 	/**
@@ -389,7 +387,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 * @param {object} _action
 	 * @param {object} _senders
 	 * @param {boolean} _noEdit defines whether to set edit button or not default is false
-	 * @param {function} callback function to run after et2 is loaded
+	 * @param {function} et2_callback function to run after et2 is loaded
 	 */
 	viewEntry: function(_action, _senders, _noEdit, et2_callback)
 	{
@@ -1156,6 +1154,8 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 *				]
 	 *			}
 	 *		}
+	 *
+	 * @param {DOMNode} div
 	 */
 	egwTutorial_init: function(div)
 	{
@@ -1536,23 +1536,22 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		var dialog = function(_content, _callback)
 		{
 			return et2_createWidget("dialog", {
-						callback: function(_button_id, _value) {
-							if (typeof _callback == "function")
-							{
-								_callback.call(this, _button_id, _value.value);
-							}
-						},
-						title: egw.lang('PGP Encryption Installation'),
-						buttons: buttons,
-						dialog_type: 'info',
-						value: {
-							content: _content
-						},
-						template: egw.webserverUrl+'/etemplate/templates/default/pgp_installation.xet',
-						class: "pgp_installation",
-						modal: true,
-						//resizable:false,
-
+				callback: function(_button_id, _value) {
+					if (typeof _callback == "function")
+					{
+						_callback.call(this, _button_id, _value.value);
+					}
+				},
+				title: egw.lang('PGP Encryption Installation'),
+				buttons: buttons,
+				dialog_type: 'info',
+				value: {
+					content: _content
+				},
+				template: egw.webserverUrl+'/etemplate/templates/default/pgp_installation.xet',
+				class: "pgp_installation",
+				modal: true
+				//resizable:false,
 			});
 		};
 		var content = [
