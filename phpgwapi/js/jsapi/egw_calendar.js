@@ -190,7 +190,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					}
 					else
 					{
-						if (key != 'indexOf') trans[key] = full[key].substr(0,translate_fields[i]);
+						if (trans.hasOwnProperty(key)) trans[key] = full[key].substr(0,translate_fields[i]);
 					}
 				}
 				// Keep the full one for missing short ones
