@@ -131,7 +131,9 @@ class pixelegg_framework extends jdots_framework
 
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color))	// a little xss check
 		{
-			$ret['app_css'] = "
+			if (!html::$ua_mobile)
+			{
+				$ret['app_css'] .= "
 /**
  * theme changes to color pixelegg for color: $color
  */
@@ -166,10 +168,11 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #div
 
 
 ";
+			}
+			else
 			/* Mobile theme custom colors*/
-			if (html::$ua_mobile)
 			{
-				$ret['app_css'] = "
+				$ret['app_css'] .= "
 /* Mobile theme specific color changes */
 
 /*nextmatch header and plus_button in mobile theme*/
