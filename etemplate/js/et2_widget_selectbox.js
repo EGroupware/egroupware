@@ -1108,7 +1108,11 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 		options_string = options_string.replace(/,+$/, '');
 
 		var cache_id = widget._type+'_'+options_string;
-		var cache = egw.window.et2_selectbox.type_cache[cache_id];
+		var cache = (
+			egw.window.et2_selectbox ?
+				egw.window.et2_selectbox :
+				egw(window).window.et2_selectbox
+		).type_cache[cache_id] || {};
 
 		// Options for a selectbox in a nextmatch must be returned now, as the
 		// widget we have is not enough to set the options later.
