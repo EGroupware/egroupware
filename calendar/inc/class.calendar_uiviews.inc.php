@@ -524,11 +524,11 @@ class calendar_uiviews extends calendar_ui
 
 		// Loop through, using egw_time to handle DST
 		$week = 0;
-		$week_start = new egw_time($this->first);
+		$week_start = new EGroupware\Api\DateTime($this->first);
 		$week_start->setTime(0,0,0);
 		$week_end = new egw_time($week_start);
 		$week_end->add(new DateInterval('P6DT23H59M59S'));
-		$last = new egw_time($this->last);
+		$last = new EGroupware\Api\DateTime($this->last);
 		for ($week_start; $week_start < $last; $week_start->add('1 week'), $week_end->add('1 week'))
 		{
 			$search_params = $this->search_params;
@@ -1717,7 +1717,30 @@ class calendar_uiviews extends calendar_ui
 		}
 		return '';
 	}
-
+	
+	/**
+	 * Calculates a brighter color for a given color
+	 *
+	 * @param $rgb string color as #rrggbb value
+	 * @param $decr int value to add to each component, default 64
+	 * @return string the brighter color
+	 */
+	static function brighter($rgb,$decr=64)
+	{
+		if (!preg_match('/^#?([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})$/',$rgb,$components))
+		{
+				return '#ffffff';
+		}
+		$brighter = '#';
+		for ($i = 1; $i <=3; ++$i)
+		{
+				$val = hexdec($components[$i]) + $decr;
+				if ($val > 255) $val = 255;
+				$brighter .= sprintf('%02x',$val);
+		}
+		//echo "brighter($rgb=".print_r($components,True).")=$brighter</p>\n";
+		return $brighter;
+	}
 
 	/**
 	 * Calculates the brightness of a hexadecimal rgb color (median of the r, g and b components)

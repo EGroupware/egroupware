@@ -473,7 +473,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				for(var i = 0; i < 12; i++)
 				{
 					// Not using UTC because we corrected for timezone offset
-					labels.push({id: d.getFullYear() +'-'+d.getMonth(), label:app.calendar.egw.lang(date('F',d))+' '+d.getFullYear()});
+					labels.push({id: d.getFullYear() +'-'+d.getMonth(), label:this.egw().lang(date('F',d))+' '+d.getFullYear()});
 					d.setMonth(d.getMonth()+1);
 				}
 				return labels;
@@ -829,6 +829,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		// Draw the rows
 		for(var key in labels)
 		{
+			if (!labels.hasOwnProperty(key)) continue;
+			
 			// Skip sub-categories (events are merged into top level)
 			if(this.options.group_by == 'category' &&
 				(!app.calendar.state.cat_id || app.calendar.state.cat_id == '') &&
@@ -873,7 +875,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				label: label,
 				start_date: start,
 				end_date: end,
-				value: events
+				value: events,
+				readonly: this.options.readonly
 			},this);
 
 
@@ -900,8 +903,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var end = new Date(this.options.end_date);
 		end = new Date(end.valueOf() + end.getTimezoneOffset() * 60 * 1000);
 
-		var title = app.calendar.egw.lang(date('F',start))+' '+date('Y',start)+' - '+
-			app.calendar.egw.lang(date('F',end))+' '+date('Y',end);
+		var title = this.egw().lang(date('F',start))+' '+date('Y',start)+' - '+
+			this.egw().lang(date('F',end))+' '+date('Y',end);
 
 		content += '<div class="calendar_plannerMonthScale th et2_link" style="left: 0; width: 100%;">'+
 				title+"</div>";
@@ -946,7 +949,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			{
 				days_in_month = days - i;
 			}
-			var title = app.calendar.egw.lang(date('F',new Date(t.valueOf() + t.getTimezoneOffset() * 60 * 1000)));
+			var title = this.egw().lang(date('F',new Date(t.valueOf() + t.getTimezoneOffset() * 60 * 1000)));
 			if (days_in_month > 10)
 			{
 				title += ' '+t.getUTCFullYear();
@@ -1000,7 +1003,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 			week_width = 100 / days * Math.min(days, days_in_week);
 
-			var title = app.calendar.egw.lang('Week')+' '+app.calendar.date.week_number(usertime);
+			var title = this.egw().lang('Week')+' '+app.calendar.date.week_number(usertime);
 
 			if(start.getTimezoneOffset() > 0)
 			{
@@ -1053,15 +1056,15 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 			if (days <= 3)
 			{
-				title = app.calendar.egw.lang(date('l',t))+', '+date('j',t)+'. '+app.calendar.egw.lang(date('F',t));
+				title = this.egw().lang(date('l',t))+', '+date('j',t)+'. '+this.egw().lang(date('F',t));
 			}
 			else if (days <= 7)
 			{
-				title = app.calendar.egw.lang(date('l',t))+' '+date('j',t);
+				title = this.egw().lang(date('l',t))+' '+date('j',t);
 			}
 			else
 			{
-				title = app.calendar.egw.lang(date('D',t)).substr(0,2)+'<br />'+date('j',t);
+				title = this.egw().lang(date('D',t)).substr(0,2)+'<br />'+date('j',t);
 			}
 			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
 
@@ -1740,7 +1743,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var result = true;
 
 		// Is this click in the event stuff, or in the header?
-		if(this.gridHeader.has(_ev.target).length === 0 && !$j(_ev.target).hasClass('calendar_plannerRowHeader'))
+		if(!this.options.readonly && this.gridHeader.has(_ev.target).length === 0 && !$j(_ev.target).hasClass('calendar_plannerRowHeader'))
 		{
 			// Event came from inside, maybe a calendar event
 			var event = this._get_event_info(_ev.originalEvent.target);
@@ -1795,7 +1798,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			}
 			app.calendar.update_state(_ev.data);
 		}
-		else
+		else if (!this.options.readonly)
 		{
 			// Default handler to open a new event at the selected time
 			// TODO: Determine date / time more accurately from position

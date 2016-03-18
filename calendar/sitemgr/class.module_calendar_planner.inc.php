@@ -16,15 +16,19 @@
 class module_calendar_planner extends Module
 {
 	/**
-	 * Default callendar CSS file
+	 * Default calendar CSS file
 	 */
 	const CALENDAR_CSS = '/calendar/templates/default/app.css';
+
+	const ETEMPLATE_CSS = '/etemplate/templates/default/etemplate2.css';
 
 	/**
 	 * Constructor
 	 */
 	function __construct()
 	{
+		parent::__construct();
+		
 		$this->arguments = array(
 			'sortby' => array(
 				'type' => 'select',
@@ -32,8 +36,7 @@ class module_calendar_planner extends Module
 				'options' => array(
 					0 => lang('Planner by category'),
 					'user' => lang('Planner by user'),
-					'month' => lang('Yearly Planner'),
-					'yearly' => lang('Yearly Planner').' ('.lang('initially year aligned').')',
+					'month' => lang('Yearly Planner')
 				),
 			),
 			'cat_id' => array(
@@ -186,10 +189,9 @@ class module_calendar_planner extends Module
 	 */
 	function get_content(&$arguments,$properties)
 	{
-		translation::add_app('calendar');
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
 
-		//_debug_array($arguments);
-		$arguments['view'] = 'planner';
+		//error_log(array2string($arguments));
 		if (empty($arguments['date']))
 		{
 			$arguments['date'] = date('Ymd');
@@ -200,7 +202,7 @@ class module_calendar_planner extends Module
 			$arguments['date'] = substr($arguments['date'],0,4).'0101';
 		}
 		if (isset($_GET['date'])) $arguments['date'] = $_GET['date'];
-		if (empty($arguments['cat_id'])) $arguments['cat_id'] = 0;
+		if (empty($arguments['cat_id'])) $arguments['cat_id'] = '';
 		if(isset($arguments['resources']) && in_array('r0', $arguments['resources']))
 		{
 			foreach($arguments['resources'] as $index => $value)
@@ -221,28 +223,94 @@ class module_calendar_planner extends Module
 
 		$html = '<style type="text/css">'."\n";
 		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].self::CALENDAR_CSS.");\n";
-		$html .= '</style>'."\n";
+		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].self::ETEMPLATE_CSS.");\n";
+		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].categories::css(categories::GLOBAL_APPNAME).");\n";
+		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].categories::css('calendar').");\n";
+		$html .= '.popupMainDiv #calendar-planner { position: static;}
+		#calendar-planner .calendar_plannerWidget, #calendar-planner div.calendar_plannerRows {
+    height: auto !important;
+}
+	</style>'."\n";
+		$html .= html::image('sitemgr', 'left', lang('Previous'), 'onclick=\'app.calendar.toolbar_action({id:"previous"});\'')
+		. html::image('sitemgr', 'right', lang('Next'), 'style="float: right;" onclick=\'app.calendar.toolbar_action({id:"next"});\'');
 
 		if (is_array($params['owner']))
 		{
-			$params['owner'] = implode(',', $params['owner']);
+			// Buffer, and add anything that gets cleared to the content
+			ob_start(function($buffer) use(&$html) {
+				$html .= $buffer;
+				return '';
+			});
+			egw_framework::$header_done = true;
+			$ui = new calendar_uiviews();
+			$ui->sortby = $arguments['sortby'];
+			$ui->owner = $params['owner'];
+			
+			if (!$ui->planner_view || $ui->planner_view == 'month')	// planner monthview
+			{
+				if ($ui->day < 15)	// show one complete month
+				{
+					$ui->_week_align_month($ui->first,$ui->last);
+				}
+				else	// show 2 half month
+				{
+					$ui->_week_align_month($ui->first,$ui->last,15);
+				}
+			}
+			elseif ($ui->planner_view == 'week' || $ui->planner_view == 'weekN')	// weeekview
+			{
+				$ui->first = $ui->datetime->get_weekday_start($ui->year,$ui->month,$ui->day);
+				$ui->last = $ui->bo->date2array($this->first);
+				$ui->last['day'] += ($ui->planner_view == 'week' ? 7 : 7 * $ui->cal_prefs['multiple_weeks'])-1;
+				$ui->last['hour'] = 23; $ui->last['minute'] = $ui->last['sec'] = 59;
+				unset($ui->last['raw']);
+				$ui->last = $ui->bo->date2ts($ui->last);
+			}
+			else // dayview
+			{
+				$ui->first = $ui->bo->date2ts($ui->date);
+				$ui->last = $ui->bo->date2array($ui->first);
+				$ui->last['day'] += 0;
+				$ui->last['hour'] = 23; $ui->last['minute'] = $ui->last['sec'] = 59;
+				unset($ui->last['raw']);
+				$ui->last = $ui->bo->date2ts($ui->last);
+			}
 
-			$uiviews = new calendar_uiviews($params);
-			$uiviews->allowEdit = false;	// switches off all edit popups
+			$search_params = $ui->search_params;
+			$search_params['daywise'] = false;
+			$search_params['start'] = $ui->first;
+			$search_params['end'] = $ui->last;
+			$search_params['owner'] = $ui->owner;
+			$search_params['enum_groups'] = $ui->sortby == 'user';
+			$content['planner'] = $ui->bo->search($search_params);
+			foreach($content['planner'] as &$event)
+			{
+				$ui->to_client($event);
+			}
 
-			// Initialize Tooltips
-			static $wz_tooltips;
-			if (!$wz_tooltips++) $html .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js"></script>'."\n";
+			$tmpl = new etemplate_new('calendar.planner');
 
-			// replacing egw-urls with sitemgr ones, allows to use navigation links
-			$html .= str_replace($GLOBALS['egw_info']['server']['webserver_url'].'/index.php?',
-				$this->link().'&',
-				$uiviews->planner(true));
+			$tmpl->setElementAttribute('planner','start_date', egw_time::to($ui->first, egw_time::ET2));
+			$tmpl->setElementAttribute('planner','end_date', egw_time::to($ui->last, egw_time::ET2));
+			$tmpl->setElementAttribute('planner','owner', $search_params['users']);
+			$tmpl->setElementAttribute('planner','group_by', $ui->sortby);
+			$tmpl->exec(__METHOD__, $content,array(), array('__ALL__' => true),array(),2);
+			$html .= ob_get_contents();
+			$html .= '<script>'
+			. '$j(function() {app.calendar.set_state(' . json_encode(array(
+					'owner' => $search_params['users'],
+					'sortby' => $ui->sortby,
+					'filter' => $arguments['filter']
+				)).');'
+			. '});'
+			. '</script>';
 		}
 		else
 		{
 			$html .= '<div class="message" align="center">'.lang('No owner selected').'</div>';
 		}
+		
+		while(@ob_end_clean());
 
 		return $html;
 	}

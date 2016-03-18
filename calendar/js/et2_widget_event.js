@@ -233,18 +233,21 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 
 		// Copy actions set in parent
-		var action_parent = this;
-		while(action_parent != null && !action_parent.options.actions &&
-			!action_parent.instanceOf(et2_container)
-		)
+		if(!this.options.readonly && !this._parent.options.readonly)
 		{
-			action_parent = action_parent.getParent();
-		}
-		try {
-			this._link_actions(action_parent.options.actions||{});
-		} catch (e) {
-			// something went wrong, but keep quiet about it
-			debugger;
+			var action_parent = this;
+			while(action_parent != null && !action_parent.options.actions &&
+				!action_parent.instanceOf(et2_container)
+			)
+			{
+				action_parent = action_parent.getParent();
+			}
+			try {
+				this._link_actions(action_parent.options.actions||{});
+			} catch (e) {
+				// something went wrong, but keep quiet about it
+				debugger;
+			}
 		}
 
 		// Make sure category stuff is there
@@ -267,11 +270,14 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				.append(this.title)
 				.append(this.body);
 		}
+		if(!this._parent.options.readonly && !this.options.readonly)
+		{
+			this.div
+				// Let timegrid always get the drag
+				.droppable('option','greedy',false);
+		}
 		// DOM nodes
 		this.div
-			// Let timegrid always get the drag
-			.droppable('option','greedy',false)
-
 			// Set full day flag
 			.attr('data-full_day', event.whole_day)
 

@@ -810,7 +810,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 			);
 		*/
-		if(framework.applications.calendar && framework.applications.calendar.tab)
+		if(typeof framework !== 'undefined' && framework.applications.calendar && framework.applications.calendar.tab)
 		{
 			jQuery(framework.applications.calendar.tab.contentDiv).swipe('destroy')
 				.swipe({
@@ -1620,7 +1620,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	update_state: function update_state(_set)
 	{
 		// Make sure we're running in top window
-		if(window !== window.top)
+		if(window !== window.top && window.top.app.calendar)
 		{
 			return window.top.app.calendar.update_state(_set);
 		}
@@ -1643,7 +1643,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			// This activates calendar app if you call setState from a different app
 			// such as home.  If we change state while not active, sizing is wrong.
-			if(framework && framework.applications.calendar && framework.applications.calendar.hasSideboxMenuContent)
+			if(typeof framework !== 'undefined' && framework.applications.calendar && framework.applications.calendar.hasSideboxMenuContent)
 			{
 				framework.setActiveApp(framework.applications.calendar);
 			}
@@ -2599,7 +2599,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			csv_export: false
 		});
 		// Show ajax loader
-		framework.applications.calendar.sidemenuEntry.showAjaxLoader()
+		if(typeof framework !== 'undefined')
+		{
+			framework.applications.calendar.sidemenuEntry.showAjaxLoader();
+		}
 
 		// Already in progress?
 		var query_string = JSON.stringify(query);
@@ -2693,7 +2696,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 
 				// Hide AJAX loader
-				framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
+				if(framework)
+				{
+					framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
+				}
 			}, this,null
 		);
 	},
