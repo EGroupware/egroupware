@@ -229,7 +229,7 @@ class mail_tree
 						tree::TOOLTIP => $nodeData['tooltip'],
 						tree::IMAGE_LEAF => self::$leafImages['folderLeaf'],
 						tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderOpen'],
-						tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClose'],
+						tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClosed'],
 						tree::CHECKED => $_checkSubscribed?$node['SUBSCRIBED']:false,
 						'parent' => $_parent
 					);
@@ -435,7 +435,7 @@ class mail_tree
 				$data[tree::TOOLTIP] = $folderName;
 				$data[tree::IMAGE_LEAF] = self::$leafImages['folderLeaf'];
 				$data[tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderOpen'];
-				$data[tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderClose'];
+				$data[tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderClosed'];
 			}
 
 			// Contains unseen mails for the folder
