@@ -484,12 +484,21 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			if($appname) {
 				$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
 			}
+			$categories = new categories('',$appname);
 			foreach((array)$fields['select-cat'] as $name) {
 				if($record[$name]) {
 					// Only parse name if it needs it
 					if($format == 1)
 					{
-						$cat_id = importexport_helper_functions::cat_name2id($record[$name]);
+						$existing_cat = $categories->exists('all',$record[$name]);
+						if($existing_cat)
+						{
+							$cat_id = $existing_cat;
+						}
+						else
+						{
+							$cat_id = importexport_helper_functions::cat_name2id($record[$name]);
+						}
 						// Don't clear it if it wasn't found
 						if($cat_id) $record[$name] = $cat_id;
 					}
