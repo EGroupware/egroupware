@@ -112,7 +112,7 @@ class pixelegg_framework extends jdots_framework
 
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color))	// a little xss check
 		{
-			$ret['app_css'] = "
+			$ret['app_css'] .= "
 /**
  * theme changes to color pixelegg for color: $color
  */
