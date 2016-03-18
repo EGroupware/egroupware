@@ -177,7 +177,7 @@ class DateTime extends \DateTime
 	 */
 	public function add($interval)
 	{
-		if (is_string($interval)) $interval = DateInterval::createFromDateString($interval);
+		if (is_string($interval)) $interval = \DateInterval::createFromDateString($interval);
 
 		parent::add($interval);
 	}
