@@ -308,7 +308,7 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					    this.span.attr("target", "_blank");
 					}
 				}
-				// Remove email address if there's a name
+				// wrap email address if there's a name
 				if (this.span.text() && this.span.text().split("<"))
 				{
 					var val = this.span.text().split("<");
@@ -317,8 +317,13 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					// need to preserve the original value somehow
 					// as it's been used for add contact plus feature
 					this.span.attr('title',_value);
-
+					
 					this.span.text(val.replace(/"/g,''));
+					this.span.append("<span class='email'>"+
+						_value.replace(val,'')
+						.replace(/</g, '&lt;')
+						.replace(/>/g, '&gt;')
+					+"</span>");
 
 				}
 

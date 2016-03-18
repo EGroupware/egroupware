@@ -450,6 +450,9 @@ div.mail-compose_fileselector {
   position: relative;
   background-color: white;
 }
+#mail-index_mailPreview .et2_email > span {
+  display: inline;
+}
 .maildisplayAllAdresses {
   max-height: 245px !important;
   overflow: scroll;
