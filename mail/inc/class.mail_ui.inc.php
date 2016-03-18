@@ -952,7 +952,7 @@ class mail_ui
 					'forwardasattach' => array(
 						'caption' => 'Attachment',
 						'hint' => 'forward as attachment',
-						'icon' => 'mail_forward',
+						'icon' => 'mail_forward_attach',
 						'group' => $group,
 						'onExecute' => 'javaScript:app.mail.mail_compose',
 					),
