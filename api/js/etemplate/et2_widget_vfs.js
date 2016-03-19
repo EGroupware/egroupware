@@ -16,7 +16,7 @@
 	et2_core_valueWidget;
 	et2_widget_description;
 	et2_widget_file;
-	/etemplate/js/expose.js;
+	expose;
 */
 
 /**

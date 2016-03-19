@@ -13,7 +13,7 @@
 /*egw:uses
 	jquery.jquery;
 	et2_core_baseWidget;
-	/etemplate/js/expose.js;
+	expose;
 */
 
 /**

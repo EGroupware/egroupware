@@ -140,7 +140,7 @@ class Etemplate extends Etemplate\Widget\Template
 		unset($hook_data);
 
 		// Include the etemplate2 javascript code
-		egw_framework::validate_file('.', 'etemplate2', 'etemplate');
+		egw_framework::validate_file('etemplate', 'etemplate2', 'api');
 
 		if (!$this->rel_path) throw new Exception\AssertionFailed("No (valid) template '$this->name' found!");
 

@@ -1940,8 +1940,8 @@ abstract class egw_framework
 	 */
 	static $bundle2minurl = array(
 		'api' => '/phpgwapi/js/jsapi.min.js',
-		'et2' => '/etemplate/js/etemplate2.min.js',
-		'et21'=> '/etemplate/js/etemplate2.min.js',
+		'et2' => '/api/js/etemplate/etemplate2.min.js',
+		'et21'=> '/api/js/etemplate/etemplate2.min.js',
 		'pixelegg' => '/pixelegg/js/fw_pixelegg.min.js',
 		'jdots' => '/jdots/js/fw_jdots.min.js',
 		'mobile' => '/jdots/js/fw_mobile.min.js',
@@ -1965,6 +1965,12 @@ abstract class egw_framework
 			unset($bundles['.ts']);
 			foreach($bundles as $name => $files)
 			{
+				// to facilitate move to new et2 location, can be removed after 16.1 release
+				if ($name == 'et21' && !in_array('/api/js/etemplate/etemplate2.js', $files))
+				{
+					egw_cache::unsetTree(__CLASS__, 'bundles');
+					return self::bundle_js_includes($js_includes);
+				}
 				// ignore bundles of not used templates, as they can contain identical files
 				if (in_array($name, array('api', 'et2', 'et21')) ||
 					$name == (html::$ua_mobile ? 'mobile' : $GLOBALS['egw_info']['server']['template_set']) ||
@@ -2143,7 +2149,7 @@ abstract class egw_framework
 
 		// generate et2 bundle (excluding files in api bundle)
 		//$inc_mgr->include_js_file('/etemplate/js/lib/jsdifflib/difflib.js');	// it does not work with "use strict" therefore included in front
-		$inc_mgr->include_js_file('/etemplate/js/etemplate2.js');
+		$inc_mgr->include_js_file('/api/js/etemplate/etemplate2.js');
 		$bundles['et2'] = array_diff($inc_mgr->get_included_files(), $bundles['api']);
 		self::bundle_urls($bundles['et2'], $max_mod['et2']);
 
