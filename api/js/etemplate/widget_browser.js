@@ -12,6 +12,9 @@
  * @version $Id$
  */
 
+/*egw:uses
+	etemplate2;
+*/
 
 /**
  * widget_browser shows a list of widgets, and allows you to view them one at a time.
