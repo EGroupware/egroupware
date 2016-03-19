@@ -24,7 +24,7 @@ class UserAgent
 	 *
 	 * @return string 'firefox', 'msie', 'safari' (incl. iPhone), 'chrome', 'opera', 'konqueror', 'mozilla'
 	 */
-	public function type()
+	public static function type()
 	{
 		return self::$user_agent;
 	}
@@ -34,7 +34,7 @@ class UserAgent
 	 *
 	 * @return string
 	 */
-	public function version()
+	public static function version()
 	{
 		return self::$ua_version;
 	}
@@ -44,7 +44,7 @@ class UserAgent
 	 *
 	 * @return string "iphone", "ipod", "ipad", "android", "symbianos", "blackberry", "kindle", "opera mobi", "windows phone"
 	 */
-	public function mobile()
+	public static function mobile()
 	{
 		return self::$ua_mobile;
 	}
