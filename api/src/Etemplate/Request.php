@@ -17,6 +17,7 @@ namespace EGroupware\Api\Etemplate;
 use egw_framework;
 use egw_json_response;
 use egw_json_request;
+use common;	// egw_exit
 
 /**
  * Class to represent the persitent information of an eTemplate request
