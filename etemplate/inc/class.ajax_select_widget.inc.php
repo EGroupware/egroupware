@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * AJAX Select Widget
  *
@@ -357,7 +359,7 @@ class ajax_select_widget
 			$query['field_name'] = $base_id;
 
 			// Check for a provided list of values
-			if($request = etemplate_request::read($etemplate_id)) {
+			if(($request = Api\Etemplate\Request::read($etemplate_id))) {
 				$extension_data = $request->extension_data[$base_id];
 				if(is_array($extension_data) && $extension_data['values']) {
 					self::$static_values[$base_id] = $extension_data['values'];

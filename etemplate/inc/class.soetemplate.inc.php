@@ -161,7 +161,7 @@ class soetemplate
 	 *
 	 * @param string $type type of the widget
 	 * @param string $name name of widget
-	 * @param array $attributes=null array with further attributes
+	 * @param array $attributes =null array with further attributes
 	 * @return array the cell
 	 */
 	static function empty_cell($type='label',$name='',$attributes=null)
@@ -1102,9 +1102,9 @@ class soetemplate
 	 *
 	 * Please note: as call_user_func_array does not return references, methods ($func is an array) can not either!!!
 	 *
-	 * @param string/array $func function to use or array($obj,'method')
+	 * @param string|array $func function to use or array($obj,'method')
 	 * @param mixed &$extra extra parameter passed to function
-	 * @param string $path='/' start-path
+	 * @param string $path ='/' start-path
 	 * @return mixed return-value of func or null if nothing returned at all
 	 */
 	function &widget_tree_walk($func,&$extra,$path='/')
@@ -1146,7 +1146,7 @@ class soetemplate
 	 * a further widget with children.
 	 *
 	 * @param array $widget the widget(-tree) the function should be applied too
-	 * @param string/array $func function to use or array($obj,'method')
+	 * @param string|array $func function to use or array($obj,'method')
 	 * @param mixed &$extra extra parameter passed to function
 	 * @param string $path path of widget in the widget-tree
 	 * @return mixed return-value of func or null if nothing returned at all

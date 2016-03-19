@@ -922,7 +922,7 @@ class Base
 					// check if a db-internal name conversation necessary
 					if (!is_int($col) && ($c = array_search($col,$this->db_cols)))
 					{
-						$col = $c;
+						$col = $this->table_name . '.' . $c;
 					}
 					if(is_int($col))
 					{
@@ -930,11 +930,11 @@ class Base
 					}
 					elseif ($val === "!''")
 					{
-						$db_filter[] = $this->table_name . '.' .$col." != ''";
+						$db_filter[] = $col." != ''";
 					}
 					else
 					{
-						$db_filter[$this->table_name . '.' .$col] = $val;
+						$db_filter[$col] = $val;
 					}
 				}
 			}

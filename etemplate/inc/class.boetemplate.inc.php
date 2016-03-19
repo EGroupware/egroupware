@@ -4,12 +4,14 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-11 by RalfBecker@outdoor-training.de
+ * @copyright 2002-16 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * Business Object for eTemplates, extending the Storage Object
@@ -64,7 +66,7 @@ class boetemplate extends soetemplate
 	 *
 	 * It's a static variable as etemplates can contain further etemplates (rendered by a different object)
 	 *
-	 * @var etemplate_request
+	 * @var Api\Etemplate\Request
 	 */
 	static public $request;
 
@@ -103,8 +105,8 @@ class boetemplate extends soetemplate
 	 *
 	 * @param string $disabled expression to check, eg. "!@var" for !$content['var']
 	 * @param array $content the content-array in the context of the grid
-	 * @param int $row=null to be able to use $row or $row_content in value of checks
-	 * @param int $c=null to be able to use $row or $row_content in value of checks
+	 * @param int $row =null to be able to use $row or $row_content in value of checks
+	 * @param int $c =null to be able to use $row or $row_content in value of checks
 	 * @return boolean true if the row/col is disabled or false if not
 	 */
 	protected function check_disabled($disabled,$content,$row=null,$c=null)
@@ -346,7 +348,7 @@ class boetemplate extends soetemplate
 	 *  disables all cells with name == $name
 	 *
 	 * @param sting $name cell-name
-	 * @param boolean $disabled=true disable or enable a cell, default true=disable
+	 * @param boolean $disabled =true disable or enable a cell, default true=disable
 	 * @return mixed number of changed cells or False, if none changed
 	 */
 	function disableElement($name,$disabled=True)
@@ -388,7 +390,7 @@ class boetemplate extends soetemplate
 	 *  disables all cells with name == $name
 	 *
 	 * @param sting $name cell-name
-	 * @param boolean $disabled=true disable or enable a cell, default true=disable
+	 * @param boolean $disabled =true disable or enable a cell, default true=disable
 	 * @return reference to attribute
 	 * @deprecated use disableElement($name, $disabled=true)
 	 */
@@ -405,7 +407,7 @@ class boetemplate extends soetemplate
 	 * @param string $class name of css class (without the leading '.') or '' for no class
 	 * @param string $valign alignment (top,middle,bottom) or '' for none
 	 * @param boolean $disabled True or expression or False to disable or enable the row (Only the number 0 means dont change the attribute !!!)
-	 * @param string $path='/0' default is the first widget in the tree of children
+	 * @param string $path ='/0' default is the first widget in the tree of children
 	 * @return false if $path is no grid or array(height,class,valign,disabled) otherwise
 	 */
 	function set_row_attributes($n,$height=0,$class=0,$valign=0,$disabled=0,$path='/0')
@@ -432,8 +434,8 @@ class boetemplate extends soetemplate
 	 * disables row $n
 	 *
 	 * @param int $n numerical row-number starting with 1 (!)
-	 * @param boolean $enable=false can be used to re-enable a row if set to True
-	 * @param string $path='/0' default is the first widget in the tree of children
+	 * @param boolean $enable =false can be used to re-enable a row if set to True
+	 * @param string $path ='/0' default is the first widget in the tree of children
 	 */
 	function disable_row($n,$enable=False,$path='/0')
 	{
@@ -445,8 +447,8 @@ class boetemplate extends soetemplate
 	 *
 	 * @param int|string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
 	 * @param string $width percent or pixel or '' for no height
-	 * @param mixed $disabled=0 True or expression or False to disable or enable the column (Only the number 0 means dont change the attribute !!!)
-	 * @param string $path='/0' default is the first widget in the tree of children
+	 * @param mixed $disabled =0 True or expression or False to disable or enable the column (Only the number 0 means dont change the attribute !!!)
+	 * @param string $path ='/0' default is the first widget in the tree of children
 	 * @return false if $path specifies no grid or array(width,disabled) otherwise
 	 */
 	function set_column_attributes($c,$width=0,$disabled=0,$path='/0')
@@ -473,7 +475,7 @@ class boetemplate extends soetemplate
 	 *
 	 * @param int|string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
 	 * @param boolean $enable can be used to re-enable a column if set to True
-	 * @param string $path='/0' default is the first widget in the tree of children
+	 * @param string $path ='/0' default is the first widget in the tree of children
 	 */
 	function disable_column($c,$enable=False,$path='/0')
 	{
@@ -782,7 +784,7 @@ class boetemplate extends soetemplate
 	 * For the 3. Column in the 2. row of a grid which is the only widget in the children-tree it is eg.: "/0/2C"
 	 *
 	 * @param string $path path in the widget tree
-	 * @param int $ancestor=0 0: widget itself, 1: parent, 2: grand-parent, ...
+	 * @param int $ancestor =0 0: widget itself, 1: parent, 2: grand-parent, ...
 	 * @return array referenz to the widget spezified or null, if it's not found
 	 */
 	function &get_widget_by_path($path,$ancestor=0)
@@ -838,9 +840,9 @@ class boetemplate extends soetemplate
 	 * - csv_split('"a""b,c",d') === array('a"b,c','d')	// to escape enclosures double them!
 	 *
 	 * @param string $str
-	 * @param int $num=null in how many parts to split maximal, parts over this number end up (unseparated) in the last part
-	 * @param string $delimiter=','
-	 * @param string $enclosure='"'
+	 * @param int $num =null in how many parts to split maximal, parts over this number end up (unseparated) in the last part
+	 * @param string $delimiter =','
+	 * @param string $enclosure ='"'
 	 * @return array
 	 */
 	static function csv_split($str,$num=null,$delimiter=',',$enclosure='"')
@@ -908,8 +910,8 @@ class boetemplate extends soetemplate
 	/**
 	 * stores the etemplate in the cache in egw_info
 	 *
-	 * @param boetemplate $tpl=null required parameter for static use!
-	 * @param boolean $only_update_older=false true only update cache, if it contains an older template
+	 * @param boetemplate $tpl =null required parameter for static use!
+	 * @param boolean $only_update_older =false true only update cache, if it contains an older template
 	 */
 	public /*static*/ function store_in_cache(boetemplate $tpl=null, $only_update_older=false)
 	{

@@ -7,9 +7,11 @@
  * @subpackage extensions
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-10 by RalfBecker@outdoor-training.de
+ * @copyright 2002-16 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * eTemplate Extension: several widgets as user-interface for the link-class
@@ -763,7 +765,7 @@ class link_widget
 			$search = $extra_array;
 		}
 		// open request
-		if ($etemplate_exec_id) $request = etemplate_request::read($etemplate_exec_id);
+		if ($etemplate_exec_id) $request = Api\Etemplate\Request::read($etemplate_exec_id);
 
 		$response = new xajaxResponse();
 		$options = array();
@@ -844,7 +846,7 @@ class link_widget
 	static function ajax_get_types($app,$id_res,$etemplate_exec_id)
 	{
 		// open request
-		if ($etemplate_exec_id) $request = etemplate_request::read($etemplate_exec_id);
+		if ($etemplate_exec_id) $request = Api\Etemplate\Request::read($etemplate_exec_id);
 
 		$response = new xajaxResponse();
 		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("',\n'",$args)."')\n calling link->query( $app , $search )" );

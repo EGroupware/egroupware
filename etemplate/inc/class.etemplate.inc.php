@@ -5,11 +5,13 @@
 * @link http://www.egroupware.org
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 * @author Ralf Becker <RalfBecker@outdoor-training.de>
-* @copyright 2002-14 by RalfBecker@outdoor-training.de
+* @copyright 2002-16 by RalfBecker@outdoor-training.de
 * @package etemplate
 * @subpackage api
 * @version $Id$
 */
+
+use EGroupware\Api;
 
 /**
 * creates dialogs / HTML-forms from eTemplate descriptions
@@ -132,7 +134,7 @@ class etemplate extends boetemplate
 	* constructor of etemplate class, reads an eTemplate if $name is given
 	*
 	* @param string $name of etemplate or array with name and other keys
-	* @param string/array $load_via with keys of other etemplate to load in order to get $name
+	* @param string|array $load_via with keys of other etemplate to load in order to get $name
 	*/
 	function __construct($name='',$load_via='')
 	{
@@ -160,7 +162,7 @@ class etemplate extends boetemplate
 	* In other UI's than html this needs to call the methode, defined by menuaction or
 	* open a browser-window for any other links.
 	*
-	* @param string/array $params url or array with get-params incl. menuaction
+	* @param string|array $params url or array with get-params incl. menuaction
 	*/
 	static function location($params='')
 	{
@@ -231,7 +233,7 @@ class etemplate extends boetemplate
 		}
 		self::$name_forms[] = self::$name_form;
 
-		self::$request = etemplate_request::read();
+		self::$request = Api\Etemplate\Request::read();
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
 		self::$request->readonlys = $readonlys;
 		self::$request->content = $content;
@@ -356,8 +358,8 @@ class etemplate extends boetemplate
 	/**
 	* Check if we have not ignored validation errors
 	*
-	* @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
-	* @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
+	* @param string $ignore_validation ='' if not empty regular expression for validation-errors to ignore
+	* @param string $cname =null name-prefix, which need to be ignored, default self::$name_vars
 	* @return boolean true if there are not ignored validation errors, false otherwise
 	*/
 	static function validation_errors($ignore_validation='',$cname=null)
@@ -381,8 +383,8 @@ class etemplate extends boetemplate
 	/**
 	 * Check if given form-name matches ai ignore-validation rule
 	 *
-	 * @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
-	 * @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
+	 * @param string $ignore_validation ='' if not empty regular expression for validation-errors to ignore
+	 * @param string $cname =null name-prefix, which need to be ignored, default self::$name_vars
 	 * @param string $cname
 	 * @return boolean
 	 */
@@ -415,7 +417,7 @@ class etemplate extends boetemplate
 		if(!$exec) $exec = $_POST;
 
 		//echo "process_exec: _POST ="; _debug_array($_POST);
-		if (!$etemplate_exec_id || !(self::$request = etemplate_request::read($etemplate_exec_id)))
+		if (!$etemplate_exec_id || !(self::$request = Api\Etemplate\Request::read($etemplate_exec_id)))
 		{
 			if ($this->sitemgr) return false;
 			//echo "uitemplate::process_exec() id='$_POST[etemplate_exec_id]' invalid session-data !!!"; _debug_array($_SESSION);
@@ -612,7 +614,7 @@ class etemplate extends boetemplate
 	function process_values2url()
 	{
 		//echo "process_exec: _GET ="; _debug_array($_GET);
-		if (!$_GET['etemplate_exec_id'] || !($request = etemplate_request::read($_GET['etemplate_exec_id'])))
+		if (!$_GET['etemplate_exec_id'] || !($request = Api\Etemplate\Request::read($_GET['etemplate_exec_id'])))
 		{
 			return false;
 		}
@@ -705,7 +707,7 @@ class etemplate extends boetemplate
 	*
 	* For multiple cats, the first with a color is used
 	*
-	* @param int/string $cats multiple comma-separated cat_id's
+	* @param int|string $cats multiple comma-separated cat_id's
 	* @return string
 	*/
 	static function cats2color($cats)
@@ -2009,8 +2011,8 @@ class etemplate extends boetemplate
 	 * (If no id is directly supplied internally.)
 	 *
 	 * @param string $form_name
-	 * @param string $name=null
-	 * @param string $id=null
+	 * @param string $name =null
+	 * @param string $id =null
 	 * @return string ' id="..."' or '' if no id found
 	 */
 	static public function get_id($form_name,$name=null,$id=null)
@@ -2038,8 +2040,8 @@ class etemplate extends boetemplate
 	 * --> use . as decimal separator for browser supporting html5 input type=number
 	 *
 	 * @param int|float|string $number
-	 * @param int $num_decimal_places=2
-	 * @param boolean $readonly=true
+	 * @param int $num_decimal_places =2
+	 * @param boolean $readonly =true
 	 * @return string
 	 */
 	static public function number_format($number,$num_decimal_places=2,$readonly=true)
@@ -2067,7 +2069,7 @@ class etemplate extends boetemplate
 	*
 	* @param array $cell
 	* @param string $name
-	* @param array $content=array();
+	* @param array $content =array();
 	* @return array
 	*/
 	function _sel_options($cell,$name,$content=array())
@@ -2235,8 +2237,8 @@ class etemplate extends boetemplate
 	* @internal
 	* @param array $content $_POST[$cname], on return the adjusted content
 	* @param array $to_process list of widgets/form-fields to process
-	* @param string $cname='' basename of our returnt content (same as in call to show)
-	* @param string $_type='regular' type of request
+	* @param string $cname ='' basename of our returnt content (same as in call to show)
+	* @param string $_type ='regular' type of request
 	* @return array with validation errors
 	*/
 	function process_show(&$content,$to_process,$cname='',$_type='regular')
@@ -2484,7 +2486,7 @@ class etemplate extends boetemplate
 	*
 	* @param string $name (complete) name of the widget causing the error
 	* @param string|boolean $error error-message already translated or false to reset all existing error for given name
-	* @param string $cname=null set it to '', if the name is already a form-name, defaults to self::$name_vars
+	* @param string $cname =null set it to '', if the name is already a form-name, defaults to self::$name_vars
 	*/
 	static function set_validation_error($name,$error,$cname=null)
 	{
