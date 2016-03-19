@@ -212,7 +212,7 @@ class admin_categories
 							return;
 						}
 					}
-					
+
 					if ($button == 'save')
 					{
 						egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
@@ -604,11 +604,8 @@ class admin_categories
 
 		$tmpl = new etemplate_new('admin.categories.index');
 
-		if($tmpl instanceof etemplate_widget_template)
-		{
-			// Category styles
-			categories::css($appname);
-		}
+		// Category styles
+		categories::css($appname);
 
 		$tmpl->exec($this->list_link,$content,$sel_options,$readonlys,array(
 			'nm' => $content['nm'],
