@@ -624,7 +624,7 @@ egw_LAB.wait(function() {
 			if (preg_match($reg_exp, $name) && ($url = Image::find($GLOBALS['egw_info']['flags']['currentapp'], $img)))
 			{
 				$options .= ' style="background-image: url('.$url.');"';
-				$classes[] = 'et2_button_with_image';
+				$classes[] = 'et2_button_with_image et2_button_text';
 				break;
 			}
 		}
