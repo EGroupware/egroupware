@@ -34,10 +34,20 @@ if(isset($_GET['hasupdates']) && $_GET['hasupdates'] == 'yes')
 /*
 	This is the menuaction driver for the multi-layered design
 */
-if(isset($_GET['menuaction']) && preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/',$_GET['menuaction']))
+if(isset($_GET['menuaction']) && preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_\\\\]+\.[A-Za-z0-9_]+$/',$_GET['menuaction']))
 {
 	list($app,$class,$method) = explode('.',$_GET['menuaction']);
-	if(! $app || ! $class || ! $method)
+
+	// check if autoloadable class belongs to given app
+	if (substr($class, 0, 11) == 'EGroupware\\')
+	{
+		list(,$app_from_class) = explode('\\', strtolower($class));
+	}
+	elseif(strpos($class, '_') !== false)
+	{
+		list($app_from_class) = explode('_', $class);
+	}
+	if(!$app || !$class || !$method || isset($app_from_class) && $app_from_class != $app)
 	{
 		$invalid_data = True;
 	}
@@ -62,9 +72,6 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 include('./header.inc.php');
-// check if users are supposed to change their password every x sdays, then check if password is of old age or the devil-admin reset the users password
-// and forced the user to change his password on next login.
-auth::check_password_age($app,$class,$method);
 
 // user changed timezone
 if (isset($_GET['tz']))
@@ -130,7 +137,14 @@ else
 		$app = 'phpgwapi';
 	}
 
-	$obj = CreateObject($app.'.'.$class);
+	if (class_exists($class))
+	{
+		$obj = new $class;
+	}
+	else
+	{
+		$obj = CreateObject($app.'.'.$class);
+	}
 	if((is_array($obj->public_functions) && $obj->public_functions[$method]) && !$invalid_data)
 	{
 		$obj->$method();

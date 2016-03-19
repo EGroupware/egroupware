@@ -71,7 +71,15 @@ if (isset($_GET['menuaction']))
 	if (strpos($_GET['menuaction'],'::') !== false && strpos($_GET['menuaction'],'.') === false)	// static method name app_something::method
 	{
 		@list($className,$functionName,$handler) = explode('::',$_GET['menuaction']);
-		list($appName) = explode('_',$className);
+
+		if (substr($className, 0, 11) == 'EGroupware\\')
+		{
+			list(,$appName) = explode('\\', strtolower($className));
+		}
+		else
+		{
+			list($appName) = explode('_',$className);
+		}
 	}
 	else
 	{

@@ -985,7 +985,7 @@ function get_var($variable,$method='any',$default_value='')
  * @param $p1,$p2,... class parameters (all optional)
  * @return object reference to an object
  */
-function &CreateObject($class)
+function CreateObject($class)
 {
 	list($appname,$classname) = explode('.',$class);
 
