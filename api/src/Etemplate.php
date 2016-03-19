@@ -224,7 +224,7 @@ class Etemplate extends Etemplate\Widget\Template
 			$theme = 'redmond';
 			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
 			// Load our CSS after jQuery-UI, so we can override it
-			egw_framework::includeCSS('/etemplate/templates/default/etemplate2.css');
+			egw_framework::includeCSS('/api/templates/default/etemplate2.css');
 
 			// check if application of template has a app.js file --> load it
 			list($app) = explode('.',$this->name);

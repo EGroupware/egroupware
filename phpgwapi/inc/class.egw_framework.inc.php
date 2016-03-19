@@ -1297,7 +1297,7 @@ abstract class egw_framework
 			self::includeCSS("/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui.css");
 
 			// eTemplate2 - load in top so sidebox has styles too
-			self::includeCSS('/etemplate/templates/default/etemplate2.css');
+			self::includeCSS('/api/templates/default/etemplate2.css');
 
 			// Category styles
 			categories::css(categories::GLOBAL_APPNAME);
