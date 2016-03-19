@@ -94,7 +94,14 @@ class egw_json_request
 		if (strpos($menuaction,'::') !== false && strpos($menuaction,'.') === false)	// static method name app_something::method
 		{
 			@list($className,$functionName,$handler) = explode('::',$menuaction);
-			list($appName) = explode('_',$className);
+			if (substr($className, 0, 11) == 'EGroupware\\')
+			{
+				list(,$appName) = explode('\\', strtolower($className));
+			}
+			else
+			{
+				list($appName) = explode('_',$className);
+			}
 
 			// Check for a real static method, avoid instanciation if it is
 			$m = new ReflectionMethod($menuaction);
@@ -137,9 +144,10 @@ class egw_json_request
 
 		if(substr($className,0,4) != 'ajax' && substr($className,-4) != 'ajax' &&
 			$menuaction != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax' ||
-			!preg_match('/^[A-Za-z0-9_-]+(\.[A-Za-z0-9_]+\.|::)[A-Za-z0-9_]+$/',$menuaction))
+			!preg_match('/^[A-Za-z0-9_\\\\-]+(\.[A-Za-z0-9_\\\\]+\.|::)[A-Za-z0-9_]+$/',$menuaction))
 		{
 			// stopped for security reasons
+			error_log("className='$className', functionName='$functionName', menuaction='$menuaction'");
 			error_log($_SERVER['PHP_SELF']. ' stopped for security reason. '.$menuaction.' is not valid. class- or function-name must start with ajax!!!');
 			// send message also to the user
 			throw new Exception($_SERVER['PHP_SELF']. ' stopped for security reason. '.$menuaction.' is not valid. class- or function-name must start with ajax!!!');

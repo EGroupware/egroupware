@@ -236,7 +236,7 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		this.itemlist.addClass("loading");
 		this.clear.css("display", "inline-block");
-		egw._json("etemplate_widget_itempicker::ajax_item_search::etemplate",
+		egw._json("EGroupware\\Api\\Etemplate\\Widget\\ItemPicker::ajax_item_search",
 			[this.current_app, '', request.term, request.options],
 			this.queryResults,
 			this,true,this

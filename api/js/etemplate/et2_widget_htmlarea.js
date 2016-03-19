@@ -127,7 +127,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		}
 		else if (this.options.imageUpload[0] !== '/' && this.options.imageUpload.substr(0, 4) != 'http')
 		{
-			self.options.config.imageUploadUrl = egw.ajaxUrl(self.egw().getAppName()+".etemplate_widget_vfs.ajax_htmlarea_upload.etemplate")+
+			self.options.config.imageUploadUrl = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload")+
 						'&request_id='+self.getInstanceManager().etemplate_exec_id+'&widget_id='+this.options.imageUpload;
 			self.options.config.imageUploadUrl = self.options.config.imageUploadUrl.substr(egw.webserverUrl.length+1);
 		}

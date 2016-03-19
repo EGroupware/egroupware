@@ -468,7 +468,7 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 	 * the more widget-specific parts.
 	 *
 	 * @param {object} actions {ID: {attributes..}+} map of egw action information
-	 * @see etemplate/inc/class.etemplate_widget_nextmatch->egw_actions()
+	 * @see api/src/Etemplate/Widget/Nextmatch.php egw_actions() method
 	 */
 	set_actions: function(actions)
 	{

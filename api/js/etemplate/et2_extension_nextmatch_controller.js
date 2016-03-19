@@ -390,7 +390,7 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 				}
 
 				// Link the entries
-				self.egw.json(self.egw.getAppName()+".etemplate_widget_link.ajax_link.etemplate",
+				self.egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link",
 					dropped.id.split('::').concat([links]),
 					function(result) {
 						if(result)

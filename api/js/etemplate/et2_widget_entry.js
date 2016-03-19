@@ -16,7 +16,7 @@
 /**
  * A widget to display a value from an entry
  *
- * Since we have etemplate_widget_transformer, this client side widget exists
+ * Since we have Etemplate\Widget\Transformer, this client side widget exists
  * mostly to resolve the problem where the ID for the entry widget is the same
  * as the widget where you actually set the value, which prevents transformer
  * from working.

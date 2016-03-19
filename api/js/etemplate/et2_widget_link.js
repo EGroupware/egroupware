@@ -178,7 +178,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		// Filemanager select
 		var select_attrs = {
-			method: 'etemplate_widget_link::link_existing',
+			method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::link_existing',
 			method_id: function() { return self.options.value.to_app + ':' + self.options.value.to_id;},
 			button_label: egw.lang('Link')
 		};
@@ -296,7 +296,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 			return;
 		}
 
-		var request = egw.json(self.egw().getAppName()+".etemplate_widget_link.ajax_link.etemplate",
+		var request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link",
 			[values.to_app, values.to_id, links],
 			self._link_result,
 			self,
@@ -939,7 +939,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 		// Remove specific display and revert to CSS file
 		// show() would use inline, should be inline-block
 		this.clear.css('display','');
-		this.request = egw.json(egw_getAppName() + ".etemplate_widget_link.ajax_link_search.etemplate",
+		this.request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_search",
 			[this.app_select.val(), '', request.term, request.options],
 			this._results,
 			this,true,this
@@ -1036,7 +1036,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 		// If a link array was passed in, don't make the ajax call
 		if(typeof _links == 'undefined')
 		{
-			var request = egw.json(self.egw().getAppName()+".etemplate_widget_link.ajax_link.etemplate",
+			var request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link",
 				[values.to_app, values.to_id, links],
 				self._link_result,
 				this,
@@ -1346,7 +1346,7 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 		{
 			_value.only_app = this.options.only_app;
 		}
-		this.egw().jsonq(this.egw().getAppName()+'.etemplate_widget_link.ajax_link_list', [_value], this.set_value, this);
+		this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value], this.set_value, this);
 		return;
 	},
 	/**
@@ -1549,7 +1549,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 						return;
 					}
 					remark.addClass("loading");
-					var request = egw.json(self.egw().getAppName() + ".etemplate_widget_link.ajax_link_comment.etemplate",
+					var request = egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_comment",
 						[link_id, comment],
 						function() {
 							if(remark)
@@ -1623,7 +1623,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 
 			// Download ZIP
 			window.location = self.egw().link('/index.php',{
-				menuaction: 'etemplate.etemplate_widget_link.download_zip',
+				menuaction: 'EGroupware\\Api\\Etemplate\\Widget\\Link::download_zip',
 				app: self.value.to_app,
 				id: self.value.to_id
 			});
@@ -1917,7 +1917,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 		}
 		if(typeof link_id != "object")
 		{
-			egw.json(this.egw().getAppName()+".etemplate_widget_link.ajax_delete.etemplate", [link_id],
+			egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_delete", [link_id],
 				function(data) { if(data) {row.slideUp(row.remove);}}
 			).sendRequest();
 		}

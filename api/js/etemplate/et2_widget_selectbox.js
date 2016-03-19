@@ -945,7 +945,7 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 	/**
 	 * Some static options, no need to transfer them over and over.
 	 * We still need the same thing on the server side to validate, so they
-	 * have to match.  See etemplate_widget_menupopup::typeOptions()
+	 * have to match.  See Etemplate\Widget\Select::typeOptions()
 	 * The type specific legacy options wind up in attrs.other.
 	 *
 	 * @param {type} widget
@@ -1132,7 +1132,7 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
 			var req = egw.json(
-				widget.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
+				'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
 				[widget._type,options_string,attrs.value]
 			).sendRequest(!in_nextmatch);
 			if(typeof cache === 'undefined')

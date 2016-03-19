@@ -139,7 +139,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			beforeSend: function(form) { return self.beforeSend(form);},
 
 
-			target: egw.ajaxUrl(self.egw().getAppName()+".etemplate_widget_file.ajax_upload.etemplate"),
+			target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\File::ajax_upload"),
 			query: function(file) {return self.beforeSend(file);},
 			// Disable checking for already uploaded chunks
 			testChunks: false

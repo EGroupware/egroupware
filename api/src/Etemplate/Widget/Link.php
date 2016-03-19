@@ -176,7 +176,7 @@ class Link extends Etemplate\Widget
 		$response->data(is_array($id) ? $id : $result !== false);
 	}
 
-	public function ajax_link_list($value)
+	public static function ajax_link_list($value)
 	{
 		$app = $value['to_app'];
 		$id  = $value['to_id'];
@@ -256,7 +256,7 @@ class Link extends Etemplate\Widget
 		}
 	}
 
-	public function ajax_delete($value)
+	public static function ajax_delete($value)
 	{
 		$response = egw_json_response::get();
 		$response->data(Api\Link::unlink($value));
@@ -270,7 +270,7 @@ class Link extends Etemplate\Widget
 	 * the entry has no linked files, the ZIP will still be returned, but it will
 	 * be empty.
 	 */
-	public function download_zip()
+	public static function download_zip()
 	{
 		$app = $_GET['app'];
 		$id = $_GET['id'];

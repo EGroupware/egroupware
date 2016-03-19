@@ -44,7 +44,7 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 	 *
 	 * Using \042 instead of " to NOT stall minifyer!
 	 *
-	 * Same preg is in etemplate_widget_url PHP class!
+	 * Same preg is in Etemplate\Widget\Url PHP class!
 	 */
 	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i),
 	/**
@@ -317,7 +317,7 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					// need to preserve the original value somehow
 					// as it's been used for add contact plus feature
 					this.span.attr('title',_value);
-					
+
 					this.span.text(val.replace(/"/g,''));
 					this.span.append("<span class='email'>"+
 						_value.replace(val,'')

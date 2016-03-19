@@ -50,7 +50,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		"autocomplete_url": {
 			"name": "Autocomplete source",
 			"type": "string",
-			"default": "home.etemplate_widget_taglist.ajax_search.etemplate",
+			"default": "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_search",
 			"description": "Menuaction (app.class.function) for autocomplete data source.  Must return actual JSON, and nothing more."
 		},
 		"autocomplete_params": {
@@ -838,7 +838,7 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 {
 	attributes: {
 		"autocomplete_url": {
-			"default": "home.etemplate_widget_taglist.ajax_search.etemplate"
+			"default": "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_search"
 		},
 		allowFreeEntries: {
 			"default": false,
@@ -1008,7 +1008,7 @@ var et2_taglist_email = (function(){ "use strict"; return et2_taglist.extend(
 {
 	attributes: {
 		"autocomplete_url": {
-			"default": "home.etemplate_widget_taglist.ajax_email.etemplate"
+			"default": "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email"
 		},
 		"autocomplete_params": {
 			"default": {}

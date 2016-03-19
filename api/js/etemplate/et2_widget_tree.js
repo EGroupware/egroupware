@@ -25,7 +25,7 @@
 /**
  * Tree widget
  *
- * For syntax of nodes supplied via sel_optons or autoloading refer to etemplate_widget_tree class.
+ * For syntax of nodes supplied via sel_optons or autoloading refer to Etemplate\Widget\Tree class.
  *
  * @augments et2_inputWidget
  */

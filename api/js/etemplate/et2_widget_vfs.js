@@ -654,7 +654,7 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 	legacyOptions: ["mime"],
 
 	asyncOptions: {
-		target: egw.ajaxUrl(self.egw().getAppName()+".etemplate_widget_vfs.ajax_upload.etemplate")
+		target: egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_upload")
 	},
 
 	/**

@@ -627,7 +627,7 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 				// Filemanager select
 				{
 					label: '',
-					method: 'etemplate_widget_link::link_existing',
+					method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::link_existing',
 					method_id: attrs.path,
 					button_label: egw.lang('Link')
 				},{type: 'vfs-select'});
