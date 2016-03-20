@@ -447,10 +447,10 @@ class Widget
 	 * If a widget's type is expandable, we need to expand it to make sure we have
 	 * the right class before running the method on it
 	 *
-	 * @param Widget $child Widget to check & expand if needed
+	 * @param Widget& $child Widget to check & expand if needed
 	 * @param array& $expand Expansion array
 	 */
-	protected function expand_widget(Widget $child, array &$expand)
+	protected function expand_widget(Widget &$child, array &$expand)
 	{
 		if(strpos($child->attrs['type'], '@') !== false || strpos($child->attrs['type'], '$') !== false)
 		{
