@@ -101,6 +101,7 @@ class Box extends Etemplate\Widget
 	 *
 	 * We only check passed widget and direct children.
 	 *
+	 * @param Etemplate\Widget $widget
 	 * @param string $cname
 	 * @param array $expand
 	 */
