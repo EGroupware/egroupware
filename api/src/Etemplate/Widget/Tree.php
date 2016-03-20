@@ -18,7 +18,6 @@ use EGroupware\Api;
 
 // explicitly import old not yet ported classes
 use common; // egw_exit
-use categories;
 use egw_framework;
 
 egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlXTree.css');
@@ -436,7 +435,7 @@ class Tree extends Etemplate\Widget
 				}
 				else    // we need to instanciate a new cat object for the correct application
 				{
-					$categories = new categories('',$type3);
+					$categories = new Api\Categories('',$type3);
 				}
 				$cat2path=array();
 				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type,0,true) as $cat)

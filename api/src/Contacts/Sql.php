@@ -439,7 +439,7 @@ class Sql extends Api\Storage
 	{
 		if (!is_object($GLOBALS['egw']->categories))
 		{
-			$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
+			$GLOBALS['egw']->categories = new Api\Categories;
 		}
 		foreach($GLOBALS['egw']->categories->return_all_children((int)$cat_id) as $cat)
 		{

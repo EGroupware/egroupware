@@ -19,7 +19,6 @@ use EGroupware\Api;
 // explicitly import old not yet ported classes
 use egw;
 use egw_framework; // includeCSS
-use categories;
 
 /**
  * eTemplate serverside implementation of the nextmatch widget
@@ -920,7 +919,7 @@ class Nextmatch extends Etemplate\Widget
 	public static function category_action($app, $group=0, $caption='Change category',
 		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH)
 	{
-		$cat = new categories(null,$app);
+		$cat = new Api\Categories(null,$app);
 		$cats = $cat->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', $globals, $parent_id, true);
 
 		// if more then max_length cats, switch automatically to hierarchical display

@@ -16,7 +16,6 @@ namespace EGroupware\Api;
 // explicitly import old not yet ported classes
 use egw;
 use egw_framework;
-use categories;	// css
 
 /**
  * New eTemplate serverside contains:
@@ -232,7 +231,7 @@ class Etemplate extends Etemplate\Widget\Template
 				egw_framework::validate_file('.','app',$app,false);
 			}
 			// Category styles
-			categories::css($app);
+			Categories::css($app);
 
 			// set action attribute for autocomplete form tag
 			// as firefox complains on about:balnk action, thus we have to literaly submit the form to a blank html

@@ -16,10 +16,6 @@
 
 namespace EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use categories;
-use etemplate;	// cats2color
-
 use calendar_bo;	// to_do: do NOT require it, just use if there
 
 /**
@@ -143,7 +139,7 @@ class Contacts extends Contacts\Storage
 	/**
 	 * Categories object
 	 *
-	 * @var categories
+	 * @var Categories
 	 */
 	var $categories;
 
@@ -315,7 +311,7 @@ class Contacts extends Contacts\Storage
 				$this->org_fields[] = 'adr_two_countrycode';
 			}
 		}
-		$this->categories = new categories($this->user,'addressbook');
+		$this->categories = new Categories($this->user,'addressbook');
 
 		$this->delete_history = $GLOBALS['egw_info']['server']['history'];
 	}
@@ -1525,7 +1521,7 @@ class Contacts extends Contacts\Storage
 					$result[$contact['id']] = call_user_func_array('imap_rfc822_write_address', $args);
 				}
 				// show category color
-				if ($contact['cat_id'] && ($color = etemplate::cats2color($contact['cat_id'])))
+				if ($contact['cat_id'] && ($color = Categories::cats2color($contact['cat_id'])))
 				{
 					$result[$contact['id']] = array(
 						'label' => $result[$contact['id']],
@@ -1691,7 +1687,7 @@ class Contacts extends Contacts\Storage
 		$drop_subs = ($data['drop_subs'] && !$data['modify_subs']);
 		if($drop_subs)
 		{
-			$cats = new categories('', 'addressbook');
+			$cats = new Categories('', 'addressbook');
 			$cat_ids = $cats->return_all_children($data['cat_id']);
 		}
 		else
@@ -2090,7 +2086,7 @@ class Contacts extends Contacts\Storage
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories = new categories($this->user,'addressbook');
+			$this->categories = new Categories($this->user,'addressbook');
 		}
 
 		if (!is_array($cat_id_list))

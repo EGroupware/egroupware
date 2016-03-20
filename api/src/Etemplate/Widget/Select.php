@@ -17,7 +17,6 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
 // explicitly import old not yet ported classes
-use categories;
 use calendar_timezones;
 
 /**
@@ -563,7 +562,7 @@ class Select extends Etemplate\Widget
 				}
 				else	// we need to instanciate a new cat object for the correct application
 				{
-					$categories = new categories($type5,$type3);
+					$categories = new Api\Categories($type5,$type3);
 				}
 				// Allow text for global
 				$type = ($type && strlen($type) > 1 ? $type : !$type);
@@ -572,9 +571,9 @@ class Select extends Etemplate\Widget
 				{
 					$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
-					if (categories::is_global($cat))
+					if (Api\Categories::is_global($cat))
 					{
-						$s .= categories::$global_marker;
+						$s .= Api\Categories::$global_marker;
 					}
 					$options[$cat['id']] = array(
 						'label' => $s,

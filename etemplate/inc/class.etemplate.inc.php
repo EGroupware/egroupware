@@ -712,33 +712,7 @@ class etemplate extends boetemplate
 	*/
 	static function cats2color($cats)
 	{
-		static $cat2color;
-
-		// ACL check
-		$cats = $GLOBALS['egw']->categories->check_list(EGW_ACL_READ,$cats);
-
-		if (!$cats) return null;
-
-		if (isset($cat2color[$cats]))
-		{
-			return $cat2color[$cats];
-		}
-
-		foreach(explode(',',$cats) as $cat)
-		{
-			if (isset($cat2color[$cat]))
-			{
-				return $cat2color[$cat];
-			}
-			$data = categories::id2name($cat,'data');
-
-			if (is_array($data) && ($color = $data['color']))
-			{
-				//echo "<p>cats2color('$cats')=$color</p>\n";
-				return $cat2color[$cats] = $cat2color[$cat] = $color;
-			}
-		}
-		return null;
+		return Api\Categories::cats2color($cats);
 	}
 
 	/**

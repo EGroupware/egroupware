@@ -932,7 +932,7 @@ class Ldap
 					{
 						if (!is_object($GLOBALS['egw']->categories))
 						{
-							$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
+							$GLOBALS['egw']->categories = new Api\Categories();
 						}
 						$cats = $GLOBALS['egw']->categories->return_all_children((int)$value);
 						if (count($cats) > 1) $filters .= '(|';
@@ -1210,7 +1210,7 @@ class Ldap
 			foreach(is_array($data['cat_id']) ? $data['cat_id'] : explode(',',$data['cat_id'])  as $cat)
 			{
 				$ldapContact['category'][] = Api\Translation::convert(
-					ExecMethod('phpgwapi.categories.id2name',$cat),$this->charset,'utf-8');
+					Api\Categories::id2name($cat),$this->charset,'utf-8');
 			}
 		}
 		foreach(array(
@@ -1256,7 +1256,7 @@ class Ldap
 			{
 				if (!is_int($iii)) continue;
 
-				$contact['cat_id'][] = ExecMethod('phpgwapi.categories.name2id',$cat);
+				$contact['cat_id'][] = $GLOBALS['egw']->categories->name2id($cat);
 			}
 			if ($contact['cat_id']) $contact['cat_id'] = implode(',',$contact['cat_id']);
 		}

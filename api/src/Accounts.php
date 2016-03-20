@@ -622,7 +622,7 @@ class Accounts
 		$GLOBALS['egw']->acl->delete_account($id);
 
 		// delete all categories belonging to that user or group
-		categories::delete_account($id);
+		Categories::delete_account($id);
 
 		return true;
 	}
