@@ -17,7 +17,6 @@ use EGroupware\Api;
 use EGroupware\Api\Vfs;
 
 // explicitly list old, not yet ported api classes
-use common;	// egw_exist
 use egw_framework;
 use asyncservice;
 use egw; // link
@@ -193,7 +192,7 @@ class Sharing
 			header("HTTP/1.1 $status");
 			header("X-WebDAV-Status: $status", true);
 			echo "Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n";
-			common::egw_exit();
+			exit;
 		}
 
 		// check password, if required
@@ -208,7 +207,7 @@ class Sharing
 			header("HTTP/1.1 $status");
 			header("X-WebDAV-Status: $status", true);
 			echo "<html>\n<head>\n<title>401 Unauthorized</title>\n<body>\nAuthorization failed.\n</body>\n</html>\n";
-			common::egw_exit();
+			exit;
 		}
 
 		// need to reset fs_tab, as resolve_url does NOT work with just share mounted
@@ -256,7 +255,7 @@ class Sharing
 			header("HTTP/1.1 $status");
 			header("X-WebDAV-Status: $status", true);
 			echo "Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n";
-			common::egw_exit();
+			exit;
 		}
 		Vfs::$is_root = false;
 		Vfs::clearstatcache();
@@ -284,7 +283,7 @@ class Sharing
 				header("HTTP/1.1 $status");
 				header("X-WebDAV-Status: $status", true);
 				echo "Failed to create session: ".$GLOBALS['egw']->session->reason."\n";
-				common::egw_exit();
+				exit;
 			}
 			// only allow filemanager app (gets overwritten by session::create)
 			$GLOBALS['egw_info']['user']['apps'] = array(

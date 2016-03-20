@@ -16,9 +16,6 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
-// explicitly import old not yet ported classes
-use common;	// egw_exit
-
 /**
  * eTemplate link widgets
  * Deals with creation and display of links between entries in various participating egw applications
@@ -292,7 +289,7 @@ class Link extends Etemplate\Widget
 				array_shift($files);
 			}
 			Api\Vfs::download_zip($files, Api\Link::title($app, $id));
-			common::egw_exit();
+			exit;
 		}
 	}
 

@@ -175,7 +175,7 @@ class Vfs extends File
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($file);
 
-		common::egw_exit();
+		exit;
 	}
 
 	/**

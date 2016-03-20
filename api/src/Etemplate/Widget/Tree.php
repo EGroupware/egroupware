@@ -17,7 +17,6 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
 // explicitly import old not yet ported classes
-use common; // egw_exit
 use egw_framework;
 
 egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlXTree.css');
@@ -155,7 +154,7 @@ class Tree extends Etemplate\Widget
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode(self::htmlencode_node($data));
 
-		common::egw_exit();
+		exit;
 	}
 
 	/**

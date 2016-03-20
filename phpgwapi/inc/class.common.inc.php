@@ -265,9 +265,8 @@ class common
 	/**
 	 * function to stop running an app
 	 *
-	 * used to stop running an app in the middle of execution <br>
-	 * There may need to be some cleanup before hand
 	 * @param $call_footer boolean value to if true then call footer else exit
+	 * @deprecated use $GLOBALS['egw']->framework->footer(), if necessary, and exit
 	 */
 	static function egw_exit($call_footer = False)
 	{

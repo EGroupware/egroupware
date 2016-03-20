@@ -17,7 +17,6 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
 // explicitly import old not yet ported classes
-use common;
 use mail_compose;
 
 /**
@@ -77,7 +76,7 @@ class Taglist extends Etemplate\Widget
 
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
-		common::egw_exit();
+		exit;
 	}
 
 	/**

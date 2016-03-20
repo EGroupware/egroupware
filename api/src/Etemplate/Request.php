@@ -17,7 +17,6 @@ use EGroupware\Api;
 
 // explicitly import old not yet ported classes
 use egw_framework;
-use common;	// egw_exit
 
 /**
  * Class to represent the persitent information of an eTemplate request
@@ -208,7 +207,7 @@ class Request
 				{
 					$response = Api\Json\Response::get();
 					$response->redirect($index_url, false, $app);
-					common::egw_exit();
+					exit;
 				}
 			}
 			else

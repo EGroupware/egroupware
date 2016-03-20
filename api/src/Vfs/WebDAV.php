@@ -2,8 +2,6 @@
 /**
  * eGroupWare API: VFS - WebDAV access using the new stream wrapper VFS interface
  *
- * Using the PEAR HTTP/WebDAV/Server/Filesystem class (which need to be installed!)
- *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
@@ -21,9 +19,6 @@ use HTTP_WebDAV_Server_Filesystem;
 use HTTP_WebDAV_Server;
 use EGroupware\Api\Vfs;
 use EGroupware\Api;
-
-// old, not yet ported api classes
-use common;	// egw_exit
 
 /**
  * FileManger - WebDAV access using the new stream wrapper VFS interface
@@ -783,7 +778,7 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 
 		echo "</body>\n</html>\n";
 
-		common::egw_exit();
+		exit;
 	}
 
 	/**
