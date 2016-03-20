@@ -10,13 +10,14 @@
  * @version $Id$
  */
 
-// egw_json_push_backend is currently not autoloaded, it would only try egw_json for it!
-require_once(EGW_API_INC.'/class.egw_json_push.inc.php');
+use EGroupware\Api\Json;
+
+use EGroupware\Api;
 
 /**
  * Class to push via notification polling and other json requests from client-side
  */
-class notifications_push implements egw_json_push_backend
+class notifications_push implements Json\PushBackend
 {
 	const APP = 'notifications';
 
@@ -39,8 +40,8 @@ class notifications_push implements egw_json_push_backend
 
 	public static function get()
 	{
-		$already_send =& egw_cache::getSession(__CLASS__, 'already_send');
-		$max_id = egw_cache::getInstance(__CLASS__, 'max_id');
+		$already_send =& Api\Cache::getSession(__CLASS__, 'already_send');
+		$max_id = Api\Cache::getInstance(__CLASS__, 'max_id');
 
 		if (!isset($already_send))
 		{
@@ -49,13 +50,13 @@ class notifications_push implements egw_json_push_backend
 			if (!isset($max_id))
 			{
 				$max_id = (int)self::$db->select(self::TABLE, 'MAX(notify_id)', false, __LINE__, __FILE__, false, '', self::APP)->fetchColumn();
-				egw_cache::setInstance(__CLASS__, 'max_id', $max_id);
+				Api\Cache::setInstance(__CLASS__, 'max_id', $max_id);
 			}
 			$already_send = $max_id;
 		}
 		elseif (isset($max_id) && $max_id > $already_send)
 		{
-			$response = egw_json_response::get();
+			$response = Json\Response::get();
 
 			foreach(self::$db->select(self::TABLE, '*', array(
 				'account_id' => array(0, $GLOBALS['egw_info']['user']['account_id']),
@@ -86,9 +87,9 @@ class notifications_push implements egw_json_push_backend
 	public function addGeneric($account_id, $key, $data)
 	{
 		// todo: check $account_id is online
-		if ($account_id > 0 && !egw_session::notifications_active($account_id))
+		if ($account_id > 0 && !Api\Session::notifications_active($account_id))
 		{
-			throw new egw_json_push_exception_not_online();
+			throw new Json\Exception\NotOnline();
 		}
 		self::$db->insert(self::TABLE, array(
 			'account_id'  => $account_id,
@@ -100,7 +101,7 @@ class notifications_push implements egw_json_push_backend
 		), false, __LINE__, __FILE__, self::APP);
 
 		// cache highest id, to not poll database
-		egw_cache::setInstance(__CLASS__, 'max_id', self::$db->get_last_insert_id(self::TABLE, 'notify_id'));
+		Api\Cache::setInstance(__CLASS__, 'max_id', self::$db->get_last_insert_id(self::TABLE, 'notify_id'));
 
 		self::cleanup_push_msgs();
 	}
