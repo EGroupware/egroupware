@@ -38,7 +38,7 @@ Prefix: /usr/share
     %else
         # SLES 12 no longer sets sles_version, but suse_version == 1315: does contain broken php5-tidy, because no libtidy
         %if 0%{?suse_version} == 1315
-    	    %define extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix 
+    	    %define extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix
         %else
     	    %define extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix %{php}-tidy
         %endif
@@ -573,7 +573,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/remote.php
 %{egwdir}/rpc.php
 %{egwdir}/share.php
-%{egwdir}/set_box.php
 %{egwdir}/status.php
 %{egwdir}/svn-helper.php
 %{egwdir}/groupdav.php
