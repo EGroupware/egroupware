@@ -573,7 +573,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/remote.php
 %{egwdir}/rpc.php
 %{egwdir}/share.php
-%{egwdir}/set_box.php
 %{egwdir}/status.php
 %{egwdir}/svn-helper.php
 %{egwdir}/groupdav.php
