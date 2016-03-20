@@ -17,7 +17,6 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
 // explicitly import old not yet ported classes
-use egw_json_request;
 use common; // egw_exit
 use categories;
 use egw_framework;
@@ -152,7 +151,7 @@ class Tree extends Etemplate\Widget
 	public static function send_quote_json(array $data)
 	{
 		// switch regular JSON response handling off
-		egw_json_request::isJSONRequest(false);
+		Api\Json\Request::isJSONRequest(false);
 
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode(self::htmlencode_node($data));

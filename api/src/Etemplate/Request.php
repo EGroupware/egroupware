@@ -13,10 +13,10 @@
 
 namespace EGroupware\Api\Etemplate;
 
+use EGroupware\Api;
+
 // explicitly import old not yet ported classes
 use egw_framework;
-use egw_json_response;
-use egw_json_request;
 use common;	// egw_exit
 
 /**
@@ -59,7 +59,7 @@ use common;	// egw_exit
  *
  *	if (($new_id = $request->id()) != $exec_id)
  *	{
- *		egw_json_response::get()->generic('assign', array(
+ *		Api\Json\Response::get()->generic('assign', array(
  *			'etemplate_exec_id' => $id,
  *			'id' => '',
  *			'key' => 'etemplate_exec_id',
@@ -71,7 +71,7 @@ use common;	// egw_exit
  *
  *	if (($new_id = $request->id()) != $exec_id)
  *	{
- *		egw_json_response::get()->assign('etemplate_exec_id','value',$new_id);
+ *		Api\Json\Response::get()->assign('etemplate_exec_id','value',$new_id);
  *	}
  *
  * For an example look in link_widget::ajax_search()
@@ -200,13 +200,13 @@ class Request
 				'/index.php?menuaction='.$GLOBALS['egw_info']['apps'][$app]['index'] : '/'.$app.'/index.php';
 			// add a unique token to redirect to avoid client-side framework tries refreshing via nextmatch
 			$index_url .= (strpos($index_url, '?') ? '&' : '?').'redirect='.microtime(true);
-			error_log(__METHOD__."('$id', ...) eT2 request not found / expired --> redirecting app $app to $index_url (_GET[menuaction]=$_GET[menuaction], isJSONRequest()=".array2string(egw_json_request::isJSONRequest()).')');
-			if (egw_json_request::isJSONRequest())
+			error_log(__METHOD__."('$id', ...) eT2 request not found / expired --> redirecting app $app to $index_url (_GET[menuaction]=$_GET[menuaction], isJSONRequest()=".array2string(Api\Json\Request::isJSONRequest()).')');
+			if (Api\Json\Request::isJSONRequest())
 			{
 				// we must not redirect ajax_destroy_session calls, as they might originate from our own redirect!
 				if (strpos($_GET['menuaction'], '.ajax_destroy_session.etemplate') === false)
 				{
-					$response = egw_json_response::get();
+					$response = Api\Json\Response::get();
 					$response->redirect($index_url, false, $app);
 					common::egw_exit();
 				}

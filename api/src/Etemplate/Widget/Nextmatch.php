@@ -17,7 +17,6 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
 // explicitly import old not yet ported classes
-use egw_json_response;
 use egw;
 use egw_framework; // includeCSS
 use categories;
@@ -291,7 +290,7 @@ class Nextmatch extends Etemplate\Widget
 		{
 			self::$request->content = array($form_name => array());
 		}
-		self::$response = egw_json_response::get();
+		self::$response = Api\Json\Response::get();
 
 		$value = self::get_array(self::$request->content, $form_name, true);
 		if(!is_array($value))
@@ -362,7 +361,7 @@ class Nextmatch extends Etemplate\Widget
 		if (isset($GLOBALS['egw_info']['flags']['app_header']) && self::$request->app_header != $GLOBALS['egw_info']['flags']['app_header'])
 		{
 			self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
-			egw_json_response::get()->apply('egw_app_header', array($GLOBALS['egw_info']['flags']['app_header']));
+			Api\Json\Response::get()->apply('egw_app_header', array($GLOBALS['egw_info']['flags']['app_header']));
 		}
 
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
@@ -502,7 +501,7 @@ class Nextmatch extends Etemplate\Widget
 			$changes = true;
 			$request_value[$key] = $value[$key];
 
-			egw_json_response::get()->generic('assign', array(
+			Api\Json\Response::get()->generic('assign', array(
 				'etemplate_exec_id' => $exec_id,
 				'id' => $form_name,
 				'key' => $key,
@@ -519,12 +518,12 @@ class Nextmatch extends Etemplate\Widget
 
 		// Send back data
 		//foreach($result as $name => $value) if ($name != 'readonlys') error_log(__METHOD__."() result['$name']=".array2string($name == 'data' ? array_keys($value) : $value));
-		egw_json_response::get()->data($result);
+		Api\Json\Response::get()->data($result);
 
 		// If etemplate_exec_id has changed, update the client side
 		if (($new_id = self::$request->id()) != $exec_id)
 		{
-			egw_json_response::get()->generic('assign', array(
+			Api\Json\Response::get()->generic('assign', array(
 				'etemplate_exec_id' => $exec_id,
 				'id' => '',
 				'key' => 'etemplate_exec_id',

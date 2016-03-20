@@ -19,7 +19,6 @@ use EGroupware\Api;
 // explicitly import old not yet ported classes
 use categories;
 use calendar_timezones;
-use egw_json_response;
 
 /**
  * eTemplate select widget
@@ -861,7 +860,7 @@ class Select extends Etemplate\Widget
 		$no_lang = false;
 		$options = self::typeOptions($type, $attributes,$no_lang,false,$value);
 		self::fix_encoded_options($options,true);
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->data($options);
 	}
 }

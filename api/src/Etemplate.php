@@ -16,7 +16,6 @@ namespace EGroupware\Api;
 // explicitly import old not yet ported classes
 use egw;
 use egw_framework;
-use egw_json_response;
 use categories;	// css
 
 /**
@@ -147,7 +146,7 @@ class Etemplate extends Etemplate\Widget\Template
 		if ($output_mode == 4)
 		{
 			$output_mode = 0;
-			self::$response = egw_json_response::get();
+			self::$response = Json\Response::get();
 		}
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
 		self::$request->content = self::$cont = $content;
@@ -274,13 +273,13 @@ class Etemplate extends Etemplate\Widget\Template
 				echo '<div id="popupMainDiv" class="popupMainDiv">'."\n";
 			}
 			// Send any accumulated json responses - after flush to avoid sending the buffer as a response
-			if(egw_json_response::isJSONResponse())
+			if(Json\Response::isJSONResponse())
 			{
-				$load_array['response'] = egw_json_response::get()->returnResult();
+				$load_array['response'] = Json\Response::get()->returnResult();
 			}
 			// <iframe> and <form> tags added only to get browser autocomplete handling working again
 			echo '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container" data-etemplate="'.
-				htmlspecialchars(egw_json_response::json_encode($load_array), ENT_COMPAT, Translation::charset(), true).'"></form>'."\n".
+				htmlspecialchars(Json\Response::json_encode($load_array), ENT_COMPAT, Translation::charset(), true).'"></form>'."\n".
 				'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
 
 			if ($output_mode == 2)
@@ -331,7 +330,7 @@ class Etemplate extends Etemplate\Widget\Template
 		self::$request = Etemplate\Request::read($etemplate_exec_id);
 		//error_log('request='.array2string(self::$request));
 
-		self::$response = egw_json_response::get();
+		self::$response = Json\Response::get();
 
 		if (!($template = self::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
@@ -418,7 +417,7 @@ class Etemplate extends Etemplate\Widget\Template
 			// Strip out any script tags
 			$GLOBALS['egw_info']['flags']['java_script'] = preg_replace(array('/(<script[^>]*>)([^<]*)/is','/<\/script>/'),array('$2',''),$GLOBALS['egw_info']['flags']['java_script']);
 			self::$response->script($GLOBALS['egw_info']['flags']['java_script']);
-			//error_log($app .' added javascript to $GLOBALS[egw_info][flags][java_script] - use egw_json_response->script() instead.');
+			//error_log($app .' added javascript to $GLOBALS[egw_info][flags][java_script] - use Json\Response->script() instead.');
 		}
 
 		return $content;

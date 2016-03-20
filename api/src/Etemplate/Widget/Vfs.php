@@ -17,7 +17,6 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
 // explicitly import old not yet ported classes
-use egw_json_request;
 use common; // egw_exit
 use egw;	// link
 
@@ -162,7 +161,7 @@ class Vfs extends File
 			}
 		}
 		// switch regular JSON response handling off
-		egw_json_request::isJSONRequest(false);
+		Api\Json\Request::isJSONRequest(false);
 
 		$file = array(
 			"uploaded" => (int)empty($error),

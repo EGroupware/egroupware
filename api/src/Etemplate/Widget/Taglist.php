@@ -17,7 +17,6 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
 // explicitly import old not yet ported classes
-use egw_json_request;
 use common;
 use mail_compose;
 
@@ -74,7 +73,7 @@ class Taglist extends Etemplate\Widget
 			$results[] = array('id' => $id, 'label' => $name);
 		}
 		 // switch regular JSON response handling off
-		egw_json_request::isJSONRequest(false);
+		Api\Json\Request::isJSONRequest(false);
 
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);

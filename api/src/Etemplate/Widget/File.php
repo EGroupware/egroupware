@@ -16,9 +16,6 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
-// explicitly import old not yet ported classes
-use egw_json_response;
-
 /**
  * eTemplate file upload widget
  * Uses AJAX to send file(s) to server, and stores for submit
@@ -52,7 +49,7 @@ class File extends Etemplate\Widget
 	 * @note Currently, no attempt is made to clean up files automatically.
 	 */
 	public static function ajax_upload() {
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$request_id = str_replace(' ', '+', rawurldecode($_REQUEST['request_id']));
 		$widget_id = $_REQUEST['widget_id'];
 		if(!self::$request = Etemplate\Request::read($request_id)) {

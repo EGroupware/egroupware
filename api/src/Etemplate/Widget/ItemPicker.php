@@ -18,9 +18,6 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
-// explicitly import old not yet ported classes
-use egw_json_response;
-
 /**
  * eTemplate itempicker widget
  */
@@ -48,7 +45,7 @@ class ItemPicker extends Etemplate\Widget
 		$options['type'] = $type ? $type : $options['type'];
 		$items = Api\Link::query($app, $pattern, $options);
 
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->data($items);
 	}
 }

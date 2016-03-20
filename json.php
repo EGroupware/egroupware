@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api\Json;
+
 /**
  * callback if the session-check fails, redirects to login.php
  *
@@ -19,8 +21,8 @@
 function login_redirect(&$anon_account)
 {
 	unset($anon_account);
-	egw_json_request::isJSONRequest(true);	// because egw_json_request::parseRequest() is not (yet) called
-	$response = egw_json_response::get();
+	Json\Request::isJSONRequest(true);	// because egw_json_request::parseRequest() is not (yet) called
+	$response = Json\Response::get();
 	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10', true);
 
 	common::egw_exit();
@@ -46,7 +48,7 @@ function ajax_exception_handler($e)
 	{
 		_egw_log_exception($e,$message);
 	}
-	$response = egw_json_response::get();
+	$response = Json\Response::get();
 	$message .= ($message ? "\n\n" : '').$e->getMessage();
 
 	// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
@@ -103,17 +105,17 @@ if (isset($_GET['menuaction']))
 
 
 	//Create a new json handler
-	$json = new egw_json_request();
+	$json = new Json\Request();
 
 	//Check whether the request data is set
 	if (isset($GLOBALS['egw_unset_vars']['_POST[json_data]']))
 	{
 		$json->isJSONRequest(true);	// otherwise exception is not send back to client, as we have not yet called parseRequest()
-		throw new egw_exception_assertion_failed("JSON Data contains script tags. Aborting...");
+		throw new Json\Exception\ScriptTags("JSON Data contains script tags. Aborting...");
 	}
 	$json->parseRequest($_GET['menuaction'], $_REQUEST['json_data']);
-	egw_json_response::get();
+	Json\Response::get();
 	common::egw_exit();
 }
 
-throw new Exception($_SERVER['PHP_SELF'] . ' Invalid AJAX JSON Request');
+throw new Json\Exception($_SERVER['PHP_SELF'] . ' Invalid AJAX JSON Request');

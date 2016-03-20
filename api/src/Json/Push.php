@@ -5,15 +5,17 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
- * @subpackage ajax
+ * @subpackage json
  * @author Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
 
+namespace EGroupware\Api\Json;
+
 /**
  * Class to push JSON commands to client
  */
-class egw_json_push extends egw_json_msg
+class Push extends Msg
 {
 	/**
 	 * Available backends to try
@@ -51,7 +53,7 @@ class egw_json_push extends egw_json_msg
 	 *
 	 * @param string $key
 	 * @param mixed $data
-	 * @throws egw_json_push_exception_not_online if $account_id is not online
+	 * @throws Exception\NotOnline if $account_id is not online
 	 */
 	protected function addGeneric($key, $data)
 	{
@@ -65,41 +67,17 @@ class egw_json_push extends egw_json_msg
 						self::$backend = new $class;
 						break;
 					}
-					catch (Exception $e) {
-						// ignore exception
+					catch (\Exception $e) {
+						// ignore all exceptions
 						unset($e, self::$backend);
 					}
 				}
 			}
 			if (!isset(self::$backend))
 			{
-				throw new egw_json_push_exception_not_online('No valid push-backend found!');
+				throw new Exception\NotOnline('No valid push-backend found!');
 			}
 		}
 		self::$backend->addGeneric($this->account_id, $key, $data);
 	}
-}
-
-/**
- * Interface for push backends
- */
-interface egw_json_push_backend
-{
-	/**
-	 * Adds any type of data to the message
-	 *
-	 * @param int $account_id account_id to push message too
-	 * @param string $key
-	 * @param mixed $data
-	 * @throws egw_json_push_exception_not_online if $account_id is not online
-	 */
-	public function addGeneric($account_id, $key, $data);
-}
-
-/**
- * Exception thrown, if message can not be pushed
- */
-class egw_json_push_exception_not_online extends egw_exception_not_found
-{
-
 }

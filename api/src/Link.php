@@ -19,7 +19,6 @@ namespace EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
 use egw;	// on_shutdown
-use egw_json_response;
 
 /**
  * Generalized linking between entries of EGroupware apps
@@ -1474,10 +1473,10 @@ class Link extends Link\Storage
 		{
 			self::notify('update',$link['app'],$link['id'],$app,$id,$link_id,$data);
 		}
-		if($data[Link::OLD_LINK_TITLE] && egw_json_response::isJSONResponse())
+		if($data[Link::OLD_LINK_TITLE] && Api\Json\Response::isJSONResponse())
 		{
 			// Update client side with new title
-			egw_json_response::get()->apply('egw.link_title_callback',array(array($app => array($id => self::title($app, $id)))));
+			Api\Json\Response::get()->apply('egw.link_title_callback',array(array($app => array($id => self::title($app, $id)))));
 		}
 	}
 

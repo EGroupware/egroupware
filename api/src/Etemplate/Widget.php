@@ -17,10 +17,6 @@ use EGroupware\Api;
 use XMLReader;
 use ReflectionMethod;
 
-// explicitly import old not yet ported classes
-use egw_json_response;
-
-
 /**
  * eTemplate widget baseclass
  */
@@ -73,7 +69,7 @@ class Widget
 	/**
 	 * JSON response object, if we run via a JSON request
 	 *
-	 * @var egw_json_response
+	 * @var Api\Json\Response
 	 */
 	static protected $response;
 

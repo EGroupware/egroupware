@@ -17,7 +17,6 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
 // explicitly import old not yet ported classes
-use egw_json_response;
 use common;	// egw_exit
 
 /**
@@ -109,7 +108,7 @@ class Link extends Etemplate\Widget
 		if(!$options['num_rows']) $options['num_rows'] = 1000;
 		$links = Api\Link::query($app, $pattern, $options);
 		$linksc = array_combine(array_map(create_function('$k', 'return (string)" ".$k;'), array_keys($links)), $links);
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->data($linksc);
 	}
 
@@ -124,7 +123,7 @@ class Link extends Etemplate\Widget
 	{
 		$title = Api\Link::title($app, $id);
 		//error_log(__METHOD__."('$app', '$id') = ".array2string($title));
-		egw_json_response::get()->data($title);
+		Api\Json\Response::get()->data($title);
 	}
 
 	/**
@@ -147,7 +146,7 @@ class Link extends Etemplate\Widget
 				error_log(__METHOD__."(".array2string($app_ids).") got invalid title request: app=$app, ids=" . array2string($ids));
 			}
 		}
-		egw_json_response::get()->data($response);
+		Api\Json\Response::get()->data($response);
 	}
 
 	/**
@@ -172,7 +171,7 @@ class Link extends Etemplate\Widget
 		}
 		$result = Api\Link::link($app, $id, $links);
 
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->data(is_array($id) ? $id : $result !== false);
 	}
 
@@ -207,7 +206,7 @@ class Link extends Etemplate\Widget
 			}
 		}
 
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		// Strip keys, unneeded and cause index problems on the client side
 		$response->data(array_values($links));
 	}
@@ -234,7 +233,7 @@ class Link extends Etemplate\Widget
 				$result = Api\Vfs::proppatch($path, array(array('name' => 'comment', 'val' => $comment)));
 			}
 		}
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->data($result !== false);
 	}
 
@@ -258,7 +257,7 @@ class Link extends Etemplate\Widget
 
 	public static function ajax_delete($value)
 	{
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->data(Api\Link::unlink($value));
 	}
 
