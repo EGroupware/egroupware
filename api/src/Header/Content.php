@@ -28,9 +28,9 @@ class Content
 	 *
 	 * Mitigate risk of html downloads by using CSP or force download for IE
 	 *
-	 * @param resource|string &$content content might be changed by this call
+	 * @param resource|string& $content content might be changed by this call
 	 * @param string $path filename or path for content-disposition header
-	 * @param string &$mime ='' mimetype or '' (default) to detect it from filename, using mime_magic::filename2mime()
+	 * @param string& $mime ='' mimetype or '' (default) to detect it from filename, using mime_magic::filename2mime()
 	 *	on return used, maybe changed, mime-type
 	 * @param int $length =0 content length, default 0 = skip that header
 	 *  on return changed size

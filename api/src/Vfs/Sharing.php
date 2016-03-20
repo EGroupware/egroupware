@@ -5,16 +5,30 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
+ * @subpackage Vfs
  * @author Ralf Becker <rb@stylite.de>
- * @copyright (c) 2014/15 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014-16 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api\Vfs;
+
+use EGroupware\Api;
+use EGroupware\Api\Vfs;
+
+// explicitly list old, not yet ported api classes
+use common;	// egw_exist
+use egw_framework;
+use asyncservice;
+use egw; // link
+
+use filemanager_ui;
 
 /**
  * VFS sharing
  *
  * Token generation uses openssl_random_pseudo_bytes, if available, otherwise
- * mt_rand based auth::randomstring is used.
+ * mt_rand based Api\Auth::randomstring is used.
  *
  * Existing user sessions are kept whenever possible by an additional mount into regular VFS:
  * - share owner is current user (no problems with rights, they simply match)
@@ -26,7 +40,7 @@
  * @todo handle mounts inside shared directory (they get currently lost)
  * @todo handle absolute symlinks (wont work as we use share as root)
  */
-class egw_sharing
+class Sharing
 {
 	/**
 	 * Length of base64 encoded token (real length is only 3/4 of it)
@@ -184,9 +198,9 @@ class egw_sharing
 
 		// check password, if required
 		if ($share['share_passwd'] && (empty($_SERVER['PHP_AUTH_PW']) ||
-			!(auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
-				egw_digest_auth::decode_password($_SERVER['PHP_AUTH_PW']) &&
-					auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
+			!(Api\Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt') ||
+				Api\Header\Authenticate::decode_password($_SERVER['PHP_AUTH_PW']) &&
+					Api\Auth::compare_password($_SERVER['PHP_AUTH_PW'], $share['share_passwd'], 'crypt'))))
 		{
 			$realm = 'EGroupware share '.$share['share_token'];
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
@@ -201,10 +215,10 @@ class egw_sharing
 		if (count($GLOBALS['egw_info']['server']['vfs_fstab']) <= 1)
 		{
 			unset($GLOBALS['egw_info']['server']['vfs_fstab']);	// triggers reset of fstab in mount()
-			$GLOBALS['egw_info']['server']['vfs_fstab'] = egw_vfs::mount();
-			egw_vfs::clearstatcache();
+			$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
+			Vfs::clearstatcache();
 		}
-		$share['resolve_url'] = egw_vfs::resolve_url($share['share_path'], true, true, true, true);	// true = fix evtl. contained url parameter
+		$share['resolve_url'] = Vfs::resolve_url($share['share_path'], true, true, true, true);	// true = fix evtl. contained url parameter
 		// if share not writable append ro=1 to mount url to make it readonly
 		if (!self::$db->from_bool($share['share_writable']))
 		{
@@ -217,7 +231,7 @@ class egw_sharing
 			$share['share_root'] = '/'.$share['share_token'];
 
 			// if current user is not the share owner, we cant just mount share
-			if (egw_vfs::$user != $share['share_owner'])
+			if (Vfs::$user != $share['share_owner'])
 			{
 				$keep_session = false;
 			}
@@ -230,12 +244,12 @@ class egw_sharing
 			);
 
 			$share['share_root'] = '/';
-			egw_vfs::$user = $share['share_owner'];
+			Vfs::$user = $share['share_owner'];
 		}
 
 		// mounting share
-		egw_vfs::$is_root = true;
-		if (!egw_vfs::mount($share['resolve_url'], $share['share_root'], false, false, !$keep_session))
+		Vfs::$is_root = true;
+		if (!Vfs::mount($share['resolve_url'], $share['share_root'], false, false, !$keep_session))
 		{
 			sleep(1);
 			$status = '404 Not Found';
@@ -244,8 +258,8 @@ class egw_sharing
 			echo "Requested resource '/".htmlspecialchars($token)."' does NOT exist!\n";
 			common::egw_exit();
 		}
-		egw_vfs::$is_root = false;
-		egw_vfs::clearstatcache();
+		Vfs::$is_root = false;
+		Vfs::clearstatcache();
 
 		// update accessed timestamp
 		self::$db->update(self::TABLE, array(
@@ -255,7 +269,7 @@ class egw_sharing
 		), __LINE__, __FILE__);
 
 		// store sharing object in egw object and therefore in session
-		$GLOBALS['egw']->sharing = new egw_sharing($share);
+		$GLOBALS['egw']->sharing = new Sharing($share);
 
 		// we have a session we want to keep, but share owner is different from current user and we need filemanager UI, or no session
 		// --> create a new anon session
@@ -284,16 +298,16 @@ class egw_sharing
 			$GLOBALS['egw']->session->commit_session();
 		}
 		// need to store new fstab and vfs_user in session to allow GET requests / downloads via WebDAV
-		$GLOBALS['egw_info']['user']['vfs_user'] = egw_vfs::$user;
-		$GLOBALS['egw_info']['server']['vfs_fstab'] = egw_vfs::mount();
+		$GLOBALS['egw_info']['user']['vfs_user'] = Vfs::$user;
+		$GLOBALS['egw_info']['server']['vfs_fstab'] = Vfs::mount();
 
 		// update modified egw and egw_info again in session, if neccessary
 		if ($keep_session || $sessionid)
 		{
-			$_SESSION[egw_session::EGW_INFO_CACHE] = $GLOBALS['egw_info'];
-			unset($_SESSION[egw_session::EGW_INFO_CACHE]['flags']);	// dont save the flags, they change on each request
+			$_SESSION[Api\Session::EGW_INFO_CACHE] = $GLOBALS['egw_info'];
+			unset($_SESSION[Api\Session::EGW_INFO_CACHE]['flags']);	// dont save the flags, they change on each request
 
-			$_SESSION[egw_session::EGW_OBJECT_CACHE] = serialize($GLOBALS['egw']);
+			$_SESSION[Api\Session::EGW_OBJECT_CACHE] = serialize($GLOBALS['egw']);
 		}
 
 		return $sessionid;
@@ -308,9 +322,9 @@ class egw_sharing
 	 */
 	public function use_filemanager()
 	{
-		return !(!egw_vfs::is_dir($this->share['share_root']) || $_SERVER['REQUEST_METHOD'] != 'GET' ||
+		return !(!Vfs::is_dir($this->share['share_root']) || $_SERVER['REQUEST_METHOD'] != 'GET' ||
 			// or unsupported browsers like ie < 10
-			html::$user_agent == 'msie' && html::$ua_version < 10.0 ||
+			Api\Header\UserAgent::type() == 'msie' && Api\Header\UserAgent::version() < 10.0 ||
 			// or if no filemanager installed (WebDAV has own autoindex)
 			!file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'));
 	}
@@ -331,13 +345,13 @@ class egw_sharing
 		if (!$this->use_filemanager())
 		{
 			// send a content-disposition header, so browser knows how to name downloaded file
-			if (!egw_vfs::is_dir($this->share['share_root']))
+			if (!Vfs::is_dir($this->share['share_root']))
 			{
-				html::content_disposition_header(egw_vfs::basename($this->share['share_path']), false);
+				Api\Header\Content::disposition(Vfs::basename($this->share['share_path']), false);
 			}
 			//$GLOBALS['egw']->session->commit_session();
-			$webdav_server = new vfs_webdav_server();
-			$webdav_server->ServeRequest(egw_vfs::concat($this->share['share_root'], $this->share['share_token']));
+			$webdav_server = new Vfs\WebDAV();
+			$webdav_server->ServeRequest(Vfs::concat($this->share['share_root'], $this->share['share_token']));
 			return;
 		}
 		// run full eTemplate2 UI for directories
@@ -346,7 +360,7 @@ class egw_sharing
 		$_GET['cd'] = 'no';
 		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
 		egw_framework::includeCSS('filemanager', 'sharing');
-		$ui = new egw_sharing_filemanager();
+		$ui = new SharingUi();
 		$ui->index();
 	}
 
@@ -357,13 +371,13 @@ class egw_sharing
 	 */
 	public static function token()
 	{
-		// generate random token (using oppenssl if available otherwise mt_rand based auth::randomstring)
+		// generate random token (using oppenssl if available otherwise mt_rand based Api\Auth::randomstring)
 		do {
 			$token = function_exists('openssl_random_pseudo_bytes') ?
 				base64_encode(openssl_random_pseudo_bytes(3*self::TOKEN_LENGTH/4)) :
-				auth::randomstring(self::TOKEN_LENGTH);
+				Api\Auth::randomstring(self::TOKEN_LENGTH);
 			// base64 can contain chars not allowed in our vfs-urls eg. / or #
-		} while ($token != egw_vfs::encodePathComponent($token));
+		} while ($token != Vfs::encodePathComponent($token));
 
 		return $token;
 	}
@@ -387,7 +401,7 @@ class egw_sharing
 
 		if (empty($name)) $name = $path;
 
-		$path2tmp =& egw_cache::getSession(__CLASS__, 'path2tmp');
+		$path2tmp =& Api\Cache::getSession(__CLASS__, 'path2tmp');
 
 		// allow filesystem path only for temp_dir
 		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/';
@@ -402,13 +416,13 @@ class egw_sharing
 			{
 				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
 			}
-			$vfs_path = egw_vfs::parse_url($path, PHP_URL_PATH);
-			$exists = egw_vfs::file_exists($vfs_path) && egw_vfs::is_readable($vfs_path);
+			$vfs_path = Vfs::parse_url($path, PHP_URL_PATH);
+			$exists = Vfs::file_exists($vfs_path) && Vfs::is_readable($vfs_path);
 		}
 		// check if file exists and is readable
 		if (!$exists)
 		{
-			throw new egw_exception_not_found("'$path' NOT found!");
+			throw new Api\Exception\NotFound("'$path' NOT found!");
 		}
 		// check if file has been shared before, with identical attributes
 		if (($mode != self::LINK || isset($path2tmp[$path])) &&
@@ -447,29 +461,29 @@ class egw_sharing
 			if ($mode == 'link')
 			{
 				$user_tmp = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.tmp';
-				if (!egw_vfs::file_exists($user_tmp) && !egw_vfs::mkdir($user_tmp))
+				if (!Vfs::file_exists($user_tmp) && !Vfs::mkdir($user_tmp))
 				{
-					throw new egw_exception_assertion_failed("Could NOT create temp. directory '$user_tmp'!");
+					throw new Api\Exception\AssertionFailed("Could NOT create temp. directory '$user_tmp'!");
 				}
 				$n = 0;
 				do {
-					$tmp_file = egw_vfs::concat($user_tmp, ($n?$n.'.':'').egw_vfs::basename($name));
+					$tmp_file = Vfs::concat($user_tmp, ($n?$n.'.':'').Vfs::basename($name));
 				}
-				while(!(is_dir($path) && egw_vfs::mkdir($tmp_file) ||
-					!is_dir($path) && (!egw_vfs::file_exists($tmp_file) && ($fp = egw_vfs::fopen($tmp_file, 'x')) ||
+				while(!(is_dir($path) && Vfs::mkdir($tmp_file) ||
+					!is_dir($path) && (!Vfs::file_exists($tmp_file) && ($fp = Vfs::fopen($tmp_file, 'x')) ||
 						// do not copy identical files again to users tmp dir, just re-use them
-						egw_vfs::file_exists($tmp_file) && egw_vfs::compare(egw_vfs::PREFIX.$tmp_file, $path))) && $n++ < 100);
+						Vfs::file_exists($tmp_file) && Vfs::compare(Vfs::PREFIX.$tmp_file, $path))) && $n++ < 100);
 
 				if ($n >= 100)
 				{
-					throw new egw_exception_assertion_failed("Could NOT create temp. file '$tmp_file'!");
+					throw new Api\Exception\AssertionFailed("Could NOT create temp. file '$tmp_file'!");
 				}
 				if ($fp) fclose($fp);
 
-				if (is_dir($path) && !egw_vfs::copy_files(array($path), $tmp_file) ||
-					!is_dir($path) && !copy($path, egw_vfs::PREFIX.$tmp_file))
+				if (is_dir($path) && !Vfs::copy_files(array($path), $tmp_file) ||
+					!is_dir($path) && !copy($path, Vfs::PREFIX.$tmp_file))
 				{
-					throw new egw_exception_assertion_failed("Could NOT create temp. file '$tmp_file'!");
+					throw new Api\Exception\AssertionFailed("Could NOT create temp. file '$tmp_file'!");
 				}
 				// store temp. path in session, to be able to add more recipients
 				$path2tmp[$path] = $tmp_file;
@@ -490,7 +504,7 @@ class egw_sharing
 				try {
 					self::$db->insert(self::TABLE, $share = array(
 						'share_token' => self::token(),
-						'share_path' => egw_vfs::parse_url($path, PHP_URL_PATH),
+						'share_path' => Vfs::parse_url($path, PHP_URL_PATH),
 						'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
 						'share_with' => implode(',', (array)$recipients),
 						'share_created' => time(),
@@ -499,7 +513,7 @@ class egw_sharing
 					$share['share_id'] = self::$db->get_last_insert_id(self::TABLE, 'share_id');
 					break;
 				}
-				catch(egw_exception_db $e) {
+				catch(Api\Db\Exception $e) {
 					if ($i++ > 3) throw $e;
 					unset($e);
 				}
@@ -509,9 +523,9 @@ class egw_sharing
 	}
 
 	/**
-	 * so_sql instance for egw_sharing table
+	 * Api\Storage\Base instance for egw_sharing table
 	 *
-	 * @var so_sql
+	 * @var Api\Storage\Base
 	 */
 	protected static $so;
 
@@ -522,7 +536,7 @@ class egw_sharing
 	{
 		if (!isset(self::$so))
 		{
-			self::$so = new so_sql('phpgwapi', self::TABLE, null, '', true);
+			self::$so = new Api\Storage\Base('phpgwapi', self::TABLE, null, '', true);
 			self::$so->set_times('string');
 		}
 		return self::$so;
@@ -567,7 +581,7 @@ class egw_sharing
 			// if not delete them
 			foreach($tmp_paths as $path)
 			{
-				egw_vfs::remove($path);
+				Vfs::remove($path);
 			}
 		}
 		return $deleted;
@@ -586,7 +600,7 @@ class egw_sharing
 	public static function tmp_cleanup()
 	{
 		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
-		egw_vfs::$is_root = true;
+		Vfs::$is_root = true;
 
 		try {
 			$cols = array(
@@ -607,7 +621,7 @@ class egw_sharing
 				"share_path LIKE '/home/%/.tmp/%'",
 			), __LINE__, __FILE__, false, 'GROUP BY share_path '.$having) as $row)
 			{
-				egw_vfs::remove($row['share_path']);
+				Vfs::remove($row['share_path']);
 
 				if ($group_concat)
 				{
@@ -629,10 +643,10 @@ class egw_sharing
 				}
 			}
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			unset($e);
 		}
-		egw_vfs::$is_root = false;
+		Vfs::$is_root = false;
 	}
 
 	/**
@@ -661,7 +675,7 @@ if (file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'))
 {
 	require_once __DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php';
 
-	class egw_sharing_filemanager extends filemanager_ui
+	class SharingUi extends filemanager_ui
 	{
 		/**
 		 * Get the configured start directory for the current user

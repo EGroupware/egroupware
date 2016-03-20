@@ -7,24 +7,30 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
- * @subpackage vfs
+ * @subpackage webdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Hartmut Holzgraefe <hartmut@php.net> original HTTP/WebDAV/Server/Filesystem class, of which some code is used
  * @version $Id$
  */
 
-if (strpos(ini_get('include_path'), EGW_API_INC) === false)
-{
-	ini_set('include_path', EGW_API_INC.PATH_SEPARATOR.ini_get('include_path'));
-}
-require_once('HTTP/WebDAV/Server/Filesystem.php');
+namespace EGroupware\Api\Vfs;
+
+require_once dirname(__DIR__).'/WebDAV/Server/Filesystem.php';
+
+use HTTP_WebDAV_Server_Filesystem;
+use HTTP_WebDAV_Server;
+use EGroupware\Api\Vfs;
+use EGroupware\Api;
+
+// old, not yet ported api classes
+use common;	// egw_exit
 
 /**
  * FileManger - WebDAV access using the new stream wrapper VFS interface
  *
  * Using modified PEAR HTTP/WebDAV/Server/Filesystem class in API dir
  */
-class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
+class WebDAV extends HTTP_WebDAV_Server_Filesystem
 {
 	/**
 	 * Realm of eGW's WebDAV server
@@ -39,7 +45,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 *
 	 * @var string
 	 */
-	var $base = egw_vfs::PREFIX;
+	var $base = Vfs::PREFIX;
 
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, eg. complete $_SERVER array
@@ -90,11 +96,11 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		{
 			// recursive delete the directory
 			try {
-				$deleted = egw_vfs::remove($options['path']);
+				$deleted = Vfs::remove($options['path']);
 				$ret = !empty($deleted[$options['path']]);
-				//error_log(__METHOD__."() egw_vfs::remove($options[path]) returned ".array2string($deleted)." --> ".array2string($ret));
+				//error_log(__METHOD__."() Vfs::remove($options[path]) returned ".array2string($deleted)." --> ".array2string($ret));
 			}
-			catch (Exception $e) {
+			catch (\Exception $e) {
 				return '403 Forbidden: '.$e->getMessage();
 			}
 		}
@@ -120,7 +126,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
     function MKCOL($options)
     {
         $path   = $this->_unslashify($this->base .$options["path"]);
-        $parent = egw_vfs::dirname($path);
+        $parent = Vfs::dirname($path);
 
         if (!file_exists($parent)) {
             return "409 Conflict";
@@ -225,7 +231,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
             }
         } else {
             if (is_dir($source) && $options['depth'] == 'infinity') {
-            	$files = egw_vfs::find($source,array('depth' => true,'url' => true));	// depth=true: return dirs first, url=true: allow urls!
+            	$files = Vfs::find($source,array('depth' => true,'url' => true));	// depth=true: return dirs first, url=true: allow urls!
             } else {
                 $files = array($source);
             }
@@ -289,41 +295,41 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		$info['props'] = array();
 
 		// no special beautified displayname here ...
-		$info['props'][] = HTTP_WebDAV_Server::mkprop	('displayname', egw_vfs::basename(self::_unslashify($info['path'])));
+		$info['props'][] = self::mkprop	('displayname', Vfs::basename(self::_unslashify($info['path'])));
 
 		// creation and modification time
-		$info['props'][] = HTTP_WebDAV_Server::mkprop	('creationdate',    filectime($fspath));
-		$info['props'][] = HTTP_WebDAV_Server::mkprop	('getlastmodified', filemtime($fspath));
+		$info['props'][] = self::mkprop	('creationdate',    filectime($fspath));
+		$info['props'][] = self::mkprop	('getlastmodified', filemtime($fspath));
 
         // Microsoft extensions: last access time and 'hidden' status
-        $info["props"][] = HTTP_WebDAV_Server::mkprop("lastaccessed",    fileatime($fspath));
-        $info["props"][] = HTTP_WebDAV_Server::mkprop("ishidden",        egw_vfs::is_hidden($fspath));
+        $info["props"][] = self::mkprop("lastaccessed",    fileatime($fspath));
+        $info["props"][] = self::mkprop("ishidden",        Vfs::is_hidden($fspath));
 
 		// type and size (caller already made sure that path exists)
 		if (is_dir($fspath)) {
 			// directory (WebDAV collection)
-			$info['props'][] = HTTP_WebDAV_Server::mkprop	('resourcetype', array(
-			 	HTTP_WebDAV_Server::mkprop('collection', '')));
-			$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontenttype', 'httpd/unix-directory');
+			$info['props'][] = self::mkprop	('resourcetype', array(
+			 	self::mkprop('collection', '')));
+			$info['props'][] = self::mkprop	('getcontenttype', 'httpd/unix-directory');
 		} else {
 			// plain file (WebDAV resource)
-			$info['props'][] = HTTP_WebDAV_Server::mkprop	('resourcetype', '');
-			if (egw_vfs::is_readable($path)) {
-				$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontenttype', egw_vfs::mime_content_type($path));
+			$info['props'][] = self::mkprop	('resourcetype', '');
+			if (Vfs::is_readable($path)) {
+				$info['props'][] = self::mkprop	('getcontenttype', Vfs::mime_content_type($path));
 			} else {
 				error_log(__METHOD__."($path) $fspath is not readable!");
-				$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontenttype', 'application/x-non-readable');
+				$info['props'][] = self::mkprop	('getcontenttype', 'application/x-non-readable');
 			}
-			$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontentlength', filesize($fspath));
+			$info['props'][] = self::mkprop	('getcontentlength', filesize($fspath));
 		}
 		// generate etag from inode (sqlfs: fs_id), modification time and size
 		$stat = stat($fspath);
-		$info['props'][] = HTTP_WebDAV_Server::mkprop('getetag', '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"');
+		$info['props'][] = self::mkprop('getetag', '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"');
 
 /*		returning the supportedlock property causes Windows DAV provider and Konqueror to not longer work
 		ToDo: return it only if explicitly requested ($options['props'])
 		// supportedlock property
-		$info['props'][] = HTTP_WebDAV_Server::mkprop('supportedlock','
+		$info['props'][] = self::mkprop('supportedlock','
       <D:lockentry>
        <D:lockscope><D:exclusive/></D:lockscope>
        <D:locktype><D:write/></D:lockscope>
@@ -384,13 +390,13 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			$_path = $info['path'];
 			if (!$n && $info['path'] != '/' && substr($info['path'],-1) == '/') $_path = substr($info['path'],0,-1);
 
-			// need to encode path again, as $info['path'] is NOT encoded, but egw_vfs::(stat|propfind) require it
+			// need to encode path again, as $info['path'] is NOT encoded, but Vfs::(stat|propfind) require it
 			// otherwise pathes containing url special chars like ? or # will not stat
-			$path = egw_vfs::encodePath($_path);
+			$path = Vfs::encodePath($_path);
 			$path2n[$path] = $n;
 
 			// adding some properties used instead of regular DAV times
-			if (($stat = egw_vfs::stat($path)))
+			if (($stat = Vfs::stat($path)))
 			{
 				$fileprops =& $files['files'][$path2n[$path]]['props'];
 				foreach(self::$auto_props as $attr => $props)
@@ -414,14 +420,14 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 				}
 			}
 		}
-		if ($path2n && ($path2props = egw_vfs::propfind(array_keys($path2n),null)))
+		if ($path2n && ($path2props = Vfs::propfind(array_keys($path2n),null)))
 		{
 			foreach($path2props as $path => $props)
 			{
 				$fileprops =& $files['files'][$path2n[$path]]['props'];
 				foreach($props as $prop)
 				{
-					if ($prop['ns'] == egw_vfs::DEFAULT_PROP_NAMESPACE && $prop['name'][0] == '#')	// eGW's customfields
+					if ($prop['ns'] == Vfs::DEFAULT_PROP_NAMESPACE && $prop['name'][0] == '#')	// eGW's customfields
 					{
 						$prop['ns'] .= 'customfields/';
 						$prop['name'] = substr($prop['name'],1);
@@ -437,13 +443,13 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
  	/**
 	 * Used eg. by get
 	 *
-	 * @todo replace all calls to _mimetype with egw_vfs::mime_content_type()
+	 * @todo replace all calls to _mimetype with Vfs::mime_content_type()
 	 * @param string $path
 	 * @return string
 	 */
 	function _mimetype($path)
 	{
-		return egw_vfs::mime_content_type($path);
+		return Vfs::mime_content_type($path);
 	}
 
     /**
@@ -454,7 +460,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
      */
     function _is_readable($fspath)
     {
-    	return egw_vfs::is_readable($fspath);
+    	return Vfs::is_readable($fspath);
     }
 
     /**
@@ -465,7 +471,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
      */
     function _is_writable($fspath)
     {
-    	return egw_vfs::is_writable($fspath);
+    	return Vfs::is_writable($fspath);
     }
 
 	/**
@@ -480,7 +486,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 */
 	function PROPPATCH(&$options)
 	{
-		$path = translation::convert($options['path'],'utf-8');
+		$path = Api\Translation::convert($options['path'],'utf-8');
 
 		foreach ($options['props'] as $key => $prop) {
 			$attributes = array();
@@ -492,14 +498,14 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 					{
 						case 'srt_modifiedtime':
 						case 'getlastmodified':
-							egw_vfs::touch($path,strtotime($prop['val']));
+							Vfs::touch($path,strtotime($prop['val']));
 							break;
 						//case 'srt_creationtime':
 							// no streamwrapper interface / php function to set the ctime currently
 							//$attributes['created'] = strtotime($prop['val']);
 							//break;
 						default:
-							if (!egw_vfs::proppatch($path,array($prop))) $options['props'][$key]['status'] = '403 Forbidden';
+							if (!Vfs::proppatch($path,array($prop))) $options['props'][$key]['status'] = '403 Forbidden';
 							break;
 					}
 					break;
@@ -509,7 +515,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 					{
 						// allow netdrive to change the modification time
 						case 'getlastmodified':
-							egw_vfs::touch($path,strtotime($prop['val']));
+							Vfs::touch($path,strtotime($prop['val']));
 							break;
 						// not sure why, the filesystem example of the WebDAV class does it ...
 						default:
@@ -522,23 +528,23 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 					switch($prop['name'])
 					{
 						case 'Win32LastModifiedTime':
-							egw_vfs::touch($path,strtotime($prop['val']));
+							Vfs::touch($path,strtotime($prop['val']));
 							break;
 						case 'Win32CreationTime':	// eg. "Wed, 14 Sep 2011 15:48:26 GMT"
 						case 'Win32LastAccessTime':
 						case 'Win32FileAttributes':	// not sure what that is, it was always "00000000"
 						default:
-							if (!egw_vfs::proppatch($path,array($prop))) $options['props'][$key]['status'] = '403 Forbidden';
+							if (!Vfs::proppatch($path,array($prop))) $options['props'][$key]['status'] = '403 Forbidden';
 							break;
 					}
 					break;
 
-				case egw_vfs::DEFAULT_PROP_NAMESPACE.'customfields/':	// eGW's customfields
-					$prop['ns'] = egw_vfs::DEFAULT_PROP_NAMESPACE;
+				case Vfs::DEFAULT_PROP_NAMESPACE.'customfields/':	// eGW's customfields
+					$prop['ns'] = Vfs::DEFAULT_PROP_NAMESPACE;
 					$prop['name'] = '#'.$prop['name'];
 					// fall through
 				default:
-					if (!egw_vfs::proppatch($path,array($prop))) $options['props'][$key]['status'] = '403 Forbidden';
+					if (!Vfs::proppatch($path,array($prop))) $options['props'][$key]['status'] = '403 Forbidden';
 					break;
 			}
 			if ($this->debug) $props[] = '('.$prop['ns'].')'.$prop['name'].'='.$prop['val'];
@@ -570,7 +576,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 
 		// dont know why, but HTTP_WebDAV_Server passes the owner in D:href tags, which get's passed unchanged to checkLock/PROPFIND
 		// that's wrong according to the standard and cadaver does not show it on discover --> strip_tags removes eventual tags
-		if (($ret = egw_vfs::lock($options['path'],$options['locktoken'],$options['timeout'],strip_tags($options['owner']),
+		if (($ret = Vfs::lock($options['path'],$options['locktoken'],$options['timeout'],strip_tags($options['owner']),
 			$options['scope'],$options['type'],isset($options['update']))) && !isset($options['update']))
 		{
 			return $ret ? '200 OK' : '409 Conflict';
@@ -587,7 +593,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	function UNLOCK(&$options)
 	{
 		if ($this->debug) error_log(__METHOD__.'('.str_replace(array("\n",'    '),'',print_r($options,true)).')');
-		return egw_vfs::unlock($options['path'],$options['token']) ? '204 No Content' : '409 Conflict';
+		return Vfs::unlock($options['path'],$options['token']) ? '204 No Content' : '409 Conflict';
 	}
 
 	/**
@@ -598,7 +604,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 */
 	function checkLock($path)
 	{
-		return egw_vfs::checkLock($path);
+		return Vfs::checkLock($path);
 	}
 
 	/**
@@ -612,7 +618,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
     function GetDir($fspath, &$options)
     {
 		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
-		header('Content-type: text/html; charset='.translation::charset());
+		header('Content-type: text/html; charset='.Api\Translation::charset());
 
 		parent::GetDir($fspath, $options);
     }
@@ -650,7 +656,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		if (($ok = parent::GET($options)))
 		{
 			// mitigate risks of serving javascript or css from our domain
-			html::safe_content_header($options['stream'], $options['path'], $options['mimetype'], $options['size'], false,
+			Api\Header\Content::safe($options['stream'], $options['path'], $options['mimetype'], $options['size'], false,
 				$this->force_download, true);	// true = do not send content-type and content-length header, but modify values
 
 			if (!is_resource($options['stream']))
@@ -678,7 +684,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		{
 			return $ret;	// no collection
 		}
-		header('Content-type: text/html; charset='.translation::charset());
+		header('Content-type: text/html; charset='.Api\Translation::charset());
 		echo "<html>\n<head>\n\t<title>".'EGroupware WebDAV server '.htmlspecialchars($options['path'])."</title>\n";
 		echo "\t<meta http-equiv='content-type' content='text/html; charset=utf-8' />\n";
 		echo "\t<style type='text/css'>\n.th { background-color: #e0e0e0; }\n.row_on { background-color: #F1F1F1; vertical-align: top; }\n".
@@ -691,7 +697,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		foreach(explode('/',$this->_unslashify($options['path'])) as $n => $name)
 		{
 			$path .= ($n != 1 ? '/' : '').$name;
-			echo html::a_href(htmlspecialchars($name.'/'),$path);
+			echo Api\Html::a_href(htmlspecialchars($name.'/'),$path);
 		}
 		echo "</h1>\n";
 
@@ -739,7 +745,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			}
 
 			echo "\t<tr class='$class'>\n\t\t<td>$n</td>\n\t\t<td>".
-				html::a_href(htmlspecialchars($name),$base.strtr($file['path'], array(
+				Api\Html::a_href(htmlspecialchars($name),$base.strtr($file['path'], array(
 					'%' => '%25',
 					'#' => '%23',
 					'?' => '%3F',

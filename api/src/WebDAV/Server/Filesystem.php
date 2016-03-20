@@ -33,8 +33,7 @@
    +----------------------------------------------------------------------+
 */
 
-require_once "HTTP/WebDAV/Server.php";
-require_once "System.php";
+require_once dirname(__DIR__).'/Server.php';
 
 /**
  * Filesystem access using WebDAV

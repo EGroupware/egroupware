@@ -24,7 +24,6 @@ namespace EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi
 use egw_mailer;
-use egw_digest_auth;	// egw_digest_auth::parse_digest
 
 /**
  * Create, verifies or destroys an EGroupware session
@@ -831,7 +830,7 @@ class Session
 		{
 			// we generate a pseudo-sessionid from the digest username, realm and nounce
 			// can't use full $_SERVER['PHP_AUTH_DIGEST'], as it changes (contains eg. the url)
-			$data = egw_digest_auth::parse_digest($_SERVER['PHP_AUTH_DIGEST']);
+			$data = Header\Authenticate::parse_digest($_SERVER['PHP_AUTH_DIGEST']);
 			$sessionid = md5($data['username'].':'.$data['realm'].':'.$data['nonce'].':'.$_SERVER['HTTP_HOST'].
 				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php').
 				':'.$_SERVER['HTTP_USER_AGENT']);

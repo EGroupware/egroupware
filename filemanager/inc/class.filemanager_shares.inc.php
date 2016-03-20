@@ -5,10 +5,13 @@
  * @link http://www.egroupware.org/
  * @package filemanager
  * @author Ralf Becker <rb-AT-stylite.de>
- * @copyright (c) 2014 by Ralf Becker <rb-AT-stylite.de>
+ * @copyright (c) 2014-16 by Ralf Becker <rb-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Vfs\Sharing;
 
 /**
  * Filemanager: shares
@@ -40,7 +43,7 @@ class filemanager_shares extends filemanager_ui
 	{
 		// sudo handling
 		parent::__construct();
-		self::$is_setup = egw_session::appsession('is_setup','filemanager');
+		self::$is_setup = Api\Cache::getSession('filemanager', 'is_setup');
 		self::$tmp_dir = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.tmp/';
 	}
 
@@ -57,16 +60,16 @@ class filemanager_shares extends filemanager_ui
 	{
 		switch ($query['col_filter']['type'])
 		{
-			case egw_sharing::LINK:
+			case Sharing::LINK:
 				$query['col_filter'][] = "share_path LIKE ".$GLOBALS['egw']->db->quote(self::$tmp_dir.'%');
 				break;
 
-			case egw_sharing::READONLY:
+			case Sharing::READONLY:
 				$query['col_filter'][] = "share_path NOT LIKE ".$GLOBALS['egw']->db->quote(self::$tmp_dir.'%');
 				$query['col_filter']['share_writable'] = false;
 				break;
 
-			case egw_sharing::WRITABLE:
+			case Sharing::WRITABLE:
 				$query['col_filter']['share_writable'] = true;
 				break;
 		}
@@ -82,18 +85,18 @@ class filemanager_shares extends filemanager_ui
 		$query['col_filter']['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
 
 		$readonlys = null;
-		$total = egw_sharing::so()->get_rows($query, $rows, $readonlys);
+		$total = Sharing::so()->get_rows($query, $rows, $readonlys);
 
 		foreach($rows as &$row)
 		{
 			if (substr($row['share_path'], 0, strlen(self::$tmp_dir)) === self::$tmp_dir)
 			{
 				$row['share_path'] = substr($row['share_path'], strlen(self::$tmp_dir));
-				$row['type'] = egw_sharing::LINK;
+				$row['type'] = Sharing::LINK;
 			}
 			else
 			{
-				$row['type'] = $row['share_writable'] ? egw_sharing::WRITABLE : egw_sharing::READONLY;
+				$row['type'] = $row['share_writable'] ? Sharing::WRITABLE : Sharing::READONLY;
 			}
 			$row['share_passwd'] = (boolean)$row['share_passwd'];
 			if ($row['share_with']) $row['share_with'] = preg_replace('/,([^ ])/', ', $1', $row['share_with']);
@@ -159,25 +162,25 @@ class filemanager_shares extends filemanager_ui
 					{
 						$where['share_id'] = $content['nm']['selected'];
 					}
-					egw_framework::message(lang('%1 shares deleted.', egw_sharing::delete($where)), 'success');
+					egw_framework::message(lang('%1 shares deleted.', Sharing::delete($where)), 'success');
 					break;
 				default:
-					throw new egw_exception_wrong_parameter("Unknown action '{$content['nm']['action']}'!");
+					throw new Api\Exception\WrongParameter("Unknown action '{$content['nm']['action']}'!");
 			}
 			unset($content['nm']['action']);
 		}
 		$content['is_setup'] = self::$is_setup;
 
 		$sel_options = array(
-			'type' => egw_sharing::$modes,
+			'type' => Sharing::$modes,
 			'share_passwd' => array(
 				'no' => lang('No'),
 				'yes' => lang('Yes'),
 			)
 		);
-		unset($sel_options['type'][egw_sharing::ATTACH]);
+		unset($sel_options['type'][Sharing::ATTACH]);
 
-		$tpl = new etemplate_new('filemanager.shares');
+		$tpl = new Api\Etemplate('filemanager.shares');
 		$tpl->exec('filemanager.filemanager_shares.index', $content, $sel_options, null, $content);
 	}
 }

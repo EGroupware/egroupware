@@ -6,11 +6,13 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @author Ralf Becker <rb@stylite.de>
- * @copyright (c) 2014/15 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014-16 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
 
-require_once('./phpgwapi/inc/class.egw_sharing.inc.php');
+require_once(__DIR__.'/api/src/Vfs/Sharing.php');
+
+use EGroupware\Api\Vfs\Sharing;
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
@@ -18,7 +20,7 @@ $GLOBALS['egw_info'] = array(
 		'noheader'  => true,
 		'nonavbar' => 'always',	// true would cause eTemplate to reset it to false for non-popups!
 		'currentapp' => 'filemanager',
-		'autocreate_session_callback' => 'egw_sharing::create_session',
+		'autocreate_session_callback' => 'EGroupware\\Api\\Vfs\\Sharing::create_session',
 		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
 	)
 );
@@ -27,6 +29,6 @@ include('./header.inc.php');
 
 if (!$GLOBALS['egw']->sharing)
 {
-	egw_sharing::create_session(true);	// true = mount into existing session
+	Sharing::create_session(true);	// true = mount into existing session
 }
 $GLOBALS['egw']->sharing->ServeRequest();

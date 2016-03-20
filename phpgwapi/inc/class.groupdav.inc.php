@@ -7,15 +7,11 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
-if (strpos(ini_get('include_path'), EGW_API_INC) === false)
-{
-	ini_set('include_path', EGW_API_INC.PATH_SEPARATOR.ini_get('include_path'));
-}
-require_once('HTTP/WebDAV/Server.php');
+require_once(EGW_INCLUDE_ROOT.'/api/src/WebDAV/Server.php');
 
 /**
  * EGroupware: GroupDAV access
