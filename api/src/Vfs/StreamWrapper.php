@@ -1103,7 +1103,10 @@ class StreamWrapper implements StreamWrapperIface
 		self::$symlink_cache[$path] = $target;
 
 		// sort longest path first
-		uksort(self::$symlink_cache,create_function('$b,$a','return strlen($a)-strlen($b);'));
+		uksort(self::$symlink_cache, function($b, $a)
+		{
+			return strlen($a) - strlen($b);
+		});
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$target) cache now ".array2string(self::$symlink_cache));
 	}
 

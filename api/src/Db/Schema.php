@@ -1369,7 +1369,10 @@ class Schema
 		{
 			if($this->capabilities['name_case'] == 'upper')
 			{
-				array_walk($primary,create_function('&$s','$s = strtolower($s);'));
+				array_walk($primary, function(&$s)
+				{
+					$s = strtolower($s);
+				});
 			}
 			$definition['pk'] = $primary;
 		}
@@ -1402,7 +1405,10 @@ class Schema
 				}
 				if($this->capabilities['name_case'] == 'upper')
 				{
-					array_walk($index['columns'],create_function('&$s','$s = strtolower($s);'));
+					array_walk($index['columns'], function(&$s)
+					{
+						$s = strtolower($s);
+					});
 				}
 				if (count($definition['pk']) && (implode(':',$definition['pk']) == implode(':',$index['columns']) ||
 					$index['unique'] && count(array_intersect($definition['pk'],$index['columns'])) == count($definition['pk'])))

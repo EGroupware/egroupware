@@ -2057,7 +2057,11 @@ class Db
 	{
 		$keys = array_keys($arr);
 
-		return array_walk($keys,create_function('&$v,$k,$strip','$v = str_replace($strip,\'\',$v);'),$strip) ?
+		return array_walk($keys, function(&$v, $k, $strip)
+		{
+			unset($k);	// not used, but required by function signature
+			$v = str_replace($strip, '', $v);
+		}, $strip) ?
 			array_combine($keys,$arr) : $arr;
 	}
 }

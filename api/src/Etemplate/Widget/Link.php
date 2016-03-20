@@ -90,7 +90,8 @@ class Link extends Etemplate\Widget
 		// ToDo: implement on client-side
 		if (!$attrs['help']) self::setElementAttribute($form_name, 'help', 'view this linked entry in its application');
 
-		if($attrs['type'] == 'link-list') {
+		if($attrs['type'] == 'link-list')
+		{
 			$app = $value['to_app'];
 			$id  = $value['to_id'];
 			$links = Api\Link::get_links($app,$id,'','link_lastmod DESC',true, $value['show_deleted']);
@@ -103,11 +104,18 @@ class Link extends Etemplate\Widget
 	/**
 	 * Find links that match the given parameters
 	 */
-	public static function ajax_link_search($app, $type, $pattern, $options=array()) {
+	public static function ajax_link_search($app, $type, $pattern, $options=array())
+	{
 		$options['type'] = $type ? $type : $options['type'];
 		if(!$options['num_rows']) $options['num_rows'] = 1000;
+
 		$links = Api\Link::query($app, $pattern, $options);
-		$linksc = array_combine(array_map(create_function('$k', 'return (string)" ".$k;'), array_keys($links)), $links);
+
+		$linksc = array_combine(array_map(function($k)
+		{
+			return (string)$k;
+		}, array_keys($links)), $links);
+
 		$response = Api\Json\Response::get();
 		$response->data($linksc);
 	}

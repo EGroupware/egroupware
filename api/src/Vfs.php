@@ -360,7 +360,10 @@ class Vfs extends Vfs\StreamWrapper
 		}
 		self::$fstab[$path] = $url;
 
-		uksort(self::$fstab,create_function('$a,$b','return strlen($a)-strlen($b);'));
+		uksort(self::$fstab, function($a, $b)
+		{
+			return strlen($a) - strlen($b);
+		});
 
 		if ($persitent_mount)
 		{

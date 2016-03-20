@@ -811,7 +811,10 @@ class Categories
 					($cat['appname'] != self::GLOBAL_APPNAME);
 			}
 			// sort heighest weight to the top
-			usort($cats,create_function('$a,$b',"return \$b['weight'] - \$a['weight'];"));
+			usort($cats, function($a, $b)
+			{
+				return $b['weight'] - $a['weight'];
+			});
 		}
 		return $cache[$cat['cat_name']] = (int) $cats[0]['id'];
 	}
