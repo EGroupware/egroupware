@@ -47,7 +47,8 @@ if(isset($_GET['menuaction']) && preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_\\\\]+\
 	{
 		list($app_from_class) = explode('_', $class);
 	}
-	if(!$app || !$class || !$method || isset($app_from_class) && $app_from_class != $app)
+	if(!$app || !$class || !$method || isset($app_from_class) &&
+		isset($GLOBALS['egw_info']['apps'][$app_from_class]) && $app_from_class != $app)
 	{
 		$invalid_data = True;
 	}
