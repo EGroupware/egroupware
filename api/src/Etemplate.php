@@ -687,39 +687,3 @@ class Etemplate extends Etemplate\Widget\Template
 		return (int)$size;
 	}
 }
-
-// Try to discover all widgets, as names don't always match tags (eg: listbox is in menupopup)
-foreach(scandir($dir=__DIR__ . '/Etemplate/Widget') as $filename)
-{
-	if(substr($filename, -4) == '.php')
-	{
-		try
-		{
-			include_once($dir.'/'.$filename);
-		}
-		catch(Exception $e)
-		{
-			error_log($e->getMessage());
-		}
-	}
-}
-
-// Use hook to load custom widgets from other apps
-$widgets = $GLOBALS['egw']->hooks->process('etemplate2_register_widgets');
-foreach($widgets as $app => $list)
-{
-	if (is_array($list))
-	{
-		foreach($list as $class)
-		{
-			try
-			{
-				class_exists($class);	// trigger autoloader
-			}
-			catch(Exception $e)
-			{
-				error_log($e->getMessage());
-			}
-		}
-	}
-}

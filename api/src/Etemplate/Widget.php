@@ -14,6 +14,7 @@
 namespace EGroupware\Api\Etemplate;
 
 use EGroupware\Api;
+use EGroupware\Api\Cache;
 use XMLReader;
 use ReflectionMethod;
 
@@ -286,6 +287,68 @@ class Widget
 		{
 			self::$widget_registry[$widget] = $class;
 		}
+	}
+	
+	/**
+	 * Try to discover all widgets, as names don't always match tags (eg:
+	 * listbox is in menupopup)
+	 *
+	 * Look through filesystem for widgets, then process the hook
+	 * 'etemplate2_register_widgets', which may return a list of widget class
+	 * names.
+	 *
+	 * The list is cached for an hour, to avoid rescanning the filesystem but
+	 * also to make sure the list is always available, even when calling static
+	 * functions of widgets.
+	 */
+	public static function scanForWidgets()
+	{
+
+		$widget_registry = Cache::getInstance('etemplate', 'widget_registry');
+
+		if (!$widget_registry)	// not in instance cache --> rescan from filesystem
+		{
+			foreach(scandir($dir=__DIR__ . '/Widget') as $filename)
+			{
+				if(substr($filename, -4) == '.php')
+				{
+					try
+					{
+						include_once($dir.'/'.$filename);
+					}
+					catch(Exception $e)
+					{
+						error_log($e->getMessage());
+					}
+				}
+			}
+
+			// Use hook to load custom widgets from other apps
+			$widgets = $GLOBALS['egw']->hooks->process('etemplate2_register_widgets',array(),true);
+			foreach($widgets as $app => $list)
+			{
+				if (is_array($list))
+				{
+					foreach($list as $class)
+					{
+						try
+						{
+							class_exists($class);	// trigger autoloader
+						}
+						catch(Exception $e)
+						{
+							error_log($e->getMessage());
+						}
+					}
+				}
+			}
+			Cache::setInstance('etemplate', 'widget_registry', self::$widget_registry, 3600);
+		}
+		else
+		{
+			self::$widget_registry = $widget_registry;
+		}
+		return self::$widget_registry;
 	}
 
 	/**
@@ -913,3 +976,6 @@ class Widget
 		return self::setElementAttribute($name, 'disabled', $disabled);
 	}
 }
+
+// Scan for widget classes and cache for 1 hour
+Widget::scanForWidgets();
