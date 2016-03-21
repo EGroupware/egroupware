@@ -168,6 +168,11 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 					}
 
 				},0);
+			})
+			.datepicker('option','onClose', function(dateText, inst) {
+				// Lose focus, avoids an issue with focus
+				// not allowing datepicker to re-open
+				inst.input.blur();
 			});
 		}
 
