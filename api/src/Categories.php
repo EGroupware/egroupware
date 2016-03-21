@@ -86,7 +86,7 @@ class Categories
 	 *
 	 * @var array cat_id => array of data
 	 */
-	private static $cache;
+	protected static $cache;
 	const CACHE_APP = 'phpgwapi';
 	const CACHE_NAME = 'cat_cache';
 
