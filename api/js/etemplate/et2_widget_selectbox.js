@@ -1110,11 +1110,12 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 		options_string = options_string.replace(/,+$/, '');
 
 		var cache_id = widget._type+'_'+options_string;
-		var cache = (
+		var cache_owner = (
 			egw.window.et2_selectbox ?
 				egw.window.et2_selectbox :
 				egw(window).window.et2_selectbox
-		).type_cache[cache_id];
+		).type_cache;
+		var cache = cache_owner[cache_id];
 
 		// Options for a selectbox in a nextmatch must be returned now, as the
 		// widget we have is not enough to set the options later.
@@ -1139,7 +1140,7 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 			).sendRequest(!in_nextmatch);
 			if(typeof cache === 'undefined')
 			{
-				egw.window.et2_selectbox.type_cache[cache_id] = req;
+				cache_owner[cache_id] = req;
 			}
 			cache = req;
 		}
@@ -1147,10 +1148,10 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 		{
 			// pending, wait for it
 			cache.done(jQuery.proxy(function(response) {
-				egw.window.et2_selectbox.type_cache[this.cache_id] = response.response[0].data||undefined;
+				cache = cache_owner[cache_id] = response.response[0].data||undefined;
 				// Set select_options in attributes in case we get a resonse before
 				// the widget is finished loading (otherwise it will re-set to {})
-				attrs.select_options = egw.window.et2_selectbox.type_cache[this.cache_id];
+				attrs.select_options = cache;
 
 				egw.window.setTimeout(jQuery.proxy(function() {
 					// Avoid errors if widget is destroyed before the timeout
@@ -1181,7 +1182,7 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 				// Try again - ask the server with the current value this time
 				if(missing_option)
 				{
-					delete egw.window.et2_selectbox.type_cache[cache_id];
+					delete cache_owner[cache_id];
 					return this.cached_server_side_options(widget, options_string, attrs);
 				}
 			}
