@@ -814,7 +814,7 @@ class infolog_bo
 				$values['info_percent'] = 0;
 			}
 			else if (
-				($values['info_status'] != 'archive' && in_array($values['info_status'], $this->stock_status[$values['info_type']])) &&
+				($values['info_status'] != 'archive' && $values['info_status'] != 'cancelled' && in_array($values['info_status'], $this->stock_status[$values['info_type']])) &&
 				((int)$values['info_percent'] == 100 || $values['info_percent'] == 0))
 			{
 				// We change percent to match status, not status to match percent
