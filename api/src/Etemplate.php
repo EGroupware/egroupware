@@ -691,11 +691,11 @@ class Etemplate extends Etemplate\Widget\Template
 // Try to discover all widgets, as names don't always match tags (eg: listbox is in menupopup)
 foreach(scandir($dir=__DIR__ . '/Etemplate/Widget') as $filename)
 {
-	if(substr($filname, -4) == '.php')
+	if(substr($filename, -4) == '.php')
 	{
 		try
 		{
-			include_once($dir.$filename);
+			include_once($dir.'/'.$filename);
 		}
 		catch(Exception $e)
 		{
