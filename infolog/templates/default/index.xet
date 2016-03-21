@@ -8,7 +8,7 @@
 	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
 		<hbox>
 			<date id="startdate" label="Start"/>
-			<date statustext="Leave it empty for a full week" id="enddate" label="End"/>
+			<date id="enddate" label="End"/>
 		</hbox>
 	</template>
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
