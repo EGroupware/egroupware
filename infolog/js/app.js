@@ -256,7 +256,7 @@ app.classes.infolog = AppJS.extend(
 
 			// Load new preferences
 			var colData = nm.columns.slice();
-			for(var i = 0; i < nm.columns.length; i++) colData[i].disabled=false;
+			for(var i = 0; i < nm.columns.length; i++) colData[i].visible=false;
 
 			nm.set_columns(egw.preference(nm.options.settings.columnselection_pref,'infolog').split(','));
 			nm._applyUserPreferences(nm.columns, colData);
@@ -265,7 +265,7 @@ app.classes.infolog = AppJS.extend(
 			for(var i = 0; i < colData.length; i++)
 			{
 				nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width);
-				nm.dataview.getColumnMgr().columns[i].set_visibility(!colData[i].disabled);
+				nm.dataview.getColumnMgr().columns[i].set_visibility(colData[i].visible);
 			}
 			nm.dataview.getColumnMgr().updated = true;
 			// Update page

@@ -534,11 +534,6 @@ class infolog_ui
 			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
 			!isset($GLOBALS['egw_info']['user']['apps']['admin'])
 		);
-		if($rows['no_info_owner_info_responsible'])
-		{
-			// dont show owner, responsible in the columnselection
-			$query['options-selectcols']['info_owner'] = $query['options-selectcols']['info_responsible'] = false;
-		}
 
 		// if filtered by type, show only the stati of the filtered type
 		$rows['sel_options']['info_status'] = $this->bo->get_status($query['col_filter']['info_type']);
