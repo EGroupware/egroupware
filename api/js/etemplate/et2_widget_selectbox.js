@@ -691,7 +691,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				if(typeof _options[key]["label"] == 'undefined' && typeof _options[key]["title"] == "undefined")
 				{
 					var group = $j(document.createElement("optgroup"))
-						.attr("label", this.options.no_lang ? key : this.egw().lang(key))
+						.attr("label", this.options.no_lang ? _options[key].value : this.egw().lang(_options[key].value))
 						.appendTo(this.input);
 					if(this.input == null)
 					{
@@ -702,6 +702,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 
 					for(var sub in _options[key])
 					{
+						if(sub == 'value') continue;
 						if (typeof _options[key][sub] === 'object' && _options[key][sub] !== null)
 						{
 							this._appendOptionElement(sub,
