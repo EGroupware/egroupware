@@ -308,13 +308,13 @@ class Widget
 
 		if (!$widget_registry)	// not in instance cache --> rescan from filesystem
 		{
-			foreach(scandir($dir=__DIR__ . '/Widget') as $filename)
+			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(__DIR__)) as $path)
 			{
-				if(substr($filename, -4) == '.php')
+				if(substr($path, -4) == '.php')
 				{
 					try
 					{
-						include_once($dir.'/'.$filename);
+						include_once($path);
 					}
 					catch(Exception $e)
 					{
@@ -388,6 +388,24 @@ class Widget
 					// Fall back to widget class, we can not ignore it, as the widget may contain other widgets
 					$class_name = __CLASS__;
 				}
+			}
+		}
+		else if (!class_exists($class_name))
+		{
+			// Class in widget registry, but not loaded
+			// Try for a base class
+			$subtypes = explode('-',$type);
+			$basetype = $subtypes[0];
+			$class_name = __CLASS__.'\\'.implode('\\',array_map('ucfirst',$subtypes));
+			if(!class_exists($class_name) && self::$widget_registry[$basetype] && self::$widget_registry[$basetype] != $class_name)
+			{
+				// Try for base type, it's probably better than the root
+				$class_name = self::$widget_registry[$basetype];
+			}
+			if(!class_exists($class_name))
+			{
+				// Fall back to widget class, we can not ignore it, as the widget may contain other widgets
+				$class_name = __CLASS__;
 			}
 		}
 
