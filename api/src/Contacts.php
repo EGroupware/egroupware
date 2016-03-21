@@ -18,6 +18,9 @@ namespace EGroupware\Api;
 
 use calendar_bo;	// to_do: do NOT require it, just use if there
 
+// explicitly import old, not yet ported api classes
+use preferences;
+
 /**
  * Business object for contacts
  */
