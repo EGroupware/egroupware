@@ -690,8 +690,9 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				// Optgroup
 				if(typeof _options[key]["label"] == 'undefined' && typeof _options[key]["title"] == "undefined")
 				{
+					var label = isNaN(key) ? key : _options[key].value;
 					var group = $j(document.createElement("optgroup"))
-						.attr("label", this.options.no_lang ? _options[key].value : this.egw().lang(_options[key].value))
+						.attr("label", this.options.no_lang ? label : this.egw().lang(label))
 						.appendTo(this.input);
 					if(this.input == null)
 					{
