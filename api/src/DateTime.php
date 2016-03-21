@@ -14,6 +14,7 @@ namespace EGroupware\Api;
 
 // we do not have an own implementation/extensions
 use DateTimeZone;
+use DateInterval;
 
 /**
  * EGroupware time and timezone handling class extending PHP's DateTime
@@ -177,7 +178,7 @@ class DateTime extends \DateTime
 	 */
 	public function add($interval)
 	{
-		if (is_string($interval)) $interval = \DateInterval::createFromDateString($interval);
+		if (is_string($interval)) $interval = DateInterval::createFromDateString($interval);
 
 		parent::add($interval);
 	}
