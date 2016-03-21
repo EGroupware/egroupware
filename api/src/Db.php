@@ -1562,7 +1562,7 @@ class Db
 		if ($this === $GLOBALS['egw']->db && $app != self::API_APPNAME)
 		{
 			// prevent that anyone switches the global db object to an other app
-			throw new Api\Exception\WrongParameter('You are not allowed to call set_app for $GLOBALS[egw]->db or a refence to it, you have to clone it!');
+			throw new Exception\WrongParameter('You are not allowed to call set_app for $GLOBALS[egw]->db or a refence to it, you have to clone it!');
 		}
 		$this->app = $app;
 	}
@@ -1735,7 +1735,7 @@ class Db
 		$inputarr = false;
 		if (isset($data[0]) && is_array($data[0]))	// multiple data rows
 		{
-			if ($where) throw new Api\Exception\WrongParameter('Can NOT use $where together with multiple data rows in $data!');
+			if ($where) throw new Exception\WrongParameter('Can NOT use $where together with multiple data rows in $data!');
 
 			$sql = "$cmd INTO $table ";
 			foreach($data as $k => $d)

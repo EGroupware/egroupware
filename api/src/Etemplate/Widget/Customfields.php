@@ -130,10 +130,8 @@ class Customfields extends Transformer
 		}
 
 		// if we are in the etemplate editor or the app has no cf's, load the cf's from the app the tpl belongs too
-		if ($app && $app != 'stylite' && $app != $GLOBALS['egw_info']['flags']['currentapp'] && !isset($customfields) && (
-			$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' || !$this->attrs['customfields'] ||
-			Etemplate::$hooked
-		) || !isset($customfields))
+		if ($app && $app != 'stylite' && $app != $GLOBALS['egw_info']['flags']['currentapp'] && !isset($customfields) &&
+			($GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' || !$this->attrs['customfields']) || !isset($customfields))
 		{
 			// app changed
 			$customfields =& Api\Storage\Customfields::get($app);

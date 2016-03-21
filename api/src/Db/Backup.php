@@ -313,11 +313,11 @@ class Backup
 	 */
 	function saveConfig($minCount,$backupFiles=null)
 	{
-		Config::save_value('backup_mincount',$this->backup_mincount=(int)$minCount,'phpgwapi');
+		Api\Config::save_value('backup_mincount',$this->backup_mincount=(int)$minCount,'phpgwapi');
 
 		if (!is_null($backupFiles))
 		{
-			Config::save_value('backup_files',$this->backup_files=(boolean)$backupFiles,'phpgwapi');
+			Api\Config::save_value('backup_files',$this->backup_files=(boolean)$backupFiles,'phpgwapi');
 		}
 	}
 
@@ -426,7 +426,7 @@ class Backup
 
 		if ($convert_to_system_charset)	// store the changed charset
 		{
-			$this->db->insert(Config::TABLE, array(
+			$this->db->insert(Api\Config::TABLE, array(
 				'config_value' => $this->schema_proc->system_charset,
 			),array(
 				'config_app' => 'phpgwapi',
@@ -918,7 +918,7 @@ class Backup
 			{
 				$zippresent = true;
 				//echo '-> is_object($zip); '.$filename.'<br>';	// !
-				$res = $zip->open($filename, ZIPARCHIVE::CREATE);
+				$res = $zip->open($filename, ZipArchive::CREATE);
 				if($res !== TRUE)
 				{
 					//echo '   -> !$res<br>';	// !

@@ -214,7 +214,7 @@ class Ads
 			if ($set_if_empty && ($dn = $this->id2name(-self::DOMAIN_USERS_GROUP, 'account_dn')))
 			{
 				$dn = preg_replace('/^CN=.*?,(CN|OU)=/i', '$1=', $dn);
-				config::save_value(self::ADS_CONTEXT, $this->frontend->config[self::ADS_CONTEXT]=$dn, 'phpgwapi');
+				Api\Config::save_value(self::ADS_CONTEXT, $this->frontend->config[self::ADS_CONTEXT]=$dn, 'phpgwapi');
 			}
 			else
 			{
@@ -522,7 +522,7 @@ class Ads
 	public function user_active(array $data)
 	{
 		$user = $this->_ldap2user($data);
-		$active = accounts::is_active($user);
+		$active = Api\Accounts::is_active($user);
 		//error_log(__METHOD__."(cn={$data['cn'][0]}, useraccountcontrol={$data['useraccountcontrol'][0]}, accountexpires={$data['accountexpires'][0]}) user=".array2string($user)." returning ".array2string($active));
 		return $active;
 	}
@@ -562,7 +562,7 @@ class Ads
 	protected static function _when2ts($_when)
 	{
 		static $utc=null;
-		if (!isset($utc)) $utc = new DateTimeZone('UTC');
+		if (!isset($utc)) $utc = new \DateTimeZone('UTC');
 
 		list($when) = explode('.', $_when);	// remove .0Z not understood by createFromFormat
 		$datetime = Api\DateTime::createFromFormat(self::WHEN_FORMAT, $when, $utc);
@@ -778,8 +778,8 @@ class Ads
 						break;
 					case 'account_lastpwd_change':
 						// Samba4 does not understand -1 for current time, but Win2008r2 only allows to set -1 (beside 0)
-						// call auth_ads::setLastPwdChange with true to get correct modification for both
-						$ldap = array_merge($ldap, auth_ads::setLastPwdChange($data['account_lid'], null, $data[$egw], true));
+						// call Api\Auth\Ads::setLastPwdChange with true to get correct modification for both
+						$ldap = array_merge($ldap, Api\Auth\Ads::setLastPwdChange($data['account_lid'], null, $data[$egw], true));
 						break;
 					default:
 						$attributes[$adldap] = $data[$egw];
@@ -910,7 +910,7 @@ class Ads
 					{
 						continue;
 					}
-					$account['account_fullname'] = common::display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname'],$account['account_id']);
+					$account['account_fullname'] = Api\Accounts::format_username($account['account_lid'],$account['account_firstname'],$account['account_lastname'],$account['account_id']);
 					$accounts[$account_id] = $account;
 				}
 			}

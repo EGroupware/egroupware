@@ -791,7 +791,7 @@ class Link extends Link\Storage
 		else
 		{
 			// if there is no object or no method, give a more explaining error message
-			throw new egw_exception_assertion_failed("Object has no method '$reg[query]'!");
+			throw new Exception\AssertionFailed("Object has no method '$reg[query]'!");
 		}
 
 		if (!isset($options['total']))
@@ -1073,7 +1073,7 @@ class Link extends Link\Storage
 			}
 			else
 			{
-				throw new egw_exception_assertion_failed("Missing 'mime_id' or 'mime_url' for mime-type '$type'!");
+				throw new Exception\AssertionFailed("Missing 'mime_id' or 'mime_url' for mime-type '$type'!");
 			}
 			unset($data['mime_popup']);
 		}
@@ -1473,10 +1473,10 @@ class Link extends Link\Storage
 		{
 			self::notify('update',$link['app'],$link['id'],$app,$id,$link_id,$data);
 		}
-		if($data[Link::OLD_LINK_TITLE] && Api\Json\Response::isJSONResponse())
+		if($data[Link::OLD_LINK_TITLE] && Json\Response::isJSONResponse())
 		{
 			// Update client side with new title
-			Api\Json\Response::get()->apply('egw.link_title_callback',array(array($app => array($id => self::title($app, $id)))));
+			Json\Response::get()->apply('egw.link_title_callback',array(array($app => array($id => self::title($app, $id)))));
 		}
 	}
 

@@ -124,7 +124,7 @@ class Contact extends Entry
 	 */
 	public function get_contact_fields()
 	{
-		ApiTranslation::add_app('addressbook');
+		Api\Translation::add_app('addressbook');
 
 		$this->contacts->__construct();
 		$options = $this->contacts->contact_fields;

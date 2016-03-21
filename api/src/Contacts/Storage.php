@@ -909,7 +909,7 @@ class Storage
 		$sql_contacts  = new Sql();
 		// we need an admin connection
 		$ds = $GLOBALS['egw']->ldap->ldapConnect();
-		$ldap_contacts = new addressbook_ldap(null, $ds);
+		$ldap_contacts = new Ldap(null, $ds);
 
 		if (!is_array($type)) $type = explode(',', $type);
 

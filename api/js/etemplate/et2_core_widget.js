@@ -74,6 +74,11 @@ function et2_createWidget(_name, _attrs, _parent)
 		_attrs = {};
 	}
 
+	if (typeof _attrs != "object")
+	{
+		_attrs = {};
+	}
+
 	if (typeof _parent == "undefined")
 	{
 		_parent = null;

@@ -119,7 +119,7 @@ class Deprecated extends Api\Db
 	{
 		if (!$this->Query_ID)
 		{
-			throw new Exception\Db('next_record called with no query pending.');
+			throw new Exception('next_record called with no query pending.');
 		}
 		if ($this->Row)	// first row is already fetched
 		{
@@ -174,7 +174,7 @@ class Deprecated extends Api\Db
 	{
 		if (!$this->Query_ID  || !$this->Query_ID->Move($this->Row = $pos))
 		{
-			throw new Exception\Db("seek($pos) failed: resultset has " . $this->num_rows() . " rows");
+			throw new Exception("seek($pos) failed: resultset has " . $this->num_rows() . " rows");
 		}
 		return True;
 	}

@@ -43,8 +43,8 @@ class Utils extends StreamWrapper
 		$stmt->bindColumn(1,$fs_id);
 		$stmt->bindColumn(2,$fs_name);
 		$stmt->bindColumn(3,$fs_size);
-		$stmt->bindColumn(4,$fs_content,PDO::PARAM_LOB);
-		$stmt->bindValue(':offset', $n, PDO::PARAM_INT);
+		$stmt->bindColumn(4,$fs_content,\PDO::PARAM_LOB);
+		$stmt->bindValue(':offset', $n, \PDO::PARAM_INT);
 
 		while ($stmt->execute())
 		{
@@ -88,7 +88,7 @@ class Utils extends StreamWrapper
 			}
 			if (!$n) break;	// just in case nothing is found, statement will execute just fine
 
-			$stmt->bindValue(':offset', $n, PDO::PARAM_INT);
+			$stmt->bindValue(':offset', $n, \PDO::PARAM_INT);
 		}
 		unset($row);	// not used, as we access bound variables
 		unset($stmt);

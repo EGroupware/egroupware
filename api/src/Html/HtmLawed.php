@@ -11,8 +11,12 @@
  */
 
 namespace EGroupware\Api\Html;
+
 use EGroupware\Api;
-use translation;
+
+// explicitly name old, not yet converted api classes
+use translation;	// mail specific stuff not in Api\Translation
+use emailadmin_imapbase;
 
 require_once(__DIR__.'/htmLawed/htmLawed.php');
 

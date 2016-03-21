@@ -1089,7 +1089,7 @@ class Base
 		// ToDo: Implement that as an iterator, as $rs is also an interator and we could return one instead of an array
 		if ($this->search_return_iterator)
 		{
-			return new so_sql_db2data_iterator($this,$rs);
+			return new Db2DataIterator($this,$rs);
 		}
 		$arr = array();
 		$n = 0;

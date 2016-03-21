@@ -23,6 +23,7 @@ use EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi or old structure
 use common;	// next_id
+use setup_cmd_ldap;
 
 /**
  * LDAP Backend for accounts
@@ -595,7 +596,7 @@ class Ldap
 		{
 			if (preg_match('/^[a-f0-9]{32}$/', $data['account_passwd']))	// md5 --> ldap md5
 			{
-				$data['account_passwd'] = setup_cmd_Api\Ldap::hash_sql2ldap($data['account_passwd']);
+				$data['account_passwd'] = setup_cmd_ldap::hash_sql2ldap($data['account_passwd']);
 			}
 			elseif (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']))	// if it's not already entcrypted, do so now
 			{

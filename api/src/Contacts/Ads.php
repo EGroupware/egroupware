@@ -158,7 +158,7 @@ class Ads extends Ldap
 		// we cant use ldap::quote() for win2008r2 hex GUID, as it contains backslashes
 		if (!preg_match('/^[0-9A-Fa-f-]+/', $contact_id))
 		{
-			throw new egw_exception_assertion_failed("'$contact_id' is NOT a valid GUID!");
+			throw new Api\Exception\AssertionFailed("'$contact_id' is NOT a valid GUID!");
 		}
 
 		// samba4 can only search by string representation of objectGUID, while win2008r2 requires hex representation

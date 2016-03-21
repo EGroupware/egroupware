@@ -12,6 +12,8 @@
 
 namespace EGroupware\Api\Contacts;
 
+use EGroupware\Api\Accounts;
+
 /**
  * Univention backend for addressbook
  *
@@ -22,7 +24,7 @@ class Univention extends Ldap
 	function __construct($ldap_config = null, $ds = null)
 	{
 		$this->schema2egw['univentionmail'] = array(
-			'email'			=> accounts_univention::MAIL_ATTR,
+			'email'			=> Accounts\Univention::MAIL_ATTR,
 		);
 		parent::__construct($ldap_config, $ds);
 	}

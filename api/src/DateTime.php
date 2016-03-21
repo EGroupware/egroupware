@@ -167,7 +167,7 @@ class DateTime extends \DateTime
 				}
 				// fall through
 			default:
-				throw new egw_exception_assertion_failed("Not implemented for type ($type)$time!");
+				throw new Exception\AssertionFailed("Not implemented for type ($type)$time!");
 		}
 	}
 
@@ -483,7 +483,6 @@ class DateTime extends \DateTime
 	 * @param string $tz timezone, eg. 'Europe/Berlin' or 'UTC'
 	 * @param string $dateformat ='' eg. 'Y-m-d' or 'd.m.Y'
 	 * @param string|int $timeformat ='' integer 12, 24, or format string eg. 'H:i'
-	 * @throws egw_exception_wrong_userinput if invalid $tz parameter
 	 * @return DateTimeZone
 	 */
 	public static function setUserPrefs($tz,$dateformat='',$timeformat='')
@@ -508,7 +507,7 @@ class DateTime extends \DateTime
 		try {
 			self::$user_timezone = new DateTimeZone($tz);
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			unset($e);
 			// silently use server timezone, as we have no means to report the wrong timezone to the user from this class
