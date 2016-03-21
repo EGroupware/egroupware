@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware - eTemplate serverside implementation of the nextmatch filter header widget
+ * EGroupware - eTemplate serverside implementation of the nextmatch account filter header widget
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
@@ -18,7 +18,7 @@ use EGroupware\Api\Etemplate\Widget;
 /**
  * Extend selectbox and change type so proper users / groups get loaded, according to preferences
  */
-class AccountFilter extends Widget\Select
+class Accountfilter extends Widget\Select
 {
 	/**
 	 * Parse and set extra attributes from xml in template object
@@ -33,3 +33,4 @@ class AccountFilter extends Widget\Select
 		$this->attrs['type'] = 'select-account';
 	}
 }
+Customfilter::registerWidget(__NAMESPACE__.'\\Accountfilter', array('nextmatch-accountfilter'));

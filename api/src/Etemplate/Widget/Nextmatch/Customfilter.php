@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware - eTemplate serverside implementation of the nextmatch filter header widget
+ * EGroupware - eTemplate serverside implementation of the nextmatch custom filter header widget
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
@@ -18,7 +18,7 @@ use EGroupware\Api\Etemplate\Widget;
 /**
  * A filter widget that fakes another (select) widget and turns it into a nextmatch filter widget.
  */
-class NextmatchCustomFilter extends Widget\Transformer
+class Customfilter extends Widget\Transformer
 {
 
 	protected $legacy_options = 'type,widget_options';
@@ -40,7 +40,7 @@ class NextmatchCustomFilter extends Widget\Transformer
 				list($type) = explode('-',$this->attrs['type']);
 				if($type == 'select')
 				{
-					if(in_array($this->attrs['type'], Select::$cached_types))
+					if(in_array($this->attrs['type'], Widget\Select::$cached_types))
 					{
 						$widget_type = $this->attrs['type'];
 					}
@@ -60,3 +60,4 @@ class NextmatchCustomFilter extends Widget\Transformer
 		parent::beforeSendToClient($cname, $expand);
 	}
 }
+Customfilter::registerWidget(__NAMESPACE__.'\\Customfilter', array('nextmatch-customfilter'));

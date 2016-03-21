@@ -21,3 +21,5 @@ use EGroupware\Api\Etemplate\Widget;
 class Filterheader extends Widget\Select
 {
 }
+
+Customfilter::registerWidget(__NAMESPACE__.'\\Filterheader', array('nextmatch-filterheader'));
