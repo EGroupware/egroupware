@@ -333,8 +333,9 @@ etemplate2.prototype.download = function(_url)
  * @param {object} _data object with attributes content, langRequire, etemplate_exec_id, ...
  * @param {function} _callback called after tempalte is loaded
  * @param {object} _app local app object
+ * @param {boolean} _no_et2_ready true: do not send et2_ready, used by et2_dialog to not overwrite app.js et2 object
  */
-etemplate2.prototype.load = function(_name, _url, _data, _callback, _app)
+etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et2_ready)
 {
 	var app = _app || window.app;
 	this.name = _name;	// store top-level template name to have it available in widgets
@@ -529,11 +530,11 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app)
 				{
 					_callback.call(window,this,_name);
 				}
-				if(app_callback && _callback != app_callback)
+				if(app_callback && _callback != app_callback && !_no_et2_ready)
 				{
 					app_callback.call(window,this,_name);
 				}
-				if(appname && appname != this.app && typeof app[this.app] == "object")
+				if(appname && appname != this.app && typeof app[this.app] == "object" && !_no_et2_ready)
 				{
 					// Loaded a template from a different application?
 					// Let the application that loaded it know too

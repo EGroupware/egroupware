@@ -428,7 +428,9 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 		else
 		{
 			// Just template name, it better be loaded already
-			this.template.load(template,'',this.options.value||{});
+			this.template.load(template, '', this.options.value || {},
+				// true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
+				undefined, undefined, true);
 		}
 		// set template-name as id, to allow to style dialogs
 		this.div.children().attr('id', template.replace(/^(.*\/)?([^/]+)(\.xet)?$/, '$2').replace(/\./g, '-'));
