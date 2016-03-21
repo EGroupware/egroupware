@@ -34,6 +34,16 @@ function check_namespace($file)
 		return str_repeat("\n", substr_count($matches[0], "\n"));
 	}, $content);
 
+	// find classes declared in file itself, in case they are used
+	$declared = array();
+	foreach(explode("\n", $lines) as $num => $line)
+	{
+		$matches = null;
+		if (preg_match('/class\s+([^ ]+)/', $line, $matches))
+		{
+			$declared[] = $matches[1];
+		}
+	}
 	$namespace = '';
 	$use = array();
 	$allways = array('self', 'parent', 'static');
@@ -69,7 +79,7 @@ function check_namespace($file)
 		{
 			$parts = explode('\\', $class);
 			$first_part = array_shift($parts);
-			if (in_array($class, $allways) || $class[0] == '\\' || in_array($first_part, $use))
+			if (in_array($class, $allways) || in_array($class, $declared) || $class[0] == '\\' || in_array($first_part, $use))
 			{
 				unset($all_matches[$c]);
 				continue;
