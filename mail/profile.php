@@ -24,11 +24,10 @@ $GLOBALS['egw_info'] = array(
 		'disable_Template_class' => True,
 		'noheader'  => True,
 		'currentapp' => 'mail',
-		'autocreate_session_callback' => 'egw_digest_auth::autocreate_session_callback',
+		'autocreate_session_callback' => 'EGroupware\\Api\\Header\\Authenticate::autocreate_session_callback',
 		'auth_realm' => 'EGroupware mail profile',
 	)
 );
-//require_once('../phpgwapi/inc/class.egw_digest_auth.inc.php');
 include(dirname(__DIR__).'/header.inc.php');
 
 $headertime = microtime(true);

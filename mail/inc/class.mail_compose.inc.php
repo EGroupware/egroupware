@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @package mail
  * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013-2014 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2013-2016 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api\Vfs;
 
 /**
  * Mail interface class for compose mails in popup
@@ -327,10 +329,10 @@ class mail_compose
 			foreach ($_content['selectFromVFSForCompose'] as $i => $path)
 			{
 				$_content['uploadForCompose'][] = array(
-					'name' => egw_vfs::basename($path),
-					'type' => egw_vfs::mime_content_type($path),
-					'file' => egw_vfs::PREFIX.$path,
-					'size' => filesize(egw_vfs::PREFIX.$path),
+					'name' => Vfs::basename($path),
+					'type' => Vfs::mime_content_type($path),
+					'file' => Vfs::PREFIX.$path,
+					'size' => filesize(Vfs::PREFIX.$path),
 				);
 			}
 			unset($_content['selectFromVFSForCompose']);
@@ -352,9 +354,9 @@ class mail_compose
 					unset($_content['uploadForCompose'][$i]);
 					continue;
 				}
-				if (is_dir($upload['file']) && (!$_content['filemode'] || $_content['filemode'] == egw_sharing::ATTACH))
+				if (is_dir($upload['file']) && (!$_content['filemode'] || $_content['filemode'] == Vfs\Sharing::ATTACH))
 				{
-					$_content['filemode'] = egw_sharing::READONLY;
+					$_content['filemode'] = Vfs\Sharing::READONLY;
 					egw_framework::message(lang('Directories have to be shared.'), 'info');
 				}
 			}
@@ -879,8 +881,8 @@ class mail_compose
 				if (isset($_REQUEST['preset']['file']))
 				{
 					$content['filemode'] = !empty($_REQUEST['preset']['filemode']) &&
-						isset(egw_sharing::$modes[$_REQUEST['preset']['filemode']]) ?
-							$_REQUEST['preset']['filemode'] : egw_sharing::ATTACH;
+						isset(Vfs\Sharing::$modes[$_REQUEST['preset']['filemode']]) ?
+							$_REQUEST['preset']['filemode'] : Vfs\Sharing::ATTACH;
 
 					$names = (array)$_REQUEST['preset']['name'];
 					$types = (array)$_REQUEST['preset']['type'];
@@ -895,14 +897,14 @@ class mail_compose
 						//error_log(__METHOD__.__LINE__.$path.'->'.array2string(parse_url($path,PHP_URL_SCHEME == 'vfs')));
 						if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
 						{
-							//egw_vfs::load_wrapper('vfs');
-							$type = egw_vfs::mime_content_type($path);
+							//Vfs::load_wrapper('vfs');
+							$type = Vfs::mime_content_type($path);
 							// special handling for attaching vCard of iCal --> use their link-title as name
 							if (substr($path,-7) != '/.entry' ||
 								!(list($app,$id) = array_slice(explode('/',$path),-3)) ||
 								!($name = egw_link::title($app, $id)))
 							{
-								$name = egw_vfs::decodePath(egw_vfs::basename($path));
+								$name = Vfs::decodePath(Vfs::basename($path));
 							}
 							else
 							{
@@ -912,12 +914,12 @@ class mail_compose
 							$formData = array(
 								'name' => $name,
 								'type' => $type,
-								'file' => egw_vfs::decodePath($path),
-								'size' => filesize(egw_vfs::decodePath($path)),
+								'file' => Vfs::decodePath($path),
+								'size' => filesize(Vfs::decodePath($path)),
 							);
-							if ($formData['type'] == egw_vfs::DIR_MIME_TYPE && $content['filemode'] == egw_sharing::ATTACH)
+							if ($formData['type'] == Vfs::DIR_MIME_TYPE && $content['filemode'] == Vfs\Sharing::ATTACH)
 							{
-								$content['filemode'] = egw_sharing::READONLY;
+								$content['filemode'] = Vfs\Sharing::READONLY;
 								egw_framework::message(lang('Directories have to be shared.'), 'info');
 							}
 						}
@@ -1241,7 +1243,7 @@ class mail_compose
 		if (isset($content['mimeType'])) $preserv['mimeType'] = $content['mimeType'];
 		$sel_options['mimeType'] = self::$mimeTypes;
 		$sel_options['priority'] = self::$priorities;
-		$sel_options['filemode'] = egw_sharing::$modes;
+		$sel_options['filemode'] = Vfs\Sharing::$modes;
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new etemplate_new('mail.compose');
@@ -1416,7 +1418,7 @@ class mail_compose
 				if(count($merge_ids) <= 1)
 				{
 					$results = $this->mail_bo->importMessageToMergeAndSend(
-						$document_merge, egw_vfs::PREFIX . $_REQUEST['document'], $merge_ids, $folder, $merged_mail_id
+						$document_merge, Vfs::PREFIX . $_REQUEST['document'], $merge_ids, $folder, $merged_mail_id
 					);
 
 					// Open compose
@@ -1838,7 +1840,7 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.array2string($_GET));
 		if (parse_url($attachment['tmp_name'],PHP_URL_SCHEME) == 'vfs')
 		{
-			egw_vfs::load_wrapper('vfs');
+			Vfs::load_wrapper('vfs');
 		}
 		// attachment data in temp_dir, only use basename of given name, to not allow path traversal
 		else
@@ -2304,7 +2306,7 @@ class mail_compose
 			$signature = mail_bo::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		}
 		*/
-		if ($_formData['attachments'] && $_formData['filemode'] != egw_sharing::ATTACH && !$_autosaving)
+		if ($_formData['attachments'] && $_formData['filemode'] != Vfs\Sharing::ATTACH && !$_autosaving)
 		{
 			$attachment_links = $this->getAttachmentLinks($_formData['attachments'], $_formData['filemode'],
 				$_formData['mimeType'] == 'html',
@@ -2422,11 +2424,11 @@ class mail_compose
 						}
 					}
 					// attach files not for autosaving
-					elseif ($_formData['filemode'] == egw_sharing::ATTACH && !$_autosaving)
+					elseif ($_formData['filemode'] == Vfs\Sharing::ATTACH && !$_autosaving)
 					{
 						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
 						{
-							egw_vfs::load_wrapper('vfs');
+							Vfs::load_wrapper('vfs');
 							$tmp_path = $attachment['file'];
 						}
 						else	// non-vfs file has to be in temp_dir
@@ -2451,7 +2453,7 @@ class mail_compose
 	 * We only care about file attachments, not forwarded messages or parts
 	 *
 	 * @param array $attachments
-	 * @param string $filemode egw_sharing::(ATTACH|LINK|READONL|WRITABLE)
+	 * @param string $filemode Vfs\Sharing::(ATTACH|LINK|READONL|WRITABLE)
 	 * @param boolean $html
 	 * @param array $recipients =array()
 	 * @param string $expiration =null
@@ -2460,7 +2462,7 @@ class mail_compose
 	 */
 	protected function getAttachmentLinks(array $attachments, $filemode, $html, $recipients=array(), $expiration=null, $password=null)
 	{
-		if ($filemode == egw_sharing::ATTACH) return '';
+		if ($filemode == Vfs\Sharing::ATTACH) return '';
 
 		$links = array();
 		foreach($attachments as $attachment)
@@ -2472,26 +2474,26 @@ class mail_compose
 				$path = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($path);
 			}
 			// create share
-			if ($filemode == egw_sharing::WRITABLE || $expiration || $password)
+			if ($filemode == Vfs\Sharing::WRITABLE || $expiration || $password)
 			{
 				$share = stylite_sharing::create($path, $filemode, $attachment['name'], $recipients, $expiration, $password);
 			}
 			else
 			{
-				$share = egw_sharing::create($path, $filemode, $attachment['name'], $recipients);
+				$share = Vfs\Sharing::create($path, $filemode, $attachment['name'], $recipients);
 			}
-			$link = egw_sharing::share2link($share);
+			$link = Vfs\Sharing::share2link($share);
 
-			$name = egw_vfs::basename($attachment['name'] ? $attachment['name'] : $attachment['file']);
+			$name = Vfs::basename($attachment['name'] ? $attachment['name'] : $attachment['file']);
 
 			if ($html)
 			{
 				$links[] = html::a_href($name, $link).' '.
-					(is_dir($path) ? lang('Directory') : egw_vfs::hsize($attachment['size']));
+					(is_dir($path) ? lang('Directory') : Vfs::hsize($attachment['size']));
 			}
 			else
 			{
-				$links[] = $name.' '.egw_vfs::hsize($attachment['size']).': '.
+				$links[] = $name.' '.Vfs::hsize($attachment['size']).': '.
 					(is_dir($path) ? lang('Directory') : $link);
 			}
 		}
@@ -3475,7 +3477,7 @@ class mail_compose
 		// Actually do the merge
 		$folder = $merged_mail_id = null;
 		$results = $this->mail_bo->importMessageToMergeAndSend(
-			$document_merge, egw_vfs::PREFIX . $_REQUEST['document'],
+			$document_merge, Vfs::PREFIX . $_REQUEST['document'],
 			// Send an extra non-numeric ID to force actual send of document
 			// instead of save as draft
 			array((int)$contact_id, ''),
