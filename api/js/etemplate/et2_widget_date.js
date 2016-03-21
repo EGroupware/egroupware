@@ -1303,15 +1303,12 @@ var et2_date_range = (function(){ "use strict"; return et2_inputWidget.extend({
 		// Show description
 		this.select.set_value(_value);
 
-		var now = new Date();
-		now.setUTCMinutes(-now.getTimezoneOffset());
-		now.setUTCHours(0);
-		now.setUTCSeconds(0);
-
+		var tempDate = new Date();
+		var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
 
 		// Use strings to avoid references
-		this.from.set_value(now.toJSON());
-		this.to.set_value(now.toJSON());
+		this.from.set_value(today.toJSON());
+		this.to.set_value(today.toJSON());
 
 		var relative = null;
 		for(var index in et2_date_range.relative_dates)
@@ -1325,7 +1322,7 @@ var et2_date_range = (function(){ "use strict"; return et2_inputWidget.extend({
 		if(relative)
 		{
 			var dates = ["from","to"];
-			var value = now.toJSON();
+			var value = today.toJSON();
 			for(var i = 0; i < dates.length; i++)
 			{
 				var date = dates[i];
@@ -1353,13 +1350,16 @@ jQuery.extend(et2_date_range,
 		{
 			value: 'Today',
 			label: 'Today',
-			from: '',
-			to: '+1d'
+			from: function(date) {return date;},
+			to: function(date) {return date;}
 		},
 		{
 			label: 'Yesterday',
 			value: 'Yesterday',
-			from: '-1d',
+			from: function(date) {
+				date.setUTCDate(date.getUTCDate() - 1);
+				return date;
+			},
 			to: ''
 		},
 		{
@@ -1387,20 +1387,49 @@ jQuery.extend(et2_date_range,
 		{
 			label: 'This month',
 			value: 'This month',
-			from: '',
-			to: '+1m'
+			from: function(date)
+			{
+				date.setUTCDate(1);
+				return date;
+			},
+			to: function(date)
+			{
+				date.setUTCMonth(date.getUTCMonth()+1);
+				date.setUTCDate(0);
+				return date;
+			}
 		},
 		{
 			label: 'Last month',
 			value: 'Last month',
-			from: '-1m',
-			to: ''
+			from: function(date)
+			{
+				date.setUTCMonth(date.getUTCMonth() - 1);
+				date.setUTCDate(1);
+				return date;
+			},
+			to: function(date)
+			{
+				date.setUTCMonth(date.getUTCMonth()+1);
+				date.setUTCDate(0);
+				return date;
+			}
 		},
 		{
 			label: 'Last 3 months',
 			value: 'Last 3 months',
-			from: '-3m',
-			to: ''
+			from: function(date)
+			{
+				date.setUTCMonth(date.getUTCMonth() - 2);
+				date.setUTCDate(1);
+				return date;
+			},
+			to: function(date)
+			{
+				date.setUTCMonth(date.getUTCMonth()+3);
+				date.setUTCDate(0);
+				return date;
+			}
 		},
 		/*
 		'This quarter'=> array(0,0,0,0,  0,0,0,0),      // Just a marker, needs special handling
