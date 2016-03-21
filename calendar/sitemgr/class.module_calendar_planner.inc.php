@@ -166,15 +166,20 @@ class module_calendar_planner extends Module
 		}
 
 		$calendar_bo = new calendar_bo();
- 		foreach ($calendar_bo->resources as $resource)
+		$query = '';
+		$options = array('start' => 0, 'num_rows' => 50);
+ 		foreach ($calendar_bo->resources as $type => $data)
 		{
-			if(!is_array($resource['cal_sidebox'])) continue;
-			$this->arguments['resources']['options'] = array_merge($this->arguments['resources']['options'],
-				ExecMethod($resource['cal_sidebox']['file'],array(
-					'menuaction' => $_GET['menuaction'],
-					'block_id' => $_GET['block_id'],
-					'return_array' => true,
-				)));
+			if ($type != '' && $data['app'] && egw_link::get_registry($data['app'], 'query'))
+			{
+				$_results = egw_link::query($data['app'], $query,$options);
+			}
+			if(!$_results) continue;
+			$_results = array_unique($_results);
+			foreach ($_results as $key => $value)
+			{
+				$this->arguments['resources']['options'][$type.$key] = $value;
+			}
 		}
 		$this->arguments['resources']['multiple'] = count($this->arguments['resources']['options']) ? 4 : 0;
 
@@ -245,7 +250,7 @@ class module_calendar_planner extends Module
 			$ui = new calendar_uiviews();
 			$ui->sortby = $arguments['sortby'];
 			$ui->owner = $params['owner'];
-			
+
 			if (!$ui->planner_view || $ui->planner_view == 'month')	// planner monthview
 			{
 				if ($ui->day < 15)	// show one complete month
@@ -292,13 +297,13 @@ class module_calendar_planner extends Module
 
 			$tmpl->setElementAttribute('planner','start_date', egw_time::to($ui->first, egw_time::ET2));
 			$tmpl->setElementAttribute('planner','end_date', egw_time::to($ui->last, egw_time::ET2));
-			$tmpl->setElementAttribute('planner','owner', $search_params['users']);
+			$tmpl->setElementAttribute('planner','owner', $search_params['owner']);
 			$tmpl->setElementAttribute('planner','group_by', $ui->sortby);
 			$tmpl->exec(__METHOD__, $content,array(), array('__ALL__' => true),array(),2);
 			$html .= ob_get_contents();
 			$html .= '<script>'
 			. '$j(function() {app.calendar.set_state(' . json_encode(array(
-					'owner' => $search_params['users'],
+					'owner' => $search_params['owner'],
 					'sortby' => $ui->sortby,
 					'filter' => $arguments['filter']
 				)).');'
