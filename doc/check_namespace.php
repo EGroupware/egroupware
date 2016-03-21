@@ -28,8 +28,11 @@ function check_namespace($file)
 
 	if (($content = file_get_contents($file)) === false) return false;
 
-	// remove commented lines
-	$lines = preg_replace('#(//.*$|/\\*.*\\*/)#msU', '', $content);
+	// replace commented lines with empty ones
+	$lines = preg_replace_callback('#(//.*$|/\\*.*\\*/)#msU', function($matches)
+	{
+		return str_repeat("\n", substr_count($matches[0], "\n"));
+	}, $content);
 
 	$namespace = '';
 	$use = array();
