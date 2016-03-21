@@ -10,6 +10,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Vfs;
+
 /**
  * Filemanage user interface class
  */
@@ -53,13 +56,13 @@ class filemanager_ui
 			$_GET = etemplate::array_stripslashes($_GET);
 		}
 		// do we have root rights
-		if (egw_session::appsession('is_root','filemanager'))
+		if (Api\Cache::getSession('filemanager', 'is_root'))
 		{
-			egw_vfs::$is_root = true;
+			Vfs::$is_root = true;
 		}
 
 		static::init_views();
-		static::$merge_prop_namespace = egw_vfs::DEFAULT_PROP_NAMESPACE.$GLOBALS['egw_info']['flags']['currentapp'];
+		static::$merge_prop_namespace = Vfs::DEFAULT_PROP_NAMESPACE.$GLOBALS['egw_info']['flags']['currentapp'];
 	}
 
 	/**
@@ -93,7 +96,7 @@ class filemanager_ui
 	 */
 	public static function get_view()
 	{
-		$view =& egw_cache::getSession('filemanager', 'view');
+		$view =& Api\Cache::getSession('filemanager', 'view');
 		if (isset($_GET['view']))
 		{
 			$view = $_GET['view'];
@@ -142,7 +145,7 @@ class filemanager_ui
 				'caption' => lang('Edit settings'),
 				'group' => $group,
 				'allowOnMultiple' => false,
-				'onExecute' => html::$ua_mobile?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
+				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
 				'mobileViewTemplate' => 'file'
 			),
 			'mkdir' => array(
@@ -210,7 +213,7 @@ class filemanager_ui
 		}
 		else
 		{
-			foreach(egw_sharing::$modes as $mode => $data)
+			foreach(Vfs\Sharing::$modes as $mode => $data)
 			{
 				$actions['mail']['children']['mail_'.$mode] = array(
 					'caption' => $data['label'],
@@ -238,15 +241,15 @@ class filemanager_ui
 		switch($scope)
 		{
 			case 'self':
-				$props = egw_vfs::propfind($path, static::$merge_prop_namespace);
+				$props = Vfs::propfind($path, static::$merge_prop_namespace);
 				$app = empty($props) ? null : $props[0]['val'];
 				break;
 			case 'parents':
 				// search for props in parent directories
 				$currentpath = $path;
-				while($dir = egw_vfs::dirname($currentpath))
+				while($dir = Vfs::dirname($currentpath))
 				{
-					$props = egw_vfs::propfind($dir, static::$merge_prop_namespace);
+					$props = Vfs::propfind($dir, static::$merge_prop_namespace);
 					if(!empty($props))
 					{
 						// found prop in parent directory
@@ -271,7 +274,7 @@ class filemanager_ui
 		if (!is_array($content))
 		{
 			$content = array(
-				'nm' => egw_session::appsession('index','filemanager'),
+				'nm' => Api\Cache::getSession('filemanager', 'index'),
 			);
 			if (!is_array($content['nm']))
 			{
@@ -293,7 +296,7 @@ class filemanager_ui
 					'row_modified'   => 'mtime',
 					'parent_id'      => 'dir',
 					'is_parent'      => 'mime',
-					'is_parent_value'=> egw_vfs::DIR_MIME_TYPE,
+					'is_parent_value'=> Vfs::DIR_MIME_TYPE,
 					'favorites'      => true,
 					'placeholder_actions' => array('mkdir','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 				);
@@ -319,19 +322,19 @@ class filemanager_ui
 				switch($path)
 				{
 					case '..':
-						$path = egw_vfs::dirname($content['nm']['path']);
+						$path = Vfs::dirname($content['nm']['path']);
 						break;
 					case '~':
 						$path = static::get_home_dir();
 						break;
 				}
-				if ($path[0] == '/' && egw_vfs::stat($path,true) && egw_vfs::is_dir($path) && egw_vfs::check_access($path,egw_vfs::READABLE))
+				if ($path[0] == '/' && Vfs::stat($path,true) && Vfs::is_dir($path) && Vfs::check_access($path,Vfs::READABLE))
 				{
 					$content['nm']['path'] = $path;
 				}
 				else
 				{
-					$msg .= lang('The requested path %1 is not available.',egw_vfs::decodePath($path));
+					$msg .= lang('The requested path %1 is not available.',Vfs::decodePath($path));
 				}
 				// reset lettersearch as it confuses users (they think the dir is empty)
 				$content['nm']['searchletter'] = false;
@@ -341,10 +344,6 @@ class filemanager_ui
 		}
 		$view = static::get_view();
 
-		if (strpos($view,'::') !== false && version_compare(PHP_VERSION,'5.3.0','<'))
-		{
-			$view = explode('::',$view);
-		}
 		call_user_func($view,$content,$msg);
 	}
 
@@ -367,15 +366,15 @@ class filemanager_ui
 		else
 		{
 			// config user & password
-			$is_setup = egw_session::user_pw_hash($user,$password) === $GLOBALS['egw_info']['server']['config_hash'];
+			$is_setup = Api\Session::user_pw_hash($user,$password) === $GLOBALS['egw_info']['server']['config_hash'];
 			// or vfs root user from setup >> configuration
 			$is_root = $is_setup ||	$GLOBALS['egw_info']['server']['vfs_root_user'] &&
 				in_array($user,preg_split('/, */',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
 				$GLOBALS['egw']->auth->authenticate($user, $password, 'text');
 		}
-		//echo "<p>".__METHOD__."('$user','$password',$is_setup) user_pw_hash(...)='".egw_session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root)."</p>\n";
-		egw_session::appsession('is_setup','filemanager',$is_setup);
-		return egw_session::appsession('is_root','filemanager',egw_vfs::$is_root = $is_root);
+		//echo "<p>".__METHOD__."('$user','$password',$is_setup) user_pw_hash(...)='".Api\Session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root)."</p>\n";
+		Api\Cache::setSession('filemanager', 'is_setup',$is_setup);
+		return Api\Cache::setSession('filemanager', 'is_root',Vfs::$is_root = $is_root);
 	}
 
 	/**
@@ -386,7 +385,7 @@ class filemanager_ui
 	 */
 	function listview(array $content=null,$msg=null)
 	{
-		$tpl = new etemplate_new('filemanager.index');
+		$tpl = new Api\Etemplate('filemanager.index');
 
 		if($msg) egw_framework::message($msg);
 
@@ -421,11 +420,11 @@ class filemanager_ui
 				if (isset($content['nm']['selected'])) unset($content['nm']['selected']);
 			}
 			unset($content['nm']['rows']);
-			egw_session::appsession('index','filemanager',$content['nm']);
+			Api\Cache::setSession('filemanager', 'index',$content['nm']);
 		}
 
 		// be tolerant with (in previous versions) not correct urlencoded pathes
-		if ($content['nm']['path'][0] == '/' && !egw_vfs::stat($content['nm']['path'],true) && egw_vfs::stat(urldecode($content['nm']['path'])))
+		if ($content['nm']['path'][0] == '/' && !Vfs::stat($content['nm']['path'],true) && Vfs::stat(urldecode($content['nm']['path'])))
 		{
 			$content['nm']['path'] = urldecode($content['nm']['path']);
 		}
@@ -448,10 +447,10 @@ class filemanager_ui
 					foreach(isset($content['upload'][0]) ? $content['upload'] : array($content['upload']) as $upload)
 					{
 						// encode chars which special meaning in url/vfs (some like / get removed!)
-						$to = egw_vfs::concat($content['nm']['path'],egw_vfs::encodePathComponent($upload['name']));
+						$to = Vfs::concat($content['nm']['path'],Vfs::encodePathComponent($upload['name']));
 						if ($upload &&
-							(egw_vfs::is_writable($content['nm']['path']) || egw_vfs::is_writable($to)) &&
-							copy($upload['tmp_name'],egw_vfs::PREFIX.$to))
+							(Vfs::is_writable($content['nm']['path']) || Vfs::is_writable($to)) &&
+							copy($upload['tmp_name'],Vfs::PREFIX.$to))
 						{
 							$upload_success[] = $upload['name'];
 						}
@@ -496,7 +495,7 @@ class filemanager_ui
 		}
 		// if initial load is done via GET request (idots template or share.php)
 		// get_rows cant call app.filemanager.set_readonly, so we need to do that here
-		$content['initial_path_readonly'] = !egw_vfs::is_writable($content['nm']['path']);
+		$content['initial_path_readonly'] = !Vfs::is_writable($content['nm']['path']);
 
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
@@ -512,11 +511,11 @@ class filemanager_ui
 
 		// check if user specified a valid startpath in his prefs --> use it
 		if (($path = $GLOBALS['egw_info']['user']['preferences']['filemanager']['startfolder']) &&
-			$path[0] == '/' && egw_vfs::is_dir($path) && egw_vfs::check_access($path, egw_vfs::READABLE))
+			$path[0] == '/' && Vfs::is_dir($path) && Vfs::check_access($path, Vfs::READABLE))
 		{
 			$start = $path;
 		}
-		elseif (!egw_vfs::is_dir($start) && egw_vfs::check_access($start, egw_vfs::READABLE))
+		elseif (!Vfs::is_dir($start) && Vfs::check_access($start, Vfs::READABLE))
 		{
 			$start = '/';
 		}
@@ -564,10 +563,10 @@ class filemanager_ui
 							++$errs;
 						}
 					}
-					elseif (!egw_vfs::is_dir($path))
+					elseif (!Vfs::is_dir($path))
 					{
-						$to = egw_vfs::concat($dir,egw_vfs::basename($path));
-						if ($path != $to && egw_vfs::copy($path,$to))
+						$to = Vfs::concat($dir,Vfs::basename($path));
+						if ($path != $to && Vfs::copy($path,$to))
 						{
 							++$files;
 						}
@@ -579,7 +578,7 @@ class filemanager_ui
 					else
 					{
 						$len = strlen(dirname($path));
-						foreach(egw_vfs::find($path) as $p)
+						foreach(Vfs::find($path) as $p)
 						{
 							$to = $dir.substr($p,$len);
 							if ($to == $p)	// cant copy into itself!
@@ -587,11 +586,11 @@ class filemanager_ui
 								++$errs;
 								continue;
 							}
-							if (($is_dir = egw_vfs::is_dir($p)) && egw_vfs::mkdir($to,null,STREAM_MKDIR_RECURSIVE))
+							if (($is_dir = Vfs::is_dir($p)) && Vfs::mkdir($to,null,STREAM_MKDIR_RECURSIVE))
 							{
 								++$dirs;
 							}
-							elseif(!$is_dir && egw_vfs::copy($p,$to))
+							elseif(!$is_dir && Vfs::copy($p,$to))
 							{
 								++$files;
 							}
@@ -611,8 +610,8 @@ class filemanager_ui
 			case 'move':
 				foreach($selected as $path)
 				{
-					$to = egw_vfs::is_dir($dir) || count($selected) > 1 ? egw_vfs::concat($dir,egw_vfs::basename($path)) : $dir;
-					if ($path != $to && egw_vfs::rename($path,$to))
+					$to = Vfs::is_dir($dir) || count($selected) > 1 ? Vfs::concat($dir,Vfs::basename($path)) : $dir;
+					if ($path != $to && Vfs::rename($path,$to))
 					{
 						++$files;
 					}
@@ -630,8 +629,8 @@ class filemanager_ui
 			case 'symlink':	// symlink given files to $dir
 				foreach((array)$selected as $target)
 				{
-					$link = egw_vfs::concat($dir, egw_vfs::basename($target));
-					if (!egw_vfs::stat($dir) || ($ok = egw_vfs::mkdir($dir,0,true)))
+					$link = Vfs::concat($dir, Vfs::basename($target));
+					if (!Vfs::stat($dir) || ($ok = Vfs::mkdir($dir,0,true)))
 					{
 						if(!$ok)
 						{
@@ -639,12 +638,12 @@ class filemanager_ui
 							continue;
 						}
 					}
-					if ($target[0] != '/') $target = egw_vfs::concat($dir, $target);
-					if (!egw_vfs::stat($target))
+					if ($target[0] != '/') $target = Vfs::concat($dir, $target);
+					if (!Vfs::stat($target))
 					{
-						return lang('Link target %1 not found!', egw_vfs::decodePath($target));
+						return lang('Link target %1 not found!', Vfs::decodePath($target));
 					}
-					if ($target != $link && egw_vfs::symlink($target, $link))
+					if ($target != $link && Vfs::symlink($target, $link))
 					{
 						++$files;
 					}
@@ -655,27 +654,27 @@ class filemanager_ui
 				}
 				if (count((array)$selected) == 1)
 				{
-					return $files ? lang('Symlink to %1 created.', egw_vfs::decodePath($target)) :
-						lang('Error creating symlink to target %1!', egw_vfs::decodePath($target));
+					return $files ? lang('Symlink to %1 created.', Vfs::decodePath($target)) :
+						lang('Error creating symlink to target %1!', Vfs::decodePath($target));
 				}
 				$ret = lang('%1 elements linked.', $files);
 				if ($errs)
 				{
 					$ret = lang('%1 errors linking (%2)!',$errs, $ret);
 				}
-				return $ret;//." egw_vfs::symlink('$target', '$link')";
+				return $ret;//." Vfs::symlink('$target', '$link')";
 
 			case 'createdir':
-				$dst = egw_vfs::concat($dir, is_array($selected) ? $selected[0] : $selected);
-				if (egw_vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
+				$dst = Vfs::concat($dir, is_array($selected) ? $selected[0] : $selected);
+				if (Vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
 				{
 					return lang("Directory successfully created.");
 				}
 				return lang("Error while creating directory.");
 
 			case 'saveaszip':
-				egw_vfs::download_zip($selected);
-				common::egw_exit();
+				Vfs::download_zip($selected);
+				exit;
 
 			default:
 				list($action, $settings) = explode('_', $action, 2);
@@ -683,7 +682,7 @@ class filemanager_ui
 				{
 					case 'document':
 						if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['filemanager']['default_document'];
-						$document_merge = new filemanager_merge(egw_vfs::decodePath($dir));
+						$document_merge = new filemanager_merge(Vfs::decodePath($dir));
 						$msg = $document_merge->download($settings, $selected, '', $GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir']);
 						if($msg) return $msg;
 						$errs = count($selected);
@@ -706,12 +705,12 @@ class filemanager_ui
 	{
 		$dirs = $files = $errs = 0;
 		// we first delete all selected links (and files)
-		// feeding the links to dirs to egw_vfs::find() deletes the content of the dirs, not just the link!
+		// feeding the links to dirs to Vfs::find() deletes the content of the dirs, not just the link!
 		foreach($selected as $key => $path)
 		{
-			if (!egw_vfs::is_dir($path) || egw_vfs::is_link($path))
+			if (!Vfs::is_dir($path) || Vfs::is_link($path))
 			{
-				if (egw_vfs::unlink($path))
+				if (Vfs::unlink($path))
 				{
 					++$files;
 				}
@@ -730,20 +729,20 @@ class filemanager_ui
 				if (preg_match('/^\/?(home|apps|)\/*$/',$path))
 				{
 					$errs++;
-					return lang("Cautiously rejecting to remove folder '%1'!",egw_vfs::decodePath($path));
+					return lang("Cautiously rejecting to remove folder '%1'!",Vfs::decodePath($path));
 				}
 			}
 			// now we use find to loop through all files and dirs: (selected only contains dirs now)
 			// - depth=true to get first the files and then the dir containing it
 			// - hidden=true to also return hidden files (eg. Thumbs.db), as we cant delete non-empty dirs
 			// - show-deleted=false to not (finally) deleted versioned files
-			foreach(egw_vfs::find($selected,array('depth'=>true,'hidden'=>true,'show-deleted'=>false)) as $path)
+			foreach(Vfs::find($selected,array('depth'=>true,'hidden'=>true,'show-deleted'=>false)) as $path)
 			{
-				if (($is_dir = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)) && egw_vfs::rmdir($path,0))
+				if (($is_dir = Vfs::is_dir($path) && !Vfs::is_link($path)) && Vfs::rmdir($path,0))
 				{
 					++$dirs;
 				}
-				elseif (!$is_dir && egw_vfs::unlink($path))
+				elseif (!$is_dir && Vfs::unlink($path))
 				{
 					++$files;
 				}
@@ -780,7 +779,7 @@ class filemanager_ui
 		// do NOT store query, if hierarchical data / children are requested
 		if (!$query['csv_export'])
 		{
-			egw_session::appsession('index','filemanager',$query);
+			Api\Cache::setSession('filemanager', 'index',$query);
 		}
 		if(!$query['path']) $query['path'] = static::get_home_dir();
 
@@ -797,11 +796,11 @@ class filemanager_ui
 			}
 		}
 		// be tolerant with (in previous versions) not correct urlencoded pathes
-		if (!egw_vfs::stat($query['path'],true) && egw_vfs::stat(urldecode($query['path'])))
+		if (!Vfs::stat($query['path'],true) && Vfs::stat(urldecode($query['path'])))
 		{
 			$query['path'] = urldecode($query['path']);
 		}
-		if (!egw_vfs::stat($query['path'],true) || !egw_vfs::is_dir($query['path']) || !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
+		if (!Vfs::stat($query['path'],true) || !Vfs::is_dir($query['path']) || !Vfs::check_access($query['path'],Vfs::READABLE))
 		{
 			// only redirect, if it would be to some other location, gives redirect-loop otherwise
 			if ($query['path'] != ($path = static::get_home_dir()))
@@ -810,7 +809,7 @@ class filemanager_ui
 				// an appropriate message
 				egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
 					'path' => $path,
-					'msg' => lang('The requested path %1 is not available.',egw_vfs::decodePath($query['path'])),
+					'msg' => lang('The requested path %1 is not available.',Vfs::decodePath($query['path'])),
 					'ajax' => 'true'
 				));
 			}
@@ -858,20 +857,20 @@ class filemanager_ui
 		{
 			$vfs_options['mime'] = $query['col_filter']['mime'];
 		}
-		foreach(egw_vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],$vfs_options,true) as $path => $row)
+		foreach(Vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],$vfs_options,true) as $path => $row)
 		{
 			//echo $path; _debug_array($row);
 
 			$dir = dirname($path);
 			if (!isset($dir_is_writable[$dir]))
 			{
-				$dir_is_writable[$dir] = egw_vfs::is_writable($dir);
+				$dir_is_writable[$dir] = Vfs::is_writable($dir);
 			}
-			if (egw_vfs::is_dir($path))
+			if (Vfs::is_dir($path))
 			{
 				$row['class'] = 'isDir';
 			}
-			$row['download_url'] = egw_vfs::download_url($path);
+			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
 
 			$rows[++$n] = $row;
@@ -887,7 +886,7 @@ class filemanager_ui
 		}
 		$all_cfs = in_array('customfields',$cols_to_show) && $cols_to_show[count($cols_to_show)-1][0] != '#';
 		if ($path2n && (in_array('comment',$cols_to_show) || in_array('customfields',$cols_to_show)) &&
-			($path2props = egw_vfs::propfind(array_keys($path2n))))
+			($path2props = Vfs::propfind(array_keys($path2n))))
 		{
 			foreach($path2props as $path => $props)
 			{
@@ -902,8 +901,8 @@ class filemanager_ui
 			}
 		}
 		// tell client-side if directory is writeable or not
-		$response = egw_json_response::get();
-		$response->call('app.filemanager.set_readonly', $query['path'], !egw_vfs::is_writable($query['path']));
+		$response = Api\Json\Response::get();
+		$response->call('app.filemanager.set_readonly', $query['path'], !Vfs::is_writable($query['path']));
 
 		//_debug_array($readonlys);
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'projectmanager')
@@ -916,7 +915,7 @@ class filemanager_ui
 			$GLOBALS['egw_info']['flags']['css'] .= "\n\t\t</style>\n\t\t".'<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].
 				$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).'" type="text/css" rel="StyleSheet" />'."\n\t\t<style>\n\t\t\t";
 		}
-		return egw_vfs::$find_total;
+		return Vfs::$find_total;
 	}
 
 	/**
@@ -927,7 +926,7 @@ class filemanager_ui
 	 */
 	function file(array $content=null,$msg='')
 	{
-		$tpl = new etemplate_new('filemanager.file');
+		$tpl = new Api\Etemplate('filemanager.file');
 
 		if (!is_array($content))
 		{
@@ -938,39 +937,39 @@ class filemanager_ui
 			if (!($path = str_replace(array('#','?'),array('%23','%3F'),$_GET['path'])) ||	// ?, # need to stay encoded!
 				// actions enclose pathes containing comma with "
 				($path[0] == '"' && substr($path,-1) == '"' && !($path = substr(str_replace('""','"',$path),1,-1))) ||
-				!($stat = egw_vfs::lstat($path)))
+				!($stat = Vfs::lstat($path)))
 			{
 				$msg .= lang('File or directory not found!')." path='$path', stat=".array2string($stat);
 			}
 			else
 			{
 				$content = $stat;
-				$content['name'] = $content['itempicker_merge']['name'] = egw_vfs::basename($path);
-				$content['dir'] = $content['itempicker_merge']['dir'] = egw_vfs::decodePath(egw_vfs::dirname($path));
+				$content['name'] = $content['itempicker_merge']['name'] = Vfs::basename($path);
+				$content['dir'] = $content['itempicker_merge']['dir'] = Vfs::decodePath(Vfs::dirname($path));
 				$content['path'] = $path;
-				$content['hsize'] = egw_vfs::hsize($stat['size']);
-				$content['mime'] = egw_vfs::mime_content_type($path);
+				$content['hsize'] = Vfs::hsize($stat['size']);
+				$content['mime'] = Vfs::mime_content_type($path);
 				$content['gid'] *= -1;	// our widgets use negative gid's
-				if (($props = egw_vfs::propfind($path)))
+				if (($props = Vfs::propfind($path)))
 				{
 					foreach($props as $prop)
 					{
 						$content[$prop['name']] = $prop['val'];
 					}
 				}
-				if (($content['is_link'] = egw_vfs::is_link($path)))
+				if (($content['is_link'] = Vfs::is_link($path)))
 				{
-					$content['symlink'] = egw_vfs::readlink($path);
+					$content['symlink'] = Vfs::readlink($path);
 				}
 			}
 			$content['tabs'] = $_GET['tabs'];
-			if (!($content['is_dir'] = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)))
+			if (!($content['is_dir'] = Vfs::is_dir($path) && !Vfs::is_link($path)))
 			{
 				$content['perms']['executable'] = (int)!!($content['mode'] & 0111);
 				$mask = 6;
 				if (preg_match('/^text/',$content['mime']) && $content['size'] < 100000)
 				{
-					$content['text_content'] = file_get_contents(egw_vfs::PREFIX.$path);
+					$content['text_content'] = file_get_contents(Vfs::PREFIX.$path);
 				}
 			}
 			else
@@ -982,7 +981,7 @@ class filemanager_ui
 			{
 				$content['perms'][$name] = ($content['mode'] >> $shift) & $mask;
 			}
-			$content['is_owner'] = egw_vfs::has_owner_rights($path,$content);
+			$content['is_owner'] = Vfs::has_owner_rights($path,$content);
 		}
 		else
 		{
@@ -997,13 +996,13 @@ class filemanager_ui
 				unset($content['sudo']);
 			}
 			// need to check 'setup' button (submit button in sudo popup), as some browsers (eg. chrome) also fill the hidden field
-			if ($button == 'sudo' && egw_vfs::$is_root || $button == 'setup' && $content['sudo']['user'])
+			if ($button == 'sudo' && Vfs::$is_root || $button == 'setup' && $content['sudo']['user'])
 			{
 				$msg = $this->sudo($button == 'setup' ? $content['sudo']['user'] : '',$content['sudo']['passwd']) ?
 					lang('Root access granted.') : ($button == 'setup' && $content['sudo']['user'] ?
 					lang('Wrong username or password!') : lang('Root access stopped.'));
 				unset($content['sudo']);
-				$content['is_owner'] = egw_vfs::has_owner_rights($path);
+				$content['is_owner'] = Vfs::has_owner_rights($path);
 			}
 			if (in_array($button,array('save','apply')))
 			{
@@ -1014,12 +1013,12 @@ class filemanager_ui
 					if (isset($content[$name]) && ($old_value != $content[$name] ||
 						// do not check for modification, if modify_subs is checked!
 						$content['modify_subs'] && in_array($name,array('uid','gid','perms'))) &&
-						($name != 'uid' || egw_vfs::$is_root))
+						($name != 'uid' || Vfs::$is_root))
 					{
 						if ($name == 'name')
 						{
-							$to = egw_vfs::concat(egw_vfs::dirname($path),$content['name']);
-							if (file_exists(egw_vfs::PREFIX.$to) && $content['confirm_overwrite'] !== $to)
+							$to = Vfs::concat(Vfs::dirname($path),$content['name']);
+							if (file_exists(Vfs::PREFIX.$to) && $content['confirm_overwrite'] !== $to)
 							{
 								$tpl->set_validation_error('name',lang("There's already a file with that name!").'<br />'.
 									lang('To overwrite the existing file store again.',lang($button)));
@@ -1027,18 +1026,18 @@ class filemanager_ui
 								if ($button == 'save') $button = 'apply';
 								continue;
 							}
-							if (egw_vfs::rename($path,$to))
+							if (Vfs::rename($path,$to))
 							{
-								$msg .= lang('Renamed %1 to %2.',egw_vfs::decodePath(basename($path)),egw_vfs::decodePath(basename($to))).' ';
+								$msg .= lang('Renamed %1 to %2.',Vfs::decodePath(basename($path)),Vfs::decodePath(basename($to))).' ';
 								$content['old']['name'] = $content[$name];
 								$path = $to;
 								$content['mime'] = mime_magic::filename2mime($path);	// recheck mime type
-								$refresh_path = egw_vfs::dirname($path);	// for renames, we have to refresh the parent
+								$refresh_path = Vfs::dirname($path);	// for renames, we have to refresh the parent
 							}
 							else
 							{
-								$msg .= lang('Rename of %1 to %2 failed!',egw_vfs::decodePath(basename($path)),egw_vfs::decodePath(basename($to))).' ';
-								if (egw_vfs::deny_script($to))
+								$msg .= lang('Rename of %1 to %2 failed!',Vfs::decodePath(basename($path)),Vfs::decodePath(basename($to))).' ';
+								if (Vfs::deny_script($to))
 								{
 									$msg .= lang('You are NOT allowed to upload a script!').' ';
 								}
@@ -1057,7 +1056,7 @@ class filemanager_ui
 									'val'	=> (!empty($content[$name]) ? $content[$name] : null),
 								),
 							);
-							if (egw_vfs::proppatch($path,$mergeprop))
+							if (Vfs::proppatch($path,$mergeprop))
 							{
 								$content['old'][$name] = $content[$name];
 								$msg .= lang('Setting for document merge saved.');
@@ -1076,12 +1075,12 @@ class filemanager_ui
 							{
 								if ($name == 'perms')
 								{
-									$changed = egw_vfs::find($path,array('type'=>'d'),$cmd,array($value));
-									$changed += egw_vfs::find($path,array('type'=>'f'),$cmd,array($value & 0666));	// no execute for files
+									$changed = Vfs::find($path,array('type'=>'d'),$cmd,array($value));
+									$changed += Vfs::find($path,array('type'=>'f'),$cmd,array($value & 0666));	// no execute for files
 								}
 								else
 								{
-									$changed = egw_vfs::find($path,null,$cmd,array($value));
+									$changed = Vfs::find($path,null,$cmd,array($value));
 								}
 								$ok = $failed = 0;
 								foreach($changed as &$r)
@@ -1120,7 +1119,7 @@ class filemanager_ui
 				}
 				if ($props)
 				{
-					if (egw_vfs::proppatch($path,$props))
+					if (Vfs::proppatch($path,$props))
 					{
 						foreach($props as $prop)
 						{
@@ -1140,7 +1139,7 @@ class filemanager_ui
 				{
 					list($ino_owner) = each($content['eacl']['delete']);
 					list(, $owner) = explode('-',$ino_owner,2);	// $owner is a group and starts with a minus!
-					$msg .= egw_vfs::eacl($path,null,$owner) ? lang('ACL deleted.') : lang('Error deleting the ACL entry!');
+					$msg .= Vfs::eacl($path,null,$owner) ? lang('ACL deleted.') : lang('Error deleting the ACL entry!');
 				}
 				elseif ($button == 'eacl')
 				{
@@ -1150,7 +1149,7 @@ class filemanager_ui
 					}
 					else
 					{
-						$msg .= egw_vfs::eacl($path,$content['eacl']['rights'],$content['eacl_owner']) ?
+						$msg .= Vfs::eacl($path,$content['eacl']['rights'],$content['eacl_owner']) ?
 							lang('ACL added.') : lang('Error adding the ACL!');
 					}
 				}
@@ -1158,18 +1157,18 @@ class filemanager_ui
 			egw_framework::refresh_opener($msg, 'filemanager', $refresh_path ? $refresh_path : $path, 'edit', null, '&path=[^&]*');
 			if ($button == 'save') egw_framework::window_close();
 		}
-		if ($content['is_link'] && !egw_vfs::stat($path))
+		if ($content['is_link'] && !Vfs::stat($path))
 		{
 			$msg .= ($msg ? "\n" : '').lang('Link target %1 not found!',$content['symlink']);
 		}
-		$content['link'] = egw::link(egw_vfs::download_url($path));
-		$content['icon'] = egw_vfs::mime_icon($content['mime']);
+		$content['link'] = egw::link(Vfs::download_url($path));
+		$content['icon'] = Vfs::mime_icon($content['mime']);
 		$content['msg'] = $msg;
 
-		if (($readonlys['uid'] = !egw_vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';
+		if (($readonlys['uid'] = !Vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';
 		// only owner can change group & perms
 		if (($readonlys['gid'] = !$content['is_owner'] ||
-			egw_vfs::parse_url(egw_vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs'))	// no uid, gid or perms in oldvfs
+			Vfs::parse_url(Vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs'))	// no uid, gid or perms in oldvfs
 		{
 			if (!$content['gid']) $content['ro_gid_root'] = 'root';
 			foreach($content['perms'] as $name => $value)
@@ -1177,18 +1176,18 @@ class filemanager_ui
 				$readonlys['perms['.$name.']'] = true;
 			}
 		}
-		$readonlys['name'] = $path == '/' || !egw_vfs::is_writable(egw_vfs::dirname($path));
-		$readonlys['comment'] = !egw_vfs::is_writable($path);
+		$readonlys['name'] = $path == '/' || !Vfs::is_writable(Vfs::dirname($path));
+		$readonlys['comment'] = !Vfs::is_writable($path);
 		$readonlys['tabs']['filemanager.file.preview'] = $readonlys['tabs']['filemanager.file.perms'] = $content['is_link'];
 
 		// if neither owner nor is writable --> disable save&apply
-		$readonlys['button[save]'] = $readonlys['button[apply]'] = !$content['is_owner'] && !egw_vfs::is_writable($path);
+		$readonlys['button[save]'] = $readonlys['button[apply]'] = !$content['is_owner'] && !Vfs::is_writable($path);
 
-		if (!($cfs = config::get_customfields('filemanager')))
+		if (!($cfs = Api\Storage\Customfields::get('filemanager')))
 		{
 			$readonlys['tabs']['custom'] = true;
 		}
-		elseif (!egw_vfs::is_writable($path))
+		elseif (!Vfs::is_writable($path))
 		{
 			foreach($cfs as $name => $data)
 			{
@@ -1204,12 +1203,12 @@ class filemanager_ui
 				5 => lang('Display of content'),
 				0 => lang('No access'),
 			);
-			if(($content['eacl'] = egw_vfs::get_eacl($content['path'])) !== false)	// backend supports eacl
+			if(($content['eacl'] = Vfs::get_eacl($content['path'])) !== false)	// backend supports eacl
 			{
 				unset($readonlys['tabs']['filemanager.file.eacl']);	// --> switch the tab on again
 				foreach($content['eacl'] as &$eacl)
 				{
-					$eacl['path'] = rtrim(egw_vfs::parse_url($eacl['path'],PHP_URL_PATH),'/');
+					$eacl['path'] = rtrim(Vfs::parse_url($eacl['path'],PHP_URL_PATH),'/');
 					$readonlys['delete['.$eacl['ino'].'-'.$eacl['owner'].']'] = $eacl['ino'] != $content['ino'] ||
 						$eacl['path'] != $content['path'] || !$content['is_owner'];
 				}
@@ -1243,7 +1242,7 @@ class filemanager_ui
 			$content['mergeapp_effective'] = null;
 		}
 		// mergeapp select options
-		$mergeapp_list = egw_link::app_list('merge');
+		$mergeapp_list = Api\Link::app_list('merge');
 		unset($mergeapp_list[$GLOBALS['egw_info']['flags']['currentapp']]); // exclude filemanager from list
 		$mergeapp_empty = !empty($content['mergeapp_parent'])
 			? $mergeapp_list[$content['mergeapp_parent']] . ' (parent setting)' : '';
@@ -1268,7 +1267,7 @@ class filemanager_ui
 				$preserve['old']['#'.$name] = (string)$content['#'.$name];
 			}
 		}
-		if (egw_vfs::$is_root)
+		if (Vfs::$is_root)
 		{
 			$tpl->setElementAttribute('sudouser', 'label', 'Logout');
 			$tpl->setElementAttribute('sudouser', 'help','Log out as superuser');
@@ -1282,7 +1281,7 @@ class filemanager_ui
 			$tpl->setElementAttribute('sudouser', 'help','Enter setup user and password to get root rights');
 			$tpl->setElementAttribute('sudouser', 'onclick','app.filemanager.set_sudoButton(widget,"logout")');
 		}
-		if (($extra_tabs = egw_vfs::getExtraInfo($path,$content)))
+		if (($extra_tabs = Vfs::getExtraInfo($path,$content)))
 		{
 			// add to existing tabs in template
 			$tpl->setElementAttribute('tabs', 'add_tabs', true);
@@ -1311,7 +1310,7 @@ class filemanager_ui
 			}
 		}
 		egw_framework::window_focus();
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.egw_vfs::decodePath($path);
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.Vfs::decodePath($path);
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
 	}
@@ -1327,11 +1326,11 @@ class filemanager_ui
 	public static function ajax_action($action, $selected, $dir=null, $props=null)
 	{
 		// do we have root rights, need to run here too, as method is static and therefore does NOT run __construct
-		if (egw_session::appsession('is_root','filemanager'))
+		if (Api\Cache::getSession('filemanager', 'is_root'))
 		{
-			egw_vfs::$is_root = true;
+			Vfs::$is_root = true;
 		}
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 
 		$arr = array(
 			'msg' => '',
@@ -1349,9 +1348,9 @@ class filemanager_ui
 				$script_error = 0;
 				foreach($selected as $tmp_name => &$data)
 				{
-					$path = egw_vfs::concat($dir, egw_vfs::encodePathComponent($data['name']));
+					$path = Vfs::concat($dir, Vfs::encodePathComponent($data['name']));
 
-					if(egw_vfs::deny_script($path))
+					if(Vfs::deny_script($path))
 					{
 						if (!isset($script_error))
 						{
@@ -1361,11 +1360,11 @@ class filemanager_ui
 						++$arr['errs'];
 						unset($selected[$tmp_name]);
 					}
-					elseif (egw_vfs::is_dir($path))
+					elseif (Vfs::is_dir($path))
 					{
 						$data['confirm'] = 'is_dir';
 					}
-					elseif (!$data['confirmed'] && egw_vfs::stat($path))
+					elseif (!$data['confirmed'] && Vfs::stat($path))
 					{
 						$data['confirm'] = true;
 					}
@@ -1380,7 +1379,7 @@ class filemanager_ui
 							$tmp_path = ini_get('upload_tmp_dir').'/'.basename($tmp_name);
 						}
 
-						if (egw_vfs::copy_uploaded($tmp_path, $path, $props, false))
+						if (Vfs::copy_uploaded($tmp_path, $path, $props, false))
 						{
 							++$arr['files'];
 							$uploaded[] = $data['name'];
@@ -1408,16 +1407,16 @@ class filemanager_ui
 			case 'link':
 				// First upload
 				$arr = static::ajax_action('upload', $selected, $dir, $props);
-				$app_dir = egw_link::vfs_path($props['entry']['app'],$props['entry']['id'],'',true);
+				$app_dir = Api\Link::vfs_path($props['entry']['app'],$props['entry']['id'],'',true);
 
 				foreach($arr['uploaded'] as $file)
 				{
-					$target=egw_vfs::concat($dir,egw_vfs::encodePathComponent($file['name']));
-					if (egw_vfs::file_exists($target) && $app_dir)
+					$target=Vfs::concat($dir,Vfs::encodePathComponent($file['name']));
+					if (Vfs::file_exists($target) && $app_dir)
 					{
-						if (!egw_vfs::file_exists($app_dir)) egw_vfs::mkdir($app_dir);
+						if (!Vfs::file_exists($app_dir)) Vfs::mkdir($app_dir);
 						error_log("Symlinking $target to $app_dir");
-						egw_vfs::symlink($target, egw_vfs::concat($app_dir,egw_vfs::encodePathComponent($file['name'])));
+						Vfs::symlink($target, Vfs::concat($app_dir,Vfs::encodePathComponent($file['name'])));
 					}
 				}
 				// Must return to avoid adding to $response again
