@@ -13,6 +13,8 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
+use egw_framework;
+
 egw_framework::includeCSS('/phpgwapi/js/dhtmlxGantt/codebase/dhtmlxgantt.css');
 
 /**
