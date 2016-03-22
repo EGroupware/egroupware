@@ -10,7 +10,7 @@
  * @subpackage etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: class.contact_widget.inc.php 46844 2014-05-07 09:00:59Z ralfbecker $
+ * @version $Id$
  */
 
 namespace EGroupware\Api\Etemplate\Widget;
