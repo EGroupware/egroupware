@@ -1136,6 +1136,9 @@ et2_register_widget(et2_taglist_email, ["taglist-email"]);
 var et2_taglist_category = (function(){ "use strict"; return et2_taglist.extend(
 {
 	attributes: {
+		"minChars": {
+			default: 0
+		},
 		"autocomplete_url": {
 			"default": ""
 		},
