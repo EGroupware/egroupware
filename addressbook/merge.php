@@ -23,7 +23,7 @@
  * @package api
  * @subpackage addressbook
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2015 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2015-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -32,13 +32,12 @@ $GLOBALS['egw_info'] = array(
 		'noheader'  => True,
 		'currentapp' => 'addressbook',
 		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
-		'autocreate_session_callback' => array('egw_digest_auth','autocreate_session_callback'),
+		'autocreate_session_callback' => 'EGroupware\\Api\\Header\\Authenticate::autocreate_session_callback',
 		'auth_realm' => 'EGroupware document merge',
 	)
 );
 // if you move this file somewhere else, you need to adapt the path to the header!
 $egw_dir = dirname(dirname(__FILE__));
-require_once($egw_dir.'/phpgwapi/inc/class.egw_digest_auth.inc.php');
 include($egw_dir.'/header.inc.php');
 
 $merge = new addressbook_merge();
