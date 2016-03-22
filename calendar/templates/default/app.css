@@ -276,6 +276,10 @@ Hide subsequent headers in week view with non-consolidated owners
  *  top:
  */
 }
+.calendar_calTimeRow:not(.calendar_calWorkHours)
+{
+	background-color: rgba(120,120,120,0.1);
+}
 
 /* time in a timeRow
  */

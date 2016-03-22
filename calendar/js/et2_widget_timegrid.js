@@ -703,7 +703,12 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		this._top_time = 0;
 		for(var t = 0,i = 0; t < 1440; t += granularity,++i)
 		{
-			html += '<div class="calendar_calTimeRow" style="height: '+(100/row_count)+'%;">';
+			if(t <= wd_start && t + granularity > wd_start)
+			{
+				this._top_time = this.rowHeight * (i+1+(wd_start - (t+granularity))/granularity);
+			}
+			var working_hours = (t >= wd_start && t < wd_end) ? ' calendar_calWorkHours' : '';
+			html += '<div class="calendar_calTimeRow' + working_hours + '" style="height: '+(100/row_count)+'%;">';
 			// show time for full hours, always for 45min interval and at least on every 3 row
 			var time = jQuery.datepicker.formatTime(
 					egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
@@ -715,10 +720,6 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					},
 					{"ampm": (egw.preference("timeformat") === "12")}
 				);
-			if(t <= wd_start && t + granularity > wd_start)
-			{
-				this._top_time = this.rowHeight * (i+1+(wd_start - (t+granularity))/granularity);
-			}
 
 			var time_label = (typeof show[granularity] === 'undefined' ? t % 60 === 0 : show[granularity].indexOf(t % 60) !== -1) ? time : '';
 			if(time_label && egw.preference("timeformat") == "12" && time_label.split(':')[0] < 10)
