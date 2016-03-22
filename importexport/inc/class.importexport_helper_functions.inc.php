@@ -50,9 +50,15 @@ class importexport_helper_functions {
 	* If you put appname => true, the whole app will be skipped.
 	*/
 	protected static $blacklist_files = array(
+		'api' => true,
+		'etemplate' => true,
+		'setup' => true,
 		'news_admin' => array(
 			'class.news_admin_import.inc.php',
 		),
+		'importexport' => array(
+			'class.importexport_widget_filter.inc.php',
+		)
 	);
 
 	/**
@@ -743,10 +749,10 @@ class importexport_helper_functions {
 				$end   = $weekstart + $eweek*7*24*60*60;
 			}
 			$end_param = $end - 24*60*60;
-		
+
 			// Take 1 second off end to provide an inclusive range.for filtering
 			$end -= 1;
-		
+
 			//echo __METHOD__."($value,$start,$end) today=".date('l, Y-m-d H:i',$today)." ==> <br />".date('l, Y-m-d H:i:s',$start)." <= date <= ".date('l, Y-m-d H:i:s',$end)."</p>\n";
 			return array('from' => $start, 'to' => $end);
 		}
