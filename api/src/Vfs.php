@@ -1663,11 +1663,7 @@ class Vfs extends Vfs\StreamWrapper
 			}
 			if (!$token)
 			{
-				if (strpos(ini_get('include_path'), EGW_API_INC) === false)
-				{
-					ini_set('include_path', EGW_API_INC.PATH_SEPARATOR.ini_get('include_path'));
-				}
-				require_once('HTTP/WebDAV/Server.php');
+				require_once(__DIR__.'/WebDAV/Server.php');
 				$token = HTTP_WebDAV_Server::_new_locktoken();
 			}
 			try {
