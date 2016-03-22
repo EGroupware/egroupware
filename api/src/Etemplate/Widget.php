@@ -14,7 +14,6 @@
 namespace EGroupware\Api\Etemplate;
 
 use EGroupware\Api;
-use EGroupware\Api\Cache;
 use XMLReader;
 use ReflectionMethod;
 
@@ -288,7 +287,7 @@ class Widget
 			self::$widget_registry[$widget] = $class;
 		}
 	}
-	
+
 	/**
 	 * Try to discover all widgets, as names don't always match tags (eg:
 	 * listbox is in menupopup)
@@ -304,11 +303,11 @@ class Widget
 	public static function scanForWidgets()
 	{
 
-		$widget_registry = Cache::getInstance('etemplate', 'widget_registry');
+		$widget_registry = Api\Cache::getInstance('etemplate', 'widget_registry');
 
 		if (!$widget_registry)	// not in instance cache --> rescan from filesystem
 		{
-			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(__DIR__)) as $path)
+			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(__DIR__.'/Widget')) as $path)
 			{
 				if(substr($path, -4) == '.php')
 				{
@@ -325,7 +324,7 @@ class Widget
 
 			// Use hook to load custom widgets from other apps
 			$widgets = $GLOBALS['egw']->hooks->process('etemplate2_register_widgets',array(),true);
-			foreach($widgets as $app => $list)
+			foreach($widgets as $list)
 			{
 				if (is_array($list))
 				{
@@ -342,7 +341,7 @@ class Widget
 					}
 				}
 			}
-			Cache::setInstance('etemplate', 'widget_registry', self::$widget_registry, 3600);
+			Api\Cache::setInstance('etemplate', 'widget_registry', self::$widget_registry, 3600);
 		}
 		else
 		{
