@@ -232,7 +232,27 @@
     color: #ffffff;
   }
   .ui-datepicker .ui-datepicker-buttonpane button[data-handler="today"] {
-    background-image: url(../images/today.png);
+    background-image: url(../images/bullet.svg);
+    background-color: transparent;
+    background-size: contain;
+    border: none;
+  }
+  .ui-datepicker .ui-datepicker-prev:hover,
+  .ui-datepicker .ui-datepicker-next:hover {
+    border: none;
+  }
+  .ui-datepicker .ui-datepicker-prev span {
+    background-image: url(../images/back.png) !important;
+    background-position: 0px 0px !important;
+    background-size: contain;
+  }
+  .ui-datepicker .ui-datepicker-next span {
+    background-image: url(../images/forward.png) !important;
+    background-position: 0px 0px !important;
+    background-size: contain;
+  }
+  .ui-datepicker .ui-datepicker-next span:hover {
+    border: none;
   }
   .et2_file .progress li:hover div.remove {
     width: 16px;
@@ -803,7 +823,7 @@
     text-align: left;
     position: relative;
     right: 1px;
-    top: 3px;
+    top: 1px;
   }
   .et2_dropdown button.ui-corner-left:active,
   .et2_dropdown button.ui-state-default:active {

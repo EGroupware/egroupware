@@ -1266,14 +1266,43 @@ div#calendar-container {
 		padding-right: 5px !important;
 	}
 	.ui-datepicker-header a span {
-		background-image: url('../../../phpgwapi/js/jquery/jquery-ui/redmond/images/ui-icons_217bc0_256x240.png')
+		width: 20px;
+		height: 20px;
 	}
 	.ui-datepicker-header a.ui-state-hover {
 		top: 3px;
 		span {
-			background-image: url('../../../pixelegg/images/ui-icons_egw_color_2_256x240_0C5DA5.png');
 			transition: none;
 		}
+	}
+}
+#calendar-sidebox_header_go {
+	width: 20px;
+	height: 20px;
+
+	background-image: url('../../../pixelegg/images/check.png');
+    text-indent: 140%;
+    border: none;
+    border-radius: 0px;
+    background-size: contain;
+    background-color: transparent;
+	&:hover {
+		background-color: transparent;
+	}
+}
+#calendar-sidebox_header_today {
+	width: 20px;
+	height: 20px;
+
+	background-image: url('../../../pixelegg/images/bullet.png');
+    text-indent: 140%;
+    border: none;
+    border-radius: 0px;
+	margin-left: 7px;
+    background-size: contain;
+    background-color: transparent;
+	&:hover {
+		background-color: transparent;
 	}
 }
 
