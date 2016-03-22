@@ -21,6 +21,8 @@ class egw_json_request extends Json\Request {}
 
 /**
  * Class used to send ajax responses
+ *
+ * @deprecated use Api\Json\Response
  */
 class egw_json_response extends Json\Response
 {
@@ -30,36 +32,5 @@ class egw_json_response extends Json\Response
 	public function printOutput()
 	{
 		// do nothing, as output is triggered by egw::__destruct()
-	}
-}
-
-/**
- * Deprecated legacy xajax wrapper functions for the new egw_json interface
- *
- * @deprecated use Api\Json\Response methods
- */
-class xajaxResponse
-{
-	public function __call($name, $args)
-	{
-		if (substr($name, 0, 3) == 'add')
-		{
-			$name = substr($name, 3);
-			$name[0] = strtolower($name[0]);
-		}
-		return call_user_func_array(array(egw_json_response::get(), $name), $args);
-	}
-
-	public function addScriptCall()
-	{
-		$args = func_get_args();
-		$func = array_shift($args);
-
-		return call_user_func(array(egw_json_response::get(), 'apply'), $func, $args);
-	}
-
-	public function getXML()
-	{
-		return '';
 	}
 }
