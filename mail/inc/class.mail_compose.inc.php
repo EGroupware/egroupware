@@ -1703,7 +1703,7 @@ class mail_compose
 		$mail_bo->reopen($_folder);
 
 		// get message headers for specified message
-		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID);
+		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID,false,$_folder);
 		//error_log(__METHOD__.__LINE__.array2string($headers));
 		//_debug_array($headers); exit;
 		// check for Re: in subject header
