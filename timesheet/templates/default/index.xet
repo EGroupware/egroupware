@@ -5,9 +5,9 @@
 	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001" >
 		<hbox>
 			<description value="Start"/>
-			<date id="startdate"/>
+			<date id="startdate" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());"/>
 			<description value="End"/>
-			<date statustext="Leave it empty for a full week" id="enddate"/>
+			<date statustext="Leave it empty for a full week" id="enddate"  onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());"/>
 		</hbox>
 	</template>
 	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">

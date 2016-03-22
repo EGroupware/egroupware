@@ -7,8 +7,8 @@
 	</template>
 	<template id="infolog.index.dates" template="" lang="" group="0" version="1.9.001">
 		<hbox>
-			<date id="startdate" label="Start"/>
-			<date id="enddate" label="End"/>
+			<date id="startdate" label="Start" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());"/>
+			<date id="enddate" label="End" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());"/>
 		</hbox>
 	</template>
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
