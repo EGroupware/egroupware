@@ -26,7 +26,7 @@ class Contact extends Entry
 	 *
 	 * @var Api\Contacts
 	 */
-	private $contacts;
+	protected $contacts;
 
 	/**
 	 * Array with a transformation description, based on attributes to modify.
