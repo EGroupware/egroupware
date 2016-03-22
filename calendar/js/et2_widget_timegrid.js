@@ -310,8 +310,11 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			.on('mousemove', function(event) {
 				timegrid._get_time_from_position(event.clientX, event.clientY);
 			})
-			.on('mouseout', function() {
-				timegrid.gridHover.hide();
+			.on('mouseout', function(event) {
+				if(timegrid.div.has(event.relatedTarget).length === 0)
+				{
+					timegrid.gridHover.hide();
+				}
 			});
 		return true;
 	},
