@@ -159,8 +159,6 @@ module.exports = function (grunt) {
 						"api\/js\/etemplate\/et2_dataview.js",
 						"api\/js\/etemplate\/et2_extension_nextmatch.js",
 						"api\/js\/etemplate\/et2_widget_favorites.js",
-						"phpgwapi\/js\/dhtmlxGantt\/codebase\/dhtmlxgantt.js",
-						"api\/js\/etemplate\/et2_widget_gantt.js",
 						"api\/js\/etemplate\/et2_widget_html.js",
 						"phpgwapi\/js\/ckeditor\/adapters\/jquery.js",
 						"api\/js\/etemplate\/et2_widget_htmlarea.js",
@@ -248,6 +246,15 @@ module.exports = function (grunt) {
 						"phpgwapi\/js\/framework\/fw_desktop.js",
 						"pixelegg\/js\/slider.js",
 						"pixelegg\/js\/fw_pixelegg.js"
+					]
+				}
+			},
+			projectmanager: {
+				files: {
+					"projectmanager\/js\/app.min.js": [
+						"projectmanager\/js\/dhtmlxGantt\/codebase\/dhtmlxgantt.js",
+						"projectmanager\/js\/et2_widget_gantt.js",
+						"projectmanager\/js\/app.js"
 					]
 				}
 			}
