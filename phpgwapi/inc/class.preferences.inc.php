@@ -747,6 +747,7 @@ class preferences
 		foreach($db->select(self::TABLE, '*', $where, __LINE__, __FILE__) as $row)
 		{
 			$prefs = self::unserialize($row['preference_value']);
+			if (!is_array($prefs)) $prefs = array();	// would stall update otherwise
 
 			if ($name[0] == '/' && substr($name, -1) == '/')
 			{
