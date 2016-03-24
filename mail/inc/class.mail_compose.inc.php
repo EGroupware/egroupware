@@ -1642,7 +1642,8 @@ class mail_compose
 		if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 			foreach($attachments as $attachment) {
 				$cid = $attachment['cid'];
-				preg_match("/[cid:{$cid}]/", $bodyParts['0']['body'], $match);
+				$match=null;
+				preg_match("/cid:{$cid}/", $bodyParts['0']['body'], $match);
 				if (!$match || !$attachment['cid'])
 				{
 					$this->addMessageAttachment($_uid, $attachment['partID'],
