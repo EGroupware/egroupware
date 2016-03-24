@@ -738,7 +738,10 @@ class mail_ui
 				if (html::$ua_mobile) $sel_options['toolbar'] = $this->get_toolbar_actions();
 
 				//we use the category "filter" option as specifier where we want to search (quick, subject, from, to, etc. ....)
-				if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['cat_id']=(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject');
+				if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search']))
+				{
+					$content[self::$nm_index]['cat_id']=($content[self::$nm_index]['cat_id']?(!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]&&($content[self::$nm_index]['cat_id']=='quick'||$content[self::$nm_index]['cat_id']=='quickwithcc')?'subject':$content[self::$nm_index]['cat_id']):(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject'));
+				}
 				$readonlys = $preserv = array();
 				if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		}
@@ -1350,6 +1353,7 @@ class mail_ui
 		$prefchanged = false;
 		if (!isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']) || ($query['cat_id'] !=$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']))
 		{
+			//error_log(__METHOD__.__LINE__.' Changing userPref ActivesearchType:'.$query['cat_id']);
 			$GLOBALS['egw']->preferences->add('mail','ActiveSearchType',$query['cat_id'],'user');
 			$prefchanged = true;
 		}
