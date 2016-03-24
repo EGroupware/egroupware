@@ -532,8 +532,8 @@ class mail_ui
 					unset($this->searchTypes['quickwithcc']);
 				}
 				$sel_options['cat_id'] = $this->searchTypes;
-				error_log(__METHOD__.__LINE__.array2string($sel_options['cat_id']));
-				error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']));
+				//error_log(__METHOD__.__LINE__.array2string($sel_options['cat_id']));
+				//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']));
 				$content[self::$nm_index]['cat_id'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType'];
 				$sel_options['filter'] = $this->statusTypes;
 				$sel_options['filter2'] = array(''=>'No details',1=>'Details');
