@@ -246,7 +246,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					var sT = event_widget.options.value.start_m;
 					if (typeof this.dropEnd != 'undefined' && this.dropEnd.length == 1)
 					{
-						var eT = parseInt(this.dropEnd.attr('data-hour') * 60) + parseInt(this.dropEnd.attr('data-minute'));
+						var eT = (parseInt(timegrid._drop_data.hour) * 60) + parseInt(timegrid._drop_data.minute);
 						e.data.duration = ((eT - sT)/60) * 3600;
 
 						if(event_widget)
@@ -335,7 +335,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 		if(element.dropEnd.length)
 		{
-			this._drop_data = element.dropEnd[0].dataset || {};
+			this._drop_data = jQuery.extend({},element.dropEnd[0].dataset || {});
 		}
 
 		if (typeof element.dropEnd != 'undefined' && element.dropEnd.length)
