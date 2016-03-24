@@ -2,6 +2,7 @@
 %1 is not writable by you!	mail	cs	Pro %1 nemáte oprávnění k zápisu!
 (no subject)	mail	cs	(žádný předmět)
 activating by date requires a start- and end-date!	mail	cs	Aktivace datumem vyžaduje nastavení počátečního A koncového data!
+add folder	mail	cs	Přidat složku
 add to addressbook	mail	cs	přidat do adresáře
 all of	mail	cs	vše z
 allow images from external sources in html emails	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech
@@ -18,6 +19,7 @@ compress folder	mail	cs	Komprimovat složku
 condition	mail	cs	podmínka
 contains	mail	cs	obsahuje
 copy to	mail	cs	Kopírovat do
+create new account	mail	cs	Přidat účet
 date(newest first)	mail	cs	Datum (od nejnovějšího)
 date(oldest first)	mail	cs	Datum (od nejstaršího)
 default sorting order	mail	cs	Výchozí třídění
@@ -45,10 +47,14 @@ don't use template folder	mail	cs	Nepoužívat složku šablon
 don't use trash	mail	cs	Nepoužívat Koš
 draft folder	mail	cs	Rozepsané
 drafts	mail	cs	Rozepsané
-edit account	mail	cs	Editovat účet
+edit account	mail	cs	Upravit účet
+edit account ...	mail	cs	Upravit účet...
+edit folder acl	mail	cs	Upravit oprávnění
+edit folder acl ...	mail	cs	Upravit oprávnění ...
 edit vacation settings	mail	cs	editovat nastavení odpovědi v nepřítomnosti
 email notification update failed	mail	cs	aktualizace e-mailových upozornění se nezdařila
 emailaddress	admin	cs	e-mailová adresa
+empty junk	mail	cs	Vyprázdnit složku spam
 empty trash	mail	cs	Vyprázdnit koš
 enable	mail	cs	povolit
 error saving %1!	mail	cs	Chyba při ukládání %1!
@@ -63,6 +69,7 @@ file into	mail	cs	soubor do
 filemanager	mail	cs	Správce souborů
 flagged	mail	cs	s příznakem
 folder	mail	cs	složka
+folder management ...	mail	cs	Složka - vedení ...
 folder settings	mail	cs	Nastavení složky
 forward	mail	cs	Přeposlat
 forward as attachment	mail	cs	přeposlat jako přílohu
@@ -84,16 +91,20 @@ imap	mail	cs	IMAP
 imap server	mail	cs	IMAP Server
 import message	mail	cs	importovat zprávu
 importance	mail	cs	Důležitost
+important	mail	cs	důležitý
 inbox	mail	cs	INBOX
+job	mail	cs	obchodní
 junk	mail	cs	Spam
 keep a copy of the message in your inbox	mail	cs	zachovat kopii zprávy ve Vašem inboxu
 kilobytes	mail	cs	kilobytů
 later	mail	cs	Později
 less than	mail	cs	menší než
+mail filter	mail	cs	Pravidla Mail filtru
 mail settings	mail	cs	Nastavení pošty
 mark as deleted	mail	cs	Označit jako smazané
 matches	mail	cs	shoduje se s
 matches regexp	mail	cs	shoduje se s regulárním výrazem
+message body	mail	cs	Zpráva
 move selected to	mail	cs	přesunout vybrané (kam)
 move to	mail	cs	Přesunout do
 move to trash	mail	cs	Přesunout do koše
@@ -139,6 +150,7 @@ select all	mail	cs	Vybrat vše
 sender	mail	cs	Odesílatel
 sent	mail	cs	Odeslané
 sent folder	mail	cs	Odeslané
+set / remove flags	mail	cs	Označit
 sieve script name	mail	cs	Jméno sieve skriptu
 signature	mail	cs	Podpis
 size(...->0)	mail	cs	Velikost (...->0)
@@ -148,6 +160,7 @@ sort order	mail	cs	Pořadí řazení
 start new messages with mime type plain/text or html?	mail	cs	Začínat psaní nových zpráv jako MIME typ plain/text nebo html?
 subject(a->z)	mail	cs	Předmět (A->Z)
 subject(z->a)	mail	cs	Předmět (Z->A)
+subscribe folder ...	mail	cs	Odebírání nebo přidávání složek ...
 template folder	mail	cs	Složka šablon
 templates	mail	cs	Šablony
 text	mail	cs	Text
@@ -156,10 +169,12 @@ the message sender has requested a response to indicate that you have read this 
 the mimeparser can not parse this message.	mail	cs	Mimeparser nemůže zpracovat tuto zprávu.
 then	mail	cs	POTOM
 there is no imap server configured.	mail	cs	Není nakonfigurován žádný IMAP server.
+to do	mail	cs	k vyřízení
 trash	mail	cs	Koš
 trash folder	mail	cs	Koš
 unflagged	mail	cs	bez příznaku
 unread	mail	cs	nepřečtené
+unsubscribe folder	mail	cs	Složku odebrat
 vacation notice	mail	cs	Odpověď v nepřítomnosti
 vacation notice is active	mail	cs	Odpověď v nepřítomnosti je aktivní
 vacation start-date must be before the end-date!	mail	cs	Počáteční datum automatické odpovědi musí PŘEDCHÁZET koncovému datu!
@@ -167,6 +182,7 @@ view header lines	mail	cs	Zobrazit řádky hlavičky
 when deleting messages	mail	cs	Při mazání zpráv
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	cs	Které složky (kromě složky Odeslané) by měly být zobrazeny za použití schématu pro zobrazení složky Odeslané
 which folders - in general - should not be automatically created, if not existing	mail	cs	Které složky by neměly být automaticky vytvářeny pokud neexistují
+whole message	mail	cs	Všechny zprávy
 write	mail	cs	Uložit
 wrote	mail	cs	napsal
 yes, offer copy option	mail	cs	Ano, nabídnout volbu kopírování

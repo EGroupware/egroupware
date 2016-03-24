@@ -17,7 +17,7 @@ action	mail	de	Aktion
 activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach Datum erfordert ein Start- UND Enddatum!
 add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
 add all my aliases	mail	de	Alle Alias Adressen hinzufügen
-add folder	mail	de	Neuer Ordner
+add folder	mail	de	Ordner hinzufügen
 add to addressbook	mail	de	zum Adressbuch hinzufügen
 after reply, visible during compose	mail	de	Nach dem zitierten Text, sichtbar während der Bearbeitung
 aliases+forwards	mail	de	Aliase+Weiterleitungen
@@ -60,7 +60,7 @@ changed profile	mail	de	Profil geändert
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
 check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. manche Empfänger keine Bestätigung senden möchten.)
 check to save as calendar event on send	mail	de	Nach dem Versenden als Termin erstellen
-check to save as infolog on send	mail	de	Nach dem Versenden als Infolog erstellen	
+check to save as infolog on send	mail	de	Nach dem Versenden als Infolog erstellen
 check to save as trackerentry on send	mail	de	Nach dem Versenden als Ticket erstellen
 choose file	mail	de	Datei
 common acl	mail	de	Berechtigung
@@ -151,7 +151,7 @@ email notification update failed	mail	de	Die Benachrichtigung über den Gelesen-
 email notification update failed! you need to set an email address!	mail	de	Aktualisierung der E-Mail Benachrichtigungen fehlgeschlagen! Es muss eine E-Mail-Adresse ausgewählt sein!
 emailaddress	admin	de	E-Mail
 emailadmin: profilemanagement	mail	de	E-Mail-Admin: Profilmanagement
-empty junk	mail	de	Junk-/Spam- Ordner leeren
+empty junk	mail	de	Spam-Ordner leeren
 empty trash	mail	de	Papierkorb leeren
 enable	mail	de	Aktivieren
 enabled!	mail	de	aktiviert!
@@ -169,7 +169,6 @@ error:could not save the acl! because some names are empty!	mail	de	Fehler: Zugr
 esync will fail without a working email configuration!	mail	de	eSync steht Ihnen nicht zur Verfügung, weil kein gültiges Mailkonto eingestellt wurde!
 event details follow	mail	de	Details zum Termin folgen
 everyone	mail	de	Alle Anwender
-examine namespace to retrieve folders in others and shared	mail	de	Untersuche Namespace für Mail-Ordner in den Bereichen OTHERS and SHARED
 extended	mail	de	Erweitert
 extra sent folders	mail	de	Anzeigeschema Gesendet Ordner
 failed to delete %1	mail	de	Löschen von %1 fehlgeschlagen
@@ -194,8 +193,8 @@ flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
 folder %1 is moving to folder %2	mail	de	Ordner %1 wird in den Ordner %2 verschoben
-folder management ...	mail	de	Ordner Verwaltung ...
-folder settings	mail	de	Ordner Einstellungen
+folder management ...	mail	de	Ordner-Verwaltung ...
+folder settings	mail	de	Ordner-Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
 for eg.: mpeg	mail	de	z.B. für mpeg
 force html	mail	de	erzwinge HTML
@@ -266,7 +265,7 @@ later	mail	de	später
 less than	mail	de	kleiner als
 mail	common	de	Mail
 mail acl	mail	de	Zugriffsrechte
-mail filter	mail	de	Filter Regeln
+mail filter	mail	de	Filter-Regeln
 mail settings	mail	de	E-Mail-Einstellungen
 mail source	mail	de	Nachrichtenquelltext anzeigen
 mail-address	mail	de	Mail-Adresse
@@ -275,7 +274,7 @@ mailinglist	mail	de	Mailingliste
 mails	common	de	Mails
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	de	Der Mailserver meldete:\n%1 \nWollen Sie fortfahren und die ausgewählten Mails direkt löschen (Ok klicken)?\nWenn nicht, bitten den Mülleimer löschen und es nochmal versuchen. (Abbruch klicken)
 mark all as read	mail	de	alle als Gelesen markieren
-mark all messages in folder as read	mail	de	Alle Nachrichten in diesem Ordner als Gelesen markieren 
+mark all messages in folder as read	mail	de	Alle Nachrichten in diesem Ordner als Gelesen markieren
 mark as deleted	mail	de	als gelöscht markieren
 match:	mail	de	Übereinstimmung:
 matches	mail	de	stimmt überein (*, ? erlaubt)
