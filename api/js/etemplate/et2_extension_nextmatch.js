@@ -2360,7 +2360,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 		// Add category
 		if(!settings.no_cat) {
 			if (typeof settings.cat_id_label == 'undefined') settings.cat_id_label = '';
-			this.category = this._build_select('cat_id', 'select-cat', settings.cat_id, settings.cat_is_select !== true);
+			this.category = this._build_select('cat_id', settings.cat_is_select ? 'select' : 'select-cat', settings.cat_id, settings.cat_is_select !== true);
 		}
 
 		// Filter 1
