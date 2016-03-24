@@ -86,12 +86,15 @@ class mail_ui
 	 */
 	var $searchTypes = array(
 		'quick'		=> 'quicksearch',	// lang('quicksearch')
+		'quickwithcc'=> 'quicksearch (with cc)',	// lang('quicksearch (with cc)')
 		'subject'	=> 'subject',		// lang('subject')
 		'body'		=> 'message body',	// lang('message body')
 		'from'		=> 'from',			// lang('from')
 		'to'		=> 'to',			// lang('to')
 		'cc'		=> 'cc',			// lang('cc')
 		'text'		=> 'whole message',	// lang('whole message')
+		'larger'		=> 'greater than',	// lang('greater than')
+		'smaller'		=> 'less than',	// lang('less than')
 //		'custom' 	=> 'Selected range',// lang('Selected range')
 	);
 
@@ -523,8 +526,15 @@ class mail_ui
 					emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 					if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
 				}
-				if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]) unset($this->searchTypes['quick']);
+				if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])
+				{
+					unset($this->searchTypes['quick']);
+					unset($this->searchTypes['quickwithcc']);
+				}
 				$sel_options['cat_id'] = $this->searchTypes;
+				error_log(__METHOD__.__LINE__.array2string($sel_options['cat_id']));
+				error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']));
+				$content[self::$nm_index]['cat_id'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType'];
 				$sel_options['filter'] = $this->statusTypes;
 				$sel_options['filter2'] = array(''=>'No details',1=>'Details');
 				$content[self::$nm_index]['filter2'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails'];
@@ -1337,9 +1347,19 @@ class mail_ui
 			$filter['status'] = $query['filter'];
 		}
 		$reverse = ($query['sort']=='ASC'?false:true);
+		$prefchanged = false;
+		if (!isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']) || ($query['cat_id'] !=$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']))
+		{
+			$GLOBALS['egw']->preferences->add('mail','ActiveSearchType',$query['cat_id'],'user');
+			$prefchanged = true;
+		}
 		if (!isset($GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails']) || ($query['filter2'] !=$GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails']))
 		{
 			$GLOBALS['egw']->preferences->add('mail','ShowDetails',$query['filter2'],'user');
+			$prefchanged = true;
+		}
+		if ($prefchanged)
+		{
 			// save prefs
 			$GLOBALS['egw']->preferences->save_repository(true);
 		}
@@ -4143,6 +4163,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])
 		{
 			unset($this->searchTypes['quick']);
+			unset($this->searchTypes['quickwithcc']);
 		}
 		if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
 		{
