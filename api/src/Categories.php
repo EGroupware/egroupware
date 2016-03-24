@@ -295,9 +295,9 @@ class Categories
 			{
 				if (in_array($order, array('name','description','appname','app_name')))
 				{
-					return $sign * strcasecmp($a['$order'], $b['$order']);
+					return $sign * strcasecmp($a[$order], $b[$order]);
 				}
-				return $sign*(int)$a['$order'] - $sign*(int)$b['$order'];
+				return $sign*(int)$a[$order] - $sign*(int)$b[$order];
 			});
 		}
 		// limit the number of returned rows
@@ -339,7 +339,7 @@ class Categories
 		if (!$sort)  $sort = 'ASC';
 		if (!$order) $order = 'cat_name';
 
-		//error_log(__METHOD__."($start,$limit,$query,$sort,$order,globals=$globals,parent=$parent_id,$unserialize_data) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
+		error_log(__METHOD__."($start,$limit,$query,$sort,$order,globals=$globals,parent=$parent_id,$unserialize_data) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
 
 		$parents = $cats = array();
 
