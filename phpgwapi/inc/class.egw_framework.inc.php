@@ -315,9 +315,10 @@ abstract class egw_framework
 	 */
 	public static function refresh_opener($msg, $app, $id=null, $type=null, $targetapp=null, $replace=null, $with=null, $msg_type=null)
 	{
-		unset($msg, $app, $id, $type, $targetapp, $replace, $with, $msg_type);	// used only via func_get_args();
 		//error_log(__METHOD__.'('.array2string(func_get_args()).')');
 		self::$extra['refresh-opener'] = func_get_args();
+
+		unset($msg, $app, $id, $type, $targetapp, $replace, $with, $msg_type);	// used only via func_get_args();
 	}
 
 	/**
@@ -330,8 +331,9 @@ abstract class egw_framework
 	 */
 	public static function message($msg, $type='success')
 	{
-		unset($msg, $type);	// used only via func_get_args();
 		self::$extra['message'] = func_get_args();
+
+		unset($msg, $type);	// used only via func_get_args();
 	}
 
 	/**
@@ -343,9 +345,10 @@ abstract class egw_framework
 	 */
 	public static function popup($link, $target='_blank', $popup='640x480')
 	{
-		unset($link, $target, $popup);	// used only via func_get_args()
 		// default params are not returned by func_get_args!
 		$args = func_get_args()+array(null, '_blank', '640x480');
+
+		unset($link, $target, $popup);	// used only via func_get_args()
 
 		if (egw_json_request::isJSONRequest())
 		{
