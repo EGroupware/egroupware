@@ -1512,6 +1512,7 @@ class emailadmin_imapbase
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.'->'.$mime_id.' Disp:'.$partdisposition.' Type:'.$partPrimaryType.' Skip:'.array2string($skipParts));
 					if (array_key_exists($mime_id,$skipParts)) continue;
 					if ($partdisposition=='attachment' ||
+						($partdisposition=='inline'&&$partPrimaryType == 'image'&&$mime_type=='image/tiff') || // as we are not able to display tiffs
 						($partdisposition=='inline'&&$partPrimaryType == 'image'&&empty($cid)) ||
 						($partdisposition=='inline' && $partPrimaryType != 'image' && $partPrimaryType != 'multipart' && $partPrimaryType != 'text'))
 					{
@@ -5288,6 +5289,7 @@ class emailadmin_imapbase
 			if ($partDisposition == 'attachment' ||
 				(($partDisposition == 'inline' || empty($partDisposition)) && $partPrimaryType == 'image' && $part->getContentId()=='') ||
 				(($partDisposition == 'inline' || empty($partDisposition)) && $partPrimaryType != 'image' && $partPrimaryType != 'text' && $partPrimaryType != 'multipart') ||
+				($mime_type=='image/tiff') || //always fetch. even if $fetchEmbeddedImages is false. as we cannot display tiffs
 				($fetchEmbeddedImages && ($partDisposition == 'inline' || empty($partDisposition)) && $partPrimaryType == 'image') ||
 				($fetchTextCalendar && $partPrimaryType == 'text' && $part->getSubType() == 'calendar'))
 			{
