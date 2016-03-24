@@ -797,7 +797,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 		// Scroll to start of day
 		this._top_time = (wd_start * this.rowHeight) / this.options.granularity;
-		this.scrolling.scrollTop(this._top_time);
+		// For some reason on Chrome & FF this doesn't quite get the day start
+		// to the top, so add 2px;
+		this.scrolling.scrollTop(this._top_time+2);
 
 		if(this.rowHeight != old_height)
 		{

@@ -530,11 +530,13 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 
 		// elem is jquery div of event
 		function isHidden(elem) {
-			var docViewTop = timegrid.scrolling.scrollTop(),
+			// Add an extra 5px top and bottom to include events just on the
+			// edge of visibility
+			var docViewTop = timegrid.scrolling.scrollTop() + 5,
 			docViewBottom = docViewTop + (
 				this.display_settings.granularity === 0 ?
 				this.event_wrapper.height() :
-				timegrid.scrolling.height()
+				timegrid.scrolling.height() - 10
 			),
 			elemTop = elem.position().top,
 			elemBottom = elemTop + elem.outerHeight(true);
