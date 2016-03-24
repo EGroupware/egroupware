@@ -27,7 +27,7 @@ actions...	calendar	de	Aktionen...
 add alarm	calendar	de	Alarm zufügen
 add current view as favorite	calendar	de	Ansicht als Favorit zufügen
 add new alarm	calendar	de	Neuen Alarm erstellen
-add new participants or resource	calendar	de	Neuen Teilnehmer oder Ressource auswählen
+add new participants or resource	calendar	de	Neue(n) Teilnehmer oder Ressource auswählen
 add timesheet entry	calendar	de	Zeitnachweis anfügen
 added	calendar	de	Neuer Termin
 added by synchronisation	calendar	de	Durch Synchronisation hinzugefügt
@@ -474,12 +474,12 @@ show a calendar title	calendar	de	Soll der Kalender Titel angezeigt werden?
 show all events, as if they were private	calendar	de	Zeige alle Termine, so als wären sie privat
 show all status incl. rejected events	calendar	de	Zeige alle Status einschl. abgesagte Termine
 show all status, but rejected	calendar	de	Zeige alle Status außer abgesagte Termine
-show all status, but unknown	calendar	de	Zeige alle Status außer Einladungen
+show all status, but unknown	calendar	de	Zeige alle Termine außer Einladungen
 show also events just owned by selected user	calendar	de	Zeige zusätzlich Termine die dem ausgewählten Benutzer nur gehören
 show birthdays from addressbook	admin	de	Zeige Geburtstage vom Adressbuch
 show default view on main screen	calendar	de	Kalenderansicht auf der Startseite anzeigen
 show empty rows in planner	calendar	de	Zeige leere Zeilen im Planer
-show events that have been deleted	calendar	de	Zeige delegierte Termine
+show events that have been deleted	calendar	de	Zeige gelöschte Termine
 show list of upcoming events	calendar	de	Zeige eine Liste der kommenden Termine
 show only accepted events	calendar	de	Zeige nur zugesagte Termine
 show only delegated events	calendar	de	Nur delegierte Einträge anzeigen

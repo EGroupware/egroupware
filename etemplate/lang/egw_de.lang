@@ -189,6 +189,7 @@ error: template not found !!!	etemplate	de	Fehler: eTemplate nicht gefunden !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
 error: while saving !!!	etemplate	de	Fehler: beim Speichern !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	de	Fehler: Datei schreiben (keine Schreibberechtigung für den Webserver) !!!
+et2 rendering took %1s	etemplate	de	eT2 Rendering benötigte %1s
 etemplate	common	de	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
 etemplate '%1' written to '%2'	etemplate	de	eTemplate '%1' wurde nach '%2' geschrieben

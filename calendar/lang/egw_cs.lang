@@ -15,6 +15,8 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	cs	Akce
 actions...	calendar	cs	Akce...
 add alarm	calendar	cs	Přidat připomínku
+add new alarm	calendar	cs	Vytvořit nový alarm
+add new participants or resource	calendar	cs	Přidat nové účastníky nebo místo
 add timesheet entry	calendar	cs	Přidat pracovní výkaz
 added	calendar	cs	Přidáno
 added by synchronisation	calendar	cs	přidáno synchronizací
@@ -88,7 +90,7 @@ custom fields	common	cs	Volitelné položky
 custom_2	common	cs	volný/zaneprázdněn
 daily	calendar	cs	Denně
 day	calendar	cs	den
-days	calendar	cs	dny
+days	calendar	cs	Dny
 days of the week for a weekly repeated event	calendar	cs	Dny v týdnu pro události s týdenním opakováním
 days repeated	calendar	cs	dní opakováno
 dayview	calendar	cs	Denní pohled
@@ -184,6 +186,7 @@ groupmember(s) %1 not included, because you have no access.	calendar	cs	Členov�
 groups: other users can allways be invited, only groups require an invite grant	admin	cs	Skupiny: ostatní uživatelé mohou být pozváni vždy, jen skupiny vyžadují oprávnění
 h	calendar	cs	h
 here is your requested alarm.	calendar	cs	Zde je Váše požadovaná připomínka.
+hide private events	calendar	cs	Skrýt soukromé události
 hide private infos	calendar	cs	Skrýt soukromé informace
 high priority	calendar	cs	vysoká priorita
 history	calendar	cs	Historie
@@ -227,7 +230,7 @@ location, start- and endtimes, ...	calendar	cs	Umístění, počáteční a konc
 mail all participants	calendar	cs	obeslat všechny účastníky
 make freebusy information available to not loged in persons?	calendar	cs	Povolit zobrazení stavu volný/zaneprázdněn nepřihlášeným osobám?
 manage mapping	calendar	cs	Spravovat mapování
-minutes	calendar	cs	Minut
+minutes	calendar	cs	Minuty
 modified	calendar	cs	Změněno
 mon	calendar	cs	Po
 month	calendar	cs	Měsíc
@@ -243,6 +246,7 @@ new search with the above parameters	calendar	cs	nové hledání dle výše uved
 no events found	calendar	cs	Žádné události nebyly nalezeny
 no filter	calendar	cs	Žádný filtr
 no matches found	calendar	cs	nenalezeny žádné záznamy
+no meeting requests	calendar	cs	žádné pozvánky
 no recurrence	calendar	cs	Žádné opakování
 no response	calendar	cs	Žádná odpověď
 non blocking	calendar	cs	neblokující
@@ -335,12 +339,16 @@ should the status of the event-participants (accept, reject, ...) be shown in br
 show all events, as if they were private	calendar	cs	Zobrazit všechny události jako by byly soukromé
 show all status incl. rejected events	calendar	cs	Zobrazit stav všech událostí včetně odmítnutých
 show all status, but rejected	calendar	cs	Zobrazit stav všech událostí kromě odmítnutých
+show all status, but unknown	calendar	cs	Zobrazit všechny termíny kromě pozvánek
 show also events just owned by selected user	calendar	cs	Zobrazit také události, které vybraný uživatel jen vlastní
 show birthdays from addressbook	admin	cs	Zobrazit narozeniny z adresáře
 show default view on main screen	calendar	cs	Zobrazit výchozí pohled na hlavní obrazovce
 show empty rows in planner	calendar	cs	Zobrazit prázdné řádky v Plánovači
+show events that have been deleted	calendar	cs	Zobrazí odstraněné termíny
 show list of upcoming events	calendar	cs	zobrazit seznam nadcházejících událostí
 show only accepted events	calendar	cs	Zobrazit jen přijaté události
+show only delegated events	calendar	cs	Zobrazit pouze pověřené  termíny
+show only events flagged as public, (not checked as private)	calendar	cs	Zobrazit pouze veřejné termíny
 show only invitations, not yet accepted or rejected	calendar	cs	Zobrazit jen pozvánky, zatím ani přijaté ani odmítnuté
 show only rejected events	calendar	cs	Zobrazit jen odmítnuté události
 show only tentative accepted events	calendar	cs	Zobrazit jen předběžně přijaté události
@@ -427,6 +435,7 @@ work day starts on	calendar	cs	Pracovní den začíná v
 workday	calendar	cs	Pracovní den
 workdays	calendar	cs	Pracovní dny
 yearly	calendar	cs	Ročně
+yearly planner	calendar	cs	Roční plánovač
 yearview	calendar	cs	Roční pohled
 yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
 you are not allowed to book the resource selected:	calendar	cs	Nemáte oprávnění si rezervovat vybraný zdroj:

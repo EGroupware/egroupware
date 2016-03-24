@@ -18,6 +18,10 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	cs	%1' není platné číslo s pohyblivou desetinnou čárkou !!!
 '%1' is not a valid integer !!!	etemplate	cs	%1' není platné celé číslo
 '%1' is not allowed ('%2')!	etemplate	cs	'%1' NENÍ povoleno ('%2')!
+1 minute	etemplate	cs	1 Minuty
+15 minutes	etemplate	cs	15 Minuty
+30 minutes	etemplate	cs	30 Minuty
+5 minutes	etemplate	cs	5 Minuty
 a pattern to be searched for	etemplate	cs	hledaný výraz
 accesskey	etemplate	cs	Přístupový klíč
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	cs	Přístupové klíče mohou být specifikovány také s & v označení (např. &Name)
@@ -30,6 +34,7 @@ add column	etemplate	cs	Přidat sloupec
 add index	etemplate	cs	Přidat index
 add new	etemplate	cs	Přidat nový
 add table	etemplate	cs	Přidat tabulku
+add to clipboard	etemplate	cs	Přidat do schránky
 advanced search	etemplate	cs	Rozšířené hledání
 align	etemplate	cs	Zarovnat
 alignment of label and input-field in table-cell	etemplate	cs	zarovnání popisku a vstupního pole v buňce tabulky
@@ -91,6 +96,7 @@ contact	etemplate	cs	Kontakt
 contact field to show	etemplate	cs	Zobrazit položku kontaktu
 contact fields	etemplate	cs	Kontaktní položky
 contains	etemplate	cs	obsahuje
+copy "%1"	etemplate	cs	Kopie "%1"
 copy to clipboard	etemplate	cs	Kopírovat do clipboardu
 create a new table for the application	etemplate	cs	Vytvořit novou tabulku pro aplikaci
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	cs	vytvoří nový anglický jazykový soubor ('en') z označení a pomocných textů (pro aplikaci uvedenou v Názvu)
@@ -106,7 +112,7 @@ custom javascript for onchange	etemplate	cs	uživatelsky definovaný javaskript 
 cut	etemplate	cs	Vyjmout
 date+time	etemplate	cs	Datum a čas
 day	etemplate	cs	Den
-days	etemplate	cs	dnů
+days	etemplate	cs	Dny
 db ensures that every row has a unique value in that column	etemplate	cs	Databáze zajišťuje, že každý řádek má v tomto sloupci unikátní hodnotu
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	cs	volby indexu (oddělené čárkou) specifické pro databázi, např. mysql(FULLTEXT) nebo mysql(100) pro indexovanou délku sloupce
 db-tools	etemplate	cs	Databázové nástroje
@@ -254,7 +260,7 @@ maximum size for uploads	filemanager	cs	Maximální velikost pro uploady
 message ...	etemplate	cs	Zpráva...
 middle	etemplate	cs	Prostřední
 minute	etemplate	cs	Minuta
-minutes	etemplate	cs	minut
+minutes	etemplate	cs	Minuty
 month	etemplate	cs	Měsíc
 more	etemplate	cs	Více
 more than 1 match for '%1'	etemplate	cs	Více než jeden záznam pro '%1'
@@ -278,6 +284,7 @@ nextmatch sortheader	etemplate	cs	Další shoda setříděného záhlaví
 no column to swap with !!!	etemplate	cs	není sloupec, za který se dá prohodit !!!
 no file	etemplate	cs	žádný soubor
 no filename given or selected via browse...	etemplate	cs	nebyl zadán název souboru ani vybrán přes Procházet
+no filters	etemplate	cs	Odebrat filtr
 no matches found	etemplate	cs	Nenalezeny žádné záznamy
 no row to swap with !!!	etemplate	cs	není řádek, za který se dá prohodit !!!
 not null	etemplate	cs	NENÍ NULL
@@ -350,6 +357,7 @@ select country	etemplate	cs	Vybrat zemi
 select day	etemplate	cs	Vybrat den
 select day of week	etemplate	cs	vybrat den v týdnu
 select entry	etemplate	cs	Vybrat záznam
+select files from filemanager ...	etemplate	cs	Vyberte soubory ze správce souborů ...
 select hour	etemplate	cs	Vybrat hodinu
 select if content of field should not be translated (label gets always translated)	etemplate	cs	vyberte pokud nemá být obsah pole přeložen (jmenovka je přeložena vždy)
 select language	etemplate	cs	Vybrat jazyk

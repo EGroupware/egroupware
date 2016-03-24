@@ -40,6 +40,7 @@ add	common	cs	Přidat
 add %1 category for	common	cs	Přidat kategorii %1 pro
 add a new contact	common	cs	Přidat nový kontakt
 add category	common	cs	Přidat kategorii
+add current	common	cs	Uložit aktuální náhled
 add shortcut	common	cs	Přidat zástupce
 add sub	common	cs	Přidat pod
 addressbook	common	cs	Adresář
@@ -142,6 +143,7 @@ choose a background color for the icons	common	cs	Vyberte barvu pozadí pro ikon
 choose a background image.	common	cs	Vyberte obrázek na pozadí
 choose a background style.	common	cs	Vyberte styl pozadí
 choose a text color for the icons	common	cs	Vyberte barvu textu pro ikony
+choose file...	common	cs	vyberte soubory ...
 choose the category	common	cs	Vyberte kategorii
 choose the parent category	common	cs	Vyberte nadřazenou kategorii
 christmas island	common	cs	VÁNOČNÍ OSTROV
@@ -208,6 +210,7 @@ disable the execution a bugfixscript for internet explorer 5.5 and higher to sho
 disabled	common	cs	Zakázano
 display %s first	jscalendar	cs	Zobrazit nejprve %s
 djibouti	common	cs	DŽIBUTSKO
+do not notify	common	cs	Neupozorňovat
 do you also want to delete all subcategories ?	common	cs	Chcete také smazat všechny podkategorie?
 doctype:	common	cs	Typ dokumentu:
 document properties	common	cs	Vlastnosti dokumentu
@@ -470,6 +473,7 @@ niue	common	cs	NIUE
 no	common	cs	Ne
 no - cancel	common	cs	Ne - Zrušit
 no entries found, try again ...	common	cs	žádné záznamy nebyly nalezeny, zkuste znovu...
+no filters	common	cs	Odebrat filtr
 no history for this record	common	cs	Žádná historie pro tento záznam
 no savant2 template directories were found in:	common	cs	Nebyly nalezeny šablony adresářů Savant2 v:
 no subject	common	cs	Žádný subjekt
@@ -602,6 +606,7 @@ save	common	cs	Uložit
 search	common	cs	Hledat
 search %1 '%2'	common	cs	Hledat %1 '%2'
 search accounts	common	cs	Hledat v účtech
+search for '%1'	common	cs	Hledat '%1'
 search or select accounts	common	cs	vyhledat nebo vybrat účty
 second	common	cs	sekunda
 section	common	cs	Sekce
@@ -795,4 +800,3 @@ your settings have been updated	common	cs	Vaše nastavení byla zaktualizována
 zambia	common	cs	ZAMBIE
 zimbabwe	common	cs	ZIMBABWE
 zoom	common	cs	Lupa
-search for '%1'	common	cs	Hledat '%1'

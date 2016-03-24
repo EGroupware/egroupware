@@ -257,7 +257,7 @@ disabled	common	de	Deaktiviert
 display %s first	jscalendar	de	%s zuerst anzeigen
 distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
 djibouti	common	de	DSCHIBUTI
-do not notify	common	de	Nicht Benachrichtigen
+do not notify	common	de	Nicht benachrichtigen
 do not notify of these changes	common	de	Keine Benachrichtigung
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 doctype:	common	de	DOCTYPE:
@@ -733,6 +733,7 @@ scheduling outbox	common	de	Postausgang Terminplanung
 search	common	de	Suchen
 search %1 '%2'	common	de	Suche %1 '%2'
 search accounts	common	de	Benutzer suchen
+search for '%1'	common	de	Suche nach '%1'
 search or select accounts	common	de	Suchen und auswählen von Benutzern
 second	common	de	Sekunden
 section	common	de	Sektion
@@ -974,4 +975,3 @@ your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
 zoom	common	de	Zoomen
-search for '%1'	common	de	Suche nach '%1'
