@@ -33,7 +33,6 @@
           <entry type="string" name="start">start</entry>
           <entry type="string" name="end">end</entry>
           <entry type="string" name="participants">Participants: User, Status, Role</entry>
-          <entry type="string" name="participants-c">Participants: User, Status, Quantity, Role</entry>
           <entry type="string" name="all_custom_fields">calendar</entry>
         </entry>
         <entry type="string" name="delimiter">;</entry>
