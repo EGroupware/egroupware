@@ -144,7 +144,7 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 				foreach($list as $a_type)
 				{
 					$account_options = $options + array('account_type' => $a_type);
-					$_results += accounts::link_query('',$account_options);
+					$_results += accounts::link_query($query,$account_options);
 				}
 				$_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
 			}
