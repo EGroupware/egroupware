@@ -498,7 +498,7 @@ class Accounts
 	 */
 	static function username($account_id=null)
 	{
-		if ($account_id && !($account = self::cache_read($account_id)))
+		if ($account_id && !($account = self::cache_read((int)$account_id)))
 		{
 			return '#'.$account_id;
 		}
