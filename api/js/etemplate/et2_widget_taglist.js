@@ -267,8 +267,8 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		if(this.options.autocomplete_url && !jQuery.isEmptyObject(this.options.select_options))
 		{
 			var widget = this;
-			this.taglist.setData(function(query) {
-				return widget._data.call(widget,query);
+			this.taglist.setData(function(query, cfg) {
+				return widget._data.call(widget,query, cfg);
 			});
 		}
 
@@ -420,9 +420,10 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 	 * typed, or query via AJAX if user typed something
 	 *
 	 * @param {string} query
+	 * @param {Object} cfg Magicsuggest's internal configuration
 	 * @returns {Array}
 	 */
-	_data: function(query) {
+	_data: function(query, cfg) {
 
 		var return_value = this.options.select_options || {};
 
@@ -446,9 +447,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		else if (query.trim().length >= this.taglist_options.minChars || this._query_server)
 		{
 			// No options - ask server
-			return this.options.autocomplete_url;
+			return_value = this.options.autocomplete_url;
 		}
 		this._query_server = false;
+
+		// Turn on local filtering, or trust server to do it
+		cfg.mode = typeof return_value === 'string' ? 'remote' : 'local'
 
 		return return_value;
 	},
@@ -519,8 +523,8 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			if(this.taglist == null || !source) return;
 
 			var widget = this;
-			this.taglist.setData(function(query) {
-				return widget._data.call(widget,query);
+			this.taglist.setData(function(query, cfg) {
+				return widget._data.call(widget,query, cfg);
 			});
 		}
 	},
@@ -551,8 +555,8 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 
 		if(this.taglist == null) return;
 		var widget = this;
-		this.taglist.setData(function(query) {
-			return widget._data.call(widget,query);
+		this.taglist.setData(function(query, cfg) {
+			return widget._data.call(widget,query, cfg);
 		});
 	},
 
