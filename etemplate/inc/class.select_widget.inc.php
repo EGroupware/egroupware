@@ -75,7 +75,7 @@ class select_widget
 	 *
 	 * @param string $ui '' for html
 	 */
-	function select_widget($ui='')
+	function __construct($ui='')
 	{
 		foreach($this->monthnames as $k => $name)
 		{

@@ -16,7 +16,7 @@
 	 *
 	 * With the value or the name of the widget, you can specify a certain manual page
 	 * (eg. ManualAddressbook). Additional params can be past to the manual app with
-	 * $GLOBALS['egw_info']['flags']['params']['manual']. 
+	 * $GLOBALS['egw_info']['flags']['params']['manual'].
 	 * If no page is set after that two mechanisms the URL will contains the referer.
 	 *
 	 * @package etemplate
@@ -26,7 +26,7 @@
 	 */
 	class manual_widget
 	{
-		/** 
+		/**
 		 * exported methods of this class
 		 * @var array $public_functions
 		 */
@@ -48,7 +48,7 @@
 		 *
 		 * @param string $ui '' for html
 		 */
-		function manual_widget($ui)
+		function __construct($ui)
 		{
 			$this->ui = $ui;
 		}
@@ -60,7 +60,7 @@
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
-		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @param array &$readonlys names of widgets as key, to be made readonly
 		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 		 * @param object &$tmpl reference to the template we belong too
@@ -89,7 +89,7 @@
 			$cell['onclick'] = $GLOBALS['egw']->framework->open_manual_js($link).'; return false;';
 			if (!$cell['label']) $cell['label'] = 'Manual';
 			if (!$cell['help']) $cell['help'] = /*lang(*/'Open the online help.'/*)*/;
-			
+
 			if (!$cell['readonly'] && !isset($GLOBALS['egw_info']['user']['apps']['manual']))
 			{
 				$cell['readonly'] = true;	// we disable / remove the button, if use has no run-rights for the manual

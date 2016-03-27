@@ -12,13 +12,14 @@
  */
 
 use EGroupware\Api\Etemplate\Widget;
+use EGroupware\Api\Etemplate;
 
 /**
  * eTemplate widget baseclass
  *
  * @deprecated use Api\Etemplate\Widget
  */
-class etemplate_widget extends Widget {}
+class etemplate_widget extends Etemplate\Widget {}
 
 /**
  * eTemplate Extension: Entry widget

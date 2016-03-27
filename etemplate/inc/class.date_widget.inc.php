@@ -66,7 +66,7 @@ class date_widget
 	 *
 	 * @param string $ui '' for html
 	 */
-	function date_widget($ui)
+	function __construct($ui)
 	{
 		if ($ui == 'html')
 		{

@@ -42,20 +42,11 @@
 		var $human_name = 'Tabs';	// this is the name for the editor
 
 		/**
-		 * Constructor of the extension
-		 *
-		 * @param string $ui '' for html
-		 */
-		function tab_widget($ui)
-		{
-		}
-
-		/**
 		 * pre-processing of the extension
 		 *
 		 * This function is called before the extension gets rendered
 		 *
-		 * @param string $name form-name of the control
+		 * @param string $form_name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
 		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @param array &$readonlys names of widgets as key, to be made readonly

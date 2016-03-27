@@ -58,7 +58,7 @@ class ajax_select_widget
 
 	private $debug = false;
 
-	function ajax_select_widget($ui='')
+	function __construct($ui='')
 	{
 
 		switch($ui)

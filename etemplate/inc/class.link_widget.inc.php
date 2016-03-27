@@ -97,16 +97,6 @@ class link_widget
 	const LIMIT_LINKS = 1000;
 
 	/**
-	 * Constructor of the extension
-	 *
-	 * @param string $ui '' for html
-	 */
-	function link_widget($ui='')
-	{
-
-	}
-
-	/**
 	 * pre-processing of the extension
 	 *
 	 * This function is called before the extension gets rendered

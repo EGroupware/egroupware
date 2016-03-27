@@ -12,7 +12,7 @@
 	/**
 	 * eTemplate Extension: widget to display a path with clickable components
 	 *
-	 * The value is an array with id => label pairs. 
+	 * The value is an array with id => label pairs.
 	 * Returned will be the id of the clicked component or nothing at all.
 	 *
 	 * @package etemplate
@@ -22,7 +22,7 @@
 	 */
 	class path_widget
 	{
-		/** 
+		/**
 		 * exported methods of this class
 		 * @var array
 		 */
@@ -41,7 +41,7 @@
 		 *
 		 * @param string $ui '' for html
 		 */
-		function select_widget($ui)
+		function __construct($ui)
 		{
 			$this->ui = $ui;
 		}
@@ -53,7 +53,7 @@
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
-		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @param array &$readonlys names of widgets as key, to be made readonly
 		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 		 * @param object &$tmpl reference to the template we belong too
@@ -81,7 +81,7 @@
 				$sep['label'] = $seperator;
 				soetemplate::add_child($cell,$sep);
 				unset($sep);
-				
+
 				$button = soetemplate::empty_cell('button',$cell_name.'['.$id.']');
 				$button['label'] = $label;
 				$button['onchange'] = 1; // display as link
@@ -89,7 +89,7 @@
 				$button['help'] = $cell['help'] ? $cell['help'] : lang($label)."($i)";
 				soetemplate::add_child($cell,$button);
 				unset($button);
-			}	
+			}
 			return True;	// extra Label Ok
 		}
 
@@ -113,7 +113,7 @@
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			$value = '';
-			
+
 			foreach((array)$value_in as $id => $pressed)
 			{
 				if ($pressed && isset($extension_data[$id]))
