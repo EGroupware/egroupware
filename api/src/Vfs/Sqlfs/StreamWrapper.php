@@ -1195,7 +1195,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 *
 	 * @return string
 	 */
-	protected function _sql_readable()
+	protected static function _sql_readable()
 	{
 		static $sql_read_acl=null;
 
@@ -1469,7 +1469,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @param string $path
 	 * @return array|boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
 	 */
-	function get_eacl($path)
+	static function get_eacl($path)
 	{
 		if (!($stat = static::url_stat($path, STREAM_URL_STAT_QUIET)))
 		{
