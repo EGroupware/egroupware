@@ -1703,15 +1703,22 @@ function try_lang($key,$vars=null)
  *
  * Should be used for all external content, to guard against exploidts.
  *
+ * PHP 7.0+ can be told not to instanciate any classes (and calling eg. it's destructor).
+ * In fact it instanciates it as __PHP_Incomplete_Class without any methods and therefore disarming threads.
+ *
  * @param string $str
  * @return mixed
  */
 function php_safe_unserialize($str)
 {
+	if (PHP_VERSION >= 7)
+	{
+		return unserialize($str, array('allowed_classes' => false));
+	}
 	if ((strpos($str, 'O:') !== false || strpos($str, 'C:') !== false) &&
 		preg_match('/(^|;|{)[OC]:\d+:"/', $str))
 	{
-		error_log(__METHOD__."('$str') contains objects --> return false");
+		error_log(__METHOD__."('$str') contains objects --> return NULL");
 		return null;	// null, not false, to not trigger behavior of returning string itself to app code
 	}
 	return unserialize($str);
@@ -1727,19 +1734,39 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		"O:20:\"Horde_Prefs_Identity\":2:{s:9:\"\x00*\x00_prefs\";O:11:\"Horde_Prefs\":2:{s:8:\"\x00*\x00_opts\";a:1:{s:12:\"sizecallback\";" => false,
 		"a:2:{i:0;O:12:\"Horde_Config\":1:{s:13:\"\x00*\x00_oldConfig\";s:#{php_injection.length}:\"#{php_injection}\";}i:1;s:13:\"readXMLConfig\";}}" => false,
 		'a:6:{i:0;i:0;i:1;d:2;i:2;s:4:"ABCD";i:3;r:3;i:4;O:8:"my_Class":2:{s:1:"a";r:6;s:1:"b";N;};i:5;C:16:"SplObjectStorage":14:{x:i:0;m:a:0:{}}' => false,
+		serialize(new stdClass()) => false,
+		serialize(array(new stdClass(), new SplObjectStorage())) => false,
 		// string content, safe to unserialize
 		serialize('O:8:"stdClass"') => true,
 		serialize('C:16:"SplObjectStorage"') => true,
 		serialize(array('a' => 'O:8:"stdClass"', 'b' => 'C:16:"SplObjectStorage"')) => true,
-		// false positive: failing our tests, because it has correct delimiter (^|;|{) in front of pattern :-(
+		// false positive: failing our php<7 regular expression, because it has correct delimiter (^|;|{) in front of pattern :-(
 		serialize('O:8:"stdClass";C:16:"SplObjectStorage"') => true,
 	) as $str => $result)
 	{
-		if ((bool)php_safe_unserialize($str) !== $result)
+		if ((bool)($r=php_safe_unserialize($str)) !== $result)
 		{
 			if (!$result)
 			{
-				echo "FAILED: $str\n";
+				if (PHP_VERSION >= 7)
+				{
+					if (preg_match_all('/([^ ]+) Object\(/', array2string($r), $matches))
+					{
+						foreach($matches[1] as $class)
+						{
+							if (!preg_match('/^__PHP_Incomplete_Class(#\d+)?$/', $class))
+							{
+								echo "FAILED: $str\n";
+								continue 2;
+							}
+						}
+					}
+					echo "passed: ".array2string($str)." = ".array2string($r)."\n";
+				}
+				else
+				{
+					echo "FAILED: $str\n";
+				}
 			}
 			else
 			{
@@ -1750,6 +1777,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		{
 			echo "passed: $str\n";
 		}
+		//echo "result=".array2string($result).", php_save_unserialize('".htmlspecialchars($str)."') = ".array2string(php_safe_unserialize($str))." --> ".array2string((bool)php_safe_unserialize($str))."\n";
 	}
 }*/
 
