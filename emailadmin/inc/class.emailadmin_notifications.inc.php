@@ -6,7 +6,7 @@
  * @package emailadmin
  * @author Ralf Becker <rb@stylite.de>
  * @author Stylite AG <info@stylite.de>
- * @copyright (c) 2014 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2014-16 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -37,8 +37,8 @@ class emailadmin_notifications
 	 * Read credentials for a given mail account
 	 *
 	 * @param int $acc_id
-	 * @param int|array $account_id=null default use current user or all (in that order)
-	 * @param boolean $return_empty_marker=false should we return null
+	 * @param int|array $account_id =null default use current user or all (in that order)
+	 * @param boolean $return_empty_marker =false should we return null
 	 * @return array with values for "notify_folders", "notify_use_default"
 	 */
 	public static function read($acc_id, $account_id=null, $return_empty_marker=false)
@@ -71,7 +71,7 @@ class emailadmin_notifications
 			{
 				self::$cache[$acc_id][$row['account_id']][] = $row['notif_folder'];
 			} // make sure set the account_specific correctly when notify_folder gets removed
-			elseif (!$row['account_id'] && is_array($rows[$account_id]))
+			elseif (!$row['account_id'] && !is_array($account_id) && is_array($rows[$account_id]))
 			{
 				$account_specific = $account_id;
 			}
@@ -142,7 +142,7 @@ class emailadmin_notifications
 	 * Delete credentials from database
 	 *
 	 * @param int $acc_id
-	 * @param int|array $account_id=null
+	 * @param int|array $account_id =null
 	 * @return int number of rows deleted
 	 */
 	public static function delete($acc_id, $account_id=null)
