@@ -14,9 +14,6 @@ namespace EGroupware\Api\Html;
 
 use EGroupware\Api;
 
-// explicitly name old, not yet converted api classes
-use translation;	// mail specific stuff not in Api\Translation
-
 require_once(__DIR__.'/htmLawed/htmLawed.php');
 
 /**
@@ -141,7 +138,7 @@ class HtmLawed
 		{
 			//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
 			$style2buffer = implode('',$newStyle[0]);
-			// only replace what we have found, we use it here, as we use the same routine in translation::replaceTagsCompletley
+			// only replace what we have found, we use it here, as we use the same routine in Api\Mail\Html::replaceTagsCompletley
 			// no need to do the extra routine
 			$html = str_ireplace($newStyle[0],'',$html);
 		}
@@ -170,15 +167,15 @@ class HtmLawed
 		// CSS Security
 		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
 		$css = preg_replace('/(javascript|expession|-moz-binding)/i','',$style);
-		if (stripos($css,'script')!==false) translation::replaceTagsCompletley($css,'script'); // Strip out script that may be included
+		if (stripos($css,'script')!==false) Api\Mail\Html::replaceTagsCompletley($css,'script'); // Strip out script that may be included
 		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
 		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
 		$css_no_comment = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
 		//error_log(__METHOD__.__LINE__.$css);
-		// we already removed what we have found, above, as we used pretty much the same routine as in translation::replaceTagsCompletley
+		// we already removed what we have found, above, as we used pretty much the same routine as in Api\Mail\Html::replaceTagsCompletley
 		// no need to do the extra routine
 		// TODO: we may have to strip urls and maybe comments and ifs
-		//if (stripos($html,'style')!==false) translation::replaceTagsCompletley($html,'style'); // clean out empty or pagewide style definitions / left over tags
+		//if (stripos($html,'style')!==false) Api\Mail\Html::replaceTagsCompletley($html,'style'); // clean out empty or pagewide style definitions / left over tags
 		return $css_no_comment;
 	}
 

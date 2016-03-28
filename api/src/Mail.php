@@ -31,7 +31,6 @@ use Horde_Mime_Mdn;
 use tidy;
 
 // old not yet converted api classes
-use translation;	// mail stuff not in Api\Translation
 use addressbook_merge;	// should go to Contacts\Merge
 
 /**
@@ -1529,7 +1528,7 @@ class Mail
 						if (empty($headerObject['BODYPREVIEW'])&&$part->getPrimaryType()== 'text')
 						{
 							$charset = $part->getContentTypeParameter('charset');
-							$buffer = translation::convertHTMLToText($part->toString(array(
+							$buffer = Mail\Html::convertHTMLToText($part->toString(array(
 												'encode' => Horde_Mime_Part::ENCODE_BINARY,	// otherwise we cant recode charset
 											)), $charset, 'utf-8');
 							$headerObject['BODYPREVIEW']=trim(str_replace(array("\r\n","\r","\n"),' ',mb_substr(Translation::convert_jsonsafe($buffer),0,((int)$_fetchPreviews<300?300:$_fetchPreviews))));
@@ -1562,7 +1561,7 @@ class Mail
 						($partdisposition !== 'attachment')) {
 							$_structure=$part;
 							$this->fetchPartContents($uid, $_structure, false,true);
-							$headerObject['BODYPREVIEW']=trim(str_replace(array("\r\n","\r","\n"),' ',mb_substr(translation::convertHTMLToText($_structure->getContents()),0,((int)$_fetchPreviews<300?300:$_fetchPreviews))));
+							$headerObject['BODYPREVIEW']=trim(str_replace(array("\r\n","\r","\n"),' ',mb_substr(Mail\Html::convertHTMLToText($_structure->getContents()),0,((int)$_fetchPreviews<300?300:$_fetchPreviews))));
 							$charSet=Translation::detect_encoding($headerObject['BODYPREVIEW']);
 							// add line breaks to $bodyParts
 							//error_log(__METHOD__.' ('.__LINE__.') '.' Charset:'.$bodyParts[$i]['charSet'].'->'.$bodyParts[$i]['body']);
@@ -2212,7 +2211,7 @@ class Mail
 		}
 		else
 		{
-			$_string = translation::decodeMailHeader($_string,self::$displayCharset);
+			$_string = Mail\Html::decodeMailHeader($_string,self::$displayCharset);
 			$test = @json_encode($_string);
 			//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
 			if (($test=="null" || $test === false || is_null($test)) && strlen($_string)>0)
@@ -4175,18 +4174,18 @@ class Mail
 		$_html = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>','</td></font>','<br><td>','<tr></tr>','<o:p></o:p>','<o:p>','</o:p>'),
 							 array('&amp;',    '<BR>',           '<BR>',             '<BR>',             '</font></td>','<td>',    '',         '',           '',  ''),$_html);
 		//$_html = str_replace(array('&amp;amp;'),array('&amp;'),$_html);
-		if (stripos($_html,'style')!==false) translation::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
-		if (stripos($_html,'head')!==false) translation::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
-		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) translation::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
-		//if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) translation::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
+		if (stripos($_html,'style')!==false) Mail\Html::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
+		if (stripos($_html,'head')!==false) Mail\Html::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
+		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) Mail\Html::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
+		//if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) Mail\Html::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
 		//error_log(__METHOD__.' ('.__LINE__.') '.$_html);
 
 		if (get_magic_quotes_gpc() === 1) $_html = stripslashes($_html);
 		// Strip out doctype in head, as htmlLawed cannot handle it TODO: Consider extracting it and adding it afterwards
-		if (stripos($_html,'!doctype')!==false) translation::replaceTagsCompletley($_html,'!doctype');
-		if (stripos($_html,'?xml:namespace')!==false) translation::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
-		if (stripos($_html,'?xml version')!==false) translation::replaceTagsCompletley($_html,'\?xml version','\?>',false);
-		if (strpos($_html,'!CURSOR')!==false) translation::replaceTagsCompletley($_html,'!CURSOR');
+		if (stripos($_html,'!doctype')!==false) Mail\Html::replaceTagsCompletley($_html,'!doctype');
+		if (stripos($_html,'?xml:namespace')!==false) Mail\Html::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
+		if (stripos($_html,'?xml version')!==false) Mail\Html::replaceTagsCompletley($_html,'\?xml version','\?>',false);
+		if (strpos($_html,'!CURSOR')!==false) Mail\Html::replaceTagsCompletley($_html,'!CURSOR');
 		// htmLawed filter only the 'body'
 		//preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $_html, $matches);
 		//if ($matches[2])
@@ -4857,7 +4856,7 @@ class Mail
 				if (!$preserveHTML)
 				{
 					$alreadyHtmlLawed=false;
-					// as translation::convert reduces \r\n to \n and purifier eats \n -> peplace it with a single space
+					// as Translation::convert reduces \r\n to \n and purifier eats \n -> peplace it with a single space
 					$newBody = str_replace("\n"," ",$newBody);
 					// convert HTML to text, as we dont want HTML in infologs
 					if ($useTidy && extension_loaded('tidy'))
@@ -4902,7 +4901,7 @@ class Mail
 						$alreadyHtmlLawed=true;
 					}
 					//error_log(__METHOD__.' ('.__LINE__.') '.' after purify:'.$newBody);
-					if ($preserveHTML==false) $newBody = translation::convertHTMLToText($newBody,self::$displayCharset,true,true);
+					if ($preserveHTML==false) $newBody = Mail\Html::convertHTMLToText($newBody,self::$displayCharset,true,true);
 					//error_log(__METHOD__.' ('.__LINE__.') '.' after convertHTMLToText:'.$newBody);
 					if ($preserveHTML==false) $newBody = nl2br($newBody); // we need this, as htmLawed removes \r\n
 					/*if (!$alreadyHtmlLawed) */ $mailClass->getCleanHTML($newBody); // remove stuff we regard as unwanted
@@ -4913,9 +4912,9 @@ class Mail
 				continue;
 			}
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Body(after specialchars):'.$newBody);
-			//use translation::convertHTMLToText instead of strip_tags, (even message is plain text) as strip_tags eats away too much
+			//use Mail\Html::convertHTMLToText instead of strip_tags, (even message is plain text) as strip_tags eats away too much
 			//$newBody = strip_tags($newBody); //we need to fix broken tags (or just stuff like "<800 USD/p" )
-			$newBody = translation::convertHTMLToText($newBody,self::$displayCharset,false,false);
+			$newBody = Mail\Html::convertHTMLToText($newBody,self::$displayCharset,false,false);
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Body(after strip tags):'.$newBody);
 			$newBody = htmlspecialchars_decode($newBody,ENT_QUOTES);
 			//error_log(__METHOD__.' ('.__LINE__.') '.' Body (after hmlspc_decode):'.$newBody);
@@ -5300,7 +5299,7 @@ class Mail
 		// CSS Security
 		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
 		$css = preg_replace('/(javascript|expression|-moz-binding)/i','',$style);
-		if (stripos($css,'script')!==false) translation::replaceTagsCompletley($css,'script'); // Strip out script that may be included
+		if (stripos($css,'script')!==false) Mail\Html::replaceTagsCompletley($css,'script'); // Strip out script that may be included
 		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
 		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
 		$css = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
@@ -5985,7 +5984,7 @@ class Mail
 				{
 					if ($bodyParts[$i]['mimeType']=='text/html')
 					{
-						$bodyParts[$i]['body'] = translation::convertHTMLToText($bodyParts[$i]['body'],$bodyParts[$i]['charSet'],true,$stripalltags=true);
+						$bodyParts[$i]['body'] = Mail\Html::convertHTMLToText($bodyParts[$i]['body'],$bodyParts[$i]['charSet'],true,$stripalltags=true);
 						$bodyParts[$i]['mimeType']='text/plain';
 					}
 				}
