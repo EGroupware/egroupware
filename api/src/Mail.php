@@ -5948,7 +5948,7 @@ class Mail
 	 */
 	static function getRandomString()
 	{
-		return auth::randomstring(32);
+		return Auth::randomstring(32);
 	}
 
 	/**
