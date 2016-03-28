@@ -289,7 +289,7 @@ class Mail
 		self::$instances[$_profileID]->profileID = $_profileID;
 		if (!isset(self::$instances[$_profileID]->idna2)) self::$instances[$_profileID]->idna2 = new Horde_Idna;
 		//if ($_profileID==0); error_log(__METHOD__.' ('.__LINE__.') '.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID);
-		if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
+		if (is_null(self::$mailConfig)) self::$mailConfig = Config::read('mail');
 		return self::$instances[$_profileID];
 	}
 
@@ -426,7 +426,7 @@ class Mail
 			$_profileID = $this->profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->icServer->ImapServerId;
 		}
 
-		if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
+		if (is_null(self::$mailConfig)) self::$mailConfig = Config::read('mail');
 	}
 
 	/**
@@ -792,7 +792,7 @@ class Mail
 	static function generateIdentityString($identity, $fullString=true)
 	{
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($identity));
-		//if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
+		//if (is_null(self::$mailConfig)) self::$mailConfig = Config::read('mail');
 		// not set? -> use default, means full display of all available data
 		//if (!isset(self::$mailConfig['how2displayIdentities'])) self::$mailConfig['how2displayIdentities']='';
 		$how2displayIdentities = '';
@@ -2787,7 +2787,7 @@ class Mail
 			$topFolders = $this->icServer->getMailboxes("", 2, true);
 			// Trigger examination of namespace to retrieve
 			// folders located in other and shared; needed only for some servers
-			if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
+			if (is_null(self::$mailConfig)) self::$mailConfig = Config::read('mail');
 			if (self::$mailConfig['examineNamespace'])
 			{
 				$prefixes=array();
