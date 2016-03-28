@@ -10,12 +10,8 @@
  * @version $Id:$
  */
 
-
-/**
- * Define tree as class tree widget
- */
-use \etemplate_widget_tree as tree;
-
+use EGroupware\Api\Mail;
+use EGroupware\Api\Etemplate\Widget\Tree;
 
 /**
  * Mail tree worker class
@@ -26,11 +22,11 @@ use \etemplate_widget_tree as tree;
 class mail_tree
 {
 	/**
-	 * delimiter - used to separate profileID from folder-tree-structure
+	 * delimiter - used to separate acc_id from mailbox / folder-tree-structure
 	 *
 	 * @var string
 	 */
-	static $delimiter = '::';
+	const DELIMITER = Mail::DELIMITER;
 
 	/**
 	 * Icons used for nodes different states
@@ -48,11 +44,18 @@ class mail_tree
 	);
 
 	/**
+	 * Instance of mail_ui class
+	 *
+	 * @var mail_ui
+	 */
+	var $ui;
+
+	/**
 	 * Mail tree constructor
 	 *
-	 * @param object $mail_ui
+	 * @param mail_ui $mail_ui
 	 */
-	function __construct($mail_ui)
+	function __construct(mail_ui $mail_ui)
 	{
 		$this->ui = $mail_ui;
 
@@ -79,7 +82,7 @@ class mail_tree
 	{
 		$baseNode = array('id' => $_profileID);
 		$leaf =  array(
-			'id' => $_profileID.self::$delimiter.'INBOX',
+			'id' => $_profileID.self::DELIMITER.'INBOX',
 			'text' => $_err,
 			'tooltip' => $_err,
 			'im0' => self::$leafImages["folderNoSelectClosed"],
@@ -88,7 +91,7 @@ class mail_tree
 			'path'=> $_path,
 			'parent' => $_parent
 		);
-		self::setOutStructure($leaf, $baseNode, self::$delimiter);
+		self::setOutStructure($leaf, $baseNode, self::DELIMITER);
 
 		return ($baseNode?$baseNode:array( // fallback not connected array
 						'id'=>0,
@@ -98,28 +101,6 @@ class mail_tree
 							'im0'=> self::$leafImages['folderHome']
 						)
 					)
-		);
-	}
-
-	/**
-	 * Get folder data from path
-	 *
-	 * @param string $path a node path
-	 * @return array returns an array of data extracted from given node path
-	 */
-	static function pathToFolderData ($_path, $_hDelimiter)
-	{
-		if (!strpos($_path, self::$delimiter)) $_path = self::$delimiter.$_path;
-		list(,$path) = explode(self::$delimiter, $_path);
-		$path_chain = $parts = explode($_hDelimiter, $path);
-		$name = array_pop($parts);
-		return array (
-			'name' => $name,
-			'mailbox' => $path,
-			'parent' => implode($_hDelimiter, $parts),
-			'text' => $name,
-			'tooltip' => $name,
-			'path' => $path_chain
 		);
 	}
 
@@ -146,7 +127,7 @@ class mail_tree
 	 */
 	private static function isAccountNode ($_node)
 	{
-		list(,$leaf) = explode(self::$delimiter, $_node);
+		list(,$leaf) = explode(self::DELIMITER, $_node);
 		if ($leaf || $_node == null) return false;
 		return true;
 	}
@@ -185,10 +166,10 @@ class mail_tree
 	function getTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_noCheckboxNS = false, $_subscribedOnly= false, $_allInOneGo = false, $_checkSubscribed = true)
 	{
 		//Init mail folders
-		$tree = array(tree::ID=> $_parent?$_parent:0,tree::CHILDREN => array());
+		$tree = array(Tree::ID=> $_parent?$_parent:0,Tree::CHILDREN => array());
 		$hDelimiter = $this->ui->mail_bo->getHierarchyDelimiter();
 
-		if ($_parent) list($_profileID) = explode(self::$delimiter, $_parent);
+		if ($_parent) list($_profileID) = explode(self::DELIMITER, $_parent);
 
 		if (is_numeric($_profileID) && $_profileID != $this->ui->mail_bo->profileID)
 		{
@@ -213,28 +194,28 @@ class mail_tree
 			);
 			if ($_parent && !self::isAccountNode($_parent)) // Single node loader
 			{
-				$nodeInfo = self::pathToFolderData($_parent, $hDelimiter);
+				$nodeInfo = Mail::pathToFolderData($_parent, $hDelimiter);
 				$folders = $this->ui->mail_bo->getFolderArrays($nodeInfo['mailbox'],false,$_allInOneGo?0:2, $_subscribedOnly);
 
 				$childrenNode = array();
 				foreach ($folders as &$node)
 				{
-					$nodeId = $_profileID.self::$delimiter.$node['MAILBOX'];
-					$nodeData = self::pathToFolderData($nodeId, $node['delimiter']);
+					$nodeId = $_profileID.self::DELIMITER.$node['MAILBOX'];
+					$nodeData = Mail::pathToFolderData($nodeId, $node['delimiter']);
 					$childrenNode[] = array(
-						tree::ID=> $nodeId,
-						tree::AUTOLOAD_CHILDREN => $_allInOneGo?false:self::nodeHasChildren($node),
-						tree::CHILDREN =>array(),
-						tree::LABEL => $nodeData['text'],
-						tree::TOOLTIP => $nodeData['tooltip'],
-						tree::IMAGE_LEAF => self::$leafImages['folderLeaf'],
-						tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderOpen'],
-						tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClosed'],
-						tree::CHECKED => $_checkSubscribed?$node['SUBSCRIBED']:false,
+						Tree::ID=> $nodeId,
+						Tree::AUTOLOAD_CHILDREN => $_allInOneGo?false:self::nodeHasChildren($node),
+						Tree::CHILDREN =>array(),
+						Tree::LABEL => $nodeData['text'],
+						Tree::TOOLTIP => $nodeData['tooltip'],
+						Tree::IMAGE_LEAF => self::$leafImages['folderLeaf'],
+						Tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderOpen'],
+						Tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClosed'],
+						Tree::CHECKED => $_checkSubscribed?$node['SUBSCRIBED']:false,
 						'parent' => $_parent
 					);
 				}
-				$tree[tree::CHILDREN] = $childrenNode;
+				$tree[Tree::CHILDREN] = $childrenNode;
 			}
 			else //Top Level Nodes loader
 			{
@@ -259,15 +240,15 @@ class mail_tree
 					array_unshift($path, $_profileID);
 
 					$data = array(
-						tree::ID=>$_profileID.self::$delimiter.$folder['MAILBOX'],
-						tree::AUTOLOAD_CHILDREN => $_allInOneGo?false:self::nodeHasChildren($folder),
-						tree::CHILDREN =>array(),
-						tree::LABEL =>lang($folder['MAILBOX']),
-						tree::OPEN => self::getNodeLevel($folder['MAILBOX'], $folder['delimiter']) <= $_openTopLevel?1:0,
-						tree::TOOLTIP => lang($folder['MAILBOX']),
-						tree::CHECKED => $_checkSubscribed?$folder['SUBSCRIBED']:false,
-						tree::NOCHECKBOX => 0,
-						'parent' => $parent?$_profileID.self::$delimiter.implode($folder['delimiter'], $parent):$_profileID,
+						Tree::ID=>$_profileID.self::DELIMITER.$folder['MAILBOX'],
+						Tree::AUTOLOAD_CHILDREN => $_allInOneGo?false:self::nodeHasChildren($folder),
+						Tree::CHILDREN =>array(),
+						Tree::LABEL =>lang($folder['MAILBOX']),
+						Tree::OPEN => self::getNodeLevel($folder['MAILBOX'], $folder['delimiter']) <= $_openTopLevel?1:0,
+						Tree::TOOLTIP => lang($folder['MAILBOX']),
+						Tree::CHECKED => $_checkSubscribed?$folder['SUBSCRIBED']:false,
+						Tree::NOCHECKBOX => 0,
+						'parent' => $parent?$_profileID.self::DELIMITER.implode($folder['delimiter'], $parent):$_profileID,
 						'path' => $path,
 						'folderarray' => $folder
 					);
@@ -275,12 +256,12 @@ class mail_tree
 					if ($folder['MAILBOX'] === "INBOX")
 					{
 						$data['data'] = array('acl' => $this->ui->mail_bo->icServer->queryCapability('ACL'));
-						$data[tree::NOCHECKBOX] = $_noCheckboxNS;
+						$data[Tree::NOCHECKBOX] = $_noCheckboxNS;
 					}
 					else
 					{
 						//Do not open Initially other folders but INBOX
-						$data[tree::OPEN] = 0;
+						$data[Tree::OPEN] = 0;
 					}
 					self::setOutStructure($data, $tree, $folder['delimiter'], true, $this->ui->mail_bo->_getNameSpaces(), $definedFolders);
 				}
@@ -288,16 +269,16 @@ class mail_tree
 				if (self::isAccountNode($_parent))
 				{
 					$tree = array(
-						tree::ID => (string)$_parent,
-						tree::CHILDREN => $tree[tree::CHILDREN][0][tree::CHILDREN],
-						tree::LABEL => $tree[tree::CHILDREN][0][tree::LABEL],
-						tree::IMAGE_LEAF => $tree[tree::CHILDREN][0][tree::IMAGE_LEAF],
-						tree::IMAGE_FOLDER_OPEN => $tree[tree::CHILDREN][0][tree::IMAGE_FOLDER_OPEN],
-						tree::IMAGE_FOLDER_CLOSED => $tree[tree::CHILDREN][0][tree::IMAGE_FOLDER_CLOSED],
-						tree::OPEN => 1,
-						tree::TOOLTIP => $tree[tree::CHILDREN][0][tree::TOOLTIP],
-						tree::AUTOLOAD_CHILDREN => 1,
-						'data' => $tree[tree::CHILDREN][0]['data']
+						Tree::ID => (string)$_parent,
+						Tree::CHILDREN => $tree[Tree::CHILDREN][0][Tree::CHILDREN],
+						Tree::LABEL => $tree[Tree::CHILDREN][0][Tree::LABEL],
+						Tree::IMAGE_LEAF => $tree[Tree::CHILDREN][0][Tree::IMAGE_LEAF],
+						Tree::IMAGE_FOLDER_OPEN => $tree[Tree::CHILDREN][0][Tree::IMAGE_FOLDER_OPEN],
+						Tree::IMAGE_FOLDER_CLOSED => $tree[Tree::CHILDREN][0][Tree::IMAGE_FOLDER_CLOSED],
+						Tree::OPEN => 1,
+						Tree::TOOLTIP => $tree[Tree::CHILDREN][0][Tree::TOOLTIP],
+						Tree::AUTOLOAD_CHILDREN => 1,
+						'data' => $tree[Tree::CHILDREN][0]['data']
 					);
 				}
 			}
@@ -335,13 +316,13 @@ class mail_tree
 			if (count($parents)>1)
 			{
 				$helper = array_slice($parents,1,null,true);
-				$parent = $parents[0].self::$delimiter.implode($del, $helper);
+				$parent = $parents[0].self::DELIMITER.implode($del, $helper);
 				if ($parent) $parent .= $del;
 			}
 			else
 			{
-				$parent = implode(self::$delimiter, $parents);
-				if ($parent) $parent .= self::$delimiter;
+				$parent = implode(self::DELIMITER, $parents);
+				if ($parent) $parent .= self::DELIMITER;
 			}
 
 			if (!is_array($insert) || !isset($insert['item']))
@@ -357,9 +338,9 @@ class mail_tree
 				{
 					// if (appropriately padded) namespace prefix of (others or shared) is the leading part of parent
 					// we want to create the node in question as we meet the above considerations
-					if ($nsp['type']!='personal' && $nsp['prefix_present'] && stripos($parent,$data['path'][0].self::$delimiter.$nsp['prefix'])===0)
+					if ($nsp['type']!='personal' && $nsp['prefix_present'] && stripos($parent,$data['path'][0].self::DELIMITER.$nsp['prefix'])===0)
 					{
-						if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' about to create:'.$parent.' in '.$data['path'][0].self::$delimiter.$nsp['prefix']);
+						if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' about to create:'.$parent.' in '.$data['path'][0].self::DELIMITER.$nsp['prefix']);
 						$break=false;
 					}
 				}
@@ -406,36 +387,36 @@ class mail_tree
 
 			if ($data['folderarray']['MAILBOX'] === "INBOX")
 			{
-				$data[tree::IMAGE_LEAF] = self::$leafImages['folderHome'];
-				$data[tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderHome'];
-				$data[tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderHome'];
-				$data[tree::LABEL] = lang($folderName);
-				$data[tree::TOOLTIP] = lang($folderName);
+				$data[Tree::IMAGE_LEAF] = self::$leafImages['folderHome'];
+				$data[Tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderHome'];
+				$data[Tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderHome'];
+				$data[Tree::LABEL] = lang($folderName);
+				$data[Tree::TOOLTIP] = lang($folderName);
 			}
 			// User defined folders may get different icons
 			// plus they need to be translated too
 			elseif (($key = array_search($data['folderarray']['MAILBOX'], $definedFolders, true)) !== false)
 			{
-				$data[tree::LABEL] = lang($key);
-				$data[tree::TOOLTIP] = lang($key);
+				$data[Tree::LABEL] = lang($key);
+				$data[Tree::TOOLTIP] = lang($key);
 				//User defined folders icons
-				$data[tree::IMAGE_LEAF] =
-					$data[tree::IMAGE_FOLDER_OPEN] =
-					$data [tree::IMAGE_FOLDER_CLOSED] = "MailFolder".$key.".png";
+				$data[Tree::IMAGE_LEAF] =
+					$data[Tree::IMAGE_FOLDER_OPEN] =
+					$data [Tree::IMAGE_FOLDER_CLOSED] = "MailFolder".$key.".png";
 			}
 			elseif(stripos(array2string($data['folderarray']['attributes']),'\noselect')!== false)
 			{
-				$data[tree::IMAGE_LEAF] = self::$leafImages['folderNoSelectClosed'];
-				$data[tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderNoSelectOpen'];
-				$data[tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderNoSelectClosed'];
+				$data[Tree::IMAGE_LEAF] = self::$leafImages['folderNoSelectClosed'];
+				$data[Tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderNoSelectOpen'];
+				$data[Tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderNoSelectClosed'];
 			}
 			elseif ($data['parent'])
 			{
-				$data[tree::LABEL] = $folderName;
-				$data[tree::TOOLTIP] = $folderName;
-				$data[tree::IMAGE_LEAF] = self::$leafImages['folderLeaf'];
-				$data[tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderOpen'];
-				$data[tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderClosed'];
+				$data[Tree::LABEL] = $folderName;
+				$data[Tree::TOOLTIP] = $folderName;
+				$data[Tree::IMAGE_LEAF] = self::$leafImages['folderLeaf'];
+				$data[Tree::IMAGE_FOLDER_OPEN] = self::$leafImages['folderOpen'];
+				$data[Tree::IMAGE_FOLDER_CLOSED] = self::$leafImages['folderClosed'];
 			}
 
 			// Contains unseen mails for the folder
@@ -445,7 +426,7 @@ class mail_tree
 			// accordingly to indicate useen mails
 			if ($unseen > 0)
 			{
-				$data[tree::LABEL] = $data[tree::LABEL].'('.$unseen.')';
+				$data[Tree::LABEL] = $data[Tree::LABEL].'('.$unseen.')';
 				$data['style'] = 'font-weight: bold';
 			}
 		}
@@ -467,35 +448,35 @@ class mail_tree
 	 */
 	static function getAccountsRootNode($_profileID = null, $_noCheckbox = false, $_openTopLevel = 0 )
 	{
-		$roots = array(tree::ID => 0, tree::CHILDREN => array());
+		$roots = array(Tree::ID => 0, Tree::CHILDREN => array());
 
-		foreach(emailadmin_account::search(true, false) as $acc_id => $accObj)
+		foreach(Mail\Account::search(true, false) as $acc_id => $accObj)
 		{
 			if (!$accObj->is_imap()|| $_profileID && $acc_id != $_profileID) continue;
-			$identity = emailadmin_account::identity_name($accObj,true,$GLOBALS['egw_info']['user']['acount_id']);
+			$identity = Mail\Account::identity_name($accObj,true,$GLOBALS['egw_info']['user']['acount_id']);
 			// Open top level folders for active account
 			$openActiveAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] == $acc_id?1:0;
 
 			$baseNode = array(
-							tree::ID=> (string)$acc_id,
-							tree::LABEL => str_replace(array('<','>'),array('[',']'),$identity),
-							tree::TOOLTIP => '('.$acc_id.') '.htmlspecialchars_decode($identity),
-							tree::IMAGE_LEAF => self::$leafImages['folderAccount'],
-							tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderAccount'],
-							tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderAccount'],
+							Tree::ID=> (string)$acc_id,
+							Tree::LABEL => str_replace(array('<','>'),array('[',']'),$identity),
+							Tree::TOOLTIP => '('.$acc_id.') '.htmlspecialchars_decode($identity),
+							Tree::IMAGE_LEAF => self::$leafImages['folderAccount'],
+							Tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderAccount'],
+							Tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderAccount'],
 							'path'=> array($acc_id),
-							tree::CHILDREN => array(), // dynamic loading on unfold
-							tree::AUTOLOAD_CHILDREN => true,
+							Tree::CHILDREN => array(), // dynamic loading on unfold
+							Tree::AUTOLOAD_CHILDREN => true,
 							'parent' => '',
-							tree::OPEN => $_openTopLevel?$_openTopLevel:$openActiveAccount,
+							Tree::OPEN => $_openTopLevel?$_openTopLevel:$openActiveAccount,
 							// mark on account if Sieve is enabled
 							'data' => array(
 										'sieve' => $accObj->imapServer()->acc_sieve_enabled,
 										'spamfolder'=> $accObj->imapServer()->acc_folder_junk?true:false
 									),
-							tree::NOCHECKBOX  => $_noCheckbox
+							Tree::NOCHECKBOX  => $_noCheckbox
 			);
-			self::setOutStructure($baseNode, $roots,self::$delimiter);
+			self::setOutStructure($baseNode, $roots,self::DELIMITER);
 		}
 		return $roots;
 	}
@@ -518,9 +499,9 @@ class mail_tree
 	{
 		$tree = $this->getTree($_parent, '', $_openTopLevel, false, $_subscribedOnly, $_allInOneGo);
 		$branches = $this->getTree($_profileID, $_profileID,1,false,$_subscribedOnly,$_allInOneGo);
-		foreach ($tree[tree::CHILDREN] as &$account)
+		foreach ($tree[Tree::CHILDREN] as &$account)
 		{
-			if ($account[tree::ID] == $_profileID)
+			if ($account[Tree::ID] == $_profileID)
 			{
 				$account = $branches;
 			}

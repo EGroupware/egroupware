@@ -12,9 +12,9 @@
 /**
  * Wizard to create mail accounts
  *
- * Extends emailadmin_wizard to allow non-admins to use it.
+ * Extends admin_mail to allow non-admins to use it.
  */
-class mail_wizard extends emailadmin_wizard
+class mail_wizard extends admin_mail
 {
 	/**
 	 * Prefix for callback names
@@ -29,11 +29,11 @@ class mail_wizard extends emailadmin_wizard
 		parent::__construct();
 
 		// need emailadmin's app.css file
-		egw_framework::includeCSS('emailadmin','app');
+		egw_framework::includeCSS('admin','app');
 
 		// and translations
-		translation::add_app('emailadmin');
+		translation::add_app('admin');
 
-		egw_framework::validate_file('/emailadmin/js/app.js');
+		egw_framework::validate_file('/admin/js/app.js');
 	}
 }

@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package admin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -60,9 +60,10 @@ switch($action)
 	case '--change-account-id':
 		return do_change_account_id($arg0s);
 
+	/* ToDo: get this working again
 	case '--subscribe-other':
 		return do_subscribe_other($arg0s[2],$arg0s[3]);
-
+	*/
 	case '--check-acl';
 		return do_check_acl();
 
@@ -281,11 +282,12 @@ function _check_pw($hash_or_cleartext,$pw)
 /**
  * Give a usage message and exit
  *
- * @param string $action=null
- * @param int $ret=0 exit-code
+ * @param string $action =null
+ * @param int $ret =0 exit-code
  */
 function usage($action=null,$ret=0)
 {
+	unset($action);
 	$cmd = basename($_SERVER['argv'][0]);
 	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...'] [--remote {id|name}] [--skip-checks] [--dry-run]\n\n";
 
@@ -355,15 +357,16 @@ function do_edit_group($args)
 	try {
 		admin_cmd::parse_account($account,false);
 
-		foreach($data as $name => &$value)	// existing account --> empty values mean dont change, not set them empty!
+		foreach($data as &$value)	// existing account --> empty values mean dont change, not set them empty!
 		{
 			if ((string)$value === '') $value = null;
 		}
 	}
 	catch (Exception $e) {	// new group
+		unset($e);	// not used
 		$data['account_lid'] = $account;
 		$account = false;
-	};
+	}
 	run_command(new admin_cmd_edit_group($account,$data));
 }
 
@@ -386,7 +389,7 @@ function do_change_pw($args)
  * Edit or add a user to EGroupware. If you specify groups, they *replace* the exiting memberships!
  *                    1:                     2:             3:                         4:         5:        6:       7:    8:                                         9:                                 10:                            11:                                  12
  * @param array $args admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{true(default)|false},anon-user{true|false(default)},primary-group{Default(default)|...}[,groups,...][,homedirectory,loginshell]
- * @param boolean $run_addaccount_hook=null default run hook depending on account existence, true=allways run addaccount hook
+ * @param boolean $run_addaccount_hook =null default run hook depending on account existence, true=allways run addaccount hook
  */
 function do_edit_user($args,$run_addaccount_hook=null)
 {
@@ -419,15 +422,16 @@ function do_edit_user($args,$run_addaccount_hook=null)
 	try {
 		admin_cmd::parse_account($account,true);
 
-		foreach($data as $name => &$value)	// existing account --> empty values mean dont change, not set them empty!
+		foreach($data as &$value)	// existing account --> empty values mean dont change, not set them empty!
 		{
 			if ((string)$value === '') $value = null;
 		}
 	}
 	catch (Exception $e) {	// new account
+		unset($e);	// not used
 		$data['account_lid'] = $account;
 		$account = false;
-	};
+	}
 	run_command(new admin_cmd_edit_user($account,$data,null,$run_addaccount_hook));
 }
 
@@ -435,8 +439,8 @@ function do_edit_user($args,$run_addaccount_hook=null)
  * Delete a given acount from eGW
  *
  * @param int/string $account account-name of -id
- * @param int/string $new_user=0 for users only: account to move the entries too
- * @param boolean $is_user=true are we called for a user or group
+ * @param int/string $new_user =0 for users only: account to move the entries too
+ * @param boolean $is_user =true are we called for a user or group
  * @return int 0 on success, 2-4 otherwise (see source)
  */
 function do_delete_account($account,$new_user=0,$is_user=true)
@@ -487,8 +491,9 @@ function list_exit_codes()
 	error_reporting(error_reporting() & ~E_NOTICE);
 
 	$codes = array('Ok');
-	foreach(file(__FILE__) as $n => $line)
+	foreach(file(__FILE__) as $line)
 	{
+		$matches = null;
 		if (preg_match('/fail\(([0-9]+),(.*)\);/',$line,$matches))
 		{
 			//echo "Line $n: $matches[1]: $matches[2]\n";
@@ -510,6 +515,8 @@ function list_exit_codes()
  */
 function do_subscribe_other($account_lid,$pw=null)
 {
+	unset($account_lid, $pw);
+	/* ToDo: this cant work, not even in 14.x
 	if (!($account_id = $GLOBALS['egw']->accounts->name2id($account_lid)))
 	{
 		throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$account_lid),15);
@@ -544,14 +551,14 @@ function do_subscribe_other($account_lid,$pw=null)
 
 		if (!$pw) $mailbox = str_replace('INBOX','user'.$delimiter.$account_lid,$mailbox);
 
-/*		$rights = $icServer->getACL($mailbox);
-		echo "getACL($mailbox)\n";
-		foreach($rights as $data)
-		{
-			echo $data['USER'].' '.$data['RIGHTS']."\n";
-		}*/
+		//$rights = $icServer->getACL($mailbox);
+		//echo "getACL($mailbox)\n";
+		//foreach($rights as $data)
+		//{
+		//	echo $data['USER'].' '.$data['RIGHTS']."\n";
+		//}
 		echo "subscribing $mailbox for $account_lid\n";
 		//$icServer->subscribeMailbox($mailbox);
 		//exit;
-	}
+	}*/
 }

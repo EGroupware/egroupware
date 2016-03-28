@@ -526,3 +526,138 @@ you must select at least one group member.	admin	zh	您必须至少选择一个�
 you need to enter install id and password!	admin	zh	您需要输入安装 ID 和密码！
 you will need to remove the subcategories before you can delete this category	admin	zh	在删除该类别前，必须删除它的所有子类别！
 your session could not be verified.	admin	zh	本次会话无法校验。
+(no subject)	emailadmin	zh	(无主题)
+account '%1' not found !!!	emailadmin	zh	帐户 '%1' 未发现！
+add new email address:	emailadmin	zh	添加新邮箱地址：
+add profile	emailadmin	zh	添加 profile
+admin dn	emailadmin	zh	管理 DN
+admin password	emailadmin	zh	管理密码
+admin username	emailadmin	zh	管理帐户
+advanced options	emailadmin	zh	高级选项
+alternate email address	emailadmin	zh	候选邮箱地址
+any application	emailadmin	zh	任何用用程序
+any group	emailadmin	zh	任何组
+bad login name or password.	emailadmin	zh	错误登录名和密码。
+bad or malformed request. server responded: %s	emailadmin	zh	不正确的请求。服务器或应：%s
+bad request: %s	emailadmin	zh	错误请求：%s
+can be used by application	emailadmin	zh	可用于应用程序
+can be used by group	emailadmin	zh	可用于群组
+connection dropped by imap server.	emailadmin	zh	连接被 IMAP 服务器中断。
+continue	emailadmin	zh	继续
+could not complete request. reason given: %s	emailadmin	zh	无法完成请求。原因是：%s
+could not open secure connection to the imap server. %s : %s.	emailadmin	zh	无法打开到 IMAP 服务器的安全连接。%s:%s。
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	zh	CRAM-MD5 或 DIGEST-MD5 需要安装 auth_sasl 包。
+cyrus imap server	emailadmin	zh	Cyrus IMAP 服务器
+cyrus imap server administration	emailadmin	zh	Cyrus IMAP 服务器管理
+default	emailadmin	zh	默认
+deliver extern	emailadmin	zh	传送外部
+displaying html messages is disabled	emailadmin	zh	显示HTML邮件被禁用
+do not validate certificate	emailadmin	zh	不确认证书
+do you really want to delete this profile	emailadmin	zh	您确定要删除这个 profile 文件
+domainname	emailadmin	zh	域名
+edit email settings	emailadmin	zh	编辑邮箱设置
+email account active	emailadmin	zh	邮箱帐户激活
+email address	emailadmin	zh	邮箱地址
+email settings	common	zh	邮箱设置
+emailadmin	emailadmin	zh	邮箱管理
+enable cyrus imap server administration	emailadmin	zh	启用 Cyrus IMAP 服务器管理
+enable sieve	emailadmin	zh	启用过滤
+encrypted connection	emailadmin	zh	加密连接
+encryption settings	emailadmin	zh	加密设置
+enter your default mail domain (from: user@domain)	emailadmin	zh	输入您的默认邮箱域 (比如：user@domain，取@之后的所有词或字母)
+entry saved	emailadmin	zh	条目已储存
+error connecting to imap server. %s : %s.	emailadmin	zh	连接到 IMAP 服务器错误。%s : %s。
+error connecting to imap server: [%s] %s.	emailadmin	zh	连接到 IMAP 服务器错误：[%s] %s。
+error saving account!	emailadmin	zh	保存帐户错误！
+error saving the entry!!!	emailadmin	zh	保存条目时发生错误！
+event details follow	emailadmin	zh	事件细节
+forward also to	emailadmin	zh	同时转发到
+forward email's to	emailadmin	zh	转发邮件到
+forward only	emailadmin	zh	转发
+global options	emailadmin	zh	全局选项
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	zh	如果使用 SSL 或 TLS，您必须加载 PHP openssl 扩展。
+imap admin password	admin	zh	IMAP 管理者密码
+imap admin user	admin	zh	IMAP 管理者帐户
+imap c-client version < 2001	emailadmin	zh	IMAP C-Clien 版本小 < 2001
+imap server	emailadmin	zh	IMAP 服务器
+imap server closed the connection.	emailadmin	zh	IMAP 服务器关闭连接。
+imap server closed the connection. server responded: %s	emailadmin	zh	IMAP 服务器关闭连接。服务器回应：%s
+imap server hostname or ip address	emailadmin	zh	IMAP 服务器的主机名或 IP 地址
+imap server logintyp	emailadmin	zh	IMAP 服务器登录类型
+imap server name	emailadmin	zh	IMAP 服务器名
+imap server port	emailadmin	zh	IMAP 服务器端口号
+imap/pop3 server name	emailadmin	zh	IMAP / POP3 服务器名
+in mbyte	emailadmin	zh	以 MB 表示
+ldap basedn	emailadmin	zh	LDAP basedn
+ldap server	emailadmin	zh	LDAP 服务器
+ldap server accounts dn	emailadmin	zh	LDAP 服务器帐户 DN
+ldap server admin dn	emailadmin	zh	LDAP 服务器管理员 DN
+ldap server admin password	emailadmin	zh	LDAP 服务器管管理员密码
+ldap server hostname or ip address	emailadmin	zh	LDAP 服务器主机名或 IP 地址
+ldap settings	emailadmin	zh	LDAP 设置
+leave empty for no quota	emailadmin	zh	留空表示无限额
+mail settings	admin	zh	邮箱设置
+name of organisation	emailadmin	zh	组织名称
+no alternate email address	emailadmin	zh	无备用邮箱地址
+no encryption	emailadmin	zh	未加密
+no forwarding email address	emailadmin	zh	没有转发邮件地址
+no message returned.	emailadmin	zh	无返回消息。
+no plain text part found	emailadmin	zh	未找到纯文本部分
+no supported imap authentication method could be found.	emailadmin	zh	无支持 IMAP 认证的方法可以找到。
+order	emailadmin	zh	排序
+organisation	emailadmin	zh	组织
+plesk can't rename users --> request ignored	emailadmin	zh	Plesk 不能重命名用户  --> 请求忽略
+plesk imap server (courier)	emailadmin	zh	Plesk IMAP 服务器 (Courier)
+plesk mail script '%1' not found !!!	emailadmin	zh	Plesk 邮件脚本  '%1' 未找到！
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	zh	Plesk 需要至少5个字符密码并且不包含帐户名 --> 密码未设置！
+plesk smtp-server (qmail)	emailadmin	zh	Plesk SMTP-Server (Qmail)
+pop3 server hostname or ip address	emailadmin	zh	POP3 服务器主机名或 IP 地址
+pop3 server port	emailadmin	zh	POP3 服务器端口号
+port	emailadmin	zh	端口
+postfix with ldap	emailadmin	zh	LDAP 用于 Postfix
+profile access rights	emailadmin	zh	profile 访问权限
+profile list	emailadmin	zh	profile 列表
+profile name	emailadmin	zh	profile 名
+qmaildotmode	emailadmin	zh	qmaildotmode
+quota settings	emailadmin	zh	配额设置
+quota size in mbyte	emailadmin	zh	配额大小(MB)
+remove	emailadmin	zh	移除
+select type of imap server	emailadmin	zh	选择 IMAP 服务器类型
+select type of imap/pop3 server	emailadmin	zh	选择 IMAP / POP3 服务器类型
+select type of smtp server	emailadmin	zh	选择 SMAP 服务器类型
+server settings	emailadmin	zh	服务器设置
+sieve server hostname or ip address	emailadmin	zh	Sieve 服务器主机名或 IP 地址
+sieve server port	emailadmin	zh	Sieve 服务器端口号
+sieve settings	emailadmin	zh	Sieve 设置
+smtp authentication	emailadmin	zh	SMTP 认证
+smtp options	emailadmin	zh	SMTP 选项
+smtp server name	emailadmin	zh	SMTP 服务器名
+smtp settings	emailadmin	zh	SMTP 设置
+smtp-server hostname or ip address	emailadmin	zh	SMTP 服务器主机名或 IP 地址
+smtp-server port	emailadmin	zh	SMTP 服务器端口号
+standard	emailadmin	zh	标准
+standard imap server	emailadmin	zh	标准 IMAP 服务器
+standard pop3 server	emailadmin	zh	标准 POP3 服务器
+standard smtp-server	emailadmin	zh	标准 SMTP 服务器
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	zh	IMAP 服务器似乎不支持所选择的认证方法。请联系系统管理员。
+the mimeparser can not parse this message.	emailadmin	zh	mime 解析器不能解析这个邮件。
+this php has no imap support compiled in!!	emailadmin	zh	PHP 没有 IMAP 支持的编译！
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	zh	未使用一个 TLS 连接，您必须运行 PHP 5.1.0 或更高版本。
+unexpected response from server to authenticate command.	emailadmin	zh	服务器为 AUTHENTICATE 指令返回不当以外回应。
+unexpected response from server to digest-md5 response.	emailadmin	zh	服务器为 Digest-MD5 返回意外的不当的回应。
+unexpected response from server to login command.	emailadmin	zh	服务器为 LOGIN  指令返回意外的不当回应。
+unknown imap response from the server. server responded: %s	emailadmin	zh	INAP 服务器返回未知回应。服务器回应：%s
+unsupported action '%1' !!!	emailadmin	zh	不支持 '%1'  的操作！
+update current email address:	emailadmin	zh	更新当前邮件地址：
+use default	emailadmin	zh	使用默认值
+use ldap defaults	emailadmin	zh	使用 LDAP 默认值
+use smtp auth	emailadmin	zh	使用 SMTP 认证
+use tls authentication	emailadmin	zh	使用TLS 认证
+use tls encryption	emailadmin	zh	使用TLS 加密
+user can edit forwarding address	emailadmin	zh	用户可以编辑转发地址
+username (standard)	emailadmin	zh	用户名(标准)
+username@domainname (virtual mail manager)	emailadmin	zh	用户名@域 (虚拟邮箱管理)
+users can define their own emailaccounts	emailadmin	zh	用户可以自定义邮箱账户
+users can define their own signatures	emailadmin	zh	用户可以定义他们自己的签名
+virtual mail manager	emailadmin	zh	虚拟邮箱管理
+your name	emailadmin	zh	您的名字

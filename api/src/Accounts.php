@@ -507,6 +507,48 @@ class Accounts
 	}
 
 	/**
+	 * Format an email address according to the system standard
+	 *
+	 * Convert all european special chars to ascii and fallback to the accountname, if nothing left eg. chiniese
+	 *
+	 * @param string $first firstname
+	 * @param string $last lastname
+	 * @param string $account account-name (lid)
+	 * @param string $domain =null domain-name or null to use eGW's default domain $GLOBALS['egw_info']['server']['mail_suffix]
+	 * @return string with email address
+	 */
+	static function email($first,$last,$account,$domain=null)
+	{
+		foreach (array('first','last','account') as $name)
+		{
+			$$name = Translation::to_ascii($$name);
+		}
+		//echo " --> ('$first', '$last', '$account')";
+		if (!$first && !$last)	// fallback to the account-name, if real names contain only special chars
+		{
+			$first = '';
+			$last = $account;
+		}
+		if (!$first || !$last)
+		{
+			$dot = $underscore = '';
+		}
+		else
+		{
+			$dot = '.';
+			$underscore = '_';
+		}
+		if (!$domain) $domain = $GLOBALS['egw_info']['server']['mail_suffix'];
+
+		$email = str_replace(array('first','last','initial','account','dot','underscore','-'),
+			array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
+			$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first-dot-last').
+			($domain ? '@'.$domain : '');
+		//echo " = '$email'</p>\n";
+		return $email;
+	}
+
+	/**
 	 * Add a default description for stock groups: Admins, Default, NoGroup
 	 *
 	 * @param array &$data

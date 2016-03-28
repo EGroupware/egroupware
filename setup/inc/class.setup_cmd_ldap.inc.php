@@ -549,8 +549,8 @@ class setup_cmd_ldap extends setup_cmd
 					$ldap = new ldap();
 					$ldap->ldapConnect();
 					foreach(array(	// todo: have these enumerated by emailadmin ...
-						'qmailUser' => 'postfixldap',
-						'dbMailUser' => 'postfixdbmailuser',
+						'qmailUser' => 'EGroupware\\Api\\Mail\\Smtp\\Oldqmailuser',
+						'dbMailUser' => 'EGroupware\\Api\\Mail\\Smtp\\Dbmailuser',
 						// nothing to migrate for inetOrgPerson ...
 					) as $object_class => $class)
 					{
@@ -565,16 +565,15 @@ class setup_cmd_ldap extends setup_cmd
 				{
 					if (!isset($emailadmin_src))
 					{
-						include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$ldap_class.'.inc.php');
 						if ($to != 'sql')
 						{
-							$emailadmin_src = new emailadmin_smtp_sql();
+							$emailadmin_src = new Api\Mail\Smtp\Sql();
 							$emailadmin_dst = new $ldap_class();
 						}
 						else
 						{
 							$emailadmin_src = new $ldap_class();
-							$emailadmin_dst = new emailadmin_smtp_sql();
+							$emailadmin_dst = new Api\Mail\Smtp\Sql();
 						}
 					}
 					if (($mailaccount = $emailadmin_src->getUserData($account_id)))
@@ -972,7 +971,7 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			if ($n === 'count') continue;
 
-			$mbox = emailadmin_smtp_ldap::mailbox_addr(array(
+			$mbox = Api\Mail\Smtp\Ldap::mailbox_addr(array(
 				'account_id' => $entry['uidnumber'][0],
 				'account_lid' => $entry['uid'][0],
 				'account_email' => $entry['mail'][0],

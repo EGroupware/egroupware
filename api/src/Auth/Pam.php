@@ -11,9 +11,6 @@
 
 namespace EGroupware\Api\Auth;
 
-// explicitly import classes still in phpgwapi
-use common;	// email_address
-
 /**
  * Auth from PAM
  *
@@ -47,7 +44,7 @@ class Pam implements Backend
 				{
 					$lastname = array_pop($parts);
 					$firstname = implode(' ',$parts);
-					$email = common::email_address($firstname, $lastname, $username);
+					$email = Api\Accounts::email($firstname, $lastname, $username);
 
 					$GLOBALS['auto_create_acct'] = array(
 						'firstname' => $firstname,

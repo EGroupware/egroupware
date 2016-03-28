@@ -10,7 +10,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
 use EGroupware\Api\Vfs;
+use EGroupware\Api\Mail;
 
 /**
  * Mail interface class for compose mails in popup
@@ -44,9 +46,9 @@ class mail_compose
 	);
 
 	/**
-	 * Instance of mail_bo
+	 * Instance of Mail
 	 *
-	 * @var mail_bo
+	 * @var Mail
 	 */
 	var $mail_bo;
 
@@ -66,7 +68,7 @@ class mail_compose
 		$this->displayCharset   = translation::charset();
 
 		$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		$this->mail_bo	= mail_bo::getInstance(true,$profileID);
+		$this->mail_bo	= Mail::getInstance(true,$profileID);
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
 
 		$this->mailPreferences	=& $this->mail_bo->mailPreferences;
@@ -75,7 +77,7 @@ class mail_compose
 		{
 			$this->mailPreferences['message_forwarding'] = 'asmail';
 		}
-		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
+		if (is_null(Mail::$mailConfig)) Mail::$mailConfig = Api\Config::read('mail');
 
 		$this->mailPreferences  =& $this->mail_bo->mailPreferences;
 	}
@@ -89,9 +91,9 @@ class mail_compose
 	{
 		if ($this->mail_bo->profileID!=$_icServerID)
 		{
-			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.$this->mail_bo->profileID.'<->'.$_icServerID);
-			$this->mail_bo = mail_bo::getInstance(false,$_icServerID);
-			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$this->mail_bo->profileID.':'.function_backtrace());
+			if (Mail::$debug) error_log(__METHOD__.__LINE__.'->'.$this->mail_bo->profileID.'<->'.$_icServerID);
+			$this->mail_bo = Mail::getInstance(false,$_icServerID);
+			if (Mail::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$this->mail_bo->profileID.':'.function_backtrace());
 			// no icServer Object: something failed big time
 			if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 			$this->mail_bo->openConnection($this->mail_bo->profileID);
@@ -301,7 +303,7 @@ class mail_compose
 		if (isset($_content['composeID'])&&!empty($_content['composeID']))
 		{
 			$isFirstLoad = false;
-			$composeCache = egw_cache::getCache(egw_cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$_content['composeID'],$callback=null,$callback_params=array(),$expiration=60*60*2);
+			$composeCache = Api\Cache::getCache(Api\Cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$_content['composeID'],$callback=null,$callback_params=array(),$expiration=60*60*2);
 			$this->composeID = $_content['composeID'];
 			//error_log(__METHOD__.__LINE__.array2string($composeCache));
 		}
@@ -346,7 +348,7 @@ class mail_compose
 				if (!isset($upload['file'])) $upload['file'] = $upload['tmp_name'];
 				try
 				{
-					$upload['file'] = $upload['tmp_name'] = mail_bo::checkFileBasics($upload,$this->composeID,false);
+					$upload['file'] = $upload['tmp_name'] = Mail::checkFileBasics($upload,$this->composeID,false);
 				}
 				catch (egw_exception_wrong_userinput $e)
 				{
@@ -385,7 +387,7 @@ class mail_compose
 		// someone clicked something like send, or saveAsDraft
 		// make sure, we are connected to the correct server for sending and storing the send message
 		$activeProfile = $composeProfile = $this->mail_bo->profileID; // active profile may not be the profile uised in/for compose
-		$activeFolderCache = egw_cache::getCache(egw_cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+		$activeFolderCache = Api\Cache::getCache(Api\Cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
 		if (!empty($activeFolderCache[$this->mail_bo->profileID]))
 		{
 			//error_log(__METHOD__.__LINE__.' CurrentFolder:'.$activeFolderCache[$this->mail_bo->profileID]);
@@ -401,7 +403,7 @@ class mail_compose
 		}
 		// make sure $acc is set/initalized properly with the current composeProfile, as $acc is used down there
 		// at several locations and not neccesaryly initialized before
-		$acc = emailadmin_account::read($composeProfile);
+		$acc = Mail\Account::read($composeProfile);
 		$buttonClicked = false;
 		if ($_content['composeToolbar'] === 'send')
 		{
@@ -598,9 +600,9 @@ class mail_compose
 			$suppressSigOnTop = true;
 			if (!empty($composeCache['mailaccount']) && !empty($_content['mailaccount']) && $_content['mailaccount'] != $composeCache['mailaccount'])
 			{
-				$acc = emailadmin_account::read($_content['mailaccount']);
+				$acc = Mail\Account::read($_content['mailaccount']);
 				//error_log(__METHOD__.__LINE__.array2string($acc));
-				$Identities = emailadmin_account::read_identity($acc['ident_id'],true);
+				$Identities = Mail\Account::read_identity($acc['ident_id'],true);
 				//error_log(__METHOD__.__LINE__.array2string($Identities));
 				if ($Identities['ident_id'])
 				{
@@ -621,7 +623,7 @@ class mail_compose
 				// prepare signatures, the selected sig may be used on top of the body
 				try
 				{
-					$oldSignature = emailadmin_account::read_identity($_oldSig,true);
+					$oldSignature = Mail\Account::read_identity($_oldSig,true);
 					//error_log(__METHOD__.__LINE__.'Old:'.array2string($oldSignature).'#');
 					$oldSigText = $oldSignature['ident_signature'];
 				}
@@ -632,7 +634,7 @@ class mail_compose
 				}
 				try
 				{
-					$signature = emailadmin_account::read_identity($_signatureid,true);
+					$signature = Mail\Account::read_identity($_signatureid,true);
 					//error_log(__METHOD__.__LINE__.'New:'.array2string($signature).'#');
 					$sigText = $signature['ident_signature'];
 				}
@@ -650,23 +652,23 @@ class mail_compose
 					if($this->_debug) error_log(__METHOD__." Old signature:".$oldSigText);
 				}
 
-				//$oldSigText = mail_bo::merge($oldSigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+				//$oldSigText = Mail::merge($oldSigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 				//error_log(__METHOD__.'Old+:'.$oldSigText.'#');
-				//$sigText = mail_bo::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+				//$sigText = Mail::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 				//error_log(__METHOD__.'new+:'.$sigText.'#');
-				$_htmlConfig = mail_bo::$htmLawed_config;
-				mail_bo::$htmLawed_config['comment'] = 2;
-				mail_bo::$htmLawed_config['transform_anchor'] = false;
+				$_htmlConfig = Mail::$htmLawed_config;
+				Mail::$htmLawed_config['comment'] = 2;
+				Mail::$htmLawed_config['transform_anchor'] = false;
 				$oldSigTextCleaned = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,null,array(),true):$oldSigText));
 				//error_log(__METHOD__.'Old(clean):'.$oldSigTextCleaned.'#');
 				if ($_currentMode == 'html')
 				{
 					$content['body'] = str_replace("\n",'\n',$content['body']);	// dont know why, but \n screws up preg_replace
-					$styles = mail_bo::getStyles(array(array('body'=>$content['body'])));
+					$styles = Mail::getStyles(array(array('body'=>$content['body'])));
 					if (stripos($content['body'],'style')!==false) translation::replaceTagsCompletley($content['body'],'style',$endtag='',true); // clean out empty or pagewide style definitions / left over tags
 				}
-				$content['body'] = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($content['body'],mail_bo::$htmLawed_config,array(),true):$content['body']));
-				mail_bo::$htmLawed_config = $_htmlConfig;
+				$content['body'] = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($content['body'],Mail::$htmLawed_config,array(),true):$content['body']));
+				Mail::$htmLawed_config = $_htmlConfig;
 				if ($_currentMode == 'html')
 				{
 					$replaced = null;
@@ -1065,7 +1067,7 @@ class mail_compose
 		//_debug_array(($presetSig ? $presetSig : $content['mailidentity']));
 		try
 		{
-			$signature = emailadmin_account::read_identity($content['mailidentity'] ? $content['mailidentity'] : $presetSig,true);
+			$signature = Mail\Account::read_identity($content['mailidentity'] ? $content['mailidentity'] : $presetSig,true);
 		}
 		catch (Exception $e)
 		{
@@ -1082,7 +1084,7 @@ class mail_compose
 		if($content['mimeType'] == 'html' /*&& trim($content['body'])==''*/) {
 			// User preferences for style
 			$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-			$font_size = egw_ckeditor_config::font_size_from_prefs();
+			$font_size = Api\Html\CkEditorConfig::font_size_from_prefs();
 			$font_part = '<span style="width:100%; display: inline; '.($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">';
 			$font_span = $font_part.'&#8203;</span>';
 			if (empty($font) && empty($font_size)) $font_span = '';
@@ -1105,7 +1107,7 @@ class mail_compose
 						'no_belowaftersend'  => 'appended after reply before sending',
 			*/
 			$insertSigOnTop = ($insertSigOnTop?$insertSigOnTop:($this->mailPreferences['insertSignatureAtTopOfMessage']?$this->mailPreferences['insertSignatureAtTopOfMessage']:'below'));
-			$sigText = mail_bo::merge($signature['ident_signature'],array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+			$sigText = Mail::merge($signature['ident_signature'],array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 			if ($content['mimeType'] == 'html')
 			{
 				$sigTextStartsWithBlockElement = ($disableRuler?false:true);
@@ -1149,7 +1151,7 @@ class mail_compose
 
 		// get identities of all accounts as "$acc_id:$ident_id" => $identity
 		$sel_options['mailaccount'] = $identities = array();
-		foreach(emailadmin_account::search(true,false) as $acc_id => $account)
+		foreach(Mail\Account::search(true,false) as $acc_id => $account)
 		{
 			foreach($account->identities($acc_id) as $ident_id => $identity)
 			{
@@ -1181,10 +1183,10 @@ class mail_compose
 				}
 				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
 				$value = str_replace("\"\"",'"', htmlspecialchars_decode($value, ENT_COMPAT));
-				foreach(emailadmin_imapbase::parseAddressList($value) as $addressObject) {
+				foreach(Mail::parseAddressList($value) as $addressObject) {
 					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
-					//$address = mail_bo::htmlentities($address, $this->displayCharset);
+					//$address = Mail::htmlentities($address, $this->displayCharset);
 					$content[strtolower($destination)][]=$address;
 					$destinationRows++;
 				}
@@ -1246,25 +1248,25 @@ class mail_compose
 		$sel_options['filemode'] = Vfs\Sharing::$modes;
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
-		$etpl = new etemplate_new('mail.compose');
+		$etpl = new Api\Etemplate('mail.compose');
 
 		$etpl->setElementAttribute('composeToolbar', 'actions', $this->getToolbarActions($_content));
 		if ($content['mimeType']=='html')
 		{
 			//mode="$cont[rtfEditorFeatures]" validation_rules="$cont[validation_rules]" base_href="$cont[upload_dir]"
-			$_htmlConfig = mail_bo::$htmLawed_config;
-			mail_bo::$htmLawed_config['comment'] = 2;
-			mail_bo::$htmLawed_config['transform_anchor'] = false;
+			$_htmlConfig = Mail::$htmLawed_config;
+			Mail::$htmLawed_config['comment'] = 2;
+			Mail::$htmLawed_config['transform_anchor'] = false;
 			// it is intentional to use that simple-withimage configuration for the ckeditor
 			// and not the eGroupware wide pref to prevent users from trying things that will potentially not work
 			// or not work as expected, as a full featured editor that may be wanted in other apps
 			// is way overloading the "normal" needs for composing mails
-			$content['rtfEditorFeatures']='simple-withimage';//egw_ckeditor_config::get_ckeditor_config();
-			//$content['rtfEditorFeatures']='advanced';//egw_ckeditor_config::get_ckeditor_config();
-			$content['validation_rules']= json_encode(mail_bo::$htmLawed_config);
+			$content['rtfEditorFeatures']='simple-withimage';//Api\Html\CkEditorConfig::get_ckeditor_config();
+			//$content['rtfEditorFeatures']='advanced';//Api\Html\CkEditorConfig::get_ckeditor_config();
+			$content['validation_rules']= json_encode(Mail::$htmLawed_config);
 			$etpl->setElementAttribute('mail_htmltext','mode',$content['rtfEditorFeatures']);
 			$etpl->setElementAttribute('mail_htmltext','validation_rules',$content['validation_rules']);
-			mail_bo::$htmLawed_config = $_htmlConfig;
+			Mail::$htmLawed_config = $_htmlConfig;
 		}
 
 		if (isset($content['composeID'])&&!empty($content['composeID']))
@@ -1273,7 +1275,7 @@ class mail_compose
 			unset($composeCache['body']);
 			unset($composeCache['mail_htmltext']);
 			unset($composeCache['mail_plaintext']);
-			egw_cache::setCache(egw_cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$this->composeID,$composeCache,$expiration=60*60*2);
+			Api\Cache::setCache(Api\Cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$this->composeID,$composeCache,$expiration=60*60*2);
 		}
 		if (!isset($_content['serverID'])||empty($_content['serverID']))
 		{
@@ -1483,7 +1485,7 @@ class mail_compose
 	 */
 	function generateComposeID()
 	{
-		return mail_bo::getRandomString();
+		return Mail::getRandomString();
 	}
 
 	// $_mode can be:
@@ -1520,7 +1522,7 @@ class mail_compose
 			// with the new system it would be the identity
 			try
 			{
-				emailadmin_account::read_identity($addHeadInfo['X-MAILIDENTITY']);
+				Mail\Account::read_identity($addHeadInfo['X-MAILIDENTITY']);
 				$this->sessionData['mailidentity'] = $addHeadInfo['X-MAILIDENTITY'];
 			}
 			catch (Exception $e)
@@ -1536,7 +1538,7 @@ class mail_compose
 			// with the new system it would the identity is the account id
 			try
 			{
-				emailadmin_account::read($addHeadInfo['X-MAILACCOUNT']);
+				Mail\Account::read($addHeadInfo['X-MAILACCOUNT']);
 				$this->sessionData['mailaccount'] = $addHeadInfo['X-MAILACCOUNT'];
 			}
 			catch (Exception $e)
@@ -1553,7 +1555,7 @@ class mail_compose
 		$this->sessionData['isDraft'] = true;
 		$foundAddresses = array();
 		foreach((array)$headers['CC'] as $val) {
-			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
+			$rfcAddr=Mail::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
 			if (!$_rfcAddr->valid) continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (!$_rfcAddr->mailbox && !$_rfcAddr->host) ) {
@@ -1573,7 +1575,7 @@ class mail_compose
 				$this->sessionData['to'][] = $val;
 				continue;
 			}
-			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
+			$rfcAddr=Mail::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
 			if (!$_rfcAddr->valid) continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (!$_rfcAddr->mailbox && !$_rfcAddr->host) ) {
@@ -1588,7 +1590,7 @@ class mail_compose
 		}
 
 		foreach((array)$headers['REPLY-TO'] as $val) {
-			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
+			$rfcAddr=Mail::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
 			if (!$_rfcAddr->valid) continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
@@ -1603,7 +1605,7 @@ class mail_compose
 		}
 
 		foreach((array)$headers['BCC'] as $val) {
-			$rfcAddr=emailadmin_imapbase::parseAddressList($val);
+			$rfcAddr=Mail::parseAddressList($val);
 			$_rfcAddr = $rfcAddr[0];
 			if (!$_rfcAddr->valid) continue;
 			if($_rfcAddr->mailbox == 'undisclosed-recipients' || (empty($_rfcAddr->mailbox) && empty($_rfcAddr->host)) ) {
@@ -1635,7 +1637,7 @@ class mail_compose
 					#$bodyParts[$i]['body'] = nl2br($bodyParts[$i]['body']);
 					$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 				}
-				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = mail_bo::detect_encoding($bodyParts[$i]['body']);
+				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = Mail::detect_encoding($bodyParts[$i]['body']);
 				$bodyParts[$i]['body'] = translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyParts[$i]['body'] ;
@@ -1649,7 +1651,7 @@ class mail_compose
 				if($i>0) {
 					$this->sessionData['body'] .= "<hr>";
 				}
-				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = mail_bo::detect_encoding($bodyParts[$i]['body']);
+				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = Mail::detect_encoding($bodyParts[$i]['body']);
 				$bodyParts[$i]['body'] = translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyParts[$i]['body'] ;
@@ -1769,7 +1771,7 @@ class mail_compose
 		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
 		try
 		{
-			$tmpFileName = mail_bo::checkFileBasics($_formData,$this->composeID,false);
+			$tmpFileName = Mail::checkFileBasics($_formData,$this->composeID,false);
 		}
 		catch (egw_exception_wrong_userinput $e)
 		{
@@ -2056,7 +2058,7 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.'->'.array2string($this->mailPreferences['htmlOptions']));
 		$bodyParts = $mail_bo->getMessageBody($_uid, ($this->mailPreferences['htmlOptions']?$this->mailPreferences['htmlOptions']:''), $_partID);
 		//_debug_array($bodyParts);
-		$styles = mail_bo::getStyles($bodyParts);
+		$styles = Mail::getStyles($bodyParts);
 
 		$fromAddress = implode(', ', str_replace(array('<','>'),array('[',']'),$headers['FROM']));
 
@@ -2084,7 +2086,7 @@ class mail_compose
 			$this->sessionData['body']	= /*"<br>".*//*"&nbsp;".*/"<div>".'----------------'.lang("original message").'-----------------'."".'<br>'.
 				@htmlspecialchars(lang("from")).": ".$fromAddress."<br>".
 				$toAddress.$ccAddress.
-				@htmlspecialchars(lang("date").": ".$headers['DATE'],ENT_QUOTES | ENT_IGNORE,mail_bo::$displayCharset, false)."<br>".
+				@htmlspecialchars(lang("date").": ".$headers['DATE'],ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."<br>".
 				'----------------------------------------------------------'."</div>";
 			$this->sessionData['mimeType'] 	= 'html';
 			if (!empty($styles)) $this->sessionData['body'] .= $styles;
@@ -2098,13 +2100,13 @@ class mail_compose
 					#$bodyParts[$i]['body'] = nl2br($bodyParts[$i]['body'])."<br>";
 					$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 				}
-				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = mail_bo::detect_encoding($bodyParts[$i]['body']);
+				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = Mail::detect_encoding($bodyParts[$i]['body']);
 
-				$_htmlConfig = mail_bo::$htmLawed_config;
-				mail_bo::$htmLawed_config['comment'] = 2;
-				mail_bo::$htmLawed_config['transform_anchor'] = false;
+				$_htmlConfig = Mail::$htmLawed_config;
+				Mail::$htmLawed_config['comment'] = 2;
+				Mail::$htmLawed_config['transform_anchor'] = false;
 				$this->sessionData['body'] .= "<br>".self::_getCleanHTML(translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
-				mail_bo::$htmLawed_config = $_htmlConfig;
+				Mail::$htmLawed_config = $_htmlConfig;
 				#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 			}
 
@@ -2116,7 +2118,7 @@ class mail_compose
             $this->sessionData['body']  = " \r\n \r\n".'----------------'.lang("original message").'-----------------'."\r\n".
                 @htmlspecialchars(lang("from")).": ".$fromAddress."\r\n".
 				$toAddress.$ccAddress.
-				@htmlspecialchars(lang("date").": ".$headers['DATE'], ENT_QUOTES | ENT_IGNORE,mail_bo::$displayCharset, false)."\r\n".
+				@htmlspecialchars(lang("date").": ".$headers['DATE'], ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."\r\n".
                 '-------------------------------------------------'."\r\n \r\n ";
 			$this->sessionData['mimeType']	= 'plain';
 
@@ -2174,7 +2176,7 @@ class mail_compose
 		if ($_useTidy && extension_loaded('tidy') )
 		{
 			$tidy = new tidy();
-			$cleaned = $tidy->repairString($_body, mail_bo::$tidy_config,'utf8');
+			$cleaned = $tidy->repairString($_body, Mail::$tidy_config,'utf8');
 			// Found errors. Strip it all so there's some output
 			if($tidy->getStatus() == 2)
 			{
@@ -2186,7 +2188,7 @@ class mail_compose
 			}
 		}
 
-		mail_bo::getCleanHTML($_body);
+		Mail::getCleanHTML($_body);
 		return preg_replace($nonDisplayAbleCharacters, '', $_body);
 	}
 
@@ -2216,7 +2218,7 @@ class mail_compose
 		}
 		//error_log(__METHOD__."(, formDate[filemode]=$_formData[filemode], _autosaving=".array2string($_autosaving).') '.function_backtrace());
 		$mail_bo	= $this->mail_bo;
-		$activeMailProfile = emailadmin_account::read($this->mail_bo->profileID);
+		$activeMailProfile = Mail\Account::read($this->mail_bo->profileID);
 
 		// you need to set the sender, if you work with different identities, since most smtp servers, dont allow
 		// sending in the name of someone else
@@ -2225,7 +2227,7 @@ class mail_compose
 			error_log(__METHOD__.__LINE__.' Faking From/SenderInfo for '.$activeMailProfile['ident_email'].' with ID:'.$activeMailProfile['ident_id'].'. Identitiy to use for sending:'.array2string($_identity));
 		}
 		$_mailObject->setFrom($_identity['ident_email'] ? $_identity['ident_email'] : $activeMailProfile['ident_email'],
-			mail_bo::generateIdentityString($_identity,false));
+			Mail::generateIdentityString($_identity,false));
 
 		$_mailObject->addHeader('X-Priority', $_formData['priority']);
 		$_mailObject->addHeader('X-Mailer', 'EGroupware-Mail');
@@ -2274,7 +2276,7 @@ class mail_compose
 		$_mailObject->addHeader('Subject', $_formData['subject']);
 
 		// this should never happen since we come from the edit dialog
-		if (mail_bo::detect_qp($_formData['body'])) {
+		if (Mail::detect_qp($_formData['body'])) {
 			//error_log("Error: bocompose::createMessage found QUOTED-PRINTABLE while Composing Message. Charset:$realCharset Message:".print_r($_formData['body'],true));
 			$_formData['body'] = preg_replace('/=\r\n/', '', $_formData['body']);
 			$_formData['body'] = quoted_printable_decode($_formData['body']);
@@ -2303,7 +2305,7 @@ class mail_compose
 		/* should be handled by identity object itself
 		if($signature)
 		{
-			$signature = mail_bo::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+			$signature = Mail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		}
 		*/
 		if ($_formData['attachments'] && $_formData['filemode'] != Vfs\Sharing::ATTACH && !$_autosaving)
@@ -2340,7 +2342,7 @@ class mail_compose
 				$_mailObject->setBody($this->convertHTMLToText($body, true, true));
 			}
 			// convert URL Images to inline images - if possible
-			if (!$_autosaving) mail_bo::processURL2InlineImages($_mailObject, $body, $mail_bo);
+			if (!$_autosaving) Mail::processURL2InlineImages($_mailObject, $body, $mail_bo);
 			if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
 			{
 				$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
@@ -2659,9 +2661,9 @@ class mail_compose
 		$this->sessionData['attachments']  = $_formData['attachments'];
 		try
 		{
-			$acc = emailadmin_account::read($this->sessionData['mailaccount']);
+			$acc = Mail\Account::read($this->sessionData['mailaccount']);
 			//error_log(__METHOD__.__LINE__.array2string($acc));
-			$identity = emailadmin_account::read_identity($acc['ident_id'],true);
+			$identity = Mail\Account::read_identity($acc['ident_id'],true);
 		}
 		catch (Exception $e)
 		{
@@ -2797,7 +2799,7 @@ class mail_compose
 		}
 		try
 		{
-			$identity = emailadmin_account::read_identity((int)$this->sessionData['mailidentity'],true);
+			$identity = Mail\Account::read_identity((int)$this->sessionData['mailidentity'],true);
 		}
 		catch (Exception $e)
 		{
@@ -3207,7 +3209,7 @@ class mail_compose
 			if (empty($content['mailidentity']))
 			{
 				$default_identity = null;
-				foreach(emailadmin_account::identities($this->mail_bo->profileID, true, 'params') as $identity)
+				foreach(Mail\Account::identities($this->mail_bo->profileID, true, 'params') as $identity)
 				{
 					if (!isset($default_identity)) $default_identity = $identity['ident_id'];
 					if (!empty($identity['ident_signature']))
@@ -3271,7 +3273,7 @@ class mail_compose
 			{
 				$useCacheIfPossible = true;
 			}
-			$searchString = translation::convert($_searchString, mail_bo::$displayCharset,'UTF7-IMAP');
+			$searchString = translation::convert($_searchString, Mail::$displayCharset,'UTF7-IMAP');
 			foreach ($folderObjects as $k =>$fA)
 			{
 				//error_log(__METHOD__.__LINE__.$_searchString.'/'.$searchString.' in '.$k.'->'.$fA->displayName);
@@ -3362,7 +3364,7 @@ class mail_compose
 				foreach(array($contact['email'],$contact['email_home']) as $email) {
 					// avoid wrong addresses, if an rfc822 encoded address is in addressbook
 					//$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
-					$rfcAddr = emailadmin_imapbase::parseAddressList($email);
+					$rfcAddr = Mail::parseAddressList($email);
 					$_rfcAddr=$rfcAddr->first();
 					if (!$_rfcAddr->valid)
 					{
@@ -3495,7 +3497,7 @@ class mail_compose
 	}
 
 	/**
-	 * Wrapper for etemplate_new::ajax_process_content to be able to identify send request to select different fpm pool
+	 * Wrapper for Api\Etemplate::ajax_process_content to be able to identify send request to select different fpm pool
 	 *
 	 * @param string $etemplate_exec_id
 	 * @param array $content
@@ -3505,8 +3507,8 @@ class mail_compose
 	static public function ajax_send($etemplate_exec_id, array $content, $no_validation)
 	{
 		// setting menuaction is required as it triggers different behavior eg. in egw_framework::window_close()
-		$_GET['menuaction'] = 'etemplate_new::ajax_process_content';
+		$_GET['menuaction'] = 'Api\Etemplate::ajax_process_content';
 
-		return etemplate_new::ajax_process_content($etemplate_exec_id, $content, $no_validation);
+		return Api\Etemplate::ajax_process_content($etemplate_exec_id, $content, $no_validation);
 	}
 }

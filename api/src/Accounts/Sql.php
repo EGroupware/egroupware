@@ -28,7 +28,6 @@ namespace EGroupware\Api\Accounts;
 use EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi of old structure
-use emailadmin_smtp_sql;
 use acl;
 
 /**
@@ -142,10 +141,10 @@ class Sql
 		}
 		// during setup emailadmin might not yet be installed and running below query
 		// will abort transaction in PostgreSQL
-		elseif (!isset($GLOBALS['egw_setup']) || in_array(emailadmin_smtp_sql::TABLE, $this->db->table_names(true)))
+		elseif (!isset($GLOBALS['egw_setup']) || in_array(Api\Mail\Smtp\Sql::TABLE, $this->db->table_names(true)))
 		{
-			$extra_cols = emailadmin_smtp_sql::TABLE.'.mail_value AS account_email,';
-			$join = 'LEFT JOIN '.emailadmin_smtp_sql::TABLE.' ON '.$this->table.'.account_id=-'.emailadmin_smtp_sql::TABLE.'.account_id AND mail_type='.emailadmin_smtp_sql::TYPE_ALIAS;
+			$extra_cols = Api\Mail\Smtp\Sql::TABLE.'.mail_value AS account_email,';
+			$join = 'LEFT JOIN '.Api\Mail\Smtp\Sql::TABLE.' ON '.$this->table.'.account_id=-'.Api\Mail\Smtp\Sql::TABLE.'.account_id AND mail_type='.Api\Mail\Smtp\Sql::TYPE_ALIAS;
 		}
 		try {
 			$rs = $this->db->select($this->table, $extra_cols.$this->table.'.*',
@@ -239,29 +238,29 @@ class Sql
 			}
 		}
 		// store group-email in mailaccounts table
-		if ($data['account_id'] < 0 && class_exists('emailadmin_smtp_sql', isset($data['account_email'])))
+		if ($data['account_id'] < 0 && class_exists('Api\Mail\Smtp\Sql', isset($data['account_email'])))
 		{
 			try {
 				if (isset($GLOBALS['egw_info']['apps']) && !isset($GLOBALS['egw_info']['apps']['emailadmin']) ||
-					isset($GLOBALS['egw_setup']) && !in_array(emailadmin_smtp_sql::TABLE, $this->db->table_names(true)))
+					isset($GLOBALS['egw_setup']) && !in_array(Api\Mail\Smtp\Sql::TABLE, $this->db->table_names(true)))
 				{
 					// cant store email, if emailadmin not (yet) installed
 				}
 				elseif (empty($data['account_email']))
 				{
-					$this->db->delete(emailadmin_smtp_sql::TABLE, array(
+					$this->db->delete(Api\Mail\Smtp\Sql::TABLE, array(
 						'account_id' => $data['account_id'],
-						'mail_type' => emailadmin_smtp_sql::TYPE_ALIAS,
-					), __LINE__, __FILE__, emailadmin_smtp_sql::APP);
+						'mail_type' => Api\Mail\Smtp\Sql::TYPE_ALIAS,
+					), __LINE__, __FILE__, Api\Mail\Smtp\Sql::APP);
 				}
 				else
 				{
-					$this->db->insert(emailadmin_smtp_sql::TABLE, array(
+					$this->db->insert(Api\Mail\Smtp\Sql::TABLE, array(
 						'mail_value' => $data['account_email'],
 					), array(
 						'account_id' => $data['account_id'],
-						'mail_type' => emailadmin_smtp_sql::TYPE_ALIAS,
-					), __LINE__, __FILE__, emailadmin_smtp_sql::APP);
+						'mail_type' => Api\Mail\Smtp\Sql::TYPE_ALIAS,
+					), __LINE__, __FILE__, Api\Mail\Smtp\Sql::APP);
 				}
 			}
 			// ignore not (yet) existing mailaccounts table (does NOT work in PostgreSQL, because of transaction!)
@@ -429,14 +428,14 @@ class Sql
 		$email_cols = array('email');
 
 		// Add in group email searching
-		if (!isset($GLOBALS['egw_setup']) || in_array(emailadmin_smtp_sql::TABLE, $this->db->table_names(true)))
+		if (!isset($GLOBALS['egw_setup']) || in_array(Api\Mail\Smtp\Sql::TABLE, $this->db->table_names(true)))
 		{
-			$email_cols = array('coalesce('.$this->contacts_table.'.contact_email,'.emailadmin_smtp_sql::TABLE.'.mail_value) as email');
+			$email_cols = array('coalesce('.$this->contacts_table.'.contact_email,'.Api\Mail\Smtp\Sql::TABLE.'.mail_value) as email');
 			if ($this->db->Type == 'mysql' && !preg_match('/[\x80-\xFF]/', $param['query']))
 			{
-				$search_cols[] = emailadmin_smtp_sql::TABLE.'.mail_value';
+				$search_cols[] = Api\Mail\Smtp\Sql::TABLE.'.mail_value';
 			}
-			$join .= ' LEFT JOIN '.emailadmin_smtp_sql::TABLE.' ON '.$this->table.'.account_id=-'.emailadmin_smtp_sql::TABLE.'.account_id AND mail_type='.emailadmin_smtp_sql::TYPE_ALIAS;
+			$join .= ' LEFT JOIN '.Api\Mail\Smtp\Sql::TABLE.' ON '.$this->table.'.account_id=-'.Api\Mail\Smtp\Sql::TABLE.'.account_id AND mail_type='.Api\Mail\Smtp\Sql::TYPE_ALIAS;
 		}
 
 		$filter = array();
@@ -525,9 +524,9 @@ class Sql
 				case 'email':
 					$criteria['email'] = $query;
 					// Group email
-					if(in_array(emailadmin_smtp_sql::TABLE, $this->db->table_names(true)))
+					if(in_array(Api\Mail\Smtp\Sql::TABLE, $this->db->table_names(true)))
 					{
-						$criteria[emailadmin_smtp_sql::TABLE.'.mail_value'] = $query;
+						$criteria[Api\Mail\Smtp\Sql::TABLE.'.mail_value'] = $query;
 					}
 					break;
 			}

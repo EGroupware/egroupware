@@ -16,7 +16,6 @@ use EGroupware\Api;
 
 // explicitly name old, not yet converted api classes
 use translation;	// mail specific stuff not in Api\Translation
-use emailadmin_imapbase;
 
 require_once(__DIR__.'/htmLawed/htmLawed.php');
 
@@ -433,7 +432,7 @@ function hl_email_tag_transform($element, $attribute_array=0)
 		if (strpos($attribute_array['href'],'denied:javascript')===0) $attribute_array['href']='';
 		if (isset($attribute_array['name']) && isset($attribute_array['id'])) $attribute_array['id'] = $attribute_array['name'];
 		if (strpos($attribute_array['href'],'@')!==false) $attribute_array['href'] = str_replace('@','%40',$attribute_array['href']);
-		if (strpos($attribute_array['href'],'#')===0 && (isset(emailadmin_imapbase::$htmLawed_config['transform_anchor']) && emailadmin_imapbase::$htmLawed_config['transform_anchor']===true))
+		if (strpos($attribute_array['href'],'#')===0 && (isset(Api\Mail::$htmLawed_config['transform_anchor']) && Api\Mail::$htmLawed_config['transform_anchor']===true))
 		{
 			$attribute_array['href'] = "javascript:GoToAnchor('".trim(substr($attribute_array['href'],1))."');";
 		}

@@ -5,12 +5,14 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2011-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2011-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
 include_once(EGW_INCLUDE_ROOT.'/setup/inc/hook_config.inc.php');	// functions to return password hashes
+
+use EGroupware\Api;
 
 /**
  * Reset passwords
@@ -72,13 +74,13 @@ class admin_passwordreset
 		{
 			if ($content['download_csv'] && $content['changed'])
 			{
-				html::content_header('changed.csv','text/csv');
+				Api\Header\Content::type('changed.csv', 'text/csv');
 				//echo "account_lid;account_password;account_email;account_firstname;account_lastname\n";
 				foreach($content['changed'] as $account)
 				{
 					echo "$account[account_lid];$account[account_password];$account[account_email];$account[account_firstname];$account[account_lastname]\n";
 				}
-				common::egw_exit();
+				exit;
 			}
 			if (!$content['users'])
 			{
@@ -99,7 +101,7 @@ class admin_passwordreset
 			{
 				if ($content['hash'] && $content['hash'] != $current_hash)
 				{
-					config::save_value($account_repository.'_encryption_type',$content['hash'],'phpgwapi');
+					Api\Config::save_value($account_repository.'_encryption_type',$content['hash'],'phpgwapi');
 					$msg = lang('Changed password hash for %1 to %2.',strtoupper($account_repository),$content['hash'])."\n";
 					$GLOBALS['egw_info']['server'][$account_repository.'_encryption_type'] = $content['hash'];
 				}
@@ -113,7 +115,7 @@ class admin_passwordreset
 						//_debug_array($account); //break;
 						if ($content['random_pw'])
 						{
-							$password = auth::randomstring(8);
+							$password = Api\Auth::randomstring(8);
 							$old_password = null;
 						}
 						elseif ($change_pw && !preg_match('/^{plain}/i',$account['account_pwd']) &&
@@ -157,8 +159,8 @@ class admin_passwordreset
 						{
 							if (!isset($emailadmin))
 							{
-								$emailadmin = emailadmin_account::get_default();
-								if (!emailadmin_account::is_multiple($emailadmin))
+								$emailadmin = Api\Mail\Account::get_default();
+								if (!Api\Mail\Account::is_multiple($emailadmin))
 								{
 									$msg = lang('No default account found!');
 									break;
@@ -218,7 +220,7 @@ class admin_passwordreset
 							{
 								$send->Send();
 							}
-							catch (phpmailerException $e)
+							catch (Exception $e)
 							{
 								unset ($e);
 								$msg .= lang('Notifying account "%1" %2 failed!',$account['account_lid'],$account['account_email']).
@@ -253,7 +255,7 @@ class admin_passwordreset
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Bulk password reset');
 
-		$tmpl = new etemplate_new('admin.passwordreset');
+		$tmpl = new Api\Etemplate('admin.passwordreset');
 		$tmpl->exec('admin.admin_passwordreset.index',$content,$sel_options,$readonlys,array(
 			'changed' => $changed,
 		));

@@ -5,10 +5,13 @@
  * @link http://www.egroupware.org
  * @package mail
  * @author Hadi Nategh [hn@stylite.de]
- * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2013-16 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Mail;
 
 class mail_acl
 {
@@ -37,16 +40,9 @@ class mail_acl
 	);
 
 	/**
-	 * instance of mail_bo
-	 *
-	 * @var mail_bo
-	 */
-	var $mail_bo;
-
-	/**
 	 * imap object instanciated in constructor for account to edit
 	 *
-	 * @var emailadmin_imap
+	 * @var Mail\Imap
 	 */
 	var $imap;
 
@@ -65,7 +61,7 @@ class mail_acl
 	 */
 	function edit(array $content=null ,$msg='')
 	{
-		$tmpl = new etemplate_new('mail.acl');
+		$tmpl = new Api\Etemplate('mail.acl');
 		if (!is_array($content))
 		{
 			$acc_id = $_GET['acc_id']?$_GET['acc_id']:$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
@@ -80,7 +76,7 @@ class mail_acl
 			$acc_id = $content['acc_id'];
 			$account_id = $content['account_id'];
 		}
-		$account = emailadmin_account::read($acc_id, $account_id);
+		$account = Mail\Account::read($acc_id, $account_id);
 		$this->imap = $account->imapServer(isset($account_id) ? (int)$account_id : false);
 
 		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']): $content['mailbox'][0];
@@ -185,8 +181,8 @@ class mail_acl
 				//Fall through
 				case 'cancel':
 					egw_framework::window_close();
-					common::egw_exit();
-					break;
+					exit;
+
 				case 'delete':
 					$aclRvmCnt = $this->remove_acl($content, $msg);
 					if (is_array($aclRvmCnt))
@@ -251,7 +247,7 @@ class mail_acl
 		{
 			throw new egw_exception_no_permission_admin;
 		}
-		$account = emailadmin_account::read($_GET['acc_id'], $_GET['account_id']);
+		$account = Mail\Account::read($_GET['acc_id'], $_GET['account_id']);
 		$imap = $account->imapServer(!empty($_GET['account_id']) ? (int)$_GET['account_id'] : false);
 		$mailbox = $imap->isAdminConnection ? $imap->getUserMailboxString($imap->isAdminConnection) : 'INBOX';
 
@@ -272,7 +268,7 @@ class mail_acl
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($folders);
 
-		common::egw_exit();
+		exit;
 	}
 
 	/**
@@ -441,10 +437,10 @@ class mail_acl
 	 * Get subfolders of a mailbox
 	 *
 	 * @param string $mailbox structural folder name
-	 * @param emailadmin_imap $imap
+	 * @param Mail\Imap $imap
 	 * @return Array an array including all subfolders of given mailbox| returns an empty array in case of no subfolders
 	 */
-	protected static function getSubfolders($mailbox, emailadmin_imap $imap)
+	protected static function getSubfolders($mailbox, Mail\Imap $imap)
 	{
 		$delimiter = $imap->getDelimiter();
 		$nameSpace = $imap->getNameSpace();

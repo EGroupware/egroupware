@@ -204,33 +204,6 @@ function do_hooks($arg)
 }
 
 /**
- * Updates the default EMailAdmin profile
- *
- * @param array $values
- */
-function do_emailadmin()
-{
-	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array(
-		'config_app'  => 'phpgwapi',
-		"((config_name LIKE 'mail%' AND config_name != 'mail_footer') OR config_name LIKE 'smtp%' OR config_name LIKE 'imap%' OR config_name='editforwardingaddress')",
-	),__LINE__,__FILE__);
-	while (($row = $GLOBALS['egw_setup']->db->row(true)))
-	{
-		$config[$row['config_name']] = $row['config_value'];
-	}
-	$config['smtpAuth'] = $config['smtp_auth_user'] ? 'yes' : null;
-
-	$emailadmin = new emailadmin_bo(false,false);	// false=no session stuff
-	$emailadmin->setDefaultProfile($config);
-
-	echo "\n".lang('EMailAdmin profile updated:')."\n";
-	foreach($config as $name => $value)
-	{
-		echo str_pad($name.':',22).$value."\n";
-	}
-}
-
-/**
  * Create an admin account
  *
  * @param string $arg domain(default),[config user(admin)],password,username,password,[first name],[last name],[email],[lang]

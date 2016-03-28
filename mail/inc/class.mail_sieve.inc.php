@@ -5,10 +5,13 @@
  * @link http://www.egroupware.org
  * @package mail
  * @author Hadi Nategh [hn@stylite.de]
- * @copyright (c) 2013 by Hadi Nategh <hn-AT-stylite.de>
+ * @copyright (c) 2013-16 by Hadi Nategh <hn-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Mail;
 
 class mail_sieve
 {
@@ -38,7 +41,7 @@ class mail_sieve
 	/**
 	 * account object
 	 *
-	 * @var emailadmin_account
+	 * @var Mail\Account
 	 */
 	var $account;
 
@@ -61,16 +64,16 @@ class mail_sieve
 	 */
 	function __construct()
 	{
-		$this->displayCharset = translation::charset();
+		$this->displayCharset = Api\Translation::charset();
 		$this->mail_admin = isset($GLOBALS['egw_info']['user']['apps']['emailadmin']);
-		$this->mailConfig = config::read('mail');
+		$this->mailConfig = Api\Config::read('mail');
 
-		$acc_id = isset($_GET['acc_id']) ? (int)$_GET['acc_id'] : egw_cache::getSession(__CLASS__, 'acc_id');
+		$acc_id = isset($_GET['acc_id']) ? (int)$_GET['acc_id'] : Api\Cache::getSession(__CLASS__, 'acc_id');
 		if ($acc_id > 0)
 		{
-			$this->account = emailadmin_account::read($acc_id);
-			$identity = emailadmin_account::read_identity($this->account->ident_id,true);
-			$this->currentIdentity = mail_bo::generateIdentityString($identity,false);
+			$this->account = Mail\Account::read($acc_id);
+			$identity = Mail\Account::read_identity($this->account->ident_id,true);
+			$this->currentIdentity = Mail::generateIdentityString($identity,false);
 		}
 
 		$this->restoreSessionData();
@@ -86,10 +89,10 @@ class mail_sieve
 	{
 		if (!is_array($content))
 		{
-			egw_cache::setSession(__CLASS__, 'acc_id', $this->account->acc_id);
+			Api\Cache::setSession(__CLASS__, 'acc_id', $this->account->acc_id);
 		}
-		//Instantiate an etemplate_new object
-		$tmpl = new etemplate_new('mail.sieve.index');
+		//Instantiate an Api\Etemplate object
+		$tmpl = new Api\Etemplate('mail.sieve.index');
 
 		if ($msg)
 		{
@@ -102,7 +105,7 @@ class mail_sieve
 			$content['rg']= $this->get_rows();
 
 			// Set content-menu actions
-			$tmpl->set_cell_attribute('rg', 'actions',$this->get_actions());
+			$tmpl->setElementAttribute('rg', 'actions',$this->get_actions());
 
 			$sel_options = array(
 				'status' => array(
@@ -128,8 +131,8 @@ class mail_sieve
 	 */
 	function editEmailNotification($content=null, $msg='')
 	{
-		//Instantiate an etemplate_new object, representing sieve.emailNotification
-		$eNotitmpl = new etemplate_new('mail.sieve.emailNotification');
+		//Instantiate an Api\Etemplate object, representing sieve.emailNotification
+		$eNotitmpl = new Api\Etemplate('mail.sieve.emailNotification');
 
 		if ($this->account->acc_sieve_enabled)
 		{
@@ -191,7 +194,7 @@ class mail_sieve
 
 					case 'cancel':
 						egw_framework::window_close();
-						common::egw_exit();
+						exit;
 				}
 				$this->saveSessionData();
 			}
@@ -223,8 +226,8 @@ class mail_sieve
 	 */
 	function edit ($content=null)
 	{
-		//Instantiate an etemplate_new object, representing sieve.edit template
-		$etmpl = new etemplate_new('mail.sieve.edit');
+		//Instantiate an Api\Etemplate object, representing sieve.edit template
+		$etmpl = new Api\Etemplate('mail.sieve.edit');
 		$etmpl->setElementAttribute('action_folder_text','autocomplete_params', array('noPrefixId'=> true));
 		if (!is_array($content))
 		{
@@ -357,7 +360,7 @@ class mail_sieve
 
 				case 'cancel':
 					egw_framework::window_close();
-					common::egw_exit();
+					exit;
 			}
 		}
 		$sel_options = array(//array_merge($sel_options,array(
@@ -373,7 +376,7 @@ class mail_sieve
 				0 => 'raw',
 				1 => 'text',
 			),
-			'ctype' => emailadmin_script::$btransform_ctype_array,
+			'ctype' => Mail\Script::$btransform_ctype_array,
 
 		);
 
@@ -463,8 +466,8 @@ class mail_sieve
 	 */
 	function editVacation($content=null, $msg='')
 	{
-		//Instantiate an etemplate_new object, representing the sieve.vacation template
-		$vtmpl = new etemplate_new('mail.sieve.vacation');
+		//Instantiate an Api\Etemplate object, representing the sieve.vacation template
+		$vtmpl = new Api\Etemplate('mail.sieve.vacation');
 		$vacation = array();
 
 		if (isset($_GET['account_id'])) $account_id = $preserv['account_id'] = $_GET['account_id'];
@@ -476,11 +479,11 @@ class mail_sieve
 		}
 		if(isset($account_id) && $this->mail_admin)
 		{
-			foreach(emailadmin_account::search($account_id, false, null, false, 0, false) as $account)
+			foreach(Mail\Account::search($account_id, false, null, false, 0, false) as $account)
 			{
 				try {
 					// check if account is valid for multiple users, has admin credentials and sieve enabled
-					if (emailadmin_account::is_multiple($account) &&
+					if (Mail\Account::is_multiple($account) &&
 						($icServer = $account->imapServer(true)) &&	// check on icServer object, so plugins can overwrite
 						$icServer->acc_imap_admin_username && $icServer->acc_sieve_enabled)
 					{
@@ -508,12 +511,12 @@ class mail_sieve
 		}
 		elseif(!is_array($content) && isset($_GET['acc_id']))
 		{
-			$this->account = emailadmin_account::read($_GET['acc_id']);
+			$this->account = Mail\Account::read($_GET['acc_id']);
 			$preserv['acc_id'] = $this->account->acc_id;
 		}
 		elseif ($content['acc_id'])
 		{
-			$this->account = emailadmin_account::read($content['acc_id']);
+			$this->account = Mail\Account::read($content['acc_id']);
 			$preserv['acc_id'] = $content['acc_id'];
 		}
 
@@ -578,7 +581,7 @@ class mail_sieve
 								// store text as default
 								if ($content['set_as_default'] == 1 && $content['text'])
 								{
-									config::save_value('default_vacation_text', $content['text'], 'mail');
+									Api\Config::save_value('default_vacation_text', $content['text'], 'mail');
 								}
 							}
 							if (isset($content['status']))
@@ -637,15 +640,15 @@ class mail_sieve
 										if (isset($account_id) && $this->mail_admin)
 										{
 											$account_lid = accounts::id2name($account_id,'account_lid');
-											$cachedVacations = array($icServer->acc_id => $newVacation) + (array)egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.$account_lid);
+											$cachedVacations = array($icServer->acc_id => $newVacation) + (array)Api\Cache::getCache(Api\Cache::INSTANCE, 'email', 'vacationNotice'.$account_lid);
 											//error_log(__METHOD__.__LINE__.' Setting Cache for '.$account_lid.':'.array2string($cachedVacations));
-											egw_cache::setCache(egw_cache::INSTANCE,'email', 'vacationNotice'.$account_lid, $cachedVacations);
+											Api\Cache::setCache(Api\Cache::INSTANCE,'email', 'vacationNotice'.$account_lid, $cachedVacations);
 										}
 										else
 										{
-											$cachedVacations = array($icServer->acc_id => $newVacation) + (array)egw_cache::getCache(egw_cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid']);
+											$cachedVacations = array($icServer->acc_id => $newVacation) + (array)Api\Cache::getCache(Api\Cache::INSTANCE, 'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid']);
 											//error_log(__METHOD__.__LINE__.' Setting Cache for own ('.$GLOBALS['egw_info']['user']['account_lid'].'):'.array2string($cachedVacations));
-											egw_cache::setCache(egw_cache::INSTANCE,'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations);
+											Api\Cache::setCache(Api\Cache::INSTANCE,'email', 'vacationNotice'.$GLOBALS['egw_info']['user']['account_lid'], $cachedVacations);
 										}
 										$msg = lang('Vacation notice sucessfully updated.');
 									}
@@ -715,7 +718,7 @@ class mail_sieve
 	static function strip_rfc882_addresses($_addresses)
 	{
 		$addresses = array();
-		foreach(emailadmin_imapbase::parseAddressList($_addresses) as $addr)
+		foreach(Mail::parseAddressList($_addresses) as $addr)
 		{
 			if ($addr->valid)
 			{
@@ -774,7 +777,7 @@ class mail_sieve
 	{
 		//error_log(__METHOD__.'('.array2string($_vacation).')');
 
-		$account = emailadmin_account::read($_vacation['acc_id'], $_vacation['account_id']);
+		$account = Mail\Account::read($_vacation['acc_id'], $_vacation['account_id']);
 		$icServer = $account->imapServer($_vacation['account_id']);
 
 		//error_log(__METHOD__.'() imap username='.$icServer->acc_imap_username);
@@ -1053,7 +1056,7 @@ class mail_sieve
 			{
 				$newruletext .= ", ";
 			}
-			$btransform_ctype = emailadmin_script::$btransform_ctype_array[$rule['ctype']];
+			$btransform_ctype = Mail\Script::$btransform_ctype_array[$rule['ctype']];
 			$ctype_subtype = "";
 			if ($rule['field_ctype_val'])
 			{
@@ -1061,7 +1064,7 @@ class mail_sieve
 			}
 			$complete .= " body :content " . " \"" . $btransform_ctype . $ctype_subtype . $rule['field_ctype_val'] . "\"" . " :contains \"\"";
 			$started = 1;
-			//error_log(__CLASS__."::".__METHOD__.array2string(emailadmin_script::$btransform_ctype_array));
+			//error_log(__CLASS__."::".__METHOD__.array2string(Mail\Script::$btransform_ctype_array));
 		}
 		if (!$rule['unconditional'])
 		{

@@ -7,10 +7,12 @@
  * @author Stylite AG [info@stylite.de]
  * @author Ralf Becker <rb@stylite.de>
  * @author Philip Herbert <philip@knauber.de>
- * @copyright (c) 2014-15 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2014-16 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api\Mail;
 
 /**
  * mail eSync plugin
@@ -25,9 +27,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	private $backend;
 
 	/**
-	 * Instance of mail_bo
+	 * Instance of Mail
 	 *
-	 * @var mail_bo
+	 * @var Mail
 	 */
 	private $mail;
 
@@ -116,11 +118,11 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (!isset($GLOBALS['egw_setup']))
 		{
 			try {
-				emailadmin_account::read(self::$profileID);
+				Mail\Account::read(self::$profileID);
 			}
 			catch(Exception $e) {
 				unset($e);
-				self::$profileID = emailadmin_account::get_default_acc_id();
+				self::$profileID = Mail\Account::get_default_acc_id();
 			}
 		}
 		if ($this->debugLevel>0) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.self::$profileID);
@@ -139,7 +141,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$identities = array();
 		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group')))
 		{
-			$identities = iterator_to_array(emailadmin_account::search((int)$hook_data['account_id']));
+			$identities = iterator_to_array(Mail\Account::search((int)$hook_data['account_id']));
 		}
 		$identities += array(
 			'G' => lang('Primary Profile'),
@@ -232,7 +234,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$this->account = $account;
 			// todo: tell mail which account to use
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
-			$this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
+			$this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
 		}
 		else
@@ -352,11 +354,11 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__."): Smartdata = ".array2string($smartdata));
 		//error_log("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
 
-		// initialize our mail_bo
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
+		// initialize our Mail
+		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 		$activeMailProfiles = $this->mail->getAccountIdentities(self::$profileID);
 		// use the standardIdentity
-		$activeMailProfile = mail_bo::getStandardIdentityForProfile($activeMailProfiles,self::$profileID);
+		$activeMailProfile = Mail::getStandardIdentityForProfile($activeMailProfiles,self::$profileID);
 
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.")".' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
 
@@ -366,28 +368,28 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->From 	= $activeMailProfile['ident_email'];
-		$mailObject->FromName = $mailObject->EncodeHeader(mail_bo::generateIdentityString($activeMailProfile,false));
+		$mailObject->FromName = $mailObject->EncodeHeader(Mail::generateIdentityString($activeMailProfile,false));
 		$mailObject->AddCustomHeader('X-Mailer: mail-Activesync');
 
 
 		// prepare addressee list; moved the adding of addresses to the mailobject down
 		// to
 
-		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("To")) as $addressObject) {
+		foreach(Mail::parseAddressList($mailObject->getHeader("To")) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") Header Sentmail To: ".array2string($addressObject) );
 			//$mailObject->AddAddress($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$toMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// CC
-		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("Cc")) as $addressObject) {
+		foreach(Mail::parseAddressList($mailObject->getHeader("Cc")) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") Header Sentmail CC: ".array2string($addressObject) );
 			//$mailObject->AddCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
 			$ccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// BCC
-		foreach(emailadmin_imapbase::parseAddressList($mailObject->getHeader("Bcc")) as $addressObject) {
+		foreach(Mail::parseAddressList($mailObject->getHeader("Bcc")) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") Header Sentmail BCC: ".array2string($addressObject) );
 			//$mailObject->AddBCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
@@ -471,7 +473,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$toCount = 0;
 		//error_log(__METHOD__.__LINE__.array2string($toMailAddr));
 		foreach((array)$toMailAddr as $address) {
-			foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
+			foreach(Mail::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' &&
 					calendar_boupdate::email_update_requested($emailAddress, isset($cSMRMethod) ? $cSMRMethod : 'REQUEST',
@@ -486,7 +488,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		$ccCount = 0;
 		foreach((array)$ccMailAddr as $address) {
-			foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
+			foreach(Mail::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
 				$mailObject->AddCC($emailAddress, $addressObject->personal);
@@ -495,7 +497,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		$bccCount = 0;
 		foreach((array)$bccMailAddr as $address) {
-			foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
+			foreach(Mail::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
 				$mailObject->AddBCC($emailAddress, $addressObject->personal);
@@ -518,9 +520,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ActiveMailProfile:'.array2string($activeMailProfile));
 		try
 		{
-			$acc = emailadmin_account::read($this->mail->icServer->ImapServerId);
+			$acc = Mail\Account::read($this->mail->icServer->ImapServerId);
 			//error_log(__METHOD__.__LINE__.array2string($acc));
-			$_signature = emailadmin_account::read_identity($acc['ident_id'],true);
+			$_signature = Mail\Account::read_identity($acc['ident_id'],true);
 		}
 		catch (Exception $e)
 		{
@@ -536,7 +538,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$beforePlain = $beforeHtml = "";
 		$beforeHtml = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
 		$beforePlain = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
-		$sigText = emailadmin_imapbase::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+		$sigText = Mail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Signature to use:'.$sigText);
 		$sigTextHtml = $beforeHtml.$sigText;
 		$sigTextPlain = $beforePlain.translation::convertHTMLToText($sigText);
@@ -747,7 +749,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			}
 			if (count($folderArray) > 0) {
 				foreach((array)$bccMailAddr as $address) {
-					foreach(emailadmin_imapbase::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
+					foreach(Mail::parseAddressList((get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 						$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 						$mailAddr[] = array($emailAddress, $addressObject->personal);
 					}
@@ -826,7 +828,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (!$mimesupport && ($key = array_search('4', $bodypreference))) unset($bodypreference[$key]);
 
 		//$this->debugLevel=4;
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
 		$account = $_folderName = $xid = null;
 		$this->splitID($folderid,$account,$_folderName,$xid);
@@ -1194,7 +1196,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$this->splitID($folderid, $account, $folder);
 
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
@@ -1227,7 +1229,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$this->splitID($folderid, $account, $folder);
 
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
@@ -1315,7 +1317,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$this->splitID($folderid, $account, $srcFolder);
 		$this->splitID($newfolderid, $account, $destFolder);
 		debugLog("IMAP-MoveMessage: (SourceFolder: '$srcFolder'  id: '$id'  DestFolder: '$destFolder' )");
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 		$this->mail->reopen($destFolder);
 		$status = $this->mail->getFolderStatus($destFolder);
 		$uidNext = $status['uidnext'];
@@ -1500,10 +1502,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 /*
 		// other types may be possible - we support quicksearch first (freeText in subject and from (or TO in Sent Folder))
-		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[self::$profileID]))
+		if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[self::$profileID]))
 		{
-			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
-			if (!isset(emailadmin_imapbase::$supportsORinQuery[self::$profileID])) emailadmin_imapbase::$supportsORinQuery[self::$profileID]=true;
+			Mail::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+			if (!isset(Mail::$supportsORinQuery[self::$profileID])) Mail::$supportsORinQuery[self::$profileID]=true;
 		}
 */
 		if (isset($searchquery['searchfreetext']))
@@ -1519,8 +1521,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ProfileID:'.self::$profileID.' FolderID:'.$folderid.' Foldername:'.$_folderName);
 		$this->_connect($account);
 		// this should not be needed ???
-		emailadmin_imapbase::$supportsORinQuery[self::$profileID]=true; // trigger quicksearch (if possible)
-		$_filter = array('type'=> (emailadmin_imapbase::$supportsORinQuery[self::$profileID]?'quick':'subject'),
+		Mail::$supportsORinQuery[self::$profileID]=true; // trigger quicksearch (if possible)
+		$_filter = array('type'=> (Mail::$supportsORinQuery[self::$profileID]?'quick':'subject'),
 						 'string'=> $searchText,
 						 'status'=>'any'
 						);
@@ -1704,7 +1706,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
         ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": on $folderid -> $folder ($account) type: ". $type);
 		if ($type != 'mail') return false;
 
-		if (!isset($this->mail)) $this->mail = mail_bo::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 
 		$changes = array();
         ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": on $folderid ($folder) stat: ". $syncstate);

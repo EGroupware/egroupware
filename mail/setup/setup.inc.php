@@ -32,9 +32,9 @@ $setup_info['mail']['hooks']['search_link'] = 'mail_hooks::search_link';
 $setup_info['mail']['hooks']['admin'] = 'mail_hooks::admin';
 $setup_info['mail']['hooks']['settings'] = 'mail_hooks::settings';
 $setup_info['mail']['hooks']['sidebox_menu'] = 'mail_hooks::sidebox_menu';
-$setup_info['mail']['hooks']['session_creation'] = 'mail_bo::resetConnectionErrorCache';
-$setup_info['mail']['hooks']['verify_settings'] = 'mail_bo::forcePrefReload';
-$setup_info['mail']['hooks']['clear_cache'] = 'mail_bo::unsetCachedObjects';
+$setup_info['mail']['hooks']['session_creation'] = 'EGroupware\\Api\\Mail::resetConnectionErrorCache';
+$setup_info['mail']['hooks']['verify_settings'] = 'EGroupware\\Api\\Mail::forcePrefReload';
+$setup_info['mail']['hooks']['clear_cache'] = 'EGroupware\\Api\\Mail::unsetCachedObjects';
 $setup_info['mail']['hooks']['check_notify'] = 'mail_hooks::notification_check_mailbox';
 $setup_info['mail']['hooks']['emailadmin_edit'] = 'mail_hooks::emailadmin_edit';
 

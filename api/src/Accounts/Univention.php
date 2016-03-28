@@ -15,9 +15,6 @@ namespace EGroupware\Api\Accounts;
 
 use EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use emailadmin_account;
-
 /**
  * Univention LDAP Backend for accounts
  *
@@ -84,9 +81,9 @@ class Univention extends Ldap
 					// get_default() does not work for Adminstrator, try acc_id=1 instead
 					// if everything fails try hostname ...
 					try {
-						if (!($account = emailadmin_account::get_default(false, false, false)))
+						if (!($account = Api\Mail\Account::get_default(false, false, false)))
 						{
-							$account = emailadmin_account::read(1);
+							$account = Api\Mail\Account::read(1);
 						}
 						$hostname = $account->acc_imap_host;
 					}

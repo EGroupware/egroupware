@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package mail
  * @author Hadi Nategh [hn@stylite.de]
- * @copyright (c) 2015 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2015-16 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id:$
  */
@@ -66,22 +66,22 @@ class mail_integration {
 	{
 		// App name which is called for integration
 		$app = isset($GLOBALS['egw_info']['user']['apps'][$_GET['app']])? $_GET['app'] : null;
-		
+
 		// preset app entry id, selected by user from app_entry_dialog
 		$app_entry_id = $_GET['entry_id'];
-		
+
 		// Set the date
 		if (!$_date)
 		{
 			$time = time();
 			$_date = egw_time::server2user($time->now,'ts');
 		}
-		
+
 		// For dealing with multiple files of the same name
 		$dupe_count = $file_list = array();
 
 		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
-		//error_log(__METHOD__.__LINE__.': RowID:'.$_GET['rowid'].': emailAddress:'. array2string($_to_emailAddress).' && '.$app);		
+		//error_log(__METHOD__.__LINE__.': RowID:'.$_GET['rowid'].': emailAddress:'. array2string($_to_emailAddress).' && '.$app);
 		// Integrate not yet saved mail
 		if (empty($_GET['rowid']) && $_to_emailAddress && $app)
 		{
@@ -258,7 +258,7 @@ class mail_integration {
 				$mailcontent['date'] = strtotime($mailcontent['headers']['DATE']);
 			}
 		}
-		
+
 		// Convert addresses to email and personal
 		$addresses = imap_rfc822_parse_adrlist($mailcontent['mailaddress'],'');
 		foreach ($addresses as $address)
@@ -293,12 +293,12 @@ class mail_integration {
 				if ($uid && !$mailcontent['attachments'][$key]['add_raw'])
 				{
 					$data_attachments[$key]['egw_data'] = egw_link::set_data($mailcontent['attachments'][$key]['mimeType'],
-						'emailadmin_imapbase::getAttachmentAccount',array($icServerID, $mailbox, $uid, $attachment['partID'], $is_winmail, true),true);
+						'EGroupware\\Api\\Mail::getAttachmentAccount',array($icServerID, $mailbox, $uid, $attachment['partID'], $is_winmail, true),true);
 				}
 				unset($mailcontent['attachments'][$key]['add_raw']);
 			}
 		}
-		
+
 		// Check if the hook is registered
 		if ($GLOBALS['egw']->hooks->hook_exists('mail_import',$app) == 0)
 		{
@@ -308,14 +308,14 @@ class mail_integration {
 				throw new egw_exception_assertion_failed('Hook import_mail registration faild for '.$app.' app! Please, contact your system admin in order to clear cache and register hooks.');
 			}
 		}
-		
+
 		// Get the registered hook method of requested app for integration
 		$hook = $GLOBALS['egw']->hooks->single(array('location' => 'mail_import'),$app);
-		
+
 		// Load translation for the app since the original URL
 		// is from mail integration and only loads mail translation
 		translation::add_app($app);
-		
+
 		// Execute import mail with provided content
 		ExecMethod($hook['menuaction'],array (
 			'addresses' => $data_addresses,

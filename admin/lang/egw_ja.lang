@@ -213,3 +213,10 @@ you must enter a group name.	admin	ja	グループ名を入力して下さい。
 you must enter an application name and title.	admin	ja	アプリケーション名とタイトルを入力して下さい。
 you must select a file type	admin	ja	ファイルタイプを選択してください。
 your session could not be verified.	admin	ja	Your session could not be verified.
+admin password	emailadmin	ja	パスワード
+admin username	emailadmin	ja	ユーザID
+email settings	common	ja	電子メール設定
+mail settings	admin	ja	電子メール設定
+order	emailadmin	ja	順序
+remove	emailadmin	ja	削除
+standard	emailadmin	ja	標準

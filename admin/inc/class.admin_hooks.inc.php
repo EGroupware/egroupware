@@ -219,6 +219,42 @@ class admin_hooks
 				'icon'        => 'cancel',
 			);
 		}
+
+		// currently no way to deny Admins access to administrate mail
+		// we could add a deny check as for other admin functionality
+		{
+			$actions[] = array(
+				'id'      => 'mail_account',
+				'caption' => 'mail account',
+				'url'     => 'menuaction=admin.admin_mail.edit&account_id=$id',
+				'popup'   => '720x530',
+				'icon'    => 'mail/navbar',
+			);
+
+			$emailadmin = Api\Mail\Account::get_default();
+			if ($emailadmin->acc_smtp_type && $emailadmin->acc_smtp_type !== 'EGroupware\Api\Mail\Smtp')
+			{
+				$actions[] = array (
+					'id'       => 'mail_activeAccounts',
+					'caption'  => '(de)activate mail accounts',
+					'icon'    => 'mail/navbar',
+					'children' => array (
+						'active' => array (
+							'caption'		  => 'activate',
+							'onExecute'	  	  => 'javaScript:app.admin.emailadminActiveAccounts',
+							'icon'			  => 'check',
+							'allowOnMultiple' => true
+						),
+						'inactive' => array (
+							'caption'		  => 'deactivate',
+							'onExecute'		  => 'javaScript:app.admin.emailadminActiveAccounts',
+							'icon'			  => 'bullet',
+							'allowOnMultiple' => true
+						)
+					)
+				);
+			}
+		}
 		return $actions;
 	}
 }

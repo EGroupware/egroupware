@@ -32,6 +32,9 @@ include(dirname(__DIR__).'/header.inc.php');
 
 $headertime = microtime(true);
 
+use EGroupware\Api\Mail\Account as emailadmin_account;
+use EGroupware\Api\Mail\Imap as emailadmin_imap;
+
 // on which mail account do we work, if not specified use default one (connects to imap server!)
 $acc_id = isset($_GET['acc_id']) && (int)$_GET['acc_id'] > 0 ? (int)$_GET['acc_id'] : emailadmin_account::get_default_acc_id();
 // calling emailadmin_account::read with explicit account_id to not cache object for current user!

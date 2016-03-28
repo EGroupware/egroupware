@@ -99,3 +99,57 @@ td.admin_userAgent span {
 #admin-acl_filter {
 	max-width: 100% !important;
 }
+
+/**
+ * mail account wizard and edit
+ */
+.emailadmin_manual {
+  display: none;
+}
+.emailadmin_progress {
+  display: none;
+  padding-top: 5px;
+}
+.emailadmin_ssl {
+  margin-right: 10px;
+}
+.emailadmin_port {
+  width: 5em;
+}
+.emailadmin_header {
+  font-weight: bold;
+  font-size: 150%;
+}
+#admin-mailaccount_tabs {
+  padding-top: 10px;
+}
+#admin-mailaccount_acc_imap_logintype {
+  width: 100%;
+}
+span.emailadmin_diagnostic,.emailadmin_diagnostic {
+  color: lightgray;
+}
+span#admin-mailaccount_acc_id {
+  float: right;
+}
+#admin-mailaccount_acc_smtp_account_id {
+  padding-left: 5px;
+}
+#admin-mailaccount_button\[multiple\] {
+  height: auto;
+  padding-left: 5px;
+  margin:2px;
+  width: 16px;
+  vertical-align: top;
+}
+#admin-mailaccount_button\[placeholders\] {
+  height: 16px;
+  padding-left: 5px;
+  vertical-align: middle;
+}
+#admin-mailaccount_mailLocalAddress {
+  width: 98%;
+}
+select#admin-mailaccount_ident_id {
+  width: 95%;
+}

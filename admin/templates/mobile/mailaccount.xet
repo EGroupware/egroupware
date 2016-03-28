@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.mailaccount.identity" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row>
+					<description for="ident_id" value="Identity"/>
+					<menulist>
+						<menupopup id="ident_id" no_lang="1" onchange="1" class="et2_fullWidth"/>
+					</menulist>
+				</row>
+				<row>
+					<description/>
+					<checkbox label="allow users to create further identities" id="acc_further_identities" class="emailadmin_no_user"/>
+				</row>
+				<row>
+					<description for="ident_name" value="Name"/>
+					<textbox id="ident_name" maxlength="128" blur="default your name and email" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="ident_realname" value="Your name"/>
+					<hbox>
+						<textbox id="ident_realname" maxlength="128" width="96%"/>
+						<buttononly label="Placeholders" id="button[placeholders]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements&amp;nonavbar=1'),'_blank','dependent=yes,width=860,height=620,scrollbars=yes,status=yes'); return false;" options="dialog_help"/>
+					</hbox>
+				</row>
+				<row>
+					<description for="ident_org" value="Organisation"/>
+					<textbox id="ident_org" maxlength="128" span="all" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="ident_email" value="EMail address"/>
+					<url-email id="ident_email" options="80,128" width="96%"/>
+				</row>
+				<row>
+					<htmlarea expand_toolbar="false" height="125px" id="ident_signature" span="all" width="100%"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.mailaccount.imap" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row class="emailadmin_no_single">
+					<description for="acc_imap_logintype" value="Type"/>
+					<menulist>
+						<menupopup id="acc_imap_type" class="et2_fullWidth"/>
+					</menulist>
+				</row>
+				<row class="emailadmin_no_single">
+					<description for="acc_imap_logintype" value="Login" class="emailadmin_no_single"/>
+					<menulist>
+						<menupopup class="emailadmin_no_single et2_fullWidth" statustext="How username get constructed" id="acc_imap_logintype"/>
+					</menulist>
+				</row>
+				<row class="@manual_class">
+					<description for="acc_imap_username" value="Username"/>
+					<textbox id="acc_imap_username" maxlength="128" autocomplete="off" class="et2_fullWidth"/>
+				</row>
+				<row class="@manual_class">
+					<description for="acc_domain" value="Domain" class="emailadmin_no_single"/>
+					<textbox id="acc_domain" maxlength="128" class="emailadmin_no_single et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="acc_imap_password" value="Password"/>
+					<hbox>
+						<passwd id="acc_imap_password" maxlength="128" autocomplete="off" width="96%"/>
+						<description id="acc_imap_account_id" class="emailadmin_diagnostic"/>
+					</hbox>
+				</row>
+				<row class="@manual_class">
+					<description for="acc_imap_host" value="IMAP server"/>
+					<textbox blur="Hostname or IP" id="acc_imap_host" maxlength="128" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="acc_imap_ssl" value="Secure connection"/>
+					<hbox>
+						<menulist>
+							<menupopup class="emailadmin_ssl" id="acc_imap_ssl" needed="1" onchange="app.admin.wizard_imap_ssl_onchange" width="30%"/>
+						</menulist>
+						<textbox type="integer" label="Port" id="acc_imap_port" needed="1" class="emailadmin_port"/>
+					</hbox>
+				</row>
+				<row class="emailadmin_no_single">
+					<groupbox span="all" class="emailadmin_imap_admin">
+						<caption label="IMAP administration"/>
+						<grid>
+							<columns>
+								<column width="120"/>
+								<column width="600"/>
+							</columns>
+							<rows>
+								<row>
+									<description for="acc_imap_admin_username" value="Admin user"/>
+									<textbox id="acc_imap_admin_username" maxlength="128" autocomplete="off" class="et2_fullWidth"/>
+								</row>
+								<row>
+									<description for="acc_imap_admin_password" value="Password"/>
+									<passwd id="acc_imap_admin_password" maxlength="128" autocomplete="off" class="et2_fullWidth"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.mailaccount.folder" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row>
+					<description for="acc_folder_sent" value="Sent folder"/>
+					<taglist id="acc_folder_sent" empty_label="Select one ..." maxSelection="1" autocomplete_url="" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="acc_folder_trash" value="Trash folder"/>
+					<taglist id="acc_folder_trash" empty_label="Select one ..." maxSelection="1" autocomplete_url="" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="acc_folder_draft" value="Drafts folder"/>
+					<taglist id="acc_folder_draft" empty_label="Select one ..." maxSelection="1" autocomplete_url="" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="acc_folder_template" value="Templates folder"/>
+					<taglist id="acc_folder_template" empty_label="Select one ..." maxSelection="1" autocomplete_url="" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="acc_folder_junk" value="Junk folder"/>
+					<taglist id="acc_folder_junk" empty_label="Select one ..." maxSelection="1" autocomplete_url="" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description for="acc_folder_junk" value="Notify about new mail in this folders"/>
+					<vbox>
+						<taglist id="notify_folders" empty_label="Select one ..." autocomplete_url="" onchange="app.admin.change_folders" class="et2_fullWidth"/>
+						<checkbox id="notify_save_default" label="save as default"/>
+						<checkbox id="notify_use_default" label="use default"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.mailaccount.sieve" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row>
+					<description for="acc_sieve_enabled" value="Enable Sieve"/>
+					<menulist>
+						<menupopup type="select-bool" id="acc_sieve_enabled" needed="1" class="et2_fullWidth"/>
+					</menulist>
+				</row>
+				<row class="@manual_class">
+					<description for="acc_sieve_host" value="Sieve server"/>
+					<textbox blur="Hostname or IP" id="acc_sieve_host" onchange="app.admin.wizard_sieve_onchange" maxlength="128" class="et2_fullWidth"/>
+				</row>
+				<row class="@manual_class">
+					<description for="acc_sieve_ssl" value="Secure connection"/>
+					<hbox>
+						<menulist>
+							<menupopup class="emailadmin_ssl" id="acc_sieve_ssl" onchange="app.admin.wizard_sieve_ssl_onchange" width="30%"/>
+						</menulist>
+						<textbox type="integer" label="Port" id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="emailadmin_port"/>
+					</hbox>
+				</row>
+				<row>
+					<description value="Vacation messages with start and end date require an admin account to be set!" span="all" class="emailadmin_no_single"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.mailaccount.smtp" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row class="emailadmin_no_single">
+					<description for="acc_smtp_type" value="Type"/>
+					<menulist>
+						<menupopup id="acc_smtp_type" onchange="1" class="et2_fullWidth"/>
+					</menulist>
+				</row>
+				<row class="emailadmin_no_single">
+					<description for="acc_smtp_auth_session" value="Authentication"/>
+					<checkbox label="Use username+password from current user" id="acc_smtp_auth_session"/>
+				</row>
+				<row class="@manual_class">
+					<description for="acc_smtp_username" value="Username"/>
+					<textbox blur="if authentication required" id="acc_smtp_username" maxlength="128" autocomplete="off" class="et2_fullWidth"/>
+				</row>
+				<row class="@manual_class">
+					<description for="acc_smtp_password" value="Password"/>
+					<hbox>
+						<passwd id="acc_smtp_password" maxlength="128" autocomplete="off" class="et2_fullWidth"/>
+						<description id="acc_smtp_account_id" class="emailadmin_diagnostic"/>
+					</hbox>
+				</row>
+				<row class="@manual_class">
+					<description for="acc_smtp_host" value="SMTP server"/>
+					<textbox blur="Hostname or IP" id="acc_smtp_host" needed="1" maxlength="128" class="et2_fullWidth"/>
+				</row>
+				<row class="@manual_class">
+					<description for="acc_smtp_ssl" value="Secure connection"/>
+					<hbox>
+						<menulist>
+							<menupopup class="emailadmin_ssl" id="acc_smtp_ssl" needed="1" onchange="app.admin.wizard_smtp_ssl_onchange" width="30%"/>
+						</menulist>
+						<textbox type="integer" label="Port" id="acc_smtp_port" needed="1" class="emailadmin_port"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.mailaccount.aliases" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row>
+					<description for="mailLocalAddress" value="EMail address"/>
+					<url-email id="mailLocalAddress" options="32,128" class="et2_fullWidth"/>
+				</row>
+				<row>
+					<description/>
+					<checkbox label="Email account active" id="accountStatus" selected_value="active"/>
+				</row>
+				<row>
+					<description for="mailAlternateAddress" value="Alternate email address"/>
+					<taglist id="mailAlternateAddress" autocomplete_url="" class="et2_fullWidth"/>
+				</row>
+				<row disabled="@no_forward_available">
+					<description for="mailForwardingAddress" value="Forward email's to"/>
+					<taglist id="mailForwardingAddress" autocomplete_url="" class="et2_fullWidth"/>
+				</row>
+				<row disabled="@no_forward_available">
+					<description/>
+					<vbox>
+						<checkbox label="Forward only" id="deliveryMode" selected_value="forwardOnly" onchange="if (widget.getValue()) et2_dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');"/>
+						<checkbox label="Allow users to change forwards" id="acc_user_forward"/>
+					</vbox>
+				</row>
+				<row>
+					<description for="quotaLimit" value="Quota (MB)"/>
+					<hbox>
+						<textbox type="integer" id="quotaLimit"/>
+						<description value="Leave empty for no quota"/>
+					</hbox>
+				</row>
+				<row>
+					<description for="quotaUsed" value="Currently:"/>
+					<textbox type="integer" id="quotaUsed" readonly="true"/>
+				</row>
+				<row disabled="!@admin_actions">
+					<description value="Administration"/>
+					<description/>
+				</row>
+				<row disabled="!@admin_actions">
+					<toolbar id="admin_actions" colspan="2" default_execute="app.admin.account_edit_action"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.mailaccount" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="600"/>
+			</columns>
+			<rows>
+				<row disabled="@hidebuttons" class="dialogHeadbar" >
+					<hbox span="all">
+						<button label="Save" id="button[save]"/>
+						<button label="Apply" id="button[apply]" />
+						<button statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magicwand" background_image="1"/>
+						<button align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"/>
+						<button align="right" label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')"  image="delete" background_image="1"/>
+					</hbox>
+				</row>
+				<row disabled="!@accounts" class="dialogHeader">
+					<description for="acc_id" value="Mail account"/>
+					<menulist>
+						<menupopup id="acc_id" onchange="app.admin.change_account" class="et2_fullWidth"/>
+					</menulist>
+					<description/>
+				</row>
+				<row>
+					<description for="acc_name" value="Name of account"/>
+					<hbox>
+						<textbox id="acc_name" needed="1" class="et2_fullWidth"/>
+						<description align="right" value="$cont[acc_id]" class="emailadmin_diagnostic"/>
+					</hbox>
+				</row>
+				<row class="emailadmin_no_user">
+					<description for="account_id" value="Valid for"/>
+					<hbox>
+						<menulist>
+							<menupopup type="select-account" id="account_id" onchange="app.admin.account_hide_not_applying" options="Everyone,both" width="96%"/>
+						</menulist>
+						<buttononly label="Select multiple" id="button[multiple]" onclick="app.admin.edit_multiple" options="users"/>
+					</hbox>
+				</row>
+				<row>
+					<description/>
+					<checkbox label="account editable by user" id="acc_user_editable"/>
+				</row>
+				<row>
+					<tabbox id="tabs" span="all" width="100%" align_tabs="v">
+						<tabs>
+							<tab id="admin.mailaccount.identity" label="Identity+Signature" statustext="Identity&amp;Signature"/>
+							<tab id="admin.mailaccount.imap" label="IMAP" statustext="incoming mail"/>
+							<tab id="admin.mailaccount.folder" label="Folder" statustext="Folder"/>
+							<tab id="admin.mailaccount.sieve" label="Sieve" statustext="serverside filtering"/>
+							<tab id="admin.mailaccount.smtp" label="SMTP" statustext="outgoing mail"/>
+							<tab id="admin.mailaccount.aliases" label="Aliases+Forwards" statustext="Aliases, Forwarding, Quota, ..."/>
+						</tabs>
+						<tabpanels>
+							<template id="admin.mailaccount.identity"/>
+							<template id="admin.mailaccount.imap"/>
+							<template id="admin.mailaccount.folder"/>
+							<template id="admin.mailaccount.sieve"/>
+							<template id="admin.mailaccount.smtp"/>
+							<template id="admin.mailaccount.aliases"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

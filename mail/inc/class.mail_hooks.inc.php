@@ -5,10 +5,13 @@
  * @link http://www.egroupware.org
  * @package mail
  * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2013-16 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Mail;
 
 /**
  * Class containing admin, preferences and sidebox-menus and other hooks
@@ -24,8 +27,8 @@ class mail_hooks
 	{
 		$actions = array();
 
-		$account = emailadmin_account::read($data['acc_id'], $data['account_id']);
-		if (emailadmin_account::is_multiple($account) && $account['acc_imap_admin_username'] ||
+		$account = Mail\Account::read($data['acc_id'], $data['account_id']);
+		if (Mail\Account::is_multiple($account) && $account['acc_imap_admin_username'] ||
 			$account['acc_imap_type'] == 'managementserver_imap')
 		{
 			translation::add_app('mail');
@@ -463,18 +466,18 @@ class mail_hooks
 			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		try
 		{
-			$mail_bo = mail_bo::getInstance(true,$profileID);
+			$mail_bo = Mail::getInstance(true,$profileID);
 			$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
 		} catch (Exception $e) {
 			//error_log(__METHOD__."()" . $e->getMessage());
-			$profileID = emailadmin_account::get_default_acc_id();
+			$profileID = Mail\Account::get_default_acc_id();
 		}
 
 		$preferences =& $mail_bo->mailPreferences;
 		$serverCounter = $sieveEnabledServerCounter = 0;
 		// account select box
 		$selectedID = $profileID;
-		$allAccountData = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null);
+		$allAccountData = Mail\Account::search($only_current_user=true, $just_name=false, $order_by=null);
 		if ($allAccountData) {
 			$rememberFirst=$selectedFound=null;
 			foreach ($allAccountData as $tmpkey => $icServers)
@@ -534,7 +537,7 @@ class mail_hooks
 			display_sidebox($appname,lang('Admin'),$file);
 		}
 		hooks::pgp_encryption_menu('mail');
-		
+
 	}
 
 	/**
@@ -545,22 +548,22 @@ class mail_hooks
 	static function notification_check_mailbox()
 	{
 		// should not run more often then every 3 minutes;
-		$lastRun = egw_cache::getCache(egw_cache::INSTANCE,'email','mailNotifyLastRun'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*24*2);
+		$lastRun = Api\Cache::getCache(Api\Cache::INSTANCE,'email','mailNotifyLastRun'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*24*2);
 		$currentTime = time();
 		if (!empty($lastRun) && $lastRun>$currentTime-3*60)
 		{
 			//error_log(__METHOD__.__LINE__." Job should not run too often; we limit this to once every 3 Minutes :". ($currentTime-$lastRun). " Seconds to go!");
 			return true;
 		}
-		$accountsToSearchObj = emailadmin_account::search($only_current_user=true, $just_name=true);
+		$accountsToSearchObj = Mail\Account::search($only_current_user=true, $just_name=true);
 
 		foreach($accountsToSearchObj as $acc_id => $identity_name)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$acc_id.':'.$identity_name);
-			$folders2notify[$acc_id] = emailadmin_notifications::read($acc_id);// read all, even those set for acc_id 0 (folders for all acounts?)
+				$folders2notify[$acc_id] = Mail\Notifications::read($acc_id);// read all, even those set for acc_id 0 (folders for all acounts?)
 			$accountsToSearchArray[$acc_id] = str_replace(array('<','>'),array('[',']'),$identity_name);
 		}
-		$notified_mail_uidsCache = egw_cache::getCache(egw_cache::INSTANCE,'email','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*24*2);
+		$notified_mail_uidsCache = Api\Cache::getCache(Api\Cache::INSTANCE,'email','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*24*2);
 		//error_log(__METHOD__.__LINE__.array2string($notified_mail_uidsCache));
 		if (!is_array($folders2notify)) return true;
 		foreach ($folders2notify as $nFKey =>$notifyfolders)
@@ -577,7 +580,7 @@ class mail_hooks
 				//error_log(__METHOD__.__LINE__.' (user: '.$currentRecipient->account_lid.') Active Profile:'.$activeProfile);
 				try
 				{
-					$bomail = mail_bo::getInstance(false, $activeProfile,false);
+					$bomail = Mail::getInstance(false, $activeProfile,false);
 				} catch (Exception $e)
 				{
 					error_log(__METHOD__.__LINE__.' (user: '.$currentRecipient->account_lid.') notification for Profile:'.$activeProfile.' failed.'.$e->getMessage());
@@ -644,7 +647,7 @@ class mail_hooks
 							'mail_uid'				=> $recent_message['uid'],
 							'mail_folder' 			=> $recent_message['folder_display_name'],
 							'mail_folder_base64' 	=> $recent_message['folder_base64'],
-							'mail_subject'			=> mail_bo::adaptSubjectForImport($recent_message['subject']),
+							'mail_subject'			=> Mail::adaptSubjectForImport($recent_message['subject']),
 							'mail_from'				=> !empty($recent_message['sender_name']) ? $recent_message['sender_name'] : $recent_message['sender_address'],
 							'mail_received'			=> $recent_message['date'],
 						);
@@ -665,13 +668,13 @@ class mail_hooks
 					$notification->set_skip_backends(array('email'));
 					$notification->send();
 				}
-				egw_cache::setCache(egw_cache::INSTANCE,'email','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),$notified_mail_uidsCache, $expiration=60*60*24*2);
+				Api\Cache::setCache(Api\Cache::INSTANCE,'email','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),$notified_mail_uidsCache, $expiration=60*60*24*2);
 			} catch (Exception $e) {
 				// fail silently per server, if possible
 				error_log(__METHOD__.__LINE__.' Notification on new messages for Profile '.$activeProfile.' ('.$accountsToSearchArray[$activeProfile].') failed:'.$e->getMessage());
 			}
 		}
-		egw_cache::setCache(egw_cache::INSTANCE,'email','mailNotifyLastRun'.trim($GLOBALS['egw_info']['user']['account_id']),time(), $expiration=60*60*24*2);
+		Api\Cache::setCache(Api\Cache::INSTANCE,'email','mailNotifyLastRun'.trim($GLOBALS['egw_info']['user']['account_id']),time(), $expiration=60*60*24*2);
 		//error_log(__METHOD__.__LINE__.array2string($notified_mail_uidsCache));
 		return true;
 	}

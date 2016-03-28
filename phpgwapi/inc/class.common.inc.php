@@ -36,40 +36,11 @@ class common
 	 * @param $category =LC_ALL category to set, see setlocal function
 	 * @param $charset =null default system charset
 	 * @return string the local (or best estimate) set
+	 * @deprecated use Api\Preferences::setlocal($category,$charset)
 	 */
-	static function setlocale($category=LC_ALL,$charset=null)
+	static function setlocale($category=LC_ALL, $charset=null)
 	{
-		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-		$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
-
-		if (strlen($lang) == 2)
-		{
-			$country_from_lang = strtoupper($lang);
-		}
-		else
-		{
-			list($lang,$lang2) = explode('-',$lang);
-			$country_from_lang = strtoupper($lang2);
-		}
-		if (is_null($charset)) $charset = translation::charset();
-
-		foreach(array(
-			$lang.'_'.$country,
-			$lang.'_'.$country_from_lang,
-			$lang,
-			'en_US',
-			'C',
-		) as $local)
-		{
-			if (($ret = setlocale($category,$local.'@'.$charset)) ||
-				($ret = setlocale($category,$local)))
-			{
-				//error_log(__METHOD__."($category,$charset) lang=$lang, country=$country, country_from_lang=$country_from_lang: returning '$ret'");
-				return $ret;
-			}
-		}
-		error_log(__METHOD__."($category,$charset) lang=$lang, country=$country, country_from_lang=$country_from_lang: Could not set local!");
-		return false;	// should not happen, as the 'C' local should at least be available everywhere
+		return Api\Preferences::setlocale($category, $charset);
 	}
 
 	/**
@@ -918,7 +889,7 @@ class common
 	 * @param int $t =0 timestamp, default current time
 	 * @param string $format ='' timeformat, default '' = read from the user prefernces
 	 * @param boolean $adjust_to_usertime =true should datetime::tz_offset be added to $t or not, default true
-	 * @deprecated use egw_time::to($time, $format) egw_time::server2user($time, $format)
+	 * @deprecated use Api\DateTime::to($time, $format) Api\DateTime::server2user($time, $format)
 	 * @return string the formated date/time
 	 */
 	static function show_date($t = 0, $format = '', $adjust_to_usertime=true)
@@ -1009,18 +980,11 @@ class common
 	 *
 	 * @param string $str
 	 * @return string
+	 * @deprecated use Api\Translation::to_ascii
 	 */
 	public static function transliterate($str)
 	{
-		static $extra = array(
-			'&szlig;' => 'ss',
-			' ' => '',
-		);
-		$entities = htmlentities($str, ENT_QUOTES,translation::charset());
-		$extra_replaced = str_replace(array_keys($extra),array_values($extra),$entities);
-		$umlauts = preg_replace('/&([aAuUoO])uml;/','\\1e',$extra_replaced);	// replace german umlauts with the letter plus one 'e'
-		$accents = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$umlauts);	// remove all types of acents
-		return preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$accents);	// remove all other entities
+		return Api\Translation::to_ascii($str);
 	}
 
 	/**
@@ -1033,37 +997,11 @@ class common
 	 * @param string $account account-name (lid)
 	 * @param string $domain =null domain-name or null to use eGW's default domain $GLOBALS['egw_info']['server']['mail_suffix]
 	 * @return string with email address
+	 * @deprecated use Api\Accounts::email($first, $last, $account, $domain)
 	 */
 	static function email_address($first,$last,$account,$domain=null)
 	{
-		//echo "<p align=right>common::email_address('$first','$last','$account')";
-		foreach (array('first','last','account') as $name)
-		{
-			$$name = self::transliterate($$name);
-		}
-		//echo " --> ('$first', '$last', '$account')";
-		if (!$first && !$last)	// fallback to the account-name, if real names contain only special chars
-		{
-			$first = '';
-			$last = $account;
-		}
-		if (!$first || !$last)
-		{
-			$dot = $underscore = '';
-		}
-		else
-		{
-			$dot = '.';
-			$underscore = '_';
-		}
-		if (!$domain) $domain = $GLOBALS['egw_info']['server']['mail_suffix'];
-
-		$email = str_replace(array('first','last','initial','account','dot','underscore','-'),
-			array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
-			$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first-dot-last').
-			($domain ? '@'.$domain : '');
-		//echo " = '$email'</p>\n";
-		return $email;
+		return Api\Accounts::email($first, $last, $account, $domain);
 	}
 
 	/**

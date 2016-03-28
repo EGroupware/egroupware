@@ -5,12 +5,13 @@
  * @link http://www.egroupware.org
  * @package mail
  * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013-2014 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2013-2016 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Mail;
 
 /**
  * Mail User Interface
@@ -73,9 +74,9 @@ class mail_ui
 	static $nm_index = 'nm';
 
 	/**
-	 * instance of mail_bo
+	 * instance of Mail
 	 *
-	 * @var mail_bo
+	 * @var Mail
 	 */
 	var $mail_bo;
 
@@ -122,7 +123,7 @@ class mail_ui
 		$this->mail_tree = new mail_tree($this);
 		if (!$run_constructor) return;
 
-		if (mail_bo::$debugTimes) $starttime = microtime (true);
+		if (Mail::$debugTimes) $starttime = microtime (true);
 		// no autohide of the sidebox, as we use it for folderlist now.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
@@ -133,13 +134,13 @@ class mail_ui
 		if ($_GET["resetConnection"])
 		{
 			unset($_GET["resetConnection"]);
-			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Connection Reset triggered: for Profile with ID:'.self::$icServerID);
-			emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
+			if (Mail::$debug) error_log(__METHOD__.__LINE__.' Connection Reset triggered: for Profile with ID:'.self::$icServerID);
+			Mail::unsetCachedObjects(self::$icServerID);
 		}
 
 		try {
-			$this->mail_bo = mail_bo::getInstance(true,self::$icServerID, true, false, true);
-			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+			$this->mail_bo = Mail::getInstance(true,self::$icServerID, true, false, true);
+			if (Mail::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 
 			// RegEx to minimize extra openConnection
@@ -156,7 +157,7 @@ class mail_ui
 			// redirect to mail wizard to handle it (redirect works for ajax too)
 			self::callWizard($e->getMessage(),true,'error');
 		}
-		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
+		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
 
 	/**
@@ -215,16 +216,16 @@ class mail_ui
 	 */
 	function changeProfile($_icServerID,$unsetCache=false)
 	{
-		if (mail_bo::$debugTimes) $starttime = microtime (true);
+		if (Mail::$debugTimes) $starttime = microtime (true);
 		if (self::$icServerID != $_icServerID)
 		{
 			self::$icServerID = $_icServerID;
 		}
-		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
+		if (Mail::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
 
-		if ($unsetCache) emailadmin_imapbase::unsetCachedObjects(self::$icServerID);
-		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID,true, false, true);
-		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+		if ($unsetCache) Mail::unsetCachedObjects(self::$icServerID);
+		$this->Mail = Mail::getInstance(false,self::$icServerID,true, false, true);
+		if (Mail::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID)
 		{
@@ -236,12 +237,12 @@ class mail_ui
 		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
 		if ($oldicServerID <> self::$icServerID) $this->mail_bo->openConnection(self::$icServerID);
 		$oldicServerID = self::$icServerID;
-		if (!emailadmin_imapbase::storeActiveProfileIDToPref($this->mail_bo->icServer, self::$icServerID, true ))
+		if (!Mail::storeActiveProfileIDToPref($this->mail_bo->icServer, self::$icServerID, true ))
 		{
 			throw new egw_exception(__METHOD__." failed to change Profile to $_icServerID");
 		}
 
-		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
+		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
 
 	/**
@@ -407,7 +408,7 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		try	{
 				//error_log(__METHOD__.__LINE__.function_backtrace());
-				if (mail_bo::$debugTimes) $starttime = microtime (true);
+				if (Mail::$debugTimes) $starttime = microtime (true);
 				$this->mail_bo->restoreSessionData();
 				$sessionFolder = $this->mail_bo->sessionData['mailbox'];
 				if ($this->mail_bo->folderExists($sessionFolder))
@@ -521,12 +522,12 @@ class mail_ui
 
 				$content[self::$nm_index]['foldertree'] = $content[self::$nm_index]['selectedFolder'];
 
-				if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+				if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
 				{
-					emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-					if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+					Mail::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE, 'email', 'supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+					if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
 				}
-				if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])
+				if (!Mail::$supportsORinQuery[$this->mail_bo->profileID])
 				{
 					unset($this->searchTypes['quick']);
 					unset($this->searchTypes['quickwithcc']);
@@ -740,10 +741,10 @@ class mail_ui
 				//we use the category "filter" option as specifier where we want to search (quick, subject, from, to, etc. ....)
 				if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search']))
 				{
-					$content[self::$nm_index]['cat_id']=($content[self::$nm_index]['cat_id']?(!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]&&($content[self::$nm_index]['cat_id']=='quick'||$content[self::$nm_index]['cat_id']=='quickwithcc')?'subject':$content[self::$nm_index]['cat_id']):(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject'));
+					$content[self::$nm_index]['cat_id']=($content[self::$nm_index]['cat_id']?(!Mail::$supportsORinQuery[$this->mail_bo->profileID]&&($content[self::$nm_index]['cat_id']=='quick'||$content[self::$nm_index]['cat_id']=='quickwithcc')?'subject':$content[self::$nm_index]['cat_id']):(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject'));
 				}
 				$readonlys = $preserv = array();
-				if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
+				if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		}
 		catch (Exception $e)
 		{
@@ -764,7 +765,7 @@ class mail_ui
 	 */
 	public function ajax_foldersubscription($_acc_id,$_folderName, $_status)
 	{
-		//Change the mail_bo object to related profileId
+		//Change the Mail object to related profileId
 		$this->changeProfile($_acc_id);
 
 		if($this->mail_bo->icServer->subscribeMailbox($_folderName, $_status))
@@ -859,7 +860,7 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.' ProfileId:'.$this->mail_bo->profileID." StoredFolders->(".count($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]).") ".array2string($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]));
 		if (is_null($accArray))
 		{
-			foreach(emailadmin_account::search($only_current_user=true, false) as $acc_id => $accountObj)
+			foreach(Mail\Account::search($only_current_user=true, false) as $acc_id => $accountObj)
 			{
 				//error_log(__METHOD__.__LINE__.array2string($accountObj));
 				if (!$accountObj->is_imap())
@@ -867,7 +868,7 @@ class mail_ui
 					// not to be used for IMAP Foldertree, as there is no Imap host
 					continue;
 				}
-				$identity_name = emailadmin_account::identity_name($accountObj,true,$GLOBALS['egw_info']['user']['acount_id']);
+				$identity_name = Mail\Account::identity_name($accountObj,true,$GLOBALS['egw_info']['user']['acount_id']);
 				$accArray[$acc_id] = str_replace(array('<','>'),array('[',']'),$identity_name);// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
 			}
 		}
@@ -1284,8 +1285,8 @@ class mail_ui
 		}
 
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
-		//mail_bo::$debugTimes=true;
-		if (mail_bo::$debugTimes) $starttime = microtime(true);
+		//Mail::$debugTimes=true;
+		if (Mail::$debugTimes) $starttime = microtime(true);
 		//$query['search'] is the phrase in the searchbox
 
 		$mail_ui->mail_bo->restoreSessionData();
@@ -1323,19 +1324,19 @@ class mail_ui
 		$sort = ($query['order']=='address'?($toSchema?'toaddress':'fromaddress'):$query['order']);
 		if (!empty($query['search']))
 		{
-			if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]))
+			if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]))
 			{
-				emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-				if (!isset(emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]))
+				Mail::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+				if (!isset(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]))
 				{
-					emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]=true;
+					Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]=true;
 				}
 			}
 			//$cutoffdate = egw_time::to('now','ts')-(3600*24*3);//SINCE, enddate
 			//$cutoffdate2 = egw_time::to('now','ts');//-(3600*24*2);//BEFORE, startdate
 			$filter = array(
-				'filterName' => (emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
-				'type' => ($query['cat_id']?$query['cat_id']:(emailadmin_imapbase::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
+				'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
+				'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
 				'string' => $query['search'],
 				'status' => 'any',
 				//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
@@ -1472,7 +1473,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$rows = $mail_ui->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 
-		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows'],__METHOD__.__LINE__);
+		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows'],__METHOD__.__LINE__);
 		return $rowsFetched['messages'];
 	}
 
@@ -1596,7 +1597,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 */
 	public function header2gridelements($_headers, $cols, $_folderName, $_folderType=0)
 	{
-		if (mail_bo::$debugTimes) $starttime = microtime(true);
+		if (Mail::$debugTimes) $starttime = microtime(true);
 		$rv = array();
 		$i=0;
 		foreach((array)$_headers as $header)
@@ -1747,7 +1748,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (in_array("toaddress", $cols))
 			{
 				// sent or drafts or template folder means foldertype > 0, use to address instead of from
-				$data["toaddress"] = $header['to_address'];//mail_bo::htmlentities($header['to_address'],$this->charset);
+				$data["toaddress"] = $header['to_address'];//Mail::htmlentities($header['to_address'],$this->charset);
 			}
 
 			if (in_array("additionaltoaddress", $cols))
@@ -1802,7 +1803,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($data));
 		}
-		if (mail_bo::$debugTimes) mail_bo::logRunTimes($starttime,null,'Folder:'.$_folderName,__METHOD__.__LINE__);
+		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'Folder:'.$_folderName,__METHOD__.__LINE__);
 
 		// ToDo: call this ONLY if labels change
 		etemplate_widget::setElementAttribute('toolbar', 'actions', $this->get_toolbar_actions());
@@ -1956,7 +1957,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$headers['DATE'] = (is_array($envelope)&&$envelope['DATE']?$envelope['DATE']:'');
 		}
-		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
+		$content['mail_displaydate'] = Mail::_strtotime($headers['DATE'],'ts',true);
 		$content['mail_displaysubject'] = $subject;
 		$linkData = array('menuaction'=>"mail.mail_ui.loadEmailBody","_messageID"=>$rowID);
 		if (!empty($partID)) $linkData['_partID']=$partID;
@@ -2047,7 +2048,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$mailbox = $hA['folder'];
 				$acc_id = $hA['profileID'];
 
-				$attachmentHTML[$key]['mime_data'] = egw_link::set_data($value['mimeType'], 'emailadmin_imapbase::getAttachmentAccount', array(
+				$attachmentHTML[$key]['mime_data'] = egw_link::set_data($value['mimeType'], 'Mail::getAttachmentAccount', array(
 					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'], true
 				));
 				$attachmentHTML[$key]['size']=egw_vfs::hsize($value['size']);
@@ -2256,8 +2257,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$quotaPercent=round(($_usage*100)/$_limit);
 		}
 
-		$quotaLimit=mail_bo::show_readable_size($_limit*1024);
-		$quotaUsage=mail_bo::show_readable_size($_usage*1024);
+		$quotaLimit=Mail::show_readable_size($_limit*1024);
+		$quotaUsage=Mail::show_readable_size($_usage*1024);
 
 
 		if($quotaPercent > 90 && $_limit>0) {
@@ -2460,7 +2461,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (!$display)
 		{
 			$headers = Horde_Mime_Headers::parseHeaders($message);
-			$subject = str_replace('$$','__',mail_bo::decode_header($headers['SUBJECT']));
+			$subject = str_replace('$$','__',Mail::decode_header($headers['SUBJECT']));
 			html::safe_content_header($message, $subject.".eml", $mime='message/rfc822', $size=0, true, true);
 			echo $message;
 		}
@@ -2525,7 +2526,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if ($succeeded)
 			{
 				unset($headers['SUBJECT']);//already in filename
-				$infoSection = mail_bo::createHeaderInfoSection($headers, 'SUPPRESS', false);
+				$infoSection = Mail::createHeaderInfoSection($headers, 'SUPPRESS', false);
 				$props = array(array('name' => 'comment','val' => $infoSection));
 				egw_vfs::proppatch($file,$props);
 			}
@@ -2900,10 +2901,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			//error_log(__METHOD__.__LINE__.array2string($singleBodyPart));
 			if($singleBodyPart['mimeType'] == 'text/plain')
 			{
-				$newBody	= @htmlentities($singleBodyPart['body'],ENT_QUOTES, strtoupper(mail_bo::$displayCharset));
+				$newBody	= @htmlentities($singleBodyPart['body'],ENT_QUOTES, strtoupper(Mail::$displayCharset));
 				//error_log(__METHOD__.__LINE__.'..'.$newBody);
 				// if empty and charset is utf8 try sanitizing the string in question
-				if (empty($newBody) && strtolower($singleBodyPart['charSet'])=='utf-8') $newBody = @htmlentities(iconv('utf-8', 'utf-8', $singleBodyPart['body']),ENT_QUOTES, strtoupper(mail_bo::$displayCharset));
+				if (empty($newBody) && strtolower($singleBodyPart['charSet'])=='utf-8') $newBody = @htmlentities(iconv('utf-8', 'utf-8', $singleBodyPart['body']),ENT_QUOTES, strtoupper(Mail::$displayCharset));
 				// if the conversion to htmlentities fails somehow, try without specifying the charset, which defaults to iso-
 				if (empty($newBody)) $newBody    = htmlentities($singleBodyPart['body'],ENT_QUOTES);
 
@@ -2917,7 +2918,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				// redirect links for websites if you use no cookies
 				#if (!($GLOBALS['egw_info']['server']['usecookies']))
 				#	$newBody = preg_replace("/href=(\"|\')((http(s?):\/\/)|(www\.))([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\(,\),\*,#,:,~,\+]+)(\"|\')/ie",
-				#		"'href=\"$webserverURL/redirect.php?go='.@htmlentities(urlencode('http$4://$5$6'),ENT_QUOTES,\"mail_bo::$displayCharset\").'\"'", $newBody);
+				#		"'href=\"$webserverURL/redirect.php?go='.@htmlentities(urlencode('http$4://$5$6'),ENT_QUOTES,\"Mail::$displayCharset\").'\"'", $newBody);
 
 				// create links for email addresses
 				//TODO:if ($modifyURI) $this->parseEmail($newBody);
@@ -2933,7 +2934,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				// since we do not display the message as HTML anymore we may want to insert good linebreaking (for visibility).
 				//error_log(__METHOD__.__LINE__.'..'.$newBody);
 				// dont break lines that start with > (&gt; as the text was processed with htmlentities before)
-				$newBody	= "<pre>".mail_bo::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
+				$newBody	= "<pre>".Mail::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
 			}
 			else
 			{
@@ -2944,7 +2945,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if ($useTidy && extension_loaded('tidy'))
 				{
 					$tidy = new tidy();
-					$cleaned = $tidy->repairString($newBody, mail_bo::$tidy_config,'utf8');
+					$cleaned = $tidy->repairString($newBody, Mail::$tidy_config,'utf8');
 					// Found errors. Strip it all so there's some output
 					if($tidy->getStatus() == 2)
 					{
@@ -2978,26 +2979,26 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					// the next line should not be needed, but produces better results on HTML 2 Text conversion,
 					// as we switched off HTMLaweds tidy functionality
 					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
-					$newBody = $htmLawed->run($newBody,mail_bo::$htmLawed_config);
+					$newBody = $htmLawed->run($newBody,Mail::$htmLawed_config);
 					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
 					$alreadyHtmlLawed=true;
 				}
 				// do the cleanup, set for the use of purifier
 				//$newBodyBuff = $newBody;
-				/* if (!$alreadyHtmlLawed)*/ mail_bo::getCleanHTML($newBody);
+				/* if (!$alreadyHtmlLawed)*/ Mail::getCleanHTML($newBody);
 /*
 				// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
-				if (strtoupper(mail_bo::$displayCharset) == 'UTF-8')
+				if (strtoupper(Mail::$displayCharset) == 'UTF-8')
 				{
 					$test = @json_encode($newBody);
 					//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
 					if (($test=="null" || $test === false || is_null($test)) && strlen($newBody)>0)
 					{
 						$newBody = $newBodyBuff;
-						$tv = mail_bo::$htmLawed_config['tidy'];
-						mail_bo::$htmLawed_config['tidy'] = 0;
-						mail_bo::getCleanHTML($newBody);
-						mail_bo::$htmLawed_config['tidy'] = $tv;
+						$tv = Mail::$htmLawed_config['tidy'];
+						Mail::$htmLawed_config['tidy'] = 0;
+						Mail::getCleanHTML($newBody);
+						Mail::$htmLawed_config['tidy'] = $tv;
 					}
 				}
 */
@@ -3123,7 +3124,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					{
 						if ($_type !="background")
 						{
-							$bo = emailadmin_imapbase::getInstance(false, mail_ui::$icServerID);
+							$bo = Mail::getInstance(false, mail_ui::$icServerID);
 							$attachment = $bo->getAttachmentByCID($_uid, $CID, $_partID);
 
 							// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
@@ -3208,7 +3209,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$this->changeProfile($icServerID);
 			}
 			//error_log(__METHOD__.__LINE__.self::$delimiter.array2string($destination));
-			$importID = mail_bo::getRandomString();
+			$importID = Mail::getRandomString();
 			$importFailed = false;
 			try
 			{
@@ -3257,7 +3258,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
 		try
 		{
-			$tmpFileName = mail_bo::checkFileBasics($_formData,$importID);
+			$tmpFileName = Mail::checkFileBasics($_formData,$importID);
 		}
 		catch (egw_exception_wrong_userinput $e)
 		{
@@ -3351,7 +3352,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (empty($formData)) if (isset($_REQUEST['formData'])) $formData = $_REQUEST['formData'];
 		//error_log(__METHOD__.__LINE__.':'.array2string($formData).' Mode:'.$mode.'->'.function_backtrace());
 		$draftFolder = $this->mail_bo->getDraftFolder(false);
-		$importID = mail_bo::getRandomString();
+		$importID = Mail::getRandomString();
 
 		// handling for mime-data hash
 		if (!empty($formData['data']))
@@ -3416,7 +3417,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (!$_messageID && !empty($_GET['_messageID'])) $_messageID = $_GET['_messageID'];
 		if (!$_partID && !empty($_GET['_partID'])) $_partID = $_GET['_partID'];
 		if (!$_htmloptions && !empty($_GET['_htmloptions'])) $_htmloptions = $_GET['_htmloptions'];
-		if(mail_bo::$debug) error_log(__METHOD__."->".print_r($_messageID,true).",$_partID,$_htmloptions");
+		if(Mail::$debug) error_log(__METHOD__."->".print_r($_messageID,true).",$_partID,$_htmloptions");
 		if (empty($_messageID)) return "";
 		$uidA = self::splitRowID($_messageID);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
@@ -3460,7 +3461,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					if ($folderName)
 					{
 						$fS = $this->mail_bo->getFolderStatus($folderName,false,false,false);
-						if (in_array($fS['shortDisplayName'],mail_bo::$autoFolders)) $fS['shortDisplayName']=lang($fS['shortDisplayName']);
+						if (in_array($fS['shortDisplayName'],Mail::$autoFolders)) $fS['shortDisplayName']=lang($fS['shortDisplayName']);
 						//error_log(__METHOD__.__LINE__.array2string($fS));
 						if ($fS['unseen'])
 						{
@@ -3600,7 +3601,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 */
 	function ajax_renameFolder($_folderName, $_newName)
 	{
-		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
+		if (Mail::$debug) error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
 		if ($_folderName)
 		{
 			translation::add_app('mail');
@@ -3829,7 +3830,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 */
 	function ajax_MoveFolder($_folderName, $_target)
 	{
-		if (mail_bo::$debug) error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
+		if (Mail::$debug) error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
 		if ($_folderName)
 		{
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
@@ -4124,8 +4125,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			// Create mail app object
 			$mail = new mail_ui();
 
-			if (empty($icServerID)) $icServerID = $mail->mail_bo->profileID;
-			if ($icServerID != $mail->mail_bo->profileID) return;
+			if (empty($icServerID)) $icServerID = $mail->Mail->profileID;
+			if ($icServerID != $mail->Mail->profileID) return;
 
 			$vacation = $mail->gatherVacation($cachedVacations);
 		}
@@ -4159,12 +4160,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		//error_log(__METHOD__.__LINE__.array2string($icServerId));
 		if (empty($icServerID)) $icServerID = $this->mail_bo->profileID;
-		if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+		if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
 		{
-			emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-			if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+			Mail::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+			if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
 		}
-		if (!emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])
+		if (!Mail::$supportsORinQuery[$this->mail_bo->profileID])
 		{
 			unset($this->searchTypes['quick']);
 			unset($this->searchTypes['quickwithcc']);
@@ -4385,7 +4386,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 */
 	function ajax_sendMDN($_messageList)
 	{
-		if(mail_bo::$debug) error_log(__METHOD__."->".array2string($_messageList));
+		if(Mail::$debug) error_log(__METHOD__."->".array2string($_messageList));
 		$uidA = self::splitRowID($_messageList['msg'][0]);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$this->mail_bo->sendMDN($uidA['msgUID'],$folder);
@@ -4402,7 +4403,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 */
 	function ajax_flagMessages($_flag, $_messageList, $_sendJsonResponse=true)
 	{
-		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.array2string($_messageList));
+		if(Mail::$debug) error_log(__METHOD__."->".$_flag.':'.array2string($_messageList));
 		translation::add_app('mail');
 		$alreadyFlagged=false;
 		$flag2check='';
@@ -4420,12 +4421,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					if (!empty($query['search']) || !empty($query['filter']))
 					{
 						//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
-						if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+						if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
 						{
-							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+							Mail::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+							if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
-						$filter = $filter2toggle = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
+						$filter = $filter2toggle = array('filterName' => (Mail::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
 					}
 					else
 					{
@@ -4469,13 +4470,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						if (count($messageListForToggle)>0)
 						{
 							$flag2set = (strtolower($_flag));
-							if(mail_bo::$debug) error_log(__METHOD__.__LINE__." toggle un$_flag -> $flag2set ".array2string($filter2toggle).array2string($messageListForToggle));
+							if(Mail::$debug) error_log(__METHOD__.__LINE__." toggle un$_flag -> $flag2set ".array2string($filter2toggle).array2string($messageListForToggle));
 							$this->mail_bo->flagMessages($flag2set, $messageListForToggle,$folder);
 						}
 						if (count($messageList)>0)
 						{
 							$flag2set = 'un'.$_flag;
-							if(mail_bo::$debug) error_log(__METHOD__.__LINE__." $_flag -> $flag2set ".array2string($filter).array2string($messageList));
+							if(Mail::$debug) error_log(__METHOD__.__LINE__." $_flag -> $flag2set ".array2string($filter).array2string($messageList));
 							$this->mail_bo->flagMessages($flag2set, $messageList,$folder);
 						}
 						$alreadyFlagged=true;
@@ -4491,7 +4492,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							// since we toggle and we toggle by the filtered flag we must must change _flag
 							$_flag = ($query['filter']=='unseen' && $_flag=='read' ? 'read' : ($query['filter']=='seen'&& $_flag=='read'?'unread':($_flag==$query['filter']?'un'.$_flag:$_flag)));
 						}
-						if(mail_bo::$debug) error_log(__METHOD__.__LINE__." flag all with $_flag on filter used:".array2string($filter));
+						if(Mail::$debug) error_log(__METHOD__.__LINE__." flag all with $_flag on filter used:".array2string($filter));
 						$_sR = $this->mail_bo->getSortedList(
 							$folder,
 							$sort=0,
@@ -4506,7 +4507,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					}
 					else
 					{
-						if(mail_bo::$debug) error_log(__METHOD__.__LINE__." $_flag all ".array2string($filter));
+						if(Mail::$debug) error_log(__METHOD__.__LINE__." $_flag all ".array2string($filter));
 						$alreadyFlagged=true;
 						$uidA = self::splitRowID($_messageList['msg'][0]);
 						$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
@@ -4526,13 +4527,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$hA = self::splitRowID($rowID);
 					$messageList[] = $hA['msgUID'];
 				}
-				if(mail_bo::$debug) error_log(__METHOD__.__LINE__." $_flag in $folder:".array2string(((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList)));
+				if(Mail::$debug) error_log(__METHOD__.__LINE__." $_flag in $folder:".array2string(((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList)));
 				$this->mail_bo->flagMessages($_flag, ((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList),$folder);
 			}
 		}
 		else
 		{
-			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
+			if(Mail::$debug) error_log(__METHOD__."-> No messages selected.");
 		}
 
 		if ($_sendJsonResponse)
@@ -4569,7 +4570,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 */
 	function ajax_deleteMessages($_messageList,$_forceDeleteMethod=null)
 	{
-		if(mail_bo::$debug) error_log(__METHOD__."->".print_r($_messageList,true).' Method:'.$_forceDeleteMethod);
+		if(Mail::$debug) error_log(__METHOD__."->".print_r($_messageList,true).' Method:'.$_forceDeleteMethod);
 		$error = null;
 		$filtered =  false;
 		if ($_messageList=='all' || !empty($_messageList['msg']))
@@ -4585,13 +4586,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					if (!empty($query['search']) || !empty($query['filter']))
 					{
 						//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
-						if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+						if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
 						{
-							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+							Mail::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+							if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
 						$filtered =  true;
-						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
+						$filter = array('filterName' => (Mail::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
 					}
 					else
 					{
@@ -4657,7 +4658,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		else
 		{
-			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
+			if(Mail::$debug) error_log(__METHOD__."-> No messages selected.");
 		}
 	}
 
@@ -4672,7 +4673,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 */
 	function ajax_copyMessages($_folderName, $_messageList, $_copyOrMove='copy')
 	{
-		if(mail_bo::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove);
+		if(Mail::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove);
 		translation::add_app('mail');
 		$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 		// only copy or move are supported as method
@@ -4711,13 +4712,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					if (!empty($query['search']) || !empty($query['filter']))
 					{
 						//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
-						if (is_null(emailadmin_imapbase::$supportsORinQuery) || !isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]))
+						if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
 						{
-							emailadmin_imapbase::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-							if (!isset(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID])) emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]=true;
+							Mail::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+							if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
 						$filtered = true;
-						$filter = array('filterName' => (emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(emailadmin_imapbase::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
+						$filter = array('filterName' => (Mail::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
 					}
 					else
 					{
@@ -4827,7 +4828,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		else
 		{
-			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
+			if(Mail::$debug) error_log(__METHOD__."-> No messages selected.");
 		}
 	}
 

@@ -385,3 +385,9 @@ you must enter an application name.	admin	tr	Bir uygulama adý girmelisiniz
 you must enter an application title.	admin	tr	Bir uygulama baþlýðý girmelisiniz
 you must select a file type	admin	tr	Bir dosya tipi seçmelisiniz
 you will need to remove the subcategories before you can delete this category	admin	tr	Bir kategoriyi silmeden önce o kategoriye ait tüm alt kategorileri kaldýrmalýsýnýz !
+default	emailadmin	tr	Varsayýlan
+event details follow	emailadmin	tr	Etkinlik Detaylarý Ektedir
+mail settings	admin	tr	Mail ayarlarý
+order	emailadmin	tr	Sýralama
+remove	emailadmin	tr	Kaldýr
+standard	emailadmin	tr	standart
