@@ -30,8 +30,6 @@ $appname = $_GET['app'] && $GLOBALS['egw_info']['apps'][$_GET['app']] ? $_GET['a
 $cats = new categories('', $appname);
 $categories = $cats->return_array('all',0, false, '', 'ASC','',$appname==categories::GLOBAL_APPNAME);
 
-error_log('categories='.array2string($categories));
-
 $content = "/* Category CSS for $appname */\n\n";
 
 foreach($categories as $cat)
