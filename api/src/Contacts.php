@@ -18,9 +18,6 @@ namespace EGroupware\Api;
 
 use calendar_bo;	// to_do: do NOT require it, just use if there
 
-// explicitly import old, not yet ported api classes
-use preferences;
-
 /**
  * Business object for contacts
  */
@@ -352,7 +349,7 @@ class Contacts extends Contacts\Storage
 		}
 		else
 		{
-			$prefs_obj = new preferences($user);
+			$prefs_obj = new Preferences($user);
 			$preferences = $prefs_obj->read_repository();
 			$grants = $this->get_grants($user, 'addressbook', $preferences);
 		}
