@@ -288,7 +288,7 @@ class categories
 		if (!($this->total_records = count($cats)))
 		{
 			//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,$globals,parent=$parent_id,$lastmod,$column) account_id=$this->account_id, appname=$this->app_name = FALSE");
-			return false;
+			return array();
 		}
 		if (!$sort) $sort = 'ASC';
 		// order the entries if necessary (cache is already ordered in or default order: cat_main, cat_level, cat_name ASC)
