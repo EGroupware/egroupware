@@ -334,7 +334,7 @@ class Account implements \ArrayAccess
 		// store account-information of managed mail server
 		if ($user > 0 && $data['acc_smtp_type'] && $data['acc_smtp_type'] != __NAMESPACE__.'\\Smtp')
 		{
-			$smtp = self::_smtp($data);
+			$smtp = $this->smtpServer($data);
 			$smtp->setUserData($user, (array)$data['mailAlternateAddress'], (array)$data['mailForwardingAddress'],
 				$data['deliveryMode'], $data['accountStatus'], $data['mailLocalAddress'], $data['quotaLimit']);
 		}
@@ -1136,10 +1136,12 @@ class Account implements \ArrayAccess
 
 		// remove redundant namespace to fit into column
 		$ns_len = strlen(__NAMESPACE__)+1;
+		$backup = array();
 		foreach(array('acc_smtp_type', 'acc_imap_type') as $attr)
 		{
 			if (substr($data[$attr], 0, $ns_len) == __NAMESPACE__.'\\')
 			{
+				$backup[$attr] = $data[$attr];
 				$data[$attr] = substr($data[$attr], $ns_len);
 			}
 		}
@@ -1164,6 +1166,9 @@ class Account implements \ArrayAccess
 		{
 			$data['acc_id'] = self::$db->get_last_insert_id(self::TABLE, 'acc_id');
 		}
+		// restore namespace in class-names
+		if ($backup) $data = array_merge($data, $backup);
+
 		// store identity
 		$new_ident_id = self::save_identity($data);
 		if (!($data['ident_id'] > 0))
