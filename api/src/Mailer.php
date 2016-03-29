@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware API: Sending mail via PHPMailer
+ * EGroupware API: Sending mail via Horde_Mime_Mail
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -16,6 +16,7 @@ use Horde_Mime_Mail;
 use Horde_Mime_Part;
 use Horde_Mail_Rfc822_List;
 use Horde_Mail_Exception;
+use Horde_Mail_Transport;
 use Horde_Mail_Transport_Null;
 use Horde_Mime_Headers_MessageId;
 use Horde_Text_Flowed;
@@ -24,13 +25,10 @@ use Horde_Stream_Wrapper_Combine;
 use Horde_Mime_Headers;
 
 /**
+ * Sending mail via Horde_Mime_Mail
+ *
  * Log mails to log file specified in $GLOBALS['egw_info']['server']['log_mail']
  * or regular error_log for true (can be set either in DB or header.inc.php).
- *
- * New egw_mailer object uses Horde Mime Mail class with compatibility methods for
- * old PHPMailer methods and class variable assignments.
- *
- * This class does NOT use anything EGroupware specific, it acts like PHPMail, but logs.
  */
 class Mailer extends Horde_Mime_Mail
 {
@@ -476,11 +474,20 @@ class Mailer extends Horde_Mime_Mail
 	 * Log mails to log file specified in $GLOBALS['egw_info']['server']['log_mail']
 	 * or regular error_log for true (can be set either in DB or header.inc.php).
 	 *
+     * @param Horde_Mail_Transport $transport =null using transport from mail-account
+	 *		specified in construct, or default one, if not specified
+     * @param boolean $resend =true allways true in EGroupware!
+     * @param boolean $flowed =null send message in flowed text format,
+	 *		default null used flowed by default for everything but multipart/encrypted,
+	 *		unless disabled in site configuration ("disable_rfc3676_flowed")
+	 *
 	 * @throws Exception\NotFound for no smtp account available
 	 * @throws Horde_Mime_Exception
 	 */
-	function send()
+	function send(Horde_Mail_Transport $transport=null, $resend=true, $flowed=null)
 	{
+		unset($resend);	// parameter is not used, but required by function signature
+
 		if (!($message_id = $this->getHeader('Message-ID')) &&
 			class_exists('Horde_Mime_Headers_MessageId'))	// since 2.5.0
 		{
@@ -524,7 +531,7 @@ class Mailer extends Horde_Mime_Mail
 
 		try {
 			// no flowed for encrypted messages
-			$flowed = $this->_body && $this->_body->getType() != 'multipart/encrypted';
+			if (!isset($flowed)) $flowed = $this->_body && $this->_body->getType() != 'multipart/encrypted';
 
 			// check if flowed is disabled in mail site configuration
 			if (($config = config::read('mail')) && $config['disable_rfc3676_flowed'])
@@ -560,7 +567,7 @@ class Mailer extends Horde_Mime_Mail
 				$this->_body = $body;
 				$flowed = false;
 			}
-			parent::send($this->account->smtpTransport(), true,	$flowed);	// true: keep Message-ID
+			parent::send($transport ? $transport : $this->account->smtpTransport(), true,	$flowed);	// true: keep Message-ID
 		}
 		catch (\Exception $e) {
 			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
