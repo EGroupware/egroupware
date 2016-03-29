@@ -4196,7 +4196,7 @@ class Mail
 		// purify got switched to htmLawed
 		// some testcode to test purifying / htmlawed
 		//$_html = "<BLOCKQUOTE>hi <div> there </div> kram <br> </blockquote>".$_html;
-		$_html = html::purify($_html,self::$htmLawed_config,array(),true);
+		$_html = Html\HtmLawed::purify($_html,self::$htmLawed_config,array(),true);
 		//if ($hasOther) $_html = $matches[1]. $_html. $matches[3];
 		// clean out comments , should not be needed as purify should do the job.
 		$search = array(

@@ -212,13 +212,13 @@ class CkEditorConfig
 		{
 			//Get the skin name
 			$skin = $GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'];
-			//error_log(__METHOD__.__LINE__.' UserAgent:'.html::$user_agent);
+			//error_log(__METHOD__.__LINE__.' UserAgent:'.EGroupware\Api\Header\UserAgent::type());
 			//Convert old fckeditor skin names to new ones
 			switch ($skin)
 			{
 				case 'kama':
 					$skin = "kama";
-					//if (html::$user_agent=='firefox' || html::$user_agent=='msie') $skin='moonocolor';
+					//if (EGroupware\Api\Header\UserAgent::type()=='firefox' || EGroupware\Api\Header\UserAgent::type()=='msie') $skin='moonocolor';
 					break;
 				case 'silver':
 				case 'moono-dark':

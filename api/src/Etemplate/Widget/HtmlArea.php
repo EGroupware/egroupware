@@ -75,7 +75,7 @@ class HtmlArea extends Etemplate\Widget
 			// only purify for html, mode "ascii" is NO html and content get lost!
 			if ($this->attrs['mode'] != 'ascii')
 			{
-				$value = Api\Html::purify($value, $this->attrs['validation_rules']);
+				$value = Api\Html\HtmLawed::purify($value, $this->attrs['validation_rules']);
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			if (true) $valid = $value;

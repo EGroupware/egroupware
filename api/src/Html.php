@@ -665,7 +665,6 @@ egw_LAB.wait(function() {
 	 */
 	static function link($_url,$vars='')
 	{
-		//echo "<p>html::link(url='$url',vars='"; print_r($vars); echo "')</p>\n";
 		if (!is_array($vars))
 		{
 			parse_str($vars,$vars);
@@ -779,7 +778,7 @@ egw_LAB.wait(function() {
 				continue;					// parameter
 			}
 			// get the current part from the optional 'h' or 'f' prefix of the key
-			$p = $key[0] == 'h' ? html::THEAD : ($key[0] == 'f' ? html::TFOOT : html::TBODY);
+			$p = $key[0] == 'h' ? self::THEAD : ($key[0] == 'f' ? self::TFOOT : self::TBODY);
 			if ($part < $p && ($part || $p < self::TBODY))	// add only allowed and neccessary transitions
 			{
 				if ($part) $html .= '</'.self::$part2tag[$part].">\n";
@@ -977,7 +976,7 @@ egw_LAB.wait(function() {
 		{
 			$url = self::link($url,$vars);
 		}
-		//echo "<p>html::a_href('".self::htmlspecialchars($content)."','$url',".print_r($vars,True).") = ".self::link($url,$vars)."</p>";
+		//echo "<p>self::a_href('".self::htmlspecialchars($content)."','$url',".print_r($vars,True).") = ".self::link($url,$vars)."</p>";
 		return '<a href="'.self::htmlspecialchars($url).'" '.$options.'>'.$content.'</a>';
 	}
 
