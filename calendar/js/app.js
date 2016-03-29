@@ -1852,9 +1852,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			switch(state.state.view)
 			{
 				case 'day':
-				case 'day4':
 					grid_count = 1
 					break;
+				case 'day4':
 				case 'week':
 					grid_count = state.state.owner.length >= parseInt(this.egw.preference('week_consolidate','calendar')) ? 1 : state.state.owner.length;
 					break;
@@ -1879,7 +1879,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				var date = new Date(state.state.first);
 
 				// Hide all but the first day header
-				$j(grid.getDOMNode()).toggleClass('hideDayColHeader',state.state.view == 'week');
+				$j(grid.getDOMNode()).toggleClass(
+					'hideDayColHeader',
+					state.state.view == 'week' || state.state.view == 'day4'
+				);
 
 				// Determine the different end date & varying values
 				switch(state.state.view)
