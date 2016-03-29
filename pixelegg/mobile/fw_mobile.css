@@ -57,7 +57,7 @@
  * @version: 1
  * Stefan Reinhardt
  */
-/*@import (less) "../../etemplate/templates/default/etemplate2.css";*/
+/*@import (less) "../../api/templates/default/etemplate2.css";*/
 @media all {
   /**
  * Top level
@@ -1026,7 +1026,6 @@
     direction: ltr;
   }
   .et2_toolbar_more {
-    position: relative;
     float: right;
     direction: rtl;
     margin-top: 2px;

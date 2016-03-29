@@ -2023,6 +2023,7 @@ div.ui-toolbar-menulist{
 	border-radius: 0 !important;
 	width: 100% !important;
 	white-space: nowrap;
+	display: block;
 }
 .ui-toolbar-menulist > div{
 	margin: 0 !important;
@@ -2040,7 +2041,6 @@ div.ui-toolbar-menulist{
 	direction: ltr;
 }
 .et2_toolbar_more{
-	position: relative;
 	float:right;
 	direction: rtl;
 	padding-bottom: 3px;
