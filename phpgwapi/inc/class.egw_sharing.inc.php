@@ -441,7 +441,7 @@ class egw_sharing
 			if ($mode == 'link')
 			{
 				$user_tmp = '/home/'.$GLOBALS['egw_info']['user']['account_lid'].'/.tmp';
-				if (!egw_vfs::file_exists($user_tmp) && !egw_vfs::mkdir($user_tmp))
+				if (!egw_vfs::file_exists($user_tmp) && !egw_vfs::mkdir($user_tmp, null, STREAM_MKDIR_RECURSIVE))
 				{
 					throw new egw_exception_assertion_failed("Could NOT create temp. directory '$user_tmp'!");
 				}
@@ -449,7 +449,7 @@ class egw_sharing
 				do {
 					$tmp_file = egw_vfs::concat($user_tmp, ($n?$n.'.':'').egw_vfs::basename($name));
 				}
-				while(!(is_dir($path) && egw_vfs::mkdir($tmp_file) ||
+				while(!(is_dir($path) && egw_vfs::mkdir($tmp_file, null, STREAM_MKDIR_RECURSIVE) ||
 					!is_dir($path) && (!egw_vfs::file_exists($tmp_file) && ($fp = egw_vfs::fopen($tmp_file, 'x')) ||
 						// do not copy identical files again to users tmp dir, just re-use them
 						egw_vfs::file_exists($tmp_file) && egw_vfs::compare(egw_vfs::PREFIX.$tmp_file, $path))) && $n++ < 100);

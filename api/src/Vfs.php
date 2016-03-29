@@ -1959,8 +1959,11 @@ class Vfs extends Vfs\StreamWrapper
 	 *
 	 * @param array $src contains the source file
 	 * @param string $dst is the destination directory
+	 * @param int& $errs =null on return number of errors happened
+	 * @param array& $copied =null on return files copied
+	 * @return boolean true for no errors, false otherwise
 	 */
-	static public function copy_files(array $src, $dst, &$errs, array &$copied)
+	static public function copy_files(array $src, $dst, &$errs=null, array &$copied=null)
 	{
 		if (self::is_dir($dst))
 		{
