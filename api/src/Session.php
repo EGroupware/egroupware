@@ -22,9 +22,6 @@
 
 namespace EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use egw_mailer;
-
 /**
  * Create, verifies or destroys an EGroupware session
  *
@@ -769,7 +766,7 @@ class Session
 			$GLOBALS['egw_info']['server']['login_blocked_mail_time'] < time()-5*60)	// max. one mail every 5mins
 		{
 			try {
-				$mailer = new egw_mailer();
+				$mailer = new Mailer();
 				// notify admin(s) via email
 				$mailer->setFrom('eGroupWare@'.$GLOBALS['egw_info']['server']['mail_suffix']);
 				$mailer->addHeader('Subject', lang("eGroupWare: login blocked for user '%1', IP %2",$login,$ip));
