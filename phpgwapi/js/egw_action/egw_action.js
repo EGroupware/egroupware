@@ -2161,11 +2161,11 @@ egwActionObject.prototype.getActionImplementationGroups = function(_test, _group
 
 /**
  * Check if user tries to get dragOut action
- * 
+ *
  * keys for dragOut:
  *	-Mac: Command + Shift
  *	-Others: Alt + Shift
- *	
+ *
  * @param {event} _event
  * @return {boolean} return true if Alt+Shift keys and left mouse click arre pressed, otherwise false
  */
@@ -2176,17 +2176,17 @@ egwActionObject.prototype.isDragOut = function (_event)
 
 /**
  * Check if user tries to get selection action
- * 
+ *
  * Keys for selection:
  *	-Mac: Command key
  *	-Others: Ctrl key
- *	
+ *
  * @param {type} _event
- * @returns {Boolean} return true if left mouse click and Ctrl key are pressed, otherwise false
+ * @returns {Boolean} return true if left mouse click and Ctrl/Alt key are pressed, otherwise false
  */
 egwActionObject.prototype.isSelection = function (_event)
 {
-	return !(_event.shiftKey) && _event.which == 1 && (_event.metaKey || _event.ctrlKey);
+	return !(_event.shiftKey) && _event.which == 1 && (_event.metaKey || _event.ctrlKey || _event.altKey);
 };
 
 /** egwActionObjectInterface Interface **/

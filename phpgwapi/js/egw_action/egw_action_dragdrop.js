@@ -342,7 +342,7 @@ function egwDragActionImplementation()
 						return ai.defaultDDHelper(ai.selected);//$j(document.createElement("div")).addClass('et2_egw_action_ddHelper');
 					},
 					"start": function(e) {
-						
+
 						//Stop dragging if user tries to do scrolling by mouse down and drag
 						//Seems this issue is only happening in FF
 						var $target = $j(e.originalEvent.target);
@@ -350,7 +350,7 @@ function egwDragActionImplementation()
 						{
 							return false;
 						}
-						
+
 						return ai.helper != null;
 					},
 					revert: function(valid)
@@ -368,9 +368,14 @@ function egwDragActionImplementation()
 							{
 								var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ?
 									egw.lang("Ctrl") : egw.lang("Command ⌘");
+								// We can not use Ctrl key for FF because FF has specific function
+								// for element selection bound to ctrl key and it would confilicts
+								// with our selection functionallity. Therefore, we use Alt key when
+								// it comes to FF regardless of OS.
+								if (window.navigator.userAgent.match(/firefox/i)) key = egw.lang("Alt");
 								egw.message(egw.lang('Hold [%1] key to select text eg. to copy it', key), 'info');
 							}
-							
+
 							// Invalid target
 							return true;
 						}
@@ -638,10 +643,10 @@ function egwDropActionImplementation()
 							// set of properties.
 							var popup = getPopupImplementation();
 							var pos = popup._getPageXY(event.originalEvent);
-							
+
 							// Don't add paste actions, this is a drop
 							popup.auto_paste = false;
-							
+
 							window.setTimeout(function() {
 								popup.doExecuteImplementation(pos, selected, links,
 									_context);
@@ -651,7 +656,7 @@ function egwDropActionImplementation()
 						}
 						// Set cursor back to auto. Seems FF can't handle cursor reversion
 						$j('body').css({cursor:'auto'});
-						
+
 						_aoi.triggerEvent(EGW_AI_DRAG_OUT,{event: event,ui:ui});
 					},
 					"over": function(event, ui) {
