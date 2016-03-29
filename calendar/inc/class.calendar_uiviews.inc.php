@@ -319,7 +319,7 @@ class calendar_uiviews extends calendar_ui
 			),
 			'planner_category' => array(
 				'caption' => 'Planner by category',
-				'icon'	=> 'planner',
+				'icon'	=> 'planner_category',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Planner by category',
@@ -388,7 +388,20 @@ class calendar_uiviews extends calendar_ui
 				'toolbarDefault' => true,
 			),
 		);
-
+		if (html::$ua_mobile)
+		{
+			foreach (array_keys($actions) as $key)
+			{
+				if (!in_array($key, array('add','weekend','next', 'today','previous'))) {
+					$actions[$key]['toolbarDefault'] = false;
+				}
+				else {
+					$actions[$key]['toolbarDefault'] = true;
+				}
+			}
+			$actions['weekend']['data'] = array('toggle_off' => '7', 'toggle_on' => '5');
+			unset($actions['pgp']);
+		}
 		return $actions;
 	}
 
@@ -1717,7 +1730,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		return '';
 	}
-	
+
 	/**
 	 * Calculates a brighter color for a given color
 	 *

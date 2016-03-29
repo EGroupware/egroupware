@@ -1826,6 +1826,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	vertical-align: top;
 	width:auto;
 	padding-left: 3px;
+	background-image: none;
 }
 .et2_toolbar button, .nextmatch_header_row button, .et2_toolbar div.et2_progress, .nextmatch_header_row div.et2_progress {
 	margin: 1px 4px 1px 0;
