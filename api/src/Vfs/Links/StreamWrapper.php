@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id: class.sqlfs_stream_wrapper.inc.php 24997 2008-03-02 21:44:15Z ralfbecker $
  */
 
@@ -210,7 +210,7 @@ class StreamWrapper extends LinksParent
 	 * @param string $path
 	 * @return array/boolean array with array('path'=>$path,'owner'=>$owner,'rights'=>$rights) or false if $path not found
 	 */
-	function get_eacl($path)
+	static function get_eacl($path)
 	{
 		unset($path);	// not used, but required by function signature
 
