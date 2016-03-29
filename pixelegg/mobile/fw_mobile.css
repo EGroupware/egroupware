@@ -1060,6 +1060,14 @@
     background-size: 20px 20px;
     background-position: center;
   }
+  /*#################################### ET2 SLIDESWITCH #####################################################*/
+  span.et2_checkbox_slideSwitch:hover {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    border: 1px solid gray;
+  }
+  span.et2_checkbox_slideSwitch > span.slideSwitch_container {
+    background-color: #fafafa;
+  }
   /*#################################### ADMIN PART #####################################################*/
   iframe#admin-index_iframe {
     background-color: yellow;
@@ -8062,7 +8070,13 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   body span.et2_checkbox_slideSwitch {
     height: 50px;
+    border: none;
+    padding-right: 10px;
     vertical-align: bottom;
+  }
+  body span.et2_checkbox_slideSwitch:hover {
+    border: none;
+    box-shadow: none;
   }
   body span.et2_checkbox_slideSwitch input {
     height: 100% !important;

@@ -2071,12 +2071,11 @@ span.et2_checkbox_slideSwitch {
 	position: relative;
     display: inline-block;
 	vertical-align: middle;
+	border: 1px solid silver;
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container {
     height: 16px;
-    border: 1px solid silver;
     background-color: #FFF;
-    box-shadow: inset 0 2px 6px rgb(71, 71, 71), 0 1px 0 rgba(255, 255, 255, 0.2);
     margin: 0px;
     min-width: 44px;
     display: block;
@@ -2096,7 +2095,7 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container > span:first-child {
 
 	font-weight: bold;
 	color:#C0C0C0;
-	top: 5px;
+	top: 4px;
 }
 span.et2_checkbox_slideSwitch.switchOn > span.slideSwitch_container > span:first-child {
 	color:#FAFAFA;
@@ -2117,7 +2116,7 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container> span:nth-child(2) {
 	left:50%;
 	font-weight: bold;
 	color:#FAFAFA;
-	top:5px;
+	top:4px;
 }
 span.et2_checkbox_slideSwitch > span.slideSwitch_container a {
 	position: absolute;
@@ -2133,7 +2132,6 @@ span.et2_checkbox_slideSwitch > span.slideSwitch_container a {
     -webkit-transition: all 0.5s ease-out;
     -moz-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
-    box-shadow: grey -1px 0px 3px 0px;
 }
 span.et2_checkbox_slideSwitch > input {
 	opacity: 0;
