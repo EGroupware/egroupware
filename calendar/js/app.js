@@ -2126,7 +2126,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					state.state.enddate = state.state.enddate.toJSON();
 				}
 				state.state.col_filter = {participant: state.state.owner};
-				state.state.search = state.state.keywords;
+				state.state.search = state.state.keywords ? state.state.keywords : state.state.search;
 
 
 				var nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
@@ -3229,6 +3229,11 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				// Avoid unwanted refresh immediately after load
 				nm.controller._grid.doInvalidate = false;
 
+				// Preserve pre-set search
+				if(nm.activeFilters.search)
+				{
+					this.state.keywords = nm.activeFilters.search;
+				}
 				nm.set_startdate = jQuery.proxy(function(date) {
 					this.state.first = this.date.toString(new Date(date));
 				},this);
