@@ -555,9 +555,10 @@ class calendar_ui
 		}
 		$sidebox = new etemplate_new('calendar.sidebox');
 
-		$content = $this->cal_prefs['saved_states'];
-		$content['view'] = $this->view ? $this->view : 'week';
-		$content['date'] = $this->date ? $this->date : egw_time();
+		$cont = $this->cal_prefs['saved_states'];
+		if (!is_array($cont)) $cont = array();
+		$cont['view'] = $this->view ? $this->view : 'week';
+		$cont['date'] = $this->date ? $this->date : egw_time();
 
 		$readonlys = array();
 		$sel_options['status_filter'] = array(
@@ -590,7 +591,7 @@ class calendar_ui
 		}
 
 		// Sidebox?
-		$sidebox->exec('calendar.calendar_ui.sidebox_etemplate', $content, $sel_options, $readonlys);
+		$sidebox->exec('calendar.calendar_ui.sidebox_etemplate', $cont, $sel_options, $readonlys);
 	}
 
 	/**
