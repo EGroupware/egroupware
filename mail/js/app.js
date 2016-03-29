@@ -225,8 +225,6 @@ app.classes.mail = AppJS.extend(
 				{
 					this.mailvelopeAvailable(this.mailvelopeCompose);
 				}
- 				// use a wrapper on a different url to be able to use a different fpm pool
-				et2.menuaction = 'mail_compose::ajax_send';
 				var that = this;
 				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 				this.mail_isMainWindow = false;
@@ -857,10 +855,10 @@ app.classes.mail = AppJS.extend(
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = jQuery.extend(dataElem, egw.dataGetUIDdata(_id));
-			
+
 			// Try to resolve winmail.data attachment
 			if (dataElem.data && dataElem.data.attachmentsBlock[0]
-					&& dataElem.data.attachmentsBlock[0].winmailFlag 
+					&& dataElem.data.attachmentsBlock[0].winmailFlag
 					&& (dataElem.data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
 					dataElem.data.attachmentsBlock[0].filename == "winmail.dat"))
 			{
@@ -870,11 +868,11 @@ app.classes.mail = AppJS.extend(
 					if (typeof _data == 'object')
 					{
 						attachmentArea.set_value({content:_data});
-						
+
 						this.data.attachmentsBlock = _data;
 						// Update client cache to avoid resolving winmail.dat attachment again
 						egw.dataStoreUID(this.data.uid, this.data);
-						
+
 						set_prev_iframe_top();
 					}
 					else
@@ -3211,7 +3209,7 @@ app.classes.mail = AppJS.extend(
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var src_label = _senders[0].id.replace(/^[0-9]+::/,'');
 		var dest_label = destination.id.replace(/^[0-9]+::/,'');
-		
+
 		var callback = function (_button)
 		{
 			if (_button == et2_dialog.YES_BUTTON)
@@ -5156,10 +5154,10 @@ app.classes.mail = AppJS.extend(
 		et2_dialog.show_dialog(callbackDialog, this.egw.lang('Are you sure you want to delete all selected folders?'), this.egw.lang('Delete folder'), {},
 			et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	},
-	
+
 	/**
 	 * Implement mobile view
-	 * 
+	 *
 	 * @param {type} _action
 	 * @param {type} _sender
 	 */
@@ -5167,7 +5165,7 @@ app.classes.mail = AppJS.extend(
 	{
 		// row id in nm
 		var id = _sender[0].id;
-		
+
 		var defaultActions= {
 			actions:['delete', 'forward','reply','flagged'], // default actions to display
 			check:function(_action){
@@ -5178,10 +5176,10 @@ app.classes.mail = AppJS.extend(
 				return false;
 			}
 		};
-		
+
 		var content = {};
 		var self = this;
-		
+
 		if (id){
 			content = egw.dataGetUIDdata(id);
 			content.data['toolbar'] = this.et2.getArrayMgr('sel_options').getEntry('toolbar');
@@ -5193,7 +5191,7 @@ app.classes.mail = AppJS.extend(
 			// update local storage with added toolbar actions
 			egw.dataStoreUID(id,content.data);
 		}
-		
+
 		this.viewEntry(_action, _sender, true, function(etemplate){
 			// et2 object in view
 			var et2 = etemplate.widgetContainer;
@@ -5207,10 +5205,10 @@ app.classes.mail = AppJS.extend(
 			var $details = jQuery('.et2_details.details');
 			// Content
 			var content = et2.getArrayMgr('content').data;
-			
+
 			// set the current selected row
 			et2.mail_currentlyFocussed = id;
-			
+
 			if (content.attachmentsBlock.length>0 && content.attachmentsBlock[0].filename)
 			{
 				$attachment.text(content.attachmentsBlock.length+' '+ egw.lang('attachments'));
@@ -5222,9 +5220,9 @@ app.classes.mail = AppJS.extend(
 			}
 			// disable the detials if there's no details
 			if (!content.ccaddress) $details.hide();
-			
+
 			toolbar.set_actions(content.toolbar);
-			
+
 			// Request email body from server
 			iframe.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:id}));
 			jQuery(iframe.getDOMNode()).on('load',function(){

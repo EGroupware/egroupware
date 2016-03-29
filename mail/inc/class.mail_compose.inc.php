@@ -812,6 +812,7 @@ class mail_compose
 
 				if ($_REQUEST['preset']['mailtocontactbyid']) {
 					if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
+						$contacts_obj = new Api\Contacts();
 						$addressbookprefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
 						if (method_exists($contacts_obj,'search')) {
 
@@ -2613,11 +2614,13 @@ class mail_compose
 	 */
 	static function resolveEmailAddressList($_emailAddressList)
 	{
+		$contacts_obs = null;
 		$addrFromList=array();
 		foreach((array)$_emailAddressList as $ak => $address)
 		{
 			if(is_int($address))
 			{
+				if (!isset($contacts_obs)) $contacts_obj = new Api\Contacts();
 				// List was selected, expand to addresses
 				unset($_emailAddressList[$ak]);
 				$list = $contacts_obj->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'','','',False,'AND',false,array('list' =>(int)$address));
@@ -3495,21 +3498,5 @@ class mail_compose
 		{
 			$response->error(implode(',',$results['failed']));
 		}
-	}
-
-	/**
-	 * Wrapper for Api\Etemplate::ajax_process_content to be able to identify send request to select different fpm pool
-	 *
-	 * @param string $etemplate_exec_id
-	 * @param array $content
-	 * @param boolean $no_validation
-	 * @throws egw_exception_wrong_parameter
-	 */
-	static public function ajax_send($etemplate_exec_id, array $content, $no_validation)
-	{
-		// setting menuaction is required as it triggers different behavior eg. in egw_framework::window_close()
-		$_GET['menuaction'] = 'Api\Etemplate::ajax_process_content';
-
-		return Api\Etemplate::ajax_process_content($etemplate_exec_id, $content, $no_validation);
 	}
 }
