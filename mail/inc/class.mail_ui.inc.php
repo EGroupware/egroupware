@@ -224,7 +224,7 @@ class mail_ui
 		if (Mail::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
 
 		if ($unsetCache) Mail::unsetCachedObjects(self::$icServerID);
-		$this->Mail = Mail::getInstance(false,self::$icServerID,true, false, true);
+		$this->mail_bo = Mail::getInstance(false,self::$icServerID,true, false, true);
 		if (Mail::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID)
