@@ -311,10 +311,7 @@ app.classes.mail = AppJS.extend(
 				// we need to set mail_currentlyFocused var otherwise mail
 				// defined actions won't work
 				this.mail_currentlyFocussed = this.et2.mail_currentlyFocussed;
-				// a replacement for is_popup to distinguishe whether
-				// the view should be considered like popup and it does indicate
-				// we are in view mode
-				this.mail_viewMode = true;
+
 		}
 	},
 
@@ -1585,9 +1582,9 @@ app.classes.mail = AppJS.extend(
 		{
 			egw(window).close();
 		}
-		else if (this.mail_viewMode)
+		else if (typeof this.et2_view!='undefined' && typeof this.et2_view.close == 'function')
 		{
-			this.close();
+			this.et2_view.close();
 		}
 	},
 
@@ -2091,7 +2088,7 @@ app.classes.mail = AppJS.extend(
 			data = {
 				msg: [this.et2.getArrayMgr("content").getEntry('mail_id')] || '',
 				all: _allMessagesChecked || false,
-				popup: this.mail_viewMode || egw(window).is_popup() || false,
+				popup: typeof this.et2_view!='undefined' || egw(window).is_popup() || false,
 				activeFilters: _action.id == 'readall'? false : this.mail_getActiveFilters(_action)
 			},
 			rowClass = _action.id;
@@ -2115,7 +2112,7 @@ app.classes.mail = AppJS.extend(
 				rowClass = 'seen';
 				if (data.popup)
 				{
-					var et_2 = this.mail_viewMode? etemplate2:opener.etemplate2;
+					var et_2 = typeof this.et2_view!='undefined'? etemplate2:opener.etemplate2;
 					tree = et_2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 				}
 				else

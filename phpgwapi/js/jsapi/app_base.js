@@ -418,7 +418,6 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			delete self.viewTemplate;
 			delete self.viewContainer;
 			delete self.et2_view;
-			this.destroy(app);
 			// we need to reference back into parent context this
 			for (var v in self)
 			{
@@ -482,7 +481,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 
 		// define a global close function for view template
 		// in order to be able to destroy view on action
-		app[this.appname]['close'] = destroy;
+		this.et2_view.close = destroy;
 	},
 
 	/**
