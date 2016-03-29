@@ -813,7 +813,7 @@ class mail_compose
 				if ($_REQUEST['preset']['mailtocontactbyid']) {
 					if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 						$addressbookprefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
-						if (method_exists($GLOBALS['egw']->contacts,'search')) {
+						if (method_exists($contacts_obj,'search')) {
 
 							$addressArray = explode(',',$_REQUEST['preset']['mailtocontactbyid']);
 							foreach ((array)$addressArray as $id => $addressID)
@@ -831,13 +831,13 @@ class mail_compose
 								if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
 								$filter = ($showAccounts?array():array('account_id' => null));
 								$filter['cols_to_search']=array('n_fn','email','email_home');
-								$contacts = $GLOBALS['egw']->contacts->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
+								$contacts = $contacts_obj->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
 								// additionally search the accounts, if the contact storage is not the account storage
 								if ($showAccounts &&
 									$GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
 									$GLOBALS['egw_info']['server']['contact_repository'] == 'sql')
 								{
-									$accounts = $GLOBALS['egw']->contacts->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
+									$accounts = $contacts_obj->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
 
 									if ($contacts && $accounts)
 									{
@@ -2620,7 +2620,7 @@ class mail_compose
 			{
 				// List was selected, expand to addresses
 				unset($_emailAddressList[$ak]);
-				$list = $GLOBALS['egw']->contacts->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'','','',False,'AND',false,array('list' =>(int)$address));
+				$list = $contacts_obj->search('',array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'','','',False,'AND',false,array('list' =>(int)$address));
 				// Just add email addresses, they'll be checked below
 				foreach($list as $email)
 				{
@@ -3322,6 +3322,7 @@ class mail_compose
 		$_searchString = trim($_REQUEST['query']);
 		$include_lists = (boolean)$_REQUEST['include_lists'];
 
+		$contacts_obj = new Api\Contacts();
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook'] && strlen($_searchString)>=$_searchStringLength)
 		{
 			//error_log(__METHOD__.__LINE__.array2string($_searchString));
@@ -3336,12 +3337,12 @@ class mail_compose
 			$filter = $showAccounts ? array() : array('account_id' => null);
 			$filter['cols_to_search'] = array('n_prefix','n_given','n_family','org_name','email','email_home');
 			$cols = array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home');
-			$contacts = $GLOBALS['egw']->contacts->search($search_str, $cols, 'n_fn', '', '%', false, 'OR', array(0,100), $filter);
+			$contacts = $contacts_obj->search($search_str, $cols, 'n_fn', '', '%', false, 'OR', array(0,100), $filter);
 			// additionally search the accounts, if the contact storage is not the account storage
-			if ($showAccounts && $GLOBALS['egw']->contacts->so_accounts)
+			if ($showAccounts && $contacts_obj->so_accounts)
 			{
 				$filter['owner'] = 0;
-				$accounts = $GLOBALS['egw']->contacts->search($search_str, $cols, 'n_fn', '', '%', false,'OR', array(0,100), $filter);
+				$accounts = $contacts_obj->search($search_str, $cols, 'n_fn', '', '%', false,'OR', array(0,100), $filter);
 
 				if ($contacts && $accounts)
 				{
@@ -3372,7 +3373,7 @@ class mail_compose
 					}
 					$email = $_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 
-					if (method_exists($GLOBALS['egw']->contacts,'search'))
+					if (method_exists($contacts_obj,'search'))
 					{
 						$contact['n_fn']='';
 						if (!empty($contact['n_prefix'])) $contact['n_fn'] = $contact['n_prefix'];
@@ -3423,7 +3424,7 @@ class mail_compose
 		if($include_lists)
 		{
 			$lists = array_filter(
-				$GLOBALS['egw']->contacts->get_lists(EGW_ACL_READ),
+				$contacts_obj->get_lists(EGW_ACL_READ),
 				function($element) use($_searchString) {
 					return (stripos($element, $_searchString) !== false);
 				}
