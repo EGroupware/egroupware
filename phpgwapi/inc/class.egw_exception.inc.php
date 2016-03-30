@@ -37,27 +37,6 @@ class egw_exception extends Api\Exception {}
 class egw_exception_no_permission extends Api\Exception {}
 
 /**
- * User lacks the right to run an application
- *
- * @deprecated use Api\Exception\NoPermission\App
- */
-class egw_exception_no_permission_app extends Api\Exception\NoPermission\App {}
-
-/**
- * User is no eGroupWare admin (no right to run the admin application)
- *
- * @deprecated use Api\Exception\NoPermission\Admin
- */
-class egw_exception_no_permission_admin extends Api\Exception\NoPermission\Admin {}
-
-/**
- * User lacks a record level permission, eg. he's not the owner and has no grant from the owner
- *
- * @deprecated use Api\Exception\NoPermission\Record
- */
-class egw_exception_no_permission_record extends Api\Exception\NoPermission\Record {}
-
-/**
  * A record or application entry was not found for the given id
  *
  * @deprecated use Api\Exception\NotFound
