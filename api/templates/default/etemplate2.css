@@ -1799,6 +1799,9 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .long_task .message {
 	height: inherit;
 }
+div.ui-dialog div.ui-dialog-content > div {
+	width: 100%;
+}
 /**
 * et2_toolbar
 */
