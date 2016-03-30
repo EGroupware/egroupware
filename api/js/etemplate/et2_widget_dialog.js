@@ -155,6 +155,24 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			"description": "Instead of displaying a simple message, a full template can be loaded instead.  Set defaults with value.",
 			"type": "string",
 			"default": et2_no_init
+		},
+		minWidth: {
+			name: "minimum width",
+			type: "integer",
+			description: "Define minimum width of dialog",
+			"default": 0
+		},
+		minHeight: {
+			name: "minimum height",
+			type: "integer",
+			description: "Define minimum height of dialog",
+			"default": 0
+		},
+		width: {
+			name: "width",
+			type: "string",
+			description: "Define width of dialog, the default is auto",
+			"default": 'auto'
 		}
 	},
 
@@ -455,7 +473,9 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			buttons: this.options.buttons,
 			modal: this.options.modal,
 			resizable: this.options.resizable,
-			width: "auto",
+			width: this.options.width,
+			minWidth: this.options.minWidth,
+			minHeight:this.options.minHeight,
 			maxWidth: 640,
 			title: this.options.title,
 			open: function() {
