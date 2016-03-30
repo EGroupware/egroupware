@@ -3269,6 +3269,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		}
 		if(all_loaded)
 		{
+			$j(window).trigger('resize');
 			this.setState({state:this.state});
 		}
 	},
