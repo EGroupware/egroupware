@@ -7173,6 +7173,14 @@ form[id^="tracker-"] .dialogHeadbar {
     /*************** SLIDESWITCH **********/
     /***************************************/
   }
+  body button[id*="save"]:hover,
+  body button[id*="apply"]:hover,
+  body button[id*="copy"]:hover,
+  body button[id*="edit_button[edit]"]:hover,
+  body button.et2_button:hover {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  }
   body span.egw_fw_mobile_popup_close.loaded {
     background-image: url(../images/topmenu_items/mobile/back.svg);
     -webkit-filter: brightness(0) invert(1) !important;
