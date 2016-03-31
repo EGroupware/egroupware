@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55492 2016-03-22 15:09:39Z nathangray $ */
+/* $Id: app.css 55586 2016-03-31 21:55:47Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -38,7 +38,7 @@
     page-break-inside: avoid;
   }
   .calendar_calTimeGrid .calendar_calTimeGridScroll {
-    overflow-y: hidden;
+    overflow-y: hidden !important;
   }
   /* Let hidden user names be visible */
   #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > ul {
@@ -292,13 +292,16 @@ Hide subsequent headers in week view with non-consolidated owners
 #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader .calendar_calDayColHeader > div[data-date] {
   display: none;
 }
-#calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > ul > li {
+#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > ul > li {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-#calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > ul > li:hover {
+#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > ul:hover {
   overflow: visible;
+  width: auto;
+  background-color: inherit;
+  z-index: 100;
 }
 /* single row in the time-line you dont need to set a bgcolor, but you can
  */

@@ -1403,6 +1403,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 		if(typeof _owner == 'string' && isNaN(_owner))
 		{
+			this.set_label('');
 			switch(_owner[0])
 			{
 				case 'c':

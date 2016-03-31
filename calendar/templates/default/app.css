@@ -283,13 +283,16 @@ Hide subsequent headers in week view with non-consolidated owners
 #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader .calendar_calDayColHeader > div[data-date] {
 	display:none;
 }
-#calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader  > ul > li {
+#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader  > ul > li {
 	white-space:nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
-#calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader  > ul > li:hover {
+#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader  > ul:hover {
 	overflow: visible;
+    width: auto;
+	background-color: inherit;
+    z-index: 100;
 }
 
 /* single row in the time-line you dont need to set a bgcolor, but you can
