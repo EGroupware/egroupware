@@ -2873,8 +2873,10 @@ var et2_nextmatch_header = (function(){ "use strict"; return et2_baseWidget.exte
 		this.label = _value;
 
 		this.labelNode.text(_value);
+		
+		// add class if label is empty
+		this.labelNode.toggleClass('et2_label_empty', !_value);
 	}
-
 });}).call(this);
 et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
 

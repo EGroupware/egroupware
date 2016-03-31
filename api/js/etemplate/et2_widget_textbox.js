@@ -354,6 +354,9 @@ var et2_textbox_ro = (function(){ "use strict"; return et2_valueWidget.extend([e
 		this.span.prepend(parts[0]);
 		this.span.append(parts[1]);
 		this.label = label;
+
+		// add class if label is empty
+		this.span.toggleClass('et2_label_empty', !label || !parts[0]);
 	},
 	set_value: function(_value)
 	{

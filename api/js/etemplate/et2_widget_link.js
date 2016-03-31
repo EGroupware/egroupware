@@ -1118,6 +1118,9 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		this.label_span.prepend(parts[0]);
 		this.label_span.append(parts[1]);
 		this.label = label;
+
+		// add class if label is empty
+		this.label_span.toggleClass('et2_label_empty', !label || !parts[0]);
 	},
 	set_value: function(_value) {
 		if(typeof _value != 'object' && _value && !this.options.only_app)

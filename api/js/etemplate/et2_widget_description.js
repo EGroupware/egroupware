@@ -182,6 +182,9 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 					this._labelContainer.append(ph);
 				}
 			}
+
+			// add class if label is empty
+			this._labelContainer.toggleClass('et2_label_empty', !_value || !parts[0]);
 		}
 		else
 		{

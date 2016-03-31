@@ -151,7 +151,7 @@ div.et2_hbox > div {
 label.et2_label > * {
 	margin-left: 5px !important;
 }
-label.et2_label > input[type="checkbox"], label.et2_label.et2_label_empty > * {
+label.et2_label.et2_label_empty > * {
 	margin-left: 0 !important;
 }
 #msg,
