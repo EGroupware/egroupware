@@ -7166,6 +7166,18 @@ form[id^="tracker-"] .dialogHeadbar {
     -o-filter: brightness(20%);
     filter: brightness(20%);
   }
+  body .ui-dialog .ui-dialog-buttonpane button {
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
+    padding-left: 0px !important;
+    width: 50px;
+  }
+  body .ui-dialog .ui-dialog-buttonpane button span {
+    display: none;
+  }
 }
 /*mobile etemplate2*/
 @media all {
@@ -7382,6 +7394,16 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   body .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
     float: right;
+  }
+  body .ui-dialog .ui-dialog-buttonpane button {
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
+  }
+  body .ui-dialog .ui-dialog-buttonpane button span {
+    padding-left: 20px;
   }
   body .ui-dialog-titlebar {
     display: none;
