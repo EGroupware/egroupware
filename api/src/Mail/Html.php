@@ -230,7 +230,7 @@ class Html
 			$isHTML = false;
 			// return $_html; // maybe we should not proceed at all
 		}
-		if ($displayCharset === false) $displayCharset = self::$system_charset;
+		if ($displayCharset === false) $displayCharset = Api\Translation::charset();
 		//error_log(__METHOD__.$_html);
 		#print '<hr>';
 		#print "<pre>"; print htmlspecialchars($_html);
