@@ -54,7 +54,6 @@
   button,
   select {
     margin: 1px;
-    padding: 0px;
     /*-webkit-appearance: none;*/
   }
   /**
@@ -2670,7 +2669,6 @@ input {
     &:focus{.Complete_Button_input_focus;}*/
 }
 select {
-  padding: 3px;
   margin: 0;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -2725,7 +2723,9 @@ input,
 button {
   color: #000000;
   /*font-size:99%;*/
-  padding: 2px 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-right: 0;
   border-width: 1px;
   border-style: solid;
   border-color: #e6e6e6;
@@ -2897,17 +2897,16 @@ div#popupMainDiv > * {
 form.et2_container {
   padding: 0;
 }
-form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget select {
+form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget select,
+form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
   height: 20px;
-  padding: 0;
-  margin: 0px;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
   font-size: 0.95em;
 }
 form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
-  height: 20px;
-  padding: 0;
-  margin: 4px 4px 4px 5px;
-  font-size: 0.95em;
+  margin: 4px 5px 4px 0;
   -webkit-border-top-right-radius: 3px;
   -webkit-border-bottom-right-radius: 3px;
   -webkit-border-bottom-left-radius: 3px;
@@ -3192,6 +3191,9 @@ div#etemplate\.tab_widget {
 }
 .dialogFooterToolbar td {
   padding: 0px 5px 0px 0px;
+}
+.dialogFooterToolbar td:first-child {
+  padding-left: 5px;
 }
 .dialogFooterToolbar button {
   height: 24px;

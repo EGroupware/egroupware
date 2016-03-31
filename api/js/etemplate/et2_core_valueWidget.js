@@ -108,6 +108,9 @@ var et2_valueWidget = (function(){ "use strict"; return et2_baseWidget.extend(
 					this._labelContainer.append(ph);
 				}
 			}
+
+			// add class if label is empty
+			this._labelContainer.toggleClass('et2_label_empty', !_value || !parts[0]);
 		}
 		else
 		{

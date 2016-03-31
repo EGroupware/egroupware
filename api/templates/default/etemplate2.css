@@ -51,11 +51,11 @@ div.et2_hbox {
 div.et2_hbox > * {
   text-align: left;
   white-space: normal;
-  padding-right: 5px;
+  margin-right: 5px;
   display: inline-block;
 }
 div.et2_hbox > *:empty {
-  padding-right: 0;
+  margin-right: 0;
 }
 div.et2_hbox_left {
   float: left;
@@ -148,6 +148,12 @@ div.et2_hbox > div {
   color: #101050;
   white-space: pre-wrap;
 }
+label.et2_label > * {
+	margin-left: 5px !important;
+}
+label.et2_label > input[type="checkbox"], label.et2_label.et2_label_empty > * {
+	margin-left: 0 !important;
+}
 #msg,
 .message {
   color: red;
@@ -204,6 +210,7 @@ input[type=button] {
 	background-position: center;
 	background-repeat: repeat-x;
 	margin: 5px;
+	margin-left: 0;
 	padding: 3px;
 	border: 1px solid silver;
 	color: #101010;
@@ -392,11 +399,8 @@ ul.et2_selectbox {
   display: inline-block;
 }
 /* padding between selectbox/textbox and it's label */
-label.et2_label > .et2_selectbox, label.et2_label > .et2_textbox, label.et2_label > .et2_textbox_ro {
+input, select {
 	padding-left: 5px;
-}
-label.et2_label_empty > .et2_textbox_ro{
-	padding-left: 0;
 }
 .et2_selectbox li {
   text-decoration: none;

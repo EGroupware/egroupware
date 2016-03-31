@@ -1104,6 +1104,9 @@ var et2_date_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_
 		this._labelContainer.prepend(parts[0]);
 		this._labelContainer.append(parts[1]);
 		this.label = label;
+
+		// add class if label is empty
+		this._labelContainer.toggleClass('et2_label_empty', !label || !parts[0]);
 	},
 
 	/**

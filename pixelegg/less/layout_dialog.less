@@ -58,20 +58,17 @@ form.et2_container {
                         td {
                             .et2_box_widget {
 
-                                select{
+                                select, input{
                                     height: 20px;
-                                    padding: 0;
-                                    margin: 0px;
+                                    padding-right: 0;
+									padding-top: 0;
+									padding-bottom: 0;
                                     font-size: 0.95em;
-
                                 }
 
-                               input {
-                                    height: 20px;
-                                    padding: 0;
-                                    margin: 4px 4px 4px 5px;;
-                                    font-size: 0.95em;
-                                    .border_radius (3px, 3px ,3px ,3px );
+							    input {
+                                    margin: 4px 5px 4px 0;
+                                   .border_radius (3px, 3px ,3px ,3px );
                                 }
 
                                 input.hasDatepicker {
@@ -397,7 +394,12 @@ div#etemplate\.tab_widget {
     padding: 3px;
     white-space: nowrap;
 
-    td {padding: 0px 5px 0px 0px;}
+    td {
+		padding: 0px 5px 0px 0px;
+	}
+	td:first-child {
+		padding-left: 5px;
+	}
 
     button {
         .dimension_height_m; min-width: 86px;
@@ -410,8 +412,8 @@ div#etemplate\.tab_widget {
     }
 
     div.et2_hbox {
-    white-space: normal;
-}
+		white-space: normal;
+	}
 
     div.et2_box_widget{white-space: nowrap;}
 

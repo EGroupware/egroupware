@@ -2928,7 +2928,7 @@ form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget select {
 form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
   height: 20px;
   padding: 0;
-  margin: 4px 4px 4px 5px;
+  margin: 4px 5px 4px 0;
   font-size: 0.95em;
   -webkit-border-top-right-radius: 3px;
   -webkit-border-bottom-right-radius: 3px;
