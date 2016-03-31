@@ -1810,7 +1810,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .long_task .message {
 	height: inherit;
 }
-div.ui-dialog div.ui-dialog-content > div {
+div.ui-dialog div.ui-dialog-content > div[id] {
 	width: 100%;
 }
 /**
