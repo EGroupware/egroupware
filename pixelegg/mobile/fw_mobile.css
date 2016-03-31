@@ -7174,6 +7174,7 @@ form[id^="tracker-"] .dialogHeadbar {
     -webkit-overflow-scrolling: touch;
   }
   body {
+    /*Notification popup*/
     /*Chosen*/
     /* View mode styles*/
     /***************CHECKBOX *************/
@@ -7188,6 +7189,59 @@ form[id^="tracker-"] .dialogHeadbar {
   body button.et2_button:hover {
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
+  }
+  body #egwpopup {
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 5px !important;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    border-radius: 0;
+  }
+  body #egwpopup #egwpopup_header {
+    text-align: center;
+    height: 50px;
+    z-index: 1;
+    background-color: #5180AC;
+    line-height: 40px;
+    width: 100%;
+    font-size: 10pt;
+    color: white;
+  }
+  body #egwpopup #egwpopup_header span {
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
+    height: 50px;
+    position: absolute;
+    left: 10px;
+    background-image: url(../images/cancelled.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  body #egwpopup #egwpopup_header span button {
+    width: 50px;
+    height: 50px;
+  }
+  body #egwpopup #egwpopup_header span img {
+    display: none;
+  }
+  body #egwpopup #egwpopup_footer {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    height: 50px;
+  }
+  body #egwpopup #egwpopup_footer input {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
   }
   body span.egw_fw_mobile_popup_close.loaded {
     background-image: url(../images/topmenu_items/mobile/back.svg);
