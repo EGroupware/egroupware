@@ -903,7 +903,7 @@ class Contacts extends Contacts\Storage
 		// Update country codes
 		foreach(array('adr_one_', 'adr_two_') as $c_prefix) {
 			if($contact[$c_prefix.'countryname'] && !$contact[$c_prefix.'countrycode'] &&
-				$code = $GLOBALS['egw']->country->country_code($contact[$c_prefix.'countryname']))
+				$code = Country::country_code($contact[$c_prefix.'countryname']))
 			{
 				if(strlen($code) == 2)
 				{
@@ -1087,10 +1087,10 @@ class Contacts extends Contacts\Storage
 
 			// Update country name from code
 			if($data['adr_one_countrycode'] != null) {
-				$data['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_one_countrycode'], true);
+				$data['adr_one_countryname'] = Country::get_full_name($data['adr_one_countrycode'], true);
 			}
 			if($data['adr_two_countrycode'] != null) {
-				$data['adr_two_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_two_countrycode'], true);
+				$data['adr_two_countryname'] = Country::get_full_name($data['adr_two_countrycode'], true);
 			}
 		}
 		if (isset($cf_backup))
@@ -1961,7 +1961,7 @@ class Contacts extends Contacts\Storage
 	 */
 	function addr_format_by_country($country)
 	{
-		$code = $GLOBALS['egw']->country->country_code($country);
+		$code = Country::country_code($country);
 
 		switch($code)
 		{

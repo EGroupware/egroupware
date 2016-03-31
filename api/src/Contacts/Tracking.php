@@ -166,7 +166,7 @@ class Tracking extends Api\Storage\Tracking
 			{
 				if($data[$code])
 				{
-					$data[$name] = $GLOBALS['egw']->country->get_full_name($data[$code], true);
+					$data[$name] = Api\Country::get_full_name($data[$code], true);
 				}
 				unset($changed_fields[array_search($code, $changed_fields)]);
 			}

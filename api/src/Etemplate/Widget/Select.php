@@ -211,7 +211,7 @@ class Select extends Etemplate\Widget
 					list(,$country_use_name) = explode(',', $legacy_options);
 					if ($country_use_name && $value)
 					{
-						$value = $GLOBALS['egw']->country->get_full_name($value);
+						$value = Api\Country::get_full_name($value);
 					}
 					break;
 
@@ -529,15 +529,15 @@ class Select extends Etemplate\Widget
 				if($type == 0 && $type2)
 				{
 					$custom_label = is_numeric($type2) ? 'Custom' : $type2;
-					$options = array('-custom-' => lang($custom_label)) + $GLOBALS['egw']->country->countries();
+					$options = array('-custom-' => lang($custom_label)) + Api\Country::countries();
 				}
 				else
 				{
-					$options = $GLOBALS['egw']->country->countries();
+					$options = Api\Country::countries();
 				}
 				if ($type && $value)
 				{
-					$value = $GLOBALS['egw']->country->country_code($value);
+					$value = Api\Country::country_code($value);
 					if (!isset($options[$value]))
 					{
 						if($type2)
@@ -550,7 +550,7 @@ class Select extends Etemplate\Widget
 				break;
 
 			case 'select-state':
-				$options = $GLOBALS['egw']->country->us_states();
+				$options = Api\Country::us_states();
 				$no_lang = True;
 				break;
 

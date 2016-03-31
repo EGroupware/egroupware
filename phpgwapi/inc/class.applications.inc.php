@@ -26,11 +26,6 @@ class applications
 	 */
 	var $db;
 	var $table_name = 'egw_applications';
-	/*var $public_functions = array(
-		'list_methods' => True,
-		'read'         => True
-	);*/
-	var $xmlrpc_methods = array();
 
 	/**************************************************************************\
 	* Standard constructor for setting $this->account_id                       *
@@ -53,48 +48,6 @@ class applications
 		}
 
 		$this->account_id = get_account_id($account_id);
-
-		$this->xmlrpc_methods[] = array(
-			'name'        => 'read',
-			'description' => 'Return a list of applications the current user has access to'
-		);
-	}
-
-	function NOT_list_methods($_type='xmlrpc')
-	{
-		/*
-			This handles introspection or discovery by the logged in client,
-			in which case the input might be an array.  The server always calls
-			this function to fill the server dispatch map using a string.
-		*/
-		if (is_array($_type))
-		{
-			$_type = $_type['type'] ? $_type['type'] : $_type[0];
-		}
-		switch($_type)
-		{
-			case 'xmlrpc':
-				$xml_functions = array(
-					'read' => array(
-						'function'  => 'read',
-						'signature' => array(array(xmlrpcStruct)),
-						'docstring' => lang('Returns struct of users application access')
-					),
-					'list_methods' => array(
-						'function'  => 'list_methods',
-						'signature' => array(array(xmlrpcStruct,xmlrpcString)),
-						'docstring' => lang('Read this list of methods.')
-					)
-				);
-				return $xml_functions;
-				break;
-			case 'soap':
-				return $this->soap_functions;
-				break;
-			default:
-				return array();
-				break;
-		}
 	}
 
 	/**************************************************************************\
@@ -194,7 +147,7 @@ class applications
 	 */
 	function save_repository()
 	{
-		$num_rows = $GLOBALS['egw']->acl->delete_repository("%%", 'run', $this->account_id);
+		$GLOBALS['egw']->acl->delete_repository("%%", 'run', $this->account_id);
 		foreach($this->data as $app => $data)
 		{
 			if(!$this->is_system_enabled($app))
@@ -229,7 +182,7 @@ class applications
 		{
 			$this->read_installed_apps();
 		}
-		if ($app_list = $GLOBALS['egw']->acl->get_app_list_for_id('run',1,$this->account_id))
+		if (($app_list = $GLOBALS['egw']->acl->get_app_list_for_id('run',1,$this->account_id)))
 		{
 			foreach($app_list as $app)
 			{

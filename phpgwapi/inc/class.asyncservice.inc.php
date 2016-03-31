@@ -1,6 +1,6 @@
 <?php
 /**
- * API - Timed Asynchron Services for eGroupWare
+ * EGroupware API - Timed Asynchron Services
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -622,7 +622,7 @@ class asyncservice
 				}
 				//echo "<p>$name = '".$this->$name."'</p>\n";
 			}
-			if ($this->php5{0} == '/')	// we found a php5 binary
+			if ($this->php5[0] == '/')	// we found a php5 binary
 			{
 				$this->php = $this->php5;
 			}
