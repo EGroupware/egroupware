@@ -154,6 +154,11 @@ label.et2_label > * {
 label.et2_label.et2_label_empty > * {
 	margin-left: 0 !important;
 }
+/*do not pre-wrap label as it would cause empty space*/
+.et2_vbox > .et2_label.et2_label_empty {
+	white-space: normal;
+}
+
 #msg,
 .message {
   color: red;
