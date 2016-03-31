@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55587 2016-03-31 22:32:13Z nathangray $ */
+/* $Id: app.css 55588 2016-03-31 22:44:00Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -134,6 +134,9 @@
 }
 #calendar-toolbar .egw_fw_ui_app_header_container {
   border: none;
+  display: flex;
+  align-items: center;
+  min-height: 26px;
 }
 /* Space for toolbar */
 #calendar-view,

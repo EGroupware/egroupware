@@ -123,6 +123,9 @@
 }
 #calendar-toolbar .egw_fw_ui_app_header_container {
 	border: none;
+	display:flex;
+	align-items: center;
+	min-height: 26px;
 }
 
 /* Space for toolbar */
