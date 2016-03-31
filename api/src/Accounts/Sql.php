@@ -27,9 +27,6 @@ namespace EGroupware\Api\Accounts;
 
 use EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi of old structure
-use acl;
-
 /**
  * SQL Backend for accounts
  *
@@ -349,11 +346,11 @@ class Sql
 
 		$members = array();
 		foreach($this->db->select($this->table, 'account_id,account_lid',
-			$this->db->expression(acl::TABLE, array(
+			$this->db->expression(Api\Acl::TABLE, array(
 				'acl_appname'  => 'phpgw_group',
 				'acl_location' => $account_id,
 			)), __LINE__, __FILE__, false, '', false, 0,
-			'JOIN '.acl::TABLE.' ON account_id=acl_account'
+			'JOIN '.Api\Acl::TABLE.' ON account_id=acl_account'
 		) as $row)
 		{
 			$members[$row['account_id']] = $row['account_lid'];
