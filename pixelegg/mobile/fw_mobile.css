@@ -76,7 +76,6 @@
   button,
   select {
     margin: 1px;
-    padding: 0px;
     /*-webkit-appearance: none;*/
   }
   /**
@@ -2662,7 +2661,7 @@ div.client_error_log tr td.stack > div {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package phpgwapi
- * @version $Id: layout_content_elements.less 54870 2016-01-28 18:17:40Z hnategh $
+ * @version $Id: layout_content_elements.less 55572 2016-03-31 09:21:55Z ralfbecker $
  */
 /* #######################################################################################
 *
@@ -2692,7 +2691,6 @@ input {
     &:focus{.Complete_Button_input_focus;}*/
 }
 select {
-  padding: 3px;
   margin: 0;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -2747,7 +2745,9 @@ input,
 button {
   color: #000000;
   /*font-size:99%;*/
-  padding: 2px 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-right: 0;
   border-width: 1px;
   border-style: solid;
   border-color: #e6e6e6;
@@ -2900,7 +2900,7 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: layout_dialog.less 53382 2015-08-14 09:49:57Z hnategh $
+ * @version $Id: layout_dialog.less 55572 2016-03-31 09:21:55Z ralfbecker $
  */
 /*body {
     background-color: @gray_0;
@@ -2919,17 +2919,16 @@ div#popupMainDiv > * {
 form.et2_container {
   padding: 0;
 }
-form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget select {
+form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget select,
+form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
   height: 20px;
-  padding: 0;
-  margin: 0px;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
   font-size: 0.95em;
 }
 form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
-  height: 20px;
-  padding: 0;
   margin: 4px 5px 4px 0;
-  font-size: 0.95em;
   -webkit-border-top-right-radius: 3px;
   -webkit-border-bottom-right-radius: 3px;
   -webkit-border-bottom-left-radius: 3px;
@@ -3214,6 +3213,9 @@ div#etemplate\.tab_widget {
 }
 .dialogFooterToolbar td {
   padding: 0px 5px 0px 0px;
+}
+.dialogFooterToolbar td:first-child {
+  padding-left: 5px;
 }
 .dialogFooterToolbar button {
   height: 24px;
@@ -3659,7 +3661,7 @@ td.message span.message {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package pixelegg
- * @version $Id: layout_raster.less 50846 2014-07-24 08:27:05Z pixelegg $
+ * @version $Id: layout_raster.less 55572 2016-03-31 09:21:55Z ralfbecker $
  */
 /* #################################################
  * Basecontainer
@@ -3675,7 +3677,7 @@ td.message span.message {
 }
 .egwGridView_scrollarea {
   width: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 /**

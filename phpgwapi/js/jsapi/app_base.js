@@ -429,20 +429,19 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		// view container
 		this.viewContainer = jQuery(document.createElement('div'))
 				.addClass('et2_mobile_view')
-				.css({"z-index":102,
+				.css({
+					"z-index":102,
 					width:"100%",
 					height:"100%",
 					background:"white",
 					display:'block',
 					position: 'absolute',
-					top:0,
 					left:0,
 					bottom:0,
 					right:0,
-					overflow:'auto',
-					"padding":'60px 0 10px 0'})
+					overflow:'auto'
+				})
 				.attr('id','popupMainDiv')
-				.addClass('popupMainDiv')
 				.appendTo('body');
 
 		// close button
@@ -464,7 +463,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		// view template main container (content)
 		this.viewTemplate = jQuery(document.createElement('div'))
 				.attr('id', this.appname+'-view')
-				.addClass('et2_mobile-view-container')
+				.addClass('et2_mobile-view-container popupMainDiv')
 				.appendTo(this.viewContainer);
 
 		var templateName = _action.data.mobileViewTemplate || 'edit';

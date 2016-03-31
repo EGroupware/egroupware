@@ -131,7 +131,7 @@ function egwPopupActionImplementation()
 		var defaultHandler = function(e) {
 			// Prevent bubbling bound event on <a> tag, on touch devices
 			// a tag should be handled by default event
-			if (egwIsMobile && e.target.tagName == "A")	return true;
+			if (egwIsMobile() && e.target.tagName == "A")	return true;
 
 			if (typeof document.selection != "undefined" && typeof document.selection.empty != "undefined")
 			{

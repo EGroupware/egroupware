@@ -3655,7 +3655,7 @@ td.message span.message {
 }
 .egwGridView_scrollarea {
   width: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 /**
