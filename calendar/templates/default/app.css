@@ -24,7 +24,7 @@
 		page-break-inside: avoid;
 	}
 	.calendar_calTimeGrid .calendar_calTimeGridScroll {
-		overflow-y: hidden;
+		overflow-y: hidden !important;
 	}
 
 	/* Let hidden user names be visible */
