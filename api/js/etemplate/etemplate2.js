@@ -983,7 +983,7 @@ etemplate2.prototype.print = function()
 	var deferred = [];
 
 	// Skip hidden etemplates
-	if(!jQuery(this.DOMContainer).filter(':visible').length) return [];
+	if(jQuery(this.DOMContainer).filter(':visible').length === 0) return [];
 
 	// Allow any widget to change for printing
 	this.widgetContainer.iterateOver(function(_widget) {

@@ -27,7 +27,7 @@
  *
  * @augments et2_calendar_view
  */
-var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
+var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable,et2_IPrint],
 {
 	createNamespace: true,
 
@@ -1868,6 +1868,38 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			day.set_left((day_width * i) + 'px');
 			day.set_width(day_width + 'px');
 		}
-	}
+	},
+
+	/**
+	 * Set up for printing
+	 *
+	 * @return {undefined|Deferred} Return a jQuery Deferred object if not done setting up
+	 *  (waiting for data)
+	 */
+	beforePrint: function() {
+
+		if(this.disabled || !this.div.is(':visible'))
+		{
+			return;
+		}
+		
+		// update day widgets
+		var day_width = (100 / this.day_widgets.length);
+		for(var i = 0; i < this.day_widgets.length; i++)
+		{
+			var day = this.day_widgets[i];
+
+			// Position
+			day.set_left((i*day_width) + '%');
+			day.set_width(day_width + '%');
+			// For some reason the column's method does not set it correctly in Chrome
+			day.header[0].style.width = day_width + '%';
+		}
+	},
+
+	/**
+	 * Reset after printing
+	 */
+	afterPrint: function() {}
 });}).call(this);
 et2_register_widget(et2_calendar_timegrid, ["calendar-timegrid"]);
