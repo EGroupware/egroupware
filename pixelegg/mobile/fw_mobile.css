@@ -6175,8 +6175,27 @@ span.egw_tutorial_title {
   body #egw_fw_basecontainer {
     background: white;
   }
+  body #egw_fw_basecontainer #egw_fw_main {
+    margin-top: 15px;
+  }
   body #egw_fw_basecontainer #egw_fw_main #egw_fw_tabs {
     margin-top: -3px;
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar {
+    width: 300px;
+    position: absolute;
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar .egw_fw_logout {
+    float: right;
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar .egw_fw_logout a#topmenu_logout {
+    background-image: url(../images/logout.png);
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    background-size: 24px 24px;
+    display: inline-block;
+    background-position: center;
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div.egw_fw_ui_tabs_header {
     max-height: 60px;
@@ -6221,6 +6240,7 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     z-index: 999;
     background-position: center;
+    margin-left: 10px;
   }
   body #egw_fw_basecontainer div#egw_fw_menu:hover {
     -webkit-box-shadow: none;
@@ -6258,16 +6278,6 @@ span.egw_tutorial_title {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-  }
-  body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_logout:before {
-    content: "";
-    background-image: url(../images/logout.png);
-    background-repeat: no-repeat;
-    width: 32px;
-    height: 32px;
-    background-size: 24px 24px;
-    display: inline-block;
-    background-position: center;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home:before {
     content: " ";
@@ -6339,13 +6349,10 @@ span.egw_tutorial_title {
     background-position: center;
   }
   body #egw_fw_basecontainer #egw_fw_userinfo {
-    position: absolute;
-    top: 50px;
-    margin-left: 8px;
-    width: 300px;
     height: 50px;
     z-index: 1000;
-    text-align: left;
+    display: inline-block;
+    margin-left: 40%;
   }
   body #egw_fw_basecontainer #egw_fw_userinfo span.avatar {
     display: inline-block;
@@ -6486,7 +6493,7 @@ span.egw_tutorial_title {
     background-color: #b4b4b4;
   }
   body #egw_fw_sidebar {
-    top: 110px;
+    top: 55px;
     bottom: 5px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu {
@@ -6640,6 +6647,7 @@ span.egw_tutorial_title {
     border-style: solid;
     border-width: 0px;
     margin: 0 0 2em 0;
+    background-color: white;
     /*######################*/
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content:nth-last-of-type(-n+3) {
@@ -6784,7 +6792,8 @@ span.egw_tutorial_title {
   body .sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
     background-image: url(../images/topmenu_items/mobile/menu.png);
   }
-  body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_userinfo {
+  body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_userinfo,
+  body .sidebar-toggle #egw_fw_top_toolbar .egw_fw_logout {
     display: none;
   }
   body .sidebar-toggle #egw_fw_sidebar {
@@ -7119,9 +7128,6 @@ form[id^="tracker-"] .dialogHeadbar {
   }
 }
 @media only screen and (max-device-width: 736px) and (min-width: 300px) {
-  body #egw_fw_basecontainer.sidebar-toggle div#egw_fw_top_toolbar {
-    z-index: 0;
-  }
   body #egw_fw_basecontainer.sidebar-toggle #egw_fw_main {
     margin-left: 0 !important ;
   }
@@ -7202,9 +7208,16 @@ form[id^="tracker-"] .dialogHeadbar {
     background-position: 15px center;
     margin-left: 8px;
   }
+  body #egw_fw_basecontainer #egw_fw_main {
+    margin-top: 0px;
+  }
   body #egw_fw_basecontainer .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
     width: 18px;
     height: 18px;
+  }
+  body #egw_fw_basecontainer #egw_fw_top_toolbar {
+    position: absolute;
+    width: 300px;
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar div#egw_fw_topmenu_items {
     padding-top: 8px;

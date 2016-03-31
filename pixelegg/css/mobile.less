@@ -137,6 +137,7 @@
 			background:white;
 
 			#egw_fw_main {
+				margin-top:15px;
 				#egw_fw_tabs {
 					margin-top:-3px;
 				}
@@ -147,6 +148,20 @@
 			//#					#
 			//###################
 			#egw_fw_top_toolbar{
+				width:300px;
+				position:absolute;
+				.egw_fw_logout {
+					float:right;
+					a#topmenu_logout{
+						background-image: url(../images/logout.png);
+						background-repeat: no-repeat;
+						width: 50px;
+						height: 50px;
+						background-size: 24px 24px;
+						display: inline-block;
+						background-position: center;
+					}
+				}
 
 				div.egw_fw_ui_tabs_header{
 					max-height: 60px;
@@ -197,6 +212,7 @@
 				background-repeat: no-repeat;
 				z-index: 999;
 				background-position:center;
+				margin-left:10px;
 				&:hover {
 					-webkit-box-shadow: none;
 					-moz-box-shadow: none;
@@ -233,18 +249,7 @@
 							box-shadow: none;
 						}
 					}
-					a#topmenu_logout{
-						&:before {
-							content: "";
-							background-image: url(../images/logout.png);
-							background-repeat: no-repeat;
-							width: 32px;
-							height: 32px;
-							background-size: 24px 24px;
-							display: inline-block;
-							background-position: center;
-						}
-					}
+
 					a#topmenu_home:before {
 						content: " ";
 						background-image: url(../images/topmenu_items/mobile/home.png);
@@ -325,13 +330,10 @@
 				}
 			}
 			#egw_fw_userinfo {
-				position: absolute;
-				top:50px;
-				margin-left:8px;
-				width:300px;
 				height:50px;
 				z-index:1000;
-				text-align : left;
+				display: inline-block;
+				margin-left:40%;
 				span.avatar {
 					display: inline-block;
 					float:left;
@@ -479,7 +481,7 @@
 		//#					#
 		//###################
 		#egw_fw_sidebar{
-			top: 110px;
+			top: 55px;
 			bottom: 5px;
 			//SIDE AREA
 			#egw_fw_sidemenu {
@@ -577,7 +579,7 @@
 					border-style: solid;
 					border-width: 0px;
 					margin: 0 0 2em 0;
-
+					background-color:white;
 
 					// rounded Corner on bottom
 					&:nth-last-of-type(-n+3)   {
@@ -718,7 +720,7 @@
 			#egw_fw_top_toolbar div#egw_fw_menu{
 				background-image:  url(../images/topmenu_items/mobile/menu.png);
 			}
-			#egw_fw_top_toolbar #egw_fw_userinfo{
+			#egw_fw_top_toolbar #egw_fw_userinfo,#egw_fw_top_toolbar .egw_fw_logout {
 				display: none;
 			}
 			#egw_fw_sidebar{

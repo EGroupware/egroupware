@@ -121,8 +121,18 @@ var fw_ui_sidemenu_entry = (function(){ "use strict"; return Class.extend(
 	open: function()
 	{
 		/* Move this entry to the top of the list */
-		$j(this.baseDiv).prepend(this.contentDiv);
-		$j(this.baseDiv).prepend(this.headerDiv);
+		if (egwIsMobile())
+		{
+			$j(this.baseDiv).append(this.headerDiv);
+			$j(this.baseDiv).append(this.contentDiv);
+
+		}
+		else
+		{
+			$j(this.baseDiv).prepend(this.contentDiv);
+			$j(this.baseDiv).prepend(this.headerDiv);
+		}
+
 		this.atTop = true;
 
 		$j(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header_active");
