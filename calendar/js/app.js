@@ -3023,6 +3023,33 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		var date_widget = this.sidebox_et2.getWidgetById('date');
 		if(date_widget)
 		{
+			// Dynamic resize of sidebox calendar to fill sidebox
+			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
+			var font_ratio = 12 / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
+			var calendar_resize = function() {
+				try {
+					var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
+					percent *= font_ratio;
+					$j('#calendar-sidebox_date .ui-datepicker-inline')
+						.css('font-size',(percent*100)+'%');
+
+					// Position go and today
+					var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a span');
+					if(today.length && go_button.length)
+					{
+						go_button.position({my: 'left+15px center', at: 'right center-1',of: $j('#calendar-sidebox_date .ui-datepicker-year')});
+						today.css({
+							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
+							'top': go_button.css('top')
+						});
+						buttons.position({my: 'center', at: 'center', of: go_button})
+							.css('left', '');
+					}
+				} catch (e){
+					// Resize didn't work
+				}
+			};
+
 			var datepicker = date_widget.input_date.datepicker("option", {
 				showButtonPanel:	false,
 				onChangeMonthYear: function(year, month, inst)
@@ -3039,6 +3066,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						temp_date.setUTCMinutes(temp_date.getUTCMinutes() - temp_date.getTimezoneOffset());
 						go_button.btn.attr('data-date', temp_date.toJSON());
 					}
+					window.setTimeout(calendar_resize,0);
 				},
 				// Mark holidays
 				beforeShowDay: function (date)
@@ -3129,35 +3157,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				go_button.attr('data-date', temp_date.toJSON());
 
 			}
-
-			// Dynamic resize of sidebox calendar to fill sidebox
-			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
-			var font_ratio = 12 / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
-			$j(window).on('resize.calendar'+date_widget.dom_id, function() {
-				try {
-					var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
-					percent *= font_ratio;
-					$j('#calendar-sidebox_date .ui-datepicker-inline')
-						.css('font-size',(percent*100)+'%');
-
-					// Position go and today
-					var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a span');
-					if(today.length && go_button.length)
-					{
-						go_button.position({my: 'left+15px center', at: 'right center-1',of: $j('#calendar-sidebox_date .ui-datepicker-year')});
-						today.css({
-							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
-							'top': go_button.css('top')
-						});
-						buttons.position({my: 'center', at: 'center', of: go_button})
-							.css('left', '');
-					}
-				} catch (e){
-					// Resize didn't work
-				}
-			}).trigger('resize');
-
 		}
+
+		$j(window).on('resize.calendar'+date_widget.dom_id,calendar_resize).trigger('resize');
 
 		// Avoid wrapping owner icons if user has group + search
 		var button = $j('#calendar-sidebox_owner ~ span.et2_clickable');

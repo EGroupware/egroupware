@@ -219,12 +219,12 @@
     border: none;
   }
   .ui-datepicker .ui-datepicker-prev span {
-    background-image: url(../images/back.png) !important;
+    background-image: url(../images/previous.svg) !important;
     background-position: 0px 0px !important;
     background-size: contain;
   }
   .ui-datepicker .ui-datepicker-next span {
-    background-image: url(../images/forward.png) !important;
+    background-image: url(../images/next.svg) !important;
     background-position: 0px 0px !important;
     background-size: contain;
   }

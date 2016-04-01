@@ -141,7 +141,7 @@ form[id^="tracker-"] .dialogHeadbar {
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55588 2016-03-31 22:44:00Z nathangray $ */
+/* $Id: app.css 55589 2016-03-31 22:58:04Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -2654,7 +2654,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar-sidebox_header_go {
   width: 20px;
   height: 20px;
-  background-image: url('../../../pixelegg/images/check.png');
+  background-image: url('../../../pixelegg/images/check.svg');
   text-indent: 140%;
   border: none;
   border-radius: 0px;
@@ -2667,7 +2667,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar-sidebox_header_today {
   width: 20px;
   height: 20px;
-  background-image: url('../../../pixelegg/images/bullet.png');
+  background-image: url('../../../pixelegg/images/bullet.svg');
   text-indent: 140%;
   border: none;
   border-radius: 0px;
