@@ -2048,7 +2048,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$mailbox = $hA['folder'];
 				$acc_id = $hA['profileID'];
 
-				$attachmentHTML[$key]['mime_data'] = egw_link::set_data($value['mimeType'], 'Mail::getAttachmentAccount', array(
+				$attachmentHTML[$key]['mime_data'] = egw_link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount', array(
 					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'], true
 				));
 				$attachmentHTML[$key]['size']=egw_vfs::hsize($value['size']);
