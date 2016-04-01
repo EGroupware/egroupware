@@ -481,6 +481,8 @@ var et2_searchbox = (function(){ "use strict"; return et2_textbox.extend(
 					},0);
 				}
 			}},this);
+		// Autocomplete needs name
+		this.search.input.attr('name', this.id||'searchbox');
 		this.search.input.on({
 			keyup:function(event)
 			{
