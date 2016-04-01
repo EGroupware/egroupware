@@ -1076,7 +1076,14 @@ function &ExecMethod2($acm)
 		list(,$class,$method) = explode('.',$acm);
 		if (!is_object($obj =& $GLOBALS[$class]))
 		{
-			$obj =& CreateObject($acm);
+			if (class_exists($class))
+			{
+				$obj = new $class;
+			}
+			else
+			{
+				$obj = CreateObject($acm);
+			}
 		}
 
 		if (!method_exists($obj,$method))
