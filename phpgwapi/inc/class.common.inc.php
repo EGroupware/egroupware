@@ -1236,28 +1236,12 @@ class common
 	 * @param string $appname app-name
 	 * @param int $min =0 if != 0 minimum id
 	 * @param int $max =0 if != 0 maximum id allowed, if it would be exceeded we return false
-	 * @return int/boolean the next id or false if $max given and exceeded
+	 * @deprecated use Api\Accounts\Ldap::next_id($appname, $min, $max)
+	 * @return int|boolean the next id or false if $max given and exceeded
 	 */
 	static function next_id($appname,$min=0,$max=0)
 	{
-		if (!$appname)
-		{
-			return -1;
-		}
-
-		$id = (int) $GLOBALS['egw']->db->select(self::NEXTID_TABLE,'id',array('appname' => $appname),__LINE__,__FILE__)->fetchColumn();
-
-		if ($max && $id >= $max)
-		{
-			return False;
-		}
-		++$id;
-
-		if($id < $min) $id = $min;
-
-		$GLOBALS['egw']->db->insert(self::NEXTID_TABLE,array('id' => $id),array('appname' => $appname),__LINE__,__FILE__);
-
-		return (int)$id;
+		return Api\Accounts\Ldap::next_id($appname, $min, $max);
 	}
 
 	/**
@@ -1266,26 +1250,12 @@ class common
 	 * @param string $appname app-name
 	 * @param int $min =0 if != 0 minimum id
 	 * @param int $max =0 if != 0 maximum id allowed, if it would be exceeded we return false
-	 * @return int current id in the next_id table for a particular app/class or -1 for no app and false if $max is exceeded.
+	 * @deprecated use Api\Accounts\Ldap::last_id($appname, $min, $max)
+	 * @return int|boolean current id in the next_id table for a particular app/class or -1 for no app and false if $max is exceeded.
 	 */
 	static function last_id($appname,$min=0,$max=0)
 	{
-		if (!$appname)
-		{
-			return -1;
-		}
-
-		$id = (int)$GLOBALS['egw']->db->select(self::NEXTID_TABLE,'id',array('appname' => $appname),__LINE__,__FILE__)->fetchColumn();
-
-		if (!$id || $id < $min)
-		{
-			return self::next_id($appname,$min,$max);
-		}
-		if ($max && $id > $max)
-		{
-			return False;
-		}
-		return $id;
+		return Api\Accounts\Ldap::last_id($appname, $min, $max);
 	}
 
 	/**

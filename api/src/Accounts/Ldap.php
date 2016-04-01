@@ -22,7 +22,6 @@ namespace EGroupware\Api\Accounts;
 use EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi or old structure
-use common;	// next_id
 use setup_cmd_ldap;
 
 /**
@@ -632,9 +631,13 @@ class Ldap
 			if (isset($data['homedirectory'])) $to_write['homedirectory']  = $data['homedirectory'];
 			if (isset($data['loginshell'])) $to_write['loginshell'] = $data['loginshell'] ? $data['loginshell'] : array();
 		}
-		if ($new_entry && !isset($to_write['homedirectory']))
+		if (($new_entry || isset($to_write['homedirectory'])) && empty($to_write['homedirectory']))
 		{
 			$to_write['homedirectory']  = '/dev/null';	// is a required attribute of posixAccount
+		}
+		if ($new_entry && empty($to_write['loginshell']))
+		{
+			unset($to_write['loginshell']);	// setting array() for new entry gives "Protocol error", must not set it
 		}
 		return $to_write;
 	}
@@ -1187,7 +1190,7 @@ class Ldap
 		/* Loop until we find a free id */
 		do
 		{
-			$account_id = (int) common::next_id($type,$min,$max);
+			$account_id = (int) self::next_id($type,$min,$max);
 		}
 		while ($account_id && ($this->frontend->exists($sign * $account_id) ||	// check need to include the sign!
 			$this->frontend->exists(-1 * $sign * $account_id) ||
@@ -1200,6 +1203,65 @@ class Ldap
 			return False;
 		}
 		return $sign * $account_id;
+	}
+
+	/**
+	 * Return a value for the next id an app/class may need to insert values into LDAP
+	 *
+	 * @param string $location name for id eg. "groups" or "accounts"
+	 * @param int $min =0 if != 0 minimum id
+	 * @param int $max =0 if != 0 maximum id allowed, if it would be exceeded we return false
+	 * @return int|boolean the next id or false if $max given and exceeded
+	 */
+	static function next_id($location,$min=0,$max=0)
+	{
+		if (!$location)
+		{
+			return -1;
+		}
+
+		$id = (int)$GLOBALS['egw_info']['server'][$key='last_id_'.$location];
+
+		if ($max && $id >= $max)
+		{
+			return False;
+		}
+		++$id;
+
+		if($id < $min) $id = $min;
+
+		Api\Config::save_value($key, $id, 'phpgwapi', true);
+		$GLOBALS['egw_info']['server'][$key='last_id_'.$location] = $id;
+
+		return (int)$id;
+	}
+
+	/**
+	 * Return a value for the last id entered, which an app may need to check values for LDAP
+	 *
+	 * @param string $location name for id eg. "groups" or "accounts"
+	 * @param int $min =0 if != 0 minimum id
+	 * @param int $max =0 if != 0 maximum id allowed, if it would be exceeded we return false
+	 * @return int|boolean current id in the next_id table for a particular app/class or -1 for no app and false if $max is exceeded.
+	 */
+	static function last_id($location,$min=0,$max=0)
+	{
+		if (!$location)
+		{
+			return -1;
+		}
+
+		$id = (int)$GLOBALS['egw_info']['server'][$key='last_id_'.$location];
+
+		if (!$id || $id < $min)
+		{
+			return self::next_id($location,$min,$max);
+		}
+		if ($max && $id > $max)
+		{
+			return False;
+		}
+		return $id;
 	}
 
 	/**
