@@ -16,7 +16,7 @@
 /* tablets and smartphones  */
 @media all {
 	#calendar-toolbar {
-		height: 50px;
+		height: 70px;
 		box-shadow: 0px 4px 5px 2px silver;
 		width: 100%;
 		background: #0c5da5;
@@ -50,7 +50,7 @@
 		padding: 0px 5px 0 5px !important;
 	}
 	#calendar-list button.plus_button {
-		bottom: 65px ;
+		bottom: 85px ;
 	}
 	#calendar-edit_category {max-width: 100%;}
 	#calendar-edit #calendar-edit_whole_day {margin:0;}
@@ -59,7 +59,29 @@
 	#calendar-toolbar {background-color: @calendar-color;}
 	#calendar-view {
 		button.plus_button {
-			bottom: 65px;
+			bottom: 85px;
+		}
+	}
+	#calendar-toolbar button#toolbar-today {
+		font-weight: bold;
+		font-size: 12pt;
+		text-align: center;
+		vertical-align: bottom;
+	}
+	#calendar-toolbar_toolbar .et2_toolbar_more {
+		width:30px;
+	}
+	#calendar-toolbar .egw_fw_ui_app_header_container {
+		background: white;
+		width: 100%;
+		display: block;
+		margin-top: 44px;
+		font-size: 10pt;
+		span{
+			display: block;
+			width:100%;
+			text-align: center;
+			font-size:10pt;
 		}
 	}
 }
