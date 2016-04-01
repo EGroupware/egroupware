@@ -630,9 +630,13 @@ class accounts_ldap
 			if (isset($data['homedirectory'])) $to_write['homedirectory']  = $data['homedirectory'];
 			if (isset($data['loginshell'])) $to_write['loginshell'] = $data['loginshell'] ? $data['loginshell'] : array();
 		}
-		if ($new_entry && !isset($to_write['homedirectory']))
+		if (($new_entry || isset($to_write['homedirectory'])) && empty($to_write['homedirectory']))
 		{
 			$to_write['homedirectory']  = '/dev/null';	// is a required attribute of posixAccount
+		}
+		if ($new_entry && empty($to_write['loginshell']))
+		{
+			unset($to_write['loginshell']);	// setting array() for new entry gives "Protocol error", must not set it
 		}
 		return $to_write;
 	}
