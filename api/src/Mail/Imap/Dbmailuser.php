@@ -27,7 +27,7 @@ class Dbmailuser extends Mail\Imap
 	/**
 	 * Label shown in EMailAdmin
 	 */
-	const DESCRIPTION = 'dbmail (dbmailUser Schema)';
+	const DESCRIPTION = 'DBMail (dbmailUser Schema)';
 
 	/**
 	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail

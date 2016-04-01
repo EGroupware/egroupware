@@ -27,7 +27,7 @@ class Dbmailqmailuser extends Mail\Imap
 	/**
 	 * Label shown in EMailAdmin
 	 */
-	const DESCRIPTION = 'dbmail (qmailUser Schema)';
+	const DESCRIPTION = 'DBMail (qmailUser Schema)';
 
 	/**
 	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail

@@ -25,7 +25,7 @@ class Types
 	 */
 	static public function getSMTPServerTypes($extended=true)
 	{
-		$retData = self::server_types(true, $extended);
+		$retData = self::server_types(false, $extended);
 		foreach($GLOBALS['egw']->hooks->process(array(
 			'location' => 'smtp_server_types',
 			'extended' => $extended,
@@ -35,9 +35,10 @@ class Types
 		}
 
 		uksort($retData, function($a, $b) {
-			/* static requires PHP5.6+ */ $prio = array(	// not explicitly mentioned get 0
-				__NAMESPACE__.'\\Smtp' => 9,
-				__NAMESPACE__.'\\Smtp\\Sql' => 8,
+			static $prio = array(	// not explicitly mentioned get 0
+				'EGroupware\\Api\\Mail\\Smtp' => 9,
+				'EGroupware\\Api\\Mail\\Smtp\\Sql' => 8,
+				'EGroupware\\Api\\Mail\\Smtp\\Ads' => 7,
 			);
 			return (int)$prio[$b] - (int)$prio[$a];
 		});
@@ -54,7 +55,7 @@ class Types
 	 */
 	static public function getIMAPServerTypes($extended=true)
 	{
-		$retData = self::server_types(false, $extended);
+		$retData = self::server_types(true, $extended);
 		foreach($GLOBALS['egw']->hooks->process(array(
 			'location' => 'imap_server_types',
 			'extended' => $extended,
@@ -63,11 +64,11 @@ class Types
 			if ($data && $app != 'emailadmin') $retData += $data;
 		}
 		uksort($retData, function($a, $b) {
-			/* static requires PHP5.6+ */ $prio = array(	// not explicitly mentioned get 0
-				__NAMESPACE__.'\\Imap' => 9,
+			static $prio = array(	// not explicitly mentioned get 0
+				'EGroupware\\Api\\Mail\\Imap' => 9,
 				'managementserver_imap' => 8,
-				__NAMESPACE__.'\\Dovecot' => 7,
-				__NAMESPACE__.'\\Cyrus' => 6,
+				'EGroupware\\Api\\Mail\\Imap\\Dovecot' => 7,
+				'EGroupware\\Api\\Mail\\Imap\\Cyrus' => 6,
 			);
 			return (int)$prio[$b] - (int)$prio[$a];
 		});
