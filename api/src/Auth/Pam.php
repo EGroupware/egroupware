@@ -11,6 +11,8 @@
 
 namespace EGroupware\Api\Auth;
 
+use EGroupware\Api;
+
 /**
  * Auth from PAM
  *
