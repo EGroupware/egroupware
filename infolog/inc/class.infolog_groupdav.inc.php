@@ -11,13 +11,15 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * EGroupware: GroupDAV access: infolog handler
  *
- * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * Permanent error_log() calls should use $this->caldav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
  */
-class infolog_groupdav extends groupdav_handler
+class infolog_groupdav extends Api\CalDAV\Handler
 {
 	/**
 	 * bo class of the application
@@ -49,7 +51,7 @@ class infolog_groupdav extends groupdav_handler
 	/**
 	 * Are we using info_id, info_uid or caldav_name for the path/url
 	 *
-	 * Get's set in constructor to 'caldav_name' and groupdav_handler::$path_extension = ''!
+	 * Get's set in constructor to 'caldav_name' and self::$path_extension = ''!
 	 */
 	static $path_attr = 'info_id';
 
@@ -57,11 +59,11 @@ class infolog_groupdav extends groupdav_handler
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param groupdav $groupdav calling class
+	 * @param Api\CalDAV $caldav calling class
 	 */
-	function __construct($app, groupdav $groupdav)
+	function __construct($app, Api\CalDAV $caldav)
 	{
-		parent::__construct($app, $groupdav);
+		parent::__construct($app, $caldav);
 
 		$this->bo = new infolog_bo();
 		$this->vCalendar = new Horde_Icalendar;
@@ -70,7 +72,7 @@ class infolog_groupdav extends groupdav_handler
 		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.002', '>='))
 		{
 			self::$path_attr = 'caldav_name';
-			groupdav_handler::$path_extension = '';
+			self::$path_extension = '';
 		}
 	}
 
@@ -91,7 +93,7 @@ class infolog_groupdav extends groupdav_handler
 			if (!is_array($info)) $info = $this->bo->read($info);
 			$name = $info[self::$path_attr];
 		}
-		return $name.groupdav_handler::$path_extension;
+		return $name.self::$path_extension;
 	}
 
 	/**
@@ -166,7 +168,7 @@ class infolog_groupdav extends groupdav_handler
 
 		// check if we have to return the full calendar data or just the etag's
 		if (!($filter['calendar_data'] = $options['props'] == 'all' &&
-			$options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
+			$options['root']['ns'] == Api\CalDAV::CALDAV) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
@@ -208,7 +210,7 @@ class infolog_groupdav extends groupdav_handler
 		else
 		{
 			// return iterator, calling ourself to return result in chunks
-			$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+			$files['files'] = new Api\CalDAV\PropfindIterator($this,$path,$filter,$files['files']);
 		}
 		return true;
 	}
@@ -295,7 +297,7 @@ class infolog_groupdav extends groupdav_handler
 				{
 					$content = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
 					$props['getcontentlength'] = bytes($content);
-					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
+					$props[] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
 				}
 				$files[] = $this->add_resource($path, $task, $props);
 			}
@@ -317,7 +319,7 @@ class infolog_groupdav extends groupdav_handler
 			// hack to support limit with sync-collection report: tasks are returned in modified ASC order (oldest first)
 			// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
 			// (which might contain further entries with identical modification time)
-			if ($start[0] == 0 && $start[1] != groupdav_propfind_iterator::CHUNK_SIZE && $this->bo->total > $start[1])
+			if ($start[0] == 0 && $start[1] != Api\CalDAV\PropfindIterator::CHUNK_SIZE && $this->bo->total > $start[1])
 			{
 				--$this->sync_collection_token;
 			}
@@ -414,11 +416,11 @@ class infolog_groupdav extends groupdav_handler
 				case 'sync-level':
 					if ($option['data'] != '1')
 					{
-						$this->groupdav->log(__METHOD__."(...) only sync-level {$option['data']} requested, but only 1 supported! options[other]=".array2string($options['other']));
+						$this->caldav->log(__METHOD__."(...) only sync-level {$option['data']} requested, but only 1 supported! options[other]=".array2string($options['other']));
 					}
 					break;
 				default:
-					$this->groupdav->log(__METHOD__."(...) unknown xml tag '{$option['name']}': options[other]=".array2string($options['other']));
+					$this->caldav->log(__METHOD__."(...) unknown xml tag '{$option['name']}': options[other]=".array2string($options['other']));
 					break;
 			}
 		}
@@ -429,8 +431,8 @@ class infolog_groupdav extends groupdav_handler
 			$ids = array();
 			if ($id)
 			{
-				$cal_filters[self::$path_attr] = groupdav_handler::$path_extension ?
-					basename($id,groupdav_handler::$path_extension) : $id;
+				$cal_filters[self::$path_attr] = self::$path_extension ?
+					basename($id,self::$path_extension) : $id;
 			}
 			else	// fetch all given url's
 			{
@@ -441,8 +443,8 @@ class infolog_groupdav extends groupdav_handler
 						$parts = explode('/',$option['data']);
 						if (($id = basename(urldecode(array_pop($parts)))))
 						{
-							$cal_filters[self::$path_attr][] = groupdav_handler::$path_extension ?
-								basename($id,groupdav_handler::$path_extension) : $id;
+							$cal_filters[self::$path_attr][] = self::$path_extension ?
+								basename($id,self::$path_extension) : $id;
 						}
 					}
 				}
@@ -474,7 +476,7 @@ class infolog_groupdav extends groupdav_handler
 		}
 		elseif (empty($attrs['start']))
 		{
-			$this->groupdav->log(__METHOD__.'('.array2string($attrs).') minimum one of start or end is required!');
+			$this->caldav->log(__METHOD__.'('.array2string($attrs).') minimum one of start or end is required!');
 			return '1';	// to not give sql error, but simply not filter out anything
 		}
 		// we dont need to care for DURATION line in rfc4791#section-9.9, as we always put that in DUE/info_enddate
@@ -784,33 +786,33 @@ class infolog_groupdav extends groupdav_handler
 
 		// calendar description
 		$displayname = translation::convert(lang('Tasks of'),translation::charset(),'utf-8').' '.$displayname;
-		$props['calendar-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
+		$props['calendar-description'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-description',$displayname);
 		// supported components, currently only VEVENT
-		$props['supported-calendar-component-set'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),
+		$props['supported-calendar-component-set'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'supported-calendar-component-set',array(
+			Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'comp',array('name' => 'VCALENDAR')),
+			Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'comp',array('name' => 'VTODO')),
 		));
 		// supported reports
 		$props['supported-report-set'] = array(
-			'calendar-query' => HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))))),
-			'calendar-multiget' => HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget',''))))),
+			'calendar-query' => Api\CalDAV::mkprop('supported-report',array(
+				Api\CalDAV::mkprop('report',array(
+					Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-query',''))))),
+			'calendar-multiget' => Api\CalDAV::mkprop('supported-report',array(
+				Api\CalDAV::mkprop('report',array(
+					Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-multiget',''))))),
 		);
 		// only advertice rfc 6578 sync-collection report, if "delete-prevention" is switched on (deleted entries get marked deleted but not actualy deleted
 		$config = config::read('infolog');
 		if ($config['history'])
 		{
-			$props['supported-report-set']['sync-collection'] = HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop('sync-collection','')))));
+			$props['supported-report-set']['sync-collection'] = Api\CalDAV::mkprop('supported-report',array(
+				Api\CalDAV::mkprop('report',array(
+					Api\CalDAV::mkprop('sync-collection','')))));
 		}
 		// get timezone of calendar
-		if ($this->groupdav->prop_requested('calendar-timezone'))
+		if ($this->caldav->prop_requested('calendar-timezone'))
 		{
-			$props['calendar-timezone'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-timezone',
+			$props['calendar-timezone'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-timezone',
 				calendar_timezones::user_timezone($user));
 		}
 		return $props;

@@ -5,24 +5,32 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
- * @subpackage groupdav
+ * @subpackage caldav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api\CalDAV;
+
+use EGroupware\Api;
+
+// explicit import classes without namespace
+use resources_bo;
+use calendar_bo;
 
 /**
  * EGroupware: GroupDAV access: groupdav/caldav/carddav principals handlers
  *
  * First-level properties used in this class should have the property name as their key,
  * to allow to check if required properties are set!
- * groupdav_principals::add_principal() converts simple associative props (name => value pairs)
- * to name => HTTP_WebDAV_Server(name, value) pairs.
+ * Principals::add_principal() converts simple associative props (name => value pairs)
+ * to name => Api\CalDAV(name, value) pairs.
  *
- * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * Permanent error_log() calls should use $this->caldav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
  */
-class groupdav_principals extends groupdav_handler
+class Principals extends Handler
 {
 	/**
 	 * Instance of resources_bo
@@ -35,11 +43,11 @@ class groupdav_principals extends groupdav_handler
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param groupdav $groupdav calling class
+	 * @param Api\CalDAV $caldav calling class
 	 */
-	function __construct($app, groupdav $groupdav)
+	function __construct($app, Api\CalDAV $caldav)
 	{
-		parent::__construct($app, $groupdav);
+		parent::__construct($app, $caldav);
 
 		if (!isset(self::$resources)) self::$resources = new resources_bo();
 	}
@@ -67,7 +75,7 @@ class groupdav_principals extends groupdav_handler
 		),
 		/* seems only be used 'til OS X 10.6, no longer in 10.7
 		'addressbook-findshared' => array(
-			'ns' => groupdav::ADDRESSBOOKSERVER,
+			'ns' => Api\CalDAV::ADDRESSBOOKSERVER,
 			'method' => 'addressbook_findshared_report',
 		),*/
 	);
@@ -79,7 +87,7 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param string $path eg. '/principals/'
 	 * @param array $reports =null
-	 * @return array HTTP_WebDAV_Server::mkprop('supported-report-set', ...)
+	 * @return array Api\CalDAV::mkprop('supported-report-set', ...)
 	 */
 	protected function supported_report_set($path, array $reports=null)
 	{
@@ -90,10 +98,10 @@ class groupdav_principals extends groupdav_handler
 		$supported = array();
 		foreach($reports as $name => $data)
 		{
-			$supported[$name] = HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',array(
-					!$data['ns'] ? HTTP_WebDAV_Server::mkprop($name, '') :
-						HTTP_WebDAV_Server::mkprop($data['ns'], $name, '')))));
+			$supported[$name] = Api\CalDAV::mkprop('supported-report',array(
+				Api\CalDAV::mkprop('report',array(
+					!$data['ns'] ? Api\CalDAV::mkprop($name, '') :
+						Api\CalDAV::mkprop($data['ns'], $name, '')))));
 		}
 		return $supported;
 	}
@@ -116,7 +124,7 @@ class groupdav_principals extends groupdav_handler
 			{
 				return $this->$method($path, $options, $files, $user);
 			}
-			$this->groupdav->log(__METHOD__."('$path', ".array2string($options).",, $user) not implemented report, returning 501 Not Implemented");
+			$this->caldav->log(__METHOD__."('$path', ".array2string($options).",, $user) not implemented report, returning 501 Not Implemented");
 			return '501 Not Implemented';
 		}
 		list(,,$type,$name,$rest) = explode('/',$path,5);
@@ -178,7 +186,7 @@ class groupdav_principals extends groupdav_handler
 		foreach($this->get_shared_addressbooks() as $path)
 		{
 			$files['files'][] = $f = $this->add_collection($path.'addressbook/', array(
-				'resourcetype' => array(HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook','')),
+				'resourcetype' => array(Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'addressbook','')),
 			));
 			error_log(__METHOD__."() ".array2string($f));
 		}
@@ -268,14 +276,14 @@ class groupdav_principals extends groupdav_handler
 				case 'calendar-proxy-write-for':
 					$prop_path = $path . substr($prop_name, 0, -4).'/';
 					$prop_name = 'group-member-set';
-					$prop_ns = groupdav::DAV;
+					$prop_ns = Api\CalDAV::DAV;
 					break;
 
 				case 'expanded-group-member-set':
 				case 'expanded-group-membership':
 					// remove 'expanded-' prefix
 					$prop_name = substr($prop_name, 9);
-					$prop_ns = groupdav::DAV;
+					$prop_ns = Api\CalDAV::DAV;
 					break;
 			}
 			// run regular propfind for requested property
@@ -286,10 +294,10 @@ class groupdav_principals extends groupdav_handler
 				'xmlns' => $prop_ns,
 			));
 			$prop_files = array();
-			$this->groupdav->options = $options;	// also modify global variable
+			$this->caldav->options = $options;	// also modify global variable
 			if (empty($prop_name) || $this->propfind($prop_path, $options, $prop_files, $user) !== true)
 			{
-				$this->groupdav->log('### NO expand-property report for '.$requested_prop['attrs']['name']);
+				$this->caldav->log('### NO expand-property report for '.$requested_prop['attrs']['name']);
 				continue;
 			}
 			// find prop to expand
@@ -300,7 +308,7 @@ class groupdav_principals extends groupdav_handler
 			if ($expand_prop['name'] !== $prop_name || !is_array($expand_prop['val']) ||
 				$expand_prop['val'] && $expand_prop['val'][0]['name'] !== 'href')
 			{
-				$this->groupdav->log('### NO expand-property report for '.$requested_prop['attrs']['name'].' ('.$prop_name.')');
+				$this->caldav->log('### NO expand-property report for '.$requested_prop['attrs']['name'].' ('.$prop_name.')');
 				continue;
 			}
 
@@ -323,12 +331,12 @@ class groupdav_principals extends groupdav_handler
 			}
 			// put back evtl. read top-level property
 			if ($prop && $prop['depth'] == 1) array_unshift($requested_props, $prop);
-			$this->groupdav->options = $options2;	// also modify global variable
+			$this->caldav->options = $options2;	// also modify global variable
 
 			// run regular profind to get requested 2.-level properties for each href
 			foreach($expand_prop['val'] as $key => &$prop_val)
 			{
-				list(,$expand_path) = explode($this->groupdav->base_uri, $prop_val['val']);
+				list(,$expand_path) = explode($this->caldav->base_uri, $prop_val['val']);
 				//error_log(__METHOD__."('$path', ..., $user) calling propfind('$expand_path', ".array2string($options2).', '.array2string($prop_val).", $user)");
 				if ($this->propfind($expand_path, $options2, $prop_val, $user) !== true || !isset($prop_val['files'][0]))
 				{
@@ -341,7 +349,7 @@ class groupdav_principals extends groupdav_handler
 			// setting top-level name and namespace
 			$expand_prop['ns'] = $requested_prop['attrs']['namespace'];
 			$expand_prop['name'] = $requested_prop['attrs']['name'];
-			// setting 2.-level props, so HTTP_WebDAV_Server can filter unwanted ones out or mark missing ones
+			// setting 2.-level props, so Api\CalDAV can filter unwanted ones out or mark missing ones
 			$expand_prop['props'] = $options2['props'];
 			// add top-level path and property
 			$files['files'][0]['path'] = $path;
@@ -463,13 +471,13 @@ class groupdav_principals extends groupdav_handler
 		}
 		if (!isset($property_search) || !$search_props || !isset($search_props[$property_search]['match']))
 		{
-			$this->groupdav->log(__METHOD__."('$path',...) Could not parse options[other]=".array2string($options['other']));
+			$this->caldav->log(__METHOD__."('$path',...) Could not parse options[other]=".array2string($options['other']));
 			return '400 Bad Request';
 		}
 		// make sure search property is included in toplevel props (can be missing and defaults to property-search/prop's)
 		foreach($search_props as $prop)
 		{
-			if (!$this->groupdav->prop_requested($prop['name'], $prop['xmlns']))
+			if (!$this->caldav->prop_requested($prop['name'], $prop['xmlns']))
 			{
 				$options['props'][] = array(
 					'name' => $prop['name'],
@@ -483,7 +491,7 @@ class groupdav_principals extends groupdav_handler
 				substr($search_props[0]['match'],-13) == '/groupdav.php')
 			{
 				$path = '/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/';
-				$this->groupdav->log('Enabling hack for Lightning prior 1.1.1 for searching calendar-home-set matching "/groupdav.php": limiting search to '.$path);
+				$this->caldav->log('Enabling hack for Lightning prior 1.1.1 for searching calendar-home-set matching "/groupdav.php": limiting search to '.$path);
 			}
 		}
 		// check type attribute to limit search on a certain tree
@@ -645,18 +653,18 @@ class groupdav_principals extends groupdav_handler
 		static $search_props = array(
 			// from iOS iCal
 			'displayname' => 'Display Name',
-			'email-address-set' => array('description' => 'Email Addresses', 'ns' => groupdav::CALENDARSERVER),
-			'last-name' => array('description' => 'Last Name', 'ns' => groupdav::CALENDARSERVER),
-			'calendar-user-type' => array('description' => 'Calendar User Type', 'ns' => groupdav::CALDAV),
-			'first-name' => array('description' => 'First Name', 'ns' => groupdav::CALENDARSERVER),
-			'calendar-user-address-set' => array('description' => 'Calendar User Address Set', 'ns' => groupdav::CALDAV),
+			'email-address-set' => array('description' => 'Email Addresses', 'ns' => Api\CalDAV::CALENDARSERVER),
+			'last-name' => array('description' => 'Last Name', 'ns' => Api\CalDAV::CALENDARSERVER),
+			'calendar-user-type' => array('description' => 'Calendar User Type', 'ns' => Api\CalDAV::CALDAV),
+			'first-name' => array('description' => 'First Name', 'ns' => Api\CalDAV::CALENDARSERVER),
+			'calendar-user-address-set' => array('description' => 'Calendar User Address Set', 'ns' => Api\CalDAV::CALDAV),
 			// Lightning
-			'calendar-home-set' => array('description' => 'Calendar Home Set', 'ns' => groupdav::CALENDARSERVER),
+			'calendar-home-set' => array('description' => 'Calendar Home Set', 'ns' => Api\CalDAV::CALENDARSERVER),
 			// others, we generally support all properties of the principal
 		);
 		header('Content-type: text/xml; charset=UTF-8');
 
-		$xml = new XMLWriter;
+		$xml = new \XMLWriter;
 		$xml->openMemory();
 		$xml->setIndent(true);
 		$xml->startDocument('1.0', 'UTF-8');
@@ -687,7 +695,7 @@ class groupdav_principals extends groupdav_handler
 		$xml->endDocument();
 		echo $xml->outputMemory();
 
-		common::egw_exit();
+		exit;
 	}
 
 	/**
@@ -791,7 +799,7 @@ class groupdav_principals extends groupdav_handler
 				!($account = $this->accounts->read($id)) ||
 				!$this->accounts->visible($name))
 			{
-				$this->groupdav->log(__METHOD__."('$name', ...) account '$name' NOT found OR not visible to you (check account-selection preference)!");
+				$this->caldav->log(__METHOD__."('$name', ...) account '$name' NOT found OR not visible to you (check account-selection preference)!");
 				return '404 Not Found';
 			}
 			while (substr($rest,-1) == '/')
@@ -913,7 +921,7 @@ class groupdav_principals extends groupdav_handler
 		{
 			$addressbooks[] = '/';
 		}
-		foreach(array_keys(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ)) as $id)
+		foreach(array_keys($GLOBALS['egw']->contacts->get_addressbooks(EGW_ACL_READ)) as $id)
 		{
 			if ((in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
 				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
@@ -934,50 +942,50 @@ class groupdav_principals extends groupdav_handler
 	{
 		$addressbooks = $calendars = array();
 		// since we "show" shared addressbooks and calendars in the user home, no need for individualiced homes
-		$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
+		$addressbooks[] = Api\CalDAV::mkprop('href',
 			$this->base_uri.'/'.$account['account_lid'].'/');
-		$calendars[] = HTTP_WebDAV_Server::mkprop('href',
+		$calendars[] = Api\CalDAV::mkprop('href',
 			$this->base_uri.'/'.$account['account_lid'].'/');
 
-		$displayname = translation::convert($account['account_fullname'], translation::charset(),'utf-8');
+		$displayname = Api\Translation::convert($account['account_fullname'], Api\Translation::charset(),'utf-8');
 
 		return $this->add_principal('users/'.$account['account_lid'], array(
 			'getetag' => $this->get_etag($account),
 			'displayname' => $displayname,
 			// CalDAV
-			'calendar-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$calendars),
+			'calendar-home-set' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-home-set',$calendars),
 			// CalDAV scheduling
-			'schedule-outbox-URL' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-outbox-URL',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/outbox/'))),
-			'schedule-inbox-URL' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-inbox-URL',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/inbox/'))),
-			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-				HTTP_WebDAV_Server::mkprop('href','mailto:'.$account['account_email']),
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(true).'/principals/users/'.$account['account_lid'].'/'),
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(false).'/principals/users/'.$account['account_lid'].'/'),
-				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])),
+			'schedule-outbox-URL' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'schedule-outbox-URL',array(
+				Api\CalDAV::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/outbox/'))),
+			'schedule-inbox-URL' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'schedule-inbox-URL',array(
+				Api\CalDAV::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/inbox/'))),
+			'calendar-user-address-set' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-user-address-set',array(
+				Api\CalDAV::mkprop('href','mailto:'.$account['account_email']),
+				Api\CalDAV::mkprop('href',$this->base_uri(true).'/principals/users/'.$account['account_lid'].'/'),
+				Api\CalDAV::mkprop('href',$this->base_uri(false).'/principals/users/'.$account['account_lid'].'/'),
+				Api\CalDAV::mkprop('href','urn:uuid:'.Api\CalDAV::generate_uid('accounts', $account['account_id'])),
 			)),
-			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','INDIVIDUAL'),
+			'calendar-user-type' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-user-type','INDIVIDUAL'),
 			// Calendarserver
-			'email-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
-				HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address',$account['account_email']))),
-			'last-name' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'last-name',$account['account_lastname']),
-			'first-name' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'first-name',$account['account_firstname']),
-			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','users'),
+			'email-address-set' => Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER,'email-address-set',array(
+				Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER,'email-address',$account['account_email']))),
+			'last-name' => Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER,'last-name',$account['account_lastname']),
+			'first-name' => Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER,'first-name',$account['account_firstname']),
+			'record-type' => Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER,'record-type','users'),
 			// WebDAV ACL and CalDAV proxy
 			'group-membership' => $this->principal_set('group-membership', $this->accounts->memberships($account['account_id']),
 				array('calendar', 'resources'), $account['account_id']),	// add proxy-rights
 			'alternate-URI-set' => array(
-				HTTP_WebDAV_Server::mkprop('href','mailto:'.$account['account_email'])),
+				Api\CalDAV::mkprop('href','mailto:'.$account['account_email'])),
 			// CardDAV
-			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',$addressbooks),
-			'principal-address' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'principal-address',
+			'addressbook-home-set' => Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'addressbook-home-set',$addressbooks),
+			'principal-address' => Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'principal-address',
 				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] ? '' : array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/addressbook-accounts/'.$account['person_id'].'.vcf'))),
+				Api\CalDAV::mkprop('href',$this->base_uri.'/addressbook-accounts/'.$account['person_id'].'.vcf'))),
 			// CardDAV directory
-			'directory-gateway' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV, 'directory-gateway',array(
-				HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/addressbook/'))),
-			'resource-id' => array(HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id']))),
+			'directory-gateway' => Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'directory-gateway',array(
+				Api\CalDAV::mkprop('href', $this->base_uri.'/addressbook/'))),
+			'resource-id' => array(Api\CalDAV::mkprop('href','urn:uuid:'.Api\CalDAV::generate_uid('accounts', $account['account_id']))),
 		));
 	}
 
@@ -1096,7 +1104,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	protected function add_group(array $account)
 	{
-		$displayname = translation::convert(lang('Group').' '.$account['account_lid'],	translation::charset(), 'utf-8');
+		$displayname = Api\Translation::convert(lang('Group').' '.$account['account_lid'],	Api\Translation::charset(), 'utf-8');
 
 		// only return current user, if account-selection == 'none'
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none')
@@ -1111,19 +1119,19 @@ class groupdav_principals extends groupdav_handler
 		return $this->add_principal('groups/'.$account['account_lid'], array(
 			'getetag' => $this->get_etag($account),
 			'displayname' => $displayname,
-			'calendar-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
-			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
-			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(true).'/principals/groups/'.$account['account_lid'].'/'),
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(false).'/principals/groups/'.$account['account_lid'].'/'),
-				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])),
+			'calendar-home-set' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-home-set',array(
+				Api\CalDAV::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
+			'addressbook-home-set' => Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'addressbook-home-set',array(
+				Api\CalDAV::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
+			'calendar-user-address-set' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-user-address-set',array(
+				Api\CalDAV::mkprop('href',$this->base_uri(true).'/principals/groups/'.$account['account_lid'].'/'),
+				Api\CalDAV::mkprop('href',$this->base_uri(false).'/principals/groups/'.$account['account_lid'].'/'),
+				Api\CalDAV::mkprop('href','urn:uuid:'.Api\CalDAV::generate_uid('accounts', $account['account_id'])),
 			)),
-			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','groups'),
-			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','GROUP'),
+			'record-type' => Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER,'record-type','groups'),
+			'calendar-user-type' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-user-type','GROUP'),
 			'group-member-set' => $this->principal_set('group-member-set', $groupmembers),
-			'resource-id' => array(HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id']))),
+			'resource-id' => array(Api\CalDAV::mkprop('href','urn:uuid:'.Api\CalDAV::generate_uid('accounts', $account['account_id']))),
 		));
 	}
 
@@ -1142,18 +1150,18 @@ class groupdav_principals extends groupdav_handler
 		return $this->add_principal($name, array(
 			'getetag' => $this->get_resource_etag($resource),
 			'displayname' => $displayname,
-			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(true).'/principals/'.$name.'/'),
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(false).'/principals/'.$name.'/'),
-				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('resources', $resource['res_id'])),
+			'calendar-user-address-set' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-user-address-set',array(
+				Api\CalDAV::mkprop('href',$this->base_uri(true).'/principals/'.$name.'/'),
+				Api\CalDAV::mkprop('href',$this->base_uri(false).'/principals/'.$name.'/'),
+				Api\CalDAV::mkprop('href','urn:uuid:'.Api\CalDAV::generate_uid('resources', $resource['res_id'])),
 			)),
-			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type',$is_location ? 'locations' : 'resources'),
-			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type',$is_location ? 'ROOM' : 'RESOURCE'),
-			'resource-id' => array(HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('resources', $resource['res_id']))),
+			'record-type' => Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER,'record-type',$is_location ? 'locations' : 'resources'),
+			'calendar-user-type' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-user-type',$is_location ? 'ROOM' : 'RESOURCE'),
+			'resource-id' => array(Api\CalDAV::mkprop('href','urn:uuid:'.Api\CalDAV::generate_uid('resources', $resource['res_id']))),
 			// Calendarserver also reports empty email-address-set, thought iCal still does not show resources (only locations)
-			'email-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',''),
-			'calendar-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$name.'/'))),
+			'email-address-set' => Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER,'email-address-set',''),
+			'calendar-home-set' => Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-home-set',array(
+				Api\CalDAV::mkprop('href',$this->base_uri.'/'.$name.'/'))),
 		));
 	}
 
@@ -1173,10 +1181,10 @@ class groupdav_principals extends groupdav_handler
 		}
 		if (is_null($is_location)) $is_location = self::resource_is_location($resource);
 
-		$displayname = translation::convert($resource['name'],	translation::charset(), 'utf-8');
+		$displayname = Api\Translation::convert($resource['name'],	Api\Translation::charset(), 'utf-8');
 
 		return ($is_location ? 'locations/' : 'resources/').$resource['res_id'].'-'.
-			preg_replace('/[^a-z0-9]+/i','-', translation::to_ascii($resource['name']));
+			preg_replace('/[^a-z0-9]+/i','-', Api\Translation::to_ascii($resource['name']));
 	}
 
 	/**
@@ -1190,7 +1198,7 @@ class groupdav_principals extends groupdav_handler
 		static $location_cats=null;
 		if (is_null($location_cats))
 		{
-			$config = config::read('resources');
+			$config = Api\Config::read('resources');
 			$location_cats = $config['location_cats'] ? explode(',', $config['location_cats']) : array();
 		}
 		if (!is_array($resource) && !($resource = self::read_resource($resource)))
@@ -1298,16 +1306,16 @@ class groupdav_principals extends groupdav_handler
 	 * Add a collection
 	 *
 	 * @param string $path
-	 * @param array $props =array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
+	 * @param array $props =array() extra properties 'resourcetype' is added anyway, name => value pairs or name => Api\CalDAV([namespace,]name,value)
 	 * @return array with values for keys 'path' and 'props'
 	 */
 	protected function add_collection($path, array $props = array())
 	{
-		if ($this->groupdav->prop_requested('supported-report-set'))
+		if ($this->caldav->prop_requested('supported-report-set'))
 		{
 			$props['supported-report-set'] = $this->supported_report_set($path);
 		}
-		return $this->groupdav->add_collection($path, $props);
+		return $this->caldav->add_collection($path, $props);
 	}
 
 	/**
@@ -1320,17 +1328,17 @@ class groupdav_principals extends groupdav_handler
 	 */
 	protected function add_principal($principal, array $props = array(), $principal_url=null)
 	{
-		$props['resourcetype'][] = HTTP_WebDAV_Server::mkprop('principal', '');
+		$props['resourcetype'][] = Api\CalDAV::mkprop('principal', '');
 
 		// required props per WebDAV ACL
 		foreach(array('alternate-URI-set', 'group-membership') as $name)
 		{
-			if (!isset($props[$name])) $props[$name] = HTTP_WebDAV_Server::mkprop($name,'');
+			if (!isset($props[$name])) $props[$name] = Api\CalDAV::mkprop($name,'');
 		}
 		if (!$principal_url) $principal_url = $principal;
 
 		$props['principal-URL'] = array(
-			HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'.$principal.'/'));
+			Api\CalDAV::mkprop('href',$this->base_uri.'/principals/'.$principal.'/'));
 
 		return $this->add_collection('/principals/'.$principal.'/', $props);
 	}
@@ -1412,7 +1420,7 @@ class groupdav_principals extends groupdav_handler
 				'displayname' => lang('%1 proxy of %2', lang($app).' '.lang($what), basename($principal)),
 				'group-member-set' => $this->principal_set('group-member-set', $proxys),
 				'getetag' => md5(serialize($proxys)),
-				'resourcetype' => array(HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER, $type, '')),
+				'resourcetype' => array(Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER, $type, '')),
 			));
 	}
 
@@ -1434,7 +1442,7 @@ class groupdav_principals extends groupdav_handler
 		{
 			if ($this->accounts->visible($account_lid))	// only add visible accounts, gives error in iCal otherwise
 			{
-				$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.($account_id < 0 ? 'groups/' : 'users/').$account_lid.'/');
+				$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.($account_id < 0 ? 'groups/' : 'users/').$account_lid.'/');
 			}
 		}
 		if ($app_proxys)
@@ -1493,7 +1501,7 @@ class groupdav_principals extends groupdav_handler
 				$rights = $location_grants['L'.$resource['cat_id']];
 				if (isset($rights))
 				{
-					$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.$this->resource2name($resource).
+					$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.$this->resource2name($resource).
 						'/calendar-proxy-'.($rights & EGW_ACL_DIRECT_BOOKING ? 'write' : 'read').'/');
 				}
 			}
@@ -1518,7 +1526,7 @@ class groupdav_principals extends groupdav_handler
 				($account_lid = $this->accounts->id2name($account_id)) &&
 				$this->accounts->visible($account_lid))	// only add visible accounts, gives error in iCal otherwise
 			{
-				$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.
+				$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.
 					($account_id < 0 ? 'groups/' : 'users/').
 					$account_lid.'/'.$app.'-proxy-'.($rights & EGW_ACL_EDIT ? 'write' : 'read').'/');
 			}

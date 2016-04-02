@@ -7,7 +7,7 @@
  * @link http://www.egroupware.org
  * @author Hadi Nategh (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$ 
+ * @version $Id$
  */
 
 
@@ -27,15 +27,15 @@ jQuery(function()
 	{
 		if (buttonId != "clear_log")
 		{
-			var ajax = new egw_json_request("home.egw_tail.ajax_delete",[filename,buttonId=="empty_log"]);
-			ajax.sendRequest(true);
+			egw.json("api.EGroupware\\Api\\Json\\Tail.ajax_delete",[filename,buttonId=="empty_log"])
+				.sendRequest(true);
 		}
 		$j("#log").text("");
 	}
 	function refresh_log()
 	{
-		var ajax = new egw_json_request("home.egw_tail.ajax_chunk",[filename,log_tail_start]);
-		ajax.sendRequest(true,function(_data) {
+		egw.json("api.EGroupware\\Api\\Json\\Tail.ajax_chunk",[filename,log_tail_start], function(_data)
+		{
 			if (_data.length) {
 				log_tail_start = _data.next;
 				var log = $j("#log").append(_data.content.replace(/</g,"&lt;"));
@@ -60,7 +60,7 @@ jQuery(function()
 				$j("#empty_log").show();
 			}
 			window.setTimeout(refresh_log,_data.length?200:2000);
-		});
+		}).sendRequest(true);
 	}
 	function resize_log()
 	{

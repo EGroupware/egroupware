@@ -11,10 +11,17 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\CalDAV;
+
+use EGroupware\Api;
+
+// explicit import old non-namespaced api classes
+use egw;	// link
+
 /**
  * GroupDAV hooks: eg. preferences
  */
-class groupdav_hooks
+class Hooks
 {
 	public $public_functions = array(
 		'log' => true,
@@ -33,7 +40,7 @@ class groupdav_hooks
 		if ($location == 'preferences')
 		{
 			$file = array(
-				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
+				'Preferences'     => egw::link('/index.php','menuaction=preferences.preference_settings.index&appname='.$appname),
 			);
 			if ($location == 'preferences')
 			{
@@ -109,13 +116,13 @@ class groupdav_hooks
 						if (substr($log,0,$account_lid_len+1) == $GLOBALS['egw_info']['user']['account_lid'].'-' &&
 							substr($log,-4) == '.log')
 						{
-							$logs['groupdav/'.$log] = egw_time::to(filemtime($log_dir.'/'.$log)).': '.
+							$logs['groupdav/'.$log] = Api\DateTime::to(filemtime($log_dir.'/'.$log)).': '.
 								str_replace('!','/',substr($log,$account_lid_len+1,-4));
 						}
 					}
 				}
 				$link = egw::link('/index.php',array(
-					'menuaction' => 'groupdav.groupdav_hooks.log',
+					'menuaction' => 'api.'.__CLASS__.'.log',
 					'filename' => '',
 				));
 				$onchange = "egw_openWindowCentered('$link'+encodeURIComponent(this.value), '_blank', 1000, 500); this.value=''";
@@ -144,21 +151,21 @@ class groupdav_hooks
 	 *
 	 * $_GET['filename'] has to be in groupdav sub-dir of files_dir and start with account_lid of current user
 	 *
-	 * @throws egw_exception_wrong_parameter
+	 * @throws Api\Exception\WrongParameter
 	 */
-	public function log()
+	public static function log()
 	{
 		$filename = $_GET['filename'];
 		if (!preg_match('|^groupdav/'.preg_quote($GLOBALS['egw_info']['user']['account_lid'],'|').'-[^/]+\.log$|',$filename))
 		{
-			throw new egw_exception_wrong_parameter("Access denied to file '$filename'!");
+			throw new Api\Exception\WrongParameter("Access denied to file '$filename'!");
 		}
 		$GLOBALS['egw_info']['flags']['css'] = '
 body { background-color: #e0e0e0; overflow: hidden; }
 pre.tail { background-color: white; padding-left: 5px; margin-left: 5px; }
 ';
 		$header = str_replace('!','/',substr($filename,10+strlen($GLOBALS['egw_info']['user']['account_lid']),-4));
-		$tail = new egw_tail($filename);
+		$tail = new Api\Json\Tail($filename);
 		$GLOBALS['egw']->framework->render($tail->show($header),false,false);
 	}
 }

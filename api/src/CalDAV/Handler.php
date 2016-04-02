@@ -5,21 +5,25 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
- * @subpackage groupdav
+ * @subpackage caldav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
+namespace EGroupware\Api\CalDAV;
+
+use EGroupware\Api;
+
 /**
  * EGroupware: GroupDAV access: abstract baseclass for groupdav/caldav/carddav handlers
  *
- * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * Permanent error_log() calls should use $this->caldav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
  *
  * @ToDo: If precondition for PUT, see https://tools.ietf.org/html/rfc6578#section-5
  */
-abstract class groupdav_handler
+abstract class Handler
 {
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, eg. complete $_SERVER array
@@ -39,13 +43,13 @@ abstract class groupdav_handler
 	/**
 	 * Reference to the accounts class
 	 *
-	 * @var accounts
+	 * @var Api\Accounts
 	 */
 	var $accounts;
 	/**
 	 * Reference to the ACL class
 	 *
-	 * @var acl
+	 * @var Api\Acl
 	 */
 	var $acl;
 	/**
@@ -65,13 +69,13 @@ abstract class groupdav_handler
 	 */
 	var $app;
 	/**
-	 * Calling groupdav object
+	 * Calling CalDAV object
 	 *
-	 * @var groupdav
+	 * @var Api\CalDAV
 	 */
-	var $groupdav;
+	var $caldav;
 	/**
-	 * Base url of handler, need to prefix all pathes not automatic handled by HTTP_WebDAV_Server
+	 * Base url of handler, need to prefix all pathes not automatic handled by Api\CalDAV
 	 *
 	 * @var string
 	 */
@@ -114,18 +118,18 @@ abstract class groupdav_handler
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param groupdav $groupdav calling class
+	 * @param Api\CalDAV $caldav calling class
 	 */
-	function __construct($app, groupdav $groupdav)
+	function __construct($app, Api\CalDAV $caldav)
 	{
 		$this->app = $app;
-		if (!is_null($groupdav->debug)) $this->debug = $groupdav->debug;
-		$this->base_uri = $groupdav->base_uri;
-		$this->groupdav = $groupdav;
+		if (!is_null($caldav->debug)) $this->debug = $caldav->debug;
+		$this->base_uri = $caldav->base_uri;
+		$this->caldav = $caldav;
 
 		$this->agent = self::get_agent();
 
-		$this->egw_charset = translation::charset();
+		$this->egw_charset = Api\Translation::charset();
 
 		$this->accounts = $GLOBALS['egw']->accounts;
 		$this->acl = $GLOBALS['egw']->acl;
@@ -358,7 +362,7 @@ abstract class groupdav_handler
 		{
 			if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			{
-				$location = $this->groupdav->base_uri.$options['path'];
+				$location = $this->caldav->base_uri.$options['path'];
 				if ($location[0] == '/')
 				{
 					$location = (@$_SERVER['HTTPS'] === 'on' ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'].$location;
@@ -372,7 +376,7 @@ abstract class groupdav_handler
 
 			if (($ret = $this->get($options, $id ? $id : $this->new_id, $user)) && !empty($options['data']))
 			{
-				if (!$this->groupdav->use_compression()) header('Content-Length: '.$this->groupdav->bytes($options['data']));
+				if (!$this->caldav->use_compression()) header('Content-Length: '.$this->caldav->bytes($options['data']));
 				header('Content-Type: '.$options['mimetype']);
 				echo $options['data'];
 			}
@@ -398,17 +402,17 @@ abstract class groupdav_handler
 	 *
 	 * @static
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param groupdav $groupdav calling class
+	 * @param Api\CalDAV $groupdav calling class
 	 * @return groupdav_handler
 	 */
-	static function app_handler($app, $groupdav)
+	static function app_handler($app, Api\CalDAV $groupdav)
 	{
 		static $handler_cache = array();
 
 		if (!array_key_exists($app,$handler_cache))
 		{
 			$class = $app.'_groupdav';
-			if (!class_exists($class) && !class_exists($class = 'groupdav_'.$app)) return null;
+			if (!class_exists($class) && !class_exists($class = __NAMESPACE__.'\\'.ucfirst($app))) return null;
 
 			$handler_cache[$app] = new $class($app, $groupdav);
 		}
@@ -639,21 +643,21 @@ abstract class groupdav_handler
 		}
 		// if requested add privileges
 		$privileges = array('read', 'read-current-user-privilege-set');
-		if ($this->groupdav->prop_requested('current-user-privilege-set') === true && !isset($props['current-user-privilege-set']))
+		if ($this->caldav->prop_requested('current-user-privilege-set') === true && !isset($props['current-user-privilege-set']))
 		{
 			if ($this->check_access(EGW_ACL_EDIT, $entry))
 			{
 				$privileges[] = 'write-content';
 			}
 		}
-		if ($this->groupdav->prop_requested('owner') === true && !isset($props['owner']) &&
+		if ($this->caldav->prop_requested('owner') === true && !isset($props['owner']) &&
 			($account_lid = $this->accounts->id2name($entry['owner'])))
 		{
 			$type = $this->accounts->get_type($entry['owner']) == 'u' ? 'users' : 'groups';
-			$props['owner'] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.$type.'/'.$account_lid.'/');
+			$props['owner'] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.$type.'/'.$account_lid.'/');
 		}
-		// we urldecode here, as HTTP_WebDAV_Server uses a minimal (#?%) urlencoding for incomming pathes and urlencodes pathes in propfind
-		return $this->groupdav->add_resource($path.urldecode($this->get_path($entry)), $props, $privileges);
+		// we urldecode here, as Api\CalDAV uses a minimal (#?%) urlencoding for incomming pathes and urlencodes pathes in propfind
+		return $this->caldav->add_resource($path.urldecode($this->get_path($entry)), $props, $privileges);
 	}
 
 	/**
@@ -671,7 +675,7 @@ abstract class groupdav_handler
 
 		if (!isset($uri))
 		{
-			$uri = $path = $this->groupdav->base_uri;
+			$uri = $path = $this->caldav->base_uri;
 			if ($uri[0] == '/')
 			{
 				$uri = ($_SERVER["HTTPS"] === "on" ? "https:" : "http:") .'//' . $_SERVER['HTTP_HOST'] . $uri;
@@ -705,12 +709,12 @@ abstract class groupdav_handler
 		{
 			$error =
 ' <D:response>
-  <D:href>'.htmlspecialchars($this->groupdav->base_uri.$this->groupdav->path).'</D:href>
+  <D:href>'.htmlspecialchars($this->caldav->base_uri.$this->caldav->path).'</D:href>
   <D:status>HTTP/1.1 507 Insufficient Storage</D:status>
   <D:error><D:number-of-matches-within-limits/></D:error>
  </D:response>
 ';
-			if ($this->groupdav->crrnd)
+			if ($this->caldav->crrnd)
 			{
 				$error = str_replace(array('<D:', '</D:'),  array('<', '</'), $error);
 			}
@@ -745,177 +749,5 @@ abstract class groupdav_handler
 			$token = (int)$GLOBALS['egw_info']['flags']['page_start_time'] - 1;
 		}
 		return $this->base_uri().$path.$token;
-	}
-}
-
-/**
- * Iterator for propfinds using propfind callback of a groupdav_handler to query results in chunks
- *
- * The propfind method just computes a filter and then returns an instance of this iterator instead of the files:
- *
- *	function propfind($path,$options,&$files,$user,$id='')
- *	{
- *		$filter = array();
- * 		// compute filter from path, options, ...
- *
- * 		$files['files'] = new groupdav_propfind_iterator($this,$filter,$files['files']);
- *
- * 		return true;
- * 	}
- */
-class groupdav_propfind_iterator implements Iterator
-{
-	/**
-	 * current path
-	 *
-	 * @var string
-	 */
-	protected $path;
-
-	/**
-	 * Handler to call for entries
-	 *
-	 * @var groupdav_handler
-	 */
-	protected $handler;
-
-	/**
-	 * Filter of propfind call
-	 *
-	 * @var array
-	 */
-	protected $filter;
-
-	/**
-	 * Extra responses to return too
-	 *
-	 * @var array
-	 */
-	protected $common_files;
-
-	/**
-	 * current chunk
-	 *
-	 * @var array
-	 */
-	protected $files;
-
-
-	/**
-	 * Start value for callback
-	 *
-	 * @var int
-	 */
-	protected $start=0;
-
-	/**
-	 * Number of entries queried from callback in one call
-	 *
-	 */
-	const CHUNK_SIZE = 500;
-
-	/**
-	 * Log calls via error_log()
-	 *
-	 * @var boolean
-	 */
-	public $debug = false;
-
-	/**
-
-	/**
-	 * Constructor
-	 *
-	 * @param groupdav_handler $handler
-	 * @param array $filter filter for propfind call
-	 * @param array $files =array() extra files/responses to return too
-	 */
-	public function __construct(groupdav_handler $handler, $path, array $filter,array &$files=array())
-	{
-		if ($this->debug) error_log(__METHOD__."('$path', ".array2string($filter).",)");
-		$this->path    = $path;
-		$this->handler = $handler;
-		$this->filter  = $filter;
-		$this->files   = $this->common_files = $files;
-		reset($this->files);
-	}
-
-	/**
-	 * Return the current element
-	 *
-	 * @return array
-	 */
-	public function current()
-	{
-		if ($this->debug) error_log(__METHOD__."() returning ".array2string(current($this->files)));
-		return current($this->files);
-	}
-
-	/**
-	 * Return the key of the current element
-	 *
-	 * @return int|string
-	 */
-	public function key()
-	{
-		$current = current($this->files);
-
-		if ($this->debug) error_log(__METHOD__."() returning ".array2string($current['path']));
-		return $current['path'];	// we return path as key
-	}
-
-	/**
-	 * Move forward to next element (called after each foreach loop)
-	 */
-	public function next()
-	{
-		if (next($this->files) !== false)
-		{
-			if ($this->debug) error_log(__METHOD__."() returning TRUE");
-			return true;
-		}
-		// check if previous query gave less then CHUNK_SIZE entries --> we're done
-		if ($this->start && count($this->files) < self::CHUNK_SIZE)
-		{
-			if ($this->debug) error_log(__METHOD__."() returning FALSE (no more entries)");
-			return false;
-		}
-		// try query further files via propfind callback of handler and store result in $this->files
-		$this->files = $this->handler->propfind_callback($this->path,$this->filter,array($this->start,self::CHUNK_SIZE));
-		if (!is_array($this->files) || !($entries = count($this->files)))
-		{
-			if ($this->debug) error_log(__METHOD__."() returning FALSE (no more entries)");
-			return false;	// no further entries
-		}
-		$this->start += self::CHUNK_SIZE;
-		reset($this->files);
-
-		if ($this->debug) error_log(__METHOD__."() this->start=$this->start, entries=$entries, count(this->files)=".count($this->files)." returning ".array2string(current($this->files) !== false));
-
-		return current($this->files) !== false;
-	}
-
-	/**
-	 * Rewind the Iterator to the first element (called at beginning of foreach loop)
-	 */
-	public function rewind()
-	{
-		if ($this->debug) error_log(__METHOD__."()");
-
-		$this->start = 0;
-		$this->files = $this->common_files;
-		if (!$this->files) $this->next();	// otherwise valid will return false and nothing get returned
-		reset($this->files);
-	}
-
-	/**
-	 * Checks if current position is valid
-	 *
-	 * @return boolean
-	 */
-	public function valid ()
-	{
-		if ($this->debug) error_log(__METHOD__."() returning ".array2string(current($this->files) !== false));
-		return current($this->files) !== false;
 	}
 }

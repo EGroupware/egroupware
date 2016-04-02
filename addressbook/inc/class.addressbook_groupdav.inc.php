@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package addressbook
- * @subpackage groupdav
+ * @subpackage carddav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
@@ -14,20 +14,20 @@
 use EGroupware\Api;
 
 /**
- * EGroupware: GroupDAV access: addressbook handler
+ * CalDAV/CardDAV/GroupDAV access: Addressbook handler
  *
- * Propfind now uses a groupdav_propfind_iterator with a callback to query huge addressbooks in chunk,
+ * Propfind now uses a Api\CalDAV\PropfindIterator with a callback to query huge addressbooks in chunk,
  * without getting into problems with memory_limit.
  *
- * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
+ * Permanent error_log() calls should use $this->caldav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
  */
-class addressbook_groupdav extends groupdav_handler
+class addressbook_groupdav extends Api\CalDAV\Handler
 {
 	/**
 	 * bo class of the application
 	 *
-	 * @var addressbook_bo
+	 * @var Api\Contacts
 	 */
 	var $bo;
 
@@ -63,13 +63,13 @@ class addressbook_groupdav extends groupdav_handler
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
-	 * @param groupdav $groupdav calling class
+	 * @param Api\CalDAV $caldav calling class
 	 */
-	function __construct($app, groupdav $groupdav)
+	function __construct($app, Api\CalDAV $caldav)
 	{
-		parent::__construct($app, $groupdav);
+		parent::__construct($app, $caldav);
 
-		$this->bo = new addressbook_bo();
+		$this->bo = new Api\Contacts();
 
 		// since 1.9.007 we allow clients to specify the URL when creating a new contact, as specified by CardDAV
 		// LDAP does NOT have a carddav_name attribute --> stick with id mapped to LDAP attribute uid
@@ -77,12 +77,12 @@ class addressbook_groupdav extends groupdav_handler
 			$this->bo->contact_repository != 'sql' ||
 			$this->bo->account_repository != 'sql' && strpos($_SERVER['REQUEST_URI'].'/','/addressbook-accounts/') !== false)
 		{
-			groupdav_handler::$path_extension = '.vcf';
+			self::$path_extension = '.vcf';
 		}
 		else
 		{
-			groupdav_handler::$path_attr = 'carddav_name';
-			groupdav_handler::$path_extension = '';
+			self::$path_attr = 'carddav_name';
+			self::$path_extension = '';
 		}
 		if ($this->debug) error_log(__METHOD__."() contact_repository={$this->bo->contact_repository}, account_repository={$this->bo->account_repository}, REQUEST_URI=$_SERVER[REQUEST_URI] --> path_attr=".self::$path_attr.", path_extension=".self::$path_extension);
 
@@ -136,7 +136,7 @@ class addressbook_groupdav extends groupdav_handler
 
 		// check if we have to return the full contact data or just the etag's
 		if (!($filter['address_data'] = $options['props'] == 'all' &&
-			$options['root']['ns'] == groupdav::CARDDAV) && is_array($options['props']))
+			$options['root']['ns'] == Api\CalDAV::CARDDAV) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
@@ -177,13 +177,13 @@ class addressbook_groupdav extends groupdav_handler
 		else
 		{
 			// return iterator, calling ourself to return result in chunks
-			$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+			$files['files'] = new Api\CalDAV\PropfindIterator($this,$path,$filter,$files['files']);
 		}
 		return true;
 	}
 
 	/**
-	 * Callback for profind interator
+	 * Callback for profind iterator
 	 *
 	 * @param string $path
 	 * @param array& $filter
@@ -243,7 +243,7 @@ class addressbook_groupdav extends groupdav_handler
 					continue;
 				}
 				$props = array(
-					'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
+					'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', 'text/vcard'),
 					'getlastmodified' => $contact['modified'],
 					'displayname' => $contact['n_fn'],
 				);
@@ -251,7 +251,7 @@ class addressbook_groupdav extends groupdav_handler
 				{
 					$content = $handler->getVCard($contact['id'],$this->charset,false);
 					$props['getcontentlength'] = bytes($content);
-					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content,true);
+					$props[] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'address-data',$content,true);
 				}
 				$files[] = $this->add_resource($path, $contact, $props);
 			}
@@ -271,11 +271,11 @@ class addressbook_groupdav extends groupdav_handler
 				$accounts_filter = $filter_in;
 				$accounts_filter['owner'] = '0';
 				if ($sync_collection_report) $token_was = $this->sync_collection_token;
-				groupdav_handler::$path_attr = 'id';
-				groupdav_handler::$path_extension = '.vcf';
+				self::$path_attr = 'id';
+				self::$path_extension = '.vcf';
 				$files = array_merge($files, $this->propfind_callback($path, $accounts_filter, false, false));
-				groupdav_handler::$path_attr = 'carddav_name';
-				groupdav_handler::$path_extension = '';
+				self::$path_attr = 'carddav_name';
+				self::$path_extension = '';
 				if ($sync_collection_report && $token_was > $this->sync_collection_token)
 				{
 					$this->sync_collection_token = $token_was;
@@ -310,7 +310,7 @@ class addressbook_groupdav extends groupdav_handler
 							$etag .= ':'.implode('-',$filter['owner']);
 						}
 						$props = array(
-							'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
+							'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', 'text/vcard'),
 							'getlastmodified' => egw_time::to($list['list_modified'],'ts'),
 							'displayname' => $list['list_name'],
 							'getetag' => '"'.$etag.'"',
@@ -319,7 +319,7 @@ class addressbook_groupdav extends groupdav_handler
 						{
 							$content = $handler->getGroupVCard($list);
 							$props['getcontentlength'] = bytes($content);
-							$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content,true);
+							$props[] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'address-data',$content,true);
 						}
 						$files[] = $this->add_resource($path, $list, $props);
 
@@ -391,7 +391,7 @@ class addressbook_groupdav extends groupdav_handler
 				switch((string)$filter['name'])
 				{
 					case 'param-filter':
-						$this->groupdav->log(__METHOD__."(...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
+						$this->caldav->log(__METHOD__."(...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'prop-filter':	// can be multiple prop-filter, see example
 						if ($matches) $prop_filters[] = implode($prop_test=='allof'?' AND ':' OR ',$matches);
@@ -456,7 +456,7 @@ class addressbook_groupdav extends groupdav_handler
 						}
 						// fall through
 					default:
-						$this->groupdav->log(__METHOD__."(".array2string($options).",,$id) unknown filter=".array2string($filter).' --> ignored');
+						$this->caldav->log(__METHOD__."(".array2string($options).",,$id) unknown filter=".array2string($filter).' --> ignored');
 						break;
 				}
 			}
@@ -498,11 +498,11 @@ class addressbook_groupdav extends groupdav_handler
 				case 'sync-level':
 					if ($option['data'] != '1')
 					{
-						$this->groupdav->log(__METHOD__."(...) only sync-level {$option['data']} requested, but only 1 supported! options[other]=".array2string($options['other']));
+						$this->caldav->log(__METHOD__."(...) only sync-level {$option['data']} requested, but only 1 supported! options[other]=".array2string($options['other']));
 					}
 					break;
 				default:
-					$this->groupdav->log(__METHOD__."(...) unknown xml tag '{$option['name']}': options[other]=".array2string($options['other']));
+					$this->caldav->log(__METHOD__."(...) unknown xml tag '{$option['name']}': options[other]=".array2string($options['other']));
 					break;
 			}
 		}
@@ -517,7 +517,7 @@ class addressbook_groupdav extends groupdav_handler
 					$parts = explode('/',$option['data']);
 					if (($id = urldecode(array_pop($parts))))
 					{
-						$ids[] = groupdav_handler::$path_extension ? basename($id,groupdav_handler::$path_extension) : $id;
+						$ids[] = self::$path_extension ? basename($id,self::$path_extension) : $id;
 					}
 				}
 			}
@@ -526,7 +526,7 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		elseif ($id)
 		{
-			$filters[self::$path_attr] = groupdav_handler::$path_extension ? basename($id,groupdav_handler::$path_extension) : $id;
+			$filters[self::$path_attr] = self::$path_extension ? basename($id,self::$path_extension) : $id;
 		}
 		//error_log(__METHOD__."() options[other]=".array2string($options['other'])." --> filters=".array2string($filters));
 		return true;
@@ -848,27 +848,27 @@ class addressbook_groupdav extends groupdav_handler
 		if (!isset($props['addressbook-description']))
 		{
 			// default addressbook description: can be overwritten via PROPPATCH, in which case it's already set
-			$props['addressbook-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-description',$props['displayname']);
+			$props['addressbook-description'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'addressbook-description',$props['displayname']);
 		}
 		// setting an max image size, so iOS scales the images before transmitting them
 		// we currently scale down to width of 240px, which tests shown to be ~20k
-		$props['max-image-size'] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'max-image-size',24*1024);
+		$props['max-image-size'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'max-image-size',24*1024);
 
 		// supported reports (required property for CardDAV)
 		$props['supported-report-set'] = array(
-			'addressbook-query' => HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-query',''))))),
-			'addressbook-multiget' => HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-multiget',''))))),
+			'addressbook-query' => Api\CalDAV::mkprop('supported-report',array(
+				Api\CalDAV::mkprop('report',array(
+					Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'addressbook-query',''))))),
+			'addressbook-multiget' => Api\CalDAV::mkprop('supported-report',array(
+				Api\CalDAV::mkprop('report',array(
+					Api\CalDAV::mkprop(Api\CalDAV::CARDDAV,'addressbook-multiget',''))))),
 		);
 		// only advertice rfc 6578 sync-collection report, if "delete-prevention" is switched on (deleted entries get marked deleted but not actualy deleted
 		if ($GLOBALS['egw_info']['server']['history'])
 		{
-			$props['supported-report-set']['sync-collection'] = HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop('sync-collection','')))));
+			$props['supported-report-set']['sync-collection'] = Api\CalDAV::mkprop('supported-report',array(
+				Api\CalDAV::mkprop('report',array(
+					Api\CalDAV::mkprop('sync-collection','')))));
 		}
 		return $props;
 	}

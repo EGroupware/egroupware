@@ -1054,7 +1054,7 @@ class Account implements \ArrayAccess
 		}
 		if ($data['acc_smtp_type'])
 		{
-			if (substr($data['acc_imap_type'], 0, 4) == 'Smtp')
+			if (substr($data['acc_smtp_type'], 0, 4) == 'Smtp')
 			{
 				$data['acc_smtp_type'] = __NAMESPACE__.'\\'.$data['acc_smtp_type'];
 			}

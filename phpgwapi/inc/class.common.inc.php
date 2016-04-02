@@ -115,28 +115,25 @@ class common
 	}
 
 	/**
-	* generate a unique id, which can be used for syncronisation
-	*
-	* @param string $_appName the appname
-	* @param string $_eventID the id of the content
-	* @return string the unique id
-	*/
+	 * generate a unique id, which can be used for syncronisation
+	 *
+	 * @param string $_appName the appname
+	 * @param string $_eventID the id of the content
+	 * @deprecated use Api\CalDAV::generate_uid($_appName, $_eventID)
+	 * @return string the unique id
+	 */
 	static function generate_uid($_appName, $_eventID)
 	{
-		if(empty($_appName) || empty($_eventID)) return false;
-
-		// not used: $suffix = $GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : 'local';
-		$prefix = $_appName.'-'.$_eventID.'-'.$GLOBALS['egw_info']['server']['install_id'];
-
-		return $prefix;
+		return Api\CalDAV::generate_uid($_appName, $_eventID);
 	}
 
 	/**
-	* get the local content id from a global UID
-	*
-	* @param sting $_globalUid the global UID
-	* @return int local egw content id
-	*/
+	 * get the local content id from a global UID
+	 *
+	 * @param sting $_globalUid the global UID
+	 * @deprecated dont use, as only EGroupware interal uids are reversable
+	 * @return int local egw content id
+	 */
 	static function get_egwId($_globalUid)
 	{
 		if(empty($_globalUid)) return false;

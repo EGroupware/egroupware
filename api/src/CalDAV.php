@@ -5,13 +5,21 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
- * @subpackage groupdav
+ * @subpackage caldav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT.'/api/src/WebDAV/Server.php');
+namespace EGroupware\Api;
+
+use EGroupware\Api\CalDAV\Handler;
+use EGroupware\Api\CalDAV\Principals;
+
+// explicit import non-namespaced classes
+require_once(__DIR__.'/WebDAV/Server.php');
+use HTTP_WebDAV_Server;
+use calendar_hooks;
 
 /**
  * EGroupware: GroupDAV access
@@ -54,7 +62,7 @@ require_once(EGW_INCLUDE_ROOT.'/api/src/WebDAV/Server.php');
  * @link http://carddav.calconnect.org/ CardDAV resources
  * @link http://calendarserver.org/ Apple calendar and contacts server
  */
-class groupdav extends HTTP_WebDAV_Server
+class CalDAV extends HTTP_WebDAV_Server
 {
 	/**
 	 * DAV namespace
@@ -141,7 +149,7 @@ class groupdav extends HTTP_WebDAV_Server
 	/**
 	 * Instance of our application specific handler
 	 *
-	 * @var groupdav_handler
+	 * @var Handler
 	 */
 	var $handler;
 	/**
@@ -228,7 +236,7 @@ class groupdav extends HTTP_WebDAV_Server
 		$this->crrnd = false;
 
 		// identify clients, which do NOT support path AND full url in <D:href> of PROPFIND request
-		switch(($agent = groupdav_handler::get_agent()))
+		switch(($agent = Handler::get_agent()))
 		{
 			case 'kde':	// KAddressbook (at least in 3.5 can NOT subscribe / does NOT find addressbook)
 				$this->client_require_href_as_url = true;
@@ -262,7 +270,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}*/
 		//error_log($_SERVER['REQUEST_URI']." --> ".$this->_SERVER['REQUEST_URI']);
 
-		$this->egw_charset = translation::charset();
+		$this->egw_charset = Translation::charset();
 		if (strpos($this->base_uri, 'http') === 0)
 		{
 			$this->current_user_principal = $this->_slashify($this->base_uri);
@@ -288,13 +296,13 @@ class groupdav extends HTTP_WebDAV_Server
 	 * get the handler for $app
 	 *
 	 * @param string $app
-	 * @return groupdav_handler
+	 * @return Handler
 	 */
 	function app_handler($app)
 	{
 		if (isset($this->root[$app]['app'])) $app = $this->root[$app]['app'];
 
-		return groupdav_handler::app_handler($app,$this);
+		return Handler::app_handler($app,$this);
 	}
 
 	/**
@@ -632,7 +640,7 @@ class groupdav extends HTTP_WebDAV_Server
 			$displayname = 'EGroupware (Cal|Card|Group)DAV server';
 		}
 
-		$displayname = translation::convert($displayname, translation::charset(),'utf-8');
+		$displayname = Translation::convert($displayname, Translation::charset(),'utf-8');
 		// self url
 		$props = array(
 			'displayname' => $displayname,
@@ -710,12 +718,12 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if ($depth)
 		{
-			foreach(groupdav_principals::get_resources() as $resource)
+			foreach(Principals::get_resources() as $resource)
 			{
-				if ($is_location == groupdav_principals::resource_is_location($resource))
+				if ($is_location == Principals::resource_is_location($resource))
 				{
 					$files['files'][] = $this->add_app('calendar', false, 'r'.$resource['res_id'],
-						'/'.groupdav_principals::resource2name($resource, $is_location).'/');
+						'/'.Principals::resource2name($resource, $is_location).'/');
 				}
 			}
 		}
@@ -800,11 +808,11 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		if ($this->debug) error_log(__METHOD__."(app='$app', no_extra_types=$no_extra_types, user='$user', path='$path')");
 		$user_preferences = $GLOBALS['egw_info']['user']['preferences'];
-		if (is_string($user) && $user[0] == 'r' && ($resource = groupdav_principals::read_resource(substr($user, 1))))
+		if (is_string($user) && $user[0] == 'r' && ($resource = Principals::read_resource(substr($user, 1))))
 		{
-			$is_location = groupdav_principals::resource_is_location($resource);
+			$is_location = Principals::resource_is_location($resource);
 			$displayname = null;
-			list($principalType, $account_lid) = explode('/', groupdav_principals::resource2name($resource, $is_location, $displayname));
+			list($principalType, $account_lid) = explode('/', Principals::resource2name($resource, $is_location, $displayname));
 		}
 		elseif ($user)
 		{
@@ -850,7 +858,7 @@ class groupdav extends HTTP_WebDAV_Server
 				}
 				// fall through
 			default:
-				$props['displayname'] = translation::convert(lang($app).' '.$displayname, $this->egw_charset, 'utf-8');
+				$props['displayname'] = Translation::convert(lang($app).' '.$displayname, $this->egw_charset, 'utf-8');
 		}
 
 		// rfc 5995 (Use POST to add members to WebDAV collections): we use collection path with add-member query param
@@ -926,7 +934,7 @@ class groupdav extends HTTP_WebDAV_Server
 			if (method_exists($handler,'getctag') && $this->prop_requested('getctag') === true)
 			{
 				$props['getctag'] = self::mkprop(
-					groupdav::CALENDARSERVER,'getctag',$handler->getctag($path,$user));
+					self::CALENDARSERVER,'getctag',$handler->getctag($path,$user));
 			}
 			// add sync-token url if handler supports sync-collection report
 			if (isset($props['supported-report-set']['sync-collection']) && $this->prop_requested('sync-token') === true)
@@ -1006,7 +1014,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			return $ret;	// no collection
 		}
-		header('Content-type: text/html; charset='.translation::charset());
+		header('Content-type: text/html; charset='.Translation::charset());
 		echo "<html>\n<head>\n\t<title>".'EGroupware (Cal|Card|Group)DAV server '.htmlspecialchars($options['path'])."</title>\n";
 		echo "\t<meta http-equiv='content-type' content='text/html; charset=utf-8' />\n";
 		echo "\t<style type='text/css'>\n.th { background-color: #e0e0e0; }\n.row_on { background-color: #F1F1F1; vertical-align: top; }\n".
@@ -1018,7 +1026,7 @@ class groupdav extends HTTP_WebDAV_Server
 		foreach(explode('/',$this->_unslashify($options['path'])) as $n => $name)
 		{
 			$path .= ($n != 1 ? '/' : '').$name;
-			echo html::a_href(htmlspecialchars($name.'/'),$path);
+			echo Html::a_href(htmlspecialchars($name.'/'),$path);
 		}
 		echo "</h1>\n";
 
@@ -1069,7 +1077,7 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 
 			echo "\t<tr class='$class'>\n\t\t<td>$n</td>\n\t\t<td>".
-				html::a_href(htmlspecialchars($name),'/groupdav.php'.strtr($file['path'], array(
+				Html::a_href(htmlspecialchars($name),'/groupdav.php'.strtr($file['path'], array(
 					'%' => '%25',
 					'#' => '%23',
 					'?' => '%3F',
@@ -1107,7 +1115,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 		echo "</body>\n</html>\n";
 
-		common::egw_exit();
+		exit;
 	}
 
 	/**
@@ -1206,7 +1214,7 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		// for some reason OS X Addressbook (CFNetwork user-agent) uses now (DAV:add-member given with collection URL+"?add-member")
 		// POST to the collection URL plus a UID like name component (like for regular PUT) to create new entrys
-		if (isset($_GET['add-member']) || groupdav_handler::get_agent() == 'cfnetwork')
+		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork')
 		{
 			$_GET['add-member'] = '';	// otherwise we give no Location header
 			return $this->PUT($options);
@@ -1251,7 +1259,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * @param array &$options
 	 * @param string|int $id
-	 * @param groupdav_handler $handler
+	 * @param Handler $handler
 	 * @param string $action 'attachment-add', 'attachment-update', 'attachment-remove'
 	 * @return string http status
 	 *
@@ -1259,7 +1267,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @todo managed-id does NOT change on update
 	 * @todo updates of attachments through vfs need to call $handler->update_tags($id) too
 	 */
-	protected function managed_attachements(&$options, $id, groupdav_handler $handler, $action)
+	protected function managed_attachements(&$options, $id, Handler $handler, $action)
 	{
 		error_log(__METHOD__."(path=$options[path], id=$id, ..., action=$action) _GET=".array2string($_GET));
 		$entry = $handler->_common_get_put_delete('GET', $options, $id);
@@ -1269,7 +1277,7 @@ class groupdav extends HTTP_WebDAV_Server
 			return $entry ? $entry : "404 Not found";
 		}
 
-		if (!egw_link::file_access($handler->app, $entry['id'], EGW_ACL_EDIT))
+		if (!Link::file_access($handler->app, $entry['id'], EGW_ACL_EDIT))
 		{
 			return '403 Forbidden';
 		}
@@ -1282,7 +1290,7 @@ class groupdav extends HTTP_WebDAV_Server
 					substr($this->_SERVER['HTTP_CONTENT_DISPOSITION'], 0, 10) === 'attachment' &&
 					preg_match('/filename="?([^";]+)/', $this->_SERVER['HTTP_CONTENT_DISPOSITION'], $matches))
 				{
-					$filename = egw_vfs::basename($matches[1]);
+					$filename = Vfs::basename($matches[1]);
 				}
 				$path = null;
 				if (!($to = self::fopen_attachment($handler->app, $handler->get_id($entry), $filename, $this->_SERVER['CONTENT_TYPE'], $path)) ||
@@ -1307,7 +1315,7 @@ class groupdav extends HTTP_WebDAV_Server
 				}
 				if ($action == 'attachment-remove')
 				{
-					if (!egw_vfs::unlink($path))
+					if (!Vfs::unlink($path))
 					{
 						self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
 						return '403 Forbidden';
@@ -1320,16 +1328,16 @@ class groupdav extends HTTP_WebDAV_Server
 					if (isset($this->_SERVER['HTTP_CONTENT_DISPOSITION']) &&
 						substr($this->_SERVER['HTTP_CONTENT_DISPOSITION'], 0, 10) === 'attachment' &&
 						preg_match('/filename="?([^";]+)/', $this->_SERVER['HTTP_CONTENT_DISPOSITION'], $matches) &&
-						($filename = egw_vfs::basename($matches[1])) != egw_vfs::basename($path))
+						($filename = Vfs::basename($matches[1])) != Vfs::basename($path))
 					{
 						$old_path = $path;
-						if (!egw_vfs::rename($old_path, $path = egw_vfs::concat(egw_vfs::dirname($path), $filename)))
+						if (!Vfs::rename($old_path, $path = Vfs::concat(Vfs::dirname($path), $filename)))
 						{
 							self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
 							return '403 Forbidden';
 						}
 					}
-					if (!($to = egw_vfs::fopen($path, 'w')) ||
+					if (!($to = Vfs::fopen($path, 'w')) ||
 						isset($options['stream']) && ($copied=stream_copy_to_stream($options['stream'], $to)) === false ||
 						isset($options['content']) && ($copied=fwrite($to, $options['content'])) === false)
 					{
@@ -1377,7 +1385,7 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		error_log(__METHOD__."('$app', $id, attach=".array2string($attach).", delete_via_put=".array2string($delete_via_put).')');
 
-		if (!egw_link::file_access($app, $id, EGW_ACL_EDIT))
+		if (!Link::file_access($app, $id, EGW_ACL_EDIT))
 		{
 			error_log(__METHOD__."('$app', $id, ...) no rights to update attachments");
 			return;	// no rights --> nothing to do
@@ -1386,7 +1394,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 		if ($delete_via_put)
 		{
-			foreach(egw_vfs::find(egw_link::vfs_path($app, $id, '', true), array('type' => 'F')) as $path)
+			foreach(Vfs::find(Link::vfs_path($app, $id, '', true), array('type' => 'F')) as $path)
 			{
 				$found = false;
 				foreach($attach as $key => $attr)
@@ -1400,8 +1408,8 @@ class groupdav extends HTTP_WebDAV_Server
 				}
 				if (!$found)
 				{
-					$ok = egw_vfs::unlink($path);
-					error_log(__METHOD__."('$app', $id, ...) egw_vfs::unlink('$path') returned ".array2string($ok));
+					$ok = Vfs::unlink($path);
+					error_log(__METHOD__."('$app', $id, ...) Vfs::unlink('$path') returned ".array2string($ok));
 				}
 			}
 		}
@@ -1413,24 +1421,24 @@ class groupdav extends HTTP_WebDAV_Server
 				if (isset($attr['params']['MANAGED-ID']))
 				{
 					// invalid managed-id
-					if (!($path = self::managed_id2path($attr['params']['MANAGED-ID'])) || !egw_vfs::is_readable($path))
+					if (!($path = self::managed_id2path($attr['params']['MANAGED-ID'])) || !Vfs::is_readable($path))
 					{
 						error_log(__METHOD__."('$app', $id, ...) invalid MANAGED-ID ".array2string($attr));
 						self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id', ''));
 						return false;
 					}
-					if($path == ($link = egw_link::vfs_path($app, $id, egw_vfs::basename($path))))
+					if($path == ($link = Link::vfs_path($app, $id, Vfs::basename($path))))
 					{
 						error_log(__METHOD__."('$app', $id, ...) trying to modify existing MANAGED-ID --> ignored! ".array2string($attr));
 						continue;
 					}
 					// reuse valid managed-id --> symlink attachment
-					if (egw_vfs::file_exists($link))
+					if (Vfs::file_exists($link))
 					{
-						if (egw_vfs::readlink($link) === $path) continue;	// no need to recreate identical link
-						egw_vfs::unlink($link);		// symlink will fail, if $link exists
+						if (Vfs::readlink($link) === $path) continue;	// no need to recreate identical link
+						Vfs::unlink($link);		// symlink will fail, if $link exists
 					}
-					if (!egw_vfs::symlink($path, $link))
+					if (!Vfs::symlink($path, $link))
 					{
 						error_log(__METHOD__."('$app', $id, ...) failed to symlink($path, $link) --> ignored!");
 					}
@@ -1465,15 +1473,15 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	protected static function fopen_attachment($app, $id, $_filename, $mime=null, &$path=null)
 	{
-		$filename = empty($_filename) ? 'attachment' : egw_vfs::basename($_filename);
+		$filename = empty($_filename) ? 'attachment' : Vfs::basename($_filename);
 
 		if (strpos($mime, ';')) list($mime) = explode(';', $mime);	// in case it contains eg. charset info
 
-		$ext = !empty($mime) ? mime_magic::mime2ext($mime) : '';
+		$ext = !empty($mime) ? MimeMagic::mime2ext($mime) : '';
 
 		$matches = null;
 		if (!$ext || substr($filename, -strlen($ext)-1) == '.'.$ext ||
-			preg_match('/\.([^.]+)$/', $filename, $matches) && mime_magic::ext2mime($matches[1]) == $mime)
+			preg_match('/\.([^.]+)$/', $filename, $matches) && MimeMagic::ext2mime($matches[1]) == $mime)
 		{
 			$parts = explode('.', $filename);
 			$ext = '.'.array_pop($parts);
@@ -1485,18 +1493,18 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		for($i = 1; $i < 100; ++$i)
 		{
-			$path = egw_link::vfs_path($app, $id, $filename.($i > 1 ? '-'.$i : '').$ext, true);
-			if (!egw_vfs::stat($path)) break;
+			$path = Link::vfs_path($app, $id, $filename.($i > 1 ? '-'.$i : '').$ext, true);
+			if (!Vfs::stat($path)) break;
 		}
 		if ($i >= 100) return null;
 
-		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir, 0777, STREAM_MKDIR_RECURSIVE))
+		if (!Vfs::file_exists($dir = Vfs::dirname($path)) && !Vfs::mkdir($dir, 0777, STREAM_MKDIR_RECURSIVE))
 		{
 			error_log(__METHOD__."('$app', $id, ...) failed to create entry dir $dir!");
 			return false;
 		}
 
-		return egw_vfs::fopen($path, 'w');
+		return Vfs::fopen($path, 'w');
 	}
 
 	/**
@@ -1516,7 +1524,7 @@ class groupdav extends HTTP_WebDAV_Server
 				$url_prefix = ($_SERVER['HTTPS'] ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
 			}
 		}
-		return $url_prefix.egw::link(egw_vfs::download_url($path));
+		return $url_prefix.egw::link(Vfs::download_url($path));
 	}
 
 	/**
@@ -1529,15 +1537,15 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	public static function add_attach($app, $id, array &$attributes, array &$parameters)
 	{
-		foreach(egw_vfs::find(egw_link::vfs_path($app, $id, '', true), array(
+		foreach(Vfs::find(Link::vfs_path($app, $id, '', true), array(
 			'type' => 'F',
 			'need_mime' => true,
 		), true) as $path => $stat)
 		{
 			// handle symlinks --> return target size and mime-type
-			if (($target = egw_vfs::readlink($path)))
+			if (($target = Vfs::readlink($path)))
 			{
-				if (!($stat = egw_vfs::stat($target))) continue;	// broken or inaccessible symlink
+				if (!($stat = Vfs::stat($target))) continue;	// broken or inaccessible symlink
 
 				// check if target is in /apps, probably reused MANAGED-ID --> return it
 				if (substr($target, 0, 6) == '/apps/')
@@ -1547,10 +1555,10 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			$attributes['ATTACH'][] = self::path2location($path);
 			$parameters['ATTACH'][] = array(
-				'MANAGED-ID' => groupdav::path2managed_id($path),
+				'MANAGED-ID' => self::path2managed_id($path),
 				'FMTTYPE'    => $stat['mime'],
 				'SIZE'       => (string)$stat['size'],	// Horde_Icalendar renders int as empty string
-				'FILENAME'   => egw_vfs::basename($path),
+				'FILENAME'   => Vfs::basename($path),
 			);
 			// if we have attachments, set X-attribute to enable deleting them by put
 			// (works around events synced before without ATTACH attributes)
@@ -1581,7 +1589,7 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		$path = base64_decode($managed_id);
 
-		if (!$path || substr($path, 0, 6) != '/apps/' || !egw_vfs::stat($path))
+		if (!$path || substr($path, 0, 6) != '/apps/' || !Vfs::stat($path))
 		{
 			$path = false;
 		}
@@ -1684,13 +1692,16 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->save_repository();
 			// call calendar-hook, if default-alarms are changed, to sync them to calendar prefs
-			foreach($need_save as $name)
+			if (class_exists('calendar_hooks'))
 			{
-				list($name) = explode(':', $name);
-				if (in_array($name, array('default-alarm-vevent-date', 'default-alarm-vevent-datetime')))
+				foreach($need_save as $name)
 				{
-					calendar_hooks::sync_default_alarms();
-					break;
+					list($name) = explode(':', $name);
+					if (in_array($name, array('default-alarm-vevent-date', 'default-alarm-vevent-datetime')))
+					{
+						calendar_hooks::sync_default_alarms();
+						break;
+					}
 				}
 			}
 		}
@@ -1801,7 +1812,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function COPY($options, $del=false)
 	{
-		if ($this->debug) error_log('groupdav::'.($del ? 'MOVE' : 'COPY').'('.array2string($options).')');
+		if ($this->debug) error_log('self::'.($del ? 'MOVE' : 'COPY').'('.array2string($options).')');
 
 		return '501 Not Implemented';
 	}
@@ -1816,7 +1827,7 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		$id = $app = $user = null;
 		self::_parse_path($options['path'],$id,$app,$user);
-		$path = egw_vfs::app_entry_lock_path($app,$id);
+		$path = Vfs::app_entry_lock_path($app,$id);
 
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$path");
 
@@ -1832,7 +1843,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 		// dont know why, but HTTP_WebDAV_Server passes the owner in D:href tags, which get's passed unchanged to checkLock/PROPFIND
 		// that's wrong according to the standard and cadaver does not show it on discover --> strip_tags removes eventual tags
-		if (($ret = egw_vfs::lock($path,$options['locktoken'],$options['timeout'],strip_tags($options['owner']),
+		if (($ret = Vfs::lock($path,$options['locktoken'],$options['timeout'],strip_tags($options['owner']),
 			$options['scope'],$options['type'],isset($options['update']),false)) && !isset($options['update']))		// false = no ACL check
 		{
 			return $ret ? '200 OK' : '409 Conflict';
@@ -1850,10 +1861,10 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		$id = $app = $user = null;
 		self::_parse_path($options['path'],$id,$app,$user);
-		$path = egw_vfs::app_entry_lock_path($app,$id);
+		$path = Vfs::app_entry_lock_path($app,$id);
 
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$path");
-		return egw_vfs::unlock($path,$options['token']) ? '204 No Content' : '409 Conflict';
+		return Vfs::unlock($path,$options['token']) ? '204 No Content' : '409 Conflict';
 	}
 
 	/**
@@ -1867,7 +1878,7 @@ class groupdav extends HTTP_WebDAV_Server
 		$id = $app = $user = null;
 		self::_parse_path($path,$id,$app,$user);
 
-		return egw_vfs::checkLock(egw_vfs::app_entry_lock_path($app, $id));
+		return Vfs::checkLock(Vfs::app_entry_lock_path($app, $id));
 	}
 
 	/**
@@ -1929,7 +1940,7 @@ class groupdav extends HTTP_WebDAV_Server
 				$user = $parts[0].'/'.$parts[1];
 				array_shift($parts);
 				$res_id = (int)array_shift($parts);
-				if (!groupdav_principals::read_resource($res_id))
+				if (!Principals::read_resource($res_id))
 				{
 					return false;
 				}
@@ -1964,7 +1975,7 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			elseif($app == 'resource' || $app == 'location')
 			{
-				if (!groupdav_principals::read_resource($res_id = (int)$username))
+				if (!Principals::read_resource($res_id = (int)$username))
 				{
 					return false;
 				}
@@ -2127,7 +2138,7 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		header('Content-type: application/xml; charset=utf-8');
 
-		$xml = new XMLWriter;
+		$xml = new \XMLWriter;
 		$xml->openMemory();
 		$xml->setIndent(true);
 		$xml->startDocument('1.0', 'utf-8');
@@ -2148,10 +2159,10 @@ class groupdav extends HTTP_WebDAV_Server
 	/**
 	 * Recursivly add properties to XMLWriter object
 	 *
-	 * @param XMLWriter $xml
+	 * @param \XMLWriter $xml
 	 * @param string|array $props string with name for empty element in DAV NS or array with props
 	 */
-	protected static function add_prop(XMLWriter $xml, $props)
+	protected static function add_prop(\XMLWriter $xml, $props)
 	{
 		if (is_string($props)) $props = self::mkprop($props, '');
 		if (isset($props['name'])) $props = array($props);
@@ -2202,9 +2213,9 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * Does NOT return and get installed in constructor.
 	 *
-	 * @param Exception $e
+	 * @param \Exception $e
 	 */
-	public static function exception_handler(Exception $e)
+	public static function exception_handler(\Exception $e)
 	{
 		// logging exception as regular egw_execption_hander does
 		$headline = null;
@@ -2229,10 +2240,20 @@ class groupdav extends HTTP_WebDAV_Server
 				self::$instance->log_request();
 			}
 		}
-		if (is_object($GLOBALS['egw']))
-		{
-			common::egw_exit();
-		}
 		exit;
+	}
+
+	/**
+	 * Generate a unique id, which can be used for syncronisation
+	 *
+	 * @param string $_appName the appname
+	 * @param string $_eventID the id of the content
+	 * @return string the unique id
+	 */
+	static function generate_uid($_appName, $_eventID)
+	{
+		if(empty($_appName) || empty($_eventID)) return false;
+
+		return $_appName.'-'.$_eventID.'-'.$GLOBALS['egw_info']['server']['install_id'];
 	}
 }

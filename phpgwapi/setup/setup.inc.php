@@ -70,7 +70,7 @@ $setup_info['groupdav']['author'] = $setup_info['groupdav']['maintainer'] = arra
 	'email' => 'RalfBecker@outdoor-training.de'
 );
 $setup_info['groupdav']['license'] = 'GPL';
-$setup_info['groupdav']['hooks']['preferences']	= 'groupdav_hooks::menus';
-$setup_info['groupdav']['hooks']['settings']	= 'groupdav_hooks::settings';
+$setup_info['groupdav']['hooks']['preferences']	= 'EGroupware\\Api\\CalDAV\\Hooks::menus';
+$setup_info['groupdav']['hooks']['settings']	= 'EGroupware\\Api\\CalDAV\\Hooks::settings';
 
 

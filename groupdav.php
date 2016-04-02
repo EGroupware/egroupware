@@ -9,16 +9,16 @@
  *
  * Otherwise authentication request will be send over and over again, as password is NOT available to PHP!
  *
- * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
- *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
- * @subpackage groupdav
+ * @subpackage caldav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 // switching off output compression for Lighttpd and HTTPS, as it makes problems with TB Lightning
 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' &&
@@ -48,6 +48,6 @@ $GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read
 
 $headertime = microtime(true);
 
-$groupdav = new groupdav();
-$groupdav->ServeRequest();
+$caldav = new Api\CalDAV();
+$caldav->ServeRequest();
 //error_log(sprintf('GroupDAV %s: status "%s", took %5.3f s'.($headertime?' (header include took %5.3f s)':''),$_SERVER['REQUEST_METHOD'].($_SERVER['REQUEST_METHOD']=='REPORT'?' '.$groupdav->propfind_options['root']['name']:'').' '.$_SERVER['PATH_INFO'],$groupdav->_http_status,microtime(true)-$starttime,$headertime-$starttime));

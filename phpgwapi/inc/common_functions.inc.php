@@ -1127,6 +1127,10 @@ function ExecMethod($method, $functionparam = '_UNDEF_', $loglevel = 3, $classpa
 			{
 				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
 			}
+			elseif (class_exists($classname))
+			{
+				$GLOBALS[$classname] = new $classname;
+			}
 			else
 			{
 				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname);
