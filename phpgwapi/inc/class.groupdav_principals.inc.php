@@ -1,13 +1,13 @@
 <?php
 /**
- * EGroupware: GroupDAV access: groupdav/caldav/carddav principals handlers
+ * EGroupware: CalDAV/CardDAV/GroupDAV access: Principals handlers
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -78,11 +78,13 @@ class groupdav_principals extends groupdav_handler
 	 * Currently we return all reports independed of path
 	 *
 	 * @param string $path eg. '/principals/'
-	 * @param array $reports=null
+	 * @param array $reports =null
 	 * @return array HTTP_WebDAV_Server::mkprop('supported-report-set', ...)
 	 */
 	protected function supported_report_set($path, array $reports=null)
 	{
+		unset($path);	// not used, but required by function signature
+
 		if (is_null($reports)) $reports = $this->supported_reports;
 
 		$supported = array();
@@ -117,7 +119,7 @@ class groupdav_principals extends groupdav_handler
 			$this->groupdav->log(__METHOD__."('$path', ".array2string($options).",, $user) not implemented report, returning 501 Not Implemented");
 			return '501 Not Implemented';
 		}
-		list(,$principals,$type,$name,$rest) = explode('/',$path,5);
+		list(,,$type,$name,$rest) = explode('/',$path,5);
 		// /principals/users/$name/
 		//            /users/$name/calendar-proxy-read/
 		//            /users/$name/calendar-proxy-write/
@@ -291,7 +293,7 @@ class groupdav_principals extends groupdav_handler
 				continue;
 			}
 			// find prop to expand
-			foreach($prop_files['files'][0]['props'] as $name => $expand_prop)
+			foreach($prop_files['files'][0]['props'] as $expand_prop)
 			{
 				if ($expand_prop['name'] === $prop_name) break;
 			}
@@ -526,7 +528,10 @@ class groupdav_principals extends groupdav_handler
 			foreach($search_props as $search_prop)
 			{
 				// search resource for $search_prop
-				foreach($resource['props'] as $prop) if ($prop['name'] === $search_prop['name']) break;
+				foreach($resource['props'] as $prop)
+				{
+					if ($prop['name'] === $search_prop['name']) break;
+				}
 				if ($prop['name'] === $search_prop['name'])	// search_prop NOT found
 				{
 					foreach((array)$prop['val'] as $value)
@@ -559,7 +564,7 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param string $value value to test
 	 * @param string $match criteria/sub-string
-	 * @param string $match_type='contains' 'starts-with', 'ends-with' or 'equals'
+	 * @param string $match_type ='contains' 'starts-with', 'ends-with' or 'equals'
 	 */
 	private static function match($value, $match, $match_type='contains')
 	{
@@ -635,6 +640,8 @@ class groupdav_principals extends groupdav_handler
 	 */
 	function principal_search_property_set_report($path,&$options,&$files,$user)
 	{
+		unset($path, $options, $files, $user);	// not used, but required by function signature
+
 		static $search_props = array(
 			// from iOS iCal
 			'displayname' => 'Display Name',
@@ -787,7 +794,10 @@ class groupdav_principals extends groupdav_handler
 				$this->groupdav->log(__METHOD__."('$name', ...) account '$name' NOT found OR not visible to you (check account-selection preference)!");
 				return '404 Not Found';
 			}
-			while (substr($rest,-1) == '/') $rest = substr($rest,0,-1);
+			while (substr($rest,-1) == '/')
+			{
+				$rest = substr($rest,0,-1);
+			}
 			switch((string)$rest)
 			{
 				case '':
@@ -850,7 +860,10 @@ class groupdav_principals extends groupdav_handler
 			{
 				return '404 Not Found';
 			}
-			while (substr($rest,-1) == '/') $rest = substr($rest,0,-1);
+			while (substr($rest,-1) == '/')
+			{
+				$rest = substr($rest,0,-1);
+			}
 			switch((string)$rest)
 			{
 				case '':
@@ -881,9 +894,9 @@ class groupdav_principals extends groupdav_handler
 	protected function get_shared_addressbooks()
 	{
 		$addressbooks = array();
-		$addressbook_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
-		if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
-		$addressbook_home_set = explode(',',$addressbook_home_set);
+		$ab_home_set = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
+		if (empty($ab_home_set)) $ab_home_set = 'P';	// personal addressbook
+		$addressbook_home_set = explode(',', $ab_home_set);
 		// replace symbolic id's with real nummeric id's
 		foreach(array(
 			'P' => $GLOBALS['egw_info']['user']['account_id'],
@@ -900,7 +913,7 @@ class groupdav_principals extends groupdav_handler
 		{
 			$addressbooks[] = '/';
 		}
-		foreach(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ) as $id => $label)
+		foreach(array_keys(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ)) as $id)
 		{
 			if ((in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
 				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
@@ -972,8 +985,8 @@ class groupdav_principals extends groupdav_handler
 	 * Convert CalDAV principal URL to a calendar uid
 	 *
 	 * @param string $url
-	 * @param string|array $only_type=null allowed types, return false for other (valid) types, eg. "users", "groups" or "resources", default all
-	 * @param string $cn=null common name to be stored in case of an "e" uid
+	 * @param string|array $only_type =null allowed types, return false for other (valid) types, eg. "users", "groups" or "resources", default all
+	 * @param string $cn =null common name to be stored in case of an "e" uid
 	 * @return int|string|boolean integer account_id, string calendar uid or false if not a supported uid
 	 */
 	static public function url2uid($url, $only_type=null, $cn=null)
@@ -1037,8 +1050,8 @@ class groupdav_principals extends groupdav_handler
 				list($type, $id, $install_id) = explode('-', $uid);
 				if ($type == 'accounts' && empty($id))	// groups have a negative id, eg. "urn:uuid:accounts--1-..."
 				{
-					list($type, $nul, $id, $install_id) = explode('-', $uid);
-					$id = -$id;
+					list($type, , $id_abs, $install_id) = explode('-', $uid);
+					$id = -$id_abs;
 				}
 				// own urn
 				if ($urn_type === 'uuid' && $install_id === $GLOBALS['egw_info']['server']['install_id'])
@@ -1050,7 +1063,7 @@ class groupdav_principals extends groupdav_handler
 					}
 					else
 					{
-						static $calendar_bo;
+						static $calendar_bo=null;
 						if (is_null($calendar_bo)) $calendar_bo = new calendar_bo();
 						foreach($calendar_bo->resources as $letter => $info)
 						{
@@ -1118,11 +1131,12 @@ class groupdav_principals extends groupdav_handler
 	 * Add collection of a single resource to a collection
 	 *
 	 * @param array $resource
-	 * @param boolean $is_location=null
+	 * @param boolean $is_location =null
 	 * @return array with values for keys 'path' and 'props'
 	 */
 	protected function add_principal_resource(array $resource, $is_location=null)
 	{
+		$displayname = null;
 		$name = $this->resource2name($resource, $is_location, $displayname);
 
 		return $this->add_principal($name, array(
@@ -1173,7 +1187,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	public static function resource_is_location($resource)
 	{
-		static $location_cats;
+		static $location_cats=null;
 		if (is_null($location_cats))
 		{
 			$config = config::read('resources');
@@ -1194,7 +1208,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	public static function read_resource($res_id)
 	{
-		static $cache;	// some per-request caching
+		static $cache=null;	// some per-request caching
 
 		if (isset(self::$all_resources) && isset(self::$all_resources[$res_id]))
 		{
@@ -1233,7 +1247,7 @@ class groupdav_principals extends groupdav_handler
 	/**
 	 * Get all resources (we cache the resources here, to only query them once per request)
 	 *
-	 * @param int $user=null account_if of user, or null for current user
+	 * @param int $user =null account_if of user, or null for current user
 	 * @return array of array with values for res_id, cat_id and name (no other values1)
 	 */
 	public static function get_resources($user=null)
@@ -1249,6 +1263,7 @@ class groupdav_principals extends groupdav_handler
 				'start' => 0,
 				'num_rows' => 10000,	// return all aka first 10000 entries
 			);
+			$rows = $readonlys = null;
 			if (self::$resources->get_rows($query, $rows, $readonlys))
 			{
 				//_debug_array($rows);
@@ -1270,7 +1285,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	protected function get_resource_rights()
 	{
-		static $grants;
+		static $grants=null;
 
 		if (is_null($grants))
 		{
@@ -1283,7 +1298,7 @@ class groupdav_principals extends groupdav_handler
 	 * Add a collection
 	 *
 	 * @param string $path
-	 * @param array $props=array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
+	 * @param array $props =array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
 	 * @return array with values for keys 'path' and 'props'
 	 */
 	protected function add_collection($path, array $props = array())
@@ -1299,8 +1314,8 @@ class groupdav_principals extends groupdav_handler
 	 * Add a principal collection
 	 *
 	 * @param string $principal relative to principal-collection-set, eg. "users/username"
-	 * @param array $props=array() extra properties 'resourcetype' is added anyway
-	 * @param string $principal_url=null include given principal url, relative to principal-collection-set, default $principal
+	 * @param array $props =array() extra properties 'resourcetype' is added anyway
+	 * @param string $principal_url =null include given principal url, relative to principal-collection-set, default $principal
 	 * @return array with values for keys 'path' and 'props'
 	 */
 	protected function add_principal($principal, array $props = array(), $principal_url=null)
@@ -1327,15 +1342,15 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param string $principal relative to principal-collection-set, eg. "users/username"
 	 * @param string $type eg. 'calendar-proxy-read' or 'calendar-proxy-write'
-	 * @param array $proxys=array()
-	 * @param array $resource=null resource to use (to not query it multiple times from the database)
+	 * @param array $proxys =array()
+	 * @param array $resource =null resource to use (to not query it multiple times from the database)
 	 * @return array with values for 'path' and 'props'
 	 */
 	protected function add_proxys($principal, $type, array $proxys=array(), array $resource=null)
 	{
 		list($app,,$what) = explode('-', $type);
 
-		$proxys = array();
+		if (true) $proxys = array();	// ignore parameter!
 		list($account_type,$account) = explode('/', $principal);
 
 		switch($account_type)
@@ -1366,8 +1381,8 @@ class groupdav_principals extends groupdav_handler
 			switch($app)
 			{
 				case 'resources':
-					$grants = $this->get_resource_rights();
-					$grants = (array)$grants[$location];	// returns array($location => $grants)
+					$res_grants = $this->get_resource_rights();
+					$grants = (array)$res_grants[$location];	// returns array($location => $grants)
 					break;
 
 				case 'calendar':
@@ -1405,13 +1420,15 @@ class groupdav_principals extends groupdav_handler
 	 * Create a named property with set or principal-urls
 	 *
 	 * @param string $prop egw. 'group-member-set' or 'membership'
-	 * @param array $accounts=array() account_id => account_lid pairs
-	 * @param string|array $app_proxys=null applications for which proxys should be added
+	 * @param array $accounts =array() account_id => account_lid pairs
+	 * @param string|array $app_proxys =null applications for which proxys should be added
 	 * @param int $account who is the proxy
 	 * @return array with href props
 	 */
-	protected function principal_set($prop, array $accounts=array(), $add_proxys=null, $account=null)
+	protected function principal_set($prop, array $accounts=array(), $app_proxys=null, $account=null)
 	{
+		unset($prop);	// not used, but required by function signature
+
 		$set = array();
 		foreach($accounts as $account_id => $account_lid)
 		{
@@ -1420,9 +1437,9 @@ class groupdav_principals extends groupdav_handler
 				$set[] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.($account_id < 0 ? 'groups/' : 'users/').$account_lid.'/');
 			}
 		}
-		if ($add_proxys)
+		if ($app_proxys)
 		{
-			foreach((array)$add_proxys as $app)
+			foreach((array)$app_proxys as $app)
 			{
 				if (!isset($GLOBALS['egw_info']['user']['apps'][$app])) continue;
 
@@ -1445,7 +1462,7 @@ class groupdav_principals extends groupdav_handler
 	 * Get proxy-groups for given user $account: users or groups who GRANT proxy rights to $account
 	 *
 	 * @param int $account who is the proxy
-	 * @param string|array $app_proxys=null applications for which proxys should be added
+	 * @param string|array $app_proxys =null applications for which proxys should be added
 	 * @return array with href props
 	 */
 	protected function get_resource_proxy_groups($account)
@@ -1489,7 +1506,7 @@ class groupdav_principals extends groupdav_handler
 	 * Get proxy-groups for given user $account: users or groups who GRANT proxy rights to $account
 	 *
 	 * @param int $account who is the proxy
-	 * @param string|array $app_proxys=null applications for which proxys should be added
+	 * @param string|array $app ='calendar' applications for which proxys should be added
 	 * @return array with href props
 	 */
 	protected function get_calendar_proxy_groups($account, $app='calendar')
@@ -1515,7 +1532,7 @@ class groupdav_principals extends groupdav_handler
 	 * @param string $name name of group or empty
 	 * @param string $rest rest of path behind account-name
 	 * @param array $options
-	 * @param boolean $do_locations=false false: /principal/resources, true: /principals/locations
+	 * @param boolean $do_locations =false false: /principal/resources, true: /principals/locations
 	 * @return array|string array with files or HTTP error code
 	 */
 	protected function propfind_resources($name,$rest,array $options,$do_locations=false)
@@ -1534,9 +1551,6 @@ class groupdav_principals extends groupdav_handler
 
 			if ($options['depth'])
 			{
-				$query = array(
-
-				);
 				if (($resources = $this->get_resources()))
 				{
 					//_debug_array($resources);
@@ -1557,7 +1571,10 @@ class groupdav_principals extends groupdav_handler
 				return '404 Not Found';
 			}
 			$path = ($is_location ? 'locations/' : 'resources/').$name;
-			while (substr($rest,-1) == '/') $rest = substr($rest,0,-1);
+			while (substr($rest,-1) == '/')
+			{
+				$rest = substr($rest,0,-1);
+			}
 			switch((string)$rest)
 			{
 				case '':
@@ -1597,12 +1614,12 @@ class groupdav_principals extends groupdav_handler
 		if ($options['depth'])
 		{
 			if (is_numeric($options['depth'])) --$options['depth'];
-			$files = array_merge($files,$this->propfind_users('','',$options));
-			$files = array_merge($files,$this->propfind_groups('','',$options));
+			$files = array_merge($files, $this->propfind_users('','',$options),
+				$this->propfind_groups('','',$options));
 			if ($GLOBALS['egw_info']['user']['apps']['resources'])
 			{
-				$files = array_merge($files,$this->propfind_resources('','',$options,false));	// resources
-				$files = array_merge($files,$this->propfind_resources('','',$options,true));	// locations
+				$files = array_merge($files, $this->propfind_resources('','',$options,false),	// resources
+					$this->propfind_resources('','',$options,true));	// locations
 			}
 			//$files = array_merge($files,$this->propfind_uids('','',$options));
 		}
@@ -1614,11 +1631,13 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id
+	 * @param int $user =null account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function get(&$options,$id,$user=null)
 	{
+		unset($options, $id, $user);	// not used, but required by function signature
+
 		return false;
 	}
 
@@ -1627,11 +1646,13 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id of owner, default null
+	 * @param int $user =null account_id of owner, default null
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function put(&$options,$id,$user=null)
 	{
+		unset($options, $id, $user);	// not used, but required by function signature
+
 		return false;
 	}
 
@@ -1644,17 +1665,21 @@ class groupdav_principals extends groupdav_handler
 	 */
 	function delete(&$options,$id)
 	{
+		unset($options, $id);	// not used, but required by function signature
+
 		return false;
 	}
 
 	/**
 	 * Read an entry
 	 *
-	 * @param string/int $id
+	 * @param string|int $id
 	 * @return array/boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	function read($id)
 	{
+		unset($id);	// not used, but required by function signature
+
 		return false;
 	}
 
@@ -1662,7 +1687,7 @@ class groupdav_principals extends groupdav_handler
 	 * Check if user has the neccessary rights on an entry
 	 *
 	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
-	 * @param array/int $entry entry-array or id
+	 * @param array|int $entry entry-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
 	function check_access($acl,$entry)
@@ -1681,7 +1706,7 @@ class groupdav_principals extends groupdav_handler
 	/**
 	 * Get the etag for an entry, can be reimplemented for other algorithm or field names
 	 *
-	 * @param array/int $event array with event or cal_id
+	 * @param array|int $account array with event or cal_id
 	 * @return string/boolean string with etag or false
 	 */
 	function get_etag($account)
@@ -1705,11 +1730,13 @@ class groupdav_principals extends groupdav_handler
 	 * Privileges are for the collection, not the resources / entries!
 	 *
 	 * @param string $path path of collection
-	 * @param int $user=null owner of the collection, default current user
+	 * @param int $user =null owner of the collection, default current user
 	 * @return array with privileges
 	 */
 	public function current_user_privileges($path, $user=null)
 	{
+		unset($path, $user);	// not used, but required by function signature
+
 		return array('read', 'read-current-user-privilege-set');
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware: GroupDAV access: addressbook handler
+ * EGroupware: CalDAV/CardDAV/GroupDAV access: Addressbook handler
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -21,8 +21,6 @@ use EGroupware\Api;
  *
  * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
- *
- * @todo check/fix contacts in LDAP (no carddav_name column!)
  */
 class addressbook_groupdav extends groupdav_handler
 {
@@ -106,7 +104,7 @@ class addressbook_groupdav extends groupdav_handler
 	 * @param array &$options
 	 * @param array &$files
 	 * @param int $user account_id
-	 * @param string $id=''
+	 * @param string $id =''
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function propfind($path,&$options,&$files,$user,$id='')
@@ -127,6 +125,7 @@ class addressbook_groupdav extends groupdav_handler
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 
 		// process REPORT filters or multiget href's
+		$nresults = null;
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id, $nresults))
 		{
 			return false;
@@ -188,7 +187,7 @@ class addressbook_groupdav extends groupdav_handler
 	 *
 	 * @param string $path
 	 * @param array& $filter
-	 * @param array|boolean $start=false false=return all or array(start,num)
+	 * @param array|boolean $start =false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
 	function &propfind_callback($path,array &$filter,$start=false,$report_not_found_multiget_ids=true)
@@ -384,6 +383,7 @@ class addressbook_groupdav extends groupdav_handler
 				$options['filters']['attrs']['test'] : 'anyof';
 			$prop_filters = array();
 
+			$matches = $prop_test = $column = null;
 			foreach($options['filters'] as $n => $filter)
 			{
 				if (!is_int($n)) continue;	// eg. attributes of filter xml element
@@ -464,7 +464,7 @@ class addressbook_groupdav extends groupdav_handler
 			if ($prop_filters)
 			{
 				$filters[] = $filter = '(('.implode($filter_test=='allof'?') AND (':') OR (', $prop_filters).'))';
-				if ($this->debug) error_log(__METHOD__."($path,...) sql-filter: $filter");
+				if ($this->debug) error_log(__METHOD__."(path=$options[path], ...) sql-filter: $filter");
 			}
 		}
 		// parse limit from $options['other']
@@ -537,11 +537,13 @@ class addressbook_groupdav extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id
+	 * @param int $user =null account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function get(&$options,$id,$user=null)
 	{
+		unset($user);	// not used, but required by function signature
+
 		if (!is_array($contact = $this->_common_get_put_delete('GET',$options,$id)))
 		{
 			return $contact;
@@ -561,8 +563,8 @@ class addressbook_groupdav extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id of owner, default null
-	 * @param string $prefix=null user prefix from path (eg. /ralf from /ralf/addressbook)
+	 * @param int $user =null account_id of owner, default null
+	 * @param string $prefix =null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function put(&$options,$id,$user=null,$prefix=null)
@@ -577,9 +579,9 @@ class addressbook_groupdav extends groupdav_handler
 		}
 
 		$handler = self::_get_handler();
-		$vCard = htmlspecialchars_decode($options['content']);
 		// Fix for Apple Addressbook
-		$vCard = preg_replace('/item\d\.(ADR|TEL|EMAIL|URL)/', '\1', $vCard);
+		$vCard = preg_replace('/item\d\.(ADR|TEL|EMAIL|URL)/', '\1',
+			htmlspecialchars_decode($options['content']));
 		$charset = null;
 		if (!empty($options['content_type']))
 		{
@@ -733,8 +735,10 @@ class addressbook_groupdav extends groupdav_handler
 			{
 				$new_members = array($new_members);
 			}
-			foreach($new_members as &$uid) $uid = substr($uid,9);	// cut off "urn:uuid:" prefix
-
+			foreach($new_members as &$uid)
+			{
+				$uid = substr($uid,9);	// cut off "urn:uuid:" prefix
+			}
 			if ($oldContact)
 			{
 				$to_add = array_diff($new_members,$oldContact['members']);
@@ -809,6 +813,7 @@ class addressbook_groupdav extends groupdav_handler
 			$lists_ctag = $this->bo->lists_ctag($user);
 		}
 		//error_log(__METHOD__."('$path', ".array2string($user_in).") --> user=".array2string($user)." --> ctag=$ctag=".date('Y-m-d H:i:s',$ctag).", lists_ctag=".($lists_ctag ? $lists_ctag.'='.date('Y-m-d H:i:s',$lists_ctag) : '').' returning '.max($ctag,$lists_ctag));
+		unset($user_in);
 		return $ctags[$path] = max($ctag, $accounts_ctag, $lists_ctag);
 	}
 
@@ -830,14 +835,16 @@ class addressbook_groupdav extends groupdav_handler
 	 * </D:supported-report-set>
 	 * @link http://www.mail-archive.com/calendarserver-users@lists.macosforge.org/msg01156.html
 	 *
-	 * @param array $props=array() regular props by the groupdav handler
+	 * @param array $props =array() regular props by the groupdav handler
 	 * @param string $displayname
-	 * @param string $base_uri=null base url of handler
-	 * @param int $user=null account_id of owner of collection
+	 * @param string $base_uri =null base url of handler
+	 * @param int $user =null account_id of owner of collection
 	 * @return array
 	 */
-	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null)
+	public function extra_properties(array $props, $displayname, $base_uri=null, $user=null)
 	{
+		unset($displayname, $base_uri, $user);	// not used, but required by function signature
+
 		if (!isset($props['addressbook-description']))
 		{
 			// default addressbook description: can be overwritten via PROPPATCH, in which case it's already set
@@ -889,6 +896,7 @@ class addressbook_groupdav extends groupdav_handler
 			$databaseFields['X-ABSHOWAS'] = $supportedFields['X-ABSHOWAS'] = array('fileas_type');	// Horde vCard class uses uppercase prop-names!
 
 			// Apple Addressbook pre Lion (OS X 10.7) messes up CLASS and CATEGORIES (Lion cant set them but leaves them alone)
+			$matches = null;
 			if (preg_match('|CFNetwork/([0-9]+)|i', $_SERVER['HTTP_USER_AGENT'],$matches) && $matches[1] < 520 ||
 				// iOS 5.1.1 does not display CLASS or CATEGORY, but wrongly escapes multiple, comma-separated categories
 				// and appends CLASS: PUBLIC to an empty NOTE: field --> leaving them out for iOS
@@ -946,17 +954,17 @@ class addressbook_groupdav extends groupdav_handler
 	 * the same UID and/or carddav_name as not deleted contacts and would block access to valid entries
 	 *
 	 * @param string|int $id
-	 * @param string $path=null
+	 * @param string $path =null
 	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	function read($id, $path=null)
 	{
-		static $non_deleted_tids;
+		static $non_deleted_tids=null;
 		if (is_null($non_deleted_tids))
 		{
-			$non_deleted_tids = $this->bo->content_types;
-			unset($non_deleted_tids[Api\Contacts::DELETED_TYPE]);
-			$non_deleted_tids = array_keys($non_deleted_tids);
+			$tids = $this->bo->content_types;
+			unset($tids[Api\Contacts::DELETED_TYPE]);
+			$non_deleted_tids = array_keys($tids);
 		}
 		$contact = $this->bo->read(array(self::$path_attr => $id, 'tid' => $non_deleted_tids));
 
@@ -1044,7 +1052,7 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * Return calendars/addressbooks shared from other users with the current one
 	 *
-	 * @param boolean $ignore_all_in_one=false if true, return selected addressbooks and not array() for all-in-one
+	 * @param boolean $ignore_all_in_one =false if true, return selected addressbooks and not array() for all-in-one
 	 * @return array account_id => account_lid pairs
 	 */
 	function get_shared($ignore_all_in_one=false)
@@ -1065,7 +1073,7 @@ class addressbook_groupdav extends groupdav_handler
 				$this->home_set_pref[$key] = $id;
 			}
 		}
-		foreach($this->bo->get_addressbooks(EGW_ACL_READ) as $id => $label)
+		foreach(array_keys($this->bo->get_addressbooks(EGW_ACL_READ)) as $id)
 		{
 			if (($id || !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) &&
 				$GLOBALS['egw_info']['user']['account_id'] != $id &&	// no current user and no accounts, if disabled in ab prefs

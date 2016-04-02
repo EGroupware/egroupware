@@ -1,13 +1,13 @@
 <?php
 /**
- * EGroupware: GroupDAV access: infolog handler
+ * EGroupware: CalDAV/CardDAV/GroupDAV access: InfoLog handler
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package infolog
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -146,6 +146,7 @@ class infolog_groupdav extends groupdav_handler
 		$filter = $this->get_infolog_filter($path, $user);
 
 		// process REPORT filters or multiget href's
+		$nresults = null;
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options, $filter, $id, $nresults))
 		{
 			// return empty collection, as iCal under iOS 5 had problems with returning "404 Not found" status
@@ -217,7 +218,7 @@ class infolog_groupdav extends groupdav_handler
 	 *
 	 * @param string $path
 	 * @param array $filter
-	 * @param array|boolean $start=false false=return all or array(start,num)
+	 * @param array|boolean $start =false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
 	function &propfind_callback($path,array $filter,$start=false)
@@ -234,6 +235,7 @@ class infolog_groupdav extends groupdav_handler
 
 		$order = 'info_datemodified';
 		$sort = 'DESC';
+		$matches = null;
 		if (preg_match('/^([a-z0-9_]+)( DESC| ASC)?$/i', $filter['order'], $matches))
 		{
 			$order = $matches[1];
@@ -337,8 +339,6 @@ class infolog_groupdav extends groupdav_handler
 	{
 		if ($options['filters'])
 		{
-			$cal_filters_in = $cal_filters;	// remember filter, to be able to reset standard open-filter, if client sets own filters
-
 			foreach($options['filters'] as $filter)
 			{
 				switch($filter['name'])
@@ -508,7 +508,7 @@ class infolog_groupdav extends groupdav_handler
  			"NOT info_datecompleted > 0". (isset($end) ? " AND info_created < $end" : '').
 		')';
 		$sql = '('.implode(' OR ', $to_or).')';
-		if ($this->debug > 1) error_log(__FILE__ . __METHOD__.'('.array2string($attrs).") time-range={$filter['attrs']['start']}-{$filter['attrs']['end']} --> $sql");
+		if ($this->debug > 1) error_log(__FILE__ . __METHOD__.'('.array2string($attrs).") time-range=$attrs[start]-$attrs[end] --> $sql");
 		return $sql;
 	}
 
@@ -517,11 +517,13 @@ class infolog_groupdav extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id
+	 * @param int $user =null account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function get(&$options,$id,$user=null)
 	{
+		unset($user);	// not used, but required by function signature
+
 		if (!is_array($task = $this->_common_get_put_delete('GET',$options,$id)))
 		{
 			return $task;
@@ -539,12 +541,14 @@ class infolog_groupdav extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id of owner, default null
-	 * @param string $prefix=null user prefix from path (eg. /ralf from /ralf/addressbook)
+	 * @param int $user =null account_id of owner, default null
+	 * @param string $prefix =null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	function put(&$options,$id,$user=null,$prefix=null)
 	{
+		unset($prefix);	// not used, but required by function signature
+
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 
 		$oldTask = $this->_common_get_put_delete('PUT',$options,$id);
@@ -584,9 +588,9 @@ class infolog_groupdav extends groupdav_handler
 
 		// send evtl. necessary respose headers: Location, etag, ...
 		// but only for new entries, as X-INFOLOG-STATUS get's not updated on client, if we confirm with an etag
-		if ($retval !== true && (!$path_attr_is_name ||
+		if ($retval !== true)
 			// POST with add-member query parameter
-			$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])))
+			//$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])))
 		{
 			$this->put_response_headers($infoId, $options['path'], $retval, self::$path_attr == 'caldav_name');
 		}
@@ -609,7 +613,7 @@ class infolog_groupdav extends groupdav_handler
 	 * Callback for infolog_ical::importVTODO to implement infolog-cat-action
 	 *
 	 * @param array $task
-	 * @param array $oldTask=null
+	 * @param array $oldTask =null
 	 * @return array modified task data
 	 */
 	public function cat_action(array $task, $oldTask=null)
@@ -768,14 +772,16 @@ class infolog_groupdav extends groupdav_handler
 	/**
 	 * Add extra properties for calendar collections
 	 *
-	 * @param array $props=array() regular props by the groupdav handler
+	 * @param array $props =array() regular props by the groupdav handler
 	 * @param string $displayname
-	 * @param string $base_uri=null base url of handler
-	 * @param int $user=null account_id of owner of collection
+	 * @param string $base_uri =null base url of handler
+	 * @param int $user =null account_id of owner of collection
 	 * @return array
 	 */
-	public function extra_properties(array $props=array(), $displayname, $base_uri=null,$user=null)
+	public function extra_properties(array $props, $displayname, $base_uri=null,$user=null)
 	{
+		unset($base_uri);	// not used, but required by function signature
+
 		// calendar description
 		$displayname = translation::convert(lang('Tasks of'),translation::charset(),'utf-8').' '.$displayname;
 		$props['calendar-description'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);

@@ -1,13 +1,13 @@
 <?php
 /**
- * EGroupware: GroupDAV access: abstract baseclass for groupdav/caldav/carddav handlers
+ * EGroupware: CalDAV/CardDAV/GroupDAV access: abstract baseclass for application handlers
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -119,7 +119,7 @@ abstract class groupdav_handler
 	function __construct($app, groupdav $groupdav)
 	{
 		$this->app = $app;
-		if (!is_null($parent->debug)) $this->debug = $groupdav->debug;
+		if (!is_null($groupdav->debug)) $this->debug = $groupdav->debug;
 		$this->base_uri = $groupdav->base_uri;
 		$this->groupdav = $groupdav;
 
@@ -151,14 +151,17 @@ abstract class groupdav_handler
 	 * @param int &$total
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function &propfind_callback($path, array $filter,$start,&$total) { }
+	function &propfind_callback($path, array $filter,$start,&$total)
+	{
+		unset($path, $filter, $start, $total);	// not used, but required by function signature
+	}
 
 	/**
 	 * Handle get request for an applications entry
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id
+	 * @param int $user =null account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	abstract function get(&$options,$id,$user=null);
@@ -168,7 +171,7 @@ abstract class groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
-	 * @param int $user=null account_id of owner, default null
+	 * @param int $user =null account_id of owner, default null
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	abstract function put(&$options,$id,$user=null);
@@ -186,7 +189,7 @@ abstract class groupdav_handler
 	 * Read an entry
 	 *
 	 * @param string|int $id
-	 * @param string $path=null implementation can use it, used in call from _common_get_put_delete
+	 * @param string $path =null implementation can use it, used in call from _common_get_put_delete
 	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	abstract function read($id /*,$path=null*/);
@@ -214,21 +217,23 @@ abstract class groupdav_handler
 	/**
 	 * Add extra properties for collections
 	 *
-	 * @param array $props=array() regular props by the groupdav handler
+	 * @param array $props =array() regular props by the groupdav handler
 	 * @param string $displayname
-	 * @param string $base_uri=null base url of handler
-	 * @param int $user=null account_id of owner of collection
+	 * @param string $base_uri =null base url of handler
+	 * @param int $user =null account_id of owner of collection
 	 * @return array
 	 */
-	public function extra_properties(array $props=array(), $displayname, $base_uri=null, $user=null)
+	public function extra_properties(array $props, $displayname, $base_uri=null, $user=null)
 	{
+		unset($displayname, $base_uri, $user);	// not used, but required by function signature
+
 		return $props;
 	}
 
 	/**
 	 * Get the etag for an entry, can be reimplemented for other algorithm or field names
 	 *
-	 * @param array|int $event array with event or cal_id
+	 * @param array|int $entry array with event or cal_id
 	 * @return string|boolean string with etag or false
 	 */
 	function get_etag($entry)
@@ -268,7 +273,7 @@ abstract class groupdav_handler
 	 * @param array &$options
 	 * @param int|string &$id on return self::$path_extension got removed
 	 * @param boolean &$return_no_access=false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
-	 * @param boolean $ignore_if_match=false if true, ignore If-Match precondition
+	 * @param boolean $ignore_if_match =false if true, ignore If-Match precondition
 	 * @return array|string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
 	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false,$ignore_if_match=false)
@@ -343,7 +348,7 @@ abstract class groupdav_handler
 	 *
 	 * @param array $options
 	 * @param int $id
-	 * @param int $user=null account_id
+	 * @param int $user =null account_id
 	 * @return string|boolean http status of get or null if no representation was requested
 	 */
 	public function check_return_representation($options, $id, $user=null)
@@ -385,7 +390,7 @@ abstract class groupdav_handler
 	 */
 	public function update_tags($entry)
 	{
-
+		unset($entry);	// not used, but required by function signature
 	}
 
 	/**
@@ -408,8 +413,6 @@ abstract class groupdav_handler
 			$handler_cache[$app] = new $class($app, $groupdav);
 		}
 
-		if ($debug) error_log(__METHOD__."('$app')");
-
 		return $handler_cache[$app];
 	}
 
@@ -420,7 +423,7 @@ abstract class groupdav_handler
 	 */
 	static function get_agent()
 	{
-		static $agent;
+		static $agent=null;
 
 		if (is_null($agent))
 		{
@@ -464,6 +467,7 @@ abstract class groupdav_handler
 				switch ($agent)
 				{
 					case 'cfnetwork':
+						$matches = null;
 						if (preg_match('/address%20book\/([0-9.]+)/', $user_agent, $matches))
 						{
 							if ((int)$matches[1] < 868) $agent .= '_old';
@@ -481,9 +485,7 @@ abstract class groupdav_handler
 				}
 			}
 		}
-
-		if ($debug) error_log(__METHOD__."GroupDAV client: $agent");
-
+		//error_log(__METHOD__."GroupDAV client: $agent");
 		return $agent;
 	}
 
@@ -503,12 +505,14 @@ abstract class groupdav_handler
 	 * Priviledges are for the collection, not the resources / entries!
 	 *
 	 * @param string $path path of collection
-	 * @param int $user=null owner of the collection, default current user
+	 * @param int $user =null owner of the collection, default current user
 	 * @return array with privileges
 	 */
 	public function current_user_privileges($path, $user=null)
 	{
-		static $grants;
+		unset($path);	// not used, but required by function signature
+
+		static $grants=null;
 		if (is_null($grants))
 		{
 			$grants = $this->get_grants();
@@ -556,8 +560,8 @@ abstract class groupdav_handler
 	 * @param int|array $entry id or array of new created entry
 	 * @param string $path
 	 * @param int|string $retval
-	 * @param boolean $path_attr_is_name=true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
-	 * @param string $etag=null etag, to not calculate it again (if != null)
+	 * @param boolean $path_attr_is_name =true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
+	 * @param string $etag =null etag, to not calculate it again (if != null)
 	 */
 	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true, $etag=null)
 	{
@@ -602,6 +606,8 @@ abstract class groupdav_handler
 	 */
 	static function get_settings($hook_data)
 	{
+		unset($hook_data);	// not used, but required by function signature
+
 		return array();
 	}
 
@@ -655,13 +661,13 @@ abstract class groupdav_handler
 	 *
 	 * base_uri of WebDAV class can be both, depending on EGroupware config
 	 *
-	 * @param boolean $full_uri=true
+	 * @param boolean $full_uri =true
 	 * @return string eg. https://domain.com/egroupware/groupdav.php
 	 */
 	public function base_uri($full_uri=true)
 	{
-		static $uri;
-		static $path;
+		static $uri=null;
+		static $path=null;
 
 		if (!isset($uri))
 		{
@@ -726,7 +732,7 @@ abstract class groupdav_handler
 	 *
 	 * @param string $path
 	 * @param int $user parameter necessary to call getctag, if no $token specified
-	 * @param int $token=null modification time, default call getctag($path, $user) to fetch it
+	 * @param int $token =null modification time, default call getctag($path, $user) to fetch it
 	 * @return string
 	 */
 	public function get_sync_token($path, $user, $token=null)
@@ -822,7 +828,7 @@ class groupdav_propfind_iterator implements Iterator
 	 *
 	 * @param groupdav_handler $handler
 	 * @param array $filter filter for propfind call
-	 * @param array $files=array() extra files/responses to return too
+	 * @param array $files =array() extra files/responses to return too
 	 */
 	public function __construct(groupdav_handler $handler, $path, array $filter,array &$files=array())
 	{

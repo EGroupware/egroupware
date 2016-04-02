@@ -252,7 +252,7 @@ class groupdav extends HTTP_WebDAV_Server
 		$this->dav_powered_by = str_replace('EGroupware','EGroupware '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'],
 			$this->dav_powered_by);
 
-		parent::__Construct();
+		parent::__construct();
 		// hack to allow to use query parameters in WebDAV, which HTTP_WebDAV_Server interprets as part of the path
 		list($this->_SERVER['REQUEST_URI']) = explode('?',$this->_SERVER['REQUEST_URI']);
 		/*if (substr($this->_SERVER['REQUEST_URI'],-13) == '/;add-member/')
@@ -306,6 +306,8 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function OPTIONS($path, &$dav, &$allow)
 	{
+		unset($allow);	// not used, but required by function signature
+
 		// locking support
 		if (!in_array('2', $dav)) $dav[] = '2';
 
@@ -361,6 +363,7 @@ class groupdav extends HTTP_WebDAV_Server
 		$this->propfind_options = $options;
 
 		// parse path in form [/account_lid]/app[/more]
+		$id = $app = $user = $user_prefix = null;
 		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user && $user !== 0)
 		{
 			if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id': 404 not found!");
@@ -435,9 +438,9 @@ class groupdav extends HTTP_WebDAV_Server
 	 * Add a collection to a PROPFIND request
 	 *
 	 * @param string $path
-	 * @param array $props=array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
-	 * @param array $privileges=array('read') values for current-user-privilege-set
-	 * @param array $supported_privileges=null default $this->supported_privileges
+	 * @param array $props =array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
+	 * @param array $privileges =array('read') values for current-user-privilege-set
+	 * @param array $supported_privileges =null default $this->supported_privileges
 	 * @return array with values for keys 'path' and 'props'
 	 */
 	public function add_collection($path, array $props = array(), array $privileges=array('read','read-acl','read-current-user-privilege-set'), array $supported_privileges=null)
@@ -454,9 +457,9 @@ class groupdav extends HTTP_WebDAV_Server
 	 * Add a resource to a PROPFIND request
 	 *
 	 * @param string $path
-	 * @param array $props=array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
-	 * @param array $privileges=array('read') values for current-user-privilege-set
-	 * @param array $supported_privileges=null default $this->supported_privileges
+	 * @param array $props =array() extra properties 'resourcetype' is added anyway, name => value pairs or name => HTTP_WebDAV_Server([namespace,]name,value)
+	 * @param array $privileges =array('read') values for current-user-privilege-set
+	 * @param array $supported_privileges =null default $this->supported_privileges
 	 * @return array with values for keys 'path' and 'props'
 	 */
 	public function add_resource($path, array $props = array(), array $privileges=array('read','read-current-user-privilege-set'), array $supported_privileges=null)
@@ -529,7 +532,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * @param string $name name of privilege
 	 * @param string|array $data string with describtion or array with agregated privileges plus value for key '*description*', '*ns*', '*only*'
-	 * @param string $path=null path to match with $data['*only*']
+	 * @param string $path =null path to match with $data['*only*']
 	 * @return array of self::mkprop() arrays
 	 */
 	protected function supported_privilege($name, $data, $path=null)
@@ -557,8 +560,8 @@ class groupdav extends HTTP_WebDAV_Server
 	 * Checks if a given property was requested in propfind request
 	 *
 	 * @param string $name property name
-	 * @param string $ns=null namespace, if that is to be checked too
-	 * @param boolean $return_prop=false if true return the property array with values for 'name', 'xmlns', 'attrs', 'children'
+	 * @param string $ns =null namespace, if that is to be checked too
+	 * @param boolean $return_prop =false if true return the property array with values for 'name', 'xmlns', 'attrs', 'children'
 	 * @return boolean|string|array true: $name explicitly requested (or autoindex), "all": allprop or "names": propname requested, false: $name was not requested
 	 */
 	function prop_requested($name, $ns=null, $return_prop=false)
@@ -686,14 +689,14 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * @param array &$files
 	 * @param string $path / or /<username>/
-	 * @param int $depth=0
+	 * @param int $depth =0
 	 * @return string|boolean http status or true|false
 	 */
 	protected function add_resources_collection(array &$files, $path, $depth=0)
 	{
 		if (!isset($GLOBALS['egw_info']['user']['apps']['resources']))
 		{
-			if ($this->debug) error_log(__CLASS__."::$method(path=$path) 403 Forbidden: no app rights for 'resources'");
+			if ($this->debug) error_log(__METHOD__."(path=$path) 403 Forbidden: no app rights for 'resources'");
 			return "403 Forbidden: no app rights for 'resources'";	// no rights for the given app
 		}
 		list(,$what) = explode('/', $path);
@@ -707,7 +710,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if ($depth)
 		{
-			foreach(groupdav_principals::get_resources() as $res_id => $resource)
+			foreach(groupdav_principals::get_resources() as $resource)
 			{
 				if ($is_location == groupdav_principals::resource_is_location($resource))
 				{
@@ -788,9 +791,9 @@ class groupdav extends HTTP_WebDAV_Server
 	 * Add an application collection to a user home or the root
 	 *
 	 * @param string $app
-	 * @param boolean $no_extra_types=false should the GroupDAV and CalDAV types be added (KAddressbook has problems with it in self URL)
-	 * @param int $user=null owner of the collection, default current user
-	 * @param string $path='/'
+	 * @param boolean $no_extra_types =false should the GroupDAV and CalDAV types be added (KAddressbook has problems with it in self URL)
+	 * @param int $user =null owner of the collection, default current user
+	 * @param string $path ='/'
 	 * @return array with values for keys 'path' and 'props'
 	 */
 	protected function add_app($app,$no_extra_types=false,$user=null,$path='/')
@@ -800,6 +803,7 @@ class groupdav extends HTTP_WebDAV_Server
 		if (is_string($user) && $user[0] == 'r' && ($resource = groupdav_principals::read_resource(substr($user, 1))))
 		{
 			$is_location = groupdav_principals::resource_is_location($resource);
+			$displayname = null;
 			list($principalType, $account_lid) = explode('/', groupdav_principals::resource2name($resource, $is_location, $displayname));
 		}
 		elseif ($user)
@@ -857,6 +861,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 
 		// add props modifyable via proppatch from client, eg. calendar-color, see self::$proppatch_props
+		$ns = null;
 		foreach((array)$GLOBALS['egw_info']['user']['preferences'][$app] as $name => $value)
 		{
 			unset($ns);
@@ -972,6 +977,7 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
+		$id = $app = $user = null;
 		if (!$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
 		{
 			return $this->autoindex($options);
@@ -1031,6 +1037,7 @@ class groupdav extends HTTP_WebDAV_Server
 			//'DAV:sync-token' => 'sync-token',
 		);
 		$n = 0;
+		$collection_props = null;
 		foreach($files['files'] as $file)
 		{
 			if (!isset($collection_props))
@@ -1042,7 +1049,10 @@ class groupdav extends HTTP_WebDAV_Server
 			if(!$n++)
 			{
 				echo "<table>\n\t<tr class='th'>\n\t\t<th>#</th>\n\t\t<th>".lang('Name')."</th>";
-				foreach($props2show as $label) echo "\t\t<th>".lang($label)."</th>\n";
+				foreach($props2show as $label)
+				{
+					echo "\t\t<th>".lang($label)."</th>\n";
+				}
 				echo "\t</tr>\n";
 			}
 			$props = $this->props2array($file['props']);
@@ -1083,9 +1093,9 @@ class groupdav extends HTTP_WebDAV_Server
 		foreach($collection_props as $name => $value)
 		{
 			$class = $class == 'row_on' ? 'row_off' : 'row_on';
-			$ns = explode(':',$name);
-			$name = array_pop($ns);
-			$ns = implode(':',$ns);
+			$parts = explode(':', $name);
+			$name = array_pop($parts);
+			$ns = implode(':', $parts);
 			echo "\t<tr class='$class'>\n\t\t<td>".htmlspecialchars($ns)."</td><td style='white-space: nowrap'>".htmlspecialchars($name)."</td>\n";
 			echo "\t\t<td>".$value."</td>\n\t</tr>\n";
 		}
@@ -1132,14 +1142,13 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			$value = preg_replace('/\<(D:)?href\>('.preg_quote($this->base_uri.'/','/').')?([^<]+)\<\/(D:)?href\>/i','<\\1href><a href="\\2\\3">\\3</a></\\4href>',$value);
 		}
-		$value = $value[0] == '<'  || strpos($value, "\n") !== false ? '<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
+		$ret = $value[0] == '<'  || strpos($value, "\n") !== false ? '<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
 
 		if ($href)
 		{
-			$value = preg_replace('/&lt;a href=&quot;(.+)&quot;&gt;/', '<a href="\\1">', $value);
-			$value = str_replace('&lt;/a&gt;', '</a>', $value);
+			$ret = str_replace('&lt;/a&gt;', '</a>', preg_replace('/&lt;a href=&quot;(.+)&quot;&gt;/', '<a href="\\1">', $ret));
 		}
-		return $value;
+		return $ret;
 	}
 
 	/**
@@ -1204,6 +1213,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
+		$id = $app = $user = null;
 		$this->_parse_path($options['path'],$id,$app,$user);
 
 		if (($handler = self::app_handler($app)))
@@ -1267,12 +1277,14 @@ class groupdav extends HTTP_WebDAV_Server
 		switch($action)
 		{
 			case 'attachment-add':
+				$matches = null;
 				if (isset($this->_SERVER['HTTP_CONTENT_DISPOSITION']) &&
 					substr($this->_SERVER['HTTP_CONTENT_DISPOSITION'], 0, 10) === 'attachment' &&
 					preg_match('/filename="?([^";]+)/', $this->_SERVER['HTTP_CONTENT_DISPOSITION'], $matches))
 				{
 					$filename = egw_vfs::basename($matches[1]);
 				}
+				$path = null;
 				if (!($to = self::fopen_attachment($handler->app, $handler->get_id($entry), $filename, $this->_SERVER['CONTENT_TYPE'], $path)) ||
 					isset($options['stream']) && ($copied=stream_copy_to_stream($options['stream'], $to)) === false ||
 					isset($options['content']) && ($copied=fwrite($to, $options['content'])) === false)
@@ -1288,7 +1300,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 			case 'attachment-remove':
 			case 'attachment-update':
-				if (empty($_GET['managed-id']) || !($path = self::managed_id2path($_GET['managed-id'], $app, $id)))
+				if (empty($_GET['managed-id']) || !($path = self::managed_id2path($_GET['managed-id'], $handler->app, $id)))
 				{
 					self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
 					return '403 Forbidden';
@@ -1340,7 +1352,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 		// check/handle Prefer: return-representation
 		// we can NOT use 204 No content (forbidds a body) with return=representation, therefore we need to use 200 Ok instead!
-		if ($handler->check_return_representation($options, $id, $user) && (int)$ret == 204)
+		if ($handler->check_return_representation($options, $id) && (int)$ret == 204)
 		{
 			$ret = '200 Ok';
 		}
@@ -1446,19 +1458,20 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * @param string $app
 	 * @param int|string $id
-	 * @param string $filename defaults to 'attachment'
-	 * @param string $mime=null mime-type to generate extension
-	 * @param string &$path=null on return path opened
+	 * @param string $_filename defaults to 'attachment'
+	 * @param string $mime =null mime-type to generate extension
+	 * @param string &$path =null on return path opened
 	 * @return resource
 	 */
-	protected static function fopen_attachment($app, $id, $filename, $mime=null, &$path=null)
+	protected static function fopen_attachment($app, $id, $_filename, $mime=null, &$path=null)
 	{
-		$filename = empty($filename) ? 'attachment' : egw_vfs::basename($filename);
+		$filename = empty($_filename) ? 'attachment' : egw_vfs::basename($_filename);
 
 		if (strpos($mime, ';')) list($mime) = explode(';', $mime);	// in case it contains eg. charset info
 
 		$ext = !empty($mime) ? mime_magic::mime2ext($mime) : '';
 
+		$matches = null;
 		if (!$ext || substr($filename, -strlen($ext)-1) == '.'.$ext ||
 			preg_match('/\.([^.]+)$/', $filename, $matches) && mime_magic::ext2mime($matches[1]) == $mime)
 		{
@@ -1494,7 +1507,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	protected static function path2location($path)
 	{
-		static $url_prefix;
+		static $url_prefix = null;
 		if (!isset($url_prefix))
 		{
 			$url_prefix = '';
@@ -1560,8 +1573,8 @@ class groupdav extends HTTP_WebDAV_Server
 	 * Return vfs-path of a managed-id
 	 *
 	 * @param string $managed_id
-	 * @param string $app=null app-name to check against path
-	 * @param string|int $id=null id to check agains path
+	 * @param string $app =null app-name to check against path
+	 * @param string|int $id =null id to check agains path
 	 * @return string|boolean "/apps/$app/$id/something" or false if not found or not belonging to given $app/$id
 	 */
 	static public function managed_id2path($managed_id, $app=null, $id=null)
@@ -1619,11 +1632,15 @@ class groupdav extends HTTP_WebDAV_Server
 		if ($this->debug) error_log(__METHOD__."(".array2string($options).')');
 
 		// parse path in form [/account_lid]/app[/more]
+		$id = $app = $user = $user_prefix = null;
 		self::_parse_path($options['path'],$id,$app,$user,$user_prefix);	// allways returns false if eg. !$id
 		if ($app == 'principals' || $id || $options['path'] == '/')
 		{
 			if ($this->debug > 1) error_log(__METHOD__.": user='$user', app='$app', id='$id': 404 not found!");
-			foreach($options['props'] as &$prop) $prop['status'] = '403 Forbidden';
+			foreach($options['props'] as &$prop)
+			{
+				$prop['status'] = '403 Forbidden';
+			}
 			return 'NOT allowed to PROPPATCH that resource!';
 		}
 		// store selected props in preferences, eg. calendar-color, see self::$proppatch_props
@@ -1699,6 +1716,7 @@ class groupdav extends HTTP_WebDAV_Server
 
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
+		$id = $app = $user = $prefix = null;
 		if (!$this->_parse_path($options['path'],$id,$app,$user,$prefix))
 		{
 			return '404 Not Found';
@@ -1734,6 +1752,7 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
+		$id = $app = $user = null;
 		if (!$this->_parse_path($options['path'],$id,$app,$user))
 		{
 			return '404 Not Found';
@@ -1795,6 +1814,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function LOCK(&$options)
 	{
+		$id = $app = $user = null;
 		self::_parse_path($options['path'],$id,$app,$user);
 		$path = egw_vfs::app_entry_lock_path($app,$id);
 
@@ -1828,6 +1848,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function UNLOCK(&$options)
 	{
+		$id = $app = $user = null;
 		self::_parse_path($options['path'],$id,$app,$user);
 		$path = egw_vfs::app_entry_lock_path($app,$id);
 
@@ -1843,10 +1864,10 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function checkLock($path)
 	{
+		$id = $app = $user = null;
 		self::_parse_path($path,$id,$app,$user);
-		$path = egw_vfs::app_entry_lock_path($app,$id);
 
-		return egw_vfs::checkLock($path);
+		return egw_vfs::checkLock(egw_vfs::app_entry_lock_path($app, $id));
 	}
 
 	/**
@@ -1857,9 +1878,10 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function ACL(&$options)
 	{
+		$id = $app = $user = null;
 		self::_parse_path($options['path'],$id,$app,$user);
 
-		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$path");
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$options[path]");
 
 		$options['errors'] = array();
 		switch ($app)
@@ -1884,7 +1906,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @param int &$id
 	 * @param string &$app addressbook, calendar, infolog (=infolog)
 	 * @param int &$user
-	 * @param string &$user_prefix=null
+	 * @param string &$user_prefix =null
 	 * @return boolean true on success, false on error
 	 */
 	function _parse_path($path,&$id,&$app,&$user,&$user_prefix=null)
@@ -2019,7 +2041,7 @@ class groupdav extends HTTP_WebDAV_Server
 	/**
 	 * Log the request
 	 *
-	 * @param string $extra='' extra text to add below request-log, eg. exception thrown
+	 * @param string $extra ='' extra text to add below request-log, eg. exception thrown
 	 */
 	protected function log_request($extra='')
 	{
@@ -2065,7 +2087,10 @@ class groupdav extends HTTP_WebDAV_Server
 			$content .= 'HTTP/1.1 '.$this->_http_status."\n";
 			$content .= 'Date: '.str_replace('+0000', 'GMT', gmdate('r'))."\n";
 			$content .= 'Server: '.$_SERVER['SERVER_SOFTWARE']."\n";
-			foreach(headers_list() as $line) $content .= $line."\n";
+			foreach(headers_list() as $line)
+			{
+				$content .= $line."\n";
+			}
 			if (($c = ob_get_flush())) $content .= "\n";
 			if (self::$log_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED\n";
 			$content .= $c;
@@ -2084,7 +2109,10 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			else
 			{
-				foreach(explode("\n",$content) as $line) error_log($line);
+				foreach(explode("\n",$content) as $line)
+				{
+					error_log($line);
+				}
 			}
 		}
 	}
@@ -2093,7 +2121,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 * Output xml error element
 	 *
 	 * @param string|array $xml_error string with name for empty element in DAV NS or array with props
-	 * @param string $human_readable=null human readable error message
+	 * @param string $human_readable =null human readable error message
 	 */
 	public static function xml_error($xml_error, $human_readable=null)
 	{
@@ -2179,6 +2207,7 @@ class groupdav extends HTTP_WebDAV_Server
 	public static function exception_handler(Exception $e)
 	{
 		// logging exception as regular egw_execption_hander does
+		$headline = null;
 		_egw_log_exception($e,$headline);
 
 		// exception handler sending message back to the client as basic auth message

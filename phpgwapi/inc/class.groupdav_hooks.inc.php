@@ -1,13 +1,13 @@
 <?php
 /**
- * EGroupware: GroupDAV hooks: eg. preferences
+ * EGroupware: CalDAV/CardDAV/GroupDAV access: hooks eg. preferences
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
