@@ -429,7 +429,6 @@ class infolog_so
 		$this->db->delete($this->info_table,array('info_id'=>$info_id),__LINE__,__FILE__);
 		$this->db->delete($this->extra_table,array('info_id'=>$info_id),__LINE__,__FILE__);
 		egw_link::unlink(0,'infolog',$info_id);
-		egw_index::delete('infolog',$info_id);
 
 		if ($this->data['info_id'] == $info_id)
 		{
@@ -439,13 +438,12 @@ class infolog_so
 		if ($delete_children)
 		{
 			$db2 = clone($this->db);	// we need an extra result-set
-			$db2->select($this->info_table,'info_id',array(
+			foreach($db2->select($this->info_table,'info_id',array(
 					'info_id_parent'	=> $info_id,
 					'info_owner'		=> $this->user,
-				),__LINE__,__FILE__);
-			while ($db2->next_record())
+				),__LINE__,__FILE__) as $row)
 			{
-				$this->delete($db2->f(0),$delete_children);
+				$this->delete($row['info_id'], $delete_children);
 			}
 		}
 		// set parent_id to $new_parent or 0 for all not deleted children
@@ -625,10 +623,6 @@ class infolog_so
 		// echo "<p>soinfolog.write this->data= "; _debug_array($this->data);
 		//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning id=".$this->data['info_id']);
 
-		// update the index
-		//egw_index::save('infolog',$this->data['info_id'],$this->data['info_owner'],$this->data,$this->data['info_cat'],
-		//	array('info_uid','info_type','info_status','info_confirm','info_access'));
-
 		return $this->data['info_id'];
 	}
 
@@ -806,23 +800,6 @@ class infolog_so
 		if ($query['query']) $query['search'] = $query['query'];	// allow both names
 		if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
 		{
-			/* new code join the index
-			if (ctype_digit($query['search']))	// search by ticket-number (numbers get never indexed!)
-			{
-				$sql_query = 'AND info_id='.(int)$query['search'];
-			}
-			else
-			{
-				$join = egw_index::sql_join_ids_by_keyword($query['search'],'infolog','info_id');
-			}
-			*/
-			/* new code with info_id IN (subquery) --> way to slow
-			$sql_query .= 'AND info_id IN ('.
-				egw_index::sql_ids_by_keyword(explode(' ',$query['search']),egw_index::MATCH_CONTAINS,'infolog').
-				// add search string itself, if it is numeric, to allow to search for a info_id/ticket number
-				ctype_digit($query['search'] ? ' UNION (SELECT '.$this->db->quote($query['search']).')' : '').')';
-			*/
-			/* old code searching the table direct */
 			$columns = array('info_from','info_addr','info_location','info_subject','info_extra_value');
 			// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
 			if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
@@ -953,19 +930,17 @@ class infolog_so
 	{
 		$users = array();
 
-		$this->db->select($this->info_table,'DISTINCT info_owner',array(
+		foreach($this->db->select($this->info_table,'DISTINCT info_owner',array(
 			str_replace(' AND ','',$this->statusFilter('open')),
 			'(ABS(info_startdate-'.time().')<'.(4*24*60*60).' OR '.	// start_day within 4 days
 			'ABS(info_enddate-'.time().')<'.(4*24*60*60).')',		// end_day within 4 days
-		),__LINE__,__FILE__);
-		while ($this->db->next_record())
+		),__LINE__,__FILE__) as $row)
 		{
-			$users[] = $this->db->f(0);
+			$users[] = $row['info_responsible'];
 		}
-		$this->db->select($this->info_table,'DISTINCT info_responsible',$this->statusFilter('open',false),__LINE__,__FILE__);
-		while ($this->db->next_record())
+		foreach($this->db->select($this->info_table,'DISTINCT info_responsible',$this->statusFilter('open',false),__LINE__,__FILE__) as $row)
 		{
-			foreach(explode(',',$this->db->f(0)) as $responsible)
+			foreach(explode(',', $row['info_responsible']) as $responsible)
 			{
 				if ($GLOBALS['egw']->accounts->get_type($responsible) == 'g')
 				{

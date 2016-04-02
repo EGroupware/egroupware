@@ -86,8 +86,9 @@ $setup_info = $GLOBALS['egw_setup']->detection->get_versions();
 $GLOBALS['egw_info']['setup']['stage']['db'] = $GLOBALS['egw_setup']->detection->check_db($setup_info);
 if ($GLOBALS['egw_info']['setup']['stage']['db'] != 1)
 {
-	$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
-	$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
+	$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions(
+		$GLOBALS['egw_setup']->detection->get_versions());
+
 	$GLOBALS['egw_info']['setup']['stage']['db'] = $GLOBALS['egw_setup']->detection->check_db($setup_info);
 	if($GLOBALS['DEBUG'])
 	{
@@ -101,7 +102,7 @@ if ($GLOBALS['DEBUG']) { echo 'Stage: ' . $GLOBALS['egw_info']['setup']['stage']
 //$action = 'Upgrade';
 // end DEBUG code
 
-switch(@get_var('action',Array('POST')))
+switch($_POST['action'])
 {
 	case 'Uninstall all applications':
 		$subtitle = lang('Deleting Tables');
@@ -254,8 +255,9 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		break;
 	case 4:
 		$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
-		$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',$setup_info['phpgwapi']['currentver']));
-		$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['phpgwapi']['version']));
+		$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',
+			isset($setup_info['api']['currentver']) ? $setup_info['api']['currentver'] : $setup_info['phpgwapi']['currentver']));
+		$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['api']['version']));
 		$setup_tpl->set_var('backupwarn',lang('but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>'));
 		$setup_tpl->set_var('lang_backup',lang('create a backup before upgrading the DB'));
 		$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
@@ -301,14 +303,14 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 					break;
 				case 'drop':
 					Api\Csrf::validate($_POST['csrf_token'], __FILE__);
-					$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
-					$setup_info = $GLOBALS['egw_setup']->process->droptables($setup_info);
+					$setup_info = $GLOBALS['egw_setup']->process->droptables(
+						$GLOBALS['egw_setup']->detection->get_versions($setup_info));
 					break;
 				case 'new':
 					// use uploaded backup, instead installing from scratch
 					if ($_POST['upload'])
 					{
-						$db_backup = new db_backup();
+						$db_backup = new Api\Db\Backup();
 						if (is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
 							is_uploaded_file($_FILES['uploaded']['tmp_name']))
 						{
@@ -336,14 +338,14 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 					}
 					else
 					{
-						$setup_info = $GLOBALS['egw_setup']->detection->upgrade_exclude($setup_info);
+						$s_info = $GLOBALS['egw_setup']->detection->upgrade_exclude($setup_info);
 						// Set the DB's client charset if a system-charset is set
 						if (preg_match('/^[a-z0-9-]+$/i', $_REQUEST['system_charset']))
 						{
 							$GLOBALS['egw_setup']->system_charset = $_REQUEST['system_charset'];
 							$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($_REQUEST['system_charset']);
 						}
-						$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True);
+						$setup_info = $GLOBALS['egw_setup']->process->pass($s_info,'new',$_REQUEST['debug'],True);
 						$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					}
 					break;
@@ -468,54 +470,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['config'])
 		$setup_tpl->set_var('admin_table_data',lang('Not ready for this stage yet'));
 		break;
 }
-/*
-// Lang Section
-$setup_tpl->set_var('lang_step_text',lang('Step %1 - Language Management', ++$num));
-$GLOBALS['egw_info']['setup']['stage']['lang'] = $GLOBALS['egw_setup']->detection->check_lang();
 
-// begin DEBUG code
-//$GLOBALS['egw_info']['setup']['stage']['lang'] = 0;
-// end DEBUG code
-
-switch($GLOBALS['egw_info']['setup']['stage']['lang'])
-{
-	case 1:
-		$setup_tpl->set_var('lang_status_img',$incomplete);
-		$setup_tpl->set_var('lang_status_alt','not completed');
-		$btn_install_lang = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
-			lang('You do not have any languages installed. Please install one now <br />'),
-			'post','lang.php',
-			'submit',lang('Install Language'),
-			'');
-		$setup_tpl->set_var('lang_table_data',$btn_install_lang);
-		break;
-	case 10:
-		$langs_list = array();
-		$languages = setup_translation::get_supported_langs();
-		foreach ($GLOBALS['egw_info']['setup']['installed_langs'] as $key => $value)
-		{
-			$langs_list[] = isset($languages[$key]) ? $languages[$key]['descr'] : $value;
-		}
-		$setup_tpl->set_var('lang_status_img',$completed);
-		$setup_tpl->set_var('lang_status_alt','completed');
-		$btn_manage_lang = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
-			lang('This stage is completed<br />') . lang('Currently installed languages: %1 <br />',implode(', ',$langs_list)),
-			'post','lang.php',
-			'submit',lang('Manage Languages'),
-			'');
-		// show system-charset and offer conversation
-		$btn_manage_lang .= lang('Current system-charset is %1.',$GLOBALS['egw_setup']->system_charset ?
-			"'<b>".$GLOBALS['egw_setup']->system_charset."</b>'" : lang('not set'))."\n";
-		$btn_manage_lang .= lang('To change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.');
-		$setup_tpl->set_var('lang_table_data',$btn_manage_lang);
-		break;
-	default:
-		$setup_tpl->set_var('lang_status_img',$incomplete);
-		$setup_tpl->set_var('lang_status_alt',lang('not completed'));
-		$setup_tpl->set_var('lang_table_data',lang('Not ready for this stage yet'));
-		break;
-}
-*/
 $setup_tpl->set_var('apps_step_text',lang('Step %1 - Advanced Application Management', ++$num));
 //	$GLOBALS['egw_info']['setup']['stage']['apps'] = $GLOBALS['egw_setup']->check_apps();
 switch($GLOBALS['egw_info']['setup']['stage']['db'])
@@ -534,7 +489,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 			}
 		}
 		// warn if essential apps are not installed
-		foreach(array('phpgwapi','etemplate','home','admin','preferences','emailadmin') as $app)
+		foreach(array('api','phpgwapi','etemplate','home','admin','preferences') as $app)
 		{
 			if (!isset($setup_info[$app]) || empty($setup_info[$app]['currentver']))
 			{

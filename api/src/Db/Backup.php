@@ -118,41 +118,23 @@ class Backup
 		{
 			if ($GLOBALS['egw_setup']->config_table && $GLOBALS['egw_setup']->table_exist(array($GLOBALS['egw_setup']->config_table)))
 			{
-				$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='backup_dir'",__LINE__,__FILE__);
-				$this->db->next_record();
-				if (!($this->backup_dir = $this->db->f(0)))
-				{
-					$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='files_dir'",__LINE__,__FILE__);
-					$this->db->next_record();
-					$this->backup_dir = $this->db->f(0).'/db_backup';
-				}
-				$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='files_dir'",__LINE__,__FILE__);
-				$this->db->next_record();
-				if (!($this->files_dir = $this->db->f(0)))
+				if (!($this->files_dir = $this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='files_dir'",__LINE__,__FILE__)->fetchColumn()))
 				{
 					error_log(__METHOD__."->"."No files Directory set/found");
 				}
-				$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
-				$this->db->next_record();
-				$this->charset = $this->db->f(0);
-				if (!$this->charset)
+				if (!($this->backup_dir = $this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='backup_dir'",__LINE__,__FILE__)->fetchColumn()))
 				{
-					$this->db->query("SELECT content FROM {$GLOBALS['egw_setup']->lang_table} WHERE message_id='charset' AND app_name='common' AND lang!='en'",__LINE__,__FILE__);
-					$this->db->next_record();
-					$this->charset = $this->db->f(0);
+					$this->backup_dir = $this->files_dir.'/db_backup';
 				}
-				$this->db->select($GLOBALS['egw_setup']->applications_table,'app_version',array('app_name'=>'phpgwapi'),__LINE__,__FILE__);
-				$this->api_version = $this->db->next_record() ? $this->db->f(0) : false;
-				/* Backup settings */
-				$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='backup_mincount'",__LINE__,__FILE__);
-				$this->db->next_record();
-				$this->backup_mincount = $this->db->f(0);
+				$this->charset = $this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__)->fetchColumn();
+				$this->api_version = $this->db->select($GLOBALS['egw_setup']->applications_table,'app_version',array('app_name'=>array('api','phpgwapi')),
+					__LINE__,__FILE__,0,'ORDER BY app_name ASC')->fetchColumn();
+				// Backup settings
+				$this->backup_mincount = $this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='backup_mincount'",__LINE__,__FILE__)->fetchColumn();
 				// backup files too
-				$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='backup_files'",__LINE__,__FILE__);
-				$this->db->next_record();
-				$this->backup_files = (bool)$this->db->f(0);
+				$this->backup_files = (bool)$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='backup_files'",__LINE__,__FILE__)->fetchColumn();
 			}
-			if (!$this->charset) $this->charset = 'iso-8859-1';
+			if (!$this->charset) $this->charset = 'utf-8';
 		}
 		else	// called from eGW
 		{
@@ -163,9 +145,9 @@ class Backup
 			$this->files_dir = $GLOBALS['egw_info']['server']['files_dir'];
 			$this->backup_mincount = $GLOBALS['egw_info']['server']['backup_mincount'];
 			$this->backup_files = $GLOBALS['egw_info']['server']['backup_files'];
-			$this->charset = $GLOBALS['egw']->translation->charset();
+			$this->charset = Api\Translation::charset();
 
-			$this->api_version = $GLOBALS['egw_info']['apps']['phpgwapi']['version'];
+			$this->api_version = $GLOBALS['egw_info']['apps'][isset($GLOBALS['egw_info']['apps']['api'])?'api':'phpgwapi']['version'];
 		}
 		// Set a default value if not set.
 		if (!isset($this->backup_mincount))

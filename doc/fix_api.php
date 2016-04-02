@@ -103,7 +103,7 @@ foreach(array(
 	'etemplate_widget_taglist' => 'Api\\Etemplate\\Widget\\Taglist',
 	'etemplate_widget_file' => 'Api\\Etemplate\\Widget\\File',
 	'etemplate_widget_vfs' => 'Api\\Etemplate\\Widget\\Vfs',
-	'etemplate_requst' => 'Api\\Etemplate\\Request',
+	'etemplate_request' => 'Api\\Etemplate\\Request',
 	'nextmatch_widget::category_action' => 'Api\\Etemplate\\Widget\\Nextmatch::category_action',
 	// so_sql and friends
 	'so_sql' => 'Api\\Storage\\Base',

@@ -15,9 +15,6 @@ namespace EGroupware\Api\Contacts;
 
 use EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use common;	// common::generate_uid
-
 /**
  * Contacts - SQL storage
  */
@@ -72,10 +69,10 @@ class Sql extends Api\Storage
 	 */
 	function __construct(Api\Db $db=null)
 	{
-		parent::__construct('phpgwapi', 'egw_addressbook', self::EXTRA_TABLE,
+		parent::__construct('api', 'egw_addressbook', self::EXTRA_TABLE,
 			'contact_', '_name', '_value', '_id', $db);
 
-		// Get custom fields from addressbook instead of phpgwapi
+		// Get custom fields from addressbook instead of api
 		$this->customfields = Api\Storage\Customfields::get('addressbook');
 
 		if ($GLOBALS['egw_info']['server']['account_repository'])
@@ -599,7 +596,7 @@ class Sql extends Api\Storage
 			$update = array();
 			if (!isset($data['list_uid']))
 			{
-				$update['list_uid'] = $data['list_uid'] = common::generate_uid('addresbook-lists', $list_id);
+				$update['list_uid'] = $data['list_uid'] = Api\CalDAV::generate_uid('addresbook-lists', $list_id);
 			}
 			if (!isset($data['list_carddav_name']))
 			{
@@ -766,7 +763,7 @@ class Sql extends Api\Storage
 		// enforce a minium uid strength
 		if (is_array($contact) && (!isset($contact['uid'])
 				|| strlen($contact['uid']) < $minimum_uid_length)) {
-			parent::update(array('uid' => common::generate_uid('addressbook',$contact['id'])));
+			parent::update(array('uid' => Api\CalDAV::generate_uid('addressbook',$contact['id'])));
 		}
 		return $contact;
 	}
@@ -818,7 +815,7 @@ class Sql extends Api\Storage
 		// enforce a minium uid strength
 		if (!isset($this->data['uid']) || strlen($this->data['uid']) < $minimum_uid_length)
 		{
-			$update['uid'] = common::generate_uid('addressbook',$this->data['id']);
+			$update['uid'] = Api\CalDAV::generate_uid('addressbook',$this->data['id']);
 			//echo "<p>set uid={$this->data['uid']}, etag={$this->data['etag']}</p>";
 		}
 		// set carddav_name, if not given by caller

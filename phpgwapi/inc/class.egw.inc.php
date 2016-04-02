@@ -82,12 +82,13 @@ class egw extends egw_minimal
 	function setup($domain_names,$createsessionobject=True)
 	{
 		// create the DB-object
-		$this->db = new egw_db($GLOBALS['egw_info']['server']);
+		// as SiteMgr, Wiki, KnowledgeBase and probably more still use eg next_record(), we stick with Db\Deprecated for now
+		$this->db = new Api\Db\Deprecated($GLOBALS['egw_info']['server']);
 		if ($this->debug)
 		{
 			$this->db->Debug = 1;
 		}
-		$this->db->set_app('phpgwapi');
+		$this->db->set_app(Api\Db::API_APPNAME);
 
 		// check if eGW is already setup, if not redirect to setup/
 		try {

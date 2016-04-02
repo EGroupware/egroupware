@@ -1052,7 +1052,7 @@ function phpgwapi_upgrade14_3_906()
 }
 
 /**
- * Move content of (usually empty or for LDAP 2 rows) egw_nextid table to egw_config table and drop it
+ * Drop no longer used egw_hooks table
  */
 function phpgwapi_upgrade14_3_907()
 {
@@ -1060,3 +1060,17 @@ function phpgwapi_upgrade14_3_907()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.908';
 }
+
+
+/**
+ * Drop never used index tables
+ */
+function phpgwapi_upgrade14_3_908()
+{
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_index_keywords');
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_index');
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_cat2entry');
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.909';
+}
+

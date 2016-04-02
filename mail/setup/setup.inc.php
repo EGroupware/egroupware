@@ -44,12 +44,8 @@ $setup_info['mail']['depends'][] = array(
 	'versions' => Array('14.1')
 );
 $setup_info['mail']['depends'][] = array(
-	'appname'  => 'etemplate',
-	'versions' => Array('14.1')
-);
-$setup_info['mail']['depends'][] = array(
-	'appname'  => 'emailadmin',
-	'versions' => Array('14.1')
+	'appname'  => 'api',
+	'versions' => Array('16.1')
 );
 // installation checks for mail
 $setup_info['mail']['check_install'] = array(

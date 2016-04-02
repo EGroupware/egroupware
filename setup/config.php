@@ -103,10 +103,9 @@ if($GLOBALS['error'] && is_array($newsettings))
 }
 else
 {
-	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'*',false,__LINES__,__FILES__);
-	while($GLOBALS['egw_setup']->db->next_record())
+	foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'*',false,__LINES__,__FILES__) as $row)
 	{
-		$GLOBALS['current_config'][$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
+		$GLOBALS['current_config'][$row['config_name']] = $row['config_value'];
 	}
 }
 $setup_tpl->pparse('out','T_config_pre_script');

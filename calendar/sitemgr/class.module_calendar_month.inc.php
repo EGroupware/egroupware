@@ -154,11 +154,8 @@ class module_calendar_month extends Module
 			$site_urls[] = ($_SERVER['HTTPS'] ? 'https://' : 'http://') . $_SERVER['SERVER_ADDR'] . $sitemgr_path;
 			$site_urls[] = $site_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . $sitemgr_path;
 
-			$GLOBALS['egw']->db->select('egw_sitemgr_sites','anonymous_user,anonymous_passwd,site_id',
-				array('site_url' => $site_urls),__LINE__,__FILE__,false,'','sitemgr');
-
-			$GLOBALS['egw']->db->next_record();
-			$anon_user = $this->accounts->name2id($GLOBALS['egw']->db->f('anonymous_user'),'account_lid','u');
+			$anon_user = $this->accounts->name2id($GLOBALS['egw']->db->select('egw_sitemgr_sites','anonymous_user,anonymous_passwd,site_id',
+				array('site_url' => $site_urls),__LINE__,__FILE__,false,'','sitemgr')->fetchColumn(),'account_lid','u');
 		}
 
 		$anon_groups = $this->accounts->memberships($anon_user,true);

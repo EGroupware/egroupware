@@ -68,7 +68,7 @@ $bgcolor = array('#DDDDDD','#EEEEEE');
 function parsedep($depends,$main=True)
 {
 	$depstring = '(';
-	foreach($depends as $a => $b)
+	foreach($depends as $b)
 	{
 		foreach($b as $c => $d)
 		{
@@ -98,14 +98,11 @@ function parsedep($depends,$main=True)
 $GLOBALS['egw_setup']->loaddb();
 $GLOBALS['egw_info']['setup']['stage']['db'] = $GLOBALS['egw_setup']->detection->check_db();
 
-$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
-//var_dump($setup_info);exit;
-$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
-//var_dump($setup_info);exit;
-$setup_info = $GLOBALS['egw_setup']->detection->compare_versions($setup_info);
-//var_dump($setup_info);exit;
-$setup_info = $GLOBALS['egw_setup']->detection->check_depends($setup_info);
-//var_dump($setup_info);exit;
+$setup_info = $GLOBALS['egw_setup']->detection->check_depends(
+	$GLOBALS['egw_setup']->detection->compare_versions(
+		$GLOBALS['egw_setup']->detection->get_db_versions(
+			$GLOBALS['egw_setup']->detection->get_versions())));
+
 @ksort($setup_info);
 
 if(@get_var('cancel',Array('POST')))
@@ -172,8 +169,8 @@ if(@get_var('submit',Array('POST')))
 
 			if ($setup_info[$appname]['tables'])
 			{
-				$terror = $GLOBALS['egw_setup']->process->current($terror,$DEBUG);
-				$terror = $GLOBALS['egw_setup']->process->default_records($terror,$DEBUG);
+				$terror_c = $GLOBALS['egw_setup']->process->current($terror, $DEBUG);
+				$terror = $GLOBALS['egw_setup']->process->default_records($terror_c, $DEBUG);
 				echo '<br />' . $app_title . ' '
 					. lang('tables installed, unless there are errors printed above') . '.';
 			}
@@ -193,7 +190,7 @@ if(@get_var('submit',Array('POST')))
 
 				if ($setup_info[$appname]['hooks'])
 				{
-					$GLOBALS['egw_setup']->register_hooks($setup_info[$appname]['name']);
+					Api\Hooks::read(true);
 					echo '<br />' . $app_title . ' ' . lang('hooks registered') . '.';
 				}
 			}
@@ -233,14 +230,9 @@ else
 
 if(@get_var('hooks', Array('GET')))
 {
-	egw_cache::flush(egw_cache::INSTANCE);
+	Api\Cache::flush(Api\Cache::INSTANCE);
 
-	// Find & register all application hooks
-	foreach($setup_info as $appname => $info)
-	{
-		if ($info['currentver']) $GLOBALS['egw_setup']->register_hooks($appname);
-	}
-	echo lang('All hooks registered') . '<br />';
+	echo lang('Cached cleared') . '<br />';
 }
 $detail = get_var('detail',Array('GET'));
 $resolve = get_var('resolve',Array('GET'));
@@ -256,28 +248,43 @@ if(@$detail)
 
 	foreach($setup_info[$detail] as $key => $val)
 	{
-		if($key != 'title')
+		switch($key)
 		{
-			$i = ($i ? 0 : 1);
-
-			if ($key == 'tables')
-			{
+			case 'title':
+				continue 2;
+			case 'tables':
 				$tblcnt = count($setup_info[$detail][$key]);
 				if(is_array($val))
 				{
 					$key = '<a href="sqltoarray.php?appname=' . $detail . '&submit=True&apps=True">' . $key . '(' . $tblcnt . ')</a>' . "\n";
 					$val = implode(',' . "\n",$val);
 				}
-			}
-			if ($key == 'hooks')   { $val = implode(',',$val); }
-			if ($key == 'depends') { $val = parsedep($val); }
-			if (is_array($val))    { $val = implode(',',$val); }
-
-			$setup_tpl->set_var('bg_color',$bgcolor[$i]);
-			$setup_tpl->set_var('name',$key);
-			$setup_tpl->set_var('details',$val);
-			$setup_tpl->pparse('out','detail');
+				break;
+			case 'hooks':
+				foreach($val as &$hooks)
+				{
+					$hooks = (array)$hooks;
+				}
+				$val = str_replace('EGroupware\\', '', implode(', ', call_user_func_array('array_merge', $val)));
+				break;
+			case 'depends':
+				foreach($val as &$dep)
+				{
+					$dep = $dep['appname'].': '.implode(', ', $dep['versions']);
+				}
+				$val = implode('; ', $val);
+				break;
+			case 'check_install':
+				$val = array2string($val);
+				break;
+			default:
+				if (is_array($val)) $val = implode(', ', $val);
+				break;
 		}
+		$setup_tpl->set_var('bg_color', $bgcolor[++$i & 1]);
+		$setup_tpl->set_var('name',$key);
+		$setup_tpl->set_var('details',$val);
+		$setup_tpl->pparse('out','detail');
 	}
 
 	echo '<br /><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
@@ -345,8 +352,7 @@ elseif (@$resolve)
 					{
 						$list .= $y . ', ';
 					}
-					$list = substr($list,0,-2);
-					echo "$list\n";
+					echo substr($list,0,-2)."\n";
 				}
 				echo '<br /><br />' . lang('The table definition was correct, and the tables were installed') . '.';
 			}
@@ -423,7 +429,7 @@ else
 			switch($value['status'])
 			{
 				case 'C':
-					$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+					$setup_tpl->set_var('remove', in_array($key, array('api', 'phpgwapi')) ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 					$setup_tpl->set_var('upgrade','&nbsp;');
 					if (!$GLOBALS['egw_setup']->detection->check_app_tables($value['name']))
 					{

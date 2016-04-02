@@ -62,20 +62,19 @@ class setup_detection
 				/* one of these tables exists. checking for post/pre beta version */
 				if($GLOBALS['egw_setup']->applications_table != 'applications')
 				{
-					$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'*',false,__LINE__,__FILE__);
-					while(@$GLOBALS['egw_setup']->db->next_record())
+					foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'*',false,__LINE__,__FILE__) as $row)
 					{
-						$app = $GLOBALS['egw_setup']->db->f('app_name');
+						$app = $row['app_name'];
 						if (!isset($setup_info[$app]))	// app source no longer there
 						{
 							$setup_info[$app] = array(
 								'name' => $app,
-								'tables' => $GLOBALS['egw_setup']->db->f('app_tables'),
+								'tables' => $row['app_tables'],
 								'version' => 'deleted',
 							);
 						}
-						$setup_info[$app]['currentver'] = $GLOBALS['egw_setup']->db->f('app_version');
-						$setup_info[$app]['enabled'] = $GLOBALS['egw_setup']->db->f('app_enabled');
+						$setup_info[$app]['currentver'] = $row['app_version'];
+						$setup_info[$app]['enabled'] = $row['app_enabled'];
 					}
 					/* This is to catch old setup installs that did not have phpgwapi listed as an app */
 					$tmp = @$setup_info['phpgwapi']['version']; /* save the file version */
@@ -98,14 +97,13 @@ class setup_detection
 				}
 				else
 				{
-					$GLOBALS['egw_setup']->db->query('select * from applications');
-					while(@$GLOBALS['egw_setup']->db->next_record())
+					foreach($GLOBALS['egw_setup']->db->query('select * from applications') as $row)
 					{
-						if($GLOBALS['egw_setup']->db->f('app_name') == 'admin')
+						if($row['app_name'] == 'admin')
 						{
-							$setup_info['phpgwapi']['currentver'] = $GLOBALS['egw_setup']->db->f('app_version');
+							$setup_info['phpgwapi']['currentver'] = $row['app_version'];
 						}
-						$setup_info[$GLOBALS['egw_setup']->db->f('app_name')]['currentver'] = $GLOBALS['egw_setup']->db->f('app_version');
+						$setup_info[$row['app_name']]['currentver'] = $row['app_version'];
 					}
 				}
 			}
@@ -316,10 +314,24 @@ class setup_detection
 		{
 			$setup_info = $this->get_db_versions($setup_info);
 		}
-		//_debug_array($setup_info);
-		if (isset($setup_info['phpgwapi']['currentver']))
+		// first check new api installed and up to date
+		if (isset($setup_info['api']['currentver']))
 		{
-			if(@$setup_info['phpgwapi']['currentver'] == @$setup_info['phpgwapi']['version'])
+			if($setup_info['api']['currentver'] == $setup_info['api']['version'])
+			{
+				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Tables Complete)';
+				return 10;
+			}
+			else
+			{
+				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Tables need upgrading)';
+				return 4;
+			}
+		}
+		// then check old phpgwapi
+		elseif (isset($setup_info['phpgwapi']['currentver']))
+		{
+			if($setup_info['phpgwapi']['currentver'] == $setup_info['phpgwapi']['version'])
 			{
 				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Tables Complete)';
 				return 10;
@@ -340,6 +352,7 @@ class setup_detection
 				return 3;
 			}
 			catch (Api\Db\Exception $e) {
+				unset($e);
 				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
 				return 1;
 			}
@@ -359,10 +372,10 @@ class setup_detection
 		}
 
 		try {	// catch db errors
-			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array('config_app' => 'phpgwapi'),__LINE__,__FILE__);
-			while($GLOBALS['egw_setup']->db->next_record())
+			foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,
+				'config_name,config_value',array('config_app' => 'phpgwapi'),__LINE__,__FILE__) as $row)
 			{
-				$config[$GLOBALS['egw_setup']->db->f(0)] = $GLOBALS['egw_setup']->db->f(1);
+				$config[$row['config_name']] = $row['config_value'];
 			}
 		}
 		catch (Api\Db\Exception $e) {
@@ -432,46 +445,9 @@ class setup_detection
 		return 10;
 	}
 
-	function check_lang($check = True)
-	{
-		if($check && $GLOBALS['egw_info']['setup']['stage']['db'] != 10)
-		{
-			return '';
-		}
-		if (!$check)
-		{
-			$GLOBALS['setup_info'] = $GLOBALS['egw_setup']->detection->get_db_versions($GLOBALS['setup_info']);
-		}
-		try {
-			$GLOBALS['egw_setup']->db->query($q = "SELECT DISTINCT lang FROM {$GLOBALS['egw_setup']->lang_table}",__LINE__,__FILE__);
-		}
-		catch (Api\Db\Exception $e) {
-			// ignore db error
-		}
-		if($e || $GLOBALS['egw_setup']->db->num_rows() == 0)
-		{
-			$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 3 (No languages installed)';
-			return 1;
-		}
-		while(@$GLOBALS['egw_setup']->db->next_record())
-		{
-			$GLOBALS['egw_info']['setup']['installed_langs'][$GLOBALS['egw_setup']->db->f('lang')] = $GLOBALS['egw_setup']->db->f('lang');
-		}
-		foreach($GLOBALS['egw_info']['setup']['installed_langs'] as $value)
-		{
-			$sql = "SELECT lang_name FROM {$GLOBALS['egw_setup']->languages_table} WHERE lang_id = '".$value."'";
-			$GLOBALS['egw_setup']->db->query($sql);
-			if ($GLOBALS['egw_setup']->db->next_record())
-			{
-				$GLOBALS['egw_info']['setup']['installed_langs'][$value] = $GLOBALS['egw_setup']->db->f('lang_name');
-			}
-		}
-		$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 3 (Completed)';
-		return 10;
-	}
-
 	/**
 	 * Verify that all of an app's tables exist in the db
+	 *
 	 * @param $appname
 	 * @param $any		optional, set to True to see if any of the apps tables are installed
 	 */

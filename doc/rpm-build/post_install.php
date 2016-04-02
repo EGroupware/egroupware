@@ -655,17 +655,17 @@ function set_univention_defaults()
 			$domain = array_shift($domains);
 			// set "use auth with session credentials",tls,"not user editable","further identities"
 			$config['smtpserver'] = "$mailserver,465,,,yes,tls,no,yes";
-			$config['smtp'] = ',emailadmin_smtp_univention';
+			$config['smtp'] = ',Smtp\\Univention';
 			$config['mailserver'] = "$mailserver,993,$domain,email,tls";
 			if (_ucr_get('mail/dovecot') == 'yes')
 			{
-				$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_dovecot';
+				$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',Imap\\Dovecot';
 				// default with sieve port to 4190, as config is only available on host mailserver app is installed
 				if (!($sieve_port = _ucr_get('mail/dovecot/sieve/port'))) $sieve_port = 4190;
 			}
 			else
 			{
-				$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',emailadmin_imap_cyrus';
+				$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',Imap\\Cyrus';
 				// default with sieve port to 4190, as config is only available on host mailserver app is installed
 				if (!($sieve_port = _ucr_get('mail/cyrus/sieve/port'))) $sieve_port = 4190;
 			}

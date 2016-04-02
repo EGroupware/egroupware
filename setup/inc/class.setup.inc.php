@@ -114,13 +114,14 @@ class setup
 		}
 
 		try {
-			$GLOBALS['egw']->db = $this->db = new egw_db($GLOBALS['egw_domain'][$this->ConfigDomain]);
+			$GLOBALS['egw']->db = $this->db = new Api\Db\Deprecated($GLOBALS['egw_domain'][$this->ConfigDomain]);
 			$this->db->connect();
 		}
 		catch (Exception $e) {
+			unset($e);
 			return;
 		}
-		$this->db->set_app('phpgwapi');
+		$this->db->set_app(Api\Db::API_APPNAME);
 
 		if ($connect_and_setcharset)
 		{
@@ -128,22 +129,19 @@ class setup
 				$this->set_table_names();		// sets/checks config- and applications-table-name
 
 				// Set the DB's client charset if a system-charset is set
-				$this->db->select($this->config_table,'config_value',array(
-					'config_app'  => 'phpgwapi',
-					'config_name' => 'system_charset',
-				),__LINE__,__FILE__);
-				if ($this->db->next_record() && $this->db->f(0))
+				if (($this->system_charset = $this->db->select($this->config_table,'config_value',array(
+						'config_app'  => 'phpgwapi',
+						'config_name' => 'system_charset',
+					),__LINE__,__FILE__)->fetchColumn()))
 				{
-					$this->system_charset = $this->db->f(0);
 					$this->db_charset_was = $this->db->Link_ID->GetCharSet();	// needed for the update
 
 					// we can NOT set the DB charset for mysql, if the api version < 1.0.1.019, as it would mess up the DB content!!!
 					if (substr($this->db->Type,0,5) == 'mysql')	// we need to check the api version
 					{
-						$this->db->select($this->applications_table,'app_version',array(
-							'app_name'  => 'phpgwapi',
-						),__LINE__,__FILE__);
-						$api_version = $this->db->next_record() ? $this->db->f(0) : false;
+						$api_version = $this->db->select($this->applications_table,'app_version',array(
+								'app_name'  => 'phpgwapi',
+							),__LINE__,__FILE__)->fetchColumn();
 					}
 					if (!$api_version || !$this->alessthanb($api_version,'1.0.1.019'))
 					{
@@ -454,12 +452,13 @@ class setup
 	/**
 	 * Add an application to the phpgw_applications table
 	 *
-	 * @param $appname Application 'name' with a matching $setup_info[$appname] array slice
+	 * @param string $appname Application 'name' with a matching $setup_info[$appname] array slice
 	 * @param $_enable =99 set to True/False to override setup.inc.php setting
+	 * @param array $setup_info =null default use $GLOBALS['setup_info']
 	 */
-	function register_app($appname, $_enable=99)
+	function register_app($appname, $_enable=99, array $setup_info=null)
 	{
-		$setup_info = $GLOBALS['setup_info'];
+		if (!isset($setup_info)) $setup_info = $GLOBALS['setup_info'];
 
 		if(!$appname)
 		{
@@ -530,8 +529,7 @@ class setup
 			// _debug_array($setup_info[$appname]);
 		}
 
-		$this->db->select($this->applications_table,'COUNT(*)',array('app_name' => $appname),__LINE__,__FILE__);
-		if($this->db->next_record() && $this->db->f(0))
+		if ($this->db->select($this->applications_table,'COUNT(*)',array('app_name' => $appname),__LINE__,__FILE__)->fetchColumn())
 		{
 			if(@$GLOBALS['DEBUG'])
 			{
@@ -549,12 +547,12 @@ class setup
 	/**
 	 * Update application info in the db
 	 *
-	 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-	 * @param	$enabled	optional, set to False to not enable this app
+	 * @param string $appname	Application 'name' with a matching $setup_info[$appname] array slice
+	 * @param array $setup_info =null default use $GLOBALS['setup_info']
 	 */
-	function update_app($appname)
+	function update_app($appname, array $setup_info=null)
 	{
-		$setup_info = $GLOBALS['setup_info'];
+		if (!isset($setup_info)) $setup_info = $GLOBALS['setup_info'];
 
 		if(!$appname)
 		{
@@ -631,16 +629,16 @@ class setup
 		}
 
 		// Remove categories
-		$this->db->delete(categories::TABLE, array('cat_appname'=>$appname),__LINE__,__FILE__);
-		categories::invalidate_cache($appname);
+		$this->db->delete(Api\Categories::TABLE, array('cat_appname'=>$appname),__LINE__,__FILE__);
+		Api\Categories::invalidate_cache($appname);
 
 		// Remove config
-		$this->db->delete(config::TABLE, array('config_app'=>$appname),__LINE__,__FILE__);
+		$this->db->delete(Api\Config::TABLE, array('config_app'=>$appname),__LINE__,__FILE__);
 		//echo 'DELETING application: ' . $appname;
 		$this->db->delete($this->applications_table,array('app_name'=>$appname),__LINE__,__FILE__);
 
 		// Remove links to the app
-		egw_link::unlink(0, $appname);
+		Api\Link::unlink(0, $appname);
 
 		$this->clear_session_cache();
 	}
@@ -729,32 +727,6 @@ class setup
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Update an application's hooks
-	 *
-	 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-	 */
-	function update_hooks($appname)
-	{
-		$this->register_hooks($appname);
-	}
-
-	/**
-	 * de-Register an application's hooks
-	 *
-	 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
-	 * @return boolean|int false on error or number of removed hooks
-	 */
-	function deregister_hooks($appname)
-	{
-		if(!$appname)
-		{
-			return False;
-		}
-
-		Api\Hooks::read(true);
 	}
 
 	/**
@@ -961,7 +933,7 @@ class setup
 				}
 			}
 			try {
-				$this->accounts = new accounts($config);
+				$this->accounts = new Api\Accounts($config);
 			}
 			catch (Exception $e) {
 				echo "<p><b>".$e->getMessage()."</b></p>\n";

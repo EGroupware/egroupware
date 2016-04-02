@@ -204,7 +204,7 @@ class Hooks
 	 *
 	 * @param boolan $force_rescan =false true: do not use instance cache
 	 */
-	protected static function read($force_rescan=false)
+	public static function read($force_rescan=false)
 	{
 		//$starttime = microtime(true);
 		if ($force_rescan) Cache::unsetInstance(__CLASS__, 'locations');

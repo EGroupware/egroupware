@@ -181,6 +181,9 @@ class Base
 	 */
 	function __construct($app='',$table='',Api\Db $db=null,$column_prefix='',$no_clone=false,$timestamp_type=null)
 	{
+		// ease the transition to api
+		if ($app == 'phpgwapi') $app = 'api';
+
 		if ($no_clone)
 		{
 			$this->db = is_object($db) ? $db : $GLOBALS['egw']->db;

@@ -992,11 +992,10 @@ class Db
 			echo "<p>db::index_names() not yet implemented for db-type '$this->Type'</p>\n";
 			return $indices;
 		}
-		$this->query("SELECT relname FROM pg_class WHERE NOT relname ~ 'pg_.*' AND relkind ='i' ORDER BY relname");
-		while ($this->next_record())
+		foreach($this->query("SELECT relname FROM pg_class WHERE NOT relname ~ 'pg_.*' AND relkind ='i' ORDER BY relname") as $row)
 		{
 			$indices[] = array(
-				'index_name'      => $this->f(0),
+				'index_name'      => $row[0],
 				'tablespace_name' => $this->Database,
 				'database'        => $this->Database,
 			);
@@ -1541,7 +1540,7 @@ class Db
 	 * Application name used by the API
 	 *
 	 */
-	const API_APPNAME = 'phpgwapi';
+	const API_APPNAME = 'api';
 	/**
 	 * Default app, if no app specified in select, insert, delete, ...
 	 *
@@ -1559,6 +1558,9 @@ class Db
 	 */
 	function set_app($app)
 	{
+		// ease the transition to api
+		if ($app == 'phpgwapi') $app = 'api';
+
 		if ($this === $GLOBALS['egw']->db && $app != self::API_APPNAME)
 		{
 			// prevent that anyone switches the global db object to an other app
@@ -1581,6 +1583,9 @@ class Db
 	*/
 	function get_table_definitions($app=False,$table=False)
 	{
+		// ease the transition to api
+		if ($app === 'phpgwapi') $app = 'api';
+
 		static $all_app_data = array();
 		if ($app === true && $table)
 		{
@@ -1710,8 +1715,7 @@ class Db
 					}
 					// fall through !!!
 				default:
-					$this->select($table,'count(*)',$where,$line,$file);
-					if ($this->next_record() && $this->f(0))
+					if ($this->select($table,'count(*)',$where,$line,$file)->fetchColumn())
 					{
 						return !!$this->update($table,$data,$where,$line,$file,$app,$use_prepared_statement,$table_def);
 					}

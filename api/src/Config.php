@@ -86,7 +86,6 @@ class Config
 	{
 		if (is_array($this->config_data))
 		{
-			self::$db->lock(array(config::TABLE));
 			foreach($this->config_data as $name => $value)
 			{
 				self::save_value($name, $value, $this->appname, false);
@@ -99,7 +98,6 @@ class Config
 					//self::$db->delete(config::TABLE,array('config_app'=>$this->appname,'config_name'=>$name),__LINE__,__FILE__);
 				}
 			}
-			self::$db->unlock();
 
 			if ($this->appname == 'phpgwapi' && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 			{

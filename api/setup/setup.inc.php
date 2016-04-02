@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['api']['name']      = 'api';
 $setup_info['api']['title']     = 'EGroupware API';
-$setup_info['api']['version']   = '14.3.907';
+$setup_info['api']['version']   = '16.1';
 $setup_info['api']['versions']['current_header'] = '1.29';
 $setup_info['api']['enable']    = 3;
 $setup_info['api']['app_order'] = 1;
@@ -22,7 +22,7 @@ $setup_info['api']['maintainer']	= $setup_info['api']['author']	= array(
 	'email' => 'egroupware-developers@lists.sourceforge.net',
 );
 
-/* The tables this app creates
+// The tables this app creates
 $setup_info['api']['tables'][]  = 'egw_config';
 $setup_info['api']['tables'][]  = 'egw_applications';
 $setup_info['api']['tables'][]  = 'egw_acl';
@@ -31,7 +31,6 @@ $setup_info['api']['tables'][]  = 'egw_preferences';
 $setup_info['api']['tables'][]  = 'egw_access_log';
 $setup_info['api']['tables'][]  = 'egw_languages';
 $setup_info['api']['tables'][]  = 'egw_lang';
-$setup_info['api']['tables'][]  = 'egw_nextid';
 $setup_info['api']['tables'][]  = 'egw_categories';
 $setup_info['api']['tables'][]  = 'egw_history_log';
 $setup_info['api']['tables'][]  = 'egw_async';
@@ -45,7 +44,13 @@ $setup_info['api']['tables'][]  = 'egw_locks';
 $setup_info['api']['tables'][]  = 'egw_sqlfs_props';
 $setup_info['api']['tables'][]  = 'egw_customfields';
 $setup_info['api']['tables'][]  = 'egw_sharing';
-*/
+$setup_info['api']['tables'][]	= 'egw_mailaccounts';
+$setup_info['api']['tables'][]	= 'egw_ea_accounts';
+$setup_info['api']['tables'][]	= 'egw_ea_credentials';
+$setup_info['api']['tables'][]	= 'egw_ea_identities';
+$setup_info['api']['tables'][]	= 'egw_ea_valid';
+$setup_info['api']['tables'][]	= 'egw_ea_notifications';
+
 // hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
 $setup_info['api']['hooks']['addaccount']     = array('EGroupware\\Api\\Vfs\\Hooks::addAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount');
 $setup_info['api']['hooks']['deleteaccount']  = array('EGroupware\\Api\\Vfs\\Hooks::deleteAccount', 'EGroupware\\Api\\Mail\\Hooks::deleteaccount');
@@ -59,52 +64,52 @@ $setup_info['api']['hooks']['changepassword'] = 'EGroupware\\Api\\Mail\\Hooks::c
 $setup_info['api']['check_install'] = array(
 	'' => array(
 		'func' => 'pear_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 	),
 	'pear.horde.org/Horde_Imap_Client' => array(
 		'func' => 'pear_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 		'version' => '2.24.2',
 	),
 	'pear.horde.org/Horde_Nls' => array(
 		'func' => 'pear_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 		'version' => '2.0.3',
 	),
 	'pear.horde.org/Horde_Mail' => array(
 		'func' => 'pear_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 		'version' => '2.1.2',
 	),
 	'pear.horde.org/Horde_Smtp' => array(
 		'func' => 'pear_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 		'version' => '1.3.0',
 	),
 	'pear.horde.org/Horde_ManageSieve' => array(
 		'func' => 'pear_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 		'version' => '1.0.1',
 	),
 	// next 4 are required for TNEF support
 	'pear.horde.org/Horde_Compress' => array(
 		'func' => 'pear_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 		'version' => '2.0.8',
 	),
 	'pear.horde.org/Horde_Icalendar' => array(
 		'func' => 'pear_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 		'version' => '2.0.0',
 	),
 	'pear.horde.org/Horde_Mapi' => array(
 		'func' => 'pear_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 		'version' => '1.0.0',
 	),
 	'bcmath' => array(
 		'func' => 'extension_check',
-		'from' => 'EMailAdmin',
+		'from' => 'Api/Mail',
 	),
 );
 

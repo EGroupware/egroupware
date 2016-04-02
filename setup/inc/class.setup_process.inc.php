@@ -52,30 +52,48 @@ class setup_process
 	/**
 	 * the mother of all multipass upgrade parental loop functions
 	 *
-	 * @param array $setup_info	array of application info from setup.inc.php files
+	 * @param array $setup_info array of application info from setup.inc.php files
 	 * @param string $type='new' defaults to new(install), could also be 'upgrade'
 	 * @param boolean $DEBUG=false print debugging info
-	 * @param boolean $force_en=false install english language files
+	 * @param boolean $force_en=false install english language files, not used anymore
 	 * @param string $system_charset=null charset to use
 	 * @param array $preset_config=array()
 	 */
 	function pass(array $setup_info,$method='new',$DEBUG=False,$force_en=False,$preset_config=array())
 	{
+		unset($force_en);	// no longer used
+
 		if(!$method)
 		{
 			return False;
 		}
-		// Place api first
-		$pass['phpgwapi'] = $setup_info['phpgwapi'];
+
+		// update to 16.x with no api installed yet
+		if ($method == 'upgrade' && !isset($setup_info['api']['currentver']))
+		{
+			// remove api dependency
+			unset($setup_info['phpgwapi']['depends']['api']);
+
+			$pass['phpgwapi'] = $setup_info['phpgwapi'];
+			$pass['emailadmin'] = $setup_info['emailadmin'];
+			$pass['api'] = $setup_info['api'];
+
+			// mark api as already installed in version 14.3.907
+			$setup_info['api']['version'] = $setup_info['api']['currentversion'] = '14.3.907';
+			$GLOBALS['egw_setup']->register_app('api', 99, $setup_info);
+			$setup_info['api']['version'] = $pass['api']['version'];
+		}
+		// new install or upgrade after 16.x api is installed
+		else
+		{
+			$pass['api'] = $setup_info['api'];
+			$pass['phpgwapi'] = $setup_info['phpgwapi'];
+		}
 		$pass['admin']    = $setup_info['admin'];
 		$pass['preferences'] = $setup_info['preferences'];
 		$pass['etemplate'] = $setup_info['etemplate'];	// helps to minimize passes, as many apps depend on it
-		@reset($setup_info);
-		$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
-		@reset($setup_info);
 
-		// setting api-target-version for general use
-		$this->api_version_target = $setup_info['phpgwapi']['version'];
+		$this->api_version_target = $setup_info['api']['version'];
 
 		$i = 1;
 		$passed = array();
@@ -86,14 +104,13 @@ class setup_process
 		{
 			$passing = array();
 			if($DEBUG) { echo '<br>process->pass(): #' . $i . ' for ' . $method . ' processing' . "\n"; }
-			/* Check current versions and dependencies */
-			$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
-			$setup_info = $GLOBALS['egw_setup']->detection->compare_versions($setup_info,true);
-			//_debug_array($setup_info);exit;
-			$setup_info = $GLOBALS['egw_setup']->detection->check_depends($setup_info);
-			//if($i==2) { _debug_array($passed);exit; }
 
-			/* stuff the rest of the apps, but only those with available upgrades */
+			// Check current versions and dependencies
+			$setup_info = $GLOBALS['egw_setup']->detection->check_depends(
+				$GLOBALS['egw_setup']->detection->compare_versions(
+					$GLOBALS['egw_setup']->detection->get_db_versions($setup_info), true));
+
+			// stuff the rest of the apps, but only those with available upgrades
 			foreach($setup_info as $key => $value)
 			{
 				// check if app is either installed or supports the used database
@@ -103,7 +120,7 @@ class setup_process
 				{
 					continue;	// app does not support this db-type, dont try installing it
 				}
-				if($value['name'] != 'phpgwapi' && $value['status'] == 'U')
+				if(/*$value['name'] != 'phpgwapi' &&*/ $value['status'] == 'U')
 				{
 					if($passed[$value['name']]['status'] != 'F' && $passed[$value['name']]['status'] != 'C')
 					{
@@ -116,9 +133,9 @@ class setup_process
 			{
 				case 'new':
 					/* Create tables and insert new records for each app in this list */
-					$passing = $this->current($pass,$DEBUG);
+					$passing_c = $this->current($pass,$DEBUG);
 					if (isset($pass['phpgwapi'])) $this->save_minimal_config($preset_config);
-					$passing = $this->default_records($passing,$DEBUG);
+					$passing = $this->default_records($passing_c,$DEBUG);
 					break;
 				case 'upgrade':
 					/* Run upgrade scripts on each app in the list */
@@ -128,7 +145,6 @@ class setup_process
 				default:
 					/* What the heck are you doing? */
 					return False;
-					break;
 			}
 
 			$pass = array();
@@ -170,23 +186,21 @@ class setup_process
 			$passing_string = implode (':', $passing);
 		}
 		try {
-			// flush instance cache
-			egw_cache::flush(egw_cache::INSTANCE);
-			// delete image-map, in case new apps get installed, or existing ones updated
-			common::delete_image_map();
+			// flush instance cache: also registers hooks and flushes image cache
+			Api\Cache::flush(Api\Cache::INSTANCE);
 		}
 		catch(Exception $e) {
 			unset($e);
 			// ignore exception, as during a new install, there's no cache configured and therefore no need to unset
 		}
 		/* now return the list */
-		return $setup_info = array_merge($setup_info,$passed);
+		return array_merge($setup_info,$passed);
 	}
 
 	/**
 	 * saves a minimal default config, so you get a running install without entering and saveing Step #2 config
 	 *
-	 * @param array $preset_config=array()
+	 * @param array $preset_config =array()
 	 */
 	function save_minimal_config(array $preset_config=array())
 	{
@@ -272,6 +286,7 @@ class setup_process
 		}
 		catch(Exception $e)
 		{
+			unset($e);
 			// do nothing if new DateTimeZone fails (eg. 'System/Localtime' returned), specially do NOT store it!
 			error_log(__METHOD__."() NO valid 'date.timezone' set in your php.ini!");
 		}
@@ -281,6 +296,7 @@ class setup_process
 
 		// use securest password hash by default
 		require_once EGW_SERVER_ROOT.'/setup/inc/hook_config.inc.php';	// for sql_passwdhashes, to get securest available password hash
+		$securest = null;
 		sql_passwdhashes(array(), true, $securest);
 		$current_config['sql_encryption_type'] = $current_config['ldap_encryption_type'] = $securest;
 
@@ -310,8 +326,8 @@ class setup_process
 
 		// so the default_records use the current data
 		$GLOBALS['egw_info']['server'] = array_merge((array)$GLOBALS['egw_info']['server'], $current_config);
-		egw_cache::flush();	// flush whole instance cache
-		config::init_static();	// flush internal cache of config class
+		Api\Cache::flush();	// flush whole instance cache
+		Api\Config::init_static();	// flush internal cache of config class
 		$GLOBALS['egw_setup']->setup_account_object($current_config);
 	}
 
@@ -368,7 +384,7 @@ class setup_process
 	 * process current table setup in each application/setup dir
 	 *
 	 * @param array $setup_info	array of application info from setup.inc.php files, etc.
-	 * @param boolean $DEBUG=false output further diagnostics
+	 * @param boolean $DEBUG =false output further diagnostics
 	 * @return array $setup_info
 	 */
 	function current(array $setup_info,$DEBUG=False)
@@ -390,6 +406,7 @@ class setup_process
 			if($appdata['tables'] && file_exists($appdir.'tables_current.inc.php'))
 			{
 				if($DEBUG) { echo '<br>process->current(): Including: ' . $appdir.'tables_current.inc.php'; }
+				$phpgw_baseline = null;
 				include ($appdir.'tables_current.inc.php');
 				$ret = $this->post_process($phpgw_baseline,$DEBUG);
 				if($ret)
@@ -397,12 +414,10 @@ class setup_process
 					if($GLOBALS['egw_setup']->app_registered($appname))
 					{
 						$GLOBALS['egw_setup']->update_app($appname);
-						$GLOBALS['egw_setup']->update_hooks($appname);
 					}
 					else
 					{
 						$GLOBALS['egw_setup']->register_app($appname);
-						$GLOBALS['egw_setup']->register_hooks($appname);
 						$GLOBALS['egw_setup']->set_default_preferences($appname);
 					}
 					// Update the array values for return below
@@ -430,18 +445,19 @@ class setup_process
 				if($GLOBALS['egw_setup']->app_registered($appname))
 				{
 					$GLOBALS['egw_setup']->update_app($appname);
-					$GLOBALS['egw_setup']->update_hooks($appname);
 				}
 				else
 				{
 					$GLOBALS['egw_setup']->register_app($appname,$enabled);
-					$GLOBALS['egw_setup']->register_hooks($appname);
 					$GLOBALS['egw_setup']->set_default_preferences($appname);
 				}
 				$appdata['status'] = 'C';
 			}
 			if($DEBUG) { echo '<br>process->current(): Outgoing status: ' . $appname . ',status: '. $appdata['status']; }
 		}
+
+		// update hooks
+		Api\Hooks::read(true);
 
 		/* Done, return current status */
 		return $setup_info;
@@ -451,7 +467,7 @@ class setup_process
 	 * process default_records.inc.php in each application/setup dir
 	 *
 	 * @param array $setup_info	array of application info from setup.inc.php files, etc.
-	 * @param boolean $DEBUG=false output further diagnostics
+	 * @param boolean $DEBUG =false output further diagnostics
 	 * @return array $setup_info
 	 */
 	function default_records(array $setup_info,$DEBUG=False)
@@ -478,6 +494,8 @@ class setup_process
 			}
 			/* $appdata['status'] = 'C'; */
 		}
+		unset($appdata, $oProc);
+
 		// Clear categories cache in case app adds categories
 		categories::invalidate_cache();
 
@@ -491,7 +509,7 @@ class setup_process
 	 * This data should work with the baseline tables
 	 *
 	 * @param array $setup_info	array of application info from setup.inc.php files, etc.
-	 * @param boolean $DEBUG=false output further diagnostics
+	 * @param boolean $DEBUG =false output further diagnostics
 	 * @return array $setup_info
 	 */
 	function test_data(array $setup_info,$DEBUG=False)
@@ -515,6 +533,7 @@ class setup_process
 				$GLOBALS['egw_setup']->oProc->m_odb->transaction_commit();
 			}
 		}
+		unset($appdata);
 
 		/* Done, return current status */
 		return ($setup_info);
@@ -524,7 +543,7 @@ class setup_process
 	 * process baseline table setup in each application/setup dir
 	 *
 	 * @param array $setup_info	array of application info from setup.inc.php files, etc.
-	 * @param boolean $DEBUG=false output further diagnostics
+	 * @param boolean $DEBUG =false output further diagnostics
 	 * @return array $setup_info
 	 */
 	function baseline(array $setup_info,$DEBUG=False)
@@ -543,6 +562,7 @@ class setup_process
 				{
 					echo '<br>process->baseline(): Including baseline tables for ' . $appname . "\n";
 				}
+				$phpgw_baseline = null;
 				include ($appdir.'tables_baseline.inc.php');
 				$GLOBALS['egw_setup']->oProc->GenerateScripts($phpgw_baseline, $DEBUG);
 				$this->post_process($phpgw_baseline,$DEBUG);
@@ -559,6 +579,7 @@ class setup_process
 				//$setup_info[$key]['status'] = 'C';
 			}
 		}
+		unset($appdata);
 
 		/* Done, return current status */
 		return ($setup_info);
@@ -568,7 +589,7 @@ class setup_process
 	 * process available upgrades in each application/setup dir
 	 *
 	 * @param array $setup_info array of application info from setup.inc.php files, etc.
-	 * @param boolean $DEBUG=false output further diagnostics
+	 * @param boolean $DEBUG =false output further diagnostics
 	 * @return array $setup_info
 	 */
 	function upgrade($setup_info,$DEBUG=False)
@@ -589,8 +610,8 @@ class setup_process
 				if (isset($appdata['autoinstall']) && ($appdata['autoinstall'] === true ||
 					$appdata['autoinstall'] === $this->api_version_target))
 				{
-					$info = $this->current(array($appname => $appdata),$DEBUG);
-					$info = $this->default_records($info,$DEBUG);
+					$info_c = $this->current(array($appname => $appdata), $DEBUG);
+					$info = $this->default_records($info_c, $DEBUG);
 					$appdata = $info[$appname];
 					continue;
 				}
@@ -677,12 +698,10 @@ class setup_process
 					if($GLOBALS['egw_setup']->app_registered($appname))
 					{
 						$GLOBALS['egw_setup']->update_app($appname);
-						$GLOBALS['egw_setup']->update_hooks($appname);
 					}
 					else
 					{
 						$GLOBALS['egw_setup']->register_app($appname);
-						$GLOBALS['egw_setup']->register_hooks($appname);
 					}
 				}
 
@@ -702,6 +721,9 @@ class setup_process
 			}
 			$appdate['status'] = $appstatus;
 		}
+
+		// update hooks
+		Api\Hooks::read(true);
 
 		/* Done, return current status */
 		return $setup_info;
@@ -737,7 +759,8 @@ class setup_process
 			$this->init_process();
 		}
 
-		$GLOBALS['egw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['egw_setup']->oProc, $tablename, $sColumns, $sColumnName);
+		$sColumns = null;
+		$GLOBALS['egw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['egw_setup']->oProc, $tablename, $sColumns);
 
 		while(list($key,$tbldata) = each($GLOBALS['egw_setup']->oProc->m_oTranslator->sCol))
 		{

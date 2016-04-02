@@ -263,8 +263,8 @@ class Storage
 		}
 		if ($this->contact_repository == 'sql' || $this->contact_repository == 'sql-ldap')
 		{
-			$tda2list = $this->db->get_table_definitions('phpgwapi','egw_addressbook2list');
-			$tdlists = $this->db->get_table_definitions('phpgwapi','egw_addressbook_lists');
+			$tda2list = $this->db->get_table_definitions('api','egw_addressbook2list');
+			$tdlists = $this->db->get_table_definitions('api','egw_addressbook_lists');
 			$this->distributionlist_tabledef = array('fd' => array(
 					$this->distri_id => $tda2list['fd'][$this->distri_id],
 					$this->distri_owner => $tdlists['fd'][$this->distri_owner],
@@ -872,7 +872,7 @@ class Storage
 	 */
 	function get_fields($type='all',$contact_id=null,$owner=null)
 	{
-		$def = $this->db->get_table_definitions('phpgwapi','egw_addressbook');
+		$def = $this->db->get_table_definitions('api','egw_addressbook');
 
 		$all_fields = array();
 		foreach(array_keys($def['fd']) as $field)
