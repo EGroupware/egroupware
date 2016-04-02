@@ -156,7 +156,15 @@ class setup_html
 		}
 
 		$GLOBALS['setup_tpl']->set_var('lang_version',lang('version'));
-		$GLOBALS['setup_tpl']->set_var('pgw_ver',@$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+		if (!isset($GLOBALS['setup_info']) || !isset($GLOBALS['setup_info']['api']))
+		{
+			include(EGW_SERVER_ROOT.'/api/setup/setup.inc.php');
+		}
+		else
+		{
+			$setup_info = $GLOBALS['setup_info'];
+		}
+		$GLOBALS['setup_tpl']->set_var('pgw_ver', $setup_info['api']['version']);
 		$GLOBALS['setup_tpl']->set_var(array(
 			'logoutbutton'  => $btn_logout,
 			'indexbutton'   => $index_btn,
