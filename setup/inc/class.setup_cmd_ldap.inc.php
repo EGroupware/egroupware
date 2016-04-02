@@ -607,7 +607,7 @@ class setup_cmd_ldap extends setup_cmd
 						// running all addAccount hooks (currently NOT working, as not all work in setup)
 						if ($this->add_account_hook === true)
 						{
-							$GLOBALS['egw']->hooks->process($account,array(),true);
+							Api\Hooks::process($account, array(), true);
 						}
 						elseif(is_callable($this->add_account_hook))
 						{

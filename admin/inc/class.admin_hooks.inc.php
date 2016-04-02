@@ -20,10 +20,10 @@ class admin_hooks
 	/**
 	 * Functions callable via menuaction
 	 *
-	 * @var unknown_type
+	 * @var array
 	 */
 	var $public_functions = array(
-		'ajax_register_all_hooks' => True,
+		'ajax_clear_cache' => True,
 	);
 
 	/**
@@ -118,7 +118,7 @@ class admin_hooks
 					'id' => 'admin/clear_cache',
 					'no_lang' => true,
 					'link' => "javascript:egw.message('".lang('Clear cache and register hooks') . "<br />" .lang('Please wait...')."','info'); " .
-						"egw.json('admin.admin_hooks.ajax_register_all_hooks').sendRequest(true);"
+						"egw.json('admin.admin_hooks.ajax_clear_cache').sendRequest(true);"
 				 );
 			}
 
@@ -159,17 +159,15 @@ class admin_hooks
 	}
 
 	/**
-	 * Register all hooks
+	 * Clears instance cache (and thereby also refreshes hooks)
 	 */
-	function ajax_register_all_hooks()
+	function ajax_clear_cache()
 	{
 		if ($GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
 		Api\Cache::flush(Api\Cache::INSTANCE);
-
-		$GLOBALS['egw']->hooks->register_all_hooks();
 
 		Api\Image::invalidate();
 
@@ -178,9 +176,9 @@ class admin_hooks
 			$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
 		}
 		// allow apps to hook into "Admin >> Clear cache and register hooks"
-		$GLOBALS['egw']->hooks->process('clear_cache', array(), true);
+		Api\Hooks::process('clear_cache', array(), true);
 
-		egw_json_response::get()->apply('egw.message', array(lang('Done'),'success'));
+		Api\Json\Response::get()->apply('egw.message', array(lang('Done'), 'success'));
 	}
 
 	/**

@@ -11,8 +11,8 @@
 
 /* Basic information about this app */
 $setup_info['phpgwapi']['name']      = 'phpgwapi';
-$setup_info['phpgwapi']['title']     = 'EGroupware API';
-$setup_info['phpgwapi']['version']   = '14.3.906';
+$setup_info['phpgwapi']['title']     = 'EGroupware old API';
+$setup_info['phpgwapi']['version']   = '14.3.908';
 $setup_info['phpgwapi']['versions']['current_header'] = '1.29';
 $setup_info['phpgwapi']['enable']    = 3;
 $setup_info['phpgwapi']['app_order'] = 1;
@@ -29,10 +29,8 @@ $setup_info['phpgwapi']['tables'][]  = 'egw_acl';
 $setup_info['phpgwapi']['tables'][]  = 'egw_accounts';
 $setup_info['phpgwapi']['tables'][]  = 'egw_preferences';
 $setup_info['phpgwapi']['tables'][]  = 'egw_access_log';
-$setup_info['phpgwapi']['tables'][]  = 'egw_hooks';
 $setup_info['phpgwapi']['tables'][]  = 'egw_languages';
 $setup_info['phpgwapi']['tables'][]  = 'egw_lang';
-$setup_info['phpgwapi']['tables'][]  = 'egw_nextid';
 $setup_info['phpgwapi']['tables'][]  = 'egw_categories';
 $setup_info['phpgwapi']['tables'][]  = 'egw_history_log';
 $setup_info['phpgwapi']['tables'][]  = 'egw_async';
@@ -49,28 +47,3 @@ $setup_info['phpgwapi']['tables'][]  = 'egw_locks';
 $setup_info['phpgwapi']['tables'][]  = 'egw_sqlfs_props';
 $setup_info['phpgwapi']['tables'][]  = 'egw_customfields';
 $setup_info['phpgwapi']['tables'][]  = 'egw_sharing';
-
-// hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
-$setup_info['phpgwapi']['hooks']['addaccount']		= 'phpgwapi.vfs_home_hooks.addAccount';
-$setup_info['phpgwapi']['hooks']['deleteaccount']	= 'phpgwapi.vfs_home_hooks.deleteAccount';
-$setup_info['phpgwapi']['hooks']['editaccount']		= 'phpgwapi.vfs_home_hooks.editAccount';
-$setup_info['phpgwapi']['hooks']['addgroup']		= 'phpgwapi.vfs_home_hooks.addGroup';
-$setup_info['phpgwapi']['hooks']['deletegroup']		= 'phpgwapi.vfs_home_hooks.deleteGroup';
-$setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home_hooks.editGroup';
-
-/* CalDAV/CardDAV/GroupDAV app */
-$setup_info['groupdav']['name']      = 'groupdav';
-$setup_info['groupdav']['version']   = '14.1';
-$setup_info['groupdav']['enable']    = 2;
-$setup_info['groupdav']['app_order'] = 1;
-$setup_info['groupdav']['icon']      = 'groupdav';
-$setup_info['groupdav']['icon_app']  = 'phpgwapi';
-$setup_info['groupdav']['author'] = $setup_info['groupdav']['maintainer'] = array(
-	'name'  => 'Ralf Becker',
-	'email' => 'RalfBecker@outdoor-training.de'
-);
-$setup_info['groupdav']['license'] = 'GPL';
-$setup_info['groupdav']['hooks']['preferences']	= 'EGroupware\\Api\\CalDAV\\Hooks::menus';
-$setup_info['groupdav']['hooks']['settings']	= 'EGroupware\\Api\\CalDAV\\Hooks::settings';
-
-

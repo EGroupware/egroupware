@@ -13,6 +13,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 class setup
 {
 	var $db;
@@ -650,23 +652,12 @@ class setup
 	 */
 	function register_hooks($appname)
 	{
-		$setup_info = $GLOBALS['setup_info'];
-
 		if(!$appname)
 		{
 			return False;
 		}
 
-		if(!$this->hooks_table)	// No hooks table yet
-		{
-			return False;
-		}
-
-		if (!is_object($this->hooks))
-		{
-			$this->hooks =& CreateObject('phpgwapi.hooks',$this->db,$this->hooks_table);
-		}
-		$this->hooks->register_hooks($appname,$setup_info[$appname]['hooks']);
+		Api\Hooks::read(true);
 	}
 
 	/**
@@ -758,22 +749,12 @@ class setup
 	 */
 	function deregister_hooks($appname)
 	{
-		if(!$this->hooks_table)	// No hooks table yet
-		{
-			return False;
-		}
-
 		if(!$appname)
 		{
 			return False;
 		}
 
-		//echo "DELETING hooks for: " . $setup_info[$appname]['name'];
-		if (!is_object($this->hooks))
-		{
-			$this->hooks =& CreateObject('phpgwapi.hooks',$this->db,$this->hooks_table);
-		}
-		return $this->hooks->register_hooks($appname);
+		Api\Hooks::read(true);
 	}
 
 	/**
@@ -784,11 +765,7 @@ class setup
 	 */
 	function hook($location, $appname='')
 	{
-		if (!is_object($this->hooks))
-		{
-			$this->hooks =& CreateObject('phpgwapi.hooks',$this->db,$this->hooks_table);
-		}
-		return $this->hooks->single($location,$appname,True,True);
+		return Api\Hooks::single($location,$appname,True,True);
 	}
 
 	/**

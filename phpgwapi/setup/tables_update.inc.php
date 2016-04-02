@@ -1036,3 +1036,27 @@ function phpgwapi_upgrade14_3_905()
 	}
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.906';
 }
+
+/**
+ * Move content of (usually empty or for LDAP 2 rows) egw_nextid table to egw_config table and drop it
+ */
+function phpgwapi_upgrade14_3_906()
+{
+	foreach($GLOBALS['egw_setup']->db->query('SELECT appname,id FROM egw_nextid', __LINE__, __FILE__) as $row)
+	{
+		common::next_id($row['appname'], $row['id']);	// store it
+	}
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_nextid');
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.907';
+}
+
+/**
+ * Move content of (usually empty or for LDAP 2 rows) egw_nextid table to egw_config table and drop it
+ */
+function phpgwapi_upgrade14_3_907()
+{
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_hooks');
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '14.3.908';
+}

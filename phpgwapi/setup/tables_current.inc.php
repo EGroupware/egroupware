@@ -103,18 +103,6 @@ $phpgw_baseline = array(
 		'ix' => array('li','lo','session_dla','session_php','notification_heartbeat',array('account_id','ip','li'),array('account_id','loginid','li')),
 		'uc' => array()
 	),
-	'egw_hooks' => array(
-		'fd' => array(
-			'hook_id' => array('type' => 'auto','nullable' => False),
-			'hook_appname' => array('type' => 'ascii','precision' => '16'),
-			'hook_location' => array('type' => 'ascii','precision' => '32'),
-			'hook_filename' => array('type' => 'ascii','precision' => '255')
-		),
-		'pk' => array('hook_id'),
-		'fk' => array(),
-		'ix' => array(),
-		'uc' => array()
-	),
 	'egw_languages' => array(
 		'fd' => array(
 			'lang_id' => array('type' => 'ascii','precision' => '5','nullable' => False),
@@ -137,16 +125,6 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array(),
 		'uc' => array(array('lang','app_name','message_id'))
-	),
-	'egw_nextid' => array(
-		'fd' => array(
-			'id' => array('type' => 'int','precision' => '4'),
-			'appname' => array('type' => 'ascii','precision' => '16','nullable' => False)
-		),
-		'pk' => array('appname'),
-		'fk' => array(),
-		'ix' => array(),
-		'uc' => array()
 	),
 	'egw_categories' => array(
 		'fd' => array(

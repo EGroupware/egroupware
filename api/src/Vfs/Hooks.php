@@ -1,18 +1,22 @@
 <?php
 /**
- * eGroupWare API: VFS - Hooks to add/rename/delete user and group home-directories
+ * EGroup2are API: VFS - Hooks to add/rename/delete user and group home-directories
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
+namespace EGroupware\Api\Vfs;
+
+use EGroupware\Api;
+
 /**
- * eGroupWare API: VFS - Hooks to add/rename/delete user and group home-directories
+ * VFS - Hooks to add/rename/delete user and group home-directories
  *
  * This class implements the creation, renaming or deletion of home-dirs via some hooks from admin:
  * - create the homedir if a new user gets created
@@ -20,7 +24,7 @@
  * - delete the homedir or copy its content to an other users homedir, if a user gets deleted
  * --> these hooks are registered via phpgwapi/setup/setup.inc.php and called by the admin app
  */
-class vfs_home_hooks
+class Hooks
 {
 	/**
 	 * Should we log our calls to the error_log
@@ -40,14 +44,14 @@ class vfs_home_hooks
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		// create a user-dir
-		egw_vfs::$is_root = true;
-		if (egw_vfs::mkdir($dir='/home/'.$data['account_lid'],0700,0))
+		Api\Vfs::$is_root = true;
+		if (Api\Vfs::mkdir($dir='/home/'.$data['account_lid'],0700,0))
 		{
-			egw_vfs::chown($dir,$data['account_id']);
-			egw_vfs::chgrp($dir,0);
-			egw_vfs::chmod($dir,0700);	// only user has access
+			Api\Vfs::chown($dir,$data['account_id']);
+			Api\Vfs::chgrp($dir,0);
+			Api\Vfs::chmod($dir,0700);	// only user has access
 		}
-		egw_vfs::$is_root = false;
+		Api\Vfs::$is_root = false;
 	}
 
 	/**
@@ -66,9 +70,9 @@ class vfs_home_hooks
 			return;	// nothing to do here
 		}
 		// rename the user-dir
-		egw_vfs::$is_root = true;
-		egw_vfs::rename('/home/'.$data['old_loginid'],'/home/'.$data['account_lid']);
-		egw_vfs::$is_root = false;
+		Api\Vfs::$is_root = true;
+		Api\Vfs::rename('/home/'.$data['old_loginid'],'/home/'.$data['account_lid']);
+		Api\Vfs::$is_root = false;
 	}
 
 	/**
@@ -82,25 +86,28 @@ class vfs_home_hooks
 	static function deleteAccount($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
-		egw_vfs::$is_root = true;
+		Api\Vfs::$is_root = true;
 		if ($data['new_owner'] && ($new_lid = $GLOBALS['egw']->accounts->id2name($data['new_owner'])))
 		{
 			// copy content of user-dir to new owner's user-dir as old-home-$name
-			for ($i=''; file_exists(egw_vfs::PREFIX.($new_dir = '/home/'.$new_lid.'/old-home-'.$data['account_lid'].$i)); $i++);
-			egw_vfs::rename('/home/'.$data['account_lid'],$new_dir);
+			for ($i=''; file_exists(Api\Vfs::PREFIX.($new_dir = '/home/'.$new_lid.'/old-home-'.$data['account_lid'].$i)); $i++)
+			{
+				
+			}
+			Api\Vfs::rename('/home/'.$data['account_lid'],$new_dir);
 			// make the new owner the owner of the dir and it's content
-			egw_vfs::find($new_dir,array(),array('egw_vfs','chown'),$data['new_owner']);
+			Api\Vfs::find($new_dir,array(),array('egw_vfs','chown'),$data['new_owner']);
 		}
 		elseif(!empty($data['account_lid']) && $data['account_lid'] != '/')
 		{
 			// delete the user-directory
-			egw_vfs::remove('/home/'.$data['account_lid']);
+			Api\Vfs::remove('/home/'.$data['account_lid']);
 		}
 		else
 		{
-			throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($data).') account_lid NOT set!');
+			throw new Api\Exception\AssertionFailed(__METHOD__.'('.array2string($data).') account_lid NOT set!');
 		}
-		egw_vfs::$is_root = false;
+		Api\Vfs::$is_root = false;
 	}
 
 	/**
@@ -113,17 +120,17 @@ class vfs_home_hooks
 	static function addGroup($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
-		if (empty($data['account_lid'])) throw new egw_exception_wrong_parameter('account_lid must not be empty!');
+		if (empty($data['account_lid'])) throw new Api\Exception\WrongParameter('account_lid must not be empty!');
 
 		// create a group-dir
-		egw_vfs::$is_root = true;
-		if (egw_vfs::mkdir($dir='/home/'.$data['account_lid'],0070,0))
+		Api\Vfs::$is_root = true;
+		if (Api\Vfs::mkdir($dir='/home/'.$data['account_lid'],0070,0))
 		{
-			egw_vfs::chown($dir,0);
-			egw_vfs::chgrp($dir,abs($data['account_id']));	// gid in Vfs is positiv!
-			egw_vfs::chmod($dir,0070);	// only group has access
+			Api\Vfs::chown($dir,0);
+			Api\Vfs::chgrp($dir,abs($data['account_id']));	// gid in Vfs is positiv!
+			Api\Vfs::chmod($dir,0070);	// only group has access
 		}
-		egw_vfs::$is_root = false;
+		Api\Vfs::$is_root = false;
 	}
 
 	/**
@@ -145,7 +152,7 @@ class vfs_home_hooks
 		if ($data['account_lid'] == $data['old_name'])
 		{
 			// check if group directory exists and create it if not (by calling addGroup hook)
-			if (!egw_vfs::stat('/home/'.$data['account_lid']))
+			if (!Api\Vfs::stat('/home/'.$data['account_lid']))
 			{
 				self::addGroup($data);
 			}
@@ -153,9 +160,9 @@ class vfs_home_hooks
 		else
 		{
 			// rename the group-dir
-			egw_vfs::$is_root = true;
-			egw_vfs::rename('/home/'.$data['old_name'],'/home/'.$data['account_lid']);
-			egw_vfs::$is_root = false;
+			Api\Vfs::$is_root = true;
+			Api\Vfs::rename('/home/'.$data['old_name'],'/home/'.$data['account_lid']);
+			Api\Vfs::$is_root = false;
 		}
 	}
 
@@ -172,11 +179,11 @@ class vfs_home_hooks
 
 		if(empty($data['account_lid']) || $data['account_lid'] == '/')
 		{
-			throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($data).') account_lid NOT set!');
+			throw new Api\Exception\AssertionFailed(__METHOD__.'('.array2string($data).') account_lid NOT set!');
 		}
 		// delete the group-directory
-		egw_vfs::$is_root = true;
-		egw_vfs::remove('/home/'.$data['account_lid']);
-		egw_vfs::$is_root = false;
+		Api\Vfs::$is_root = true;
+		Api\Vfs::remove('/home/'.$data['account_lid']);
+		Api\Vfs::$is_root = false;
 	}
 }
