@@ -308,28 +308,13 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 	 * @memberOf et2_calendar_view
 	 */
 	_get_owner_name: function _get_owner_name(user) {
+		var label = undefined;
 		if(parseInt(user) === 0)
 		{
 			// 0 means current user
 			user = egw.user('account_id');
 		}
-		if (isNaN(user)) // resources or contact
-		{
-			var application = 'home-accounts';
-			switch(user[0])
-			{
-				case 'c':
-					application = 'addressbook';
-					break;
-				case 'r':
-					application = 'resources';
-					break;
-			}
-			// This might not have a value right away
-			// send an empty function or it won't ask the server
-			user = egw.link_title(application,user.match(/\d+/)[0], function() {}, this);
-		}
-		else	// users
+		if (!isNaN(user))
 		{
 			user = parseInt(user);
 			var accounts = egw.accounts('both');
@@ -337,12 +322,21 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			{
 				if(accounts[j].value === user)
 				{
-					user = accounts[j].label;
+					label = accounts[j].label;
 					break;
 				}
 			}
 		}
-		return user;
+		if(typeof label === 'undefined')
+		{
+			// Not found?  Ask the sidebox owner widget, it gets updated
+			if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
+			{
+				user = app.calendar.sidebox_et2.getWidgetById('owner').options.select_options.find(function(element) {return element.id == user;}) || {};
+				label = user.label;
+			}
+		}
+		return label;
 	},
 
 	/**

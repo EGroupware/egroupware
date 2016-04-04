@@ -324,42 +324,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			// Labels for the rows
 			row_labels: function() {
 				var labels = [];
-				var accounts = egw.accounts();
 				var already_added = [];
 				for(var i = 0; i < this.options.owner.length; i++)
 				{
 					var user = this.options.owner[i];
-					if(parseInt(user) === 0)
-					{
-						// 0 means current user
-						user = egw.user('account_id');
-					}
-					if (isNaN(user))		// resources
-					{
-						var planner = this;
-						var label = egw.link_title('resources',user.match(/\d+/)[0],function(name) {
-							for(var j = 0; j < labels.length; j++)
-							{
-								if(labels[j].id == this)
-								{
-									labels[j].label = name;
-									break;
-								}
-							}
-							var row = planner.getWidgetById('planner_row_'+this);
-							if(row && row.set_label)
-							{
-								row.set_label(name);
-							}
-						},user);
-						if(!label) label = user;
-						if(already_added.indexOf(user) < 0)
-						{
-							labels.push({id: user, label: label, data: {participants:user,owner:''}});
-							already_added.push(''+user);
-						}
-					}
-					else if (user < 0)	// groups
+					if (user < 0)	// groups
 					{
 						egw.accountData(user,'account_fullname',true,function(result) {
 							for(var id in result)
@@ -374,15 +343,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					}
 					else	// users
 					{
-						user = parseInt(user);
-						for(var j = 0; j < accounts.length && already_added.indexOf(''+user) < 0; j++)
+						var label = this._get_owner_name(user);
+						if(already_added.indexOf(user) < 0)
 						{
-							if(accounts[j].value === user)
-							{
-								labels.push({id: user, label: accounts[j].label, data: {participants:user,owner:user}});
-								already_added.push(''+user);
-								break;
-							}
+							labels.push({id: user, label: label, data: {participants:user,owner:''}});
+							already_added.push(''+user);
 						}
 					}
 				}
