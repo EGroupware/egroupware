@@ -1152,6 +1152,12 @@ Hide subsequent headers in week view with non-consolidated owners
 	height: 100%;
 	padding-top: 2px;
 }
+.calendar_plannerWidget .calendar_calEventSmall[data-full_day='true'] .calendar_calTimespan {
+	display: none;
+}
+.calendar_plannerWidget .calendar_calEventSmall .calendar_calEventTitle {
+	display: inline;
+}
 
 /* Special colors for the year view */
 .calendar_cal_year_legend_weekend {
