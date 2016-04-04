@@ -251,8 +251,8 @@ class mail_ui
 	static function ajax_tree_autoloading ($_id = null)
 	{
 		$mail_ui = new mail_ui();
-		$_id = $_id? $_id:$_GET['id'];
-		etemplate_widget_tree::send_quote_json($mail_ui->mail_tree->getTree($_id,'',1,false));
+		$id = $_id ? $_id : $_GET['id'];
+		Api\Etemplate\Widget\Tree::send_quote_json($mail_ui->mail_tree->getTree($id,'',1,false));
 	}
 
 	/**
@@ -808,7 +808,7 @@ class mail_ui
 			$data = $this->mail_tree->getTree($nodeID,$_profileID,0, false,$subscribedOnly,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 		}
 		if (!is_null($_nodeID)) return $data;
-		etemplate_widget_tree::send_quote_json($data);
+		Api\Etemplate\Widget\Tree::send_quote_json($data);
 	}
 
 	/**
@@ -4842,7 +4842,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$mail_ui = new mail_ui();
 		$_id = $_id? $_id:$_GET['id'];
-		etemplate_widget_tree::send_quote_json($mail_ui->mail_tree->getTree($_id,'',1,true,false,false,false));
+		Api\Etemplate\Widget\Tree::send_quote_json($mail_ui->mail_tree->getTree($_id,'',1,true,false,false,false));
 	}
 
 	/**

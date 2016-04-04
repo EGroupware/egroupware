@@ -32,13 +32,6 @@ class etemplate_widget extends Etemplate\Widget {}
 abstract class etemplate_widget_entry extends Widget\Entry {}
 
 /**
- * eTemplate Tree widget
- *
- * @deprecated use Api\Etemplate\Widget\Tree
- */
-class etemplate_widget_tree extends Widget\Tree {}
-
-/**
  * eTemplate Select widget
  *
  * @deprecated use Api\Etemplate\Widget\Select

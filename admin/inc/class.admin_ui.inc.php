@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
  * @package admin
- * @copyright (c) 2013-14 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2013-16 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * UI for admin
@@ -41,7 +43,7 @@ class admin_ui
 		{
 			$_GET['load'] = 'admin.admin_statistics.submit';
 		}
-		$tpl = new etemplate_new('admin.index');
+		$tpl = new Api\Etemplate('admin.index');
 
 		if (!is_array($content)) $content = array();
 		$content['nm'] = array(
@@ -206,7 +208,7 @@ class admin_ui
 				),
 			);
 			// generate urls for add/edit accounts via addressbook
-			$edit = egw_link::get_registry('addressbook', 'edit');
+			$edit = Api\Link::get_registry('addressbook', 'edit');
 			$edit['account_id'] = '$id';
 			foreach($edit as $name => $val)
 			{
@@ -302,9 +304,9 @@ class admin_ui
 		foreach($rows as &$row)
 		{
 			$row['status'] = self::$accounts->is_expired($row) ?
-				lang('Expired').' '.egw_time::to($row['account_expires'], true) :
+				lang('Expired').' '.Api\DateTime::to($row['account_expires'], true) :
 					(!self::$accounts->is_active($row) ? lang('Disabled') :
-						($row['account_expires'] != -1 ? lang('Expires').' '.egw_time::to($row['account_expires'], true) :
+						($row['account_expires'] != -1 ? lang('Expires').' '.Api\DateTime::to($row['account_expires'], true) :
 							lang('Enabled')));
 
 			if (!self::$accounts->is_active($row)) $row['status_class'] = 'adminAccountInactive';
@@ -318,7 +320,7 @@ class admin_ui
 	 */
 	public static function ajax_tree()
 	{
-		etemplate_widget_tree::send_quote_json(self::tree_data(!empty($_GET['id']) ? $_GET['id'] : '/'));
+		Api\Etemplate\Widget\Tree::send_quote_json(self::tree_data(!empty($_GET['id']) ? $_GET['id'] : '/'));
 	}
 
 	/**
@@ -373,7 +375,7 @@ class admin_ui
 					}
 					if (!empty($data['icon']))
 					{
-						$icon = etemplate_widget_tree::imagePath($data['icon']);
+						$icon = Api\Etemplate\Widget\Tree::imagePath($data['icon']);
 						if ($data['child'] || $data['item'])
 						{
 							$data['im1'] = $data['im2'] = $icon;
@@ -394,8 +396,8 @@ class admin_ui
 						$path .= ($path == '/' ? '' : '/').$part;
 						if (!isset($parent[$path]))
 						{
-							$icon = etemplate_widget_tree::imagePath($part == 'apps' ? common::image('phpgwapi', 'home') :
-								(($i=common::image($part, 'navbar')) ? $i : common::image('phpgwapi', 'nonav')));
+							$icon = Api\Etemplate\Widget\Tree::imagePath($part == 'apps' ? Api\Image::find('phpgwapi', 'home') :
+								(($i=Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('phpgwapi', 'nonav')));
 							$parent[$path] = array(
 								'id' => $path,
 								'text' => $part == 'apps' ? lang('Applications') : lang($part),
