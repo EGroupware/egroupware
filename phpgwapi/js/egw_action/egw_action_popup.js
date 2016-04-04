@@ -291,7 +291,9 @@ function egwPopupActionImplementation()
 			}
 			return !e.cancelBubble;
 		};
-
+		// Safari still needs the taphold to trigger contextmenu
+		// Chrome has default event on touch and hold which acts like right click
+		$j(_node).bind('taphold', contextHandler);
 		$j(_node).on('contextmenu', contextHandler);
 	};
 
