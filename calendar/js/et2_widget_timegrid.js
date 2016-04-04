@@ -1632,9 +1632,15 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			}
 			return result;
 		}
-		else if (this.gridHeader.is(_ev.target) && _ev.target.dataset)
+		else if (this.gridHeader.is(_ev.target) && _ev.target.dataset ||
+			this._labelContainer.is(_ev.target) && this.gridHeader[0].dataset)
 		{
-			app.calendar.update_state(jQuery.extend({view: 'week'},_ev.target.dataset));
+			app.calendar.update_state(jQuery.extend(
+				{view: 'week'},
+				this._labelContainer.is(_ev.target) ?
+					this.gridHeader[0].dataset :
+					_ev.target.dataset
+			));
 		}
 		else if (this.dayHeader.has(_ev.target).length)
 		{
