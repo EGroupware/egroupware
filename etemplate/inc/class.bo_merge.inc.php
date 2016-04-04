@@ -204,7 +204,7 @@ abstract class bo_merge
 			$contact = $this->contacts->read($contact, $ignore_acl);
 		}
 		if (!is_array($contact)) return array();
-
+		
 		$replacements = array();
 		foreach(array_keys($this->contacts->contact_fields) as $name)
 		{
@@ -1012,7 +1012,7 @@ abstract class bo_merge
 					continue;
 				}
 				// decode html entities back to utf-8
-				
+
 				if (is_string($value) && (strpos($value,'&') !== false) && $this->parse_html_styles)
 				{
 					$value = html_entity_decode($value,ENT_QUOTES,$charset);
@@ -1118,7 +1118,10 @@ abstract class bo_merge
 			}
 			// now decode &, < and >, which need to be encoded as entities in xml
 			// Check for encoded >< getting double-encoded
-			$replacements = str_replace(array('&',"\r","\n",'&amp;lt;','&amp;gt;'),array('&amp;','',$break,'&lt;','&gt;'),$replacements);
+			if($this->parse_html_styles)
+			{
+				$replacements = str_replace(array('&',"\r","\n",'&amp;lt;','&amp;gt;'),array('&amp;','',$break,'&lt;','&gt;'),$replacements);
+			}
 		}
 		if ($mimetype == 'application/x-yaml')
 		{
