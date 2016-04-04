@@ -2770,4 +2770,14 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
     text-align: center;
     font-size: 10pt;
   }
+  #calendar-edit button#calendar-edit_freetime {
+    margin-left: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-right: 0;
+    height: 45px;
+    vertical-align: top;
+    width: 100%;
+  }
 }

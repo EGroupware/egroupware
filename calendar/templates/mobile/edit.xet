@@ -227,8 +227,8 @@
 					<hbox  span="all" width="100%">
 						<button statustext="Saves this entry" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Apply the changes" id="button[apply]" image="apply" background_image="1"/>
-						<button align="right" statustext="delete this entry" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
-						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1"/>
+						<button statustext="delete this entry" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
+						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" id="freetime" label="Freetime" onclick="app.calendar.freetime_search" image="add" background_image="1"/>
 						<checkbox label="notification" id="no_notifications"/>
 						<textbox type="hidden" id="delete_exceptions"/>
 					</hbox>
