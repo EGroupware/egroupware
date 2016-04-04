@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * InfoLog: Create and parse iCal's
  */
@@ -356,7 +358,7 @@ class infolog_ical extends infolog_bo
 			}
 			else
 			{
-				$url = 'urn:uuid:'.common::generate_uid('accounts', $taskData['info_owner']);
+				$url = 'urn:uuid:'.Api\CalDAV::generate_uid('accounts', $taskData['info_owner']);
 			}
 			$vevent->setAttribute('ORGANIZER',$url,array(
 				'CN'		=>	$GLOBALS['egw']->accounts->id2name($taskData['info_owner'],'account_fullname'),
@@ -370,7 +372,7 @@ class infolog_ical extends infolog_bo
 				}
 				else
 				{
-					$url = 'urn:uuid:'.common::generate_uid('accounts', $responsible);
+					$url = 'urn:uuid:'.Api\CalDAV::generate_uid('accounts', $responsible);
 				}
 				if ($responsible > 0)
 				{
@@ -843,14 +845,14 @@ class infolog_ical extends infolog_bo
 						break;
 
 					case 'ATTENDEE':
-						if (($uid = groupdav_principals::url2uid($attribute['value'])) && is_numeric($uid))
+						if (($uid = Api\CalDAV\Principals::url2uid($attribute['value'])) && is_numeric($uid))
 						{
 							$taskData['info_responsible'][] = $uid;
 						}
 						break;
 
 					case 'ORGANIZER':
-						if (($uid = groupdav_principals::url2uid($attribute['value'])) && is_numeric($uid))
+						if (($uid = Api\CalDAV\Principals::url2uid($attribute['value'])) && is_numeric($uid))
 						{
 							$taskData['info_owner'] = $uid;
 						}

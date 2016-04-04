@@ -12,6 +12,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * iCal import and export via Horde iCalendar classes
  *
@@ -474,7 +476,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								case 'g':
 									$cutype = 'GROUP';
-									$participantURL = 'urn:uuid:'.common::generate_uid('accounts', $uid);
+									$participantURL = 'urn:uuid:'.Api\CalDAV::generate_uid('accounts', $uid);
 									if (!isset($event['participants'][$this->user]) &&
 										($members = $GLOBALS['egw']->accounts->members($uid, true)) && in_array($this->user, $members))
 									{
@@ -492,8 +494,8 @@ class calendar_ical extends calendar_boupdate
 									}
 									break;
 								case 'r':
-									$participantURL = 'urn:uuid:'.common::generate_uid('resources', substr($uid, 1));
-									$cutype = groupdav_principals::resource_is_location(substr($uid, 1)) ? 'ROOM' : 'RESOURCE';
+									$participantURL = 'urn:uuid:'.Api\CalDAV::generate_uid('resources', substr($uid, 1));
+									$cutype = Api\CalDAV\Principals::resource_is_location(substr($uid, 1)) ? 'ROOM' : 'RESOURCE';
 									// unset resource email (email of responsible user) as iCal at least has problems,
 									// if resonpsible is also pariticipant or organizer
 									unset($info['email']);
@@ -510,7 +512,7 @@ class calendar_ical extends calendar_boupdate
 							// generate urn:uuid, if we have no other participant URL
 							if (empty($participantURL) && $info && $info['app'])
 							{
-								$participantURL = 'urn:uuid:'.common::generate_uid($info['app'], substr($uid, 1));
+								$participantURL = 'urn:uuid:'.Api\CalDAV::generate_uid($info['app'], substr($uid, 1));
 							}
 							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT|X-*}
 							$options = array();
@@ -783,7 +785,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'ATTACH':
-						groupdav::add_attach('calendar', $event['id'], $attributes, $parameters);
+						Api\CalDAV::add_attach('calendar', $event['id'], $attributes, $parameters);
 						break;
 
 					default:
@@ -1149,7 +1151,7 @@ class calendar_ical extends calendar_boupdate
 		if ($this->productManufacturer == 'groupdav' && $cal_id > 0 &&
 			$events[0]['recur_type'] != MCAL_RECUR_NONE)
 		{
-			calendar_groupdav::fix_series($events);
+			calendar_Api\CalDAV::fix_series($events);
 		}
 
 		if ($this->tzid)
@@ -1207,7 +1209,7 @@ class calendar_ical extends calendar_boupdate
 						else
 						{
 							if (!($exception = $this->read($id))) continue;
-							$exception['uid'] = common::generate_uid('calendar', $id);
+							$exception['uid'] = Api\CalDAV::generate_uid('calendar', $id);
 							$exception['reference'] = $exception['recurrence'] = 0;
 							$this->update($exception, true,true,false,true,$msg,$skip_notification);
 						}
@@ -1749,7 +1751,7 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			// handle ATTACH attribute for managed attachments
-			if ($updated_id && groupdav::handle_attach('calendar', $updated_id, $event['attach'], $event['attach-delete-by-put']) === false)
+			if ($updated_id && Api\CalDAV::handle_attach('calendar', $updated_id, $event['attach'], $event['attach-delete-by-put']) === false)
 			{
 				$return_id = null;
 			}
@@ -2373,7 +2375,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $component			VEVENT
 	 * @param string $version			vCal version (1.0/2.0)
 	 * @param array $supportedFields	supported fields of the device
-	 * @param string $principalURL =''	Used for CalDAV imports, no longer used in favor of groupdav_principals::url2uid()
+	 * @param string $principalURL =''	Used for CalDAV imports, no longer used in favor of Api\CalDAV\Principals::url2uid()
 	 * @param string $check_component ='Horde_Icalendar_Vevent'
 	 * @param Horde_Icalendar $container =null container to access attributes on container
 	 * @return array|boolean			event on success, false on failure
@@ -2839,7 +2841,7 @@ class calendar_ical extends calendar_boupdate
 							$uid = $this->user;
 					}
 					// check principal url from CalDAV here after X-EGROUPWARE-UID and to get optional X-EGROUPWARE-QUANTITY
-					if (!$uid) $uid = groupdav_principals::url2uid($attributes['value'], null, $cn);
+					if (!$uid) $uid = Api\CalDAV\Principals::url2uid($attributes['value'], null, $cn);
 
 					// try to find an email address
 					if (!$uid && $email && ($uid = $GLOBALS['egw']->accounts->name2id($email, 'account_email')))
