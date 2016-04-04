@@ -98,7 +98,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 					// and used as such.  All unknown values will be used for selection, not passed through to the query
 					if (isset($field['values']['@']))
 					{
-						$options['values'] = $this->_get_options_from_file($field['values']['@']);
+						$options['values'] = egw_customfields::get_options_from_file($field['values']['@']);
 						unset($field['values']['@']);
 					} else {
 						$options['values'] = array_diff_key($field['values'], array_flip(ajax_select_widget::$known_options));
@@ -113,7 +113,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 					{
 						if (count($field['values']) == 1 && isset($field['values']['@']))
 						{
-							$field['values'] = $this->_get_options_from_file($field['values']['@']);
+							$field['values'] = egw_customfields::get_options_from_file($field['values']['@']);
 						}
 						foreach((array)$field['values'] as $key => $val)
 						{
@@ -164,67 +164,6 @@ class importexport_widget_filter extends etemplate_widget_transformer
 		$this->setElementAttribute($form_name, 'fields',array_fill_keys(array_keys($fields), true));
 		return false;
 	}
-
-	/**
-	 * Create widgets to select a relative date range
-	 *
-	 * @param $lname Field name
-	 * @param $options
-	 * @param $readonly
-	 *
-	 * @return Array of widget info
-	 */
-	protected static function do_relative_date($lname, Array &$value, $options, $readonly)
-	{
-		// Maybe this could be moved to date widget
-		$input = boetemplate::empty_cell('select',$lname, array(
-			'readonly'	=> $readonly,
-			'no_lang'	=> true,
-			'options'	=> $options,
-			'sel_options'	=> array('' => lang('all'))
-		));
-		foreach(importexport_helper_functions::$relative_dates as $label => $values)
-		{
-			$input['sel_options'][$label] = lang($label);
-		}
-		
-		return $input;
-	}
-
-	/**
-	 * Create widgets to select an absolute date range
-	 *
-	 * @param $lname Field name
-	 * @param $options
-	 * @param $readonly
-	 *
-	 * @return Array of widget info
-	 */
-	protected static function do_absolute_date($lname, Array &$value, $options, $readonly)
-	{
-		$input = boetemplate::empty_cell('hbox',$lname);
-		
-		$type = 'date';
-		$from = boetemplate::empty_cell($type, $lname.'[from]',array(
-			'readonly'      => $readonly,
-			'no_lang'       => True,
-			'size'          => $options
-		));
-		
-		$to = boetemplate::empty_cell($type, $lname.'[to]', array(
-			'readonly'      => $readonly,
-			'no_lang'       => True,
-			'size'          => $options
-		));
-		boetemplate::add_child($input, $from);
-		boetemplate::add_child($input,boetemplate::empty_cell('label','',array(
-			'label' => lang('to'),
-			'no_lang' => true
-		)));
-		boetemplate::add_child($input, $to);
-		return $input;
-	}
-	
 	
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
