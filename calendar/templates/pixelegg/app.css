@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55589 2016-03-31 22:58:04Z nathangray $ */
+/* $Id: app.css 55613 2016-04-04 16:38:23Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -406,6 +406,14 @@ Hide subsequent headers in week view with non-consolidated owners
   border-bottom: 1px solid silver;
   white-space: nowrap;
   overflow: hidden;
+}
+/* Seperate long and short day names */
+.calendar_calDayColHeader > div[data-date] .short_date,
+.calendar_calDayColHeader > div[data-date] .long_date {
+  padding-right: 1ex;
+}
+.calendar_calDayColHeader > div[data-date] .short_date {
+  display: none;
 }
 /* Indicators for offscreen events */
 .calendar_calDayColHeader .hiddenEventBefore,

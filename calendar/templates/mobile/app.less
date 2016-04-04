@@ -96,3 +96,22 @@
 		width: 100%;
 	}
 }
+@media all and (max-width: 1024px) {
+	// styles assigned when width is smaller than 1024px
+	.calendar_calDayColHeader > div[data-date] .long_date
+	{
+		display: none;
+	}
+	.calendar_calDayColHeader > div[data-date] .short_date
+	{
+		display: inline;
+	}
+}
+@media all and (max-width: 480px) {
+	// styles assigned when width is smaller than 480px;
+	.calendar_calDayColHeader > div[data-date] .long_date,
+	.calendar_calDayColHeader > div[data-date] .short_date
+	{
+		display: none;
+	}
+}

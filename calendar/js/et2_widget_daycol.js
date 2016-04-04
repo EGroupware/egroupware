@@ -234,10 +234,10 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		{
 			// Add timezone offset back in, or formatDate will lose those hours
 			var formatDate = new Date(this.date.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
-			var date_string = this._parent._children.length === 1 ?
-				app.calendar.date.long_date(formatDate,false, false, true) :
-				jQuery.datepicker.formatDate('DD dd',formatDate);
-			this.title.text(date_string);
+
+			this.title.html('<span class="long_date">'+jQuery.datepicker.formatDate('DD',formatDate)+
+				'</span><span class="short_date">'+jQuery.datepicker.formatDate('D',formatDate)+'</span>'+
+				jQuery.datepicker.formatDate('d',formatDate));
 		}
 		this.title
 			.attr("data-date", new_date);

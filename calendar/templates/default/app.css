@@ -399,6 +399,15 @@ Hide subsequent headers in week view with non-consolidated owners
 	overflow: hidden;
 }
 
+/* Seperate long and short day names */
+.calendar_calDayColHeader > div[data-date] .short_date,
+.calendar_calDayColHeader > div[data-date] .long_date {
+	padding-right: 1ex;
+}
+.calendar_calDayColHeader > div[data-date] .short_date {
+	display: none;
+}
+
 /* Indicators for offscreen events */
 .calendar_calDayColHeader .hiddenEventBefore, .calendar_calDayCol .hiddenEventAfter {
 	width: 80%;
