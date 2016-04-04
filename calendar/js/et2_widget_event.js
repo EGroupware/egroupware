@@ -708,41 +708,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 
 		// Also check participants against owner
-		var owner_match = true;
-		if(event.participants && this._parent.options.owner)
-		{
-			var parent_owner = typeof this._parent.options.owner !== 'object' ?
-				[this._parent.options.owner] :
-				this._parent.options.owner;
-			owner_match = false;
-			var length = parent_owner.length;
-			for(var i = 0; i < length; i++ )
-			{
-				if (parseInt(parent_owner[i]) < 0)
-				{
-					// Add in groups, if we can get them (this is syncronous)
-					egw.accountData(parent_owner[i],'account_id',true,function(members) {
-						parent_owner = parent_owner.concat(Object.keys(members));
-					});
-				}
-			}
-			for(var id in event.participants)
-			{
-				if(this._parent.options.owner == id ||
-					parent_owner.indexOf &&
-					parent_owner.indexOf(id) >= 0)
-				{
-					owner_match = true;
-					break;
-				}
-			}
-			if(!owner_match)
-			{
-				owner_match = (this._parent.options.owner == event.owner ||
-					parent_owner.indexOf &&
-					parent_owner.indexOf(event.owner) >= 0);
-			}
-		}
+		var owner_match = et2_calendar_event.owner_check(event, this._parent);
 
 		// Simple, same day
 		if(owner_match && this.options.value.date && event.date == this.options.value.date)
@@ -913,6 +879,61 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 et2_register_widget(et2_calendar_event, ["calendar-event"]);
 
 // Static class stuff
+/**
+ * Check event owner against a parent object
+ * 
+ * As an event is edited, its participants may change.  Also, as the state
+ * changes we may change which events are displayed and show the same event
+ * in several places for different users.  Here we check the event participants
+ * against an owner value (which may be an array) to see if the event should be
+ * displayed or included.
+ * 
+ * @param {Object} event - Event information
+ * @param {et2_widget_daycol|et2_widget_planner_row} parent - potential parent object
+ *	that has an owner option
+ *	
+ * @return {boolean} Should the event be displayed
+ */
+et2_calendar_event.owner_check = function owner_check(event, parent)
+{
+	var owner_match = true;
+	if(event.participants && parent.options.owner)
+	{
+		var parent_owner = typeof parent.options.owner !== 'object' ?
+			[parent.options.owner] :
+			parent.options.owner;
+		owner_match = false;
+		var length = parent_owner.length;
+		for(var i = 0; i < length; i++ )
+		{
+			if (parseInt(parent_owner[i]) < 0)
+			{
+				// Add in groups, if we can get them (this is syncronous)
+				egw.accountData(parent_owner[i],'account_id',true,function(members) {
+					parent_owner = parent_owner.concat(Object.keys(members));
+				});
+			}
+		}
+		for(var id in event.participants)
+		{
+			if(parent.options.owner == id ||
+				parent_owner.indexOf &&
+				parent_owner.indexOf(id) >= 0)
+			{
+				owner_match = true;
+				break;
+			}
+		}
+		if(!owner_match)
+		{
+			owner_match = (parent.options.owner == event.owner ||
+				parent_owner.indexOf &&
+				parent_owner.indexOf(event.owner) >= 0);
+		}
+	}
+	return owner_match;
+};
+
 /**
  * @callback et2_calendar_event~prompt_callback
  * @param {string} button_id - One of ok, exception, series, single or cancel

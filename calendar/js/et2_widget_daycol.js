@@ -348,13 +348,18 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		{
 			var event = egw.dataGetUIDdata('calendar::'+event_ids[i]);
 			event = event && event.data || false;
-			if(event && event.date && (
+			if(event && event.date && et2_calendar_event.owner_check(event, this) && (
 				event.date === this.options.date ||
 				// Accept multi-day events
 				new Date(event.start) <= this.date //&& new Date(event.end) >= this.date
 			))
 			{
 				events.push(event);
+			}
+			else if (event)
+			{
+				// Got an ID that doesn't belong
+				event_ids.splice(i,1);
 			}
 		}
 		if(!this._parent.disabled)
