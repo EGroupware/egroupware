@@ -412,9 +412,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			}
 			if(event_widget)
 			{
-				event_widget._parent.date_helper.set_year(drop_date.substring(0,4));
-				event_widget._parent.date_helper.set_month(drop_date.substring(4,6));
-				event_widget._parent.date_helper.set_date(drop_date.substring(6,8));
+				event_widget._parent.date_helper.set_value(drop_date.substring(0,4)+'-'+drop_date.substring(4,6)+'-'+drop_date.substring(6,8));
+
+
 				// Make sure whole day events stay as whole day events by ignoring drop time
 				if(event_data.app == 'calendar' && event_widget.options.value.whole_day)
 				{
