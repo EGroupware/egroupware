@@ -442,9 +442,11 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	/**
 	 * Set value
 	 *
-	 * @param _value
+	 * @param {string|number} _value
+	 * @param {boolean} _dont_try_set_options true: if _value is not in options, use "" instead of calling set_select_options
+	 *		(which would go into an infinit loop)
 	 */
-	set_value: function(_value)
+	set_value: function(_value, _dont_try_set_options)
 	{
 		if (typeof _value == "number") _value = ""+_value;	// convert to string for consitent matching
 		if(typeof _value == "string" && (this.options.multiple || this.options.expand_multiple_rows) && _value.match(this._is_multiple_regexp) !== null)
@@ -498,10 +500,15 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			{
 				if(this.options.select_options[_value] ||
 					this.options.select_options.filter &&
-					this.options.select_options.filter(function(value) {return value == _value;}))
+					this.options.select_options.filter(function(value) {return value == _value;}) &&
+					!_dont_try_set_options)
 				{
 					// Options not set yet? Do that now, which will try again.
 					return this.set_select_options(this.options.select_options);
+				}
+				else if (_dont_try_set_options)
+				{
+					this.value = "";
 				}
 				else if (jQuery.isEmptyObject(this.options.select_options))
 				{
@@ -737,9 +744,10 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				this._appendOptionElement(key, _options[key]);
 			}
 		}
+		this.options.select_options = _options;
 
 		// Sometimes value gets set before options
-		if(this.value || this.options.empty_label) this.set_value(this.value);
+		if(this.value || this.options.empty_label) this.set_value(this.value, true);	// true = dont try to set_options, to avoid an infinit recursion
 	},
 
 	getValue: function() {
@@ -1125,7 +1133,7 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 			var parent = widget._parent;
 			while(parent && !in_nextmatch)
 			{
-				in_nextmatch =(parent && parent._type && parent._type === 'nextmatch')
+				in_nextmatch = parent && parent._type && parent._type === 'nextmatch';
 				parent = parent._parent;
 			}
 		}
