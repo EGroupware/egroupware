@@ -74,6 +74,21 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 		return true;
 	},
 
+	selectionRenderer: function(item)
+	{
+		if(this.options.allowFreeEntries)
+		{
+			return this._super.apply(this,arguments);
+		}
+		else
+		{
+			var label = jQuery('<span>').text(item.label);
+			if (item.class) label.addClass(item.class);
+			if (typeof item.title != 'undefined') label.attr('title', item.title);
+			if (typeof item.data != 'undefined') label.attr('data', item.data);
+			return label;
+		}
+	},
 	getValue: function()
 	{
 		if(this.taglist == null) return null;
