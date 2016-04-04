@@ -5,11 +5,16 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
- * @subpackage groupdav
+ * @subpackage caldav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
+
+namespace EGroupware\Api\CalDAV;
+
+use EGroupware\Api;
+use Horde_Icalendar;
 
 // required for tests at the end of this file (run if file called directly)
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)
@@ -20,7 +25,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 			'nonavbar'   => 'true',
 		),
 	);
-	include('../../header.inc.php');
+	include('../../../header.inc.php');
 }
 
 /**
@@ -28,7 +33,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
  *
  * try {
  * 		$ical_file = fopen($path,'r');
- * 		$ical_it = new egw_ical_iterator($ical_file,'VCALENDAR');
+ * 		$ical_it = new Api\CalDAV\IcalIterator($ical_file,'VCALENDAR');
  * }
  * catch (Exception $e)
  * {
@@ -40,7 +45,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
  * }
  * fclose($ical_file)
  */
-class egw_ical_iterator extends Horde_Icalendar implements Iterator
+class IcalIterator extends Horde_Icalendar implements \Iterator
 {
 	/**
 	 * File we work on
@@ -124,7 +129,7 @@ class egw_ical_iterator extends Horde_Icalendar implements Iterator
 		}
 		if (!is_resource($this->ical_file))
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__.'($ical_file, ...) NO resource! $ical_file='.substr(array2string($ical_file),0,100));
+			throw new Api\Exception\WrongParameter(__METHOD__.'($ical_file, ...) NO resource! $ical_file='.substr(array2string($ical_file),0,100));
 		}
 	}
 
@@ -425,12 +430,12 @@ X-MS-OLK-CONFTYPE:0
 END:VEVENT
 END:VCALENDAR
 ';
-	common::egw_header();
+	 $GLOBALS['egw']->framework->header();
 	//$ical_file = fopen('/tmp/KalenderFelicitasKubala.ics');
 	if (!is_resource($ical_file)) echo "<pre>$ical_file</pre>\n";
 	//$calendar_ical = new calendar_ical();
 	//$calendar_ical->setSupportedFields('file');
-	$ical_it = new egw_ical_iterator($ical_file);//,'VCALENDAR','iso-8859-1',array($calendar_ical,'_ical2egw_callback'),array('Europe/Berlin'));
+	$ical_it = new IcalIterator($ical_file);//,'VCALENDAR','iso-8859-1',array($calendar_ical,'_ical2egw_callback'),array('Europe/Berlin'));
 	foreach($ical_it as $uid => $vevent)
 	{
 		echo "$uid<pre>".print_r($vevent->toHash(), true)."</pre>\n";

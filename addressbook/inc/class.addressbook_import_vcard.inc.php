@@ -10,6 +10,7 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
 
 /**
  * Plugin to import vCard files
@@ -17,7 +18,7 @@
 class addressbook_import_vcard implements importexport_iface_import_plugin  {
 
 	private static $plugin_options = array(
-		
+
 		'contact_owner'
 	);
 
@@ -124,7 +125,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 		// Fix for Apple Addressbook
         $vCard = preg_replace('/item\d\.(ADR|TEL|EMAIL|URL)/', '\1', stream_get_contents($_stream));
 
-		$contacts = new egw_ical_iterator($vCard, '', $charset, array($this, '_vcard'),array(
+		$contacts = new Api\CalDAV\IcalIterator($vCard, '', $charset, array($this, '_vcard'),array(
 			// Owner (addressbook)
 			$contact_owner
 		));
@@ -147,7 +148,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 			$count++;
 			$contacts->next();
 		}
-		
+
 		return $count;
 	}
 
@@ -166,8 +167,8 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 		if(!array_key_exists($record['owner'], $this->bocontacts->get_addressbooks()))
 		{
 			$this->errors[$this->current] = lang("Unable to import into %1, using %2",
-				common::grab_owner_name($record['owner']),
-				common::grab_owner_name($this->user)
+				Api\Accounts::username($record['owner']),
+				Api\Accounts::username($this->user)
 			);
 			$record['owner'] = $this->user;
 		}
@@ -220,7 +221,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 				} else {
 					//error_log(__METHOD__.__LINE__.array2string($changed).' Old:'.$old['adr_one_countryname'].' ('.$old['adr_one_countrycode'].') New:'.$_data['adr_one_countryname'].' ('.$_data['adr_one_countryname'].')');
 				}
-				
+
 				// Make sure n_fn gets updated
 				unset($_data['n_fn']);
 
@@ -249,8 +250,8 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 					return $result;
 				}
 			default:
-				throw new egw_exception('Unsupported action: '. $_action);
-			
+				throw new Api\Exception('Unsupported action: '. $_action);
+
 		}
 	}
 
@@ -289,7 +290,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 			$row += $record;
 			$rows[] = $row;
 		}
-		return html::table($rows);
+		return Api\Html::table($rows);
 	}
 
 	/**
@@ -380,4 +381,3 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
                 return $this->results;
         }
 } // end of iface_export_plugin
-?>

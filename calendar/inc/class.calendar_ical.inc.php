@@ -2249,10 +2249,10 @@ class calendar_ical extends calendar_boupdate
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
-		// we use egw_ical_iterator only on resources, as calling importVCal() accesses single events like an array (eg. $events[0])
+		// we use Api\CalDAV\IcalIterator only on resources, as calling importVCal() accesses single events like an array (eg. $events[0])
 		if (is_resource($_vcalData))
 		{
-			return new egw_ical_iterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($this->tzid,$principalURL));
+			return new Api\CalDAV\IcalIterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($this->tzid,$principalURL));
 		}
 
 		if ($this->tzid)
@@ -2317,7 +2317,7 @@ class calendar_ical extends calendar_boupdate
 	}
 
 	/**
-	 * Callback for egw_ical_iterator to convert Horde_iCalendar_Vevent to EGw event array
+	 * Callback for Api\CalDAV\IcalIterator to convert Horde_iCalendar_Vevent to EGw event array
 	 *
 	 * @param Horde_iCalendar $component
 	 * @param string $tzid timezone
