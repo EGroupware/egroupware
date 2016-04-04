@@ -1715,7 +1715,10 @@ class calendar_uiforms extends calendar_ui
 				$readonlys['recur_interval'] = $readonlys['recur_data'] = true;
 			}
 		}
-		$content['category'] = explode(',',$event['category']);
+		if($content['category'] && !is_array($content['category']))
+		{
+			$content['category'] = explode(',',$event['category']);
+		}
 		// disabling the custom fields tab, if there are none
 		$readonlys['tabs'] = array(
 			'custom' => !count($this->bo->customfields),
