@@ -998,7 +998,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 	click: function(_ev)
 	{
 		// Click on the title
-		if(this.title.is(_ev.target))
+		if(this.title.is(_ev.target) || this.title.has(_ev.target))
 		{
 			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
 			return false;
