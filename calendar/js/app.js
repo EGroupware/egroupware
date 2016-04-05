@@ -2828,6 +2828,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				if(!multiple_owner) break;
 			}
 		}
+
+		egw.loading_prompt(this.appname,false);
 	},
 
 	/**
@@ -3280,7 +3282,13 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			$j(window).trigger('resize');
 			this.setState({state:this.state});
-			egw.loading_prompt(this.appname,false);
+			
+			// Hide loader after 1 second as a fallback, it will also be hidden
+			// after loading is complete.
+			window.setTimeout(jQuery.proxy(function() {
+				egw.loading_prompt(this.appname,false);
+			}, this),1000);
+			
 		}
 	},
 
