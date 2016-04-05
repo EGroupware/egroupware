@@ -111,7 +111,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		this.owner = et2_createWidget('select-account_ro',{},this);
 
 		this._labelContainer = $j(document.createElement("label"))
-			.addClass("et2_label")
+			.addClass("et2_label et2_link")
 			.appendTo(this.gridHeader);
 
 		this.gridHover = jQuery('<div style="height:5px;" class="calendar_calAddEvent drop-hover">');
