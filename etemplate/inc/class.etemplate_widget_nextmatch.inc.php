@@ -657,8 +657,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			{
 				if($n == 'sel_options')
 				{
-					foreach($row as &$options)
+					foreach($row as $name => &$options)
 					{
+						// remember newly set options for validation of nextmatch filters
+						self::$request->sel_options[$name] = $options;
+
 						etemplate_widget_menupopup::fix_encoded_options($options, true);
 					}
 				}
