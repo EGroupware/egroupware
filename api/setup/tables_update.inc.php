@@ -39,5 +39,14 @@ function api_upgrade14_3_907()
 	}
 	$GLOBALS['egw_setup']->deregister_app('emailadmin');
 
+	// uninstall obsolete FelamiMail tables, if still around
+	$done = 0;
+	foreach(array_intersect($tables, array('egw_felamimail_accounts', 'egw_felamimail_displayfilter', 'egw_felamimail_signatures')) as $table)
+	{
+		$GLOBALS['egw_setup']->oProc->DropTable($table);
+
+		if (!$done++) $GLOBALS['egw_setup']->deregister_app('felamimail');
+	}
+
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.1';
 }
