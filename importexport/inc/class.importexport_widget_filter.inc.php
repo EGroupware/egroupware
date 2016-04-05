@@ -182,4 +182,4 @@ class importexport_widget_filter extends etemplate_widget_transformer
 	}
 }
 // Register, or it won't be found
-etemplate_widget::registerWidget('importexport_widget_filter', array('filter'));
+\EGroupware\Api\Etemplate\Widget::registerWidget('importexport_widget_filter', array('filter'));
