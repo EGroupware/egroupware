@@ -94,6 +94,13 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 		// call parent
 		this._super.apply(this, arguments);
+		
+		// Show loading div
+		egw.loading_prompt(
+			this.appname,true,egw.lang('please wait...'),
+			framework.applications.calendar.tab.contentDiv,
+			egwIsMobile()?'horizental':'spinner'
+		);
 
 		// Scroll
 		jQuery(jQuery.proxy(this._scroll,this));
@@ -3273,6 +3280,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			$j(window).trigger('resize');
 			this.setState({state:this.state});
+			egw.loading_prompt(this.appname,false);
 		}
 	},
 
