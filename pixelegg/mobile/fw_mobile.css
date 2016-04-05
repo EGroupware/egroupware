@@ -7919,6 +7919,9 @@ form[id^="tracker-"] .dialogHeadbar {
   body .popupMainDiv .et2_taglist > div {
     min-height: auto;
   }
+  body .popupMainDiv form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
+    margin: 0 5px 0 0;
+  }
   body .dialogHeadbar button[class*="et2_button_with_image"]:not([class*="et2_toolbar_hasCaption"]) {
     -webkit-filter: brightness(0) invert(1) !important;
     filter: brightness(0) invert(1) !important;
