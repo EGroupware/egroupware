@@ -98,7 +98,7 @@ class Hooks
 	 * @param boolean $try_unregistered =false If true, try to include old file-hook anyway (for setup)
 	 * @return mixed False if no hook exists, True if old hook exists and whatever the new method-hook returns (can be True or False too!).
 	 */
-	public static function single($args, $appname = '', $no_permission_check = False)//,$try_unregistered = False)
+	public static function single($args, $appname = '', $no_permission_check = False, $try_unregistered = False)
 	{
 		//error_log(__METHOD__."(".array2string($args).",'$appname','$no_permission_check','$try_unregistered')");
 
@@ -149,6 +149,13 @@ class Hooks
 			catch (\Exception $e) {
 				_egw_log_exception($e);
 			}
+		}
+
+		// hooks only existing in filesystem used by setup
+		if (!$ret && $try_unregistered && file_exists(EGW_SERVER_ROOT.($hook='/'.$appname.'/inc/hook_'.$location.'.inc.php')))
+		{
+			include(EGW_SERVER_ROOT.$hook);
+			return true;
 		}
 
 		if (!$ret) return false;
