@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * setup command: create / change eGW configuration
@@ -99,7 +101,7 @@ class setup_cmd_config extends setup_cmd
 			if ($save_mail_account) $this->_save_mail_account($values);
 
 			// flush instance cache, so above config get read from database not cache
-			egw_cache::flush();
+			Api\Cache::flush();
 
 			$this->restore_db();
 
@@ -286,7 +288,7 @@ class setup_cmd_config extends setup_cmd
 		{
 			if (!isset(self::$options[$arg]))
 			{
-				throw new egw_exception_wrong_userinput(lang("Unknown option '%1' !!!",$arg),90);
+				throw new Api\Exception\WrongUserinput(lang("Unknown option '%1' !!!",$arg),90);
 			}
 			$options = is_array(self::$options[$arg]) ? explode(',',array_shift($args)) : array(array_shift($args));
 
@@ -330,7 +332,7 @@ class setup_cmd_config extends setup_cmd
 
 			if (isset($name['allowed']) && !in_array($value,$name['allowed']))
 			{
-				throw new egw_exception_wrong_userinput(lang("'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg)." ($name[name])",91);
+				throw new Api\Exception\WrongUserinput(lang("'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg)." ($name[name])",91);
 			}
 			$name = $name['name'];
 		}
@@ -346,15 +348,15 @@ class setup_cmd_config extends setup_cmd
 	 */
 	function _save_mail_account(array $data)
 	{
-		// convert ssl textual values to nummerical ones used in emailadmin_account
+		// convert ssl textual values to nummerical ones used in Api\Mail\Account
 		foreach(array('acc_imap_ssl', 'acc_sieve_ssl', 'acc_smtp_ssl') as $name)
 		{
 			switch(strtolower($data[$name]))
 			{
-				case 'no':       $data[$name] = emailadmin_account::SSL_NONE; break;
-				case 'starttls': $data[$name] = emailadmin_account::SSL_STARTTLS; break;
-				case 'ssl':      $data[$name] = emailadmin_account::SSL_SSL; break;
-				case 'tls':      $data[$name] = emailadmin_account::SSL_TLS; break;
+				case 'no':       $data[$name] = Api\Mail\Account::SSL_NONE; break;
+				case 'starttls': $data[$name] = Api\Mail\Account::SSL_STARTTLS; break;
+				case 'ssl':      $data[$name] = Api\Mail\Account::SSL_SSL; break;
+				case 'tls':      $data[$name] = Api\Mail\Account::SSL_TLS; break;
 			}
 		}
 		// convert 'yes', 'no' to boolean
@@ -375,7 +377,7 @@ class setup_cmd_config extends setup_cmd
 		$data['acc_name'] = 'Created by setup';
 		$data['account_id'] = 0;	// 0 = valid for all users
 
-		emailadmin_account::write($data);
+		Api\Mail\Account::write($data);
 
 		if ($this->verbose)
 		{

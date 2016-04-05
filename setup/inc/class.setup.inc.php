@@ -31,13 +31,6 @@ class setup
 	var $cookie_domain;
 
 	/**
-	 * Instance of the hooks class
-	 *
-	 * @var hooks
-	 */
-	var $hooks;
-
-	/**
 	 * @var setup_detection
 	 */
 	var $detection;
@@ -149,7 +142,7 @@ class setup
 					}
 				}
 			}
-			catch (egw_exception_db $e) {
+			catch (Api\Db\Exception $e) {
 				// table might not be created at that stage
 			}
 		}
@@ -249,7 +242,7 @@ class setup
 
 		$ok = @session_start();	// suppress notice if session already started or warning in CLI
 		// need to decrypt session, in case session encryption is switched on in header.inc.php
-		egw_session::decrypt();
+		Api\Session::decrypt();
 		//error_log(__METHOD__."() returning ".array2string($ok).' _SESSION='.array2string($_SESSION));
 		return $ok;
 	}
@@ -375,7 +368,7 @@ class setup
 			{
 				$hash = '{plain}'.$hash;
 			}
-			$ret = auth::compare_password($pw, $hash, 'md5');
+			$ret = Api\Auth::compare_password($pw, $hash, 'md5');
 		}
 		//error_log(__METHOD__."('$user', '$pw', '$conf_user', '$hash') returning ".array2string($ret));
 		return $ret;
@@ -709,7 +702,7 @@ class setup
 			}
 		}
 		// store default/forced preferences, if any found
-		$preferences = new preferences();
+		$preferences = new Api\Preferences();
 		$preferences->read_repository(false);
 		foreach(array(
 			'default' => $default,
@@ -735,7 +728,7 @@ class setup
 	  * @param $location hook location - required
 	  * @param $appname application name - optional
 	 */
-	function hook($location, $appname='')
+	static function hook($location, $appname='')
 	{
 		return Api\Hooks::single($location,$appname,True,True);
 	}
@@ -940,7 +933,7 @@ class setup
 				return false;
 			}
 			if (!isset($GLOBALS['egw']->accounts)) $GLOBALS['egw']->accounts = $this->accounts;
-			accounts::cache_invalidate();	// the cache is shared for all instances of the class
+			Api\Accounts::cache_invalidate();	// the cache is shared for all instances of the class
 		}
 		return true;
 	}
@@ -974,7 +967,7 @@ class setup
 
 		if ($username == 'anonymous')
 		{
-			if (!isset($this->anonpw)) $this->anonpw = auth::randomstring(16);
+			if (!isset($this->anonpw)) $this->anonpw = Api\Auth::randomstring(16);
 			$passwd = $anonpw = $this->anonpw;
 		}
 
@@ -1002,7 +995,7 @@ class setup
 		elseif($passwd && $passwd != '*unchanged*')
 		{
 			try {
-				$auth = new auth;
+				$auth = new Api\Auth;
 				$pw_changed = $auth->change_password(null, $passwd, $accountid);
 			}
 			catch (Exception $e)
@@ -1016,19 +1009,19 @@ class setup
 				return false;
 			}
 		}
-		// call vfs_home_hooks::add{account|group} hook to create the vfs-home-dirs
+		// call Api\Vfs\Hooks::add{account|group} hook to create the vfs-home-dirs
 		// calling general add{account|group} hook fails, as we are only in setup
 		// --> setup_cmd_admin execs "admin/admin-cli.php --edit-user" to run them
 		if ($primary_group)
 		{
-			vfs_home_hooks::addAccount(array(
+			Api\Vfs\Hooks::addAccount(array(
 				'account_id' => $accountid,
 				'account_lid' => $username,
 			));
 		}
 		else
 		{
-			vfs_home_hooks::addGroup(array(
+			Api\Vfs\Hooks::addGroup(array(
 				'account_id' => $accountid,
 				'account_lid' => $username,
 			));
