@@ -42,7 +42,7 @@ $setup_tpl->set_file(array(
 	'T_login_stage_header' => 'login_stage_header.tpl',
 	'T_setup_main' => 'applications.tpl'
 ));
-$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
+$setup_tpl->set_var('hidden_vars', Api\Html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 
 // check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
@@ -122,9 +122,11 @@ if(@get_var('submit',Array('POST')))
 	$install = get_var('install',Array('POST'));
 	$upgrade = get_var('upgrade',Array('POST'));
 
+	$register_hooks = false;
+
 	if(!empty($remove) && is_array($remove))
 	{
-		$historylog = CreateObject('phpgwapi.historylog');
+		$historylog = new Api\Storage\History();
 		$historylog->db = $GLOBALS['egw_setup']->db;
 
 		foreach($remove as $appname => $key)
@@ -142,10 +144,7 @@ if(@get_var('submit',Array('POST')))
 			$GLOBALS['egw_setup']->deregister_app($setup_info[$appname]['name']);
 			echo '<br />' . $app_title . ' ' . lang('deregistered') . '.';
 
-			if ($GLOBALS['egw_setup']->deregister_hooks($setup_info[$appname]['name']))
-			{
-				echo '<br />' . $app_title . ' ' . lang('hooks deregistered') . '.';
-			}
+			$register_hooks = true;
 
 			$historylog->appname = $appname;
 			if ($historylog->delete(null))
@@ -190,8 +189,7 @@ if(@get_var('submit',Array('POST')))
 
 				if ($setup_info[$appname]['hooks'])
 				{
-					Api\Hooks::read(true);
-					echo '<br />' . $app_title . ' ' . lang('hooks registered') . '.';
+					$register_hooks = true;
 				}
 			}
 		}
@@ -215,8 +213,16 @@ if(@get_var('submit',Array('POST')))
 			{
 				echo '<br />' . $app_title . ' ' . lang('upgraded') . '.';
 			}
+			$register_hooks = true;
 		}
 	}
+
+	if ($register_hooks)
+	{
+		Api\Hooks::read(true);
+		echo '<br />' . $app_title . ' ' . lang('hooks registered') . '.';
+	}
+
 	//$setup_tpl->set_var('goback',
 	echo '<br /><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
 	//$setup_tpl->pparse('out','submit');
