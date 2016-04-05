@@ -108,13 +108,19 @@ function et2_dataview_rowAOI(_node)
 	if (egwIsMobile()) {
 		$j(_node).swipe({
 				allowPageScroll: "vertical",
-				swipe: function (event, direction)
+				longTapThreshold: 10,
+				swipe: function (event, direction, distance)
 				{
-					selectHandler(event, {swip:direction});
+					if (distance > 100) selectHandler(event, {swip:direction});
 				},
-				click: function (event)
+				tap: function (event, duration)
 				{
 					selectHandler(event);
+				},
+				// stop scrolling touch being confused from tap
+				longTap: function (event)
+				{
+					return;
 				}
 
 		});
