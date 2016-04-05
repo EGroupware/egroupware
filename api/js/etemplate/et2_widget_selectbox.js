@@ -165,7 +165,9 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			typeof _attrs.select_options == 'undefined' || _attrs.select_options === null
 		)
 		{
-			return;
+			// do not return inside nextmatch, as get_rows data might have changed select_options
+			// for performance reasons we only do it for first row, which should have id "0[...]"
+			if (this.getParent()._type != 'rowWidget' || !_attrs.id || _attrs.id[0] != '0') return;
 		}
 
 		var sel_options = et2_selectbox.find_select_options(this, _attrs['select_options'], _attrs);
@@ -1335,7 +1337,7 @@ var et2_selectbox_ro = (function(){ "use strict"; return et2_selectbox.extend([e
 	 * @param {array} _attrs array to add further attributes to
 	 */
 	getDetachedAttributes: function(_attrs) {
-		_attrs.push("value");
+		_attrs.push("value",'select_options');
 	},
 
 	/**
@@ -1360,6 +1362,10 @@ var et2_selectbox_ro = (function(){ "use strict"; return et2_selectbox.extend([e
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
 		this.span = jQuery(_nodes[0]);
+		if (typeof _values.select_options != 'undefined')
+		{
+			this.set_select_options(_values.select_options);
+		}
 		this.set_value(_values["value"]);
 	}
 });}).call(this);

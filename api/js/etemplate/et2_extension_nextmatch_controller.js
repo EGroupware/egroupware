@@ -565,6 +565,8 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 					{
 						this.self._rowProvider.categories = null;
 					}
+					// update array mgr so select widgets in row also get refreshed options
+					nm.getParent().getArrayMgr('sel_options').data[id] = _response.rows.sel_options[id];
 				}
 			}
 			else
