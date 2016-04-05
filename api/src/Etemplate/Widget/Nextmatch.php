@@ -658,8 +658,11 @@ class Nextmatch extends Etemplate\Widget
 			{
 				if($n == 'sel_options')
 				{
-					foreach($row as &$options)
+					foreach($row as $name => &$options)
 					{
+						// remember newly set options for validation of nextmatch filters
+						self::$request->sel_options[$name] = $options;
+
 						Select::fix_encoded_options($options, true);
 					}
 				}
@@ -1020,7 +1023,7 @@ class Nextmatch extends Etemplate\Widget
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = self::get_array($content, $form_name);
 
-		// Some (most) extmatch settings are set in its value, not attributes, which aren't in
+		// Some (most) nextmatch settings are set in its value, not attributes, which aren't in
 		// $content.  Fetch them from the request, so we actually have them.
 		$content_value = self::get_array(self::$request->content, $form_name);
 
