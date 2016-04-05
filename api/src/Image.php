@@ -136,7 +136,8 @@ class Image
 		{
 			$svg = self::svg_usable();
 		}
-		$cache_name = 'image_map_'.$template_set.($svg ? '_svg' : '');
+
+		$cache_name = 'image_map_'.$template_set.($svg ? '_svg' : '').(Header\UserAgent::mobile() ? '_mobile' : '');
 		if (($map = Cache::getInstance(__CLASS__, $cache_name)))
 		{
 			return $map;
