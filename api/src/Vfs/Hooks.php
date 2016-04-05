@@ -92,7 +92,7 @@ class Hooks
 			// copy content of user-dir to new owner's user-dir as old-home-$name
 			for ($i=''; file_exists(Api\Vfs::PREFIX.($new_dir = '/home/'.$new_lid.'/old-home-'.$data['account_lid'].$i)); $i++)
 			{
-				
+
 			}
 			Api\Vfs::rename('/home/'.$data['account_lid'],$new_dir);
 			// make the new owner the owner of the dir and it's content
@@ -147,7 +147,7 @@ class Hooks
 	static function editGroup($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
-		if (empty($data['account_lid']) || empty($data['old_name'])) throw new egw_exception_wrong_parameter('account_lid and old_name must not be empty!');
+		if (empty($data['account_lid']) || empty($data['old_name'])) throw new Api\Exception\WrongParameter('account_lid and old_name must not be empty!');
 
 		if ($data['account_lid'] == $data['old_name'])
 		{
