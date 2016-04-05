@@ -6530,22 +6530,22 @@ class Mail
 	/**
 	 * importMessageToMergeAndSend
 	 *
-	 * @param object &bo_merge bo_merge object
+	 * @param Storage\Merge bo_merge bo_merge object
 	 * @param string $document the full filename
 	 * @param array $SendAndMergeTocontacts array of contact ids
-	 * @param string $_folder (passed by reference) will set the folder used. must be set with a folder, but will hold modifications if
+	 * @param string& $_folder (passed by reference) will set the folder used. must be set with a folder, but will hold modifications if
 	 *					folder is modified
-	 * @param string $importID ID for the imported message, used by attachments to identify them unambiguously
+	 * @param string& $importID ID for the imported message, used by attachments to identify them unambiguously
 	 * @return mixed array of messages with success and failed messages or exception
 	 */
-	function importMessageToMergeAndSend(bo_merge $bo_merge, $document, $SendAndMergeTocontacts, &$_folder, &$importID='')
+	function importMessageToMergeAndSend(Storage\Merge $bo_merge, $document, $SendAndMergeTocontacts, &$_folder, &$importID='')
 	{
 		$importfailed = false;
 		$processStats = array('success'=>array(),'failed'=>array());
 		if (empty($SendAndMergeTocontacts))
 		{
 			$importfailed = true;
-			$alert_msg .= lang("Import of message %1 failed. No Contacts to merge and send to specified.",$_formData['name']);
+			$alert_msg .= lang("Import of message %1 failed. No Contacts to merge and send to specified.", '');
 		}
 
 		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
@@ -6636,7 +6636,7 @@ class Mail
 							$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
 							if($email)
 							{
-								$mailObject->addAddress(Horde_Idna::encode($email),$mailObject->EncodeHeader($nfn));
+								$mailObject->addAddress(Horde_Idna::encode($email), $nfn);
 							}
 						}
 
@@ -6692,7 +6692,7 @@ class Mail
 							$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
 							if($email)
 							{
-								$mailObject->addAddress(Horde_Idna::encode($email),$mailObject->EncodeHeader($nfn));
+								$mailObject->addAddress(Horde_Idna::encode($email), $nfn);
 							}
 						}
 						$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
