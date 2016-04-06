@@ -356,7 +356,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 	var appname = _name.split('.')[0];
 	// if no app object provided and template app is not currentapp (eg. infolog CRM view)
 	// create private app object / closure with just classes / prototypes
-	if (!_app && appname && appname != currentapp) app = { classes: window.app.classes };
+	if (!_app && appname && appname != currentapp && currentapp != 'home' && appname != 'home') app = { classes: window.app.classes };
 	// remember used app object, to eg. use: onchange="widget.getInstanceMgr().app_object[app].callback()"
 	this.app_obj = app;
 
