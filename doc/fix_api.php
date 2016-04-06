@@ -28,23 +28,48 @@ $replace = array(
 	"#\\\$GLOBALS\['egw'\]->session->appsession\(([^,]+),\s*('[^']+')\)#" => 'Api\\Cache::getSession($2, $1)',
 	"#\\\$GLOBALS\['egw'\]->session->appsession\(([^,]+),\s*('[^']+'),\s*#" => 'Api\\Cache::setSession($2, $1, ',
 	"#\\\$GLOBALS\['egw'\]->common->#" => 'common::',
+	"#\\\$GLOBALS\['egw'\]->hooks->#" => 'Api\\Hooks::',
+	"#\\\$GLOBALS\['egw'\]->translation->#" => 'Api\\Translation::',
 );
 // enclose class-names and static methods with some syntax check
 $class_start = '#([\[\s,;(])';
 $class_end = '(::|\\(|;|\?|:|\\s|$)#';
 foreach(array(
 	'accounts' => 'Api\\Accounts',
-	//'acl' => 'Api\Acl',
-	//'applications' => 'Api\Applications',
-	//'asyncservice' => 'Api\AsyncService',
+	'acl' => 'Api\\Acl',
+	'EGW_ACL_READ' => 'Api\\Acl::READ',
+	'EGW_ACL_ADD' => 'Api\\Acl::ADD',
+	'EGW_ACL_EDIT' => 'Api\\Acl::EDIT',
+	'EGW_ACL_DELETE' => 'Api\\Acl::DELETE',
+	'EGW_ACL_PRIVATE' => 'Api\\Acl::PRIVAT',
+	'EGW_ACL_GROUP_MANAGERS' => 'Api\\Acl::GROUPMGRS',
+	'EGW_ACL_CUSTOM_1' => 'Api\\Acl::CUSTOM1',
+	'EGW_ACL_CUSTOM_2' => 'Api\\Acl::CUSTOM2',
+	'EGW_ACL_CUSTOM_3' => 'Api\\Acl::CUSTOM3',
+	//'applications' => 'Api\\Applications',
+	'asyncservice' => 'Api\\AsyncService',
 	'auth' => 'Api\\Auth',
 	'categories' => 'Api\\Categories',
 	'config::get_customfields' => 'Api\\Storage\\Customfields::get',
 	'config' => 'Api\\Config',
-	'common::image' => 'Api\\Image::find',
+	'common::setlocale' => 'Api\\Preferences::setlocale',
+	'common::generate_uid' => 'Api\\CalDAV::generate_uid',
+	'common::ldap_addslashes' => 'Api\\Ldap::quote',
+	'common::ldapConnect' => 'Api\\Ldap::factory',
 	'common::egw_exit' => 'exit',
-	//'common' list single methods like
-	//'country' => 'Api\\Country',
+	'common::randomstring' => 'Api\\Auth::randomstring',
+	'common::display_fullname' => 'Api\\Accounts::format_username',
+	'common::grab_owner_name' => 'Api\\Accounts::username',
+	'common::find_image' => 'Api\\Image::find',
+	'common::image' => 'Api\\Image::find',
+	'common::svg_usable' => 'Api\\Image::svg_usable',
+	'common::image_map' => 'Api\\Image::map',
+	'common::delete_image_map' => 'Api\\Image::invalidate',
+	'common::transliterate' => 'Api\\Translation::to_ascii',
+	'common::email_address' => 'Api\\Accounts::email',
+	'common::next_id' => 'Api\\Accounts\\Ldap::next_id',
+	'common::last_id' => 'Api\\Accounts\\Ldap::last_id',
+	'country' => 'Api\\Country',
 	//'egw' =>
 	'egw_cache' => 'Api\\Cache',
 	'egw_ckeditor_config' => 'Api\\Html\\CkEditorConfig',
@@ -65,18 +90,19 @@ foreach(array(
 	'egw_exception_redirect' => 'Api\\Exception\\Redirect',
 	//'egw_favorites' =>
 	//'egw_framework' =>
-	//'egw_ical_iterator' =>
 	'egw_json_request' => 'Api\\Json\\Request',
 	'egw_json_response' => 'Api\\Json\\Response',
 	'egw_link' => 'Api\\Link',
-	//'egw_mailer' =>
+	'egw_mailer' => 'Api\\Mailer',
 	'egw_session' => 'Api\\Session',
-	//'egw_tail' =>
+	'egw_tail' => 'Api\\Json\\Tail',
 	'egw_time' => 'Api\\DateTime',
 	'egw_vfs' => 'Api\\Vfs',
-	//'groupdav*' =>
+	'groupdav' => 'Api\CalDAV',
+	'groupdav_principal' => 'Api\\CalDAV\\Principal',
+	'groupdav_handler' => 'Api\\CalDAV\\Handler',
+	'egw_ical_iterator' => 'Api\\CalDAV\\IcalIterator',
 	'historylog' => 'Api\\Storage\\History',
-	//'hooks' =>
 	'html::\$user_agent' => 'Api\\Header\\UserAgent::type()',
 	'html::\$ua_version' => 'Api\\Header\\UserAgent::version()',
 	'html::\$ua_mobile' => 'Api\\Header\\UserAgent::mobile()',
@@ -90,7 +116,13 @@ foreach(array(
 	'solink' => 'Api\\Link\\Storage',
 	'sqlfs_stream_wrapper' => 'Api\\Vfs\\Sqlfs\\StreamWrapper',
 	'sqlfs_utils' => 'Api\\Vfs\\Sqlfs\\Utils',
-	// todo translation mail specific stuff
+	'translation::decodeMailHeader' => 'Api\\Mail\\Html::decodeMailHeader',
+	'translation::replaceEmailAdresses' => 'Api\\Mail\\Html::replaceEmailAdresses',
+	'translation::replaceTagsCompletley' => 'Api\\Mail\\Html::replaceTagsCompletley',
+	'translation::transform_mailto2text' => 'Api\\Mail\\Html::transform_mailto2text',
+	'translation::transform_url2text' => 'Api\\Mail\\Html::transform_url2text',
+	'translation::convertHTMLToText' => 'Api\\Mail\\Html::convertHTMLToText',
+	'translation::splithtmlByPRE' => 'Api\\Mail\\Html::splithtmlByPRE',
 	'translation' => 'Api\\Translation',
 	// etemplate2
 	'etemplate_new' => 'Api\\Etemplate',
@@ -110,7 +142,7 @@ foreach(array(
 	'so_sql_cf' => 'Api\\Storage',
 	'so_sql2' => 'Api\\Storage\\Base2',
 	'bo_tracking' => 'Api\\Storage\\Tracking',
-	//'bo_merge' =>
+	'bo_merge' => 'Api\\Storage\\Merge',
 	// addressbook backend
 	'addressbook_bo' => 'Api\\Contacts',
 	'addressbook_so' => 'Api\\Contacts\\Storage',
