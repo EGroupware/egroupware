@@ -251,7 +251,7 @@ class CkEditorConfig
 			{
 				$skin = "moono"; //this is the basic skin for ckeditor
 			}
-			self::$skin = $skin;
+			self::$skin = \EGroupware\Api\Header\UserAgent::mobile()?'flat':$skin;
 		}
 
 		return self::$skin;
