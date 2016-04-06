@@ -110,8 +110,6 @@ abstract class Merge
 
 	/**
 	 * Constructor
-	 *
-	 * @return bo_merge
 	 */
 	function __construct()
 	{

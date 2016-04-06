@@ -27,6 +27,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api\Contacts\Merge;
+
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'noheader'  => True,
@@ -40,7 +42,7 @@ $GLOBALS['egw_info'] = array(
 $egw_dir = dirname(dirname(__FILE__));
 include($egw_dir.'/header.inc.php');
 
-$merge = new addressbook_merge();
+$merge = new Merge();
 
 if (!isset($_REQUEST['ids']) && isset($_REQUEST['search']))
 {

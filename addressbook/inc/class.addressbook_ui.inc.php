@@ -12,6 +12,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * General user interface object of the adressbook
  */
@@ -698,7 +700,7 @@ class addressbook_ui extends addressbook_bo
 			);
 		}
 
-		$actions['documents'] = addressbook_merge::document_action(
+		$actions['documents'] = Api\Contacts\Merge::document_action(
 			$this->prefs['document_dir'], $group, 'Insert in document', 'document_',
 			$this->prefs['default_document'], $this->config['contact_export_limit']
 		);
@@ -1082,7 +1084,7 @@ window.egw_LAB.wait(function() {
 
 			case 'document':
 				if (!$document) $document = $this->prefs['default_document'];
-				$document_merge = new addressbook_merge();
+				$document_merge = new Api\Contacts\Merge();
 				$msg = $document_merge->download($document, $checked, '', $this->prefs['document_dir']);
 				$failed = count($checked);
 				return false;

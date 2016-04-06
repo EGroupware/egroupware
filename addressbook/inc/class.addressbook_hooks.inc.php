@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package addressbook
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) 2006-13 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2006-16 by Ralf Becker <RalfBecker@outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -55,7 +55,7 @@ class addressbook_hooks
 				'Advanced search' => "javascript:egw_openWindowCentered2('".
 					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.search'),false).
 					"','_blank',870,480,'yes')",
-				'Placeholders'    => egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements')
+				'Placeholders'    => egw::link('/index.php','menuaction=api.EGroupware\\Api\\Contacts\\Merge.show_replacements')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);
 		}
@@ -140,7 +140,7 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
-		$fileas_options = ExecMethod('addressbook.addressbook_bo.fileas_options');
+		$fileas_options = ExecMethod('api.EGroupware\\Api\\Contacts.fileas_options');
 		$settings['link_title'] = array(
 			'type'   => 'select',
 			'label'  => 'Link title for contacts show',
@@ -273,10 +273,11 @@ class addressbook_hooks
 				}
 				catch (Exception $e)
 				{
+					unset($e);
 					// permission error
 					continue;
 				}
-				if ($title = $definition->get_title())
+				if (($title = $definition->get_title()))
 				{
 					$options[$title] = $title;
 				}
@@ -316,10 +317,12 @@ class addressbook_hooks
 	 */
 	static function search_link($location)
 	{
+		unset($location);	// not used, but required by function signature
+
 		$links = array(
-			'query' => 'addressbook.addressbook_bo.link_query',
-			'title' => 'addressbook.addressbook_bo.link_title',
-			'titles' => 'addressbook.addressbook_bo.link_titles',
+			'query' => 'api.EGroupware\\Api\\Contacts.link_query',
+			'title' => 'api.EGroupware\\Api\\Contacts.link_title',
+			'titles' => 'api.EGroupware\\Api\\Contacts.link_titles',
 			'view' => array(
 				'menuaction' => 'addressbook.addressbook_ui.view',
 				'ajax' => 'true'
@@ -341,12 +344,12 @@ class addressbook_hooks
 			'add_id'     => 'link_id',
 			'add_popup'  => '859x550',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
-			'file_access'=> 'addressbook.addressbook_bo.file_access',
+			'file_access'=> 'api.EGroupware\\Api\\Contacts.file_access',
 			'default_types' => array('n' => array('name' => 'contact', 'options' => array('icon' => 'navbar.png','template' => 'addressbook.edit'))),
 			// registers an addtional type 'addressbook-email', returning only contacts with email, title has email appended
 			'additional' => array(
 				'addressbook-email' => array(
-					'query' => 'addressbook.addressbook_bo.link_query_email',
+					'query' => 'api.EGroupware\\Api\\Contacts.link_query_email',
 					'view' => array(
 						'menuaction' => 'addressbook.addressbook_ui.view',
 						'ajax' => 'true'
@@ -369,6 +372,8 @@ class addressbook_hooks
 	 */
 	static function getAppExportLimit($location)
 	{
+		unset($location);	// not used, but required by function signature
+
 		return $GLOBALS['egw_info']['server']['contact_export_limit'];
 	}
 
@@ -380,9 +385,11 @@ class addressbook_hooks
 	 */
 	static function calendar_resources($args)
 	{
+		unset($args);	// not used, but required by function signature
+
 		return array(
 			'type' => 'c',// one char type-identifiy for this resources
-			'info' => 'addressbook.addressbook_bo.calendar_info',// info method, returns array with id, type & name for a given id
+			'info' => 'api.EGroupware\\Api\\Contacts.calendar_info',// info method, returns array with id, type & name for a given id
 		);
 	}
 
@@ -394,6 +401,8 @@ class addressbook_hooks
 	 */
 	static function group_acl($args)
 	{
+		unset($args);	// not used, but required by function signature
+
 		// addressbook uses group-acl, only if contacts-backend is NOT LDAP, as the ACL can not be modified there
 		return $GLOBALS['egw_info']['server']['contact_repository'] != 'ldap';
 	}
@@ -406,6 +415,8 @@ class addressbook_hooks
 	 */
 	static function not_enum_group_acls($data)
 	{
+		unset($data);	// not used, but required by function signature
+
 		return true;
 	}
 
@@ -417,6 +428,8 @@ class addressbook_hooks
 	 */
 	public static function acl_rights($params)
 	{
+		unset($params);	// not used, but required by function signature
+
 		return array(
 			acl::READ    => 'read',
 			acl::EDIT    => 'edit',
@@ -433,6 +446,8 @@ class addressbook_hooks
 	 */
 	public static function categories($data)
 	{
+		unset($data);	// not used, but required by function signature
+
 		return true;
 	}
 

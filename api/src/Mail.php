@@ -30,9 +30,6 @@ use Horde_Mime_Mdn;
 
 use tidy;
 
-// old not yet converted api classes
-use addressbook_merge;	// should go to Contacts\Merge
-
 /**
  * Mail worker class
  *  -provides backend functionality for all classes in Mail
@@ -6211,7 +6208,7 @@ class Mail
 	 */
 	static function merge($content,$ids,$mimetype='')
 	{
-		$mergeobj = new addressbook_merge();
+		$mergeobj = new Contacts\Merge();
 
 		if (empty($mimetype)) $mimetype = (strlen(strip_tags($content)) == strlen($content) ?'text/plain':'text/html');
 		$rv = $mergeobj->merge_string($content,$ids,$err='',$mimetype, array(), self::$displayCharset);
@@ -6530,7 +6527,7 @@ class Mail
 	/**
 	 * importMessageToMergeAndSend
 	 *
-	 * @param Storage\Merge bo_merge bo_merge object
+	 * @param Storage\Merge Storage\Merge bo_merge object
 	 * @param string $document the full filename
 	 * @param array $SendAndMergeTocontacts array of contact ids
 	 * @param string& $_folder (passed by reference) will set the folder used. must be set with a folder, but will hold modifications if
@@ -6549,7 +6546,7 @@ class Mail
 		}
 
 		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
-		/* as the file is provided by bo_merge, we do not check
+		/* as the file is provided by Storage\Merge, we do not check
 		try
 		{
 			$tmpFileName = Mail::checkFileBasics($_formData,$importID);

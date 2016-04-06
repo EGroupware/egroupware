@@ -19,8 +19,6 @@ use EGroupware\Api;
 use Horde_Imap_Client_Exception;
 use Horde_Mail_Transport_Smtphorde;
 
-use addressbook_merge;	// should go to Contacts\Merge
-
 /**
  * Mail accounts supports 3 types of accounts:
  *
@@ -638,7 +636,7 @@ class Account implements \ArrayAccess
 	/**
 	 * Replace placeholders like {{n_fn}} in an identity
 	 *
-	 * For full list of placeholders see addressbook_merge.
+	 * For full list of placeholders see Api\Contacts\Merge.
 	 *
 	 * @param array|Account $identity
 	 * @param int $account_id =null account_id of user, or current user
@@ -663,7 +661,7 @@ class Account implements \ArrayAccess
 		if ($to_replace)
 		{
 			static $merge=null;
-			if (!isset($merge)) $merge = new addressbook_merge();
+			if (!isset($merge)) $merge = new Api\Contacts\Merge();
 			if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
 			foreach($to_replace as $name => &$value)
 			{
