@@ -442,6 +442,25 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	_is_multiple_regexp: /^[,0-9A-Za-z/_-]+$/,
 
 	/**
+	 * Regular expression and replace value for escaping values in jQuery selectors used to find options
+	 */
+	_escape_value_replace: /\\/g,
+	_escape_value_with: '\\\\',
+
+	/**
+	 * Find an option by it's value
+	 *
+	 * Taking care of escaping values correctly eg. EGroupware\Api\Mail\Smtp using above regular expression
+	 *
+	 * @param {string} _value
+	 * @return {array}
+	 */
+	find_option: function(_value)
+	{
+		return jQuery("option[value='"+_value.replace(this._escape_value_replace, this._escape_value_with)+"']", this.input);
+	},
+
+	/**
 	 * Set value
 	 *
 	 * @param {string|number} _value
@@ -486,19 +505,19 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			for(var i = 0; i < _value.length; i++)
 			{
-				jQuery("option[value='"+_value[i]+"']", this.input).prop("selected", true);
+				this.find_option(_value[i]).prop("selected", true);
 			}
 		}
 		else if (typeof _value == "object")
 		{
 			for(var i in _value)
 			{
-				jQuery("option[value='"+_value[i]+"']", this.input).prop("selected", true);
+				this.find_option(_value[i]).prop("selected", true);
 			}
 		}
 		else
 		{
-			if(_value && jQuery("option[value='"+_value+"']", this.input).prop("selected", true).length == 0)
+			if(_value && this.find_option(_value).prop("selected", true).length == 0)
 			{
 				if(this.options.select_options[_value] ||
 					this.options.select_options.filter &&
@@ -532,25 +551,38 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		}
 	},
 
+	/**
+	 * Find an option by it's value
+	 *
+	 * Taking care of escaping values correctly eg. EGroupware\Api\Mail\Smtp
+	 *
+	 * @param {string} _value
+	 * @return {array}
+	 */
+	find_multi_option: function(_value)
+	{
+		return jQuery("input[value='"+_value.replace(this._escape_value_replace, this._escape_value_with)+"']", this.multiOptions);
+	},
+
 	set_multi_value: function(_value) {
 		jQuery("input",this.multiOptions).prop("checked", false);
 		if(typeof _value == "array")
 		{
 			for(var i = 0; i < _value.length; i++)
 			{
-				jQuery("input[value='"+_value[i]+"']", this.multiOptions).prop("checked", true);
+				this.find_multi_option(_value[i]).prop("checked", true);
 			}
 		}
 		else if (typeof _value == "object")
 		{
 			for(var i in _value)
 			{
-				jQuery("input[value='"+_value[i]+"']", this.multiOptions).prop("checked", true);
+				this.find_multi_option(_value[i]).prop("checked", true);
 			}
 		}
 		else
 		{
-			if(jQuery("input[value='"+_value+"']", this.multiOptions).prop("checked", true).length == 0)
+			if(this.find_multi_option(_value[i]).prop("checked", true).length == 0)
 			{
 				var debug_value = _value;
 				if(debug_value === null) debug_value == 'NULL';
