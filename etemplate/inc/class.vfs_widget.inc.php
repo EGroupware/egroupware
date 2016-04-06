@@ -343,7 +343,7 @@ class vfs_widget
 						$thparams['mtime'] = $value['mtime'];
 					}
 
-					$value = $GLOBALS['egw']->link('/etemplate/thumbnail.php', $thparams);
+					$value = $GLOBALS['egw']->link('/api/thumbnail.php', $thparams);
 				}
 				else
 				{

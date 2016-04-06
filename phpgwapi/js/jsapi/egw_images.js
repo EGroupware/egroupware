@@ -148,7 +148,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 			{
 				var params = { 'path': _path, 'thsize': this.config('link_list_thumbnail') || 64};
 				if (_mtime) params.mtime = _mtime;
-				image = this.link('/etemplate/thumbnail.php', params);
+				image = this.link('/api/thumbnail.php', params);
 			}
 			// for svg return image itself
 			else if (type[0] == 'image' && type[1] == 'svg+xml')

@@ -892,7 +892,7 @@ egw_LAB.wait(function() {
 		{
 			$name = egw::link(Vfs::download_url(substr($name,4)));
 		}
-		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://' || stripos($name,'etemplate/thumbnail.php') )
+		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://' || stripos($name,'api/thumbnail.php') )
 		{
 			if (!($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://')) $name = '/'.$name;
 			$url = $name;

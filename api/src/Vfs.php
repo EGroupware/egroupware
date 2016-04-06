@@ -1903,7 +1903,7 @@ class Vfs extends Vfs\StreamWrapper
 			{
 				$thparams['thsize'] = $thsize;
 			}
-			$image = $GLOBALS['egw']->link('/etemplate/thumbnail.php', $thparams);
+			$image = $GLOBALS['egw']->link('/api/thumbnail.php', $thparams);
 		}
 		else
 		{

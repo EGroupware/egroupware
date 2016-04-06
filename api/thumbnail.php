@@ -10,6 +10,8 @@
 * @version $Id$
 */
 
+use EGroupware\Api;
+use EGroupware\Api\Vfs;
 
 //Set all necessary info and fire up egroupware
 $GLOBALS['egw_info']['flags'] = array(
@@ -44,10 +46,10 @@ function get_srcfile()
 	}
 	else
 	{
-		$g_srcfile = egw_link::vfs_path($_GET['app'], $_GET['id'], $_GET['file'], true);
+		$g_srcfile = Api\Link::vfs_path($_GET['app'], $_GET['id'], $_GET['file'], true);
 	}
 
-	return egw_vfs::PREFIX.$g_srcfile;
+	return Vfs::PREFIX.$g_srcfile;
 }
 
 /**
@@ -103,7 +105,7 @@ function get_maxsize()
 function read_thumbnail($src)
 {
 	//Check whether the source file is readable and exists
-	if (!file_exists($src) || !egw_vfs::is_readable($src))
+	if (!file_exists($src) || !Vfs::is_readable($src))
 	{
 		return false;
 	}
@@ -134,14 +136,14 @@ function read_thumbnail($src)
 
 	// Generate the destination filename and check whether the destination directory
 	// had been successfully created (the cache class used in gen_dstfile does that).
-	$stat = egw_vfs::stat(egw_vfs::parse_url($src, PHP_URL_PATH));
+	$stat = Vfs::stat(Vfs::parse_url($src, PHP_URL_PATH));
 
 	// if pdf-thumbnail-creation is not available, generate a single scaled-down pdf-icon
-	if ($stat && egw_vfs::mime_content_type($src) == 'application/pdf' && !pdf_thumbnails_available())
+	if ($stat && Vfs::mime_content_type($src) == 'application/pdf' && !pdf_thumbnails_available())
 	{
-		list($app, $icon) = explode('/', egw_vfs::mime_icon('application/pdf'), 2);
+		list($app, $icon) = explode('/', Vfs::mime_icon('application/pdf'), 2);
 		list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
-			common::image($app, $icon), 2);
+			Api\Image::find($app, $icon), 2);
 		$src = EGW_SERVER_ROOT.$path;
 		$stat = false;
 		$maxsize = $height = $width = $minsize = $maxh = $minh = $maxw = $minw = 16;
@@ -176,10 +178,10 @@ function read_thumbnail($src)
 		// simply output the mime type icon
 		if (!$exists)
 		{
-			$mime = egw_vfs::mime_content_type($src);
-			list($app, $icon) = explode('/', egw_vfs::mime_icon($mime), 2);
+			$mime = Vfs::mime_content_type($src);
+			list($app, $icon) = explode('/', Vfs::mime_icon($mime), 2);
 			list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
-				common::image($app, $icon), 2);
+				Api\Image::find($app, $icon), 2);
 			$dst = EGW_SERVER_ROOT.$path;
 			$output_mime = mime_content_type($dst);
 		}
@@ -188,7 +190,7 @@ function read_thumbnail($src)
 		{
 			// Allow client to cache these, makes scrolling in filemanager much nicer
 			// setting maximum allow caching time of one year, if url contains (non-empty) moditication time
-			egw_session::cache_control(empty($_GET['mtime']) ? 300 : 31536000, true);	// true = private / browser only caching
+			Api\Session::cache_control(empty($_GET['mtime']) ? 300 : 31536000, true);	// true = private / browser only caching
 			header('Content-Type: '.$output_mime);
 			readfile($dst);
 			return true;
@@ -213,9 +215,9 @@ function read_thumbnail($src)
 function gen_dstfile($src, $maxsize, $height=null, $width=null, $minsize=null)
 {
 	// Use the egroupware file cache to store the thumbnails on a per instance basis
-	$cachefile = new egw_cache_files(array());
+	$cachefile = new Api\Cache\Files(array());
 	$size = ($height > 0 ? 'h'.$height : ($width > 0 ? 'w'.$height : ($minsize > 0 ? 'm'.$minsize : $maxsize)));
-	return $cachefile->filename(egw_cache::keys(egw_cache::INSTANCE, 'etemplate',
+	return $cachefile->filename(Api\Cache::keys(Api\Cache::INSTANCE, 'etemplate',
 		'thumb_'.md5($src.$size).'.png'), true);
 }
 
@@ -300,9 +302,9 @@ function exif_thumbnail_load($file)
 function gd_image_load($file,$maxw,$maxh)
 {
 	// Get mime type
-	list($type, $image_type) = explode('/', $mime = egw_vfs::mime_content_type($file));
-	// if $file is not from vfs, use mime_magic::filename2mime to get mime-type from extension
-	if (!$type) list($type, $image_type) = explode('/', $mime = mime_magic::filename2mime($file));
+	list($type, $image_type) = explode('/', $mime = Vfs::mime_content_type($file));
+	// if $file is not from vfs, use Api\MimeMagic::filename2mime to get mime-type from extension
+	if (!$type) list($type, $image_type) = explode('/', $mime = Api\MimeMagic::filename2mime($file));
 
 	// Call the according gd constructor depending on the file type
 	if($type == 'image')
@@ -322,9 +324,9 @@ function gd_image_load($file,$maxw,$maxh)
 			case 'bmp':
 				return imagecreatefromwbmp($file);
 			case 'svg+xml':
-				html::content_header(egw_vfs::basename($file), $mime);
+				Api\Header\Content::type(Vfs::basename($file), $mime);
 				readfile($file);
-				common::egw_exit();
+				exit;
 		}
 	}
 	else if ($type == 'application')
@@ -358,7 +360,7 @@ function gd_image_load($file,$maxw,$maxh)
 				imagecopyresampled($img_dst, $thumb, 0, 0, 0, 0, $sw, $sh, imagesx($thumb), imagesy($thumb));
 				$thumb = $img_dst;
 			}
-			$mime = egw_vfs::mime_content_type($file);
+			$mime = Vfs::mime_content_type($file);
 			$tag_image = null;
 			corner_tag($thumb, $tag_image, $mime);
 			imagedestroy($tag_image);
@@ -381,7 +383,7 @@ function gd_image_load($file,$maxw,$maxh)
  */
 function get_opendocument_thumbnail($file)
 {
-	$mimetype = explode('/', egw_vfs::mime_content_type($file));
+	$mimetype = explode('/', Vfs::mime_content_type($file));
 
 	// Image is already there, but we can't access them directly through VFS
 	$ext = $mimetype == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
@@ -471,9 +473,9 @@ function corner_tag(&$target_image, &$tag_image, $mime)
 	// Find mime image, if no tag image set
 	if(!$tag_image && $mime)
 	{
-		list($app, $icon) = explode('/', egw_vfs::mime_icon($mime), 2);
+		list($app, $icon) = explode('/', Vfs::mime_icon($mime), 2);
 		list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
-			common::image($app, $icon), 2);
+			Api\Image::find($app, $icon), 2);
 		$dst = EGW_SERVER_ROOT.$path;
 		$tag_image = imagecreatefrompng($dst);
 	}
