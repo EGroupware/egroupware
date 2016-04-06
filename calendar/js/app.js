@@ -91,16 +91,18 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			window.app.calendar = window.top.app.calendar;
 			return;
 		}
+		else if (window.top == window && !egw(window).is_popup())
+		{
+			// Show loading div
+			egw.loading_prompt(
+				this.appname,true,egw.lang('please wait...'),
+				framework.applications.calendar.tab.contentDiv,
+				egwIsMobile()?'horizental':'spinner'
+			);
+		}
 
 		// call parent
 		this._super.apply(this, arguments);
-		
-		// Show loading div
-		egw.loading_prompt(
-			this.appname,true,egw.lang('please wait...'),
-			framework.applications.calendar.tab.contentDiv,
-			egwIsMobile()?'horizental':'spinner'
-		);
 
 		// Scroll
 		jQuery(jQuery.proxy(this._scroll,this));
