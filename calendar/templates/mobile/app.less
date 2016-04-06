@@ -96,13 +96,41 @@
 		width: 100%;
 	}
 }
-@media all and (max-width: 1024px) {
-	// styles assigned when width is smaller than 1024px
+
+/* Use media queries and day counts to toggle full days & abbreviations in day labels
+  Width breakpoints in media queries chosen somewhat arbitrarily, looking at 'Wednesday'
+  to see if it still fits.
+*/
+@media all and (max-width: 1000px) and (min-width: 481px) {
+	// styles assigned when width is smaller than 1000px
 	.calendar_calDayColHeader > div[data-date] .long_date
+	{
+		display: inline;
+	}
+	.calendar_calDayColHeader > div[data-date] .short_date
 	{
 		display: none;
 	}
-	.calendar_calDayColHeader > div[data-date] .short_date
+	// 7 day needs short day labels
+	.calendar_calDayColHeader:first-child:nth-last-child(7)  > div[data-date] .short_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(7) ~ .calendar_calDayColHeader  > div[data-date] .short_date,
+	{
+		display: inline;
+	}
+	.calendar_calDayColHeader:first-child:nth-last-child(7)  > div[data-date] .long_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(7) ~ .calendar_calDayColHeader  > div[data-date] .long_date,
+	{
+		display: none;
+	}
+}
+@media all and (max-width: 580px) {
+	.calendar_calDayColHeader:first-child:nth-last-child(5)  > div[data-date] .long_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader  > div[data-date] .long_date,
+	{
+		display:none;
+	}
+	.calendar_calDayColHeader:first-child:nth-last-child(5)  > div[data-date] .short_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader  > div[data-date] .short_date,
 	{
 		display: inline;
 	}
@@ -113,5 +141,23 @@
 	.calendar_calDayColHeader > div[data-date] .short_date
 	{
 		display: none;
+	}
+	// 5 day and less fits short day labels
+	.calendar_calDayColHeader:first-child:nth-last-child(3)  > div[data-date] .short_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(3) ~ .calendar_calDayColHeader  > div[data-date] .short_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(4)  > div[data-date] .short_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(4) ~ .calendar_calDayColHeader  > div[data-date] .short_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(5)  > div[data-date] .short_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader  > div[data-date] .short_date,
+	{
+		display: inline;
+	}
+	// 2 day view and less has enough room for full label
+	.calendar_calDayColHeader:first-child:nth-last-child(1)  > div[data-date] .long_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(1) ~ .calendar_calDayColHeader  > div[data-date] .long_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(2)  > div[data-date] .long_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(2) ~ .calendar_calDayColHeader  > div[data-date] .long_date,
+	{
+		display:inline;
 	}
 }

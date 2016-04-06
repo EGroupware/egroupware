@@ -141,7 +141,7 @@ form[id^="tracker-"] .dialogHeadbar {
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55613 2016-04-04 16:38:23Z nathangray $ */
+/* $Id: app.css 55614 2016-04-04 17:55:49Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -714,7 +714,8 @@ Hide subsequent headers in week view with non-consolidated owners
 #calendar-view_view tbody.ui-sortable .calendar_calGridHeader {
   cursor: ns-resize;
 }
-#calendar-view_view tbody.ui-sortable-disabled .calendar_calGridHeader {
+#calendar-view_view tbody.ui-sortable-disabled .calendar_calGridHeader,
+#calendar-view_view tbody.ui-sortable-disabled .calendar_calGridHeader label {
   cursor: pointer;
 }
 /* contains (multiple) events's
@@ -2795,11 +2796,33 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
     width: 100%;
   }
 }
-@media all and (max-width: 1024px) {
+/* Use media queries and day counts to toggle full days & abbreviations in day labels
+  Width breakpoints in media queries chosen somewhat arbitrarily, looking at 'Wednesday'
+  to see if it still fits.
+*/
+@media all and (max-width: 1000px) and (min-width: 481px) {
   .calendar_calDayColHeader > div[data-date] .long_date {
-    display: none;
+    display: inline;
   }
   .calendar_calDayColHeader > div[data-date] .short_date {
+    display: none;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(7) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(7) ~ .calendar_calDayColHeader > div[data-date] .short_date {
+    display: inline;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(7) > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(7) ~ .calendar_calDayColHeader > div[data-date] .long_date {
+    display: none;
+  }
+}
+@media all and (max-width: 580px) {
+  .calendar_calDayColHeader:first-child:nth-last-child(5) > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader > div[data-date] .long_date {
+    display: none;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(5) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader > div[data-date] .short_date {
     display: inline;
   }
 }
@@ -2807,5 +2830,19 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   .calendar_calDayColHeader > div[data-date] .long_date,
   .calendar_calDayColHeader > div[data-date] .short_date {
     display: none;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(3) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(3) ~ .calendar_calDayColHeader > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(4) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(4) ~ .calendar_calDayColHeader > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(5) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader > div[data-date] .short_date {
+    display: inline;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(1) > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(1) ~ .calendar_calDayColHeader > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(2) > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(2) ~ .calendar_calDayColHeader > div[data-date] .long_date {
+    display: inline;
   }
 }
