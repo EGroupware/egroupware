@@ -18,7 +18,6 @@ use EGroupware\Api\Vfs;
 
 // explicitly list old, not yet ported api classes
 use egw_framework;
-use asyncservice;
 use egw; // link
 
 use filemanager_ui;
@@ -490,7 +489,7 @@ class Sharing
 				$path = $tmp_file;
 
 				// if not already installed, install periodic cleanup of tmp files
-				$async = new asyncservice();
+				$async = new Api\Asyncservice();
 				if (!$async->read('egw_sharing-tmp-cleanup'))
 				{
 					$async->set_timer(array('day' => 28),'egw_sharing-tmp_cleanup','egw_sharing::tmp_cleanup',null);
