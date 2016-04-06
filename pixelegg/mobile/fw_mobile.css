@@ -7378,6 +7378,7 @@ form[id^="tracker-"] .dialogHeadbar {
     height: 87% !important;
     margin-top: 60px !important;
     padding: 0 !important;
+    font-size: 12pt;
   }
   body .ui-dialog .ui-dialog-buttonpane {
     position: fixed !important;
