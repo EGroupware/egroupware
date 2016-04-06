@@ -46,11 +46,7 @@ tr.infolog_rowHasParent > td:first-child {
 	background-repeat: no-repeat;
 	background-position: 6px -2px;
 }
-tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
-tr.dialogOperators td,.dialogFooterToolbar {
-	padding: 5px 0 5px 0;
-	vertical-align: middle;
-}
+
 /*Project Name*/
 #infolog-edit_infolog-edit-project .et2_link_entry.no_app input.ui-autocomplete-input {
   width: 291px;

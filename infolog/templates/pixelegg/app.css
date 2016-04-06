@@ -39,7 +39,7 @@
 }
 .normal,
 .normal_done {
-  color: #000000;
+  color: black;
 }
 .high {
   color: #cc0000;
@@ -115,15 +115,6 @@ tr.infolog_rowHasParent > td:first-child {
   background-image: url(../../../phpgwapi/templates/default/images/egw_action/arrow_up.png);
   background-repeat: no-repeat;
   background-position: 6px -2px;
-}
-tr.dialogHeader td,
-tr.dialogHeader2 td,
-tr.dialogHeader3 td,
-tr.dialogHeader4 td,
-tr.dialogOperators td,
-.dialogFooterToolbar {
-  padding: 5px 0 5px 0;
-  vertical-align: middle;
 }
 /*Project Name*/
 #infolog-edit_infolog-edit-project .et2_link_entry.no_app input.ui-autocomplete-input {

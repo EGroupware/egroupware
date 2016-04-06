@@ -304,6 +304,8 @@ button#cancel {
 .et2_textbox_ro {
   white-space: pre-wrap;
 }
+textarea.et2_textbox {border:1px solid silver;}
+textarea.et2_textbox_ro {border:none;}
 /*Switch of FF red border validation*/
 .et2_textbox:invalid{
 	box-shadow: none;
@@ -852,7 +854,6 @@ ul.et2_link_string {
   cursor: pointer;
   border: 1px solid silver;
   background-color: #E0E0E0;
-  background-image: url(images/gradient01.png);
   background-position: center;
   background-repeat: repeat-x;
   -webkit-user-select: none;
@@ -865,7 +866,6 @@ ul.et2_link_string {
   background-color: #D0D0EE;
 }
 .et2_tabflag:active {
-  background-image: url(images/gradient02.png);
   background-color: #D0D0E0;
 }
 .et2_tabs {
@@ -1024,7 +1024,7 @@ ul.et2_link_string {
 }
 .et2_taglist_toggle > div.ms-ctn {
 	display: inline-block;
-    width: calc(100% - 16px);
+    width: calc(100% - 10px);
 	padding-right: 2px;
 }
 .et2_taglist_toggle.ui-state-hover,
@@ -1034,26 +1034,23 @@ ul.et2_link_string {
 .et2_taglist_toggle:not(.et2_taglist_single) .ms-ctn {
 /*    height: 100%;*/
 }
-.et2_taglist_toggle.et2_taglist_single > div.ms-ctn {
-	padding-right: 7px
-}
+
 .et2_taglist_toggle > div.toggle {
-	margin-left: -1px;
-	float: right;
-
-	width: 25px;
-	height: 23px;
-	position: relative;
-
-	z-index: 5;
-
-	border: 1px solid #BBB;
+	top: 1px;
+	width: 23px;
+    height: 23px;
+    position: absolute;
+    right: 5px;
+    z-index: 5;
 	background-color: white;
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-image: url("../../../phpgwapi/templates/default/images/foldertree_nolines_minus.gif");
 }
-
+.et2_taglist_toggle div.ms-ctn {
+	padding:0;
+	padding-left: 10px;
+}
 .et2_taglist_toggle.et2_taglist_single:not(.expanded) > div.toggle {
 	display: none;
 }
@@ -2603,3 +2600,17 @@ td.avatar {
 .et2_searchbox .hide {
 	display: none !important;
 }
+
+
+/*Dialog headers styling*/
+tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
+tr.dialogOperators td,.dialogFooterToolbar {
+	padding: 5px 0 5px 0;
+	vertical-align: middle;
+}
+.dialogHeader {
+	vertical-align: middle;
+	border-bottom: 1px solid #E6E6E6;
+	height: 50px;
+}
+tr.dialogHeader2 td {padding-top:15px;}

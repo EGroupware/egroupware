@@ -21,252 +21,154 @@
 @media all {
 
 
-/* #############################################################################
+	/* #############################################################################
 
-// Rahmen + padding**/
+	// Rahmen + padding**/
 
-/*##############################################*/
-/*#            #                               #*/
-/*#   Bild     #                               #*/
-/*#            #      Infolog                  #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#    Sidebar #                               #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*##############################################*/
-
-
-// Image + Data
-
-div#addressbook_view_sidebox{
-
-    //img
-    img.photo {
-                width: 68px;
-                padding-right: 3px;
-                height: auto;
-                vertical-align: top;
-                margin-right: 5px;
-                }
-
-    // name
-    #addressbook-view_n_fn{
-                .fontsize_xl;
-                font-weight: bold;
-                padding: 2px 0 2px 0;
-                width: 85%;
-                }
-
-    // org
-    #addressbook-view_org_name {
-                .fontsize_xl;
-                padding: 2px 0 2px 0;
-                width: 85%;
-                }
-
-    // Unit
-    #addressbook-view_org_unit {
-                .fontsize_m;
-                padding: 2px 0 2px 0;
-                }
-
-   // Ort
-    #addressbook-view_adr_one_locality{
-                .fontsize_m;
-                padding: 2px 0 2px 0;
-                }
+	/*##############################################*/
+	/*#            #                               #*/
+	/*#   Bild     #                               #*/
+	/*#            #      Infolog                  #*/
+	/*#            #                               #*/
+	/*#            #                               #*/
+	/*#            #                               #*/
+	/*#    Sidebar #                               #*/
+	/*#            #                               #*/
+	/*#            #                               #*/
+	/*#            #                               #*/
+	/*#            #                               #*/
+	/*#            #                               #*/
+	/*##############################################*/
 
 
+	// Image + Data
 
+	div#addressbook_view_sidebox{
+		//img
+		img.photo {
+			width: 68px;
+			padding-right: 3px;
+			height: auto;
+			vertical-align: top;
+			margin-right: 5px;
+		}
+		// name
+		#addressbook-view_n_fn {
+			.fontsize_xl;
+			font-weight: bold;
+			padding: 2px 0 2px 0;
+			width: 85%;
+		}
+		// org
+		#addressbook-view_org_name {
+			.fontsize_xl;
+			padding: 2px 0 2px 0;
+			width: 85%;
+		}
+		// Unit
+		#addressbook-view_org_unit {
+			.fontsize_m;
+			padding: 2px 0 2px 0;
+		}
+	   // Ort
+		#addressbook-view_adr_one_locality {
+			.fontsize_m;
+			padding: 2px 0 2px 0;
+		}
+	}
+
+	/**
+	 * Give space to both contact view & infolog list
+	 */
+
+	#addressbook-edit {
+		height: auto;
+		min-height: 390px;
+		overflow:    auto;
+	}
+
+	/*##################################################################*/
+
+	/*Infolog*/
+
+	.et2_container[id^="infolog-index-addressbook"] {
+
+		/*ADD Button */
+		.et2_hbox_right[id*="_infolog-index-header_right"] {
+			div.et2_box_widget {
+				text-shadow: none;
+				.dimension_height_l;
+				margin-top: 5px;
+				background-image: none !important;
+				transition: all 0.5s linear;
+				-webkit-transition: all 0.5s linear; /* Safari */
+				&:before {
+					content: "+";
+					font-size: 2em;
+					color: @egw_color_1;
+					line-height: 0.5em;
+				}
+				/*Text ""hinzufügen" "*/
+				span {display: none;}
+				// IMG
+				img {
+					.Complete_Button_Icon_normal;
+					.dimension_width_height_s;
+					margin-left: 0.5em;
+					padding: 0px;
+					margin-top: 0px;
+					vertical-align: middle;
+					/*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
+
+					&:hover{.Complete_Button_Icon_hover ;}
+
+					&:active { .Complete_Button_Icon_active ;}
+				}
+
+				img:last-child {margin-right: 5px;};
+
+				/*MouseOver*/
+				&:hover {
+					.box_shadow_standard_light_hover;
+					background-color: @egw_color_2_a !important;
+					.border_radius_button_lefttop;
+					.dimension_height_l;
+					&:before {content: ""; font-size: 1em;padding-left: 5px;}
+					/*Text*/
+					span {visibility: hidden; display: none;};
+					img {.scale; margin: 0.5em; background: @gray_0;}
+				}
+			}
+		 }
+		// Scrollarea in Infolog
+		.egwGridView_scrollarea{
+			overflow-y: scroll !important;
+			overflow-x: hidden !important;
+		}
+	}
+
+	//******************************************************************
+	// CRM View - Tracking System
+
+	button#tracker-index-addressbook_add{
+		.Complete_Button_add_only_plus;
+		.dimension_height_m;
+
+		&:hover {.Complete_Button_add_only_plus_hover;}
+		&:active {background-color: @color_positive_action_active !important;}
+	}
+
+	// person image
+	div.addressbook_edit_general_picture img {
+		top: -4px;
+		width: 70px;
+		height: auto;
+		left: 7px;
+	}
+
+	// general
+	#addressbook-edit_addressbook-edit-general{
+		.et2_label {margin-right: 6px;}
+	}
 }
-
-
-
-/**
- * Give space to both contact view & infolog list
- */
-
-#addressbook-edit {
-  height: auto;
-  min-height: 390px;
-  overflow:    auto;
-}
-
-
-
-/*##################################################################*/
-
-/*Infolog*/
-
-.et2_container[id^="infolog-index-addressbook"] {
-
-    /*height: auto;*/
-    /*padding: 1em;*/
-    /*min-height: 250px;*/
-
-
-/*ADD Button */
-/*        div.et2_hbox,
-        div.et2_box_widget*/
-        .et2_hbox_right[id*="_infolog-index-header_right"]{
-
-
-                    div.et2_box_widget{
-                        /*border: 1px solid rgba(0, 0, 0, 0.15);*/
-                        /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
-                        text-shadow: none;
-                        .dimension_height_l;
-                        margin-top: 5px;
-                        background-image: none !important;
-                        transition: all 0.5s linear;
-                        -webkit-transition: all 0.5s linear; /* Safari */
-
-                         &:before {
-                            content: "+";
-                            font-size: 2em;
-                            color: @egw_color_1;
-                            line-height: 0.5em;
-                            }
-
-                       /*Text ""hinzufügen" "*/
-                       span {display: none;}
-
-
-                      // IMG
-                        img {
-                            .Complete_Button_Icon_normal;
-                            .dimension_width_height_s;
-                            margin-left: 0.5em;
-                            padding: 0px;
-                            margin-top: 0px;
-                            vertical-align: middle;
-                            /*.gradient_vertical (@egw_color_2_a, @egw_color_2_a);*/
-
-                            &:hover{.Complete_Button_Icon_hover ;}
-
-                            &:active { .Complete_Button_Icon_active ;}
-                        }
-
-                        img:last-child {margin-right: 5px;};
-
-
-
-                /*MouseOver*/
-                      &:hover {
-                          .box_shadow_standard_light_hover;
-                          background-color: @egw_color_2_a !important;
-                          .border_radius_button_lefttop;
-                          .dimension_height_l;
-                          &:before {content: ""; font-size: 1em;padding-left: 5px;}
-                          /*Text*/
-                          span {visibility: hidden; display: none;};
-                         img {.scale; margin: 0.5em; background: @gray_0;}
-                      }
-                    }
-
-
-
-
-        }
-
-        // Scrollarea in Infolog
-        .egwGridView_scrollarea{
-            overflow-y: scroll !important;
-            overflow-x: hidden !important;
-        }
-}
-
-//******************************************************************
-// CRM View - Tracking System
-
-button#tracker-index-addressbook_add{
-
-    .Complete_Button_add_only_plus;
-    .dimension_height_m;
-
-    &:hover {.Complete_Button_add_only_plus_hover;}
-    &:active {background-color: @color_positive_action_active !important;}
-
-}
-
-
-
-
-
-
-
-
-//******************************************************************
-// sidebar
-//******************************************************************
-
-#egw_fw_sidemenu{
-
-    //Tabelle mit Ansichten des Kalenders
-
-    .egw_fw_ui_category_content{
-
-//        table {margin-left: -14px;}
-    }
-
-    // Bilder für Favoriten
-
-    img.sideboxstar {
-
-    }
-
-//    select {margin-top: -5px;}
-
-}
-
-// #############################################################################
-// Addressbook edit dialog
-
-/*###########################################
-#                                           #
-#      dialogHeader                         #
-#############################################
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#      dialog                               #
-#                                           #
-#                                           #
-#############################################
-#                                           #
-#    buttons                                #
-#                                           #
-#                                           #
-##############################################*/
-
-#addressbook-edit.et2_container {
-}
-
-// person image
-div.addressbook_edit_general_picture img {
-    top: -4px;
-    width: 70px;
-    height: auto;
-    left: 7px;
-}
-
-
-// general
-#addressbook-edit_addressbook-edit-general{
-
-     .et2_label {margin-right: 6px;}
-
-}
-
-
-// END DIALOG #############################################################################
-
-} // Ende Media all
 

@@ -21,102 +21,42 @@
 @media all {
 
     // ADMIN in SIDEBAR
-
     div.dhtmlxTree {
-
-
         // selected Item
         td.standartTreeRow {
-
             span.selectedTreeRow { background-color: @egw_color_1_e; color: @gray_90;}
-
         }
-
-
-
     }
+	/* #############################################################################
+	// iframe
+	// Rahmen + padding**/
+
+	/*################## iframe ####################*/
+	/*#            #                               #*/
+	/*#            #                               #*/
+	/*#            #      ADMIN                    #*/
+	/*#            #                               #*/
+	/*#            #                               #*/
+	/*#            #                               #*/
+	/*##############################################*/
 
 
-/* #############################################################################
-// iframe
-// Rahmen + padding**/
+	/**
+	 * Give space to both contact view & infolog list
+	 */
 
-/*################## iframe ####################*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #      ADMIN                    #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*#            #                               #*/
-/*##############################################*/
+	iframe#admin-index_iframe {
+		background-color: transparent;
 
+		#admin-categories-index{padding: 10px;}
 
-/**
- * Give space to both contact view & infolog list
- */
+		table.egwGridView_grid tr td {color: #000;}
 
-iframe#admin-index_iframe{
+	} // iframe
 
-    background-color: transparent;
-
-    #admin-categories-index{
-        padding: 10px;
-
-        table.et2_grid {
-
-            #admin-categories-index_nm {
-
-                div.egwGridView_outer{
-
-                    td.frame {
-
-
-
-                    }
-                }
-
-            }
-
-        }
-
-    }
-
-    table.egwGridView_grid tr td {color: #000;}
-
-} // iframe
-
-// gray Filter for images
+	// gray Filter for images
     table.egwGridView_grid img {
-            /*filter grey*/
-            .img_filter_none;
-        }
-
-
-
-
-// #############################################################################
-// Dialog ADMIN
-
-/*###########################################
-#                                           #
-#       dialogHeader                       #
-#############################################
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                   dialog                  #
-#                                           #
-#                                           #
-#############################################
-#                                           #
-#    buttons                                #
-#                                           #
-#                                           #
-##############################################*/
-
-
-} // Media
-//
-//
+	/*filter grey*/
+	.img_filter_none;
+	}
+}

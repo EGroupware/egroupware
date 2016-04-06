@@ -18,7 +18,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 55140 2016-02-25 08:42:33Z ralfbecker $
+ * @version $Id: app.css 55532 2016-03-28 18:51:38Z ralfbecker $
  */
 .admin_tree table,
 .admin_tree tr,
@@ -166,8 +166,8 @@ select#admin-mailaccount_ident_id {
     color: #1e1e1e;
   }
   /* #############################################################################
-// iframe
-// Rahmen + padding**/
+	// iframe
+	// Rahmen + padding**/
   /*################## iframe ####################*/
   /*#            #                               #*/
   /*#            #                               #*/
@@ -177,8 +177,8 @@ select#admin-mailaccount_ident_id {
   /*#            #                               #*/
   /*##############################################*/
   /**
- * Give space to both contact view & infolog list
- */
+	 * Give space to both contact view & infolog list
+	 */
   iframe#admin-index_iframe {
     background-color: transparent;
   }
@@ -200,22 +200,4 @@ select#admin-mailaccount_ident_id {
     filter: initial;
     /* IE 6-9 */
   }
-  /*###########################################
-#                                           #
-#       dialogHeader                       #
-#############################################
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                   dialog                  #
-#                                           #
-#                                           #
-#############################################
-#                                           #
-#    buttons                                #
-#                                           #
-#                                           #
-##############################################*/
 }

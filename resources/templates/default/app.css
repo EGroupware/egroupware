@@ -4,13 +4,6 @@
  * @version: $Id$
  */
 
-/* Header classes*/
-tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
-tr.dialogOperators td,.dialogFooterToolbar {
-	padding: 5px 0 5px 0;
-	vertical-align: middle;
-}
-
 #resources-edit.et2_container
 {
 	width:848px;

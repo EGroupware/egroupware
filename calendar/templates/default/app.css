@@ -148,12 +148,7 @@
 #calendar-view_view td {
 	padding: 0px;
 }
-/* Header classes */
-tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
-tr.dialogOperators td,.dialogFooterToolbar {
-	padding: 5px 0 5px 0;
-	vertical-align: middle;
-}
+
 .calendar_inputFullWidth input { width: 100%; }
 
 /******************************************************************
@@ -1313,11 +1308,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 #calendar-edit_account + .chzn-container .chzn-results {
 	max-height: 195px;
 }
-
-#calendar-edit_category {
-	max-width:230px;
-}
-
+input#calendar-edit_location {padding-left: 0;}
 #calendar_sidebox_content .ui-datepicker div.ui-datepicker-buttonpane {
 	border-top: 0;
     margin: 0;

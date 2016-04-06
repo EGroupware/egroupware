@@ -83,15 +83,6 @@ div.addressbook_edit_general_picture img {
 .custom_country {
   display: none;
 }
-tr.dialogHeader td,
-tr.dialogHeader2 td,
-tr.dialogHeader3 td,
-tr.dialogHeader4 td,
-tr.dialogOperators td,
-.dialogFooterToolbar {
-  padding: 5px 0 5px 0;
-  vertical-align: middle;
-}
 input.et2_radiobox {
   position: relative;
   left: -16px;
@@ -149,7 +140,7 @@ select#addressbook-index_col_filter\[tid\] {
 @media all {
   /* #############################################################################
 
-// Rahmen + padding**/
+	// Rahmen + padding**/
   /*##############################################*/
   /*#            #                               #*/
   /*#   Bild     #                               #*/
@@ -191,8 +182,8 @@ select#addressbook-index_col_filter\[tid\] {
     padding: 2px 0 2px 0;
   }
   /**
- * Give space to both contact view & infolog list
- */
+	 * Give space to both contact view & infolog list
+	 */
   #addressbook-edit {
     height: auto;
     min-height: 390px;
@@ -201,16 +192,9 @@ select#addressbook-index_col_filter\[tid\] {
   /*##################################################################*/
   /*Infolog*/
   .et2_container[id^="infolog-index-addressbook"] {
-    /*height: auto;*/
-    /*padding: 1em;*/
-    /*min-height: 250px;*/
     /*ADD Button */
-    /*        div.et2_hbox,
-        div.et2_box_widget*/
   }
   .et2_container[id^="infolog-index-addressbook"] .et2_hbox_right[id*="_infolog-index-header_right"] div.et2_box_widget {
-    /*border: 1px solid rgba(0, 0, 0, 0.15);*/
-    /*box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
     text-shadow: none;
     height: 32px;
     margin-top: 5px;
@@ -350,24 +334,6 @@ select#addressbook-index_col_filter\[tid\] {
   button#tracker-index-addressbook_add:active {
     background-color: #1aa200 !important;
   }
-  /*###########################################
-#                                           #
-#      dialogHeader                         #
-#############################################
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#      dialog                               #
-#                                           #
-#                                           #
-#############################################
-#                                           #
-#    buttons                                #
-#                                           #
-#                                           #
-##############################################*/
   div.addressbook_edit_general_picture img {
     top: -4px;
     width: 70px;

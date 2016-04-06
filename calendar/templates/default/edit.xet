@@ -2,98 +2,56 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.edit.details" template="" lang="" group="0" version="1.9.001">
-		<hbox>
-			<grid width="60%">
-				<columns>
-					<column width="80px"/>
-					<column/>
-				</columns>
-				<rows>
-					<row>
-						<description for="location" value="Location"/>
-						<textbox id="location" maxlength="255" class="calendar_inputFullWidth"/>
-					</row>
-					<row class="row_off">
-						<description for="priority" value="Priority"/>
-						<menulist>
-							<menupopup type="select-priority" id="priority"/>
-						</menulist>
-					</row>
-					<row>
-						<description value="Options"/>
-						<hbox>
-							<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
-							<checkbox label="Private" id="public" options="0,1"/>
-						</hbox>
-					</row>
-					<row>
-						<grid width="100%">
-							<columns>
-								<column width="80px" height="30px"/>
-								<column/>
-							</columns>
-							<rows>
-								<row class="th" disabled="@view" height="28">
-									<description value="Add new alarm" span="all"/>
-								</row>
-								<row class="row add_alarm_action" valign="top" disabled="@no_add_alarm">
-									<hbox span="all">
-										<menulist>
-											<menupopup type="select" statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"/>
-										</menulist>
-										<date-time id="new_alarm[date]" class="calendar_alarm_date_display"/>
-										<menulist>
-											<menupopup statustext="Select who should get the alarm" label="for" id="new_alarm[owner]" no_lang="1"/>
-										</menulist>
-										<button label="Add" id="button[add_alarm]" image="add" background_image="1"/>
-									</hbox>
-								</row>
-								<row valign="top" disabled="!@alarm" height="100%">
-									<grid id="alarm" width="100%"  class="egwGridView_grid calendar_alarm_grid">
-										<columns>
-											<column/>
-											<column/>
-											<column/>
-											<column/>
-											<column/>
-										</columns>
-										<rows>
-											<row class="th">
-												<description value="Time"/>
-												<description value="before the event"/>
-												<description value="All participants"/>
-												<description value="Owner"/>
-												<description value="Action"/>
-											</row>
-											<row>
-												<date-time id="${row}[time]" readonly="true"/>
-												<description id="${row}[offset]" no_lang="1"/>
-												<checkbox align="center" id="${row}[all]" readonly="true"/>
-												<menulist>
-													<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
-												</menulist>
-												<button align="center" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"/>
-											</row>
-										</rows>
-									</grid>
-								</row>
-							</rows>
-						</grid>
-					</row>
-				</rows>
-			</grid>
-			<vbox align="right" width="100%" height="240">
-				<description for="category" value="Categories" class="row_on"/>
-				<taglist-cat id="category" height="190" />
-			</vbox>
-		</hbox>
-	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="240"/>
+		<textbox multiline="true" id="description" rows="12" cols="70" width="99%" height="150" resize_ratio="0.7"/>
+		<hbox disabled="@no_add_alarm" height="35">
+			<button label="Add new alarm" id="button[add_alarm]" image="add" background_image="1"/>
+			<menulist>
+				<menupopup type="select" statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"/>
+			</menulist>
+			<date-time id="new_alarm[date]" class="calendar_alarm_date_display"/>
+			<menulist>
+				<menupopup statustext="Select who should get the alarm" label="for" id="new_alarm[owner]" no_lang="1"/>
+			</menulist>
+		</hbox>
+		<grid id="alarm" width="100%"  class="egwGridView_grid" resize_ratio="0.3">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description value="Time"/>
+					<description value="before the event"/>
+					<description value="All participants"/>
+					<description value="Owner"/>
+					<description value="Action"/>
+				</row>
+				<row>
+					<date-time id="${row}[time]" readonly="true"/>
+					<description id="${row}[offset]" no_lang="1"/>
+					<checkbox align="center" id="${row}[all]" readonly="true"/>
+					<menulist>
+						<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
+					</menulist>
+					<button align="center" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="et2_dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"/>
+				</row>
+			</rows>
+		</grid>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
-		<grid width="99%" id="participants">
+		<hbox disabled="@no_add" height="60">
+			<button id="add" image="add" background_image="1" novalidate="1"/>
+			<calendar-owner id="participant" allowFreeEntries="true" empty_label="Add new participants or resource" width="40%"/>
+			<textbox type="integer" label="Quantity" id="quantity" min="1" size="3"/>
+			<menulist>
+				<menupopup label="Role" class="selectRole" id="role"/>
+			</menulist>
+		</hbox>
+		<grid width="99%" id="participants" class="egwGridView_grid">
 			<columns>
 				<column width="85"/>
 				<column/>
@@ -103,18 +61,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th gray" disabled="@view">
-					<description value="Add new participants or resource" span="all"/>
-				</row>
-				<row class="row optional" disabled="@no_add">
-					<calendar-owner id="participant" allowFreeEntries="true" span="2"/>
-					<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
-					<menulist>
-						<menupopup class="selectRole" id="role"/>
-					</menulist>
-					<button align="center" label="Add" id="add" image="add" background_image="1" novalidate="1"/>
-				</row>
-				<row class="th gray">
+				<row class="th">
 					<description value="Type"/>
 					<description value="Participants"/>
 					<description align="center" value="Quantity"/>
@@ -238,7 +185,10 @@
 		<grid width="100%">
 			<columns>
 				<column width="88"/>
-				<column width="80"/>
+				<column width="130"/>
+				<column width="88"/>
+				<column width="130"/>
+				<column width="130"/>
 				<column/>
 				<column width="50"/>
 				<column width="50"/>
@@ -246,31 +196,43 @@
 			<rows>
 				<row class="dialogHeader" height="28">
 					<description value="Title"/>
-					<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1" class="et2_fullWidth" span="2"/>
+					<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1" class="et2_fullWidth" span="5"/>
 					<description font_style="n" id="id"/>
 					<appicon/>
 				</row>
 				<row class="dialogHeader2" height="28">
 					<description for="start" value="Start" width="88"/>
 					<date-time id="start" needed="1" class="required"/>
-					<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" span="all" onchange="app.calendar.set_alarmOptions_WD"/>
+					<description for="duration" value="Duration" id="calendar_edit_duration" />
+					<menulist >
+						<menupopup statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
+					</menulist>
+					<date-time id="end"/>
 				</row>
 				<row class="dialogHeader2" height="28">
-					<description for="duration" value="Duration" width="0" id="calendar_edit_duration" />
+					<label value="options"/>
+					<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"/>
+					<checkbox label="Private" id="public" options="0,1"/>
+					<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
 					<hbox>
-						<menulist >
-							<menupopup statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
+						<label for="priority" value="Priority"/>
+						<menulist class="et2_fullWidth">
+							<menupopup type="select-priority" id="priority"/>
 						</menulist>
-						<date-time id="end"/>
 					</hbox>
-					<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1" span="all"/>
+					<description/>
+				</row>
+				<row class="dialogHeader3" height="28">
+					<label for="location" value="Location"/>
+					<textbox id="location" maxlength="255" class="et2_fullWidth" span="2"/>
+					<description/>
+					<taglist-cat id="category" height="190" empty_label="Categories" multiple="toggle" class="et2_fullWidth" />
 				</row>
 				<row>
 					<tabbox id="tabs" span="all" tab_height="260">
 						<tabs>
 							<tab id="description" label="Description" statustext="Full description"/>
 							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
-							<tab id="details" label="Details" statustext="Location, Start- and Endtimes, ..."/>
 							<tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
 							<tab id="custom" label="Custom" statustext="Custom fields"/>
 							<tab id="links" label="Links" statustext="Links, Attachments"/>
@@ -279,7 +241,6 @@
 						<tabpanels>
 							<template id="calendar.edit.description"/>
 							<template id="calendar.edit.participants"/>
-							<template id="calendar.edit.details"/>
 							<template id="calendar.edit.recurrence"/>
 							<template id="calendar.edit.custom"/>
 							<template id="calendar.edit.links"/>
@@ -309,6 +270,7 @@
 				<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
 			</menulist>
 			<checkbox label="Do not notify" id="no_notifications"/>
+			<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1" span="all"/>
 			<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
 			<textbox type="hidden" id="delete_exceptions"/>
 		</hbox>

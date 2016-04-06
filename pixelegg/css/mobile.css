@@ -955,6 +955,9 @@
   /**
  * et2_textbox
  */
+  textarea.et2_textbox {
+    border: 1px solid #e6e6e6;
+  }
   textarea,
   textarea.description {
     background-color: rgba(255, 221, 115, 0.1);
@@ -1547,6 +1550,14 @@ div#ui-datepicker-div {
  * @package pixelegg
  * @version $Id$
  */
+.ms-ctn,
+.ms-res-ctn {
+  /* It doesn't really work smaller than this */
+  border: solid 1px #e6e6e6;
+}
+.ms-ctn .ms-trigger {
+  border-left: none;
+}
 /**
  * EGroupware: CSS with less preprocessor
 
@@ -2899,7 +2910,6 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
 div#popupMainDiv {
   padding: 8px;
   background-color: #ffffff;
-  background-image: url(../images/bgDialog.png);
   background-repeat: repeat-x;
 }
 div#popupMainDiv > * {
@@ -2975,30 +2985,10 @@ table.dialog-main-view {
 #                                           #
 #  button | button | button         delete  #
 ##############################################*/
-tr.dialogHeader td,
-tr.dialogHeader2 td,
-tr.dialogHeader3 td,
-tr.dialogHeader4 td,
-tr.dialogOperators td {
-  padding: 5px 6px 5px 0;
-  vertical-align: middle;
-}
 /*** dialogHeader on a box not table ***/
-div.dialogHeader {
-  /*background-color: @egw_color_2_a !important;*/
-  vertical-align: middle;
-  /*font-size: 150%*/
-}
-.dialogHeader2,
-.dialogHeader3,
-.dialogHeader4 {
-  /*font-size: 120%;*/
-}
 /**********    Header Part ********************/
 .dialogHeader {
-  /*.gradient_thead;*/
   color: #000000;
-  height: 50px;
 }
 .dialogHeader img[src*="navbar"] {
   padding: 0 0 0 15px;
@@ -3055,7 +3045,6 @@ div.dialogHeader {
 tr.dialogHeader2,
 tr.dialogHeader3,
 tr.dialogHeader4 {
-  background-color: #f2f2f2 !important;
   vertical-align: middle;
 }
 tr.dialogHeader2 .et2_label,
@@ -3063,9 +3052,6 @@ tr.dialogHeader3 .et2_label,
 tr.dialogHeader4 .et2_label {
   color: #1a1a1a;
   vertical-align: middle;
-  padding: 0px 0px 0px 0px !important;
-  /*margin-right: 55px;*/
-  margin: 0px;
   font-size: 1em;
 }
 /************* Tabs  *********************************/
@@ -3074,7 +3060,7 @@ tr.dialogHeader4 .et2_label {
  */
 .et2_tabheader {
   padding-left: 0em;
-  border-bottom: 1px solid #bfbfbf;
+  border-bottom: 3px solid #e6e6e6;
   margin: 0;
   background-image: none;
   background-color: #ffffff;
@@ -3082,41 +3068,25 @@ tr.dialogHeader4 .et2_label {
 .et2_tabheader :first-child {
   margin-left: 0px;
 }
+.et2_tabflag {
+  border: none;
+}
 .et2_tabflag,
 .etemplate_tab > div,
 .etemplate_tab_active > div {
   margin: 1em 3px -1px 0;
   padding: 4px;
-  background-color: #b4b4b4;
+  background-color: white;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
   min-width: 73px;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 0px;
-  -webkit-border-bottom-left-radius: 0px;
-  -webkit-border-top-left-radius: 3px;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 0px;
-  -moz-border-radius-bottomleft: 0px;
-  -moz-border-radius-topleft: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 3px;
-  /*.background-clip(padding-box);*/
 }
 .et2_tabflag:hover,
 .etemplate_tab > div:hover,
 .etemplate_tab_active > div:hover {
-  color: #808080;
-  background-color: #bfbfbf;
-}
-.et2_tabflag:active,
-.etemplate_tab > div:active,
-.etemplate_tab_active > div:active {
-  background-color: #ffffff;
-  color: #ffffff;
+  background-color: #ffdd73;
+  border: none;
 }
 td.etemplate_tab_active.th {
   background-color: transparent;
@@ -3126,9 +3096,8 @@ td.etemplate_tab_active.th {
   border-spacing: 0px;
   background-color: white;
   color: #000000;
-  border-width: 1px 1px 0px 1px;
-  border-style: solid;
-  border-color: #505050;
+  border-bottom: 3px solid #696969;
+  margin-bottom: -3px;
 }
 .et2_tabflag.active:hover,
 .etemplate_tab_active > div:hover {
@@ -3137,15 +3106,10 @@ td.etemplate_tab_active.th {
 }
 .et2_tabs,
 .tab_body {
-  border-width: 0px 1px 1px 1px;
-  border-style: solid;
-  border-color: #b4b4b4;
+  border: none;
+  border-bottom: 1px solid #e6e6e6;
   padding: 5px;
-  /*overflow-y: auto;*/
   background-color: #ffffff;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
   margin-bottom: 11px;
 }
 .tab_body {
@@ -5300,23 +5264,16 @@ button.image_button {
  */
 /* TABLE STYLE */
 .th {
-  background-color: #e0e0e0;
+  border-bottom: 1px solid #e6e6e6;
 }
 .innerContainer {
   overflow: hidden;
   /*padding: 0;*/
 }
 .egwGridView_grid > tbody > tr.th > td {
-  background-color: #d9d9d9;
+  border-bottom: 1px solid darkgray;
   font-weight: normal;
   padding: 0 2px 2px 0;
-  border-width: 0;
-  border-style: solid;
-  border-color: #b4b4b4;
-  border-left: 0px solid transparent;
-  border-top: 0px solid transparent;
-  border-right: 0px solid transparent;
-  border-bottom: 0px solid transparent;
   background-image: none;
   background-position: center;
   background-repeat: repeat-x;

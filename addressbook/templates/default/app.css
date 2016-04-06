@@ -70,11 +70,6 @@ div.addressbook_edit_general_picture img {
 .custom_country {
 	display: none;
 }
-tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
-tr.dialogOperators td,.dialogFooterToolbar {
-	padding: 5px 0 5px 0;
-	vertical-align: middle;
-}
 input.et2_radiobox {
 	position: relative;
 	left: -16px;
