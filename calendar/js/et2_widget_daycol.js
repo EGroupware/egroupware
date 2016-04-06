@@ -998,12 +998,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 	click: function(_ev)
 	{
 		// Click on the title
-		if(this.title.is(_ev.target) || this.title.has(_ev.target))
-		{
-			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
-			return false;
-		}
-		else if ($j(_ev.target).hasClass('calendar_calAddEvent') && !_ev.target.dataset.whole_day)
+		if ($j(_ev.target).hasClass('calendar_calAddEvent') && !_ev.target.dataset.whole_day)
 		{
 			// Default handler to open a new event at the selected time
 			var options = {
@@ -1016,6 +1011,12 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 				options.owner = this.options.owner;
 			}
 			this.egw().open(null, 'calendar', 'add', options, '_blank');
+			return false;
+		}
+		// Day label
+		else if(this.title.is(_ev.target) || this.title.has(_ev.target))
+		{
+			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
 			return false;
 		}
 		// Header, but not the hidden event indicators that are in there
