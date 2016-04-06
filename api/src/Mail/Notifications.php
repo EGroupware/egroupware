@@ -21,7 +21,13 @@ use EGroupware\Api;
  */
 class Notifications
 {
-	const APP = 'emailadmin';
+	/**
+	 * App tables belong to
+	 */
+	const APP = 'api';
+	/**
+	 * Name of credentials table
+	 */
 	const TABLE = 'egw_ea_notifications';
 
 	/**

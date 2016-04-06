@@ -96,7 +96,10 @@ use addressbook_merge;	// should go to Contacts\Merge
  */
 class Account implements \ArrayAccess
 {
-	const APP = 'emailadmin';
+	/**
+	 * App tables belong to
+	 */
+	const APP = 'api';
 	/**
 	 * Table with mail-accounts
 	 */
@@ -903,8 +906,8 @@ class Account implements \ArrayAccess
 		}
 
 		$access = false;
-		// emailadmin has all rights
-		if (isset($GLOBALS['egw_info']['user']['apps']['emailadmin']))
+		// Admin app has all rights
+		if (isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			$access = true;
 			$reason = 'user is EMailAdmin';
@@ -1150,7 +1153,7 @@ class Account implements \ArrayAccess
 		if (!($data['acc_id'] > 0))
 		{
 			// set not set values which, are NOT NULL and therefore would give an SQL error
-			$td = self::$db->get_table_definitions('emailadmin', self::TABLE);
+			$td = self::$db->get_table_definitions('api', self::TABLE);
 			foreach($td['fd'] as $col => $def)
 			{
 				if (!isset($data[$col]) && $def['nullable'] === false && !isset($def['default']))

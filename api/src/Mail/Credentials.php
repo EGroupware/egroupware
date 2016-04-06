@@ -25,8 +25,17 @@ use EGroupware\Api;
  */
 class Credentials
 {
-	const APP = 'emailadmin';
+	/**
+	 * App tables belong to
+	 */
+	const APP = 'api';
+	/**
+	 * Name of credentials table
+	 */
 	const TABLE = 'egw_ea_credentials';
+	/**
+	 * Join to check account is user-editable
+	 */
 	const USER_EDITABLE_JOIN = 'JOIN egw_ea_accounts ON egw_ea_accounts.acc_id=egw_ea_credentials.acc_id AND acc_user_editable=';
 
 	/**
@@ -378,7 +387,7 @@ class Credentials
 		$old_mcrypt = null;
 		foreach(self::$db->select(self::TABLE, self::TABLE.'.*', array(
 			'account_id' => $data['account_id']
-		),__LINE__, __FILE__, false, '', 'emailadmin', 0, self::USER_EDITABLE_JOIN.self::$db->quote(true, 'bool')) as $row)
+		),__LINE__, __FILE__, false, '', self::APP, 0, self::USER_EDITABLE_JOIN.self::$db->quote(true, 'bool')) as $row)
 		{
 			if (!isset($old_mcrypt))
 			{

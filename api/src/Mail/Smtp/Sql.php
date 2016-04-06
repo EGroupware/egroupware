@@ -45,7 +45,7 @@ class Sql extends Mail\Smtp
 	/**
 	 * Name of app our table belongs to
 	 */
-	const APP = 'emailadmin';
+	const APP = 'api';
 	/**
 	 * Values for mail_type column
 	 *
