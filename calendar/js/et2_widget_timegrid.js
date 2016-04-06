@@ -1906,11 +1906,22 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			// For some reason the column's method does not set it correctly in Chrome
 			day.header[0].style.width = day_width + '%';
 		}
+
+		// Stop Firefox from scrolling the day to the top - this would break printing in Chrome
+		if (navigator.userAgent.match(/(firefox|safari|iceweasel)/i) && !navigator.userAgent.match(/chrome/i))
+		{
+			this.scrolling.children().css({
+				'transform':'translateY(-'+this.scrolling.scrollTop()+'px)',
+				'overflow': 'visible'
+			});
+		}
 	},
 
 	/**
 	 * Reset after printing
 	 */
-	afterPrint: function() {}
+	afterPrint: function() {
+		this.scrolling.children().css({'transform':'', 'overflow':''});
+	}
 });}).call(this);
 et2_register_widget(et2_calendar_timegrid, ["calendar-timegrid"]);
