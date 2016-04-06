@@ -44,7 +44,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 
 	return {
 		/**
-		 * Set imagemap, called from /phpgwapi/images.php
+		 * Set imagemap, called from /api/images.php
 		 *
 		 * @param {array|object} _images
 		 * @param {boolean} _need_clone _images need to be cloned, as it is from different window context

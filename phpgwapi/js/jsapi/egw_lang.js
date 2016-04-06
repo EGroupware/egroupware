@@ -147,7 +147,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 				if (typeof lang_arr[_apps[i].app] === "undefined")
 				{
 					jss.push(this.webserverUrl +
-						'/phpgwapi/lang.php?app=' + _apps[i].app +
+						'/api/lang.php?app=' + _apps[i].app +
 						'&lang=' + _apps[i].lang +
 						'&etag=' + (_apps[i].etag || this.config('max_lang_time')));
 				}

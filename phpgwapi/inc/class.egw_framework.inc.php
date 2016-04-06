@@ -1425,15 +1425,15 @@ abstract class egw_framework
 		// specifying etag in url to force reload, as we send expires header
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
 		{
-			self::validate_file('/phpgwapi/config.php', array(
+			self::validate_file('/api/config.php', array(
 				'etag' => md5(json_encode(config::clientConfigs()).egw_link::json_registry()),
 			));
-			self::validate_file('/phpgwapi/images.php', array(
+			self::validate_file('/api/images.php', array(
 				'template' => $GLOBALS['egw_info']['server']['template_set'],
 				'etag' => md5(json_encode(common::image_map($GLOBALS['egw_info']['server']['template_set']))),
 				'svg' => html::$ua_mobile,	// always load non-svg image map, ATM we use svg icons only for mobile theme
 			));
-			self::validate_file('/phpgwapi/user.php', array(
+			self::validate_file('/api/user.php', array(
 				'user' => $GLOBALS['egw_info']['user']['account_lid'],
 				'lang' => $GLOBALS['egw_info']['user']['preferences']['common']['lang'],
 				// add etag on url, so we can set an expires header

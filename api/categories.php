@@ -2,21 +2,23 @@
 /**
  * API: loading categories and setting styles
  *
- * Usage: /egroupware/phpgwapi/categories.php[?app=calendar]
+ * Usage: /egroupware/api/categories.php[?app=calendar]
  *
  * @link www.egroupware.org
  * @author Nathan Gray
- * @package API
+ * @package api
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp' => 'home',
+		'currentapp' => 'api',
 		'noheader' => true,
 		'nocachecontrol' => true,
 	)
@@ -25,10 +27,10 @@ $GLOBALS['egw_info'] = array(
 include '../header.inc.php';
 
 // Get appname
-$appname = $_GET['app'] && $GLOBALS['egw_info']['apps'][$_GET['app']] ? $_GET['app'] : categories::GLOBAL_APPNAME;
+$appname = $_GET['app'] && $GLOBALS['egw_info']['apps'][$_GET['app']] ? $_GET['app'] : Api\Categories::GLOBAL_APPNAME;
 
-$cats = new categories('', $appname);
-$categories = $cats->return_array('all',0, false, '', 'ASC','',$appname==categories::GLOBAL_APPNAME);
+$cats = new Api\Categories('', $appname);
+$categories = $cats->return_array('all',0, false, '', 'ASC','',$appname==Api\Categories::GLOBAL_APPNAME);
 
 $content = "/* Category CSS for $appname */\n\n";
 
@@ -50,7 +52,7 @@ foreach($categories as $cat)
 $etag = '"'.md5($content).'"';
 
 // headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
-egw_session::cache_control(86400);	// cache for 1 day
+Api\Session::cache_control(86400);	// cache for 1 day
 Header('Content-Type: text/css; charset=utf-8');
 Header('ETag: '.$etag);
 
@@ -58,7 +60,7 @@ Header('ETag: '.$etag);
 if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag)
 {
 	header("HTTP/1.1 304 Not Modified");
-	common::egw_exit();
+	exit;
 }
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content

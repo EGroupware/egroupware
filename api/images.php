@@ -2,21 +2,23 @@
 /**
  * API: loading available images by application and image-name (without extension)
  *
- * Usage: /egroupware/phpgwapi/images.php?template=idots
+ * Usage: /egroupware/api/images.php?template=idots
  *
  * @link www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @package phpgwapi
+ * @package api
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 // switch evtl. set output-compression off, as we cant calculate a Content-Length header with transparent compression
 ini_set('zlib.output_compression', 0);
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp' => 'home',
+		'currentapp' => 'api',
 		'noheader' => true,
 		'nocachecontrol' => true,
 	)
@@ -24,13 +26,13 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
-$content = json_encode(common::image_map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null, $_GET['svg']));
+$content = json_encode(Api\Image::map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null, $_GET['svg']));
 
 // use an etag over the image mapp
 $etag = '"'.md5($content).'"';
 
 // headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
-egw_session::cache_control(86400);	// cache for one day
+Api\Session::cache_control(86400);	// cache for one day
 Header('Content-Type: text/javascript; charset=utf-8');
 Header('ETag: '.$etag);
 
@@ -38,7 +40,7 @@ Header('ETag: '.$etag);
 if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag)
 {
 	header("HTTP/1.1 304 Not Modified");
-	common::egw_exit();
+	exit;
 }
 
 $content = 'egw.set_images('.$content.", egw && egw.window !== window);\n";
