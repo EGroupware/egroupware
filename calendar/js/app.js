@@ -149,7 +149,11 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		this._super.apply(this, arguments);
 
 		// Avoid many problems with home
-		if(_et2.app !== 'calendar') return;
+		if(_et2.app !== 'calendar')
+		{
+			egw.loading_prompt(this.appname,false);
+			return;
+		}
 
 		// Re-init sidebox, since it was probably initialized too soon
 		var sidebox = jQuery('#favorite_sidebox_'+this.appname);

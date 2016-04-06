@@ -899,7 +899,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			day = this.day_widgets[i];
 
 			// Classes
-			if(this.day_list[i] && parseInt(this.day_list[i].substr(4,2)) !== new Date(app.calendar.state.date).getUTCMonth()+1)
+			if(app.calendar && app.calendar.state &&
+				this.day_list[i] && parseInt(this.day_list[i].substr(4,2)) !== new Date(app.calendar.state.date).getUTCMonth()+1)
 			{
 				day.set_class('calendar_differentMonth');
 			}
@@ -1349,34 +1350,26 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				this.set_end_date(day_list[day_list.length-1]);
 			}
 
-			// We need to check if we're attached already, as the datastore can cause
-			// conflicts across other events (especially home) if we call it too early
-			if(this.isAttached())
+			
+			// Sub widgets actually get their own data from egw.data, so we'll
+			// stick it there
+			var consolidated = et2_calendar_view.is_consolidated(this.options.owner, this.day_list.length == 1 ? 'day' : 'week');
+			for(var day in events)
 			{
-				// Sub widgets actually get their own data from egw.data, so we'll
-				// stick it there
-				var consolidated = et2_calendar_view.is_consolidated(this.options.owner, this.day_list.length == 1 ? 'day' : 'week');
-				for(var day in events)
+				var day_list = [];
+				for(var i = 0; i < events[day].length; i++)
 				{
-					var day_list = [];
-					for(var i = 0; i < events[day].length; i++)
-					{
-						day_list.push(events[day][i].row_id);
-						egw.dataStoreUID('calendar::'+events[day][i].row_id, events[day][i]);
-					}
-					// Might be split by user, so we have to check that too
-					for(var i = 0; i < this.options.owner.length; i++)
-					{
-						var owner = consolidated ? this.options.owner : this.options.owner[i];
-						var day_id = app.classes.calendar._daywise_cache_id(day,owner);
-						egw.dataStoreUID(day_id, day_list);
-						if(consolidated) break;
-					}
+					day_list.push(events[day][i].row_id);
+					egw.dataStoreUID('calendar::'+events[day][i].row_id, events[day][i]);
 				}
-			}
-			else
-			{
-				this.value = events;
+				// Might be split by user, so we have to check that too
+				for(var i = 0; i < this.options.owner.length; i++)
+				{
+					var owner = consolidated ? this.options.owner : this.options.owner[i];
+					var day_id = app.classes.calendar._daywise_cache_id(day,owner);
+					egw.dataStoreUID(day_id, day_list);
+					if(consolidated) break;
+				}
 			}
 		}
 
@@ -1429,7 +1422,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			this.owner.set_value('');
 			if(this.options.start_date)
 			{
-				this.set_label(egw.lang('wk') + ' ' +app.calendar.date.week_number(this.options.start_date));
+				this.set_label(egw.lang('wk') + ' ' +
+					(app.calendar ? app.calendar.date.week_number(this.options.start_date) : '')
+				);
 			}
 		}
 		else
