@@ -34,8 +34,6 @@ $setup_info['admin']['description'] = 'EGroupware administration application';
 $setup_info['admin']['hooks'] = array(
 	'acl_manager',
 	'config_validate',
-	'deleteaccount',
-	'topmenu_info'
 );
 $setup_info['admin']['hooks']['admin'] = 'admin_hooks::all_hooks';
 $setup_info['admin']['hooks']['sidebox_menu'] = 'admin_hooks::all_hooks';
