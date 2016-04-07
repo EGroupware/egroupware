@@ -144,7 +144,7 @@ class pixelegg_framework extends jdots_framework
 -popup toolbar
 */
 div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #divAppIconBar #divLogo,
-.dialogFooterToolbar, .et2_portlet .ui-widget-header{
+.et2_portlet .ui-widget-header{
 	background-color: $color !important;
 }
 
@@ -168,6 +168,10 @@ div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #div
 
 
 ";
+				if ($GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'traditional')
+				{
+					$ret['app_css'] .= ".dialogFooterToolbar {background-color: $color !important;}";
+				}
 			}
 			else
 			/* Mobile theme custom colors*/

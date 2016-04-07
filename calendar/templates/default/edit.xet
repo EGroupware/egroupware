@@ -94,7 +94,7 @@
 				<column width="50%"/>
 			</columns>
 			<rows>
-				<row class="th gray">
+				<row class="th">
 					<description value="Repeating Event Information" span="all"/>
 				</row>
 				<row disabled="!@reference">
@@ -157,19 +157,19 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" overflow="auto">
+		<grid width="100%">
 			<columns>
 				<column width="95"/>
 				<column/>
 			</columns>
 			<rows>
-				<row class="th gray" disabled="@view">
+				<row class="th" disabled="@view">
 					<description value="Create new links" span="all"/>
 				</row>
 				<row disabled="@view">
 					<link-to id="link_to" span="all"/>
 				</row>
-				<row class="th gray">
+				<row class="th">
 					<description value="Existing links" span="all" />
 				</row>
 				<row class="row_off" valign="top">
@@ -270,7 +270,7 @@
 				<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
 			</menulist>
 			<checkbox label="Do not notify" id="no_notifications"/>
-			<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="add" background_image="1" span="all"/>
+			<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="timesheet" background_image="1" span="all"/>
 			<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
 			<textbox type="hidden" id="delete_exceptions"/>
 		</hbox>

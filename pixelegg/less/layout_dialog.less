@@ -155,7 +155,7 @@ table.dialog-main-view {width: 100%;}
 /**********    Header Part ********************/
 .dialogHeader {
 	.color_100_gray;
-
+	border-bottom: 3px solid @gray_60;
 	// APP img
 	img[src*="navbar"] {
 		padding: 0 0 0 15px;
@@ -284,6 +284,7 @@ td.etemplate_tab_active.th {
     padding: 5px;
     background-color: @gray_0;
     margin-bottom: 11px;
+	margin-top:11px;
 }
 
 .tab_body {
@@ -318,7 +319,6 @@ div#etemplate\.tab_widget {
 #   dialogOperators                        #
 #############################################*/
 .dialogOperators {
-    background-color: @gray_10;
     border-top: 0px solid @gray_10;
     border-bottom: 0px solid @gray_10;
 
@@ -335,11 +335,12 @@ div#etemplate\.tab_widget {
 /*##############################################*/
 
 .dialogFooterToolbar{
-    background-color: @color_button_panel_bg_color;
+    background-color: transparent;
     margin: 10px 0 0 0;
     padding: 3px;
     white-space: nowrap;
-
+	border-top: 3px solid #696969;
+	padding-top: 8px !important;
     td {
 		padding: 0px 5px 0px 0px;
 	}
@@ -349,6 +350,9 @@ div#etemplate\.tab_widget {
 
     button {
         .dimension_height_m; min-width: 86px;
+		height: 24px;
+		border-radius: 3px;
+		border: 1px solid silver;
         &:hover{.dimension_height_m;}
         &:action{.dimension_height_m;}
     }

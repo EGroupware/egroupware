@@ -141,7 +141,7 @@ form[id^="tracker-"] .dialogHeadbar {
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55614 2016-04-04 17:55:49Z nathangray $ */
+/* $Id: app.css 55640 2016-04-05 21:38:49Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -288,16 +288,6 @@ form[id^="tracker-"] .dialogHeadbar {
 }
 #calendar-view_view td {
   padding: 0px;
-}
-/* Header classes */
-tr.dialogHeader td,
-tr.dialogHeader2 td,
-tr.dialogHeader3 td,
-tr.dialogHeader4 td,
-tr.dialogOperators td,
-.dialogFooterToolbar {
-  padding: 5px 0 5px 0;
-  vertical-align: middle;
 }
 .calendar_inputFullWidth input {
   width: 100%;
@@ -1418,8 +1408,8 @@ img.calendar_print_appicon {
 #calendar-edit_account + .chzn-container .chzn-results {
   max-height: 195px;
 }
-#calendar-edit_category {
-  max-width: 230px;
+input#calendar-edit_location {
+  padding-left: 0;
 }
 #calendar_sidebox_content .ui-datepicker div.ui-datepicker-buttonpane {
   border-top: 0;
@@ -1761,24 +1751,6 @@ div.calendar {
   background-color: #000;
   color: #0f0;
 }
-/*###########################################
-#                                           #
-#       dialogHeader                       #
-#############################################
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                                           #
-#                   dialog                  #
-#                                           #
-#                                           #
-#############################################
-#                                           #
-#    buttons                                #
-#                                           #
-#                                           #
-##############################################*/
 #calendar-edit {
   /*###########################################*/
   /*###########################################*/

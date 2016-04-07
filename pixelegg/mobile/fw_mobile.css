@@ -1559,7 +1559,7 @@ div#ui-datepicker-div {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: magicsuggest.less 55035 2016-02-16 21:37:19Z nathangray $
+ * @version $Id: magicsuggest.less 55652 2016-04-06 16:43:51Z hnategh $
  */
 .ms-ctn,
 .ms-res-ctn {
@@ -2911,7 +2911,7 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: layout_dialog.less 55581 2016-03-31 16:59:47Z hnategh $
+ * @version $Id: layout_dialog.less 55652 2016-04-06 16:43:51Z hnategh $
  */
 /*body {
     background-color: @gray_0;
@@ -3000,6 +3000,7 @@ table.dialog-main-view {
 /**********    Header Part ********************/
 .dialogHeader {
   color: #000000;
+  border-bottom: 3px solid #696969;
 }
 .dialogHeader img[src*="navbar"] {
   padding: 0 0 0 15px;
@@ -3122,6 +3123,7 @@ td.etemplate_tab_active.th {
   padding: 5px;
   background-color: #ffffff;
   margin-bottom: 11px;
+  margin-top: 11px;
 }
 .tab_body {
   border-top-width: 1px;
@@ -3151,7 +3153,6 @@ div#etemplate\.tab_widget {
 #   dialogOperators                        #
 #############################################*/
 .dialogOperators {
-  background-color: #e6e6e6;
   border-top: 0px solid #e6e6e6;
   border-bottom: 0px solid #e6e6e6;
 }
@@ -3168,10 +3169,12 @@ div#etemplate\.tab_widget {
 /*#  button | button | button         delete  #*/
 /*##############################################*/
 .dialogFooterToolbar {
-  background-color: #679fd2;
+  background-color: transparent;
   margin: 10px 0 0 0;
   padding: 3px;
   white-space: nowrap;
+  border-top: 3px solid #696969;
+  padding-top: 8px !important;
   /*.et2_selectbox {height: 32px; top: 0px; font-size: 1em;}*/
 }
 .dialogFooterToolbar td {
@@ -3181,8 +3184,10 @@ div#etemplate\.tab_widget {
   padding-left: 5px;
 }
 .dialogFooterToolbar button {
-  height: 24px;
   min-width: 86px;
+  height: 24px;
+  border-radius: 3px;
+  border: 1px solid silver;
 }
 .dialogFooterToolbar button:hover {
   height: 24px;
@@ -5266,7 +5271,7 @@ button.image_button {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: layout_table.less 55187 2016-02-29 13:25:21Z ralfbecker $
+ * @version $Id: layout_table.less 55652 2016-04-06 16:43:51Z hnategh $
  */
 /** #####################################################################################
  * et2
@@ -5405,6 +5410,9 @@ table.egwGridView_grid tbody {
 }
 table.egwGridView_grid tbody tr:hover {
   background: rgba(103, 159, 210, 0.2);
+}
+table.egwGridView_grid tbody tr.th:hover {
+  background: transparent;
 }
 table.egwGridView_grid tbody tr.selected {
   background-image: none;
