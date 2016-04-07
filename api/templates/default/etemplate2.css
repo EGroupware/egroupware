@@ -2331,6 +2331,8 @@ ul.et2_nowrap, div.et2_nowrap{
 	float: right;
 }
 
+.et2_fullWidth input.et2_date { width:95%;}
+
 /*et2_image_widget*/
 div.et2_image_tooltipPopup {
 	background: white;
@@ -2605,7 +2607,7 @@ td.avatar {
 /*Dialog headers styling*/
 tr.dialogHeader td, tr.dialogHeader2 td, tr.dialogHeader3 td, tr.dialogHeader4 td,
 tr.dialogOperators td,.dialogFooterToolbar {
-	padding: 5px 0 5px 0;
+	padding: 5px 0 5px 3px;
 	vertical-align: middle;
 }
 .dialogHeader {
