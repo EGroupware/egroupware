@@ -13,6 +13,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
 * Stylite Pixelegg template
 */
@@ -46,7 +48,7 @@ class pixelegg_framework extends jdots_framework
 		parent::__construct($template);		// call the constructor of the extended class
 
 		// search 'mobile' dirs first
-		if (html::$ua_mobile) array_unshift ($this->template_dirs, 'mobile');
+		if (Api\Header\UserAgent::mobile()) array_unshift ($this->template_dirs, 'mobile');
 	}
 
 	/**
@@ -61,9 +63,9 @@ class pixelegg_framework extends jdots_framework
 	{
 		// load our slider.js, but only if framework requested
 		if (!self::$header_done && $_GET['cd'] === 'yes' &&
-			!(html::$ua_mobile || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile'))
+			!(Api\Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile'))
 		{
-			self::validate_file('/pixelegg/js/slider.js');
+			self::includeJS('/pixelegg/js/slider.js');
 		}
 		return parent::header($extra);
 	}
@@ -97,7 +99,7 @@ class pixelegg_framework extends jdots_framework
 	/**
 	 * Overwrite to NOT add customizable colors from jDots
 	 *
-	 * @see egw_framework::_get_css()
+	 * @see Api\Framework::_get_css()
 	 * @return array
 	 */
 	public function _get_css()
@@ -131,7 +133,7 @@ class pixelegg_framework extends jdots_framework
 
 		if (preg_match('/^(#[0-9A-F]+|[A-Z]+)$/i',$color))	// a little xss check
 		{
-			if (!html::$ua_mobile)
+			if (!Api\Header\UserAgent::mobile())
 			{
 				$ret['app_css'] .= "
 /**

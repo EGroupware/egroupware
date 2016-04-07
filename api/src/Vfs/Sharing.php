@@ -16,10 +16,6 @@ namespace EGroupware\Api\Vfs;
 use EGroupware\Api;
 use EGroupware\Api\Vfs;
 
-// explicitly list old, not yet ported api classes
-use egw_framework;
-use egw; // link
-
 use filemanager_ui;
 
 /**
@@ -357,7 +353,7 @@ class Sharing
 		$GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'] = 'tile';
 		$_GET['cd'] = 'no';
 		$GLOBALS['egw_info']['flags']['js_link_registry'] = true;
-		egw_framework::includeCSS('filemanager', 'sharing');
+		Api\Framework::includeCSS('filemanager', 'sharing');
 		$ui = new SharingUi();
 		$ui->index();
 	}
@@ -657,7 +653,7 @@ class Sharing
 	{
 		if (is_array($share)) $share = $share['share_token'];
 
-		$link = egw::link('/share.php').'/'.$share;
+		$link = Api\Framework::link('/share.php').'/'.$share;
 		if ($link[0] == '/')
 		{
 			$link = ($_SERVER['HTTPS'] ? 'https://' : 'http://').

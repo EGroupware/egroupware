@@ -17,9 +17,6 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 use XMLReader;
 
-// explicitly import old not yet ported classes
-use egw; // link
-
 /* allow to call direct for tests (see end of class)
 if (!isset($GLOBALS['egw_info']))
 {
@@ -211,7 +208,7 @@ class Template extends Etemplate\Widget
 			{
 				$url = Api\Vfs::download_url($path);
 
-				if ($url[0] == '/') $url = egw::link($url);
+				if ($url[0] == '/') $url = Api\Framework::link($url);
 
 				// mtime postfix has to use '?download=', as our WebDAV treats everything else literal and not ignore them like Apache for static files!
 				$url .= '?download='.filemtime($path);

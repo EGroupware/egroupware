@@ -29,11 +29,16 @@ $replace = array(
 	"#\\\$GLOBALS\['egw'\]->session->appsession\(([^,]+),\s*('[^']+'),\s*#" => 'Api\\Cache::setSession($2, $1, ',
 	"#\\\$GLOBALS\['egw'\]->common->#" => 'common::',
 	"#\\\$GLOBALS\['egw'\]->hooks->#" => 'Api\\Hooks::',
+	'#Api\\Hooks::hook_implemented#' => 'Api\\Hooks::implemented',
 	"#\\\$GLOBALS\['egw'\]->translation->#" => 'Api\\Translation::',
+	'#egw_framework::csp_script_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('script-src', \$1);",
+	'#egw_framework::csp_style_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('style-src', \$1);",
+	'#egw_framework::csp_connect_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('connect-src', \$1);",
+	'#egw_framework::csp_frame_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('frame-src', \$1);",
 );
 // enclose class-names and static methods with some syntax check
-$class_start = '#([\[\s,;(])';
-$class_end = '(::|\\(|;|\?|:|\\s|$)#';
+$class_start = '#([\[\s,;(.!])';
+$class_end = '(::|\\(|\\)|;|\?|:|\\s|,|$)#';
 foreach(array(
 	'accounts' => 'Api\\Accounts',
 	'acl' => 'Api\\Acl',
@@ -88,8 +93,10 @@ foreach(array(
 	'egw_exception_db' => 'Api\\Db\\Exception',
 	'egw_exception_db_invalid_sql' => 'Api\\Db\\Exception\\InvalidSql',
 	'egw_exception_redirect' => 'Api\\Exception\\Redirect',
-	//'egw_favorites' =>
-	//'egw_framework' =>
+	'egw_favorites' => 'Api\\Framework\\Favorites',
+	'egw_framework::validate_file' => 'Api\\Framework::includeJS',
+	'egw_framework::favorite_list' => 'Api\\Framework\\Favorites::list_favorites',
+	'egw_framework' => 'Api\\Framework',
 	'egw_json_request' => 'Api\\Json\\Request',
 	'egw_json_response' => 'Api\\Json\\Response',
 	'egw_link' => 'Api\\Link',
@@ -156,14 +163,15 @@ foreach(array(
  * Check namespace usage in converted code
  *
  * @param string $file filename
+ * @param boolean $dry_run =false true: only echo fixed file, not fix it
  * @return boolean false on error
  */
-function fix_api($file)
+function fix_api($file, $dry_run=false)
 {
 	global $prog, $replace;
 	if (basename($file) == $prog) return true;	// dont fix ourself ;-)
 
-	if (($content = file_get_contents($file)) === false) return false;
+	if (($content = $content_in = file_get_contents($file)) === false) return false;
 
 	if (!preg_match("|<\?php\n/\*\*.*\*/|msU", $content))
 	{
@@ -184,9 +192,15 @@ function fix_api($file)
 		}
 	}
 
-	die($content);
+	if ($dry_run)
+	{
+		echo $content;
+	}
+	elseif ($content_in != $content)
+	{
+		file_put_contents($file, $content);
+	}
 
-	//print_r($use);
 	return true;
 }
 
@@ -194,9 +208,10 @@ function fix_api($file)
  * Loop recursive through directory and call fix_api for each php file
  *
  * @param string $dir
+ * @param boolean $dry_run =false true: only echo fixed file, not fix it
  * @return boolean false on error
  */
-function fix_api_recursive($dir)
+function fix_api_recursive($dir, $dry_run=false)
 {
 	if (!is_dir($dir)) return false;
 
@@ -206,12 +221,12 @@ function fix_api_recursive($dir)
 
 		if (is_dir($dir.'/'.$file))
 		{
-			fix_api_recursive($dir.'/'.$file);
+			fix_api_recursive($dir.'/'.$file, $dry_run);
 		}
 		elseif(substr($file,-4) == '.php')
 		{
 			echo "\r".str_repeat(' ',100)."\r".$dir.'/'.$file.': ';
-			fix_api($dir.'/'.$file);
+			fix_api($dir.'/'.$file, $dry_run);
 		}
 	}
 	echo "\r".str_repeat(' ',100)."\r";
@@ -226,7 +241,7 @@ function fix_api_recursive($dir)
 function usage($error=null)
 {
 	global $prog;
-	echo "Usage: $prog [-h|--help] file or dir\n\n";
+	echo "Usage: $prog [-h|--help] [-d|--dry-run] file or dir\n\n";
 	if ($error) echo $error."\n\n";
 	exit($error ? 1 : 0);
 }
@@ -236,7 +251,7 @@ $prog = basename(array_shift($args));
 
 if (!$args) usage();
 
-$replace_file = false;
+$dry_run = false;
 while(($arg = array_shift($args)))
 {
 	switch($arg)
@@ -244,6 +259,11 @@ while(($arg = array_shift($args)))
 		case '-h':
 		case '--help':
 			usage();
+			break;
+
+		case '-d':
+		case '--dry-run':
+			$dry_run = true;
 			break;
 
 		default:
@@ -259,9 +279,9 @@ if (!file_exists($arg)) usage("Error: $arg not found!");
 
 if (!is_dir($arg))
 {
-	fix_api($arg,$replace_file);
+	fix_api($arg, $dry_run);
 }
 else
 {
-	fix_api_recursive($arg,$replace_file);
+	fix_api_recursive($arg, $dry_run);
 }

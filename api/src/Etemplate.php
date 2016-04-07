@@ -13,10 +13,6 @@
 
 namespace EGroupware\Api;
 
-// explicitly import old not yet ported classes
-use egw;
-use egw_framework;
-
 /**
  * New eTemplate serverside contains:
  * - main server methods like read, exec
@@ -71,7 +67,7 @@ class Etemplate extends Etemplate\Widget\Template
 	 */
 	static function location($params='')
 	{
-		egw::redirect_link(is_array($params) ? '/index.php' : $params,
+		Framework::redirect_link(is_array($params) ? '/index.php' : $params,
 			is_array($params) ? $params : '');
 	}
 
@@ -138,7 +134,7 @@ class Etemplate extends Etemplate\Widget\Template
 		unset($hook_data);
 
 		// Include the etemplate2 javascript code
-		egw_framework::validate_file('etemplate', 'etemplate2', 'api');
+		Framework::includeJS('etemplate', 'etemplate2', 'api');
 
 		if (!$this->rel_path) throw new Exception\AssertionFailed("No (valid) template '$this->name' found!");
 
@@ -210,25 +206,25 @@ class Etemplate extends Etemplate\Widget\Template
 		if (self::$response)	// call is within an ajax event / form submit
 		{
 			//error_log("Ajax " . __LINE__);
-			self::$response->generic('et2_load', $load_array+egw_framework::get_extra());
-			egw_framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
+			self::$response->generic('et2_load', $load_array+Framework::get_extra());
+			Framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
 		}
 		else	// first call
 		{
 			// missing dependency, thought egw:uses jquery.jquery.tools does NOT work, maybe we should rename it to jquery-tools
-			// egw_framework::validate_file('jquery','jquery.tools.min');
+			// Framework::includeJS('jquery','jquery.tools.min');
 
 			// Include the jQuery-UI CSS - many more complex widgets use it
 			$theme = 'redmond';
-			egw_framework::includeCSS("/api/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
+			Framework::includeCSS("/api/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
 			// Load our CSS after jQuery-UI, so we can override it
-			egw_framework::includeCSS('/api/templates/default/etemplate2.css');
+			Framework::includeCSS('/api/templates/default/etemplate2.css');
 
 			// check if application of template has a app.js file --> load it
 			list($app) = explode('.',$this->name);
 			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
 			{
-				egw_framework::validate_file('.','app',$app,false);
+				Framework::includeJS('.','app',$app,false);
 			}
 			// Category styles
 			Categories::css($app);
@@ -252,8 +248,8 @@ class Etemplate extends Etemplate\Widget\Template
 					$content .= "\n".$vars['page_generation_time'];
 				}
 				$GLOBALS['egw']->framework->response->generic("data", array($content));
-				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+egw_framework::get_extra());
-				egw_framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
+				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+Framework::get_extra());
+				Framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
 				self::$request = null;
 				return;
 			}

@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
- * @subpackage groupdav
+ * @subpackage framework
  * @author Andreas Stöckel
  * @copyright (c) 2011 Stylite
  * @version $Id$

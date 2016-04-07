@@ -479,45 +479,7 @@ class egw extends egw_minimal
 	 */
 	static function redirect($url, $link_app=null)
 	{
-		// Determines whether the current output buffer should be flushed
-		$do_flush = true;
-
-		if (egw_json_response::isJSONResponse() || egw_json_request::isJSONRequest())
-		{
-			$response = egw_json_response::get();
-			$response->redirect($url, false, $link_app);
-
-			// If we are in a json request, we should not flush the current output!
-			$do_flush = false;
-		}
-		else
-		{
-			$file = $line = null;
-			if (headers_sent($file,$line))
-			{
-				throw new Api\Exception\AssertionFailed(__METHOD__."('".htmlspecialchars($url)."') can NOT redirect, output already started at $file line $line!");
-			}
-			if ($GLOBALS['egw']->framework instanceof jdots_framework && !empty($link_app))
-			{
-				egw_framework::set_extra('egw', 'redirect', array($url, $link_app));
-				$GLOBALS['egw']->framework->render('');
-			}
-			else
-			{
-				Header("Location: $url");
-				print("\n\n");
-			}
-		}
-
-		if ($do_flush)
-		{
-			@ob_flush(); flush();
-		}
-
-		// commit session (if existing), to fix timing problems sometimes preventing session creation ("Your session can not be verified")
-		if (isset($GLOBALS['egw']->session)) $GLOBALS['egw']->session->commit_session();
-
-		exit;
+		Api\Framework::redirect($url, $link_app);
 	}
 
 	/**

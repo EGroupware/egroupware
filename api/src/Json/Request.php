@@ -18,7 +18,6 @@ use EGroupware\Api;
 
 // explicitly import old, not yet ported api classes
 use notifications_push;
-use egw_framework;
 
 /**
  * Class handling JSON requests to the server
@@ -174,7 +173,7 @@ class Request
 
 		// for Ajax: no need to load the "standard" javascript files,
 		// they are already loaded, in fact jquery has a problem if loaded twice
-		egw_framework::js_files(array());
+		Api\Framework::js_files(array());
 
 		call_user_func_array(array($ajaxClass, $functionName),
 			Api\Translation::convert($parameters, 'utf-8'));

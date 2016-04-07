@@ -14,10 +14,6 @@
 
 namespace EGroupware\Api;
 
-// explicitly import classes not yet imported into Api
-use egw_framework;	// validate_file, includeCSS
-use egw;	// link
-
 /**
  * Generates html with methods representing html-tags or higher widgets
  *
@@ -197,8 +193,8 @@ class Html
 		$out .= "</select>\n";
 
 		if($enhanced) {
-			egw_framework::validate_file('/api/js/jquery/chosen/chosen.jquery.js');
-			egw_framework::includeCSS('/api/js/jquery/chosen/chosen.css',null,false);
+			Framework::includeJS('/api/js/jquery/chosen/chosen.jquery.js');
+			Framework::includeCSS('/api/js/jquery/chosen/chosen.css',null,false);
 			$out .= "<script>var lab = egw_LAB || \$LAB; lab.wait(function() {\$j(function() {if(\$j().chosen) \$j('select[name=\"$name\"]').chosen({width: '100%'});});})</script>\n";
 		}
 		return $out;
@@ -433,7 +429,7 @@ class Html
 		}
 
 		//include the ckeditor js file
-		egw_framework::validate_file('ckeditor','ckeditor','phpgwapi');
+		Framework::includeJS('ckeditor','ckeditor','phpgwapi');
 
 		// run content through htmlpurifier
 		if ($_purify && !empty($_content))
@@ -675,7 +671,7 @@ egw_LAB.wait(function() {
 			parse_str($v,$v);
 			$vars += $v;
 		}
-		return egw::link($url,$vars);
+		return Framework::link($url,$vars);
 	}
 
 	/**
@@ -890,7 +886,7 @@ egw_LAB.wait(function() {
 		}
 		if (substr($name,0,5) == 'vfs:/')	// vfs pseudo protocoll
 		{
-			$name = egw::link(Vfs::download_url(substr($name,4)));
+			$name = Framework::link(Vfs::download_url(substr($name,4)));
 		}
 		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://' || stripos($name,'api/thumbnail.php') )
 		{
@@ -1087,7 +1083,7 @@ egw_LAB.wait(function() {
 	 * @param boolean|string $_onCheckHandler =false string with handler-name to display a checkbox for each folder, or false (default), 'null' switches checkboxes on without an handler!
 	 * @param string $delimiter ='/' path-delimiter, default /
 	 * @param string $folderImageDir =null string path to the tree menu images, null uses default path
-	 * @param string|array $autoLoading =null EGw relative path or array with get parameter, both send through egw::link
+	 * @param string|array $autoLoading =null EGw relative path or array with get parameter, both send through Framework::link
 	 * @param string $dataMode ='JSON' data type for autoloading: XML, JSON, CSV
 	 * @param boolean $dragndrop =false true to enable drag-n-drop (must be before autoloading get enabled!)
 	 *
@@ -1121,10 +1117,10 @@ egw_LAB.wait(function() {
 		static $tree_initialised=false;
 		if (!$tree_initialised)
 		{
-			egw_framework::includeCSS('/api/js/dhtmlxtree/codebase/dhtmlxtree.css');
-			egw_framework::validate_file('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
-			egw_framework::validate_file('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
-			if ($autoLoading && $dataMode != 'XML') egw_framework::validate_file('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
+			Framework::includeCSS('/api/js/dhtmlxtree/codebase/dhtmlxtree.css');
+			Framework::includeJS('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+			Framework::includeJS('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
+			if ($autoLoading && $dataMode != 'XML') Framework::includeJS('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 			$tree_initialised = true;
 			if (!$_folders && !$autoLoading) return null;
 		}
@@ -1148,7 +1144,7 @@ egw_LAB.wait(function() {
 		if ($autoLoading)
 		{
 			$autoLoading = is_array($autoLoading) ?
-				egw::link('/index.php',$autoLoading) : egw::link($autoLoading);
+				Framework::link('/index.php',$autoLoading) : Framework::link($autoLoading);
 			$html .= "$tree.setXMLAutoLoading('$autoLoading');\n";
 			if ($dataMode != 'XML') $html .= "$tree.setDataMode('$dataMode');\n";
 

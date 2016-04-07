@@ -19,7 +19,7 @@
 namespace EGroupware\Api;
 
 // explicitly reference classes still in phpgwapi of old structure
-use egw;
+use egw;	// invalidate_session_cache
 
 /**
  * API - accounts

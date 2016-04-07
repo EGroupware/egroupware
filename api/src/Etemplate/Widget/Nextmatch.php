@@ -16,10 +16,6 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
-// explicitly import old not yet ported classes
-use egw;
-use egw_framework; // includeCSS
-
 /**
  * eTemplate serverside implementation of the nextmatch widget
  *
@@ -95,7 +91,7 @@ class Nextmatch extends Etemplate\Widget
 			parent::__construct($xml);
 
 			// TODO: probably a better way to do this
-			egw_framework::includeCSS('/api/js/egw_action/test/skins/dhtmlxmenu_egw.css');
+			Api\Framework::includeCSS('/api/js/egw_action/test/skins/dhtmlxmenu_egw.css');
 		}
 	}
 
@@ -863,7 +859,7 @@ class Nextmatch extends Etemplate\Widget
 			// link or popup action
 			if ($action['url'])
 			{
-				$action['url'] = egw::link('/index.php',str_replace('$action',$id,$action['url']));
+				$action['url'] = Api\Framework::link('/index.php',str_replace('$action',$id,$action['url']));
 				if ($action['popup'])
 				{
 					list($action['data']['width'],$action['data']['height']) = explode('x',$action['popup']);

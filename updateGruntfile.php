@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api\Framework\Bundle;
+
 if (php_sapi_name() !== 'cli') die("This is a commandline ONLY tool!\n");
 
 $GLOBALS['egw_info'] = array(
@@ -35,7 +37,7 @@ if (!preg_match('/grunt\.initConfig\(({.+})\);/s', $content, $matches) ||
 
 $uglify =& $config['uglify'];
 
-foreach(egw_framework::get_bundles() as $name => $files)
+foreach(Bundle::all() as $name => $files)
 {
 	if ($name == '.ts') continue;	// ignore timestamp
 

@@ -19,8 +19,6 @@
 
 namespace EGroupware\Api;
 
-use egw_framework; // includeCSS
-
 /**
  * class to manage categories in eGroupWare
  *
@@ -1040,7 +1038,7 @@ class Categories
 		$last_mod = $cats->return_array('all',0,1,'','DESC','last_mod', $appname == self::GLOBAL_APPNAME);
 		$time = count($last_mod) ? $last_mod[0]['last_mod'] : time();
 		$path = '/api/categories.php?app='.$appname.'&'.$time;
-		egw_framework::includeCSS($path);
+		Framework::includeCSS($path);
 
 		return $path;
 	}

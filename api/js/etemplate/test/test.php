@@ -14,22 +14,23 @@ $GLOBALS['egw_info'] = array(
 );
 include('../../../header.inc.php');
 
-	egw_framework::validate_file('.','etemplate2','etemplate');
-	egw_framework::validate_file('jquery','jquery.tools.min','phpgwapi'); // Not needed once JS require works for files like this
-	egw_framework::validate_file('jquery','jquery.html5_upload','phpgwapi'); // Not needed once JS require works for files like this
-	egw_framework::includeCSS('/etemplate/js/test/test.css');
+use EGroupware\Api;
+
+Api\Framework::includeJS('.','etemplate2','etemplate');
+Api\Framework::includeJS('jquery','jquery.tools.min','phpgwapi'); // Not needed once JS require works for files like this
+Api\Framework::includeJS('jquery','jquery.html5_upload','phpgwapi'); // Not needed once JS require works for files like this
+Api\Framework::includeCSS('/api/js/etemplate/test/test.css');
 
 /*
 * Test using any actual template
 */
 	$template = 'etemplate.et2_test_file_upload';
 	if($template) {
-		$etemplate = new etemplate_new('etemplate.et2_test_file_upload');
+		$etemplate = new Api\Etemplate('etemplate.et2_test_file_upload');
 		$etemplate->exec('',array());
 		return;
 	}
-	common::egw_header();
-//	parse_navbar();
+	echo $GLOBALS['egw']->framework->header();
 ?>
 		<script src="et2_test_timesheet_edit.json"></script>
 		<script src="et2_test_input_validator.json"></script>
@@ -58,6 +59,4 @@ Testing from inside framework, so JS includes work
                         }
                 </script>
 <?php
-common::egw_footer();
-
-?>
+echo $GLOBALS['egw']->framework->footer();

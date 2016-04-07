@@ -15,9 +15,6 @@ namespace EGroupware\Api\CalDAV;
 
 use EGroupware\Api;
 
-// explicit import old non-namespaced api classes
-use egw;	// link
-
 /**
  * GroupDAV hooks: eg. preferences
  */
@@ -40,7 +37,7 @@ class Hooks
 		if ($location == 'preferences')
 		{
 			$file = array(
-				'Preferences'     => egw::link('/index.php','menuaction=preferences.preference_settings.index&appname='.$appname),
+				'Preferences'     => Api\Framework::link('/index.php','menuaction=preferences.preference_settings.index&appname='.$appname),
 			);
 			if ($location == 'preferences')
 			{
@@ -121,7 +118,7 @@ class Hooks
 						}
 					}
 				}
-				$link = egw::link('/index.php',array(
+				$link = Api\Framework::link('/index.php',array(
 					'menuaction' => 'api.'.__CLASS__.'.log',
 					'filename' => '',
 				));

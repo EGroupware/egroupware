@@ -23,7 +23,6 @@ use ZipArchive;
 
 // explicit import old, non-namespaced phpgwapi classes
 use uiaccountsel;
-use egw;	// link
 
 /**
  * Document merge print
@@ -345,11 +344,11 @@ abstract class Merge
 				if($link_info['app'] != Api\Link::VFS_APPNAME)
 				{
 					// Set app to false so we always get an external link
-					$link = str_replace(',','%2C',egw::link('/index.php',$link, false));
+					$link = str_replace(',', '%2C', $GLOBALS['egw']->framework->link('/index.php',$link, false));
 				}
 				else
 				{
-					$link = egw::link($link, array());
+					$link = Api\Framework::link($link, array());
 				}
 				// Prepend site
 				if ($link{0} == '/')
@@ -404,11 +403,11 @@ abstract class Merge
 						if($app != Api\Link::VFS_APPNAME)
 						{
 							// Set app to false so we always get an external link
-							$link = str_replace(',','%2C',egw::link('/index.php',$link, false));
+							$link = str_replace(',', '%2C', $GLOBALS['egw']->framework->link('/index.php',$link, false));
 						}
 						else
 						{
-							$link = egw::link($link, array());
+							$link = Api\Framework::link($link, array());
 						}
 						// Prepend site
 						if ($link{0} == '/')

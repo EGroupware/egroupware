@@ -15,9 +15,6 @@ namespace EGroupware\Api\Etemplate;
 
 use EGroupware\Api;
 
-// explicitly import old not yet ported classes
-use egw_framework;
-
 /**
  * Class to represent the persitent information of an eTemplate request
  *
@@ -212,7 +209,7 @@ class Request
 			}
 			else
 			{
-				egw_framework::redirect_link($index_url);
+				Api\Framework::redirect_link($index_url);
 			}
 		}
 		return $request;

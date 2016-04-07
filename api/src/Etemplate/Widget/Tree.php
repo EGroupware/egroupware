@@ -16,10 +16,7 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
-// explicitly import old not yet ported classes
-use egw_framework;
-
-egw_framework::includeCSS('/api/js/dhtmlxtree/codebase/dhtmlXTree.css');
+Api\Framework::includeCSS('/api/js/dhtmlxtree/codebase/dhtmlXTree.css');
 
 /**
  * eTemplate tree widget

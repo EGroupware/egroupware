@@ -16,9 +16,6 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
-// explicitly import old not yet ported classes
-use egw;	// link
-
 /**
  * eTemplate VFS widget
  * Deals with the Virtual File System
@@ -165,7 +162,7 @@ class Vfs extends File
 		$file = array(
 			"uploaded" => (int)empty($error),
 			"fileName" => Api\Html::htmlspecialchars($_FILES['upload']['name']),
-			"url" => egw::link(Api\Vfs::download_url($path)),
+			"url" => Api\Framework::link(Api\Vfs::download_url($path)),
 			"error" => array(
 				"message" => $error,
 			)
