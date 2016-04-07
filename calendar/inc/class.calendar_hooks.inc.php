@@ -31,8 +31,8 @@ class calendar_hooks
 				'menuaction' => 'calendar.calendar_uiforms.edit',
 			),
 			'view_id'    => 'cal_id',
-			'view_popup' => '750x400',
-			'edit_popup' => '750x400',
+			'view_popup' => '790x400',
+			'edit_popup' => '790x400',
 			'list'  => array(
 				'menuaction' => 'calendar.calendar_uiviews.index',
 				'view' => 'listview',
@@ -43,7 +43,7 @@ class calendar_hooks
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
-			'add_popup'  => '750x400',
+			'add_popup'  => '790x400',
 			'file_access' => 'calendar.calendar_bo.file_access',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'mime' => array(
@@ -51,7 +51,7 @@ class calendar_hooks
 					'menuaction' => 'calendar.calendar_uiforms.edit',
 					'mime_data' => 'ical_data',
 					'mime_url' => 'ical_url',
-					'mime_popup' => '750x400',
+					'mime_popup' => '790x400',
 					'mime_target' => '_blank'
 				),
 			),
@@ -826,7 +826,7 @@ END:VALARM';
 		unset($data);	// not used, but in function signature for hooks
 		return true;
 	}
-	
+
 	/**
 	 * Mail integration hook to import mail message contents into a calendar entry
 	 *

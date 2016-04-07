@@ -1302,9 +1302,6 @@ img.calendar_print_button, img.calendar_print_appicon {
 	display: none;
 }
 
-#calendar-edit select#calendar-edit_duration {
-	width: 133px;
-}
 #calendar-edit_account + .chzn-container .chzn-results {
 	max-height: 195px;
 }

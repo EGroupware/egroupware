@@ -43,15 +43,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
-		<hbox disabled="@no_add" height="60">
-			<button id="add" image="add" background_image="1" novalidate="1"/>
-			<calendar-owner id="participant" allowFreeEntries="true" empty_label="Add new participants or resource" width="40%"/>
-			<textbox type="integer" label="Quantity" id="quantity" min="1" size="3"/>
-			<menulist>
-				<menupopup label="Role" class="selectRole" id="role"/>
-			</menulist>
-		</hbox>
-		<grid width="99%" id="participants" class="egwGridView_grid">
+		<grid width="99%" id="participants">
 			<columns>
 				<column width="85"/>
 				<column/>
@@ -61,7 +53,16 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th">
+				<row class="th"></row>
+				<row disabled="@no_add" height="35">
+					<button align="center" id="add" image="add" background_image="1" novalidate="1"/>
+					<calendar-owner id="participant" allowFreeEntries="true" span="2" empty_label="Add new participants or resource"/>
+					<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
+					<menulist>
+						<menupopup class="selectRole" id="role"/>
+					</menulist>
+				</row>
+				<row class="th thb">
 					<description value="Type"/>
 					<description value="Participants"/>
 					<description align="center" value="Quantity"/>
@@ -88,10 +89,11 @@
 	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
+				<column width="110"/>
+				<column width="208"/>
 				<column width="95"/>
+				<column width="208"/>
 				<column/>
-				<column/>
-				<column width="50%"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -102,28 +104,31 @@
 					<date-time id="recurrence" readonly="true"/>
 					<description id="reference" />
 					<description id="uid" />
+					<label/>
 				</row>
 				<row height="12">
 					<description for="recur_type" value="Repeat type"/>
-					<menulist>
+					<menulist class="et2_fullWidth">
 						<menupopup id="recur_type" onchange="app.calendar.check_recur_type"/>
 					</menulist>
 					<description for="recur_interval" value="Interval"/>
-					<menulist>
+					<menulist class="et2_fullWidth">
 						<menupopup type="select-number" statustext="repeating interval, eg. 2 to repeat every second week" id="recur_interval" options="None,2,31"/>
 					</menulist>
+					<label/>
 				</row>
 				<row height="12">
 					<description for="recur_enddate" value="End date"/>
-					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate"/>
+					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate" class="et2_fullWidth"/>
 					<description for="tzid" value="Timezone"/>
-					<menulist>
+					<menulist class="et2_fullWidth">
 						<menupopup type="select-timezone" statustext="Timezone in which recurrences have identical time" id="tzid"/>
 					</menulist>
+					<label/>
 				</row>
 				<row valign="top">
 					<description for="recur_data" value="Repeat days"/>
-					<listbox type="select-dow" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
+					<listbox type="select-dow" class="et2_fullWidth" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
 					<vbox>
 						<description value="Exceptions"/>
 						<button statustext="Create an exception for the given date" label="@exception_label" id="button[exception]" no_lang="1" />
@@ -140,6 +145,7 @@
 							</row>
 						</rows>
 					</grid>
+					<label/>
 				</row>
 			</rows>
 		</grid>

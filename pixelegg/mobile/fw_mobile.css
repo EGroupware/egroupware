@@ -169,7 +169,7 @@
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #b4b4b4;
+    background-color: #e6e6e6;
   }
   .et2_button_icon {
     height: 16px;
@@ -373,7 +373,7 @@
     -moz-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
-    background-color: #b4b4b4;
+    background-color: #e6e6e6;
     padding: 3px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -971,7 +971,7 @@
   }
   textarea,
   textarea.description {
-    background-color: rgba(255, 221, 115, 0.1);
+    background-color: #fafafa;
     padding: 0.3em 0 0 0.3em;
     border: none;
     height: auto;
@@ -1462,7 +1462,7 @@ span.ui-icon-search {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;
@@ -2151,7 +2151,6 @@ button.et2_button_with_image {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
   padding-left: 30px;
   background-repeat: no-repeat;
   background-size: 20px auto;
@@ -2208,7 +2207,7 @@ button.et2_button_delete {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;
@@ -2247,7 +2246,7 @@ button.et2_button_delete:hover {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;
@@ -2285,7 +2284,7 @@ button.et2_button_delete:active {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;
@@ -2355,7 +2354,7 @@ button#filemanager-select_button[ok]:active {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;
@@ -2420,7 +2419,7 @@ button#cancel {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;
@@ -2464,7 +2463,7 @@ button#cancel:active {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;
@@ -2527,7 +2526,7 @@ button[id="add"] {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;
@@ -2756,8 +2755,8 @@ input,
 button {
   color: #000000;
   /*font-size:99%;*/
-  padding-top: 2px;
-  padding-bottom: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   padding-right: 0;
   border-width: 1px;
   border-style: solid;
@@ -2911,7 +2910,7 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: layout_dialog.less 55652 2016-04-06 16:43:51Z hnategh $
+ * @version $Id: layout_dialog.less 55667 2016-04-07 09:13:26Z hnategh $
  */
 /*body {
     background-color: @gray_0;
@@ -3093,6 +3092,8 @@ tr.dialogHeader4 .et2_label {
   -moz-user-select: none;
   user-select: none;
   min-width: 73px;
+  border-bottom: 3px solid #e6e6e6;
+  margin-bottom: -3px;
 }
 .et2_tabflag:hover,
 .etemplate_tab > div:hover,
@@ -3517,7 +3518,7 @@ td.lettersearch {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   height: 24px;
   padding: 0 5px;
 }
@@ -5271,7 +5272,7 @@ button.image_button {
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: layout_table.less 55652 2016-04-06 16:43:51Z hnategh $
+ * @version $Id: layout_table.less 55667 2016-04-07 09:13:26Z hnategh $
  */
 /** #####################################################################################
  * et2
@@ -5281,6 +5282,12 @@ button.image_button {
 /* TABLE STYLE */
 .th {
   border-bottom: 1px solid #e6e6e6;
+}
+.th.thb {
+  border-color: darkgray;
+}
+.th.thb td {
+  padding-top: 10px;
 }
 .innerContainer {
   overflow: hidden;

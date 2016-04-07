@@ -80,6 +80,10 @@ span.egw_tutorial_title {
 [id^="egw_tutorial_"][id$="sidebox_list"] {
   overflow-x: hidden;
   overflow-y: auto;
+  max-height: 200px;
+}
+#list_grid_wrapper {
+  max-height: 200px;
 }
 #home-tutorial_list {
   float: left;
@@ -113,8 +117,8 @@ span.egw_tutorial_title {
 }
 div.tutorial_iframe_wrapper {
   position: absolute;
-  left: 211px;
-  right: 2px;
+  left: 225px;
+  right: 12px;
   height: 90%;
 }
 span.egw_tutorial_title {
