@@ -12,6 +12,8 @@
  * @version $Id$
  */
 
+namespace EGroupware\Api\Framework;
+
 /**
  * Syntax for including JS files form others
  * -----------------------------------------
@@ -42,11 +44,11 @@
  *
  * Class can be tested by opening it in browser:
  *
- *		http://localhost/egroupware/phpgwapi/inc/class.egw_incluce_mgr.inc.php?path=/api/js/jsapi/egw_calendar.js
+ *		http://localhost/egroupware/api/src/Framework/IncludeMgr.inc.php?path=/api/js/jsapi/egw_calendar.js
  *
  * This will then show the parsed dependencies of the given path.
  */
-class egw_include_mgr
+class IncludeMgr
 {
 	static private $DEBUG_MODE = true;
 
@@ -177,8 +179,8 @@ class egw_include_mgr
 
 	private function file_processed($file)
 	{
-		return (array_key_exists($file, $this->included_files) ||
-			    array_key_exists($file, $this->parsed_files));
+		return array_key_exists($file, $this->included_files) ||
+			array_key_exists($file, $this->parsed_files);
 	}
 
 	/**
@@ -414,10 +416,10 @@ class egw_include_mgr
 // specify one or more files in url, eg. path[]=/phpgwapi/js/jsapi/egw.js&path[]=/etemplate/js/etemplate2.js
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)
 {
-	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
+	define('EGW_SERVER_ROOT', dirname(dirname(dirname(__DIR__))));
 	include_once(EGW_SERVER_ROOT.'/phpgwapi/inc/common_functions.inc.php');
 
-	$mgr = new egw_include_mgr();
+	$mgr = new IncludeMgr();
 	echo "<html>\n<head>\n\t<title>Dependencies</title>\n</head>\n<body>\n";
 
 	$paths = !empty($_GET['path']) ? (array)$_GET['path'] : (array)'/stylite/js/filemanager/filemanager.js';

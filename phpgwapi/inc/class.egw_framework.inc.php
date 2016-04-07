@@ -203,8 +203,8 @@ abstract class egw_framework
 	 */
 	public static function init_static()
 	{
-		self::$js_include_mgr = new egw_include_mgr(array(
-			// We need LABjs, but putting it through egw_include_mgr causes it to re-load itself
+		self::$js_include_mgr = new Api\Framework\IncludeMgr(array(
+			// We need LABjs, but putting it through Api\Framework\IncludeMgr causes it to re-load itself
 			//'/api/js/labjs/LAB.src.js',
 
 			// allways load jquery (not -ui) first
@@ -2119,7 +2119,7 @@ abstract class egw_framework
 	 */
 	public static function get_bundles()
 	{
-		$inc_mgr = new egw_include_mgr();
+		$inc_mgr = new Api\Framework\IncludeMgr();
 		$bundles = array();
 
 		$max_mod = array();
@@ -2169,7 +2169,7 @@ abstract class egw_framework
 		{
 			if (@file_exists(EGW_SERVER_ROOT.$file))
 			{
-				$inc_mgr = new egw_include_mgr($stock_files);	// reset loaded files to stock files
+				$inc_mgr = new Api\Framework\IncludeMgr($stock_files);	// reset loaded files to stock files
 				$inc_mgr->include_js_file($file);
 				$bundles[$bundle] = array_diff($inc_mgr->get_included_files(), $stock_files);
 				self::bundle_urls($bundles[$bundle], $max_mod[$bundle]);
