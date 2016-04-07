@@ -1,4 +1,4 @@
-<script src="./phpgwapi/js/login.js" type="text/javascript"></script>
+<script src="./api/js/login.js" type="text/javascript"></script>
 <div id="loginMainDiv">
 	<div id="divAppIconBar" style="position:relative;">
 		<div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="{logo_title}" title="{logo_title}" /></a></div>

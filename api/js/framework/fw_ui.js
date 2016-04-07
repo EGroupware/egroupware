@@ -9,7 +9,7 @@
 
 /*egw:uses
 	jquery.jquery;
-	/phpgwapi/js/jquery/mousewheel/mousewheel.js;
+	/api/js/jquery/mousewheel/mousewheel.js;
 	egw_inheritance.js;
 */
 

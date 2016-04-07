@@ -197,8 +197,8 @@ class Html
 		$out .= "</select>\n";
 
 		if($enhanced) {
-			egw_framework::validate_file('/phpgwapi/js/jquery/chosen/chosen.jquery.js');
-			egw_framework::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css',null,false);
+			egw_framework::validate_file('/api/js/jquery/chosen/chosen.jquery.js');
+			egw_framework::includeCSS('/api/js/jquery/chosen/chosen.css',null,false);
 			$out .= "<script>var lab = egw_LAB || \$LAB; lab.wait(function() {\$j(function() {if(\$j().chosen) \$j('select[name=\"$name\"]').chosen({width: '100%'});});})</script>\n";
 		}
 		return $out;
@@ -459,7 +459,7 @@ class Html
 		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"',true).	// true = double encoding
 '
 <script type="text/javascript">
-window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor/";
+window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/api/js/ckeditor/";
 egw_LAB.wait(function() {
 	CKEDITOR.replace("'.$_name.'", '.Html\CkEditorConfig::get_ckeditor_config($_mode,
 		$pxheight, $expanded, $_start_path).');
@@ -1121,10 +1121,10 @@ egw_LAB.wait(function() {
 		static $tree_initialised=false;
 		if (!$tree_initialised)
 		{
-			egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlxtree.css');
-			egw_framework::validate_file('/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js');
-			egw_framework::validate_file('/phpgwapi/js/dhtmlxtree/sources/dhtmlxtree.js');
-			if ($autoLoading && $dataMode != 'XML') egw_framework::validate_file('/phpgwapi/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
+			egw_framework::includeCSS('/api/js/dhtmlxtree/codebase/dhtmlxtree.css');
+			egw_framework::validate_file('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+			egw_framework::validate_file('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
+			if ($autoLoading && $dataMode != 'XML') egw_framework::validate_file('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 			$tree_initialised = true;
 			if (!$_folders && !$autoLoading) return null;
 		}

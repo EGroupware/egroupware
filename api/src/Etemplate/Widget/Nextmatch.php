@@ -95,7 +95,7 @@ class Nextmatch extends Etemplate\Widget
 			parent::__construct($xml);
 
 			// TODO: probably a better way to do this
-			egw_framework::includeCSS('/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css');
+			egw_framework::includeCSS('/api/js/egw_action/test/skins/dhtmlxmenu_egw.css');
 		}
 	}
 

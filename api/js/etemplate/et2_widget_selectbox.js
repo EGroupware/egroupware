@@ -13,7 +13,7 @@
 
 /*egw:uses
 	jquery.jquery;
-	/phpgwapi/js/jquery/chosen/chosen.jquery.js;
+	/api/js/jquery/chosen/chosen.jquery.js;
 	et2_core_xml;
 	et2_core_DOMWidget;
 	et2_core_inputWidget;

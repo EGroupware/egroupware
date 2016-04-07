@@ -1,4 +1,4 @@
-<script src="./phpgwapi/js/login.js" type="text/javascript"></script>
+<script src="./api/js/login.js" type="text/javascript"></script>
 
 
 <div id="loginMainDiv">

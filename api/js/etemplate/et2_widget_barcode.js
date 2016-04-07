@@ -12,7 +12,7 @@
 
 /*egw:uses
 	jquery.jquery;
-	/phpgwapi/js/jquery/barcode/jquery-barcode.min.js;
+	/api/js/jquery/barcode/jquery-barcode.min.js;
 	et2_core_interfaces;
 	et2_core_baseWidget;
 */

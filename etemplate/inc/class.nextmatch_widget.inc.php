@@ -883,7 +883,7 @@ class nextmatch_widget
 	public static function init_egw_actions(array $actions=null, $action_links=null, $template_name='', $prefix='egw_')
 	{
 		// Load some JS files needed for the egw_action framework
-		egw_framework::includeCSS('/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css');
+		egw_framework::includeCSS('/api/js/egw_action/test/skins/dhtmlxmenu_egw.css');
 
 		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxcommon');
 		egw_framework::validate_file('dhtmlxtree','dhtmlxMenu/codebase/dhtmlxmenu');

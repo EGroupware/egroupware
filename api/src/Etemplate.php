@@ -220,7 +220,7 @@ class Etemplate extends Etemplate\Widget\Template
 
 			// Include the jQuery-UI CSS - many more complex widgets use it
 			$theme = 'redmond';
-			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
+			egw_framework::includeCSS("/api/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
 			// Load our CSS after jQuery-UI, so we can override it
 			egw_framework::includeCSS('/api/templates/default/etemplate2.css');
 

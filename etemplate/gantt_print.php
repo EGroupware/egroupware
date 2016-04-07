@@ -21,10 +21,10 @@ include('../header.inc.php');
 egw_framework::csp_script_src_attrs(array('https://export.dhtmlx.com/gantt/api.js'));
 egw_framework::csp_connect_src_attrs('http://export.dhtmlx.com');
 
-egw_framework::validate_file('/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js');
-egw_framework::validate_file('/phpgwapi/js/dhtmlxGantt/codebase/dhtmlxgantt.js');
+egw_framework::validate_file('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+egw_framework::validate_file('/api/js/dhtmlxGantt/codebase/dhtmlxgantt.js');
 
-egw_framework::includeCSS('/phpgwapi/js/dhtmlxGantt/codebase/dhtmlxgantt.css');
+egw_framework::includeCSS('/api/js/dhtmlxGantt/codebase/dhtmlxgantt.css');
 
 echo $GLOBALS['egw']->framework->header();
 ?>

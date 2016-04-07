@@ -12,7 +12,7 @@
 /*egw:uses
 	jquery.jquery;
 	egw_menu;
-	/phpgwapi/js/jquery/jquery-tap-and-hold/jquery.tapandhold.js;
+	/api/js/jquery/jquery-tap-and-hold/jquery.tapandhold.js;
 */
 
 if (typeof window._egwActionClasses == "undefined")

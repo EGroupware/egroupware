@@ -83,7 +83,7 @@ class CkEditorConfig
 		);
 		$skins = array();
 
-		foreach(scandir(EGW_SERVER_ROOT.'/phpgwapi/js/ckeditor/skins') as $skin)
+		foreach(scandir(EGW_SERVER_ROOT.'/api/js/ckeditor/skins') as $skin)
 		{
 			if ($skin[0] == '.') continue;
 
@@ -169,7 +169,7 @@ class CkEditorConfig
 	private static function get_base_path()
 	{
 		//Get the ckeditor base url
-		return $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor/';
+		return $GLOBALS['egw_info']['server']['webserver_url'].'/api/js/ckeditor/';
 	}
 
 	/**
@@ -247,7 +247,7 @@ class CkEditorConfig
 			}
 
 			//Check whether the skin actually exists, if not, switch to a default
-			if (!file_exists(EGW_SERVER_ROOT.'/phpgwapi/js/ckeditor/skins/'.$skin))
+			if (!file_exists(EGW_SERVER_ROOT.'/api/js/ckeditor/skins/'.$skin))
 			{
 				$skin = "moono"; //this is the basic skin for ckeditor
 			}

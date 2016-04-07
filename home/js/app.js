@@ -10,9 +10,9 @@
  */
 
 /*egw:uses
-        jquery.jquery;
-        jquery.jquery-ui;
-	/phpgwapi/js/jquery/gridster/jquery.gridster.js;
+	jquery.jquery;
+	jquery.jquery-ui;
+	/api/js/jquery/gridster/jquery.gridster.js;
 */
 
 /**

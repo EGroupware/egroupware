@@ -45,13 +45,13 @@ foreach(egw_framework::get_bundles() as $name => $files)
 		if ($path[0] == '/') $path = substr($path, 1);
 	});
 
-	// phpgwapi/js/jsapi/egw.js loaded via own tag, and we must not load it twice!
-	if ($name == 'api' && ($key = array_search('phpgwapi/js/jsapi/egw.js', $files)))
+	// api/js/jsapi/egw.js loaded via own tag, and we must not load it twice!
+	if ($name == 'api' && ($key = array_search('api/js/jsapi/egw.js', $files)))
 	{
 		unset($files[$key]);
 	}
 	// ckeditor is loaded separate before the bundle
-	if ($name == 'api' && ($key = array_search('phpgwapi/js/ckeditor/ckeditor.js', $files)))
+	if ($name == 'api' && ($key = array_search('api/js/ckeditor/ckeditor.js', $files)))
 	{
 		unset($files[$key]);
 	}

@@ -205,13 +205,13 @@ abstract class egw_framework
 	{
 		self::$js_include_mgr = new egw_include_mgr(array(
 			// We need LABjs, but putting it through egw_include_mgr causes it to re-load itself
-			//'/phpgwapi/js/labjs/LAB.src.js',
+			//'/api/js/labjs/LAB.src.js',
 
-			// allways load jquery (not -ui) and egw_json first
-			'/phpgwapi/js/jquery/jquery.js',
+			// allways load jquery (not -ui) first
+			'/api/js/jquery/jquery.js',
 			// always include javascript helper functions
-			'/phpgwapi/js/jsapi/jsapi.js',
-			'/phpgwapi/js/jsapi/egw.js',
+			'/api/js/jsapi/jsapi.js',
+			'/api/js/jsapi/egw.js',
 		));
 	}
 
@@ -1294,10 +1294,10 @@ abstract class egw_framework
 			// Cascade should go:
 			//  Libs < etemplate2 < framework/theme < app < print
 			// Enhanced selectboxes (et1)
-			self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
+			self::includeCSS('/api/js/jquery/chosen/chosen.css');
 
 			// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
-			self::includeCSS("/phpgwapi/js/jquery/jquery-ui/redmond/jquery-ui.css");
+			self::includeCSS("/api/js/jquery/jquery-ui/redmond/jquery-ui.css");
 
 			// eTemplate2 - load in top so sidebox has styles too
 			self::includeCSS('/api/templates/default/etemplate2.css');
@@ -1448,9 +1448,9 @@ abstract class egw_framework
 
 		// Load LABjs ONCE here
 		$java_script .= '<script type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
-				'/phpgwapi/js/labjs/LAB.src.js?'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/js/labjs/LAB.src.js')."\"></script>\n".
+				'/api/js/labjs/LAB.src.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/labjs/LAB.src.js')."\"></script>\n".
 			'<script type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].
-				'/phpgwapi/js/jsapi/egw.js?'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/js/jsapi/egw.js').'" id="egw_script_id"';
+				'/api/js/jsapi/egw.js?'.filemtime(EGW_SERVER_ROOT.'/api/js/jsapi/egw.js').'" id="egw_script_id"';
 
 		// add values of extra parameter and class var as data attributes to script tag of egw.js
 		foreach($extra+self::$extra as $name => $value)
@@ -1900,7 +1900,7 @@ abstract class egw_framework
 	/**
 	 * Set or return all javascript files set via validate_file, optionally clear all files
 	 *
-	 * @param array $files =null array with pathes relative to EGW_SERVER_ROOT, eg. /phpgwapi/js/jquery/jquery.js
+	 * @param array $files =null array with pathes relative to EGW_SERVER_ROOT, eg. /api/js/jquery/jquery.js
 	 * @param boolean $clear_files =false true clear files after returning them
 	 * @return array with pathes relative to EGW_SERVER_ROOT
 	 */
@@ -1942,7 +1942,7 @@ abstract class egw_framework
 	 * @var array
 	 */
 	static $bundle2minurl = array(
-		'api' => '/phpgwapi/js/jsapi.min.js',
+		'api' => '/api/js/jsapi.min.js',
 		'et2' => '/api/js/etemplate/etemplate2.min.js',
 		'et21'=> '/api/js/etemplate/etemplate2.min.js',
 		'pixelegg' => '/pixelegg/js/fw_pixelegg.min.js',
@@ -2052,7 +2052,7 @@ abstract class egw_framework
 		$query = null;
 		foreach($js_includes as $path)
 		{
-			if ($path == '/phpgwapi/js/jsapi/egw.js') continue;	// loaded via own tag, and we must not load it twice!
+			if ($path == '/api/js/jsapi/egw.js') continue;	// loaded via own tag, and we must not load it twice!
 
 			unset($query);
 			list($path,$query) = explode('?',$path,2);
@@ -2125,33 +2125,32 @@ abstract class egw_framework
 		$max_mod = array();
 
 		// generate api bundle
-		$inc_mgr->include_js_file('/phpgwapi/js/jquery/jquery.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/jquery/jquery-ui.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/jsapi/jsapi.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/egw_json.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/jsapi/egw.js');
+		$inc_mgr->include_js_file('/api/js/jquery/jquery.js');
+		$inc_mgr->include_js_file('/api/js/jquery/jquery-ui.js');
+		$inc_mgr->include_js_file('/api/js/jsapi/jsapi.js');
+		$inc_mgr->include_js_file('/api/js/egw_json.js');
+		$inc_mgr->include_js_file('/api/js/jsapi/egw.js');
 		// dhtmlxTree (dhtmlxMenu get loaded via dependency in egw_menu_dhtmlx.js)
-		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/sources/dhtmlxtree.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
+		$inc_mgr->include_js_file('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+		$inc_mgr->include_js_file('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
+		$inc_mgr->include_js_file('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 		// actions
-		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_action.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_keymanager.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_action_popup.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_action_dragdrop.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_dragdrop_dhtmlx_tree.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_menu.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/egw_action/egw_menu_dhtmlx.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_action.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_keymanager.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_popup.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_dragdrop.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_dragdrop_dhtmlx_tree.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu.js');
+		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu_dhtmlx.js');
 		// include choosen in api, as old eTemplate uses it and fail if it pulls in half of et2
-		$inc_mgr->include_js_file('/phpgwapi/js/jquery/chosen/chosen.jquery.js');
+		$inc_mgr->include_js_file('/api/js/jquery/chosen/chosen.jquery.js');
 		// include CKEditor in api, as old eTemplate uses it too
-		$inc_mgr->include_js_file('/phpgwapi/js/ckeditor/ckeditor.js');
-		$inc_mgr->include_js_file('/phpgwapi/js/ckeditor/config.js');
+		$inc_mgr->include_js_file('/api/js/ckeditor/ckeditor.js');
+		$inc_mgr->include_js_file('/api/js/ckeditor/config.js');
 		$bundles['api'] = $inc_mgr->get_included_files();
 		self::bundle_urls($bundles['api'], $max_mod['api']);
 
 		// generate et2 bundle (excluding files in api bundle)
-		//$inc_mgr->include_js_file('/etemplate/js/lib/jsdifflib/difflib.js');	// it does not work with "use strict" therefore included in front
 		$inc_mgr->include_js_file('/api/js/etemplate/etemplate2.js');
 		$bundles['et2'] = array_diff($inc_mgr->get_included_files(), $bundles['api']);
 		self::bundle_urls($bundles['et2'], $max_mod['et2']);

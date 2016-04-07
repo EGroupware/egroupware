@@ -13,7 +13,7 @@
 
 /*egw:uses
 	egw_inheritance;
-	/phpgwapi/js/es6-promise.min.js;
+	/api/js/es6-promise.min.js;
 */
 
 /**

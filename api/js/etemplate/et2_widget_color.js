@@ -14,7 +14,7 @@
 	jquery.jquery;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
-	/phpgwapi/js/jquery/jpicker/jpicker-1.1.6.js;
+	/api/js/jquery/jpicker/jpicker-1.1.6.js;
 */
 
 /**
@@ -41,7 +41,7 @@ var et2_color = (function(){ "use strict"; return et2_inputWidget.extend(
 			position: { "x": "screenCenter", "y": "screenCenter"}
 		},
 		"images": {
-			clientPath: egw_webserverUrl + "/phpgwapi/js/jquery/jpicker/images/"
+			clientPath: egw_webserverUrl + "/api/js/jquery/jpicker/images/"
 		},
 		"color": {
 			"active": new jQuery.jPicker.Color()

@@ -26,10 +26,10 @@
  * 2) Files in a certain application and package. The syntax is
  *    	[$app.]$package.$file
  *    The first "$app" part is optional. It defaults to phpgwapi. Examples:
- *    	jquery.jquery-ui; // Loads /phpgwapi/js/jquery/jquery-ui.js
+ *    	jquery.jquery-ui; // Loads /api/js/jquery/jquery-ui.js
  *    	stylite.filemanager.filemanager; // Loads /stylite/filemanager/filemanager.js
  * 3) Absolute file paths starting with "/". Example:
- *    	/phpgwapi/js/jquery/jquery-ui.js;
+ *    	/api/js/jquery/jquery-ui.js;
 *
  * Comments can be started with "//".
  *
@@ -38,7 +38,13 @@
  * 		egw_action_common;
  * 		egw_action;
  * 		jquery.jquery; // Includes jquery.js from package jquery in phpgwapi
- * 		/phpgwapi/js/jquery/jquery-ui.js; // Includes jquery-ui.js
+ * 		/api/js/jquery/jquery-ui.js; // Includes jquery-ui.js
+ *
+ * Class can be tested by opening it in browser:
+ *
+ *		http://localhost/egroupware/phpgwapi/inc/class.egw_incluce_mgr.inc.php?path=/api/js/jsapi/egw_calendar.js
+ *
+ * This will then show the parsed dependencies of the given path.
  */
 class egw_include_mgr
 {
@@ -212,13 +218,13 @@ class egw_include_mgr
 					}
 					else
 					{
-						$uses_path = $this->translate_params($entry[0], null, 'phpgwapi');
+						$uses_path = $this->translate_params($entry[0]);
 					}
 				}
 			}
 			else if (count($entry) == 2)
 			{
-				$uses_path = $this->translate_params($entry[0], $entry[1], 'phpgwapi');
+				$uses_path = $this->translate_params($entry[0], $entry[1]);
 			}
 			else if (count($entry) == 3)
 			{
@@ -271,17 +277,21 @@ class egw_include_mgr
 	 *
 	 * @param string $package package or complete path (relative to EGW_SERVER_ROOT) to be included
 	 * @param string|array $file =null file to be included - no ".js" on the end or array with get params
-	 * @param string $app ='phpgwapi' application directory to search - default = phpgwapi
+	 * @param string $app ='api' application directory to search - default = phpgwapi
 	 *
 	 * @returns the correct path on the server if the file is found or false, if the
 	 *  file is not found or no further processing is needed.
 	 */
-	private function translate_params($package, $file, $app)
+	private function translate_params($package, $file=null, $app='api')
 	{
-		if ($package[0] == '/' && (is_readable(EGW_SERVER_ROOT.(parse_url($path = $package, PHP_URL_PATH))) ||
-			is_readable(EGW_SERVER_ROOT.($path = $package))) ||
+		if ($package[0] == '/' && is_readable(EGW_SERVER_ROOT.parse_url($path = $package, PHP_URL_PATH)) ||
+			// fix old /phpgwapi/js/ path by replacing it with /api/js/
+			substr($package, 0, 13) == '/phpgwapi/js/' && is_readable(EGW_SERVER_ROOT.parse_url($path = str_replace('/phpgwapi/js/', '/api/js/', $package), PHP_URL_PATH)) ||
+			$package[0] == '/' && is_readable(EGW_SERVER_ROOT.($path = $package)) ||
 			$package == '.' && is_readable(EGW_SERVER_ROOT.($path="/$app/js/$file.js")) ||
 			is_readable(EGW_SERVER_ROOT.($path="/$app/js/$package/$file.js")) ||
+			// fix not found by using app='api'
+			$app != 'api' && is_readable(EGW_SERVER_ROOT.($path="/api/js/$package/$file.js")) ||
 			$app != 'phpgwapi' && is_readable(EGW_SERVER_ROOT.($path="/phpgwapi/js/$package/$file.js")))
 		{
 			// normalise /./ to /
@@ -405,6 +415,7 @@ class egw_include_mgr
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)
 {
 	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
+	include_once(EGW_SERVER_ROOT.'/phpgwapi/inc/common_functions.inc.php');
 
 	$mgr = new egw_include_mgr();
 	echo "<html>\n<head>\n\t<title>Dependencies</title>\n</head>\n<body>\n";

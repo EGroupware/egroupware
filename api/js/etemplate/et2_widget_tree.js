@@ -1,7 +1,7 @@
 /**
  * EGroupware eTemplate2 - JS Tree object
  *
- * @link http://community.egroupware.org/egroupware/phpgwapi/js/dhtmlxtree/docsExplorer/dhtmlxtree/
+ * @link http://community.egroupware.org/egroupware/api/js/dhtmlxtree/docsExplorer/dhtmlxtree/
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
@@ -13,13 +13,13 @@
  */
 
 /*egw:uses
-        et2_core_inputWidget;
-	/phpgwapi/js/egw_action/egw_dragdrop_dhtmlx_tree.js;
-	/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js;
-//	using debugable and fixed source of dhtmltree instead: /phpgwapi/js/dhtmlxtree/js/dhtmlXTree.js;
-	/phpgwapi/js/dhtmlxtree/sources/dhtmlxtree.js;
-	/phpgwapi/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js;
-//	/phpgwapi/js/dhtmlxtree/sources/ext/dhtmlxtree_start.js;
+	et2_core_inputWidget;
+	/api/js/egw_action/egw_dragdrop_dhtmlx_tree.js;
+	/api/js/dhtmlxtree/codebase/dhtmlxcommon.js;
+//	using debugable and fixed source of dhtmltree instead: /api/js/dhtmlxtree/js/dhtmlXTree.js;
+	/api/js/dhtmlxtree/sources/dhtmlxtree.js;
+	/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js;
+//	/api/js/dhtmlxtree/sources/ext/dhtmlxtree_start.js;
 */
 
 /**

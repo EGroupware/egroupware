@@ -19,7 +19,7 @@ use EGroupware\Api;
 // explicitly import old not yet ported classes
 use egw_framework;
 
-egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/codebase/dhtmlXTree.css');
+egw_framework::includeCSS('/api/js/dhtmlxtree/codebase/dhtmlXTree.css');
 
 /**
  * eTemplate tree widget

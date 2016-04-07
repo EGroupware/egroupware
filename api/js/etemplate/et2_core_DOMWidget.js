@@ -13,7 +13,7 @@
 /*egw:uses
 	et2_core_interfaces;
 	et2_core_widget;
-	/phpgwapi/js/egw_action/egw_action.js;
+	/api/js/egw_action/egw_action.js;
 */
 
 /**

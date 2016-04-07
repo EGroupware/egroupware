@@ -12,7 +12,7 @@
 
 /*egw:uses
 	jquery.jquery;
-	/phpgwapi/js/jquery/blueimp/js/blueimp-gallery.min.js;
+	/api/js/jquery/blueimp/js/blueimp-gallery.min.js;
 */
 
 /**

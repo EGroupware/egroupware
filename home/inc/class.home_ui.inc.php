@@ -37,7 +37,7 @@ class home_ui
 		self::setup_default_home();
 
 		// CSS for Gridster grid layout
-		egw_framework::includeCSS('/phpgwapi/js/jquery/gridster/jquery.gridster.css');
+		egw_framework::includeCSS('/api/js/jquery/gridster/jquery.gridster.css');
 
 		$template = new etemplate_new('home.index');
 

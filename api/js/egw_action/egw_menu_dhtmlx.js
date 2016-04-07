@@ -11,13 +11,13 @@
 
 /*egw:uses
 	egw_menu;
-	/phpgwapi/js/dhtmlxtree/codebase/dhtmlxcommon.js;
-	/phpgwapi/js/dhtmlxMenu/sources/dhtmlxmenu.js;
-	/phpgwapi/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js;
+	/api/js/dhtmlxtree/codebase/dhtmlxcommon.js;
+	/api/js/dhtmlxMenu/sources/dhtmlxmenu.js;
+	/api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js;
 */
 
 // Need CSS, or it doesn't really work
-if(typeof egw == 'function') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/egw_action/test/skins/dhtmlxmenu_egw.css");
+if(typeof egw == 'function') egw(window).includeCSS(egw.webserverUrl + "/api/js/egw_action/test/skins/dhtmlxmenu_egw.css");
 function egwMenuImpl(_structure)
 {
 	//Create a new dhtmlxmenu object

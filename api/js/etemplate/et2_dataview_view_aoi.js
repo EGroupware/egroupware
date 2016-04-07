@@ -13,7 +13,7 @@
 /*egw:uses
 	egw_action.egw_action_common;
 	egw_action.egw_action;
-	/phpgwapi/js/jquery/TouchSwipe/jquery.touchSwipe.js;
+	/api/js/jquery/TouchSwipe/jquery.touchSwipe.js;
 */
 
 /**

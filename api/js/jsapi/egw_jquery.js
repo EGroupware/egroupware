@@ -32,9 +32,9 @@ egw.extend('jquery', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	// Include the jQuery and jQuery UI library.
 	var token = ready.readyWaitFor();
 	files.includeJS([
-		this.webserverUrl + '/phpgwapi/js/jquery/jquery.js',
-		this.webserverUrl + '/phpgwapi/js/jquery/jquery-ui.js',
-		this.webserverUrl + '/phpgwapi/js/jquery/jquery.html5_upload.js'
+		this.webserverUrl + '/api/js/jquery/jquery.js',
+		this.webserverUrl + '/api/js/jquery/jquery-ui.js',
+		this.webserverUrl + '/api/js/jquery/jquery.html5_upload.js'
 	], function () {
 		this.constant('jquery', '$j', _wnd.$j, _wnd);
 		ready.readyDone(token);
