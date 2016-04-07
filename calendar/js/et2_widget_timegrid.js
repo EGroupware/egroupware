@@ -1690,10 +1690,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 		x = Math.round(x);
 		y = Math.round(y);
-		if(this.options.granularity === 0)
-		{
-			return $j('.calendar_calDayCol',this.div);
-		}
+		
 		var path = [];
 		var day = null;
 		var time = null;
