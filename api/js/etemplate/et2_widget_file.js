@@ -160,8 +160,9 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 	createInputWidget: function() {
 		this.node = $j(document.createElement("div")).addClass("et2_file");
 		this.span = $j(document.createElement("span"))
-			.addClass('et2_file_span et2_button et2_button_text')
+			.addClass('et2_file_span et2_button')
 			.appendTo (this.node);
+		if (this.options.label != '') this.span.addClass('et2_button_text');
 		var span = this.span;
 		this.input = $j(document.createElement("input"))
 			.attr("type", "file").attr("placeholder", this.options.blur)

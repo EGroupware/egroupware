@@ -870,7 +870,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		this.button = $j(document.createElement("button"))
 			.attr("title", this.egw().lang("Select file(s) from VFS"))
-			.addClass("et2_button et2_button_text et2_vfs_btn")
+			.addClass("et2_button et2_vfs_btn")
 			.css("background-image","url("+this.egw().image("filemanager/navbar")+")");
 
 		if (this.options.button_caption != "")

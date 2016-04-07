@@ -719,9 +719,19 @@ div.et2_link_entry input.ui-autocomplete-input {
 .et2_link_to {
   overflow-x: visible;
 }
+.et2_link_to > div {display: inline-block; margin-right:5px;}
+
+.et2_link_to.et2_toolbar {margin-top:5px !important;}
+
+.et2_link_to.et2_toolbar div.et2_link_entry input.ui-autocomplete-input {
+	padding-bottom: 4px;
+	height:16px;
+	border-radius: 3px;
+}
+.et2_link_to.et2_toolbar .div_link {width:85%;}
+.et2_link_to.et2_toolbar .div_link select {margin-right: 4px;}
 .et2_link_to button {
   display: inline;
-  float: right;
 }
 .et2_link_to span.status {
   background-repeat: no-repeat;
@@ -765,24 +775,23 @@ div.et2_link_entry input.ui-autocomplete-input {
   width: 22px;
 }
 .et2_link_to button.et2_vfs_btn{
-	float: left;
-	margin: 0;
-	text-align: left;
-	height: 24px !important;
-	padding-left: 30px !important;
-	background-repeat: no-repeat;
-	background-position: 4px center;
-	background-size: 20px auto;
-	width: 35%;
+	width:24px;
+	height:24px;
 }
-.et2_link_to div.et2_file{
-	display: inline-block;
-	position: relative;
+.et2_link_to div.et2_file,
+.et2_link_to.et2_toolbar div.et2_file,
+.et2_link_to.et2_toolbar span.et2_file_span {
+	width:22px;
+	height: 22px;
+	background-position: center;
+}
+.et2_link_to.et2_toolbar div.et2_file {
 	vertical-align: middle;
-	width: 37%;
-	margin-left: 8px;
-	margin-top: 0;
+    margin-top: -4px;
+	padding-right: 2px;
 }
+.et2_link_to.et2_toolbar button.link {float:right;}
+.et2_link_to.et2_toolbar span.et2_file_span { padding-right: 0;}
 .et2_link {
   cursor: pointer;
   color: #003075;

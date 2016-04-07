@@ -127,12 +127,19 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 	},
 
 	createInputWidget: function() {
-		this.div = $j(document.createElement("div")).addClass("et2_link_to");
+		this.div = $j(document.createElement("div")).addClass("et2_link_to et2_toolbar");
+
+		// Need a div for file upload widget
+		this.file_div = $j(document.createElement("div")).css({display:'inline-block'}).appendTo(this.div);
+
+		// Filemanager link popup
+		this.filemanager_button = $j(document.createElement("div")).css({display:'inline-block'}).appendTo(this.div);
 
 		// One common link button
 		this.link_button = $j(document.createElement("button"))
 			.text(this.egw().lang(this.options.link_label))
 			.appendTo(this.div).hide()
+			.addClass('link')
 			.click(this, this.createLink);
 
 		// Span for indicating status
@@ -141,16 +148,9 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		// Need a div for link-to widget
 		this.link_div = $j(document.createElement("div"))
-			.css("margin-bottom", "1ex")
+			.addClass('div_link')
 			// Leave room for link button
-			.css("width", "89%")
 			.appendTo(this.div);
-
-		// Filemanager link popup
-		this.filemanager_button = $j(document.createElement("div")).appendTo(this.div);
-
-		// Need a div for file upload widget
-		this.file_div = $j(document.createElement("div")).appendTo(this.div);
 
 		this.setDOMNode(this.div[0]);
 	},
@@ -180,7 +180,8 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 		var select_attrs = {
 			method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::link_existing',
 			method_id: function() { return self.options.value.to_app + ':' + self.options.value.to_id;},
-			button_label: egw.lang('Link')
+			button_label: egw.lang('Link'),
+			button_caption: ''
 		};
 		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
 		$j(this.vfs_select.getDOMNode()).change( function() {
@@ -209,7 +210,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 		var file_attrs = {
 			multiple: true,
 			id: this.id + '_file',
-
+			label: '',
 			// Make the whole template a drop target
 			drop_target: this.getInstanceManager().DOMContainer.getAttribute("id"),
 
