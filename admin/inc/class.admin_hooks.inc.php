@@ -82,10 +82,6 @@ class admin_hooks
 				);
 			}
 
-			if (! $GLOBALS['egw']->acl->check('applications_acc',1,'admin'))
-			{
-				$file['Applications']               = egw::link('/index.php','menuaction=admin.admin_applications.index');
-			}
 			if (! $GLOBALS['egw']->acl->check('global_categorie',1,'admin'))
 			{
 				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.admin_categories.index&appname=phpgw&ajax=true');
