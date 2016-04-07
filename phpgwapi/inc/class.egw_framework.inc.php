@@ -1968,8 +1968,9 @@ abstract class egw_framework
 			unset($bundles['.ts']);
 			foreach($bundles as $name => $files)
 			{
-				// to facilitate move to new et2 location, can be removed after 16.1 release
-				if ($name == 'et21' && !in_array('/api/js/etemplate/etemplate2.js', $files))
+				// to facilitate move to new et2/api location, can be removed after 16.1 release
+				if ($name == 'et21' && !in_array('/api/js/etemplate/etemplate2.js', $files) ||
+					$name == 'api' && !in_array('/api/js/jquery/jquery.js', $files))
 				{
 					egw_cache::unsetTree(__CLASS__, 'bundles');
 					return self::bundle_js_includes($js_includes);
@@ -1982,6 +1983,7 @@ abstract class egw_framework
 					$file2bundle += array_combine($files, array_fill(0, count($files), $name));
 				}
 			}
+			//error_log(__METHOD__."() file2bundle=".array2string($file2bundle));
 		}
 		$to_include = $included_bundles = array();
 		$query = null;
@@ -2028,10 +2030,7 @@ abstract class egw_framework
 				}
 			}
 		}
-		/*_debug_array($js_includes);
-		_debug_array(array_values($to_include));
-		die('STOP');*/
-
+		//error_log(__METHOD__."(".array2string($js_includes).') debug_minify='.array2string($GLOBALS['egw_info']['server']['debug_minify']).', include_bundels='.array2string($included_bundles).' returning '.array2string(array_values(array_unique($to_include))));
 		return array_values(array_unique($to_include));
 	}
 
