@@ -308,42 +308,27 @@
   /*
         Link to / Selector Widget
 */
-  .et2_link_to {
-    min-height: 78px;
+  .et2_link_to.et2_toolbar {
+    margin-top: 2px !important;
+  }
+  .et2_link_to .et2_link_entry select,
+  .et2_link_to .et2_link_entry input,
+  .et2_link_to .et2_link_entry button {
+    padding: 0;
+    padding-left: 4px;
   }
   .et2_link_to .et2_link_entry .ui-icon-close {
     background-color: transparent;
     left: 0px;
   }
-  .et2_link_to button.et2_vfs_btn {
-    vertical-align: middle;
-    background-position: center;
-    padding: 0 !important;
-    background-size: 16px;
-    margin-top: -1px;
-    margin-right: 0px;
-  }
   .et2_link_to .et2_file span {
     background-image: url("../images/add.png");
-    background-position: 4px 2px;
+    background-position: center;
     background-size: 16px 16px;
     background-repeat: no-repeat;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-  }
-  .et2_link_to .et2_file span:hover {
-    background-color: #1aa200 !important;
-  }
-  .et2_link_to .et2_file span:active {
-    background-color: #1aa200 !important;
-  }
-  .et2_link_to .et2_file span.et2_file_spanActive {
-    background-color: #1aa200 !important;
-  }
-  .et2_link_to .et2_file input {
-    border: none;
-    padding: 1em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
   }
   .et2_link {
     color: #0c5da5;

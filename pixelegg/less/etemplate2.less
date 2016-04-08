@@ -279,10 +279,10 @@ div.et2_file input.et2_file_upload{
 /*
         Link to / Selector Widget
 */
+.et2_link_to.et2_toolbar {margin-top: 2px !important;}
 .et2_link_to {
-	min-height: 78px;
-	// right select field - icon after
 	.et2_link_entry {
+		select, input, button {padding:0; padding-left:4px;}
 		.ui-icon-close {
 			background-color: transparent;
 			left: 0px;
@@ -295,30 +295,15 @@ div.et2_file input.et2_file_upload{
 	// next line - left
 	// et2_vfs_btn
 	button.et2_vfs_btn {
-		vertical-align: middle;
-		background-position: center;
-		padding: 0 !important;
-		background-size: 16px;
-		margin-top: -1px;
-		margin-right:0px;
+
 	}
-
 	.et2_file {
-
 		span {
 		background-image: url("../images/add.png");
-			background-position: 4px 2px;
+			background-position: center;
 			background-size: 16px 16px;
 			background-repeat: no-repeat;
-			.rounded (5px);
-
-			&:hover {background-color: @color_positive_action_active !important;}
-			&:active {background-color: @color_positive_action_active !important;}
-		}
-		span.et2_file_spanActive{background-color: @color_positive_action_active !important;}
-		input{
-			border: none;
-			padding: 1em;
+			.rounded (3px);
 		}
 	}
 }
