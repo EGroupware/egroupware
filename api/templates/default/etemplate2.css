@@ -791,7 +791,11 @@ div.et2_link_entry input.ui-autocomplete-input {
 	padding-right: 2px;
 }
 .et2_link_to.et2_toolbar button.link {float:right;}
+
 .et2_link_to.et2_toolbar span.et2_file_span { padding-right: 0;}
+
+.et2_link_to.et2_toolbar .et2_file_upload {padding: 0;margin: 0;}
+
 .et2_link {
   cursor: pointer;
   color: #003075;
