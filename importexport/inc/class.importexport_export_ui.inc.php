@@ -22,7 +22,6 @@ class importexport_export_ui {
 		'download' 	=>	true,
 	);
 
-	private $js;
 	private $user;
 
 	/**
@@ -33,9 +32,8 @@ class importexport_export_ui {
 	private $export_plugins;
 
 	public function __construct() {
-		$this->js = $GLOBALS['egw']->js = is_object($GLOBALS['egw']->js) ? $GLOBALS['egw']->js : CreateObject('phpgwapi.javascript');
-		$this->js->validate_file('.','export_dialog','importexport');
-		$this->js->validate_file('.','importexport','importexport');
+		egw_framework::validate_file('.','export_dialog','importexport');
+		egw_framework::validate_file('.','importexport','importexport');
 		$this->user = $GLOBALS['egw_info']['user']['user_id'];
 		$this->export_plugins = importexport_helper_functions::get_plugins('all','export');
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
@@ -123,7 +121,6 @@ class importexport_export_ui {
 					$sel_options['plugin'] = $plugins;
 */
 			}
-			//$this->js->set_onload("set_style_by_class('tr','select_definition','display','none');");
 		}
 		else {
 			$readonlys['plugin'] = true;
@@ -183,7 +180,7 @@ class importexport_export_ui {
 		if($definition && is_array($definition->plugin_options) && $definition->plugin_options['selection'] && !$content['selection_passed']) {
 			$_selection = $definition->plugin_options['selection'];
 		}
-		
+
 		if ($_selection && ($content['old_definition'] == $content['definition'] || $content['selection_passed'])) {
 			$readonlys[$tabs]['selection_tab'] = true;
 			$content['selection'] = $_selection;
@@ -387,7 +384,7 @@ class importexport_export_ui {
 				);
 
 				$preview = "<div class='header'>".lang('Preview') . "<span class='count'>".(int)$record_count."</span></div>".$preview;
-				
+
 				$et->setElementAttribute('preview-box', 'value', nl2br($preview));
 				return;
 			}
@@ -456,7 +453,7 @@ class importexport_export_ui {
 			$description = $plugin_object->get_description();
 		}
 		$_response->addAssign('importexport-export_dialog_plugin_description','innerHTML',$description);
-		
+
 		unset ($plugin_object);
 	}
 
