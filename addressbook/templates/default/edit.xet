@@ -57,19 +57,19 @@
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
-				<column width="82"/>
-				<column width="300"/>
-				<column width="28"/>
-				<column width="85"/>
-				<column width="300"/>
-				<column/>
+				<column width="92"/>
+				<column width="230"/>
+				<column width="50"/>
+				<column width="92"/>
+				<column width="230"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row>
 					<description for="role" value="Role"/>
 					<hbox width="100%">
-						<textbox id="role" width="200" maxlength="64" autocomplete="section-one" />
-						<textbox label="Room" id="room" width="40"/>
+						<textbox id="role" width="60%" maxlength="64" autocomplete="section-one" />
+						<textbox id="room" width="34%" blur="Room"/>
 					</hbox>
 					<description/>
 					<description for="adr_one_street" value="street"/>
@@ -90,8 +90,8 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
 					<description for="adr_one_locality" value="city" />
 					<hbox>
-						<textbox statustext="ZIP Code" id="adr_one_postalcode" width="40" maxlength="64" autocomplete="postal-code"/>
-						<textbox statustext="City" id="adr_one_locality" maxlength="64"  width="242" autocomplete="address-level2"/>
+						<textbox statustext="ZIP Code" id="adr_one_postalcode" width="24%" maxlength="64" autocomplete="postal-code"/>
+						<textbox statustext="City" id="adr_one_locality" maxlength="64"  width="70%" autocomplete="address-level2"/>
 					</hbox>
 					<description/>
 				</row>
@@ -165,18 +165,21 @@
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" overflow="auto">
 			<columns>
-				<column disabled="!@cat_tab=Tree" width="40%"/>
-				<column disabled="@cat_tab=Tree" width="40%"/>
-				<column width="60%"/>
+				<column disabled="!@cat_tab=Tree" width="312"/>
+				<column disabled="@cat_tab=Tree" width="312"/>
+				<column width="50"/>
+				<column width="312"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row valign="top">
 					<tree-cat id="cat_id_tree" options="13,,width:99%"/>
 					<taglist-cat id="cat_id" tags="true" empty_label="Category" width="100%" height="195"/>
+					<description/>
 					<grid width="100%">
 						<columns>
-							<column width="80"/>
-							<column/>
+							<column width="92"/>
+							<column width="230"/>
 						</columns>
 						<rows>
 							<row valign="top">
@@ -197,6 +200,7 @@
 							</row>
 						</rows>
 					</grid>
+					<description/>
 				</row>
 			</rows>
 		</grid>
@@ -204,12 +208,12 @@
 	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="82"/>
-				<column width="300"/>
-				<column width="28"/>
-				<column width="85"/>
-				<column width="300"/>
-				<column/>
+				<column width="92"/>
+				<column width="230"/>
+				<column width="50"/>
+				<column width="92"/>
+				<column width="230"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row>
@@ -234,8 +238,8 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
 					<description for="adr_two_locality" value="city"/>
 					<hbox>
-						<textbox statustext="ZIP Code" id="adr_two_postalcode" width="40" maxlength="64" autocomplete="section-two postal-code" />
-						<textbox statustext="City" id="adr_two_locality" maxlength="64" width="242" autocomplete="section-two address-level2" />
+						<textbox statustext="ZIP Code" id="adr_two_postalcode" width="24%" maxlength="64" autocomplete="section-two postal-code" />
+						<textbox statustext="City" id="adr_two_locality" maxlength="64" width="70%" autocomplete="section-two address-level2" />
 					</hbox>
 					<description/>
 				</row>
@@ -347,37 +351,36 @@
 		<template id="addressbook.editname"/>
 		<grid class="addressbook_edit" border="1" width="100%">
 			<columns>
-				<column width="90"/>
-				<column width="90"/>
-				<column width="210"/>
-				<column width="60"/>
-				<column width="90"/>
-				<column width="300"/>
-				<column/>
+				<column width="100"/>
+				<column width="250"/>
+				<column width="50"/>
+				<column width="100"/>
+				<column width="250"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<hbox disabled="@hidebuttons" class="addressbook_edit_general_picture" rowSpan="3">
-						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
-						<template id="addressbook.edit.upload"/>
-					</hbox>
-					<textbox id="n_fn" blur="Name" no_lang="1" span="2" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name" />
+					<box align="center">
+						<hbox disabled="@hidebuttons" class="avatar">
+							<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
+							<template id="addressbook.edit.upload"/>
+						</hbox>
+					</box>
+					<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name"/>
 					<description/>
 					<description for="org_name" value="Organisation"/>
 					<textbox id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128" class="et2_fullWidth" autocomplete="organization" />
 					<appicon/>
 				</row>
 				<row class="dialogHeader2">
-					<description/>
 					<description for="tel_work" value="Business phone"/>
-					<url-phone id="tel_work" class="telNumbers et2_fullWidth" autocomplete="work tel" />
+					<url-phone id="tel_work" class="telNumbers et2_fullWidth" autocomplete="work tel"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work,&amp;hearts;"/>
 					<description for="org_unit" value="department"/>
 					<textbox id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" maxlength="64"/>
 					<description/>
 				</row>
 				<row class="dialogHeader3">
-					<description/>
 					<description for="tel_cell" value="mobile phone"/>
 					<url-phone id="tel_cell" class="telNumbers et2_fullWidth" autocomplete="mobile tel" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell,&amp;hearts;"/>
@@ -386,9 +389,8 @@
 					<description/>
 				</row>
 				<row class="dialogHeader4">
-					<description/>
 					<description for="email" value="email"/>
-					<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" autocomplete="work email" />
+					<url-email id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" class="et2_fullWidth" autocomplete="work email"/>
 					<description/>
 					<description for="url" value="url"/>
 					<url id="url" class="et2_fullWidth" autocomplete="url" />
@@ -420,18 +422,19 @@
 				</row>
 				<row class="dialogOperators">
 					<description value="Addressbook"/>
-					<menulist span="2" class="et2_fullWidth">
+					<menulist class="et2_fullWidth">
 						<menupopup class="owner" statustext="Addressbook the contact should be saved to" id="owner" no_lang="1"/>
 					</menulist>
 					<description/>
 					<description value="own sorting"/>
-					<menulist span="2">
+					<menulist>
 						<menupopup blur="Name" id="fileas_type" no_lang="1" class="fileas et2_fullWidth"/>
 					</menulist>
+					<description/>
 				</row>
 				<row class="dialogOperators">
 					<description value="Created"/>
-					<hbox span="2" width="100%">
+					<hbox width="100%">
 						<menulist>
 							<menupopup type="select-account" id="creator" readonly="true"/>
 						</menulist>
@@ -439,12 +442,13 @@
 					</hbox>
 					<description/>
 					<description value="Last modified"/>
-					<hbox width="100%" span="2">
+					<hbox width="100%">
 						<menulist>
 							<menupopup type="select-account" id="modifier" readonly="true"/>
 						</menulist>
 						<date-time id="modified" readonly="true" align="right"/>
 					</hbox>
+					<description/>
 				</row>
 				<row disabled="@hidebuttons" class="dialogFooterToolbar">
 					<hbox span="all" width="100%">
