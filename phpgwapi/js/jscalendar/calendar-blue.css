@@ -1,9 +1,13 @@
 /* The main calendar widget.  DIV containing a table. */
 
-div.calendar { position: relative; }
+div.calendar {
+  position: relative;
+  width: 200px;
+  border: 1px solid #556;
+  box-shadow: 5px 5px 5px #888888;
+}
 
 .calendar, .calendar table {
-  border: 0px solid #556;
   font-size: 10pt;
   color: #000;
   cursor: default;
