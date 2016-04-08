@@ -151,16 +151,6 @@
 	window.egw_LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:window.egw_webserverUrl+'/'});
 	var include = JSON.parse(egw_script.getAttribute('data-include'));
 
-	// remove this script from include, until server-side no longer requires it
-	for(var i=0; i < include.length; ++i)
-	{
-		if (include[i].match(/^phpgwapi\/js\/jsapi\/egw\.js/))
-		{
-			include.splice(i, 1);
-			break;
-		}
-	}
-
 	window.egw_LAB.script(include).wait(function()
 	{
 		// call egw.link_handler, if attr specified

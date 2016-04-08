@@ -53,8 +53,9 @@ class Bundle
 			unset($bundles['.ts']);
 			foreach($bundles as $name => $files)
 			{
-				// to facilitate move to new et2 location, can be removed after 16.1 release
-				if ($name == 'et21' && !in_array('/api/js/etemplate/etemplate2.js', $files))
+				// to facilitate move to new api/et2 location, can be removed after 16.1 release
+				if ($name == 'et21' && !in_array('/api/js/etemplate/etemplate2.js', $files) ||
+					$name == 'api' && !in_array('/api/js/jquery/jquery.js', $files))
 				{
 					Cache::unsetTree(__CLASS__, 'bundles');
 					return self::js_includes($js_includes);
@@ -73,6 +74,8 @@ class Bundle
 		$query = null;
 		foreach($js_includes as $file)
 		{
+			if ($file == '/api/js/jsapi/egw.js') continue;	// loaded via own tag, and we must not load it twice!
+
 			if (!isset($to_include[$file]))
 			{
 				if (($bundle = $file2bundle[$file]))
@@ -135,8 +138,6 @@ class Bundle
 		$query = null;
 		foreach($js_includes as $path)
 		{
-			if ($path == '/api/js/jsapi/egw.js') continue;	// loaded via own tag, and we must not load it twice!
-
 			unset($query);
 			list($path,$query) = explode('?',$path,2);
 			$mod = filemtime(EGW_SERVER_ROOT.$path);
