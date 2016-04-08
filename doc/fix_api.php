@@ -123,6 +123,7 @@ foreach(array(
 	'solink' => 'Api\\Link\\Storage',
 	'sqlfs_stream_wrapper' => 'Api\\Vfs\\Sqlfs\\StreamWrapper',
 	'sqlfs_utils' => 'Api\\Vfs\\Sqlfs\\Utils',
+	'Template' => 'Api\\Framework\\Template',
 	'translation::decodeMailHeader' => 'Api\\Mail\\Html::decodeMailHeader',
 	'translation::replaceEmailAdresses' => 'Api\\Mail\\Html::replaceEmailAdresses',
 	'translation::replaceTagsCompletley' => 'Api\\Mail\\Html::replaceTagsCompletley',

@@ -16,9 +16,6 @@ namespace EGroupware\Api\Framework;
 
 use EGroupware\Api;
 
-// explicitly import old, not yet ported api classes
-use Template;
-
 /**
  * Render (deny-)login screen
  */
