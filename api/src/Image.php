@@ -71,6 +71,10 @@ class Image
 			return $webserver_url.$image_map[$app][$image.$extension];
 		}
 		// then api
+		if(isset($image_map['api'][$image.$extension]))
+		{
+			return $webserver_url.$image_map['api'][$image.$extension];
+		}
 		if(isset($image_map['phpgwapi'][$image.$extension]))
 		{
 			return $webserver_url.$image_map['phpgwapi'][$image.$extension];
