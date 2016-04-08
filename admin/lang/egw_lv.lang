@@ -419,73 +419,73 @@ you must enter an application title.	admin	lv	Jums jāievada aplikācijas virsra
 you must select a file type	admin	lv	Jums jāizvēlas faila tips
 you will need to remove the subcategories before you can delete this category	admin	lv	Tev vajadzēs izdzēst apakšgrpu pirms tu varēsi izdzēst šo kategoriju!
 your session could not be verified.	admin	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.
-(no subject)	emailadmin	lv	(nav temata)
-add profile	emailadmin	lv	Pievienot profilu
-admin dn	emailadmin	lv	administratora dn
-admin password	emailadmin	lv	administratora parole
-admin username	emailadmin	lv	administratora lietotājvārds
-advanced options	emailadmin	lv	uzlabotās iespējas
-alternate email address	emailadmin	lv	alternatīvas e-pasta adreses
-continue	emailadmin	lv	Turpināt
-cyrus imap server	emailadmin	lv	Cyrus IMAP serveris
-cyrus imap server administration	emailadmin	lv	Cyrus IMAP servera administrēšana
-default	emailadmin	lv	noklusējums
-do you really want to delete this profile	emailadmin	lv	Vai tu tiešām vēlies dzēst šo profilu?
-domainname	emailadmin	lv	domēna vārds
-edit email settings	emailadmin	lv	rediģēt e-pasta uzstādījumus
-email account active	emailadmin	lv	e-pasta konts aktīvs
-email address	emailadmin	lv	e-pasta adrese
-enable cyrus imap server administration	emailadmin	lv	atļaut Cyrus IMAP servera administrēšanu
-enable sieve	emailadmin	lv	atļaut Sieve
-enter your default mail domain (from: user@domain)	emailadmin	lv	Ievadi noklusēto pasta domēnu (no: lietotājs@domēns)
-entry saved	emailadmin	lv	Ieraksts saglabāts
-forward also to	emailadmin	lv	pārsūtīt arī
-forward email's to	emailadmin	lv	pārsūtīt e-pasta vēstules
-forward only	emailadmin	lv	tikai pārsūtīt
+(no subject)	admin	lv	(nav temata)
+add profile	admin	lv	Pievienot profilu
+admin dn	admin	lv	administratora dn
+admin password	admin	lv	administratora parole
+admin username	admin	lv	administratora lietotājvārds
+advanced options	admin	lv	uzlabotās iespējas
+alternate email address	admin	lv	alternatīvas e-pasta adreses
+continue	admin	lv	Turpināt
+cyrus imap server	admin	lv	Cyrus IMAP serveris
+cyrus imap server administration	admin	lv	Cyrus IMAP servera administrēšana
+default	admin	lv	noklusējums
+do you really want to delete this profile	admin	lv	Vai tu tiešām vēlies dzēst šo profilu?
+domainname	admin	lv	domēna vārds
+edit email settings	admin	lv	rediģēt e-pasta uzstādījumus
+email account active	admin	lv	e-pasta konts aktīvs
+email address	admin	lv	e-pasta adrese
+enable cyrus imap server administration	admin	lv	atļaut Cyrus IMAP servera administrēšanu
+enable sieve	admin	lv	atļaut Sieve
+enter your default mail domain (from: user@domain)	admin	lv	Ievadi noklusēto pasta domēnu (no: lietotājs@domēns)
+entry saved	admin	lv	Ieraksts saglabāts
+forward also to	admin	lv	pārsūtīt arī
+forward email's to	admin	lv	pārsūtīt e-pasta vēstules
+forward only	admin	lv	tikai pārsūtīt
 imap admin password	admin	lv	IMAP administratora parole
 imap admin user	admin	lv	IMAP administrators
-imap c-client version < 2001	emailadmin	lv	IMAP C-Client Version <2001
-imap server	emailadmin	lv	IMAP serveris
-imap server hostname or ip address	emailadmin	lv	IMAP servera hosta vārds vai IP adrese
-imap server logintyp	emailadmin	lv	IMAP servera autorizācijas veids
-imap server port	emailadmin	lv	IMAP servera ports
-imap/pop3 server name	emailadmin	lv	IMAP/POP3 servera nosaukums
-ldap basedn	emailadmin	lv	LDAP bāzes dn
-ldap server	emailadmin	lv	LDAP serveris
-ldap server accounts dn	emailadmin	lv	LDAP servera konti DN
-ldap server admin dn	emailadmin	lv	LDAP servera administratora DN
-ldap server admin password	emailadmin	lv	LDAP servera administratora parole
-ldap server hostname or ip address	emailadmin	lv	LDAP servera hosta vārds vai IP adrese
-ldap settings	emailadmin	lv	LDAP uzstādījumi
+imap c-client version < 2001	admin	lv	IMAP C-Client Version <2001
+imap server	admin	lv	IMAP serveris
+imap server hostname or ip address	admin	lv	IMAP servera hosta vārds vai IP adrese
+imap server logintyp	admin	lv	IMAP servera autorizācijas veids
+imap server port	admin	lv	IMAP servera ports
+imap/pop3 server name	admin	lv	IMAP/POP3 servera nosaukums
+ldap basedn	admin	lv	LDAP bāzes dn
+ldap server	admin	lv	LDAP serveris
+ldap server accounts dn	admin	lv	LDAP servera konti DN
+ldap server admin dn	admin	lv	LDAP servera administratora DN
+ldap server admin password	admin	lv	LDAP servera administratora parole
+ldap server hostname or ip address	admin	lv	LDAP servera hosta vārds vai IP adrese
+ldap settings	admin	lv	LDAP uzstādījumi
 mail settings	admin	lv	Pasta uzstādījumi
-name of organisation	emailadmin	lv	Organizācijas nosaukums
-no alternate email address	emailadmin	lv	nav alternatīvas e-pasta adreses
-no forwarding email address	emailadmin	lv	nav pārsūtāmās e-pasta adreses
-order	emailadmin	lv	Kārtība
-pop3 server hostname or ip address	emailadmin	lv	POP3 servera hosta vārds vai IP adrese
-pop3 server port	emailadmin	lv	POP3 servera ports
-profile list	emailadmin	lv	Profila saraksts
-profile name	emailadmin	lv	Profila vārds
-remove	emailadmin	lv	pārvietot
-select type of imap/pop3 server	emailadmin	lv	Atzīmēt IMAP/POP3 servera tipu
-select type of smtp server	emailadmin	lv	Atzīmēt SMTP servera tipu
-sieve server hostname or ip address	emailadmin	lv	<b>?Sieve?</b> servera hosta vārds vai IP adrese
-sieve server port	emailadmin	lv	Sieve servera ports
-sieve settings	emailadmin	lv	Sieve uzstadījumi
-smtp server name	emailadmin	lv	SMTP servera nosaukums
-smtp settings	emailadmin	lv	SMTP uzstādījumi
-smtp-server hostname or ip address	emailadmin	lv	SMTP servera hosta vārds vai IP adrese
-smtp-server port	emailadmin	lv	SMTP servera ports
-standard	emailadmin	lv	Standarta
-standard imap server	emailadmin	lv	Standarta IMAP serveris
-standard pop3 server	emailadmin	lv	Standarta POP3 serveris
-standard smtp-server	emailadmin	lv	Standarta SMTP serveris
-this php has no imap support compiled in!!	emailadmin	lv	Šim PHP nav IMAP nokompilēts atbalsts
-use default	emailadmin	lv	Lietot noklusējumu
-use ldap defaults	emailadmin	lv	lieto LDAP noklusējumus
-use smtp auth	emailadmin	lv	Lieto SMTP autentifikāciju
-use tls authentication	emailadmin	lv	Lieto TLS autentifikāciju
-use tls encryption	emailadmin	lv	Lieto TLS šifrēšanu
-users can define their own emailaccounts	emailadmin	lv	LIetotāji  paši var definēt savus e-pasta kontus
-virtual mail manager	emailadmin	lv	VIrtuālais MAIL ManaGeR
-your name	emailadmin	lv	Tavs vārds
+name of organisation	admin	lv	Organizācijas nosaukums
+no alternate email address	admin	lv	nav alternatīvas e-pasta adreses
+no forwarding email address	admin	lv	nav pārsūtāmās e-pasta adreses
+order	admin	lv	Kārtība
+pop3 server hostname or ip address	admin	lv	POP3 servera hosta vārds vai IP adrese
+pop3 server port	admin	lv	POP3 servera ports
+profile list	admin	lv	Profila saraksts
+profile name	admin	lv	Profila vārds
+remove	admin	lv	pārvietot
+select type of imap/pop3 server	admin	lv	Atzīmēt IMAP/POP3 servera tipu
+select type of smtp server	admin	lv	Atzīmēt SMTP servera tipu
+sieve server hostname or ip address	admin	lv	<b>?Sieve?</b> servera hosta vārds vai IP adrese
+sieve server port	admin	lv	Sieve servera ports
+sieve settings	admin	lv	Sieve uzstadījumi
+smtp server name	admin	lv	SMTP servera nosaukums
+smtp settings	admin	lv	SMTP uzstādījumi
+smtp-server hostname or ip address	admin	lv	SMTP servera hosta vārds vai IP adrese
+smtp-server port	admin	lv	SMTP servera ports
+standard	admin	lv	Standarta
+standard imap server	admin	lv	Standarta IMAP serveris
+standard pop3 server	admin	lv	Standarta POP3 serveris
+standard smtp-server	admin	lv	Standarta SMTP serveris
+this php has no imap support compiled in!!	admin	lv	Šim PHP nav IMAP nokompilēts atbalsts
+use default	admin	lv	Lietot noklusējumu
+use ldap defaults	admin	lv	lieto LDAP noklusējumus
+use smtp auth	admin	lv	Lieto SMTP autentifikāciju
+use tls authentication	admin	lv	Lieto TLS autentifikāciju
+use tls encryption	admin	lv	Lieto TLS šifrēšanu
+users can define their own emailaccounts	admin	lv	LIetotāji  paši var definēt savus e-pasta kontus
+virtual mail manager	admin	lv	VIrtuālais MAIL ManaGeR
+your name	admin	lv	Tavs vārds

@@ -405,12 +405,12 @@ you must enter an application title.	admin	ko	응용프로그램 제목을 입�
 you must select a file type	admin	ko	파일 타입을 선택해야 합니다.
 you will need to remove the subcategories before you can delete this category	admin	ko	이 카테고리를 삭제하기 전에 하위카테고리를 삭제해야 합니다!
 your session could not be verified.	admin	ko	세션이 검증되지 않았습니다
-admin password	emailadmin	ko	관리자 암호
-admin username	emailadmin	ko	관리사용자 이름
-continue	emailadmin	ko	계속
-default	emailadmin	ko	기본
-event details follow	emailadmin	ko	** 다음은 이벤트-설명
+admin password	admin	ko	관리자 암호
+admin username	admin	ko	관리사용자 이름
+continue	admin	ko	계속
+default	admin	ko	기본
+event details follow	admin	ko	** 다음은 이벤트-설명
 mail settings	admin	ko	메일 설정
-remove	emailadmin	ko	삭제
-standard	emailadmin	ko	기본
-use default	emailadmin	ko	기본 사용
+remove	admin	ko	삭제
+standard	admin	ko	기본
+use default	admin	ko	기본 사용

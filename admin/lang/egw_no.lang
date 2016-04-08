@@ -443,83 +443,83 @@ you must enter an application title.	admin	no	Du må registrere et programtittel
 you must select a file type	admin	no	Du må velge en filtype
 you will need to remove the subcategories before you can delete this category	admin	no	Du må først fjerne underkategorier før du kan slette denne kategorien!
 your session could not be verified.	admin	no	Din sesjon kunne ikke bekreftes
-(no subject)	emailadmin	no	(uten emne)
-add profile	emailadmin	no	Legg til profil
-admin dn	emailadmin	no	Admin dn
-admin password	emailadmin	no	Admin passord
-admin username	emailadmin	no	Admin brukernavn
-advanced options	emailadmin	no	Avanserte valg
-alternate email address	emailadmin	no	Alternativ e-mailadresse
-continue	emailadmin	no	Fortsette
-cyrus imap server	emailadmin	no	Cyrus IMAP tjener
-cyrus imap server administration	emailadmin	no	Cyrys IMAP tjeneradministrasjon
-default	emailadmin	no	standard
-deliver extern	emailadmin	no	lever eksternt
-do you really want to delete this profile	emailadmin	no	Ønsker du virkelig å slette denne profilen
-domainname	emailadmin	no	Domenenavn
-edit email settings	emailadmin	no	Rediger e-mail oppsett
-email account active	emailadmin	no	E-mailkonto aktiv
-email address	emailadmin	no	E-mailadresse
-enable cyrus imap server administration	emailadmin	no	Tillat Cyrus IMAP-tjener administrasjon
-enable sieve	emailadmin	no	Tillat Sieve
-enter your default mail domain (from: user@domain)	emailadmin	no	Registrer ditt standard Emaildomene (fra: bruker@domene)
-entry saved	emailadmin	no	Registrering lagret
-error saving the entry!!!	emailadmin	no	Feil ved lagring av forekomst!
-event details follow	emailadmin	no	Hendelses Detaljer Følger
-forward also to	emailadmin	no	videresend også til
-forward email's to	emailadmin	no	videresend e-mailer til
-forward only	emailadmin	no	bare videresending
+(no subject)	admin	no	(uten emne)
+add profile	admin	no	Legg til profil
+admin dn	admin	no	Admin dn
+admin password	admin	no	Admin passord
+admin username	admin	no	Admin brukernavn
+advanced options	admin	no	Avanserte valg
+alternate email address	admin	no	Alternativ e-mailadresse
+continue	admin	no	Fortsette
+cyrus imap server	admin	no	Cyrus IMAP tjener
+cyrus imap server administration	admin	no	Cyrys IMAP tjeneradministrasjon
+default	admin	no	standard
+deliver extern	admin	no	lever eksternt
+do you really want to delete this profile	admin	no	Ønsker du virkelig å slette denne profilen
+domainname	admin	no	Domenenavn
+edit email settings	admin	no	Rediger e-mail oppsett
+email account active	admin	no	E-mailkonto aktiv
+email address	admin	no	E-mailadresse
+enable cyrus imap server administration	admin	no	Tillat Cyrus IMAP-tjener administrasjon
+enable sieve	admin	no	Tillat Sieve
+enter your default mail domain (from: user@domain)	admin	no	Registrer ditt standard Emaildomene (fra: bruker@domene)
+entry saved	admin	no	Registrering lagret
+error saving the entry!!!	admin	no	Feil ved lagring av forekomst!
+event details follow	admin	no	Hendelses Detaljer Følger
+forward also to	admin	no	videresend også til
+forward email's to	admin	no	videresend e-mailer til
+forward only	admin	no	bare videresending
 imap admin password	admin	no	IMAP Administrasjonspassord
 imap admin user	admin	no	IMAP Administrasjonsbruker
-imap c-client version < 2001	emailadmin	no	IMAP C-klient versjon < 2001
-imap server	emailadmin	no	IMAP Tjener
-imap server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for IMAP tjener
-imap server logintyp	emailadmin	no	IMAP Tjener påloggingstype
-imap server port	emailadmin	no	IMAP Tjenerport
-imap/pop3 server name	emailadmin	no	IMAP/POP3 tjenernavn
-in mbyte	emailadmin	no	i MByte
-ldap basedn	emailadmin	no	LDAP basedn
-ldap server	emailadmin	no	LDAP Tjener
-ldap server accounts dn	emailadmin	no	LDAP Tjenerkonti DN
-ldap server admin dn	emailadmin	no	LDAP Tjeneradmin. DN
-ldap server admin password	emailadmin	no	LDAP Tjeneradmin. passord
-ldap server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for LDAP tjener
-ldap settings	emailadmin	no	LDAP Instillinger
-leave empty for no quota	emailadmin	no	La stå tomt for ingen begrensning.
+imap c-client version < 2001	admin	no	IMAP C-klient versjon < 2001
+imap server	admin	no	IMAP Tjener
+imap server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for IMAP tjener
+imap server logintyp	admin	no	IMAP Tjener påloggingstype
+imap server port	admin	no	IMAP Tjenerport
+imap/pop3 server name	admin	no	IMAP/POP3 tjenernavn
+in mbyte	admin	no	i MByte
+ldap basedn	admin	no	LDAP basedn
+ldap server	admin	no	LDAP Tjener
+ldap server accounts dn	admin	no	LDAP Tjenerkonti DN
+ldap server admin dn	admin	no	LDAP Tjeneradmin. DN
+ldap server admin password	admin	no	LDAP Tjeneradmin. passord
+ldap server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for LDAP tjener
+ldap settings	admin	no	LDAP Instillinger
+leave empty for no quota	admin	no	La stå tomt for ingen begrensning.
 mail settings	admin	no	E-post innstillinger
-name of organisation	emailadmin	no	Navn på organisasjon
-no alternate email address	emailadmin	no	ingen alternativ e-mailadresse
-no forwarding email address	emailadmin	no	ingen e-mailadresse for videresending
-order	emailadmin	no	Ordre
-organisation	emailadmin	no	Organisasjon
-pop3 server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for POP3 tjener
-pop3 server port	emailadmin	no	POP3 Tjenerport
-postfix with ldap	emailadmin	no	Postfix med LDAP
-profile list	emailadmin	no	Profilliste
-profile name	emailadmin	no	Profilnavn
-qmaildotmode	emailadmin	no	qmaildotmodus
-quota settings	emailadmin	no	Grenseinstillinger
-quota size in mbyte	emailadmin	no	Grense Str. i Mbyte
-remove	emailadmin	no	fjern
-select type of imap/pop3 server	emailadmin	no	Velg type for IMAP/POP3 Tjener
-select type of smtp server	emailadmin	no	Velg type SMTP Tjener
-sieve server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for Sieve-tjener
-sieve server port	emailadmin	no	Sieve tjenerport
-sieve settings	emailadmin	no	Sieve innstillinger
-smtp server name	emailadmin	no	SMTP Tjenernavn
-smtp settings	emailadmin	no	SMTP innstillinger
-smtp-server hostname or ip address	emailadmin	no	Tjenernavn eller IP-Adresse for SMTP-Tjener
-smtp-server port	emailadmin	no	SMTP Tjenerport
-standard	emailadmin	no	standard
-standard imap server	emailadmin	no	Standard IMAP tjener
-standard pop3 server	emailadmin	no	Standard POP3 tjener
-standard smtp-server	emailadmin	no	Standard SMTP tjener
-this php has no imap support compiled in!!	emailadmin	no	PHP versjonen har ingen IMAP-støtte kompilert inn
-use default	emailadmin	no	Bruk standard
-use ldap defaults	emailadmin	no	Bruk LDAP standaroppsett
-use smtp auth	emailadmin	no	Bruk SMTP autentisering
-use tls authentication	emailadmin	no	Bruk TLS autentisering
-use tls encryption	emailadmin	no	Bruk TLS kryptering
-users can define their own emailaccounts	emailadmin	no	Brukere kan definere egne e-post kontoer
-virtual mail manager	emailadmin	no	Virtuell Mail Manager
-your name	emailadmin	no	Ditt navn
+name of organisation	admin	no	Navn på organisasjon
+no alternate email address	admin	no	ingen alternativ e-mailadresse
+no forwarding email address	admin	no	ingen e-mailadresse for videresending
+order	admin	no	Ordre
+organisation	admin	no	Organisasjon
+pop3 server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for POP3 tjener
+pop3 server port	admin	no	POP3 Tjenerport
+postfix with ldap	admin	no	Postfix med LDAP
+profile list	admin	no	Profilliste
+profile name	admin	no	Profilnavn
+qmaildotmode	admin	no	qmaildotmodus
+quota settings	admin	no	Grenseinstillinger
+quota size in mbyte	admin	no	Grense Str. i Mbyte
+remove	admin	no	fjern
+select type of imap/pop3 server	admin	no	Velg type for IMAP/POP3 Tjener
+select type of smtp server	admin	no	Velg type SMTP Tjener
+sieve server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for Sieve-tjener
+sieve server port	admin	no	Sieve tjenerport
+sieve settings	admin	no	Sieve innstillinger
+smtp server name	admin	no	SMTP Tjenernavn
+smtp settings	admin	no	SMTP innstillinger
+smtp-server hostname or ip address	admin	no	Tjenernavn eller IP-Adresse for SMTP-Tjener
+smtp-server port	admin	no	SMTP Tjenerport
+standard	admin	no	standard
+standard imap server	admin	no	Standard IMAP tjener
+standard pop3 server	admin	no	Standard POP3 tjener
+standard smtp-server	admin	no	Standard SMTP tjener
+this php has no imap support compiled in!!	admin	no	PHP versjonen har ingen IMAP-støtte kompilert inn
+use default	admin	no	Bruk standard
+use ldap defaults	admin	no	Bruk LDAP standaroppsett
+use smtp auth	admin	no	Bruk SMTP autentisering
+use tls authentication	admin	no	Bruk TLS autentisering
+use tls encryption	admin	no	Bruk TLS kryptering
+users can define their own emailaccounts	admin	no	Brukere kan definere egne e-post kontoer
+virtual mail manager	admin	no	Virtuell Mail Manager
+your name	admin	no	Ditt navn

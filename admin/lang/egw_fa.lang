@@ -440,78 +440,78 @@ you must enter an application name.	admin	fa	شما باید یک نام کار�
 you must enter an application title.	admin	fa	شما باید یک عنوان کاربرد وارد کنید
 you must select a file type	admin	fa	شما باید یک نوع پرونده انتخاب کنید
 you will need to remove the subcategories before you can delete this category	admin	fa	شما باید قبل از حذف این دسته، زیر مجموعه ها را حذف کنید!
-(no subject)	emailadmin	fa	(بدون عنوان)
-add profile	emailadmin	fa	افزودن مجموعه تنظیمات
-admin dn	emailadmin	fa	dn مدیر
-admin password	emailadmin	fa	گذرواژه مدیر
-admin username	emailadmin	fa	نام کاربری مدیر
-advanced options	emailadmin	fa	تنظیمات پیشرفته
-alternate email address	emailadmin	fa	نشانی پست الکترونیکی دیگر
-any application	emailadmin	fa	همه کاربردها
-any group	emailadmin	fa	همه گروهها
-can be used by application	emailadmin	fa	استفاده شود توسط کاربرد
-can be used by group	emailadmin	fa	استفاده شود توسط گروه
-continue	emailadmin	fa	ادامه
-default	emailadmin	fa	پیش فرض
-deliver extern	emailadmin	fa	حمل بیرونی
-do you really want to delete this profile	emailadmin	fa	آیا واقعا می خواهید این مجموعه تنظیمات را حذف کنید؟
-domainname	emailadmin	fa	نام حوزه
-edit email settings	emailadmin	fa	ویرایش تنظیمات نامه الکترونیکی
-email account active	emailadmin	fa	حساب نامه الکترونیکی فعال
-email address	emailadmin	fa	نشانی الکترونیکی
-emailadmin	emailadmin	fa	مدیر رایانامه
-enable sieve	emailadmin	fa	فعالسازی Sieve
-encryption settings	emailadmin	fa	تنظیمات رمز نگاری
-enter your default mail domain (from: user@domain)	emailadmin	fa	حوزه پیش فرض خود را وارد کنید:(مثلا: fgpars.net)
-entry saved	emailadmin	fa	ورودی ذخیره شد
-error saving the entry!!!	emailadmin	fa	خطای ذخیره ورودی!!!
-event details follow	emailadmin	fa	پیگیری جزئیات رویداد
-forward also to	emailadmin	fa	همچنین ارسال به
-forward email's to	emailadmin	fa	ارسال نامه ها به
-forward only	emailadmin	fa	فقط ارسال به
-global options	emailadmin	fa	گزینه های عمومی
+(no subject)	admin	fa	(بدون عنوان)
+add profile	admin	fa	افزودن مجموعه تنظیمات
+admin dn	admin	fa	dn مدیر
+admin password	admin	fa	گذرواژه مدیر
+admin username	admin	fa	نام کاربری مدیر
+advanced options	admin	fa	تنظیمات پیشرفته
+alternate email address	admin	fa	نشانی پست الکترونیکی دیگر
+any application	admin	fa	همه کاربردها
+any group	admin	fa	همه گروهها
+can be used by application	admin	fa	استفاده شود توسط کاربرد
+can be used by group	admin	fa	استفاده شود توسط گروه
+continue	admin	fa	ادامه
+default	admin	fa	پیش فرض
+deliver extern	admin	fa	حمل بیرونی
+do you really want to delete this profile	admin	fa	آیا واقعا می خواهید این مجموعه تنظیمات را حذف کنید؟
+domainname	admin	fa	نام حوزه
+edit email settings	admin	fa	ویرایش تنظیمات نامه الکترونیکی
+email account active	admin	fa	حساب نامه الکترونیکی فعال
+email address	admin	fa	نشانی الکترونیکی
+emailadmin	admin	fa	مدیر رایانامه
+enable sieve	admin	fa	فعالسازی Sieve
+encryption settings	admin	fa	تنظیمات رمز نگاری
+enter your default mail domain (from: user@domain)	admin	fa	حوزه پیش فرض خود را وارد کنید:(مثلا: fgpars.net)
+entry saved	admin	fa	ورودی ذخیره شد
+error saving the entry!!!	admin	fa	خطای ذخیره ورودی!!!
+event details follow	admin	fa	پیگیری جزئیات رویداد
+forward also to	admin	fa	همچنین ارسال به
+forward email's to	admin	fa	ارسال نامه ها به
+forward only	admin	fa	فقط ارسال به
+global options	admin	fa	گزینه های عمومی
 imap admin password	admin	fa	گذرواژه مدیر IMAP
 imap admin user	admin	fa	کاربر مدیر IMAP
-imap server	emailadmin	fa	کارگزار آی مپ
-imap server hostname or ip address	emailadmin	fa	نام میزبان یا نشانی IP کارگزار IMAP
-imap server logintyp	emailadmin	fa	نوع ورود کارگزار IMAP
-imap server port	emailadmin	fa	درگاه کارگزار IMAP
-imap/pop3 server name	emailadmin	fa	نام کارگزار IMAP/POP3
-in mbyte	emailadmin	fa	به مگابایت
-leave empty for no quota	emailadmin	fa	برای بدون سهمیه بودن، خالی بگذارید
+imap server	admin	fa	کارگزار آی مپ
+imap server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار IMAP
+imap server logintyp	admin	fa	نوع ورود کارگزار IMAP
+imap server port	admin	fa	درگاه کارگزار IMAP
+imap/pop3 server name	admin	fa	نام کارگزار IMAP/POP3
+in mbyte	admin	fa	به مگابایت
+leave empty for no quota	admin	fa	برای بدون سهمیه بودن، خالی بگذارید
 mail settings	admin	fa	تنظیمات نامه
-name of organisation	emailadmin	fa	نام سازمان
-no alternate email address	emailadmin	fa	بدون نشانی نامه الکترونیکی دیگر
-no forwarding email address	emailadmin	fa	بدون نشانی نامه الکترونیکی ارسال به دیگری
-order	emailadmin	fa	ترتیب
-organisation	emailadmin	fa	سازمان
-pop3 server hostname or ip address	emailadmin	fa	نام میزبان یا نشانی IP کارگزار POP3
-pop3 server port	emailadmin	fa	درگاه کارگزار POP3
-profile access rights	emailadmin	fa	حقوق دسترسی مجموعه تنظیمات
-profile list	emailadmin	fa	لیست مجموعه تنظیمات
-profile name	emailadmin	fa	نام مجموعه تنظیمات
-quota settings	emailadmin	fa	تنظیمات سهمیه
-quota size in mbyte	emailadmin	fa	سهمیه به مگابایت
-remove	emailadmin	fa	حذف
-select type of imap/pop3 server	emailadmin	fa	نوع کارگزار IMAP/POP3 را انتخاب کنید
-select type of smtp server	emailadmin	fa	نوع کارگزار SMTP را انتخاب کنید
-server settings	emailadmin	fa	تنظیمات کارگزار
-sieve server hostname or ip address	emailadmin	fa	نام میزبان یا نشانی IP کارگزار Sieve
-sieve server port	emailadmin	fa	درگاه کارگزار Sieve
-sieve settings	emailadmin	fa	تنظیمات Sieve
-smtp authentication	emailadmin	fa	تصدیق smtp
-smtp server name	emailadmin	fa	نام کارگزار SMTP
-smtp settings	emailadmin	fa	تنظیمات smtp
-smtp-server hostname or ip address	emailadmin	fa	نشانی IP یا نام میزبان SMTP
-smtp-server port	emailadmin	fa	درگاه کارگزار SMTP
-standard	emailadmin	fa	استاندارد
-standard imap server	emailadmin	fa	کارگزار استاندارد IMAP
-standard pop3 server	emailadmin	fa	کارگزار استاندارد POP3
-standard smtp-server	emailadmin	fa	کارگزار استاندارد SMTP
-the mimeparser can not parse this message.	emailadmin	fa	تشخیص دهنده نوع فایل قادر به تشخیص این پیام نیست
-this php has no imap support compiled in!!	emailadmin	fa	این PHP پشتیبانی از آی مپ را در خود ندارد!
-use default	emailadmin	fa	استفاده از پیش فرض
-use ldap defaults	emailadmin	fa	از پیش فرضهای LDAP استفاده شود
-use smtp auth	emailadmin	fa	استفاده از تصدیق در SMTP
-users can define their own emailaccounts	emailadmin	fa	کاربران می توانند حسابهای کاربری را خودشان تعریف کنند
-your name	emailadmin	fa	نام شما
+name of organisation	admin	fa	نام سازمان
+no alternate email address	admin	fa	بدون نشانی نامه الکترونیکی دیگر
+no forwarding email address	admin	fa	بدون نشانی نامه الکترونیکی ارسال به دیگری
+order	admin	fa	ترتیب
+organisation	admin	fa	سازمان
+pop3 server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار POP3
+pop3 server port	admin	fa	درگاه کارگزار POP3
+profile access rights	admin	fa	حقوق دسترسی مجموعه تنظیمات
+profile list	admin	fa	لیست مجموعه تنظیمات
+profile name	admin	fa	نام مجموعه تنظیمات
+quota settings	admin	fa	تنظیمات سهمیه
+quota size in mbyte	admin	fa	سهمیه به مگابایت
+remove	admin	fa	حذف
+select type of imap/pop3 server	admin	fa	نوع کارگزار IMAP/POP3 را انتخاب کنید
+select type of smtp server	admin	fa	نوع کارگزار SMTP را انتخاب کنید
+server settings	admin	fa	تنظیمات کارگزار
+sieve server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار Sieve
+sieve server port	admin	fa	درگاه کارگزار Sieve
+sieve settings	admin	fa	تنظیمات Sieve
+smtp authentication	admin	fa	تصدیق smtp
+smtp server name	admin	fa	نام کارگزار SMTP
+smtp settings	admin	fa	تنظیمات smtp
+smtp-server hostname or ip address	admin	fa	نشانی IP یا نام میزبان SMTP
+smtp-server port	admin	fa	درگاه کارگزار SMTP
+standard	admin	fa	استاندارد
+standard imap server	admin	fa	کارگزار استاندارد IMAP
+standard pop3 server	admin	fa	کارگزار استاندارد POP3
+standard smtp-server	admin	fa	کارگزار استاندارد SMTP
+the mimeparser can not parse this message.	admin	fa	تشخیص دهنده نوع فایل قادر به تشخیص این پیام نیست
+this php has no imap support compiled in!!	admin	fa	این PHP پشتیبانی از آی مپ را در خود ندارد!
+use default	admin	fa	استفاده از پیش فرض
+use ldap defaults	admin	fa	از پیش فرضهای LDAP استفاده شود
+use smtp auth	admin	fa	استفاده از تصدیق در SMTP
+users can define their own emailaccounts	admin	fa	کاربران می توانند حسابهای کاربری را خودشان تعریف کنند
+your name	admin	fa	نام شما

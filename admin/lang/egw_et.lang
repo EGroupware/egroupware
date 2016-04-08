@@ -239,55 +239,55 @@ you must enter an application title.	admin	et	Pead sisesestama rakenduse pealkir
 you must select a file type	admin	et	Pead valima failitüübi
 you must select at least one group member.	admin	et	Pead valima vähemalt ühe grupiliikme.
 you will need to remove the subcategories before you can delete this category	admin	et	Pead eemaldama kõigepealt alamkategoorjad kustutamaks seda kategooriat !
-account '%1' not found !!!	emailadmin	et	Kontot '%1' ei leitud !!!
-add new email address:	emailadmin	et	Lisa uus email aadress
-add profile	emailadmin	et	Lisa Profiil
-admin password	emailadmin	et	admin parool
-admin username	emailadmin	et	admin kasutajanimi
-alternate email address	emailadmin	et	Alternatiivne email aadress
-bad login name or password.	emailadmin	et	Vale kasutajanimi või parool
-continue	emailadmin	et	Jätka
-cyrus imap server	emailadmin	et	Cyrus IMAP Server
-cyrus imap server administration	emailadmin	et	Cyrus IMAP server administreerimine
-default	emailadmin	et	vaikimisi
-displaying html messages is disabled	emailadmin	et	html kirjade näitamine on välja lülitatud
-do not validate certificate	emailadmin	et	ära valideeri sertifikaati
-do you really want to delete this profile	emailadmin	et	Tahad tõesti kustutada seda Profiili
-domainname	emailadmin	et	Doomeninimi
-edit email settings	emailadmin	et	muuda emaili setinguid
-email account active	emailadmin	et	email konto aktiivne
-email address	emailadmin	et	email aadress
+account '%1' not found !!!	admin	et	Kontot '%1' ei leitud !!!
+add new email address:	admin	et	Lisa uus email aadress
+add profile	admin	et	Lisa Profiil
+admin password	admin	et	admin parool
+admin username	admin	et	admin kasutajanimi
+alternate email address	admin	et	Alternatiivne email aadress
+bad login name or password.	admin	et	Vale kasutajanimi või parool
+continue	admin	et	Jätka
+cyrus imap server	admin	et	Cyrus IMAP Server
+cyrus imap server administration	admin	et	Cyrus IMAP server administreerimine
+default	admin	et	vaikimisi
+displaying html messages is disabled	admin	et	html kirjade näitamine on välja lülitatud
+do not validate certificate	admin	et	ära valideeri sertifikaati
+do you really want to delete this profile	admin	et	Tahad tõesti kustutada seda Profiili
+domainname	admin	et	Doomeninimi
+edit email settings	admin	et	muuda emaili setinguid
+email account active	admin	et	email konto aktiivne
+email address	admin	et	email aadress
 email settings	common	et	Email setingud
-encrypted connection	emailadmin	et	krüpteeritud ühendus
-encryption settings	emailadmin	et	Krüpteerimise setingud
-enter your default mail domain (from: user@domain)	emailadmin	et	Sisesta oma vaikimisi mail doomen (kasutaja@doomen)
-entry saved	emailadmin	et	Kirje salvestatud
-error saving the entry!!!	emailadmin	et	Viga kirje salvestamisel !!!
-global options	emailadmin	et	Globaalsed omadused
+encrypted connection	admin	et	krüpteeritud ühendus
+encryption settings	admin	et	Krüpteerimise setingud
+enter your default mail domain (from: user@domain)	admin	et	Sisesta oma vaikimisi mail doomen (kasutaja@doomen)
+entry saved	admin	et	Kirje salvestatud
+error saving the entry!!!	admin	et	Viga kirje salvestamisel !!!
+global options	admin	et	Globaalsed omadused
 imap admin password	admin	et	IMAP admin parool
 imap admin user	admin	et	IMAP admin kasutaja
-imap c-client version < 2001	emailadmin	et	IMAP C-Client Versioon < 2001
-imap server	emailadmin	et	IMAP Server
-imap server closed the connection.	emailadmin	et	IMAP server sulges ühenduse.
-imap server closed the connection. server responded: %s	emailadmin	et	IMAP Server sulges ühenduse. Server Vastas: %s
-imap server name	emailadmin	et	imap serveri nimi
-imap server port	emailadmin	et	IMAP serveri port
-imap/pop3 server name	emailadmin	et	IMAP/POP3 server nimi
-ldap settings	emailadmin	et	LDAP setingud
+imap c-client version < 2001	admin	et	IMAP C-Client Versioon < 2001
+imap server	admin	et	IMAP Server
+imap server closed the connection.	admin	et	IMAP server sulges ühenduse.
+imap server closed the connection. server responded: %s	admin	et	IMAP Server sulges ühenduse. Server Vastas: %s
+imap server name	admin	et	imap serveri nimi
+imap server port	admin	et	IMAP serveri port
+imap/pop3 server name	admin	et	IMAP/POP3 server nimi
+ldap settings	admin	et	LDAP setingud
 mail settings	admin	et	Mail setingud
-no alternate email address	emailadmin	et	pole alternatiivset email aadressi
-no encryption	emailadmin	et	ilna krüpteeringutta
-organisation	emailadmin	et	Organisatsioon
-pop3 server port	emailadmin	et	POP3 serveri port
-port	emailadmin	et	port
-remove	emailadmin	et	eemalda
-select type of imap server	emailadmin	et	vali IMAP serveri tüüp
-select type of imap/pop3 server	emailadmin	et	vali IMAP/POP3 serveri tüüp
-select type of smtp server	emailadmin	et	Vali SMTP serveri tüüp
-server settings	emailadmin	et	Serveri setingud
-sieve server port	emailadmin	et	Sieve serveri port
-sieve settings	emailadmin	et	Sieve setingud
-smtp server name	emailadmin	et	SMTP serveri nimi
-smtp settings	emailadmin	et	SMTP setingud
-smtp-server port	emailadmin	et	SMTP serveri port
-use default	emailadmin	et	Kasuta vaikimisi
+no alternate email address	admin	et	pole alternatiivset email aadressi
+no encryption	admin	et	ilna krüpteeringutta
+organisation	admin	et	Organisatsioon
+pop3 server port	admin	et	POP3 serveri port
+port	admin	et	port
+remove	admin	et	eemalda
+select type of imap server	admin	et	vali IMAP serveri tüüp
+select type of imap/pop3 server	admin	et	vali IMAP/POP3 serveri tüüp
+select type of smtp server	admin	et	Vali SMTP serveri tüüp
+server settings	admin	et	Serveri setingud
+sieve server port	admin	et	Sieve serveri port
+sieve settings	admin	et	Sieve setingud
+smtp server name	admin	et	SMTP serveri nimi
+smtp settings	admin	et	SMTP setingud
+smtp-server port	admin	et	SMTP serveri port
+use default	admin	et	Kasuta vaikimisi

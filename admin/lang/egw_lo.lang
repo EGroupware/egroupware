@@ -573,30 +573,30 @@ you need to enter install id and password!	admin	lo	ທ່ານຕ້ອງໃ�
 you will need to remove the subcategories before you can delete this category	admin	lo	ທ່ານຕ້ອງລຶບໝວດໝູ່ຍ່ອຍກ່ອນທີ່ຈະລຶບໝວດໝູ່ນີ້
 your last submission was less then %1 days ago!	admin	lo	ຄັ້ງລ່າສຸດໃນການສົ່ງຢ່າງໜ້ອຍ % 1 ມຶ້ທີ່ຜ່ານມາ
 your session could not be verified.	admin	lo	ເຊສຊັ້ນຂອງທ່ານຈະບໍ່ສາມາດຢືນຢັນ
-advanced options	emailadmin	lo	ການຕັ້ງຄ່າແບບພິເສດ
-alternate email address	emailadmin	lo	ທີ່ຢູ່ email ອື່ນ
-cyrus imap server	emailadmin	lo	Cyrus IMAP Server
-default	emailadmin	lo	ຄ່າເລີ່ມຕົ້ນ
-deliver extern	emailadmin	lo	ສົ່ງ extern
-edit email settings	emailadmin	lo	ແກ້ໄຂການຕັ້ງຄ່າ email
-email account active	emailadmin	lo	email ບັນຊີທີ່ໃຊ້ຢູ່
-email address	emailadmin	lo	ທີ່ຢູ່ email
-error saving account!	emailadmin	lo	ການບັນທຶກບັນຊີພົບຂໍ້ຜິດພາດ!
-event details follow	emailadmin	lo	ຕິດຕາມລາຍລະອຽດກິດຈະກໍາ
-forward also to	emailadmin	lo	ສົ່ງຕໍ່ໄປຫາ
-forward only	emailadmin	lo	ສົ່ງຕໍ່ເທົ່ານັ້ນ
-in mbyte	emailadmin	lo	ໃນ Mbyte
-leave empty for no quota	emailadmin	lo	ອອກຈາກລະບົບສໍາລັບບໍ່ມີໂກຕ້າ
+advanced options	admin	lo	ການຕັ້ງຄ່າແບບພິເສດ
+alternate email address	admin	lo	ທີ່ຢູ່ email ອື່ນ
+cyrus imap server	admin	lo	Cyrus IMAP Server
+default	admin	lo	ຄ່າເລີ່ມຕົ້ນ
+deliver extern	admin	lo	ສົ່ງ extern
+edit email settings	admin	lo	ແກ້ໄຂການຕັ້ງຄ່າ email
+email account active	admin	lo	email ບັນຊີທີ່ໃຊ້ຢູ່
+email address	admin	lo	ທີ່ຢູ່ email
+error saving account!	admin	lo	ການບັນທຶກບັນຊີພົບຂໍ້ຜິດພາດ!
+event details follow	admin	lo	ຕິດຕາມລາຍລະອຽດກິດຈະກໍາ
+forward also to	admin	lo	ສົ່ງຕໍ່ໄປຫາ
+forward only	admin	lo	ສົ່ງຕໍ່ເທົ່ານັ້ນ
+in mbyte	admin	lo	ໃນ Mbyte
+leave empty for no quota	admin	lo	ອອກຈາກລະບົບສໍາລັບບໍ່ມີໂກຕ້າ
 mail settings	admin	lo	ຕັ້ງຄ່າ mail
-no alternate email address	emailadmin	lo	ບໍ່ມີ email ສະຫຼັບກັນ
-order	emailadmin	lo	Order
-postfix with ldap	emailadmin	lo	Postfix ດ້ວຍ LDAP
-qmaildotmode	emailadmin	lo	qmaildotmode
-quota settings	emailadmin	lo	ໂກຕ້າການຕັ້ງຄ່າ
-quota size in mbyte	emailadmin	lo	ຂະໜາດໂກຕ້າໃນ ເມກະໄບທ
-remove	emailadmin	lo	ລຶບອອກ
-standard	emailadmin	lo	ມາດຕະຖານ
-standard imap server	emailadmin	lo	ມາດຕະຖານ IMAP ເຊີເວີ້
-standard pop3 server	emailadmin	lo	ມາດຕະຖານ POP3 ເຊີເວີ້
-standard smtp-server	emailadmin	lo	ມາດຕະຖານ SMTP-ເຊີເວີ້
-use default	emailadmin	lo	ໃຊ້ຄ່າເລີ່ມຕົ້ນ
+no alternate email address	admin	lo	ບໍ່ມີ email ສະຫຼັບກັນ
+order	admin	lo	Order
+postfix with ldap	admin	lo	Postfix ດ້ວຍ LDAP
+qmaildotmode	admin	lo	qmaildotmode
+quota settings	admin	lo	ໂກຕ້າການຕັ້ງຄ່າ
+quota size in mbyte	admin	lo	ຂະໜາດໂກຕ້າໃນ ເມກະໄບທ
+remove	admin	lo	ລຶບອອກ
+standard	admin	lo	ມາດຕະຖານ
+standard imap server	admin	lo	ມາດຕະຖານ IMAP ເຊີເວີ້
+standard pop3 server	admin	lo	ມາດຕະຖານ POP3 ເຊີເວີ້
+standard smtp-server	admin	lo	ມາດຕະຖານ SMTP-ເຊີເວີ້
+use default	admin	lo	ໃຊ້ຄ່າເລີ່ມຕົ້ນ

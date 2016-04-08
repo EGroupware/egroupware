@@ -361,37 +361,37 @@ you must enter an application name.	admin	eu	Aplikazioari izen bat eman behar di
 you must enter an application title.	admin	eu	Aplikazioari izenburu bat jarri behar diozu.
 you must select a file type	admin	eu	Fitxategi mota bat aukeratu behar duzu
 your session could not be verified.	admin	eu	Zure saioa ezin izan da egiaztatu
-(no subject)	emailadmin	eu	(gai gabe)
-advanced options	emailadmin	eu	Aukera aurreratuak
-alternate email address	emailadmin	eu	Helbide elektroniko alternatiboa
-bad login name or password.	emailadmin	eu	Izen edo pasahitz okerra
-default	emailadmin	eu	Lehenetsia
-email address	emailadmin	eu	Helbide elektronikoa
-encrypted connection	emailadmin	eu	konexioa enkriptatua
-entry saved	emailadmin	eu	Sarrera gordeta
-error saving the entry!!!	emailadmin	eu	Errorea sarrera gordetzerakoan
-event details follow	emailadmin	eu	Gertakariaren detaileak
-imap server	emailadmin	eu	IMAP Zerbitzaria
-imap server closed the connection.	emailadmin	eu	IMAP zerbitzariak konexioa itxi du
-in mbyte	emailadmin	eu	MByte-sen
-leave empty for no quota	emailadmin	eu	zurian utzi kuotarik ez badago
+(no subject)	admin	eu	(gai gabe)
+advanced options	admin	eu	Aukera aurreratuak
+alternate email address	admin	eu	Helbide elektroniko alternatiboa
+bad login name or password.	admin	eu	Izen edo pasahitz okerra
+default	admin	eu	Lehenetsia
+email address	admin	eu	Helbide elektronikoa
+encrypted connection	admin	eu	konexioa enkriptatua
+entry saved	admin	eu	Sarrera gordeta
+error saving the entry!!!	admin	eu	Errorea sarrera gordetzerakoan
+event details follow	admin	eu	Gertakariaren detaileak
+imap server	admin	eu	IMAP Zerbitzaria
+imap server closed the connection.	admin	eu	IMAP zerbitzariak konexioa itxi du
+in mbyte	admin	eu	MByte-sen
+leave empty for no quota	admin	eu	zurian utzi kuotarik ez badago
 mail settings	admin	eu	Posta elektronikoaren konfigurazioa
-no alternate email address	emailadmin	eu	ez da ordezko helbide elektronikorik
-no message returned.	emailadmin	eu	Ez da mezurik itzuli
-order	emailadmin	eu	Ordena
-organisation	emailadmin	eu	antolaketa
-port	emailadmin	eu	ataka
-postfix with ldap	emailadmin	eu	Postfix-ak LDAP-arekin
-quota settings	emailadmin	eu	kuotaren konfigurazioa
-quota size in mbyte	emailadmin	eu	kuotaren tamaina MBytes-etan
-remove	emailadmin	eu	ezabatu
-sieve settings	emailadmin	eu	SIEVE ren lehentasunak
-smtp settings	emailadmin	eu	SMTP lehentasunak
-standard	emailadmin	eu	estandar
-standard imap server	emailadmin	eu	IMAP zerbitzari estandarra
-standard pop3 server	emailadmin	eu	POP3 zerbitzari estandarra
-standard smtp-server	emailadmin	eu	SMTP zerbitzari estandarra
-this php has no imap support compiled in!!	emailadmin	eu	PHParendako IMAPa konpilatu gabe
-use default	emailadmin	eu	Lehenetsia erabili
-use smtp auth	emailadmin	eu	SMTP autentifikazioa erabili
-users can define their own emailaccounts	emailadmin	eu	Erabiltzaileek euren posta kontuak defini ditzazkete
+no alternate email address	admin	eu	ez da ordezko helbide elektronikorik
+no message returned.	admin	eu	Ez da mezurik itzuli
+order	admin	eu	Ordena
+organisation	admin	eu	antolaketa
+port	admin	eu	ataka
+postfix with ldap	admin	eu	Postfix-ak LDAP-arekin
+quota settings	admin	eu	kuotaren konfigurazioa
+quota size in mbyte	admin	eu	kuotaren tamaina MBytes-etan
+remove	admin	eu	ezabatu
+sieve settings	admin	eu	SIEVE ren lehentasunak
+smtp settings	admin	eu	SMTP lehentasunak
+standard	admin	eu	estandar
+standard imap server	admin	eu	IMAP zerbitzari estandarra
+standard pop3 server	admin	eu	POP3 zerbitzari estandarra
+standard smtp-server	admin	eu	SMTP zerbitzari estandarra
+this php has no imap support compiled in!!	admin	eu	PHParendako IMAPa konpilatu gabe
+use default	admin	eu	Lehenetsia erabili
+use smtp auth	admin	eu	SMTP autentifikazioa erabili
+users can define their own emailaccounts	admin	eu	Erabiltzaileek euren posta kontuak defini ditzazkete
