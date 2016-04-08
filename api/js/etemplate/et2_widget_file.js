@@ -180,7 +180,9 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 					$j(span).removeClass('et2_file_spanActive');
 				}
 			});
-
+		var self = this;
+		// trigger native input upload file
+		this.span.click(function(){self.input.click()});
 		// Check for File interface, should fall back to normal form submit if missing
 		if(typeof File != "undefined" && typeof (new XMLHttpRequest()).upload != "undefined")
 		{
