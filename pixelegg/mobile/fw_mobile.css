@@ -7889,9 +7889,8 @@ form[id^="tracker-"] .dialogHeadbar {
     font-size: 18pt;
   }
   body .et2_link_to div {
-    height: 40px;
+    height: 46px;
     padding-bottom: 3px;
-    width: 99% !important;
   }
   body .et2_link_to .et2_file {
     margin: 0;
@@ -7900,7 +7899,15 @@ form[id^="tracker-"] .dialogHeadbar {
   body .et2_link_to .et2_file .et2_file_span,
   body .et2_link_to .et2_file .et2_file_spanHover,
   body .et2_link_to .et2_file .et2_file_upload {
-    height: 25px !important;
+    height: 46px;
+    width: 46px;
+  }
+  body .et2_link_to.et2_toolbar div.et2_file {
+    width: 46px;
+  }
+  body .et2_link_to.et2_toolbar button.et2_vfs_btn {
+    width: 46px;
+    height: 46px !important;
   }
   body .chzn-container ul.chzn-choices {
     background: none;
