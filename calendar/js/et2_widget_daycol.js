@@ -998,20 +998,37 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 	click: function(_ev)
 	{
 		// Click on the title
-		if ($j(_ev.target).hasClass('calendar_calAddEvent') && !_ev.target.dataset.whole_day)
+		if ($j(_ev.target).hasClass('calendar_calAddEvent'))
 		{
-			// Default handler to open a new event at the selected time
-			var options = {
-				date: _ev.target.dataset.date || this.options.date,
-				hour: _ev.target.dataset.hour || this._parent.options.day_start,
-				minute: _ev.target.dataset.minute || 0
-			};
-			if (this.options.owner != app.calendar.state.owner)
+			if(!_ev.target.dataset.whole_day)
 			{
-				options.owner = this.options.owner;
+				// Default handler to open a new event at the selected time
+				var options = {
+					date: _ev.target.dataset.date || this.options.date,
+					hour: _ev.target.dataset.hour || this._parent.options.day_start,
+					minute: _ev.target.dataset.minute || 0
+				};
+				if (this.options.owner != app.calendar.state.owner)
+				{
+					options.owner = this.options.owner;
+				}
+				this.egw().open(null, 'calendar', 'add', options, '_blank');
+				return false;
 			}
-			this.egw().open(null, 'calendar', 'add', options, '_blank');
-			return false;
+			// Header, all day non-blocking
+			else if (this.header.has(_ev.target).length && !$j('.hiddenEventBefore',this.header).has(_ev.target).length ||
+			this.header.is(_ev.target)
+			)
+			{
+				// Click on the header, but not the title.  That's an all-day non-blocking
+				var end = this.date.getFullYear() + '-' + (this.date.getUTCMonth()+1) + '-' + this.date.getUTCDate() + 'T23:59';
+				this.egw().open(null, 'calendar', 'add', {
+					start: this.date.toJSON(),
+					end: end,
+					non_blocking: true
+				} , '_blank');
+				return false;
+			}
 		}
 		// Day label
 		else if(this.title.is(_ev.target) || this.title.has(_ev.target))
@@ -1019,20 +1036,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
 			return false;
 		}
-		// Header, but not the hidden event indicators that are in there
-		else if (this.header.has(_ev.target).length && !$j('.hiddenEventBefore',this.header).has(_ev.target).length ||
-			this.header.is(_ev.target)
-		)
-		{
-			// Click on the header, but not the title.  That's an all-day non-blocking
-			var end = this.date.getFullYear() + '-' + (this.date.getUTCMonth()+1) + '-' + this.date.getUTCDate() + 'T23:59';
-			this.egw().open(null, 'calendar', 'add', {
-				start: this.date.toJSON(),
-				end: end,
-				non_blocking: true
-			} , '_blank');
-			return false;
-		}
+		
 	},
 
 	/**
