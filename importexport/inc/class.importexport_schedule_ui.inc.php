@@ -85,6 +85,7 @@
 		public function edit($content = array()) {
 			$id = $_GET['id'] ? urldecode($_GET['id']) : $content['id'];
 			$definition_id = $_GET['definition'];
+			$async = new asyncservice();
 
 			unset($content['id']);
 
@@ -93,7 +94,7 @@
 			// Deal with incoming
 			if($content['save'] && self::check_target($content) === true) {
 				unset($content['save']);
-				ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
+				$async->cancel_timer($id);
 				$id = self::generate_id($content);
 				$schedule = $content['schedule'];
 				// Async sometimes changes minutes to an array - keep what user typed
@@ -104,7 +105,7 @@
 				foreach($schedule as $key => &$value) {
 					if($value == '') unset($schedule[$key]);
 				}
-				$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
+				$result = $async->set_timer(
 					$schedule,
 					$id,
 					'importexport.importexport_schedule_ui.exec',
@@ -121,7 +122,7 @@
 
 			if($id) {
 				$preserve['id'] = $id;
-				$async = ExecMethod('phpgwapi.asyncservice.read', $id);
+				$async = $async->read($id);
 				if(is_array($async[$id]['data'])) {
 					$data += $async[$id]['data'];
 					$data['schedule'] = $async[$id]['times'];
@@ -158,7 +159,7 @@
 			$data['current_time'] = time();
 
 			$sel_options = self::get_select_options($data);
-			$GLOBALS['egw']->js->validate_file('.','importexport','importexport');
+			egw_framework::validate_file('.','importexport','importexport');
 
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Schedule import / export');
 			$this->template->read('importexport.schedule_edit');
