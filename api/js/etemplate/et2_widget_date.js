@@ -362,6 +362,17 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 			}
 			else
 			{
+				// Check for full timestamp
+				if(typeof _value == 'string' && _value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(?:\.\d{3})?(?:Z|[+-](\d{2})\:(\d{2}))/))
+				{
+					_value = new Date(_value);
+					// Add timezone offset back in, or formatDate will lose those hours
+					var formatDate = new Date(_value + this.date.getTimezoneOffset() * 60 * 1000);
+					if(this._type == 'date')
+					{
+						_value = jQuery.datepicker.formatDate(this.dateFormat, formatDate);
+					}
+				}
 				this.input_date.datepicker('option','minDate',_value);
 			}
 		}
@@ -405,6 +416,17 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 			}
 			else
 			{
+				// Check for full timestamp
+				if(typeof _value == 'string' && _value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(?:\.\d{3})?(?:Z|[+-](\d{2})\:(\d{2}))/))
+				{
+					_value = new Date(_value);
+					// Add timezone offset back in, or formatDate will lose those hours
+					var formatDate = new Date(_value + this.date.getTimezoneOffset() * 60 * 1000);
+					if(this._type == 'date')
+					{
+						_value = jQuery.datepicker.formatDate(this.dateFormat, formatDate);
+					}
+				}
 				this.input_date.datepicker('option','maxDate',_value);
 			}
 		}
