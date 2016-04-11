@@ -2612,9 +2612,6 @@ div.mailComposeHeaderSection > table {
     border: none;
     box-shadow: none;
   }
-  body #mail-compose span#cke_1_top {
-    display: none;
-  }
   body #mail-compose .mailComposeHeaderSection > table {
     padding: 0;
   }
