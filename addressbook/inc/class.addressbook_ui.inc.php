@@ -1979,6 +1979,9 @@ window.egw_LAB.wait(function() {
 					{
 						egw_link::link('addressbook',$content['id'],$links);
 					}
+					// Update client side global datastore
+					$response = egw_json_response::get();
+					$response->generic('data', array('uid' => 'addressbook::'.$content['id'], 'data' => $content));
 					egw_framework::refresh_opener($content['msg'], 'addressbook', $content['id'],  $content['id'] ? 'edit' : 'add',
 						null, null, null, $this->error ? 'error' : 'success');
 

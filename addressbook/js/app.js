@@ -90,6 +90,49 @@ app.classes.addressbook = AppJS.extend(
 		});
 	},
 
+/**
+	 * Observer method receives update notifications from all applications
+	 *
+	 * App is responsible for only reacting to "messages" it is interested in!
+	 *
+	 * Addressbook checks for CRM view to update the displayed data if you edit
+	 * that contact
+	 *
+	 * @param {string} _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param {string} _app application name
+	 * @param {(string|number)} _id id of entry to refresh or null
+	 * @param {string} _type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param {string} _msg_type 'error', 'warning' or 'success' (default)
+	 * @param {object|null} _links app => array of ids of linked entries
+	 * or null, if not triggered on server-side, which adds that info
+	 * @return {false|*} false to stop regular refresh, thought all observers are run
+	 */
+	observer: function(_msg, _app, _id, _type, _msg_type, _links)
+	{
+		// Edit to the current entry
+		var state = this.getState();
+		if(_app === 'addressbook' && state && state.type && state.type === 'view' && state.id === _id)
+		{
+			var content = egw.dataGetUIDdata('addressbook::'+_id);
+			if (content.data)
+			{
+				var view = etemplate2.getById('addressbook-view');
+				if(view)
+				{
+					view.widgetContainer._children[0].set_value({content:content.data});
+				}
+			}
+			return false;
+		}
+
+		return true;
+	},
+
 	/**
 	 * Open CRM view
 	 *
