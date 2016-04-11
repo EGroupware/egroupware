@@ -321,7 +321,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		else
 		{
-			$this->tmpl->disableElement('col_filter[tid]');
+			$this->tmpl->disableElement('nm[col_filter][tid]');
 		}
 		// get the availible org-views plus the label of the contacts view of one org
 		$sel_options['org_view'] = $this->org_views;
