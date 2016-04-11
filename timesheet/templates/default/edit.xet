@@ -62,9 +62,6 @@
 				<column width="99%"/>
 			</columns>
 			<rows>
-				<row class="th" disabled="@view">
-					<description value="Create new links"/>
-				</row>
 				<row class="row" disabled="@status_only">
 					<link-to id="link_to"/>
 				</row>

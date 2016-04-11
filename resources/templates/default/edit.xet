@@ -91,9 +91,6 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th">
-					<description value="Create new links" span="all"/>
-				</row>
 				<row class="row">
 					<link-to id="link_to" span="all"/>
 				</row>

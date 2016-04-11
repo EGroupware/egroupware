@@ -314,9 +314,6 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th" disabled="@view">
-					<description value="Create new links"/>
-				</row>
 				<row>
 					<link-to id="link_to"/>
 				</row>

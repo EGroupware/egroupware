@@ -12,9 +12,6 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th" disabled="@status_only">
-					<description value="Create new links" span="all"/>
-				</row>
 				<row class="row" disabled="@status_only">
 					<link-to id="link_to" span="all"/>
 				</row>
