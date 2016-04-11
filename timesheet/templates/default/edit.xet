@@ -5,13 +5,13 @@
 	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%" >
 			<columns>
-				<column width="72"/>
-				<column width="192"/>
+				<column width="92"/>
+				<column width="185"/>
 				<column width="30"/>
-				<column width="95" disabled="@ts_viewtype"/>
-				<column width="130" disabled="@ts_viewtype"/>
-				<column width="40"/>
+				<column width="92" disabled="@ts_viewtype"/>
+				<column width="105" disabled="@ts_viewtype"/>
 				<column width="30"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row>
@@ -88,14 +88,13 @@
 	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
-				<column width="78"/>
-				<column width="200"/>
+				<column width="100"/>
+				<column width="185"/>
 				<column width="30"/>
-				<column width="97"/>
-				<column width="120"/>
-				<column width="40"/>
+				<column width="100"/>
+				<column width="105"/>
 				<column width="30"/>
-				<column width="4"/>
+				<column width="50"/>
 			</columns>
 			<rows>
 				<row disabled="@ts_viewtype" class="dialogHeader">
@@ -103,23 +102,20 @@
 					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="255" class="et2_fullWidth et2_required" tabindex="1" span="4"/>
 					<textbox type="integer" id="ts_id" readonly="true"/>
 					<appicon src="timesheet"/>
-                    <description/>
 				</row>
 				<row class="dialogHeader2">
 					<description value="Date" for="ts_start"/>
 					<date id="ts_start" needed="1" options=",8" class="et2_fullWidth"/>
 					<description/>
 					<description value="Starttime"/>
-					<date-timeonly id="start_time" options="H:i"  class="et2_fullWidth" span="3"/>
-					<description/>
+					<date-timeonly id="start_time" options="H:i"  class="et2_fullWidth"/>
 				</row>
 				<row class="row dialogHeader3">
 					<description value="Duration" for="ts_duration"/>
 					<date-duration id="ts_duration" options=",hm" class="et2_fullWidth" />
 					<description/>
 					<description value="or endtime" class="et2_noWrap"/>
-					<date-timeonly id="end_time" options="H:i" class="et2_fullWidth" span="3"/>
-					<description/>
+					<date-timeonly id="end_time" options="H:i" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="165">

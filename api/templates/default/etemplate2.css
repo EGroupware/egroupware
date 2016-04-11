@@ -444,7 +444,7 @@ span.et2_date span {
   font-size: 9pt;
 }
 span.et2_date_duration input.et2_date_duration{
-	width: 5em;
+	width: 25%;
 }
 /* customize calendar layout */
 .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
