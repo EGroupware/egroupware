@@ -693,7 +693,6 @@ div.et2_link_entry select {
   margin-right: 10px;
 }
 div.et2_link_entry input.ui-autocomplete-input {
-  width: 40%;
   padding-bottom: 1px;
 }
 .et2_link_entry.no_app input.ui-autocomplete-input {
@@ -723,6 +722,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 .et2_link_to.et2_toolbar div.et2_link_entry input.ui-autocomplete-input {
 	height:22px;
 	border-radius: 3px;
+	width: 40%;
 }
 .et2_link_to.et2_toolbar .div_link {width:85%;vertical-align: top;}
 .et2_link_to.et2_toolbar .div_link select {margin-right: 4px;}
