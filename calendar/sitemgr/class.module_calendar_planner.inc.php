@@ -155,7 +155,7 @@ class module_calendar_planner extends Module
 		asort($groups);
 		asort($users);
 		// concat users and groups to the option array.
-		$this->arguments['owner']['options'] = $groups + $users;
+		$this->arguments['owner']['options'] = array_unique($groups + $users);
 		if (count($this->arguments['owner']['options']) > 10)
 		{
 			$this->arguments['owner']['multiple'] = 10;
@@ -181,6 +181,7 @@ class module_calendar_planner extends Module
 				$this->arguments['resources']['options'][$type.$key] = $value;
 			}
 		}
+		$this->arguments['resources']['options'] = array_unique($this->arguments['resources']['options']);
 		$this->arguments['resources']['multiple'] = count($this->arguments['resources']['options']) ? 4 : 0;
 
 		return parent::get_user_interface();
