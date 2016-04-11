@@ -46,13 +46,13 @@
 				<buttononly label="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" options="linkpaste,linkpaste_disabled"/>
 				<buttononly label="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" options="mailpaste,mailpaste_disabled"/>
 				<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
-				
+
 			</hbox>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
 		<nextmatch id="nm" template="filemanager.index.rows" header_left="filemanager.index.header_left" />
 		<hbox>
-			<file statustext="Select file to upload in current directory" value=" " class="plus_button" id="upload" progress_dropdownlist = "true" drop_target ="divAppbox" multiple="true" onFinishOne="app.filemanager.uploadOnOne"/>
+			<file label="" statustext="Select file to upload in current directory" value=" " class="plus_button" id="upload" progress_dropdownlist = "true" drop_target ="divAppbox" multiple="true" onFinishOne="app.filemanager.uploadOnOne"/>
 		</hbox>
 	</template>
 </overlay>
