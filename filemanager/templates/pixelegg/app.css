@@ -147,6 +147,12 @@ input.displayNone {
   display: inline-block;
   overflow-y: scroll;
 }
+.mimeIcon {
+  width: 65px;
+}
+.previewImage {
+  width: 100%;
+}
 /*/*****************************************************************
 // sidebar
 
@@ -314,7 +320,7 @@ div#stylite-filemanager-upload .dialogFooterToolbar button {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;

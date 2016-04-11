@@ -118,3 +118,6 @@ table.egwGridView_grid .tile .file_tile {
 	display: inline-block;
 	overflow-y: scroll;
 }
+
+.mimeIcon {width:65px;}
+.previewImage {width:100%;}
