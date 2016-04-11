@@ -162,6 +162,10 @@ var et2_portlet = (function(){ "use strict"; return et2_valueWidget.extend(
 		this._super.apply(this, arguments);
 	},
 
+	doLoadingFinished: function() {
+		this.set_color(this.options.color);
+	},
+
 	/**
 	 * If anyone asks, return the content node, so content goes inside
 	 */
@@ -364,7 +368,9 @@ var et2_portlet = (function(){ "use strict"; return et2_valueWidget.extend(
 	 */
 	set_color: function(color)
 	{
+		this.options.color = color;
 		this.header.css("backgroundColor", color);
+		this.header.css('color', jQuery.Color(this.header.css("backgroundColor")).lightness() > 0.5 ? 'black':'white');
 		this.content.css("backgroundColor", color);
 	},
 
