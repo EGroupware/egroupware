@@ -234,6 +234,9 @@
 	html *{touch-action:auto;-webkit-overflow-scrolling: touch;}
 	body
 	{
+		/* Stop pull-to-refresh on chrome*/
+		overflow-y: hidden;
+
 		button[id*="save"]:hover,
 		button[id*="apply"]:hover,
 		button[id*="copy"]:hover,

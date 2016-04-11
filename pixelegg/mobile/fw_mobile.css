@@ -7058,6 +7058,8 @@ form[id^="tracker-"] .dialogHeadbar {
     -webkit-overflow-scrolling: touch;
   }
   body {
+    /* Stop pull-to-refresh on chrome*/
+    overflow-y: hidden;
     /*Notification popup*/
     /*Chosen*/
     /* View mode styles*/
