@@ -582,7 +582,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		}
 		else
 		{
-			if(this.find_multi_option(_value[i]).prop("checked", true).length == 0)
+			if(this.find_multi_option(_value).prop("checked", true).length == 0)
 			{
 				var debug_value = _value;
 				if(debug_value === null) debug_value == 'NULL';
