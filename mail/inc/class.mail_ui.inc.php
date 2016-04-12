@@ -96,7 +96,7 @@ class mail_ui
 		'text'		=> 'whole message',	// lang('whole message')
 		'larger'		=> 'greater than',	// lang('greater than')
 		'smaller'		=> 'less than',	// lang('less than')
-//		'custom' 	=> 'Selected range',// lang('Selected range')
+		'bydate' 	=> 'Selected date range (with quicksearch)',// lang('Selected date range (with quicksearch)')
 	);
 
 	/**
@@ -541,6 +541,8 @@ class mail_ui
 				$content[self::$nm_index]['filter2'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails'];
 
 				$etpl = new etemplate_new('mail.index');
+				//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
+				$content[self::$nm_index]['cat_id_onchange'] = "app.mail.mail_searchtype_change()";
 				// Start at 2 so auto-added copy+paste actions show up as second group
 				// Needed because there's no 'select all' action to push things down
 				$group=1;
@@ -1283,7 +1285,6 @@ class mail_ui
 			$mail_ui = new mail_ui(true);	// run constructor for current profile
 			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->profileID.self::$delimiter.'INBOX';
 		}
-
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
 		//Mail::$debugTimes=true;
 		if (Mail::$debugTimes) $starttime = microtime(true);
@@ -1322,7 +1323,7 @@ class mail_ui
 		$maxMessages = $query['num_rows'];
 		//error_log(__METHOD__.__LINE__.array2string($query));
 		$sort = ($query['order']=='address'?($toSchema?'toaddress':'fromaddress'):$query['order']);
-		if (!empty($query['search']))
+		if (!empty($query['search'])||($query['cat_id']=='bydate' && (!empty($query['startdate'])||!empty($query['enddate']))))
 		{
 			if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]))
 			{
@@ -1332,8 +1333,11 @@ class mail_ui
 					Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]=true;
 				}
 			}
-			//$cutoffdate = egw_time::to('now','ts')-(3600*24*3);//SINCE, enddate
-			//$cutoffdate2 = egw_time::to('now','ts');//-(3600*24*2);//BEFORE, startdate
+			//error_log(__METHOD__.__LINE__.' Startdate:'.$query['startdate'].' Enddate'.$query['enddate']);
+			$cutoffdate = $cutoffdate2 = null;
+			if ($query['startdate']) $cutoffdate = egw_time::to($query['startdate'],'ts');//SINCE, enddate
+			if ($query['enddate']) $cutoffdate2 = egw_time::to($query['enddate'],'ts');//BEFORE, startdate
+			//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
 			$filter = array(
 				'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
 				'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
@@ -1341,6 +1345,17 @@ class mail_ui
 				'status' => 'any',
 				//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
 			);
+			if ($query['enddate']||$query['startdate']) {
+				$filter['range'] = "BETWEEN";
+				if ($cutoffdate) {
+					$filter[(empty($cutoffdate2)?'date':'since')] =  date("d-M-Y", $cutoffdate);
+					if (empty($cutoffdate2)) $filter['range'] = "SINCE";
+				}
+				if ($cutoffdate2) {
+					$filter[(empty($cutoffdate)?'date':'before')] =  date("d-M-Y", $cutoffdate2);
+					if (empty($cutoffdate)) $filter['range'] = "BEFORE";
+				}
+			}
 		}
 		else
 		{

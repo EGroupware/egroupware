@@ -168,7 +168,6 @@ app.classes.mail = AppJS.extend(
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
 				this.mail_disablePreviewArea(true);
-
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
 
@@ -184,8 +183,9 @@ app.classes.mail = AppJS.extend(
 					tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 					tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
 				}
-				// Show vacation notice on load for the current profile
-				this.mail_callRefreshVacationNotice();
+				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
+				var alreadyrefreshed = this.mail_searchtype_change();
+				if (!alreadyrefreshed) this.mail_callRefreshVacationNotice();
 				break;
 			case 'mail.display':
 				var self = this;
@@ -1214,6 +1214,42 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Enable or disable the date filter
+	 *
+	 * If the searchtype (cat_id) is set to something that needs dates, we enable the
+	 * header_right template.  Otherwise, it is disabled.
+	 */
+	mail_searchtype_change: function()
+	{
+		var filter = this.et2.getWidgetById('cat_id');
+		var nm = this.et2.getWidgetById(this.nm_index);
+		var dates = this.et2.getWidgetById('mail.index.datefilter');
+		if(nm && filter)
+		{
+			switch(filter.getValue())
+			{
+				case 'bydate':
+
+					if (filter && dates)
+					{
+						dates.set_disabled(false);
+						if (this.et2.getWidgetById('startdate')) jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
+					}
+					this.mail_callRefreshVacationNotice();
+					return true;
+				default:
+					if (dates)
+					{
+						dates.set_disabled(true);
+					}
+					this.mail_callRefreshVacationNotice();
+					return true;
+			}
+		}
+		return false;
+	},
+
+	/**
 	 * mail_refreshFilter2Options, function to call with appropriate data to refresh the filter2 options for the active server
 	 *
 	 * @param {object} _data
@@ -1261,14 +1297,14 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * mail_refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
+	 * mail_refreshCatIdOptions, function to call with appropriate data to refresh the filter options for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
 	mail_refreshCatIdOptions: function(_data)
 	{
-		//alert('mail_refreshFilterOptions');
+		//alert('mail_refreshCatIdOptions');
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
@@ -1490,8 +1526,9 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param {boolean} _isPopup
 	 */
-	mail_refreshMessageGrid: function(_isPopup) {
+	mail_refreshMessageGrid: function(_isPopup, _refreshVacationNotice) {
 		if (typeof _isPopup == 'undefined') _isPopup = false;
+		if (typeof _refreshVacationNotice == 'undefined') _refreshVacationNotice = false;
 		var nm;
 		if (_isPopup && !this.mail_isMainWindow)
 		{
@@ -1501,7 +1538,25 @@ app.classes.mail = AppJS.extend(
 		{
 			nm = this.et2.getWidgetById(this.nm_index);
 		}
+		var dates = this.et2.getWidgetById('mail.index.datefilter');
+		var filter = this.et2.getWidgetById('cat_id');
+		if(nm && filter)
+		{
+			nm.activeFilters["startdate"]=null;
+			nm.activeFilters["enddate"]=null;
+			switch(filter.getValue())
+			{
+				case 'bydate':
+
+					if (filter && dates)
+					{
+						if (this.et2.getWidgetById('startdate') && this.et2.getWidgetById('startdate').get_value()) nm.activeFilters["startdate"] = this.et2.getWidgetById('startdate').date;
+						if (this.et2.getWidgetById('enddate') && this.et2.getWidgetById('enddate').get_value()) nm.activeFilters["enddate"] = this.et2.getWidgetById('enddate').date;
+					}
+			}
+		}
 		nm.applyFilters(); // this should refresh the active folder
+		if (_refreshVacationNotice) this.mail_callRefreshVacationNotice();
 	},
 
 	/**

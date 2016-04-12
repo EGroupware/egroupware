@@ -662,6 +662,9 @@ div.mailPreviewHeaders div.mail_extraEmails {
 #mail-index div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject > span {
   white-space: nowrap;
 }
+#mail-index_mail-index-header_right {
+  display: inline-flex;
+}
 div.mailPreviewHeaders div.mail_extraEmails.visible,
 div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
   position: absolute;
