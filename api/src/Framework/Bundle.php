@@ -138,6 +138,7 @@ class Bundle
 		$query = null;
 		foreach($js_includes as $path)
 		{
+			if ($path == '/api/js/jsapi/egw.js') continue; // Leave egw.js out of bundle
 			unset($query);
 			list($path,$query) = explode('?',$path,2);
 			$mod = filemtime(EGW_SERVER_ROOT.$path);
