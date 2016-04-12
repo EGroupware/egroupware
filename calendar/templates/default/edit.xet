@@ -229,7 +229,7 @@
 					<label for="location" value="Location"/>
 					<textbox id="location" maxlength="255" class="et2_fullWidth" span="2"/>
 					<description/>
-					<taglist-cat id="category" height="190" empty_label="Categories" multiple="toggle" class="et2_fullWidth" />
+					<taglist-cat id="category" height="190" empty_label="Categories" multiple="toggle" class="et2_fullWidth" rows="1" />
 				</row>
 				<row>
 					<tabbox id="tabs" span="all" tab_height="260">
