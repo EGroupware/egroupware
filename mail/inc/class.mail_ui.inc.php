@@ -427,29 +427,25 @@ class mail_ui
 					);
 					if (!is_array($content[self::$nm_index]))
 					{
+						// These only set on first load
 						$content[self::$nm_index] = array(
 							'filter'         => 'any',	// filter is used to choose the mailbox
-							'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
-							'no_cat'         => false,	// I  disable the cat-selectbox
 							'lettersearch'   => false,	// I  show a lettersearch
 							'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
 							'start'          =>	0,		// IO position in list
 							'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
 							'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
-							//'default_cols'   => 'status,attachments,subject,'.($toSchema?'toaddress':'fromaddress').',date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-							//'default_cols'   => 'status,attachments,subject,address,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-							//'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
-											//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
-							'actions'        => self::get_actions(),
-							'row_id'         => 'row_id', // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
-							'placeholder_actions' => array('composeasnew'),
-
 						);
 					}
 					if (html::$ua_mobile) $content[self::$nm_index]['header_row'] = 'mail.index.header_right';
 				}
 
-				$content[self::$nm_index]['cat_is_select'] = true;
+				// These must always be set, even if $content is an array
+				$content[self::$nm_index]['cat_is_select'] = true;    // Category select is just a normal selectbox
+				$content[self::$nm_index]['no_filter2'] = true;       // Disable second filter
+				$content[self::$nm_index]['actions'] = self::get_actions();
+				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
+				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
 				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
 				$content[self::$nm_index]['num_rows'] = 0;      // Do not send any rows with initial request
 				$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
