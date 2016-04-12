@@ -72,10 +72,10 @@ div.addressbook_edit_general_picture img {
 }
 input.et2_radiobox {
 	position: relative;
-	left: -16px;
+	left: 7px;
 }
 #addressbook-edit_tel_prefer-tel_work, #addressbook-edit_tel_prefer-tel_cell {
-	left: -13px;
+	left: 7px;
 }
 #addressbook-edit_memberships + .chzn-container .chzn-results {
 	max-height: 85px;
