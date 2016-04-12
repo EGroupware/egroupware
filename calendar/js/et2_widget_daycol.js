@@ -592,7 +592,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			}
 			// Only top is hidden, move label
 			// Bottom hidden is fine
-			if(hidden.hidden === 'top' && !hidden.completely)
+			if(hidden.hidden === 'top' && !hidden.completely && !event.div.hasClass('calendar_calEventSmall'))
 			{
 				var title_height = event.title.outerHeight();
 				event.title.css({
