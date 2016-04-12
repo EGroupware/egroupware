@@ -29,8 +29,8 @@ class home_tutorial_ui
 	function popup ($content=null)
 	{
 		// check and if not done register tutorial_menu hook
-		if (!$GLOBALS['egw']->hooks->hook_exists('sidebox_all', 'home') ||
-			$GLOBALS['egw']->hooks->locations['sidebox_all']['home'] != 'home_tutorial_ui::tutorial_menu')
+		if (!EGroupware\Api\Hooks::exists('sidebox_all', 'home') ||
+			EGroupware\Api\Hooks::exists('sidebox_all', 'home', true) != 'home_tutorial_ui::tutorial_menu')
 		{
 			$setup_info = array();
 			include(EGW_SERVER_ROOT.'/home/setup/setup.inc.php');
