@@ -2109,7 +2109,11 @@ app.classes.mail = AppJS.extend(
 		var obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
 		if (obj_manager && obj_manager.manager && obj_manager.manager.data && obj_manager.manager.data.nextmatch && obj_manager.manager.data.nextmatch.activeFilters)
 		{
-			return obj_manager.manager.data.nextmatch.activeFilters;
+			var af = obj_manager.manager.data.nextmatch.activeFilters;
+			// merge startdate and enddate into the active filters (if set)
+			if (this.et2.getWidgetById('startdate') && this.et2.getWidgetById('startdate').get_value()) af["startdate"] = this.et2.getWidgetById('startdate').date;
+			if (this.et2.getWidgetById('enddate') && this.et2.getWidgetById('enddate').get_value()) af["enddate"] = this.et2.getWidgetById('enddate').date;
+			return af;
 		}
 		return false;
 	},
