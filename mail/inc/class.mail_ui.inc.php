@@ -431,7 +431,6 @@ class mail_ui
 							'filter'         => 'any',	// filter is used to choose the mailbox
 							'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
 							'no_cat'         => false,	// I  disable the cat-selectbox
-							'cat_is_select'	 => true, // true or no_lang
 							'lettersearch'   => false,	// I  show a lettersearch
 							'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
 							'start'          =>	0,		// IO position in list
@@ -450,6 +449,7 @@ class mail_ui
 					if (html::$ua_mobile) $content[self::$nm_index]['header_row'] = 'mail.index.header_right';
 				}
 
+				$content[self::$nm_index]['cat_is_select'] = true;
 				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
 				$content[self::$nm_index]['num_rows'] = 0;      // Do not send any rows with initial request
 				$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
