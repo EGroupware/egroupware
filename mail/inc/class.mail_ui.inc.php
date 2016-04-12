@@ -4433,7 +4433,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
 				{
 					$query = $_messageList['activeFilters'];
-					if (!empty($query['search']) || !empty($query['filter']))
+					if (!empty($query['search']) || !empty($query['filter'])||($query['cat_id']=='bydate' && (!empty($query['startdate'])||!empty($query['enddate']))))
 					{
 						//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
 						if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
@@ -4441,7 +4441,30 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							Mail::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
 							if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
-						$filter = $filter2toggle = array('filterName' => (Mail::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => 'any');
+						//error_log(__METHOD__.__LINE__.' Startdate:'.$query['startdate'].' Enddate'.$query['enddate']);
+						$cutoffdate = $cutoffdate2 = null;
+						if ($query['startdate']) $cutoffdate = egw_time::to($query['startdate'],'ts');//SINCE, enddate
+						if ($query['enddate']) $cutoffdate2 = egw_time::to($query['enddate'],'ts');//BEFORE, startdate
+						//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
+						$filter = array(
+							'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
+							'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
+							'string' => $query['search'],
+							'status' => 'any',//this is a status change. status will be manipulated later on
+							//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
+						);
+						if ($query['enddate']||$query['startdate']) {
+							$filter['range'] = "BETWEEN";
+							if ($cutoffdate) {
+								$filter[(empty($cutoffdate2)?'date':'since')] =  date("d-M-Y", $cutoffdate);
+								if (empty($cutoffdate2)) $filter['range'] = "SINCE";
+							}
+							if ($cutoffdate2) {
+								$filter[(empty($cutoffdate)?'date':'before')] =  date("d-M-Y", $cutoffdate2);
+								if (empty($cutoffdate)) $filter['range'] = "BEFORE";
+							}
+						}
+						$filter2toggle = $filter;
 					}
 					else
 					{
@@ -4598,7 +4621,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
 				{
 					$query = $_messageList['activeFilters'];
-					if (!empty($query['search']) || !empty($query['filter']))
+					if (!empty($query['search']) || !empty($query['filter'])||($query['cat_id']=='bydate' && (!empty($query['startdate'])||!empty($query['enddate']))))
 					{
 						//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
 						if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
@@ -4607,7 +4630,28 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
 						$filtered =  true;
-						$filter = array('filterName' => (Mail::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
+						$cutoffdate = $cutoffdate2 = null;
+						if ($query['startdate']) $cutoffdate = egw_time::to($query['startdate'],'ts');//SINCE, enddate
+						if ($query['enddate']) $cutoffdate2 = egw_time::to($query['enddate'],'ts');//BEFORE, startdate
+						//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
+						$filter = array(
+							'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
+							'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
+							'string' => $query['search'],
+							'status' => (!empty($query['filter'])?$query['filter']:'any'),
+							//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
+						);
+						if ($query['enddate']||$query['startdate']) {
+							$filter['range'] = "BETWEEN";
+							if ($cutoffdate) {
+								$filter[(empty($cutoffdate2)?'date':'since')] =  date("d-M-Y", $cutoffdate);
+								if (empty($cutoffdate2)) $filter['range'] = "SINCE";
+							}
+							if ($cutoffdate2) {
+								$filter[(empty($cutoffdate)?'date':'before')] =  date("d-M-Y", $cutoffdate2);
+								if (empty($cutoffdate)) $filter['range'] = "BEFORE";
+							}
+						}
 					}
 					else
 					{
@@ -4724,7 +4768,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
 				{
 					$query = $_messageList['activeFilters'];
-					if (!empty($query['search']) || !empty($query['filter']))
+					if (!empty($query['search']) || !empty($query['filter'])||($query['cat_id']=='bydate' && (!empty($query['startdate'])||!empty($query['enddate']))))
 					{
 						//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
 						if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
@@ -4733,7 +4777,28 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
 						}
 						$filtered = true;
-						$filter = array('filterName' => (Mail::$supportsORinQuery[$this->mail_bo->profileID]?lang('quicksearch'):lang('subject')),'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject')),'string' => $query['search'],'status' => (!empty($query['filter'])?$query['filter']:'any'));
+						$cutoffdate = $cutoffdate2 = null;
+						if ($query['startdate']) $cutoffdate = egw_time::to($query['startdate'],'ts');//SINCE, enddate
+						if ($query['enddate']) $cutoffdate2 = egw_time::to($query['enddate'],'ts');//BEFORE, startdate
+						//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
+						$filter = array(
+							'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
+							'type' => ($query['cat_id']?$query['cat_id']:(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?'quick':'subject')),
+							'string' => $query['search'],
+							'status' => (!empty($query['filter'])?$query['filter']:'any'),
+							//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
+						);
+						if ($query['enddate']||$query['startdate']) {
+							$filter['range'] = "BETWEEN";
+							if ($cutoffdate) {
+								$filter[(empty($cutoffdate2)?'date':'since')] =  date("d-M-Y", $cutoffdate);
+								if (empty($cutoffdate2)) $filter['range'] = "SINCE";
+							}
+							if ($cutoffdate2) {
+								$filter[(empty($cutoffdate)?'date':'before')] =  date("d-M-Y", $cutoffdate2);
+								if (empty($cutoffdate)) $filter['range'] = "BEFORE";
+							}
+						}
 					}
 					else
 					{
