@@ -345,14 +345,19 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 					});
 					$j('body').one('click',function() {
 						taglist.collapse();
-					});},1
+					});},100
 				);
 				this.$taglist.one('collapse', function() {
 					wrapper.remove();
-					widget.div.removeClass('expanded');
 				});
-			},this));
+			},this))
+			.on('collapse', function() {
+				widget.div.removeClass('expanded');
+			});
 
+		$j('.ms-trigger',this.div).on('click', function(e) {
+			e.stopPropagation();
+		})
 		// Unbind change handler of widget's ancestor to stop it from bubbling
 		// taglist has its own onchange
 		$j(this.getDOMNode()).unbind('change.et2_inputWidget');
