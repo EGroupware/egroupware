@@ -2044,6 +2044,7 @@ class Mail
 		if(!empty($_criterias['string'])) {
 			$criteria = strtoupper($_criterias['type']);
 			switch ($criteria) {
+				case 'BYDATE':
 				case 'QUICK':
 				case 'QUICKWITHCC':
 					$imapSearchFilter->headerText('SUBJECT', $_criterias['string'], $not=false);
