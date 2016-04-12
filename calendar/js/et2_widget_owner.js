@@ -67,9 +67,6 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 		var widget = this;
 		// onChange fired when losing focus, which is different from normal
 		this._oldValue = this.taglist.getValue();
-		this.$taglist
-			.on('focus', function() {widget.taglist.expand();});
-
 
 		return true;
 	},
