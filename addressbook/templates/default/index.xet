@@ -107,7 +107,11 @@
 					</vbox>
 					<description id="${row}[role]"/>
 					<listbox type="select-cat" id="${row}[cat_id]" readonly="true" rows="2"/>
-					<image src="${row}[photo]" class="iphoto"/>
+					<box>
+						<hbox class="avatar">
+							<image src="${row}[photo]" class="iphoto"/>
+						</hbox>
+					</box>
 					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
 					<vbox>
 						<description id="${row}[adr_one_street]" no_lang="1"/>
