@@ -417,6 +417,7 @@ select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, 
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager anhängen.
 select files to upload	mail	de	Dateien anhängen.
 selected	mail	de	ausgewählt
+selected date range (with quicksearch)	mail	de	Datumsbereich (mit Schnellsuche)
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
 send files as	mail	de	Dateien versenden als
 send message and move to send folder (if configured)	mail	de	Versende Nachricht und kopiere diese in den konfigurierten Gesendet Ordner
