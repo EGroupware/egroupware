@@ -240,9 +240,9 @@ class Favorites
 			$pref = $prefs->save_repository(false,$type);
 
 			// Update preferences client side, or it could disappear
-			Api\Json\Responseget()->call('egw.set_preferences', (array)$pref[$app], $app);
+			Api\Json\Response::get()->call('egw.set_preferences', (array)$pref[$app], $app);
 
-			Api\Json\Responseget()->data(isset($result[$app][$pref_name]));
+			Api\Json\Response::get()->data(isset($result[$app][$pref_name]));
 			return isset($result[$app][$pref_name]);
 		}
 		else if ($action == "delete")
@@ -251,9 +251,9 @@ class Favorites
 			$pref = $prefs->save_repository(false,$type);
 
 			// Update preferences client side, or it could come back
-			Api\Json\Responseget()->call('egw.set_preferences', (array)$pref[$app], $app);
+			Api\Json\Response::get()->call('egw.set_preferences', (array)$pref[$app], $app);
 
-			Api\Json\Responseget()->data(!isset($result[$app][$pref_name]));
+			Api\Json\Response::get()->data(!isset($result[$app][$pref_name]));
 			return !isset($result[$app][$pref_name]);
 		}
 	}
