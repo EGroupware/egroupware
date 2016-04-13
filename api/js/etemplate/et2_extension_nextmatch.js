@@ -3305,26 +3305,12 @@ var et2_nextmatch_entryheader = (function(){ "use strict"; return et2_link_entry
 	 * @param {object} event
 	 * @param {object} selected
 	 */
-	select: function(event, selected) {
-		this._super.apply(this, arguments);
+	onchange: function() {
 		var col_filter = {};
-		if(selected && selected.item.value) {
-			if(event.data.options.only_app)
-			{
-				// Only one application, just give the ID
-				col_filter[this.id] = selected.item.value;
-			}
-			else
-			{
-				// App is expecting app:id
-				col_filter[this.id] = event.data.app_select.val() + ":"+ selected.item.value;
-			}
-		} else {
-			col_filter[this.id] = '';
-		}
+		col_filter[this.id] = this.get_value();
 		this.nextmatch.applyFilters.call(this.nextmatch, {col_filter: col_filter});
 	},
-
+	
 	/**
 	 * Override to always return a string appname:id (or just id) for simple (one real selection)
 	 * cases, parent returns an object.  If multiple are selected, or anything other than app and
