@@ -1905,6 +1905,7 @@ div.ui-dialog div.ui-dialog-content > div[id] {
 	background-color: #fafafa;
 	border: 1px solid silver;
 	text-indent: 0;
+	background-position: center;
 }
 /**
  * Textbox in toolbar or NM header

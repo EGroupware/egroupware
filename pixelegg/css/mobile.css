@@ -253,6 +253,28 @@
     background-image: url(../images/upload.png);
     width: 145px;
   }
+  span.et2_file_span img[url*="svg"] {
+    background-color: #b4b4b4 !important;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYjRiNGI0IiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=) !important;
+    background-image: -moz-linear-gradient(top, #b4b4b4, #b4b4b4) !important;
+    background-image: -ms-linear-gradient(top, #b4b4b4, #b4b4b4) !important;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4b4b4), to(#b4b4b4)) !important;
+    background-image: -webkit-linear-gradient(top, #b4b4b4, #b4b4b4) !important;
+    background-image: -o-linear-gradient(top, #b4b4b4, #b4b4b4) !important;
+    background-image: linear-gradient(top, #b4b4b4, #b4b4b4) !important;
+    background-repeat: repeat-x !important;
+    fill: red !important;
+  }
+  span.et2_file_span:hover {
+    background-color: #189800 !important;
+    color: #000000 !important;
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6) !important;
+  }
+  span.et2_file_span:active {
+    background-color: #1aa200 !important;
+  }
   div.et2_file input.et2_file_upload {
     background-color: #ffffff !important;
     -webkit-border-radius: 3px;
