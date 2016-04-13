@@ -774,17 +774,25 @@ class timesheet_ui extends timesheet_bo
 		{
 			$rows += $this->summary;
 		}
+		else
+		{
+			// Clear summary
+			$rows += array('duration'=>'','price'=>'','quantity'=>'');
+		}
 		$rows['pm_integration'] = $this->pm_integration;
 		$rows['ts_viewtype'] =  $rows['no_ts_quantity'] =  $rows['no_ts_unitprice'] =  $rows['no_ts_total'] = $this->ts_viewtype == 'short';
 		if (!$rows['ts_viewtype'])
 		{
 			#_debug_array($query['selectcols']);
+			if(!is_array($query['selectcols'])){
+				$query['selectcols'] = explode(',',$query['selectcols']);
+			}
 			#ts_quantity,ts_unitprice,ts_total
-			if ($query['selectcols'] && strpos($query['selectcols'],'ts_quantity')===false) $rows['no_ts_quantity'] = 1;
-			if ($query['selectcols'] && strpos($query['selectcols'],'ts_unitprice')===false) $rows['no_ts_unitprice'] = 1;
-			if ($query['selectcols'] && strpos($query['selectcols'],'ts_total')===false) $rows['no_ts_total'] = 1;
+			if ($query['selectcols'] && in_array('ts_quantity',$query['selectcols'])===false) $rows['no_ts_quantity'] = 1;
+			if ($query['selectcols'] && in_array('ts_unitprice', $query['selectcols'])===false) $rows['no_ts_unitprice'] = 1;
+			if ($query['selectcols'] && in_array('ts_total',$query['selectcols'])===false) $rows['no_ts_total'] = 1;
 		}
-		$rows['no_ts_status'] = strpos($query['selectcols'], 'ts_status') === false && !$this->config_data['history'] ||
+		$rows['no_ts_status'] = in_array('ts_status', $query['selectcols']) === false && !$this->config_data['history'] ||
 			$query['no_status'];
 
 		if ($query['search'])
