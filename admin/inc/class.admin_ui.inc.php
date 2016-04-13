@@ -57,6 +57,7 @@ class admin_ui
 			'row_id' => 'account_id',
 			'default_cols' => '!account_id,created',
 			'actions' => self::user_actions(),
+			'placeholder_actions' => array('add')
 		);
 		//$content['msg'] = 'Hi Ralf ;-)';
 		$sel_options['tree'] = $this->tree_data();
