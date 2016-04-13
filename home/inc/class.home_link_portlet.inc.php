@@ -174,7 +174,7 @@ class home_link_portlet extends home_portlet
 			$this->context['entry']['app'] = 'file';
 			$this->context['entry']['path'] = $this->context['entry']['title'] = $this->context['entry']['id'];
 			$this->context['entry']['type'] = egw_vfs::mime_content_type($this->context['entry']['id']);
-			$content['image'] = egw_framework::link('/etemplate/thumbnail.php',array('path' => $this->context['entry']['id']));
+			$content['image'] = egw_framework::link('/api/thumbnail.php',array('path' => $this->context['entry']['id']));
 		}
 
 		$content += $this->context;
