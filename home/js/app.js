@@ -777,7 +777,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 			this.egw.set_preference('common', 'egw_tutorial_noautoload', widget.get_value());
 		}
 	}
-});
+})}).call(this);
 
 /// Base class code
 
@@ -922,7 +922,7 @@ app.classes.home.home_favorite_portlet = app.classes.home.home_portlet.extend({
 			this.portlet.getWidgetById('nm').refresh(_id,_type);
 		}
 	}
-});}).call(this);
+});
 
 
 /**
