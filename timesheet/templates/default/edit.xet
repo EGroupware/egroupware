@@ -138,9 +138,9 @@
 						<menupopup id="ts_owner" no_lang="1" class="et2_fullWidth"/>
 					</menulist>
 					<description/>
-					<description value="Status"/>
+					<description value="Status"  disabled="@no_ts_status"/>
 					<menulist span="3">
-						<menupopup statustext="select a status of the timesheet" id="ts_status"  class="et2_fullWidth" options="please select" />
+						<menupopup statustext="select a status of the timesheet" id="ts_status"  class="et2_fullWidth" empty_label="please select" disabled="@no_ts_status"/>
 					</menulist>
 					<description/>
 				</row>
