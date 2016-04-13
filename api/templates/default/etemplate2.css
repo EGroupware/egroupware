@@ -9,6 +9,7 @@
 /* These imports processed by framework */
 /*@import url("../../js/jquery/magicsuggest/magicsuggest.css");*/
 /*@import url("../../js/jquery/jpicker/css/jPicker-1.1.6.min.css");*/
+/*@import url("../../js/jquery/jquery-ui-timepicker-addon.css");*/
 /*@import url("../../js/jquery/blueimp/css/blueimp-gallery.min.css");*/
 
 
@@ -469,6 +470,10 @@ span.et2_date_duration input.et2_date_duration{
     text-indent: 20px;
     background-size: contain;
     background-image: url(images/today.png);
+}
+.ui-timepicker-div dl dd { margin: 0 0px 10px 30%; }
+.ui-timepicker-div .ui_tpicker_time .ui_tpicker_time_input {
+	border: none;
 }
 
 /**

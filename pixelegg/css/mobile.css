@@ -1414,9 +1414,11 @@ div#ui-datepicker-div {
   font-size: 0.9em;
 }
 .ui-datepicker div.ui-timepicker-div dd.ui_tpicker_time {
-  font-size: 1.3em;
   padding-left: 75px;
   background-color: #ffc200;
+}
+.ui-datepicker div.ui-timepicker-div dd.ui_tpicker_time input {
+  font-size: 1.3em;
 }
 .ui-datepicker div.ui-timepicker-div dt.ui_tpicker_time_label {
   font-size: 0.9em;
