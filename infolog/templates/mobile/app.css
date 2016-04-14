@@ -43,6 +43,7 @@
   }
   label[id^='infolog-index_'][id$='info_startdate]'] time {
     float: none;
+	text-align: right;
   }
   ul[id^='infolog-index_'][id$='info_responsible]'] {
     overflow: hidden;
