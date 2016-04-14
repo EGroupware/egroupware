@@ -480,7 +480,7 @@ class Asyncservice
 	 */
 	function read($id=0,$cols='*',$offset=False,$append='ORDER BY async_next',$num_rows=0)
 	{
-		if (!is_a($this->db, 'Db')) return false;
+		if (!is_a($this->db, 'EGroupware\\Api\\Db')) return false;
 
 		if ($id === '%')
 		{
@@ -533,7 +533,7 @@ class Asyncservice
 	 */
 	function write($job, $exists = False, $where=array())
 	{
-		if (!is_a($this->db, 'Db')) return 0;
+		if (!is_a($this->db, 'EGroupware\\Api\\Db')) return 0;
 
 		if (is_array($job['data']) && isset($job['data']['next']) && isset($job['next'])) $job['data']['next'] = $job['next'];
 		$data = array(
