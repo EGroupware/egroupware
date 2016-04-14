@@ -29,6 +29,14 @@ class Html
 	 */
 	static function decodeMailHeader($_string, $displayCharset='utf-8')
 	{
+/*
+		$maxreclevel=25;
+		if ($reclevel > $maxreclevel) {
+			error_log( __METHOD__.__LINE__." Recursion Level Exeeded ($reclevel) while decoding $_string ");
+			return $_string;
+		}
+		$reclevel++;
+*/
 		//error_log(__FILE__.','.__METHOD__.':'."called with $_string and CHARSET $displayCharset");
 		if(function_exists('imap_mime_header_decode'))
 		{
@@ -62,12 +70,23 @@ class Html
 				{
 					if( strtoupper($element->charset) != 'UTF-8') $element->text = preg_replace($sar,$rar,$element->text);
 					// check if there is a possible nested encoding; make sure that the inputstring and the decoded result are different to avoid loops
-					if(preg_match('/\?=.+=\?/', $element->text) && $element->text != $_string)
+					$openTags = substr_count($element->text,'?=');
+					if(preg_match('/\?=.+=\?/', $element->text) && $openTags>0 && $openTags==substr_count($element->text,'=?') && $element->text != $_string)
 					{
 						$element->text = self::decodeMailHeader($element->text, $element->charset);
 						$element->charset = $displayCharset;
 					}
-					$newString .= Api\Translation::convert($element->text,$element->charset);
+					$translatedString = Api\Translation::convert($element->text,$element->charset);
+/*					//try to be smart about concatenating
+error_log(__METHOD__.__LINE__.$translatedString);
+error_log(__METHOD__.__LINE__.$newString);
+					if ($translatedString && $newString && strpos($translatedString,$newString)===0)
+					{
+						$newString = $translatedString;						
+					}
+					else
+*/
+						$newString .= $translatedString;
 				}
 				else
 				{
