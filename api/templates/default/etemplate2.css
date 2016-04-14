@@ -730,7 +730,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 	border-radius: 3px;
 	width: 40%;
 }
-.et2_link_to.et2_toolbar .div_link {width:85%;vertical-align: top;}
+.et2_link_to.et2_toolbar .div_link {width:80%;vertical-align: top;}
 .et2_link_to.et2_toolbar .div_link select {margin-right: 4px;}
 .et2_link_to button {
   display: inline;
@@ -740,8 +740,7 @@ div.et2_link_entry input.ui-autocomplete-input {
   background-position: 3px center;
   width: 22px;
   height: 22px;
-  display: block;
-  float: right;
+  display: inline-block;
 }
 .et2_link_to span.status.success {
   background-image: url(images/tick.png);
@@ -799,7 +798,6 @@ div.et2_link_entry input.ui-autocomplete-input {
 	vertical-align: bottom;
 	padding-right: 2px;
 }
-.et2_link_to.et2_toolbar button.link {float:right;}
 
 .et2_link_to.et2_toolbar span.et2_file_span { padding-right: 0;}
 

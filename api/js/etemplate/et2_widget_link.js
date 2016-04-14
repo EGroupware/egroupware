@@ -135,22 +135,22 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 		// Filemanager link popup
 		this.filemanager_button = $j(document.createElement("div")).css({display:'inline-block'}).appendTo(this.div);
 
-		// One common link button
+		// Need a div for link-to widget
+		this.link_div = $j(document.createElement("div"))
+			.addClass('div_link')
+			// Leave room for link button
+			.appendTo(this.div);
+
+                // One common link button
 		this.link_button = $j(document.createElement("button"))
 			.text(this.egw().lang(this.options.link_label))
 			.appendTo(this.div).hide()
 			.addClass('link')
 			.click(this, this.createLink);
 
-		// Span for indicating status
+                // Span for indicating status
 		this.status_span = $j(document.createElement("span"))
 			.appendTo(this.div).addClass("status").hide();
-
-		// Need a div for link-to widget
-		this.link_div = $j(document.createElement("div"))
-			.addClass('div_link')
-			// Leave room for link button
-			.appendTo(this.div);
 
 		this.setDOMNode(this.div[0]);
 	},
