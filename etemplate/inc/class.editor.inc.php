@@ -521,7 +521,7 @@ class editor
 			// check if application of template has a app.js file --> load it
 			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
 			{
-				$GLOBALS['egw']->js->validate_file('.','app',$app,false);
+				egw_framework::validate_file('.','app',$app,false);
 			}
 			$editor->data[$editor->rows]['A']['obj'] = &$this->etemplate;
 			$vals = $content['vals'];
