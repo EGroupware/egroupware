@@ -1295,6 +1295,7 @@ input#calendar-edit_location {
   color: #616161;
   font-weight: 500;
 }
+#calendar-edit .dialogFooterToolbar {min-width: 780px;}
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
   background-color: #828282 !important;
