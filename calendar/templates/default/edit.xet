@@ -128,7 +128,7 @@
 				</row>
 				<row valign="top">
 					<description for="recur_data" value="Repeat days"/>
-					<listbox type="select-dow" class="et2_fullWidth" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
+					<listbox type="select-dow" class="et2_fullWidth" tags="true" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
 					<vbox>
 						<description value="Exceptions"/>
 						<button statustext="Create an exception for the given date" label="@exception_label" id="button[exception]" no_lang="1" />
