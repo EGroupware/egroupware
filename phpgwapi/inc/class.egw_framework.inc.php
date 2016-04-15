@@ -120,7 +120,15 @@ abstract class egw_framework extends Api\Framework
 	 */
 	static function set_onload($code='',$replace=false)
 	{
-		unset($code, $replace);
+		if ($replace || empty(self::$body_tags['onLoad']))
+		{
+			self::$body_tags['onLoad'] = $code;
+		}
+		else
+		{
+			self::$body_tags['onLoad'] .= $code;
+		}
+		return self::$body_tags['onLoad'];
 	}
 
 	/**
@@ -133,7 +141,15 @@ abstract class egw_framework extends Api\Framework
 	 */
 	static function set_onunload($code='',$replace=false)
 	{
-		unset($code, $replace);
+		if ($replace || empty(self::$body_tags['onUnload']))
+		{
+			self::$body_tags['onUnload'] = $code;
+		}
+		else
+		{
+			self::$body_tags['onUnload'] .= $code;
+		}
+		return self::$body_tags['onUnload'];
 	}
 
 	/**
@@ -146,7 +162,15 @@ abstract class egw_framework extends Api\Framework
 	 */
 	static function set_onbeforeunload($code='',$replace=false)
 	{
-		unset($code, $replace);
+		if ($replace || empty(self::$body_tags['onBeforeUnload']))
+		{
+			self::$body_tags['onBeforeUnload'] = $code;
+		}
+		else
+		{
+			self::$body_tags['onBeforeUnload'] .= $code;
+		}
+		return self::$body_tags['onBeforeUnload'];
 	}
 
 	/**
@@ -159,7 +183,15 @@ abstract class egw_framework extends Api\Framework
 	 */
 	static function set_onresize($code='',$replace=false)
 	{
-		unset($code, $replace);
+		if ($replace || empty(self::$body_tags['onResize']))
+		{
+			self::$body_tags['onResize'] = $code;
+		}
+		else
+		{
+			self::$body_tags['onResize'] .= $code;
+		}
+		return self::$body_tags['onResize'];
 	}
 
 	/**

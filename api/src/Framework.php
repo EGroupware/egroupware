@@ -360,6 +360,40 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * Body tags for onLoad, onUnload and onResize
+	 *
+	 * @deprecated since 14.1 use app.js et2_ready method instead to execute code or bind a handler (CSP will stop onXXX attributes!)
+	 * @var array
+	 */
+	protected static $body_tags = array();
+
+	/**
+	 * Adds on(Un)Load= attributes to the body tag of a page
+	 *
+	 * Can only be set via egw_framework::set_on* methods.
+	 *
+	 * @deprecated since 14.1 use app.js et2_ready method instead to execute code or bind a handler (CSP will stop onXXX attributes!)
+	 * @returns string the attributes to be used
+	 */
+	static public function _get_body_attribs()
+	{
+		$js = '';
+		foreach(self::$body_tags as $what => $data)
+		{
+			if (!empty($data))
+			{
+				if($what == 'onLoad')
+				{
+					$js .= 'onLoad="egw_LAB.wait(function() {'. htmlspecialchars($data).'})"';
+					continue;
+				}
+				$js .= ' '.$what.'="' . htmlspecialchars($data) . '"';
+			}
+		}
+		return $js;
+	}
+
+	/**
 	 * Get header as array to eg. set as vars for a template (from idots' head.inc.php)
 	 *
 	 * @param array $extra =array() extra attributes passed as data-attribute to egw.js
@@ -419,6 +453,7 @@ abstract class Framework extends Framework\Extra
 			'lang_code'			=> $lang_code,
 			'charset'       	=> Translation::charset(),
 			'website_title' 	=> $site_title,
+			'body_tags'         => self::_get_body_attribs(),
 			'java_script'   	=> self::_get_js($extra),
 			'meta_robots'		=> $robots,
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
