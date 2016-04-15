@@ -95,13 +95,15 @@ input[type=button] {
 button.et2_button_with_image{
         .Complete_Button_text_icon_before;
         background-repeat: no-repeat !important;
-        background-position: 6px center;
+        background-position: center;
         background-size: 20px 20px;
         background-color: @gray_10;
         background-color[url$="svg"]{.gradient_vertical (@gray_30, @gray_30);}
-
 }
 
+button.et2_button_with_image.et2_button_text {
+	background-position: 6px center;
+}
 /* ########################################################################################
  * Content Element
  * Button löschen / delete / => color-negative-action // red

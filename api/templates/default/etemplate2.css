@@ -252,9 +252,11 @@ input[type=button]:focus {
 button.et2_button_with_image {
 	padding-left: 20px;
 	background-repeat: no-repeat;
-	background-position:  4px center;
 	background-size: 16px;
 	height: 24px;
+}
+button.et2_button_with_image.et2_button_text {
+	background-position: 4px center;
 }
 /* et2_box_widget ###*/
 button[id="cancel"],

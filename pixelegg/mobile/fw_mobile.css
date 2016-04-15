@@ -1057,7 +1057,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id: jquery-ui.less 55245 2016-03-04 09:21:40Z ralfbecker $
+ * @version $Id: jquery-ui.less 55742 2016-04-13 18:44:45Z nathangray $
  */
 #uical_select_resource {
   background-color: #ffdd73;
@@ -1494,26 +1494,6 @@ div#ui-datepicker-div {
 .ms-ctn .ms-trigger {
   border-left: none;
 }
-/**
- * EGroupware: CSS with less preprocessor
-
- * traditional.less
- * included in pixelegg.less since 17/03/2014
-
-
- *
- * Please do NOT change css-files directly, instead change less-files and compile them!
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
- * @package phpgwapi
- * @version $Id: traditional.less 50764 2014-03-17 14:10:27Z pixelegg $
- */
-/*
-	font styling
-	allowed attributes: font-family,font-size,color,font-weight
-*/
 /**
  * layout_*.less files are Pixelegg template specific
  */
@@ -2077,12 +2057,13 @@ button.et2_button_with_image {
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
   padding-left: 30px;
+  background-position: 6px center;
   background-repeat: no-repeat;
   background-size: 20px auto;
   /*.Button_size_h32_auto;*/
   height: 24px;
   background-repeat: no-repeat !important;
-  background-position: 6px center;
+  background-position: center;
   background-size: 20px 20px;
   background-color: #e6e6e6;
 }
@@ -2096,6 +2077,9 @@ button.et2_button_with_image background-color[url$="svg"] {
   background-image: -o-linear-gradient(top, #b4b4b4, #b4b4b4);
   background-image: linear-gradient(top, #b4b4b4, #b4b4b4);
   background-repeat: repeat-x;
+}
+button.et2_button_with_image.et2_button_text {
+  background-position: 6px center;
 }
 /* ########################################################################################
  * Content Element
@@ -2462,7 +2446,6 @@ button[id="add"] {
 button[id="add"]:active {
   background-color: #1aa200 !important;
 }
-/*Button Ende #######################################################*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -3390,10 +3373,6 @@ h6 {
 td.lettersearch {
   background-image: none;
 }
-/*.nextmatch_header table {
-        border: none !important;
-        width: 99% !important;
-}*/
 /**
  * EGroupware: CSS with less preprocessor
  *
@@ -5171,21 +5150,6 @@ button.image_button {
  * @package pixelegg
  * @version $Id: layout_table.less 3089 2014-06-11 14:02:57Z pixelegg $
  */
-/* disabled for now in pixelegg.less, until we use svg outside filemanager thumbnails
-
-//SVG Filter / not for Logo
-#egw_fw_sidebar img[src$="svg"]{
-            .gradient_vertical (@gray_60, @gray_60);
-            .rounded(3px);
-            border: 1px solid @gray_0;;
-}
-
-#egw_fw_main img[src$="svg"],
-#egw_fw_footer img[src$="svg"]{
-            //.gradient_vertical (@egw_color_2_a, @egw_color_2_a);
-            .gradient_vertical (fade(@gray_100,50%), fade(@gray_100,50%));
-
-}*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
