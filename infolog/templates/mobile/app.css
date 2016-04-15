@@ -37,13 +37,14 @@
   label[id^='infolog-index_'][id$='info_enddate]'] time {
     float: none;
     font-weight: normal;
+    text-align: right;
   }
   label[id^='infolog-index_'][id$='info_startdate]'] {
     font-size: 10pt;
   }
   label[id^='infolog-index_'][id$='info_startdate]'] time {
     float: none;
-	text-align: right;
+    text-align: right;
   }
   ul[id^='infolog-index_'][id$='info_responsible]'] {
     overflow: hidden;
