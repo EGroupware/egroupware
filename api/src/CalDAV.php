@@ -1524,7 +1524,7 @@ class CalDAV extends HTTP_WebDAV_Server
 				$url_prefix = ($_SERVER['HTTPS'] ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
 			}
 		}
-		return $url_prefix.egw::link(Vfs::download_url($path));
+		return $url_prefix.Framework::link(Vfs::download_url($path));
 	}
 
 	/**
