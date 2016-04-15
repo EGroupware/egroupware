@@ -25,18 +25,18 @@ class Html
 	 *
 	 * @param string $_string -> part of an mailheader
 	 * @param string $displayCharset the charset parameter specifies the character set to represent the result by (if iconv_mime_decode is to be used)
+	 * @param integer $reclevel param to control recursive calls (to prevent endless recursion)
 	 * @return string
 	 */
-	static function decodeMailHeader($_string, $displayCharset='utf-8')
+	static function decodeMailHeader($_string, $displayCharset='utf-8', $reclevel=0)
 	{
-/*
 		$maxreclevel=25;
 		if ($reclevel > $maxreclevel) {
 			error_log( __METHOD__.__LINE__." Recursion Level Exeeded ($reclevel) while decoding $_string ");
 			return $_string;
 		}
 		$reclevel++;
-*/
+
 		//error_log(__FILE__.','.__METHOD__.':'."called with $_string and CHARSET $displayCharset");
 		if(function_exists('imap_mime_header_decode'))
 		{
@@ -73,20 +73,10 @@ class Html
 					$openTags = substr_count($element->text,'?=');
 					if(preg_match('/\?=.+=\?/', $element->text) && $openTags>0 && $openTags==substr_count($element->text,'=?') && $element->text != $_string)
 					{
-						$element->text = self::decodeMailHeader($element->text, $element->charset);
+						$element->text = self::decodeMailHeader($element->text, $element->charset, $reclevel);
 						$element->charset = $displayCharset;
 					}
-					$translatedString = Api\Translation::convert($element->text,$element->charset);
-/*					//try to be smart about concatenating
-error_log(__METHOD__.__LINE__.$translatedString);
-error_log(__METHOD__.__LINE__.$newString);
-					if ($translatedString && $newString && strpos($translatedString,$newString)===0)
-					{
-						$newString = $translatedString;						
-					}
-					else
-*/
-						$newString .= $translatedString;
+					$newString .= Api\Translation::convert($element->text,$element->charset);
 				}
 				else
 				{
@@ -94,7 +84,7 @@ error_log(__METHOD__.__LINE__.$newString);
 					$convertAtEnd = true;
 				}
 			}
-			if ($convertAtEnd) $newString = self::decodeMailHeader($newString,$displayCharset);
+			if ($convertAtEnd) $newString = self::decodeMailHeader($newString,$displayCharset,$reclevel);
 			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);
 		}
 		elseif(function_exists(mb_decode_mimeheader))
