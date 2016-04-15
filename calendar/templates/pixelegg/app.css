@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55652 2016-04-06 16:43:51Z hnategh $ */
+/* $Id: app.css 55746 2016-04-14 14:58:21Z hnategh $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -1295,7 +1295,13 @@ input#calendar-edit_location {
   color: #616161;
   font-weight: 500;
 }
-#calendar-edit .dialogFooterToolbar {min-width: 780px;}
+#calendar-edit .dialogFooterToolbar {
+  min-width: 780px;
+}
+#calendar_edit_recur_data_chzn {
+  width: 99% !important;
+  max-width: 99% !important;
+}
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
   background-color: #828282 !important;
@@ -2525,5 +2531,3 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar_merge {
   margin: 9px 0 0 0;
 }
-/* ########################################################################################
-/* * Calendar END */

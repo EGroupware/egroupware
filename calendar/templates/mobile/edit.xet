@@ -135,7 +135,7 @@
 				</row>
 				<row>
 					<description for="recur_data" value="Repeat days"/>
-					<listbox type="select-dow" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
+					<listbox type="select-dow" tags="true" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
 				</row>
 				<row class="th">
 					<description value="Exceptions" span="all"/>

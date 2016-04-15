@@ -1327,3 +1327,5 @@ input#calendar-edit_location {padding-left: 0;}
 }
 
 #calendar-edit .dialogFooterToolbar {min-width: 780px;}
+
+#calendar_edit_recur_data_chzn {width:99% !important;max-width:99% !important;}
