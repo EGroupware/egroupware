@@ -3662,6 +3662,7 @@ td.message span.message {
   /*font-size: 1.1em;*/
   font-size: 12px;
   line-height: 1.5em;
+  display: inline-block;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul li a:hover {
   /*color: @gray_10;*/
@@ -3681,76 +3682,53 @@ td.message span.message {
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home {
   margin-left: 0px;
-}
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_home:before {
-  padding-right: 20px;
-  font-size: 12px;
-  content: " ";
   background-image: url(../images/topmenu_items/home.png);
   background-repeat: no-repeat;
-  background-size: 20px 20px;
-  width: 24px;
-  height: 24px;
+  background-size: 16px;
+  padding-left: 20px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_prefs {
   margin-left: 0px;
-}
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_prefs:before {
-  padding-right: 20px;
-  content: "";
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-left: 20px;
   background-image: url(../images/topmenu_items/setup.png);
-  background-repeat: no-repeat;
-  /*                        background-size: 20px 20px;*/
-  width: 12px;
-  height: 12px;
 }
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl:before {
-  padding-right: 20px;
-  content: "";
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl {
   background-repeat: no-repeat;
-  width: 12px;
-  height: 12px;
+  background-size: 16px;
+  padding-left: 20px;
   background-image: url(../images/topmenu_items/access.png);
 }
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_cats:before {
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_cats {
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-left: 20px;
   background-image: url(../images/topmenu_items/category.png);
-  padding-right: 20px;
-  content: "";
-  background-repeat: no-repeat;
-  width: 12px;
-  height: 12px;
 }
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_password:before {
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_password {
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-left: 20px;
   background-image: url(../images/topmenu_items/password.png);
-  padding-right: 20px;
-  content: "";
-  background-repeat: no-repeat;
-  width: 12px;
-  height: 12px;
 }
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_manual:before {
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_manual {
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-left: 20px;
   background-image: url(../images/topmenu_items/help.png);
-  padding-right: 20px;
-  content: "";
-  background-repeat: no-repeat;
-  width: 12px;
-  height: 12px;
 }
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_search:before {
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_search {
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-left: 20px;
   background-image: url(../images/topmenu_items/search.png);
-  padding-right: 20px;
-  content: "";
-  background-repeat: no-repeat;
-  width: 12px;
-  height: 12px;
 }
-#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_logout:before {
-  background-image: url(../images/topmenu_items/logout.png);
-  padding-right: 20px;
-  content: "";
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_logout {
   background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
+  background-size: 16px;
+  padding-left: 20px;
+  background-image: url(../images/topmenu_items/logout.png);
 }
 /* ###################################################
    Slide Effekt
