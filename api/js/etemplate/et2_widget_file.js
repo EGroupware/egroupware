@@ -182,7 +182,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			});
 		var self = this;
 		// trigger native input upload file
-		this.span.click(function(){self.input.click()});
+		if (!this.options.readonly) this.span.click(function(){self.input.click()});
 		// Check for File interface, should fall back to normal form submit if missing
 		if(typeof File != "undefined" && typeof (new XMLHttpRequest()).upload != "undefined")
 		{
@@ -649,6 +649,29 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		// In case it didn't make it to the list (error)
 		target.remove();
 		$j(e.target).remove();
+	},
+
+	/**
+	 * Set readonly
+	 *
+	 * @param {boolean} _ro boolean readonly state, true means readonly
+	 */
+	set_readonly: function(_ro)
+	{
+		if (typeof _ro != "undefined")
+		{
+			this.options.readonly = _ro;
+			this.span.toggleClass('et2_file_ro',_ro);
+			if (this.options.readonly)
+			{
+				this.span.unbind('click');
+			}
+			else
+			{
+				var self = this;
+				this.span.off().bind('click',function(){self.input.click()});
+			}
+		}
 	}
 });}).call(this);
 

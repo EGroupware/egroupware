@@ -2640,3 +2640,11 @@ tr.dialogOperators td,.dialogFooterToolbar {
 	height: 50px;
 }
 tr.dialogHeader2 td {padding-top:15px;}
+
+/*readonly widget style*/
+.et2_button_ro,.et2_file_span.et2_button.et2_file_ro {
+	opacity: 0.5;
+	background-color: initial !important;
+	box-shadow: none !important;
+	cursor: not-allowed !important;
+}

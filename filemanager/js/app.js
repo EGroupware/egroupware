@@ -889,20 +889,7 @@ app.classes.filemanager = AppJS.extend(
 					var widget = etemplate2.getById(id).widgetContainer.getWidgetById(ids[i]);
 					if (widget)
 					{
-						if (widget._type == 'button' || widget._type == 'buttononly')
-						{
-							widget.set_readonly(_ro);
-						}
-						// upload
-						else if (widget.disabled != _ro)
-						{
-							// fix width of path-widget to kope with hidden/shown upload
-							var path_parent = jQuery(this.path_widget[id].getDOMNode().parentNode);
-							var width = jQuery(widget.getDOMNode()).outerWidth(true);
-							path_parent.css('right', (parseInt(path_parent.css('right'))+(_ro?-1:1)*width)+'px');
-
-							widget.set_disabled(_ro);
-						}
+						widget.set_readonly(_ro);
 					}
 				}
 			}
