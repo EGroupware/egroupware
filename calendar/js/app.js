@@ -2090,7 +2090,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Toggle todos
 			if(state.state.view == 'day' || this.state.view == 'day')
 			{
-				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0)
+				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile())
 				{
 
 					view.etemplates[0].widgetContainer.iterateOver(function(w) {
