@@ -402,9 +402,17 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 		visible_lines = Math.max(1,visible_lines);
 
-		this.div.toggleClass('calendar_calEventSmall',visible_lines < 4);
-		this.div
-			.attr('data-visible_lines', visible_lines);
+		if(this.getParent() && this.getParent().instanceOf(et2_calendar_daycol))
+		{
+			this.div.toggleClass('calendar_calEventSmall',visible_lines < 4);
+			this.div
+				.attr('data-visible_lines', visible_lines);
+		}
+		else if (this.getParent() && this.getParent().instanceOf(et2_calendar_planner_row))
+		{
+			// Less than 8 hours is small
+			this.div.toggleClass('calendar_calEventSmall',this.options.value.end_m - this.options.value.start_m < 480);
+		}
 
 
 		if(this.body.height() > this.div.height() - this.title.height() && visible_lines >= 4)

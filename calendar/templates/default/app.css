@@ -815,6 +815,12 @@ Hide subsequent headers in week view with non-consolidated owners
 .calendar_calEventSmall .calendar_calEventBody {
 	padding-top: 4em;
 }
+.calendar_plannerRowWidget .calendar_calEvent:not(.calendar_calEventSmall) .calendar_calTimespan {
+	display: none;
+}
+.calendar_plannerRowWidget .calendar_calEvent:not(.calendar_calEventSmall) .calendar_calEventHeader .calendar_calEventTitle {
+	display: inline;
+}
 
 /* Events as displayed in a list, not sized by time */
 .calendar_calTimeGridList .calendar_calTimeGridScroll {
