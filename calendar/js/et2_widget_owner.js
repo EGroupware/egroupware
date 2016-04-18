@@ -73,7 +73,7 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 
 	selectionRenderer: function(item)
 	{
-		if(this.options.allowFreeEntries)
+		if(this && this.options && this.options.allowFreeEntries)
 		{
 			return this._super.apply(this,arguments);
 		}
