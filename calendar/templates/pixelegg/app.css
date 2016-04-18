@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55754 2016-04-15 11:12:08Z hnategh $ */
+/* $Id: app.css 55760 2016-04-18 08:34:53Z hnategh $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -2383,8 +2383,9 @@ button#exception:active {
 }
 /*calendar series add*/
 #calendar-edit_add {
-  /*    .Complete_Button_add;
-    &:hover {.Complete_Button_add_hover;} */
+  padding-left: 24px;
+  background-size: 16px;
+  background-position: center;
 }
 #calendar-edit_add:active {
   background-color: #1aa200 !important;

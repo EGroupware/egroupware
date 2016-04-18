@@ -254,6 +254,7 @@ button.et2_button_with_image {
 	background-repeat: no-repeat;
 	background-size: 16px;
 	height: 24px;
+	background-position: center;
 }
 button.et2_button_with_image.et2_button_text {
 	background-position: 4px center;

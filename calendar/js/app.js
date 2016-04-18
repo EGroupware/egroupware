@@ -1120,6 +1120,18 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	},
 
 	/**
+	 * Change participant add button status based on
+	 * participants field value
+	 *
+	 */
+	participantOnChange: function () {
+		var add = this.et2.getWidgetById('add');
+		var participant = this.et2.getWidgetById('participant');
+
+		add.set_readonly(!Number(participant.get_value()));
+	},
+
+	/**
 	 * print_participants_status(egw,widget)
 	 * Handle to apply changes from status in print popup
 	 *
@@ -3288,13 +3300,13 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			$j(window).trigger('resize');
 			this.setState({state:this.state});
-			
+
 			// Hide loader after 1 second as a fallback, it will also be hidden
 			// after loading is complete.
 			window.setTimeout(jQuery.proxy(function() {
 				egw.loading_prompt(this.appname,false);
 			}, this),1000);
-			
+
 		}
 	},
 

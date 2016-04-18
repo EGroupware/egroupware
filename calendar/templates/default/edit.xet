@@ -54,9 +54,9 @@
 			</columns>
 			<rows>
 				<row class="th"></row>
-				<row disabled="@no_add" height="35">
-					<button align="center" id="add" image="add" background_image="1" novalidate="1"/>
-					<calendar-owner id="participant" allowFreeEntries="true" span="2" empty_label="Add new participants or resource"/>
+				<row disabled="@no_add" height="35" class="et2_toolbar">
+					<button align="center" id="add" image="add" novalidate="1"  background_image="1" readonly="true" ro_image="add"/>
+					<calendar-owner id="participant" allowFreeEntries="true" span="2" empty_label="Add new participants or resource" onchange="app.calendar.participantOnChange"/>
 					<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
 					<menulist>
 						<menupopup class="selectRole" id="role"/>

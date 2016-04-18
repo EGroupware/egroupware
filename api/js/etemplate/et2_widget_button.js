@@ -94,7 +94,7 @@ var et2_button = (function(){ "use strict"; return et2_baseWidget.extend([et2_II
 			this.setDOMNode(this.image[0]);
 			return;
 		}
-		if (!this.options.readonly)
+		if (!this.options.readonly || this.options.ro_image)
 		{
 			this.btn = $j(document.createElement("button"))
 				.addClass("et2_button")
