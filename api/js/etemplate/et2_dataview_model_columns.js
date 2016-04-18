@@ -404,7 +404,7 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 			for(columnIndex = 0; columnIndex < this.columns.length; columnIndex++)
 			{
 				if(this.columns[columnIndex].visibility === ET2_COL_VISIBILITY_INVISIBLE ||
-					col.visibility === ET2_COL_VISIBILITY_DISABLED ||
+					this.columns[columnIndex].visibility === ET2_COL_VISIBILITY_DISABLED ||
 					this.columnWidths[columnIndex] <= 0)
 				{
 					continue;
