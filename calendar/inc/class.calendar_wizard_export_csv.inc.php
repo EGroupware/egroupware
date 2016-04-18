@@ -16,6 +16,11 @@ class calendar_wizard_export_csv extends importexport_wizard_basic_export_csv
 		// Field mapping
 		$bo = new calendar_tracking();
 		$this->export_fields = array('id' => 'Calendar ID') + $bo->field2label;
+
+		// These are not valid:
+		unset($this->export_fields['participants-c']);
+		unset($this->export_fields['participants-r']);
+
 		$custom = config::get_customfields('calendar', true);
 		foreach($custom as $name => $data) {
 			$this->export_fields['#'.$name] = $data['label'];
