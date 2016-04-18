@@ -645,7 +645,7 @@ div.et2_file {
 span.et2_file_span{
 	display: block;
 	background-position: 2px;
-	background-image: url(images/upload.png);
+	background-image: url(images/attach.png);
 	background-repeat: no-repeat;
 	background-size: 16px;
 	cursor: pointer;

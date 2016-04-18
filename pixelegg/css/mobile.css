@@ -250,7 +250,7 @@
     background-color: #ffdd73;
   }
   span.et2_file_span {
-    background-image: url(../images/upload.png);
+    background-image: url(../images/attach.png);
     width: 145px;
   }
   span.et2_file_span img[url*="svg"] {
@@ -355,7 +355,6 @@
     left: 0px;
   }
   .et2_link_to .et2_file span {
-    background-image: url("../images/add.png");
     background-position: center;
     background-size: 16px 16px;
     background-repeat: no-repeat;
