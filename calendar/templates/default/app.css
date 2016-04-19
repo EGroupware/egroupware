@@ -117,6 +117,12 @@
 	background-color: white;
 }
 
+/* Loader - hide sizing behind overlay*/
+#egw-loadin-prompt_calendar::before {
+	opacity: 1;
+    background-color: #e6e6e6;
+}
+
 /* Toolbar */
 #calendar-toolbar {
 	height: 30px;

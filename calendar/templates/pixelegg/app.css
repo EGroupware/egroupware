@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55760 2016-04-18 08:34:53Z hnategh $ */
+/* $Id: app.css 55765 2016-04-18 19:03:35Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -127,6 +127,11 @@
 #calendar-sidebox_owner .ms-helper {
   padding: 2px;
   background-color: white;
+}
+/* Loader */
+#egw-loadin-prompt_calendar::before {
+  opacity: 1;
+  background-color: #e6e6e6;
 }
 /* Toolbar */
 #calendar-toolbar {
