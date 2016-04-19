@@ -40,6 +40,12 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			default: '',
 			description: 'A filter that is used to select events.  It is passed along when events are queried.'
 		},
+		show_weekend: {
+			name: "Weekends",
+			type: "boolean",
+			default: egw.preference('days_in_weekview','calendar') != 5,
+			description: "Display weekends.  The date range should still include them for proper scrolling, but they just won't be shown."
+		},
 		value: {
 			type: "any",
 			description: "A list of events, optionally you can set start_date, end_date and group_by as keys and events will be fetched"
@@ -1012,6 +1018,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
 		for(var left = 0,i = 0; i < days; t.setDate(t.getDate()+1),left += day_width,++i)
 		{
+			if(!this.options.show_weekend && [0,6].indexOf(t.getDay()) !== -1 ) continue;
 			var holidays = [];
 			var tempDate = new Date(t);
 			tempDate.setMinutes(tempDate.getMinutes()-start.getTimezoneOffset());
@@ -1034,7 +1041,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
 
 			content += '<div class="calendar_plannerDayScale et2_clickable et2_link '+ day_class+
-				'" data-date=\'' + state +'\' style="left: '+left+'%; width: '+day_width+'%;"'+
+				'" data-date=\'' + state +'\''+
 				(holidays ? ' title="'+holidays.join(',')+'"' : '')+'>'+title+"</div>\n";
 		}
 		content += "</div>";		// end of plannerScale
@@ -1076,6 +1083,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var t = new Date(start.valueOf() + start.getTimezoneOffset() * 60 * 1000);
 		for(var left = 0,i = 0; i < hours; left += cell_width,i += decr)
 		{
+			if(!this.options.show_weekend && [0,6].indexOf(t.getDay()) !== -1 ) continue;
 			var title = date(egw.preference('timeformat','calendar') == 12 ? 'ha' : 'H',t);
 
 			content += '<div class="calendar_plannerHourScale et2_link" data-date="' + t.toJSON() +'" style="left: '+left+'%; width: '+(cell_width)+'%;">'+title+"</div>";
@@ -1638,6 +1646,24 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		}
 	},
 
+	/**
+	 * Turn on or off the visibility of weekends
+	 *
+	 * @param {boolean} weekends
+	 */
+	set_show_weekend: function(weekends)
+	{
+		weekends = weekends ? true : false;
+		if(this.options.show_weekend !== weekends)
+		{
+			this.options.show_weekend = weekends;
+			if(this.isAttached())
+			{
+				this.invalidate();
+			}
+		}
+	},
+	
 	/**
 	 * Call change handler, if set
 	 *

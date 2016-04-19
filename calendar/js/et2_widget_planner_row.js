@@ -104,14 +104,14 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		this.rows.remove('.calendar_eventRowsMarkedDay,.calendar_eventRowsFiller').nextAll().remove();
 
 		var days = 31;
-		var width = 85;
+		var width = 100;
 		if (this._parent.options.group_by === 'month')
 		{
 			days = new Date(this.options.end_date.getUTCFullYear(),this.options.end_date.getUTCMonth()+1,0).getUTCDate();
 			if(days < 31)
 			{
-				width = 85*days/31;
-				this.rows.css('width',width+'%');
+				width = 100*days/31;
+				this.rows.css('width','calc('+width+'% - 162px)');
 			}
 		}
 
@@ -125,7 +125,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		{
 			// add a filler for non existing days in that month
 			this.rows.after('<div class="calendar_eventRowsFiller"'+
-				' style="left:'+(15+width)+'%; width:'+(85-width)+'%;" ></div>');
+				' style="width:'+(99.5-width)+'%;" ></div>');
 		}
 	},
 
@@ -406,8 +406,29 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		if(t <= start) return 0; // We are left of our scale
 		if(t >= end) return 100; // We are right of our scale
 
+		// Remove space for weekends, if hidden
+		var weekend_count = 0;
+		var weekend_before = 0;
+		if(this._parent.options.group_by !== 'month' && this._parent && !this._parent.options.show_weekend)
+		{
+
+			var counter_date = new Date(start);
+			do
+			{
+				if([0,6].indexOf(counter_date.getUTCDay()) !== -1)
+				{
+					weekend_count++;
+					if(counter_date < t) weekend_before++;
+				}
+				counter_date.setUTCDate(counter_date.getUTCDate() + 1);
+			} while(counter_date < end)
+			// Put it in ms
+			weekend_before *= 24 * 3600 * 1000;
+			weekend_count *= 24 * 3600 * 1000;
+		}
+
 		// Basic scaling, doesn't consider working times
-		pos = (t - start) / (end - start);
+		pos = (t - start - weekend_before) / (end - start - weekend_count);
 
 		// Month view
 		if(this._parent.options.group_by !== 'month')
