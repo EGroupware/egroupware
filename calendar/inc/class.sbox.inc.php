@@ -54,19 +54,7 @@
 		{
 			if (!$this->country_array)
 			{
-				$country = CreateObject('phpgwapi.country');
-				$this->country_array = &$country->country_array;
-				unset($country);
-				unset($this->country_array['  ']);
-				// try to translate them and sort alphabetic
-				foreach($this->country_array as $k => $name)
-				{
-					if (($translated = lang($name)) != $name.'*')
-					{
-						$this->country_array[$k] = $translated;
-					}
-				}
-				asort($this->country_array);
+				$this->country_array = EGroupware\Api\Country::countries(true);
 			}
 		}
 
