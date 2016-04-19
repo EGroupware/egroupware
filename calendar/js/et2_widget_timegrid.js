@@ -1886,6 +1886,14 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			return;
 		}
 
+		var height_check = this.div.height();
+		this.div.css('max-height','17cm');
+		if(this.div.height() != height_check)
+		{
+			this.div.height('17cm');
+			this._resizeTimes();
+		}
+
 		// update day widgets
 		var day_width = (100 / this.day_widgets.length);
 		for(var i = 0; i < this.day_widgets.length; i++)
@@ -1911,7 +1919,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					'transform': 'translateY(-'+this.scrolling.scrollTop()+'px)',
 					'height': height+'px'
 			});
-			this.div.css('height','');
+			this.div.css({'height':'','max-height':''});
 		}
 	},
 
@@ -1921,9 +1929,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	afterPrint: function() {
 		this.div.css('maxHeight','');
 		this.scrolling.children().css({'transform':'', 'overflow':''});
+		this.div.height(this.options.height);
 		if (navigator.userAgent.match(/(firefox|safari|iceweasel)/i) && !navigator.userAgent.match(/chrome/i))
 		{
-			this.div.height(this.options.height);
 			this._resizeTimes();
 			this.scrolling
 				// Re-enable out-of-view formatting on scroll
