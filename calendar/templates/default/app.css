@@ -23,6 +23,9 @@
 	#calendar-view_view > tbody > tr.view_row {
 		page-break-inside: avoid;
 	}
+	.calendar_calTimeGrid {
+		max-height: 18cm;
+	}
 	.calendar_calTimeGrid .calendar_calTimeGridScroll {
 		overflow-y: hidden !important;
 	}

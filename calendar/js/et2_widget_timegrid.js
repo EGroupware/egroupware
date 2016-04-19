@@ -1885,7 +1885,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		{
 			return;
 		}
-		
+
 		// update day widgets
 		var day_width = (100 / this.day_widgets.length);
 		for(var i = 0; i < this.day_widgets.length; i++)
@@ -1902,10 +1902,16 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		// Stop Firefox from scrolling the day to the top - this would break printing in Chrome
 		if (navigator.userAgent.match(/(firefox|safari|iceweasel)/i) && !navigator.userAgent.match(/chrome/i))
 		{
-			this.scrolling.children().css({
-				'transform':'translateY(-'+this.scrolling.scrollTop()+'px)',
-				'overflow': 'visible'
+			var height = this.scrolling.scrollTop() + this.scrolling.height();
+			this.scrolling
+				// Disable scroll event, or it will recalculate out of view events
+				.off('scroll')
+				// Explicitly transform to the correct place
+				.css({
+					'transform': 'translateY(-'+this.scrolling.scrollTop()+'px)',
+					'height': height+'px'
 			});
+			this.div.css('height','');
 		}
 	},
 
@@ -1913,7 +1919,18 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	 * Reset after printing
 	 */
 	afterPrint: function() {
+		this.div.css('maxHeight','');
 		this.scrolling.children().css({'transform':'', 'overflow':''});
+		if (navigator.userAgent.match(/(firefox|safari|iceweasel)/i) && !navigator.userAgent.match(/chrome/i))
+		{
+			this.div.height(this.options.height);
+			this._resizeTimes();
+			this.scrolling
+				// Re-enable out-of-view formatting on scroll
+				.on('scroll', jQuery.proxy(this._scroll, this))
+				// Remove translation
+				.css('transform','');
+		}
 	}
 });}).call(this);
 et2_register_widget(et2_calendar_timegrid, ["calendar-timegrid"]);
