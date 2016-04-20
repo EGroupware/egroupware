@@ -46,17 +46,19 @@
 		<grid width="99%" id="participants">
 			<columns>
 				<column width="85"/>
-				<column/>
-				<column/>
+				<column width="350"/>
+				<column width="88"/>
 				<column width="70"/>
-				<column/>
+				<column width="100"/>
 				<column/>
 			</columns>
 			<rows>
 				<row class="th"></row>
 				<row disabled="@no_add" height="35" class="et2_toolbar">
 					<button align="center" id="add" image="add" novalidate="1"  background_image="1" readonly="true" ro_image="add"/>
-					<calendar-owner id="participant" allowFreeEntries="true" span="2" empty_label="Add new participants or resource" onchange="app.calendar.participantOnChange"/>
+					<hbox span="2">
+						<calendar-owner id="participant" allowFreeEntries="true"  empty_label="Add new participants or resource" onchange="app.calendar.participantOnChange"/>
+					</hbox>
 					<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
 					<menulist>
 						<menupopup class="selectRole" id="role"/>

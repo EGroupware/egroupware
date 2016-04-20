@@ -1018,9 +1018,9 @@ ul.et2_link_string {
 }
 .et2_taglist div.ms-ctn input {
 	padding: 3px 5px;
-}
-.et2_taglist div.ms-ctn input:focus {
-	min-width: 10em;
+	min-width:20px;
+	max-width: 93% !important;
+	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
 }
 
 .et2_taglist .ms-res-ctn .ms-res-item {
@@ -1120,7 +1120,7 @@ div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
 .et2_taglist_single div.ms-sel-ctn .ms-close-btn {
 	position: relative;
 	top: 0px;
-	right: 10px;
+	right: 20px;
 	float: none;
 	display: inline-block;
 }
@@ -1140,7 +1140,6 @@ div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
 	text-align: right;
 	position: absolute;
 	z-index: 10;
-	top: 1px;
 	bottom: 0px;
 	right: 0;
 	padding-top: 1em;
@@ -1153,6 +1152,7 @@ div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
 }
 .et2_taglist_small:not(.et2_taglist_single) {
 	border-bottom: 1px solid silver;
+	border-right: 1px solid silver;
 }
 div .et2_taglist_small.et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 	max-width: calc(100% - 43px);
