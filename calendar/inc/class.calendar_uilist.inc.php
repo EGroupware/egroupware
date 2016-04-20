@@ -256,7 +256,7 @@ class calendar_uilist extends calendar_ui
 			if ($old_params['filter'] && $old_params['filter'] != $params['filter'])	// filter changed => order accordingly
 			{
 				$params['order'] = 'cal_start';
-				$params['sort'] = $params['filter'] == 'after' ? 'ASC' : 'DESC';
+				$params['sort'] = $params['filter'] == 'before' ? 'DESC' : 'ASC';
 			}
 			if ($old_params['search'] != $params['search'])
 			{
@@ -286,9 +286,12 @@ class calendar_uilist extends calendar_ui
 			'query'   => $params['search'],
 			'offset'  => (int) $params['start'],
 			'num_rows'=> $params['num_rows'],
-			'order'   => $params['order'] ? $params['order'].' '.$params['sort'] : 'cal_start',
+			'order'   => $params['order'] ? $params['order'].' '.$params['sort'] : 'cal_start ASC',
 			'cfs'	 => $params['csv_export'] ? array() : $cfs,
 		);
+		// Non-blocking events above blocking
+		$search_params['order'] .= ', cal_non_blocking DESC';
+		
 		switch($params['filter'])
 		{
 			case 'all':

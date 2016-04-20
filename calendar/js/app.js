@@ -1217,6 +1217,15 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if(filter)
 		{
 			app.calendar.state.filter = filter.getValue();
+			// Change sort order for before - this is just the UI, server does the query
+			if(app.calendar.state.filter == 'before')
+			{
+				view.getWidgetById('nm').sortBy('cal_start',false, false);
+			}
+			else
+			{
+				view.getWidgetById('nm').sortBy('cal_start',true, false);
+			}
 		}
 		else
 		{
