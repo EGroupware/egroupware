@@ -309,6 +309,20 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		this._children.sort(function(a,b) {
 			var start = new Date(a.options.value.start) - new Date(b.options.value.start);
 			var end = new Date(a.options.value.end) - new Date(b.options.value.end);
+			// Whole day events sorted by ID, normal events by start / end time
+			if(a.options.value.whole_day && b.options.value.whole_day)
+			{
+				// Longer duration comes first so we have nicer bars across the top
+				var duration =
+					(new Date(b.options.value.end) - new Date(b.options.value.start)) -
+					(new Date(a.options.value.end) - new Date(a.options.value.start));
+
+				return duration ? duration : (a.options.value.app_id - b.options.value.app_id);
+			}
+			else if (a.options.value.whole_day || b.options.value.whole_day)
+			{
+				return a.options.value.whole_day ? -1 : 1;
+			}
 			return start ? start : end;
 		});
 
