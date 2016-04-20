@@ -2,8 +2,8 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="mail.view" template="" lang="" group="0" version="1.9.001">
-		<vbox width="100%">
+	<template id="mail.view" template="" lang="" group="0" version="1.9.001" height="100%">
+		<vbox width="100%" height="100%">
 			<hbox class="dialogHeadbar">
 				<hbox>
 					<toolbar id="toolbar"  class="et2_head_toolbar" width="100%" view_range="1" flat_list="true"/>
@@ -20,7 +20,7 @@
 				<date-time id="date" readonly="true"/>
 			</hbox>
 			<hbox class="mail-d-h2" disabled="!@toaddress" width="100%">
-				<description value="To"/> 
+				<description value="To"/>
 				<url-email id="toaddress" readonly="true"/>
 			</hbox>
 			<hbox>
@@ -70,7 +70,7 @@
 					</grid>
 				</details>
 			</hbox>
-			<box>
+			<box height="100%">
 				<iframe id="iframe" width="100%" height="100%" scrolling="auto"/>
 			</box>
 		</vbox>

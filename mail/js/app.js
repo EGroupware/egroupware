@@ -5282,9 +5282,24 @@ app.classes.mail = AppJS.extend(
 			// Request email body from server
 			iframe.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:id}));
 			jQuery(iframe.getDOMNode()).on('load',function(){
-				// Use prepare print function to copy iframe content into div
-				// as we don't want to show content in iframe.
-				self.mail_prepare_print(jQuery(this));
+
+				if (jQuery(this.contentWindow.document.body).find('#calendar-meeting').length > 0)
+				{
+					var frame = this;
+					jQuery(this).show();
+					// calendar meeting mails still need to be in iframe, therefore, we calculate the height
+					// and set the iframe with a fixed height to be able to see all content without getting
+					// scrollbar becuase of scrolling issue in iframe
+					window.setTimeout(function(){jQuery(frame).height(frame.contentWindow.document.body.scrollHeight);}, 500);
+				}
+				else
+				{
+					// Use prepare print function to copy iframe content into div
+					// as we don't want to show content in iframe (scrolling problem).
+					self.mail_prepare_print(jQuery(this));
+				}
+
+
 			});
 		});
 	}

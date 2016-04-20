@@ -1132,7 +1132,7 @@ body {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #b4b4b4;
+  background-color: #e6e6e6;
   float: left;
   width: 55px;
   margin: 3px;
@@ -1982,6 +1982,9 @@ input[type=button] {
   position: relative;
   background-color: transparent;
   width: 100%;
+}
+#mail-index_mail-index-header_right {
+  display: inline-flex;
 }
 #mail-index_mailPreview {
   overflow: hidden;
