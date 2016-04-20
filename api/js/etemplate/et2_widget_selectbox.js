@@ -424,11 +424,16 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		}
 
 		// Read the option-tags
-		var options = et2_directChildrenByTagName(_node, "options");
+		var options = et2_directChildrenByTagName(_node, "option");
+		var egw = this.egw();
 		for (var i = 0; i < options.length; i++)
 		{
 			this.options.select_options[et2_readAttrWithDefault(options[i], "value", options[i].textContent)] = {
-				"label": options[i].textContent,
+				// allow options to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
+				"label": options[i].textContent.replace(/{([^}]+)}/g, function(str,p1)
+				{
+					return egw.lang(p1);
+				}),
 				"title": et2_readAttrWithDefault(options[i], "title", "")
 			};
 		}

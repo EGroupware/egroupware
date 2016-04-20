@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.config" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="70%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Site configuration" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Should the login page include a language selectbox (useful for demo-sites) ?" label="%s:"/>
+					<select id="newsettings[login_show_language_selection]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+				<row>
+					<description value="How should EMail addresses for new users be constructed?" label="%s:"/>
+					<select id="newsettings[email_address_format]">
+						<option value="first-dot-last">{Firstname}.{Lastname}@domain.com</option>
+						<option value="first-last">{Firstname}{Lastname}@domain.com</option>
+						<option value="first-underscore-last">{Firstname}_{Lastname}@domain.com</option>
+						<option value="initial-last">{Initial}{Lastname}@domain.com</option>
+						<option value="initial-dot-last">{Initial}.{Lastname}@domain.com</option>
+						<option value="last-dot-first">{Lastname}.{Firstname}@domain.com</option>
+						<option value="last-first">{Lastname}{Firstname}@domain.com</option>
+						<option value="last-underscore-first">{Lastname}_{Firstname}@domain.com</option>
+						<option value="last">{Lastname}@domain.com</option>
+						<option value="first">{Firstname}@domain.com</option>
+						<option value="account">{Username}@domain.com</option>
+					</select>
+				</row>
+				<row>
+					<description value="Enter the VFS-Path where additional images, icons or logos can be placed (and found by EGroupwares applications). The path MUST start with /,and be readable by all users" label="%s:"/>
+					<textbox id="newsettings[vfs_image_dir]" size="40"/>
+				</row>
+				<row>
+					<description value="Log user-agent and action of changes in history-log of entries" label="%s:"/>
+					<select id="newsettings[log_user_agent_action]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+				<row>
+					<description value="appearance" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Enter the title for your site" label="%s:"/>
+					<textbox id="newsettings[site_title]"/>
+				</row>
+				<row>
+					<description value="Enter the URL or filename (in phpgwapi/templates/default/images) of your logo" label="%s:"/>
+					<textbox id="newsettings[login_logo_file]"/>
+				</row>
+				<row>
+					<description value="Enter the url where your logo should link to" label="%s:"/>
+					<textbox id="newsettings[login_logo_url]"/>
+				</row>
+				<row>
+					<description value="Enter the title of your logo" label="%s:"/>
+					<textbox id="newsettings[login_logo_title]"/>
+				</row>
+				<row>
+					<description value="Enter the URL or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)" label="%s:"/>
+					<textbox id="newsettings[favicon_file]"/>
+				</row>
+				<row>
+					<description value="How big should thumbnails for linked images be (maximum in pixels) ?" label="%s:"/>
+					<textbox id="newsettings[link_list_thumbnail]" size="5"/>
+				</row>
+				<row>
+					<description value="Enable spellcheck in rich text editor" label="%s:"/>
+					<select id="newsettings[enabled_spellcheck]">
+						<option value="">{No} - {more secure}</option>
+						<option value="True">Yes</option>
+						<option value="YesNoSCAYT">Yes, but no SCAYT</option>
+						<option value="YesBrowserBased">{Yes, use browser based spell checking engine} - {more secure}</option>
+						<option value="YesUseWebSpellCheck">Yes, use WebSpellChecker</option>
+					</select>
+				</row>
+				<row>
+					<description value="EGroupware Tutorial" label="%s:"/>
+					<select id="newsettings[egw_tutorial_disable]">
+						<option value="">Enable</option>
+						<option value="sidebox">Hide sidebox video tutorials</option>
+						<option value="intro">Do not offer introduction video</option>
+						<option value="all">Disable all</option>
+					</select>
+				</row>
+				<row>
+					<description value="Applications available on mobile devices" label="%s:"/>
+					<select-app id="newsettings[fw_mobile_app_list]" multiple="true" tags="true"/>
+				</row>
+				<row>
+					<description value="security" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Cookie path (allows multiple eGW sessions with different directories, has problemes with SiteMgr!)" label="%s:"/>
+					<select id="newsettings[cookiepath]">
+						<option value="">Document root (default)</option>
+						<option value="egroupware">eGroupWare directory</option>
+					</select>
+				</row>
+				<row>
+					<description value="Cookie domain (default empty means use full domain name, for SiteMgr eg. &quot;.domain.com&quot; allows to use the same cookie for egw.domain.com and www.domain.com)" label="%s:"/>
+					<textbox id="newsettings[cookiedomain]"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="check ip address of all sessions"/>
+						<description value="switch it off, if users are randomly thrown out" label="%s:"/>
+						<description value="Your session could not be verified."/>
+					</vbox>
+					<select id="newsettings[sessions_checkip]">
+						<option value="True">{Yes} - {more secure}</option>
+						<option value="">No</option>
+					</select>
+				</row>
+				<row>
+					<description value="Use secure cookies (transmitted only via https)"/>
+					<select id="newsettings[insecure_cookies]">
+						<option value="">{Yes} - {more secure}</option>
+						<option value="insecure">No</option>
+					</select>
+				</row>
+				<row>
+					<description value="Deny all users access to grant other users access to their entries ?" label="%s:"/>
+					<select id="newsettings[deny_user_grants_access]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+				<!--
+				<row>
+					<description value="Default file system space per user"/>
+					<textbox id="newsettings[vfs_default_account_size_number]" type="text" size="7"/>
+
+     <td>{Default_file_system_space_per_user}/{group_?}:</td>
+     <td>
+      <input type="text" name="newsettings[vfs_default_account_size_number]" size="7" value="{value_vfs_default_account_size_number}">&nbsp;&nbsp;
+      <select name="newsettings[vfs_default_account_size_type]">
+       <option value="gb"{selected_vfs_default_account_size_type_gb}>GB</option>
+       <option value="mb"{selected_vfs_default_account_size_type_mb}>MB</option>
+       <option value="kb"{selected_vfs_default_account_size_type_kb}>KB</option>
+       <option value="b"{selected_vfs_default_account_size_type_b}>B</option>
+      </select>
+     </td>
+    				</row> -->
+				<row>
+					<description value="How many days should entries stay in the access log, before they get deleted (default 90) ?" label="%s:"/>
+					<textbox id="newsettings[max_access_log_age]" size="5"/>
+				</row>
+				<row>
+					<description value="After how many unsuccessful attempts to login, an account should be blocked (default 3) ?" label="%s:"/>
+					<textbox id="newsettings[num_unsuccessful_id]" size="5"/>
+				</row>
+				<row>
+					<description value="After how many unsuccessful attempts to login, an IP should be blocked (default 3) ?" label="%s:"/>
+					<textbox id="newsettings[num_unsuccessful_ip]" size="5"/>
+				</row>
+				<row>
+					<description value="How many minutes should an account or IP be blocked (default 30) ?" label="%s:"/>
+					<textbox id="newsettings[block_time]" size="5"/>
+				</row>
+				<row>
+					<description value="Force users to change their password regularily?(empty for no,number for after that number of days" label="%s:"/>
+					<textbox id="newsettings[change_pwd_every_x_days]" size="5"/>
+				</row>
+				<row>
+					<description value="Warn users about the need to change their password? The number set here should be lower than the value used to enforce the change of passwords every X days. Only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)" label="%s:"/>
+					<textbox id="newsettings[warn_about_upcoming_pwd_change]" size="5"/>
+				</row>
+				<row>
+					<description value="Passwords require a minimum number of characters" label="%s:"/>
+					<select id="newsettings[force_pwd_length]">
+						<option value="">None</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="10">10</option>
+						<option value="12">12</option>
+						<option value="14">14</option>
+						<option value="16">16</option>
+					</select>
+				</row>
+				<row>
+					<vbox>
+						<description value="Passwords requires this number of different character classes"/>
+						<description value="Uppercase, lowercase, number, special char" label="(%s)"/>
+					</vbox>
+					<select id="newsettings[force_pwd_strength]">
+						<option value="">None</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+					</select>
+				</row>
+				<row>
+					<description value="Reject passwords containing part of username or full name (3 or more characters long)" label="%s:"/>
+					<select id="newsettings[passwd_forbid_name]">
+						<option value="no">No</option>
+						<option value="yes">Yes</option>
+					</select>
+				</row>
+				<row>
+					<description value="Admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)" label="%s:"/>
+					<textbox id="newsettings[admin_mails]" size="40"/>
+				</row>
+				<!-- not used at the moment RalfBecker 2007/05/17
+				<row>
+					<description value="Disable &quot;auto completion&quot; of the login form " label="%s:"/>
+					<select id="newsettings[autocomplete_login]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row> -->
+				<row>
+					<vbox>
+						<description value="How many entries should non-admins be able to export (empty = no limit, no = no export)"/>
+						<description value="This controls exports and merging."/>
+					</vbox>
+					<textbox id="newsettings[export_limit]" size="5"/>
+				</row>
+				<row>
+					<description value="Group excepted from above export limit (admins are always excepted)" label="%s:"/>
+					<select-account id="newsettings[export_limit_excepted]" account_type="groups" multiple="true" tags="true"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="Allow remote administration from following install ID's (comma separated)"/>
+						<description id="newsettings[install_id]" label="Own install ID:"/>
+					</vbox>
+					<textbox id="newsettings[allow_remote_admin]" size="40"/>
+				</row>
+				<row>
+					<description value="Should exceptions contain a trace (including function arguments)" label="%s:"/>
+					<select id="newsettings[exception_show_trace]">
+						<option value="">{No} - {more secure}</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+				<row>
+					<description value="Disable minifying of javascript and CSS files" label="%s:"/>
+					<select id="newsettings[debug_minify]">
+						<option value="">{No} - {Default}</option>
+						<option value="True">Yes</option>
+						<option value="debug">Debug</option>
+					</select>
+				</row>
+			</rows>
+		</grid>
+		<hbox class="dialogFooterToolbar">
+			<button id="save" label="Save"/>
+			<button id="apply" label="Apply"/>
+			<button id="cancel" label="Cancel"/>
+		</hbox>
+	</template>
+</overlay>

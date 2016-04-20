@@ -233,7 +233,7 @@
     <td>{lang_Passwords_require_a_minimum_number_of_characters}:</td>
     <td>
      <select name="newsettings[force_pwd_length]">
-     	<option value="">{lang_None}</options>
+     	<option value="">{lang_None}</option>
      	<option value="6"{selected_force_pwd_length_6}>6</option>
      	<option value="7"{selected_force_pwd_length_7}>7</option>
      	<option value="8"{selected_force_pwd_length_8}>8</option>

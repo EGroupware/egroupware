@@ -160,6 +160,13 @@ span#admin-mailaccount_acc_id {
 select#admin-mailaccount_ident_id {
   width: 95%;
 }
+/**
+ * new et2 site configuration
+ */
+table.admin-config td.subHeader span {
+  font-weight: bold;
+  font-size: 110%;
+}
 @media all {
   div.dhtmlxTree td.standartTreeRow span.selectedTreeRow {
     background-color: #ffdd73;
