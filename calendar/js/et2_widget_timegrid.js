@@ -1700,6 +1700,12 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 		var node = document.elementFromPoint(x,y);
 
+		// Ignore high level & non-time (grid itself, header parent & week label)
+		if([this.node, this.gridHeader[0], this._labelContainer[0]].indexOf(node) !== -1)
+		{
+			return [];
+		}
+
 		while(node && node != this.node && node.tagName != 'BODY' && path.length < 10)
 		{
 			path.push(node);
