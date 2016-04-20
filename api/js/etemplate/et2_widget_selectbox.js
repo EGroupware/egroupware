@@ -425,6 +425,11 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		// Read the option-tags
 		var options = et2_directChildrenByTagName(_node, "option");
+		if(options.length)
+		{
+			// Break reference to content manager, we don't want to add to it
+			this.options.select_options = jQuery.extend({},this.options.select_options);
+		}
 		var egw = this.egw();
 		for (var i = 0; i < options.length; i++)
 		{
@@ -916,6 +921,20 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 					if(content_options && typeof content_options[last] != 'undefined' && content_options[last] )
 					{
 						content_options = content_options[last];
+					}
+					else if (content_options)
+					{
+						// Check for real values
+						for(var key in content_options)
+						{
+							if(!(isNaN(key) && typeof content_options[key] === 'string' ||
+								!isNaN(key) && typeof content_options[key] === 'object' && typeof content_options[key]['value'] !== 'undefined'))
+							{
+								// Found a parent of some other namespace
+								content_options = undefined;
+								break;
+							}
+						}
 					}
 				}
 			}
