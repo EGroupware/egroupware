@@ -1111,6 +1111,11 @@ abstract class bo_merge
 			{
 				$replacements = str_replace(array('&',"\r","\n",'&amp;lt;','&amp;gt;'),array('&amp;','',$break,'&lt;','&gt;'),$replacements);
 			}
+			else
+			{
+				// Need to at least handle new lines, or it'll be run together on one line
+				$replacements = str_replace(array("\r","\n"),array('',$break),$replacements);
+			}
 		}
 		return str_replace(array_keys($replacements),array_values($replacements),$content);
 	}
