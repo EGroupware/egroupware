@@ -193,6 +193,13 @@ abstract class Framework extends Framework\Extra
 		{
 			Json\Response::get()->redirect($url, false, $link_app);
 
+			// check if we have a message, in which case send it along too
+			$extra = self::get_extra();
+			if ($extra['message'])
+			{
+				Json\Response::get()->apply('egw.message', $extra['message']);
+			}
+
 			// If we are in a json request, we should not flush the current output!
 			$do_flush = false;
 		}
