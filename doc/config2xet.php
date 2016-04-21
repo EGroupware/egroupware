@@ -55,9 +55,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<description value="Site configuration" span="all" class="subHeader"/>
-				</row>
 ';
 foreach($trs[2] as $n => $tr)
 {
@@ -164,11 +161,6 @@ foreach($trs[2] as $n => $tr)
 echo
 '			</rows>
 		</grid>
-		<hbox class="dialogFooterToolbar">
-			<button id="save" label="Save"/>
-			<button id="apply" label="Apply"/>
-			<button id="cancel" label="Cancel"/>
-		</hbox>
 	</template>
 </overlay>
 ';

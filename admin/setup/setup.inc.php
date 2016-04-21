@@ -38,6 +38,7 @@ $setup_info['admin']['hooks'] = array(
 $setup_info['admin']['hooks']['admin'] = 'admin_hooks::all_hooks';
 $setup_info['admin']['hooks']['sidebox_menu'] = 'admin_hooks::all_hooks';
 $setup_info['admin']['hooks']['edit_user'] = 'admin_hooks::edit_user';
+$setup_info['admin']['hooks']['config'] = 'admin_hooks::config';
 
 // add account tab to addressbook.edit
 $setup_info['admin']['hooks']['addressbook_edit'] = 'admin.admin_account.addressbook_edit';

@@ -20,6 +20,12 @@ class uiconfig
 
 	function index($params=null)
 	{
+		// if we have a xet file, run new et2 config
+		if (file_exists(EGW_SERVER_ROOT.'/'.$_GET['appname'].'/templates/default/config.xet'))
+		{
+			$new_config = new admin_config();
+			return $new_config->index();
+		}
 		// allowing inline js
 		egw_framework::csp_script_src_attrs('unsafe-inline');
 

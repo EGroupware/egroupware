@@ -57,7 +57,7 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('site_config_acce',1,'admin'))
 			{
-				$file['Site Configuration']         = egw::link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
+				$file['Site Configuration']         = egw::link('/index.php','menuaction=admin.admin_config.index&appname=admin&ajax=true');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
@@ -250,5 +250,21 @@ class admin_hooks
 			}
 		}
 		return $actions;
+	}
+
+	/**
+	 * Called before displaying site configuration
+	 *
+	 * @param array $config
+	 * @return array with additional config to merge
+	 */
+	public static function config(array $config)
+	{
+		$ret = array();
+		if (empty($config['fw_mobile_app_list']) && class_exists('jdots_framework'))
+		{
+			$ret['fw_mobile_app_list'] = jdots_framework::DEFAULT_MOBILE_APPS;
+		}
+		return $ret;
 	}
 }

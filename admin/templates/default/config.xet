@@ -10,9 +10,6 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Site configuration" span="all" class="subHeader"/>
-				</row>
-				<row>
 					<description value="Should the login page include a language selectbox (useful for demo-sites) ?" label="%s:"/>
 					<select id="newsettings[login_show_language_selection]">
 						<option value="">No</option>
@@ -94,7 +91,7 @@
 				</row>
 				<row>
 					<description value="Applications available on mobile devices" label="%s:"/>
-					<select-app id="newsettings[fw_mobile_app_list]" multiple="true" tags="true"/>
+					<select-app id="newsettings[fw_mobile_app_list]" multiple="true" tags="true" options=",,enabled" width="100%"/>
 				</row>
 				<row>
 					<description value="security" span="all" class="subHeader"/>
@@ -103,7 +100,7 @@
 					<description value="Cookie path (allows multiple eGW sessions with different directories, has problemes with SiteMgr!)" label="%s:"/>
 					<select id="newsettings[cookiepath]">
 						<option value="">Document root (default)</option>
-						<option value="egroupware">eGroupWare directory</option>
+						<option value="egroupware">EGroupware directory</option>
 					</select>
 				</row>
 				<row>
@@ -228,7 +225,7 @@
 				</row>
 				<row>
 					<description value="Group excepted from above export limit (admins are always excepted)" label="%s:"/>
-					<select-account id="newsettings[export_limit_excepted]" account_type="groups" multiple="true" tags="true"/>
+					<select-account id="newsettings[export_limit_excepted]" account_type="groups" multiple="true" tags="true" width="100%"/>
 				</row>
 				<row>
 					<vbox>
@@ -254,10 +251,5 @@
 				</row>
 			</rows>
 		</grid>
-		<hbox class="dialogFooterToolbar">
-			<button id="save" label="Save"/>
-			<button id="apply" label="Apply"/>
-			<button id="cancel" label="Cancel"/>
-		</hbox>
 	</template>
 </overlay>

@@ -35,7 +35,7 @@ class admin_config
 		}
 		if ($GLOBALS['egw']->acl->check('site_config_acce',1,'admin'))
 		{
-			egw::redirect_link('/index.php');
+			Api\Framework::redirect_link('/index.php');
 		}
 
 		// load the translations of the app we show too, so they dont need to be in admin!
@@ -56,7 +56,7 @@ class admin_config
 			case 'phpgwapi':
 			case '':
 				/* This keeps the admin from getting into what is a setup-only config */
-				egw::redirect_link('/admin/index.php');
+				Api\Framework::redirect_link('/admin/index.php');
 				break;
 			default:
 				$appname = $_appname;
@@ -68,7 +68,7 @@ class admin_config
 		$c->read_repository();
 		if ($_content['cancel'] || ($_content['save'] || $_content['apply']) && $GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
 		{
-			egw::redirect_link('/admin/index.php?ajax=true');
+			Api\Framework::redirect_link('/admin/index.php?ajax=true');
 		}
 
 		if ($_content['save'] || $_content['apply'])
@@ -118,8 +118,8 @@ class admin_config
 
 			if(!$errors && !$_content['apply'])
 			{
-				egw_framework::message(lang('Configuration saved.'), 'success');
-				egw::redirect_link('/index.php', array(
+				Api\Framework::message(lang('Configuration saved.'), 'success');
+				Api\Framework::redirect_link('/index.php', array(
 					'menuaction' => 'admin.admin_ui.index',
 					'ajax' => 'true'
 				), 'admin');
@@ -128,21 +128,34 @@ class admin_config
 
 		if($errors)
 		{
-			egw_framework::message(lang('Error') . ': ' . $errors, 'error');
+			Api\Framework::message(lang('Error') . ': ' . $errors, 'error');
 			unset($errors);
 			unset($GLOBALS['config_error']);
 		}
 		elseif ($_content['apply'])
 		{
-			egw_framework::message(lang('Configuration saved.'), 'success');
+			Api\Framework::message(lang('Configuration saved.'), 'success');
 		}
 
-		Api\Hooks::single('config', $appname);
+		$sel_options = $readonlys = array();
+		$config = $c->read_repository();
+
+		// call "config" hook, allowing apps to overwrite config, eg. set default values,
+		// or return options in "sel_options" keys
+		$config['location'] = 'config';
+		$ret = Api\Hooks::single($config, $appname);
+		if (is_array($ret))
+		{
+			if (isset($ret['sel_options'])) $sel_options = $ret['sel_options'];
+			$config = array_merge($config, $ret);
+		}
 
 		$tmpl = new Api\Etemplate($appname.'.config');
 		$path = (parse_url($tmpl->rel_path, PHP_URL_SCHEME) !== 'vfs' ? EGW_SERVER_ROOT : '').$tmpl->rel_path;
-		$content = array('newsettings' => array());
-		$config = $c->read_repository();
+		$content = array(
+			'template' => $appname.'.config',
+			'newsettings' => array(),
+		);
 
 		// for security reasons we do not send all config to client-side, but only ones mentioned in templates
 		$matches = null;
@@ -152,6 +165,14 @@ class admin_config
 			$content['newsettings'][$name] = $config[$name];
 		}
 
-		$tmpl->exec('admin.admin_config.index', $content, array(), array(), array('appname' => $appname));
+		// make everything readonly and remove save/apply button, if user has not rights to store config
+		if ($GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
+		{
+			$readonlys[__ALL__] = true;
+			$readonlys['cancel'] = false;
+		}
+
+		$tmpl->read('admin.site-config');
+		$tmpl->exec('admin.admin_config.index', $content, $sel_options, $readonlys, array('appname' => $appname));
 	}
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.site-config" template="" lang="" group="0" version="16.1">
+		<description value="Site configuration" class="subHeader"/>
+		<template id="template" template="@template" width="100%"/>
+		<hbox class="dialogFooterToolbar">
+			<button id="save" label="Save"/>
+			<button id="apply" label="Apply"/>
+			<button id="cancel" label="Cancel"/>
+		</hbox>
+	</template>
+</overlay>

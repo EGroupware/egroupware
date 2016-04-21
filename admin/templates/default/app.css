@@ -157,7 +157,14 @@ select#admin-mailaccount_ident_id {
 /**
  * new et2 site configuration
  */
-table.admin-config td.subHeader span {
+#admin-site-config > div > span.subHeader  {
+	border-bottom: 3px solid #696969;
+	padding-left: 3px;
+	padding-bottom: 3px;
+	display: block;
+	margin-bottom: 5px;
+}
+#admin-site-config span.subHeader  {
 	font-weight: bold;
 	font-size: 110%;
 }
