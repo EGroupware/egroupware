@@ -1703,7 +1703,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		// Ignore high level & non-time (grid itself, header parent & week label)
 		if([this.node, this.gridHeader[0], this._labelContainer[0]].indexOf(node) !== -1 ||
 			// Day labels
-			this.gridHeader.has(node) && !$j(node).hasClass("calendar_calDayColAllDay"))
+			this.gridHeader.has(node).length && !$j(node).hasClass("calendar_calDayColAllDay"))
 		{
 			return [];
 		}
