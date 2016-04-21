@@ -137,9 +137,15 @@ class Select extends Etemplate\Widget
 
 			$allowed2 = self::selOptions($form_name, true);	// true = return array of option-values
 			$type_options = self::typeOptions($this,
-					// typeOptions thinks # of rows is the first thing in options
-					($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']));
+				// typeOptions thinks # of rows is the first thing in options
+				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']));
 			$allowed = array_merge($allowed2,array_keys($type_options));
+
+			// add option children's values too, "" is not read, therefore we cast to string
+			foreach($this->children as $child)
+			{
+				if ($child->type == 'option') $allowed[] = (string)$child->attrs['value'];
+			}
 
 			if (!$this->attrs['multiple'] || !($this->attrs['options'] > 1)) $allowed[] = '';
 
