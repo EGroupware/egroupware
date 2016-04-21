@@ -984,7 +984,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				var et2_list = [];
 				$j('.et2_container',this.activeApp.tab.contDiv).each(function() {
 					var et2 = etemplate2.getById(this.id);
-					if(et2 && jQuery(et2.DOMContainer).filter(':visible'))
+					if(et2 && jQuery(et2.DOMContainer).filter(':visible').length)
 					{
 						deferred = deferred.concat(et2.print());
 						et2_list.push(et2);
