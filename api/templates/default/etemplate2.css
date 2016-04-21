@@ -1064,7 +1064,7 @@ ul.et2_link_string {
 	width: 23px;
     height: 23px;
     position: absolute;
-    right: 5px;
+    right: 0px;
     z-index: 5;
 	background-color: white;
 	background-repeat: no-repeat;
@@ -1100,7 +1100,7 @@ div .et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 	border: none;
 	background: inherit;
 	margin-bottom: 0px;
-	padding-bottom: 6px;
+	
 	white-space: nowrap;
 	overflow: hidden;
 }

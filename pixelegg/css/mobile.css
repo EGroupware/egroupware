@@ -898,6 +898,9 @@
     background-image: url("../images/plus.svg");
     background-size: 50%;
   }
+  .et2_taglist.et2_taglist_category {
+    max-height: 20px !important;
+  }
   /**
 * et2_toolbar
 */
