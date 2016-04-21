@@ -613,11 +613,20 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	},
 
 	set_disabled: function(disabled) {
+		var old_value = this.options.disabled;
 		this._super.apply(this, arguments);
 		if(disabled)
 		{
 			this.loader.show();
 		}
+		else if (old_value !== disabled)
+		{
+			// Scroll to start of day - stops jumping in FF
+			// For some reason on Chrome & FF this doesn't quite get the day start
+			// to the top, so add 2px;
+			this.scrolling.scrollTop(this._top_time+2);
+		}
+
 	},
 
 	/**
@@ -761,7 +770,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			window.clearTimeout(this.resize_timer);
 		}
 		// No point if it is just going to be redone completely
-		if(this.upate_timer) return;
+		if(this.update_timer) return;
 
 		this.resize_timer = window.setTimeout(jQuery.proxy(function() {
 			if(this._resizeTimes)

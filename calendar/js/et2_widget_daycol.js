@@ -930,7 +930,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 					if(columns[c][i].div.is(':visible'))
 					{
 						var border_diff = columns[c][i].div.outerHeight() - columns[c][i].div.height();
-						columns[c][i].div.css('height',columns[c][i].div.height() - border_diff);
+						columns[c][i].div.css('height','calc('+height+'% - ' +border_diff+')');
 					}
 					// This gives the wrong height
 					//columns[c][i].div.outerHeight(height+'%');
@@ -1074,10 +1074,18 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		{
 			// Layout has changed
 			this._draw();
-		}
-		// Resize & position all events
-		this.position_event();
 
+			// Resize & position all events
+			this.position_event();
+		}
+		else
+		{
+			// Don't need to resize & reposition, just clear some stuff
+			// to reset for _out_of_view()
+			this.iterateOver(function(widget) {
+				widget._small_size();
+			}, this, et2_calendar_event);
+		}
 		this._out_of_view();
 	}
 });}).call(this);

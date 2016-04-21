@@ -1900,6 +1900,13 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 			var grid = view.etemplates[0].widgetContainer.getWidgetById('view');
 
+			// Show the templates for the current view
+			// Needs to be visible while updating so sizing works
+			for(var i = 0; i < view.etemplates.length; i++)
+			{
+				$j(view.etemplates[i].DOMContainer).show();
+			}
+			
 			/*
 			If the count is different, we need to have the correct number
 			If the count is > 1, it's either because there are multiple date spans (weekN, month) and we need the correct span
@@ -2005,18 +2012,37 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 									// Swap DOM nodes
 									var a = grid._children[0].getDOMNode().parentNode.parentNode;
+									var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop();
 									var b = grid._children[1].getDOMNode().parentNode.parentNode;
 									a.parentNode.insertBefore(a,b);
+									
+									// Moving nodes changes scrolling, so set it back
+									var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop(a_scroll);
 								}
 							}
 							else if (row_index > i)
 							{
 								// Swap DOM nodes
 								var a = grid._children[row_index].getDOMNode().parentNode.parentNode;
+								var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop();
 								var b = grid._children[i].getDOMNode().parentNode.parentNode;
-								a.parentNode.insertBefore(a,b);
-								grid._children.splice(i,0,widget);
-								grid._children.splice(row_index+1,1);
+
+								// Simple scroll forward, put top on the bottom
+								// This makes it faster if they scroll back next
+								if(i==0 && row_index == 1)
+								{
+									$j(b).appendTo(b.parentNode);
+									grid._children.push(grid._children.shift());
+								}
+								else
+								{
+									grid._children.splice(i,0,widget);
+									grid._children.splice(row_index+1,1);
+									a.parentNode.insertBefore(a,b);
+								}
+
+								// Moving nodes changes scrolling, so set it back
+								var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop(a_scroll);
 							}
 							break;
 						}
@@ -2045,12 +2071,17 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						widget.set_granularity(view.granularity(state.state));
 					}
 					if(widget.id == value[row_index].id &&
-						widget.get_end_date().toJSON() == value[row_index].end_date
+						widget.get_end_date().getUTCFullYear() == value[row_index].end_date.substring(0,4) &&
+						widget.get_end_date().getUTCMonth()+1 == value[row_index].end_date.substring(5,7) &&
+						widget.get_end_date().getUTCDate() == value[row_index].end_date.substring(8,10)
 					)
 					{
 						// Do not need to re-set this row, but we do need to re-do
 						// the times, as they may have changed
-						widget.invalidate();
+						widget.resizeTimes();
+						
+						// Hide loader
+						widget.loader.hide();
 						row_index++;
 						return;
 					}
@@ -2091,11 +2122,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			if(state.state.first && state.state.first.toJSON) state.state.first = state.state.first.toJSON();
 			if(state.state.last && state.state.last.toJSON) state.state.last = state.state.last.toJSON();
 
-			// Show the templates for the current view
-			for(var i = 0; i < view.etemplates.length; i++)
-			{
-				$j(view.etemplates[i].DOMContainer).show();
-			}
 			// Toggle todos
 			if(state.state.view == 'day' || this.state.view == 'day')
 			{
