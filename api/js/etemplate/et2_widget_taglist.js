@@ -345,6 +345,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 					});
 					$j('body').one('click',function() {
 						taglist.collapse();
+						taglist.input.focus();
 					});},100
 				);
 				this.$taglist.one('collapse', function() {
