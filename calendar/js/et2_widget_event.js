@@ -316,7 +316,6 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		this.div.toggleClass('calendar_calEventUnknown', event.participants[egw.user('account_id')] ? event.participants[egw.user('account_id')][0] === 'U' : false);
 		this.div.addClass(status_class);
 
-		this.title.toggle(!event.whole_day_on_top);
 		this.body.toggleClass('calendar_calEventBodySmall', event.whole_day_on_top || false);
 
 		// Header
