@@ -11,124 +11,6 @@
  * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
  */
 /**
- *
- * Mobile FW - Applications colors
- *
- * Please do NOT change app.css directly, instead change app.less and compile it!
- * Pixleegg Template app.css
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Hadi Nategh <hn@stylite.de>
- * @package Mobile Framework
- * @version $Id: app.less 55033 2016-02-16 18:49:17Z hnategh $
- */
-div[id^="addressbook-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-form[id^="addressbook-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-div[id^="addressbook-"] .plus_button,
-form[id^="addressbook-"] .plus_button,
-div[id^="addressbook-"] .search.nm-mob-header,
-form[id^="addressbook-"] .search.nm-mob-header,
-div[id^="addressbook-"] .dialogHeadbar,
-form[id^="addressbook-"] .dialogHeadbar {
-  background-color: #333399;
-}
-div[id^="admin-"] .plus_button,
-form[id^="admin-"] .plus_button,
-div[id^="admin-"] .search.nm-mob-header,
-form[id^="admin-"] .search.nm-mob-header,
-div[id^="admin-"] .dialogHeadbar,
-form[id^="admin-"] .dialogHeadbar {
-  background-color: #0073ce;
-}
-div[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-form[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-div[id^="bookmarks-"] .plus_button,
-form[id^="bookmarks-"] .plus_button,
-div[id^="bookmarks-"] .search.nm-mob-header,
-form[id^="bookmarks-"] .search.nm-mob-header,
-div[id^="bookmarks-"] .dialogHeadbar,
-form[id^="bookmarks-"] .dialogHeadbar {
-  background-color: #db0087;
-}
-div[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-form[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-div[id^="calendar-"] .plus_button,
-form[id^="calendar-"] .plus_button,
-div[id^="calendar-"] .search.nm-mob-header,
-form[id^="calendar-"] .search.nm-mob-header,
-div[id^="calendar-"] .dialogHeadbar,
-form[id^="calendar-"] .dialogHeadbar {
-  background-color: #cc0033;
-}
-div[id^="filemanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-form[id^="filemanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-div[id^="filemanager-"] .plus_button,
-form[id^="filemanager-"] .plus_button,
-div[id^="filemanager-"] .search.nm-mob-header,
-form[id^="filemanager-"] .search.nm-mob-header,
-div[id^="filemanager-"] .dialogHeadbar,
-form[id^="filemanager-"] .dialogHeadbar {
-  background-color: #f9d730;
-}
-div[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-form[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-div[id^="infolog-"] .plus_button,
-form[id^="infolog-"] .plus_button,
-div[id^="infolog-"] .search.nm-mob-header,
-form[id^="infolog-"] .search.nm-mob-header,
-div[id^="infolog-"] .dialogHeadbar,
-form[id^="infolog-"] .dialogHeadbar {
-  background-color: #ffb936;
-}
-div[id^="mail-"] .plus_button,
-form[id^="mail-"] .plus_button,
-div[id^="mail-"] .search.nm-mob-header,
-form[id^="mail-"] .search.nm-mob-header,
-div[id^="mail-"] .dialogHeadbar,
-form[id^="mail-"] .dialogHeadbar {
-  background-color: #47b2d4;
-}
-div[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-form[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-div[id^="projectmanager-"] .plus_button,
-form[id^="projectmanager-"] .plus_button,
-div[id^="projectmanager-"] .search.nm-mob-header,
-form[id^="projectmanager-"] .search.nm-mob-header,
-div[id^="projectmanager-"] .dialogHeadbar,
-form[id^="projectmanager-"] .dialogHeadbar {
-  background-color: #75de27;
-}
-div[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-form[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-div[id^="resources-"] .plus_button,
-form[id^="resources-"] .plus_button,
-div[id^="resources-"] .search.nm-mob-header,
-form[id^="resources-"] .search.nm-mob-header,
-div[id^="resources-"] .dialogHeadbar,
-form[id^="resources-"] .dialogHeadbar {
-  background-color: #009966;
-}
-div[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-form[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-div[id^="timesheet-"] .plus_button,
-form[id^="timesheet-"] .plus_button,
-div[id^="timesheet-"] .search.nm-mob-header,
-form[id^="timesheet-"] .search.nm-mob-header,
-div[id^="timesheet-"] .dialogHeadbar,
-form[id^="timesheet-"] .dialogHeadbar {
-  background-color: #9d15ea;
-}
-div[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-form[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
-div[id^="tracker-"] .plus_button,
-form[id^="tracker-"] .plus_button,
-div[id^="tracker-"] .search.nm-mob-header,
-form[id^="tracker-"] .search.nm-mob-header,
-div[id^="tracker-"] .dialogHeadbar,
-form[id^="tracker-"] .dialogHeadbar {
-  background-color: #006666;
-}
-/**
  * EGroupware: CSS with less preprocessor
  *
  * CALENDAR
@@ -141,7 +23,7 @@ form[id^="tracker-"] .dialogHeadbar {
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55746 2016-04-14 14:58:21Z hnategh $ */
+/* $Id: app.css 55784 2016-04-20 15:07:01Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -166,6 +48,9 @@ form[id^="tracker-"] .dialogHeadbar {
   /* Don't split a calendar week across pages */
   #calendar-view_view > tbody > tr.view_row {
     page-break-inside: avoid;
+  }
+  .calendar_calTimeGrid {
+    max-height: 18cm;
   }
   .calendar_calTimeGrid .calendar_calTimeGridScroll {
     overflow-y: hidden !important;
@@ -257,6 +142,11 @@ form[id^="tracker-"] .dialogHeadbar {
 #calendar-sidebox_owner .ms-helper {
   padding: 2px;
   background-color: white;
+}
+/* Loader - hide sizing behind overlay*/
+#egw-loadin-prompt_calendar::before {
+  opacity: 1;
+  background-color: #e6e6e6;
 }
 /* Toolbar */
 #calendar-toolbar {
@@ -615,6 +505,9 @@ Hide subsequent headers in week view with non-consolidated owners
   right: 0px;
   text-align: center;
 }
+.calendar_calDayColAllDay .calendar_calEventHeader {
+  display: none;
+}
 .calendar_calDayColAllDay > .calendar_calEventBodySmall {
   white-space: nowrap;
 }
@@ -896,7 +789,7 @@ Hide subsequent headers in week view with non-consolidated owners
 .calendar_calEventBody .calendar_calTimespan {
   display: none;
 }
-.calendar_calEventBodySmall {
+.calendar_calTimeGrid .calendar_calEventBodySmall {
   font-size: 95%;
 }
 .calendar_calEventLabel {
@@ -921,6 +814,13 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 .calendar_calTimeGrid:not(.calendar_calTimeGridList) .calendar_calEventSmall .calendar_calEventBody {
   padding-top: 4em;
+}
+.calendar_plannerRowWidget .calendar_calEvent:not(.calendar_calEventSmall) .calendar_calTimespan {
+  display: none;
+}
+.calendar_plannerRowWidget .calendar_calEvent:not(.calendar_calEventSmall) .calendar_calEventHeader .calendar_calEventTitle {
+  display: inline;
+  font-weight: normal;
 }
 /* Events as displayed in a list, not sized by time */
 .calendar_calTimeGridList .calendar_calTimeGridScroll {
@@ -1134,6 +1034,9 @@ Hide subsequent headers in week view with non-consolidated owners
   width: 100%;
   height: 20px;
   line-height: 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: stretch;
 }
 .calendar_plannerDayScale,
 .calendar_plannerMonthScale,
@@ -1152,6 +1055,12 @@ Hide subsequent headers in week view with non-consolidated owners
  *  left:
  *  width:
  */
+}
+.calendar_plannerDayScale,
+.calendar_plannerWeekScale,
+.calendar_plannerHourScale {
+  position: static;
+  flex: 1 1 14%;
 }
 .calendar_plannerHourScale {
   font-size: 90%;
@@ -1426,7 +1335,7 @@ input#calendar-edit_location {
   font-weight: 500;
 }
 #calendar-edit .dialogFooterToolbar {
-  min-width: 780px;
+  min-width: 800px;
 }
 #calendar_edit_recur_data_chzn {
   width: 99% !important;
@@ -2513,8 +2422,9 @@ button#exception:active {
 }
 /*calendar series add*/
 #calendar-edit_add {
-  /*    .Complete_Button_add;
-    &:hover {.Complete_Button_add_hover;} */
+  padding-left: 24px;
+  background-size: 16px;
+  background-position: center;
 }
 #calendar-edit_add:active {
   background-color: #1aa200 !important;
