@@ -271,7 +271,7 @@
 				</row>
 				<row>
 					<description for="category" value="Categories"/>
-					<taglist-cat id="category" class="et2_fullWidth"/>
+					<taglist-cat id="category" class="et2_fullWidth" rows="1" multiple="toggle"/>
 				</row>
 				<row>
 					<tabbox id="tabs" span="all" width="100%" align_tabs="v">
