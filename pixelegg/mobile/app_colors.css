@@ -20,6 +20,9 @@ div[id^="addressbook-"] .dialogHeadbar,
 form[id^="addressbook-"] .dialogHeadbar {
   background-color: #333399;
 }
+#addressbook_sidebox_header {
+  border-left: 6px solid #333399 !important;
+}
 div[id^="admin-"] .plus_button,
 form[id^="admin-"] .plus_button,
 div[id^="admin-"] .search.nm-mob-header,
@@ -27,6 +30,9 @@ form[id^="admin-"] .search.nm-mob-header,
 div[id^="admin-"] .dialogHeadbar,
 form[id^="admin-"] .dialogHeadbar {
   background-color: #0073ce;
+}
+#admin_sidebox_header {
+  border-left: 6px solid #0073ce !important;
 }
 div[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="bookmarks-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -38,6 +44,9 @@ div[id^="bookmarks-"] .dialogHeadbar,
 form[id^="bookmarks-"] .dialogHeadbar {
   background-color: #db0087;
 }
+#bookmarks_sidebox_header {
+  border-left: 6px solid #db0087 !important;
+}
 div[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="calendar-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 div[id^="calendar-"] .plus_button,
@@ -47,6 +56,9 @@ form[id^="calendar-"] .search.nm-mob-header,
 div[id^="calendar-"] .dialogHeadbar,
 form[id^="calendar-"] .dialogHeadbar {
   background-color: #cc0033;
+}
+#calendar_sidebox_header {
+  border-left: 6px solid #cc0033 !important;
 }
 div[id^="filemanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="filemanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -58,6 +70,9 @@ div[id^="filemanager-"] .dialogHeadbar,
 form[id^="filemanager-"] .dialogHeadbar {
   background-color: #f9d730;
 }
+#filemanager_sidebox_header {
+  border-left: 6px solid #f9d730 !important;
+}
 div[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="infolog-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 div[id^="infolog-"] .plus_button,
@@ -68,6 +83,9 @@ div[id^="infolog-"] .dialogHeadbar,
 form[id^="infolog-"] .dialogHeadbar {
   background-color: #ffb936;
 }
+#infolog_sidebox_header {
+  border-left: 6px solid #ffb936 !important;
+}
 div[id^="mail-"] .plus_button,
 form[id^="mail-"] .plus_button,
 div[id^="mail-"] .search.nm-mob-header,
@@ -75,6 +93,9 @@ form[id^="mail-"] .search.nm-mob-header,
 div[id^="mail-"] .dialogHeadbar,
 form[id^="mail-"] .dialogHeadbar {
   background-color: #47b2d4;
+}
+#mail_sidebox_header {
+  border-left: 6px solid #47b2d4 !important;
 }
 div[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="projectmanager-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -86,6 +107,9 @@ div[id^="projectmanager-"] .dialogHeadbar,
 form[id^="projectmanager-"] .dialogHeadbar {
   background-color: #75de27;
 }
+#projectmanager_sidebox_header {
+  border-left: 6px solid #75de27 !important;
+}
 div[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="resources-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 div[id^="resources-"] .plus_button,
@@ -95,6 +119,9 @@ form[id^="resources-"] .search.nm-mob-header,
 div[id^="resources-"] .dialogHeadbar,
 form[id^="resources-"] .dialogHeadbar {
   background-color: #009966;
+}
+#resources_sidebox_header {
+  border-left: 6px solid #009966 !important;
 }
 div[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="timesheet-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
@@ -106,6 +133,9 @@ div[id^="timesheet-"] .dialogHeadbar,
 form[id^="timesheet-"] .dialogHeadbar {
   background-color: #9d15ea;
 }
+#timesheet_sidebox_header {
+  border-left: 6px solid #9d15ea !important;
+}
 div[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 form[id^="tracker-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
 div[id^="tracker-"] .plus_button,
@@ -115,4 +145,7 @@ form[id^="tracker-"] .search.nm-mob-header,
 div[id^="tracker-"] .dialogHeadbar,
 form[id^="tracker-"] .dialogHeadbar {
   background-color: #006666;
+}
+#tracker_sidebox_header {
+  border-left: 6px solid #006666 !important;
 }

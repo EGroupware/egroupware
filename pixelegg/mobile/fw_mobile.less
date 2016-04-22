@@ -321,7 +321,22 @@
 				position:absolute;
 				width:300px;
 				#egw_fw_userinfo {
-
+					float: right;
+				}
+				#egw_fw_appsToggle {
+					height: 50px;
+					z-index: 1000;
+					display: inline-block;
+					width: 50px;
+					float: left;
+					margin-left: 60px;
+					background-image:url(../images/apps.svg);
+					background-size: 24px;
+					background-repeat: no-repeat;
+					background-position: center;
+				}
+				#egw_fw_appsToggle.toggled {
+					background-image:url(../images/sidebar.svg);
 				}
 				div#egw_fw_topmenu_items {
 					padding-top: 8px;
@@ -379,11 +394,7 @@
 				box-shadow: none;
 			}
 			.egw_fw_ui_sidemenu_entry_apps> div{
-				display: inline-block;
-				h1 {
-					display: none;
-				}
-
+				margin-bottom: 5px;
 			}
 		}
 

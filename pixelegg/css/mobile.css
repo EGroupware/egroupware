@@ -6038,7 +6038,7 @@ span.egw_tutorial_title {
     position: absolute;
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar .egw_fw_logout {
-    float: right;
+    display: inline-block;
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar .egw_fw_logout a#topmenu_logout {
     background-image: url(../images/logout.png);
@@ -6201,14 +6201,16 @@ span.egw_tutorial_title {
     background-position: center;
   }
   body #egw_fw_basecontainer #egw_fw_userinfo {
-    height: 50px;
+    height: 60px;
     z-index: 1000;
     display: inline-block;
-    margin-left: 40%;
   }
   body #egw_fw_basecontainer #egw_fw_userinfo span.avatar {
     display: inline-block;
     float: left;
+    height: 45px;
+    width: 45px;
+    margin-top: 1px;
   }
   body #egw_fw_basecontainer #egw_fw_userinfo span.user {
     display: inline-block;
@@ -6645,8 +6647,9 @@ span.egw_tutorial_title {
     background-image: url(../images/topmenu_items/mobile/menu.png);
   }
   body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_userinfo,
-  body .sidebar-toggle #egw_fw_top_toolbar .egw_fw_logout {
-    display: none;
+  body .sidebar-toggle #egw_fw_top_toolbar .egw_fw_logout,
+  body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_appsToggle {
+    display: none !important;
   }
   body .sidebar-toggle #egw_fw_sidebar {
     top: 70px;
