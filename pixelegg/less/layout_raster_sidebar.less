@@ -328,7 +328,7 @@
 	// Toggle menu
 	#egw_fw_toggler {
 		display: block;
-		width: 28px;
+		width: 30px;
 		height: 30px;
 		position: relative;
 		z-index: 1;
@@ -336,8 +336,6 @@
 		margin-top: 0;
 		margin-bottom: -30px;
 		float: right;
-		margin-right:-15px;
-
 		span {
 			background-color: transparent;
 			&:before{
@@ -379,6 +377,7 @@
 			backface-visibility: hidden;
 			border-radius: 2px;
 			top:11px;
+			left:10px;
 		}
 	}
 	#egw_fw_sidemenu.egw_fw_sidebar_toggleOn {
@@ -391,6 +390,7 @@
 				transition: all 0.3s;
 				-webkit-transition: all 0.3s;
 				-moz-transition: all 0.3s;
+				left:0;
 				&:before, &:after {
 					transform:none;
 					-ms-transform: none;
