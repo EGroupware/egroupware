@@ -8121,7 +8121,14 @@ form[id^="tracker-"] .dialogHeadbar {
   body span.et2_checkbox_slideSwitch input {
     height: 100% !important;
   }
+  body span.et2_checkbox_slideSwitch span.et2_label {
+    margin-left: 40px;
+    display: inline-block;
+    height: 50px;
+    margin-top: 15px;
+  }
   body span.et2_checkbox_slideSwitch span.slideSwitch_container {
+    width: 50px !important;
     border-radius: 15px;
     margin-top: 15px;
     box-shadow: inset 0 2px 2px #474747, 0 0px 0 rgba(255, 255, 255, 0.2);
@@ -8134,6 +8141,9 @@ form[id^="tracker-"] .dialogHeadbar {
     border-radius: 50%;
     box-shadow: 0 2px 2px #474747, 0 0px 0 rgba(255, 255, 255, 0.2);
     z-index: 2;
+  }
+  body .et2_toolbar_more span.et2_checkbox_slideSwitch > span.slideSwitch_container {
+    float: right;
   }
   body .cke_inner .cke_toolbox .cke_toolbox_main {
     height: 30px;
