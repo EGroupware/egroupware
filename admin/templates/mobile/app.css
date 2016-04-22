@@ -30,4 +30,7 @@
     content: ",";
     font-size: 10pt;
   }
+  .globalCat_hiddenCatid {
+    display: none;
+  }
 }
