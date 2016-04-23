@@ -882,7 +882,9 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 			// Try first according to ID
 			content_options = widget.getArrayMgr("sel_options").getEntry(widget.id);
 			// ID can get set to an array with 0 => ' ' - not useful
-			if(content_options && content_options.length == 1 && typeof content_options[0] == 'string' && content_options[0].trim() == '')
+			if (content_options && (content_options.length == 1 && typeof content_options[0] == 'string' && content_options[0].trim() == '' ||
+				// eg. autorepeated id "cat[3]" would pick array element 3 from cat
+				typeof content_options.value != 'undefined' && typeof content_options.label != 'undefined' && widget.id.match(/\[\d+\]$/)))
 			{
 				content_options = null;
 			}
@@ -918,7 +920,7 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 					// Double check, might have found a normal parent namespace ( eg subgrid in subgrid[selectbox] )
 					// with an empty entry for the selecbox.  If there were valid options here,
 					// we would have found them already, and keeping this would result in the ID as an option
-					if(content_options && typeof content_options[last] != 'undefined' && content_options[last] )
+					if(content_options && !jQuery.isArray(content_options) && typeof content_options[last] != 'undefined' && content_options[last] )
 					{
 						content_options = content_options[last];
 					}
