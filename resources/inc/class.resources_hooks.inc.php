@@ -19,7 +19,7 @@ class resources_hooks
 {
 	function admin_prefs_sidebox($args)
 	{
-		$this->acl =& CreateObject('resources.bo_acl');
+		$this->acl = CreateObject('resources.bo_acl');
 
 		$appname = 'resources';
 		$location = is_array($args) ? $args['location'] : $args;
@@ -48,7 +48,7 @@ class resources_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
+				'Site Configuration' => egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname.'&ajax=true'),
 				'Global Categories'  => egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
@@ -150,7 +150,7 @@ class resources_hooks
 		$query = array('filter' => $args['cat_id']);
 		$bo = new resources_bo();
 		$bo->get_rows($query, $resources, $readonly);
-		
+
 		foreach($resources as $resource)
 		{
 			if(is_array($resource))
