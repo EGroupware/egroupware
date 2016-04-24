@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -36,6 +36,8 @@ class timesheet_hooks
 	 */
 	static function search_link($location)
 	{
+		unset($location);	// not used, but required by function signature
+
 		return array(
 			'query' => TIMESHEET_APP.'.timesheet_bo.link_query',
 			'title' => TIMESHEET_APP.'.timesheet_bo.link_title',
@@ -123,7 +125,7 @@ class timesheet_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
+				'Site Configuration' => egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname,'&ajax=true'),
 				'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.index&appname='.$appname.'&use_private=1'),
 				'Global Categories'  => egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
@@ -209,10 +211,11 @@ class timesheet_hooks
 				}
 				catch (Exception $e)
 				{
+					unset($e);
 					// permission error
 					continue;
 				}
-				if ($title = $definition->get_title())
+				if (($title = $definition->get_title()))
 				{
 					$options[$title] = $title;
 				}
@@ -242,6 +245,8 @@ class timesheet_hooks
 	 */
 	public static function acl_rights($params)
 	{
+		unset($params);	// not used, but required by function signature
+
 		return array(
 			acl::READ    => 'read',
 			acl::EDIT    => 'edit',
@@ -257,6 +262,8 @@ class timesheet_hooks
 	 */
 	public static function categories($data)
 	{
+		unset($data);	// not used, but required by function signature
+
 		return true;
 	}
 }

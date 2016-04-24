@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="timesheet.config" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="60%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="ProjectManager integration" label="%s:"/>
+					<select id="newsettings[pm_integration]">
+						<option value="">Both: allow to use ProjectManager and free project-names</option>
+						<option value="none">None: use only free project-names</option>
+						<option value="full">Full: use only ProjectManager</option>
+					</select>
+				</row>
+				<row>
+					<description value="Mode" label="%s:"/>
+					<select id="newsettings[ts_viewtype]">
+						<option value="normal">Regular</option>
+						<option value="short">Simple</option>
+					</select>
+				</row>
+				<row>
+					<description value="Show a quantity sum (eg. to sum up negative overtime)" label="%s:"/>
+					<select id="newsettings[quantity_sum]">
+						<option value="">No</option>
+						<option value="true">Yes</option>
+					</select>
+				</row>
+				<row>
+					<description value="History logging" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Prevent deleting"/>
+					<select id="newsettings[history]">
+						<option value="">No</option>
+						<option value="history">Yes, only admins can purge deleted items</option>
+						<option value="userpurge">Yes, users can purge their deleted items</option>
+					</select>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
