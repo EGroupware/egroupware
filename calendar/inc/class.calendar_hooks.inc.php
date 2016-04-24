@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-14 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -79,7 +79,7 @@ class calendar_hooks
 	static function admin()
 	{
 		$file = Array(
-			'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
+			'Site Configuration' => egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
 			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
 			'Calendar Holiday Management' => egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
 			'Global Categories' => egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),

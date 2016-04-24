@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.config" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="60%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Do you wish to autoload calendar holidays files dynamically?"/>
+					<select id="newsettings[auto_load_holidays]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+				<row>
+					<description value="Location to autoload from" label="%s:"/>
+					<select id="newsettings[holidays_url_path]">
+						<option value="localhost">localhost</option>
+						<option value="http://www.egroupware.org/cal">www.egroupware.org</option>
+					</select>
+				</row>
+				<row>
+					<description value="setting lock time calender" label="%s:"/>
+					<textbox id="newsettings[Lock_Time_Calender]" size="40"/>
+				</row>
+				<row>
+					<description value="Deny Ressources reservation for private events" label="%s:"/>
+					<select id="newsettings[no_ressources_private]">
+						<option value="">No</option>
+						<option value="yes">Yes</option>
+					</select>
+				</row>
+				<row>
+					<description value="Require an ACL grant to invite other users and groups" label="%s:"/>
+					<select id="newsettings[require_acl_invite]">
+						<option value="">{No}: {Every user can invite other users and groups}</option>
+						<option value="groups">Groups: other users can allways be invited, only groups require an invite grant</option>
+						<option value="all">Users + groups: inviting both allways requires an invite grant</option>
+					</select>
+				</row>
+				<row>
+					<description value="Allow users to prevent change notifications ('Do not notify')" label="%s:"/>
+					<select id="newsettings[calendar_allow_no_notification]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+				<row>
+					<description value="Use range-views to optimise calendar queries?"/>
+					<select id="newsettings[no_timerange_views]">
+						<option value="">Yes</option>
+						<option value="true">No</option>
+					</select>
+				</row>
+				<row>
+					<description value="Security" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="How many appointments should non-admins be able to export"/>
+						<description value="(empty = use global limit, no = no export at all)"/>
+					</vbox>
+					<textbox id="newsettings[calendar_export_limit]" size="5"/>
+				</row>
+				<row>
+					<description value="History logging" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Prevent deleting of entries"/>
+					<select id="newsettings[calendar_delete_history]">
+						<option value="">No</option>
+						<option value="history">Yes, only admins can purge deleted items</option>
+						<option value="userpurge">Yes, users can purge their deleted items</option>
+					</select>
+				</row>
+				<row>
+					<description value="Automatically purge old events after"/>
+					<select id="newsettings[calendar_purge_old]">
+						<option value="0ff">No automatic purging</option>
+						<option value=".5">0.5 {years}</option>
+						<option value="1">1 {year}</option>
+						<option value="2">2 {years}</option>
+						<option value="3">3 {years}</option>
+						<option value="4">4 {years}</option>
+						<option value="5">5 {years}</option>
+						<option value="10">10 {years}</option>
+					</select>
+				</row>
+				<row>
+					<description value="Birthdays" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Show birthdays from addressbook" label="%s:"/>
+					<select id="newsettings[hide_birthdays]">
+						<option value="">Yes</option>
+						<option value="dateonly">Show only the date, not the year</option>
+						<option value="yes">No</option>
+					</select>
+				</row>
+				<row>
+					<description value="Calendar recurrence horizont in days (default 1000)" label="%s:"/>
+					<textbox id="newsettings[calendar_horizont]" size="5"/>
+				</row>
+				<row>
+					<description value="Create links for participants from addressbook" label="%s:"/>
+					<select id="newsettings[link_contacts]">
+						<option value="">No</option>
+						<option value="yes">Yes</option>
+					</select>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

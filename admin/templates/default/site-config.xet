@@ -4,7 +4,7 @@
 <overlay>
 	<template id="admin.site-config" template="" lang="" group="0" version="16.1">
 		<description value="Site configuration" class="subHeader"/>
-		<template id="template" template="@template" width="100%"/>
+		<template template="@template" width="100%"/>
 		<hbox class="dialogFooterToolbar">
 			<button id="save" label="Save"/>
 			<button id="apply" label="Apply"/>

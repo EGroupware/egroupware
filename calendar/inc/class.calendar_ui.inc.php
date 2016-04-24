@@ -370,7 +370,7 @@ class calendar_ui
 		}
 		$this->view_menuaction = $this->view == 'listview' ? 'calendar.calendar_uilist.listview' : 'calendar.calendar_uiviews.index';
 
-		if ($this->debug > 0 || $this->debug == 'manage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3',True,$set_states,$states_session,$states);
+		if ($this->debug > 0 || $this->debug == 'manage_states') $this->bo->debug_message('uical::manage_states(%1), states now %3',True,$set_states,$states);
 		// save the states in the session only when we are in calendar
 		if ($GLOBALS['egw_info']['flags']['currentapp']=='calendar')
 		{
@@ -480,7 +480,6 @@ class calendar_ui
 	 */
 	function sidebox_menu()
 	{
-		$link_vars = array();
 		// Magic etemplate2 favorites menu (from framework)
 		display_sidebox('calendar', lang('Favorites'), egw_framework::favorite_list('calendar'));
 
@@ -520,7 +519,7 @@ class calendar_ui
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Configuration'=>egw::link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
+				'Configuration'=>egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
 				'Custom Fields'=>egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
 				'Holiday Management'=>egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
 				'Global Categories' =>egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
@@ -688,6 +687,7 @@ class calendar_ui
 		}
 		$event['non_blocking'] = (bool)$event['non_blocking'];
 
+		$matches = null;
 		if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
 		{
 			$app = $matches[1];
