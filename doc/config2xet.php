@@ -79,6 +79,7 @@ foreach($trs[2] as $n => $tr)
 			switch($matches[1])
 			{
 				case 'input':
+				case 'textarea':
 					echo "\t\t\t\t\t<textbox id=\"".$attrs['name'].'"';
 					unset($attrs['value'], $attrs['name']);
 					foreach($attrs as $name => $value)
@@ -86,7 +87,7 @@ foreach($trs[2] as $n => $tr)
 						echo " $name=\"$value\"";
 					}
 					echo "/>\n";
-					if (trim($matches[3]))
+					if (trim($matches[3]) && $matches['1'] == 'input')
 					{
 						if ($commented)
 						{
