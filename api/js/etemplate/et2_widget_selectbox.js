@@ -512,14 +512,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		}
 
 		jQuery("option",this.input).prop("selected", false);
-		if(typeof _value == "array")
-		{
-			for(var i = 0; i < _value.length; i++)
-			{
-				this.find_option(_value[i]).prop("selected", true);
-			}
-		}
-		else if (typeof _value == "object")
+		if (typeof _value == "object")
 		{
 			for(var i in _value)
 			{
@@ -575,16 +568,10 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		return jQuery("input[value='"+_value.replace(this._escape_value_replace, this._escape_value_with)+"']", this.multiOptions);
 	},
 
-	set_multi_value: function(_value) {
+	set_multi_value: function(_value)
+	{
 		jQuery("input",this.multiOptions).prop("checked", false);
-		if(typeof _value == "array")
-		{
-			for(var i = 0; i < _value.length; i++)
-			{
-				this.find_multi_option(_value[i]).prop("checked", true);
-			}
-		}
-		else if (typeof _value == "object")
+		if (typeof _value == "object")
 		{
 			for(var i in _value)
 			{
@@ -814,7 +801,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		else if (this.value === null && this.options.value)
 		{
 			// Null means it tried to set the value, and it got stripped by missing options
-			this.set_value(this.options.value, true)
+			this.set_value(this.options.value, true);
 		}
 	},
 
