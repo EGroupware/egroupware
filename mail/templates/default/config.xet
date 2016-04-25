@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.config" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="60%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Deny certain groups access to following features" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Create new account"/>
+					<select-account id="newsettings[deny_createaccount]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="Prevent managing folders"/>
+						<description value="Do you want to prevent the managing of folders (creation, accessrights AND subscribtion)?"/>
+					</vbox>
+					<select-account id="newsettings[deny_managefolders]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="Prevent managing notifications"/>
+						<description value="Do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if SIEVE is enabled)?"/>
+					</vbox>
+					<select-account id="newsettings[deny_notificationformailviaemail]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="Prevent managing filters"/>
+						<description value="Do you want to prevent the editing/setup of filter rules (, even if SIEVE is enabled)?"/>
+					</vbox>
+					<select-account id="newsettings[deny_editfilterrules]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="Prevent managing vacation notice"/>
+						<description value="Do you want to prevent the editing/setup of the absent/vacation notice (, even if SIEVE is enabled)?"/>
+					</vbox>
+					<select-account id="newsettings[deny_absentnotice]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="restrict acl management"/>
+						<description value="effective only if server supports ACL at all"/>
+					</vbox>
+					<select-account id="newsettings[deny_aclmanagement]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
+				<row>
+					<description value="Sieve" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="provide a default vacation text, (used on new vacation messages when there was no message set up previously)"/>
+					<textbox id="newsettings[default_vacation_text]" cols="50" rows="8"/>
+				</row>
+				<row>
+					<description value="Miscellaneous" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="examine namespace to retrieve folders in others and shared"/>
+						<description value="only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level"/>
+					</vbox>
+					<select id="newsettings[examineNamespace]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+				<row>
+					<vbox>
+						<description value="Disable use of flowed lines in plain text mails (RFC3676)"/>
+						<description value="Some clients fail to detect correct charset, if flowed lines are enabled."/>
+					</vbox>
+					<select id="newsettings[disable_rfc3676_flowed]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

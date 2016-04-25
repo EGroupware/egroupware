@@ -680,26 +680,6 @@ class mail_hooks
 	}
 
 	/**
-	 * Hook returning options for deny_* groups
-	 *
-	 * @param string $name function name
-	 * @param array $arguments
-	 * @return string html
-	 */
-	public static function __callStatic($name, $arguments)
-	{
-		if (substr($name, 0, 5) != 'deny_')
-		{
-			if ($name == 'edit_user') return;	// to ease upgrade, as hook is removed
-			throw new egw_exception_wrong_parameter("No method $name!");
-		}
-		$accountsel = new uiaccountsel();
-
-		return '<input type="hidden" value="" name="newsettings['.$name.']" />'.
-			$accountsel->selection('newsettings['.$name.']', 'deny_prefs', $arguments[0][$name], 'groups', 4);
-	}
-
-	/**
 	 * Check if current user has access to a specific feature
 	 *
 	 * Example: if (!mail_hooks::access("managerfolders")) return;
