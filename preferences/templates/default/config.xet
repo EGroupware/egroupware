@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="preferences.config" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="60%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Deny following groups access to preferences" label="%s:"/>
+					<select-account id="newsettings[deny_prefs]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
+				<row>
+					<description value="Deny following groups access to ACL (grant access)" label="%s:"/>
+					<select-account id="newsettings[deny_acl]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
+				<row>
+					<description value="Deny following groups access to edit categories" label="%s:"/>
+					<select-account id="newsettings[deny_cats]" account_type="groups" multiple="true" tags="true" width="100%"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
