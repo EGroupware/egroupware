@@ -84,6 +84,7 @@ foreach($trs[2] as $n => $tr)
 					unset($attrs['value'], $attrs['name']);
 					foreach($attrs as $name => $value)
 					{
+						if ($name == 'type' && $value == 'password') $value = 'passwd';
 						echo " $name=\"$value\"";
 					}
 					echo "/>\n";
