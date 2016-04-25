@@ -807,7 +807,15 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			this.input.trigger("liszt:updated");
 		}
 		// Sometimes value gets set before options
-		if(this.value || this.options.empty_label) this.set_value(this.value, true);	// true = dont try to set_options, to avoid an infinit recursion
+		if(this.value || this.options.empty_label)
+		{
+			this.set_value(this.value, true);	// true = dont try to set_options, to avoid an infinit recursion
+		}
+		else if (this.value === null && this.options.value)
+		{
+			// Null means it tried to set the value, and it got stripped by missing options
+			this.set_value(this.options.value, true)
+		}
 	},
 
 	getValue: function() {
