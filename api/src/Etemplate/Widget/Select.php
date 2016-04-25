@@ -294,7 +294,7 @@ class Select extends Etemplate\Widget
 				unset(self::$request->content[$this->id]);
 				$this->attrs['readonly'] = true;
 			}
-			if(!in_array($this->attrs['type'], self::$cached_types))
+			if(!in_array($type, self::$cached_types))
 			{
 				// adding type specific options here, while keep further options set by app code
 				// we need to make sure to run only once for auto-repeated rows, because
