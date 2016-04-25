@@ -5979,9 +5979,9 @@ span.egw_tutorial_title {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 64px;
-    -webkit-animation: fw-firstload 1s infinite;
-    animation: fw-firstload 1s infinite;
-    -moz-animation: fw-firstload 1s infinite;
+    -webkit-animation: fw-firstload 2s infinite;
+    animation: fw-firstload 2s infinite;
+    -moz-animation: fw-firstload 2s infinite;
   }
   body table.egwGridView_outer thead tr th {
     font-size: small !important;
