@@ -264,7 +264,9 @@
 			if (_app == _app.parentFw.activeApp)
 			{
 				//Set the sidebox width if a application specific sidebox width is set
-				if (_app.sideboxWidth !== false)
+				// do not trigger resize if the sidebar is already in toggle on mode and
+				// the next set state is the same
+				if (_app.sideboxWidth !== false &&  egw.preference('toggleSidebar',_app.appName) == 'off')
 				{
 					this.sideboxSizeCallback(_app.sideboxWidth);
 					this.splitterUi.constraints[0].size = _app.sideboxWidth;
