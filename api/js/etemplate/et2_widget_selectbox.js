@@ -428,19 +428,20 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		if(options.length)
 		{
 			// Break reference to content manager, we don't want to add to it
-			this.options.select_options = jQuery.extend({},this.options.select_options);
+			this.options.select_options = jQuery.extend([], this.options.select_options);
 		}
 		var egw = this.egw();
 		for (var i = 0; i < options.length; i++)
 		{
-			this.options.select_options[et2_readAttrWithDefault(options[i], "value", options[i].textContent)] = {
+			this.options.select_options.push({
+				value: et2_readAttrWithDefault(options[i], "value", options[i].textContent),
 				// allow options to contain multiple translated sub-strings eg: {Firstname}.{Lastname}
 				"label": options[i].textContent.replace(/{([^}]+)}/g, function(str,p1)
 				{
 					return egw.lang(p1);
 				}),
 				"title": et2_readAttrWithDefault(options[i], "title", "")
-			};
+			});
 		}
 
 		this.set_select_options(this.options.select_options);
