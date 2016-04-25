@@ -77,10 +77,11 @@ app.classes.timesheet = AppJS.extend(
 		{
 			dates.set_disabled(filter.value !== "custom");
 			if (filter.value == "custom")
-			{
+			{				
 				jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
 			}
 		}
+		return true;
 	},
 
 	/**
@@ -120,6 +121,27 @@ app.classes.timesheet = AppJS.extend(
 		if (ts_project)
 		{
 			ts_project.set_blur(_widget.getValue() ? _widget.search.val() : '');
+		}
+	},
+
+	/**
+	 * Update custom filter timespan, without triggering a change
+	 */
+	update_timespan: function(start, end)
+	{
+		if(this && this.et2)
+		{
+			var nm = this.et2.getWidgetById('nm');
+			if(nm)
+			{
+				// Toggle update_in_progress to avoid another request
+				nm.update_in_progress = true;
+				this.et2.getWidgetById('startdate').set_value(start);
+				this.et2.getWidgetById('enddate').set_value(end);
+				nm.activeFilters.startdate = start;
+				nm.activeFilters.enddate = end;
+				nm.update_in_progress = false;
+			}
 		}
 	},
 

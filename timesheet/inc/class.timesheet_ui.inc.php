@@ -467,6 +467,7 @@ class timesheet_ui extends timesheet_bo
 		$this->show_sums = false;
 		if ($query_in['filter'])
 		{
+			$query_in['enddate'] = $query_in['enddate'] ? $query_in['enddate'] : time();
 			$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$query_in['enddate']);
 
 			if ($query_in['startdate'])
@@ -651,6 +652,15 @@ class timesheet_ui extends timesheet_bo
 					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.common::show_date($query['enddate']+12*60*60,$df,false);
 				}
 			}
+		}
+		// Update start / end dates for custom
+		if($query_in['filter'] != 'custom')
+		{
+			egw_json_response::get()->call(
+				'app.timesheet.update_timespan',
+				egw_time::to($query['startdate'] ? $query['startdate'] : now() ,egw_time::ET2),
+				$query['filter'] ? egw_time::to($query['enddate'], egw_time::ET2) : null
+			);
 		}
 		$total = parent::get_rows($query,$rows,$readonlys);
 
