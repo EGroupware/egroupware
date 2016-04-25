@@ -2061,7 +2061,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				for(var field_name in widget.customfields)
 				{
 					columns[widget.prefix+field_name] = " - "+widget.customfields[field_name].label;
-					if(widget.options.fields[field_name]) columns_selected.push(et2_customfields_list.prototype.prefix+field_name);
+					if(widget.options.fields[field_name] && columns_selected.indexOf(colName) >= 0)
+					{
+						columns_selected.push(et2_customfields_list.prototype.prefix+field_name);
+					}
 				}
 			}
 		}
@@ -2228,7 +2231,21 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		}
 
 		// Restore columns
-		this.set_columns(this.egw().preference(this.options.settings.columnselection_pref,this.getInstanceManager().app));
+		var pref = [];
+		var app = this.getInstanceManager().app;
+		if(this.options.settings.columnselection_pref.indexOf('nextmatch') == 0)
+		{
+			pref = egw.preference(this.options.settings.columnselection_pref, app);
+		}
+		else
+		{
+			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
+			pref = egw.preference("nextmatch-"+this.options.settings.columnselection_pref, app);
+		}
+		if(pref)
+		{
+			this.set_columns(pref,app);
+		}
 		this.dynheight.outerNode.css('max-width','inherit');
 		this.resize();
 	}
