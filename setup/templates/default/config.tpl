@@ -75,14 +75,14 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <!-- tr class="row_on">
     <td>{lang_Complete_path_to_aspell_program}:</td>
     <td>
      <input name="newsettings[aspell_path]" value="{value_aspell_path}" size="40">
     </td>
-   </tr>
+   </tr -->
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td colspan="2">&nbsp;</td>
    </tr>
 

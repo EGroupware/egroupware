@@ -70,6 +70,7 @@
 					<description value="How big should thumbnails for linked images be (maximum in pixels) ?" label="%s:"/>
 					<textbox id="newsettings[link_list_thumbnail]" size="5"/>
 				</row>
+				<!-- disable spellcheck config in favor to always use browser native spellchecker
 				<row>
 					<description value="Enable spellcheck in rich text editor" label="%s:"/>
 					<select id="newsettings[enabled_spellcheck]">
@@ -79,7 +80,7 @@
 						<option value="YesBrowserBased">{Yes, use browser based spell checking engine} - {more secure}</option>
 						<option value="YesUseWebSpellCheck">Yes, use WebSpellChecker</option>
 					</select>
-				</row>
+				</row> -->
 				<row>
 					<description value="EGroupware Tutorial" label="%s:"/>
 					<select id="newsettings[egw_tutorial_disable]">
@@ -91,7 +92,7 @@
 				</row>
 				<row>
 					<description value="Applications available on mobile devices" label="%s:"/>
-					<select-app id="newsettings[fw_mobile_app_list]" multiple="true" tags="true" options=",,enabled" width="100%"/>
+					<select-app id="newsettings[fw_mobile_app_list]" multiple="true" tags="true" other=",enabled" width="100%"/>
 				</row>
 				<row>
 					<description value="security" span="all" class="subHeader"/>

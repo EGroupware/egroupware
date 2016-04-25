@@ -319,6 +319,13 @@ class CkEditorConfig
 	private static function add_spellchecker_options(&$config, &$spellchecker_button, &$scayt_button)
 	{
 		//error_log(__METHOD__.__LINE__.' Spellcheck:'.$GLOBALS['egw_info']['server']['enabled_spellcheck']);
+
+		// currently we only support browser native spellchecker, and always disable Scayt
+		$config['disableNativeSpellChecker'] = false;
+		$config['scayt_autoStartup'] = false;
+		$spellchecker_button = $scayt_button = null;
+
+		/*
 		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']) && $GLOBALS['egw_info']['server']['enabled_spellcheck'])
 		{
 			// enable browsers native spellchecker as default, if e.g.: aspell fails
@@ -349,6 +356,7 @@ class CkEditorConfig
 		{
 			$config['scayt_autoStartup'] = false;
 		}
+		*/
 	}
 
 	/**
