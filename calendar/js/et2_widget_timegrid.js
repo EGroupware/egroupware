@@ -562,7 +562,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				this.widget.change();
 			}
 			// Hide loader
-			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this.widget),100);
+			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this.widget),200);
 		},{widget:this,"trigger":trigger}),ET2_GRID_INVALIDATE_TIMEOUT);
 	},
 
@@ -1388,7 +1388,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		// None of the above changed anything, hide the loader
 		if(!this.update_timer)
 		{
-			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this),100);
+			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this),200);
 		}
 	},
 

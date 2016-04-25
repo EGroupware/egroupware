@@ -2075,6 +2075,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					}
 					if(widget.set_granularity)
 					{
+						if(widget.loader) widget.loader.show();
 						widget.set_granularity(view.granularity(state.state));
 					}
 					if(widget.id == value[row_index].id &&

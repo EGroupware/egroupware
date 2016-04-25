@@ -294,7 +294,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		// None of the above changed anything, hide the loader
 		if(!this.update_timer)
 		{
-			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this),100);
+			window.setTimeout(jQuery.proxy(function() {this.loader.hide();},this),200);
 		}
 	},
 
