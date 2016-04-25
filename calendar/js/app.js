@@ -1234,8 +1234,15 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if (filter && dates)
 		{
 			dates.set_disabled(filter.value !== "custom");
-			if (filter.value == "custom")
+			if (filter.value == "custom" && !this.state_update_in_progress)
 			{
+				// Copy state dates over, without causing [another] state update
+				var actual = this.state_update_in_progress;
+				this.state_update_in_progress = true;
+				view.getWidgetById('startdate').set_value(app.calendar.state.first);
+				view.getWidgetById('enddate').set_value(app.calendar.state.last);
+				this.state_update_in_progress = actual;
+
 				jQuery(view.getWidgetById('startdate').getDOMNode()).find('input').focus();
 			}
 		}
