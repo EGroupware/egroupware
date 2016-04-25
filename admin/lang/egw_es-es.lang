@@ -181,7 +181,7 @@ default file system space per user	admin	es-es	Espacio predetermiado en el siste
 default file system space per user/group ?	admin	es-es	Espacio predetermiado en el sistema de archivos por usuario/grupo
 deinstall crontab	admin	es-es	Desinstalar crontab
 delete account	admin	es-es	Borrar cuenta
-delete account %1	admin	es-es	Borrar la cuenta %1
+delete account %s	admin	es-es	Borrar la cuenta %s
 delete all records	admin	es-es	Borrar todos los registros
 delete application	admin	es-es	Borrar aplicación
 delete category	admin	es-es	Borrar categoría

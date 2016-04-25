@@ -142,7 +142,7 @@ default file system space per user	admin	lo	ຄ່າເລີ່ມຕົ້ນ
 default file system space per user/group ?	admin	lo	ຄ່າເລີ່ມຕົ້ນຂອງພື້ນທີ່ສໍາລັບ 1 ຜູ້ໃຊ້/ກຸ່ມ
 deinstall crontab	admin	lo	Deinstall crontab
 delete account	admin	lo	ລຶບບັນຊີ
-delete account %1	admin	lo	ລຶບບັນຊີ%1
+delete account %s	admin	lo	ລຶບບັນຊີ%s
 delete all records	admin	lo	ລຶບບັນທຶກທັງໝົດ
 delete application	admin	lo	ລຶບແອັບພຼິເຄຊັນ
 delete category	admin	lo	ລຶບໝວດໝູ່

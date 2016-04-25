@@ -141,7 +141,7 @@ default file system space per user	admin	nl	Standaard bestandssysteemruimte per 
 default file system space per user/group ?	admin	nl	Standaard bestandssysteemruimte per gebruiker/groep
 deinstall crontab	admin	nl	Deïnstalleer crontab
 delete account	admin	nl	Account verwijderen
-delete account %1	admin	nl	Account %1 verwijderen
+delete account %s	admin	nl	Account %s verwijderen
 delete all records	admin	nl	Alle records verwijderen
 delete application	admin	nl	Toepassing verwijderen
 delete category	admin	nl	Categorie verwijderen

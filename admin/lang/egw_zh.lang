@@ -136,7 +136,7 @@ default file system space per user	admin	zh	每个用户的默认文件系统空
 default file system space per user/group ?	admin	zh	每一用户/组的默认文件系统空间？
 deinstall crontab	admin	zh	卸载 crontab
 delete account	admin	zh	删除账户
-delete account %1	admin	zh	删除账户%1
+delete account %s	admin	zh	删除账户%s
 delete all records	admin	zh	删除所有记录
 delete application	admin	zh	删除应用程序
 delete category	admin	zh	删除类别

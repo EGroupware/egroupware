@@ -169,7 +169,7 @@ default file system space per user	admin	ru	Объём свободного ме
 default file system space per user/group ?	admin	ru	Объём свободного места, выделяемого в системе на пользователя/группу (по умолчанию)
 deinstall crontab	admin	ru	Деинсталлировать crontab
 delete account	admin	ru	Удалить учётную запись
-delete account %1	admin	ru	Удалить учётную запись %1
+delete account %s	admin	ru	Удалить учётную запись %s
 delete all records	admin	ru	Удалить все записи
 delete application	admin	ru	Удалить приложение
 delete category	admin	ru	Удалить категорию

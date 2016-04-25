@@ -191,7 +191,7 @@ default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pr
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
 deinstall crontab	admin	de	Crontab deinstallieren
 delete account	admin	de	Benutzerkonto löschen
-delete account %1	admin	de	Benutzerkonto %1 löschen
+delete account %s	admin	de	Benutzerkonto %s löschen
 delete all records	admin	de	Alle Einträge löschen
 delete application	admin	de	Anwendung löschen
 delete category	admin	de	Kategorie löschen

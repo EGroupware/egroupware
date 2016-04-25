@@ -150,7 +150,7 @@ default file system space per user	admin	fi	Tallennustila per käyttäjä
 default file system space per user/group ?	admin	fi	Tallennustila per käyttäjä/ryhmä ?
 deinstall crontab	admin	fi	Poista crontab
 delete account	admin	fi	Poista käyttäjätili
-delete account %1	admin	fi	Poista käyttäjätili %1
+delete account %s	admin	fi	Poista käyttäjätili %s
 delete all records	admin	fi	Poista kaikki tietueet
 delete application	admin	fi	Poista sovellus
 delete category	admin	fi	Poista kategoria

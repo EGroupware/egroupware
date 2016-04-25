@@ -191,7 +191,7 @@ default file system space per user	admin	en	Default file system space per user
 default file system space per user/group ?	admin	en	Default file system space per user/group?
 deinstall crontab	admin	en	Deinstall crontab
 delete account	admin	en	Delete account
-delete account %1	admin	en	Delete account %1
+delete account %s	admin	en	Delete account %s
 delete all records	admin	en	Delete all records
 delete application	admin	en	Delete application
 delete category	admin	en	Delete category

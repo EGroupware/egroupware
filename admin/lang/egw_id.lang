@@ -90,7 +90,7 @@ day of week<br>(0-6, 0=sun)	admin	id	Hari-hari<br>(0-6, 0=Min)
 default	admin	id	Bawaan
 deinstall crontab	admin	id	Deinstall crontab
 delete account	admin	id	Hapus akoun
-delete account %1	admin	id	Hapus akoun %1
+delete account %s	admin	id	Hapus akoun %s
 delete all records	admin	id	Hapus semua Rekaman
 delete application	admin	id	Hapus aplikasi
 delete category	admin	id	Hapus kategori

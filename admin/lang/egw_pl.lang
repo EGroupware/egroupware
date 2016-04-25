@@ -145,7 +145,7 @@ default file system space per user	admin	pl	Domyślny rozmiar plików na użytko
 default file system space per user/group ?	admin	pl	Domyślny rozmiar plików na użytkownika/grupę?
 deinstall crontab	admin	pl	Odinstaluj crontab
 delete account	admin	pl	Usuń konto użytkownika
-delete account %1	admin	pl	Usuń konto %1
+delete account %s	admin	pl	Usuń konto %s
 delete all records	admin	pl	Usuń wszystkie rekordy
 delete application	admin	pl	Usuń aplikację
 delete category	admin	pl	Usuń kategorię

@@ -5,7 +5,7 @@
 	<template id="admin.account.delete" template="" lang="" group="0" version="1.9.003">
 		<vbox class="admin_account_delete">
 			<box class="dialogHeader">
-				<select-account id="account_id" readonly="true" label="Delete account %1"/>
+				<select-account id="account_id" readonly="true" label="Delete account %s"/>
 			</box>
 			<description value="Who would you like to transfer ALL records owned by the deleted user to?" class="dialogHeader2"/>
 			<select-account id="new_owner" empty_label="Delete all records" class="dialogHeader3"/>

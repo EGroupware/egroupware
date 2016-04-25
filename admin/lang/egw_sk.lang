@@ -187,7 +187,7 @@ default file system space per user	admin	sk	Predvolený priestor v súborovom sy
 default file system space per user/group ?	admin	sk	Predvolený priestor v súborovom systéme na používateľa/skupinu?
 deinstall crontab	admin	sk	Odinštalovať crontab
 delete account	admin	sk	Odstrániť účet
-delete account %1	admin	sk	Odstrániť účet %1
+delete account %s	admin	sk	Odstrániť účet %s
 delete all records	admin	sk	Odstrániť všetky záznamy
 delete application	admin	sk	Odstrániť aplikáciu
 delete category	admin	sk	Odstrániť kategóriu

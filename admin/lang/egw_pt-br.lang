@@ -138,7 +138,7 @@ default file system space per user	admin	pt-br	Espaço em disco padrão por usu�
 default file system space per user/group ?	admin	pt-br	Espaço em disco padrão por usuário/grupo?
 deinstall crontab	admin	pt-br	Desinstalar crontab
 delete account	admin	pt-br	Remover conta
-delete account %1	admin	pt-br	Remover conta %1
+delete account %s	admin	pt-br	Remover conta %s
 delete all records	admin	pt-br	Remover todos os registros
 delete application	admin	pt-br	Remover aplicativo
 delete category	admin	pt-br	Remover categoria

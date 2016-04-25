@@ -144,7 +144,7 @@ default file system space per user	admin	cs	Výchozí kapacita na souborovém sy
 default file system space per user/group ?	admin	cs	Výchozí kapacita na souborovém systému na uživatele/skupinu?
 deinstall crontab	admin	cs	Odinstalace crontabu
 delete account	admin	cs	Smazat účet
-delete account %1	admin	cs	Smazat účet %1
+delete account %s	admin	cs	Smazat účet %s
 delete all records	admin	cs	Smazat všechny záznamy
 delete application	admin	cs	Smazat aplikaci
 delete category	admin	cs	Smazat kategorii

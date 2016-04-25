@@ -188,7 +188,7 @@ default file system space per user	admin	it	Spazio sul filesystem predefinito pe
 default file system space per user/group ?	admin	it	Spazio sul filesystem predefinito per utente/gruppo ?
 deinstall crontab	admin	it	Rimuovi crontab
 delete account	admin	it	Elimina account
-delete account %1	admin	it	Elimina account %1
+delete account %s	admin	it	Elimina account %s
 delete all records	admin	it	Elimina tutto
 delete application	admin	it	Cancella applicazione
 delete category	admin	it	Cancella categoria
