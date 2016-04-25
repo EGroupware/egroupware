@@ -15,7 +15,6 @@
 class filemanager_hooks
 {
 	static $appname = 'filemanager';
-	static $foldercount = 1;
 
 	/**
 	 * Data for Filemanagers sidebox menu
@@ -32,8 +31,6 @@ class filemanager_hooks
 		$basepath = '/home';
 		$homepath = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
 		//echo "<p>admin_prefs_sidebox_hooks::all_hooks(".print_r($args,True).") appname='$appname', location='$location'</p>\n";
-		$config = config::read(self::$appname);
-		if (!empty($config['max_folderlinks'])) self::$foldercount = (int)$config['max_folderlinks'];
 		$file_prefs    = &$GLOBALS['egw_info']['user']['preferences'][self::$appname];
 		if ($location == 'sidebox_menu')
 		{
@@ -75,19 +72,9 @@ class filemanager_hooks
 			{
 				$file['Basedirectory'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath,'ajax'=>'true'));
 			}
-			if (!empty($file_prefs['startfolder'])) $file['Startfolder']= egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder'],'ajax'=>'true'));
-			for ($i=1; $i<=self::$foldercount; $i++)
+			if (!empty($file_prefs['startfolder']))
 			{
-				if (!empty($file_prefs['folderlink'.$i]))
-				{
-					$foldername = array_pop(explode('/',$file_prefs['folderlink'.$i]));
-					$file[lang('Link %1: %2',$i,$foldername)]= egw::link('/index.php',array(
-						'menuaction' => self::$appname.'.filemanager_ui.index',
-						'path'       => $file_prefs['folderlink'.$i],
-						'nolang'     => true,
-						'ajax'       => 'true'
-					));
-				}
+				$file['Startfolder']= egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder'],'ajax'=>'true'));
 			}
 			$file['Placeholders'] = egw::link('/index.php','menuaction=filemanager.filemanager_merge.show_replacements');
 			$file['Shared files'] = egw::link('/index.php','menuaction=filemanager.filemanager_shares.index&ajax=true');
@@ -106,7 +93,7 @@ class filemanager_hooks
 		if (is_array($location)) $location = $location['location'];
 
 		$file = Array(
-			'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname='.self::$appname),
+			//'Site Configuration' => egw::link('/index.php','menuaction=admin.admin_config.index&appname='.self::$appname.'&ajax=true'),
 			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.index&appname='.self::$appname.'&ajax=true'),
 			'Check virtual filesystem' => egw::link('/index.php','menuaction=filemanager.filemanager_admin.fsck'),
 			'VFS mounts and versioning' => egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index'),
@@ -147,19 +134,6 @@ class filemanager_hooks
 				'admin'		=> False,
 			),
 		);
-		for ($i=1; $i <= self::$foldercount; $i++)
-		{
-			$settings['folderlink'.$i]	= array(
-				'type'		=> 'input',
-				'name'		=> 'folderlink'.$i,
-				'size'		=> 60,
-				'default'	=> '',
-				'label' 	=> lang('Enter the complete VFS path to specify a fast access link to a folder').' ('.$i.').',
-				'run_lang'  => -1,	// -1 = no lang on label
-				'xmlrpc'	=> True,
-				'admin'		=> False
-			);
-		}
 
 		$settings += array(
 			'showbase'	=> array(
