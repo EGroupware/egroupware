@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Class containing admin, preferences and sidebox-menus and other hooks
  */
@@ -452,15 +454,80 @@ class addressbook_hooks
 	}
 
 	/**
-	 * Hook returning options for deny_acl groups
+	 * Called before displaying site configuration
 	 *
 	 * @param array $config
+	 * @return array with additional config to merge and "sel_options" values
 	 */
-	public static function allow_account_edit($config)
+	public static function config(array $config)
 	{
-		$accountsel = new uiaccountsel();
+		$bocontacts = new Api\Contacts();
 
-		return '<input type="hidden" value="" name="newsettings[allow_account_edit]" />'.
-			$accountsel->selection('newsettings[allow_account_edit]', 'allow_account_edit', $config['allow_account_edit'], 'groups', 4);
+		// get the list of account fields
+		$own_account_acl = array();
+		foreach($bocontacts->contact_fields as $field => $label)
+		{
+			// some fields the user should never be allowed to edit or are covert by an other attribute (n_fn for all n_*)
+			if (!in_array($field,array('id','tid','owner','created','creator','modified','modifier','private','n_prefix','n_given','n_middle','n_family','n_suffix')))
+			{
+				$own_account_acl[$field] = $label;
+			}
+		}
+		$own_account_acl['link_to'] = 'Links';
+		if ($config['account_repository'] != 'ldap')	// no custom-fields in ldap
+		{
+			foreach(Api\Storage\Customfields::get('addressbook') as $name => $data)
+			{
+				$own_account_acl['#'.$name] = $data['label'];
+			}
+		}
+
+		$org_fields = $own_account_acl;
+		unset($org_fields['n_fn'], $org_fields['account_id']);
+		// Remove country codes as an option, it will be added by BO constructor
+		unset($org_fields['adr_one_countrycode'], $org_fields['adr_two_countrycode']);
+
+		$supported_fields = $bocontacts->get_fields('supported',null,0);	// fields supported by the backend (ldap schemas!)
+		// get the list of account fields
+		$copy_fields = array();
+		foreach($bocontacts->contact_fields as $field => $label)
+		{
+			// some fields the user should never be allowed to copy or are coverted by an other attribute (n_fn for all n_*)
+			if (!in_array($field,array('id','tid','created','creator','modified','modifier','account_id','uid','etag','n_fn')))
+			{
+				$copy_fields[$field] = $label;
+			}
+		}
+		if ($config['contact_repository'] != 'ldap')	// no custom-fields in ldap
+		{
+			foreach(Api\Storage\Customfields::get('addressbook') as $name => $data)
+			{
+				$copy_fields['#'.$name] = $data['label'];
+			}
+		}
+		// Remove country codes as an option, it will be added by UI constructor
+		if(in_array('adr_one_countrycode', $supported_fields))
+		{
+			unset($copy_fields['adr_one_countrycode'], $copy_fields['adr_two_countrycode']);
+		}
+
+		$repositories = array('sql' => 'SQL');
+		// check account-repository, contact-repository LDAP is only availible for account-repository == ldap
+		if ($config['account_repository'] == 'ldap' || !$config['account_repository'] && $config['auth_type'] == 'ldap')
+		{
+			$repositories['ldap'] = 'LDAP';
+			$repositories['sql-ldap'] = 'SQL --> LDAP ('.lang('read only').')';
+		}
+
+		$ret = array(
+			'sel_options' => array(
+				'own_account_acl' => $own_account_acl,
+				'org_fileds_to_update' => $org_fields,	// typo has to stay, as it was there allways and we would loose existing config :(
+				'copy_fields' => $copy_fields,
+				'fileas' => $bocontacts->fileas_options(),
+				'contact_repository' => $repositories,
+			),
+		);
+		return $ret;
 	}
 }

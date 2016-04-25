@@ -610,6 +610,17 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	},
 
 	/**
+	 * Method to check all options of a multi-select, if not all are selected, or none if all where selected
+	 *
+	 * @todo: add an attribute to automatic add a button calling this method
+	 */
+	select_all_toggle: function()
+	{
+		var all = jQuery("input",this.multiOptions);
+		all.prop("checked", jQuery("input:checked",this.multiOptions).length == all.length ? false : true);
+	},
+
+	/**
 	 * Add a button to toggle between single select and multi select.
 	 *
 	 * @param {number} _rows How many rows for multi-select
