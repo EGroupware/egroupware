@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="notifications.config" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="60%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="EGroupware-Popup backend" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Poll interval"/>
+					<select id="newsettings[popup_poll_interval]">
+						<option value="5">5secs</option>
+						<option value="60">1 {minute}</option>
+						<option value="120">2 {minutes}</option>
+						<option value="300">5 {minutes}</option>
+					</select>
+				</row>
+				<row>
+					<description value="Windows-Popup backend" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Enable Windows-Popup backend"/>
+					<select id="newsettings[winpopup_enable]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
+				<row>
+					<description value="Signature" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="Signature added to every change notification"/>
+						<description value="You can also use Addressbook placeholders with user/ prefix" href="/index.php?menuaction=addressbook.addressbook_merge.show_replacements" extra_link_popup="800x600"/>
+					</vbox>
+					<textbox id="newsettings[signature]" rows="7" cols="50"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
