@@ -392,7 +392,7 @@ class calendar_uiviews extends calendar_ui
 		{
 			foreach (array_keys($actions) as $key)
 			{
-				if (!in_array($key, array('day_view','weekend','next', 'today','previous'))) {
+				if (!in_array($key, array('day_view','week_view','next', 'today','previous'))) {
 					$actions[$key]['toolbarDefault'] = false;
 				}
 				else {
