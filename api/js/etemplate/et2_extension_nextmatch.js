@@ -2029,6 +2029,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 		
 		var pref = this.options.settings.columnselection_pref;
+		if(pref.indexOf('nextmatch') == 0)
+		{
+			pref = 'nextmatch-'+pref;
+		}
 		var app = this.getInstanceManager().app;
 		
 		var columns = {};
@@ -2244,6 +2248,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		}
 		if(pref)
 		{
+			if(typeof pref === 'string') pref = pref.split(',');
 			this.set_columns(pref,app);
 		}
 		this.dynheight.outerNode.css('max-width','inherit');
