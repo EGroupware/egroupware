@@ -251,11 +251,13 @@
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row disabled="!@owner" class="dialogOperators">
-					<description value="Owner"/>
+				<row disabled="!@id" class="dialogOperators">
+					<hbox span="2">
+						<date-time label="created" id="created" no_lang="1" readonly="true"/>
 					<menulist>
-						<menupopup type="select-account" id="owner" readonly="true"/>
+							<menupopup label = "by" type="select-account" id="owner" readonly="true"/>
 					</menulist>
+					</hbox>
 					<hbox align="right">
 						<date-time label="Updated" id="modified" no_lang="1" readonly="true"/>
 						<menulist>

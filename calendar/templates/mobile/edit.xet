@@ -197,21 +197,23 @@
 				<column/>
 			</columns>
 			<rows>
-				<row disabled="!@owner">
-					<description value="Owner"/>
-					<menulist>
-						<menupopup type="select-account" id="owner" readonly="true"/>
-					</menulist>
+				<row disabled="!@id">
+					<description value="Created"/>
+					<hbox>
+						<menulist>
+							<menupopup type="select-account" id="owner" readonly="true"/>
+						</menulist>
+						<date-time id="created" no_lang="1" readonly="true"/>
+					</hbox>
 				</row>
 				<row disabled="!@modified">
 					<description value="Updated"/>
-					<date-time id="modified" no_lang="1" readonly="true"/>
-				</row>
-				<row disabled="!@modifier">
-					<description value="by"/>
-					<menulist>
-						<menupopup type="select-account"   class="et2_nowrap" id="modifier" readonly="true"/>
-					</menulist>
+					<hbox>
+						<menulist>
+							<menupopup type="select-account"   class="et2_nowrap" id="modifier" readonly="true"/>
+						</menulist>
+						<date-time id="modified" no_lang="1" readonly="true"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>
@@ -225,11 +227,10 @@
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<hbox  span="all" width="100%">
-						<button statustext="Saves this entry" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Apply the changes" id="button[apply]" image="apply" background_image="1"/>
 						<button statustext="delete this entry" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
 						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" id="freetime" label="Freetime" onclick="app.calendar.freetime_search" image="add" background_image="1"/>
-						<checkbox label="notification" id="no_notifications"/>
+						<checkbox label="Do not notify" id="no_notifications"/>
 						<textbox type="hidden" id="delete_exceptions"/>
 					</hbox>
 				</row>
