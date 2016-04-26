@@ -1011,10 +1011,6 @@
     filter: initial;
     /* IE 6-9 */
   }
-  #late-sidebox table img {
-    width: 16px;
-    height: 16px;
-  }
   .admin_aclAPP {
     /*filter grey*/
     filter: none;
