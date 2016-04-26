@@ -352,6 +352,7 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 						.text(entry.label || "Tab")
 						.click({"tabs": this, "idx": i}, function(e) {
 							e.data.tabs.flagContainer.children(":eq(" + e.data.idx + ")").toggleClass('active');
+							e.data.tabs.setActiveTab(e.data.idx);
 						})
 						.appendTo(entry.flagDiv);
 				entry.contentDiv.appendTo(entry.flagDiv);
