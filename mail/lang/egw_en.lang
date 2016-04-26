@@ -92,6 +92,7 @@ date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
 default sorting order	mail	en	Default sorting order
 default your name and email	common	en	default your name and email
+details	mail	en	short preview in list	
 delete folder	mail	en	Delete Folder
 delete folder %1 ?	mail	en	DELETE Folder %1 ?
 deleted	mail	en	deleted
@@ -303,6 +304,7 @@ no access	mail	en	no access
 no action defined!	mail	en	No action defined!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	en	No Address TO/CC/BCC supplied, and no folder to save message to provided.
 no adress, to send this mail to, supplied	mail	en	no adress, to send this mail to, supplied
+no details	mail	en	no short preview in list
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	en	No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.
 no folders	mail	en	no folders
 no message body supplied	mail	en	no message body supplied

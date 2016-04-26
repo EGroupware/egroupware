@@ -442,7 +442,7 @@ class mail_ui
 
 				// These must always be set, even if $content is an array
 				$content[self::$nm_index]['cat_is_select'] = true;    // Category select is just a normal selectbox
-				$content[self::$nm_index]['no_filter2'] = true;       // Disable second filter
+				$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
 				$content[self::$nm_index]['actions'] = self::get_actions();
 				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
@@ -533,7 +533,7 @@ class mail_ui
 				//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']));
 				$content[self::$nm_index]['cat_id'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType'];
 				$sel_options['filter'] = $this->statusTypes;
-				$sel_options['filter2'] = array(''=>'No details',1=>'Details');
+				$sel_options['filter2'] = array(''=>lang('No details'),1=>lang('Details'));
 				$content[self::$nm_index]['filter2'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails'];
 
 				$etpl = new etemplate_new('mail.index');
@@ -4203,7 +4203,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$response = egw_json_response::get();
 		$response->call('app.mail.mail_refreshCatIdOptions',$this->searchTypes);
 		$response->call('app.mail.mail_refreshFilterOptions',$this->statusTypes);
-		$response->call('app.mail.mail_refreshFilter2Options',array(''=>'No details',1=>'Details'));
+		$response->call('app.mail.mail_refreshFilter2Options',array(''=>lang('No details'),1=>lang('Details')));
 
 	}
 
