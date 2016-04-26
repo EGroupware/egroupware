@@ -1844,8 +1844,9 @@ class calendar_uiviews extends calendar_ui
 			);
 		}
 
-		$draggableID = $event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
-
+		$draggableID = $event['id'].($event['recur_type'] ? ':'.$event['start'] : '').
+			'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
+		
 		if ($this->use_time_grid)
 		{
 			if($event['whole_day_on_top'])
@@ -1875,11 +1876,11 @@ class calendar_uiviews extends calendar_ui
 				!$event['whole_day'] &&
 				!$event['recur_type'])
 			{
-				$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
+				$draggableID = 'drag_'.$event['id'].($event['recur_type'] ? ':'.$event['start'] : '').'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
 			}
 			else
 			{
-				$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
+				$draggableID = 'drag_'.$event['id'].($event['recur_type'] ? ':'.$event['start'] : '').'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
 
 			}
 		}

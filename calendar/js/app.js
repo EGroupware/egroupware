@@ -722,7 +722,7 @@ app.classes.calendar = AppJS.extend(
 		var eventOwner = _id.substring(_id.lastIndexOf("_C")+2,_id.lastIndexOf(""));
 		var date = this.cal_dnd_tZone_converter(_date);
 
-		if (_eventFlag == 'S')
+		if (_eventFlag === 'S' && eventId.indexOf(':') > 0)
 		{
 			et2_dialog.show_dialog(function(_button_id)
 			{

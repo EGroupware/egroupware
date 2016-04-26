@@ -1071,6 +1071,127 @@ class calendar_uiforms extends calendar_ui
 		}
 		return lang('Edit status or alarms for this particular day');
 	}
+	
+	/**
+	 * Since we cannot change recurrences in the past, break a recurring
+	 * event (that starts in the past), and create a new event.
+	 *
+	 * $old_event will be ended (if needed) and $event will be modified with the
+	 * new start date and time.  It is not allowed to edit events in the past,
+	 * so if $as_of_date is in the past, it will be adjusted to today.
+	 *
+	 * @param array &$event Event to be modified
+	 * @param array $old_event Unmodified (original) event, as read from the database
+	 * @param date $as_of_date If provided, the break will be done as of this
+	 *	date instead of today
+	 * @param boolean $no_notifications Toggle notifications to participants
+	 *
+	 * @return false or error message
+	 */
+	function _break_recurring(&$event, $old_event, $as_of_date = null, $no_notifications = true)
+	{
+		$msg = false;
+
+		if(!$as_of_date )
+		{
+			$as_of_date = time();
+		}
+
+		//error_log(__METHOD__ . egw_time::to($old_event['start']) . ' -> '. egw_time::to($event['start']) . ' as of ' . egw_time::to($as_of_date));
+
+		if(!($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + 1, true)))
+		{
+			$msg = lang("Error: You can't shift a series from the past!");
+			$noerror = false;
+			return $msg;
+		}
+
+		// Hold on to this in case something goes wrong
+		$orig_event = $event;
+
+		$offset = $event['start'] - $old_event['start'];
+		$duration = $event['duration'] ? $event['duration'] : $event['end'] - $event['start'];
+
+		// base start-date of new series on actual / clicked date
+		$event['start'] = $as_of_date ;
+
+		if (egw_time::to($old_event['start'],'Ymd') < egw_time::to($as_of_date,'Ymd') ||
+			// Adjust for requested date in the past
+			egw_time::to($as_of_date,'ts') < time()
+		)
+		{
+
+			unset($orig_event);
+			// copy event by unsetting the id(s)
+			unset($event['id']);
+			unset($event['uid']);
+			unset($event['caldav_name']);
+			$event['alarm'] = array();
+
+			// set enddate of existing event
+			$rriter = calendar_rrule::event2rrule($old_event, true);
+			$rriter->rewind();
+			$last = $rriter->current();
+			do
+			{
+				$rriter->next_no_exception();
+				$occurrence = $rriter->current();
+			}
+			while ($rriter->valid()  && (
+				egw_time::to($occurrence, 'ts') <= time() ||
+				egw_time::to($occurrence, 'Ymd') < egw_time::to($as_of_date,'Ymd')
+			) && ($last = $occurrence));
+
+
+			// Make sure as_of_date is still valid, may have to move forward
+			if(egw_time::to($as_of_date,'ts') < egw_time::to($last,'ts') ||
+				egw_time::to($as_of_date, 'Ymd') == egw_time::to($last, 'Ymd'))
+			{
+				$event['start'] = egw_time::to($rriter->current(),'ts') + $offset;
+			}
+
+			//error_log(__METHOD__ ." Series should end at " . egw_time::to($last) . " New series starts at " . egw_time::to($event['start']));
+			if ($duration)
+			{
+				$event['end'] = $event['start'] + $duration;
+			}
+			elseif($event['end'] < $event['start'])
+			{
+				$event['end'] = $old_event['end'] - $old_event['start'] + $event['start'];
+			}
+			//error_log(__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration={$duration}, event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset\n");
+
+			$event['participants'] = $old_event['participants'];
+			foreach ($old_event['recur_exception'] as $key => $exdate)
+			{
+				if ($exdate > egw_time::to($last,'ts'))
+				{
+					//error_log("Moved exception on " . egw_time::to($exdate));
+					unset($old_event['recur_exception'][$key]);
+					$event['recur_exception'][$key] += $offset;
+				}
+				else
+				{
+					//error_log("Kept exception on ". egw_time::to($exdate));
+					unset($event['recur_exception'][$key]);
+				}
+			}
+			$last->setTime(0, 0, 0);
+			$old_event['recur_enddate'] = egw_time::to($last, 'ts');
+			if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$no_notifications))
+			{
+				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
+					lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
+						htmlspecialchars(egw::link('/index.php',array(
+							'menuaction' => 'calendar.calendar_uiforms.edit',
+							'cal_id'    => $content['id'],
+						))).'">','</a>');
+				$event = $orig_event;
+			}
+		}
+		$event['start'] = egw_time::to($event['start'],'ts');
+		return $msg;
+	}
 
 	/**
 	 * return javascript to open mail compose window with preset content to mail all participants
@@ -2568,13 +2689,15 @@ class calendar_uiforms extends calendar_ui
 	 * @param string $durationT the duration to support resizable calendar event
 	 * @return string XML response if no error occurs
 	 */
-	function ajax_moveEvent($eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null)
+	function ajax_moveEvent($_eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null)
 	{
 		// we do not allow dragging into another users calendar ATM
 		if(!$calendarOwner == $targetOwner)
 		{
 			return false;
 		}
+
+		list($eventId, $date) = explode(':', $_eventId,2);
 
 		$old_event=$event=$this->bo->read($eventId);
 		if (!$durationT)
@@ -2585,11 +2708,23 @@ class calendar_uiforms extends calendar_ui
 		{
 			$duration = $durationT;
 		}
-		
+
 		$event['start'] = $this->bo->date2ts($targetDateTime);
 
 		$event['end'] = $event['start']+$duration;
-		
+
+		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
+		{
+			// calculate offset against clicked recurrance,
+			// depending on which is smaller
+			$offset = egw_time::to($targetDateTime,'ts') - egw_time::to($date,'ts');
+			$event['start'] = $old_event['start'] + $offset;
+			$event['duration'] = $duration;
+
+			// We have a recurring event starting in the past -
+			// stop it & create a new one.
+			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
+		}
 		$status_reset_to_unknown = false;
 		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
 		foreach((array)$event['participants'] as $uid => $status)
