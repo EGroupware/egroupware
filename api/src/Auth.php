@@ -14,9 +14,6 @@
 
 namespace EGroupware\Api;
 
-// explicit import classes still in phpgwapi
-use egw;	// invalidate_session_cache
-
 // allow to set an application depending authentication type (eg. for syncml, groupdav, ...)
 if (isset($GLOBALS['egw_info']['server']['auth_type_'.$GLOBALS['egw_info']['flags']['currentapp']]) &&
 	$GLOBALS['egw_info']['server']['auth_type_'.$GLOBALS['egw_info']['flags']['currentapp']])
@@ -253,7 +250,7 @@ class Auth
 				$GLOBALS['egw_info']['user']['passwd'] = $new_passwd;
 				$GLOBALS['egw_info']['user']['account_lastpwd_change'] = DateTime::to('now','ts');
 				// invalidate EGroupware session, as password is stored in egw_info in session
-				egw::invalidate_session_cache();
+				Egw::invalidate_session_cache();
 			}
 			Accounts::cache_invalidate($account_id);
 			// run changepwasswd hook

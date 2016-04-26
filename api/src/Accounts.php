@@ -18,9 +18,6 @@
 
 namespace EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi of old structure
-use egw;	// invalidate_session_cache
-
 /**
  * API - accounts
  *
@@ -1134,7 +1131,7 @@ class Accounts
 
 		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 		{
-			egw::invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
+			Egw::invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
 		}
 	}
 

@@ -17,9 +17,6 @@
 
 namespace EGroupware\Api;
 
-// explicitly reference classes still in phpgwapi
-use egw;	// on_shutdown
-
 /**
  * Generalized linking between entries of EGroupware apps
  *
@@ -258,7 +255,7 @@ class Link extends Link\Storage
 		}
 
 		// register self::save_session_cache to run on shutdown
-		egw::on_shutdown(array(__CLASS__, 'save_session_cache'));
+		Egw::on_shutdown(array(__CLASS__, 'save_session_cache'));
 
 		//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
 	}
@@ -295,7 +292,7 @@ class Link extends Link\Storage
 	}
 
 	/**
-	 * Called by egw::shutdown to store the title-cache in session and run notifications
+	 * Called by Egw::shutdown to store the title-cache in session and run notifications
 	 *
 	 * Would probably better called shutdown as well.
 	 */
@@ -1507,7 +1504,7 @@ class Link extends Link\Storage
 		{
 			if (!self::$notifies)
 			{
-				egw::on_shutdown(array(__CLASS__, 'run_notifies'));
+				Egw::on_shutdown(array(__CLASS__, 'run_notifies'));
 			}
 			self::$notifies[] = array(
 				'method'     => self::$app_register[$notify_app]['notify'],
@@ -1522,7 +1519,7 @@ class Link extends Link\Storage
 	}
 
 	/**
-	 * Run notifications called by egw::on_shutdown(), after regular processing is finished
+	 * Run notifications called by Egw::on_shutdown(), after regular processing is finished
 	 */
 	static public function run_notifies()
 	{

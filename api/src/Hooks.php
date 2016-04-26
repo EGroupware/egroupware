@@ -14,9 +14,6 @@
 
 namespace EGroupware\Api;
 
-// explicitly import old not namespaced api classes
-use applications;
-
 /**
  * Allow applications to set and use hooks to communicate with each other
  *
@@ -221,7 +218,7 @@ class Hooks
 			// if we run in setup, we need to read installed apps first
 			if (!$GLOBALS['egw_info']['apps'])
 			{
-				$applications = new applications();
+				$applications = new Egw\Applications();
 				$applications->read_installed_apps();
 			}
 
