@@ -1067,7 +1067,7 @@ class Contacts extends Contacts\Storage
 	function read($contact_id, $ignore_acl=false)
 	{
 		// get so_sql_cf to read private customfields too, if we ignore acl
-		if ($ignore_acl && is_a($this->somain, 'addressbook_sql'))
+		if ($ignore_acl && is_a($this->somain, __CLASS__.'\\Sql'))
 		{
 			$cf_backup = (array)$this->somain->customfields;
 			$this->somain->customfields = Storage\Customfields::get('addressbook', true);
@@ -1128,6 +1128,7 @@ class Contacts extends Contacts\Storage
 		}
 
 		if ((!is_array($contact) || !isset($contact['owner'])) &&
+
 			!($contact = parent::read(is_array($contact) ? $contact['id'] : $contact)))
 		{
 			return null;
