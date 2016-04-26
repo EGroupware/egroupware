@@ -173,6 +173,12 @@
 					<description value="Notes"/>
 					<textbox multiline="true" id="note" rows="10" resize_ratio="0" class="et2_fullWidth" height="200"/>
 				</row>
+				<row>
+					<description value="Categories"/>
+					<menulist>
+						<menupopup type="select-cat" id="cat_id"/>
+					</menulist>
+				</row>
 			</rows>
 		</grid>
 	</template>
