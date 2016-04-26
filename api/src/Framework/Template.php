@@ -18,6 +18,8 @@
 
 namespace EGroupware\Api\Framework;
 
+use EGroupware\Api;
+
 /**
  * Old phplib templates: DO NOT USE FOR ANY NEW DEVELOPMENT, use eTemplate2!
  */
@@ -539,7 +541,7 @@ class Template
 				echo "<b>Backtrace</b>: ".function_backtrace(2)."<br>\n";
 				break;
 			case 'yes':
-				throw new egw_exception_wrong_parameter('Template Error: '.$msg);
+				throw new Api\Exception\WrongParameter('Template Error: '.$msg);
 		}
 	}
 

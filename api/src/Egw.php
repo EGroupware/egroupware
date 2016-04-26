@@ -135,7 +135,7 @@ class Egw extends Egw\Base
 		{
 			try
 			{
-				$tz = new DateTimeZone(date_default_timezone_get());
+				$tz = new \DateTimeZone(date_default_timezone_get());
 				Config::save_value('server_timezone',$GLOBALS['egw_info']['server']['server_timezone'] = $tz->getName(),'phpgwapi');
 				error_log(__METHOD__."() stored server_timezone=".$GLOBALS['egw_info']['server']['server_timezone']);
 			}
