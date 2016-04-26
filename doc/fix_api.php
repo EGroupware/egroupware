@@ -30,14 +30,16 @@ $replace = array(
 	"#\\\$GLOBALS\['egw'\]->common->#" => 'common::',
 	"#\\\$GLOBALS\['egw'\]->hooks->#" => 'Api\\Hooks::',
 	'#Api\\Hooks::hook_implemented#' => 'Api\\Hooks::implemented',
+	'#Api\\Hooks::hook_exists#' => 'Api\\Hooks::exists',
 	"#\\\$GLOBALS\['egw'\]->translation->#" => 'Api\\Translation::',
 	'#egw_framework::csp_script_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('script-src', \$1);",
 	'#egw_framework::csp_style_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('style-src', \$1);",
 	'#egw_framework::csp_connect_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('connect-src', \$1);",
 	'#egw_framework::csp_frame_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('frame-src', \$1);",
+	'#common::show_date\(([^,]+),\s*([^,]+),\s*false\)#' => 'Api\\DateTime::to($1, $2)',
 );
 // enclose class-names and static methods with some syntax check
-$class_start = '#([\[\s,;(.!])';
+$class_start = '#(?<!function)([\[\s,;(.!])';
 $class_end = '(::|\\(|\\)|;|\?|:|\\s|,|$)#';
 foreach(array(
 	'accounts' => 'Api\\Accounts',
@@ -51,7 +53,7 @@ foreach(array(
 	'EGW_ACL_CUSTOM_1' => 'Api\\Acl::CUSTOM1',
 	'EGW_ACL_CUSTOM_2' => 'Api\\Acl::CUSTOM2',
 	'EGW_ACL_CUSTOM_3' => 'Api\\Acl::CUSTOM3',
-	//'applications' => 'Api\\Applications',
+	'applications' => 'Api\\Applications',
 	'asyncservice' => 'Api\\AsyncService',
 	'auth' => 'Api\\Auth',
 	'categories' => 'Api\\Categories',
@@ -74,8 +76,12 @@ foreach(array(
 	'common::email_address' => 'Api\\Accounts::email',
 	'common::next_id' => 'Api\\Accounts\\Ldap::next_id',
 	'common::last_id' => 'Api\\Accounts\\Ldap::last_id',
+	'common::egw_header' => "\$GLOBALS['egw']->framework->header",
+	'common::egw_footer' => "\$GLOBALS['egw']->framework->footer",
+	'common::show_date' => 'Api\\DateTime::server2user',
 	'country' => 'Api\\Country',
-	//'egw' =>
+	'egw' => 'Api\\Egw',
+	'egw_minimal' => 'Api\\Egw\\Base',
 	'egw_cache' => 'Api\\Cache',
 	'egw_ckeditor_config' => 'Api\\Html\\CkEditorConfig',
 	'egw_customfields' => 'Api\\Storage\\Customfields',
@@ -158,6 +164,10 @@ foreach(array(
 {
 	$replace[$class_start.$from.$class_end] = '$1'.$to.'$2';
 }
+// raw expressions running after regular replacements, because they would be replaced themself if running before
+$replace += array(
+	"#\\\$GLOBALS\['egw'\]->js->#" => 'egw_framework::',
+);
 //print_r($replace);
 
 /**
@@ -182,7 +192,7 @@ function fix_api($file, $dry_run=false)
 	$content = 	preg_replace(array_keys($replace), array_values($replace), $content);
 
 	// shorten some classes, if used, with further use declarations
-	foreach(array('Api\\Etemplate', 'Api\\Vfs') as $namespace)
+	foreach(array('Api\\Etemplate', 'Api\\Vfs', 'Api\\Acl', 'Api\\Egw', 'Api\\Framework', 'Api\\Link') as $namespace)
 	{
 		if (strpos($content, $namespace) !== false && strpos($content, 'use EGroupware\\'.$namespace) === false)
 		{
@@ -199,7 +209,16 @@ function fix_api($file, $dry_run=false)
 	}
 	elseif ($content_in != $content)
 	{
-		file_put_contents($file, $content);
+		file_put_contents($file.'.new', $content);
+		$ret = 0;
+		system('/usr/bin/php -l '.$file.'.new', $ret);
+		system('/usr/bin/diff -u '.$file.' '.$file.'.new');
+		if (!$ret)
+		{
+			unlink($file);
+			rename($file.'.new', $file);
+		}
+		return !$ret;
 	}
 
 	return true;
