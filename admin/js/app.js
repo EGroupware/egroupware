@@ -1016,7 +1016,7 @@ app.classes.admin = AppJS.extend(
 			{
 				jQuery('.emailadmin_no_single').hide();
 			}
-			if (!this.egw.user('apps').emailadmin)
+			if (!this.egw.user('apps').admin)
 			{
 				jQuery('.emailadmin_no_user,#button\\[multiple\\]').hide();
 			}
