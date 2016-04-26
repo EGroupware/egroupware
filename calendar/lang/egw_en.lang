@@ -415,6 +415,7 @@ receive summary of appointments	calendar	en	Receive summary of appointments
 recover	calendar	en	Recover
 recovered	calendar	en	Recovered.
 recurrence	calendar	en	Recurrence
+recurrence enddate	calendar	en	Recurrence end date
 recurring event	calendar	en	Recurring event
 reject	calendar	en	Reject
 rejected	calendar	en	Rejected

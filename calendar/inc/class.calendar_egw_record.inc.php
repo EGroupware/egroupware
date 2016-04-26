@@ -26,6 +26,7 @@ class calendar_egw_record implements importexport_iface_egw_record
 		'select-cat'    => array('category'),
 		'select-account'=> array('owner','creator', 'modifier'),
 		'date-time'     => array('modified', 'created','start','end','recur_date'),
+		'date'			=> array('recur_enddate'),
 		'select-bool'	=> array('public', 'non_blocking'),
 		'select'	=> array('priority'),
 	);
