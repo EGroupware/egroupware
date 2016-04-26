@@ -503,8 +503,10 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				'<p style="margin: 2px 0px;">'+times+'</p>'+
 				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' + this.options.value.location+'</p>' : '')+
 				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label +'</p>' : '')+
-				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
-					(this.options.value.parts ? this.options.value.parts.replace("\n","<br />"):'')+'</p>'+
+				(this.options.value.parts ?
+					'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
+						this.options.value.parts.replace("\n","<br />")+'</p>':''
+				)+
 			'</div>'+
 		'</div>';
 	},
