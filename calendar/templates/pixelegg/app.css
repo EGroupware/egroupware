@@ -11,15 +11,20 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55805 2016-04-21 20:30:48Z nathangray $ */
+/* $Id: app.css 55840 2016-04-25 22:09:57Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
-  #calendar-todo.et2_container,
   #calendar-planner.et2_container,
   #calendar-list.et2_container {
     position: static;
     height: auto !important;
+  }
+  #calendar-todo.et2_container {
+    display: none;
+  }
+  .calendar_calDayTodos .calendar_calDayTodosTable {
+    position: relative;
   }
   .calendar_plannerWidget {
     height: auto !important;
@@ -37,8 +42,10 @@
   #calendar-view_view > tbody > tr.view_row {
     page-break-inside: avoid;
   }
+  /* Try to keep it on the page */
   .calendar_calTimeGrid {
     max-height: 18cm;
+    max-width: 90vw;
   }
   .calendar_calTimeGrid .calendar_calTimeGridScroll {
     overflow-y: hidden !important;
@@ -933,6 +940,9 @@ Hide subsequent headers in week view with non-consolidated owners
 .calendar_calDayTodosHeader {
   text-align: center;
 }
+.calendar_calDayTodosTable tr {
+  page-break-inside: avoid;
+}
 .calendar_calDayTodosTable tr td span:first-child {
   white-space: nowrap;
 }
@@ -1333,6 +1343,56 @@ input#calendar-edit_location {
 #calendar_edit_recur_data_chzn {
   width: 99% !important;
   max-width: 99% !important;
+}
+/* Use media queries and day counts to toggle full days & abbreviations in day labels
+  Width breakpoints in media queries chosen somewhat arbitrarily, looking at 'Wednesday'
+  to see if it still fits.
+*/
+@media all and (max-width: 1000px) and (min-width: 481px) {
+  .calendar_calDayColHeader > div[data-date] .long_date {
+    display: inline;
+  }
+  .calendar_calDayColHeader > div[data-date] .short_date {
+    display: none;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(7) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(7) ~ .calendar_calDayColHeader > div[data-date] .short_date {
+    display: inline;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(7) > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(7) ~ .calendar_calDayColHeader > div[data-date] .long_date {
+    display: none;
+  }
+}
+@media all and (max-width: 580px) {
+  .calendar_calDayColHeader:first-child:nth-last-child(5) > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader > div[data-date] .long_date {
+    display: none;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(5) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader > div[data-date] .short_date {
+    display: inline;
+  }
+}
+@media all and (max-width: 480px) {
+  .calendar_calDayColHeader > div[data-date] .long_date,
+  .calendar_calDayColHeader > div[data-date] .short_date {
+    display: none;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(3) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(3) ~ .calendar_calDayColHeader > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(4) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(4) ~ .calendar_calDayColHeader > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(5) > div[data-date] .short_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader > div[data-date] .short_date {
+    display: inline;
+  }
+  .calendar_calDayColHeader:first-child:nth-last-child(1) > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(1) ~ .calendar_calDayColHeader > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(2) > div[data-date] .long_date,
+  .calendar_calDayColHeader:first-child:nth-last-child(2) ~ .calendar_calDayColHeader > div[data-date] .long_date {
+    display: inline;
+  }
 }
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
