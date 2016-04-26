@@ -900,6 +900,7 @@ class timesheet_ui extends timesheet_bo
 				//'actions'        => $this->get_actions(),
 				'default_cols'   => '!legacy_actions',	// switch legacy actions column and row off by default
 				'pm_integration' => $this->pm_integration,
+				'placeholder_actions' => array('add')
 			);
 		}
 		$content['nm']['actions'] = $this->get_actions($content['nm']);

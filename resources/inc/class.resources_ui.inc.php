@@ -142,6 +142,7 @@ class resources_ui
 			$content['nm']['filter2'] = (int)$_GET['view_accs_of'];
 		}
 		$content['nm']['actions']	= $this->get_actions();
+		$content['nm']['placeholder_actions'] = array('add');
 
 		// check if user is permitted to add resources
 		// If they can't read any categories, they won't be able to save it

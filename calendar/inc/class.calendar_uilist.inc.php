@@ -137,7 +137,8 @@ class calendar_uilist extends calendar_ui
 				'filter_onchange' => "app.calendar.filter_change",
 				'row_id'          => 'row_id',	// set in get rows "$event[id]:$event[recur_date]"
 				'row_modified'    => 'modified',
-				'favorites'       => true
+				'favorites'       => true,
+				'placeholder_actions' => array('add')
 			);
 		}
 		$content['nm']['actions'] = $this->get_actions();
