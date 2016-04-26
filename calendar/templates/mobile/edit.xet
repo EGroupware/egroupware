@@ -199,7 +199,7 @@
 			<rows>
 				<row disabled="!@id">
 					<description value="Created"/>
-					<hbox>
+					<hbox height="46">
 						<menulist>
 							<menupopup type="select-account" id="owner" readonly="true"/>
 						</menulist>
@@ -208,7 +208,7 @@
 				</row>
 				<row disabled="!@modified">
 					<description value="Updated"/>
-					<hbox>
+					<hbox height="46">
 						<menulist>
 							<menupopup type="select-account"   class="et2_nowrap" id="modifier" readonly="true"/>
 						</menulist>
