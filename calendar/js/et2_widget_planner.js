@@ -357,7 +357,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 						}
 					}
 				}
-				
+
 				return labels.sort(function(a,b) {
 					return a.label.localeCompare(b.label);
 				});
@@ -801,7 +801,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		for(var key in labels)
 		{
 			if (!labels.hasOwnProperty(key)) continue;
-			
+
 			// Skip sub-categories (events are merged into top level)
 			if(this.options.group_by == 'category' &&
 				(!app.calendar.state.cat_id || app.calendar.state.cat_id == '') &&
@@ -1546,7 +1546,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 							}, {application:event.data.app||'calendar'});
 
 							// Get CSS too
-							egw.includeCSS('/phpgwapi/categories.php?app='+event.data.app);
+							egw.includeCSS('/api/categories.php?app='+event.data.app);
 						}
 					}
 
@@ -1663,7 +1663,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			}
 		}
 	},
-	
+
 	/**
 	 * Call change handler, if set
 	 *

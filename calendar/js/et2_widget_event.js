@@ -260,7 +260,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}, {application:event.app||'calendar'});
 
 		// Get CSS too
-		egw.includeCSS('/phpgwapi/categories.php?app='+event.app);
+		egw.includeCSS('/api/categories.php?app='+event.app);
 
 		// Need cleaning? (DnD helper removes content)
 		if(!this.div.has(this.title).length)
@@ -888,17 +888,17 @@ et2_register_widget(et2_calendar_event, ["calendar-event"]);
 // Static class stuff
 /**
  * Check event owner against a parent object
- * 
+ *
  * As an event is edited, its participants may change.  Also, as the state
  * changes we may change which events are displayed and show the same event
  * in several places for different users.  Here we check the event participants
  * against an owner value (which may be an array) to see if the event should be
  * displayed or included.
- * 
+ *
  * @param {Object} event - Event information
  * @param {et2_widget_daycol|et2_widget_planner_row} parent - potential parent object
  *	that has an owner option
- *	
+ *
  * @return {boolean} Should the event be displayed
  */
 et2_calendar_event.owner_check = function owner_check(event, parent)
