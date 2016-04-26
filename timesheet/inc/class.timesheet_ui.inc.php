@@ -658,7 +658,7 @@ class timesheet_ui extends timesheet_bo
 		{
 			egw_json_response::get()->call(
 				'app.timesheet.update_timespan',
-				egw_time::to($query['startdate'] ? $query['startdate'] : now() ,egw_time::ET2),
+				egw_time::to($query['startdate'] ? $query['startdate'] : 'now' , egw_time::ET2),
 				$query['filter'] ? egw_time::to($query['enddate'], egw_time::ET2) : null
 			);
 		}
