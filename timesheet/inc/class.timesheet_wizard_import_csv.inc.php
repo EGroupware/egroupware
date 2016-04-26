@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 {
 
@@ -39,7 +41,7 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 
 		// List each custom field
 		unset($this->mapping_fields['customfields']);
-		$custom = config::get_customfields('timesheet');
+		$custom = Api\Storage\Customfields::get('timesheet');
 		foreach($custom as $name => $data) {
 			$this->mapping_fields['#'.$name] = $data['label'];
 		}
@@ -100,7 +102,7 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 				'add' => lang('Add'),
 			);
 			$set_to = lang('Set to') . ':';
-			$categories = new categories('','timesheet');
+			$categories = new Api\Categories('','timesheet');
 			$cat_list = array();
 			foreach((array)$categories->return_sorted_array(0,False,'','','',true) as $cat) {
 				$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);

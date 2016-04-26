@@ -11,6 +11,8 @@
  * @version $Id: class.egw_addressbook_record.inc.php 22827 2006-11-10 15:35:35Z nelius_weiss $
  */
 
+use EGroupware\Api\Link;
+
 /**
  * class egw_addressbook_record
  * compability layer for iface_egw_record needet for importexport
@@ -84,7 +86,8 @@ class timesheet_egw_record implements importexport_iface_egw_record
 	 *
 	 *@return string title
 	 */
-	public function get_title() {
+	public function get_title()
+	{
 // TODO get_record gibts nicht ?
 //		if (empty($this->timesheetentry)) {
 //			$this->get_record();
@@ -102,8 +105,8 @@ class timesheet_egw_record implements importexport_iface_egw_record
 		$this->timesheetentry = $_record;
 		// Check for linked project ID
 		if($this->timesheetentry['ts_project']) {
-			$links = egw_link::get_links('timesheet', $_record['ts_id'], 'projectmanager');
-			foreach($links as $link_id => $app_id) {
+			$links = Link::get_links('timesheet', $_record['ts_id'], 'projectmanager');
+			foreach($links as $app_id) {
 				$this->timesheetentry['pm_id'] = $app_id;
 				break;
 			}
@@ -135,7 +138,7 @@ class timesheet_egw_record implements importexport_iface_egw_record
 	 * @return string identifier
 	 */
 	public function save ( $_dst_identifier ) {
-
+		unset($_dst_identifier);
 	}
 
 	/**
@@ -145,7 +148,7 @@ class timesheet_egw_record implements importexport_iface_egw_record
 	 * @return string dst_identifier
 	 */
 	public function copy ( $_dst_identifier ) {
-
+		unset($_dst_identifier);
 	}
 
 	/**
@@ -156,7 +159,7 @@ class timesheet_egw_record implements importexport_iface_egw_record
 	 * @return string dst_identifier
 	 */
 	public function move ( $_dst_identifier ) {
-
+		unset($_dst_identifier);
 	}
 
 	/**

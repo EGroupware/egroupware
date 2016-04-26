@@ -6,10 +6,12 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
  * @subpackage setup
- * @copyright (c) 2005-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 function timesheet_upgrade0_1_001()
 {
@@ -119,7 +121,13 @@ function timesheet_upgrade1_9_001()
 function timesheet_upgrade1_9_002()
 {
 	// switch history / delete prevention on, like for new installs, so only admins can finally delete timesheets
-	config::save_value('history', 'history', 'timesheet');
+	Api\Config::save_value('history', 'history', 'timesheet');
 
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '14.1';
+}
+
+
+function timesheet_upgrade14_1()
+{
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '16.1';
 }

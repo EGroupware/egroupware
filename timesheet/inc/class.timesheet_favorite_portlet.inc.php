@@ -9,13 +9,16 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * The timesheet_list_portlet uses a nextmatch / favorite
  * to display a list of entries.
  */
 class timesheet_favorite_portlet extends home_favorite_portlet
 {
-
 	/**
 	 * Construct the portlet
 	 *
@@ -39,7 +42,7 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 		);
 	}
 
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 		$ui = new timesheet_ui();
 
@@ -51,7 +54,7 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 		$date_filters['custom'] = 'custom';
 		$this->context['sel_options']['filter'] = $date_filters;
 		$this->context['sel_options']['filter2'] = array('No details','Details');
-		$read_grants = $ui->grant_list(EGW_ACL_READ);
+		$read_grants = $ui->grant_list(Acl::READ);
 		$this->context['sel_options'] += array(
 			'ts_owner'   => $read_grants,
 			'pm_id'      => array(lang('No project')),
@@ -84,7 +87,7 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 	 * output is handled by parent.
 	 *
 	 * @param type $id
-	 * @param etemplate_new $etemplate
+	 * @param Etemplate $etemplate
 	 */
 	public static function process($content = array())
 	{
@@ -109,7 +112,7 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
 				$msg = lang('You need to select some entries first!');
-				egw_json_response::get()->apply('egw.message',array($msg,'error'));
+				Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 			}
 			else
 			{
@@ -119,21 +122,20 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 				{
 					$msg .= lang('%1 timesheets(s) %2',$success,$action_msg);
 
-					egw_json_response::get()->apply('egw.message',array($msg,'success'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'success'));
 					foreach($content['nm']['selected'] as &$id)
 					{
 						$id = 'timesheet::'.$id;
 					}
 					// Directly request an update - this will get timesheet tab too
-					egw_json_response::get()->apply('egw.dataRefreshUIDs',array($content['nm']['selected']));
+					Api\Json\Response::get()->apply('egw.dataRefreshUIDs',array($content['nm']['selected']));
 				}
 				elseif(empty($msg))
 				{
 					$msg .= lang('%1 timesheets(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
-				egw_json_response::get()->apply('egw.message',array($msg,'error'));
+				Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 			}
 		}
-
 	}
  }

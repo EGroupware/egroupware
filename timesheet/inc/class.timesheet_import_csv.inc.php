@@ -11,12 +11,14 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
 
 /**
  * class import_csv for timesheet
  */
-class timesheet_import_csv implements importexport_iface_import_plugin  {
-
+class timesheet_import_csv implements importexport_iface_import_plugin
+{
 	private static $plugin_options = array(
 		'fieldsep', 		// char
 		'charset', 			// string
@@ -146,10 +148,10 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 			$_definition->plugin_options['record_owner'] : $this->user;
 
 		// Used to try to automatically match names to account IDs
-		$addressbook = new addressbook_so();
+		$addressbook = new Api\Contacts\Storage();
 
 		// For converting human-friendly lookups
-		$categories = new categories('timesheet');
+		$categories = new Api\Categories('timesheet');
 		$lookups = array(
 			'ts_status'	=> $this->bo->status_labels,
 //			'cat_id'	=> $categories->return_sorted_array(0,False,'','','',true)
@@ -177,11 +179,11 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 			$result = importexport_import_csv::convert($record, timesheet_egw_record::$types, 'timesheet', $lookups, $_definition->plugin_options['convert']);
 			if($result) $this->warnings[$import_csv->get_current_position()] = $result;
 
-			// Automatically handle text categories without explicit translation
+			// Automatically handle text Api\Categories without explicit Api\Translation
 			foreach(array('ts_status','cat_id') as $field) {
 				if(!is_numeric($record[$field])) {
 					$translate_key = 'translate'.(substr($field,0,2) == 'ts' ? substr($field,2) : '_cat_id');
-					if($key = array_search($record[$field], $lookups[$field])) {
+					if(($key = array_search($record[$field], $lookups[$field]))) {
 						$record[$field] = $key;
 					} elseif(array_key_exists($translate_key, $_definition->plugin_options)) {
 						$t_field = $_definition->plugin_options[$translate_key];
@@ -212,11 +214,11 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 											'parent' => $parent,
 											'admin'  => false
 										);
-										config::save_value('status_labels',$this->bo->status_labels_config,TIMESHEET_APP);
+										Api\Config::save_value('status_labels',$this->bo->status_labels_config,TIMESHEET_APP);
 										$lookups[$field][$id] = $name;
 										$record[$field] = $id;
 									}
-								} elseif($key = array_search($t_field, $lookups[$field])) {
+								} elseif(($key = array_search($t_field, $lookups[$field]))) {
 									$record[$field] = $key;
 								} else {
 									$record[$field] = $t_field;
@@ -230,13 +232,13 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 			// Set creator, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv'] && $record['ts_owner']) {
 				if(!is_numeric($record['ts_owner'])) {
-					// Automatically handle text owner without explicit translation
+					// Automatically handle text owner without explicit Api\Translation
 					$new_owner = importexport_helper_functions::account_name2id($record['ts_owner']);
 					if($new_owner == '') {
 						$this->errors[$import_csv->get_current_position()] = lang(
 							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
 							$record['ts_owner'],
-							common::grab_owner_name($_definition->plugin_options['record_owner']),
+							Api\Accounts::username($_definition->plugin_options['record_owner']),
 							lang($this->bo->field2label['ts_owner'])
 						);
 						$record['ts_owner'] = $_definition->plugin_options['record_owner'];
@@ -253,13 +255,13 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 				if($record[$field] && !is_numeric($record[$field])) {
 					// Try an automatic conversion
 					$account_id = importexport_helper_functions::account_name2id($record[$field]);
-					if($account_id && strtoupper(common::grab_owner_name($account_id)) == strtoupper($record[$field])) {
+					if($account_id && strtoupper(Api\Accounts::username($account_id)) == strtoupper($record[$field])) {
 						$record[$field] = $account_id;
 					} else {
 						$this->errors[$import_csv->get_current_position()] = lang(
 							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
 							$record[$field],
-							common::grab_owner_name($_definition->plugin_options['record_owner']),
+							Api\Accounts::username($_definition->plugin_options['record_owner']),
 							$this->bo->field2label[$field] ? lang($this->bo->field2label[$field]) : $field
 						);
 					}
@@ -348,9 +350,9 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 
 				// Clear old link, if different
 				if ($_data['ts_id'] && array_key_exists('pm_id', $_data) && $_data['pm_id'] != $old['pm_id']) {
-					egw_link::unlink2(0,TIMESHEET_APP,$_data['ts_id'],0,'projectmanager',$old['pm_id']);
+					Link::unlink2(0,TIMESHEET_APP,$_data['ts_id'],0,'projectmanager',$old['pm_id']);
 				}
-				
+
 				// Fall through
 			case 'insert' :
 				if ( $this->dry_run ) {
@@ -363,7 +365,7 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 
 					// Set projectmanager link
 					if ($_data['pm_id']) {
-						egw_link::link(TIMESHEET_APP,$_data['ts_id'],'projectmanager',$_data['pm_id']);
+						Link::link(TIMESHEET_APP,$_data['ts_id'],'projectmanager',$_data['pm_id']);
 					}
 
 					if($result) {
@@ -378,7 +380,7 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 					break;
 				}
 			default:
-				throw new egw_exception('Unsupported action');
+				throw new Api\Exception('Unsupported action');
 		}
 
 		// Process some additional fields
@@ -397,7 +399,7 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 				$id = $_data[$field];
 			}
 			if ($app && $app_id) {
-				$link_id = egw_link::link('timesheet',$id,$app,$app_id);
+				$link_id = Link::link('timesheet',$id,$app,$app_id);
 			}
 		}
 		return $result;

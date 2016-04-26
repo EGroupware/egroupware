@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 class timesheet_wizard_export_csv extends importexport_wizard_basic_export_csv
 {
 	public function __construct() {
@@ -21,7 +23,7 @@ class timesheet_wizard_export_csv extends importexport_wizard_basic_export_csv
 
 		// Custom fields
 		unset($this->export_fields['customfields']);
-		$custom = config::get_customfields('timesheet', true);
+		$custom = Api\Storage\Customfields::get('timesheet', true);
 		foreach($custom as $name => $data) {
 			$this->export_fields['#'.$name] = $data['label'];
 		}

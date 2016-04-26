@@ -5,10 +5,14 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
 
 if (!defined('TIMESHEET_APP'))
 {
@@ -19,9 +23,9 @@ if (!defined('TIMESHEET_APP'))
 /**
  * Business object of the TimeSheet
  *
- * Uses eTemplate's so_sql as storage object (Table: egw_timesheet).
+ * Uses eTemplate's Api\Storage as storage object (Table: egw_timesheet).
  */
-class timesheet_bo extends so_sql_cf
+class timesheet_bo extends Api\Storage
 {
 	/**
 	 * Flag for timesheets deleted, but preserved
@@ -29,7 +33,7 @@ class timesheet_bo extends so_sql_cf
 	const DELETED_STATUS = -1;
 
 	/**
-	 * Timesheets config data
+	 * Timesheets Api\Config data
 	 *
 	 * @var array
 	 */
@@ -164,7 +168,7 @@ class timesheet_bo extends so_sql_cf
 		parent::__construct(TIMESHEET_APP,'egw_timesheet',self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
 
 		if ($this->customfields) $this->columns_to_search[] = self::EXTRA_TABLE.'.ts_extra_value';
-		$this->config_data = config::read(TIMESHEET_APP);
+		$this->config_data = Api\Config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
 
 		// Load & process statuses
@@ -220,7 +224,7 @@ class timesheet_bo extends so_sql_cf
 		$this->status_labels = array();
 		$this->make_status_labels($tree, $this->status_labels);
 
-		// Sort config based on tree
+		// Sort Api\Config based on tree
 		$sorted = array();
 		foreach($this->status_labels as $status_id => $label)
 		{
@@ -286,7 +290,7 @@ class timesheet_bo extends so_sql_cf
 		{
 			if ($grant & $required)
 			{
-				$result[$uid] = common::grab_owner_name($uid);
+				$result[$uid] = Api\Accounts::username($uid);
 			}
 		}
 		natcasesort($result);
@@ -297,7 +301,7 @@ class timesheet_bo extends so_sql_cf
 	/**
 	 * checks if the user has enough rights for a certain operation
 	 *
-	 * Rights are given via status config admin/noadmin
+	 * Rights are given via status Api\Config admin/noadmin
 	 *
 	 * @param array|int $data =null use $this->data or $this->data['ts_id'] (to fetch the data)
 	 * @param int $user =null for which user to check, default current user
@@ -331,9 +335,9 @@ class timesheet_bo extends so_sql_cf
 	/**
 	 * checks if the user has enough rights for a certain operation
 	 *
-	 * Rights are given via owner grants or role based acl
+	 * Rights are given via owner grants or role based Acl
 	 *
-	 * @param int $required EGW_ACL_READ, EGW_ACL_WRITE, EGW_ACL_ADD, EGW_ACL_DELETE, EGW_ACL_BUDGET, EGW_ACL_EDIT_BUDGET
+	 * @param int $required Acl::READ, EGW_ACL_WRITE, Acl::ADD, Acl::DELETE, EGW_ACL_BUDGET, EGW_ACL_EDIT_BUDGET
 	 * @param array|int $data =null project or project-id to use, default the project in $this->data
 	 * @param int $user =null for which user to check, default current user
 	 * @return boolean true if the rights are ok, null if not found, false if no rights
@@ -363,7 +367,7 @@ class timesheet_bo extends so_sql_cf
 		}
 		$ret = $data && !!($grants[$data['ts_owner']] & $required);
 
-		if(($required & EGW_ACL_DELETE) && $this->config_data['history'] == 'history' &&
+		if(($required & Acl::DELETE) && $this->config_data['history'] == 'history' &&
 			$data['ts_status'] == self::DELETED_STATUS)
 		{
 			$ret = !!($GLOBALS['egw_info']['user']['apps']['admin']);
@@ -382,7 +386,7 @@ class timesheet_bo extends so_sql_cf
 	 */
 	function date_filter($name,&$start,&$end)
 	{
-		return egw_time::sql_filter($name, $start, $end, 'ts_start', $this->date_filters);
+		return Api\DateTime::sql_filter($name, $start, $end, 'ts_start', $this->date_filters);
 	}
 
 	/**
@@ -479,7 +483,7 @@ class timesheet_bo extends so_sql_cf
 			$only_summary && is_array($criteria) ? ($filter ? array_merge($criteria, (array)$filter) : $criteria) : $filter,
 			$only_summary ? '' : $join);
 		$this->summary = $this->summary[0];
-		$this->summary['max_modified'] = egw_time::server2user($this->summary['max_modified']);
+		$this->summary['max_modified'] = Api\DateTime::server2user($this->summary['max_modified']);
 
 		if ($only_summary) return $this->summary;
 
@@ -528,7 +532,7 @@ class timesheet_bo extends so_sql_cf
 	 * read a timesheet entry
 	 *
 	 * @param int $ts_id
-	 * @param boolean $ignore_acl =false should the acl be checked
+	 * @param boolean $ignore_acl =false should the Acl be checked
 	 * @return array|boolean array with timesheet entry, null if timesheet not found or false if no rights
 	 */
 	function read($ts_id,$ignore_acl=false)
@@ -538,7 +542,7 @@ class timesheet_bo extends so_sql_cf
 		{
 			return null;	// entry not found
 		}
-		if (!$ignore_acl && !($ret = $this->check_acl(EGW_ACL_READ)))
+		if (!$ignore_acl && !($ret = $this->check_acl(Acl::READ)))
 		{
 			return false;	// no read rights
 		}
@@ -552,14 +556,14 @@ class timesheet_bo extends so_sql_cf
 	 *
 	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
 	 * @param boolean $touch_modified =true should modification date+user be set, default yes
-	 * @param boolean $ignore_acl =false should the acl be checked, returns true if no edit-rigts
+	 * @param boolean $ignore_acl =false should the Acl be checked, returns true if no edit-rigts
 	 * @return int 0 on success and errno != 0 else
 	 */
 	function save($keys=null,$touch_modified=true,$ignore_acl=false)
 	{
 		if ($keys) $this->data_merge($keys);
 
-		if (!$ignore_acl && $this->data['ts_id'] && !$this->check_acl(EGW_ACL_EDIT))
+		if (!$ignore_acl && $this->data['ts_id'] && !$this->check_acl(Acl::EDIT))
 		{
 			return true;
 		}
@@ -592,7 +596,7 @@ class timesheet_bo extends so_sql_cf
 		// Check for restore of deleted contact, restore held links
 		if($old && $old['ts_status'] == self::DELETED_STATUS && $new['ts_status'] != self::DELETED_STATUS)
 		{
-			egw_link::restore(TIMESHEET_APP, $new['ts_id']);
+			Link::restore(TIMESHEET_APP, $new['ts_id']);
 		}
 
 		if (!is_object($this->tracking))
@@ -608,7 +612,7 @@ class timesheet_bo extends so_sql_cf
 		if (!($err = parent::save()))
 		{
 			// notify the link-class about the update, as other apps may be subscribt to it
-			egw_link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
+			Link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 		}
 
 		return $err;
@@ -618,7 +622,7 @@ class timesheet_bo extends so_sql_cf
 	 * deletes a timesheet entry identified by $keys or the loaded one, reimplemented to notify the link class (unlink)
 	 *
 	 * @param array $keys if given array with col => value pairs to characterise the rows to delete
-	 * @param boolean $ignore_acl =false should the acl be checked, returns false if no delete-rigts
+	 * @param boolean $ignore_acl =false should the Acl be checked, returns false if no delete-rigts
 	 * @return int affected rows, should be 1 if ok, 0 if an error
 	 */
 	function delete($keys=null,$ignore_acl=false)
@@ -629,7 +633,7 @@ class timesheet_bo extends so_sql_cf
 		}
 		$ts_id = is_null($keys) ? $this->data['ts_id'] : $keys['ts_id'];
 
-		if (!$ignore_acl && !$this->check_acl(EGW_ACL_DELETE,$ts_id) || !($old = $this->read($ts_id)))
+		if (!$ignore_acl && !$this->check_acl(Acl::DELETE,$ts_id) || !($old = $this->read($ts_id)))
 		{
 			return false;
 		}
@@ -640,12 +644,12 @@ class timesheet_bo extends so_sql_cf
 			$delete = $old;
 			$delete['ts_status'] = self::DELETED_STATUS;
 			$ret = !($this->save($delete));
-			egw_link::unlink(0,TIMESHEET_APP,$ts_id,'','','',true);
+			Link::unlink(0,TIMESHEET_APP,$ts_id,'','','',true);
 		}
 		elseif (($ret = parent::delete($keys)) && $ts_id)
 		{
 			// delete all links to timesheet entry $ts_id
-			egw_link::unlink(0,TIMESHEET_APP,$ts_id);
+			Link::unlink(0,TIMESHEET_APP,$ts_id);
 		}
 		return $ret;
 	}
@@ -664,7 +668,7 @@ class timesheet_bo extends so_sql_cf
 
 		if (!$new_owner)
 		{
-			egw_link::unlink(0, TIMESHEET_APP, '', $account_id);
+			Link::unlink(0, TIMESHEET_APP, '', $account_id);
 			parent::delete(array('ts_owner' => $account_id));
 		}
 		else
@@ -693,7 +697,7 @@ class timesheet_bo extends so_sql_cf
 		}
 		$ts_id = is_null($keys) ? $this->data['ts_id'] : $keys['ts_id'];
 
-		if (!$this->check_acl(EGW_ACL_EDIT,$ts_id) || !$this->read($ts_id,true))
+		if (!$this->check_acl(Acl::EDIT,$ts_id) || !$this->read($ts_id,true))
 		{
 			return false;
 		}
@@ -768,7 +772,7 @@ class timesheet_bo extends so_sql_cf
 				$titles[$entry['ts_id']] = $this->link_title($entry);
 			}
 		}
-		// we assume all not returned entries are not readable by the user, as we notify egw_link about all deletes
+		// we assume all not returned entries are not readable by the user, as we notify Link about all deletes
 		foreach($ids as $id)
 		{
 			if (!isset($titles[$id]))
@@ -809,7 +813,7 @@ class timesheet_bo extends so_sql_cf
 	 * Check access to the file store
 	 *
 	 * @param int|array $id id of entry or entry array
-	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param int $check Acl::READ for read and Acl::EDIT for write or delete access
 	 * @param string $rel_path =null currently not used in InfoLog
 	 * @param int $user =null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
@@ -858,7 +862,7 @@ class timesheet_bo extends so_sql_cf
 		{
 			$pm_ids = ExecMethod('projectmanager.projectmanager_bo.children',$pm_id);
 			$pm_ids[] = $pm_id;
-			$links = solink::get_links('projectmanager',$pm_ids,'timesheet');	// solink::get_links not egw_links::get_links!
+			$links = Link\Storage::get_links('projectmanager',$pm_ids,'timesheet');	// Link\Storage::get_links not egw_links::get_links!
 			if ($links)
 			{
 				$links = array_unique(call_user_func_array('array_merge',$links));
@@ -884,7 +888,7 @@ class timesheet_bo extends so_sql_cf
 
 		if ($data['target_app'] == 'projectmanager' && $this->read($data['id']))
 		{
-			$old_title = isset($data['data']) ? $data['data'][egw_link::OLD_LINK_TITLE] : null;
+			$old_title = isset($data['data']) ? $data['data'][Link::OLD_LINK_TITLE] : null;
 			switch($data['type'])
 			{
 				case 'link':
@@ -893,7 +897,7 @@ class timesheet_bo extends so_sql_cf
 						isset($old_title) && $this->data['ts_project'] === $old_title)
 					{
 						$pm_id = $data['target_id'];
-						$update['ts_project'] = egw_link::title('projectmanager', $pm_id);
+						$update['ts_project'] = Link::title('projectmanager', $pm_id);
 						if (isset($old_title) && $this->data['ts_title'] === $old_title)
 						{
 							$update['ts_title'] = $update['ts_project'];
@@ -914,7 +918,7 @@ class timesheet_bo extends so_sql_cf
 			{
 				$this->update($update);
 				// do NOT notify about title-change, as this will lead to an infinit loop!
-				// egw_link::notify_update(TIMESHEET_APP, $this->data['ts_id'],$this->data);
+				// Link::notify_update(TIMESHEET_APP, $this->data['ts_id'],$this->data);
 				//error_log(__METHOD__."() setting pm_id=$pm_id --> ".array2string($update));
 			}
 		}
@@ -941,10 +945,10 @@ class timesheet_bo extends so_sql_cf
 		if (!isset($data['pm_id']) && $data['ts_id'])
 		{
 			$first_pm_id = null;
-			foreach(egw_link::get_links('timesheet', $data['ts_id'], 'projectmanager') as $pm_id)
+			foreach(Link::get_links('timesheet', $data['ts_id'], 'projectmanager') as $pm_id)
 			{
 				if (!isset($first_pm_id)) $first_pm_id = $pm_id;
-				if ($data['ts_project'] == egw_link::title('projectmanager', $pm_id))
+				if ($data['ts_project'] == Link::title('projectmanager', $pm_id))
 				{
 					$data['pm_id'] = $pm_id;
 					$data['ts_project_blur'] = $data['ts_project'];
@@ -954,7 +958,7 @@ class timesheet_bo extends so_sql_cf
 			}
 			if (!isset($data['pm_id']) && isset($first_pm_id)) $data['pm_id'] = $first_pm_id;
 		}
-		elseif ($data['ts_id'] && $data['pm_id'] && egw_link::title('projectmanager', $data['pm_id']) == $data['ts_project'])
+		elseif ($data['ts_id'] && $data['pm_id'] && Link::title('projectmanager', $data['pm_id']) == $data['ts_project'])
 		{
 			$data['ts_project_blur'] = $data['ts_project'];
 			$data['ts_project'] = '';
@@ -980,7 +984,7 @@ class timesheet_bo extends so_sql_cf
 		// allways store ts_project to be able to search for it, even if no custom project is set
 		if (empty($data['ts_project']) && !is_null($data['ts_project']))
 		{
-			$data['ts_project'] = $data['pm_id'] ? egw_link::title('projectmanager', $data['pm_id']) : '';
+			$data['ts_project'] = $data['pm_id'] ? Link::title('projectmanager', $data['pm_id']) : '';
 		}
 		return parent::data2db($intern ? null : $data);	// important to use null, if $intern!
 	}

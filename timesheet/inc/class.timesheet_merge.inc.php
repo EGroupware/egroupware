@@ -6,16 +6,19 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Nathan Gray
  * @package timesheet
- * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright 2011 Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+
 /**
  * Timesheet - document merge object
  */
-class timesheet_merge extends bo_merge
+class timesheet_merge extends Api\Storage\Merge
 {
 	/**
 	 * Functions that can be called via menuaction
@@ -50,8 +53,8 @@ class timesheet_merge extends bo_merge
 	{
 		parent::__construct();
 
-		// switch of handling of html formated content, if html is not used
-		$this->parse_html_styles = egw_customfields::use_html('timesheet');
+		// switch of handling of Api\Html formated content, if Api\Html is not used
+		$this->parse_html_styles = Api\Storage\Customfields::use_html('timesheet');
 
 		$this->bo = new timesheet_bo();
 		$this->date_fields += array(
@@ -102,7 +105,7 @@ class timesheet_merge extends bo_merge
 		$info = array();
 
 		// Get project manager ID
-		$links = solink::get_links('timesheet',$id,'projectmanager');
+		$links = Link\Storage::get_links('timesheet',$id,'projectmanager');
 		if($links)
 		{
 			$record->pm_id = current($links);
@@ -152,14 +155,14 @@ class timesheet_merge extends bo_merge
 	}
 
 	/**
-	 * Generate table with replacements for the preferences
+	 * Generate table with replacements for the Api\Preferences
 	 *
 	 */
 	public function show_replacements()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet').' - '.lang('Replacements for inserting entries into documents');
 		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
-		common::egw_header();
+		$GLOBALS['egw']->framework->header();
 
 		echo "<table width='90%' align='center'>\n";
 		echo '<tr><td colspan="4"><h3>'.lang('Timesheet fields:')."</h3></td></tr>";
@@ -223,6 +226,6 @@ class timesheet_merge extends bo_merge
 
 		echo "</table>\n";
 
-		common::egw_footer();
+		$GLOBALS['egw']->framework->footer();
 	}
 }

@@ -10,6 +10,12 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+
 if (!defined('TIMESHEET_APP'))
 {
 	define('TIMESHEET_APP','timesheet');
@@ -74,7 +80,7 @@ class timesheet_hooks
 	 */
 	static function cumulate($param)
 	{
-		$links = egw_link::get_3links(TIMESHEET_APP,'projectmanager',$param['pm_id']);
+		$links = Link::get_3links(TIMESHEET_APP,'projectmanager',$param['pm_id']);
 
 		$rows = array();
 		foreach($links as $link)
@@ -93,7 +99,7 @@ class timesheet_hooks
 	}
 
 	/**
-	 * hooks to build projectmanager's sidebox-menu plus the admin and preferences sections
+	 * hooks to build projectmanager's sidebox-menu plus the admin and Api\Preferences sections
 	 *
 	 * @param string/array $args hook args
 	 */
@@ -106,32 +112,32 @@ class timesheet_hooks
 		if ($location == 'sidebox_menu')
 		{
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname, lang('Favorites'), egw_framework::favorite_list($appname));
+			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname));
 
 			$file = array(
-				'Timesheet list' => egw::link('/index.php',array(
+				'Timesheet list' => Egw::link('/index.php',array(
 					'menuaction' => 'timesheet.timesheet_ui.index',
 					'ajax' => 'true')),
 				array(
-					'text' => lang('Add %1',lang(egw_link::get_registry($appname, 'entry'))),
+					'text' => lang('Add %1',lang(Link::get_registry($appname, 'entry'))),
 					'no_lang' => true,
 					'link' => "javascript:egw.open('','$appname','add')"
 				),
 			);
-			$file['Placeholders'] = egw::link('/index.php','menuaction=timesheet.timesheet_merge.show_replacements');
+			$file['Placeholders'] = Egw::link('/index.php','menuaction=timesheet.timesheet_merge.show_replacements');
 			display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Site Configuration' => egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname,'&ajax=true'),
-				'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.index&appname='.$appname.'&use_private=1'),
-				'Global Categories'  => egw::link('/index.php',array(
+				'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname,'&ajax=true'),
+				'Custom fields' => Egw::link('/index.php','menuaction=admin.customfields.index&appname='.$appname.'&use_private=1'),
+				'Global Categories'  => Egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
 					'global_cats'=> True)),
-				'Edit Status' => egw::link('/index.php','menuaction=timesheet.timesheet_ui.editstatus'),
+				'Edit Status' => Egw::link('/index.php','menuaction=timesheet.timesheet_ui.editstatus'),
 			);
 			if ($location == 'admin')
 			{
@@ -145,7 +151,7 @@ class timesheet_hooks
 	}
 
 	/**
-	 * populates $GLOBALS['settings'] for the preferences
+	 * populates $GLOBALS['settings'] for the Api\Preferences
 	 */
 	static function settings()
 	{
@@ -174,7 +180,7 @@ class timesheet_hooks
 				'name'   => 'default_document',
 				'help'   => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.',lang('timesheet')).' '.
 					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'ts_title').' '.
-					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+					lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -186,7 +192,7 @@ class timesheet_hooks
 				'name'   => 'document_dir',
 				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.', lang('timesheet')).' '.
 					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','ts_title').' '.
-					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+					lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -248,9 +254,9 @@ class timesheet_hooks
 		unset($params);	// not used, but required by function signature
 
 		return array(
-			acl::READ    => 'read',
-			acl::EDIT    => 'edit',
-			acl::DELETE  => 'delete',
+			Acl::READ    => 'read',
+			Acl::EDIT    => 'edit',
+			Acl::DELETE  => 'delete',
 		);
 	}
 

@@ -5,15 +5,17 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package tracker
- * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-stylite.de>
+ * @copyright (c) 2006-16 by Ralf Becker <RalfBecker-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id: class.timesheet_tracking.inc.php 26515 2009-03-24 11:50:16Z leithoff $
  */
 
+use EGroupware\Api;
+
 /**
  * Timesheet - tracking object for the tracker
  */
-class timesheet_tracking extends bo_tracking
+class timesheet_tracking extends Api\Storage\Tracking
 {
 	/**
 	 * Application we are tracking (required!)
@@ -62,7 +64,7 @@ class timesheet_tracking extends bo_tracking
 	/**
 	 * Constructor
 	 *
-	 * @param timesheet_bo $botimesheet
+	 * @param timesheet_bo $bo
 	 * @return timesheet_tracking
 	 */
 	function __construct(timesheet_bo $bo)
@@ -81,12 +83,12 @@ class timesheet_tracking extends bo_tracking
 	/**
 	 * Get a notification-config value
 	 *
-	 * @param string $what
+	 * @param string $name
 	 * 	- 'copy' array of email addresses notifications should be copied too, can depend on $data
 	 *  - 'lang' string lang code for copy mail
 	 *  - 'sender' string send email address
 	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param array $old =null old/last state of the entry or null for a new entry
 	 * @return mixed
 	 */
 	function get_config($name,$data,$old=null)
@@ -99,7 +101,7 @@ class timesheet_tracking extends bo_tracking
 	}
 
 	/**
-	 * Get the subject for a given entry, reimplementation for get_subject in bo_tracking
+	 * Get the subject for a given entry, reimplementation for get_subject in Api\Storage\Tracking
 	 *
 	 * Default implementation uses the link-title
 	 *
@@ -124,11 +126,11 @@ class timesheet_tracking extends bo_tracking
 		if (!$data['ts_modified'] || !$old)
 		{
 			return lang('New timesheet submitted by %1 at %2',
-				common::grab_owner_name($data['ts_creator']),
+				Api\Accounts::username($data['ts_creator']),
 				$this->datetime($data['ts_created']));
 		}
 		return lang('Timesheet modified by %1 at %2',
-			$data['ts_modifier'] ? common::grab_owner_name($data['ts_modifier']) : lang('Timesheet'),
+			$data['ts_modifier'] ? Api\Accounts::username($data['ts_modifier']) : lang('Timesheet'),
 			$this->datetime($data['ts_modified']));
 	}
 }

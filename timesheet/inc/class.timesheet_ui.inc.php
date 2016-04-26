@@ -10,6 +10,12 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * User interface object of the TimeSheet
  */
@@ -54,7 +60,7 @@ class timesheet_ui extends timesheet_bo
 
 	function edit($content = null,$view = false)
 	{
-		$etpl = new etemplate_new('timesheet.edit');
+		$etpl = new Etemplate('timesheet.edit');
 		if (!is_array($content))
 		{
 			if ($_GET['msg']) $msg = strip_tags($_GET['msg']);
@@ -63,9 +69,9 @@ class timesheet_ui extends timesheet_bo
 			{
 				if (!$this->read((int)$_GET['ts_id']))
 				{
-					egw_framework::window_close(lang('Permission denied!!!'));
+					Framework::window_close(lang('Permission denied!!!'));
 				}
-				if (!$view && !$this->check_acl(EGW_ACL_EDIT))
+				if (!$view && !$this->check_acl(Acl::EDIT))
 				{
 					$view = true;
 				}
@@ -75,7 +81,7 @@ class timesheet_ui extends timesheet_bo
 				$this->data = array(
 					'ts_start' => $this->today,
 					'start_time' => '',	// force empty start-time
-					'end_time' => egw_time::to($this->now,'H:i'),
+					'end_time' => Api\DateTime::to($this->now,'H:i'),
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id'   => (int) $_REQUEST['cat_id'],
 					'ts_status'=> $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
@@ -91,7 +97,7 @@ class timesheet_ui extends timesheet_bo
 				$only_admin_edit = true;
 				$msg = lang('only Admin can edit this status');
 			}
-			$this->data['ts_project_blur'] = $this->data['pm_id'] ? egw_link::title('projectmanager', $this->data['pm_id']) : '';
+			$this->data['ts_project_blur'] = $this->data['pm_id'] ? Link::title('projectmanager', $this->data['pm_id']) : '';
 		}
 		else
 		{
@@ -113,14 +119,14 @@ class timesheet_ui extends timesheet_bo
 			if (isset($content['start_time']))		// start-time specified
 			{
 				//$content['ts_start'] += $content['start_time'];
-				$start = new egw_time($content['ts_start']);
+				$start = new Api\DateTime($content['ts_start']);
 				$start_time = explode(':',$content['start_time']);
 				$start->setTime($start_time[0],$start_time[1]);
 				$content['ts_start'] = $start->format('ts');
 			}
 			if (isset($content['end_time']))		// end-time specified
 			{
-				$end = new egw_time($content['ts_start']);
+				$end = new Api\DateTime($content['ts_start']);
 				$end_time = explode(':',$content['end_time']);
 				$end->setTime($end_time[0],$end_time[1]);
 			}
@@ -137,14 +143,14 @@ class timesheet_ui extends timesheet_bo
 			elseif ($content['ts_duration'] && $end)	// no start, calculate from end and duration
 			{
 				$content['ts_start'] = $end->format('ts') - 60*$content['ts_duration'];
-				//echo "<p>end_time=$content[end_time], duration=$content[ts_duration] --> ts_start=$content[ts_start]=".egw_time::to($content['ts_start'])."</p>\n";
+				//echo "<p>end_time=$content[end_time], duration=$content[ts_duration] --> ts_start=$content[ts_start]=".Api\DateTime::to($content['ts_start'])."</p>\n";
 			}
 			if ($content['ts_duration'] > 0) unset($content['end_time']);
 			// now we only deal with start (date+time) and duration
 			list($button) = @each($content['button']);
 			$view = $content['view'];
 			$referer = $content['referer'];
-			$content['ts_project_blur'] = $content['pm_id'] ? egw_link::title('projectmanager', $content['pm_id']) : '';
+			$content['ts_project_blur'] = $content['pm_id'] ? Link::title('projectmanager', $content['pm_id']) : '';
 			$this->data = $content;
 			foreach(array('button','view','referer','tabs','start_time') as $key)
 			{
@@ -153,7 +159,7 @@ class timesheet_ui extends timesheet_bo
 			switch($button)
 			{
 				case 'edit':
-					if ($this->check_acl(EGW_ACL_EDIT) && !$only_admin_edit) $view = false;
+					if ($this->check_acl(Acl::EDIT) && !$only_admin_edit) $view = false;
 					break;
 
 				case 'undelete':
@@ -212,11 +218,11 @@ class timesheet_ui extends timesheet_bo
 						// update links accordingly
 						if ($this->data['pm_id'])
 						{
-							egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],'projectmanager',$this->data['pm_id']);
+							Link::link(TIMESHEET_APP,$content['link_to']['to_id'],'projectmanager',$this->data['pm_id']);
 						}
 						if ($this->data['old_pm_id'])
 						{
-							egw_link::unlink2(0,TIMESHEET_APP,$content['link_to']['to_id'],0,'projectmanager',$this->data['old_pm_id']);
+							Link::unlink2(0,TIMESHEET_APP,$content['link_to']['to_id'],0,'projectmanager',$this->data['old_pm_id']);
 							unset($this->data['old_pm_id']);
 						}
 					}
@@ -228,7 +234,7 @@ class timesheet_ui extends timesheet_bo
 							if ($data['app'] == 'projectmanager')
 							{
 								$this->data['pm_id'] = $data['id'];
-								$this->data['ts_project_blur'] = egw_link::title('projectmanager', $data['id']);
+								$this->data['ts_project_blur'] = Link::title('projectmanager', $data['id']);
 								break;
 							}
 						}
@@ -244,10 +250,10 @@ class timesheet_ui extends timesheet_bo
 						$msg = lang('Entry saved');
 						if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 						{
-							egw_link::link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
+							Link::link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
 						}
 					}
-					egw_framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'edit' : 'add');
+					Framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'edit' : 'add');
 					if ($button == 'apply') break;
 					if ($button == 'save_new')
 					{
@@ -256,9 +262,9 @@ class timesheet_ui extends timesheet_bo
 						if (!is_array($content['link_to']['to_id']))	// set links again, so new entry gets the same links as the existing one
 						{
 							$content['link_to']['to_id'] = 0;
-							foreach(egw_link::get_links(TIMESHEET_APP,$this->data['ts_id'],'!'.egw_link::VFS_APPNAME) as $link)
+							foreach(Link::get_links(TIMESHEET_APP,$this->data['ts_id'],'!'.Link::VFS_APPNAME) as $link)
 							{
-								egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
+								Link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
 							}
 						}
 						// create a new entry
@@ -278,7 +284,7 @@ class timesheet_ui extends timesheet_bo
 						if ($this->delete())
 						{
 							$msg = lang('Entry deleted');
-							egw_framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], 'delete');
+							Framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], 'delete');
 						}
 						else
 						{
@@ -288,7 +294,7 @@ class timesheet_ui extends timesheet_bo
 					}
 					// fall-through for save
 				case 'cancel':
-					egw_framework::window_close();
+					Framework::window_close();
 			}
 		}
 		$preserv = $this->data + array(
@@ -329,13 +335,13 @@ class timesheet_ui extends timesheet_bo
 							if(!$n)
 							{
 								// get title from first linked app
-								$preserv['ts_title_blur'] = egw_link::title($link_app,$link_id);
+								$preserv['ts_title_blur'] = Link::title($link_app,$link_id);
 								// ask first linked app via "timesheet_set" hook, for further data to set, incl. links
-								if (($set = $GLOBALS['egw']->hooks->single(array('location'=>'timesheet_set','id'=>$link_id),$link_app)))
+								if (($set = Api\Hooks::single(array('location'=>'timesheet_set','id'=>$link_id),$link_app)))
 								{
 									foreach((array)$set['link_app'] as $i => $l_app)
 									{
-										if (($l_id=$set['link_id'][$i])) egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$l_app,$l_id);
+										if (($l_id=$set['link_id'][$i])) Link::link(TIMESHEET_APP,$content['link_to']['to_id'],$l_app,$l_id);
 										if ($l_app == 'projectmanager') $links[] = $l_id;
 									}
 									unset($set['link_app']);
@@ -346,13 +352,13 @@ class timesheet_ui extends timesheet_bo
 							}
 							break;
 					}
-					egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
+					Link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
 				}
 			}
 		}
 		elseif ($this->data['ts_id'])
 		{
-			$links = egw_link::get_links(TIMESHEET_APP,$this->data['ts_id'],'projectmanager');
+			$links = Link::get_links(TIMESHEET_APP,$this->data['ts_id'],'projectmanager');
 		}
 		// make all linked projects availible for the pm-pricelist widget, to be able to choose prices from all
 		$content['all_pm_ids'] = array_values($links);
@@ -385,9 +391,9 @@ class timesheet_ui extends timesheet_bo
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $content['ts_project_blur'];
 		$readonlys = array(
-			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE) || $this->data['ts_status'] == self::DELETED_STATUS,
+			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(Acl::DELETE) || $this->data['ts_status'] == self::DELETED_STATUS,
 			'button[undelete]' => $this->data['ts_status'] != self::DELETED_STATUS,
-			'button[edit]'     => !$view || !$this->check_acl(EGW_ACL_EDIT),
+			'button[edit]'     => !$view || !$this->check_acl(Acl::EDIT),
 			'button[save]'     => $view,
 			'button[save_new]' => $view,
 			'button[apply]'    => $view,
@@ -401,7 +407,7 @@ class timesheet_ui extends timesheet_bo
 			}
 			$readonlys['start_time'] = $readonlys['end_time'] = true;
 		}
-		$edit_grants = $this->grant_list(EGW_ACL_EDIT);
+		$edit_grants = $this->grant_list(Acl::EDIT);
 		if (count($edit_grants) == 1)
 		{
 			$readonlys['ts_owner'] = true;
@@ -409,7 +415,7 @@ class timesheet_ui extends timesheet_bo
 		// in view mode, we need to add the owner, if it does not exist, otherwise it's displayed empty
 		if ($view && $content['ts_owner'] && !isset($edit_grants[$content['ts_owner']]))
 		{
-			$edit_grants[$content['ts_owner']] = common::grab_owner_name($content['ts_owner']);
+			$edit_grants[$content['ts_owner']] = Api\Accounts::username($content['ts_owner']);
 		}
 		$sel_options['ts_owner']  = $edit_grants;
 		$sel_options['ts_status']  = $this->status_labels;
@@ -454,11 +460,11 @@ class timesheet_ui extends timesheet_bo
 	/**
 	 * query projects for nextmatch in the projects-list
 	 *
-	 * reimplemented from so_sql to disable action-buttons based on the acl and make some modification on the data
+	 * reimplemented from Api\Storage\Base to disable action-buttons based on the Acl and make some modification on the data
 	 *
 	 * @param array &$query
 	 * @param array &$rows returned rows/cups
-	 * @param array &$readonlys eg. to disable buttons based on acl
+	 * @param array &$readonlys eg. to disable buttons based on Acl
 	 * @param boolean $id_only if true only return (via $rows) an array of contact-ids, dont save state to session
 	 * @return int total number of contacts matching the selection
 	 */
@@ -528,7 +534,7 @@ class timesheet_ui extends timesheet_bo
 		}
 		if ((string)$query['col_filter']['pm_id'] != '' && (string)$query['col_filter']['pm_id'] != '0')
 		{
-			//$query['col_filter']['ts_id'] = egw_link::get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
+			//$query['col_filter']['ts_id'] = Link::get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
 			$query['col_filter']['ts_id'] = $this->get_ts_links($query['col_filter']['pm_id']);
 			if (empty($query['col_filter']['ts_id'])) $query['col_filter']['ts_id'] = -1;
 			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
@@ -544,7 +550,7 @@ class timesheet_ui extends timesheet_bo
 		if ($query['col_filter']['linked'])
 		{
 			list($app,$id) = explode(':',$query['col_filter']['linked']);
-			if (!($links = egw_link::get_links($app,$id,'timesheet')))
+			if (!($links = Link::get_links($app,$id,'timesheet')))
 			{
 				$rows = array();	// no infologs linked to project --> no rows to return
 				return 0;
@@ -606,7 +612,7 @@ class timesheet_ui extends timesheet_bo
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet');
 		if ($query['col_filter']['ts_owner'])
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.common::grab_owner_name($query['col_filter']['ts_owner']);
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.Api\Accounts::username($query['col_filter']['ts_owner']);
 			#if ($GLOBALS['egw']->accounts->get_type($query['col_filter']['ts_owner']) == 'g') $GLOBALS['egw_info']['flags']['app_header'] .= ' '. lang("and its members");
 			#_debug_array($GLOBALS['egw']->accounts->members($query['col_filter']['ts_owner'],true));
 			if ($query['col_filter']['ts_owner']<0) $query['col_filter']['ts_owner'] = array_merge(array($query['col_filter']['ts_owner']),$GLOBALS['egw']->accounts->members($query['col_filter']['ts_owner'],true));
@@ -646,20 +652,20 @@ class timesheet_ui extends timesheet_bo
 			elseif ($query['startdate'])
 			{
 				$df = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
-				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . common::show_date($query['startdate']+12*60*60,$df,false);
+				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . Api\DateTime::to($query['startdate']+12*60*60, $df);
 				if ($start != $end)
 				{
-					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.common::show_date($query['enddate']+12*60*60,$df,false);
+					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.Api\DateTime::to($query['enddate']+12*60*60, $df);
 				}
 			}
 		}
 		// Update start / end dates for custom
 		if($query_in['filter'] != 'custom')
 		{
-			egw_json_response::get()->call(
+			Api\Json\Response::get()->call(
 				'app.timesheet.update_timespan',
-				egw_time::to($query['startdate'] ? $query['startdate'] : 'now' , egw_time::ET2),
-				$query['filter'] ? egw_time::to($query['enddate'], egw_time::ET2) : null
+				Api\DateTime::to($query['startdate'] ? $query['startdate'] : 'now' , Api\DateTime::ET2),
+				$query['filter'] ? Api\DateTime::to($query['enddate'], Api\DateTime::ET2) : null
 			);
 		}
 		$total = parent::get_rows($query,$rows,$readonlys);
@@ -675,7 +681,7 @@ class timesheet_ui extends timesheet_bo
 			return $this->total;	// no need to set other fields or $readonlys
 		}
 		$links = array();
-		$links3 = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true,'projectmanager');	// only check for pm links!
+		$links3 = Link::get_links_multiple(TIMESHEET_APP,$ids,true,'projectmanager');	// only check for pm links!
 		//as the full array is expected, we must supply the missing but needed (since expected further down) information
 		if (is_array($links3))
 		{
@@ -713,8 +719,7 @@ class timesheet_ui extends timesheet_bo
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
-						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.common::show_date($row['ts_start'],
-						$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
+						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.Api\DateTime::to($row['ts_start'], $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']));
 						$row['ts_id'] = 'sum-day-'.$row['ts_start'];
 						break;
 					case -1:	// week-sum
@@ -740,7 +745,7 @@ class timesheet_ui extends timesheet_bo
 			{
 				$row['ts_quantity'] = round($row['ts_quantity'], 2);
 			}
-			if (!$this->check_acl(EGW_ACL_EDIT,$row))
+			if (!$this->check_acl(Acl::EDIT,$row))
 			{
 				$row['class'] .= ' rowNoEdit ';
 			}
@@ -748,7 +753,7 @@ class timesheet_ui extends timesheet_bo
 			{
 				$row['class'] .= ' rowNoEdit ';
 			}
-			if (!$this->check_acl(EGW_ACL_DELETE,$row))
+			if (!$this->check_acl(Acl::DELETE,$row))
 			{
 				$row['class'] .= ' rowNoDelete ';
 			}
@@ -821,7 +826,7 @@ class timesheet_ui extends timesheet_bo
 	 */
 	function index($content = null,$msg='')
 	{
-		$etpl = new etemplate_new('timesheet.index');
+		$etpl = new Etemplate('timesheet.index');
 
 		if ($_GET['msg']) $msg = $_GET['msg'];
 		if ($content['nm']['rows']['delete'])
@@ -903,7 +908,7 @@ class timesheet_ui extends timesheet_bo
 		{
 			$content['nm']['search'] = $_GET['search'];
 		}
-		$read_grants = $this->grant_list(EGW_ACL_READ);
+		$read_grants = $this->grant_list(Acl::READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
 		if ($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows']) $content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
 		$sel_options = array(
@@ -946,10 +951,10 @@ class timesheet_ui extends timesheet_bo
 				'default' => true,
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=timesheet.timesheet_ui.edit&ts_id=$id',
-				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+				'popup' => Link::get_registry('timesheet', 'add_popup'),
 				'group' => $group=1,
 				'disableClass' => 'th',
-				'onExecute' => html::$ua_mobile?'javaScript:app.timesheet.viewEntry':''
+				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.timesheet.viewEntry':''
 			),
 /*
 			'view' => array(
@@ -957,14 +962,14 @@ class timesheet_ui extends timesheet_bo
 				'default' => true,
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=timesheet.timesheet_ui.view&ts_id=$id',
-				'popup' => egw_link::get_registry('timesheet', 'view_popup'),
+				'popup' => Link::get_registry('timesheet', 'view_popup'),
 				'group' => $group=1,
 			),
 			'edit' => array(
 				'caption' => 'Edit',
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=timesheet.timesheet_ui.edit&ts_id=$id',
-				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+				'popup' => Link::get_registry('timesheet', 'add_popup'),
 				'group' => $group,
 				'disableClass' => 'rowNoEdit',
 			),
@@ -972,10 +977,10 @@ class timesheet_ui extends timesheet_bo
 			'add' => array(
 				'caption' => 'Add',
 				'url' => 'menuaction=timesheet.timesheet_ui.edit',
-				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+				'popup' => Link::get_registry('timesheet', 'add_popup'),
 				'group' => $group,
 			),
-			'cat' => etemplate_widget_nextmatch::category_action(
+			'cat' => Etemplate\Widget\Nextmatch::category_action(
 				'timesheet',++$group,'Change category','cat_'
 			),
 			'status' => array(
@@ -988,7 +993,7 @@ class timesheet_ui extends timesheet_bo
 			),
 		);
 
-		// Other applications
+		// Other Api\Applications
 		$group++;
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
@@ -1057,7 +1062,7 @@ class timesheet_ui extends timesheet_bo
 		if ($use_all)
 		{
 			// get the whole selection
-			$query = is_array($session_name) ? $session_name : $GLOBALS['egw']->session->appsession($session_name,'timesheet');
+			$query = is_array($session_name) ? $session_name : Api\Cache::getSession('timesheet', $session_name);
 
 			if ($use_all)
 			{
@@ -1125,7 +1130,7 @@ class timesheet_ui extends timesheet_bo
 				}
 				break;
 			case 'cat':
-				$cat_name = categories::id2name($settings);
+				$cat_name = Api\Categories::id2name($settings);
 				$action_msg = lang('changed category to %1', $cat_name);
 				foreach((array)$checked as $n => $id) {
 					$entry = $this->read($id);
@@ -1189,8 +1194,8 @@ class timesheet_ui extends timesheet_bo
 					}
 					if ($need_update)
 					{
-						config::save_value('status_labels',$this->status_labels_config,TIMESHEET_APP);
-						$this->config_data = config::read(TIMESHEET_APP);
+						Api\Config::save_value('status_labels',$this->status_labels_config,TIMESHEET_APP);
+						$this->config_data = Api\Config::read(TIMESHEET_APP);
 						$this->load_statuses();
 						$msg .= lang('Status updated.');
 					}
@@ -1206,7 +1211,7 @@ class timesheet_ui extends timesheet_bo
 			if (isset($this->status_labels_config[$id]))
 			{
 				unset($this->status_labels_config[$id]);
-				config::save_value('status_labels',$this->status_labels_config,TIMESHEET_APP);
+				Api\Config::save_value('status_labels',$this->status_labels_config,TIMESHEET_APP);
 				unset($this->status_labels[$id]);
 				$msg .= lang('Status deleted.');
 			}
@@ -1231,7 +1236,7 @@ class timesheet_ui extends timesheet_bo
 		$content['msg'] = $msg;
 		$preserv = $content;
 		$sel_options['parent'] = $this->status_labels;
-		$etpl = new etemplate_new('timesheet.editstatus');
+		$etpl = new Etemplate('timesheet.editstatus');
 		$etpl->exec('timesheet.timesheet_ui.editstatus',$content,$sel_options,array(),$preserv);
 	}
 }
