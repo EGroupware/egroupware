@@ -995,8 +995,6 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				{
 					// Try to clean up after - not guaranteed
 					var afterPrint = function() {
-						// Reset after removing margin
-						$j('#egw_fw_main').css('margin-left', (framework.activeApp.sideboxWidth -1)+ "px");
 						var app = framework.activeApp;
 						framework.activeApp = '';
 						framework.setActiveApp(app);
@@ -1027,8 +1025,6 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 
 					// Wait for everything to be loaded, then send it off
 					jQuery.when.apply(jQuery, deferred).done(function() {
-						// Despite being set in the print CSS, this just doesn't work
-						$j('#egw_fw_main').css('margin-left','0px');
 						appWindow.setTimeout(appWindow.print, 0);
 					}).fail(function() {
 						afterPrint();
