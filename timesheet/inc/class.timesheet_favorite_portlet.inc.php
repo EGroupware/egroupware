@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * Egroupware - Addressbook - A portlet for displaying a list of entries
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package timesheet
@@ -24,11 +23,9 @@ class timesheet_favorite_portlet extends home_favorite_portlet
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
 		$context['appname'] = 'timesheet';
-		
+
 		// Let parent handle the basic stuff
 		parent::__construct($context,$need_reload);
-
-		$ui = new timesheet_ui();
 
 		$this->context['template'] = 'timesheet.index.rows';
 		$this->nm_settings += array(
