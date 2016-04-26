@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API - Applications
+ * EGroupware API - Applications
  *
  * @link http://www.egroupware.org
  * @author Mark Peters <skeeter@phpgroupware.org>
@@ -10,77 +10,17 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * functions for managing and installing apps
  *
  * Author: skeeter
+ *
+ * @deprecated use just methods from Api\Egw\Applications
  */
-class applications
+class applications extends Api\Egw\Applications
 {
-	var $account_id;
-	var $data = Array();
-	/**
-	 * Reference to the global db class
-	 *
-	 * @var egw_db
-	 */
-	var $db;
-	var $table_name = 'egw_applications';
-
-	/**************************************************************************\
-	* Standard constructor for setting $this->account_id                       *
-	\**************************************************************************/
-
-	/**
-	 * standard constructor for setting $this->account_id
-	 *
-	 * @param $account_id account id
-	 */
-	function __construct($account_id = '')
-	{
-		if (is_object($GLOBALS['egw_setup']) && is_object($GLOBALS['egw_setup']->db))
-		{
-			$this->db = $GLOBALS['egw_setup']->db;
-		}
-		else
-		{
-			$this->db = $GLOBALS['egw']->db;
-		}
-
-		$this->account_id = get_account_id($account_id);
-	}
-
-	/**************************************************************************\
-	* These are the standard $this->account_id specific functions              *
-	\**************************************************************************/
-
-	/**
-	 * read from repository
-	 *
-	 * private should only be called from withing this class
-	 */
-	function read_repository()
-	{
-		if (!isset($GLOBALS['egw_info']['apps']) ||	!is_array($GLOBALS['egw_info']['apps']))
-		{
-			$this->read_installed_apps();
-		}
-		$this->data = Array();
-		if(!$this->account_id)
-		{
-			return False;
-		}
-		$apps = $GLOBALS['egw']->acl->get_user_applications($this->account_id);
-		foreach($GLOBALS['egw_info']['apps'] as $app => $data)
-		{
-			if (isset($apps[$app]) && $apps[$app])
-			{
-				$this->data[$app] =& $GLOBALS['egw_info']['apps'][$app];
-			}
-		}
-		return $this->data;
-	}
-
 	/**
 	 * read from the repository
 	 *
@@ -148,7 +88,7 @@ class applications
 	function save_repository()
 	{
 		$GLOBALS['egw']->acl->delete_repository("%%", 'run', $this->account_id);
-		foreach($this->data as $app => $data)
+		foreach(array_keys($this->data) as $app)
 		{
 			if(!$this->is_system_enabled($app))
 			{
@@ -169,7 +109,7 @@ class applications
 		{
 			$this->read_repository();
 		}
-		foreach ($this->data as $app => $data)
+		foreach (array_keys($this->data) as $app)
 		{
 			$apps[] = $this->data[$app]['name'];
 		}
@@ -193,39 +133,6 @@ class applications
 			}
 		}
 		return $this->data;
-	}
-
-	/**************************************************************************\
-	* These are the generic functions. Not specific to $this->account_id       *
-	\**************************************************************************/
-
-	/**
-	 * populate array with a list of installed apps
-	 *
-	 */
-	function read_installed_apps()
-	{
-		foreach($this->db->select($this->table_name,'*',false,__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
-		{
-			$title = $app_name = $row['app_name'];
-
-			if (@is_array($GLOBALS['egw_info']['user']['preferences']) && ($t = lang($app_name)) != $app_name.'*')
-			{
-				$title = $t;
-			}
-			$GLOBALS['egw_info']['apps'][$app_name] = Array(
-				'title'   => $title,
-				'name'    => $app_name,
-				'enabled' => True,
-				'status'  => $row['app_enabled'],
-				'id'      => (int)$row['app_id'],
-				'order'   => (int)$row['app_order'],
-				'version' => $row['app_version'],
-				'index'   => $row['app_index'],
-				'icon'    => $row['app_icon'],
-				'icon_app'=> $row['app_icon_app'],
-			);
-		}
 	}
 
 	/**

@@ -1,8 +1,8 @@
 <?php
 /**
- * eGroupWare - configuration file
+ * EGroupware - configuration file
  *
- * Use eGroupWare's setup to create or edit this configuration file.
+ * Use EGroupware's setup to create or edit this configuration file.
  * You do NOT need to copy and edit this file manually!
  *
  * @link http://www.egroupware.org
@@ -11,20 +11,6 @@
  * (This file was originaly written by Dan Kuykendall)
  * @version $Id$
  */
-
-// allow to migrate from phpgw_info to egw_info
-if (!isset($GLOBALS['egw_info']) || in_array($GLOBALS['egw_info']['flags']['currentapp'],array('jinn','mydms','tts')))
-{
-	if (!isset($GLOBALS['egw_info']))
-	{
-		$GLOBALS['egw_info'] =& $GLOBALS['phpgw_info'];
-	}
-	else
-	{
-		$GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
-	}
-	$GLOBALS['egw_info']['flags']['phpgw_compatibility'] = true;
-}
 
 // eGW install dir, need to be changed if you copy the server to an other directory
 define('EGW_SERVER_ROOT','{SERVER_ROOT}');
@@ -52,12 +38,6 @@ $GLOBALS['egw_info']['server']['show_domain_selectbox'] = {DOMAIN_SELECTBOX};
 
 $GLOBALS['egw_info']['server']['db_persistent'] = {DB_PERSISTENT};
 
-/*
-** used session handler: egw_session_files works for all build in php session handlers
-** other handlers (like egw_session_memcache) can be enabled here
-*/
-$GLOBALS['egw_info']['server']['session_handler'] = '{SESSION_HANDLER}';
-
 /* This is used to control mcrypt's use */
 $GLOBALS['egw_info']['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
 
@@ -71,11 +51,8 @@ $GLOBALS['egw_info']['server']['mcrypt_iv'] = '{MCRYPT_IV}';
 
 $GLOBALS['egw_info']['flags']['page_start_time'] = microtime(true);
 
-define('DEBUG_API',  False);
-define('DEBUG_APP',  False);
-
-include(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php');
-$GLOBALS['egw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
+include(EGW_SERVER_ROOT.'/api/setup/setup.inc.php');
+$GLOBALS['egw_info']['server']['versions']['phpgwapi'] = $GLOBALS['egw_info']['server']['versions']['api'] = $setup_info['api']['version'];
 $GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 unset($setup_info);
 $GLOBALS['egw_info']['server']['versions']['header'] = '1.29';
@@ -88,11 +65,11 @@ if(!isset($GLOBALS['egw_info']['flags']['noapi']) || !$GLOBALS['egw_info']['flag
 	{
 		ob_start();	// to prevent error messages to be send before our headers
 	}
-	require_once(EGW_API_INC . '/functions.inc.php');
+	require_once(EGW_SERVER_ROOT.'/api/src/loader.php');
 }
 else
 {
-	require_once(EGW_API_INC . '/common_functions.inc.php');
+	require_once(EGW_SERVER_ROOT.'/api/src/loader/common.php');
 }
 
 /*
