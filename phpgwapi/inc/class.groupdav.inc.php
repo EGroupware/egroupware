@@ -386,6 +386,7 @@ class groupdav extends HTTP_WebDAV_Server
 					'location' => 'groupdav_root_props',
 					'props' => &$files['files'][0]['props'],
 					'options' => $options,
+					'caldav' => $this,
 				));
 			}
 

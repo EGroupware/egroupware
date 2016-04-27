@@ -1077,6 +1077,27 @@ class addressbook_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Hook to add properties to CardDAV root
+	 *
+	 * OS X 10.11.4 addressbook does a propfind for "addressbook-home-set" and "directory-gateway"
+	 * in the root and does not continue without it.
+	 *
+	 * @param array $data
+	 */
+	public static function groupdav_root_props(array $data)
+	{
+		$data['props']['addressbook-home-set'] = groupdav::mkprop(groupdav::CARDDAV, 'addressbook-home-set', array(
+			groupdav::mkprop('href',$data['caldav']->base_uri.'/'.$GLOBALS['egw_info']['user']['account_lid'].'/')));
+
+		$data['props']['principal-address'] = groupdav::mkprop(groupdav::CARDDAV, 'principal-address',
+				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] ? '' : array(
+				groupdav::mkprop('href',$data['caldav']->base_uri.'/addressbook-accounts/'.$GLOBALS['egw_info']['user']['person_id'].'.vcf')));
+
+		$data['props']['directory-gateway'] = groupdav::mkprop(groupdav::CARDDAV, 'directory-gateway', array(
+			groupdav::mkprop('href',$data['caldav']->base_uri.'/addressbook/')));
+	}
+
+	/**
 	 * Return appliction specific settings
 	 *
 	 * @param array $hook_data values for keys 'location', 'type' and 'account_id'
