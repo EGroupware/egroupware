@@ -1151,7 +1151,7 @@ class calendar_ical extends calendar_boupdate
 		if ($this->productManufacturer == 'groupdav' && $cal_id > 0 &&
 			$events[0]['recur_type'] != MCAL_RECUR_NONE)
 		{
-			calendar_Api\CalDAV::fix_series($events);
+			calendar_groupdav::fix_series($events);
 		}
 
 		if ($this->tzid)
