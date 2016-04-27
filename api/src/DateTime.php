@@ -228,11 +228,6 @@ class DateTime extends \DateTime
 				$end->setTime(0, 0, 0);
 				$end->add('+1day');
 			}
-			else
-			{
-				$end = new DateTime($start);
-				$end->add('+1week');
-			}
 		}
 		else
 		{
@@ -280,13 +275,19 @@ class DateTime extends \DateTime
 			}
 		}
 		// convert start + end from user to servertime for the filter
-		$sql = '('.DateTime::user2server($start, 'ts').' <= '.$column.' AND '.$column.' < '.DateTime::user2server($end, 'ts').')';
+		$sql = '('.DateTime::user2server($start, 'ts').' <= '.$column;
+		if($end)
+		{
+			$sql .=' AND '.$column.' < '.DateTime::user2server($end, 'ts');
+
+			// returned timestamps: $end is an inclusive date, eg. for today it's equal to start!
+			$end->add('-1day');
+			$end = $end->format('ts');
+		}
+		$sql .= ')';
 		//error_log(__METHOD__."('$name', ...) syear=$syear, smonth=$smonth, sday=$sday, sweek=$sweek, eyear=$eyear, emonth=$emonth, eday=$eday, eweek=$eweek --> start=".$start->format().', end='.$end->format().", sql='$sql'");
 
-		// returned timestamps: $end is an inclusive date, eg. for today it's equal to start!
 		$start = $start->format('ts');
-		$end->add('-1day');
-		$end = $end->format('ts');
 
 		return $sql;
 	}
