@@ -659,13 +659,9 @@ class calendar_ical extends calendar_boupdate
 							{
 								foreach ($event['recur_exception'] as $key => $timestamp)
 								{
-									$event['recur_exception'][$key] = self::getDateTime($timestamp,$tzid,$parameters['EXDATE']);
-								}
-								if ($version != '1.0')
-								{
-									// VALUE=DATE-TIME is default and optional
-									// adding it causes iCal on iOS 5.1.1 / OSX 10.7.4 to fail to recognice exceptions
-									if (!empty($tzid)) $parameters['EXDATE']['TZID'] = $tzid;
+									// current Horde_Icalendar 2.1.4 exports EXDATE always in UTC, so we should not set a timezone here
+									// Apple calendar on OS X 10.11.4 uses a timezone, so does Horde eg. for Recurrence-ID
+									$event['recur_exception'][$key] = self::getDateTime($timestamp,$tzid);//,$parameters['EXDATE']);
 								}
 							}
 							else
