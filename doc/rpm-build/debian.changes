@@ -1,3 +1,17 @@
+egroupware-epl (14.3.20160428) hardy; urgency=low
+
+  * CardDAV: fix not working creation of new CardDAV account with OS X 10.11.4 addressbook (it stays empty)
+  * CardDAV: SoGo and Busycontacts without all name- or organisation components use last value for missing ones
+  * CalDAV: fix exceptions (EXDATE) was exported with timezone and Zulu-time, causing eM Clinet to fail
+  * ProjectManager: fix PHP 5.3 problem: PHP Parse error:  syntax error, unexpected "["
+  * LDAP: fix "Protocol error" on creating new accounts, if "Do you want to manage home directory and login shell attributes?" is set to yes, but fields are left empty
+  * Admin: clear cache after admin-cli.php commands, so they become active automatically, also backported feedback for "Clear cache and register hooks" from trunk
+  * Bookmark: Fix bookmark preview image not getting a right size 
+  * Bookmarks: fixed not displayed favicon for new bookmarks
+  * Wiki/PostgreSQL: fix SQL error while searching
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 27 Apr 2016 21:31:22 +0200
+
 egroupware-epl (14.3.20160304) hardy; urgency=low
 
   * All apps: updated included Horde and PEAR packages (now including PEAR itself) to improve php 7.0 compatibility
