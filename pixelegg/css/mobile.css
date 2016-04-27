@@ -6697,8 +6697,6 @@ span.egw_tutorial_title {
     position: absolute;
     display: none;
     z-index: 999;
-    -webkit-overflow-scrolling: touch;
-    overflow-y: scroll;
   }
   body .egw_fw_mobile_popup_container .egw_fw_mobile_popupFrame {
     width: 100%;
