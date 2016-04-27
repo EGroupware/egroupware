@@ -43,11 +43,12 @@ $setup_info['admin']['hooks']['config'] = 'admin_hooks::config';
 // add account tab to addressbook.edit
 $setup_info['admin']['hooks']['addressbook_edit'] = 'admin.admin_account.addressbook_edit';
 
-/* Dependencies for this app to work */
+// Dependencies for this app to work
 $setup_info['admin']['depends'][] = array(
-	'appname' => 'phpgwapi',
-	'versions' => Array('14.1')
+	'appname' => 'api',
+	'versions' => Array('16.1')
 );
+// still using old etemplate in: admin_cmds, admin_customtranslation admin admin_statistics
 $setup_info['admin']['depends'][] = array(
 	'appname' => 'etemplate',
 	'versions' => Array('14.1')

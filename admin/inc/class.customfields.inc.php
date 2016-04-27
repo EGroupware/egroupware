@@ -11,6 +11,8 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
 
 /**
  * Customfields class -  manages customfield definitions in egw_config table
@@ -125,11 +127,11 @@ class customfields
 		// Read fields, constructor doesn't always know appname
 		$this->fields = Api\Storage\Customfields::get($this->appname,true);
 
-		$this->tmpl = new etemplate_new();
+		$this->tmpl = new Etemplate();
 		$this->tmpl->read('admin.customfields');
 
 		// do we manage content-types?
-		$test = new etemplate_new();
+		$test = new Etemplate();
 		if($test->read($this->appname.'.admin.types')) $this->manage_content_types = true;
 
 		// Handle incoming - types, options, etc.
@@ -142,7 +144,7 @@ class customfields
 			if (count($this->content_types)==0)
 			{
 				// if you define your default types of your app with the search_link hook, they are available here, if no types were found
-				$this->content_types = (array)egw_link::get_registry($this->appname,'default_types');
+				$this->content_types = (array)Api\Link::get_registry($this->appname,'default_types');
 			}
 			// Set this now, we need to know it for updates
 			$this->content_type = $content['content_types']['types'] ? $content['content_types']['types'] : (array_key_exists(0,$this->content_types) ? $this->content_types[0] : key($this->content_types));
@@ -182,7 +184,7 @@ class customfields
 			$this->save_repository();
 		}
 
-		$content['nm']= $GLOBALS['egw']->session->appsession('customfield-index','admin');
+		$content['nm']= Api\Cache::getSession('admin', 'customfield-index');
 		if (!is_array($content['nm']))
 		{
 			// Initialize nextmatch
@@ -256,7 +258,7 @@ class customfields
 		static::app_index($content, $sel_options, $readonlys, $preserve);
 
 		// Make sure app css gets loaded, extending app might cause et2 to miss it
-		egw_framework::includeCSS('admin','app');
+		Framework::includeCSS('admin','app');
 
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
 
@@ -304,14 +306,14 @@ class customfields
 			{
 				case 'delete':
 					$this->so->delete($cf_id);
-					egw_framework::refresh_opener('Deleted', 'admin', $cf_id /* Conflicts with accounts 'delete'*/);
-					egw_framework::window_close();
+					Framework::refresh_opener('Deleted', 'admin', $cf_id /* Conflicts with Api\Accounts 'delete'*/);
+					Framework::window_close();
 					break;
 				case 'save':
 				case 'apply':
 					if(!$cf_id && $this->fields[$content['cf_name']])
 					{
-						egw_framework::message(lang("Field '%1' already exists !!!",$content['cf_name']),'error');
+						Framework::message(lang("Field '%1' already exists !!!",$content['cf_name']),'error');
 						$content['cf_name'] = '';
 						break;
 					}
@@ -351,14 +353,14 @@ class customfields
 						$this->fields = Api\Storage\Customfields::get($this->appname,true);
 						$cf_id = (int)$this->fields[$content['cf_name']]['id'];
 					}
-					egw_framework::refresh_opener('Saved', 'admin', $cf_id, 'edit');
+					Framework::refresh_opener('Saved', 'admin', $cf_id, 'edit');
 					if ($action != 'save')
 					{
 						break;
 					}
 				//fall through
 				case 'cancel':
-					egw_framework::window_close();
+					Framework::window_close();
 			}
 		}
 		else
@@ -368,13 +370,13 @@ class customfields
 
 
 		// do we manage content-types?
-		$test = new etemplate_new();
+		$test = new Etemplate();
 		if($test->read($this->appname.'.admin.types')) $this->manage_content_types = true;
 
-		$this->tmpl = new etemplate_new();
+		$this->tmpl = new Etemplate();
 		$this->tmpl->read('admin.customfield_edit');
 
-		translation::add_app('infolog');	// til we move the translations
+		Api\Translation::add_app('infolog');	// til we move the translations
 
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
 		$sel_options = array();
@@ -590,7 +592,7 @@ class customfields
 	function save_repository()
 	{
 		//echo '<p>uicustomfields::save_repository() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
-		$config = new config($this->appname);
+		$config = new Api\Config($this->appname);
 		$config->read_repository();
 		$config->value('types',$this->content_types);
 		$config->save_repository();

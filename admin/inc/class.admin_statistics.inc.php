@@ -5,10 +5,13 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2009-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Egw;
 
 /**
  * Submit statistical data to egroupware.org
@@ -40,29 +43,29 @@ class admin_statistics
 	/**
 	 * Display and allow to submit statistical data
 	 *
-	 * @param array $content=null
+	 * @param array $_content =null
 	 */
-	public function submit($content=null)
+	public function submit($_content=null)
 	{
-		if (is_array($content))
+		if (is_array($_content))
 		{
-			$config = new config(self::CONFIG_APP);
-			if ($content['postpone'])
+			$config = new Api\Config(self::CONFIG_APP);
+			if ($_content['postpone'])
 			{
-				config::save_value(self::CONFIG_POSTPONE_SUBMIT,time()+$content['postpone'],self::CONFIG_APP);
+				Api\Config::save_value(self::CONFIG_POSTPONE_SUBMIT,time()+$_content['postpone'],self::CONFIG_APP);
 				$what = 'postpone';
 			}
-			elseif(!$content['cancel'])
+			elseif(!$_content['cancel'])
 			{
-				config::save_value(self::CONFIG_LAST_SUBMIT,time(),self::CONFIG_APP);
-				config::save_value(self::CONFIG_SUBMIT_ID,empty($content['submit_id']) ? '***none***' : $content['submit_id'],self::CONFIG_APP);
-				config::save_value(self::CONFIG_COUNTRY,empty($content['country']) ? '***multinational***' : $content['country'],self::CONFIG_APP);
-				config::save_value(self::CONFIG_USAGE_TYPE,$content['usage_type'],self::CONFIG_APP);
-				config::save_value(self::CONFIG_INSTALL_TYPE,$content['install_type'],self::CONFIG_APP);
-				config::save_value(self::CONFIG_POSTPONE_SUBMIT,null,self::CONFIG_APP);	// remove evtl. postpone time
+				Api\Config::save_value(self::CONFIG_LAST_SUBMIT,time(),self::CONFIG_APP);
+				Api\Config::save_value(self::CONFIG_SUBMIT_ID,empty($_content['submit_id']) ? '***none***' : $_content['submit_id'],self::CONFIG_APP);
+				Api\Config::save_value(self::CONFIG_COUNTRY,empty($_content['country']) ? '***multinational***' : $_content['country'],self::CONFIG_APP);
+				Api\Config::save_value(self::CONFIG_USAGE_TYPE,$_content['usage_type'],self::CONFIG_APP);
+				Api\Config::save_value(self::CONFIG_INSTALL_TYPE,$_content['install_type'],self::CONFIG_APP);
+				Api\Config::save_value(self::CONFIG_POSTPONE_SUBMIT,null,self::CONFIG_APP);	// remove evtl. postpone time
 				$what = 'submited';
 			}
-			egw::redirect_link('/admin/index.php','statistics='.($what ? $what : 'cancled'));
+			Egw::redirect_link('/admin/index.php','statistics='.($what ? $what : 'cancled'));
 		}
 		$sel_options['usage_type'] = array(
 			'commercial'   => lang('Commercial: all sorts of companies'),
@@ -89,10 +92,10 @@ class admin_statistics
 			30*24*3600 => lang('one month'),
 			60*24*3600 => lang('two months'),
 		);
-		$config = config::read(self::CONFIG_APP);
+		$config = Api\Config::read(self::CONFIG_APP);
 		//_debug_array($config);
 		$content = array_merge(self::gather_data(),array(
-			'statistic_url' => html::a_href(self::STATISTIC_URL,self::STATISTIC_URL,'',' target="_blank"'),
+			'statistic_url' => Api\Html::a_href(self::STATISTIC_URL,self::STATISTIC_URL,'',' target="_blank"'),
 			'submit_host' => parse_url(self::SUBMIT_URL,PHP_URL_HOST),
 			'submit_url'  => self::SUBMIT_URL,
 			'last_submitted' => $config[self::CONFIG_LAST_SUBMIT],
@@ -104,7 +107,7 @@ class admin_statistics
 		{
 			$content['submit_id'] = $config['statistics_submit_id'] == '***none***' ? '' : $config['statistics_submit_id'];
 		}
-		// show previous country
+		// show previous Api\Country
 		if ($config[self::CONFIG_COUNTRY])
 		{
 			$content['country'] = $config[self::CONFIG_COUNTRY] == '***multinational***' ? '' : $config[self::CONFIG_COUNTRY];
@@ -138,7 +141,7 @@ class admin_statistics
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Submit statistic information');
 		$tmpl = new etemplate('admin.statistics');
-		$tmpl->exec('admin.admin_statistics.submit',$content,$sel_options,$readonlys,$preserv);
+		$tmpl->exec('admin.admin_statistics.submit',$content,$sel_options,$readonlys);
 	}
 
 	/**
@@ -185,11 +188,11 @@ class admin_statistics
 		{
 			$data['install_type'] = 'package';
 		}
-		foreach($GLOBALS['egw_info']['apps'] as $app => $app_data)
+		foreach(array_keys($GLOBALS['egw_info']['apps']) as $app)
 		{
 			if (in_array($app,array(
-				'admin','phpgwapi','emailadmin','sambaadmin','developer_tools',
-				'home','preferences','etemplate','registration','manual','egw-pear',
+				'admin','phpgwapi','api','sambaadmin','developer_tools',
+				'home','preferences','etemplate','registration','manual',
 			)))
 			{
 				continue;	// --> ignore to not submit too much
@@ -270,7 +273,8 @@ class admin_statistics
 				$entries = (int)$GLOBALS['egw']->db->query('SELECT COUNT(*) FROM '.$table)->fetchColumn();
 				//echo "$app ($table): $entries<br />\n";
 			}
-			catch(egw_exception_db $e) {
+			catch(Api\Db\Exception $e) {
+				unset($e);
 				$entries = null;
 			}
 		}
@@ -285,7 +289,7 @@ class admin_statistics
 	 */
 	public static function check($redirect=true)
 	{
-		$config = config::read(self::CONFIG_APP);
+		$config = Api\Config::read(self::CONFIG_APP);
 
 		if (isset($config[self::CONFIG_POSTPONE_SUBMIT]) && $config[self::CONFIG_POSTPONE_SUBMIT] > time() ||
 			isset($config[self::CONFIG_LAST_SUBMIT ]) && $config[self::CONFIG_LAST_SUBMIT ] > time()-self::SUBMISION_RATE)
@@ -295,7 +299,7 @@ class admin_statistics
 		if (!$redirect) return true;
 
 		//die('Due for new statistics submission: last_submit='.$config[self::CONFIG_LAST_SUBMIT ].', postpone='.$config[self::CONFIG_POSTPONE_SUBMIT].', '.function_backtrace());
-		egw::redirect_link('/index.php',array(
+		Egw::redirect_link('/index.php',array(
 			'menuaction' => 'admin.admin_ui.index',
 			'ajax' => 'true',
 			'load' => 'admin.admin_statistics.submit',

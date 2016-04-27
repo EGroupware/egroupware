@@ -1,24 +1,24 @@
 <?php
 /**
- * eGgroupWare admin - admin command: check ACL for entries of deleted accounts
+ * EGroupWare admin - admin command: check ACL for entries of deleted Api\Accounts
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * admin command: check ACL for entries of deleted accounts
  */
-class admin_cmd_check_acl extends admin_cmd 
+class admin_cmd_check_acl extends admin_cmd
 {
 	/**
 	 * Constructor
 	 *
-	 * @param array $data=array() default parm from parent class, no real parameters
+	 * @param array $data =array() default parm from parent class, no real parameters
 	 */
 	function __construct($data=array())
 	{
@@ -27,8 +27,8 @@ class admin_cmd_check_acl extends admin_cmd
 
 	/**
 	 * give or remove run rights from a given account and application
-	 * 
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 *
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang("Permission denied !!!"),2)
 	 * @throws Exception(lang("Unknown account: %1 !!!",$this->account),15);
@@ -50,7 +50,7 @@ class admin_cmd_check_acl extends admin_cmd
 			$GLOBALS['egw']->db->query("DELETE FROM egw_acl WHERE acl_account NOT IN (".implode(',',$ids).") OR acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$ids)."')",__LINE__,__FILE__);
 			$deleted = $GLOBALS['egw']->db->affected_rows();
 		}
-		return lang("%1 ACL records of not (longer) existing accounts deleted.",$deleted);
+		return lang("%1 ACL records of not (longer) existing Api\Accounts deleted.",$deleted);
 	}
 
 	/**

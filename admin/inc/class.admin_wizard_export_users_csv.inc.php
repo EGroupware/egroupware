@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Wizard for User CSV export
+ * EGroupware - Wizard for User CSV export
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package admin
@@ -9,6 +9,8 @@
  * @author Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 class admin_wizard_export_users_csv extends importexport_wizard_basic_export_csv
 {
@@ -33,7 +35,7 @@ class admin_wizard_export_users_csv extends importexport_wizard_basic_export_csv
 
 		// Custom fields - not really used in admin...
 		unset($this->export_fields['customfields']);
-		$custom = config::get_customfields('admin', true);
+		$custom = Api\Storage\Customfields::get('admin', true);
 		foreach($custom as $name => $data) {
 			$this->export_fields['#'.$name] = $data['label'];
 		}

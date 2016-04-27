@@ -1,14 +1,20 @@
 <?php
 /**
- * EGgroupware admin - Edit global categories
+ * EGroupware admin - Edit global categories
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2010-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+use EGroupware\Api\Categories;
 
 /**
  * Edit global categories
@@ -55,7 +61,7 @@ class admin_categories
 	{
 		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
-			throw new egw_exception_no_permission_admin();
+			throw new Api\Exception\NoPermission\Admin();
 		}
 		if ($GLOBALS['egw']->acl->check('global_categorie',1,'admin'))
 		{
@@ -90,19 +96,19 @@ class admin_categories
 	{
 		// read the session, as the global_cats param is stored with it.
 		$appname = $content['appname'] ? $content['appname'] : ($_GET['appname']?$_GET['appname']:categories::GLOBAL_APPNAME);
-		$session = egw_cache::getSession(__CLASS__.$appname,'nm');
+		$session = Api\Cache::getSession(__CLASS__.$appname,'nm');
 		unset($session);
 		if (!isset($content))
 		{
 			if (!(isset($_GET['cat_id']) && $_GET['cat_id'] > 0 &&
-				($content = categories::read($_GET['cat_id']))))
+				($content = Categories::read($_GET['cat_id']))))
 			{
 				$content = array('data' => array());
 				if(isset($_GET['parent']) && $_GET['parent'] > 0)
 				{
 					// Sub-category - set some defaults from parent
 					$content['parent'] = (int)$_GET['parent'];
-					$parent_cat = categories::read($content['parent']);
+					$parent_cat = Categories::read($content['parent']);
 					$content['owner'] = $parent_cat['owner'];
 				}
 				if (isset($_GET['appname']) && isset($GLOBALS['egw_info']['apps'][$_GET['appname']]))
@@ -111,7 +117,7 @@ class admin_categories
 				}
 				else
 				{
-					$appname = categories::GLOBAL_APPNAME;
+					$appname = Categories::GLOBAL_APPNAME;
 				}
 			}
 			elseif ($content['appname'] != $appname || !self::$acl_edit || ( $content['owner'] != $GLOBALS['egw_info']['user']['account_id'] && $this->appname != 'admin'))
@@ -124,7 +130,7 @@ class admin_categories
 		}
 		elseif ($content['button'] || $content['delete'])
 		{
-			$cats = new categories($content['owner'] ? $content['owner'] : categories::GLOBAL_ACCOUNT,$content['appname']);
+			$cats = new Categories($content['owner'] ? $content['owner'] : Categories::GLOBAL_ACCOUNT,$content['appname']);
 
 			if ($content['delete']['delete'] || $content['delete']['subs'])
 			{
@@ -154,7 +160,7 @@ class admin_categories
 							$cats->edit($content);
 							$msg = lang('Category saved.');
 						}
-						catch (egw_exception_wrong_userinput $e)
+						catch (Api\Exception\WrongUserinput $e)
 						{
 							$msg = lang('Unwilling to save category with current settings. Check for inconsistency:').$e->getMessage();	// display conflicts etc.
 						}
@@ -177,24 +183,24 @@ class admin_categories
 					// Nicely reload just the category window / iframe
 					if($change_color)
 					{
-						if(egw_json_response::isJSONResponse())
+						if(Api\Json\Response::isJSONResponse())
 						{
 							// Update category styles
-							egw_json_response::get()->apply('opener.egw.includeCSS',array(categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app)));
+							Api\Json\Response::get()->apply('opener.egw.includeCSS',array(Categories::css($refresh_app == 'admin' ? Categories::GLOBAL_APPNAME : $refresh_app)));
 							if($this->appname != 'admin')
 							{
-								egw_json_response::get()->apply('opener.egw.show_preferences',array(
+								Api\Json\Response::get()->apply('opener.egw.show_preferences',array(
 									'cats',
-									$this->appname == 'admin' ? categories::GLOBAL_APPNAME : array($refresh_app)
+									$this->appname == 'admin' ? Categories::GLOBAL_APPNAME : array($refresh_app)
 								));
 								$change_color = false;
 							}
 							else
 							{
-								categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app);
+								Categories::css($refresh_app == 'admin' ? Categories::GLOBAL_APPNAME : $refresh_app);
 								// Need to forcably re-load the iframe to avoid smart etemplate refresh
-								egw_json_response::get()->apply('opener.app.admin.load',array(
-									egw_framework::link('/index.php', array(
+								Api\Json\Response::get()->apply('opener.app.admin.load',array(
+									Framework::link('/index.php', array(
 										'menuaction' => $this->list_link,
 										'appname' => $appname
 									)
@@ -203,11 +209,11 @@ class admin_categories
 						}
 						else
 						{
-							categories::css($refresh_app == 'admin' ? categories::GLOBAL_APPNAME : $refresh_app);
-							egw_framework::refresh_opener('', null, null);
+							Categories::css($refresh_app == 'admin' ? Categories::GLOBAL_APPNAME : $refresh_app);
+							Framework::refresh_opener('', null, null);
 							if ($button == 'save')
 							{
-								egw_framework::window_close();
+								Framework::window_close();
 							}
 							return;
 						}
@@ -215,8 +221,8 @@ class admin_categories
 
 					if ($button == 'save')
 					{
-						egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
-						egw_framework::window_close();
+						Framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
+						Framework::window_close();
 					}
 					break;
 
@@ -226,8 +232,8 @@ class admin_categories
 						$cats->delete($content['id'],$delete_subs,!$delete_subs);
 						$msg = lang('Category deleted.');
 
-						egw_framework::refresh_opener($msg, $refresh_app, $content['id'],'delete', $this->appname);
-						egw_framework::window_close();
+						Framework::refresh_opener($msg, $refresh_app, $content['id'],'delete', $this->appname);
+						Framework::window_close();
 						return;
 					}
 					else
@@ -238,7 +244,7 @@ class admin_categories
 					break;
 			}
 			// This should probably refresh the application $this->appname in the target tab $refresh_app, but that breaks pretty much everything
-			egw_framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
+			Framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
@@ -265,7 +271,7 @@ class admin_categories
 
 		if($this->appname != 'admin' && $content['owner'] > 0 )
 		{
-			$sel_options['owner'][$content['owner']] = common::grab_owner_name($content['owner']);
+			$sel_options['owner'][$content['owner']] = Api\Accounts::username($content['owner']);
 		}
 		// Add 'All users', in case owner is readonlys
 		if($content['id'] && $content['owner'] == 0)
@@ -276,7 +282,7 @@ class admin_categories
 		{
 			if($content['owner'] > 0)
 			{
-				$content['msg'] .= "\n".lang('owner "%1" removed, please select group-owner', common::grab_owner_name($content['owner']));
+				$content['msg'] .= "\n".lang('owner "%1" removed, please select group-owner', Api\Accounts::username($content['owner']));
 				$content['owner'] = 0;
 			}
 			$sel_options['owner'][0] = lang('All users');
@@ -285,7 +291,7 @@ class admin_categories
 			{
 				if ($acc['account_type'] == 'g')
 				{
-					$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc);
+					$sel_options['owner'][$acc['account_id']] = Etemplate\Widget\Select::accountInfo($acc['account_id'], $acc);
 				}
 			}
 			$content['no_private'] = true;
@@ -302,14 +308,14 @@ class admin_categories
 			$readonlys['access'] = $content['owner'] != $GLOBALS['egw_info']['user']['account_id'];
 		}
 
-		egw_framework::validate_file('.','global_categories','admin');
+		Framework::includeJS('.','global_categories','admin');
 
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete ||		// cant delete not yet saved category
 			$appname != $content['appname'] || // Can't edit a category from a different app
 			 ($this->appname != 'admin' && $content['owner'] != $GLOBALS['egw_info']['user']['account_id']);
 		// Make sure $content['owner'] is an array otherwise it wont show up values in the multiselectbox
 		if (!is_array($content['owner'])) $content['owner'] = explode(',',$content['owner']);
-		$tmpl = new etemplate_new('admin.categories.edit');
+		$tmpl = new Etemplate('admin.categories.edit');
 		$tmpl->exec($this->edit_link,$content,$sel_options,$readonlys,$content+array(
 			'old_parent' => $content['old_parent'] ? $content['old_parent'] : $content['parent'], 'appname' => $appname
 		),2);
@@ -354,7 +360,7 @@ class admin_categories
 	 *
 	 * @param array $query with keys 'start', 'search', 'order', 'sort', 'col_filter'
 	 * @param array &$rows returned rows/competitions
-	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
+	 * @param array &$readonlys eg. to disable buttons based on Acl, not use here, maybe in a derived class
 	 * @return int total number of rows
 	 */
 	public function get_rows(&$query,&$rows,&$readonlys)
@@ -362,7 +368,7 @@ class admin_categories
 		self::init_static();
 
 		$filter = array();
-		$globalcat = ($query['filter'] === categories::GLOBAL_ACCOUNT || !$query['filter']);
+		$globalcat = ($query['filter'] === Categories::GLOBAL_ACCOUNT || !$query['filter']);
 		if (isset($query['global_cats']) && $query['global_cats']===false)
 		{
 			$globalcat = false;
@@ -371,7 +377,7 @@ class admin_categories
 		// new column-filter access has highest priority
 		if (!empty($query['col_filter']['access']))$filter['access'] = $query['col_filter']['access'];
 
-		egw_cache::setSession(__CLASS__.$query['appname'],'nm',$query);
+		Api\Cache::setSession(__CLASS__.$query['appname'],'nm',$query);
 
 		if($query['filter'] > 0 || $query['col_filter']['owner'])
 		{
@@ -381,8 +387,8 @@ class admin_categories
 		{
 			$filter['appname'] = $query['col_filter']['app'];
 		}
-		$GLOBALS['egw']->categories = $cats = new categories($filter['owner'],$query['appname']);
-		$globals = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : $globalcat;	// ignore acl only for admins
+		$GLOBALS['egw']->categories = $cats = new Categories($filter['owner'],$query['appname']);
+		$globals = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : $globalcat;	// ignore Acl only for admins
 		$parent = $query['search'] ? false : 0;
 		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globals,$parent,true,$filter);
 		$count = $cats->total_records;
@@ -409,18 +415,18 @@ class admin_categories
 			}
 			else if (!$GLOBALS['egw_info']['user']['apps']['admin'])
 			{
-				if(!$cats->check_perms(EGW_ACL_EDIT, $row['id']) || !self::$acl_edit)
+				if(!$cats->check_perms(Acl::EDIT, $row['id']) || !self::$acl_edit)
 				{
 					$row['class'] .= ' rowNoEdit';
 				}
-				if(!$cats->check_perms(EGW_ACL_DELETE, $row['id']) || !self::$acl_delete ||
+				if(!$cats->check_perms(Acl::DELETE, $row['id']) || !self::$acl_delete ||
 					// Only admins can delete globals
 					$cats->is_global($row['id']) && !$GLOBALS['egw_info']['user']['apps']['admin'])
 				{
 					$row['class'] .= ' rowNoDelete';
 				}
 			}
-			// Can only edit (via context menu) categories for the selected app (backend restriction)
+			// Can only edit (via context menu) Categories for the selected app (backend restriction)
 			if($row['appname'] != $query['appname'] || (array_sum($row['owner']) > 0))
 			{
 				$row['class'] .= ' rowNoEdit ';
@@ -434,11 +440,11 @@ class admin_categories
 		$rows['appname'] = $query['appname'];
 		$rows['edit_link'] = $this->edit_link;
 
-		// disable access column for global categories
+		// disable access column for global Categories
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'admin') $rows['no_access'] = true;
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang($this->appname).' - '.lang('categories').
-			($query['appname'] != categories::GLOBAL_APPNAME ? ': '.lang($query['appname']) : '');
+			($query['appname'] != Categories::GLOBAL_APPNAME ? ': '.lang($query['appname']) : '');
 
 		return $count;
 	}
@@ -452,13 +458,13 @@ class admin_categories
 	public function index(array $content=null,$msg='')
 	{
 		//_debug_array($_GET);
-		if ($this->appname != 'admin') translation::add_app('admin');	// need admin translations
+		if ($this->appname != 'admin') Api\Translation::add_app('admin');	// need admin translations
 
 		if(!isset($content))
 		{
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 
-			$appname = categories::GLOBAL_APPNAME;
+			$appname = Categories::GLOBAL_APPNAME;
 			foreach(array($content['nm']['appname'], $_GET['cats_app'], $_GET['appname']) as $field)
 			{
 				if($field)
@@ -467,14 +473,14 @@ class admin_categories
 					break;
 				}
 			}
-			$content['nm'] = egw_cache::getSession(__CLASS__.$appname,'nm');
+			$content['nm'] = Api\Cache::getSession(__CLASS__.$appname,'nm');
 			if (!is_array($content['nm']))
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	$this->get_rows,	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 					'options-filter' => array(
 						'' => lang('All categories'),
-						categories::GLOBAL_ACCOUNT => lang('Global categories'),
+						Categories::GLOBAL_ACCOUNT => lang('Global categories'),
 						$GLOBALS['egw_info']['user']['account_id'] => lang('Own categories'),
 					),
 					'no_filter2'     => True,	// I  disable the 2. filter (params are the same as for filter)
@@ -506,7 +512,7 @@ class admin_categories
 			{
 				$content['nm']['no_filter'] = true;
 				// Make sure filter is set properly, could be different if user was looking at something else
-				$content['nm']['filter'] = categories::GLOBAL_ACCOUNT;
+				$content['nm']['filter'] = Categories::GLOBAL_ACCOUNT;
 			}
 
 			$content['nm']['global_cats'] = true;
@@ -562,12 +568,12 @@ class admin_categories
 				{
 					$msg .= lang('%1 category(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
-				egw_framework::refresh_opener($msg, $this->appname);
+				Framework::refresh_opener($msg, $this->appname);
 				$msg = '';
 			}
 		}
 		$content['msg'] = $msg;
-		$content['nm']['add_link']= egw_framework::link('/index.php','menuaction='.$this->add_link . '&cat_id=&appname='.$appname);
+		$content['nm']['add_link']= Framework::link('/index.php','menuaction='.$this->add_link . '&cat_id=&appname='.$appname);
 		$content['edit_link']= $this->edit_link.'&appname='.$appname;
 		$content['owner'] = '';
 
@@ -597,15 +603,15 @@ class admin_categories
 			$readonlys['nm']['rows']['owner'] = true;
 			$readonlys['nm']['col_filter']['owner'] = true;
 		}
-		if($appname == categories::GLOBAL_APPNAME) {
+		if($appname == Categories::GLOBAL_APPNAME) {
 			$sel_options['app'] = array(''=>'');
 			$readonlys['nm']['rows']['app'] = true;
 		}
 
-		$tmpl = new etemplate_new('admin.categories.index');
+		$tmpl = new Etemplate('admin.categories.index');
 
 		// Category styles
-		categories::css($appname);
+		Categories::css($appname);
 
 		$tmpl->exec($this->list_link,$content,$sel_options,$readonlys,array(
 			'nm' => $content['nm'],
@@ -697,7 +703,7 @@ class admin_categories
 		}
 		$owner = $query['col_filter']['owner'] ? $query['col_filter']['owner'] : $query['filter'];
 		$app = $query['col_filter']['app'] ? $query['col_filter']['app'] : $query['appname'];
-		$cats = new categories($owner,$app);
+		$cats = new Categories($owner,$app);
 
 		list($action, $settings) = explode('_', $_action, 2);
 
@@ -707,7 +713,7 @@ class admin_categories
 				$action_msg = lang('deleted');
 				foreach($checked as $id)
 				{
-					if($cats->check_perms(EGW_ACL_DELETE, $id, (boolean)$GLOBALS['egw_info']['user']['apps']['admin']))
+					if($cats->check_perms(Acl::DELETE, $id, (boolean)$GLOBALS['egw_info']['user']['apps']['admin']))
 					{
 						$cats->delete($id,$settings == 'sub',$settings != 'sub');
 						$success++;
@@ -723,18 +729,18 @@ class admin_categories
 				list($add_remove, $ids_csv) = explode('_', $settings, 2);
 				$ids = explode(',', $ids_csv);
 				// Adding 'All users' removes all the others
-				if($add_remove == 'add' && array_search(categories::GLOBAL_ACCOUNT,$ids) !== false) $ids = array(categories::GLOBAL_ACCOUNT);
+				if($add_remove == 'add' && array_search(Categories::GLOBAL_ACCOUNT,$ids) !== false) $ids = array(Categories::GLOBAL_ACCOUNT);
 
 				foreach($checked as $id)
 				{
 					if (!$data = $cats->read($id)) continue;
 					$data['owner'] = explode(',',$data['owner']);
-					if(array_search(categories::GLOBAL_ACCOUNT,$data['owner']) !== false || $data['owner'][0] > 0)
+					if(array_search(Categories::GLOBAL_ACCOUNT,$data['owner']) !== false || $data['owner'][0] > 0)
 					{
 						$data['owner'] = array();
 					}
 					$data['owner'] = $add_remove == 'add' ?
-						$ids == array(categories::GLOBAL_ACCOUNT) ? $ids : array_merge($data['owner'],$ids) :
+						$ids == array(Categories::GLOBAL_ACCOUNT) ? $ids : array_merge($data['owner'],$ids) :
 						array_diff($data['owner'],$ids);
 					$data['owner'] = implode(',',array_unique($data['owner']));
 
@@ -766,7 +772,7 @@ class admin_categories
 				$apps['phpgw'] = lang('Global');
 				continue;
 			}
-			// Skip apps that don't show in the app bar, they [usually] don't have categories
+			// Skip apps that don't show in the app bar, they [usually] don't have Categories
 			if($data['status'] > 1 || in_array($app, array('home','admin','felamimail','sitemgr','sitemgr-link'))) continue;
 			if ($GLOBALS['egw_info']['user']['apps'][$app])
 			{

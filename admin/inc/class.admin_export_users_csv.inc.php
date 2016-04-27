@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Export plugin for users
+ * EGroupware - Export plugin for users
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package admin
@@ -14,8 +14,8 @@
 /**
  * Export users plugin
  */
-class admin_export_users_csv implements importexport_iface_export_plugin {
-
+class admin_export_users_csv implements importexport_iface_export_plugin
+{
 	/**
 	 * Exports records as defined in $_definition
 	 *
@@ -23,8 +23,6 @@ class admin_export_users_csv implements importexport_iface_export_plugin {
 	 */
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
-
-		$selection = array();
 
 		$query = array(
 			'type'	=>	'accounts',

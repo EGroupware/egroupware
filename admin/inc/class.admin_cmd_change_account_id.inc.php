@@ -1,14 +1,16 @@
 <?php
 /**
- * eGgroupWare admin - admin command: change an account_id
+ * EGgroupware admin - admin command: change an account_id
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-15 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 
 /**
@@ -44,7 +46,7 @@ class admin_cmd_change_account_id extends admin_cmd
 		// happens if one used "root_admin" and config-password
 		if (empty($GLOBALS['egw_info']['apps']))
 		{
-			$apps = new applications();
+			$apps = new Api\Egw\Applications();
 			$apps->read_installed_apps();
 		}
 		$changes = $setup_info = array();
@@ -83,7 +85,7 @@ class admin_cmd_change_account_id extends admin_cmd
 				}
 				// we have a custom field table and cfs containing accounts
 				if ($cf && !empty($cf['cfname']) && !empty($cf['cfvalue']) &&
-					($account_cfs = egw_customfields::get_account_cfs($app == 'phpgwapi' ? 'addressbook' : $app)))
+					($account_cfs = Api\Storage\Customfields::get_account_cfs($app == 'phpgwapi' ? 'addressbook' : $app)))
 				{
 					foreach($account_cfs as $type => $names)
 					{
@@ -108,9 +110,9 @@ class admin_cmd_change_account_id extends admin_cmd
 	 *
 	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
-	 * @throws egw_exception_no_admin
-	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
-	 * @throws egw_exception_wrong_userinput(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
+	 * @throws Api\Exception\Permission\NoAdmin
+	 * @throws Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws Api\Exception\WrongUserinput(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
 	 */
 	protected function exec($check_only=false)
 	{
@@ -118,23 +120,23 @@ class admin_cmd_change_account_id extends admin_cmd
 		{
 			if (!(int)$from || !(int)$to)
 			{
-				throw new egw_exception_wrong_userinput(lang("Account-id's have to be integers!"),16);
+				throw new Api\Exception\WrongUserinput(lang("Account-id's have to be integers!"),16);
 			}
 			if (($from < 0) != ($to < 0))
 			{
-				throw new egw_exception_wrong_userinput(lang("Can NOT change users into groups, same sign required!"),17);
+				throw new Api\Exception\WrongUserinput(lang("Can NOT change users into groups, same sign required!"),17);
 			}
 			if (!($from_exists = $GLOBALS['egw']->accounts->exists($from)))
 			{
-				throw new egw_exception_wrong_userinput(lang("Source account #%1 does NOT exist!", $from),18);
+				throw new Api\Exception\WrongUserinput(lang("Source account #%1 does NOT exist!", $from),18);
 			}
 			if ($from_exists !== ($from > 0 ? 1 : 2))
 			{
-				throw new egw_exception_wrong_userinput(lang("Group #%1 must have negative sign!", $from),19);
+				throw new Api\Exception\WrongUserinput(lang("Group #%1 must have negative sign!", $from),19);
 			}
 			if ($GLOBALS['egw']->accounts->exists($to) && !isset($this->change[$to]))
 			{
-				throw new egw_exception_wrong_userinput(lang("Destination account #%1 does exist and is NOT renamed itself! Can not merge accounts, it will violate unique contains. Delete with transfer of data instead.", $to),20);
+				throw new Api\Exception\WrongUserinput(lang("Destination account #%1 does exist and is NOT renamed itself! Can not merge Api\Accounts, it will violate unique contains. Delete with transfer of data instead.", $to),20);
 			}
 		}
 		$columns2change = $this->get_changes();
@@ -177,11 +179,11 @@ class admin_cmd_change_account_id extends admin_cmd
 		{
 			foreach($GLOBALS['egw_info']['apps'] as $app => $data)
 			{
-				$total += ($changed = egw_customfields::change_account_ids($app, $this->change));
+				$total += ($changed = Api\Storage\Customfields::change_account_ids($app, $this->change));
 				if ($changed) echo "$app:\t$changed id's in definition of private custom fields changed\n";
 			}
 		}
-		if ($total) egw_cache::flush(egw_cache::INSTANCE);
+		if ($total) Api\Cache::flush(Api\Cache::INSTANCE);
 
 		return lang("Total of %1 id's changed.",$total)."\n";
 	}
@@ -190,14 +192,14 @@ class admin_cmd_change_account_id extends admin_cmd
 	 * Update DB with changed account ids
 	 *
 	 * @param array $ids2change from-id => to-id pairs
-	 * @param egw_db $db
+	 * @param Api\Db $db
 	 * @param string $table
 	 * @param string $column
 	 * @param array $where
 	 * @param string $type
 	 * @return int number of changed ids
 	 */
-	private static function _update_account_id(array $ids2change,egw_db $db,$table,$column,array $where=null,$type=null)
+	private static function _update_account_id(array $ids2change,Api\Db $db,$table,$column,array $where=null,$type=null)
 	{
 		$update_sql = '';
 		foreach($ids2change as $from => $to)

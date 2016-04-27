@@ -1,14 +1,16 @@
 <?php
 /**
- * eGgroupWare admin - admin command: edit/add a group
+ * EGgroupware admin - admin command: edit/add a group
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * admin command: edit/add a user
@@ -18,8 +20,8 @@ class admin_cmd_edit_group extends admin_cmd
 	/**
 	 * Constructor
 	 *
-	 * @param string/int/array $account account name or id (!$account to add a new account), or array with all parameters
-	 * @param array $set=null array with all data to change
+	 * @param string|int|array $account account name or id (!$account to add a new account), or array with all parameters
+	 * @param array $set =null array with all data to change
 	 */
 	function __construct($account,$set=null)
 	{
@@ -36,10 +38,10 @@ class admin_cmd_edit_group extends admin_cmd
 	/**
 	 * change the password of a given user
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
-	 * @throws egw_exception_no_admin
-	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws Api\Exception\NoPermission\Admin
+	 * @throws Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$this->account),15);
 	 */
 	protected function exec($check_only=false)
 	{
@@ -64,16 +66,16 @@ class admin_cmd_edit_group extends admin_cmd
 		}
 		if (!$data['account_lid'] && (!$this->account || !is_null($data['account_lid'])))
 		{
-			throw new egw_exception_wrong_userinput(lang('You must enter a group name.'),9);
+			throw new Api\Exception\WrongUserinput(lang('You must enter a group name.'),9);
 		}
 		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','g')) &&
 			$id !== $data['account_id'])
 		{
-			throw new egw_exception_wrong_userinput(lang('That loginid has already been taken'),999);
+			throw new Api\Exception\WrongUserinput(lang('That loginid has already been taken'),999);
 		}
 		if (!$data['account_members'] && !$this->account)
 		{
-			throw new egw_exception_wrong_userinput(lang('You must select at least one group member.'),9);
+			throw new Api\Exception\WrongUserinput(lang('You must select at least one group member.'),9);
 		}
 		if ($data['account_members'])
 		{
@@ -84,10 +86,10 @@ class admin_cmd_edit_group extends admin_cmd
 		if (($update = $this->account))
 		{
 			// invalidate account, before reading it, to code with changed to DB or LDAP outside EGw
-			accounts::cache_invalidate($data['account_id']);
+			Api\Accounts::cache_invalidate($data['account_id']);
 			if (!($old = admin_cmd::$accounts->read($data['account_id'])))
 			{
-				throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
+				throw new Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$this->account),15);
 			}
 			// as the current account class always sets all values, we have to add the not specified ones
 			foreach($data as $name => &$value)
@@ -98,12 +100,12 @@ class admin_cmd_edit_group extends admin_cmd
 		if (!($data['account_id'] = admin_cmd::$accounts->save($data)))
 		{
 			//_debug_array($data);
-			throw new egw_exception_db(lang("Error saving account!"),11);
+			throw new Api\Db\Exception(lang("Error saving account!"),11);
 		}
 		$data['account_name'] = $data['account_lid'];	// also set deprecated name
 		if ($update) $data['old_name'] = $old['account_lid'];	// make old name available for hooks
 		$GLOBALS['hook_values'] =& $data;
-		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+		Api\Hooks::process($GLOBALS['hook_values']+array(
 			'location' => $update ? 'editgroup' : 'addgroup'
 		),False,True);	// called for every app now, not only enabled ones)
 
@@ -114,7 +116,7 @@ class admin_cmd_edit_group extends admin_cmd
 		// make new account_id available to caller
 		$this->account = $data['account_id'];
 
-		return lang("Group %1 %2", $data['account_lid'] ? $data['account_lid'] : accounts::id2name($this->account),
+		return lang("Group %1 %2", $data['account_lid'] ? $data['account_lid'] : Api\Accounts::id2name($this->account),
 			$update ? lang('updated') : lang("created with id #%1", $this->account));
 	}
 

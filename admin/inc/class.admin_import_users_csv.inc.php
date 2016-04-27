@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare
+ * EGroupware admin
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package admin
@@ -10,6 +10,7 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
 
 /**
  * class import_csv for admin (users)
@@ -216,7 +217,7 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 				$this->results[$_action]++;
 				return true;
 			default:
-				throw new egw_exception('Unsupported action');
+				throw new Api\Exception('Unsupported action');
 
 		}
 	}

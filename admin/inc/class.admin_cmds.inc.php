@@ -1,14 +1,16 @@
 <?php
 /**
- * eGgroupWare admin - UI for the command queue
+ * EGgroupware admin - UI for the command queue
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * UI for the admin comand queue
@@ -19,9 +21,9 @@ class admin_cmds
 		'index' => true,
 		'remotes' => true,
 	);
-	
+
 	/**
-	 * calling get_rows of our static so_sql instance
+	 * calling get_rows of our static Api\Storage\Base instance
 	 *
 	 * @param array $query
 	 * @param array &$rows
@@ -30,10 +32,10 @@ class admin_cmds
 	 */
 	static function get_rows(array $query,&$rows,&$readonlys)
 	{
-		$GLOBALS['egw']->session->appsession('cmds','admin',$query);
+		Api\Cache::setSession('admin', 'cmds', $query);
 
 		$total = admin_cmd::get_rows($query,$rows,$readonlys);
-		
+
 		if (!$rows) return array();
 
 		foreach($rows as &$row)
@@ -50,11 +52,11 @@ class admin_cmds
 		//_debug_array($rows);
 		return $total;
 	}
-	
+
 	/**
 	 * Showing the command history and the scheduled commands
 	 *
-	 * @param array $content=null
+	 * @param array $content =null
 	 */
 	static function index(array $content=null)
 	{
@@ -62,7 +64,7 @@ class admin_cmds
 
 		if (!is_array($content))
 		{
-			$content['nm'] = $GLOBALS['egw']->session->appsession('cmds','admin');
+			$content['nm'] = Api\Cache::getSession('admin', 'cmds');
 			if (!is_array($content['nm']))
 			{
 				$content['nm'] = array(
@@ -72,14 +74,14 @@ class admin_cmds
 					'no_cat' => true,		// I  disable the cat-selectbox
 					'order' => 'cmd_created',
 					'sort' => 'DESC',
-				);		
+				);
 			}
 		}
 		elseif ($content['nm']['rows']['delete'])
 		{
 			list($id) = each($content['nm']['rows']['delete']);
 			unset($content['nm']['rows']);
-			
+
 			if (($cmd = admin_cmd::read($id)))
 			{
 				$cmd->delete();
@@ -91,7 +93,7 @@ class admin_cmds
 			'remote_id' => admin_cmd::remote_sites(),
 		),array(),$content);
 	}
-	
+
 	/**
 	 * get_rows for remote instances
 	 *
@@ -108,7 +110,7 @@ class admin_cmds
 	/**
 	 * Showing remote administration instances
 	 *
-	 * @param array $content=null
+	 * @param array $content =null
 	 */
 	static function remotes(array $content=null)
 	{
@@ -116,7 +118,7 @@ class admin_cmds
 
 		if (!is_array($content))
 		{
-			$content['nm'] = $GLOBALS['egw']->session->appsession('remotes','admin');
+			$content['nm'] = Api\Cache::getSession('admin', 'remotes');
 			if (!is_array($content['nm']))
 			{
 				$content['nm'] = array(
@@ -139,7 +141,7 @@ class admin_cmds
 			{
 				list($id) = each($content['nm']['rows']['edit']);
 				unset($content['nm']['rows']);
-				
+
 				$content['remote'] = admin_cmd::read_remote($id);
 			}
 			elseif($content['remote']['button'])
@@ -150,8 +152,8 @@ class admin_cmds
 				{
 					case 'save':
 					case 'apply':
-						if ($content['remote']['install_id'] && !$content['remote']['config_passwd'] || 
-							!$content['remote']['install_id'] && $content['remote']['config_passwd'] || 
+						if ($content['remote']['install_id'] && !$content['remote']['config_passwd'] ||
+							!$content['remote']['install_id'] && $content['remote']['config_passwd'] ||
 							!$content['remote']['remote_hash'] && !$content['remote']['install_id'] && !$content['remote']['config_passwd'])
 						{
 							$content['msg'] = lang('You need to enter Install ID AND Password!');
@@ -178,6 +180,6 @@ class admin_cmds
 			}
 		}
 		$tpl->exec('admin.admin_cmds.remotes',$content,array(),array(),$content);
-		
+
 	}
 }

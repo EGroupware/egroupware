@@ -10,6 +10,8 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
 
 /**
  * Site configuration for all apps using an $app/templates/default/config.tpl
@@ -27,7 +29,7 @@ class uiconfig
 			return $new_config->index();
 		}
 		// allowing inline js
-		egw_framework::csp_script_src_attrs('unsafe-inline');
+		Api\Header\ContentSecurityPolicy::add('script-src', 'unsafe-inline');
 
 		// for POST requests validate CSRF token (or terminate request)
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -46,7 +48,7 @@ class uiconfig
 		}
 		if ($GLOBALS['egw']->acl->check('site_config_acce',1,'admin'))
 		{
-			egw::redirect_link('/index.php');
+			Egw::redirect_link('/index.php');
 		}
 
 		// load the translations of the app we show too, so they dont need to be in admin!
@@ -75,8 +77,8 @@ class uiconfig
 				break;
 			case 'phpgwapi':
 			case '':
-				/* This keeps the admin from getting into what is a setup-only config */
-				egw::redirect_link('/admin/index.php');
+				/* This keeps the admin from getting into what is a setup-only Api\Config */
+				Egw::redirect_link('/admin/index.php');
 				break;
 			default:
 				$appname = $_appname;
@@ -84,7 +86,7 @@ class uiconfig
 				break;
 		}
 		if (ob_get_contents()) ob_end_flush(); // if there is output in buffer, flush it now.
-		$t = new Template(common::get_tpl_dir($appname));
+		$t = new Framework\Template(Framework\Template::get_dir($appname));
 		$t->set_unknowns('keep');
 		$t->set_file(array('config' => 'config.tpl'));
 		$t->set_block('config','header','header');
@@ -115,13 +117,13 @@ class uiconfig
 		$c->read_repository();
 		if ($_POST['cancel'] || ($_POST['submit'] || $_POST['save'] || $_POST['apply']) && $GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
 		{
-			egw::redirect_link('/admin/index.php?ajax=true');
+			Egw::redirect_link('/admin/index.php?ajax=true');
 		}
 
 		if ($_POST['submit'] || $_POST['save'] || $_POST['apply'])
 		{
-			/* Load hook file with functions to validate each config (one/none/all) */
-			$GLOBALS['egw']->hooks->single('config_validate',$appname);
+			/* Load hook file with functions to validate each Api\Config (one/none/all) */
+			Api\Hooks::single('config_validate',$appname);
 
 			foreach($_POST['newsettings'] as $key => $config)
 			{
@@ -160,8 +162,8 @@ class uiconfig
 
 			if(!$errors && !$_POST['apply'])
 			{
-				egw_framework::message(lang('Configuration saved.'), 'success');
-				egw::redirect_link('/index.php', array(
+				Framework::message(lang('Configuration saved.'), 'success');
+				Egw::redirect_link('/index.php', array(
 					'menuaction' => 'admin.admin_ui.index',
 					'ajax' => 'true'
 				), 'admin');
@@ -171,13 +173,13 @@ class uiconfig
 		$t->set_var('error','');
 		if($errors)
 		{
-			egw_framework::message(lang('Error') . ': ' . $errors, 'error');
+			Framework::message(lang('Error') . ': ' . $errors, 'error');
 			unset($errors);
 			unset($GLOBALS['config_error']);
 		}
 		elseif ($_POST['apply'])
 		{
-			egw_framework::message(lang('Configuration saved.'), 'success');
+			Framework::message(lang('Configuration saved.'), 'success');
 		}
 		$t->set_var('title',lang('Site Configuration'));
 		$t->set_var('action_url',$GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname));
@@ -185,11 +187,11 @@ class uiconfig
 		$t->set_var('th_text',   $GLOBALS['egw_info']['theme']['th_text']);
 		$t->set_var('row_on',    $GLOBALS['egw_info']['theme']['row_on']);
 		$t->set_var('row_off',   $GLOBALS['egw_info']['theme']['row_off']);
-		$t->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__CLASS__)));
+		$t->set_var('hidden_vars', Api\Html::input_hidden('csrf_token', Api\Csrf::token(__CLASS__)));
 
 		$vars = $t->get_undefined('body');
 
-		if ($GLOBALS['egw']->hooks->single('config',$appname))	// reload the config-values, they might have changed
+		if (Api\Hooks::single('config',$appname))	// reload the config-values, they might have changed
 		{
 			$c->read_repository();
 		}
@@ -270,9 +272,9 @@ class uiconfig
 		}
 		$t->set_var('submit', '<div class="dialogFooterToolbar" style="text-align: left">'.
 			($GLOBALS['egw']->acl->check('site_config_acce',2,'admin') ? '' :
-				html::submit_button('save', 'Save')."\n".
-				html::submit_button('apply', 'Apply')));
-		$t->set_var('cancel', html::submit_button('cancel', 'Cancel').'</div>');
+				Api\Html::submit_button('save', 'Save')."\n".
+				Api\Html::submit_button('apply', 'Apply')));
+		$t->set_var('cancel', Api\Html::submit_button('cancel', 'Cancel').'</div>');
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Site configuration').
 			($appname != 'admin' ? ': '.lang($appname) : '');

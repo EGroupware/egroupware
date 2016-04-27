@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware EMailAdmin: Wizard to create mail accounts
+ * EGroupware EMailAdmin: Wizard to create mail Api\Accounts
  *
  * @link http://www.stylite.de
  * @package emailadmin
@@ -11,6 +11,9 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
 use EGroupware\Api\Mail;
 
 /**
@@ -170,7 +173,7 @@ class admin_mail
 		// otherwise we cant switch to ckeditor in edit
 		Api\Html\CkEditorConfig::set_csp_script_src_attrs();
 
-		$tpl = new Api\Etemplate('admin.mailwizard');
+		$tpl = new Etemplate('admin.mailwizard');
 		if (empty($content['account_id']))
 		{
 			$content['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
@@ -182,7 +185,7 @@ class admin_mail
 			'acc_imap_port' => 993,
 			'manual_class' => 'emailadmin_manual',
 		);
-		egw_framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
+		Framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
 
 		if (!empty($content['acc_imap_host']) || !empty($content['acc_imap_username']))
 		{
@@ -326,19 +329,19 @@ class admin_mail
 			switch($e->getCode())
 			{
 				case Horde_Imap_Client_Exception::LOGIN_AUTHENTICATIONFAILED:
-					Api\Etemplate::set_validation_error('acc_imap_username', lang($e->getMessage()));
-					Api\Etemplate::set_validation_error('acc_imap_password', lang($e->getMessage()));
+					Etemplate::set_validation_error('acc_imap_username', lang($e->getMessage()));
+					Etemplate::set_validation_error('acc_imap_password', lang($e->getMessage()));
 					break;
 
 				case Horde_Imap_Client_Exception::SERVER_CONNECT:
-					Api\Etemplate::set_validation_error('acc_imap_host', lang($e->getMessage()));
+					Etemplate::set_validation_error('acc_imap_host', lang($e->getMessage()));
 					break;
 			}
 		}
 		$readonlys['button[manual]'] = true;
 		unset($content['manual_class']);
 		$sel_options['acc_imap_ssl'] = self::$ssl_types;
-		$tpl = new Api\Etemplate('admin.mailwizard');
+		$tpl = new Etemplate('admin.mailwizard');
 		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys, $content, 2);
 	}
 
@@ -378,7 +381,7 @@ class admin_mail
 			if (self::$debug) _egw_log_exception($e);
 		}
 
-		$tpl = new Api\Etemplate('admin.mailwizard.folder');
+		$tpl = new Etemplate('admin.mailwizard.folder');
 		$tpl->exec(static::APP_CLASS.'folder', $content, $sel_options, array(), $content);
 	}
 
@@ -578,15 +581,15 @@ class admin_mail
 				case 61:	// connection refused
 				case 60:	// connection timed out (imap.googlemail.com returns that for none-ssl/4190/2000)
 				case 65:	// no route ot host (imap.googlemail.com returns that for ssl/5190)
-					Api\Etemplate::set_validation_error('acc_sieve_host', lang($e->getMessage()));
-					Api\Etemplate::set_validation_error('acc_sieve_port', lang($e->getMessage()));
+					Etemplate::set_validation_error('acc_sieve_host', lang($e->getMessage()));
+					Etemplate::set_validation_error('acc_sieve_port', lang($e->getMessage()));
 					break;
 			}
 			$content['msg'] = lang('No sieve support detected, either fix configuration manually or leave it switched off.');
 			$content['acc_sieve_enabled'] = 0;
 		}
 		$sel_options['acc_sieve_ssl'] = self::$ssl_types;
-		$tpl = new Api\Etemplate('admin.mailwizard.sieve');
+		$tpl = new Etemplate('admin.mailwizard.sieve');
 		$tpl->exec(static::APP_CLASS.'sieve', $content, $sel_options, $readonlys, $content, 2);
 	}
 
@@ -776,18 +779,18 @@ class admin_mail
 				case Horde_Smtp_Exception::LOGIN_AUTHENTICATIONFAILED:
 				case Horde_Smtp_Exception::LOGIN_REQUIREAUTHENTICATION:
 				case Horde_Smtp_Exception::UNSPECIFIED:
-					Api\Etemplate::set_validation_error('acc_smtp_username', lang($e->getMessage()));
-					Api\Etemplate::set_validation_error('acc_smtp_password', lang($e->getMessage()));
+					Etemplate::set_validation_error('acc_smtp_username', lang($e->getMessage()));
+					Etemplate::set_validation_error('acc_smtp_password', lang($e->getMessage()));
 					break;
 
 				case Horde_Smtp_Exception::SERVER_CONNECT:
-					Api\Etemplate::set_validation_error('acc_smtp_host', lang($e->getMessage()));
-					Api\Etemplate::set_validation_error('acc_smtp_port', lang($e->getMessage()));
+					Etemplate::set_validation_error('acc_smtp_host', lang($e->getMessage()));
+					Etemplate::set_validation_error('acc_smtp_port', lang($e->getMessage()));
 					break;
 			}
 		}
 		$sel_options['acc_smtp_ssl'] = self::$ssl_types;
-		$tpl = new Api\Etemplate('admin.mailwizard.smtp');
+		$tpl = new Etemplate('admin.mailwizard.smtp');
 		$tpl->exec(static::APP_CLASS.'smtp', $content, $sel_options, $readonlys, $content, 2);
 	}
 
@@ -813,7 +816,7 @@ class admin_mail
 			if (stripos($_GET['msg'],'fatal error:')!==false || $_GET['msg_type'] == 'error') $msg_type = 'error';
 		}
 		if ($content['acc_id'] || (isset($_GET['acc_id']) && (int)$_GET['acc_id'] > 0) ) Mail::unsetCachedObjects($content['acc_id']?$content['acc_id']:$_GET['acc_id']);
-		$tpl = new Api\Etemplate('admin.mailaccount');
+		$tpl = new Etemplate('admin.mailaccount');
 
 		if (!is_array($content) || !empty($content['acc_id']) && isset($content['old_acc_id']) && $content['acc_id'] != $content['old_acc_id'])
 		{
@@ -879,11 +882,11 @@ class admin_mail
 				}
 				catch(Api\Exception\NotFound $e) {
 					if (self::$debug) _egw_log_exception($e);
-					egw_framework::window_close(lang('Account not found!'));
+					Framework::window_close(lang('Account not found!'));
 				}
 				catch(Exception $e) {
 					if (self::$debug) _egw_log_exception($e);
-					egw_framework::window_close($e->getMessage().' ('.get_class($e).': '.$e->getCode().')');
+					Framework::window_close($e->getMessage().' ('.get_class($e).': '.$e->getCode().')');
 				}
 			}
 			elseif ($content['acc_id'] === 'new')
@@ -925,7 +928,7 @@ class admin_mail
 			unset($content['acc_smtp_auth_session']);
 			unset($content['notify_use_default']);
 		}
-		$edit_access = Mail\Account::check_access(EGW_ACL_EDIT, $content);
+		$edit_access = Mail\Account::check_access(Acl::EDIT, $content);
 
 		// disable notification save-default and use-default, if only one account or no edit-rights
 		$tpl->disableElement('notify_save_default', !$is_multiple || !$edit_access);
@@ -993,7 +996,7 @@ class admin_mail
 								$content['deliveryMode'] == Mail\Smtp::FORWARD_ONLY &&
 								empty($content['mailForwardingAddress']))
 							{
-								Api\Etemplate::set_validation_error('mailForwardingAddress', lang('Field must not be empty !!!'));
+								Etemplate::set_validation_error('mailForwardingAddress', lang('Field must not be empty !!!'));
 								throw new Api\Exception\WrongUserinput(lang('You need to specify a forwarding address, when checking "%1"!', lang('Forward only')));
 							}
 							// set notifications to store according to checkboxes
@@ -1092,12 +1095,12 @@ class admin_mail
 					}
 					if ($content['acc_id']) Mail::unsetCachedObjects($content['acc_id']);
 					if (stripos($msg,'fatal error:')!==false) $msg_type = 'error';
-					egw_framework::refresh_opener($msg, 'emailadmin', $content['acc_id'], $new_account ? 'add' : 'update', null, null, null, $msg_type);
-					if ($button == 'save') egw_framework::window_close();
+					Framework::refresh_opener($msg, 'emailadmin', $content['acc_id'], $new_account ? 'add' : 'update', null, null, null, $msg_type);
+					if ($button == 'save') Framework::window_close();
 					break;
 
 				case 'delete':
-					if (!Mail\Account::check_access(EGW_ACL_DELETE, $content))
+					if (!Mail\Account::check_access(Acl::DELETE, $content))
 					{
 						$msg = lang('Permission denied!');
 						$msg_type = 'error';
@@ -1105,8 +1108,8 @@ class admin_mail
 					elseif (Mail\Account::delete($content['acc_id']) > 0)
 					{
 						if ($content['acc_id']) Mail::unsetCachedObjects($content['acc_id']);
-						egw_framework::refresh_opener(lang('Account deleted.'), 'emailadmin', $content['acc_id'], 'delete');
-						egw_framework::window_close();
+						Framework::refresh_opener(lang('Account deleted.'), 'emailadmin', $content['acc_id'], 'delete');
+						Framework::window_close();
 					}
 					else
 					{
@@ -1118,7 +1121,7 @@ class admin_mail
 
 		// disable delete button for new, not yet saved entries, if no delete rights or a non-standard identity selected
 		$readonlys['button[delete]'] = empty($content['acc_id']) ||
-			!Mail\Account::check_access(EGW_ACL_DELETE, $content) ||
+			!Mail\Account::check_access(Acl::DELETE, $content) ||
 			$content['ident_id'] != $content['std_ident_id'];
 
 		// if account is for multiple user, change delete confirmation to reflect that
@@ -1249,7 +1252,7 @@ class admin_mail
 				'tabs' => array_merge((array)$readonlys['tabs'], (array)$imap_ro['tabs']),
 			));
 		}
-		egw_framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
+		Framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
 
 		if (count($content['account_id']) > 1)
 		{
@@ -1260,7 +1263,7 @@ class admin_mail
 		if ($content['called_for'] && $content['acc_id'] > 0)
 		{
 			$admin_actions = array();
-			foreach($GLOBALS['egw']->hooks->process(array(
+			foreach(Api\Hooks::process(array(
 				'location' => 'emailadmin_edit',
 				'account_id' => $content['called_for'],
 				'acc_id' => $content['acc_id'],
@@ -1453,7 +1456,7 @@ class admin_mail
 	public function ajax_activeAccounts($_data)
 	{
 		if (!$this->is_admin) die('no rights to be here!');
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		if (($account = $GLOBALS['egw']->accounts->read($_data['id'])))
 		{
 			if ($_data['quota'] !== '' || $_data['accountStatus'] !== ''

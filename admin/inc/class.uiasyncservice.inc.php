@@ -9,6 +9,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Egw;
+
 /**
  * Class to admin cron-job like timed calls of eGroupWare methods
  */
@@ -22,11 +25,11 @@ class uiasyncservice
 	{
 		if ($GLOBALS['egw']->acl->check('asyncservice_acc',1,'admin'))
 		{
-			egw::redirect_link('/index.php');
+			Egw::redirect_link('/index.php');
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Asynchronous timed services');
 
-		common::egw_header();
+		$GLOBALS['egw']->framework->header();
 		echo parse_navbar();
 
 		$async = $GLOBALS['egw']->asyncservice;	// use an own instance, as we might set debug=True
@@ -88,12 +91,12 @@ class uiasyncservice
 		echo '<div style="text-align: left; margin: 10px;">'."\n";
 
 		$last_run = $async->last_check_run();
-		$lr_date = $last_run['end'] ? common::show_date($last_run['end']) : lang('never');
+		$lr_date = $last_run['end'] ? Api\DateTime::server2user($last_run['end']) : lang('never');
 		echo '<p><b>'.lang('Async services last executed').'</b>: '.$lr_date.' ('.$last_run['run_by'].")</p>\n<hr>\n";
 
 		if (isset($_POST['asyncservice']) && $_POST['asyncservice'] != $GLOBALS['egw_info']['server']['asyncservice'])
 		{
-			config::save_value('asyncservice', $GLOBALS['egw_info']['server']['asyncservice']=$_POST['asyncservice'], 'phpgwapi');
+			Api\Config::save_value('asyncservice', $GLOBALS['egw_info']['server']['asyncservice']=$_POST['asyncservice'], 'phpgwapi');
 		}
 		if (!$async->only_fallback)
 		{
@@ -158,7 +161,7 @@ class uiasyncservice
 		{
 			$next = $async->next_run($times,True);
 
-			echo "<p>asyncservice::next_run(";print_r($times);echo")=".($next === False ? 'False':"'$next'=".common::show_date($next))."</p>\n";
+			echo "<p>asyncservice::next_run(";print_r($times);echo")=".($next === False ? 'False':"'$next'=".Api\DateTime::server2user($next))."</p>\n";
 		}
 		echo '<hr><p><input type="submit" name="cancel" value="'.lang('Cancel TestJob!')."\"> &nbsp;\n";
 		echo '<input type="submit" name="test" value="'.lang('Start TestJob!')."\">\n";
@@ -171,7 +174,7 @@ class uiasyncservice
 			echo "<table border=1>\n<tr>\n<th>Id</th><th>".lang('Next run').'</th><th>'.lang('Times').'</th><th>'.lang('Method').'</th><th>'.lang('Data')."</th><th>".lang('LoginID')."</th></tr>\n";
 			foreach($jobs as $job)
 			{
-				echo "<tr>\n<td>$job[id]</td><td>".common::show_date($job['next'])."</td><td>";
+				echo "<tr>\n<td>$job[id]</td><td>".Api\DateTime::server2user($job['next'])."</td><td>";
 				print_r($job['times']);
 				echo "</td><td>$job[method]</td><td>";
 				print_r($job['data']);

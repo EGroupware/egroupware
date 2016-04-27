@@ -8,11 +8,13 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 $GLOBALS['acl_manager']['admin']['site_config_acce'] = array(
 	'name' => 'Deny access to site configuration',
 	'rights' => array(
-		'List config settings'   => 1,
-		'Change config settings' => 2
+		'List Api\Config settings'   => 1,
+		'Change Api\Config settings' => 2
 	)
 );	// added and working ralfbecker
 

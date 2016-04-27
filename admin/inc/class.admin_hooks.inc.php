@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Egw;
 
 /**
  * Static hooks for admin application
@@ -57,7 +58,7 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('site_config_acce',1,'admin'))
 			{
-				$file['Site Configuration']         = egw::link('/index.php','menuaction=admin.admin_config.index&appname=admin&ajax=true');
+				$file['Site Configuration']         = Egw::link('/index.php','menuaction=admin.admin_config.index&appname=admin&ajax=true');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
@@ -70,7 +71,7 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('account_access',16,'admin'))
 			{
-				$file['Bulk password reset']        = egw::link('/index.php','menuaction=admin.admin_passwordreset.index&ajax=true');
+				$file['Bulk password reset']        = Egw::link('/index.php','menuaction=admin.admin_passwordreset.index&ajax=true');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('group_access',1,'admin'))
@@ -84,28 +85,28 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('global_categorie',1,'admin'))
 			{
-				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.admin_categories.index&appname=phpgw&ajax=true');
+				$file['Global Categories']          = Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=phpgw&ajax=true');
 			}
 
 			if (!$GLOBALS['egw']->acl->check('mainscreen_messa',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_messa',2,'admin'))
 			{
-				$file['Change Main Screen Message'] = egw::link('/index.php','menuaction=admin.uimainscreen.index');
+				$file['Change Main Screen Message'] = Egw::link('/index.php','menuaction=admin.uimainscreen.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('current_sessions',1,'admin'))
 			{
-				$file['View Sessions'] = egw::link('/index.php','menuaction=admin.admin_accesslog.sessions&ajax=true');
+				$file['View Sessions'] = Egw::link('/index.php','menuaction=admin.admin_accesslog.sessions&ajax=true');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('access_log_acces',1,'admin'))
 			{
-				$file['View Access Log'] = egw::link('/index.php','menuaction=admin.admin_accesslog.index&ajax=true');
+				$file['View Access Log'] = Egw::link('/index.php','menuaction=admin.admin_accesslog.index&ajax=true');
 			}
 
 			/* disable old EGroupware error_log, as it is not used anymore
 			if (! $GLOBALS['egw']->acl->check('error_log_access',1,'admin'))
 			{
-				$file['View Error Log']  = egw::link('/index.php','menuaction=admin.uilog.list_log');
+				$file['View Error Log']  = Egw::link('/index.php','menuaction=admin.uilog.list_log');
 			}*/
 
 			if (! $GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
@@ -120,24 +121,24 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('asyncservice_acc',1,'admin'))
 			{
-				$file['Asynchronous timed services'] = egw::link('/index.php','menuaction=admin.uiasyncservice.index');
+				$file['Asynchronous timed services'] = Egw::link('/index.php','menuaction=admin.uiasyncservice.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('db_backup_access',1,'admin'))
 			{
-				$file['DB backup and restore'] = egw::link('/index.php','menuaction=admin.admin_db_backup.index');
+				$file['DB backup and restore'] = Egw::link('/index.php','menuaction=admin.admin_db_backup.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('info_access',1,'admin'))
 			{
-				$file['phpInfo']         = "javascript:egw.openPopup('" . egw::link('/admin/phpinfo.php','',false) . "',960,600,'phpinfoWindow')";
+				$file['phpInfo']         = "javascript:egw.openPopup('" . Egw::link('/admin/phpinfo.php','',false) . "',960,600,'phpinfoWindow')";
 			}
-			$file['Admin queue and history'] = egw::link('/index.php','menuaction=admin.admin_cmds.index');
-			$file['Remote administration instances'] = egw::link('/index.php','menuaction=admin.admin_cmds.remotes');
-			$file['Custom translation'] = egw::link('/index.php','menuaction=admin.admin_customtranslation.index');
-			$file['Changelog and versions'] = egw::link('/about.php');
+			$file['Admin queue and history'] = Egw::link('/index.php','menuaction=admin.admin_cmds.index');
+			$file['Remote administration instances'] = Egw::link('/index.php','menuaction=admin.admin_cmds.remotes');
+			$file['Custom translation'] = Egw::link('/index.php','menuaction=admin.admin_customtranslation.index');
+			$file['Changelog and versions'] = Egw::link('/about.php');
 
-			$file['Submit statistic information'] = egw::link('/index.php','menuaction=admin.admin_statistics.submit');
+			$file['Submit statistic information'] = Egw::link('/index.php','menuaction=admin.admin_statistics.submit');
 
 			if ($location == 'admin')
 			{
@@ -167,7 +168,7 @@ class admin_hooks
 
 		Api\Image::invalidate();
 
-		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// Egw object in setup is limited
 		{
 			$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
 		}
@@ -256,7 +257,7 @@ class admin_hooks
 	 * Called before displaying site configuration
 	 *
 	 * @param array $config
-	 * @return array with additional config to merge
+	 * @return array with additional Api\Config to merge
 	 */
 	public static function config(array $config)
 	{

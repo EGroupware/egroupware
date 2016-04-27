@@ -11,6 +11,9 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Etemplate;
 
 /**
  * UI for admin
@@ -28,7 +31,7 @@ class admin_ui
 	/**
 	 * Reference to global accounts object
 	 *
-	 * @var accounts
+	 * @var Api\Accounts
 	 */
 	private static $accounts;
 
@@ -43,7 +46,7 @@ class admin_ui
 		{
 			$_GET['load'] = 'admin.admin_statistics.submit';
 		}
-		$tpl = new Api\Etemplate('admin.index');
+		$tpl = new Etemplate('admin.index');
 
 		if (!is_array($content)) $content = array();
 		$content['nm'] = array(
@@ -89,7 +92,7 @@ class admin_ui
 			$vars['menuaction'] = $vars['load'];
 			unset($vars['ajax']);
 			unset($vars['load']);
-			$content['iframe'] = egw::link('/index.php', $vars);
+			$content['iframe'] = Egw::link('/index.php', $vars);
 		}
 		else
 		{
@@ -142,11 +145,11 @@ class admin_ui
 		}
 		$group = 5;	// allow to place actions in different groups by hook, this is the default
 		// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
-		$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_group')));
+		$apps = array_unique(array_merge(array('admin'), Api\Hooks::implemented('edit_group')));
 		foreach($apps as $app)
 		{
 			$GLOBALS['menuData'] = $data = array();
-			$data = $GLOBALS['egw']->hooks->single('edit_group', $app);
+			$data = Api\Hooks::single('edit_group', $app);
 			if (!is_array($data)) $data = $GLOBALS['menuData'];
 			//error_log(__METHOD__."() app $app returned ".array2string($data));
 			foreach($data as $item)
@@ -209,7 +212,7 @@ class admin_ui
 				),
 			);
 			// generate urls for add/edit accounts via addressbook
-			$edit = Api\Link::get_registry('addressbook', 'edit');
+			$edit = Link::get_registry('addressbook', 'edit');
 			$edit['account_id'] = '$id';
 			foreach($edit as $name => $val)
 			{
@@ -223,11 +226,11 @@ class admin_ui
 			}
 			++$group;
 			// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
-			$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_user')));
+			$apps = array_unique(array_merge(array('admin'), Api\Hooks::implemented('edit_user')));
 			foreach($apps as $app)
 			{
 				$GLOBALS['menuData'] = $data = array();
-				$data = $GLOBALS['egw']->hooks->single('edit_user', $app);
+				$data = Api\Hooks::single('edit_user', $app);
 				if (!is_array($data)) $data = $GLOBALS['menuData'];
 				foreach($data as $item)
 				{
@@ -321,7 +324,7 @@ class admin_ui
 	 */
 	public static function ajax_tree()
 	{
-		Api\Etemplate\Widget\Tree::send_quote_json(self::tree_data(!empty($_GET['id']) ? $_GET['id'] : '/'));
+		Etemplate\Widget\Tree::send_quote_json(self::tree_data(!empty($_GET['id']) ? $_GET['id'] : '/'));
 	}
 
 	/**
@@ -376,7 +379,7 @@ class admin_ui
 					}
 					if (!empty($data['icon']))
 					{
-						$icon = Api\Etemplate\Widget\Tree::imagePath($data['icon']);
+						$icon = Etemplate\Widget\Tree::imagePath($data['icon']);
 						if ($data['child'] || $data['item'])
 						{
 							$data['im1'] = $data['im2'] = $icon;
@@ -397,7 +400,7 @@ class admin_ui
 						$path .= ($path == '/' ? '' : '/').$part;
 						if (!isset($parent[$path]))
 						{
-							$icon = Api\Etemplate\Widget\Tree::imagePath($part == 'apps' ? Api\Image::find('phpgwapi', 'home') :
+							$icon = Etemplate\Widget\Tree::imagePath($part == 'apps' ? Api\Image::find('phpgwapi', 'home') :
 								(($i=Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('phpgwapi', 'nonav')));
 							$parent[$path] = array(
 								'id' => $path,
@@ -493,9 +496,9 @@ class admin_ui
 			admin_ui::$hook_data[$appname] = $file2 ? $file2 : $file;
 			//error_log(__METHOD__."(".array2string(func_get_args()).")");
 		}
-		self::$hook_data = array_merge($GLOBALS['egw']->hooks->process('admin', array('admin')), self::$hook_data);
+		self::$hook_data = array_merge(Api\Hooks::process('admin', array('admin')), self::$hook_data);
 
-		// sort apps alphabetic by their title / translation of app-name
+		// sort apps alphabetic by their title / Api\Translation of app-name
 		uksort(self::$hook_data, function($a, $b)
 		{
 			return strcasecmp(lang($a), lang($b));

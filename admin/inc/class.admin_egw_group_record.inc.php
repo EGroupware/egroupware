@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Admin - importexport
+ * EGroup2are - Admin - importexport
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package admin
@@ -11,13 +11,14 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * class admin_egw_group_record
  * Record class needed for export
  */
 class admin_egw_group_record implements importexport_iface_egw_record
 {
-
 	private $identifier = '';
 	private $group = array();
 
@@ -26,8 +27,6 @@ class admin_egw_group_record implements importexport_iface_egw_record
 		'select-account' => array('account_members'),
 		'select' => array('account_status'),
 	);
-
-
 
 	/**
 	 * constructor
@@ -81,7 +80,7 @@ class admin_egw_group_record implements importexport_iface_egw_record
 	 *@return string title
 	 */
 	public function get_title() {
-		return common::grab_owner_name($this->identifier);
+		return Api\Accounts::username($this->identifier);
 	}
 
 	/**
@@ -113,14 +112,14 @@ class admin_egw_group_record implements importexport_iface_egw_record
 	public function get_icon() {
 		return 'group';
 	}
-	
+
 	/**
 	 * saves record into backend
 	 *
 	 * @return string identifier
 	 */
 	public function save ( $_dst_identifier ) {
-
+		unset($_dst_identifier);	// not used, but require by function signature
 	}
 
 	/**
@@ -130,7 +129,7 @@ class admin_egw_group_record implements importexport_iface_egw_record
 	 * @return string dst_identifier
 	 */
 	public function copy ( $_dst_identifier ) {
-
+		unset($_dst_identifier);	// not used, but require by function signature
 	}
 
 	/**
@@ -141,7 +140,7 @@ class admin_egw_group_record implements importexport_iface_egw_record
 	 * @return string dst_identifier
 	 */
 	public function move ( $_dst_identifier ) {
-
+		unset($_dst_identifier);	// not used, but require by function signature
 	}
 
 	/**
@@ -159,5 +158,4 @@ class admin_egw_group_record implements importexport_iface_egw_record
 	public function __destruct() {
 		unset ($this->group);
 	}
-
-} // end of egw_timesheet_record
+}

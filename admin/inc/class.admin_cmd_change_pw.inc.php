@@ -1,14 +1,16 @@
 <?php
 /**
- * eGgroupWare admin - admin command: change the password of a given user
+ * EGgroupware admin - admin command: change the password of a given user
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * admin command: change the password of a given user
@@ -18,8 +20,8 @@ class admin_cmd_change_pw extends admin_cmd
 	/**
 	 * Constructor
 	 *
-	 * @param string/int/array $account account name or id, or array with all parameters
-	 * @param string $password=null password
+	 * @param string|int|array $account account name or id, or array with all parameters
+	 * @param string $password =null password
 	 */
 	function __construct($account,$password=null)
 	{
@@ -36,25 +38,25 @@ class admin_cmd_change_pw extends admin_cmd
 	/**
 	 * change the password of a given user
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
-	 * @throws egw_exception_no_admin
-	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
-	 * @throws egw_exception_wrong_userinput(lang('Error changing the password for %1 !!!',$this->account),99);
+	 * @throws Api\Exception\NoPermission\Admin
+	 * @throws Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws Api\Exception\WrongUserinput(lang('Error changing the password for %1 !!!',$this->account),99);
 	 */
 	protected function exec($check_only=false)
 	{
 		$account_id = admin_cmd::parse_account($this->account,true);	// true = user, no group
-		// check creator is still admin and not explicitly forbidden to edit accounts
+		// check creator is still admin and not explicitly forbidden to edit Api\Accounts
 		if ($this->creator) $this->_check_admin('account_access',16);
 
 		if ($check_only) return true;
 
-		$auth = new auth;
+		$auth = new Api\Auth;
 
 		if (!$auth->change_password(null, $this->password, $account_id))
 		{
-			// as long as the auth class is not throwing itself ...
+			// as long as the Api\Auth class is not throwing itself ...
 			throw new Exception(lang('Error changing the password for %1 !!!',$this->account),99);
 		}
 		return lang('Password updated');

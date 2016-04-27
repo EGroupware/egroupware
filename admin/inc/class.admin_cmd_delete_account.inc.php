@@ -1,14 +1,16 @@
 <?php
 /**
- * eGgroupWare admin - admin command: delete an account (user or group)
+ * EGroupware admin - admin command: delete an account (user or group)
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * admin command: delete an account (user or group)
@@ -18,9 +20,9 @@ class admin_cmd_delete_account extends admin_cmd
 	/**
 	 * Constructor
 	 *
-	 * @param string/int/array $account account name or id, or array with all parameters
-	 * @param string $new_user=null if specified, account to transfer the data to (users only)
-	 * @param string $is_user=true type of the account: true=user, false=group
+	 * @param string|int|array $account account name or id, or array with all parameters
+	 * @param string $new_user =null if specified, account to transfer the data to (users only)
+	 * @param string $is_user =true type of the account: true=user, false=group
 	 */
 	function __construct($account,$new_user=null,$is_user=true)
 	{
@@ -38,11 +40,11 @@ class admin_cmd_delete_account extends admin_cmd
 	/**
 	 * delete an account (user or group)
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
-	 * @throws egw_exception_no_admin
-	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
-	 * @throws egw_exception_wrong_userinput(lang('Error changing the password for %1 !!!',$this->account),99);
+	 * @throws Api\Exception\NoPermission\Admin
+	 * @throws Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws Api\Exception\WrongUserinput(lang('Error changing the password for %1 !!!',$this->account),99);
 	 */
 	protected function exec($check_only=false)
 	{
@@ -70,7 +72,7 @@ class admin_cmd_delete_account extends admin_cmd
 		// first all other apps, then preferences and admin
 		foreach(array_merge(array_diff(array_keys($GLOBALS['egw_info']['apps']),array('preferences','admin')),array('preferences','admin')) as $app)
 		{
-			$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$app);
+			Api\Hooks::single($GLOBALS['hook_values'],$app);
 		}
 		$GLOBALS['egw']->accounts->delete($account_id);
 

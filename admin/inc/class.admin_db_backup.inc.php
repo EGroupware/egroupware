@@ -42,12 +42,12 @@ class admin_db_backup
 	{
 		$tpl_root = EGW_SERVER_ROOT.'/setup/templates/default';
 		$self = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'admin.admin_db_backup.index'));
-		translation::add_app('setup');
-		egw_framework::csp_script_src_attrs('unsafe-inline');
+		Api\Translation::add_app('setup');
+		Api\Header\ContentSecurityPolicy::add('script-src', 'unsafe-inline');
 
 		include EGW_SERVER_ROOT.'/setup/db_backup.php';
 
 		unset($tpl_root, $self);
-		common::egw_footer();
+		$GLOBALS['egw']->framework->footer();
 	}
 }

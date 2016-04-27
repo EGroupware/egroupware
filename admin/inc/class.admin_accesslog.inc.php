@@ -1,14 +1,17 @@
 <?php
 /**
- * EGgroupware admin - access- and session-log
+ * EGroupware admin - access- and session-log
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2009-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Etemplate;
 
 /**
  * Show EGroupware access- and session-log
@@ -28,7 +31,7 @@ class admin_accesslog
 	/**
 	 * Our storage object
 	 *
-	 * @var so_sql
+	 * @var Api\Storage\Base
 	 */
 	protected $so;
 
@@ -47,7 +50,7 @@ class admin_accesslog
 	 */
 	function __construct()
 	{
-		$this->so = new so_sql(self::APP,self::TABLE,null,'',true);
+		$this->so = new Api\Storage\Base(self::APP,self::TABLE,null,'',true);
 		$this->so->timestamps = array('li', 'lo', 'session_dla', 'notification_heartbeat');
 	}
 
@@ -62,7 +65,7 @@ class admin_accesslog
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
-		$heartbeat_limit = egw_session::heartbeat_limit();
+		$heartbeat_limit = Api\Session::heartbeat_limit();
 
 		if ($query['session_list'])	// filter active sessions
 		{
@@ -82,7 +85,7 @@ class admin_accesslog
 		}
 		$total = $this->so->get_rows($query,$rows,$readonlys);
 
-		$heartbeat_limit_user = egw_time::server2user($heartbeat_limit, 'ts');
+		$heartbeat_limit_user = Api\DateTime::server2user($heartbeat_limit, 'ts');
 
 		foreach($rows as &$row)
 		{
@@ -124,7 +127,7 @@ class admin_accesslog
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.
 			($query['session_list'] ? lang('View sessions') : lang('View Access Log')).
-			($query['col_filter']['account_id'] ? ': '.common::grab_owner_name($query['col_filter']['account_id']) : '');
+			($query['col_filter']['account_id'] ? ': '.Api\Accounts::username($query['col_filter']['account_id']) : '');
 
 		return $total;
 	}
@@ -241,7 +244,7 @@ class admin_accesslog
 			'SELECT ((SELECT COUNT(*) FROM '.self::TABLE.' WHERE lo != 0) / COUNT(*)) FROM '.self::TABLE,
 			__LINE__,__FILE__)->fetchColumn();
 
-		$tmpl = new etemplate_new('admin.accesslog');
+		$tmpl = new Etemplate('admin.accesslog');
 		$tmpl->exec('admin.admin_accesslog.index', $content, array(), $readonlys, array(
 			'nm' => $content['nm'],
 		));

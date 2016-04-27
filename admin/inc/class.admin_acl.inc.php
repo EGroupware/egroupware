@@ -10,6 +10,11 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * UI for admin ACL
  *
@@ -26,9 +31,9 @@ class admin_acl
 	);
 
 	/**
-	 * Reference to global acl class (instanciated for current user)
+	 * Reference to global Acl class (instanciated for current user)
 	 *
-	 * @var acl
+	 * @var Acl
 	 */
 	protected $acl;
 
@@ -70,15 +75,15 @@ class admin_acl
 		}
 		elseif (!$old_apps)
 		{
-			egw_framework::refresh_opener(lang('ACL added.'), 'admin', null, 'add');
+			Framework::refresh_opener(lang('ACL added.'), 'admin', null, 'add');
 		}
 		elseif (!$added_apps)
 		{
-			egw_framework::refresh_opener(lang('ACL deleted.'), 'admin', $deleted_ids, 'delete');
+			Framework::refresh_opener(lang('ACL deleted.'), 'admin', $deleted_ids, 'delete');
 		}
 		else
 		{
-			egw_framework::refresh_opener(lang('ACL updated.'), 'admin', null, 'edit');
+			Framework::refresh_opener(lang('ACL updated.'), 'admin', null, 'edit');
 		}
 	}
 
@@ -106,24 +111,24 @@ class admin_acl
 		elseif (!$rights)	// all rights removed --> delete it
 		{
 			$this->acl->delete_repository($content['acl_appname'], $content['acl_location'], $content['acl_account']);
-			egw_framework::refresh_opener(lang('ACL deleted.'), 'admin', $id, 'delete');
+			Framework::refresh_opener(lang('ACL deleted.'), 'admin', $id, 'delete');
 		}
 		else
 		{
 			$this->acl->add_repository($content['acl_appname'], $content['acl_location'], $content['acl_account'], $rights);
 			if ($content['id'])
 			{
-				egw_framework::refresh_opener(lang('ACL updated.'), 'admin', $id, 'edit');
+				Framework::refresh_opener(lang('ACL updated.'), 'admin', $id, 'edit');
 			}
 			else
 			{
-				egw_framework::refresh_opener(lang('ACL added.'), 'admin', $id, 'add');
+				Framework::refresh_opener(lang('ACL added.'), 'admin', $id, 'add');
 			}
 		}
 	}
 
 	/**
-	 * Callback for nextmatch to fetch acl
+	 * Callback for nextmatch to fetch Acl
 	 *
 	 * @param array $query
 	 * @param array &$rows=null
@@ -131,7 +136,7 @@ class admin_acl
 	 */
 	public static function get_rows(array $query, array &$rows=null)
 	{
-		$so_sql = new so_sql('phpgwapi', acl::TABLE, null, '', true);
+		$so_sql = new Api\Storage\Base('phpgwapi', Acl::TABLE, null, '', true);
 
 		// client queries destinct rows by their row-id
 		if (isset($query['col_filter']['id']))
@@ -145,7 +150,7 @@ class admin_acl
 			$memberships = $GLOBALS['egw']->accounts->memberships($query['account_id'], true);
 			$memberships[] = $query['account_id'];
 
-			egw_cache::setSession(__CLASS__, 'state', array(
+			Api\Cache::setSession(__CLASS__, 'state', array(
 				'account_id' => $query['account_id'],
 				'filter' => $query['filter'],
 				'acl_appname' => $query['filter2'],
@@ -175,7 +180,7 @@ class admin_acl
 						$query['col_filter'][] = "acl_location SIMILAR TO '-?[0-9]+'";
 					}
 					// get apps not using group-acl (eg. Addressbook) or using it only partialy (eg. InfoLog)
-					$not_enum_group_acls = $GLOBALS['egw']->hooks->process('not_enum_group_acls', array(), true);
+					$not_enum_group_acls = Api\Hooks::process('not_enum_group_acls', array(), true);
 					//error_log(__METHOD__."(filter=$query[filter]) not_enum_group_acl=".array2string($not_enum_group_acls));
 					if ($not_enum_group_acls)
 					{
@@ -192,13 +197,13 @@ class admin_acl
 								//error_log(__METHOD__."() app=$app, array_diff(memberships=".array2string($memberships).", groups=".array2string($groups).")=".array2string($check));
 								if (!$check) continue;	// would give sql error otherwise!
 							}
-							$sql .= ' WHEN '.$GLOBALS['egw']->db->quote($app).' THEN '.$GLOBALS['egw']->db->expression(acl::TABLE, array(
+							$sql .= ' WHEN '.$GLOBALS['egw']->db->quote($app).' THEN '.$GLOBALS['egw']->db->expression(Acl::TABLE, array(
 								'acl_account' => $check,
 							));
 						}
 						$sql .= ' ELSE ';
 					}
-					$sql .= $GLOBALS['egw']->db->expression(acl::TABLE, array(
+					$sql .= $GLOBALS['egw']->db->expression(Acl::TABLE, array(
 						'acl_account' => $memberships,
 					));
 					if ($not_enum_group_acls) $sql .= ' END)';
@@ -231,7 +236,7 @@ class admin_acl
 			}
 			else
 			{
-				if ($app !== $row['acl_appname']) translation::add_app($row['app_name']);
+				if ($app !== $row['acl_appname']) Api\Translation::add_app($row['app_name']);
 				foreach($query['acl_rights'][$row['acl_appname']] as $val => $label)
 				{
 					if ($row['acl_rights'] & $val)
@@ -260,7 +265,7 @@ class admin_acl
 			$rows['sel_options']['filter2'] = array(
 				array('value' => '', 'label' => lang('All applications'))
 			);
-			$apps = $GLOBALS['egw']->hooks->process(array(
+			$apps = Api\Hooks::process(array(
 				'location' => 'acl_rights',
 				'owner' => $query['account_id'],
 			), array(), true);
@@ -286,7 +291,7 @@ class admin_acl
 	 * @param int|string $location =null numeric account-id or "run"
 	 * @param boolean $throw =true if true, throw an exception if no access, instead of just returning false
 	 * @return boolean true if access is granted, false if notification_bo
-	 * @throws egw_exception_no_permission
+	 * @throws Api\Exception\NoPermission
 	 */
 	public static function check_access($account_id, $location=null, $throw=true)
 	{
@@ -301,7 +306,7 @@ class admin_acl
 		if (!(int)$account_id || !((int)$account_id == (int)$GLOBALS['egw_info']['user']['account_id'] && $location !== 'run' ?
 				$own_access : $admin_access))
 		{
-			if ($throw) throw new egw_exception_no_permission(lang('Permission denied!!!'));
+			if ($throw) throw new Api\Exception\NoPermission(lang('Permission denied!!!'));
 			return false;
 		}
 		return true;
@@ -321,7 +326,7 @@ class admin_acl
 		{
 			$list = array_keys($GLOBALS['egw']->acl->get_user_applications((int)$account_id,false,false));
 		}
-		egw_json_response::get()->data($list);
+		Api\Json\Response::get()->data($list);
 	}
 
 	/**
@@ -331,7 +336,7 @@ class admin_acl
 	 *
 	 * @param string|array $ids "$app:$account:$location" string used as row-id in list
 	 * @param int $rights =null null to delete, or new rights
-	 * @throws egw_exception_no_permission
+	 * @throws Api\Exception\NoPermission
 	 */
 	public static function ajax_change_acl($ids, $rights=null)
 	{
@@ -368,14 +373,14 @@ class admin_acl
 			{
 				$msg = lang('ACL updated');
 			}
-			egw_json_response::get()->data(array(
+			Api\Json\Response::get()->data(array(
 				'msg' => $msg,
 				'ids' => $ids,
 				'type' => !(int)$rights ? 'delete' : 'add',
 			));
 		}
 		catch (Exception $e) {
-			egw_json_response::get()->call('egw.message', $e->getMessage(), 'error');
+			Api\Json\Response::get()->call('egw.message', $e->getMessage(), 'error');
 		}
 	}
 
@@ -388,7 +393,7 @@ class admin_acl
 	{
 		unset($_content);	// not used, required by function signature
 
-		$tpl = new etemplate_new('admin.acl');
+		$tpl = new Etemplate('admin.acl');
 
 		$content = array();
 		$account_id = isset($_GET['account_id']) && (int)$_GET['account_id'] ?
@@ -406,12 +411,12 @@ class admin_acl
 			'row_id' => 'id',
 			'account_id' => $account_id,
 			'actions' => self::get_actions(),
-			'acl_rights' => $GLOBALS['egw']->hooks->process(array(
+			'acl_rights' => Api\Hooks::process(array(
 				'location' => 'acl_rights',
 				'owner' => $account_id,
 			), array(), true),
 		);
-		$user = common::grab_owner_name($content['nm']['account_id']);
+		$user = Api\Accounts::username($content['nm']['account_id']);
 		$sel_options = array(
 			'filter' => array(
 				'other' => lang('Access to %1 data by others', $user),

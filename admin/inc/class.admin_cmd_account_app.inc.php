@@ -1,26 +1,28 @@
 <?php
 /**
- * eGgroupWare admin - admin command: give or remove run rights from a given account and application
+ * EGroupware admin - admin command: give or remove run rights from a given account and application
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * admin command: give or remove run rights from a given account and application
  */
-class admin_cmd_account_app extends admin_cmd 
+class admin_cmd_account_app extends admin_cmd
 {
 	/**
 	 * Constructor
 	 *
-	 * @param boolean/array $allow true=give rights, false=remove rights, or array with all 3 params
-	 * @param string/int $account=null account name or id
-	 * @param array/string $apps=null app-names
+	 * @param boolean|array $allow true=give rights, false=remove rights, or array with all 3 params
+	 * @param string|int $account =null account name or id
+	 * @param array|string $apps =null app-names
 	 */
 	function __construct($allow,$account=null,$apps=null)
 	{
@@ -41,21 +43,21 @@ class admin_cmd_account_app extends admin_cmd
 
 	/**
 	 * give or remove run rights from a given account and application
-	 * 
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 *
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
-	 * @throws egw_exception_no_admin
-	 * @throws egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
-	 * @throws egw_exception_wrong_userinput(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
+	 * @throws Api\Exception\NoPermission\Admin
+	 * @throws Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$this->account),15);
+	 * @throws Api\Exception\WrongUserinput(lang("Application '%1' not found (maybe not installed or misspelled)!",$name),8);
 	 */
 	protected function exec($check_only=false)
 	{
 		$account_id = admin_cmd::parse_account($this->account);
 		// check creator is still admin and not explicitly forbidden to edit accounts/groups
 		if ($this->creator) $this->_check_admin($account_id > 0 ? 'account_access' : 'group_access',16);
-		
+
 		$apps = admin_cmd::parse_apps($this->apps);
-		
+
 		if ($check_only) return true;
 
 		//echo "account=$this->account, account_id=$account_id, apps: ".implode(', ',$apps)."\n";

@@ -8,6 +8,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+
 class uimainscreen
 {
 	var $public_functions = array('index' => True);
@@ -32,7 +35,7 @@ class uimainscreen
 			$GLOBALS['egw']->redirect_link('/admin/index.php');
 		}
 
-		egw_framework::validate_file('ckeditor','ckeditor','phpgwapi');
+		Framework::includeJS('ckeditor','ckeditor','phpgwapi');
 
 		$GLOBALS['egw']->template->set_file(array('message' => 'mainscreen_message.tpl'));
 		$GLOBALS['egw']->template->set_block('message','form','form');
@@ -41,8 +44,8 @@ class uimainscreen
 
 		if ($_POST['save'])
 		{
-			translation::write($select_lang,$section,$section.'_message',$message);
-			egw_framework::message(lang('message has been updated'));
+			Api\Translation::write($select_lang,$section,$section.'_message',$message);
+			Framework::message(lang('message has been updated'));
 
 			$section = '';
 		}
@@ -64,16 +67,16 @@ class uimainscreen
 		}
 		if (empty($section))
 		{
-			common::egw_header();
+			$GLOBALS['egw']->framework->header();
 			echo parse_navbar();
 
 			$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index'));
 			$GLOBALS['egw']->template->set_var('value','&nbsp;');
 			$GLOBALS['egw']->template->fp('rows','row_2',True);
 
-			$langs = translation::get_installed_langs();
+			$langs = Api\Translation::get_installed_langs();
 			$langs['en'] .= ' ('.lang('All languages').')';
-			$lang_select = html::select('select_lang', 'en', $langs);
+			$lang_select = Api\Html::select('select_lang', 'en', $langs);
 
 			$GLOBALS['egw']->template->set_var('label',lang('Language'));
 			$GLOBALS['egw']->template->set_var('value',$lang_select);
@@ -92,26 +95,26 @@ class uimainscreen
 			$GLOBALS['egw']->template->fp('rows','row',True);
 
 			$GLOBALS['egw']->template->set_var('value',
-				html::submit_button('edit', lang('Edit'))."\n".html::submit_button('cancel', lang('Cancel')));
+				Api\Html::submit_button('edit', lang('Edit'))."\n".Api\Html::submit_button('cancel', lang('Cancel')));
 			$GLOBALS['egw']->template->fp('rows','row_2',True);
 		}
 		else
 		{
-			$current_message = translation::read($select_lang,$section,$section.'_message');
+			$current_message = Api\Translation::read($select_lang,$section,$section.'_message');
 			if ($_POST['no']) $current_message = strip_tags($current_message);
 			if (empty($_POST['no']) && ($_POST['yes'] || empty($current_message) ||
 				strlen($current_message) != strlen(strip_tags($current_message))))
 			{
-				 $text_or_htmlarea = html::fckEditorQuick('message','advanced',$current_message,'400px','800px');
-				 $htmlarea_button = html::submit_button("no", lang('disable WYSIWYG-editor'));
+				 $text_or_htmlarea = Api\Html::fckEditorQuick('message','advanced',$current_message,'400px','800px');
+				 $htmlarea_button = Api\Html::submit_button("no", lang('disable WYSIWYG-editor'));
 			}
 			else
 			{
 				 $text_or_htmlarea='<textarea name="message" style="width:100%; min-width:350px; height:300px;" wrap="virtual">' .
-					html::htmlspecialchars($current_message) . '</textarea>';
-				 $htmlarea_button = html::submit_button("yes", lang('activate WYSIWYG-editor'));
+					Api\Html::htmlspecialchars($current_message) . '</textarea>';
+				 $htmlarea_button = Api\Html::submit_button("yes", lang('activate WYSIWYG-editor'));
 			}
-			common::egw_header();
+			$GLOBALS['egw']->framework->header();
 			echo parse_navbar();
 
 			$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index'));
@@ -125,7 +128,7 @@ class uimainscreen
 			$GLOBALS['egw']->template->fp('rows','row_2',True);
 
 			$GLOBALS['egw']->template->set_var('value',
-				html::submit_button('save', lang('Save'))."\n".html::submit_button('cancel', lang('Cancel')).
+				Api\Html::submit_button('save', lang('Save'))."\n".Api\Html::submit_button('cancel', lang('Cancel')).
 				"\n".$htmlarea_button);
 			$GLOBALS['egw']->template->fp('rows','row_2',True);
 		}

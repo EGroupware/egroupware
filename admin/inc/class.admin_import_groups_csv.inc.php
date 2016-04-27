@@ -1,15 +1,16 @@
 <?php
 /**
- * eGroupWare
+ * EGroupware admin
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package admin
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @copyright Nathan Gray
- * @version $Id: $
+ * @version $Id$
  */
 
+use EGroupware\Api;
 
 /**
  * class import_csv for admin (groups)
@@ -69,9 +70,9 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 	protected $errors = array();
 
 	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
+	 * List of actions, and how many times that action was taken
+	 */
+	protected $results = array();
 
 	/**
 	 * imports entries according to given definition object.
@@ -127,7 +128,7 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 
 							// Skip the search if the field is empty
 							if($record[$condition['string']] !== '') {
-							
+
 								$accounts = $GLOBALS['egw']->accounts->search(array(
 									'type' => 'groups',
 									'query' => $record[$condition['string']],
@@ -204,8 +205,8 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 				$this->results[$_action]++;
 				return true;
 			default:
-				throw new egw_exception('Unsupported action');
-			
+				throw new Api\Exception('Unsupported action');
+
 		}
 	}
 
@@ -262,39 +263,38 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 	}
 
 	/**
-	* Returns warnings that were encountered during importing
-	* Maximum of one warning message per record, but you can concatenate them if you need to
-	*
-	* @return Array (
-	*       record_# => warning message
-	*       )
-	*/
+	 * Returns warnings that were encountered during importing
+	 * Maximum of one warning message per record, but you can concatenate them if you need to
+	 *
+	 * @return Array (
+	 *       record_# => warning message
+	 * )
+	 */
 	public function get_warnings() {
 		return $this->warnings;
 	}
 
 	/**
-        * Returns errors that were encountered during importing
-        * Maximum of one error message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => error message
-        *       )
-        */
-        public function get_errors() {
+	 * Returns errors that were encountered during importing
+	 * Maximum of one error message per record, but you can append if you need to
+	 *
+	 * @return Array (
+	 *       record_# => error message
+	 * )
+	 */
+	public function get_errors() {
 		return $this->errors;
 	}
 
 	/**
-        * Returns a list of actions taken, and the number of records for that action.
-        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
-        *
-        * @return Array (
-        *       action => record count
-        * )
-        */
-        public function get_results() {
-                return $this->results;
-        }
-} // end of iface_export_plugin
-?>
+	 * Returns a list of actions taken, and the number of records for that action.
+	 * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
+	 *
+	 * @return Array (
+	 *       action => record count
+	 * )
+	 */
+	public function get_results() {
+		return $this->results;
+	}
+}

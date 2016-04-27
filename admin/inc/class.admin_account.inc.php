@@ -10,6 +10,11 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * UI for admin: edit/add account
  */
@@ -29,7 +34,7 @@ class admin_account
 	 *
 	 * @param array $content
 	 * @return array
-	 * @throws egw_exception_not_found
+	 * @throws Api\Exception\NotFound
 	 */
 	public function addressbook_edit(array $content)
 	{
@@ -39,27 +44,27 @@ class admin_account
 				$GLOBALS['egw']->acl->check('account_access', 4, 'admin');
 			//error_log(__METHOD__."() contact_id=$content[contact_id], account_id=$content[account_id], deny_edit=".array2string($deny_edit));
 
-			if (!$content['account_id'] && $deny_edit) return;	// no right to add new accounts, should not happen by AB ACL
+			if (!$content['account_id'] && $deny_edit) return;	// no right to add new Api\Accounts, should not happen by AB ACL
 
 			// load our translations
-			translation::add_app('admin');
+			Api\Translation::add_app('admin');
 
 			if ($content['id'])	// existing account
 			{
 				// invalidate account, before reading it, to code with changed to DB or LDAP outside EGw
-				accounts::cache_invalidate((int)$content['account_id']);
+				Api\Accounts::cache_invalidate((int)$content['account_id']);
 				if (!($account = $GLOBALS['egw']->accounts->read($content['account_id'])))
 				{
-					throw new egw_exception_not_found('Account data NOT found!');
+					throw new Api\Exception\NotFound('Account data NOT found!');
 				}
 				if ($account['account_expires'] == -1) $account['account_expires'] = '';
 				unset($account['account_pwd']);	// do NOT send to client
 				$account['memberships'] = array_keys($account['memberships']);
-				$acl = new acl($content['account_id']);
+				$acl = new Acl($content['account_id']);
 				$acl->read_repository();
 				$account['anonymous'] = $acl->check('anonymous', 1, 'phpgwapi');
 				$account['changepassword'] = !$acl->check('nopasswordchange', 1, 'preferences');
-				$auth = new auth();
+				$auth = new Api\Auth();
 				if (($account['account_lastpwd_change'] = $auth->getLastPwdChange($account['account_lid'])) === false)
 				{
 					$account['account_lastpwd_change'] = null;
@@ -174,13 +179,13 @@ class admin_account
 		$cmd = new admin_cmd_edit_user((int)$content['account_id'], $account);
 		$cmd->run();
 
-		egw_json_response::get()->call('egw.refresh', '', 'admin', $cmd->account, $content['account_id'] ? 'edit' : 'add');
+		Api\Json\Response::get()->call('egw.refresh', '', 'admin', $cmd->account, $content['account_id'] ? 'edit' : 'add');
 
-		$addressbook_bo = new addressbook_bo();
-		if (!($content['id'] = accounts::id2name($cmd->account, 'person_id')) ||
+		$addressbook_bo = new Api\Contacts();
+		if (!($content['id'] = Api\Accounts::id2name($cmd->account, 'person_id')) ||
 			!($contact = $addressbook_bo->read($content['id'])))
 		{
-			throw new egw_exception_assertion_failed("Can't find contact of just created account!");
+			throw new Api\Exception\AssertionFailed("Can't find contact of just created account!");
 		}
 		// for a new account a new contact was created, need to merge that data with $content
 		if (!$content['account_id'])
@@ -219,7 +224,7 @@ class admin_account
 		if ($GLOBALS['egw']->acl->check('account_access',32,'admin') || !($content['account_id'] > 0) ||
 			$GLOBALS['egw_info']['user']['account_id'] == $content['account_id'])
 		{
-			egw_framework::window_close(lang('Permission denied!!!'));
+			Framework::window_close(lang('Permission denied!!!'));
 		}
 		if ($content['delete'])
 		{
@@ -227,15 +232,15 @@ class admin_account
 			$msg = $cmd->run();
 			if ($content['contact_id'])
 			{
-				egw_framework::refresh_opener($msg, 'addressbook', $content['contact_id'], 'delete');
+				Framework::refresh_opener($msg, 'addressbook', $content['contact_id'], 'delete');
 			}
 			else
 			{
-				egw_framework::refresh_opener($msg, 'admin', $content['account_id'], 'delete');
+				Framework::refresh_opener($msg, 'admin', $content['account_id'], 'delete');
 			}
-			egw_framework::window_close();
+			Framework::window_close();
 		}
-		$tpl = new etemplate_new('admin.account.delete');
+		$tpl = new Etemplate('admin.account.delete');
 		$tpl->exec('admin_account::delete', $content, array(), array(), $content, 2);
 	}
 
@@ -246,10 +251,10 @@ class admin_account
 	 */
 	public static function ajax_delete_group($account_id)
 	{
-		$cmd = new admin_cmd_delete_account(accounts::id2name(accounts::id2name($account_id)), null, false);
+		$cmd = new admin_cmd_delete_account(Api\Accounts::id2name(Api\Accounts::id2name($account_id)), null, false);
 		$msg = $cmd->run();
 
-		egw_json_response::get()->call('egw.refresh', $msg, 'admin', $account_id, 'delete');
+		Api\Json\Response::get()->call('egw.refresh', $msg, 'admin', $account_id, 'delete');
 	}
 
 	/**
@@ -260,26 +265,26 @@ class admin_account
 	 */
 	public static function ajax_check(array $data, $changed)
 	{
-		// generate default email address, but only for new accounts
+		// generate default email address, but only for new Api\Accounts
 		if (!$data['account_id'] && in_array($changed, array('n_given', 'n_family', 'account_lid')))
 		{
-			$email = common::email_address($data['account_firstname'], $data['account_lastname'], $data['account_lid']);
+			$email = Api\Accounts::email($data['account_firstname'], $data['account_lastname'], $data['account_lid']);
 			if ($email && $email[0] != '@' && strpos($email, '@'))	// only add valid email addresses
 			{
-				egw_json_response::get()->assign('addressbook-edit_email', 'value', $email);
+				Api\Json\Response::get()->assign('addressbook-edit_email', 'value', $email);
 			}
 		}
 
 		if (!$data['account_lid'] && !$data['account_id']) return;	// makes no sense to check before
 
-		// set home-directory when account_lid is entered, but only for new accounts
+		// set home-directory when account_lid is entered, but only for new Api\Accounts
 		if ($changed == 'account_lid' && !$data['account_id'] &&
 			$GLOBALS['egw_info']['server']['ldap_extra_attributes'] &&
 			$GLOBALS['egw_info']['server']['ldap_account_home'])
 		{
-			egw_json_response::get()->assign('addressbook-edit_homedirectory', 'value',
+			Api\Json\Response::get()->assign('addressbook-edit_homedirectory', 'value',
 				$GLOBALS['egw_info']['server']['ldap_account_home'].'/'.preg_replace('/[^a-z0-9_.-]/i', '',
-					common::transliterate($data['account_lid'])));
+					Api\Translation::to_ascii($data['account_lid'])));
 		}
 
 		// set dummy membership to get no error about no members yet
@@ -291,7 +296,7 @@ class admin_account
 		}
 		catch(Exception $e)
 		{
-			egw_json_response::get()->data($e->getMessage());
+			Api\Json\Response::get()->data($e->getMessage());
 		}
 	}
 }
