@@ -929,10 +929,8 @@ class addressbook_vcal extends addressbook_bo
 				{
 					if (!empty($fieldName))
 					{
-						if (is_scalar($vcardValues[$vcardKey]['values'][$fieldKey]))
-						{
-							$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
-						}
+						$value = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
+
 						if ($pref_tel && (($vcardKey == $pref_tel) ||
 								($vcardValues[$vcardKey]['name'] == 'TEL') &&
 								($vcardValues[$vcardKey]['value'] == $vcardValues[$pref_tel]['value'])))
