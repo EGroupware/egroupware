@@ -16,9 +16,11 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling as web-pag
 }
 
 // raw replacements
-$replace = array(
-	"#use EGroupware\\Api;#" => '',	// remove evtl. use EGroupware\Api, as we add it again below
+$add_use_api = array(
+	"#use EGroupware\\\\Api;\n#" => '',	// remove evtl. use EGroupware\Api, as we add it again below
 	"#<\?php\n/\*\*.*\*/#msU" => "\$0\n\nuse EGroupware\\Api;",
+);
+$replace = array(
 	'#egw_framework::csp_connect_src_attrs\(#' => "Api\\Header\\ContentSecurityPolicy::add('connect-src', ",
 	'#egw_framework::csp_frame_src_attrs\(#' => "Api\\Header\\ContentSecurityPolicy::add('frame-src', ",
 	'#egw_framework::csp_script_src_attrs\(#' => "Api\\Header\\ContentSecurityPolicy::add('script-src', ",
@@ -29,8 +31,8 @@ $replace = array(
 	"#\\\$GLOBALS\['egw'\]->session->appsession\(([^,]+),\s*('[^']+'),\s*#" => 'Api\\Cache::setSession($2, $1, ',
 	"#\\\$GLOBALS\['egw'\]->common->#" => 'common::',
 	"#\\\$GLOBALS\['egw'\]->hooks->#" => 'Api\\Hooks::',
-	'#Api\\Hooks::hook_implemented#' => 'Api\\Hooks::implemented',
-	'#Api\\Hooks::hook_exists#' => 'Api\\Hooks::exists',
+	'#Api\\\\Hooks::hook_implemented#' => 'Api\\Hooks::implemented',
+	'#Api\\\\Hooks::hook_exists#' => 'Api\\Hooks::exists',
 	"#\\\$GLOBALS\['egw'\]->translation->#" => 'Api\\Translation::',
 	'#egw_framework::csp_script_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('script-src', \$1);",
 	'#egw_framework::csp_style_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('style-src', \$1);",
@@ -39,7 +41,7 @@ $replace = array(
 	'#common::show_date\(([^,]+),\s*([^,]+),\s*false\)#' => 'Api\\DateTime::to($1, $2)',
 );
 // enclose class-names and static methods with some syntax check
-$class_start = '#(?<!function)([\[\s,;(.!])';
+$class_start = '#(?<!function)([\[\s,;().!])';
 $class_end = '(::|\\(|\\)|;|\?|:|\\s|,|$)#';
 foreach(array(
 	'accounts' => 'Api\\Accounts',
@@ -53,7 +55,7 @@ foreach(array(
 	'EGW_ACL_CUSTOM_1' => 'Api\\Acl::CUSTOM1',
 	'EGW_ACL_CUSTOM_2' => 'Api\\Acl::CUSTOM2',
 	'EGW_ACL_CUSTOM_3' => 'Api\\Acl::CUSTOM3',
-	'applications' => 'Api\\Applications',
+	'applications' => 'Api\\Egw\\Applications',
 	'asyncservice' => 'Api\\AsyncService',
 	'auth' => 'Api\\Auth',
 	'categories' => 'Api\\Categories',
@@ -79,6 +81,7 @@ foreach(array(
 	'common::egw_header' => "\$GLOBALS['egw']->framework->header",
 	'common::egw_footer' => "\$GLOBALS['egw']->framework->footer",
 	'common::show_date' => 'Api\\DateTime::server2user',
+	'common::get_tpl_dir' => 'Api\\Framework\\Template::get_dir',
 	'country' => 'Api\\Country',
 	'egw' => 'Api\\Egw',
 	'egw_minimal' => 'Api\\Egw\\Base',
@@ -179,7 +182,7 @@ $replace += array(
  */
 function fix_api($file, $dry_run=false)
 {
-	global $prog, $replace;
+	global $prog, $replace, $add_use_api;
 	if (basename($file) == $prog) return true;	// dont fix ourself ;-)
 
 	if (($content = $content_in = file_get_contents($file)) === false) return false;
@@ -189,7 +192,11 @@ function fix_api($file, $dry_run=false)
 		error_log("No file-level phpDoc block found in $file to add 'use EGroupware\\Api;'\n");
 		return;
 	}
-	$content = 	preg_replace(array_keys($replace), array_values($replace), $content);
+	$content2 = 	preg_replace(array_keys($replace), array_values($replace), $content);
+
+	if ($content2 == $content_in) return true;	// nothing changed
+
+	$content = preg_replace(array_keys($add_use_api), array_values($add_use_api), $content2);
 
 	// shorten some classes, if used, with further use declarations
 	foreach(array('Api\\Etemplate', 'Api\\Vfs', 'Api\\Acl', 'Api\\Egw', 'Api\\Framework', 'Api\\Link') as $namespace)
@@ -207,7 +214,7 @@ function fix_api($file, $dry_run=false)
 	{
 		echo $content;
 	}
-	elseif ($content_in != $content)
+	else
 	{
 		file_put_contents($file.'.new', $content);
 		$ret = 0;
