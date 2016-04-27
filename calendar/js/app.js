@@ -1128,7 +1128,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		var add = this.et2.getWidgetById('add');
 		var participant = this.et2.getWidgetById('participant');
 
-		add.set_readonly(!Number(participant.get_value()));
+		add.set_readonly(participant.get_value().length <= 0);
 	},
 
 	/**
@@ -1913,7 +1913,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			{
 				$j(view.etemplates[i].DOMContainer).show();
 			}
-			
+
 			/*
 			If the count is different, we need to have the correct number
 			If the count is > 1, it's either because there are multiple date spans (weekN, month) and we need the correct span
@@ -2022,7 +2022,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 									var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop();
 									var b = grid._children[1].getDOMNode().parentNode.parentNode;
 									a.parentNode.insertBefore(a,b);
-									
+
 									// Moving nodes changes scrolling, so set it back
 									var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop(a_scroll);
 								}
@@ -2087,7 +2087,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						// Do not need to re-set this row, but we do need to re-do
 						// the times, as they may have changed
 						widget.resizeTimes();
-						
+
 						// Hide loader
 						widget.loader.hide();
 						row_index++;
