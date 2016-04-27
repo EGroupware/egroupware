@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
 if (php_sapi_name() !== 'cli')	// security precaution: forbit calling admin-cli as web-page
@@ -113,7 +115,7 @@ exit(0);
  */
 function run_command(admin_cmd $cmd)
 {
-	global $arguments;
+	global $arguments,$user,$arg0s,$domain;
 
 	$skip_checks = false;
 	while ($arguments && ($extra = array_shift($arguments)))
@@ -168,6 +170,24 @@ function run_command(admin_cmd $cmd)
 	//_debug_array($cmd);
 	try {
 		print_r($cmd->run($time, true, $skip_checks, $dry_run));
+
+		// cli can NOT clear instance cache of APC(u), as cli uses different shared memory then webserver
+		// --> we use a webservice call to clear cache (might fail if no domain in specified in webserver_url or on command line)
+		if (!$dry_run)
+		{
+			$url = $GLOBALS['egw_info']['server']['webserver_url'].'/json.php?menuaction=admin.admin_hooks.ajax_clear_cache';
+			if ($url[0] == '/') $url = 'http://'.(!empty($domain) && $domain != 'default' ? $domain : 'localhost').$url;
+			$data = file_get_contents($url, false, Api\Framework::proxy_context($user,$arg0s[1]));
+			error_log("file_get_contents('$url') returned ".array2string($data));
+			if ($data && strpos($data, '"success"') !== false)
+			{
+				error_log('Instance cache cleared.');
+			}
+			else
+			{
+				error_log('You might need to clear the cache for changes to be visiable: Admin >> Clear cache!');
+			}
+		}
 	}
 	catch (egw_exception_wrong_userinput $e) {
 		echo "\n".$e->getMessage()."\n\n";

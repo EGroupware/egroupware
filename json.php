@@ -10,17 +10,23 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
 use EGroupware\Api\Json;
 
 /**
- * callback if the session-check fails, redirects to login.php
+ * callback if the session-check fails, redirects to login.php, if no valid basic auth credentials given
  *
  * @param array &$anon_account anon account_info with keys 'login', 'passwd' and optional 'passwd_type'
  * @return boolean|string true if we allow anon access and anon_account is set, a sessionid or false otherwise
  */
 function login_redirect(&$anon_account)
 {
-	unset($anon_account);
+	// allow to make json calls via basic auth
+	if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) &&
+		($session_id = Api\Header\Authenticate::autocreate_session_callback($anon_account)))
+	{
+		return $session_id;
+	}
 	Json\Request::isJSONRequest(true);	// because egw_json_request::parseRequest() is not (yet) called
 	$response = Json\Response::get();
 	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10', true);
