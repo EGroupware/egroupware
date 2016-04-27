@@ -27,14 +27,13 @@
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
-  #calendar-todo.et2_container,
   #calendar-planner.et2_container,
   #calendar-list.et2_container {
     position: static;
     height: auto !important;
   }
   #calendar-todo.et2_container {
-    float: left;
+    display: none;
   }
   .calendar_calDayTodos .calendar_calDayTodosTable {
     position: relative;
@@ -2637,8 +2636,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar_merge {
   margin: 9px 0 0 0;
 }
-/* ########################################################################################
-/* * Calendar END */
 /* tablets and smartphones  */
 @media all {
   #calendar-toolbar {
@@ -2649,7 +2646,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
     z-index: 1;
   }
   #calendar-toolbar #toolbar-actionlist {
-    margin-left: 70px;
+    margin-left: 60px;
   }
   #calendar-edit #calendar-edit_calendar-edit-details {
     float: none;
