@@ -2635,6 +2635,7 @@ class calendar_uiforms extends calendar_ui
 				'start'		   => 'date-time',
 				'end'		   => 'date-time',
 				'deleted'      => 'date-time',
+				'recur_enddate'=> 'date',
 
 				'tz_id'        => 'select-timezone',
 

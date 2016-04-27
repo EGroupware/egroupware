@@ -55,6 +55,7 @@ class calendar_tracking extends bo_tracking
 		'non_blocking'	=>	'non_blocking',
 		'special'	=>	'special',
 		'recurrence'	=>	'recurrence',
+		'recur_enddate'	=>	'recur_enddate',
 		'tz_id'		=>	'tz_id',
 
 		'start'		=>	'start',
@@ -83,6 +84,7 @@ class calendar_tracking extends bo_tracking
 		'non_blocking'	=>	'non blocking',
 		'special'	=>	'special',
 		'recurrence'=>	'recurrence',
+		'recur_enddate'	=>	'recurrence enddate',
 		'tz_id'		=>	'timezone',
 
 		'start'		=>	'start',
