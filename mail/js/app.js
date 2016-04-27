@@ -918,54 +918,58 @@ app.classes.mail = AppJS.extend(
 				IframeHandle.set_src('about:blank');
 				this.mail_disablePreviewArea(true);
 			}
-			return;
+			if (!egwIsMobile())return;
 		}
-
-		// Widget ID:data key map of widgets we can directly set from cached data
-		var data_widgets = {
-			'previewFromAddress':	'fromaddress',
-			'previewDate':			'date',
-			'previewSubject':		'subject'
-		};
-
-		// Set widget values from cached data
-		for(var id in data_widgets)
+		// Not applied to mobile preview
+		if (!egwIsMobile())
 		{
-			var widget = this.et2.getWidgetById(id);
-			if(widget == null) continue;
-			widget.set_value(dataElem.data[data_widgets[id]] || "");
+
+			// Widget ID:data key map of widgets we can directly set from cached data
+			var data_widgets = {
+				'previewFromAddress':	'fromaddress',
+				'previewDate':			'date',
+				'previewSubject':		'subject'
+			};
+
+			// Set widget values from cached data
+			for(var id in data_widgets)
+			{
+				var widget = this.et2.getWidgetById(id);
+				if(widget == null) continue;
+				widget.set_value(dataElem.data[data_widgets[id]] || "");
+			}
+
+			// Blank first, so we don't show previous email while loading
+			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
+			IframeHandle.set_src('about:blank');
+
+			// show iframe, in case we hide it from mailvelopes one and remove that
+			jQuery(IframeHandle.getDOMNode()).show()
+				.next(this.mailvelope_iframe_selector).remove();
+
+			// Set up additional content that can be expanded.
+			// We add a new URL widget for each address, so they get all the UI
+			// TO addresses have the first one split out, not all together
+			// list of keys:
+			var expand_content = [
+				{build_children: true, data_one: 'toaddress', data: 'additionaltoaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
+				{build_children: true, data: 'ccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'},
+				{build_children: false, data: 'attachmentsBlock', widget:'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
+			];
+
+			dataElem = this.url_email_expandOnClick(expand_content,dataElem);
+
+
+			// Update the internal list of selected mails, if needed
+			if(this.mail_selectedMails.indexOf(_id) < 0)
+			{
+				this.mail_selectedMails.push(_id);
+			}
+			this.mail_disablePreviewArea(false);
+
+			// Request email body from server
+			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
 		}
-
-		// Blank first, so we don't show previous email while loading
-		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
-		IframeHandle.set_src('about:blank');
-
-		// show iframe, in case we hide it from mailvelopes one and remove that
-		jQuery(IframeHandle.getDOMNode()).show()
-			.next(this.mailvelope_iframe_selector).remove();
-
-		// Set up additional content that can be expanded.
-		// We add a new URL widget for each address, so they get all the UI
-		// TO addresses have the first one split out, not all together
-		// list of keys:
-		var expand_content = [
-			{build_children: true, data_one: 'toaddress', data: 'additionaltoaddress', widget: 'additionalToAddress', line: 'mailPreviewHeadersTo'},
-			{build_children: true, data: 'ccaddress', widget: 'additionalCCAddress', line: 'mailPreviewHeadersCC'},
-			{build_children: false, data: 'attachmentsBlock', widget:'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
-		];
-
-		dataElem = this.url_email_expandOnClick(expand_content,dataElem);
-
-
-		// Update the internal list of selected mails, if needed
-		if(this.mail_selectedMails.indexOf(_id) < 0)
-		{
-			this.mail_selectedMails.push(_id);
-		}
-		this.mail_disablePreviewArea(false);
-
-		// Request email body from server
-		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
 
 		var messages = {};
 		messages['msg'] = [_id];
