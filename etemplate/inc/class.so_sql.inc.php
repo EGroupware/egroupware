@@ -1135,7 +1135,8 @@ class so_sql
 	public static function fix_group_by_columns($group_by, &$columns, $table_name, $autoinc_id)
 	{
 		$matches = null;
-		if ($GLOBALS['egw']->db->Type == 'mysql' || !preg_match('/(GROUP BY .*)(HAVING.*|ORDER BY.*)?$/iU', $group_by, $matches))
+		//error_log(__METHOD__."('$group_by', ..., '$table_name', '$autoinc_id') db->Type=".array2string($GLOBALS['egw']->db->Type));
+		if (substr($GLOBALS['egw']->db->Type, 0, 5) == 'mysql' || !preg_match('/(GROUP BY .*)(HAVING.*|ORDER BY.*)?$/iU', $group_by, $matches))
 		{
 			return $group_by;	// nothing to do
 		}
