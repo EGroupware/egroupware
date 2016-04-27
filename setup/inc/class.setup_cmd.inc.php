@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api\Egw;
 
 /**
  * setup command: abstract baseclass for all setup commands, extending admin_cmd
@@ -85,7 +87,7 @@ abstract class setup_cmd extends admin_cmd
 	/**
 	 * Saving the object to the database, reimplemented to not do it in setup context
 	 *
-	 * @param boolean $set_modifier=true set the current user as modifier or 0 (= run by the system)
+	 * @param boolean $set_modifier =true set the current user as modifier or 0 (= run by the system)
 	 * @return boolean true on success, false otherwise
 	 */
 	function save($set_modifier=true)
@@ -120,7 +122,7 @@ abstract class setup_cmd extends admin_cmd
 		self::$egw_setup->ConfigDomain = $domain;
 
 		if (isset($GLOBALS['egw_info']['server']['header_admin_user']) && !isset($GLOBALS['egw_domain']) &&
-			is_object($GLOBALS['egw']) && $GLOBALS['egw'] instanceof egw)
+			is_object($GLOBALS['egw']) && $GLOBALS['egw'] instanceof Egw)
 		{
 			// we run inside eGW, not setup --> read egw_domain array from the header via the showheader cmd
 			$cmd = new setup_cmd_showheader(null);	// null = only header, no db stuff, no hashes
@@ -172,7 +174,7 @@ abstract class setup_cmd extends admin_cmd
 	 *
 	 * @param string $user
 	 * @param string $pw
-	 * @param string $domain=null if given we also check agains config user/pw
+	 * @param string $domain =null if given we also check agains config user/pw
 	 * @throws egw_exception_no_permission(lang('Access denied: wrong username or password for manage-header !!!'),21);
 	 * @throws egw_exception_no_permission(lang("Access denied: wrong username or password to configure the domain '%1(%2)' !!!",$domain,$GLOBALS['egw_domain'][$domain]['db_type']),40);
 	 */
@@ -219,9 +221,9 @@ abstract class setup_cmd extends admin_cmd
 	 *
 	 * Sets self::$apps_to_update and self::$apps_to_install for the last/only domain only!
 	 *
-	 * @param string $domain='' domain to check, default '' = all
-	 * @param int/array $stop=0 stop checks before given exit-code(s), default 0 = all checks
-	 * @param boolean $verbose=false echo messages as they happen, instead returning them
+	 * @param string $domain ='' domain to check, default '' = all
+	 * @param int/array $stop =0 stop checks before given exit-code(s), default 0 = all checks
+	 * @param boolean $verbose =false echo messages as they happen, instead returning them
 	 * @return array with translated messages
 	 */
 	static function check_installed($domain='',$stop=0,$verbose=false)

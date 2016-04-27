@@ -6,10 +6,12 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2009-15 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2009-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * Recurrence rule iterator
@@ -182,14 +184,14 @@ class calendar_rrule implements Iterator
 	/**
 	 * Starttime of series
 	 *
-	 * @var egw_time
+	 * @var Api\DateTime
 	 */
 	public $time;
 
 	/**
 	 * Current "position" / time
 	 *
-	 * @var egw_time
+	 * @var Api\DateTime
 	 */
 	public $current;
 
@@ -234,11 +236,11 @@ class calendar_rrule implements Iterator
 				$this->lastdayofweek = self::SUNDAY;
 		}
 
-		$this->time = $time instanceof egw_time ? $time : new egw_time($time);
+		$this->time = $time instanceof Api\DateTime ? $time : new Api\DateTime($time);
 
 		if (!in_array($type,array(self::NONE, self::DAILY, self::WEEKLY, self::MONTHLY_MDAY, self::MONTHLY_WDAY, self::YEARLY)))
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__."($time,$type,$interval,$enddate,$weekdays,...) type $type is NOT valid!");
+			throw new Api\Exception\WrongParameter(__METHOD__."($time,$type,$interval,$enddate,$weekdays,...) type $type is NOT valid!");
 		}
 		$this->type = $type;
 
@@ -350,7 +352,7 @@ class calendar_rrule implements Iterator
 	private static function daysInMonth(DateTime $time)
 	{
 		list($year,$month) = explode('-',$time->format('Y-m'));
-		$last_day = new egw_time();
+		$last_day = new Api\DateTime();
 		$last_day->setDate($year,$month+1,0);
 
 		return (int)$last_day->format('d');
@@ -437,7 +439,7 @@ class calendar_rrule implements Iterator
 				break;
 
 			default:
-				throw new egw_exception_assertion_failed(__METHOD__."() invalid type #$this->type !");
+				throw new Api\Exception\AssertionFailed(__METHOD__."() invalid type #$this->type !");
 		}
 	}
 
@@ -600,13 +602,13 @@ class calendar_rrule implements Iterator
 			}
 			if ($this->enddate)
 			{
-				if ($this->enddate->getTimezone()->getName() != egw_time::$user_timezone->getName())
+				if ($this->enddate->getTimezone()->getName() != Api\DateTime::$user_timezone->getName())
 				{
-					$this->enddate->setTimezone(egw_time::$user_timezone);
+					$this->enddate->setTimezone(Api\DateTime::$user_timezone);
 				}
-				$str_extra[] = lang('ends').': '.lang($this->enddate->format('l')).', '.$this->enddate->format(egw_time::$user_dateformat);
+				$str_extra[] = lang('ends').': '.lang($this->enddate->format('l')).', '.$this->enddate->format(Api\DateTime::$user_dateformat);
 			}
-			if ($this->time->getTimezone()->getName() != egw_time::$user_timezone->getName())
+			if ($this->time->getTimezone()->getName() != Api\DateTime::$user_timezone->getName())
 			{
 				$str_extra[] = $this->time->getTimezone()->getName();
 			}
@@ -725,8 +727,8 @@ class calendar_rrule implements Iterator
 	{
 		if (!is_array($event)  || !isset($event['tzid'])) return false;
 		if (!$to_tz) $to_tz = $event['tzid'];
-		$timestamp_tz = $usertime ? egw_time::$user_timezone : egw_time::$server_timezone;
-		$time = is_a($event['start'],'DateTime') ? $event['start'] : new egw_time($event['start'],$timestamp_tz);
+		$timestamp_tz = $usertime ? Api\DateTime::$user_timezone : Api\DateTime::$server_timezone;
+		$time = is_a($event['start'],'DateTime') ? $event['start'] : new Api\DateTime($event['start'],$timestamp_tz);
 
 		if (!isset(self::$tz_cache[$to_tz]))
 		{
@@ -739,13 +741,13 @@ class calendar_rrule implements Iterator
 
 		if ($event['recur_enddate'])
 		{
-			$enddate = is_a($event['recur_enddate'],'DateTime') ? $event['recur_enddate'] : new egw_time($event['recur_enddate'],$timestamp_tz);
+			$enddate = is_a($event['recur_enddate'],'DateTime') ? $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'],$timestamp_tz);
 		}
 		if (is_array($event['recur_exception']))
 		{
 			foreach($event['recur_exception'] as $exception)
 			{
-				$exceptions[] = is_a($exception,'DateTime') ? $exception : new egw_time($exception,$timestamp_tz);
+				$exceptions[] = is_a($exception,'DateTime') ? $exception : new Api\DateTime($exception,$timestamp_tz);
 			}
 		}
 		return new calendar_rrule($time,$event['recur_type'],$event['recur_interval'],$enddate,$event['recur_data'],$exceptions);
@@ -796,7 +798,7 @@ class calendar_rrule implements Iterator
 		}
 
 		$time = is_a($starttime,'DateTime') ?
-			$starttime : new egw_time($starttime, egw_time::$server_timezone);
+			$starttime : new Api\DateTime($starttime, Api\DateTime::$server_timezone);
 		$time->setTimezone(self::$tz_cache[$event['tzid']]);
 		$remote = clone $time;
 		$remote->setTimezone(self::$tz_cache[$to_tz]);
@@ -832,13 +834,11 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 	error_reporting(E_ALL & ~E_NOTICE);
 	function lang($str) { return $str; }
 	$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = $_REQUEST['user-tz'] ? $_REQUEST['user-tz'] : 'Europe/Berlin';
-	require_once('../../phpgwapi/inc/class.egw_time.inc.php');
-	require_once('../../phpgwapi/inc/class.html.inc.php');
-	require_once('../../phpgwapi/inc/class.egw_exception.inc.php');
+	require_once('../../api/src/autoload.php');
 
 	if (!isset($_REQUEST['time']))
 	{
-		$now = new egw_time('now',new DateTimeZone($_REQUEST['tz'] = 'UTC'));
+		$now = new Api\DateTime('now',new DateTimeZone($_REQUEST['tz'] = 'UTC'));
 		$_REQUEST['time'] = $now->format();
 		$_REQUEST['type'] = calendar_rrule::WEEKLY;
 		$_REQUEST['interval'] = 2;
@@ -847,31 +847,31 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		$_REQUEST['user-tz'] = 'Europe/Berlin';
 	}
 	echo "<html>\n<head>\n\t<title>Test calendar_rrule class</title>\n</head>\n<body>\n<form method='GET'>\n";
-	echo "<p>Date+Time: ".html::input('time',$_REQUEST['time']).
-		html::select('tz',$_REQUEST['tz'],egw_time::getTimezones())."</p>\n";
-	echo "<p>Type: ".html::select('type',$_REQUEST['type'],calendar_rrule::$types)."\n".
-		"Interval: ".html::input('interval',$_REQUEST['interval'])."</p>\n";
+	echo "<p>Date+Time: ".Api\Html::input('time',$_REQUEST['time']).
+		Api\Html::select('tz',$_REQUEST['tz'],Api\DateTime::getTimezones())."</p>\n";
+	echo "<p>Type: ".Api\Html::select('type',$_REQUEST['type'],calendar_rrule::$types)."\n".
+		"Interval: ".Api\Html::input('interval',$_REQUEST['interval'])."</p>\n";
 	echo "<table><tr><td>\n";
-	echo "Weekdays:<br />".html::checkbox_multiselect('weekdays',$_REQUEST['weekdays'],calendar_rrule::$days,false,'','7',false,'height: 150px;')."\n";
+	echo "Weekdays:<br />".Api\Html::checkbox_multiselect('weekdays',$_REQUEST['weekdays'],calendar_rrule::$days,false,'','7',false,'height: 150px;')."\n";
 	echo "</td><td>\n";
-	echo "<p>Exceptions:<br />".html::textarea('exceptions',$_REQUEST['exceptions'],'style="height: 150px;"')."\n";
+	echo "<p>Exceptions:<br />".Api\Html::textarea('exceptions',$_REQUEST['exceptions'],'style="height: 150px;"')."\n";
 	echo "</td></tr></table>\n";
-	echo "<p>Enddate: ".html::input('enddate',$_REQUEST['enddate'])."</p>\n";
-	echo "<p>Display recurances in ".html::select('user-tz',$_REQUEST['user-tz'],egw_time::getTimezones())."</p>\n";
-	echo "<p>".html::submit_button('calc','Calculate')."</p>\n";
+	echo "<p>Enddate: ".Api\Html::input('enddate',$_REQUEST['enddate'])."</p>\n";
+	echo "<p>Display recurances in ".Api\Html::select('user-tz',$_REQUEST['user-tz'],Api\DateTime::getTimezones())."</p>\n";
+	echo "<p>".Api\Html::submit_button('calc','Calculate')."</p>\n";
 	echo "</form>\n";
 
 	$tz = new DateTimeZone($_REQUEST['tz']);
-	$time = new egw_time($_REQUEST['time'],$tz);
-	if ($_REQUEST['enddate']) $enddate = new egw_time($_REQUEST['enddate'],$tz);
+	$time = new Api\DateTime($_REQUEST['time'],$tz);
+	if ($_REQUEST['enddate']) $enddate = new Api\DateTime($_REQUEST['enddate'],$tz);
 	$weekdays = 0; foreach((array)$_REQUEST['weekdays'] as $mask) { $weekdays |= $mask; }
-	if ($_REQUEST['exceptions']) foreach(preg_split("/[,\r\n]+ ?/",$_REQUEST['exceptions']) as $exception) { $exceptions[] = new egw_time($exception); }
+	if ($_REQUEST['exceptions']) foreach(preg_split("/[,\r\n]+ ?/",$_REQUEST['exceptions']) as $exception) { $exceptions[] = new Api\DateTime($exception); }
 
 	$rrule = new calendar_rrule($time,$_REQUEST['type'],$_REQUEST['interval'],$enddate,$weekdays,$exceptions);
 	echo "<h3>".$time->format('l').', '.$time.' ('.$tz->getName().') '.$rrule."</h3>\n";
 	foreach($rrule as $rtime)
 	{
-		$rtime->setTimezone(egw_time::$user_timezone);
+		$rtime->setTimezone(Api\DateTime::$user_timezone);
 		echo ++$n.': '.$rtime->format('l').', '.$rtime."<br />\n";
 	}
 	echo "</body>\n</html>\n";
