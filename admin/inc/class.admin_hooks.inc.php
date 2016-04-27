@@ -112,7 +112,12 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
 			{
-				$file['Clear cache and register hooks'] = egw::link('/index.php','menuaction=admin.admin_hooks.register_all_hooks');
+				$file['Clear cache and register hooks'] = array(
+					'id' => 'admin/clear_cache',
+					'no_lang' => true,
+					'link' => "javascript:egw.message('".lang('Clear cache and register hooks') . "<br />" .lang('Please wait...')."','info'); " .
+						"egw.json('admin.admin_hooks.ajax_clear_cache').sendRequest(true);"
+				 );
 			}
 
 			if (! $GLOBALS['egw']->acl->check('asyncservice_acc',1,'admin'))
@@ -152,9 +157,9 @@ class admin_hooks
 	}
 
 	/**
-	 * Register all hooks
+	 * Clears instance cache and register hooks
 	 */
-	function register_all_hooks()
+	function ajax_clear_cache()
 	{
 		if ($GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
 		{
@@ -173,7 +178,7 @@ class admin_hooks
 		// allow apps to hook into "Admin >> Clear cache and register hooks"
 		$GLOBALS['egw']->hooks->process('clear_cache', array(), true);
 
-		$GLOBALS['egw']->redirect_link('/admin/index.php');
+		egw_json_response::get()->apply('egw.message', array(lang('Done'), 'success'));
 	}
 
 	/**
