@@ -569,7 +569,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		}
 		// Check all day overflow
 		this.all_day.toggleClass('overflown',
-			this.all_day[0].scrollHeight - this.all_day.height() > 5
+			this.all_day[0].scrollHeight - this.all_day.innerHeight() > 5
 		);
 
 		// Check each event
@@ -1000,7 +1000,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		// Click on the title
 		if ($j(_ev.target).hasClass('calendar_calAddEvent'))
 		{
-			if(!_ev.target.dataset.whole_day)
+			if(this.header.has(_ev.target).length == 0 && !_ev.target.dataset.whole_day)
 			{
 				// Default handler to open a new event at the selected time
 				var options = {

@@ -1708,11 +1708,12 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			delete this.gridHover[0].dataset[id];
 		}
 		var node = document.elementFromPoint(x,y);
+		var $node = $j(node);
 
 		// Ignore high level & non-time (grid itself, header parent & week label)
 		if([this.node, this.gridHeader[0], this._labelContainer[0]].indexOf(node) !== -1 ||
 			// Day labels
-			this.gridHeader.has(node).length && !$j(node).hasClass("calendar_calDayColAllDay"))
+			this.gridHeader.has(node).length && !$node.hasClass("calendar_calDayColAllDay") && !$node.hasClass('calendar_calDayColHeader'))
 		{
 			return [];
 		}
@@ -1721,7 +1722,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		{
 			path.push(node);
 			node.style.display = 'none';
-			var $node = $j(node);
+			$node = $j(node);
 			if($node.hasClass('calendar_calDayColHeader')) {
 				for(var id in node.dataset) {
 					this.gridHover[0].dataset[id] = node.dataset[id];
