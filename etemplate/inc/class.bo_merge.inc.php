@@ -361,7 +361,7 @@ abstract class bo_merge
 	protected function get_all_links($app, $id, $prefix, &$content)
 	{
 		$array = array();
-		$pattern = '@\$(link|links|attachments|links_attachments)\/?(title|href|link)?\/?([a-z]*)\$@';
+		$pattern = '@\$(links_attachments|links|attachments|link)\/?(title|href|link)?\/?([a-z]*)\$@';
 		static $link_cache;
 		if(preg_match_all($pattern, $content, $matches))
 		{
@@ -403,7 +403,8 @@ abstract class bo_merge
 						$array[($prefix?$prefix.'/':'').$placeholder] = $title;
 						break;
 					case 'links':
-						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, '!'.egw_link::VFS_APPNAME, array(),$matches[2][$i]);
+						$link_app = $matches[3][$i] ? $matches[3][$i] :  '!'.egw_link::VFS_APPNAME;
+						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, $link_app, array(),$matches[2][$i]);
 						break;
 					case 'attachments':
 						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, egw_link::VFS_APPNAME,array(),$matches[2][$i]);
