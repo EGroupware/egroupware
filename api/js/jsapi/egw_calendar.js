@@ -163,6 +163,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			"currentText": false,
 			"prevText": false,
 			"closeText": false,
+			"weekHeader": false,
 
 			// These ones are arrays.
 			// Integers are length.  If lang() has no short translation, just trim full
