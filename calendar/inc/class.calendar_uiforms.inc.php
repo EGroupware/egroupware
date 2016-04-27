@@ -713,7 +713,7 @@ class calendar_uiforms extends calendar_ui
 					if ($event['recur_type'] != MCAL_RECUR_NONE)
 					{
 						$update_type = 'edit';
-						
+
 						// we edit a existing series event
 						if ($event['start'] != $old_event['start'] ||
 							$event['whole_day'] != $old_event['whole_day'] ||
@@ -2567,7 +2567,8 @@ class calendar_uiforms extends calendar_ui
 	function ajax_moveEvent($_eventId,$calendarOwner,$targetDateTime,$targetOwner,$durationT=null,$seriesInstance=null)
 	{
 		list($eventId, $date) = explode(':', $_eventId,2);
-
+		$ignore_conflicts = false;
+		
 		// we do not allow dragging into another users calendar ATM
 		if($targetOwner < 0)
 		{
@@ -2654,6 +2655,9 @@ class calendar_uiforms extends calendar_ui
 			// We have a recurring event starting in the past -
 			// stop it & create a new one.
 			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
+
+			// Can't handle conflict.  Just ignore it.
+			$ignore_conflicts = true;
 		}
 		if(!$event['recur_type'])
 		{
@@ -2704,8 +2708,8 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		$message = false;
-		$conflicts=$this->bo->update($event,false, true, false, true, $message);
-
+		$conflicts=$this->bo->update($event,$ignore_conflicts, true, false, true, $message);
+		
 		$this->update_client($event['id'],$d);
 		$response = egw_json_response::get();
 		if(!is_array($conflicts) && $conflicts)
