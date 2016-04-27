@@ -801,11 +801,11 @@ class Select extends Etemplate\Widget
 	 *
 	 * @param int $id
 	 * @param array $acc =null optional values for keys account_(type|lid|lastname|firstname) to not read them again
-	 * @param int $longnames
-	 * @param boolean $show_type true: return array with values for keys label and icon, false: only label
+	 * @param int $longnames =0
+	 * @param boolean $show_type =false true: return array with values for keys label and icon, false: only label
 	 * @return string|array
 	 */
-	private static function accountInfo($id,$acc=null,$longnames=0,$show_type=false)
+	public static function accountInfo($id,$acc=null,$longnames=0,$show_type=false)
 	{
 		if (!$id)
 		{

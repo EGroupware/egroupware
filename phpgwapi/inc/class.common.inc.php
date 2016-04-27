@@ -489,54 +489,11 @@ class common
 	 *
 	 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
 	 * @return string|boolean dir or false if no dir is found
+	 * @deprecated use Api\Framework\Template::get_dir($appname)
 	 */
 	static function get_tpl_dir($appname = '')
 	{
-		if (!$appname)
-		{
-			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-		}
-		if ($appname == 'logout' || $appname == 'login')
-		{
-			$appname = 'phpgwapi';
-		}
-
-		if (!isset($GLOBALS['egw_info']['server']['template_set']) && isset($GLOBALS['egw_info']['user']['preferences']['common']['template_set']))
-		{
-			$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
-		}
-
-		// Setting this for display of template choices in user preferences
-		if ($GLOBALS['egw_info']['server']['template_set'] == 'user_choice')
-		{
-			$GLOBALS['egw_info']['server']['usrtplchoice'] = 'user_choice';
-		}
-
-		if (($GLOBALS['egw_info']['server']['template_set'] == 'user_choice' ||
-			!isset($GLOBALS['egw_info']['server']['template_set'])) &&
-			isset($GLOBALS['egw_info']['user']['preferences']['common']['template_set']))
-		{
-			$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
-		}
-		if (!file_exists(EGW_SERVER_ROOT.'/phpgwapi/templates/'.basename($GLOBALS['egw_info']['server']['template_set']).'/class.'.
-			$GLOBALS['egw_info']['server']['template_set'].'_framework.inc.php') &&
-			!file_exists(EGW_SERVER_ROOT.'/'.basename($GLOBALS['egw_info']['server']['template_set']).'/inc/class.'.
-			$GLOBALS['egw_info']['server']['template_set'].'_framework.inc.php'))
-		{
-			$GLOBALS['egw_info']['server']['template_set'] = 'idots';
-		}
-		$tpldir         = EGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['egw_info']['server']['template_set'];
-		$tpldir_default = EGW_SERVER_ROOT . '/' . $appname . '/templates/default';
-
-		if (@is_dir($tpldir))
-		{
-			return $tpldir;
-		}
-		elseif (@is_dir($tpldir_default))
-		{
-			return $tpldir_default;
-		}
-		return False;
+		return Api\Framework\Template::get_dir($appname);
 	}
 
 	/**

@@ -335,7 +335,7 @@ class Tree extends Etemplate\Widget
 	/**
 	 * Return image relative to trees image-path
 	 *
-	 * @param string $image url of image, eg. from common::image($image, $app)
+	 * @param string $image url of image, eg. from Api\Image::find($image, $app)
 	 * @return string path relative to image-path, to use when returning tree data eg. via json
 	 */
 	public static function imagePath($image)

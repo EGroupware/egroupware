@@ -145,7 +145,7 @@ class Link extends Link\Storage
 			'name' => 'Accounts',
 			'icon' => 'addressbook/accounts',
 			'query' => 'accounts::link_query',
-			'title' => 'common::grab_owner_name',
+			'title' => 'EGroupware\\Api\\Accounts::username',
 			'view' => array('menuaction'=>'addressbook.addressbook_ui.view','ajax'=>'true'),
 			'view_id' => 'account_id'
 		),

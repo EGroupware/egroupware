@@ -109,7 +109,7 @@ class Base
 			case 'framework':
 				return $this->framework = Api\Framework::factory();
 			case 'template':	// need to be instancated for the current app
-				if (!($tpl_dir = common::get_tpl_dir($this->currentapp)))
+				if (!($tpl_dir = Api\Framework\Template::get_dir($this->currentapp)))
 				{
 					return null;
 				}

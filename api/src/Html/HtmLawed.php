@@ -389,7 +389,7 @@ function hl_email_tag_transform($element, $attribute_array=0)
 			{
 					$attribute_array['alt']= $attribute_array['alt'].' [blocked (reason: url length):'.$attribute_array['src'].']';
 					if (!isset($attribute_array['title'])) $attribute_array['title']=$attribute_array['alt'];
-					$attribute_array['src']=common::image('phpgwapi','dialog_error');
+					$attribute_array['src']=Api\Image::find('phpgwapi','dialog_error');
 			}
 			if (!preg_match('/^cid:.*/',$attribute_array['src']))
 			{
@@ -400,7 +400,7 @@ function hl_email_tag_transform($element, $attribute_array=0)
 					{
 						$attribute_array['alt']= $attribute_array['alt'].' [blocked external image:'.$attribute_array['src'].']';
 						if (!isset($attribute_array['title'])) $attribute_array['title']=$attribute_array['alt'];
-						$attribute_array['src']=common::image('mail','no-image-shown');
+						$attribute_array['src']=Api\Image::find('mail','no-image-shown');
 						$attribute_array['border'] = 1;
 						if ($attribute_array['style'])
 						{
