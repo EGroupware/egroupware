@@ -47,6 +47,7 @@ $setup_info['addressbook']['hooks']['not_enum_group_acls'] = 'addressbook_hooks:
 $setup_info['addressbook']['hooks']['export_limit'] = 'addressbook_hooks::getAppExportLimit';
 $setup_info['addressbook']['hooks']['acl_rights'] = 'addressbook_hooks::acl_rights';
 $setup_info['addressbook']['hooks']['categories'] = 'addressbook_hooks::categories';
+$setup_info['addressbook']['hooks']['groupdav_root_props'] = 'addressbook_groupdav::groupdav_root_props';
 
 /* Dependencies for this app to work */
 $setup_info['addressbook']['depends'][] = array(
