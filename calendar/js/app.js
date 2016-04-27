@@ -1309,6 +1309,26 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	},
 
 	/**
+	 * Context menu action (on a single event) in non-listview to generate ical
+	 *
+	 * Since nextmatch is all ready to handle that, we pass it through
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _events
+	 */
+	ical: function(_action, _events)
+	{
+		// Send it through nextmatch
+		_action.data.nextmatch = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm');
+		var ids = {ids:[]};
+		for(var i = 0; i < _events.length; i++)
+		{
+			ids.ids.push(_events[i].id);
+		}
+		nm_action(_action, _events, null, ids);
+	},
+
+	/**
 	 * Change status (via AJAX)
 	 *
 	 * @param {egwAction} _action

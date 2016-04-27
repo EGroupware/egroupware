@@ -2602,6 +2602,7 @@ class calendar_uiviews extends calendar_ui
 			// TODO: See if we can get this working sensibly
 			$actions['documents']['enabled'] = false;
 		}
+		$actions['ical']['onExecute'] = 'javaScript:app.calendar.ical';
 
 		$actions['delete']['onExecute'] = 'javaScript:app.calendar.delete';
 
