@@ -1099,6 +1099,10 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		$data['props']['addressbook-home-set'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'addressbook-home-set', array(
 			Api\CalDAV::mkprop('href',$data['caldav']->base_uri.'/'.$GLOBALS['egw_info']['user']['account_lid'].'/')));
 
+		$data['props']['principal-address'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'principal-address',
+				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] ? '' : array(
+				Api\CalDAV::mkprop('href',$data['caldav']->base_uri.'/addressbook-accounts/'.$GLOBALS['egw_info']['user']['person_id'].'.vcf')));
+
 		$data['props']['directory-gateway'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'directory-gateway', array(
 			Api\CalDAV::mkprop('href',$data['caldav']->base_uri.'/addressbook/')));
 	}
