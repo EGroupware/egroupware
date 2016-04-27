@@ -46,7 +46,7 @@
 					</span>
 					<span class="user"></span>
 				</div>
-
+				<div id="egw_fw_topmenu_items">{topmenu_items}</div>
 			</div>
 			<div id="egw_fw_sidebar">
 				<div id="egw_fw_sidemenu"></div>

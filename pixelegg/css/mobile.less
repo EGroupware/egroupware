@@ -226,104 +226,60 @@
 				box-shadow: none;
 			}
 			div#egw_fw_topmenu_items{
-				width: 280px;
-				display: inline;
-				float: left;
-				position: absolute;
-				padding:8px 5px 0 50px;
+				width: 100%;
+				display: block;
 				ul{
-					display:inline;
+
+					display:inline-block;
 					padding:0;
 					margin:0;
 					list-style-type: none;
+					width:100%;
+					backgroud-color:white;
 					li{
 						display: -webkit-inline-box;
 						display: -moz-inline-box;
-						display: inline-block;
+						display: block;
 						padding:2px;
+						margin-left:20px;
+						width:90%;
 						&:hover {
 							-webkit-box-shadow: none;
 							-moz-box-shadow: none;
 							box-shadow: none;
 						}
+						a {
+							background-position: left;
+							padding-left: 3em;
+							color: #636363;;
+							font-size: 14px;
+							line-height: 30px;
+							text-decoration: none;
+							width:100%;
+							background-repeat: no-repeat;
+							background-size: 24px 24px;
+							display: inline-block;
+						}
 					}
-
-					a#topmenu_home:before {
-						content: " ";
+					a#topmenu_home, a#topmenu_logout {display: none;}
+					a#topmenu_home {
 						background-image: url(../images/topmenu_items/mobile/home.png);
-						background-repeat: no-repeat;
-						width: 32px;
-						height: 32px;
-						background-size: 24px 24px;
-						/*display:inline-block;*/
-						display:none;
+						display: none;
 					}
 					a#topmenu_prefs {
-						&:before {
-							content: "";
 							background-image: url(../images/topmenu_items/mobile/setup.png);
-							background-repeat: no-repeat;
-							width: 32px;
-							height: 32px;
-							background-size: 24px 24px;
-							display: inline-block;
-							background-position: center;
-						}
 					}
-
-					a#topmenu_acl:before {
-						content: "";
-						background-repeat: no-repeat;
-						width: 32px;
-						height: 32px;
-						background-size: 24px 24px;
+					a#topmenu_acl {
 						background-image: url(../images/topmenu_items/mobile/access.png);
-						display: inline-block;
-						background-position: center;
 					}
-
-					a#topmenu_cats:before {
+					a#topmenu_cats {
 						background-image: url(../images/topmenu_items/mobile/category.png);
-						content: "";
-						background-repeat: no-repeat;
-						width: 32px;
-						height: 32px;
-						background-size: 24px 24px;
-						display: inline-block;
-						background-position: center;
 					}
-					a#topmenu_password:before {
+					a#topmenu_password {
 						background-image: url(../images/topmenu_items/mobile/password.png);
-						content: "";
-						background-repeat: no-repeat;
-						width: 32px;
-						height: 32px;
-						background-size: 24px 24px;
-						display: inline-block;
-						background-position: center;
 					}
-
-					a#topmenu_manual:before {
-						background-image: url(../images/topmenu_items/mobile/help.png);
-						content: "";
-						background-repeat: no-repeat;
-						width: 32px;
-						height: 32px;
-						background-size: 24px 24px;
-						display: inline-block;
-					}
-
 					a#topmenu_search{
-						&:before {
 							background-image: url(../images/topmenu_items/mobile/search.png);
-							content: "";
-							background-repeat: no-repeat;
-							width: 32px;
-							height: 32px;
-							background-size: 24px 24px;
-							display: inline-block;
-							background-position: center;
-						}
 					}
 				}
 			}
@@ -480,6 +436,7 @@
 		//#		SIDEBAR		#
 		//#					#
 		//###################
+		#egw_fw_sidebar.avatarSubmenu {top:203px;}
 		#egw_fw_sidebar{
 			top: 55px;
 			bottom: 5px;
@@ -548,8 +505,8 @@
 
 					h1 {text-transform: uppercase; font-size: 12px; .color_100_gray; padding-top: 4px;padding-left:32px;}
 
-					&:hover {.box_shadow_standard_light_hover; .border_radius ( 5px, 0px, 0px, 27px );}
-					&:active {.box_shadow_standard_light_active; .border_radius ( 5px, 0px, 0px, 27px );}
+					&:hover {.box_shadow_standard_light_hover; border-radius: 0;}
+					&:active {.box_shadow_standard_light_active; border-radius: 0;}
 
 					&:focus {
 						background-image: url("../images/ajax-loader.gif");

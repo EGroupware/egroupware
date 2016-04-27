@@ -189,16 +189,8 @@
 				width: 300px;
 				background: white;
 				div#egw_fw_topmenu_items{
-					width: 245px;
-					display: inline;
-					float: left;
-					position: absolute;
-					padding-left: 50px;
-					padding-right:5px;
-					background:white;
 					height:100%;
 					z-index:998;
-					border-right:2px solid silver;
 				}
 			}
 			#egw_fw_sidebar {
@@ -339,38 +331,29 @@
 					background-image:url(../images/sidebar.svg);
 				}
 				div#egw_fw_topmenu_items {
-					padding-top: 8px;
 					ul {
+						border-left: 6px solid silver;
 						li{
 							a#topmenu_logout{
-								&:before {
-									background-image: url(../images/logout.svg);
-								}
+								background-image: url(../images/logout.svg);
 							}
-							a#topmenu_home:before {
+							a#topmenu_home {
 								background-image: url(../images/home.svg);
 							}
 							a#topmenu_prefs {
-								&:before {
-									background-image: url(../images/setup.svg);
-								}
+								background-image: url(../images/setup.svg);
 							}
-							a#topmenu_acl:before {
+							a#topmenu_acl {
 								background-image: url(../images/lock.svg);
 							}
-							a#topmenu_cats:before {
+							a#topmenu_cats {
 								background-image: url(../images/tag_message.svg);
 							}
-							a#topmenu_password:before {
+							a#topmenu_password {
 								background-image: url(../images/password.svg);
 							}
-							a#topmenu_manual:before {
-								background-image: url(../images/help.svg);
-							}
-							a#topmenu_search{
-								&:before {
-									background-image: url(../images/search.svg);
-								}
+							a#topmenu_search {
+								background-image: url(../images/search.svg);
 							}
 						}
 					}
@@ -379,6 +362,24 @@
 					background-image: url(../images/topmenu_items/mobile/menu_active.svg);
 				}
 			}
+			/* active app header*/
+			#egw_fw_sidebar {
+				#egw_fw_sidemenu {
+					.egw_fw_ui_sidemenu_entry_header_active {
+						margin-left:2px;
+						img {
+							height: 32px;
+							padding: 0;
+							padding-left: 14px;
+						}
+						h1 {
+							font-size: 14px;
+							padding-left:57px;
+						}
+					}
+				}
+			}
+
 			#egw_fw_sidemenu img[src$=".svg"] {
 				background: none;
 				box-shadow: none;
