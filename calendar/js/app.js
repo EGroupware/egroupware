@@ -318,6 +318,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 					// Force redraw to current state
 					this.setState({state: this.state});
+					return false;
 				}
 				break;
 		}
@@ -2119,7 +2120,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					}
 				},this, et2_calendar_view);
 			}
-			else
+			else if(state.state.view !== 'listview')
 			{
 				// Simple, easy case - just one widget for the selected time span. (planner)
 				// Update existing view's special attribute filters, defined in the view list
