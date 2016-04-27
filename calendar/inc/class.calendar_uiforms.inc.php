@@ -89,7 +89,7 @@ class calendar_uiforms extends calendar_ui
 				$extra_participants += $owner;
 				$owner = count($owner) > 1 ? $this->user : $owner[0];
 			}
-			else
+			else if ($owner)
 			{
 				$extra_participants[] = $owner;
 			}
