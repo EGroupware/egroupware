@@ -38,6 +38,9 @@ tr.mail div {
   cursor: default;
   white-space: nowrap;
 }
+tr.mail {
+  border-left: 6px solid white;
+}
 tr.mail a {
   cursor: pointer;
   white-space: nowrap;
@@ -53,53 +56,29 @@ tr.unseen a {
   color: #003075;
   font-weight: bold;
 }
-tr.labelone div,
-tr.labelone span,
-tr.labelone time,
-tr.labelone a {
-  color: #ff0080 !important;
+tr.mail.labelone {
+  border-left: 6px solid #ff0080 !important;
 }
-tr.labeltwo div,
-tr.labeltwo span,
-tr.labeltwo time,
-tr.labeltwo a {
-  color: #ff8000 !important;
+tr.mail.labeltwo {
+  border-left: 6px solid  #ff8000 !important;
 }
-tr.labelthree div,
-tr.labelthree span,
-tr.labelthree time,
-tr.labelthree a {
-  color: #008000 !important;
+tr.mail.labelthree {
+  border-left: 6px solid  #008000 !important;
 }
-tr.labelfour div,
-tr.labelfour span,
-tr.labelfour time,
-tr.labelfour a {
-  color: #0000ff !important;
+tr.mail.labelfour {
+  border-left: 6px solid #0000ff !important;
 }
-tr.labelfive div,
-tr.labelfive span,
-tr.labelfive time,
-tr.labelfive a {
-  color: #8000ff !important;
+tr.mail.labelfive {
+  border-left: 6px solid #8000ff !important;
 }
-tr.flagged div,
-tr.flagged span,
-tr.flagged time,
-tr.flagged a {
-  color: #ff0000 !important;
+tr.mail.flagged {
+  border-left: 6px solid #ff0000 !important;
 }
-tr.prio_high div,
-tr.prio_high span,
-tr.prio_high time,
-tr.prio_high a {
-  color: #ac0000 !important;
+tr.mail.prio_high {
+  border-left: 6px solid #ac0000 !important;
 }
-tr.deleted div,
-tr.deleted span,
-tr.deleted time,
-tr.deleted a {
-  color: silver;
+tr.mail.deleted {
+  border-left: 6px solid silver;
   text-decoration: line-through;
 }
 span.status_img {
@@ -1719,53 +1698,29 @@ tr.unseen a {
   color: #003075;
   font-weight: bold;
 }
-tr.labelone div,
-tr.labelone span,
-tr.labelone time,
-tr.labelone a {
-  color: #ff0080 !important;
+tr.mail.labelone {
+  border-left: 6px solid #ff0080 !important;
 }
-tr.labeltwo div,
-tr.labeltwo span,
-tr.labeltwo time,
-tr.labeltwo a {
-  color: #ff8000 !important;
+tr.mail.labeltwo {
+  border-left: 6px solid #ff8000 !important;
 }
-tr.labelthree div,
-tr.labelthree span,
-tr.labelthree time,
-tr.labelthree a {
-  color: #008000 !important;
+tr.mail.labelthree {
+  border-left: 6px solid #008000 !important;
 }
-tr.labelfour div,
-tr.labelfour span,
-tr.labelfour time,
-tr.labelfour a {
-  color: #0000ff !important;
+tr.mail.labelfour {
+  border-left: 6px solid #0000ff !important;
 }
-tr.labelfive div,
-tr.labelfive span,
-tr.labelfive time,
-tr.labelfive a {
-  color: #8000ff !important;
+tr.mail.labelfive {
+  border-left: 6px solid #8000ff !important;
 }
-tr.flagged div,
-tr.flagged span,
-tr.flagged time,
-tr.flagged a {
-  color: #ff0000 !important;
+tr.mail.flagged {
+  border-left: 6px solid #ff0000 !important;
 }
-tr.prio_high div,
-tr.prio_high span,
-tr.prio_high time,
-tr.prio_high a {
-  color: #ac0000 !important;
+tr.mail.prio_high {
+  border-left: 6px solid #ac0000 !important;
 }
-tr.deleted div,
-tr.deleted span,
-tr.deleted time,
-tr.deleted a {
-  color: silver;
+tr.mail.deleted {
+  border-left: 6px solid silver;
   text-decoration: line-through;
 }
 span.status_img {
