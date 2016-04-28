@@ -61,6 +61,15 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 		action.checked = _value;
 	};
 
+	// Allow checkbox to be set from context using the given function
+	action.set_isChecked = function(_value) {
+		action.isChecked = new egwFnct(this, null, []);
+		if(_value !== null)
+		{
+			action.isChecked.setValue(_value);
+		}
+	};
+
 	// If radioGroup is >0 and the element is a checkbox, radioGroup specifies
 	// the group of radio buttons this one belongs to
 	action.set_radioGroup = function(_value) {
@@ -502,6 +511,10 @@ function egwPopupActionImplementation()
 						item.set_hint(link.actionObj.hint);
 						item.set_checkbox(link.actionObj.checkbox);
 						item.set_checked(link.actionObj.checked);
+						if(link.actionObj.checkbox && link.actionObj.isChecked)
+						{
+							item.set_checked(link.actionObj.isChecked.exec(link.actionObj, _selected));
+						}
 						item.set_groupIndex(link.actionObj.radioGroup);
 
 						if (link.actionObj.shortcut)
