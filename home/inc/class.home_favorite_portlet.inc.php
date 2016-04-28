@@ -1,5 +1,5 @@
 <?php
-/**
+/***
  * EGroupware - Home - A simple portlet for displaying a list of entries
  *
  * @link www.egroupware.org
@@ -10,6 +10,10 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id: class.home_list_portlet.inc.php 49321 2014-11-06 21:40:03Z nathangray $
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
 
 
 /**
@@ -26,10 +30,10 @@ class home_favorite_portlet extends home_portlet
 		'appname'	=>	'',
 		'favorite'	=>	'blank'
 	);
-	
+
 	/**
 	 * Nextmatch settings
-	 * @see etemplate_widget_nextmatch
+	 * @see Etemplate\Widget\Nextmatch
 	 * @var array
 	 */
 	protected $nm_settings = array(
@@ -55,6 +59,8 @@ class home_favorite_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
+		if (false) parent::__construct();
+
 		// Process dropped data (Should be [appname => <appname>, id => <favorite ID>]) into something useable
 		if($context['dropped_data'])
 		{
@@ -67,7 +73,7 @@ class home_favorite_portlet extends home_portlet
 			}
 
 			unset($context['dropped_data']);
-			
+
 			$need_reload = true;
 		}
 		// Favorite not set for new widgets created via context menu
@@ -76,14 +82,14 @@ class home_favorite_portlet extends home_portlet
 			// Set initial size to 6x3, default is way too small
 			$context['width'] = max($context['width'], 6);
 			$context['height'] = max($context['height'], 3);
-			
+
 			$need_reload = true;
 		}
 
 		// Load and copy favorite
 		if($context['favorite'] && !is_array($context['favorite']))
 		{
-			$favorites = egw_favorites::get_favorites($context['appname']);
+			$favorites = Framework\Favorites::get_favorites($context['appname']);
 			$context['favorite'] = $favorites[$context['favorite']];
 			$need_reload = true;
 		}
@@ -101,13 +107,14 @@ class home_favorite_portlet extends home_portlet
 		}
 		$this->nm_settings['columnselection_pref'] = "nextmatch-home.{$this->context['id']}";
 
-		translation::add_app($context['appname']);
+		Api\Translation::add_app($context['appname']);
 	}
-	public function exec($id = null, etemplate_new &$etemplate = null)
+
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 		if($etemplate == null)
 		{
-			$etemplate = new etemplate_new();
+			$etemplate = new Etemplate();
 		}
 		$etemplate->read('home.favorite');
 
@@ -121,11 +128,11 @@ class home_favorite_portlet extends home_portlet
 
 
 		// Always load app's css
-		egw_framework::includeCSS($this->context['appname'], 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
-			egw_framework::includeCSS($this->context['appname'],'app');
+		Framework::includeCSS($this->context['appname'], 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
+			Framework::includeCSS($this->context['appname'],'app');
 
 		// Always load app's javascript, so most actions have a chance of working
-		egw_framework::validate_file('.','app',$this->context['appname']);
+		Framework::includeJS('.','app',$this->context['appname']);
 
 		// Set this so app's JS gets initialized
 		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
@@ -138,19 +145,21 @@ class home_favorite_portlet extends home_portlet
 
 	public static function process($content = array())
 	{
+		unset($content);	// not used, but required by function signature
+
 		// We need to keep the template going, thanks.
-		etemplate_widget::setElementAttribute('','','');
+		Etemplate\Widget::setElementAttribute('','','');
 	}
 
 	public function get_actions(){
 		return array();
 	}
-	
+
 	/**
 	 * Some descriptive information about the portlet, so that users can decide if
 	 * they want it or not, and for inclusion in lists, hover text, etc.
 	 *
-	 * These should be already translated, no further translation will be done.
+	 * These should be already translated, no further Api\Translation will be done.
 	 *
 	 * @return Array with keys
 	 * - displayName: Used in lists
@@ -171,7 +180,7 @@ class home_favorite_portlet extends home_portlet
 	 * Settings should be in the same style as for preferences.  It is OK to return an empty array
 	 * for no customizable settings.
 	 *
-	 * These should be already translated, no further translation will be done.
+	 * These should be already translated, no further Api\Translation will be done.
 	 *
 	 * @see preferences/inc/class.preferences_settings.inc.php
 	 * @return Array of settings.  Each setting should have the following keys:
@@ -184,7 +193,7 @@ class home_favorite_portlet extends home_portlet
 	public function get_properties()
 	{
 		$properties = parent::get_properties();
-		$favorites = egw_favorites::get_favorites($this->context['appname']);
+		$favorites = Framework\Favorites::get_favorites($this->context['appname']);
 		$favorite_list = array();
 		foreach($favorites as $id => $favorite)
 		{

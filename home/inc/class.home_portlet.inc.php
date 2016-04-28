@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api\Etemplate;
+
 abstract class home_portlet
 {
 	/**
@@ -33,7 +35,7 @@ abstract class home_portlet
 	 * @param boolean $need_reload Flag to indicate that the portlet needs to be reloaded (exec will be called)
 	 */
 	public abstract function __construct(Array &$context = array(), &$need_reload = false);
-	
+
 	/**
 	 * Some descriptive information about the portlet, so that users can decide if
 	 * they want it or not, and for inclusion in lists, hover text, etc.
@@ -52,9 +54,9 @@ abstract class home_portlet
 	 *
 	 * @param id String unique ID, provided to the portlet so it can make sure content is
 	 * 	unique, if needed.
-	 * @param etemplate etemplate_new Etemplate to generate content
+	 * @param Etemplate $etemplate eTemplate to generate content
 	 */
-	public abstract function exec($id = null, etemplate_new &$etemplate = null);
+	public abstract function exec($id = null, Etemplate &$etemplate = null);
 
 	/**
 	 * Return a list of settings to customize the portlet.
@@ -96,7 +98,7 @@ abstract class home_portlet
 	 * same id / key to override the default action.
 	 */
 	public abstract function get_actions();
-		
+
 	/**
 	 * If this portlet can accept, display, or otherwise handle multiple
 	 * EgroupWare entries.  Used for drag and drop processing.  How the entries

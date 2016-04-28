@@ -1,6 +1,5 @@
 <?php
-
- /*
+/**
   * Egroupware
   * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
   * @package home
@@ -10,13 +9,16 @@
   * @version $Id$
   */
 
+use EGroupware\Api;
+use EGroupware\Api\Etemplate;
 
  /**
   * Show birthdays
   *
   */
- class home_birthday_portlet extends home_portlet {
-	 /**
+ class home_birthday_portlet extends home_portlet
+{
+	/**
 	 * Constructor sets up the portlet according to the user's saved property values
 	 * for this particular portlet.  It is possible to have multiple instances of the
 	 * same portlet with different properties.
@@ -29,6 +31,9 @@
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
+		unset($need_reload);	// not used, but required by function signature
+		if (false) parent::__construct();
+
 		$this->context = $context;
 	}
 
@@ -57,15 +62,15 @@
 	 *
 	 * @param id String unique ID, provided to the portlet so it can make sure content is
 	 * 	unique, if needed.
-	 * @param etemplate etemplate_new Etemplate to generate content
+	 * @param etemplate Etemplate Etemplate to generate content
 	 */
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 		$content = array();
 
 		$etemplate->read('home.birthdays');
-		
-		if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')	// calendar config
+
+		if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')	// calendar Api\Config
 		{
 			$content = $this->get_birthdays();
 		}
@@ -79,7 +84,7 @@
 	 */
 	protected function get_birthdays()
 	{
-		$contacts = new addressbook_bo();
+		$contacts = new Api\Contacts();
 		$month_start = date('-m-',$contacts->now_su);
 		$days = $this->context['days'];
 		$birthdays = array();
@@ -110,6 +115,7 @@
 		unset($month_start); unset($month_end);
 		if ($bdays)
 		{
+			$ab_lang_loaded = 0;
 			for($n = 0; $n <= $days; ++$n)
 			{
 				$day = date('-m-d',$contacts->now_su+$n*24*3600);
@@ -117,7 +123,7 @@
 				{
 					if(substr($contact['bday'],-6) == $day)
 					{
-						if (!$ab_lang_loaded++) $GLOBALS['egw']->translation->add_app('addressbook');
+						if (!$ab_lang_loaded++) Api\Translation::add_app('addressbook');
 						switch($n)
 						{
 							case 0:
@@ -130,7 +136,7 @@
 								list($y,$m,$d) = explode('-',$contact['bday']);
 								if ($GLOBALS['egw_info']['server']['hide_birthdays'] == 'dateonly') $y = '';
 								$text = lang("In %1 days (%2) is %3's birthday.",$n,
-									$GLOBALS['egw']->common->dateformatorder($y,$m,$d,true),
+									common::dateformatorder($y,$m,$d,true),
 									$contact['n_given'].' '.$contact['n_family']);
 								break;
 						}

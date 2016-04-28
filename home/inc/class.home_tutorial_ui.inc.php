@@ -10,6 +10,10 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
+
 class home_tutorial_ui
 {
 	/**
@@ -32,15 +36,13 @@ class home_tutorial_ui
 		if (!EGroupware\Api\Hooks::exists('sidebox_all', 'home') ||
 			EGroupware\Api\Hooks::exists('sidebox_all', 'home', true) != 'home_tutorial_ui::tutorial_menu')
 		{
-			$setup_info = array();
-			include(EGW_SERVER_ROOT.'/home/setup/setup.inc.php');
-			$GLOBALS['egw']->hooks->register_hooks('home', $setup_info['home']['hooks']);
+			Api\Hooks::read(true);
 		}
 
 		//Allow youtube frame to pass the CSP check
-		egw_framework::csp_frame_src_attrs(array('https://www.youtube.com'));
+		Api\Header\ContentSecurityPolicy::add('frame-src', array('https://www.youtube.com'));
 
-		$tmpl = new etemplate_new('home.tutorial');
+		$tmpl = new Etemplate('home.tutorial');
 		if (!is_array($content))
 		{
 			// Get tutorial object id
@@ -92,7 +94,7 @@ class home_tutorial_ui
 		else
 		{
 			$content = array();
-			egw_framework::message(lang('You do not have permission to see this tutorial!'));
+			Framework::message(lang('You do not have permission to see this tutorial!'));
 		}
 
 		$tmpl->exec('home.home_tutorial_ui.popup', $content, $sel_options, array(), array(), 2);
@@ -103,7 +105,7 @@ class home_tutorial_ui
 	 */
 	function ajax_data()
 	{
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->data(json_decode(self::getJsonData()));
 	}
 
@@ -114,13 +116,13 @@ class home_tutorial_ui
 	 */
 	static function getJsonData()
 	{
-		if (!($json = egw_cache::getCache(egw_cache::TREE, 'home', 'egw_tutorial_json')))
+		if (!($json = Api\Cache::getCache(Api\Cache::TREE, 'home', 'egw_tutorial_json')))
 		{
 			$json = file_get_contents('http://www.egroupware.de/videos/tutorials.json');
 			// Fallback tutorials.json
 			if (!$json) $json = file_get_contents('home/setup/tutorials.json');
 			// Cache the json object for two hours
-			egw_cache::setCache(egw_cache::TREE, 'home', 'egw_tutorial_json', $json, 7200);
+			Api\Cache::setCache(Api\Cache::TREE, 'home', 'egw_tutorial_json', $json, 7200);
 		}
 
 		return $json;
@@ -132,7 +134,7 @@ class home_tutorial_ui
 	 */
 	public static function tutorial_menu()
 	{
-		if (html::$ua_mobile) return;
+		if (Api\Header\UserAgent::mobile()) return;
 		$tutorials = json_decode(self::getJsonData(),true);
 		$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 		if (!is_array($tutorials[$appname])) return false;

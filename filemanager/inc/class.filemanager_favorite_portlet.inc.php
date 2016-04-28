@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * Egroupware - Filemanager - A portlet for displaying a list of entries
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package filemanager
@@ -10,13 +9,16 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Vfs;
+use EGroupware\Api\Etemplate;
+
 /**
  * The filemanager_list_portlet uses a nextmatch / favorite
  * to display a list of entries.
  */
 class filemanager_favorite_portlet extends home_favorite_portlet
 {
-
 	/**
 	 * Construct the portlet
 	 *
@@ -24,11 +26,9 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
 		$context['appname'] = 'filemanager';
-		
+
 		// Let parent handle the basic stuff
 		parent::__construct($context,$need_reload);
-
-		$ui = new filemanager_ui();
 
 		$this->nm_settings += array(
 			'get_rows'       => 'filemanager.filemanager_favorite_portlet.get_rows',
@@ -45,12 +45,12 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 			'row_modified'   => 'mtime',
 			'parent_id'      => 'dir',
 			'is_parent'      => 'mime',
-			'is_parent_value'=> egw_vfs::DIR_MIME_TYPE,
+			'is_parent_value'=> Vfs::DIR_MIME_TYPE,
 			'placeholder_actions' => array('mkdir','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 		);
 	}
 
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 
 		$this->context['sel_options']['filter'] = array(
@@ -93,7 +93,7 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 	 * output is handled by parent.
 	 *
 	 * @param type $id
-	 * @param etemplate_new $etemplate
+	 * @param Etemplate $etemplate
 	 */
 	public static function process($content = array())
 	{
@@ -104,13 +104,13 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 		if ($content['nm']['action'])
 		{
 			$msg = filemanager_ui::action($content['nm']['action'],$content['nm']['selected'],$content['nm']['path']);
-			if($msg) egw_json_response::get()->apply('egw.message',array($msg));
+			if($msg) Api\Json\Response::get()->apply('egw.message',array($msg));
 			foreach($content['nm']['selected'] as &$id)
 			{
 				$id = 'filemanager::'.$id;
 			}
 			// Directly request an update - this will get filemanager tab too
-			egw_json_response::get()->apply('egw.dataRefreshUIDs',array($content['nm']['selected']));
+			Api\Json\Response::get()->apply('egw.dataRefreshUIDs',array($content['nm']['selected']));
 		}
 	}
  }

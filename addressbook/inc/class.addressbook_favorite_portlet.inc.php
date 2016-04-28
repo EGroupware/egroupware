@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * Egroupware - Addressbook - A portlet for displaying a list of entries
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package addressbook
@@ -9,6 +8,11 @@
  * @author Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
 
 /**
  * The addressbook_list_portlet uses a nextmatch / favorite
@@ -24,7 +28,7 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
 		$context['appname'] = 'addressbook';
-		
+
 		// Let parent handle the basic stuff
 		parent::__construct($context,$need_reload);
 
@@ -45,11 +49,11 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 		);
 	}
 
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 		$ui = new addressbook_ui();
-		$this->context['sel_options']['filter'] = $this->context['sel_options']['owner'] = $ui->get_addressbooks(EGW_ACL_READ,lang('All'));
-		$this->context['sel_options']['filter2'] = $ui->get_lists(EGW_ACL_READ,array('' => lang('none')));
+		$this->context['sel_options']['filter'] = $this->context['sel_options']['owner'] = $ui->get_addressbooks(Acl::READ,lang('All'));
+		$this->context['sel_options']['filter2'] = $ui->get_lists(Acl::READ,array('' => lang('none')));
 		$this->nm_settings['actions'] = $ui->get_actions($this->nm_settings['col_filter']['tid'], $this->nm_settings['org_view']);
 
 		parent::exec($id, $etemplate);
@@ -76,7 +80,7 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 	 * output is handled by parent.
 	 *
 	 * @param type $id
-	 * @param etemplate_new $etemplate
+	 * @param Etemplate $etemplate
 	 */
 	public static function process($values = array())
 	{
@@ -86,34 +90,33 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 		{
 			if (!count($values['nm']['selected']) && !$values['nm']['select_all'])
 			{
-				egw_framework::message(lang('You need to select some entries first'));
+				Framework::message(lang('You need to select some entries first'));
 			}
 			else
 			{
 				// Some processing to add values in for links and cats
-				$multi_action = $values['nm']['action'];
-				$success = $failed = $action_msg = null;
+				$success = $failed = $action_msg = $msg = null;
 				if ($ui->action($values['nm']['action'],$values['nm']['selected'],$values['nm']['select_all'],
 						$success,$failed,$action_msg,$values['do_email'] ? 'email' : 'index',$msg,$values['nm']['checkboxes']))
 				{
 					$msg .= lang('%1 contact(s) %2',$success,$action_msg);
-					egw_json_response::get()->apply('egw.message',array($msg,'success'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'success'));
 					foreach($values['nm']['selected'] as &$id)
 					{
 						$id = 'addressbook::'.$id;
 					}
 					// Directly request an update - this will get addressbook tab too
-					egw_json_response::get()->apply('egw.dataRefreshUIDs',array($values['nm']['selected']));
+					Api\Json\Response::get()->apply('egw.dataRefreshUIDs',array($values['nm']['selected']));
 				}
 				elseif(is_null($msg))
 				{
 					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
-					egw_json_response::get()->apply('egw.message',array($msg,'error'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 				}
 				elseif($msg)
 				{
 					$msg .= "\n".lang('%1 entries %2, %3 failed.',$success,$action_msg,$failed);
-					egw_json_response::get()->apply('egw.message',array($msg,'error'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 				}
 				unset($values['nm']['action']);
 				unset($values['nm']['select_all']);

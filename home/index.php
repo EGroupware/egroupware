@@ -21,9 +21,6 @@ $GLOBALS['egw_info'] = array(
 include('../header.inc.php');
 $GLOBALS['egw_info']['flags']['nonavbar']=false;
 
-// check and if neccessary force user to chane password
-auth::check_password_age('home','index');
-
 // Home is treated specially, so a redirect won't work.
 $home = new home_ui();
 echo $home->index();

@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api\Vfs;
+use EGroupware\Api\Etemplate;
 
 /**
  * The home_list_portlet uses the link system and its associated link-list widget
@@ -38,6 +40,8 @@ class home_list_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
+		if (false) parent::__construct();
+
 		if(!is_array($context['list'])) $context['list'] = array();
 
 		// Process dropped data (Should be GUIDs) into something useable
@@ -65,7 +69,7 @@ class home_list_portlet extends home_portlet
 			if($item['app'] == 'filemanager' || $item['app'] == 'file')
 			{
 				$item['app'] = 'file';
-				$item['type'] = egw_vfs::mime_content_type($item['id']);
+				$item['type'] = Vfs::mime_content_type($item['id']);
 
 				// Always reload...
 				$need_reload = true;
@@ -78,7 +82,7 @@ class home_list_portlet extends home_portlet
 	 * Some descriptive information about the portlet, so that users can decide if
 	 * they want it or not, and for inclusion in lists, hover text, etc.
 	 *
-	 * These should be already translated, no further translation will be done.
+	 * These should be already translated, no further Api\Translation will be done.
 	 *
 	 * @return Array with keys
 	 * - displayName: Used in lists
@@ -101,7 +105,7 @@ class home_list_portlet extends home_portlet
 	 * 	unique, if needed.
 	 * @return string HTML fragment for display
 	 */
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 		$etemplate->read('home.list');
 
@@ -119,7 +123,7 @@ class home_list_portlet extends home_portlet
 			{
 				$list['app'] = 'file';
 				$list['path'] = $list['title'] = $list['icon'] = $list['id'];
-				$list['type'] = egw_vfs::mime_content_type($list['id']);
+				$list['type'] = Vfs::mime_content_type($list['id']);
 			}
 		}
 
@@ -132,7 +136,7 @@ class home_list_portlet extends home_portlet
 	 * Settings should be in the same style as for preferences.  It is OK to return an empty array
 	 * for no customizable settings.
 	 *
-	 * These should be already translated, no further translation will be done.
+	 * These should be already translated, no further Api\Translation will be done.
 	 *
 	 * @see preferences/inc/class.preferences_settings.inc.php
 	 * @return Array of settings.  Each setting should have the following keys:

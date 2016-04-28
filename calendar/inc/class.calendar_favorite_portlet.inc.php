@@ -1,14 +1,18 @@
 <?php
-
-/*
- * Egroupware - Addressbook - A portlet for displaying a list of entries
+/**
+ * Egroupware - Calendar - A portlet for displaying a list of entries
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package addressbook
+ * @package calendar
  * @subpackage home
  * @link http://www.egroupware.org
  * @author Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
 
 /**
  * The addressbook_list_portlet uses a nextmatch / favorite
@@ -32,7 +36,6 @@ class calendar_favorite_portlet extends home_favorite_portlet
 
 		if($this->favorite['state']['view'] == 'listview')
 		{
-			$ui = new calendar_uilist();
 			$this->context['template'] = 'calendar.list.rows';
 			$this->context['sel_options'] = array();
 			$this->nm_settings += array(
@@ -55,16 +58,16 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		$need_reload = $reload && $need_reload;
 	}
 
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 
 		// Always load app's javascript, so most actions have a chance of working
-		egw_framework::validate_file('.','app',$this->context['appname']);
+		Framework::includeJS('.','app',$this->context['appname']);
 
 		// Always load app's css
-		egw_framework::includeCSS('calendar', 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
-			egw_framework::includeCSS('calendar','app');
-		
+		Framework::includeCSS('calendar', 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
+			Framework::includeCSS('calendar','app');
+
 		if($this->favorite['state']['view'] == 'listview' || is_array($this->favorite) && !$this->favorite['state']['view'])
 		{
 			$ui = new calendar_uilist();
@@ -98,11 +101,8 @@ class calendar_favorite_portlet extends home_favorite_portlet
 			case 'listview':
 				$this->context['sel_options']['filter'] = &$ui->date_filters;
 				$this->nm_settings['actions'] = $ui->get_actions($this->nm_settings['col_filter']['tid'], $this->nm_settings['org_view']);
-
 				// Early exit
 				return parent::exec($id, $etemplate);
-
-				break;
 
 			case 'planner_user':
 			case 'planner_cat':
@@ -121,7 +121,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				$etemplate->read('calendar.view');
 				$etemplate->set_dom_id($id);
 				$this->actions =& $etemplate->getElementAttribute('view', 'actions');
-				
+
 				$ui->month($this->favorite['state']['view'] == 'month' ?
 					0 :
 					(int)$ui->cal_prefs['multiple_weeks'],
@@ -150,7 +150,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 
 		unset($GLOBALS['egw_info']['flags']['app_header']);
 		// Force loading of CSS
-		egw_framework::include_css_js_response();
+		Framework::include_css_js_response();
 
 		// Set this to calendar so app.js gets initialized
 		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
@@ -184,8 +184,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 	 * Here we need to handle any incoming data.  Setup is done in the constructor,
 	 * output is handled by parent.
 	 *
-	 * @param type $id
-	 * @param etemplate_new $etemplate
+	 * @param $values =array()
 	 */
 	public static function process($values = array())
 	{
@@ -195,39 +194,39 @@ class calendar_favorite_portlet extends home_favorite_portlet
 		{
 			if (!count($values['nm']['selected']) && !$values['nm']['select_all'])
 			{
-				egw_framework::message(lang('You need to select some entries first'));
+				Framework::message(lang('You need to select some entries first'));
 			}
 			else
 			{
-				$success = $failed = $action_msg = null;
+				$success = $failed = $action_msg = $msg = null;
 				if ($ui->action($values['nm']['action'],$values['nm']['selected'],$values['nm']['select_all'],
 						$success,$failed,$action_msg,'calendar_list',$msg, $values['nm']['checkboxes']['no_notifications']))
 				{
 					$msg .= lang('%1 event(s) %2',$success,$action_msg);
-					egw_json_response::get()->apply('egw.message',array($msg,'success'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'success'));
 					foreach($values['nm']['selected'] as &$id)
 					{
 						$id = 'calendar::'.$id;
 					}
 					// Directly request an update - this will get addressbook tab too
-					egw_json_response::get()->apply('egw.dataRefreshUIDs',array($values['nm']['selected']));
+					Api\Json\Response::get()->apply('egw.dataRefreshUIDs',array($values['nm']['selected']));
 				}
 				elseif(is_null($msg))
 				{
 					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
-					egw_json_response::get()->apply('egw.message',array($msg,'error'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 				}
 				elseif($msg)
 				{
 					$msg .= "\n".lang('%1 entries %2, %3 failed.',$success,$action_msg,$failed);
-					egw_json_response::get()->apply('egw.message',array($msg,'error'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 				}
 				unset($values['nm']['action']);
 				unset($values['nm']['select_all']);
 			}
 		}
 	}
-	
+
 	/**
 	 * No filters default favorite causes problems with calendar's special state handling,
 	 * so just remove it.

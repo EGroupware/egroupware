@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * Egroupware - Resources - A portlet for displaying a list of entries
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package resources
@@ -10,13 +9,16 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * The resources_list_portlet uses a nextmatch / favorite
  * to display a list of entries.
  */
 class resources_favorite_portlet extends home_favorite_portlet
 {
-
 	/**
 	 * Construct the portlet
 	 *
@@ -24,11 +26,9 @@ class resources_favorite_portlet extends home_favorite_portlet
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
 		$context['appname'] = 'resources';
-		
+
 		// Let parent handle the basic stuff
 		parent::__construct($context,$need_reload);
-
-		$ui = new resources_ui();
 
 		$this->context['template'] = 'resources.show.rows';
 		$this->nm_settings += array(
@@ -48,11 +48,11 @@ class resources_favorite_portlet extends home_favorite_portlet
 		);
 	}
 
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 		$ui = new resources_ui();
 
-		$this->context['sel_options']['filter']= array(''=>lang('all categories'))+(array)$ui->bo->acl->get_cats(EGW_ACL_READ);
+		$this->context['sel_options']['filter']= array(''=>lang('all categories'))+(array)$ui->bo->acl->get_cats(Acl::READ);
 		$this->context['sel_options']['filter2'] = resources_bo::$filter_options;
 		if(!$content['nm']['filter2'])
 		{
@@ -67,8 +67,7 @@ class resources_favorite_portlet extends home_favorite_portlet
 	 * Here we need to handle any incoming data.  Setup is done in the constructor,
 	 * output is handled by parent.
 	 *
-	 * @param type $id
-	 * @param etemplate_new $etemplate
+	 * @param $content =array()
 	 */
 	public static function process($content = array())
 	{
@@ -93,7 +92,7 @@ class resources_favorite_portlet extends home_favorite_portlet
 			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
 				$msg = lang('You need to select some entries first!');
-				egw_json_response::get()->apply('egw.message',array($msg,'error'));
+				Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 			}
 			else
 			{
@@ -103,21 +102,20 @@ class resources_favorite_portlet extends home_favorite_portlet
 				{
 					$msg .= lang('%1 resource(s) %2',$success,$action_msg);
 
-					egw_json_response::get()->apply('egw.message',array($msg,'success'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'success'));
 					foreach($content['nm']['selected'] as &$id)
 					{
 						$id = 'resources::'.$id;
 					}
 					// Directly request an update - this will get resources tab too
-					egw_json_response::get()->apply('egw.dataRefreshUIDs',array($content['nm']['selected']));
+					Api\Json\Response::get()->apply('egw.dataRefreshUIDs',array($content['nm']['selected']));
 				}
 				elseif(empty($msg))
 				{
 					$msg .= lang('%1 resource(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
-					egw_json_response::get()->apply('egw.message',array($msg,'error'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 				}
 			}
 		}
-
 	}
- }
+}

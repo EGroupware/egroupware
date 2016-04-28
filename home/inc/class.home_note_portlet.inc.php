@@ -1,6 +1,5 @@
 <?php
-
- /*
+/**
  * Egroupware
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package home
@@ -9,6 +8,9 @@
  * @author Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Etemplate;
 
  /**
   * A simple HTML note-to-self
@@ -24,12 +26,14 @@ class home_note_portlet extends home_portlet
 	public $public_functions = array(
 		'edit' => true
 	);
-	
+
 	/**
 	 * Context for this portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
+		if (false) parent::__construct();
+
 		// Title not set for new widgets created via context menu
 		if(!$context['title'])
 		{
@@ -39,7 +43,7 @@ class home_note_portlet extends home_portlet
 
 			$need_reload = true;
 		}
-		
+
 		$this->context = $context;
 	}
 
@@ -54,34 +58,31 @@ class home_note_portlet extends home_portlet
 
 		if($content['group'] && $GLOBALS['egw_info']['apps']['admin'])
 		{
-			$prefs = new preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
+			$prefs = new Api\Preferences(is_numeric($content['group']) ? $content['group'] : $GLOBALS['egw_info']['user']['account_id']);
 		}
 		else
 		{
 			$prefs = $GLOBALS['egw']->preferences;
 		}
-		$type = is_numeric($group) ? "user" : $group;
-		$portlets = $prefs->read_repository();
-		$portlets = $portlets['home'];
+		$type = is_numeric($content['group']) ? "user" : $content['group'];
+		$arr = $prefs->read_repository();
+		$portlets = $arr['home'];
 		if($content['button'])
 		{
-			// Save updated preferences
+			// Save updated Api\Preferences
 			$portlets[$id]['note'] = $content['note'];
 			$prefs->add('home', $id, $portlets[$id],$type);
 			$prefs->save_repository(True,$type);
 			// Yay for AJAX submit
-			egw_json_response::get()->apply('window.opener.app.home.refresh',array($id));
-			
+			Api\Json\Response::get()->apply('window.opener.app.home.refresh',array($id));
+
 			if(key($content['button'])=='save')
 			{
-				egw_json_response::get()->apply('window.close',array());
+				Api\Json\Response::get()->apply('window.close',array());
 			}
 		}
-		$etemplate = new etemplate_new('home.note');
+		$etemplate = new Etemplate('home.note');
 
-		$content = array(
-			'note'	=> $portlets[$id]['note']
-		);
 		$etemplate->setElementAttribute('note', 'width', '99%');
 		$etemplate->setElementAttribute('note', 'height', $height);
 		$preserve = array(
@@ -89,10 +90,12 @@ class home_note_portlet extends home_portlet
 			'height'	=>	$height,
 			'group'		=>	$portlets[$id]['group']
 		);
-		$etemplate->exec('home.home_note_portlet.edit',$content, array(),array('note'=>false,'save'=>false), $preserve);
+		$etemplate->exec('home.home_note_portlet.edit',array(
+			'note'	=> $portlets[$id]['note']
+		), array(),array('note'=>false,'save'=>false), $preserve);
 	}
 
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 		// Allow to submit directly back here
 		if(is_array($id) && $id['id'])
@@ -107,7 +110,7 @@ class home_note_portlet extends home_portlet
 		if(!$content['note'])
 		{
 			$content['note'] = '';
-			egw_json_response::get()->apply('app.home.note_edit',array($id));
+			Api\Json\Response::get()->apply('app.home.note_edit',array($id));
 		}
 
 		$etemplate->exec('home.home_note_portlet.exec',$content,array(),array('__ALL__'=>true),array('id' =>$id));

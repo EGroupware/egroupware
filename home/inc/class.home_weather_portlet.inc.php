@@ -1,6 +1,5 @@
 <?php
-
- /*
+/**
  * Egroupware Weather widget
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package home
@@ -9,6 +8,10 @@
  * @author Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
 
  /**
   * Widget displaying the weather
@@ -33,6 +36,8 @@ class home_weather_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
+		if (false) parent::__construct();
+
 		// City not set for new widgets created via context menu
 		if(!$context['city'] || $context['height'] < 2)
 		{
@@ -42,11 +47,11 @@ class home_weather_portlet extends home_portlet
 		}
 
 		$need_reload = true;
-		
+
 		$this->context = $context;
 	}
 
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 		// Allow to submit directly back here
 		if(is_array($id) && $id['id'])
@@ -82,11 +87,11 @@ class home_weather_portlet extends home_portlet
 		// Caching is best done by city ID, so store that
 		if($content['city_id'] && (!$this->context['city_id'] || $content['city_id'] != $this->context['city_id']))
 		{
-			
-			$portlets = $GLOBALS['egw']->preferences->read_repository();
-			$portlets = $portlets['home'];
 
-			// Save updated preferences
+			$arr = $GLOBALS['egw']->preferences->read_repository();
+			$portlets = $arr['home'];
+
+			// Save updated Api\Preferences
 			$portlets[$id]['city_id'] = $content['city_id'];
 			$this->context['city'] = $portlets[$id]['city'] = $content['settings']['city'] =
 				$content['settings']['title'] = $content['city'] = is_array($content['city']) ? $content['city']['name'] : $content['city'];
@@ -111,11 +116,11 @@ class home_weather_portlet extends home_portlet
 		{
 			$content['current']['no_current_temp'] = true;
 		}
-		
+
 
 		// Direct to full forecast page
 		$content['attribution'] ='http://openweathermap.org/city/'.$content['city_id'];
-		
+
 		$etemplate->exec('home.home_weather_portlet.exec',$content,array(),array('__ALL__'=>true),array('id' =>$id));
 	}
 
@@ -136,7 +141,8 @@ class home_weather_portlet extends home_portlet
 		{
 			$query['APPID'] = self::API_KEY;
 		}
-		$data = egw_cache::getTree('home', json_encode($query), function($query) use(&$clear_cache) {
+		$data = Api\Cache::getTree('home', json_encode($query), function($query)
+		{
 			$debug = false;
 			if($debug) error_log('Fetching fresh data from ' . static::API_URL);
 
@@ -158,7 +164,7 @@ class home_weather_portlet extends home_portlet
 		if($debug)
 		{
 			error_log(__METHOD__ .' weather info:');
-			foreach($data as $key => $val)
+			foreach(array_keys($data) as $key)
 			{
 				error_log($key . ': ' .array2string($data[$key]));
 			}
@@ -166,7 +172,7 @@ class home_weather_portlet extends home_portlet
 		if(is_string($data['message']))
 		{
 			$desc = $this->get_description();
-			egw_framework::message($desc['displayName'] . ': ' . $desc['title'] . "\n".$data['message'], 'warning');
+			Framework::message($desc['displayName'] . ': ' . $desc['title'] . "\n".$data['message'], 'warning');
 			return array();
 		}
 
@@ -181,11 +187,11 @@ class home_weather_portlet extends home_portlet
 		if($data['list'])
 		{
 			$massage =& $data['list'];
-			
+
 			for($i = 0; $i <  min(count($massage), $this->context['width']); $i++)
 			{
 				$forecast =& $massage[$i];
-				$forecast['day'] = egw_time::to($forecast['dt'],'l');
+				$forecast['day'] = Api\DateTime::to($forecast['dt'],'l');
 				self::format_forecast($forecast);
 			}
 			// Chop data to fit into portlet

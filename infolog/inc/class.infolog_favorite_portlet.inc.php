@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * Egroupware - Infolog - A portlet for displaying a list of portlet entries
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package infolog
@@ -9,6 +8,10 @@
  * @author Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
 
 /**
  * The infolog_list_portlet uses a nextmatch / favorite
@@ -27,7 +30,7 @@ class infolog_favorite_portlet extends home_favorite_portlet
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
 		$context['appname'] = 'infolog';
-		
+
 		// Let parent handle the basic stuff
 		parent::__construct($context,$need_reload);
 
@@ -66,7 +69,7 @@ class infolog_favorite_portlet extends home_favorite_portlet
 		// Make sure we pass the type check
 		if ($query['col_filter']['info_type'])
 		{
-			$tpl = new etemplate_new;
+			$tpl = new Etemplate;
 			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type']))
 			{
 				$query['template'] = $tpl->name;
@@ -80,13 +83,12 @@ class infolog_favorite_portlet extends home_favorite_portlet
 		unset($GLOBALS['egw_info']['flags']['app_header']);
 		return $total;
 	}
-	
+
 	/**
 	 * Here we need to handle any incoming data.  Setup is done in the constructor,
 	 * output is handled by parent.
 	 *
-	 * @param type $id
-	 * @param etemplate_new $etemplate
+	 * @param $values =array()
 	 */
 	public static function process($values = array())
 	{
@@ -96,7 +98,7 @@ class infolog_favorite_portlet extends home_favorite_portlet
 		{
 			if (!count($values['nm']['selected']) && !$values['nm']['select_all'])
 			{
-				egw_framework::message(lang('You need to select some entries first'));
+				Framework::message(lang('You need to select some entries first'));
 			}
 			else
 			{
@@ -127,28 +129,28 @@ class infolog_favorite_portlet extends home_favorite_portlet
 					unset($values[$multi_action.'_popup']);
 					unset($values[$multi_action]);
 				}
-				$success = $failed = $action_msg = null;
+				$success = $failed = $action_msg = $msg = null;
 				if ($ui->action($values['nm']['multi_action'], $values['nm']['selected'], $values['nm']['select_all'],
 					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
 				{
 					$msg .= lang('%1 entries %2',$success,$action_msg);
-					egw_json_response::get()->apply('egw.message',array($msg,'success'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'success'));
 					foreach($values['nm']['selected'] as &$id)
 					{
 						$id = 'infolog::'.$id;
 					}
 					// Directly request an update - this will get infolog tab too
-					egw_json_response::get()->apply('egw.dataRefreshUIDs',array($values['nm']['selected']));
+					Api\Json\Response::get()->apply('egw.dataRefreshUIDs',array($values['nm']['selected']));
 				}
 				elseif(is_null($msg))
 				{
 					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
-					egw_json_response::get()->apply('egw.message',array($msg,'error'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 				}
 				elseif($msg)
 				{
 					$msg .= "\n".lang('%1 entries %2, %3 failed.',$success,$action_msg,$failed);
-					egw_json_response::get()->apply('egw.message',array($msg,'error'));
+					Api\Json\Response::get()->apply('egw.message',array($msg,'error'));
 				}
 				unset($values['nm']['multi_action']);
 				unset($values['nm']['select_all']);

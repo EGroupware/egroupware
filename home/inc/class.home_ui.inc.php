@@ -10,6 +10,10 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
+
 /**
  * General user interface object of the Home app
  *
@@ -37,9 +41,9 @@ class home_ui
 		self::setup_default_home();
 
 		// CSS for Gridster grid layout
-		egw_framework::includeCSS('/api/js/jquery/gridster/jquery.gridster.css');
+		Framework::includeCSS('/api/js/jquery/gridster/jquery.gridster.css');
 
-		$template = new etemplate_new('home.index');
+		$template = new Etemplate('home.index');
 
 		// Get a list of portlets
 		$content = array(
@@ -51,13 +55,13 @@ class home_ui
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'home';
 
 		// Main screen message
-		translation::add_app('mainscreen');
-		$greeting = translation::translate('mainscreen_message',false,'');
+		Api\Translation::add_app('mainscreen');
+		$greeting = Api\Translation::translate('mainscreen_message',false,'');
 
 		if($greeting == 'mainscreen_message'|| empty($greeting))
 		{
-			translation::add_app('mainscreen','en');    // trying the en one
-			$greeting = translation::translate('mainscreen_message',false,'');
+			Api\Translation::add_app('mainscreen','en');    // trying the en one
+			$greeting = Api\Translation::translate('mainscreen_message',false,'');
 		}
 		if(!($greeting == 'mainscreen_message'|| empty($greeting)))
 		{
@@ -67,6 +71,7 @@ class home_ui
 		$template->exec('home.home_ui.index', $content);
 
 		// Now run the portlets themselves
+		$attrs = array();
 		foreach($content['portlets'] as $portlet => $p_data)
 		{
 			$id = $p_data['id'];
@@ -152,7 +157,7 @@ class home_ui
 	 * Actual portlet content is provided by each portlet.
 	 * @param template etemplate so attributes can be set
 	 */
-	protected function get_user_portlets(etemplate_new &$template)
+	protected function get_user_portlets(Etemplate &$template)
 	{
 		$portlets = array();
 
@@ -228,9 +233,9 @@ class home_ui
 
 		// This should be set already, but just in case the execution path
 		// is different from normal...
-		if(egw_json_response::isJSONResponse())
+		if(Api\Json\Response::isJSONResponse())
 		{
-			$GLOBALS['egw']->framework->response = egw_json_response::get();
+			$GLOBALS['egw']->framework->response = Api\Json\Response::get();
 		}
 
 		$classname = $context['class'];
@@ -239,7 +244,7 @@ class home_ui
 		$desc = $portlet->get_description();
 
 		// Pre-set up etemplate so it only needs done once
-		$etemplate = new etemplate_new();
+		$etemplate = new Etemplate();
 
 		// Exclude common attributes changed through UI and settings lacking a type
 		$settings = $portlet->get_properties();
@@ -285,7 +290,7 @@ class home_ui
 				$appname = $app;
 			}
 		}
-		egw_framework::validate_file('', $classname, $appname ? $appname : 'home');
+		Framework::includeJS('', $classname, $appname ? $appname : 'home');
 
 		if($full_exec)
 		{
@@ -320,7 +325,7 @@ class home_ui
 					break;
 				}
 			}
-			if($no_pref || !$GLOBALS['egw']->hooks->hook_exists('home', $appname))
+			if($no_pref || !Api\Hooks::exists('home', $appname))
 			{
 				continue;
 			}
@@ -344,7 +349,7 @@ class home_ui
 	 */
 	protected function get_portlet_list()
 	{
-		$list = egw_cache::getTree('home', 'portlet_classes', function() {
+		$list = Api\Cache::getTree('home', 'portlet_classes', function() {
 			$list = array();
 			$classes = array();
 
@@ -411,7 +416,7 @@ class home_ui
 		}, array(), 60);
 
 		// Filter list by current user's permissions
-		foreach($list as $appname => $children)
+		foreach(array_keys($list) as $appname)
 		{
 			if(in_array($appname, array_keys($GLOBALS['egw_info']['apps']))) {
 				if(!in_array($appname, array_keys($GLOBALS['egw_info']['user']['apps'])))
@@ -457,11 +462,11 @@ class home_ui
 						// If it's a group, we'd like to know which
 						if($location == 'group')
 						{
-							$options = array('account_type' => $type);
-							$groups = accounts::link_query('',$options);
-							foreach($groups as $gid => $name)
+							$options = array('account_type' => 'groups');
+							$groups = Api\Accounts::link_query('',$options);
+							foreach(array_keys($groups) as $gid)
 							{
-								$prefs = new preferences($gid);
+								$prefs = new Api\Preferences($gid);
 								$prefs->read_repository();
 								if (isset($prefs->user['home'][$portlet_id]))
 								{
@@ -472,7 +477,7 @@ class home_ui
 						}
 						$actions['remove_default_'.$location] = array(
 							'type'		=> 'popup',
-							'caption'	=> lang('Remove as default for %1',is_numeric($location) ? accounts::id2name($location,'account_fullname') : $location),
+							'caption'	=> lang('Remove as default for %1',is_numeric($location) ? Api\Accounts::id2name($location,'account_fullname') : $location),
 							'onExecute'	=> 'javaScript:app.home.set_default',
 							'group'		=> 'Admins',
 							'portlet_group' => $location
@@ -526,7 +531,7 @@ class home_ui
 		}
 		if($group && $GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			$prefs = new preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
+			$prefs = new Api\Preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
 		}
 		else
 		{
@@ -536,7 +541,7 @@ class home_ui
 
 		$prefs->read_repository();
 
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 
 		if($values =='~reload~')
 		{
@@ -588,6 +593,7 @@ class home_ui
 				$add = true;
 				$classname = substr($classname, 4);
 			}
+			$content = null;
 			$portlet = $this->get_portlet($portlet_id, $context, $content, $attributes, $full_exec);
 
 			$context['class'] = get_class($portlet);
@@ -637,7 +643,7 @@ class home_ui
 		// Load the appropriate group
 		if($group)
 		{
-			$prefs = new preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
+			$prefs = new Api\Preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
 		}
 		else
 		{
@@ -651,7 +657,7 @@ class home_ui
 		{
 			foreach($portlet_ids as $id)
 			{
-				egw_json_response::get()->call('egw.message', lang("Set default"));
+				Api\Json\Response::get()->call('egw.message', lang("Set default"));
 				// Current user is setting the default, copy their settings
 				$settings = $GLOBALS['egw_info']['user']['preferences']['home'][$id];
 				$settings['group'] = $group;
@@ -666,16 +672,16 @@ class home_ui
 		{
 			foreach($portlet_ids as $id)
 			{
-				egw_json_response::get()->call('egw.message', lang("Removed default"));
+				Api\Json\Response::get()->call('egw.message', lang("Removed default"));
 				$prefs->delete('home',$id, $type);
 			}
 		}
 		$prefs->save_repository(false,$type);
 
-		// Update preferences client side for consistency
+		// Update Api\Preferences client side for consistency
 		$prefs = $GLOBALS['egw']->preferences;
 		$pref = $prefs->read_repository();
-		egw_json_response::get()->call('egw.set_preferences', (array)$pref['home'], 'home');
+		Api\Json\Response::get()->call('egw.set_preferences', (array)$pref['home'], 'home');
 	}
 
 	/**
@@ -697,12 +703,12 @@ class home_ui
 		$lang = $preferences->default['common']['lang'];
 		if (empty($lang)) $lang = 'en';
 
-		translation::add_app('calendar', $lang);
+		Api\Translation::add_app('calendar', $lang);
 		$weekview = lang('Weekview');
 
 		if ($GLOBALS['egw_info']['apps']['news_admin'])
 		{
-			$cats = new categories('', 'news_admin');
+			$cats = new Api\Categories('', 'news_admin');
 			$cat_id_egw_org_news = $cats->name2id('egroupware.org');
 		}
 
@@ -776,12 +782,12 @@ class home_ui
 		{
 			foreach($prefs as $name => $value)
 			{
-				preferences::delete_preference($app, $name, 'default');
+				Api\Preferences::delete_preference($app, $name, 'default');
 				$preferences->add($app, $name, $value, 'default');
 			}
 		}
 		// remove tutorial from home, as it is now in sidebox
-		preferences::delete_preference('home', 'portlet_setup142t', 'default');
+		Api\Preferences::delete_preference('home', 'portlet_setup142t', 'default');
 		$preferences->delete('home', 'portlet_setup142t', 'default');
 
 		// assigning saved preferences to egw_info, which is used for this request
@@ -802,7 +808,7 @@ class home_ui
 
 			default:
 				call_user_func(array(__CLASS__, 'setup_default_home_'.str_replace('.', '_', self::CURRENT_HOME_VERSION)));
-				config::save_value(self::HOME_VERSION, self::CURRENT_HOME_VERSION, 'phpgwapi');
+				Api\Config::save_value(self::HOME_VERSION, self::CURRENT_HOME_VERSION, 'phpgwapi');
 				break;
 		}
 	}

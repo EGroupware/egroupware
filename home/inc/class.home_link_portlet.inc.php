@@ -11,6 +11,11 @@
  * @version $Id$
  */
 
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Vfs;
+use EGroupware\Api\Etemplate;
+
  /**
   * A single entry is displayed with its application icon and title
   */
@@ -46,6 +51,8 @@ class home_link_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array(), &$need_reload = false)
 	{
+		if (false) parent::__construct();
+
 		// Process dropped data into something useable
 		if($context['dropped_data'])
 		{
@@ -53,9 +60,9 @@ class home_link_portlet extends home_portlet
 			unset($context['dropped_data']);
 			$need_reload = true;
 		}
-		if($context['entry'] && is_array($context['entry']));
+		if($context['entry'] && is_array($context['entry']))
 		{
-			$this->title = $context['entry']['title'] = egw_link::title($context['entry']['app'], $context['entry']['id']);
+			$this->title = $context['entry']['title'] = Link::title($context['entry']['app'], $context['entry']['id']);
 
 			// Reload to get the latest title
 			// TODO: This is a performance hit, it would be good to do this less
@@ -90,7 +97,7 @@ class home_link_portlet extends home_portlet
 	 * @param id String unique ID, provided to the portlet so it can make sure content is
 	 * 	unique, if needed.
 	 */
-	public function exec($id = null, etemplate_new &$etemplate = null)
+	public function exec($id = null, Etemplate &$etemplate = null)
 	{
 		// Check for custom template for app
 		$custom_template = false;
@@ -107,7 +114,7 @@ class home_link_portlet extends home_portlet
 
 
 		$etemplate->set_dom_id($id);
-		
+
 		$content = array(
 			'image'	=>	$this->image
 		);
@@ -117,9 +124,9 @@ class home_link_portlet extends home_portlet
 		{
 
 			// Always load app's css
-			egw_framework::includeCSS($this->context['entry']['app'], 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
-				egw_framework::includeCSS($this->context['entry']['app'],'app');
-			
+			Framework::includeCSS($this->context['entry']['app'], 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
+				Framework::includeCSS($this->context['entry']['app'],'app');
+
 			try
 			{
 				$classname = $this->context['entry']['app'] . '_egw_record';
@@ -153,7 +160,7 @@ class home_link_portlet extends home_portlet
 				error_log("Problem loading record " . array2string($this->context['entry']));
 				throw $e;
 			}
-			
+
 			// Set a fallback image
 			if($content['image'] == false)
 			{
@@ -173,8 +180,8 @@ class home_link_portlet extends home_portlet
 		{
 			$this->context['entry']['app'] = 'file';
 			$this->context['entry']['path'] = $this->context['entry']['title'] = $this->context['entry']['id'];
-			$this->context['entry']['type'] = egw_vfs::mime_content_type($this->context['entry']['id']);
-			$content['image'] = egw_framework::link('/api/thumbnail.php',array('path' => $this->context['entry']['id']));
+			$this->context['entry']['type'] = Vfs::mime_content_type($this->context['entry']['id']);
+			$content['image'] = Framework::link('/api/thumbnail.php',array('path' => $this->context['entry']['id']));
 		}
 
 		$content += $this->context;
@@ -193,7 +200,7 @@ class home_link_portlet extends home_portlet
 	 * Settings should be in the same style as for preferences.  It is OK to return an empty array
 	 * for no customizable settings.
 	 *
-	 * These should be already translated, no further translation will be done.
+	 * These should be already translated, no further Api\Translation will be done.
 	 *
 	 * @see preferences/inc/class.preferences_settings.inc.php
 	 * @return Array of settings.  Each setting should have the following keys:
