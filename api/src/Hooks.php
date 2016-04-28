@@ -166,7 +166,7 @@ class Hooks
 	 * @param string $location location-name
 	 * @return int the number of found hooks
 	 */
-	function count($location)
+	public static function count($location)
 	{
 		if (!isset(self::$locations)) self::read();
 
