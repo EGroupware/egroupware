@@ -472,7 +472,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 
 		// etemplate2 object for view
 		this.et2_view = new etemplate2 (this.viewTemplate[0], false);
-
+		framework.pushState('view');
 		if(templateName)
 		{
 			this.et2_view.load(this.appname+'.'+templateName,templateURL, data, typeof et2_callback == 'function'?et2_callback:function(){}, app);
