@@ -650,7 +650,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		this.taglist.setMaxSelection(this._multiple ? this.options.maxSelection : 1);
 		if(!this._multiple && this.taglist.getValue().length > 1)
 		{
-			this.set_value(this.taglist.getValue()[0]);
+			this.set_value(this.taglist.getValue());
 		}
 
 		// This changes sizes, so
