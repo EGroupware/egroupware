@@ -20,7 +20,7 @@ class module_calendar_planner extends Module
 	 */
 	const CALENDAR_CSS = '/calendar/templates/default/app.css';
 
-	const ETEMPLATE_CSS = '/etemplate/templates/default/etemplate2.css';
+	const ETEMPLATE_CSS = '/api/templates/default/etemplate2.css';
 
 	/**
 	 * Constructor
@@ -28,7 +28,7 @@ class module_calendar_planner extends Module
 	function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->arguments = array(
 			'sortby' => array(
 				'type' => 'select',
@@ -92,7 +92,7 @@ class module_calendar_planner extends Module
 		{
 			$this->arguments['cat_id']['options'][$cat['id']] = str_repeat('&nbsp; ',$cat['level']).$cat['name'];
 		}
-		if (count($cat_ids) > 5)
+		if (count($this->arguments['cat_id']['options']) > 5)
 		{
 			$this->arguments['cat_id']['multiple'] = 5;
 		}
@@ -315,7 +315,7 @@ class module_calendar_planner extends Module
 		{
 			$html .= '<div class="message" align="center">'.lang('No owner selected').'</div>';
 		}
-		
+
 		while(@ob_end_clean());
 
 		return $html;
