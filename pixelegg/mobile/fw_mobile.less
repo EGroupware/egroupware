@@ -208,7 +208,9 @@
 			}
 		}
 		.ui-dialog .ui-dialog-buttonpane {
-			button {
+			button[class*="et2_button_cancel"],
+			button[class="et2_button_delete"],
+			button[class="et2_button_save"] {
 				.white-svg;
 				padding-left:0px !important;
 				width:50px;
@@ -1072,7 +1074,6 @@
 		}
 		.et2_link_to {
 			div {
-				height:46px;
 				padding-bottom: 3px;
 			}
 			.et2_file {
@@ -1084,6 +1085,7 @@
 					width:46px;
 				}
 			}
+			button.link { float:right; height: 46px;width:46px;}
 		}
 		.et2_link_to.et2_toolbar {
 			div.et2_file {

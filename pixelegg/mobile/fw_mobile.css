@@ -6997,7 +6997,9 @@ form[id^="tracker-"] .dialogHeadbar {
     -o-filter: brightness(20%);
     filter: brightness(20%);
   }
-  body .ui-dialog .ui-dialog-buttonpane button {
+  body .ui-dialog .ui-dialog-buttonpane button[class*="et2_button_cancel"],
+  body .ui-dialog .ui-dialog-buttonpane button[class="et2_button_delete"],
+  body .ui-dialog .ui-dialog-buttonpane button[class="et2_button_save"] {
     -webkit-filter: brightness(0) invert(1) !important;
     filter: brightness(0) invert(1) !important;
     background-color: transparent !important;
@@ -7006,7 +7008,9 @@ form[id^="tracker-"] .dialogHeadbar {
     padding-left: 0px !important;
     width: 50px;
   }
-  body .ui-dialog .ui-dialog-buttonpane button span {
+  body .ui-dialog .ui-dialog-buttonpane button[class*="et2_button_cancel"] span,
+  body .ui-dialog .ui-dialog-buttonpane button[class="et2_button_delete"] span,
+  body .ui-dialog .ui-dialog-buttonpane button[class="et2_button_save"] span {
     display: none;
   }
 }
@@ -7885,7 +7889,6 @@ form[id^="tracker-"] .dialogHeadbar {
     font-size: 18pt;
   }
   body .et2_link_to div {
-    height: 46px;
     padding-bottom: 3px;
   }
   body .et2_link_to .et2_file {
@@ -7895,6 +7898,11 @@ form[id^="tracker-"] .dialogHeadbar {
   body .et2_link_to .et2_file .et2_file_span,
   body .et2_link_to .et2_file .et2_file_spanHover,
   body .et2_link_to .et2_file .et2_file_upload {
+    height: 46px;
+    width: 46px;
+  }
+  body .et2_link_to button.link {
+    float: right;
     height: 46px;
     width: 46px;
   }
