@@ -5708,11 +5708,10 @@ class Mail
 					if ($part && ($partDisposition=='attachment' || $partDisposition=='inline' || ($part->getPrimaryType() == 'text' && $part->getSubType() == 'calendar')))
 					{
 						//$headerObject=$part->getAllDispositionParameters();//not used anywhere around here
-						$structure_bytes = $part->getBytes();
-						$structure_mime=$part->getType();
-						$structure_partID=$part->getMimeId();
-						$filename=$part->getName();
-						//error_log(__METHOD__.__LINE__." fetchPartContents(".array2string($_uid).", $structure_partID, $_stream, $_preserveSeen,$structure_mime)" );
+						$structure_mime = $part->getType();
+						$filename = $part->getName();
+						$charset = $part->getContentTypeParameter('charset');
+						//$structure_bytes = $part->getBytes(); $structure_partID=$part->getMimeId(); error_log(__METHOD__.__LINE__." fetchPartContents(".array2string($_uid).", $structure_partID, $_stream, $_preserveSeen,$structure_mime)" );
 						$this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true,$structure_mime);
 						if ($_returnPart) return $part;
 					}
@@ -5727,8 +5726,8 @@ class Mail
 		}
 		$attachmentData = array(
 			'type'		=> $structure_mime,
+			'charset' => $charset,
 			'filename'	=> $filename,
-			//'attachment'	=> $part->getContents(array('stream'=>$_stream))
 			'attachment'	=> $part->getContents(array(
 				// tnef_decode needs strings not a stream
 				'stream' => $_stream && !($filename == 'winmail.dat' && $_winmail_nr)

@@ -2264,7 +2264,11 @@ class calendar_ical extends calendar_boupdate
 
 		$events = array();
 		$vcal = new Horde_Icalendar;
-		if (!$vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset))
+		if ($charset && $charset != 'utf-8')
+		{
+			$_vcalData = Api\Translation::convert($_vcalData, $charset, 'utf-8');
+		}
+		if (!$vcal->parsevCalendar($_vcalData, 'VCALENDAR'))
 		{
 			if ($this->log)
 			{

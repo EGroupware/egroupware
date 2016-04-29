@@ -913,6 +913,11 @@ class mail_compose
 							{
 								$name .= '.'.mime_magic::mime2ext($type);
 							}
+							// use type specified by caller, if Vfs reports only default, or contains specified type (eg. "text/vcard; charset=utf-8")
+							if (!empty($types[$k]) && ($type == 'application/octet-stream' || stripos($types[$k], $type) === 0))
+							{
+								$type = $types[$k];
+							}
 							$path = str_replace('+','%2B',$path);
 							$formData = array(
 								'name' => $name,
