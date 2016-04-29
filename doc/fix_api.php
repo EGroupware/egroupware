@@ -18,7 +18,7 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling as web-pag
 // raw replacements
 $add_use_api = array(
 	"#use EGroupware\\\\Api;\n#" => '',	// remove evtl. use EGroupware\Api, as we add it again below
-	"#<\?php\n/\*\*.*\*/#msU" => "\$0\n\nuse EGroupware\\Api;",
+	"#<\?php\n+\s*/\*+?(.*)\*/#msU" => "<?php\n/**$1*/\n\nuse EGroupware\\Api;",
 );
 $replace = array(
 	'#egw_framework::csp_connect_src_attrs\(#' => "Api\\Header\\ContentSecurityPolicy::add('connect-src', ",
@@ -33,12 +33,15 @@ $replace = array(
 	"#\\\$GLOBALS\['egw'\]->hooks->#" => 'Api\\Hooks::',
 	'#Api\\\\Hooks::hook_implemented#' => 'Api\\Hooks::implemented',
 	'#Api\\\\Hooks::hook_exists#' => 'Api\\Hooks::exists',
+	'#Api\\\\Hooks::register_(all_hooks|hooks|single_app_hook)\([^)]*\)#' => 'Api\\Hooks::read(true)',
 	"#\\\$GLOBALS\['egw'\]->translation->#" => 'Api\\Translation::',
+	"#\\\$GLOBALS\['egw'\]->country->#" => 'Api\\Country::',
 	'#egw_framework::csp_script_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('script-src', \$1);",
 	'#egw_framework::csp_style_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('style-src', \$1);",
 	'#egw_framework::csp_connect_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('connect-src', \$1);",
 	'#egw_framework::csp_frame_src_attrs\((.*)\);#' => "Api\\Header\\ContentSecurityPolicy::add('frame-src', \$1);",
 	'#common::show_date\(([^,]+),\s*([^,]+),\s*false\)#' => 'Api\\DateTime::to($1, $2)',
+	"#\\\$GLOBALS\['egw'\]->preferences->change#" => '$GLOBALS[\'egw\']->preferences->add',
 );
 // enclose class-names and static methods with some syntax check
 $class_start = '#(?<!function)([\[\s,;().!])';
@@ -154,6 +157,7 @@ foreach(array(
 	'etemplate_widget_vfs' => 'Api\\Etemplate\\Widget\\Vfs',
 	'etemplate_request' => 'Api\\Etemplate\\Request',
 	'nextmatch_widget::category_action' => 'Api\\Etemplate\\Widget\\Nextmatch::category_action',
+	'nextmatch_widget::DEFAULT_MAX_MENU_LENGTH' => 'Api\\Etemplate\\Widget\\Nextmatch::DEFAULT_MAX_MENU_LENGTH',
 	// so_sql and friends
 	'so_sql' => 'Api\\Storage\\Base',
 	'so_sql_cf' => 'Api\\Storage',
@@ -187,12 +191,12 @@ function fix_api($file, $dry_run=false)
 
 	if (($content = $content_in = file_get_contents($file)) === false) return false;
 
-	if (!preg_match("|<\?php\n/\*\*.*\*/|msU", $content))
+	if (!preg_match("|<\?php\n+\s*/\*\*?.*\*/|msU", $content))
 	{
 		error_log("No file-level phpDoc block found in $file to add 'use EGroupware\\Api;'\n");
 		return;
 	}
-	$content2 = 	preg_replace(array_keys($replace), array_values($replace), $content);
+	$content2 = preg_replace(array_keys($replace), array_values($replace), $content);
 
 	if ($content2 == $content_in) return true;	// nothing changed
 
@@ -268,7 +272,7 @@ function fix_api_recursive($dir, $dry_run=false)
 function usage($error=null)
 {
 	global $prog;
-	echo "Usage: $prog [-h|--help] [-d|--dry-run] file or dir\n\n";
+	echo "Usage: $prog [-h|--help] [-d|--dry-run] file(s) or dir(s)\n\n";
 	if ($error) echo $error."\n\n";
 	exit($error ? 1 : 0);
 }
@@ -279,7 +283,7 @@ $prog = basename(array_shift($args));
 if (!$args) usage();
 
 $dry_run = false;
-while(($arg = array_shift($args)))
+while(($arg = array_shift($args)) && $arg[0] == '-')
 {
 	switch($arg)
 	{
@@ -302,13 +306,16 @@ while(($arg = array_shift($args)))
 	}
 }
 
-if (!file_exists($arg)) usage("Error: $arg not found!");
+do {
+	if (!file_exists($arg)) usage("Error: $arg not found!");
 
-if (!is_dir($arg))
-{
-	fix_api($arg, $dry_run);
+	if (!is_dir($arg))
+	{
+		fix_api($arg, $dry_run);
+	}
+	else
+	{
+		fix_api_recursive($arg, $dry_run);
+	}
 }
-else
-{
-	fix_api_recursive($arg, $dry_run);
-}
+while(($arg = array_shift($args)));
