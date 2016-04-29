@@ -1621,20 +1621,6 @@ class calendar_uiforms extends calendar_ui
 				if ($data['app'] == 'email') continue;	// make no sense, as we cant search for email
 				$content['participants']['cal_resources'] .= ','.$data['app'];
 			}
-			// adding extra content for the resource link-entry widget to
-			// * select resources or addressbook as a default selection on the app selectbox based on prefs
-			$content['participants']['resource']['app'] = $this->cal_prefs['defaultresource_sel'];
-			// * get informations from the event on the ajax callback
-			if (in_array($content['participants']['resource']['app'],array('resources_conflict','resources_without_conflict')))
-			{
-				// fix real app string
-				$content['participants']['resource']['app'] = 'resources';
-			}
-			// check if current pref. is an allowed application for the user
-			if (!isset($GLOBALS['egw_info']['user']['apps'][$content['participants']['resource']['app']]))
-			{
-				$content['participants']['resource']['app'] = 'home-accounts';
-			}
 		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
 		$preserved = array_merge($preserv,$content);

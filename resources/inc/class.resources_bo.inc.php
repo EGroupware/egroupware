@@ -598,7 +598,7 @@ class resources_bo
 		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
 		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
 		$show_conflict=False;
-		if ($options['exec'])
+		if ($options['exec'] && $GLOBALS['egw_info']['preferences']['calendar']['defaultresource_sel'] !== 'resources')
 		{
 			// we'll use a cache for resources info taken from database
 			static $res_info_cache = array();
@@ -608,12 +608,11 @@ class resources_bo
 				//get a calendar objet for reservations
 				if ( (!isset($this->bocal)) || !(is_object($this->bocal)))
 				{
-					require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_bo.inc.php');
-					$this->bocal =& CreateObject('calendar.calendar_bo');
+					$this->bocal = new calendar_bo();
 				}
 				$start = new egw_time($cal_info['start']);
 				$startarr= getdate($start->format('ts'));
-				if (isset($cal_info['whole_day'])) {
+				if (isset($cal_info['whole_day']) && $cal_info['whole_day']) {
 					$startarr['hour'] = $startarr['minute'] = 0;
 					$start = new egw_time($startarr);
 					$end = $start->format('ts') + 86399;
@@ -675,7 +674,7 @@ class resources_bo
 			}
 		}
 		if (isset($res_info_cache)) {
-			$show_conflict= (isset($options['exec']['show_conflict'])&& ($options['exec']['show_conflict']=='0'))? False:True;
+			$show_conflict= $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultresource_sel'] === 'resources_conflict';
 			// if we have this array indexed on resource id it means non-bookable resource are removed and we are working for calendar
 			// so we'll loop on this one and not $data
 			foreach($res_info_cache as $id => $resource) {

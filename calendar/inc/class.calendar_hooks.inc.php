@@ -192,9 +192,7 @@ class calendar_hooks
 		$defaultresource_sel = array(
 			'resources_conflict'    => lang('resources with conflict detection'),
 			'resources_without_conflict'    => lang('resources except conflicting ones'),
-			'resources'     => lang('resources'),
-			'addressbook'   => lang('addressbook'),
-			'home-accounts' => lang('Accounts'),
+			'resources'     => lang('resources')
 		);
 		$reset_stati_on_shifts = array(
 			'no'		=> lang('Never'),
@@ -418,7 +416,8 @@ class calendar_hooks
 				'help'		=> 'Default type of resources application selected in the calendar particpants research form.',
 				'xmlrpc'	=> True,
 				'admin'		=> False,
-				'forced'    => 'addressbook',
+				'forced'    => 'resources',
+				'default'	=> 'resources'
 			),
 			'default_private' => array(
 				'type'  => 'check',

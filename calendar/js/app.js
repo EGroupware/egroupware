@@ -1003,6 +1003,30 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				if (typeof content.duration != 'undefined') end.set_value("+"+content.duration);
 			}
 		}
+		this.edit_update_participant(start);
+	},
+
+	/**
+	 * Update query parameters for participants
+	 *
+	 * This allows for resource conflict checking
+	 *
+	 * @param {DOMNode|et2_widget} input Either the input node, or the widget
+	 * @param {et2_widget} [widget] If input is an input node, widget will have
+	 *	the widget, otherwise it will be undefined.
+	 */
+	edit_update_participant: function(input, widget)
+	{
+		if(typeof widget === 'undefined') widget = input;
+		var content = widget.getInstanceManager().getValues(widget.getRoot());
+		var participant = widget.getRoot().getWidgetById('participant');
+
+		participant.set_autocomplete_params({exec:{
+			start: content.start,
+			end: content.end,
+			duration: content.duration,
+			whole_day: content.whole_day
+		}});
 	},
 
 	/**

@@ -205,12 +205,12 @@
 				</row>
 				<row class="dialogHeader2" height="28">
 					<description for="start" value="Start" width="88"/>
-					<date-time id="start" needed="1" class="required"/>
+					<date-time id="start" needed="1" class="required" onchange="app.calendar.edit_update_participant"/>
 					<description for="duration" value="Duration" id="calendar_edit_duration" />
 					<menulist >
 						<menupopup statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
 					</menulist>
-					<date-time id="end"/>
+					<date-time id="end" onchange="app.calendar.edit_update_participant"/>
 				</row>
 				<row class="dialogHeader2" height="28">
 					<label value="options"/>
