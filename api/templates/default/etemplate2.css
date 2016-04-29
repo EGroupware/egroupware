@@ -11,6 +11,8 @@
 /*@import url("../../js/jquery/jpicker/css/jPicker-1.1.6.min.css");*/
 /*@import url("../../js/jquery/jquery-ui-timepicker-addon.css");*/
 /*@import url("../../js/jquery/blueimp/css/blueimp-gallery.min.css");*/
+/*@import url("../../js/dhtmlxtree/codebase/dhtmlXTree.css");*/
+/*@import url("../../js/egw_action/test/skins/dhtmlxmenu_egw.css");*/
 
 
 /**
@@ -1100,7 +1102,7 @@ div .et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 	border: none;
 	background: inherit;
 	margin-bottom: 0px;
-	
+
 	white-space: nowrap;
 	overflow: hidden;
 }

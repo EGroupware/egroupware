@@ -16,8 +16,6 @@ namespace EGroupware\Api\Etemplate\Widget;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api;
 
-Api\Framework::includeCSS('/api/js/dhtmlxtree/codebase/dhtmlXTree.css');
-
 /**
  * eTemplate tree widget
  *

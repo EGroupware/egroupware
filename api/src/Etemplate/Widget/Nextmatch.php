@@ -89,9 +89,6 @@ class Nextmatch extends Etemplate\Widget
 	{
 		if($xml) {
 			parent::__construct($xml);
-
-			// TODO: probably a better way to do this
-			Api\Framework::includeCSS('/api/js/egw_action/test/skins/dhtmlxmenu_egw.css');
 		}
 	}
 
