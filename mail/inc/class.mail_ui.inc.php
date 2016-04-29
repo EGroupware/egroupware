@@ -912,7 +912,8 @@ class mail_ui
 					//error_log(__METHOD__.__LINE__."$i => $lastFolderUsedForMoveCont");
 					if (!empty($lastFolderUsedForMoveCont)) // only 10 entries per mailaccount.Control this on setting the buffered folders
 					{
-						$moveaction = 'move_';
+						$moveaction = 'move_'.$lastFolderUsedForMoveCont;
+						//error_log(__METHOD__.__LINE__.'#'.$moveaction);
 						$fS = array();
 						$fS['profileID'] = $pid;
 						$fS['profileName'] = $accArray[$pid];
@@ -4744,17 +4745,27 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @param array _folderName target folder
 	 * @param array _messageList list of UID's
 	 * @param string _copyOrMove method to use copy or move allowed
+	 * @param string _move2ArchiveMarker marker to indicate if a move 2 archive was triggered
 	 *
 	 * @return xajax response
 	 */
-	function ajax_copyMessages($_folderName, $_messageList, $_copyOrMove='copy')
+	function ajax_copyMessages($_folderName, $_messageList, $_copyOrMove='copy', $_move2ArchiveMarker='_')
 	{
-		if(Mail::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove);
+		if(Mail::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove.' ArchiveMarker:'.$_move2ArchiveMarker);
 		translation::add_app('mail');
 		$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 		// only copy or move are supported as method
 		if (!($_copyOrMove=='copy' || $_copyOrMove=='move')) $_copyOrMove='copy';
 		list($targetProfileID,$targetFolder) = explode(self::$delimiter,$_folderName,2);
+		// check if move2archive was called with the correct archiveFolder
+		$archiveFolder = $this->mail_bo->getArchiveFolder();
+		if ($_move2ArchiveMarker=='2' && $targetFolder != $archiveFolder)
+		{
+			error_log(__METHOD__.__LINE__."#Move to Archive called with:"."$targetProfileID,$targetFolder");
+			$targetProfileID = $this->mail_bo->profileID;
+			$targetFolder = $archiveFolder;
+			error_log(__METHOD__.__LINE__."#Fixed ArchiveFolder:"."$targetProfileID,$targetFolder");
+		}
 		$lastFoldersUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
 		$changeFolderActions = false;
 		//error_log(__METHOD__.__LINE__."#"."$targetProfileID,$targetFolder");

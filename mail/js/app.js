@@ -3136,7 +3136,8 @@ app.classes.mail = AppJS.extend(
 
 		var self = this;
 		var nm = this.et2.getWidgetById(this.nm_index);
-		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move'], function(){
+		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
+		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
 			self.unlock_tree();
 			// Nextmatch automatically selects the next row and calls preview.
 			// Unselect it and thanks to the timeout selectionMgr uses, preview
