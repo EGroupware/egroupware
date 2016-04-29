@@ -144,7 +144,7 @@ class admin_account
 			// copy following fields to account
 			'account_lid', 'account_id',
 			'changepassword', 'anonymous', 'mustchangepassword',
-			'account_passwd', 'account_passwd2',
+			'account_passwd', 'account_passwd_2',
 			'account_primary_group',
 			'account_expires',
 			'homedirectory', 'loginshell',
