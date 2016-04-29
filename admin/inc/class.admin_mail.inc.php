@@ -374,7 +374,7 @@ class admin_mail
 			//_debug_array($content);
 			$sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
 				$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
-					$sel_options['acc_folder_junk'] = self::mailboxes($imap, $content);
+					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] = self::mailboxes($imap, $content);
 		}
 		catch(Exception $e) {
 			$content['msg'] = $e->getMessage();
@@ -419,6 +419,7 @@ class admin_mail
 			'acc_folder_draft' => array('\\drafts', 'drafts'),
 			'acc_folder_template' => array('', 'templates'),
 			'acc_folder_junk'  => array('\\junk', 'junk', 'spam'),
+			'acc_folder_archive' => array('', 'archive'),
 		) as $name => $common_names)
 		{
 			// first check special-use attributes

@@ -42,6 +42,7 @@ any status	mail	en	any status
 append	mail	en	append
 appended after reply before sending	mail	en	Appended after reply before sending
 application mail expected but got: %1	mail	en	Application mail expected but got: %1
+archive folder	mail	en	Archive folder
 are you sure you want to delete all selected folders?	mail	en	Are you sure you want to delete all selected folders?
 are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you want to move folder %1 to folder %2?
 arrival	mail	en	Recieved
@@ -290,7 +291,9 @@ message send failed: %1	mail	en	Message send failed: %1
 message send successfully.	mail	en	Message send successfully.
 miscellaneous	mail	en	Miscellaneous
 move folder	mail	en	Move Folder
+move selected mails to archive	mail	en	Move selected mails to archive
 move selected to	mail	en	Move selected to
+move to archive	mail	en	Move to archive folder
 move to	mail	en	Move to
 move to trash	mail	en	move to trash
 moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
@@ -320,7 +323,7 @@ no valid %1 folder configured!	mail	en	No valid %1 folder configured!
 non	mail	en	Non
 none, create all	mail	en	none, create all
 nothing to change.	mail	en	Nothing to change.
-notify about new mail in this folders	mail	en	Notify about new mail in this folders
+notify about new mail in this folders	mail	en	Notify about new mail in these folders
 notify when new mails arrive in these folders	mail	en	notify when new mails arrive in these folders
 on	mail	en	on
 one address is not valid	mail	en	One address is not valid

@@ -42,6 +42,7 @@ any status	mail	de	Alle Status
 append	mail	de	hinzufügen
 appended after reply before sending	mail	de	Einfügen nach dem zitierten Text im Zuge des Versendens
 application mail expected but got: %1	mail	de	Anwendung Mail erwarted, aber %1 erhalten!
+archive folder	mail	de	Archivordner
 are you sure you want to delete all selected folders?	mail	de	Sollen alle selektierten Ordner gelöcht werden?
 are you sure you want to move folder %1 to folder %2?	mail	de	Soll der Ordner %1 in den Ordner %2 verschoben werden?
 arrival	mail	de	Empfangsdatum
@@ -290,7 +291,9 @@ message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
 message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
 miscellaneous	mail	de	Verschiedenes
 move folder	mail	de	Ordner verschieben
+move selected mails to archive	mail	de	Verschiebe ausgewählte Nachrichten in den konfigurierten Archiv Ordner
 move selected to	mail	de	Verschiebe ausgewählte nach
+move to archive	mail	de	Verschiebe in den Archivordner
 move to	mail	de	verschieben
 move to trash	mail	de	in den Papierkorb verschieben
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben

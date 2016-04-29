@@ -1058,6 +1058,7 @@ class Mail
 		//if (!empty($this->icServer->acc_folder_template) && !isset($_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_template]))
 			$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_template]='Templates';
 		$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_junk]='Junk';
+		$_specialUseFolders[$this->icServer->ImapServerId][$this->icServer->acc_folder_archive]='Archive';
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_specialUseFolders));//.'<->'.array2string($this->icServer));
 		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId];
 		Cache::setCache(Cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, 60*60*24*5);
@@ -3303,6 +3304,7 @@ class Mail
 			'Sent'     => array('profileKey'=>'acc_folder_sent','autoFolderName'=>'Sent'),
 			'Junk'     => array('profileKey'=>'acc_folder_junk','autoFolderName'=>'Junk'),
 			'Outbox'   => array('profileKey'=>'acc_folder_outbox','autoFolderName'=>'Outbox'),
+			'Archive'   => array('profileKey'=>'acc_folder_archive','autoFolderName'=>'Archive'),
 		);
 		if ($_type == 'Templates') $_type = 'Template';	// for some reason self::$autofolders uses 'Templates'!
 		$created = false;
@@ -3324,8 +3326,17 @@ class Mail
 			if ($_type != 'Outbox') error_log(__METHOD__.' ('.__LINE__.') '.' Failed to retrieve Folder'.$_folderName." for ".array2string($types[$_type]).":".$e->getMessage());
 			$_folderName = false;
 		}
+		// do not try to autocreate configured Archive-Folder. Return false if configured folder does not exist
+		if ($_type == 'Archive') {
+			if ($_folderName && $_checkexistance && strtolower($_folderName) !='none' && !$this->folderExists($_folderName,true)) {
+				return false;
+			} else {
+				return $_folderName;
+			}
+
+		}
 		// does the folder exist??? (is configured/preset, but non-existent)
-		if ($_folderName && $_checkexistance && $_folderName !='none' && !$this->folderExists($_folderName,true)) {
+		if ($_folderName && $_checkexistance && strtolower($_folderName) !='none' && !$this->folderExists($_folderName,true)) {
 			try
 			{
 				$error = null;
@@ -3391,7 +3402,7 @@ class Mail
 	}
 
 	/**
-	 * getDraftFolder wrapper for _getSpecialUseFolder Type Drafts
+	 * getJunkFolder wrapper for _getSpecialUseFolder Type Junk
 	 * @param boolean $_checkexistance trigger check for existance
 	 * @return mixed string or false
 	 */
@@ -3448,6 +3459,16 @@ class Mail
 	function getOutboxFolder($_checkexistance=TRUE)
 	{
 		return $this->_getSpecialUseFolder('Outbox', $_checkexistance);
+	}
+
+	/**
+	 * getArchiveFolder wrapper for _getSpecialUseFolder Type Archive
+	 * @param boolean $_checkexistance trigger check for existance . We do no autocreation for configured Archive folder
+	 * @return mixed string or false
+	 */
+	function getArchiveFolder($_checkexistance=TRUE)
+	{
+		return $this->_getSpecialUseFolder('Archive', $_checkexistance);
 	}
 
 	/**

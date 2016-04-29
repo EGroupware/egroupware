@@ -853,6 +853,8 @@ class mail_ui
 		// todo: real hierarchical folder list
 		$lastFolderUsedForMove = null;
 		$moveactions = array();
+		$archiveFolder = $this->mail_bo->getArchiveFolder();
+		$currentArchiveActionKey = 'move_'.$this->mail_bo->profileID.self::$delimiter.$archiveFolder;
 		$lastFoldersUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
 		//error_log(__METHOD__.__LINE__." StoredFolders->".array2string($lastFoldersUsedForMoveCont));
 		//error_log(__METHOD__.__LINE__.' ProfileId:'.$this->mail_bo->profileID." StoredFolders->(".count($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]).") ".array2string($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]));
@@ -884,7 +886,8 @@ class mail_ui
 					if ($_folder!=$i)
 					{
 						$moveaction .= $lastFolderUsedForMoveCont;
-
+						//error_log(__METHOD__.__LINE__.'#'.$moveaction);
+						//error_log(__METHOD__.__LINE__.'#'.$currentArchiveActionKey);
 						if ($this->mail_bo->folderExists($i)) // only 10 entries per mailaccount.Control this on setting the buffered folders
 						{
 							$fS['profileID'] = $this->mail_bo->profileID;
@@ -1008,13 +1011,31 @@ class mail_ui
 				array(
 					'caption' => lang('Move selected to'),
 					'icon' => 'move',
-					'group' => $group++,
+					'group' => $group,
 					'children' => $children,
 					)
 				)
 			);
 
+		} else {
+			$group++;
 		}
+		
+		//error_log(__METHOD__.__LINE__.$archiveFolder);
+		$actions = array_merge($actions,
+			array(
+				'move2'.$this->mail_bo->profileID.self::$delimiter.$archiveFolder => array( //toarchive
+					'caption' => 'Move to archive',
+					'hint' => 'move selected mails to archive',
+					'icon' => 'move',
+					'group' => $group++,
+					'enabled' => 'javaScript:app.mail.archivefolder_enabled',
+					//'hideOnDisabled' => true, // does not work as expected on message-list
+					'onExecute' => 'javaScript:app.mail.mail_move2folder',
+					'shortcut' => egw_keymanager::shortcut(egw_keymanager::A, true, true),
+					'allowOnMultiple' => true,
+					'toolbarDefault' => false
+				)));
 
 		$actions = array_merge($actions,
 			array(
@@ -4736,8 +4757,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		list($targetProfileID,$targetFolder) = explode(self::$delimiter,$_folderName,2);
 		$lastFoldersUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
 		$changeFolderActions = false;
+		//error_log(__METHOD__.__LINE__."#"."$targetProfileID,$targetFolder");
+		//error_log(__METHOD__.__LINE__.array2string($lastFoldersUsedForMoveCont));
 		if (!isset($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]))
 		{
+			//error_log(__METHOD__.__LINE__.array2string($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]));
 			if ($lastFoldersUsedForMoveCont[$targetProfileID] && count($lastFoldersUsedForMoveCont[$targetProfileID])>3)
 			{
 				$keys = array_keys($lastFoldersUsedForMoveCont[$targetProfileID]);
@@ -4748,6 +4772,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				}
 				//error_log(__METHOD__.__LINE__.array2string($lastFoldersUsedForMoveCont[$targetProfileID]));
 			}
+			//error_log(__METHOD__.__LINE__."#"."$targetProfileID,$targetFolder = $_folderName");
 			$lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]=$_folderName;
 			$changeFolderActions = true;
 		}
@@ -4896,6 +4921,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			if ($changeFolderActions == true)
 			{
+				//error_log(__METHOD__.__LINE__.array2string($lastFoldersUsedForMoveCont));
 				egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFoldersUsedForMoveCont, $expiration=60*60*1);
 				$actionsnew = self::get_actions();
 				$actionsnew = etemplate_widget_nextmatch::egw_actions($actionsnew);

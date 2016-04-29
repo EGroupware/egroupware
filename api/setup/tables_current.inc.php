@@ -432,6 +432,7 @@ $phpgw_baseline = array(
 			'acc_folder_trash' => array('type' => 'varchar','precision' => '128','comment' => 'trash folder'),
 			'acc_folder_draft' => array('type' => 'varchar','precision' => '128','comment' => 'draft folder'),
 			'acc_folder_template' => array('type' => 'varchar','precision' => '128','comment' => 'template folder'),
+			'acc_folder_archive' => array('type' => 'varchar','precision' => '128','comment' => 'archive folder'),
 			'acc_smtp_host' => array('type' => 'varchar','precision' => '128','comment' => 'smtp hostname'),
 			'acc_smtp_ssl' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '0','comment' => '0=none, 1=starttls, 2=tls, 3=ssl, &8=validate certificate'),
 			'acc_smtp_port' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '25','comment' => 'smtp port'),

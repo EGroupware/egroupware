@@ -50,3 +50,14 @@ function api_upgrade14_3_907()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.1';
 }
+
+function api_upgrade16_1()
+{
+        $GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_folder_archive', array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'comment' => 'archive folder'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.001';
+}

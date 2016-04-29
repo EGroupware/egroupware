@@ -1387,9 +1387,27 @@ app.classes.mail = AppJS.extend(
 
 
 	/**
+	 * Check if archiveFolder is enabled on that account
+	 *
+	 * ArchiveFolder enabled is stored as data { archivefolder: true/false } on account node.
+	 *
+	 * @param {object} _action
+	 * @param {object} _senders the representation of the tree leaf to be manipulated
+	 * @param {object} _currentNode
+	 */
+	archivefolder_enabled: function(_action,_senders,_currentNode)
+	{
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		var acc_id = _senders[0].id.split('::')[2]; // this is operating on mails
+		var node = ftree ? ftree.getNode(acc_id) : null;
+
+		return node && node.data && node.data.archivefolder;
+	},
+
+	/**
 	 * Check if Sieve is enabled on that account
 	 *
-	 * Sieve enabled is stored as data { acl: true/false } on account node.
+	 * Sieve enabled is stored as data { sieve: true/false } on account node.
 	 *
 	 * @param {object} _action
 	 * @param {object} _senders the representation of the tree leaf to be manipulated

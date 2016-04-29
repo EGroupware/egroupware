@@ -472,7 +472,8 @@ class mail_tree
 							// mark on account if Sieve is enabled
 							'data' => array(
 										'sieve' => $accObj->imapServer()->acc_sieve_enabled,
-										'spamfolder'=> $accObj->imapServer()->acc_folder_junk?true:false
+										'spamfolder'=> $accObj->imapServer()->acc_folder_junk&&(strtolower($accObj->imapServer()->acc_folder_junk)!='none')?true:false,
+										'archivefolder'=> $accObj->imapServer()->acc_folder_archive&&(strtolower($accObj->imapServer()->acc_folder_archive)!='none')?true:false
 									),
 							Tree::NOCHECKBOX  => $_noCheckbox
 			);

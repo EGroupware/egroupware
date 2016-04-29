@@ -118,7 +118,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.mailaccount.folder" template="" lang="" group="0" version="1.9.001">
+	<template id="admin.mailaccount.folder" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width="115"/>
@@ -146,7 +146,11 @@
 					<taglist id="acc_folder_junk" empty_label="Select one ..." maxSelection="1" autocomplete_url=""/>
 				</row>
 				<row>
-					<description for="acc_folder_junk" value="Notify about new mail in this folders"/>
+					<description for="acc_folder_archive" value="Archive folder"/>
+					<taglist id="acc_folder_archive" empty_label="Select one ..." maxSelection="1" autocomplete_url=""/>
+				</row>
+				<row>
+					<description for="notify_folders" value="Notify about new mail in this folders"/>
 					<vbox>
 						<taglist id="notify_folders" empty_label="Select one ..." autocomplete_url="" onchange="app.admin.change_folders"/>
 						<checkbox id="notify_save_default" label="save as default"/>
