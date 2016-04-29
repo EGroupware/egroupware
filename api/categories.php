@@ -36,13 +36,14 @@ $content = "/* Category CSS for $appname */\n\n";
 
 foreach($categories as $cat)
 {
-	if($cat['data']['color'])
+	if (!isset($cat['data'])) continue;
+	if (!empty($cat['data']['color']))
 	{
 		// Use slightly more specific selector that just class, to allow defaults
 		// if the category has no color
 		$content .= "tr.cat_{$cat['id']} {border-left:6px solid {$cat['data']['color']};} div.cat_{$cat['id']}, span.cat_{$cat['id']} { background-color: {$cat['data']['color']};} /*{$cat['name']}*/\n";
 	}
-	if($cat['data']['icon'])
+	if (!empty($cat['data']['icon']))
 	{
 		$content .= ".cat_{$cat['id']} .cat_icon { background-image: url('". admin_categories::icon_url($cat['data']['icon']) ."');} /*{$cat['name']}*/\n";
 	}
