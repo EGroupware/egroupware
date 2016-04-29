@@ -250,7 +250,7 @@ class egw_ical_iterator extends Horde_Icalendar implements Iterator
         }
 		if ($this->charset && $this->charset != 'utf-8')
 		{
-			$data = Api\Translation::convert($data, $this->charset, 'utf-8');
+			$data = translation::convert($data, $this->charset, 'utf-8');
 		}
 		//error_log(__METHOD__."() about to call parsevCalendar('".substr($data,0,100)."...','$type','$this->charset')");
 		$this->component->parsevCalendar($data, $type);
