@@ -286,7 +286,11 @@ class StreamWrapper extends LinksParent
 		{
 			list($id) = array_slice(explode('/',$url),-2,1);
 			$ab_vcard = new addressbook_vcal('addressbook','text/vcard');
-			if (!($vcard =& $ab_vcard->getVCard($id)))
+			if (!($charset = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset']))
+			{
+				$charset = 'utf-8';
+			}
+			if (!($vcard =& $ab_vcard->getVCard($id, $charset)))
 			{
 				error_log(__METHOD__."('$url', '$mode', $options) addressbook_vcal::getVCard($id) returned false!");
 				return false;
