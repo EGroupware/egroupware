@@ -157,8 +157,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	 */
 	public function _vcard($_vcard, $owner)
 	{
-		// ToDo: Nathan: $_definition is not defined
-		$charset = $_definition->plugin_options['charset'];
+		$charset = $this->definition->plugin_options['charset'];
 		if($charset == 'user') $charset = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset'];
 		$record = $this->bocontacts->vcardtoegw($_vcard,$charset);
 
