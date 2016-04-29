@@ -109,7 +109,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 					// and used as such.  All unknown values will be used for selection, not passed through to the query
 					if (isset($field['values']['@']))
 					{
-						$options['values'] = egw_customfields::_get_options_from_file($field['values']['@']);
+						$options['values'] = egw_customfields::get_options_from_file($field['values']['@']);
 						unset($field['values']['@']);
 					} else {
 						$options['values'] = array_diff_key($field['values'], array_flip(ajax_select_widget::$known_options));
@@ -124,7 +124,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 					{
 						if (count($field['values']) == 1 && isset($field['values']['@']))
 						{
-							$field['values'] = egw_customfields::_get_options_from_file($field['values']['@']);
+							$field['values'] = egw_customfields::get_options_from_file($field['values']['@']);
 						}
 						foreach((array)$field['values'] as $key => $val)
 						{
