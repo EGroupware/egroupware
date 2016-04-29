@@ -1032,7 +1032,7 @@ class mail_ui
 					'enabled' => 'javaScript:app.mail.archivefolder_enabled',
 					//'hideOnDisabled' => true, // does not work as expected on message-list
 					'onExecute' => 'javaScript:app.mail.mail_move2folder',
-					'shortcut' => egw_keymanager::shortcut(egw_keymanager::A, true, true),
+					'shortcut' => egw_keymanager::shortcut(egw_keymanager::V, true, true),
 					'allowOnMultiple' => true,
 					'toolbarDefault' => false
 				)));
