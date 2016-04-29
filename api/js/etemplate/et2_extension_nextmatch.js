@@ -2054,12 +2054,12 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				if(col.visibility === ET2_COL_VISIBILITY_VISIBLE) columns_selected.push(colName);
 			}
 			// Custom fields get listed separately
-			if(widget.instanceOf(et2_nextmatch_customfields))
+			if(widget.instanceOf(et2_nextmatch_customfields) && col.visibility === ET2_COL_VISIBILITY_VISIBLE)
 			{
 				if(jQuery.isEmptyObject(widget.customfields))
 				{
 					// No customfields defined, don't show column
-					delete(columns[col.id]);
+					delete(columns[colName]);
 					continue;
 				}
 				for(var field_name in widget.customfields)
