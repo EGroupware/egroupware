@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55840 2016-04-25 22:09:57Z nathangray $ */
+/* $Id: app.css 55869 2016-04-26 22:58:35Z nathangray $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -1394,6 +1394,9 @@ input#calendar-edit_location {
     display: inline;
   }
 }
+#calendar-edit_quantity.et2_textbox_ro {
+  opacity: 0.5;
+}
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
   background-color: #828282 !important;
@@ -2624,5 +2627,3 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar_merge {
   margin: 9px 0 0 0;
 }
-/* ########################################################################################
-/* * Calendar END */

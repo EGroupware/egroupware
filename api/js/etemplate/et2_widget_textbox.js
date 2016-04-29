@@ -249,6 +249,7 @@ var et2_textbox = (function(){ "use strict"; return et2_inputWidget.extend([et2_
 	 */
 	set_readonly: function(_readonly) {
 		this.input.attr("readonly", _readonly);
+		this.input.toggleClass('et2_textbox_ro', _readonly);
 	},
 
 	set_blur: function(_value) {

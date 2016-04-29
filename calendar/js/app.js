@@ -1121,15 +1121,36 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	},
 
 	/**
-	 * Change participant add button status based on
-	 * participants field value
+	 * On change participant event, try to set add button status based on
+	 * participant field value. Additionally, disable/enable quantity field
+	 * if there's none resource value or there are more than one resource selected.
 	 *
 	 */
-	participantOnChange: function () {
+	participantOnChange: function ()
+	{
 		var add = this.et2.getWidgetById('add');
+		var quantity = this.et2.getWidgetById('quantity');
 		var participant = this.et2.getWidgetById('participant');
 
-		add.set_readonly(participant.get_value().length <= 0);
+		// array of participants
+		var value = participant.get_value();
+
+		add.set_readonly(value.length <= 0);
+
+		quantity.set_readonly(false);
+
+		// number of resources
+		var nRes = 0;
+
+		for (var i=0;i<value.length;i++)
+		{
+			if (!value[i].match(/\D/ig) || nRes)
+			{
+				quantity.set_readonly(true);
+				quantity.set_value(1);
+			}
+			nRes++;
+		}
 	},
 
 	/**
