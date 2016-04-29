@@ -12,6 +12,8 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Vfs;
 
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
@@ -87,7 +89,7 @@ switch($action)
 				list($name,$value) = explode('=',$arg,2);
 				if(property_exists('admin_cmd',$name))		// dont allow to overwrite admin_cmd properties
 				{
-					throw new egw_exception_wrong_userinput(lang("Invalid argument '%1' !!!",$arg),90);
+					throw new Api\Exception\WrongUserinput(lang("Invalid argument '%1' !!!",$arg),90);
 				}
 				if (substr($name,-1) == ']')	// allow 1-dim. arrays
 				{
@@ -177,7 +179,7 @@ function run_command(admin_cmd $cmd)
 		{
 			$url = $GLOBALS['egw_info']['server']['webserver_url'].'/json.php?menuaction=admin.admin_hooks.ajax_clear_cache';
 			if ($url[0] == '/') $url = 'http://'.(!empty($domain) && $domain != 'default' ? $domain : 'localhost').$url;
-			$data = file_get_contents($url, false, Api\Framework::proxy_context($user,$arg0s[1]));
+			$data = file_get_contents($url, false, Framework::proxy_context($user,$arg0s[1]));
 			error_log("file_get_contents('$url') returned ".array2string($data));
 			if ($data && strpos($data, '"success"') !== false)
 			{
@@ -189,7 +191,7 @@ function run_command(admin_cmd $cmd)
 			}
 		}
 	}
-	catch (egw_exception_wrong_userinput $e) {
+	catch (Api\Exception\WrongUserinput $e) {
 		echo "\n".$e->getMessage()."\n\n";
 		exit($e->getCode());
 	}
@@ -273,7 +275,7 @@ function load_egw($user,$passwd,$domain='default')
 			_check_pw($GLOBALS['egw_domain'][$_GET['domain']]['config_passwd'],$passwd))
 		{
 			echo "\nRoot access granted!\n";
-			egw_vfs::$is_root = true;
+			Vfs::$is_root = true;
 		}
 		else
 		{
@@ -539,7 +541,7 @@ function do_subscribe_other($account_lid,$pw=null)
 	/* ToDo: this cant work, not even in 14.x
 	if (!($account_id = $GLOBALS['egw']->accounts->name2id($account_lid)))
 	{
-		throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$account_lid),15);
+		throw new Api\Exception\WrongUserinput(lang("Unknown account: %1 !!!",$account_lid),15);
 	}
 	$GLOBALS['egw_info']['user'] = array(
 		'account_id' => $account_id,
