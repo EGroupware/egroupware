@@ -32,6 +32,7 @@
 	egw_tail;
 	egw_inheritance;
 	egw_message;
+	egw_notification;
 	app_base;
 */
 
