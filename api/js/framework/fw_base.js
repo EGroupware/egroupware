@@ -998,6 +998,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 						var app = framework.activeApp;
 						framework.activeApp = '';
 						framework.setActiveApp(app);
+						
+						egw.loading_prompt(app.appName,true,egw.lang('please wait...'),app.browser.baseDiv, egwIsMobile()?'horizental':'spinner');
 
 						// Give framework a chance to deal, then reset the etemplates
 						window.setTimeout(function() {
@@ -1007,6 +1009,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 									_widget.afterPrint();
 								},et2_list[i],et2_IPrint);
 							}
+							egw.loading_prompt(app.appName,false);
 						},100);
 						appWindow.onafterprint = null;
 					};
