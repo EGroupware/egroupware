@@ -8,6 +8,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp' => 'addressbook',
@@ -17,10 +19,10 @@ $GLOBALS['egw_info'] = array(
 include('../header.inc.php');
 
 // check if we have an advanced search and reset it in case
-$old_state = $GLOBALS['egw']->session->appsession('index','addressbook');
+$old_state = Api\Cache::getSession('addressbook', 'index');
 if ($old_state['advanced_search'])
 {
 	unset($old_state['advanced_search']);
-	$GLOBALS['egw']->session->appsession('index','addressbook',$old_state);
+	Api\Cache::setSession('addressbook', 'index', $old_state);
 }
-$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.addressbook_ui.index');
+Api\Egw::redirect_link('/index.php','menuaction=addressbook.addressbook_ui.index');

@@ -12,6 +12,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Acl;
 
 /**
  * CalDAV/CardDAV/GroupDAV access: Addressbook handler
@@ -237,7 +238,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 					unset($requested_multiget_ids[$k]);
 				}
 				// sync-collection report: deleted entry need to be reported without properties
-				if ($contact['tid'] == addressbook_bo::DELETED_TYPE)
+				if ($contact['tid'] == Api\Contacts::DELETED_TYPE)
 				{
 					$files[] = array('path' => $path.urldecode($this->get_path($contact)));
 					continue;
@@ -311,7 +312,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 						}
 						$props = array(
 							'getcontenttype' => Api\CalDAV::mkprop('getcontenttype', 'text/vcard'),
-							'getlastmodified' => egw_time::to($list['list_modified'],'ts'),
+							'getlastmodified' => Api\DateTime::to($list['list_modified'],'ts'),
 							'displayname' => $list['list_name'],
 							'getetag' => '"'.$etag.'"',
 						);
@@ -415,7 +416,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 							{
 								case 'i;unicode-casemap':
 								default:
-									$comp = ' '.$GLOBALS['egw']->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' ';
+									$comp = ' '.$GLOBALS['egw']->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' ';
 									break;
 							}
 							$column = $this->filter_prop2cal[strtoupper($prop_filter)];
@@ -618,7 +619,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		$is_group = $contact['##X-ADDRESSBOOKSERVER-KIND'] == 'group';
 		if ($oldContact && $is_group !== isset($oldContact['list_id']))
 		{
-			throw new egw_exception_assertion_failed(__METHOD__."(,'$id',$user,'$prefix') can contact into group or visa-versa!");
+			throw new Api\Exception\AssertionFailed(__METHOD__."(,'$id',$user,'$prefix') can contact into group or visa-versa!");
 		}
 
 		if (!$is_group && is_array($contact['cat_id']))
@@ -651,7 +652,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			{
 				$contact['owner'] = $user;
 			}
-			// check if default addressbook is synced and not accounts, if not use (always synced) personal addressbook
+			// check if default addressbook is synced and not Api\Accounts, if not use (always synced) personal addressbook
 			elseif(!$this->bo->default_addressbook || !in_array($this->bo->default_addressbook,$this->home_set_pref))
 			{
 				$contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
@@ -663,7 +664,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			}
 			// check if user has add rights for addressbook
 			// done here again, as _common_get_put_delete knows nothing about default addressbooks...
-			if (!($this->bo->grants[$contact['owner']] & EGW_ACL_ADD))
+			if (!($this->bo->grants[$contact['owner']] & Acl::ADD))
 			{
 				if ($this->debug) error_log(__METHOD__."(,'$id', $user, '$prefix') returning '403 Forbidden'");
 				return '403 Forbidden';
@@ -689,7 +690,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			{
 				if (($contact = $this->bo->read_list($save_ok)))
 				{
-					$contact = egw_db::strip_array_keys($contact, 'list_');
+					$contact = Api\Db::strip_array_keys($contact, 'list_');
 				}
 			}
 			else
@@ -835,7 +836,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	 * </D:supported-report-set>
 	 * @link http://www.mail-archive.com/calendarserver-users@lists.macosforge.org/msg01156.html
 	 *
-	 * @param array $props =array() regular props by the groupdav handler
+	 * @param array $props =array() regular props by the Api\CalDAV handler
 	 * @param string $displayname
 	 * @param string $base_uri =null base url of handler
 	 * @param int $user =null account_id of owner of collection
@@ -1021,7 +1022,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	/**
 	 * Check if user has the neccessary rights on a contact
 	 *
-	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
+	 * @param int $acl Acl::READ, Acl::EDIT or Acl::DELETE
 	 * @param array|int $contact contact-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
@@ -1073,7 +1074,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				$this->home_set_pref[$key] = $id;
 			}
 		}
-		foreach(array_keys($this->bo->get_addressbooks(EGW_ACL_READ)) as $id)
+		foreach(array_keys($this->bo->get_addressbooks(Acl::READ)) as $id)
 		{
 			if (($id || !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) &&
 				$GLOBALS['egw_info']['user']['account_id'] != $id &&	// no current user and no accounts, if disabled in ab prefs
@@ -1125,8 +1126,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group')))
 		{
 			$user = $hook_data['account_id'];
-			$addressbook_bo = new addressbook_bo();
-			$addressbooks += $addressbook_bo->get_addressbooks(EGW_ACL_READ, null, $user);
+			$addressbook_bo = new Api\Contacts();
+			$addressbooks += $addressbook_bo->get_addressbooks(Acl::READ, null, $user);
 			if ($user > 0)  unset($addressbooks[$user]);	// allways synced
 			unset($addressbooks[$user.'p']);// ignore (optional) private addressbook for now
 		}

@@ -1,6 +1,6 @@
 <?php
 /**
- * vCard export plugin for importexport framework
+ * EGroupware addressbook: vCard export plugin for importexport framework
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package addressbook
@@ -10,6 +10,8 @@
  * @copyright 2012 Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * export addressbook contacts as vcard
@@ -29,9 +31,8 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 		$this->selection = array();
 
 		// Addressbook defines its own export imits
-		$limit_exception = bo_merge::is_export_limit_excepted();
-		$export_limit = bo_merge::getExportLimit($app='addressbook');
-		if (!$limit_exception) $export_object->export_limit = $export_limit; // we may not need that after all
+		$limit_exception = Api\Storage\Merge::is_export_limit_excepted();
+		$export_limit = Api\Storage\Merge::getExportLimit($app='addressbook');
 		if($export_limit == 'no' && !$limit_exception) {
 			return;
 		}
@@ -42,10 +43,11 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 
 		if ($options['selection'] == 'search') {
 			// uicontacts selection with checkbox 'use_all'
-			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
+			$query = Api\Cache::getSession('addressbook', 'index');
 			$query['num_rows'] = -1;	// all
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			if(!array_key_exists('filter',$query)) $query['filter'] = $GLOBALS['egw_info']['user']['account_id'];
+			$readonlys = null;
 			$this->uicontacts->get_rows($query,$this->selection,$readonlys, true);	// only return the ids
 		}
 		elseif ( $options['selection'] == 'all' ) {
@@ -59,7 +61,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 
-		if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+		if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
 			$this->selection = array_slice($this->selection, 0, $export_limit);
 		}
 
@@ -69,7 +71,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 				$_contact = $_contact[$_contact['id'] ? 'id' : 'contact_id'];
 			}
 		}
-		
+
 		// vCard opens & closes the resource itself, but this doesn't seem to matter
 		$meta = stream_get_meta_data($_stream);
 

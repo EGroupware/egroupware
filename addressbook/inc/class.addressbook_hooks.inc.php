@@ -1,6 +1,6 @@
 <?php
 /**
- * Addressbook - admin, preferences and sidebox-menus and other hooks
+ * EGroupware Addressbook - admin, preferences and sidebox-menus and other hooks
  *
  * @link http://www.egroupware.org
  * @package addressbook
@@ -11,6 +11,10 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
 
 /**
  * Class containing admin, preferences and sidebox-menus and other hooks
@@ -43,21 +47,21 @@ class addressbook_hooks
 				));
 			}
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname, lang('Favorites'), egw_framework::favorite_list('addressbook'));
+			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites('addressbook'));
 
 			$file = array(
-				'Addressbook list' => egw::link('/index.php',array(
+				'Addressbook list' => Egw::link('/index.php',array(
 					'menuaction' => 'addressbook.addressbook_ui.index',
 					'ajax' => 'true')),
 				array(
-					'text' => lang('Add %1',lang(egw_link::get_registry($appname, 'entry'))),
+					'text' => lang('Add %1',lang(Link::get_registry($appname, 'entry'))),
 					'no_lang' => true,
 					'link' => "javascript:egw.open('','$appname','add')"
 				),
 				'Advanced search' => "javascript:egw_openWindowCentered2('".
-					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.search'),false).
+					Egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.search'),false).
 					"','_blank',870,480,'yes')",
-				'Placeholders'    => egw::link('/index.php','menuaction=api.EGroupware\\Api\\Contacts\\Merge.show_replacements')
+				'Placeholders'    => Egw::link('/index.php','menuaction=api.EGroupware\\Api\\Contacts\\Merge.show_replacements')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);
 		}
@@ -65,11 +69,11 @@ class addressbook_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
-				'Site configuration' => egw::link('/index.php',array(
+				'Site configuration' => Egw::link('/index.php',array(
 					'menuaction' => 'admin.uiconfig.index',
 					'appname'    => $appname,
 				)),
-				'Global Categories'  => egw::link('/index.php',array(
+				'Global Categories'  => Egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
 					'global_cats'=> True,
@@ -78,7 +82,7 @@ class addressbook_hooks
 			// custom fields are not availible in LDAP
 			if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
 			{
-				$file['Custom fields'] = egw::link('/index.php',array(
+				$file['Custom fields'] = Egw::link('/index.php',array(
 					'menuaction' => 'admin.customfields.index',
 					'appname'    => $appname,
 					'use_private'=> 1,
@@ -97,7 +101,7 @@ class addressbook_hooks
 	}
 
 	/**
-	 * populates $settings for the preferences
+	 * populates $settings for the Api\Preferences
 	 *
 	 * @param array|string $hook_data
 	 * @return array
@@ -118,7 +122,7 @@ class addressbook_hooks
 			'label'  => 'Default addressbook for adding contacts',
 			'name'   => 'add_default',
 			'help'   => 'Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.',
-			'values' => !$hook_data['setup'] ? ExecMethod('addressbook.addressbook_ui.get_addressbooks',EGW_ACL_ADD) : array(),
+			'values' => !$hook_data['setup'] ? ExecMethod('addressbook.addressbook_ui.get_addressbooks',Acl::ADD) : array(),
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
@@ -159,7 +163,7 @@ class addressbook_hooks
 			'type'  => 'select',
 			'label' => 'Add a customfield to link title',
 			'name'  => 'link_title_cf',
-			'values' => addressbook_bo::cf_options(),
+			'values' => Api\Contacts::cf_options(),
 			'help'  =>  'Add customfield to links of addressbook, which displays in other applications. The default value is none customfield.',
 			'xmlrpc' => True,
 			'admin'  => false,
@@ -223,7 +227,7 @@ class addressbook_hooks
 				'name'   => 'default_document',
 				'help'   => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.', lang('addressbook')).' '.
 					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','n_fn').' '.
-					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+					lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -235,7 +239,7 @@ class addressbook_hooks
 				'name'   => 'document_dir',
 				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.',lang('addressbook')).' '.
 					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','n_fn').' '.
-					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+					lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -301,7 +305,7 @@ class addressbook_hooks
 				'type'   => 'select',
 				'label'  => 'Charset for the vCard import and export',
 				'name'   => 'vcard_charset',
-				'values' => translation::get_installed_charsets(),
+				'values' => Api\Translation::get_installed_charsets(),
 				'help'   => 'Which charset should be used for the vCard import and export.',
 				'xmlrpc' => True,
 				'admin'  => false,
@@ -425,18 +429,18 @@ class addressbook_hooks
 	/**
 	 * ACL rights and labels used
 	 *
-	 * @param string|array string with location or array with parameters incl. "location", specially "owner" for selected acl owner
-	 * @return array acl::(READ|ADD|EDIT|DELETE|PRIVAT|CUSTOM(1|2|3)) => $label pairs
+	 * @param string|array string with location or array with parameters incl. "location", specially "owner" for selected Acl owner
+	 * @return array Acl::(READ|ADD|EDIT|DELETE|PRIVAT|CUSTOM(1|2|3)) => $label pairs
 	 */
 	public static function acl_rights($params)
 	{
 		unset($params);	// not used, but required by function signature
 
 		return array(
-			acl::READ    => 'read',
-			acl::EDIT    => 'edit',
-			acl::ADD     => 'add',
-			acl::DELETE  => 'delete',
+			Acl::READ    => 'read',
+			Acl::EDIT    => 'edit',
+			Acl::ADD     => 'add',
+			Acl::DELETE  => 'delete',
 		);
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare
+ * EGroupware - addressbook
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package addressbook
@@ -11,12 +11,14 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+
 /**
  * export plugin of addressbook
  */
-class addressbook_export_contacts_csv implements importexport_iface_export_plugin {
-
-
+class addressbook_export_contacts_csv implements importexport_iface_export_plugin
+{
 	/**
 	 * Constants used for exploding categories & multi-selectboxes into seperate fields
 	 */
@@ -44,8 +46,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		$selection = array();
 
 		// Addressbook defines its own export imits
-		$limit_exception = bo_merge::is_export_limit_excepted();
-		$export_limit = bo_merge::getExportLimit($app='addressbook');
+		$limit_exception = Api\Storage\Merge::is_export_limit_excepted();
+		$export_limit = Api\Storage\Merge::getExportLimit($app='addressbook');
 		if (!$limit_exception) $export_object->export_limit = $export_limit; // we may not need that after all
 		if($export_limit == 'no' && !$limit_exception) {
 			return;
@@ -57,11 +59,12 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 		if ($options['selection'] == 'search') {
 			// uicontacts selection with checkbox 'use_all'
-			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
+			$query = Api\Cache::getSession('addressbook', 'index');
 			$query['num_rows'] = -1;	// all
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$query['order'] = 'contact_id';
 			if(!array_key_exists('filter',$query)) $query['filter'] = $GLOBALS['egw_info']['user']['account_id'];
+			$readonlys = null;
 			$this->ui->get_rows($query,$selection,$readonlys, true);	// only return the ids
 		}
 		elseif ( $options['selection'] == 'all' ) {
@@ -73,9 +76,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 		elseif ($options['selection'] == 'filter')
 		{
-			$fields = importexport_helper_functions::get_filter_fields($_definition->application, $this);
 			$filter = $_definition->filter;
-			$known_fields = $this->ui->get_fields('supported');
 			$query = array();
 
 			// Handle ranges
@@ -125,14 +126,14 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 
-		if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+		if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
 			$selection = array_slice($selection, 0, $export_limit);
 		}
 
 		if($options['explode_multiselects']) {
-			$customfields = config::get_customfields('addressbook');
+			$customfields = Api\Storage\Customfields::get('addressbook');
 			$additional_fields = array();
-			$cat_obj = new categories('', 'addressbook');
+			$cat_obj = new Api\Categories('', 'addressbook');
 			foreach($options['explode_multiselects'] as $field => $explode) {
 				switch($explode['explode']) {
 					case self::MAIN_CATS:
@@ -241,7 +242,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 
 		$export_object->set_mapping($options['mapping']);
-		
+
 		// Add in last/next event, if needed
 		if($options['mapping']['last_date'] || $options['mapping']['next_date'])
 		{
@@ -439,7 +440,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			'type'		=> 'select',
 			'rows'		=> 5,
 			'tags'		=> true,
-			'values'	=> $this->ui->get_addressbooks(EGW_ACL_READ)
+			'values'	=> $this->ui->get_addressbooks(Acl::READ)
 		);
 	}
 }

@@ -14,6 +14,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Acl;
 
 /**
  * Business object for addressbook
@@ -126,7 +127,7 @@ class addressbook_bo extends Api\Contacts
 			$result = self::get_pgp_keyserver($missing, $result);
 		}
 		//error_log(__METHOD__."(".array2string($recipients).") returning ".array2string($result));
-		egw_json_response::get()->data($result);
+		Api\Json\Response::get()->data($result);
 	}
 
 	/**
@@ -191,7 +192,7 @@ class addressbook_bo extends Api\Contacts
 			{
 				$contact['pubkey'] = preg_replace(self::$pgp_key_regexp, $key, $contact['pubkey']);
 			}
-			if ($this->check_perms(EGW_ACL_EDIT, $contact) && $this->save($contact))
+			if ($this->check_perms(Acl::EDIT, $contact) && $this->save($contact))
 			{
 				++$updated;
 			}
@@ -209,7 +210,7 @@ class addressbook_bo extends Api\Contacts
 		$message .= "\n".lang('%1 key(s) added to public keyserver "%2".',
 			self::set_pgp_keyserver($keys), PARSE_URL(self::KEYSERVER_ADD, PHP_URL_HOST));
 
-		egw_json_response::get()->data($message);
+		Api\Json\Response::get()->data($message);
 	}
 
 	/**

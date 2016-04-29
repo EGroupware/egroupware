@@ -98,7 +98,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 					$this->errors[$import_csv->get_current_position()] = lang(
 						'Unable to convert "%1" to account ID.  Using plugin setting (%2) for owner.',
 						$record->owner,
-						common::grab_owner_name($this->user)
+						Api\Accounts::username($this->user)
 					);
 					$record->owner = $this->user;
 				} else {
@@ -113,8 +113,8 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		if(!array_key_exists($record->owner, $this->bocontacts->get_addressbooks()))
 		{
 			$this->errors[$import_csv->get_current_position()] = lang("Unable to import into %1, using %2",
-				common::grab_owner_name($record->owner),
-				common::grab_owner_name($this->user)
+				Api\Accounts::username($record->owner),
+				Api\Accounts::username($this->user)
 			);
 			$record->owner = $this->user;
 		}
@@ -165,7 +165,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		// Format birthday as backend requires - converter should give timestamp
 		if($record->bday && is_numeric($record->bday))
 		{
-			$time = new egw_time($record->bday);
+			$time = new Api\DateTime($record->bday);
 			$record->bday = $time->format('Y-m-d');
 		}
 
@@ -323,7 +323,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 					return $result;
 				}
 			default:
-				throw new egw_exception('Unsupported action: '. $_action);
+				throw new Api\Exception('Unsupported action: '. $_action);
 
 		}
 	}
@@ -415,4 +415,4 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
         public function get_results() {
                 return $this->results;
         }
-} // end of iface_export_plugin
+}

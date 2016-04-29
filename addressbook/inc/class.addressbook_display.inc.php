@@ -10,26 +10,15 @@
  * @version $Id: class.addressbook_display.inc.php 24099 2008-02-18 16:29:06Z stefanbecker $
  */
 
+use EGroupware\Api;
+
 /**
  * SiteMgr Display form for the addressbook
  *
  */
 class addressbook_display extends addressbook_ui
 {
-	/**
-	 * Shows the Addressbook Entry and stores the submitted data
-	 *
-	 * @param array $content=null submitted eTemplate content
-	 * @param int $addressbook=null int owner-id of addressbook to save contacts too
-	 * @param array $fields=null field-names to show
-	 * @param string $msg=null message to show after submitting the form
-	 * @param string $email=null comma-separated email addresses
-	 * @param string $tpl_name=null custom etemplate to use
-	 * @param string $subject=null subject for email
-	 * @return string html content
-	 */
-	//
-function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
+	function get_rows(&$query,&$rows,&$readonlys)
 	{
 		$query['sitemgr_display'] = ($readonlys['sitemgr_display'] ?$readonlys['sitemgr_display']:'addressbook.display');
 		$total = parent::get_rows($query,$rows,$readonlys);
@@ -44,6 +33,18 @@ function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 
 	}
 
+	/**
+	 * Shows the Addressbook Entry and stores the submitted data
+	 *
+	 * @param array $content =null submitted eTemplate content
+	 * @param int $addressbook =null int owner-id of addressbook to save contacts too
+	 * @param array $fields =null field-names to show
+	 * @param string $msg =null message to show after submitting the form
+	 * @param string $email =null comma-separated email addresses
+	 * @param string $tpl_name =null custom etemplate to use
+	 * @param string $subject =null subject for email
+	 * @return string html content
+	 */
 	function display($content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null)
 	{
 		$tpl_name=($tpl_name ? $tpl_name : 'addressbook.display');
@@ -52,7 +53,7 @@ function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 		$content = array(
 			'msg' => $msg ? $msg : $_GET['msg'],
 		);
-		$content['nm1'] = $GLOBALS['egw']->session->appsession(($tpl_name ? $tpl_name : 'index'),'addressbook');
+		$content['nm1'] = Api\Cache::getSession('addressbook', ($tpl_name ? $tpl_name : 'index'));
 		$readonlys['sitemgr_display']=$tpl_name;
 		if (!is_array($content['nm1']))
 		{

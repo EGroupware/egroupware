@@ -11,6 +11,8 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Vfs;
 
 /**
  * SiteMgr contact form for the addressbook
@@ -92,9 +94,9 @@ class addressbook_contactform
 								// the anonymous user to have run rights for addressbook AND
 								// edit rights for the addressbook used to store the new entry,
 								// which is clearly not wanted securitywise
-								Api\Vfs::$is_root = true;
-								egw_link::link('addressbook',$id,egw_link::VFS_APPNAME,$value,$name);
-								Api\Vfs::$is_root = false;
+								Vfs::$is_root = true;
+								Link::link('addressbook',$id,Link::VFS_APPNAME,$value,$name);
+								Vfs::$is_root = false;
 							}
 						}
 

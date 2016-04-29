@@ -157,6 +157,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	 */
 	public function _vcard($_vcard, $owner)
 	{
+		// ToDo: Nathan: $_definition is not defined
 		$charset = $_definition->plugin_options['charset'];
 		if($charset == 'user') $charset = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset'];
 		$record = $this->bocontacts->vcardtoegw($_vcard,$charset);
@@ -202,8 +203,12 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 				// Only update if there are changes
 				$old = $this->bocontacts->read($_data['id']);
 				// if we get countrycodes as countryname, try to translate them -> the rest should be handled by bo classes.
-				foreach(array('adr_one_', 'adr_two_') as $c_prefix) {
-					if (strlen(trim($_data[$c_prefix.'countryname']))==2) $_data[$c_prefix.'countryname'] = $GLOBALS['egw']->country->get_full_name(trim($_data[$c_prefix.'countryname']),$translated=true);
+				foreach(array('adr_one_', 'adr_two_') as $c_prefix)
+				{
+					if (strlen(trim($_data[$c_prefix.'countryname']))==2)
+					{
+						$_data[$c_prefix.'countryname'] = Api\Country::get_full_name(trim($_data[$c_prefix.'countryname']), true);
+					}
 				}
 				// Don't change a user account into a contact
 				if($old['owner'] == 0) {
@@ -270,13 +275,13 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 
 		$record_class = get_class($this->preview_records[0]);
 
-		foreach($this->preview_records as $i => $record)
+		foreach($this->preview_records as $record)
 		{
 			// Convert to human-friendly
             importexport_export_csv::convert($record,$record_class::$types,$_definition->application);
 			$record = $record->get_record_array();
 			$row = array();
-			foreach($labels as $field => $label)
+			foreach(array_keys($labels) as $field)
 			{
 				$row[$field] = $record[$field];
 
@@ -380,4 +385,4 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
         public function get_results() {
                 return $this->results;
         }
-} // end of iface_export_plugin
+}

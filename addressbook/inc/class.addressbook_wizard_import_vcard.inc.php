@@ -10,27 +10,27 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+
 class addressbook_wizard_import_vcard extends addressbook_import_vcard
 {
-
 	/**
 	 * constructor
 	 */
 	function __construct()
 	{
-
 		$this->steps = array(
 			'wizard_step40' => lang('Choose charset'),
 			'wizard_step60' => lang('Choose owner of imported data'),
 		);
-
 	}
 
 	function wizard_step40(&$content, &$sel_options, &$readonlys, &$preserv)
-        {
-                if($this->debug) error_log(get_class($this) . '::wizard_step40->$content '.print_r($content,true));
-                // return from step40
-                if ($content['step'] == 'wizard_step40')
+	{
+		if($this->debug) error_log(get_class($this) . '::wizard_step40->$content '.print_r($content,true));
+		// return from step40
+		if ($content['step'] == 'wizard_step40')
 		{
 			switch (array_search('pressed', $content['button']))
 			{
@@ -50,20 +50,20 @@ class addressbook_wizard_import_vcard extends addressbook_import_vcard
 			$content['msg'] = $this->steps['wizard_step40'];
 			$content['step'] = 'wizard_step40';
 			if(!$content['charset'] && $content['plugin_options']['charset']) {
-                                $content['charset'] = $content['plugin_options']['charset'];
-                        }
-			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
-                        array(
-                                'user'  => lang('User preference'),
-                        );
+				$content['charset'] = $content['plugin_options']['charset'];
+			}
+			$sel_options['charset'] = Api\Translation::get_installed_charsets()+
+				array(
+					'user'  => lang('User preference'),
+				);
 
 			// Add in extra allowed charsets
-                        $config = config::read('importexport');
-                        $extra_charsets = array_intersect(explode(',',$config['import_charsets']), mb_list_encodings());
-                        if($extra_charsets)
-                        {
-                                $sel_options['charset'] += array(lang('Extra encodings') => array_combine($extra_charsets,$extra_charsets));
-                        }
+			$config = Api\Config::read('importexport');
+			$extra_charsets = array_intersect(explode(',',$config['import_charsets']), mb_list_encodings());
+			if($extra_charsets)
+			{
+				$sel_options['charset'] += array(lang('Extra encodings') => array_combine($extra_charsets,$extra_charsets));
+			}
 
 			$preserv = $content;
 			unset ($preserv['button']);
@@ -102,13 +102,12 @@ class addressbook_wizard_import_vcard extends addressbook_import_vcard
 				$content['change_owner'] = $content['plugin_options']['change_owner'];
 			}
 
-			$bocontacts = new addressbook_bo();
-			$sel_options['contact_owner'] = array('personal' => lang("Importer's personal")) + $bocontacts->get_addressbooks(EGW_ACL_ADD);
+			$bocontacts = new Api\Contacts();
+			$sel_options['contact_owner'] = array('personal' => lang("Importer's personal")) + $bocontacts->get_addressbooks(Acl::ADD);
 
 			$preserv = $content;
 			unset ($preserv['button']);
 			return 'addressbook.importexport_wizard_vcard_chooseowner';
 		}
-		
 	}
 }

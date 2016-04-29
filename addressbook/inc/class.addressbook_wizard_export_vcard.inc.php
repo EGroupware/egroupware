@@ -9,6 +9,8 @@
  * @author Nathan Gray
  */
 
+use EGroupware\Api;
+
 /**
  * We need to allow choosing of charset, so we'll just use the standard one from CSV
  */
@@ -22,7 +24,6 @@ class addressbook_wizard_export_vcard
 		$this->step_templates = array(
 			'wizard_step40' => 'addressbook.importexport_wizard_vcard_charset'
 		);
-
 	}
 
 	/**
@@ -59,14 +60,14 @@ class addressbook_wizard_export_vcard
 			if(!$content['charset'] && $content['plugin_options']['charset']) {
                                 $content['charset'] = $content['plugin_options']['charset'] ? $content['plugin_options']['charset'] : 'user';
                         }
-			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
+			$sel_options['charset'] = Api\Translation::get_installed_charsets()+
                         array(
                                 'user'  => lang('User preference'),
                         );
 			$preserv = $content;
 
                         // Add in extra allowed charsets
-                        $config = config::read('importexport');
+                        $config = Api\Config::read('importexport');
                         $extra_charsets = array_intersect(explode(',',$config['import_charsets']), mb_list_encodings());
                         if($extra_charsets)
                         {

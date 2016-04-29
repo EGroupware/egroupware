@@ -9,6 +9,9 @@
  * @version $Id:  $
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+
 class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_import_csv
 {
 
@@ -25,16 +28,16 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 		);
 
 		// Field mapping
-		$bocontacts = new addressbook_bo();
+		$bocontacts = new Api\Contacts();
 		$this->mapping_fields = $bocontacts->contact_fields;
 
-		$categories = new categories('','addressbook');
+		$categories = new Api\Categories('','addressbook');
 		$cat_list = array();
 		foreach((array)$categories->return_sorted_array(0,False,'','','',true,0,true) as $cat)
 		{
 			$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
-			if (categories::is_global($cat))
+			if (Api\Categories::is_global($cat))
 			{
 				$s .= ' &#9830;';
 			}
@@ -51,7 +54,7 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 			$this->mapping_fields['#'.$name] = $data['label'];
 		}
 		unset($this->mapping_fields['jpegphoto']);        // can't cvs import that
-		
+
 		// Add in special handled fields
 		$this->mapping_fields[lang('Special')] = addressbook_import_contacts_csv::$special_fields;
 
@@ -77,10 +80,10 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 		}
 		$result = parent::wizard_step50($content, $sel_options, $readonlys, $preserv);
 		$content['msg'] .= "\n*" . lang('Contact ID cannot be changed by import');
-		
+
 		return $result;
 	}
-	
+
 	function wizard_step60(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		if($this->debug) error_log('addressbook.importexport.addressbook_csv_import::wizard_step60->$content '.print_r($content,true));
@@ -115,8 +118,8 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 				$content['change_owner'] = $content['plugin_options']['change_owner'];
 			}
 
-			$bocontacts = new addressbook_bo();
-			$sel_options['contact_owner'] = array('personal' => lang("Importer's personal")) + $bocontacts->get_addressbooks(EGW_ACL_ADD);
+			$bocontacts = new Api\Contacts();
+			$sel_options['contact_owner'] = array('personal' => lang("Importer's personal")) + $bocontacts->get_addressbooks(Acl::ADD);
 			if(!in_array('owner', $content['field_mapping'])) {
 				$content['no_owner_map'] = true;
 			}
@@ -125,6 +128,5 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 			unset ($preserv['button']);
 			return 'addressbook.importexport_wizard_chooseowner';
 		}
-		
 	}
 }

@@ -10,6 +10,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+
 /**
  * SiteMgr contact form for the addressbook
  *
@@ -38,7 +41,7 @@ class module_addressbook_contactform extends sitemgr_module
 	 */
 	function get_user_interface()
 	{
-		$GLOBALS['egw']->translation->add_app('addressbook');
+		Api\Translation::add_app('addressbook');
 
 		$uicontacts = new addressbook_ui();
 
@@ -76,7 +79,7 @@ class module_addressbook_contactform extends sitemgr_module
 				'label' => lang('Addressbook the contact should be saved to').' ('.lang('The anonymous user needs add rights for it!').')',
 				'options' => array(
 					'' => lang('None'),
-				)+$uicontacts->get_addressbooks(EGW_ACL_ADD)	// add to not show the accounts!
+				)+$uicontacts->get_addressbooks(Acl::ADD)	// add to not show the accounts!
 			),
 			'arg4' => array(
 				'type' => 'textfield',

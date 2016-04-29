@@ -11,6 +11,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+
 /**
  * class addressbook_egw_record
  * compability layer for iface_egw_record needed for importexport
@@ -44,7 +47,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	 */
 	public function __construct( $_identifier='' ){
 		$this->identifier = $_identifier;
-		$this->bocontacts = new addressbook_bo();
+		$this->bocontacts = new Api\Contacts();
 		if($_identifier) {
 			$this->contact = $this->bocontacts->read($this->identifier);
 		}
@@ -123,7 +126,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 		$ui->type_icon($this->owner, $this->private, $this->tid, $icon, $label);
 
 		// Specific photo
-		return $this->jpegphoto ? egw_framework::link('/index.php',$ui->photo_src($this->identifier,$this->jpegphoto)):$icon;
+		return $this->jpegphoto ? Framework::link('/index.php',$ui->photo_src($this->identifier,$this->jpegphoto)):$icon;
 	}
 	/**
 	 * saves record into backend
@@ -171,5 +174,4 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	public function __destruct() {
 		unset ($this->bocontacts);
 	}
-
-} // end of egw_addressbook_record
+}

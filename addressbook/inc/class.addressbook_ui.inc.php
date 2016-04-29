@@ -13,6 +13,12 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Vfs;
+use EGroupware\Api\Etemplate;
 
 /**
  * General user interface object of the adressbook
@@ -64,7 +70,7 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * Instance of eTemplate class
 	 *
-	 * @var etemplate_new
+	 * @var Etemplate
 	 */
 	protected $tmpl;
 
@@ -77,7 +83,7 @@ class addressbook_ui extends addressbook_bo
 	{
 		parent::__construct($contact_app);
 
-		$this->tmpl = new etemplate_new();
+		$this->tmpl = new Etemplate();
 
 		$this->org_views = array(
 			'org_name'                  => lang('Organisations'),
@@ -86,12 +92,12 @@ class addressbook_ui extends addressbook_bo
 		);
 
 		// make sure the hook for export_limit is registered
-		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','addressbook')) $GLOBALS['egw']->hooks->register_single_app_hook('addressbook','export_limit');
+		if (!Api\Hooks::exists('export_limit','addressbook')) Api\Hooks::read(true);
 
 		$this->config =& $GLOBALS['egw_info']['server'];
 
 		// check if a contact specific export limit is set, if yes use it also for etemplate's csv export
-		$this->config['export_limit'] = $this->config['contact_export_limit'] = bo_merge::getExportLimit($app='addressbook');
+		$this->config['export_limit'] = $this->config['contact_export_limit'] = Api\Storage\Merge::getExportLimit($app='addressbook');
 
 		if ($this->config['copy_fields'] && ($fields = is_array($this->config['copy_fields']) ?
 			$this->config['copy_fields'] : unserialize($this->config['copy_fields'])))
@@ -114,69 +120,70 @@ class addressbook_ui extends addressbook_bo
 	/**
 	 * List contacts of an addressbook
 	 *
-	 * @param array $content=null submitted content
-	 * @param string $msg=null	message to show
-	 * @param boolean $do_email=false do an email-selection popup or the regular index-page
+	 * @param array $_content =null submitted content
+	 * @param string $msg =null	message to show
+	 * @param boolean $do_email =false do an email-selection popup or the regular index-page
 	 */
-	function index($content=null,$msg=null,$do_email=false)
+	function index($_content=null,$msg=null,$do_email=false)
 	{
-		//echo "<p>uicontacts::index(".print_r($content,true).",'$msg')</p>\n";
-		if (($re_submit = is_array($content)))
+		//echo "<p>uicontacts::index(".print_r($_content,true).",'$msg')</p>\n";
+		if (($re_submit = is_array($_content)))
 		{
-			$do_email = $content['do_email'];
+			$do_email = $_content['do_email'];
 
-			if (isset($content['nm']['rows']['delete']))	// handle a single delete like delete with the checkboxes
+			if (isset($_content['nm']['rows']['delete']))	// handle a single delete like delete with the checkboxes
 			{
-				list($id) = @each($content['nm']['rows']['delete']);
-				$content['nm']['action'] = 'delete';
-				$content['nm']['selected'] = array($id);
+				list($id) = @each($_content['nm']['rows']['delete']);
+				$_content['nm']['action'] = 'delete';
+				$_content['nm']['selected'] = array($id);
 			}
-			if (isset($content['nm']['rows']['document']))	// handle insert in default document button like an action
+			if (isset($_content['nm']['rows']['document']))	// handle insert in default document button like an action
 			{
-				list($id) = @each($content['nm']['rows']['document']);
-				$content['nm']['action'] = 'document';
-				$content['nm']['selected'] = array($id);
+				list($id) = @each($_content['nm']['rows']['document']);
+				$_content['nm']['action'] = 'document';
+				$_content['nm']['selected'] = array($id);
 			}
-			if ($content['nm']['action'] !== '' && $content['nm']['action'] !== null)
+			if ($_content['nm']['action'] !== '' && $_content['nm']['action'] !== null)
 			{
-				if (!count($content['nm']['selected']) && !$content['nm']['select_all'] && $content['nm']['action'] != 'delete_list')
+				if (!count($_content['nm']['selected']) && !$_content['nm']['select_all'] && $_content['nm']['action'] != 'delete_list')
 				{
 					$msg = lang('You need to select some contacts first');
 				}
-				elseif ($content['nm']['action'] == 'view_org')	// org-view via context menu
+				elseif ($_content['nm']['action'] == 'view_org')	// org-view via context menu
 				{
-					$content['nm']['org_view'] = array_shift($content['nm']['selected']);
+					$_content['nm']['org_view'] = array_shift($_content['nm']['selected']);
 				}
 				else
 				{
-					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
-						$success,$failed,$action_msg,$content['do_email'] ? 'email' : 'index',$msg,$content['nm']['checkboxes']))
+					$success = $failed = $action_msg = null;
+					if ($this->action($_content['nm']['action'],$_content['nm']['selected'],$_content['nm']['select_all'],
+						$success,$failed,$action_msg,$_content['do_email'] ? 'email' : 'index',$msg,$_content['nm']['checkboxes']))
 					{
 						$msg .= lang('%1 contact(s) %2',$success,$action_msg);
-						egw_framework::message($msg);
+						Framework::message($msg);
 					}
 					elseif(is_null($msg))
 					{
 						$msg .= lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
-						egw_framework::message($msg,'error');
+						Framework::message($msg,'error');
 					}
 					$msg = '';
 				}
 			}
-			if ($content['nm']['rows']['infolog'])
+			if ($_content['nm']['rows']['infolog'])
 			{
-				list($org) = each($content['nm']['rows']['infolog']);
+				list($org) = each($_content['nm']['rows']['infolog']);
 				return $this->infolog_org_view($org);
 			}
-			if ($content['nm']['rows']['view'])	// show all contacts of an organisation
+			if ($_content['nm']['rows']['view'])	// show all contacts of an organisation
 			{
-				list($org_view) = each($content['nm']['rows']['view']);
+				list($org_view) = each($_content['nm']['rows']['view']);
 			}
 			else
 			{
-				$org_view = $content['nm']['org_view'];
+				$org_view = $_content['nm']['org_view'];
 			}
-			$typeselection = $content['nm']['col_filter']['tid'];
+			$typeselection = $_content['nm']['col_filter']['tid'];
 		}
 		elseif($_GET['add_list'])
 		{
@@ -197,14 +204,14 @@ class addressbook_ui extends addressbook_bo
 		$preserv = array(
 			'do_email' => $do_email,
 		);
-		$to = $content['nm']['to'];
+		$to = $_content['nm']['to'];
 		$content = array();
 		if($msg || $_GET['msg'])
 		{
-			egw_framework::message($msg ? $msg : $_GET['msg']);
+			Framework::message($msg ? $msg : $_GET['msg']);
 		}
 
-		$content['nm'] = egw_session::appsession($do_email ? 'email' : 'index','addressbook');
+		$content['nm'] = Api\Cache::getSession('addressbook', $do_email ? 'email' : 'index');
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
@@ -257,7 +264,7 @@ class addressbook_ui extends addressbook_bo
 		$sel_options['cat_id'] = array('' => lang('All categories'), '0' => lang('None'));
 
 		// Edit and delete list actions depends on permissions
-		if($this->get_lists(EGW_ACL_EDIT))
+		if($this->get_lists(Acl::EDIT))
 		{
 			$content['nm']['placeholder_actions'][] = 'rename_list';
 			$content['nm']['placeholder_actions'][] = 'delete_list';
@@ -270,10 +277,10 @@ class addressbook_ui extends addressbook_bo
 		if (isset($typeselection)) $content['nm']['col_filter']['tid'] = $typeselection;
 		// save the tid for use in creating new addressbook entrys via UI. Current tid is to be used as type of new entrys
 		//error_log(__METHOD__.__LINE__.' '.$content['nm']['col_filter']['tid']);
-		egw_cache::setSession('addressbook','active_tid',$content['nm']['col_filter']['tid']);
+		Api\Cache::setSession('addressbook','active_tid',$content['nm']['col_filter']['tid']);
 		if ($this->lists_available())
 		{
-			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array('' => lang('No distribution list')));
+			$sel_options['filter2'] = $this->get_lists(Acl::READ,array('' => lang('No distribution list')));
 			$sel_options['filter2']['add'] = lang('Add a new list').'...';	// put it at the end
 		}
 		if ($do_email)
@@ -296,13 +303,13 @@ class addressbook_ui extends addressbook_bo
 		{
 			$content['nm']['header_left'] = 'addressbook.index.left';
 		}
-		$sel_options['filter'] = $sel_options['owner'] = $this->get_addressbooks(EGW_ACL_READ, lang('All addressbooks'));
+		$sel_options['filter'] = $sel_options['owner'] = $this->get_addressbooks(Acl::READ, lang('All addressbooks'));
 		$sel_options['to'] = array(
 			'to'  => 'To',
 			'cc'  => 'Cc',
 			'bcc' => 'Bcc',
 		);
-		$sel_options['adr_one_countrycode']['-custom-'] = lang('No country selected');
+		$sel_options['adr_one_countrycode']['-custom-'] = lang('No Api\Country selected');
 
 		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
 		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
@@ -351,17 +358,16 @@ class addressbook_ui extends addressbook_bo
 
 		$this->tmpl->read($do_email ? 'addressbook.email' : 'addressbook.index');
 		return $this->tmpl->exec($do_email ? 'addressbook.addressbook_ui.emailpopup' : 'addressbook.addressbook_ui.index',
-			$content,$sel_options,$readonlys,$preserv,$do_email ? 2 : 0);
+			$content,$sel_options,array(),$preserv,$do_email ? 2 : 0);
 	}
 
 	/**
 	 * Get actions / context menu items
 	 *
-	 * @param string $tid_filter=null
-	 * @param string $org_view=null
-	 * @return array see nextmatch_widget::get_actions()
+	 * @param string $tid_filter =null
+	 * @return array see Etemplate\Widget\Nextmatch::get_actions()
 	 */
-	public function get_actions($tid_filter=null, $org_view=null)
+	public function get_actions($tid_filter=null)
 	{
 		// Contact view
 		$actions = array(
@@ -384,7 +390,7 @@ class addressbook_ui extends addressbook_bo
 				'disableClass' => 'contact_organisation',
 				'hideOnDisabled' => true,
 				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
-				'popup' => egw_link::get_registry('addressbook', 'edit_popup'),
+				'popup' => Link::get_registry('addressbook', 'edit_popup'),
 				'group' => $group,
 			),
 			'add' => array(
@@ -396,13 +402,13 @@ class addressbook_ui extends addressbook_bo
 					'new' => array(
 						'caption' => 'New',
 						'url' => 'menuaction=addressbook.addressbook_ui.edit',
-						'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+						'popup' => Link::get_registry('addressbook', 'add_popup'),
 						'icon' => 'new',
 					),
 					'copy' => array(
 						'caption' => 'Copy',
 						'url' => 'menuaction=addressbook.addressbook_ui.edit&makecp=1&contact_id=$id',
-						'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+						'popup' => Link::get_registry('addressbook', 'add_popup'),
 						'allowOnMultiple' => false,
 						'icon' => 'copy',
 					),
@@ -445,7 +451,7 @@ class addressbook_ui extends addressbook_bo
 				'disableClass' => 'contact_contact',
 				'hideOnDisabled' => true,
 				'url' => 'menuaction=addressbook.addressbook_ui.edit&org=$id',
-				'popup' => egw_link::get_registry('addressbook', 'add_popup'),
+				'popup' => Link::get_registry('addressbook', 'add_popup'),
 			),
 		);
 
@@ -455,16 +461,16 @@ class addressbook_ui extends addressbook_bo
 			'caption' => 'Categories',
 			'group' => $group,
 			'children' => array(
-				'cat_add' => nextmatch_widget::category_action(
+				'cat_add' => Etemplate\Widget\Nextmatch::category_action(
 					'addressbook',$group,'Add category', 'cat_add_',
-					true, 0,nextmatch_widget::DEFAULT_MAX_MENU_LENGTH,false
+					true, 0,Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH,false
 				)+array(
 					'icon' => 'foldertree_nolines_plus',
 					'disableClass' => 'rowNoEdit',
 				),
-				'cat_del' => nextmatch_widget::category_action(
+				'cat_del' => Etemplate\Widget\Nextmatch::category_action(
 					'addressbook',$group,'Delete category', 'cat_del_',
-					true, 0,nextmatch_widget::DEFAULT_MAX_MENU_LENGTH,false
+					true, 0,Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH,false
 				)+array(
 					'icon' => 'foldertree_nolines_minus',
 					'disableClass' => 'rowNoEdit',
@@ -484,7 +490,7 @@ class addressbook_ui extends addressbook_bo
 			),
 			'group' => $group,
 		);
-		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?, and are we allowed to edit them
+		if (($add_lists = $this->get_lists(Acl::EDIT)))	// do we have distribution lists?, and are we allowed to edit them
 		{
 			$actions['lists']['children'] += array(
 				'to_list' => array(
@@ -528,11 +534,12 @@ class addressbook_ui extends addressbook_bo
 			}
 		}
 		// move to AB
-		if (($move2addressbooks = $this->get_addressbooks(EGW_ACL_ADD)))	// do we have addressbooks, we should
+		if (($move2addressbooks = $this->get_addressbooks(Acl::ADD)))	// do we have addressbooks, we should
 		{
 			unset($move2addressbooks[0]);	// do not offer action to move contact to an account, as we dont support that currrently
 			foreach($move2addressbooks as $owner => $label)
 			{
+				$icon = $type_label = null;
 				$this->type_icon((int)$owner, substr($owner,-1) == 'p', 'n', $icon, $type_label);
 				$move2addressbooks[$owner] = array(
 					'icon' => $icon,
@@ -583,7 +590,7 @@ class addressbook_ui extends addressbook_bo
 						'caption' => 'Add a new Infolog',
 						'icon' => 'new',
 						'url' => 'menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=$id',
-						'popup' => egw_link::get_registry('infolog', 'add_popup'),
+						'popup' => Link::get_registry('infolog', 'add_popup'),
 						'onExecute' => 'javaScript:app.addressbook.add_task',	// call server for org-view only
 					),
 				),
@@ -607,7 +614,7 @@ class addressbook_ui extends addressbook_bo
 					'calendar_add' => array(
 						'caption' => 'Add appointment',
 						'icon' => 'new',
-						'popup' => egw_link::get_registry('calendar', 'add_popup'),
+						'popup' => Link::get_registry('calendar', 'add_popup'),
 						'onExecute' => 'javaScript:app.addressbook.add_cal',
 					),
 				),
@@ -676,7 +683,7 @@ class addressbook_ui extends addressbook_bo
 			);
 		}
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
-		$exception = bo_merge::is_export_limit_excepted();
+		$exception = Api\Storage\Merge::is_export_limit_excepted();
 		if ((isset($GLOBALS['egw_info']['user']['apps']['admin']) || $exception)  || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
 		{
 			$actions['export'] = array(
@@ -693,7 +700,7 @@ class addressbook_ui extends addressbook_bo
 					'vcard'  => array(
 						'caption' => 'Export as VCard',
 						'postSubmit' => true,	// download needs post submit (not Ajax) to work
-						'icon' => egw_vfs::mime_icon('text/vcard'),
+						'icon' => Vfs::mime_icon('text/vcard'),
 					),
 				),
 				'hideOnMobile' => true
@@ -727,7 +734,7 @@ class addressbook_ui extends addressbook_bo
 				'disableClass' => 'rowNoDelete',
 			);
 		}
-		if ($this->grants[0] & EGW_ACL_DELETE)
+		if ($this->grants[0] & Acl::DELETE)
 		{
 			$actions['delete_account'] = array(
 				'caption' => 'Delete',
@@ -752,7 +759,7 @@ class addressbook_ui extends addressbook_bo
 		if (isset($actions['export']['children']['csv']) && !importexport_helper_functions::has_definitions('addressbook','export')) unset($actions['export']['children']['csv']);
 
 		// Intercept open action in order to open entry into view mode instead of edit
-		if (html::$ua_mobile)
+		if (Api\Header\UserAgent::mobile())
 		{
 			$actions['open']['onExecute'] = 'javaScript:app.addressbook.viewEntry';
 			$actions['open']['mobileViewTemplate'] = 'view';
@@ -786,15 +793,15 @@ class addressbook_ui extends addressbook_bo
 			list(,$name) = explode(':',$part,2);
 			if ($name) $org_name[] = $name;
 		}
-		$org_name = implode(': ',$org_name);
-		return $org_name ? array($org => $org_name) : array();
+		$name = implode(': ',$org_name);
+		return $name ? array($org => $name) : array();
 	}
 
 	/**
 	 * Email address-selection popup
 	 *
-	 * @param array $content=null submitted content
-	 * @param string $msg=null	message to show
+	 * @param array $content =null submitted content
+	 * @param string $msg =null	message to show
 	 */
 	function emailpopup($content=null,$msg=null)
 	{
@@ -838,13 +845,13 @@ window.egw_LAB.wait(function() {
 	 * Return the contacts in an organisation via AJAX
 	 *
 	 * @param string|string[] $org Organisation ID
-	 * @param mixed $query Query filters (category, etc) to use, or null to use session
+	 * @param mixed $_query Query filters (category, etc) to use, or null to use session
 	 * @return array
 	 */
-	public function ajax_organisation_contacts($org, $query = null)
+	public function ajax_organisation_contacts($org, $_query = null)
 	{
 		$org_contacts = array();
-		$query = $query == null ? egw_session::appsession('index','addressbook') : $query;
+		$query = !$_query ? Api\Cache::getSession('addressbook', 'index') : $_query;
 		$query['num_rows'] = -1;	// all
 		if(!is_array($query['col_filter'])) $query['col_filter'] = array();
 
@@ -853,13 +860,14 @@ window.egw_LAB.wait(function() {
 		{
 			$query['org_view'] = $org_name;
 			$checked = array();
-			$count = $this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
+			$readonlys = null;
+			$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 			if($checked[0])
 			{
 				$org_contacts = array_merge($org_contacts,$checked);
 			}
 		}
-		egw_json_response::get()->data(array_unique($org_contacts));
+		Api\Json\Response::get()->data(array_unique($org_contacts));
 	}
 
 	/**
@@ -869,10 +877,11 @@ window.egw_LAB.wait(function() {
 	 */
 	function infolog_org_view($org)
 	{
-		$query = egw_session::appsession('index','addressbook');
+		$query = Api\Cache::getSession('addressbook', 'index');
 		$query['num_rows'] = -1;	// all
 		$query['org_view'] = $org;
 		$query['searchletter'] = '';
+		$checked = $readonlys = null;
 		$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 
 		if (count($checked) > 1)	// use a nicely formatted org-name as title in infolog
@@ -890,7 +899,7 @@ window.egw_LAB.wait(function() {
 		{
 			$org = '';	// use infolog default of link-title
 		}
-		egw::redirect_link('/index.php',array(
+		Egw::redirect_link('/index.php',array(
 			'menuaction' => 'infolog.infolog_ui.index',
 			'action' => 'addressbook',
 			'action_id' => implode(',',$checked),
@@ -900,13 +909,14 @@ window.egw_LAB.wait(function() {
 
 	function ajax_add_whole_list($list, $email_type = 'email')
 	{
-		$query = egw_session::appsession('email','addressbook');
+		$query = Api\Cache::getSession('addressbook', 'email');
 		$query['filter2'] = (int)$list;
+		$success = $failed = $action_msg = $msg = null;
 		$this->action($email_type,array(),true,$success,$failed,$action_msg,$query,$msg);
 
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 
-		if ($success) $response->addScript(egw_framework::set_onload(''));
+		if ($success) $response->addScript(Framework::set_onload(''));
 
 		// close window only if no errors AND something added
 		if ($failed || !$success)
@@ -932,23 +942,23 @@ window.egw_LAB.wait(function() {
 	 *
 	 * @param int $list_id ID of existing list, or 0 for a new one
 	 * @param string $new_name List name
-	 * @param int $owner List owner, or empty for current user
+	 * @param int $_owner List owner, or empty for current user
 	 * @return boolean|string
 	 */
-	function ajax_set_list($list_id, $new_name, $owner = false)
+	function ajax_set_list($list_id, $new_name, $_owner = false)
 	{
 		// Set owner to current user, if not set
-		$owner = $owner ? $owner : $GLOBALS['egw_info']['user']['account_id'];
+		$owner = $_owner ? $_owner : $GLOBALS['egw_info']['user']['account_id'];
 
 		// Check for valid list & permissions
 		if(!(int)$list_id && !$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner))
 		{
-			egw_json_response::get()->apply('egw.message', array(  lang('List creation failed, no rights!'),'error'));
+			Api\Json\Response::get()->apply('egw.message', array(  lang('List creation failed, no rights!'),'error'));
 			return;
 		}
-		if ((int)$list_id && !$this->check_list((int)$list_id, EGW_ACL_EDIT, $owner))
+		if ((int)$list_id && !$this->check_list((int)$list_id, Acl::EDIT, $owner))
 		{
-			egw_json_response::get()->apply('egw.message', array(  lang('Insufficent rights to edit this list!'),'error'));
+			Api\Json\Response::get()->apply('egw.message', array(  lang('Insufficent rights to edit this list!'),'error'));
 			return;
 		}
 
@@ -963,12 +973,12 @@ window.egw_LAB.wait(function() {
 
 		$new_id = $this->add_list(array('list_id' => (int)$list_id), $list['list_owner'],array(),$list);
 
-		egw_json_response::get()->apply('egw.message', array(
+		Api\Json\Response::get()->apply('egw.message', array(
 			$new_id == $list_id ? lang('Distribution list renamed') : lang('List created'),
 			'success'
 		));
 		// Success, just update selectbox to new value
-		egw_json_response::get()->data($new_id == $list_id ? "true" : $new_id);
+		Api\Json\Response::get()->data($new_id == $list_id ? "true" : $new_id);
 	}
 
 	/**
@@ -990,12 +1000,13 @@ window.egw_LAB.wait(function() {
 		if ($use_all || in_array($action,array('remove_from_list','delete_list')))
 		{
 			// get the whole selection
-			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'addressbook');
+			$query = is_array($session_name) ? $session_name : Api\Cache::getSession('addressbook', $session_name);
 
 			if ($use_all)
 			{
 				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
 				$query['num_rows'] = -1;	// all
+				$readonlys = null;
 				$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 			}
 		}
@@ -1010,10 +1021,11 @@ window.egw_LAB.wait(function() {
 					return $this->infolog_org_view($id);	// uses the org-name, instead of 'selected contacts'
 				}
 				unset($checked[$n]);
-				$query = egw_session::appsession($session_name,'addressbook');
+				$query = Api\Cache::getSession('addressbook', $session_name);
 				$query['num_rows'] = -1;	// all
 				$query['org_view'] = $id;
 				unset($query['filter2']);
+				$extra = $readonlys = null;
 				$this->get_rows($query,$extra,$readonlys,true);	// true = only return the id's
 				if ($extra[0]) $org_contacts = array_merge($org_contacts,$extra);
 			}
@@ -1041,7 +1053,7 @@ window.egw_LAB.wait(function() {
 			$action = substr($action,0,7);
 		}
 		// Security: stop non-admins to export more then the configured number of contacts
-		if (in_array($action,array('csv','vcard')) && $this->config['contact_export_limit'] && !bo_merge::is_export_limit_excepted() &&
+		if (in_array($action,array('csv','vcard')) && $this->config['contact_export_limit'] && !Api\Storage\Merge::is_export_limit_excepted() &&
 			(!is_numeric($this->config['contact_export_limit']) || count($checked) > $this->config['contact_export_limit']))
 		{
 			$action_msg = lang('exported');
@@ -1059,6 +1071,7 @@ window.egw_LAB.wait(function() {
 				break;
 
 			case 'merge':
+				$error_msg = null;
 				$success = $this->merge($checked,$error_msg);
 				$failed = count($checked) - (int)$success;
 				$action_msg = lang('merged');
@@ -1078,7 +1091,7 @@ window.egw_LAB.wait(function() {
 				{
 					$msg = lang('Distribution list deleted');
 					unset($query['filter2']);
-					egw_session::appsession($session_name,'addressbook',$query);
+					Api\Cache::setSession('addressbook', $session_name, $query);
 				}
 				return false;
 
@@ -1090,26 +1103,25 @@ window.egw_LAB.wait(function() {
 				return false;
 
 			case 'infolog_add':
-				egw_framework::popup(egw::link('/index.php',array(
+				Framework::popup(Egw::link('/index.php',array(
 						'menuaction' => 'infolog.infolog_ui.edit',
 						'type' => 'task',
 						'action' => 'addressbook',
 						'action_id' => implode(',',$checked),
-					)),'_blank',egw_link::get_registry('infolog', 'add_popup'));
+					)),'_blank',Link::get_registry('infolog', 'add_popup'));
 				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
 				return false;
 
 			case 'calendar_add':	// add appointment for org-views, other views are handled directly in javascript
-				egw_framework::popup(egw::link('/index.php',array(
+				Framework::popup(Egw::link('/index.php',array(
 						'menuaction' => 'calendar.calendar_uiforms.edit',
 						'participants' => 'c'.implode(',c',$checked),
-					)),'_blank',egw_link::get_registry('calendar', 'add_popup'));
+					)),'_blank',Link::get_registry('calendar', 'add_popup'));
 				$msg = '';	// no message, as we send none in javascript too and users sees opening popup
 				return false;
 
 			case 'calendar_view':	// show calendar for org-views, although all views are handled directly in javascript
-				list($width,$height) = explode('x',egw_link::get_registry('calendar', 'add_popup'));
-				egw::redirect_link('/index.php',array(
+				Egw::redirect_link('/index.php',array(
 					'menuaction' => 'calendar.calendar_uiviews.index',
 					'owner' => 'c'.implode(',c',$checked),
 				));
@@ -1120,10 +1132,10 @@ window.egw_LAB.wait(function() {
 			{
 				case 'cat_add':
 				case 'cat_del':
-					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_EDIT,$contact)))
+					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::EDIT,$contact)))
 					{
 						$action_msg = $action == 'cat_add' ? lang('categorie added') : lang('categorie delete');
-						$cat_ids = $contact['cat_id'] ? explode(',', $contact['cat_id']) : array();   //existing categories
+						$cat_ids = $contact['cat_id'] ? explode(',', $contact['cat_id']) : array();   //existing Api\Categories
 						if ($action == 'cat_add')
 						{
 							$cat_ids[] = $cat_id;
@@ -1133,10 +1145,10 @@ window.egw_LAB.wait(function() {
 						{
 							unset($cat_ids[$key]);
 						}
-						$cat_ids = $cat_ids ? implode(',',$cat_ids) : null;
-						if ($cat_ids !== $contact['cat_id'])
+						$ids = $cat_ids ? implode(',',$cat_ids) : null;
+						if ($ids !== $contact['cat_id'])
 						{
-							$contact['cat_id'] = $cat_ids;
+							$contact['cat_id'] = $ids;
 							$Ok = $this->save($contact);
 						}
 					}
@@ -1144,7 +1156,7 @@ window.egw_LAB.wait(function() {
 
 				case 'delete':
 					$action_msg = lang('deleted');
-					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
+					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::DELETE,$contact)))
 					{
 						if ($contact['owner'] ||	// regular contact or
 							empty($contact['account_id']) ||	// accounts without account_id
@@ -1156,13 +1168,13 @@ window.egw_LAB.wait(function() {
 						// delete single account --> redirect to admin
 						elseif (count($checked) == 1 && $contact['account_id'])
 						{
-							egw::redirect_link('/index.php',array(
+							Egw::redirect_link('/index.php',array(
 								'menuaction' => 'admin.admin_account.delete',
 								'account_id' => $contact['account_id'],
 							));
 							// this does NOT return!
 						}
-						else	// no mass delete of accounts
+						else	// no mass delete of Api\Accounts
 						{
 							$Ok = false;
 						}
@@ -1171,7 +1183,7 @@ window.egw_LAB.wait(function() {
 
 				case 'undelete':
 					$action_msg = lang('recovered');
-					if ($contact = $this->read($id))
+					if (($contact = $this->read($id)))
 					{
 						$contact['tid'] = 'n';
 						$Ok = $this->save($contact);
@@ -1180,9 +1192,10 @@ window.egw_LAB.wait(function() {
 
 				case 'email':
 				case 'email_home':
-					$action == 'email' ? $action_fallback = 'email_home' : $action_fallback = 'email';
+					/* this cant work anymore, as Framework::set_onload does not longer exist
+					$action_fallback = $action == 'email' ? 'email_home' : 'email';
 					$action_msg = lang('added');
-					if($contact = $this->read($id))
+					if(($contact = $this->read($id)))
 					{
 						if(strpos($contact[$action],'@') !== false)
 						{
@@ -1199,13 +1212,13 @@ window.egw_LAB.wait(function() {
 						if($email)
 						{
 							$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
-							egw_framework::set_onload("addEmail('".addslashes(
+							Framework::set_onload("addEmail('".addslashes(
 								$contact['n_fn'] ? $contact['n_fn'].' <'.trim($email).'>' : trim($email))."');");
 							//error_log(__METHOD__.__LINE__."addEmail('".addslashes(
 							//	$contact['n_fn'] ? $contact['n_fn'].' <'.trim($email).'>' : trim($email))."');");
 							$Ok = true;
 						}
-					}
+					}*/
 					break;
 
 				case 'remove_from_list':
@@ -1235,16 +1248,16 @@ window.egw_LAB.wait(function() {
 					break;
 
 				default:	// move to an other addressbook
-					if (!(int)$action || !($this->grants[(string) (int) $action] & EGW_ACL_EDIT))	// might be ADD in the future
+					if (!(int)$action || !($this->grants[(string) (int) $action] & Acl::EDIT))	// might be ADD in the future
 					{
 						return false;
 					}
 					if (!$checkboxes['move_to_copy'])
 					{
 						$action_msg = lang('moved');
-						if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
+						if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::DELETE,$contact)))
 						{
-							if (!$contact['owner'])		// no (mass-)move of accounts
+							if (!$contact['owner'])		// no (mass-)move of Api\Accounts
 							{
 								$Ok = false;
 							}
@@ -1259,7 +1272,7 @@ window.egw_LAB.wait(function() {
 					else
 					{
 						$action_msg = lang('copied');
-						if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_READ,$contact)))
+						if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(Acl::READ,$contact)))
 						{
 							if ($contact['owner'] != (int)$action || $contact['private'] != (int)(substr($action,-1) == 'p'))
 							{
@@ -1270,7 +1283,7 @@ window.egw_LAB.wait(function() {
 								$Ok = $this->save($contact);
 								if ($Ok && is_array($links))
 								{
-									egw_link::link('addressbook', $contact['id'], $links);
+									Link::link('addressbook', $contact['id'], $links);
 								}
 							}
 						}
@@ -1301,8 +1314,8 @@ window.egw_LAB.wait(function() {
 	function copy_contact(array &$content, $only_copy_fields=true)
 	{
 		$content['link_to']['to_id'] = 0;
-		egw_link::link('addressbook',$content['link_to']['to_id'],'addressbook',$content['id'],
-			lang('Copied by %1, from record #%2.',common::display_fullname('',
+		Link::link('addressbook',$content['link_to']['to_id'],'addressbook',$content['id'],
+			lang('Copied by %1, from record #%2.',Api\Accounts::format_username('',
 			$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 			$content['id']));
 		// create a new contact with the content of the old
@@ -1327,8 +1340,8 @@ window.egw_LAB.wait(function() {
 	 * @internal
 	 * @param array &$query
 	 * @param array &$rows returned rows/cups
-	 * @param array &$readonlys eg. to disable buttons based on acl
-	 * @param boolean $id_only=false if true only return (via $rows) an array of contact-ids, dont save state to session
+	 * @param array &$readonlys eg. to disable buttons based on Acl
+	 * @param boolean $id_only =false if true only return (via $rows) an array of contact-ids, dont save state to session
 	 * @return int total number of contacts matching the selection
 	 */
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
@@ -1344,11 +1357,11 @@ window.egw_LAB.wait(function() {
 			{
 				unset($store_query[$key]);
 			}
-			$old_state = egw_session::appsession($what,'addressbook',$store_query);
+			$old_state = Api\Cache::setSession('addressbook', $what, $store_query);
 		}
 		else
 		{
-			$old_state = egw_session::appsession($what,'addressbook');
+			$old_state = Api\Cache::getSession('addressbook', $what);
 		}
 		if (!isset($this->org_views[(string) $query['org_view']]) || strpos($query['org_view'],':') === false)   // we dont have an org view, unset the according col_filters
 		{
@@ -1369,10 +1382,11 @@ window.egw_LAB.wait(function() {
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
+		/* this cant work anymore, as Framework::set_onload no longer exists
 		if ($do_email && etemplate::$loop)
 		{	// remove previous addEmail() calls, otherwise they will be run again
-			egw_framework::set_onload(preg_replace('/addEmail\([^)]+\);/','',egw_framework::set_onload()),true);
-		}
+			Framework::set_onload(preg_replace('/addEmail\([^)]+\);/','',Framework::set_onload()),true);
+		}*/
 
 		// Make sure old lettersearch filter doesn't stay - current letter filter will be added later
 		foreach($query['col_filter'] as $key => $col_filter)
@@ -1590,9 +1604,9 @@ window.egw_LAB.wait(function() {
 
 			// do we need to read the custom fields, depends on the column is enabled and customfields exist
 			// $query['csv_export'] allways needs to read ALL cf's
-			$columselection = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
-			$available_distib_lists=$this->get_lists(EGW_ACL_READ);
-			$columselection = $columselection && !$query['csv_export'] ? explode(',',$columselection) : array();
+			$columsel = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
+			$available_distib_lists=$this->get_lists(Acl::READ);
+			$columselection = $columsel && !$query['csv_export'] ? explode(',',$columsel) : array();
 			if (!$id_only && $rows)
 			{
 				$show_custom_fields = (!$columselection || in_array('customfields',$columselection) || $query['csv_export']) && $this->customfields;
@@ -1614,7 +1628,7 @@ window.egw_LAB.wait(function() {
 					}
 					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($ids);
 					// distributionlist memership for the entrys
-					//_debug_array($this->get_lists(EGW_ACL_EDIT));
+					//_debug_array($this->get_lists(Acl::EDIT));
 					if ($show_distributionlist && $available_distib_lists)
 					{
 						$distributionlist = $this->read_distributionlist($ids,array_keys($available_distib_lists));
@@ -1664,7 +1678,7 @@ window.egw_LAB.wait(function() {
 				$row['type'] = 'home';
 				$row['type_label'] = lang('Organisation');
 
-				if ($query['filter'] && !($this->grants[(int)$query['filter']] & EGW_ACL_DELETE))
+				if ($query['filter'] && !($this->grants[(int)$query['filter']] & Acl::DELETE))
 				{
 					$row['class'] .= 'rowNoDelete ';
 				}
@@ -1676,7 +1690,7 @@ window.egw_LAB.wait(function() {
 				$this->type_icon($row['owner'],$row['private'],$row['tid'],$row['type'],$row['type_label']);
 
 				static $tel2show = array('tel_work','tel_cell','tel_home','tel_fax');
-				static $prefer_marker;
+				static $prefer_marker = null;
 				if (is_null($prefer_marker))
 				{
 					// as et2 adds options with .text(), it can't be entities, but php knows no string literals with utf-8
@@ -1695,11 +1709,11 @@ window.egw_LAB.wait(function() {
 				{
 					$row['class'] .= 'rowAccount rowNoDelete ';
 				}
-				elseif (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == self::DELETED_TYPE))
+				elseif (!$this->check_perms(Acl::DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == self::DELETED_TYPE))
 				{
 					$row['class'] .= 'rowNoDelete ';
 				}
-				if (!$this->check_perms(EGW_ACL_EDIT,$row))
+				if (!$this->check_perms(Acl::EDIT,$row))
 				{
 					$row['class'] .= 'rowNoEdit ';
 				}
@@ -1735,7 +1749,7 @@ window.egw_LAB.wait(function() {
 			// respect category permissions
 			if(!empty($row['cat_id']))
 			{
-				$row['cat_id'] = $this->categories->check_list(EGW_ACL_READ,$row['cat_id']);
+				$row['cat_id'] = $this->categories->check_list(Acl::READ,$row['cat_id']);
 			}
 		}
 		$rows['no_distribution_list'] = (bool)$query['filter2'];
@@ -1754,7 +1768,7 @@ window.egw_LAB.wait(function() {
 			$header[] = ($query['filter'] == '0' ? lang('accounts') :
 				($GLOBALS['egw']->accounts->get_type($query['filter']) == 'g' ?
 					lang('Group %1',$GLOBALS['egw']->accounts->id2name($query['filter'])) :
-					common::grab_owner_name((int)$query['filter']).
+					Api\Accounts::username((int)$query['filter']).
 						(substr($query['filter'],-1) == 'p' ? ' ('.lang('private').')' : '')));
 		}
 		if ($query['org_view'])
@@ -1792,7 +1806,7 @@ window.egw_LAB.wait(function() {
 	/**
 	 * Get addressbook type icon from owner, private and tid
 	 *
-	 * @param int $owner user- or group-id or 0 for accounts
+	 * @param int $owner user- or group-id or 0 for Api\Accounts
 	 * @param boolean $private
 	 * @param string $tid 'n' for regular addressbook
 	 * @param string &$icon icon-name
@@ -1818,12 +1832,12 @@ window.egw_LAB.wait(function() {
 		else
 		{
 			$icon = 'personal';
-			$label = $owner == $this->user ? lang('personal') : common::grab_owner_name($owner);
+			$label = $owner == $this->user ? lang('personal') : Api\Accounts::username($owner);
 		}
 		// show tid icon for tid!='n' AND only if one is defined
-		if ($tid != 'n' && common::image('addressbook',$this->content_types[$tid]['name']))
+		if ($tid != 'n' && Api\Image::find('addressbook',$this->content_types[$tid]['name']))
 		{
-			$icon = common::image('addressbook',$this->content_types[$tid]['name']);
+			$icon = Api\Image::find('addressbook',$this->content_types[$tid]['name']);
 		}
 
 		// Legacy - from when icons could be anywhere
@@ -1931,7 +1945,7 @@ window.egw_LAB.wait(function() {
 									$content['msg'] .= ', '.$success_msg;
 								}
 							}
-							catch(egw_exception_redirect $r)
+							catch(Api\Exception\Redirect $r)
 							{
 								// catch it to continue execution and rethrow it later
 							}
@@ -1962,7 +1976,7 @@ window.egw_LAB.wait(function() {
 					{
 						$content['msg'] = lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-								htmlspecialchars(egw::link('/index.php',array(
+								htmlspecialchars(Egw::link('/index.php',array(
 									'menuaction' => 'addressbook.addressbook_ui.edit',
 									'contact_id' => $content['id'],
 								))).'">','</a>');
@@ -1977,12 +1991,12 @@ window.egw_LAB.wait(function() {
 					// writing links for new entry, existing ones are handled by the widget itself
 					if ($links && $content['id'])
 					{
-						egw_link::link('addressbook',$content['id'],$links);
+						Link::link('addressbook',$content['id'],$links);
 					}
 					// Update client side global datastore
-					$response = egw_json_response::get();
+					$response = Api\Json\Response::get();
 					$response->generic('data', array('uid' => 'addressbook::'.$content['id'], 'data' => $content));
-					egw_framework::refresh_opener($content['msg'], 'addressbook', $content['id'],  $content['id'] ? 'edit' : 'add',
+					Framework::refresh_opener($content['msg'], 'addressbook', $content['id'],  $content['id'] ? 'edit' : 'add',
 						null, null, null, $this->error ? 'error' : 'success');
 
 					// re-throw redirect exception, if there's no error
@@ -1992,28 +2006,29 @@ window.egw_LAB.wait(function() {
 					}
 					if ($button == 'save')
 					{
-						egw_framework::window_close();
+						Framework::window_close();
 					}
 					else
 					{
-						egw_framework::message($content['msg'], $this->error ? 'error' : 'success');
+						Framework::message($content['msg'], $this->error ? 'error' : 'success');
 						unset($content['msg']);
 					}
 					$content['link_to']['to_id'] = $content['id'];
 					break;
 
 				case 'delete':
+					$success = $failed = $action_msg = null;
 					if($this->action('delete',array($content['id']),false,$success,$failed,$action_msg,'',$content['msg']))
 					{
 						if ($GLOBALS['egw']->currentapp == 'addressbook')
 						{
-							egw_framework::refresh_opener(lang('Contact deleted'), 'addressbook', $content['id'], 'delete' );
-							egw_framework::window_close();
+							Framework::refresh_opener(lang('Contact deleted'), 'addressbook', $content['id'], 'delete' );
+							Framework::window_close();
 						}
 						else
 						{
-							egw_framework::refresh_opener(lang('Contact deleted'), 'addressbook', $content['id'], null, 'addressbook');
-							egw_framework::window_close();
+							Framework::refresh_opener(lang('Contact deleted'), 'addressbook', $content['id'], null, 'addressbook');
+							Framework::window_close();
 						}
 					}
 					else
@@ -2022,7 +2037,7 @@ window.egw_LAB.wait(function() {
 					}
 					break;
 			}
-			$view = !$this->check_perms(EGW_ACL_EDIT, $content);
+			$view = !$this->check_perms(Acl::EDIT, $content);
 		}
 		else
 		{
@@ -2033,19 +2048,19 @@ window.egw_LAB.wait(function() {
 			if ($contact_id && is_array($content = $this->read($contact_id)))
 			{
 				$contact_id = $content['id'];	// it could have been: "account:$account_id"
-				if (!$this->check_perms(EGW_ACL_EDIT, $content))
+				if (!$this->check_perms(Acl::EDIT, $content))
 				{
 					$view = true;
 				}
 			}
 			else // not found
 			{
-				$state = egw_session::appsession('index','addressbook');
+				$state = Api\Cache::getSession('addressbook', 'index');
 				// check if we create the new contact in an existing org
 				if (($org = $_GET['org']))
 				{
 					// arguments containing a comma get quoted by etemplate/js/nextmatch_action.js
-					// leading to error in egw_db::column_data_implode, if not unquoted
+					// leading to error in Api\Db::column_data_implode, if not unquoted
 					if ($org[0] == '"') $org = substr($org, 1, -1);
 					$content = $this->read_org($org);
 				}
@@ -2077,12 +2092,12 @@ window.egw_LAB.wait(function() {
 					$content['owner'] = (string)$state['filter'];
 				}
 				$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
-				if ($content['owner'] === '' || !($this->grants[$content['owner'] = (string) (int) $content['owner']] & EGW_ACL_ADD))
+				if ($content['owner'] === '' || !($this->grants[$content['owner'] = (string) (int) $content['owner']] & Acl::ADD))
 				{
 					$content['owner'] = $this->default_addressbook;
 					$content['private'] = (int)$this->default_private;
 
-					if (!($this->grants[$content['owner'] = (string) (int) $content['owner']] & EGW_ACL_ADD))
+					if (!($this->grants[$content['owner'] = (string) (int) $content['owner']] & Acl::ADD))
 					{
 						$content['owner'] = (string) $this->user;
 						$content['private'] = 0;
@@ -2090,7 +2105,7 @@ window.egw_LAB.wait(function() {
 				}
 				$new_type = array_keys($this->content_types);
 				// fetch active type to preset the type, if param typeid is not passed
-				$active_tid = egw_cache::getSession('addressbook','active_tid');
+				$active_tid = Api\Cache::getSession('addressbook','active_tid');
 				if ($active_tid && strtoupper($active_tid) === 'D') unset($active_tid);
 				$content['tid'] = $_GET['typeid'] ? $_GET['typeid'] : ($active_tid?$active_tid:$new_type[0]);
 				foreach($this->get_contact_columns() as $field)
@@ -2178,7 +2193,7 @@ window.egw_LAB.wait(function() {
 					$link_id = $link_ids[$n];
 					if (preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// gard against XSS
 					{
-						egw_link::link('addressbook',$content['link_to']['to_id'],$link_app,$link_id);
+						Link::link('addressbook',$content['link_to']['to_id'],$link_app,$link_id);
 					}
 				}
 			}
@@ -2196,7 +2211,7 @@ window.egw_LAB.wait(function() {
 		if ($this->config['private_cf_tab'])
 		{
 			$content['private_cfs'] = array();
-			foreach(config::get_customfields('addressbook', true) as $name => $cf)
+			foreach(Api\Storage\Customfields::get('addressbook', true) as $name => $cf)
 			{
 				if ($cf['private'] && isset($content['#'.$name]))
 				{
@@ -2209,7 +2224,7 @@ window.egw_LAB.wait(function() {
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
 
 		//_debug_array($content);
-		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
+		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(Acl::DELETE,$content);
 		$readonlys['button[copy]'] = $readonlys['button[edit]'] = $readonlys['button[vcard]'] = true;
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = $view;
 		if ($view)
@@ -2220,17 +2235,17 @@ window.egw_LAB.wait(function() {
 
 		$sel_options['fileas_type'] = $this->fileas_options($content);
 		$sel_options['adr_one_countrycode']['-custom-'] = lang('Custom');
-		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_ADD);
+		$sel_options['owner'] = $this->get_addressbooks(Acl::ADD);
 		if ($content['owner']) unset($sel_options['owner'][0]);	// do not offer to switch to accounts, as we do not support moving contacts to accounts
 		if ((string) $content['owner'] !== '')
 		{
 			if (!isset($sel_options['owner'][(int)$content['owner']]))
 			{
 				$sel_options['owner'][(int)$content['owner']] = !$content['owner'] ? lang('Accounts') :
-					common::grab_owner_name($content['owner']);
+					Api\Accounts::username($content['owner']);
 			}
 			$readonlys['owner'] = !$content['owner'] || 		// dont allow to move accounts, as this mean deleting the user incl. all content he owns
-				$content['id'] && !$this->check_perms(EGW_ACL_DELETE,$content);	// you need delete rights to move an existing contact into an other addressbook
+				$content['id'] && !$this->check_perms(Acl::DELETE,$content);	// you need delete rights to move an existing contact into an other addressbook
 		}
 		// set the unsupported fields from the backend to readonly
 		foreach($this->get_fields('unsupported',$content['id'],$content['owner']) as $field)
@@ -2261,11 +2276,14 @@ window.egw_LAB.wait(function() {
 		$readonlys['change_org'] = empty($content['org_name']) || $view;
 
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
-		if (!$content['owner'] && !$this->check_perms(EGW_ACL_EDIT, $content))
+		if (!$content['owner'] && !$this->check_perms(Acl::EDIT, $content))
 		{
-			$this->_set_readonlys_for_own_account_acl($readonlys,$id);
+			$this->_set_readonlys_for_own_account_acl($readonlys, $content['id']);
 		}
-		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
+		for($i = -23; $i<=23; $i++)
+		{
+			$tz[$i] = ($i > 0 ? '+' : '').$i;
+		}
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : '0';
 		if (count($this->content_types) > 1)
@@ -2274,7 +2292,7 @@ window.egw_LAB.wait(function() {
 			{
 				$sel_options['tid'][$type] = $data['name'];
 			}
-			$content['typegfx'] = html::image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
+			$content['typegfx'] = Api\Html::image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
 		}
 		else
 		{
@@ -2320,7 +2338,7 @@ window.egw_LAB.wait(function() {
 			$tabs = array();
 		}
 		//error_log(__LINE__.': '.__METHOD__."() first_call=$first_call");
-		$hook_data = $GLOBALS['egw']->hooks->process(array('location' => 'addressbook_edit')+$content);
+		$hook_data = Api\Hooks::process(array('location' => 'addressbook_edit')+$content);
 		//error_log(__METHOD__."() hook_data=".array2string($hook_data));
 		foreach($hook_data as $extra_tabs)
 		{
@@ -2395,7 +2413,7 @@ window.egw_LAB.wait(function() {
 		// custom fields
 		if ($this->customfields)
 		{
-			foreach($this->customfields as $name => $data)
+			foreach(array_keys($this->customfields) as $name)
 			{
 				if (!$this->own_account_acl || !in_array('#'.$name,$this->own_account_acl))
 				{
@@ -2417,13 +2435,14 @@ window.egw_LAB.wait(function() {
 	 *
 	 * @param array $values contact values from form
 	 * @param string $name name of changed value, eg. "email"
-	 * @param int $own_id=0 own contact id, to not check against it
+	 * @param int $own_id =0 own contact id, to not check against it
 	 * @return array with keys 'msg' => "EMail address exists, do you want to open contact?" (or null if not existing)
 	 * 	'data' => array of id => "full name (addressbook)" pairs
 	 *  'fileas_options'
 	 */
 	public function ajax_check_values($values, $name, $own_id=0)
 	{
+		$matches = null;
 		if (preg_match('/^exec\[([^\]]+)\]$/', $name, $matches)) $name = $matches[1];	// remove exec[ ]
 
 		$ret = array('doublicates' => array(), 'msg' => null);
@@ -2436,7 +2455,7 @@ window.egw_LAB.wait(function() {
 				$contacts = parent::search(array(
 					'email' => $values[$name],
 					'email_home' => $values[$name],
-				),$only_keys=false, $order_by='', $extra_cols='', $wildcard='', $empty=False, $op='OR');
+				), false, '', '', '', false, 'OR');
 			}
 		}
 		else
@@ -2455,8 +2474,7 @@ window.egw_LAB.wait(function() {
 				{
 					if (!empty($values[$n])) $filter[$n] = $values[$n];
 				}
-				$contacts = parent::search($criteria='', $only_keys=false, $order_by='', $extra_cols='', $wildcard='',
-					$empty=False, $op='AND', $start=false, $filter);
+				$contacts = parent::search('', false, '', '', '', false, 'AND', false, $filter);
 			}
 		}
 		if ($contacts)
@@ -2467,7 +2485,7 @@ window.egw_LAB.wait(function() {
 
 				$ret['doublicates'][$contact['id']] = $this->fileas($contact).' ('.
 					(!$contact['owner'] ? lang('Accounts') : ($contact['owner'] == $this->user ?
-					($contact['private'] ? lang('Private') : lang('Personal')) : common::grab_owner_name($contact['owner']))).')';
+					($contact['private'] ? lang('Private') : lang('Personal')) : Api\Accounts::username($contact['owner']))).')';
 			}
 			if ($ret['doublicates'])
 			{
@@ -2477,7 +2495,7 @@ window.egw_LAB.wait(function() {
 			}
 		}
 		//error_log(__METHOD__.'('.array2string($values).", '$name', $own_id) doublicates found ".array2string($ret['doublicates']));
-		egw_json_response::get()->data($ret);
+		Api\Json\Response::get()->data($ret);
 	}
 
 	/**
@@ -2498,13 +2516,13 @@ window.egw_LAB.wait(function() {
 			switch ($content['toolbar'] ? $content['toolbar'] : $button)
 			{
 				case 'vcard':
-					egw::redirect_link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$content['id']);
+					Egw::redirect_link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$content['id']);
 
 				case 'cancel':
-					egw::redirect_link('/index.php','menuaction=addressbook.addressbook_ui.index&ajax=true');
+					Egw::redirect_link('/index.php','menuaction=addressbook.addressbook_ui.index&ajax=true');
 
 				case 'delete':
-					egw::redirect_link('/index.php',array(
+					Egw::redirect_link('/index.php',array(
 						'menuaction' => 'addressbook.addressbook_ui.index',
 						'msg' => $this->delete($content) ? lang('Contact deleted') : lang('Error deleting the contact !!!'),
 					));
@@ -2515,7 +2533,7 @@ window.egw_LAB.wait(function() {
 				case 'back':
 					if (!isset($inc)) $inc = -1;
 					// get next/previous contact in selection
-					$query = egw_session::appsession('index', 'addressbook');
+					$query = Api\Cache::getSession('addressbook', 'index');
 					$query['start'] = $content['index'] + $inc;
 					$query['num_rows'] = 1;
 					$rows = $readonlys = array();
@@ -2524,7 +2542,7 @@ window.egw_LAB.wait(function() {
 					$contact_id = $rows[0];
 					if(!$contact_id || !is_array($content = $this->read($contact_id)))
 					{
-						egw::redirect_link('/index.php',array(
+						Egw::redirect_link('/index.php',array(
 							'menuaction' => 'addressbook.addressbook_ui.index',
 							'msg' => $content,
 							'ajax' => 'true'
@@ -2533,14 +2551,14 @@ window.egw_LAB.wait(function() {
 					$content['index'] = $query['start'];
 
 					// List nextmatch is already there, just update the filter
-					if($contact_id && egw_json_request::isJSONRequest())
+					if($contact_id && Api\Json\Request::isJSONRequest())
 					{
 						switch($crm_list)
 						{
 							case 'infolog':
 							case 'tracker':
 							default:
-								egw_json_response::get()->apply('app.addressbook.view_set_list',Array(Array('action'=>'addressbook', 'action_id' => $contact_id)));
+								Api\Json\Response::get()->apply('app.addressbook.view_set_list',Array(Array('action'=>'addressbook', 'action_id' => $contact_id)));
 								break;
 						}
 
@@ -2555,14 +2573,14 @@ window.egw_LAB.wait(function() {
 			// allow to search eg. for a phone number
 			if (isset($_GET['search']))
 			{
-				$query = egw_session::appsession('index', 'addressbook');
+				$query = Api\Cache::getSession('addressbook', 'index');
 				$query['search'] = $_GET['search'];
 				unset($_GET['search']);
 				// reset all filters
 				unset($query['advanced_search']);
 				$query['col_filter'] = array();
 				$query['filter'] = $query['filter2'] = $query['cat_id'] = '';
-				egw_session::appsession('index', 'addressbook', $query);
+				Api\Cache::setSession('addressbook', 'index', $query);
 				$query['start'] = 0;
 				$query['num_rows'] = 1;
 				$rows = $readonlys = array();
@@ -2573,7 +2591,7 @@ window.egw_LAB.wait(function() {
 			$contact_id = $_GET['contact_id'] ? $_GET['contact_id'] : ((int)$_GET['account_id'] ? 'account:'.(int)$_GET['account_id'] : 0);
 			if(!$contact_id || !is_array($content = $this->read($contact_id)))
 			{
-				egw::redirect_link('/index.php',array(
+				Egw::redirect_link('/index.php',array(
 					'menuaction' => 'addressbook.addressbook_ui.index',
 					'msg' => $content,
 					'ajax' => 'true'
@@ -2583,7 +2601,7 @@ window.egw_LAB.wait(function() {
 			{
 				$content['index'] = (int)$_GET['index'];
 				// get number of rows to determine if we can have a next button
-				$query = egw_session::appsession('index', 'addressbook');
+				$query = Api\Cache::getSession('addressbook', 'index');
 				$query['start'] = $content['index'];
 				$query['num_rows'] = 1;
 				$rows = $readonlys = array();
@@ -2608,7 +2626,7 @@ window.egw_LAB.wait(function() {
 		// respect category permissions
 		if(!empty($content['cat_id']))
 		{
-			$content['cat_id'] = $this->categories->check_list(EGW_ACL_READ,$content['cat_id']);
+			$content['cat_id'] = $this->categories->check_list(Acl::READ,$content['cat_id']);
 		}
 		$content['cat_id_tree'] = $content['cat_id'];
 
@@ -2622,8 +2640,8 @@ window.egw_LAB.wait(function() {
 		{
 			$content['link_to']['show_deleted'] = true;
 		}
-		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
-		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
+		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(Acl::DELETE,$content);
+		$readonlys['button[edit]'] = !$this->check_perms(Acl::EDIT,$content);
 
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
@@ -2631,7 +2649,10 @@ window.egw_LAB.wait(function() {
 
 		$sel_options['fileas_type'][$content['fileas_type']] = $this->fileas($content);
 		$sel_options['owner'] = $this->get_addressbooks();
-		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
+		for($i = -23; $i<=23; $i++)
+		{
+			$tz[$i] = ($i > 0 ? '+' : '').$i;
+		}
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
 		if (count($this->content_types) > 1)
@@ -2640,7 +2661,7 @@ window.egw_LAB.wait(function() {
 			{
 				$sel_options['tid'][$type] = $data['name'];
 			}
-			$content['typegfx'] = html::image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
+			$content['typegfx'] = Api\Html::image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
 		}
 		else
 		{
@@ -2687,7 +2708,7 @@ window.egw_LAB.wait(function() {
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
 
 		// load app.css for addressbook explicit, as addressbook_view hooks changes currentapp!
-		egw_framework::includeCSS('addressbook', 'app');
+		Framework::includeCSS('addressbook', 'app');
 
 		// dont show an app-header
 		$GLOBALS['egw_info']['flags']['app_header'] = '';
@@ -2729,7 +2750,7 @@ window.egw_LAB.wait(function() {
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
 		// need to load list's app.js now, as exec calls header before other app can include it
-		egw_framework::validate_file('/'.$crm_list.'/js/app.js');
+		Framework::includeJS('/'.$crm_list.'/js/app.js');
 
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array(
 			'id' => $content['id'],
@@ -2741,7 +2762,7 @@ window.egw_LAB.wait(function() {
 		// Sending it again (via ajax) will break the addressbook.view etemplate2
 		if($contact_id)
 		{
-			$GLOBALS['egw']->hooks->single(array(
+			Api\Hooks::single(array(
 				'location' => 'addressbook_view',
 				'ab_id'    => $content['id']
 			),$crm_list);
@@ -2795,9 +2816,9 @@ window.egw_LAB.wait(function() {
 
 			$_content['cat_id'] = $this->config['cat_tab'] === 'Tree' ? $_content['cat_id_tree'] : $_content['cat_id'];
 
-			$response = egw_json_response::get();
+			$response = Api\Json\Response::get();
 
-			$query = egw_session::appsession('index','addressbook');
+			$query = Api\Cache::getSession('addressbook', 'index');
 
 			if ($_content['button']['cancelsearch'])
 			{
@@ -2815,16 +2836,16 @@ window.egw_LAB.wait(function() {
 			}
 			$query['search'] = '';
 			// store the index state in the session
-			egw_session::appsession('index','addressbook',$query);
+			Api\Cache::setSession('addressbook', 'index', $query);
 
 			// store the advanced search in the session to call it again
-			egw_session::appsession('advanced_search','addressbook',$query['advanced_search']);
+			Api\Cache::setSession('addressbook', 'advanced_search', $query['advanced_search']);
 
 			// Update client / nextmatch with filters, or clear
 			$response->call("app.addressbook.adv_search", array('advanced_search' => $_content['button']['search'] ? $query['advanced_search'] : ''));
 			if ($_content['button']['cancelsearch'])
 			{
-				egw_framework::window_close (); //$response->addScript('this.close();');
+				Framework::window_close ();
 
 				// No need to reload popup
 				return;
@@ -2835,18 +2856,21 @@ window.egw_LAB.wait(function() {
 
 		// initialize etemplate arrays
 		$sel_options = $readonlys = array();
-		$content = egw_session::appsession('advanced_search','addressbook');
+		$content = Api\Cache::getSession('addressbook', 'advanced_search');
 		$content['n_fn'] = $this->fullname($content);
 		// Avoid ID conflict with tree & selectboxes
 		$content['cat_id_tree'] = $content['cat_id'];
 
-		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
+		for($i = -23; $i<=23; $i++)
+		{
+			$tz[$i] = ($i > 0 ? '+' : '').$i;
+		}
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
 		$sel_options['tid'][] = lang('all');
 		//foreach($this->content_types as $type => $data) $sel_options['tid'][$type] = $data['name'];
 
 		// configure search options
-		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_READ,lang('all'));
+		$sel_options['owner'] = $this->get_addressbooks(Acl::READ,lang('all'));
 		$sel_options['operator'] =  array(
 			'AND' => 'AND',
 			'OR' => 'OR',
@@ -2906,7 +2930,7 @@ window.egw_LAB.wait(function() {
 		}
 		if (!($contact = $this->read($contact_id)) || !$contact['jpegphoto'])
 		{
-			egw::redirect(common::image('addressbook','photo'));
+			Egw::redirect(Api\Image::find('addressbook','photo'));
 		}
 		// use an etag over the image mapp
 		$etag = '"'.$contact['id'].':'.$contact['etag'].'"';
@@ -2918,7 +2942,7 @@ window.egw_LAB.wait(function() {
 			// different url with different etag parameter will force a reload
 			if (isset($_GET['etag']))
 			{
-				egw_session::cache_control(30*86400);	// cache for 30 days
+				Api\Session::cache_control(30*86400);	// cache for 30 days
 			}
 			// if servers send a If-None-Match header, response with 304 Not Modified, if etag matches
 			if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $etag)
@@ -2930,7 +2954,7 @@ window.egw_LAB.wait(function() {
 				header('Content-length: '.bytes($contact['jpegphoto']));
 				echo $contact['jpegphoto'];
 			}
-			common::egw_exit();
+			exit();
 		}
 	}
 
@@ -2941,7 +2965,7 @@ window.egw_LAB.wait(function() {
 	function migrate2ldap()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Migration to LDAP');
-		common::egw_header();
+		$GLOBALS['egw']->framework->header();
 		parse_navbar();
 
 		if (!$this->is_admin())
@@ -2953,7 +2977,7 @@ window.egw_LAB.wait(function() {
 			parent::migrate2ldap($_GET['type']);
 			echo '<p style="margin-top: 20px;"><b>'.lang('Migration finished')."</b></p>\n";
 		}
-		common::egw_footer();
+		$GLOBALS['egw']->framework->footer();
 	}
 
 	/**
@@ -2964,9 +2988,9 @@ window.egw_LAB.wait(function() {
 	 */
 	function admin_set_fileas()
 	{
-		translation::add_app('admin');
+		Api\Translation::add_app('admin');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Contact maintenance');
-		common::egw_header();
+		$GLOBALS['egw']->framework->header();
 		parse_navbar();
 
 		// check if user has admin rights AND if a valid fileas type is given (Security)
@@ -2976,10 +3000,11 @@ window.egw_LAB.wait(function() {
 		}
 		else
 		{
-			$updated = parent::set_all_fileas($_GET['type'],(boolean)$_GET['all'],$errors,true);	// true = ignore acl
+			$errors = null;
+			$updated = parent::set_all_fileas($_GET['type'],(boolean)$_GET['all'],$errors,true);	// true = ignore Acl
 			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
-		common::egw_footer();
+		$GLOBALS['egw']->framework->footer();
 	}
 
 	/**
@@ -2988,9 +3013,9 @@ window.egw_LAB.wait(function() {
 	 */
 	function admin_set_all_cleanup()
 	{
-		translation::add_app('admin');
+		Api\Translation::add_app('admin');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Contact maintenance');
-		common::egw_header();
+		$GLOBALS['egw']->framework->header();
 		parse_navbar();
 
 		// check if user has admin rights (Security)
@@ -3000,10 +3025,11 @@ window.egw_LAB.wait(function() {
 		}
 		else
 		{
-			$updated = parent::set_all_cleanup($errors,true);	// true = ignore acl
+			$errors = null;
+			$updated = parent::set_all_cleanup($errors,true);	// true = ignore Acl
 			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
-		common::egw_footer();
+		$GLOBALS['egw']->framework->footer();
 	}
 
 	/**

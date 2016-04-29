@@ -1,13 +1,15 @@
 <?php
 /**
- * eGroupWare - Wizard for Adressbook CSV export
+ * EGroupware - Wizard for Adressbook CSV export
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package addressbook
  * @link http://www.egroupware.org
  * @author Nathan Gray
- * @version $Id:  $
+ * @version $Id$
  */
+
+use EGroupware\Api;
 
 class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_export_csv
 {
@@ -18,7 +20,7 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 		$this->step_templates['wizard_step50'] = 'addressbook.export_explode_fields';
 
 		// Field mapping
-		$bocontacts = new addressbook_bo();
+		$bocontacts = new Api\Contacts();
 		$this->export_fields = $bocontacts->contact_fields;
 		foreach($bocontacts->customfields as $name => $data) {
 			$this->export_fields['#'.$name] = $data['label'];
@@ -51,7 +53,7 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 	}
 
         /**
-        * Choose how to export multi-selects (includes categories)
+        * Choose how to export multi-selects (includes Api\Categories)
         */
         function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
@@ -87,7 +89,7 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 			$content['step'] = 'wizard_step50';
 			unset ($preserv['button']);
 			$field_list = $this->get_field_list($content);
-			
+
 			$settings = $content['explode_multiselects'] ? $content['explode_multiselects'] : $content['plugin_options']['explode_multiselects'];
 
 			// Skip this step if no fields applicable
@@ -97,7 +99,7 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 
 			$cat_options = array(
 				addressbook_export_contacts_csv::NO_EXPLODE => lang('All in one field'),
-				addressbook_export_contacts_csv::MAIN_CATS => lang('Main categories in their own field'),
+				addressbook_export_contacts_csv::MAIN_CATS => lang('Main Api\Categories in their own field'),
 				addressbook_export_contacts_csv::EACH_CAT => lang('Each category in its own field'),
 			);
 			$multi_options = array(
@@ -132,16 +134,16 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 	*/
 	protected function get_field_list($content) {
 		$field_list = array();
-		
+
 		// Category gets special handling
 		if(in_array('cat_id', array_keys($content['mapping']))) {
 			$field_list['cat_id'] = $this->export_fields['cat_id'];
 		}
 
 		// Add any multi-select custom fields
-		$custom = config::get_customfields('addressbook');
+		$custom = Api\Storage\Customfields::get('addressbook');
 		foreach($custom as $name => $c_field) {
-			if($c_field['type'] = 'select' && $c_field['rows'] > 1 && in_array('#'.$name, array_keys($content['mapping']))) {
+			if($c_field['type'] == 'select' && $c_field['rows'] > 1 && in_array('#'.$name, array_keys($content['mapping']))) {
 				$field_list['#'.$name] = $c_field['label'];
 			}
 		}

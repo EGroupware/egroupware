@@ -13,11 +13,12 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Link;
 
 /**
  * Addressbook - vCard parser
  */
-class addressbook_vcal extends addressbook_bo
+class addressbook_vcal extends Api\Contacts
 {
 	/**
 	 * product manufacturer from setSupportedFields (lowercase!)
@@ -32,11 +33,11 @@ class addressbook_vcal extends addressbook_bo
 	 */
 	var $productName;
 	/**
-	 * supported fields for vCard file and groupdav import/export
+	 * supported fields for vCard file and CardDAV import/export
 	 *
 	 * @var array
 	 */
-	var $databaseFields = array( // all entries e.g. for groupdav
+	var $databaseFields = array( // all entries e.g. for CardDAV
 			'ADR;WORK'			=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region',
 									'adr_one_postalcode','adr_one_countryname'),
 			'ADR;HOME'			=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region',
@@ -205,7 +206,7 @@ class addressbook_vcal extends addressbook_bo
 		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['phpgwapi']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
-		$sysCharSet = translation::charset();
+		$sysCharSet = Api\Translation::charset();
 
 		// KAddressbook and Funambol4BlackBerry always requires non-ascii chars to be qprint encoded.
 		if ($this->productName == 'kde' ||
@@ -280,7 +281,7 @@ class addressbook_vcal extends addressbook_bo
 				switch ($databaseField)
 				{
 					case 'modified':
-						$value = gmdate("Y-m-d\TH:i:s\Z",egw_time::user2server($value));
+						$value = gmdate("Y-m-d\TH:i:s\Z",Api\DateTime::user2server($value));
 						$hasdata++;
 						break;
 
@@ -332,7 +333,7 @@ class addressbook_vcal extends addressbook_bo
 					case 'cat_id':
 						if (!empty($value) && ($values = /*str_replace(',','\\,',*/$this->get_categories($value)))//)
 						{
-							$values = (array) translation::convert($values, $sysCharSet, $_charset);
+							$values = (array) Api\Translation::convert($values, $sysCharSet, $_charset);
 							$value = implode(',', $values); // just for the CHARSET recognition
 							if (($size > 0) && strlen($value) > $size)
 							{
@@ -428,7 +429,7 @@ class addressbook_vcal extends addressbook_bo
 							|| in_array($vcardField,array('FN','ORG','N'))
 							|| ($size >= 0 && !$noTruncate))
 						{
-							$value = translation::convert(trim($value), $sysCharSet, $_charset);
+							$value = Api\Translation::convert(trim($value), $sysCharSet, $_charset);
 							$values[] = $value;
 							if (preg_match('/[^\x20-\x7F]/', $value))
 							{
@@ -1030,8 +1031,8 @@ class addressbook_vcal extends addressbook_bo
 	{
 		if (!$file)
 		{
-			$filename = count($ids) == 1 ? egw_link::title('addressbook',$ids[0]): 'egw_addressbook_'.date('Y-m-d');
-			html::content_header(($filename ? $filename : 'addressbook').'.vcf','text/x-vcard');
+			$filename = count($ids) == 1 ? Link::title('addressbook',$ids[0]): 'egw_addressbook_'.date('Y-m-d');
+			Api\Header\Content::type(($filename ? $filename : 'addressbook').'.vcf','text/x-vcard');
 		}
 		if (!($fp = fopen($file ? $file : 'php://output','w')))
 		{
@@ -1053,7 +1054,7 @@ class addressbook_vcal extends addressbook_bo
 
 		if (!$file)
 		{
-			common::egw_exit();
+			exit();
 		}
 		return true;
 	}
@@ -1079,7 +1080,7 @@ class addressbook_vcal extends addressbook_bo
 		{
 			$vCard->setAttribute('X-ADDRESSBOOKSERVER-MEMBER','urn:uuid:'.$uid);
 		}
-		$vCard->setAttribute('REV',egw_time::to($list['list_modified'],'Y-m-d\TH:i:s\Z'));
+		$vCard->setAttribute('REV',Api\DateTime::to($list['list_modified'],'Y-m-d\TH:i:s\Z'));
 		$vCard->setAttribute('UID',$list['list_uid']);
 
 		return $vCard->exportvCalendar();

@@ -1,5 +1,5 @@
 <?php
-/**
+/***
  * Addressbook - Sitemgr contact form
  *
  * @link http://www.egroupware.org
@@ -9,6 +9,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id: class.module_addressbook_display.inc.php 24028 2008-02-18 09:04:36Z stefanbecker $
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Acl;
 
 /**
  * SiteMgr contact form for the addressbook
@@ -36,7 +39,7 @@ class module_addressbook_display extends sitemgr_module
 	 */
 	function get_user_interface()
 	{
-		$GLOBALS['egw']->translation->add_app('addressbook');
+		Api\Translation::add_app('addressbook');
 
 		$uicontacts = new addressbook_ui();
 
@@ -68,7 +71,7 @@ class module_addressbook_display extends sitemgr_module
 				'label' => lang('Addressbook the contact should be shown').' ('.lang('The anonymous user needs read it!').')',
 				'options' => array(
 					'' => lang('All'),
-				)+$uicontacts->get_addressbooks(EGW_ACL_ADD)	// add to not show the accounts!
+				)+$uicontacts->get_addressbooks(Acl::ADD)	// add to not show the accounts!
 			),
 			'arg2' => array(
 				'type' => 'select',

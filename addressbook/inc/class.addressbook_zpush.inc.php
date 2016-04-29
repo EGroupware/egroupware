@@ -12,6 +12,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+
 /**
  * Addressbook activesync plugin
  */
@@ -25,7 +28,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	/**
 	 * Instance of addressbook_bo
 	 *
-	 * @var addressbook_bo
+	 * @var Api\Contacts
 	 */
 	private $addressbook;
 
@@ -134,11 +137,11 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 			}
 			else
 			{
-				translation::add_app('addressbook');	// we need the addressbook translations
+				Api\Translation::add_app('addressbook');	// we need the addressbook translations
 
-				if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+				if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
-				// error_log(print_r($this->addressbook->get_addressbooks(EGW_ACL_READ),true));
+				// error_log(print_r($this->addressbook->get_addressbooks(Acl::READ),true));
 				$pref = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'];
 				$pref_abs = (string)$pref !== '' ? explode(',',$pref) : array();
 
@@ -172,7 +175,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	 */
 	public function GetFolderList()
 	{
-		// error_log(print_r($this->addressbook->get_addressbooks(EGW_ACL_READ),true));
+		// error_log(print_r($this->addressbook->get_addressbooks(Acl::READ),true));
 		$folderlist = array();
 		foreach ($this->get_addressbooks() as $account => $label)
 		{
@@ -278,7 +281,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	function GetMessageList($id, $cutoffdate=NULL)
 	{
 		unset($cutoffdate);	// not used, but required by function signature
-		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
 		$type = $user = null;
 		$this->backend->splitID($id,$type,$user);
@@ -329,7 +332,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	 */
 	public function GetMessage($folderid, $id, $contentparameters)
 	{
-		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
 		//$truncsize = Utils::GetTruncSize($contentparameters->GetTruncation());
 		//$mimesupport = $contentparameters->GetMimeSupport();
@@ -386,7 +389,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 					$message->$key = array();
 					foreach($contact[$attr] ? explode(',',$contact[$attr]) : array() as $cat_id)
 					{
-						$message->categories[] = categories::id2name($cat_id);
+						$message->categories[] = Api\Categories::id2name($cat_id);
 					}
 					// for all addressbooks in one, add addressbook name itself as category
 					if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
@@ -437,7 +440,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	public function StatMessage($folderid, $contact)
 	{
 		unset($folderid);	// not used (contact_id is global), but required by function signaure
-		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
 		if (!is_array($contact)) $contact = $this->addressbook->read($contact);
 
@@ -511,7 +514,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	public function ChangeMessage($folderid, $id, $message, $contentParameters)
 	{
 		unset($contentParameters);	// not used, but required by function signature
-		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
 		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
@@ -528,13 +531,13 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 			debugLog(__METHOD__." Folder wrong or contact not existing");
 			return false;
 		}
-		if ($account == 0)	// as a precausion, we currently do NOT allow to change accounts
+		if ($account == 0)	// as a precausion, we currently do NOT allow to change Api\Accounts
 		{
-			debugLog(__METHOD__." Changing of accounts denied!");
-			return false;			//no changing of accounts
+			debugLog(__METHOD__." Changing of Api\Accounts denied!");
+			return false;			//no changing of Api\Accounts
 		}
 		$contact = array();
-		if (empty($id) && ($this->addressbook->grants[$account] & EGW_ACL_EDIT) || ($contact = $this->addressbook->read($id)) && $this->addressbook->check_perms(EGW_ACL_EDIT, $contact))
+		if (empty($id) && ($this->addressbook->grants[$account] & Acl::EDIT) || ($contact = $this->addressbook->read($id)) && $this->addressbook->check_perms(Acl::EDIT, $contact))
 		{
 			// remove all fields supported by AS, leaving all unsupported fields unchanged
 			$contact = array_diff_key($contact, array_flip(self::$mapping));
@@ -601,7 +604,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 				}
 			}
 			// for all-in-one addressbook, account is meaningless and wrong!
-			// addressbook_bo::save() keeps the owner or sets an appropriate one if none given
+			// Api\Contacts::save() keeps the owner or sets an appropriate one if none given
 			if (!isset($contact['private'])) $contact['private'] = (int)$is_private;
 			if (!$GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
 			{
@@ -670,7 +673,8 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	 */
 	public function DeleteMessage($folderid, $id, $contentParameters)
 	{
-		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		unset($contentParameters);	// not used, but required by function signature
+		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
 		$ret = $this->addressbook->delete($id);
 		debugLog(__METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
@@ -732,7 +736,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 
 		if ($type != 'addressbook') return false;
 
-		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
 		// handle all-in-one addressbook
 		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] &&
@@ -783,7 +787,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	 */
 	function getSearchResultsGAL($searchquery)
 	{
-		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 		//error_log(__METHOD__.'('.array2string($searchquery).')');
 
 		// only return items in given range, eg. "0-50"
@@ -841,8 +845,8 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group')))
 		{
 			$user = $hook_data['account_id'];
-			$addressbook_bo = new addressbook_bo();
-			$addressbooks = $addressbook_bo->get_addressbooks(EGW_ACL_READ, null, $user);
+			$addressbook_bo = new Api\Contacts();
+			$addressbooks = $addressbook_bo->get_addressbooks(Acl::READ, null, $user);
 			if ($user > 0)
 			{
 				unset($addressbooks[$user]);	// personal addressbook is allways synced
