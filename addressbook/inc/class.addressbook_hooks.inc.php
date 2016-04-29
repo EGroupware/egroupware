@@ -302,7 +302,7 @@ class addressbook_hooks
 				'help'   => 'Which charset should be used for the vCard import and export.',
 				'xmlrpc' => True,
 				'admin'  => false,
-				'default'=> 'iso-8859-1',
+				'default'=> 'utf-8',
 			);
 		}
 		return $settings;

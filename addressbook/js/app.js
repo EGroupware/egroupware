@@ -186,7 +186,7 @@ app.classes.addressbook = AppJS.extend(
 				extras.owner.push('c'+ids);
 			}
 		}
-		
+
 		if(orgs.length > 0)
 		{
 			// Get organisation contacts, then show infolog list
@@ -660,13 +660,13 @@ app.classes.addressbook = AppJS.extend(
 	adb_mail_vcard: function(_action, _elems)
 	{
 		var app_registry = egw.link_get_registry('mail');
-		if (typeof app_registry['view'] == 'undefined') app_registry = egw.link_get_registry('felamimail');
 		var link = egw().link("/index.php","menuaction="+app_registry['add']['menuaction']);
 		for (var i = 0; i < _elems.length; i++)
 		{
 			var idToUse = _elems[i].id;
 			var idToUseArray = idToUse.split('::');
 			idToUse = idToUseArray[1];
+			link += "&preset[type][]="+encodeURIComponent("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 			link += "&preset[file][]="+encodeURIComponent("vfs://default/apps/addressbook/"+idToUse+"/.entry");
 		}
 		if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
@@ -859,7 +859,7 @@ app.classes.addressbook = AppJS.extend(
 				break;
 		}
 	},
-	
+
 	/**
 	 * Get title in order to set it as document title
 	 * @returns {string}

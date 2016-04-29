@@ -306,18 +306,17 @@ class egw_mailer extends Horde_Mime_Mail
 	 *
 	 * @param string|resource $data Path to the attachment or open file-descriptor
 	 * @param string $name     The file name to use for the attachment.
-	 * @param string $type     The content type of the file.
-	 * @param string $charset  The character set of the part, only relevant for text parts.
+	 * @param string $type =null content type of the file, incl. parameters eg. "text/plain; charset=utf-8"
+	 * @param string $old_type =null used to support phpMailer signature (deprecated)
 	 * @return integer part-number
 	 * @throws egw_exception_not_found if $file could not be opened for reading
 	 */
-	public function addAttachment($data, $name = null, $type = null, $charset = 'us-ascii')
+	public function addAttachment($data, $name = null, $type = null, $old_type=null)
 	{
 		// deprecated PHPMailer::AddAttachment($path, $name = '', $encoding = 'base64', $type = 'application/octet-stream') call
 		if ($type === 'base64')
 		{
-			$type = $charset;
-			$charset = 'us-ascii';
+			$type = $old_type;
 		}
 
 		// pass file as resource to Horde_Mime_Part::setContent()
@@ -342,6 +341,14 @@ class egw_mailer extends Horde_Mime_Mail
 
 		$part = new Horde_Mime_Part();
 		$part->setType($type);
+		// set content-type parameters, which get ignored by setType
+		if (preg_match_all('/;\s*([^=]+)=([^;]*)/', $type, $matches))
+		{
+			foreach($matches[1] as $n => $label)
+			{
+				$part->setContentTypeParameter($label, $matches[2][$n]);
+			}
+		}
 		$part->setContents($resource);
 
 		// setting name, also sets content-disposition attachment (!), therefore we have to do it after "text/calendar; method=" handling
@@ -349,7 +356,7 @@ class egw_mailer extends Horde_Mime_Mail
 
 		// this should not be necessary, because binary data get detected by mime-type,
 		// but at least Cyrus complains about NUL characters
-		$part->setTransferEncoding('base64', array('send' => true));
+		if (substr($type, 0, 5) != 'text/') $part->setTransferEncoding('base64', array('send' => true));
 		$part->setDisposition('attachment');
 
 		return $this->addMimePart($part);

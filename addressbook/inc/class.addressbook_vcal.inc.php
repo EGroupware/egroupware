@@ -14,7 +14,6 @@
 
 /**
  * Addressbook - vCard parser
- *
  */
 class addressbook_vcal extends addressbook_bo
 {
@@ -555,11 +554,17 @@ class addressbook_vcal extends addressbook_bo
 			$container = false;
 			$vCard = Horde_Icalendar::newComponent('vcard', $container);
 
-			if (!$vCard->parsevCalendar($_vcard, 'VCARD', $charset))
+			if ($charset && $charset != 'utf-8')
+			{
+				$_vcard = translation::convert($_vcard, $charset, 'utf-8');
+			}
+			if (!$vCard->parsevCalendar($_vcard, 'VCARD'))
 			{
 				return False;
 			}
-		} else {
+		}
+		else
+		{
 			$vCard = $_vcard;
 		}
 		$vcardValues = $vCard->getAllAttributes();

@@ -248,8 +248,12 @@ class egw_ical_iterator extends Horde_Icalendar implements Iterator
         	return;
             //return PEAR::raiseError("Unable to create object for type $type");
         }
+		if ($this->charset && $this->charset != 'utf-8')
+		{
+			$data = Api\Translation::convert($data, $this->charset, 'utf-8');
+		}
 		//error_log(__METHOD__."() about to call parsevCalendar('".substr($data,0,100)."...','$type','$this->charset')");
-		$this->component->parsevCalendar($data, $type, $this->charset);
+		$this->component->parsevCalendar($data, $type);
 
 		// VTIMEZONE components are NOT returned, they are only processed internally
 		if ($type == 'VTIMEZONE')

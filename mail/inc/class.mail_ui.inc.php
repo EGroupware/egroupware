@@ -2309,7 +2309,7 @@ class mail_ui
 				$eventid = $calendar_ical->search($attachment['attachment'],-1);
 				//error_log(__METHOD__.array2string($eventid));
 				if (!$eventid) $eventid = -1;
-				$event = $calendar_ical->importVCal($attachment['attachment'],(is_array($eventid)?$eventid[0]:$eventid),null,true);
+				$event = $calendar_ical->importVCal($attachment['attachment'],(is_array($eventid)?$eventid[0]:$eventid),null,true,0,'',null,$attachment['charset']);
 				//error_log(__METHOD__.$event);
 				if ((int)$event > 0)
 				{
@@ -2327,7 +2327,7 @@ class mail_ui
 				// double \r\r\n seems to end a vcard prematurely, so we set them to \r\n
 				//error_log(__METHOD__.__LINE__.$attachment['attachment']);
 				$attachment['attachment'] = str_replace("\r\r\n", "\r\n", $attachment['attachment']);
-				$vcard = $addressbook_vcal->vcardtoegw($attachment['attachment']);
+				$vcard = $addressbook_vcal->vcardtoegw($attachment['attachment'], $attachment['charset']);
 				if ($vcard['uid'])
 				{
 					$vcard['uid'] = trim($vcard['uid']);
@@ -2338,7 +2338,7 @@ class mail_ui
 				// if there are not enough fields in the vcard (or the parser was unable to correctly parse the vcard (as of VERSION:3.0 created by MSO))
 				if ($contact || count($vcard)>2)
 				{
-					$contact = $addressbook_vcal->addVCard($attachment['attachment'],(is_array($contact)?array_shift($contact):$contact),true);
+					$contact = $addressbook_vcal->addVCard($attachment['attachment'],(is_array($contact)?array_shift($contact):$contact),true,$attachment['charset']);
 				}
 				if ((int)$contact > 0)
 				{

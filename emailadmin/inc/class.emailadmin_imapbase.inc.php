@@ -5435,7 +5435,7 @@ class emailadmin_imapbase
 
 		return $attachment['attachment'];
 	}
-	
+
 	/**
 	 * Retrieve tnef attachments
 	 *
@@ -5454,7 +5454,7 @@ class emailadmin_imapbase
 		{
 			foreach($tnef_parts->getParts() as $mime_id => $part)
 			{
-				
+
 				$attachment = $part->getAllDispositionParameters();
 				$attachment['mimeType'] = $part->getType();
 				if (!isset($attachment['filename'])||empty($attachment['filename'])) $attachment['filename'] = $part->getName();
@@ -5464,16 +5464,16 @@ class emailadmin_imapbase
 					$attachment['filename'] = (isset($attachment['cid'])&&!empty($attachment['cid'])?
 						$attachment['cid']:lang("unknown").'_Uid'.$_uid.'_Part'.$mime_id).'.'.mime_magic::mime2ext($attachment['mimeType']);
 				}
-				
+
 				$attachment['attachment'] = $part->getContents(array('stream'=>$_stream));
-				
+
 				$attachments[$_uid.'@'.$_partID.'@'.$mime_id] = $attachment;
 			}
 		}
 		if (!is_array($attachments)) return false;
 		return $attachments;
 	}
-	
+
 	/**
 	 * Retrieve a attachment
 	 *
@@ -5520,11 +5520,10 @@ class emailadmin_imapbase
 					if ($part && ($partDisposition=='attachment' || $partDisposition=='inline' || ($part->getPrimaryType() == 'text' && $part->getSubType() == 'calendar')))
 					{
 						//$headerObject=$part->getAllDispositionParameters();//not used anywhere around here
-
-						$structure_bytes = $part->getBytes();
-						$structure_mime=$part->getType();
-						$structure_partID=$part->getMimeId();
-						$filename=$part->getName();
+						$structure_mime = $part->getType();
+						$filename = $part->getName();
+						$charset = $part->getContentTypeParameter('charset');
+						//$structure_bytes = $part->getBytes(); $structure_partID=$part->getMimeId(); error_log(__METHOD__.__LINE__." fetchPartContents(".array2string($_uid).", $structure_partID, $_stream, $_preserveSeen,$structure_mime)" );
 						$this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true,$structure_mime);
 						if ($_returnPart) return $part;
 					}
@@ -5539,14 +5538,14 @@ class emailadmin_imapbase
 		}
 		$attachmentData = array(
 			'type'		=> $structure_mime,
+			'charset'   => $charset,
 			'filename'	=> $filename,
-			//'attachment'	=> $part->getContents(array('stream'=>$_stream))
 			'attachment'	=> $part->getContents(array(
 				// tnef_decode needs strings not a stream
 				'stream' => $_stream && !($filename == 'winmail.dat' && $_winmail_nr)
 			)),
 		);
-		
+
 		// try guessing the mimetype, if we get the application/octet-stream
 		if (strtolower($attachmentData['type']) == 'application/octet-stream') $attachmentData['type'] = mime_magic::filename2mime($attachmentData['filename']);
 		# if the attachment holds a winmail number and is a winmail.dat then we have to handle that.
@@ -6719,7 +6718,7 @@ class emailadmin_imapbase
 				$previousFailed=false;
 				//error_log(__METHOD__.__LINE__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal");
 				$ret2->add($adr);
-			}			
+			}
 		}
 		//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret2).'#'.$ret2->count().'#'.$ret2->count);
 		return $ret2;

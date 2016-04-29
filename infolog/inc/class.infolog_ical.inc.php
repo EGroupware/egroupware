@@ -405,7 +405,7 @@ class infolog_ical extends infolog_bo
 						foreach((array)$value as $compvData)
 						{
 							$comp = Horde_Icalendar::newComponent(substr($name,3), $vevent);
-							$comp->parsevCalendar($compvData,substr($name,3),'utf-8');
+							$comp->parsevCalendar($compvData,substr($name,3));
 							$vevent->addComponent($comp);
 						}
 					}
@@ -654,7 +654,11 @@ class infolog_ical extends infolog_bo
 		}
 
 		$vcal = new Horde_Icalendar;
-		if (!($vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset)))
+		if ($charset && $charset != 'utf-8')
+		{
+			$_vcalData = translation::convert($_vcalData, $charset, 'utf-8');
+		}
+		if (!($vcal->parsevCalendar($_vcalData, 'VCALENDAR')))
 		{
 			if ($this->log)
 			{
@@ -1096,7 +1100,11 @@ class infolog_ical extends infolog_bo
 
 			case 'text/x-vnote':
 				$vnote = new Horde_Icalendar;
-				if (!$vnote->parsevCalendar($_data, 'VCALENDAR', $charset))	return false;
+				if ($charset && $charset != 'utf-8')
+				{
+					$_data = translation::convert($_data, $charset, 'utf-8');
+				}
+				if (!$vnote->parsevCalendar($_data, 'VCALENDAR'))	return false;
 
 				$components = $vnote->getComponent();
 				foreach ($components as $component)
