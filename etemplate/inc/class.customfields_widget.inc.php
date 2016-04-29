@@ -291,7 +291,7 @@ class customfields_widget
 						// and used as such.  All unknown values will be used for selection, not passed through to the query
 						if (isset($field['values']['@']))
 						{
-							$options['values'] = $this->_get_options_from_file($field['values']['@']);
+							$options['values'] = egw_customfields::_get_options_from_file($field['values']['@']);
 							unset($field['values']['@']);
 						} else {
 							$options['values'] = array_diff_key($field['values'], array_flip(ajax_select_widget::$known_options));
@@ -311,7 +311,7 @@ class customfields_widget
 						$showthis = '#a#l#l#';
 						if (count($field['values']) == 1 && isset($field['values']['@']))
 						{
-							$field['values'] = $this->_get_options_from_file($field['values']['@']);
+							$field['values'] = egw_customfields::_get_options_from_file($field['values']['@']);
 						}
 						if($this->advanced_search && $field['rows'] <= 1) $field['values'][''] = lang('doesn\'t matter');
 						if ($readonly)

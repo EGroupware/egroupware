@@ -25,11 +25,11 @@ class importexport_widget_filter extends etemplate_widget_transformer
 {
 
 	protected static $prefix = '';
-	
+
 	protected static $transformation = array(
 		'type' => 'customfields'
 	 );
-		
+
 	/**
 	 * Adapt the settings to custom fields widget
 	 *
@@ -64,15 +64,15 @@ class importexport_widget_filter extends etemplate_widget_transformer
 		self::$transformation['label'] = '';
 
 		$this->setElementAttribute($form_name, 'prefix', self::$prefix);
-		
+
 		$n = 1;
 		foreach($fields as $lname => &$field)
 		{
 			$type =& $field['type'];
-			
+
 			// No filters are required
 			$field['needed'] = false;
-			
+
 			switch($type)
 			{
 				case 'date':
@@ -109,14 +109,14 @@ class importexport_widget_filter extends etemplate_widget_transformer
 					// and used as such.  All unknown values will be used for selection, not passed through to the query
 					if (isset($field['values']['@']))
 					{
-						$options['values'] = $this->_get_options_from_file($field['values']['@']);
+						$options['values'] = egw_customfields::_get_options_from_file($field['values']['@']);
 						unset($field['values']['@']);
 					} else {
 						$options['values'] = array_diff_key($field['values'], array_flip(ajax_select_widget::$known_options));
 					}
 					$options = array_merge($options, array_intersect_key($field['values'], array_flip(ajax_select_widget::$known_options)));
 
-					
+
 					break;
 				case 'select':
 				default:
@@ -124,7 +124,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 					{
 						if (count($field['values']) == 1 && isset($field['values']['@']))
 						{
-							$field['values'] = $this->_get_options_from_file($field['values']['@']);
+							$field['values'] = egw_customfields::_get_options_from_file($field['values']['@']);
 						}
 						foreach((array)$field['values'] as $key => $val)
 						{
@@ -168,7 +168,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 			}
 			unset($widget);
 		}
-		
+
 		parent::beforeSendToClient($cname, $expand);
 
 		$this->setElementAttribute($form_name, 'customfields', $fields);
@@ -198,7 +198,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 		{
 			$input['sel_options'][$label] = lang($label);
 		}
-		
+
 		return $input;
 	}
 
@@ -214,14 +214,14 @@ class importexport_widget_filter extends etemplate_widget_transformer
 	protected static function do_absolute_date($lname, Array &$value, $options, $readonly)
 	{
 		$input = boetemplate::empty_cell('hbox',$lname);
-		
+
 		$type = 'date';
 		$from = boetemplate::empty_cell($type, $lname.'[from]',array(
 			'readonly'      => $readonly,
 			'no_lang'       => True,
 			'size'          => $options
 		));
-		
+
 		$to = boetemplate::empty_cell($type, $lname.'[to]', array(
 			'readonly'      => $readonly,
 			'no_lang'       => True,
@@ -235,8 +235,8 @@ class importexport_widget_filter extends etemplate_widget_transformer
 		boetemplate::add_child($input, $to);
 		return $input;
 	}
-	
-	
+
+
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
