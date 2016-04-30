@@ -143,6 +143,7 @@ class Bundle
 			unset($query);
 			list($path,$query) = explode('?',$path,2);
 			$mod = filemtime(EGW_SERVER_ROOT.$path);
+			if ($mod > $max_modified) $max_modified = $mod;
 
 			// ckeditor must be included before bundled files, as they depend on it!
 			if (strpos($path,'/ckeditor/ckeditor.js') !== false)
@@ -157,7 +158,6 @@ class Bundle
 			}
 			else
 			{
-				if ($mod > $max_modified) $max_modified = $mod;
 				$to_minify[] = substr($path,1);
 			}
 		}
