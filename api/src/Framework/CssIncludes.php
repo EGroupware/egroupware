@@ -105,7 +105,7 @@ class CssIncludes
 	{
 		// add all css files from self::includeCSS
 		$max_modified = 0;
-		$debug_minify = true;	//no more dynamic minifying: $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
+		//no more dynamic minifying: $debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 		$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
 		if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
 		$css_files = '';
@@ -117,7 +117,7 @@ class CssIncludes
 				if (($mod = filemtime(EGW_SERVER_ROOT.$file)) > $max_modified) $max_modified = $mod;
 
 				// do NOT include app.css or categories.php, as it changes from app to app
-				if ($debug_minify || substr($path, -8) == '/app.css' || substr($file,-14) == 'categories.php')
+				//no more dynamic minifying: if ($debug_minify || substr($path, -8) == '/app.css' || substr($file,-14) == 'categories.php')
 				{
 					$css_files .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].$path.($query ? '&' : '?').$mod.'" type="text/css" rel="StyleSheet" />'."\n";
 				}

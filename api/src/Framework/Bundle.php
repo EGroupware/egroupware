@@ -133,6 +133,7 @@ class Bundle
 	{
 		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 		// ignore not existing minurl
+		if (!empty($minurl) && !file_exists(EGW_SERVER_ROOT.$minurl)) $minurl = null;
 		$to_include_first = $to_include = $to_minify = array();
 		$max_modified = 0;
 		$query = null;
@@ -149,7 +150,7 @@ class Bundle
 				$to_include_first[] = $path . '?' . $mod;
 			}
 			// for now minify does NOT support query parameters, nor php files generating javascript
-			elseif ($debug_minify || $query || substr($path, -3) != '.js')
+			elseif ($debug_minify || $query || substr($path, -3) != '.js' || empty($minurl))
 			{
 				$path .= '?'. $mod.($query ? '&'.$query : '');
 				$to_include[] = $path;
@@ -162,6 +163,8 @@ class Bundle
 		}
 		if (!$debug_minify && $to_minify)
 		{
+			$path = $minurl.'?'.filemtime(EGW_SERVER_ROOT.$minurl);
+			/* no more dynamic minifying
 			if (!empty($minurl) && file_exists(EGW_SERVER_ROOT.$minurl) &&
 				($mod=filemtime(EGW_SERVER_ROOT.$minurl)) >= $max_modified)
 			{
@@ -175,7 +178,7 @@ class Bundle
 					'f='.implode(',', $to_minify) .
 					($GLOBALS['egw_info']['server']['debug_minify'] === 'debug' ? '&debug' : '').
 					'&'.$max_modified;
-			}
+			}*/
 			// need to include minified javascript before not minified stuff like jscalendar-setup, as it might depend on it
 			array_unshift($to_include, $path);
 		}
