@@ -247,7 +247,7 @@
 					<select id="newsettings[debug_minify]">
 						<option value="">{No} - {Default}</option>
 						<option value="True">Yes</option>
-						<option value="debug">Debug</option>
+						<!-- no more dynamic minifying: option value="debug">Debug</option -->
 					</select>
 				</row>
 			</rows>
