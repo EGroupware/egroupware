@@ -5,10 +5,13 @@
 * @link http://www.egroupware.org
 * @author Ralf Becker <rb@stylite.de>
 * @package admin
-* @copyright (c) 2013 by Ralf Becker <rb@stylite.de>
+* @copyright (c) 2013-16 by Ralf Becker <rb@stylite.de>
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 * @version $Id$
 */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
 
 /**
  * Preferences ACL
@@ -19,8 +22,8 @@ class preferences_acl extends admin_acl
 {
 	function __construct()
 	{
-		translation::add_app('admin');
-		egw_framework::includeCSS('admin', 'app');
+		Api\Translation::add_app('admin');
+		Framework::includeCSS('admin', 'app');
 
 		parent::__construct();
 	}

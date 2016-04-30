@@ -5,13 +5,19 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
  * @package preferences
- * @copyright (c) 2013-14 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2013-16 by Ralf Becker <rb@stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Vfs;
+use EGroupware\Api\Etemplate;
+
 /**
- * UI for settings / preferences
+ * UI for settings / Api\Preferences
  */
 class preferences_settings
 {
@@ -41,7 +47,7 @@ class preferences_settings
 	 */
 	function index(array $content=null, $msg='')
 	{
-		$tpl = new etemplate_new('preferences.settings');
+		$tpl = new Etemplate('preferences.settings');
 		if (!is_array($content))
 		{
 			$appname = isset($_GET['appname']) && $_GET['appname'] != 'preferences' &&
@@ -71,7 +77,7 @@ class preferences_settings
 						// check if user has rights to store preferences for $type and $account_id
 						if ($content['old_type'] !== 'user' && !$GLOBALS['egw_info']['user']['apps']['admin'])
 						{
-							throw new egw_exception_no_permission_admin;
+							throw new Api\Exception\NoPermission\Admin;
 						}
 						list($type,$account_id) = explode(':', $content['old_type']);
 						// merge prefs of all tabs together again
@@ -111,17 +117,17 @@ class preferences_settings
 								//error_log(__METHOD__."() ".__LINE__.": old_values=".array2string($old_values).", new_values=".array2string($new_values));
 								if ($old_values != $new_values)
 								{
-									egw_framework::refresh_opener($msg, null, null, null, null, null, null, $msg_type);
+									Framework::refresh_opener($msg, null, null, null, null, null, null, $msg_type);
 								}
 							}
 						}
-						// update client-side preferences in response
-						egw_framework::ajax_get_preference($appname);
+						// update client-side Api\Preferences in response
+						Framework::ajax_get_preference($appname);
 				}
 				if (in_array($button, array('save','cancel')))
 				{
-					egw_json_response::get()->call('egw.message', $msg, $msg_type);
-					egw_framework::window_close();
+					Api\Json\Response::get()->call('egw.message', $msg, $msg_type);
+					Framework::window_close();
 				}
 			}
 			$appname = $content['appname'] ? $content['appname'] : 'common';
@@ -144,7 +150,7 @@ class preferences_settings
 		$preserve['current_app'] = $content['current_app'];
 		$GLOBALS['egw_info']['flags']['currentapp'] = $content['current_app'] == 'common' ?
 			'preferences' : $content['current_app'];
-		egw_framework::includeCSS('preferences','app');
+		Framework::includeCSS('preferences','app');
 
 		// if not just saved, call validation before, to be able to show failed validation of current prefs
 		if (!isset($button))
@@ -160,7 +166,7 @@ class preferences_settings
 		$preserve['type'] = $preserve['old_type'] = $data['type'];
 		if (isset($old_tab)) $data['tabs'] = $old_tab;
 
-		if ($msg) egw_framework::message($msg, $msg_type ? $msg_type : 'error');
+		if ($msg) Framework::message($msg, $msg_type ? $msg_type : 'error');
 
 		$tpl->exec('preferences.preferences_settings.index', $data, $sel_options, $readonlys, $preserve, 2);
 	}
@@ -209,7 +215,7 @@ class preferences_settings
 					}
 					elseif ($types[$var] == 'vfs_file')
 					{
-						if ($value[0] != '/' || !egw_vfs::stat($value) || egw_vfs::is_dir($value))
+						if ($value[0] != '/' || !Vfs::stat($value) || Vfs::is_dir($value))
 						{
 							$error = lang('%1 is no existing vfs file!',htmlspecialchars($value));
 						}
@@ -221,7 +227,7 @@ class preferences_settings
 						foreach($types[$var] == 'vfs_dir' ? array($value) : preg_split('/[,\s]+\//', $value) as $n => $dir)
 						{
 							if ($n) $dir = '/'.$dir;	// re-adding trailing slash removed by split
-							if ($dir[0] != '/' || !egw_vfs::stat($dir) || !egw_vfs::is_dir($dir))
+							if ($dir[0] != '/' || !Vfs::stat($dir) || !Vfs::is_dir($dir))
 							{
 								$error .= ($error ? ' ' : '').lang('%1 is no existing vfs directory!',$dir);
 							}
@@ -255,7 +261,7 @@ class preferences_settings
 		// if you return something else than False, it is treated as an error-msg and
 		// displayed to the user (the prefs are not saved)
 		//
-		if(($error .= $GLOBALS['egw']->hooks->single(array(
+		if(($error .= Api\Hooks::single(array(
 				'location' => 'verify_settings',
 				'prefs'    => &$repository[$appname],
 				'type'     => $type,
@@ -272,7 +278,7 @@ class preferences_settings
 		// certain common prefs (language, template, ...) require the session to be re-created
 		if ($appname == 'common' && !$only_verify)
 		{
-			egw::invalidate_session_cache();
+			Egw::invalidate_session_cache();
 		}
 
 		return null;
@@ -287,14 +293,14 @@ class preferences_settings
 	 * @param array &$readonlys
 	 * @param array &$types on return setting-name => setting-type
 	 * @param etemplate $tpl
-	 * @throws egw_exception_wrong_parameter
+	 * @throws Api\Exception\WrongParameter
 	 * @return array content
 	 */
 	function get_content($appname, $type, &$sel_options, &$readonlys, &$types, $tpl)
 	{
 		if (!$this->call_hook($appname, $type, $GLOBALS['egw']->preferences->get_account_id()))
 		{
-			throw new egw_exception_wrong_parameter("Could not find settings for application: ".$appname);
+			throw new Api\Exception\WrongParameter("Could not find settings for application: ".$appname);
 		}
 		$attribute = $type == 'group' ? 'user' : $type;
 		//error_log(__METHOD__."('$appname', '$type' ) attribute='$attribute', preferences->account_id=".$GLOBALS['egw']->preferences->get_account_id());
@@ -454,7 +460,7 @@ class preferences_settings
 
 		$content['appname'] = $appname;
 		$sel_options['appname'] = array();
-		foreach($GLOBALS['egw']->hooks->hook_implemented('settings') as $app)
+		foreach(Api\Hooks::implemented('settings') as $app)
 		{
 			if ($app != 'preferences' && $GLOBALS['egw_info']['user']['apps'][$app])
 			{
@@ -474,7 +480,7 @@ class preferences_settings
 			if (($id = $GLOBALS['egw']->preferences->get_account_id()) != $GLOBALS['egw_info']['user']['account_id'])
 			{
 				$content['type'] .= ':'.$id;
-				$sel_options['type'][$content['type']] = common::grab_owner_name($GLOBALS['egw']->preferences->account_id);
+				$sel_options['type'][$content['type']] = Api\Accounts::username($GLOBALS['egw']->preferences->account_id);
 
 				// Restrict app list to apps the user has access to
 				$user_apps = $GLOBALS['egw']->acl->get_user_applications($id);
@@ -482,7 +488,7 @@ class preferences_settings
 			}
 			foreach($GLOBALS['egw']->accounts->search(array('type' => 'groups', 'order' => 'account_lid')) as $account_id => $group)
 			{
-				$sel_options['type']['group:'.$account_id] = lang('Preferences').' '.common::display_fullname($group['account_lid'], '', '', $account_id);
+				$sel_options['type']['group:'.$account_id] = lang('Preferences').' '.Api\Accounts::format_username($group['account_lid'], '', '', $account_id);
 			}
 		}
 		else
@@ -554,13 +560,13 @@ class preferences_settings
 
 		// Set framework here to make sure we get the right settings for user's [newly] selected template
 		$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw']->preferences->data['common']['template_set'];
-		translation::add_app($this->appname);
+		Api\Translation::add_app($this->appname);
 		if($this->appname != 'preferences')
 		{
-			translation::add_app('preferences');	// we need the prefs translations too
+			Api\Translation::add_app('preferences');	// we need the prefs translations too
 		}
 
-		// make type available, to hooks from applications can use it, eg. activesync
+		// make type available, to hooks from Egw\Applications can use it, eg. activesync
 		$hook_data = array(
 			'location' => 'settings',
 			'type' => $type,
@@ -569,7 +575,7 @@ class preferences_settings
 		$GLOBALS['type'] = $type;	// old global variable
 
 		// calling app specific settings hook
-		$settings = $GLOBALS['egw']->hooks->single($hook_data, $this->appname);
+		$settings = Api\Hooks::single($hook_data, $this->appname);
 		// it either returns the settings or save it in $GLOBALS['settings'] (deprecated!)
 		if (isset($settings) && is_array($settings) && $settings)
 		{
@@ -586,7 +592,7 @@ class preferences_settings
 
 		// calling settings hook all apps can answer (for a specific app)
 		$hook_data['location'] = 'settings_'.$this->appname;
-		foreach($GLOBALS['egw']->hooks->process($hook_data, $this->appname,true) as $settings)
+		foreach(Api\Hooks::process($hook_data, $this->appname,true) as $settings)
 		{
 			if (isset($settings) && is_array($settings) && $settings)
 			{

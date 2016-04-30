@@ -9,6 +9,10 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
+
 class preferences_password
 {
 	var $public_functions = array(
@@ -25,7 +29,7 @@ class preferences_password
 	{
 		if ($GLOBALS['egw']->acl->check('nopasswordchange', 1))
 		{
-			egw_framework::window_close('There was no password change!');
+			Framework::window_close('There was no password change!');
 		}
 
 		if (!is_array($content))
@@ -38,19 +42,19 @@ class preferences_password
 			{
 				if (($errors = self::do_change($content['o_passwd_2'], $content['n_passwd'], $content['n_passwd_2'])))
 				{
-					egw_framework::message(implode("\n", $errors), 'error');
+					Framework::message(implode("\n", $errors), 'error');
 					$content = array();
 				}
 				else
 				{
-					egw_framework::refresh_opener(lang('Password changed'), 'preferences');
-					egw_framework::window_close();
+					Framework::refresh_opener(lang('Password changed'), 'preferences');
+					Framework::window_close();
 				}
 			}
 		}
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Change your password');
-		$tmpl = new etemplate_new('preferences.password');
+		$tmpl = new Etemplate('preferences.password');
 
 		$tmpl->exec('preferences.preferences_password.change', $content,array(),array(),array(),2);
 	}
@@ -67,7 +71,7 @@ class preferences_password
 	{
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'preferences')
 		{
-			translation::add_app('preferences');
+			Api\Translation::add_app('preferences');
 		}
 		$errors = array();
 

@@ -10,9 +10,11 @@
  * @version $Id$
  */
 
+use EGroupware\Api\Framework;
+
 /**
  * Preference UI extends Admin class to give regular users restricted
- * access to modify categories
+ * access to modify Api\Categories
  */
 class preferences_categories_ui extends admin_categories {
 
@@ -22,14 +24,17 @@ class preferences_categories_ui extends admin_categories {
 	protected $edit_link = 'preferences.preferences_categories_ui.edit';
 	protected $add_link = 'preferences.preferences_categories_ui.edit';
 
-	function __construct() {
-		egw_framework::includeCSS('/admin/templates/default/app.css');
+	function __construct()
+	{
+		if (false) parent::__construct ();	// parent constructor explicitly not called!
+
+		Framework::includeCSS('/admin/templates/default/app.css');
 	}
 
-	public function get_rows(&$query, &$rows, &$readonlys) {
+	public function get_rows(&$query, &$rows, &$readonlys)
+	{
 		$count = parent::get_rows($query, $rows, $readonlys);
 		$rows['edit_link'] = 'preferences.preferences_categories_ui.edit';
 		return $count;
 	}
 }
-?>

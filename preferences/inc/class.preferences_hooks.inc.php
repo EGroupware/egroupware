@@ -8,6 +8,10 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+
 /**
  * Static hooks for preferences class
  */
@@ -35,9 +39,9 @@ class preferences_hooks
 
 		if (!$hook_data['setup'])
 		{
-			$langs = translation::get_installed_langs();
+			$langs = Api\Translation::get_installed_langs();
 
-			$tzs = egw_time::getTimezones();
+			$tzs = Api\DateTime::getTimezones();
 		}
 
 		$date_formats = array(
@@ -67,7 +71,7 @@ class preferences_hooks
 			'br'	=> lang('br')
 		);
 
-		$rich_text_editor_skins = egw_ckeditor_config::getAvailableCKEditorSkins();
+		$rich_text_editor_skins = Api\Html\CkEditorConfig::getAvailableCKEditorSkins();
 
 		$account_sels = array(
 			'selectbox'     => lang('Selectbox'),
@@ -103,12 +107,12 @@ class preferences_hooks
 			{
 				if (substr($prefs->{$type}['common']['rte_font_size'], -2) == 'px')
 				{
-					egw_ckeditor_config::font_size_from_prefs($prefs->{$type}, $prefs->{$type}['common']['rte_font_size'],
+					Api\Html\CkEditorConfig::font_size_from_prefs($prefs->{$type}, $prefs->{$type}['common']['rte_font_size'],
 						$prefs->{$type}['common']['rte_font_unit']);
 					$prefs->save_repository(false, $type);
 				}
 			}
-			egw_ckeditor_config::font_size_from_prefs($GLOBALS['egw_info']['user']['preferences'],
+			Api\Html\CkEditorConfig::font_size_from_prefs($GLOBALS['egw_info']['user']['preferences'],
 				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'],
 				$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit']);
 		}
@@ -132,7 +136,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Interface/Template Selection',
 				'name'   => 'template_set',
-				'values' => egw_framework::list_templates(),
+				'values' => Framework::list_templates(),
 				'help'   => 'A template defines the layout of eGroupWare and it contains icons for each application.',
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -253,7 +257,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Country',
 				'name'   => 'country',
-				'values' => ExecMethod('phpgwapi.country.countries'),
+				'values' => Api\Country::countries(),
 				'help'   => 'In which country are you. This is used to set certain defaults for you.',
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -329,7 +333,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Charset for the CSV export/import',
 				'name'   => 'csv_charset',
-				'values' => translation::get_installed_charsets(),
+				'values' => Api\Translation::get_installed_charsets(),
 				'help'   => 'Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.',
 				'xmlrpc' => True,
 				'admin'  => false,
@@ -343,7 +347,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Default font',
 				'name'   => 'rte_font',
-				'values' => egw_ckeditor_config::$font_options,
+				'values' => Api\Html\CkEditorConfig::$font_options,
 				'help'   => 'Automatically start with this font',
 				'xmlrpc' => True,
 				'admin'  => false,
@@ -353,7 +357,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Font size unit',
 				'name'   => 'rte_font_unit',
-				'values' => array_map('lang', egw_ckeditor_config::$font_unit_options),
+				'values' => array_map('lang', Api\Html\CkEditorConfig::$font_unit_options),
 				'help'   => 'Unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.',
 				'default'=> 'pt',
 				'xmlrpc' => True,
@@ -364,7 +368,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Default font size',
 				'name'   => 'rte_font_size',
-				'values' => egw_ckeditor_config::$font_size_options,
+				'values' => Api\Html\CkEditorConfig::$font_size_options,
 				'help'   => 'Automatically start with this font size',
 				'xmlrpc' => True,
 				'admin'  => false,
@@ -460,7 +464,7 @@ class preferences_hooks
 		unset($args);	// unused, but required by function signature
 		$appname = 'preferences';
 		$file = Array(
-			'Site configuration' => egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname.'&ajax=true'),
+			'Site configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname.'&ajax=true'),
 		);
 		display_section($appname, $file);
 	}
