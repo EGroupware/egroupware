@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare
+ * EGroupware - Infolog iCal import
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
@@ -10,7 +10,6 @@
  * @copyright Nathan Gray
  * @version $Id$
  */
-
 
 /**
  * import ical for infolog
@@ -30,7 +29,6 @@ class infolog_import_ical implements importexport_iface_import_plugin  {
 					'action' => insert,
 					'last' => true,
 				),*/
-
 	);
 
 	/**
@@ -71,9 +69,9 @@ class infolog_import_ical implements importexport_iface_import_plugin  {
 	protected $errors = array();
 
 	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
+	 * List of actions, and how many times that action was taken
+	 */
+	protected $results = array();
 
 	/**
 	 * imports entries according to given definition object.
@@ -109,7 +107,7 @@ class infolog_import_ical implements importexport_iface_import_plugin  {
 		return $success;
 	}
 
-	
+
 	/**
 	 * returns translated name of plugin
 	 *
@@ -163,39 +161,38 @@ class infolog_import_ical implements importexport_iface_import_plugin  {
 	}
 
 	/**
-        * Returns warnings that were encountered during importing
-        * Maximum of one warning message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => warning message
-        *       )
-        */
-        public function get_warnings() {
+	 * Returns warnings that were encountered during importing
+	 * Maximum of one warning message per record, but you can append if you need to
+	 *
+	 * @return Array (
+	 *       record_# => warning message
+	 *       )
+	 */
+	public function get_warnings() {
 		return $this->warnings;
 	}
 
 	/**
-        * Returns errors that were encountered during importing
-        * Maximum of one error message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => error message
-        *       )
-        */
-        public function get_errors() {
+	 * Returns errors that were encountered during importing
+	 * Maximum of one error message per record, but you can append if you need to
+	 *
+	 * @return Array (
+	 *       record_# => error message
+	 *       )
+	 */
+	public function get_errors() {
 		return $this->errors;
 	}
 
 	/**
-        * Returns a list of actions taken, and the number of records for that action.
-        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
-        *
-        * @return Array (
-        *       action => record count
-        * )
-        */
-        public function get_results() {
-                return $this->results;
-        }
-} // end of iface_export_plugin
-?>
+	 * Returns a list of actions taken, and the number of records for that action.
+	 * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
+	 *
+	 * @return Array (
+	 *       action => record count
+	 * )
+	 */
+	public function get_results() {
+		return $this->results;
+	}
+}

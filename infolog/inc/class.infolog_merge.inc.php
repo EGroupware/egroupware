@@ -6,16 +6,19 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Nathan Gray
  * @package infolog
- * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright 2011 Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+
 /**
  * Infolog - document merge object
  */
-class infolog_merge extends bo_merge
+class infolog_merge extends Api\Storage\Merge
 {
 	/**
 	 * Functions that can be called via menuaction
@@ -49,8 +52,8 @@ class infolog_merge extends bo_merge
 			'info_created',
 		);
 
-		// switch of handling of html formated content, if html is not used
-		$this->parse_html_styles = egw_customfields::use_html('infolog');
+		// switch of handling of Api\Html formated content, if Api\Html is not used
+		$this->parse_html_styles = Api\Storage\Customfields::use_html('infolog');
 	}
 
 	/**
@@ -118,11 +121,11 @@ class infolog_merge extends bo_merge
 			{
 				$array['#'.$name] = '';
 			}
-			// Format date cfs per user preferences
+			// Format date cfs per user Api\Preferences
 			if($field['type'] == 'date' || $field['type'] == 'date-time')
 			{
 				$this->date_fields[] = '#'.$name;
-				$array['#'.$name] = egw_time::to($array['#'.$name], $field['type'] == 'date' ? true : '');
+				$array['#'.$name] = Api\DateTime::to($array['#'.$name], $field['type'] == 'date' ? true : '');
 			}
 		}
 
@@ -132,17 +135,17 @@ class infolog_merge extends bo_merge
 		// Timesheet time
 		if(strpos($content, 'info_sum_timesheets'))
 		{
-			$links = egw_link::get_links('infolog',$id,'timesheet');
+			$links = Link::get_links('infolog',$id,'timesheet');
 			$sum = ExecMethod('timesheet.timesheet_bo.sum',$links);
 			$info['$$info_sum_timesheets$$'] = $sum['duration'];
 		}
 
 		// Check for linked project ID
-		$links = egw_link::get_links('infolog', $id, 'projectmanager');
+		$links = Link::get_links('infolog', $id, 'projectmanager');
 		foreach($links as $app_id)
 		{
 			$array['pm_id'] = $app_id;
-			$array['project'] = egw_link::title('projectmanager', $app_id);
+			$array['project'] = Link::title('projectmanager', $app_id);
 			break;
 		}
 
@@ -162,14 +165,14 @@ class infolog_merge extends bo_merge
 	}
 
 	/**
-	 * Generate table with replacements for the preferences
+	 * Generate table with replacements for the Api\Preferences
 	 *
 	 */
 	public function show_replacements()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('infolog').' - '.lang('Replacements for inserting entries into documents');
 		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
-		common::egw_header();
+		$GLOBALS['egw']->framework->header();
 
 		echo "<table width='90%' align='center'>\n";
 		echo '<tr><td colspan="4"><h3>'.lang('Infolog fields:')."</h3></td></tr>";
@@ -177,7 +180,7 @@ class infolog_merge extends bo_merge
 		$n = 0;
 		$tracking = new infolog_tracking($this->bo);
 		$fields = array('info_id' => lang('Infolog ID'), 'pm_id' => lang('Project ID'), 'project' => lang('Project name')) + $tracking->field2label + array('info_sum_timesheets' => lang('Used time'));
-		translation::add_app('projectmanager');
+		Api\Translation::add_app('projectmanager');
 		foreach($fields as $name => $label)
 		{
 			if (in_array($name,array('custom'))) continue;	// dont show them
@@ -228,7 +231,7 @@ class infolog_merge extends bo_merge
 		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
 		foreach($this->contacts->customfields as $name => $field)
 		{
-				echo '<tr><td>{{info_contact/#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
+			echo '<tr><td>{{info_contact/#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
 		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
@@ -258,6 +261,6 @@ class infolog_merge extends bo_merge
 
 		echo "</table>\n";
 
-		common::egw_footer();
+		$GLOBALS['egw']->framework->footer();
 	}
 }

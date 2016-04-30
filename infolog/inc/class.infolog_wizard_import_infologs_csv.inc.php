@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Wizard for Infolog CSV import
+ * EGroupware - Wizard for Infolog CSV import
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package infolog
@@ -8,6 +8,9 @@
  * @author Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Acl;
 
 class infolog_wizard_import_infologs_csv extends importexport_wizard_basic_import_csv
 {
@@ -30,7 +33,7 @@ class infolog_wizard_import_infologs_csv extends importexport_wizard_basic_impor
 		$this->mapping_fields = array('info_id' => 'Infolog ID') + $tracking->field2label + infolog_import_infologs_csv::$special_fields;
 		// List each custom field
 		unset($this->mapping_fields['custom']);
-		$custom = config::get_customfields('infolog');
+		$custom = Api\Storage\Customfields::get('infolog');
 		foreach($custom as $name => $data) {
 			$this->mapping_fields['#'.$name] = $data['label'];
 		}
@@ -52,10 +55,10 @@ class infolog_wizard_import_infologs_csv extends importexport_wizard_basic_impor
 	function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		$result = parent::wizard_step50($content, $sel_options, $readonlys, $preserv);
-		
+
 		return $result;
 	}
-	
+
 	# Skipped for now (or forever)
 	function wizard_step60(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
@@ -66,7 +69,7 @@ class infolog_wizard_import_infologs_csv extends importexport_wizard_basic_impor
 		if($content['record_owner'])
 		{
 			$bo = new infolog_bo();
-			$access = $bo->check_access(0,EGW_ACL_EDIT, $content['record_owner']);
+			$access = $bo->check_access(0,Acl::EDIT, $content['record_owner']);
 		}
 
 		// return from step60
@@ -115,6 +118,6 @@ class infolog_wizard_import_infologs_csv extends importexport_wizard_basic_impor
 			unset ($preserv['button']);
 			return 'infolog.importexport_wizard_chooseowner';
 		}
-		
+
 	}
 }

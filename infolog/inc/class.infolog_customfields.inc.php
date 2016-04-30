@@ -5,10 +5,13 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Etemplate;
 
 require_once(EGW_INCLUDE_ROOT . '/admin/inc/class.customfields.inc.php');
 /**
@@ -26,7 +29,7 @@ class infolog_customfields extends customfields
 	/**
 	 * instance of the config class for infolog
 	 *
-	 * @var config
+	 * @var Api\Config
 	 */
 	var $config_data;
 	/**
@@ -39,12 +42,12 @@ class infolog_customfields extends customfields
 	function __construct( )
 	{
 		parent::__construct('infolog');
-		
+
 		$this->bo = new infolog_bo();
-		$this->tmpl = new etemplate_new();
+		$this->tmpl = new Etemplate();
 		$this->content_types = &$this->bo->enums['type'];
 		$this->status = &$this->bo->status;
-		$this->config_data = config::read('infolog');
+		$this->config_data = Api\Config::read('infolog');
 		$this->fields = &$this->bo->customfields;
 		$this->group_owners =& $this->bo->group_owners;
 	}
@@ -55,6 +58,8 @@ class infolog_customfields extends customfields
 	 */
 	protected function app_index(&$content, &$sel_options, &$readonlys, &$preserve)
 	{
+		unset($sel_options);	// not used, but required by function signature
+
 		$n = 0;
 		foreach($this->status[$this->content_type] as $name => $label)
 		{
@@ -83,7 +88,6 @@ class infolog_customfields extends customfields
 
 	function update_fields(&$content)
 	{
-		$typ = $content['type2'];
 		$fields = &$content['fields'];
 
 		$create = $fields['create'];
@@ -129,8 +133,8 @@ class infolog_customfields extends customfields
 			{
 				foreach(explode("\n",$field['values']) as $line)
 				{
-					list($var,$value) = explode('=',trim($line),2);
-					$var = trim($var);
+					list($var2,$value) = explode('=',trim($line),2);
+					$var = trim($var2);
 					$values[$var] = empty($value) ? $var : $value;
 				}
 			}
@@ -156,7 +160,7 @@ class infolog_customfields extends customfields
 		uasort($this->fields,sort_by_order);
 
 		$n = 0;
-		foreach($this->fields as $name => $data)
+		foreach(array_keys($this->fields) as $name)
 		{
 			$this->fields[$name]['order'] = ($n += 10);
 		}
@@ -265,7 +269,7 @@ class infolog_customfields extends customfields
 		}
 		else
 		{
-			foreach($this->content_types as $letter => $name)
+			foreach($this->content_types as $name)
 			{
 				if($name == $new_name)
 				{
@@ -285,15 +289,15 @@ class infolog_customfields extends customfields
 		$this->save_repository();
 		return $new_name;
 	}
-	
+
 	function save_repository()
 	{
 		// save changes to repository
-		config::save_value('types',$this->content_types,'infolog');
+		Api\Config::save_value('types',$this->content_types,'infolog');
 		//echo '<p>'.__METHOD__.'() \$this->status=<pre style="text-aling: left;">'; print_r($this->status); echo "</pre>\n";
-		config::save_value('status',$this->status,'infolog');
+		Api\Config::save_value('status',$this->status,'infolog');
 		//echo '<p>'.__METHOD__.'() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
-		egw_customfields::save('infolog', $this->fields);
-		config::save_value('group_owners',$this->group_owners,'infolog');
+		Api\Storage\Customfields::save('infolog', $this->fields);
+		Api\Config::save_value('group_owners',$this->group_owners,'infolog');
 	}
 }

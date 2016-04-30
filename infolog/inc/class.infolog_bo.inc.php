@@ -11,13 +11,21 @@
  * @version $Id$
  */
 
-define('EGW_ACL_UNDELETE',EGW_ACL_CUSTOM_1);	// undelete right
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Vfs;
 
 /**
  * This class is the BO-layer of InfoLog
  */
 class infolog_bo
 {
+	/**
+	 * Undelete right
+	 */
+	const ACL_UNDELETE = Acl::CUSTOM1;
+
 	var $enums;
 	var $status;
 	/**
@@ -204,7 +212,7 @@ class infolog_bo
 				'ongoing' => 'ongoing',			// iCal has no status on notes
 				'done' => 'done' ),
 		);
-		if (($config_data = config::read('infolog')))
+		if (($config_data = Api\Config::read('infolog')))
 		{
 			if (isset($config_data['status']) && is_array($config_data['status']))
 			{
@@ -226,7 +234,7 @@ class infolog_bo
 			}
 			if ($config_data['group_owners']) $this->group_owners = $config_data['group_owners'];
 
-			$this->customfields = egw_customfields::get('infolog');
+			$this->customfields = Api\Storage\Customfields::get('infolog');
 			if ($this->customfields)
 			{
 				foreach($this->customfields as $name => $field)
@@ -244,7 +252,7 @@ class infolog_bo
 						$save_config = true;
 					}
 				}
-				if ($save_config) config::save_value('customfields',$this->customfields,'infolog');
+				if ($save_config) Api\Config::save_value('customfields',$this->customfields,'infolog');
 			}
 			if (is_array($config_data['responsible_edit']))
 			{
@@ -278,7 +286,7 @@ class infolog_bo
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
 		$this->now = time();
-		$this->user_time_now = egw_time::server2user($this->now,'ts');
+		$this->user_time_now = Api\DateTime::server2user($this->now,'ts');
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
 		$this->so = new infolog_so($this->grants);
@@ -297,17 +305,13 @@ class infolog_bo
 	 * checks if there are customfields for typ $typ
 	 *
 	 * @param string $type
-	 * @param boolean $links = false if true check only customfields containing links, default false = all custom fields
 	 * @return boolean True if there are customfields for $typ, else False
 	 */
-	function has_customfields($type,$links=false)
+	function has_customfields($type)
 	{
-		if ($links) $link_types = customfields_widget::get_customfield_link_types();
-
 		foreach($this->customfields as $field)
 		{
-			if ((!$type || empty($field['type2']) || in_array($type,is_array($field['type2']) ? $field['type2'] : explode(',',$field['type2']))) &&
-				(!$links || in_array($field['type'],$link_types)))
+			if ((!$type || empty($field['type2']) || in_array($type,is_array($field['type2']) ? $field['type2'] : explode(',',$field['type2']))))
 			{
 				return True;
 			}
@@ -319,7 +323,7 @@ class infolog_bo
 	 * check's if user has the requiered rights on entry $info_id
 	 *
 	 * @param int|array $info data or info_id of infolog entry to check
-	 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
+	 * @param int $required_rights ACL::{READ|EDIT|ADD|DELETE}|infolog_bo::ACL_UNDELETE
 	 * @param int $other uid to check (if info==0) or 0 to check against $this->user
 	 * @param int $user = null user whos rights to check, default current user
 	 * @return boolean
@@ -356,14 +360,14 @@ class infolog_bo
 				if (!is_array($info) && !($info = $this->so->read(array('info_id' => $info_id)))) return false;
 
 				if ($info['info_status'] == 'deleted' &&
-					($required_rights == EGW_ACL_EDIT ||		// no edit rights for deleted entries
-					 $required_rights == EGW_ACL_ADD  ||		// no add rights for deleted entries
-					 $required_rights == EGW_ACL_DELETE && ($this->history == 'history_no_delete' || // no delete at all!
+					($required_rights == Acl::EDIT ||		// no edit rights for deleted entries
+					 $required_rights == Acl::ADD  ||		// no add rights for deleted entries
+					 $required_rights == Acl::DELETE && ($this->history == 'history_no_delete' || // no delete at all!
 					 $this->history == 'history_admin_delete' && (!isset($GLOBALS['egw_info']['user']['apps']['admin']) || $user!=$this->user))))	// delete only for admins
 				{
 					$access = false;
 				}
-				elseif ($required_rights == EGW_ACL_UNDELETE)
+				elseif ($required_rights == self::ACL_UNDELETE)
 				{
 					if ($info['info_status'] != 'deleted')
 					{
@@ -372,11 +376,11 @@ class infolog_bo
 					else
 					{
 						// undelete requires edit rights
-						$access = $this->so->check_access( $info,EGW_ACL_EDIT,$this->implicit_rights == 'edit',$grants,$user );
+						$access = $this->so->check_access( $info,Acl::EDIT,$this->implicit_rights == 'edit',$grants,$user );
 					}
 				}
 			}
-			elseif ($required_rights == EGW_ACL_UNDELETE)
+			elseif ($required_rights == self::ACL_UNDELETE)
 			{
 				$access = false;
 			}
@@ -423,7 +427,7 @@ class infolog_bo
 
 		if ($info['info_link_id'] > 0 &&
 			(isset($info['links']) && ($link = $info['links'][$info['info_link_id']]) ||	// use supplied links info
-			 ($link = egw_link::get_link($info['info_link_id'])) !== False))	// if link not found in supplied links, we always search!
+			 ($link = Link::get_link($info['info_link_id'])) !== False))	// if link not found in supplied links, we always search!
 		{
 			if (isset($info['links']) && isset($link['app']))
 			{
@@ -436,7 +440,7 @@ class infolog_bo
 				$app = $link['link_app'.$nr];
 				$id  = $link['link_id'.$nr];
 			}
-			$title = egw_link::title($app,$id);
+			$title = Link::title($app,$id);
 
 			if ((string)$info['info_custom_from'] === '')	// old entry
 			{
@@ -493,7 +497,7 @@ class infolog_bo
 
 		if ($fromTZId === $toTZId) return;
 
-		$tz = egw_time::$server_timezone;
+		$tz = Api\DateTime::$server_timezone;
 
 	 	if ($fromTZId)
 		{
@@ -505,12 +509,12 @@ class infolog_bo
 		}
 		elseif (is_null($fromTZId))
 		{
-			$tz = egw_time::$user_timezone;
-			$fromTZ = egw_time::$user_timezone;
+			$tz = Api\DateTime::$user_timezone;
+			$fromTZ = Api\DateTime::$user_timezone;
 		}
 		else
 		{
-			$fromTZ = egw_time::$server_timezone;
+			$fromTZ = Api\DateTime::$server_timezone;
 		}
 		if ($toTZId)
 		{
@@ -522,30 +526,30 @@ class infolog_bo
 		}
 		elseif (is_null($toTZId))
 		{
-			$toTZ = egw_time::$user_timezone;
+			$toTZ = Api\DateTime::$user_timezone;
 		}
 		else
 		{
-			$toTZ = egw_time::$server_timezone;
+			$toTZ = Api\DateTime::$server_timezone;
 		}
-		//error_log(__METHOD__.'(values[info_enddate]='.date('Y-m-d H:i:s',$values['info_enddate']).", from=".array2string($fromTZId).", to=".array2string($toTZId).") tz=".$tz->getName().', fromTZ='.$fromTZ->getName().', toTZ='.$toTZ->getName().', userTZ='.egw_time::$user_timezone->getName());
+		//error_log(__METHOD__.'(values[info_enddate]='.date('Y-m-d H:i:s',$values['info_enddate']).", from=".array2string($fromTZId).", to=".array2string($toTZId).") tz=".$tz->getName().', fromTZ='.$fromTZ->getName().', toTZ='.$toTZ->getName().', userTZ='.Api\DateTime::$user_timezone->getName());
 	 	foreach($this->timestamps as $key)
 		{
 		 	if ($values[$key])
 		 	{
-			 	$time = new egw_time($values[$key], $tz);
+			 	$time = new Api\DateTime($values[$key], $tz);
 			 	$time->setTimezone($fromTZ);
 			 	if ($time->format('Hi') == '0000')
 			 	{
 				 	// we keep dates the same in new timezone
-				 	$arr = egw_time::to($time,'array');
-				 	$time = new egw_time($arr, $toTZ);
+				 	$arr = Api\DateTime::to($time,'array');
+				 	$time = new Api\DateTime($arr, $toTZ);
 			 	}
 			 	else
 			 	{
 				 	$time->setTimezone($toTZ);
 			 	}
-			 	$values[$key] = egw_time::to($time,'ts');
+			 	$values[$key] = Api\DateTime::to($time,'ts');
 		 	}
 		}
 		//error_log(__METHOD__.'() --> values[info_enddate]='.date('Y-m-d H:i:s',$values['info_enddate']));
@@ -562,7 +566,7 @@ class infolog_bo
 	{
 		if (empty($ts) || $date_format == 'server') return $ts;
 
-		return egw_time::server2user($ts,$date_format);
+		return Api\DateTime::server2user($ts,$date_format);
 	}
 
 	/**
@@ -596,9 +600,8 @@ class infolog_bo
 		{
 			return null;
 		}
-		$info_id = $data['info_id'];	// in case the uid was specified
 
-		if (!$ignore_acl && !$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
+		if (!$ignore_acl && !$this->check_access($data,Acl::READ))	// check behind read, to prevent a double read
 		{
 			return False;
 		}
@@ -640,7 +643,7 @@ class infolog_bo
 		{
 			return False;
 		}
-		if (!$this->check_access($info,EGW_ACL_DELETE))
+		if (!$this->check_access($info,Acl::DELETE))
 		{
 			return False;
 		}
@@ -649,7 +652,7 @@ class infolog_bo
 		{
 			foreach($children as $id => $owner)
 			{
-				if ($delete_children && $this->so->grants[$owner] & EGW_ACL_DELETE)
+				if ($delete_children && $this->so->grants[$owner] & Acl::DELETE)
 				{
 					$this->delete($id,$delete_children,$new_parent,$skip_notification);	// call ourself recursive to delete the child
 				}
@@ -674,13 +677,13 @@ class infolog_bo
 
 			$this->so->write($deleted);
 
-			egw_link::unlink(0,'infolog',$info_id,'','!file','',true);	// keep the file attachments, hide the rest
+			Link::unlink(0,'infolog',$info_id,'','!file','',true);	// keep the file attachments, hide the rest
 		}
 		else
 		{
 			$this->so->delete($info_id,false);	// we delete the children via bo to get all notifications!
 
-			egw_link::unlink(0,'infolog',$info_id);
+			Link::unlink(0,'infolog',$info_id);
 		}
 		if ($info['info_status'] != 'deleted')	// dont notify of final purge of already deleted items
 		{
@@ -717,8 +720,8 @@ class infolog_bo
 	{
 		$values = $values_in;
 		//echo "boinfolog::write()values="; _debug_array($values);
-		if (!$values['info_id'] && !$this->check_access(0,EGW_ACL_EDIT,$values['info_owner']) &&
-			!$this->check_access(0,EGW_ACL_ADD,$values['info_owner']))
+		if (!$values['info_id'] && !$this->check_access(0,Acl::EDIT,$values['info_owner']) &&
+			!$this->check_access(0,Acl::ADD,$values['info_owner']))
 		{
 			return false;
 		}
@@ -728,7 +731,7 @@ class infolog_bo
 			$old = $this->read($values['info_id'], false, 'server');
 		}
 
-		if (($status_only = $values['info_id'] && !$this->check_access($values,EGW_ACL_EDIT)))
+		if (($status_only = $values['info_id'] && !$this->check_access($values,Acl::EDIT)))
 		{
 			if (!isset($values['info_responsible']))
 			{
@@ -744,11 +747,11 @@ class infolog_bo
 			}
 			if (!$status_only && $values['info_status'] != 'deleted')
 			{
-				$status_only = $undelete = $this->check_access($values['info_id'],EGW_ACL_UNDELETE);
+				$status_only = $undelete = $this->check_access($values['info_id'],self::ACL_UNDELETE);
 			}
 		}
-		if ($values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT) && !$status_only ||
-		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],EGW_ACL_ADD))
+		if ($values['info_id'] && !$this->check_access($values['info_id'],Acl::EDIT) && !$status_only ||
+		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],Acl::ADD))
 		{
 			return false;
 		}
@@ -851,7 +854,7 @@ class infolog_bo
 			// Check required custom fields
 			if($throw_exception)
 			{
-				$custom = egw_customfields::get('infolog');
+				$custom = Api\Storage\Customfields::get('infolog');
 				foreach($custom as $c_name => $c_field)
 				{
 					if($c_field['type2']) $type2 = is_array($c_field['type2']) ? $c_field['type2'] : explode(',',$c_field['type2']);
@@ -860,7 +863,7 @@ class infolog_bo
 						// Required custom field
 						if(!$values['#'.$c_name])
 						{
-							throw new egw_exception_wrong_userinput(lang('For infolog type %1, %2 is required',lang($values['info_type']),$c_field['label']));
+							throw new Api\Exception\WrongUserinput(lang('For infolog type %1, %2 is required',lang($values['info_type']),$c_field['label']));
 						}
 					}
 				}
@@ -869,10 +872,10 @@ class infolog_bo
 		if (isset($this->group_owners[$values['info_type']]))
 		{
 			$values['info_owner'] = $this->group_owners[$values['info_type']];
-			if (!($this->grants[$this->group_owners[$values['info_type']]] & EGW_ACL_EDIT))
+			if (!($this->grants[$this->group_owners[$values['info_type']]] & Acl::EDIT))
 			{
-				if (!$this->check_access($values['info_id'],EGW_ACL_EDIT) ||
-					!$values['info_id'] && !$this->check_access($values,EGW_ACL_ADD)
+				if (!$this->check_access($values['info_id'],Acl::EDIT) ||
+					!$values['info_id'] && !$this->check_access($values,Acl::ADD)
 				)
 				{
 					return false;	// no edit rights from the group-owner and no implicit rights (delegated and sufficient rights)
@@ -950,11 +953,11 @@ class infolog_bo
 			// Check for restore of deleted entry, restore held links
 			if($old['info_status'] == 'deleted' && $values['info_status'] != 'deleted')
 			{
-				egw_link::restore('infolog', $info_id);
+				Link::restore('infolog', $info_id);
 			}
 
 			// notify the link-class about the update, as other apps may be subscribt to it
-			egw_link::notify_update('infolog',$info_id,$values);
+			Link::notify_update('infolog',$info_id,$values);
 
 			// pre-cache the new values
 			self::set_link_cache($values);
@@ -1056,7 +1059,7 @@ class infolog_bo
 				{
 					if (!empty($query['col_filter'][$key]))
 					{
-						$query['col_filter'][$key] = egw_time::user2server($query['col_filter'][$key],'ts');
+						$query['col_filter'][$key] = Api\DateTime::user2server($query['col_filter'][$key],'ts');
 					}
 				}
 			}
@@ -1069,7 +1072,7 @@ class infolog_bo
 		{
 			foreach ($ret as $id => &$data)
 			{
-				if (!$this->check_access($data,EGW_ACL_READ))
+				if (!$this->check_access($data,Acl::READ))
 				{
 					unset($ret[$id]);
 					continue;
@@ -1079,21 +1082,21 @@ class infolog_bo
 				{
 					if ($data[$key])
 					{
-						$time = new egw_time($data[$key], egw_time::$server_timezone);
+						$time = new Api\DateTime($data[$key], Api\DateTime::$server_timezone);
 						if (!isset($query['date_format']) || $query['date_format'] != 'server')
 						{
 							if ($time->format('Hi') == '0000')
 							{
 								// we keep dates the same in user-time
-								$arr = egw_time::to($time,'array');
-								$time = new egw_time($arr, egw_time::$user_timezone);
+								$arr = Api\DateTime::to($time,'array');
+								$time = new Api\DateTime($arr, Api\DateTime::$user_timezone);
 							}
 							else
 							{
-								$time->setTimezone(egw_time::$user_timezone);
+								$time->setTimezone(Api\DateTime::$user_timezone);
 							}
 						}
-						$data[$key] = egw_time::to($time,'ts');
+						$data[$key] = Api\DateTime::to($time,'ts');
 					}
 				}
 				// pre-cache title and file access
@@ -1161,7 +1164,7 @@ class infolog_bo
 			'info_addr' => implode(', ',$emails),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
-			'info_startdate' => egw_time::server2user($_date),
+			'info_startdate' => Api\DateTime::server2user($_date),
 			'info_status' => $status,
 			'info_priority' => 1,
 			'info_percent' => $status == 'done' ? 100 : 0,
@@ -1173,7 +1176,7 @@ class infolog_bo
 		);
 		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['cat_add_default']) $info['info_cat'] = $GLOBALS['egw_info']['user']['preferences']['infolog']['cat_add_default'];
 		// find the addressbookentry to link with
-		$addressbook = new addressbook_bo();
+		$addressbook = new Api\Contacts();
 		$contacts = array();
 		foreach ($emails as $mailadr)
 		{
@@ -1196,7 +1199,7 @@ class infolog_bo
 			// create the rest a "ordinary" links
 			foreach ($contacts as $contact)
 			{
-				egw_link::link('infolog',$info['link_to']['to_id'],'addressbook',$contact['id']);
+				Link::link('infolog',$info['link_to']['to_id'],'addressbook',$contact['id']);
 			}
 		}
 		if (is_array($_attachments))
@@ -1205,12 +1208,12 @@ class infolog_bo
 			{
 				if($attachment['egw_data'])
 				{
-					egw_link::link('infolog',$info['link_to']['to_id'],egw_link::DATA_APPNAME,  $attachment);
+					Link::link('infolog',$info['link_to']['to_id'],Link::DATA_APPNAME,  $attachment);
 				}
 				else if(is_readable($attachment['tmp_name']) ||
-					(egw_vfs::is_readable($attachment['tmp_name']) && parse_url($attachment['tmp_name'], PHP_URL_SCHEME) === 'vfs'))
+					(Vfs::is_readable($attachment['tmp_name']) && parse_url($attachment['tmp_name'], PHP_URL_SCHEME) === 'vfs'))
 				{
-					egw_link::link('infolog',$info['link_to']['to_id'],'file',  $attachment);
+					Link::link('infolog',$info['link_to']['to_id'],'file',  $attachment);
 				}
 			}
 		}
@@ -1294,7 +1297,7 @@ class infolog_bo
 	 * Check access to the file store
 	 *
 	 * @param int|array $id id of entry or entry array
-	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param int $check Acl::READ for read and Acl::EDIT for write or delete access
 	 * @param string $rel_path = null currently not used in InfoLog
 	 * @param int $user = null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
@@ -1312,10 +1315,10 @@ class infolog_bo
 	 */
 	function set_link_cache(array $info)
 	{
-		egw_link::set_cache('infolog',$info['info_id'],
+		Link::set_cache('infolog',$info['info_id'],
 			$this->link_title($info),
-			$this->file_access($info,EGW_ACL_EDIT) ? EGW_ACL_READ|EGW_ACL_EDIT :
-			($this->file_access($info,EGW_ACL_READ) ? EGW_ACL_READ : 0));
+			$this->file_access($info,Acl::EDIT) ? EGW_ACL_READ|EGW_ACL_EDIT :
+			($this->file_access($info,Acl::READ) ? Acl::READ : 0));
 	}
 
 	/**
@@ -1334,7 +1337,7 @@ class infolog_bo
 		{
 			return False;
 		}
-		$GLOBALS['egw']->translation->add_app('infolog');
+		Api\Translation::add_app('infolog');
 
 		$do_events = $args['location'] == 'calendar_include_events';
 		$to_include = array();
@@ -1357,12 +1360,12 @@ class infolog_bo
 		{
 			foreach ($infos as $info)
 			{
-				$start = new egw_time($info['info_startdate'],egw_time::$user_timezone);
+				$start = new Api\DateTime($info['info_startdate'],Api\DateTime::$user_timezone);
 				$title = ($do_events?common::formattime($start->format('H'),$start->format('i')).' ':'').
 					$info['info_subject'];
-				$view = egw_link::view('infolog',$info['info_id']);
+				$view = Link::view('infolog',$info['info_id']);
 				$size = null;
-				$edit = egw_link::edit('infolog',$info['info_id'], $size);
+				$edit = Link::edit('infolog',$info['info_id'], $size);
 				$edit['size'] = $size;
 				$content=array();
 				$status = $this->status[$info['info_type']][$info['info_status']];
@@ -1372,10 +1375,10 @@ class infolog_bo
 					$status => 'status'
 				) as $icon => $default)
 				{
-					$icons[common::image('infolog',$icon) ? $icon : $default] = $icon;
+					$icons[Api\Image::find('infolog',$icon) ? $icon : $default] = $icon;
 				}
-				$content[] = html::a_href($title,$view);
-				$html = html::table(array(1 => $content));
+				$content[] = Api\Html::a_href($title,$view);
+				$html = Api\Html::table(array(1 => $content));
 
 				$to_include[] = array(
 					'starttime' => $info['info_startdate'],
@@ -1421,8 +1424,8 @@ class infolog_bo
 						'ongoing' : 'infolog/'.$row['info_status'],
 					'class'  => $row['info_id_parent'] ? 'infolog_rowHasParent' : null,
 				);
-				if (common::image('infolog', $icon=$row['info_type'].'_element') ||
-					common::image('infolog', $icon=$row['info_type']))
+				if (Api\Image::find('infolog', $icon=$row['info_type'].'_element') ||
+					Api\Image::find('infolog', $icon=$row['info_type']))
 				{
 					$infos[$row['info_id']]['icon'] = 'infolog/'.$icon;
 				}
@@ -1450,19 +1453,19 @@ class infolog_bo
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories = new categories($this->user,'infolog');
+			$this->categories = new Api\Categories($this->user,'infolog');
 		}
 		$old_cats_preserve = array();
 		if ($info_id && $info_id > 0)
 		{
-			// preserve categories without users read access
+			// preserve Api\Categories without users read access
 			$old_infolog = $this->read($info_id);
 			$old_categories = explode(',',$old_infolog['info_cat']);
 			if (is_array($old_categories) && count($old_categories) > 0)
 			{
 				foreach ($old_categories as $cat_id)
 				{
-					if ($cat_id && !$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					if ($cat_id && !$this->categories->check_perms(Acl::READ, $cat_id))
 					{
 						$old_cats_preserve[] = $cat_id;
 					}
@@ -1518,7 +1521,7 @@ class infolog_bo
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories = new categories($this->user,'infolog');
+			$this->categories = new Api\Categories($this->user,'infolog');
 		}
 
 		if (!is_array($cat_id_list))
@@ -1528,7 +1531,7 @@ class infolog_bo
 		$cat_list = array();
 		foreach($cat_id_list as $cat_id)
 		{
-			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
+			if ($cat_id && $this->categories->check_perms(Acl::READ, $cat_id) &&
 					($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
 			{
 				$cat_list[] = $cat_name;
@@ -1671,13 +1674,13 @@ class infolog_bo
 	 * X-INFOLOG-STATUS is only used, if translated to the vtodo-status gives the identical vtodo status
 	 * --> the user did not changed it
 	 *
-	 * @param string $vtodo_status {CANCELLED|NEEDS-ACTION|COMPLETED|IN-PROCESS}
+	 * @param string $_vtodo_status {CANCELLED|NEEDS-ACTION|COMPLETED|IN-PROCESS}
 	 * @param string $x_infolog_status preserved original infolog status
 	 * @return string
 	 */
-	function vtodo2status($vtodo_status,$x_infolog_status=null)
+	function vtodo2status($_vtodo_status,$x_infolog_status=null)
 	{
-		$vtodo_status = strtoupper($vtodo_status);
+		$vtodo_status = strtoupper($_vtodo_status);
 
 		if ($x_infolog_status && $this->status2vtodo($x_infolog_status) == $vtodo_status)
 		{
@@ -1800,7 +1803,7 @@ class infolog_bo
 			$filter = array('col_filter' => array('info_uid' => $infoData['info_uid']));
 			foreach($this->so->search($filter) as $egwData)
 			{
-				if (!$this->check_access($egwData,EGW_ACL_READ)) continue;
+				if (!$this->check_access($egwData,Acl::READ)) continue;
 				$foundInfoLogs[$egwData['info_id']] = $egwData['info_id'];
 			}
 			return $foundInfoLogs;
@@ -1852,7 +1855,7 @@ class infolog_bo
 
 		foreach ($this->so->search($filter) as $itemID => $egwData)
 		{
-			if (!$this->check_access($egwData,EGW_ACL_READ)) continue;
+			if (!$this->check_access($egwData,Acl::READ)) continue;
 
 			switch ($infoData['info_type'])
 			{
@@ -1925,7 +1928,7 @@ class infolog_bo
 		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 		foreach ($this->so->search($filter) as $itemID => $egwData)
 		{
-			if (!$this->check_access($egwData,EGW_ACL_READ)) continue;
+			if (!$this->check_access($egwData,Acl::READ)) continue;
 			// Horde::logMessage("findVTODO Trying\n"
 			//	. print_r($egwData, true),
 			//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
@@ -1947,8 +1950,8 @@ class infolog_bo
 				if (isset($egwData['info_startdate']) && $egwData['info_startdate'])
 				{
 					// We compare the date only
-					$taskTime = new egw_time($infoData['info_startdate'],egw_time::$server_timezone);
-					$egwTime = new egw_time($egwData['info_startdate'],egw_time::$server_timezone);
+					$taskTime = new Api\DateTime($infoData['info_startdate'],Api\DateTime::$server_timezone);
+					$egwTime = new Api\DateTime($egwData['info_startdate'],Api\DateTime::$server_timezone);
 					if ($taskTime->format('Ymd') != $egwTime->format('Ymd'))
 					{
 						if ($this->log)
@@ -1992,8 +1995,8 @@ class infolog_bo
 					if (isset($egwData['info_enddate']) && $egwData['info_enddate'])
 					{
 						// We compare the date only
-						$taskTime = new egw_time($infoData['info_enddate'],egw_time::$server_timezone);
-						$egwTime = new egw_time($egwData['info_enddate'],egw_time::$server_timezone);
+						$taskTime = new Api\DateTime($infoData['info_enddate'],Api\DateTime::$server_timezone);
+						$egwTime = new Api\DateTime($egwData['info_enddate'],Api\DateTime::$server_timezone);
 						if ($taskTime->format('Ymd') != $egwTime->format('Ymd'))
 						{
 							if ($this->log)
@@ -2021,8 +2024,8 @@ class infolog_bo
 					if (isset($egwData['info_datecompleted']) && $egwData['info_datecompleted'])
 					{
 						// We compare the date only
-						$taskTime = new egw_time($infoData['info_datecompleted'],egw_time::$server_timezone);
-						$egwTime = new egw_time($egwData['info_datecompleted'],egw_time::$server_timezone);
+						$taskTime = new Api\DateTime($infoData['info_datecompleted'],Api\DateTime::$server_timezone);
+						$egwTime = new Api\DateTime($egwData['info_datecompleted'],Api\DateTime::$server_timezone);
 						if ($taskTime->format('Ymd') != $egwTime->format('Ymd'))
 						{
 							if ($this->log)

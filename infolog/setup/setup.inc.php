@@ -6,13 +6,13 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
 $setup_info['infolog']['name']      = 'infolog';
-$setup_info['infolog']['version']   = '14.3';
+$setup_info['infolog']['version']   = '16.1';
 $setup_info['infolog']['app_order'] = 5;
 $setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra');
 $setup_info['infolog']['enable']    = 1;
@@ -65,15 +65,8 @@ $setup_info['infolog']['hooks']['timesheet_set'] = 'infolog.infolog_ui.timesheet
 $setup_info['infolog']['hooks']['calendar_set'] = 'infolog.infolog_ui.calendar_set';
 $setup_info['infolog']['hooks']['mail_import'] = 'infolog_hooks::mail_import';
 
-/* Dependencies for this app to work */
+// Dependencies for this app to work
 $setup_info['infolog']['depends'][] = array(
-	'appname' => 'phpgwapi',
-	'versions' => Array('14.1')
+	'appname' => 'api',
+	'versions' => Array('16.1')
 );
-$setup_info['infolog']['depends'][] = array(
-	'appname' => 'etemplate',
-	'versions' => Array('14.1')
-);
-
-
-

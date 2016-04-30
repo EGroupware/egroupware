@@ -6,10 +6,13 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage projectmanager
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
 
 include_once(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.datasource.inc.php');
 
@@ -93,11 +96,13 @@ class infolog_datasource extends datasource
 	 *
 	 * @param array $element source project element representing an InfoLog entry, $element['pe_app_id'] = info_id
 	 * @param int $target target project id
-	 * @param array $target_data=null data of target-project, atm not used by the infolog datasource
+	 * @param array $extra =null data of target-project, atm not used by the infolog datasource
 	 * @return array/boolean array(info_id,link_id) on success, false otherwise
 	 */
 	function copy($element,$target,$extra=null)
 	{
+		unset($extra);	// not used, but required by function signature
+
 		$info =& $this->infolog_bo->read((int) $element['pe_app_id']);
 
 		if (!is_array($info)) return false;
@@ -116,11 +121,11 @@ class infolog_datasource extends datasource
 		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
 
 		// link the new infolog against the project and setting info_link_id and evtl. info_from
-		$old_link = $info['info_link_id'] ? egw_link::get_link($info['info_link']) : $info['info_link'];
-		$info['info_link_id'] = egw_link::link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
+		$old_link = $info['info_link_id'] ? Link::get_link($info['info_link']) : $info['info_link'];
+		$info['info_link_id'] = Link::link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
 		if (!$info['info_from'] || $old_link && $info['info_from'] == $old_link['title'])
 		{
-			$info['info_from'] = egw_link::title('projectmanager',$target);
+			$info['info_from'] = Link::title('projectmanager',$target);
 		}
 		if ($info['info_status'] == 'template')
 		{
@@ -129,14 +134,14 @@ class infolog_datasource extends datasource
 		$this->infolog_bo->write($info);
 
 		// creating again all links, beside the one to the source-project
-		foreach(egw_link::get_links('infolog',$element['pe_app_id']) as $link)
+		foreach(Link::get_links('infolog',$element['pe_app_id']) as $link)
 		{
 			if ($link['app'] == 'projectmanager' && $link['id'] == $element['pm_id'] ||		// ignoring the source project
-				$link['app'] == egw_link::VFS_APPNAME)					// ignoring files attachments for now
+				$link['app'] == Link::VFS_APPNAME)					// ignoring files attachments for now
 			{
 				continue;
 			}
-			egw_link::link('infolog',$info['info_id'],$link['app'],$link['id'],$link['remark']);
+			Link::link('infolog',$info['info_id'],$link['app'],$link['id'],$link['remark']);
 		}
 		$ret = array($info['info_id'],$info['info_link_id']);
 
@@ -181,7 +186,7 @@ class infolog_datasource extends datasource
 			$GLOBALS['infolog_bo'] = new infolog_bo();
 		}
 		// dont delete infolog, which are linked to other elements, but their project
-		if (count(egw_link::get_links('infolog',$id)) > 1)
+		if (count(Link::get_links('infolog',$id)) > 1)
 		{
 			return false;
 		}
@@ -198,7 +203,7 @@ class infolog_datasource extends datasource
 	function change_status($id,$status)
 	{
 		//error_log("datasource_infolog::change_status($id,$status)");
-		if (($info = $this->infolog_bo->read($id)) && $this->infolog_bo->check_access($info,EGW_ACL_EDIT))
+		if (($info = $this->infolog_bo->read($id)) && $this->infolog_bo->check_access($info,Acl::EDIT))
 		{
 			if ($status == 'active' && in_array($info['info_status'],array('template','nonactive','archive')))
 			{

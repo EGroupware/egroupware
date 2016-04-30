@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * export iCal plugin of infolog
  */
@@ -25,15 +27,15 @@ class infolog_export_ical extends infolog_export_csv {
 		$options = $_definition->plugin_options;
 		$this->bo = new infolog_bo();
 
-		$limit_exception = bo_merge::is_export_limit_excepted();
-		if (!$limit_exception) $export_limit = bo_merge::getExportLimit('infolog');
+		$limit_exception = Api\Storage\Merge::is_export_limit_excepted();
+		if (!$limit_exception) $export_limit = Api\Storage\Merge::getExportLimit('infolog');
 
 		$ids = array();
 		$query = array();
 		switch($options['selection'])
 		{
 			case 'search':
-				$query = array_merge($GLOBALS['egw']->session->appsession('session_data','infolog'), $query);
+				$query = array_merge(Api\Cache::getSession('infolog', 'session_data'), $query);
 				// Fall through
 			case 'all':
 				$query['num_rows'] = $export_limit ? $export_limit : -1;

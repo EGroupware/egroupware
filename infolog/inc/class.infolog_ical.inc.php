@@ -12,6 +12,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Acl;
 
 /**
  * InfoLog: Create and parse iCal's
@@ -180,8 +181,8 @@ class infolog_ical extends infolog_bo
 			$taskData['info_cat'] = $cats[0];
 		}
 
-		$taskData = translation::convert($taskData,
-			translation::charset(), $charset);
+		$taskData = Api\Translation::convert($taskData,
+			Api\Translation::charset(), $charset);
 
 		if ($this->log)
 		{
@@ -201,8 +202,8 @@ class infolog_ical extends infolog_bo
 			// check if we have vtimezone component data for tzid of event, if not default to user timezone (default to server tz)
 			if (!calendar_timezones::add_vtimezone($vcal, $tzid))
 			{
-				error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
-				calendar_timezones::add_vtimezone($vcal, egw_time::$user_timezone->getName());
+				error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".Api\DateTime::$user_timezone->getName()."'!");
+				calendar_timezones::add_vtimezone($vcal, Api\DateTime::$user_timezone->getName());
 				$tzid = null;
 			}
 			if (!isset(self::$tz_cache[$tzid]))
@@ -457,22 +458,22 @@ class infolog_ical extends infolog_bo
 		}
 		elseif(is_null($tzid))
 		{
-			$tz = egw_time::$user_timezone;
+			$tz = Api\DateTime::$user_timezone;
 		}
 		else
 		{
-			$tz = egw_time::$server_timezone;
+			$tz = Api\DateTime::$server_timezone;
 		}
 		if (!is_a($time,'DateTime'))
 		{
-			$time = new egw_time($time,egw_time::$server_timezone);
+			$time = new Api\DateTime($time,Api\DateTime::$server_timezone);
 		}
 		$time->setTimezone($tz);
 
 		// check for date --> export it as such
 		if ($time->format('Hi') == '0000')
 		{
-			$arr = egw_time::to($time, 'array');
+			$arr = Api\DateTime::to($time, 'array');
 			$value = array(
 				'year'  => $arr['year'],
 				'month' => $arr['month'],
@@ -493,7 +494,7 @@ class infolog_ical extends infolog_bo
 			}
 			else
 			{
-				$value = egw_time::to($time, 'ts');
+				$value = Api\DateTime::to($time, 'ts');
 			}
 		}
 		//error_log(__METHOD__."(, '$attr', ".array2string($time_in).', '.array2string($tzid).') tz='.$tz->getName().', value='.array2string($value).(is_int($value)?date('Y-m-d H:i:s',$value):''));
@@ -542,7 +543,7 @@ class infolog_ical extends infolog_bo
 		// setting owner or responsible for new tasks based on folder
 		if (!is_null($user) && $_taskID == -1)
 		{
-			if ($this->check_access($taskData, EGW_ACL_ADD))
+			if ($this->check_access($taskData, Acl::ADD))
 			{
 				$taskData['info_owner'] = $user;
 			}
@@ -632,7 +633,7 @@ class infolog_ical extends infolog_bo
 	 */
 	protected static function date2ts($date)
 	{
-		return is_scalar($date) ? $date : egw_time::to($date, 'ts');
+		return is_scalar($date) ? $date : Api\DateTime::to($date, 'ts');
 	}
 
 	/**
@@ -922,8 +923,8 @@ class infolog_ical extends infolog_bo
 	{
 		if(!($note = $this->read($_noteID, true, 'server'))) return false;
 
-		$note = translation::convert($note,
-			translation::charset(), $charset);
+		$note = Api\Translation::convert($note,
+			Api\Translation::charset(), $charset);
 
 		switch	($_type)
 		{
@@ -935,8 +936,8 @@ class infolog_ical extends infolog_bo
 				if (!empty($note['info_cat']))
 				{
 					$cats = $this->get_categories(array($note['info_cat']));
-					$note['info_cat'] = translation::convert($cats[0],
-						translation::charset(), $charset);
+					$note['info_cat'] = Api\Translation::convert($cats[0],
+						Api\Translation::charset(), $charset);
 				}
 				$vnote = new Horde_Icalendar_Vnote();
 				$vnote->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware InfoLog '.$GLOBALS['egw_info']['apps']['infolog']['version'].'//'.
@@ -1084,7 +1085,7 @@ class infolog_ical extends infolog_bo
 			case 'text/plain':
 				$note = array();
 				$note['info_type'] = 'note';
-				$txt = str_replace("\r\n", "\n", translation::convert($_data, $charset));
+				$txt = str_replace("\r\n", "\n", Api\Translation::convert($_data, $charset));
 
 				$match = null;
 				if (preg_match('/([^\n]+)\n\n(.*)/ms', $txt, $match))
@@ -1208,13 +1209,13 @@ class infolog_ical extends infolog_bo
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 				'(' . $this->productManufacturer .
 				', '. $this->productName .', ' .
-				($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .
+				($this->tzid ? $this->tzid : Api\DateTime::$user_timezone->getName()) .
 				")\n" , 3, $this->logfile);
 		}
 
 		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
 		//	. $this->productName .', ' .
-		//	($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
+		//	($this->tzid ? $this->tzid : Api\DateTime::$user_timezone->getName()) .')',
 		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 }

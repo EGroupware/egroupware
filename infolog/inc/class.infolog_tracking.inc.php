@@ -5,15 +5,18 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package tracker
- * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+
 /**
  * Tracker - tracking object for the tracker
  */
-class infolog_tracking extends bo_tracking
+class infolog_tracking extends Api\Storage\Tracking
 {
 	/**
 	 * Application we are tracking (required!)
@@ -176,16 +179,16 @@ class infolog_tracking extends bo_tracking
 		if (!$old || $old['info_status'] == 'deleted')
 		{
 			return lang('New %1 created by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
-				common::grab_owner_name($this->infolog->user),$this->datetime('now'));
+				Api\Accounts::username($this->infolog->user),$this->datetime('now'));
 		}
 		elseif($data['info_status'] == 'deleted')
 		{
 			return lang('%1 deleted by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
-				common::grab_owner_name($data['info_modifier']),
+				Api\Accounts::username($data['info_modifier']),
 				$this->datetime($data['info_datemodified']));
 		}
 		return lang('%1 modified by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
-			common::grab_owner_name($data['info_modifier']),
+			Api\Accounts::username($data['info_modifier']),
 			$this->datetime($data['info_datemodified']));
 	}
 
@@ -205,7 +208,7 @@ class infolog_tracking extends bo_tracking
 		{
 			foreach($data['info_responsible'] as $uid)
 			{
-				$responsible[] = common::grab_owner_name($uid);
+				$responsible[] = Api\Accounts::username($uid);
 			}
 		}
 		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['show_id'])
@@ -218,7 +221,7 @@ class infolog_tracking extends bo_tracking
 			'info_addr'      => $data['info_addr'],
 			'info_cat'       => $data['info_cat'] ? $GLOBALS['egw']->categories->id2name($data['info_cat']) : '',
 			'info_priority'  => lang($this->infolog->enums['priority'][$data['info_priority']]),
-			'info_owner'     => common::grab_owner_name($data['info_owner']),
+			'info_owner'     => Api\Accounts::username($data['info_owner']),
 			'info_status'    => lang($data['info_status']=='deleted'?'deleted':$this->infolog->status[$data['info_type']][$data['info_status']]),
 			'info_percent'   => (int)$data['info_percent'].'%',
 			'info_datecompleted' => $data['info_datecompleted'] ? $this->datetime($data['info_datecompleted']) : '',
@@ -236,7 +239,7 @@ class infolog_tracking extends bo_tracking
 				if (in_array($data['info_contact'],$lkeys))
 				{
 					list($app,$id) = explode(':',$data['info_contact']);
-					if (!empty($app)&&!empty($id)) $value = egw_link::title($app,$id);
+					if (!empty($app)&&!empty($id)) $value = Link::title($app,$id);
 				}
 			}
 			$details[$name] = array(
@@ -328,7 +331,7 @@ class infolog_tracking extends bo_tracking
 				}
 				break;
 			case self::CUSTOM_NOTIFICATION:
-				$info_config = config::read('infolog');
+				$info_config = Api\Config::read('infolog');
 				if(!$info_config[self::CUSTOM_NOTIFICATION])
 				{
 					return '';

@@ -10,6 +10,13 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * This class is the UI-layer (user interface) of InfoLog
  */
@@ -40,7 +47,7 @@ class infolog_ui
 	/**
 	 * instance of the etemplate class
 	 *
-	 * @var etemplate
+	 * @var Etemplate
 	 */
 	var $tmpl;
 	/**
@@ -90,17 +97,17 @@ class infolog_ui
 	 */
 	function __construct()
 	{
-		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'infolog') translation::add_app('infolog');
+		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'infolog') Api\Translation::add_app('infolog');
 
 		// Make sure Global category is infolog - on first load, it may not be
 		if($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog' && !$GLOBALS['egw']->categories->app_name)
 		{
-			$GLOBALS['egw']->categories = new categories();
+			$GLOBALS['egw']->categories = new Api\Categories();
 		}
 
 		$this->bo = new infolog_bo();
 
-		$this->tmpl = new etemplate_new();
+		$this->tmpl = new Etemplate();
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
@@ -109,7 +116,7 @@ class infolog_ui
 		// read the duration format from project-manager
 		if ($GLOBALS['egw_info']['apps']['projectmanager'])
 		{
-			$pm_config = config::read('projectmanager');
+			$pm_config = Api\Config::read('projectmanager');
 			$this->duration_format = str_replace(',','',implode('', (array)$pm_config['duration_units']));
 			//error_log(__METHOD__."() ".__LINE__." duration_format=$this->duration_format, duration_unit=".array2string($pm_config['duration_units']));
 			$this->hours_per_workday = $pm_config['hours_per_workday'];
@@ -135,12 +142,6 @@ class infolog_ui
 		}
 		*/
 		$GLOBALS['infolog_ui'] =& $this;	// make ourself availible for ExecMethod of get_rows function
-
-		// can be removed for next release / infolog update
-		if (!$GLOBALS['egw']->hooks->hook_exists('calendar_set','infolog'))
-		{
-			$GLOBALS['egw']->hooks->register_single_app_hook('infolog','calendar_set');
-		}
 	}
 
 	/**
@@ -173,14 +174,14 @@ class infolog_ui
 		if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 		$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 		$info['info_percent'] = (int) $info['info_percent'].'%';
-		$editrights = $this->bo->check_access($info,EGW_ACL_EDIT);
+		$editrights = $this->bo->check_access($info,Acl::EDIT);
 		$isresposible = $this->bo->is_responsible($info);
 		if ((!($editrights || // edit rights or more then standard responsible rights
 			$isresposible && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')))))
 		{
 			$info['class'] .= 'rowNoEdit ';
 		}
-		if ($info['status'] == 'deleted' && !$this->bo->check_access($info, EGW_ACL_UNDELETE))
+		if ($info['status'] == 'deleted' && !$this->bo->check_access($info, infolog_bo::ACL_UNDELETE))
 		{
 			$info['class'] .= 'rowNoUndelete ';
 		}
@@ -195,11 +196,11 @@ class infolog_ui
 		{
 			$info['class'] .= 'rowNoCloseAll ';
 		}
-		if (!$this->bo->check_access($info,EGW_ACL_DELETE))
+		if (!$this->bo->check_access($info,Acl::DELETE))
 		{
 			$info['class'] .= 'rowNoDelete ';
 		}
-		if (!$this->bo->check_access($info,EGW_ACL_ADD))
+		if (!$this->bo->check_access($info,Acl::ADD))
 		{
 			$info['class'] .= 'rowNoSubs ';
 		}
@@ -211,13 +212,13 @@ class infolog_ui
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
 			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
-			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true,true))))
+			(isset($info['links']) || ($info['links'] = Link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true,true))))
 		{
 			$timesheets = array();
 			foreach ($info['links'] as $link)
 			{
 				// incl. link modification time into row_mod (link's lastmod is always in server-time!)
-				$link_mod = egw_time::server2user($link['lastmod']);
+				$link_mod = Api\DateTime::server2user($link['lastmod']);
 				if ($info['row_mod'] < $link_mod) $info['row_mod'] = $link_mod;
 
 				if ($link['deleted']) continue;	// skip deleted links, but incl. them in row_mod!
@@ -225,7 +226,7 @@ class infolog_ui
 				if ($show_links != 'none' && $show_links != 'no_describtion' &&
 					$link['link_id'] != $info['info_link_id'] &&
 				    ($link['app'] != $action || $link['id'] != $action_id) &&
-					($show_links == 'all' || ($show_links == 'links') === ($link['app'] != egw_link::VFS_APPNAME)))
+					($show_links == 'all' || ($show_links == 'links') === ($link['app'] != Link::VFS_APPNAME)))
 				{
 					$info['filelinks'][] = $link;
 				}
@@ -315,7 +316,7 @@ class infolog_ui
 			unset($query['col_filter']['parent_id']);
 			if(!$query['action'])
 			{
-				egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
+				Api\Cache::setSession('infolog', $query['session_for'].'session_data', $query);
 			}
 			$query['actions'] = $this->get_actions($query);
 			$query['row_id'] = 'info_id';
@@ -364,7 +365,7 @@ class infolog_ui
 				$id = $link['id'];
 			}
 			if(!is_array($id)) $id = explode(',',$id);
-			if (!($linked = egw_link::get_links_multiple($app,$id,true,'infolog','',$query['col_filter']['info_status'] == 'deleted')))
+			if (!($linked = Link::get_links_multiple($app,$id,true,'infolog','',$query['col_filter']['info_status'] == 'deleted')))
 			{
 				$rows = array();	// no infologs linked to selected link --> no rows to return
 				return 0;
@@ -378,7 +379,7 @@ class infolog_ui
 			$links[$key] = array_unique($links[$key]);
 			if($key == 'linked')
 			{
-				$linked = array('app' => $app, 'id' => $id, 'title' => (count($id) == 1 ? egw_link::title($app, $id) : lang('multiple')));
+				$linked = array('app' => $app, 'id' => $id, 'title' => (count($id) == 1 ? Link::title($app, $id) : lang('multiple')));
 			}
 		}
 		if(count($links))
@@ -397,7 +398,7 @@ class infolog_ui
 		unset($query['custom_fields']);
 		if ($query['col_filter']['info_type'])
 		{
-			$tpl = new etemplate_new;
+			$tpl = new Etemplate;
 			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type']))
 			{
 				$query['template'] = $tpl->name;
@@ -411,7 +412,7 @@ class infolog_ui
 				$clear_status_filter = true;
 			}
 		}
-		// Template change forces the UI to do a full update first, no point in getting rows right now
+		// Framework\Template change forces the UI to do a full update first, no point in getting rows right now
 		if($old_template && $old_template != $query['template']) return 0;
 
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
@@ -455,7 +456,7 @@ class infolog_ui
 		// query all links and sub counts in one go
 		if ($infos && (!$query['csv_export'] || !is_array($query['csv_export'])))
 		{
-			$links = egw_link::get_links_multiple('infolog',array_keys($infos),true,'','link_lastmod DESC',true);	// true=incl. deleted
+			$links = Link::get_links_multiple('infolog',array_keys($infos),true,'','link_lastmod DESC',true);	// true=incl. deleted
 			$anzSubs = $this->bo->anzSubs(array_keys($infos));
 		}
 		$rows = array();
@@ -551,7 +552,7 @@ class infolog_ui
 				$headers[] = lang($this->filters[$query['filter']]);
 			}
 			if ($query['action'] && ($title = $query['action_title'] || is_array($query['action_id']) ?
-				$query['action_title'] : egw_link::title($query['action']=='sp'?'infolog':$query['action'],$query['action_id'])))
+				$query['action_title'] : Link::title($query['action']=='sp'?'infolog':$query['action'],$query['action_id'])))
 			{
 				$headers[] = $title;
 			}
@@ -581,9 +582,9 @@ class infolog_ui
 		{
 			if ($info['info_cat']) $set['cat_id'] = $info['info_cat'];
 
-			foreach(egw_link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true) as $link)
+			foreach(Link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true) as $link)
 			{
-				if ($link['app'] != 'timesheet' && $link['app'] != egw_link::VFS_APPNAME)
+				if ($link['app'] != 'timesheet' && $link['app'] != Link::VFS_APPNAME)
 				{
 					$set['link_app'][] = $link['app'];
 					$set['link_id'][]  = $link['id'];
@@ -607,7 +608,7 @@ class infolog_ui
 			return $data;
 		}
 		$event = array_merge($data,array(
-			'category'	=> $GLOBALS['egw']->categories->check_list(EGW_ACL_READ, $infolog['info_cat']),
+			'category'	=> $GLOBALS['egw']->categories->check_list(Acl::READ, $infolog['info_cat']),
 			'priority'	=> $infolog['info_priority'] + 1,
 			'public'	=> $infolog['info_access'] != 'private',
 			'title'		=> $infolog['info_subject'],
@@ -619,8 +620,8 @@ class infolog_ui
 		unset($event['entry_id']);
 		if (!$event['end']) $event['end'] = $event['start'] + (int) $GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength']*60;
 
-		// Match categories by name
-		$event['category'] = $GLOBALS['egw']->categories->name2id(categories::id2name($infolog['info_cat']));
+		// Match Api\Categories by name
+		$event['category'] = $GLOBALS['egw']->categories->name2id(Api\Categories::id2name($infolog['info_cat']));
 
 		// make current user the owner of the new event, not the selected calendar, if current user has rights for it
 		$event['owner'] = $user = $GLOBALS['egw_info']['user']['account_id'];
@@ -665,16 +666,16 @@ class infolog_ui
 		$event['link_id'][]  = $infolog['info_link']['id'];
 
 		// Copy infolog's links
-		foreach(egw_link::get_links('infolog',$infolog['info_id'],'','link_lastmod DESC',true) as $link)
+		foreach(Link::get_links('infolog',$infolog['info_id'],'','link_lastmod DESC',true) as $link)
 		{
-			if ($link['app'] != egw_link::VFS_APPNAME)
+			if ($link['app'] != Link::VFS_APPNAME)
 			{
 				$event['link_app'][] = $link['app'];
 				$event['link_id'][]  = $link['id'];
 			}
 		}
 		// Copy same custom fields
-		foreach(array_keys(config::get_customfields('calendar')) as $name)
+		foreach(array_keys(Api\Storage\Customfields::get('calendar')) as $name)
 		{
 			if ($this->bo->customfields[$name]) $event['#'.$name] = $infolog['#'.$name];
 		}
@@ -706,11 +707,11 @@ class infolog_ui
 			$own_referer = common::get_referer();
 			if (strpos($own_referer,'menuaction=infolog.infolog_ui.edit') !== false)
 			{
-				$own_referer = $GLOBALS['egw']->session->appsession('own_session','infolog');
+				$own_referer = Api\Cache::getSession('infolog', 'own_session');
 			}
 			else
 			{
-				$GLOBALS['egw']->session->appsession('own_session','infolog',$own_referer);
+				Api\Cache::setSession('infolog', 'own_session', $own_referer);
 			}
 		}
 
@@ -768,17 +769,17 @@ class infolog_ui
 					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
 				{
 					$msg .= lang('%1 entries %2',$success,$action_msg);
-					egw_framework::message($msg);
+					Framework::message($msg);
 				}
 				elseif(is_null($msg))
 				{
 					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
-					egw_framework::message($msg,'error');
+					Framework::message($msg,'error');
 				}
 				elseif($msg)
 				{
 					$msg .= "\n".lang('%1 entries %2, %3 failed.',$success,$action_msg,$failed);
-					egw_framework::message($msg,'error');
+					Framework::message($msg,'error');
 				}
 				unset($values['nm']['multi_action']);
 				unset($values['nm']['select_all']);
@@ -793,7 +794,7 @@ class infolog_ui
 		//echo "<p>".__METHOD__."(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
 		if (!is_array($values))
 		{
-			$nm = egw_cache::getSession('infolog', $this->called_by.'session_data');
+			$nm = Api\Cache::getSession('infolog', $this->called_by.'session_data');
 			unset($nm['rows']);
 			if ($values === 'reset_action_view')
 			{
@@ -807,10 +808,10 @@ class infolog_ui
 				$nm['action_id'] = 0;
 				$nm['action_title'] = '';
 				// check if action-view reset filter and restore it
-				if (($filter = egw_cache::getSession('infolog', 'filter_reset_from')))
+				if (($filter = Api\Cache::getSession('infolog', 'filter_reset_from')))
 				{
 					$nm['filter'] = $filter;
-					egw_cache::unsetSession('infolog', 'filter_reset_from');
+					Api\Cache::unsetSession('infolog', 'filter_reset_from');
 				}
 			}
 			$values = array('nm' => $nm);
@@ -852,7 +853,7 @@ class infolog_ui
 			{
 				unset($values['nm']['multi_action']);
 				unset($values['nm']['action_id']);
-				egw_cache::setSession('infolog', $values['nm']['session_for'].'session_data', $values['nm']);
+				Api\Cache::setSession('infolog', $values['nm']['session_for'].'session_data', $values['nm']);
 				$this->tmpl->location($own_referer);
 			}
 			else
@@ -1018,7 +1019,7 @@ class infolog_ui
 			// remove types owned by groups the user has no edit grant
 			foreach($this->bo->group_owners as $type => $group)
 			{
-				if (!($this->bo->grants[$group] & EGW_ACL_EDIT))
+				if (!($this->bo->grants[$group] & Acl::EDIT))
 				{
 					unset($types[$type]);
 				}
@@ -1046,7 +1047,7 @@ class infolog_ui
 		unset($types['delete']);
 		foreach($types as $type => &$data)
 		{
-			$image_exists = common::image('infolog',$type);
+			$image_exists = Api\Image::find('infolog',$type);
 			$data = array(
 				'caption' => $data,
 				'icon' => $image_exists ? $type : 'infolog/navbar',
@@ -1060,7 +1061,7 @@ class infolog_ui
 		$statis = $this->bo->get_status($query['col_filter']['info_type'], $icons);
 		foreach($statis as $type => &$data)
 		{
-			$image_exists = common::image('infolog',$icons[$type]);
+			$image_exists = Api\Image::find('infolog',$icons[$type]);
 			$data = array(
 				'caption' => $data,
 				'icon' => $image_exists ? $icons[$type] : 'infolog/status',
@@ -1072,9 +1073,9 @@ class infolog_ui
 				'caption' => 'Open',
 				'default' => true,
 				'allowOnMultiple' => false,
-				'onExecute' => html::$ua_mobile?'javaScript:app.infolog.viewEntry':'',
+				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.infolog.viewEntry':'',
 				'url' => 'menuaction=infolog.infolog_ui.edit&info_id=$id',
-				'popup' => egw_link::get_registry('infolog', 'add_popup'),
+				'popup' => Link::get_registry('infolog', 'add_popup'),
 				'group' => $group=1,
 			),
 			'parent' => array(
@@ -1098,7 +1099,7 @@ class infolog_ui
 					'sub' => array(
 						'caption' => 'Sub-entry',
 						'url' => 'menuaction=infolog.infolog_ui.edit&action=sp&action_id=$id',
-						'popup' => egw_link::get_registry('infolog', 'add_popup'),
+						'popup' => Link::get_registry('infolog', 'add_popup'),
 						'allowOnMultiple' => false,
 						'hint' => 'Add a new sub-task, -note, -call to this entry',
 						'icon' => 'new',
@@ -1106,7 +1107,7 @@ class infolog_ui
 					'copy' => array(
 						'caption' => 'Copy',
 						'url' => 'menuaction=infolog.infolog_ui.edit&action=copy&info_id=$id',
-						'popup' => egw_link::get_registry('infolog', 'add_popup'),
+						'popup' => Link::get_registry('infolog', 'add_popup'),
 						'allowOnMultiple' => false,
 						'icon' => 'copy',
 					),
@@ -1147,7 +1148,7 @@ class infolog_ui
 						'group' => $group,
 						'icon' => 'completed',
 					),
-					'cat' =>  nextmatch_widget::category_action(
+					'cat' =>  Etemplate\Widget\Nextmatch::category_action(
 						'infolog',$group,'Change category','cat_'
 					),
 					'responsible' => array(
@@ -1203,9 +1204,9 @@ class infolog_ui
 				'caption' => 'Schedule appointment',
 				'group' => $group,
 				'url' => 'menuaction=calendar.calendar_uiforms.edit&'.
-					egw_link::get_registry('calendar', 'add_app') . '[]=infolog&'.egw_link::get_registry('calendar','add_id').'[]=$id',
+					Link::get_registry('calendar', 'add_app') . '[]=infolog&'.Link::get_registry('calendar','add_id').'[]=$id',
 				'allowOnMultiple' => false,
-				'popup' => egw_link::get_registry('calendar', 'add_popup'),
+				'popup' => Link::get_registry('calendar', 'add_popup'),
 			);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
@@ -1216,7 +1217,7 @@ class infolog_ui
 				'url' => 'menuaction=timesheet.timesheet_ui.edit&link_app[]=infolog&link_id[]=$id',
 				'group' => $group,
 				'allowOnMultiple' => false,
-				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+				'popup' => Link::get_registry('timesheet', 'add_popup'),
 			);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['tracker'])
@@ -1227,9 +1228,9 @@ class infolog_ui
 				'hint' => 'Convert to a ticket',
 				'group' => $group,
 				'url' => 'menuaction=tracker.tracker_ui.edit&'.
-					egw_link::get_registry('tracker', 'add_app') . '[]=infolog&'.egw_link::get_registry('tracker','add_id').'[]=$id',
+					Link::get_registry('tracker', 'add_app') . '[]=infolog&'.Link::get_registry('tracker','add_id').'[]=$id',
 				'allowOnMultiple' => false,
-				'popup' => egw_link::get_registry('tracker', 'add_popup'),
+				'popup' => Link::get_registry('tracker', 'add_popup'),
 			);
 		}
 
@@ -1322,10 +1323,10 @@ class infolog_ui
 					$msg = lang('You need to select an entry for linking.');
 					break;
 				}
-				$title = egw_link::title($app, $link_id);
+				$title = Link::title($app, $link_id);
 				foreach($checked as $id)
 				{
-					if(!$this->bo->check_access($id, EGW_ACL_EDIT))
+					if(!$this->bo->check_access($id, Acl::EDIT))
 					{
 						$failed++;
 						continue;
@@ -1333,7 +1334,7 @@ class infolog_ui
 					if($add_remove == 'add')
 					{
 						$action_msg = lang('linked to %1', $title);
-						if(egw_link::link('infolog', $id, $app, $link_id))
+						if(Link::link('infolog', $id, $app, $link_id))
 						{
 							$success++;
 						}
@@ -1345,7 +1346,7 @@ class infolog_ui
 					else
 					{
 						$action_msg = lang('unlinked from %1', $title);
-						$count = egw_link::unlink(0, 'infolog', $id, '', $app, $link_id);
+						$count = Link::unlink(0, 'infolog', $id, '', $app, $link_id);
 						$success += $count;
 					}
 				}
@@ -1360,9 +1361,9 @@ class infolog_ui
 			case 'ical':
 				// infolog_ical lets horde be auto-loaded, so it must go first
 				$boical = new infolog_ical();
-				html::content_header('todo.ics','text/calendar');
+				Api\Header\Content::type('todo.ics','text/calendar');
 				echo $boical->exportvCalendar($checked);
-				common::egw_exit();
+				exit();
 
 		}
 
@@ -1397,7 +1398,7 @@ class infolog_ui
 				case 'type':
 					$action_msg = lang('changed type');
 					// Dont allow to change the type, if user has no delete rights from the group-owner
-					if ($id && !($this->bo->grants[$entry['info_owner']] & EGW_ACL_DELETE))
+					if ($id && !($this->bo->grants[$entry['info_owner']] & Acl::DELETE))
 					{
 						$failed++;
 						break;
@@ -1406,7 +1407,7 @@ class infolog_ui
 					try {
 						$this->bo->write($entry, true,true,true,$skip_notifications,true); // Throw exceptions
 					}
-					catch (egw_exception_wrong_userinput $e)
+					catch (Api\Exception\WrongUserinput $e)
 					{
 						$msg .= "\n".$e->getMessage();
 						$failed++;
@@ -1475,7 +1476,7 @@ class infolog_ui
 				case 'cat':
 					if($settings)
 					{
-						$cat_name = categories::id2name($settings);
+						$cat_name = Api\Categories::id2name($settings);
 						$action_msg = lang('changed category to %1', $cat_name);
 					}
 					else
@@ -1500,7 +1501,7 @@ class infolog_ui
 					$users = explode(',', $user_str);
 					foreach($users as $account_id)
 					{
-						$names[] = common::grab_owner_name($account_id);
+						$names[] = Api\Accounts::username($account_id);
 					}
 					$action_msg .= implode(', ', $names);
 					$function = $add_remove == 'add' ? 'array_merge' : 'array_diff';
@@ -1590,7 +1591,7 @@ class infolog_ui
 
 		if (is_array($values) || $info_id <= 0)
 		{
-			if (($values['delete'] || $values['delete_subs']) && $info_id > 0 && $this->bo->check_access($info_id,EGW_ACL_DELETE))
+			if (($values['delete'] || $values['delete_subs']) && $info_id > 0 && $this->bo->check_access($info_id,Acl::DELETE))
 			{
 				$deleted = $this->bo->delete($info_id,$values['delete_subs'],$values['info_id_parent'], $skip_notification);
 			}
@@ -1677,7 +1678,7 @@ class infolog_ui
 				if (in_array($button,array('copy','schedule','ical','tracker')))
 				{
 					$action = $button;
-					if (!$info_id || $this->bo->check_access($info_id,EGW_ACL_EDIT))
+					if (!$info_id || $this->bo->check_access($info_id,Acl::EDIT))
 					{
 						$button = 'apply';	// need to store infolog first
 					}
@@ -1701,10 +1702,10 @@ class infolog_ui
 				if (($button == 'save' || $button == 'apply') && $info_id)
 				{
 					$old = $this->bo->read($info_id);
-					if (!($edit_acl = $this->bo->check_access($info_id,EGW_ACL_EDIT)))
+					if (!($edit_acl = $this->bo->check_access($info_id,Acl::EDIT)))
 					{
 						$status_only = $this->bo->is_responsible($old);
-						$undelete = $this->bo->check_access($old,EGW_ACL_UNDELETE);
+						$undelete = $this->bo->check_access($old,infolog_bo::ACL_UNDELETE);
 					}
 				}
 				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only || $undelete))
@@ -1730,7 +1731,7 @@ class infolog_ui
 							{
 								$content['link_to'] = array();
 							}
-							$content['info_link_id'] = (int)($info_link_id = egw_link::link('infolog',$content['link_to']['to_id'],$app,$id));
+							$content['info_link_id'] = (int)($info_link_id = Link::link('infolog',$content['link_to']['to_id'],$app,$id));
 						}
 						else
 						{
@@ -1738,13 +1739,13 @@ class infolog_ui
 						}
 						if ($old_link_id && $old_link_id != $content['info_link_id'])
 						{
-							$link = egw_link::get_link($old_link_id);
+							$link = Link::get_link($old_link_id);
 							// remove selected project, if removed link is that project
 							if($link['link_app2'] == 'projectmanager' && $link['link_id2'] == $content['old_pm_id'])
 							{
 								unset($content['pm_id'], $content['old_pm_id']);
 							}
-							egw_link::unlink($old_link_id);
+							Link::unlink($old_link_id);
 						}
 						// if added link is a project and no other project selected, also add as project
 						if ($app == 'projectmanager' && $id && !$content['pm_id'])
@@ -1762,7 +1763,7 @@ class infolog_ui
 						$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Error: saving the entry') :
 							lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-								htmlspecialchars(egw::link('/index.php',array(
+								htmlspecialchars(Egw::link('/index.php',array(
 									'menuaction' => 'infolog.infolog_ui.edit',
 									'info_id'    => $content['info_id'],
 									'no_popup'   => $no_popup,
@@ -1776,7 +1777,7 @@ class infolog_ui
 						$GLOBALS['egw']->preferences->add('infolog','preferred_type',$content['info_type']);
 						$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 						$content['msg'] = lang('InfoLog entry saved');
-						egw_framework::refresh_opener($content['msg'],'infolog',$info_id,$operation);
+						Framework::refresh_opener($content['msg'],'infolog',$info_id,$operation);
 					}
 					$content['tabs'] = $active_tab;
 					if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
@@ -1786,7 +1787,7 @@ class infolog_ui
 						if ($content['pm_id'])
 						{
 							//echo "<p>this->link->link('infolog',{$content['link_to']['to_id']},'projectmanager',{$content['pm_id']});</p>";
-							egw_link::link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
+							Link::link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
 							// making the project the selected link, if no other link selected
 							if (!$info_link_id || $info_link_id == 'projectmanager:'.$content['old_pm_id'])
 							{
@@ -1796,7 +1797,7 @@ class infolog_ui
 						if ($content['old_pm_id'])
 						{
 							//echo "<p>this->link->unlink2(0,infolog,{$content['link_to']['to_id']},0,'projectmanager',{$content['old_pm_id']});</p>\n";
-							egw_link::unlink2(0,infolog,$content['link_to']['to_id'],0,'projectmanager',$content['old_pm_id']);
+							Link::unlink2(0,infolog,$content['link_to']['to_id'],0,'projectmanager',$content['old_pm_id']);
 						}
 						$content['old_pm_id'] = $content['pm_id'];
 					}
@@ -1804,13 +1805,13 @@ class infolog_ui
 					if ($info_id && is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 					{
 						//echo "<p>writing links for new entry $info_id</p>\n"; _debug_array($content['link_to']['to_id']);
-						egw_link::link('infolog',$info_id,$content['link_to']['to_id']);
+						Link::link('infolog',$info_id,$content['link_to']['to_id']);
 						$content['link_to']['to_id'] = $info_id;
 					}
 					if ($info_link_id && strpos($info_link_id,':') !== false)	// updating info_link_id if necessary
 					{
 						list($app,$id) = explode(':',$info_link_id);
-						$link = egw_link::get_link('infolog',$info_id,$app,$id);
+						$link = Link::get_link('infolog',$info_id,$app,$id);
 						if ((int) $content['info_link_id'] != (int) $link['link_id'])
 						{
 							$content['info_link_id'] = $link['link_id'];
@@ -1838,20 +1839,20 @@ class infolog_ui
 					);
 					if (!($content['msg'] = $this->delete($info_id,$referer,'edit'))) return;	// checks ACL first
 
-					egw_framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
+					Framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
 				}
 				// called again after delete confirmation dialog
 				elseif ($button == 'deleted'  && $content['msg'])
 				{
-					egw_framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
+					Framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
 				}
 				if ($button == 'save' || $button == 'cancel' || $button == 'delete' || $button == 'deleted')
 				{
 					if ($no_popup)
 					{
-						egw::redirect_link($referer,array('msg' => $content['msg']));
+						Egw::redirect_link($referer,array('msg' => $content['msg']));
 					}
-					egw_framework::window_close();
+					Framework::window_close();
 				}
 			}
 			// on a type-change, set the status to the default status of that type, if the actual status is not supported by the new type
@@ -1915,7 +1916,7 @@ class infolog_ui
 						// set blank behind all , and . if words are too long, apply wordwrap afterwards to make sure we get
 						if (strlen($word)>75)
 						{
-							$buff = html::activate_links($word);
+							$buff = Api\Html::activate_links($word);
 							if (strlen($buff) == strlen($word)) // no links -> try to break overlong words
 							{
 								if (!(strpos($word,',')===false) && strpos($word,', ')===false) $word = str_replace(',',', ',$word);
@@ -1948,21 +1949,21 @@ class infolog_ui
 				case 'datetime':      $set_startdate = $this->bo->user_time_now; break;
 				case 'empty':         $set_startdate = 0; break;
 			}
-			if ((int)$content['info_link_id'] > 0 && !egw_link::get_link($content['info_link_id']))
+			if ((int)$content['info_link_id'] > 0 && !Link::get_link($content['info_link_id']))
 			{
 				$content['info_link_id'] = 0;	// link has been deleted
 				if (!$content['info_custom_link']) $content['info_from'] = '';
 			}
 			if (!$info_id && $action_id && $action == 'sp')    // new SubProject
 			{
-				if (!$this->bo->check_access($action_id,EGW_ACL_ADD))
+				if (!$this->bo->check_access($action_id,Acl::ADD))
 				{
 					return $referer ? $this->tmpl->location($referer) : $this->index(0,$action,$action_id);
 				}
 			}
 			else
 			{
-				$undelete = $this->bo->check_access($info_id,EGW_ACL_UNDELETE);
+				$undelete = $this->bo->check_access($info_id,infolog_bo::ACL_UNDELETE);
 			}
 			$content['links'] = $content['link_to'] = array(
 				'to_id' => $info_id,
@@ -1975,7 +1976,7 @@ class infolog_ui
 			switch ($action)
 			{
 				case 'schedule':
-					egw::redirect_link('/index.php',array(
+					Egw::redirect_link('/index.php',array(
 						'menuaction' => 'calendar.calendar_uiforms.edit',
 						'link_app' => 'infolog',
 						'link_id' => $info_id,
@@ -1984,9 +1985,9 @@ class infolog_ui
 				case 'ical':
 					$boical = new infolog_ical();
 					$result = $boical->exportVTODO($content,'2.0','PUBLISH',false);
-					html::content_header('todo.ics', 'text/calendar');
+					Api\Header\Content::type('todo.ics', 'text/calendar');
 					echo $result;
-					common::egw_exit();
+					exit();
 				case 'sp':
 				case 'copy':
 					$info_id = 0;
@@ -1999,16 +2000,16 @@ class infolog_ui
 					unset($action);	// it get stored in $content and will cause an other copy after [apply]
 					break;
 				case 'to_tracker':
-					egw::redirect_link('/index.php',array(
+					Egw::redirect_link('/index.php',array(
 						'menuaction' => 'tracker.tracker_ui.edit',
-						egw_link::get_registry('tracker', 'add_app').'[]' => 'infolog',
-						egw_link::get_registry('tracker','add_id').'[]' => $info_id,
+						Link::get_registry('tracker', 'add_app').'[]' => 'infolog',
+						Link::get_registry('tracker','add_id').'[]' => $info_id,
 					));
 					break;
 				case 'projectmanager':
 					$pm_links = array($action_id);
 				default:	// to allow other apps to participate
-					$content['info_subject'] = egw_link::title($action, $id);
+					$content['info_subject'] = Link::title($action, $id);
 					$action_ids = explode(',',$action_id);
 					if(count($action_ids) == 1)
 					{
@@ -2016,14 +2017,14 @@ class infolog_ui
 					}
 					foreach ($action_ids as $n => $id)
 					{
-						egw_link::link('infolog', $content['link_to']['to_id'], $action, $id);
+						Link::link('infolog', $content['link_to']['to_id'], $action, $id);
 
 						// calling "infolog_set" hook for first, in case app wants to set some more values
-						if (!$n && ($set = $GLOBALS['egw']->hooks->single(array('location'=>'infolog_set','id'=>$action_id),$action)))
+						if (!$n && ($set = Api\Hooks::single(array('location'=>'infolog_set','id'=>$action_id),$action)))
 						{
 							foreach((array)$set['link_app'] as $i => $l_app)
 							{
-								if (($l_id=$set['link_id'][$i])) egw_link::link('infolog',$content['link_to']['to_id'],$l_app,$l_id);
+								if (($l_id=$set['link_id'][$i])) Link::link('infolog',$content['link_to']['to_id'],$l_app,$l_id);
 							}
 							unset($set['link_app']);
 							unset($set['link_id']);
@@ -2037,7 +2038,7 @@ class infolog_ui
 					{
 						if (!isset($pm_links))
 						{
-							$pm_links = egw_link::get_links('infolog',$info_id,'projectmanager');
+							$pm_links = Link::get_links('infolog',$info_id,'projectmanager');
 						}
 						break;	// normal edit
 					}
@@ -2069,7 +2070,7 @@ class infolog_ui
 			// remove types owned by groups the user has no edit grant (current type is made readonly)
 			foreach($this->bo->group_owners as $type => $group)
 			{
-				if (!($this->bo->grants[$group] & EGW_ACL_EDIT))
+				if (!($this->bo->grants[$group] & Acl::EDIT))
 				{
 					if ($type == $content['info_type'])
 					{
@@ -2087,7 +2088,7 @@ class infolog_ui
 			{
 				$content['info_owner'] = $this->bo->group_owners[$content['info_type']];
 				// Dont allow to change the type, if user has no delete rights from the group-owner
-				if ($info_id && !($this->bo->grants[$content['info_owner']] & EGW_ACL_DELETE))
+				if ($info_id && !($this->bo->grants[$content['info_owner']] & Acl::DELETE))
 				{
 					//echo "<p>setting type to r/o as user has no delete rights from group #$group</p>\n";
 					$readonlys['info_type'] = true;
@@ -2107,7 +2108,7 @@ class infolog_ui
 		unset($preserv['links']); unset($preserv['link_to']);
 
 		// for no edit rights or implizit edit of responsible user make all fields readonly, but status and percent
-		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && !$undelete)
+		if ($info_id && !$this->bo->check_access($info_id,Acl::EDIT) && !$undelete)
 		{
 			$readonlys['__ALL__'] = true;	// make all fields not explicitly set readonly
 			if ($this->bo->is_responsible($content))
@@ -2131,7 +2132,7 @@ class infolog_ui
 			$this->tmpl->setElementAttribute('button[save]', 'label', 'Un-Delete');
 		}
 
-		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE)))
+		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($info_id,Acl::DELETE)))
 		{
 			$content['info_anz_subs'] = $this->bo->anzSubs($info_id);	// to determine js confirmation of delete or not
 		}
@@ -2303,16 +2304,16 @@ class infolog_ui
 		// Get links to be copied, if not excluded
 		if (!in_array('link_to',$exclude_fields) || !in_array('attachments',$exclude_fields))
 		{
-			foreach(egw_link::get_links($content['link_to']['to_app'], $info_id) as $link)
+			foreach(Link::get_links($content['link_to']['to_app'], $info_id) as $link)
 			{
-				if ($link['app'] != egw_link::VFS_APPNAME && !in_array('link_to', $exclude_fields))
+				if ($link['app'] != Link::VFS_APPNAME && !in_array('link_to', $exclude_fields))
 				{
-					egw_link::link('infolog', $content['link_to']['to_id'], $link['app'], $link['id'], $link['remark']);
+					Link::link('infolog', $content['link_to']['to_id'], $link['app'], $link['id'], $link['remark']);
 				}
-				elseif ($link['app'] == egw_link::VFS_APPNAME && !in_array('attachments', $exclude_fields))
+				elseif ($link['app'] == Link::VFS_APPNAME && !in_array('attachments', $exclude_fields))
 				{
-					egw_link::link('infolog', $content['link_to']['to_id'], egw_link::VFS_APPNAME, array(
-						'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
+					Link::link('infolog', $content['link_to']['to_id'], Link::VFS_APPNAME, array(
+						'tmp_name' => Link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
 						'name' => $link['id'],
 					), $link['remark']);
 				}
@@ -2326,19 +2327,19 @@ class infolog_ui
 			// we need this if copy is triggered via context menu action
 			if (!isset($content['info_contact']) || empty($content['info_contact']) || $content['info_contact'] === 'copy:')
 			{
-				$linkinfos = egw_link::get_link($info_link_id);
+				$linkinfos = Link::get_link($info_link_id);
 				$content['info_contact'] = $linkinfos['link_app1']=='infolog'? $linkinfos['link_app2'].':'.$linkinfos['link_id2']:$linkinfos['link_app1'].':'.$linkinfos['link_id1'];
 				if (stripos($content['info_contact'],'projectmanager')!==false) $content['pm_id'] = $linkinfos['link_app1']=='projectmanager'? $linkinfos['link_id1']:$linkinfos['link_id2'];
 			}
 			unset($content['info_link_id']);
 		}
-		$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
+		$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(Acl::ADD,0,$this->owner) ? $this->user : $this->owner;
 
 		if (!empty($content['info_subject']))
 		{
 			if ($create_sub)
 			{
-				$config = config::read('infolog');
+				$config = Api\Config::read('infolog');
 				$prefix = lang(empty($config['sub_prefix']) ? 'Re:': $config['sub_prefix']);
 			}
 			else
@@ -2370,7 +2371,7 @@ class infolog_ui
 				$alt = $id;
 			}
 		}
-		return $icon ? html::image('infolog',$icon,lang($alt),'border=0') : lang($alt);
+		return $icon ? Api\Html::image('infolog',$icon,lang($alt),'border=0') : lang($alt);
 	}
 
 	/**
@@ -2443,14 +2444,14 @@ class infolog_ui
 			'info_cc' => 'CC',
 		);
 		// add customfields to field list
-		foreach(config::get_customfields('infolog') as $name => $data)
+		foreach(Api\Storage\Customfields::get('infolog') as $name => $data)
 		{
 			$excludefields['#'.$name] = $data['label'];
 		}
 		$sub_excludefields = $excludefields;
 		unset($sub_excludefields['info_id_parent']);	// always set to parent!
 
-		$config = config::read('infolog');
+		$config = Api\Config::read('infolog');
 
 		if($content)
 		{
@@ -2465,23 +2466,23 @@ class infolog_ui
 					$extra = array_intersect($content['responsible_edit'],array_keys($fields));
 					$this->bo->responsible_edit = array_unique(array_merge($this->bo->responsible_edit,$extra));
 				}
-				config::save_value('copy_excludefields', $content['copy_excludefields'] ? $content['copy_excludefields'] : null, 'infolog');
-				config::save_value('sub_excludefields', $content['sub_excludefields'] ? $content['sub_excludefields'] : array('*NONE*'), 'infolog');
-				config::save_value('responsible_edit', $this->bo->responsible_edit, 'infolog');
-				config::save_value('implicit_rights', $this->bo->implicit_rights = $content['implicit_rights'] == 'edit' ? 'edit' : 'read', 'infolog');
-				config::save_value('history', $this->bo->history = $content['history'], 'infolog');
-				config::save_value('index_load_cfs', implode(',', (array)$content['index_load_cfs']), 'infolog');
-				config::save_value('sub_prefix', $content['sub_prefix'], 'infolog');
+				Api\Config::save_value('copy_excludefields', $content['copy_excludefields'] ? $content['copy_excludefields'] : null, 'infolog');
+				Api\Config::save_value('sub_excludefields', $content['sub_excludefields'] ? $content['sub_excludefields'] : array('*NONE*'), 'infolog');
+				Api\Config::save_value('responsible_edit', $this->bo->responsible_edit, 'infolog');
+				Api\Config::save_value('implicit_rights', $this->bo->implicit_rights = $content['implicit_rights'] == 'edit' ? 'edit' : 'read', 'infolog');
+				Api\Config::save_value('history', $this->bo->history = $content['history'], 'infolog');
+				Api\Config::save_value('index_load_cfs', implode(',', (array)$content['index_load_cfs']), 'infolog');
+				Api\Config::save_value('sub_prefix', $content['sub_prefix'], 'infolog');
 
 				// Notifications
 				$notifications =& $config[infolog_tracking::CUSTOM_NOTIFICATION];
 				$notifications[$content['notification_type']] = $content['notification'];
-				config::save_value(infolog_tracking::CUSTOM_NOTIFICATION, $notifications,'infolog');
+				Api\Config::save_value(infolog_tracking::CUSTOM_NOTIFICATION, $notifications,'infolog');
 			}
 
 			if($button == 'save' || $button == 'cancel')
 			{
-				egw::redirect_link('/index.php', array(
+				Egw::redirect_link('/index.php', array(
 					'menuaction' => 'admin.admin_ui.index',
 					'ajax' => 'true'
 				), 'admin');
@@ -2541,7 +2542,7 @@ class infolog_ui
 		if (!is_array($mailContent) && ($_GET['egw_data']))
 		{
 			// get the mail raw data
-			egw_link::get_data ($_GET['egw_data']);
+			Link::get_data ($_GET['egw_data']);
 			return false;
 		}
 
@@ -2561,7 +2562,7 @@ class infolog_ui
 	 * @param $args['view_id']  name of the id-var for location == 'infolog'
 	 * @param $args[$args['view_id']] id of the entry
 	 * this function can be called for any app, which should include infolog: \
-	 * 	$GLOBALS['egw']->hooks->process(array( \
+	 * 	Api\Hooks::process(array( \
 	 * 		 * 'location' => 'infolog', \
 	 * 		 * 'app'      => <your app>, \
 	 * 		 * 'view_id'  => <id name>, \
@@ -2572,7 +2573,7 @@ class infolog_ui
 	function hook_view($args)
 	{
 		// Load JS for infolog actions
-		egw_framework::validate_file('.','app','infolog');
+		Framework::includeJS('.','app','infolog');
 
 		switch ($args['location'])
 		{
@@ -2605,10 +2606,10 @@ class infolog_ui
 		// Set to calling app, so actions wind up in the correct place client side
 		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
 
-		translation::add_app('infolog');
+		Api\Translation::add_app('infolog');
 
-		// Still want infolog categories though
-		$GLOBALS['egw']->categories = new categories('','infolog');
+		// Still want infolog Api\Categories though
+		$GLOBALS['egw']->categories = new Api\Categories('','infolog');
 		$this->index(null,$app,$args[$view_id],array(
 			'menuaction' => $view,
 			isset($view_id2) ? $view_id2 : $view_id => $args[$view_id]

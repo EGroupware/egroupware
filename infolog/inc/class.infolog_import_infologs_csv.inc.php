@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
 
 /**
  * class import_csv for infolog
@@ -129,7 +131,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		$this->tracking = new infolog_tracking($this->boinfolog);
 
 		// Need translations for some human stuff (early type detection)
-		translation::add_app('infolog');
+		Api\Translation::add_app('infolog');
 
 		// set FieldMapping.
 		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
@@ -193,7 +195,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			if(!$record['info_type'] || $record['info_type'] && !$this->boinfolog->enums['type'][$record['info_type']])
 			{
 				// Check for translated type
-				$un_trans = translation::get_message_id($record['info_type'],'infolog');
+				$un_trans = Api\Translation::get_message_id($record['info_type'],'infolog');
 				if($record['info_type'] && $this->boinfolog->enums['type'][$un_trans])
 				{
 					$record['info_type'] = $un_trans;
@@ -339,8 +341,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 					// Check for link during dry run
 					if($_data['link_custom'])
 					{
-						list($app, $app_id) = explode(':', $_data['link_custom'],2);
-						$app_id = $this->link_by_cf($record_num, $app, $field, $app_id);
+						list($app, $app_id2) = explode(':', $_data['link_custom'],2);
+						$app_id = $this->link_by_cf($record_num, $app, $field, $app_id2);
 					}
 
 					$this->results[$_action]++;
@@ -371,7 +373,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 					break;
 				}
 			default:
-				throw new egw_exception('Unsupported action');
+				throw new Api\Exception('Unsupported action');
 		}
 
 		// Process some additional fields
@@ -379,7 +381,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			return $result;
 		}
 		$info_link_id = $_data['info_link_id'];
-		foreach(self::$special_fields as $field => $desc) {
+		foreach(array_keys(self::$special_fields) as $field) {
 			if(!$_data[$field]) continue;
 			if(strpos($field, 'link') === 0) {
 				list($app, $app_id) = explode(':', $_data[$field],2);
@@ -396,7 +398,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			if ($app && $app_id) {
 				$id = $_data['info_id'] ? $_data['info_id'] : (int)$result;
 				//echo "<p>linking infolog:$id with $app:$app_id</p>\n";
-				$link_id = egw_link::link('infolog',$id,$app,$app_id);
+				$link_id = Link::link('infolog',$id,$app,$app_id);
 				if ($link_id && !$info_link_id)
 				{
 					$to_write = array(
@@ -503,7 +505,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	// Extra conversion functions - must be static
 	public static function project_id($num_or_title)
 	{
-		static $boprojects;
+		static $boprojects=null;
 
 		if (!$num_or_title) return false;
 
@@ -526,15 +528,15 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	 * This is a copy of what's in importexport_basic_import_csv, and can go
 	 * away if this is changed to extend it
 	 */
-	protected function link_by_cf($record_num, $app, $fieldname, $value)
+	protected function link_by_cf($record_num, $app, $fieldname, $_value)
 	{
 		$app_id = false;
 
-		list($custom_field, $value) = explode(':',$value);
+		list($custom_field, $value) = explode(':',$_value);
 		// Find matching entry
 		if($app && $custom_field && $value)
 		{
-			$cfs = config::get_customfields($app);
+			$cfs = Api\Storage\Customfields::get($app);
 			// Error if no custom fields, probably something wrong in definition
 			if(!$cfs[$custom_field])
 			{
@@ -558,10 +560,10 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			if($custom_field[0] != '#') $custom_field = '#' . $custom_field;
 
 			// Search
-			if(egw_link::get_registry($app, 'query'))
+			if(Link::get_registry($app, 'query'))
 			{
 				$options = array('filter' => array("$custom_field = " . $GLOBALS['egw']->db->quote($value)));
-				$result = egw_link::query($app, '', $options);
+				$result = Link::query($app, '', $options);
 
 				// Only one allowed
 				if(count($result) != 1)

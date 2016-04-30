@@ -5,16 +5,17 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package infolog
- * @subpackage groupdav
+ * @subpackage caldav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Acl;
 
 /**
- * EGroupware: GroupDAV access: infolog handler
+ * EGroupware: CalDAV access: infolog handler
  *
  * Permanent error_log() calls should use $this->caldav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
@@ -623,7 +624,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		$action = $GLOBALS['egw_info']['user']['preferences']['groupdav']['infolog-cat-action'];
 
 		//error_log(__METHOD__.'('.array2string($task).', '.array2string($oldTask).") action=$action");
-		if ($task['info_cat'] && ($new_cat = categories::id2name($task['info_cat'])) &&
+		if ($task['info_cat'] && ($new_cat = Api\Categories::id2name($task['info_cat'])) &&
 			strpos($new_cat, '@') !== false)
 		{
 			$new_user = $GLOBALS['egw']->accounts->name2id($new_cat, 'account_email');
@@ -633,17 +634,17 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		if ($new_user)
 		{
 			// make sure category is global, as otherwise it will not be transmitted to other users
-			if (!categories::is_global($task['info_cat']))
+			if (!Api\Categories::is_global($task['info_cat']))
 			{
-				$cat_obj = new categories(categories::GLOBAL_ACCOUNT, 'infolog');
-				$cat = categories::read($task['info_cat']);
-				$cat['owner'] = categories::GLOBAL_ACCOUNT;
+				$cat_obj = new Api\Categories(categories::GLOBAL_ACCOUNT, 'infolog');
+				$cat = Api\Categories::read($task['info_cat']);
+				$cat['owner'] = Api\Categories::GLOBAL_ACCOUNT;
 				$cat['access'] = 'public';
 				$cat_obj->edit($cat);
 			}
 			// if replace, remove user of old category from responsible
 			if ($action == 'replace' && $oldTask && $oldTask['info_cat'] &&
-				($old_cat = categories::id2name($oldTask['info_cat'])) && strpos($old_cat, '@') !== false &&
+				($old_cat = Api\Categories::id2name($oldTask['info_cat'])) && strpos($old_cat, '@') !== false &&
 				($old_user = $GLOBALS['egw']->accounts->name2id($old_cat, 'account_email')) &&
 				($key = array_search($old_user, (array)$task['info_responsible'])) !== false)
 			{
@@ -722,7 +723,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	/**
 	 * Check if user has the neccessary rights on a task / infolog entry
 	 *
-	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
+	 * @param int $acl Acl::READ, Acl::EDIT or Acl::DELETE
 	 * @param array|int $task task-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
@@ -732,7 +733,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 
 		$access = $this->bo->check_access($task,$acl);
 
-		if (!$access && $acl == EGW_ACL_EDIT && $this->bo->is_responsible($task))
+		if (!$access && $acl == Acl::EDIT && $this->bo->is_responsible($task))
 		{
 			$access = true;	// access limited to $this->bo->responsible_edit fields (handled in infolog_bo::write())
 		}
@@ -774,7 +775,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	/**
 	 * Add extra properties for calendar collections
 	 *
-	 * @param array $props =array() regular props by the groupdav handler
+	 * @param array $props =array() regular props by the Api\CalDAV handler
 	 * @param string $displayname
 	 * @param string $base_uri =null base url of handler
 	 * @param int $user =null account_id of owner of collection
@@ -785,7 +786,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		unset($base_uri);	// not used, but required by function signature
 
 		// calendar description
-		$displayname = translation::convert(lang('Tasks of'),translation::charset(),'utf-8').' '.$displayname;
+		$displayname = Api\Translation::convert(lang('Tasks of'),Api\Translation::charset(),'utf-8').' '.$displayname;
 		$props['calendar-description'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-description',$displayname);
 		// supported components, currently only VEVENT
 		$props['supported-calendar-component-set'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'supported-calendar-component-set',array(
@@ -802,7 +803,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 					Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-multiget',''))))),
 		);
 		// only advertice rfc 6578 sync-collection report, if "delete-prevention" is switched on (deleted entries get marked deleted but not actualy deleted
-		$config = config::read('infolog');
+		$config = Api\Config::read('infolog');
 		if ($config['history'])
 		{
 			$props['supported-report-set']['sync-collection'] = Api\CalDAV::mkprop('supported-report',array(
@@ -842,7 +843,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	{
 		if (!isset($hook_data['setup']))
 		{
-			translation::add_app('infolog');
+			Api\Translation::add_app('infolog');
 			$infolog = new infolog_bo();
 			$types = $infolog->enums['type'];
 		}

@@ -10,6 +10,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+
 /**
  * InfoLog activesync plugin
  */
@@ -69,7 +72,7 @@ class infolog_zpush implements activesync_plugin_write
 	 *
 	 * Currently we only return an own infolog
 	 *
-	 * @param int $account=null account_id of addressbook or null to get array of all addressbooks
+	 * @param int $account =null account_id of addressbook or null to get array of all addressbooks
 	 * @return string|array folder name of array with int account_id => folder name pairs
 	 */
 	private function get_folders($account=null)
@@ -109,6 +112,7 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	public function GetFolder($id)
 	{
+		$type = $owner = null;
 		$this->backend->splitID($id, $type, $owner);
 
 		$folderObj = new SyncFolder();
@@ -151,6 +155,7 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	public function StatFolder($id)
 	{
+		$type = $owner = null;
 		$this->backend->splitID($id, $type, $owner);
 
 		$stat = array(
@@ -183,13 +188,16 @@ class infolog_zpush implements activesync_plugin_write
 	 * will work OK apart from that.
 	 *
 	 * @param string $id folder id
-	 * @param int $cutoffdate=null
+	 * @param int $cutoffdate =null
 	 * @return array
   	 */
 	function GetMessageList($id, $cutoffdate=NULL)
 	{
+		unset($cutoffdate);	// not used, but required by function signature
+
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
 
+		$type = $user = null;
 		$this->backend->splitID($id,$type,$user);
 		if (!($infolog_types = $GLOBALS['egw_info']['user']['preferences']['activesync']['infolog-types']))
 		{
@@ -232,6 +240,7 @@ class infolog_zpush implements activesync_plugin_write
 		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
 		debugLog (__METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
+		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
 		if ($type != 'infolog' || !($infolog = $this->infolog->read($id, true, 'server')))
 		{
@@ -267,7 +276,7 @@ class infolog_zpush implements activesync_plugin_write
 					$message->$key = array();
 					foreach($infolog[$attr] ? explode(',',$infolog[$attr]) : array() as $cat_id)
 					{
-						$message->categories[] = categories::id2name($cat_id);
+						$message->categories[] = Api\Categories::id2name($cat_id);
 					}
 					break;
 
@@ -304,6 +313,8 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	public function StatMessage($folderid, $infolog)
 	{
+		unset($folderid);	// not used, info_id does not depend on folder
+
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
 
 		if (!is_array($infolog)) $infolog = $this->infolog->read($infolog, true, 'server');
@@ -338,6 +349,8 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
+		unset($id, $oldid, $displayname, $type);	// not used
+
 		debugLog(__METHOD__." not implemented");
 	}
 
@@ -353,6 +366,8 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	public function DeleteFolder($parentid, $id)
 	{
+		unset($parentid, $id);	// not used
+
 		debugLog(__METHOD__." not implemented");
 	}
 
@@ -377,6 +392,7 @@ class infolog_zpush implements activesync_plugin_write
 	{
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
 		unset($contentParameters); // not used but required
+		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
 		//debugLog(__METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
 		if ($type != 'infolog') // || !($infolog = $this->addressbook->read($id)))
@@ -385,8 +401,8 @@ class infolog_zpush implements activesync_plugin_write
 			return false;
 		}
 		$infolog = array();
-		if (empty($id) && $this->infolog->check_access(0, EGW_ACL_EDIT, $account) ||
-			($infolog = $this->infolog->read($id)) && $this->infolog->check_access($infolog, EGW_ACL_EDIT))
+		if (empty($id) && $this->infolog->check_access(0, Acl::EDIT, $account) ||
+			($infolog = $this->infolog->read($id)) && $this->infolog->check_access($infolog, Acl::EDIT))
 		{
 			if (!$infolog) $infolog = array();
 			foreach (self::$mapping as $key => $attr)
@@ -472,6 +488,8 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	public function DeleteMessage($folderid, $id, $contentParameters)
 	{
+		unset($contentParameters);	// not used
+
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
 
 		$ret = $this->infolog->delete($id);
@@ -498,6 +516,8 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	public function SetReadFlag($folderid, $id, $flags, $contentParameters)
 	{
+		unset($folderid, $id, $flags, $contentParameters);	// not used
+
 		return false;
 	}
 
@@ -513,6 +533,8 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	function ChangeMessageFlag($folderid, $id, $flags)
 	{
+		unset($folderid, $id, $flags);	// not used
+
 		return false;
 	}
 
@@ -527,6 +549,7 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	function AlterPingChanges($folderid, &$syncstate)
 	{
+		$type = $owner = null;
 		$this->backend->splitID($folderid, $type, $owner);
 
 		if ($type != 'infolog') return false;
@@ -544,7 +567,7 @@ class infolog_zpush implements activesync_plugin_write
 		));
 
 		$changes = array();	// no change
-		$syncstate_was = $syncstate;
+		//$syncstate_was = $syncstate;
 
 		if ($ctag !== $syncstate)
 		{
@@ -556,14 +579,14 @@ class infolog_zpush implements activesync_plugin_write
 	}
 
 	/**
-	 * Populates $settings for the preferences
+	 * Populates $settings for the Api\Preferences
 	 *
 	 * @param array|string $hook_data
 	 * @return array
 	 */
 	function egw_settings($hook_data)
 	{
-		if (!$hook_data['setup']) translation::add_app('infolog');
+		if (!$hook_data['setup']) Api\Translation::add_app('infolog');
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
 
 		if (!($types = $this->infolog->enums['type']))

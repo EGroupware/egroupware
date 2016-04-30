@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -796,4 +796,10 @@ function infolog_upgrade14_2_001()
 	));
 
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '14.3';
+}
+
+
+function infolog_upgrade14_3()
+{
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '16.1';
 }

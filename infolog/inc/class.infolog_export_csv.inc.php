@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare
+ * EGroupware Infolog - export plugin
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package infolog
@@ -11,6 +11,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+
 /**
  * export plugin of infolog
  */
@@ -18,7 +21,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 
 
 	public function __construct() {
-		translation::add_app('infolog');
+		Api\Translation::add_app('infolog');
 		$this->bo = new infolog_bo();
 		$this->get_selects();
 	}
@@ -42,7 +45,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		switch($options['selection'])
 		{
 			case 'search':
-				$query = array_merge((array)$GLOBALS['egw']->session->appsession('session_data','infolog'), $query);
+				$query = array_merge((array)Api\Cache::getSession('infolog', 'session_data'), $query);
 				// Fall through
 			case 'filter':
 			case 'all':
@@ -94,7 +97,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 							if($row[$field]) $cf_preload[$app][] = $row[$field];
 						}
 						if($cf_preload[$app]){
-							 $selects[$field] = egw_link::titles($app, $cf_preload[$app]);
+							 $selects[$field] = Link::titles($app, $cf_preload[$app]);
 							//error_log('Preload ' . $field . '['.$app . ']: ' . implode(',',$cf_preload[$app]));
 						}
 					}
@@ -104,7 +107,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 				} while($query['start'] < $query['total']);
 
 				return $this->export_object;
-				break;
+
 			default:
 				$ids = $selection = explode(',',$options['selection']);
 				$this->export_records($this->export_object, $options, $selection, $ids);
@@ -118,22 +121,22 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		// Pre-load links all at once
 		if($ids && $options['mapping']['info_link_id'])
 		{
-			$links = egw_link::get_links_multiple('infolog', $ids, true, '!'.egw_link::VFS_APPNAME);
+			$links = Link::get_links_multiple('infolog', $ids, true, '!'.Link::VFS_APPNAME);
 			foreach($links as $id => $link) {
 				if(!is_array($selection[$id])) break;
 				$selection[$id]['info_link_id'] = $link;
-				if($options['convert']) $selection[$id]['info_link_id'] = egw_link::title($link['app'], $link['id']);
+				if($options['convert']) $selection[$id]['info_link_id'] = Link::title($link['app'], $link['id']);
 			}
 		}
 		// If exporting PM fields, pre-load them all at once
 		if($ids && ($options['mapping']['pm_id'] || $options['mapping']['project']))
 		{
-			$projects = egw_link::get_links_multiple('infolog', $ids, true, 'projectmanager');
+			$projects = Link::get_links_multiple('infolog', $ids, true, 'projectmanager');
 			foreach($projects as $id => $links)
 			{
 				if(!is_array($selection[$id])) break;
 				$selection[$id]['pm_id'] = current($links);
-				$selection[$id]['project'] = egw_link::title('projectmanager', $selection[$id]['pm_id']);
+				$selection[$id]['project'] = Link::title('projectmanager', $selection[$id]['pm_id']);
 				$this->selects['pl_id'] = ExecMethod('projectmanager.projectmanager_pricelist_bo.pricelist',$selection[$id]['pm_id']);
 			}
 		}
@@ -141,11 +144,11 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		foreach ($selection as $_identifier) {
 			if(!is_array($_identifier)) {
 				$record = new infolog_egw_record($_identifier);
-				if($link = $links[$record->info_id]) $record->info_link_id = $options['convert'] ? egw_link::title($link['app'], $link['id']) : $link;
-				if($project = $projects[$record->info_id])
+				if(($link = $links[$record->info_id])) $record->info_link_id = $options['convert'] ? Link::title($link['app'], $link['id']) : $link;
+				if(($project = $projects[$record->info_id]))
 				{
 					$record->pm_id = current($project);
-					$record->project = egw_link::title('projectmanager', $record->pm_id);
+					$record->project = Link::title('projectmanager', $record->pm_id);
 				}
 			} else {
 				$record = new infolog_egw_record();
@@ -249,7 +252,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		foreach($filters as $field_name => &$settings)
 		{
 			if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
-			
+
 			// Infolog can't handle ranges in custom fields due to the way searching is done.
 			if(strpos($field_name, '#') === 0 && strpos($settings['type'],'date') === 0) unset($filters[$field_name]);
 		}

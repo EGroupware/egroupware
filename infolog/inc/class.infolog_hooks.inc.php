@@ -1,14 +1,20 @@
 <?php
 /**
- * InfoLog - Admin-, Preferences- and SideboxMenu-Hooks
+ * EGroupware InfoLog - Admin-, Preferences- and SideboxMenu-Hooks
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
 
 /**
  * Class containing admin, preferences and sidebox-menus (used as hooks)
@@ -24,7 +30,7 @@ class infolog_hooks
 	static function not_enum_group_acls($location)
 	{
 		unset($location);	// not used, but part of hook signature
-		$config = config::read('infolog');
+		$config = Api\Config::read('infolog');
 
 		return $config['group_owners'];
 	}
@@ -38,15 +44,6 @@ class infolog_hooks
 	static function search_link($location)
 	{
 		unset($location);	// not used, but part of hook signature
-		// register our not_enum_group_acls hook, if not already registered
-		// can be removed after next infolog version update after 1.6
-		if ($GLOBALS['egw']->hooks->single('not_enum_group_acls', 'infolog') === false)
-		{
-			$setup_info = array();
-			include(EGW_INCLUDE_ROOT.'/infolog/setup/setup.inc.php');
-			$GLOBALS['egw']->hooks->register_hooks('infolog',$setup_info['infolog']['hooks']);
-			unset($setup_info);
-		}
 
 		return array(
 			'query'      => 'infolog.infolog_bo.link_query',
@@ -93,32 +90,32 @@ class infolog_hooks
 		if ($location == 'sidebox_menu')
 		{
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname, lang('Favorites'), egw_framework::favorite_list($appname));
+			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname));
 
 			$file = array(
-				'infolog list' => egw::link('/index.php',array(
+				'infolog list' => Egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_ui.index',
 					'ajax' => 'true')),
 				array(
-					'text' => lang('Add %1',lang(egw_link::get_registry($appname, 'entry'))),
+					'text' => lang('Add %1',lang(Link::get_registry($appname, 'entry'))),
 					'no_lang' => true,
 					'link' => "javascript:app.infolog.add_link_sidemenu();"
 				),
-				'Placeholders' => egw::link('/index.php','menuaction=infolog.infolog_merge.show_replacements')
+				'Placeholders' => Egw::link('/index.php','menuaction=infolog.infolog_merge.show_replacements')
 			);
 			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
 		}
 
-		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !html::$ua_mobile)
+		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !Api\Header\UserAgent::mobile())
 		{
 			$file = Array(
-				'Site configuration' => egw::link('/index.php',array(
+				'Site configuration' => Egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_ui.admin' )),
-				'Global Categories'  => egw::link('/index.php',array(
+				'Global Categories'  => Egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
 					'global_cats'=> True)),
-				'Custom fields, typ and status' => egw::link('/index.php',array(
+				'Custom fields, typ and status' => Egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_customfields.index')),
 			);
 			if ($location == 'admin')
@@ -133,7 +130,7 @@ class infolog_hooks
 	}
 
 	/**
-	 * populates $settings for the preferences
+	 * populates $settings for the Api\Preferences
 	 *
 	 * @return array
 	 */
@@ -488,7 +485,7 @@ class infolog_hooks
 	 */
 	private static function all_cats()
 	{
-		$categories = new categories('','infolog');
+		$categories = new Api\Categories('','infolog');
 		$accountId = $GLOBALS['egw_info']['user']['account_id'];
 
 		foreach((array)$categories->return_sorted_array(0,False,'','','',true) as $cat)
@@ -524,7 +521,7 @@ class infolog_hooks
 		if ($data['prefs']['notify_due_delegated'] || $data['prefs']['notify_due_responsible'] ||
 			$data['prefs']['notify_start_delegated'] || $data['prefs']['notify_start_responsible'])
 		{
-			$async = new asyncservice();
+			$async = new Api\AsyncService();
 
 			if (!$async->read('infolog-async-notification'))
 			{
@@ -537,17 +534,17 @@ class infolog_hooks
 	 * ACL rights and labels used
 	 *
 	 * @param string|array string with location or array with parameters incl. "location", specially "owner" for selected acl owner
-	 * @return array acl::(READ|ADD|EDIT|DELETE|PRIVAT|CUSTOM(1|2|3)) => $label pairs
+	 * @return array Acl::(READ|ADD|EDIT|DELETE|PRIVAT|CUSTOM(1|2|3)) => $label pairs
 	 */
 	public static function acl_rights($params)
 	{
 		unset($params);	// not used, but default function signature for hooks
 		return array(
-			acl::READ    => 'read',
-			acl::ADD     => 'add',
-			acl::EDIT    => 'edit',
-			acl::DELETE  => 'delete',
-			acl::PRIVAT  => 'private',
+			Acl::READ    => 'read',
+			Acl::ADD     => 'add',
+			Acl::EDIT    => 'edit',
+			Acl::DELETE  => 'delete',
+			Acl::PRIVAT  => 'private',
 		);
 	}
 
@@ -562,7 +559,7 @@ class infolog_hooks
 		unset($location);	// not used, but part of hook signature
 		return true;
 	}
-	
+
 	/**
 	 * Mail integration hook to import mail message contents into an infolog entry
 	 *
@@ -570,9 +567,11 @@ class infolog_hooks
 	 */
 	public static function mail_import($args)
 	{
+		unset($args);	// not used, but required by function signature
+
 		return array (
 			'menuaction' => 'infolog.infolog_ui.mail_import',
-			'popup' => egw_link::get_registry('infolog', 'edit_popup')
+			'popup' => Link::get_registry('infolog', 'edit_popup')
 		);
 	}
 }

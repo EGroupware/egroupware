@@ -5,10 +5,14 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
 
 /**
  * storage object / db-layer for InfoLog
@@ -21,7 +25,7 @@ class infolog_so
 	/**
 	 * Instance of the db class
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	var $db;
 	/**
@@ -64,7 +68,7 @@ class infolog_so
 	/**
 	 * Constructor
 	 *
-	 * @param array $grants=array()
+	 * @param array $grants =array()
 	 * @return soinfolog
 	 */
 	function __construct( $grants=array() )
@@ -102,9 +106,9 @@ class infolog_so
 	 *
 	 * @param array|int $info data or info_id of InfoLog entry
 	 * @param int $required_rights EGW_ACL_xyz anded together
-	 * @param boolean $implicit_edit=false responsible has only implicit read and add rigths, unless this is set to true
-	 * @param array $grants=null grants to use, default (null) $this->grants
-	 * @param int $user=null user to check, default (null) $this->user
+	 * @param boolean $implicit_edit =false responsible has only implicit read and add rigths, unless this is set to true
+	 * @param array $grants =null grants to use, default (null) $this->grants
+	 * @param int $user =null user to check, default (null) $this->user
 	 * @return boolean True if access is granted else False
 	 */
 	function check_access( $info,$required_rights,$implicit_edit=false,array $grants=null,$user=null )
@@ -139,8 +143,8 @@ class infolog_so
 			// ACL only on public entrys || $owner granted _PRIVATE
 			(!!($grants[$owner] & $required_rights) ||
 				$this->is_responsible($info,$user) &&	// implicite rights for responsible user(s) and his memberships
-				($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)) &&
-			($info['info_access'] == 'public' || !!($this->grants[$user] & EGW_ACL_PRIVATE));
+				($required_rights == Acl::READ || $required_rights == Acl::ADD || $implicit_edit && $required_rights == Acl::EDIT)) &&
+			($info['info_access'] == 'public' || !!($this->grants[$user] & Acl::PRIVAT));
 
 		// error_log(__METHOD__."($info[info_id],$required_rights,$implicit_edit,".array2string($grants).",$user) returning ".array2string($access_ok));
 		return $access_ok;
@@ -181,16 +185,16 @@ class infolog_so
 	/**
 	 * generate sql to be AND'ed into a query to ensure ACL is respected (incl. _PRIVATE)
 	 *
-	 * @param string $filter: ''|all - list all entrys user have rights to see<br>
+	 * @param string $_filter ''|all - list all entrys user have rights to see<br>
 	 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!),
 	 *  responsible|my = entries the user is responsible for
 	 *  delegated = entries the user delegated to someone else
 	 * @return string the necesary sql
 	 */
-	function aclFilter($filter = False)
+	function aclFilter($_filter = False)
 	{
 		$vars = null;
-		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)/',$filter_was=$filter,$vars);
+		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)/',$_filter,$vars);
 		$filter = $vars[1];
 		$f_user = $vars[2];
 
@@ -224,7 +228,7 @@ class infolog_so
 					{
 						$public_user_list[] = $user;
 					}
-					if ($grant & EGW_ACL_PRIVATE)
+					if ($grant & Acl::PRIVAT)
 					{
 						$private_user_list[] = $user;
 					}
@@ -266,21 +270,21 @@ class infolog_so
 				)," AND info_responsible='0' OR ",$this->responsible_filter($f_user),')');
 			}
 		}
-		//echo "<p>aclFilter(filter='$filter_was',user='$f_user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
+		//echo "<p>aclFilter(filter='$_filter',user='$f_user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
 		return $this->acl_filter[$filter.$f_user] = $filtermethod;  // cache the filter
 	}
 
 	/**
 	 * generate sql to filter based on the status of the log-entry
 	 *
-	 * @param string $filter done = done or billed, open = not (done, billed, cancelled or deleted), offer = offer
-	 * @param boolean $prefix_and=true if true prefix the fileter with ' AND '
+	 * @param string $_filter done = done or billed, open = not (done, billed, cancelled or deleted), offer = offer
+	 * @param boolean $prefix_and =true if true prefix the fileter with ' AND '
 	 * @return string the necesary sql
 	 */
-	function statusFilter($filter = '',$prefix_and=true)
+	function statusFilter($_filter = '',$prefix_and=true)
 	{
 		$vars = null;
-		preg_match('/(done|open|offer|deleted|\+deleted)/',$filter,$vars);
+		preg_match('/(done|open|offer|deleted|\+deleted)/',$_filter,$vars);
 		$filter = $vars[1];
 
 		switch ($filter)
@@ -298,7 +302,7 @@ class infolog_so
 	/**
 	 * generate sql to filter based on the start- and enddate of the log-entry
 	 *
-	 * @param string $filter upcoming = startdate is in the future
+	 * @param string $_filter upcoming = startdate is in the future
 	 * 	today: startdate < tomorrow
 	 * 	overdue: enddate < tomorrow
 	 *  date: today <= startdate && startdate < tomorrow
@@ -306,10 +310,10 @@ class infolog_so
 	 * 	limitYYYY/MM/DD not older or open
 	 * @return string the necesary sql
 	 */
-	function dateFilter($filter = '')
+	function dateFilter($_filter = '')
 	{
 		$vars = null;
-		preg_match('/(open-upcoming|upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$filter,$vars);
+		preg_match('/(open-upcoming|upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$_filter,$vars);
 		$filter = $vars[1];
 
 		if (isset($vars[2]) && !empty($vars[2]) && ($date = preg_split('/[-\\/.]/',$vars[2])))
@@ -393,7 +397,7 @@ class infolog_so
 		// entry without uid --> create one based on our info_id and save it
 		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length)
 		{
-			$this->data['info_uid'] = common::generate_uid('infolog', $this->data['info_id']);
+			$this->data['info_uid'] = Api\CalDAV::generate_uid('infolog', $this->data['info_id']);
 			$this->db->update($this->info_table,
 				array('info_uid' => $this->data['info_uid']),
 				array('info_id' => $this->data['info_id']), __LINE__,__FILE__);
@@ -428,7 +432,7 @@ class infolog_so
 		}
 		$this->db->delete($this->info_table,array('info_id'=>$info_id),__LINE__,__FILE__);
 		$this->db->delete($this->extra_table,array('info_id'=>$info_id),__LINE__,__FILE__);
-		egw_link::unlink(0,'infolog',$info_id);
+		Link::unlink(0,'infolog',$info_id);
 
 		if ($this->data['info_id'] == $info_id)
 		{
@@ -499,15 +503,14 @@ class infolog_so
 				'info_responsible' => implode(',',$new_responsible),
 			),array('info_id' => $row['info_id']),__LINE__,__FILE__,'infolog');
 		}
-
 	}
 
 	/**
 	 * writes the given $values to InfoLog, a new entry gets created if info_id is not set or 0
 	 *
 	 * @param array $values with the data of the log-entry
-	 * @param int $check_modified=0 old modification date to check before update (include in WHERE)
-	 * @param string $purge_cfs=null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
+	 * @param int $check_modified =0 old modification date to check before update (include in WHERE)
+	 * @param string $purge_cfs =null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
 	 * @return int|boolean info_id, false on error or 0 if the entry has been updated in the meantime
 	 */
 	function write($values, $check_modified=0, $purge_cfs=null)  // did _not_ ensure ACL
@@ -567,7 +570,7 @@ class infolog_so
 		// entry without (reasonable) uid --> create one based on our info_id and save it
 		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length)
 		{
-			$update['info_uid'] = $this->data['info_uid'] = common::generate_uid('infolog', $info_id);
+			$update['info_uid'] = $this->data['info_uid'] = Api\CalDAV::generate_uid('infolog', $info_id);
 		}
 		// entry without caldav_name --> generate one based on info_id plus '.ics' extension
 		if (empty($this->data['caldav_name']))
@@ -685,7 +688,7 @@ class infolog_so
 			$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
 			if ($action)
 			{
-				$links = solink::get_links($action=='sp'?'infolog':$action,
+				$links = Link\Storage::get_links($action=='sp'?'infolog':$action,
 					is_array($query['action_id']) ? $query['action_id'] : explode(',',$query['action_id']),'infolog','',$query['col_filter']['info_status'] =='deleted');
 
 				if (count($links))
@@ -767,14 +770,14 @@ class infolog_so
 				if ($col[0] == '#' &&  $query['custom_fields'] && $data)
 				{
 					$filtermethod .= " AND main.info_id IN (SELECT DISTINCT info_id FROM $this->extra_table WHERE ";
-					$custom_fields = config::get_customfields('infolog');
+					$custom_fields = Api\Storage\Customfields::get('infolog');
 
 					if($custom_fields[substr($col,1)]['type'] == 'select' && $custom_fields[substr($col,1)]['rows'] > 1)
 					{
 						// Multi-select - any entry with the filter value selected matches
 						$filtermethod .= $this->db->expression($this->extra_table, array(
 							'info_extra_name' => substr($col,1),
-							$this->db->concat("','",'info_extra_value',"','").' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%,'.$data.',%'),
+							$this->db->concat("','",'info_extra_value',"','").' '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%,'.$data.',%'),
 						)).')';
 					}
 					else
@@ -792,7 +795,7 @@ class infolog_so
 
 		if ((int)$query['cat_id'])
 		{
-			$categories = new categories('','infolog');
+			$categories = new Api\Categories('','infolog');
 			$cats = $categories->return_all_children((int)$query['cat_id']);
 			$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 		}
@@ -805,7 +808,7 @@ class infolog_so
 			if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 
 			$wildcard = $op = null;
-			$so_sql = new so_sql('infolog', $this->info_table, $this->db);
+			$so_sql = new Api\Storage\Base('infolog', $this->info_table, $this->db);
 			$search = $so_sql->search2criteria($query['search'], $wildcard, $op, null, $columns);
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 				implode($op, $search) .')';
@@ -841,7 +844,7 @@ class infolog_so
 			if ($sortbycf != '')
 			{
 				$sort_col = "(SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 WHERE sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).")";
-				if (!isset($custom_fields)) $custom_fields = config::get_customfields('infolog');
+				if (!isset($custom_fields)) $custom_fields = Api\Storage\Customfields::get('infolog');
 				switch($custom_fields[$sortbycf]['type'])
 				{
 					case 'int':
@@ -863,7 +866,7 @@ class infolog_so
 				$cols = isset($query['cols']) ? $query['cols'] : 'main.*';
 				if (is_array($cols)) $cols = implode(',',$cols);
 				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$info_customfield.' '.$sql_query.$query['append'].' '.$ordermethod,__LINE__,__FILE__,
-					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1,false,egw_db::FETCH_ASSOC);
+					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1,false,Api\Db::FETCH_ASSOC);
 				//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 
 				if ($mysql_calc_rows)
@@ -887,7 +890,7 @@ class infolog_so
 			static $index_load_cfs = null;
 			if (is_null($index_load_cfs) && $query['col_filter']['info_type'])
 			{
-				$config_data = config::read('infolog');
+				$config_data = Api\Config::read('infolog');
 				$index_load_cfs = $config_data['index_load_cfs'];
 				if (!is_array($index_load_cfs)) $index_load_cfs = explode(',', $index_load_cfs);
 			}
