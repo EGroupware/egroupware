@@ -1304,7 +1304,7 @@ abstract class Framework extends Framework\Extra
 		{
 			self::$load_default_css = false;
 		}
-		error_log(__METHOD__."('$app', '$name', append=$append, no_default=$no_default_css) ".function_backtrace());
+		//error_log(__METHOD__."('$app', '$name', append=$append, no_default=$no_default_css) ".function_backtrace());
 		return Framework\CssIncludes::add($app, $name, $append, $no_default_css);
 	}
 
@@ -1322,7 +1322,7 @@ abstract class Framework extends Framework\Extra
 
 		// add all css files from Framework::includeCSS()
 		$query = null;
-error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
+		//error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
 		foreach(Framework\CssIncludes::get() as $path)
 		{
 			unset($query);
