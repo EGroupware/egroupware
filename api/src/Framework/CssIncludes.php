@@ -79,9 +79,21 @@ class CssIncludes
 	 *
 	 * @return string
 	 */
-	public static function get()
+	public static function get($resolve=false)
 	{
-		return self::$files;
+		if (!$resolve)
+		{
+			return self::$files;
+		}
+		$files = array();
+		foreach(self::$files as $path)
+		{
+			foreach(self::resolve_css_includes($path) as $path)
+			{
+				$files[] = $path;
+			}
+		}
+		return $files;
 	}
 
 	/**
@@ -93,7 +105,7 @@ class CssIncludes
 	{
 		// add all css files from self::includeCSS
 		$max_modified = 0;
-		$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
+		$debug_minify = true;	//no more dynamic minifying: $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 		$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
 		if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
 		$css_files = '';
@@ -109,12 +121,14 @@ class CssIncludes
 				{
 					$css_files .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].$path.($query ? '&' : '?').$mod.'" type="text/css" rel="StyleSheet" />'."\n";
 				}
+				/* no more dynamic minifying
 				else
 				{
 					$css_file .= ($css_file ? ',' : '').substr($path, 1);
-				}
+				}*/
 			}
 		}
+		/* no more dynamic minifying
 		if (!$debug_minify)
 		{
 			$css = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/inc/min/?';
@@ -123,7 +137,7 @@ class CssIncludes
 				($GLOBALS['egw_info']['server']['debug_minify'] === 'debug' ? '&debug' : '').
 				'&'.$max_modified;
 			$css_files = '<link href="'.$css.'" type="text/css" rel="StyleSheet" />'."\n".$css_files;
-		}
+		}*/
 		return $css_files;
 	}
 

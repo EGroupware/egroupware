@@ -56,7 +56,8 @@ var et2_color = (function(){ "use strict"; return et2_inputWidget.extend(
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.egw().includeCSS("phpgwapi/js/jquery/jpicker/css/jPicker-1.1.6.min.css");
+		// included via etemplate2.css
+		//this.egw().includeCSS("phpgwapi/js/jquery/jpicker/css/jPicker-1.1.6.min.css");
 		this.input = this.$node = jQuery(document.createElement("span"));
 
 		// Translations

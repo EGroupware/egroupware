@@ -211,15 +211,6 @@ class Etemplate extends Etemplate\Widget\Template
 		}
 		else	// first call
 		{
-			// missing dependency, thought egw:uses jquery.jquery.tools does NOT work, maybe we should rename it to jquery-tools
-			// Framework::includeJS('jquery','jquery.tools.min');
-
-			// Include the jQuery-UI CSS - many more complex widgets use it
-			$theme = 'redmond';
-			Framework::includeCSS("/api/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
-			// Load our CSS after jQuery-UI, so we can override it
-			Framework::includeCSS('/api/templates/default/etemplate2.css');
-
 			// check if application of template has a app.js file --> load it
 			list($app) = explode('.',$this->name);
 			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))

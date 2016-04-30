@@ -15,12 +15,15 @@
  *		npm install grunt --save-dev
  *		npm install grunt-contrib-uglify --save-dev
  *		npm install grunt-newer --save-dev
+ *		npm install grunt-contrib-cssmin --save-dev
  *
  * Building happens by running in your EGroupware directory:
  *
- *		grunt	# runs uglify for all targets with changed files
+ *		grunt	# runs uglify and cssmin for all targets with changed files
  * or
  *		grunt [newer:]uglify:<target>	# targets: api, et2, pixelegg, mobile, mail, calendar, ...
+ * or
+ *		grunt [newer:]cssmin:<target>	# targets: pixelegg, jdots
  *
  * app.js files can be added like mail target or, if you want automatic dependencies,
  * you need to add them in egw_framework::$bundle2minurl and egw_framework::get_bundles().
@@ -258,14 +261,136 @@ module.exports = function (grunt) {
 					]
 				}
 			}
+		},
+		cssmin: {
+			options: {
+				shorthandCompacting: false,
+				sourceMap: true,
+				relativeTo: "pixelegg\/css\/"
+			},
+			pixelegg: {
+				files: {
+					"pixelegg\/css\/pixelegg.min.css": [
+						"api\/js\/jquery\/chosen\/chosen.css",
+						"api\/js\/jquery\/jquery-ui\/redmond\/jquery-ui.css",
+						"api\/js\/jquery\/magicsuggest\/magicsuggest.css",
+						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
+						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
+						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
+						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
+						"api\/templates\/default\/etemplate2.css",
+						"pixelegg\/css\/pixelegg.css",
+						"phpgwapi\/templates\/idots\/print.css",
+						"jdots\/print.css",
+						"pixelegg\/print.css"
+					],
+					"pixelegg\/css\/mobile.min.css": [
+						"api\/js\/jquery\/chosen\/chosen.css",
+						"api\/js\/jquery\/jquery-ui\/redmond\/jquery-ui.css",
+						"api\/js\/jquery\/magicsuggest\/magicsuggest.css",
+						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
+						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
+						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
+						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
+						"api\/templates\/default\/etemplate2.css",
+						"pixelegg\/css\/mobile.css",
+						"phpgwapi\/templates\/idots\/print.css",
+						"jdots\/print.css",
+						"pixelegg\/print.css"
+					],
+					"pixelegg\/mobile\/fw_mobile.min.css": [
+						"api\/js\/jquery\/chosen\/chosen.css",
+						"api\/js\/jquery\/jquery-ui\/redmond\/jquery-ui.css",
+						"api\/js\/jquery\/magicsuggest\/magicsuggest.css",
+						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
+						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
+						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
+						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
+						"api\/templates\/default\/etemplate2.css",
+						"pixelegg\/mobile\/fw_mobile.css",
+						"phpgwapi\/templates\/idots\/print.css",
+						"jdots\/print.css",
+						"pixelegg\/print.css"
+					]
+				}
+			},
+			jdots: {
+				files: {
+					"jdots\/css\/high-contrast.min.css": [
+						"api\/js\/jquery\/chosen\/chosen.css",
+						"api\/js\/jquery\/jquery-ui\/redmond\/jquery-ui.css",
+						"api\/js\/jquery\/magicsuggest\/magicsuggest.css",
+						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
+						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
+						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
+						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
+						"api\/templates\/default\/etemplate2.css",
+						"phpgwapi\/templates\/default\/def_tutorials.css",
+						"phpgwapi\/templates\/idots\/css\/traditional.css",
+						"jdots\/egw_fw.css",
+						"jdots\/css\/jdots.css",
+						"jdots\/css\/high-contrast.css",
+						"phpgwapi\/templates\/idots\/print.css",
+						"jdots\/print.css"
+					],
+					"jdots\/css\/jdots.min.css": [
+						"api\/js\/jquery\/chosen\/chosen.css",
+						"api\/js\/jquery\/jquery-ui\/redmond\/jquery-ui.css",
+						"api\/js\/jquery\/magicsuggest\/magicsuggest.css",
+						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
+						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
+						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
+						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
+						"api\/templates\/default\/etemplate2.css",
+						"phpgwapi\/templates\/default\/def_tutorials.css",
+						"phpgwapi\/templates\/idots\/css\/traditional.css",
+						"jdots\/egw_fw.css",
+						"jdots\/css\/jdots.css",
+						"phpgwapi\/templates\/idots\/print.css",
+						"jdots\/print.css"
+					],
+					"jdots\/css\/orange-green.min.css": [
+						"api\/js\/jquery\/chosen\/chosen.css",
+						"api\/js\/jquery\/jquery-ui\/redmond\/jquery-ui.css",
+						"api\/js\/jquery\/magicsuggest\/magicsuggest.css",
+						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
+						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
+						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
+						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
+						"api\/templates\/default\/etemplate2.css",
+						"phpgwapi\/templates\/default\/def_tutorials.css",
+						"phpgwapi\/templates\/idots\/css\/traditional.css",
+						"jdots\/egw_fw.css",
+						"jdots\/css\/jdots.css",
+						"jdots\/css\/orange-green.css",
+						"phpgwapi\/templates\/idots\/print.css",
+						"jdots\/print.css"
+					]
+				}
+			}
 		}
 	});
 	// Load the plugin that provides the "uglify" task.
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 
+	// Load plugin for css minificaton
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
+
 	// Load the plugin that runs tasks only on modified files
 	grunt.loadNpmTasks('grunt-newer');
 
 	// Default task(s).
-	grunt.registerTask('default', ['newer:uglify']);
+	grunt.registerTask('default', ['newer:uglify', 'newer:cssmin']);
 };

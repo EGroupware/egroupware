@@ -17,7 +17,12 @@
 */
 
 // Need CSS, or it doesn't really work
-if(typeof egw == 'function') egw(window).includeCSS(egw.webserverUrl + "/api/js/egw_action/test/skins/dhtmlxmenu_egw.css");
+//if(typeof egw == 'function') egw(window).includeCSS(egw.webserverUrl + "/api/js/egw_action/test/skins/dhtmlxmenu_egw.css");
+
+/**
+ *
+ * @param {type} _structure
+ */
 function egwMenuImpl(_structure)
 {
 	//Create a new dhtmlxmenu object
@@ -160,7 +165,7 @@ egwMenuImpl.prototype._translateStructure = function(_structure, _parentId, _idC
 	}
 
 	return counter;
-}
+};
 
 
 egwMenuImpl.prototype.showAt = function(_x, _y, _onHide)
@@ -182,11 +187,9 @@ egwMenuImpl.prototype.showAt = function(_x, _y, _onHide)
 		self.dhtmlxmenu.showContextMenu(_x, _y);
 		// TODO: Get keybard focus
 	}, 0);
-}
+};
 
 egwMenuImpl.prototype.hide = function()
 {
 	this.dhtmlxmenu.hide();
-}
-
-
+};

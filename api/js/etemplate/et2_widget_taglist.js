@@ -358,7 +358,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 
 		$j('.ms-trigger',this.div).on('click', function(e) {
 			e.stopPropagation();
-		})
+		});
 		// Unbind change handler of widget's ancestor to stop it from bubbling
 		// taglist has its own onchange
 		$j(this.getDOMNode()).unbind('change.et2_inputWidget');
@@ -458,7 +458,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		this._query_server = false;
 
 		// Turn on local filtering, or trust server to do it
-		cfg.mode = typeof return_value === 'string' ? 'remote' : 'local'
+		cfg.mode = typeof return_value === 'string' ? 'remote' : 'local';
 
 		return return_value;
 	},
@@ -1251,5 +1251,5 @@ var et2_taglist_ro = (function(){ "use strict"; return et2_selectbox_ro.extend(
 et2_register_widget(et2_taglist_ro, ["taglist_ro","taglist_email_ro", "taglist_account_ro" ]);
 
 // Require css
-// TODO: merge into etemplate2.css with all other widgets when done
-if(typeof egw == 'function') egw(window).includeCSS(egw.webserverUrl + "/api/js/jquery/magicsuggest/magicsuggest.css");
+// included via etemplate2.css
+//if(typeof egw == 'function') egw(window).includeCSS(egw.webserverUrl + "/api/js/jquery/magicsuggest/magicsuggest.css");

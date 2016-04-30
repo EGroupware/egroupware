@@ -40,7 +40,8 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		this._super.apply(this, arguments);
 		this.mini = true;
 
-		this.egw().includeCSS('etemplate/js/lib/jsdifflib/diffview.css');
+		// included via etemplate2.css
+		//this.egw().includeCSS('etemplate/js/lib/jsdifflib/diffview.css');
 		this.div = document.createElement("div");
 		jQuery(this.div).addClass('diff');
 	},
@@ -106,6 +107,8 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 
 	/**
 	 * Make the diff into a mini-diff
+	 *
+	 * @param {DOMNode|String} view
 	 */
 	minify: function(view) {
 		view = jQuery(view)
@@ -118,6 +121,11 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 			.prevAll().hide();
 	},
 
+	/**
+	 * Expand mini-diff
+	 *
+	 * @param {DOMNode|String} view
+	 */
 	un_minify: function(view) {
 		jQuery(view).removeClass('mini').show();
 		jQuery('th',view).show();
@@ -133,6 +141,8 @@ var et2_diff = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
          * Build a list of attributes which can be set when working in the
          * "detached" mode in the _attrs array which is provided
          * by the calling code.
+		 *
+		 * @param {object} _attrs
          */
         getDetachedAttributes: function(_attrs) {
                 _attrs.push("value", "label");

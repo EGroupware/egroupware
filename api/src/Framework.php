@@ -814,43 +814,54 @@ abstract class Framework extends Framework\Extra
 
 		if (self::$load_default_css)
 		{
-			// Load these first
-			// Cascade should go:
-			//  Libs < etemplate2 < framework/theme < app < print
-			// Enhanced selectboxes (et1)
-			self::includeCSS('/api/js/jquery/chosen/chosen.css');
-
-			// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
-			self::includeCSS("/api/js/jquery/jquery-ui/redmond/jquery-ui.css");
-
-			// eTemplate2 - load in top so sidebox has styles too
-			self::includeCSS('/api/templates/default/etemplate2.css');
-
-			// Category styles
-			Categories::css(Categories::GLOBAL_APPNAME);
-
 			// For mobile user-agent we prefer mobile theme over selected one with a final fallback to theme named as template
 			$themes_to_check = array();
-			if (Header\UserAgent::mobile()) $themes_to_check[] = $this->template_dir.'/mobile/fw_mobile.css';
+			if (Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'fw_mobile')
+			{
+				$themes_to_check[] = $this->template_dir.'/mobile/fw_mobile.css';
+			}
 			$themes_to_check[] = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
 			$themes_to_check[] = $this->template_dir.'/css/'.$this->template.'.css';
 			foreach($themes_to_check as $theme_css)
 			{
 				if (file_exists(EGW_SERVER_ROOT.$theme_css)) break;
 			}
-			self::includeCSS($theme_css);
+			$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
+			if (!$debug_minify && file_exists(EGW_SERVER_ROOT.($theme_min_css = str_replace('.css', '.min.css', $theme_css))))
+			{
+				error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
+				self::includeCSS($theme_min_css);
+			}
+			else
+			{
+				// Load these first
+				// Cascade should go:
+				//  Libs < etemplate2 < framework/theme < app < print
+				// Enhanced selectboxes (et1)
+				self::includeCSS('/api/js/jquery/chosen/chosen.css');
 
+				// eTemplate2 uses jQueryUI, so load it first so et2 can override if needed
+				self::includeCSS("/api/js/jquery/jquery-ui/redmond/jquery-ui.css");
+
+				// eTemplate2 - load in top so sidebox has styles too
+				self::includeCSS('/api/templates/default/etemplate2.css');
+
+				// Category styles
+				Categories::css(Categories::GLOBAL_APPNAME);
+
+				self::includeCSS($theme_css);
+
+				// sending print css last, so it can overwrite anything
+				$print_css = $this->template_dir.'/print.css';
+				if(!file_exists(EGW_SERVER_ROOT.$print_css))
+				{
+					$print_css = '/phpgwapi/templates/idots/print.css';
+				}
+				self::includeCSS($print_css);
+			}
 			// search for app specific css file, so it can customize the theme
 			self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app-'.$GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
 				self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
-
-			// sending print css last, so it can overwrite anything
-			$print_css = $this->template_dir.'/print.css';
-			if(!file_exists(EGW_SERVER_ROOT.$print_css))
-			{
-				$print_css = '/phpgwapi/templates/idots/print.css';
-			}
-			self::includeCSS($print_css);
 		}
 		return array(
 			'app_css'   => $app_css,
@@ -950,7 +961,7 @@ abstract class Framework extends Framework\Extra
 	function list_themes()
 	{
 		$list = array();
-		if (($dh = @opendir(EGW_SERVER_ROOT.$this->template_dir . SEP . 'css')))
+		if (($dh = @opendir(EGW_SERVER_ROOT.$this->template_dir.'/css')))
 		{
 			while (($file = readdir($dh)))
 			{
@@ -1293,6 +1304,7 @@ abstract class Framework extends Framework\Extra
 		{
 			self::$load_default_css = false;
 		}
+		error_log(__METHOD__."('$app', '$name', append=$append, no_default=$no_default_css) ".function_backtrace());
 		return Framework\CssIncludes::add($app, $name, $append, $no_default_css);
 	}
 
@@ -1310,6 +1322,7 @@ abstract class Framework extends Framework\Extra
 
 		// add all css files from Framework::includeCSS()
 		$query = null;
+error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
 		foreach(Framework\CssIncludes::get() as $path)
 		{
 			unset($query);
