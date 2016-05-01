@@ -1,0 +1,13 @@
+(shift-)click or drag to change value	jscalendar	id	(Shift-)Klik atau seret untuk mengubah nilai
+about the calendar	jscalendar	id	Tentang Kalender
+date selection:	jscalendar	id	Pemilihan tanggal:
+display %s first	jscalendar	id	Tampilkan %s lebih dulu
+drag to move	jscalendar	id	Seretlah untuk memindahkan
+go today	jscalendar	id	Ke Hari ini
+next month (hold for menu)	jscalendar	id	Bulan mendatang (tekan, menu)
+next year (hold for menu)	jscalendar	id	Tahun mendatang (tekan, menu)
+prev. month (hold for menu)	jscalendar	id	Bulan lalu (tekan, menu)
+prev. year (hold for menu)	jscalendar	id	Tahun lalu (tekan, menu)
+time selection:	jscalendar	id	Pemilihan waktu:
+wk	jscalendar	id	mg
+phpgwapi	common	id	old EGroupware API

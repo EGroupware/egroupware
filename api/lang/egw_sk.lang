@@ -10,26 +10,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1EGroupware%2 je viacpoužívateľský, webovo orientovaný grupvérový balík napísaný v %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	sk	'%1' nie je php súborom v root adresári eGW servera (%2)!
 (session restored in %1 seconds)	common	sk	(relácia obnovená za %1 sekúnd)
-(shift-)click or drag to change value	jscalendar	sk	Ak chcete zmeniť hodnotu, použite (Shift-)klik alebo potiahnutie
-- click on any of the time parts to increase it	jscalendar	sk	- Ak kliknite na ktorúkoľvek časť času, zvýši sa
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	sk	- Ak chcete rýchlejší výber, podržte myšítko na ktoromkoľvek z horeuvedených tlačidiel.
-- or click and drag for faster selection.	jscalendar	sk	- alebo ak chcete rýchlejší výber, kliknite a potiahnite
-- or shift-click to decrease it	jscalendar	sk	- alebo ak chcete znížiť, Shift-kliknite
-- use the %1, %2 buttons to select month	jscalendar	sk	- Ak chcete vybrať mesiac, použite %1, %2 tlačítka
-- use the %1, %2 buttons to select year	jscalendar	sk	- Ak chcete vybrať rok, použite %1, %2 tlačítka
 00 (disable)	admin	sk	00 (vypnúť)
 1 day	common	sk	1 deň
 1 hour	common	sk	1 hodina
 1 month	common	sk	1 mesiac
 1 week	common	sk	1 týždeň
 13 (ntp)	admin	sk	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	sk	3 počet znakov skratky dňa
-3 number of chars for month-shortcut	jscalendar	sk	3 počet znakov skratky mesiaca
 80 (http)	admin	sk	80 (http)
 about	common	sk	O aplikácii
 about %1	common	sk	O aplikácii %1
 about egroupware	common	sk	Info o balíku EGroupware
-about the calendar	jscalendar	sk	O aplikácii Kalendár
 access	common	sk	Prístup
 access not permitted	common	sk	Prístup bol odmietnutý
 account has been created	common	sk	Používateľský účet bol vytvorený
@@ -221,7 +211,6 @@ database error	common	sk	Chyba databázy
 database error!	common	sk	Chyba databázy!
 date	common	sk	Dátum
 date due	common	sk	Termín do
-date selection:	jscalendar	sk	Výber dátumu:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sk	Port pre dátum/čas.<br>Ak používate port 13, prosím nastavte korektne filtrovacie pravidlá na firewall-e ešte predtým, než potvrdíte túto stránku.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	sk	December
 default category	common	sk	Štandardná kategória
@@ -248,7 +237,6 @@ disable slider effects	common	sk	Vypnúť efekty posuvníka
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sk	Vypnúť animované efekty posuvníka, keď sa zobrazujú alebo skrývajú ponuky na stránke? Používatelia Opery a Konquerer-a to pravdepodobne musia zvoliť.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť opravný skript pre Internet Explorer 5.5 a novšie pre zobrazenie priesvitnosti v obrázkoch PNG?
 disabled	common	sk	Neaktívny
-display %s first	jscalendar	sk	Zobraziť %s najskôr
 distribution lists as groups	groupdav	sk	Distribučné zoznamy ako skupiny
 djibouti	common	sk	DŽIBUTSKO
 do not notify	common	sk	Neupozorňovať
@@ -265,7 +253,6 @@ dominican republic	common	sk	DOMINIKÁNSKA REPUBLIKA
 done	common	sk	Hotovo
 download	common	sk	Stiahnuť
 download link	common	sk	Odkaz na stiahnutie
-drag to move	jscalendar	sk	Potiahni pre presun
 e-mail	common	sk	E-Mail
 east timor	common	sk	VÝCHODNÝ TIMOR
 eastern european	common	sk	Východoeurópske
@@ -358,7 +345,6 @@ ghana	common	sk	GHANA
 gibraltar	common	sk	GIBRALTAR
 global	common	sk	Globálne
 global public	common	sk	Verejný pre všetkých
-go today	jscalendar	sk	Choď na dnešok
 grant access	common	sk	Povoliť prístup
 greece	common	sk	GRÉCKO
 greek	common	sk	Grécky
@@ -548,9 +534,7 @@ new main category	common	sk	Nová hlavná kategória
 new value	common	sk	Nová hodnota
 new zealand	common	sk	NOVÝ ZÉLAND
 next	common	sk	Ďalší
-next month (hold for menu)	jscalendar	sk	Ďalší mesiac (podržaním zobrazíte ponuku)
 next page	common	sk	Ďalšia stránka
-next year (hold for menu)	jscalendar	sk	Ďalší rok (podržaním zobrazíte ponuku)
 nicaragua	common	sk	NIKARAGUA
 niger	common	sk	NIGER
 nigeria	common	sk	NIGÉRIA
@@ -631,7 +615,7 @@ personal	common	sk	Osobný
 peru	common	sk	PERU
 philippines	common	sk	FILIPÍNY
 phone number	common	sk	telefónne číslo
-phpgwapi	common	sk	EGroupware API
+api	common	sk	EGroupware API
 pitcairn	common	sk	PITCAIRNOVE OSTROVY
 please %1 by hand	common	sk	Prosím %1 ručne
 please enter a name	common	sk	Prosím zadajte meno!
@@ -648,8 +632,6 @@ postal	common	sk	Poštové
 powered by	common	sk	Používame
 preferences	common	sk	Predvoľby
 preferences for the %1 template set	preferences	sk	Predvoľby pre šablónu %1
-prev. month (hold for menu)	jscalendar	sk	Predch. mesiac (podržaním zobrazíte ponuku)
-prev. year (hold for menu)	jscalendar	sk	Predch. rok (podržaním zobrazíte ponuku)
 previous page	common	sk	Predchádzajúca stránka
 primary group	common	sk	Základná skupina
 print	common	sk	Tlač
@@ -818,7 +800,6 @@ this name has been used already	common	sk	Toto meno sa už používa!
 thursday	common	sk	Štvrtok
 tiled	common	sk	Dlaždice
 time	common	sk	Čas
-time selection:	jscalendar	sk	Výber času
 time zone	common	sk	Časová zóna
 time zone offset	common	sk	Rozdiel časovej zóny
 title	common	sk	Titulok
@@ -827,7 +808,6 @@ to correct this error for the future you will need to properly set the	common	sk
 to go back to the msg list, click <a href= %1 >here</a>	common	sk	<a href="%1">Naspäť na zoznam správ</a>
 today	common	sk	Dnes
 todays date, eg. "%1"	common	sk	Dnešný dátum, napr. "%1"
-toggle first day of week	jscalendar	sk	Určiť prvý deň týždňa
 togo	common	sk	TOGO
 tokelau	common	sk	TOKELAU
 tonga	common	sk	TONGA
@@ -896,7 +876,6 @@ which groups	common	sk	Ktoré skupiny
 which infolog types should be synced with the device, default only tasks.	common	sk	Ktoré typy Záznamníka sa majú synchronizovať s týmto zariadením; štandardne iba úlohy.
 whole query	common	sk	Celý výber
 width	common	sk	Šírka
-wk	jscalendar	sk	Týž
 work email	common	sk	Pracovný E-mail
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	sk	Spoľahlivo to funguje pre celkovú veľkosť do 1-2MB, zvyčajne aj do 5-10MB, ale pravdepodobne zlyhá pri >10MB
 would you like to display the page generation time at the bottom of every window?	common	sk	Chcete, aby sa naspodku stránky zobrazoval čas jej generovania?

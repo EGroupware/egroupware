@@ -6,26 +6,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fi	%1EGroupware%2 on %3PHP%4 kielellä kirjoitettu monen käyttäjän työryhmäohjelmisto.
 '%1' is no php file in the egw server root (%2)!	common	fi	'%1' ei ole PHP tiedosto EGroupwaren server rootissa (%2)!
 (session restored in %1 seconds)	common	fi	Istunto palautettu %1 sekunnissa.
-(shift-)click or drag to change value	jscalendar	fi	(Shift-) napsauta tai vedä muuttaaksesi arvoa
-- click on any of the time parts to increase it	jscalendar	fi	- Napsauta mitä tahansa ajan osaa muuttaaksesi sitä suuremmaksi
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	fi	- Pidä hiiren painiketta painettuna allaolevissa painikkeissa nopeuttaaksesi valintaa.
-- or click and drag for faster selection.	jscalendar	fi	- tai vedä ja pudota.
-- or shift-click to decrease it	jscalendar	fi	- tai Shift-napsauta muuttaaksesi sitä suuremmaksi
-- use the %1, %2 buttons to select month	jscalendar	fi	- Käytä %1, %2 -painikkeita valitaksesi kuukauden
-- use the %1, %2 buttons to select year	jscalendar	fi	- Käytä %1, %2 -painikkeita valitaksesi vuoden
 00 (disable)	admin	fi	00 (ei käytössä)
 1 day	common	fi	1 Päivä
 1 hour	common	fi	1 Tunti
 1 month	common	fi	1 Kuukausi
 1 week	common	fi	1 Viikko
 13 (ntp)	admin	fi	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	fi	2, just a number, don't translate -- RalfBecker 2006/03/14
-3 number of chars for month-shortcut	jscalendar	fi	3, just a number, don't translate -- RalfBecker 2006/03/14
 80 (http)	admin	fi	80 (http)
 about	common	fi	Tietoja
 about %1	common	fi	Tietoja sovelluksesta %1
 about egroupware	common	fi	Tietoja EGroupwaresta
-about the calendar	jscalendar	fi	Tietoja kalenterista
 access	common	fi	Käyttöoikeus
 access not permitted	common	fi	Ei pääsyä
 account has been created	common	fi	Käyttäjätili on luotu
@@ -199,7 +189,6 @@ database error	common	fi	Virhe tietokannassa
 database error!	common	fi	Virhe tietokannassa!
 date	common	fi	Päivämäärä
 date due	common	fi	Eräpäivä
-date selection:	jscalendar	fi	Päivämäärän valinta:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fi	Date time-portti.<br>Jos käytät porttia 13, määrittele palomuuriasetukset oikein, ennen kuin lähetät tämän lomakkeen tiedot.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	fi	Joulukuu
 default category	common	fi	Oletuskategoria
@@ -226,7 +215,6 @@ disable slider effects	common	fi	Ota liukuefektit pois käytöstä
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fi	Ota valikoiden näyttämisen ja piilottamisen liukuefekti pois käytöstä.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fi	Estä korjausskripti, joka mahdollistaa PNG kuvien läpinäkyvän taustan käytön Internet Explorer 5.5 ja uudemmissa selaimissa?
 disabled	common	fi	Ei käytössä
-display %s first	jscalendar	fi	Näytä ensin %s
 distribution lists as groups	groupdav	fi	Jakelulista ryhmänä
 djibouti	common	fi	DJIBOUTI
 do not notify	common	fi	Älä lähetä huomautusviestiä
@@ -243,7 +231,6 @@ dominican republic	common	fi	DOMINIKAANINEN TASAVALTA
 done	common	fi	Valmis
 dos international	common	fi	Dos International
 download	common	fi	Lataa
-drag to move	jscalendar	fi	Vedä siirtääksesi
 e-mail	common	fi	Sähköposti
 east timor	common	fi	ITÄTIMORI
 eastern european	common	fi	Eastern european
@@ -320,7 +307,6 @@ ghana	common	fi	GHANA
 gibraltar	common	fi	GIBRALTAR
 global	common	fi	Yleinen
 global public	common	fi	Yleinen julkinen
-go today	jscalendar	fi	Siirry tähän päivään
 grant access	common	fi	Myönnä oikeuksia
 greece	common	fi	KREIKKA
 greek	common	fi	Greek
@@ -493,9 +479,7 @@ new main category	common	fi	Uusi pääkategoria
 new value	common	fi	Uusi arvo
 new zealand	common	fi	UUSI SEELANTI
 next	common	fi	Seuraava
-next month (hold for menu)	jscalendar	fi	Seuraava kuukausi (pidä alhaalla, niin näet valikon)
 next page	common	fi	Seuraava sivu
-next year (hold for menu)	jscalendar	fi	Seuraava vuosi (pidä alhaalla, niin näet valikon)
 nicaragua	common	fi	NICARAGUA
 niger	common	fi	NIGER
 nigeria	common	fi	NIGERIA
@@ -571,7 +555,7 @@ pg down	common	fi	Sivu alas
 pg up	common	fi	Sivu ylös
 philippines	common	fi	FILIPPIINIT
 phone number	common	fi	Puhelin
-phpgwapi	common	fi	EGroupware API
+api	common	fi	EGroupware API
 pitcairn	common	fi	PITCAIRN
 please %1 by hand	common	fi	Suorita manuaalisesti: %1
 please enter a name	common	fi	Anna nimi!
@@ -588,8 +572,6 @@ postal	common	fi	Posti
 powered by	common	fi	Kehittänyt
 preferences	common	fi	Asetukset
 preferences for the %1 template set	preferences	fi	Asetukset mallipohjalle: %1
-prev. month (hold for menu)	jscalendar	fi	Edellinen kuukausi (pidä alhaalla, niin näet valikon)
-prev. year (hold for menu)	jscalendar	fi	Edellinen vuosi (pidä alhaalla, niin näet valikon)
 previous page	common	fi	Edellinen sivu
 primary group	common	fi	Ensisijainen ryhmä
 primary style-sheet:	common	fi	Ensisijainen tyyli:
@@ -743,7 +725,6 @@ this name has been used already	common	fi	Nimi on jo käytössä!
 thursday	common	fi	Torstai
 tiled	common	fi	Pinottu
 time	common	fi	Aika
-time selection:	jscalendar	fi	Ajan valinta:
 time zone	common	fi	Aikavyöhyke
 time zone offset	common	fi	Aikaero
 title	common	fi	Otsikko
@@ -752,7 +733,6 @@ to correct this error for the future you will need to properly set the	common	fi
 to go back to the msg list, click <a href= %1 >here</a>	common	fi	Siirtyäksesi takaisin viestiluetteloon napsauta <a href="%1">tästä</a>
 today	common	fi	Tänään
 todays date, eg. "%1"	common	fi	Tämä päivämäärä, esim. "%1"
-toggle first day of week	jscalendar	fi	Vaihda viikon aloituspäivää
 togo	common	fi	TOGO
 tokelau	common	fi	TOKELAU
 tonga	common	fi	TONGA
@@ -817,7 +797,6 @@ which groups	common	fi	Mitkä ryhmät
 which infolog types should be synced with the device, default only tasks.	common	fi	Mitkä Tehtävienhallinnan tyypit synkronoidaan, oletuksena "Tehtävät"
 whole query	common	fi	Kaikki merkinnät
 width	common	fi	Leveys
-wk	jscalendar	fi	vk
 work email	common	fi	Työsähköposti
 would you like to display the page generation time at the bottom of every window?	common	fi	Näytä jokaisen ikkunan alareunassa sivun luomiseen kulunut aika
 writing	common	fi	Kirjoitetaan

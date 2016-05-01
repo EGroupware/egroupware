@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	sk	Ak chcete zmeniť hodnotu, použite (Shift-)klik alebo potiahnutie
+- click on any of the time parts to increase it	jscalendar	sk	- Ak kliknite na ktorúkoľvek časť času, zvýši sa
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	sk	- Ak chcete rýchlejší výber, podržte myšítko na ktoromkoľvek z horeuvedených tlačidiel.
+- or click and drag for faster selection.	jscalendar	sk	- alebo ak chcete rýchlejší výber, kliknite a potiahnite
+- or shift-click to decrease it	jscalendar	sk	- alebo ak chcete znížiť, Shift-kliknite
+- use the %1, %2 buttons to select month	jscalendar	sk	- Ak chcete vybrať mesiac, použite %1, %2 tlačítka
+- use the %1, %2 buttons to select year	jscalendar	sk	- Ak chcete vybrať rok, použite %1, %2 tlačítka
+3 number of chars for day-shortcut	jscalendar	sk	3 počet znakov skratky dňa
+3 number of chars for month-shortcut	jscalendar	sk	3 počet znakov skratky mesiaca
+about the calendar	jscalendar	sk	O aplikácii Kalendár
+date selection:	jscalendar	sk	Výber dátumu:
+display %s first	jscalendar	sk	Zobraziť %s najskôr
+drag to move	jscalendar	sk	Potiahni pre presun
+go today	jscalendar	sk	Choď na dnešok
+next month (hold for menu)	jscalendar	sk	Ďalší mesiac (podržaním zobrazíte ponuku)
+next year (hold for menu)	jscalendar	sk	Ďalší rok (podržaním zobrazíte ponuku)
+prev. month (hold for menu)	jscalendar	sk	Predch. mesiac (podržaním zobrazíte ponuku)
+prev. year (hold for menu)	jscalendar	sk	Predch. rok (podržaním zobrazíte ponuku)
+time selection:	jscalendar	sk	Výber času
+toggle first day of week	jscalendar	sk	Určiť prvý deň týždňa
+wk	jscalendar	sk	Týž
+phpgwapi	common	sk	old EGroupware API

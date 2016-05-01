@@ -2,8 +2,6 @@
 %1 is not executable by the webserver !!!	common	et	%1 pole veebiserverijaoks käivitatav !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2<br />või tee %3 veebiserverijaoks kirjutatavaks
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	et	%1eGroupWare%2 on multi-kasutaja, veebipõhine grupitöö vahend mis on kirjutatud %3PHP%4.
-- use the %1, %2 buttons to select month	jscalendar	et	- Kasuta %1, %2 nuppe kuu valimiseks
-- use the %1, %2 buttons to select year	jscalendar	et	- Kasuta %1, %2 nuppe aasta valimiseks
 00 (disable)	admin	et	00 (keela)
 1 day	common	et	1 Päev
 1 hour	common	et	1 Tund
@@ -14,7 +12,6 @@
 about	common	et	Üldiselt
 about %1	common	et	Üldiselt %1
 about egroupware	common	et	Üldiselt eGroupware
-about the calendar	jscalendar	et	Üldiselt kalender
 access	common	et	Ligipääs
 access not permitted	common	et	Ligipääs keelatud
 account has been created	common	et	Konto tehtud
@@ -150,7 +147,6 @@ cyprus	common	et	KÜPROS
 czech republic	common	et	TŠEHHOSLOVAKKIA
 date	common	et	Kuupäev
 date due	common	et	Tähtaeg
-date selection:	jscalendar	et	Kuupäeva valik:
 december	common	et	Detsember
 default category	common	et	Vaikimisi Kategooria
 default height for the windows	common	et	Vaikimisi akna kõrgus
@@ -165,7 +161,6 @@ detail	common	et	Detail
 details	common	et	Detailselt
 direction left to right	common	et	Suund vasakult paremale
 disabled	common	et	Väljalülitatud
-display %s first	jscalendar	et	Kuva %s esmalt
 do you also want to delete all subcategories ?	common	et	Tahad kustutada samuti kõik alamkataloogid ?
 document properties	common	et	Dokumendi omadused
 document title:	common	et	Dokumendi pealkiri:
@@ -176,7 +171,6 @@ dominica	common	et	DOMINICA
 dominican republic	common	et	DOMINIKAANI VABARIIK
 done	common	et	Valmis
 download	common	et	Lae alla
-drag to move	jscalendar	et	Lohista liigutamiseks
 e-mail	common	et	E-Mail
 east timor	common	et	IDA TIMOR
 ecuador	common	et	ECUADOR
@@ -235,7 +229,6 @@ ghana	common	et	GHANA
 gibraltar	common	et	GIBRALTAR
 global	common	et	Globaalne
 global public	common	et	Globaalne Publik
-go today	jscalendar	et	Mine Tänasele
 grant access	common	et	Luba Ligipääs
 greece	common	et	KREEKA
 greenland	common	et	GRÖÖNIMAA
@@ -435,7 +428,6 @@ this name has been used already	common	et	See nimi on juba kasutusel !
 thursday	common	et	Neljapäev
 tiled	common	et	paanidena
 time	common	et	Aeg
-time selection:	jscalendar	et	Aja valik:
 time zone	common	et	Ajavöönd
 time zone offset	common	et	Ajavööndi nihe
 title	common	et	Pealkiri
@@ -476,7 +468,6 @@ welcome	common	et	Tere tulemast
 western sahara	common	et	LÄÄNE SAHARA
 which groups	common	et	Millised grupid
 width	common	et	Laius
-wk	jscalendar	et	Nd
 work email	common	et	töö email
 writing	common	et	kirjutan
 written by:	common	et	Kirjutatud:

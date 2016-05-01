@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	hr	(Shift-)Click or drag to change value
+- click on any of the time parts to increase it	jscalendar	hr	- Click on any of the time parts to increase it
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	hr	- Hold mouse button on any of the above buttons for faster selection.
+- or click and drag for faster selection.	jscalendar	hr	- or click and drag for faster selection.
+- or shift-click to decrease it	jscalendar	hr	- or Shift-click to decrease it
+- use the %1, %2 buttons to select month	jscalendar	hr	- Use the %1, %2 buttons to select month
+- use the %1, %2 buttons to select year	jscalendar	hr	- Use the %1, %2 buttons to select year
+3 number of chars for day-shortcut	jscalendar	hr	3 number of chars for day-shortcut
+3 number of chars for month-shortcut	jscalendar	hr	3 number of chars for month-shortcut
+about the calendar	jscalendar	hr	O Kalendaru
+date selection:	jscalendar	hr	Date selection:
+display %s first	jscalendar	hr	Prikaži prvo %s
+drag to move	jscalendar	hr	Drag to move
+go today	jscalendar	hr	Go Today
+next month (hold for menu)	jscalendar	hr	Next month (hold for menu)
+next year (hold for menu)	jscalendar	hr	Next year (hold for menu)
+prev. month (hold for menu)	jscalendar	hr	Prev. month (hold for menu)
+prev. year (hold for menu)	jscalendar	hr	Prev. year (hold for menu)
+time selection:	jscalendar	hr	Odabir vremena:
+toggle first day of week	jscalendar	hr	Toggle first day of week
+wk	jscalendar	hr	wk
+phpgwapi	common	hr	old EGroupware API

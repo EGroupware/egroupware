@@ -2,22 +2,12 @@
 %1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af Web server
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br/>eller gør %3 skrivbar for Web server
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1eGroupWare%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
-(shift-)click or drag to change value	jscalendar	da	(Shift)Klik eller træk for at ændre værdien
-- click on any of the time parts to increase it	jscalendar	da	- Klik på hvilken som helst tidsandelerne for at forøge den
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	da	- Hold musse knappen på hvilken som helst af de overstående knapper for hurtigere udvælgelse.
-- or click and drag for faster selection.	jscalendar	da	- eller klik og træk for hurtigere udvælgelse
-- or shift-click to decrease it	jscalendar	da	- eller Shift-klik for at forminske den
-- use the %1, %2 buttons to select month	jscalendar	da	- Brug %1, %2 knapperne for at vælge måned
-- use the %1, %2 buttons to select year	jscalendar	da	- Brug %1, %2 knapperne for at vælge år
 00 (disable)	admin	da	00 (deaktiveret)
 13 (ntp)	admin	da	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	da	3 antal tegn for dag-forkortelse
-3 number of chars for month-shortcut	jscalendar	da	3 antal tegn for måneds-forkortelse
 80 (http)	admin	da	80 (http)
 about	common	da	Om
 about %1	common	da	Om %1
 about egroupware	common	da	Om eGroupWare
-about the calendar	jscalendar	da	Om kalenderen
 access	common	da	Adgang
 access not permitted	common	da	Ingen adgang
 account has been created	common	da	Kontoen er oprettet
@@ -158,7 +148,6 @@ cyprus	common	da	Cupern
 czech republic	common	da	Tjekkiet
 date	common	da	Dato
 date due	common	da	Skal være færdig
-date selection:	jscalendar	da	Dato valg:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.<br>Hvis port 13 bruges, åben venligst din firewall før denne side gemmes.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	da	December
 default category	common	da	Standard Kategori
@@ -180,7 +169,6 @@ disable slider effects	common	da	Deaktiver glide-effekter?
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktiver kørsel af fejlfindingsscript for Internet Explorer 5.5 eller nyere for at vise det transparente i PNG billeder?
 disabled	common	da	Slået fra
-display %s first	jscalendar	da	Vis %s først
 djibouti	common	da	Djibouti
 do you also want to delete all subcategories ?	common	da	Ønsker du at slette alle underkategorierne?
 doctype:	common	da	Dokument type:
@@ -193,7 +181,6 @@ dominica	common	da	Dominica
 dominican republic	common	da	Dominikanske Republik
 done	common	da	Udført
 download	common	da	Download
-drag to move	jscalendar	da	Træk for at flytte
 e-mail	common	da	E-mail
 east timor	common	da	Øst Timor
 ecuador	common	da	Ecuador
@@ -254,7 +241,6 @@ ghana	common	da	Ghana
 gibraltar	common	da	Gibraltar
 global	common	da	Global
 global public	common	da	Global adgang
-go today	jscalendar	da	Gå i dag
 grant access	common	da	Giv adgang
 greece	common	da	Grækenland
 greenland	common	da	Grønland
@@ -396,9 +382,7 @@ new main category	common	da	Ny hovedkategori
 new value	common	da	Ny Værdi
 new zealand	common	da	New Zealand
 next	common	da	Næste
-next month (hold for menu)	jscalendar	da	Næste måned (hold knap nede for menu)
 next page	common	da	Næste side
-next year (hold for menu)	jscalendar	da	Næste år (hold knap nede for menu)
 nicaragua	common	da	Nicaragua
 niger	common	da	Niger
 nigeria	common	da	Nigeria
@@ -470,8 +454,6 @@ popup with search	common	da	Popup vindue med søg
 portugal	common	da	Portugal
 postal	common	da	Post
 preferences	common	da	Præferencer
-prev. month (hold for menu)	jscalendar	da	Sidste måned (hold knap nede for menu)
-prev. year (hold for menu)	jscalendar	da	Sidste år (hold knap nede for menu)
 previous page	common	da	Forrige side
 primary group	common	da	primær gruppe
 print	common	da	Udskriv
@@ -572,7 +554,6 @@ the mail server returned	common	da	Postserveren retunerede
 this name has been used already	common	da	Dette navn er allerede i brug!
 thursday	common	da	Torsdag
 time	common	da	Tid
-time selection:	jscalendar	da	Tid valgt:
 time zone	common	da	Tidszone
 time zone offset	common	da	Tidszone forskel
 title	common	da	Titel
@@ -581,7 +562,6 @@ to correct this error for the future you will need to properly set the	common	da
 to go back to the msg list, click <a href= %1 >here</a>	common	da	For at gå tilbage til beskedlisten, klik <a href="%1">her</a>
 today	common	da	I dag
 todays date, eg. "%1"	common	da	i dags dato, f.eks. "%1"
-toggle first day of week	jscalendar	da	Toogle første dag på ugen
 togo	common	da	Togo
 tokelau	common	da	Tokelau
 tonga	common	da	Tonga
@@ -633,7 +613,6 @@ western sahara	common	da	Vest Sahara
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	da	Hvis du siger ja, bliver hjem og logout knapperne vist som applikationer i hoved applikations linien.
 which groups	common	da	Hvilke grupper
 width	common	da	Bredde
-wk	jscalendar	da	uge
 work email	common	da	arbejds e-mail
 writing	common	da	skriver
 written by:	common	da	Skrevet af:

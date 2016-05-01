@@ -1,6 +1,5 @@
 %1 email addresses inserted	common	ko	%1 E-Mail 주소가 삽입되었습니다.
 %1 is not executable by the webserver !!!	common	ko	%1 은 웹서버에 의해 실행될 수 없습니다 !!!
-(shift-)click or drag to change value	jscalendar	ko	쉬프트 클릭 혹은 드래그로 값을 변경하세요
 00 (disable)	admin	ko	00 ( 미사용 / 추천 )
 13 (ntp)	admin	ko	13 (ntp)
 80 (http)	admin	ko	80 (http)
@@ -334,7 +333,6 @@ wednesday	common	ko	수요일
 welcome	common	ko	환영합니다
 which groups	common	ko	그룹선택
 width	common	ko	너비
-wk	jscalendar	ko	주
 work email	common	ko	업무 E-Mail
 would you like to display the page generation time at the bottom of every window?	common	ko	페이지 생성 시간을 모든 창의 하단에 출력하길 원하십니까?
 written by:	common	ko	작성:

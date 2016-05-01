@@ -3,26 +3,16 @@
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt	%1Escolha outra directoria%2<br />ou torne %3 editável pelo servidor Web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt	O %1eGroupWare%2 é uma ferramenta Web groupware criada em %3PHP%4, para ser utilizada por vários utilizadores em simultâneo.
 '%1' is no php file in the egw server root (%2)!	common	pt	'% 1' não é arquivo php na raiz do servidor eGW (% 2)!
-(shift-)click or drag to change value	jscalendar	pt	Clique no Shift ou arraste para alterar o valor
-- click on any of the time parts to increase it	jscalendar	pt	- Clique em qualquer área de tempo para a aumentar
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	pt	- Mantenha o botão do rato pressionado num dos seguintes botões para uma selecção mais rápida.
-- or click and drag for faster selection.	jscalendar	pt	- ou clique e arraste para uma selecção mais rápida.
-- or shift-click to decrease it	jscalendar	pt	- ou prima Shift para diminuí-lo
-- use the %1, %2 buttons to select month	jscalendar	pt	- Utilize os botões %1, %2 para seleccionar o mês
-- use the %1, %2 buttons to select year	jscalendar	pt	- Utilize os botões %1, %2 para seleccionar o ano
 00 (disable)	admin	pt	00 (desactivado)
 1 day	common	pt	1 Dia
 1 hour	common	pt	1 Hora
 1 month	common	pt	1 Mês
 1 week	common	pt	1 Semana
 13 (ntp)	admin	pt	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	pt	3 caracteres para abreviatura do dia
-3 number of chars for month-shortcut	jscalendar	pt	3 caracteres para abreviatura do mês
 80 (http)	admin	pt	80 (http)
 about	common	pt	Sobre
 about %1	common	pt	Sobre a aplicação %1
 about egroupware	common	pt	Sobre o eGroupware
-about the calendar	jscalendar	pt	Sobre o calendário
 access	common	pt	Acesso
 access not permitted	common	pt	Acesso negado
 account has been created	common	pt	A conta foi criada
@@ -170,7 +160,6 @@ cyprus	common	pt	Chipre
 czech republic	common	pt	República Checa
 date	common	pt	Data
 date due	common	pt	Até
-date selection:	jscalendar	pt	Selecção de data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt	Porto Datetime.<br>Se utilizar o porto 13, por favor configure as regras da firewall apropriadamente antes de enviar esta página.<br>(Porto: 13 / Servidor: 129.6.15.28)
 december	common	pt	Dezembro
 default category	common	pt	Categoria por omissão
@@ -193,7 +182,6 @@ disable slider effects	common	pt	Desactivar efeitos de deslizamento
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	pt	Desactivar os efeitos de deslizamento animado ao exibir ou esconder os menus na página? Os utilizadores de Opera e Konqueror deverão achar esta opção útil.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt	Desactivar a execução de um script de correcção de falhas do Internet Explorer 5.5 ou superior para exibir as transparências nas imagens .png?
 disabled	common	pt	Desactivado
-display %s first	jscalendar	pt	Exibir %s primeiro
 djibouti	common	pt	Jibuti
 do not notify of these changes	common	pt	Não notificar dessas mudanças
 do you also want to delete all subcategories ?	common	pt	Deseja eliminar também todas subcategorias ?
@@ -207,7 +195,6 @@ dominica	common	pt	Dominica
 dominican republic	common	pt	República Dominicana
 done	common	pt	Concluído
 download	common	pt	Transferência
-drag to move	jscalendar	pt	Arrastar para mover
 e-mail	common	pt	Correio Electrónico
 east timor	common	pt	Timor Leste
 ecuador	common	pt	Equador
@@ -273,7 +260,6 @@ ghana	common	pt	Gana
 gibraltar	common	pt	Gibraltar
 global	common	pt	Geral
 global public	common	pt	Acesso público
-go today	jscalendar	pt	Ir para hoje
 grant access	common	pt	Permitir acesso
 greece	common	pt	Grécia
 greenland	common	pt	Gronelândia
@@ -430,9 +416,7 @@ new main category	common	pt	Nova categoria principal
 new value	common	pt	Novo Valor
 new zealand	common	pt	Nova Zelândia
 next	common	pt	Seguinte
-next month (hold for menu)	jscalendar	pt	Mês seguinte (manter pressionado para ver menu)
 next page	common	pt	Página seguinte
-next year (hold for menu)	jscalendar	pt	Ano seguinte (manter pressionado para ver menu)
 nicaragua	common	pt	Nicarágua
 niger	common	pt	Níger
 nigeria	common	pt	Nigéria
@@ -500,7 +484,7 @@ personal	common	pt	Pessoal
 peru	common	pt	Peru
 philippines	common	pt	Filipinas
 phone number	common	pt	número de telefone
-phpgwapi	common	pt	API eGroupWare
+api	common	pt	API eGroupWare
 pitcairn	common	pt	Ilha Pitcairn
 please %1 by hand	common	pt	Por favor, %1 manualmente
 please enter a name	common	pt	Por favor, insira um nome !
@@ -514,8 +498,6 @@ popup with search	common	pt	Janela popup com pesquisa
 portugal	common	pt	Portugal
 postal	common	pt	Código Postal
 preferences	common	pt	Preferências
-prev. month (hold for menu)	jscalendar	pt	Mês anterior (manter pressionado para ver menu)
-prev. year (hold for menu)	jscalendar	pt	Ano anterior (manter pressionado para ver menu)
 previous page	common	pt	Página anterior
 primary group	common	pt	Grupo principal
 primary style-sheet:	common	pt	Folha de estilo primária
@@ -647,7 +629,6 @@ this name has been used already	common	pt	Este nome já está a ser utilizado !
 thursday	common	pt	Quinta
 tiled	common	pt	Mosaico
 time	common	pt	Hora
-time selection:	jscalendar	pt	Selecção da hora:
 time zone	common	pt	Fuso horário
 time zone offset	common	pt	Faixa de fuso horário
 title	common	pt	Título
@@ -656,7 +637,6 @@ to correct this error for the future you will need to properly set the	common	pt
 to go back to the msg list, click <a href= %1 >here</a>	common	pt	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
 today	common	pt	Hoje
 todays date, eg. "%1"	common	pt	data de hoje, ex: "%1"
-toggle first day of week	jscalendar	pt	Alterar o primeiro dia da semana
 togo	common	pt	Togo
 tokelau	common	pt	Toquelau
 tonga	common	pt	Tonga
@@ -715,7 +695,6 @@ when you say yes the home and logout buttons are presented as applications in th
 which groups	common	pt	Que grupo(s)
 whole query	common	pt	Consulta Whole
 width	common	pt	Largura
-wk	jscalendar	pt	Semana
 work email	common	pt	endereço de correio electrónico do trabalho
 would you like to display the page generation time at the bottom of every window?	common	pt	Deseja apresentar o tempo de geração da página no final de cada janela?
 writing	common	pt	a escrever

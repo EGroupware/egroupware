@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	lo	(Shift-) ຄຼິກ ຫຼື ລາກເພື່ອປ່ຽນຄ່າ
+- click on any of the time parts to increase it	jscalendar	lo	- ຄຼິດພາກສ່ວນໃດໜຶ່ງເພື່ອເພີ່ມເວລາຂື້ນ
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	lo	- ກົດປຸ່ມເມົ້າໃນທຸກໆປຸ່ມຂ້າງເທິງເພື່ອເພີ່ມຄວາມໄວໃນການເລືອກ
+- or click and drag for faster selection.	jscalendar	lo	- ຫຼືຄຼິກ ແລະ ລາກເພື່ອເພີ່ມຄວາມໄວໃນການເລືອກ
+- or shift-click to decrease it	jscalendar	lo	- ຫຼື (Shift+ຄຼິກ) ເພື່ອຫຼຸດລົງ
+- use the %1, %2 buttons to select month	jscalendar	lo	- ໃຊ່້ %1, %2 ປຸ່ມເພື່ອເລືອກເດືອນ
+- use the %1, %2 buttons to select year	jscalendar	lo	- ໃຊ່້ %1, %2 ປຸ່ມເພື່ອເລືອກປີ
+3 number of chars for day-shortcut	jscalendar	lo	ຕົວຫຍໍ້ຂອງມື້
+3 number of chars for month-shortcut	jscalendar	lo	ຕົວຫຍໍ້ຂອງເດືອນ
+about the calendar	jscalendar	lo	ກ່ຽວກັບປະຕິທິນ
+date selection:	jscalendar	lo	ການເລືອກວັນທີ:
+display %s first	jscalendar	lo	ສະແດງ %s ທໍາອິດ
+drag to move	jscalendar	lo	ລາກເຄື່ອນຍ້າຍ
+go today	jscalendar	lo	ໄປທີ່ມື້ນີ້
+next month (hold for menu)	jscalendar	lo	ເດືອນຖັດໄປ(ຮັກສາສະເພາະເມນູ)
+next year (hold for menu)	jscalendar	lo	ປີຖັດໄປ(ຮັກສາສະເພາະເມນູ)
+prev. month (hold for menu)	jscalendar	lo	ເດືອນກ່ອນໜ້ານີ້(ພາກສ່ວນເມນູທີ່ຕົກຄ້າງ)
+prev. year (hold for menu)	jscalendar	lo	ປີກ່ອນໜ້ານີ້(ພາກສ່ວນເມນູທີ່ຕົກຄ້າງ)
+time selection:	jscalendar	lo	ການເລືອກເວລາ
+toggle first day of week	jscalendar	lo	ສະລັບມື້ທໍາອິດຂອງອາທິດ
+wk	jscalendar	lo	wk
+phpgwapi	common	lo	old EGroupware API

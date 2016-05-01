@@ -1,25 +1,15 @@
 %1 email addresses inserted	common	no	%1 email adresser lagt til
 %1 is not executable by the webserver !!!	common	no	%1 er ikke eksekverbar på webtjener !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	no	%1eGroupWare%2 er en flerbruker, web-basert gruppevare skrevet i %3PHP%4.
-(shift-)click or drag to change value	jscalendar	no	(Shift-)klikk eller dra for å endre verdi
-- click on any of the time parts to increase it	jscalendar	no	- Klikk en av tidsdelene for å øke
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	no	- Trykk og hold nede musknappen på knappene over for raskere utvalg
-- or click and drag for faster selection.	jscalendar	no	- eller kikk og dra for raskere utvalg
-- or shift-click to decrease it	jscalendar	no	- eller Shift-Klikk for å redusere utvalg
-- use the %1, %2 buttons to select month	jscalendar	no	- Bruk %1, %2 knappene for å velge måned
-- use the %1, %2 buttons to select year	jscalendar	no	- Bruk %1, %2 knappene for å velge år
 00 (disable)	admin	no	00 (frakoblet)
 1 day	common	no	1 dag
 1 hour	common	no	1 time
 1 month	common	no	1 måned
 1 week	common	no	1 uke
 13 (ntp)	admin	no	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	no	3 karakterer for dag
-3 number of chars for month-shortcut	jscalendar	no	3 karakterer for måned
 80 (http)	admin	no	80 (http)
 about	common	no	Om
 about %1	common	no	Om %1
-about the calendar	jscalendar	no	Om kalenderen
 access	common	no	Tilgang
 access not permitted	common	no	Ingen tilgang
 account has been created	common	no	Brukerkonto har blitt opprettet
@@ -150,7 +140,6 @@ cyprus	common	no	KYPROS
 czech republic	common	no	TSJEKKIA
 date	common	no	Dato
 date due	common	no	Dato Ferdig
-date selection:	jscalendar	no	Dato utvalg
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	no	Datetime port.<br>Hvis port 13 brukes, vennligst påse at brannmur-reglene er riktige før du oppdaterer denne siden.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	no	Desember
 default category	common	no	Standard kategori
@@ -168,7 +157,6 @@ disable internet explorer png-image-bugfix	common	no	Koble ut Internet Explorer 
 disable slider effects	common	no	Slå av skyve-effektene
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	no	Slå av de animerte skyver-effektene under visning eller skjuling av menyene på siden? Opera og Konqueror brukere bør sannsynligvis velge dette.
 disabled	common	no	Utkoblet
-display %s first	jscalendar	no	Vis %s først
 djibouti	common	no	DJIBOUTI
 do you also want to delete all subcategories ?	common	no	Vil du slette alle underkategoriene?
 doctype:	common	no	Dok.type:
@@ -181,7 +169,6 @@ dominica	common	no	DOMINICA
 dominican republic	common	no	DOMINIKANSKE REPUBLIKK
 done	common	no	Ferdig
 download	common	no	Last ned
-drag to move	jscalendar	no	Dra for å flytte
 e-mail	common	no	E-Post
 east timor	common	no	ØST TIMOR
 ecuador	common	no	ECUADOR
@@ -243,7 +230,6 @@ ghana	common	no	GHANA
 gibraltar	common	no	GIBRALTAR
 global	common	no	Global
 global public	common	no	Global offentlig
-go today	jscalendar	no	Gå i dag
 grant access	common	no	Gi tilgang
 greece	common	no	HELLAS
 greenland	common	no	GRØNLAND
@@ -394,9 +380,7 @@ new main category	common	no	Ny hovedkategori
 new value	common	no	Ny verdi
 new zealand	common	no	NEW ZEALAND
 next	common	no	Neste
-next month (hold for menu)	jscalendar	no	Neste måned (hold nede for meny)
 next page	common	no	Neste side
-next year (hold for menu)	jscalendar	no	Neste side (hold nede for meny)
 nicaragua	common	no	NICARAGUA
 niger	common	no	NIGER
 nigeria	common	no	NIGERIA
@@ -469,8 +453,6 @@ popup with search	common	no	Sprett-opp meny for søking
 portugal	common	no	PORTUGAL
 postal	common	no	Post
 preferences	common	no	Preferanser
-prev. month (hold for menu)	jscalendar	no	Forrige måned (hold for meny)
-prev. year (hold for menu)	jscalendar	no	Forrige år (hold for meny)
 previous page	common	no	Forrige side
 primary group	common	no	primærgruppe
 primary style-sheet:	common	no	Primær style-sheet:
@@ -584,7 +566,6 @@ the mail server returned	common	no	Epost tjener returnerte
 this name has been used already	common	no	Dette navnet er allerede i bruk !
 thursday	common	no	Torsdag
 time	common	no	Tid
-time selection:	jscalendar	no	Valg av tid:
 time zone	common	no	Tidssone
 time zone offset	common	no	Tidsforskjell
 title	common	no	Tittel
@@ -592,7 +573,6 @@ to	common	no	Til
 to correct this error for the future you will need to properly set the	common	no	For å unngå denne feilen i framtiden må du sette
 today	common	no	Idag
 todays date, eg. "%1"	common	no	Dagens dato, f.eks: "%1"
-toggle first day of week	jscalendar	no	Velg føste ukedag
 togo	common	no	TOGO
 tokelau	common	no	TOKELAU
 tonga	common	no	TONGA
@@ -645,7 +625,6 @@ western sahara	common	no	VEST-SAHARA
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	no	Når du svarer ja vil hjem- og avloggingsknappene prsenteres som valg i topp av hovedbildet.
 which groups	common	no	Hvilke grupper
 width	common	no	Bredde
-wk	jscalendar	no	wk
 work email	common	no	arbeids-epost
 writing	common	no	skrivning
 written by:	common	no	Skrevet av:

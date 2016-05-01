@@ -1,13 +1,10 @@
 %1 email addresses inserted	common	th	แทรกที่อยู่อีเมลจำนวน %1 ที่อยู่
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	th	%1eGroupware%2 เป็นซอฟต์แวร์ผ่านเว็บที่รับผู้ใชในบริสัททั้งหลายได้้ เขียนโดยภาษา %3PHP%4
-- use the %1, %2 buttons to select month	jscalendar	th	ใช้ปุ่ม %1 กับ %2 เพื่อเลือกเดือน
-- use the %1, %2 buttons to select year	jscalendar	th	ใช้ปุ่ม %1 กับ %2 เพื่อเลือกปี
 00 (disable)	admin	th	00 ปิดการใช้
 13 (ntp)	admin	th	13 (ntp)
 80 (http)	admin	th	80 (http)
 about	common	th	เรือง
 about %1	common	th	เรือง %1
-about the calendar	jscalendar	th	เรืองปฏิทิน
 account has been created	common	th	สร้างบัญชีเสร็จแล้ว
 account has been deleted	common	th	ลบบัญชีเสร็จแล้ว
 account has been updated	common	th	แก้ไขบัญชีเสร็จแล้ว
@@ -89,7 +86,6 @@ fixme!	common	th	นี่ผิด แก้ซิ
 friday	common	th	วันศุกร์
 fullname	common	th	ชื่อนามสกุล
 general menu	common	th	เมนูทั่วไป
-go today	jscalendar	th	ไปวันนี้
 group	common	th	กลุ่ม
 group has been added	common	th	เพิ่มกลุมเสร็จแล้ว
 group has been deleted	common	th	ลบกลุมเสร็จแล้ว
@@ -187,7 +183,6 @@ view	common	th	วิว
 wednesday	common	th	วันพุธ
 welcome	common	th	ยินดีตอนรับ
 which groups	common	th	กลุ่มไหนบ้าง
-wk	jscalendar	th	งาน
 work email	common	th	อีเมลบริสัท
 written by:	common	th	เขียนโดย
 year	common	th	ปี

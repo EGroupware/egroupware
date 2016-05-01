@@ -10,26 +10,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	en	'%1' is no php file in the eGW server root (%2)!
 (session restored in %1 seconds)	common	en	Session restored in %1 seconds.
-(shift-)click or drag to change value	jscalendar	en	(Shift-) Click or drag to change value
-- click on any of the time parts to increase it	jscalendar	en	- Click on any of the time parts to increase it.
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	en	- Hold mouse button on any of the above buttons for faster selection.
-- or click and drag for faster selection.	jscalendar	en	- or click and drag for faster selection.
-- or shift-click to decrease it	jscalendar	en	- or Shift click to decrease it
-- use the %1, %2 buttons to select month	jscalendar	en	- Use the %1, %2 buttons to select month
-- use the %1, %2 buttons to select year	jscalendar	en	- Use the %1, %2 buttons to select year
 00 (disable)	admin	en	00 (disable)
 1 day	common	en	1 Day
 1 hour	common	en	1 Hour
 1 month	common	en	1 Month
 1 week	common	en	1 Week
 13 (ntp)	admin	en	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	en	3 number of chars for day shortcut
-3 number of chars for month-shortcut	jscalendar	en	3 number of chars for month shortcut
 80 (http)	admin	en	80 (http)
 about	common	en	About
 about %1	common	en	About %1
 about egroupware	common	en	About EGroupware
-about the calendar	jscalendar	en	About the calendar
 access	common	en	Access
 access not permitted	common	en	Access not permitted.
 account has been created	common	en	Account has been created.
@@ -226,7 +216,6 @@ database error	common	en	Database error
 database error!	common	en	Database error!
 date	common	en	Date
 date due	common	en	Due date
-date selection:	jscalendar	en	Date selection:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Date time port.<br>If using port 13, set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28).
 december	common	en	December
 default category	common	en	Default category
@@ -254,7 +243,6 @@ disable slider effects	common	en	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Disable the execution a bugfix script for Internet Explorer 5.5 and higher to show transparency in PNG-images.
 disabled	common	en	Disabled
-display %s first	jscalendar	en	Display %s first
 distribution lists as groups	groupdav	en	Distribution lists as groups
 djibouti	common	en	DJIBOUTI
 do not notify	common	en	Do not notify
@@ -273,7 +261,6 @@ done	common	en	Done
 dos international	common	en	DOS International
 download	common	en	Download
 download link	common	en	Download link
-drag to move	jscalendar	en	Drag to move
 e-mail	common	en	Email
 east timor	common	en	EAST TIMOR
 eastern european	common	en	Eastern european
@@ -366,7 +353,6 @@ ghana	common	en	GHANA
 gibraltar	common	en	GIBRALTAR
 global	common	en	Global
 global public	common	en	Global public
-go today	jscalendar	en	Go today
 grant access	common	en	Grant access
 greece	common	en	GREECE
 greek	common	en	Greek
@@ -560,9 +546,7 @@ new main category	common	en	New main category
 new value	common	en	New value
 new zealand	common	en	NEW ZEALAND
 next	common	en	Next
-next month (hold for menu)	jscalendar	en	Next month (hold for menu)
 next page	common	en	Next page
-next year (hold for menu)	jscalendar	en	Next year (hold for menu)
 nicaragua	common	en	NICARAGUA
 niger	common	en	NIGER
 nigeria	common	en	NIGERIA
@@ -649,7 +633,7 @@ pgp encryption	common	en	PGP Encryption
 pgp encryption installation	common	en	PGP Encryption Installation
 philippines	common	en	PHILIPPINES
 phone number	common	en	Phone number
-phpgwapi	common	en	EGroupware API
+api	common	en	EGroupware API
 pitcairn	common	en	PITCAIRN
 placeholders	common	en	Placeholders
 please %1 by hand	common	en	Please %1 by hand
@@ -669,8 +653,6 @@ pre	common	en	Pre
 preferences	common	en	Preferences
 preferences for the %1 template set	preferences	en	Preferences for the %1 template set
 prev	common	en	Prev
-prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
-prev. year (hold for menu)	jscalendar	en	Prev. year (hold for menu)
 previous page	common	en	Previous page
 primary group	common	en	Primary group
 primary style-sheet:	common	en	Primary style sheet:
@@ -847,7 +829,6 @@ this name has been used already	common	en	This name has been used already!
 thursday	common	en	Thursday
 tiled	common	en	Tiled
 time	common	en	Time
-time selection:	jscalendar	en	Time selection:
 time zone	common	en	Time zone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
@@ -857,7 +838,6 @@ to examine or reinstate inactived files, you might need to turn versioning on.	a
 to go back to the msg list, click <a href= %1 >here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
 today	common	en	Today
 todays date, eg. "%1"	common	en	Todays date, eg. "%1"
-toggle first day of week	jscalendar	en	Toggle first day of week
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
@@ -929,7 +909,6 @@ which groups	common	en	Which groups
 which infolog types should be synced with the device, default only tasks.	common	en	Which InfoLog types should be synced with the device, default only tasks.
 whole query	common	en	Whole query
 width	common	en	Width
-wk	jscalendar	en	wk
 work email	common	en	Work email
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	en	Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB
 would you like to display the page generation time at the bottom of every window?	common	en	Display the page generation time at the bottom of every window

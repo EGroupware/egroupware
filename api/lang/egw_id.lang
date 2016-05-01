@@ -1,7 +1,6 @@
 %1 email addresses inserted	common	id	%1 alamat email disisipkan
 %1 file	common	id	berkas %1
 '%1' is no php file in the egw server root (%2)!	common	id	'%1' is no php file in the eGW server root (%2)!
-(shift-)click or drag to change value	jscalendar	id	(Shift-)Klik atau seret untuk mengubah nilai
 00 (disable)	admin	id	00 (disable)
 1 day	common	id	1 Hari
 1 hour	common	id	1 Jam
@@ -12,7 +11,6 @@
 about	common	id	Tentang
 about %1	common	id	Tentang %1
 about egroupware	common	id	Tentang eGroupware
-about the calendar	jscalendar	id	Tentang Kalender
 access	common	id	Akses
 access not permitted	common	id	Akses tidak diijinkan
 account has been created	common	id	Akoun telah dibuat
@@ -146,7 +144,6 @@ database error	common	id	Database error
 database error!	common	id	Database error!
 date	common	id	Tanggal
 date due	common	id	Tanggal Berakhir
-date selection:	jscalendar	id	Pemilihan tanggal:
 december	common	id	Desember
 default category	common	id	Kategori Bawaan
 delete	common	id	Hapus
@@ -160,7 +157,6 @@ details	common	id	Detil
 directory	common	id	Direktori
 disable slider effects	common	id	Disable slider effects
 disabled	common	id	Disabled
-display %s first	jscalendar	id	Tampilkan %s lebih dulu
 djibouti	common	id	DJIBOUTI
 doctype:	common	id	DOCTYPE:
 document properties	common	id	Properti Dokumen
@@ -171,7 +167,6 @@ dominica	common	id	DOMINIKA
 dominican republic	common	id	REPUBLIK DOMINIKA
 done	common	id	Selesai
 download	common	id	Unduh
-drag to move	jscalendar	id	Seretlah untuk memindahkan
 e-mail	common	id	E-Mail
 east timor	common	id	TIMOR LESTE
 eastern european	common	id	Eropa Timur
@@ -236,7 +231,6 @@ ghana	common	id	GHANA
 gibraltar	common	id	GIBRALTAR
 global	common	id	Global
 global public	common	id	Global Publik
-go today	jscalendar	id	Ke Hari ini
 grant access	common	id	Berikan Akses
 greece	common	id	YUNANI
 greek	common	id	Yunani
@@ -385,9 +379,7 @@ new main category	common	id	Kategori Utama baru
 new value	common	id	Nilai Baru
 new zealand	common	id	SELANDIA BARU
 next	common	id	Lanjut
-next month (hold for menu)	jscalendar	id	Bulan mendatang (tekan, menu)
 next page	common	id	Halaman selanjutnya
-next year (hold for menu)	jscalendar	id	Tahun mendatang (tekan, menu)
 nicaragua	common	id	NIKARAGUA
 niger	common	id	NIGER
 nigeria	common	id	NIGERIA
@@ -439,7 +431,7 @@ personal	common	id	Pribadi
 peru	common	id	PERU
 philippines	common	id	FILIPINA
 phone number	common	id	nomor telepon
-phpgwapi	common	id	eGroupWare API
+api	common	id	eGroupWare API
 pitcairn	common	id	PITCAIRN
 please enter a name	common	id	Mohon masukan nama
 please select	common	id	Pilihlah
@@ -450,8 +442,6 @@ portugal	common	id	PORTUGAL
 postal	common	id	Pos
 powered by	common	id	Digerakan oleh
 preferences	common	id	Kesukaan
-prev. month (hold for menu)	jscalendar	id	Bulan lalu (tekan, menu)
-prev. year (hold for menu)	jscalendar	id	Tahun lalu (tekan, menu)
 previous page	common	id	Halaman Sebelumnya
 primary group	common	id	Kelompok utama
 primary style-sheet:	common	id	Primary style-sheet:
@@ -567,7 +557,6 @@ thailand	common	id	THAILAND
 thursday	common	id	Kamis
 tiled	common	id	tiled
 time	common	id	Waktu
-time selection:	jscalendar	id	Pemilihan waktu:
 time zone	common	id	Zonawaktu
 time zone offset	common	id	Offset zonawaktu
 title	common	id	Judul
@@ -620,7 +609,6 @@ western european	common	id	Eropa Barat
 western sahara	common	id	SAHARA BARAT
 whole query	common	id	seluruh query
 width	common	id	Lebar (W)
-wk	jscalendar	id	mg
 work email	common	id	email kerja
 writing	common	id	Menulis
 written by:	common	id	Ditulis oleh:

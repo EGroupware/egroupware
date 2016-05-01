@@ -1,21 +1,11 @@
 %1 email addresses inserted	common	hr	unešeno %1 e-mail adresa
 %1 is not executable by the webserver !!!	common	hr	%1 webserver ne može izvršiti!!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	hr	%1eGroupWare%2 je višekorisnički, web-bazirani groupware suite pisan u %3PHP%4.
-(shift-)click or drag to change value	jscalendar	hr	(Shift-)Click or drag to change value
-- click on any of the time parts to increase it	jscalendar	hr	- Click on any of the time parts to increase it
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	hr	- Hold mouse button on any of the above buttons for faster selection.
-- or click and drag for faster selection.	jscalendar	hr	- or click and drag for faster selection.
-- or shift-click to decrease it	jscalendar	hr	- or Shift-click to decrease it
-- use the %1, %2 buttons to select month	jscalendar	hr	- Use the %1, %2 buttons to select month
-- use the %1, %2 buttons to select year	jscalendar	hr	- Use the %1, %2 buttons to select year
 00 (disable)	admin	hr	00 (disable)
 13 (ntp)	admin	hr	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	hr	3 number of chars for day-shortcut
-3 number of chars for month-shortcut	jscalendar	hr	3 number of chars for month-shortcut
 80 (http)	admin	hr	80 (http)
 about	common	hr	O
 about %1	common	hr	O %1
-about the calendar	jscalendar	hr	O Kalendaru
 access	common	hr	Pristup
 access not permitted	common	hr	Pristup nije dozvoljen
 account has been created	common	hr	Račun je kreiran
@@ -143,7 +133,6 @@ cyprus	common	hr	CYPRUS
 czech republic	common	hr	CZECH REPUBLIC
 date	common	hr	Datum
 date due	common	hr	Date Due
-date selection:	jscalendar	hr	Date selection:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hr	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	hr	Prosinac
 default category	common	hr	Default Category
@@ -160,7 +149,6 @@ disable internet explorer png-image-bugfix	common	hr	Disable Internet Explorer p
 disable slider effects	common	hr	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	hr	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
 disabled	common	hr	Onemogućeno
-display %s first	jscalendar	hr	Prikaži prvo %s
 djibouti	common	hr	DJIBOUTI
 do you also want to delete all subcategories ?	common	hr	Do you also want to delete all subcategories ?
 domain	common	hr	Domena
@@ -170,7 +158,6 @@ dominica	common	hr	DOMINICA
 dominican republic	common	hr	DOMINICAN REPUBLIC
 done	common	hr	Done
 download	common	hr	Preuzmi sa poslužitelja
-drag to move	jscalendar	hr	Drag to move
 e-mail	common	hr	E-Mail
 east timor	common	hr	EAST TIMOR
 ecuador	common	hr	ECUADOR
@@ -230,7 +217,6 @@ ghana	common	hr	GHANA
 gibraltar	common	hr	GIBRALTAR
 global	common	hr	Global
 global public	common	hr	Global Public
-go today	jscalendar	hr	Go Today
 grant access	common	hr	Omogući pristup
 greece	common	hr	GREECE
 greenland	common	hr	GREENLAND
@@ -373,9 +359,7 @@ new main category	common	hr	New main category
 new value	common	hr	New Value
 new zealand	common	hr	NEW ZEALAND
 next	common	hr	Slijedeći
-next month (hold for menu)	jscalendar	hr	Next month (hold for menu)
 next page	common	hr	Next page
-next year (hold for menu)	jscalendar	hr	Next year (hold for menu)
 nicaragua	common	hr	NICARAGUA
 niger	common	hr	NIGER
 nigeria	common	hr	NIGERIA
@@ -444,8 +428,6 @@ popup with search	common	hr	Popup with search
 portugal	common	hr	PORTUGAL
 postal	common	hr	Postal
 preferences	common	hr	Postavke
-prev. month (hold for menu)	jscalendar	hr	Prev. month (hold for menu)
-prev. year (hold for menu)	jscalendar	hr	Prev. year (hold for menu)
 previous page	common	hr	Previous page
 primary group	common	hr	primarna grupa
 print	common	hr	Print
@@ -551,7 +533,6 @@ the mail server returned	common	hr	The mail server returned
 this name has been used already	common	hr	This name has been used already !
 thursday	common	hr	Četvrtak
 time	common	hr	Vrijeme
-time selection:	jscalendar	hr	Odabir vremena:
 time zone	common	hr	Vremenska zona
 time zone offset	common	hr	Time zone offset
 title	common	hr	Naslov
@@ -560,7 +541,6 @@ to correct this error for the future you will need to properly set the	common	hr
 to go back to the msg list, click <a href= %1 >here</a>	common	hr	To go back to the msg list, click <a href="%1">here</a>
 today	common	hr	Danas
 todays date, eg. "%1"	common	hr	todays date, eg. "%1"
-toggle first day of week	jscalendar	hr	Toggle first day of week
 togo	common	hr	TOGO
 tokelau	common	hr	TOKELAU
 tonga	common	hr	TONGA
@@ -612,7 +592,6 @@ western sahara	common	hr	WESTERN SAHARA
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	hr	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
 which groups	common	hr	Koje grupe
 width	common	hr	Width
-wk	jscalendar	hr	wk
 work email	common	hr	E-mail poslovni
 writing	common	hr	zapisujem
 written by:	common	hr	Napisao:

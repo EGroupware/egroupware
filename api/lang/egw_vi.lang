@@ -1,21 +1,11 @@
 %1 email addresses inserted	common	vi	Có %1 &#273;&#7883;a ch&#7881; email &#273;&#432;&#7907;c thêm vào
 %1 is not executable by the webserver !!!	common	vi	%1 không th&#7875; th&#7921;c thi b&#7903;i máy ch&#7911; web !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	vi	%1eGroupWare%2 là b&#7897; ph&#7847;n m&#7873;m nhóm d&#7841;ng Web h&#7895; tr&#7907; &#273;a ng&#432;&#7901;i dùng vi&#7871;t b&#7857;ng %3PHP%4.
-(shift-)click or drag to change value	jscalendar	vi	(Shift-)Click ho&#7863;c kéo và rê chu&#7897;t &#273;&#7875; thay &#273;&#7893;i giá tr&#7883;
-- click on any of the time parts to increase it	jscalendar	vi	- Click vào b&#7845;t k&#7923; ph&#7847;n th&#7901;i gian nào &#273;&#7875; t&#259;ng nó
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	vi	- Gi&#7919; phím trái chu&#7897;t trên b&#7845;t k&#7923; nút &#7845;n nào phía trên &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
-- or click and drag for faster selection.	jscalendar	vi	- ho&#7863;c click và kéo - rê chu&#7897;t &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
-- or shift-click to decrease it	jscalendar	vi	- ho&#7863;c Shift-Click chu&#7897;t &#273;&#7875; gi&#7843;m nó
-- use the %1, %2 buttons to select month	jscalendar	vi	- Dùng các nút &#7845;n %1, %2 &#273;&#7875; ch&#7885;n tháng
-- use the %1, %2 buttons to select year	jscalendar	vi	- Dùng các nút &#7845;n %1, %2 &#273;&#7875; ch&#7885;n n&#259;m
 00 (disable)	admin	vi	00 (t&#7855;t)
 13 (ntp)	admin	vi	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	vi	3 ký t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t ngày
-3 number of chars for month-shortcut	jscalendar	vi	3 ký t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t tháng
 80 (http)	admin	vi	80 (http)
 about	common	vi	Gi&#7899;i thi&#7879;u
 about %1	common	vi	Gi&#7899;i thi&#7879;u %1
-about the calendar	jscalendar	vi	Gi&#7899;i thi&#7879;u v&#7873; L&#7883;ch
 access	common	vi	Truy c&#7853;p
 access not permitted	common	vi	Truy c&#7853;p không &#273;&#432;&#7907;c phép
 account has been created	common	vi	Tài kho&#7843;n &#273;ã &#273;&#432;&#7907;c t&#7841;o
@@ -138,7 +128,6 @@ cyprus	common	vi	CYPRUS
 czech republic	common	vi	CZECH REPUBLIC
 date	common	vi	Ngày
 date due	common	vi	Ngày &#273;&#7871;n h&#7841;n
-date selection:	jscalendar	vi	L&#7921;a ch&#7885;n ngày:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	vi	C&#7893;ng Datetime.<br>N&#7871;u dùng c&#7893;ng 13, vui lòng thi&#7871;t l&#7853;p các ch&#7871; &#273;&#7897; t&#432;&#7901;ng l&#7917;a tr&#432;&#7899;c khi g&#7917;i trang này.<br>(C&#7893;ng: 13 / &#272;&#7883;a ch&#7881; c&#7893;ng: 129.6.15.28)
 december	common	vi	Tháng M&#432;&#7901;i Hai
 default category	common	vi	Nhóm m&#7863;c &#273;&#7883;nh
@@ -152,7 +141,6 @@ disable internet explorer png-image-bugfix	common	vi	T&#7855;t ch&#7913;c n&#259
 disable slider effects	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t &#273;&#7897;ng khi hi&#7875;n th&#7883; ho&#7863;c t&#7855;t các menu trong trang? Các ng&#432;&#7901;i s&#7917; d&#7909;ng trình duy&#7879;t Opera và Konqueror h&#7847;u nh&#432; c&#7847;n làm nh&#432; v&#7847;y.
 disabled	common	vi	&#272;ã t&#7855;t
-display %s first	jscalendar	vi	Hi&#7875;n th&#7883; %s &#273;&#7847;u tiên
 djibouti	common	vi	DJIBOUTI
 do you also want to delete all subcategories ?	common	vi	B&#7841;n c&#361;ng mu&#7889;n xóa luôn các nhóm con ph&#7843;i không ?
 doctype:	common	vi	DOCTYPE:
@@ -165,7 +153,6 @@ dominica	common	vi	DOMINICA
 dominican republic	common	vi	DOMINICAN REPUBLIC
 done	common	vi	&#272;ã xong
 download	common	vi	T&#7843;i v&#7873;
-drag to move	jscalendar	vi	Kéo và rê chu&#7897;t &#273;&#7875; di chuy&#7875;n
 e-mail	common	vi	E-Mail
 east timor	common	vi	EAST TIMOR
 ecuador	common	vi	ECUADOR
@@ -224,7 +211,6 @@ ghana	common	vi	GHANA
 gibraltar	common	vi	GIBRALTAR
 global	common	vi	Chung
 global public	common	vi	Môi tr&#432;&#7901;ng chung
-go today	jscalendar	vi	Vào m&#7909;c Hôm nay
 grant access	common	vi	Phân quy&#7873;n truy c&#7853;p
 greece	common	vi	GREECE
 greenland	common	vi	GREENLAND
@@ -361,9 +347,7 @@ new main category	common	vi	Nhóm chính m&#7899;i
 new value	common	vi	Giá tr&#7883; m&#7899;i
 new zealand	common	vi	NEW ZEALAND
 next	common	vi	K&#7871; ti&#7871;p
-next month (hold for menu)	jscalendar	vi	Tháng k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
 next page	common	vi	Trang k&#7871; ti&#7871;p
-next year (hold for menu)	jscalendar	vi	N&#259;m k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
 nicaragua	common	vi	NICARAGUA
 niger	common	vi	NIGER
 nigeria	common	vi	NIGERIA
@@ -427,8 +411,6 @@ poland	common	vi	POLAND
 portugal	common	vi	PORTUGAL
 postal	common	vi	&#272;&#432;&#7901;ng b&#432;u &#273;i&#7879;n
 preferences	common	vi	Các tùy ch&#7885;n
-prev. month (hold for menu)	jscalendar	vi	Tháng tr&#432;&#7899;c (&#273;&#432;a ra menu)
-prev. year (hold for menu)	jscalendar	vi	N&#259;m tr&#432;&#7899;c (&#273;&#432;a ra menu)
 previous page	common	vi	Trang tr&#432;&#7899;c
 primary style-sheet:	common	vi	Style-sheet chính:
 print	common	vi	In
@@ -528,7 +510,6 @@ the mail server returned	common	vi	Máy ch&#7911; Mail tr&#7843; v&#7873;
 this name has been used already	common	vi	Tên này &#273;ã &#273;&#432;&#7907;c s&#7917; d&#7909;ng !
 thursday	common	vi	Th&#7913; N&#259;m
 time	common	vi	Gi&#7901;
-time selection:	jscalendar	vi	Ch&#7885;n gi&#7901;
 time zone	common	vi	Múi gi&#7901;
 time zone offset	common	vi	&#272;&#7897; l&#7879;ch múi gi&#7901;
 title	common	vi	Tiêu &#273;&#7873;
@@ -537,7 +518,6 @@ to correct this error for the future you will need to properly set the	common	vi
 to go back to the msg list, click <a href= %1 >here</a>	common	vi	&#272;&#7875; quay l&#7841;i danh sách tin nh&#7855;n, click <a href="%1">vào &#273;ây</a>
 today	common	vi	Hôm nay
 todays date, eg. "%1"	common	vi	ngày hôm nay, ví d&#7909;: "%1"
-toggle first day of week	jscalendar	vi	Chuy&#7875;n qua ngày &#273;&#7847;u tu&#7847;n
 togo	common	vi	TOGO
 tokelau	common	vi	TOKELAU
 tonga	common	vi	TONGA
@@ -583,7 +563,6 @@ wednesday	common	vi	Th&#7913; T&#432;
 welcome	common	vi	Chào m&#7915;ng
 western sahara	common	vi	WESTERN SAHARA
 which groups	common	vi	Các nhóm nào
-wk	jscalendar	vi	wk
 work email	common	vi	email t&#7841;i C&#417; quan
 written by:	common	vi	&#272;&#432;&#7907;c vi&#7871;t b&#7903;i
 year	common	vi	N&#259;m

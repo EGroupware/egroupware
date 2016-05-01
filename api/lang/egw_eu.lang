@@ -1,22 +1,12 @@
 %1 email addresses inserted	common	eu	%1 helbide elektronikoak txertatuak
 %1 is not executable by the webserver !!!	common	eu	%1-ek ez du baimenik web zerbitzaria exekutatzeko!!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	eu	%1eGroupWare%2 web-ean oinarritutako talde lanerako tresna erabiltzaile anitza da
-(shift-)click or drag to change value	jscalendar	eu	Sakatu maiuskula edota arrastatu balioa aldatzeko
-- click on any of the time parts to increase it	jscalendar	eu	- Egin klik edozein zatitan handitzeko
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	eu	-Xaguaren botoia sakatua mantendu edozein zatian aukeraketa azkarrerako
-- or click and drag for faster selection.	jscalendar	eu	- sakatu edo arrastatu aukeraketa azkarrerako
-- or shift-click to decrease it	jscalendar	eu	- sakatu maiuskularekin batera gutxitzeko
-- use the %1, %2 buttons to select month	jscalendar	eu	- %1, %2 botoiak erabili hilabetea aukeratzeko
-- use the %1, %2 buttons to select year	jscalendar	eu	- %1, %2 botoiak erabili urtea aukeratzeko
 00 (disable)	admin	eu	00 (desaktibatu)
 13 (ntp)	admin	eu	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	eu	3 karaktere egunaren laburduran
-3 number of chars for month-shortcut	jscalendar	eu	3 karaktere hilabetearen laburduran
 80 (http)	admin	eu	80 (http)
 about	common	eu	Honi buruzkoak
 about %1	common	eu	%1 honi buruzkoak
 about egroupware	common	eu	eGroupwareri buruzkoak
-about the calendar	jscalendar	eu	Egutegiari buruzkoak
 access	common	eu	Sarbide
 access not permitted	common	eu	Sarrera ez onartua
 account has been created	common	eu	Kontu bat sortu da
@@ -160,7 +150,6 @@ cyprus	common	eu	CYPRUS
 czech republic	common	eu	CZECH REPUBLIC
 date	common	eu	Data
 date due	common	eu	Muga eguna
-date selection:	jscalendar	eu	Aukeratu data:
 december	common	eu	Abendua
 default category	common	eu	Lehenetsitako kategoria
 delete	common	eu	Ezabatu
@@ -175,7 +164,6 @@ direction left to right	common	eu	Helbidea ezkerretik eskubira
 directory	common	eu	Direktorioa
 disable slider effects	common	eu	Efektu graduatzaileak desaktibatu
 disabled	common	eu	Desaktibatu
-display %s first	jscalendar	eu	Erakutsi % lehenengo
 djibouti	common	eu	DJIBOUTI
 do you also want to delete all subcategories ?	common	eu	Azpikategoria guztiak ezabatu nahi dituzu?
 doctype:	common	eu	DOCTYPE:
@@ -187,7 +175,6 @@ dominica	common	eu	DOMINICA
 dominican republic	common	eu	ERREPUBLICA DOMINIKARRA
 done	common	eu	Egina
 download	common	eu	Deskargatu
-drag to move	jscalendar	eu	Arrastatu mugitzeko
 e-mail	common	eu	Posta elektronikoa
 east timor	common	eu	EAST TIMOR
 ecuador	common	eu	ECUADOR
@@ -245,7 +232,6 @@ ghana	common	eu	GHANA
 gibraltar	common	eu	GIBRALTAR
 global	common	eu	Guztizkoa
 global public	common	eu	Publiko guztia
-go today	jscalendar	eu	Gaur joan
 grant access	common	eu	Sarrera eman
 greece	common	eu	GREZIA
 greenland	common	eu	GROENLANDIA
@@ -388,9 +374,7 @@ new main category	common	eu	Kategoria nagusi berria
 new value	common	eu	Balio berria
 new zealand	common	eu	ZELANDA BERRIA
 next	common	eu	Hurrengoa
-next month (hold for menu)	jscalendar	eu	Hurrengo hilabetea
 next page	common	eu	Hurrengo orrialdea
-next year (hold for menu)	jscalendar	eu	Hurrengo urtea
 nicaragua	common	eu	NICARAGUA
 niger	common	eu	NIGER
 nigeria	common	eu	NIGERIA
@@ -444,7 +428,7 @@ personal	common	eu	Pertsonala
 peru	common	eu	PERU
 philippines	common	eu	FILIPINAK
 phone number	common	eu	Telefono zenbakia
-phpgwapi	common	eu	eGroupWare API
+api	common	eu	eGroupWare API
 pitcairn	common	eu	PITCAIRN
 please enter a name	common	eu	Mesedez izen bat sartu
 please run setup to become current	common	eu	Mesedez setup exekutatu eguneratzeko
@@ -454,8 +438,6 @@ poland	common	eu	POLONIA
 portugal	common	eu	PORTUGAL
 postal	common	eu	Postala
 preferences	common	eu	Hobespenak
-prev. month (hold for menu)	jscalendar	eu	Aurreko hilabetea (menuan mantendu)
-prev. year (hold for menu)	jscalendar	eu	Aurreko urtea (menuan mantendu)
 previous page	common	eu	Aurreko orria
 primary group	common	eu	Talde nagusia
 primary style-sheet:	common	eu	Lehenengo estilo orria
@@ -556,13 +538,11 @@ thailand	common	eu	THAILAND
 this name has been used already	common	eu	Izen hau erabilia dago!
 thursday	common	eu	Osteguna
 time	common	eu	Ordua
-time selection:	jscalendar	eu	Ordua aukeratu:
 time zone	common	eu	Ordu-zona
 time zone offset	common	eu	Ordu-zonako diferentzia
 title	common	eu	Izenburua
 to	common	eu	Nori
 today	common	eu	Gaur
-toggle first day of week	jscalendar	eu	Asteko lehen eguna aldatu
 togo	common	eu	TOGO
 tokelau	common	eu	TOKELAU
 tonga	common	eu	TONGA
@@ -608,7 +588,6 @@ western sahara	common	eu	MENDEBALDEKO SAHARA
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	eu	Bai aukeratzen bada sarrera eta irteera botoiak aplikazio nagusien barran agertuko dira.
 which groups	common	eu	Zein taldeak
 width	common	eu	Zabalera
-wk	jscalendar	eu	wk
 work email	common	eu	laneko posta elektronikoa
 writing	common	eu	Idazten
 written by:	common	eu	Nork idatzi:

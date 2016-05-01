@@ -1,21 +1,11 @@
 %1 email addresses inserted	common	lv	%1 e-pasta adreses pievienotas
 %1 is not executable by the webserver !!!	common	lv	%1 : Šo webserveris nevar palaist !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	lv	%1eGroupWare%2 ir daudzlietotāju, caur tīmekļa pārlūkprogrammu lietojama GrupuWare ,kas programmēta %3PHP%4.
-(shift-)click or drag to change value	jscalendar	lv	(Shift-) Klikšķini un velc peli, lai mainītu lielumu
-- click on any of the time parts to increase it	jscalendar	lv	- Klikšķini uz jebkuras laika daļas, lai palielinātu to
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	lv	- Turi nospiestu peles pogu uz jebkuras no pogām ātrākai izvēlei
-- or click and drag for faster selection.	jscalendar	lv	- vai klikšķini un velc peli ātrākai izvēlei
-- or shift-click to decrease it	jscalendar	lv	- Shift-klikšķini, lai samazinātu to
-- use the %1, %2 buttons to select month	jscalendar	lv	- Spied %1, %2 pogas, lai izvēlētos mēnesi
-- use the %1, %2 buttons to select year	jscalendar	lv	- Spied %1, %2 pogas, lai izvēlētos gadu
 00 (disable)	admin	lv	00 (disable)
 13 (ntp)	admin	lv	3 (ntp)
-3 number of chars for day-shortcut	jscalendar	lv	3 simbolu dienas saisinājums
-3 number of chars for month-shortcut	jscalendar	lv	3 simbolu mēneša saisinājums
 80 (http)	admin	lv	80 (http)
 about	common	lv	Par
 about %1	common	lv	Par %1
-about the calendar	jscalendar	lv	Par kalendāru
 access	common	lv	Piekļuve
 access not permitted	common	lv	Piekļuve aizliegta
 account has been created	common	lv	Konts tika izveidots
@@ -143,7 +133,6 @@ cyprus	common	lv	KIPRA
 czech republic	common	lv	ČEHIJAS REPUBLIKA
 date	common	lv	Datums
 date due	common	lv	Datums paredzēts
-date selection:	jscalendar	lv	Datuma izvēle:
 december	common	lv	Decembris
 default category	common	lv	Noklusētā Kategorija
 delete	common	lv	Dzēst
@@ -156,7 +145,6 @@ details	common	lv	Detaļas
 directory	common	lv	Direktorija
 disable internet explorer png-image-bugfix	common	lv	Izslēgt Internet Explorer png-image-bugfix
 disabled	common	lv	Izslēgts
-display %s first	jscalendar	lv	Rādīt %s pirmo
 djibouti	common	lv	DŽIBUTIJA
 do you also want to delete all subcategories ?	common	lv	Vai vēlies dzēst arī visas apakškategorijas?
 document properties	common	lv	Dokumenta rekvizīti
@@ -168,7 +156,6 @@ dominica	common	lv	DOMINIKA
 dominican republic	common	lv	DOMINIKĀNA
 done	common	lv	Gatavs
 download	common	lv	Lejupielādēt
-drag to move	jscalendar	lv	Velc lai pārvietotu
 e-mail	common	lv	E-pasts
 east timor	common	lv	AUSTRUMTIMORA
 ecuador	common	lv	EKVADORA
@@ -226,7 +213,6 @@ germany	common	lv	Vācija
 ghana	common	lv	GANA
 gibraltar	common	lv	GIBRALTĀRS
 global	common	lv	Globāls
-go today	jscalendar	lv	Atvērt šodienu!
 grant access	common	lv	Atļaut Piekļuvi
 greece	common	lv	GRIEĶIJA
 greenland	common	lv	GRENLANDE
@@ -371,9 +357,7 @@ new main category	common	lv	Jauna galvenā kategorija
 new value	common	lv	Jauna Vērtība
 new zealand	common	lv	JAUNZĒLANDE
 next	common	lv	Nākošais
-next month (hold for menu)	jscalendar	lv	Nākošais mēnesis (paturi ilgāk, lai būtu menu)
 next page	common	lv	Nākošā lapa
-next year (hold for menu)	jscalendar	lv	Nākošais gads (paturi ilgāk, lai būtu menu)
 nicaragua	common	lv	NIKARAGVA
 niger	common	lv	NIGĒRA
 nigeria	common	lv	NIGĒRIJA
@@ -443,8 +427,6 @@ popup with search	common	lv	Uzsākt ar meklēšanu
 portugal	common	lv	PORTUGĀLE
 postal	common	lv	Pasta
 preferences	common	lv	Iestādījumi
-prev. month (hold for menu)	jscalendar	lv	Iepr. mēnesis (paturi ilgāk, lai būtu menu)
-prev. year (hold for menu)	jscalendar	lv	Iepr. gads (paturi ilgāk, lai būtu menu)
 previous page	common	lv	Iepriekšējā lapa
 primary group	common	lv	galvenā grupa
 primary style-sheet:	common	lv	Primārā stilu lapa:
@@ -553,7 +535,6 @@ the mail server returned	common	lv	Pasta serveris atgrieza
 this name has been used already	common	lv	Šis vārds jau ir aizņemts  !
 thursday	common	lv	Ceturtdiena
 time	common	lv	Laiks
-time selection:	jscalendar	lv	Laika izvēle
 time zone	common	lv	Laika zona
 time zone offset	common	lv	Laika zonas nobīde
 title	common	lv	Nosaukums
@@ -612,7 +593,6 @@ welcome	common	lv	Laipni Lūdzam
 western sahara	common	lv	RIETUMSAHĀRA
 which groups	common	lv	Kuras grubas
 width	common	lv	Platums
-wk	jscalendar	lv	ned
 work email	common	lv	darba e-pasts
 writing	common	lv	raksta
 written by:	common	lv	Autors:

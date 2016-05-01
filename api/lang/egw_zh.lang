@@ -2,26 +2,16 @@
 %1 is not executable by the webserver !!!	common	zh	Web 服务器无法执行%1！
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	zh	%1选择另一个目录%2<br />或使得 Web 服务器可以写入%3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1eGroupWare%2 是一个多用户、基于 Web 的以 %3PHP%4 为基础开发的工作组套件。
-(shift-)click or drag to change value	jscalendar	zh	(Shift+)点击或拖放修改其值
-- click on any of the time parts to increase it	jscalendar	zh	- 点击任何时间部分以增加它
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	zh	- 在任何一个按钮上保持按住鼠标键以加快选取。
-- or click and drag for faster selection.	jscalendar	zh	- 或点击拖放快速选择。
-- or shift-click to decrease it	jscalendar	zh	- 或 Shift+点击减少
-- use the %1, %2 buttons to select month	jscalendar	zh	- 使用 %1 、%2 按钮选择月份
-- use the %1, %2 buttons to select year	jscalendar	zh	- 使用 %1 、%2 按钮选择年份
 00 (disable)	admin	zh	00 (禁用)
 1 day	common	zh	1 天
 1 hour	common	zh	1 小时
 1 month	common	zh	1 个月
 1 week	common	zh	1 星期
 13 (ntp)	admin	zh	13 (NTP)
-3 number of chars for day-shortcut	jscalendar	zh	日期的简写
-3 number of chars for month-shortcut	jscalendar	zh	月份的简写
 80 (http)	admin	zh	80 (http)
 about	common	zh	关于
 about %1	common	zh	关于%1
 about egroupware	common	zh	关于 eGroupWare
-about the calendar	jscalendar	zh	关于该日历
 access	common	zh	访问
 access not permitted	common	zh	禁止访问
 account has been created	common	zh	账户创建成功
@@ -175,7 +165,6 @@ database error	common	zh	数据库错误
 database error!	common	zh	数据库错误！
 date	common	zh	日期
 date due	common	zh	到期日
-date selection:	jscalendar	zh	日期选择：
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zh	日期时间端口。<br>如果使用端口13，请在提交前设置适当的防火墙规则。<br>(端口：13/主机：129.6.15.28)
 december	common	zh	十二月
 default category	common	zh	默认显示类别
@@ -197,7 +186,6 @@ disable slider effects	common	zh	禁用滑动效果
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh	在页面显示或隐藏菜单时禁用动画效果？Opera 和 Konqueror 用户也许必须这样做。
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh	禁用为使 Internet Explorer 5.5 或更高版本能够显示透明的 PNG 图片的修复脚本？
 disabled	common	zh	已禁用
-display %s first	jscalendar	zh	首先显示%s
 djibouti	common	zh	吉布提
 do you also want to delete all subcategories ?	common	zh	确定也要删除所有的子类别吗？
 doctype:	common	zh	文件类型：
@@ -210,7 +198,6 @@ dominica	common	zh	多米尼加
 dominican republic	common	zh	多米尼加共和国
 done	common	zh	完成
 download	common	zh	下载
-drag to move	jscalendar	zh	拖动
 e-mail	common	zh	电子邮件
 east timor	common	zh	东帝汶
 ecuador	common	zh	厄瓜多尔
@@ -280,7 +267,6 @@ ghana	common	zh	加纳
 gibraltar	common	zh	直布罗陀
 global	common	zh	全局
 global public	common	zh	全局公有的
-go today	jscalendar	zh	转到今天
 grant access	common	zh	授权访问
 greece	common	zh	希腊
 greenland	common	zh	格陵兰
@@ -439,9 +425,7 @@ new main category	common	zh	新建主类别
 new value	common	zh	新值
 new zealand	common	zh	新西兰
 next	common	zh	下一个
-next month (hold for menu)	jscalendar	zh	下个月(保持按住菜单)
 next page	common	zh	下一页
-next year (hold for menu)	jscalendar	zh	明年(保持按住菜单)
 nicaragua	common	zh	尼加拉瓜
 niger	common	zh	尼日尔
 nigeria	common	zh	尼日利亚
@@ -511,7 +495,7 @@ personal	common	zh	个人
 peru	common	zh	秘鲁
 philippines	common	zh	菲律宾
 phone number	common	zh	电话号码
-phpgwapi	common	zh	[eGW-API]系统核心
+api	common	zh	[eGW-API]系统核心
 pitcairn	common	zh	皮特凯恩
 please %1 by hand	common	zh	请手动%1
 please enter a name	common	zh	请输入名称！
@@ -527,8 +511,6 @@ portugal	common	zh	葡萄牙
 postal	common	zh	邮政
 powered by	common	zh	Powered by
 preferences	common	zh	参数选择
-prev. month (hold for menu)	jscalendar	zh	上个月(hold for menu)
-prev. year (hold for menu)	jscalendar	zh	去年(hold for menu)
 previous page	common	zh	前一页
 primary group	common	zh	主要群组
 primary style-sheet:	common	zh	主要样式表：
@@ -664,7 +646,6 @@ this name has been used already	common	zh	该名称已被使用！
 thursday	common	zh	星期四
 tiled	common	zh	平铺
 time	common	zh	时间
-time selection:	jscalendar	zh	时间选择：
 time zone	common	zh	时区
 time zone offset	common	zh	时差
 title	common	zh	标题
@@ -673,7 +654,6 @@ to correct this error for the future you will need to properly set the	common	zh
 to go back to the msg list, click <a href= %1 >here</a>	common	zh	点击<a href="%1">此处</a>返回邮件列表
 today	common	zh	今天
 todays date, eg. "%1"	common	zh	当前日期，例如："%1"
-toggle first day of week	jscalendar	zh	更改一周起始日
 togo	common	zh	多哥
 tokelau	common	zh	托克劳群岛
 tonga	common	zh	汤加
@@ -734,7 +714,6 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	zh	哪一个组
 whole query	common	zh	完整查询
 width	common	zh	宽度
-wk	jscalendar	zh	星期
 work email	common	zh	工作 EMail 地址
 would you like to display the page generation time at the bottom of every window?	common	zh	您是否要在每个窗口下边显示生成时间？
 writing	common	zh	写入

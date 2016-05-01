@@ -5,26 +5,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	cs	%1eGroupWare%2 je víceuživatelský groupware postavený na webových technologiích napsaný v jazyce %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	cs	'%1' není php souborem v server root eGW (%2)!
 (session restored in %1 seconds)	common	cs	(relace obnovena za %1 sekund)
-(shift-)click or drag to change value	jscalendar	cs	Klikněte (se shiftem) nebo uchopte pro změnu hodnoty
-- click on any of the time parts to increase it	jscalendar	cs	- Kliknutím zvětšíte libovolnou položku časového údaje
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	cs	- Podržte tlačítko myši nad kterýmkoli z horních tlačítek pro zrychlení výběru.
-- or click and drag for faster selection.	jscalendar	cs	- nebo klikněte a přetáhněte pro rychlejší výběr.
-- or shift-click to decrease it	jscalendar	cs	- kliknutím se shiftem ji zmenšíte
-- use the %1, %2 buttons to select month	jscalendar	cs	- Použijte tlačítka %1, %2 pro výběr měsíce
-- use the %1, %2 buttons to select year	jscalendar	cs	- Použijte tlačítka %1, %2 pro výběr roku
 00 (disable)	admin	cs	00 (zakázat)
 1 day	common	cs	1 Den
 1 hour	common	cs	1 Hodina
 1 month	common	cs	1 Měsíc
 1 week	common	cs	1 Týden
 13 (ntp)	admin	cs	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	cs	3 číslice nebo znaky pro zkratku dne
-3 number of chars for month-shortcut	jscalendar	cs	3 číslice nebo znaky pro zkratku měsíce
 80 (http)	admin	cs	80 (http)
 about	common	cs	O
 about %1	common	cs	O %1
 about egroupware	common	cs	O eGroupWare
-about the calendar	jscalendar	cs	O kalendáři
 access	common	cs	Přístup
 access not permitted	common	cs	Přístup zakázán
 account has been created	common	cs	Účet byl vytvořen
@@ -185,7 +175,6 @@ database error	common	cs	Databázová chyba
 database error!	common	cs	Databázová chyba!
 date	common	cs	Datum
 date due	common	cs	Do data
-date selection:	jscalendar	cs	Výběr data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	cs	Port pro datum a čas.<br>Pokud používáte port 13, nastavte prosím příslušná pravidla na firewallu dříve, než odešlete tuto stránku.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	cs	Prosinec
 default category	common	cs	Výchozí kategorie
@@ -208,7 +197,6 @@ disable slider effects	common	cs	Zakázat efekty posuvníku
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	cs	Zakázat animované efekty posuvníku při zobrazení nebo skrývání menu na stránce? Uživatelé Opery a Konqueroru patrně budou muset nastavit.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	cs	Zablokovat spouštění skriptu pro opravu chyby v Internet Exploreru 5.5 a vyšších, který umožňuje zobrazit průhlednost v obrázcích formátu .PNG?
 disabled	common	cs	Zakázano
-display %s first	jscalendar	cs	Zobrazit nejprve %s
 djibouti	common	cs	DŽIBUTSKO
 do not notify	common	cs	Neupozorňovat
 do you also want to delete all subcategories ?	common	cs	Chcete také smazat všechny podkategorie?
@@ -222,7 +210,6 @@ dominica	common	cs	DOMINIKA
 dominican republic	common	cs	DOMINIKÁNSKÁ REPUBLIKA
 done	common	cs	Hotovo
 download	common	cs	Stáhnout
-drag to move	jscalendar	cs	Pro přesun uchopte
 e-mail	common	cs	E-Mail
 east timor	common	cs	VÝCHODNÍ TIMOR
 eastern european	common	cs	Východoevropské
@@ -296,7 +283,6 @@ ghana	common	cs	GHANA
 gibraltar	common	cs	DŽIBRALTAR
 global	common	cs	Globální
 global public	common	cs	Přístupný všem
-go today	jscalendar	cs	Jdi na dnešek
 grant access	common	cs	Povolit přístup
 greece	common	cs	ŘECKO
 greek	common	cs	řečtina
@@ -463,9 +449,7 @@ new main category	common	cs	Nová hlavní kategorie
 new value	common	cs	Nová hodnota
 new zealand	common	cs	NOVÝ ZÉLAND
 next	common	cs	Další
-next month (hold for menu)	jscalendar	cs	Další měsíc (podržte pro menu)
 next page	common	cs	Další strana
-next year (hold for menu)	jscalendar	cs	Další rok (podržte pro menu)
 nicaragua	common	cs	NIKARAGUA
 niger	common	cs	NIGER
 nigeria	common	cs	NIGÉRIE
@@ -537,7 +521,7 @@ personal	common	cs	Osobní
 peru	common	cs	PERU
 philippines	common	cs	FILIPÍNY
 phone number	common	cs	telefonní číslo
-phpgwapi	common	cs	eGroupWare API
+api	common	cs	eGroupWare API
 pitcairn	common	cs	PITCAIRN
 please %1 by hand	common	cs	Prosím %1 ručně
 please enter a name	common	cs	Zadejte prosím jméno!
@@ -553,8 +537,6 @@ portugal	common	cs	PORTUGALSKO
 postal	common	cs	Poštovní
 powered by	common	cs	Založeno na
 preferences	common	cs	Předvolby
-prev. month (hold for menu)	jscalendar	cs	Předchozí měsíc (podržte pro menu)
-prev. year (hold for menu)	jscalendar	cs	Předchozí rok (podržte pro menu)
 previous page	common	cs	Predchozí strana
 primary group	common	cs	primární skupina
 primary style-sheet:	common	cs	Primární formátovací sada:
@@ -697,7 +679,6 @@ this name has been used already	common	cs	Takové jméno již bylo použito!
 thursday	common	cs	Čtvrtek
 tiled	common	cs	dlaždice
 time	common	cs	Čas
-time selection:	jscalendar	cs	Výběr času:
 time zone	common	cs	Časová zóna
 time zone offset	common	cs	Posun časové zóny
 title	common	cs	Titul(ek) / Název
@@ -706,7 +687,6 @@ to correct this error for the future you will need to properly set the	common	cs
 to go back to the msg list, click <a href= %1 >here</a>	common	cs	Pro návrat do seznamu zpráv, klikněte <a href="%1">sem</a>
 today	common	cs	Dnes
 todays date, eg. "%1"	common	cs	dnešní datum, např. "%1"
-toggle first day of week	jscalendar	cs	Přepnout první den v týdnu
 togo	common	cs	TOGO
 tokelau	common	cs	TOKELAU
 tonga	common	cs	TONGA
@@ -768,7 +748,6 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	cs	Které skupiny
 whole query	common	cs	celý dotaz
 width	common	cs	Šířka
-wk	jscalendar	cs	týd.
 work email	common	cs	pracovní e-mail
 would you like to display the page generation time at the bottom of every window?	common	cs	Chcete zobrazit čas generování každého okna na jeho zápatí?
 writing	common	cs	psaní

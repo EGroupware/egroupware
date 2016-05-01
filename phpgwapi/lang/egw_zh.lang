@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	zh	(Shift+)点击或拖放修改其值
+- click on any of the time parts to increase it	jscalendar	zh	- 点击任何时间部分以增加它
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	zh	- 在任何一个按钮上保持按住鼠标键以加快选取。
+- or click and drag for faster selection.	jscalendar	zh	- 或点击拖放快速选择。
+- or shift-click to decrease it	jscalendar	zh	- 或 Shift+点击减少
+- use the %1, %2 buttons to select month	jscalendar	zh	- 使用 %1 、%2 按钮选择月份
+- use the %1, %2 buttons to select year	jscalendar	zh	- 使用 %1 、%2 按钮选择年份
+3 number of chars for day-shortcut	jscalendar	zh	日期的简写
+3 number of chars for month-shortcut	jscalendar	zh	月份的简写
+about the calendar	jscalendar	zh	关于该日历
+date selection:	jscalendar	zh	日期选择：
+display %s first	jscalendar	zh	首先显示%s
+drag to move	jscalendar	zh	拖动
+go today	jscalendar	zh	转到今天
+next month (hold for menu)	jscalendar	zh	下个月(保持按住菜单)
+next year (hold for menu)	jscalendar	zh	明年(保持按住菜单)
+prev. month (hold for menu)	jscalendar	zh	上个月(hold for menu)
+prev. year (hold for menu)	jscalendar	zh	去年(hold for menu)
+time selection:	jscalendar	zh	时间选择：
+toggle first day of week	jscalendar	zh	更改一周起始日
+wk	jscalendar	zh	星期
+phpgwapi	common	zh	old EGroupware API

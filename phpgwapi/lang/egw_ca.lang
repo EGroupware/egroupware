@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	ca	(Maj-)+clic o arrosegar per a canviar el valor
+- click on any of the time parts to increase it	jscalendar	ca	- Premeu en qualsevol part de l'hora per a incrementar-la
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	ca	- Mantingueu premut el botó del ratolí en qualsevol dels botons anteriors per a una selecció més ràpida.
+- or click and drag for faster selection.	jscalendar	ca	- o premeu i arrosegueu per a una selecció més ràpida.
+- or shift-click to decrease it	jscalendar	ca	- o Maj+clic per disminuir
+- use the %1, %2 buttons to select month	jscalendar	ca	- Useu els botons %1, %2 per a seleccionar el mes
+- use the %1, %2 buttons to select year	jscalendar	ca	- Useu els botons %1, %2 per a seleccionar l'any
+3 number of chars for day-shortcut	jscalendar	ca	3 caràcters per a l'abreviatura del dia
+3 number of chars for month-shortcut	jscalendar	ca	3 caràcters per a l'abreviatura del mes
+about the calendar	jscalendar	ca	Sobre el calendari
+date selection:	jscalendar	ca	Selecció de data:
+display %s first	jscalendar	ca	Mostra %s primer
+drag to move	jscalendar	ca	Arrosegueu per moure
+go today	jscalendar	ca	Anar a avui
+next month (hold for menu)	jscalendar	ca	Mes següent (mantenir clicat per menú)
+next year (hold for menu)	jscalendar	ca	Any següent (mantenir clicat per menú)
+prev. month (hold for menu)	jscalendar	ca	Mes anterior (mantenir clicat per menú)
+prev. year (hold for menu)	jscalendar	ca	Any anterior (mantenir clicat per menú)
+time selection:	jscalendar	ca	Seleccionar hora:
+toggle first day of week	jscalendar	ca	Canviar el primer dia de la setmana
+wk	jscalendar	ca	st
+phpgwapi	common	ca	old EGroupware API

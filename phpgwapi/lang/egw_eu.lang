@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	eu	Sakatu maiuskula edota arrastatu balioa aldatzeko
+- click on any of the time parts to increase it	jscalendar	eu	- Egin klik edozein zatitan handitzeko
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	eu	-Xaguaren botoia sakatua mantendu edozein zatian aukeraketa azkarrerako
+- or click and drag for faster selection.	jscalendar	eu	- sakatu edo arrastatu aukeraketa azkarrerako
+- or shift-click to decrease it	jscalendar	eu	- sakatu maiuskularekin batera gutxitzeko
+- use the %1, %2 buttons to select month	jscalendar	eu	- %1, %2 botoiak erabili hilabetea aukeratzeko
+- use the %1, %2 buttons to select year	jscalendar	eu	- %1, %2 botoiak erabili urtea aukeratzeko
+3 number of chars for day-shortcut	jscalendar	eu	3 karaktere egunaren laburduran
+3 number of chars for month-shortcut	jscalendar	eu	3 karaktere hilabetearen laburduran
+about the calendar	jscalendar	eu	Egutegiari buruzkoak
+date selection:	jscalendar	eu	Aukeratu data:
+display %s first	jscalendar	eu	Erakutsi % lehenengo
+drag to move	jscalendar	eu	Arrastatu mugitzeko
+go today	jscalendar	eu	Gaur joan
+next month (hold for menu)	jscalendar	eu	Hurrengo hilabetea
+next year (hold for menu)	jscalendar	eu	Hurrengo urtea
+prev. month (hold for menu)	jscalendar	eu	Aurreko hilabetea (menuan mantendu)
+prev. year (hold for menu)	jscalendar	eu	Aurreko urtea (menuan mantendu)
+time selection:	jscalendar	eu	Ordua aukeratu:
+toggle first day of week	jscalendar	eu	Asteko lehen eguna aldatu
+wk	jscalendar	eu	wk
+phpgwapi	common	eu	old EGroupware API

@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	fi	(Shift-) napsauta tai vedä muuttaaksesi arvoa
+- click on any of the time parts to increase it	jscalendar	fi	- Napsauta mitä tahansa ajan osaa muuttaaksesi sitä suuremmaksi
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	fi	- Pidä hiiren painiketta painettuna allaolevissa painikkeissa nopeuttaaksesi valintaa.
+- or click and drag for faster selection.	jscalendar	fi	- tai vedä ja pudota.
+- or shift-click to decrease it	jscalendar	fi	- tai Shift-napsauta muuttaaksesi sitä suuremmaksi
+- use the %1, %2 buttons to select month	jscalendar	fi	- Käytä %1, %2 -painikkeita valitaksesi kuukauden
+- use the %1, %2 buttons to select year	jscalendar	fi	- Käytä %1, %2 -painikkeita valitaksesi vuoden
+3 number of chars for day-shortcut	jscalendar	fi	2, just a number, don't translate -- RalfBecker 2006/03/14
+3 number of chars for month-shortcut	jscalendar	fi	3, just a number, don't translate -- RalfBecker 2006/03/14
+about the calendar	jscalendar	fi	Tietoja kalenterista
+date selection:	jscalendar	fi	Päivämäärän valinta:
+display %s first	jscalendar	fi	Näytä ensin %s
+drag to move	jscalendar	fi	Vedä siirtääksesi
+go today	jscalendar	fi	Siirry tähän päivään
+next month (hold for menu)	jscalendar	fi	Seuraava kuukausi (pidä alhaalla, niin näet valikon)
+next year (hold for menu)	jscalendar	fi	Seuraava vuosi (pidä alhaalla, niin näet valikon)
+prev. month (hold for menu)	jscalendar	fi	Edellinen kuukausi (pidä alhaalla, niin näet valikon)
+prev. year (hold for menu)	jscalendar	fi	Edellinen vuosi (pidä alhaalla, niin näet valikon)
+time selection:	jscalendar	fi	Ajan valinta:
+toggle first day of week	jscalendar	fi	Vaihda viikon aloituspäivää
+wk	jscalendar	fi	vk
+phpgwapi	common	fi	old EGroupware API

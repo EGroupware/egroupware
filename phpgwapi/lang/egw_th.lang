@@ -1,0 +1,6 @@
+- use the %1, %2 buttons to select month	jscalendar	th	ใช้ปุ่ม %1 กับ %2 เพื่อเลือกเดือน
+- use the %1, %2 buttons to select year	jscalendar	th	ใช้ปุ่ม %1 กับ %2 เพื่อเลือกปี
+about the calendar	jscalendar	th	เรืองปฏิทิน
+go today	jscalendar	th	ไปวันนี้
+wk	jscalendar	th	งาน
+phpgwapi	common	th	old EGroupware API

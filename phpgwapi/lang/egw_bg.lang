@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	bg	(Shift-)Кликнете или провлачете за промяна на стойността
+- click on any of the time parts to increase it	jscalendar	bg	- Кликнете някой от времевите периоди за да го увеличите
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	bg	- Задръжте бутона на мишката или някой от бутоните за по-бърз избор
+- or click and drag for faster selection.	jscalendar	bg	- или кликнете и провлачете за по-бърз избор
+- or shift-click to decrease it	jscalendar	bg	- или Shift+клик за намаляване
+- use the %1, %2 buttons to select month	jscalendar	bg	- Използвайте бутоните %1, %2 за избор на месец
+- use the %1, %2 buttons to select year	jscalendar	bg	- Използвайте бутоните %1, %2 за избор на година
+3 number of chars for day-shortcut	jscalendar	bg	3 брой символи за ден
+3 number of chars for month-shortcut	jscalendar	bg	3 брой символи за месец
+about the calendar	jscalendar	bg	За календара
+date selection:	jscalendar	bg	Избор на дата:
+display %s first	jscalendar	bg	Покажи %s първо
+drag to move	jscalendar	bg	Провлачете за преместване
+go today	jscalendar	bg	към Днес
+next month (hold for menu)	jscalendar	bg	Следващ месец (задръжте за списък)
+next year (hold for menu)	jscalendar	bg	Следваща година (задръжте за списък)
+prev. month (hold for menu)	jscalendar	bg	Предишен месец (задръжте за списък)
+prev. year (hold for menu)	jscalendar	bg	Предишна година (задръжте за списък)
+time selection:	jscalendar	bg	Избор на време:
+toggle first day of week	jscalendar	bg	Настройка на първия ден на седмицата
+wk	jscalendar	bg	сед
+phpgwapi	common	bg	old EGroupware API

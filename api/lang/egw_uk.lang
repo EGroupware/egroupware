@@ -1,12 +1,5 @@
 %1 email addresses inserted	common	uk	Додано %1 email адрес
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	uk	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
-(shift-)click or drag to change value	jscalendar	uk	(Shift-) Клацніть або перетягніть для зміни значення
-- click on any of the time parts to increase it	jscalendar	uk	- Клацніть мишкою на будь якій частині часу для його збільшення
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	uk	- Для швидшого вибору утримуйте клавішу миші на будь якій кнопці, що вище.
-- or click and drag for faster selection.	jscalendar	uk	- або клацніть мишкою та перетягніть для швидшого вибору.
-- or shift-click to decrease it	jscalendar	uk	- або клацніть мишкою з утримування Shift для зменшення
-- use the %1, %2 buttons to select month	jscalendar	uk	- Використайте клавіші миші %1, %2 для вибору місяця
-- use the %1, %2 buttons to select year	jscalendar	uk	- Використайте клавіші миші %1, %2 для вибору року
 00 (disable)	admin	uk	00 (disable)
 13 (ntp)	admin	uk	13 (ntp)
 80 (http)	admin	uk	80 (http)
@@ -102,7 +95,6 @@ cyprus	common	uk	КІПР
 czech republic	common	uk	ЧЕСЬКА РЕСПУБЛІКА
 date	common	uk	Число
 date due	common	uk	Очікуване число
-date selection:	jscalendar	uk	Вибір Дати:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	uk	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	uk	Грудень
 default category	common	uk	Категорія по замовчуванню
@@ -124,7 +116,6 @@ domestic	common	uk	Місцевий
 dominica	common	uk	ДОМІНІКА
 done	common	uk	Зроблено
 download	common	uk	Загрузити
-drag to move	jscalendar	uk	Перетягніть для перенесення
 e-mail	common	uk	E-Mail
 ecuador	common	uk	ЕКВАДОР
 edit	common	uk	Редагувати
@@ -169,7 +160,6 @@ general menu	common	uk	Загальне меню
 georgia	common	uk	ГРУЗІЯ
 germany	common	uk	ГЕРМАНІЯ
 ghana	common	uk	ГАНА
-go today	jscalendar	uk	Перейти на сьогодні
 grant access	common	uk	Надати доступ
 greece	common	uk	ГРЕЦІЯ
 greenland	common	uk	ГРЕНЛАНДІЯ
@@ -266,9 +256,7 @@ new entry added sucessfully	common	uk	Новий запис додано усп�
 new main category	common	uk	Нова основна категорія
 new value	common	uk	Нове значення
 next	common	uk	Наступний
-next month (hold for menu)	jscalendar	uk	Наступний місяць (для меню)
 next page	common	uk	Наступна сторінка
-next year (hold for menu)	jscalendar	uk	Наступний рік (для меню)
 nicaragua	common	uk	НІКАРАГУА
 niger	common	uk	НІГЕР
 nigeria	common	uk	НІГЕРІЯ
@@ -326,8 +314,6 @@ popup with search	common	uk	Вспливаюче вікно з пошуком
 portugal	common	uk	ПОРТУГАЛІЯ
 postal	common	uk	Поштовий
 preferences	common	uk	Параметри
-prev. month (hold for menu)	jscalendar	uk	Попередній місяць (для меню)
-prev. year (hold for menu)	jscalendar	uk	Попередній рік (для меню)
 previous page	common	uk	Попередня сторінка
 primary group	common	uk	первинна група
 print	common	uk	Друкувати
@@ -407,7 +393,6 @@ the mail server returned	common	uk	Поштовий сервер поверну�
 this name has been used already	common	uk	Таке ім'я вже використовується !
 thursday	common	uk	Четвер
 time	common	uk	Час
-time selection:	jscalendar	uk	Вибір часу:
 time zone	common	uk	Часовий пояс
 time zone offset	common	uk	Зміщення часового поясу
 title	common	uk	Назва
@@ -416,7 +401,6 @@ to correct this error for the future you will need to properly set the	common	uk
 to go back to the msg list, click <a href= %1 >here</a>	common	uk	Для повернення до переліку повідомлень натисніть <a href="%1">тут</a>
 today	common	uk	Сьогодні
 todays date, eg. "%1"	common	uk	Сьогоднішнє число, наприклад "%1"
-toggle first day of week	jscalendar	uk	Змінити перший день тиждня
 togo	common	uk	ТОГО
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	uk	Надто багато неуспішних спроб входу: %1 for the user '%2', %3 for the IP %4
 top	common	uk	зверху

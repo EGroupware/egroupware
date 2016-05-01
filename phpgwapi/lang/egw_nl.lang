@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	nl	(Shift-)Klik of sleep om waarde te wijzigen
+- click on any of the time parts to increase it	jscalendar	nl	- Klik op een willekeurig tijdsonderdeel om het te verhogen
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	nl	- Hou de muisknop op een van de knoppen hierboven voor een snellere selectie.
+- or click and drag for faster selection.	jscalendar	nl	- of klik en sleep voor snellere selectie
+- or shift-click to decrease it	jscalendar	nl	- of Shift-klik om het te verlagen
+- use the %1, %2 buttons to select month	jscalendar	nl	- Gebruik de %1, %2 knoppen om de maand te kiezen
+- use the %1, %2 buttons to select year	jscalendar	nl	- Gebruik de %1, %2 knoppen om het jaar te kiezen
+3 number of chars for day-shortcut	jscalendar	nl	3 letters voor verkorte dagaanduiding
+3 number of chars for month-shortcut	jscalendar	nl	3 letters voor verkorte maandaanduiding
+about the calendar	jscalendar	nl	Over de agenda
+date selection:	jscalendar	nl	Datumselectie
+display %s first	jscalendar	nl	%s eerst tonen
+drag to move	jscalendar	nl	Sleep om te verplaatsen
+go today	jscalendar	nl	Ga naar vandaag
+next month (hold for menu)	jscalendar	nl	Volgende maand (vasthouden voor menu)
+next year (hold for menu)	jscalendar	nl	Volgend jaar (vasthouden voor menu)
+prev. month (hold for menu)	jscalendar	nl	Vorige maand (vasthouden voor menu)
+prev. year (hold for menu)	jscalendar	nl	Vorig jaar (vasthouden voor menu)
+time selection:	jscalendar	nl	Tijdselectie:
+toggle first day of week	jscalendar	nl	(de)activeer eerste dag van de week
+wk	jscalendar	nl	wk
+phpgwapi	common	nl	old EGroupware API

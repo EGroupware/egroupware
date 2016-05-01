@@ -2,22 +2,12 @@
 %1 is not executable by the webserver !!!	common	sv	%1 är inte exekverbar av webbservern!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br/> eller gör %3 skrivbar för webbservern
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1eGroupWare%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
-(shift-)click or drag to change value	jscalendar	sv	(Shift)-klicka eller dra för att ändra värde
-- click on any of the time parts to increase it	jscalendar	sv	- Klicka på någon av tids intervallerna för att utöka
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	sv	- Håll musknappen över någon av knapparna ovan för snabbare val
-- or click and drag for faster selection.	jscalendar	sv	- eller klicka och dra för snabbare val
-- or shift-click to decrease it	jscalendar	sv	- eller Shift-klicka för att minska
-- use the %1, %2 buttons to select month	jscalendar	sv	- Använd %1, %2 knappar för att välja månad
-- use the %1, %2 buttons to select year	jscalendar	sv	- Använd %1, %2 knappar för att välja år
 00 (disable)	admin	sv	00 (inaktivera)
 13 (ntp)	admin	sv	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	sv	3 tecken för dag genväg
-3 number of chars for month-shortcut	jscalendar	sv	3 tecken för månad genväg
 80 (http)	admin	sv	80 (http)
 about	common	sv	Om
 about %1	common	sv	Om %1
 about egroupware	common	sv	Om eGroupware
-about the calendar	jscalendar	sv	Om Kalendern
 access	common	sv	Åtkomst
 access not permitted	common	sv	Åtkomst nekad
 account has been created	common	sv	Kontot skapat
@@ -164,7 +154,6 @@ cyprus	common	sv	CYPERN
 czech republic	common	sv	TJEKISKA REPUBLIKEN
 date	common	sv	Datum
 date due	common	sv	Förfallodatum
-date selection:	jscalendar	sv	Datum val:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sv	Datumtid port.<br>Om port 13, uppdatera brandväggen rätt innan du skickar med denna sida.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	sv	December
 default category	common	sv	Standard kategori
@@ -186,7 +175,6 @@ disable slider effects	common	sv	Inaktivera animerade effekter
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sv	Inaktivera animerade effekter vid visning eller vid täckta menyer på sidan? Opera och Konqueror användare väljer troligen detta.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
 disabled	common	sv	Inaktiverad
-display %s first	jscalendar	sv	Visa % första
 djibouti	common	sv	DJIBOUTI
 do you also want to delete all subcategories ?	common	sv	Vill du även radera alla underkategorier
 doctype:	common	sv	Dokumenttyp:
@@ -199,7 +187,6 @@ dominica	common	sv	DOMINICA
 dominican republic	common	sv	DOMINIKANSKA REPUBLIKEN
 done	common	sv	Färdig
 download	common	sv	Ladda ned
-drag to move	jscalendar	sv	Dra för att flytta
 e-mail	common	sv	E-post
 east timor	common	sv	ÖSTRA TIMOR
 ecuador	common	sv	ECUADOR
@@ -264,7 +251,6 @@ ghana	common	sv	GHANA
 gibraltar	common	sv	GIBRALTAR
 global	common	sv	Global
 global public	common	sv	Globalt publik
-go today	jscalendar	sv	Gå Idag
 grant access	common	sv	Reglera åtkomst
 greece	common	sv	GREKLAND
 greenland	common	sv	GRÖNLAND
@@ -422,9 +408,7 @@ new main category	common	sv	Ny huvudkategori
 new value	common	sv	Nytt värde
 new zealand	common	sv	NYA ZEELAND
 next	common	sv	Nästa
-next month (hold for menu)	jscalendar	sv	Nästa månad (håll för meny)
 next page	common	sv	Nästa sida
-next year (hold for menu)	jscalendar	sv	Nästa år (håll för meny)
 nicaragua	common	sv	NICARAGUA
 niger	common	sv	NIGER
 nigeria	common	sv	NIGERIA
@@ -491,7 +475,7 @@ personal	common	sv	Personligt
 peru	common	sv	PERU
 philippines	common	sv	FILIPINERNA
 phone number	common	sv	Telefonnummer
-phpgwapi	common	sv	eGroupWare API
+api	common	sv	eGroupWare API
 pitcairn	common	sv	PITCAIRNÖARNA
 please %1 by hand	common	sv	Var god och %1 för hand
 please enter a name	common	sv	Ange ett namn
@@ -505,8 +489,6 @@ popup with search	common	sv	Popup med sökning
 portugal	common	sv	PORTUGAL
 postal	common	sv	Post adress
 preferences	common	sv	Alternativ
-prev. month (hold for menu)	jscalendar	sv	Föreg. månad (håll för meny)
-prev. year (hold for menu)	jscalendar	sv	Föreg. år (håll för meny)
 previous page	common	sv	Föregående sida
 primary group	common	sv	Primär grupp
 primary style-sheet:	common	sv	Primär Style sheet
@@ -636,7 +618,6 @@ this name has been used already	common	sv	Namnet är redan upptaget
 thursday	common	sv	Torsdag
 tiled	common	sv	Vinklad
 time	common	sv	Tid
-time selection:	jscalendar	sv	Tidsintervall:
 time zone	common	sv	Tidzon
 time zone offset	common	sv	Tidsförskjutning
 title	common	sv	Rubrik
@@ -645,7 +626,6 @@ to correct this error for the future you will need to properly set the	common	sv
 to go back to the msg list, click <a href= %1 >here</a>	common	sv	Klicka <a href="%1">här</a> för att komma tillbaks till meddelandelistan
 today	common	sv	Idag
 todays date, eg. "%1"	common	sv	Dagens datum, ex. "%1"
-toggle first day of week	jscalendar	sv	Visa veckans första dag
 togo	common	sv	TOGO
 tokelau	common	sv	TOKELAUÖARNA
 tonga	common	sv	TONGA
@@ -704,7 +684,6 @@ when you say yes the home and logout buttons are presented as applications in th
 which groups	common	sv	Vilka grupper
 whole query	common	sv	Hela frågan
 width	common	sv	Bredd
-wk	jscalendar	sv	v.
 work email	common	sv	Arbete e-post
 would you like to display the page generation time at the bottom of every window?	common	sv	Vill du visa sidans genereringstid nederst på varje sida?
 writing	common	sv	Skriver

@@ -1,0 +1,10 @@
+- use the %1, %2 buttons to select month	jscalendar	et	- Kasuta %1, %2 nuppe kuu valimiseks
+- use the %1, %2 buttons to select year	jscalendar	et	- Kasuta %1, %2 nuppe aasta valimiseks
+about the calendar	jscalendar	et	Üldiselt kalender
+date selection:	jscalendar	et	Kuupäeva valik:
+display %s first	jscalendar	et	Kuva %s esmalt
+drag to move	jscalendar	et	Lohista liigutamiseks
+go today	jscalendar	et	Mine Tänasele
+time selection:	jscalendar	et	Aja valik:
+wk	jscalendar	et	Nd
+phpgwapi	common	et	old EGroupware API

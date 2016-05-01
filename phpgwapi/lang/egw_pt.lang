@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	pt	Clique no Shift ou arraste para alterar o valor
+- click on any of the time parts to increase it	jscalendar	pt	- Clique em qualquer área de tempo para a aumentar
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	pt	- Mantenha o botão do rato pressionado num dos seguintes botões para uma selecção mais rápida.
+- or click and drag for faster selection.	jscalendar	pt	- ou clique e arraste para uma selecção mais rápida.
+- or shift-click to decrease it	jscalendar	pt	- ou prima Shift para diminuí-lo
+- use the %1, %2 buttons to select month	jscalendar	pt	- Utilize os botões %1, %2 para seleccionar o mês
+- use the %1, %2 buttons to select year	jscalendar	pt	- Utilize os botões %1, %2 para seleccionar o ano
+3 number of chars for day-shortcut	jscalendar	pt	3 caracteres para abreviatura do dia
+3 number of chars for month-shortcut	jscalendar	pt	3 caracteres para abreviatura do mês
+about the calendar	jscalendar	pt	Sobre o calendário
+date selection:	jscalendar	pt	Selecção de data:
+display %s first	jscalendar	pt	Exibir %s primeiro
+drag to move	jscalendar	pt	Arrastar para mover
+go today	jscalendar	pt	Ir para hoje
+next month (hold for menu)	jscalendar	pt	Mês seguinte (manter pressionado para ver menu)
+next year (hold for menu)	jscalendar	pt	Ano seguinte (manter pressionado para ver menu)
+prev. month (hold for menu)	jscalendar	pt	Mês anterior (manter pressionado para ver menu)
+prev. year (hold for menu)	jscalendar	pt	Ano anterior (manter pressionado para ver menu)
+time selection:	jscalendar	pt	Selecção da hora:
+toggle first day of week	jscalendar	pt	Alterar o primeiro dia da semana
+wk	jscalendar	pt	Semana
+phpgwapi	common	pt	old EGroupware API

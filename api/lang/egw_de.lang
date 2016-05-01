@@ -10,26 +10,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1EGroupware%2 ist eine, in %3PHP%4 programmierte, webbasierte, Mehrbenutzer Groupware Suite.
 '%1' is no php file in the egw server root (%2)!	common	de	'%1' ist keine php Datei in der Server-Root Umgebung (%2)!
 (session restored in %1 seconds)	common	de	(Sitzung in %1 Sekunden wiederhergestellt)
-(shift-)click or drag to change value	jscalendar	de	(Shift-) Klicken oder drücken  um den Wert zu ändern
-- click on any of the time parts to increase it	jscalendar	de	- Auf Uhrzeit klicken um sie zu erhöhen
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	de	- für eine schnelle Auswahl die Maus gedrückt halten auf jedem der obigen Schalter
-- or click and drag for faster selection.	jscalendar	de	- oder klicken und ziehen für eine schnelle Auswahl
-- or shift-click to decrease it	jscalendar	de	- oder Shift-klick um sie zu verkleinern
-- use the %1, %2 buttons to select month	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um den Monat auszuwählen
-- use the %1, %2 buttons to select year	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um das Jahr auszuwählen
 00 (disable)	admin	de	00 (deaktiviert)
 1 day	common	de	1 Tag
 1 hour	common	de	1 Stunde
 1 month	common	de	1 Monat
 1 week	common	de	1 Woche
 13 (ntp)	admin	de	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	de	2
-3 number of chars for month-shortcut	jscalendar	de	3
 80 (http)	admin	de	80 (http)
 about	common	de	Über
 about %1	common	de	Über %1
 about egroupware	common	de	Über EGroupware
-about the calendar	jscalendar	de	Über den Kalender
 access	common	de	Zugriffsrechte
 access not permitted	common	de	Zugriff verweigert
 account has been created	common	de	Benutzerkennung wurde angelegt
@@ -226,7 +216,6 @@ database error	common	de	Datenbank Fehler
 database error!	common	de	Datenbank Fehler!
 date	common	de	Datum
 date due	common	de	fällig am
-date selection:	jscalendar	de	Datum auswählen:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn Sie Port 13 benutzen, passen Sie bitte die Regeln der Firewall an bevor Sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	de	Dezember
 default category	common	de	Standard-Kategorie
@@ -254,7 +243,6 @@ disable slider effects	common	de	Schwebeeffekte des Navigationsmenüs abschalten
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim Anzeigen oder Verstecken des Navigationsmenüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Deaktivieren des Fehlerbehebungsskripts für den Internetexplorer 5.5 und höher, um transparente PNG-Bilder anzuzeigen?
 disabled	common	de	Deaktiviert
-display %s first	jscalendar	de	%s zuerst anzeigen
 distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
 djibouti	common	de	DSCHIBUTI
 do not notify	common	de	Nicht benachrichtigen
@@ -273,7 +261,6 @@ done	common	de	Fertig
 dos international	common	de	DOS International
 download	common	de	Herunterladen
 download link	common	de	Link zum Herunterladen
-drag to move	jscalendar	de	Ziehen um zu Bewegen
 e-mail	common	de	E-Mail
 east timor	common	de	OST TIMOR
 eastern european	common	de	Osteuropäische
@@ -366,7 +353,6 @@ ghana	common	de	GHANA
 gibraltar	common	de	GIBRALTAR
 global	common	de	Global
 global public	common	de	Global Public
-go today	jscalendar	de	Heute setzen
 grant access	common	de	Zugriff gewähren
 greece	common	de	GRIECHENLAND
 greek	common	de	Griechisch
@@ -560,9 +546,7 @@ new main category	common	de	neue Hauptkategorie
 new value	common	de	Neuer Wert
 new zealand	common	de	NEUSEELAND
 next	common	de	Nächste
-next month (hold for menu)	jscalendar	de	Nächster Monat (halten für Menü)
 next page	common	de	Nächste Seite
-next year (hold for menu)	jscalendar	de	Nächstes Jahr (halten für Menü)
 nicaragua	common	de	NICARAGUA
 niger	common	de	NIGER
 nigeria	common	de	NIGERIA
@@ -649,7 +633,7 @@ pgp encryption	common	de	PGP Verschlüsselung
 pgp encryption installation	common	de	Installation der PGP Verschlüsselung
 philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
-phpgwapi	common	de	EGroupware API
+api	common	de	EGroupware API
 pitcairn	common	de	PITCAIRN
 placeholders	common	de	Platzhalter für den Seriendruck
 please %1 by hand	common	de	Bitte %1 per Hand
@@ -669,8 +653,6 @@ pre	common	de	Vorherige
 preferences	common	de	Einstellungen
 preferences for the %1 template set	preferences	de	Einstellungen für das %1 Template
 prev	common	de	Vorheriger
-prev. month (hold for menu)	jscalendar	de	Vorheriger Monat (halten für Menü)
-prev. year (hold for menu)	jscalendar	de	Vorheriges Jahr (halten für Menü)
 previous page	common	de	Vorherige Seite
 primary group	common	de	Hauptgruppe
 primary style-sheet:	common	de	Haupt-Stylesheet:
@@ -848,7 +830,6 @@ this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
 thursday	common	de	Donnerstag
 tiled	common	de	gekachelt
 time	common	de	Zeit
-time selection:	jscalendar	de	Zeitauswahl:
 time zone	common	de	Zeitzone
 time zone offset	common	de	Zeitzonendifferenz
 title	common	de	Titel
@@ -858,7 +839,6 @@ to examine or reinstate inactived files, you might need to turn versioning on.	a
 to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
 today	common	de	Heute
 todays date, eg. "%1"	common	de	heutiges Datum, z.B. "%1"
-toggle first day of week	jscalendar	de	ersten Tag der Woche wechseln
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
 tonga	common	de	TONGA
@@ -930,7 +910,6 @@ which groups	common	de	Welche Gruppen
 which infolog types should be synced with the device, default only tasks.	common	de	Welche InfoLog Typen sollen synchronisiert werden, Vorgabe nur Aufgaben.
 whole query	common	de	Gesamte Abfrage
 width	common	de	Breite
-wk	jscalendar	de	KW
 work email	common	de	geschäftliche E-Mail
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	de	Arbeitet zuverlässig für eine Gesamtgröße von 1-2 MB, kann auch für 5-10 MB funktionieren, wird wahrscheinlich für >10MB fehlschlagen
 would you like to display the page generation time at the bottom of every window?	common	de	Möchten Sie die Zeit zur Erstellung der Seite am Ende jedes Fensters anzeigen?

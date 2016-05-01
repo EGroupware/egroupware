@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	vi	(Shift-)Click ho&#7863;c kéo và rê chu&#7897;t &#273;&#7875; thay &#273;&#7893;i giá tr&#7883;
+- click on any of the time parts to increase it	jscalendar	vi	- Click vào b&#7845;t k&#7923; ph&#7847;n th&#7901;i gian nào &#273;&#7875; t&#259;ng nó
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	vi	- Gi&#7919; phím trái chu&#7897;t trên b&#7845;t k&#7923; nút &#7845;n nào phía trên &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
+- or click and drag for faster selection.	jscalendar	vi	- ho&#7863;c click và kéo - rê chu&#7897;t &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
+- or shift-click to decrease it	jscalendar	vi	- ho&#7863;c Shift-Click chu&#7897;t &#273;&#7875; gi&#7843;m nó
+- use the %1, %2 buttons to select month	jscalendar	vi	- Dùng các nút &#7845;n %1, %2 &#273;&#7875; ch&#7885;n tháng
+- use the %1, %2 buttons to select year	jscalendar	vi	- Dùng các nút &#7845;n %1, %2 &#273;&#7875; ch&#7885;n n&#259;m
+3 number of chars for day-shortcut	jscalendar	vi	3 ký t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t ngày
+3 number of chars for month-shortcut	jscalendar	vi	3 ký t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t tháng
+about the calendar	jscalendar	vi	Gi&#7899;i thi&#7879;u v&#7873; L&#7883;ch
+date selection:	jscalendar	vi	L&#7921;a ch&#7885;n ngày:
+display %s first	jscalendar	vi	Hi&#7875;n th&#7883; %s &#273;&#7847;u tiên
+drag to move	jscalendar	vi	Kéo và rê chu&#7897;t &#273;&#7875; di chuy&#7875;n
+go today	jscalendar	vi	Vào m&#7909;c Hôm nay
+next month (hold for menu)	jscalendar	vi	Tháng k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
+next year (hold for menu)	jscalendar	vi	N&#259;m k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
+prev. month (hold for menu)	jscalendar	vi	Tháng tr&#432;&#7899;c (&#273;&#432;a ra menu)
+prev. year (hold for menu)	jscalendar	vi	N&#259;m tr&#432;&#7899;c (&#273;&#432;a ra menu)
+time selection:	jscalendar	vi	Ch&#7885;n gi&#7901;
+toggle first day of week	jscalendar	vi	Chuy&#7875;n qua ngày &#273;&#7847;u tu&#7847;n
+wk	jscalendar	vi	wk
+phpgwapi	common	vi	old EGroupware API

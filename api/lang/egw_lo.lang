@@ -4,26 +4,16 @@
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	lo	%1 ເລືອກໄດເຣັກຕໍຣີ %2<br />ຫຼືເຮັດໃຫ້ %3 ສາມາດຂຽນໄດ້ໂດຍເວບເຊີເວີ້
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	lo	%1 ລະບົບຕາຕະລາງ %2
 (session restored in %1 seconds)	common	lo	ເຊສຊັ້ນໄດ້ຮຽກໃຊ້ກັບຄືນໃນ %1 ວິນາທີ
-(shift-)click or drag to change value	jscalendar	lo	(Shift-) ຄຼິກ ຫຼື ລາກເພື່ອປ່ຽນຄ່າ
-- click on any of the time parts to increase it	jscalendar	lo	- ຄຼິດພາກສ່ວນໃດໜຶ່ງເພື່ອເພີ່ມເວລາຂື້ນ
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	lo	- ກົດປຸ່ມເມົ້າໃນທຸກໆປຸ່ມຂ້າງເທິງເພື່ອເພີ່ມຄວາມໄວໃນການເລືອກ
-- or click and drag for faster selection.	jscalendar	lo	- ຫຼືຄຼິກ ແລະ ລາກເພື່ອເພີ່ມຄວາມໄວໃນການເລືອກ
-- or shift-click to decrease it	jscalendar	lo	- ຫຼື (Shift+ຄຼິກ) ເພື່ອຫຼຸດລົງ
-- use the %1, %2 buttons to select month	jscalendar	lo	- ໃຊ່້ %1, %2 ປຸ່ມເພື່ອເລືອກເດືອນ
-- use the %1, %2 buttons to select year	jscalendar	lo	- ໃຊ່້ %1, %2 ປຸ່ມເພື່ອເລືອກປີ
 00 (disable)	admin	lo	00 (ປິດການໃຊ້)
 1 day	common	lo	1 ມື້
 1 hour	common	lo	1 ຊົ່ວໂມງ
 1 month	common	lo	1 ເດືອນ
 1 week	common	lo	1 ອາທິດ
 13 (ntp)	admin	lo	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	lo	ຕົວຫຍໍ້ຂອງມື້
-3 number of chars for month-shortcut	jscalendar	lo	ຕົວຫຍໍ້ຂອງເດືອນ
 80 (http)	admin	lo	80 (http)
 about	common	lo	ກ່ຽວກັບ
 about %1	common	lo	ກ່ຽວກັບ %1
 about egroupware	common	lo	ກ່ຽວກັບລະບົບຕາຕະລາງ (eGroupware)
-about the calendar	jscalendar	lo	ກ່ຽວກັບປະຕິທິນ
 access	common	lo	ການເຂົ້າເຖີງ
 access not permitted	common	lo	ການເຂົ້າເຖີງບໍ່ໄດ້ຮັບອະນຸຍາດ
 account has been created	common	lo	ບັນຊີໄດ້ຮັບການສ້າງແລ້ວ
@@ -182,7 +172,6 @@ database error	common	lo	ຖານຂໍ້ມູນມີປັນຫາ
 database error!	common	lo	ຖານຂໍ້ມູນມີປັນຫາ!
 date	common	lo	ວັນທີ
 date due	common	lo	ຮອດມື້ທີ່ກໍານົດ
-date selection:	jscalendar	lo	ການເລືອກວັນທີ:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	lo	ພອດວັນທີ ແລະ ເວລາ. <br>ຖ້າໃຊ້ພອດ 13, ກະລຸນາຕັ້ງກົດການຄ່າປ້ອງກັນ(firewall)ໃຫ້ເໝາະສົມ ກ່ອນຈະຢືນຢັນໜ້ານີ້<br>(ພອດ: 13 / ໂຮສ:129.6.15.28)
 december	common	lo	ທັນວາ
 default category	common	lo	ໝວດໝູ່ເລີ່ມຕົ້ນ
@@ -205,7 +194,6 @@ disable slider effects	common	lo	ປິດຄຸນລັກສະນະກາ�
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	lo	ປິດພາບເຄື່ອນໄຫວທີ່ສະແດງຫຼືບັງບໍ່ໃຫ້ເຫັນ?
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	lo	ປິດການໃຊ້ Internet Explorer 5.5 ຫຼືສູງກ່ວາທີ່ສາມາດສະແດງ PNG ຮູບ?
 disabled	common	lo	ປິດນໍາໃຊ້ງານ
-display %s first	jscalendar	lo	ສະແດງ %s ທໍາອິດ
 djibouti	common	lo	DJIBOUTI
 do you also want to delete all subcategories ?	common	lo	ຕັດສິນໃຈລຶມທຸກໝວດໝູ່ຍ່ອຍບໍ່?
 doctype:	common	lo	ຊະນິດເອກະສານ:
@@ -218,7 +206,6 @@ dominica	common	lo	DOMINICA
 dominican republic	common	lo	DOMINICAN REPUBLIC
 done	common	lo	ສໍາເລັດ
 download	common	lo	ດາວໂຫຼດ
-drag to move	jscalendar	lo	ລາກເຄື່ອນຍ້າຍ
 e-mail	common	lo	ອີເມລ
 east timor	common	lo	EAST TIMOR
 eastern european	common	lo	Eastern european
@@ -292,7 +279,6 @@ ghana	common	lo	GHANA
 gibraltar	common	lo	GIBRALTAR
 global	common	lo	ທົ່ວໄປ
 global public	common	lo	ສາທາລະນະທົ່ວໄປ
-go today	jscalendar	lo	ໄປທີ່ມື້ນີ້
 grant access	common	lo	ກໍານົດສິດທິການເຂົ້າຫາ
 greece	common	lo	REECE
 greek	common	lo	Greek
@@ -457,9 +443,7 @@ new main category	common	lo	ໝວດໝູ່ຫຼັັກໃໝ່
 new value	common	lo	ຄ່າໃໝ່
 new zealand	common	lo	NEW ZEALAND
 next	common	lo	ຖັດໄປ
-next month (hold for menu)	jscalendar	lo	ເດືອນຖັດໄປ(ຮັກສາສະເພາະເມນູ)
 next page	common	lo	ໜ້າຖັດໄປ
-next year (hold for menu)	jscalendar	lo	ປີຖັດໄປ(ຮັກສາສະເພາະເມນູ)
 nicaragua	common	lo	NICARAGUA
 niger	common	lo	NIGER
 nigeria	common	lo	NIGERIA
@@ -528,7 +512,7 @@ personal	common	lo	ສ່ວນບຸກຄນ
 peru	common	lo	PERU
 philippines	common	lo	PHILIPINES
 phone number	common	lo	ເບີໂທລະສັບ
-phpgwapi	common	lo	phpgwapi
+api	common	lo	phpgwapi
 pitcairn	common	lo	PITCAIRN
 please %1 by hand	common	lo	ກະລຸນາ %1 ດ້ວຍມື
 please enter a name	common	lo	ກະລຸນາພິມຊື່ໃສ່ !
@@ -545,8 +529,6 @@ postal	common	lo	ລະຫັດໄປສະນີ
 powered by	common	lo	Powered by
 preferences	common	lo	ການຕັ້ງຄ່າ
 preferences for the %1 template set	preferences	lo	ການຕັ້ງຄ່າສໍາລັບຈັດການຮູບແບບຂອງ idots
-prev. month (hold for menu)	jscalendar	lo	ເດືອນກ່ອນໜ້ານີ້(ພາກສ່ວນເມນູທີ່ຕົກຄ້າງ)
-prev. year (hold for menu)	jscalendar	lo	ປີກ່ອນໜ້ານີ້(ພາກສ່ວນເມນູທີ່ຕົກຄ້າງ)
 previous page	common	lo	ໜ້າກ່ອນນີ້
 primary group	common	lo	ກຸ່ມຫຼັກ
 primary style-sheet:	common	lo	ຮູບແບບຫຼັກ
@@ -685,7 +667,6 @@ there already is a system-user with this name. user's should not have the same n
 this name has been used already	common	lo	ຊື່ນີ້ໄດ້ຖືກນໍາໃຊ້ແລ້ວ
 thursday	common	lo	ພະຫັດ
 time	common	lo	ເວລາ
-time selection:	jscalendar	lo	ການເລືອກເວລາ
 time zone	common	lo	ຂົງເຂດເວລາ
 time zone offset	common	lo	ຂົງເຂດເວລາຂອງທ່ານ
 title	common	lo	ຫົວຂໍ້
@@ -694,7 +675,6 @@ to correct this error for the future you will need to properly set the	common	lo
 to go back to the msg list, click <a href= %1 >here</a>	common	lo	ໃນການກັບໄປລາຍການຂໍ້ຄວາມແມ່ນໃຫ້ຄຼິກ <a href="%1">ທີ່ນີ້</a>
 today	common	lo	ມື້ນີ້
 todays date, eg. "%1"	common	lo	ມື້ນີ້ວັນທີ, eg. "%1"
-toggle first day of week	jscalendar	lo	ສະລັບມື້ທໍາອິດຂອງອາທິດ
 togo	common	lo	TOGO
 tokelau	common	lo	TOKELAU
 tonga	common	lo	TONGA
@@ -755,7 +735,6 @@ when you say yes the home and logout buttons are presented as applications in th
 where and how will the egroupware links like preferences, about and logout be displayed.	common	lo	ສະຖານທີ ແລະ ວິທີຈະລີ້ງ egroupware ຄືກັບການຕັ້ງຄ່າ, ໄດ້ສະແດງການອອກສູລະບົບ
 which groups	common	lo	ກຸ່ມໃດ
 width	common	lo	ຄວາມກວ້າງ
-wk	jscalendar	lo	wk
 work email	common	lo	ອີເມວທີ່ເຮັດວຽກ
 would you like to display the page generation time at the bottom of every window?	common	lo	ທ່ານຕ້ອງການສະແດງເວລາການສ້າງໜ້າຢູ່ຂ້າງລຸ່ມຂອງໜ້າຕ່າງ
 writing	common	lo	ບັນທຶກລົງ

@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	cs	Klikněte (se shiftem) nebo uchopte pro změnu hodnoty
+- click on any of the time parts to increase it	jscalendar	cs	- Kliknutím zvětšíte libovolnou položku časového údaje
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	cs	- Podržte tlačítko myši nad kterýmkoli z horních tlačítek pro zrychlení výběru.
+- or click and drag for faster selection.	jscalendar	cs	- nebo klikněte a přetáhněte pro rychlejší výběr.
+- or shift-click to decrease it	jscalendar	cs	- kliknutím se shiftem ji zmenšíte
+- use the %1, %2 buttons to select month	jscalendar	cs	- Použijte tlačítka %1, %2 pro výběr měsíce
+- use the %1, %2 buttons to select year	jscalendar	cs	- Použijte tlačítka %1, %2 pro výběr roku
+3 number of chars for day-shortcut	jscalendar	cs	3 číslice nebo znaky pro zkratku dne
+3 number of chars for month-shortcut	jscalendar	cs	3 číslice nebo znaky pro zkratku měsíce
+about the calendar	jscalendar	cs	O kalendáři
+date selection:	jscalendar	cs	Výběr data:
+display %s first	jscalendar	cs	Zobrazit nejprve %s
+drag to move	jscalendar	cs	Pro přesun uchopte
+go today	jscalendar	cs	Jdi na dnešek
+next month (hold for menu)	jscalendar	cs	Další měsíc (podržte pro menu)
+next year (hold for menu)	jscalendar	cs	Další rok (podržte pro menu)
+prev. month (hold for menu)	jscalendar	cs	Předchozí měsíc (podržte pro menu)
+prev. year (hold for menu)	jscalendar	cs	Předchozí rok (podržte pro menu)
+time selection:	jscalendar	cs	Výběr času:
+toggle first day of week	jscalendar	cs	Přepnout první den v týdnu
+wk	jscalendar	cs	týd.
+phpgwapi	common	cs	old EGroupware API

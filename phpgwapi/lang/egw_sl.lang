@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	sl	(Shift)-klik ali povleci-in-spusti za spremembo vrednosti.
+- click on any of the time parts to increase it	jscalendar	sl	- Kliknite na katerikoli del časa za njegovo povečanje.
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	sl	- Držite miškin gumb na kateremkoli od zgornjih gumbov za hitrejši izbor.
+- or click and drag for faster selection.	jscalendar	sl	- ali kliknite in povlecite za hitrejši izbor.
+- or shift-click to decrease it	jscalendar	sl	- ali kliknite s Shift za njegovo zmanjšanje
+- use the %1, %2 buttons to select month	jscalendar	sl	- Uporabite gumba %1, %2 za izbiro meseca
+- use the %1, %2 buttons to select year	jscalendar	sl	- Uporabite gumba %1, %2 za izbiro leta
+3 number of chars for day-shortcut	jscalendar	sl	3 - število znakov za okrajšavo dneva
+3 number of chars for month-shortcut	jscalendar	sl	3 - število znakov za okrajšavo meseca
+about the calendar	jscalendar	sl	O Koledarju
+date selection:	jscalendar	sl	Izbor datuma
+display %s first	jscalendar	sl	Pokaži najprej %1
+drag to move	jscalendar	sl	Povleci za premik
+go today	jscalendar	sl	Pojdi na današnji dan
+next month (hold for menu)	jscalendar	sl	Naslednji mesec (drži tipko za meni)
+next year (hold for menu)	jscalendar	sl	Naslednje leto (drži tipko za meni)
+prev. month (hold for menu)	jscalendar	sl	Prejšnji mesec (držite tipko za meni)
+prev. year (hold for menu)	jscalendar	sl	Prejšnje leto (držite tipko za meni)
+time selection:	jscalendar	sl	Izbor časa:
+toggle first day of week	jscalendar	sl	Zamenjajte prvi dan v tednu
+wk	jscalendar	sl	ted
+phpgwapi	common	sl	old EGroupware API

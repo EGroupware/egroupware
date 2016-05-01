@@ -1,0 +1,21 @@
+(shift-)click or drag to change value	jscalendar	lv	(Shift-) Klikšķini un velc peli, lai mainītu lielumu
+- click on any of the time parts to increase it	jscalendar	lv	- Klikšķini uz jebkuras laika daļas, lai palielinātu to
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	lv	- Turi nospiestu peles pogu uz jebkuras no pogām ātrākai izvēlei
+- or click and drag for faster selection.	jscalendar	lv	- vai klikšķini un velc peli ātrākai izvēlei
+- or shift-click to decrease it	jscalendar	lv	- Shift-klikšķini, lai samazinātu to
+- use the %1, %2 buttons to select month	jscalendar	lv	- Spied %1, %2 pogas, lai izvēlētos mēnesi
+- use the %1, %2 buttons to select year	jscalendar	lv	- Spied %1, %2 pogas, lai izvēlētos gadu
+3 number of chars for day-shortcut	jscalendar	lv	3 simbolu dienas saisinājums
+3 number of chars for month-shortcut	jscalendar	lv	3 simbolu mēneša saisinājums
+about the calendar	jscalendar	lv	Par kalendāru
+date selection:	jscalendar	lv	Datuma izvēle:
+display %s first	jscalendar	lv	Rādīt %s pirmo
+drag to move	jscalendar	lv	Velc lai pārvietotu
+go today	jscalendar	lv	Atvērt šodienu!
+next month (hold for menu)	jscalendar	lv	Nākošais mēnesis (paturi ilgāk, lai būtu menu)
+next year (hold for menu)	jscalendar	lv	Nākošais gads (paturi ilgāk, lai būtu menu)
+prev. month (hold for menu)	jscalendar	lv	Iepr. mēnesis (paturi ilgāk, lai būtu menu)
+prev. year (hold for menu)	jscalendar	lv	Iepr. gads (paturi ilgāk, lai būtu menu)
+time selection:	jscalendar	lv	Laika izvēle
+wk	jscalendar	lv	ned
+phpgwapi	common	lv	old EGroupware API

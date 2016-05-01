@@ -3,26 +3,16 @@
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	bg	%1Изберете друга директория%2<br />или позволете в %3 запис на WEB сървъра
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	bg	%1eGroupWare%2 е многопотребителска, web-базирана система за работа в екип, написана на %3PHP%4.
 (session restored in %1 seconds)	common	bg	(сесията възстановена за %1 секунди)
-(shift-)click or drag to change value	jscalendar	bg	(Shift-)Кликнете или провлачете за промяна на стойността
-- click on any of the time parts to increase it	jscalendar	bg	- Кликнете някой от времевите периоди за да го увеличите
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	bg	- Задръжте бутона на мишката или някой от бутоните за по-бърз избор
-- or click and drag for faster selection.	jscalendar	bg	- или кликнете и провлачете за по-бърз избор
-- or shift-click to decrease it	jscalendar	bg	- или Shift+клик за намаляване
-- use the %1, %2 buttons to select month	jscalendar	bg	- Използвайте бутоните %1, %2 за избор на месец
-- use the %1, %2 buttons to select year	jscalendar	bg	- Използвайте бутоните %1, %2 за избор на година
 00 (disable)	admin	bg	00 (забранен)
 1 day	common	bg	1 ден
 1 hour	common	bg	1 час
 1 month	common	bg	1 месец
 1 week	common	bg	1 седмица
 13 (ntp)	admin	bg	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	bg	3 брой символи за ден
-3 number of chars for month-shortcut	jscalendar	bg	3 брой символи за месец
 80 (http)	admin	bg	80 (http)
 about	common	bg	За
 about %1	common	bg	За %1
 about egroupware	common	bg	За eGroupware
-about the calendar	jscalendar	bg	За календара
 access	common	bg	Достъп
 access not permitted	common	bg	Достъпът не е позволен
 account has been created	common	bg	Акаунтът е създаден
@@ -175,7 +165,6 @@ database error	common	bg	Грешка в базата данни
 database error!	common	bg	Грешка в базата данни!
 date	common	bg	Дата
 date due	common	bg	Краен срок
-date selection:	jscalendar	bg	Избор на дата:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	bg	Порт за Datetime.<br>Ако използвате порт 13, моля настройте правилата на firewall-а правилно преди изпращане на тази страница.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	bg	Декември
 default category	common	bg	Категория по подразбиране
@@ -197,7 +186,6 @@ disable slider effects	common	bg	Забрани slider-ефектите
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	bg	Да се забранят анимираните slider ефекти при показване или скриване на менютата в страницата? Следва да се използва за потребители на Opera и Konqueror.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	bg	Да се забрани изпълнението на скрипта за корекция на грешки при показване на прозрачност при PNG изображения в IE 5.5 и по-високи?
 disabled	common	bg	Забранено
-display %s first	jscalendar	bg	Покажи %s първо
 djibouti	common	bg	Джибути
 do you also want to delete all subcategories ?	common	bg	Искате ли също така да изтриете и всички подкатегории?
 doctype:	common	bg	Тип документ:
@@ -210,7 +198,6 @@ dominica	common	bg	Доминика
 dominican republic	common	bg	Доминиканска Република
 done	common	bg	Готово
 download	common	bg	Изтегляне
-drag to move	jscalendar	bg	Провлачете за преместване
 e-mail	common	bg	E-Mail
 east timor	common	bg	Източен Тимур
 ecuador	common	bg	Еквадор
@@ -279,7 +266,6 @@ ghana	common	bg	Гана
 gibraltar	common	bg	Гибралтар
 global	common	bg	Глобален
 global public	common	bg	Глобален Public (общ)
-go today	jscalendar	bg	към Днес
 grant access	common	bg	Разрешаване на достъп
 greece	common	bg	Гърция
 greenland	common	bg	Гренландия
@@ -439,9 +425,7 @@ new main category	common	bg	Нова основна категория
 new value	common	bg	Нова стойност
 new zealand	common	bg	Нова Зеландия
 next	common	bg	Следващ
-next month (hold for menu)	jscalendar	bg	Следващ месец (задръжте за списък)
 next page	common	bg	Следваща страница
-next year (hold for menu)	jscalendar	bg	Следваща година (задръжте за списък)
 nicaragua	common	bg	Никарагуа
 niger	common	bg	Нигер
 nigeria	common	bg	Нигерия
@@ -526,8 +510,6 @@ portugal	common	bg	Португалия
 postal	common	bg	Пощенски
 powered by	common	bg	Работи с
 preferences	common	bg	Настройки
-prev. month (hold for menu)	jscalendar	bg	Предишен месец (задръжте за списък)
-prev. year (hold for menu)	jscalendar	bg	Предишна година (задръжте за списък)
 previous page	common	bg	Предишна страница
 primary style-sheet:	common	bg	Основен набор стилове (style-sheet):
 print	common	bg	Печат
@@ -658,7 +640,6 @@ the mail server returned	common	bg	Пощенският сървър върна 
 this name has been used already	common	bg	Това име вече е използвано !
 thursday	common	bg	Четвъртък
 time	common	bg	Време
-time selection:	jscalendar	bg	Избор на време:
 time zone	common	bg	Часови пояс
 time zone offset	common	bg	Отместване на часовия пояс
 title	common	bg	Заглавие
@@ -667,7 +648,6 @@ to correct this error for the future you will need to properly set the	common	bg
 to go back to the msg list, click <a href= %1 >here</a>	common	bg	За връщане към списъка със съобщения, натиснете <a href="%1">тук</a>
 today	common	bg	Днес
 todays date, eg. "%1"	common	bg	днешна дата, напр. "%1"
-toggle first day of week	jscalendar	bg	Настройка на първия ден на седмицата
 togo	common	bg	Того
 tokelau	common	bg	Токелау
 tonga	common	bg	Тонга
@@ -727,7 +707,6 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	bg	Кои групи
 whole query	common	bg	всички резултати
 width	common	bg	Ширина
-wk	jscalendar	bg	сед
 work email	common	bg	служебен e-mail
 would you like to display the page generation time at the bottom of every window?	common	bg	Желаете ли да се изобразява времето за генериране на страницата в долната част на всеки прозорец?
 writing	common	bg	запис

@@ -8,26 +8,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
 '%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un fichero php en el directorio raíz de eGroupWare (%2)!
 (session restored in %1 seconds)	common	es-es	(la sesión se ha restaurado en %1 segundos)
-(shift-)click or drag to change value	jscalendar	es-es	Pulse mayúsculas o arrastre para cambiar el valor
-- click on any of the time parts to increase it	jscalendar	es-es	- Pulse en cualquiera de las partes de la hora para incrementarla
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	es-es	- Mantenga pulsando el botón del ratón en cualquiera de los botones de arriba para una selección más rápida.
-- or click and drag for faster selection.	jscalendar	es-es	- o pulse y arrastre para una selección más rápida.
-- or shift-click to decrease it	jscalendar	es-es	- o pulse con la tecla mayúsculas para reducirlo
-- use the %1, %2 buttons to select month	jscalendar	es-es	- Use los botones %1, %2 para seleccionar el mes
-- use the %1, %2 buttons to select year	jscalendar	es-es	- Use los botones %1, %2 para seleccionar el año
 00 (disable)	admin	es-es	00 (desactivar)
 1 day	common	es-es	1 día
 1 hour	common	es-es	1 hora
 1 month	common	es-es	1 mes
 1 week	common	es-es	1 semana
 13 (ntp)	admin	es-es	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del día
-3 number of chars for month-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del mes
 80 (http)	admin	es-es	80 (http)
 about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
 about egroupware	common	es-es	Acerca de eGroupware
-about the calendar	jscalendar	es-es	Acerca del calendario
 access	common	es-es	Acceso
 access not permitted	common	es-es	Acceso no permitido
 account has been created	common	es-es	Se ha creado la cuenta
@@ -209,7 +199,6 @@ database error	common	es-es	Error en la base de datos
 database error!	common	es-es	¡Error en la base de datos!
 date	common	es-es	Fecha
 date due	common	es-es	Fecha límite
-date selection:	jscalendar	es-es	Seleccionar fecha:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-es	Puerto de fecha.<br>Si usa el puerto 13, por favor, configure adecuadamente las reglas del cortafuegos antes de enviar esta página.<br>
 december	common	es-es	Diciembre
 default category	common	es-es	Categoría predeterminada
@@ -236,7 +225,6 @@ disable slider effects	common	es-es	Desactivar efectos deslizantes
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	es-es	¿Desactivar los efectos deslizantes animados al mostrar u ocultar menús en la página? Los usuarios de Opera y Konqueror probablemente querrán esto.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-es	¿Desactivar la ejecución del parche para Internet Explorer 5.5 y superiores para mostrar transparencia en imágenes PNG?
 disabled	common	es-es	Deshabilitado
-display %s first	jscalendar	es-es	Mostrar %s primero
 distribution lists as groups	groupdav	es-es	Listas de distribución como grupos
 djibouti	common	es-es	DJIBOUTI
 do not notify	common	es-es	No notificar
@@ -253,7 +241,6 @@ dominican republic	common	es-es	REPUBLICA DOMINICANA
 done	common	es-es	Hecho
 dos international	common	es-es	DOS internacional
 download	common	es-es	Descargar
-drag to move	jscalendar	es-es	Arrastre para mover
 e-mail	common	es-es	Correo electrónico
 east timor	common	es-es	EAST TIMOR
 eastern european	common	es-es	Europeo del este
@@ -339,7 +326,6 @@ ghana	common	es-es	GHANA
 gibraltar	common	es-es	GIBRALTAR
 global	common	es-es	Global
 global public	common	es-es	Publico Global
-go today	jscalendar	es-es	Ir hoy
 grant access	common	es-es	Conceder acceso
 greece	common	es-es	GRECIA
 greek	common	es-es	Griego
@@ -506,9 +492,7 @@ new main category	common	es-es	Nueva categoría principal
 new value	common	es-es	Nuevo valor
 new zealand	common	es-es	NUEVA ZELANDA
 next	common	es-es	Siguiente
-next month (hold for menu)	jscalendar	es-es	Mes siguiente (mantener para menú)
 next page	common	es-es	Página siguiente
-next year (hold for menu)	jscalendar	es-es	Año siguiente (mantener para menú)
 nicaragua	common	es-es	NICARAGUA
 niger	common	es-es	NIGER
 nigeria	common	es-es	NIGERIA
@@ -579,7 +563,7 @@ personal	common	es-es	Personal
 peru	common	es-es	PERU
 philippines	common	es-es	FILIPINAS
 phone number	common	es-es	Número de teléfono
-phpgwapi	common	es-es	API de eGroupWare
+api	common	es-es	API de eGroupWare
 pitcairn	common	es-es	PITCAIRN
 please %1 by hand	common	es-es	Por favor %1 manualmente
 please enter a name	common	es-es	Por favor, introduzca un nombre
@@ -596,8 +580,6 @@ postal	common	es-es	Postal
 powered by	common	es-es	Proporcionado por
 preferences	common	es-es	Preferencias
 preferences for the %1 template set	preferences	es-es	Se han establecido las preferencias para la plantilla %1
-prev. month (hold for menu)	jscalendar	es-es	Mes anterior (mantener para menú)
-prev. year (hold for menu)	jscalendar	es-es	Año anterior (mantener para menú)
 previous page	common	es-es	Página anterior
 primary group	common	es-es	Grupo principal
 primary style-sheet:	common	es-es	Hoja de estilo principal:
@@ -741,7 +723,6 @@ this name has been used already	common	es-es	¡Este nombre ya ha sido usado!
 thursday	common	es-es	Jueves
 tiled	common	es-es	mosaico
 time	common	es-es	Hora
-time selection:	jscalendar	es-es	Seleccionar hora:
 time zone	common	es-es	Zona horaria
 time zone offset	common	es-es	Diferencia de zona horaria
 title	common	es-es	Título
@@ -750,7 +731,6 @@ to correct this error for the future you will need to properly set the	common	es
 to go back to the msg list, click <a href= %1 >here</a>	common	es-es	Psra volver a la lista de mensajes, pulse <a href="%1">aquí</a>
 today	common	es-es	Hoy
 todays date, eg. "%1"	common	es-es	fecha de hoy, p.ej. "%1"
-toggle first day of week	jscalendar	es-es	Cambiar el primer día de la semana
 togo	common	es-es	TOGO
 tokelau	common	es-es	TOKELAU
 tonga	common	es-es	TONGA
@@ -813,7 +793,6 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	es-es	Qué grupos
 whole query	common	es-es	la consulta completa
 width	common	es-es	Anchura
-wk	jscalendar	es-es	wk
 work email	common	es-es	correo del trabajo
 would you like to display the page generation time at the bottom of every window?	common	es-es	¿Desea mostrar el tiempo que tarda en generarse la página en la parte inferior de cada ventana?
 writing	common	es-es	escribiendo

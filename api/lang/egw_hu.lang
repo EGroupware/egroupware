@@ -4,26 +4,16 @@
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	hu	%1Válasszon egy másik könyvtárat%2<br />vagy tegye írhatóvá a %3 könyvtárat a webszerver számára.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	hu	Az %1eGroupWare%2 egy php nyelven írt webalapú, többfelhasználós csoportmunkát támogató alkalmazáscsomag.
 (session restored in %1 seconds)	common	hu	(munkafázis visszaállítva %1 másodperc alatt)
-(shift-)click or drag to change value	jscalendar	hu	(Shift-)Klikk vagy vontatás megváltoztatja az értéket.
-- click on any of the time parts to increase it	jscalendar	hu	- Az időmezőre kattintás megnöveli az értékét
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	hu	- Gyorsabb kijelölés érhető el az egérgomb lenyomva tartásával bármelyik gombon.
-- or click and drag for faster selection.	jscalendar	hu	- vagy kattintás és vontatás a gyorsabb kiválasztáshoz
-- or shift-click to decrease it	jscalendar	hu	- vagy Shift-kattintással csökkenthető az értéke
-- use the %1, %2 buttons to select month	jscalendar	hu	- Az %1, %2 gomb használatosak a hónap kiválasztásához
-- use the %1, %2 buttons to select year	jscalendar	hu	- Az %1, %2 gombok használatosak az év kiválasztásához.
 00 (disable)	admin	hu	00 (tiltva)
 1 day	common	hu	1 nap
 1 hour	common	hu	1 óra
 1 month	common	hu	1 hónap
 1 week	common	hu	1 hét
 13 (ntp)	admin	hu	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	hu	3 karakteres nap rövidítés
-3 number of chars for month-shortcut	jscalendar	hu	3 karakteres hónap rövidítés
 80 (http)	admin	hu	80 (http)
 about	common	hu	Névjegy
 about %1	common	hu	%1 névjegye
 about egroupware	common	hu	eGroupware névjegye
-about the calendar	jscalendar	hu	Naptár névjegye
 access	common	hu	Hozzáférés
 access not permitted	common	hu	Hozzáférés nincs engedélyezve
 account has been created	common	hu	Felhasználói fiók létrehozva
@@ -178,7 +168,6 @@ database error	common	hu	Adatbázis hiba
 database error!	common	hu	Adatbázis hiba!
 date	common	hu	Dátum
 date due	common	hu	Határidő
-date selection:	jscalendar	hu	Dátum kiválasztás:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hu	Időszerver port.<br>A 13-as port használatához a tűzfalat ki kell nyitni, mielőtt ez az oldal elküldésre kerülne.<br>
 december	common	hu	December
 default category	common	hu	Alapértelmezett kategória
@@ -201,7 +190,6 @@ disable slider effects	common	hu	Csúsztatás tiltása
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	hu	Letiltja az oldalon található menük animált be- és kiúsztatását? Opera és Konqueror felhasználók valószínűleg hasznát veszik ennek.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	hu	Hibajavító szkript futtatásának letiltása, hogy az Internet Explorer >=5.5 esetén az átlátszó PNG képek helyesen jelenjenek meg?
 disabled	common	hu	Letiltva
-display %s first	jscalendar	hu	Először mutasd ezt %1
 djibouti	common	hu	Dzsibuti
 do you also want to delete all subcategories ?	common	hu	Az alkategóriákat is törölni szeretné?
 doctype:	common	hu	Doctype:
@@ -214,7 +202,6 @@ dominica	common	hu	Dominika
 dominican republic	common	hu	Dominikai Köztársaság
 done	common	hu	Kész
 download	common	hu	Letölt
-drag to move	jscalendar	hu	Ragadja meg mozgatáshoz
 e-mail	common	hu	E-Mail
 east timor	common	hu	Kelet Timor
 eastern european	common	hu	Kelet-európai
@@ -286,7 +273,6 @@ ghana	common	hu	Ghána
 gibraltar	common	hu	Gibraltár
 global	common	hu	Globális
 global public	common	hu	Publikus
-go today	jscalendar	hu	Ugrás a mai napra
 grant access	common	hu	Hozzáférési jogok adása
 greece	common	hu	Görögország
 greek	common	hu	Görög
@@ -451,9 +437,7 @@ new main category	common	hu	Új főkategória
 new value	common	hu	Új érték
 new zealand	common	hu	Újzéland
 next	common	hu	Következő
-next month (hold for menu)	jscalendar	hu	Következő hónap
 next page	common	hu	következő oldal
-next year (hold for menu)	jscalendar	hu	Következő év
 nicaragua	common	hu	Nikaragua
 niger	common	hu	Niger
 nigeria	common	hu	Nigéria
@@ -523,7 +507,7 @@ personal	common	hu	Személyes
 peru	common	hu	Peru
 philippines	common	hu	Fülöp-szigetek
 phone number	common	hu	telefonszám
-phpgwapi	common	hu	eGroupWare API
+api	common	hu	eGroupWare API
 pitcairn	common	hu	Pitcairn-szigetek
 please %1 by hand	common	hu	Kérem %1 kézzel
 please enter a name	common	hu	Kérem adjon meg egy nevet!
@@ -539,8 +523,6 @@ portugal	common	hu	Portugália
 postal	common	hu	Postai
 powered by	common	hu	Powered by
 preferences	common	hu	Tulajdonságok
-prev. month (hold for menu)	jscalendar	hu	Előző hónap
-prev. year (hold for menu)	jscalendar	hu	Előző év
 previous page	common	hu	Előző oldal
 primary group	common	hu	elsődleges csoport
 primary style-sheet:	common	hu	Elsődleges stíluslap
@@ -676,7 +658,6 @@ this name has been used already	common	hu	Ez a név már használatban van!
 thursday	common	hu	Csütörtök
 tiled	common	hu	mozaik
 time	common	hu	Idő
-time selection:	jscalendar	hu	Idő kiválasztása:
 time zone	common	hu	Időzóna
 time zone offset	common	hu	Időzóna offszet
 title	common	hu	Cím
@@ -685,7 +666,6 @@ to correct this error for the future you will need to properly set the	common	hu
 to go back to the msg list, click <a href= %1 >here</a>	common	hu	Az üzenet listához való visszatéréshez kattintson <a href="%1">ide</a>
 today	common	hu	Mai nap
 todays date, eg. "%1"	common	hu	mai dátum, pl. "%1"
-toggle first day of week	jscalendar	hu	Hét első napjának rögzítése
 togo	common	hu	Togo
 tokelau	common	hu	Tokelau
 tonga	common	hu	Tonga
@@ -746,7 +726,6 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	hu	Melyik csoport
 whole query	common	hu	teljes lekérdezés
 width	common	hu	Szélesség
-wk	jscalendar	hu	hét
 work email	common	hu	munkahelyi email
 would you like to display the page generation time at the bottom of every window?	common	hu	Kívánja megjeleníteni az oldal előállítására felhasznált időt minden oldal alján?
 writing	common	hu	írás

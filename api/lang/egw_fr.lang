@@ -9,26 +9,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fr	%1eGroupWare%2 est un progiciel de collaboration multi-utilisateur basé sur le web et écrit en %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	fr	'%1' n'est pas un fichier php dans l'arborescence racine d'egw (%2) !
 (session restored in %1 seconds)	common	fr	Session restaurée en %1 secondes
-(shift-)click or drag to change value	jscalendar	fr	(Shift-)Cliquer ou glisser pour changer la valeur
-- click on any of the time parts to increase it	jscalendar	fr	- Cliquer sur les chiffres horaires pour les augmenter
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	fr	- Maintenir le bouton de la souris sur n'importe lequel des boutons ci-dessus pour une sélection plus rapide.
-- or click and drag for faster selection.	jscalendar	fr	- ou cliquer et glisser pour une sélection plus rapide
-- or shift-click to decrease it	jscalendar	fr	- ou Shift-cliquer pour la décrémenter
-- use the %1, %2 buttons to select month	jscalendar	fr	- Utiliser les boutons %1, %2 pour sélectionner le mois
-- use the %1, %2 buttons to select year	jscalendar	fr	- Utiliser les boutons %1, %2 pour sélectionner l'année
 00 (disable)	admin	fr	00 (non actif)
 1 day	common	fr	1 Jour
 1 hour	common	fr	1 Heure
 1 month	common	fr	1 Mois
 1 week	common	fr	1 Semaine
 13 (ntp)	admin	fr	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourci jour
-3 number of chars for month-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourci mois
 80 (http)	admin	fr	80 (http)
 about	common	fr	A propos de
 about %1	common	fr	A propos de %1
 about egroupware	common	fr	A propos d'eGroupware
-about the calendar	jscalendar	fr	A propos du Calendrier
 access	common	fr	Accès
 access not permitted	common	fr	Accès non permis
 account has been created	common	fr	Le compte a été créé
@@ -215,7 +205,6 @@ database error	common	fr	Erreur de base de données
 database error!	common	fr	Erreur de base de données !
 date	common	fr	Date
 date due	common	fr	Date butoire
-date selection:	jscalendar	fr	Sélection de la date :
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.<br>Si vous utilisez le port 13, adaptez svp les règles de votre pare-feu avant de soumettre cette page.<br>(Port: 13 / Hôte: 129.6.15.28)
 december	common	fr	Décembre
 default category	common	fr	Catégorie par défaut
@@ -242,7 +231,6 @@ disable slider effects	common	fr	Désactiver les effets de glisse
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? Les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script de déboguage visant à afficher la transparence dans les images PNG sous Internet Explorer 5.5 ou plus?
 disabled	common	fr	Désactivé
-display %s first	jscalendar	fr	Affiche %s en premier
 distribution lists as groups	groupdav	fr	Les listes de distribution comme des groupes
 djibouti	common	fr	DJIBOUTI
 do not notify	common	fr	Ne pas modifier
@@ -259,7 +247,6 @@ dominican republic	common	fr	REPUBLIQUE DOMINICAINE
 done	common	fr	Fait
 dos international	common	fr	DOS International
 download	common	fr	Télécharger
-drag to move	jscalendar	fr	Glisser pour le déplacer
 e-mail	common	fr	email
 east timor	common	fr	TIMOR ORIENTAL
 eastern european	common	fr	Européen occidental
@@ -346,7 +333,6 @@ ghana	common	fr	GHANA
 gibraltar	common	fr	GIBRALTAR
 global	common	fr	Global
 global public	common	fr	Public global
-go today	jscalendar	fr	Aller à aujourd'hui
 grant access	common	fr	Autoriser l'accès
 greece	common	fr	GRECE
 greek	common	fr	Grec
@@ -528,9 +514,7 @@ new main category	common	fr	Nouvelle catégorie principale
 new value	common	fr	Nouvelle valeur
 new zealand	common	fr	NOUVELLE ZELANDE
 next	common	fr	Suivant
-next month (hold for menu)	jscalendar	fr	Mois suivant (maintenir pour menu)
 next page	common	fr	Page suivante
-next year (hold for menu)	jscalendar	fr	Année suivante (maintenir pour menu)
 nicaragua	common	fr	NICARAGUA
 niger	common	fr	NIGER
 nigeria	common	fr	NIGERIA
@@ -612,7 +596,7 @@ pg down	common	fr	Pg préc.
 pg up	common	fr	Pg suiv.
 philippines	common	fr	PHILIPPINES
 phone number	common	fr	numéro de téléphone
-phpgwapi	common	fr	API eGroupWare
+api	common	fr	API eGroupWare
 pitcairn	common	fr	PITCAIRN
 please %1 by hand	common	fr	Veuillez %1 à la main
 please enter a name	common	fr	Veuillez saisir un nom !
@@ -631,8 +615,6 @@ pre	common	fr	Pré
 preferences	common	fr	Préférences
 preferences for the %1 template set	preferences	fr	Préférences pour le template %1
 prev	common	fr	Préc.
-prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
-prev. year (hold for menu)	jscalendar	fr	Année précédente (maintenir pour le menu)
 previous page	common	fr	Page précédente
 primary group	common	fr	groupe initial
 primary style-sheet:	common	fr	Feuille de style primaire:
@@ -801,7 +783,6 @@ this name has been used already	common	fr	Ce nom est déjà utilisé !
 thursday	common	fr	Jeudi
 tiled	common	fr	mosaïque
 time	common	fr	Heure
-time selection:	jscalendar	fr	Sélection du temps:
 time zone	common	fr	Fuseau horaire
 time zone offset	common	fr	Décalage du fuseau horaire
 title	common	fr	Titre
@@ -811,7 +792,6 @@ to examine or reinstate inactived files, you might need to turn versioning on.	a
 to go back to the msg list, click <a href= %1 >here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1">ici</a>
 today	common	fr	Aujourd'hui
 todays date, eg. "%1"	common	fr	date d'aujourd'hui, p.ex. "%1"
-toggle first day of week	jscalendar	fr	Voir le premier jour de la semaine
 togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
@@ -879,7 +859,6 @@ which groups	common	fr	Quels groupes
 which infolog types should be synced with the device, default only tasks.	common	fr	Quels types d'infolog doivent-ils être synchronisés avec l'appareil ? (par défaut, les tâches uniquement)
 whole query	common	fr	Requête entière
 width	common	fr	Largeur
-wk	jscalendar	fr	S.
 work email	common	fr	Email professionnel
 would you like to display the page generation time at the bottom of every window?	common	fr	Voulez-vous voir apparaître le temps de génération en bas de chaque fenêtre?
 writing	common	fr	écriture

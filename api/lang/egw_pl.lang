@@ -5,26 +5,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pl	%1eGroupWare%2 jest pakietem oprogramowania do pracy grupowej dla wielu użytkowników, działającym w środowisku internetowym / intranetowym i napisanym w PHP4.
 '%1' is no php file in the egw server root (%2)!	common	pl	'%1' to nie plik php w katalogu głównym serwera (%2)
 (session restored in %1 seconds)	common	pl	(sesja będzie przywrócona po upływie %1 sekund)
-(shift-)click or drag to change value	jscalendar	pl	Kilknij z Shift-em aby przenieść lub zmienić wartość
-- click on any of the time parts to increase it	jscalendar	pl	- Kliknij na dowolny wycinek czasu aby go zwiększyć
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	pl	- Zatrzymaj przycisk myszy na którymś z powyższych przycisków, aby szybciej wybrać.
-- or click and drag for faster selection.	jscalendar	pl	- lub kliknij i przenieś, aby szybciej wybrać.
-- or shift-click to decrease it	jscalendar	pl	- lub kliknij z Shift-em aby zmniejszyć
-- use the %1, %2 buttons to select month	jscalendar	pl	- Użyj przycisków %1, %2 aby wybrać miesiąc
-- use the %1, %2 buttons to select year	jscalendar	pl	- Użyj przycisków %1, %2 aby wybrać rok
 00 (disable)	admin	pl	00 (wyłączony)
 1 day	common	pl	jeden dzień
 1 hour	common	pl	jedna godzina
 1 month	common	pl	jeden miesiąc
 1 week	common	pl	jeden tydzień
 13 (ntp)	admin	pl	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	pl	3 ilość znaków dla skrótu dnia
-3 number of chars for month-shortcut	jscalendar	pl	3 ilość znaków dla skrótu miesiąca
 80 (http)	admin	pl	80 (http)
 about	common	pl	O aplikacji
 about %1	common	pl	O aplikacji %1
 about egroupware	common	pl	O eGroupWare
-about the calendar	jscalendar	pl	O kalendarzu
 access	common	pl	Dostęp
 access not permitted	common	pl	Dostęp zabroniony
 account has been created	common	pl	Konto zostało utworzone
@@ -184,7 +174,6 @@ database error	common	pl	Bład bazy danych
 database error!	common	pl	Błąd bazy danych!
 date	common	pl	Data
 date due	common	pl	Data wymagalności
-date selection:	jscalendar	pl	Wybór daty:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pl	Port datetime.<br>Jeżeli używasz portu 13, ustaw odpowiednio reguły firewall-a przed zaakceptowaniem tej zmiany.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	pl	Grudzień
 default category	common	pl	Kategoria domyślna
@@ -207,7 +196,6 @@ disable slider effects	common	pl	Wyłącz efekt płynnego przesuwania
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	pl	Wyłączyć efekty płynnego przesuwania podczas pokazywania lub ukrywania menu?? Użytkownicy Opery i Konquerora najprawdopodobniej muszą to zrobić.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pl	Wyłączyć wykonywanie skryptu poprawki dla Internet Explorer 5.5 i wyższych, który odpowiada za pokazywanie przezroczystości w obrazkach PNG?
 disabled	common	pl	Zablokowany
-display %s first	jscalendar	pl	Wyświetl najpierw %s
 djibouti	common	pl	DŻIBUTI
 do you also want to delete all subcategories ?	common	pl	Czy chcesz również usunąć wszystkie podkategorie?
 doctype:	common	pl	DOCTYPE:
@@ -220,7 +208,6 @@ dominica	common	pl	DOMINIKA
 dominican republic	common	pl	DOMINIKANA
 done	common	pl	Gotowe
 download	common	pl	Pobierz
-drag to move	jscalendar	pl	Przeciągnij aby przenieść
 e-mail	common	pl	E-mail
 east timor	common	pl	TIMOR WSCHODNI
 eastern european	common	pl	Europa Wschodnia
@@ -294,7 +281,6 @@ ghana	common	pl	GHANA
 gibraltar	common	pl	GIBRALTAR
 global	common	pl	Globalne
 global public	common	pl	Globalny publiczny
-go today	jscalendar	pl	Idź do Dzisiaj
 grant access	common	pl	Przyznaj dostęp
 greece	common	pl	GRECJA
 greek	common	pl	grecki
@@ -461,9 +447,7 @@ new main category	common	pl	Nowa kategoria główna
 new value	common	pl	Nowa wartość
 new zealand	common	pl	NOWA ZELANDIA
 next	common	pl	Następny
-next month (hold for menu)	jscalendar	pl	Następny miesiąc (zatrzymaj aby pokazać menu)
 next page	common	pl	Następna strona
-next year (hold for menu)	jscalendar	pl	Następny rok (zatrzymaj aby pokazać menu)
 nicaragua	common	pl	NIKARAGUA
 niger	common	pl	NIGER
 nigeria	common	pl	NIGERIA
@@ -534,7 +518,7 @@ personal	common	pl	Osobisty
 peru	common	pl	PERU
 philippines	common	pl	FILIPINY
 phone number	common	pl	numer  telefonu
-phpgwapi	common	pl	eGroupWare API
+api	common	pl	eGroupWare API
 pitcairn	common	pl	PITCAIRN
 please %1 by hand	common	pl	Proszę %1 ręcznie
 please enter a name	common	pl	Proszę podać nazwę
@@ -550,8 +534,6 @@ portugal	common	pl	PORTUGALIA
 postal	common	pl	Pocztowy
 powered by	common	pl	Działa w oparciu o
 preferences	common	pl	Ustawienia
-prev. month (hold for menu)	jscalendar	pl	Poprz. miesiąc (zatrzymaj aby pokazać menu)
-prev. year (hold for menu)	jscalendar	pl	Poprz. rok (zatrzymaj aby pokazać menu)
 previous page	common	pl	Poprzednia strona
 primary group	common	pl	Grupa domyślna
 primary style-sheet:	common	pl	Podstawowy arkusz stylu:
@@ -693,7 +675,6 @@ this name has been used already	common	pl	Ta nazwa została już użyta
 thursday	common	pl	Czwartek
 tiled	common	pl	Sąsiadujący
 time	common	pl	Czas
-time selection:	jscalendar	pl	Wybór czasu:
 time zone	common	pl	Strefa czasowa
 time zone offset	common	pl	Przesunięcie strefy czasowej
 title	common	pl	Tytuł
@@ -702,7 +683,6 @@ to correct this error for the future you will need to properly set the	common	pl
 to go back to the msg list, click <a href= %1 >here</a>	common	pl	Aby wrócić do listy wiadomości, kliknij <a href="%1">tutaj</a>
 today	common	pl	Dzisiaj
 todays date, eg. "%1"	common	pl	dzisiajsza data, np. "%1"
-toggle first day of week	jscalendar	pl	Zmień pierwszy dzień tygodnia
 togo	common	pl	TOGO
 tokelau	common	pl	TOKELAU
 tonga	common	pl	TONGA
@@ -765,7 +745,6 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	pl	Które grupy
 whole query	common	pl	Całe zapytanie
 width	common	pl	Szerokosc
-wk	jscalendar	pl	tydz
 work email	common	pl	email służbowy
 would you like to display the page generation time at the bottom of every window?	common	pl	Czy chcesz aby wyświetlany był czas generowania każdej strony na dole okna?
 writing	common	pl	zapisywanie

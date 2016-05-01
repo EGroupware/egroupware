@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	fr	(Shift-)Cliquer ou glisser pour changer la valeur
+- click on any of the time parts to increase it	jscalendar	fr	- Cliquer sur les chiffres horaires pour les augmenter
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	fr	- Maintenir le bouton de la souris sur n'importe lequel des boutons ci-dessus pour une sélection plus rapide.
+- or click and drag for faster selection.	jscalendar	fr	- ou cliquer et glisser pour une sélection plus rapide
+- or shift-click to decrease it	jscalendar	fr	- ou Shift-cliquer pour la décrémenter
+- use the %1, %2 buttons to select month	jscalendar	fr	- Utiliser les boutons %1, %2 pour sélectionner le mois
+- use the %1, %2 buttons to select year	jscalendar	fr	- Utiliser les boutons %1, %2 pour sélectionner l'année
+3 number of chars for day-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourci jour
+3 number of chars for month-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourci mois
+about the calendar	jscalendar	fr	A propos du Calendrier
+date selection:	jscalendar	fr	Sélection de la date :
+display %s first	jscalendar	fr	Affiche %s en premier
+drag to move	jscalendar	fr	Glisser pour le déplacer
+go today	jscalendar	fr	Aller à aujourd'hui
+next month (hold for menu)	jscalendar	fr	Mois suivant (maintenir pour menu)
+next year (hold for menu)	jscalendar	fr	Année suivante (maintenir pour menu)
+prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
+prev. year (hold for menu)	jscalendar	fr	Année précédente (maintenir pour le menu)
+time selection:	jscalendar	fr	Sélection du temps:
+toggle first day of week	jscalendar	fr	Voir le premier jour de la semaine
+wk	jscalendar	fr	S.
+phpgwapi	common	fr	old EGroupware API

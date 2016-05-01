@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	ru	(Shift-)Клик или перетащите для изменения значения
+- click on any of the time parts to increase it	jscalendar	ru	- Кликните на любой части времени для увеличения
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	ru	- Удерживайте клавишу мыши на любой из иконок вверху для более быстрого выбора.
+- or click and drag for faster selection.	jscalendar	ru	- или щелкните и перетащите для быстрого выбора.
+- or shift-click to decrease it	jscalendar	ru	- или Shift-клик для уменьшения
+- use the %1, %2 buttons to select month	jscalendar	ru	- Используйте кнопки %1, %2 для выбора месяца
+- use the %1, %2 buttons to select year	jscalendar	ru	- Используйте кнопки %1, %2 для выбора года
+3 number of chars for day-shortcut	jscalendar	ru	3 первых буквы сокращения дня недели
+3 number of chars for month-shortcut	jscalendar	ru	3 буквы сокращения месяца
+about the calendar	jscalendar	ru	О Календаре
+date selection:	jscalendar	ru	Выбор даты:
+display %s first	jscalendar	ru	Вначале отображать %s
+drag to move	jscalendar	ru	Перетащите
+go today	jscalendar	ru	Перейти на сегодня
+next month (hold for menu)	jscalendar	ru	Следующий месяц (удерживается для меню)
+next year (hold for menu)	jscalendar	ru	Следующий год (удерживается для меню)
+prev. month (hold for menu)	jscalendar	ru	Предыдущий месяц
+prev. year (hold for menu)	jscalendar	ru	Предыдущий год
+time selection:	jscalendar	ru	Выбор времени :
+toggle first day of week	jscalendar	ru	Изменить первый день недели
+wk	jscalendar	ru	нед.
+phpgwapi	common	ru	old EGroupware API

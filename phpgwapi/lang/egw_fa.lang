@@ -1,0 +1,12 @@
+(shift-)click or drag to change value	jscalendar	fa	(تبدیل-) کلیک کنید یا بکشید تا مقدار را تغییر دهید
+- click on any of the time parts to increase it	jscalendar	fa	روی هر بخشی از زمان کلیک کنید تا زیادش کنید
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	fa	برای انتخاب سریعتر دکمه موشواره را روی هر کدام از کلیدهای بالا نگه دارید
+- or click and drag for faster selection.	jscalendar	fa	یا برای انتخاب سریعتر کلیک کنید و بکشید
+- or shift-click to decrease it	jscalendar	fa	یا تبدیل-کلیک کنید تا کم شود
+about the calendar	jscalendar	fa	درباره تقویم
+date selection:	jscalendar	fa	انتخاب تاریخ:
+display %s first	jscalendar	fa	نمايش S% ابتدا
+drag to move	jscalendar	fa	برای حرکت بکشید
+go today	jscalendar	fa	برو به امروز
+wk	jscalendar	fa	هفته
+phpgwapi	common	fa	old EGroupware API

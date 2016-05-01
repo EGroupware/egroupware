@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	hu	(Shift-)Klikk vagy vontatás megváltoztatja az értéket.
+- click on any of the time parts to increase it	jscalendar	hu	- Az időmezőre kattintás megnöveli az értékét
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	hu	- Gyorsabb kijelölés érhető el az egérgomb lenyomva tartásával bármelyik gombon.
+- or click and drag for faster selection.	jscalendar	hu	- vagy kattintás és vontatás a gyorsabb kiválasztáshoz
+- or shift-click to decrease it	jscalendar	hu	- vagy Shift-kattintással csökkenthető az értéke
+- use the %1, %2 buttons to select month	jscalendar	hu	- Az %1, %2 gomb használatosak a hónap kiválasztásához
+- use the %1, %2 buttons to select year	jscalendar	hu	- Az %1, %2 gombok használatosak az év kiválasztásához.
+3 number of chars for day-shortcut	jscalendar	hu	3 karakteres nap rövidítés
+3 number of chars for month-shortcut	jscalendar	hu	3 karakteres hónap rövidítés
+about the calendar	jscalendar	hu	Naptár névjegye
+date selection:	jscalendar	hu	Dátum kiválasztás:
+display %s first	jscalendar	hu	Először mutasd ezt %1
+drag to move	jscalendar	hu	Ragadja meg mozgatáshoz
+go today	jscalendar	hu	Ugrás a mai napra
+next month (hold for menu)	jscalendar	hu	Következő hónap
+next year (hold for menu)	jscalendar	hu	Következő év
+prev. month (hold for menu)	jscalendar	hu	Előző hónap
+prev. year (hold for menu)	jscalendar	hu	Előző év
+time selection:	jscalendar	hu	Idő kiválasztása:
+toggle first day of week	jscalendar	hu	Hét első napjának rögzítése
+wk	jscalendar	hu	hét
+phpgwapi	common	hu	old EGroupware API

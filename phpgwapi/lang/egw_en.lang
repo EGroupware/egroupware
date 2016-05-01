@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	en	(Shift-) Click or drag to change value
+- click on any of the time parts to increase it	jscalendar	en	- Click on any of the time parts to increase it.
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	en	- Hold mouse button on any of the above buttons for faster selection.
+- or click and drag for faster selection.	jscalendar	en	- or click and drag for faster selection.
+- or shift-click to decrease it	jscalendar	en	- or Shift click to decrease it
+- use the %1, %2 buttons to select month	jscalendar	en	- Use the %1, %2 buttons to select month
+- use the %1, %2 buttons to select year	jscalendar	en	- Use the %1, %2 buttons to select year
+3 number of chars for day-shortcut	jscalendar	en	3 number of chars for day shortcut
+3 number of chars for month-shortcut	jscalendar	en	3 number of chars for month shortcut
+about the calendar	jscalendar	en	About the calendar
+date selection:	jscalendar	en	Date selection:
+display %s first	jscalendar	en	Display %s first
+drag to move	jscalendar	en	Drag to move
+go today	jscalendar	en	Go today
+next month (hold for menu)	jscalendar	en	Next month (hold for menu)
+next year (hold for menu)	jscalendar	en	Next year (hold for menu)
+prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
+prev. year (hold for menu)	jscalendar	en	Prev. year (hold for menu)
+time selection:	jscalendar	en	Time selection:
+toggle first day of week	jscalendar	en	Toggle first day of week
+wk	jscalendar	en	wk
+phpgwapi	common	en	old EGroupware API

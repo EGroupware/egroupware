@@ -1,0 +1,17 @@
+(shift-)click or drag to change value	jscalendar	uk	(Shift-) Клацніть або перетягніть для зміни значення
+- click on any of the time parts to increase it	jscalendar	uk	- Клацніть мишкою на будь якій частині часу для його збільшення
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	uk	- Для швидшого вибору утримуйте клавішу миші на будь якій кнопці, що вище.
+- or click and drag for faster selection.	jscalendar	uk	- або клацніть мишкою та перетягніть для швидшого вибору.
+- or shift-click to decrease it	jscalendar	uk	- або клацніть мишкою з утримування Shift для зменшення
+- use the %1, %2 buttons to select month	jscalendar	uk	- Використайте клавіші миші %1, %2 для вибору місяця
+- use the %1, %2 buttons to select year	jscalendar	uk	- Використайте клавіші миші %1, %2 для вибору року
+date selection:	jscalendar	uk	Вибір Дати:
+drag to move	jscalendar	uk	Перетягніть для перенесення
+go today	jscalendar	uk	Перейти на сьогодні
+next month (hold for menu)	jscalendar	uk	Наступний місяць (для меню)
+next year (hold for menu)	jscalendar	uk	Наступний рік (для меню)
+prev. month (hold for menu)	jscalendar	uk	Попередній місяць (для меню)
+prev. year (hold for menu)	jscalendar	uk	Попередній рік (для меню)
+time selection:	jscalendar	uk	Вибір часу:
+toggle first day of week	jscalendar	uk	Змінити перший день тиждня
+phpgwapi	common	uk	old EGroupware API

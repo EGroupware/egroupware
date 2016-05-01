@@ -2,26 +2,16 @@
 %1 is not executable by the webserver !!!	common	ca	%1 no es pot executar en el servidor web !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ca	%1Tria un altre directori%2<br />o fes que %3 sigui modificable pel webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ca	%1eGroupWare%2 és una eina de treball en grup, multiusuari i basada en web escrita en %3PHP%4
-(shift-)click or drag to change value	jscalendar	ca	(Maj-)+clic o arrosegar per a canviar el valor
-- click on any of the time parts to increase it	jscalendar	ca	- Premeu en qualsevol part de l'hora per a incrementar-la
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	ca	- Mantingueu premut el botó del ratolí en qualsevol dels botons anteriors per a una selecció més ràpida.
-- or click and drag for faster selection.	jscalendar	ca	- o premeu i arrosegueu per a una selecció més ràpida.
-- or shift-click to decrease it	jscalendar	ca	- o Maj+clic per disminuir
-- use the %1, %2 buttons to select month	jscalendar	ca	- Useu els botons %1, %2 per a seleccionar el mes
-- use the %1, %2 buttons to select year	jscalendar	ca	- Useu els botons %1, %2 per a seleccionar l'any
 00 (disable)	admin	ca	00 (desactiva)
 1 day	common	ca	1 Dia
 1 hour	common	ca	1 Hora
 1 month	common	ca	1 Mes
 1 week	common	ca	1 Setmana
 13 (ntp)	admin	ca	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	ca	3 caràcters per a l'abreviatura del dia
-3 number of chars for month-shortcut	jscalendar	ca	3 caràcters per a l'abreviatura del mes
 80 (http)	admin	ca	80 (http)
 about	common	ca	Sobre
 about %1	common	ca	Sobre %1
 about egroupware	common	ca	Sobre eGroupware
-about the calendar	jscalendar	ca	Sobre el calendari
 access	common	ca	Accés
 access not permitted	common	ca	Accés no permès
 account has been created	common	ca	Compte creat
@@ -170,7 +160,6 @@ cyprus	common	ca	XIPRE
 czech republic	common	ca	REPÚBLICA TXECA
 date	common	ca	Data
 date due	common	ca	Data límit
-date selection:	jscalendar	ca	Selecció de data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ca	Port de data.<br>Si useu el port 13, si us plau, configureu acuradament les regles del tallafocs abans d'enviar aquesta plana.<br>
 december	common	ca	Desembre
 default category	common	ca	Categoria predeterminada
@@ -193,7 +182,6 @@ disable slider effects	common	ca	Desactivar efectes lliscants
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	ca	Desactivar efectes lliscants animats en mostrar o amagar menús a la plana? Opera i Konqueror probablement ho necessiten.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ca	Deshabilita l'execució d'un bugfixscript per Internet Explorer 5.5 i superior per mostrar les imatges PNG transparents?
 disabled	common	ca	Desactivat
-display %s first	jscalendar	ca	Mostra %s primer
 djibouti	common	ca	DJIBOUTI
 do you also want to delete all subcategories ?	common	ca	També voleu esborrar totes les subcategories?
 doctype:	common	ca	TIPUS DE DOCUMENT:
@@ -206,7 +194,6 @@ dominica	common	ca	DOMINICA
 dominican republic	common	ca	REPÚBLICA DOMINICANA
 done	common	ca	Fet
 download	common	ca	Descarregar
-drag to move	jscalendar	ca	Arrosegueu per moure
 e-mail	common	ca	Correu electrònic
 east timor	common	ca	TIMOR EST
 ecuador	common	ca	EQUADOR
@@ -274,7 +261,6 @@ ghana	common	ca	GHANA
 gibraltar	common	ca	GIBRALTAR
 global	common	ca	Global
 global public	common	ca	Public Global
-go today	jscalendar	ca	Anar a avui
 grant access	common	ca	Atorgar accés
 greece	common	ca	GRÈCIA
 greenland	common	ca	GROENLANDIA
@@ -435,9 +421,7 @@ new main category	common	ca	Nova categoria principal
 new value	common	ca	Nou valor
 new zealand	common	ca	NOVA ZELANDA
 next	common	ca	Següent
-next month (hold for menu)	jscalendar	ca	Mes següent (mantenir clicat per menú)
 next page	common	ca	Plana següent
-next year (hold for menu)	jscalendar	ca	Any següent (mantenir clicat per menú)
 nicaragua	common	ca	NICARAGUA
 niger	common	ca	NIGER
 nigeria	common	ca	NIGERIA
@@ -504,7 +488,7 @@ personal	common	ca	Personal
 peru	common	ca	PERU
 philippines	common	ca	FILIPINES
 phone number	common	ca	Número de telèfon
-phpgwapi	common	ca	API eGroupware
+api	common	ca	API eGroupware
 pitcairn	common	ca	PITCAIRN
 please %1 by hand	common	ca	Si us plau, %1 manualment
 please enter a name	common	ca	Si us plau, introduïu un nom !
@@ -520,8 +504,6 @@ portugal	common	ca	PORTUGAL
 postal	common	ca	Postal
 powered by	common	ca	Gestionat per
 preferences	common	ca	Preferències
-prev. month (hold for menu)	jscalendar	ca	Mes anterior (mantenir clicat per menú)
-prev. year (hold for menu)	jscalendar	ca	Any anterior (mantenir clicat per menú)
 previous page	common	ca	Plana anterior
 primary group	common	ca	grup principal
 primary style-sheet:	common	ca	Full d'estils primari:
@@ -657,7 +639,6 @@ this name has been used already	common	ca	Aquest nom ja és en ús !
 thursday	common	ca	Dijous
 tiled	common	ca	apilat
 time	common	ca	Hora
-time selection:	jscalendar	ca	Seleccionar hora:
 time zone	common	ca	Zona horària
 time zone offset	common	ca	Diferència de zona horària
 title	common	ca	Títol
@@ -666,7 +647,6 @@ to correct this error for the future you will need to properly set the	common	ca
 to go back to the msg list, click <a href= %1 >here</a>	common	ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
 today	common	ca	Avui
 todays date, eg. "%1"	common	ca	data d'avui, ex. "%1"
-toggle first day of week	jscalendar	ca	Canviar el primer dia de la setmana
 togo	common	ca	TOGO
 tokelau	common	ca	TOKELAU
 tonga	common	ca	TONGA
@@ -727,7 +707,6 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	ca	Quins grups
 whole query	common	ca	consulta sencera
 width	common	ca	Amplada
-wk	jscalendar	ca	st
 work email	common	ca	correu del treball
 would you like to display the page generation time at the bottom of every window?	common	ca	T'agradaria veure el temps de generació de la pàgina al peu de cada finestra?
 writing	common	ca	escrivint

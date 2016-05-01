@@ -9,26 +9,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1eGroupWare%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	ru	'%1' нет файла php в корневом каталоге eGW (%2)!
 (session restored in %1 seconds)	common	ru	(сессия восстановлена за %1 секунд)
-(shift-)click or drag to change value	jscalendar	ru	(Shift-)Клик или перетащите для изменения значения
-- click on any of the time parts to increase it	jscalendar	ru	- Кликните на любой части времени для увеличения
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	ru	- Удерживайте клавишу мыши на любой из иконок вверху для более быстрого выбора.
-- or click and drag for faster selection.	jscalendar	ru	- или щелкните и перетащите для быстрого выбора.
-- or shift-click to decrease it	jscalendar	ru	- или Shift-клик для уменьшения
-- use the %1, %2 buttons to select month	jscalendar	ru	- Используйте кнопки %1, %2 для выбора месяца
-- use the %1, %2 buttons to select year	jscalendar	ru	- Используйте кнопки %1, %2 для выбора года
 00 (disable)	admin	ru	00 (выкл)
 1 day	common	ru	1 День
 1 hour	common	ru	1 Час
 1 month	common	ru	1 Месяц
 1 week	common	ru	1 Неделя
 13 (ntp)	admin	ru	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	ru	3 первых буквы сокращения дня недели
-3 number of chars for month-shortcut	jscalendar	ru	3 буквы сокращения месяца
 80 (http)	admin	ru	80 (http)
 about	common	ru	О программе
 about %1	common	ru	О %1
 about egroupware	common	ru	Об eGroupware
-about the calendar	jscalendar	ru	О Календаре
 access	common	ru	Доступ
 access not permitted	common	ru	Доступ запрещен
 account has been created	common	ru	Учетная запись создана
@@ -206,7 +196,6 @@ database error	common	ru	Ошибка Базы Данных
 database error!	common	ru	Ошибка Базы Данных!
 date	common	ru	Дата
 date due	common	ru	Дата до
-date selection:	jscalendar	ru	Выбор даты:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ru	Порт протокола точного времени (ntp).Если используется порт 13, пожалуйста установите правила брандмауэра перед сохранением данных этой страницы.(Port: 13 / Host: 129.6.15.28)
 december	common	ru	Декабрь
 default category	common	ru	Категория по умолчанию
@@ -233,7 +222,6 @@ disable slider effects	common	ru	Отключить эффекты скольж�
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	ru	Отключить эффекты анимации выпадающих меню на странице? Пользователи Opera и Konqueror возможно захотят это сделать.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ru	Отключить обработку ошибок для Internet Explorer версии 5.5 и выше для показа прозрачности в PNG-картинках?
 disabled	common	ru	Отключено
-display %s first	jscalendar	ru	Вначале отображать %s
 distribution lists as groups	groupdav	ru	Списки рассылки как группы
 djibouti	common	ru	Джибути
 do not notify	common	ru	Не уведомлять
@@ -250,7 +238,6 @@ dominican republic	common	ru	Доминиканская республика
 done	common	ru	Готово
 dos international	common	ru	DOS International
 download	common	ru	Скачать
-drag to move	jscalendar	ru	Перетащите
 e-mail	common	ru	Эл.почта
 east timor	common	ru	Восточный Тимор
 eastern european	common	ru	Восточно-Европейские
@@ -332,7 +319,6 @@ ghana	common	ru	Гана
 gibraltar	common	ru	Гибралтар
 global	common	ru	Общие
 global public	common	ru	Общедоступный
-go today	jscalendar	ru	Перейти на сегодня
 grant access	common	ru	Предоставить Доступ
 greece	common	ru	Греция
 greek	common	ru	греческий
@@ -509,9 +495,7 @@ new main category	common	ru	Новая основная категория
 new value	common	ru	Новое значение
 new zealand	common	ru	Новая Зеландия
 next	common	ru	Следующий
-next month (hold for menu)	jscalendar	ru	Следующий месяц (удерживается для меню)
 next page	common	ru	Следующая страница
-next year (hold for menu)	jscalendar	ru	Следующий год (удерживается для меню)
 nicaragua	common	ru	Никарагуа
 niger	common	ru	Нигер
 nigeria	common	ru	Нигерия
@@ -588,7 +572,7 @@ pg down	common	ru	На страницу вниз
 pg up	common	ru	На страницу вверх
 philippines	common	ru	Филиппины
 phone number	common	ru	номер телефона
-phpgwapi	common	ru	eGroupWare API
+api	common	ru	eGroupWare API
 pitcairn	common	ru	О-в Питкэрн
 please %1 by hand	common	ru	Пожалуйста %1 вручную
 please enter a name	common	ru	введите имя !
@@ -605,8 +589,6 @@ postal	common	ru	Почтовый
 powered by	common	ru	Под управлением
 preferences	common	ru	Настройки
 preferences for the %1 template set	preferences	ru	Настройки для %1 набора шаблонов
-prev. month (hold for menu)	jscalendar	ru	Предыдущий месяц
-prev. year (hold for menu)	jscalendar	ru	Предыдущий год
 previous page	common	ru	Предыдущая страница
 primary group	common	ru	Основная группа
 primary style-sheet:	common	ru	Основная таблица стилей:
@@ -768,7 +750,6 @@ this name has been used already	common	ru	Это имя уже использу�
 thursday	common	ru	Четверг
 tiled	common	ru	мозаика
 time	common	ru	Время
-time selection:	jscalendar	ru	Выбор времени :
 time zone	common	ru	Часовой пояс
 time zone offset	common	ru	Смещение часового пояса
 title	common	ru	Заголовок
@@ -778,7 +759,6 @@ to examine or reinstate inactived files, you might need to turn versioning on.	a
 to go back to the msg list, click <a href= %1 >here</a>	common	ru	Для возврата к списку сообщений, нажмите <a href="%1">здесь</a>
 today	common	ru	Сегодня
 todays date, eg. "%1"	common	ru	Сегодняшняя дата, напр. "%1"
-toggle first day of week	jscalendar	ru	Изменить первый день недели
 togo	common	ru	Того
 tokelau	common	ru	Токелау
 tonga	common	ru	Тонга
@@ -842,7 +822,6 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	ru	Какие группы
 whole query	common	ru	Всего запросов
 width	common	ru	Ширина
-wk	jscalendar	ru	нед.
 work email	common	ru	рабочий e-mail
 would you like to display the page generation time at the bottom of every window?	common	ru	Отображать время генерации страницы в нижней части окна?
 writing	common	ru	запись

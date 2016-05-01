@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	da	(Shift)Klik eller træk for at ændre værdien
+- click on any of the time parts to increase it	jscalendar	da	- Klik på hvilken som helst tidsandelerne for at forøge den
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	da	- Hold musse knappen på hvilken som helst af de overstående knapper for hurtigere udvælgelse.
+- or click and drag for faster selection.	jscalendar	da	- eller klik og træk for hurtigere udvælgelse
+- or shift-click to decrease it	jscalendar	da	- eller Shift-klik for at forminske den
+- use the %1, %2 buttons to select month	jscalendar	da	- Brug %1, %2 knapperne for at vælge måned
+- use the %1, %2 buttons to select year	jscalendar	da	- Brug %1, %2 knapperne for at vælge år
+3 number of chars for day-shortcut	jscalendar	da	3 antal tegn for dag-forkortelse
+3 number of chars for month-shortcut	jscalendar	da	3 antal tegn for måneds-forkortelse
+about the calendar	jscalendar	da	Om kalenderen
+date selection:	jscalendar	da	Dato valg:
+display %s first	jscalendar	da	Vis %s først
+drag to move	jscalendar	da	Træk for at flytte
+go today	jscalendar	da	Gå i dag
+next month (hold for menu)	jscalendar	da	Næste måned (hold knap nede for menu)
+next year (hold for menu)	jscalendar	da	Næste år (hold knap nede for menu)
+prev. month (hold for menu)	jscalendar	da	Sidste måned (hold knap nede for menu)
+prev. year (hold for menu)	jscalendar	da	Sidste år (hold knap nede for menu)
+time selection:	jscalendar	da	Tid valgt:
+toggle first day of week	jscalendar	da	Toogle første dag på ugen
+wk	jscalendar	da	uge
+phpgwapi	common	da	old EGroupware API

@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	no	(Shift-)klikk eller dra for å endre verdi
+- click on any of the time parts to increase it	jscalendar	no	- Klikk en av tidsdelene for å øke
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	no	- Trykk og hold nede musknappen på knappene over for raskere utvalg
+- or click and drag for faster selection.	jscalendar	no	- eller kikk og dra for raskere utvalg
+- or shift-click to decrease it	jscalendar	no	- eller Shift-Klikk for å redusere utvalg
+- use the %1, %2 buttons to select month	jscalendar	no	- Bruk %1, %2 knappene for å velge måned
+- use the %1, %2 buttons to select year	jscalendar	no	- Bruk %1, %2 knappene for å velge år
+3 number of chars for day-shortcut	jscalendar	no	3 karakterer for dag
+3 number of chars for month-shortcut	jscalendar	no	3 karakterer for måned
+about the calendar	jscalendar	no	Om kalenderen
+date selection:	jscalendar	no	Dato utvalg
+display %s first	jscalendar	no	Vis %s først
+drag to move	jscalendar	no	Dra for å flytte
+go today	jscalendar	no	Gå i dag
+next month (hold for menu)	jscalendar	no	Neste måned (hold nede for meny)
+next year (hold for menu)	jscalendar	no	Neste side (hold nede for meny)
+prev. month (hold for menu)	jscalendar	no	Forrige måned (hold for meny)
+prev. year (hold for menu)	jscalendar	no	Forrige år (hold for meny)
+time selection:	jscalendar	no	Valg av tid:
+toggle first day of week	jscalendar	no	Velg føste ukedag
+wk	jscalendar	no	wk
+phpgwapi	common	no	old EGroupware API

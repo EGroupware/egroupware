@@ -5,7 +5,6 @@
 about	common	lt	Apie
 about %1	common	lt	% - apie
 about egroupware	common	lt	Apie eGroupware
-about the calendar	jscalendar	lt	Apie kalendorių
 access	common	lt	Prieiga
 access not permitted	common	lt	Prieiga negalima
 addressbook	common	lt	Adresų knyga
@@ -51,7 +50,6 @@ currency	common	lt	Valiuta
 cyprus	common	lt	KIPRAS
 czech republic	common	lt	ČEKIJA
 date	common	lt	Data
-date selection:	jscalendar	lt	Datos išrinkimas:
 december	common	lt	Gruodis
 default category	common	lt	Numatyta kategorija
 default height for the windows	common	lt	Numatytas langų aukštis
@@ -149,7 +147,7 @@ paraguay	common	lt	PARAGVAJUS
 password	common	lt	Slaptažodis
 peru	common	lt	PERU
 phone number	common	lt	telefono numeris
-phpgwapi	common	lt	eGroupWare API
+api	common	lt	eGroupWare API
 poland	common	lt	LENKIJA
 portugal	common	lt	PORTUGALIJA
 postal	common	lt	Pašto kodas

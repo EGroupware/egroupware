@@ -9,26 +9,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1eGroupWare%2 is een multi-user, web-gebaseerde groupware suite, geschreven in %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	nl	'%1' is geen php bestand in de eGW server rootdirectory (%2)
 (session restored in %1 seconds)	common	nl	(sessie hersteld in %1 seconden)
-(shift-)click or drag to change value	jscalendar	nl	(Shift-)Klik of sleep om waarde te wijzigen
-- click on any of the time parts to increase it	jscalendar	nl	- Klik op een willekeurig tijdsonderdeel om het te verhogen
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	nl	- Hou de muisknop op een van de knoppen hierboven voor een snellere selectie.
-- or click and drag for faster selection.	jscalendar	nl	- of klik en sleep voor snellere selectie
-- or shift-click to decrease it	jscalendar	nl	- of Shift-klik om het te verlagen
-- use the %1, %2 buttons to select month	jscalendar	nl	- Gebruik de %1, %2 knoppen om de maand te kiezen
-- use the %1, %2 buttons to select year	jscalendar	nl	- Gebruik de %1, %2 knoppen om het jaar te kiezen
 00 (disable)	admin	nl	00 (uitschakelen)
 1 day	common	nl	1 dag
 1 hour	common	nl	1 uur
 1 month	common	nl	1 maand
 1 week	common	nl	1 week
 13 (ntp)	admin	nl	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	nl	3 letters voor verkorte dagaanduiding
-3 number of chars for month-shortcut	jscalendar	nl	3 letters voor verkorte maandaanduiding
 80 (http)	admin	nl	80 (http)
 about	common	nl	Over
 about %1	common	nl	Over %1
 about egroupware	common	nl	Over eGroupWare
-about the calendar	jscalendar	nl	Over de agenda
 access	common	nl	Toegang
 access not permitted	common	nl	Toegang geweigerd
 account has been created	common	nl	Account is aangemaakt
@@ -216,7 +206,6 @@ database error	common	nl	Database fout
 database error!	common	nl	Database fout!
 date	common	nl	Datum
 date due	common	nl	Einddatum
-date selection:	jscalendar	nl	Datumselectie
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	Datetime poort<br />Indien poort 13 gebruikt wordt, pas dan s.v.p. de firewall regels eerst aan voordat u deze pagina verzendt.<br />(Port: 13 / Host: 129.6.15.28)
 december	common	nl	December
 default category	common	nl	Standaard Categorie
@@ -243,7 +232,6 @@ disable slider effects	common	nl	Bewegende schuifeffecten uitschakelen
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	nl	Schakel de bewegende schuifeffecten uit wanneer een langzame computer gebruikt of problemen met de uitklapmenus ondervind.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	nl	Het uitvoeren van een bugfixscript voor Internet Explore 5.5 en hoger uitschakelen zodat transparantie in PNG-afbeeldingen zichtbaar wordt?
 disabled	common	nl	Uitgeschakeld
-display %s first	jscalendar	nl	%s eerst tonen
 distribution lists as groups	groupdav	nl	Distributie lijsten als groep
 djibouti	common	nl	DJIBOUTI
 do not notify	common	nl	Geen melding maken
@@ -260,7 +248,6 @@ dominican republic	common	nl	DOMINICAANSE REPUBLIEK
 done	common	nl	Gereed
 dos international	common	nl	DOS Internationaal
 download	common	nl	Download
-drag to move	jscalendar	nl	Sleep om te verplaatsen
 e-mail	common	nl	Email
 east timor	common	nl	OOST TIMOR
 eastern european	common	nl	Oost europees
@@ -347,7 +334,6 @@ ghana	common	nl	GHANA
 gibraltar	common	nl	GIBRALTAR
 global	common	nl	Globale
 global public	common	nl	Toegang Openbaar
-go today	jscalendar	nl	Ga naar vandaag
 grant access	common	nl	Geef toegang
 greece	common	nl	GRIEKENLAND
 greek	common	nl	Grieks
@@ -529,9 +515,7 @@ new main category	common	nl	Nieuwe hoofdcategorie
 new value	common	nl	Nieuwe waarde
 new zealand	common	nl	NIEUW ZEELAND
 next	common	nl	Volgende
-next month (hold for menu)	jscalendar	nl	Volgende maand (vasthouden voor menu)
 next page	common	nl	volgende pagina
-next year (hold for menu)	jscalendar	nl	Volgend jaar (vasthouden voor menu)
 nicaragua	common	nl	NICARAGUA
 niger	common	nl	NIGER
 nigeria	common	nl	NIGERIA
@@ -613,7 +597,7 @@ pg down	common	nl	Pagina naar benenden
 pg up	common	nl	Pagina omhoog
 philippines	common	nl	FILIPIJNEN
 phone number	common	nl	telefoonnummer
-phpgwapi	common	nl	eGroupWare API
+api	common	nl	eGroupWare API
 pitcairn	common	nl	PITCAIRN (EILAND)
 placeholders	common	nl	Tijdelijke aanduiding
 please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
@@ -633,8 +617,6 @@ pre	common	nl	Voor
 preferences	common	nl	Voorkeuren
 preferences for the %1 template set	preferences	nl	Voorkeur voor set template %1
 prev	common	nl	Vorige
-prev. month (hold for menu)	jscalendar	nl	Vorige maand (vasthouden voor menu)
-prev. year (hold for menu)	jscalendar	nl	Vorig jaar (vasthouden voor menu)
 previous page	common	nl	Vorige pagina
 primary group	common	nl	Primaire groep
 primary style-sheet:	common	nl	Primaire style-sheet:
@@ -805,7 +787,6 @@ this name has been used already	common	nl	Deze naam is reeds in gebruik !
 thursday	common	nl	Donderdag
 tiled	common	nl	als tegels
 time	common	nl	Tijd
-time selection:	jscalendar	nl	Tijdselectie:
 time zone	common	nl	Tijdzone
 time zone offset	common	nl	Tijdzoneverschil
 title	common	nl	Titel
@@ -815,7 +796,6 @@ to examine or reinstate inactived files, you might need to turn versioning on.	a
 to go back to the msg list, click <a href= %1 >here</a>	common	nl	Klik <a href="%1">hier</a> om terug te gaan in de berichtenlijst.
 today	common	nl	Vandaag
 todays date, eg. "%1"	common	nl	datum vandaag, bijv. "%1"
-toggle first day of week	jscalendar	nl	(de)activeer eerste dag van de week
 togo	common	nl	TOGO
 tokelau	common	nl	TOKELAU
 tonga	common	nl	TONGA
@@ -883,7 +863,6 @@ which groups	common	nl	Welke groepen
 which infolog types should be synced with the device, default only tasks.	common	nl	Welke Infolog typen zouden met dit apparaat moeten worden gesynchroniseerd, standaard is het alleen taken
 whole query	common	nl	gehele query
 width	common	nl	Breedte
-wk	jscalendar	nl	wk
 work email	common	nl	email werk
 would you like to display the page generation time at the bottom of every window?	common	nl	Wilt u de pagina gerereer tijd onderaan iedere pagina laten weergeven?
 writing	common	nl	schrijft

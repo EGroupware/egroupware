@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	iw	הקלק או גרור כדי לשנות ערך(-Shift)
+- click on any of the time parts to increase it	jscalendar	iw	הקלק על חלק כלשהו של השעון כדי לקדם אותו -
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	iw	- אחזק את כפתור העכבר על כל אחד מהכפתורים לעיל לבחירה מהירה יותר
+- or click and drag for faster selection.	jscalendar	iw	.או הקלק וגרור עבור בחירה מהירה יותר -
+- or shift-click to decrease it	jscalendar	iw	. הקלק כדי להוריד אותו-Shift או -
+- use the %1, %2 buttons to select month	jscalendar	iw	השתמש בכפתורי %1, %2 כדי לבחור חודש -
+- use the %1, %2 buttons to select year	jscalendar	iw	השתמש בכפתורי %1, %2 כדי לבחור שנה -
+3 number of chars for day-shortcut	jscalendar	iw	3 כמות התווים לקיצור של יום
+3 number of chars for month-shortcut	jscalendar	iw	3 כמות התווים לקיצור של חודש
+about the calendar	jscalendar	iw	אודות לוח השנה
+date selection:	jscalendar	iw	:בחירת תאריך
+display %s first	jscalendar	iw	הצג %s קודם
+drag to move	jscalendar	iw	גרור כדי להזיז
+go today	jscalendar	iw	אל היום
+next month (hold for menu)	jscalendar	iw	(החודש הבא (החזק לקבלת תפריט
+next year (hold for menu)	jscalendar	iw	(השנה הבאה (החזק לקבלת תפריט
+prev. month (hold for menu)	jscalendar	iw	(החודש הקודם (החזק לקבלת תפריט
+prev. year (hold for menu)	jscalendar	iw	(השנה הקודמת (החזק לקבלת תפריט
+time selection:	jscalendar	iw	:בחירת שעה
+toggle first day of week	jscalendar	iw	מתג את היום הראשון בשבוע
+wk	jscalendar	iw	שבוע
+phpgwapi	common	iw	old EGroupware API

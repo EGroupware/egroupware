@@ -2,26 +2,16 @@
 %1 is not executable by the webserver !!!	common	zh-tw	網頁伺服器無法執行 %1 ！
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	zh-tw	%1選擇一個其他資料夾%2<br />或是讓網頁伺服器可以寫入 %3 。
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh-tw	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
-(shift-)click or drag to change value	jscalendar	zh-tw	(Shift 鍵加)點選或拖拉滑鼠游標來改變數值
-- click on any of the time parts to increase it	jscalendar	zh-tw	- 點選任意時間區來增加它
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	zh-tw	- 按住滑鼠來快速選取上面的按鈕
-- or click and drag for faster selection.	jscalendar	zh-tw	- 或是用滑鼠拖拉來快速點選
-- or shift-click to decrease it	jscalendar	zh-tw	- 或是用Shift加滑鼠鍵來增加
-- use the %1, %2 buttons to select month	jscalendar	zh-tw	- 使用按鈕 %1,%2來選擇月份
-- use the %1, %2 buttons to select year	jscalendar	zh-tw	- 使用按鈕 %1,%2來選擇年
 00 (disable)	admin	zh-tw	00 (關閉)
 1 day	common	zh-tw	1 天
 1 hour	common	zh-tw	1 小時
 1 month	common	zh-tw	1 個月
 1 week	common	zh-tw	1 星期
 13 (ntp)	admin	zh-tw	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	zh-tw	-1
-3 number of chars for month-shortcut	jscalendar	zh-tw	2
 80 (http)	admin	zh-tw	80 (http)
 about	common	zh-tw	關於
 about %1	common	zh-tw	關於 %1
 about egroupware	common	zh-tw	關於 eGroupware
-about the calendar	jscalendar	zh-tw	關於行事曆
 access	common	zh-tw	存取權限
 access not permitted	common	zh-tw	存取遭拒
 account has been created	common	zh-tw	帳號已經建立
@@ -169,7 +159,6 @@ cyprus	common	zh-tw	賽普勒斯
 czech republic	common	zh-tw	捷克共和國
 date	common	zh-tw	日期
 date due	common	zh-tw	到期日期
-date selection:	jscalendar	zh-tw	選擇日期：
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zh-tw	時間服務埠。<br>如果使用13埠，在送出之前記得檢查您的防火牆設定。<br>(Port: 13 / Host: 129.6.15.28)
 december	common	zh-tw	十二月
 default category	common	zh-tw	預設分類
@@ -192,7 +181,6 @@ disable slider effects	common	zh-tw	停用切換效果
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh-tw	在顯示或是隱藏選單的時候停用動態切換效果？Opera 與 Konqueror 的使用者可能必須這麼做。
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh-tw	停用為 IE 5.5 或更新版本設計的修正程式？這個程式的用意在讓 PNG 格式圖片能夠顯示透明效果。
 disabled	common	zh-tw	停用
-display %s first	jscalendar	zh-tw	先顯示 %s
 djibouti	common	zh-tw	吉布地
 do you also want to delete all subcategories ?	common	zh-tw	您確定要刪除所有的子分類？
 doctype:	common	zh-tw	文件類型：
@@ -205,7 +193,6 @@ dominica	common	zh-tw	多明尼加
 dominican republic	common	zh-tw	多明尼加共和國
 done	common	zh-tw	完成
 download	common	zh-tw	下載
-drag to move	jscalendar	zh-tw	拖曳移動
 e-mail	common	zh-tw	電子郵件
 east timor	common	zh-tw	EAST TIMOR
 ecuador	common	zh-tw	厄瓜多爾
@@ -273,7 +260,6 @@ ghana	common	zh-tw	迦納
 gibraltar	common	zh-tw	GIBRALTAR
 global	common	zh-tw	全域
 global public	common	zh-tw	全域共用
-go today	jscalendar	zh-tw	回到今天
 grant access	common	zh-tw	存取權限開放
 greece	common	zh-tw	希臘
 greenland	common	zh-tw	格陵蘭
@@ -433,9 +419,7 @@ new main category	common	zh-tw	新的主要分類
 new value	common	zh-tw	新數值
 new zealand	common	zh-tw	紐西蘭
 next	common	zh-tw	下一個
-next month (hold for menu)	jscalendar	zh-tw	下一個月(按住滑鼠鍵)
 next page	common	zh-tw	下一頁
-next year (hold for menu)	jscalendar	zh-tw	下一年(按住滑鼠鍵)
 nicaragua	common	zh-tw	NICARAGUA
 niger	common	zh-tw	NIGER
 nigeria	common	zh-tw	NIGERIA
@@ -502,7 +486,7 @@ personal	common	zh-tw	個人
 peru	common	zh-tw	祕魯
 philippines	common	zh-tw	菲律賓
 phone number	common	zh-tw	電話
-phpgwapi	common	zh-tw	eGroupWare 核心
+api	common	zh-tw	eGroupWare 核心
 pitcairn	common	zh-tw	PITCAIRN
 please %1 by hand	common	zh-tw	請手動 %1
 please enter a name	common	zh-tw	請輸入名稱！
@@ -517,8 +501,6 @@ portugal	common	zh-tw	PORTUGAL
 postal	common	zh-tw	郵遞區號
 powered by	common	zh-tw	系統提供
 preferences	common	zh-tw	喜好設定
-prev. month (hold for menu)	jscalendar	zh-tw	上一個月(按住滑鼠鍵)
-prev. year (hold for menu)	jscalendar	zh-tw	上一年(按住滑鼠鍵)
 previous page	common	zh-tw	上一頁
 primary group	common	zh-tw	主要群組
 primary style-sheet:	common	zh-tw	主要樣式表：
@@ -650,7 +632,6 @@ this name has been used already	common	zh-tw	這個名字已被使用！
 thursday	common	zh-tw	星期四
 tiled	common	zh-tw	展開
 time	common	zh-tw	時間
-time selection:	jscalendar	zh-tw	選取的時間：
 time zone	common	zh-tw	時區
 time zone offset	common	zh-tw	時區時差
 title	common	zh-tw	標題(職稱)
@@ -659,7 +640,6 @@ to correct this error for the future you will need to properly set the	common	zh
 to go back to the msg list, click <a href= %1 >here</a>	common	zh-tw	點選<a href="%1">這裡</a>回到訊息清單
 today	common	zh-tw	今天
 todays date, eg. "%1"	common	zh-tw	今天日期, 例： "%1"
-toggle first day of week	jscalendar	zh-tw	每星期的第一天
 togo	common	zh-tw	TOGO
 tokelau	common	zh-tw	TOKELAU
 tonga	common	zh-tw	TONGA
@@ -719,7 +699,6 @@ when you say yes the home and logout buttons are presented as applications in th
 which groups	common	zh-tw	哪個群組
 whole query	common	zh-tw	整個查詢
 width	common	zh-tw	寬度
-wk	jscalendar	zh-tw	週
 work email	common	zh-tw	工作信箱
 would you like to display the page generation time at the bottom of every window?	common	zh-tw	您是否要在每個視窗的最下方顯示產生時間？
 writing	common	zh-tw	寫入中

@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	zh-tw	(Shift 鍵加)點選或拖拉滑鼠游標來改變數值
+- click on any of the time parts to increase it	jscalendar	zh-tw	- 點選任意時間區來增加它
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	zh-tw	- 按住滑鼠來快速選取上面的按鈕
+- or click and drag for faster selection.	jscalendar	zh-tw	- 或是用滑鼠拖拉來快速點選
+- or shift-click to decrease it	jscalendar	zh-tw	- 或是用Shift加滑鼠鍵來增加
+- use the %1, %2 buttons to select month	jscalendar	zh-tw	- 使用按鈕 %1,%2來選擇月份
+- use the %1, %2 buttons to select year	jscalendar	zh-tw	- 使用按鈕 %1,%2來選擇年
+3 number of chars for day-shortcut	jscalendar	zh-tw	-1
+3 number of chars for month-shortcut	jscalendar	zh-tw	2
+about the calendar	jscalendar	zh-tw	關於行事曆
+date selection:	jscalendar	zh-tw	選擇日期：
+display %s first	jscalendar	zh-tw	先顯示 %s
+drag to move	jscalendar	zh-tw	拖曳移動
+go today	jscalendar	zh-tw	回到今天
+next month (hold for menu)	jscalendar	zh-tw	下一個月(按住滑鼠鍵)
+next year (hold for menu)	jscalendar	zh-tw	下一年(按住滑鼠鍵)
+prev. month (hold for menu)	jscalendar	zh-tw	上一個月(按住滑鼠鍵)
+prev. year (hold for menu)	jscalendar	zh-tw	上一年(按住滑鼠鍵)
+time selection:	jscalendar	zh-tw	選取的時間：
+toggle first day of week	jscalendar	zh-tw	每星期的第一天
+wk	jscalendar	zh-tw	週
+phpgwapi	common	zh-tw	old EGroupware API

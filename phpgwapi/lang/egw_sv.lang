@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	sv	(Shift)-klicka eller dra för att ändra värde
+- click on any of the time parts to increase it	jscalendar	sv	- Klicka på någon av tids intervallerna för att utöka
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	sv	- Håll musknappen över någon av knapparna ovan för snabbare val
+- or click and drag for faster selection.	jscalendar	sv	- eller klicka och dra för snabbare val
+- or shift-click to decrease it	jscalendar	sv	- eller Shift-klicka för att minska
+- use the %1, %2 buttons to select month	jscalendar	sv	- Använd %1, %2 knappar för att välja månad
+- use the %1, %2 buttons to select year	jscalendar	sv	- Använd %1, %2 knappar för att välja år
+3 number of chars for day-shortcut	jscalendar	sv	3 tecken för dag genväg
+3 number of chars for month-shortcut	jscalendar	sv	3 tecken för månad genväg
+about the calendar	jscalendar	sv	Om Kalendern
+date selection:	jscalendar	sv	Datum val:
+display %s first	jscalendar	sv	Visa % första
+drag to move	jscalendar	sv	Dra för att flytta
+go today	jscalendar	sv	Gå Idag
+next month (hold for menu)	jscalendar	sv	Nästa månad (håll för meny)
+next year (hold for menu)	jscalendar	sv	Nästa år (håll för meny)
+prev. month (hold for menu)	jscalendar	sv	Föreg. månad (håll för meny)
+prev. year (hold for menu)	jscalendar	sv	Föreg. år (håll för meny)
+time selection:	jscalendar	sv	Tidsintervall:
+toggle first day of week	jscalendar	sv	Visa veckans första dag
+wk	jscalendar	sv	v.
+phpgwapi	common	sv	old EGroupware API

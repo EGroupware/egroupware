@@ -1,0 +1,22 @@
+(shift-)click or drag to change value	jscalendar	el	(Shift-)Click ή σύρετε για να αλλάξετε τιμή
+- click on any of the time parts to increase it	jscalendar	el	- Κάντε κλικ σε οποιοδήποτε τμήμα της ώρας για να το αυξήσετε
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	el	- Κάντε κλικ και κρατηστε πατημένο το κουμπί του ποντικιού πάνω από οποιοδήποτε από τα παραπάνω κουμπιά για γρηγορότερη επιλογή
+- or click and drag for faster selection.	jscalendar	el	- ή κάντε κλικ και σύρετε για γρηγορότερη επιλογή
+- or shift-click to decrease it	jscalendar	el	- ή κάντε shift-click gια να το αυξήσετε
+- use the %1, %2 buttons to select month	jscalendar	el	- Χρησιμοποιήστε τα κουμπιά %1, %2 για να επιλέξετε μήνα
+- use the %1, %2 buttons to select year	jscalendar	el	- Χρησιμοποιήστε τα κουμπιά %1, %2 για να επιλέξετε χρόνο
+3 number of chars for day-shortcut	jscalendar	el	3 αριθμός διαγραμμάτων για καθημερινή-συντόμευση
+3 number of chars for month-shortcut	jscalendar	el	3 αριθμός διαγραμμάτων για μηνιαία-συντόμευση
+about the calendar	jscalendar	el	Για το ημερολόγιο
+date selection:	jscalendar	el	Ημερομηνία επιλογής
+display %s first	jscalendar	el	Προβολή % πρώτα
+drag to move	jscalendar	el	Σύρε για μετακίνηση
+go today	jscalendar	el	Σήμερα
+next month (hold for menu)	jscalendar	el	Επόμενος μήνας (κρατήστε για μενού)
+next year (hold for menu)	jscalendar	el	Επόμενος χρόνος (κρατήστε για μενού)
+prev. month (hold for menu)	jscalendar	el	Προηγούμενος μήνας (κρατήστε για μενού)
+prev. year (hold for menu)	jscalendar	el	Προηγούμενος χρόνος (κρατήστε για μενού)
+time selection:	jscalendar	el	Επιλογή ώρας:
+toggle first day of week	jscalendar	el	Εναλλαγή πρώτης ημέρας της εβδομάδας
+wk	jscalendar	el	εβ.
+phpgwapi	common	el	old EGroupware API

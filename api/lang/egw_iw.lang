@@ -1,19 +1,9 @@
 %1 email addresses inserted	common	iw	נקלטו %1 כתובות דואר אלקטרוני
 %1 is not executable by the webserver !!!	common	iw	!%1 אינו ניתן להרצה על יד שרת הווב
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	iw	%4PHP%3-הנו סוויטת תוכנה קבוצתית, רב-משתמשים, מבוססת ווב, התכובה ב %2 eGroupWare%1
-(shift-)click or drag to change value	jscalendar	iw	הקלק או גרור כדי לשנות ערך(-Shift)
-- click on any of the time parts to increase it	jscalendar	iw	הקלק על חלק כלשהו של השעון כדי לקדם אותו -
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	iw	- אחזק את כפתור העכבר על כל אחד מהכפתורים לעיל לבחירה מהירה יותר
-- or click and drag for faster selection.	jscalendar	iw	.או הקלק וגרור עבור בחירה מהירה יותר -
-- or shift-click to decrease it	jscalendar	iw	. הקלק כדי להוריד אותו-Shift או -
-- use the %1, %2 buttons to select month	jscalendar	iw	השתמש בכפתורי %1, %2 כדי לבחור חודש -
-- use the %1, %2 buttons to select year	jscalendar	iw	השתמש בכפתורי %1, %2 כדי לבחור שנה -
 00 (disable)	admin	iw	00 (בטל)
-3 number of chars for day-shortcut	jscalendar	iw	3 כמות התווים לקיצור של יום
-3 number of chars for month-shortcut	jscalendar	iw	3 כמות התווים לקיצור של חודש
 about	common	iw	אודות
 about %1	common	iw	אודות %1
-about the calendar	jscalendar	iw	אודות לוח השנה
 access	common	iw	גישה
 access not permitted	common	iw	הגישה אסורה
 account has been created	common	iw	החשבון נוצר
@@ -86,7 +76,6 @@ current	common	iw	נוכחי
 current users	common	iw	משתמשים נוכחיים
 date	common	iw	תאריך
 date due	common	iw	תאריך יעד
-date selection:	jscalendar	iw	:בחירת תאריך
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	iw	הפורט של תאריך/שעה
 december	common	iw	דצמבר
 default category	common	iw	קטגוריה ברירת מחדל
@@ -103,7 +92,6 @@ disable internet explorer png-image-bugfix	common	iw	internet Explorer-ב PNG ש
 disable slider effects	common	iw	בטל אפקט סליידר
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	iw	לבטל את אפקט האנימציה של הסליידר?<br>
 disabled	common	iw	מבוטל
-display %s first	jscalendar	iw	הצג %s קודם
 do you also want to delete all subcategories ?	common	iw	?האם למחוק גם את כל תתי הקטגוריה
 doctype:	common	iw	:סוג מסמך
 document properties	common	iw	תכונות המסמך
@@ -113,7 +101,6 @@ domain name for mail-address, eg. "%1"	common	iw	שם הדומיין עבור כ
 domestic	common	iw	מקומי
 done	common	iw	בוצע
 download	common	iw	הורד
-drag to move	jscalendar	iw	גרור כדי להזיז
 e-mail	common	iw	דואר אלקטרוני
 edit	common	iw	ערוך
 edit %1 category for	common	iw	ערוך קטגוריה %1 עבור
@@ -151,7 +138,6 @@ fullname	common	iw	שם מלא
 general menu	common	iw	תפריט כללי
 global	common	iw	גלובלי
 global public	common	iw	ציבור גלובלי
-go today	jscalendar	iw	אל היום
 grant access	common	iw	לאפשר כניסה
 group	common	iw	קבוצה
 group access	common	iw	גישת קבוצה
@@ -229,9 +215,7 @@ new entry added sucessfully	common	iw	רשומה חדשה נוספה בהצלח�
 new main category	common	iw	קטגוריה ראשית חדשה
 new value	common	iw	ערך חדש
 next	common	iw	הבאה
-next month (hold for menu)	jscalendar	iw	(החודש הבא (החזק לקבלת תפריט
 next page	common	iw	עמוד הבא
-next year (hold for menu)	jscalendar	iw	(השנה הבאה (החזק לקבלת תפריט
 no	common	iw	לא
 no - cancel	common	iw	לא - בטל
 no entries found, try again ...	common	iw	...לא נמצאו רשומות, נסה שוב
@@ -283,8 +267,6 @@ please wait...	common	iw	...המתן בבקשה
 popup with search	common	iw	חלונית קופצת עם חיפוש
 postal	common	iw	דואר
 preferences	common	iw	העדיפויות
-prev. month (hold for menu)	jscalendar	iw	(החודש הקודם (החזק לקבלת תפריט
-prev. year (hold for menu)	jscalendar	iw	(השנה הקודמת (החזק לקבלת תפריט
 previous page	common	iw	עמוד קודם
 primary group	common	iw	קבוצה ראשית
 primary style-sheet:	common	iw	:דף סגנון ראשי
@@ -356,7 +338,6 @@ the mail server returned	common	iw	שרת הדואר החזיר
 this name has been used already	common	iw	!שם זה בשימוש כבר
 thursday	common	iw	יום חמישי
 time	common	iw	שעה
-time selection:	jscalendar	iw	:בחירת שעה
 time zone	common	iw	איזור שעון
 time zone offset	common	iw	סתיה של איזור שעון
 title	common	iw	כותרת
@@ -365,7 +346,6 @@ to correct this error for the future you will need to properly set the	common	iw
 to go back to the msg list, click <a href= %1 >here</a>	common	iw	כדי לחזור אל רשימת ההודעות, לחץ <a href="%1">כאן</a>
 today	common	iw	היום
 todays date, eg. "%1"	common	iw	תאריך היום, לדוגמא "%1"
-toggle first day of week	jscalendar	iw	מתג את היום הראשון בשבוע
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	iw	%4 IP-יותר מידי נסיונות כניסה כושלים : %1 למשתמש %2, %3 לכתובת ה
 top	common	iw	עליון
 total	common	iw	סך הכל
@@ -393,7 +373,6 @@ welcome	common	iw	ברוך בואך
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	iw	.כאשר עונים כאן כן, כפתורי הבית והיציאה מהמערכת מוצגים כצלמיות יישום בפס הניווט הראשי
 which groups	common	iw	איזו קבוצות
 width	common	iw	רוחב
-wk	jscalendar	iw	שבוע
 work email	common	iw	דוא"ל בעבודה
 writing	common	iw	כותב
 written by:	common	iw	:נכתב על ידי

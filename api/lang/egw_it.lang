@@ -10,26 +10,16 @@
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite di collaborazione multiutente, web-based scritta in %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	it	'%1' non è un file php nella root del server EGroupware (%2)!
 (session restored in %1 seconds)	common	it	Sessione ripristinata in %1 secondi
-(shift-)click or drag to change value	jscalendar	it	(Shift-)Click o trascina per cambiare valore
-- click on any of the time parts to increase it	jscalendar	it	- Clicca su qualunque parte della data per aumentarla
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	it	- Tieni premuto il tasto del mouse su uno dei pulsanti soprastanti per una selezione veloce.
-- or click and drag for faster selection.	jscalendar	it	- o clicca e trascina per una selezione rapida.
-- or shift-click to decrease it	jscalendar	it	- o Shift-clicca per diminuirlo
-- use the %1, %2 buttons to select month	jscalendar	it	- Usa il bottone %1, %2 per selezionare il mese
-- use the %1, %2 buttons to select year	jscalendar	it	- Usa il bottone %1, %2 per selezionare l'anno
 00 (disable)	admin	it	00 (disabilitato)
 1 day	common	it	1 giorno
 1 hour	common	it	1 ora
 1 month	common	it	1 mese
 1 week	common	it	1 settimana
 13 (ntp)	admin	it	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Giorno
-3 number of chars for month-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Mese
 80 (http)	admin	it	80 (http)
 about	common	it	Info
 about %1	common	it	Info su %1
 about egroupware	common	it	Info su eGroupware
-about the calendar	jscalendar	it	Informazioni sull'Agenda
 access	common	it	Accesso
 access not permitted	common	it	Accesso non permesso
 account has been created	common	it	Account creato
@@ -226,7 +216,6 @@ database error	common	it	Errore del database!
 database error!	common	it	Errore del database!
 date	common	it	Data
 date due	common	it	Data richiesta
-date selection:	jscalendar	it	Selezione data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Porta data e ora.<br>Se utilizzi la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	it	Dicembre
 default category	common	it	Categoria Predefinita
@@ -254,7 +243,6 @@ disable slider effects	common	it	Disabilita l'effetto effects slider
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menù sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	it	Disabilitare l'esecuzione di bugfixscript per Internet Explorer 5.5 e superiori per mostrare la trasparenza nelle immagini PNG?
 disabled	common	it	Disabilitato
-display %s first	jscalendar	it	Mostra prima %1
 distribution lists as groups	groupdav	it	Liste di distribuzione come gruppi
 djibouti	common	it	DJIBOUTI
 do not notify	common	it	Non avvisare
@@ -273,7 +261,6 @@ done	common	it	Finito
 dos international	common	it	DOS International
 download	common	it	Scarica
 download link	common	it	Link per il download
-drag to move	jscalendar	it	Trascina per spostare
 e-mail	common	it	E-Mail
 east timor	common	it	TIMOR EST
 eastern european	common	it	Europeo orientale
@@ -366,7 +353,6 @@ ghana	common	it	GHANA
 gibraltar	common	it	GIBILTERRA
 global	common	it	Globale
 global public	common	it	Pubblico Globale
-go today	jscalendar	it	Vai a Oggi
 grant access	common	it	Autorizza Accesso
 greece	common	it	GRECIA
 greek	common	it	Greco
@@ -560,9 +546,7 @@ new main category	common	it	Nuova categoria principale
 new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
 next	common	it	Successivo
-next month (hold for menu)	jscalendar	it	Mese successivo (premi per menù)
 next page	common	it	Pagina successiva
-next year (hold for menu)	jscalendar	it	Anno successivo (premi per menù)
 nicaragua	common	it	NICARAGUA
 niger	common	it	NIGER
 nigeria	common	it	NIGERIA
@@ -649,7 +633,7 @@ pgp encryption	common	it	Cifratura PGP
 pgp encryption installation	common	it	Installazione cifratura PGP
 philippines	common	it	FILIPPINE
 phone number	common	it	numero telefonico
-phpgwapi	common	it	API eGroupWare
+api	common	it	API eGroupWare
 pitcairn	common	it	PITCAIRN
 placeholders	common	it	Segnaposto (variabili metasintattiche)
 please %1 by hand	common	it	Per favore %1 a mano
@@ -669,8 +653,6 @@ pre	common	it	Pre
 preferences	common	it	Preferenze
 preferences for the %1 template set	preferences	it	Preferenze per il set %1 di template
 prev	common	it	Prec
-prev. month (hold for menu)	jscalendar	it	Mese precedente (premi per menu)
-prev. year (hold for menu)	jscalendar	it	Anno precedente (premi per menu)
 previous page	common	it	Pagina precedente
 primary group	common	it	Gruppo primario
 primary style-sheet:	common	it	Foglio di stile primario:
@@ -848,7 +830,6 @@ this name has been used already	common	it	Questo nome è già stato usato!
 thursday	common	it	Giovedì
 tiled	common	it	tiled
 time	common	it	Ora
-time selection:	jscalendar	it	Selezione Ora:
 time zone	common	it	Fuso orario
 time zone offset	common	it	Differenza di fuso orario
 title	common	it	Titolo
@@ -858,7 +839,6 @@ to examine or reinstate inactived files, you might need to turn versioning on.	a
 to go back to the msg list, click <a href= %1 >here</a>	common	it	Per tornare alla lista dei messaggi, clicca <a href="%1">qui</a>
 today	common	it	Oggi
 todays date, eg. "%1"	common	it	Data di oggi, es. "%1"
-toggle first day of week	jscalendar	it	Togli il primo giorno della settimana
 togo	common	it	TOGO
 tokelau	common	it	TOKELAU
 tonga	common	it	TONGA
@@ -930,7 +910,6 @@ which groups	common	it	Quali gruppi
 which infolog types should be synced with the device, default only tasks.	common	it	Quali tipi di Attività dovrebbero essere sincronizzati con il dispositivo? Predefinito = solo task
 whole query	common	it	Tutta la query
 width	common	it	Larghezza
-wk	jscalendar	it	set
 work email	common	it	e-mail ufficio
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	it	Funziona bene con 1-2 MB, potrà funzionare per 5-10 MB, fallirà molto probabilmente con dimensioni > 10 MB
 would you like to display the page generation time at the bottom of every window?	common	it	Mostra il tempo per la generazione della pagina in fondo ad ogni finestra
