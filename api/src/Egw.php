@@ -16,7 +16,7 @@ namespace EGroupware\Api;
 
 // explicitly list old, non-namespaced classes
 // they are only used, if phpgwapi is installed
-use accounts;
+use accounts as egw_accounts;
 use egw_session;
 
 /**
@@ -150,7 +150,7 @@ class Egw extends Egw\Base
 		// if phpgwapi exists we prefer accounts and egw_session, as they have some deprecated methods
 		if (file_exists(EGW_SERVER_ROOT.'/phpgwapi'))
 		{
-			$this->accounts       = new accounts();
+			$this->accounts       = new egw_accounts();
 			/* Do not create the session object if called by the sessions class.  This way
 			 * we ensure the correct db based on the user domain.
 			 */
