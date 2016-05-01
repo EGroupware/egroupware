@@ -746,36 +746,6 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 		nm.div.toggleClass('header_hidden');
 		nm.set_hide_header(nm.div.hasClass('header_hidden'));
 		nm.resize();
-	},
-
-	/**
-	 * Function to set video iframe base on selected tutorial from
-	 * tutorials box
-	 *
-	 * @param {type} url
-	 */
-	tutorial_videoOnClick: function (_url)
-	{
-		var frame = etemplate2.getByApplication('home')[0].widgetContainer.getWidgetById('src');
-		if (frame)
-		{
-			frame.set_value(_url);
-		}
-	},
-
-	/**
-	 * Function calls on discard checkbox and will set
-	 * the egw_tutorial_noautoload preference
-	 *
-	 * @param {type} egw
-	 * @param {type} widget
-	 */
-	tutorial_autoloadDiscard: function (egw, widget)
-	{
-		if (widget)
-		{
-			this.egw.set_preference('common', 'egw_tutorial_noautoload', widget.get_value());
-		}
 	}
 })}).call(this);
 

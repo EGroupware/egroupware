@@ -100,7 +100,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			if(jQuery.isEmptyObject(accountStore))
 			{
 				// Synchronous
-				egw.json('home.egw_framework.ajax_user_list.template',[],
+				egw.json('EGroupware\\Api\\Framework::ajax_user_list',[],
 					function(data) {
 						accountStore = jQuery.extend(true, {}, data||{});
 					}
@@ -166,7 +166,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 			// something not found in cache --> ask server
 			if (_account_ids.length)
 			{
-				egw.json('home.egw_framework.ajax_account_data.template',[_account_ids, _field, _resolve_groups],
+				egw.json('EGroupware\\Api\\Framework::ajax_account_data',[_account_ids, _field, _resolve_groups],
 					function(_data) {
 						for(var account_id in _data)
 						{
@@ -229,7 +229,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 								}
 								else
 								{
-									this.link_title('home-accounts', _id, function(_label)
+									this.link_title('api-accounts', _id, function(_label)
 									{
 										store[i].label = _label;
 										if (_id < 0)

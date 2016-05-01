@@ -399,7 +399,7 @@ hold [%1] and [%2] key to drag %3 to your desktop	common	it	Premere [%1] e [%2] 
 holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITTA' DEL VATICANO)
 home	common	it	Home
 home email	common	it	e-mail abitazione
-home-accounts	common	it	Account utenti
+api-accounts	common	it	Account utenti
 honduras	common	it	HONDURAS
 hong kong	common	it	HONG KONG
 how many days to sync in the future (default %1)	groupdav	it	Quanti giorni nel futuro sincronizzare (predefinito %1)

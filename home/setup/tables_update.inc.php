@@ -83,3 +83,30 @@ function home_upgrade14_1()
 	return $GLOBALS['setup_info']['home']['currentver'] = '14.1.001';
 }
 
+/**
+ * Update to 16.1: rename "home-accounts" to "api-accounts" and give everyone updating home run-rights
+ *
+ * @return string
+ */
+function home_upgrade14_1_001()
+{
+	// rename "home-accounts" to "api-accounts"
+	foreach(array('link_app1', 'link_app2') as $col)
+	{
+		$GLOBALS['egw_setup']->db->update('egw_links', array(
+				$col => 'api-accounts',
+			),
+			array(
+				$col => 'home-accounts',
+			), __LINE__, __FILE__);
+	}
+
+	// give Default group run-rights for home, as it is no longer implicit
+	$GLOBALS['egw_setup']->setup_account_object();
+	if (($defaultgroup = $GLOBALS['egw_setup']->accounts->name2id('Default', 'account_lid', 'g')))
+	{
+		$GLOBALS['egw_setup']->add_acl('home', 'run', $defaultgroup);
+	}
+
+	return $GLOBALS['setup_info']['home']['currentver'] = '16.1';
+}

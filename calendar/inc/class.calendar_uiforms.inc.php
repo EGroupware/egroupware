@@ -231,7 +231,7 @@ class calendar_uiforms extends calendar_ui
 		notifications::errors(true);
 		$messages = null;
 		$msg_permission_denied_added = false;
-		
+
 		// We'd like to just refresh the data as that's the fastest, but some changes
 		// affect more than just one event widget, so require a full refresh.
 		// $update_type is one of the update types
@@ -693,7 +693,7 @@ class calendar_uiforms extends calendar_ui
 					unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
 					unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 					$this->bo->update($recur_event,true);	// no conflict check here
-					
+
 					unset($recur_event);
 					unset($event['edit_single']);			// if we further edit it, it's just a single event
 					unset($preserv['edit_single']);
@@ -780,7 +780,7 @@ class calendar_uiforms extends calendar_ui
 				$event['button_was'] = $button;	// remember for ignore
 				return $this->conflicts($event,$conflicts,$preserv);
 			}
-			
+
 			// Event spans multiple days, need an edit to make sure they all get updated
 			// We could check old date, as removing from days could still be an update
 			if(date('Ymd', $event['start']) != date('Ymd', $event['end']))
@@ -1074,7 +1074,7 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		//error_log(__METHOD__ . egw_time::to($old_event['start']) . ' -> '. egw_time::to($event['start']) . ' as of ' . egw_time::to($as_of_date));
-		
+
 		if(!($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + 1, true)))
 		{
 			$msg = lang("Error: You can't shift a series from the past!");
@@ -1087,7 +1087,7 @@ class calendar_uiforms extends calendar_ui
 
 		$offset = $event['start'] - $old_event['start'];
 		$duration = $event['duration'] ? $event['duration'] : $event['end'] - $event['start'];
-		
+
 		// base start-date of new series on actual / clicked date
 		$event['start'] = $as_of_date ;
 
@@ -1096,7 +1096,7 @@ class calendar_uiforms extends calendar_ui
 			egw_time::to($as_of_date,'ts') < time()
 		)
 		{
-			
+
 			unset($orig_event);
 			// copy event by unsetting the id(s)
 			unset($event['id']);
@@ -2554,7 +2554,7 @@ class calendar_uiforms extends calendar_ui
 	{
 		list($eventId, $date) = explode(':', $_eventId,2);
 		$ignore_conflicts = false;
-		
+
 		// we do not allow dragging into another users calendar ATM
 		if($targetOwner < 0)
 		{
@@ -2608,7 +2608,7 @@ class calendar_uiforms extends calendar_ui
 			// For DnD, create an exception if they gave the date
 			$this->_create_exception($event,$preserv);
 			unset($event['id']);
-			
+
 			$conflicts = $this->bo->update($event,false,true,false,true,$messages);
 			if (!is_array($conflicts) && $conflicts)
 			{
@@ -2637,7 +2637,7 @@ class calendar_uiforms extends calendar_ui
 			$offset = egw_time::to($targetDateTime,'ts') - egw_time::to($seriesInstance,'ts');
 			$event['start'] = $old_event['start'] + $offset;
 			$event['duration'] = $duration;
-		
+
 			// We have a recurring event starting in the past -
 			// stop it & create a new one.
 			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
@@ -2695,7 +2695,7 @@ class calendar_uiforms extends calendar_ui
 
 		$message = false;
 		$conflicts=$this->bo->update($event,$ignore_conflicts, true, false, true, $message);
-		
+
 		$this->update_client($event['id'],$d);
 		$response = egw_json_response::get();
 		if(!is_array($conflicts) && $conflicts)

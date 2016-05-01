@@ -7,7 +7,7 @@
    * Copyright (C) 2005 Lingewoud BV and Pim Snel                             *
    * -------------------------------------------------------------------------*
    * This library is part of the eGroupWare API                               *
-   * http://www.egroupware.org                                                * 
+   * http://www.egroupware.org                                                *
    * ------------------------------------------------------------------------ *
    * This library is free software; you can redistribute it and/or modify it  *
    * under the terms of the GNU Lesser General Public License as published by *
@@ -74,26 +74,26 @@
 		 $Sav2Version = @file_get_contents(EGW_INCLUDE_ROOT.'/phpgwapi/inc/savant2/VERSION',"rb");
 
 		 if(trim($Sav2Version) != trim($this->version))
-		 { 
-			$this->halt(lang('Savant2 version differs from Savant2 wrapper. <br/>This version: %1 <br/>Savants version: %2',$this->version, $Sav2Version));					
+		 {
+			$this->halt(lang('Savant2 version differs from Savant2 wrapper. <br/>This version: %1 <br/>Savants version: %2',$this->version, $Sav2Version));
 		 }
 	  }
 
 	  /**
-	   * set_tpl_path sets the preferred and fallback template search paths  
-	   * 
+	   * set_tpl_path sets the preferred and fallback template search paths
+	   *
 	   * @param string $man_dir custom manual given template path in filesystem
 	   * @access public
 	   * @return void
 	   */
 	  function set_tpl_path($man_dir=null)
 	  {
-		 $preferred_dir=$this->get_tpl_dir(); 
-		 $fallback_dir=$this->get_tpl_dir(true); 
+		 $preferred_dir=$this->get_tpl_dir();
+		 $fallback_dir=$this->get_tpl_dir(true);
 
 		 if(!$preferred_dir && $man_dir && $fallback_dir)
 		 {
-			$this->halt(lang('No Savant2 template directories were found in:'.EGW_APP_ROOT)); 
+			$this->halt(lang('No Savant2 template directories were found in:'.EGW_APP_ROOT));
 		 }
 		 else
 		 {
@@ -101,7 +101,7 @@
 			{
 			   $this->addPath('template',$fallback_dir);
 			}
-			// add preferred tpl dir last because savant set the last added first in the search array  
+			// add preferred tpl dir last because savant set the last added first in the search array
 			if($preferred_dir)
 			{
 			   $this->addPath('template',$preferred_dir);
@@ -116,7 +116,7 @@
 
 	  /**
 	   * get_tpl_dir get template dir of an application
-	   * 
+	   *
 	   * @param bool $fallback if true the default fallback template dir is returned
 	   * @param string $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
 	   * @access public
@@ -128,7 +128,7 @@
 		 {
 			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 		 }
-		 if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
+		 if ($appname == 'api' || $appname == 'logout' || $appname == 'login')
 		 {
 			$appname = 'phpgwapi';
 		 }
@@ -217,9 +217,9 @@
 
 	  /**
 	   * set_var the same as assign()
-	   * 
-	   * @param mixed $tplvar 
-	   * @param string $val 
+	   *
+	   * @param mixed $tplvar
+	   * @param string $val
 	   * @access public
 	   * @return void
 	   */

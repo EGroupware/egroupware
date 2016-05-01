@@ -829,7 +829,7 @@ abstract class Framework extends Framework\Extra
 			$debug_minify = $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 			if (!$debug_minify && file_exists(EGW_SERVER_ROOT.($theme_min_css = str_replace('.css', '.min.css', $theme_css))))
 			{
-				error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
+				//error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
 				self::includeCSS($theme_min_css);
 			}
 			else

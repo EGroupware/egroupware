@@ -366,8 +366,8 @@ class idots_framework extends egw_framework
 		foreach($apps as $app => $app_data)
 		{
 			if ($app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'manual' &&
-				($app != 'home' || $GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons'] != 'no') ||
-				html::$ua_mobile && in_array($app,array('preferences','logout','home')))
+				($app != 'api' || $GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons'] != 'no') ||
+				html::$ua_mobile && in_array($app,array('preferences','logout','api')))
 			{
 				$this->tpl->set_var($app_data);
 

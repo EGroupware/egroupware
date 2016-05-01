@@ -50,7 +50,7 @@ class Request
 	 * Parses the raw input data supplied with the input_data parameter and calls the menuaction
 	 * passing all parameters supplied in the request to it.
 	 *
-	 * Also handle queued requests (menuaction == 'home.queue') containing multiple requests
+	 * Also handle queued requests (menuaction == 'api.queue') containing multiple requests
 	 *
 	 * @param string menuaction to call
 	 * @param string $input_data is the RAW input data as it was received from the client
@@ -73,7 +73,7 @@ class Request
 			$parameters = array();
 		}
 		// do we have a single request or an array of queued requests
-		if ($menuaction == 'home.queue')
+		if ($menuaction == 'api.queue')
 		{
 			$responses = array();
 			$response = Response::get();

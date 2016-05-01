@@ -381,7 +381,7 @@
 
 	/**
 	 * Creates the egw object --- if the egw object should be created, some data
-	 * has already been set inside the object by the egw_framework::header
+	 * has already been set inside the object by the Api\Framework::header
 	 * function and the instance has been marked as "prefsOnly".
 	 */
 	if (typeof window.egw != "undefined" && window.egw.prefsOnly)

@@ -30,7 +30,7 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 
 		egw_framework::validate_file('.','et2_widget_owner','calendar');
 		egw_framework::includeCSS('calendar');
-		
+
 		$bo = new calendar_bo();
 
 		$form_name = self::form_name($cname, $this->id, $expand);
@@ -62,7 +62,7 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 				return array(
 					'value' => ''.$account_id,
 					'label' => $account_name,
-					'app' => lang('home-accounts')
+					'app' => lang('api-accounts')
 				);
 			},
 			array_keys($accounts), $accounts
@@ -82,8 +82,8 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 			}
 			else if (!in_array($owner, array_keys($accounts)))
 			{
-				$label = egw_link::title('home-accounts',$owner);
-				$resource = array('app'=> 'home-accounts');
+				$label = egw_link::title('api-accounts',$owner);
+				$resource = array('app'=> 'api-accounts');
 			}
 			else
 			{
@@ -112,7 +112,7 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 			{
 				$value = Array($value);
 			}
-			
+
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = $value;
 		}

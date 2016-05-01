@@ -1359,7 +1359,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				this.set_end_date(day_list[day_list.length-1]);
 			}
 
-			
+
 			// Sub widgets actually get their own data from egw.data, so we'll
 			// stick it there
 			var consolidated = et2_calendar_view.is_consolidated(this.options.owner, this.day_list.length == 1 ? 'day' : 'week');
@@ -1438,7 +1438,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 		else
 		{
-			this.owner.options.application = 'home-accounts';
+			this.owner.options.application = 'api-accounts';
 			this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
 			this.set_label('');
 			$j(this.getDOMNode(this.owner)).prepend(this.owner.getDOMNode());
@@ -1699,7 +1699,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 		x = Math.round(x);
 		y = Math.round(y);
-		
+
 		var path = [];
 		var day = null;
 		var time = null;

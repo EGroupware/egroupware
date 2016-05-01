@@ -3,18 +3,20 @@
  * EGroupware - Tutorial
  *
  * @link http://www.egroupware.org
- * @package home
+ * @package api
+ * @subpackage framework
  * @author Hadi Nategh [hn@stylite.de]
- * @copyright (c) 2015 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2015-16 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+namespace EGroupware\Api\Framework;
+
 use EGroupware\Api;
-use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;
 
-class home_tutorial_ui
+class Tutorial
 {
 	/**
 	 * Methods callable via menuaction
@@ -33,8 +35,8 @@ class home_tutorial_ui
 	function popup ($content=null)
 	{
 		// check and if not done register tutorial_menu hook
-		if (!EGroupware\Api\Hooks::exists('sidebox_all', 'home') ||
-			EGroupware\Api\Hooks::exists('sidebox_all', 'home', true) != 'home_tutorial_ui::tutorial_menu')
+		if (!Api\Hooks::exists('sidebox_all', 'api') ||
+			Api\Hooks::exists('sidebox_all', 'api', true) != 'EGroupware\\Api\\Framework\\Tutorial::tutorial_menu')
 		{
 			Api\Hooks::read(true);
 		}
@@ -42,7 +44,7 @@ class home_tutorial_ui
 		//Allow youtube frame to pass the CSP check
 		Api\Header\ContentSecurityPolicy::add('frame-src', array('https://www.youtube.com'));
 
-		$tmpl = new Etemplate('home.tutorial');
+		$tmpl = new Etemplate('api.tutorial');
 		if (!is_array($content))
 		{
 			// Get tutorial object id
@@ -81,7 +83,7 @@ class home_tutorial_ui
 			);
 			foreach (isset($tutorials[$appName][$lang]) ? $tutorials[$appName][$lang] : $tutorials[$appName]['en'] as $v)
 			{
-				$v ['onclick'] = 'app.home.tutorial_videoOnClick("'.$v['src'].'")';
+				$v ['onclick'] = 'app[egw.app_name()].tutorial_videoOnClick("'.$v['src'].'")';
 				array_push($list, $v);
 			}
 			$content = array (
@@ -94,16 +96,16 @@ class home_tutorial_ui
 		else
 		{
 			$content = array();
-			Framework::message(lang('You do not have permission to see this tutorial!'));
+			Api\Framework::message(lang('You do not have permission to see this tutorial!'));
 		}
 
-		$tmpl->exec('home.home_tutorial_ui.popup', $content, $sel_options, array(), array(), 2);
+		$tmpl->exec('api.EGroupware\\Api\\Framework\\Tutorial.popup', $content, $sel_options, array(), array(), 2);
 	}
 
 	/**
 	 * Ajax function to get videos links as json
 	 */
-	function ajax_data()
+	public static function ajax_data()
 	{
 		$response = Api\Json\Response::get();
 		$response->data(json_decode(self::getJsonData()));
@@ -116,13 +118,13 @@ class home_tutorial_ui
 	 */
 	static function getJsonData()
 	{
-		if (!($json = Api\Cache::getCache(Api\Cache::TREE, 'home', 'egw_tutorial_json')))
+		if (!($json = Api\Cache::getCache(Api\Cache::TREE, __CLASS__, 'egw_tutorial_json')))
 		{
 			$json = file_get_contents('http://www.egroupware.de/videos/tutorials.json');
 			// Fallback tutorials.json
-			if (!$json) $json = file_get_contents('home/setup/tutorials.json');
+			if (!$json) $json = file_get_contents('api/setup/tutorials.json');
 			// Cache the json object for two hours
-			Api\Cache::setCache(Api\Cache::TREE, 'home', 'egw_tutorial_json', $json, 7200);
+			Api\Cache::setCache(Api\Cache::TREE, __CLASS__, 'egw_tutorial_json', $json, 7200);
 		}
 
 		return $json;

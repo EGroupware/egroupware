@@ -49,7 +49,7 @@ class jscalendar
 		}
 		else
 		{
-			$args['app'] = 'home'; // home can be granted to anyone.
+			$args['app'] = 'api';
 		}
 		if ($do_header)
 		{

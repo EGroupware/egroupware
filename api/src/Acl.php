@@ -631,7 +631,7 @@ class Acl
 		}
 		if ($add_implicit_apps)
 		{
-			$apps['home'] = 1;	// give everyone implicit rights for the home app
+			$apps['api'] = 1;	// give everyone implicit rights for the home app
 		}
 		return $apps;
 	}

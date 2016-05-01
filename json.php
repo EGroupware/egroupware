@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Egw;
 use EGroupware\Api\Json;
 
 /**
@@ -27,11 +28,11 @@ function login_redirect(&$anon_account)
 	{
 		return $session_id;
 	}
-	Json\Request::isJSONRequest(true);	// because egw_json_request::parseRequest() is not (yet) called
+	Json\Request::isJSONRequest(true);	// because Api\Json\Request::parseRequest() is not (yet) called
 	$response = Json\Response::get();
 	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10', true);
 
-	common::egw_exit();
+	exit();
 }
 
 /**
@@ -46,7 +47,7 @@ function ajax_exception_handler($e)
 	// handle redirects without logging
 	if (is_a($e, 'egw_exception_redirect'))
 	{
-		egw::redirect($e->url, $e->app);
+		Egw::redirect($e->url, $e->app);
 	}
 	// logging all exceptions to the error_log
 	$message = null;
@@ -64,10 +65,6 @@ function ajax_exception_handler($e)
 	}
 	$response->alert($message);
 
-	if (is_object($GLOBALS['egw']))
-	{
-		common::egw_exit();
-	}
 	exit;
 }
 
@@ -121,7 +118,7 @@ if (isset($_GET['menuaction']))
 	}
 	$json->parseRequest($_GET['menuaction'], $_REQUEST['json_data']);
 	Json\Response::get();
-	common::egw_exit();
+	exit();
 }
 
 throw new Json\Exception($_SERVER['PHP_SELF'] . ' Invalid AJAX JSON Request');

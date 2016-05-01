@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="home.tutorial" template="" lang="" group="0" version="15.1">
+	<template id="api.tutorial" template="" lang="" group="0" version="15.1">
 		<grid height="100%" width="100%">
 			<columns>
 				<column width="100%"/>
@@ -37,10 +37,10 @@
 						<hbox class="tutorial_iframe_wrapper">
 							<iframe id="src" height="100%" seamless="true" width="100%" fullscreen="true"/>
 						</hbox>
-					</hbox>	
+					</hbox>
 				</row>
 				<!-- This row needs to be here in order to keep footer always at bottom when we resize the window -->
-				<row> 
+				<row>
 					<grid resize_ratio="1">
 						<columns>
 							<column/>
@@ -56,7 +56,7 @@
 					<hbox span="all">
 						<button  align="left" statustext="Close this window" label="Close" id="button[close]" onclick="window.close()" image="close" background_image="1"/>
 					</hbox>
-				</row>	
+				</row>
 			</rows>
 		</grid>
 	</template>

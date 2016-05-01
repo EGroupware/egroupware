@@ -59,6 +59,7 @@ $setup_info['api']['hooks']['addgroup']       = 'EGroupware\\Api\\Vfs\\Hooks::ad
 $setup_info['api']['hooks']['deletegroup']    = array('EGroupware\\Api\\Vfs\\Hooks::deleteGroup', 'EGroupware\\Api\\Mail\\Hooks::deletegroup');
 $setup_info['api']['hooks']['editgroup']      = 'EGroupware\\Api\\Vfs\\Hooks::editGroup';
 $setup_info['api']['hooks']['changepassword'] = 'EGroupware\\Api\\Mail\\Hooks::changepassword';
+$setup_info['api']['hooks']['sidebox_all'] = 'EGroupware\\Api\\Framework\\Tutorial::tutorial_menu';
 
 // installation checks
 $setup_info['api']['check_install'] = array(

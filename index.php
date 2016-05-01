@@ -2,13 +2,17 @@
 /**
  * EGroupware index page
  *
- * Starts all applications using $_GET[menuaction]
+ * Starts all Egw\Applications using $_GET[menuaction]
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
 
 // support of Mac or iPhone trying to autodetect CalDAV or CardDAV support
 // if EGroupware is not installed in the docroot, you need either this code in the index.php there,
@@ -55,13 +59,13 @@ if(isset($_GET['menuaction']) && preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_\\\\]+\
 }
 else
 {
-	$app = 'home';
+	$app = 'api';
 	$invalid_data = True;
 }
 //error_log(__METHOD__."$app,$class,$method");
 if($app == 'phpgwapi')
 {
-	$app = 'home';
+	$app = 'api';
 	$api_requested = True;
 }
 
@@ -77,14 +81,14 @@ include('./header.inc.php');
 // user changed timezone
 if (isset($_GET['tz']))
 {
-	egw_time::setUserPrefs($_GET['tz']);	// throws exception, if tz is invalid
+	Api\DateTime::setUserPrefs($_GET['tz']);	// throws exception, if tz is invalid
 
 	$GLOBALS['egw']->preferences->add('common','tz',$_GET['tz']);
 	$GLOBALS['egw']->preferences->save_repository();
 
 	if (($referer = common::get_referer()))
 	{
-		egw::redirect_link($referer);
+		Egw::redirect_link($referer);
 	}
 }
 
@@ -105,7 +109,7 @@ if(@file_exists($tpl_info))
 }
 
 
-if($app == 'home' && !$class && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !html::$ua_mobile) && $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] == 'idots')
+if($app == 'api' && !$class && !$api_requested && !($windowed && $_GET['cd'] == 'yes' && !Api\Header\UserAgent::mobile()) && $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] == 'idots')
 {
 	if ($GLOBALS['egw_info']['server']['force_default_app'] && $GLOBALS['egw_info']['server']['force_default_app'] != 'user_choice')
 	{
@@ -113,11 +117,11 @@ if($app == 'home' && !$class && !$api_requested && !($windowed && $_GET['cd'] ==
 	}
 	if($GLOBALS['egw_info']['user']['preferences']['common']['default_app'] && !$hasupdates)
 	{
-		egw::redirect(egw_framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']),$GLOBALS['egw_info']['user']['preferences']['common']['default_app']);
+		Egw::redirect(Framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']),$GLOBALS['egw_info']['user']['preferences']['common']['default_app']);
 	}
 	else
 	{
-		egw::redirect_link('/home/index.php?cd=yes');
+		Egw::redirect_link('/home/index.php?cd=yes');
 	}
 }
 
@@ -128,8 +132,8 @@ if($windowed && $_GET['cd'] == 'yes')
 		'nonavbar'   => False,
 		'currentapp' => 'eGroupWare'
 	);
-	common::egw_header();
-	common::egw_footer();
+	$GLOBALS['egw']->framework->header();
+	$GLOBALS['egw']->framework->footer();
 }
 else
 {
@@ -192,6 +196,6 @@ else
 
 	if(!isset($GLOBALS['egw_info']['nofooter']))
 	{
-		common::egw_footer();
+		$GLOBALS['egw']->framework->footer();
 	}
 }

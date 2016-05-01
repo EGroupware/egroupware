@@ -140,7 +140,7 @@ class Link extends Link\Storage
 	 * @var array
 	 */
 	static $app_register = array(
-		'home-accounts' => array(	// user need run-rights for home
+		'api-accounts' => array(	// user need run-rights for home
 			'app' => 'home',
 			'name' => 'Accounts',
 			'icon' => 'addressbook/accounts',
@@ -243,7 +243,7 @@ class Link extends Link\Storage
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
-			unset(self::$app_register['home-accounts']);
+			unset(self::$app_register['api-accounts']);
 		}
 		if (!(self::$title_cache = Cache::getSession(__CLASS__, 'link_title_cache')))
 		{

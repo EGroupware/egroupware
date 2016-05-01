@@ -415,7 +415,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		{
 			this.serializedTabState = serialized;
 
-			egw.jsonq("home.jdots_framework.ajax_tab_changed_state", [data]);
+			egw.jsonq("api.jdots_framework.ajax_tab_changed_state", [data]);
 		}
 	},
 
@@ -857,7 +857,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	tzSelection: function(_tz)
 	{
 		//Perform an AJAX request to tell server
-		var req = egw.json('home.jdots_framework.ajax_tz_selection.template',[_tz],null,null,false); // false = synchron
+		var req = egw.json('api.jdots_framework.ajax_tz_selection.template',[_tz],null,null,false); // false = synchron
 		req.sendRequest();
 
 		if (this.activeApp.browser)

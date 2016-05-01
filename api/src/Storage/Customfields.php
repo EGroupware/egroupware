@@ -518,7 +518,7 @@ class Customfields implements \IteratorAggregate
 		{
 			foreach($cfs as $name => $data)
 			{
-				if ($data['type'] == 'select-account' || $data['type'] == 'home-accounts')
+				if ($data['type'] == 'select-account' || $data['type'] == 'api-accounts')
 				{
 					$types['account'.($data['rows'] > 1 ? '-commasep' : '')][] = $name;
 				}

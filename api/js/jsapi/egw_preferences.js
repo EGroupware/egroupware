@@ -65,7 +65,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 
 			if (typeof prefs[_app] == 'undefined')
 			{
-				var request = this.json('home.egw_framework.ajax_get_preference.template', [_app], _callback, _context);
+				var request = this.json('EGroupware\\Api\\Framework::ajax_get_preference', [_app], _callback, _context);
 				request.sendRequest(typeof _callback == 'function', 'GET');	// use synchronous (cachable) GET request
 				if (typeof prefs[_app] == 'undefined') prefs[_app] = {};
 				if (typeof _callback == 'function') return false;
@@ -91,7 +91,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 			// if there is no change, no need to submit it to server
 			if (typeof prefs[_app] != 'undefined' && prefs[_app][_name] === _val) return;
 
-			this.jsonq('home.egw_framework.ajax_set_preference.template',[_app, _name, _val], _callback);
+			this.jsonq('EGroupware\\Api\\Framework::ajax_set_preference',[_app, _name, _val], _callback);
 
 			// update own preference cache, if _app prefs are loaded (dont update otherwise, as it would block loading of other _app prefs!)
 			if (typeof prefs[_app] != 'undefined')

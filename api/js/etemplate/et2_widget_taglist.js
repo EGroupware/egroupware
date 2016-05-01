@@ -980,7 +980,7 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 			else if (typeof v != 'object'  && !isNaN(v) && (typeof v != 'string' || v.match(this.int_reg_exp)))
 			{
 				v = parseInt(v);
-				var label = this.egw().link_title('home-accounts', v);
+				var label = this.egw().link_title('api-accounts', v);
 				if (label)	// already cached on client-side --> replace it
 				{
 					values[i] = {
@@ -991,7 +991,7 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 				else if (!this.deferred_loading)	// call set_value again, after result has arrived from server
 				{
 					this.deferred_loading++;
-					this.egw().link_title('home-accounts', v, function(label) {
+					this.egw().link_title('api-accounts', v, function(label) {
 						this.deferred_loading--;
 						if (label) this.set_value(values);
 					}, this);

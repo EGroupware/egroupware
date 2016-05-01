@@ -12,7 +12,7 @@
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp'  => 'home',
+		'currentapp'  => 'api',
 		'noheader'    => True,
 		'nonavbar'    => True,
 		'noappheader' => True,

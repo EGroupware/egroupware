@@ -380,7 +380,7 @@ hold [%1] and [%2] key to drag %3 to your desktop	common	nl	Houd [%1] en [%2] to
 holy see (vatican city state)	common	nl	VATICAANSTAD
 home	common	nl	Start
 home email	common	nl	email thuis
-home-accounts	common	nl	Gebruiker accounts
+api-accounts	common	nl	Gebruiker accounts
 honduras	common	nl	HONDURAS
 hong kong	common	nl	HONG KONG
 how many days to sync in the future (default %1)	groupdav	nl	Hoeveel dagen om te synchroniseren in de toekomst (Standaard %1)

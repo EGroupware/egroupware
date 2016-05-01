@@ -267,7 +267,7 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 				if(!found && !isNaN(search[j]))
 				{
 					// Add it in
-					var name = this.egw().link_title('home-accounts', search[j]);
+					var name = this.egw().link_title('api-accounts', search[j]);
 					if (name)	// was already cached on client-side
 					{
 						update_options = true;
@@ -278,7 +278,7 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 						++num_calls;
 						// Add immediately with value as label, we'll replace later
 						this._appendOptionElement(search[j],search[j]);
-						this.egw().link_title('home-accounts', search[j], function(name)
+						this.egw().link_title('api-accounts', search[j], function(name)
 						{
 							if (++current_call >= num_calls)	// only run last callback
 							{
@@ -463,7 +463,7 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 		var search = this.search = jQuery(document.createElement("div"));
 
 		var search_widget = this.search_widget = et2_createWidget('link-entry', {
-				'only_app': 'home-accounts',
+				'only_app': 'api-accounts',
 				'query': function(request, response) {
 					// Clear previous search results for multi-select
 					if(!request.options)
@@ -639,7 +639,7 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 			.addClass("loading")
 			.appendTo(node);
 
-		this.egw().link_title('home-accounts', item.value, function(name) {
+		this.egw().link_title('api-accounts', item.value, function(name) {
 			label.text(name).removeClass("loading");
 		}, label);
 
@@ -721,7 +721,7 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 		var label = jQuery(document.createElement('label'))
 			.addClass("loading")
 			.appendTo(option);
-		this.egw().link_title('home-accounts', value, function(name) {this.text(name).removeClass("loading");}, label);
+		this.egw().link_title('api-accounts', value, function(name) {this.text(name).removeClass("loading");}, label);
 	},
 
 	/**
@@ -790,7 +790,7 @@ var et2_selectAccount_ro = (function(){ "use strict"; return et2_link_string.ext
 			}
 		}
 
-		this.options.application = 'home-accounts';
+		this.options.application = 'api-accounts';
 
 		// Editable version allows app to set options that aren't accounts, so allow for them
 		var options = et2_selectbox.find_select_options(this,options['select_options']);

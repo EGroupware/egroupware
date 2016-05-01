@@ -181,9 +181,9 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'link_id' => array('type' => 'auto','nullable' => False),
 			'link_app1' => array('type' => 'ascii','precision' => '16','nullable' => False),
-			'link_id1' => array('type' => 'ascii','meta' => array("link_app1='home-accounts'" => 'account'),'precision' => '64','nullable' => False),
+			'link_id1' => array('type' => 'ascii','meta' => array("link_app1='api-accounts'" => 'account'),'precision' => '64','nullable' => False),
 			'link_app2' => array('type' => 'ascii','precision' => '16','nullable' => False),
-			'link_id2' => array('type' => 'ascii','meta' => array("link_app2='home-accounts'" => 'account'),'precision' => '64','nullable' => False),
+			'link_id2' => array('type' => 'ascii','meta' => array("link_app2='api-accounts'" => 'account'),'precision' => '64','nullable' => False),
 			'link_remark' => array('type' => 'varchar','precision' => '100'),
 			'link_lastmod' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False),
 			'link_owner' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False),

@@ -260,7 +260,7 @@ class calendar_merge extends bo_merge
 			foreach($event['participants'] as $uid => $status)
 			{
 				$type = $this->bo->resources[$uid[0]]['app'];
-				if($type == 'home-accounts')
+				if($type == 'api-accounts')
 				{
 					$type = ($GLOBALS['egw']->accounts->get_type($uid) == 'g' ? 'group' : 'account');
 				}

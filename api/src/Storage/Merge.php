@@ -1368,9 +1368,9 @@ abstract class Merge
 				{
 					$field_app = $cfs[$field]['type'];
 				}
-				else if ($cfs[$field]['type'] == 'home-accounts' || $cfs[$field]['type'] == 'select-account')
+				else if ($cfs[$field]['type'] == 'api-accounts' || $cfs[$field]['type'] == 'select-account')
 				{
-					// Special case for home-accounts -> contact
+					// Special case for api-accounts -> contact
 					$field_app = 'addressbook';
 					$account = $GLOBALS['egw']->accounts->read($values['#'.$field]);
 					$app_replacements[$field] = $this->contact_replacements($account['person_id']);

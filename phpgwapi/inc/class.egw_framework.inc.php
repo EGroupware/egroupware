@@ -88,7 +88,7 @@ abstract class egw_framework extends Api\Framework
 		if (EGW_APP_INC != EGW_API_INC &&	// this prevents an endless inclusion on the homepage
 			                                // (some apps set currentapp in hook_home => it's not releyable)
 			(file_exists (EGW_APP_INC . '/footer.inc.php') || isset($_GET['menuaction'])) &&
-			$GLOBALS['egw_info']['flags']['currentapp'] != 'home' &&
+			$GLOBALS['egw_info']['flags']['currentapp'] != 'api' &&
 			$GLOBALS['egw_info']['flags']['currentapp'] != 'login' &&
 			$GLOBALS['egw_info']['flags']['currentapp'] != 'logout' &&
 			!@$GLOBALS['egw_info']['flags']['noappfooter'])

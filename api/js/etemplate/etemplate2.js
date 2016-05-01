@@ -82,7 +82,7 @@ function etemplate2(_container, _menuaction)
 {
 	if (typeof _menuaction == "undefined")
 	{
-		_menuaction = "home.etemplate_new.ajax_process_content.etemplate";
+		_menuaction = "EGroupware\\Api\\Etemplate::ajax_process_content";
 	}
 
 	// Copy the given parameters
@@ -1083,7 +1083,7 @@ function etemplate2_handle_load(_type, _response)
 	// Check the parameters
 	var data = _response.data;
 
-	// handle egw_framework::refresh_opener()
+	// handle Api\Framework::refresh_opener()
 	if (jQuery.isArray(data['refresh-opener']))
 	{
 		if (window.opener)// && typeof window.opener.egw_refresh == 'function')
@@ -1101,13 +1101,13 @@ function etemplate2_handle_load(_type, _response)
 		delete data.data.app_header;
 	}
 
-	// handle egw_framework::message()
+	// handle Api\Framework::message()
 	if (jQuery.isArray(data.message))
 	{
 		egw.message.apply(egw, data.message);
 	}
 
-	// handle egw_framework::window_close(), this will terminate execution
+	// handle Api\Framework::window_close(), this will terminate execution
 	if (data['window-close'])
 	{
 		if (typeof data['window-close'] == 'string' && data['window-close'] !== 'true')
@@ -1118,7 +1118,7 @@ function etemplate2_handle_load(_type, _response)
 		return true;
 	}
 
-	// handle egw_framework::window_focus()
+	// handle Api\Framework::window_focus()
 	if (data['window-focus'])
 	{
 		window.focus();

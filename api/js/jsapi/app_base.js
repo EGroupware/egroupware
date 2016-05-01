@@ -764,7 +764,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 					if(typeof self.favorite_popup.group != "undefined" && self.favorite_popup.group.getValue() != '')
 					{
 						// Admin stuff - save preference server side
-						self.egw.jsonq(self.appname+'.egw_framework.ajax_set_favorite.template',
+						self.egw.jsonq('EGroupware\\Api\\Framework::ajax_set_favorite',
 							[
 								self.appname,
 								name.val(),
@@ -874,7 +874,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			$j(trash).hide();
 
 			// Delete preference server side
-			var request = egw.json(app.appname + ".egw_framework.ajax_set_favorite.template",
+			var request = egw.json("EGroupware\\Api\\Framework::ajax_set_favorite",
 				[app.appname, id, "delete", group, ''],
 				function(result) {
 					// Got the full response from callback, which we don't want
@@ -1117,15 +1117,15 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		{
 			var resolve = _resolve;
 			var reject = _reject;
-			self.egw.json('home.home_tutorial_ui.ajax_data', [self.egw.app_name()], function(_data){
-					resolve(_data);
+			self.egw.json('EGroupware\\Api\\Framework\\Tutorial::ajax_data', [self.egw.app_name()], function(_data){
+				resolve(_data);
 			}).sendRequest();
 		});
 	},
 
 	/**
 	 * Create and Render etemplate2 for egroupware tutorial
-	 * sidebox option. The .xet file is stored in etemplate/templates/default/egw_tutorials
+	 * sidebox option. The .xet file is stored in api/templates/default/egw_tutorials
 	 *
 	 * @description tutorials json object should have the following structure:
 	 *	object:
@@ -1159,7 +1159,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	{
 		// et2 object
 		var etemplate = new etemplate2 (div, false);
-		var template = egw.webserverUrl+'/etemplate/templates/default/egw_tutorial.xet?1';
+		var template = egw.webserverUrl+'/api/templates/default/egw_tutorial.xet?1';
 
 		this.egwTutorialGetData().then(function(_data){
 			var lang = egw.preference('lang');
@@ -1200,8 +1200,37 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 */
 	egwTutorialPopup: function (_tuid)
 	{
-		var url = egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid='+_tuid);
+		var url = egw.link('/index.php', 'menuaction=api.EGroupware\\Api\\Framework\\Tutorial.popup&tuid='+_tuid);
 		egw.open_link(url,'_blank','960x580');
+	},
+
+	/**
+	 * Function to set video iframe base on selected tutorial from tutorials box
+	 *
+	 * @param {string} _url
+	 */
+	tutorial_videoOnClick: function (_url)
+	{
+		var frame = etemplate2.getByApplication('api')[0].widgetContainer.getWidgetById('src');
+		if (frame)
+		{
+			frame.set_value(_url);
+		}
+	},
+
+	/**
+	 * Function calls on discard checkbox and will set
+	 * the egw_tutorial_noautoload preference
+	 *
+	 * @param {type} egw
+	 * @param {type} widget
+	 */
+	tutorial_autoloadDiscard: function (egw, widget)
+	{
+		if (widget)
+		{
+			this.egw.set_preference('common', 'egw_tutorial_noautoload', widget.get_value());
+		}
 	},
 
 	/**
@@ -1257,7 +1286,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		downloadSync: function(_downloadObj)
 		{
 			return new Promise(function(_resolve,_reject){});
-					},
+		},
 
 		/**
 		 * function called by Mailvelope to upload an encrypted private key backup
@@ -1492,7 +1521,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 								menu:_content
 							}
 						},
-						template: egw.webserverUrl+'/etemplate/templates/default/pgp_backup_restore.xet',
+						template: egw.webserverUrl+'/api/templates/default/pgp_backup_restore.xet',
 						class: "pgp_backup_restore",
 						modal:true
 			});
@@ -1546,7 +1575,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				value: {
 					content: _content
 				},
-				template: egw.webserverUrl+'/etemplate/templates/default/pgp_installation.xet',
+				template: egw.webserverUrl+'/api/templates/default/pgp_installation.xet',
 				class: "pgp_installation",
 				modal: true
 				//resizable:false,

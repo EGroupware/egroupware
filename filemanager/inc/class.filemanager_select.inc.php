@@ -168,7 +168,7 @@ class filemanager_select
 						case 'select-dir':
 							$files = $content['path'];
 							break;
-						
+
 						case 'saveas':
 							// Don't trust the name the user gives, encode it
 							$content['name'] = egw_vfs::encodePathComponent($content['name']);
@@ -346,7 +346,7 @@ class filemanager_select
 
 		unset($apps['mydms']);	// they do NOT support adding files to VFS
 		unset($apps['wiki']);
-		unset($apps['home-accounts']);
+		unset($apps['api-accounts']);
 		unset($apps['addressbook-email']);
 
 		return $apps;

@@ -76,7 +76,7 @@ function check_access(&$account)
 
 $GLOBALS['egw_info']['flags'] = array(
 	'noheader'  => True,
-	'currentapp' => 'home',
+	'currentapp' => 'api',
 	'autocreate_session_callback' => 'check_access',
 );
 // if you move this file somewhere else, you need to adapt the path to the header!

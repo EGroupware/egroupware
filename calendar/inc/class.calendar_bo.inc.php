@@ -251,7 +251,7 @@ class calendar_bo
 			);
 			$this->resources[''] = array(
 				'type' => '',
-				'app' => 'home-accounts',
+				'app' => 'api-accounts',
 			);
 			$GLOBALS['egw']->session->appsession('resources','calendar',$this->resources);
 		}

@@ -357,7 +357,7 @@ class Egw extends Egw\Base
 	{
 		$this->currentapp = $GLOBALS['egw_info']['flags']['currentapp'];	// some apps change it later
 
-		if (!in_array($GLOBALS['egw_info']['flags']['currentapp'], array('api', 'home')))	// give everyone implicit home rights
+		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'api')	// give everyone implicit api rights
 		{
 			// This will need to use ACL in the future
 			if (!$GLOBALS['egw_info']['user']['apps'][$currentapp = $GLOBALS['egw_info']['flags']['currentapp']] ||
