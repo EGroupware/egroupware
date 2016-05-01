@@ -1,14 +1,21 @@
 <?php
 /**
- * eGroupWare - Calendar's views and widgets
+ * EGroupware - Calendar's views and widgets
  *
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-15 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
 
 /**
  * Class to generate the calendar views and the necesary widgets
@@ -139,7 +146,7 @@ class calendar_uiviews extends calendar_ui
 		// Check for GET message (from merge)
 		if($_GET['msg'])
 		{
-			egw_framework::message($_GET['msg']);
+			Framework::message($_GET['msg']);
 			unset($_GET['msg']);
 		}
 		// standard params for calling bocal::search for all views
@@ -173,7 +180,7 @@ class calendar_uiviews extends calendar_ui
 	 */
 	public function week_number($time)
 	{
-		if (!is_a($time,'DateTime')) $time = new egw_time($time);
+		if (!is_a($time,'DateTime')) $time = new Api\DateTime($time);
 
 		// if week does not start Monday and $time is Sunday --> add one day
 		if ($this->cal_prefs['weekdaystarts'] != 'Monday' && !($wday = $time->format('w')))
@@ -199,11 +206,11 @@ class calendar_uiviews extends calendar_ui
 			$this->manage_states(array_merge($content,json_decode($content['view'],true)));
 			if($content['first'])
 			{
-				$this->first = egw_time::to($content['first'],'ts');
+				$this->first = Api\DateTime::to($content['first'],'ts');
 			}
 			if($content['last'])
 			{
-				$this->last = egw_time::to($content['last'],'ts');
+				$this->last = Api\DateTime::to($content['last'],'ts');
 			}
 			$_GET['merge'] = $content['merge'];
 			$this->merge();
@@ -223,32 +230,32 @@ class calendar_uiviews extends calendar_ui
 		{
 			$GLOBALS['egw_info']['flags']['nonavbar'] = true;
 			$this->manage_states($_GET);
-			$old_calendar = $this->{$this->view}();
+			$this->{$this->view}();
 			return;
 		}
 
 		// Toolbar
-		$tmpl = new etemplate_new('calendar.toolbar');
+		$tmpl = new Etemplate('calendar.toolbar');
 		$tmpl->setElementAttribute('toolbar', 'actions', $this->getToolbarActions($content));
 		// Adjust toolbar for mobile
-		if(html::$ua_mobile){
+		if(Api\Header\UserAgent::mobile()){
 			$tmpl->setElementAttribute('toolbar','class', 'et2_head_toolbar');
 			$tmpl->setElementAttribute('toolbar','view_range', '3');
 		}
 		$tmpl->exec('calendar_uiviews::index',array());
 
 		// Load the different views once, we'll switch between them on the client side
-		$tmpl = new etemplate_new('calendar.todo');
+		$todo = new Etemplate('calendar.todo');
 		$label = '';
-		$tmpl->exec('calendar_uiviews::index',array('todos'=>$this->get_todos($label), 'label' => $label));
+		$todo->exec('calendar_uiviews::index',array('todos'=>$this->get_todos($label), 'label' => $label));
 
 		// Actually, this takes care of most of it...
 		$this->week();
 
-		$tmpl = new etemplate_new('calendar.planner');
+		$planner = new Etemplate('calendar.planner');
 		// Get the actions
-		$tmpl->setElementAttribute('planner','actions',$this->get_actions());
-		$tmpl->exec('calendar_uiviews::index',array());
+		$planner->setElementAttribute('planner','actions',$this->get_actions());
+		$planner->exec('calendar_uiviews::index',array());
 
 		// List view in a separate file
 		$list_ui = new calendar_uilist();
@@ -257,10 +264,8 @@ class calendar_uiviews extends calendar_ui
 
 	/**
 	 * Generate the calendar toolbar actions
-	 *
-	 * @param Array $content
 	 */
-	protected function getToolbarActions($content = array())
+	protected function getToolbarActions()
 	{
 		$group = 0;
 		$actions = array(
@@ -388,7 +393,7 @@ class calendar_uiviews extends calendar_ui
 				'toolbarDefault' => true,
 			),
 		);
-		if (html::$ua_mobile)
+		if (Api\Header\UserAgent::mobile())
 		{
 			foreach (array_keys($actions) as $key)
 			{
@@ -454,7 +459,7 @@ class calendar_uiviews extends calendar_ui
 		$merge = $this->merge();
 		if($merge)
 		{
-			egw::redirect_link('/index.php',array(
+			Egw::redirect_link('/index.php',array(
 				'menuaction' => 'calendar.calendar_uiviews.index',
 				'msg'        => $merge,
 			));
@@ -473,10 +478,10 @@ class calendar_uiviews extends calendar_ui
 
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::planner() date=%1: first=%2, last=%3',False,$this->date,$this->bo->date2string($this->first),$this->bo->date2string($this->last));
 
-		$tmpl = $home ? $home :new etemplate_new('calendar.planner');
+		$tmpl = $home ? $home : new Etemplate('calendar.planner');
 
-		$tmpl->setElementAttribute('planner','start_date', egw_time::to($this->first, egw_time::ET2));
-		$tmpl->setElementAttribute('planner','end_date', egw_time::to($this->last, egw_time::ET2));
+		$tmpl->setElementAttribute('planner','start_date', Api\DateTime::to($this->first, Api\DateTime::ET2));
+		$tmpl->setElementAttribute('planner','end_date', Api\DateTime::to($this->last, Api\DateTime::ET2));
 		$tmpl->setElementAttribute('planner','owner', $search_params['users']);
 		$tmpl->setElementAttribute('planner','group_by', $this->sortby);
 		// Get the actions
@@ -535,11 +540,11 @@ class calendar_uiviews extends calendar_ui
 		}
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(%1) date=%2: first=%3, last=%4',False,$weeks,$this->date,$this->bo->date2string($this->first),$this->bo->date2string($this->last));
 
-		// Loop through, using egw_time to handle DST
+		// Loop through, using Api\DateTime to handle DST
 		$week = 0;
 		$week_start = new EGroupware\Api\DateTime($this->first);
 		$week_start->setTime(0,0,0);
-		$week_end = new egw_time($week_start);
+		$week_end = new Api\DateTime($week_start);
 		$week_end->add(new DateInterval('P6DT23H59M59S'));
 		$last = new EGroupware\Api\DateTime($this->last);
 		for ($week_start; $week_start < $last; $week_start->add('1 week'), $week_end->add('1 week'))
@@ -585,12 +590,12 @@ class calendar_uiviews extends calendar_ui
 		}
 		// now we need to calculate the end of the last day of that week
 		// as simple $last += WEEK_s - 1; does NOT work, if daylight saving changes in that week!!!
-		$last = $this->bo->date2array($last);
-		$last['day'] += 6;
-		$last['hour'] = 23;
-		$last['min'] = $last['sec'] = 59;
-		unset($last['raw']);	// otherwise date2ts does not calc raw new, but uses it
-		$last = $this->bo->date2ts($last);
+		$arr = $this->bo->date2array($last);
+		$arr['day'] += 6;
+		$arr['hour'] = 23;
+		$arr['min'] = $arr['sec'] = 59;
+		unset($arr['raw']);	// otherwise date2ts does not calc raw new, but uses it
+		$last = $this->bo->date2ts($arr);
 	}
 
 	/**
@@ -602,7 +607,7 @@ class calendar_uiviews extends calendar_ui
 	 */
 	private function close_button($uid)
 	{
-		return html::a_href(html::image('phpgwapi', 'close.button', 'Close','style="width: 12px; padding-top: 1px;"'), array(
+		return Api\Html::a_href(Api\Html::image('phpgwapi', 'close.button', 'Close','style="width: 12px; padding-top: 1px;"'), array(
 			'menuaction' => 'calendar.calendar_uiviews.index',
 			'close' => $uid,
 		));
@@ -702,7 +707,7 @@ class calendar_uiviews extends calendar_ui
 			}
 			else
 			{
-				foreach($this->_get_planner_users(false) as $uid => $label)
+				foreach(array_keys($this->_get_planner_users(false)) as $uid)
 				{
 					$search_params['users'] = $uid;
 					$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params))
@@ -710,8 +715,8 @@ class calendar_uiviews extends calendar_ui
 				}
 			}
 		}
-		$tmpl = $home ? $home :new etemplate_new('calendar.view');
-		foreach($content['view'] as $index => $week)
+		$tmpl = $home ? $home :new Etemplate('calendar.view');
+		foreach(array_keys($content['view']) as $index)
 		{
 			$tmpl->setElementAttribute("view[$index]",'granularity',$granularity);
 			$tmpl->setElementAttribute("view[$index]",'show_weekend',$this->search_params['weekend']);
@@ -726,9 +731,9 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Get todos via AJAX
 	 */
-	public static function ajax_get_todos($date, $owner)
+	public static function ajax_get_todos($_date, $owner)
 	{
-		$date = egw_time::to($date, 'array');
+		$date = Api\DateTime::to($_date, 'array');
 		$ui = new calendar_uiviews();
 		$ui->year = $date['year'];
 		$ui->month = $date['month'];
@@ -737,7 +742,7 @@ class calendar_uiviews extends calendar_ui
 
 		$label = '';
 		$todos = $ui->get_todos($label);
-		egw_json_response::get()->data(array(
+		Api\Json\Response::get()->data(array(
 			'label' => $label,
 			'todos' => $todos
 		));
@@ -748,11 +753,11 @@ class calendar_uiviews extends calendar_ui
 	 *
 	 * @param array/string $todo_label label for the todo-box or array with 2 values: the label and a boolean show_all
 	 *	On return $todo_label contains the label for the todo-box
-	 * @return string/boolean html with a table of open todo's or false if no hook availible
+	 * @return string/boolean Api\Html with a table of open todo's or false if no hook availible
 	 */
 	function get_todos(&$todo_label)
 	{
-		$todos_from_hook = $GLOBALS['egw']->hooks->process(array(
+		$todos_from_hook = Api\Hooks::process(array(
 			'location'  => 'calendar_include_todos',
 			'year'      => $this->year,
 			'month'     => $this->month,
@@ -802,12 +807,11 @@ class calendar_uiviews extends calendar_ui
 						if($todo['edit']) {
 							$todo['edit_size'] = $todo['edit']['size'];
 							unset($todo['edit']['size']);
-							$edit_icon_href = html::a_href( $icons, $todo['edit'],'',' data-todo="app|'.$width.'x'.$height.'" ');
-							$edit_href = html::a_href( $todo['title'], $todo['edit'],'',' data-todo="app|750x590" ');
-							$todo['edit'] = egw_framework::link('/index.php',$todo['edit'],true);
+							$edit_icon_href = Api\Html::a_href( $icons, $todo['edit'],'',' data-todo="app|'.$width.'x'.$height.'" ');
+							$edit_href = Api\Html::a_href( $todo['title'], $todo['edit'],'',' data-todo="app|750x590" ');
+							$todo['edit'] = Framework::link('/index.php',$todo['edit'],true);
 						}
-						$icon_href = html::a_href($icons,$todo['view']);
-						$href = html::a_href($todo['title'], $todo['view']);
+						$icon_href = Api\Html::a_href($icons,$todo['view']);
 						$content .= " <tr class=\"$class\">\n  <td valign=\"top\" width=\"15%\" nowrap>".
 							($this->bo->printer_friendly?$icons:($edit_icon_href ? $edit_icon_href : $icon_href)).
 							"</td>\n  <td>".($this->printer_friendly?$todo['title']:
@@ -865,10 +869,9 @@ class calendar_uiviews extends calendar_ui
 	 *
 	 * @param int $start time in minutes
 	 * @param int $end time in minutes
-	 * @param int $minimum = 0 minimum height
 	 * @return float height in percent
 	 */
-	function times2height($start,$end,$minimum=0)
+	function times2height($start,$end)
 	{
 		$minimum = $this->rowHeight;
 		$height = $this->time2pos($end) - $this->time2pos($start);
@@ -898,9 +901,9 @@ class calendar_uiviews extends calendar_ui
 		// determine if the browser supports scrollIntoView: IE4+, firefox1.0+ and safari2.0+ does
 		// then show all hours in a div of the size of the workday and scroll to the workday start
 		// still disabled, as things need to be re-aranged first, to that the column headers are not scrolled
-		$this->scroll_to_wdstart = false;/*$this->use_time_grid && (html::$user_agent == 'msie' ||
-			html::$user_agent == 'mozilla' && html::ua_version >= 5.0 ||
-			html::$user_agent == 'safari' && html::ua_version >= 2.0);*/
+		$this->scroll_to_wdstart = false;/*$this->use_time_grid && (Api\Header\UserAgent::type() == 'msie' ||
+			Api\Header\UserAgent::type() == 'mozilla' && Api\Html::ua_version >= 5.0 ||
+			Api\Header\UserAgent::type() == 'safari' && Api\Html::ua_version >= 2.0);*/
 
 		if ($this->scroll_to_wdstart)
 		{
@@ -959,7 +962,7 @@ class calendar_uiviews extends calendar_ui
 				);
 				if (!isset($show[$this->granularity_m]) ? $t % 60 == 0 : in_array($t % 60,$show[$this->granularity_m]))
 				{
-					$time = $GLOBALS['egw']->common->formattime(sprintf('%02d',$t/60),sprintf('%02d',$t%60));
+					$time = common::formattime(sprintf('%02d',$t/60),sprintf('%02d',$t%60));
 				}
 				if ($add_links) $time = $this->add_link($time,$this->date,(int) ($t/60),$t%60);
 				$html .= $indent."\t\t".'<div class="calendar_calTimeRowTime">'.$time."</div>\n";
@@ -977,7 +980,7 @@ class calendar_uiviews extends calendar_ui
 			$html .= $indent."\t".'<div id="calendar_calDayCols" class="calendar_calDayCols'.
 				($this->use_time_grid ? ($this->bo->common_prefs['timeformat'] == 12 ? '12h' : '') : 'NoTime').'">'."\n";
 
-			if (html::$user_agent == 'msie')	// necessary IE hack - stupid thing ...
+			if (Api\Header\UserAgent::type() == 'msie')	// necessary IE hack - stupid thing ...
 			{
 				// Lars Kneschke 2005-08-28
 				// why do we use a div in a div which has the same height and width???
@@ -1007,7 +1010,7 @@ class calendar_uiviews extends calendar_ui
 					$dayColWidth,$indent."\t\t",$short_title,++$on_off & 1,$col_owner);
 				++$n;
 			}
-			if (html::$user_agent == 'msie') $html .= "</div>\n";
+			if (Api\Header\UserAgent::type() == 'msie') $html .= "</div>\n";
 
 			$html .= $indent."\t</div>\n";	// calendar_calDayCols
 		}
@@ -1106,13 +1109,13 @@ class calendar_uiviews extends calendar_ui
 		);
 		$this->_day_class_holiday($day_ymd,$class,$holidays);
 		// the weekday and date
-		if (!$short_title && $holidays) $title .= html::htmlspecialchars(': '.$holidays);
+		if (!$short_title && $holidays) $title .= Api\Html::htmlspecialchars(': '.$holidays);
 
 		if ($short_title === true)
 		{
 			if ($this->allowEdit)
 			{
-				$title = html::a_href($title,$day_view,'',
+				$title = Api\Html::a_href($title,$day_view,'',
 					!isset($this->holidays[$day_ymd])?' title="'.$this->bo->long_date($ts,0,false,true).'"':'');
 			}
 		}
@@ -1122,7 +1125,7 @@ class calendar_uiviews extends calendar_ui
 			$day_view['date'] = $this->bo->date2string($ts -= 12*HOUR_s);
 			if ($this->allowEdit)
 			{
-				$title = html::a_href(html::image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' <span> '.$title;
+				$title = Api\Html::a_href(Api\Html::image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' <span> '.$title;
 			}
 			else
 			{
@@ -1131,7 +1134,7 @@ class calendar_uiviews extends calendar_ui
 			$day_view['date'] = $this->bo->date2string($ts += 48*HOUR_s);
 			if ($this->allowEdit)
 			{
-				$title .= ' </span> '.html::a_href(html::image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
+				$title .= ' </span> '.Api\Html::a_href(Api\Html::image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
 			}
 			else
 			{
@@ -1140,7 +1143,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		if (is_bool($short_title) || ($short_title != "")) {
 			$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calendar_calDayColHeader '.$class.'"'.
-				($holidays ? ' title="'.html::htmlspecialchars($holidays).'"':'').'>'.$title."</div>\n";
+				($holidays ? ' title="'.Api\Html::htmlspecialchars($holidays).'"':'').'>'.$title."</div>\n";
 		}
 
 		if ($this->use_time_grid)
@@ -1148,7 +1151,7 @@ class calendar_uiviews extends calendar_ui
 			// drag and drop: check if the current user has EDIT permissions on the grid
 			if($owner)
 			{
-				$dropPermission = $this->bo->check_perms(EGW_ACL_EDIT,0,$owner);
+				$dropPermission = $this->bo->check_perms(Acl::EDIT,0,$owner);
 			}
 			else
 			{
@@ -1224,7 +1227,7 @@ class calendar_uiviews extends calendar_ui
 	 * @param boolean $only_weekend = false show only the weekend in header-color, otherwise every second days is shown too
 	 * @param boolean $show_bdays = true If available, also show birthdays (or hide Bdays)
 	 *        Note that this is not the place to disable a preference.
-	 *        If the preferences allow birthdays to be displayed, they are cached within the holidays structure.
+	 *        If the Api\Preferences allow birthdays to be displayed, they are cached within the holidays structure.
 	 *        This setting just suppressing the available data in the view.
 	 */
 	function _day_class_holiday($day_ymd,&$class,&$holidays,$only_weekend=false,$show_bdays=true)
@@ -1327,7 +1330,7 @@ class calendar_uiviews extends calendar_ui
 	 * @param $width int width of the widget
 	 * @param string $indent string for correct indention
 	 * @param int $owner owner of the calendar the event is in
-	 * @param boolean $return_array = false should an array with keys(tooltip,popup,html) be returned or the complete widget as string
+	 * @param boolean $return_array = false should an array with keys(tooltip,popup,Api\Html) be returned or the complete widget as string
 	 * @param string $block = 'event_widget' template used the render the widget
 	 * @param int $z_index is the z-index of the drag-drobable outer box of the event.
 	 * @return string/array
@@ -1341,7 +1344,7 @@ class calendar_uiviews extends calendar_ui
 		static $tpl = False;
 		if (!$tpl)
 		{
-			$tpl = new Template(common::get_tpl_dir('calendar'));
+			$tpl = new Framework\Template(Framework\Template::get_dir('calendar'));
 
 			$tpl->set_file('event_widget_t','event_widget.tpl');
 			$tpl->set_block('event_widget_t','event_widget');
@@ -1371,7 +1374,7 @@ class calendar_uiviews extends calendar_ui
 			$app_id = $matches[2];
 			if (($is_private = calendar_bo::integration_get_private($app,$app_id,$event)))
 			{
-				$icons[] = html::image('calendar','private');
+				$icons[] = Api\Html::image('calendar','private');
 			}
 			else
 			{
@@ -1380,16 +1383,16 @@ class calendar_uiviews extends calendar_ui
 		}
 		elseif($event['id'])
 		{
-			if (($is_private = !$this->bo->check_perms(EGW_ACL_READ,$event)))
+			if (($is_private = !$this->bo->check_perms(Acl::READ,$event)))
 			{
-				$icons = array(html::image('calendar','private'));
+				$icons = array(Api\Html::image('calendar','private'));
 			}
 			else
 			{
 				$icons = $this->event_icons($event);
 			}
 		}
-		$cats  = $this->bo->categories($this->categories->check_list(EGW_ACL_READ, $event['category']),$color);
+		$cats  = $this->bo->categories($this->categories->check_list(Acl::READ, $event['category']),$color);
 		// these values control varius aspects of the geometry of the eventWidget
 		$small_trigger_width = 120 + 20*count($icons);
 		$corner_radius=$width > $small_trigger_width ? 10 : 5;
@@ -1462,14 +1465,14 @@ class calendar_uiviews extends calendar_ui
 
 		$tpl->set_var(array(
 			// event-content, some of it displays only if it really has content or is needed
-			'owner' => $GLOBALS['egw']->common->grab_owner_name($event['owner']),
+			'owner' => Api\Accounts::username($event['owner']),
 			'header_icons' => $small ? '' : implode("",$icons),
 			'body_icons' => $small ? implode("\n",$icons) : '',
 			'icons' => implode('',$icons),
 			'timespan' => $timespan,
-			'title' => ($title = !$is_private ? html::htmlspecialchars($event['title']) : lang('private')),
+			'title' => ($title = !$is_private ? Api\Html::htmlspecialchars($event['title']) : lang('private')),
 			'header' => $small_height ? $title : $timespan,
-			'description' => !$is_private ? nl2br(html::htmlspecialchars($event['description'])) : '',
+			'description' => !$is_private ? nl2br(Api\Html::htmlspecialchars($event['description'])) : '',
 			'location'   => !$is_private ? $this->add_nonempty($event['location'],lang('Location')) : '',
 			'participants' => $participants,
 			'times' => !$event['multiday'] ? $this->add_nonempty($this->bo->timespan($event['start_m'],$event['end_m'],true),lang('Time')) :
@@ -1480,7 +1483,7 @@ class calendar_uiviews extends calendar_ui
 				$this->add_nonempty($this->bo->format_date($event['end']),lang('End')),
 			'category' => !$is_private ? $this->add_nonempty($cats,lang('Category')) : '',
 			// the tooltip is based on the content of the actual widget, this way it takes no extra bandwidth/volum
-//			'tooltip' => html::tooltip(False,False,array('BorderWidth'=>0,'Padding'=>0)),
+//			'tooltip' => Api\Html::tooltip(False,False,array('BorderWidth'=>0,'Padding'=>0)),
 			// various aspects of the geometry or style
 			'corner_radius'  => $corner_radius.'px',
 			'header_height' => $header_height.'px',
@@ -1517,7 +1520,7 @@ class calendar_uiviews extends calendar_ui
 		// to be able to show some lines of description text
 		if ($event['whole_day'] || ($event['end'] - $event['start']) > ($this->cal_prefs['interval'] * 3 * 60))
 		{
-			$tpl->set_var('bodydescription', !$is_private ? nl2br(html::htmlspecialchars($event['description'])) : '');
+			$tpl->set_var('bodydescription', !$is_private ? nl2br(Api\Html::htmlspecialchars($event['description'])) : '');
 		}
 		// set the bodydescription to empty if it is not visible
 		else
@@ -1547,7 +1550,7 @@ class calendar_uiviews extends calendar_ui
 				$popup = $event['id']."|n";
 			}
 		}
-		$tooltip = html::htmlspecialchars($tooltip, true);	// true=need double-encoding, as it is transported as attribute!
+		$tooltip = Api\Html::htmlspecialchars($tooltip, true);	// true=need double-encoding, as it is transported as attribute!
 		//_debug_array($event);
 
 		if ($return_array)
@@ -1586,7 +1589,7 @@ class calendar_uiviews extends calendar_ui
 		$z_index = is_null($z_index) ? 20 : (int)$z_index;
 
 		if ($this->use_time_grid &&
-			((int)$event['id'] || substr($event['id'],0,7) == 'infolog') && $this->bo->check_perms(EGW_ACL_EDIT,$event))
+			((int)$event['id'] || substr($event['id'],0,7) == 'infolog') && $this->bo->check_perms(Acl::EDIT,$event))
 		{
 			if (!$event['whole_day_on_top'] &&
 				!$event['whole_day'] &&
@@ -1652,11 +1655,11 @@ class calendar_uiviews extends calendar_ui
 		}
 		else
 		{
-			$edit = egw_link::edit($app,$id,$popup_size);
+			$edit = Link::edit($app,$id,$popup_size);
 		}
 		if ($edit)
 		{
-			$view_link = egw::link('/index.php',$edit);
+			$view_link = Egw::link('/index.php',$edit);
 
 			if ($popup_size)
 			{
@@ -1691,16 +1694,16 @@ class calendar_uiviews extends calendar_ui
 			foreach(explode(',',$event['icons']) as $icon)
 			{
 				list($icon_app,$icon) = explode(':',$icon);
-				if (common::find_image($icon_app,$icon))
+				if (Api\Image::find($icon_app,$icon))
 				{
-					$icons[] = html::image($icon_app,$icon);
+					$icons[] = Api\Html::image($icon_app,$icon);
 				}
 			}
 		}
 		$app_data = calendar_bo::integration_get_data($app,'icons');
 		if (is_null($app_data))
 		{
-			$icons[] = html::image($app,'navbar');	// use navbar icon
+			$icons[] = Api\Html::image($app,'navbar');	// use navbar icon
 		}
 		elseif ($app_data)
 		{
@@ -1809,7 +1812,7 @@ class calendar_uiviews extends calendar_ui
 			case 'month':
 				$title = lang('Month');
 				$sort2label = array();
-				$time = new egw_time($start);
+				$time = new Api\DateTime($start);
 				for($n = 0; $n < self::YEARLY_PLANNER_NUM_MONTH; ++$n)
 				{
 					$sort2label[$time->format('Y-m')] = lang($time->format('F')).' '.$time->format('Y');
@@ -1937,12 +1940,12 @@ class calendar_uiviews extends calendar_ui
 				$by_cat === 'user' && $this->cal_prefs['planner_show_empty_rows'] == 'cat' ||
 				is_int($by_cat) && $this->cal_prefs['planner_show_empty_rows'] == 'user'))
 			{
-				continue;		// dont show empty categories or user rows
+				continue;		// dont show empty Api\Categories or user rows
 			}
 			$class = $class == 'row_on' ? 'row_off' : 'row_on';
 			if ($by_cat === 'month')
 			{
-				$time = new egw_time($sort.'-01');
+				$time = new Api\DateTime($sort.'-01');
 				$start = $time->format('ts');
 				$time->modify('+1month -1second');
 				$end = $time->format('ts');
@@ -1983,7 +1986,7 @@ class calendar_uiviews extends calendar_ui
 			{
 				foreach((array) $GLOBALS['egw']->accounts->members($user, true) as $user)
 				{
-					if ($this->bo->check_perms(EGW_ACL_READ | EGW_ACL_FREEBUSY,0,$user))
+					if ($this->bo->check_perms(Acl::READ | calendar_bo::ACL_FREEBUSY,0,$user))
 					{
 						$users[$user] = $this->bo->participant_name($user);
 					}
@@ -2005,7 +2008,7 @@ class calendar_uiviews extends calendar_ui
 	}
 
 	/**
-	 * get all categories used as sort criteria for the planner by category
+	 * get all Api\Categories used as sort criteria for the planner by category
 	 *
 	 * the returned cat is as direct sub-category of $this->cat_id or a main (level 1) category if !$this->cat_id
 	 *
@@ -2093,11 +2096,11 @@ class calendar_uiviews extends calendar_ui
 					if ($this->day >= 15) $prev = $t_arr;		// we stay in the same month
 					$prev['day'] = $this->day < 15 ? 15 : 1;
 					$half = $this->bo->date2string($prev);
-					$title = html::a_href(html::image('phpgwapi','first',lang('back one month'),$options=' alt="<<"'),array(
+					$title = Api\Html::a_href(Api\Html::image('phpgwapi','first',lang('back one month'),$options=' alt="<<"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $full,
 					)) . ' &nbsp; '.
-					html::a_href(html::image('phpgwapi','left',lang('back half a month'),$options=' alt="<"'),array(
+					Api\Html::a_href(Api\Html::image('phpgwapi','left',lang('back half a month'),$options=' alt="<"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $half,
 					)) . ' &nbsp; '.$title;
@@ -2119,11 +2122,11 @@ class calendar_uiviews extends calendar_ui
 					if ($this->day < 15) $next = $t_arr;		// we stay in the same month
 					$next['day'] = $this->day < 15 ? 15 : 1;
 					$half = $this->bo->date2string($next);
-					$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',lang('forward half a month'),$options=' alt=">>"'),array(
+					$title .= ' &nbsp; '.Api\Html::a_href(Api\Html::image('phpgwapi','right',lang('forward half a month'),$options=' alt=">>"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $half,
 					)). ' &nbsp; '.
-					html::a_href(html::image('phpgwapi','last',lang('forward one month'),$options=' alt=">>"'),array(
+					Api\Html::a_href(Api\Html::image('phpgwapi','last',lang('forward one month'),$options=' alt=">>"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $full,
 					));
@@ -2160,21 +2163,21 @@ class calendar_uiviews extends calendar_ui
 			$title = lang('Week').' '.$this->week_number($t);
 			if ($days > 7)
 			{
-				$title = html::a_href($title,array(
+				$title = Api\Html::a_href($title,array(
 					'menuaction' => 'calendar.calendar_uiviews.planner',
 					'planner_days' => 7,
 					'date'       => date('Ymd',$t),
-				),false,' title="'.html::htmlspecialchars(lang('Weekview')).'"');
+				),false,' title="'.Api\Html::htmlspecialchars(lang('Weekview')).'"');
 			}
 			else
 			{
 				// prev. week
-				$title = html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
+				$title = Api\Html::a_href(Api\Html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => date('Ymd',$t-7*DAY_s),
 				)) . ' &nbsp; <b>'.$title;
 				// next week
-				$title .= '</b> &nbsp; '.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
+				$title .= '</b> &nbsp; '.Api\Html::a_href(Api\Html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => date('Ymd',$t+7*DAY_s),
 				));
@@ -2218,31 +2221,31 @@ class calendar_uiviews extends calendar_ui
 			}
 			if ($days > 1)
 			{
-				$title = html::a_href($title,array(
+				$title = Api\Html::a_href($title,array(
 					'menuaction'   => 'calendar.calendar_uiviews.planner',
 					'planner_days' => 1,
 					'date'         => date('Ymd',$t),
-				),false,strpos($class,'calendar_calHoliday') !== false || strpos($class,'calendar_calBirthday') !== false ? '' : ' title="'.html::htmlspecialchars(lang('Dayview')).'"');
+				),false,strpos($class,'calendar_calHoliday') !== false || strpos($class,'calendar_calBirthday') !== false ? '' : ' title="'.Api\Html::htmlspecialchars(lang('Dayview')).'"');
 			}
 			if ($days < 5)
 			{
 				if (!$i)	// prev. day only for the first day
 				{
-					$title = html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
+					$title = Api\Html::a_href(Api\Html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => date('Ymd',$start-DAY_s),
 					)) . ' &nbsp; '.$title;
 				}
 				if ($i == $days-1)	// next day only for the last day
 				{
-					$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
+					$title .= ' &nbsp; '.Api\Html::a_href(Api\Html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => date('Ymd',$start+DAY_s),
 					));
 				}
 			}
 			$content .= $indent."\t".'<div class="calendar_plannerDayScale '.$class.'" style="left: '.$left.'%; width: '.$day_width.'%;"'.
-				($holidays ? ' title="'.html::htmlspecialchars($holidays).'"' : '').'>'.$title."</div>\n";
+				($holidays ? ' title="'.Api\Html::htmlspecialchars($holidays).'"' : '').'>'.$title."</div>\n";
 		}
 		$content .= $indent."</div>\n";		// end of plannerScale
 
@@ -2262,11 +2265,11 @@ class calendar_uiviews extends calendar_ui
 		// month scale with navigation
 		$content .= $indent.'<div class="calendar_plannerScale">'."\n";
 
-		$title = lang(egw_time::to($this->first,'F')).' '.egw_time::to($this->first,'Y').' - '.
-			lang(egw_time::to($this->last,'F')).' '.egw_time::to($this->last,'Y');
+		$title = lang(Api\DateTime::to($this->first,'F')).' '.Api\DateTime::to($this->first,'Y').' - '.
+			lang(Api\DateTime::to($this->last,'F')).' '.Api\DateTime::to($this->last,'Y');
 
 		// calculate date for navigation links
-		$time = new egw_time($this->first);
+		$time = new Api\DateTime($this->first);
 		$time->modify('-1year');
 		$last_year = $time->format('Ymd');
 		$time->modify('+11month');
@@ -2276,19 +2279,19 @@ class calendar_uiviews extends calendar_ui
 		$time->modify('+11month');
 		$next_year = $time->format('Ymd');
 
-		$title = html::a_href(html::image('phpgwapi','first',lang('back one year'),$options=' alt="<<"'),array(
+		$title = Api\Html::a_href(Api\Html::image('phpgwapi','first',lang('back one year'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => $last_year,
 			)) . ' &nbsp; '.
-			html::a_href(html::image('phpgwapi','left',lang('back one month'),$options=' alt="<"'),array(
+			Api\Html::a_href(Api\Html::image('phpgwapi','left',lang('back one month'),$options=' alt="<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => $last_month,
 			)) . ' &nbsp; '.$title;
-			$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',lang('forward one month'),$options=' alt=">>"'),array(
+			$title .= ' &nbsp; '.Api\Html::a_href(Api\Html::image('phpgwapi','right',lang('forward one month'),$options=' alt=">>"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => $next_month,
 				)). ' &nbsp; '.
-				html::a_href(html::image('phpgwapi','last',lang('forward one year'),$options=' alt=">>"'),array(
+				Api\Html::a_href(Api\Html::image('phpgwapi','last',lang('forward one year'),$options=' alt=">>"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => $next_year,
 				));
@@ -2299,7 +2302,7 @@ class calendar_uiviews extends calendar_ui
 
 		// day of month scale
 		$content .= $indent.'<div class="calendar_plannerScale">'."\n";
-		$today = egw_time::to('now','d');
+		$today = Api\DateTime::to('now','d');
 		for($left = 0,$i = 0; $i < 31; $left += $day_width,++$i)
 		{
 			$class = $i & 1 ? 'row_on' : 'row_off';
@@ -2433,7 +2436,7 @@ class calendar_uiviews extends calendar_ui
 			{
 				$content .= $indent.'<div class="calendar_eventRowsMarkedDay '.$class.
 					'" style="left: '.$left.'%; width:'.$day_width.'%;"'.
-					($holidays ? ' title="'.html::htmlspecialchars($holidays).'"' : '').
+					($holidays ? ' title="'.Api\Html::htmlspecialchars($holidays).'"' : '').
 					' ></div>'."\n";
 			}
 		}
@@ -2536,7 +2539,7 @@ class calendar_uiviews extends calendar_ui
 		$width = $this->_planner_pos($event['end'],$start,$end) - $left;
 		$color = $data['color'] ? $data['color'] : 'gray';
 
-		$tooltip = html::htmlspecialchars(str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$data['tooltip']));
+		$tooltip = Api\Html::htmlspecialchars(str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$data['tooltip']));
 		return $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').'" style="left: '.$left.
 			'%; width: '.$width.'%; background-color: '.$color.';"'.'data-tooltip="'. $tooltip.'" '.
 			'" data-date ="'.$this->bo->date2string($event['start']).'|'.$data['popup'].'">'."\n".$data['html'].$indent."</div>\n";
@@ -2657,7 +2660,7 @@ class calendar_uiviews extends calendar_ui
 
 	/**
 	 *
-	 * Returns the special icon html code for holidays
+	 * Returns the special icon Api\Html code for holidays
 	 *
 	 * @param string $type is the type of the holiday, currently either 'hday' or
 	 *    'bday'
@@ -2667,9 +2670,9 @@ class calendar_uiviews extends calendar_ui
 		//Set the special icon which will be prepended to the event
 		switch ($type) {
 			case "bday":
-				return html::image('calendar', 'cake', '', "style=\"float:left; padding: 1px 2px 0px 2px;\"");
+				return Api\Html::image('calendar', 'cake', '', "style=\"float:left; padding: 1px 2px 0px 2px;\"");
 			case "hday":
-				return html::image('calendar', 'date', '', "style=\"float:left; padding: 1px 2px 0px 2px;\"");
+				return Api\Html::image('calendar', 'date', '', "style=\"float:left; padding: 1px 2px 0px 2px;\"");
 		}
 	}
 

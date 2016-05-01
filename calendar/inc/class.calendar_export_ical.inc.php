@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * iCal export plugin of calendar
  */
@@ -29,8 +31,8 @@ class calendar_export_ical extends calendar_export_csv {
 		// Custom fields need to be specifically requested
 		$cfs = array();
 
-		$limit_exception = bo_merge::is_export_limit_excepted();
-		if (!$limit_exception) $export_limit = bo_merge::getExportLimit('calendar');
+		$limit_exception = Api\Storage\Merge::is_export_limit_excepted();
+		if (!$limit_exception) $export_limit = Api\Storage\Merge::getExportLimit('calendar');
 
 		if($options['selection'] == 'criteria')
 		{
@@ -42,7 +44,7 @@ class calendar_export_ical extends calendar_export_csv {
 				'users'         => $options['criteria']['owner'],
 				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
 			);
-			if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+			if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
 				$query['offset'] = 0;
 				$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
 			}
@@ -51,15 +53,15 @@ class calendar_export_ical extends calendar_export_csv {
 		// Scheduled export will use 'all', which we don't allow through UI
 		elseif ($options['selection'] == 'search_results' || $options['selection'] == 'all')
 		{
-			$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
+			$states = Api\Cache::getSession('calendar', 'session_data');
 			if($states['view'] == 'listview')
 			{
-				$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+				$query = Api\Cache::getSession('calendar', 'calendar_list');
 				$query['num_rows'] = -1;        // all
 				$query['start'] = 0;
 				$query['cfs'] = $cfs;
 
-				if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+				if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
 					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
 				}
 				$ui = new calendar_uilist();
@@ -68,10 +70,10 @@ class calendar_export_ical extends calendar_export_csv {
 			}
 			else
 			{
-				$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
+				$query = Api\Cache::getSession('calendar', 'session_data');
 				$query['users'] = explode(',', $query['owner']);
 				$query['num_rows'] = -1;
-				if(bo_merge::hasExportLimit($export_limit) && !$limit_exception)
+				if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception)
 				{
 					$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
 				}

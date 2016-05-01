@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Calendar Holidays
+ * EGroupware - Calendar Holidays
  *
  * @link http://www.egroupware.org
  * @package calendar
@@ -9,6 +9,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * Storage layer for calendar holidays
@@ -22,7 +24,7 @@ class soholiday
 	/**
 	 * Reference to the global db-object
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	var $db;
 	var $table = 'egw_cal_holidays';

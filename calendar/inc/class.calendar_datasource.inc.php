@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author RalfBecker-AT-outdoor-training.de
- * @copyright (c) 2005-8 by RalfBecker-AT-outdoor-training.de
+ * @copyright (c) 2005-16 by RalfBecker-AT-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 include_once(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.datasource.inc.php');
 
@@ -22,6 +24,8 @@ class calendar_datasource extends datasource
 	 */
 	function __construct()
 	{
+		if (false) parent::__construct();	// can not be called, but gives IDE warning
+
 		$this->datasource('calendar');
 
 		$this->valid = PM_PLANNED_START|PM_PLANNED_END|PM_PLANNED_TIME|PM_RESOURCES|PM_CAT_ID;
@@ -63,7 +67,7 @@ class calendar_datasource extends datasource
 		// return first global category, as PM only supports one
 		foreach($data['category'] ? explode(',', $data['category']) : array() as $cat_id)
 		{
-			if (categories::is_global($cat_id))
+			if (Api\Categories::is_global($cat_id))
 			{
 				$ds['cat_id'] = $cat_id;
 				break;
@@ -75,13 +79,14 @@ class calendar_datasource extends datasource
 		// if the event spans multiple days, we have to substract the nights (24h - daily working time specified in PM)
 		if (($ds['pe_planned_time']/ 60 > 24) && date('Y-m-d',$ds['pe_planned_end']) != date('Y-m-d',$ds['pe_planned_start']))
 		{
+			$start = $end = null;
 			foreach(array('start','end') as $name)
 			{
-				$$name = $cal->date2array($ds['pe_planned_'.$name]);
-				${$name}['hour'] = 12;
-				${$name}['minute'] = ${$name}['second'] = 0;
-				unset(${$name}['raw']);
-				$$name = $cal->date2ts($$name);
+				$arr = $cal->date2array($ds['pe_planned_'.$name]);
+				$arr['hour'] = 12;
+				$arr['minute'] = ${$name}['second'] = 0;
+				unset($arr['raw']);
+				$$name = $cal->date2ts($arr);
 			}
 			$nights = round(($end - $start) / DAY_s);
 

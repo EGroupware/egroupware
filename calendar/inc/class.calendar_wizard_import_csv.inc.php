@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Wizard for user CSV import
+ * EGroupware - Wizard for user CSV import
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
@@ -9,6 +9,8 @@
  * @author Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 {
@@ -30,7 +32,7 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 
 		// List each custom field
 		unset($this->mapping_fields['customfields']);
-		$custom = config::get_customfields('calendar');
+		$custom = Api\Storage\Customfields::get('calendar');
 		foreach($custom as $name => $data) {
 			$this->mapping_fields['#'.$name] = $data['label'];
 		}
@@ -52,7 +54,7 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 	{
 		$result = parent::wizard_step50($content, $sel_options, $readonlys, $preserv);
 		$content['msg'] .= "\n*" ;
-		
+
 		return $result;
 	}
 

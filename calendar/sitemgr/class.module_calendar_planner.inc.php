@@ -10,6 +10,12 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * Calendar planner block for sitemgr
  */
@@ -87,7 +93,7 @@ class module_calendar_planner extends Module
 	 */
 	function get_user_interface()
 	{
-		$cats = new categories('','calendar');
+		$cats = new Api\Categories('','calendar');
 		foreach($cats->return_array('all',0,False,'','cat_name','',True) as $cat)
 		{
 			$this->arguments['cat_id']['options'][$cat['id']] = str_repeat('&nbsp; ',$cat['level']).$cat['name'];
@@ -99,7 +105,7 @@ class module_calendar_planner extends Module
 
 		if (!isset($GLOBALS['egw']->accounts))
 		{
-			$GLOBALS['egw']->accounts = new accounts();
+			$GLOBALS['egw']->accounts = new Api\Accounts();
 		}
 		$this->accounts =& $GLOBALS['egw']->accounts;
 		$search_params = array(
@@ -116,12 +122,12 @@ class module_calendar_planner extends Module
 		{
 			$is_group = false;
 			$has_read_permissions = false;
-			$acl = new acl($entry['account_id']);
+			$acl = new Acl($entry['account_id']);
 			$acl->read_repository();
 			// get the rights for each account to check whether the anon user has read permissions.
 			$rights = $acl->get_rights($anon_user,'calendar');
 			// also add the anon user if it's his own calendar.
-			if (($rights & EGW_ACL_READ) || ($entry['account_id'] == $anon_user))
+			if (($rights & Acl::READ) || ($entry['account_id'] == $anon_user))
 			{
 				$has_read_permissions = true;
 			}
@@ -132,7 +138,7 @@ class module_calendar_planner extends Module
 				foreach ($anon_groups as $parent_group)
 				{
 					$rights = $acl->get_rights($parent_group,'calendar');
-					if (($rights & EGW_ACL_READ) || ($entry['account_id'] == $parent_group))
+					if (($rights & Acl::READ) || ($entry['account_id'] == $parent_group))
 					{
 						$has_read_permissions = true;
 						break;
@@ -148,7 +154,7 @@ class module_calendar_planner extends Module
 				}
 				else
 				{
-					$users[$entry['account_id']] = $GLOBALS['egw']->common->display_fullname($entry['account_lid'],$entry['account_firstname'],$entry['account_lastname']);
+					$users[$entry['account_id']] = Api\Accounts::format_username($entry['account_lid'],$entry['account_firstname'],$entry['account_lastname']);
 				}
 			}
 		}
@@ -170,9 +176,9 @@ class module_calendar_planner extends Module
 		$options = array('start' => 0, 'num_rows' => 50);
  		foreach ($calendar_bo->resources as $type => $data)
 		{
-			if ($type != '' && $data['app'] && egw_link::get_registry($data['app'], 'query'))
+			if ($type != '' && $data['app'] && Link::get_registry($data['app'], 'query'))
 			{
-				$_results = egw_link::query($data['app'], $query,$options);
+				$_results = Link::query($data['app'], $query,$options);
 			}
 			if(!$_results) continue;
 			$_results = array_unique($_results);
@@ -230,15 +236,15 @@ class module_calendar_planner extends Module
 		$html = '<style type="text/css">'."\n";
 		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].self::CALENDAR_CSS.");\n";
 		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].self::ETEMPLATE_CSS.");\n";
-		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].categories::css(categories::GLOBAL_APPNAME).");\n";
-		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].categories::css('calendar').");\n";
+		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].Api\Categories::css(Api\Categories::GLOBAL_APPNAME).");\n";
+		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].Api\Categories::css('calendar').");\n";
 		$html .= '.popupMainDiv #calendar-planner { position: static;}
 		#calendar-planner .calendar_plannerWidget, #calendar-planner div.calendar_plannerRows {
     height: auto !important;
 }
 	</style>'."\n";
-		$html .= html::image('sitemgr', 'left', lang('Previous'), 'onclick=\'app.calendar.toolbar_action({id:"previous"});\'')
-		. html::image('sitemgr', 'right', lang('Next'), 'style="float: right;" onclick=\'app.calendar.toolbar_action({id:"next"});\'');
+		$html .= Api\Html::image('sitemgr', 'left', lang('Previous'), 'onclick=\'app.calendar.toolbar_action({id:"previous"});\'')
+		. Api\Html::image('sitemgr', 'right', lang('Next'), 'style="float: right;" onclick=\'app.calendar.toolbar_action({id:"next"});\'');
 
 		if (is_array($params['owner']))
 		{
@@ -247,7 +253,7 @@ class module_calendar_planner extends Module
 				$html .= $buffer;
 				return '';
 			});
-			egw_framework::$header_done = true;
+			Framework::$header_done = true;
 			$ui = new calendar_uiviews();
 			$ui->sortby = $arguments['sortby'];
 			$ui->owner = $params['owner'];
@@ -294,10 +300,10 @@ class module_calendar_planner extends Module
 				$ui->to_client($event);
 			}
 
-			$tmpl = new etemplate_new('calendar.planner');
+			$tmpl = new Etemplate('calendar.planner');
 
-			$tmpl->setElementAttribute('planner','start_date', egw_time::to($ui->first, egw_time::ET2));
-			$tmpl->setElementAttribute('planner','end_date', egw_time::to($ui->last, egw_time::ET2));
+			$tmpl->setElementAttribute('planner','start_date', Api\DateTime::to($ui->first, Api\DateTime::ET2));
+			$tmpl->setElementAttribute('planner','end_date', Api\DateTime::to($ui->last, Api\DateTime::ET2));
 			$tmpl->setElementAttribute('planner','owner', $search_params['owner']);
 			$tmpl->setElementAttribute('planner','group_by', $ui->sortby);
 			$tmpl->exec(__METHOD__, $content,array(), array('__ALL__' => true),array(),2);

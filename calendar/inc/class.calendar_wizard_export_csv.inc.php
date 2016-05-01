@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Wizard for Adressbook CSV export
+ * EGroupware - Wizard for Adressbook CSV export
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
@@ -8,6 +8,8 @@
  * @author Nathan Gray
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 class calendar_wizard_export_csv extends importexport_wizard_basic_export_csv
 {
@@ -21,12 +23,9 @@ class calendar_wizard_export_csv extends importexport_wizard_basic_export_csv
 		unset($this->export_fields['participants-c']);
 		unset($this->export_fields['participants-r']);
 
-		$custom = config::get_customfields('calendar', true);
+		$custom = Api\Storage\Customfields::get('calendar', true);
 		foreach($custom as $name => $data) {
 			$this->export_fields['#'.$name] = $data['label'];
 		}
-
 	}
-
-	
 }

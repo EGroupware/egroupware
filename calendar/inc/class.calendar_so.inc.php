@@ -7,10 +7,14 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Christian Binder <christian-AT-jaytraxx.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-15 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
 
 /**
  * some necessary defines used by the calendar
@@ -101,13 +105,13 @@ class calendar_so
 	/**
 	 * reference to global db-object
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	var $db;
 	/**
 	 * instance of the async object
 	 *
-	 * @var asyncservice
+	 * @var Api\AsyncService
 	 */
 	var $async;
 	/**
@@ -191,7 +195,7 @@ class calendar_so
 		if ($start) $where[] = "cal_end>".(int)$start;
 		if ($_where) $where = array_merge($where, $_where);
 
-		// egw_db::union uses egw_db::select which check if join contains "WHERE"
+		// Api\Db::union uses Api\Db::select which check if join contains "WHERE"
 		// to support old join syntax like ", other_table WHERE ...",
 		// therefore we have to use eg. "WHERe" instead!
 		$sql = "(SELECT * FROM $this->dates_table WHERe ".$this->db->expression($this->dates_table, $where).") $this->dates_table";
@@ -236,7 +240,7 @@ class calendar_so
 			//in_array($filter,array('owner','deleted')) ||
 			$params['enum_recuring']===false)
 		{
-			throw new egw_exception_assertion_failed("Unsupported value for parameters!");
+			throw new Api\Exception\AssertionFailed("Unsupported value for parameters!");
 		}
 		$where = is_array($params['query']) ? $params['query'] : array();
 		if ($cat_id) $where[] = $this->cat_filter($cat_id);
@@ -286,7 +290,7 @@ class calendar_so
 			$sql .= "\nORDER BY ".$params['order'];
 		}
 
-		if ($offset === false)	// return all rows --> egw_db::query wants offset=0, num_rows=-1
+		if ($offset === false)	// return all rows --> Api\Db::query wants offset=0, num_rows=-1
 		{
 			$offset = 0;
 			$num_rows = -1;
@@ -381,7 +385,7 @@ class calendar_so
 				unset($row['recur_enddate']);
 			}
 			$row['recur_exception'] = $row['alarm'] = array();
-			$events[$row['cal_id']] = egw_db::strip_array_keys($row,'cal_');
+			$events[$row['cal_id']] = Api\Db::strip_array_keys($row,'cal_');
 		}
 		if (!$events) return $events;
 
@@ -393,7 +397,7 @@ class calendar_so
 			if (!isset($event['uid']) || strlen($event['uid']) < $minimum_uid_length)
 			{
 				// event (without uid), not strong enough uid => create new uid
-				$event['uid'] = common::generate_uid('calendar',$event['id']);
+				$event['uid'] = Api\CalDAV::generate_uid('calendar',$event['id']);
 				$this->db->update($this->cal_table, array('cal_uid' => $event['uid']),
 					array('cal_id' => $event['id']),__LINE__,__FILE__,'calendar');
 			}
@@ -567,11 +571,11 @@ class calendar_so
 	/**
 	 * Query calendar main table and return iterator of query
 	 *
-	 * Use as: foreach(get_cal_data() as $data) { $data = egw_db::strip_array_keys($data, 'cal_'); // do something with $data
+	 * Use as: foreach(get_cal_data() as $data) { $data = Api\Db::strip_array_keys($data, 'cal_'); // do something with $data
 	 *
 	 * @param array $query filter, keys have to use 'cal_' prefix
 	 * @param string|array $cols ='cal_id,cal_reference,cal_etag,cal_modified,cal_user_modified' cols to query
-	 * @return Iterator as egw_db::select
+	 * @return Iterator as Api\Db::select
 	 */
 	function get_cal_data(array $query, $cols='cal_id,cal_reference,cal_etag,cal_modified,cal_user_modified')
 	{
@@ -733,14 +737,14 @@ class calendar_so
 		{
 			foreach(array('cal_title','cal_description','cal_location') as $col)
 			{
-				$to_or[] = $col.' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%'.$params['query'].'%');
+				$to_or[] = $col.' '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%'.$params['query'].'%');
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
 
 			// Searching - restrict private to own or private grant
 			if (!isset($params['private_grants']))
 			{
-				$params['private_grants'] = $GLOBALS['egw']->acl->get_ids_for_location($GLOBALS['egw_info']['user']['account_id'], EGW_ACL_PRIVATE, 'calendar');
+				$params['private_grants'] = $GLOBALS['egw']->acl->get_ids_for_location($GLOBALS['egw_info']['user']['account_id'], Acl::PRIVAT, 'calendar');
 				$params['private_grants'][] = $GLOBALS['egw_info']['user']['account_id'];	// db query does NOT return current user
 			}
 			$private_filter = '(cal_public=1 OR cal_public=0 AND '.$this->db->expression($this->cal_table, array('cal_owner' => $params['private_grants'])) . ')';
@@ -1026,7 +1030,7 @@ class calendar_so
 			// compile a list of recurrences per cal_id
 			if (!in_array($id,(array)$recur_ids[$row['cal_id']])) $recur_ids[$row['cal_id']][] = $id;
 
-			$events[$id] = egw_db::strip_array_keys($row,'cal_');
+			$events[$id] = Api\Db::strip_array_keys($row,'cal_');
 		}
 		//_debug_array($events);
 		if (count($ids))
@@ -1151,7 +1155,7 @@ class calendar_so
 		{
 			return;    // disable integration for GroupDAV, SyncML, ...
 		}
-		self::$integration_data = $GLOBALS['egw']->hooks->process(array(
+		self::$integration_data = Api\Hooks::process(array(
 			'location' => 'calendar_search_union',
 			'cols'  => $selects[0]['cols'],    // cols to return
 			'start' => $start,
@@ -1253,7 +1257,7 @@ class calendar_so
 		else
 		{
 			// special handling for egw_cal, as old databases have a different column order!!!
-			$cols =& egw_cache::getSession(__CLASS__,$table);
+			$cols =& Api\Cache::getSession(__CLASS__,$table);
 
 			if (is_null($cols))
 			{
@@ -1350,7 +1354,7 @@ ORDER BY cal_user_type, cal_usre_id
 			while ($rrule->valid() && ($enddate = $occurrence));
 			$enddate->modify(($event['end'] - $event['start']).' second');
 			$event['recur_enddate'] = $enddate->format('server');
-			//error_log(__METHOD__."($event[title]) start=".egw_time::to($event['start'],'string').', end='.egw_time::to($event['end'],'string').', range_end='.egw_time::to($event['recur_enddate'],'string'));
+			//error_log(__METHOD__."($event[title]) start=".Api\DateTime::to($event['start'],'string').', end='.Api\DateTime::to($event['end'],'string').', range_end='.Api\DateTime::to($event['recur_enddate'],'string'));
 		}
 
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
@@ -1432,7 +1436,7 @@ ORDER BY cal_user_type, cal_usre_id
 		// event without uid or not strong enough uid
 		if (!isset($event['cal_uid']) || strlen($event['cal_uid']) < $minimum_uid_length)
 		{
-			$update['cal_uid'] = $event['cal_uid'] = common::generate_uid('calendar',$cal_id);
+			$update['cal_uid'] = $event['cal_uid'] = Api\CalDAV::generate_uid('calendar',$cal_id);
 		}
 		// set caldav_name, if not given by caller
 		if (empty($event['caldav_name']) && version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.003', '>='))
@@ -1699,11 +1703,11 @@ ORDER BY cal_user_type, cal_usre_id
 			return false;
 		}
 		$start = $timestamp ? $timestamp : (int)time() + $alarm['offset'];
-		$event = egw_db::strip_array_keys($_event, 'cal_');
+		$event = Api\Db::strip_array_keys($_event, 'cal_');
 		$rrule = calendar_rrule::event2rrule($event, false);
 		foreach ($rrule as $time)
 		{
-			if ($start < ($ts = egw_time::to($time,'server')))
+			if ($start < ($ts = Api\DateTime::to($time,'server')))
 			{
 				$alarm['time'] = $ts - $alarm['offset'];
 				return true;
@@ -2230,7 +2234,7 @@ ORDER BY cal_user_type, cal_usre_id
 				'sync_contentid' => $row['cal_id'],	// sync_contentid is varchar(60)!
 			), __LINE__, __FILE__);
 			// handle links
-			egw_link::unlink('', 'calendar', $row['cal_id']);
+			Link::unlink('', 'calendar', $row['cal_id']);
 		}
 	}
 
@@ -2654,10 +2658,10 @@ ORDER BY cal_user_type, cal_usre_id
 				if (in_array($filter, array('map','tz_map','rrule','tz_rrule')))
 				{
 					 // real exception
-					$locts = (int)egw_time::to($egw_rrule->current(),'server');
+					$locts = (int)Api\DateTime::to($egw_rrule->current(),'server');
 					if ($expand_all)
 					{
-						$remts = (int)egw_time::to($remote_rrule->current(),'server');
+						$remts = (int)Api\DateTime::to($remote_rrule->current(),'server');
 						if ($remote)
 						{
 							$days[$locts]= $remts;
@@ -2680,14 +2684,14 @@ ORDER BY cal_user_type, cal_usre_id
 				if (!$egw_rrule->valid()) return $days;
 			}
 			$day = $egw_rrule->current();
-			$locts = (int)egw_time::to($day,'server');
+			$locts = (int)Api\DateTime::to($day,'server');
 			$tz_exception = ($filter == 'tz_rrule');
 			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 			//	'()[EVENT Server]: ' . $day->format('Ymd\THis') . " ($locts)");
 			if ($expand_all)
 			{
 				$remote_day = $remote_rrule->current();
-				$remts = (int)egw_time::to($remote_day,'server');
+				$remts = (int)Api\DateTime::to($remote_day,'server');
 			//	error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 			//	'()[EVENT Device]: ' . $remote_day->format('Ymd\THis') . " ($remts)");
 			}
@@ -2906,7 +2910,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if (empty($event['tzid']))
 		{
-			$timezone = egw_time::$server_timezone;
+			$timezone = Api\DateTime::$server_timezone;
 		}
 		else
 		{
@@ -2916,14 +2920,14 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			$timezone = self::$tz_cache[$event['tzid']];
 		}
-		$start_time = new egw_time($event['start'],egw_time::$server_timezone);
+		$start_time = new Api\DateTime($event['start'],Api\DateTime::$server_timezone);
 		$start_time->setTimezone($timezone);
-		$end_time = new egw_time($event['end'],egw_time::$server_timezone);
+		$end_time = new Api\DateTime($event['end'],Api\DateTime::$server_timezone);
 		$end_time->setTimezone($timezone);
 		//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 		//	'(): ' . $start . '-' . $end);
-		$start = egw_time::to($start_time,'array');
-		$end = egw_time::to($end_time,'array');
+		$start = Api\DateTime::to($start_time,'array');
+		$end = Api\DateTime::to($end_time,'array');
 
 
 		return !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
@@ -2932,16 +2936,16 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * Moves a datetime to the beginning of the day within timezone
 	 *
-	 * @param egw_time	$time	the datetime entry
+	 * @param Api\DateTime	$time	the datetime entry
 	 * @param string tz_id		timezone
 	 *
 	 * @return DateTime
 	 */
-	function &startOfDay(egw_time $time, $tz_id=null)
+	function &startOfDay(Api\DateTime $time, $tz_id=null)
 	{
 		if (empty($tz_id))
 		{
-			$timezone = egw_time::$server_timezone;
+			$timezone = Api\DateTime::$server_timezone;
 		}
 		else
 		{
@@ -2951,7 +2955,7 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			$timezone = self::$tz_cache[$tz_id];
 		}
-		return new egw_time($time->format('Y-m-d 00:00:00'), $timezone);
+		return new Api\DateTime($time->format('Y-m-d 00:00:00'), $timezone);
 	}
 
 	/**

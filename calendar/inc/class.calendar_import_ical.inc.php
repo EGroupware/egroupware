@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare
+ * EGroupWare iCal import plugin
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
@@ -236,5 +236,4 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
         public function get_results() {
                 return $this->results;
         }
-} // end of iface_export_plugin
-?>
+}

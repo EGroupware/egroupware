@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare
+ * EGroupware calendar export
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
@@ -11,13 +11,15 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * export CSV plugin of calendar
  */
 class calendar_export_csv implements importexport_iface_export_plugin {
 
 	public function __construct() {
-		translation::add_app('calendar');
+		Api\Translation::add_app('calendar');
 		$this->bo = new calendar_bo();
 		$this->get_selects();
 	}
@@ -30,8 +32,8 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 
-		$limit_exception = bo_merge::is_export_limit_excepted();
-		if (!$limit_exception) $export_limit = bo_merge::getExportLimit('calendar');
+		$limit_exception = Api\Storage\Merge::is_export_limit_excepted();
+		if (!$limit_exception) $export_limit = Api\Storage\Merge::getExportLimit('calendar');
 		// Custom fields need to be specifically requested
 		$cfs = array();
 		foreach($options['mapping'] + (array)$_definition->filter as $key => $label) {
@@ -55,31 +57,31 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 					'users'         => $options['criteria']['owner'],
 					'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
 				);
-				if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+				if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
 					$query['offset'] = 0;
 					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
 				}
 				$events =& $this->bo->search($query);
 				break;
 			case 'search_results':
-				$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
+				$states = Api\Cache::getSession('calendar', 'session_data');
 				if($states['view'] == 'listview') {
-					$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+					$query = Api\Cache::getSession('calendar', 'calendar_list');
 					$query['num_rows'] = -1;        // all
 					$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 					$query['start'] = 0;
 					$query['cfs'] = $cfs;
 
-					if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+					if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
 						$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
 					}
 					$ui = new calendar_uilist();
 					$ui->get_rows($query, $events, $unused);
 				} else {
-					$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
+					$query = Api\Cache::getSession('calendar', 'session_data');
 					$query['users'] = explode(',', $query['owner']);
 					$query['num_rows'] = -1;
-					if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+					if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
 						$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
 					}
 
@@ -238,7 +240,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 */
 	public function get_selectors_etpl($definition = null) {
 		$states = $this->bo->cal_prefs['saved_states'];
-		$list = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+		$list = Api\Cache::getSession('calendar', 'calendar_list');
 		if(!$list['startdate'])
 		{
 			switch($states['view']) {
@@ -253,23 +255,23 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 					$query = $this->get_query_day($states);
 					break;
 			}
-			$start= new egw_time($query['start']);
-			$end = new egw_time($query['end']);
+			$start= new Api\DateTime($query['start']);
+			$end = new Api\DateTime($query['end']);
 		}
 		else
 		{
-			$start= new egw_time($list['startdate']);
-			$end = new egw_time($list['enddate']);
+			$start= new Api\DateTime($list['startdate']);
+			$end = new Api\DateTime($list['enddate']);
 		}
 		if ($states['view'] == 'listview')
 		{
-			$list = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+			$list = Api\Cache::getSession('calendar', 'calendar_list');
 
 			// Use UI to get dates
 			$ui = new calendar_uilist();
 			$list['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$ui->get_rows($list,$rows,$readonlys);
-			$start = $ui->first ? $ui->first : new egw_time($ui->date);
+			$start = $ui->first ? $ui->first : new Api\DateTime($ui->date);
 			$end = $ui->last;
 
 			// Special handling

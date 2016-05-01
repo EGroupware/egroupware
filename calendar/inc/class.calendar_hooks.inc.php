@@ -10,6 +10,11 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+
 /**
  * diverse static calendar hooks
  */
@@ -79,12 +84,12 @@ class calendar_hooks
 	static function admin()
 	{
 		$file = Array(
-			'Site Configuration' => egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
-			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
-			'Calendar Holiday Management' => egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
-			'Global Categories' => egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
-			'Category ACL' => egw::link('/index.php','menuaction=calendar.calendar_uiforms.cat_acl'),
-			'Update timezones' => egw::link('/index.php','menuaction=calendar.calendar_timezones.update'),
+			'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
+			'Custom fields' => Egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
+			'Calendar Holiday Management' => Egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
+			'Global Categories' => Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
+			'Category ACL' => Egw::link('/index.php','menuaction=calendar.calendar_uiforms.cat_acl'),
+			'Update timezones' => Egw::link('/index.php','menuaction=calendar.calendar_timezones.update'),
 		);
 		display_section('calendar','calendar',$file);
 	}
@@ -101,18 +106,6 @@ class calendar_hooks
 			$bo = new calendar_bo();
 			$bo->check_set_default_prefs();
 		}
-		$mainscreen = array(
-			'0'            => lang('None'),
-			'day'          => lang('Dayview'),
-			'day4'         => lang('Four days view'),
-			'1'            => lang('Weekview'),
-			'weekN'        => lang('Multiple week view'),
-			'month'        => lang('Monthview'),
-			'year'         => lang('yearview'),
-			'planner_cat'  => lang('Planner by category'),
-			'planner_user' => lang('Planner by user'),
-			'listview'     => lang('Listview'),
-		);
 		$yesno = array(
 			'1' => lang('Yes'),
 			'0' => lang('No'),
@@ -162,10 +155,7 @@ class calendar_hooks
 			'Saturday' => lang('Saturday')
 		);
 
-		for ($i=0; $i < 24; ++$i)
-		{
-			$times[$i] = $GLOBALS['egw']->common->formattime($i,'00');
-		}
+		$times = Api\Etemplate\Widget\Select::typeOptions('select-time', '');
 
 		for ($i = 2; $i <= 4; ++$i)
 		{
@@ -209,7 +199,7 @@ class calendar_hooks
 			$options = array('0' => lang('none'));
 			foreach($GLOBALS['egw']->accounts->search(array('type' => 'owngroups','app' => 'calendar')) as $group)
 			{
-				$options[$group['account_id']] = common::grab_owner_name($group['account_id']);
+				$options[$group['account_id']] = Api\Accounts::username($group['account_id']);
 			}
 			$freebusy_url = calendar_bo::freebusy_url($GLOBALS['egw_info']['user']['account_lid'],$GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw']);
 			$freebusy_url = '<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>';
@@ -218,7 +208,7 @@ class calendar_hooks
 
 			// Timezone for file exports
 			$export_tzs = array('0' => 'Use Event TZ');
-			$export_tzs += egw_time::getTimezones();
+			$export_tzs += Api\DateTime::getTimezones();
 		}
 		$link_title_options = ExecMethod('calendar.calendar_bo.get_link_options');
 		$settings = array(
@@ -577,7 +567,7 @@ class calendar_hooks
 				'name'   => 'default_document',
 				'help'   => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.',lang('calendar')).' '.
 					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','calendar_title').' '.
-					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+					lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -589,7 +579,7 @@ class calendar_hooks
 				'name'   => 'document_dir',
 				'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.',lang('calendar')).' '.
 					lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','calendar_title').' '.
-					lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+					lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -772,7 +762,7 @@ END:VALARM';
 	/**
 	 * Sync default alarms from CalDAV to Calendar
 	 *
-	 * Gets called by groupdav::PROPPATCH() for 'default-alarm-vevent-date(time)' changes
+	 * Gets called by Api\CalDAV::PROPPATCH() for 'default-alarm-vevent-date(time)' changes
 	 */
 	public static function sync_default_alarms()
 	{
@@ -791,25 +781,25 @@ END:VALARM';
 	/**
 	 * ACL rights and labels used
 	 *
-	 * @param string|array string with location or array with parameters incl. "location", specially "owner" for selected acl owner
-	 * @return array acl::(READ|ADD|EDIT|DELETE|PRIVAT|CUSTOM(1|2|3)) => $label pairs
+	 * @param string|array string with location or array with parameters incl. "location", specially "owner" for selected Acl owner
+	 * @return array Acl::(READ|ADD|EDIT|DELETE|PRIVAT|CUSTOM(1|2|3)) => $label pairs
 	 */
 	public static function acl_rights($params)
 	{
 		$rights = array(
-			acl::CUSTOM2 => 'freebusy',
-			acl::CUSTOM3 => 'invite',
-			acl::READ    => 'read',
-			acl::ADD     => 'add',
-			acl::EDIT    => 'edit',
-			acl::DELETE  => 'delete',
-			acl::PRIVAT  => 'private',
+			Acl::CUSTOM2 => 'freebusy',
+			Acl::CUSTOM3 => 'invite',
+			Acl::READ    => 'read',
+			Acl::ADD     => 'add',
+			Acl::EDIT    => 'edit',
+			Acl::DELETE  => 'delete',
+			Acl::PRIVAT  => 'private',
 		);
 		$require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];
 
 		if (!$require_acl_invite || $require_acl_invite == 'groups' && !($params['owner'] < 0))
 		{
-			unset($rights[acl::CUSTOM3]);
+			unset($rights[Acl::CUSTOM3]);
 		}
 		return $rights;
 	}
@@ -833,9 +823,11 @@ END:VALARM';
 	 */
 	public static function mail_import($args)
 	{
+		unset($args);	// not used, but required by function signature
+
 		return array (
 			'menuaction' => 'calendar.calendar_uiforms.mail_import',
-			'popup' => egw_link::get_registry('calendar', 'edit_popup')
+			'popup' => Link::get_registry('calendar', 'edit_popup')
 		);
 	}
 }
@@ -846,11 +838,12 @@ function calendar_purge_old($config)
 	$id = 'calendar_purge';
 
 	// Cancel old purge
-	ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
+	$async = new Api\Asyncservice();
+	$async->cancel_timer($id);
 
 	if((float)$config > 0)
 	{
-		$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
+		$result = $async->set_timer(
 			array('month' => '*', 'day' => 1),
 			$id,
 			'calendar.calendar_boupdate.purge',

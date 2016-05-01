@@ -9,6 +9,9 @@
 *  option) any later version.                                              *
 \**************************************************************************/
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+
 /* $Id$ */
 
 /*
@@ -168,7 +171,7 @@ class module_calendar_list extends Module
 
 		if (!isset($GLOBALS['egw']->accounts))
 		{
-			$GLOBALS['egw']->accounts = new accounts();
+			$GLOBALS['egw']->accounts = new Api\Accounts();
 		}
 		$this->accounts =& $GLOBALS['egw']->accounts;
 		$search_params = array(
@@ -185,12 +188,12 @@ class module_calendar_list extends Module
 		{
 			$is_group = false;
 			$has_read_permissions = false;
-			$acl = new acl($entry['account_id']);
+			$acl = new Acl($entry['account_id']);
 			$acl->read_repository();
 			// get the rights for each account to check whether the anon user has read permissions.
 			$rights = $acl->get_rights($anon_user,'calendar');
 			// also add the anon user if it's his own calendar.
-			if (($rights & EGW_ACL_READ) || ($entry['account_id'] == $anon_user))
+			if (($rights & Acl::READ) || ($entry['account_id'] == $anon_user))
 			{
 				$has_read_permissions = true;
 			}
@@ -201,7 +204,7 @@ class module_calendar_list extends Module
 				foreach ($anon_groups as $parent_group)
 				{
 					$rights = $acl->get_rights($parent_group,'calendar');
-					if (($rights & EGW_ACL_READ) || ($entry['account_id'] == $parent_group))
+					if (($rights & Acl::READ) || ($entry['account_id'] == $parent_group))
 					{
 						$has_read_permissions = true;
 						break;
@@ -217,7 +220,7 @@ class module_calendar_list extends Module
 				}
 				else
 				{
-					$users[$entry['account_id']] = $GLOBALS['egw']->common->display_fullname($entry['account_lid'],$entry['account_firstname'],$entry['account_lastname']);
+					$users[$entry['account_id']] = Api\Accounts::format_username($entry['account_lid'],$entry['account_firstname'],$entry['account_lastname']);
 				}
 			}
 		}
@@ -240,7 +243,7 @@ class module_calendar_list extends Module
 	function get_content(&$arguments,$properties)
 	{
 		$html = "";
-		$GLOBALS['egw']->translation->add_app('calendar');
+		Api\Translation::add_app('calendar');
 		$this->bo = new calendar_bo();
 		$this->ui = new calendar_uiviews();
 		$this->ui->allowEdit = false;
@@ -259,7 +262,7 @@ class module_calendar_list extends Module
 			$first = $start = (int) ($this->bo->now_su +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
-		if ($arguments['useWeekStart']) 
+		if ($arguments['useWeekStart'])
 		{
 			$first = $this->ui->datetime->get_weekday_start(
 				adodb_date('Y',$start),

@@ -1,14 +1,20 @@
 <?php
 /**
- * eGroupWare - Calendar's shared base-class of all UI classes
+ * EGroupware - Calendar's shared base-class of all UI classes
  *
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-15 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
 
 /**
  * Shared base-class of all calendar UserInterface classes
@@ -47,9 +53,9 @@ class calendar_ui
 	 */
 	var $datetime;
 	/**
-	 * Instance of categories class
+	 * Instance of Api\Categories class
 	 *
-	 * @var categories
+	 * @var Api\Categories
 	 */
 	var $categories;
 	/**
@@ -147,7 +153,7 @@ class calendar_ui
 		}
 		$this->datetime = $GLOBALS['egw']->datetime;
 
-		$this->categories = new categories($this->user,'calendar');
+		$this->categories = new Api\Categories($this->user,'calendar');
 
 		$this->common_prefs	= &$GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs	= &$GLOBALS['egw_info']['user']['preferences']['calendar'];
@@ -167,7 +173,7 @@ class calendar_ui
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
 		// make sure the hook for export_limit is registered
-		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','calendar')) $GLOBALS['egw']->hooks->register_single_app_hook('calendar','export_limit');
+		if (!Api\Hooks::exists('export_limit','calendar')) Api\Hooks::read(true);
 	}
 
 	/**
@@ -188,13 +194,13 @@ class calendar_ui
 			{
 				foreach($GLOBALS['egw']->accounts->members($owner, true) as $member)
 				{
-					if (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$member))
+					if (!$this->bo->check_perms(Acl::READ|calendar_bo::ACL_READ_FOR_PARTICIPANTS|calendar_bo::ACL_FREEBUSY,0,$member))
 					{
 						$no_access_group[$member] = $this->bo->participant_name($member);
 					}
 				}
 			}
-			elseif (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$owner))
+			elseif (!$this->bo->check_perms(Acl::READ|calendar_bo::ACL_READ_FOR_PARTICIPANTS|calendar_bo::ACL_FREEBUSY,0,$owner))
 			{
 				$no_access[$owner] = $this->bo->participant_name($owner);
 				unset($owner_array[$idx]);
@@ -203,7 +209,7 @@ class calendar_ui
 		if (count($no_access))
 		{
 			$message = lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access));
-			egw_framework::message($message,'error');
+			Framework::message($message,'error');
 			$this->owner = implode(',',$owner_array);
 			return $message;
 		}
@@ -395,18 +401,18 @@ class calendar_ui
 	*/
 	function event_icons($event)
 	{
-		$is_private = !$event['public'] && !$this->bo->check_perms(EGW_ACL_READ,$event);
+		$is_private = !$event['public'] && !$this->bo->check_perms(Acl::READ,$event);
 
 		$icons = array();
 		if (!$is_private)
 		{
 			if($event['priority'] == 3)
 			{
-				$icons[] = html::image('calendar','high',lang('high priority'));
+				$icons[] = Api\Html::image('calendar','high',lang('high priority'));
 			}
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$icons[] = html::image('calendar','recur',lang('recurring event'));
+				$icons[] = Api\Html::image('calendar','recur',lang('recurring event'));
 			}
 			// icons for single user, multiple users or group(s) and resources
 			foreach(array_keys($event['participants']) as  $uid)
@@ -416,16 +422,16 @@ class calendar_ui
 					if (isset($icons['single']) || $GLOBALS['egw']->accounts->get_type($uid) == 'g')
 					{
 						unset($icons['single']);
-						$icons['multiple'] = html::image('calendar','users');
+						$icons['multiple'] = Api\Html::image('calendar','users');
 					}
 					elseif (!isset($icons['multiple']))
 					{
-						$icons['single'] = html::image('calendar','single');
+						$icons['single'] = Api\Html::image('calendar','single');
 					}
 				}
 				elseif(!isset($icons[$uid[0]]) && isset($this->bo->resources[$uid[0]]) && isset($this->bo->resources[$uid[0]]['icon']))
 				{
-				 	$icons[$uid[0]] = html::image($this->bo->resources[$uid[0]]['app'],
+				 	$icons[$uid[0]] = Api\Html::image($this->bo->resources[$uid[0]]['app'],
 				 		($this->bo->resources[$uid[0]]['icon'] ? $this->bo->resources[$uid[0]]['icon'] : 'navbar'),
 				 		lang($this->bo->resources[$uid[0]]['app']),
 				 		'width="16px" height="16px"');
@@ -434,19 +440,19 @@ class calendar_ui
 		}
 		if($event['non_blocking'])
 		{
-			$icons[] = html::image('calendar','nonblocking',lang('non blocking'));
+			$icons[] = Api\Html::image('calendar','nonblocking',lang('non blocking'));
 		}
 		if($event['public'] == 0)
 		{
-			$icons[] = html::image('calendar','private',lang('private'));
+			$icons[] = Api\Html::image('calendar','private',lang('private'));
 		}
 		if(isset($event['alarm']) && count($event['alarm']) >= 1 && !$is_private)
 		{
-			$icons[] = html::image('calendar','alarm',lang('alarm'));
+			$icons[] = Api\Html::image('calendar','alarm',lang('alarm'));
 		}
 		if($event['participants'][$this->user][0] == 'U')
 		{
-			$icons[] = html::image('calendar','needs-action',lang('Needs action'));
+			$icons[] = Api\Html::image('calendar','needs-action',lang('Needs action'));
 		}
 		return $icons;
 	}
@@ -471,8 +477,8 @@ class calendar_ui
 			$vars['hour'] = $hour;
 			$vars['minute'] = $minute;
 		}
-		return html::a_href($content,'',$vars,' data-date="' .$vars['date'].'|'.$vars['hour'].'|'.$vars['minute']
-				. '" title="'.html::htmlspecialchars(lang('Add')).'"');
+		return Api\Html::a_href($content,'',$vars,' data-date="' .$vars['date'].'|'.$vars['hour'].'|'.$vars['minute']
+				. '" title="'.Api\Html::htmlspecialchars(lang('Add')).'"');
 	}
 
 	/**
@@ -481,7 +487,7 @@ class calendar_ui
 	function sidebox_menu()
 	{
 		// Magic etemplate2 favorites menu (from framework)
-		display_sidebox('calendar', lang('Favorites'), egw_framework::favorite_list('calendar'));
+		display_sidebox('calendar', lang('Favorites'), Framework\Favorites::list_favorites('calendar'));
 
 		$file = array('menuOpened' => true);	// menu open by default
 
@@ -496,7 +502,7 @@ class calendar_ui
 		// Merge print placeholders (selectbox in etemplate)
 		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
 		{
-			$file['Placeholders'] = egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
+			$file['Placeholders'] = Egw::link('/index.php','menuaction=calendar.calendar_merge.show_replacements');
 		}
 		$appname = 'calendar';
 		$menu_title = lang('Calendar Menu');
@@ -519,10 +525,10 @@ class calendar_ui
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Configuration'=>egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
-				'Custom Fields'=>egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
-				'Holiday Management'=>egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
-				'Global Categories' =>egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
+				'Configuration'=>Egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
+				'Custom Fields'=>Egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
+				'Holiday Management'=>Egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
+				'Global Categories' =>Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
 			);
 			$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');
 		}
@@ -539,11 +545,11 @@ class calendar_ui
 			$this->manage_states(array_merge($content,json_decode($content['view'],true)));
 			if($content['first'])
 			{
-				$this->first = egw_time::to($content['first'],'ts');
+				$this->first = Api\DateTime::to($content['first'],'ts');
 			}
 			if($content['last'])
 			{
-				$this->last = new egw_time($content['last']);
+				$this->last = new Api\DateTime($content['last']);
 				$this->last->setTime(23, 59, 59);
 				$this->last = $this->last->format('ts');
 			}
@@ -552,12 +558,12 @@ class calendar_ui
 			$this->merge();
 			return;
 		}
-		$sidebox = new etemplate_new('calendar.sidebox');
+		$sidebox = new Etemplate('calendar.sidebox');
 
 		$cont = $this->cal_prefs['saved_states'];
 		if (!is_array($cont)) $cont = array();
 		$cont['view'] = $this->view ? $this->view : 'week';
-		$cont['date'] = $this->date ? $this->date : egw_time();
+		$cont['date'] = $this->date ? $this->date : Api\DateTime();
 
 		$readonlys = array();
 		$sel_options['status_filter'] = array(
@@ -598,22 +604,22 @@ class calendar_ui
 	 *
 	 * This allows to pass only changed information for a single (recurring) event
 	 * and update the UI without a refreshing any more than needed.  If adding,
-	 * a notification via egw_framework::refresh_opener() is still needed but
+	 * a notification via Framework::refresh_opener() is still needed but
 	 * edits, updates and deletes will be automatic.
 	 * If the event is recurring, we send the next month's worth of recurrences
 	 * for lack of a better way to determine how much to send.
 	 *
 	 * @param int $event_id
-	 * @param egw_time $recurrence_date
+	 * @param Api\DateTime $recurrence_date
 	 */
-	public function update_client($event_id, egw_time $recurrence_date = null)
+	public function update_client($event_id, Api\DateTime $recurrence_date = null)
 	{
 		if(!$event_id) return;
 
 		// Directly update stored data.
 		// Make sure we have the whole event
 		$event = $this->bo->read($event_id, $recurrence_date);
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 
 		if(!$event)
 		{
@@ -630,7 +636,7 @@ class calendar_ui
 		// If it's recurring, try to send the next month or so
 		else if($event['recur_type'] )
 		{
-			$this_month = new egw_time('next month');
+			$this_month = new Api\DateTime('next month');
 			$rrule = calendar_rrule::event2rrule($event, true);
 			$rrule->rewind();
 			do
@@ -658,13 +664,13 @@ class calendar_ui
 	{
 		if(!$event || !is_array($event)) return false;
 
-		if (!$this->bo->check_perms(EGW_ACL_EDIT,$event))
+		if (!$this->bo->check_perms(Acl::EDIT,$event))
 		{
 			$event['class'] .= 'rowNoEdit ';
 		}
 
 		// Delete disabled for other applications
-		if (!$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id']))
+		if (!$this->bo->check_perms(Acl::DELETE,$event) || !is_numeric($event['id']))
 		{
 			$event['class'] .= 'rowNoDelete ';
 		}
@@ -683,7 +689,7 @@ class calendar_ui
 		// respect category permissions
 		if(!empty($event['category']))
 		{
-			$event['category'] = $this->categories->check_list(EGW_ACL_READ, $event['category']);
+			$event['category'] = $this->categories->check_list(Acl::READ, $event['category']);
 		}
 		$event['non_blocking'] = (bool)$event['non_blocking'];
 
@@ -702,7 +708,7 @@ class calendar_ui
 		}
 		else
 		{
-			$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
+			$is_private = !$this->bo->check_perms(Acl::READ,$event);
 		}
 		if ($is_private)
 		{
@@ -721,10 +727,10 @@ class calendar_ui
 
 		if ($event['recur_type'] != MCAL_RECUR_NONE)
 		{
-			$event['app_id'] .= ':'.egw_time::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts');
+			$event['app_id'] .= ':'.Api\DateTime::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts');
 		}
 		// set id for grid
-		$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.egw_time::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts') : '');
+		$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.Api\DateTime::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts') : '');
 
 		$event['parts'] = implode(",\n",$this->bo->participants($event,false));
 		$event['date'] = $this->bo->date2string($event['start']);
@@ -734,7 +740,7 @@ class calendar_ui
 		{
 			if(is_int($event[$field]))
 			{
-				$event[$field] = egw_time::to($event[$field], egw_time::ET2);
+				$event[$field] = Api\DateTime::to($event[$field], Api\DateTime::ET2);
 			}
 		}
 	}
@@ -762,18 +768,18 @@ class calendar_ui
 				{
 					case 'month':
 						// Trim to _only_ the month, do not pad to week start / end
-						$time = new egw_time($this->date);
+						$time = new Api\DateTime($this->date);
 						$timespan = array(array(
-							'start' => egw_time::to($time->format('Y-m-01 00:00:00'),'ts'),
-							'end'	=> egw_time::to($time->format('Y-m-t 23:59:59'),'ts')
+							'start' => Api\DateTime::to($time->format('Y-m-01 00:00:00'),'ts'),
+							'end'	=> Api\DateTime::to($time->format('Y-m-t 23:59:59'),'ts')
 						));
 						break;
 					case 'week':
 						$timespan = array();
-						$start = new egw_time($this->first);
+						$start = new Api\DateTime($this->first);
 						$t = clone $start;
 						$t->modify('+1 week')->modify('-1 second');
-						if($t->format('ts') < egw_time::to($this->last,'ts'))
+						if($t->format('ts') < Api\DateTime::to($this->last,'ts'))
 						{
 							do
 							{
@@ -795,16 +801,16 @@ class calendar_ui
 				}
 			}
 			$merge = new calendar_merge();
-			//error_log($_GET['merge'] . ' Timespan: ');foreach($timespan as $t) error_log(egw_time::to($t['start']) . ' - ' . egw_time::to($t['end']));
+			//error_log($_GET['merge'] . ' Timespan: ');foreach($timespan as $t) error_log(Api\DateTime::to($t['start']) . ' - ' . Api\DateTime::to($t['end']));
 			$error = $merge->download($_GET['merge'], $timespan, '', $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 			// Here?  Doesn't actually give the message
-			egw_framework::refresh_opener($error, 'calendar');
+			Framework::refresh_opener($error, 'calendar');
 		}
 		unset($_GET['merge']);
 		if($error)
 		{
 			// This doesn't give message either, but at least it doesn't give a blank screen
-			egw_framework::redirect_link('/index.php', array(
+			Framework::redirect_link('/index.php', array(
 				'msg' => $error,
 				'cd' => 'yes'
 			));

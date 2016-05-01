@@ -12,6 +12,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+
 /**
  * Required for TZID <--> AS timezone blog test, if script is called directly via URL
  */
@@ -57,9 +60,9 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	private $calendar;
 
 	/**
-	 * Instance of addressbook_bo
+	 * Instance of Api\Contacts
 	 *
-	 * @var addressbook_bo
+	 * @var Api\Contacts
 	 */
 	private $addressbook;
 
@@ -211,7 +214,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			{
 
 				foreach($this->calendar->so->get_recurrence_exceptions($event,
-					egw_time::$server_timezone->getName(), $cutoffdate, 0, 'all') as $recur_date)
+					Api\DateTime::$server_timezone->getName(), $cutoffdate, 0, 'all') as $recur_date)
 				{
 					$messagelist[] = $this->StatMessage($id, $event['id'].':'.$recur_date);
 				}
@@ -544,7 +547,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 			//error_log(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 		}
-		if (!$this->calendar->check_perms($id ? EGW_ACL_EDIT : EGW_ACL_ADD, $old_event ? $old_event : 0,$account))
+		if (!$this->calendar->check_perms($id ? Acl::EDIT : Acl::ADD, $old_event ? $old_event : 0,$account))
 		{
 			// @todo: write in users calendar and make account only a participant
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) no rights to add/edit event!");
@@ -605,7 +608,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 					$save_event = $this->message2event($exception, $account, $ex_event);
 					$save_event['participants'] = $participants;	// not contained in $exception
 					$save_event['reference'] = $event['id'];
-					$save_event['recurrence'] = egw_time::server2user($exception->exceptionstarttime);
+					$save_event['recurrence'] = Api\DateTime::server2user($exception->exceptionstarttime);
 					$ex_ok = $this->calendar->save($save_event);
 					ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) saving exception=".array2string($save_event).' returned '.array2string($ex_ok));
 					//error_log(__METHOD__."('$folderid',$id,...) exception=".array2string($exception).") saving exception=".array2string($save_event).' returned '.array2string($ex_ok));
@@ -633,7 +636,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			'end' => 'endtime',
 		) as $key => $attr)
 		{
-			if (isset($message->$attr)) $event[$key] = egw_time::server2user($message->$attr);
+			if (isset($message->$attr)) $event[$key] = Api\DateTime::server2user($message->$attr);
 		}
 		// copying strings
 		foreach(array(
@@ -683,7 +686,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 					//'n_fn' => $attendee->name,	// not sure if we want matches without email
 				);
 				// search addressbook for participant
-				if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+				if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 				if ((list($data) = $this->addressbook->search($search,
 					array('id','egw_addressbook.account_id as account_id','n_fn'),
 					'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC',
@@ -810,14 +813,14 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			}
 			if ($message->recurrence->until)
 			{
-				$event['recur_enddate'] = egw_time::server2user($message->recurrence->until);
+				$event['recur_enddate'] = Api\DateTime::server2user($message->recurrence->until);
 			}
 			$event['recur_exceptions'] = array();
 			if ($message->exceptions)
 			{
 				foreach($message->exceptions as $exception)
 				{
-					$event['recur_exception'][] = egw_time::server2user($exception->exceptionstarttime);
+					$event['recur_exception'][] = Api\DateTime::server2user($exception->exceptionstarttime);
 				}
 				$event['recur_exception'] = array_unique($event['recur_exception']);
 			}
@@ -1132,7 +1135,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		$message->categories = array();
 		foreach($event['category'] ? explode(',',$event['category']) : array() as $cat_id)
 		{
-			$message->categories[] = categories::id2name($cat_id);
+			$message->categories[] = Api\Categories::id2name($cat_id);
 		}
 
 		// recurring information, only if not a single recurrence eg. virtual exception (!$recur_date)
@@ -1221,7 +1224,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			/* disabled virtual exceptions for now, as AS does NOT support changed participants or status
 			// add virtual exceptions here too (get_recurrence_exceptions should be able to return real-exceptions too!)
 			foreach($this->calendar->so->get_recurrence_exceptions($event,
-				egw_time::$server_timezone->getName(), $cutoffdate, 0, 'all') as $exception_time)
+				Api\DateTime::$server_timezone->getName(), $cutoffdate, 0, 'all') as $exception_time)
 			{
 				// exceptions seems to be full SyncAppointments, with only exceptionstarttime required
 				$exception = $this->GetMessage($folderid, $event['id'].':'.$exception_time, $contentparameters);
@@ -1275,7 +1278,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			$backup = $this->calendar->debug;
 			//$this->calendar->debug = 2;
 			list($id) = explode(':',$id);
-			$this->calendar->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server');
+			$this->calendar->check_perms(calendar_bo::ACL_FREEBUSY, $id, 0, 'server');
 			$this->calendar->debug = $backup;
 		}
 		else
@@ -1343,7 +1346,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 * - "dstbias": offset in minutes for no DST --> DST, usually 60 or 0 for no DST
 	 *
 	 * @link http://download.microsoft.com/download/5/D/D/5DD33FDF-91F5-496D-9884-0A0B0EE698BB/%5BMS-ASDTYPE%5D.pdf
-	 * @throws egw_exception_assertion_failed if no vtimezone data found for given timezone
+	 * @throws Api\Exception\AssertionFailed if no vtimezone data found for given timezone
 	 */
 	static public function tz2as($tz)
 	{
@@ -1401,7 +1404,7 @@ END:VTIMEZONE
 			}
 			else
 			{
-				throw new egw_exception_assertion_failed("NO standard component for '$name' in '$component'!");
+				throw new Api\Exception\AssertionFailed("NO standard component for '$name' in '$component'!");
 			}
 		}
 		// get bias and dstbias from standard component, which is present in all tz's
@@ -1548,7 +1551,7 @@ END:VTIMEZONE
 		{
 			if (!$n)	// check users timezone first
 			{
-				$tz = egw_time::$user_timezone->getName();
+				$tz = Api\DateTime::$user_timezone->getName();
 			}
 			elseif (!($tz = calendar_timezones::id2tz($n)))	// no further timezones to check
 			{

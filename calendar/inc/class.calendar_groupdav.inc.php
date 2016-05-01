@@ -5,13 +5,14 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
- * @subpackage groupdav
+ * @subpackage caldav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Acl;
 
 /**
  * CalDAV/CardDAV/GroupDAV access: Calendar handler
@@ -270,7 +271,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	function output_vcalendar($files)
 	{
 		// todo ETag logic with CTag to not download unchanged calendar again
-		html::content_header('calendar.ics', 'text/calendar');
+		Api\Header\Content::type('calendar.ics', 'text/calendar');
 
 		$n = 0;
 		foreach($files as $file)
@@ -306,7 +307,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		{
 			echo "END:VCALENDAR\n";
 		}
-		common::egw_exit();
+		exit();
 	}
 
 	/**
@@ -831,7 +832,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			return $oldEvent;
 		}
 
-		if (is_null($oldEvent) && ($user >= 0 && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user) ||
+		if (is_null($oldEvent) && ($user >= 0 && !$this->bo->check_perms(Acl::ADD, 0, $user) ||
 			// if we require an extra invite grant, we fail if that does not exist (bind privilege is not given in that case)
 			$this->bo->require_acl_invite && $user && $user != $GLOBALS['egw_info']['user']['account_id'] &&
 				!$this->bo->check_acl_invite($user)))
@@ -899,7 +900,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				}
 			}
 			// if no edit-rights (aka no organizer), update only attendee stuff: status and alarms
-			if (!$this->check_access(EGW_ACL_EDIT, $oldEvent))
+			if (!$this->check_access(Acl::EDIT, $oldEvent))
 			{
 				$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 				$user_and_memberships[] = $user;
@@ -937,12 +938,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 									!($oldEvent['recur_date'] == $event['recurrence'] || !$event['recurrence'] && !$oldEvent['recurrence']))
 								{
 									// if recurrence not found --> log it and continue with other recurrence
-									$this->caldav->log(__METHOD__."(,,$user) could NOT find recurrence=$event[recurrence]=".egw_time::to($event['recurrence']).' of event series! event='.array2string($event));
+									$this->caldav->log(__METHOD__."(,,$user) could NOT find recurrence=$event[recurrence]=".Api\DateTime::to($event['recurrence']).' of event series! event='.array2string($event));
 									continue;
 								}
 							}
 						}
-						if ($this->debug) error_log(__METHOD__."(, $id, $user, '$prefix') eventId=$eventId ($oldEvent[id]), user=$user, old-status='{$oldEvent['participants'][$user]}', new-status='{$event['participants'][$user]}', recurrence=$event[recurrence]=".egw_time::to($event['recurrence']).", event=".array2string($event));
+						if ($this->debug) error_log(__METHOD__."(, $id, $user, '$prefix') eventId=$eventId ($oldEvent[id]), user=$user, old-status='{$oldEvent['participants'][$user]}', new-status='{$event['participants'][$user]}', recurrence=$event[recurrence]=".Api\DateTime::to($event['recurrence']).", event=".array2string($event));
 						if (isset($event['participants']) && isset($event['participants'][$user]) &&
 							$event['participants'][$user] !== $oldEvent['participants'][$user])
 						{
@@ -950,13 +951,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 								// real (not virtual) exceptions use recurrence 0 in egw_cal_user.cal_recurrence!
 								$recurrence = $eventId == $oldEvent['id'] ? $event['recurrence'] : 0))
 							{
-								if ($this->debug) error_log(__METHOD__."(,,$user) failed to set_status($oldEvent[id], $user, '{$event['participants'][$user]}', $recurrence=".egw_time::to($recurrence).')');
+								if ($this->debug) error_log(__METHOD__."(,,$user) failed to set_status($oldEvent[id], $user, '{$event['participants'][$user]}', $recurrence=".Api\DateTime::to($recurrence).')');
 								return '403 Forbidden';
 							}
 							else
 							{
 								++$modified;
-								if ($this->debug) error_log(__METHOD__."() set_status($oldEvent[id], $user, {$event['participants'][$user]} , $recurrence=".egw_time::to($recurrence).')');
+								if ($this->debug) error_log(__METHOD__."() set_status($oldEvent[id], $user, {$event['participants'][$user]} , $recurrence=".Api\DateTime::to($recurrence).')');
 							}
 						}
 						// import alarms, if given and changed
@@ -986,7 +987,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 				// lightning will pop up the alarm, as long as the Sequence (etag) does NOT change
 				// --> update the etag alone, if user has no edit rights
-				if ($this->agent == 'lightning' && !$this->check_access(EGW_ACL_EDIT, $oldEvent) &&
+				if ($this->agent == 'lightning' && !$this->check_access(Acl::EDIT, $oldEvent) &&
 					isset($oldEvent['participants'][$GLOBALS['egw_info']['user']['account_id']]))
 				{
 					// just update etag in database
@@ -1191,7 +1192,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	function free_busy_report($path,$options,$user)
 	{
 		unset($path);	// unused, but required by function signature
-		if (!$this->bo->check_perms(EGW_ACL_FREEBUSY, 0, $user))
+		if (!$this->bo->check_perms(calendar_bo::ACL_FREEBUSY, 0, $user))
 		{
 			return '403 Forbidden';
 		}
@@ -1207,7 +1208,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		header('Content-Type: text/calendar');
 		echo $handler->freebusy($user, $end, true, 'utf-8', $start, 'REPLY', array());
 
-		common::egw_exit();	// otherwise we get a 207 multistatus, not 200 Ok
+		exit();	// otherwise we get a 207 multistatus, not 200 Ok
 	}
 
 	/**
@@ -1224,7 +1225,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$privileges = parent::current_user_privileges($path, $user);
 		//error_log(__METHOD__."('$path', $user) parent gave ".array2string($privileges));
 
-		if ($this->bo->check_perms(EGW_ACL_FREEBUSY, 0, $user))
+		if ($this->bo->check_perms(calendar_bo::ACL_FREEBUSY, 0, $user))
 		{
 			$privileges['read-free-busy'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV, 'read-free-busy', '');
 
@@ -1237,7 +1238,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		{
 			$privileges['schedule-deliver'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV, 'schedule-deliver', '');
 		}
-		// remove bind privilege on other users or groups calendars, if calendar config require_acl_invite is set
+		// remove bind privilege on other users or groups calendars, if calendar Api\Config require_acl_invite is set
 		// and current user has no invite grant
 		if ($user && $user != $GLOBALS['egw_info']['user']['account_id'] && isset($privileges['bind']) &&
 			!$this->bo->check_acl_invite($user))
@@ -1381,14 +1382,14 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL', 'cal_reference=0'), null, true, 'server');
 		if ($event) $event = array_shift($event);	// read with array as 1. param, returns an array of events!
 
-		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY,$event, 0, 'server')) &&
+		if (!($retval = $this->bo->check_perms(calendar_bo::ACL_FREEBUSY,$event, 0, 'server')) &&
 			// above can be true, if current user is not in master but just a recurrence
 			(!$event['recur_type'] || !($events = self::get_series($event['uid'], $this->bo))))
 		{
 			if ($this->debug > 0) error_log(__METHOD__."($id) no READ or FREEBUSY rights returning ".array2string($retval));
 			return $retval;
 		}
-		if (!$this->bo->check_perms(EGW_ACL_READ, $event, 0, 'server'))
+		if (!$this->bo->check_perms(Acl::READ, $event, 0, 'server'))
 		{
 			$this->bo->clear_private_infos($event, array($this->bo->user, $event['owner']));
 		}
@@ -1466,16 +1467,16 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	/**
 	 * Check if user has the neccessary rights on an event
 	 *
-	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
+	 * @param int $acl Acl::READ, Acl::EDIT or Acl::DELETE
 	 * @param array|int $event event-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
 	function check_access($acl,$event)
 	{
-		if ($acl == EGW_ACL_READ)
+		if ($acl == Acl::READ)
 		{
-			// we need at least EGW_ACL_FREEBUSY to get some information
-			$acl = EGW_ACL_FREEBUSY;
+			// we need at least calendar_bo::ACL_FREEBUSY to get some information
+			$acl = calendar_bo::ACL_FREEBUSY;
 		}
 		return $this->bo->check_perms($acl,$event,0,'server');
 	}
@@ -1483,7 +1484,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	/**
 	 * Add extra properties for calendar collections
 	 *
-	 * @param array $props regular props by the groupdav handler
+	 * @param array $props regular props by the Api\CalDAV handler
 	 * @param string $displayname
 	 * @param string $base_uri =null base url of handler
 	 * @param int $user =null account_id of owner of current collection

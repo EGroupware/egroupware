@@ -1,502 +1,507 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - Holiday                                                     *
-	* http://www.egroupware.org                                                *
-	* Written by Mark Peters <skeeter@phpgroupware.org>                        *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
+/**************************************************************************\
+* eGroupWare - Holiday                                                     *
+* http://www.egroupware.org                                                *
+* Written by Mark Peters <skeeter@phpgroupware.org>                        *
+* --------------------------------------------                             *
+*  This program is free software; you can redistribute it and/or modify it *
+*  under the terms of the GNU General Public License as published by the   *
+*  Free Software Foundation; either version 2 of the License, or (at your  *
+*  option) any later version.                                              *
+\**************************************************************************/
 
-	/* $Id$ */
+use EGroupware\Api;
+use EGroupware\Api\Framework;
 
-	/**
-	 * Business object for calendar holidays
-	 *
-	 * @package calendar
-	 * @author Mark Peters <skeeter@phpgroupware.org>
-	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
-	 */
-	class boholiday
+/* $Id$ */
+
+/**
+ * Business object for calendar holidays
+ *
+ * @package calendar
+ * @author Mark Peters <skeeter@phpgroupware.org>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ */
+class boholiday
+{
+	var $public_functions = Array(
+		'add'		=> True,
+		'delete_holiday'	=> True,
+		'delete_locale'	=> True,
+		'accept_holiday'	=> True,
+
+		'read_entries'	=> True,
+		'read_entry'	=> True,
+		'add_entry'	=> True,
+		'update_entry'	=> True
+	);
+
+	var $debug = false;
+	var $base_url = '/index.php';
+
+	var $ui;
+	var $so;
+	var $owner;
+	var $year;
+
+	var $id;
+	var $total;
+	var $start;
+	var $query;
+	var $sort;
+
+	var $locales = Array();
+	var $holidays;
+	var $cached_holidays;
+
+	function boholiday()
 	{
-		var $public_functions = Array(
-			'add'		=> True,
-			'delete_holiday'	=> True,
-			'delete_locale'	=> True,
-			'accept_holiday'	=> True,
+		$this->so =& CreateObject('calendar.soholiday');
 
-			'read_entries'	=> True,
-			'read_entry'	=> True,
-			'add_entry'	=> True,
-			'update_entry'	=> True
-		);
-
-		var $debug = false;
-		var $base_url = '/index.php';
-
-		var $ui;
-		var $so;
-		var $owner;
-		var $year;
-
-		var $id;
-		var $total;
-		var $start;
-		var $query;
-		var $sort;
-
-		var $locales = Array();
-		var $holidays;
-		var $cached_holidays;
-
-		function boholiday()
+		$this->start  = (int)get_var('start',array('POST','GET'));
+		$this->query  = get_var('query',array('POST','GET'));
+		$this->sort   = get_var('sort',array('POST','GET'));
+		$this->order  = get_var('order',array('POST','GET'));
+		$this->id     = get_var('id',array('POST','GET'));
+		$this->year   = get_var('year',array('POST','GET'),date('Y'));
+		$this->locale = get_var('locale',array('POST','GET'));
+		if ($this->locale)
 		{
-			$this->so =& CreateObject('calendar.soholiday');
-
-			$this->start  = (int)get_var('start',array('POST','GET'));
-			$this->query  = get_var('query',array('POST','GET'));
-			$this->sort   = get_var('sort',array('POST','GET'));
-			$this->order  = get_var('order',array('POST','GET'));
-			$this->id     = get_var('id',array('POST','GET'));
-			$this->year   = get_var('year',array('POST','GET'),date('Y'));
-			$this->locale = get_var('locale',array('POST','GET'));
-			if ($this->locale)
-			{
-				$this->locales[] = $this->locale;
-			}
-
-			if($this->debug)
-			{
-				echo '<-- Locale = '.$this->locales[0].' -->'."\n";
-			}
-
-			$this->total = $this->so->holiday_total($this->locales[0],$this->query,$this->year);
+			$this->locales[] = $this->locale;
 		}
 
-		/* Begin Calendar functions */
-		function read_entry($id=0)
+		if($this->debug)
 		{
-			if($this->debug)
-			{
-				echo "BO : Reading Holiday ID : ".$id."<br>\n";
-			}
-
-			if(!$id)
-			{
-				if(!$this->id)
-				{
-					return Array();
-				}
-				else
-				{
-					$id = $this->id;
-				}
-			}
-
-			return $this->so->read_holiday($id);
+			echo '<-- Locale = '.$this->locales[0].' -->'."\n";
 		}
 
-		function delete_holiday($id=0)
-		{
-			if(!$id)
-			{
-				if($this->id)
-				{
-					$id = $this->id;
-				}
-			}
+		$this->total = $this->so->holiday_total($this->locales[0],$this->query,$this->year);
+	}
 
-			$this->ui =& CreateObject('calendar.uiholiday');
-			if($id)
+	/* Begin Calendar functions */
+	function read_entry($id=0)
+	{
+		if($this->debug)
+		{
+			echo "BO : Reading Holiday ID : ".$id."<br>\n";
+		}
+
+		if(!$id)
+		{
+			if(!$this->id)
 			{
-				$this->so->delete_holiday($id);
-				$this->ui->edit_locale();
+				return Array();
 			}
 			else
 			{
-				$this->ui->admin();
+				$id = $this->id;
 			}
 		}
 
-		function delete_locale($locale='')
-		{
-			if(!$locale)
-			{
-				if($this->locales[0])
-				{
-					$locale = $this->locales[0];
-				}
-			}
+		return $this->so->read_holiday($id);
+	}
 
-			if($locale)
+	function delete_holiday($id=0)
+	{
+		if(!$id)
+		{
+			if($this->id)
 			{
-				$this->so->delete_locale($locale);
+				$id = $this->id;
 			}
-			$this->ui =& CreateObject('calendar.uiholiday');
+		}
+
+		$this->ui =& CreateObject('calendar.uiholiday');
+		if($id)
+		{
+			$this->so->delete_holiday($id);
+			$this->ui->edit_locale();
+		}
+		else
+		{
 			$this->ui->admin();
 		}
+	}
 
-		function accept_holiday()
+	function delete_locale($locale='')
+	{
+		if(!$locale)
 		{
-			$send_back_to = str_replace('submitlocale','holiday_admin',$_SERVER['HTTP_REFERER']);
-			if(!@$this->locales[0])
+			if($this->locales[0])
 			{
-				Header('Location: '.$send_back_to);
+				$locale = $this->locales[0];
 			}
+		}
 
-			$send_back_to = str_replace('&locale='.$this->locales[0],'',$send_back_to);
-			$file = './holidays.'.$this->locales[0];
-			if(!file_exists($file) && count($_POST['name']))
-			{
-				$fp = fopen($file,'w');
-				fwrite($fp,"charset\t".$GLOBALS['egw']->translation->charset()."\n");
+		if($locale)
+		{
+			$this->so->delete_locale($locale);
+		}
+		$this->ui =& CreateObject('calendar.uiholiday');
+		$this->ui->admin();
+	}
 
-				$holidays = array();
-				foreach($_POST['name'] as $i => $name)
-				{
-					$holiday = array(
-						'locale' => $_POST['locale'],
-						'name'   => str_replace('\\','',$name),
-						'day'    => $_POST['day'][$i],
-						'month'  => $_POST['month'][$i],
-						'occurence' => $_POST['occurence'][$i],
-						'dow'    => $_POST['dow'][$i],
-						'observance' => $_POST['observance'][$i],
-					);
-				}
-				// sort holidays by year / occurence:
-				usort($holidays,'_holiday_cmp');
-
-				$last_year = -1;
-				foreach($holidays as $holiday)
-				{
-					$year = $holiday['occurence'] <= 0 ? 0 : $holiday['occurence'];
-					if ($year != $last_year)
-					{
-						echo "\n".($year ? $year : 'regular (year=0)').":\n";
-						$last_year = $year;
-					}
-					fwrite($fp,"$holiday[locale]\t$holiday[name]\t$holiday[day]\t$holiday[month]\t$holiday[occurence]\t$holiday[dow]\t$holiday[observance_rule]\n");
-				}
-				fclose($fp);
-			}
+	function accept_holiday()
+	{
+		$send_back_to = str_replace('submitlocale','holiday_admin',$_SERVER['HTTP_REFERER']);
+		if(!@$this->locales[0])
+		{
 			Header('Location: '.$send_back_to);
 		}
 
-		function get_holiday_list($locale='', $sort='', $order='', $query='', $total='', $year=0)
+		$send_back_to = str_replace('&locale='.$this->locales[0],'',$send_back_to);
+		$file = './holidays.'.$this->locales[0];
+		if(!file_exists($file) && count($_POST['name']))
 		{
-			$locale = ($locale?$locale:$this->locales[0]);
-			$sort = ($sort?$sort:$this->sort);
-			$order = ($order?$order:$this->order);
-			$query = ($query?$query:$this->query);
-			$year = ($$year?$$year:$this->year);
-			return $this->so->read_holidays($locale,$query,$order,$year);
+			$fp = fopen($file,'w');
+			fwrite($fp,"charset\t".Api\Translation::charset()."\n");
+
+			$holidays = array();
+			foreach($_POST['name'] as $i => $name)
+			{
+				$holiday = array(
+					'locale' => $_POST['locale'],
+					'name'   => str_replace('\\','',$name),
+					'day'    => $_POST['day'][$i],
+					'month'  => $_POST['month'][$i],
+					'occurence' => $_POST['occurence'][$i],
+					'dow'    => $_POST['dow'][$i],
+					'observance' => $_POST['observance'][$i],
+				);
+			}
+			// sort holidays by year / occurence:
+			usort($holidays,'_holiday_cmp');
+
+			$last_year = -1;
+			foreach($holidays as $holiday)
+			{
+				$year = $holiday['occurence'] <= 0 ? 0 : $holiday['occurence'];
+				if ($year != $last_year)
+				{
+					echo "\n".($year ? $year : 'regular (year=0)').":\n";
+					$last_year = $year;
+				}
+				fwrite($fp,"$holiday[locale]\t$holiday[name]\t$holiday[day]\t$holiday[month]\t$holiday[occurence]\t$holiday[dow]\t$holiday[observance_rule]\n");
+			}
+			fclose($fp);
+		}
+		Header('Location: '.$send_back_to);
+	}
+
+	function get_holiday_list($locale='', $sort='', $order='', $query='', $total='', $year=0)
+	{
+		$locale = ($locale?$locale:$this->locales[0]);
+		$sort = ($sort?$sort:$this->sort);
+		$order = ($order?$order:$this->order);
+		$query = ($query?$query:$this->query);
+		$year = ($$year?$$year:$this->year);
+		return $this->so->read_holidays($locale,$query,$order,$year);
+	}
+
+	function get_locale_list($sort='', $order='', $query='')
+	{
+		$sort = ($sort?$sort:$this->sort);
+		$order = ($order?$order:$this->order);
+		$query = ($query?$query:$this->query);
+		return $this->so->get_locale_list($sort,$order,$query);
+	}
+
+	function prepare_read_holidays($year=0,$owner=0)
+	{
+		$this->year = (isset($year) && $year > 0?$year: Api\DateTime::to(time() - $GLOBALS['egw']->datetime->tz_offset,'Y'));
+		$this->owner = ($owner?$owner:$GLOBALS['egw_info']['user']['account_id']);
+
+		if($this->debug)
+		{
+			echo 'Setting Year to : '.$this->year.'<br>'."\n";
 		}
 
-		function get_locale_list($sort='', $order='', $query='')
+		if(@$GLOBALS['egw_info']['user']['preferences']['common']['country'])
 		{
-			$sort = ($sort?$sort:$this->sort);
-			$order = ($order?$order:$this->order);
-			$query = ($query?$query:$this->query);
-			return $this->so->get_locale_list($sort,$order,$query);
+			$this->locales[] = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
+		}
+		elseif(@$GLOBALS['egw_info']['user']['preferences']['calendar']['locale'])
+		{
+			$this->locales[] = $GLOBALS['egw_info']['user']['preferences']['calendar']['locale'];
+		}
+		else
+		{
+			$this->locales[] = 'US';
 		}
 
-		function prepare_read_holidays($year=0,$owner=0)
+		if($this->owner != $GLOBALS['egw_info']['user']['account_id'])
 		{
-			$this->year = (isset($year) && $year > 0?$year:$GLOBALS['egw']->common->show_date(time() - $GLOBALS['egw']->datetime->tz_offset,'Y'));
-			$this->owner = ($owner?$owner:$GLOBALS['egw_info']['user']['account_id']);
-
-			if($this->debug)
+			$owner_pref = new Api\Preferences($owner);
+			$owner_prefs = $owner_pref->read_repository();
+			if(@$owner_prefs['common']['country'])
 			{
-				echo 'Setting Year to : '.$this->year.'<br>'."\n";
+				$this->locales[] = $owner_prefs['common']['country'];
 			}
-
-			if(@$GLOBALS['egw_info']['user']['preferences']['common']['country'])
+			elseif(@$owner_prefs['calendar']['locale'])
 			{
-				$this->locales[] = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
+				$this->locales[] = $owner_prefs['calendar']['locale'];
 			}
-			elseif(@$GLOBALS['egw_info']['user']['preferences']['calendar']['locale'])
+			unset($owner_pref);
+		}
+
+		if($GLOBALS['egw_info']['server']['auto_load_holidays'] == True && $this->locales)
+		{
+			foreach($this->locales as $local)
 			{
-				$this->locales[] = $GLOBALS['egw_info']['user']['preferences']['calendar']['locale'];
+				$this->auto_load_holidays($local, $year);
+			}
+		}
+	}
+
+	function auto_load_holidays($locale, $year=0)
+	{
+		//error_log(__METHOD__."('$locale', $year)");
+		if (!Api\Cache::getInstance(__CLASS__, $locale.'-'.$year) &&	// check if autoload has been tried for this locale and year
+			(!($total_year = $this->so->holiday_total($locale, '', $year)) ||
+			// automatic try load new holidays, if there are no irregular ones for queried year
+			$total_year == $this->so->holiday_total($locale, '', 1901)))
+		{
+			//error_log(__METHOD__."('$locale', $year) attemption autoload ...");
+			Api\Cache::setInstance(__CLASS__, $locale.'-'.$year, true, 864000);	// do NOT try again for 10 days
+			@set_time_limit(0);
+
+			/* get the file that contains the calendar events for your locale */
+			/* "http://www.egroupware.org/cal/holidays.US.csv";                 */
+			if(isset($GLOBALS['egw_info']['server']['holidays_url_path']) && $GLOBALS['egw_info']['server']['holidays_url_path'] != 'localhost')
+			{
+				$load_from = $GLOBALS['egw_info']['server']['holidays_url_path'];
 			}
 			else
 			{
-				$this->locales[] = 'US';
-			}
-
-			if($this->owner != $GLOBALS['egw_info']['user']['account_id'])
-			{
-				$owner_pref =& CreateObject('phpgwapi.preferences',$owner);
-				$owner_prefs = $owner_pref->read_repository();
-				if(@$owner_prefs['common']['country'])
+				if ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/')
 				{
-					$this->locales[] = $owner_prefs['common']['country'];
-				}
-				elseif(@$owner_prefs['calendar']['locale'])
-				{
-					$this->locales[] = $owner_prefs['calendar']['locale'];
-				}
-				unset($owner_pref);
-			}
-
-			if($GLOBALS['egw_info']['server']['auto_load_holidays'] == True && $this->locales)
-			{
-				foreach($this->locales as $local)
-				{
-					$this->auto_load_holidays($local, $year);
-				}
-			}
-		}
-
-		function auto_load_holidays($locale, $year=0)
-		{
-			//error_log(__METHOD__."('$locale', $year)");
-			if (!egw_cache::getInstance(__CLASS__, $locale.'-'.$year) &&	// check if autoload has been tried for this locale and year
-				(!($total_year = $this->so->holiday_total($locale, '', $year)) ||
-				// automatic try load new holidays, if there are no irregular ones for queried year
-				$total_year == $this->so->holiday_total($locale, '', 1901)))
-			{
-				//error_log(__METHOD__."('$locale', $year) attemption autoload ...");
-				egw_cache::setInstance(__CLASS__, $locale.'-'.$year, true, 864000);	// do NOT try again for 10 days
-				@set_time_limit(0);
-
-				/* get the file that contains the calendar events for your locale */
-				/* "http://www.egroupware.org/cal/holidays.US.csv";                 */
-				if(isset($GLOBALS['egw_info']['server']['holidays_url_path']) && $GLOBALS['egw_info']['server']['holidays_url_path'] != 'localhost')
-				{
-					$load_from = $GLOBALS['egw_info']['server']['holidays_url_path'];
+					$server_host = ($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$GLOBALS['egw_info']['server']['webserver_url'];
 				}
 				else
 				{
-					if ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/')
-					{
-						$server_host = ($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$GLOBALS['egw_info']['server']['webserver_url'];
-					}
-					else
-					{
-						$server_host = $GLOBALS['egw_info']['server']['webserver_url'];
-					}
-					$load_from = $server_host.'/calendar/egroupware.org';
+					$server_host = $GLOBALS['egw_info']['server']['webserver_url'];
 				}
+				$load_from = $server_host.'/calendar/egroupware.org';
+			}
 //				echo 'Loading from: '.$load_from.'/holidays.'.strtoupper($locale).'.csv'."<br>\n";
-				if($GLOBALS['egw_info']['server']['holidays_url_path'] == 'localhost')
-				{
-					$lines = file(EGW_SERVER_ROOT.'/calendar/egroupware.org/holidays.'.strtoupper($locale).'.csv');
-				}
-				else
-				{
-					$lines = file($url=$load_from.'/holidays.'.strtoupper($locale).'.csv', 0, egw_framework::proxy_context());
-					//error_log(__METHOD__."('$locale', $year) file('$url')=".array2string($lines));
-				}
-				if (!$lines)
-				{
-					return false;
-				}
-				// reading the holidayfile from egroupware.org via network::gethttpsocketfile contains all the headers!
-				foreach($lines as $line)
-				{
-					$fields = preg_split("/[\t\n ]+/",$line);
-
-					if ($fields[0] == 'charset' && $fields[1])
-					{
-						$lines = translation::convert($lines,$fields[1]);
-						break;
-					}
-				}
-				foreach ($lines as $line)
-				{
-//					echo 'Line #'.$i.' : '.$lines[$i]."<br>\n";
-					$holiday = explode("\t",$line);
-					if(count($holiday) == 7)
-					{
-						$holiday['locale'] = $holiday[0];
-						$holiday['name'] = $GLOBALS['egw']->db->db_addslashes($holiday[1]);
-						$holiday['mday'] = (int)$holiday[2];
-						$holiday['month_num'] = (int)$holiday[3];
-						$holiday['occurence'] = (int)$holiday[4];
-						$holiday['dow'] = (int)$holiday[5];
-						$holiday['observance_rule'] = (int)$holiday[6];
-						$holiday['hol_id'] = 0;
-						$this->so->save_holiday($holiday);
-					}
-				}
-			}
-		}
-
-		function save_holiday($holiday)
-		{
-			$this->so->save_holiday($holiday);
-		}
-
-		function add()
-		{
-			if(@$_POST['submit'])
+			if($GLOBALS['egw_info']['server']['holidays_url_path'] == 'localhost')
 			{
-				$holiday = $_POST['holiday'];
-
-				if(empty($holiday['mday']))
-				{
-					$holiday['mday'] = 0;
-				}
-				if(!isset($this->bo->locales[0]) || $this->bo->locales[0]=='')
-				{
-					$this->bo->locales[0] = $holiday['locale'];
-				}
-				elseif(!isset($holiday['locale']) || $holiday['locale']=='')
-				{
-					$holiday['locale'] = $this->bo->locales[0];
-				}
-				if(!isset($holiday['hol_id']))
-				{
-					$holiday['hol_id'] = $this->bo->id;
-				}
-
-				// some input validation
-
-				if (!$holiday['mday'] == !$holiday['occurence'])
-				{
-					$errors[] = lang('You need to set either a day or a occurence !!!');
-				}
-				if($holiday['year'] && $holiday['occurence'])
-				{
-					$errors[] = lang('You can only set a year or a occurence !!!');
-				}
-				else
-				{
-					$holiday['occurence'] = (int)($holiday['occurence'] ? $holiday['occurence'] : $holiday['year']);
-					unset($holiday['year']);
-				}
-
-	// Still need to put some validation in here.....
-
-				$this->ui =& CreateObject('calendar.uiholiday');
-
-				if (is_array($errors))
-				{
-					$holiday['month'] = $holiday['month_num'];
-					$holiday['day']   = $holiday['mday'];
-					$this->ui->edit_holiday($errors,$holiday);
-				}
-				else
-				{
-					$this->so->save_holiday($holiday);
-					$this->ui->edit_locale($holiday['locale']);
-				}
+				$lines = file(EGW_SERVER_ROOT.'/calendar/egroupware.org/holidays.'.strtoupper($locale).'.csv');
 			}
-		}
-
-		function sort_holidays_by_date($holidays)
-		{
-			$c_holidays = count($holidays);
-			for($outer_loop=0;$outer_loop<($c_holidays - 1);$outer_loop++)
+			else
 			{
-				for($inner_loop=$outer_loop;$inner_loop<$c_holidays;$inner_loop++)
-				{
-					if($holidays[$outer_loop]['date'] > $holidays[$inner_loop]['date'])
-					{
-						$temp = $holidays[$inner_loop];
-						$holidays[$inner_loop] = $holidays[$outer_loop];
-						$holidays[$outer_loop] = $temp;
-					}
-				}
+				$lines = file($url=$load_from.'/holidays.'.strtoupper($locale).'.csv', 0, Framework::proxy_context());
+				//error_log(__METHOD__."('$locale', $year) file('$url')=".array2string($lines));
 			}
-			return $holidays;
-		}
-
-		function set_holidays_to_date($holidays)
-		{
-			$new_holidays = Array();
-			for($i=0;$i<count($holidays);$i++)
-			{
-//	echo "Setting Holidays Date : ".date('Ymd',$holidays[$i]['date'])."<br>\n";
-				$new_holidays[date('Ymd',$holidays[$i]['date'])][] = $holidays[$i];
-			}
-			return $new_holidays;
-		}
-
-		function read_holiday()
-		{
-			if(isset($this->cached_holidays))
-			{
-				return $this->cached_holidays;
-			}
-			$holidays = $this->so->read_holidays($this->locales,'','',$this->year);
-
-			if(count($holidays) == 0)
-			{
-				return $holidays;
-			}
-
-			$temp_locale = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
-			foreach($holidays as $i => $holiday)
-			{
-				if($i == 0 || $holidays[$i]['locale'] != $holidays[$i - 1]['locale'])
-				{
-					if(is_object($holidaycalc))
-					{
-						unset($holidaycalc);
-					}
-					$GLOBALS['egw_info']['user']['preferences']['common']['country'] = $holidays[$i]['locale'];
-					$holidaycalc =& CreateObject('calendar.holidaycalc');
-				}
-				$holidays[$i]['date'] = $holidaycalc->calculate_date($holiday, $holidays, $this->year);
-			}
-			unset($holidaycalc);
-			$this->holidays = $this->sort_holidays_by_date($holidays);
-			$this->cached_holidays = $this->set_holidays_to_date($this->holidays);
-			$GLOBALS['egw_info']['user']['preferences']['common']['country'] = $temp_locale;
-			return $this->cached_holidays;
-		}
-		/* End Calendar functions */
-
-		function check_admin()
-		{
-			if(!@$GLOBALS['egw_info']['user']['apps']['admin'])
-			{
-				Header('Location: ' . $GLOBALS['egw']->link('/index.php'));
-			}
-		}
-
-		function rule_string($holiday)
-		{
-			if (!is_array($holiday))
+			if (!$lines)
 			{
 				return false;
 			}
-			$monthnames = array(
-				'','January','February','March','April','May','June',
-				'July','August','September','October','November','December'
-			);
-			$month = $holiday['month'] ? lang($monthnames[$holiday['month']]) : '';
-
-			if (!$holiday['day'])
+			// reading the holidayfile from egroupware.org via network::gethttpsocketfile contains all the headers!
+			foreach($lines as $line)
 			{
-				$occ = $holiday['occurence'] == 99 ? lang('last') : $holiday['occurence'].'.';
+				$fields = preg_split("/[\t\n ]+/",$line);
 
-				$dow_str = Array(lang('Sun'),lang('Mon'),lang('Tue'),lang('Wed'),lang('Thu'),lang('Fri'),lang('Sat'));
-				$dow = $dow_str[$holiday['dow']];
+				if ($fields[0] == 'charset' && $fields[1])
+				{
+					$lines = Api\Translation::convert($lines,$fields[1]);
+					break;
+				}
+			}
+			foreach ($lines as $line)
+			{
+//					echo 'Line #'.$i.' : '.$lines[$i]."<br>\n";
+				$holiday = explode("\t",$line);
+				if(count($holiday) == 7)
+				{
+					$holiday['locale'] = $holiday[0];
+					$holiday['name'] = $GLOBALS['egw']->db->db_addslashes($holiday[1]);
+					$holiday['mday'] = (int)$holiday[2];
+					$holiday['month_num'] = (int)$holiday[3];
+					$holiday['occurence'] = (int)$holiday[4];
+					$holiday['dow'] = (int)$holiday[5];
+					$holiday['observance_rule'] = (int)$holiday[6];
+					$holiday['hol_id'] = 0;
+					$this->so->save_holiday($holiday);
+				}
+			}
+		}
+	}
 
-				$str = lang('%1 %2 in %3',$occ,$dow,$month);
+	function save_holiday($holiday)
+	{
+		$this->so->save_holiday($holiday);
+	}
+
+	function add()
+	{
+		if(@$_POST['submit'])
+		{
+			$holiday = $_POST['holiday'];
+
+			if(empty($holiday['mday']))
+			{
+				$holiday['mday'] = 0;
+			}
+			if(!isset($this->bo->locales[0]) || $this->bo->locales[0]=='')
+			{
+				$this->bo->locales[0] = $holiday['locale'];
+			}
+			elseif(!isset($holiday['locale']) || $holiday['locale']=='')
+			{
+				$holiday['locale'] = $this->bo->locales[0];
+			}
+			if(!isset($holiday['hol_id']))
+			{
+				$holiday['hol_id'] = $this->bo->id;
+			}
+
+			// some input validation
+
+			if (!$holiday['mday'] == !$holiday['occurence'])
+			{
+				$errors[] = lang('You need to set either a day or a occurence !!!');
+			}
+			if($holiday['year'] && $holiday['occurence'])
+			{
+				$errors[] = lang('You can only set a year or a occurence !!!');
 			}
 			else
 			{
-				$str = $GLOBALS['egw']->common->dateformatorder($holiday['occurence']>1900?$holiday['occurence']:'',$month,$holiday[day]);
+				$holiday['occurence'] = (int)($holiday['occurence'] ? $holiday['occurence'] : $holiday['year']);
+				unset($holiday['year']);
 			}
-			if ($holiday['observance_rule'])
+
+// Still need to put some validation in here.....
+
+			$this->ui =& CreateObject('calendar.uiholiday');
+
+			if (is_array($errors))
 			{
-				$str .= ' ('.lang('Observance Rule').')';
+				$holiday['month'] = $holiday['month_num'];
+				$holiday['day']   = $holiday['mday'];
+				$this->ui->edit_holiday($errors,$holiday);
 			}
-			return $str;
+			else
+			{
+				$this->so->save_holiday($holiday);
+				$this->ui->edit_locale($holiday['locale']);
+			}
 		}
 	}
 
-	function _holiday_cmp($a,$b)
+	function sort_holidays_by_date($holidays)
 	{
-		if (($year_diff = ($a['occurence'] <= 0 ? 0 : $a['occurence']) - ($b['occurence'] <= 0 ? 0 : $b['occurence'])))
+		$c_holidays = count($holidays);
+		for($outer_loop=0;$outer_loop<($c_holidays - 1);$outer_loop++)
 		{
-			return $year_diff;
+			for($inner_loop=$outer_loop;$inner_loop<$c_holidays;$inner_loop++)
+			{
+				if($holidays[$outer_loop]['date'] > $holidays[$inner_loop]['date'])
+				{
+					$temp = $holidays[$inner_loop];
+					$holidays[$inner_loop] = $holidays[$outer_loop];
+					$holidays[$outer_loop] = $temp;
+				}
+			}
 		}
-		return $a['month'] - $b['month'] ? $a['month'] - $b['month'] : $a['day'] - $b['day'];
+		return $holidays;
 	}
+
+	function set_holidays_to_date($holidays)
+	{
+		$new_holidays = Array();
+		for($i=0;$i<count($holidays);$i++)
+		{
+//	echo "Setting Holidays Date : ".date('Ymd',$holidays[$i]['date'])."<br>\n";
+			$new_holidays[date('Ymd',$holidays[$i]['date'])][] = $holidays[$i];
+		}
+		return $new_holidays;
+	}
+
+	function read_holiday()
+	{
+		if(isset($this->cached_holidays))
+		{
+			return $this->cached_holidays;
+		}
+		$holidays = $this->so->read_holidays($this->locales,'','',$this->year);
+
+		if(count($holidays) == 0)
+		{
+			return $holidays;
+		}
+
+		$temp_locale = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
+		foreach($holidays as $i => $holiday)
+		{
+			if($i == 0 || $holidays[$i]['locale'] != $holidays[$i - 1]['locale'])
+			{
+				if(is_object($holidaycalc))
+				{
+					unset($holidaycalc);
+				}
+				$GLOBALS['egw_info']['user']['preferences']['common']['country'] = $holidays[$i]['locale'];
+				$holidaycalc =& CreateObject('calendar.holidaycalc');
+			}
+			$holidays[$i]['date'] = $holidaycalc->calculate_date($holiday, $holidays, $this->year);
+		}
+		unset($holidaycalc);
+		$this->holidays = $this->sort_holidays_by_date($holidays);
+		$this->cached_holidays = $this->set_holidays_to_date($this->holidays);
+		$GLOBALS['egw_info']['user']['preferences']['common']['country'] = $temp_locale;
+		return $this->cached_holidays;
+	}
+	/* End Calendar functions */
+
+	function check_admin()
+	{
+		if(!@$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			Header('Location: ' . $GLOBALS['egw']->link('/index.php'));
+		}
+	}
+
+	function rule_string($holiday)
+	{
+		if (!is_array($holiday))
+		{
+			return false;
+		}
+		$monthnames = array(
+			'','January','February','March','April','May','June',
+			'July','August','September','October','November','December'
+		);
+		$month = $holiday['month'] ? lang($monthnames[$holiday['month']]) : '';
+
+		if (!$holiday['day'])
+		{
+			$occ = $holiday['occurence'] == 99 ? lang('last') : $holiday['occurence'].'.';
+
+			$dow_str = Array(lang('Sun'),lang('Mon'),lang('Tue'),lang('Wed'),lang('Thu'),lang('Fri'),lang('Sat'));
+			$dow = $dow_str[$holiday['dow']];
+
+			$str = lang('%1 %2 in %3',$occ,$dow,$month);
+		}
+		else
+		{
+			$arr = array($month,$holiday['day']);
+			if ($holiday['occurence']>1900) array_unshift ($arr, $holiday['occurence']);
+			$str = implode('-', $arr);
+		}
+		if ($holiday['observance_rule'])
+		{
+			$str .= ' ('.lang('Observance Rule').')';
+		}
+		return $str;
+	}
+}
+
+function _holiday_cmp($a,$b)
+{
+	if (($year_diff = ($a['occurence'] <= 0 ? 0 : $a['occurence']) - ($b['occurence'] <= 0 ? 0 : $b['occurence'])))
+	{
+		return $year_diff;
+	}
+	return $a['month'] - $b['month'] ? $a['month'] - $b['month'] : $a['day'] - $b['day'];
+}

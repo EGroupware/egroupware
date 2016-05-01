@@ -9,10 +9,12 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Calendar - tracking object
  */
-class calendar_tracking extends bo_tracking
+class calendar_tracking extends Api\Storage\Tracking
 {
 	/**
 	 * Application we are tracking (required!)

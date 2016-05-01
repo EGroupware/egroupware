@@ -1,21 +1,23 @@
 <?php
 /**
- * Calendar - document merge
+ * EGroupware Calendar - document merge
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Nathan Gray
  * @package calendar
- * @copyright (c) 2007-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright 2011 Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Calendar - document merge object
  */
-class calendar_merge extends bo_merge
+class calendar_merge extends Api\Storage\Merge
 {
 	/**
 	 * Functions that can be called via menuaction
@@ -71,10 +73,10 @@ class calendar_merge extends bo_merge
 		parent::__construct();
 
 		// overwrite global export-limit, if one is set for calendar/appointments
-		$this->export_limit = bo_merge::getExportLimit('calendar');
+		$this->export_limit = Api\Storage\Merge::getExportLimit('calendar');
 
-		// switch of handling of html formated content, if html is not used
-		$this->parse_html_styles = egw_customfields::use_html('calendar');
+		// switch of handling of Api\Html formated content, if Api\Html is not used
+		$this->parse_html_styles = Api\Storage\Customfields::use_html('calendar');
 		$this->bo = new calendar_boupdate();
 
 		self::$range_tags['start'] = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
@@ -130,8 +132,8 @@ class calendar_merge extends bo_merge
 				$ids = array('start' => PHP_INT_MAX, 'end' => 0);
 				$this->ids = array();
 				foreach($events as $event) {
-					if($event['start'] && egw_time::to($event['start'],'ts') < $ids['start']) $ids['start'] = egw_time::to($event['start'],'ts');
-					if($event['end'] && egw_time::to($event['end'],'ts') > $ids['end']) $ids['end'] = egw_time::to($event['end'],'ts');
+					if($event['start'] && Api\DateTime::to($event['start'],'ts') < $ids['start']) $ids['start'] = Api\DateTime::to($event['start'],'ts');
+					if($event['end'] && Api\DateTime::to($event['end'],'ts') > $ids['end']) $ids['end'] = Api\DateTime::to($event['end'],'ts');
 					// Keep ids for future use
 					$this->ids[] = $event['id'];
 				}
@@ -149,7 +151,7 @@ class calendar_merge extends bo_merge
 				'offset' => 0,
 				'enum_recuring' => true,
 				'order' => 'cal_start',
-				'cfs' => strpos($content, '#') !== false ? array_keys(config::get_customfields('calendar')) : null
+				'cfs' => strpos($content, '#') !== false ? array_keys(Api\Storage\Customfields::get('calendar')) : null
 			));
 			$ids = array();
 			foreach($events as $event) {
@@ -176,7 +178,7 @@ class calendar_merge extends bo_merge
 			$events = $this->bo->search($this->query + $id + array(
 				'offset' => 0,
 				'order' => 'cal_start',
-				'cfs' => strpos($content, '#') !== false ? array_keys(config::get_customfields('calendar')) : null
+				'cfs' => strpos($content, '#') !== false ? array_keys(Api\Storage\Customfields::get('calendar')) : null
 			));
 			if(strpos($content,'$$calendar/') !== false || strpos($content, '$$table/day') !== false)
 			{
@@ -204,10 +206,10 @@ class calendar_merge extends bo_merge
 			$this->ids = $events;
 		}
 		// as this function allows to pass query- parameters, we need to check the result of the query against export_limit restrictions
-		if (bo_merge::hasExportLimit($this->export_limit) && !bo_merge::is_export_limit_excepted() && count($events) > (int)$this->export_limit)
+		if (Api\Storage\Merge::hasExportLimit($this->export_limit) && !Api\Storage\Merge::is_export_limit_excepted() && count($events) > (int)$this->export_limit)
 		{
 			$err = lang('No rights to export more than %1 entries!',(int)$this->export_limit);
-			throw new egw_exception_wrong_userinput($err);
+			throw new Api\Exception\WrongUserinput($err);
 		}
 		$replacements = array();
 		$n = 0;
@@ -284,7 +286,7 @@ class calendar_merge extends bo_merge
 				'time' => (date('Ymd',$event['start']) != date('Ymd',$event['end']) ? $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' ' : '') . ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i'),
 			) as $name => $format)
 			{
-				$value = egw_time::to($event[$what],$format);
+				$value = Api\DateTime::to($event[$what],$format);
 				if ($format == 'l') $value = lang($value);
 				$replacements['$$' .($prefix ? $prefix.'/':'').'calendar_'.$what.$name.'$$'] = $value;
 			}
@@ -304,7 +306,7 @@ class calendar_merge extends bo_merge
 			$this->cf_link_to_expand($event, $content, $replacements);
 		}
 
-		$custom = config::get_customfields('calendar');
+		$custom = Api\Storage\Customfields::get('calendar');
 		foreach(array_keys($custom) as $name)
 		{
 			$replacements['$$'.($prefix?$prefix.'/':'').'#'.$name.'$$'] = $event['#'.$name];
@@ -371,8 +373,8 @@ class calendar_merge extends bo_merge
 			foreach($list as $event)
 			{
 				if($this->ids && !in_array($event['id'], $this->ids)) continue;
-				$start = egw_time::to($event['start'], 'array');
-				$end = egw_time::to($event['end'], 'array');
+				$start = Api\DateTime::to($event['start'], 'array');
+				$end = Api\DateTime::to($event['end'], 'array');
 				$replacements = $this->calendar_replacements($event);
 				if($start['year'] == $end['year'] && $start['month'] == $end['month'] && $start['day'] == $end['day']) {
 					$dow = date('l',$event['start']);
@@ -474,8 +476,8 @@ class calendar_merge extends bo_merge
 			foreach($list as $event)
 			{
 				if($this->ids && !in_array($event['id'], $this->ids)) continue;
-				$start = egw_time::to($event['start'], 'array');
-				$end = egw_time::to($event['end'], 'array');
+				$start = Api\DateTime::to($event['start'], 'array');
+				$end = Api\DateTime::to($event['end'], 'array');
 				$replacements = $this->calendar_replacements($event);
 				if($start['year'] == $end['year'] && $start['month'] == $end['month'] && $start['day'] == $end['day']) {
 					//$dow = date('l',$event['start']);
@@ -597,10 +599,10 @@ class calendar_merge extends bo_merge
 	 */
 	public function show_replacements()
 	{
-		$GLOBALS['egw']->translation->add_app('calendar');
+		Api\Translation::add_app('calendar');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar').' - '.lang('Replacements for inserting events into documents');
 		$GLOBALS['egw_info']['flags']['nonavbar'] = true;
-		common::egw_header();
+		$GLOBALS['egw']->framework->header();
 
 		echo "<table width='90%' align='center'>\n";
 		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')."</h3></td></tr>";
@@ -647,7 +649,7 @@ class calendar_merge extends bo_merge
 			echo '<tr><td>{{range/'.$name.'}}</td><td>'.lang($name)."</td></tr>\n";
 		}
 		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-		$custom = config::get_customfields('calendar');
+		$custom = Api\Storage\Customfields::get('calendar');
 		foreach($custom as $name => $field)
 		{
 			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
@@ -720,6 +722,6 @@ class calendar_merge extends bo_merge
 
 		echo "</table>\n";
 
-		common::egw_footer();
+		$GLOBALS['egw']->framework->footer();
 	}
 }

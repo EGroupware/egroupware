@@ -11,12 +11,17 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
+
 /**
  * eTemplate tag list widget
  *
  * The naming convention is <appname>_<subtype>_etemplate_widget
  */
-class calendar_owner_etemplate_widget extends etemplate_widget_taglist
+class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 {
 
 	/**
@@ -28,8 +33,8 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 	public function beforeSendToClient($cname, array $expand=null)
 	{
 
-		egw_framework::validate_file('.','et2_widget_owner','calendar');
-		egw_framework::includeCSS('calendar');
+		Framework::includeJS('.','et2_widget_owner','calendar');
+		Framework::includeCSS('calendar');
 
 		$bo = new calendar_bo();
 
@@ -50,7 +55,7 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 		foreach($list as $type)
 		{
 			$account_options = array('account_type' => $type);
-			$accounts_type = accounts::link_query('',$account_options);
+			$accounts_type = Api\Accounts::link_query('',$account_options);
 			if($type == 'accounts')
 			{
 				$accounts_type = array_intersect_key($accounts_type, $GLOBALS['egw']->acl->get_grants('calendar'));
@@ -77,12 +82,11 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 			if(!is_numeric($owner))
 			{
 				$resource = $bo->resources[substr($owner, 0,1)];
-				$label = egw_link::title($resource['app'], substr($owner,1));
-				$linked_owners[$resource['app']][substr($owner,1)] = $label;
+				$label = Link::title($resource['app'], substr($owner,1));
 			}
 			else if (!in_array($owner, array_keys($accounts)))
 			{
-				$label = egw_link::title('api-accounts',$owner);
+				$label = Link::title('api-accounts',$owner);
 				$resource = array('app'=> 'api-accounts');
 			}
 			else
@@ -114,7 +118,7 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 			}
 
 			$valid =& self::get_array($validated, $form_name, true);
-			$valid = $value;
+			if (true) $valid = $value;
 		}
 	}
 	/**
@@ -138,25 +142,24 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 			$mapped = array();
 			$_results = array();
 
-			// Handle accounts seperately
+			// Handle Api\Accounts seperately
 			if($type == '')
 			{
 				$list = array('accounts', 'owngroups');
 				foreach($list as $a_type)
 				{
 					$account_options = $options + array('account_type' => $a_type);
-					$_results += accounts::link_query($query,$account_options);
+					$_results += Api\Accounts::link_query($query,$account_options);
 				}
 				$_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
 			}
-			else if ($data['app'] && egw_link::get_registry($data['app'], 'query'))
+			else if ($data['app'] && Link::get_registry($data['app'], 'query'))
 			{
-				$_results = egw_link::query($data['app'], $query,$options);
+				$_results = Link::query($data['app'], $query,$options);
 			}
 			if(!$_results) continue;
-			$_results = array_unique($_results);
 
-			foreach($_results as $id => $title)
+			foreach(array_unique($_results) as $id => $title)
 			{
 				if($id && $title)
 				{
@@ -181,10 +184,10 @@ class calendar_owner_etemplate_widget extends etemplate_widget_taglist
 		}
 
 		// switch regular JSON response handling off
-		egw_json_request::isJSONRequest(false);
+		Api\Json\Request::isJSONRequest(false);
 
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
-		common::egw_exit();
+		exit();
 	}
 }

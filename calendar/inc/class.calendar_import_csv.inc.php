@@ -1,8 +1,6 @@
 <?php
 /**
- * eGroupWare
- *
- * Plugin to import events from a CSV file
+ * EGroupWare - Plugin to import events from a CSV file
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
@@ -13,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
 
 /**
  * class import_csv for calendar
@@ -148,8 +148,8 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 						else
 						{
 							// Search app via link query
-							$result = egw_link::query($resource['app'], $search, $options);
-						
+							$result = Link::query($resource['app'], $search, $options);
+
 							if($result)
 							{
 								$id = $resource['type'] . key($result);
@@ -224,7 +224,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 			// unconditional insert
 			$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 		}
-		
+
 		return $success;
 	}
 
@@ -308,7 +308,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 					return $result;
 				}
 			default:
-				throw new egw_exception('Unsupported action');
+				throw new Api\Exception('Unsupported action');
 
 		}
 	}
@@ -350,5 +350,4 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 		$row_entry->participants = implode('<br />', $this->bo->participants(array('participants' => $row_entry->participants),true));
 	}
 
-} // end of iface_export_plugin
-?>
+}

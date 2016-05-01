@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Calendar - importexport
+ * EGroupware - Calendar - importexport
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package calendar
@@ -136,7 +136,7 @@ class calendar_egw_record implements importexport_iface_egw_record
 	 * @return string dst_identifier
 	 */
 	public function copy ( $_dst_identifier ) {
-
+		unset($_dst_identifier);	// not used
 	}
 
 	/**
@@ -147,7 +147,7 @@ class calendar_egw_record implements importexport_iface_egw_record
 	 * @return string dst_identifier
 	 */
 	public function move ( $_dst_identifier ) {
-
+		unset($_dst_identifier);	// not used
 	}
 
 	/**
@@ -165,5 +165,4 @@ class calendar_egw_record implements importexport_iface_egw_record
 	public function __destruct() {
 	}
 
-} // end of calendar_egw_record
-?>
+}

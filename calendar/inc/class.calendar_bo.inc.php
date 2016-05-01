@@ -6,10 +6,14 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2004-15 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
 
 if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_message methode
 {
@@ -19,17 +23,6 @@ if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_mes
 define('HOUR_s',60*60);
 define('DAY_s',24*HOUR_s);
 define('WEEK_s',7*DAY_s);
-
-/**
- * Gives read access to the calendar, but all events the user is not participating are private!
- * Used by addressbook.
- */
-define('EGW_ACL_READ_FOR_PARTICIPANTS',EGW_ACL_CUSTOM_1);
-define('EGW_ACL_FREEBUSY',EGW_ACL_CUSTOM_2);
-/**
- * Allows to invite an other user (if configured to be used!)
- */
-define('EGW_ACL_INVITE',EGW_ACL_CUSTOM_3);
 
 /**
  * Required (!) include, as we use the MCAL_* constants, BEFORE instanciating (and therefore autoloading) the class
@@ -56,6 +49,20 @@ require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_so.inc.php');
  */
 class calendar_bo
 {
+	/**
+	 * Gives read access to the calendar, but all events the user is not participating are private!
+	 * Used by addressbook.
+	 */
+	const ACL_READ_FOR_PARTICIPANTS = Acl::CUSTOM1;
+	/**
+	 * Right to see free/busy data only
+	 */
+	const ACL_FREEBUSY = Acl::CUSTOM2;
+	/**
+	 * Allows to invite an other user (if configured to be used!)
+	 */
+	const ACL_INVITE = Acl::CUSTOM3;
+
 	/**
 	 * @var int $debug name of method to debug or level of debug-messages:
 	 *	False=Off as higher as more messages you get ;-)
@@ -196,7 +203,7 @@ class calendar_bo
 	/**
 	 * Instance of the categories class
 	 *
-	 * @var categories
+	 * @var Api\Categories
 	 */
 	var $categories;
 
@@ -228,16 +235,16 @@ class calendar_bo
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
 
 		$this->now = time();
-		$this->now_su = egw_time::server2user($this->now,'ts');
+		$this->now_su = Api\DateTime::server2user($this->now,'ts');
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('calendar');
 
-		if (!is_array($this->resources = $GLOBALS['egw']->session->appsession('resources','calendar')))
+		if (!is_array($this->resources = Api\Cache::getSession('calendar', 'resources')))
 		{
 			$this->resources = array();
-			foreach($GLOBALS['egw']->hooks->process('calendar_resources') as $app => $data)
+			foreach(Api\Hooks::process('calendar_resources') as $app => $data)
 			{
 				if ($data && $data['type'])
 				{
@@ -253,16 +260,16 @@ class calendar_bo
 				'type' => '',
 				'app' => 'api-accounts',
 			);
-			$GLOBALS['egw']->session->appsession('resources','calendar',$this->resources);
+			Api\Cache::setSession('calendar', 'resources', $this->resources);
 		}
 		//echo "registered resources="; _debug_array($this->resources);
 
-		$this->config = config::read('calendar');	// only used for horizont, regular calendar config is under phpgwapi
+		$this->config = Api\Config::read('calendar');	// only used for horizont, regular calendar Api\Config is under phpgwapi
 		$this->require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];
 
-		$this->categories = new categories($this->user,'calendar');
+		$this->categories = new Api\Categories($this->user,'calendar');
 
-		$this->customfields = config::get_customfields('calendar');
+		$this->customfields = Api\Storage\Customfields::get('calendar');
 
 		foreach($this->alarms as $secs => &$label)
 		{
@@ -317,7 +324,7 @@ class calendar_bo
 			$data[] = array(
 				'res_id' => $id,
 				'email' => $email,
-				'rights' => EGW_ACL_READ_FOR_PARTICIPANTS,
+				'rights' => self::ACL_READ_FOR_PARTICIPANTS,
 				'name' => $name,
 			);
 		}
@@ -372,7 +379,7 @@ class calendar_bo
 		foreach($_users as $user)
 		{
 			$user = trim($user);
-			if ($ignore_acl || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|($use_freebusy?EGW_ACL_FREEBUSY:0),0,$user))
+			if ($ignore_acl || $this->check_perms(ACL::READ|self::ACL_READ_FOR_PARTICIPANTS|($use_freebusy?self::ACL_FREEBUSY:0),0,$user))
 			{
 				if ($user && !in_array($user,$users))	// already added?
 				{
@@ -398,7 +405,7 @@ class calendar_bo
 					{
 						// use only members which gave the user a read-grant
 						if (!in_array($member, $users) &&
-							($ignore_acl || $this->check_perms(EGW_ACL_READ|($use_freebusy?EGW_ACL_FREEBUSY:0),0,$member)))
+							($ignore_acl || $this->check_perms(Acl::READ|($use_freebusy?self::ACL_FREEBUSY:0),0,$member)))
 						{
 							$users[] = $member;
 						}
@@ -443,7 +450,7 @@ class calendar_bo
 	 *		otherwise the original recuring event (with the first start- + enddate) is returned
 	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
 	 *  order column-names plus optional DESC|ASC separted by comma
-	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
+	 *  ignore_acl if set and true no check_perms for a general Acl::READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
 	 *  cols string|array columns to select, if set an iterator will be returned
 	 *  append string to append to the query, eg. GROUP BY
@@ -484,7 +491,7 @@ class calendar_bo
 			$params['private_grants'] = array();
 			foreach($this->grants as $user => $rights)
 			{
-				if ($rights & EGW_ACL_PRIVATE) $params['private_grants'][] = $user;
+				if ($rights & Acl::PRIVAT) $params['private_grants'][] = $user;
 			}
 		}
 
@@ -548,7 +555,7 @@ class calendar_bo
 			}
 			else
 			{
-				$is_private = !$this->check_perms(EGW_ACL_READ,$event);
+				$is_private = !$this->check_perms(Acl::READ,$event);
 			}
 			if ($is_private || (!$event['public'] && $filter == 'hideprivate'))
 			{
@@ -640,7 +647,7 @@ class calendar_bo
 		// no method, fall back to link title
 		if (is_null($app_data))
 		{
-			$is_private = !egw_link::title($app,$id);
+			$is_private = !Link::title($app,$id);
 		}
 		// boolean value to make all events of $app public (false) or private (true)
 		elseif (is_bool($app_data))
@@ -658,7 +665,7 @@ class calendar_bo
 	/**
 	 * Clears all non-private info from a privat event
 	 *
-	 * That function only returns the infos allowed to be viewed by people without EGW_ACL_PRIVATE grants
+	 * That function only returns the infos allowed to be viewed by people without Acl::PRIVAT grants
 	 *
 	 * @param array &$event
 	 * @param array $allowed_participants ids of the allowed participants, eg. the ones the search is over or eg. the owner of the calendar
@@ -724,7 +731,7 @@ class calendar_bo
 		if ($new_horizont > time()+$maxdays*DAY_s)		// some user tries to "look" more then the maximum number of days in the future
 		{
 			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 new horizont more then %3 days from now --> ignoring it',true,$new_horizont,(int)$this->config['horizont'],$maxdays);
-			$this->warnings['horizont'] = lang('Requested date %1 outside allowed range of %2 days: recurring events obmitted!', egw_time::to($new_horizont,true), $maxdays);
+			$this->warnings['horizont'] = lang('Requested date %1 outside allowed range of %2 days: recurring events obmitted!', Api\DateTime::to($new_horizont,true), $maxdays);
 			return;
 		}
 		if ($new_horizont < time()+31*DAY_s)
@@ -745,11 +752,11 @@ class calendar_bo
 					$this->debug_message('calendar_bo::check_move_horizont(%1): calling set_recurrences(%2,%3)',true,$new_horizont,$event,$old_horizont);
 				}
 				// insert everything behind max(cal_start), which can be less then $old_horizont because of bugs in the past
-				$this->set_recurrences($event,egw_time::server2user($recuring[$cal_id]+1));	// set_recurences operates in user-time!
+				$this->set_recurrences($event,Api\DateTime::server2user($recuring[$cal_id]+1));	// set_recurences operates in user-time!
 			}
 		}
 		// update the horizont
-		config::save_value('horizont',$this->config['horizont'],'calendar');
+		Api\Config::save_value('horizont',$this->config['horizont'],'calendar');
 
 		if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) new horizont=%2, exiting',true,$new_horizont,(int)$this->config['horizont']);
 	}
@@ -790,15 +797,15 @@ class calendar_bo
 		$exceptions = array();
 		foreach((array)$event['recur_exception'] as $exception)
 		{
-			$exceptions[] = egw_time::to($exception, true);	// true = date
+			$exceptions[] = Api\DateTime::to($exception, true);	// true = date
 		}
 		foreach($events as $event)
 		{
-			$is_exception = in_array(egw_time::to($event['start'], true), $exceptions);
+			$is_exception = in_array(Api\DateTime::to($event['start'], true), $exceptions);
 			$start = $this->date2ts($event['start'],true);
 			if ($event['whole_day'])
 			{
-				$time = $this->so->startOfDay(new egw_time($event['end'], egw_time::$user_timezone));
+				$time = $this->so->startOfDay(new Api\DateTime($event['end'], Api\DateTime::$user_timezone));
 				$time->setTime(23, 59, 59);
 				$end = $this->date2ts($time,true);
 			}
@@ -806,7 +813,7 @@ class calendar_bo
 			{
 				$end = $this->date2ts($event['end'],true);
 			}
-			//error_log(__METHOD__."() start=".egw_time::to($start).", is_exception=".array2string($is_exception));
+			//error_log(__METHOD__."() start=".Api\DateTime::to($start).", is_exception=".array2string($is_exception));
 			$this->so->recurrence($event['id'], $start, $end, $event['participants'], $is_exception);
 		}
 	}
@@ -815,7 +822,7 @@ class calendar_bo
 	 * Convert data read from the db, eg. convert server to user-time
 	 *
 	 * Also make sure all timestamps comming from DB as string are converted to integer,
-	 * to avoid misinterpretation by egw_time as Ymd string.
+	 * to avoid misinterpretation by Api\DateTime as Ymd string.
 	 *
 	 * @param array &$events array of event-arrays (reference)
 	 * @param $date_format ='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
@@ -828,32 +835,32 @@ class calendar_bo
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
 			if (empty($event['tzid']) && (!$event['tz_id'] || !($event['tzid'] = calendar_timezones::id2tz($event['tz_id']))))
 			{
-				$event['tzid'] = egw_time::$server_timezone->getName();
+				$event['tzid'] = Api\DateTime::$server_timezone->getName();
 			}
 			// database returns timestamps as string, convert them to integer
-			// to avoid misinterpretation by egw_time as Ymd string
+			// to avoid misinterpretation by Api\DateTime as Ymd string
 			// (this will fail on 32bit systems for times > 2038!)
-			$event['start'] = (int)$event['start'];	// this is for isWholeDay(), which also calls egw_time
+			$event['start'] = (int)$event['start'];	// this is for isWholeDay(), which also calls Api\DateTime
 			$event['end'] = (int)$event['end'];
 			$event['whole_day'] = self::isWholeDay($event);
 			if ($event['whole_day'] && $date_format != 'server')
 			{
 				// Adjust dates to user TZ
-				$stime =& $this->so->startOfDay(new egw_time((int)$event['start'], egw_time::$server_timezone), $event['tzid']);
-				$event['start'] = egw_time::to($stime, $date_format);
-				$time =& $this->so->startOfDay(new egw_time((int)$event['end'], egw_time::$server_timezone), $event['tzid']);
+				$stime =& $this->so->startOfDay(new Api\DateTime((int)$event['start'], Api\DateTime::$server_timezone), $event['tzid']);
+				$event['start'] = Api\DateTime::to($stime, $date_format);
+				$time =& $this->so->startOfDay(new Api\DateTime((int)$event['end'], Api\DateTime::$server_timezone), $event['tzid']);
 				$time->setTime(23, 59, 59);
-				$event['end'] = egw_time::to($time, $date_format);
+				$event['end'] = Api\DateTime::to($time, $date_format);
 				if (!empty($event['recurrence']))
 				{
-					$time =& $this->so->startOfDay(new egw_time((int)$event['recurrence'], egw_time::$server_timezone), $event['tzid']);
-					$event['recurrence'] = egw_time::to($time, $date_format);
+					$time =& $this->so->startOfDay(new Api\DateTime((int)$event['recurrence'], Api\DateTime::$server_timezone), $event['tzid']);
+					$event['recurrence'] = Api\DateTime::to($time, $date_format);
 				}
 				if (!empty($event['recur_enddate']))
 				{
-					$time =& $this->so->startOfDay(new egw_time((int)$event['recur_enddate'], egw_time::$server_timezone), $event['tzid']);
+					$time =& $this->so->startOfDay(new Api\DateTime((int)$event['recur_enddate'], Api\DateTime::$server_timezone), $event['tzid']);
 					$time->setTime(23, 59, 59);
-					$event['recur_enddate'] = egw_time::to($time, $date_format);
+					$event['recur_enddate'] = Api\DateTime::to($time, $date_format);
 				}
 				$timestamps = array('modified','created');
 			}
@@ -877,8 +884,8 @@ class calendar_bo
 					if ($event['whole_day'] && $date_format != 'server')
 					{
 						// Adjust dates to user TZ
-						$time =& $this->so->startOfDay(new egw_time((int)$date, egw_time::$server_timezone), $event['tzid']);
-						$date = egw_time::to($time, $date_format);
+						$time =& $this->so->startOfDay(new Api\DateTime((int)$date, Api\DateTime::$server_timezone), $event['tzid']);
+						$date = Api\DateTime::to($time, $date_format);
 					}
 					else
 					{
@@ -908,7 +915,7 @@ class calendar_bo
 	{
 		if (empty($ts) || $date_format == 'server') return $ts;
 
-		return egw_time::server2user($ts,$date_format);
+		return Api\DateTime::server2user($ts,$date_format);
 	}
 
 	/**
@@ -918,7 +925,7 @@ class calendar_bo
 	 * @param mixed $date =null date to specify a single event of a series
 	 * @param boolean $ignore_acl should we ignore the acl, default False for a single id, true for multiple id's
 	 * @param string $date_format ='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
-	 * @param array|int $clear_private_infos_users =null if not null, return events with EGW_ACL_FREEBUSY too,
+	 * @param array|int $clear_private_infos_users =null if not null, return events with self::ACL_FREEBUSY too,
 	 * 	but call clear_private_infos() with the given users
 	 * @return boolean|array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
 	 */
@@ -930,7 +937,7 @@ class calendar_bo
 
 		$return = null;
 
-		$check = $clear_private_infos_users ? EGW_ACL_FREEBUSY : EGW_ACL_READ;
+		$check = $clear_private_infos_users ? self::ACL_FREEBUSY : Acl::READ;
 		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms($check,$ids,0,$date_format,$date)))
 		{
 			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
@@ -961,7 +968,7 @@ class calendar_bo
 				$return = self::$cached_event;
 			}
 		}
-		if ($clear_private_infos_users && !is_array($ids) && !$this->check_perms(EGW_ACL_READ,$return))
+		if ($clear_private_infos_users && !is_array($ids) && !$this->check_perms(Acl::READ,$return))
 		{
 			$this->clear_private_infos($return, (array)$clear_private_infos_users);
 		}
@@ -1000,7 +1007,7 @@ class calendar_bo
 		// if $end is before recur_enddate, use it instead
 		if (!$event['recur_enddate'] || $this->date2ts($event['recur_enddate']) > $this->date2ts($end))
 		{
-			//echo "<p>recur_enddate={$event['recur_enddate']}=".egw_time::to($event['recur_enddate'])." > end=$end=".egw_time::to($end)." --> using end instead of recur_enddate</p>\n";
+			//echo "<p>recur_enddate={$event['recur_enddate']}=".Api\DateTime::to($event['recur_enddate'])." > end=$end=".Api\DateTime::to($end)." --> using end instead of recur_enddate</p>\n";
 			// insert at least the event itself, if it's behind the horizont
 			$event['recur_enddate'] = $this->date2ts($end) < $this->date2ts($event['end']) ? $event['end'] : $end;
 		}
@@ -1091,7 +1098,7 @@ class calendar_bo
 	{
 		static $res_info_cache = array();
 
-		if (!is_scalar($uid)) throw new egw_exception_wrong_parameter(__METHOD__.'('.array2string($uid).') parameter must be scalar');
+		if (!is_scalar($uid)) throw new Api\Exception\WrongParameter(__METHOD__.'('.array2string($uid).') parameter must be scalar');
 
 		if (!isset($res_info_cache[$uid]))
 		{
@@ -1136,7 +1143,7 @@ class calendar_bo
 	 * Note: Participating in an event is considered as haveing read-access on that event,
 	 *	even if you have no general read-grant from that user.
 	 *
-	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param int $needed necessary ACL right: Acl::{READ|EDIT|DELETE}
 	 * @param mixed $event event as array or the event-id or 0 for a general check
 	 * @param int $other uid to check (if event==0) or 0 to check against $this->user
 	 * @param string $date_format ='ts' date-format used for reading: 'ts'=timestamp, 'array'=array, 'string'=iso8601 string for xmlrpc
@@ -1185,9 +1192,9 @@ class calendar_bo
 		$grant = $grants[$owner];
 
 		// now any ACL rights (but invite rights!) implicate FREEBUSY rights (at least READ has to include FREEBUSY)
-		if ($grant & ~EGW_ACL_INVITE) $grant |= EGW_ACL_FREEBUSY;
+		if ($grant & ~self::ACL_INVITE) $grant |= self::ACL_FREEBUSY;
 
-		if (is_array($event) && ($needed == EGW_ACL_READ || $needed == EGW_ACL_FREEBUSY))
+		if (is_array($event) && ($needed == Acl::READ || $needed == self::ACL_FREEBUSY))
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
 			// in that case he has an implicite READ grant for that event
@@ -1199,19 +1206,19 @@ class calendar_bo
 					if ($uid == $user || $uid < 0 && in_array($user, (array)$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite FREEBUSY, READ and PRIVAT grant
-						$grant |= EGW_ACL_FREEBUSY | EGW_ACL_READ | EGW_ACL_PRIVATE;
+						$grant |= self::ACL_FREEBUSY | Acl::READ | Acl::PRIVAT;
 						break;
 					}
-					elseif ($grants[$uid] & EGW_ACL_READ)
+					elseif ($grants[$uid] & Acl::READ)
 					{
 						// if we have a READ grant from a participant, we dont give an implicit privat grant too
-						$grant |= EGW_ACL_READ;
+						$grant |= Acl::READ;
 						// we cant break here, as we might be a participant too, and would miss the privat grant
 					}
 					elseif (!is_numeric($uid))
 					{
-						// if the owner only grants EGW_ACL_FREEBUSY we are not interested in the recources explicit rights
-						if ($grant == EGW_ACL_FREEBUSY) continue;
+						// if the owner only grants self::ACL_FREEBUSY we are not interested in the recources explicit rights
+						if ($grant == self::ACL_FREEBUSY) continue;
 						// if we have a resource as participant
 						$resource = $this->resource_info($uid);
 						$grant |= $resource['rights'];
@@ -1219,17 +1226,17 @@ class calendar_bo
 				}
 			}
 		}
-		if ($GLOBALS['egw']->accounts->get_type($owner) == 'g' && $needed == EGW_ACL_ADD)
+		if ($GLOBALS['egw']->accounts->get_type($owner) == 'g' && $needed == Acl::ADD)
 		{
 			$access = False;	// a group can't be the owner of an event
 		}
 		else
 		{
 			$access = $user == $owner || $grant & $needed
-				&& ($needed == EGW_ACL_FREEBUSY || !$private || $grant & EGW_ACL_PRIVATE);
+				&& ($needed == self::ACL_FREEBUSY || !$private || $grant & Acl::PRIVAT);
 		}
 		// do NOT allow users to purge deleted events, if we dont have 'userpurge' enabled
-		if ($access && $needed == EGW_ACL_DELETE && $event['deleted'] &&
+		if ($access && $needed == Acl::DELETE && $event['deleted'] &&
 			!$GLOBALS['egw_info']['user']['apps']['admin'] &&
 			$GLOBALS['egw_info']['server']['calendar_delete_history'] != 'userpurge')
 		{
@@ -1254,7 +1261,7 @@ class calendar_bo
 	 */
 	static function date2ts($date,$user2server=False)
 	{
-		return $user2server ? egw_time::user2server($date,'ts') : egw_time::to($date,'ts');
+		return $user2server ? Api\DateTime::user2server($date,'ts') : Api\DateTime::to($date,'ts');
 	}
 
 	/**
@@ -1266,7 +1273,7 @@ class calendar_bo
 	 */
 	static function date2array($date,$server2user=False)
 	{
-		return $server2user ? egw_time::server2user($date,'array') : egw_time::to($date,'array');
+		return $server2user ? Api\DateTime::server2user($date,'array') : Api\DateTime::to($date,'array');
 	}
 
 	/**
@@ -1279,7 +1286,7 @@ class calendar_bo
 	 */
 	static function date2string($date,$server2user=False,$format='Ymd')
 	{
-		return $server2user ? egw_time::server2user($date,$format) : egw_time::to($date,$format);
+		return $server2user ? Api\DateTime::server2user($date,$format) : Api\DateTime::to($date,$format);
 	}
 
 	/**
@@ -1291,7 +1298,7 @@ class calendar_bo
 	 */
 	static function format_date($date,$format='')
 	{
-		return egw_time::to($date,$format);
+		return Api\DateTime::to($date,$format);
 	}
 
 	/**
@@ -1317,12 +1324,12 @@ class calendar_bo
 	{
 		static $acl2string = array(
 			0               => 'ACL-UNKNOWN',
-			EGW_ACL_READ    => 'ACL_READ',
-			EGW_ACL_ADD     => 'ACL_ADD',
-			EGW_ACL_EDIT    => 'ACL_EDIT',
-			EGW_ACL_DELETE  => 'ACL_DELETE',
-			EGW_ACL_PRIVATE => 'ACL_PRIVATE',
-			EGW_ACL_FREEBUSY => 'ACL_FREEBUSY',
+			Acl::READ    => 'ACL_READ',
+			Acl::ADD     => 'ACL_ADD',
+			Acl::EDIT    => 'ACL_EDIT',
+			Acl::DELETE  => 'ACL_DELETE',
+			Acl::PRIVAT => 'ACL_PRIVATE',
+			self::ACL_FREEBUSY => 'ACL_FREEBUSY',
 		);
 		for($i = 2; $i < func_num_args(); ++$i)
 		{
@@ -1521,7 +1528,7 @@ class calendar_bo
 			}
 			else
 			{
-				$id2lid[$id] = common::grab_owner_name($id);
+				$id2lid[$id] = Api\Accounts::username($id);
 				$id2email[$id] = $GLOBALS['egw']->accounts->id2name($id,'account_email');
 			}
 		}
@@ -1554,19 +1561,19 @@ class calendar_bo
 				switch($status[0])
 				{
 					case 'A':	// accepted
-						$status = html::image('calendar','accepted',$lang_status);
+						$status = Api\Html::image('calendar','accepted',$lang_status);
 						break;
 					case 'R':	// rejected
-						$status = html::image('calendar','rejected',$lang_status);
+						$status = Api\Html::image('calendar','rejected',$lang_status);
 						break;
 					case 'T':	// tentative
-						$status = html::image('calendar','tentative',$lang_status);
+						$status = Api\Html::image('calendar','tentative',$lang_status);
 						break;
 					case 'U':	// no response = unknown
-						$status = html::image('calendar','needs-action',$lang_status);
+						$status = Api\Html::image('calendar','needs-action',$lang_status);
 						break;
 					case 'D':	// delegated
-						$status = html::image('calendar','forward',$lang_status);
+						$status = Api\Html::image('calendar','forward',$lang_status);
 						break;
 					case 'G':	// group invitation
 						// Todo: Image, seems not to be used
@@ -1578,7 +1585,7 @@ class calendar_bo
 			{
 				$status = '('.$lang_status.')';
 			}
-			$names[$id] = html::htmlspecialchars($this->participant_name($id)).($quantity > 1 ? ' ('.$quantity.')' : '').' '.$status;
+			$names[$id] = Api\Html::htmlspecialchars($this->participant_name($id)).($quantity > 1 ? ' ('.$quantity.')' : '').' '.$status;
 
 			// add role, if not a regular participant
 			if ($role != 'REQ-PARTICIPANT')
@@ -1623,7 +1630,7 @@ class calendar_bo
 
 			if (!isset($id2cat[$cat_id]))
 			{
-				$id2cat[$cat_id] = categories::read($cat_id);
+				$id2cat[$cat_id] = Api\Categories::read($cat_id);
 			}
 			$cat = $id2cat[$cat_id];
 
@@ -1646,7 +1653,7 @@ class calendar_bo
 	 */
 	private static function _list_cals_add($id,&$users,&$groups)
 	{
-		$name = common::grab_owner_name($id);
+		$name = Api\Accounts::username($id);
 		if (!($egw_name = $GLOBALS['egw']->accounts->id2name($id)))
 		{
 			return;	// do not return no longer existing accounts which eg. still mentioned in acl
@@ -1698,7 +1705,7 @@ class calendar_bo
 			{
 				self::_list_cals_add($group,$users,$groups);
 
-				if (($account_perms = $GLOBALS['egw']->acl->get_ids_for_location($group,EGW_ACL_READ,'calendar')))
+				if (($account_perms = $GLOBALS['egw']->acl->get_ids_for_location($group,Acl::READ,'calendar')))
 				{
 					foreach($account_perms as $id)
 					{
@@ -1759,7 +1766,7 @@ class calendar_bo
 
 		if (!$this->cached_holidays)	// try reading the holidays from the session
 		{
-			$this->cached_holidays = $GLOBALS['egw']->session->appsession('holidays','calendar');
+			$this->cached_holidays = Api\Cache::getSession('calendar', 'holidays');
 		}
 		if (!isset($this->cached_holidays[$year]))
 		{
@@ -1773,7 +1780,7 @@ class calendar_bo
 			// search for birthdays
 			if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
 			{
-				$contacts = new addressbook_bo();
+				$contacts = new Api\Contacts();
 				$filter = array(
 					'n_family' => "!''",
 					'bday' => "!''",
@@ -1813,7 +1820,7 @@ class calendar_bo
 				}
 			}
 			// store holidays and birthdays in the session
-			$this->cached_holidays = $GLOBALS['egw']->session->appsession('holidays','calendar',$this->cached_holidays);
+			$this->cached_holidays = Api\Cache::setSession('calendar', 'holidays', $this->cached_holidays);
 		}
 		if ((int) $this->debug >= 2 || $this->debug == 'read_holidays')
 		{
@@ -1880,13 +1887,13 @@ class calendar_bo
 					case 'participants':
 						foreach (array_keys($event[$val]) as $key)
 						{
-							$extra_fields [$val] = accounts::id2name($key, 'account_fullname');
+							$extra_fields [$val] = Api\Accounts::id2name($key, 'account_fullname');
 						}
 						break;
 					case 'modifier':
 					case 'creator':
 					case 'owner':
-						$extra_fields [$val] = accounts::id2name($event[$val], 'account_fullname');
+						$extra_fields [$val] = Api\Accounts::id2name($event[$val], 'account_fullname');
 						break;
 					default:
 						$extra_fields [] = $event[$val];
@@ -1929,7 +1936,7 @@ class calendar_bo
 	 * Check access to the file store
 	 *
 	 * @param int $id id of entry
-	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param int $check Acl::READ for read and Acl::EDIT for write or delete access
 	 * @param string $rel_path =null currently not used in calendar
 	 * @param int $user =null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
@@ -1948,11 +1955,11 @@ class calendar_bo
 	 */
 	function check_set_default_prefs()
 	{
-		if ($this->cal_prefs['interval'] && ($set = $GLOBALS['egw']->session->appsession('default_prefs_set','calendar')))
+		if ($this->cal_prefs['interval'] && ($set = Api\Cache::getSession('calendar', 'default_prefs_set')))
 		{
 			return;
 		}
-		$GLOBALS['egw']->session->appsession('default_prefs_set','calendar','set');
+		Api\Cache::setSession('calendar', 'default_prefs_set', 'set');
 
 		$default_prefs =& $GLOBALS['egw']->preferences->default['calendar'];
 		$forced_prefs  =& $GLOBALS['egw']->preferences->forced['calendar'];
@@ -2088,7 +2095,7 @@ class calendar_bo
 		}
 
 		$content = array(
-			'info_cat'       => $GLOBALS['egw']->categories->check_list(EGW_ACL_READ, $calendar['category']),
+			'info_cat'       => $GLOBALS['egw']->categories->check_list(Acl::READ, $calendar['category']),
 			'info_priority'  => $calendar['priority'] ,
 			'info_public'    => $calendar['public'] != 'private',
 			'info_subject'   => $calendar['title'],
@@ -2104,9 +2111,9 @@ class calendar_bo
 		$content['link_app'][] = $calendar['info_link']['app'];
 		$content['link_id'][]  = $calendar['info_link']['id'];
 		// Copy claendar's links
-		foreach(egw_link::get_links('calendar',$calendar['id'],'','link_lastmod DESC',true) as $link)
+		foreach(Link::get_links('calendar',$calendar['id'],'','link_lastmod DESC',true) as $link)
 		{
-			if ($link['app'] != egw_link::VFS_APPNAME)
+			if ($link['app'] != Link::VFS_APPNAME)
 			{
 				$content['link_app'][] = $link['app'];
 				$content['link_id'][]  = $link['id'];
@@ -2117,7 +2124,7 @@ class calendar_bo
 			}
 		}
 		// Copy same custom fields
-		foreach(array_keys(config::get_customfields('infolog')) as $name)
+		foreach(array_keys(Api\Storage\Customfields::get('infolog')) as $name)
 		{
 			if ($this->customfields[$name]) $content['#'.$name] = $calendar['#'.$name];
 		}
@@ -2140,7 +2147,7 @@ class calendar_bo
 		{
 			$set['ts_start'] = $event['start'];
 			$set['ts_title'] = $this->link_title($event);
-			$set['start_time'] = egw_time::to($event['start'],'H:i');
+			$set['start_time'] = Api\DateTime::to($event['start'],'H:i');
 			$set['ts_description'] = $event['description'];
 			if ($this->isWholeDay($event)) $event['end']++;	// whole day events are 1sec short
 			$set['ts_duration']	= ($event['end'] - $event['start']) / 60;
@@ -2148,9 +2155,9 @@ class calendar_bo
 			$set['end_time'] = null;	// unset end-time
 			$set['cat_id'] = (int)$event['category'];
 
-			foreach(egw_link::get_links('calendar',$id,'','link_lastmod DESC',true) as $link)
+			foreach(Link::get_links('calendar',$id,'','link_lastmod DESC',true) as $link)
 			{
-				if ($link['app'] != 'timesheet' && $link['app'] != egw_link::VFS_APPNAME)
+				if ($link['app'] != 'timesheet' && $link['app'] != Link::VFS_APPNAME)
 				{
 					$set['link_app'][] = $link['app'];
 					$set['link_id'][]  = $link['id'];

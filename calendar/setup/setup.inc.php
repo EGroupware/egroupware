@@ -10,7 +10,7 @@
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '14.3.903';
+$setup_info['calendar']['version'] = '16.1';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index&ajax=true';
@@ -50,19 +50,6 @@ $setup_info['calendar']['hooks']['mail_import'] = 'calendar_hooks::mail_import';
 
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(
-	 'appname' => 'phpgwapi',
-	 'versions' => Array('14.1')
-);
-$setup_info['calendar']['depends'][] = array(
-	 'appname' => 'etemplate',
-	 'versions' => Array('14.1')
-);
-
-// installation checks for calendar
-$setup_info['calendar']['check_install'] = array(
-	// check if PEAR is availible
-	'' => array(
-		'func' => 'pear_check',
-		'from' => 'Calendar (iCal import+export)',
-	),
+	 'appname' => 'api',
+	 'versions' => Array('16.1')
 );

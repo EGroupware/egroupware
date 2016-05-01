@@ -9,6 +9,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 function calendar_v0_9_2to0_9_3update_owner($table, $field)
 {
 	$GLOBALS['egw_setup']->oProc->query("select distinct($field) from $table");
@@ -1426,7 +1428,7 @@ function calendar_upgrade1_0_1_007()
 
 function calendar_upgrade1_0_1_008()
 {
-	$config_data = config::read('calendar');
+	$config_data = Api\Config::read('calendar');
 	if (isset($config_data['fields']))	// old custom fields
 	{
 		$customfields = array();
@@ -1445,9 +1447,9 @@ function calendar_upgrade1_0_1_008()
 		}
 		if (count($customfields))
 		{
-			config::save_value('customfields', $customfields, 'calendar');
+			Api\Config::save_value('customfields', $customfields, 'calendar');
 		}
-		config::save_value('fields', null, 'calendar');
+		Api\Config::save_value('fields', null, 'calendar');
 	}
 	$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.1.009';
 	return $GLOBALS['setup_info']['calendar']['currentver'];
@@ -1615,7 +1617,7 @@ function calendar_upgrade1_5_001()
 function calendar_upgrade1_5_002()
 {
 	// update the alarm methods
-	$async = new asyncservice();
+	$async = new Api\AsyncService();
 	foreach((array)$async->read('cal:%') as $job)
 	{
 		if ($job['method'] == 'calendar.bocalupdate.send_alarm')
@@ -2261,7 +2263,7 @@ function calendar_upgrade1_9_009()
 	));
 	foreach($GLOBALS['egw_setup']->db->query('SELECT egw_cal.cal_id AS cal_id,range_start AS start,tz_tzid AS tzid,recur_type,recur_interval,recur_data FROM egw_cal_repeats JOIN egw_cal ON egw_cal.cal_id=egw_cal_repeats.cal_id LEFT JOIN egw_cal_timezones ON egw_cal.tz_id=egw_cal_timezones.tz_id', __LINE__, __FILE__) as $event)
 	{
-		if (!$event['tzid']) $event['tzid'] = egw_time::$server_timezone->getName();
+		if (!$event['tzid']) $event['tzid'] = Api\DateTime::$server_timezone->getName();
 		$rrule = calendar_rrule::event2rrule($event);
 		$rrule_str = '';
 		foreach($rrule->generate_rrule('2.0') as $name => $value)
@@ -2324,7 +2326,7 @@ WHERE egw_cal_user.cal_recur_date=0 AND
     FROM egw_cal_user master_user
     WHERE master_user.cal_recur_date=0 AND master_user.cal_id=master.cal_id
 )
-ORDER BY master.cal_id DESC", __LINE__, __FILE__, 0, -1, false, egw_db::FETCH_ASSOC) as $row)
+ORDER BY master.cal_id DESC", __LINE__, __FILE__, 0, -1, false, Api\Db::FETCH_ASSOC) as $row)
 	{
 		$GLOBALS['egw_setup']->db->insert('egw_cal_user', $row, false, __LINE__, __FILE__, 'calendar');
 	}
@@ -2346,9 +2348,9 @@ FROM egw_cal
 JOIN egw_cal_repeats ON egw_cal_repeats.cal_id=egw_cal.cal_id
 JOIN egw_cal_dates ON egw_cal_dates.cal_id=egw_cal.cal_id AND cal_start=range_start
 JOIN egw_cal_timezones ON egw_cal.tz_id=egw_cal_timezones.tz_id
-WHERE range_end IS NOT NULL", __LINE__, __FILE__, 0, -1, false, egw_db::FETCH_ASSOC) as $event)
+WHERE range_end IS NOT NULL", __LINE__, __FILE__, 0, -1, false, Api\Db::FETCH_ASSOC) as $event)
 	{
-		$event = egw_db::strip_array_keys($event, 'cal_');
+		$event = Api\Db::strip_array_keys($event, 'cal_');
 		$event['recur_enddate'] = $event['range_end'];
 		$rrule = calendar_rrule::event2rrule($event, false);
 		$rrule->rewind();
@@ -2670,7 +2672,9 @@ function calendar_upgrade14_3_900()
  */
 function calendar_upgrade14_3_901()
 {
-	preferences::change_preference('calendar', '/^favorite_/', function($attr, $old_value, $owner) {
+	Api\Preferences::change_preference('calendar', '/^favorite_/', function($attr, $old_value, $owner)
+	{
+		unset($attr, $owner);	// not used, but required by function signature
 		if($old_value['state'] && is_array($old_value['state']))
 		{
 			unset($old_value['state']['date']);
@@ -2689,7 +2693,9 @@ function calendar_upgrade14_3_901()
  */
 function calendar_upgrade14_3_902()
 {
-	preferences::change_preference('calendar', 'use_time_grid', function($attr, $old_value, $owner) {
+	Api\Preferences::change_preference('calendar', 'use_time_grid', function($attr, $old_value, $owner)
+	{
+		unset($attr, $owner);	// not used, but required by function signature
 		switch($old_value)
 		{
 			case 'all':
@@ -2702,4 +2708,10 @@ function calendar_upgrade14_3_902()
 		return null;
 	});
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.3.903';
+}
+
+
+function calendar_upgrade14_3_903()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1';
 }

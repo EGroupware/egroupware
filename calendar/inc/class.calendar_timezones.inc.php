@@ -7,10 +7,12 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-15 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2009-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * Class for timezone information
@@ -98,7 +100,7 @@ class calendar_timezones
 			),__LINE__,__FILE__,false,'','calendar')->fetch()))
 			{
 				$id = $data['tz_id'];
-				self::$tz_cache[$id] = egw_db::strip_array_keys($data,'tz_');
+				self::$tz_cache[$id] = Api\Db::strip_array_keys($data,'tz_');
 			}
 		}
 		// check if we can find a 3-part America timezone eg. check 'America/Argentina/Buenos_Aires' for 'America/Buenos_Aires'
@@ -109,7 +111,7 @@ class calendar_timezones
 			),__LINE__,__FILE__,false,'','calendar')->fetch()))
 			{
 				$id = $data['tz_id'];
-				self::$tz_cache[$id] = egw_db::strip_array_keys($data,'tz_');
+				self::$tz_cache[$id] = Api\Db::strip_array_keys($data,'tz_');
 			}
 		}
 		if (isset($id) && $what != 'id')
@@ -142,7 +144,7 @@ class calendar_timezones
 				'tz_id' => $id,
 			),__LINE__,__FILE__,false,'','calendar')->fetch()))
 			{
-				$data = egw_db::strip_array_keys($data,'tz_');
+				$data = Api\Db::strip_array_keys($data,'tz_');
 				self::$tz2id[$data['tzid']] = $id;
 			}
 		}
@@ -168,8 +170,8 @@ class calendar_timezones
 	 */
 	public static function init_static()
 	{
-		self::$tz_cache =& egw_cache::getSession(__CLASS__,'tz_cache');
-		self::$tz2id =& egw_cache::getSession(__CLASS__,'tz2id');
+		self::$tz_cache =& Api\Cache::getSession(__CLASS__,'tz_cache');
+		self::$tz2id =& Api\Cache::getSession(__CLASS__,'tz2id');
 
 		// init cache with mapping UTC <--> -1, as UTC is no real timezone, but we need to be able to use it in calendar
 		if (!is_array(self::$tz2id))
@@ -182,7 +184,7 @@ class calendar_timezones
 		}
 
 		// check for updated timezones once per session
-		if (!egw_cache::getSession(__CLASS__, 'tzs_checked'))
+		if (!Api\Cache::getSession(__CLASS__, 'tzs_checked'))
 		{
 			$updated = false;
 			$msg = self::import_zones($updated);
@@ -193,7 +195,7 @@ class calendar_timezones
 
 			self::$import_msg = $msg.'<br/>'.$alias_msg;
 
-			egw_cache::setSession(__CLASS__, 'tzs_checked', true);
+			Api\Cache::setSession(__CLASS__, 'tzs_checked', true);
 		}
 	}
 
@@ -203,9 +205,9 @@ class calendar_timezones
 	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
 	 * @param string $file ='calendar/setup/timezones.sqlite' filename relative to EGW_SERVER_ROOT
 	 * @return string message about update
-	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
-	 * @throws egw_exception_wrong_userinput if no PDO sqlite support
-	 * @throws egw_exception_wrong_userinput for broken sqlite extension
+	 * @throws Api\Exception\WrongParameter if $file is not readable or wrong format/version
+	 * @throws Api\Exception\WrongUserinput if no PDO sqlite support
+	 * @throws Api\Exception\WrongUserinput for broken sqlite extension
 	 * @link https://hg.mozilla.org/comm-central/raw-file/tip/calendar/timezones/zones.json
 	 */
 	public static function import_zones(&$updated=null, $file='calendar/setup/zones.json')
@@ -214,17 +216,17 @@ class calendar_timezones
 
 		if (!file_exists($path) || !is_readable($path) || !($fp = fopen($path, 'r')))
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__."('$file') not found or readable!");
+			throw new Api\Exception\WrongParameter(__METHOD__."('$file') not found or readable!");
 		}
 		// only read a couple of bytes to parse version
 		$json = fread($fp, 80);
 		$matches = null;
 		if (!preg_match('/"version": *"([^"]+)"/', $json, $matches))
 		{
-			throw new egw_exception_wrong_parameter('Could not read timezoneversion!');
+			throw new Api\Exception\WrongParameter('Could not read timezoneversion!');
 		}
 		$tz_version = $matches[1];
-		$config = config::read('phpgwapi');
+		$config = Api\Config::read('phpgwapi');
 		//echo "<p>tz_version($path)=$tz_version, tz_db_version=$config[tz_version]</p>\n";
 		if ($tz_version === $config['tz_version'])
 		{
@@ -236,7 +238,7 @@ class calendar_timezones
 		fclose($fp);
 		if (!($zones = json_decode($json, true)) || !isset($zones['aliases']) || !isset($zones['zones']))
 		{
-			throw new egw_exception_wrong_parameter('Could not parse zones.json!');
+			throw new Api\Exception\WrongParameter('Could not parse zones.json!');
 		}
 		// import zones first and then aliases
 		$tz2id = array();
@@ -267,7 +269,7 @@ class calendar_timezones
 				if (!$tz2id[$tzid]) $tz2id[$tzid] = $GLOBALS['egw']->db->get_last_insert_id('egw_cal_timezones','tz_id');
 			}
 		}
-		config::save_value('tz_version', $tz_version, 'phpgwapi');
+		Api\Config::save_value('tz_version', $tz_version, 'phpgwapi');
 
 		//_debug_array($tz2id);
 		$updated = true;
@@ -280,7 +282,7 @@ class calendar_timezones
 	 * @param boolean &$updated=null on return true if update was neccessary, false if tz's were already up to date
 	 * @param string $file ='calendar/setup/tz_aliases.inc.php' filename relative to EGW_SERVER_ROOT
 	 * @return string message about update
-	 * @throws egw_exception_wrong_parameter if $file is not readable or wrong format/version
+	 * @throws Api\Exception\WrongParameter if $file is not readable or wrong format/version
 	 */
 	public static function import_tz_aliases(&$updated=null,$file='calendar/setup/tz_aliases.inc.php')
 	{
@@ -288,9 +290,9 @@ class calendar_timezones
 
 		if (!file_exists($path) || !is_readable($path))
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__."('$file') not found or readable!");
+			throw new Api\Exception\WrongParameter(__METHOD__."('$file') not found or readable!");
 		}
-		$config = config::read('phpgwapi');
+		$config = Api\Config::read('phpgwapi');
 		$tz_aliases_mtime = date('Y-m-d H:i:s', filemtime($path));
 		if ($tz_aliases_mtime === $config['tz_aliases_mtime'])
 		{
@@ -315,7 +317,7 @@ class calendar_timezones
 			}
 			//error_log(__METHOD__."() alias=$alias, tzid=$tzid --> self::tz2id('$alias', 'alias') = ".array2string($alias_id).",  self::tz2id('$tzid')=".array2string($tz_id));
 		}
-		config::save_value('tz_aliases_mtime',$tz_aliases_mtime,$app='phpgwapi');
+		Api\Config::save_value('tz_aliases_mtime',$tz_aliases_mtime,$app='phpgwapi');
 
 		//_debug_array($tz2id);
 		$updated = true;
@@ -330,7 +332,7 @@ class calendar_timezones
 	{
 		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			throw new egw_exception_no_permission_admin();
+			throw new Api\Exception\NoPermission\Admin();
 		}
 		if (empty(self::$import_msg))
 		{
@@ -363,16 +365,16 @@ class calendar_timezones
 		if (is_a($standard, 'Horde_Icalendar'))
 		{
 			$time = $standard->getAttribute('DTSTART');
-			$dtstart = new egw_time($time, egw_time::$server_timezone);
-			$dtstart->setTimezone(egw_time::$server_timezone);
+			$dtstart = new Api\DateTime($time, Api\DateTime::$server_timezone);
+			$dtstart->setTimezone(Api\DateTime::$server_timezone);
 			$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
 		}
 		$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
 		if (is_a($daylight, 'Horde_Icalendar'))
 		{
 			$time = $daylight->getAttribute('DTSTART');
-			$dtstart = new egw_time($time, egw_time::$server_timezone);
-			$dtstart->setTimezone(egw_time::$server_timezone);
+			$dtstart = new Api\DateTime($time, Api\DateTime::$server_timezone);
+			$dtstart->setTimezone(Api\DateTime::$server_timezone);
 			$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
 		}
 		//error_log($vtimezone); error_log($horde_vtimezone->_exportvData('VTIMEZONE'));
@@ -396,11 +398,11 @@ class calendar_timezones
 		}
 		else
 		{
-			$prefs_obj = new preferences($user);
+			$prefs_obj = new Api\Preferences($user);
 			$prefs = $prefs_obj->read();
 			$tzid = $prefs['common']['tz'];
 		}
-		if (!$tzid) $tzid = egw_time::$server_timezone->getName();
+		if (!$tzid) $tzid = Api\DateTime::$server_timezone->getName();
 
 		switch ($type)
 		{
@@ -435,7 +437,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 //	echo "<h3>Testing availability of VTIMEZONE data for each tzid supported by PHP</h3>\n";
 //	foreach(DateTimeZone::listIdentifiers() as $tz)
 	echo "<h3>Testing availability of VTIMEZONE data for each TZID supported by EGroupware</h3>\n";
-	foreach(call_user_func_array('array_merge',egw_time::getTimezones()) as $tz => $label)
+	foreach(call_user_func_array('array_merge',Api\DateTime::getTimezones()) as $tz => $label)
 	{
 		if (($id = calendar_timezones::tz2id($tz,'component')) || $tz == 'UTC')	// UTC is always supported
 		{

@@ -9,6 +9,10 @@
  *  option) any later version.                                              *
  \**************************************************************************/
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Acl;
+
 /* $Id$ */
 
 class module_calendar_month extends Module
@@ -32,9 +36,9 @@ class module_calendar_month extends Module
 	 */
 	var $uiviews;
 	/**
-	 * Instance of the accounts object
+	 * Instance of the Api\Accounts object
 	 *
-	 * @var accounts
+	 * @var Api\Accounts
 	 */
 	var $accounts;
 	/**
@@ -117,7 +121,7 @@ class module_calendar_month extends Module
 
 		if (! isset($GLOBALS['egw']->accounts))
 		{
-			$GLOBALS['egw']->accounts = new accounts();
+			$GLOBALS['egw']->accounts = new Api\Accounts();
 		}
 		$this->accounts =& $GLOBALS['egw']->accounts;
 		$search_params=array(
@@ -163,12 +167,12 @@ class module_calendar_month extends Module
 		{
 			$is_group = false;
 			$has_read_permissions = false;
-			$acl = new acl($entry['account_id']);
+			$acl = new Acl($entry['account_id']);
 			$acl->read_repository();
 			// get the rights for each account to check whether the anon user has read permissions.
 			$rights = $acl->get_rights($anon_user,'calendar');
 			// also add the anon user if it's his own calendar.
-			if (($rights & EGW_ACL_READ) || ($entry['account_id'] == $anon_user))
+			if (($rights & Acl::READ) || ($entry['account_id'] == $anon_user))
 			{
 				$has_read_permissions = true;
 			}
@@ -179,7 +183,7 @@ class module_calendar_month extends Module
 				foreach ($anon_groups as $parent_group)
 				{
 					$rights = $acl->get_rights($parent_group,'calendar');
-					if (($rights & EGW_ACL_READ) || ($entry['account_id'] == $parent_group))
+					if (($rights & Acl::READ) || ($entry['account_id'] == $parent_group))
 					{
 						$has_read_permissions = true;
 						break;
@@ -195,7 +199,7 @@ class module_calendar_month extends Module
 				}
 				else
 				{
-					$users[$entry['account_id']] = $GLOBALS['egw']->common->display_fullname($entry['account_lid'],$entry['account_firstname'],$entry['account_lastname']);
+					$users[$entry['account_id']] = Api\Accounts::format_username($entry['account_lid'],$entry['account_firstname'],$entry['account_lastname']);
 				}
 			}
 		}
@@ -218,7 +222,7 @@ class module_calendar_month extends Module
 	function get_content(&$arguments,$properties)
 	{
 		$html = "";
-		$GLOBALS['egw']->translation->add_app('calendar');
+		Api\Translation::add_app('calendar');
 		$this->ui = new calendar_uiviews();
 		$this->ui->allowEdit = false;
 		$this->ui->use_time_grid = isset($arguments['grid']) ? $arguments['grid'] : false;
@@ -300,7 +304,7 @@ class module_calendar_month extends Module
 			$title = lang('Wk').' '.adodb_date('W',$week_start);
 			if (!isset($GLOBALS['egw']->template))
 			{
-				$GLOBALS['egw']->template = new Template;
+				$GLOBALS['egw']->template = new Framework\Template;
 			}
 			$html .= $this->ui->timeGridWidget($this->ui->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $last);
 		}

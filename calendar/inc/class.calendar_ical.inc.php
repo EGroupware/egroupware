@@ -13,6 +13,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Acl;
 
 /**
  * iCal import and export via Horde iCalendar classes
@@ -179,7 +180,7 @@ class calendar_ical extends calendar_boupdate
 		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
 		$this->clientProperties = $_clientProperties;
 		$this->vCalendar = new Horde_Icalendar;
-		$this->addressbook = new addressbook_bo;
+		$this->addressbook = new Api\Contacts;
 	}
 
 
@@ -254,7 +255,7 @@ class calendar_ical extends calendar_boupdate
 			{
 				if ($this->read($event, $recurrence, true, 'server'))
 				{
-					if ($this->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))
+					if ($this->check_perms(calendar_bo::ACL_FREEBUSY, $event, 0, 'server'))
 					{
 						$this->clear_private_infos($event, array($this->user, $event['owner']));
 					}
@@ -360,7 +361,7 @@ class calendar_ical extends calendar_boupdate
 			{
 				// check if we have vtimezone component data for tzid of event, if not default to user timezone (default to server tz)
 				if (calendar_timezones::add_vtimezone($vcal, $tzid) ||
-					!in_array($tzid = egw_time::$user_timezone->getName(), $vtimezones_added) &&
+					!in_array($tzid = Api\DateTime::$user_timezone->getName(), $vtimezones_added) &&
 						calendar_timezones::add_vtimezone($vcal, $tzid))
 				{
 					$vtimezones_added[] = $tzid;
@@ -606,8 +607,8 @@ class calendar_ical extends calendar_boupdate
 							$event['end-nextday'] = $event['end'] + 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
 							foreach (array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
 							{
-								$time = new egw_time($event[$f],egw_time::$server_timezone);
-								$arr = egw_time::to($time,'array');
+								$time = new Api\DateTime($event[$f],Api\DateTime::$server_timezone);
+								$arr = Api\DateTime::to($time,'array');
 								$vevent->setAttribute($t, array('year' => $arr['year'],'month' => $arr['month'],'mday' => $arr['day']),
 									array('VALUE' => 'DATE'));
 							}
@@ -669,9 +670,9 @@ class calendar_ical extends calendar_boupdate
 								// use 'DATE' instead of 'DATE-TIME' on whole day events
 								foreach ($event['recur_exception'] as $id => $timestamp)
 								{
-									$time = new egw_time($timestamp,egw_time::$server_timezone);
+									$time = new Api\DateTime($timestamp,Api\DateTime::$server_timezone);
 									$time->setTimezone(self::$tz_cache[$event['tzid']]);
-									$arr = egw_time::to($time,'array');
+									$arr = Api\DateTime::to($time,'array');
 									$days[$id] = array(
 										'year'  => $arr['year'],
 										'month' => $arr['month'],
@@ -743,9 +744,9 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								$time = new egw_time($recur_date,egw_time::$server_timezone);
+								$time = new Api\DateTime($recur_date,Api\DateTime::$server_timezone);
 								$time->setTimezone(self::$tz_cache[$event['tzid']]);
-								$arr = egw_time::to($time,'array');
+								$arr = Api\DateTime::to($time,'array');
 								$vevent->setAttribute($icalFieldName, array(
 									'year' => $arr['year'],
 									'month' => $arr['month'],
@@ -765,9 +766,9 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								$time = new egw_time($event['recurrence'],egw_time::$server_timezone);
+								$time = new Api\DateTime($event['recurrence'],Api\DateTime::$server_timezone);
 								$time->setTimezone(self::$tz_cache[$event['tzid']]);
-								$arr = egw_time::to($time,'array');
+								$arr = Api\DateTime::to($time,'array');
 								$vevent->setAttribute($icalFieldName, array(
 									'year' => $arr['year'],
 									'month' => $arr['month'],
@@ -990,12 +991,12 @@ class calendar_ical extends calendar_boupdate
 			{
 				foreach (is_array($value) && $parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
 				{
-					$valueData = translation::convert($valueData,translation::charset(),$charset);
-                    $paramData = (array) translation::convert(is_array($value) ?
+					$valueData = Api\Translation::convert($valueData,Api\Translation::charset(),$charset);
+                    $paramData = (array) Api\Translation::convert(is_array($value) ?
                     		$parameters[$key][$valueID] : $parameters[$key],
-                            translation::charset(),$charset);
-                    $valuesData = (array) translation::convert($values[$key],
-                    		translation::charset(),$charset);
+                            Api\Translation::charset(),$charset);
+                    $valuesData = (array) Api\Translation::convert($values[$key],
+                    		Api\Translation::charset(),$charset);
                     $content = $valueData . implode(';', $valuesData);
 
 					if ($version == '1.0' && (preg_match('/[^\x20-\x7F]/', $content) ||
@@ -1066,11 +1067,11 @@ class calendar_ical extends calendar_boupdate
 	{
 		if (empty($tzid) || $tzid == 'UTC')
 		{
-			return egw_time::to($time,'ts');
+			return Api\DateTime::to($time,'ts');
 		}
 		if (!is_a($time,'DateTime'))
 		{
-			$time = new egw_time($time,egw_time::$server_timezone);
+			$time = new Api\DateTime($time,Api\DateTime::$server_timezone);
 		}
 		if (!isset(self::$tz_cache[$tzid]))
 		{
@@ -1156,7 +1157,7 @@ class calendar_ical extends calendar_boupdate
 		}
 		else
 		{
-			$tzid = egw_time::$user_timezone->getName();
+			$tzid = Api\DateTime::$user_timezone->getName();
 		}
 
 		date_default_timezone_set($tzid);
@@ -1186,7 +1187,7 @@ class calendar_ical extends calendar_boupdate
 			{
 				$event_info['type'] = $event['recur_type'] == MCAL_RECUR_NONE ?
 					'SINGLE' : 'SERIES-MASTER';
-				$event_info['acl_edit'] = $this->check_perms(EGW_ACL_EDIT, $cal_id);
+				$event_info['acl_edit'] = $this->check_perms(Acl::EDIT, $cal_id);
 				if (($event_info['stored_event'] = $this->read($cal_id, 0, false, 'server')) &&
 					$event_info['stored_event']['recur_type'] != MCAL_RECUR_NONE &&
 					($event_info['stored_event']['recur_type'] != $event['recur_type']
@@ -1346,28 +1347,28 @@ class calendar_ical extends calendar_boupdate
  					if (!empty($event['whole_day']) && $event['tzid'] != $event_info['stored_event']['tzid'])
 					{
 						// Adjust dates to original TZ
-						$time = new egw_time($event['start'],egw_time::$server_timezone);
+						$time = new Api\DateTime($event['start'],Api\DateTime::$server_timezone);
 						$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
-						$event['start'] = egw_time::to($time,'server');
-						//$time = new egw_time($event['end'],egw_time::$server_timezone);
+						$event['start'] = Api\DateTime::to($time,'server');
+						//$time = new Api\DateTime($event['end'],Api\DateTime::$server_timezone);
 						//$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
 						//$time->setTime(23, 59, 59);
 						$time->modify('+'.round(($event['end']-$event['start'])/DAY_s).' day');
-						$event['end'] = egw_time::to($time,'server');
+						$event['end'] = Api\DateTime::to($time,'server');
 						if ($event['recur_type'] != MCAL_RECUR_NONE)
 						{
 							foreach ($event['recur_exception'] as $key => $day)
 							{
-								$time = new egw_time($day,egw_time::$server_timezone);
+								$time = new Api\DateTime($day,Api\DateTime::$server_timezone);
 								$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
-								$event['recur_exception'][$key] = egw_time::to($time,'server');
+								$event['recur_exception'][$key] = Api\DateTime::to($time,'server');
 							}
 						}
 						elseif ($event['recurrence'])
 						{
-							$time = new egw_time($event['recurrence'],egw_time::$server_timezone);
+							$time = new Api\DateTime($event['recurrence'],Api\DateTime::$server_timezone);
 							$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
-							$event['recurrence'] = egw_time::to($time,'server');
+							$event['recurrence'] = Api\DateTime::to($time,'server');
 						}
 						error_log(__METHOD__."() TZ adjusted {$event_info['stored_event']['tzid']} --> {$event['tzid']} event=".array2string($event));
 					}*/
@@ -1400,7 +1401,7 @@ class calendar_ical extends calendar_boupdate
 
 				if (!is_null($user))
 				{
-					if ($user > 0 && $this->check_perms(EGW_ACL_ADD, 0, $user))
+					if ($user > 0 && $this->check_perms(Acl::ADD, 0, $user))
 					{
 						$event['owner'] = $user;
 					}
@@ -1426,7 +1427,7 @@ class calendar_ical extends calendar_boupdate
 				// check if an owner is set and the current user has add rights
 				// for that owners calendar; if not set the current user
 				elseif (!isset($event['owner'])
-					|| !$this->check_perms(EGW_ACL_ADD, 0, $event['owner']))
+					|| !$this->check_perms(Acl::ADD, 0, $event['owner']))
 				{
 					$event['owner'] = $this->user;
 				}
@@ -1982,7 +1983,7 @@ class calendar_ical extends calendar_boupdate
 						$owner = $this->user;
 						break;
 					default:
-						if ((int)$owner && $this->check_perms(EGW_ACL_EDIT, 0, $owner))
+						if ((int)$owner && $this->check_perms(Acl::EDIT, 0, $owner))
 						{
 							$this->calendarOwner = $owner;
 						}
@@ -2216,13 +2217,13 @@ class calendar_ical extends calendar_boupdate
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 				'(' . $this->productManufacturer .
 				', '. $this->productName .', ' .
-				($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .
+				($this->tzid ? $this->tzid : Api\DateTime::$user_timezone->getName()) .
 				', ' . $this->calendarOwner . ")\n" , 3, $this->logfile);
 		}
 
 		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
 		//	. $this->productName .', ' .
-		//	($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
+		//	($this->tzid ? $this->tzid : Api\DateTime::$user_timezone->getName()) .')',
 		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 
@@ -2257,7 +2258,7 @@ class calendar_ical extends calendar_boupdate
 		}
 		else
 		{
-			$tzid = egw_time::$user_timezone->getName();
+			$tzid = Api\DateTime::$user_timezone->getName();
 		}
 
 		date_default_timezone_set($tzid);
@@ -2441,7 +2442,7 @@ class calendar_ical extends calendar_boupdate
 							try
 							{
 								$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
-								// sometimes we do not get an egw_time object but no exception is thrown
+								// sometimes we do not get an Api\DateTime object but no exception is thrown
 								// may be php 5.2.x related. occurs when a NokiaE72 tries to open Outlook invitations
 								if ($tz instanceof DateTimeZone)
 								{
@@ -3117,8 +3118,8 @@ class calendar_ical extends calendar_boupdate
 				return false;
 			}
 			$last->setTime(0, 0, 0);
-			//error_log(__METHOD__."() rrule=$recurence --> ".array2string($rriter)." --> enddate=".array2string($last).'='.egw_time::to($last, ''));
-			$event['recur_enddate'] = egw_time::to($last, 'server');
+			//error_log(__METHOD__."() rrule=$recurence --> ".array2string($rriter)." --> enddate=".array2string($last).'='.Api\DateTime::to($last, ''));
+			$event['recur_enddate'] = Api\DateTime::to($last, 'server');
 		}
 		// translate COUNT into an enddate, as we only store enddates
 		elseif($event['recur_count'])
@@ -3135,7 +3136,7 @@ class calendar_ical extends calendar_boupdate
 				return false;
 			}
 			$last->setTime(0, 0, 0);
-			$event['recur_enddate'] = egw_time::to($last, 'server');
+			$event['recur_enddate'] = Api\DateTime::to($last, 'server');
 			unset($event['recur_count']);
 		}
 

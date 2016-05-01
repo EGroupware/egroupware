@@ -6,10 +6,14 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-15 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
 
 // types of messsages send by calendar_boupdate::send_update
 define('MSG_DELETED',0);
@@ -148,11 +152,11 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// check if user has the permission to update / create the event
-		if (!$ignore_acl && (!$new_event && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
-			$new_event && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) &&
-			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
+		if (!$ignore_acl && (!$new_event && !$this->check_perms(Acl::EDIT,$event['id']) ||
+			$new_event && !$this->check_perms(Acl::EDIT,0,$event['owner'])) &&
+			!$this->check_perms(Acl::ADD,0,$event['owner']))
 		{
-			$messages[] = lang('Access to calendar of %1 denied!',common::grab_owner_name($event['owner']));
+			$messages[] = lang('Access to calendar of %1 denied!',Api\Accounts::username($event['owner']));
 			return false;
 		}
 		if ($new_event)
@@ -338,7 +342,7 @@ class calendar_boupdate extends calendar_bo
 				foreach($conflicts as $key => $conflict)
 				{
 						$conflict['participants'] = array_intersect_key((array)$conflict['participants'],$event['participants']);
-					if (!$this->check_perms(EGW_ACL_READ,$conflict))
+					if (!$this->check_perms(Acl::READ,$conflict))
 					{
 						$conflicts[$key] = array(
 							'id'    => $conflict['id'],
@@ -371,7 +375,7 @@ class calendar_boupdate extends calendar_bo
 		if($old_event['deleted'] && $event['deleted'] == null)
 		{
 			// Restored, bring back links
-			egw_link::restore('calendar', $cal_id);
+			Link::restore('calendar', $cal_id);
 		}
 		if ($this->log_file)
 		{
@@ -391,7 +395,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// notify the link-class about the update, as other apps may be subscribt to it
-		egw_link::notify_update('calendar',$cal_id,$event);
+		Link::notify_update('calendar',$cal_id,$event);
 
 		return $cal_id;
 	}
@@ -446,7 +450,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		else
 		{
-			$ret = $this->check_perms(EGW_ACL_INVITE,0,$uid);
+			$ret = $this->check_perms(self::ACL_INVITE,0,$uid);
 		}
 		//error_log(__METHOD__."($uid) = ".array2string($ret));
 		//echo "<p>".__METHOD__."($uid) require_acl_invite=$this->require_acl_invite returning ".array2string($ret)."</p>\n";
@@ -608,7 +612,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		if ($account_id)
 		{
-			$pref_obj = new preferences($account_id);
+			$pref_obj = new Api\Preferences($account_id);
 			$prefs = $pref_obj->read_repository();
 		}
 		else
@@ -771,11 +775,11 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
-		$startdate = new egw_time($event['start']);
-		$enddate = new egw_time($event['end']);
-		$modified = new egw_time($event['modified']);
-		if ($old_event) $olddate = new egw_time($old_event['start']);
-		//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".egw_time::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
+		$startdate = new Api\DateTime($event['start']);
+		$enddate = new Api\DateTime($event['end']);
+		$modified = new Api\DateTime($event['modified']);
+		if ($old_event) $olddate = new Api\DateTime($old_event['start']);
+		//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".Api\DateTime::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
 		$owner_prefs = $ics = null;
 		foreach($to_notify as $userid => $statusid)
 		{
@@ -789,7 +793,7 @@ class calendar_boupdate extends calendar_bo
 
 				// check if responsible of a resource has read rights on event (might be private!)
 				if ($res_info['app'] == 'resources' && $res_info['responsible'] &&
-					!$this->check_perms(EGW_ACL_READ, $event, 0, 'ts', null, $res_info['responsible']))
+					!$this->check_perms(Acl::READ, $event, 0, 'ts', null, $res_info['responsible']))
 				{
 					// --> use only details from (private-)cleared event only containing resource ($userid)
 					// reading server timezone, to be able to use cleared event for iCal generation further down
@@ -804,7 +808,7 @@ class calendar_boupdate extends calendar_bo
 					// check if event-owner wants non-EGroupware users notified
 					if (is_null($owner_prefs))
 					{
-						$preferences = new preferences($owner);
+						$preferences = new Api\Preferences($owner);
 						$owner_prefs = $preferences->read_repository();
 					}
 					if ($role != 'CHAIR' &&		// always notify externals CHAIRs
@@ -830,16 +834,16 @@ class calendar_boupdate extends calendar_bo
 				$tfn = $tln = $lid = null; //cleanup of lastname and fullname (in case they are set in a previous loop)
 				if (is_numeric($userid))
 				{
-					$preferences = new preferences($userid);
+					$preferences = new Api\Preferences($userid);
 					$GLOBALS['egw_info']['user']['preferences'] = $part_prefs = $preferences->read_repository();
 					$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$tfn,$tln);
-					$fullname = common::display_fullname('',$tfn,$tln);
+					$fullname = Api\Accounts::format_username('',$tfn,$tln);
 				}
-				else	// external email address: use preferences of event-owner, plus some hardcoded settings (eg. ical notification)
+				else	// external email address: use Api\Preferences of event-owner, plus some hardcoded settings (eg. ical notification)
 				{
 					if (is_null($owner_prefs))
 					{
-						$preferences = new preferences($owner);
+						$preferences = new Api\Preferences($owner);
 						$GLOBALS['egw_info']['user']['preferences'] = $owner_prefs = $preferences->read_repository();
 					}
 					$part_prefs = $owner_prefs;
@@ -858,7 +862,7 @@ class calendar_boupdate extends calendar_bo
 
 				if ($lang !== $part_prefs['common']['lang'])
 				{
-					translation::init();
+					Api\Translation::init();
 					$lang = $part_prefs['common']['lang'];
 				}
 				$event_arr = null;
@@ -890,7 +894,7 @@ class calendar_boupdate extends calendar_bo
 				$details['enddate'] = $enddate->format($timeformat);
 
 				$modified->setTimezone($timezone);
-				$details['updated'] = $modified->format($timeformat) . ', ' . common::grab_owner_name($event['modifier']);
+				$details['updated'] = $modified->format($timeformat) . ', ' . Api\Accounts::username($event['modifier']);
 
 				if ($old_event != False)
 				{
@@ -1000,7 +1004,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		if ($lang !== $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 		{
-			translation::init();
+			Api\Translation::init();
 		}
 		// restore timezone, in case we had to reset it to server-timezone
 		if ($restore_tz) date_default_timezone_set($restore_tz);
@@ -1029,7 +1033,7 @@ class calendar_boupdate extends calendar_bo
 		//echo "<p>bocalendar::send_alarm("; print_r($alarm); echo ")</p>\n";
 		$GLOBALS['egw_info']['user']['account_id'] = $this->owner = $alarm['owner'];
 
-		$event_time_user = egw_time::server2user($alarm['time'] + $alarm['offset']);	// alarm[time] is in server-time, read requires user-time
+		$event_time_user = Api\DateTime::server2user($alarm['time'] + $alarm['offset']);	// alarm[time] is in server-time, read requires user-time
 		if (!$alarm['owner'] || !$alarm['cal_id'] || !($event = $this->read($alarm['cal_id'],$event_time_user)))
 		{
 			return False;	// event not found
@@ -1038,7 +1042,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$to_notify = $event['participants'];
 		}
-		elseif ($this->check_perms(EGW_ACL_READ,$event))	// checks agains $this->owner set to $alarm[owner]
+		elseif ($this->check_perms(Acl::READ,$event))	// checks agains $this->owner set to $alarm[owner]
 		{
 			$to_notify[$alarm['owner']] = 'A';
 		}
@@ -1047,7 +1051,7 @@ class calendar_boupdate extends calendar_bo
 			return False;	// no rights
 		}
 		// need to load calendar translations and set currentapp, so calendar can reload a different lang
-		translation::add_app('calendar');
+		Api\Translation::add_app('calendar');
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
 
 		$ret = $this->send_update(MSG_ALARM,$to_notify,$event,False,$alarm['owner']);
@@ -1081,9 +1085,9 @@ class calendar_boupdate extends calendar_bo
 		//error_log(__METHOD__.'('.array2string($event).", $ignore_acl, $updateTS)");
 
 		// check if user has the permission to update / create the event
-		if (!$ignore_acl && ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
-			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner']) &&
-			!$this->check_perms(EGW_ACL_ADD,0,$event['owner'])))
+		if (!$ignore_acl && ($event['id'] && !$this->check_perms(Acl::EDIT,$event['id']) ||
+			!$event['id'] && !$this->check_perms(Acl::EDIT,0,$event['owner']) &&
+			!$this->check_perms(Acl::ADD,0,$event['owner'])))
 		{
 			return false;
 		}
@@ -1105,32 +1109,32 @@ class calendar_boupdate extends calendar_bo
 		{
 			if (!empty($event['start']))
 			{
-				$time = $this->so->startOfDay(new egw_time($event['start'], egw_time::$user_timezone));
-				$event['start'] = egw_time::to($time, 'ts');
+				$time = $this->so->startOfDay(new Api\DateTime($event['start'], Api\DateTime::$user_timezone));
+				$event['start'] = Api\DateTime::to($time, 'ts');
 				$save_event['start'] = $time;
 			}
 			if (!empty($event['end']))
 			{
-				$time = new egw_time($event['end'], egw_time::$user_timezone);
+				$time = new Api\DateTime($event['end'], Api\DateTime::$user_timezone);
 				$time->setTime(23, 59, 59);
-				$event['end'] = egw_time::to($time, 'ts');
+				$event['end'] = Api\DateTime::to($time, 'ts');
 				$save_event['end'] = $time;
 			}
 			if (!empty($event['recurrence']))
 			{
-				$time = $this->so->startOfDay(new egw_time($event['recurrence'], egw_time::$user_timezone));
-				$event['recurrence'] = egw_time::to($time, 'ts');
+				$time = $this->so->startOfDay(new Api\DateTime($event['recurrence'], Api\DateTime::$user_timezone));
+				$event['recurrence'] = Api\DateTime::to($time, 'ts');
 			}
 			if (!empty($event['recur_enddate']))
 			{
-				$time = $this->so->startOfDay(new egw_time($event['recur_enddate'], egw_time::$user_timezone));
-				$event['recur_enddate'] = egw_time::to($time, 'ts');
+				$time = $this->so->startOfDay(new Api\DateTime($event['recur_enddate'], Api\DateTime::$user_timezone));
+				$event['recur_enddate'] = Api\DateTime::to($time, 'ts');
 				$time->setUser();
-				$save_event['recur_enddate'] = egw_time::to($time, 'ts');
+				$save_event['recur_enddate'] = Api\DateTime::to($time, 'ts');
 			}
 			$timestamps = array('modified','created');
 			// all-day events are handled in server time
-			$event['tzid'] = $save_event['tzid'] = egw_time::$server_timezone->getName();
+			$event['tzid'] = $save_event['tzid'] = Api\DateTime::$server_timezone->getName();
 		}
 		else
 		{
@@ -1145,7 +1149,7 @@ class calendar_boupdate extends calendar_bo
 		// convert tzid name to integer tz_id, of set user default
 		if (empty($event['tzid']) || !($event['tz_id'] = calendar_timezones::tz2id($event['tzid'])))
 		{
-			$event['tz_id'] = calendar_timezones::tz2id($event['tzid'] = egw_time::$user_timezone->getName());
+			$event['tz_id'] = calendar_timezones::tz2id($event['tzid'] = Api\DateTime::$user_timezone->getName());
 		}
 		// same with the recur exceptions
 		if (isset($event['recur_exception']) && is_array($event['recur_exception']))
@@ -1154,8 +1158,8 @@ class calendar_boupdate extends calendar_bo
 			{
 				if ($event['whole_day'])
 				{
-					$time = $this->so->startOfDay(new egw_time($date, egw_time::$user_timezone));
-					$date = egw_time::to($time, 'ts');
+					$time = $this->so->startOfDay(new Api\DateTime($date, Api\DateTime::$user_timezone));
+					$date = Api\DateTime::to($time, 'ts');
 				}
 				else
 				{
@@ -1236,7 +1240,7 @@ class calendar_boupdate extends calendar_bo
 				calendar_so::split_user($uid, $user_type, $user_id);
 				if ($user_type == 'c' && (!$old_event || !isset($old_event['participants'][$uid])))
 				{
-					egw_link::link('calendar', $cal_id, 'addressbook', $user_id);
+					Link::link('calendar', $cal_id, 'addressbook', $user_id);
 				}
 			}
 		}
@@ -1264,9 +1268,9 @@ class calendar_boupdate extends calendar_bo
 		{
 			if (!is_array($event) && !($event = $this->read($event))) return false;
 
-			return $this->check_perms(EGW_ACL_EDIT,0,$event['owner']);
+			return $this->check_perms(Acl::EDIT,0,$event['owner']);
 		}
-		// check if we have a category acl for the event or not (null)
+		// check if we have a category Acl for the event or not (null)
 		$access = $this->check_cat_acl(self::CAT_ACL_STATUS,$event);
 		if (!is_null($access))
 		{
@@ -1277,7 +1281,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$resource = $this->resource_info($uid);
 
-			return EGW_ACL_EDIT & $resource['rights'];
+			return Acl::EDIT & $resource['rights'];
 		}
 		if (!is_array($event) && !($event = $this->read($event))) return false;
 
@@ -1287,7 +1291,7 @@ class calendar_boupdate extends calendar_bo
 			$memberships = $GLOBALS['egw']->accounts->memberships($uid,true);
 		}
 		$memberships[] = $uid;
-		return array_intersect($memberships, array_keys($event['participants'])) && $this->check_perms(EGW_ACL_EDIT,0,$uid);
+		return array_intersect($memberships, array_keys($event['participants'])) && $this->check_perms(Acl::EDIT,0,$uid);
 	}
 
 	/**
@@ -1343,7 +1347,7 @@ class calendar_boupdate extends calendar_bo
 	{
 		if (!isset(self::$cat_rights_cache))
 		{
-			self::$cat_rights_cache = egw_cache::getSession('calendar','cat_rights',
+			self::$cat_rights_cache = Api\Cache::getSession('calendar','cat_rights',
 				array($GLOBALS['egw']->acl,'get_location_grants'),array('L%','calendar'));
 		}
 		//echo "<p>".__METHOD__."($cat_id) = ".array2string($cat_id ? self::$cat_rights_cache['L'.$cat_id] : self::$cat_rights_cache)."</p>\n";
@@ -1375,7 +1379,7 @@ class calendar_boupdate extends calendar_bo
 				if (!self::$cat_rights_cache['L'.$cat_id]) unset(self::$cat_rights_cache['L'.$cat_id]);
 				$GLOBALS['egw']->acl->delete_repository('calendar','L'.$cat_id,$user);
 			}
-			egw_cache::setSession('calendar','cat_rights',self::$cat_rights_cache);
+			Api\Cache::setSession('calendar','cat_rights',self::$cat_rights_cache);
 		}
 	}
 
@@ -1534,7 +1538,7 @@ class calendar_boupdate extends calendar_bo
 	{
 		//error_log(__METHOD__."(cal_id=$cal_id, recur_date=$recur_date, ignore_acl=$ignore_acl, skip_notifications=$skip_notification)");
 		if (!($event = $this->read($cal_id,$recur_date)) ||
-			!$ignore_acl && !$this->check_perms(EGW_ACL_DELETE,$event))
+			!$ignore_acl && !$this->check_perms(Acl::DELETE,$event))
 		{
 			return false;
 		}
@@ -1547,18 +1551,18 @@ class calendar_boupdate extends calendar_bo
 
 		if (!$recur_date || $event['recur_type'] == MCAL_RECUR_NONE)
 		{
-			$config = config::read('phpgwapi');
+			$config = Api\Config::read('phpgwapi');
 			if(!$config['calendar_delete_history'] || $event['deleted'])
 			{
 				$this->so->delete($cal_id);
 
 				// delete all links to the event
-				egw_link::unlink(0,'calendar',$cal_id);
+				Link::unlink(0,'calendar',$cal_id);
 			}
 			elseif ($config['calendar_delete_history'])
 			{
 				// mark all links to the event as deleted, but keep them
-				egw_link::unlink(0,'calendar',$cal_id,'','','',true);
+				Link::unlink(0,'calendar',$cal_id,'','','',true);
 
 				$event['deleted'] = $this->now;
 				$this->save($event, $ignore_acl);
@@ -1585,7 +1589,7 @@ class calendar_boupdate extends calendar_bo
 					else
 					{
 						if (!($exception = $this->read($id))) continue;
-						$exception['uid'] = common::generate_uid('calendar', $id);
+						$exception['uid'] = Api\CalDAV::generate_uid('calendar', $id);
 						$exception['reference'] = $exception['recurrence'] = 0;
 						$this->update($exception, true, true, false, true, $msg=null, true);
 						++$exceptions_kept;
@@ -1753,12 +1757,12 @@ class calendar_boupdate extends calendar_bo
 
 		$var['owner'] = Array(
 			'field'	=> lang('Owner'),
-			'data'	=> common::grab_owner_name($event['owner'])
+			'data'	=> Api\Accounts::username($event['owner'])
 		);
 
 		$var['updated'] = Array(
 			'field'	=> lang('Updated'),
-			'data'	=> $this->format_date($event['modtime']).', '.common::grab_owner_name($event['modifier'])
+			'data'	=> $this->format_date($event['modtime']).', '.Api\Accounts::username($event['modifier'])
 		);
 
 		$var['access'] = Array(
@@ -1798,7 +1802,7 @@ class calendar_boupdate extends calendar_bo
 			echo "<p>error opening '$this->log_file' !!!</p>\n";
 			return false;
 		}
-		fwrite($f,$type.': '.common::grab_owner_name($this->user).': '.date('r')."\n");
+		fwrite($f,$type.': '.Api\Accounts::username($this->user).': '.date('r')."\n");
 		fwrite($f,"Time: time to save / saved time read back / old time before save\n");
 		foreach(array('start','end') as $name)
 		{
@@ -1823,20 +1827,20 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array $event
 	 * @param array $old_event
-	 * @param egw_time $instance_date For recurring events, this is the date we
+	 * @param Api\DateTime $instance_date For recurring events, this is the date we
 	 *	are dealing with
 	 */
-	function check_move_alarms(Array &$event, Array $old_event = null, egw_time $instance_date = null)
+	function check_move_alarms(Array &$event, Array $old_event = null, Api\DateTime $instance_date = null)
 	{
 		if ($old_event !== null && $event['start'] == $old_event['start']) return;
 
-		$time = new egw_time($event['start']);
+		$time = new Api\DateTime($event['start']);
 		if(!is_array($event['alarm']))
 		{
 			$event['alarm'] = $this->so->read_alarms($event['id']);
 		}
 
-		foreach($event['alarm'] as $id => &$alarm)
+		foreach($event['alarm'] as &$alarm)
 		{
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{
@@ -1860,7 +1864,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function save_alarm($cal_id, $alarm, $update_modified=true)
 	{
-		if (!$cal_id || !$this->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $cal_id : 0,!$alarm['all'] ? $alarm['owner'] : 0))
+		if (!$cal_id || !$this->check_perms(Acl::EDIT,$alarm['all'] ? $cal_id : 0,!$alarm['all'] ? $alarm['owner'] : 0))
 		{
 			//echo "<p>no rights to save the alarm=".print_r($alarm,true)." to event($cal_id)</p>";
 			return false;	// no rights to add the alarm
@@ -1880,7 +1884,7 @@ class calendar_boupdate extends calendar_bo
 	{
 		list(,$cal_id) = explode(':',$id);
 
-		if (!($alarm = $this->so->read_alarm($id)) || !$cal_id || !$this->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $cal_id : 0,!$alarm['all'] ? $alarm['owner'] : 0))
+		if (!($alarm = $this->so->read_alarm($id)) || !$cal_id || !$this->check_perms(Acl::EDIT,$alarm['all'] ? $cal_id : 0,!$alarm['all'] ? $alarm['owner'] : 0))
 		{
 			return false;	// no rights to delete the alarm
 		}
@@ -1909,7 +1913,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				foreach ($old_categories as $cat_id)
 				{
-					if (!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					if (!$this->categories->check_perms(Acl::READ, $cat_id))
 					{
 						$old_cats_preserve[] = $cat_id;
 					}
@@ -1962,7 +1966,7 @@ class calendar_boupdate extends calendar_bo
 		$cat_list = array();
 		foreach ($cat_id_list as $cat_id)
 		{
-			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
+			if ($cat_id && $this->categories->check_perms(Acl::READ, $cat_id) &&
 					($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
 			{
 				$cat_list[] = $cat_name;
@@ -2066,7 +2070,7 @@ class calendar_boupdate extends calendar_bo
 		foreach(array_keys($this->grants) as $user)
 		{
 			$user = trim($user);
-			if ($this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$user))
+			if ($this->check_perms(Acl::READ|self::ACL_READ_FOR_PARTICIPANTS|self::ACL_FREEBUSY,0,$user))
 			{
 				if ($user && !in_array($user,$users))	// already added?
 				{
@@ -2090,7 +2094,7 @@ class calendar_boupdate extends calendar_bo
 					{
 						// use only members which gave the user a read-grant
 						if (!in_array($member, $users) &&
-								$this->check_perms(EGW_ACL_READ|EGW_ACL_FREEBUSY, 0, $member))
+								$this->check_perms(Acl::READ|self::ACL_FREEBUSY, 0, $member))
 						{
 							$users[] = $member;
 						}
@@ -2203,7 +2207,7 @@ class calendar_boupdate extends calendar_bo
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
 			if (!$egwEvent['tz_id'] || !($egwEvent['tzid'] = calendar_timezones::id2tz($egwEvent['tz_id'])))
 			{
-				$egwEvent['tzid'] = egw_time::$server_timezone->getName();
+				$egwEvent['tzid'] = Api\DateTime::$server_timezone->getName();
 			}
 			if (!isset(self::$tz_cache[$egwEvent['tzid']]))
 			{
@@ -2211,7 +2215,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			if (!$event['tzid'])
 			{
-				$event['tzid'] = egw_time::$server_timezone->getName();
+				$event['tzid'] = Api\DateTime::$server_timezone->getName();
 			}
 			if (!isset(self::$tz_cache[$event['tzid']]))
 			{
@@ -2231,9 +2235,9 @@ class calendar_boupdate extends calendar_bo
 					// UID found
 					if (empty($event['recurrence']))
 					{
-						$egwstart = new egw_time($egwEvent['start'], egw_time::$server_timezone);
+						$egwstart = new Api\DateTime($egwEvent['start'], Api\DateTime::$server_timezone);
 						$egwstart->setTimezone(self::$tz_cache[$egwEvent['tzid']]);
-						$dtstart = new egw_time($event['start'], egw_time::$server_timezone);
+						$dtstart = new Api\DateTime($event['start'], Api\DateTime::$server_timezone);
 						$dtstart->setTimezone(self::$tz_cache[$event['tzid']]);
 						if ($egwEvent['recur_type'] == MCAL_RECUR_NONE &&
 							$event['recur_type'] == MCAL_RECUR_NONE ||
@@ -2333,7 +2337,7 @@ class calendar_boupdate extends calendar_bo
 				$egwCategories = explode(',', $egwEvent['category']);
 				foreach ($egwCategories as $cat_id)
 				{
-					if ($this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
+					if ($this->categories->check_perms(Acl::READ, $cat_id) &&
 							!in_array($cat_id, $event['category']))
 					{
 						if ($this->log)
@@ -2590,7 +2594,7 @@ class calendar_boupdate extends calendar_bo
 						$egw_rrule->current = clone $egw_rrule->time;
 						while ($egw_rrule->valid())
 						{
-							$occurrence = egw_time::to($egw_rrule->current(), 'server');
+							$occurrence = Api\DateTime::to($egw_rrule->current(), 'server');
 							if ($this->log)
 							{
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
@@ -2659,13 +2663,13 @@ class calendar_boupdate extends calendar_bo
 		// check ACL
 		if (is_array($master_event))
 		{
-			$acl_edit = $this->check_perms(EGW_ACL_EDIT, $master_event['id']);
+			$acl_edit = $this->check_perms(Acl::EDIT, $master_event['id']);
 		}
 		else
 		{
 			if (is_array($stored_event))
 			{
-				$acl_edit = $this->check_perms(EGW_ACL_EDIT, $stored_event['id']);
+				$acl_edit = $this->check_perms(Acl::EDIT, $stored_event['id']);
 			}
 			else
 			{

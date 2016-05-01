@@ -10,6 +10,13 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * Class to generate the calendar listview and the search
  *
@@ -51,7 +58,7 @@ class calendar_uilist extends calendar_ui
 	/**
 	 * Constructor
 	 *
-	 * @param array $set_states=null to manualy set / change one of the states, default NULL = use $_REQUEST
+	 * @param array $set_states =null to manualy set / change one of the states, default NULL = use $_REQUEST
 	 */
 	function __construct($set_states=null)
 	{
@@ -68,48 +75,49 @@ class calendar_uilist extends calendar_ui
 	/**
 	 * Show the listview
 	 */
-	function listview($content=null,$msg='',$home=false)
+	function listview($_content=null,$msg='',$home=false)
 	{
 		if ($_GET['msg']) $msg .= $_GET['msg'];
 		if ($this->group_warning) $msg .= $this->group_warning;
 
-		$etpl = new etemplate_new('calendar.list');
+		$etpl = new Etemplate('calendar.list');
 
 		// Handle merge from sidebox
 		if($_GET['merge'])
 		{
-			$content['nm']['action'] = 'document_'.$_GET['merge'];
-			$content['nm']['select_all'] = true;
+			$_content['nm']['action'] = 'document_'.$_GET['merge'];
+			$_content['nm']['select_all'] = true;
 		}
 
-		if (is_array($content))
+		if (is_array($_content))
 		{
 			// handle a single button like actions
 			foreach(array('delete','timesheet','document') as $button)
 			{
-				if ($content['nm']['rows'][$button])
+				if ($_content['nm']['rows'][$button])
 				{
-					list($id) = each($content['nm']['rows'][$button]);
-					$content['nm']['action'] = $button;
-					$content['nm']['selected'] = array($id);
+					list($id) = each($_content['nm']['rows'][$button]);
+					$_content['nm']['action'] = $button;
+					$_content['nm']['selected'] = array($id);
 				}
 			}
 			// Handle actions
-			if ($content['nm']['action'])
+			if ($_content['nm']['action'])
 			{
 				// Allow merge using the date range filter
-				if(strpos($content['nm']['action'],'document') !== false &&
-					!count($content['nm']['selected']) && !$content['nm']['select_all']) {
-					$content['nm']['selected'][] = $this->get_merge_range($content['nm']);
+				if(strpos($_content['nm']['action'],'document') !== false &&
+					!count($_content['nm']['selected']) && !$_content['nm']['select_all']) {
+					$_content['nm']['selected'][] = $this->get_merge_range($_content['nm']);
 				}
-				if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
+				if (!count($_content['nm']['selected']) && !$_content['nm']['select_all'])
 				{
 					$msg = lang('You need to select some events first');
 				}
 				else
 				{
-					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
-						$success,$failed,$action_msg,'calendar_list',$msg, $content['nm']['checkboxes']['no_notifications']))
+					$success = $failed = $action_msg = null;
+					if ($this->action($_content['nm']['action'],$_content['nm']['selected'],$_content['nm']['select_all'],
+						$success,$failed,$action_msg,'calendar_list',$msg, $_content['nm']['checkboxes']['no_notifications']))
 					{
 						$msg .= lang('%1 event(s) %2',$success,$action_msg);
 					}
@@ -121,7 +129,7 @@ class calendar_uilist extends calendar_ui
 			}
 		}
 		$content = array(
-			'nm'  => egw_session::appsession('calendar_list','calendar'),
+			'nm'  => Api\Cache::getSession('calendar', 'calendar_list'),
 		);
 		if (!is_array($content['nm']))
 		{
@@ -155,6 +163,7 @@ class calendar_uilist extends calendar_ui
 		if (isset($_REQUEST['json_data']) && ($json_data = json_decode($_REQUEST['json_data'], true)) &&
 			!empty($json_data['request']['parameters'][0]))
 		{
+			$params = null;
 			parse_str(substr($json_data['request']['parameters'][0], 10), $params);	// cut off "/index.php?"
 			if (isset($params['keywords']))	// new search => set filters so every match is shown
 			{
@@ -168,7 +177,7 @@ class calendar_uilist extends calendar_ui
 		$sel_options['filter'] = &$this->date_filters;
 
 		// Send categories for row styling - calendar uses no_cat, so they don't go automatically
-		$sel_options['category'] = array('' => lang('all')) + etemplate_widget_menupopup::typeOptions('select-cat', ',,calendar',$no_lang,false,$value['cat_id']);
+		$sel_options['category'] = array('' => lang('all')) + Etemplate\Widget\Select::typeOptions('select-cat', ',,calendar');
 		// Prevent double encoding - widget does this on its own, but we're just grabbing the options
 		foreach($sel_options['category'] as &$label)
 		{
@@ -192,9 +201,9 @@ class calendar_uilist extends calendar_ui
 
 		if($msg)
 		{
-			egw_framework::message($msg);
+			Framework::message($msg);
 		}
-		$html = $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,$readonlys,array(),$home ? -1 : 0);
+		$html = $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,array(),array(),$home ? -1 : 0);
 
 		// Not sure why this has to be echoed instead of appended, but that's what works.
 		//echo calendar_uiviews::edit_series();
@@ -229,10 +238,11 @@ class calendar_uilist extends calendar_ui
 	 * @internal
 	 * @param array &$params parameters
 	 * @param array &$rows returned rows/events
-	 * @param array &$readonlys eg. to disable buttons based on acl
+	 * @param array &$readonlys eg. to disable buttons based on Acl
 	 */
 	function get_rows(&$params,&$rows,&$readonlys)
 	{
+		unset($readonlys);	// not used;
 		//echo "uilist::get_rows() params="; _debug_array($params);
 		if ($params['filter'] == 'custom')
 		{
@@ -251,7 +261,7 @@ class calendar_uilist extends calendar_ui
 				$this->manage_states(array('date' => $this->bo->date2string($params['startdate'])));
 			}
 		}
-		$old_params = egw_session::appsession('calendar_list','calendar');
+		$old_params = Api\Cache::getSession('calendar', 'calendar_list');
 		if (is_array($old_params))
 		{
 			if ($old_params['filter'] && $old_params['filter'] != $params['filter'])	// filter changed => order accordingly
@@ -264,7 +274,7 @@ class calendar_uilist extends calendar_ui
 				$this->adjust_for_search($params['search'],$params);
 			}
 		}
-		if (!$params['csv_export']) egw_session::appsession('calendar_list','calendar',$params);
+		if (!$params['csv_export']) Api\Cache::setSession('calendar', 'calendar_list', $params);
 
 		// do we need to query custom fields and which
 		// Check stored preference if selectcols isn't available (ie: first call)
@@ -292,22 +302,22 @@ class calendar_uilist extends calendar_ui
 		);
 		// Non-blocking events above blocking
 		$search_params['order'] .= ', cal_non_blocking DESC';
-		
+
 		switch($params['filter'])
 		{
 			case 'all':
 				break;
 			case 'before':
-				$search_params['end'] = $params['date'] ? egw_time::to($params['date'],'ts') : $this->date;
+				$search_params['end'] = $params['date'] ? Api\DateTime::to($params['date'],'ts') : $this->date;
 				$label = lang('Before %1',$this->bo->long_date($search_params['end']));
 				break;
 			case 'custom':
-				$this->first = $search_params['start'] = egw_time::to($params['startdate'],'ts');
+				$this->first = $search_params['start'] = Api\DateTime::to($params['startdate'],'ts');
 				$this->last  = $search_params['end'] = strtotime('+1 day', $this->bo->date2ts($params['enddate']))-1;
 				$label = $this->bo->long_date($this->first,$this->last);
 				break;
 			case 'today':
-				$today = new egw_time();
+				$today = new Api\DateTime();
 				$today->setTime(0, 0, 0);
 				$this->first = $search_params['start'] = $today->format('ts');
 				$today->setTime(23,59,59);
@@ -324,8 +334,8 @@ class calendar_uilist extends calendar_ui
 				$this->date_filters['week'] = $label = lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
 				$search_params['start'] = $this->first;
 				$search_params['end'] = $this->last;
-				$params['startdate'] = egw_time::to($this->first, egw_time::ET2);
-				$params['enddate'] = egw_time::to($this->last, egw_time::ET2);
+				$params['startdate'] = Api\DateTime::to($this->first, Api\DateTime::ET2);
+				$params['enddate'] = Api\DateTime::to($this->last, Api\DateTime::ET2);
 				break;
 
 			case 'month':
@@ -340,14 +350,14 @@ class calendar_uilist extends calendar_ui
 				$this->last--;
 				$search_params['start'] = $this->first;
 				$search_params['end'] = $this->last;
-				$params['startdate'] = egw_time::to($this->first, egw_time::ET2);
-				$params['enddate'] = egw_time::to($this->last, egw_time::ET2);
+				$params['startdate'] = Api\DateTime::to($this->first, Api\DateTime::ET2);
+				$params['enddate'] = Api\DateTime::to($this->last, Api\DateTime::ET2);
 				break;
 
 				// fall through to after given date
 			case 'after':
 			default:
-				$this->date = $params['startdate'] ? egw_time::to($params['startdate'],'ts') : $this->date;
+				$this->date = $params['startdate'] ? Api\DateTime::to($params['startdate'],'ts') : $this->date;
 				$label = lang('After %1',$this->bo->long_date($this->date));
 				$search_params['start'] = $this->date;
 				break;
@@ -381,7 +391,7 @@ class calendar_uilist extends calendar_ui
 		// it to match changing list filters
 		if($params['view'] && $params['view'] == 'listview')
 		{
-			egw_json_response::get()->call('app.calendar.set_app_header',
+			Api\Json\Response::get()->call('app.calendar.set_app_header',
 				(count($search_params['users']) == 1 ? $this->bo->participant_name($search_params['users'][0]).': ' : '') .
 				$label);
 		}
@@ -397,7 +407,7 @@ class calendar_uilist extends calendar_ui
 				$this->to_client($event);
 			}
 
-
+			$matches = null;
 			if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
 			{
 				$app = $matches[1];
@@ -405,7 +415,7 @@ class calendar_uilist extends calendar_ui
 				$icons = array();
 				if (($is_private = calendar_bo::integration_get_private($app,$app_id,$event)))
 				{
-					$icons[] = html::image('calendar','private');
+					$icons[] = Api\Html::image('calendar','private');
 				}
 				else
 				{
@@ -414,7 +424,7 @@ class calendar_uilist extends calendar_ui
 			}
 			else
 			{
-				$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
+				$is_private = !$this->bo->check_perms(Acl::READ,$event);
 			}
 			if ($is_private)
 			{
@@ -445,17 +455,13 @@ class calendar_uilist extends calendar_ui
 			}
 			elseif ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$event['app_id'] .= ':'.egw_time::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts');
-			}
-			else
-			{
-				$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
+				$event['app_id'] .= ':'.Api\DateTime::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts');
 			}
 
 			// Format start and end with timezone
 			foreach(array('start','end') as $time)
 			{
-				$event[$time] = egw_time::to($event[$time],'Y-m-d\TH:i:s\Z');
+				$event[$time] = Api\DateTime::to($event[$time],'Y-m-d\TH:i:s\Z');
 			}
 
 			$rows[] = $event;
@@ -472,13 +478,13 @@ class calendar_uilist extends calendar_ui
 		$users = is_array($search_params['users']) ? $search_params['users'] : explode(',',$search_params['users']);
 
 		$this->bo->warnings['groupmembers'] = '';
-		if($message = $this->check_owners_access($users,$no_access))
+		if(($message = $this->check_owners_access($users)))
 		{
-			egw_json_response::get()->error($message);
+			Api\Json\Response::get()->error($message);
 		}
 		else if($this->bo->warnings['groupmembers'])
 		{
-			egw_json_response::get()->error($this->bo->warnings['groupmembers']);
+			Api\Json\Response::get()->error($this->bo->warnings['groupmembers']);
 		}
 		$rows['sel_options']['filter'] = $this->date_filters;
 		if($label)
@@ -492,7 +498,7 @@ class calendar_uilist extends calendar_ui
 				$app = $this->bo->resources[$owner[0]]['app'];
 				$_owner = substr($owner,1);
 				// Try link first
-				$title = egw_link::title($app, $_owner );
+				$title = Link::title($app, $_owner );
 				if($title)
 				{
 					$rows['sel_options']['owner'][$owner] = $title;
@@ -555,9 +561,10 @@ class calendar_uilist extends calendar_ui
 		if ($use_all)
 		{
 			// get the whole selection
-			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
+			$query = is_array($session_name) ? $session_name : Api\Cache::getSession('calendar', $session_name);
 			@set_time_limit(0);				// switch off the execution time limit, as for big selections it's too small
 			$query['num_rows'] = -1;		// all
+			$readonlys = null;
 			$this->get_rows($query,$checked,$readonlys,!in_array($action,array('ical','document')));	   // true = only return the id's
 			// Get rid of any extras (rows that aren't events)
 			if(in_array($action,array('ical','document')))
@@ -574,8 +581,9 @@ class calendar_uilist extends calendar_ui
 		// for calendar integration we have to fetch all rows and unset the not selected ones, as we can not filter by id
 		elseif($action == 'document')
 		{
-			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
+			$query = is_array($session_name) ? $session_name : Api\Cache::getSession('calendar', $session_name);
 			@set_time_limit(0);				// switch off the execution time limit, as for big selections it's too small
+			$events = null;
 			$this->get_rows($query,$events,$readonlys);
 			foreach($events as $key => $event)
 			{
@@ -602,9 +610,9 @@ class calendar_uilist extends calendar_ui
 				}
 				$boical = new calendar_ical();
 				$ical =& $boical->exportVCal($ids, '2.0', 'PUBLISH');
-				html::content_header('event.ics', 'text/calendar', bytes($ical));
+				Api\Header\Content::type('event.ics', 'text/calendar', bytes($ical));
 				echo $ical;
-				common::egw_exit();
+				exit();
 
 			case 'document':
 				if (!$settings) $settings = $GLOBALS['egw_info']['user']['preferences']['calendar']['default_document'];
@@ -627,6 +635,7 @@ class calendar_uilist extends calendar_ui
 			{
 				$id = $id['id'];
 			}
+			$matches = null;
 			if(!(int)$id && preg_match('/^([a-z_-]+)([0-9]+)$/i',$id,$matches))
 			{
 				$app = $matches[1];
@@ -662,9 +671,9 @@ class calendar_uilist extends calendar_ui
 							}
 						}
 
-						if(egw_json_response::isJSONResponse())
+						if(Api\Json\Response::isJSONResponse())
 						{
-							egw_json_response::get()->call('egw.refresh','','calendar',$id,'delete');
+							Api\Json\Response::get()->call('egw.refresh','','calendar',$id,'delete');
 						}
 					}
 					else
@@ -679,7 +688,7 @@ class calendar_uilist extends calendar_ui
 						// unDelete the whole thing
 						$recur_date = 0;
 					}
-					if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id) &&
+					if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(Acl::EDIT,$id) &&
 						is_array($event) && $event['deleted'])
 					{
 						$event['deleted'] = null;
@@ -687,10 +696,10 @@ class calendar_uilist extends calendar_ui
 						{
 							$success++;
 
-							if(egw_json_response::isJSONResponse())
+							if(Api\Json\Response::isJSONResponse())
 							{
-								egw_json_response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
-								egw_json_response::get()->call('egw.refresh','','calendar',$id,'edit');
+								Api\Json\Response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
+								Api\Json\Response::get()->call('egw.refresh','','calendar',$id,'edit');
 							}
 							break;
 						}
@@ -702,6 +711,7 @@ class calendar_uilist extends calendar_ui
 					if($id && ($event = $this->bo->read($id, $recur_date)))
 					{
 						$old_status = $event['participants'][$GLOBALS['egw_info']['user']['account_id']];
+						$quantity = $role = null;
 						calendar_so::split_status($old_status, $quantity, $role);
 						if ($old_status != $status)
 						{
@@ -710,9 +720,9 @@ class calendar_uilist extends calendar_ui
 							if ($this->bo->set_status($event,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date,
 								false,true,$skip_notification))
 							{
-								if(egw_json_response::isJSONResponse())
+								if(Api\Json\Response::isJSONResponse())
 								{
-									egw_json_response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
+									Api\Json\Response::get()->call('egw.dataStoreUID','calendar::'.$id,$this->to_client($this->bo->read($id,$recur_date)));
 								}
 								$success++;
 								//$msg = lang('Status changed');
@@ -735,7 +745,7 @@ class calendar_uilist extends calendar_ui
 					}
 					elseif ($app)
 					{
-						$query = egw_session::appsession('calendar_list','calendar');
+						$query = Api\Cache::getSession('calendar', 'calendar_list');
 						$query['query'] = $app_id;
 						$query['search'] = $app_id;
 						$result = $this->bo->search($query);
@@ -775,14 +785,14 @@ class calendar_uilist extends calendar_ui
 					$err = $timesheet_bo->save($timesheet);
 
 					//get the project manager linked to the calnedar entry
-					$calApp_links = egw_link::get_links('calendar', $event['id']);
+					$calApp_links = Link::get_links('calendar', $event['id']);
 					foreach ($calApp_links as $l_app)
 					{
 						if ($l_app['app'] == 'projectmanager')
 						{
 							$prj_links = $l_app;
 							//Links timesheet to projectmanager
-							egw_link::link('timesheet', $timesheet_bo->data['ts_id'], 'projectmanager', $prj_links['id']);
+							Link::link('timesheet', $timesheet_bo->data['ts_id'], 'projectmanager', $prj_links['id']);
 
 						}
 					}
@@ -795,7 +805,7 @@ class calendar_uilist extends calendar_ui
 						if(!$recur_date || $app) {
 							// Create link
 							$link_id = $app ? $app_id : $id;
-							egw_link::link($app ? $app : 'calendar', $link_id, 'timesheet', $timesheet_bo->data['ts_id']);
+							Link::link($app ? $app : 'calendar', $link_id, 'timesheet', $timesheet_bo->data['ts_id']);
 						}
 					}
 					else
@@ -867,7 +877,7 @@ class calendar_uilist extends calendar_ui
 				'default' => true,
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=calendar.calendar_uiforms.edit&cal_id=$id',
-				'popup' => egw_link::get_registry('calendar', 'view_popup'),
+				'popup' => Link::get_registry('calendar', 'view_popup'),
 				'group' => $group=1,
 				'onExecute' => 'javaScript:app.calendar.cal_open',
 				'disableClass' => 'rowNoView',
@@ -877,7 +887,7 @@ class calendar_uilist extends calendar_ui
 				'group' => $group,
 				'disableClass' => 'rowNoView',
 				'url' => 'menuaction=calendar.calendar_uiforms.edit&cal_id=$id&action=copy',
-				'popup' => egw_link::get_registry('calendar', 'view_popup'),
+				'popup' => Link::get_registry('calendar', 'view_popup'),
 				'allowOnMultiple' => false,
 			),
 			'select_all' => array(
@@ -923,7 +933,7 @@ class calendar_uilist extends calendar_ui
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=infolog.infolog_ui.edit&type=task&action=calendar&action_id=$id',
-				'popup' => egw_link::get_registry('infolog', 'add_popup'),
+				'popup' => Link::get_registry('infolog', 'add_popup'),
 			);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
@@ -936,7 +946,7 @@ class calendar_uilist extends calendar_ui
 				'allowOnMultiple' => false,
 				'hideOnDisabled' => true,	// show only one timesheet action in context menu
 				'onExecute' => 'javaScript:app.calendar.cal_fix_app_id',
-				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
+				'popup' => Link::get_registry('timesheet', 'add_popup'),
 			);
 			$actions['timesheet-add'] = array(	// automatic add for multiple events
 				'icon' => 'timesheet/navbar',
@@ -956,7 +966,7 @@ class calendar_uilist extends calendar_ui
 		);
 		$actions['documents'] = calendar_merge::document_action(
 			$this->bo->cal_prefs['document_dir'], ++$group, 'Insert in document', 'document_',
-			$this->bo->cal_prefs['default_document'],bo_merge::getExportLimit('calendar')
+			$this->bo->cal_prefs['default_document'],Api\Storage\Merge::getExportLimit('calendar')
 		);
 		++$group;
 		$actions['delete'] = array(

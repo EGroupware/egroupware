@@ -5,10 +5,18 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-15 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-16 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Vfs;
+use EGroupware\Api\Etemplate;
 
 /**
  * calendar UserInterface forms: view and edit events, freetime search
@@ -76,7 +84,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			if ($uid[0] == 'c')
 			{
-				$title = egw_link::title('addressbook', substr($uid, 1));
+				$title = Link::title('addressbook', substr($uid, 1));
 				break;
 			}
 		}
@@ -100,7 +108,7 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' ||
-			!$this->bo->check_perms(EGW_ACL_ADD,0,$owner))
+			!$this->bo->check_perms(Acl::ADD,0,$owner))
 		{
 			if ($owner)	// make an owner who is no user or we have no add-rights a participant
 			{
@@ -127,7 +135,7 @@ class calendar_uiforms extends calendar_ui
 
 		if(isset($_GET['start']))
 		{
-			$start = egw_time::to($_GET['start'], 'ts');
+			$start = Api\DateTime::to($_GET['start'], 'ts');
 		}
 		else
 		{
@@ -150,7 +158,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				$participants[$uid] = $participant_types['u'][$uid] =
 					calendar_so::combine_status($uid == $this->user ? 'A' : 'U',1,
-					($uid == $this->user || ($uid == $owner && $this->bo->check_perms(EGW_ACL_ADD,0,$owner))) ? 'CHAIR' : 'REQ-PARTICIPANT');
+					($uid == $this->user || ($uid == $owner && $this->bo->check_perms(Acl::ADD,0,$owner))) ? 'CHAIR' : 'REQ-PARTICIPANT');
 			}
 			elseif (is_array($this->bo->resources[$uid[0]]))
 			{
@@ -160,7 +168,7 @@ class calendar_uiforms extends calendar_ui
 					$uid = $account_id;
 					$participants[$uid] = $participant_types['u'][$uid] =
 						calendar_so::combine_status($uid == $this->user ? 'A' : 'U',1,
-						($uid == $this->user || ($uid == $owner && $this->bo->check_perms(EGW_ACL_ADD,0,$owner))) ? 'CHAIR' : 'REQ-PARTICIPANT');
+						($uid == $this->user || ($uid == $owner && $this->bo->check_perms(Acl::ADD,0,$owner))) ? 'CHAIR' : 'REQ-PARTICIPANT');
 					continue;
 				}
 				$res_data = $this->bo->resources[$uid[0]];
@@ -252,7 +260,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			list($date) = each($content['recur_exception']['delete_exception']);
 			// eT2 converts time to
-			if (!is_numeric($date)) $date = egw_time::to (str_replace('Z','', $date), 'ts');
+			if (!is_numeric($date)) $date = Api\DateTime::to (str_replace('Z','', $date), 'ts');
 			unset($content['recur_exception']['delete_exception']);
 			if (($key = array_search($date,$content['recur_exception'])) !== false)
 			{
@@ -262,7 +270,7 @@ class calendar_uiforms extends calendar_ui
 				{
 					if (!($exception = $this->bo->read($id)) ||
 							$exception['recurrence'] != $content['recur_exception'][$key]) continue;
-					$exception['uid'] = common::generate_uid('calendar', $id);
+					$exception['uid'] = Api\CalDAV::generate_uid('calendar', $id);
 					$exception['reference'] = $exception['recurrence'] = 0;
 					$this->bo->update($exception, true, true,false,true,$messages,$content['no_notifications']);
 					break;
@@ -489,7 +497,7 @@ class calendar_uiforms extends calendar_ui
 											{
 												$msg = lang('Status changed');
 												//Refresh the event in the main window after changing status
-												egw_framework::refresh_opener($msg, 'calendar', $event['id']);
+												Framework::refresh_opener($msg, 'calendar', $event['id']);
 											}
 										}
 										if (!$content['no_popup'])
@@ -565,7 +573,7 @@ class calendar_uiforms extends calendar_ui
 			unset($event['modified']);
 			unset($event['modifier']);
 			unset($event['caldav_name']);
-			$event['owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
+			$event['owner'] = !(int)$this->owner || !$this->bo->check_perms(Acl::ADD,0,$this->owner) ? $this->user : $this->owner;
 
 			// Clear participant stati
 			foreach($event['participant_types'] as $type => &$participants)
@@ -593,16 +601,16 @@ class calendar_uiforms extends calendar_ui
 			// Get links to be copied
 			// With no ID, $content['link_to']['to_id'] is used
 			$content['link_to']['to_id'] = array('to_app' => 'calendar', 'to_id' => 0);
-			foreach(egw_link::get_links('calendar', $content['id']) as $link)
+			foreach(Link::get_links('calendar', $content['id']) as $link)
 			{
-				if ($link['app'] != egw_link::VFS_APPNAME)
+				if ($link['app'] != Link::VFS_APPNAME)
 				{
-					egw_link::link('calendar', $content['link_to']['to_id'], $link['app'], $link['id'], $link['remark']);
+					Link::link('calendar', $content['link_to']['to_id'], $link['app'], $link['id'], $link['remark']);
 				}
-				elseif ($link['app'] == egw_link::VFS_APPNAME)
+				elseif ($link['app'] == Link::VFS_APPNAME)
 				{
-					egw_link::link('calendar', $content['link_to']['to_id'], egw_link::VFS_APPNAME, array(
-						'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
+					Link::link('calendar', $content['link_to']['to_id'], Link::VFS_APPNAME, array(
+						'tmp_name' => Link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
 						'name' => $link['id'],
 					), $link['remark']);
 				}
@@ -619,7 +627,7 @@ class calendar_uiforms extends calendar_ui
 		case 'print':
 		case 'apply':
 		case 'infolog':
-			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event))
+			if ($event['id'] && !$this->bo->check_perms(Acl::EDIT,$event))
 			{
 				$msg = lang('Permission denied');
 				$button = '';
@@ -787,7 +795,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				$update_type = 'edit';
 			}
-			// check if there are messages from update, eg. removed participants or categories because of missing rights
+			// check if there are messages from update, eg. removed participants or Api\Categories because of missing rights
 			if ($messages)
 			{
 				$msg  .= ($msg ? ', ' : '').implode(', ',$messages);
@@ -796,7 +804,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-								htmlspecialchars(egw::link('/index.php',array(
+								htmlspecialchars(Egw::link('/index.php',array(
 								'menuaction' => 'calendar.calendar_uiforms.edit',
 								'cal_id'    => $content['id'],
 							))).'">','</a>');
@@ -808,11 +816,11 @@ class calendar_uiforms extends calendar_ui
 				if ($old_event && $old_event['id'] != $event['id'])
 				{
 					$update_type = 'edit';
-					foreach ((array)$old_alarms as $alarm)
+					foreach ((array)$old_event['alarms'] as $alarm)
 					{
 						// check if alarms still needed in old event, if not delete it
 						$event_time = $alarm['time'] + $alarm['offset'];
-						if ($event_time >= $actual_date)
+						if ($event_time >= $this->bo->now_su)
 						{
 							$this->bo->delete_alarm($alarm['id']);
 						}
@@ -850,7 +858,7 @@ class calendar_uiforms extends calendar_ui
 					));
 					foreach ((array)$events as $exception)
 					{
-						if ($exception['recurrence'] > $actual_date)
+						if ($exception['recurrence'] > $this->bo->now_su)
 						{
 							$exception['recurrence'] += $offset;
 							$exception['reference'] = $event['id'];
@@ -875,18 +883,18 @@ class calendar_uiforms extends calendar_ui
 					$message .= lang(', stati of participants reset');
 				}
 
-				$response = egw_json_response::get();
+				$response = Api\Json\Response::get();
 				if($response && $update_type != 'delete')
 				{
 					$this->update_client($event['id']);
 				}
 
 				$msg = $message . ($msg ? ', ' . $msg : '');
-				egw_framework::refresh_opener($msg, 'calendar', $event['id'], $event['recur_type'] ? 'edit' : $update_type);
+				Framework::refresh_opener($msg, 'calendar', $event['id'], $event['recur_type'] ? 'edit' : $update_type);
 				// writing links for new entry, existing ones are handled by the widget itself
 				if (!$content['id'] && is_array($content['link_to']['to_id']))
 				{
-					egw_link::link('calendar',$event['id'],$content['link_to']['to_id']);
+					Link::link('calendar',$event['id'],$content['link_to']['to_id']);
 				}
 			}
 			else
@@ -898,7 +906,7 @@ class calendar_uiforms extends calendar_ui
 		case 'cancel':
 			if($content['cancel_needs_refresh'])
 			{
-				egw_framework::refresh_opener($msg, 'calendar');
+				Framework::refresh_opener($msg, 'calendar');
 			}
 			break;
 
@@ -934,7 +942,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				$content['new_alarm']['date'] = $next_occurrence['start'] - $offset;
 			}
-			if ($this->bo->check_perms(EGW_ACL_EDIT,!$content['new_alarm']['owner'] ? $event : 0,$content['new_alarm']['owner']))
+			if ($this->bo->check_perms(Acl::EDIT,!$content['new_alarm']['owner'] ? $event : 0,$content['new_alarm']['owner']))
 			{
 				$alarm = array(
 					'offset' => $offset,
@@ -954,7 +962,7 @@ class calendar_uiforms extends calendar_ui
 						$event['alarm'][$alarm_id] = $alarm;
 
 						$msg = lang('Alarm added');
-						egw_framework::refresh_opener($msg,'calendar', $event['id'], 'update');
+						Framework::refresh_opener($msg,'calendar', $event['id'], 'update');
 					}
 					else
 					{
@@ -979,7 +987,7 @@ class calendar_uiforms extends calendar_ui
 			$msg .= ($msg ? "\n" : '').implode("\n", $notification_errors);
 		}
 		// New event, send data before updating so it's there
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		if($response && !$content['id'] && $event['id'])
 		{
 			$this->update_client($event['id']);
@@ -988,25 +996,25 @@ class calendar_uiforms extends calendar_ui
 		{
 			if ($content['lock_token'])	// remove an existing lock
 			{
-				egw_vfs::unlock(egw_vfs::app_entry_lock_path('calendar',$content['id']),$content['lock_token'],false);
+				Vfs::unlock(Vfs::app_entry_lock_path('calendar',$content['id']),$content['lock_token'],false);
 			}
 			if ($content['no_popup'])
 			{
-				egw::redirect_link('/index.php',array(
+				Egw::redirect_link('/index.php',array(
 					'menuaction' => 'calendar.calendar_uiviews.index',
 					'msg'        => $msg,
 				));
 			}
 			if (in_array($button,array('delete_exceptions','delete_keep_exceptions')) || $content['recur_type'] && $button == 'delete')
 			{
-				egw_framework::refresh_opener($msg,'calendar');
+				Framework::refresh_opener($msg,'calendar');
 			}
 			else
 			{
-				egw_framework::refresh_opener($msg, 'calendar', $event['id'], $button == 'save' ? ($content['id'] ? $update_type : 'add') : 'delete');
+				Framework::refresh_opener($msg, 'calendar', $event['id'], $button == 'save' ? ($content['id'] ? $update_type : 'add') : 'delete');
 			}
-			egw_framework::window_close();
-			common::egw_exit();
+			Framework::window_close();
+			exit();
 		}
 		unset($event['no_notifications']);
 		return $this->edit($event,$preserv,$msg,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
@@ -1041,7 +1049,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			unset($alarm['uid'], $alarm['id'], $alarm['time']);
 		}
-		if($this->bo->check_perms(EGW_ACL_EDIT,$event))
+		if($this->bo->check_perms(Acl::EDIT,$event))
 		{
 			return lang('Save event as exception - Delete single occurrence - Edit status or alarms for this particular day');
 		}
@@ -1073,12 +1081,11 @@ class calendar_uiforms extends calendar_ui
 			$as_of_date = time();
 		}
 
-		//error_log(__METHOD__ . egw_time::to($old_event['start']) . ' -> '. egw_time::to($event['start']) . ' as of ' . egw_time::to($as_of_date));
+		//error_log(__METHOD__ . Api\DateTime::to($old_event['start']) . ' -> '. Api\DateTime::to($event['start']) . ' as of ' . Api\DateTime::to($as_of_date));
 
 		if(!($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + 1, true)))
 		{
 			$msg = lang("Error: You can't shift a series from the past!");
-			$noerror = false;
 			return $msg;
 		}
 
@@ -1091,9 +1098,9 @@ class calendar_uiforms extends calendar_ui
 		// base start-date of new series on actual / clicked date
 		$event['start'] = $as_of_date ;
 
-		if (egw_time::to($old_event['start'],'Ymd') < egw_time::to($as_of_date,'Ymd') ||
+		if (Api\DateTime::to($old_event['start'],'Ymd') < Api\DateTime::to($as_of_date,'Ymd') ||
 			// Adjust for requested date in the past
-			egw_time::to($as_of_date,'ts') < time()
+			Api\DateTime::to($as_of_date,'ts') < time()
 		)
 		{
 
@@ -1114,19 +1121,19 @@ class calendar_uiforms extends calendar_ui
 				$occurrence = $rriter->current();
 			}
 			while ($rriter->valid()  && (
-				egw_time::to($occurrence, 'ts') <= time() ||
-				egw_time::to($occurrence, 'Ymd') < egw_time::to($as_of_date,'Ymd')
+				Api\DateTime::to($occurrence, 'ts') <= time() ||
+				Api\DateTime::to($occurrence, 'Ymd') < Api\DateTime::to($as_of_date,'Ymd')
 			) && ($last = $occurrence));
 
 
 			// Make sure as_of_date is still valid, may have to move forward
-			if(egw_time::to($as_of_date,'ts') < egw_time::to($last,'ts') ||
-				egw_time::to($as_of_date, 'Ymd') == egw_time::to($last, 'Ymd'))
+			if(Api\DateTime::to($as_of_date,'ts') < Api\DateTime::to($last,'ts') ||
+				Api\DateTime::to($as_of_date, 'Ymd') == Api\DateTime::to($last, 'Ymd'))
 			{
-				$event['start'] = egw_time::to($rriter->current(),'ts') + $offset;
+				$event['start'] = Api\DateTime::to($rriter->current(),'ts') + $offset;
 			}
 
-			//error_log(__METHOD__ ." Series should end at " . egw_time::to($last) . " New series starts at " . egw_time::to($event['start']));
+			//error_log(__METHOD__ ." Series should end at " . Api\DateTime::to($last) . " New series starts at " . Api\DateTime::to($event['start']));
 			if ($duration)
 			{
 				$event['end'] = $event['start'] + $duration;
@@ -1135,37 +1142,37 @@ class calendar_uiforms extends calendar_ui
 			{
 				$event['end'] = $old_event['end'] - $old_event['start'] + $event['start'];
 			}
-			//error_log(__LINE__.": event[start]=$event[start]=".egw_time::to($event['start']).", duration={$duration}, event[end]=$event[end]=".egw_time::to($event['end']).", offset=$offset\n");
+			//error_log(__LINE__.": event[start]=$event[start]=".Api\DateTime::to($event['start']).", duration={$duration}, event[end]=$event[end]=".Api\DateTime::to($event['end']).", offset=$offset\n");
 
 			$event['participants'] = $old_event['participants'];
 			foreach ($old_event['recur_exception'] as $key => $exdate)
 			{
-				if ($exdate > egw_time::to($last,'ts'))
+				if ($exdate > Api\DateTime::to($last,'ts'))
 				{
-					//error_log("Moved exception on " . egw_time::to($exdate));
+					//error_log("Moved exception on " . Api\DateTime::to($exdate));
 					unset($old_event['recur_exception'][$key]);
 					$event['recur_exception'][$key] += $offset;
 				}
 				else
 				{
-					//error_log("Kept exception on ". egw_time::to($exdate));
+					//error_log("Kept exception on ". Api\DateTime::to($exdate));
 					unset($event['recur_exception'][$key]);
 				}
 			}
 			$last->setTime(0, 0, 0);
-			$old_event['recur_enddate'] = egw_time::to($last, 'ts');
+			$old_event['recur_enddate'] = Api\DateTime::to($last, 'ts');
 			if (!$this->bo->update($old_event,true,true,false,true,$dummy=null,$no_notifications))
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 					lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-						htmlspecialchars(egw::link('/index.php',array(
+						htmlspecialchars(Egw::link('/index.php',array(
 							'menuaction' => 'calendar.calendar_uiforms.edit',
-							'cal_id'    => $content['id'],
+							'cal_id'    => $event['id'],
 						))).'">','</a>');
 				$event = $orig_event;
 			}
 		}
-		$event['start'] = egw_time::to($event['start'],'ts');
+		$event['start'] = Api\DateTime::to($event['start'],'ts');
 		return $msg;
 	}
 
@@ -1262,7 +1269,7 @@ class calendar_uiforms extends calendar_ui
 			'preset[size]'    => filesize($ics_file),
 		);
 		if ($asrequest) $vars['preset[msg]'] = lang('You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.');
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->call('app.calendar.custom_mail', $vars);
 	}
 
@@ -1276,7 +1283,7 @@ class calendar_uiforms extends calendar_ui
 	{
 		if (is_numeric($uid))
 		{
-			return common::grab_owner_name($uid);
+			return Api\Accounts::username($uid);
 		}
 		elseif (($info = $this->bo->resource_info($uid)))
 		{
@@ -1353,14 +1360,14 @@ class calendar_uiforms extends calendar_ui
 			}
 			// vfs path
 			if (!empty($_GET['ical_vfs']) &&
-				(!egw_vfs::file_exists($_GET['ical_vfs']) || !($_GET['ical'] = file_get_contents(egw_vfs::PREFIX.$_GET['ical_vfs']))))
+				(!Vfs::file_exists($_GET['ical_vfs']) || !($_GET['ical'] = file_get_contents(Vfs::PREFIX.$_GET['ical_vfs']))))
 			{
 				//error_log(__METHOD__."() Error: importing the iCal: vfs file not found '$_GET[ical_vfs]'!");
 				$msg = lang('Error: importing the iCal').': '.lang('VFS file not found').': '.$_GET['ical_vfs'];
 				$event =& $this->default_add_event();
 			}
 			if (!empty($_GET['ical_data']) &&
-				!($_GET['ical'] = egw_link::get_data($_GET['ical_data'])))
+				!($_GET['ical'] = Link::get_data($_GET['ical_data'])))
 			{
 				//error_log(__METHOD__."() Error: importing the iCal: data not found '$_GET[ical_data]'!");
 				$msg = lang('Error: importing the iCal').': '.lang('Data not found').': '.$_GET['ical_data'];
@@ -1410,12 +1417,12 @@ class calendar_uiforms extends calendar_ui
 				{
 					if (!$preserv['no_popup'])
 					{
-						egw_framework::window_close(lang('Permission denied'));
+						Framework::window_close(lang('Permission denied'));
 					}
 					else
 					{
 						$GLOBALS['egw']->framework->render('<p class="message" align="center">'.lang('Permission denied')."</p>\n",null,true);
-						common::egw_exit();
+						exit();
 					}
 				}
 				$event =& $this->default_add_event();
@@ -1431,7 +1438,7 @@ class calendar_uiforms extends calendar_ui
 					}
 					else
 					{
-						$date = $this->bo->so->startOfDay(new egw_time($_GET['date'], egw_time::$user_timezone));
+						$date = $this->bo->so->startOfDay(new Api\DateTime($_GET['date'], Api\DateTime::$user_timezone));
 						$date->setUser();
 					}
 					$event = $this->bo->read($cal_id, $date, true);
@@ -1447,8 +1454,8 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 			// set new start and end if given by $_GET
-			if(isset($_GET['start'])) { $event['start'] = egw_time::to($_GET['start'],'ts'); }
-			if(isset($_GET['end'])) { $event['end'] = egw_time::to($_GET['end'],'ts'); }
+			if(isset($_GET['start'])) { $event['start'] = Api\DateTime::to($_GET['start'],'ts'); }
+			if(isset($_GET['end'])) { $event['end'] = Api\DateTime::to($_GET['end'],'ts'); }
 			if(isset($_GET['non_blocking'])) { $event['non_blocking'] = (bool)$_GET['non_blocking']; }
 			// check if the event is the whole day
 			$start = $this->bo->date2array($event['start']);
@@ -1468,13 +1475,13 @@ class calendar_uiforms extends calendar_ui
 					}
 					if(!$n)
 					{
-						$event['title'] = egw_link::title($link_app,$link_id);
+						$event['title'] = Link::title($link_app,$link_id);
 						// ask first linked app via "calendar_set" hook, for further data to set, incl. links
-						if (($set = $GLOBALS['egw']->hooks->single($event+array('location'=>'calendar_set','entry_id'=>$link_id),$link_app)))
+						if (($set = Api\Hooks::single($event+array('location'=>'calendar_set','entry_id'=>$link_id),$link_app)))
 						{
 							foreach((array)$set['link_app'] as $i => $l_app)
 							{
-								if (($l_id=$set['link_id'][$i])) egw_link::link('calendar',$event['link_to']['to_id'],$l_app,$l_id);
+								if (($l_id=$set['link_id'][$i])) Link::link('calendar',$event['link_to']['to_id'],$l_app,$l_id);
 							}
 							unset($set['link_app']);
 							unset($set['link_id']);
@@ -1482,39 +1489,39 @@ class calendar_uiforms extends calendar_ui
 							$event = array_merge($event,$set);
 						}
 					}
-					egw_link::link('calendar',$link_to_id,$link_app,$link_id);
+					Link::link('calendar',$link_to_id,$link_app,$link_id);
 				}
 			}
 		}
 
-		$etpl = new etemplate_new();
+		$etpl = new Etemplate();
 		if (!$etpl->read($preserv['template']))
 		{
 			$etpl->read($preserv['template'] = 'calendar.edit');
 		}
-		$view = $preserv['view'] = $preserv['view'] || $event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event);
+		$view = $preserv['view'] = $preserv['view'] || $event['id'] && !$this->bo->check_perms(Acl::EDIT,$event);
 		//echo "view=$view, event="; _debug_array($event);
 		// shared locking of entries to edit
 		if (!$view && ($locktime = $GLOBALS['egw_info']['server']['Lock_Time_Calender']) && $event['id'])
 		{
-			$lock_path = egw_vfs::app_entry_lock_path('calendar',$event['id']);
+			$lock_path = Vfs::app_entry_lock_path('calendar',$event['id']);
 			$lock_owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
 
 			if (($preserv['lock_token'] = $event['lock_token']))		// already locked --> refresh the lock
 			{
-				egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',true,false);
+				Vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',true,false);
 			}
-			if (($lock = egw_vfs::checkLock($lock_path)) && $lock['owner'] != $lock_owner)
+			if (($lock = Vfs::checkLock($lock_path)) && $lock['owner'] != $lock_owner)
 			{
 				$msg .= ' '.lang('This entry is currently opened by %1!',
 					(($lock_uid = $GLOBALS['egw']->accounts->name2id(substr($lock['owner'],7),'account_email')) ?
-					common::grab_owner_name($lock_uid) : $lock['owner']));
+					Api\Accounts::username($lock_uid) : $lock['owner']));
 			}
 			elseif($lock)
 			{
 				$preserv['lock_token'] = $lock['token'];
 			}
-			elseif(egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',false,false))
+			elseif(Vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',false,false))
 			{
 				//We handle AJAX_REQUEST in client-side for unlocking the locked entry, in case of closing the entry by X button or close button
 			}
@@ -1534,7 +1541,7 @@ class calendar_uiforms extends calendar_ui
 			'view' => $view,
 			'query_delete_exceptions' => (int)($event['recur_type'] && $event['recur_exception']),
 		));
-		egw_framework::message($msg, $msg_type);
+		Framework::message($msg, $msg_type);
 		$content['duration'] = $content['end'] - $content['start'];
 		if (isset($this->durations[$content['duration']])) $content['end'] = '';
 
@@ -1586,7 +1593,7 @@ class calendar_uiforms extends calendar_ui
 
 				if (($no_status = !$this->bo->check_status_perms($uid,$event)) || $view)
 					$readonlys['participants'][$row]['status'] = $no_status;
-				if ($preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_EDIT,$event))
+				if ($preserv['hide_delete'] || !$this->bo->check_perms(Acl::EDIT,$event))
 					$readonlys['participants']['delete'][$uid] = true;
 				// todo: make the participants available as links with email as title
 				$content['participants'][$row++]['title'] = $this->get_title($uid);
@@ -1599,7 +1606,7 @@ class calendar_uiforms extends calendar_ui
 					usort($members, array($this, 'uid_title_cmp'));
 					foreach($members as $member)
 					{
-						if (!isset($participants[$member]) && $this->bo->check_perms(EGW_ACL_READ,0,$member))
+						if (!isset($participants[$member]) && $this->bo->check_perms(Acl::READ,0,$member))
 						{
 							$preserv['participants'][$row] = $content['participants'][$row] = array(
 								'app'      => 'Group invitation',
@@ -1608,8 +1615,8 @@ class calendar_uiforms extends calendar_ui
 							);
 							$readonlys['participants'][$row]['quantity'] = $readonlys['participants']['delete'][$member] = true;
 							// read access is enough to invite participants, but you need edit rights to change status
-							$readonlys['participants'][$row]['status'] = !$this->bo->check_perms(EGW_ACL_EDIT,0,$member);
-							$content['participants'][$row++]['title'] = common::grab_owner_name($member);
+							$readonlys['participants'][$row]['status'] = !$this->bo->check_perms(Acl::EDIT,0,$member);
+							$content['participants'][$row++]['title'] = Api\Accounts::username($member);
 						}
 					}
 				}
@@ -1631,7 +1638,7 @@ class calendar_uiforms extends calendar_ui
 			$content['alarm'] = array(false);
 			foreach(array_values($event['alarm']) as $id => $alarm)
 			{
-				if (!$alarm['all'] && !$this->bo->check_perms(EGW_ACL_READ,0,$alarm['owner']))
+				if (!$alarm['all'] && !$this->bo->check_perms(Acl::READ,0,$alarm['owner']))
 				{
 					continue;	// no read rights to the calendar of the alarm-owner, dont show the alarm
 				}
@@ -1652,7 +1659,7 @@ class calendar_uiforms extends calendar_ui
 				$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
 				$content['alarm'][] = $alarm;
 
-				$readonlys['alarm[delete_alarm]['.$alarm['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
+				$readonlys['alarm[delete_alarm]['.$alarm['id'].']'] = !$this->bo->check_perms(Acl::EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
 			}
 			if (count($content['alarm']) == 1)
 			{
@@ -1682,7 +1689,7 @@ class calendar_uiforms extends calendar_ui
 			// respect category permissions
 			if(!empty($event['category']))
 			{
-				$content['category'] = $this->categories->check_list(EGW_ACL_READ, $event['category']);
+				$content['category'] = $this->categories->check_list(Acl::READ, $event['category']);
 			}
 		}
 		else
@@ -1720,13 +1727,13 @@ class calendar_uiforms extends calendar_ui
 		{
 			$readonlys['action'] = true;
 		}
-		if (!($readonlys['button[exception]'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event) || $event['recur_type'] == MCAL_RECUR_NONE || ($event['recur_enddate'] &&$event['start'] > $event['recur_enddate'])))
+		if (!($readonlys['button[exception]'] = !$this->bo->check_perms(Acl::EDIT,$event) || $event['recur_type'] == MCAL_RECUR_NONE || ($event['recur_enddate'] &&$event['start'] > $event['recur_enddate'])))
 		{
 			$content['exception_label'] = $this->bo->long_date(max($preserved['actual_date'], $event['start']));
 		}
-		$readonlys['button[delete]'] = !$event['id'] || $preserved['hide_delete'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
+		$readonlys['button[delete]'] = !$event['id'] || $preserved['hide_delete'] || !$this->bo->check_perms(Acl::DELETE,$event);
 
-		if (!$event['id'] || $this->bo->check_perms(EGW_ACL_EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
+		if (!$event['id'] || $this->bo->check_perms(Acl::EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
 		{
 			$sel_options['owner'][0] = lang('All participants');
 		}
@@ -1736,7 +1743,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		foreach((array) $event['participant_types']['u'] as $uid => $status)
 		{
-			if ($uid != $this->user && $status != 'R' && $this->bo->check_perms(EGW_ACL_EDIT,0,$uid))
+			if ($uid != $this->user && $status != 'R' && $this->bo->check_perms(Acl::EDIT,0,$uid))
 			{
 				$sel_options['owner'][$uid] = $this->bo->participant_name($uid);
 			}
@@ -1798,12 +1805,12 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function ajax_unlock($id,$token)
 	{
-		$lock_path = egw_vfs::app_entry_lock_path('calendar',$id);
+		$lock_path = Vfs::app_entry_lock_path('calendar',$id);
 		$lock_owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
 
-		if (($lock = egw_vfs::checkLock($lock_path)) && $lock['owner'] == $lock_owner || $lock['token'] == $token)
+		if (($lock = Vfs::checkLock($lock_path)) && $lock['owner'] == $lock_owner || $lock['token'] == $token)
 		{
-			egw_vfs::unlock($lock_path,$token,false);
+			Vfs::unlock($lock_path,$token,false);
 		}
 	}
 
@@ -1833,7 +1840,7 @@ class calendar_uiforms extends calendar_ui
 			$ical_string = $_GET['ical'];
 			if ($ical_string == 'session' || $_usesession)
 			{
-				$session_data = egw_cache::getSession('calendar', 'ical');
+				$session_data = Api\Cache::getSession('calendar', 'ical');
 				$ical_string = $session_data['attachment'];
 				$ical_charset = $session_data['charset'];
 				$ical_method = $session_data['method'];
@@ -1843,7 +1850,7 @@ class calendar_uiforms extends calendar_ui
 			if (!($events = $ical->icaltoegw($ical_string, '', $ical_charset)) || count($events) != 1)
 			{
 				error_log(__METHOD__."('$_GET[ical]') error parsing iCal!");
-				$GLOBALS['egw']->framework->render(html::fieldset('<pre>'.htmlspecialchars($ical_string).'</pre>',
+				$GLOBALS['egw']->framework->render(Api\Html::fieldset('<pre>'.htmlspecialchars($ical_string).'</pre>',
 					lang('Error: importing the iCal')));
 				return;
 			}
@@ -1956,7 +1963,7 @@ class calendar_uiforms extends calendar_ui
 					if (!$event['id'])
 					{
 						// if organizer is a EGroupware user, but we have no rights to organizers calendar
-						if (isset($event['owner']) && !$this->bo->check_perms(EGW_ACL_ADD,0,$event['owner']))
+						if (isset($event['owner']) && !$this->bo->check_perms(Acl::ADD,0,$event['owner']))
 						{
 							// --> make organize a participant with role chair and current user the owner
 							$event['participant_types']['u'] = $event['participants'][$event['owner']] =
@@ -1999,7 +2006,7 @@ class calendar_uiforms extends calendar_ui
 			// add notification-errors, if we have some
 			$msg = array_merge((array)$msg, notifications::errors(true));
 		}
-		egw_framework::message(implode("\n", (array)$msg));
+		Framework::message(implode("\n", (array)$msg));
 		$readonlys['button[edit]'] = !$event['id'];
 		$event['ics_method'] = $readonlys['ics_method'] = strtolower($ical_method);
 		switch(strtolower($ical_method))
@@ -2015,7 +2022,7 @@ class calendar_uiforms extends calendar_ui
 				$event['ics_method_label'] = lang('Meeting request');
 				break;
 		}
-		$tpl = new etemplate_new('calendar.meeting');
+		$tpl = new Etemplate('calendar.meeting');
 		$tpl->exec('calendar.calendar_uiforms.meeting', $event, array(), $readonlys, $event, 2);
 	}
 
@@ -2033,7 +2040,7 @@ class calendar_uiforms extends calendar_ui
 
 		foreach($conflicts as $k => $conflict)
 		{
-			$is_readable = $this->bo->check_perms(EGW_ACL_READ,$conflict);
+			$is_readable = $this->bo->check_perms(Acl::READ,$conflict);
 
 			$conflicts[$k] += array(
 				'icon_participants' => $is_readable ? (count($conflict['participants']) > 1 ? 'users' : 'single') : 'private',
@@ -2051,7 +2058,7 @@ class calendar_uiforms extends calendar_ui
 			'conflicts' => array_values($conflicts),	// conflicts have id-start as key
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Scheduling conflict');
-		$resources_config = config::read('resources');
+		$resources_config = Api\Config::read('resources');
 		$readonlys = array();
 
 		foreach (array_keys($allConflicts) as $pId)
@@ -2090,7 +2097,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function ajax_freetimesearch(array $edit_content)
 	{
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		//$response->addAlert(__METHOD__.'('.array2string($edit_content).')');
 
 		// convert start/end date-time values to timestamps
@@ -2098,7 +2105,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			if (!empty($edit_content[$name]))
 			{
-				$date = new egw_time($edit_content[$name]);
+				$date = new Api\DateTime($edit_content[$name]);
 				$edit_content[$name] = $date->format('ts');
 			}
 		}
@@ -2148,7 +2155,7 @@ class calendar_uiforms extends calendar_ui
 		$content['search_window'] = 7 * DAY_s;
 
 		// store content in session
-		egw_cache::setSession('calendar','freetimesearch_args_'.(int)$edit_content['id'],$content);
+		Api\Cache::setSession('calendar','freetimesearch_args_'.(int)$edit_content['id'],$content);
 
 		//menuaction=calendar.calendar_uiforms.freetimesearch&values2url('start,end,duration,participants,recur_type,whole_day'),ft_search,700,500
 		$link = 'calendar.calendar_uiforms.freetimesearch&cal_id='. $edit_content['id'];
@@ -2174,7 +2181,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function freetimesearch($content = null)
 	{
-		$etpl = new etemplate_new('calendar.freetimesearch');
+		$etpl = new Etemplate('calendar.freetimesearch');
 		$sel_options['search_window'] = array(
 			7*DAY_s		=> lang('one week'),
 			14*DAY_s	=> lang('two weeks'),
@@ -2185,8 +2192,8 @@ class calendar_uiforms extends calendar_ui
 		if (!is_array($content))
 		{
 			// get content from session (and delete it immediatly)
-			$content = egw_cache::getSession('calendar','freetimesearch_args_'.(int)$_GET['cal_id']);
-			egw_cache::unsetSession('calendar','freetimesearch_args_'.(int)$_GET['cal_id']);
+			$content = Api\Cache::getSession('calendar','freetimesearch_args_'.(int)$_GET['cal_id']);
+			Api\Cache::unsetSession('calendar','freetimesearch_args_'.(int)$_GET['cal_id']);
 			//Since the start_time and end_time from calendar_user_preferences are numbers, not timestamp, in order to show them on date-timeonly
 			//widget we need to convert them from numbers to timestamps, only for the first time when we have template without content
 			$sTime = $content['start_time'];
@@ -2413,13 +2420,13 @@ class calendar_uiforms extends calendar_ui
 	{
 		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			throw new egw_exception_no_permission_admin();
+			throw new Api\Exception\NoPermission\Admin();
 		}
 		if ($_content)
 		{
 			list($button) = each($_content['button']);
 			unset($_content['button']);
-			if ($button != 'cancel')	// store changed acl
+			if ($button != 'cancel')	// store changed Acl
 			{
 				foreach($_content as $data)
 				{
@@ -2435,7 +2442,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			if ($button != 'apply')	// end dialog
 			{
-				egw::redirect_link('/index.php', array(
+				Egw::redirect_link('/index.php', array(
 					'menuaction' => 'admin.admin_ui.index',
 					'ajax' => 'true'
 				), 'admin');
@@ -2468,7 +2475,7 @@ class calendar_uiforms extends calendar_ui
 		$content[] = array('cat_id' => '');
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Calendar').' - '.lang('Category ACL');
-		$tmp = new etemplate_new('calendar.cat_acl');
+		$tmp = new Etemplate('calendar.cat_acl');
 		$GLOBALS['egw_info']['flags']['nonavbar'] = 1;
 		$tmp->exec('calendar.calendar_uiforms.cat_acl',$content,null,$readonlys,$preserv);
 	}
@@ -2524,8 +2531,8 @@ class calendar_uiforms extends calendar_ui
 		{
 			$content['history']['filter'] = array(
 				'(history_status NOT LIKE \'participants%\' OR (history_status LIKE \'participants%\' AND (
-					history_new_value LIKE \'%' . bo_tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\' OR
-					history_old_value LIKE \'%' . bo_tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\')))'
+					history_new_value LIKE \'%' . Api\Storage\Tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\' OR
+					history_old_value LIKE \'%' . Api\Storage\Tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\')))'
 			);
 		}
 
@@ -2576,7 +2583,7 @@ class calendar_uiforms extends calendar_ui
 					$return = false;
 					break;
 				}
-				else if ($owner > 0 && $this->bo->check_perms(EGW_ACL_EDIT, $eventId,0,'ts',$date))
+				else if ($owner > 0 && $this->bo->check_perms(Acl::EDIT, $eventId,0,'ts',$date))
 				{
 					$return = false;
 					break;
@@ -2597,7 +2604,7 @@ class calendar_uiforms extends calendar_ui
 		// If we have a recuring event for a particular day, make an exception
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
 		{
-			$d = new egw_time($date, egw_time::$user_timezone);
+			$d = new Api\DateTime($date, Api\DateTime::$user_timezone);
 			if (!empty($event['whole_day']))
 			{
 				$d =& $this->bo->so->startOfDay($d);
@@ -2606,9 +2613,11 @@ class calendar_uiforms extends calendar_ui
 			$event = $this->bo->read($eventId, $d, true);
 
 			// For DnD, create an exception if they gave the date
+			$preserv = null;
 			$this->_create_exception($event,$preserv);
 			unset($event['id']);
 
+			$messages = null;
 			$conflicts = $this->bo->update($event,false,true,false,true,$messages);
 			if (!is_array($conflicts) && $conflicts)
 			{
@@ -2626,7 +2635,7 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 
-		$d = new egw_time($targetDateTime, egw_time::$user_timezone);
+		$d = new Api\DateTime($targetDateTime, Api\DateTime::$user_timezone);
 		$event['start'] = $d->format('ts');
 		$event['end'] = $event['start']+$duration;
 
@@ -2634,7 +2643,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			// calculate offset against clicked recurrance,
 			// depending on which is smaller
-			$offset = egw_time::to($targetDateTime,'ts') - egw_time::to($seriesInstance,'ts');
+			$offset = Api\DateTime::to($targetDateTime,'ts') - Api\DateTime::to($seriesInstance,'ts');
 			$event['start'] = $old_event['start'] + $offset;
 			$event['duration'] = $duration;
 
@@ -2657,6 +2666,7 @@ class calendar_uiforms extends calendar_ui
 			$event['non_blocking'] = false;
 			// If there's a conflict, it won't save the change and the conflict popup will be blank
 			// so save the change now, and then let the conflict check happen.
+			$message = null;
 			$this->bo->update($event,true, true, false, true, $message,true);
 
 			// Whole day non blocking with DAY_s would add a day
@@ -2697,7 +2707,7 @@ class calendar_uiforms extends calendar_ui
 		$conflicts=$this->bo->update($event,$ignore_conflicts, true, false, true, $message);
 
 		$this->update_client($event['id'],$d);
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		if(!is_array($conflicts) && $conflicts)
 		{
 			if(is_int($conflicts))
@@ -2751,7 +2761,7 @@ class calendar_uiforms extends calendar_ui
 		// If we have a recuring event for a particular day, make an exception
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
 		{
-			$d = new egw_time($date, egw_time::$user_timezone);
+			$d = new Api\DateTime($date, Api\DateTime::$user_timezone);
 			if (!empty($event['whole_day']))
 			{
 				$d =& $this->bo->so->startOfDay($date);
@@ -2785,7 +2795,7 @@ class calendar_uiforms extends calendar_ui
 	{
 		list($id, $date) = explode(':',$eventId);
 		$event=$this->bo->read($id);
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 
 		if ($this->bo->delete($event['id'], (int)$date))
 		{
@@ -2817,14 +2827,14 @@ class calendar_uiforms extends calendar_ui
 		if (!is_array($mailContent) && ($_GET['egw_data']))
 		{
 			// get raw mail data
-			egw_link::get_data ($_GET['egw_data']);
+			Link::get_data ($_GET['egw_data']);
 			return false;
 		}
 
 		if (is_array($mailContent))
 		{
 			// Addressbook
-			$AB = new addressbook_bo();
+			$AB = new Api\Contacts();
 			$accounts = array(0 => $GLOBALS['egw_info']['user']['account_id']);
 
 			$participants[0] = array (
@@ -2885,19 +2895,19 @@ class calendar_uiforms extends calendar_ui
 				{
 					if($attachment['egw_data'])
 					{
-						egw_link::link('calendar',$event['link_to']['to_id'],egw_link::DATA_APPNAME,  $attachment);
+						Link::link('calendar',$event['link_to']['to_id'],Link::DATA_APPNAME,  $attachment);
 					}
 					else if(is_readable($attachment['tmp_name']) ||
-						(egw_vfs::is_readable($attachment['tmp_name']) && parse_url($attachment['tmp_name'], PHP_URL_SCHEME) === 'vfs'))
+						(Vfs::is_readable($attachment['tmp_name']) && parse_url($attachment['tmp_name'], PHP_URL_SCHEME) === 'vfs'))
 					{
-						egw_link::link('calendar',$event['link_to']['to_id'],'file',  $attachment);
+						Link::link('calendar',$event['link_to']['to_id'],'file',  $attachment);
 					}
 				}
 			}
 		}
 		else
 		{
-			egw_framework::window_close(lang('No content found to show up as calendar entry.'));
+			Framework::window_close(lang('No content found to show up as calendar entry.'));
 		}
 
 		return $this->process_edit($event);

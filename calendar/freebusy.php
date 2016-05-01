@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp' => 'calendar',
@@ -28,9 +30,9 @@ include ('../header.inc.php');
 function fail_exit($msg)
 {
 	echo "<html>\n<head>\n<title>$msg</title>\n<meta http-equiv=\"content-type\" content=\"text/html; charset=".
-		$GLOBALS['egw']->translation->charset()."\" />\n</head>\n<body><h1>$msg</h1>\n</body>\n</html>\n";
+		Api\Translation::charset()."\" />\n</head>\n<body><h1>$msg</h1>\n</body>\n</html>\n";
 
-	$GLOBALS['egw']->common->egw_exit();
+	exit();
 }
 
 if (!$loged_in)
@@ -107,6 +109,7 @@ if ($_GET['debug'])
 }
 else
 {
-	html::content_header('freebusy.ifb','text/calendar');
+	Api\Header\Content::type('freebusy.ifb','text/calendar');
 }
-echo ExecMethod2('calendar.calendar_ical.freebusy',$user,$_GET['end']);
+$ical = new calendar_ical();
+echo $ical->freebusy($user, $_GET['end']);
