@@ -1,6 +1,6 @@
 <?php
 /**
- * Setup - Manage the eGW config file header.inc.php
+ * EGroupware Setup - Manage the eGW config file header.inc.php
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -10,6 +10,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
 
 /**
  * Functions to manage the eGW config file header.inc.php
@@ -58,7 +61,7 @@ class setup_header
 	 * Sets $GLOBALS['egw_info'], $GLOBALS['egw_domains'] and the defines EGW_SERVER_ROOT and EGW_INCLUDE_ROOT,
 	 * as if the header has been included
 	 *
-	 * @param string $domain='default' domain to set
+	 * @param string $domain ='default' domain to set
 	 */
 	function defaults($domain='default')
 	{
@@ -83,6 +86,7 @@ class setup_header
 
 	function domain_defaults($user='admin',$passwd='',$supported_db=null)
 	{
+		$null = null;
 		if (is_null($supported_db)) $supported_db = $this->check_db_support($null);
 		$default_db = count($supported_db) ? $supported_db[0] : 'mysqli';
 
@@ -149,16 +153,17 @@ class setup_header
 	 * should write an identical header.inc.php as the one include
 	 *
 	 * @param array $egw_info usual content (in server key) plus keys server_root and include_root
-	 * @param array $egw_domains info about the existing eGW domains / DB instances
+	 * @param array $egw_domain info about the existing eGW domains / DB instances
 	 * @return string content of header.inc.php
 	 */
 	function generate($egw_info,$egw_domain)
 	{
-		$tpl = new Template('../', 'keep');	// 'keep' to not loose '{hash}' prefix of password-hashes!
+		$tpl = new Framework\Template('../', 'keep');	// 'keep' to not loose '{hash}' prefix of password-hashes!
 		$tpl->set_file(array('header' => 'header.inc.php.template'));
 		$tpl->set_block('header','domain','domain');
 
-		auth::passwdhashes($most_secure_pw_hash);
+		$most_secure_pw_hash = null;
+		Api\Auth::passwdhashes($most_secure_pw_hash);
 
 		foreach($egw_domain as $domain => $data)
 		{
@@ -168,7 +173,7 @@ class setup_header
 				if ($name == 'db_port' && !$value) $value = $this->default_db_ports[$data['db_type']];
 				if ($name == 'config_passwd')
 				{
-					$var['CONFIG_PASS'] = self::is_hashed($value) ? $value : auth::encrypt_sql($value, $most_secure_pw_hash);
+					$var['CONFIG_PASS'] = self::is_hashed($value) ? $value : Api\Auth::encrypt_sql($value, $most_secure_pw_hash);
 				}
 				else
 				{
@@ -183,7 +188,7 @@ class setup_header
 		$var = Array();
 		foreach($egw_info['server'] as $name => $value)
 		{
-			if ($name == 'header_admin_password' && $value && !self::is_hashed($value)) $value = auth::encrypt_sql($value, $most_secure_pw_hash);
+			if ($name == 'header_admin_password' && $value && !self::is_hashed($value)) $value = Api\Auth::encrypt_sql($value, $most_secure_pw_hash);
 			if ($name == 'versions')
 			{
 				$name = 'mcrypt_version';
@@ -213,7 +218,7 @@ class setup_header
 	 */
 	function generate_mcyrpt_iv()
 	{
-		/*$mcrypt = mcrypt_module_open(egw_session::MCRYPT_ALGO, '', egw_session::MCRYPT_MODE, '');
+		/*$mcrypt = mcrypt_module_open(Api\Session::MCRYPT_ALGO, '', Api\Session::MCRYPT_MODE, '');
 		$size = mcrypt_enc_get_iv_size($mcrypt);
 		if (function_exists('mcrypt_create_iv'))	// PHP 5.3+
 		{

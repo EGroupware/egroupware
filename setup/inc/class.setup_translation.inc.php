@@ -1,6 +1,6 @@
 <?php
 /**
- * Setup translation class
+ * EGroupware Setup translation class
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -10,6 +10,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 if (!defined('MAX_MESSAGE_ID_LENGTH'))
 {
@@ -52,10 +54,10 @@ class setup_translation
 			$lang = $ConfigLang;
 		}
 
-		$fn = '.' . SEP . 'lang' . SEP . EGW_LANGFILE_PREFIX . $lang . '.lang';
+		$fn = './lang/' . EGW_LANGFILE_PREFIX . $lang . '.lang';
 		if (!file_exists($fn))
 		{
-			$fn = '.' . SEP . 'lang' . SEP . EGW_LANGFILE_PREFIX .'en.lang';
+			$fn = './lang/' . EGW_LANGFILE_PREFIX .'en.lang';
 		}
 		if (file_exists($fn) && ($fp = fopen($fn,'r')))
 		{
@@ -77,22 +79,22 @@ class setup_translation
 	/**
 	 * Translate phrase to user selected lang
 	 *
-	 * @param $key  phrase to translate
+	 * @param $_key  phrase to translate
 	 * @param $vars vars sent to lang function, passed to us
 	 */
-	function translate($key, $vars=False)
+	function translate($_key, $vars=False)
 	{
 		static $placeholders = array('%1','%2','%3','%4','%5','%6','%7','%8','%9','%10');
 
-		$ret = $key . $this->no_translation_marker;
-		$key = strtolower(trim($key));
+		$ret = $_key . $this->no_translation_marker;
+		$key = strtolower(trim($_key));
 		if (isset($this->langarray[$key]))
 		{
 			$ret = $this->langarray[$key];
 		}
 		if ($GLOBALS['egw_setup']->system_charset != $this->langarray['charset'])
 		{
-			$ret = translation::convert($ret,$this->langarray['charset']);
+			$ret = Api\Translation::convert($ret,$this->langarray['charset']);
 		}
 		if (is_array($vars))
 		{
@@ -104,7 +106,7 @@ class setup_translation
 	/**
 	 * Languages we support (alphabetically sorted)
 	 *
-	 * @param boolean $array_values=true true: values are an array, false values are just the descriptiong
+	 * @param boolean $array_values =true true: values are an array, false values are just the descriptiong
 	 * @return array
 	 */
 	static function get_supported_langs($array_values=true)
@@ -112,8 +114,8 @@ class setup_translation
 		$f = fopen(EGW_SERVER_ROOT.'/setup/lang/languages','rb');
 		while(($line = fgets($f)))
 		{
-			list($lang,$descr) = explode("\t",$line,2);
-			$lang = trim($lang);
+			list($lang2,$descr) = explode("\t",$line,2);
+			$lang = trim($lang2);
 			if ($array_values)
 			{
 				$languages[$lang]['lang']  = $lang;
@@ -132,6 +134,7 @@ class setup_translation
 			$d = dir(EGW_SERVER_ROOT.'/setup/lang');
 			while(($file = $d->read()))
 			{
+				$matches = null;
 				if(preg_match('/^(php|e)gw_([-a-z]+).lang$/i',$file,$matches))
 				{
 					$languages[$matches[2]]['available'] = True;
@@ -150,9 +153,9 @@ class setup_translation
 
 	/**
 	 * List availible charsets and it's supported languages
-	 * @param boolean/string $name=false name for selectbox or false to return an array
+	 * @param boolean|string $name =false name for selectbox or false to return an array
 	 * @param string $selected selected charset
-	 * @return string/array html for a selectbox or array with charset / languages pairs
+	 * @return string|array html for a selectbox or array with charset / languages pairs
 	 */
 	static function get_charsets($name=false,$selected='')
 	{
@@ -189,6 +192,6 @@ class setup_translation
 		{
 			return $charsets;
 		}
-		return html::select($name,trim(strtolower($selected)),$charsets,true);
+		return Api\Html::select($name,trim(strtolower($selected)),$charsets,true);
 	}
 }

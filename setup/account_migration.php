@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupware Setup - Account migration between SQL <--> LDAP
+ * EGroupware Setup - Account migration between SQL <--> LDAP
  *
  * The migration is done to the account-repository configured for eGroupWare!
  *
@@ -31,7 +31,7 @@ $setup_tpl->set_file(array(
 	'T_footer' => 'footer.tpl',
 	'T_alert_msg' => 'msg_alert_msg.tpl'
 ));
-$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
+$setup_tpl->set_var('hidden_vars', Api\Html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 
 // check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
@@ -108,7 +108,7 @@ if (!$_POST['migrate'] && !$_POST['passwords2sql'])
 		else
 		{
 			$user_list .= '<option value="' . $account_id . '" selected="1">'.
-				common::display_fullname($account['account_lid'],
+				Api\Accounts::format_username($account['account_lid'],
 				$account['account_firstname'],$account['account_lastname'])	. "</option>\n";
 		}
 	}
@@ -129,7 +129,7 @@ if (!$_POST['migrate'] && !$_POST['passwords2sql'])
 	$setup_tpl->set_var('cancel',lang('Cancel'));
 	if ($from == 'sql' && $GLOBALS['egw_info']['server']['auth_type'] == 'ldap')
 	{
-		$setup_tpl->set_var('extra_button', html::submit_button('passwords2sql', lang('Passwords --> SQL')));
+		$setup_tpl->set_var('extra_button', Api\Html::submit_button('passwords2sql', lang('Passwords --> SQL')));
 	}
 
 	$setup_tpl->pfp('out','header');
@@ -163,10 +163,10 @@ else	// do the migration
 	// store new repostory (and auth_type), as we are migrated now
 	if ($_POST['migrate'])
 	{
-		config::save_value('account_repository', $GLOBALS['egw_info']['server']['account_repository']=$to, 'phpgwapi');
+		Api\Config::save_value('account_repository', $GLOBALS['egw_info']['server']['account_repository']=$to, 'phpgwapi');
 		if (empty($GLOBALS['egw_info']['server']['auth_type']) || $GLOBALS['egw_info']['server']['auth_type'] == $from)
 		{
-			config::save_value('auth_type', $GLOBALS['egw_info']['server']['auth_type']=$to, 'phpgwapi');
+			Api\Config::save_value('auth_type', $GLOBALS['egw_info']['server']['auth_type']=$to, 'phpgwapi');
 		}
 	}
 	echo '<p align="center">'.lang('Click <a href="index.php">here</a> to return to setup.')."</p>\n";

@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * setup command: create or update the header.inc.php
@@ -33,8 +35,8 @@ class setup_cmd_header extends setup_cmd
 	/**
 	 * Constructor
 	 *
-	 * @param string/array $sub_command='create' 'create','edit','delete'(-domain) or array with all arguments
-	 * @param array $arguments=null comand line arguments
+	 * @param string|array $sub_command ='create' 'create','edit','delete'(-domain) or array with all arguments
+	 * @param array $arguments =null comand line arguments
 	 */
 	function __construct($sub_command='create',$arguments=null)
 	{
@@ -66,7 +68,7 @@ class setup_cmd_header extends setup_cmd
 	/**
 	 * Create or update header.inc.php
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string serialized $GLOBALS defined in the header.inc.php
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
@@ -81,7 +83,7 @@ class setup_cmd_header extends setup_cmd
 		{
 			if ($this->sub_command != 'create')
 			{
-				throw new egw_exception_wrong_userinput(lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'),1);
+				throw new Api\Exception\WrongUserinput(lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'),1);
 			}
 			$this->defaults(false);
 		}
@@ -89,7 +91,7 @@ class setup_cmd_header extends setup_cmd
 		{
 			if ($this->sub_command == 'create')
 			{
-				throw new egw_exception_wrong_userinput(
+				throw new Api\Exception\WrongUserinput(
 					lang('eGroupWare configuration file header.inc.php already exists, you need to use --edit-header or delete it first!'),20);
 			}
 			if ($this->arguments)
@@ -123,7 +125,7 @@ class setup_cmd_header extends setup_cmd
 				echo '$GLOBALS[egw_info] = '; print_r($GLOBALS['egw_info']);
 				echo '$GLOBALS[egw_domain] = '; print_r($GLOBALS['egw_domain']);
 			}
-			throw new egw_exception_wrong_userinput(lang('Configuration errors:')."\n- ".implode("\n- ",$errors)."\n".lang("You need to fix the above errors, before the configuration file header.inc.php can be written!"),23);
+			throw new Api\Exception\WrongUserinput(lang('Configuration errors:')."\n- ".implode("\n- ",$errors)."\n".lang("You need to fix the above errors, before the configuration file header.inc.php can be written!"),23);
 		}
 		if ($check_only)
 		{
@@ -142,20 +144,20 @@ class setup_cmd_header extends setup_cmd
 			{
 				unlink($this->header_path);
 			}
-			if (($f = fopen($this->header_path,'wb')) && ($w=fwrite($f,$header)))
+			if (($f = fopen($this->header_path,'wb')) && fwrite($f,$header))
 			{
 				fclose($f);
 				return lang('header.inc.php successful written.');
 			}
 		}
-		throw new egw_exception_no_permission(lang("Failed writing configuration file header.inc.php, check the permissions !!!"),24);
+		throw new Api\Exception\NoPermission(lang("Failed writing configuration file header.inc.php, check the permissions !!!"),24);
 	}
 
 	/**
 	 * Magic method to allow to call all methods from setup_header, as if they were our own
 	 *
 	 * @param string $method
-	 * @param array $args=null
+	 * @param array $args =null
 	 * @return mixed
 	 */
 	function __call($method,array $args=null)
@@ -271,18 +273,18 @@ class setup_cmd_header extends setup_cmd
 
 			if (!isset(self::$options[$arg]))
 			{
-				throw new egw_exception_wrong_userinput(lang("Unknown option '%1' !!!",$arg),90);
+				throw new Api\Exception\WrongUserinput(lang("Unknown option '%1' !!!",$arg),90);
 			}
 
 			$option = self::$options[$arg];
-			$values = !is_array($option) ? array($values) : explode(',',$values);
+			$vals = !is_array($option) ? array($values) : explode(',',$values);
 			if (!is_array($option)) $option = array($option => $option);
 			$n = 0;
 			foreach($option as $name => $data)
 			{
-				if ($n >= count($values)) break;
+				if ($n >= count($vals)) break;
 
-				$this->_parse_value($arg,$name,$data,$values[$n++]);
+				$this->_parse_value($arg,$name,$data,$vals[$n++]);
 			}
 		}
 	}
@@ -296,7 +298,7 @@ class setup_cmd_header extends setup_cmd
 	{
 		if (!isset($GLOBALS['egw_domain'][$domain]))
 		{
-			throw new egw_exception_wrong_userinput(lang("Domain '%1' does NOT exist !!!",$domain),92);
+			throw new Api\Exception\WrongUserinput(lang("Domain '%1' does NOT exist !!!",$domain),92);
 		}
 		unset($GLOBALS['egw_domain'][$domain]);
 	}
@@ -311,7 +313,7 @@ class setup_cmd_header extends setup_cmd
 	 */
 	private function _parse_value($arg,$name,$data,$value)
 	{
-		static $domain;
+		static $domain=null;
 
 		if (!is_array($data)) $data = array('type' => $data);
 		$type = $data['type'];
@@ -320,7 +322,7 @@ class setup_cmd_header extends setup_cmd
 		{
 			if (!isset($data['allowed'][$value]))
 			{
-				throw new egw_exception_wrong_userinput(lang("'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg),91);
+				throw new Api\Exception\WrongUserinput(lang("'%1' is not allowed as %2. arguments of option %3 !!!",$value,1,$arg),91);
 			}
 			$value = $data['allowed'][$value];
 		}
@@ -359,6 +361,6 @@ class setup_cmd_header extends setup_cmd
 		{
 			$var =& $var[$name];
 		}
-		$var = strpos($name,'passw') !== false ? md5($value) : $value;
+		if (true) $var = strpos($name,'passw') !== false ? md5($value) : $value;
 	}
 }

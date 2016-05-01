@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
 if (php_sapi_name() !== 'cli')	// security precaution: forbit calling setup-cli as web-page
@@ -61,7 +63,7 @@ $GLOBALS['egw_setup']->system_charset = $charset;
 
 if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
 {
-	throw new egw_exception_wrong_userinput(lang('You are using PHP version %1. EGroupware now requires %2 or later, recommended is PHP %3.',PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version),98);
+	throw new Api\Exception\WrongUserinput(lang('You are using PHP version %1. EGroupware now requires %2 or later, recommended is PHP %3.',PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version),98);
 }
 
 switch($action)
@@ -132,7 +134,7 @@ switch($action)
 				list($name,$value) = explode('=',$arg,2);
 				if(property_exists('admin_cmd',$name))		// dont allow to overwrite admin_cmd properties
 				{
-					throw new egw_exception_wrong_userinput(lang("Invalid argument '%1' !!!",$arg),90);
+					throw new Api\Exception\WrongUserinput(lang("Invalid argument '%1' !!!",$arg),90);
 				}
 				if (substr($name,-1) == ']')	// allow 1-dim. arrays
 				{
@@ -150,7 +152,7 @@ switch($action)
 			echo "$msg\n";
 			break;
 		}
-		throw new egw_exception_wrong_userinput(lang("Unknown option '%1' !!!",$action),90);
+		throw new Api\Exception\WrongUserinput(lang("Unknown option '%1' !!!",$action),90);
 }
 exit(0);
 
@@ -255,7 +257,7 @@ function do_backup($arg,$quite_check=false)
 			}
 			else	// backup failed ==> dont start the upgrade
 			{
-				throw new egw_exception_wrong_userinput(lang('Backup failed').': '.$f,50);
+				throw new Api\Exception\WrongUserinput(lang('Backup failed').': '.$f,50);
 			}
 		}
 	}

@@ -45,7 +45,7 @@ use EGroupware\Api;
  * 	attributes={smtp:}proxyAddresses=mail,{smtp:}proxyAddresses=mailalias,{quota:}proxyAddresses=mailuserquota,{forward:}proxyaddresses=maildrop
  *
  * - copies mail-attributes from ldap to AD (example is from Mandriva mailAccount schema, need to adapt to other schema!)
- *   (no_sid_check=1 uses all objectClass=posixAccount, not checking for having a SID and uid not ending in $ for computer accounts)
+ *   (no_sid_check=1 uses all objectClass=posixAccount, not checking for having a SID and uid not ending in $ for computer Api\Accounts)
  *
  * setup/setup-cli.php [--dry-run] --setup-cmd-ldap <domain>,<config-user>,<config-pw> sub_command=passwords_to_sql \
  * 	ldap_context=ou=accounts,dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost
@@ -477,7 +477,7 @@ class setup_cmd_ldap extends setup_cmd
 			}
 
 			// invalidate cache: otherwise no migration takes place, if cached results says account already exists
-			accounts::cache_invalidate($account_id);
+			Api\Accounts::cache_invalidate($account_id);
 
 			if ($passwords2sql)
 			{
@@ -658,7 +658,7 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		// migrate addressbook data
 		$GLOBALS['egw_info']['user']['apps']['admin'] = true;	// otherwise migration will not run in setup!
-		$addressbook = new addressbook_so();
+		$addressbook = new Api\Contacts\Storage();
 		foreach($this->as_array() as $name => $value)
 		{
 			if (substr($name, 5) == 'ldap_')
@@ -757,16 +757,16 @@ class setup_cmd_ldap extends setup_cmd
 				$account['memberships'] = $accounts_obj->memberships($account_id,true);
 			}
 		}
-		accounts::cache_invalidate();
+		Api\Accounts::cache_invalidate();
 
 		return $accounts;
 	}
 
 	/**
-	 * Instancate accounts object from either sql of ldap
+	 * Instanciate accounts object from either sql of ldap
 	 *
 	 * @param string $type 'ldap', 'sql', 'univention'
-	 * @return accounts
+	 * @return Api\Accounts
 	 */
 	private function accounts_obj($type)
 	{
@@ -862,7 +862,7 @@ class setup_cmd_ldap extends setup_cmd
 			$this->ldap_base => array(),
 			$this->ldap_context => array(),
 			$this->ldap_group_context => array(),
-			$this->ldap_root_dn => array('userPassword' => auth::encrypt_ldap($this->ldap_root_pw,'ssha')),
+			$this->ldap_root_dn => array('userPassword' => Api\Auth::encrypt_ldap($this->ldap_root_pw,'ssha')),
 		) as $dn => $extra)
 		{
 			if (!$this->_create_node($dn,$extra,$this->check_only) && $dn == $this->ldap_root_dn)

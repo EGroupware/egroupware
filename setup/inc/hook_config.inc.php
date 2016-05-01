@@ -1,6 +1,6 @@
 <?php
 /**
- * Setup
+ * EGroupware Setup
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -9,6 +9,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * Get the options for vfs_storage_mode, select the right one depending on vfs_fstab
@@ -157,7 +159,7 @@ function passwdhashes($config,$return_hashes=false)
 
 function sql_passwdhashes($config, $return_hashes=false, &$securest=null)
 {
-	$hashes = auth::passwdhashes($securest);
+	$hashes = Api\Auth::passwdhashes($securest);
 
 	return $return_hashes ? $hashes : _options_from($hashes, $config['sql_encryption_type'] ? $config['sql_encryption_type'] : 'md5');
 }

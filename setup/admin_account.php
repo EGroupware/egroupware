@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupware Setup - create admin account
+ * EGroupware Setup - create admin account
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
 
 if (strpos($_SERVER['PHP_SELF'],'admin_account.php') !== false)
 {
@@ -54,7 +55,7 @@ if ($_POST['submit'])
 if(!$_POST['submit'] || $error)
 {
 	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-	$setup_tpl = new Template($tpl_root);
+	$setup_tpl = new Framework\Template($tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head'       => 'head.tpl',
 		'T_footer'     => 'footer.tpl',
@@ -91,7 +92,7 @@ if(!$_POST['submit'] || $error)
 	$setup_tpl->set_var('create_demo_accounts',lang('Create demo accounts'));
 	$setup_tpl->set_var('demo_desc',lang('The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
 
-	$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
+	$setup_tpl->set_var('hidden_vars', Api\Html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 
 	$setup_tpl->set_var('lang_submit',lang('Save'));
 	$setup_tpl->set_var('lang_cancel',lang('Cancel'));

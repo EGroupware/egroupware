@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * setup command: test or create the database
@@ -28,9 +30,9 @@ class setup_cmd_database extends setup_cmd
 	const MAX_DB_NAME_LEN = 16;
 
 	/**
-	 * Instance of egw_db to connect or create the db
+	 * Instance of Api\Db to connect or create the db
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	private $test_db;
 
@@ -39,16 +41,16 @@ class setup_cmd_database extends setup_cmd
 	 *
 	 * @param string/array $domain domain-name to customize the defaults or array with all parameters
 	 * @param string $db_type db-type (mysql, pgsql, ...)
-	 * @param string $db_host=null
-	 * @param string $db_port=null
-	 * @param string $db_name=null
-	 * @param string $db_user=null
-	 * @param string $db_pass=null
-	 * @param string $db_root=null
-	 * @param string $db_root_pw=null
-	 * @param string $sub_command='create_db' 'create_db', 'test_db', 'test_db_root'
-	 * @param string $db_grant_host='localhost' host/ip of webserver for grant
-	 * @param boolean $make_db_name_unique=false true: if create fails because db exists,
+	 * @param string $db_host =null
+	 * @param string $db_port =null
+	 * @param string $db_name =null
+	 * @param string $db_user =null
+	 * @param string $db_pass =null
+	 * @param string $db_root =null
+	 * @param string $db_root_pw =null
+	 * @param string $sub_command ='create_db' 'create_db', 'test_db', 'test_db_root'
+	 * @param string $db_grant_host ='localhost' host/ip of webserver for grant
+	 * @param boolean $make_db_name_unique =false true: if create fails because db exists,
 	 * 	try creating a unique name by shortening the name and adding a number to it
 	 */
 	function __construct($domain,$db_type=null,$db_host=null,$db_port=null,$db_name=null,$db_user=null,$db_pass=null,
@@ -78,7 +80,7 @@ class setup_cmd_database extends setup_cmd
 	/**
 	 * run the command: test or create database
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
@@ -87,7 +89,7 @@ class setup_cmd_database extends setup_cmd
 	{
 		if (!empty($this->domain) && !preg_match('/^([a-z0-9_-]+\.)*[a-z0-9]+/i',$this->domain))
 		{
-			throw new egw_exception_wrong_userinput(lang("'%1' is no valid domain name!",$this->domain));
+			throw new Api\Exception\WrongUserinput(lang("'%1' is no valid domain name!",$this->domain));
 		}
 		if ($this->remote_id && $check_only) return true;	// further checks can only done locally
 
@@ -127,10 +129,10 @@ class setup_cmd_database extends setup_cmd
 	/**
 	 * Connect to database
 	 *
-	 * @param string $user=null default $this->db_user
-	 * @param string $pass=null default $this->db_pass
-	 * @param string $name=null default $this->db_name
-	 * @throws egw_exception_wrong_userinput Can not connect to database ...
+	 * @param string $user =null default $this->db_user
+	 * @param string $pass =null default $this->db_pass
+	 * @param string $name =null default $this->db_name
+	 * @throws Api\Exception\WrongUserinput Can not connect to database ...
 	 */
 	private function connect($user=null,$pass=null,$name=null)
 	{
@@ -138,7 +140,7 @@ class setup_cmd_database extends setup_cmd
 		if (is_null($pass)) $pass = $this->db_pass;
 		if (is_null($name)) $name = $this->db_name;
 
-		$this->test_db = new egw_db();
+		$this->test_db = new Api\Db();
 
 		$error_rep = error_reporting();
 		error_reporting($error_rep & ~E_WARNING);	// switch warnings of, in case they are on
@@ -152,7 +154,7 @@ class setup_cmd_database extends setup_cmd
 
 		if ($e)
 		{
-			throw new egw_exception_wrong_userinput(lang('Can not connect to %1 database %2 on host %3 using user %4!',
+			throw new Api\Exception\WrongUserinput(lang('Can not connect to %1 database %2 on host %3 using user %4!',
 				$this->db_type,$name,$this->db_host.($this->db_port?':'.$this->db_port:''),$user).' ('.$e->getMessage().')');
 		}
 		return lang('Successful connected to %1 database %2 on %3 using user %4.',
@@ -168,7 +170,7 @@ class setup_cmd_database extends setup_cmd
 	 * added to $this->db_name AND $this->db_user, if db already exists.
 	 *
 	 * @return string with success message
-	 * @throws egw_exception_wrong_userinput
+	 * @throws Api\Exception\WrongUserinput
 	 */
 	private function create()
 	{
@@ -184,13 +186,13 @@ class setup_cmd_database extends setup_cmd
 		try {
 			$msg = $this->connect();
 		}
-		catch (egw_exception_wrong_userinput $e) {
+		catch (Api\Exception\WrongUserinput $e) {
 			// db or user not working --> connect as root and create it
 			try {
 				$this->test_db->create_database($this->db_root,$this->db_root_pw,$this->db_charset,$this->db_grant_host);
 				$this->connect();
 			}
-			catch(egw_exception_db $e) {	// catches failed to create database
+			catch(Api\Db\Exception $e) {	// catches failed to create database
 				// try connect as root to check if wrong root/root_pw is the problem
 				$this->connect($this->db_root,$this->db_root_pw,$this->db_meta);
 
@@ -201,6 +203,7 @@ class setup_cmd_database extends setup_cmd
 					try {
 						$this->connect($this->db_root,$this->db_root_pw);
 						// create new db_name by incrementing an existing numeric postfix
+						$matches = null;
 						if (preg_match('/([0-9]+)$/',$this->db_name,$matches))
 						{
 							$num = (string)(++$matches[1]);
@@ -215,13 +218,13 @@ class setup_cmd_database extends setup_cmd
 
 						return $this->create();
 					}
-					catch (egw_exception_wrong_userinput $e2)
+					catch (Api\Exception\WrongUserinput $e2)
 					{
 						// we can NOT connect to db as root --> ignore exception to give general error
 					}
 				}
 				// if not give general error
-				throw new egw_exception_wrong_userinput(lang('Can not create %1 database %2 on %3 for user %4!',
+				throw new Api\Exception\WrongUserinput(lang('Can not create %1 database %2 on %3 for user %4!',
 					$this->db_type,$this->db_name,$this->db_host.($this->db_port?':'.$this->db_port:''),$this->db_user));
 			}
 			$msg = lang('Successful connected to %1 on %3 and created database %2 for user %4.',
@@ -234,7 +237,7 @@ class setup_cmd_database extends setup_cmd
 			{
 				$table = $table['table_name'];
 			}
-			throw new egw_exception_wrong_userinput(lang('%1 database %2 on %3 already contains the following tables:',
+			throw new Api\Exception\WrongUserinput(lang('%1 database %2 on %3 already contains the following tables:',
 				$this->db_type,$this->db_name,$this->db_host.($this->db_port?':'.$this->db_port:'')).' '.
 				implode(', ',$tables));
 		}
@@ -245,8 +248,8 @@ class setup_cmd_database extends setup_cmd
 	 * Drop database and user
 	 *
 	 * @return string with success message
-	 * @throws egw_exception_wrong_userinput
-	 * @throws egw_db_exception if database not exist
+	 * @throws Api\Exception\WrongUserinput
+	 * @throws Api\Db\Exception if database not exist
 	 */
 	private function drop()
 	{
@@ -257,7 +260,8 @@ class setup_cmd_database extends setup_cmd
 			$this->test_db->query('DROP USER '.$this->test_db->quote($this->db_user).'@'.
 				$this->test_db->quote($this->db_grant_host?$this->db_grant_host:'%'),__LINE__,__FILE__);
 		}
-		catch (egw_db_exception $e) {
+		catch (Api\Db\Exception $e) {
+			unset($e);
 			// we make this no fatal error, as the granthost might be something else ...
 			$msg .= ' '.lang('Error dropping User!');
 		}
@@ -267,7 +271,7 @@ class setup_cmd_database extends setup_cmd
 	/**
 	 * Return default database settings for a given domain
 	 *
-	 * @param string $db_type='mysql'
+	 * @param string $db_type ='mysqli'
 	 * @return array
 	 */
 	static function defaults($db_type='mysqli')

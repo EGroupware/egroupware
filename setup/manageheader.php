@@ -1,6 +1,6 @@
 <?php
 /**
- * Setup - Manage the eGW config file header.inc.php
+ * EGroupware Setup - Manage the eGW config file header.inc.php
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -10,12 +10,15 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+
 include('./inc/functions.inc.php');
 
 require_once('./inc/class.setup_header.inc.php');
 $GLOBALS['egw_setup']->header = new setup_header();
 
-$setup_tpl = new Template('./templates/default', 'keep');	// 'keep' to keep our {hash} prefix of passwords
+$setup_tpl = new Framework\Template('./templates/default', 'keep');	// 'keep' to keep our {hash} prefix of passwords
 $setup_tpl->set_file(array(
 	'T_head' => 'head.tpl',
 	'T_footer' => 'footer.tpl',
@@ -97,7 +100,7 @@ else
 	switch($action)
 	{
 		case 'download':
-			html::content_header('header.inc.php','application/octet-stream');
+			Api\Header\Content::type('header.inc.php','application/octet-stream');
 			echo $newheader;
 			break;
 
@@ -232,6 +235,7 @@ function show_header_form($validation_errors)
 		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}
+	$detected = null;
 	$supported_db = $GLOBALS['egw_setup']->header->check_db_support($detected);
 
 	if (!count($supported_db))

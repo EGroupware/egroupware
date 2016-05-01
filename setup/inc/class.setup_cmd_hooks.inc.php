@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2011 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2011-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -40,7 +40,7 @@ class setup_cmd_hooks extends setup_cmd
 	/**
 	 * run the command: register all hooks
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');

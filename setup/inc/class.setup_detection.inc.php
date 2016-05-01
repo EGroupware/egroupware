@@ -1,6 +1,6 @@
 <?php
 /**
- * Setup
+ * EGroupware Setup
  *
  * @link http://www.egroupware.org
  * @package setup

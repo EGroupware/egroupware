@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * setup command: create a first eGroupWare user / admin and our two standard groups: Default & Admins
@@ -26,15 +28,15 @@ class setup_cmd_admin extends setup_cmd
 	 * Constructor
 	 *
 	 * @param string|array $domain domain-name or array with all parameters
-	 * @param string $config_user=null user to config the domain (or header_admin_user)
-	 * @param string $config_passwd=null pw of above user
-	 * @param string $admin_user=null
-	 * @param string $admin_password=null
-	 * @param string $admin_firstname=null
-	 * @param string $admin_lastname=null
-	 * @param string $admin_email=null
-	 * @param array $config=array() extra config for the account object: account_repository, ldap_*
-	 * @param string $lang='en'
+	 * @param string $config_user =null user to config the domain (or header_admin_user)
+	 * @param string $config_passwd =null pw of above user
+	 * @param string $admin_user =null
+	 * @param string $admin_password =null
+	 * @param string $admin_firstname =null
+	 * @param string $admin_lastname =null
+	 * @param string $admin_email =null
+	 * @param array $config =array() extra config for the account object: account_repository, ldap_*
+	 * @param string $lang ='en'
 	 */
 	function __construct($domain,$config_user=null,$config_passwd=null,$admin_user=null,$admin_password=null,
 		$admin_firstname=null,$admin_lastname=null,$admin_email=null,array $config=array(),$lang='en')
@@ -61,7 +63,7 @@ class setup_cmd_admin extends setup_cmd
 	/**
 	 * run the command: create eGW admin and standard groups
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
@@ -97,25 +99,26 @@ class setup_cmd_admin extends setup_cmd
 		switch ($error)
 		{
 			case 41:
-				throw new egw_exception_wrong_userinput(lang('Error in admin-creation !!!'),41);
+				throw new Api\Exception\WrongUserinput(lang('Error in admin-creation !!!'),41);
 			case 42:
-				throw new egw_exception_wrong_userinput(lang('Error in group-creation !!!'),42);
+				throw new Api\Exception\WrongUserinput(lang('Error in group-creation !!!'),42);
 		}
 		$this->restore_db();
 
-		// run admin/admin-cli.php --add-user to store the new accounts once in EGroupware
+		// run admin/admin-cli.php --add-user to store the new Api\Accounts once in EGroupware
 		// to run all hooks (some of them can NOT run inside setup)
 		$cmd = EGW_SERVER_ROOT.'/admin/admin-cli.php --add-user '.
 			escapeshellarg($this->admin_user.'@'.$this->domain.','.$this->admin_password.','.$this->admin_user);
 		if (php_sapi_name() !== 'cli' || !file_exists(EGW_SERVER_ROOT.'/stylite') || file_exists(EGW_SERVER_ROOT.'/managementserver'))
 		{
+			$output = $ret = null;
 			exec($cmd,$output,$ret);
 		}
 		$output = implode("\n",$output);
 		//echo "ret=$ret\n".$output;
 		if ($ret)
 		{
-			throw new egw_exception ($output,$ret);
+			throw new Api\Exception ($output,$ret);
 		}
 		return lang('Admin account successful created.');
 	}

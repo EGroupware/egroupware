@@ -327,7 +327,7 @@ class setup_process
 		// so the default_records use the current data
 		$GLOBALS['egw_info']['server'] = array_merge((array)$GLOBALS['egw_info']['server'], $current_config);
 		Api\Cache::flush();	// flush whole instance cache
-		Api\Config::init_static();	// flush internal cache of config class
+		Api\Config::init_static();	// flush internal cache of Api\Config class
 		$GLOBALS['egw_setup']->setup_account_object($current_config);
 	}
 
@@ -497,7 +497,7 @@ class setup_process
 		unset($appdata, $oProc);
 
 		// Clear categories cache in case app adds categories
-		categories::invalidate_cache();
+		Api\Categories::invalidate_cache();
 
 		/* Done, return current status */
 		return ($setup_info);

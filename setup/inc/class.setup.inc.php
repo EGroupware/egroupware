@@ -14,6 +14,9 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Vfs;
 
 class setup
 {
@@ -77,8 +80,7 @@ class setup
 
 		if (!is_object($GLOBALS['egw']))
 		{
-			require_once(EGW_API_INC.'/class.egw.inc.php');
-			$GLOBALS['phpgw'] = $GLOBALS['egw'] = new egw_minimal();
+			$GLOBALS['phpgw'] = $GLOBALS['egw'] = new Egw\Base();
 		}
 		$this->detection = new setup_detection();
 		$this->process   = new setup_process();
@@ -631,7 +633,7 @@ class setup
 		$this->db->delete($this->applications_table,array('app_name'=>$appname),__LINE__,__FILE__);
 
 		// Remove links to the app
-		Api\Link::unlink(0, $appname);
+		Link::unlink(0, $appname);
 
 		$this->clear_session_cache();
 	}
@@ -903,7 +905,7 @@ class setup
 	/**
 	 * Own instance of the accounts class
 	 *
-	 * @var accounts
+	 * @var Api\Accounts
 	 */
 	var $accounts;
 
@@ -1009,19 +1011,19 @@ class setup
 				return false;
 			}
 		}
-		// call Api\Vfs\Hooks::add{account|group} hook to create the vfs-home-dirs
+		// call Vfs\Hooks::add{account|group} hook to create the vfs-home-dirs
 		// calling general add{account|group} hook fails, as we are only in setup
 		// --> setup_cmd_admin execs "admin/admin-cli.php --edit-user" to run them
 		if ($primary_group)
 		{
-			Api\Vfs\Hooks::addAccount(array(
+			Vfs\Hooks::addAccount(array(
 				'account_id' => $accountid,
 				'account_lid' => $username,
 			));
 		}
 		else
 		{
-			Api\Vfs\Hooks::addGroup(array(
+			Vfs\Hooks::addGroup(array(
 				'account_id' => $accountid,
 				'account_lid' => $username,
 			));
@@ -1071,7 +1073,7 @@ class setup
 		$this->accounts->search(array(
 			'type'   => 'accounts',
 			'start'  => 0,
-			'offset' => 2	// we only need to check 2 accounts, if we just check for not anonymous
+			'offset' => 2	// we only need to check 2 Api\Accounts, if we just check for not anonymous
 		));
 
 		return $this->accounts->total > 1;

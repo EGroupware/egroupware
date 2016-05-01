@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare Setup
+ * EGroupware Setup
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -10,6 +10,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * Some static helper functions to generate html stuff in setup
@@ -246,7 +248,7 @@ class setup_html
 			*/
 			if (count($GLOBALS['egw_domain']) > 1)
 			{
-				foreach($GLOBALS['egw_domain'] as $domain => $data)
+				foreach(array_keys($GLOBALS['egw_domain']) as $domain)
 				{
 					$domains .= "<option value=\"$domain\" ".($domain == @$GLOBALS['egw_info']['setup']['LastDomain'] ? ' selected="selected"' : '').">$domain</option>\n";
 				}
@@ -295,7 +297,7 @@ class setup_html
 			$ConfigLang = setup::get_lang();
 			if (empty($ConfigLang)) $ConfigLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
 		}
-		return html::select('ConfigLang', $ConfigLang, translation::get_available_langs(false), true,
+		return Api\Html::select('ConfigLang', $ConfigLang, Api\Translation::get_available_langs(false), true,
 			$onChange ? ' onchange="this.form.submit();"' : '');
 	}
 
@@ -303,6 +305,7 @@ class setup_html
 	{
 		$d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates');
 
+		$list = array();
 		while($entry = $d->read())
 		{
 			if ($entry != 'CVS' && $entry != '.' && $entry != '..')

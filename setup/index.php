@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupware Setup
+ * EGroupware Setup
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
 
 $GLOBALS['DEBUG'] = False;
 include('./inc/functions.inc.php');
@@ -18,7 +19,7 @@ include('./inc/functions.inc.php');
 @set_time_limit(0);
 
 $tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-$setup_tpl = new Template($tpl_root);
+$setup_tpl = new Framework\Template($tpl_root);
 $setup_tpl->set_file(array
 (
 	'T_head'       => 'head.tpl',
@@ -254,7 +255,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 		break;
 	case 4:
-		$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
+		$setup_tpl->set_var('hidden_vars', Api\Html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 		$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',
 			isset($setup_info['api']['currentver']) ? $setup_info['api']['currentver'] : $setup_info['phpgwapi']['currentver']));
 		$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['api']['version']));
@@ -277,7 +278,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 		break;
 	case 5:
-		$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
+		$setup_tpl->set_var('hidden_vars', Api\Html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 		$setup_tpl->set_var('are_you_sure',lang('ARE YOU SURE?'));
 		$setup_tpl->set_var('really_uninstall_all_applications',lang('REALLY Uninstall all applications'));
 		$setup_tpl->set_var('dropwarn',lang('Your tables will be dropped and you will lose data'));

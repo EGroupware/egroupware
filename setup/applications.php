@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupware Setup - Install, update & remove single apps
+ * EGroupware Setup - Install, update & remove single apps
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
 
 $DEBUG = @$_POST['debug'] || @$_GET['debug'];
 /*
@@ -33,7 +34,7 @@ if (!$GLOBALS['egw_setup']->auth('Config'))
 // Does not return unless user is authorized
 
 $tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-$setup_tpl = new Template($tpl_root);
+$setup_tpl = new Framework\Template($tpl_root);
 $setup_tpl->set_file(array(
 	'T_head' => 'head.tpl',
 	'T_footer' => 'footer.tpl',

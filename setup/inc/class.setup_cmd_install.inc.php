@@ -5,10 +5,12 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * setup command: install the tables
@@ -24,13 +26,13 @@ class setup_cmd_install extends setup_cmd
 	 * Constructor
 	 *
 	 * @param string $domain string with domain-name or array with all arguments
-	 * @param string $config_user=null user to config the domain (or header_admin_user)
-	 * @param string $config_passwd=null pw of above user
-	 * @param string $backup=null filename of backup to use instead of new install, default new install
-	 * @param string $charset='utf-8' charset for the install, default utf-8 now
-	 * @param boolean $verbose=false if true, echos out some status information during the run
-	 * @param array $config=array() configuration to preset the defaults during the install, eg. set the account_repository
-	 * @param string $lang='en'
+	 * @param string $config_user =null user to config the domain (or header_admin_user)
+	 * @param string $config_passwd =null pw of above user
+	 * @param string $backup =null filename of backup to use instead of new install, default new install
+	 * @param string $charset ='utf-8' charset for the install, default utf-8 now
+	 * @param boolean $verbose =false if true, echos out some status information during the run
+	 * @param array $config =array() configuration to preset the defaults during the install, eg. set the account_repository
+	 * @param string $lang ='en'
 	 */
 	function __construct($domain,$config_user=null,$config_passwd=null,$backup=null,$charset='utf-8',$verbose=false,array $config=array(),$lang='en')
 	{
@@ -58,13 +60,14 @@ class setup_cmd_install extends setup_cmd
 	/**
 	 * run the command: install the tables
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string serialized $GLOBALS defined in the header.inc.php
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
 	 */
 	protected function exec($check_only=false)
 	{
+		unset($check_only);	// not used;
 		global $setup_info;
 
 		// instanciate setup object and check authorisation
@@ -79,7 +82,7 @@ class setup_cmd_install extends setup_cmd
 
 			if (!is_resource($f = $db_backup->fopen_backup($this->backup,true)))
 			{
-				throw new egw_exception_wrong_userinput(lang('Restore failed').' ('.$f.')',31);
+				throw new Api\Exception\WrongUserinput(lang('Restore failed').' ('.$f.')',31);
 			}
 			if ($this->verbose)
 			{
@@ -101,7 +104,7 @@ class setup_cmd_install extends setup_cmd
 		// regular (new) install
 		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 3)
 		{
-			throw new egw_exception_wrong_userinput(lang('eGroupWare is already installed!'),30);
+			throw new Api\Exception\WrongUserinput(lang('eGroupWare is already installed!'),30);
 		}
 		$setup_info = self::$egw_setup->detection->upgrade_exclude($setup_info);
 
@@ -111,7 +114,7 @@ class setup_cmd_install extends setup_cmd
 		$_POST['ConfigLang'] = $this->lang;
 
 		if ($this->verbose) echo lang('Installation started, this might take a few minutes ...')."\n";
-		$setup_info = self::$egw_setup->process->pass($setup_info,'new',false,True,$this->config);
+		if (true) $setup_info = self::$egw_setup->process->pass($setup_info,'new',false,True,$this->config);
 
 		$this->restore_db();
 

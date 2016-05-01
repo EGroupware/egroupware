@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2009-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -24,11 +24,11 @@ class setup_cmd_update extends setup_cmd
 	 * Constructor
 	 *
 	 * @param string|array $domain string with domain-name or array with all arguments
-	 * @param string $config_user=null user to config the domain (or header_admin_user)
-	 * @param string $config_passwd=null pw of above user
-	 * @param string $backup=null filename of backup to use instead of new install, default new install
-	 * @param boolean $verbose=false if true, echos out some status information during the run
-	 * @param string $app=null single application to update or install
+	 * @param string $config_user =null user to config the domain (or header_admin_user)
+	 * @param string $config_passwd =null pw of above user
+	 * @param string $backup =null filename of backup to use instead of new install, default new install
+	 * @param boolean $verbose =false if true, echos out some status information during the run
+	 * @param string $app =null single application to update or install
 	 */
 	function __construct($domain,$config_user=null,$config_passwd=null,$backup=null,$verbose=false,$app=null)
 	{
@@ -50,7 +50,7 @@ class setup_cmd_update extends setup_cmd
 	/**
 	 * run the command: update or install/update a single app ($this->app)
 	 *
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');

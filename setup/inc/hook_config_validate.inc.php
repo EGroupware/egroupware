@@ -1,6 +1,6 @@
 <?php
 /**
- * Setup
+ * EGroupware Setup
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -9,6 +9,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /*
   Set global flag to indicate for which config settings we have equally named validation methods
@@ -58,10 +60,10 @@ function vfs_storage_mode($settings)
 	switch($settings['vfs_storage_mode'])
 	{
 		case 'fs':
-			config::save_value('vfs_fstab','','phpgwapi');
+			Api\Config::save_value('vfs_fstab','','phpgwapi');
 			break;
 		case 'db':
-			config::save_value('vfs_fstab', array(
+			Api\Config::save_value('vfs_fstab', array(
 				'/' => 'sqlfs://$host/?storage=db',
 				'/apps' => 'links://$host/apps?storage=db',
 			),'phpgwapi');
@@ -71,6 +73,7 @@ function vfs_storage_mode($settings)
 
 function temp_dir($settings)
 {
+	$error_msg = null;
 	if (!setup_detection::check_dir($settings['temp_dir'],$error_msg))
 	{
 		$GLOBALS['config_error'] = lang("Your temporary directory '%1' %2",$settings['temp_dir'],$error_msg);
@@ -79,6 +82,7 @@ function temp_dir($settings)
 
 function files_dir($settings)
 {
+	$error_msg = null;
 	if ($settings['file_repository'] == 'sql' && $settings['file_store_contents'] == 'filesystem' &&
 		!setup_detection::check_dir($settings['files_dir'],$error_msg,true))
 	{
@@ -92,6 +96,7 @@ function backup_dir(&$settings)
 	{
 		$settings['backup_dir'] = $settings['files_dir'].'/db_backup';
 	}
+	$error_msg = null;
 	if (!setup_detection::check_dir($settings['backup_dir'],$error_msg,true))
 	{
 		$GLOBALS['config_error'] = lang("Your backup directory '%1' %2",$settings['backup_dir'],$error_msg);
@@ -101,7 +106,7 @@ function backup_dir(&$settings)
 function _mcrypt_test_module_mode($module,$mode)
 {
 	/* Data */
-	$key = 'this is a very long key, even too long for the cipher';
+	$key_in = 'this is a very long key, even too long for the cipher';
 	$plain_text = 'very important data';
 
 	/* Open module, and create IV */
@@ -110,7 +115,7 @@ function _mcrypt_test_module_mode($module,$mode)
 		@mcrypt_module_close($GLOBALS['td']);
 		return False;
 	}
-	$key = substr($key, 0, mcrypt_enc_get_key_size($GLOBALS['td']));
+	$key = substr($key_in, 0, mcrypt_enc_get_key_size($GLOBALS['td']));
 	$iv_size = mcrypt_enc_get_iv_size($GLOBALS['td']);
 	$iv = @mcrypt_create_iv($iv_size, MCRYPT_RAND);
 

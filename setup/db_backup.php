@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare Setup - DB backup and restore
+ * EGroupware Setup - DB backup and restore
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -10,6 +10,9 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Vfs;
 
 if (!is_object(@$GLOBALS['egw']))	// called from outside eGW ==> setup
 {
@@ -32,7 +35,7 @@ if (!is_object(@$GLOBALS['egw']))	// called from outside eGW ==> setup
 	$is_setup = true;
 }
 $db_backup = new Api\Db\Backup();
-$asyncservice = new asyncservice();
+$asyncservice = new Api\AsyncService();
 
 // download a backup, has to be before any output !!!
 if ($_POST['download'])
@@ -41,17 +44,17 @@ if ($_POST['download'])
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
 	while (@ob_end_clean()) {}      // end all active output buffering
 	ini_set('zlib.output_compression',0);   // switch off zlib.output_compression, as this would limit downloads in size to memory_limit
-	html::content_header(basename($file));
+	Api\Header\Content::type(basename($file));
 	readfile($file);
 	exit;
 }
-$setup_tpl = new Template($tpl_root);
+$setup_tpl = new Framework\Template($tpl_root);
 $setup_tpl->set_file(array(
 	'T_head' => 'head.tpl',
 	'T_footer' => 'footer.tpl',
 	'T_db_backup' => 'db_backup.tpl',
 ));
-$setup_tpl->set_var('hidden_vars', html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
+$setup_tpl->set_var('hidden_vars', Api\Html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
 
 // check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
@@ -76,7 +79,7 @@ else
 	$setup_tpl->set_block('T_db_backup','setup_header');
 	$setup_tpl->set_var('setup_header','');
 	$GLOBALS['egw_info']['flags']['app_header'] = $stage_title;
-	common::egw_header();
+	$GLOBALS['egw']->framework->header();
 	parse_navbar();
 	$run_in_egw = true;
 }
@@ -107,13 +110,13 @@ if ($_POST['save_backup_settings'])
 }
 if ($_POST['mount'])
 {
-	Api\Vfs::$is_root = true;
+	Vfs::$is_root = true;
 	echo '<div align="center">'.
-		(Api\Vfs::mount('filesystem://default'.$db_backup->backup_dir.'?group=Admins&mode=070','/backup',false) ?
+		(Vfs::mount('filesystem://default'.$db_backup->backup_dir.'?group=Admins&mode=070','/backup',false) ?
 			lang('Backup directory %1 mounted as %2',$db_backup->backup_dir,'/backup') :
 			lang('Failed to mount Backup directory!')).
 		"</div>\n";
-	Api\Vfs::$is_root = false;
+	Vfs::$is_root = false;
 }
 // create a backup now
 if($_POST['backup'])
@@ -204,7 +207,7 @@ if ($_POST['restore'])
 				$GLOBALS['egw_info']['server']['header_admin_user']='admin',
 				$GLOBALS['egw_info']['server']['header_admin_password']=uniqid('pw',true),false,true);
 			echo $cmd->run()."\n";
-			echo '<h3>'.lang('You should %1log out%2 and in again, to update your current session!','<a href="'.egw::link('/logout.php').'" target="_parent">','</a>')."</h3>\n";
+			echo '<h3>'.lang('You should %1log out%2 and in again, to update your current session!','<a href="'.Egw::link('/logout.php').'" target="_parent">','</a>')."</h3>\n";
 		}
 	}
 	else
@@ -301,7 +304,7 @@ $setup_tpl->pparse('out','T_db_backup');
 
 if ($run_in_egw)
 {
-	common::egw_footer();
+	$GLOBALS['egw']->framework->footer();
 }
 else
 {

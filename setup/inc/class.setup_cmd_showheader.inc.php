@@ -5,28 +5,30 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * setup command: show/return the header.inc.php
- * 
+ *
  * Has no constructor, as we have no arguments beside the header admin user and password,
  * which get set via setup_cmd::set_header_secret($user,$pw)
  */
-class setup_cmd_showheader extends setup_cmd 
+class setup_cmd_showheader extends setup_cmd
 {
 	/**
 	 * Allow to run this command via setup-cli
 	 */
 	const SETUP_CLI_CALLABLE = true;
-	
+
 	/**
 	 * Constructor
 	 *
-	 * @param boolean $data=true true: send only the remote_hash, domain and webserver_url, 
+	 * @param boolean $data=true true: send only the remote_hash, domain and webserver_url,
 	 *                           false: the complete header vars, plus install_id and webserver_url from the config table,
 	 *                           null:  only the header vars
 	 */
@@ -46,8 +48,8 @@ class setup_cmd_showheader extends setup_cmd
 
 	/**
 	 * show/return the header.inc.php
-	 * 
-	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
+	 *
+	 * @param boolean $check_only =false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string serialized $GLOBALS defined in the header.inc.php
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
 	 * @throws Exception('header.inc.php not found!');
@@ -55,7 +57,7 @@ class setup_cmd_showheader extends setup_cmd
 	function exec($check_only=false)
 	{
 		if ($this->remote_id && $check_only) return true;	// cant check for the remote site locally!
-		
+
 		$this->_check_header_access();
 
 		if ($check_only) return true;
@@ -77,9 +79,9 @@ class setup_cmd_showheader extends setup_cmd
 
 		// include the api version of this instance
 		$GLOBALS['egw_info']['server']['versions']['phpgwapi'] = $egw_info_backup['server']['versions']['phpgwapi'];
-		
+
 		// fetching the install id's stored in the database
-		foreach($GLOBALS['egw_domain'] as $domain => &$data)
+		foreach($GLOBALS['egw_domain'] as &$data)
 		{
 			if (!is_null($this->hash_only))
 			{
@@ -99,7 +101,7 @@ class setup_cmd_showheader extends setup_cmd
 					'webserver_url' => $data['webserver_url'],
 					'install_id'     => $data['install_id'],
 				)+($data['error'] ? array(
-					'error' => $data['error'],				
+					'error' => $data['error'],
 				) : array());
 			}
 		}
@@ -117,10 +119,10 @@ class setup_cmd_showheader extends setup_cmd
 			);
 		}
 		$GLOBALS['egw_info'] = $egw_info_backup;
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 * Fetch the install_id, and webserver_url of a domain from the DB
 	 *
@@ -129,7 +131,7 @@ class setup_cmd_showheader extends setup_cmd
 	 */
 	private function _fetch_config(array $data)
 	{
-		$db = new egw_db();
+		$db = new Api\Db();
 
 		ob_start();		// not available db connection echos a lot grab ;-)
 		$err_rep = error_reporting(0);
@@ -155,14 +157,14 @@ class setup_cmd_showheader extends setup_cmd
 
 		// restoring the db connection, seems to be necessary when we run via remote execution
 		$this->restore_db();
-		
+
 		return $config;
 	}
-	
+
 	/**
 	 * Saving the object to the database, reimplemented to only the save the command if it runs remote
 	 *
-	 * @param boolean $set_modifier=true set the current user as modifier or 0 (= run by the system)
+	 * @param boolean $set_modifier =true set the current user as modifier or 0 (= run by the system)
 	 * @return boolean true on success, false otherwise
 	 */
 	function save($set_modifier=true)
