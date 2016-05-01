@@ -9,8 +9,6 @@
  * @version $Id$
  */
 
-use EGroupware\Api;
-
 die('This file is only used on http://www.egroupware.org/ and therefore disabled on local installations!');
 
 if(empty($_POST['locale']) || !preg_match('/^[A-Z]{2}$/',$_POST['locale']))
@@ -70,7 +68,7 @@ if(!file_exists($file) || filesize($file) < 300)	// treat very small files as no
 	exit;
 }
 ?>
-<!DOCTYPE Api\Html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 	<title>eGroupWare.org: There is already a holiday-file for '<?php echo $_POST['locale']; ?>' !!!</title>
