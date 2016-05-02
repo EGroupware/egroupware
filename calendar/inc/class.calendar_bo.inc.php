@@ -262,7 +262,7 @@ class calendar_bo
 			);
 			Api\Cache::setSession('calendar', 'resources', $this->resources);
 		}
-		//echo "registered resources="; _debug_array($this->resources);
+		//error_log(__METHOD__ . " registered resources=". array2string($this->resources));
 
 		$this->config = Api\Config::read('calendar');	// only used for horizont, regular calendar Api\Config is under phpgwapi
 		$this->require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];

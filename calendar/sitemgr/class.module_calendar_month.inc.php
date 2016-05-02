@@ -306,7 +306,6 @@ class module_calendar_month extends Module
 			{
 				$GLOBALS['egw']->template = new Framework\Template;
 			}
-			$html .= $this->ui->timeGridWidget($this->ui->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $last);
 		}
 		// Initialize Tooltips
 		$html .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js"></script>'."\n";

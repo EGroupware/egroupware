@@ -96,7 +96,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Show loading div
 			egw.loading_prompt(
 				this.appname,true,egw.lang('please wait...'),
-				framework.applications.calendar.tab.contentDiv,
+				typeof framework !== 'undefined' ? framework.applications.calendar.tab.contentDiv : false,
 				egwIsMobile()?'horizental':'spinner'
 			);
 		}
@@ -2833,7 +2833,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 
 				// Hide AJAX loader
-				if(framework)
+				if(typeof framework !== 'undefined')
 				{
 					framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
 				}

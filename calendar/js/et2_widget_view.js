@@ -335,6 +335,12 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 				user = app.calendar.sidebox_et2.getWidgetById('owner').options.select_options.find(function(element) {return element.id == user;}) || {};
 				label = user.label;
 			}
+			else
+			{
+				// No sidebox?  Must be in home or sitemgr (no caching) - ask directly
+				label = '?';
+				egw.json('calendar_owner_etemplate_widget::ajax_owner',user,function(data) {label = data;}, this).sendRequest();
+			}
 		}
 		return label;
 	},

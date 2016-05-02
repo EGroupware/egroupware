@@ -77,16 +77,13 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		// Add external owners that a select account widget will not find
 		foreach($value as &$owner)
 		{
-			// Make sure it's a string for comparison
-			$owner = ''.$owner;
+			$label = self::get_owner_label($owner);
 			if(!is_numeric($owner))
 			{
 				$resource = $bo->resources[substr($owner, 0,1)];
-				$label = Link::title($resource['app'], substr($owner,1));
 			}
 			else if (!in_array($owner, array_keys($accounts)))
 			{
-				$label = Link::title('api-accounts',$owner);
 				$resource = array('app'=> 'api-accounts');
 			}
 			else
@@ -126,9 +123,15 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	 *
 	 * @return Array List of matching results
 	 */
-	public static function ajax_owner()
+	public static function ajax_owner($id = null)
 	{
-		$bo = new calendar_bo();
+		// Handle a request for a single ID
+		if($id)
+		{
+			$label = self::get_owner_label($id);
+			Api\Json\Response::get()->data($label);
+			return $label;
+		}
 
 		$query = $_REQUEST['query'];
 		// Arbitrarily limited to 50 / resource
@@ -189,5 +192,34 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
 		exit();
+	}
+
+	/**
+	 * Get just the label for a single owner
+	 * @param string $id
+	 */
+	protected static function get_owner_label($id)
+	{
+		static $bo;
+		if(!$bo) $bo = new calendar_bo();
+
+		$id = ''.$id;
+		if(!is_numeric($id))
+		{
+			$resource = $bo->resources[substr($id, 0,1)];
+			$label = Link::title($resource['app'], substr($id,1));
+			
+			// Could not get via link, try via resources info
+			if($label === false)
+			{
+				$info = ExecMethod($resource['info'], substr($id,1));
+				$label = $info[0]['name'];
+			}
+		}
+		else
+		{
+			$label = Link::title('api-accounts',$id);
+		}
+		return $label;
 	}
 }

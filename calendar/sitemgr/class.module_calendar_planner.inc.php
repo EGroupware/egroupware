@@ -113,6 +113,7 @@ class module_calendar_planner extends Module
 			'app' => 'calendar',
 		);
 		$accounts = $this->accounts->search($search_params);
+		$calendar_bo = new calendar_bo();
 		$users = array();
 		$groups = array();
 		// sort users and groups separately.
@@ -127,7 +128,7 @@ class module_calendar_planner extends Module
 			// get the rights for each account to check whether the anon user has read permissions.
 			$rights = $acl->get_rights($anon_user,'calendar');
 			// also add the anon user if it's his own calendar.
-			if (($rights & Acl::READ) || ($entry['account_id'] == $anon_user))
+			if ($calendar_bo->check_perms(Acl::READ|calendar_bo::ACL_READ_FOR_PARTICIPANTS|calendar_bo::ACL_FREEBUSY,0,$entry['account_id'],'ts',null,$anon_user) || ($entry['account_id'] == $anon_user))
 			{
 				$has_read_permissions = true;
 			}
@@ -171,12 +172,17 @@ class module_calendar_planner extends Module
 			$this->arguments['owner']['multiple'] = true;
 		}
 
-		$calendar_bo = new calendar_bo();
 		$query = '';
 		$options = array('start' => 0, 'num_rows' => 50);
+
+		$acl = new Acl($anon_user);
+		$acl->read_repository();
  		foreach ($calendar_bo->resources as $type => $data)
 		{
-			if ($type != '' && $data['app'] && Link::get_registry($data['app'], 'query'))
+			// Check anon user's permissions - must have at least run for the hook to be available
+			if($acl->check('run',EGW_ACL_READ, $data['app']) &&
+				$type != '' && $data['app'] && Link::get_registry($data['app'], 'query')
+			)
 			{
 				$_results = Link::query($data['app'], $query,$options);
 			}
@@ -184,11 +190,15 @@ class module_calendar_planner extends Module
 			$_results = array_unique($_results);
 			foreach ($_results as $key => $value)
 			{
-				$this->arguments['resources']['options'][$type.$key] = $value;
+				if($calendar_bo->check_perms(Acl::READ,0,$type.$key,'ts',null,$anon_user))
+				{
+					$this->arguments['resources']['options'][$type.$key] = $value;
+				}
 			}
 		}
 		$this->arguments['resources']['options'] = array_unique($this->arguments['resources']['options']);
 		$this->arguments['resources']['multiple'] = count($this->arguments['resources']['options']) ? 4 : 0;
+		
 
 		return parent::get_user_interface();
 	}
@@ -309,12 +319,13 @@ class module_calendar_planner extends Module
 			$tmpl->exec(__METHOD__, $content,array(), array('__ALL__' => true),array(),2);
 			$html .= ob_get_contents();
 			$html .= '<script>'
-			. '$j(function() {app.calendar.set_state(' . json_encode(array(
+			. '	window.egw_LAB.wait(function() {$j(function() {'
+			. 'app.calendar.set_state(' . json_encode(array(
 					'owner' => $search_params['owner'],
 					'sortby' => $ui->sortby,
 					'filter' => $arguments['filter']
 				)).');'
-			. '});'
+			. '});});'
 			. '</script>';
 		}
 		else

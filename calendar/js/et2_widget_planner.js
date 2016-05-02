@@ -349,9 +349,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					}
 					else	// users
 					{
-						var label = this._get_owner_name(user)||'';
 						if(already_added.indexOf(user) < 0)
 						{
+							var label = this._get_owner_name(user)||'';
 							labels.push({id: user, label: label, data: {participants:user,owner:''}});
 							already_added.push(''+user);
 						}
@@ -1278,6 +1278,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	 * @param {type} actionLinks
 	 */
 	_init_links_dnd: function(mgr,actionLinks) {
+
+		if (this.options.readonly) return;
+		
 		var self = this;
 
 		var drop_action = mgr.getActionById('egw_link_drop');
