@@ -1771,10 +1771,6 @@ class calendar_uiforms extends calendar_ui
 		// Setup history tab
 		$this->setup_history($content, $sel_options);
 
-		//echo "content="; _debug_array($content);
-		//echo "preserv="; _debug_array($preserved);
- 		//echo "readonlys="; _debug_array($readonlys);
- 		//echo "sel_options="; _debug_array($sel_options);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - '
 			. (!$event['id'] ? lang('Add')
 				: ($view ? ($content['edit_single'] ? lang('View exception') : ($content['recur_type'] ? lang('View series') : lang('View')))
