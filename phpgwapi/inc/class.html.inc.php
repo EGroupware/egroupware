@@ -222,11 +222,29 @@ class html
 		$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
 		$Domain = '([\w-]+\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
-		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . '/i';
+		$optStuff = '(&quot;|&quot|;)?';
+		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . $optStuff . '/i';
 		// use preg_replace_callback as we experienced problems with https links
 		$result3 = preg_replace_callback( $Expr, function ($match) {
+				$additionalQuote="";//at the end, ...
+				// only one &quot at the end is found. chance is, it is not belonging to the URL
+				if ($match[5]==';' && (strlen($match[4])-6) >=0 && strpos($match[4],'&quot',strlen($match[4])-6)!==false && strpos(substr($match[4],0,strlen($match[4])-6),'&quot')===false)
+				{
+					$match[4] = substr($match[4],0,strpos($match[4],'&quot',strlen($match[4])-6));
+					$additionalQuote = "&quot;";
+				}
+				// if there is quoted stuff within the URL then we have at least one more &quot; in match[4], so chance is the last &quot is matched by the one within
+				if ($match[5]==';' && (strlen($match[4])-6) >=0 && strpos($match[4],'&quot',strlen($match[4])-6)!==false && strpos(substr($match[4],0,strlen($match[4])-6),'&quot')!==false)
+				{
+					$match[4] .= $match[5];
+				}
+				if ($match[5]==';'&&$match[4]=="&quot")
+				{
+					$match[4] ='';
+					$additionalQuote = "&quot;";
+				}
 				//error_log(__METHOD__.__LINE__.array2string($match));
-				return "<a href=\"".($match[1]&&!$match[2]?$match[1]:'').($match[2]?$match[2]:'').$match[3].$match[4]."\" target=\"_blank\">".$match[3].$match[4]."</a>";
+				return "<a href=\"".($match[1]&&!$match[2]?$match[1]:'').($match[2]?$match[2]:'').$match[3].$match[4]."\" target=\"_blank\">".$match[3].$match[4]."</a>$additionalQuote";
 			}, $result2 );
 //error_log(__METHOD__.__LINE__.array2string($Expr));
 //error_log(__METHOD__.__LINE__.array2string($result3));
