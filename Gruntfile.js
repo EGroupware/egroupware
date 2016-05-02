@@ -77,6 +77,7 @@ module.exports = function (grunt) {
 						"api\/js\/jsapi\/egw_tail.js",
 						"api\/js\/jsapi\/egw_inheritance.js",
 						"api\/js\/jsapi\/egw_message.js",
+						"api\/js\/jsapi\/egw_notification.js",
 						"api\/js\/es6-promise.min.js",
 						"api\/js\/jsapi\/app_base.js",
 						"api\/js\/dhtmlxtree\/codebase\/dhtmlxcommon.js",
@@ -279,12 +280,12 @@ module.exports = function (grunt) {
 						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
 						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
 						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
-						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlxtree.css",
 						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
 						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
 						"api\/templates\/default\/etemplate2.css",
 						"pixelegg\/css\/pixelegg.css",
-						"phpgwapi\/templates\/idots\/print.css",
+						"api\/templates\/default\/print.css",
 						"jdots\/print.css",
 						"pixelegg\/print.css"
 					],
@@ -295,12 +296,12 @@ module.exports = function (grunt) {
 						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
 						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
 						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
-						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlxtree.css",
 						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
 						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
 						"api\/templates\/default\/etemplate2.css",
 						"pixelegg\/css\/mobile.css",
-						"phpgwapi\/templates\/idots\/print.css",
+						"api\/templates\/default\/print.css",
 						"jdots\/print.css",
 						"pixelegg\/print.css"
 					],
@@ -311,12 +312,12 @@ module.exports = function (grunt) {
 						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
 						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
 						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
-						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlxtree.css",
 						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
 						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
 						"api\/templates\/default\/etemplate2.css",
 						"pixelegg\/mobile\/fw_mobile.css",
-						"phpgwapi\/templates\/idots\/print.css",
+						"api\/templates\/default\/print.css",
 						"jdots\/print.css",
 						"pixelegg\/print.css"
 					]
@@ -331,16 +332,16 @@ module.exports = function (grunt) {
 						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
 						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
 						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
-						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlxtree.css",
 						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
 						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
 						"api\/templates\/default\/etemplate2.css",
-						"phpgwapi\/templates\/default\/def_tutorials.css",
-						"phpgwapi\/templates\/idots\/css\/traditional.css",
+						"api\/templates\/default\/def_tutorials.css",
+						"api\/templates\/default\/default.css",
 						"jdots\/egw_fw.css",
 						"jdots\/css\/jdots.css",
 						"jdots\/css\/high-contrast.css",
-						"phpgwapi\/templates\/idots\/print.css",
+						"api\/templates\/default\/print.css",
 						"jdots\/print.css"
 					],
 					"jdots\/css\/jdots.min.css": [
@@ -350,15 +351,15 @@ module.exports = function (grunt) {
 						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
 						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
 						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
-						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlxtree.css",
 						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
 						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
 						"api\/templates\/default\/etemplate2.css",
-						"phpgwapi\/templates\/default\/def_tutorials.css",
-						"phpgwapi\/templates\/idots\/css\/traditional.css",
+						"api\/templates\/default\/def_tutorials.css",
+						"api\/templates\/default\/default.css",
 						"jdots\/egw_fw.css",
 						"jdots\/css\/jdots.css",
-						"phpgwapi\/templates\/idots\/print.css",
+						"api\/templates\/default\/print.css",
 						"jdots\/print.css"
 					],
 					"jdots\/css\/orange-green.min.css": [
@@ -368,16 +369,16 @@ module.exports = function (grunt) {
 						"api\/js\/jquery\/jpicker\/css\/jPicker-1.1.6.min.css",
 						"api\/js\/jquery\/jquery-ui-timepicker-addon.css",
 						"api\/js\/jquery\/blueimp\/css\/blueimp-gallery.min.css",
-						"api\/js\/dhtmlxtree\/codebase\/dhtmlXTree.css",
+						"api\/js\/dhtmlxtree\/codebase\/dhtmlxtree.css",
 						"api\/js\/egw_action\/test\/skins\/dhtmlxmenu_egw.css",
 						"api\/js\/etemplate\/lib\/jsdifflib\/diffview.css",
 						"api\/templates\/default\/etemplate2.css",
-						"phpgwapi\/templates\/default\/def_tutorials.css",
-						"phpgwapi\/templates\/idots\/css\/traditional.css",
+						"api\/templates\/default\/def_tutorials.css",
+						"api\/templates\/default\/default.css",
 						"jdots\/egw_fw.css",
 						"jdots\/css\/jdots.css",
 						"jdots\/css\/orange-green.css",
-						"phpgwapi\/templates\/idots\/print.css",
+						"api\/templates\/default\/print.css",
 						"jdots\/print.css"
 					]
 				}
@@ -385,7 +386,9 @@ module.exports = function (grunt) {
 		},
 		hub: {
 			all: {
-				src: ['*/Gruntfile.js']
+				src: [
+					"*\/Gruntfile.js"
+				]
 			}
 		}
 	});

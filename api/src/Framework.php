@@ -855,7 +855,7 @@ abstract class Framework extends Framework\Extra
 				$print_css = $this->template_dir.'/print.css';
 				if(!file_exists(EGW_SERVER_ROOT.$print_css))
 				{
-					$print_css = '/phpgwapi/templates/idots/print.css';
+					$print_css = '/api/templates/default/print.css';
 				}
 				self::includeCSS($print_css);
 			}

@@ -13,10 +13,6 @@
  * addapted from orginal styles.php
  */
 /**
- * EGroupware general def_*.less are moved to phpgwapi/templates/default/*.less
- * so they can be included from app specific files and are independent of Pixelegg template
- */
-/**
  * All app_* files are now again in $app/templates/default/app.less&css and will be included independent
  *
  * If some settings are Pixelegg template specific, please create $app/templates/pixelegg.less&css
@@ -1021,7 +1017,6 @@
     display: none !important;
   }
 }
-/*@import "../../phpgwapi/templates/idots/css/traditional.css";*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -1470,6 +1465,26 @@ div#ui-datepicker-div {
 .ms-ctn .ms-trigger {
   border-left: none;
 }
+/**
+ * EGroupware: CSS with less preprocessor
+
+ * traditional.less
+ * included in pixelegg.less since 17/03/2014
+
+
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package phpgwapi
+ * @version $Id$
+ */
+/*
+	font styling
+	allowed attributes: font-family,font-size,color,font-weight
+*/
 /**
  * layout_*.less files are Pixelegg template specific
  */
@@ -2444,6 +2459,7 @@ button[id="add"] {
 button[id="add"]:active {
   background-color: #1aa200 !important;
 }
+/*Button Ende #######################################################*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -3371,6 +3387,10 @@ h6 {
 td.lettersearch {
   background-image: none;
 }
+/*.nextmatch_header table {
+        border: none !important;
+        width: 99% !important;
+}*/
 /**
  * EGroupware: CSS with less preprocessor
  *
@@ -5127,6 +5147,21 @@ button.image_button {
  * @package pixelegg
  * @version $Id$
  */
+/* disabled for now in pixelegg.less, until we use svg outside filemanager thumbnails
+
+//SVG Filter / not for Logo
+#egw_fw_sidebar img[src$="svg"]{
+            .gradient_vertical (@gray_60, @gray_60);
+            .rounded(3px);
+            border: 1px solid @gray_0;;
+}
+
+#egw_fw_main img[src$="svg"],
+#egw_fw_footer img[src$="svg"]{
+            //.gradient_vertical (@egw_color_2_a, @egw_color_2_a);
+            .gradient_vertical (fade(@gray_100,50%), fade(@gray_100,50%));
+
+}*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
@@ -5767,7 +5802,7 @@ a.textSidebox {
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Hadi NAtegh <hn@stylite.de>
+ * @author Hadi Nategh <hn@stylite.de>
  * @package phpgwapi
  * @version $Id$
  */
