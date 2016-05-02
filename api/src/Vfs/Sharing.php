@@ -385,8 +385,8 @@ class Sharing
 	 * @param string $name filename to use for $mode==self::LINK, default basename of $path
 	 * @param string|array $recipients one or more recipient email addresses
 	 * @param array $extra =array() extra data to store
-	 * @throw egw_exception_not_found if $path not found
-	 * @throw egw_excpetion_assertion_failed if user temp. directory does not exist and can not be created
+	 * @throw Api\Exception\NotFound if $path not found
+	 * @throw Api\Exception\AssertionFailed if user temp. directory does not exist and can not be created
 	 * @return array with share data, eg. value for key 'share_token'
 	 */
 	public static function create($path, $mode, $name, $recipients, $extra=array())

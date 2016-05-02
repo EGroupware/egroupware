@@ -30,7 +30,7 @@ class Taglist extends Etemplate\Widget
 	 * Overrides parent to check for $xml first, prevents errors when instanciated without (via AJAX)
 	 *
 	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
-	 * @throws egw_exception_wrong_parameter
+	 * @throws Api\Exception\WrongParameter
 	 */
 	public function __construct($xml = '')
 	{

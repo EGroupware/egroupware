@@ -195,7 +195,7 @@ class MimeMagic
 		}
 
 		mt_srand(time());
-		$filename = $GLOBALS['egw_info']['server']['temp_dir'] . SEP
+		$filename = $GLOBALS['egw_info']['server']['temp_dir'] . '/'
 			. md5( time() + mt_rand() ) . '.tmp';
 
 		$fp = @fopen($filename, 'ab');

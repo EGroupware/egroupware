@@ -27,16 +27,6 @@ use EGroupware\Api;
 class egw_exception extends Api\Exception {}
 
 /**
- * Base class for all exceptions about missing permissions
- *
- * New NoPermisison excpetion has to extend deprecated egw_exception_no_permission
- * to allow legacy code to catch them!
- *
- * @deprecated use Api\Exception\NoPermission
- */
-class egw_exception_no_permission extends Api\Exception {}
-
-/**
  * A record or application entry was not found for the given id
  *
  * @deprecated use Api\Exception\NotFound
@@ -67,26 +57,6 @@ class egw_exception_wrong_parameter extends Api\Exception\WrongParameter {}
  * @deprecated use Api\Exception\WrongUserInput
  */
 class egw_exception_wrong_userinput extends Api\Exception\WrongUserInput {}
-
-/**
- * Exception thrown by the egw_db class for everything not covered by extended classed below
- *
- * New Db\Exception has to extend deprecated egw_exception_db to allow legacy code
- * to catch exceptions thrown by Api\Db class!
- *
- * @deprecated use Api\Db\Exception
- */
-class egw_exception_db extends Api\Exception {}
-
-/**
- * Classic invalid SQL error
- *
- * New InvalidSql exception has to extend deprecated egw_exception_db_invalid_sql
- * to allow legacy code to catch exceptions thrown by Api\Db!
- *
- * @deprecated use Api\Db\Exception\InvalidSql
- */
-class egw_exception_db_invalid_sql extends Api\Db\Exception {}
 
 /**
  * Allow callbacks to request a redirect

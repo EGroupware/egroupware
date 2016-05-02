@@ -148,7 +148,7 @@ class Sql
 				$this->table.'.account_id='.abs($account_id),
 				__LINE__, __FILE__, false, '', false, 0, $join);
 		}
-		catch (egw_exception_db $e) {
+		catch (Api\Db\Exception $e) {
 			unset($e);
 		}
 
@@ -261,7 +261,7 @@ class Sql
 				}
 			}
 			// ignore not (yet) existing mailaccounts table (does NOT work in PostgreSQL, because of transaction!)
-			catch (egw_exception_db $e) {
+			catch (Api\Db\Exception $e) {
 				unset($e);
 			}
 		}

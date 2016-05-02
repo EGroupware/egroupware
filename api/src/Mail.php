@@ -6403,11 +6403,11 @@ class Mail
 			}
 			elseif (is_uploaded_file($_formData['file']))
 			{
-				move_uploaded_file($_formData['file'], $GLOBALS['egw_info']['server']['temp_dir'].SEP.$tmpFileName);	// requirement for safe_mode!
+				move_uploaded_file($_formData['file'], $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmpFileName);	// requirement for safe_mode!
 			}
 			else
 			{
-				rename($_formData['file'], $GLOBALS['egw_info']['server']['temp_dir'].SEP.$tmpFileName);
+				rename($_formData['file'], $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmpFileName);
 			}
 		} else {
 			//error_log("Import of message ".$_formData['file']." failes to meet basic restrictions");
@@ -6808,7 +6808,7 @@ class Mail
 				$message = Link::get_data(parse_url($tmpFileName, PHP_URL_HOST), true);
 				break;
 			default:
-				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($tmpFileName);
+				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($tmpFileName);
 				break;
 		}
 		if (!isset($message)) $message = fopen($tmpFileName, 'r');

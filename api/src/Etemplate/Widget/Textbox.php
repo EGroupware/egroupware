@@ -32,7 +32,7 @@ class Textbox extends Etemplate\Widget
 	 * Constructor
 	 *
 	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
-	 * @throws egw_exception_wrong_parameter
+	 * @throws Api\Exception\WrongParameter
 	 */
 	public function __construct($xml)
 	{

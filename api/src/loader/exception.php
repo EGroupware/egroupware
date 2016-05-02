@@ -90,7 +90,7 @@ function _egw_log_exception($e,&$headline=null)
 function egw_exception_handler($e)
 {
 	// handle redirects without logging
-	if (is_a($e, 'egw_exception_redirect'))
+	if ($e instanceof Api\Exception\Redirect)
 	{
 		egw::redirect($e->url, $e->app);
 	}

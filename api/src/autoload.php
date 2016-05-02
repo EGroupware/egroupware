@@ -69,6 +69,8 @@ spl_autoload_register(function($class)
 	$app = array_shift($components);
 	// classes using the new naming schema app_class_name, eg. admin_cmd
 	if (file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php') ||
+		// compatibility class in new eGW api dir, eg. exceptions
+		file_exists($file = EGW_INCLUDE_ROOT.'/api/inc/class.'.$class.'.inc.php') ||
 		// classes using the new naming schema app_class_name, eg. admin_cmd
 		isset($components[0]) && file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$app.'_'.$components[0].'.inc.php') ||
 		// classes with an underscore in their name
