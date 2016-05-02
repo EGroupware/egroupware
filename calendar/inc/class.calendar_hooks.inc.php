@@ -155,8 +155,10 @@ class calendar_hooks
 			'Saturday' => lang('Saturday')
 		);
 
-		$times = Api\Etemplate\Widget\Select::typeOptions('select-time', '');
-
+		if (!isset($hook_data['setup']))
+		{
+			$times = Api\Etemplate\Widget\Select::typeOptions('select-time', '');
+		}
 		for ($i = 2; $i <= 4; ++$i)
 		{
 			$muliple_weeks[$i] = lang('%1 weeks',$i);
@@ -210,7 +212,7 @@ class calendar_hooks
 			$export_tzs = array('0' => 'Use Event TZ');
 			$export_tzs += Api\DateTime::getTimezones();
 		}
-		$link_title_options = ExecMethod('calendar.calendar_bo.get_link_options');
+		$link_title_options = calendar_bo::get_link_options();
 		$settings = array(
 			'1.section' => array(
 				'type'  => 'section',
