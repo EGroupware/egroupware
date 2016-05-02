@@ -12,10 +12,12 @@
  * To install grunt to build minified javascript files you need to run:
  *
  *		sudo npm install -g grunt-cli
+ *		npm init	# create package.json and node_modules directory for local installs
  *		npm install grunt --save-dev
  *		npm install grunt-contrib-uglify --save-dev
  *		npm install grunt-newer --save-dev
  *		npm install grunt-contrib-cssmin --save-dev
+ *		npm install grunt-hub --save-dev
  *
  * Building happens by running in your EGroupware directory:
  *
@@ -380,6 +382,11 @@ module.exports = function (grunt) {
 					]
 				}
 			}
+		},
+		hub: {
+			all: {
+				src: ['*/Gruntfile.js']
+			}
 		}
 	});
 	// Load the plugin that provides the "uglify" task.
@@ -391,6 +398,9 @@ module.exports = function (grunt) {
 	// Load the plugin that runs tasks only on modified files
 	grunt.loadNpmTasks('grunt-newer');
 
+	// run Gruntfile.js in apps / sub-directories
+	grunt.loadNpmTasks('grunt-hub');
+
 	// Default task(s).
-	grunt.registerTask('default', ['newer:uglify', 'newer:cssmin']);
+	grunt.registerTask('default', ['newer:uglify', 'newer:cssmin', 'hub']);
 };
