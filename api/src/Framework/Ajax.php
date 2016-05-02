@@ -458,7 +458,7 @@ abstract class Ajax extends Api\Framework
 		if (!$this->sidebox_done && self::$header_done)
 		{
 			$this->do_sidebox();
-			return $header.'<span id="late-sidebox" data-setSidebox="'.htmlspecialchars(json_encode(Api\self::$extra['setSidebox'])).'"/>';
+			return $header.'<span id="late-sidebox" data-setSidebox="'.htmlspecialchars(json_encode(self::$extra['setSidebox'])).'"/>';
 		}
 
 		return $header;
