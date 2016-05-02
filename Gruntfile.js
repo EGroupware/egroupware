@@ -266,7 +266,7 @@ module.exports = function (grunt) {
 			options: {
 				shorthandCompacting: false,
 				sourceMap: true,
-				relativeTo: "pixelegg\/css\/"
+				rebase: true
 			},
 			pixelegg: {
 				files: {
