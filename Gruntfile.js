@@ -286,7 +286,6 @@ module.exports = function (grunt) {
 						"api\/templates\/default\/etemplate2.css",
 						"pixelegg\/css\/pixelegg.css",
 						"api\/templates\/default\/print.css",
-						"jdots\/print.css",
 						"pixelegg\/print.css"
 					],
 					"pixelegg\/css\/mobile.min.css": [
@@ -302,7 +301,6 @@ module.exports = function (grunt) {
 						"api\/templates\/default\/etemplate2.css",
 						"pixelegg\/css\/mobile.css",
 						"api\/templates\/default\/print.css",
-						"jdots\/print.css",
 						"pixelegg\/print.css"
 					],
 					"pixelegg\/mobile\/fw_mobile.min.css": [
@@ -318,7 +316,6 @@ module.exports = function (grunt) {
 						"api\/templates\/default\/etemplate2.css",
 						"pixelegg\/mobile\/fw_mobile.css",
 						"api\/templates\/default\/print.css",
-						"jdots\/print.css",
 						"pixelegg\/print.css"
 					]
 				}

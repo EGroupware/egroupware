@@ -14,9 +14,6 @@
 
 namespace EGroupware\Api;
 
-// import not yet ported non-namespaced classes
-use jdots_framework;
-
 /**
  * Framework: virtual base class for all template sets
  *
@@ -210,7 +207,7 @@ abstract class Framework extends Framework\Extra
 			{
 				throw new Exception\AssertionFailed(__METHOD__."('".htmlspecialchars($url)."') can NOT redirect, output already started at $file line $line!");
 			}
-			if ($GLOBALS['egw']->framework instanceof jdots_framework && !empty($link_app))
+			if ($GLOBALS['egw']->framework instanceof Framework\Ajax && !empty($link_app))
 			{
 				self::set_extra('egw', 'redirect', array($url, $link_app));
 				$GLOBALS['egw']->framework->render('');
