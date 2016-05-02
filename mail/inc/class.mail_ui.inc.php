@@ -622,7 +622,7 @@ class mail_ui
 						'onExecute' => 'javaScript:app.mail.edit_sieve',
 
 						'enabled'	=> 'javaScript:app.mail.sieve_enabled',
-						'icon' => 'etemplate/fav_filter',	// funnel
+						'icon' => 'mail/filter',	// funnel
 						'hideOnMobile' => true
 					),
 					'vacation' => array(
