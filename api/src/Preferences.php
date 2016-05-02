@@ -951,12 +951,12 @@ class Preferences
 			return $this->data['email']['address'];
 		}
 		// if email-address is set in the account, return it
-		if (($email = $GLOBALS['egw']->accounts->id2name($account_id,'account_email')))
+		if (($email = Accounts::id2name($account_id,'account_email')))
 		{
 			return $email;
 		}
-		$prefs_email_address = $GLOBALS['egw']->accounts->id2name($account_id);
-		if (strpos($prefs_email_address,'@') === False)
+		$prefs_email_address = Accounts::id2name($account_id);
+		if ($prefs_email_address && strpos($prefs_email_address,'@') === False)
 		{
 			$prefs_email_address .= '@' . $GLOBALS['egw_info']['server']['mail_suffix'];
 		}
