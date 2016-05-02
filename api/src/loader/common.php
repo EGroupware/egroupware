@@ -264,6 +264,9 @@ function check_load_extension($extension,$throw=false)
 	return $loaded;
 }
 
+// include deprecated factory methods: CreateObject, ExecMethod, ...
+require_once EGW_SERVER_ROOT.'/api/src/loader/deprecated_factory.php';
+
 // include deprecated global functions, if phpgwapi is installed
 if (file_exists(EGW_SERVER_ROOT.'/phpgwapi'))
 {

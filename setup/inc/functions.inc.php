@@ -50,7 +50,7 @@ if(!defined('EGW_SERVER_ROOT') && !defined('EGW_INCLUDE_ROOT'))
 	define('EGW_API_INC',EGW_SERVER_ROOT.'/phpgwapi/inc');
 }
 
-require_once(EGW_INCLUDE_ROOT . '/phpgwapi/inc/common_functions.inc.php');
+require_once(EGW_INCLUDE_ROOT . '/api/src/loader/common.php');
 
 /**
  * function to handle multilanguage support
