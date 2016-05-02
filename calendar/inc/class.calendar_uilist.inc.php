@@ -324,8 +324,9 @@ class calendar_uilist extends calendar_ui
 				$this->last  = $search_params['end'] = $today->format('ts');
 				break;
 			case 'week':
-				$start = $this->bo->date2array($params['date'] ? $params['date'] : $this->date);
-				$this->first = $this->datetime->get_weekday_start($start['year'],$start['month'],$start['day']);
+				$start = new Api\DateTime($params['date'] ? $params['date'] : $this->date);
+				$start->setWeekstart();
+				$this->first = $start->format('ts');
 				$this->last = $this->bo->date2array($this->first);
 				$this->last['day'] += ($params['weekend'] == 'true' ? 7 : 5) - 1;
 				$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;

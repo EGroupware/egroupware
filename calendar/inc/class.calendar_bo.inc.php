@@ -195,12 +195,6 @@ class calendar_bo
 	 */
 	var $so;
 	/**
-	 * Instance of the datetime class
-	 *
-	 * @var egw_datetime
-	 */
-	var $datetime;
-	/**
 	 * Instance of the categories class
 	 *
 	 * @var Api\Categories
@@ -229,7 +223,6 @@ class calendar_bo
 		if ($this->debug > 0) $this->debug_message('calendar_bo::bocal() started',True);
 
 		$this->so = new calendar_so();
-		$this->datetime = $GLOBALS['egw']->datetime;
 
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
@@ -1835,7 +1828,7 @@ class calendar_bo
 	 * @param type $event
 	 * @return array array of selected calendar fields
 	 */
-	function get_link_options ($event = array())
+	public static function get_link_options ($event = array())
 	{
 		unset($event);	// not used, but required by function signature
 		$options = array (

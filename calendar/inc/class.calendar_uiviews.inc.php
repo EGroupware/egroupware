@@ -438,7 +438,9 @@ class calendar_uiviews extends calendar_ui
 		}
 		elseif ($this->planner_view == 'week' || $this->planner_view == 'weekN')	// weeekview
 		{
-			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
+			$start = new Api\DateTime($this->date);
+			$start->setWeekstart();
+			$this->first = $start->format('ts');
 			$this->last = $this->bo->date2array($this->first);
 			$this->last['day'] += ($this->planner_view == 'week' ? 7 : 7 * $this->cal_prefs['multiple_weeks'])-1;
 			$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
@@ -527,7 +529,9 @@ class calendar_uiviews extends calendar_ui
 
 		if ($weeks)
 		{
-			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
+			$start = new Api\DateTime($this->date);
+			$start->setWeekstart();
+			$this->first = $start->format('ts');
 			$this->last = strtotime("+$weeks weeks",$this->first) - 1;
 			$weekNavH = "$weeks weeks";
 			$navHeader = lang('Week').' '.$this->week_number($this->first).' - '.$this->week_number($this->last).': '.
@@ -579,19 +583,16 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function _week_align_month(&$first,&$last,$day=1)
 	{
-		$first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day=$day);
-		if ($day == 1)
-		{
-			$last = $this->datetime->get_weekday_start($this->year,$this->month,
-				$this->datetime->days_in_month($this->month,$this->year));
-		}
-		else
-		{
-			$last = $this->datetime->get_weekday_start($this->year,$this->month+1,$day);
-		}
+		$start = new Api\DateTime($this->date);
+		$start->setDate($this->year,$this->month,$this->day=$day);
+		$start->setWeekstart();
+		$first = $start->format('ts');
+		$start->setDate($this->year,$this->month+1,$day);
+		if ($day == 1) $start->add('-1day');
+		$start->setWeekstart();
 		// now we need to calculate the end of the last day of that week
 		// as simple $last += WEEK_s - 1; does NOT work, if daylight saving changes in that week!!!
-		$arr = $this->bo->date2array($last);
+		$arr = $start->format('array');
 		$arr['day'] += 6;
 		$arr['hour'] = 23;
 		$arr['min'] = $arr['sec'] = 59;
@@ -628,7 +629,9 @@ class calendar_uiviews extends calendar_ui
 		}
 		else
 		{
-			$wd_start = $this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
+			$start = new Api\DateTime($this->date);
+			$start->setWeekstart();
+			$wd_start = $this->first = $start->format('ts');
 			if ($days <= 5)		// no weekend-days
 			{
 				switch($this->cal_prefs['weekdaystarts'])

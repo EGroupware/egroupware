@@ -47,12 +47,6 @@ class calendar_ui
 	 */
 	var $jscal;
 	/**
-	 * Reference to global datetime class
-	 *
-	 * @var egw_datetime
-	 */
-	var $datetime;
-	/**
 	 * Instance of Api\Categories class
 	 *
 	 * @var Api\Categories
@@ -151,7 +145,6 @@ class calendar_ui
 		{
 			$this->bo = new calendar_bo();
 		}
-		$this->datetime = $GLOBALS['egw']->datetime;
 
 		$this->categories = new Api\Categories($this->user,'calendar');
 
