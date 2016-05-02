@@ -1858,7 +1858,7 @@ class mail_ui
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
 		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
-
+		//error_log(__METHOD__.__LINE__.array2string($attachmentHTMLBlock));
 		$nonDisplayAbleCharacters = array('[\016]','[\017]',
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
 				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
@@ -2046,11 +2046,13 @@ class mail_ui
 						{
 							$windowName = 'displayEvent_'. $rowID;
 							$reg2 = egw_link::get_registry('calendar','view_popup');
+							$attachmentHTML[$key]['popup']=(!empty($reg2) ? $reg2 : $reg);
 						}
 						if (strtoupper($value['mimeType'])=='TEXT/X-VCARD' || strtoupper($value['mimeType'])=='TEXT/VCARD')
 						{
 							$windowName = 'displayContact_'. $rowID;
 							$reg2 = egw_link::get_registry('addressbook','add_popup');
+							$attachmentHTML[$key]['popup']=(!empty($reg2) ? $reg2 : $reg);
 						}
 						// apply to action
 						list($width,$height) = explode('x',(!empty($reg2) ? $reg2 : $reg));
@@ -2139,6 +2141,7 @@ class mail_ui
 		{
 			foreach ((array)$attachmentHTML as $ikey => $value)
 			{
+				//error_log(__METHOD__.__LINE__.array2string($attachmentHTML[$ikey]));
 				unset($attachmentHTML[$ikey]['link_view']);
 				unset($attachmentHTML[$ikey]['link_save']);
 			}
