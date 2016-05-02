@@ -14,7 +14,6 @@ use EGroupware\Api;
 use EGroupware\Api\Link;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
-use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
 
 /**
@@ -787,14 +786,14 @@ class calendar_uiviews extends calendar_ui
 						$icons = '';
 						foreach($todo['icons'] as $name => $alt)
 						{
-							$icons .= ($icons?' ':'').$GLOBALS['egw']->html->image('infolog',$name,lang($alt),'border="0" width="15" height="15"');
+							$icons .= ($icons?' ':'').Api\Html::image('infolog',$name,lang($alt),'border="0" width="15" height="15"');
 						}
 						$todo['icons'] = $icons;
 						$class = $class == 'row_on' ? 'row_off' : 'row_on';
 						if($todo['edit']) {
 							$todo['edit_size'] = $todo['edit']['size'];
 							unset($todo['edit']['size']);
-							$edit_icon_href = Api\Html::a_href( $icons, $todo['edit'],'',' data-todo="app|'.$width.'x'.$height.'" ');
+							$edit_icon_href = Api\Html::a_href( $icons, $todo['edit'],'',' data-todo="app|750x590" ');
 							$edit_href = Api\Html::a_href( $todo['title'], $todo['edit'],'',' data-todo="app|750x590" ');
 							$todo['edit'] = Framework::link('/index.php',$todo['edit'],true);
 						}
@@ -841,8 +840,6 @@ class calendar_uiviews extends calendar_ui
 		}
 		if ($edit)
 		{
-			$view_link = Egw::link('/index.php',$edit);
-
 			if ($popup_size)
 			{
 				$popup = ' data-app="app|'.$popup_size.'"';
