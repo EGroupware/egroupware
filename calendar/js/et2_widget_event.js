@@ -183,14 +183,17 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 * Callback for changes in cached data
 	 */
 	_UID_callback: function _UID_callback(event) {
+		// Copy to avoid changes, which may cause nm problems
+		var value = jQuery.extend({},event);
+
 		// Make sure id is a string, check values
-		if(event)
+		if(value)
 		{
-			this._values_check(event);
+			this._values_check(value);
 		}
 
 		// Check for changing days in the grid view
-		if(!this._sameday_check(event))
+		if(!this._sameday_check(value))
 		{
 			// This should now cease to exist, as new events have been created
 			this.free();
@@ -198,7 +201,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 
 		// Copy to avoid changes, which may cause nm problems
-		this.options.value = jQuery.extend({},event);
+		this.options.value = jQuery.extend({},value);
 
 		if(this._parent.options.date)
 		{
