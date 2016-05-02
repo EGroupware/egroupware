@@ -341,7 +341,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 							{
 								if(already_added.indexOf(''+id) < 0)
 								{
-									this.push({id: id, label: result[id], data: {participants:id,owner:id}});
+									this.push({id: id, label: result[id]||'', data: {participants:id,owner:id}});
 									already_added.push(''+id);
 								}
 							}
@@ -349,7 +349,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					}
 					else	// users
 					{
-						var label = this._get_owner_name(user);
+						var label = this._get_owner_name(user)||'';
 						if(already_added.indexOf(user) < 0)
 						{
 							labels.push({id: user, label: label, data: {participants:user,owner:''}});
