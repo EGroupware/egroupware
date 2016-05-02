@@ -323,7 +323,7 @@ class Sql
 	{
 		if (!(int)$account_id) return;
 
-		$acl =& CreateObject('phpgwapi.acl',$account_id);
+		$acl = new Api\Acl($account_id);
 		$acl->read_repository();
 		$acl->delete('phpgw_group',false);
 

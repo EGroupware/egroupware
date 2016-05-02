@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Logout
+ * EGroupware - Logout
  *
  * @link http://www.egroupware.org
  * @author Joseph Engo <jengo@phpgroupware.org>
@@ -9,6 +9,8 @@
  * @subpackage authentication
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
@@ -21,12 +23,12 @@ $GLOBALS['egw_info'] = array(
 );
 include('./header.inc.php');
 
-$GLOBALS['sessionid'] = egw_session::get_sessionid();
-$GLOBALS['kp3']       = egw_session::get_request('kp3');
+$GLOBALS['sessionid'] = Api\Session::get_sessionid();
+$GLOBALS['kp3']       = Api\Session::get_request('kp3');
 
 $verified = $GLOBALS['egw']->session->verify();
 
-if(!($redirectTarget = $GLOBALS['egw']->session->appsession('referer', 'login')))
+if(!($redirectTarget = Api\Cache::getSession('login', 'referer')))
 {
 	$redirectTarget = $GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain'];
 }
@@ -37,14 +39,14 @@ elseif(strpos($redirectTarget, '[?&]cd=') !== false)
 
 if($verified)
 {
-	$GLOBALS['egw']->hooks->process('logout');
+	Api\Hooks::process('logout');
 	$GLOBALS['egw']->session->destroy($GLOBALS['sessionid'],$GLOBALS['kp3']);
 }
 
-$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
-$GLOBALS['egw']->session->egw_setcookie('sessionid');
-$GLOBALS['egw']->session->egw_setcookie('kp3');
-$GLOBALS['egw']->session->egw_setcookie('domain');
+Api\Session::egw_setcookie('eGW_remember','',0,'/');
+Api\Session::egw_setcookie('sessionid');
+Api\Session::egw_setcookie('kp3');
+Api\Session::egw_setcookie('domain');
 
 if($GLOBALS['egw_info']['server']['auth_type'] == 'cas')
 {

@@ -99,7 +99,7 @@
 	//var_dump($GLOBALS['setup_info']);exit;
 	@ksort($GLOBALS['setup_info']);
 
-	if(get_var('cancel',Array('POST')))
+	if($_POST['cancel'])
 	{
 		Header('Location: index.php');
 		exit;
@@ -107,14 +107,14 @@
 
 	$GLOBALS['egw_setup']->html->show_header(lang("Developers' Table Schema Toy"),False,'config',$GLOBALS['egw_setup']->ConfigDomain);
 
-	if(get_var('submit',Array('POST')))
+	if($_POST['submit'])
 	{
 		$GLOBALS['setup_tpl']->set_var('description',lang('App process') . ':');
 		$GLOBALS['setup_tpl']->pparse('out','header');
 
-		$appname = get_var('appname','POST');
-		$install = get_var('install','POST');
-		$version = get_var('version','POST');
+		$appname = $_POST['appname'];
+		$install = $_POST['install'];
+		$version = $_POST['version'];
 
 		foreach($install as $appname => $key)
 		{
@@ -123,7 +123,7 @@
 			$terror[$appname]['version'] = $version[$appname];
 			$terror[$appname]['status'] = 'U';
 
-			$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+			$appdir  = EGW_SERVER_ROOT . '/' . $appname . '/setup/';
 
 			// Drop newest tables
 			$terror[$appname]['tables'] = $GLOBALS['setup_info'][$appname]['tables'];
@@ -170,7 +170,7 @@
 		$GLOBALS['setup_tpl']->pparse('out','footer');
 		exit;
 	}
-	$detail = get_var('detail',Array('GET','POST'));
+	$detail = $_REQUEST['detail'];
 	if($detail)
 	{
 		@ksort($GLOBALS['setup_info'][$detail]);

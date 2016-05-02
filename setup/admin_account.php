@@ -19,7 +19,7 @@ if (strpos($_SERVER['PHP_SELF'],'admin_account.php') !== false)
 
 	// Authorize the user to use setup app and load the database
 	// Does not return unless user is authorized
-	if(!$GLOBALS['egw_setup']->auth('Config') || get_var('cancel',Array('POST')))
+	if(!$GLOBALS['egw_setup']->auth('Config') || $_POST['cancel'])
 	{
 		Header('Location: index.php');
 		exit;
@@ -36,12 +36,12 @@ if ($_POST['submit'])
 	}
 
 	/* Posted admin data */
-	$passwd   = get_var('passwd',Array('POST'));
-	$passwd2  = get_var('passwd2',Array('POST'));
-	$username = get_var('username',Array('POST'));
-	$fname    = get_var('fname',Array('POST'));
-	$lname    = get_var('lname',Array('POST'));
-	$email    = get_var('email',Array('POST'));
+	$passwd   = $_POST['passwd'];
+	$passwd2  = $_POST['passwd2'];
+	$username = $_POST['username'];
+	$fname    = $_POST['fname'];
+	$lname    = $_POST['lname'];
+	$email    = $_POST['email'];
 
 	if($passwd != $passwd2 || !$username)
 	{
@@ -153,7 +153,7 @@ else
 	$GLOBALS['egw_setup']->add_acl($apps,'run',$admingroupid);
 
 	/* Creation of the demo accounts is optional - the checkbox is on by default. */
-	if(get_var('create_demo',Array('POST')))
+	if($_POST['create_demo'])
 	{
 		// Create 3 demo accounts
 		$GLOBALS['egw_setup']->add_account('demo','Demo','Account','guest');

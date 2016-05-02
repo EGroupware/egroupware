@@ -451,13 +451,13 @@ class setup_cmd_config extends setup_cmd
 		if (!$scan_done++)
 		{
 			// now add auth backends found in filesystem
-			foreach(scandir(EGW_INCLUDE_ROOT.'/phpgwapi/inc') as $class)
+			foreach(scandir(EGW_INCLUDE_ROOT.'/api/src/Auth') as $file)
 			{
 				$matches = null;
-				if (preg_match('/^class\.auth_([a-z]+)\.inc\.php$/', $class, $matches) &&
-					!isset($auth_types[$matches[1]]))
+				if (preg_match('/^([a-z0-9]+)\.php$/', $file, $matches) &&
+					!isset($auth_types[strtolower($matches[1])]) && $matches[1] != 'Backend')
 				{
-					$auth_types[$matches[1]] = ucfirst($matches[1]);
+					$auth_types[strtolower($matches[1])] = $matches[1];
 				}
 			}
 			foreach(self::$options['--account-auth'] as &$param)
@@ -489,15 +489,15 @@ class setup_cmd_config extends setup_cmd
 		if (!$scan_done++)
 		{
 			// now add auth backends found in filesystem
-			foreach(scandir(EGW_INCLUDE_ROOT.'/phpgwapi/inc') as $file)
+			foreach(scandir(EGW_INCLUDE_ROOT.'/api/src/Accounts') as $file)
 			{
 				$matches = null;
-				if (preg_match('/^class\.accounts_([a-z]+)\.inc\.php$/', $file, $matches) &&
-					!isset($account_repositories[$matches[1]]) &&
-					class_exists($class='accounts_'.$matches[1]) &&
-					($matches[1] == $current || !is_callable($callable=$class.'::available') || call_user_func($callable)))
+				if (preg_match('/^([a-z0-9]+)\.php$/', $file, $matches) &&
+					!isset($account_repositories[strtolower($matches[1])]) &&
+					class_exists($class='EGroupware\\Api\\Accounts\\'.$matches[1]) &&
+					(strtolower($matches[1]) == $current || !is_callable($callable=$class.'::available') || call_user_func($callable)))
 				{
-					$account_repositories[$matches[1]] = ucfirst($matches[1]);
+					$account_repositories[strtolower($matches[1])] = $matches[1];
 				}
 			}
 		}

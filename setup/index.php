@@ -490,7 +490,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 			}
 		}
 		// warn if essential apps are not installed
-		foreach(array('api','phpgwapi','etemplate','home','admin','preferences') as $app)
+		foreach(array('api','admin','preferences') as $app)
 		{
 			if (!isset($setup_info[$app]) || empty($setup_info[$app]['currentver']))
 			{

@@ -9,6 +9,9 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+
 $run_by_webserver = !!$_SERVER['PHP_SELF'];
 $is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 
@@ -839,12 +842,12 @@ function gd_check()
 if ($run_by_webserver)
 {
 	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
-	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
+	$setup_tpl = new Api\Framework\Template($tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head' => 'head.tpl',
 		'T_footer' => 'footer.tpl',
 	));
-	$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
+	$ConfigDomain = $_REQUEST['ConfigDomain'];
 	if (@$_GET['intro']) {
 		if(($ConfigLang = setup::get_lang()))
 		{

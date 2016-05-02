@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Login
+ * EGroupware - Login
  *
  * @link http://www.egroupware.org
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
@@ -10,6 +10,10 @@
  * @subpackage authentication
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
 
 $submit = False;			// set to some initial value
 
@@ -42,7 +46,7 @@ if(isset($GLOBALS['sitemgr_info']) && $GLOBALS['egw_info']['user']['userid'] == 
 {
 	if($GLOBALS['egw']->session->verify())
 	{
-		$GLOBALS['egw']->hooks->process('logout');
+		Api\Hooks::process('logout');
 		$GLOBALS['egw']->session->destroy($GLOBALS['sessionid'],$GLOBALS['kp3']);
 	}
 }
@@ -101,8 +105,8 @@ if($GLOBALS['egw_info']['server']['auth_type'] == 'cas')
 else
 {
 	// allow template to overide login-template (without modifying header.inc.php) by setting default or forced pref
-	$prefs = new preferences();
-	$prefs->account_id = preferences::DEFAULT_ID;
+	$prefs = new Api\Preferences();
+	$prefs->account_id = Api\Preferences::DEFAULT_ID;
 	$prefs->read_repository();
 
 	$class = $prefs->data['common']['template_set'].'_framework';
@@ -113,7 +117,7 @@ else
 	}
 	unset($prefs); unset($class);
 
-	$GLOBALS['egw']->framework = egw_framework::factory();
+	$GLOBALS['egw']->framework = Framework::factory();
 
 	// This is used for system downtime, to prevent new logins.
 	if($GLOBALS['egw_info']['server']['deny_all_logins'])
@@ -132,13 +136,13 @@ else
 				return lang('Sorry, your login has expired');
 			case 4:
 				return lang('Cookies are required to login to this site');
-			case egw_session::CD_BAD_LOGIN_OR_PASSWORD:
+			case Api\Session::CD_BAD_LOGIN_OR_PASSWORD:
 				return lang('Bad login or password');
-			case egw_session::CD_FORCE_PASSWORD_CHANGE:
+			case Api\Session::CD_FORCE_PASSWORD_CHANGE:
 				return lang('You must change your password!');
-			case egw_session::CD_ACCOUNT_EXPIRED:
+			case Api\Session::CD_ACCOUNT_EXPIRED:
 				return lang('Account is expired');
-			case egw_session::CD_BLOCKED:
+			case Api\Session::CD_BLOCKED:
 				return lang('Blocked, too many attempts');
 			case 10:
 				$GLOBALS['egw']->session->egw_setcookie('sessionid');
@@ -233,12 +237,12 @@ else
 			!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 		{
 			$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
-			egw::redirect_link('/login.php','cd=5');
+			Egw::redirect_link('/login.php','cd=5');
 		}
 		/* cookie enabled check comment out, as it seems to cause a redirect loop under certain conditions and browsers :-(
 		if ($_COOKIE['eGW_cookie_test'] !== 'enabled')
 		{
-			egw::redirect_link('/login.php','cd=4');
+			Egw::redirect_link('/login.php','cd=4');
 		}*/
 
 		// don't get login data again when $submit is true
@@ -277,7 +281,7 @@ else
 		$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login, $passwd,
 			$passwd_type, false, true, true);	// true = let session fail on forced password change
 
-		if (!$GLOBALS['sessionid'] && $GLOBALS['egw']->session->cd_reason == egw_session::CD_FORCE_PASSWORD_CHANGE)
+		if (!$GLOBALS['sessionid'] && $GLOBALS['egw']->session->cd_reason == Api\Session::CD_FORCE_PASSWORD_CHANGE)
 		{
 			if (isset($_POST['new_passwd']))
 			{
@@ -301,8 +305,8 @@ else
 		}
 		elseif (!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
-			egw::redirect_link('/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
+			Api\Session::egw_setcookie('eGW_remember','',0,'/');
+			Egw::redirect_link('/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
 		}
 		else
 		{
@@ -342,7 +346,7 @@ else
 			}
 
 			// check if new translations are available
-			translation::check_invalidate_cache();
+			Api\Translation::check_invalidate_cache();
 
 			$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
 			if (!$forward)
@@ -359,7 +363,7 @@ else
 			if(strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']) === false) {
 				// login requuest does not come from login.php
 				// redirect to referer on logout
-				$GLOBALS['egw']->session->appsession('referer', 'login', $_SERVER['HTTP_REFERER']);
+				Api\Cache::setSession('login', 'referer', $_SERVER['HTTP_REFERER']);
 			}
 			$strength = ($GLOBALS['egw_info']['server']['force_pwd_strength']?$GLOBALS['egw_info']['server']['force_pwd_strength']:false);
 			if ($strength && $strength>5) $strength =5;
@@ -370,7 +374,7 @@ else
 			{
 				error_log('login::'.__LINE__.' User '. $login. ' authenticated with an unsave password'.' '.$unsave_msg);
 				$message = lang('eGroupWare checked your password for safetyness. You have to change your password for the following reason:')."\n";
-				egw::redirect_link('/index.php', array(
+				Egw::redirect_link('/index.php', array(
 					'menuaction' => 'preferences.uipassword.change',
 					'message' => $message . $unsave_msg,
 					'cd' => 'yes',
@@ -380,14 +384,14 @@ else
 			{
 				// commiting the session, before redirecting might fix racecondition in session creation
 				$GLOBALS['egw']->session->commit_session();
-				egw::redirect_link($forward,$extra_vars);
+				Egw::redirect_link($forward,$extra_vars);
 			}
 		}
 	}
 	// show login screen
 	if(isset($_COOKIE['last_loginid']))
 	{
-		$prefs = new preferences($GLOBALS['egw']->accounts->name2id($_COOKIE['last_loginid']));
+		$prefs = new Api\Preferences($GLOBALS['egw']->accounts->name2id($_COOKIE['last_loginid']));
 
 		if($prefs->account_id)
 		{
@@ -411,17 +415,17 @@ else
 	}
 	if ($_COOKIE['eGW_cookie_test'] !== 'enabled')
 	{
-		egw_session::egw_setcookie('eGW_cookie_test','enabled',0);
+		Api\Session::egw_setcookie('eGW_cookie_test','enabled',0);
 	}
 	#print 'LANG:' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'] . '<br>';
-	translation::init();	// this will set the language according to the (new) set prefs
-	translation::add_app('login');
-	translation::add_app('loginscreen');
-	$GLOBALS['loginscreenmessage'] = translation::translate('loginscreen_message',false,'');
+	Api\Translation::init();	// this will set the language according to the (new) set prefs
+	Api\Translation::add_app('login');
+	Api\Translation::add_app('loginscreen');
+	$GLOBALS['loginscreenmessage'] = Api\Translation::translate('loginscreen_message',false,'');
 	if($GLOBALS['loginscreenmessage'] == 'loginscreen_message' || empty($GLOBALS['loginscreenmessage']))
 	{
-		translation::add_app('loginscreen','en');	// trying the en one
-		$GLOBALS['loginscreenmessage'] = translation::translate('loginscreen_message',false,'');
+		Api\Translation::add_app('loginscreen','en');	// trying the en one
+		$GLOBALS['loginscreenmessage'] = Api\Translation::translate('loginscreen_message',false,'');
 	}
 	if($GLOBALS['loginscreenmessage'] == 'loginscreen_message' || empty($GLOBALS['loginscreenmessage']))
 	{

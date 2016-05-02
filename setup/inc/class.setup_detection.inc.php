@@ -78,7 +78,11 @@ class setup_detection
 					}
 					/* This is to catch old setup installs that did not have phpgwapi listed as an app */
 					$tmp = @$setup_info['phpgwapi']['version']; /* save the file version */
-					if(!@$setup_info['phpgwapi']['currentver'])
+					if (isset($setup_info['api']['version']))
+					{
+						// new api, dont care about old pre egroupware stuff
+					}
+					elseif(!@$setup_info['phpgwapi']['currentver'])
 					{
 						$setup_info['phpgwapi']['currentver'] = $setup_info['admin']['currentver'];
 						$setup_info['phpgwapi']['version'] = $setup_info['admin']['currentver'];

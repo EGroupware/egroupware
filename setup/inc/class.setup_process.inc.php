@@ -87,12 +87,17 @@ class setup_process
 		else
 		{
 			$pass['api'] = $setup_info['api'];
-			$pass['phpgwapi'] = $setup_info['phpgwapi'];
+			if (file_exists(EGW_SERVER_ROOT.'/phpgwapi') && is_readable(EGW_SERVER_ROOT.'/phpgwapi'))
+			{
+				$pass['phpgwapi'] = $setup_info['phpgwapi'];
+			}
 		}
 		$pass['admin']    = $setup_info['admin'];
 		$pass['preferences'] = $setup_info['preferences'];
-		$pass['etemplate'] = $setup_info['etemplate'];	// helps to minimize passes, as many apps depend on it
-
+		if (file_exists(EGW_SERVER_ROOT.'/etemplate'))
+		{
+			$pass['etemplate'] = $setup_info['etemplate'];	// helps to minimize passes, as many apps depend on it
+		}
 		$this->api_version_target = $setup_info['api']['version'];
 
 		$i = 1;
@@ -132,9 +137,13 @@ class setup_process
 			switch($method)
 			{
 				case 'new':
+					if (empty($GLOBALS['egw_info']['server']['temp_dir']))
+					{
+						$GLOBALS['egw_info']['server']['temp_dir'] = sys_get_temp_dir();
+					}
 					/* Create tables and insert new records for each app in this list */
 					$passing_c = $this->current($pass,$DEBUG);
-					if (isset($pass['phpgwapi'])) $this->save_minimal_config($preset_config);
+					if (isset($pass['api'])) $this->save_minimal_config($preset_config);
 					$passing = $this->default_records($passing_c,$DEBUG);
 					break;
 				case 'upgrade':
@@ -292,7 +301,7 @@ class setup_process
 		}
 		$current_config['install_id'] = md5($_SERVER['HTTP_HOST'].microtime(true).$GLOBALS['egw_setup']->ConfigDomain);
 
-		$current_config['postpone_statistics_submit'] = time() + 2 * 30 * 3600;	// ask user in 2 month from now, when he has something to report
+		$current_config['postpone_statistics_submit'] = time() + 2 * 30 * 86400;	// ask user in 2 month from now, when he has something to report
 
 		// use securest password hash by default
 		require_once EGW_SERVER_ROOT.'/setup/inc/hook_config.inc.php';	// for sql_passwdhashes, to get securest available password hash
@@ -401,7 +410,7 @@ class setup_process
 
 			if($DEBUG) { echo '<br>process->current(): Incoming status: ' . $appname . ',status: '. $appdata['status']; }
 
-			$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+			$appdir  = EGW_SERVER_ROOT . '/' . $appname . '/setup/';
 
 			if($appdata['tables'] && file_exists($appdir.'tables_current.inc.php'))
 			{
@@ -479,7 +488,7 @@ class setup_process
 		}
 		foreach($setup_info as $appname => &$appdata)
 		{
-			$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+			$appdir  = EGW_SERVER_ROOT . '/' . $appname . '/setup/';
 
 			if(file_exists($appdir.'default_records.inc.php'))
 			{
@@ -520,7 +529,7 @@ class setup_process
 		}
 		foreach($setup_info as $appname => &$appdata)
 		{
-			$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+			$appdir  = EGW_SERVER_ROOT . '/' . $appname . '/setup/';
 
 			if(file_exists($appdir.'test_data.inc.php'))
 			{
@@ -554,7 +563,7 @@ class setup_process
 		}
 		foreach($setup_info as $appname => &$appdata)
 		{
-			$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+			$appdir  = EGW_SERVER_ROOT . '/' . $appname . '/setup/';
 
 			if(file_exists($appdir.'tables_baseline.inc.php'))
 			{
@@ -633,7 +642,7 @@ class setup_process
 			{
 				$currentver = $appdata['currentver'];
 				$targetver  = $appdata['version'];	// The version we need to match when done
-				$appdir     = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+				$appdir     = EGW_SERVER_ROOT . '/' . $appname . '/setup/';
 
 				if(file_exists($appdir . 'tables_update.inc.php'))
 				{

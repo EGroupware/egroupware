@@ -407,23 +407,26 @@ class Egw extends Egw\Base
 		define('PHPGW_ACL_CUSTOM_2',128);
 		define('PHPGW_ACL_CUSTOM_3',256);
 		// A few hacker resistant constants that will be used throught the program
-		define('EGW_TEMPLATE_DIR', $this->common->get_tpl_dir('phpgwapi'));
-		define('EGW_IMAGES_DIR', $this->common->get_image_path('phpgwapi'));
-		define('EGW_IMAGES_FILEDIR', $this->common->get_image_dir('phpgwapi'));
-		define('EGW_APP_ROOT', $this->common->get_app_dir());
-		define('EGW_APP_INC', $this->common->get_inc_dir());
-		define('EGW_APP_TPL', $this->common->get_tpl_dir());
-		define('EGW_IMAGES', $this->common->get_image_path());
-		define('EGW_APP_IMAGES_DIR', $this->common->get_image_dir());
-		// and the old ones
-		define('PHPGW_TEMPLATE_DIR',EGW_TEMPLATE_DIR);
-		define('PHPGW_IMAGES_DIR',EGW_IMAGES_DIR);
-		define('PHPGW_IMAGES_FILEDIR',EGW_IMAGES_FILEDIR);
-		define('PHPGW_APP_ROOT',EGW_APP_ROOT);
-		define('PHPGW_APP_INC',EGW_APP_INC);
-		define('PHPGW_APP_TPL',EGW_APP_TPL);
-		define('PHPGW_IMAGES',EGW_IMAGES);
-		define('PHPGW_APP_IMAGES_DIR',EGW_APP_IMAGES_DIR);
+		if (file_exists(EGW_SERVER_ROOT.'/phpgwapi'))
+		{
+			define('EGW_TEMPLATE_DIR', $this->common->get_tpl_dir('phpgwapi'));
+			define('EGW_IMAGES_DIR', $this->common->get_image_path('phpgwapi'));
+			define('EGW_IMAGES_FILEDIR', $this->common->get_image_dir('phpgwapi'));
+			define('EGW_APP_ROOT', $this->common->get_app_dir());
+			define('EGW_APP_INC', $this->common->get_inc_dir());
+			define('EGW_APP_TPL', $this->common->get_tpl_dir());
+			define('EGW_IMAGES', $this->common->get_image_path());
+			define('EGW_APP_IMAGES_DIR', $this->common->get_image_dir());
+			// and the old ones
+			define('PHPGW_TEMPLATE_DIR',EGW_TEMPLATE_DIR);
+			define('PHPGW_IMAGES_DIR',EGW_IMAGES_DIR);
+			define('PHPGW_IMAGES_FILEDIR',EGW_IMAGES_FILEDIR);
+			define('PHPGW_APP_ROOT',EGW_APP_ROOT);
+			define('PHPGW_APP_INC',EGW_APP_INC);
+			define('PHPGW_APP_TPL',EGW_APP_TPL);
+			define('PHPGW_IMAGES',EGW_IMAGES);
+			define('PHPGW_APP_IMAGES_DIR',EGW_APP_IMAGES_DIR);
+		}
 	}
 
 	/**
@@ -593,7 +596,7 @@ class Egw extends Egw\Base
 			if (!$GLOBALS['egw_info']['server']['asyncservice'])	// is default
 			{
 				$async = new Asyncservice();
-				$async->fallback();
+				$async->check_run('fallback');
 			}
 			$this->db->disconnect();
 		}

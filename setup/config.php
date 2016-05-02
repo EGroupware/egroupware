@@ -55,13 +55,12 @@ $setup_info = $GLOBALS['egw_setup']->detection->get_db_versions();
 
 $newsettings = $_POST['newsettings'];
 
-if(@get_var('submit',Array('POST')) && @$newsettings)
+if(@$_POST['submit'] && @$newsettings)
 {
 	/* Load hook file with functions to validate each config (one/none/all) */
 	$GLOBALS['egw_setup']->hook('config_validate','setup');
 
 	$newsettings['tz_offset'] = date('Z')/3600;
-	print_debug('TZ_OFFSET',$newsettings['tz_offset']);
 
 	$GLOBALS['egw_setup']->db->transaction_begin();
 	foreach($newsettings as $setting => $value)

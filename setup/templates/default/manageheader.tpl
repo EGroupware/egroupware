@@ -60,14 +60,6 @@ function setDefaultDBPort(selectBox,portField)
 				<td>{lang_persistdescr}</td>
 			</tr>
 			<tr class="row_off">
-				<td><strong>{lang_session}</strong><br />
-					<select name="setting[session_handler]">
-						{session_options}
-					</select>
-				</td>
-				<td>{lang_session_descr}</td>
-			</tr>
-			<tr class="row_on">
 				<td><strong>{lang_enablemcrypt}</strong><br />
 					<select name="setting[mcrypt_enabled]">
 						<option value="True"{mcrypt_enabled_yes}>{lang_Yes}</option>
@@ -76,11 +68,11 @@ function setDefaultDBPort(selectBox,portField)
 				</td>
 				<td>{lang_mcrypt_warning}</td>
 			</tr>
-			<tr class="row_off">
+			<tr class="row_on">
 				<td><strong>{lang_mcryptiv}</strong><br /><input type="text" name="setting[mcrypt_iv]" value="{mcrypt_iv}" size="35" /></td>
 				<td>{lang_mcryptivdescr}</td>
 			</tr>
-			<tr class="row_on">
+			<tr class="row_off">
 				<td><strong>{lang_domselect}</strong><br />
 					<select name="setting[show_domain_selectbox]">
 						<option value="True"{show_domain_selectbox_yes}>{lang_Yes}</option>

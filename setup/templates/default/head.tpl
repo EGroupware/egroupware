@@ -10,23 +10,16 @@
 		<meta name="language" content="{lang_code}" />
 		<meta name="author" content="egroupware http://www.egroupware.org" />
 		<meta name="robots" content="none" />
-		<link rel="icon" href="../phpgwapi/templates/default/images/favicon.ico" type="image/x-ico" />
-		<link rel="shortcut icon" href="../phpgwapi/templates/default/images/favicon.ico" />
-		<link href="../phpgwapi/templates/idots/css/traditional.css" type="text/css" rel="stylesheet" />
-		<link href="../phpgwapi/templates/idots/css/idots.css" type="text/css" rel="stylesheet" />
+		<link rel="icon" href="../api/templates/default/images/favicon.ico" type="image/x-ico" />
+		<link rel="shortcut icon" href="../api/templates/default/images/favicon.ico" />
+		<link href="../api/templates/default/default.css" type="text/css" rel="stylesheet" />
+		<link href="../api/templates/default/idots.css" type="text/css" rel="stylesheet" />
 
 		<!--{java_script}-->
-
-		<!-- this solves the internet explorer png-transparency bug, but only for ie 5.5 and 6.0 -->
-		<!--[if lt IE 7.0]>
-		<script src="../phpgwapi/templates/idots/js/pngfix.js" type=text/javascript>
-		</script>
-		<![endif]-->
-
 	</head>
 	<body>
 
-<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../phpgwapi/templates/default/images/logo.png" border="0" alt="egroupware" /></a></div>
+<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../api/templates/default/images/logo.png" border="0" alt="egroupware" /></a></div>
 
 <div id="divMain">
 	<div id="divAppIconBar">
@@ -36,7 +29,7 @@
 				<td>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
-							<td width="100%"><img src="../phpgwapi/templates/idots/images/spacer.gif" width="1" height="68" alt="spacer" /></td>
+							<td width="100%"><img src="templates/default/images/spacer.gif" width="1" height="68" alt="spacer" /></td>
 						</tr>
 						<tr>
 							<td width="100%">&nbsp;</td>
@@ -62,11 +55,11 @@
 							<table width="100%" cellspacing="0" cellpadding="0">
 
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../index.php">{user_login}</a></td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../index.php">{user_login}</a></td>
 								</tr>
 <!-- BEGIN loged_in -->
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{check_install}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{check_install}</td>
 								</tr>
 
 								<tr class="divSideboxEntry">
@@ -74,17 +67,17 @@
 								</tr>
 
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{register_hooks}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{register_hooks}</td>
 								</tr>
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{logoutbutton}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{logoutbutton}</td>
 								</tr>
 <!-- END loged_in -->
 								<tr class="divSideboxEntry">
 									<td colspan="2" class="textSidebox">&nbsp;</td>
 								</tr>
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{manual}</td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../api/templates/default/images/bullet.png" alt="ball" /></td><td class="textSidebox">{manual}</td>
 								</tr>
 							</table>
 						</div>

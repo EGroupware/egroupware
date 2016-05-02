@@ -18,7 +18,9 @@ namespace EGroupware\Api\Egw;
 use EGroupware\Api;
 
 // explicitly list old, non-namespaced classes
-use common;	// get_tpl_dir
+// they are only used, if phpgwapi is installed
+use accounts as egw_accounts;
+use egw_session;
 
 /**
  * Egw\Base object used in setup, does not instanciate anything by default
@@ -53,6 +55,8 @@ class Base
 	 */
 	var $ADOdb;
 
+	var $system_charset = 'utf-8';
+
 	/**
 	 * Classes which get instanciated in a different name
 	 *
@@ -62,12 +66,11 @@ class Base
 		'log' => 'errorlog',
 		'link' => 'bolink',		// depricated use static egw_link methods
 		'datetime' => 'egw_datetime',
-		'template' => 'Template',
-		'session' => 'egw_session',	// otherwise $GLOBALS['egw']->session->appsession() fails
 		// classes moved to new api dir
+		'template' => true,
+		'applications' => 'EGroupware\\Api\\Egw\\Applications',
 		'framework' => true,	// special handling in __get()
 		'ldap' => true,
-		'auth' => 'EGroupware\\Api\\Auth',
 	);
 
 	/**
@@ -99,7 +102,7 @@ class Base
 			return $this->$name;
 		}
 
-		if (!isset(self::$sub_objects[$name]) && !class_exists($name))
+		if (!isset(self::$sub_objects[$name]) && !class_exists('EGroupware\\Api\\'.ucfirst($name)) && !class_exists($name))
 		{
 			if ($name != 'ADOdb') error_log(__METHOD__.": There's NO $name object! ".function_backtrace());
 			return null;
@@ -117,7 +120,8 @@ class Base
 			case 'ldap':
 				return $this->ldap = Api\Ldap::factory(false);
 			default:
-				$class = isset(self::$sub_objects[$name]) ? self::$sub_objects[$name] : $name;
+				$class = isset(self::$sub_objects[$name]) ? self::$sub_objects[$name] : 'EGroupware\\Api\\'.ucfirst($name);
+				if (!class_exists($class)) $class = $name;
 				break;
 		}
 		return $this->$name = new $class();

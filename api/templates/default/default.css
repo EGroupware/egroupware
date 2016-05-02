@@ -108,7 +108,7 @@ a:hover,a:active
 
 body
 {
-	background-image:url(../images/body-background.png);
+	background-image:url(images/body-background.png);
 }
 
 form
@@ -191,7 +191,7 @@ input[type=image]
 
 #sideresize
 {
-	background-image:url(../images/resize.png);
+	background-image:url(images/resize.png);
 	width:13px;
 	height:13px;
 	right:1px;
@@ -306,7 +306,7 @@ body {
 #topmenu
 {
 	background-color: #0081c1;
-	background-image: url(../images/bgtopmenu2.png);
+	background-image: url(images/bgtopmenu2.png);
 	color:#006699;
 	/*border-top: solid 1px #7e7e7e;*/
 	border-bottom: solid #5793ff 1px;
@@ -373,7 +373,7 @@ body {
 {
 	background-color:silver;
 	border:solid 1px #9c9c9c;
-	background-image: url(../images/background-icon-bar.png);
+	background-image: url(images/background-icon-bar.png);
 	background-repeat: repeat-x;
 	overflow:visible;
 	height: 45px; /* prevents text line to show in IE7+8(Compatibilitymode) */
@@ -412,7 +412,7 @@ body {
 
 #divAppboxHeader
 {
-	background-image:url(../images/appbox-header-background.png);
+	background-image:url(images/appbox-header-background.png);
 	background-repeat: repeat-x;
 	height: 25px;
 	border-bottom:solid 1px #c0c0c0;
@@ -515,7 +515,7 @@ Preferences tabs
 }
 
 #egwpopup_header {
-	background-image: url(../images/gradient22.png);
+	background-image: url(images/gradient22.png);
 	height: 18px;
 	line-height: 18px;
 	margin: 0;
@@ -834,7 +834,7 @@ tr.draggedOver td {
 }
 td.lettersearch {
 	border-color: #E0E0E0;
-	background-image: url(../images/gradient22.png);
+	background-image: url(images/gradient22.png);
 }
 
 .nextmatch_header tr {
@@ -900,11 +900,11 @@ td.lettersearch {
 }
 
 .egwGridView_outer span.sort.asc {
-	background-image: url(../images/up.png);
+	background-image: url(images/up.png);
 }
 
 .egwGridView_outer span.sort.desc {
-	background-image: url(../images/down.png);
+	background-image: url(images/down.png);
 }
 
 .egwGridView_grid input[type=checkbox],

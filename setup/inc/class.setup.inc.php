@@ -99,7 +99,7 @@ class setup
 	{
 		if(!isset($this->ConfigDomain) || empty($this->ConfigDomain))
 		{
-			$this->ConfigDomain = get_var('ConfigDomain',array('COOKIE','POST'),$_POST['FormDomain']);
+			$this->ConfigDomain = isset($_REQUEST['ConfigDomain']) ? $_REQUEST['ConfigDomain'] : $_POST['FormDomain'];
 		}
 		$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_type'];
 
@@ -668,9 +668,10 @@ class setup
 			return false;	// app not found or no hook
 		}
 		$GLOBALS['settings'] = array();
+		$hook_data = array('location' => 'settings','setup' => true);
 		if (isset($setup_info['hooks']['settings']))
 		{
-			$settings = ExecMethod($setup_info['hooks']['settings'],array('location' => 'settings','setup' => true));
+			$settings = ExecMethod($setup_info['hooks']['settings'],$hook_data);
 		}
 		elseif(in_array('settings',$setup_info['hooks']) && file_exists($file = EGW_INCLUDE_ROOT.'/'.$appname.'/inc/hook_settings.inc.php'))
 		{
@@ -685,7 +686,9 @@ class setup
 			return false;
 		}
 		// include idots template prefs for (common) preferences
-		if ($appname == 'preferences' && file_exists($file = EGW_INCLUDE_ROOT.'/phpgwapi/templates/idots/hook_settings.inc.php'))
+		if ($appname == 'preferences' && (file_exists($file = EGW_INCLUDE_ROOT.'/pixelegg/hook_settings.inc.php') ||
+			file_exists($file = EGW_INCLUDE_ROOT.'/jdots/hook_settings.inc.php') ||
+			file_exists($file = EGW_INCLUDE_ROOT.'/phpgwapi/templates/idots/hook_settings.inc.php')))
 		{
 			$GLOBALS['settings'] = array();
 			include_once($file);
@@ -1073,10 +1076,24 @@ class setup
 		$this->accounts->search(array(
 			'type'   => 'accounts',
 			'start'  => 0,
-			'offset' => 2	// we only need to check 2 Api\Accounts, if we just check for not anonymous
+			'offset' => 2	// we only need to check 2 accounts, if we just check for not anonymous
 		));
 
-		return $this->accounts->total > 1;
+		if ($this->accounts->total != 1)
+		{
+			return $this->accounts->total > 1;
+		}
+
+		// one account, need to check it's not the anonymous one
+		$this->accounts->search(array(
+			'type'   => 'accounts',
+			'start'  => 0,
+			'offset' => 0,
+			'query_type' => 'lid',
+			'query'  => 'anonymous',
+		));
+
+		return !$this->accounts->total;
 	}
 
 	/**

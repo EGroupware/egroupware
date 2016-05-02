@@ -31,8 +31,8 @@ class setup_html
 		$GLOBALS['header_template']->set_block('header','domain','domain');
 		$var = Array();
 
-		$deletedomain = get_var('deletedomain',Array('POST'));
-		$domains = get_var('domains',Array('POST'));
+		$deletedomain = $_POST['deletedomain'];
+		$domains = $_POST['domains'];
 
 		foreach($domains as $k => $v)
 		{
@@ -41,7 +41,7 @@ class setup_html
 				continue;
 			}
 			$variableName = str_replace('.','_',$k);
-			$dom = get_var('setting_'.$variableName,Array('POST'));
+			$dom = $_POST['setting_'.$variableName];
 			$GLOBALS['header_template']->set_var('DB_DOMAIN',$v);
 			foreach($dom as $x => $y)
 			{
@@ -72,7 +72,7 @@ class setup_html
 
 		$GLOBALS['header_template']->set_var('domain','');
 
-		$setting = get_var('setting',Array('POST'));
+		$setting = $_POST['setting'];
 		while($setting && list($k,$v) = @each($setting))
 		{
 			if(strtoupper($k) == 'HEADER_ADMIN_PASSWORD')
@@ -101,14 +101,14 @@ class setup_html
 		/* hack to get tpl dir */
 		if (is_dir(EGW_SERVER_ROOT))
 		{
-			$srv_root = EGW_SERVER_ROOT . SEP . "$app_name" . SEP;
+			$srv_root = EGW_SERVER_ROOT . '/' . $app_name . '/';
 		}
 		else
 		{
 			$srv_root = '';
 		}
 
-		$tpl_typical = 'templates' . SEP . 'default';
+		$tpl_typical = 'templates/default';
 		$tpl_root = "$srv_root" ."$tpl_typical";
 		return $tpl_root;
 	}
@@ -154,7 +154,7 @@ class setup_html
 		if(basename($_SERVER['SCRIPT_FILENAME']) != 'index.php')
 		{
 			$index_btn = '<a href="index.php" class="link">' . lang('Setup Main Menu') . '</a>';
-			$index_img = '<img src="../phpgwapi/templates/default/images/bullet.png" />';
+			$index_img = '<img src="../api/templates/default/images/bullet.png" />';
 		}
 
 		$GLOBALS['setup_tpl']->set_var('lang_version',lang('version'));

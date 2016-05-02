@@ -106,22 +106,22 @@ $setup_info = $GLOBALS['egw_setup']->detection->check_depends(
 
 @ksort($setup_info);
 
-if(@get_var('cancel',Array('POST')))
+if(@$_POST['cancel'])
 {
 	Header("Location: index.php");
 	exit;
 }
 
-if(@get_var('submit',Array('POST')))
+if(@$_POST['submit'])
 {
 	$GLOBALS['egw_setup']->html->show_header(lang('Application Management'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 	$setup_tpl->set_var('description',lang('App install/remove/upgrade') . ':');
 	$setup_tpl->pparse('out','header');
 
-	$appname = get_var('appname',Array('POST'));
-	$remove  = get_var('remove',Array('POST'));
-	$install = get_var('install',Array('POST'));
-	$upgrade = get_var('upgrade',Array('POST'));
+	$appname = $_POST['appname'];
+	$remove  = $_POST['remove'];
+	$install = $_POST['install'];
+	$upgrade = $_POST['upgrade'];
 
 	$register_hooks = false;
 
@@ -235,14 +235,14 @@ else
 	$GLOBALS['egw_setup']->html->show_header(lang('Application Management'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 }
 
-if(@get_var('hooks', Array('GET')))
+if(@$_GET['hooks'])
 {
 	Api\Cache::flush(Api\Cache::INSTANCE);
 
 	echo lang('Cached cleared') . '<br />';
 }
-$detail = get_var('detail',Array('GET'));
-$resolve = get_var('resolve',Array('GET'));
+$detail = $_GET['detail'];
+$resolve = $_GET['resolve'];
 if(@$detail)
 {
 	@ksort($setup_info[$detail]);
@@ -300,13 +300,13 @@ if(@$detail)
 }
 elseif (@$resolve)
 {
-	$version  = get_var('version',Array('GET'));
-	$notables = get_var('notables',Array('GET'));
+	$version  = $_GET['version'];
+	$notables = $_GET['notables'];
 	$setup_tpl->set_var('description',lang('Problem resolution'). ':');
 	$setup_tpl->pparse('out','header');
 	$app_title = $setup_info[$resolve]['title'] ? $setup_info[$resolve]['title'] : $setup_info[$resolve]['name'];
 
-	if(get_var('post',Array('GET')))
+	if($_GET['post'])
 	{
 		echo '"' . $app_title . '" ' . lang('may be broken') . ' ';
 		echo lang('because an application it depends upon was upgraded');
@@ -315,7 +315,7 @@ elseif (@$resolve)
 		echo '<br />';
 		echo lang('However, the application may still work') . '.';
 	}
-	elseif(get_var('badinstall',Array('GET')))
+	elseif($_GET['badinstall'])
 	{
 		echo '"' . $app_title . '" ' . lang('is broken') . ' ';
 		echo lang('because of a failed upgrade or install') . '.';
@@ -324,7 +324,7 @@ elseif (@$resolve)
 		echo '<br />';
 		echo lang('You should either uninstall and then reinstall it, or attempt manual repairs') . '.';
 	}
-	elseif(get_var('deleted',Array('GET')))
+	elseif($_GET['deleted'])
 	{
 		echo '"' . $app_title . '" ' . lang('is broken') . ' ';
 		echo lang('because its sources are missing') . '!';

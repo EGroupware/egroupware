@@ -31,17 +31,17 @@ if(!$GLOBALS['egw_setup']->auth('Config'))
 $tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 $setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 
-$cancel   = get_var('cancel',Array('GET','POST'));
+$cancel   = $_REQUEST['cancel'];
 if($cancel)
 {
 	Header('Location: applications.php');
 	exit;
 }
-$apps     = get_var('apps',Array('GET','POST'));
-$download = get_var('download',Array('GET','POST'));
-$submit   = get_var('submit',Array('GET','POST'));
-$showall  = get_var('showall',Array('GET','POST'));
-$appname  = get_var('appname',Array('GET','POST'));
+$apps     = $_REQUEST['apps'];
+$download = $_REQUEST['download'];
+$submit   = $_REQUEST['submit'];
+$showall  = $_REQUEST['showall'];
+$appname  = $_REQUEST['appname'];
 if($download)
 {
 	$setup_tpl->set_file(array(
@@ -114,9 +114,9 @@ function _arr2str($arr)
 
 function printout($template)
 {
-	$download = get_var('download',array('POST','GET'));
-	$appname  = get_var('appname',array('POST','GET'));
-	$showall  = get_var('showall',array('POST','GET'));
+	$download = $_REQUEST['download'];
+	$appname  = $_REQUEST['appname'];
+	$showall  = $_REQUEST['showall'];
 	$apps     = $GLOBALS['apps'] ? $GLOBALS['apps'] : '';
 
 	if($download)
