@@ -32,7 +32,7 @@ class Bundle
 		'et21'=> '/api/js/etemplate/etemplate2.min.js',
 		'pixelegg' => '/pixelegg/js/fw_pixelegg.min.js',
 		'jdots' => '/jdots/js/fw_jdots.min.js',
-		'mobile' => '/jdots/js/fw_mobile.min.js',
+		'mobile' => '/pixelegg/js/fw_mobile.min.js',
 	);
 
 	/**
@@ -248,7 +248,7 @@ class Bundle
 		// generate template and app bundles, if installed
 		foreach(array(
 			'jdots' => '/jdots/js/fw_jdots.js',
-			'mobile' => '/jdots/js/fw_mobile.js',
+			'mobile' => '/pixelegg/js/fw_mobile.js',
 			'pixelegg' => '/pixelegg/js/fw_pixelegg.js',
 			'calendar' => '/calendar/js/app.js',
 			'mail' => '/mail/js/app.js',

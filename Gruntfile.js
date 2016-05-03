@@ -230,14 +230,14 @@ module.exports = function (grunt) {
 			},
 			mobile: {
 				files: {
-					"jdots\/js\/fw_mobile.min.js": [
+					"pixelegg\/js\/fw_mobile.min.js": [
 						"api\/js\/jquery\/fastclick\/lib\/fastclick.js",
 						"api\/js\/framework\/fw_base.js",
 						"api\/js\/framework\/fw_browser.js",
 						"api\/js\/jquery\/mousewheel\/mousewheel.js",
 						"api\/js\/framework\/fw_ui.js",
 						"api\/js\/framework\/fw_classes.js",
-						"jdots\/js\/fw_mobile.js"
+						"pixelegg\/js\/fw_mobile.js"
 					]
 				}
 			},
