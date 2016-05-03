@@ -342,12 +342,6 @@ Hide subsequent headers in week view with non-consolidated owners
 	border-top: 1px solid silver;
 	background-image: none;
 }
-.calendar_calTimeRowTime[data-minute='30'] {
-	background-image: linear-gradient(to right, rgba(192, 192, 192, 0.75) 2px, transparent 0%);
-    background-position: top;
-    background-size: 6px 1px;
-    background-repeat: repeat-x;
-}
 /* contains (multiple) dayCol's
  */
 .calendar_calDayCols,.calendar_calDayCols12h,.calendar_calDayColsNoGrid{

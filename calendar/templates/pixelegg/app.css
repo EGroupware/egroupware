@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 55869 2016-04-26 22:58:35Z nathangray $ */
+/* $Id: app.css 55928 2016-04-29 08:40:55Z hnategh $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -341,12 +341,6 @@ Hide subsequent headers in week view with non-consolidated owners
 .calendar_calTimeRowTime[data-minute='0'] {
   border-top: 1px solid silver;
   background-image: none;
-}
-.calendar_calTimeRowTime[data-minute='30'] {
-  background-image: linear-gradient(to right, rgba(192, 192, 192, 0.75) 2px, transparent 0%);
-  background-position: top;
-  background-size: 6px 1px;
-  background-repeat: repeat-x;
 }
 /* contains (multiple) dayCol's
  */
@@ -2627,3 +2621,5 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar_merge {
   margin: 9px 0 0 0;
 }
+/* ########################################################################################
+/* * Calendar END */
