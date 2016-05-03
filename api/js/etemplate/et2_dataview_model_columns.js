@@ -326,6 +326,7 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 		// Calculate how many space is - relatively - not occupied with columns with
 		// relative or fixed width
 		var totalRelative = 0;
+		var fixedCount = 0;
 		this.totalFixed = 0;
 
 		for (var i = 0; i < this.columns.length; i++)
@@ -351,6 +352,7 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 				else if (col.fixedWidth)
 				{
 					this.totalFixed += col.fixedWidth;
+					fixedCount++;
 				}
 			}
 		}
@@ -405,7 +407,8 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 			{
 				if(this.columns[columnIndex].visibility === ET2_COL_VISIBILITY_INVISIBLE ||
 					this.columns[columnIndex].visibility === ET2_COL_VISIBILITY_DISABLED ||
-					this.columnWidths[columnIndex] <= 0)
+					this.columnWidths[columnIndex] <= 0 ||
+					this.columnWidths[columnIndex] <= this.columns[columnIndex].minWidth)
 				{
 					continue;
 				}
@@ -423,12 +426,14 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 			}
 			if(!column)
 			{
-				// No relative width columns, distribute proportionatly over all
+				// Distribute shortage over all fixed width columns
 				for(var i = 0; i < this.columns.length; i++)
 				{
 					var col = this.columns[i];
-					col.fixedWidth -= Math.round(this.columnWidths[i] / tw * remaining_width);
-					this.columnWidths[i] = Math.max(0, Math.min(col.fixedWidth,tw));
+					if(!col.fixedWidth) continue;
+					var diff = Math.round(remaining_width / fixedCount);
+					var new_width = this.columnWidths[i] - diff;
+					this.columnWidths[i] = Math.max(0, Math.min(new_width,tw));
 				}
 			}
 			else
