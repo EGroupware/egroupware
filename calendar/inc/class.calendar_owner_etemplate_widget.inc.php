@@ -133,6 +133,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			return $label;
 		}
 
+		$bo = new calendar_bo();
 		$query = $_REQUEST['query'];
 		// Arbitrarily limited to 50 / resource
 		$options = array('start' => 0, 'num_rows' => 50) +
