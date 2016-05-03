@@ -6,7 +6,7 @@
 		<grid width="100%">
 			<columns>
 				<column width="20"/>
-				<column width="40%"/>
+				<column width="40%" minWidth="300"/>
 				<column width="70"/>
 				<column width="100"/>
 				<column width="60"/>
@@ -17,7 +17,7 @@
 				<column width="180"/>
 				<column width="40"/>
 				<column width="80" disabled="@no_customfields"/>
-				<column width="60%"/>
+				<column width="60%" minWidth="100"/>
 				<column width="80" disabled="@no_distribution_list"/>
 				<column width="80"/>
 				<column width="50"/>
