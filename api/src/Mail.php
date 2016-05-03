@@ -6696,8 +6696,9 @@ class Mail
 						// Parse destinations for placeholders
 						foreach(Mailer::$type2header as $type => $h)
 						{
-							//error_log($type . ': ' . $mailObject->getHeader(Mailer::$type2header[$type]) . ' -> ' .$bo_merge->merge_string($mailObject->getHeader(Mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset));
-							$mailObject->addAddress($bo_merge->merge_string($mailObject->getHeader(Mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset),'',$type);
+							$merged = $bo_merge->merge_string($mailObject->getHeader(Mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset);
+							//error_log($type . ': ' . $mailObject->getHeader(Mailer::$type2header[$type]) . ' -> ' .$merged);
+							$mailObject->addAddress(trim($merged,'"'),'',$type);
 						}
 
 						// No addresses from placeholders?  Treat it as just a contact ID
