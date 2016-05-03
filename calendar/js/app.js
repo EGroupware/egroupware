@@ -2201,18 +2201,20 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			{
 				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile())
 				{
+					if($j(view.etemplates[0].DOMContainer).is(':visible'))
+					{
+						view.etemplates[0].widgetContainer.iterateOver(function(w) {
+							w.set_width($j(view.etemplates[0].DOMContainer).width() * 0.69);
+						},this,et2_calendar_timegrid);
 
-					view.etemplates[0].widgetContainer.iterateOver(function(w) {
-						w.set_width($j(view.etemplates[0].DOMContainer).width() * 0.69);
-					},this,et2_calendar_timegrid);
-
-					$j(view.etemplates[1].DOMContainer).css({"left":"69%", "height":($j(framework.tabsUi.activeTab.contentDiv).height()-30)+'px'});
-					// TODO: Maybe some caching here
-					this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
-						this.getWidgetById('label').set_value(data.label||'');
-						this.getWidgetById('todos').set_value({content:data.todos||''});
-					},view.etemplates[1].widgetContainer);
-					view.etemplates[0].resize();
+						$j(view.etemplates[1].DOMContainer).css({"left":"69%", "height":($j(framework.tabsUi.activeTab.contentDiv).height()-30)+'px'});
+						// TODO: Maybe some caching here
+						this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
+							this.getWidgetById('label').set_value(data.label||'');
+							this.getWidgetById('todos').set_value({content:data.todos||''});
+						},view.etemplates[1].widgetContainer);
+						view.etemplates[0].resize();
+					}
 				}
 				else
 				{
