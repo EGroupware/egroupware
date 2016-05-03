@@ -3142,7 +3142,7 @@ class mail_compose
 		}
 		if (is_array($this->sessionData['cc'])) $mailaddresses['cc'] = $this->sessionData['cc'];
 		if (is_array($this->sessionData['bcc'])) $mailaddresses['bcc'] = $this->sessionData['bcc'];
-		if (!empty($mailaddresses)) $mailaddresses['from'] = $GLOBALS['egw']->translation->decodeMailHeader($fromAddress);
+		if (!empty($mailaddresses)) $mailaddresses['from'] = Mail\Html::decodeMailHeader($fromAddress);
 
 		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on' )
 		{
