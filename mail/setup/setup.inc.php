@@ -6,14 +6,14 @@
  * @package mail
  * @subpackage setup
  * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013-14 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2013-16 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
 $setup_info['mail']['name']      	= 'mail';
 $setup_info['mail']['title']     	= 'mail';
-$setup_info['mail']['version']     	= '14.1';
+$setup_info['mail']['version']     	= '16.1';
 $setup_info['mail']['app_order'] 	= 2;
 $setup_info['mail']['enable']    	= 1;
 $setup_info['mail']['index']    	= 'mail.mail_ui.index&ajax=true';
@@ -39,10 +39,6 @@ $setup_info['mail']['hooks']['check_notify'] = 'mail_hooks::notification_check_m
 $setup_info['mail']['hooks']['emailadmin_edit'] = 'mail_hooks::emailadmin_edit';
 
 /* Dependencies for this app to work */
-$setup_info['mail']['depends'][] = array(
-	'appname'  => 'phpgwapi',
-	'versions' => Array('14.1')
-);
 $setup_info['mail']['depends'][] = array(
 	'appname'  => 'api',
 	'versions' => Array('16.1')

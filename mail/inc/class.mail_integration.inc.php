@@ -10,6 +10,9 @@
  * @version $Id:$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+
 /**
  * Class cotains methods and functions
  * to be used to integrate mail's message into other applications
@@ -60,7 +63,7 @@ class mail_integration {
 	 * @param string $_date
 	 * @param string $_rawMail path to file with raw mail
 	 * @param int $_icServerID mail profile id
-	 * @throws egw_exception_assertion_failed
+	 * @throws Api\Exception\AssertionFailed
 	 */
 	public static function integrate ($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null,$_icServerID=null)
 	{
@@ -74,7 +77,7 @@ class mail_integration {
 		if (!$_date)
 		{
 			$time = time();
-			$_date = egw_time::server2user($time->now,'ts');
+			$_date = Api\DateTime::server2user($time->now,'ts');
 		}
 
 		// For dealing with multiple files of the same name
@@ -91,10 +94,10 @@ class mail_integration {
 			if (!($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions']==='text_only')&&is_array($_attachments))
 			{
 				// initialize mail open connection requirements
-				if (!isset($_icServerID)) $_icServerID =& egw_cache::getSession($sessionLocation,'activeProfileID');
+				if (!isset($_icServerID)) $_icServerID =& Api\Cache::getSession($sessionLocation,'activeProfileID');
 				$mo = mail_bo::getInstance(true,$_icServerID);
 				$mo->openConnection();
-				$messageUID = $messagePartId = $messageFolder = null;
+				$messagePartId = $messageFolder = null;
 				foreach ($_attachments as $attachment)
 				{
 					//error_log(__METHOD__.__LINE__.array2string($attachment));
@@ -165,7 +168,7 @@ class mail_integration {
 					{
 						$mo->deleteMessages(array($messageUid),$messageFolder);
 					}
-					catch (egw_exception $e)
+					catch (Api\Exception $e)
 					{
 						//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
 						unset($e);
@@ -222,14 +225,14 @@ class mail_integration {
 			$hA = mail_ui::splitRowID($_GET['rowid']);
 			$sessionLocation = $hA['app']; // THIS is part of the row ID, we may use this for validation
 			// Check the mail app
-			if ($sessionLocation != 'mail') throw new egw_exception_assertion_failed(lang('Application mail expected but got: %1',$sessionLocation));
+			if ($sessionLocation != 'mail') throw new Api\Exception\AssertionFailed(lang('Application mail expected but got: %1',$sessionLocation));
 			$uid = $hA['msgUID'];
 			$mailbox = $hA['folder'];
 			$icServerID = $hA['profileID'];
 
 			if ($uid && $mailbox)
 			{
-				if (!isset($icServerID)) $icServerID =& egw_cache::getSession($sessionLocation,'activeProfileID');
+				if (!isset($icServerID)) $icServerID =& Api\Cache::getSession($sessionLocation,'activeProfileID');
 				$mo	= mail_bo::getInstance(true,$icServerID);
 				$mo->openConnection();
 				$mo->reopen($mailbox);
@@ -292,7 +295,7 @@ class mail_integration {
 				);
 				if ($uid && !$mailcontent['attachments'][$key]['add_raw'])
 				{
-					$data_attachments[$key]['egw_data'] = egw_link::set_data($mailcontent['attachments'][$key]['mimeType'],
+					$data_attachments[$key]['egw_data'] = Link::set_data($mailcontent['attachments'][$key]['mimeType'],
 						'EGroupware\\Api\\Mail::getAttachmentAccount',array($icServerID, $mailbox, $uid, $attachment['partID'], $is_winmail, true),true);
 				}
 				unset($mailcontent['attachments'][$key]['add_raw']);
@@ -300,21 +303,18 @@ class mail_integration {
 		}
 
 		// Check if the hook is registered
-		if ($GLOBALS['egw']->hooks->hook_exists('mail_import',$app) == 0)
+		if (Api\Hooks::exists('mail_import',$app) == 0)
 		{
 			// Try to register hook
-			if(!$GLOBALS['egw']->hooks->register_single_app_hook($app,'mail_import'))
-			{
-				throw new egw_exception_assertion_failed('Hook import_mail registration faild for '.$app.' app! Please, contact your system admin in order to clear cache and register hooks.');
-			}
+			Api\Hooks::read(true);
 		}
 
 		// Get the registered hook method of requested app for integration
-		$hook = $GLOBALS['egw']->hooks->single(array('location' => 'mail_import'),$app);
+		$hook = Api\Hooks::single(array('location' => 'mail_import'),$app);
 
-		// Load translation for the app since the original URL
-		// is from mail integration and only loads mail translation
-		translation::add_app($app);
+		// Load Api\Translation for the app since the original URL
+		// is from mail integration and only loads mail Api\Translation
+		Api\Translation::add_app($app);
 
 		// Execute import mail with provided content
 		ExecMethod($hook['menuaction'],array (

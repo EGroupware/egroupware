@@ -11,6 +11,8 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
 use EGroupware\Api\Mail;
 
 class mail_sieve
@@ -91,8 +93,8 @@ class mail_sieve
 		{
 			Api\Cache::setSession(__CLASS__, 'acc_id', $this->account->acc_id);
 		}
-		//Instantiate an Api\Etemplate object
-		$tmpl = new Api\Etemplate('mail.sieve.index');
+		//Instantiate an eTemplate object
+		$tmpl = new Etemplate('mail.sieve.index');
 
 		if ($msg)
 		{
@@ -131,8 +133,8 @@ class mail_sieve
 	 */
 	function editEmailNotification($content=null, $msg='')
 	{
-		//Instantiate an Api\Etemplate object, representing sieve.emailNotification
-		$eNotitmpl = new Api\Etemplate('mail.sieve.emailNotification');
+		//Instantiate an eTemplate object, representing sieve.emailNotification
+		$eNotitmpl = new Etemplate('mail.sieve.emailNotification');
 
 		if ($this->account->acc_sieve_enabled)
 		{
@@ -186,14 +188,14 @@ class mail_sieve
 							$msg .= lang('email notification update failed! You need to set an email address!');
 							break;
 						}
-						egw_framework::refresh_opener($msg, 'mail');
+						Framework::refresh_opener($msg, 'mail');
 						if ($button === 'apply')
 						{
 							break;
 						}
 
 					case 'cancel':
-						egw_framework::window_close();
+						Framework::window_close();
 						exit;
 				}
 				$this->saveSessionData();
@@ -226,8 +228,8 @@ class mail_sieve
 	 */
 	function edit ($content=null)
 	{
-		//Instantiate an Api\Etemplate object, representing sieve.edit template
-		$etmpl = new Api\Etemplate('mail.sieve.edit');
+		//Instantiate an eTemplate object, representing sieve.edit template
+		$etmpl = new Etemplate('mail.sieve.edit');
 		$etmpl->setElementAttribute('action_folder_text','autocomplete_params', array('noPrefixId'=> true));
 		if (!is_array($content))
 		{
@@ -333,7 +335,7 @@ class mail_sieve
 						$msg .= "\n".lang("Error: Could not save rule").' '.lang("No action defined!");
 						$error++;
 					}
-					egw_framework::refresh_opener($msg, 'mail', 'sieve');
+					Framework::refresh_opener($msg, 'mail', 'sieve');
 					if ($button == "apply")
 					{
 						break;
@@ -356,10 +358,10 @@ class mail_sieve
 						$this->rules = array_values($this->rules);
 						$this->updateScript();
 					}
-					egw_framework::refresh_opener($msg, 'mail', 'sieve');
+					Framework::refresh_opener($msg, 'mail', 'sieve');
 
 				case 'cancel':
-					egw_framework::window_close();
+					Framework::window_close();
 					exit;
 			}
 		}
@@ -397,7 +399,7 @@ class mail_sieve
 	{
 		if(!(empty($this->mailConfig['prefpreventnotificationformailviaemail']) || $this->mailConfig['prefpreventnotificationformailviaemail'] == 0))
 		{
-			throw new egw_exception_no_permission();
+			throw new Api\Exception\NoPermission();
 		}
 
 		try {
@@ -421,7 +423,7 @@ class mail_sieve
 	{
 		if(!(empty($this->mailConfig['prefpreventabsentnotice']) || $this->mailConfig['prefpreventabsentnotice'] == 0))
 		{
-			throw new egw_exception_no_permission();
+			throw new Api\Exception\NoPermission();
 		}
 		try {
 			if ($this->is_admin_vac)
@@ -438,11 +440,11 @@ class mail_sieve
 		}
 		catch(Exception $e)
 		{
-			egw_framework::window_close(lang($e->getMessage()));
+			Framework::window_close(lang($e->getMessage()));
 		}
 		if (is_null($accountID)) $accountID = $GLOBALS['egw_info']['user']['account_id'];
 
-		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(accounts::id2name($accountID));
+		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(Api\Accounts::id2name($accountID));
 		$allAliases = array($this->account->ident_email);
 		foreach ($accAllIdentities as &$arrVal)
 		{
@@ -466,8 +468,8 @@ class mail_sieve
 	 */
 	function editVacation($content=null, $msg='')
 	{
-		//Instantiate an Api\Etemplate object, representing the sieve.vacation template
-		$vtmpl = new Api\Etemplate('mail.sieve.vacation');
+		//Instantiate an eTemplate object, representing the sieve.vacation template
+		$vtmpl = new Etemplate('mail.sieve.vacation');
 		$vacation = array();
 
 		if (isset($_GET['account_id'])) $account_id = $preserv['account_id'] = $_GET['account_id'];
@@ -557,7 +559,7 @@ class mail_sieve
 					if (strlen(trim($content['text']))==0)
 					{
 						$content['msg'] = $msg = lang('error').': '.lang('No vacation notice text provided. Please enter a message.');
-						egw_framework::refresh_opener($msg, 'mail');
+						Framework::refresh_opener($msg, 'mail');
 					}
 					//Set default value for days new entry
 					if (empty($content['days']))
@@ -639,7 +641,7 @@ class mail_sieve
 										//Reset vacationNotice cache which is used in mail_ui get_rows
 										if (isset($account_id) && $this->mail_admin)
 										{
-											$account_lid = accounts::id2name($account_id,'account_lid');
+											$account_lid = Api\Accounts::id2name($account_id,'account_lid');
 											$cachedVacations = array($icServer->acc_id => $newVacation) + (array)Api\Cache::getCache(Api\Cache::INSTANCE, 'email', 'vacationNotice'.$account_lid);
 											//error_log(__METHOD__.__LINE__.' Setting Cache for '.$account_lid.':'.array2string($cachedVacations));
 											Api\Cache::setCache(Api\Cache::INSTANCE,'email', 'vacationNotice'.$account_lid, $cachedVacations);
@@ -658,9 +660,9 @@ class mail_sieve
 									$msg .= implode("\n",$this->errorStack);
 								}
 								// refresh vacationNotice on index
-								$response = egw_json_response::get();
+								$response = Api\Json\Response::get();
 								$response->call('app.mail.mail_callRefreshVacationNotice',$icServer->ImapServerId);
-								egw_framework::refresh_opener($msg, 'mail');
+								Framework::refresh_opener($msg, 'mail');
 								if ($button === 'apply' || $icServer->error !=="")
 								{
 									break;
@@ -668,7 +670,7 @@ class mail_sieve
 							}
 
 						case 'cancel':
-							egw_framework::window_close();
+							Framework::window_close();
 					}
 				}
 
@@ -739,10 +741,10 @@ class mail_sieve
 	{
 		if (!($_vacation['acc_id'] > 0))
 		{
-			throw new egw_exception_wrong_parameter('No acc_id given!');
+			throw new Api\Exception\WrongParameter('No acc_id given!');
 		}
 		// setting up an async job to enable/disable the vacation message
-		$async = new asyncservice();
+		$async = new Api\AsyncService();
 		if (empty($_vacation['account_id'])) $_vacation['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
 		$async_id = !empty($_vacation['id']) ? $_vacation['id'] : 'mail-vacation-'.$_vacation['account_id'];
 		$async->delete($async_id);
@@ -771,7 +773,7 @@ class mail_sieve
 	 * Callback for the async job to enable/disable the vacation message
 	 *
 	 * @param array $_vacation
-	 * @throws egw_exception_not_found if mail account is not found
+	 * @throws Api\Exception\NotFound if mail account is not found
 	 */
 	static function async_vacation(array $_vacation)
 	{
@@ -788,7 +790,7 @@ class mail_sieve
 			self::setAsyncJob($_vacation);
 		}
 		// if mail account no longer exists --> remove async job
-		catch (egw_exception_not_found $e)
+		catch (Api\Exception\NotFound $e)
 		{
 			$_vacation['status'] = 'off';
 			self::setAsyncJob($_vacation);
@@ -899,7 +901,7 @@ class mail_sieve
 		$this->saveSessionData();
 
 		//Calling to referesh after move action
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->call('app.mail.sieve_refresh');
 	}
 
@@ -945,7 +947,7 @@ class mail_sieve
 		ob_start();
 		$result = $this->updateScript();
 
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 
 		if($result)
 		{

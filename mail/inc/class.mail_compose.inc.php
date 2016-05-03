@@ -11,6 +11,11 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
 use EGroupware\Api\Vfs;
 use EGroupware\Api\Mail;
 
@@ -65,7 +70,7 @@ class mail_compose
 
 	function __construct()
 	{
-		$this->displayCharset   = translation::charset();
+		$this->displayCharset   = Api\Translation::charset();
 
 		$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		$this->mail_bo	= Mail::getInstance(true,$profileID);
@@ -232,7 +237,7 @@ class mail_compose
 		{
 			$actions['prty']['children'][$content['priority']]['default'] = true;
 		}
-		if (html::$ua_mobile)
+		if (Api\Header\UserAgent::mobile())
 		{
 			foreach (array_keys($actions) as $key)
 			{
@@ -256,7 +261,7 @@ class mail_compose
 	 */
 	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
-		if ($msg) egw_framework::message($msg);
+		if ($msg) Framework::message($msg);
 
 		if (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['LastSignatureIDUsed']))
 		{
@@ -350,16 +355,16 @@ class mail_compose
 				{
 					$upload['file'] = $upload['tmp_name'] = Mail::checkFileBasics($upload,$this->composeID,false);
 				}
-				catch (egw_exception_wrong_userinput $e)
+				catch (Api\Exception\WrongUserinput $e)
 				{
-					egw_framework::message($e->getMessage(), 'error');
+					Framework::message($e->getMessage(), 'error');
 					unset($_content['uploadForCompose'][$i]);
 					continue;
 				}
 				if (is_dir($upload['file']) && (!$_content['filemode'] || $_content['filemode'] == Vfs\Sharing::ATTACH))
 				{
 					$_content['filemode'] = Vfs\Sharing::READONLY;
-					egw_framework::message(lang('Directories have to be shared.'), 'info');
+					Framework::message(lang('Directories have to be shared.'), 'info');
 				}
 			}
 		}
@@ -449,7 +454,7 @@ class mail_compose
 						$GLOBALS['egw']->preferences->save_repository(true);
 					}
 				}
-				catch (egw_exception_wrong_userinput $e)
+				catch (Api\Exception\WrongUserinput $e)
 				{
 					$sendOK = false;
 					$message = $e->getMessage();
@@ -494,7 +499,7 @@ class mail_compose
 					$rhA = mail_ui::splitRowID($_content['processedmail_id']);
 					$idsForRefresh[] = mail_ui::generateRowID($rhA['profileID'], $rhA['folder'], $rhA['msgUID'], $_prependApp=false);
 				}
-				$response = egw_json_response::get();
+				$response = Api\Json\Response::get();
 				if ($activeProfile != $composeProfile)
 				{
 					// we need a message only, when account ids (composeProfile vs. activeProfile) differ
@@ -518,12 +523,12 @@ class mail_compose
 					$response->call('opener.egw_message',lang('Message send successfully.'));
 				}
 				//egw_framework::refresh_opener(lang('Message send successfully.'),'mail');
-				egw_framework::window_close();
+				Framework::window_close();
 			}
 			if ($sendOK == false)
 			{
-				$response = egw_json_response::get();
-				egw_framework::message(lang('Message send failed: %1',$message),'error');// maybe error is more appropriate
+				$response = Api\Json\Response::get();
+				Framework::message(lang('Message send failed: %1',$message),'error');// maybe error is more appropriate
 				$response->call('app.mail.clearIntevals');
 			}
 		}
@@ -552,7 +557,7 @@ class mail_compose
 			$suppressSigOnTop = true;
 			if (stripos($content['mail_htmltext'],'<pre>')!==false)
 			{
-				$contentArr = translation::splithtmlByPRE($content['mail_htmltext']);
+				$contentArr = Api\Mail\Html::splithtmlByPRE($content['mail_htmltext']);
 				if (is_array($contentArr))
 				{
 					foreach ($contentArr as $k =>&$elem)
@@ -563,7 +568,7 @@ class mail_compose
 				}
 			}
 			$content['mail_htmltext'] = $this->_getCleanHTML($content['mail_htmltext']);
-			$content['mail_htmltext'] = translation::convertHTMLToText($content['mail_htmltext'],$charset=false,false,true);
+			$content['mail_htmltext'] = Api\Mail\Html::convertHTMLToText($content['mail_htmltext'],$charset=false,false,true);
 
 			$content['body'] = $content['mail_htmltext'];
 			unset($content['mail_htmltext']);
@@ -665,7 +670,7 @@ class mail_compose
 				{
 					$content['body'] = str_replace("\n",'\n',$content['body']);	// dont know why, but \n screws up preg_replace
 					$styles = Mail::getStyles(array(array('body'=>$content['body'])));
-					if (stripos($content['body'],'style')!==false) translation::replaceTagsCompletley($content['body'],'style',$endtag='',true); // clean out empty or pagewide style definitions / left over tags
+					if (stripos($content['body'],'style')!==false) Api\Mail\Html::replaceTagsCompletley($content['body'],'style',$endtag='',true); // clean out empty or pagewide style definitions / left over tags
 				}
 				$content['body'] = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($content['body'],Mail::$htmLawed_config,array(),true):$content['body']));
 				Mail::$htmLawed_config = $_htmlConfig;
@@ -747,7 +752,7 @@ class mail_compose
 				$mt = $_REQUEST['method'];
 				$id = $_REQUEST['id'];
 				// passed method MUST be registered
-				$method = egw_link::get_registry($app,$mt);
+				$method = Link::get_registry($app,$mt);
 				//error_log(__METHOD__.__LINE__.array2string($method));
 				if ($method)
 				{
@@ -905,13 +910,13 @@ class mail_compose
 							// special handling for attaching vCard of iCal --> use their link-title as name
 							if (substr($path,-7) != '/.entry' ||
 								!(list($app,$id) = array_slice(explode('/',$path),-3)) ||
-								!($name = egw_link::title($app, $id)))
+								!($name = Link::title($app, $id)))
 							{
 								$name = Vfs::decodePath(Vfs::basename($path));
 							}
 							else
 							{
-								$name .= '.'.mime_magic::mime2ext($type);
+								$name .= '.'.Api\MimeMagic::mime2ext($type);
 							}
 							// use type specified by caller, if Vfs reports only default, or contains specified type (eg. "text/vcard; charset=utf-8")
 							if (!empty($types[$k]) && ($type == 'application/octet-stream' || stripos($types[$k], $type) === 0))
@@ -928,14 +933,14 @@ class mail_compose
 							if ($formData['type'] == Vfs::DIR_MIME_TYPE && $content['filemode'] == Vfs\Sharing::ATTACH)
 							{
 								$content['filemode'] = Vfs\Sharing::READONLY;
-								egw_framework::message(lang('Directories have to be shared.'), 'info');
+								Framework::message(lang('Directories have to be shared.'), 'info');
 							}
 						}
 						elseif(is_readable($path))
 						{
 							$formData = array(
 								'name' => isset($names[$k]) ? $names[$k] : basename($path),
-								'type' => isset($types[$k]) ? $types[$k] : (function_exists('mime_content_type') ? mime_content_type($path) : mime_magic::filename2mime($path)),
+								'type' => isset($types[$k]) ? $types[$k] : (function_exists('mime_content_type') ? mime_content_type($path) : Api\MimeMagic::filename2mime($path)),
 								'file' => $path,
 								'size' => filesize($path),
 							);
@@ -991,8 +996,8 @@ class mail_compose
 						$content['to'] = $email;
 					}
 				}
-				if (strpos($content['to'],'%40')!== false) $content['to'] = html::purify(str_replace('%40','@',$content['to']));
-				$rarr = array(html::purify($rest));
+				if (strpos($content['to'],'%40')!== false) $content['to'] = Api\Html::purify(str_replace('%40','@',$content['to']));
+				$rarr = array(Api\Html::purify($rest));
 				if (isset($rest)&&!empty($rest) && strpos($rest,'&')!== false) $rarr = explode('&',$rest);
 				//error_log(__METHOD__.__LINE__.$content['to'].'->'.array2string($rarr));
 				$karr = array();
@@ -1011,7 +1016,7 @@ class mail_compose
 				{
 					if ($karr[$name]) $content[$name] = $karr[$name];
 				}
-				if (!empty($_REQUEST['subject'])) $content['subject'] = html::purify(trim(html_entity_decode($_REQUEST['subject'])));
+				if (!empty($_REQUEST['subject'])) $content['subject'] = Api\Html::purify(trim(html_entity_decode($_REQUEST['subject'])));
 			}
 		}
 		//error_log(__METHOD__.__LINE__.array2string($content));
@@ -1054,7 +1059,7 @@ class mail_compose
 			}
 		}
 
-		if ($content['mimeType'] == 'html' && html::htmlarea_availible()===false)
+		if ($content['mimeType'] == 'html' && Api\Html::htmlarea_availible()===false)
 		{
 			$_content['mimeType'] = $content['mimeType'] = 'plain';
 			$content['body'] = $this->convertHTMLToText($content['body']);
@@ -1152,7 +1157,7 @@ class mail_compose
 
 		// prepare body
 		// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
-		$content['body'] = translation::convert_jsonsafe($content['body'],'utf-8');
+		$content['body'] = Api\Translation::convert_jsonsafe($content['body'],'utf-8');
 		//error_log(__METHOD__.__LINE__.array2string($content));
 
 		// get identities of all accounts as "$acc_id:$ident_id" => $identity
@@ -1254,7 +1259,7 @@ class mail_compose
 		$sel_options['filemode'] = Vfs\Sharing::$modes;
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
-		$etpl = new Api\Etemplate('mail.compose');
+		$etpl = new Etemplate('mail.compose');
 
 		$etpl->setElementAttribute('composeToolbar', 'actions', $this->getToolbarActions($_content));
 		if ($content['mimeType']=='html')
@@ -1404,7 +1409,7 @@ class mail_compose
 			 * Use ajax_merge to merge & send multiple
 			 */
 			// Merge selected ID (in mailtocontactbyid or $mail_id) into given document
-			$merge_class = preg_match('/^([a-z_-]+_merge)$/', $_REQUEST['merge']) ? $_REQUEST['merge'] : 'addressbook_merge';
+			$merge_class = preg_match('/^([a-z_-]+_merge)$/', $_REQUEST['merge']) ? $_REQUEST['merge'] : 'EGroupware\\Api\\Contacts\\Merge';
 			$document_merge = new $merge_class();
 			$this->mail_bo->openConnection();
 			$merge_ids = $_REQUEST['preset']['mailtocontactbyid'] ? $_REQUEST['preset']['mailtocontactbyid'] : $mail_id;
@@ -1439,11 +1444,11 @@ class mail_compose
 				{
 					$success = implode(', ',$results['success']);
 					$fail = implode(', ', $results['failed']);
-					if($success) egw_framework::message($success, 'success');
-					egw_framework::window_close($fail);
+					if($success) Framework::message($success, 'success');
+					Framework::window_close($fail);
 				}
 			}
-			catch (egw_exception_wrong_userinput $e)
+			catch (Api\Exception\WrongUserinput $e)
 			{
 				// if this returns with an exeption, something failed big time
 				$content['msg'] = $e->getMessage();
@@ -1463,7 +1468,7 @@ class mail_compose
 	static function replaceEmailAdresses(&$text)
 	{
 		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
-		translation::replaceEmailAdresses($text);
+		Api\Mail\Html::replaceEmailAdresses($text);
 		return 1;
 	}
 
@@ -1472,7 +1477,7 @@ class mail_compose
 		$stripalltags = true;
 		// third param is stripalltags, we may not need that, if the source is already in ascii
 		if (!$sourceishtml) $stripalltags=false;
-		return translation::convertHTMLToText($_html,$this->displayCharset,$stripcrl,$stripalltags);
+		return Api\Mail\Html::convertHTMLToText($_html,$this->displayCharset,$stripcrl,$stripalltags);
 	}
 
 	function generateRFC822Address($_addressObject)
@@ -1644,7 +1649,7 @@ class mail_compose
 					$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 				}
 				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = Mail::detect_encoding($bodyParts[$i]['body']);
-				$bodyParts[$i]['body'] = translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+				$bodyParts[$i]['body'] = Api\Translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyParts[$i]['body'] ;
 			}
@@ -1658,7 +1663,7 @@ class mail_compose
 					$this->sessionData['body'] .= "<hr>";
 				}
 				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = Mail::detect_encoding($bodyParts[$i]['body']);
-				$bodyParts[$i]['body'] = translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+				$bodyParts[$i]['body'] = Api\Translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 				#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyParts[$i]['body'] ;
 			}
@@ -1779,11 +1784,11 @@ class mail_compose
 		{
 			$tmpFileName = Mail::checkFileBasics($_formData,$this->composeID,false);
 		}
-		catch (egw_exception_wrong_userinput $e)
+		catch (Api\Exception\WrongUserinput $e)
 		{
 			$attachfailed = true;
 			$alert_msg = $e->getMessage();
-			egw_framework::message($e->getMessage(), 'error');
+			Framework::message($e->getMessage(), 'error');
 		}
 		//error_log(__METHOD__.__LINE__.array2string($tmpFileName));
 		//error_log(__METHOD__.__LINE__.array2string($_formData));
@@ -1832,7 +1837,7 @@ class mail_compose
 	function getAttachment()
 	{
 		// read attachment data from etemplate request, use tmpname only to identify it
-		if (($request = etemplate_request::read($_GET['etemplate_exec_id'])))
+		if (($request = Etemplate\Request::read($_GET['etemplate_exec_id'])))
 		{
 			foreach($request->preserv['attachments'] as $attachment)
 			{
@@ -1871,7 +1876,7 @@ class mail_compose
 				$buff = explode('.',$attachment['tmp_name']);
 				$suffix = '';
 				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
-				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+				if (!empty($suffix)) $sfxMimeType = Api\MimeMagic::ext2mime($suffix);
 				$attachment['type'] = $sfxMimeType;
 				if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD') $attachment['type'] = strtoupper($sfxMimeType);
 			}
@@ -1926,10 +1931,10 @@ class mail_compose
 			}
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
-		html::safe_content_header($attachment['attachment'], $attachment['name'], $attachment['type'], $size=0, true, $_GET['mode'] == "save");
+		Api\Header\Content::safe($attachment['attachment'], $attachment['name'], $attachment['type'], $size=0, true, $_GET['mode'] == "save");
 		echo $attachment['attachment'];
 
-		common::egw_exit();
+		exit();
 	}
 
 	/**
@@ -2111,7 +2116,7 @@ class mail_compose
 				$_htmlConfig = Mail::$htmLawed_config;
 				Mail::$htmLawed_config['comment'] = 2;
 				Mail::$htmLawed_config['transform_anchor'] = false;
-				$this->sessionData['body'] .= "<br>".self::_getCleanHTML(translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
+				$this->sessionData['body'] .= "<br>".self::_getCleanHTML(Api\Translation::convert_jsonsafe($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
 				Mail::$htmLawed_config = $_htmlConfig;
 				#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 			}
@@ -2134,7 +2139,7 @@ class mail_compose
 				}
 
 				// add line breaks to $bodyParts
-				$newBody2 = translation::convert_jsonsafe($bodyParts[$i]['body'],$bodyParts[$i]['charSet']);
+				$newBody2 = Api\Translation::convert_jsonsafe($bodyParts[$i]['body'],$bodyParts[$i]['charSet']);
 				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$newBody = mail_ui::resolve_inline_images($newBody2, $_folder, $_uid, $_partID, 'plain');
 				$this->sessionData['body'] .= "\r\n";
@@ -2211,12 +2216,12 @@ class mail_compose
 	/**
 	 * Create a message from given data and identity
 	 *
-	 * @param egw_mailer $_mailObject
+	 * @param Api\Mailer $_mailObject
 	 * @param array $_formData
 	 * @param array $_identity
 	 * @param boolean $_autosaving =false true: autosaving, false: save-as-draft or send
 	 */
-	function createMessage(egw_mailer $_mailObject, array $_formData, array $_identity, $_autosaving=false)
+	function createMessage(Api\Mailer $_mailObject, array $_formData, array $_identity, $_autosaving=false)
 	{
 		if (substr($_formData['body'], 0, 27) == '-----BEGIN PGP MESSAGE-----')
 		{
@@ -2496,7 +2501,7 @@ class mail_compose
 
 			if ($html)
 			{
-				$links[] = html::a_href($name, $link).' '.
+				$links[] = Api\Html::a_href($name, $link).' '.
 					(is_dir($path) ? lang('Directory') : Vfs::hsize($attachment['size']));
 			}
 			else
@@ -2525,7 +2530,7 @@ class mail_compose
 	public function ajax_saveAsDraft ($content, $action='button[saveAsDraft]')
 	{
 		//error_log(__METHOD__.__LINE__.array2string($content)."(, action=$action)");
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$success = true;
 
 		// check if default account is changed then we need to change profile
@@ -2573,7 +2578,7 @@ class mail_compose
 							{
 								$this->mail_bo->deleteMessages($duid,$dmailbox,'remove_immediately');
 							}
-							catch (egw_exception $e)
+							catch (Api\Exception $e)
 							{
 								$msg = str_replace('"',"'",$e->getMessage());
 								$success = false;
@@ -2591,10 +2596,10 @@ class mail_compose
 			}
 			else
 			{
-				throw new egw_exception_wrong_userinput(lang("Error: Could not save Message as Draft"));
+				throw new Api\Exception\WrongUserinput(lang("Error: Could not save Message as Draft"));
 			}
 		}
-		catch (egw_exception_wrong_userinput $e)
+		catch (Api\Exception\WrongUserinput $e)
 		{
 			$msg = str_replace('"',"'",$e->getMessage());
 			error_log(__METHOD__.__LINE__.$msg);
@@ -2658,7 +2663,7 @@ class mail_compose
 	{
 		//error_log(__METHOD__."(..., $savingDestination, action=$action)");
 		$mail_bo	= $this->mail_bo;
-		$mail		= new egw_mailer($this->mail_bo->profileID);
+		$mail		= new Api\Mailer($this->mail_bo->profileID);
 
 		// preserve the bcc and if possible the save to folder information
 		$this->sessionData['folder']    = $_formData['folder'];
@@ -2716,7 +2721,7 @@ class mail_compose
 			{
 				$messageUid = $mail_bo->appendMessage($savingDestination, $mail->getRaw(), null, $flags);
 			}
-			catch (egw_exception_wrong_userinput $e)
+			catch (Api\Exception\WrongUserinput $e)
 			{
 				error_log(__METHOD__.__LINE__.lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",__METHOD__,$savingDestination,$e->getMessage()));
 				return false;
@@ -2733,7 +2738,7 @@ class mail_compose
 	function send($_formData)
 	{
 		$mail_bo	= $this->mail_bo;
-		$mail 		= new egw_mailer($mail_bo->profileID);
+		$mail 		= new Api\Mailer($mail_bo->profileID);
 		$messageIsDraft	=  false;
 
 		$this->sessionData['mailaccount']	= $_formData['mailaccount'];
@@ -3001,7 +3006,7 @@ class mail_compose
 						//error_log(__METHOD__.__LINE__.array2string($folderName));
 						$mail_bo->appendMessage($folderName, $mail->getRaw(), null, $flags);
 					}
-					catch (egw_exception_wrong_userinput $e)
+					catch (Api\Exception\WrongUserinput $e)
 					{
 						error_log(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$this->sessionData['subject'],$folderName,$e->getMessage()));
 					}
@@ -3035,7 +3040,7 @@ class mail_compose
 						//error_log(__METHOD__.__LINE__.array2string($folderName));
 						$this->mail_bo->appendMessage($folderName, $mail->getRaw(), null, $flags);
 					}
-					catch (egw_exception_wrong_userinput $e)
+					catch (Api\Exception\WrongUserinput $e)
 					{
 						error_log(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$this->sessionData['subject'],$folderName,$e->getMessage()));
 					}
@@ -3076,7 +3081,7 @@ class mail_compose
 					$mail_bo->deleteMessages($lastDrafted['uid'],$lastDrafted['folder'],'remove_immediately');
 				}
 			}
-			catch (egw_exception $e)
+			catch (Api\Exception $e)
 			{
 				//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
 				unset($e);
@@ -3103,7 +3108,7 @@ class mail_compose
 						$mail_bo->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder']);
 					}
 				}
-				catch (egw_exception $e)
+				catch (Api\Exception $e)
 				{
 					//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
 					unset($e);
@@ -3118,7 +3123,7 @@ class mail_compose
 						//error_log(__METHOD__.__LINE__.':'.array2string($this->sessionData['forwardedUID']).' F:'.$this->sessionData['sourceFolder']);
 						$mail_bo->flagMessages("forwarded", $this->sessionData['forwardedUID'],$this->sessionData['sourceFolder']);
 					}
-					catch (egw_exception $e)
+					catch (Api\Exception $e)
 					{
 						//error_log(__METHOD__.__LINE__." ". str_replace('"',"'",$e->getMessage()));
 						unset($e);
@@ -3152,7 +3157,7 @@ class mail_compose
 				{
 					$app_name = substr($app_key,3);
 					// Get registered hook data of the app called for integration
-					$hook = $GLOBALS['egw']->hooks->single(array('location'=> 'mail_import'),$app_name);
+					$hook = Api\Hooks::single(array('location'=> 'mail_import'),$app_name);
 
 					// store mail / eml in temp. file to not have to download it from mail-server again
 					$eml = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'mail_integrate');
@@ -3163,9 +3168,9 @@ class mail_compose
 					// Open the app called for integration in a popup
 					// and store the mail raw data as egw_data, in order to
 					// be stored from registered app method later
-					egw_framework::popup(egw::link('/index.php', array(
+					Framework::popup(Egw::link('/index.php', array(
 						'menuaction' => $hook['menuaction'],
-						'egw_data' => egw_link::set_data(null,'mail_integration::integrate',array(
+						'egw_data' => Link::set_data(null,'mail_integration::integrate',array(
 							$mailaddresses,
 							$this->sessionData['subject'],
 							$this->convertHTMLToText($this->sessionData['body']),
@@ -3281,7 +3286,7 @@ class mail_compose
 			{
 				$useCacheIfPossible = true;
 			}
-			$searchString = translation::convert($_searchString, Mail::$displayCharset,'UTF7-IMAP');
+			$searchString = Api\Translation::convert($_searchString, Mail::$displayCharset,'UTF7-IMAP');
 			foreach ($folderObjects as $k =>$fA)
 			{
 				//error_log(__METHOD__.__LINE__.$_searchString.'/'.$searchString.' in '.$k.'->'.$fA->displayName);
@@ -3317,12 +3322,12 @@ class mail_compose
 			return $rL;
 		}
 		// switch regular JSON response handling off
-		egw_json_request::isJSONRequest(false);
+		Api\Json\Request::isJSONRequest(false);
 
 		header('Content-Type: application/json; charset=utf-8');
 		//error_log(__METHOD__.__LINE__);
 		echo json_encode($results);
-		common::egw_exit();
+		exit();
 	}
 
 	public static function ajax_searchAddress($_searchStringLength=2) {
@@ -3432,7 +3437,7 @@ class mail_compose
 		if($include_lists)
 		{
 			$lists = array_filter(
-				$contacts_obj->get_lists(EGW_ACL_READ),
+				$contacts_obj->get_lists(Acl::READ),
 				function($element) use($_searchString) {
 					return (stripos($element, $_searchString) !== false);
 				}
@@ -3452,12 +3457,12 @@ class mail_compose
 			}
 		}
 		 // switch regular JSON response handling off
-		egw_json_request::isJSONRequest(false);
+		Api\Json\Request::isJSONRequest(false);
 
 		//error_log(__METHOD__.__LINE__.array2string($jsArray));
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
-		common::egw_exit();
+		exit();
 	}
 
 	/**
@@ -3468,14 +3473,14 @@ class mail_compose
 	 */
 	public function ajax_merge($contact_id)
 	{
-		$response = egw_json_response::get();
-		if(class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'],'bo_merge'))
+		$response = Api\Json\Response::get();
+		if(class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'], 'EGroupware\\Api\\Storage\\Merge'))
 		{
 			$document_merge = new $_REQUEST['merge']();
 		}
 		else
 		{
-			$document_merge = new addressbook_merge();
+			$document_merge = new Api\Contacts\Merge();
 		}
 		$this->mail_bo->openConnection();
 

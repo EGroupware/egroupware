@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Egw;
 use EGroupware\Api\Mail;
 
 /**
@@ -31,7 +32,7 @@ class mail_hooks
 		if (Mail\Account::is_multiple($account) && $account['acc_imap_admin_username'] ||
 			$account['acc_imap_type'] == 'managementserver_imap')
 		{
-			translation::add_app('mail');
+			Api\Translation::add_app('mail');
 
 			if (true /* ToDo check ACL available */ || $account['acc_imap_type'] == 'managementserver_imap')
 			{
@@ -40,7 +41,7 @@ class mail_hooks
 					'caption' => 'Folder ACL',
 					'icon' => 'lock',
 					'popup' => '750x420',
-					'url' => egw::link('/index.php', array(
+					'url' => Egw::link('/index.php', array(
 						'menuaction' => 'mail.mail_acl.edit',
 						'acc_id' => $data['acc_id'],
 						'account_id' => $data['account_id'],
@@ -55,7 +56,7 @@ class mail_hooks
 					'caption' => 'Vacation notice',
 					'icon' => 'mail/navbar',
 					'popup' => '750x420',
-					'url' => egw::link('/index.php', array(
+					'url' => Egw::link('/index.php', array(
 						'menuaction' => 'mail.mail_sieve.editVacation',
 						'acc_id' => $data['acc_id'],
 						'account_id' => $data['account_id'],
@@ -70,11 +71,13 @@ class mail_hooks
 	/**
      * Hook called by link-class to include mail in the appregistry of the linkage
      *
-     * @param array/string $location location and other parameters (not used)
+     * @param array|string $location location and other parameters (not used)
      * @return array with method-names
      */
     static function search_link($location)
     {
+		unset($location);	// not used, but required by function signature
+
         return array(
 			'view'  => array(
 				'menuaction' => 'mail.mail_ui.displayMessage',
@@ -122,22 +125,7 @@ class mail_hooks
 			$profileID = 0;
 			if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-
-			$mailConfig = config::read('mail');
 		}
-
-		$connectionTimeout = array(
-			'0' => lang('use default timeout (20 seconds)'),
-			'10' => '10', // timeout used in SIEVE
-			'20' => '20',
-			'30' => '30',
-			'40' => '40',
-			'50' => '50',
-			'60' => '60',
-			'70' => '70',
-			'80' => '80',
-			'90' => '90',
-		);
 
 		$no_yes = array(
 			'0' => lang('no'),
@@ -145,35 +133,13 @@ class mail_hooks
 		);
 		$no_yes_copy = array_merge($no_yes,array('2'=>lang('yes, offer copy option')));
 
- 		$prefAllowManageFolders = $no_yes;
-
 		$forwardOptions = array(
 			'asmail' => lang('forward as attachment'),
 			'inline' => lang('forward inline'),
 		);
-		$sortOrder = array(
-			'0' => lang('date(newest first)'),
-			'1' => lang('date(oldest first)'),
-			'3' => lang('from(A->Z)'),
-			'2' => lang('from(Z->A)'),
-			'5' => lang('subject(A->Z)'),
-			'4' => lang('subject(Z->A)'),
-			'7' => lang('size(0->...)'),
-			'6' => lang('size(...->0)')
-		);
-
 		$trustServersUnseenOptions = array_merge(
 			$no_yes,
 			array('2' => lang('yes') . ' - ' . lang('but check shared folders'))
-		);
-
-		$selectOptions = array_merge(
-			$no_yes,
-			array('2' => lang('yes') . ' - ' . lang('small view'))
- 		);
-		$newWindowOptions = array(
-			'1' => lang('only one window'),
-			'2' => lang('allways a new window'),
 		);
 
 		$deleteOptions = array(
@@ -208,45 +174,9 @@ class mail_hooks
 			'only_if_no_text'	=> lang('display only when no plain text is available'),
 			'always_display'	=> lang('always show html emails'),
 		);
-		$toggle = false;
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode'] == 'EGW_SELECTMODE_TOGGLE') $toggle=true;
-		$rowOrderStyle = array(
-			'mail'	=> lang('mail'),
-			'outlook'	=> 'Outlook',
-			'mail_wCB' => lang('mail').' '.($toggle?lang('(select mails by clicking on the line, like a checkbox)'):lang('(with checkbox enforced)')),
-			'outlook_wCB'	=> 'Outlook'.' '.($toggle?lang('(select mails by clicking on the line, like a checkbox)'):lang('(with checkbox enforced)')),
-		);
 
 		// otherwise we get warnings during setup
 		if (!is_array($folderList)) $folderList = array();
-
-		$trashOptions = array_merge(
-			array(
-				'none' => lang("Don't use Trash")
-			),
-			$folderList
-		);
-
-		$sentOptions = array_merge(
-			array(
-				'none' => lang("Don't use Sent")
-			),
-			$folderList
-		);
-
-		$draftOptions = array_merge(
-			array(
-				'none' => lang("Don't use draft folder")
-			),
-			$folderList
-		);
-
-		$templateOptions = array_merge(
-		    array(
-		        'none' => lang("Don't use template folder")
-		    ),
-		    $folderList
-		);
 
 		// modify folderlist, add a none entry, to be able to force the regarding settings, if no folders apply
 		$folderList['none'] = lang('no folders');
@@ -434,6 +364,8 @@ class mail_hooks
 	 */
 	static function admin($hook_data)
 	{
+		unset($hook_data);	// not used, but required by function signature
+
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 		// Only Modify the $file and $title variables.....
 		$title = $appname = 'mail';
@@ -442,7 +374,7 @@ class mail_hooks
 			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 
 		$file = Array(
-			'Site Configuration' => egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'mail')),
+			'Site Configuration' => Egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'mail')),
 		);
 		display_section($appname,$title,$file);
 	}
@@ -454,6 +386,8 @@ class mail_hooks
 	 */
 	static function sidebox_menu($hook_data)
 	{
+		unset($hook_data);	// not used, but required by function signature
+
 		//error_log(__METHOD__);
 		// always show the side bar
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
@@ -513,7 +447,7 @@ class mail_hooks
 		);
 
 		$file += array(
-			'import message' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','importMessageDialog',600,100,'no','$appname');",
+			'import message' => "javascript:egw_openWindowCentered2('".Egw::link('/index.php', $linkData,false)."','importMessageDialog',600,100,'no','$appname');",
 		);
 
 
@@ -522,21 +456,21 @@ class mail_hooks
 		{
 			$file += array(
 				'create new account' => "javascript:egw_openWindowCentered2('" .
-					egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
+					Egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
 					"','_blank',640,480,'yes')",
 			);
 		}
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
 
-		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !html::$ua_mobile)
+		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !Api\Header\UserAgent::mobile())
 		{
 			$file = Array(
-				'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
+				'Site Configuration' => Egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
 			);
 			display_sidebox($appname,lang('Admin'),$file);
 		}
-		hooks::pgp_encryption_menu('mail');
+		Api\Hooks::pgp_encryption_menu('mail');
 
 	}
 
@@ -555,7 +489,7 @@ class mail_hooks
 			//error_log(__METHOD__.__LINE__." Job should not run too often; we limit this to once every 3 Minutes :". ($currentTime-$lastRun). " Seconds to go!");
 			return true;
 		}
-		$accountsToSearchObj = Mail\Account::search($only_current_user=true, $just_name=true);
+		$accountsToSearchObj = Mail\Account::search(true, true);
 
 		foreach($accountsToSearchObj as $acc_id => $identity_name)
 		{
@@ -614,8 +548,7 @@ class mail_hooks
 						$notified_mail_uidsCache[$activeProfile][$notify_folder] = array();
 					}
 					$folder_status[$notify_folder] = $bomail->getFolderStatus($notify_folder);
-					$cutoffdate = time();
-					$cutoffdate = $cutoffdate - (60*60*24*14); // last 14 days
+					$cutoffdate = time() - (60*60*24*14); // last 14 days
 					$_filter = array('status'=>array('UNSEEN','UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 					//error_log(__METHOD__.__LINE__.' (user: '.$currentRecipient->account_lid.') Mailbox:'.$notify_folder.' filter:'.array2string($_filter));
 					// $_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true
@@ -695,7 +628,7 @@ class mail_hooks
 		{
 			return true;	// allways give admins or emailadmins all rights, even if they are in a denied group
 		}
-		if (!isset($config)) $config = (array)config::read('mail');
+		if (!isset($config)) $config = (array)Api\Config::read('mail');
 		//error_log(__METHOD__.__LINE__.' '.$feature.':'.array2string($config['deny_'.$feature]));
 		if (!empty($config['deny_'.$feature]))
 		{

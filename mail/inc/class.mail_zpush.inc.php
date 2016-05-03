@@ -12,6 +12,7 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
 use EGroupware\Api\Mail;
 
 /**
@@ -97,7 +98,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (is_null(self::$profileID))
 		{
 			if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' self::ProfileID isNUll:'.array2string(self::$profileID));
-			self::$profileID =& egw_cache::getSession('mail','activeSyncProfileID');
+			self::$profileID =& Api\Cache::getSession('mail','activeSyncProfileID');
 			if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' ActiveProfileID (after reading Cache):'.array2string(self::$profileID));
 		}
 		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-ActiveSyncProfileID']))
@@ -188,8 +189,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (isset($hook_data['prefs']['mail-ActiveSyncProfileID']) || $hook_data['type'] == 'user')
 		{
 			// eSync and eMail translations are not (yet) loaded
-			translation::add_app('activesync');
-			translation::add_app('mail');
+			Api\Translation::add_app('activesync');
+			Api\Translation::add_app('mail');
 
 			// inject preference to verify and call constructor
 			$GLOBALS['egw_info']['user']['preferences']['activesync']['mail-ActiveSyncProfileID'] =
@@ -362,8 +363,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.")".' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
 
-		// initialize the new egw_mailer object for sending
-		$mailObject = new egw_mailer(self::$profileID);
+		// initialize the new Api\Mailer object for sending
+		$mailObject = new Api\Mailer(self::$profileID);
 		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
@@ -437,7 +438,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			else
 			{
 				$AltBody = $body;
-				$Body =  trim(translation::convertHTMLToText($body));
+				$Body =  trim(Api\Mail\Html::convertHTMLToText($body));
 				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") fetched Body as :". $simpleBodyType.'=> Created Body');
 			}
 		}
@@ -531,7 +532,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$signature = $_signature['ident_signature'];
 		if ((isset($preferencesArray['disableRulerForSignatureSeparation']) &&
 			$preferencesArray['disableRulerForSignatureSeparation']) ||
-			empty($signature) || trim(translation::convertHTMLToText($signature)) =='')
+			empty($signature) || trim(Api\Mail\Html::convertHTMLToText($signature)) =='')
 		{
 			$disableRuler = true;
 		}
@@ -541,7 +542,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$sigText = Mail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Signature to use:'.$sigText);
 		$sigTextHtml = $beforeHtml.$sigText;
-		$sigTextPlain = $beforePlain.translation::convertHTMLToText($sigText);
+		$sigTextPlain = $beforePlain.Api\Mail\Html::convertHTMLToText($sigText);
 		$isreply = $isforward = false;
 		// reply ---------------------------------------------------------------------------
 		if ($smartdata_task == 'reply' && isset($smartdata->source->itemid) &&
@@ -578,7 +579,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			{
 				$isreply = true;
 				$AltBody = $AltBody."</br><pre>".nl2br($bodyBUFF).'</pre>'.$sigTextHtml;
-				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." no html Body found use modified plaintext body for txt/html: ".$AltBody);
+				if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." no Api\Html Body found use modified plaintext body for txt/html: ".$AltBody);
 			}
 		}
 
@@ -611,7 +612,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			// build a new mime message, forward entire old mail as file
 			if ($preferencesArray['message_forwarding'] == 'asmail')
 			{
-				$rawHeader='';
 				$rawHeader      = $this->mail->getMessageRawHeader($smartdata->source->itemid, $_partID,$folder);
 				$rawBody        = $this->mail->getMessageRawBody($smartdata->source->itemid, $_partID,$folder);
 				$mailObject->AddStringAttachment($rawHeader.$rawBody, $headers['SUBJECT'].'.eml', 'message/rfc822');
@@ -664,7 +664,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					{
 						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
 						$attachmentNames .= $attachment['name']."\n";
-						$attachmentData = '';
 						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],0,false,false,$folder);
 						/*$x =*/ $mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), $attachment['mimeType']);
 						ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' added part with number:'.$x);
@@ -773,7 +772,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 							$this->mail->appendMessage($folderName,$mailObject->getRaw(), null,
 									$flags);
 						}
-						catch (egw_exception_wrong_userinput $e)
+						catch (Api\Exception\WrongUserinput $e)
 						{
 							//$asf = false;
 							ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$mailObject->getHeader('Subject'),$folderName,$e->getMessage()));
@@ -920,7 +919,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
 					if(isset($bodyStructplain[0])&&isset($bodyStructplain[0]['error'])&&$bodyStructplain[0]['error']==1)
 					{
-						$plainBody = translation::convertHTMLToText($body); // always display with preserved HTML
+						$plainBody = Api\Mail\Html::convertHTMLToText($body); // always display with preserved HTML
 					}
 					else
 					{
@@ -939,8 +938,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					//SYNC_BODYPREFERENCE_MIME
 					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." bodypreference 4 requested");
 					$output->asbody->type = SYNC_BODYPREFERENCE_MIME;//4;
-					// use egw_mailer::convert to convert charset of all text parts to utf-8, which is a z-push or AS requirement!
-					$Body = egw_mailer::convert($this->mail->getMessageRawBody($id, '', $_folderName));
+					// use Api\Mailer::convert to convert charset of all text parts to utf-8, which is a z-push or AS requirement!
+					$Body = Api\Mailer::convert($this->mail->getMessageRawBody($id, '', $_folderName));
 					if ($this->debugLevel>2) debugLog(__METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Body);
 					$output->asbody->data = $Body;
 				}
@@ -1342,7 +1341,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		debugLog (__METHOD__.' for Folder:'.$folderid.' SINCE:'.$cutdate.'/'.date("d-M-Y", $cutdate));
 		if (empty($cutdate))
 		{
-			$cutdate = egw_time::to('now','ts')-(3600*24*28*3);
+			$cutdate = Api\DateTime::to('now','ts')-(3600*24*28*3);
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' Client set no truncationdate. Using 12 weeks.'.date("d-M-Y", $cutdate));
 		}
 		return $this->fetchMessages($folderid, $cutdate);
@@ -1504,7 +1503,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// other types may be possible - we support quicksearch first (freeText in subject and from (or TO in Sent Folder))
 		if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[self::$profileID]))
 		{
-			Mail::$supportsORinQuery = egw_cache::getCache(egw_cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+			Mail::$supportsORinQuery = Api\Cache::getCache(Api\Cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
 			if (!isset(Mail::$supportsORinQuery[self::$profileID])) Mail::$supportsORinQuery[self::$profileID]=true;
 		}
 */
@@ -1539,8 +1538,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$_filter['range'] = "BETWEEN";
 			list($sincedate,$crap) = explode('T',$searchquery['searchvaluegreater']);
 			list($beforedate,$crap) = explode('T',$searchquery['searchvalueless']);
-			$_filter['before'] = date("d-M-Y", egw_time::to($beforedate,'ts'));
-			$_filter['since'] = date("d-M-Y", egw_time::to($sincedate,'ts'));
+			$_filter['before'] = date("d-M-Y", Api\DateTime::to($beforedate,'ts'));
+			$_filter['since'] = date("d-M-Y", Api\DateTime::to($sincedate,'ts'));
 		}
 		//$_filter[] = array('type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
 		if ($this->debugLevel>1) debugLog (__METHOD__.' for Folder:'.$_folderName.' Filter:'.array2string($_filter));
@@ -1773,7 +1772,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		{
 			$rv = $this->mail->deleteMessages($_messageUID, $folder);
 		}
-		catch (egw_exception $e)
+		catch (Api\Exception $e)
 		{
 			$error = $e->getMessage();
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." $_messageUID, $folder ->".$error);
@@ -1885,7 +1884,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @param string $folder
 	 * @param int $id =0
 	 * @return string
-	 * @throws egw_exception_wrong_parameter
+	 * @throws Api\Exception\WrongParameter
 	 */
 	private function createID($account,$folder,$id=0)
 	{
@@ -1909,7 +1908,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @param int &$account mail account id
 	 * @param string &$folder
 	 * @param int &$id=null
-	 * @throws egw_exception_wrong_parameter
+	 * @throws Api\Exception\WrongParameter
 	 */
 	private function splitID($str,&$account,&$folder,&$id=null)
 	{
@@ -2007,13 +2006,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * On request this function also returns, but never creates (!), old z-push 1 directory.
 	 *
 	 * @param boolean $old =false true: return old / pre-15 hash-file
-	 * @throws egw_exception_assertion_failed
+	 * @throws Api\Exception\AssertionFailed
 	 */
 	private function hashFile($old=false)
 	{
 		if (!($dev_id=Request::GetDeviceID()))
 		{
-			throw new egw_exception_assertion_failed(__METHOD__."() no DeviceID set!");
+			throw new Api\Exception\AssertionFailed(__METHOD__."() no DeviceID set!");
 		}
 		if ($old)
 		{

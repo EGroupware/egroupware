@@ -11,6 +11,8 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
 use EGroupware\Api\Mail;
 
 class mail_acl
@@ -61,13 +63,13 @@ class mail_acl
 	 */
 	function edit(array $content=null ,$msg='')
 	{
-		$tmpl = new Api\Etemplate('mail.acl');
+		$tmpl = new Etemplate('mail.acl');
 		if (!is_array($content))
 		{
 			$acc_id = $_GET['acc_id']?$_GET['acc_id']:$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 			if (isset($_GET['account_id']) && !isset($GLOBALS['egw_info']['user']['apps']['admin']))
 			{
-				egw_framework::window_close(lang('Permission denied'));
+				Framework::window_close(lang('Permission denied'));
 			}
 			$account_id = $_GET['account_id'];
 		}
@@ -175,12 +177,12 @@ class mail_acl
 						$msg .= "\n".lang("Error: Could not save ACL").' '.lang("reason!");
 					}
 					//Send message
-					egw_framework::message($msg);
+					Framework::message($msg);
 					if ($button == "apply") break;
 
 				//Fall through
 				case 'cancel':
-					egw_framework::window_close();
+					Framework::window_close();
 					exit;
 
 				case 'delete':
@@ -193,7 +195,7 @@ class mail_acl
 					{
 						error_log(__METHOD__.__LINE__. "()" . "The remove_acl suppose to return an array back, something is wrong there");
 					}
-					egw_framework::message($msg);
+					Framework::message($msg);
 			}
 		}
 		$readonlys = $sel_options = array();
@@ -239,13 +241,13 @@ class mail_acl
 	/**
 	 * Autocomplete for folder taglist
 	 *
-	 * @throws egw_exception_no_permission_admin
+	 * @throws Api\Exception\NoPermission\Admin
 	 */
 	public static function ajax_folders()
 	{
 		if (!empty($_GET['account_id']) && !$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			throw new egw_exception_no_permission_admin;
+			throw new Api\Exception\NoPermission\Admin;
 		}
 		$account = Mail\Account::read($_GET['acc_id'], $_GET['account_id']);
 		$imap = $account->imapServer(!empty($_GET['account_id']) ? (int)$_GET['account_id'] : false);
@@ -263,7 +265,7 @@ class mail_acl
 			}
 		}
 		// switch regular JSON response handling off
-		egw_json_request::isJSONRequest(false);
+		Api\Json\Request::isJSONRequest(false);
 
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($folders);

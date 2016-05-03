@@ -44,7 +44,7 @@ $replace = array(
 	"#\\\$GLOBALS\['egw'\]->preferences->change#" => '$GLOBALS[\'egw\']->preferences->add',
 );
 // enclose class-names and static methods with some syntax check
-$class_start = '#(?<!function)([\[\s,;().!])';
+$class_start = '#(?<!function)([\[\s,;().!=])';
 $class_end = '(::|\\(|\\)|;|\?|:|\\s|,|$)#';
 foreach(array(
 	'accounts' => 'Api\\Accounts',
@@ -158,6 +158,7 @@ foreach(array(
 	'etemplate_request' => 'Api\\Etemplate\\Request',
 	'nextmatch_widget::category_action' => 'Api\\Etemplate\\Widget\\Nextmatch::category_action',
 	'nextmatch_widget::DEFAULT_MAX_MENU_LENGTH' => 'Api\\Etemplate\\Widget\\Nextmatch::DEFAULT_MAX_MENU_LENGTH',
+	'egw_keymanager' => 'Api\\Etemplate\\KeyManager',
 	// so_sql and friends
 	'so_sql' => 'Api\\Storage\\Base',
 	'so_sql_cf' => 'Api\\Storage',
@@ -167,6 +168,7 @@ foreach(array(
 	// addressbook backend
 	'addressbook_bo' => 'Api\\Contacts',
 	'addressbook_so' => 'Api\\Contacts\\Storage',
+	'addressbook_merge' => 'Api\\Contacts\\Merge',
 ) as $from => $to)
 {
 	$replace[$class_start.$from.$class_end] = '$1'.$to.'$2';

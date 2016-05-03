@@ -5,11 +5,12 @@
  * @link http://www.egroupware.org
  * @package mail
  * @author Hadi Nategh [hn@stylite.de]
- * @copyright (c) 2015 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2015-16 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id:$
  */
 
+use EGroupware\Api;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Etemplate\Widget\Tree;
 
@@ -375,7 +376,7 @@ class mail_tree
 				}
 				else
 				{
-					throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__.": id=$data[id]: Parent '$parent' '$component' not found!");
+					throw new Api\Exception\AssertionFailed(__METHOD__.':'.__LINE__.": id=$data[id]: Parent '$parent' '$component' not found!");
 				}
 			}
 			$parents[] = $component;

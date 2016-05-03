@@ -9,8 +9,11 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+
 /**
- * Wizard to create mail accounts
+ * Wizard to create mail Api\Accounts
  *
  * Extends admin_mail to allow non-admins to use it.
  */
@@ -29,11 +32,11 @@ class mail_wizard extends admin_mail
 		parent::__construct();
 
 		// need emailadmin's app.css file
-		egw_framework::includeCSS('admin','app');
+		Framework::includeCSS('admin','app');
 
 		// and translations
-		translation::add_app('admin');
+		Api\Translation::add_app('admin');
 
-		egw_framework::validate_file('/admin/js/app.js');
+		Framework::includeJS('/admin/js/app.js');
 	}
 }

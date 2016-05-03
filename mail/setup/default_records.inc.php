@@ -6,10 +6,12 @@
  * @package mail
  * @subpackage setup
  * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2014 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2014-16 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 // change felamimail run rights to new mail app
 $GLOBALS['egw_setup']->db->update('egw_acl', array(
@@ -27,10 +29,10 @@ if (!$GLOBALS['egw_setup']->db->affected_rows())
 }
 
 // change common/default_app pref to mail, if it was felamimail
-preferences::change_preference('common', 'default_app', 'mail', 'felamimail');
+Api\Preferences::change_preference('common', 'default_app', 'mail', 'felamimail');
 
-// copy felamimail preferences to new mail app, if they still exist there
-preferences::copy_preferences('felamimail', 'mail', array(
+// copy felamimail Api\Preferences to new mail app, if they still exist there
+Api\Preferences::copy_preferences('felamimail', 'mail', array(
 	'htmlOptions',
 	'allowExternalIMGs',
 	'message_forwarding',
