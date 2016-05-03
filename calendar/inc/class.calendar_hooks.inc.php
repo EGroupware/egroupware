@@ -157,7 +157,7 @@ class calendar_hooks
 
 		if (!isset($hook_data['setup']))
 		{
-			$times = Api\Etemplate\Widget\Select::typeOptions('select-time', '');
+			$times = Api\Etemplate\Widget\Select::typeOptions('select-hour', '');
 		}
 		for ($i = 2; $i <= 4; ++$i)
 		{

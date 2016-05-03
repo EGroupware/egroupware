@@ -716,11 +716,12 @@ class Select extends Etemplate\Widget
 				break;
 
 			case 'select-hour':
+				$minutes = !$type2 ? ':00' : '';
 				for ($h = 0; $h <= 23; ++$h)
 				{
 					$options[$h] = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ?
-						(($h % 12 ? $h % 12 : 12).' '.($h < 12 ? lang('am') : lang('pm'))) :
-						sprintf('%02d',$h);
+						(($h % 12 ? $h % 12 : 12).$minutes.' '.($h < 12 ? lang('am') : lang('pm'))) :
+						sprintf('%02d',$h).$minutes;
 				}
 				$no_lang = True;
 				break;
