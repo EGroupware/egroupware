@@ -832,6 +832,32 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			return this._super.apply(this, arguments);
 		}
+	},
+	
+	/**
+	 * override set disabled for tags as the tags using
+	 * chosen dom and need to be treated different
+	 *
+	 * @param {type} _disable
+	 * @returns {undefined}
+	 */
+	set_disabled: function (_disable)
+	{
+		this._super.apply(this, arguments);
+
+		if (this.options.tags) {
+			// Always hide input options
+			this.input.hide();
+
+			if (_disable)
+			{
+				jQuery(this.node.nextElementSibling).hide();
+			}
+			else
+			{
+				jQuery(this.node.nextElementSibling).show();
+			}
+		}
 	}
 });}).call(this);
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-cat",
