@@ -88,17 +88,17 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 
 			// own instance specific images in vfs have highest precedence
 			tries['vfs']=_name;
-			if (typeof images['vfs'] != 'undefined' && typeof images['vfs'][_name] != 'undefined')
+			if (typeof images['vfs'] != 'undefined' && typeof images['vfs'][_name] == 'string')
 			{
 				return this.webserverUrl+images['vfs'][_name];
 			}
 			tries[_app + (_app == 'phpgwapi' ? " (current app)" : "")] = _name;
-			if (typeof images[_app] != 'undefined' && typeof images[_app][_name] != 'undefined')
+			if (typeof images[_app] != 'undefined' && typeof images[_app][_name] == 'string')
 			{
 				return this.webserverUrl+images[_app][_name];
 			}
 			tries['phpgwapi'] = _name;
-			if (typeof images['phpgwapi'] != 'undefined' && typeof images['phpgwapi'][_name] != 'undefined')
+			if (typeof images['phpgwapi'] != 'undefined' && typeof images['phpgwapi'][_name] == 'string')
 			{
 				return this.webserverUrl+images['phpgwapi'][_name];
 			}
