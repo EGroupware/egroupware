@@ -430,8 +430,6 @@ class calendar_uilist extends calendar_ui
 			if ($is_private)
 			{
 				$event['class'] .= 'rowNoView ';
-				// Hide participants for private events
-				$event['parts'] = '';
 			}
 
 			$event['app'] = 'calendar';
