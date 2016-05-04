@@ -8120,4 +8120,20 @@ form[id^="tracker-"] .dialogHeadbar {
   body .cke_inner .cke_toolbox .cke_toolbox_collapser {
     height: auto;
   }
+  body .entry_id {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+  }
+  body .entry_id::before {
+    content: "#";
+    color: white;
+    font-size: 12pt;
+    font-weight: bold;
+  }
+  body .entry_id span {
+    color: white;
+    font-size: 12pt;
+    font-weight: bold;
+  }
 }

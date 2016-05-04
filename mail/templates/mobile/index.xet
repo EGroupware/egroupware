@@ -6,12 +6,12 @@
 		<grid width="100%">
 			<columns>
 				<column width="20"/>
-				<column/>
+				<column width="90%"/>
 				<column width="80"/>
 			</columns>
 			<rows>
 				<row class="th">
-					
+
 				</row>
 				<row>
 					<description class="$row_cont[class] mobile_cat_col"/>
@@ -30,7 +30,7 @@
 						<hbox>
 							<html id="${row}[attachments]"/>
 						</hbox>
-					</vbox>	
+					</vbox>
 				</row>
 			</rows>
 		</grid>

@@ -15,7 +15,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-				
+
 				</row>
 				<row class="$row_cont[class]">
 					<description class="cat_$row_cont[cat_id] mobile_cat_col"/>
@@ -50,7 +50,9 @@
 						</menulist>
 					</vbox>
 					<vbox>
-						<image id="${row}[picture_thumb]" width="50px" height="50px" expose_view="true" href="$row_cont[picture_original]" src="${row}[picture_thumb]" />
+						<hbox class="avatar">
+							<image id="${row}[picture_thumb]" width="50px" height="50px" expose_view="true" href="$row_cont[picture_original]" src="${row}[picture_thumb]" />
+						</hbox>
 					</vbox>
 				</row>
 			</rows>
@@ -100,7 +102,7 @@
 			</rows>
 		</grid>
 		<styles>
-			
+
 div.action_popup[id] {
 	position: fixed;
 	top: 200px;

@@ -114,9 +114,9 @@
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<hbox  span="all" width="100%">
 						<button statustext="Saves this entry and add a new one" id="button[save_new]" image="save_new" background_image="1"/>
-						<button statustext="Saves the changes made" id="button[save]" image="save" background_image="1"/>
 						<button statustext="Applies the changes made" id="button[apply]" image="apply" background_image="1"/>
 						<button statustext="Delete this entry" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this entry','Delete')" image="delete" background_image="1"/>
+						<textbox type="integer" id="ts_id" readonly="true" class="entry_id"/>
 					</hbox>
 				</row>
 				<row disabled="!@showsearchbuttons" class="dialogHeadbar">
@@ -131,10 +131,7 @@
 				</row>
 				<row>
 					<description value="Date"/>
-					<hbox>
-						<date id="ts_start" needed="1" options=",8"/>
-						<textbox align="right" type="integer" id="ts_id" readonly="true"/>
-					</hbox>
+					<date id="ts_start" needed="1" options=",8"/>
 				</row>
 				<row>
 					<description value="Starttime"/>
