@@ -398,7 +398,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			// if there's no active jsonq request, start a new one
 			if (title_uid == null)
 			{
-				title_uid = this.jsonq(_app+'.etemplate_widget_link.ajax_link_titles.etemplate',[{}], this.link_title_callback, this, this.link_title_before_send);
+				title_uid = this.jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_titles',[{}], this.link_title_callback, this, this.link_title_before_send);
 			}
 		},
 

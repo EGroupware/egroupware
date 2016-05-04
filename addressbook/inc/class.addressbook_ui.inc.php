@@ -756,8 +756,12 @@ class addressbook_ui extends addressbook_bo
 				'disableClass' => 'rowNoEdit',
 			);
 		}
-		if (isset($actions['export']['children']['csv']) && !importexport_helper_functions::has_definitions('addressbook','export')) unset($actions['export']['children']['csv']);
-
+		if (isset($actions['export']['children']['csv']) &&
+			(!isset($GLOBALS['egw_info']['user']['apps']['importexport']) ||
+			!importexport_helper_functions::has_definitions('addressbook','export')))
+		{
+			unset($actions['export']['children']['csv']);
+		}
 		// Intercept open action in order to open entry into view mode instead of edit
 		if (Api\Header\UserAgent::mobile())
 		{

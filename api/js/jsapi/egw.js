@@ -289,7 +289,7 @@
 						window.setTimeout(resize_popup, 50);
 					});
 				}
-				var et2 = new etemplate2(node, currentapp+".etemplate_new.ajax_process_content.etemplate");
+				var et2 = new etemplate2(node, "EGroupware\\Api\\Etemplate::ajax_process_content");
 				et2.load(data.name,data.url,data.data);
 				if (typeof data.response != 'undefined')
 				{

@@ -85,6 +85,7 @@ foreach(array(
 	'common::egw_footer' => "\$GLOBALS['egw']->framework->footer",
 	'common::show_date' => 'Api\\DateTime::server2user',
 	'common::get_tpl_dir' => 'Api\\Framework\\Template::get_dir',
+	'common::get_referer' => 'Api\\Header\\Referer::get',
 	'country' => 'Api\\Country',
 	'egw' => 'Api\\Egw',
 	'egw_minimal' => 'Api\\Egw\\Base',
@@ -158,6 +159,7 @@ foreach(array(
 	'etemplate_request' => 'Api\\Etemplate\\Request',
 	'nextmatch_widget::category_action' => 'Api\\Etemplate\\Widget\\Nextmatch::category_action',
 	'nextmatch_widget::DEFAULT_MAX_MENU_LENGTH' => 'Api\\Etemplate\\Widget\\Nextmatch::DEFAULT_MAX_MENU_LENGTH',
+	'customfields_widget::update_customfield_links' => 'Api\Storage\Customfields::update_links',
 	'egw_keymanager' => 'Api\\Etemplate\\KeyManager',
 	// so_sql and friends
 	'so_sql' => 'Api\\Storage\\Base',

@@ -2031,7 +2031,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function conflicts($event,$conflicts,$preserv)
 	{
-		$etpl = CreateObject('etemplate.etemplate_new','calendar.conflicts');
+		$etpl = new Etemplate('calendar.conflicts');
 		$allConflicts = array();
 
 		foreach($conflicts as $k => $conflict)

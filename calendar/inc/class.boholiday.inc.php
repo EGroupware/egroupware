@@ -56,15 +56,16 @@ class boholiday
 
 	function boholiday()
 	{
-		$this->so =& CreateObject('calendar.soholiday');
+		require_once(__DIR__.'/class.soholiday.inc.php');
+		$this->so = new soholiday();
 
-		$this->start  = (int)get_var('start',array('POST','GET'));
-		$this->query  = get_var('query',array('POST','GET'));
-		$this->sort   = get_var('sort',array('POST','GET'));
-		$this->order  = get_var('order',array('POST','GET'));
-		$this->id     = get_var('id',array('POST','GET'));
-		$this->year   = get_var('year',array('POST','GET'),date('Y'));
-		$this->locale = get_var('locale',array('POST','GET'));
+		$this->start  = (int)$_REQUEST['start'];
+		$this->query  = $_REQUEST['query'];
+		$this->sort   = $_REQUEST['sort'];
+		$this->order  = $_REQUEST['order'];
+		$this->id     = $_REQUEST['id'];
+		$this->year   = (int)(!empty($_REQUEST['year']) ? $_REQUEST['year'] : date('Y'));
+		$this->locale = $_REQUEST['locale'];
 		if ($this->locale)
 		{
 			$this->locales[] = $this->locale;

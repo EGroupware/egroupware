@@ -415,7 +415,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		{
 			this.serializedTabState = serialized;
 
-			egw.jsonq("api.jdots_framework.ajax_tab_changed_state", [data]);
+			egw.jsonq("api.jdots_framework.ajax_tab_changed_state.template", [data]);
 		}
 	},
 
@@ -998,7 +998,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 						var app = framework.activeApp;
 						framework.activeApp = '';
 						framework.setActiveApp(app);
-						
+
 						egw.loading_prompt(app.appName,true,egw.lang('please wait...'),app.browser.baseDiv, egwIsMobile()?'horizental':'spinner');
 
 						// Give framework a chance to deal, then reset the etemplates

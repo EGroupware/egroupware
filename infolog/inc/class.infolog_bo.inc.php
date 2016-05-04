@@ -596,7 +596,7 @@ class infolog_bo
 			}
 		}
 
-		if (($data = $this->so->read($info_id)) === False)
+		if (!$info_id || ($data = $this->so->read($info_id)) === False)
 		{
 			return null;
 		}
@@ -948,7 +948,7 @@ class infolog_bo
 				$to_write['info_responsible'] = $values['info_responsible'];
 			}
 			// create (and remove) links in custom fields
-			customfields_widget::update_customfield_links('infolog',$values,$old,'info_id');
+			Api\Storage\Customfields::update_links('infolog',$values,$old,'info_id');
 
 			// Check for restore of deleted entry, restore held links
 			if($old['info_status'] == 'deleted' && $values['info_status'] != 'deleted')
@@ -1361,7 +1361,7 @@ class infolog_bo
 			foreach ($infos as $info)
 			{
 				$start = new Api\DateTime($info['info_startdate'],Api\DateTime::$user_timezone);
-				$title = ($do_events?common::formattime($start->format('H'),$start->format('i')).' ':'').
+				$title = ($do_events ? $start->format(false).' ' : '').
 					$info['info_subject'];
 				$view = Link::view('infolog',$info['info_id']);
 				$size = null;

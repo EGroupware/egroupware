@@ -704,7 +704,7 @@ class infolog_ui
 		}
 		elseif ($own_referer === '')
 		{
-			$own_referer = common::get_referer();
+			$own_referer = Api\Header\Referer::get();
 			if (strpos($own_referer,'menuaction=infolog.infolog_ui.edit') !== false)
 			{
 				$own_referer = Api\Cache::getSession('infolog', 'own_session');
@@ -787,9 +787,9 @@ class infolog_ui
 		}
 		if (!$action)
 		{
-			$action = is_array($values) && $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
-			$action_id = is_array($values) && $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
-			$action_title = is_array($values) && $values['action_title'] ? $values['action_title'] : get_var('action_title',array('POST','GET'));
+			$action = is_array($values) && $values['action'] ? $values['action'] : $_REQUEST['action'];
+			$action_id = is_array($values) && $values['action_id'] ? $values['action_id'] : $_REQUEST['action_id'];
+			$action_title = is_array($values) && $values['action_title'] ? $values['action_title'] : $_REQUEST['action_title'];
 		}
 		//echo "<p>".__METHOD__."(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
 		if (!is_array($values))
@@ -1881,12 +1881,12 @@ class infolog_ui
 		else	// new call via GET
 		{
 			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
-			$action    = $action    ? $action    : get_var('action',   array('POST','GET'));
-			$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
-			$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
-			$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
+			$action    = $action    ? $action    : $_REQUEST['action'];
+			$action_id = $action_id ? $action_id : $_REQUEST['action_id'];
+			$info_id   = $content   ? $content   : $_REQUEST['info_id'];
+			$type      = $type      ? $type      : $_REQUEST['type'];
 			$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
-				common::get_referer('/index.php?menuaction=infolog.infolog_ui.index'));
+				Api\Header\Referer::get('/index.php?menuaction=infolog.infolog_ui.index'));
 			if (strpos($referer, 'msg=') !== false) $referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
 			$no_popup  = $_GET['no_popup'];
 			$print = (int) $_REQUEST['print'];
@@ -2360,7 +2360,7 @@ class infolog_ui
 		{
 			$icon = $this->icons[$cat][$id];
 		}
-		if ($icon && !is_readable(common::get_image_dir() . '/' . $icon))
+		if ($icon && !Api\Image::find('infolog', $icon))
 		{
 			$icon = False;
 		}

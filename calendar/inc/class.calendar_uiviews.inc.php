@@ -412,7 +412,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Displays the planner view
 	 *
-	 * @param boolean|etemplate_new $home = false if etemplate return content suitable for home-page
+	 * @param boolean|Etemplate $home = false if etemplate return content suitable for home-page
 	 */
 	function &planner($content = array(), $home=false)
 	{

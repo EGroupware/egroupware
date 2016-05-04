@@ -86,7 +86,7 @@ if (isset($_GET['tz']))
 	$GLOBALS['egw']->preferences->add('common','tz',$_GET['tz']);
 	$GLOBALS['egw']->preferences->save_repository();
 
-	if (($referer = common::get_referer()))
+	if (($referer = Api\Header\Referer::get()))
 	{
 		Egw::redirect_link($referer);
 	}

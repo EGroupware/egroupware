@@ -1474,11 +1474,11 @@ class calendar_bo
 		if ($end_m == 24*60-1) ++$duration;
 		$duration = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
 
-		$timespan = $t = common::formattime(sprintf('%02d',$start_m/60),sprintf('%02d',$start_m%60));
+		$timespan = $t = Api\DateTime::to('20000101T'.sprintf('%02d',$start_m/60).sprintf('%02d',$start_m%60).'00', false);
 
 		if ($both)	// end-time too
 		{
-			$timespan .= ' - '.common::formattime(sprintf('%02d',$end_m/60),sprintf('%02d',$end_m%60));
+			$timespan .= ' - '.Api\DateTime::to('20000101T'.sprintf('%02d',$end_m/60).sprintf('%02d',$end_m%60).'00', false);
 			// dont double am/pm if they are the same in both times
 			if ($this->common_prefs['timeformat'] == 12 && substr($timespan,-2) == substr($t,-2))
 			{

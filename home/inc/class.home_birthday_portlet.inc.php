@@ -133,10 +133,12 @@ use EGroupware\Api\Etemplate;
 								$text = lang("Tomorrow is %1's birthday.", $contact['n_given'].' '.$contact['n_family']);
 								break;
 							default:
-								list($y,$m,$d) = explode('-',$contact['bday']);
-								if ($GLOBALS['egw_info']['server']['hide_birthdays'] == 'dateonly') $y = '';
-								$text = lang("In %1 days (%2) is %3's birthday.",$n,
-									common::dateformatorder($y,$m,$d,true),
+								$date = Api\DateTime::to($contact['bday'], true);
+								if ($GLOBALS['egw_info']['server']['hide_birthdays'] == 'dateonly')
+								{
+									$date = preg_replace('/\d{4}/', '', $date);
+								}
+								$text = lang("In %1 days (%2) is %3's birthday.", $n, $date,
 									$contact['n_given'].' '.$contact['n_family']);
 								break;
 						}

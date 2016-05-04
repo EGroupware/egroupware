@@ -283,7 +283,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 
 		/**
 		 * The dataFetch function provides an abstraction layer for the
-		 * corresponding "etemplate_widget_nextmatch::ajax_get_rows" function.
+		 * corresponding "EGroupware\Api\Etemplate\Widget\Nextmatch::ajax_get_rows" function.
 		 * The server returns the following structure:
 		 * 	{
 		 * 		order: [uid, ...],
@@ -429,7 +429,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 			// independent of changes happening while waiting for the response
 			_context.filters = jQuery.extend({}, _filters);
 			var request = egw.json(
-				_app+".etemplate_widget_nextmatch.ajax_get_rows.etemplate",
+				"EGroupware\\Api\\Etemplate\\Widget\\Nextmatch::ajax_get_rows",
 				[
 					_execId,
 					_queriedRange,
@@ -836,7 +836,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 			if(typeof registeredCallbacks[_uid] !== "undefined" && registeredCallbacks[_uid].length > 0)
 			{
 				var _execId = registeredCallbacks[_uid][0].execId;
-				// This widget ID MUST be a nextmatch, because the data call is to etemplate_widget_nexmatch
+				// This widget ID MUST be a nextmatch, because the data call is to Etemplate\Widget\Nexmatch
 				var nextmatchId = registeredCallbacks[_uid][0].widgetId;
 				var uid = _uid.split("::");
 				var context = {

@@ -195,7 +195,7 @@ class Translation
 			}
 			$apps = array('common');
 			// for eTemplate apps, load etemplate before app itself (allowing app to overwrite etemplate translations)
-			if (class_exists('etemplate_new', false) || class_exists('etemplate', false)) $apps[] = 'etemplate';
+			if (class_exists('EGroupware\\Api\\Etemplate', false) || class_exists('etemplate', false)) $apps[] = 'etemplate';
 			if ($GLOBALS['egw_info']['flags']['currentapp']) $apps[] = $GLOBALS['egw_info']['flags']['currentapp'];
 			// load instance specific translations last, so they can overwrite everything
 			$apps[] = 'custom';
