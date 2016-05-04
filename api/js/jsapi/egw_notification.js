@@ -27,9 +27,6 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	// Notification permission, the default value is 'default' which is equivalent to 'denied'
 	var permission = Notification.permission || 'default';
 
-	if (Notification && Notification.requestPermission) Notification.requestPermission (function(_permission){
-		permission = _permission;
-	});
 
 	return {
 
@@ -48,9 +45,18 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *			onclose: // Callback function dispateches on notification close
 		 *			onerror: // Callback function dispatches on error, default is a egw.debug log
 		 *		}
+		 *	@return {boolean} true if the permission is granted otherwise false
 		 */
 		notification: function (_title, _options)
 		{
+
+			var self = this;
+			// Check and ask for permission
+			if (Notification && Notification.requestPermission && permission === 'default') Notification.requestPermission (function(_permission){
+				permission = _permission;
+				if (permission === 'granted') self.notification(_title,_options);
+			});
+
 			// All options including callbacks
 			var options = _options || {};
 
@@ -74,7 +80,7 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			notification.onclose = options.onclose || '';
 			// Callback function dispatches on error
 			notification.onerror = options.onerror || function (e) {egw.debug('Notification failed because of ' + e);};
-			
+
 		}
 
 	};
