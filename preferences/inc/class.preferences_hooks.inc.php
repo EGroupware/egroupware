@@ -94,10 +94,11 @@ class preferences_hooks
 		{
 			$lang = setup::get_lang();
 			if (empty($lang)) $lang = 'en';
-			list(,$country) = explode('-',$lang);
-			if (empty($country)) $country = Locale::getRegion(Locale::getDefault());
-			if (empty($country)) $country = 'de';
 		}
+		list(,$country) = explode('-',$lang);
+		if (empty($country)) $country = Locale::getRegion(Locale::getDefault());
+		if (empty($country)) $country = 'de';
+		
 		// check for old rte_font_size pref including px and split it in size and unit
 		if (!isset($GLOBALS['egw_setup']) &&
 			substr($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'], -2) == 'px')
