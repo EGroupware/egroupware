@@ -142,4 +142,13 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 			'content'	=> 'all',
 		);
 	}
+	/**
+	 * Get the class name for the egw_record to use while exporting
+	 *
+	 * @return string;
+	 */
+	public static function get_egw_record_class()
+	{
+		return 'addressbook_egw_record';
+	}
 }

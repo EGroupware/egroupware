@@ -174,8 +174,8 @@ class resources_export_csv implements importexport_iface_export_plugin {
 	/**
 	 * Customize automatically generated filter fields
 	 */
-        public function get_filter_fields(Array &$filters)
-        {
+	public function get_filter_fields(Array &$filters)
+	{
 		// In resources, not all categories are used
 		$filters['cat_id']['type'] = 'select';
 		$filters['cat_id']['name'] = 'filter';
@@ -189,9 +189,20 @@ class resources_export_csv implements importexport_iface_export_plugin {
 			'rows' => 5,
 			'values' => resources_bo::$filter_options
 		);
-                foreach($filters as $field_name => &$settings)
-                {
-                        if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
-                }
-        }
+		foreach($filters as $field_name => &$settings)
+		{
+			if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
+		}
+	}
+
+
+	/**
+	 * Get the class name for the egw_record to use while exporting
+	 *
+	 * @return string;
+	 */
+	public static function get_egw_record_class()
+	{
+		return 'resources_egw_record';
+	}
 }

@@ -103,4 +103,14 @@ class admin_export_groups_csv implements importexport_iface_export_plugin
 			'preserv' => array('no_error_for_no_selection'),
 		);
 	}
+
+	/**
+	 * Get the class name for the egw_record to use while exporting
+	 *
+	 * @return string;
+	 */
+	public static function get_egw_record_class()
+	{
+		return 'admin_egw_group_record';
+	}
 }
