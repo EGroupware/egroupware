@@ -19,7 +19,9 @@ Egroupware
 var tempDate = new Date();
 var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
 var change = {date: today.toJSON()};
-app.calendar.update_state(change);return false;"/>
+app.calendar.update_state(change);
+widget.getRoot().getWidgetById('date').set_value(today);
+return false;"/>
 			<buttononly id="header_go" label="&#8629;" icon="nope" class="ui-corner-all" onclick="var change = {date: widget.btn.attr('data-date')}; if ( app.calendar.state.view == 'listview') {change.filter='month';} else {change.view = 'month';}app.calendar.update_state(change);" />
 			<date id="date" class="et2_fullWidth" inline="true" onchange="var view_change = app.calendar.sidebox_changes_views.indexOf(app.calendar.state.view);
 var update = {date:widget.getValue()};
