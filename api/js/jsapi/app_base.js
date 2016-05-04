@@ -457,7 +457,6 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 					.click(function(){
 						egw.open(rowID, self.appname);
 					})
-					.text(egw.lang('Edit'))
 					.appendTo(this.viewContainer);
 		}
 		// view template main container (content)

@@ -24,10 +24,6 @@
  * addapted from orginal styles.php
  */
 /**
- * EGroupware general def_*.less are moved to phpgwapi/templates/default/*.less
- * so they can be included from app specific files and are independent of Pixelegg template
- */
-/**
  * All app_* files are now again in $app/templates/default/app.less&css and will be included independent
  *
  * If some settings are Pixelegg template specific, please create $app/templates/pixelegg.less&css
@@ -5778,7 +5774,7 @@ a.textSidebox {
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Hadi NAtegh <hn@stylite.de>
+ * @author Hadi Nategh <hn@stylite.de>
  * @package phpgwapi
  * @version $Id$
  */
