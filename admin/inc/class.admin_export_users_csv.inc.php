@@ -111,4 +111,13 @@ class admin_export_users_csv implements importexport_iface_export_plugin {
 			'preserv' => array('no_error_for_all'),
 		);
 	}
+	/**
+	 * Get the class name for the egw_record to use while exporting
+	 *
+	 * @return string;
+	 */
+	public static function get_egw_record_class()
+	{
+		return 'admin_egw_user_record';
+	}
 }

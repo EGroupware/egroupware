@@ -263,4 +263,14 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	public static function convert(infolog_egw_record &$record) {
 		// Stub, for now
 	}
+
+	/**
+	 * Get the class name for the egw_record to use while exporting
+	 *
+	 * @return string;
+	 */
+	public static function get_egw_record_class()
+	{
+		return 'infolog_egw_record';
+	}
 }

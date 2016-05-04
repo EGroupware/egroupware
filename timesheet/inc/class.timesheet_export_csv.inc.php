@@ -169,4 +169,13 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		}
 	}
 
+	/**
+	 * Get the class name for the egw_record to use while exporting
+	 *
+	 * @return string;
+	 */
+	public static function get_egw_record_class()
+	{
+		return 'timesheet_egw_record';
+	}
 }

@@ -590,11 +590,11 @@ class importexport_helper_functions {
 	{
 		$fields = array();
 		try {
-			if($record_classname == null) $record_classname = $app_name . '_egw_record';
-			if(!class_exists($record_classname)) throw new Exception('Bad class name ' . $record_classname);
-
 			$plugin = is_object($plugin_name) ? $plugin_name : new $plugin_name();
 			$plugin_name = get_class($plugin);
+
+			if($record_classname == null) $record_classname = $plugin::get_egw_record_class();
+			if(!class_exists($record_classname)) throw new Exception('Bad class name ' . $record_classname);
 
 			if(!$wizard_plugin)
 			{

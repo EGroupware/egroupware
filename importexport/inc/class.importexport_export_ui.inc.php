@@ -70,7 +70,7 @@ class importexport_export_ui {
 		$content['appname'] = $_appname;
 		$preserv['appname'] = $_appname;
 		if(empty($_appname)) {
-			$et.setElementAttribute('select_definition','disabled',true);
+			$et->setElementAttribute('select_definition','disabled',true);
 		}
 
 		// Check for preferred definition
