@@ -596,6 +596,9 @@ class importexport_helper_functions {
 			if($record_classname == null) $record_classname = $plugin::get_egw_record_class();
 			if(!class_exists($record_classname)) throw new Exception('Bad class name ' . $record_classname);
 
+			if($record_classname == null) $record_classname = $plugin::get_egw_record_class();
+			if(!class_exists($record_classname)) throw new Exception('Bad class name ' . $record_classname);
+
 			if(!$wizard_plugin)
 			{
 				$wizard_name = $app_name . '_wizard_' . str_replace($app_name . '_', '', $plugin_name);
