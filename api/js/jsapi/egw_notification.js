@@ -19,14 +19,20 @@
  * @augments Class
  * @param {string} _app application name object is instanciated for
  * @param {object} _wnd window object is instanciated for
+ *
+ * @return {object} defined functions of module
  */
 egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 {
 	"use strict";
 
 	// Notification permission, the default value is 'default' which is equivalent to 'denied'
-	var permission = Notification.permission || 'default';
-
+	var permission = 'default';
+	
+	if (typeof Notification != 'undefined')
+	{
+		permission = Notification.permission;
+	}
 
 	return {
 
@@ -45,10 +51,12 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *			onclose: // Callback function dispateches on notification close
 		 *			onerror: // Callback function dispatches on error, default is a egw.debug log
 		 *		}
-		 *	@return {boolean} true if the permission is granted otherwise false
+		 *	@return {boolean} false if Notification is not supported by browser
 		 */
 		notification: function (_title, _options)
 		{
+			// Check if the notification is supported by  browser
+			if (typeof Notification == 'undefined') return false;
 
 			var self = this;
 			// Check and ask for permission
