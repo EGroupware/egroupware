@@ -90,12 +90,19 @@ var et2_dataview_column = (function(){ "use strict"; return ClassWithAttributes.
 		this.initAttributes(_attrs);
 	},
 
+	/**
+	 * Set the column width
+	 *
+	 * Posible value types are:
+	 * 	1. "100" => fixedWidth 100px
+	 * 	2. "100px" => fixedWidth 100px
+	 *	3. "50%" => relativeWidth 50%
+	 *	4. 0.5 => relativeWidth 50%
+	 *
+	 * @param {float|string} _value
+	 */
 	set_width: function(_value) {
-		// Parse the width parameter. Posible values are:
-		// 	1. "100" => fixedWidth 100px
-		// 	2. "100px" => fixedWidth 100px
-		// 	3. "50%" => relativeWidth 50%
-		// 	4. 0.5 => relativeWidth 50%
+		// Parse the width parameter. 
 		this.relativeWidth = false;
 		this.fixedWidth = false;
 		var w = _value;
@@ -408,7 +415,7 @@ var et2_dataview_columns = (function(){ "use strict"; return Class.extend({
 				if(this.columns[columnIndex].visibility === ET2_COL_VISIBILITY_INVISIBLE ||
 					this.columns[columnIndex].visibility === ET2_COL_VISIBILITY_DISABLED ||
 					this.columnWidths[columnIndex] <= 0 ||
-					this.columnWidths[columnIndex] <= this.columns[columnIndex].minWidth)
+					remaining_width > 0 && this.columnWidths[columnIndex] <= this.columns[columnIndex].minWidth)
 				{
 					continue;
 				}

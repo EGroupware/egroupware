@@ -1061,6 +1061,12 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				"visibility": visibility,
 				"width": _colData[x] ? _colData[x].width : 0
 			};
+			if(_colData[x].width === 'auto')
+			{
+				// Column manager does not understand 'auto', which grid widget
+				// uses if width is not set
+				columnData[x].width = '100%';
+			}
 			if(_colData[x].minWidth)
 			{
 				columnData[x].minWidth = _colData[x].minWidth;
