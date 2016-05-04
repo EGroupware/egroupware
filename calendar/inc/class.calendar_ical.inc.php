@@ -2249,7 +2249,9 @@ class calendar_ical extends calendar_boupdate
 		// we use Api\CalDAV\IcalIterator only on resources, as calling importVCal() accesses single events like an array (eg. $events[0])
 		if (is_resource($_vcalData))
 		{
-			return new Api\CalDAV\IcalIterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($this->tzid,$principalURL));
+			return new Api\CalDAV\IcalIterator($_vcalData, 'VCALENDAR', $charset,
+				// true = add container as last parameter to callback parameters
+				array($this, '_ical2egw_callback'), array($this->tzid, $principalURL), true);
 		}
 
 		if ($this->tzid)
@@ -2333,6 +2335,12 @@ class calendar_ical extends calendar_boupdate
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
+		}
+
+		// eg. Mozilla holiday calendars contain only a X-WR-TIMEZONE on vCalendar component
+		if (!$tzid && $container && ($tz = $container->getAttributeDefault('X-WR-TIMEZONE')))
+		{
+			$tzid = $tz;
 		}
 
 		if (!is_a($component, 'Horde_Icalendar_Vevent') ||

@@ -185,10 +185,6 @@ class calendar_bo
 	 */
 	var $cached_holidays;
 	/**
-	 * @var boholiday
-	 */
-	var $holidays;
-	/**
 	 * Instance of the socal class
 	 *
 	 * @var calendar_so
@@ -1744,14 +1740,11 @@ class calendar_bo
 	 *
 	 * @param int $year =0 year, defaults to 0 = current year
 	 * @return array indexed with Ymd of array of holidays. A holiday is an array with the following fields:
-	 *	index: numerical unique id
-	 *	locale: string, 2-char short for the nation
 	 *	name: string
+	 *  title: optional string with description
 	 *	day: numerical day in month
 	 *	month: numerical month
 	 *	occurence: numerical year or 0 for every year
-	 *	dow: day of week, 0=sunday, .., 6= saturday
-	 *	observande_rule: boolean
 	 */
 	function read_holidays($year=0)
 	{
@@ -1763,12 +1756,10 @@ class calendar_bo
 		}
 		if (!isset($this->cached_holidays[$year]))
 		{
-			if (!is_object($this->holidays))
-			{
-				$this->holidays = CreateObject('calendar.boholiday');
-			}
-			$this->holidays->prepare_read_holidays($year);
-			$this->cached_holidays[$year] = $this->holidays->read_holiday();
+			$this->cached_holidays[$year] = calendar_holidays::read(
+				!empty($GLOBALS['egw_info']['server']['ical_holiday_url']) ?
+				$GLOBALS['egw_info']['server']['ical_holiday_url'] :
+				$GLOBALS['egw_info']['user']['preferences']['common']['country'], $year);
 
 			// search for birthdays
 			if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
@@ -1813,7 +1804,7 @@ class calendar_bo
 				}
 			}
 			// store holidays and birthdays in the session
-			$this->cached_holidays = Api\Cache::setSession('calendar', 'holidays', $this->cached_holidays);
+			Api\Cache::setSession('calendar', 'holidays', $this->cached_holidays);
 		}
 		if ((int) $this->debug >= 2 || $this->debug == 'read_holidays')
 		{

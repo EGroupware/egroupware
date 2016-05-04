@@ -520,7 +520,6 @@ class calendar_ui
 			$file = Array(
 				'Configuration'=>Egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
 				'Custom Fields'=>Egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
-				'Holiday Management'=>Egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
 				'Global Categories' =>Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
 			);
 			$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');

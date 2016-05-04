@@ -10,7 +10,7 @@
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '16.1';
+$setup_info['calendar']['version'] = '16.1.001';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index&ajax=true';
@@ -26,7 +26,6 @@ $setup_info['calendar']['author'] = $setup_info['calendar']['maintainer'] = arra
 );
 
 $setup_info['calendar']['tables'][] = 'egw_cal';
-$setup_info['calendar']['tables'][] = 'egw_cal_holidays';
 $setup_info['calendar']['tables'][] = 'egw_cal_repeats';
 $setup_info['calendar']['tables'][] = 'egw_cal_user';
 $setup_info['calendar']['tables'][] = 'egw_cal_extra';

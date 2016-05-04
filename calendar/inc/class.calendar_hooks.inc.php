@@ -86,7 +86,6 @@ class calendar_hooks
 		$file = Array(
 			'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
 			'Custom fields' => Egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
-			'Calendar Holiday Management' => Egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
 			'Global Categories' => Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
 			'Category ACL' => Egw::link('/index.php','menuaction=calendar.calendar_uiforms.cat_acl'),
 			'Update timezones' => Egw::link('/index.php','menuaction=calendar.calendar_timezones.update'),

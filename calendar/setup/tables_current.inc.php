@@ -41,22 +41,6 @@ $phpgw_baseline = array(
 		'ix' => array('cal_uid','cal_owner','cal_modified','cal_reference','cal_deleted','caldav_name'),
 		'uc' => array()
 	),
-	'egw_cal_holidays' => array(
-		'fd' => array(
-			'hol_id' => array('type' => 'auto','nullable' => False),
-			'hol_locale' => array('type' => 'char','precision' => '2','nullable' => False),
-			'hol_name' => array('type' => 'varchar','precision' => '50','nullable' => False),
-			'hol_mday' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-			'hol_month_num' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-			'hol_occurence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-			'hol_dow' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-			'hol_observance_rule' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0')
-		),
-		'pk' => array('hol_id'),
-		'fk' => array(),
-		'ix' => array('hol_locale'),
-		'uc' => array()
-	),
 	'egw_cal_repeats' => array(
 		'fd' => array(
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),

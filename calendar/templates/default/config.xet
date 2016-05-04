@@ -10,18 +10,11 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="Do you wish to autoload calendar holidays files dynamically?"/>
-					<select id="newsettings[auto_load_holidays]">
-						<option value="">No</option>
-						<option value="True">Yes</option>
-					</select>
-				</row>
-				<row>
-					<description value="Location to autoload from" label="%s:"/>
-					<select id="newsettings[holidays_url_path]">
-						<option value="localhost">localhost</option>
-						<option value="http://www.egroupware.org/cal">www.egroupware.org</option>
-					</select>
+					<vbox>
+						<description value="Custom URL for iCal with holidays for all users" label="%s:"/>
+						<description label="(Without a custom URL we use nation of user preference to load holidays from %s)" href="https://www.mozilla.org/en-US/projects/calendar/holidays/" value="Mozilla Holiday Calendars" extra_link_target="_blank"/>
+					</vbox>
+					<url id="newsettings[ical_holiday_url]" size="64"/>
 				</row>
 				<row>
 					<description value="setting lock time calender" label="%s:"/>

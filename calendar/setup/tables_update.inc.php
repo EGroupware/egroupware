@@ -2715,3 +2715,11 @@ function calendar_upgrade14_3_903()
 {
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1';
 }
+
+
+function calendar_upgrade16_1()
+{
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_cal_holidays');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1.001';
+}

@@ -12,9 +12,9 @@
 %s the event	calendar	de	%s dem Termin
 (%1 events in %2 seconds)	calendar	de	(%1 Termine in %2 Sekunden
 (empty = use global limit, no = no export at all)	admin	de	(leer = globale Begrenzung verwenden, nein = gar kein Export)
+(without a custom url we use nation of user preference to load holidays from %s)	calendar	de	(Ohne eine eigene URL laden wir die Feiertage entsprechen des Landes in den Benutzereinstellung aus den %s)
 , exceptions preserved	calendar	de	und Ausnahmen erhalten
 , stati of participants reset	calendar	de	, Status der Teilnehmer zurückgesetzt
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	de	<b>Bitte beachten</b>: Der Kalender verwendet die Feiertages des Landes, welches auf %1 eingestellt ist. Das können Sie in Ihren %2 ändern.<br />Feiertage werden %3 automatisch von %4 installiert, was in %5 änderbar ist.
 a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keine Konflikt mit anderen Terminen
 accept	calendar	de	Zusagen
 accept or reject an invitation	calendar	de	Einladung zu- oder absagen
@@ -55,8 +55,6 @@ always	calendar	de	Immer
 apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Termine
 apply the changes	calendar	de	Übernimmt die Änderungen
 appointment settings	calendar	de	Einstellungen der Terminverwaltung
-are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen möchten?
-are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen möchten?
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	de	Als Alternative können Sie auch einen %1MySQL Dump herunterladen%2 und diesen von Hand in die Datenbank Tabelle egw_cal_timezones importieren.
 automatically purge old events after	admin	de	Bereinigt bzw. löscht alte Termine automatisch nach
 back half a month	calendar	de	einen halben Monat zurück
@@ -79,7 +77,6 @@ calendar csv export	calendar	de	Kalender CSV Export
 calendar csv import	calendar	de	Kalender CSV Import
 calendar event	calendar	de	Kalender Aktualisierung
 calendar fields:	calendar	de	Kalender  Felder:
-calendar holiday management	admin	de	Feiertage verwalten
 calendar ical export	calendar	de	Kalender iCal Export
 calendar ical import	calendar	de	Kalender iCal Import
 calendar id	calendar	de	Kalender ID
@@ -120,6 +117,7 @@ csv-fieldname	calendar	de	CSV-Feldname
 csv-filename	calendar	de	CSV-Dateiname
 custom	calendar	de	Benutzerdefiniert
 custom fields	common	de	Benutzerdefinierte Felder
+custom url for ical with holidays for all users	calendar	de	Eigene URL für iCal-Datei mit Feiertagen für alle Benutzer
 custom_2	common	de	frei / besetzt
 daily	calendar	de	Täglich
 daily tables	calendar	de	Tabellen für tägliche Einträge
@@ -169,7 +167,6 @@ do you want to be notified about new or changed appointments? you be notified ab
 do you want to edit this event as an exception or the whole series?	calendar	de	Wollen Sie diesen Termin als Ausnahme bearbeiten oder die ganze Serie?
 do you want to keep the series exceptions in your calendar?	calendar	de	Wollen Sie die Ausnahmen dieses Serientermins in Ihrem Kalender behalten?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre Standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet, wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
-do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
 download	calendar	de	Herunterladen
 download this event as ical	calendar	de	Termin als iCal herunterladen
 duration	calendar	de	Dauer
@@ -264,7 +261,6 @@ high priority	calendar	de	Hohe Priorität
 history	calendar	de	Historie
 history logging	admin	de	Protokollierung der Historie
 holiday	calendar	de	Feiertag
-holiday management	calendar	de	Feiertagsverwaltung
 holidays	calendar	de	Feiertage
 holidays only	calendar	de	Nur Feiertage
 hours	calendar	de	Stunden
@@ -281,7 +277,6 @@ ical export	calendar	de	iCal Export
 ical file	calendar	de	iCal Datei
 ical import	calendar	de	iCal Import
 ical successful imported	calendar	de	iCal erfolgreich importiert
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauf folgenden Montag nachgeholt.
 if start day differs	calendar	de	Wenn die Starttage abweichen
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	de	Falls Sie einen Bereich (Monat, Woche, Tag) anstatt einer Liste von Einträge ausgewählt haben, können Sie folgende Platzhalter für Ihre Felder definieren.
@@ -318,7 +313,6 @@ links, attachments	calendar	de	Verknüpfungen, Datei-Anhänge
 list of files linked to the current record	calendar	de	Liste der Dokumente, die zum aktuellen Datensatz gehören.
 listview	calendar	de	Listenansicht
 location	calendar	de	Ort
-location to autoload from	admin	de	Von wo sollen sie geladen werden
 location, start- and endtimes, ...	calendar	de	Ort, Start- und Endzeiten
 mail all participants	calendar	de	Mail an alle Teilnehmer
 make freebusy information available to not loged in persons?	calendar	de	Die freien/nicht verfügbaren Zeiten für nicht angemeldete Personen sichtbar machen?
@@ -459,7 +453,6 @@ select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten so
 selected range	calendar	de	Ausgewählter Zeitraum
 send meetingrequest to all participants after the event is saved	calendar	de	Terminanforderung an alle Teilnehmer senden nachdem der Termin gespeichert wurde
 series deleted	calendar	de	Serientermin wurde gelöscht
-set a year only for one-time / non-regular holidays.	calendar	de	Nur für einmalige bzw. unregelmäßige Feiertage das Jahr angeben.
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
 setting lock time calender	admin	de	Zeitintervall für Datensatzlock (Voreinstellung beträgt eine Sekunde)
 shall the date parameter be accepted (e.g. from calendar module)?	calendar	de	Soll der Parameter Datum akzeptiert werden (z.B. vom Kalender Modul)?

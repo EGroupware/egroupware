@@ -104,8 +104,9 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 	 * @param string $charset =null
 	 * @param callback $callback =null callback to call with component in current() method, if returning false, item get's ignored
 	 * @param array $callback_params =array() further parameters for the callback, 1. parameter is component
+	 * @param boolean $add_container =false true, add container / $this as last parameter to callback
 	 */
-	public function __construct($ical_file,$base='VCALENDAR',$charset=null,$callback=null,array $callback_params=array())
+	public function __construct($ical_file,$base='VCALENDAR',$charset=null,$callback=null,array $callback_params=array(), $add_container=false)
 	{
 		// call parent constructor
 		parent::__construct();
@@ -115,6 +116,7 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 		if (is_callable($callback))
 		{
 			$this->callback = $callback;
+			if ($add_container) $callback_params[] = $this;
 			$this->callback_params = $callback_params;
 		}
 		if (is_string($ical_file))
@@ -274,7 +276,7 @@ class IcalIterator extends Horde_Icalendar implements \Iterator
 	 */
 	public function rewind()
 	{
-		fseek($this->ical_file,0,SEEK_SET);
+		@fseek($this->ical_file,0,SEEK_SET);
 
 		// advance to begin of container
 		while(($line = $this->read_line()) && substr($line,0,6+strlen($this->base)) !== 'BEGIN:'.$this->base)

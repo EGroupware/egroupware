@@ -158,7 +158,7 @@ class calendar_uiviews extends calendar_ui
 			'daywise' => True,
 			'use_so_events' => $this->test === 'true',
 		);
-		$this->holidays = $this->bo->read_holidays($this->year);
+//		$this->holidays = $this->bo->read_holidays($this->year);
 
 		$this->check_owners_access();
 
