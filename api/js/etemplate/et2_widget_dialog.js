@@ -621,7 +621,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 					message: _message
 				}
 			},
-			template: egw.webserverUrl+'/etemplate/templates/default/prompt.xet',
+			template: egw.webserverUrl+'/api/templates/default/prompt.xet',
 			class: "et2_prompt"
 		}, et2_dialog._create_parent(_egw_or_appname));
 	},
@@ -698,7 +698,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 			}}
 		];
 		var dialog = et2_createWidget("dialog", {
-			template: egw.webserverUrl+'/etemplate/templates/default/long_task.xet',
+			template: egw.webserverUrl+'/api/templates/default/long_task.xet',
 			value: {
 				content: {
 					message: _message

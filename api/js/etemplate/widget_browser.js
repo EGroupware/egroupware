@@ -311,7 +311,7 @@ widget_browser.prototype._dtd_builder = function()
 					message: egw.lang('DTD Content')
 				}
 			},
-			template: egw.webserverUrl+'/etemplate/templates/default/dtd.xet',
+			template: egw.webserverUrl+'/api/templates/default/dtd.xet',
 			modal:true,
 			resizable:false
 		});
