@@ -1721,8 +1721,7 @@ class calendar_boupdate extends calendar_bo
 
 		foreach(explode(',',$event['category']) as $cat_id)
 		{
-			list($cat) = $GLOBALS['egw']->categories->return_single($cat_id);
-			$cat_string[] = stripslashes($cat['name']);
+			$cat_string[] = stripslashes(Api\Categories::id2name($cat_id));
 		}
 		$var['category'] = Array(
 			'field'	=> lang('Category'),
