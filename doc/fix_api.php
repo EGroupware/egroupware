@@ -161,6 +161,7 @@ foreach(array(
 	'nextmatch_widget::DEFAULT_MAX_MENU_LENGTH' => 'Api\\Etemplate\\Widget\\Nextmatch::DEFAULT_MAX_MENU_LENGTH',
 	'customfields_widget::update_customfield_links' => 'Api\Storage\Customfields::update_links',
 	'egw_keymanager' => 'Api\\Etemplate\\KeyManager',
+	'etemplate::array_stripslashes' => 'array_stripslashes',
 	// so_sql and friends
 	'so_sql' => 'Api\\Storage\\Base',
 	'so_sql_cf' => 'Api\\Storage',
