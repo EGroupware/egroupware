@@ -2188,18 +2188,11 @@ class etemplate extends boetemplate
 	*
 	* @param array &$var
 	* @return array
+	* @deprecated use global array_stripslashes
 	*/
 	static function array_stripslashes($var)
 	{
-		if (!is_array($var))
-		{
-			return stripslashes($var);
-		}
-		foreach($var as $key => $val)
-		{
-			$var[$key] = is_array($val) ? self::array_stripslashes($val) : stripslashes($val);
-		}
-		return $var;
+		return array_stripslashes($var);
 	}
 
 	/**
@@ -2229,7 +2222,7 @@ class etemplate extends boetemplate
 		$content = array();
 		if (get_magic_quotes_gpc())
 		{
-			$content_in = self::array_stripslashes($content_in);
+			$content_in = array_stripslashes($content_in);
 		}
 		self::$validation_errors = array();
 		$this->canceled = $this->button_pressed = False;

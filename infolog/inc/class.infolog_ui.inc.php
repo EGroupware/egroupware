@@ -2375,29 +2375,6 @@ class infolog_ui
 	}
 
 	/**
-	 * stripping slashes from an array
-	 *
-	 * @static
-	 * @param array $arr
-	 * @return array
-	 */
-	function array_stripslashes($arr)
-	{
-		foreach($arr as $key => $val)
-		{
-			if (is_array($val))
-			{
-				$arr[$key] = self::array_stripslashes($val);
-			}
-			else
-			{
-				$arr[$key] = stripslashes($val);
-			}
-		}
-		return $arr;
-	}
-
-	/**
 	 * Infolog's site configuration
 	 *
 	 */
