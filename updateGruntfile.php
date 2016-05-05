@@ -115,7 +115,7 @@ $new_json = str_replace("\n", "\n\t",
 	preg_replace_callback('/^( *)/m', function($matches)
 	{
 		return str_repeat("\t", strlen($matches[1])/4);
-	}, json_encode($config, JSON_PRETTY_PRINT)));
+	}, json_encode($config, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES)));
 
 $new_content = preg_replace('/^(\s*)"([a-z0-9]+)":/mi', '$1$2:', $new_json);
 //die($new_content."\n");
