@@ -198,7 +198,7 @@ class module_calendar_planner extends Module
 		}
 		$this->arguments['resources']['options'] = array_unique($this->arguments['resources']['options']);
 		$this->arguments['resources']['multiple'] = count($this->arguments['resources']['options']) ? 4 : 0;
-		
+
 
 		return parent::get_user_interface();
 	}
@@ -281,7 +281,9 @@ class module_calendar_planner extends Module
 			}
 			elseif ($ui->planner_view == 'week' || $ui->planner_view == 'weekN')	// weeekview
 			{
-				$ui->first = $ui->datetime->get_weekday_start($ui->year,$ui->month,$ui->day);
+				$start = new Api\DateTime($ui->date);
+				$start->setWeekstart();
+				$ui->first = $start->format('ts');
 				$ui->last = $ui->bo->date2array($this->first);
 				$ui->last['day'] += ($ui->planner_view == 'week' ? 7 : 7 * $ui->cal_prefs['multiple_weeks'])-1;
 				$ui->last['hour'] = 23; $ui->last['minute'] = $ui->last['sec'] = 59;

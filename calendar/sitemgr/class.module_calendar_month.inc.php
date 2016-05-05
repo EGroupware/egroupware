@@ -239,10 +239,9 @@ class module_calendar_month extends Module
 			$start = (int) ($this->bo->now_su +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
-		$first = $this->ui->datetime->get_weekday_start(
-					adodb_date('Y',$start),
-					adodb_date('m',$start),
-					adodb_date('d',$start));
+		$start = new Api\DateTime($start);
+		$start->setWeekstart();
+		$first = $start->format('ts');
 		$last = strtotime("+$weeks weeks",$first) - 1;
 
 		if ($arguments['showTitle'])

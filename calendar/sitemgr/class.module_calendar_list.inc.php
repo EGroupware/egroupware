@@ -254,20 +254,19 @@ class module_calendar_list extends Module
 
 		if (($arguments['acceptDateParam']) && (get_var('date',array('POST','GET'))))
 		{
-			$first = $start = (int) (strtotime(get_var('date',array('POST','GET'))) +
+			$first = (int) (strtotime(get_var('date',array('POST','GET'))) +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
 		else
 		{
-			$first = $start = (int) ($this->bo->now_su +
+			$first = (int) ($this->bo->now_su +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
 		if ($arguments['useWeekStart'])
 		{
-			$first = $this->ui->datetime->get_weekday_start(
-				adodb_date('Y',$start),
-				adodb_date('m',$start),
-				adodb_date('d',$start));
+			$start = Api\DateTime($first);
+			$start->setWeekStart();
+			$first = $start->format('ts');
 		}
 
 		$last = (int) ($first +
