@@ -13,7 +13,7 @@
  * @todo extend Stylite template preferences instead of this copy (simple include fails)
  */
 $apps = $no_navbar_apps = array();
-if (!$hook_data['setup'])	// does not work on setup time
+if (!$hook_data['setup'] && !isset($GLOBALS['egw_setup']))	// does not work on setup time
 {
 	foreach(ExecMethod('pixelegg.pixelegg_framework.navbar_apps') as $app => $data)
 	{

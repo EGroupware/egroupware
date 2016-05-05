@@ -11,7 +11,7 @@
 		<meta name="author" content="Stylite AG www.stylite.de" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="viewport" content="user-scalable=no,width=device-width" />
-		<link rel="apple-touch-icon" href="{webserver_url}/phpgwapi/templates/default/images/logo64x64.png" />
+		<link rel="apple-touch-icon" href="{webserver_url}/api/templates/default/images/logo64x64.png" />
 		{pngfix}
 		{meta_robots}
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
