@@ -1595,6 +1595,9 @@ class editor
 
 		if (isset($this->extensions['**loaded**'][$app])) return '';	// already loaded
 
+		// load eT2 widgets first, as eg. customfield_widget depends on eT2 Widget\Transformer
+		EGroupware\Api\Etemplate\Widget::scanForWidgets();
+
 		$labels = array();
 		$dir = @opendir(EGW_SERVER_ROOT.'/'.$app.'/inc');
 		while ($dir && ($file = readdir($dir)))
