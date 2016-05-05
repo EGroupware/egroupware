@@ -9,14 +9,16 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 $resources_table_prefix = 'egw_resources';
 
 // Add a general category for resources
-$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->cats_table,array('cat_parent' => 0, 'cat_owner' => categories::GLOBAL_ACCOUNT,'cat_access' => 'public','cat_appname' => 'resources','cat_name' => 'General resources','cat_description' => 'This category has been added by setup','last_mod' => time()),false,__LINE__,__FILE__);
+$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->cats_table,array('cat_parent' => 0, 'cat_owner' => Api\Categories::GLOBAL_ACCOUNT,'cat_access' => 'public','cat_appname' => 'resources','cat_name' => 'General resources','cat_description' => 'This category has been added by setup','last_mod' => time()),false,__LINE__,__FILE__);
 $cat_id = $GLOBALS['egw_setup']->db->get_last_insert_id($GLOBALS['egw_setup']->cats_table,'cat_id');
-$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->cats_table,array('cat_parent' => 0, 'cat_owner' => categories::GLOBAL_ACCOUNT,'cat_access' => 'public','cat_appname' => 'resources','cat_name' => 'Locations','cat_description' => 'This category has been added by setup','last_mod' => time()),false,__LINE__,__FILE__);
+$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->cats_table,array('cat_parent' => 0, 'cat_owner' => Api\Categories::GLOBAL_ACCOUNT,'cat_access' => 'public','cat_appname' => 'resources','cat_name' => 'Locations','cat_description' => 'This category has been added by setup','last_mod' => time()),false,__LINE__,__FILE__);
 $locations_cat_id = $GLOBALS['egw_setup']->db->get_last_insert_id($GLOBALS['egw_setup']->cats_table,'cat_id');
-config::save_value('location_cats', $locations_cat_id, 'resources');
+Api\Config::save_value('location_cats', $locations_cat_id, 'resources');
 
 // Give default group all rights to this general cat
 $defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);

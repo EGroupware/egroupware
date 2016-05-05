@@ -11,6 +11,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Acl;
+
 /**
  * export resources to CSV
  */
@@ -34,7 +37,7 @@ class resources_export_csv implements importexport_iface_export_plugin {
 		$selection = array();
 		if ($options['selection'] == 'search') {
 			// ui selection with checkbox 'selected'
-			$query = egw_cache::getSession('resources', 'get_rows');
+			$query = Api\Cache::getSession('resources', 'get_rows');
 			$query['num_rows'] = -1;	// all
 			unset($query['store_state']);
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
@@ -83,7 +86,7 @@ class resources_export_csv implements importexport_iface_export_plugin {
 
 		// Check if we need to load the custom fields
 		$need_custom = false;
-		foreach(config::get_customfields('resources') as $field => $settings) {
+		foreach(Api\Storage\Customfields::get('resources') as $field => $settings) {
 			if($options['mapping']['#'.$field]) {
 				$need_custom = true;
 				break;
@@ -179,7 +182,7 @@ class resources_export_csv implements importexport_iface_export_plugin {
 		// In resources, not all categories are used
 		$filters['cat_id']['type'] = 'select';
 		$filters['cat_id']['name'] = 'filter';
-		$filters['cat_id']['values']= (array)$this->bo->acl->get_cats(EGW_ACL_READ);
+		$filters['cat_id']['values']= (array)$this->bo->acl->get_cats(Acl::READ);
 
 		// Add in resources / accessories
 		$filters['filter2'] = array(

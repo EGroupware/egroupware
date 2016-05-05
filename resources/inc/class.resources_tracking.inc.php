@@ -6,17 +6,18 @@
  * @copyright 2012 Nathan Gray
  * @package resources
  * @sub-package history
- * @see bo_tracking
+ * @see Api\Storage\Tracking
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
+use EGroupware\Api;
 
 /**
  * Resources - tracking object for history
  */
-class resources_tracking extends bo_tracking
+class resources_tracking extends Api\Storage\Tracking
 {
 
 	

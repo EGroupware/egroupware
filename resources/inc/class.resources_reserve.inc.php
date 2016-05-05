@@ -10,6 +10,10 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+
 class resources_reserve {
 
 	public function __construct() {
@@ -22,7 +26,7 @@ class resources_reserve {
 	 */
 	public function book($content = array(), $arguments = array())
 	{
-		egw_framework::validate_file('jscalendar','calendar');
+		Framework::includeJS('jscalendar','calendar');
 		$data = array();
 		$readonlys = array();
 		$display_days = $_GET['planner_days'] ? $_GET['planner_days'] : 3;
@@ -32,11 +36,11 @@ class resources_reserve {
 			$register_code = ($_GET['confirm'] && preg_match('/^[0-9a-f]{32}$/',$_GET['confirm'])) ? $_GET['confirm'] : false;
 			if($register_code && $registration = registration_bo::confirm($register_code)) {
 				// Get calendar through link
-				$links = egw_link::get_links('registration', $registration['reg_id'],'calendar');
+				$links = Link::get_links('registration', $registration['reg_id'],'calendar');
 				$bo = new calendar_boupdate();
 				$data = $bo->read(current($links));
 
-				$addressbook = new addressbook_bo();
+				$addressbook = new Api\Contacts();
 				$data += $addressbook->read(key($data['participant_types']['c']));
 
 				// Show date of reservation, so they can see it blocked off
@@ -50,7 +54,7 @@ class resources_reserve {
 					'quantity' => 0
 				);
 				calendar_so::split_status($data['participant_types']['r'][$content['resource']], $content['quantity'],$role);
-				$data['msg']= '<div class="confirm">'.lang('Registration confirmed %1', egw_time::to($data['start'])) .'</div>';
+				$data['msg']= '<div class="confirm">'.lang('Registration confirmed %1', Api\DateTime::to($data['start'])) .'</div>';
 			} else {
 				$data['msg']= '<div class="confirm">'.lang('Unable to process confirmation.').'</div>';
 			}
@@ -83,7 +87,7 @@ class resources_reserve {
 			// Use sitemgr's default appointment length
 			if($GLOBALS['egw_info']['user']['account_lid'] != $GLOBALS['sitemgr_info']['anonymous_user'])
 			{
-				$preferences = new preferences($GLOBALS['egw']->accounts->name2id($GLOBALS['sitemgr_info']['anonymous_user']));
+				$preferences = new Api\Preferences($GLOBALS['egw']->accounts->name2id($GLOBALS['sitemgr_info']['anonymous_user']));
 				$preferences = $preferences->read_repository();
 				$duration = $preferences['calendar']['defaultlength'] * 60;
 			}
@@ -93,7 +97,7 @@ class resources_reserve {
 			}
 			$end_time = $start_time + $duration;
 
-			$config = config::read('registration');
+			$config = Api\Config::read('registration');
 
 			// Not a user, need contact
 			if($GLOBALS['egw_info']['user']['account_lid'] == $GLOBALS['sitemgr_info']['anonymous_user'] && !$content['contact_id'])
@@ -104,14 +108,14 @@ class resources_reserve {
 					$content['private'] = 0;        // in case default_private is set
 				}
 
-				$addressbook = new addressbook_bo();
+				$addressbook = new Api\Contacts();
 				$contact_fields = $addressbook->contact_fields;
 				unset($contact_fields['email']); // Always present
 				unset($contact_fields['id']); // Address already there
 				if(array_intersect_key($contact_fields,$content)) {
 					$result = $addressbook->save($content);
 					if(!$result) {
-						throw new egw_exception_no_permission($addressbook->error);
+						throw new Api\Exception\NoPermission($addressbook->error);
 						return False;
 					}
 
@@ -129,7 +133,7 @@ class resources_reserve {
 			if($contact) {
 				// Make event
 				$event = array(
-					'title' =>	egw_link::title('addressbook', $contact_id),
+					'title' =>	Link::title('addressbook', $contact_id),
 					'start' =>	$start_time,
 					'end' =>	$end_time,
 					'participants' => array(
@@ -160,7 +164,7 @@ class resources_reserve {
 					$data += $content;
 					$data['msg'] = lang('Please choose a different time:')."\n";
 					foreach($freetime as $slot) {
-						$data['msg'] .= egw_time::to($slot['start']) . ' - ' . egw_time::to($slot['end'])."<br />\n";
+						$data['msg'] .= Api\DateTime::to($slot['start']) . ' - ' . Api\DateTime::to($slot['end'])."<br />\n";
 					}
 				}
 				elseif ($preserve['confirmation'] && $contact_id && $result)
@@ -175,21 +179,21 @@ class resources_reserve {
 					if(is_numeric($reg_id))
 					{
 						// Link to event
-						egw_link::link('registration', $reg_id, 'calendar', $result);
+						Link::link('registration', $reg_id, 'calendar', $result);
 						$reg = registration_bo::read($reg_id);
 
 						// Send email
 						$email_info = $config + array(
 							'title' => $data['name'],
-							'subject' => $data['name'] . ' ' . egw_time::to($start_time),
+							'subject' => $data['name'] . ' ' . Api\DateTime::to($start_time),
 							'link' => $preserve['link'],
 						);
 						if($preserve['email_message'])
 						{
 							$email_info['message'] = lang($preserve['email_message'],
-								egw_time::to($start_time),
+								Api\DateTime::to($start_time),
 								$preserve['link'].'&confirm='.$reg['register_code'],
-								egw_time::to($reg['timestamp'])
+								Api\DateTime::to($reg['timestamp'])
 							);
 						}
 						$data['msg'] .= registration_bo::send_confirmation($email_info, $reg);
@@ -219,7 +223,7 @@ class resources_reserve {
 		// Use sitemgr's default appointment length
 		if($GLOBALS['egw_info']['user']['account_lid'] != $GLOBALS['sitemgr_info']['anonymous_user'])
 		{
-			$preferences = new preferences($GLOBALS['egw']->accounts->name2id($GLOBALS['sitemgr_info']['anonymous_user']));
+			$preferences = new Api\Preferences($GLOBALS['egw']->accounts->name2id($GLOBALS['sitemgr_info']['anonymous_user']));
 			$preferences = $preferences->read_repository();
 			$data['duration'] = $preferences['calendar']['defaultlength'];
 		}
@@ -263,7 +267,7 @@ class resources_reserve {
 	}
 
 	public function ajax_update_planner($resource_id, $date) {
-		$response = egw_json_response::get();
+		$response = Api\Json\Response::get();
 		$response->assign('exec[planner_div]','innerHTML',$this->get_planner(
 			$resource_id,
 			strtotime('yesterday',$date),
@@ -314,7 +318,7 @@ class resources_reserve {
 	public function confirm($registration)
 	{
 		// Get calendar through link
-		$links = egw_link::get_links('registration', $registration['reg_id'],'calendar');
+		$links = Link::get_links('registration', $registration['reg_id'],'calendar');
 		$bo = new calendar_boupdate();
 		$event = $bo->read(current($links));
 		if($registration['status'] == registration_bo::CONFIRMED)

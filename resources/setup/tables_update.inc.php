@@ -11,6 +11,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Vfs;
+
 function resources_upgrade0_0_1_008()
 {
 	$GLOBALS['phpgw_setup']->oProc->AddColumn('egw_resources','picture_src',array(
@@ -291,24 +294,24 @@ function resources_upgrade1_2()
  */
 function resources_upgrade1_4()
 {
-	egw_vfs::$is_root = true;
-	egw_vfs::load_wrapper('sqlfs');
-	if (egw_vfs::is_dir('/resources/pictures'))
+	Vfs::$is_root = true;
+	Vfs::load_wrapper('sqlfs');
+	if (Vfs::is_dir('/resources/pictures'))
 	{
-		egw_vfs::remove('/resources/pictures/thumbs');	// remove thumb dir incl. thumbnails
-		foreach(egw_vfs::find('sqlfs://default/resources/pictures',array('url' => true)) as $url)
+		Vfs::remove('/resources/pictures/thumbs');	// remove thumb dir incl. thumbnails
+		foreach(Vfs::find('sqlfs://default/resources/pictures',array('url' => true)) as $url)
 		{
 			if (is_numeric($id = basename($url,'.jpg')))
 			{
-				if (!egw_vfs::is_dir($dir = "/apps/resources/$id"))
+				if (!Vfs::is_dir($dir = "/apps/resources/$id"))
 				{
-					egw_vfs::mkdir($dir,0777,STREAM_MKDIR_RECURSIVE);
+					Vfs::mkdir($dir,0777,STREAM_MKDIR_RECURSIVE);
 				}
 				rename($url,'sqlfs://default'.$dir.'/.picture.jpg');	// we need to rename on the same wrapper!
 			}
 		}
-		egw_vfs::rmdir('/resources/pictures',0);
-		egw_vfs::rmdir('/resources',0);
+		Vfs::rmdir('/resources/pictures',0);
+		Vfs::rmdir('/resources',0);
 	}
 	return $GLOBALS['setup_info']['resources']['currentver'] = '1.6';
 }
@@ -323,9 +326,9 @@ function resources_upgrade1_6()
 function resources_upgrade1_8()
 {
 	// add location category required for CalDAV to distinguish between locations and resources
-	$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->cats_table,array('cat_parent' => 0, 'cat_owner' => categories::GLOBAL_ACCOUNT,'cat_access' => 'public','cat_appname' => 'resources','cat_name' => 'Locations','cat_description' => 'This category has been added by setup','last_mod' => time()),false,__LINE__,__FILE__);
+	$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->cats_table,array('cat_parent' => 0, 'cat_owner' => Api\Categories::GLOBAL_ACCOUNT,'cat_access' => 'public','cat_appname' => 'resources','cat_name' => 'Locations','cat_description' => 'This category has been added by setup','last_mod' => time()),false,__LINE__,__FILE__);
 	$locations_cat_id = $GLOBALS['egw_setup']->db->get_last_insert_id($GLOBALS['egw_setup']->cats_table,'cat_id');
-	config::save_value('location_cats', $locations_cat_id, 'resources');
+	Api\Config::save_value('location_cats', $locations_cat_id, 'resources');
 
 	// Give default group all rights to this general cat
 	$defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
@@ -383,4 +386,8 @@ function resources_upgrade1_9_003()
 function resources_upgrade1_9_004()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '14.1';
+}
+function resources_upgrade14_1()
+{
+	return $GLOBALS['setup_info']['resources']['currentver'] = '16.1';
 }

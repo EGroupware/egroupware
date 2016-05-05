@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 class resources_wizard_import_csv extends importexport_wizard_basic_import_csv
 {
 
@@ -44,7 +46,7 @@ class resources_wizard_import_csv extends importexport_wizard_basic_import_csv
 			'accessory_of'	=> lang('Accessory of')
                 );
 
-		$custom = config::get_customfields('resources', true);
+		$custom = Api\Storage\Customfields::get('resources', true);
 		foreach($custom as $name => $data) {
 			$this->mapping_fields['#'.$name] = $data['label'];
 		}

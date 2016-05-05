@@ -10,6 +10,11 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Vfs;
 
 /**
  * General business object for resources
@@ -29,13 +34,13 @@ class resources_bo
 	 */
 	var $so;
 	/**
-	 * Instance of resources acl class
+	 * Instance of resources Acl class
 	 *
 	 * @var bo_acl
 	 */
 	var $acl;
 	/**
-	 * Instance of categories class for resources
+	 * Instance of Api\Categories class for resources
 	 */
 	var $cats;
 
@@ -69,7 +74,7 @@ class resources_bo
 	/**
 	 * Constructor
 	 *
-	 * @param int $user=null account_id of user to use for acl, default current user
+	 * @param int $user=null account_id of user to use for Acl, default current user
 	 */
 	function __construct($user=null)
 	{
@@ -78,9 +83,9 @@ class resources_bo
 		$this->cats = $this->acl->egw_cats;
 
 		$this->cal_right_transform = array(
-			EGW_ACL_CALREAD 	=> EGW_ACL_READ,
-			EGW_ACL_DIRECT_BOOKING 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
-			EGW_ACL_CAT_ADMIN 	=> EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE,
+			EGW_ACL_CALREAD 	=> Acl::READ,
+			EGW_ACL_DIRECT_BOOKING 	=> Acl::READ | Acl::ADD | Acl::EDIT | Acl::DELETE,
+			EGW_ACL_CAT_ADMIN 	=> Acl::READ | Acl::ADD | Acl::EDIT | Acl::DELETE,
 		);
 	}
 
@@ -93,11 +98,11 @@ class resources_bo
 	{
 		if(!$query['csv_export'])
 		{
-			$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$query);
+			Api\Cache::setSession('resources', 'index_nm', $query);
 		}
 		if ($query['store_state'])	// request to store state in session and filter in prefs?
 		{
-			egw_cache::setSession('resources',$query['store_state'],$query);
+			Api\Cache::setSession('resources',$query['store_state'],$query);
 			//echo "<p>".__METHOD__."() query[filter]=$query[filter], prefs[resources][filter]={$GLOBALS['egw_info']['user']['preferences']['resources']['filter']}</p>\n";
 			if ($query['filter'] != $GLOBALS['egw_info']['user']['preferences']['resources']['filter'])
 			{
@@ -147,7 +152,7 @@ class resources_bo
 
 		if ($query['filter'])
 		{
-			if (($children = $this->acl->get_cats(EGW_ACL_READ,$query['filter'])))
+			if (($children = $this->acl->get_cats(Acl::READ,$query['filter'])))
 			{
 				$filter['cat_id'] = array_keys($children);
 				$filter['cat_id'][] = $query['filter'];
@@ -157,7 +162,7 @@ class resources_bo
 				$filter['cat_id'] = $query['filter'];
 			}
 		}
-		elseif (($readcats = $this->acl->get_cats(EGW_ACL_READ)))
+		elseif (($readcats = $this->acl->get_cats(Acl::READ)))
 		{
 			$filter['cat_id'] = array_keys($readcats);
 		}
@@ -189,10 +194,10 @@ class resources_bo
 			return $nr;
 		}
 
-		$config = config::read('resources');
+		$config = Api\Config::read('resources');
 		foreach($rows as $num => &$resource)
 		{
-			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
+			if (!$this->acl->is_permitted($resource['cat_id'],Acl::EDIT))
 			{
 				$readonlys["edit[$resource[res_id]]"] = true;
 			}
@@ -200,14 +205,14 @@ class resources_bo
 			{
 				$resource['class'] .= 'deleted ';
 			}
-			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_DELETE) ||
+			if (!$this->acl->is_permitted($resource['cat_id'],Acl::DELETE) ||
 				($resource['deleted'] && !$GLOBALS['egw_info']['user']['apps']['admin'] && $config['history'] == 'history')
 			)
 			{
 				$readonlys["delete[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_delete ';
 			}
-			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) ||
+			if ((!$this->acl->is_permitted($resource['cat_id'],Acl::ADD)) ||
 				// Allow new accessory action when viewing accessories of a certain resource
 				$query['filter2'] <= 0 && $resource['accessory_of'] != -1)
 			{
@@ -266,7 +271,7 @@ class resources_bo
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
 
-		if(!config::get_customfields('resources'))
+		if(!Api\Storage\Customfields::get('resources'))
 		{
 			$rows['no_customfields'] = true;
 		}
@@ -286,7 +291,7 @@ class resources_bo
 		{
 			return null;	// not found
 		}
-		if (!$this->acl->is_permitted($data['cat_id'],EGW_ACL_READ))
+		if (!$this->acl->is_permitted($data['cat_id'],Acl::READ))
 		{
 			return false;	// permission denied
 		}
@@ -302,7 +307,7 @@ class resources_bo
 	 */
 	function save($resource)
 	{
-		if(!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
+		if(!$this->acl->is_permitted($resource['cat_id'],Acl::EDIT))
 		{
 			return lang('You are not permitted to edit this resource!');
 		}
@@ -311,13 +316,13 @@ class resources_bo
 		if(!$resource['res_id'])
 		{
 			$resource['res_owner'] = $GLOBALS['egw_info']['user']['account_id'];
-			$resource['res_created'] = egw_time::server2user(time(),'ts');
+			$resource['res_created'] = Api\DateTime::server2user(time(),'ts');
 			$resource['res_id'] = $this->so->save($resource);
 		}
 		else
 		{
 			$resource['res_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
-			$resource['res_modified'] = egw_time::server2user(time(),'ts');
+			$resource['res_modified'] = Api\DateTime::server2user(time(),'ts');
 			$old = $this->read($resource['res_id']);
 		}
 
@@ -360,7 +365,7 @@ class resources_bo
 		// Check for restore of deleted, restore held links
                 if($old && $old['deleted'] && !$resource['deleted'])
                 {
-                        egw_link::restore('resources', $resource['res_id']);
+                        Link::restore('resources', $resource['res_id']);
                 }
 
 		// delete old pictures
@@ -370,22 +375,22 @@ class resources_bo
 		}
 
 		// Update link title
-		egw_link::notify_update('resources',$resource['res_id'], $resource);
+		Link::notify_update('resources',$resource['res_id'], $resource);
 		// save links
 		if(is_array($resource['link_to']['to_id']))
 		{
-			egw_link::link('resources',$resource['res_id'],$resource['link_to']['to_id']);
+			Link::link('resources',$resource['res_id'],$resource['link_to']['to_id']);
 		}
 		if($resource['accessory_of'] != $old['accessory_of'])
 		{
-			egw_link::unlink(0,'resources',$resource['res_id'],'','resources',$old['accessory_of']);
+			Link::unlink(0,'resources',$resource['res_id'],'','resources',$old['accessory_of']);
 
 			// Check for resource changing to accessory - move its accessories to resource
 			if($old['accessory_of'] == -1 && $accessories = $this->get_acc_list($resource['res_id']))
 			{
 				foreach($accessories as $accessory => $name)
 				{
-					egw_link::unlink(0,'resources',$accessory,'','resources',$resource['res_id']);
+					Link::unlink(0,'resources',$accessory,'','resources',$resource['res_id']);
 					$acc = $this->read($accessory);
 					$acc['accessory_of'] = -1;
 					$this->so->save($acc);
@@ -394,7 +399,7 @@ class resources_bo
 		}
 		if($resource['accessory_of'] != -1)
 		{
-			egw_link::link('resources',$resource['res_id'],'resources',$resource['accessory_of']);
+			Link::link('resources',$resource['res_id'],'resources',$resource['accessory_of']);
 		}
 
 		if(!empty($resource['res_id']) && $this->so->get_value("cat_id",$resource['res_id']) != $resource['cat_id'] && $resource['accessory_of'] == -1)
@@ -432,19 +437,19 @@ class resources_bo
 	 */
 	function delete($res_id)
 	{
-		if(!$this->acl->is_permitted($this->so->get_value('cat_id',$res_id),EGW_ACL_DELETE))
+		if(!$this->acl->is_permitted($this->so->get_value('cat_id',$res_id),Acl::DELETE))
 		{
 			return lang('You are not permitted to delete this resource!');
 		}
 
 		// check if we only mark resources as deleted, or really delete them
 		$old = $this->read($res_id);
-		$config = config::read('resources');
+		$config = Api\Config::read('resources');
 		if ($config['history'] != '' && $old['deleted'] == null)
 		{
 			$old['deleted'] = time();
 			$this->save($old);
-			egw_link::unlink(0,'resources',$res_id,'','','',true);
+			Link::unlink(0,'resources',$res_id,'','','',true);
 			$accessories = $this->get_acc_list($res_id);
 			foreach($accessories as $acc_id => $name)
 			{
@@ -454,7 +459,7 @@ class resources_bo
 				{
 					$acc['deleted'] = time();
 					$this->save($acc);
-					egw_link::unlink(0,'resources',$acc_id,'','','',true);
+					Link::unlink(0,'resources',$acc_id,'','','',true);
 				}
 			}
 			return false;
@@ -472,7 +477,7 @@ class resources_bo
 				}
 			};
 			$this->remove_picture($res_id);
-	 		egw_link::unlink(0,'resources',$res_id);
+	 		Link::unlink(0,'resources',$res_id);
 	 		// delete the resource from the calendar
 	 		ExecMethod('calendar.calendar_so.deleteaccount','r'.$res_id);
 	 		return false;
@@ -533,7 +538,7 @@ class resources_bo
 			$resource['responsible'] = $this->acl->get_cat_admin($resource['cat_id']);
 
 			// preseed the cache
-			egw_link::set_cache('resources',$resource['res_id'],$t=$this->link_title($resource));
+			Link::set_cache('resources',$resource['res_id'],$t=$this->link_title($resource));
 		}
 		return $data;
 	}
@@ -577,13 +582,13 @@ class resources_bo
 		$only_keys = 'res_id,name,short_description,bookable,useable';
 
 		// If no read access to any category, just stop
-		if(!$this->acl->get_cats(EGW_ACL_READ))
+		if(!$this->acl->get_cats(Acl::READ))
 		{
 			$options['total'] = 0;
 			return array();
 		}
 		$filter = array(
-			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
+			'cat_id' => array_flip((array)$this->acl->get_cats(Acl::READ)),
 			//'accessory_of' => '-1'
 			'deleted' => null
 		);
@@ -610,11 +615,11 @@ class resources_bo
 				{
 					$this->bocal = new calendar_bo();
 				}
-				$start = new egw_time($cal_info['start']);
+				$start = new Api\DateTime($cal_info['start']);
 				$startarr= getdate($start->format('ts'));
 				if (isset($cal_info['whole_day']) && $cal_info['whole_day']) {
 					$startarr['hour'] = $startarr['minute'] = 0;
-					$start = new egw_time($startarr);
+					$start = new Api\DateTime($startarr);
 					$end = $start->format('ts') + 86399;
 				} else {
 					$start = $start->format('ts');
@@ -717,7 +722,7 @@ class resources_bo
 		{
 			if (!($resource  = $this->read(array('res_id' => $resource)))) return $resource;
 		}
-		elseif (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_READ))
+		elseif (!$this->acl->is_permitted($resource['cat_id'],Acl::READ))
 		{
 			return false;
 		}
@@ -748,7 +753,7 @@ class resources_bo
 				$titles[$resource['res_id']] = $this->link_title($resource);
 			}
 		}
-		// we assume all not returned contacts are not readable for the user (as we report all deleted contacts to egw_link)
+		// we assume all not returned contacts are not readable for the user (as we report all deleted contacts to Link)
 		foreach($ids as $id)
 		{
 			if (!isset($titles[$id]))
@@ -790,7 +795,7 @@ class resources_bo
 		imagejpeg($src_img,$tmp_name);
 		imagedestroy($src_img);
 
-		egw_link::attach_file('resources',$resouce_id,array(
+		Link::attach_file('resources',$resouce_id,array(
 			'tmp_name' => $tmp_name,
 			'name'     => self::PICTURE_NAME,
 			'type'     => 'image/jpeg',
@@ -811,22 +816,21 @@ class resources_bo
 		switch($resource['picture_src'])
 		{
 			case 'own_src':
-				$picture = egw_link::vfs_path('resources',$resource['res_id'],self::PICTURE_NAME,true);	// vfs path
+				$picture = Link::vfs_path('resources',$resource['res_id'],self::PICTURE_NAME,true);	// vfs path
 				if ($fullsize)
 				{
-					$picture = egw::link(egw_vfs::download_url($picture));
+					$picture = Egw::link(Vfs::download_url($picture));
 				}
 				else
 				{
-					$picture = egw::link('/etemplate/thumbnail.php', array(
+					$picture = Egw::link('/api/thumbnail.php', array(
 						'path' => $picture
 					),false);
 				}
 				break;
 
 			case 'cat_src':
-				list($picture) = $this->cats->return_single($resource['cat_id']);
-				$picture = unserialize($picture['data']);
+				$picture = Api\Categories::id2name($resource['cat_id'], 'data');
 				if($picture['icon'])
 				{
 					$picture = !$fullsize?$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon']:'/phpgwapi/images/'.$picture['icon'];
@@ -851,7 +855,7 @@ class resources_bo
 	 */
 	function remove_picture($res_id)
 	{
-		if (($arr = egw_link::delete_attached('resources',$res_id,self::PICTURE_NAME)) && is_array($arr))
+		if (($arr = Link::delete_attached('resources',$res_id,self::PICTURE_NAME)) && is_array($arr))
 		{
 			return array_shift($arr);	// $arr = array($path => (bool)$ok);
 		}

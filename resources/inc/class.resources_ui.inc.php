@@ -10,6 +10,12 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * General userinterface object for resources
  *
@@ -31,7 +37,7 @@ class resources_ui
 	function __construct()
 	{
 // 		print_r($GLOBALS['egw_info']); die();
-		$this->tmpl	= new etemplate_new('resources.show');
+		$this->tmpl	= new Etemplate('resources.show');
 		$this->bo	= new resources_bo();
 // 		$this->calui	= CreateObject('resources.ui_calviews');
 	}
@@ -49,7 +55,7 @@ class resources_ui
 		{
 			$sessiondata = $content['nm'];
 			unset($sessiondata['rows']);
-			$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+			Api\Cache::setSession('resources', 'index_nm', $sessiondata);
 
 			if (isset($content['btn_delete_selected']))
 			{
@@ -72,7 +78,7 @@ class resources_ui
 				if(isset($row['view_acc']))
 				{
 					$sessiondata['filter2'] = array_search('pressed',$row['view_acc']);
-					$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+					Api\Cache::setSession('resources', 'index_nm', $sessiondata);
 					return $this->index();
 				}
 			}
@@ -116,19 +122,19 @@ class resources_ui
 		$content['nm']['row_id']	= 'res_id';
 		$content['nm']['favorites'] = true;
 
-		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
+		$nm_session_data = Api\Cache::getSession('resources', 'index_nm');
 		if($nm_session_data)
 		{
 			$content['nm'] = $nm_session_data;
 		}
-		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
+		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(Acl::READ);
 		$content['nm']['options-filter2'] = resources_bo::$filter_options;
 		if(!$content['nm']['filter2'])
 		{
 			$content['nm']['filter2'] = key(resources_bo::$filter_options);
 		}
 
-		$config = config::read('resources');
+		$config = Api\Config::read('resources');
 		if($config['history'])
 		{
 			$content['nm']['options-filter2'][resources_bo::DELETED] = lang('Deleted');
@@ -146,14 +152,14 @@ class resources_ui
 
 		// check if user is permitted to add resources
 		// If they can't read any categories, they won't be able to save it
-		if(!$this->bo->acl->get_cats(EGW_ACL_ADD) || !$this->bo->acl->get_cats(EGW_ACL_READ))
+		if(!$this->bo->acl->get_cats(Acl::ADD) || !$this->bo->acl->get_cats(Acl::READ))
 		{
 			$no_button['add'] = $no_button['nm']['add'] = true;
 		}
 		$no_button['back'] = true;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
 
-		egw_framework::validate_file('.','resources','resources');
+		Framework::includeJS('.','resources','resources');
 
 		if($content['nm']['filter2'] > 0)
 		{
@@ -169,7 +175,7 @@ class resources_ui
 
 		$options = array();
 
-		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$content['nm']);
+		Api\Cache::setSession('resources', 'index_nm', $content['nm']);
 		$this->tmpl->read('resources.show');
 		return $this->tmpl->exec('resources.resources_ui.index',$content,$sel_options,$no_button,$preserv);
 	}
@@ -187,14 +193,14 @@ class resources_ui
 				'caption' => 'open',
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=resources.resources_ui.edit&res_id=$id',
-				'popup' => egw_link::get_registry('resources', 'add_popup'),
+				'popup' => Link::get_registry('resources', 'add_popup'),
 				'group' => $group=1,
 				'disableClass' => 'rowNoEdit',
 			),
 			'add' => array(
 				'caption' => 'New resource',
 				'url' => 'menuaction=resources.resources_ui.edit&accessory_of=-1',
-				'popup' => egw_link::get_registry('resources', 'add_popup'),
+				'popup' => Link::get_registry('resources', 'add_popup'),
 				'group' => $group,
 				'hideOnMobile' => true
 			),
@@ -211,7 +217,7 @@ class resources_ui
 				'icon' => 'new',
 				'group' => $group,
 				'url' => 'menuaction=resources.resources_ui.edit&res_id=0&accessory_of=$id',
-				'popup' => egw_link::get_registry('resources', 'add_popup'),
+				'popup' => Link::get_registry('resources', 'add_popup'),
 				'disableClass' => 'no_new_accessory',
 				'allowOnMultiple' => false
 			),
@@ -458,16 +464,16 @@ class resources_ui
 						break;
 					}
 			}
-			egw_framework::refresh_opener($msg, 'resources',$content['res_id'],($button == 'delete'?'delete':'edit'));
+			Framework::refresh_opener($msg, 'resources',$content['res_id'],($button == 'delete'?'delete':'edit'));
 
 			if($button != 'apply')
 			{
-				egw_framework::window_close();
+				Framework::window_close();
 			}
 
 		}
 
-		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
+		$nm_session_data = Api\Cache::getSession('resources', 'index_nm');
 		$res_id = is_numeric($content) ? (int)$content : $content['res_id'];
 		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
 		if (isset($nm_session_data['filter2']) && $nm_session_data['filter2'] > 0) $accessory_of = $nm_session_data['filter2'];
@@ -520,7 +526,7 @@ class resources_ui
 		$sel_options['status'] = resources_bo::$field2label;
 
 		//$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
-		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);
+		$sel_options['cat_id'] =  $this->bo->acl->get_cats(Acl::ADD);
 		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] :
 			array('' => lang('select one')) + $sel_options['cat_id'];
 		if($accessory_of > 0 || $content['accessory_of'] > 0)
@@ -545,12 +551,12 @@ class resources_ui
 
 		// Permissions
 		$read_only = array();
-		if($res_id && !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_EDIT))
+		if($res_id && !$this->bo->acl->is_permitted($content['cat_id'],Acl::EDIT))
 		{
 			$read_only['__ALL__'] = true;
 		}
-		$config = config::read('resources');
-		if(!$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_DELETE) ||
+		$config = Api\Config::read('resources');
+		if(!$this->bo->acl->is_permitted($content['cat_id'],Acl::DELETE) ||
 			($content['deleted'] && !$GLOBALS['egw_info']['user']['apps']['admin'] && $config['history'] == 'history'))
 		{
 			$read_only['delete'] = true;
@@ -564,7 +570,7 @@ class resources_ui
 		}
 
 		// Disable custom tab if there are no custom fields defined
-		$read_only['tabs']['custom'] = !(config::get_customfields('resources',true));
+		$read_only['tabs']['custom'] = !(Api\Storage\Customfields::get('resources',true));
 		$read_only['tabs']['history'] = ($content['history']['id'] != 0?false:true);
 
 		$preserv = $content;

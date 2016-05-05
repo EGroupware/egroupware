@@ -10,13 +10,15 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * General storage object for resources
  *
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package resources
  */
-class resources_so extends so_sql_cf
+class resources_so extends Api\Storage
 {
 	function __construct()
 	{

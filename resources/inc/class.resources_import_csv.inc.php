@@ -11,6 +11,7 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
 
 /**
  * class to import resources from CSV
@@ -191,7 +192,7 @@ class resources_import_csv extends importexport_basic_import_csv  {
 					}
 				}
 			default:
-				throw new egw_exception('Unsupported action');
+				throw new Api\Exception('Unsupported action');
 			
 		}
 	}

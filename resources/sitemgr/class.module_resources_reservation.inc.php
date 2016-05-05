@@ -9,6 +9,8 @@
  * @version $Id$
 */
 
+use EGroupware\Api;
+
 /**
  * Needs permission to resources to read the resource, calendar app to properly push everything through
  */
@@ -21,7 +23,7 @@ class module_resources_reservation extends sitemgr_module
 		$this->description = lang('Simple reservation of a single item');
 		$this->etemplate_method = 'resources.resources_reserve.book';
 		
-		$categories = new categories('', 'resources');
+		$categories = new Api\Categories('', 'resources');
 		$cat_list = $categories->return_sorted_array();
 		$cat_options = array();
 		foreach($cat_list as $category)
@@ -101,12 +103,12 @@ class module_resources_reservation extends sitemgr_module
 	*
 	* @param array &$arguments $arguments['arg1']-$arguments['arg3'] will be passed for non-submitted forms (first call)
 	* @param array $properties
-	* @return string the html content
+	* @return string the Api\Html content
 	*/
 	function get_content(&$arguments,$properties)
 	{
 		list($app) = explode('.',$this->etemplate_method);
-		$GLOBALS['egw']->translation->add_app($app);
+		Api\Translation::add_app($app);
 
 		$extra = "<style type=\"text/css\">\n<!--\n@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
 				"/etemplate/templates/default/app.css);\n";

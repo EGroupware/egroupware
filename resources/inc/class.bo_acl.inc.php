@@ -2,11 +2,14 @@
 /**
  * EGroupWare - resources
  *
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ * @license http://www.gnu.org/licenses/gpl.Api\Html GNU General Public License
  * @package resources
  * @link http://www.egroupware.org
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Acl;
 
 /**
  * ACL business object for resources
@@ -30,7 +33,7 @@ class bo_acl
 	/**
 	 * Instance of categories class for resources
 	 *
-	 * @var categories
+	 * @var egw_cats
 	 */
 	var $egw_cats;
 
@@ -46,7 +49,7 @@ class bo_acl
 		define('EGW_ACL_DIRECT_BOOKING',128);
 		define('EGW_ACL_CALREAD',256);
 
-		$this->egw_cats = new categories($user, 'resources');
+		$this->egw_cats = new Api\Categories($user, 'resources');
 		$this->debug = False;
 
 		//all this is only needed when called from uiacl.
@@ -86,7 +89,7 @@ class bo_acl
 	* get list of cats where current user has given rights
 	*
 	* @author Cornelius Weiss <egw@von-und-zu-weiss.de>
-	* @param int $perm_type one of EGW_ACL_READ, EGW_ACL_ADD, EGW_ACL_EDIT, EGW_ACL_DELETE, EGW_ACL_DIRECT_BOOKING
+	* @param int $perm_type one of Acl::READ, Acl::ADD, Acl::EDIT, Acl::DELETE, EGW_ACL_DIRECT_BOOKING
 	* @param int $parent_id=0 cat_id of parent to return only children of that category
 	* @return array cat_id => cat_name
 	* TODO mark subcats and so on!
@@ -186,7 +189,7 @@ class bo_acl
 	/**
 	 * checks one of the following rights for current user:
 	 *
-	 * EGW_ACL_READ, EGW_ACL_ADD, EGW_ACL_EDIT, EGW_ACL_DELETE, EGW_ACL_DIRECT_BOOKING
+	 * Acl::READ, Acl::ADD, Acl::EDIT, Acl::DELETE, EGW_ACL_DIRECT_BOOKING
 	 *
 	 * @param int $cat_id
 	 * @param int $right
@@ -226,12 +229,12 @@ class bo_acl
 			'limit' => $this->limit,
 		);
 		if($this->debug) { echo '<br>Read:'; _debug_array($data); }
-		$GLOBALS['egw']->session->appsession('session_data','resources_acl',$data);
+		Api\Cache::setSession('resources_acl', 'session_data', $data);
 	}
 
 	function read_sessiondata()
 	{
-		$data = $GLOBALS['egw']->session->appsession('session_data','resources_acl');
+		$data = Api\Cache::getSession('resources_acl', 'session_data');
 		if($this->debug) { echo '<br>Read:'; _debug_array($data); }
 
 		$this->start  = $data['start'];
@@ -258,8 +261,8 @@ class bo_acl
 		{
 			$account_id = $account['account_id'];
 			$rights = false;
-			$rights = in_array($account_id,$readcat) ? ($rights | EGW_ACL_READ) : false;
-			$rights = in_array($account_id,$writecat) ? ($rights | EGW_ACL_READ | EGW_ACL_ADD | EGW_ACL_EDIT | EGW_ACL_DELETE): $rights;
+			$rights = in_array($account_id,$readcat) ? ($rights | Acl::READ) : false;
+			$rights = in_array($account_id,$writecat) ? ($rights | Acl::READ | Acl::ADD | Acl::EDIT | Acl::DELETE): $rights;
 			$rights = in_array($account_id,$calreadcat) ? ($rights | EGW_ACL_CALREAD) : $rights;
 			$rights = in_array($account_id,$calbookcat) ? ($rights | EGW_ACL_DIRECT_BOOKING | EGW_ACL_CALREAD) : $rights;
 			$rights = in_array($account_id,$admincat) ? ($rights = 511) : $rights;

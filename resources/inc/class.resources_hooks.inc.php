@@ -10,6 +10,11 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+
 /**
  * General hook object for resources
  * It encapsulats all the diffent hook methods
@@ -27,17 +32,17 @@ class resources_hooks
 		if ($location == 'sidebox_menu')
 		{
 			// Magic etemplate2 favorites menu (from nextmatch widget)
-			display_sidebox($appname, lang('Favorites'), egw_framework::favorite_list($appname, 'nextmatch-resources.show.rows-favorite'));
+			display_sidebox($appname, lang('Favorites'), Framework\Favorites::list_favorites($appname, 'nextmatch-resources.show.rows-favorite'));
 
 			$title = $GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu');
 			$file = array(
-				'Resources list' => egw::link('/index.php',array(
+				'Resources list' => Egw::link('/index.php',array(
 				'menuaction' => 'resources.resources_ui.index',
 				'ajax' => 'true')),
 			);
-			if($this->acl->get_cats(EGW_ACL_ADD))
+			if($this->acl->get_cats(Acl::ADD))
 			{
-				$file['Add resource'] = "javascript:egw_openWindowCentered2('".egw::link('/index.php',array(
+				$file['Add resource'] = "javascript:egw_openWindowCentered2('".Egw::link('/index.php',array(
 						'menuaction' => 'resources.resources_ui.edit',
 						'accessory_of' => -1
 					),false)."','_blank',800,600,'yes')";
@@ -48,12 +53,12 @@ class resources_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Site Configuration' => egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname.'&ajax=true'),
-				'Global Categories'  => egw::link('/index.php',array(
+				'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname.'&ajax=true'),
+				'Global Categories'  => Egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
 					'global_cats'=> true)),
-				'Configure Access Permissions' => egw::link('/index.php',
+				'Configure Access Permissions' => Egw::link('/index.php',
 					'menuaction=resources.ui_acl.acllist'),
 				'Custom Fields'=>egw::link('/index.php',
 					'menuaction=admin.customfields.index&appname=resources'),
@@ -112,14 +117,14 @@ class resources_hooks
 	 */
 	function delete_category($args)
 	{
-		$cat = categories::read($args['cat_id']);
+		$cat = Api\Categories::read($args['cat_id']);
 
 		if(!$cat) return; // Can't find current cat?
 
 		if($cat['parent'] == 0)
 		{
 			// No parent, try the default cat from setup
-			$categories = new categories('', 'resources');
+			$categories = new Api\Categories('', 'resources');
 			$default = $categories->name2id('General resources');
 			if($default)
 			{
@@ -214,7 +219,7 @@ class resources_hooks
 	}
 
 	/**
-	 * Hook to tell framework we use only global categories (return link data in that case and false otherwise)
+	 * Hook to tell framework we use only global Api\Categories (return link data in that case and false otherwise)
 	 *
 	 * @param string|array $data hook-data or location
 	 * @return boolean|array

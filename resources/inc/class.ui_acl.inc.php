@@ -2,11 +2,15 @@
 /**
  * eGroupWare - resources
  *
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ * @license http://www.gnu.org/licenses/gpl.Api\Html GNU General Public License
  * @package resources
  * @link http://www.egroupware.org
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
 
 /**
  * ACL userinterface object for resources
@@ -46,10 +50,10 @@ class ui_acl
 
 		if ($_POST['btnDone'])
 		{
-			egw::redirect_link('/admin/index.php');
+			Egw::redirect_link('/admin/index.php');
 		}
 
-		common::egw_header();
+		$GLOBALS['egw']->framework->header();
 		echo parse_navbar();
 
 		if ($_POST['btnSave'])
@@ -59,7 +63,7 @@ class ui_acl
 				$this->bo->set_rights($cat_id,$_POST['inputread'][$cat_id],$_POST['inputwrite'][$cat_id],
 					$_POST['inputcalread'][$cat_id],$_POST['inputcalbook'][$cat_id],$_POST['inputadmin'][$cat_id]);
 			}
-			config::save_value('location_cats', implode(',', $_POST['location_cats']), 'resources');
+			Api\Config::save_value('location_cats', implode(',', $_POST['location_cats']), 'resources');
 		}
 		$template            =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 		$template->set_file(array('acl' => 'acl.tpl'));
@@ -95,7 +99,7 @@ class ui_acl
 
 		if ($this->bo->cats)
 		{
-			$config = config::read('resources');
+			$config = Api\Config::read('resources');
 			$location_cats = $config['location_cats'] ? explode(',', $config['location_cats']) : array();
 			foreach($this->bo->cats as $cat)
 			{
@@ -106,11 +110,11 @@ class ui_acl
 					'tr_color' => $tr_color,
 					'catname' => $cat['name'],
 					'catid' => $cat['id'],
-					'read' => $this->selectlist(EGW_ACL_READ),
-					'write' => $this->selectlist(EGW_ACL_ADD),
+					'read' => $this->selectlist(Acl::READ),
+					'write' => $this->selectlist(Acl::ADD),
 					'calread' => $this->selectlist(EGW_ACL_CALREAD),
 					'calbook' =>$this->selectlist(EGW_ACL_DIRECT_BOOKING),
-					'admin' => '<option value="" selected="1">'.lang('choose categories admin').'</option>'.$this->selectlist(EGW_ACL_CAT_ADMIN,true),
+					'admin' => '<option value="" selected="1">'.lang('choose Api\Categories admin').'</option>'.$this->selectlist(EGW_ACL_CAT_ADMIN,true),
 					'location_checked' => in_array($cat['id'], $location_cats) ? 'checked="1"' : '',
 				));
 				$template->parse('Cblock','cat_list',True);
@@ -167,7 +171,7 @@ class ui_acl
 			{
 				$selectlist .= ' selected="selected"';
 			}
-			$selectlist .= '>' . common::display_fullname($account['account_lid'],$account['account_firstname'],
+			$selectlist .= '>' . Api\Accounts::format_username($account['account_lid'],$account['account_firstname'],
 				$account['account_lastname'],$account['account_id']) . '</option>' . "\n";
 		}
 		return $selectlist;
@@ -200,6 +204,6 @@ class ui_acl
 	function deny()
 	{
 		echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
-		common::egw_exit(True);
+		exit(True);
 	}
 }

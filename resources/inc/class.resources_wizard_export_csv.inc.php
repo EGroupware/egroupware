@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 class resources_wizard_export_csv extends importexport_wizard_basic_export_csv
 {
 	public function __construct() {
@@ -23,7 +25,7 @@ class resources_wizard_export_csv extends importexport_wizard_basic_export_csv
 		unset($this->export_fields['prize']);
 
 		// Custom fields
-		$custom = config::get_customfields('resources', true);
+		$custom = Api\Storage\Customfields::get('resources', true);
 		foreach($custom as $name => $data) {
 			$this->export_fields['#'.$name] = $data['label'];
 		}
