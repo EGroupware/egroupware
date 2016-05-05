@@ -17,7 +17,7 @@ egw_LAB.wait(function()
 	{
 		// lock the device orientation in portrait view
 		if (screen.orientation) screen.orientation.lock('portrait');
-		
+
 		function do_social(_data)
 		{
 			var isPixelegg = $j('link[href*="pixelegg.css"]')[0];
@@ -43,9 +43,9 @@ egw_LAB.wait(function()
 		}
 
 		do_social([
-			{ "svg": egw_webserverUrl+"/phpgwapi/templates/default/images/login_contact.svg", "url": "https://www.egroupware.org/en/contact.html", "lang": { "de": "https://www.egroupware.org/de/kontakt.html" }},
-			{ "svg": egw_webserverUrl+"/phpgwapi/templates/default/images/login_facebook.svg", "url": "https://www.facebook.com/egroupware" },
-			{ "svg": egw_webserverUrl+"/phpgwapi/templates/default/images/login_twitter.svg", "url": "https://twitter.com/egroupware" }
+			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_contact.svg", "url": "https://www.egroupware.org/en/contact.html", "lang": { "de": "https://www.egroupware.org/de/kontakt.html" }},
+			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_facebook.svg", "url": "https://www.facebook.com/egroupware" },
+			{ "svg": egw_webserverUrl+"/api/templates/default/images/login_twitter.svg", "url": "https://twitter.com/egroupware" }
 		]);
 	});
 });
