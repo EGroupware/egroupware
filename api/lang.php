@@ -2,7 +2,9 @@
 /**
  * API: loading translation from server
  *
- * Usage: /egroupware/api/lang.php?app=infolog&lang=de
+ * Usage:
+ * - /egroupware/api/lang.php?app=infolog&lang=de
+ * - /egroupware/api/lang.php?app=infolog&lang=de&debug=1 gives pretty-printed JSON
  *
  * @link www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -43,7 +45,7 @@ $etag = '"'.$_GET['app'].'-'.$_GET['lang'].'-'.  Api\Translation::etag($_GET['ap
 
 // headers to allow caching, we specify etag on url to force reload, even with Expires header
 Api\Session::cache_control(864000);	// cache for 10 days
-Header('Content-Type: text/javascript; charset=utf-8');
+Header('Content-Type: '.(empty($_GET['debug'])?'text/javascript':'application/json').'; charset=utf-8');
 Header('ETag: '.$etag);
 
 // if servers send a If-None-Match header, response with 304 Not Modified, if etag matches
@@ -61,7 +63,12 @@ if (!count(Api\Translation::$lang_arr))
 }
 
 // fix for phrases containing \n
-$content = 'egw.set_lang_arr("'.$_GET['app'].'", '.str_replace('\\\\n', '\\n', json_encode(Api\Translation::$lang_arr)).', egw && egw.window !== window);';
+$content = str_replace('\\\\n', '\\n', json_encode(Api\Translation::$lang_arr,
+	JSON_UNESCAPED_UNICODE | // send utf-8 unencoded, smaller and better readable
+	JSON_UNESCAPED_SLASHES | // do not escape slashes, smaller and better readable
+	(!empty($_GET['debug']) ? JSON_PRETTY_PRINT : 0)));
+
+if (empty($_GET['debug'])) $content = 'egw.set_lang_arr("'.$_GET['app'].'", '.$content.', egw && egw.window !== window);';
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content
 if (in_array('gzip', explode(',',$_SERVER['HTTP_ACCEPT_ENCODING'])) && function_exists('gzencode'))
