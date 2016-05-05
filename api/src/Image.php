@@ -166,7 +166,7 @@ class Image
 			{
 				$imagedirs[] = '/'.$app.'/templates/mobile/images';
 			}
-			if ($app == 'phpgwapi')
+			if ($app == 'api')
 			{
 				$imagedirs[] = $GLOBALS['egw']->framework->template_dir.'/images';
 			}

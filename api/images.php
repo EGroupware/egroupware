@@ -2,7 +2,9 @@
 /**
  * API: loading available images by application and image-name (without extension)
  *
- * Usage: /egroupware/api/images.php?template=idots
+ * Usage:
+ * - /egroupware/api/images.php?template=idots
+ * - /egroupware/api/images.php?template=pixelegg&debug=1 gives pretty-printed JSON
  *
  * @link www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -26,14 +28,17 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
-$content = json_encode(Api\Image::map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null, $_GET['svg']));
+$content = json_encode(Api\Image::map(preg_match('/^[a-z0-9_-]+$/i',$_GET['template']) ? $_GET['template'] : null, $_GET['svg']),
+	JSON_FORCE_OBJECT |	// export empty php-arrays as empty objects, not empty arrays
+	JSON_UNESCAPED_SLASHES | // do not escape slashes, smaller and better readable
+	(!empty($_GET['debug']) ? JSON_PRETTY_PRINT : 0));
 
 // use an etag over the image mapp
 $etag = '"'.md5($content).'"';
 
 // headers to allow caching, egw_framework specifies etag on url to force reload, even with Expires header
 Api\Session::cache_control(86400);	// cache for one day
-Header('Content-Type: text/javascript; charset=utf-8');
+Header('Content-Type: '.(empty($_GET['debug'])?'text/javascript':'application/json').'; charset=utf-8');
 Header('ETag: '.$etag);
 
 // if servers send a If-None-Match header, response with 304 Not Modified, if etag matches
@@ -43,7 +48,7 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $
 	exit;
 }
 
-$content = 'egw.set_images('.$content.", egw && egw.window !== window);\n";
+if (empty($_GET['debug'])) $content = 'egw.set_images('.$content.", egw && egw.window !== window);\n";
 
 // we run our own gzip compression, to set a correct Content-Length of the encoded content
 if (in_array('gzip', explode(',',$_SERVER['HTTP_ACCEPT_ENCODING'])) && function_exists('gzencode'))

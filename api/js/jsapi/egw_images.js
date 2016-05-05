@@ -97,6 +97,11 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 			{
 				return this.webserverUrl+images[_app][_name];
 			}
+			tries['api'] = _name;
+			if (typeof images['api'] != 'undefined' && typeof images['api'][_name] == 'string')
+			{
+				return this.webserverUrl+images['api'][_name];
+			}
 			tries['phpgwapi'] = _name;
 			if (typeof images['phpgwapi'] != 'undefined' && typeof images['phpgwapi'][_name] == 'string')
 			{
