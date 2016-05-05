@@ -10,11 +10,15 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Vfs;
+
 /**
  * Filemanager - document merge object
  * Only merges information about the files, not the files themselves
  */
-class filemanager_merge extends bo_merge
+class filemanager_merge extends Api\Storage\Merge
 {
 	/**
 	 * Functions that can be called via menuaction
@@ -61,8 +65,8 @@ class filemanager_merge extends bo_merge
 			$this->dir = $_dir;
 		}
 
-		// switch of handling of html formated content, if html is not used
-		$this->parse_html_styles = egw_customfields::use_html('filemanager');
+		// switch off handling of html formated content, if html is not used
+		$this->parse_html_styles = Api\Storage\Customfields::use_html('filemanager');
 	}
 
 	/**
@@ -91,31 +95,31 @@ class filemanager_merge extends bo_merge
 	public function filemanager_replacements($id,$prefix='', &$content = null)
 	{
 		$info = array();
-		$file = egw_vfs::lstat($id,true);
+		$file = Vfs::lstat($id,true);
 
-		$file['mtime'] = egw_time::to($file['mtime']);
-		$file['ctime'] = egw_time::to($file['ctime']);
+		$file['mtime'] = Api\DateTime::to($file['mtime']);
+		$file['ctime'] = Api\DateTime::to($file['ctime']);
 
-		$file['name'] = egw_vfs::basename($id);
-		$file['dir'] = egw_vfs::decodePath(egw_vfs::dirname($id));
+		$file['name'] = Vfs::basename($id);
+		$file['dir'] = Vfs::decodePath(Vfs::dirname($id));
 		$dirlist = explode('/',$file['dir']);
 		$file['folder'] = array_pop($dirlist);
 		$file['folder_file'] = $file['folder'] . '/'.$file['name'];
 		$file['path'] = $id;
 		$file['rel_path'] = str_replace($this->dir.'/', '', $id);
-		$file['hsize'] = egw_vfs::hsize($file['size']);
-		$file['mime'] = egw_vfs::mime_content_type($id);
+		$file['hsize'] = Vfs::hsize($file['size']);
+		$file['mime'] = Vfs::mime_content_type($id);
 		$file['gid'] *= -1;  // our widgets use negative gid's
-		if (($props = egw_vfs::propfind($id)))
+		if (($props = Vfs::propfind($id)))
 		{
 			foreach($props as $prop)
 			{
 				$file[$prop['name']] = $prop['val'];
 			}
 		}
-		if (($file['is_link'] = egw_vfs::is_link($id)))
+		if (($file['is_link'] = Vfs::is_link($id)))
 		{
-			$file['symlink'] = egw_vfs::readlink($id);
+			$file['symlink'] = Vfs::readlink($id);
 		}
 		// Custom fields
 		if($content && strpos($content, '#') !== 0)
@@ -123,7 +127,7 @@ class filemanager_merge extends bo_merge
 			// Expand link-to custom fields
 			 $this->cf_link_to_expand($file, $content, $info);
 
-			foreach(config::get_customfields('filemanager') as $name => $field)
+			foreach(Api\Storage\Customfields::get('filemanager') as $name => $field)
 			{
 				// Set any missing custom fields, or the marker will stay
 				if(!$file['#'.$name])
@@ -132,11 +136,11 @@ class filemanager_merge extends bo_merge
 					continue;
 				}
 
-				// Format date cfs per user preferences
+				// Format date cfs per user Api\Preferences
 				if($field['type'] == 'date' || $field['type'] == 'date-time')
 				{
 					$this->date_fields[] = '#'.$name;
-					$file['#'.$name] = egw_time::to($file['#'.$name], $field['type'] == 'date' ? true : '');
+					$file['#'.$name] = Api\DateTime::to($file['#'.$name], $field['type'] == 'date' ? true : '');
 				}
 			}
 		}
@@ -149,12 +153,12 @@ class filemanager_merge extends bo_merge
 			// Symlink?
 			if(!$app || !(int)$app_id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
 				// Try resolving just app + ID - /apps/App Name/Record Title/file
-				$resolved = egw_vfs::resolve_url_symlinks(implode('/',array_slice(explode('/',$file['dir']),0,4)));
+				$resolved = Vfs::resolve_url_symlinks(implode('/',array_slice(explode('/',$file['dir']),0,4)));
 				list($app, $app_id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
 
 				if(!$app || !(int)$app_id || !array_key_exists($app, $GLOBALS['egw_info']['user']['apps'])) {
 					// Get rid of any virtual folders (eg: All$) and symlinks
-					$resolved = egw_vfs::resolve_url_symlinks($file['path']);
+					$resolved = Vfs::resolve_url_symlinks($file['path']);
 					list($app, $app_id) = explode('/', substr($resolved, strpos($resolved, 'apps/')+5));
 				}
 			}
@@ -182,17 +186,17 @@ class filemanager_merge extends bo_merge
 				}
 			}
 		}
-		$link = egw_link::mime_open($file['url'], $file['mime']);
+		$link = Link::mime_open($file['url'], $file['mime']);
 		if(is_array($link))
 		{
 			// Directories have their internal protocol in path here
 			if($link['path'] && strpos($link['path'], '://') !== false) $link['path'] = $file['path'];
-			$link = egw_session::link('/index.php', $link);
+			$link = Api\Session::link('/index.php', $link);
 		}
 		else
 		{
 			// Regular files
-			$link = egw_session::link($link);
+			$link = Api\Session::link($link);
 		}
 
 		// Prepend site, if missing
@@ -201,7 +205,7 @@ class filemanager_merge extends bo_merge
 			$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
 				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
 		}
-		$file['link'] = html::a_href(html::htmlspecialchars($file['name']), $link);
+		$file['link'] = Api\Html::a_href(Api\Html::htmlspecialchars($file['name']), $link);
 		$file['url'] = $link;
 
 		// Add markers
@@ -218,14 +222,14 @@ class filemanager_merge extends bo_merge
 	}
 
 	/**
-	 * Generate table with replacements for the preferences
+	 * Generate table with replacements for the Api\Preferences
 	 *
 	 */
 	public function show_replacements()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('filemanager').' - '.lang('Replacements for inserting entries into documents');
 		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
-		common::egw_header();
+		$GLOBALS['egw']->framework->header();
 
 		echo "<table width='90%' align='center'>\n";
 		echo '<tr><td colspan="4"><h3>'.lang('Filemanager fields:')."</h3></td></tr>";
@@ -255,7 +259,7 @@ class filemanager_merge extends bo_merge
 		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
-		foreach(config::get_customfields('filemanager') as $name => $field)
+		foreach(Api\Storage\Customfields::get('filemanager') as $name => $field)
 		{
 			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
 		}
@@ -283,6 +287,6 @@ class filemanager_merge extends bo_merge
 
 		echo "</table>\n";
 
-		common::egw_footer();
+		$GLOBALS['egw']->framework->footer();
 	}
 }

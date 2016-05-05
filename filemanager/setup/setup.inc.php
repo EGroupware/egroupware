@@ -10,7 +10,7 @@
 
 $setup_info['filemanager']['name']    = 'filemanager';
 $setup_info['filemanager']['title']   = 'Filemanager';
-$setup_info['filemanager']['version'] = '14.1';
+$setup_info['filemanager']['version'] = '16.1';
 $setup_info['filemanager']['app_order'] = 6;
 $setup_info['filemanager']['enable']  = 1;
 $setup_info['filemanager']['index']   = 'filemanager.filemanager_ui.index&ajax=true';
@@ -32,10 +32,6 @@ $setup_info['filemanager']['hooks']['search_link'] = 'filemanager_hooks::search_
 
 /* Dependencies for this app to work */
 $setup_info['filemanager']['depends'][] = array(
-	'appname' => 'phpgwapi',
-	'versions' => array('14.1')
-);
-$setup_info['filemanager']['depends'][] = array(
-	'appname' => 'etemplate',
-	'versions' => array('14.1')
+	'appname' => 'api',
+	'versions' => array('16.1')
 );

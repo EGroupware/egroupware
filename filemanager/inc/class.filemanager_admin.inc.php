@@ -1,6 +1,6 @@
 <?php
 /**
- * Filemanager: mounting GUI
+ * EGroupware Filemanager: mounting GUI
  *
  * @link http://www.egroupware.org/
  * @package filemanager
@@ -10,6 +10,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
 use EGroupware\Stylite\Vfs\Versioning;
 use EGroupware\Api\Vfs;
 
@@ -57,11 +60,11 @@ class filemanager_admin extends filemanager_ui
 		// make sure user has admin rights
 		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
-			throw new egw_exception_no_permission_admin();
+			throw new Api\Exception\NoPermission\Admin();
 		}
 		// sudo handling
 		parent::__construct();
-		self::$is_setup = egw_session::appsession('is_setup','filemanager');
+		self::$is_setup = Api\Cache::getSession('filemanager', 'is_setup');
 
 		if (class_exists('EGroupware\Stylite\Vfs\Versioning\StreamWrapper'))
 		{
@@ -120,7 +123,7 @@ class filemanager_admin extends filemanager_ui
 					}
 					else	// re-mount / with sqlFS, to disable versioning
 					{
-						$msg = Vfs::mount($url=sqlfs_stream_wrapper::SCHEME.'://default'.$path,$path) ?
+						$msg = Vfs::mount($url=Vfs\Sqlfs\StreamWrapper::SCHEME.'://default'.$path,$path) ?
 							lang('Successful mounted %1 on %2.',$url,$path) : lang('Error mounting %1 on %2!',$url,$path);
 					}
 				}
@@ -154,7 +157,7 @@ class filemanager_admin extends filemanager_ui
 				}
 				if ($content['allow_delete_versions'] != $GLOBALS['egw_info']['server']['allow_delete_versions'])
 				{
-					config::save_value('allow_delete_versions', $content['allow_delete_versions'], 'phpgwapi');
+					Api\Config::save_value('allow_delete_versions', $content['allow_delete_versions'], 'phpgwapi');
 					$GLOBALS['egw_info']['server']['allow_delete_versions'] = $content['allow_delete_versions'];
 					$msg = lang('Configuration changed.');
 				}
@@ -247,7 +250,7 @@ class filemanager_admin extends filemanager_ui
 		$content['is_setup'] = self::$is_setup;
 		$content['versioning'] = $this->versioning;
 		$content['allow_delete_versions'] = $GLOBALS['egw_info']['server']['allow_delete_versions'];
-		egw_framework::message($msg, $msg_type);
+		Framework::message($msg, $msg_type);
 
 		$n = 2;
 		$content['mounts'] = array();
@@ -275,7 +278,7 @@ class filemanager_admin extends filemanager_ui
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 		//_debug_array($content);
 
-		$tpl = new etemplate_new('filemanager.admin');
+		$tpl = new Etemplate('filemanager.admin');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('VFS mounts and versioning');
 		$tpl->exec('filemanager.filemanager_admin.index',$content,$sel_options,$readonlys);
 	}
@@ -287,18 +290,18 @@ class filemanager_admin extends filemanager_ui
 	{
 		if ($_POST['cancel'])
 		{
-			egw_framework::redirect_link('/admin/index.php', null, 'admin');
+			Framework::redirect_link('/admin/index.php', null, 'admin');
 		}
 		$check_only = !isset($_POST['fix']);
 
-		if (!($msgs = sqlfs_utils::fsck($check_only)))
+		if (!($msgs = Vfs\Sqlfs\Utils::fsck($check_only)))
 		{
 			$msgs = lang('Filesystem check reported no problems.');
 		}
 		$content = '<p>'.implode("</p>\n<p>", (array)$msgs)."</p>\n";
 
-		$content .= html::form('<p>'.($check_only&&is_array($msgs)?html::submit_button('fix', lang('Fix reported problems')):'').
-			html::submit_button('cancel', lang('Cancel')).'</p>',
+		$content .= Api\Html::form('<p>'.($check_only&&is_array($msgs)?html::submit_button('fix', lang('Fix reported problems')):'').
+			Api\Html::submit_button('cancel', lang('Cancel')).'</p>',
 			'','/index.php',array('menuaction'=>'filemanager.filemanager_admin.fsck'));
 
 		$GLOBALS['egw']->framework->render($content, lang('Admin').' - '.lang('Check virtual filesystem'), true);

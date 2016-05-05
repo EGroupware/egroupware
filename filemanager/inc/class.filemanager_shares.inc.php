@@ -1,6 +1,6 @@
 <?php
 /**
- * Filemanager: shares
+ * EGroupware Filemanager: shares
  *
  * @link http://www.egroupware.org/
  * @package filemanager
@@ -11,6 +11,8 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
 use EGroupware\Api\Vfs\Sharing;
 
 /**
@@ -162,7 +164,7 @@ class filemanager_shares extends filemanager_ui
 					{
 						$where['share_id'] = $content['nm']['selected'];
 					}
-					egw_framework::message(lang('%1 shares deleted.', Sharing::delete($where)), 'success');
+					Framework::message(lang('%1 shares deleted.', Sharing::delete($where)), 'success');
 					break;
 				default:
 					throw new Api\Exception\WrongParameter("Unknown action '{$content['nm']['action']}'!");
@@ -180,7 +182,7 @@ class filemanager_shares extends filemanager_ui
 		);
 		unset($sel_options['type'][Sharing::ATTACH]);
 
-		$tpl = new Api\Etemplate('filemanager.shares');
+		$tpl = new Etemplate('filemanager.shares');
 		$tpl->exec('filemanager.filemanager_shares.index', $content, $sel_options, null, $content);
 	}
 }

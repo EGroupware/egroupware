@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Filemanager - user interface
+ * EGroupware - Filemanager - user interface
  *
  * @link http://www.egroupware.org
  * @package filemanager
@@ -11,6 +11,11 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Etemplate;
+
 use EGroupware\Api\Vfs;
 
 /**
@@ -53,7 +58,7 @@ class filemanager_ui
 		// strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
 		if (get_magic_quotes_gpc() && $_GET)
 		{
-			$_GET = etemplate::array_stripslashes($_GET);
+			$_GET = array_stripslashes($_GET);
 		}
 		// do we have root rights
 		if (Api\Cache::getSession('filemanager', 'is_root'))
@@ -80,7 +85,7 @@ class filemanager_ui
 				$label = lang($label);
 			}
 			// search for plugins with additional filemanager views
-			foreach($GLOBALS['egw']->hooks->process('filemanager_views') as $views)
+			foreach(Api\Hooks::process('filemanager_views') as $views)
 			{
 				if (is_array($views)) static::$views += $views;
 			}
@@ -385,16 +390,16 @@ class filemanager_ui
 	 */
 	function listview(array $content=null,$msg=null)
 	{
-		$tpl = new Api\Etemplate('filemanager.index');
+		$tpl = new Etemplate('filemanager.index');
 
-		if($msg) egw_framework::message($msg);
+		if($msg) Framework::message($msg);
 
 		if (($content['nm']['action'] || $content['nm']['rows']) && (empty($content['button']) || !isset($content['button'])))
 		{
 			if ($content['nm']['action'])
 			{
 				$msg = static::action($content['nm']['action'],$content['nm']['selected'],$content['nm']['path']);
-				if($msg) egw_framework::message($msg);
+				if($msg) Framework::message($msg);
 
 				// clean up after action
 				unset($content['nm']['selected']);
@@ -408,7 +413,7 @@ class filemanager_ui
 			elseif($content['nm']['rows']['delete'])
 			{
 				$msg = static::action('delete',array_keys($content['nm']['rows']['delete']),$content['nm']['path']);
-				if($msg) egw_framework::message($msg);
+				if($msg) Framework::message($msg);
 
 				// clean up after action
 				unset($content['nm']['rows']['delete']);
@@ -440,7 +445,7 @@ class filemanager_ui
 				case 'upload':
 					if (!$content['upload'])
 					{
-						egw_framework::message(lang('You need to select some files first!'),'error');
+						Framework::message(lang('You need to select some files first!'),'error');
 						break;
 					}
 					$upload_success = $upload_failure = array();
@@ -462,12 +467,12 @@ class filemanager_ui
 					$content['nm']['msg'] = '';
 					if ($upload_success)
 					{
-						egw_framework::message( count($upload_success) == 1 && !$upload_failure ? lang('File successful uploaded.') :
+						Framework::message( count($upload_success) == 1 && !$upload_failure ? lang('File successful uploaded.') :
 							lang('%1 successful uploaded.',implode(', ',$upload_success)));
 					}
 					if ($upload_failure)
 					{
-						egw_framework::message(lang('Error uploading file!')."\n".etemplate::max_upload_size_message(),'error');
+						Framework::message(lang('Error uploading file!')."\n".etemplate::max_upload_size_message(),'error');
 					}
 					break;
 			}
@@ -807,7 +812,7 @@ class filemanager_ui
 			{
 				// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
 				// an appropriate message
-				egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
+				Egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
 					'path' => $path,
 					'msg' => lang('The requested path %1 is not available.',Vfs::decodePath($query['path'])),
 					'ajax' => 'true'
@@ -926,7 +931,7 @@ class filemanager_ui
 	 */
 	function file(array $content=null,$msg='')
 	{
-		$tpl = new Api\Etemplate('filemanager.file');
+		$tpl = new Etemplate('filemanager.file');
 
 		if (!is_array($content))
 		{
@@ -1031,7 +1036,7 @@ class filemanager_ui
 								$msg .= lang('Renamed %1 to %2.',Vfs::decodePath(basename($path)),Vfs::decodePath(basename($to))).' ';
 								$content['old']['name'] = $content[$name];
 								$path = $to;
-								$content['mime'] = mime_magic::filename2mime($path);	// recheck mime type
+								$content['mime'] = Api\MimeMagic::filename2mime($path);	// recheck mime type
 								$refresh_path = Vfs::dirname($path);	// for renames, we have to refresh the parent
 							}
 							else
@@ -1154,14 +1159,14 @@ class filemanager_ui
 					}
 				}
 			}
-			egw_framework::refresh_opener($msg, 'filemanager', $refresh_path ? $refresh_path : $path, 'edit', null, '&path=[^&]*');
-			if ($button == 'save') egw_framework::window_close();
+			Framework::refresh_opener($msg, 'filemanager', $refresh_path ? $refresh_path : $path, 'edit', null, '&path=[^&]*');
+			if ($button == 'save') Framework::window_close();
 		}
 		if ($content['is_link'] && !Vfs::stat($path))
 		{
 			$msg .= ($msg ? "\n" : '').lang('Link target %1 not found!',$content['symlink']);
 		}
-		$content['link'] = egw::link(Vfs::download_url($path));
+		$content['link'] = Egw::link(Vfs::download_url($path));
 		$content['icon'] = Vfs::mime_icon($content['mime']);
 		$content['msg'] = $msg;
 
@@ -1242,7 +1247,7 @@ class filemanager_ui
 			$content['mergeapp_effective'] = null;
 		}
 		// mergeapp select options
-		$mergeapp_list = Api\Link::app_list('merge');
+		$mergeapp_list = Link::app_list('merge');
 		unset($mergeapp_list[$GLOBALS['egw_info']['flags']['currentapp']]); // exclude filemanager from list
 		$mergeapp_empty = !empty($content['mergeapp_parent'])
 			? $mergeapp_list[$content['mergeapp_parent']] . ' (parent setting)' : '';
@@ -1309,7 +1314,7 @@ class filemanager_ui
 				}
 			}
 		}
-		egw_framework::window_focus();
+		Framework::window_focus();
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.Vfs::decodePath($path);
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
@@ -1407,7 +1412,7 @@ class filemanager_ui
 			case 'link':
 				// First upload
 				$arr = static::ajax_action('upload', $selected, $dir, $props);
-				$app_dir = Api\Link::vfs_path($props['entry']['app'],$props['entry']['id'],'',true);
+				$app_dir = Link::vfs_path($props['entry']['app'],$props['entry']['id'],'',true);
 
 				foreach($arr['uploaded'] as $file)
 				{

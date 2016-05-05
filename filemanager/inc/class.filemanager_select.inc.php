@@ -1,14 +1,21 @@
 <?php
 /**
- * eGroupWare - Filemanager - select file to open or save dialog
+ * EGroupware - Filemanager - select file to open or save dialog
  *
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-2012 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-2016 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Vfs;
+use EGroupware\Api\Etemplate;
 
 /**
  * Select file to open or save dialog
@@ -49,7 +56,7 @@ class filemanager_select
 		// strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
 		if (get_magic_quotes_gpc() && $_GET)
 		{
-			$_GET = etemplate::array_stripslashes($_GET);
+			$_GET = array_stripslashes($_GET);
 		}
 	}
 
@@ -69,17 +76,17 @@ class filemanager_select
 				$content['msg'] = $_GET['msg'];
 				$_GET['mode'] = 'open';
 				$_GET['method'] = 'ckeditor_return';
-				$_GET['CKEditorFuncNum'] = egw_cache::getSession('filemanager','ckeditorfuncnum');
+				$_GET['CKEditorFuncNum'] = Api\Cache::getSession('filemanager','ckeditorfuncnum');
 			}
 			$content['mode'] = $_GET['mode'];
 			if (!in_array($content['mode'],array('open','open-multiple','saveas','select-dir')))
 			{
-				throw new egw_exception_wrong_parameter("Wrong or unset required mode parameter!");
+				throw new Api\Exception\WrongParameter("Wrong or unset required mode parameter!");
 			}
 			$content['path'] = $_GET['path'];
 			if (empty($content['path']))
 			{
-				$content['path'] = egw_session::appsession('select_path','filemanger');
+				$content['path'] = Api\Cache::getSession('filemanger', 'select_path');
 			}
 			$content['name'] = (string)$_GET['name'];
 			$content['method'] = $_GET['method'];
@@ -87,12 +94,12 @@ class filemanager_select
 			{
 				if (isset($_GET['CKEditorFuncNum']) && is_numeric($_GET['CKEditorFuncNum']))
 				{
-					egw_cache::setSession('filemanager','ckeditorfuncnum',
+					Api\Cache::setSession('filemanager','ckeditorfuncnum',
 						$content['ckeditorfuncnum'] = $_GET['CKEditorFuncNum']);
 				}
 				else
 				{
-					throw new egw_exception_wrong_parameter("chkeditor_return has been specified as a method but some parameters are missing or invalid.");
+					throw new Api\Exception\WrongParameter("chkeditor_return has been specified as a method but some parameters are missing or invalid.");
 				}
 			}
 			$content['id']     = $_GET['id'];
@@ -104,7 +111,7 @@ class filemanager_select
 				{
 					if (is_numeric($key))
 					{
-						$sel_options['mime'][$value] = lang('%1 files',strtoupper(mime_magic::mime2ext($value))).' ('.$value.')';
+						$sel_options['mime'][$value] = lang('%1 files',strtoupper(Api\MimeMagic::mime2ext($value))).' ('.$value.')';
 					}
 					else
 					{
@@ -131,11 +138,11 @@ class filemanager_select
 					{
 						//Set the "content" name filed accordingly to the uploaded file
 						// encode chars which special meaning in url/vfs (some like / get removed!)
-						$content['name'] = egw_vfs::encodePathComponent($content['file_upload']['name']);
-						$to_path = egw_vfs::concat($content['path'],$content['name']);
+						$content['name'] = Vfs::encodePathComponent($content['file_upload']['name']);
+						$to_path = Vfs::concat($content['path'],$content['name']);
 
-						$copy_result = (egw_vfs::is_writable($content['path']) || egw_vfs::is_writable($to_path)) &&
-							copy($content['file_upload']['tmp_name'],egw_vfs::PREFIX.$to_path);
+						$copy_result = (Vfs::is_writable($content['path']) || Vfs::is_writable($to_path)) &&
+							copy($content['file_upload']['tmp_name'],Vfs::PREFIX.$to_path);
 					}
 
 					//Break on an error condition
@@ -159,7 +166,7 @@ class filemanager_select
 						case 'open-multiple':
 							foreach((array)$content['dir']['selected'] as $name)
 							{
-								$files[] = egw_vfs::concat($content['path'],$name);
+								$files[] = Vfs::concat($content['path'],$name);
 							}
 							//Add an uploaded file to the files result array2string
 							if ($copy_result === true) $files[] = $to_path;
@@ -171,11 +178,11 @@ class filemanager_select
 
 						case 'saveas':
 							// Don't trust the name the user gives, encode it
-							$content['name'] = egw_vfs::encodePathComponent($content['name']);
+							$content['name'] = Vfs::encodePathComponent($content['name']);
 							// Fall through
 
 						default:
-							$files = egw_vfs::concat($content['path'],$content['name']);
+							$files = Vfs::concat($content['path'],$content['name']);
 							break;
 					}
 
@@ -185,16 +192,16 @@ class filemanager_select
 					}
 					else if ($content['method'] == 'ckeditor_return')
 					{
-						$download_url = egw_vfs::download_url(egw_vfs::concat($content['path'],$content['name']));
-						if ($download_url[0] == '/') $download_url = egw::link($download_url);
+						$download_url = Vfs::download_url(Vfs::concat($content['path'],$content['name']));
+						if ($download_url[0] == '/') $download_url = Egw::link($download_url);
 						$js = "window.opener.CKEDITOR.tools.callFunction(".
 							$content['ckeditorfuncnum'].",'".
 							htmlspecialchars($download_url)."',".
 							"'');\negw(window).close();";
 					}
-					if(egw_json_response::isJSONResponse() && !($content['method'] == 'ckeditor_return'))
+					if(Api\Json\Response::isJSONResponse() && !($content['method'] == 'ckeditor_return'))
 					{
-						$response = egw_json_response::get();
+						$response = Api\Json\Response::get();
 						if($js)
 						{
 							$response->script($js);
@@ -205,10 +212,10 @@ class filemanager_select
 					}
 					else
 					{
-						header('Content-type: text/html; charset='.translation::charset());
+						header('Content-type: text/html; charset='.Api\Translation::charset());
 						echo "<html>\n<head>\n<script type='text/javascript'>\n$js\n</script>\n</head>\n</html>\n";
 					}
-					common::egw_exit();
+					exit();
 			}
 
 			$sel_options['mime'] = $content['options-mime'];
@@ -221,7 +228,7 @@ class filemanager_select
 
 		//Deactivate the opload field if the current directory is not writeable or
 		//we're currently not in the single file open mode.
-		$content['no_upload'] = !egw_vfs::is_writable($content['path']) ||
+		$content['no_upload'] = !Vfs::is_writable($content['path']) ||
 			!in_array($content['mode'],array('open'));
 
 		$content['apps'] = array_keys(self::get_apps());
@@ -234,17 +241,17 @@ class filemanager_select
 		// Set a flag for easy detection as we go
 		$favorites_flag = substr($content['path'],0,strlen('/apps/favorites')) == '/apps/favorites';
 
-		if (!$favorites_flag && (!$content['path'] || !egw_vfs::is_dir($content['path'])))
+		if (!$favorites_flag && (!$content['path'] || !Vfs::is_dir($content['path'])))
 		{
 			$content['path'] = filemanager_ui::get_home_dir();
 		}
-		$tpl = new etemplate_new('filemanager.select');
+		$tpl = new Etemplate('filemanager.select');
 
 		if ($favorites_flag)
 		{
 			// Display favorites as if they were folders
 			$files = array();
-			$favorites = egw_favorites::get_favorites('filemanager');
+			$favorites = Framework\Favorites::get_favorites('filemanager');
 			$n = 0;
 			foreach($favorites as $favorite)
 			{
@@ -253,7 +260,7 @@ class filemanager_select
 				if(!$path) continue;
 				if ($path == $content['path']) continue;	// remove directory itself
 
-				$mime = egw_vfs::mime_content_type($path);
+				$mime = Vfs::mime_content_type($path);
 				$content['dir'][$n] = array(
 					'name' => $favorite['name'],
 					'path' => $path,
@@ -267,7 +274,7 @@ class filemanager_select
 				++$n;
 			}
 		}
-		else if (!($files = egw_vfs::find($content['path'],array(
+		else if (!($files = Vfs::find($content['path'],array(
 			'dirsontop' => true,
 			'order' => 'name',
 			'sort' => 'ASC',
@@ -284,9 +291,9 @@ class filemanager_select
 			{
 				if ($path == $content['path']) continue;	// remove directory itself
 
-				$name = egw_vfs::basename($path);
-				$is_dir = egw_vfs::is_dir($path);
-				$mime = egw_vfs::mime_content_type($path);
+				$name = Vfs::basename($path);
+				$is_dir = Vfs::is_dir($path);
+				$mime = Vfs::mime_content_type($path);
 				if ($content['mime'] && !$is_dir && $mime != $content['mime'])
 				{
 					continue;	// does not match mime-filter --> ignore
@@ -305,10 +312,10 @@ class filemanager_select
 			}
 			if (!$n) $readonlys['selected[]'] = true;	// remove checkbox from empty line
 		}
-		$readonlys['button[createdir]'] = !egw_vfs::is_writable($content['path']);
+		$readonlys['button[createdir]'] = !Vfs::is_writable($content['path']);
 
 		//_debug_array($readonlys);
-		egw_session::appsession('select_path','filemanger',$content['path']);
+		Api\Cache::setSession('filemanger', 'select_path', $content['path']);
 		$preserve = array(
 			'mode'   => $content['mode'],
 			'method' => $content['method'],
@@ -328,7 +335,7 @@ class filemanager_select
 		// tell framework we need inline javascript for ckeditor_return
 		if ($content['method'] == 'ckeditor_return')
 		{
-			egw_framework::csp_script_src_attrs('unsafe-inline');
+			Api\Header\ContentSecurityPolicy::add('script-src', 'unsafe-inline');
 		}
 		$tpl->exec('filemanager.filemanager_select.select',$content,$sel_options,$readonlys,$preserve,2);
 	}
@@ -342,7 +349,7 @@ class filemanager_select
 	{
 		$apps = array(false);	// index starting from 1
 		if (isset($GLOBALS['egw_info']['apps']['stylite'])) $apps = array('favorites' => lang('Favorites'));
-		$apps += egw_link::app_list('query');
+		$apps += Link::app_list('query');
 
 		unset($apps['mydms']);	// they do NOT support adding files to VFS
 		unset($apps['wiki']);

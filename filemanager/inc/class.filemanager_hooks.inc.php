@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Hooks for admin, preferences and sidebox-menus
+ * EGroupware - Hooks for admin, preferences and sidebox-menus
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -8,6 +8,11 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Vfs;
 
 /**
  * Class containing admin, preferences and sidebox-menus (used as hooks)
@@ -24,7 +29,7 @@ class filemanager_hooks
 	static function sidebox_menu($args)
 	{
 		// Magic etemplate2 favorites menu (from nextmatch widget)
-		display_sidebox(self::$appname, lang('Favorites'), egw_framework::favorite_list(self::$appname));
+		display_sidebox(self::$appname, lang('Favorites'), Framework\Favorites::list_favorites(self::$appname));
 
 		$location = is_array($args) ? $args['location'] : $args;
 		$rootpath = '/';
@@ -41,7 +46,7 @@ class filemanager_hooks
 				// add "file a file" (upload) dialog
 				$file[] = array(
 					'text' => 'File a file',
-					'link' => "javascript:egw_openWindowCentered2('".egw::link('/index.php',array(
+					'link' => "javascript:egw_openWindowCentered2('".Egw::link('/index.php',array(
 							'menuaction'=>'stylite.stylite_filemanager.upload',
 						),false)."','_blank',550,350)",
 					'app'  => 'phpgwapi',
@@ -51,9 +56,9 @@ class filemanager_hooks
 			// add selection for available views, if we have more then one
 			if (count(filemanager_ui::init_views()) > 1)
 			{
-				$index_url = egw::link('/index.php',array('menuaction' => 'filemanager.filemanager_ui.index'),false);
+				$index_url = Egw::link('/index.php',array('menuaction' => 'filemanager.filemanager_ui.index'),false);
 				$file[] = array(
-					'text' => html::select('filemanager_view',filemanager_ui::get_view(),filemanager_ui::$views,false,
+					'text' => Api\Html::select('filemanager_view',filemanager_ui::get_view(),filemanager_ui::$views,false,
 						' onchange="'."egw_appWindow('filemanager').location='$index_url&view='+this.value;".
 						'" style="width: 100%;"'),
 					'no_lang' => True,
@@ -62,22 +67,22 @@ class filemanager_hooks
 			}
 			if ($file_prefs['showhome'] != 'no')
 			{
-				$file['Your home directory'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath,'ajax'=>'true'));
+				$file['Your home directory'] = Egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath,'ajax'=>'true'));
 			}
 			if ($file_prefs['showusers'] != 'no')
 			{
-				$file['Users and groups'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath,'ajax'=>'true'));
+				$file['Users and groups'] = Egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath,'ajax'=>'true'));
 			}
 			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes')
 			{
-				$file['Basedirectory'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath,'ajax'=>'true'));
+				$file['Basedirectory'] = Egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath,'ajax'=>'true'));
 			}
 			if (!empty($file_prefs['startfolder']))
 			{
-				$file['Startfolder']= egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder'],'ajax'=>'true'));
+				$file['Startfolder']= Egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder'],'ajax'=>'true'));
 			}
-			$file['Placeholders'] = egw::link('/index.php','menuaction=filemanager.filemanager_merge.show_replacements');
-			$file['Shared files'] = egw::link('/index.php','menuaction=filemanager.filemanager_shares.index&ajax=true');
+			$file['Placeholders'] = Egw::link('/index.php','menuaction=filemanager.filemanager_merge.show_replacements');
+			$file['Shared files'] = Egw::link('/index.php','menuaction=filemanager.filemanager_shares.index&ajax=true');
 			display_sidebox(self::$appname,$title,$file);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['admin']) self::admin(self::$appname);
@@ -93,10 +98,10 @@ class filemanager_hooks
 		if (is_array($location)) $location = $location['location'];
 
 		$file = Array(
-			//'Site Configuration' => egw::link('/index.php','menuaction=admin.admin_config.index&appname='.self::$appname.'&ajax=true'),
-			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.index&appname='.self::$appname.'&ajax=true'),
-			'Check virtual filesystem' => egw::link('/index.php','menuaction=filemanager.filemanager_admin.fsck'),
-			'VFS mounts and versioning' => egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index'),
+			//'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname='.self::$appname.'&ajax=true'),
+			'Custom fields' => Egw::link('/index.php','menuaction=admin.customfields.index&appname='.self::$appname.'&ajax=true'),
+			'Check virtual filesystem' => Egw::link('/index.php','menuaction=filemanager.filemanager_admin.fsck'),
+			'VFS mounts and versioning' => Egw::link('/index.php', 'menuaction=filemanager.filemanager_admin.index'),
 		);
 		if ($location == 'admin')
 		{
@@ -115,7 +120,7 @@ class filemanager_hooks
 	 */
 	static function settings()
 	{
-		$config = config::read(self::$appname);
+		$config = Api\Config::read(self::$appname);
 		if (!empty($config['max_folderlinks'])) self::$foldercount = (int)$config['max_folderlinks'];
 
 		$yes_no = array(
@@ -173,7 +178,7 @@ class filemanager_hooks
 			'name'   => 'default_document',
 			'help'   => lang('If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.',lang('filemanager')).' '.
 				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.', 'name').' '.
-				lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+				lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
 			'run_lang' => false,
 			'xmlrpc' => True,
 			'admin'  => False,
@@ -185,7 +190,7 @@ class filemanager_hooks
 			'name'   => 'document_dir',
 			'help'   => lang('If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.', lang('filemanager')).' '.
 				lang('The document can contain placeholder like {{%1}}, to be replaced with the data.','name').' '.
-				lang('The following document-types are supported:'). implode(',',bo_merge::get_file_extensions()),
+				lang('The following document-types are supported:'). implode(',',Api\Storage\Merge::get_file_extensions()),
 			'run_lang' => false,
 			'xmlrpc' => True,
 			'admin'  => False,
@@ -233,7 +238,7 @@ class filemanager_hooks
 	/**
 	 * Register filemanager as handler for directories
 	 *
-	 * @return array see egw_link class
+	 * @return array see Api\Link class
 	 */
 	static function search_link()
 	{
@@ -244,7 +249,7 @@ class filemanager_hooks
 			'edit_id' => 'path',
 			'edit_popup' => '495x425',
 			'mime' => array(
-				egw_vfs::DIR_MIME_TYPE => array(
+				Vfs::DIR_MIME_TYPE => array(
 					'menuaction' => 'filemanager.filemanager_ui.index',
 					'ajax' => 'true',
 					'mime_id' => 'path',

@@ -1,7 +1,7 @@
 #!/usr/bin/php -qC
 <?php
 /**
- * Filemanager - Command line interface
+ * EGroupware Filemanager - Command line interface
  *
  * @link http://www.egroupware.org
  * @package filemanager
@@ -12,6 +12,9 @@
  *
  * @todo --domain does NOT work with --user root_* for domains other then the first in header.inc.php
  */
+
+use EGroupware\Api;
+use EGroupware\Api\Vfs;
 
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
@@ -190,16 +193,16 @@ switch($cmd)
 			usage('Wrong number of parameters!');
 		}
 		if (($url = $argv[0])) load_wrapper($url);
-		if(!egw_vfs::$is_root)
+		if(!Vfs::$is_root)
 		{
 			die("You need to be root to do that!\n");
 		}
 		if ($all)
 		{
-			config::save_value('vfs_fstab',$GLOBALS['egw_info']['server']['vfs_fstab']='','phpgwapi');
+			Api\Config::save_value('vfs_fstab',$GLOBALS['egw_info']['server']['vfs_fstab']='','phpgwapi');
 			echo "Restored default mounts:\n";
 		}
-		elseif (!egw_vfs::umount($url))
+		elseif (!Vfs::umount($url))
 		{
 			die("$url is NOT mounted!\n");
 		}
@@ -215,11 +218,11 @@ switch($cmd)
 		}
 		load_wrapper($url=$argv[0]);
 
-		if($argc > 1 && !egw_vfs::$is_root)
+		if($argc > 1 && !Vfs::$is_root)
 		{
 			die("You need to be root to do that!\n");
 		}
-		$fstab = egw_vfs::mount($url,$path=$argv[1]);
+		$fstab = Vfs::mount($url,$path=$argv[1]);
 		if (is_array($fstab))
 		{
 			foreach($fstab as $path => $url)
@@ -261,12 +264,12 @@ switch($cmd)
 		break;
 
 	case 'migrate-db2fs':
-		if (empty($user) || empty($passwd) || !egw_vfs::$is_root)
+		if (empty($user) || empty($passwd) || !Vfs::$is_root)
 		{
 			die("\nYou need to be root to do that!\n\n");
 		}
 		if (!is_writable($GLOBALS['egw_info']['server']['files_dir'])) exit;	// we need write access, error msg already given
-		$fstab = egw_vfs::mount();
+		$fstab = Vfs::mount();
 		if (!is_array($fstab) || !isset($fstab['/']) || strpos($fstab['/'],'storage=db') === false)
 		{
 			foreach($fstab as $path => $url)
@@ -275,11 +278,11 @@ switch($cmd)
 			}
 			die("\n/ NOT mounted with 'storage=db' --> no need to convert!\n\n");
 		}
-		$num_files = sqlfs_utils::migrate_db2fs();	// throws exception on error
+		$num_files = Vfs\Sqlfs\Utils::migrate_db2fs();	// throws exception on error
 		echo "\n$num_files files migrated from DB to filesystem.\n";
 		$new_url = preg_replace('/storage=db&?/','',$fstab['/']);
 		if (substr($new_url,-1) == '?') $new_url = substr($new_url,0,-1);
-		if (egw_vfs::mount($new_url,'/'))
+		if (Vfs::mount($new_url,'/'))
 		{
 			echo "/ successful re-mounted on $new_url\n";
 		}
@@ -307,7 +310,7 @@ switch($cmd)
 							die("rm -r only implemented for eGW streams!");	// dont want to repeat the code here
 						}
 						array_unshift($argv,$url);
-						egw_vfs::remove($argv,true);
+						Vfs::remove($argv,true);
 						$argv = array();
 					}
 					else
@@ -339,7 +342,7 @@ switch($cmd)
 								$mode = $url;	// first param is mode
 								$url = array_shift($argv);
 							}
-							if (egw_vfs::parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// cant use stat or egw_vfs::mode2int otherwise!
+							if (Vfs::parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// cant use stat or Vfs::mode2int otherwise!
 
 							if (strpos($mode,'+') !== false || strpos($mode,'-') !== false)
 							{
@@ -354,7 +357,7 @@ switch($cmd)
 							{
 								die("chmod only implemented for eGW streams!");	// dont want to repeat the code here
 							}
-							$set = egw_vfs::mode2int($mode,$set);
+							$set = Vfs::mode2int($mode,$set);
 							$params = array($url,$set);
 							break;
 						case 'chown':
@@ -364,7 +367,7 @@ switch($cmd)
 							{
 								$owner = $url;	// first param is owner/group
 								$url = array_shift($argv);
-								if (egw_vfs::parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// we need the header loaded
+								if (Vfs::parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// we need the header loaded
 								if ($owner == 'root')
 								{
 									$owner = 0;
@@ -390,7 +393,7 @@ switch($cmd)
 							$params = array($url,$owner);
 							break;
 					}
-					if (($scheme = egw_vfs::parse_url($url,PHP_URL_SCHEME)))
+					if (($scheme = Vfs::parse_url($url,PHP_URL_SCHEME)))
 					{
 						load_wrapper($url);
 					}
@@ -413,14 +416,14 @@ switch($cmd)
 					{
 						load_wrapper($url);
 						array_unshift($argv,$url);
-						egw_vfs::find($argv,array('url'=>true,),'do_stat',array($long,$numeric,true,$inode));
+						Vfs::find($argv,array('url'=>true,),'do_stat',array($long,$numeric,true,$inode));
 						$argv = array();
 					}
 					elseif (is_dir($url) && ($dir = opendir($url)))
 					{
 						if ($argc)
 						{
-							if (!($name = basename(egw_vfs::parse_url($url,PHP_URL_PATH)))) $name = '/';
+							if (!($name = basename(Vfs::parse_url($url,PHP_URL_PATH)))) $name = '/';
 							echo "\n$name:\n";
 						}
 						// separate evtl. query part, to re-add it after the file-name
@@ -448,7 +451,7 @@ switch($cmd)
 						{
 							if ($argc)
 							{
-								echo "\n".basename(egw_vfs::parse_url($url,PHP_URL_PATH)).":\n";
+								echo "\n".basename(Vfs::parse_url($url,PHP_URL_PATH)).":\n";
 							}
 							fpassthru($f);
 							fclose($f);
@@ -491,7 +494,7 @@ function load_wrapper($url)
 				// get eGW's __autoload() function
 				include_once(EGW_API_INC.'/common_functions.inc.php');
 
-				if (!egw_vfs::load_wrapper($scheme))
+				if (!Vfs::load_wrapper($scheme))
 				{
 					die("Unknown scheme '$scheme' in $url !!!\n\n");
 				}
@@ -548,7 +551,7 @@ function load_egw($user,$passwd,$domain='default')
 				$GLOBALS['egw_domain'][$domain]['config_passwd']))
 		{
 			echo "\nRoot access granted!\n";
-			egw_vfs::$is_root = true;
+			Vfs::$is_root = true;
 		}
 		else
 		{
@@ -588,11 +591,11 @@ function do_eacl(array $argv)
 	}
 	if ($argc == 1)
 	{
-		foreach(egw_vfs::get_eacl($url) as $acl)
+		foreach(Vfs::get_eacl($url) as $acl)
 		{
-			$mode = ($acl['rights'] & egw_vfs::READABLE ? 'r' : '-').
-				($acl['rights'] & egw_vfs::WRITABLE ? 'w' : '-').
-				($acl['rights'] & egw_vfs::EXECUTABLE ? 'x' : '-');
+			$mode = ($acl['rights'] & Vfs::READABLE ? 'r' : '-').
+				($acl['rights'] & Vfs::WRITABLE ? 'w' : '-').
+				($acl['rights'] & Vfs::EXECUTABLE ? 'x' : '-');
 			echo $acl['path']."\t$mode\t".$GLOBALS['egw']->accounts->id2name($acl['owner'])."\n";
 		}
 		return;
@@ -605,15 +608,15 @@ function do_eacl(array $argv)
 		{
 			switch($mode[$i])
 			{
-				case 'x': $argv[1] |= egw_vfs::EXECUTABLE; break;
-				case 'w': $argv[1] |= egw_vfs::WRITABLE; break;
-				case 'r': $argv[1] |= egw_vfs::READABLE; break;
+				case 'x': $argv[1] |= Vfs::EXECUTABLE; break;
+				case 'w': $argv[1] |= Vfs::WRITABLE; break;
+				case 'r': $argv[1] |= Vfs::READABLE; break;
 			}
 		}
 	}
-	if (!egw_vfs::eacl($url,$argv[1],$argc > 2 && !is_numeric($argv[2]) ? $GLOBALS['egw']->accounts->name2id($argv[2]) : $argv[2]))
+	if (!Vfs::eacl($url,$argv[1],$argc > 2 && !is_numeric($argv[2]) ? $GLOBALS['egw']->accounts->name2id($argv[2]) : $argv[2]))
 	{
-		echo "Error setting extended acl for $argv[0]!\n";
+		echo "Error setting extended Acl for $argv[0]!\n";
 	}
 }
 
@@ -629,7 +632,7 @@ function do_eacl(array $argv)
 function do_stat($url,$long=false,$numeric=false,$full_path=false,$inode=false)
 {
 	//echo "do_stat($url,$long,$numeric,$full_path)\n";
-	$bname = egw_vfs::parse_url($url,PHP_URL_PATH);
+	$bname = Vfs::parse_url($url,PHP_URL_PATH);
 
 	if (!$full_path)
 	{
@@ -645,7 +648,7 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false,$inode=false)
 
 		if (class_exists('egw_vfs'))
 		{
-			$perms = egw_vfs::int2mode($stat['mode']);
+			$perms = Vfs::int2mode($stat['mode']);
 		}
 		else
 		{
@@ -680,7 +683,7 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false,$inode=false)
 		$nlink = $stat['nlink'];
 		if (($stat['mode'] & 0xA000) == 0xA000)
 		{
-			$symlink = " -> ".(class_exists('egw_vfs') ? egw_vfs::readlink($url) : readlink($url));
+			$symlink = " -> ".(class_exists('egw_vfs') ? Vfs::readlink($url) : readlink($url));
 		}
 		if ($inode)
 		{
@@ -718,7 +721,7 @@ function do_cp($argv,$recursive=false,$perms=false)
 	{
 		if (is_dir($from) && (!file_exists($to) || is_dir($to)) && $recursive && class_exists('egw_vfs'))
 		{
-			foreach(egw_vfs::find($from,array('url' => true)) as $f)
+			foreach(Vfs::find($from,array('url' => true)) as $f)
 			{
 				$t = $to.substr($f,strlen($from));
 				if (is_dir($f))
@@ -749,7 +752,7 @@ function _cp($from,$to,$verbose=false)
 
 	if (is_dir($to))
 	{
-		$path = egw_vfs::parse_url($from,PHP_URL_PATH);
+		$path = Vfs::parse_url($from,PHP_URL_PATH);
 		if (is_dir($to))
 		{
 			list($to,$query) = explode('?',$to,2);
@@ -805,7 +808,7 @@ function do_find($bases,$options)
 	}
 	$options['url'] = true;	// we use url's not vfs pathes in filemanager/cli.php
 
-	foreach(egw_vfs::find($bases,$options) as $path)
+	foreach(Vfs::find($bases,$options) as $path)
 	{
 		echo "$path\n";
 	}
@@ -829,7 +832,7 @@ function do_lntree($from,$to)
 	{
 		usage("Directory '$to' is not writable!");
 	}
-	egw_vfs::find($from, array(
+	Vfs::find($from, array(
 		'url' => true,
 	), '_ln', array($to));
 }
@@ -837,15 +840,15 @@ function do_lntree($from,$to)
 function _ln($src, $base, $stat)
 {
 	//echo "_ln('$src', '$base', ".array2string($stat).")\n";
-	$dst = $base.egw_vfs::parse_url($src, PHP_URL_PATH);
+	$dst = $base.Vfs::parse_url($src, PHP_URL_PATH);
 
 	if (is_link($src))
 	{
-		if (($target = sqlfs_stream_wrapper::readlink($src)))
+		if (($target = Vfs\Sqlfs\StreamWrapper::readlink($src)))
 		{
 			if ($target[0] != '/')
 			{
-				$target = egw_vfs::dirname($src).'/'.$target;
+				$target = Vfs::dirname($src).'/'.$target;
 			}
 			echo "_ln('$src', '$base')\tsymlink('$base$target', '$dst')\n";
 			symlink($base.$target, $dst);
@@ -862,7 +865,7 @@ function _ln($src, $base, $stat)
 	}
 	else
 	{
-		$target = sqlfs_stream_wrapper::_fs_path($stat['ino']);
+		$target = Vfs\Sqlfs\StreamWrapper::_fs_path($stat['ino']);
 		echo "_ln('$src', '$base')\tlink('$target', '$dst')\n";
 		link($target, $dst);
 	}
