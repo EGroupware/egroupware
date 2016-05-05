@@ -144,6 +144,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 			var apps = [];
 			for (var i = 0; i < _apps.length; i++)
 			{
+				if (!_apps[i].app) continue;
 				if (typeof lang_arr[_apps[i].app] === "undefined")
 				{
 					jss.push(this.webserverUrl +
