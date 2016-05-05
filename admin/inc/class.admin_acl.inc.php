@@ -258,7 +258,7 @@ class admin_acl
 		{
 			$rows['sel_options']['filter2'] = array(
 				'' => lang('All applications'),
-			)+etemplate_widget_menupopup::app_options('enabled');
+			)+Etemplate\Widget\Select::app_options('enabled');
 		}
 		else
 		{
