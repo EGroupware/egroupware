@@ -87,7 +87,7 @@ abstract class Framework extends Framework\Extra
 		{
 			$GLOBALS['egw']->framework = $this;
 		}
-		$this->template_dir = '/phpgwapi/templates/'.$template;
+		$this->template_dir = '/api/templates/'.$template;
 
 		$this->template_dirs[] = $template;
 		$this->template_dirs[] = 'default';
@@ -119,25 +119,24 @@ abstract class Framework extends Framework\Extra
 			if (empty($GLOBALS['egw_info']['server']['template_set'])) $GLOBALS['egw_info']['server']['template_set'] = 'idots';
 			// setup the new eGW framework (template sets)
 			$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
-			if (!class_exists($class))	// first try to autoload the class
+			if (!class_exists($class) &&	// first try to autoload the class
+				file_exists($file=EGW_INCLUDE_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.$class.'.inc.php'))
 			{
-				require_once($file=EGW_INCLUDE_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.$class.'.inc.php');
+				require_once($file);
 				if (!in_array($file,(array)$_SESSION['egw_required_files']))
 				{
 					$_SESSION['egw_required_files'][] = $file;	// automatic load the used framework class, when the object get's restored
 				}
 			}
-			// fall back to idots if a template does NOT support current user-agent
-			if ($class != 'idots_framework' && method_exists($class,'is_supported_user_agent') &&
-				!call_user_func(array($class,'is_supported_user_agent')))
-			{
-				$GLOBALS['egw_info']['server']['template_set'] = 'idots';
-				return self::factory();
-			}
 		}
 		else
 		{
 			$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
+		}
+		// eg. "default" is only used for login at the moment
+		if (!class_exists($class))
+		{
+			$class = __CLASS__.'\\Minimal';
 		}
 		return new $class($GLOBALS['egw_info']['server']['template_set']);
 	}
@@ -450,13 +449,15 @@ abstract class Framework extends Framework\Extra
 		$extra['app-header'] = $app_header;
 
 		if($GLOBALS['egw_info']['flags']['currentapp'] != 'wiki') $robots ='<meta name="robots" content="none" />';
+
 		if (substr($GLOBALS['egw_info']['server']['favicon_file'],0,4) == 'http')
 		{
 			$var['favicon_file'] = $GLOBALS['egw_info']['server']['favicon_file'];
 		}
 		else
 		{
-			$var['favicon_file'] = Image::find('phpgwapi',$GLOBALS['egw_info']['server']['favicon_file']?$GLOBALS['egw_info']['server']['favicon_file']:'favicon.ico');
+			$var['favicon_file'] = Image::find('api', $GLOBALS['egw_info']['server']['favicon_file'] ?
+				$GLOBALS['egw_info']['server']['favicon_file'] : 'favicon.ico');
 		}
 
 		if ($GLOBALS['egw_info']['flags']['include_wz_tooltip'] &&

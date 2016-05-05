@@ -574,10 +574,10 @@ Preferences tabs
 /* new dialog style */
 
 div.prompt, table.prompt {
-	background:#fff url(../../default/images/prompt_bg.jpg) bottom right no-repeat; border:1px solid #4f6d81;
+	background:#fff url(images/prompt_bg.jpg) bottom right no-repeat; border:1px solid #4f6d81;
 }
 .promptheader {
-	background:url(../../default/images/prompt_header.gif) repeat-x; color:#355468; border:1px solid #4f6d81; border-bottom:none; height:24px
+	background:url(images/prompt_header.gif) repeat-x; color:#355468; border:1px solid #4f6d81; border-bottom:none; height:24px
 }
 
 /* TABLE STYLE */
@@ -595,7 +595,7 @@ div.prompt, table.prompt {
 	border-right: 1px solid gray;
 	border-bottom: 1px solid gray;
 	background-color: gray;
-	background-image: url(../../default/images/egw_action/header_overlay.png);
+	background-image: url(images/egw_action/header_overlay.png);
 	background-position: center;
 	background-repeat: repeat-x;
 	height: 46px;
@@ -642,14 +642,14 @@ div.prompt, table.prompt {
 }
 
 .egwGridView_outer div.innerContainer.queued {
-	background-image: url(../../default/images/egw_action/ajax-loader.gif);
+	background-image: url(images/egw_action/ajax-loader.gif);
 	background-position: center;
 	background-repeat: no-repeat;
 	height: 19px;
 }
 
 .egwGridView_grid > tbody > tr.focused {
-	background-image: url(../../default/images/egw_action/focused_hatching.png);
+	background-image: url(images/egw_action/focused_hatching.png);
 	background-repeat: repeat;
 }
 
@@ -668,7 +668,7 @@ tr.draggedOver td {
 }
 
 .egwGridView_spacer {
-	background-image: url(../../default/images/egw_action/non_loaded_bg.png);
+	background-image: url(images/egw_action/non_loaded_bg.png);
 	background-position: top left;
 }
 
@@ -778,19 +778,19 @@ tr.draggedOver td {
 
 .egwGridView_grid span.arrow.opened {
 	cursor: pointer;
-	background-image: url(../../default/images/egw_action/arrows.png);
+	background-image: url(images/egw_action/arrows.png);
 	background-position: -8px 0;
 }
 
 .egwGridView_grid span.arrow.closed {
 	cursor: pointer;
-	background-image: url(../../default/images/egw_action/arrows.png);
+	background-image: url(images/egw_action/arrows.png);
 	background-position: 0 0;
 }
 
 .egwGridView_grid span.arrow.loading {
 	cursor: pointer;
-	background-image: url(../../default/images/egw_action/ajax-loader.gif);
+	background-image: url(images/egw_action/ajax-loader.gif);
 	background-position: 0 0;
 }
 
@@ -811,7 +811,7 @@ tr.draggedOver td {
 	border-top: 1px solid silver;
 	border-right: 1px solid gray;
 	border-bottom: 1px solid gray;
-	background-image: url(../../default/images/egw_action/header_overlay.png);
+	background-image: url(images/egw_action/header_overlay.png);
 	background-position: center;
 	background-repeat: repeat-x;
 }
@@ -871,7 +871,7 @@ td.lettersearch {
 	margin: 0;
 	padding: 0;
 	vertical-align: middle;
-	background-image: url(../../default/images/egw_action/selectcols.png);
+	background-image: url(images/egw_action/selectcols.png);
 	background-position: center;
 	background-repeat: no-repeat;
 }
@@ -944,24 +944,24 @@ td.lettersearch {
 	text-align: left;
 	margin-left: 5px;
 	padding-left: 20px;
-	background-image: url(../../default/images/check.png);
+	background-image: url(images/check.png);
 	background-position: left;
 	background-repeat: no-repeat;
 	background-size: 16px;
 	white-space: pre-wrap;
 }
 .warning_message {
-	background-image: url(../../default/images/dialog_warning.png);
+	background-image: url(images/dialog_warning.png);
 }
 .error_message {
 	font-weight: bold;
-	background-image: url(../../default/images/dialog_error.png);
+	background-image: url(images/dialog_error.png);
 }
 .info_message {
-	background-image: url(../../default/images/dialog_info.png);
+	background-image: url(images/dialog_info.png);
 }
 .help_message {
-	background-image: url(../../default/images/dialog_help.png);
+	background-image: url(images/dialog_help.png);
 }
 .info_message .discard  {
 	float:right;

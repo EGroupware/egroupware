@@ -21,7 +21,7 @@
 						<input type="hidden" name="account_type" value="u" />
 					</td>
 					<td rowspan="6">
-						<img src="phpgwapi/templates/{template_set}/images/password.png" />
+						<img src="api/templates/default/images/password.png" />
 					</td>
 				</tr>
 <!-- BEGIN language_select -->

@@ -13,7 +13,7 @@
 		<link rel="icon" href="../api/templates/default/images/favicon.ico" type="image/x-ico" />
 		<link rel="shortcut icon" href="../api/templates/default/images/favicon.ico" />
 		<link href="../api/templates/default/default.css" type="text/css" rel="stylesheet" />
-		<link href="../api/templates/default/idots.css" type="text/css" rel="stylesheet" />
+		<link href="../api/templates/default/css/default.css" type="text/css" rel="stylesheet" />
 
 		<!--{java_script}-->
 	</head>

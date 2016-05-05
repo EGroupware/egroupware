@@ -1,4 +1,4 @@
-/*@import url("api/templates/default/default.css");*/
+/*@import url("/api/templates/default/default.css");*/
 
 /**
  * Stylite theme changes
@@ -8,7 +8,7 @@
 	border: none;
 	background-position: 0px 30px;
 	background-color: white;
-	background-image: url(images/gradient22.png);
+	background-image: url(../images/gradient22.png);
 }
 
 #divStatusBar {
@@ -16,7 +16,7 @@
 }
 
 #divAppboxHeader {
-	background-image: url(images/gradient22.png);
+	background-image: url(../images/gradient22.png);
 	border: none;
 	height: 18px;
 	line-height: 18px;
@@ -48,7 +48,7 @@
 	width:auto;
 }
 .divSideboxHeader {
-	background-image: url(images/gradient22.png);
+	background-image: url(../images/gradient22.png);
 	border: none;
 	height: 18px;
 	line-height: 18px;
@@ -83,7 +83,7 @@
 }
 
 #topmenu {
-	background-image: url(images/gradient22.png);
+	background-image: url(../images/gradient22.png);
 	border: none;
 	x-background-color: #e0e0e0;
 	x-background-image: none;
@@ -99,7 +99,7 @@
 }
 
 #sideresize {
-	background-image:url(images/resize-transparent.png);
+	background-image:url(../images/resize-transparent.png);
 }
 
 .th {
@@ -140,7 +140,7 @@ a:link, a:visited, select, input, textarea {
 	padding-left: 8px;
 }
 .divLoginboxHeader {
-	background-image: url(images/gradient22.png);
+	background-image: url(../images/gradient22.png);
 }
 #menu1Container{
 	position: absolute;

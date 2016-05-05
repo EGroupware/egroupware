@@ -78,7 +78,7 @@ class setup_header
 
 		$GLOBALS['egw_info']['server']['show_domain_selectbox'] = false;
 		$GLOBALS['egw_info']['server']['db_persistent'] = True;
-		$GLOBALS['egw_info']['login_template_set'] = 'idots';
+		$GLOBALS['egw_info']['login_template_set'] = 'default';
 		$GLOBALS['egw_info']['server']['mcrypt_enabled'] = False;
 		$GLOBALS['egw_info']['server']['versions']['mcrypt'] = '';
 		$GLOBALS['egw_info']['server']['mcrypt_iv'] = $this->generate_mcyrpt_iv();

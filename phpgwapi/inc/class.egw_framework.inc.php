@@ -22,6 +22,18 @@ use EGroupware\Api;
 abstract class egw_framework extends Api\Framework
 {
 	/**
+	 * Constructor
+	 *
+	 * @param string $template
+	 */
+	function __construct($template)
+	{
+		parent::__construct($template);
+
+		$this->template_dir = '/phpgwapi/templates/'.$template;
+	}
+
+	/**
 	 * Set/get Content-Security-Policy attributes for script-src: 'unsafe-eval' and/or 'unsafe-inline'
 	 *
 	 * Using CK-Editor currently requires both to be set :(
