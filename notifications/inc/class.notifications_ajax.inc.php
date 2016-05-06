@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Ajax methods for notifications
  */
@@ -58,7 +60,7 @@ class notifications_ajax {
 	/**
 	 * reference to global db object
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	private $db;
 
@@ -81,7 +83,7 @@ class notifications_ajax {
 	/**
 	 * the xml response object
 	 *
-	 * @var egw_json_response
+	 * @var Api\Json\Response
 	 */
 	private $response;
 
@@ -90,12 +92,12 @@ class notifications_ajax {
 	 *
 	 */
 	public function __construct() {
-		$this->response = egw_json_response::get();
+		$this->response = Api\Json\Response::get();
 		$this->recipient = (object)$GLOBALS['egw']->accounts->read($GLOBALS['egw_info']['user']['account_id']);
 
-		$this->config = (object)config::read(self::_appname);
+		$this->config = (object)Api\Config::read(self::_appname);
 
-		$prefs = new preferences($this->recipient->account_id);
+		$prefs = new Api\Preferences($this->recipient->account_id);
 		$this->preferences = $prefs->read();
 
 		$this->db = $GLOBALS['egw']->db;
@@ -116,7 +118,7 @@ class notifications_ajax {
 
 		// call a hook for notifications on new mail
 		//if ($GLOBALS['egw_info']['user']['apps']['mail'])  $this->check_mailbox();
-		$GLOBALS['egw']->hooks->process('check_notify');
+		Api\Hooks::process('check_notify');
 
 		// update currentusers
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] &&
@@ -170,11 +172,11 @@ class notifications_ajax {
 					{
 						$message = substr_replace($message, '', strpos($message, lang('Linked entries:')));
 					}
-					$message = preg_replace('#</?a[^>]*>#is','',$message);
+					$message2 = preg_replace('#</?a[^>]*>#is','',$message);
 
-					$message = 'data:text/html;charset=' . translation::charset() .';base64,'.base64_encode($message);
+					$message3 = 'data:text/html;charset=' . Api\Translation::charset() .';base64,'.base64_encode($message2);
 				}
-				$this->response->apply('app.notifications.append',array($notification['notify_id'],$notification['notify_message'],$message));
+				$this->response->apply('app.notifications.append',array($notification['notify_id'],$notification['notify_message'],$message3));
 			}
 
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {

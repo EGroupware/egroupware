@@ -9,6 +9,8 @@
  * @author Stefan Werfling <stefan.werfling@hw-softwareentwicklung.de>, Maik H�ttner <maik.huettner@hw-softwareentwicklung.de>
  */
 
+use EGroupware\Api;
+
 /**
  * jdesk Json methods for notifications
  */
@@ -57,14 +59,14 @@ class notifications_jdesk_ajax {
 	/**
 	 * reference to global db object
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	private $db;
 
 	/**
 	 * the xml response object
 	 *
-	 * @var xajaxResponse
+	 * @var Api\Json\Response
 	 */
 	private $response;
 
@@ -74,17 +76,13 @@ class notifications_jdesk_ajax {
 	 */
 	public function __construct()
 	{
-		if( class_exists('xajaxResponse') )
-		{
-			$this->response = new xajaxResponse();
-		}
+		$this->response = new Api\Json\Response();
 
 		$this->recipient = (object)$GLOBALS['egw']->accounts->read($GLOBALS['egw_info']['user']['account_id']);
 
-		$this->config = (object)config::read(self::_appname);
+		$this->config = (object)Api\Config::read(self::_appname);
 
-		$prefs = new preferences($this->recipient->account_id);
-		$preferences = $prefs->read();
+		$prefs = new Api\Preferences($this->recipient->account_id);
 		$this->preferences = $prefs->read();
 
 		$this->db = $GLOBALS['egw']->db;
@@ -123,8 +121,6 @@ class notifications_jdesk_ajax {
 				"message" => $message,
 				"details" => $details));
 		 */
-
-		return $this->response->getXML();
 	}
 
 	/**
@@ -150,7 +146,9 @@ class notifications_jdesk_ajax {
 	 *
 	 * @return boolean true or false
 	 */
-	private function get_egwpopup($browserNotify = false) {
+	private function get_egwpopup($browserNotify = false)
+	{
+		unset($browserNotify);	// not used
 
 		$message = '';
 

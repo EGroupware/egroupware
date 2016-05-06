@@ -1,5 +1,4 @@
 <?php
-
 /**
  * EGroupware - Notifications Java Desktop App
  *
@@ -9,6 +8,8 @@
  * @link http://www.egroupware.org
  * @author Stefan Werfling <stefan.werfling@hw-softwareentwicklung.de>, Maik H�ttner <maik.huettner@hw-softwareentwicklung.de>
  */
+
+use EGroupware\Api;
 
 class notifications_jpopup implements notifications_iface
 {
@@ -59,7 +60,7 @@ class notifications_jpopup implements notifications_iface
 	/**
 	* holds db object of SQL database
 	*
-	* @var egw_db
+	* @var Api\Db
 	*/
 	private $db;
 
@@ -93,6 +94,8 @@ class notifications_jpopup implements notifications_iface
 	*/
 	public function send(array $_messages, $_subject=false, $_links=false, $_attachments=false)
 	{
+		unset($_attachments);	// not used
+
 		$jmessage = array();
 
 		// app-message
@@ -119,7 +122,7 @@ class notifications_jpopup implements notifications_iface
 		}
 
 		$message = $this->render_infos($_subject)
-			.html::hr()
+			.Api\Html::hr()
 			.$_messages['html'];
 
 		$jmessage['msghtml']	= $message;
@@ -133,7 +136,7 @@ class notifications_jpopup implements notifications_iface
 	* renders additional infos from sender and subject
 	*
 	* @param string $_subject
-	* @return html rendered info as complete string
+	* @return string html rendered info as complete string
 	*/
 	private function render_infos($_subject = false) {
 		$infos = array();
@@ -141,7 +144,7 @@ class notifications_jpopup implements notifications_iface
 
 		$sender = $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender_account_email;
 		$infos[] = lang('Message from').': '.$sender;
-		if(!empty($_subject)) { $infos[] = html::bold($_subject); }
+		if(!empty($_subject)) { $infos[] = Api\Html::bold($_subject); }
 		return implode($newline,$infos);
 	}
 

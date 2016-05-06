@@ -15,7 +15,7 @@ if (!defined('NOTIFICATION_APP'))
 }
 
 $setup_info[NOTIFICATION_APP]['name']      = NOTIFICATION_APP;
-$setup_info[NOTIFICATION_APP]['version']   = '14.3';
+$setup_info[NOTIFICATION_APP]['version']   = '16.1';
 $setup_info[NOTIFICATION_APP]['app_order'] = 1;
 $setup_info[NOTIFICATION_APP]['tables']    = array('egw_notificationpopup');
 $setup_info[NOTIFICATION_APP]['enable']    = 2;
@@ -37,11 +37,6 @@ $setup_info[NOTIFICATION_APP]['hooks']['deleteaccount'] = 'notifications.notific
 
 /* Dependencies for this app to work */
 $setup_info[NOTIFICATION_APP]['depends'][] = array(
-	 'appname' => 'phpgwapi',
-	 'versions' => Array('14.1')
+	 'appname' => 'api',
+	 'versions' => Array('16.1')
 );
-$setup_info[NOTIFICATION_APP]['depends'][] = array(
-	 'appname' => 'etemplate',
-	 'versions' => Array('14.1')
-);
-

@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Instant user notification with egroupware popup.
  *
@@ -67,7 +69,7 @@ class notifications_popup implements notifications_iface {
 	/**
 	 * holds db object of SQL database
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	private $db;
 
@@ -98,15 +100,17 @@ class notifications_popup implements notifications_iface {
 	 * @param array $_links
 	 * @param array $_attachments
 	 */
-	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
+	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false)
+	{
+		unset($_attachments);	// not used
 		// Check access log to see if user is still logged in
-		if ( !egw_session::notifications_active($this->recipient->account_id) )
+		if ( !Api\Session::notifications_active($this->recipient->account_id) )
 		{
 			throw new Exception("User {$this->recipient->account_lid} isn't online. Can't send notification via popup");
 		}
 
 		$message = 	$this->render_infos($_subject)
-					.html::hr()
+					.Api\Html::hr()
 					.(isset($_messages['popup'])&&!empty($_messages['popup'])?$_messages['popup']:$_messages['html'])
 					.$this->render_links($_links);
 
@@ -133,7 +137,7 @@ class notifications_popup implements notifications_iface {
 	 * should be moved to the ajax class later - like mentioned in the Todo
 	 *
 	 * @param array $_links
-	 * @return html rendered link(s) as complete string with jspopup or a new window
+	 * @return string html rendered link(s) as complete string with jspopup or a new window
 	 */
 	private function render_links($_links = false) {
 		if(!is_array($_links) || count($_links) == 0) { return false; }
@@ -143,20 +147,19 @@ class notifications_popup implements notifications_iface {
 		foreach($_links as $link) {
 			if(!$link->popup) { $link->view['no_popup'] = 1; }
 
-			$url = html::link('/index.php', $link->view);
 			// do not expose sensitive data
-			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$url);
+			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',
+				Api\Html::link('/index.php', $link->view));
 			// extract application-icon from menuaction
 			if($link->view['menuaction']) {
 				$menuaction_arr = explode('.',$link->view['menuaction']);
 				$application = $menuaction_arr[0];
-				$image = $application ? html::image($application,'navbar',$link->text,'align="middle" style="width: 24px; margin-right: 0.5em;"') : '';
+				$image = $application ? Api\Html::image($application,'navbar',$link->text,'align="middle" style="width: 24px; margin-right: 0.5em;"') : '';
 			} else {
 				$image = '';
 			}
 			if($link->popup && !$GLOBALS['egw_info']['user']['preferences']['notifications']['external_mailclient'])
 			{
-				$dimensions = explode('x', $link->popup);
 				$data = array(
 					"data-app = '{$link->app}'",
 					"data-id = '{$link->id}'",
@@ -164,14 +167,14 @@ class notifications_popup implements notifications_iface {
 					"data-popup = '{$link->popup}'"
 				);
 
-				$rendered_links[] = html::div($image.$link->text,implode(' ',$data),'link');
+				$rendered_links[] = Api\Html::div($image.$link->text,implode(' ',$data),'link');
 			} else {
-				$rendered_links[] = html::div('<a href="'.$url.'" target="_blank">'.$image.$link->text.'</a>','','link');
+				$rendered_links[] = Api\Html::div('<a href="'.$url.'" target="_blank">'.$image.$link->text.'</a>','','link');
 			}
 
 		}
 		if(count($rendered_links) > 0) {
-			return html::hr().html::bold(lang('Linked entries:')).$newline.implode($newline,$rendered_links);
+			return Api\Html::hr().Api\Html::bold(lang('Linked entries:')).$newline.implode($newline,$rendered_links);
 		}
 	}
 
@@ -179,9 +182,9 @@ class notifications_popup implements notifications_iface {
 	 * returns javascript to open a popup window: window.open(...)
 	 *
 	 * @param string $link link or this.href
-	 * @param string $target='_blank' name of target or this.target
-	 * @param int $width=750 width of the window
-	 * @param int $height=400 height of the window
+	 * @param string $target ='_blank' name of target or this.target
+	 * @param int $width =750 width of the window
+	 * @param int $height =400 height of the window
 	 * @return string javascript (using single quotes)
 	 */
 	private function jspopup($link,$target='_blank',$width=750,$height=410)
@@ -202,7 +205,7 @@ class notifications_popup implements notifications_iface {
 	 * renders additional infos from sender and subject
 	 *
 	 * @param string $_subject
-	 * @return html rendered info as complete string
+	 * @return string html rendered info as complete string
 	 */
 	private function render_infos($_subject = false) {
 		$infos = array();
@@ -210,7 +213,7 @@ class notifications_popup implements notifications_iface {
 
 		$sender = $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender_account_email;
 		$infos[] = lang('Message from').': '.$sender;
-		if(!empty($_subject)) { $infos[] = html::bold($_subject); }
+		if(!empty($_subject)) { $infos[] = Api\Html::bold($_subject); }
 		return implode($newline,$infos);
 	}
 

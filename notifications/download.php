@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp'	=> 'notifications',
@@ -31,8 +33,8 @@ $ret=copy($document, $archive);
 error_log("copy('$document', '$archive' returned ".array2string($ret));
 $document = 'zip://'.$archive.'#'.($config_file = 'lib/conf/egwnotifier.const.xml');
 
-$xml = file_get_contents($document);
-//html::content_header('egwnotifier.const.xml', 'application/xml', bytes($xml)); echo $xml; exit;
+$xml_in = file_get_contents($document);
+//Api\Header\Content::type('egwnotifier.const.xml', 'application/xml', bytes($xml_in)); echo $xml_in; exit;
 
 function replace_callback($matches)
 {
@@ -90,11 +92,11 @@ function replace_callback($matches)
 		$htmlscflags = 16;	// #define ENT_XML1		16
 	}
 
-	return '<'.$matches[1].'>'.htmlspecialchars($replacement, $htmlscflags, translation::charset()).'</'.$matches[1].'>';
+	return '<'.$matches[1].'>'.htmlspecialchars($replacement, $htmlscflags, Api\Translation::charset()).'</'.$matches[1].'>';
 }
 
-$xml = preg_replace_callback('/<((egw_|MI_)[^>]+)>(.*)<\/[a-z0-9_-]+>/iU', 'replace_callback', $xml);
-//html::content_header('egwnotifier.replace.xml', 'application/xml', bytes($xml)); echo $xml; exit;
+$xml = preg_replace_callback('/<((egw_|MI_)[^>]+)>(.*)<\/[a-z0-9_-]+>/iU', 'replace_callback', $xml_in);
+//Api\Header\Content::type('egwnotifier.const.xml', 'application/xml', bytes($xml)); echo $xml; exit;
 
 /* does NOT work, fails in addFromString :-(
 $zip = new ZipArchive;
@@ -115,7 +117,7 @@ unset($zip);
 clearstatcache();
 ob_end_clean();
 
-html::content_header('egroupware-notifier-'.$GLOBALS['egw_info']['user']['account_lid'].'.jar', 'application/x-java-archive', filesize($archive));
+Api\Header\Content::type('egroupware-notifier-'.$GLOBALS['egw_info']['user']['account_lid'].'.jar', 'application/x-java-archive', filesize($archive));
 readfile($archive,'rb');
 
 @unlink($archive);

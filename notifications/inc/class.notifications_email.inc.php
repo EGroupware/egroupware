@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Notifications
+ * EGroupware - Notifications
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
@@ -9,6 +9,8 @@
  * @author Christian Binder <christian@jaytraxx.de>
  * @version $Id$
  */
+
+use EGroupware\Api;
 
 /**
  * User notification via email.
@@ -44,7 +46,7 @@ class notifications_email implements notifications_iface {
 	/**
 	 * holds preferences object of user to notify
 	 *
-	 * @var preferences
+	 * @var Api\Preferences
 	 */
 	private $preferences;
 
@@ -74,7 +76,7 @@ class notifications_email implements notifications_iface {
 		{
 			unset($this->mail);
 		}
-		$this->mail = new egw_mailer();
+		$this->mail = new Api\Mailer();
 	}
 
 	/**
@@ -139,13 +141,13 @@ class notifications_email implements notifications_iface {
 		if(is_null($_render_html)) { $_render_html = false; }
 		if(is_null($_render_external)) { $_render_external = true; }
 		$newline = $_render_html ? "<br />" : "\n";
-		$hruler = $_render_html ? html::hr() : '';
+		$hruler = $_render_html ? Api\Html::hr() : '';
 
 		$rendered_links = array();
 		foreach($_links as $link) {
 			if($_render_external || ! $link->popup) { $link->view['no_popup'] = 1; }
 			// do not expose sensitive data
-			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',html::link('/index.php', $link->view));
+			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',Api\Html::link('/index.php', $link->view));
 			// complete missing protocol and domain part if needed
 			if ($url{0} == '/' && $_render_external) {
 				$url = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').

@@ -10,9 +10,8 @@
  * @version $Id$
  */
 
-use EGroupware\Api\Json;
-
 use EGroupware\Api;
+use EGroupware\Api\Json;
 
 /**
  * Class to push via notification polling and other json requests from client-side
@@ -34,7 +33,7 @@ class notifications_push implements Json\PushBackend
 	/**
 	 * Reference to global DB object
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	public static $db;
 
@@ -113,7 +112,7 @@ class notifications_push implements Json\PushBackend
 	{
 		self::$db->delete(self::TABLE, array(
 			'notify_type' => self::TYPE,
-			'notify_created < '.self::$db->from_unixtime(egw_session::heartbeat_limit()),
+			'notify_created < '.self::$db->from_unixtime(Api\Session::heartbeat_limit()),
 		), __LINE__, __FILE__, self::APP);
 	}
 

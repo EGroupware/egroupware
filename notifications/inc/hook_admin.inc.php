@@ -9,7 +9,9 @@
  * @version $Id: hook_preferences.inc.php 22498 2006-09-25 10:20:46Z jaytraxx $
  */
 
-$file = Array(	'Site Configuration' => egw::link('/index.php', array(
+use EGroupware\Api\Egw;
+
+$file = Array(	'Site Configuration' => Egw::link('/index.php', array(
 	'menuaction'	=> 'admin.admin_config.index',
 	'appname'		=> $appname,
 	'ajax'          => 'true',

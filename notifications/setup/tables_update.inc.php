@@ -123,3 +123,7 @@ function notifications_upgrade14_1()
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '14.3';
 }
 
+function notifications_upgrade14_3()
+{
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '16.1';
+}

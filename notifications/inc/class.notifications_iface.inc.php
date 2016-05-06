@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Notifications
+ * EGroupware - Notifications
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
@@ -15,7 +15,7 @@
 interface notifications_iface {
 
 	/**
-	 * constructor 
+	 * constructor
 	 *
 	 * @param object $_sender
 	 * @param object $_recipient
@@ -23,7 +23,7 @@ interface notifications_iface {
 	 * @param object $_preferences
 	 */
 	public function __construct($_sender, $_recipient, $_config = null, $_preferences = null);
-	
+
 	/**
 	 * sends one notification to one recipient
 	 *

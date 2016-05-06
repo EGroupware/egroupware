@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * User notification via winpopup.
  */
@@ -100,9 +102,12 @@ class notifications_winpopup implements notifications_iface {
 	 * @param array $_links
 	 * @param array $_attachments
 	 */
-	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
+	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false)
+	{
+		unset($_links, $_attachments);	// not used
+
 		$user_sessions = array();
-		foreach (egw_session::session_list(0, 'asc', 'session_dla', true) as $session) {
+		foreach (Api\Session::session_list(0, 'asc', 'session_dla', true) as $session) {
 			if ($session['session_lid'] == $this->recipient->account_lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
 				if($this->valid_ip($session['session_ip'])) {
 					$user_sessions[] = $session['session_ip'];
@@ -138,6 +143,7 @@ class notifications_winpopup implements notifications_iface {
 									'/\[SENDER\]/' => $this->sender->account_fullname ? escapeshellarg($this->sender->account_fullname) : escapeshellarg($this->sender->account_email),
 									);
 			$command = preg_replace(array_keys($placeholders), $placeholders, $this->netbios_command);
+			$output = $returncode = null;
 			exec($command,$output,$returncode);
 			if($returncode != 0) {
 				throw new Exception("Failed sending notification message via winpopup. Error while executing the specified command.");

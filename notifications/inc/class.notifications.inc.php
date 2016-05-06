@@ -9,7 +9,7 @@
  * @version $Id$
  */
 
-if (!defined('SEP')) define('SEP','/');
+use EGroupware\Api;
 
 /**
  * Notifies users according to their preferences.
@@ -179,13 +179,13 @@ final class notifications {
 	 *
 	 */
 	public function __construct() {
-		$this->config = (object) config::read(self::_appname);
+		$this->config = (object) Api\Config::read(self::_appname);
 	}
 
 	/**
 	 * Return notification errors
 	 *
-	 * @param boolean $reset=false true: reset all errors
+	 * @param boolean $reset =false true: reset all errors
 	 * @return array
 	 */
 	public static function errors($reset=false)
@@ -480,9 +480,9 @@ final class notifications {
 					$ids[] = $receiver->account_id;
 					if ($GLOBALS['egw']->acl->get_specific_rights_for_account($ids,'run','notifications')) {
 						// read the users notification chain
-						$prefs = new preferences($receiver->account_id);
-						$preferences = $prefs->read();
-						$preferences = (object)$preferences[self::_appname];
+						$prefs = new Api\Preferences($receiver->account_id);
+						$preferences_all = $prefs->read();
+						$preferences = (object)$preferences_all[self::_appname];
 						if($preferences->notification_chain) {
 							// fallback: admin disabled user-chosen chain
 							if(!$notification_chain = $available_chains[$preferences->notification_chain]) {
@@ -508,6 +508,7 @@ final class notifications {
 				}
 
 				foreach($notification_chain as $backend => $action) {
+					$notification_backend = null;
 					try {
 						// check if backend should be skipped
 						if( in_array($backend, $this->skip_backends) ) {
@@ -517,7 +518,7 @@ final class notifications {
 						}
 
 						$notification_backend = self::_appname.'_'.$backend;
-						if(!file_exists(EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.'. $notification_backend. '.inc.php')) {
+						if(!file_exists(EGW_INCLUDE_ROOT.'/'. self::_appname.'/inc/class.'. $notification_backend. '.inc.php')) {
 							throw new Exception('file for '.$notification_backend. ' does not exist');
 						}
 						$obj = new $notification_backend( $this->sender, $receiver, $this->config, $preferences );
@@ -581,7 +582,7 @@ final class notifications {
 		if(!empty($_message_plain)) {
 			$messages['plain'] = $_message_plain;
 		} else {
-			$messages['plain'] = translation::convertHTMLToText($_message_html, false, true);
+			$messages['plain'] = Api\Mail\Html::convertHTMLToText($_message_html, false, true);
 		}
 
 		if(!empty($_message_html)) {
@@ -601,7 +602,7 @@ final class notifications {
 	 */
 	public static function plain2html($_plain)
 	{
-		return html::activate_links(nl2br(html::htmlspecialchars($_plain, true)));
+		return Api\Html::activate_links(nl2br(Api\Html::htmlspecialchars($_plain, true)));
 	}
 
 	/**
@@ -638,7 +639,9 @@ final class notifications {
 	 * @param string $_part
 	 * @return string chosen part of the address
 	 */
-	 private function get_addresspart($_address, $_part='email') {
+	private function get_addresspart($_address, $_part='email')
+	{
+		$parts = null;
 	 	if(strpos($_address,'<') && preg_match('/^(.*)\S?\<(.*)\>/',$_address, $parts)) { // _address contains a fullname part
 	 		$fullname = trim(trim($parts[1]),'\"');
 	 		$email = $parts[2];
@@ -649,11 +652,9 @@ final class notifications {
 	 	switch($_part) {
 	 		case 'fullname':
 	 			return $fullname;
-	 			break;
 	 		case 'email':
 	 		default:
 	 			return $email;
-	 			break;
 	 	}
 	 	return false;
 	 }
@@ -668,9 +669,9 @@ final class notifications {
 	 * @return array containing notification chains, output like given in $_output
 	 */
 	public function get_available_chains($_output = 'routing') {
-		// determine enabled backends from config
+		// determine enabled backends from Api\Config
 		$enabled_backends = array();
-		foreach($this->backends as $id => $backend) {
+		foreach($this->backends as $backend) {
 			switch($backend) {
 				case 'email':
 				case 'popup':
@@ -689,7 +690,7 @@ final class notifications {
 		foreach($this->notification_chains as $key => $chain) {
 			$allow_chain = true;
 			if(is_array($chain)) {
-				foreach($chain as $name => $action) {
+				foreach(array_keys($chain) as $name) {
 					if(!$enabled_backends[$name]) {
 						$allow_chain = false; // disable whole chain if one backend is disabled
 					}
@@ -728,7 +729,7 @@ final class notifications {
 				// create descriptions for each chain key in each group
 				foreach($chain_groups as $name => $arr_name) {
 					${$arr_name.$suffix} = array();
-					foreach(${$arr_name} as $key => $value) {
+					foreach(array_keys(${$arr_name}) as $key) {
 						if($arr_name == 'disabled_chains') {
 							${$arr_name.$suffix}[$key] = '('.lang('Disabled').') '.lang($this->chains_descriptions[$key]);
 						} else {
@@ -744,12 +745,10 @@ final class notifications {
 					}
 				}
 				return $chains_final;
-				break;
 
 			case 'routing':
 			default:
 				return array_merge($common_chains, $enabled_chains);
-				break;
 		}
 
 		return false;
