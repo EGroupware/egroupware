@@ -49,9 +49,15 @@ class Login
 		Api\Header\ContentSecurityPolicy::add('frame-src', array());	// array() no external frame-sources
 
 		//error_log(__METHOD__."() this->template=$this->framework->template, this->template_dir=$this->framework->template_dir, get_class(this)=".get_class($this));
-		$tmpl = new Template(EGW_SERVER_ROOT.$this->framework->template_dir);
-
-		$tmpl->set_file(array('login_form' => Api\Header\UserAgent::mobile()?'login_mobile.tpl':'login.tpl'));
+		try {
+			$tmpl = new Template(EGW_SERVER_ROOT.$this->framework->template_dir);
+			$tmpl->set_file(array('login_form' => Api\Header\UserAgent::mobile()?'login_mobile.tpl':'login.tpl'));
+		}
+		catch(Api\Exception\WrongParameter $e) {
+			unset($e);
+			$tmpl = new Template(EGW_SERVER_ROOT.'/api/templates/default');
+			$tmpl->set_file(array('login_form' => Api\Header\UserAgent::mobile()?'login_mobile.tpl':'login.tpl'));
+		}
 
 		$tmpl->set_var('lang_message',$GLOBALS['loginscreenmessage']);
 
@@ -224,11 +230,15 @@ class Login
 	*/
 	function denylogin_screen()
 	{
-		$tmpl = new Template(EGW_SERVER_ROOT.$this->framework->template_dir);
-
-		$tmpl->set_file(array(
-			'login_form' => 'login_denylogin.tpl'
-		));
+		try {
+			$tmpl = new Template(EGW_SERVER_ROOT.$this->framework->template_dir);
+			$tmpl->set_file(array('login_form' => 'login_denylogin.tpl'));
+		}
+		catch(Api\Exception\WrongParameter $e) {
+			unset($e);
+			$tmpl = new Template(EGW_SERVER_ROOT.'/api/templates/default');
+			$tmpl->set_file(array('login_form' => 'login_denylogin.tpl'));
+		}
 
 		$tmpl->set_var(array(
 			'template_set' => 'default',
