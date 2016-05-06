@@ -146,7 +146,8 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
-		$fileas_options = ExecMethod('api.EGroupware\\Api\\Contacts.fileas_options');
+		$contacts = new Api\Contacts();
+		$fileas_options = $contacts->fileas_options();
 		$settings['link_title'] = array(
 			'type'   => 'select',
 			'label'  => 'Link title for contacts show',
@@ -159,15 +160,18 @@ class addressbook_hooks
 			'admin'  => false,
 			'default'=> 'org_name: n_family, n_given',
 		);
-    	$settings['link_title_cf'] = array(
-			'type'  => 'select',
-			'label' => 'Add a customfield to link title',
-			'name'  => 'link_title_cf',
-			'values' => Api\Contacts::cf_options(),
-			'help'  =>  'Add customfield to links of addressbook, which displays in other applications. The default value is none customfield.',
-			'xmlrpc' => True,
-			'admin'  => false,
-		);
+		if (($cf_opts = Api\Contacts::cf_options()))
+		{
+			$settings['link_title_cf'] = array(
+				'type'  => 'select',
+				'label' => 'Add a customfield to link title',
+				'name'  => 'link_title_cf',
+				'values' => $cf_opts,
+				'help'  =>  'Add customfield to links of addressbook, which displays in other applications. The default value is none customfield.',
+				'xmlrpc' => True,
+				'admin'  => false,
+			);
+		}
 		$settings['addr_format'] = array(
 			'type'   => 'select',
 			'label'  => 'Default address format',
