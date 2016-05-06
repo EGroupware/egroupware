@@ -996,6 +996,17 @@ egw_LAB.wait(function() {
 	}
 
 	/**
+	 * representates a b tag (bold)
+	 *
+	 * @param string $content of the link, if '' only the opening tag gets returned
+	 * @return string the html
+	 */
+	static function bold($content)
+	{
+		return '<b>'.($content?$content.'</b>':'');
+	}
+
+	/**
 	 * representates a hr tag (horizontal rule)
 	 *
 	 * @param string $width default ''=none given
