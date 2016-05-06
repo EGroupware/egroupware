@@ -722,536 +722,490 @@ your settings have been updated	common	pt	As suas preferências foram actualizad
 zambia	common	pt	Zâmbia
 zimbabwe	common	pt	Zimbabwe
 zoom	common	pt	Zoom
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	de	%1 (%2 neue) Texte für die Anwendung '%3' und die Sprache '%4' geschrieben
-%1 entries found, select one ...	common	de	%1 Einträge gefunden, einen auswählen ...
-%1 etemplates deleted	common	de	%1 eTemplate(s) gelöscht
-%1 etemplates for application '%2' dumped to '%3'	common	de	%1 eTemplate(s) für die Anwendung '%2' nach '%3' geschrieben
-%1 etemplates found	common	de	%1 eTemplate(s) gefunden
-%1 matches on search criteria	common	de	%1 Treffer bei der Suche
-%1 more...	common	de	%1 mehr...
-%1 new etemplates imported for application '%2'	common	de	%1 neue eTemplate(s) importiert für die Anwendung '%2'
-%1 not implemented for %2!	common	de	%1 ist nicht  implementiert für '%2'
-%1, duplicate id	common	de	%1, doppelte ID
-%s disabled	common	de	%s deaktiviert
-%s needed	common	de	%s benötigt
-%s notranslation	common	de	%s nicht übersetzen
-%s onchange	common	de	%s onChange
-%s readonly	common	de	%s Schreibschutz
-'%1' has an invalid format	common	de	'%1' hat ein ungültiges Format !!!
-'%1' has an invalid format !!!	common	de	'%1' hat ein ungültiges Format !!!
-'%1' is no php file in the egw server root (%2)!	common	de	'%1' ist keine php Datei in dem EGW Server Wurzelverzeichnis (%2)!
-'%1' is not a valid date !!!	common	de	'%1' ist ein ungültiges Datum !!!
-'%1' is not a valid floatingpoint number !!!	common	de	'%1' ist keine gültige Gleitkommazahl !!!
-'%1' is not a valid integer !!!	common	de	'%1' ist keine gültige Ganzzahl !!!
-'%1' is not a valid timezone!	common	de	'%1' ist keine gültige Zeitzone!
-'%1' is not allowed ('%2')!	common	de	'%1' ist NICHT erlaubt ('%2')!
-'%1' is not allowed%2)!	common	de	'%1' ist NICHT erlaubt '%2'!
-1 minute	common	de	1 Minute
-15 minutes	common	de	15 Minuten
-30 minutes	common	de	30 Minuten
-30 seconds	common	de	30 Sekunden
-5 minutes	common	de	5 Minuten
-a pattern to be searched for	common	de	ein Muster nach dem gesucht werden soll
-accesskey	common	de	Tastaturkürzel
-accesskeys can also be specified with an & in the label (eg. &name)	common	de	Ein Tastaturkürzel kann auch über ein & in der Beschriftung angegeben werden
-account contactdata	common	de	Kontaktdaten eines Benutzers
-actions...	common	de	Aktionen...
-add a new column (after the existing ones)	common	de	Neue Spalte hinzufügen (hinter den bestehenden)
-add a new entry of the selected application	common	de	Einen neuen Eintrag der ausgewählten Anwendung hinzufügen
-add a new multi-column index	common	de	Fügt einen mehrspaltigen Index hinzu
-add column	common	de	Spalte zufügen
-add index	common	de	Index zufügen
-add new	common	de	Neu hinzufügen
-add table	common	de	Tabelle zufügen
-add to clipboard	common	de	Zur Zwischenablage hinzufügen
-advanced search	common	de	Erweiterte Suche
-align	common	de	Ausrichtung
-alignment of label and input-field in table-cell	common	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
-alignment of the v/hbox containing table-cell	common	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
-all categories	common	de	Alle Kategorien
-all days	common	de	alle Tage
-all operations save the template!	common	de	alle Operation speichern das Template!
-all users	common	de	Alle Benutzer
-allowed file type: %1	common	de	Erlaubter Dateityp: %1
-am	common	de	Vormittag
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
-and	common	de	UND
-application	common	de	Anwendung
-application has no etemplates (no file %1) to restore!	common	de	Anwendung hat keine eTemplates (keine Datei %1) zum Wiederherstellen!
-application name needed to restore etemplates!	common	de	Anwendungsname wir benötigt zum wiederherstellen der eTemplates!
-application name needed to write a langfile or dump the etemplates !!!	common	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
-applications	common	de	Anwendungen
-applies the changes made	common	de	übernimmt die Änderungen
-applies the changes to the given version of the template	common	de	übernimmt die Änderungen in die angegebene Version des Templates
-as default	common	de	als Vorgabe
-attach	common	de	Anhängen
-attach file	common	de	Datei anhängen
-automatically refresh list	common	de	Liste automatisch aktualisieren
-baseline	common	de	Grundlinie
-blurtext	common	de	blurText
-border	common	de	Rand
-border-line-thickness for the table-tag	common	de	Randbreite (border) für die Tabelle
-bottom	common	de	Unten
-box	common	de	Box
-box...	common	de	Box...
-broken link	common	de	Beschädigte Verknüpfung (Broken Link)
-can not have special sql-value null	common	de	darf nicht den speziellen SQL Wert NULL annehmen
-cancel	common	de	Abbruch
-cant delete a single widget from a grid !!!	common	de	Kann kein einzelnes Widget aus einer Tabelle löschen !!!
-cant delete the only column of a grid !!!	common	de	Kann nicht die einzige Spalte einer Tabelle löschen !!!
-cant delete the only row in a grid !!!	common	de	Kann nicht die einzige Zeile einer Tabelle löschen !!!
-category	common	de	Kategorie
-category tree	common	de	Kategoriebaum
-cellpadding for the table-tag	common	de	Innenabstand (cellpadding) der Tabelle
-cells	common	de	Zellen
-cellspacing for the table-tag	common	de	Zellenabstand (cellspacing) der Tabelle
-center	common	de	Zentriert
-changed	common	de	Geändert
-check all	common	de	Alle auswählen
-check if content should only be displayed but not altered (the content is not send back then!)	common	de	abhaken wenn der Inhalt nur angezeigt aber nicht geändert werden soll (der Inhalt wird dann nicht zurückgesendet!)
-check if field has to be filled by user	common	de	abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefüllt werden muss
-checkbox	common	de	Checkbox
-class	common	de	Class
-class, valign	common	de	Class, Valign
-click here to attach the file	common	de	hier klicken um die Datei anzuhängen
-click here to create the link	common	de	hier klicken um die Verknüpfung anzulegen
-click here to start the search	common	de	hier klicken um die Suche zu starten
-click here to upload the file	common	de	hier klicken um die Datei hochzuladen
-click to order after that criteria	common	de	anklicken um nach diesem Kriterium zu sortieren
-clickable path	common	de	anklickbarer Pfad
-closes the window without saving the changes	common	de	schließt das Fenster ohne zu speichern
-column...	common	de	Spalte...
-columnname	common	de	Spaltenname
-comment	common	de	Kommentar
-confirm	common	de	bestätigen
-confirmation message or custom javascript (returning true or false)	common	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurückliefernd)
-confirmation necesary or custom java-script	common	de	Bestätigung notwendig oder spezielles Javascript
-confirmation required	common	de	Bestätigung erforderlich
-contact	common	de	Kontakt
-contact field to show	common	de	Kontaktfeld zum Anzeigen
-contact fields	common	de	Kontaktfelder
-contains	common	de	enthalten
-copy "%1"	common	de	"%1" kopieren
-copy to clipboard	common	de	In die Zwischenablage kopieren
-create a new table for the application	common	de	Neue Tabelle für die Anwendung anlegen
-create link	common	de	Verkünpfung erstellen
-creates an english ('en') langfile from label and helptexts (for application in name)	common	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
-creator	preferences	de	Ersteller
-css class for the table-tag	common	de	CSS class der Tabelle
-css properties	common	de	CSS Attribute
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
-css-styles	common	de	CSS Stile
-custom	common	de	Benutzerdefiniert
-custom fields	common	de	Benutzerdefinierte Felder
-custom javascript for onchange	common	de	Benutzerdefiniertes Javascript für onChange
-cut	common	de	Ausschneiden
-data type	common	de	Datentyp
-date	common	de	Datum
-date+time	common	de	Datum+Uhrzeit
-day	common	de	Tag
-days	common	de	Tage
-db ensures that every row has a unique value in that column	common	de	die Datenbank stellt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	de	DB-spezifische Index-Optionen (Komma-getrennt), z.B. mysql(FULLTEXT) oder mysql(100) für die indizierte Länge der Spalte
-db-tools	common	de	DB-Tools
-deck	common	de	Deck (intern)
-default	common	de	Vorgabe
-delete a single entry by passing the id.	common	de	Löscht einen einzelnen Eintrag über seine Id.
-delete all selected etemplates, without further inquiry	common	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
-delete and cut save the template!	common	de	Löschen und Ausschneiden speichern das Template!
-delete column	common	de	Spalte löschen
-delete index	common	de	Index löschen
-delete link	common	de	Verknüpfung löschen
-delete link?	common	de	Verknüpfung löschen?
-delete the spezified etemplate	common	de	löscht das angegebene eTemplate
-delete this column	common	de	diese Spalte löschen
-delete this etemplate	common	de	dieses eTemplate löschen
-delete this file	common	de	Diese Datei löschen
-delete this row	common	de	diese Zeile löschen
-delete whole column (can not be undone!!!)	common	de	ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
-deletes the above spez. etemplate from the database, can not be undone	common	de	löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden
-deletes the etemplate spez. above	common	de	löscht das oben spezifizierte eTemplate
-deletes this column	common	de	Löscht diese Spalte
-deletes this index	common	de	Löscht diesen Index
-discard changes	common	de	verwirft Änderungen
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
-displayed in statusline of browser if input-field gets focus	common	de	wird in der Statuszeile des Browsers angezeigt, wenn das Eingabefeld angesprochen wird
-displayed in the top line of the groupbox (legend)	common	de	wird oben in der Umrandung der Gruppierung angezeigt (Legende)
-do you want to save the changes you made in table %s?	common	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
-do you want to send the message to all selected entries, without further editing?	common	de	Wollen Sie die Nachricht an alle ausgewählten Einträge OHNE weitere Bearbeitung versenden?
-document '%1' does not exist or is not readable for you!	preferences	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
-documentation	common	de	Dokumentation
-doesn't matter	common	de	spielt keine Rolle
-done	common	de	Schliessen
-drop a table - this can not be undone	common	de	Tabelle löschen (drop) - NICHT rückgängig zu machen
-drop table	common	de	Tabelle löschen
-dump4setup	common	de	Dump4Setup
-duration	common	de	Dauer
-edit	common	de	Bearbeiten
-edit embeded css styles or of the applications app.css file	common	de	bearbeitet die eingebetteten CSS Stile oder die app.css Datei der Anwendung
-edit the etemplate spez. above	common	de	das oben spezifizierte eTemplate bearbeiten
-edit...	common	de	Bearbeiten...
-editable templates - db-tools	common	de	eTemplates - DB-Tools
-editable templates - delete template	common	de	eTemplates - Löschen
-editable templates - editor	common	de	eTemplates - Bearbeiten
-editable templates - search	common	de	eTemplates - Suchen
-editable templates - show template	common	de	eTemplates - Anzeigen
-element role title	common	de	Element Rolle Titel
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	de	eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
-enable javascript onchange submit	common	de	JavaScript absenden bei Änderung (onChange) aktivieren
-enter '' for an empty default, nothing mean no default	common	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
-enter a search pattern	common	de	Suchmuster eingeben
-enter filename to upload and attach, use [browse...] to search for it	common	de	Dateinamen zum Hochladen oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
-enter the new version number here (> old_version), empty for no update-file	common	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
-enter the new version number here (has to be > old_version)	common	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
-entry saved	common	de	Eintrag gespeichert
-error copying uploaded file to vfs!	common	de	Fehler beim Kopieren der  hoch geladenen Datei ins VFS!
-error create parent directory %1!	common	de	Fehler beim Anlegen des Elternverzeichnisses %1!
-error deleting %1!	common	de	Fehler beim Löschen von %1!
-error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
-error: template not found !!!	common	de	Fehler: eTemplate nicht gefunden !!!
-error: webserver is not allowed to write into '%1' !!!	common	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
-error: while saving !!!	common	de	Fehler: beim Speichern !!!
-error: writing file (no write-permission for the webserver) !!!	common	de	Fehler: Datei schreiben (keine Schreibberechtigung für den Webserver) !!!
-et2 rendering took %1s	common	de	eT2 Rendering benötigte %1s
-etemplate	common	de	eTemplate
-etemplate '%1' imported, use save to put it in the database	common	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
-etemplate '%1' written to '%2'	common	de	eTemplate '%1' wurde nach '%2' geschrieben
-etemplate editor	common	de	eTemplate Editor
-etemplate reference	common	de	eTemplate Handbuch
-etemplate tutorial	common	de	eTemplate Einführung
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	de	Beispiel {{NELFNV role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
-exchange this row with the one above	common	de	diese Zeile mit der darüber austauschen
-exchange this two columns	common	de	diese beiden Spalten austauschen
-export the loaded etemplate into a xml-file	common	de	das geladene eTemplate als XML Datei (.xet) exportieren
-export xml	common	de	XML Export
-extensions loaded:	common	de	Erweiterungen geladen:
-field	common	de	Feld
-field must not be empty !!!	common	de	Das Feld darf nicht leer sein !!!
-file	common	de	Datei
-file '%1' not found!	common	de	Datei '%1' nicht gefunden!
-file contains more than one etemplate, last one is shown !!!	common	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt !!!
-file information	common	de	Datei Information
-file is of wrong type (%1 != %2)!	common	de	Datei hat ungültigen Typ (%1 != %2)!
-file too large.  maximum %1	common	de	Datei ist zu gross. Maximal %1
-file writen	common	de	Datei geschrieben
-fileupload	common	de	DateiUpload
-first	common	de	Zuerst
-floating point	common	de	Gleitkommawert
-for more than one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
-force	common	de	Erzwungen
-foreign key	common	de	Foreign Key
-formatted text (html)	common	de	Formatierter Text (HTML)
-fr	common	de	Fr
-general fields:	preferences	de	Allgemeine Felder:
-go to the first entry	common	de	gehe zum ersten Eintrag
-go to the last entry	common	de	gehe zum letzten Eintrag
-go to the next page of entries	common	de	gehe zur nächsten Seite
-go to the previous page of entries	common	de	gehe zur vorherigen Seite
-grid	common	de	Tabelle
-grid column attributes	common	de	Attribute der Tabellenspalte
-grid row attributes	common	de	Attribute der Tabellenzeile
-groupbox	common	de	Gruppierung
-h	common	de	h
-hbox	common	de	HBox
-height	common	de	Höhe
-height of row (in % or pixel)	common	de	Höhe der Zeile (in % oder Pixel)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
-height of the table in % or pixels for the table-tag and (optional) div	common	de	Höhe der Tabelle in % oder Punkten
-height, disabled	common	de	Höhe, Deaktiviert
-help	common	de	Hilfe
-history log	common	de	Versionshistorie
-horizontal rule	common	de	Waagrechte Linie
-hour	common	de	Stunde
-hours	common	de	Stunden
-how many entries should the list show	common	de	Wie viele Einträge soll die Liste anzeigen
-html	common	de	HTML
-html link to the current record	common	de	HTML-Link zum aktuellen Eintrag.
-id	common	de	Id
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
-image	common	de	Grafik
-import	common	de	Import
-import an etemplate from a xml-file	common	de	Importiert ein eTemplate aus einer XML Datei
-import table-definitions from existing db-table	common	de	Importiert die Tabellen-Definition aus einer bestehenden Datenbank-Tabelle
-import xml	common	de	XML Import
-increment version to not overwrite the existing template	common	de	Version erhöhen um das existierende Template nicht zu überschreiben
-index/name of returned content (name of the template, link / method for image)	common	de	Index / Name des zurückgelieferten Inhalts (Name des eTemplates oder Link/Methode für Grafik)
-indexed	common	de	Indiziert
-indexoptions	common	de	Indexoptionen
-input required	common	de	Eingabe erforderlich
-insert a column before	common	de	eine Spalte davor einfügen
-insert a column behind	common	de	eine Spalte dahinter einfügen
-insert a row above	common	de	eine Zeile darüber einfügen
-insert a row below	common	de	eine Zeile darunter einfügen
-insert a widget before	common	de	ein Widget davor einfügen
-insert a widget behind	common	de	ein Widget dahinter einfügen
-insert in document	common	de	In ein Dokument einfügen
-insert new column behind this one	common	de	Neue Spalte hinter dieser einfügen
-insert new column in front of all	common	de	Neue Spalte vor dieser einfügen
-insert new row after this one	common	de	Neue Zeile nach dieser einfügen
-insert new row in front of first line	common	de	Neue Zeile vor dieser einfügen
-integer	common	de	Ganzzahl
-key	common	de	Schlüssel
-label	common	de	Beschriftung
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	de	Beschriftung:[bold][italic] Text:[len][,max] Zahlen:[min][,[max][,len]] mehrz.Text:[Zeilen][,Spalten] Radiok.:Wert Templ.:[IndexInContent] Auswahl:[mehrzeilig] Datum:[Format: zB. 'Y-m-d']
-lang	common	de	Sprache
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhängige Templates ('' ließt die bevorzugte Sprache, benutze 'default' für das Standard Template '')
-last	common	de	Letzte
-left	common	de	Links
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	de	Länge für char+varchar, Genauigkeit für int: 2, 4, 8 und float: 4, 8
-link	common	de	Verknüpfung
-link target %1 not found!	common	de	Keine Verknüpfung zu %1 gefunden!
-linkapps	common	de	VerknüpfungAnwendungen
-linked	common	de	Verknüptf
-linkentry	common	de	VerknüpfungEintrag
-linklist	common	de	VerknüpfungListe
-links and attached files	preferences	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
-links to specified application.  example: {{links/addressbook}}	common	de	Verknüpfungen zu der entsprechenden Anwendung. Beispiel der Verknüpfungen zum Adressbuch: {{links/addressbook}}
-linkstring	common	de	VerknüpfungZeichenkette
-linkto	common	de	VerknüpfungZu
-list of files linked to the current record	preferences	de	Liste der Dokumente, die zu dem aktuellen Datensatz gehören.
-load this template into the editor	common	de	lädt diese Template zum Bearbeiten
-loading	common	de	lade
-maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
-maybe	common	de	Vieleicht
-message ...	common	de	Nachricht ...
-message prepared for sending.	common	de	Nachricht zum Versand vorbereitet.
-message(s) send failed!	common	de	Senden der Nachricht(en) fehlgeschlagen!
-message(s) send ok.	common	de	Nachricht(en) erfolgreich versandt.
-middle	common	de	Mittig
-minute	common	de	Minute
-minutes	common	de	Minuten
-missing: %1	common	de	nicht vorhanden: %1
-mo	common	de	Mo
-modifier	preferences	de	Geändert von
-month	common	de	Monat
-more	common	de	Weitere
-more than 1 match for '%1'	common	de	Mehr als 1 trifft für '%1' zu
-multicolumn indices	common	de	Mehrspaltige Indices
-name	common	de	Name
-name of other table where column is a key from	common	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	de	Name des eGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das Standard Layout '' zu lesen)
-name of table to add	common	de	Name der zuzufügenden Tabelle
-name of the etemplate, should be in form application.function[.subtemplate]	common	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	de	muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsamen Kürzel der Anwendung beginnen: z.b. 'et_'
-new	common	de	Neu
-new search	common	de	Neue Suche
-new table created	common	de	Neue Tabelle erzeugt
-new value	common	de	Neuer Wert
-newer version '%1' exists !!!	common	de	Neuere Version '%1' existiert !!!
-nextmatch	common	de	Nextmatch
-nextmatch accountfilter	common	de	Nextmatch Benutzerfilter
-nextmatch custom filterheader	common	de	Nextmatch freier Filterkopf
-nextmatch filterheader	common	de	Nextmatch Filterkopf
-nextmatch header	common	de	Nextmatch Spaltenkopf
-nextmatch sortheader	common	de	Nextmatch Sortierkopf
-no column to swap with !!!	common	de	Keine Spalte um damit zu tauschen !!!
-no default set	common	de	Keine Vorgabe gesetzt
-no file	common	de	keine Datei
-no filename given or selected via browse...	common	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
-no filters	common	de	Keine Filter
-no matches found	common	de	Keine Treffer gefunden
-no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
-no row to swap with !!!	common	de	Keine Zeile um damit zu tauschen !!!
-no suggestions	common	de	Keine Vorschläge
-not null	common	de	NOT NULL
-nothing	common	de	nichts
-nothing found - try again !!!	common	de	Nichts gefunden - nochmal versuchen !!!
-nothing in clipboard to paste !!!	common	de	Zwischenablage leer - nichts zum einfügen !!!
-nothing matched search criteria !!!	common	de	Nicht gefunden bei diesem Suchkriterium !!!
-now	common	de	Jetzt
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
-of	common	de	von
-off	common	de	Keine
-old value	common	de	Alter Wert
-onchange	common	de	onChange
-onclick	common	de	onClick
-only an other version found !!!	common	de	nur eine andere Version gefunden !!!
-open the online help.	common	de	Öffnet die online Hilfe.
-operator	common	de	Operator
-optional note about the link	common	de	optionale Notiz zur Verknüpfung
-options	common	de	Optionen
-or	common	de	ODER
-order to navigating by tab key through the form	common	de	Reihenfolge bei der Navigation mit der Tabulator Taste durch das Formular
-overflow	common	de	Überbreite
-padding	common	de	Innenabstand
-parent is a '%1' !!!	common	de	Elternelement is ein '%1' !!!
-paste	common	de	Einfügen
-path	common	de	Pfad
-please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
-pm	common	de	Nachmittag
-popup	common	de	Pop-up
-precision	common	de	Genauigkeit
-preference	common	de	Einstellung
-primary key	common	de	Primary Key
-primary key for the table, gets automaticaly indexed	common	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
-protocol is required	common	de	Protokoll wird benötigt
-radiobutton	common	de	Radioknopf
-read	common	de	Lesen
-read a list of entries.	common	de	Liest eine Liste von Einträgen.
-read a single entry by passing the id and fieldlist.	common	de	Liste einen einzelnen Eintrag durch Übergabe seiner Id und Feldliste.
-read etemplate from database (for the keys above)	common	de	ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
-readonly	common	de	nur lesen
-refresh	common	de	Aktualisierung
-remove row (can not be undone!!!)	common	de	löscht eine Zeile (NICHT rückgängig zu machen)
-remove this link (not the entry itself)	common	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
-required	common	de	Benötigt
-reset	common	de	Zurücksetzen
-reset all user's column preferences	common	de	Spaltenauswahl für alle Benutzer zurücksetzen
-restore all	common	de	Alle wiederherstellen
-restore all application templates, overwriting existing ones with identical version number	common	de	Alle eTemplates der Anwendung wiederherstellen, durch Überschreiben der existierenden mit gleicher Versionsnummer
-returns savely, without deleting	common	de	Abbruch, OHNE zu löschen
-right	common	de	Rechts
-row...	common	de	Zeile...
-sa	common	de	Sa
-save all	common	de	Alle speichern
-save as zip	common	de	Als ZIP-Datei speichern
-save selected columns as default preference for all users.	common	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
-save the changes made and close the window	common	de	speichert die Änderungen uns schließt das Fenster
-save the etemplate under the above keys (name, ...), change them for a saveas	common	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
-saves changes to tables_current.inc.php	common	de	speichert die Änderungen in tables_current.inc.php
-saves the template with given version number and closes the window	common	de	speichert das Template unter der angegebenen Versionsnummer und schließt das Fenster
-scale	common	de	Scale
-scale for float	common	de	Nachkommastellen für Gleitkommawerte
-search	common	de	Suchen
-search letter	common	de	Suche nach Buchstaben
-search...	common	de	Suchen...
-select a category	common	de	eine Kategorie auswählen
-select a primary contact, to show in the list	common	de	einen Hauptkontakt auswählen, der in der Auflistung mit angezeigt wird
-select access	common	de	Zugriff auswählen
-select account	common	de	Benutzer auswählen
-select an app first !!!	common	de	Bitte wählen Sie zuerst ein Anwendung aus !!!
-select an app to search in	common	de	Anwendung zum Durchsuchen auswählen
-select an application	common	de	Anwendung auswählen
-select an application, (*) = uninstalled	common	de	Anwendung auswählen, (*) = nicht installiert
-select an entry to link with	common	de	Eintrag zum Verknüpfen auswählen
-select an table of the application	common	de	Tabelle der Anwendung auswählen
-select application	common	de	Anwendung auswählen
-select application to search	common	de	Anwendung zum Suchen auswählen
-select category	common	de	Kategorie auswählen
-select color	common	de	Farbe auswählen
-select columns	common	de	Spalten auswählen
-select country	common	de	Land auswählen
-select day	common	de	Tag auswählen
-select day of week	common	de	Wochentag auswählen
-select entry	common	de	Eintrag auswählen
-select file(s) from vfs	common	de	Datein aus dem VFS wählen
-select files from filemanager ...	common	de	Dateien aus Dateimanager auswählen ...
-select hour	common	de	Stunde auswählen
-select if content of field should not be translated (label gets always translated)	common	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
-select language	common	de	Sprache auswählen
-select month	common	de	Monat auswählen
-select number	common	de	Zahl auswählen
-select one ...	common	de	Eine auswählen ...
-select percentage	common	de	Prozente auswählen
-select priority	common	de	Priorität auswählen
-select some options	common	de	Optionen auswählen
-select state	common	de	US-State auswählen
-select the columns to display in the list	common	de	Wählen Sie die Spalten aus, die in der Liste angezeigt werden sollen
-select the indexed columns in their desired order	common	de	Zu indizierende Spalten in der gewünschten Reihenfolge auswählen
-select this etemplate to delete it	common	de	dieses eTemplate zum Löschen auswählen
-select which accounts to show	common	de	Benutzer zum Anzeigen auswählen
-select which values to show	common	de	auswählen welche Werte angezeigt werden
-select year	common	de	Jahr auswählen
-selectbox	common	de	Auswahlbox
-server error	common	de	Serverfehler
-set as default	common	de	Als Vorgabe setzen
-set these columns as the default	common	de	Speichern Sie diese Spaltenauswahl als Vorgabe
-sets today as date	common	de	setzt heutiges Datum
-should the form be submitted or any custom javascript be executed	common	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden
-show	common	de	Anzeigen
-show (no save)	common	de	Anzeigen (nicht speichern)
-show all / cancel filter	common	de	Alle anzeigen / Filter aufheben
-show values	common	de	Werte anzeigen
-showing	common	de	zeigt
-shows / allows you to enter values into the etemplate for testing	common	de	zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
-shows/displays etemplate for testing, does not save it before	common	de	zeigt eTemplate zum Testen an, speichert es NICHT davor
-spacing	common	de	Zellenabstand
-span	common	de	Überspannt
-span, class	common	de	Span, Class
-stack	common	de	Stapel
-start a new search, cancel this link	common	de	neue Suche Starten, diese Verknüpfung abbrechen
-start new search for the above pattern	common	de	neue Suche für das obige Muster starten
-su	common	de	So
-submit form	common	de	Formular abschicken
-submitbutton	common	de	Schaltfläche
-sure	common	de	Sicher
-swap	common	de	tauschen
-swap widget with next one	common	de	tauscht das Widget mit dem nächsten
-swap with next column	common	de	tauscht Spalte mit der nächsten
-swap with next row	common	de	tauscht Zeile mit der nächsten
-switch to a parent widget	common	de	wechselt zum Elternelement
-switch to an other widgets of that container	common	de	wechselt zu einem anderen Element dieses Containers
-tabindex	common	de	Tab-Reihenfolge
-table unchanged, no write necessary !!!	common	de	Tabelle nicht geändert, kein schreiben notwendig !!!
-tablename	common	de	Tabellenname
-tabs	common	de	Karteikarten
-template	common	de	Template
-template deleted	common	de	Template gelöscht
-template saved	common	de	Template gespeichert
-text	common	de	Textfeld
-textarea	common	de	mehrzeiliges Textfeld
-th	common	de	Do
-the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2).
-the following document-types are supported:	preferences	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
-this text gets displayed if the input-field is empty and has no focus (blur)	common	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
-time	common	de	Uhrzeit
-titles of any entries linked to the current record, excluding attached files	preferences	de	Titel der Verknüpften zu dem aktuellem Eintrag ohne Dateien.
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	de	zum deaktivieren: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert wenn data leer ist
-to start the db-tools	common	de	startet die DB-Tools
-to start the etemplate editor	common	de	startet den eTemplate Editor
-to start the search	common	de	startet die Suche
-today	common	de	Heute
-top	common	de	Oben
-tree	common	de	Baum
-tu	common	de	Di
-type	common	de	Typ
-type of the column	common	de	Typ der Spalte
-type of the field (select label if field should be empty)	common	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)
-uncheck all	common	de	Alle abwählen
-unique	common	de	Unique
-unlink	common	de	Lösen
-update a single entry by passing the fields.	common	de	Aktualisiert einen einzelnen Eintrag über seine Felder.
-update from version '%s' to	common	de	Update von Version '%s' auf
-upload	common	de	Hochladen
-upload file(s) from filemanager...	common	de	Dateien aus dem Dateimanager (VFS)..
-user	common	de	Benutzer
-user-agent & action	common	de	Browser-Typ & Aktion
-valign	common	de	vAlign
-value	common	de	Wert
-value has to be at least '%1' !!!	common	de	Der Wert muss mindestens '%1' betragen !!!
-value has to be at maximum '%1' !!!	common	de	Der Wert darf höchstens '%1' betragen !!!
-vbox	common	de	VBox
-version	common	de	Version
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
-vertical alignment of row	common	de	vertikale Ausrichtung der Zeile
-view this etemplate	common	de	dieses eTemplate anzeigen
-view this linked entry in its application	common	de	Zeige diesen Eintrag in seiner Anwendung an
-we	common	de	Mi
-weekend	common	de	Wochenende
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
-widget copied into clipboard	common	de	Widget wurde in die Zwischenablage kopiert
-width	common	de	Breite
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
-width of column (in % or pixel)	common	de	Breite der Spalte (in % oder Punkten)
-width of the table in % or pixels for the table-tag and (optional) div	common	de	Breite der Tabelle in % oder Punkten
-width, disabled	common	de	Breite, Deaktiviert
-wk	common	de	KW
-working days	common	de	Werktage
-write <app>/setup/tables_current.inc.php	common	de	schreibt <app>/setup/tables_current.inc.php
-write langfile	common	de	Sprachdatei
-write tables	common	de	Tabelle Schreiben
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	de	schreibt ein Distributionsfile 'etemplates.inc.php' (für die Anwendung in Name) in das Setup Verzeichnis der Anwendung
-xml-file to import	common	de	XML Datei zum Importieren
-xslt template	common	de	XSLT Template
-year	common	de	Jahr
-you are not allowed to export more than %1 entries!	common	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
-you can not choose more then %1 item(s)!	common	de	Sie dürfen nicht mehr als %1 Einträge auswählen!
-you can respond by visiting:	common	de	Sie können unter dem folgenden Verweis antworten:
-you need to select a file first!	common	de	Sie müssen zuerst eine Datei auswählen!
-your code is incorrect !!!	common	de	Ihr Code ist nicht richtig!!!
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	pt	%1 (%2 novas) mensagens criadas para a aplicação '%3' e idiomas '%4'
+%1 entries found, select one ...	common	pt	% Uma entrada encontrada, selecione uma ...
+%1 etemplates deleted	common	pt	%1 modelos Web eliminados
+%1 etemplates for application '%2' dumped to '%3'	common	pt	%1 modelos Web para a aplicação %2' deixados em '%3'
+%1 etemplates found	common	pt	%1 modelos Web encontrados
+%1 matches on search criteria	common	pt	%1 ocorrências da pesquisa
+%1 more...	common	pt	% Mais 1 ...
+%1 new etemplates imported for application '%2'	common	pt	%1 modelos Web novos importados para a aplicação '%2'
+%1 not implemented for %2!	common	pt	% 1 não implementado para% 2!
+%s disabled	common	pt	%s desactivados
+%s needed	common	pt	%s necessários
+%s notranslation	common	pt	%s sem tradução
+%s onchange	common	pt	%s a ser alteraados
+%s readonly	common	pt	%s apenas para leitura
+'%1' has an invalid format	common	pt	'% 1' tem um formato inválido
+'%1' has an invalid format !!!	common	pt	'%1' tem um formato inválido !!!
+'%1' is no php file in the egw server root (%2)!	common	pt	'% 1' não é arquivo php na raiz do servidor eGW (% 2)!
+'%1' is not a valid date !!!	common	pt	'%1' não é uma data válida !!!
+'%1' is not a valid floatingpoint number !!!	common	pt	%1' não é um número de ponto de flutuação válido !!!
+'%1' is not a valid integer !!!	common	pt	'%1' não é um inteiro válido !!!
+'%1' is not allowed ('%2')!	common	pt	'% 1' não é permitido ('% 2')!
+1 minute	common	pt	1 Minuto
+30 seconds	common	pt	30 segundo
+5 minutes	common	pt	5 Minutos
+a pattern to be searched for	common	pt	Um padrão a pesquisar
+accesskey	common	pt	Chave de acesso
+accesskeys can also be specified with an & in the label (eg. &name)	common	pt	As chaves de acesso podem também ser especificadas com um & na etiqueta (ex: &Nome)
+account contactdata	common	pt	Dados de contacto Conta
+actions...	common	pt	Ações ...
+add a new column (after the existing ones)	common	pt	Adicionar uma nova coluna (depois das existentes)
+add a new entry of the selected application	common	pt	Adicionar um novo registo à aplicação seleccionada
+add a new multi-column index	common	pt	Adicionar um novo índice de várias colunas
+add column	common	pt	Adicionar coluna
+add index	common	pt	Adicionar índice
+add new	common	pt	Adicionar novo/a
+add table	common	pt	Adicionar tabela
+advanced search	common	pt	Pesquisa avançada
+align	common	pt	Alinhar
+alignment of label and input-field in table-cell	common	pt	Alinhamento da etiqueta e campo na célula da tabela
+alignment of the v/hbox containing table-cell	common	pt	Alinhamento da caixa vertical/horizontal na célula da tabela
+all days	common	pt	Todos os dias
+all operations save the template!	common	pt	Todas as operações foram guardadas no modelo!
+all users	common	pt	Todos os usuários
+allowed file type: %1	common	pt	Admitidos tipo de arquivo:% 1
+am	common	pt	Manhã
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	pt	As querys utilizam uma coluna com maior eficiência se esta estiver indexada (ocupa espaço em disco !!!)
+and	common	pt	E
+application	common	pt	Aplicação
+application name needed to restore etemplates!	common	pt	Nome do aplicativo necessário para restaurar eTemplates!
+application name needed to write a langfile or dump the etemplates !!!	common	pt	É necessário o nome da aplicação para editar um ficheiro de idioma ou deixar os modelos Web !!!
+applications	common	pt	Aplicações
+applies the changes made	common	pt	Aplica as alterações efectuadas
+applies the changes to the given version of the template	common	pt	Aplica as alterações em determinada versão do modelo
+as default	common	pt	Como padrão
+attach	common	pt	Anexar
+attach file	common	pt	Anexar ficheiro
+baseline	common	pt	Linha de base
+blurtext	common	pt	Desfocar texto
+border	common	pt	Contorno
+border-line-thickness for the table-tag	common	pt	Espessura da linha do contorno da tabela
+bottom	common	pt	Fundo
+box	common	pt	Caixa
+box...	common	pt	Caixa...
+broken link	common	pt	Link quebrado
+can not have special sql-value null	common	pt	Não pode ter um valor nulo de SQL
+cancel	common	pt	Cancelar
+cant delete a single widget from a grid !!!	common	pt	Não é possível eliminar um único widget da grelha !!!
+cant delete the only column of a grid !!!	common	pt	Não é possível eliminar a única coluna da grelha !!!
+cant delete the only row in a grid !!!	common	pt	Não é possível eliminar a única linha da grelha !!!
+category	common	pt	Categoria
+category tree	common	pt	Categoria árvore
+cellpadding for the table-tag	common	pt	Preenchimento de célula da tabela
+cells	common	pt	Células
+cellspacing for the table-tag	common	pt	Espaçamento da célula da tabela
+center	common	pt	Centro
+changed	common	pt	Alterado/a
+check all	common	pt	Marcar todas
+check if content should only be displayed but not altered (the content is not send back then!)	common	pt	Marcar se o conteúdo deve ser exibido, mas não alterado (o conteúdo não será devolvido!)
+check if field has to be filled by user	common	pt	Marcar se o campo for de preenchimento obrigatório para o utilizador
+checkbox	common	pt	Caixa de selecção
+class	common	pt	Classe
+class, valign	common	pt	Classe, Alinhamento vertical
+click here to attach the file	common	pt	Clique aqui para anexar o ficheiro
+click here to create the link	common	pt	Clique aqui para criar a ligação
+click here to start the search	common	pt	Clique aqui para iniciar a pesquisa
+click here to upload the file	common	pt	Clique aqui para enviar o ficheiro
+click to order after that criteria	common	pt	Clique para ordenar sob esse critério
+clickable path	common	pt	Caminho clicável
+closes the window without saving the changes	common	pt	Fecha a janela sem guardar as alterações
+column...	common	pt	Coluna...
+columnname	common	pt	Nome da coluna
+comment	common	pt	Comentário
+confirm	common	pt	Confirmar
+confirmation message or custom javascript (returning true or false)	common	pt	Mensagem de confirmação ou java-script personalizável (a devolver verdadeiro ou falso)
+confirmation necesary or custom java-script	common	pt	É necessária confirmação ou java-script personalizável
+confirmation required	common	pt	A confirmação exigida
+contact	common	pt	Contacto
+contact field to show	common	pt	Contacte-campo para mostrar
+contact fields	common	pt	Campos de contato
+contains	common	pt	Contém
+create a new table for the application	common	pt	Criar uma nova tabela para a aplicação
+creates an english ('en') langfile from label and helptexts (for application in name)	common	pt	Cria um ficheiro de idioma inglês ('en') a partir de etiquetas ou textos de ajuda (para aplicar no Nome)
+creator	preferences	pt	Criador
+css class for the table-tag	common	pt	Classe CSS para tabela
+css properties	common	pt	Propriedades do CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	pt	Nome da classe CSS para esta linha, pré-definição: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	pt	Nome da classe CSS para esta linha, pré-definição: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
+css-styles	common	pt	Estilos CSS
+custom	common	pt	Personalizar
+custom fields	common	pt	Campos personalizados
+custom javascript for onchange	common	pt	Javascript personalizado para onChange
+cut	common	pt	Cortar
+date	common	pt	Data
+date+time	common	pt	Data+Hora
+day	common	pt	Dia
+days	common	pt	Dias
+db ensures that every row has a unique value in that column	common	pt	A base de dados assegura que cada linha tenha um valor único naquela coluna.
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	pt	Opções de índice db-specific (separadas por vírgulas), ex: mysql(FULLTEXT) ou mysql(100) para o comprimento indexado de uma coluna
+db-tools	common	pt	Ferramentas da base de dados
+deck	common	pt	Deck (interno)
+default	common	pt	Por omissão
+delete a single entry by passing the id.	common	pt	Eliminar um único resgisto passando a ID.
+delete all selected etemplates, without further inquiry	common	pt	Eliminar TODOS os modelos Web seleccionados, SEM perguntar mais
+delete and cut save the template!	common	pt	Eliminar e cortar para guardar o modelo!
+delete column	common	pt	Eliminar coluna
+delete index	common	pt	Eliminar índice
+delete the spezified etemplate	common	pt	Eliminar modelo Web específico
+delete this column	common	pt	Eliminar esta coluna
+delete this etemplate	common	pt	Eliminar este modelo Web
+delete this file	common	pt	Eliminar este ficheiro
+delete this row	common	pt	Eliminar esta linha
+delete whole column (can not be undone!!!)	common	pt	Eliminar a coluna inteira (NÃO poderá voltar atrás!!!)
+deletes the above spez. etemplate from the database, can not be undone	common	pt	Elimina o modelo Web da base de dados especificado em cima. Esta acção NÃO pode ser anulada.
+deletes the etemplate spez. above	common	pt	Elimina o modelo Web especificado em cima
+deletes this column	common	pt	Elimina esta coluna
+deletes this index	common	pt	Elimina este índice
+discard changes	common	pt	Ignorar alterações
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	pt	Surge em frente do campo ou o campo é inserido para um(a) %s' na etiqueta (etiqueta do botão de submissão ou nome do ficheiro da imagem)
+displayed in statusline of browser if input-field gets focus	common	pt	Surge na linha de estado do navegador se input-field gets focus
+displayed in the top line of the groupbox (legend)	common	pt	Surge na linha de topo da caixa de grupo (legenda)
+do you want to save the changes you made in table %s?	common	pt	Deseja guardar as alterações efectuadas na tabela %s?
+documentation	common	pt	Documentação
+doesn't matter	common	pt	Não interessa
+done	common	pt	Feito
+drop a table - this can not be undone	common	pt	Deixar uma tabela - esta acção NÃO pode ser anulada
+drop table	common	pt	Deixar tabela
+dump4setup	common	pt	Deixar para configurar
+duration	common	pt	Duração
+edit	common	pt	Editar
+edit embeded css styles or of the applications app.css file	common	pt	Editar estilos de CSS embebidos ou de ficheiros app.css de aplicações.
+edit the etemplate spez. above	common	pt	Editar o modelo Web especificado em cima
+edit...	common	pt	Editar...
+editable templates - db-tools	common	pt	Modelos editáveis - Ferramentas da base de dados
+editable templates - delete template	common	pt	Modelos editáveis - Eliminar modelo
+editable templates - editor	common	pt	Modelos editáveis - Editor
+editable templates - search	common	pt	Modelos editáveis - Pesquisa
+editable templates - show template	common	pt	Modelos editáveis - Exibir modelo
+element role title	common	pt	Título papel de elemento
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pt	Estilos de CSS embebidos. Ex: '.red { background: red; }' (repare no'.' antes do nome de classe) ou '@import url(...)' (nomes de classe são gerais para toda a página!)
+enable javascript onchange submit	common	pt	Activar a submissão de Javascript onChange
+enter '' for an empty default, nothing mean no default	common	pt	Insira " para uma definição por omissão vazia. Nada significa sem definição por omissão.
+enter a search pattern	common	pt	Insira um padrão de pesquisa
+enter filename to upload and attach, use [browse...] to search for it	common	pt	Insira um nome de ficheiro a enviar e anexar, utilize [Navegar...] para o pesquisar
+enter the new version number here (> old_version), empty for no update-file	common	pt	Insira o número da nova versão aqui (> versão antiga). Deixe vazio para não actualizar ficheiro.
+enter the new version number here (has to be > old_version)	common	pt	Insira o número da nova versão aqui (tem de ser maior do que a versão antiga)
+entry saved	common	pt	Registo guardado
+error copying uploaded file to vfs!	common	pt	Erro ao copiar arquivo carregado para VFS!
+error create parent directory %1!	common	pt	Erro ao criar diretório pai% 1!
+error deleting %1!	common	pt	Erro ao excluir% 1!
+error uploading file!	filemanager	pt	O upload de arquivos de erro!
+error: template not found !!!	common	pt	Erro: modelo não encontrado !!!
+error: webserver is not allowed to write into '%1' !!!	common	pt	Erro: O servidor Web não ter permissões de escrita no '%1' !!!
+error: while saving !!!	common	pt	Erro ao guardar !!!
+error: writing file (no write-permission for the webserver) !!!	common	pt	Erro ao editar ficheiro (servidor Web sem permissões de escrita) !!!
+etemplate	common	pt	Modelos Web
+etemplate '%1' imported, use save to put it in the database	common	pt	Modelo Web '%1' importado. Guarde-o para o inserir na base de dados
+etemplate '%1' written to '%2'	common	pt	Modelo Web '%1' criado para '%2'
+etemplate editor	common	pt	Editor de modelos Web
+etemplate reference	common	pt	Referência de modelos Web
+etemplate tutorial	common	pt	Tutorial de modelos Web
+exchange this row with the one above	common	pt	Trocar esta linha com a de cima
+exchange this two columns	common	pt	Trocar estas duas colunas
+export the loaded etemplate into a xml-file	common	pt	Exportar o modelo Web carregado para um ficheiro XML
+export xml	common	pt	Exportar XML
+extensions loaded:	common	pt	Extensões carregadas:
+field	common	pt	Campo
+field must not be empty !!!	common	pt	O campo não pode estar vazio !!!
+file	common	pt	Ficheiro
+file '%1' not found!	common	pt	Arquivo '% 1' não encontrado!
+file contains more than one etemplate, last one is shown !!!	common	pt	O ficheiro contém mais do que um modelo Web. Será exibido o último !!!
+file is of wrong type (%1 != %2)!	common	pt	Arquivo é o tipo errado (% 1! =% 2)!
+file writen	common	pt	Ficheiro editado
+fileupload	common	pt	Envio de ficheiros
+first	common	pt	Primeiro
+floating point	common	pt	Ponto de flutuação
+force	common	pt	força
+foreign key	common	pt	Chave estrangeira
+formatted text (html)	common	pt	Texto formatado (HTML)
+fr	common	pt	Fr
+general fields:	preferences	pt	Campos gerais:
+go to the first entry	common	pt	Ir para o primeiro registo
+go to the last entry	common	pt	Ir para o último registo
+go to the next page of entries	common	pt	Ir para a página seguinte de registos
+go to the previous page of entries	common	pt	Ir para a página anterior de registos
+grid	common	pt	Grelha
+grid column attributes	common	pt	Colocar grelha nos atributos das colunas
+grid row attributes	common	pt	Colocar grelha nos atributos das linhas
+groupbox	common	pt	Caixa de grupo
+h	common	pt	h
+hbox	common	pt	Caixa horizontal
+height	common	pt	Altura
+height of row (in % or pixel)	common	pt	Altura da linha (em % ou píxeis)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	pt	Altura da linha (em % ou pixeis), desactivar linha [! = not]<value>[=<check>] ex: '!@dados' desactiva a linha se o conteúdo dos dados for vazio.
+height of the table in % or pixels for the table-tag and (optional) div	common	pt	Altura da tabela em % ou pixeis para a tag e div (opcional) da tabela.
+height, disabled	common	pt	Altura, Desactivada
+help	common	pt	Ajuda
+horizontal rule	common	pt	Regra horizontal
+hour	common	pt	Hora
+hours	common	pt	Horas
+how many entries should the list show	common	pt	Número de registos a exibir na lista
+html	common	pt	HTML
+html link to the current record	common	pt	Link HTML para o registro atual
+id	common	pt	id
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pt	Se o campo estiver desactivado, será apresentada uma célula vazia da tabela, para remoção (temporária) do campo/célula
+image	common	pt	Imagem
+import	common	pt	Importar
+import an etemplate from a xml-file	common	pt	Importar um modelo Web de um ficheiro XML
+import table-definitions from existing db-table	common	pt	Importar definições da tabela de uma tabela de base de dados existente
+import xml	common	pt	Importar XML
+increment version to not overwrite the existing template	common	pt	Actualizar a versão não sobrepõe o modelo existente
+index/name of returned content (name of the template, link / method for image)	common	pt	Índice/nome do conteúdo devolvido (nome do modelo, ligação / método por imagem)
+indexed	common	pt	Indexado/a
+indexoptions	common	pt	Opções de índice
+input required	common	pt	Entrada necessária
+insert a column before	common	pt	Inserir uma coluna antes
+insert a column behind	common	pt	Inserir uma coluna depois
+insert a row above	common	pt	Inserir uma linha antes
+insert a row below	common	pt	Inserir uma linha depois
+insert a widget before	common	pt	Inserir um widget antes
+insert a widget behind	common	pt	Inserir um widget depois
+insert in document	common	pt	Insira no documento
+insert new column behind this one	common	pt	Inserir uma coluna antes desta
+insert new column in front of all	common	pt	Inserir uma coluna à frente de todas
+insert new row after this one	common	pt	Inserir uma coluna depois desta
+insert new row in front of first line	common	pt	Inserir uma linha à frente de todas
+integer	common	pt	Inteiro
+key	common	pt	Chave
+label	common	pt	Etiqueta
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	pt	Etiqueta:[bold][italic] Texto:[len][,max] Números:[min][,[max][,len]] Área de texto:[rows][,cols] Botão de selecção única.:valor de regra horizontal:[width] Modelo:[IndexInContent] Selecção:[multiselect] Data:[values: ex. 'a-m-d']
+lang	common	pt	Idioma
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	pt	Abreviatura de idioma (ex. 'pt' para português) para o modelo dependente de um idioma e ('' lêem as preferências do seu idioma ou o definido por omissão; o eGroupWare lê 'por omissão' o modelo por omissão '')
+last	common	pt	Último/a
+left	common	pt	Esquerda
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	pt	Largura por char+varchar, precisions int: 2, 4, 8 e float: 4, 8
+link	common	pt	Ligação
+link target %1 not found!	common	pt	Destino do link% 1 não encontrado!
+linkapps	common	pt	Ligação aplicativos
+linkentry	common	pt	Registo de ligações
+linklist	common	pt	Lista de ligações
+links and attached files	preferences	pt	Links e arquivos anexados
+linkstring	common	pt	Ligar string
+linkto	common	pt	Ligar a
+list of files linked to the current record	preferences	pt	Lista de arquivos vinculados ao registro atual
+load this template into the editor	common	pt	Carregar este modelo no editor
+maximum size for uploads	filemanager	pt	Tamanho máximo de carregamento
+message ...	common	pt	Mensagem ...
+message prepared for sending.	common	pt	Mensagem preparado para o envio.
+message(s) send failed!	common	pt	Mensagem (s) de envio falhou!
+message(s) send ok.	common	pt	Mensagem (s) enviar ok.
+middle	common	pt	Meio
+minute	common	pt	Minuto
+minutes	common	pt	Minutos
+missing: %1	common	pt	Falta: 1%
+mo	common	pt	Mo
+modifier	preferences	pt	Modifier
+month	common	pt	Mês
+more	common	pt	Mais
+more than 1 match for '%1'	common	pt	Mais do que um jogo para '% 1'
+multicolumn indices	common	pt	Índices de várias colunas
+name	common	pt	Nome
+name of other table where column is a key from	common	pt	Nome de outra tabela onde uma coluna é a chave.
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	pt	Nome do conjunto phpgw-template (ex: verdilak): '' = por omissão (irá ler as preferências do modelo; o eGroupWare lê 'por omissão' o modelo por omissão '')
+name of table to add	common	pt	Nome da tabela a adicionar
+name of the etemplate, should be in form application.function[.subtemplate]	common	pt	Nome do modelo Web, deve surgir no formulário application.function[.subTemplate].
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	pt	É necessário ser único na tabela e sem palavra reservada do SQL. É melhor definir todos os prefixos com dois digitos para a aplicação. Ex: 'et_'.
+new	common	pt	Novo
+new search	common	pt	Nova pesquisa
+new table created	common	pt	Nova tabela criada
+new value	common	pt	Novo valor
+newer version '%1' exists !!!	common	pt	Existe uma versão mais recente de '%1' !!!
+nextmatch	common	pt	Ocorrência seguinte
+nextmatch accountfilter	common	pt	Ocorrência seguinte do filtro de contas
+nextmatch custom filterheader	common	pt	Cabeçalho personalizado filtro NextMatch
+nextmatch filterheader	common	pt	Ocorrência seguinte do filtro de cabeçalhos
+nextmatch header	common	pt	Cabeçalho NextMatch
+nextmatch sortheader	common	pt	Ocorrência seguinte da lista de cabeçalhos
+no column to swap with !!!	common	pt	Nenhuma coluna com que trocar !!!
+no file	common	pt	Nenhum ficheiro
+no filename given or selected via browse...	common	pt	Nenhum nome de ficheiro inserido ou seleccionado a partir do Navegar...
+no filters	common	pt	Filtros não
+no matches found	common	pt	Nenhuma ocorrência encontrada
+no rights to export more than %1 entries!	common	pt	Nenhum direito a exportar mais de 1% entradas!
+no row to swap with !!!	common	pt	Nenhuma linha com que trocar !!!
+not null	common	pt	Não nulo
+nothing	common	pt	Nada
+nothing found - try again !!!	common	pt	Nada encontrado - tente de novo !!!
+nothing in clipboard to paste !!!	common	pt	Nada na área de transferência para colar !!!
+nothing matched search criteria !!!	common	pt	Não houve resultados para a pesquisa !!!
+now	common	pt	Agora
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	pt	Número de colunas a que o campo/célula deve estender ou 'tudo' para as colunas restantes, nome da classe de CSS (para a tag TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	pt	Número de linhas/colunas numa Caixa V/H, preenchimento de células e espaçamento de células
+of	common	pt	de
+off	common	pt	fora
+old value	common	pt	Valor Antigo
+onchange	common	pt	OnChange
+onclick	common	pt	OnClick
+only an other version found !!!	common	pt	Apenas outra versão foi encontrada !!!
+open the online help.	common	pt	Abrir ajuda em linha.
+operator	common	pt	Operador
+optional note about the link	common	pt	Informações adicionais sobre a ligação
+options	common	pt	Opções
+or	common	pt	ou
+order to navigating by tab key through the form	common	pt	Ordem para navegar pela chave da tabela através do formulário.
+overflow	common	pt	Excedente
+padding	common	pt	Preenchimento
+parent is a '%1' !!!	common	pt	Principal é um(a) '%1' !!!
+paste	common	pt	Colar
+path	common	pt	Caminho
+please enter table-name first !!!	common	pt	Por favor, insira o nome da tabela primeiro !!!
+pm	common	pt	Tarde
+popup	common	pt	Popup
+precision	common	pt	Precisão
+preference	common	pt	Preferência
+primary key	common	pt	Chave primária
+primary key for the table, gets automaticaly indexed	common	pt	Chave primária da tabela é automaticamente indexada
+radiobutton	common	pt	Botão de selecção única
+read	common	pt	Ler
+read a list of entries.	common	pt	Ler uma lista de registos.
+read a single entry by passing the id and fieldlist.	common	pt	Ler um registo único passando a ID e a lista de campos.
+read etemplate from database (for the keys above)	common	pt	Ler modelo Web da base de dados (para as chaves em cima)
+readonly	common	pt	Apenas para leitura
+refresh	common	pt	Atualizar
+remove row (can not be undone!!!)	common	pt	Remover linha (não será possível anular esta acção!!!)
+remove this link (not the entry itself)	common	pt	Remover esta ligação (não o registo em si)
+required	common	pt	Necessário
+reset	common	pt	Restabelecer
+reset all user's column preferences	common	pt	Repor preferências coluna de todo o usuário
+restore all	common	pt	Restaurar tudo
+returns savely, without deleting	common	pt	Voltar sem eliminar
+right	common	pt	Direita
+row...	common	pt	Linha...
+sa	common	pt	Sa
+save all	common	pt	Salve todo
+save the changes made and close the window	common	pt	Guardar as alterações efectuadas e fechar a janela
+save the etemplate under the above keys (name, ...), change them for a saveas	common	pt	Guardar o modelo Web com as chaves de cima (nome, ...). Terá de alterá-las para "Guardar como..."
+saves changes to tables_current.inc.php	common	pt	Guarda as alterações em tables_current.inc.php
+saves the template with given version number and closes the window	common	pt	Guarda o modelo com determinado número de versão e fecha a janela
+scale	common	pt	Escala
+scale for float	common	pt	Escala para flutuar
+search	common	pt	Pesquisar
+search...	common	pt	Pesquisar ...
+select a category	common	pt	Seleccione uma categoria
+select a primary contact, to show in the list	common	pt	Seleccionar um contacto principal para exibir na lista
+select access	common	pt	Seleccionar acesso
+select account	common	pt	Seleccionar conta
+select an app first !!!	common	pt	Seleccione uma aplicação primeiro !!!
+select an app to search in	common	pt	Seleccione a aplicação a pesquisar
+select an application	common	pt	Seleccione uma aplicação
+select an application, (*) = uninstalled	common	pt	Seleccione uma aplicação, (*) = desinstalada
+select an entry to link with	common	pt	Seleccione um registo a ligar a
+select an table of the application	common	pt	Seleccione uma tabela da aplicação
+select application	common	pt	Seleccionar aplicação
+select application to search	common	pt	Selecione aplicativo para pesquisa
+select category	common	pt	Seleccionar categoria
+select columns	common	pt	Selecionar colunas
+select country	common	pt	Seleccionar país
+select day	common	pt	Seleccionar dia
+select day of week	common	pt	Seleccionar dia da semana
+select entry	common	pt	Escolha uma opção
+select file(s) from vfs	common	pt	Selecione o arquivo (s) a partir de VFS
+select files from filemanager ...	common	pt	Selecione os arquivos a partir de Filemanager ...
+select hour	common	pt	Selecione hora
+select if content of field should not be translated (label gets always translated)	common	pt	Seleccionar se o conteúdo de um campo não deve ser traduzido (a etiqueta será sempre traduzida)
+select language	common	pt	Selecione o idioma
+select month	common	pt	Seleccionar mês
+select number	common	pt	Seleccionar número
+select one ...	common	pt	Seleccione um(a) ...
+select percentage	common	pt	Seleccionar percentagem
+select priority	common	pt	Seleccionar prioridade
+select some options	common	pt	Selecione algumas opções
+select state	common	pt	Seleccionar estado
+select the columns to display in the list	common	pt	Selecione as colunas para exibir na lista
+select the indexed columns in their desired order	common	pt	Seleccione as colunas indexadas na ordem pretendida
+select this etemplate to delete it	common	pt	Seleccione este modelo Web para o eliminar
+select which accounts to show	common	pt	Seleccione as contas a exibir
+select which values to show	common	pt	Seleccione os valores a exibir
+select year	common	pt	Seleccionar ano
+selectbox	common	pt	Caixa de selecção
+set these columns as the default	common	pt	Defina essas colunas como padrão
+sets today as date	common	pt	Define hoje como data
+should the form be submitted or any custom javascript be executed	common	pt	Deve o formulário ser submetido ou há alguma personalização do javascript por executar.
+show	common	pt	Exibir
+show (no save)	common	pt	Exibir (sem guardar)
+show all / cancel filter	common	pt	Mostrar tudo / cancelar filtro
+show values	common	pt	Exibir valores
+showing	common	pt	A exibir
+shows / allows you to enter values into the etemplate for testing	common	pt	exibe / permite-lhe a submissão de valores no modelo Web para testes
+shows/displays etemplate for testing, does not save it before	common	pt	exibr/apresenta o modelo Web para testes. NÃO o guarda antes
+spacing	common	pt	Espaçamento
+span	common	pt	Extensão
+span, class	common	pt	Extensão, Classe
+stack	common	pt	Empilhar
+start a new search, cancel this link	common	pt	Iniciar uma nova pesquisa. Cancelar esta ligação.
+start new search for the above pattern	common	pt	Iniciar uma nova pesquisa com o padrão acima
+su	common	pt	Su
+submit form	common	pt	Enviar formulário
+submitbutton	common	pt	Botão de envio
+swap	common	pt	Trocar
+swap widget with next one	common	pt	Trocar widget com o seguinte
+swap with next column	common	pt	Trocar com a coluna seguinte
+swap with next row	common	pt	Trocar com a linha seguinte
+switch to a parent widget	common	pt	Mudar para um widget principal
+switch to an other widgets of that container	common	pt	Mudar para outro widget do repositório
+tabindex	common	pt	Indíce de tabelas
+table unchanged, no write necessary !!!	common	pt	Tabela inalterada, não é necessário editar !!!
+tablename	common	pt	Nome da tabela
+tabs	common	pt	Tabelas
+template	common	pt	Modelo
+template deleted	common	pt	Modelo eliminado
+template saved	common	pt	Modelo guardado
+text	common	pt	Texto
+textarea	common	pt	Área de texto
+th	common	pt	Th
+the following document-types are supported:	preferences	pt	Os seguintes tipos de documentos são suportados:
+this text gets displayed if the input-field is empty and has no focus (blur)	common	pt	Este texto surge se o campo de entrada estiver vazio e se não tiver focus (blur)
+time	common	pt	Hora
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	pt	Para desactivar: [! = não]<valor>[=<verificação>] ex: '!@data' desactiva se o conteúdo dos dados estiver vazio
+to start the db-tools	common	pt	Para iniciar as ferramentas da base de dados
+to start the etemplate editor	common	pt	Para iniciar o editor de modelos Web
+to start the search	common	pt	Para iniciar a pesquisa
+today	common	pt	Hoje
+top	common	pt	Topo
+tree	common	pt	Árvore
+tu	common	pt	Tu
+type	common	pt	Tipo
+type of the column	common	pt	Tipo de coluna
+type of the field (select label if field should be empty)	common	pt	Tipo o campo (se o campo deve estar vazio, seleccione etiqueta)
+uncheck all	common	pt	Desmarque tudo
+unique	common	pt	Único/a
+unlink	common	pt	Remover ligação
+update a single entry by passing the fields.	common	pt	Actualizar um registo passando os campos.
+update from version '%s' to	common	pt	Actualizar da versão '%s' para
+upload	common	pt	Enviar
+upload file(s) from filemanager...	common	pt	Carregar arquivo (s) a partir de Filemanager ...
+user	common	pt	Usuário
+user-agent & action	common	pt	User-agent & action
+valign	common	pt	Alinhamento vertical
+value	common	pt	Valor
+value has to be at least '%1' !!!	common	pt	O valor tem de ser pelo menos '%1' !!!
+value has to be at maximum '%1' !!!	common	pt	O valor tem de ser no máximo '%1' !!!
+vbox	common	pt	Caixa vertical
+version	common	pt	Versão
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	pt	número da versão, deve estar no formulário: major.minor.revision.number (ex: 0.9.13.001 todos os números preenchidos com zeros)
+vertical alignment of row	common	pt	Alinhamento vertical da linha
+view this etemplate	common	pt	Ver este modelo Web
+view this linked entry in its application	common	pt	Ver este registo ligado na sua aplicação
+we	common	pt	Nós
+weekend	common	pt	Fim-de-semana
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt	O que acontece ao conteúdo excedente: visível (por omissão), oculto, consultável utilizando a barra de deslocamento, automático (decisão do navegador)
+widget copied into clipboard	common	pt	O widget foi copiado para a área de transferência
+width	common	pt	Largura
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	pt	Largura da coluna (em % ou pixeis), desactivar coluna [! = não]<valor>[=<verificação>] ex: '!@data' desactivar coluna se o conteúdo dos dados estiver vazio
+width of column (in % or pixel)	common	pt	Largura da coluna (em % ou píxeis)
+width of the table in % or pixels for the table-tag and (optional) div	common	pt	Largura da tabela em % ou pixeis para a tag e div (opcional) da tabela.
+width, disabled	common	pt	Largura, Desactivada
+wk	common	pt	Wk
+working days	common	pt	Dias de trabalho
+write <app>/setup/tables_current.inc.php	common	pt	Editar <app>/setup/tables_current.inc.php
+write langfile	common	pt	Editar ficheiro de idioma
+write tables	common	pt	Editar tabelas
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	pt	Edita um ficheiro 'etemplates.inc.php' (para aplicação no Nome) na directoria de configuração da aplicação.
+xml-file to import	common	pt	Ficheiro XML para importar
+xslt template	common	pt	Modelo XSLT
+year	common	pt	Ano
+you can respond by visiting:	common	pt	Você pode responder, visitando
+you need to select a file first!	common	pt	Selecione um arquivo primeiro!
+your code is incorrect !!!	common	pt	Código é incorreto!

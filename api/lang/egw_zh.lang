@@ -744,536 +744,434 @@ zambia	common	zh	赞比亚
 zimbabwe	common	zh	津巴布韦
 zoom	common	zh	缩放
 search for '%1'	common	zh	搜索'%1'
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	de	%1 (%2 neue) Texte für die Anwendung '%3' und die Sprache '%4' geschrieben
-%1 entries found, select one ...	common	de	%1 Einträge gefunden, einen auswählen ...
-%1 etemplates deleted	common	de	%1 eTemplate(s) gelöscht
-%1 etemplates for application '%2' dumped to '%3'	common	de	%1 eTemplate(s) für die Anwendung '%2' nach '%3' geschrieben
-%1 etemplates found	common	de	%1 eTemplate(s) gefunden
-%1 matches on search criteria	common	de	%1 Treffer bei der Suche
-%1 more...	common	de	%1 mehr...
-%1 new etemplates imported for application '%2'	common	de	%1 neue eTemplate(s) importiert für die Anwendung '%2'
-%1 not implemented for %2!	common	de	%1 ist nicht  implementiert für '%2'
-%1, duplicate id	common	de	%1, doppelte ID
-%s disabled	common	de	%s deaktiviert
-%s needed	common	de	%s benötigt
-%s notranslation	common	de	%s nicht übersetzen
-%s onchange	common	de	%s onChange
-%s readonly	common	de	%s Schreibschutz
-'%1' has an invalid format	common	de	'%1' hat ein ungültiges Format !!!
-'%1' has an invalid format !!!	common	de	'%1' hat ein ungültiges Format !!!
-'%1' is no php file in the egw server root (%2)!	common	de	'%1' ist keine php Datei in dem EGW Server Wurzelverzeichnis (%2)!
-'%1' is not a valid date !!!	common	de	'%1' ist ein ungültiges Datum !!!
-'%1' is not a valid floatingpoint number !!!	common	de	'%1' ist keine gültige Gleitkommazahl !!!
-'%1' is not a valid integer !!!	common	de	'%1' ist keine gültige Ganzzahl !!!
-'%1' is not a valid timezone!	common	de	'%1' ist keine gültige Zeitzone!
-'%1' is not allowed ('%2')!	common	de	'%1' ist NICHT erlaubt ('%2')!
-'%1' is not allowed%2)!	common	de	'%1' ist NICHT erlaubt '%2'!
-1 minute	common	de	1 Minute
-15 minutes	common	de	15 Minuten
-30 minutes	common	de	30 Minuten
-30 seconds	common	de	30 Sekunden
-5 minutes	common	de	5 Minuten
-a pattern to be searched for	common	de	ein Muster nach dem gesucht werden soll
-accesskey	common	de	Tastaturkürzel
-accesskeys can also be specified with an & in the label (eg. &name)	common	de	Ein Tastaturkürzel kann auch über ein & in der Beschriftung angegeben werden
-account contactdata	common	de	Kontaktdaten eines Benutzers
-actions...	common	de	Aktionen...
-add a new column (after the existing ones)	common	de	Neue Spalte hinzufügen (hinter den bestehenden)
-add a new entry of the selected application	common	de	Einen neuen Eintrag der ausgewählten Anwendung hinzufügen
-add a new multi-column index	common	de	Fügt einen mehrspaltigen Index hinzu
-add column	common	de	Spalte zufügen
-add index	common	de	Index zufügen
-add new	common	de	Neu hinzufügen
-add table	common	de	Tabelle zufügen
-add to clipboard	common	de	Zur Zwischenablage hinzufügen
-advanced search	common	de	Erweiterte Suche
-align	common	de	Ausrichtung
-alignment of label and input-field in table-cell	common	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
-alignment of the v/hbox containing table-cell	common	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
-all categories	common	de	Alle Kategorien
-all days	common	de	alle Tage
-all operations save the template!	common	de	alle Operation speichern das Template!
-all users	common	de	Alle Benutzer
-allowed file type: %1	common	de	Erlaubter Dateityp: %1
-am	common	de	Vormittag
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
-and	common	de	UND
-application	common	de	Anwendung
-application has no etemplates (no file %1) to restore!	common	de	Anwendung hat keine eTemplates (keine Datei %1) zum Wiederherstellen!
-application name needed to restore etemplates!	common	de	Anwendungsname wir benötigt zum wiederherstellen der eTemplates!
-application name needed to write a langfile or dump the etemplates !!!	common	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
-applications	common	de	Anwendungen
-applies the changes made	common	de	übernimmt die Änderungen
-applies the changes to the given version of the template	common	de	übernimmt die Änderungen in die angegebene Version des Templates
-as default	common	de	als Vorgabe
-attach	common	de	Anhängen
-attach file	common	de	Datei anhängen
-automatically refresh list	common	de	Liste automatisch aktualisieren
-baseline	common	de	Grundlinie
-blurtext	common	de	blurText
-border	common	de	Rand
-border-line-thickness for the table-tag	common	de	Randbreite (border) für die Tabelle
-bottom	common	de	Unten
-box	common	de	Box
-box...	common	de	Box...
-broken link	common	de	Beschädigte Verknüpfung (Broken Link)
-can not have special sql-value null	common	de	darf nicht den speziellen SQL Wert NULL annehmen
-cancel	common	de	Abbruch
-cant delete a single widget from a grid !!!	common	de	Kann kein einzelnes Widget aus einer Tabelle löschen !!!
-cant delete the only column of a grid !!!	common	de	Kann nicht die einzige Spalte einer Tabelle löschen !!!
-cant delete the only row in a grid !!!	common	de	Kann nicht die einzige Zeile einer Tabelle löschen !!!
-category	common	de	Kategorie
-category tree	common	de	Kategoriebaum
-cellpadding for the table-tag	common	de	Innenabstand (cellpadding) der Tabelle
-cells	common	de	Zellen
-cellspacing for the table-tag	common	de	Zellenabstand (cellspacing) der Tabelle
-center	common	de	Zentriert
-changed	common	de	Geändert
-check all	common	de	Alle auswählen
-check if content should only be displayed but not altered (the content is not send back then!)	common	de	abhaken wenn der Inhalt nur angezeigt aber nicht geändert werden soll (der Inhalt wird dann nicht zurückgesendet!)
-check if field has to be filled by user	common	de	abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefüllt werden muss
-checkbox	common	de	Checkbox
-class	common	de	Class
-class, valign	common	de	Class, Valign
-click here to attach the file	common	de	hier klicken um die Datei anzuhängen
-click here to create the link	common	de	hier klicken um die Verknüpfung anzulegen
-click here to start the search	common	de	hier klicken um die Suche zu starten
-click here to upload the file	common	de	hier klicken um die Datei hochzuladen
-click to order after that criteria	common	de	anklicken um nach diesem Kriterium zu sortieren
-clickable path	common	de	anklickbarer Pfad
-closes the window without saving the changes	common	de	schließt das Fenster ohne zu speichern
-column...	common	de	Spalte...
-columnname	common	de	Spaltenname
-comment	common	de	Kommentar
-confirm	common	de	bestätigen
-confirmation message or custom javascript (returning true or false)	common	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurückliefernd)
-confirmation necesary or custom java-script	common	de	Bestätigung notwendig oder spezielles Javascript
-confirmation required	common	de	Bestätigung erforderlich
-contact	common	de	Kontakt
-contact field to show	common	de	Kontaktfeld zum Anzeigen
-contact fields	common	de	Kontaktfelder
-contains	common	de	enthalten
-copy "%1"	common	de	"%1" kopieren
-copy to clipboard	common	de	In die Zwischenablage kopieren
-create a new table for the application	common	de	Neue Tabelle für die Anwendung anlegen
-create link	common	de	Verkünpfung erstellen
-creates an english ('en') langfile from label and helptexts (for application in name)	common	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
-creator	preferences	de	Ersteller
-css class for the table-tag	common	de	CSS class der Tabelle
-css properties	common	de	CSS Attribute
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
-css-styles	common	de	CSS Stile
-custom	common	de	Benutzerdefiniert
-custom fields	common	de	Benutzerdefinierte Felder
-custom javascript for onchange	common	de	Benutzerdefiniertes Javascript für onChange
-cut	common	de	Ausschneiden
-data type	common	de	Datentyp
-date	common	de	Datum
-date+time	common	de	Datum+Uhrzeit
-day	common	de	Tag
-days	common	de	Tage
-db ensures that every row has a unique value in that column	common	de	die Datenbank stellt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	de	DB-spezifische Index-Optionen (Komma-getrennt), z.B. mysql(FULLTEXT) oder mysql(100) für die indizierte Länge der Spalte
-db-tools	common	de	DB-Tools
-deck	common	de	Deck (intern)
-default	common	de	Vorgabe
-delete a single entry by passing the id.	common	de	Löscht einen einzelnen Eintrag über seine Id.
-delete all selected etemplates, without further inquiry	common	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
-delete and cut save the template!	common	de	Löschen und Ausschneiden speichern das Template!
-delete column	common	de	Spalte löschen
-delete index	common	de	Index löschen
-delete link	common	de	Verknüpfung löschen
-delete link?	common	de	Verknüpfung löschen?
-delete the spezified etemplate	common	de	löscht das angegebene eTemplate
-delete this column	common	de	diese Spalte löschen
-delete this etemplate	common	de	dieses eTemplate löschen
-delete this file	common	de	Diese Datei löschen
-delete this row	common	de	diese Zeile löschen
-delete whole column (can not be undone!!!)	common	de	ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
-deletes the above spez. etemplate from the database, can not be undone	common	de	löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden
-deletes the etemplate spez. above	common	de	löscht das oben spezifizierte eTemplate
-deletes this column	common	de	Löscht diese Spalte
-deletes this index	common	de	Löscht diesen Index
-discard changes	common	de	verwirft Änderungen
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
-displayed in statusline of browser if input-field gets focus	common	de	wird in der Statuszeile des Browsers angezeigt, wenn das Eingabefeld angesprochen wird
-displayed in the top line of the groupbox (legend)	common	de	wird oben in der Umrandung der Gruppierung angezeigt (Legende)
-do you want to save the changes you made in table %s?	common	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
-do you want to send the message to all selected entries, without further editing?	common	de	Wollen Sie die Nachricht an alle ausgewählten Einträge OHNE weitere Bearbeitung versenden?
-document '%1' does not exist or is not readable for you!	preferences	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
-documentation	common	de	Dokumentation
-doesn't matter	common	de	spielt keine Rolle
-done	common	de	Schliessen
-drop a table - this can not be undone	common	de	Tabelle löschen (drop) - NICHT rückgängig zu machen
-drop table	common	de	Tabelle löschen
-dump4setup	common	de	Dump4Setup
-duration	common	de	Dauer
-edit	common	de	Bearbeiten
-edit embeded css styles or of the applications app.css file	common	de	bearbeitet die eingebetteten CSS Stile oder die app.css Datei der Anwendung
-edit the etemplate spez. above	common	de	das oben spezifizierte eTemplate bearbeiten
-edit...	common	de	Bearbeiten...
-editable templates - db-tools	common	de	eTemplates - DB-Tools
-editable templates - delete template	common	de	eTemplates - Löschen
-editable templates - editor	common	de	eTemplates - Bearbeiten
-editable templates - search	common	de	eTemplates - Suchen
-editable templates - show template	common	de	eTemplates - Anzeigen
-element role title	common	de	Element Rolle Titel
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	de	eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
-enable javascript onchange submit	common	de	JavaScript absenden bei Änderung (onChange) aktivieren
-enter '' for an empty default, nothing mean no default	common	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
-enter a search pattern	common	de	Suchmuster eingeben
-enter filename to upload and attach, use [browse...] to search for it	common	de	Dateinamen zum Hochladen oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
-enter the new version number here (> old_version), empty for no update-file	common	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
-enter the new version number here (has to be > old_version)	common	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
-entry saved	common	de	Eintrag gespeichert
-error copying uploaded file to vfs!	common	de	Fehler beim Kopieren der  hoch geladenen Datei ins VFS!
-error create parent directory %1!	common	de	Fehler beim Anlegen des Elternverzeichnisses %1!
-error deleting %1!	common	de	Fehler beim Löschen von %1!
-error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
-error: template not found !!!	common	de	Fehler: eTemplate nicht gefunden !!!
-error: webserver is not allowed to write into '%1' !!!	common	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
-error: while saving !!!	common	de	Fehler: beim Speichern !!!
-error: writing file (no write-permission for the webserver) !!!	common	de	Fehler: Datei schreiben (keine Schreibberechtigung für den Webserver) !!!
-et2 rendering took %1s	common	de	eT2 Rendering benötigte %1s
-etemplate	common	de	eTemplate
-etemplate '%1' imported, use save to put it in the database	common	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
-etemplate '%1' written to '%2'	common	de	eTemplate '%1' wurde nach '%2' geschrieben
-etemplate editor	common	de	eTemplate Editor
-etemplate reference	common	de	eTemplate Handbuch
-etemplate tutorial	common	de	eTemplate Einführung
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	de	Beispiel {{NELFNV role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
-exchange this row with the one above	common	de	diese Zeile mit der darüber austauschen
-exchange this two columns	common	de	diese beiden Spalten austauschen
-export the loaded etemplate into a xml-file	common	de	das geladene eTemplate als XML Datei (.xet) exportieren
-export xml	common	de	XML Export
-extensions loaded:	common	de	Erweiterungen geladen:
-field	common	de	Feld
-field must not be empty !!!	common	de	Das Feld darf nicht leer sein !!!
-file	common	de	Datei
-file '%1' not found!	common	de	Datei '%1' nicht gefunden!
-file contains more than one etemplate, last one is shown !!!	common	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt !!!
-file information	common	de	Datei Information
-file is of wrong type (%1 != %2)!	common	de	Datei hat ungültigen Typ (%1 != %2)!
-file too large.  maximum %1	common	de	Datei ist zu gross. Maximal %1
-file writen	common	de	Datei geschrieben
-fileupload	common	de	DateiUpload
-first	common	de	Zuerst
-floating point	common	de	Gleitkommawert
-for more than one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
-force	common	de	Erzwungen
-foreign key	common	de	Foreign Key
-formatted text (html)	common	de	Formatierter Text (HTML)
-fr	common	de	Fr
-general fields:	preferences	de	Allgemeine Felder:
-go to the first entry	common	de	gehe zum ersten Eintrag
-go to the last entry	common	de	gehe zum letzten Eintrag
-go to the next page of entries	common	de	gehe zur nächsten Seite
-go to the previous page of entries	common	de	gehe zur vorherigen Seite
-grid	common	de	Tabelle
-grid column attributes	common	de	Attribute der Tabellenspalte
-grid row attributes	common	de	Attribute der Tabellenzeile
-groupbox	common	de	Gruppierung
-h	common	de	h
-hbox	common	de	HBox
-height	common	de	Höhe
-height of row (in % or pixel)	common	de	Höhe der Zeile (in % oder Pixel)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
-height of the table in % or pixels for the table-tag and (optional) div	common	de	Höhe der Tabelle in % oder Punkten
-height, disabled	common	de	Höhe, Deaktiviert
-help	common	de	Hilfe
-history log	common	de	Versionshistorie
-horizontal rule	common	de	Waagrechte Linie
-hour	common	de	Stunde
-hours	common	de	Stunden
-how many entries should the list show	common	de	Wie viele Einträge soll die Liste anzeigen
-html	common	de	HTML
-html link to the current record	common	de	HTML-Link zum aktuellen Eintrag.
-id	common	de	Id
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
-image	common	de	Grafik
-import	common	de	Import
-import an etemplate from a xml-file	common	de	Importiert ein eTemplate aus einer XML Datei
-import table-definitions from existing db-table	common	de	Importiert die Tabellen-Definition aus einer bestehenden Datenbank-Tabelle
-import xml	common	de	XML Import
-increment version to not overwrite the existing template	common	de	Version erhöhen um das existierende Template nicht zu überschreiben
-index/name of returned content (name of the template, link / method for image)	common	de	Index / Name des zurückgelieferten Inhalts (Name des eTemplates oder Link/Methode für Grafik)
-indexed	common	de	Indiziert
-indexoptions	common	de	Indexoptionen
-input required	common	de	Eingabe erforderlich
-insert a column before	common	de	eine Spalte davor einfügen
-insert a column behind	common	de	eine Spalte dahinter einfügen
-insert a row above	common	de	eine Zeile darüber einfügen
-insert a row below	common	de	eine Zeile darunter einfügen
-insert a widget before	common	de	ein Widget davor einfügen
-insert a widget behind	common	de	ein Widget dahinter einfügen
-insert in document	common	de	In ein Dokument einfügen
-insert new column behind this one	common	de	Neue Spalte hinter dieser einfügen
-insert new column in front of all	common	de	Neue Spalte vor dieser einfügen
-insert new row after this one	common	de	Neue Zeile nach dieser einfügen
-insert new row in front of first line	common	de	Neue Zeile vor dieser einfügen
-integer	common	de	Ganzzahl
-key	common	de	Schlüssel
-label	common	de	Beschriftung
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	de	Beschriftung:[bold][italic] Text:[len][,max] Zahlen:[min][,[max][,len]] mehrz.Text:[Zeilen][,Spalten] Radiok.:Wert Templ.:[IndexInContent] Auswahl:[mehrzeilig] Datum:[Format: zB. 'Y-m-d']
-lang	common	de	Sprache
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhängige Templates ('' ließt die bevorzugte Sprache, benutze 'default' für das Standard Template '')
-last	common	de	Letzte
-left	common	de	Links
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	de	Länge für char+varchar, Genauigkeit für int: 2, 4, 8 und float: 4, 8
-link	common	de	Verknüpfung
-link target %1 not found!	common	de	Keine Verknüpfung zu %1 gefunden!
-linkapps	common	de	VerknüpfungAnwendungen
-linked	common	de	Verknüptf
-linkentry	common	de	VerknüpfungEintrag
-linklist	common	de	VerknüpfungListe
-links and attached files	preferences	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
-links to specified application.  example: {{links/addressbook}}	common	de	Verknüpfungen zu der entsprechenden Anwendung. Beispiel der Verknüpfungen zum Adressbuch: {{links/addressbook}}
-linkstring	common	de	VerknüpfungZeichenkette
-linkto	common	de	VerknüpfungZu
-list of files linked to the current record	preferences	de	Liste der Dokumente, die zu dem aktuellen Datensatz gehören.
-load this template into the editor	common	de	lädt diese Template zum Bearbeiten
-loading	common	de	lade
-maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
-maybe	common	de	Vieleicht
-message ...	common	de	Nachricht ...
-message prepared for sending.	common	de	Nachricht zum Versand vorbereitet.
-message(s) send failed!	common	de	Senden der Nachricht(en) fehlgeschlagen!
-message(s) send ok.	common	de	Nachricht(en) erfolgreich versandt.
-middle	common	de	Mittig
-minute	common	de	Minute
-minutes	common	de	Minuten
-missing: %1	common	de	nicht vorhanden: %1
-mo	common	de	Mo
-modifier	preferences	de	Geändert von
-month	common	de	Monat
-more	common	de	Weitere
-more than 1 match for '%1'	common	de	Mehr als 1 trifft für '%1' zu
-multicolumn indices	common	de	Mehrspaltige Indices
-name	common	de	Name
-name of other table where column is a key from	common	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	de	Name des eGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das Standard Layout '' zu lesen)
-name of table to add	common	de	Name der zuzufügenden Tabelle
-name of the etemplate, should be in form application.function[.subtemplate]	common	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	de	muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsamen Kürzel der Anwendung beginnen: z.b. 'et_'
-new	common	de	Neu
-new search	common	de	Neue Suche
-new table created	common	de	Neue Tabelle erzeugt
-new value	common	de	Neuer Wert
-newer version '%1' exists !!!	common	de	Neuere Version '%1' existiert !!!
-nextmatch	common	de	Nextmatch
-nextmatch accountfilter	common	de	Nextmatch Benutzerfilter
-nextmatch custom filterheader	common	de	Nextmatch freier Filterkopf
-nextmatch filterheader	common	de	Nextmatch Filterkopf
-nextmatch header	common	de	Nextmatch Spaltenkopf
-nextmatch sortheader	common	de	Nextmatch Sortierkopf
-no column to swap with !!!	common	de	Keine Spalte um damit zu tauschen !!!
-no default set	common	de	Keine Vorgabe gesetzt
-no file	common	de	keine Datei
-no filename given or selected via browse...	common	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
-no filters	common	de	Keine Filter
-no matches found	common	de	Keine Treffer gefunden
-no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
-no row to swap with !!!	common	de	Keine Zeile um damit zu tauschen !!!
-no suggestions	common	de	Keine Vorschläge
-not null	common	de	NOT NULL
-nothing	common	de	nichts
-nothing found - try again !!!	common	de	Nichts gefunden - nochmal versuchen !!!
-nothing in clipboard to paste !!!	common	de	Zwischenablage leer - nichts zum einfügen !!!
-nothing matched search criteria !!!	common	de	Nicht gefunden bei diesem Suchkriterium !!!
-now	common	de	Jetzt
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
-of	common	de	von
-off	common	de	Keine
-old value	common	de	Alter Wert
-onchange	common	de	onChange
-onclick	common	de	onClick
-only an other version found !!!	common	de	nur eine andere Version gefunden !!!
-open the online help.	common	de	Öffnet die online Hilfe.
-operator	common	de	Operator
-optional note about the link	common	de	optionale Notiz zur Verknüpfung
-options	common	de	Optionen
-or	common	de	ODER
-order to navigating by tab key through the form	common	de	Reihenfolge bei der Navigation mit der Tabulator Taste durch das Formular
-overflow	common	de	Überbreite
-padding	common	de	Innenabstand
-parent is a '%1' !!!	common	de	Elternelement is ein '%1' !!!
-paste	common	de	Einfügen
-path	common	de	Pfad
-please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
-pm	common	de	Nachmittag
-popup	common	de	Pop-up
-precision	common	de	Genauigkeit
-preference	common	de	Einstellung
-primary key	common	de	Primary Key
-primary key for the table, gets automaticaly indexed	common	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
-protocol is required	common	de	Protokoll wird benötigt
-radiobutton	common	de	Radioknopf
-read	common	de	Lesen
-read a list of entries.	common	de	Liest eine Liste von Einträgen.
-read a single entry by passing the id and fieldlist.	common	de	Liste einen einzelnen Eintrag durch Übergabe seiner Id und Feldliste.
-read etemplate from database (for the keys above)	common	de	ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
-readonly	common	de	nur lesen
-refresh	common	de	Aktualisierung
-remove row (can not be undone!!!)	common	de	löscht eine Zeile (NICHT rückgängig zu machen)
-remove this link (not the entry itself)	common	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
-required	common	de	Benötigt
-reset	common	de	Zurücksetzen
-reset all user's column preferences	common	de	Spaltenauswahl für alle Benutzer zurücksetzen
-restore all	common	de	Alle wiederherstellen
-restore all application templates, overwriting existing ones with identical version number	common	de	Alle eTemplates der Anwendung wiederherstellen, durch Überschreiben der existierenden mit gleicher Versionsnummer
-returns savely, without deleting	common	de	Abbruch, OHNE zu löschen
-right	common	de	Rechts
-row...	common	de	Zeile...
-sa	common	de	Sa
-save all	common	de	Alle speichern
-save as zip	common	de	Als ZIP-Datei speichern
-save selected columns as default preference for all users.	common	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
-save the changes made and close the window	common	de	speichert die Änderungen uns schließt das Fenster
-save the etemplate under the above keys (name, ...), change them for a saveas	common	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
-saves changes to tables_current.inc.php	common	de	speichert die Änderungen in tables_current.inc.php
-saves the template with given version number and closes the window	common	de	speichert das Template unter der angegebenen Versionsnummer und schließt das Fenster
-scale	common	de	Scale
-scale for float	common	de	Nachkommastellen für Gleitkommawerte
-search	common	de	Suchen
-search letter	common	de	Suche nach Buchstaben
-search...	common	de	Suchen...
-select a category	common	de	eine Kategorie auswählen
-select a primary contact, to show in the list	common	de	einen Hauptkontakt auswählen, der in der Auflistung mit angezeigt wird
-select access	common	de	Zugriff auswählen
-select account	common	de	Benutzer auswählen
-select an app first !!!	common	de	Bitte wählen Sie zuerst ein Anwendung aus !!!
-select an app to search in	common	de	Anwendung zum Durchsuchen auswählen
-select an application	common	de	Anwendung auswählen
-select an application, (*) = uninstalled	common	de	Anwendung auswählen, (*) = nicht installiert
-select an entry to link with	common	de	Eintrag zum Verknüpfen auswählen
-select an table of the application	common	de	Tabelle der Anwendung auswählen
-select application	common	de	Anwendung auswählen
-select application to search	common	de	Anwendung zum Suchen auswählen
-select category	common	de	Kategorie auswählen
-select color	common	de	Farbe auswählen
-select columns	common	de	Spalten auswählen
-select country	common	de	Land auswählen
-select day	common	de	Tag auswählen
-select day of week	common	de	Wochentag auswählen
-select entry	common	de	Eintrag auswählen
-select file(s) from vfs	common	de	Datein aus dem VFS wählen
-select files from filemanager ...	common	de	Dateien aus Dateimanager auswählen ...
-select hour	common	de	Stunde auswählen
-select if content of field should not be translated (label gets always translated)	common	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
-select language	common	de	Sprache auswählen
-select month	common	de	Monat auswählen
-select number	common	de	Zahl auswählen
-select one ...	common	de	Eine auswählen ...
-select percentage	common	de	Prozente auswählen
-select priority	common	de	Priorität auswählen
-select some options	common	de	Optionen auswählen
-select state	common	de	US-State auswählen
-select the columns to display in the list	common	de	Wählen Sie die Spalten aus, die in der Liste angezeigt werden sollen
-select the indexed columns in their desired order	common	de	Zu indizierende Spalten in der gewünschten Reihenfolge auswählen
-select this etemplate to delete it	common	de	dieses eTemplate zum Löschen auswählen
-select which accounts to show	common	de	Benutzer zum Anzeigen auswählen
-select which values to show	common	de	auswählen welche Werte angezeigt werden
-select year	common	de	Jahr auswählen
-selectbox	common	de	Auswahlbox
-server error	common	de	Serverfehler
-set as default	common	de	Als Vorgabe setzen
-set these columns as the default	common	de	Speichern Sie diese Spaltenauswahl als Vorgabe
-sets today as date	common	de	setzt heutiges Datum
-should the form be submitted or any custom javascript be executed	common	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden
-show	common	de	Anzeigen
-show (no save)	common	de	Anzeigen (nicht speichern)
-show all / cancel filter	common	de	Alle anzeigen / Filter aufheben
-show values	common	de	Werte anzeigen
-showing	common	de	zeigt
-shows / allows you to enter values into the etemplate for testing	common	de	zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
-shows/displays etemplate for testing, does not save it before	common	de	zeigt eTemplate zum Testen an, speichert es NICHT davor
-spacing	common	de	Zellenabstand
-span	common	de	Überspannt
-span, class	common	de	Span, Class
-stack	common	de	Stapel
-start a new search, cancel this link	common	de	neue Suche Starten, diese Verknüpfung abbrechen
-start new search for the above pattern	common	de	neue Suche für das obige Muster starten
-su	common	de	So
-submit form	common	de	Formular abschicken
-submitbutton	common	de	Schaltfläche
-sure	common	de	Sicher
-swap	common	de	tauschen
-swap widget with next one	common	de	tauscht das Widget mit dem nächsten
-swap with next column	common	de	tauscht Spalte mit der nächsten
-swap with next row	common	de	tauscht Zeile mit der nächsten
-switch to a parent widget	common	de	wechselt zum Elternelement
-switch to an other widgets of that container	common	de	wechselt zu einem anderen Element dieses Containers
-tabindex	common	de	Tab-Reihenfolge
-table unchanged, no write necessary !!!	common	de	Tabelle nicht geändert, kein schreiben notwendig !!!
-tablename	common	de	Tabellenname
-tabs	common	de	Karteikarten
-template	common	de	Template
-template deleted	common	de	Template gelöscht
-template saved	common	de	Template gespeichert
-text	common	de	Textfeld
-textarea	common	de	mehrzeiliges Textfeld
-th	common	de	Do
-the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2).
-the following document-types are supported:	preferences	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
-this text gets displayed if the input-field is empty and has no focus (blur)	common	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
-time	common	de	Uhrzeit
-titles of any entries linked to the current record, excluding attached files	preferences	de	Titel der Verknüpften zu dem aktuellem Eintrag ohne Dateien.
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	de	zum deaktivieren: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert wenn data leer ist
-to start the db-tools	common	de	startet die DB-Tools
-to start the etemplate editor	common	de	startet den eTemplate Editor
-to start the search	common	de	startet die Suche
-today	common	de	Heute
-top	common	de	Oben
-tree	common	de	Baum
-tu	common	de	Di
-type	common	de	Typ
-type of the column	common	de	Typ der Spalte
-type of the field (select label if field should be empty)	common	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)
-uncheck all	common	de	Alle abwählen
-unique	common	de	Unique
-unlink	common	de	Lösen
-update a single entry by passing the fields.	common	de	Aktualisiert einen einzelnen Eintrag über seine Felder.
-update from version '%s' to	common	de	Update von Version '%s' auf
-upload	common	de	Hochladen
-upload file(s) from filemanager...	common	de	Dateien aus dem Dateimanager (VFS)..
-user	common	de	Benutzer
-user-agent & action	common	de	Browser-Typ & Aktion
-valign	common	de	vAlign
-value	common	de	Wert
-value has to be at least '%1' !!!	common	de	Der Wert muss mindestens '%1' betragen !!!
-value has to be at maximum '%1' !!!	common	de	Der Wert darf höchstens '%1' betragen !!!
-vbox	common	de	VBox
-version	common	de	Version
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
-vertical alignment of row	common	de	vertikale Ausrichtung der Zeile
-view this etemplate	common	de	dieses eTemplate anzeigen
-view this linked entry in its application	common	de	Zeige diesen Eintrag in seiner Anwendung an
-we	common	de	Mi
-weekend	common	de	Wochenende
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
-widget copied into clipboard	common	de	Widget wurde in die Zwischenablage kopiert
-width	common	de	Breite
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
-width of column (in % or pixel)	common	de	Breite der Spalte (in % oder Punkten)
-width of the table in % or pixels for the table-tag and (optional) div	common	de	Breite der Tabelle in % oder Punkten
-width, disabled	common	de	Breite, Deaktiviert
-wk	common	de	KW
-working days	common	de	Werktage
-write <app>/setup/tables_current.inc.php	common	de	schreibt <app>/setup/tables_current.inc.php
-write langfile	common	de	Sprachdatei
-write tables	common	de	Tabelle Schreiben
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	de	schreibt ein Distributionsfile 'etemplates.inc.php' (für die Anwendung in Name) in das Setup Verzeichnis der Anwendung
-xml-file to import	common	de	XML Datei zum Importieren
-xslt template	common	de	XSLT Template
-year	common	de	Jahr
-you are not allowed to export more than %1 entries!	common	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
-you can not choose more then %1 item(s)!	common	de	Sie dürfen nicht mehr als %1 Einträge auswählen!
-you can respond by visiting:	common	de	Sie können unter dem folgenden Verweis antworten:
-you need to select a file first!	common	de	Sie müssen zuerst eine Datei auswählen!
-your code is incorrect !!!	common	de	Ihr Code ist nicht richtig!!!
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	zh	应用程序'%3'和语言'%4'的文字讯息%1(%2新)
+%1 etemplates deleted	common	zh	%1 个模板已删除
+%1 etemplates for application '%2' dumped to '%3'	common	zh	%1 个模板为应用程序 '%2' 转储到 '%3'
+%1 etemplates found	common	zh	找到 %1 个模板
+%1 matches on search criteria	common	zh	有 %1 条符合搜索条件的资料
+%1 new etemplates imported for application '%2'	common	zh	导入 %1 条应用程序 '%2' 的模板
+%s disabled	common	zh	%s 已禁用
+%s needed	common	zh	需要 %s
+%s notranslation	common	zh	%s 未翻译
+%s onchange	common	zh	%s onChange
+%s readonly	common	zh	%s 只读
+'%1' has an invalid format !!!	common	zh	'%1' 格式错误！
+'%1' is not a valid date !!!	common	zh	'%1'不是有效的日期！
+'%1' is not a valid floatingpoint number !!!	common	zh	'%1' 不是正确的浮点数！
+'%1' is not a valid integer !!!	common	zh	'%1' 不是正确的整数！
+a pattern to be searched for	common	zh	一搜索模式用于
+accesskey	common	zh	快捷键
+accesskeys can also be specified with an & in the label (eg. &name)	common	zh	快捷键也可以在标签中指定有一个 & (例如 &Name) 字符
+account contactdata	common	zh	账户联系人数据
+actions...	common	zh	操作...
+add a new column (after the existing ones)	common	zh	添加新列 (在已存在的之后)
+add a new entry of the selected application	common	zh	在选择的应用程序中添加新条目
+add a new multi-column index	common	zh	添加新的多列索引
+add column	common	zh	添加列
+add index	common	zh	添加索引
+add new	common	zh	新增
+add table	common	zh	添加表
+advanced search	common	zh	高级搜索
+align	common	zh	对齐
+alignment of label and input-field in table-cell	common	zh	标签与输入字段的对齐方式
+alignment of the v/hbox containing table-cell	common	zh	V/HBox 的对齐方式
+all days	common	zh	全部日数
+all operations save the template!	common	zh	所有操作保存模板！
+all users	common	zh	所有用户
+am	common	zh	上午
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	zh	使用索引列可以提高搜索速度(但是会占用磁盘空间！)
+and	common	zh	及
+application	common	zh	应用程序
+application name needed to write a langfile or dump the etemplates !!!	common	zh	应用程序需要写一个语言文件或是转储模板！
+applications	common	zh	应用程序
+applies the changes made	common	zh	应用所作修改
+applies the changes to the given version of the template	common	zh	应用修改到指定模板的版本
+as default	common	zh	默认
+attach	common	zh	附加
+attach file	common	zh	附加文件
+baseline	common	zh	基线
+blurtext	common	zh	模煳文字
+border	common	zh	边框
+border-line-thickness for the table-tag	common	zh	表格标签使用的框线宽度
+bottom	common	zh	底部
+box	common	zh	容器 Box
+box...	common	zh	容器 Box...
+can not have special sql-value null	common	zh	不能有特殊 SQL-value  NULL
+cancel	common	zh	取消
+cant delete a single widget from a grid !!!	common	zh	不能从栅格中删除单一部件！
+cant delete the only column of a grid !!!	common	zh	无法从栅格中删除唯一的列！
+cant delete the only row in a grid !!!	common	zh	无法从栅格中删除唯一的行！
+category	common	zh	类别
+category tree	common	zh	类别树
+cellpadding for the table-tag	common	zh	表格标签文字与单元格之间的距离
+cells	common	zh	储存格
+cellspacing for the table-tag	common	zh	表格标签文字与单元格之间的距离
+center	common	zh	居中
+changed	common	zh	已更改
+check all	common	zh	全选
+check if content should only be displayed but not altered (the content is not send back then!)	common	zh	检查如果内容只是被显示，但不被改变 (当时不返回内容！)
+check if field has to be filled by user	common	zh	检查字段是否已被用户填写
+checkbox	common	zh	选择框
+class	common	zh	类
+class, valign	common	zh	类，垂直对齐
+click here to attach the file	common	zh	点击以附加文件
+click here to create the link	common	zh	点击以创建连接
+click here to start the search	common	zh	点击开始搜索
+click here to upload the file	common	zh	点击上传文件
+click to order after that criteria	common	zh	点击按此为标准排序
+clickable path	common	zh	可点击路径
+closes the window without saving the changes	common	zh	关闭窗口不保存任何更改
+column...	common	zh	列...
+columnname	common	zh	列_名称
+comment	common	zh	备注
+confirm	common	zh	确认
+confirmation message or custom javascript (returning true or false)	common	zh	确认消息或自定义javascript(返回true或false)
+confirmation necesary or custom java-script	common	zh	需要确认或自定义 javascript
+contact	common	zh	联系人
+contact field to show	common	zh	要显示的联系人字段
+contact fields	common	zh	联系人字段
+contains	common	zh	包含
+copy to clipboard	common	zh	复制到剪贴板
+create a new table for the application	common	zh	为这个应用程序创建一新数据表
+creates an english ('en') langfile from label and helptexts (for application in name)	common	zh	从标签和帮助文本创建一个英文('en')语言文件(用于应用程序名称)
+creator	preferences	zh	创建者
+css class for the table-tag	common	zh	表格标签的 CSS 类
+css properties	common	zh	CSS 属性
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	zh	该行的CSS类名，预设：'nmh' = NextMatch header，'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	zh	该列的CSS类名，预设：'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
+css-styles	common	zh	CSS-风格
+custom	common	zh	自定义
+custom fields	common	zh	自定义字段
+custom javascript for onchange	common	zh	为 onChange 自定义 javascript
+cut	common	zh	剪切
+date+time	common	zh	日期+时间
+day	common	zh	天
+days	common	zh	天
+db ensures that every row has a unique value in that column	common	zh	在该列中数据库确保每一行有一个不重复的值
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	zh	特定数据库索引选项(以逗号分隔)，例如：MySQL(FULLTEXT)或MySQL(100)来设定列的索引长度
+db-tools	common	zh	数据库工具
+deck	common	zh	装饰(内部)
+default	common	zh	默认
+delete a single entry by passing the id.	common	zh	通过 ID 删除一单项条目。
+delete all selected etemplates, without further inquiry	common	zh	删除所有选取的模板，不再进行确认询问
+delete and cut save the template!	common	zh	删除和剪切保存模板！
+delete column	common	zh	删除列
+delete index	common	zh	删除索引
+delete the spezified etemplate	common	zh	删除指定模板
+delete this column	common	zh	删除此列
+delete this etemplate	common	zh	删除该模板
+delete this file	common	zh	删除此文件
+delete this row	common	zh	删除此行
+delete whole column (can not be undone!!!)	common	zh	删除全部列 (无法复原！)
+deletes the above spez. etemplate from the database, can not be undone	common	zh	从数据库删除以上指定的模板，无法复原
+deletes the etemplate spez. above	common	zh	删除以上指定的模板
+deletes this column	common	zh	删除该列
+deletes this index	common	zh	删除此索引
+discard changes	common	zh	放弃更改
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	zh	在输入之前显示或输入是为'%s'插入标签中(提交按钮标签或图片文件名)
+displayed in statusline of browser if input-field gets focus	common	zh	如果输入字段获得焦点则在浏览器状态栏显示
+displayed in the top line of the groupbox (legend)	common	zh	在GroupBox (图例) 的顶行显示
+do you want to save the changes you made in table %s?	common	zh	是否要保存您在表%s所作修改？
+document '%1' does not exist or is not readable for you!	preferences	zh	文件'%1'不存在或是您没有读取权限！
+documentation	common	zh	文档
+doesn't matter	common	zh	没关系
+drop a table - this can not be undone	common	zh	删去数据表 - 这将无法撤消
+drop table	common	zh	删去数据表
+dump4setup	common	zh	Dump4 安装
+duration	common	zh	期间
+edit	common	zh	编辑
+edit embeded css styles or of the applications app.css file	common	zh	编辑 CSS 嵌入式样式表或应用程序 app.css 文件
+edit the etemplate spez. above	common	zh	编辑上面指定的模板
+edit...	common	zh	编辑...
+editable templates - db-tools	common	zh	可编辑模板 - 数据库-工具
+editable templates - delete template	common	zh	可编辑模板 - 删除模板
+editable templates - editor	common	zh	可编辑模板 - 编辑器
+editable templates - search	common	zh	可编辑模板 - 搜索
+editable templates - show template	common	zh	可编辑模板 - 显示模板
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	zh	CSS嵌入式样式表，例如'.red { background: red;}' (注意'.'在类名称之前)或是 '@import url(...)' (类名称可以在全局网页使用！)
+enable javascript onchange submit	common	zh	启用 JavaScript 改动时提交功能
+enter '' for an empty default, nothing mean no default	common	zh	对于空的默认值，输入'' 意味着没有任何的默认
+enter a search pattern	common	zh	输入搜索条件
+enter filename to upload and attach, use [browse...] to search for it	common	zh	输入上传文件与附件的文件名，使用[浏览...]对其搜索
+enter the new version number here (> old_version), empty for no update-file	common	zh	输入新的版本号(大于旧版本)，空白表示没有更新
+enter the new version number here (has to be > old_version)	common	zh	输入新的版本号(必须大于旧版本)
+entry saved	common	zh	条目已储存
+error uploading file!	filemanager	zh	上传文件错误！
+error: template not found !!!	common	zh	错误：找不到模板！
+error: webserver is not allowed to write into '%1' !!!	common	zh	错误：Web服务器无法写入文件'%1'！
+error: while saving !!!	common	zh	错误：保存时！
+error: writing file (no write-permission for the webserver) !!!	common	zh	错误：写入文件时(Web服务器没有写入权限)！
+etemplate	common	zh	[eGW-TPL]模板管理
+etemplate '%1' imported, use save to put it in the database	common	zh	模板'%1'已导入，点击保存将其放入数据库中
+etemplate '%1' written to '%2'	common	zh	模板 '%1' 写到 '%2'
+etemplate editor	common	zh	模板编辑器
+etemplate reference	common	zh	模板参考
+etemplate tutorial	common	zh	模板教学指南
+exchange this row with the one above	common	zh	用以上行替换这一行
+exchange this two columns	common	zh	交换这两列
+export the loaded etemplate into a xml-file	common	zh	将载入的模板导出到 XML-文件
+export xml	common	zh	导出 XML文件
+extensions loaded:	common	zh	已载入扩展：
+field	common	zh	字段
+field must not be empty !!!	common	zh	字段不得为空！
+file	common	zh	文件
+file contains more than one etemplate, last one is shown !!!	common	zh	文件包含多个模板，只显示最后一条！
+file writen	common	zh	书面文件
+fileupload	common	zh	文件上传
+first	common	zh	第一条
+floating point	common	zh	浮点数
+foreign key	common	zh	外键 (Foreign Key)
+formatted text (html)	common	zh	格式化文本 (HTML)
+general fields:	preferences	zh	通用字段：
+go to the first entry	common	zh	到第一条目
+go to the last entry	common	zh	到最后条目
+go to the next page of entries	common	zh	下一条目页面
+go to the previous page of entries	common	zh	上一条目页面
+grid	common	zh	栅格
+grid column attributes	common	zh	栅格列属性
+grid row attributes	common	zh	栅格行属性
+groupbox	common	zh	成组框控件
+h	common	zh	时
+hbox	common	zh	水平框控件
+height	common	zh	高度
+height of row (in % or pixel)	common	zh	行高 (百分比或像素)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	zh	行高(百分比或像素)，禁用行：[! = not]<value>[=<check>]例如：'!@data'如果数据内容为空则禁用
+height of the table in % or pixels for the table-tag and (optional) div	common	zh	表格标签和(可选)div的表格高度(百分比或像素)
+height, disabled	common	zh	高度，禁用
+help	common	zh	帮助
+history log	common	zh	历史日志
+horizontal rule	common	zh	水平规则
+hour	common	zh	小时
+hours	common	zh	小时
+how many entries should the list show	common	zh	列表将要显示多少个条目
+html	common	zh	HTML
+id	common	zh	编号
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	zh	为了(暂时)移除一个 field/cell，如果字段被禁用则会显示一个空白 table-cell
+image	common	zh	图片
+import	common	zh	导入
+import an etemplate from a xml-file	common	zh	从XML文件导入一个模板
+import table-definitions from existing db-table	common	zh	从已有的数据表导入表定义文件
+import xml	common	zh	导入XML文件
+increment version to not overwrite the existing template	common	zh	增加版本以避免覆盖现有模板
+index/name of returned content (name of the template, link / method for image)	common	zh	返回内容的索引/名称(模板名称，图片的链接/方法)
+indexed	common	zh	已索引
+indexoptions	common	zh	索引选项
+insert a column before	common	zh	在前面插入一列
+insert a column behind	common	zh	在后面插入一列
+insert a row above	common	zh	在上方插入一行
+insert a row below	common	zh	在下方插入一行
+insert a widget before	common	zh	在前面插入一个容器
+insert a widget behind	common	zh	在后面插入一个容器
+insert in document	common	zh	插入文件
+insert new column behind this one	common	zh	在这一列之后插入新列
+insert new column in front of all	common	zh	在最前面插入新列
+insert new row after this one	common	zh	在这一行之后插入新行
+insert new row in front of first line	common	zh	在第一行之前插入新行
+integer	common	zh	整数
+key	common	zh	键值
+label	common	zh	标签
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	zh	标签:[bold][italic] 文本:[len][,max] 编号:[min][,[max][,len]] 文本区:[rows][,cols] 复选按钮:value 水平线:[width] 模板:[IndexInContent] 选择:[multiselect] 日期:[values: eg. 'Y-m-d']
+lang	common	zh	语言
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	zh	从属语言模板的语言-缩写(例如：'en'表示英文)("会读取您的语言用户配置文件或默认值，us'默认'将读取默认模板")
+last	common	zh	最后
+left	common	zh	左
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	zh	字元长度，精确数字：2,4,8 和浮点数：4,8
+link	common	zh	链接
+linkapps	common	zh	链接应用程序
+linkentry	common	zh	链接条目
+linklist	common	zh	链接列表
+linkstring	common	zh	链接字串
+linkto	common	zh	链接到
+load this template into the editor	common	zh	载入该模板到编辑器中
+loading	common	zh	载入
+middle	common	zh	中间
+minute	common	zh	分
+minutes	common	zh	分
+modifier	preferences	zh	修改人
+month	common	zh	月
+more	common	zh	更多
+multicolumn indices	common	zh	多列索引
+name	common	zh	名称
+name of other table where column is a key from	common	zh	其他表名哪一列是来自键值
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	zh	模板名称(例如：verdilak)：'' = 默认(将读取模板用户配置文件，'默认'us 来读取默认模板)
+name of table to add	common	zh	要添加的数据表名称
+name of the etemplate, should be in form application.function[.subtemplate]	common	zh	模板名称，应在表单 application.function[.subTemplate]中
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	zh	在表格中必须是唯一的且不是SQL的保留字，最好加上两个英文与一个底线当作前置字来表示应用程序
+new	common	zh	新建
+new search	common	zh	新建搜索
+new table created	common	zh	新表已创建
+newer version '%1' exists !!!	common	zh	有新的版本 '%1'！
+nextmatch	common	zh	下一个匹配
+nextmatch accountfilter	common	zh	下一个匹配的账户规则
+nextmatch custom filterheader	common	zh	下一个匹配的自定义过滤头
+nextmatch filterheader	common	zh	下一个匹配过滤头
+nextmatch header	common	zh	下一个匹配头
+nextmatch sortheader	common	zh	下一个匹配分类头
+no column to swap with !!!	common	zh	没有与之交换的列！
+no file	common	zh	无文件
+no filename given or selected via browse...	common	zh	没有指定文件名或是通过浏览器选择的...
+no matches found	common	zh	未找到匹配
+no row to swap with !!!	common	zh	没有与之交换的行！
+not null	common	zh	非空
+nothing	common	zh	无
+nothing found - try again !!!	common	zh	没有找到 - 请再试！
+nothing in clipboard to paste !!!	common	zh	无法从剪贴板粘贴！
+nothing matched search criteria !!!	common	zh	没有与搜索条件相匹配的！
+now	common	zh	现在
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	zh	字段/单元列数应为跨距或'所有'的其余列，CSS类名(对于TD标签)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	zh	V/HBox 中 rows/cols 数目、Cellpadding, Cellspacing
+of	common	zh	的
+onchange	common	zh	当改动时
+onclick	common	zh	当点击时
+only an other version found !!!	common	zh	只有找到一个其他版本！
+open the online help.	common	zh	开启在线帮助
+operator	common	zh	操作符
+optional note about the link	common	zh	可选的关于链接的注释
+options	common	zh	选项
+or	common	zh	或
+order to navigating by tab key through the form	common	zh	使用跳位键实现在表单中的导航
+overflow	common	zh	超过
+padding	common	zh	文框距离
+parent is a '%1' !!!	common	zh	上一层是一个 '%1' ！
+paste	common	zh	贴上
+path	common	zh	路径
+please enter table-name first !!!	common	zh	请先输入表格名称！
+pm	common	zh	下午
+popup	common	zh	弹出窗口
+precision	common	zh	精度
+primary key	common	zh	主键
+primary key for the table, gets automaticaly indexed	common	zh	表的主键，自动获取索引
+radiobutton	common	zh	单选按钮
+read	common	zh	读取
+read a list of entries.	common	zh	读取条目列表。
+read a single entry by passing the id and fieldlist.	common	zh	通过ID和字段列表读取一单项条目。
+read etemplate from database (for the keys above)	common	zh	从数据库读取模板 (通过以上键值)
+readonly	common	zh	只读
+refresh	common	zh	刷新
+remove row (can not be undone!!!)	common	zh	移除行 (无法还原！)
+remove this link (not the entry itself)	common	zh	移除此链接 (不是条目本身)
+required	common	zh	需要
+reset	common	zh	重置
+returns savely, without deleting	common	zh	返回，未删除
+right	common	zh	正确
+row...	common	zh	列...
+save all	common	zh	保存所有
+save selected columns as default preference for all users.	common	zh	保存所选列作为所有用户默认首选。
+save the changes made and close the window	common	zh	保存所作更改并且关闭窗口
+save the etemplate under the above keys (name, ...), change them for a saveas	common	zh	在上面的键值(name,...)之下保存模板，把它们改为另存将
+saves changes to tables_current.inc.php	common	zh	保存到 tables_current.inc.php
+saves the template with given version number and closes the window	common	zh	使用给定的版本号保存模板并关闭窗口
+scale	common	zh	比例
+scale for float	common	zh	小数点位数
+search	common	zh	搜索
+select a category	common	zh	选择分类
+select a primary contact, to show in the list	common	zh	选择主要联系人在列表中显示
+select access	common	zh	选择访问
+select account	common	zh	选择账户
+select an app first !!!	common	zh	选择一个应用程序！
+select an app to search in	common	zh	选择要搜索的应用程序
+select an application	common	zh	选择一个应用程序
+select an application, (*) = uninstalled	common	zh	应用程序，(*)  = 未安装的
+select an entry to link with	common	zh	选择要链接的条目
+select an table of the application	common	zh	选择一个应用程序的数据表
+select application	common	zh	选择应用程序
+select application to search	common	zh	选择要搜索的应用程序
+select category	common	zh	选择分类
+select columns	common	zh	选择列
+select country	common	zh	选择国家
+select day	common	zh	选择日
+select day of week	common	zh	选择一周的星期几
+select entry	common	zh	选择条目
+select hour	common	zh	选择小时
+select if content of field should not be translated (label gets always translated)	common	zh	如果字段内容不应被翻译(标签总是被翻译)时选择
+select language	common	zh	选择语言
+select month	common	zh	选择月份
+select number	common	zh	选择数字
+select one ...	common	zh	选择一个...
+select percentage	common	zh	选择比率
+select priority	common	zh	选择优先权
+select state	common	zh	选择状态
+select the columns to display in the list	common	zh	在列表中选择要显示的列
+select the indexed columns in their desired order	common	zh	在希望的排序中选择索引列
+select this etemplate to delete it	common	zh	选择删除这个模板
+select which accounts to show	common	zh	选择要显示的帐户
+select which values to show	common	zh	选择要显示的数值
+select year	common	zh	选择年
+selectbox	common	zh	下拉选单
+set as default	common	zh	设置作为缺省
+sets today as date	common	zh	设置为当前日期
+should the form be submitted or any custom javascript be executed	common	zh	将表单提交或是执行任何自定义 javascript
+show	common	zh	显示
+show (no save)	common	zh	显示 (不保存)
+show values	common	zh	显示数值
+showing	common	zh	显示
+shows / allows you to enter values into the etemplate for testing	common	zh	显示/允许您输入用于测试的数值到模板中
+shows/displays etemplate for testing, does not save it before	common	zh	为测试显示/展示模板，在之前不保存
+spacing	common	zh	间隔
+span	common	zh	Span
+span, class	common	zh	Span, Class
+stack	common	zh	Stack
+start a new search, cancel this link	common	zh	取消此链接，开始新的搜索
+start new search for the above pattern	common	zh	用以上规则开始新的搜索
+submit form	common	zh	提交表单
+submitbutton	common	zh	提交按钮
+swap	common	zh	切换
+swap widget with next one	common	zh	切换到下一个容器
+swap with next column	common	zh	切换到下一个列
+swap with next row	common	zh	切换到下一个行
+switch to a parent widget	common	zh	切换到父器件
+switch to an other widgets of that container	common	zh	与其他容器切换
+tabindex	common	zh	跳位键索引
+table unchanged, no write necessary !!!	common	zh	表没有改动，没必要保存！
+tablename	common	zh	数据表名称
+tabs	common	zh	跳位
+template	common	zh	模板
+template deleted	common	zh	模板已删除
+template saved	common	zh	模板已保存
+text	common	zh	文字
+textarea	common	zh	文字区
+this text gets displayed if the input-field is empty and has no focus (blur)	common	zh	如果输入字段为空且没有焦点(模煳)，这些文本得以显示
+time	common	zh	时间
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	zh	禁用：[! = not]<value>[=<check>]，例如：'!@data' 如果数据内容为空则禁用
+to start the db-tools	common	zh	开始数据库工具
+to start the etemplate editor	common	zh	开始模板编辑器
+to start the search	common	zh	开始搜索
+today	common	zh	今天
+top	common	zh	顶部
+tree	common	zh	树
+type	common	zh	类型
+type of the column	common	zh	列的类型
+type of the field (select label if field should be empty)	common	zh	字段类型 (如果字段为空则选择标签)
+unique	common	zh	唯一的
+unlink	common	zh	取消链接
+update a single entry by passing the fields.	common	zh	通过字段更新一个单一条目
+update from version '%s' to	common	zh	从版本 '%s'更新到
+upload	common	zh	上传
+valign	common	zh	垂直对齐
+value	common	zh	数值
+value has to be at least '%1' !!!	common	zh	数值最少必须是 '%1'！
+value has to be at maximum '%1' !!!	common	zh	数值最大是 '%1' ！
+vbox	common	zh	VBox
+version	common	zh	版本
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	zh	版本号格式应该是：major.minor.revision.number (例如：0.9.13.001 所有数字用0来填空)
+vertical alignment of row	common	zh	行的垂直对齐
+view this etemplate	common	zh	查看这个模板
+view this linked entry in its application	common	zh	在应用程序中查看这个链接
+weekend	common	zh	周末
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	zh	发生内容超出：显示(默认)，隐藏，卷动，自动(由浏览器决定)
+widget copied into clipboard	common	zh	容器复制到剪贴簿
+width	common	zh	宽度
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	zh	列宽(百分比或是像素)，禁用列：[! = not]<value>[=<check>]例如：'!@data' 如果数据内容为空就禁用
+width of column (in % or pixel)	common	zh	列的宽度（百分比或像素）
+width of the table in % or pixels for the table-tag and (optional) div	common	zh	用于table-tag和(可选)div的百分比或像素表格宽度
+width, disabled	common	zh	宽度，禁用
+wk	common	zh	周
+working days	common	zh	工作日
+write <app>/setup/tables_current.inc.php	common	zh	写入<app>/setup/tables_current.inc.php
+write langfile	common	zh	写语言文件
+write tables	common	zh	写入表格
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	zh	在应用程序的安装目录写入'etemplates.inc.php'文件(对指定的应用程序)
+xml-file to import	common	zh	要导入的 XML-文件
+xslt template	common	zh	XSLT 模板
+year	common	zh	年
+you can respond by visiting:	common	zh	查看访问：
