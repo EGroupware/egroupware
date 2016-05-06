@@ -798,6 +798,53 @@ class Mailer extends Horde_Mime_Mail
 	}
 
 	/**
+	 * clearAttachments, does the same as parseBasePart, but does not add possible attachments
+	 */
+	function ClearAttachments()
+	{
+		try {
+			$base = $this->getBasePart();
+			$plain_id = $base->findBody('plain');
+			$html_id = $base->findBody('html');
+
+			// find further alternativ part
+			if ($base->getType() == 'multipart/alternativ' && count($base) !== ($html_id ? $html_id : $plain_id))
+			{
+				$alternativ_id = (string)count($base);
+			}
+
+			$this->_body = $this->_htmlBody = $this->_alternativBody = null;
+			$this->clearParts();
+
+			foreach($base->partIterator() as $part)
+			{
+				$id = $part->getMimeId();
+				//error_log(__METHOD__."() plain=$plain_id, html=$html_id: $id: ".$part->getType());
+				switch($id)
+				{
+					case '0':	// base-part itself
+						continue 2;
+					case $plain_id:
+						$this->_body = $part;
+						break;
+					case $html_id:
+						$this->_htmlBody = $part;
+						break;
+					case $alternativ_id:
+						$this->_alternativBody = $part;
+						break;
+					default:
+				}
+			}
+			$this->setBasePart(null);
+		}
+		catch (\Exception $e) {
+			// ignore that there is no base-part yet, so nothing to do
+			unset($e);
+		}
+	}
+
+	/**
 	 * Adds a MIME message part.
 	 *
 	 * Reimplemented to add parts / attachments if message was parsed / already has a base-part
