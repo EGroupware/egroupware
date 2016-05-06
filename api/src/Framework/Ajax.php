@@ -966,6 +966,7 @@ abstract class Ajax extends Api\Framework
 		{
 			$_SERVER['REQUEST_URI'] = '?'.$parts['query'];
 			parse_str($parts['query'],$_GET);
+			$_REQUEST = $_GET;	// some apps use $_REQUEST to check $_GET or $_POST
 		}
 
 		if (!isset($_GET['menuaction']))
