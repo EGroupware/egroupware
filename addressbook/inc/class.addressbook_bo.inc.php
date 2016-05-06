@@ -52,6 +52,7 @@ class addressbook_bo extends addressbook_so
 		'n_family, n_given',
 		'n_family, n_prefix',
 		'n_fn',
+		'n_family, n_given (bday)',
 	);
 
 	/**
@@ -414,7 +415,7 @@ class addressbook_bo extends addressbook_so
 
 		if($isUpdate)
 		{
-			$fileas_fields = array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality');
+			$fileas_fields = array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality','bday');
 			$old = null;
 			foreach($fileas_fields as $field)
 			{
@@ -427,16 +428,30 @@ class addressbook_bo extends addressbook_so
 			unset($old);
 		}
 
-		$fileas = str_replace(array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality'),
-			array($contact['n_prefix'],$contact['n_given'],$contact['n_middle'],$contact['n_family'],$contact['n_suffix'],
-				$contact['n_fn'],$contact['org_name'],$contact['org_unit'],$contact['adr_one_locality']),$type);
-
 		// removing empty delimiters, caused by empty contact fields
-		$fileas = str_replace(array(', , : ',', : ',': , ',', , ',': : ',' ()'),array(': ',': ',': ',', ',': ',''),$fileas);
-		while ($fileas[0] == ':' ||  $fileas[0] == ',') $fileas = substr($fileas,2);
-		while (substr($fileas,-2) == ': ' || substr($fileas,-2) == ', ') $fileas = substr($fileas,0,-2);
+		$fileas = str_replace(array(', , : ',', : ',': , ',', , ',': : ',' ()'),
+			array(': ',': ',': ',', ',': ',''),
+			strtr($type, array(
+				'n_prefix' => $contact['n_prefix'],
+				'n_given'  => $contact['n_given'],
+				'n_middle' => $contact['n_middle'],
+				'n_family' => $contact['n_family'],
+				'n_suffix' => $contact['n_suffix'],
+				'n_fn'     => $contact['n_fn'],
+				'org_name' => $contact['org_name'],
+				'org_unit' => $contact['org_unit'],
+				'adr_one_locality' => $contact['adr_one_locality'],
+				'bday'     => (int)$contact['bday'] ? DateTime::to($contact['bday'], true) : $contact['bday'],
+			)));
 
-		//echo "<p align=right>bocontacts::fileas(,$type)='$fileas'</p>\n";
+		while ($fileas[0] == ':' ||  $fileas[0] == ',')
+		{
+			$fileas = substr($fileas,2);
+		}
+		while (substr($fileas,-2) == ': ' || substr($fileas,-2) == ', ')
+		{
+			$fileas = substr($fileas,0,-2);
+		}
 		return $fileas;
 	}
 
@@ -498,6 +513,7 @@ class addressbook_bo extends addressbook_so
 			'org_name' => lang('company'),
 			'org_unit' => lang('department'),
 			'adr_one_locality' => lang('city'),
+			'bday'     => lang('Birthday'),
 		);
 		foreach($labels as $name => $label)
 		{
