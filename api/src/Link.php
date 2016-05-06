@@ -149,7 +149,7 @@ class Link extends Link\Storage
 			'view' => array('menuaction'=>'addressbook.addressbook_ui.view','ajax'=>'true'),
 			'view_id' => 'account_id'
 		),
-		'home' => array(
+		'api' => array(
 			// handling of text or pdf files by browser in a popup window
 			'mime' => array(
 				'application/pdf' => array(
