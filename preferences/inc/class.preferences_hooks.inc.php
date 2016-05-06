@@ -96,7 +96,7 @@ class preferences_hooks
 			if (empty($lang)) $lang = 'en';
 		}
 		list(,$country) = explode('-',$lang);
-		if (empty($country)) $country = Locale::getRegion(Locale::getDefault());
+		if (empty($country) && class_exists('Locale')) $country = Locale::getRegion(Locale::getDefault());
 		if (empty($country)) $country = 'de';
 		
 		// check for old rte_font_size pref including px and split it in size and unit
