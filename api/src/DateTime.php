@@ -649,7 +649,7 @@ class DateTime extends \DateTime
 		unset($data);
 
 		// if user lang or installed langs contain a european language --> move Europe to top of tz list
-		$langs = class_exists('translation') ? translation::get_installed_langs() : array();
+		$langs = class_exists('EGroupware\\Api\\Translation') ? Translation::get_installed_langs() : array();
 		if (array_intersect(array($GLOBALS['egw_info']['user']['preferences']['common']['lang'])+array_keys($langs),
 			array('de','fr','it','nl','bg','ca','cs','da','el','es-es','et','eu','fi','hr','hu','lt','no','pl','pt','sk','sl','sv','tr','uk')))
 		{
