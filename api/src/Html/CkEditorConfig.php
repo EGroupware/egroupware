@@ -72,14 +72,6 @@ class CkEditorConfig
 		$labels = array(
 			'kama'  => lang('kama theme'),
 			'moono'	=> lang('moono theme (default)'),
-			'moonocolor'	=> lang('moono color theme'),
-			'moono-dark'	=> lang('dark moono theme'),
-			'Moono_blue'	=> lang('blue moono theme'),
-			'bootstrapck'	=> lang('bootstrap theme for ckeditor'),
-			'icy_orange'	=> lang('icy-orange theme for ckeditor'),
-			'office2013'	=> lang('office-2013 theme for ckeditor'),
-			'minimalist'	=> lang('Minimalist theme'),
-			'flat'			=> lang('Flat theme')
 		);
 		$skins = array();
 
@@ -97,6 +89,10 @@ class CkEditorConfig
 			}
 		}
 		uasort($skins, 'strcasecmp');
+		
+		// flat skin is reserved for mobile template, although we are not
+		// supporting it on desktop (becuase FF has problem with action icons)
+		if (!\EGroupware\Api\Header\UserAgent::mobile()) unset($skins['flat']);
 
 		// return our default "moono" first
 		return isset($skins['moono']) ? array('moono' => $skins['moono'])+$skins : $skins;
@@ -220,26 +216,16 @@ class CkEditorConfig
 					$skin = "kama";
 					//if (EGroupware\Api\Header\UserAgent::type()=='firefox' || EGroupware\Api\Header\UserAgent::type()=='msie') $skin='moonocolor';
 					break;
+				// no longer supported by egw
+				case 'flat':
 				case 'silver':
 				case 'moono-dark':
-					$skin = "moono-dark";
-					break;
 				case 'icy_orange':
-					$skin = "icy_orange";
-					break;
-				case 'bootstrapck': // no longer support by egw
+				case 'bootstrapck':
 				case 'Moono_blue':
 				case 'office2013':
 				case 'office2003':
 				case 'moonocolor':
-					$skin = "moonocolor";
-					break;
-				case 'minimalist':
-					$skin = "minimalist";
-					break;
-				case 'flat':
-					$skin = "flat";
-					break;
 				case 'moono':
 				case 'default':
 				default:
@@ -251,6 +237,7 @@ class CkEditorConfig
 			{
 				$skin = "moono"; //this is the basic skin for ckeditor
 			}
+			// Skin used for mobile template
 			self::$skin = \EGroupware\Api\Header\UserAgent::mobile()?'flat':$skin;
 		}
 
