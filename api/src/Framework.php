@@ -795,13 +795,13 @@ abstract class Framework extends Framework\Extra
 		// We handle this here because its special
 		$apps['about']['title'] = 'EGroupware';
 		$apps['about']['url']   = self::link('/about.php');
-		$apps['about']['icon']  = $apps['about']['icon_hover'] = Image::find('phpgwapi',Array('about','nonav'));
+		$apps['about']['icon']  = $apps['about']['icon_hover'] = Image::find('api',Array('about','nonav'));
 		$apps['about']['name']  = 'about';
 
 		$apps['logout']['title'] = lang('Logout');
 		$apps['logout']['name']  = 'logout';
 		$apps['logout']['url']   = self::link('/logout.php');
-		$apps['logout']['icon']  = $apps['logout']['icon_hover'] = Image::find('phpgwapi',Array('logout','nonav'));
+		$apps['logout']['icon']  = $apps['logout']['icon_hover'] = Image::find('api',Array('logout','nonav'));
 
 		return $apps;
 	}
