@@ -65,7 +65,7 @@ class mail_tree
 		{
 			if (strpos($image, '.') === false)
 			{
-				$image = basename($img=common::image('mail', 'dhtmlxtree/'.$image));
+				$image = basename($img=Api\Image::find('mail', 'dhtmlxtree/'.$image));
 			}
 		}
 	}
