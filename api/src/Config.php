@@ -332,8 +332,8 @@ class Config
 	 */
 	public static function init_static()
 	{
-		// we use a reference here (no clone), as we no longer use egw_db::row() or egw_db::next_record()!
-		if (isset($GLOBALS['egw_setup']) && is_a($GLOBALS['egw_setup']->db, 'egw_db'))
+		// we use a reference here (no clone), as we no longer use Db::row() or Db::next_record()!
+		if (isset($GLOBALS['egw_setup']) && $GLOBALS['egw_setup']->db instanceof Db)
 		{
 			self::$db = $GLOBALS['egw_setup']->db;
 		}

@@ -163,9 +163,9 @@ class Contacts extends Contacts\Storage
 	 * Constructor
 	 *
 	 * @param string $contact_app ='addressbook' used for acl->get_grants()
-	 * @param egw_db $db =null
+	 * @param Db $db =null
 	 */
-	function __construct($contact_app='addressbook',egw_db $db=null)
+	function __construct($contact_app='addressbook',Db $db=null)
 	{
 		parent::__construct($contact_app,$db);
 		if ($this->log)
@@ -1549,7 +1549,7 @@ class Contacts extends Contacts\Storage
 			$options['filter'] = (array)$options['filter'];
 		}
 		// return only contacts with email set
-		$options['filter'][] = "contact_email ".$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]." '%@%'";
+		$options['filter'][] = "contact_email ".$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE]." '%@%'";
 
 		// let link query know, to append email to list
 		$options['type'] = 'email';

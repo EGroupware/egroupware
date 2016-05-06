@@ -52,7 +52,7 @@ class Sharing
 	/**
 	 * Reference to global db object
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	protected static $db;
 

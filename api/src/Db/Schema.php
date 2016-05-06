@@ -916,7 +916,7 @@ class Schema
 	 */
 	function ExecuteSqlArray($aSql,$debug_level)
 	{
-		if ($this->m_odb->query_log)	// we use egw_db::query to log the queries
+		if ($this->m_odb->query_log)	// we use Db::query to log the queries
 		{
 			$retval = 2;
 			foreach($aSql as $sql)

@@ -23,7 +23,7 @@ class Applications
 	/**
 	 * Reference to the global db class
 	 *
-	 * @var egw_db
+	 * @var EGroupware\Api\Db
 	 */
 	var $db;
 	var $table_name = 'egw_applications';

@@ -14,7 +14,7 @@
 namespace EGroupware\Api\Db;
 
 /**
- * Exception thrown by the egw_db class for everything not covered by extended classed below
+ * Exception thrown by the Api\Db class for everything not covered by extended classed below
  *
  * New Db\Exception has to extend deprecated egw_exception_db to allow legacy code
  * to catch exceptions thrown by Api\Db class!

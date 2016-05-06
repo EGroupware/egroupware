@@ -59,10 +59,10 @@ class Customfields implements \IteratorAggregate
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
 	 * @param int $start =0
 	 * @param int $num_rows =null
-	 * @param egw_db $db =null reference to database instance to use
+	 * @param Api\Db $db =null reference to database instance to use
 	 * @return array with customfields
 	 */
-	function __construct($app, $all_private_too=false, $only_type2=null, $start=0, $num_rows=null, egw_db $db=null)
+	function __construct($app, $all_private_too=false, $only_type2=null, $start=0, $num_rows=null, Api\Db $db=null)
 	{
 		$this->app = $app;
 		$this->all_private_too = $all_private_too;
@@ -88,7 +88,7 @@ class Customfields implements \IteratorAggregate
 	/**
 	 * Return iterator required for IteratorAggregate
 	 *
-	 * @return egw_db_callback_iterator
+	 * @return Api\Db\CallbackIterator
 	 */
 	function getIterator()
 	{
@@ -129,10 +129,10 @@ class Customfields implements \IteratorAggregate
 	 * @param string $app
 	 * @param boolean $all_private_too =false should all the private fields be returned too, default no
 	 * @param string $only_type2 =null if given only return fields of type2 == $only_type2
-	 * @param egw_db $db =null reference to database to use
+	 * @param Api\Db $db =null reference to database to use
 	 * @return array with customfields
 	 */
-	public static function get($app, $all_private_too=false, $only_type2=null, egw_db $db=null)
+	public static function get($app, $all_private_too=false, $only_type2=null, Api\Db $db=null)
 	{
 		$cache_key = $app.':'.($all_private_too?'all':$GLOBALS['egw_info']['user']['account_id']).':'.$only_type2;
 		$cfs = Api\Cache::getInstance(__CLASS__, $cache_key);

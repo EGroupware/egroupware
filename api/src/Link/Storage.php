@@ -39,7 +39,7 @@ class Storage
 	/**
 	 * Reference to the global db-class
 	 *
-	 * @var egw_db
+	 * @var Api\Db
 	 */
 	private static $db;
 	/**

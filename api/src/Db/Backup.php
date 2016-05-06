@@ -87,7 +87,7 @@ class Backup
 	 */
 	var $backup_files = false ;
 	/**
-	 * Reference to schema_proc's egw_db object
+	 * Reference to schema_proc's Api\Db object
 	 *
 	 * @var Api\Db
 	 */

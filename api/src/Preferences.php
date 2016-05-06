@@ -86,7 +86,7 @@ class Preferences
 	 */
 	var $session = array();
 	/**
-	 * @var egw_db
+	 * @var Db
 	 */
 	var $db;
 	/**

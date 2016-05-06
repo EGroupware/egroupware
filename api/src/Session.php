@@ -54,7 +54,7 @@ class Session
 	/**
 	 * key of eGW's required files in $_SESSION
 	 *
-	 * These files get set by egw_db and egw class, for classes which get not autoloaded (eg. ADOdb, idots_framework)
+	 * These files get set by Db and Egw class, for classes which get not autoloaded (eg. ADOdb, idots_framework)
 	 */
 	const EGW_REQUIRED_FILES = 'egw_required_files';
 
