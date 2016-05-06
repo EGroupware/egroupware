@@ -400,8 +400,8 @@ class admin_ui
 						$path .= ($path == '/' ? '' : '/').$part;
 						if (!isset($parent[$path]))
 						{
-							$icon = Etemplate\Widget\Tree::imagePath($part == 'apps' ? Api\Image::find('phpgwapi', 'home') :
-								(($i=Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('phpgwapi', 'nonav')));
+							$icon = Etemplate\Widget\Tree::imagePath($part == 'apps' ? Api\Image::find('api', 'home') :
+								(($i=Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('api', 'nonav')));
 							$parent[$path] = array(
 								'id' => $path,
 								'text' => $part == 'apps' ? lang('Applications') : lang($part),
