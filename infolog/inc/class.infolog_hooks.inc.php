@@ -53,7 +53,7 @@ class infolog_hooks
 				'menuaction' => 'infolog.infolog_ui.edit',
 			),
 			'view_id'    => 'info_id',
-			'view_popup'  => '750x580',
+			'view_popup'  => '760x570',
 			'list'	=>	array(
 				'menuaction' => 'infolog.infolog_ui.index',
 				'ajax' => 'true'
@@ -64,14 +64,14 @@ class infolog_hooks
 			),
 			'add_app'    => 'action',
 			'add_id'     => 'action_id',
-			'add_popup'  => '750x550',
+			'add_popup'  => '760x570',
 			'file_access'=> 'infolog.infolog_bo.file_access',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'edit'       => array(
 				'menuaction' => 'infolog.infolog_ui.edit',
 			),
 			'edit_id'    => 'info_id',
-			'edit_popup'  => '750x580',
+			'edit_popup'  => '760x570',
 			'merge' => true,
 		);
 	}

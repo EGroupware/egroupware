@@ -52,8 +52,8 @@ class timesheet_hooks
 				'menuaction' => TIMESHEET_APP.'.timesheet_ui.edit',
 			),
 			'view_id' => 'ts_id',
-			'view_popup'  => '600x425',
-			'edit_popup'  => '600x425',
+			'view_popup'  => '630x480',
+			'edit_popup'  => '630x480',
 			'index' => array(
 				'menuaction' => 'timesheet.timesheet_ui.index',
 			),
@@ -62,7 +62,7 @@ class timesheet_hooks
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
-			'add_popup'  => '600x425',
+			'add_popup'  => '630x480',
 			'file_access'=> TIMESHEET_APP.'.timesheet_bo.file_access',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'notify'     => TIMESHEET_APP.'.timesheet_bo.notify',

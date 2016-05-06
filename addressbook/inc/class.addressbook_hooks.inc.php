@@ -60,7 +60,7 @@ class addressbook_hooks
 				),
 				'Advanced search' => "javascript:egw_openWindowCentered2('".
 					Egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.search'),false).
-					"','_blank',870,480,'yes')",
+					"','_blank',870,610,'yes')",
 				'Placeholders'    => Egw::link('/index.php','menuaction=api.EGroupware\\Api\\Contacts\\Merge.show_replacements')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);
@@ -342,13 +342,13 @@ class addressbook_hooks
 				'menuaction' => 'addressbook.addressbook_ui.edit'
 			),
 			'edit_id' => 'contact_id',
-			'edit_popup'  => '859x550',
+			'edit_popup'  => '870x610',
 			'add' => array(
 				'menuaction' => 'addressbook.addressbook_ui.edit'
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
-			'add_popup'  => '859x550',
+			'add_popup'  => '870x610',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'file_access'=> 'api.EGroupware\\Api\\Contacts.file_access',
 			'default_types' => array('n' => array('name' => 'contact', 'options' => array('icon' => 'navbar.png','template' => 'addressbook.edit'))),
