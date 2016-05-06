@@ -2723,3 +2723,12 @@ function calendar_upgrade16_1()
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1.001';
 }
+
+
+function calendar_upgrade16_1_001()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_extra', 'cal_extra_value',
+		array('type' => 'varchar','meta' => 'cfvalue','precision' => '16384','nullable' => False,'default' => ''));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1.002';
+}
