@@ -2583,7 +2583,7 @@ div.client_error_log tr td.stack > div {
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
- * @package phpgwapi
+ * @package pixelegg
  * @version $Id$
  */
 /* #######################################################################################
@@ -3388,7 +3388,7 @@ td.lettersearch {
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
- * @package phpgwapi
+ * @package pixelegg
  * @version $Id$
  */
 #egwpopup {
@@ -5775,7 +5775,7 @@ a.textSidebox {
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Hadi Nategh <hn@stylite.de>
- * @package phpgwapi
+ * @package pixelegg
  * @version $Id$
  */
 /**
@@ -5967,7 +5967,7 @@ span.egw_tutorial_title {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url(../../phpgwapi/templates/default/images/logo64x64.png);
+    background-image: url(../../api/templates/default/images/logo64x64.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 64px;

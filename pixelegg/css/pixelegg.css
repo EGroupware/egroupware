@@ -2571,7 +2571,7 @@ div.client_error_log tr td.stack > div {
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
- * @package phpgwapi
+ * @package pixelegg
  * @version $Id$
  */
 /* #######################################################################################
@@ -3376,7 +3376,7 @@ td.lettersearch {
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
- * @package phpgwapi
+ * @package pixelegg
  * @version $Id$
  */
 #egwpopup {
@@ -5763,7 +5763,7 @@ a.textSidebox {
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Hadi Nategh <hn@stylite.de>
- * @package phpgwapi
+ * @package pixelegg
  * @version $Id$
  */
 /**
