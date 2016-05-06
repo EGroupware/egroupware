@@ -238,6 +238,7 @@ class mail_sieve
 
 				$rules = $this->rulesByID;
 				$content= $rules;
+				$content ['ruleID'] = $_GET['ruleID'];
 				switch ($rules['action'])
 				{
 					case 'folder':
@@ -273,7 +274,7 @@ class mail_sieve
 			list($button) = @each($content['button']);
 
 			//$ruleID is calculated by priority from the selected rule and is an unique ID
-			$ruleID = ($this->rulesByID['priority'] -1) / 2;
+			$content['ruleID'] = $ruleID = ($this->rulesByID['priority'] -1) / 2;
             $error = 0;
 			switch ($button)
 			{

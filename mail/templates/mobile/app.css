@@ -855,6 +855,13 @@ div.mailComposeHeaderSection > table {
 #mail-subscribe {
   overflow: hidden;
 }
+.sieve-title {
+  font-size: 12pt;
+  vertical-align: middle;
+}
+.sieve-title .ruleID::before {
+  content: '#';
+}
 #popupMainDiv {
   padding: 5px;
 }
