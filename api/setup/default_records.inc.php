@@ -1,15 +1,16 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Setup                                                       *
-* http://www.egroupware.org                                                *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
+/**
+ * EGroupware - API Setup
+ *
+ * @link http://www.egroupware.org
+ * @package api
+ * @subpackage setup
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
-/* $Id$ */
+use EGroupware\Api;
+use EGroupware\Api\Vfs;
 
 //$oProc->m_odb->Halt_On_Error = 'yes';
 
@@ -160,7 +161,7 @@ foreach(array(
 foreach(array(
 	'sessions_checkip' => 'True',
 	'asyncservice'     => 'fallback',
-	'install_id'       => md5(microtime(true).common::randomstring(15)),
+	'install_id'       => md5(microtime(true).Api\Auth::randomstring(15)),
 ) as $name => $value)
 {
 	$oProc->insert($GLOBALS['egw_setup']->config_table,array(
@@ -209,8 +210,8 @@ $GLOBALS['egw_setup']->add_acl('addressbook',$defaultgroup,$defaultgroup,1|2|4|8
  */
 $admins = $GLOBALS['egw_setup']->add_account('Admins','Admin','Group',False,False);
 
-egw_vfs::$is_root = true;
-$prefs = new preferences();
+Vfs::$is_root = true;
+$prefs = new Api\Preferences();
 $prefs->read_repository(false);
 foreach(array('','addressbook', 'calendar', 'infolog', 'tracker', 'timesheet', 'projectmanager', 'filemanager') as $app)
 {
@@ -218,9 +219,9 @@ foreach(array('','addressbook', 'calendar', 'infolog', 'tracker', 'timesheet', '
 
 	// create directory and set permissions: Admins writable and other readable
 	$dir = '/templates'.($app ? '/'.$app : '');
-	egw_vfs::mkdir($dir, 075, STREAM_MKDIR_RECURSIVE);
-	egw_vfs::chgrp($dir, abs($admins));
-	egw_vfs::chmod($dir, 075);
+	Vfs::mkdir($dir, 075, STREAM_MKDIR_RECURSIVE);
+	Vfs::chgrp($dir, abs($admins));
+	Vfs::chmod($dir, 075);
 	if (!$app) continue;
 
 	// set default preference for app (preserving a maybe already set document-directory)
@@ -233,7 +234,7 @@ foreach(array('','addressbook', 'calendar', 'infolog', 'tracker', 'timesheet', '
 	$prefs->add($app, 'document_dir', $dir, 'default');
 }
 $prefs->save_repository(false, 'default');
-egw_vfs::$is_root = false;
+Vfs::$is_root = false;
 
 /**
  * Create anonymous user for sharing of files
