@@ -2650,5 +2650,5 @@ tr.dialogHeader2 td {padding-top:15px;}
 	opacity: 0.5;
 	background-color: initial !important;
 	box-shadow: none !important;
-	cursor: not-allowed !important;
+	cursor: default !important;
 }

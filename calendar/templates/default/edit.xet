@@ -60,7 +60,7 @@
 					<menulist>
 						<menupopup class="selectRole" id="role"/>
 					</menulist>
-					<button align="center" id="add" image="add" novalidate="1"  background_image="1" readonly="true" ro_image="add"/>
+					<button align="center" id="add" image="add" novalidate="1" statustext="Please first select participants on the left and then use plus button to add them" background_image="1" readonly="true" ro_image="add"/>
 				</row>
 				<row class="th thb">
 					<description value="Type"/>
