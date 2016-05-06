@@ -488,7 +488,7 @@ app.classes.admin = AppJS.extend(
 		if(content.acl_location)
 		{
 			sel_options.acl_location = jQuery.extend({},sel_options.acl_location);
-			this.egw.link_title('home-accounts', content.acl_location, function(title) {sel_options.acl_location[content.acl_location] = title;});
+			this.egw.link_title('api-accounts', content.acl_location, function(title) {sel_options.acl_location[content.acl_location] = title;});
 		}
 
 		// Create the dialog
