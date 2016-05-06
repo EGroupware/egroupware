@@ -286,8 +286,7 @@ class admin_categories
 				$content['owner'] = 0;
 			}
 			$sel_options['owner'][0] = lang('All users');
-			$accs = $GLOBALS['egw']->accounts->get_list('groups');
-			foreach($accs as $acc)
+			foreach($GLOBALS['egw']->accounts->search(array('type' => 'groups')) as $acc)
 			{
 				if ($acc['account_type'] == 'g')
 				{
@@ -588,12 +587,11 @@ class admin_categories
 		);
 
 		$sel_options['owner'][0] = lang('All users');
-		$accs = $GLOBALS['egw']->accounts->get_list('groups');
-		foreach($accs as $acc)
+		foreach($GLOBALS['egw']->accounts->search(array('type' => 'groups')) as $acc)
 		{
 			if ($acc['account_type'] == 'g')
 			{
-				$sel_options['owner'][$acc['account_id']] = ExecMethod2('etemplate.select_widget.accountInfo',$acc['account_id'],$acc);
+				$sel_options['owner'][$acc['account_id']] = Etemplate\Widget\Select::accountInfo($acc['account_id'], $acc);
 			}
 		}
 
