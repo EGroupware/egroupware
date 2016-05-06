@@ -998,7 +998,7 @@ class StreamWrapper implements StreamWrapperIface
 				'account_lid' => basename($path),
 				'account_name' => basename($path),
 			);
-			call_user_func(array('vfs_home_hooks',$hook_data['location']),$hook_data);
+			call_user_func(array(__NAMESPACE__.'\\Hooks',$hook_data['location']),$hook_data);
 			unset($hook_data);
 			$stat = self::url_stat($path,$flags,false);
 		}
