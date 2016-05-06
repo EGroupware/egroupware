@@ -1696,7 +1696,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 *	are dealing with, default is now.
 	 * @return boolean true if alarm could be shifted, false if not
 	 */
-	public static function shift_alarm(array $_event, array &$alarm, $timestamp)
+	public static function shift_alarm(array $_event, array &$alarm, $timestamp=null)
 	{
 		if ($_event['recur_type'] == MCAL_RECUR_NONE)
 		{
