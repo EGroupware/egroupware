@@ -26,6 +26,13 @@ abstract class admin_cmd
 	const queued     = 5;	// command waits to be fetched from remote
 
 	/**
+	 * Status which stil need passwords available
+	 *
+	 * @var array
+	 */
+	static $require_pw_stati = array(self::scheduled,self::pending,self::queued);
+
+	/**
 	 * The status of the command, one of either scheduled, successful, failed or deleted
 	 *
 	 * @var int
@@ -309,7 +316,10 @@ abstract class admin_cmd
 				$vars[$name] = $this->$name;
 			}
 		}
-		$vars['data'] = json_encode($this->data);	// data is stored serialized
+		// data is stored serialized
+		// paswords are masked / removed, if we dont need them anymore
+		$vars['data'] = in_array($this->status, self::$require_pw_stati) ?
+			json_encode($this->data) : self::mask_passwords($this->data);
 
 		admin_cmd::$sql->init($vars);
 		if (admin_cmd::$sql->save() != 0)
@@ -332,6 +342,33 @@ abstract class admin_cmd
 			admin_cmd::_set_async_job();
 		}
 		return true;
+	}
+
+	/**
+	 * Mask / remove passwords in $data
+	 *
+	 * @param string|array $data json or php-encoded string or array
+	 * @param boolean $return_serialized =true true: return json serialized string, false: return array
+	 * @return string|array see $return_serialized
+	 */
+	static function mask_passwords($data, $return_serialized=true)
+	{
+		if (!is_array($data))
+		{
+			$data = json_php_unserialize($data);
+		}
+		foreach($data as $key => &$value)
+		{
+			if (is_array($value))
+			{
+				$value = self::mask_passwords($value, false);
+			}
+			elseif (preg_match('/(pw|passwd_?\d*|(?<!change)password|db_pass)$/i', $key))
+			{
+				$value = str_repeat('*', strlen($value));
+			}
+		}
+		return $return_serialized ? json_encode($data) : $data;
 	}
 
 	/**
@@ -843,6 +880,7 @@ abstract class admin_cmd
 					'status' => admin_cmd::failed,
 					'error'  => lang('Unknown command %1!',$job['type']),
 					'errno'  => 0,
+					'data'   => self::mask_passwords($job['data']),
 				));
 			}
 		}

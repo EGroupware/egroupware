@@ -151,3 +151,30 @@ function admin_upgrade14_2_001()
 	return $GLOBALS['setup_info']['admin']['currentver'] = '14.3';
 }
 
+/**
+ * Remove cleartext passwords from egw_admin_queue
+ *
+ * @return string
+ */
+function admin_upgrade14_3()
+{
+	// asuming everythings not MySQL uses PostgreSQL regular expression syntax
+	$regexp = substr($GLOBALS['egw_setup']->db->Type, 0, 5) == 'mysql' ? 'REGEXP' : '~*';
+
+	foreach($GLOBALS['egw_setup']->db->select('egw_admin_queue', 'cmd_id,cmd_data',
+		'cmd_status NOT IN ('.implode(',', admin_cmd::$require_pw_stati).") AND cmd_data $regexp '(pw|passwd\\_?\\d*|password|db\\_pass)\\?\"'",
+		__LINE__, __FILE__, false, '', 'admin') as $row)
+	{
+		if (($masked = admin_cmd::mask_passwords($row['cmd_data'])) != $row['cmd'])
+		{
+			$GLOBALS['egw_setup']->db->update('egw_admin_queue', array('cmd_data' => $masked),
+				array('cmd_id' => $row['cmd_id']), __LINE__, __FILE__, 'admin');
+		}
+	}
+	return $GLOBALS['setup_info']['admin']['currentver'] = '14.3.001';
+}
+
+function admin_upgrade14_3_001()
+{
+	return $GLOBALS['setup_info']['admin']['currentver'] = '16.1';
+}
