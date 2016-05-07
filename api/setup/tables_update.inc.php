@@ -74,14 +74,13 @@ function api_upgrade16_1()
  */
 function api_upgrade16_1_001()
 {
-    $db = new EGroupware\Api\Db;
 	foreach(array(
 		'cf_type' => 'egw_customfields',
 		'link_app1' => 'egw_links',
 		'link_app2' => 'egw_links',
 	) as $col => $table)
 	{
-		$db->query("UPDATE $table SET $col='api-accounts' WHERE $col='home-accounts'", __LINE__, __FILE__);
+		$GLOBALS['egw_setup']->db->query("UPDATE $table SET $col='api-accounts' WHERE $col='home-accounts'", __LINE__, __FILE__);
 	}
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.002';
 }
