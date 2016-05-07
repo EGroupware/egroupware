@@ -86,13 +86,16 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				tooltip_div.css('max-width', space_left.right);
 			}
 
-			if (space_left.bottom < tooltip_height) {
+			// tooltip does fit neither above nor below: put him vertical centered left or right of cursor
+			if (space_left.bottom < tooltip_height && space_left.top < tooltip_height) {
+				if (tooltip_height > window_height-20) {
+					tooltip_div.css('max-height', tooltip_height=window_height-20);
+				}
+				tooltip_div.css('top', (window_height-tooltip_height)/2);
+			} else if (space_left.bottom < tooltip_height) {
 				tooltip_div.css('top', cursor_rect.top - tooltip_height);
-			} else if (space_left.top >= tooltip_height) {
+			} else {
 				tooltip_div.css('top', cursor_rect.bottom);
-			} else	{
-				tooltip_div.css('top', cursor_rect.bottom);
-				tooltip_div.css('max-height', space_left.bottom);
 			}
 
 			tooltip_div.fadeIn(100);
