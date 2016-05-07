@@ -51,13 +51,37 @@ function api_upgrade14_3_907()
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.1';
 }
 
+/**
+ * Add archive folder to mail accounts
+ *
+ * @return string
+ */
 function api_upgrade16_1()
 {
-        $GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_folder_archive', array(
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_folder_archive', array(
 		'type' => 'varchar',
 		'precision' => '128',
 		'comment' => 'archive folder'
 	));
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.001';
+}
+
+/**
+ * Fix home-accounts in egw_customfields and egw_links to api-accounts
+ *
+ * @return string
+ */
+function api_upgrade16_1_001()
+{
+    $db = new EGroupware\Api\Db;
+	foreach(array(
+		'cf_type' => 'egw_customfields',
+		'link_app1' => 'egw_links',
+		'link_app2' => 'egw_links',
+	) as $col => $table)
+	{
+		$db->query("UPDATE $table SET $col='api-accounts' WHERE $col='home-accounts'", __LINE__, __FILE__);
+	}
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.002';
 }
