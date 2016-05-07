@@ -11,6 +11,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Etemplate;
 
 /**
  * UI for the admin comand queue
@@ -47,7 +48,13 @@ class admin_cmds
 			catch (Exception $e) {
 				$row['title'] = $e->getMessage();
 			}
-			$readonlys["delete[$row[id]]"] = $row['status'] != admin_cmd::scheduled;
+			$row['data'] = !($data = json_php_unserialize($row['data'])) ? '' :
+				json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+
+			if ($row['status'] == admin_cmd::scheduled)
+			{
+				$row['class'] = 'AllowDelete';
+			}
 		}
 		//_debug_array($rows);
 		return $total;
@@ -60,7 +67,7 @@ class admin_cmds
 	 */
 	static function index(array $content=null)
 	{
-		$tpl = new etemplate('admin.cmds');
+		$tpl = new Etemplate('admin.cmds');
 
 		if (!is_array($content))
 		{
@@ -74,6 +81,9 @@ class admin_cmds
 					'no_cat' => true,		// I  disable the cat-selectbox
 					'order' => 'cmd_created',
 					'sort' => 'DESC',
+					'row_id' => 'id',
+					'default_cols' => 'title,created,creator,status',
+					'actions' => self::cmd_actions(),
 				);
 			}
 		}
@@ -92,6 +102,21 @@ class admin_cmds
 			'status' => admin_cmd::$stati,
 			'remote_id' => admin_cmd::remote_sites(),
 		),array(),$content);
+	}
+
+	/**
+	 * Acctions for command list/index
+	 *
+	 * As we only allow to delete scheduled command, which we currently can only create via admin-cli,
+	 * I have not (yet) implemented delete of scheduled commands.
+	 *
+	 * @return array
+	 */
+	static function cmd_actions()
+	{
+		return array(
+
+		);
 	}
 
 	/**
@@ -114,7 +139,7 @@ class admin_cmds
 	 */
 	static function remotes(array $content=null)
 	{
-		$tpl = new etemplate('admin.remotes');
+		$tpl = new Etemplate('admin.remotes');
 
 		if (!is_array($content))
 		{
@@ -128,7 +153,8 @@ class admin_cmds
 					'no_cat' => true,		// I  disable the cat-selectbox
 					'order' => 'remote_name',
 					'sort' => 'ASC',
-					'header_right' => 'admin.remotes.header_right',
+					'row_id' => 'remote_id',
+					'actions' => self::remote_actions(),
 				);
 			}
 		}
@@ -137,12 +163,17 @@ class admin_cmds
 			//_debug_array($content);
 			unset($content['msg']);
 
-			if ($content['nm']['rows']['edit'])
+			if ($content['nm']['action'])
 			{
-				list($id) = each($content['nm']['rows']['edit']);
-				unset($content['nm']['rows']);
-
-				$content['remote'] = admin_cmd::read_remote($id);
+				switch($content['nm']['action'])
+				{
+					case 'edit':
+						$content['remote'] = admin_cmd::read_remote($content['nm']['selected'][0]);
+						break;
+					case 'add':
+						$content['remote'] = array('remote_domain' => 'default');
+				}
+				unset($content['nm']['action']);
 			}
 			elseif($content['remote']['button'])
 			{
@@ -180,6 +211,34 @@ class admin_cmds
 			}
 		}
 		$tpl->exec('admin.admin_cmds.remotes',$content,array(),array(),$content);
+	}
 
+	/**
+	 * Actions for remotes list
+	 *
+	 * @return array
+	 */
+	static function remote_actions()
+	{
+		return array(
+			'edit' => array(
+				'caption' => 'Edit',
+				'default' => true,
+				'allowOnMultiple' => false,
+				'nm_action' => 'submit',
+				'group' => $group=0,
+			),
+			'add' => array(
+				'caption' => 'Add',
+				'nm_action' => 'submit',
+				'group' => ++$group,
+			),
+			/* not (yet) implemented
+			'delete' => array(
+				'caption' => 'Delete',
+				'nm_action' => 'submit',
+				'group' => ++$group,
+			),*/
+		);
 	}
 }

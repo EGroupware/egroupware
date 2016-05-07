@@ -5,14 +5,13 @@
 	<template id="admin.cmds.rows" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
 			<columns>
+				<column width="30%" minWidth="300"/>
 				<column/>
 				<column/>
 				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="30%" minWidth="120"/>
 				<column/>
 				<column/>
 			</columns>
@@ -20,33 +19,27 @@
 				<row class="th">
 					<nextmatch-header label="Title" id="title"/>
 					<nextmatch-header label="Requested" id="requested"/>
-					<nextmatch-sortheader label="Scheduled" id="cmd_scheduled"/>
+					<nextmatch-sortheader label="Scheduled" id="scheduled"/>
 					<nextmatch-filterheader options="Remote" id="remote_id"/>
-					<nextmatch-sortheader label="Created" id="cmd_created"/>
-					<nextmatch-accountfilter id="creator" options="Creator"/>
-					<nextmatch-filterheader id="status" options="Status"/>
-					<nextmatch-sortheader label="Modified" id="cmd_modified"/>
+					<nextmatch-sortheader label="Created" id="created"/>
+					<nextmatch-accountfilter empty_label="Creator" id="creator"/>
+					<nextmatch-filterheader empty_label="Status" id="status"/>
+					<nextmatch-sortheader label="Modified" id="modified"/>
 					<nextmatch-accountfilter options="Modifier" id="modifier"/>
-					<description/>
 				</row>
-				<row class="row" disabled="!@1">
-					<description id="${row}[title]"/>
+				<row class="row $row_cont[class]">
+					<description id="${row}[title]" statustext="$row_cont[data]"/>
 					<url-email id="${row}[requested]" options=",,,$row_cont[requested_email]" readonly="true"/>
 					<date-time id="${row}[scheduled]" readonly="true"/>
-					<menulist>
-						<menupopup id="${row}[remote_id]" readonly="true"/>
-					</menulist>
+					<select id="${row}[remote_id]" readonly="true"/>
 					<date-time id="${row}[created]" readonly="true"/>
-					<url-email id="${row}[creator]" options=",,,$row_cont[creator_email]" readonly="true"/>
-					<vbox options="0,0">
-						<menulist>
-							<menupopup id="${row}[status]" readonly="true"/>
-						</menulist>
+					<select-account id="${row}[creator]" readonly="true" statustext="$row_cont[creator_email]"/>
+					<vbox>
+						<select id="${row}[status]" readonly="true"/>
 						<description id="${row}[error]" class="redItalic"/>
 					</vbox>
 					<date-time id="${row}[modified]" readonly="true"/>
-					<url-email id="${row}[modifier]" readonly="true" options=",,,$row_cont[modifier_email]"/>
-					<button image="delete" label="Cancel" id="delete[$row_cont[id]]" statustext="Cancel this scheduled command" onclick="et2_dialog.confirm(widget,'Cancel this scheduled command','Cancel');"/>
+					<select-account id="${row}[modifier]" readonly="true" statustext="$row_cont[modifier_email]"/>
 				</row>
 			</rows>
 		</grid>

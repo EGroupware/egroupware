@@ -41,19 +41,15 @@
 					<hbox span="all">
 						<button label="Save" id="button[save]" statustext="Saves this entry"/>
 						<button id="button[apply]" label="Apply" statustext="Apply the changes"/>
-						<button label="Cancel" id="button[cancel]" statustext="leave without saveing the entry"/>
+						<button label="Cancel" id="button[cancel]" statustext="leave without saveing the entry" novalidate="true"/>
 					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.remotes.header_right" template="" lang="" group="0" version="1.5.001">
-		<button rows="1" cols="1" id="add" label="Add" statustext="Add a new remote instance"/>
-	</template>
 	<template id="admin.remotes.rows" template="" lang="" group="0" version="1.5.001">
 		<grid>
 			<columns>
-				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -63,18 +59,17 @@
 					<nextmatch-sortheader label="Name" id="remote_name"/>
 					<nextmatch-sortheader label="URL" id="remote_url"/>
 					<nextmatch-sortheader label="Instance" id="remote_domain"/>
-					<description value="Actions"/>
 				</row>
 				<row class="row">
 					<description id="${row}[remote_name]"/>
 					<description options=",$row_cont[remote_url]/?domain=$row_cont[remote_domain],,,_blank" id="${row}[remote_url]"/>
 					<description id="${row}[remote_domain]" no_lang="1"/>
-					<hbox align="center">
-						<button image="edit" label="Edit" id="edit[$row_cont[remote_id]]"/>
-					</hbox>
 				</row>
 			</rows>
 		</grid>
+	</template>
+	<template id="admin.remotes.header_left" template="" lang="" group="0" version="1.5.001">
+		<button id="add" label="Add" statustext="Add a new remote instance"/>
 	</template>
 	<template id="admin.remotes" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
@@ -82,17 +77,11 @@
 				<column/>
 			</columns>
 			<rows>
-				<row disabled="!@msg">
-					<description span="all" class="redItalic" id="msg"/>
-				</row>
 				<row disabled="!@remote">
 					<template content="remote" span="all" class="border" id="admin.remotes.edit"/>
 				</row>
-				<row disabled="1">
-					<template align="right" id="admin.remotes.header_right"/>
-				</row>
 				<row>
-					<nextmatch id="nm" options="admin.remotes.rows"/>
+					<nextmatch id="nm" options="admin.remotes.rows" header_left="admin.remotes.header_left"/>
 				</row>
 			</rows>
 		</grid>

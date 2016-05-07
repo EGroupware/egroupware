@@ -133,8 +133,8 @@ class admin_hooks
 			{
 				$file['phpInfo']         = "javascript:egw.openPopup('" . Egw::link('/admin/phpinfo.php','',false) . "',960,600,'phpinfoWindow')";
 			}
-			$file['Admin queue and history'] = Egw::link('/index.php','menuaction=admin.admin_cmds.index');
-			$file['Remote administration instances'] = Egw::link('/index.php','menuaction=admin.admin_cmds.remotes');
+			$file['Admin queue and history'] = Egw::link('/index.php','menuaction=admin.admin_cmds.index&ajax=true');
+			$file['Remote administration instances'] = Egw::link('/index.php','menuaction=admin.admin_cmds.remotes&ajax=true');
 			$file['Custom translation'] = Egw::link('/index.php','menuaction=admin.admin_customtranslation.index');
 			$file['Changelog and versions'] = Egw::link('/about.php');
 
