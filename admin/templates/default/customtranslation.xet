@@ -3,7 +3,6 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.customtranslation" template="" lang="" group="0" version="1.9.001">
-		<description id="msg" class="redItalic"/>
 		<grid id="rows">
 			<columns>
 				<column/>

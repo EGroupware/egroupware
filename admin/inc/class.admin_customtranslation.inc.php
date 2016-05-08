@@ -12,6 +12,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Egw;
+use EGroupware\Api\Etemplate;
 
 /**
  * Custom - instance specific - translations
@@ -94,7 +95,7 @@ class admin_customtranslation
 		$content['msg'] = $msg;
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Custom translation');
-		$tpl = new etemplate('admin.customtranslation');
+		$tpl = new Etemplate('admin.customtranslation');
 		$tpl->exec('admin.admin_customtranslation.index', $content, array(), $readonlys);
 	}
 }
