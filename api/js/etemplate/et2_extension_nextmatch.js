@@ -3272,7 +3272,8 @@ var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_taglist.e
 
 				this.nextmatch.applyFilters({col_filter: col_filter});
 			}
-		}
+		},
+		rows: { default: 3}
 	},
 
 	/**
@@ -3310,7 +3311,7 @@ var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_taglist.e
 
 	// Make sure selectbox is not longer than the column
 	resize: function() {
-		this.input.css("max-width",jQuery(this.parentNode).innerWidth() + "px");
+		this.div.css("max-width",jQuery(this.parentNode).innerWidth() + "px");
 	}
 
 });}).call(this);
@@ -3343,7 +3344,8 @@ var et2_nextmatch_accountfilterheader = (function(){ "use strict"; return et2_ta
 
 				this.nextmatch.applyFilters({col_filter: col_filter});
 			}
-		}
+		},
+		rows: { default: 3}
 	},
 
 	/**
@@ -3383,7 +3385,7 @@ var et2_nextmatch_accountfilterheader = (function(){ "use strict"; return et2_ta
 		{
 			max -= jQuery(surroundings[i]).outerWidth();
 		}
-		this.input.css("max-width",max + "px");
+		this.div.css("max-width",max + "px");
 	}
 
 });}).call(this);
