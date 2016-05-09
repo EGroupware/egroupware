@@ -471,7 +471,7 @@ class timesheet_ui extends timesheet_bo
 	function get_rows(&$query_in,&$rows,&$readonlys,$id_only=false)
 	{
 		$this->show_sums = false;
-		
+
 		$query_in['enddate'] = $query_in['enddate'] ? $query_in['enddate'] : time();
 		$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$query_in['enddate']);
 
@@ -513,7 +513,7 @@ class timesheet_ui extends timesheet_bo
 			}
 		}
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
-		if (!$id_only && !$query_in['csv_export']) $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
+		if (!$id_only && !$query_in['csv_export']) Api\Cache::setSession(TIMESHEET_APP, 'index', $query_in);
 
 		// Refresh actions (undelete needs this)
 		$query_in['actions'] = $this->get_actions($query_in);
@@ -866,7 +866,7 @@ class timesheet_ui extends timesheet_bo
 		}
 
 		$content = array(
-			'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
+			'nm' => Api\Cache::getSession(TIMESHEET_APP, 'index'),
 			'msg' => $msg,
 		);
 		if (!is_array($content['nm']))
