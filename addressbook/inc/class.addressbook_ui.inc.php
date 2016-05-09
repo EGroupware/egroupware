@@ -309,7 +309,7 @@ class addressbook_ui extends addressbook_bo
 			'cc'  => 'Cc',
 			'bcc' => 'Bcc',
 		);
-		$sel_options['adr_one_countrycode']['-custom-'] = lang('No Api\Country selected');
+		$sel_options['adr_one_countrycode']['-custom-'] = lang('No country selected');
 
 		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
 		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
