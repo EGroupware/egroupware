@@ -1049,6 +1049,7 @@ ul.et2_link_string {
 }
 /* Toggle single / multiple */
 .et2_taglist_toggle {
+	position: relative;
 }
 .et2_taglist_toggle > div.ms-ctn {
 	display: inline-block;

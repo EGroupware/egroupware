@@ -26,8 +26,9 @@
 	// Include all widgets the nextmatch extension will create
 	et2_widget_template;
 	et2_widget_grid;
-	et2_widget_selectbox;
-	et2_widget_selectAccount;
+	et2_widget_taglist;
+	et2_widget_taglist_account;
+	et2_widget_link;
 	et2_extension_customfields;
 
 	// Include all nextmatch subclasses
@@ -3250,10 +3251,30 @@ var et2_nextmatch_sortheader = (function(){ "use strict"; return et2_nextmatch_h
 et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
 
 /**
- * @augments et2_selectbox
+ * @augments et2_taglist
  */
-var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_selectbox.extend([et2_INextmatchHeader, et2_IResizeable],
+var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_taglist.extend([et2_INextmatchHeader, et2_IResizeable],
 {
+	attributes: {
+		autocomplete_url: { default: ''},
+		multiple: { default: 'toggle'},
+		onchange: {
+			default: function(event) {
+				if(typeof this.nextmatch === 'undefined')
+				{
+					// Not fully set up yet
+					return;
+				}
+				var col_filter = {};
+				col_filter[this.id] = this.getValue();
+				// Set value so it's there for response (otherwise it gets cleared if options are updated)
+				//event.data.set_value(event.data.input.val());
+
+				this.nextmatch.applyFilters({col_filter: col_filter});
+			}
+		}
+	},
+
 	/**
 	 * Override to add change handler
 	 *
@@ -3266,21 +3287,6 @@ var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_selectbox
 			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
 		}
 		this._super.apply(this, arguments);
-
-		this.input.change(this, function(event) {
-			if(typeof event.data.nextmatch == 'undefined')
-			{
-				// Not fully set up yet
-				return;
-			}
-			var col_filter = {};
-			col_filter[event.data.id] = event.data.input.val();
-			// Set value so it's there for response (otherwise it gets cleared if options are updated)
-			event.data.set_value(event.data.input.val());
-
-			event.data.nextmatch.applyFilters({col_filter: col_filter});
-		});
-
 	},
 
 	/**
@@ -3313,8 +3319,33 @@ et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
 /**
  * @augments et2_selectAccount
  */
-var et2_nextmatch_accountfilterheader = (function(){ "use strict"; return et2_selectAccount.extend([et2_INextmatchHeader, et2_IResizeable],
+var et2_nextmatch_accountfilterheader = (function(){ "use strict"; return et2_taglist_account.extend([et2_INextmatchHeader, et2_IResizeable],
 {
+	attributes: {
+		"multiple": {
+			default: 'toggle'
+		},
+		onchange: {
+			default: function(event) {
+				if(typeof this.nextmatch === 'undefined')
+				{
+					// Not fully set up yet
+					return;
+				}
+				var col_filter = {};
+				col_filter[this.id] = this.getValue();
+				if(!col_filter[this.id] || col_filter[this.id].length == 0)
+				{
+					col_filter[this.id] = null;
+				}
+				// Set value so it's there for response (otherwise it gets cleared if options are updated)
+				//event.data.set_value(event.data.input.val());
+
+				this.nextmatch.applyFilters({col_filter: col_filter});
+			}
+		}
+	},
+
 	/**
 	 * Override to add change handler
 	 *
@@ -3327,18 +3358,6 @@ var et2_nextmatch_accountfilterheader = (function(){ "use strict"; return et2_se
 			this.options.empty_label = this.options.label ? this.options.label : egw.lang("All");
 		}
 		this._super.apply(this, arguments);
-
-		this.input.change(this, function(event) {
-			if(typeof event.data.nextmatch == 'undefined')
-			{
-				// Not fully set up yet
-				return;
-			}
-			var col_filter = {};
-			col_filter[event.data.id] = event.data.getValue();
-			event.data.nextmatch.applyFilters({col_filter: col_filter});
-		});
-
 	},
 
 	/**

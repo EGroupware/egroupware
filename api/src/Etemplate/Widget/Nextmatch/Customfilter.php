@@ -59,5 +59,24 @@ class Customfilter extends Widget\Transformer
 		}
 		parent::beforeSendToClient($cname, $expand);
 	}
+
+
+	/**
+	 * Validate input
+	 *
+	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 */
+	public function validate($cname, array $expand, array $content, &$validated=array())
+	{
+		$value = $value_in = self::get_array($content, $form_name);
+
+		$valid =& self::get_array($validated, $form_name, true);
+		// returning null instead of array(), as array() will be overwritten by etemplate_new::complete_array_merge()
+		// with preserved old content and therefore user can not empty a taglist
+		$valid = $value ? $value : null;
+	}
 }
 Customfilter::registerWidget(__NAMESPACE__.'\\Customfilter', array('nextmatch-customfilter'));

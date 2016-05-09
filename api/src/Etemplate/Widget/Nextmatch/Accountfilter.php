@@ -18,7 +18,7 @@ use EGroupware\Api\Etemplate\Widget;
 /**
  * Extend selectbox and change type so proper users / groups get loaded, according to preferences
  */
-class Accountfilter extends Widget\Select
+class Accountfilter extends Widget\Taglist
 {
 	/**
 	 * Parse and set extra attributes from xml in template object

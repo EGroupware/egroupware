@@ -18,7 +18,7 @@ use EGroupware\Api\Etemplate\Widget;
 /**
  * Extend selectbox so select options get parsed properly before being sent to client
  */
-class Filterheader extends Widget\Select
+class Filterheader extends Widget\Taglist
 {
 }
 

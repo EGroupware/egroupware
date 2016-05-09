@@ -310,6 +310,14 @@ class Nextmatch extends Etemplate\Widget
 				$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
 				$filters = $valid_filters[$form_name];
 			}
+			// Avoid empty arrays, they cause problems with db filtering
+			foreach($filters['col_filter'] as $col => &$val)
+			{
+				if(is_array($val) && count($val) == 0)
+				{
+					$val = null;
+				}
+			}
 			//error_log($this . " Valid filters: " . array2string($filters));
 		}
 
