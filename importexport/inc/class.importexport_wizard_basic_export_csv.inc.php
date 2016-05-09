@@ -15,6 +15,8 @@
  * @author Nathan Gray
  */
 
+use EGroupware\Api;
+
 class importexport_wizard_basic_export_csv
 {
 
@@ -63,7 +65,7 @@ class importexport_wizard_basic_export_csv
 		);
 		list($appname, $part2) = explode('_', get_class($this));
 		if(!$GLOBALS['egw_info']['apps'][$appname]) $appname .= '_'.$part2; // Handle apps with _ in the name
-		translation::add_app($appname);
+		Api\Translation::add_app($appname);
 	}
 
 	/**
@@ -202,13 +204,13 @@ class importexport_wizard_basic_export_csv
 				1	=> lang('Field names'),
 				'label'	=> lang('Field labels')
 			);
-			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
+			$sel_options['charset'] = Api\Translation::get_installed_charsets()+
 			array(
                                 'user'  => lang('User preference'),
                         );
 
                         // Add in extra allowed charsets
-                        $config = config::read('importexport');
+                        $config = Api\Config::read('importexport');
                         $extra_charsets = array_intersect(explode(',',$config['import_charsets']), mb_list_encodings());
                         if($extra_charsets)
                         {

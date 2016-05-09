@@ -10,6 +10,10 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Etemplate;
+
 /**
  * userinterface for exports
  *
@@ -32,8 +36,8 @@ class importexport_export_ui {
 	private $export_plugins;
 
 	public function __construct() {
-		egw_framework::validate_file('.','export_dialog','importexport');
-		egw_framework::validate_file('.','importexport','importexport');
+		Framework::includeJS('.','export_dialog','importexport');
+		Framework::includeJS('.','importexport','importexport');
 		$this->user = $GLOBALS['egw_info']['user']['user_id'];
 		$this->export_plugins = importexport_helper_functions::get_plugins('all','export');
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
@@ -46,7 +50,7 @@ class importexport_export_ui {
 		$readonlys = array();
 		$preserv = array();
 
-		$et = new etemplate_new(self::_appname. '.export_dialog');
+		$et = new Etemplate(self::_appname. '.export_dialog');
 		$_appname = $_content['appname'] ? $_content['appname'] : $_GET['appname'];
 		$_definition = $_content['definition'] ? $_content['definition'] : $_GET['definition'];
 		$_plugin = $_content['plugin'] ? $_content['plugin'] : $_GET['plugin'];
@@ -56,8 +60,8 @@ class importexport_export_ui {
 		if($_GET['selection'] || $_content['selection_passed']) $content['selection_passed'] = $preserv['selection_passed'] = true;
 
 		// Check global setting
-		if(!bo_merge::is_export_limit_excepted()) {
-			$export_limit = bo_merge::getExportLimit($_appname);
+		if(!Api\Storage\Merge::is_export_limit_excepted()) {
+			$export_limit = Api\Storage\Merge::getExportLimit($_appname);
 			if($export_limit == 'no') {
 				die(lang('Admin disabled exporting'));
 			}
@@ -245,7 +249,7 @@ class importexport_export_ui {
 		if($_content['preview'] || $_content['export'])
 		{
 			//error_log(__LINE__.__FILE__.'$_content: '.print_r($_content,true));
-			$response = egw_json_response::get();
+			$response = Api\Json\Response::get();
 
 			if ($_content['definition'] == 'expert') {
 				$definition = new importexport_definition();
@@ -287,13 +291,13 @@ class importexport_export_ui {
 					}
 					if(is_array($value) && array_key_exists('from', $value) && $value['from'])
 					{
-						$filter[$key]['from'] = egw_time::to($value['from'],'ts');
+						$filter[$key]['from'] = Api\DateTime::to($value['from'],'ts');
 					}
 					// If user selects an end date, they most likely want entries including that date
 					if(is_array($value) && array_key_exists('to',$value) && $value['to'] )
 					{
 						// Adjust time to 23:59:59
-						$filter[$key]['to'] = new egw_time($value['to']);
+						$filter[$key]['to'] = new Api\DateTime($value['to']);
 						$filter[$key]['to']->setTime(23,59,59);
 						$filter[$key]['to'] = $filter[$key]['to']->format('ts');
 					}
@@ -316,7 +320,7 @@ class importexport_export_ui {
 			$tmpfname = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'export');
 			$file = fopen($tmpfname, "w+");
 			if (! $charset = $definition->plugin_options['charset']) {
-				$charset = $GLOBALS['egw']->translation->charset();
+				$charset = Api\Translation::charset();
 			}
 			if($charset == 'user')
 			{
@@ -338,7 +342,7 @@ class importexport_export_ui {
 			}
 
 			// Store charset to use in header
-			egw_cache::setSession('importexport', $tmpfname, $charset, 100);
+			Api\Cache::setSession('importexport', $tmpfname, $charset, 100);
 
 			if($_content['export'] == 'pressed') {
 				fclose($file);
@@ -357,7 +361,7 @@ class importexport_export_ui {
 					$link_query['filename'] = $plugin_filename;
 				}
 				$response->redirect( $GLOBALS['egw']->link('/index.php',$link_query),true);
-				egw_framework::window_close();
+				Framework::window_close();
 				return;
 			}
 			elseif($_content['preview'] == 'pressed') {
@@ -378,9 +382,9 @@ class importexport_export_ui {
 				unlink($tmpfname);
 
 				// Convert back to system charset for display
-				$preview = $GLOBALS['egw']->translation->convert( $preview,
+				$preview = Api\Translation::convert( $preview,
 					$charset,
-					$GLOBALS['egw']->translation->charset()
+					Api\Translation::charset()
 				);
 
 				$preview = "<div class='header'>".lang('Preview') . "<span class='count'>".(int)$record_count."</span></div>".$preview;
@@ -432,7 +436,7 @@ class importexport_export_ui {
 
 	public function ajax_get_definition_description($_definition) {
 
-		$_response = egw_json_response::get();
+		$_response = Api\Json\Response::get();
 		$description = '';
 		if ($_definition)
 		{
@@ -446,7 +450,7 @@ class importexport_export_ui {
 	}
 
 	public function ajax_get_plugin_description($_plugin) {
-		$_respone = egw_json_response::get();
+		$_respone = Api\Json\Response::get();
 
 		$plugin_object = new $_plugin;
 		if (is_a($plugin_object, 'importexport_iface_export_plugin')) {
@@ -477,9 +481,9 @@ class importexport_export_ui {
 		$file = fopen($tmpfname,'rb');
 
 		// Get charset
-		$charset = egw_cache::getSession('importexport', $tmpfname);
+		$charset = Api\Cache::getSession('importexport', $tmpfname);
 
-		html::content_header($nicefname.'.'.$_GET['_suffix'],
+		Api\Header\Content::type($nicefname.'.'.$_GET['_suffix'],
 			($_GET['_type'] ? $_GET['_type'] : 'application/text') . ($charset ? '; charset='.$charset : ''),
 			filesize($tmpfname));
 		fpassthru($file);
@@ -487,6 +491,6 @@ class importexport_export_ui {
 		unlink($tmpfname);
 
 		// Try to avoid any extra finishing output
-		common::egw_exit();
+		exit();
 	}
 } // end class uiexport

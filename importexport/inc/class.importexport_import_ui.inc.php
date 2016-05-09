@@ -10,6 +10,10 @@
  * @version $Id: class.importexport_import_ui.inc.php 27222 2009-06-08 16:21:14Z ralfbecker $
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Etemplate;
 
 /**
  * userinterface for imports
@@ -44,14 +48,14 @@
 			$definition = $_GET['definition'] ? $_GET['definition'] : $content['definition'];
 
 			// We use some inline js in preview results if it fails
-			egw_framework::csp_script_src_attrs("unsafe-inline");
+			Api\Header\ContentSecurityPolicy::add('script-src', "unsafe-inline");
 			
-			$template = new etemplate_new('importexport.import_dialog');
+			$template = new Etemplate('importexport.import_dialog');
 
 			// Load application's translations
 			if($appname)
 			{
-				translation::add_app($appname);
+				Api\Translation::add_app($appname);
 			}
 			if($content['import'] && $definition) {
 				try {
@@ -81,7 +85,7 @@
 						$preference = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
 					}
 					$required = $options['charset'] == 'user' || !$options['charset'] ? $preference : $options['charset'];
-					$encoding = translation::detect_encoding($sample, $required);
+					$encoding = Api\Translation::detect_encoding($sample, $required);
 					if($encoding && strtoupper($required) != strtoupper($encoding))
 					{
 						$this->message = lang("Encoding mismatch.  Expected %1 file, you uploaded %2.<br />\n",
@@ -100,7 +104,7 @@
 					if($file)
 					{
 						$cachefile = new egw_cache_files(array());
-						$dst_file = $cachefile->filename(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
+						$dst_file = $cachefile->filename(Api\Cache::keys(Api\Cache::INSTANCE, 'importexport',
 							'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id']), true),true);
 						// Keep file
 						if($dst_file)
@@ -155,7 +159,7 @@
 					// Refresh opening window
 					if(!$content['dry-run'])
 					{
-						egw_framework::refresh_opener(lang('%1 records processed',$count), $appname, null,null,$appname);
+						Framework::refresh_opener(lang('%1 records processed',$count), $appname, null,null,$appname);
 					}
 					$total_processed = 0;
 					foreach($plugin->get_results() as $action => $a_count) {
@@ -177,7 +181,7 @@
 					}
 					if ($dst_file && $content['file']['tmp_name'] == $dst_file) {
 						// Remove file
-						$cachefile->delete(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
+						$cachefile->delete(Api\Cache::keys(Api\Cache::INSTANCE, 'importexport',
 							'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id'])));
 						unset($dst_file);
 					}
@@ -188,12 +192,12 @@
 			}
 			elseif($content['cancel'])
 			{
-				$GLOBALS['egw']->js->set_onload('window.close();');
+				egw_framework::set_onload('window.close();');
 			}
 			elseif ($GLOBALS['egw_info']['user']['apps']['admin'])
 			{
 				$this->message .= lang('You may want to <a href="%1" target="_new">backup</a> first.',
-					egw::link('/index.php',
+					Egw::link('/index.php',
 						array('menuaction' => 'admin.admin_db_backup.index')
 					)
 				);
@@ -212,7 +216,7 @@
 			$sel_options = self::get_select_options($data);
 
 			$data['message'] = $this->message;
-			egw_framework::validate_file('.','importexport','importexport');
+			Framework::includeJS('.','importexport','importexport');
 
 			if($_GET['appname']) $readonlys['appname'] = true;
 
@@ -292,7 +296,7 @@
 		 * @param importexport_iface_import_plugin $plugin Instance of plugin to be used
 		 * @param resource $stream
 		 * @param importexport_definition $definition
-		 * @return String HTML fragment illustrating how the data will be understood by egw
+		 * @return String HTML fragment illustrating how the data will be understood by Egw
 		 */
 		protected function preview(importexport_iface_import_plugin &$plugin, &$stream, importexport_definition &$definition_obj)
 		{
@@ -317,7 +321,7 @@
 					$rows[$import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines'] ? 'h1' : $row] = $row_data;
 					if($import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines']) $row--;
 				}
-				$preview = html::table($rows);
+				$preview = Api\Html::table($rows);
 				rewind($stream);
 			}
 			else
@@ -371,7 +375,7 @@
 
 			$data = fgetcsv($file, 8000, $options['fieldsep']);
 			rewind($file);
-			$data = translation::convert($data,$charset);
+			$data = Api\Translation::convert($data,$charset);
 
 			$ok = true;
 			if(count($data) != count($options['csv_fields']) && max(array_keys($data)) != max(array_keys($options['csv_fields'])))
@@ -402,8 +406,8 @@
 					continue;
 				}
 				// Check column headers, taking into account different translations - make sure no *
-				$lang_defn = mb_strtoupper(translation::translate($options['csv_fields'][$index],false,''));
-				$lang_file = mb_strtoupper(translation::translate($header,false,''));
+				$lang_defn = mb_strtoupper(Api\Translation::translate($options['csv_fields'][$index],false,''));
+				$lang_file = mb_strtoupper(Api\Translation::translate($header,false,''));
 
 				if($lang_defn == $lang_file ||
 					$lang_defn == mb_strtoupper($header) ||
@@ -413,9 +417,9 @@
 					continue;
 				}
 
-				// Try to go back to translation message ID for a match
-				$file_message_id = translation::get_message_id($header, $definition->application);
-				$defn_message_id = translation::get_message_id($options['csv_fields'][$index], $definition->application);
+				// Try to go back to Api\Translation message ID for a match
+				$file_message_id = Api\Translation::get_message_id($header, $definition->application);
+				$defn_message_id = Api\Translation::get_message_id($options['csv_fields'][$index], $definition->application);
 
 				if($file_message_id && $defn_message_id && $file_message_id == $defn_message_id)
 				{
@@ -432,12 +436,12 @@
 			if(!$ok || count($message) != $message_count)
 			{
 				// Add links for new / edit definition
-				$config = config::read('importexport');
+				$config = Api\Config::read('importexport');
 				if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['users_create_definitions'])
 				{
 					$actions = '';
 					// New definition
-					$add_link = egw::link('/index.php',array(
+					$add_link = Egw::link('/index.php',array(
 						'menuaction' => 'importexport.importexport_definitions_ui.edit',
 						'application' => $definition->application,
 						'plugin' => $definition->plugin,
@@ -445,7 +449,7 @@
 						'step' => 'wizard_step21'
 					));
 					$add_link = "
-						javascript:this.window.location = '" . egw::link('/index.php', array(
+						javascript:this.window.location = '" . Egw::link('/index.php', array(
 							'menuaction' => 'importexport.importexport_import_ui.import_dialog',
 							// Don't set appname, or user won't be able to select & see their new definition
 							//'appname' => $definition->application,
@@ -470,7 +474,7 @@
 							$GLOBALS['egw']->session->appsession('csvfile','',$dst_file);
 							$edit_link['step'] = 'wizard_step30';
 						}
-						$edit_link = egw::link('/index.php',$edit_link);
+						$edit_link = Egw::link('/index.php',$edit_link);
 						$edit_link = "javascript:egw_openWindowCentered2('$edit_link','_blank',500,500,'yes')";
 						$actions[] = lang('Edit definition <a href="%1">%2</a> to match your file',
 							$edit_link, $definition->name );

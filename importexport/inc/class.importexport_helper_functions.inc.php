@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * class importexport_helper_functions (only static methods)
  * use importexport_helper_functions::method
@@ -223,7 +225,7 @@ class importexport_helper_functions {
 	public static function cat_id2name( $_cat_ids ) {
 		$cat_ids = is_array( $_cat_ids ) ? $_cat_ids : explode( ',', $_cat_ids );
 		foreach ( $cat_ids as $cat_id ) {
-			$cat_names[] = categories::id2name( (int)$cat_id );
+			$cat_names[] = Api\Categories::id2name( (int)$cat_id );
 		}
 		return is_array( $_cat_ids ) ? $cat_names : implode(',',(array)$cat_names);
 	} // end of member function category_id2name
@@ -237,7 +239,7 @@ class importexport_helper_functions {
 	 * @return mixed comma seperated list or array with cat_ids
 	 */
 	public static function cat_name2id( $_cat_names, $parent = 0 ) {
-		$cats = new categories();	// uses current user and app (egw_info[flags][currentapp])
+		$cats = new Api\Categories();	// uses current user and app (egw_info[flags][currentapp])
 
 		$cat_names = is_array( $_cat_names ) ? $_cat_names : explode( ',', $_cat_names );
 		foreach ( $cat_names as $cat_name ) {
@@ -422,7 +424,7 @@ class importexport_helper_functions {
 	 * @return array(<appname> => array( <type> => array(<plugin> => <title>)))
 	 */
 	public static function get_plugins( $_appname = 'all', $_type = 'all' ) {
-		$plugins = egw_cache::getTree(
+		$plugins = Api\Cache::getTree(
 			__CLASS__,
 			'plugins',
 			array('importexport_helper_functions','_get_plugins'),
@@ -432,7 +434,7 @@ class importexport_helper_functions {
 		$appnames = $_appname == 'all' ? array_keys($GLOBALS['egw_info']['apps']) : (array)$_appname;
 		$types = $_type == 'all' ? array('import','export') : (array)$_type;
 
-		// Testing: comment out egw_cache call, use this
+		// Testing: comment out Api\Cache call, use this
 		//$plugins = self::_get_plugins($appnames, $types);
 		foreach($plugins as $appname => $_types) {
 			if(!in_array($appname, $appnames)) unset($plugins[$appname]);
@@ -479,7 +481,7 @@ class importexport_helper_functions {
 			}
 			$d->close();
 
-			$config = config::read('importexport');
+			$config = Api\Config::read('importexport');
 			if($config['update'] == 'auto') {
 				self::load_defaults($appname);
 			}
@@ -537,7 +539,7 @@ class importexport_helper_functions {
 	 * @return boolean
 	 */
 	public static function has_definitions( $_appname = 'all', $_type = 'all' ) {
-		$definitions = egw_cache::getSession(
+		$definitions = Api\Cache::getSession(
 			__CLASS__,
 			'has_definitions',
 			array('importexport_helper_functions','_has_definitions'),
@@ -559,7 +561,7 @@ class importexport_helper_functions {
 		return count($definitions[$appname]) > 0;
 	}
 
-	// egw_cache needs this public
+	// Api\Cache needs this public
 	public static function _has_definitions(Array $appnames, Array $types) {
 		$def = new importexport_definitions_bo(array('application'=>$appnames, 'type' => $types));
 		$list = array();
@@ -636,7 +638,7 @@ class importexport_helper_functions {
 			}
 		}
 		// Add custom fields
-		$custom = config::get_customfields($app_name);
+		$custom = Api\Storage\Customfields::get($app_name);
 		foreach($custom as $field_name => $settings)
 		{
 			$settings['name'] = '#'.$field_name;

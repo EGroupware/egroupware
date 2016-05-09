@@ -10,6 +10,10 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
+
 /**
  * class export_csv
  * This an record exporter.
@@ -40,7 +44,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	protected $record_array = array();
 	
 	/**
-	 * @var translation holds (charset) translation object
+	 * @var translation holds (charset) Api\Translation object
 	 */
 	protected $translation;
 	
@@ -96,7 +100,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	 */
 	public function __construct( $_stream, array $_options ) {
 		if (!is_object($GLOBALS['egw']->translation)) {
-			$GLOBALS['egw']->translation = new translation();
+			$GLOBALS['egw']->translation = new Api\Translation();
 		}
 		$this->translation = &$GLOBALS['egw']->translation;
 		$this->handle = $_stream;
@@ -106,10 +110,10 @@ class importexport_export_csv implements importexport_iface_export_record
 			$this->csv_options = array_merge( $this->csv_options, $_options );
 		}
 		//error_log(__METHOD__.__LINE__.array2string($_options['appname']));
-		if(!bo_merge::is_export_limit_excepted()) {
-			$this->export_limit = bo_merge::getExportLimit($_options['appname']);
+		if(!Api\Storage\Merge::is_export_limit_excepted()) {
+			$this->export_limit = Api\Storage\Merge::getExportLimit($_options['appname']);
 			//error_log(__METHOD__.__LINE__.' app:'.$_options['appname'].' limit:'.$this->export_limit);
-			if($this->export_limit == 'no') throw new egw_exception_no_permission_admin('Export disabled');
+			if($this->export_limit == 'no') throw new Api\Exception\NoPermission\Admin('Export disabled');
 		}
 	}
 	
@@ -124,7 +128,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 		if($_mapping['all_custom_fields']) {
 			// Field value is the appname, so we can pull the fields
-			$custom = config::get_customfields($_mapping['all_custom_fields']);
+			$custom = Api\Storage\Customfields::get($_mapping['all_custom_fields']);
 			unset($_mapping['all_custom_fields']);
 			foreach($custom as $field => $info) {
 				$_mapping['#'.$field] = $this->csv_options['begin_with_fieldnames'] == 'label' ? $info['label'] : $field;
@@ -179,7 +183,7 @@ class importexport_export_csv implements importexport_iface_export_record
 							if(substr($label,-1) == '*') $label = substr($label,0,-1);
 						}
 					} catch (Exception $e) {
-						translation::add_app($appname);
+						Api\Translation::add_app($appname);
 						foreach($this->mapping as $field => &$label) {
 							$label = lang($label);
 						}
@@ -236,7 +240,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		if(!$appname) return;
 
 		$fields = array();
-		$custom = config::get_customfields($appname);
+		$custom = Api\Storage\Customfields::get($appname);
 		foreach($custom as $name => $c_field) {
 			$name = '#' . $name;
 			switch($c_field['type']) {
@@ -258,7 +262,7 @@ class importexport_export_csv implements importexport_iface_export_record
 				case 'select':
 					if (count($c_field['values']) == 1 && isset($c_field['values']['@']))
 					{
-						$c_field['values'] = egw_customfields::get_options_from_file($c_field['values']['@']);
+						$c_field['values'] = Api\Storage\Customfields::get_options_from_file($c_field['values']['@']);
 					}
 					$fields['select'][] = $name;
 					$selects[$name] = $c_field['values'];
@@ -333,12 +337,12 @@ class importexport_export_csv implements importexport_iface_export_record
 		foreach((array)$fields['links'] as $name) {
 			if($record->$name) {
 				if(is_numeric($record->$name) && !$links[$name]) {
-					$link = egw_link::get_link($record->$name);
+					$link = Link::get_link($record->$name);
 					$links[$name] = ($link['link_app1'] == $appname ? $link['link_app2'] : $link['link_app1']);
 					$record->$name = ($link['link_app1'] == $appname ? $link['link_id2'] : $link['link_id1']);
 				}
 				if($links[$name]) {
-					$record->$name = egw_link::title($links[$name], $record->$name);
+					$record->$name = Link::title($links[$name], $record->$name);
 				}
 			}
 			else
@@ -352,11 +356,11 @@ class importexport_export_csv implements importexport_iface_export_record
 				if(is_array($record->$name)) {
 					$names = array();
 					foreach($record->$name as $_name) {
-						$names[] = common::grab_owner_name($_name);
+						$names[] = Api\Accounts::username($_name);
 					}
 					$record->$name = implode(', ', $names);
 				} else {
-					$record->$name = common::grab_owner_name($record->$name);
+					$record->$name = Api\Accounts::username($record->$name);
 				}
 			}
 			else
@@ -409,14 +413,14 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 
 		static $cat_object;
-		if(is_null($cat_object)) $cat_object = new categories(false,$appname);
+		if(is_null($cat_object)) $cat_object = new Api\Categories(false,$appname);
 		foreach((array)$fields['select-cat'] as $name) {
 			if($record->$name) {
 				$cats = array();
 				$ids = is_array($record->$name) ? $record->$name : explode(',', $record->$name);
 				foreach($ids as $n => $cat_id) {
 
-					if ($cat_id && $cat_object->check_perms(EGW_ACL_READ,$cat_id))
+					if ($cat_id && $cat_object->check_perms(Acl::READ,$cat_id))
 					{
 						$cats[] = $cat_object->id2name($cat_id);
 					}

@@ -9,6 +9,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Egw;
+
 if (!defined('IMPORTEXPORT_APP'))
 {
 	define('IMPORTEXPORT_APP','importexport');
@@ -32,27 +35,27 @@ class importexport_admin_prefs_sidebox_hooks
 				array(
 					'text' => 'Import',
 					'link' => "javascript:egw_openWindowCentered2('".
-						egw::link('/index.php','menuaction=importexport.importexport_import_ui.import_dialog',false).
+						Egw::link('/index.php','menuaction=importexport.importexport_import_ui.import_dialog',false).
 						"','_blank',850,440,'yes')",
 					'icon' => 'import'
 				),
 			);
-			$export_limit = bo_merge::getExportLimit($appname);
+			$export_limit = Api\Storage\Merge::getExportLimit($appname);
 			//error_log(__METHOD__.__LINE__.' app:'.$appname.' limit:'.$export_limit);
-			if(bo_merge::is_export_limit_excepted() || $export_limit !== 'no')
+			if(Api\Storage\Merge::is_export_limit_excepted() || $export_limit !== 'no')
 			{
 				$file[] = array(
 					'text' => 'Export',
 					'link' => "javascript:egw_openWindowCentered2('".
-						egw::link('/index.php','menuaction=importexport.importexport_export_ui.export_dialog',false).
+						Egw::link('/index.php','menuaction=importexport.importexport_export_ui.export_dialog',false).
 						"','_blank',850,440,'yes')",
 					'icon' => 'export'
 				);
 			}
-			$config = config::read($appname);
+			$config = Api\Config::read($appname);
 			if($config['users_create_definitions'])
 			{
-				$file['Define imports|exports']	= egw::link('/index.php',array(
+				$file['Define imports|exports']	= Egw::link('/index.php',array(
 						'menuaction' => 'importexport.importexport_definitions_ui.index',
 						'ajax' => 'true'
 				),$GLOBALS['egw_info']['user']['apps']['admin'] ? 'admin' : 'preferences');
@@ -63,13 +66,13 @@ class importexport_admin_prefs_sidebox_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Site Configuration' => egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.site_config'),
-				'Import definitions' => egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
-				'Define imports|exports'  => egw::link('/index.php',array(
+				'Site Configuration' => Egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.site_config'),
+				'Import definitions' => Egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
+				'Define imports|exports'  => Egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_definitions_ui.index',
 					'ajax' => 'true'
 				)),
-				'Schedule' => egw::link('/index.php', array(
+				'Schedule' => Egw::link('/index.php', array(
 					'menuaction' => 'importexport.importexport_schedule_ui.index'
 				)),
 			);
@@ -92,12 +95,12 @@ class importexport_admin_prefs_sidebox_hooks
 		if($GLOBALS['egw_info']['flags']['no_importexport'] === true) return array();
 
 		$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-		$cache = egw_cache::getCache(egw_cache::SESSION, 'importexport', 'sidebox_links');
+		$cache = Api\Cache::getCache(Api\Cache::SESSION, 'importexport', 'sidebox_links');
 
 		if(!$cache[$appname] && $GLOBALS['egw_info']['user']['apps']['importexport']) {
 			$cache[$appname]['import'] = importexport_helper_functions::has_definitions($appname, 'import');
 			$cache[$appname]['export'] = importexport_helper_functions::has_definitions($appname, 'export');
-			egw_cache::setCache(egw_cache::SESSION, 'importexport', 'sidebox_links', $cache);
+			Api\Cache::setCache(Api\Cache::SESSION, 'importexport', 'sidebox_links', $cache);
 		}
 
 		// Add in import / export, if available
@@ -106,7 +109,7 @@ class importexport_admin_prefs_sidebox_hooks
 		if($cache[$appname]['import'])
 		{
 			$file['Import CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
-				egw::link('/index.php',array(
+				Egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_import_ui.import_dialog',
 					'appname'=>$appname
 				),false)."','_blank',850,440,'yes')",
@@ -118,12 +121,12 @@ class importexport_admin_prefs_sidebox_hooks
 				$file['Import CSV']['link'] = '';
 			}
 		}
-		$export_limit = bo_merge::getExportLimit($appname);
+		$export_limit = Api\Storage\Merge::getExportLimit($appname);
 		//error_log(__METHOD__.__LINE__.' app:'.$appname.' limit:'.$export_limit);
-		if ((bo_merge::is_export_limit_excepted() || bo_merge::hasExportLimit($export_limit,'ISALLOWED')) && $cache[$appname]['export'])
+		if ((Api\Storage\Merge::is_export_limit_excepted() || Api\Storage\Merge::hasExportLimit($export_limit,'ISALLOWED')) && $cache[$appname]['export'])
 		{
 			$file['Export CSV'] = array('link' => "javascript:egw_openWindowCentered2('".
-				egw::link('/index.php',array(
+				Egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_export_ui.export_dialog',
 					'appname'=>$appname
 				),false)."','_blank',850,440,'yes')",
@@ -136,12 +139,12 @@ class importexport_admin_prefs_sidebox_hooks
 			}
 		}
 		
-		$config = config::read('importexport');
+		$config = Api\Config::read('importexport');
 		if($appname != 'admin' && ($config['users_create_definitions'] || $GLOBALS['egw_info']['user']['apps']['admin']) &&
 			count(importexport_helper_functions::get_plugins($appname)) > 0
 		)
 		{
-			$file['Define imports|exports']	= egw::link('/index.php',array(
+			$file['Define imports|exports']	= Egw::link('/index.php',array(
 				'menuaction' => 'importexport.importexport_definitions_ui.index',
 				'application' => $appname,
 				'ajax' => 'true'

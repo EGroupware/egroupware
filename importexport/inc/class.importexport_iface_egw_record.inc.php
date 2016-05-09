@@ -10,9 +10,12 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Egw;
+
 /**
  * class importexport_iface_egw_record
- * This a the abstract interface of an egw record.
+ * This a the abstract interface of an Egw record.
  * A record is e.g. a single address or or single event.
  * The idea behind is that we can have metaoperation over differnt apps by
  * having a common interface.

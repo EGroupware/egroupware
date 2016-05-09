@@ -10,6 +10,12 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Egw;
+use EGroupware\Api\Acl;
+use EGroupware\Api\Etemplate;
+
 /**
  * Userinterface to define {im|ex}ports
  *
@@ -57,11 +63,11 @@ class importexport_definitions_ui
 	{
 		// we cant deal with notice and warnings, as we are on ajax!
 		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-		$GLOBALS['egw']->translation->add_app(self::_appname);
+		Api\Translation::add_app(self::_appname);
 		$GLOBALS['egw_info']['flags']['currentapp'] = self::_appname;
 		
-		$this->etpl = new etemplate_new();
-		$this->clock = html::image(self::_appname,'clock');
+		$this->etpl = new Etemplate();
+		$this->clock = Api\Html::image(self::_appname,'clock');
 		$this->steps = array(
 			'wizard_step10' => lang('Choose an application'),
 			'wizard_step20' => lang('Choose a plugin'),
@@ -88,8 +94,8 @@ class importexport_definitions_ui
 		} else {
 			// Filter private definitions
 			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-			$config = config::read('phpgwapi');
-			if($config['export_limit'] == 'no' && !bo_merge::is_export_limit_excepted()) {
+			$config = Api\Config::read('phpgwapi');
+			if($config['export_limit'] == 'no' && !Api\Storage\Merge::is_export_limit_excepted()) {
 				$filter['type'] = 'import';
 			}
 		}
@@ -105,7 +111,7 @@ class importexport_definitions_ui
 			elseif(($button = array_search('pressed',$content['nm']['rows'])) !== false)
 			{
 				$selected = $content['nm']['rows']['selected'];
-				if(count($selected) < 1 || !is_array($selected)) common::egw_exit();
+				if(count($selected) < 1 || !is_array($selected)) exit();
 				switch ($button)
 				{
 					case 'delete_selected' :
@@ -174,9 +180,9 @@ class importexport_definitions_ui
 			);
 			if($_GET['application']) $content['nm']['col_filter']['application'] = $_GET['application'];
 		}
-		if(egw_session::appsession('index', 'importexport'))
+		if(Api\Cache::getSession('importexport', 'index'))
 		{
-			$content['nm'] = array_merge($content['nm'], egw_session::appsession('index', 'importexport'));
+			$content['nm'] = array_merge($content['nm'], Api\Cache::getSession('importexport', 'index'));
 		}
 		$content['nm']['actions'] = $this->get_actions();
 		$sel_options = array(
@@ -197,7 +203,7 @@ class importexport_definitions_ui
 		}
 		if($msg) $content['msg'] = $msg;
 
-		$etpl = new etemplate_new(self::_appname.'.definition_index');
+		$etpl = new Etemplate(self::_appname.'.definition_index');
 		return $etpl->exec( self::_appname.'.importexport_definitions_ui.index', $content, $sel_options, $readonlys, $preserv );
 	}
 
@@ -312,7 +318,7 @@ class importexport_definitions_ui
 		if ($use_all)
 		{
 			// get the whole selection
-			$old_query = $query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'importexport');
+			$old_query = $query = is_array($session_name) ? $session_name : Api\Cache::getSession('importexport', $session_name);
 
 			@set_time_limit(0);				// switch off the execution time limit, as it's for big selections to small
 			$query['num_rows'] = -1;		// all
@@ -326,7 +332,7 @@ class importexport_definitions_ui
 			if(!is_array($session_name))
 			{
 				// Restore old query
-				egw_session::appsession($session_name, 'importexport',$old_query);
+				Api\Cache::setSession('importexport', $session_name, $old_query);
 			}
 		}
 
@@ -340,12 +346,12 @@ class importexport_definitions_ui
 				// There's probably a way to do this in just JS, all the info should be there...
 				foreach($selected as $id) {
 					$definition = $bodefinitions->read((int)$id);
-					$link = egw::link('/index.php', array(
+					$link = Egw::link('/index.php', array(
 						'menuaction' => 'importexport.importexport_'.$definition['type'].'_ui.'.$definition['type'].'_dialog',
 						'appname' => $definition['application'],
 						'definition' => $definition['name']
 					));
-					egw_framework::set_onload("egw_openWindowCentered2('$link','_blank',850,440,'yes');");
+					Framework::set_onload("egw_openWindowCentered2('$link','_blank',850,440,'yes');");
 				}
 				break;
 			case 'allowed':
@@ -377,7 +383,7 @@ class importexport_definitions_ui
 				header('Content-Type: ' . $mime_type);
 				header('Content-Disposition: attachment; filename="'.$name.'"');
 				echo $bodefinitions->export($selected);
-				common::egw_exit();
+				exit();
 				break;
 
 			case 'copy':
@@ -438,7 +444,7 @@ class importexport_definitions_ui
 
 	public function get_rows(&$query, &$rows, &$readonlys) {
 		$rows = array();
-		egw_session::appsession('index','importexport',$query);
+		Api\Cache::setSession('importexport', 'index', $query);
 
 		// Special handling for allowed users 'private'
 		if($query['col_filter']['allowed_users'] == 'private')
@@ -528,7 +534,7 @@ class importexport_definitions_ui
 					$wizard_plugin = $content['plugin'];
 				}
 				// App translations
-				if($content['application']) translation::add_app($content['application']);
+				if($content['application']) Api\Translation::add_app($content['application']);
 
 				$this->plugin = is_object($GLOBALS['egw']->$wizard_plugin) ? $GLOBALS['egw']->$wizard_plugin : new $wizard_plugin;
 
@@ -716,7 +722,7 @@ class importexport_definitions_ui
 					} elseif($this->plugin instanceof importexport_iface_export_plugin || $this->plugin instanceof importexport_wizard_basic_export_csv || strpos(get_class($this->plugin),'export') !== false) {
 						$content['type'] = 'export';
 					} else {
-						throw new egw_exception('Invalid plugin');
+						throw new Api\Exception('Invalid plugin');
 					}
 					return $this->get_step($content['step'],1);
 				case 'previous' :
@@ -732,7 +738,7 @@ class importexport_definitions_ui
 		else
 		{
 			$content['text'] = $this->steps['wizard_step20'];
-			$config = config::read('phpgwapi');
+			$config = Api\Config::read('phpgwapi');
 			foreach ($this->plugins[$content['application']] as $type => $plugins) {
 				if($config['export_limit'] == 'no' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $type == 'export') continue;
 				foreach($plugins as $plugin => $name) {
@@ -771,7 +777,7 @@ class importexport_definitions_ui
 				$suggestions = array(
 					$content['name'] .'-'. $GLOBALS['egw_info']['user']['account_lid'],
 					$content['name'] .'-'. $GLOBALS['egw_info']['user']['account_id'],
-					$content['name'] .'-'. egw_time::to('now', true),
+					$content['name'] .'-'. Api\DateTime::to('now', true),
 					//$content['name'] .'-'. rand(0,100),
 				);
 				foreach($suggestions as $key => $suggestion) {
@@ -824,7 +830,7 @@ class importexport_definitions_ui
 		{
 			if($this->can_edit($content))
 			{
-				$content['owner'] = $content['just_me'] || !$GLOBALS['egw']->acl->check('share_definitions', EGW_ACL_READ,'importexport') ?
+				$content['owner'] = $content['just_me'] || !$GLOBALS['egw']->acl->check('share_definitions', Acl::READ,'importexport') ?
 					($content['owner'] ? $content['owner'] : $GLOBALS['egw_info']['user']['account_id']) :
 					null;
 				$content['allowed_users'] = $content['just_me'] ? '' : ($content['all_users'] ? 'all' : implode(',',$content['allowed_users']));
@@ -854,7 +860,7 @@ class importexport_definitions_ui
 			$content['just_me'] = ((!$content['allowed_users'] || !$content['allowed_users'][0] && count($content['allowed_users']) ==1) && $content['owner']);
 			$content['all_users'] = is_array($content['allowed_users']) && array_key_exists('0',$content['allowed_users']) && $content['allowed_users'][0] == 'all' ||
 			$content['allowed_users'] == 'all';
-			if(!$GLOBALS['egw']->acl->check('share_definition', EGW_ACL_READ, 'importexport') && !$GLOBALS['egw_info']['user']['apps']['admin'])
+			if(!$GLOBALS['egw']->acl->check('share_definition', Acl::READ, 'importexport') && !$GLOBALS['egw_info']['user']['apps']['admin'])
 			{
 				$content['allowed_users'] = array();
 				$readonlys['allowed_users'] = true;
@@ -897,8 +903,8 @@ class importexport_definitions_ui
 		$bodefinitions->save($content);
 		// This message is displayed if browser cant close window
 		$content['msg'] = lang('ImportExport wizard finished successfully!');
-		egw_framework::refresh_opener('','importexport');
-		egw_framework::window_close();
+		Framework::refresh_opener('','importexport');
+		Framework::window_close();
 		return 'importexport.wizard_close';
 	}
 
@@ -961,7 +967,7 @@ class importexport_definitions_ui
 	{
 		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			egw::redirect_link('/home');
+			Egw::redirect_link('/home');
 		}
 		if($content['save'])
 		{
@@ -973,25 +979,25 @@ class importexport_definitions_ui
 
 			foreach($content['share_definition'] as $group)
 			{
-				$GLOBALS['egw']->acl->add_repository(self::_appname, 'share_definition', $group,EGW_ACL_READ);
+				$GLOBALS['egw']->acl->add_repository(self::_appname, 'share_definition', $group,Acl::READ);
 			}
 			unset($content['share_definition']);
 
-			// Other config
+			// Other Api\Config
 			foreach($content as $key=>$value)
 			{
-				config::save_value($key, $value, 'importexport');
+				Api\Config::save_value($key, $value, 'importexport');
 			}
 		} elseif (isset($content['cancel'])) {
 			$GLOBALS['egw']->redirect_link('/admin/index.php');
 		}
 
-		$data = config::read(self::_appname);
-		$data['share_definition'] = $GLOBALS['egw']->acl->get_ids_for_location('share_definition', EGW_ACL_READ, self::_appname);
+		$data = Api\Config::read(self::_appname);
+		$data['share_definition'] = $GLOBALS['egw']->acl->get_ids_for_location('share_definition', Acl::READ, self::_appname);
 		$sel_options['import_charsets'] = array_combine(mb_list_encodings(),mb_list_encodings());
 
 		// Remove 'standard' encodings to prevent doubles
-		foreach($GLOBALS['egw']->translation->get_installed_charsets() as $charset => $label)
+		foreach(Api\Translation::get_installed_charsets() as $charset => $label)
 		{
 			unset($sel_options['import_charsets'][strtoupper($charset)]);
 		}

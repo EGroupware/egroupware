@@ -10,6 +10,10 @@
  * @version $Id: class.importexport_import_ui.inc.php 27222 2009-06-08 16:21:14Z ralfbecker $
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Vfs;
+use EGroupware\Api\Etemplate;
 
 /**
  * userinterface for admins to schedule imports or exports using async services
@@ -26,7 +30,7 @@
 		protected static $template;
 
 		public function __construct() {
-			$this->template = new etemplate_new();
+			$this->template = new Etemplate();
 		}
 
 		public function index($content = array()) {
@@ -68,9 +72,9 @@
 					}
 					$data['scheduled'][] = array_merge($async['data'], array(
 						'id'	=>	urlencode($id),
-						'next'	=>	egw_time::server2user($async['next']),
+						'next'	=>	Api\DateTime::server2user($async['next']),
 						'times'	=>	str_replace("\n", '', print_r($async['times'], true)),
-						'last_run' =>	$async['data']['last_run'] ? egw_time::server2user($async['data']['last_run']) : ''
+						'last_run' =>	$async['data']['last_run'] ? Api\DateTime::server2user($async['data']['last_run']) : ''
 					));
 				}
 				array_unshift($data['scheduled'], false);
@@ -85,7 +89,7 @@
 		public function edit($content = array()) {
 			$id = $_GET['id'] ? urldecode($_GET['id']) : $content['id'];
 			$definition_id = $_GET['definition'];
-			$async = new asyncservice();
+			$async = new Api\Asyncservice();
 
 			unset($content['id']);
 
@@ -112,8 +116,8 @@
 					$content
 				);
 				if($result) {
-					egw_framework::refresh_opener('', 'admin',$id,'update','admin');
-					egw_framework::window_close();
+					Framework::refresh_opener('', 'admin',$id,'update','admin');
+					Framework::window_close();
 				} else {
 					$data['message'] = lang('Unable to schedule');
 					unset($id);
@@ -159,7 +163,7 @@
 			$data['current_time'] = time();
 
 			$sel_options = self::get_select_options($data);
-			egw_framework::validate_file('.','importexport','importexport');
+			Framework::includeJS('.','importexport','importexport');
 
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Schedule import / export');
 			$this->template->read('importexport.schedule_edit');
@@ -304,11 +308,11 @@
 			if($scheme == '' || $scheme == 'file') {
 				return 'Direct file access not allowed';
 			}
-			if($scheme == EGroupware\Api\Vfs::SCHEME  && !in_array(EGroupware\Api\Vfs::SCHEME, stream_get_wrappers())) {
-				stream_wrapper_register(EGroupware\Api\Vfs::SCHEME, 'vfs_stream_wrapper', STREAM_IS_URL);
+			if($scheme == EGroupware\Vfs::SCHEME  && !in_array(EGroupware\Vfs::SCHEME, stream_get_wrappers())) {
+				stream_wrapper_register(EGroupware\Vfs::SCHEME, 'vfs_stream_wrapper', STREAM_IS_URL);
 			}
 
-			if ($data['type'] == 'import' && ($scheme == EGroupware\Api\Vfs::SCHEME && !egw_vfs::is_readable($data['target'])))
+			if ($data['type'] == 'import' && ($scheme == EGroupware\Vfs::SCHEME && !Vfs::is_readable($data['target'])))
 			{
 				return lang('%1 is not readable',$data['target']);
 			}
@@ -621,7 +625,7 @@
 
 				if($data['warnings'])
 				{
-					$contents .= lang($data['type']) . ' ' . lang('Warnings') . ' ' . egw_time::to() . ':';
+					$contents .= lang($data['type']) . ' ' . lang('Warnings') . ' ' . Api\DateTime::to() . ':';
 					foreach($data['warnings'] as $target => $message)
 					{
 						$contents .= "\n". (is_numeric($target) ? '' : $target."\n");
@@ -631,7 +635,7 @@
 				}
 				if($data['errors'])
 				{
-					$contents .= lang($data['type']) . ' ' . lang('Errors') . ' ' . egw_time::to() . ':';
+					$contents .= lang($data['type']) . ' ' . lang('Errors') . ' ' . Api\DateTime::to() . ':';
 					foreach($data['errors'] as $target => $errors)
 					{
 						$contents .= "\n". (is_numeric($target) ? '' : $target."\n");

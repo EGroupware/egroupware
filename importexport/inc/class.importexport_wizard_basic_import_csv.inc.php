@@ -15,6 +15,8 @@
  * @author Nathan Gray
  */
 
+use EGroupware\Api;
+
 class importexport_wizard_basic_import_csv
 {
 
@@ -98,7 +100,7 @@ class importexport_wizard_basic_import_csv
 			$content['step'] = 'wizard_step30';
 			$preserv = $content;
 			unset ($preserv['button']);
-			//$GLOBALS['egw']->js->set_onload("xajax_eT_wrapper_init();");
+			
 			return $this->step_templates[$content['step']];
 		}
 		
@@ -131,8 +133,8 @@ class importexport_wizard_basic_import_csv
 
 						// Remove & forget file
 						unlink($GLOBALS['egw']->session->appsession('csvfile',$content['application']));
-						egw_cache::setSession($content['application'], 'csvfile', '');
-						$content['csv_fields'] = translation::convert($data,$content['charset']);
+						Api\Cache::setSession($content['application'], 'csvfile', '');
+						$content['csv_fields'] = Api\Translation::convert($data,$content['charset']);
 
 						// Reset field mapping for new file
 						$content['field_mapping'] = array();
@@ -151,10 +153,10 @@ class importexport_wizard_basic_import_csv
 								}
 								// Check english also
 								if($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != 'en' && !isset($english[$field_name])) {
-									$msg_id = translation::get_message_id($field_name, $content['application']);
+									$msg_id = Api\Translation::get_message_id($field_name, $content['application']);
 								}
 								if($msg_id) {
-									$english[$field_name] = translation::read('en', $content['application'], $msg_id);
+									$english[$field_name] = Api\Translation::read('en', $content['application'], $msg_id);
 								} else {
 									$english[$field_name] = false;
 								}
@@ -229,13 +231,13 @@ class importexport_wizard_basic_import_csv
 				$content['convert'] = 1;
 			}
 
-			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
+			$sel_options['charset'] = Api\Translation::get_installed_charsets()+
 			array(
 				'user'	=> lang('User preference'),
 			);
 
 			// Add in extra allowed charsets
-			$config = config::read('importexport');
+			$config = Api\Config::read('importexport');
 			$extra_charsets = array_intersect(explode(',',$config['import_charsets']), mb_list_encodings());
 			if($extra_charsets)
 			{

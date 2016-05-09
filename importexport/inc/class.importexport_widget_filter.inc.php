@@ -6,6 +6,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Etemplate;
+
 /**
  * Extend custom fields and make an general advanced filter
  *
@@ -21,7 +24,7 @@
  *
  * Most text fields are ignored.
  */
-class importexport_widget_filter extends etemplate_widget_transformer
+class importexport_widget_filter extends Etemplate\Widget\Transformer
 {
 
 	protected static $prefix = '';
@@ -98,7 +101,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 					// and used as such.  All unknown values will be used for selection, not passed through to the query
 					if (isset($field['values']['@']))
 					{
-						$options['values'] = egw_customfields::get_options_from_file($field['values']['@']);
+						$options['values'] = Api\Storage\Customfields::get_options_from_file($field['values']['@']);
 						unset($field['values']['@']);
 					} else {
 						$options['values'] = array_diff_key($field['values'], array_flip(ajax_select_widget::$known_options));
@@ -113,7 +116,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 					{
 						if (count($field['values']) == 1 && isset($field['values']['@']))
 						{
-							$field['values'] = egw_customfields::get_options_from_file($field['values']['@']);
+							$field['values'] = Api\Storage\Customfields::get_options_from_file($field['values']['@']);
 						}
 						foreach((array)$field['values'] as $key => $val)
 						{
@@ -182,4 +185,4 @@ class importexport_widget_filter extends etemplate_widget_transformer
 	}
 }
 // Register, or it won't be found
-\EGroupware\Api\Etemplate\Widget::registerWidget('importexport_widget_filter', array('filter'));
+Etemplate\Widget::registerWidget('importexport_widget_filter', array('filter'));

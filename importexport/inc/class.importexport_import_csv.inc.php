@@ -11,6 +11,9 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
+
 /**
  * class import_csv
  * This a an abstract implementation of interface iface_import_record
@@ -156,7 +159,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					return false;
 				}
 				$this->current_position++;
-				$this->record = $GLOBALS['egw']->translation->convert($csv_data, $this->csv_charset);
+				$this->record = Api\Translation::convert($csv_data, $this->csv_charset);
 				break;
 				
 			case 'previous' :
@@ -268,7 +271,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 		if($appname) {
 
 			// Load translations
-			translation::add_app($appname);
+			Api\Translation::add_app($appname);
 
 			if(!self::$cf_parse_cache[$appname]) {
 				$c_fields = importexport_export_csv::convert_parse_custom_fields($appname, $selects, $links, $methods);
@@ -319,7 +322,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					// Text - search for a matching record
 					if(!is_numeric($record[$name]))
 					{
-						$results = egw_link::query($links[$name], $record[$name]);
+						$results = Link::query($links[$name], $record[$name]);
 						if(count($results) >= 1)
 						{
 							// More than 1 result.  Check for exact match
@@ -389,36 +392,36 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					// Need to handle format first
 					if($format == 1)
 					{
-						$formatted = egw_time::createFromFormat(
-							'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat,
+						$formatted = Api\DateTime::createFromFormat(
+							'!'.Api\DateTime::$user_dateformat . ' ' .Api\DateTime::$user_timeformat,
 							$record[$name],
-							egw_time::$user_timezone
+							Api\DateTime::$user_timezone
 						);
 
-						if(!$formatted && $errors = egw_time::getLastErrors())
+						if(!$formatted && $errors = Api\DateTime::getLastErrors())
 						{
 							// Try again, without time
-							$formatted = egw_time::createFromFormat(
-								'!'.egw_time::$user_dateformat,
+							$formatted = Api\DateTime::createFromFormat(
+								'!'.Api\DateTime::$user_dateformat,
 								trim($record[$name]),
-								egw_time::$user_timezone
+								Api\DateTime::$user_timezone
 							);
 							
-							if(!$formatted && $errors = egw_time::getLastErrors())
+							if(!$formatted && $errors = Api\DateTime::getLastErrors())
 							{
 								// Try again, anything goes
 								try {
-									$formatted = new egw_time($record[$name]);
+									$formatted = new Api\DateTime($record[$name]);
 								} catch (Exception $e) {
 									$warnings[] = $name.': ' . $e->getMessage() . "\n" .
-										'Format: '.'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat;
+										'Format: '.'!'.Api\DateTime::$user_dateformat . ' ' .Api\DateTime::$user_timeformat;
 									continue;
 								}
-								$errors = egw_time::getLastErrors();
+								$errors = Api\DateTime::getLastErrors();
 								foreach($errors['errors'] as $char => $msg)
 								{
 									$warnings[] = "$name: [$char] $msg\n".
-										'Format: '.'!'.egw_time::$user_dateformat . ' ' .egw_time::$user_timeformat;
+										'Format: '.'!'.Api\DateTime::$user_dateformat . ' ' .Api\DateTime::$user_timeformat;
 								}
 							}
 						}
@@ -426,7 +429,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 						{
 							$record[$name] = $formatted->getTimestamp();
 							// Timestamp is apparently in server time, but apps will do the same conversion
-							$record[$name] = egw_time::server2user($record[$name],'ts');
+							$record[$name] = Api\DateTime::server2user($record[$name],'ts');
 						}
 					}
 					
@@ -447,13 +450,13 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					// Need to handle format first
 					if($format == 1)
 					{
-						$formatted = egw_time::createFromFormat('!'.egw_time::$user_dateformat, $record[$name]);
-						if($formatted && $errors = egw_time::getLastErrors() && $errors['error_count'] == 0)
+						$formatted = Api\DateTime::createFromFormat('!'.Api\DateTime::$user_dateformat, $record[$name]);
+						if($formatted && $errors = Api\DateTime::getLastErrors() && $errors['error_count'] == 0)
 						{
 							$record[$name] = $formatted->getTimestamp();
 						}
 					}
-					$record[$name] = egw_time::server2user($record[$name],'ts');
+					$record[$name] = Api\DateTime::server2user($record[$name],'ts');
 					if(is_array(self::$cf_parse_cache[$appname][0]['date']) &&
 							in_array($name, self::$cf_parse_cache[$appname][0]['date'])) {
 						// Custom fields stored in a particular format (from customfields_widget)
@@ -484,7 +487,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			if($appname) {
 				$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
 			}
-			$categories = new categories('',$appname);
+			$categories = new Api\Categories('',$appname);
 			foreach((array)$fields['select-cat'] as $name) {
 				if($record[$name]) {
 					// Only parse name if it needs it

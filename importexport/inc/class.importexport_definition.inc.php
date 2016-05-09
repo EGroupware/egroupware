@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * class definition
  *
@@ -38,7 +40,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	);
 
 	/**
-	 * @var so_sql holds so_sql object
+	 * @var so_sql holds Api\Storage\Base object
 	 */
 	private $so_sql;
 
@@ -64,7 +66,7 @@ class importexport_definition implements importexport_iface_egw_record {
 	 * @param string $_identifier
 	 */
 	public function __construct( $_identifier='' ) {
-		$this->so_sql = new so_sql(self::_appname ,self::_defintion_talbe);
+		$this->so_sql = new Api\Storage\Base(self::_appname ,self::_defintion_talbe);
 		$this->user = $GLOBALS['egw_info']['user']['user_id'];
 		$this->is_admin = $GLOBALS['egw_info']['user']['apps']['admin'] || $GLOBALS['egw_setup'] ? true : false;
 		// compability to string identifiers
@@ -282,7 +284,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		$this->so_sql->data['filter'] = importexport_arrayxml::array2xml( $this->definition['filter'] );
 		$this->so_sql->data['modified'] = time();
 		if ($this->so_sql->save( array( 'definition_id' => $_dst_identifier ))) {
-			throw new Exception('Error: so_sql was not able to save definition: '.$this->get_identifier());
+			throw new Exception('Error: Api\Storage\Base was not able to save definition: '.$this->get_identifier());
 		}
 
 		return $this->definition['definition_id'];
@@ -342,7 +344,7 @@ class importexport_definition implements importexport_iface_egw_record {
 			throw('Error: User '. $this->user. 'does not have permissions to delete definition '.$this->get_identifier());
 		}
 		if(!$this->so_sql->delete()) {
-			throw('Error: so_sql was not able to delete definition: '.$this->get_identifier());
+			throw('Error: Api\Storage\Base was not able to delete definition: '.$this->get_identifier());
 		}
 	}
 

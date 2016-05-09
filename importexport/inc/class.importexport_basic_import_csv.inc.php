@@ -8,6 +8,8 @@
  * @author Nathan Gray
  */
 
+use EGroupware\Api;
+use EGroupware\Api\Link;
 
 /**
  * A basic CSV import plugin.
@@ -355,7 +357,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 				}
 				else if($type == 'search')
 				{
-					$result = egw_link::query($app, $app_id);
+					$result = Link::query($app, $app_id);
 					do
 					{
 						$app_id = key($result);
@@ -369,7 +371,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 				// Searching, take first result
 				if(!is_numeric($app_id))
 				{
-					$result = egw_link::query($app, $app_id);
+					$result = Link::query($app, $app_id);
 					do
 					{
 						$app_id = key($result);
@@ -385,7 +387,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			}
 			if (!$this->dry_run && $app && $app_id && ($app != $this->definition->application || $app_id != $id))
 			{
-				$link_id = egw_link::link($this->definition->application,$id,$app,$app_id);
+				$link_id = Link::link($this->definition->application,$id,$app,$app_id);
 			}
 		}
 	}
@@ -426,7 +428,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 				if($fields[$field]) $label = $fields[$field];
 			}
 		} catch (Exception $e) {
-			translation::add_app($definition->application);
+			Api\Translation::add_app($definition->application);
 			foreach($labels as $field => &$label) {
 				$label = lang($label);
 			}
@@ -443,7 +445,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		}
 		$this->preview_records = array();
 
-		return html::table($rows);
+		return Api\Html::table($rows);
 	}
 
 	/**
@@ -533,7 +535,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		// Find matching entry
 		if($app && $custom_field && $value)
 		{
-			$cfs = config::get_customfields($app);
+			$cfs = Api\Storage\Customfields::get($app);
 			// Error if no custom fields, probably something wrong in definition
 			if(!$cfs[$custom_field])
 			{
@@ -557,10 +559,10 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			if($custom_field[0] != '#') $custom_field = '#' . $custom_field;
 error_log("Searching for $custom_field = $value");
 			// Search
-			if(egw_link::get_registry($app, 'query'))
+			if(Link::get_registry($app, 'query'))
 			{
 				$options = array('filter' => array("$custom_field = " . $GLOBALS['egw']->db->quote($value)));
-				$result = egw_link::query($app, '', $options);
+				$result = Link::query($app, '', $options);
 
 				// Only one allowed
 				if($record->get_identifier())

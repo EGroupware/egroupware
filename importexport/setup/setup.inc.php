@@ -10,7 +10,7 @@
  */
 
 $setup_info['importexport']['name']      = 'importexport';
-$setup_info['importexport']['version']   = '14.1';
+$setup_info['importexport']['version']   = '16.1';
 $setup_info['importexport']['app_order'] = 2;
 $setup_info['importexport']['enable']    = 2;
 $setup_info['importexport']['tables']    = array('egw_importexport_definitions');
@@ -36,12 +36,8 @@ $setup_info['importexport']['hooks']['etemplate2_register_widgets'] = 'importexp
 
 /* Dependencies for this app to work */
 $setup_info['importexport']['depends'][] = array(
-	 'appname' => 'phpgwapi',
-	 'versions' => Array('14.1')
-);
-$setup_info['importexport']['depends'][] = array(
-	 'appname' => 'etemplate',
-	 'versions' => Array('14.1')
+	 'appname' => 'api',
+	 'versions' => Array('16.1')
 );
 
 // installation checks for importexport

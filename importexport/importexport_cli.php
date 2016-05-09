@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 $path_to_egroupware = realpath(dirname(__FILE__).'/..');
 
 $usage = "usage:
@@ -148,7 +150,7 @@ $po = new $definition->plugin;
 $resource = fopen( $file, 'r' );
 $po->$type( $resource, $definition );
 
-common::egw_exit();
+exit();
 
 function import_export_access(&$account)
 {

@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /** bo to define {im|ex}ports
  *
  * @todo make this class an egw_record_pool!
@@ -20,7 +22,7 @@ class importexport_definitions_bo {
 	const _defintion_table = 'egw_importexport_definitions';
 
 	/**
-	 * @var so_sql holds so_sql
+	 * @var so_sql holds Api\Storage\Base
 	 */
 	private $so_sql;
 
@@ -31,7 +33,7 @@ class importexport_definitions_bo {
 
 	public function __construct($_query=false, $ignore_acl = false)
 	{
-		$this->so_sql = new so_sql(self::_appname, self::_defintion_table );
+		$this->so_sql = new Api\Storage\Base(self::_appname, self::_defintion_table );
 		if ($_query) {
 			$definitions = $this->so_sql->search($_query, false);
 			foreach ((array)$definitions as $definition) {
@@ -170,7 +172,7 @@ class importexport_definitions_bo {
 	{
 		$export_data = array('metainfo' => array(
 			'type' => 'importexport definitions',
-			'charset' => translation::charset(),
+			'charset' => Api\Translation::charset(),
 			'entries' => count($keys),
 		));
 
@@ -224,10 +226,10 @@ class importexport_definitions_bo {
 		unset ( $data );
 
 		// convert charset into internal used charset
-		$definitions = translation::convert(
+		$definitions = Api\Translation::convert(
 			$definitions,
 			$metainfo['charset'],
-			translation::charset()
+			Api\Translation::charset()
 		);
 
 		// Avoid warning if no definitions found
@@ -273,7 +275,7 @@ class importexport_definitions_bo {
 	public static function export_from_import(importexport_definition $import)
 	{
 		// Only operates on import definitions
-		if($import->type != 'import') throw new egw_exception_wrong_parameter('Only import definitions');
+		if($import->type != 'import') throw new Api\Exception\WrongParameter('Only import definitions');
 
 		// Find export plugin
 		$plugin = str_replace('import', 'export',$import->plugin);
