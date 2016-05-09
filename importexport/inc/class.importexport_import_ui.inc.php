@@ -471,7 +471,7 @@ use EGroupware\Api\Etemplate;
 						if($dst_file)
 						{
 							// Still have uploaded file, jump there
-							$GLOBALS['egw']->session->appsession('csvfile','',$dst_file);
+							Cache::setSession($definition->application,'csvfile',$dst_file);
 							$edit_link['step'] = 'wizard_step30';
 						}
 						$edit_link = Egw::link('/index.php',$edit_link);

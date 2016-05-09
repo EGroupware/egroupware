@@ -124,15 +124,15 @@ class importexport_wizard_basic_import_csv
 			{
 				case 'next':
 					// Process sample file for fields
-					if ($GLOBALS['egw']->session->appsession('csvfile',$content['application']) &&
-						($handle = fopen($GLOBALS['egw']->session->appsession('csvfile',$content['application']), "rb")) !== FALSE
+					if (Api\Cache::getSession($content['application'],'csvfile') &&
+						($handle = fopen(Api\Cache::getSession($content['application'],'csvfile'), "rb")) !== FALSE
 					) {
 						$data = fgetcsv($handle, 8000, $content['fieldsep']);
 						//error_log(array2string($data));
 						fclose($handle);
 
 						// Remove & forget file
-						unlink($GLOBALS['egw']->session->appsession('csvfile',$content['application']));
+						unlink(Api\Cache::getSession($content['application'],'csvfile'));
 						Api\Cache::setSession($content['application'], 'csvfile', '');
 						$content['csv_fields'] = Api\Translation::convert($data,$content['charset']);
 
