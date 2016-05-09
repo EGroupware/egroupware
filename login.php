@@ -115,6 +115,11 @@ else
 		$GLOBALS['egw_info']['server']['template_set'] =
 			$GLOBALS['egw_info']['login_template_set'] = $prefs->data['common']['template_set'];
 	}
+	if ($GLOBALS['egw_info']['login_template_set'] == 'idots')
+	{
+		$GLOBALS['egw_info']['server']['template_set'] =
+			$GLOBALS['egw_info']['login_template_set'] = 'default';
+	}
 	unset($prefs); unset($class);
 
 	$GLOBALS['egw']->framework = Framework::factory();
