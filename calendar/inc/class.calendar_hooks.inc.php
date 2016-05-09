@@ -407,7 +407,6 @@ class calendar_hooks
 				'help'		=> 'Default type of resources application selected in the calendar particpants research form.',
 				'xmlrpc'	=> True,
 				'admin'		=> False,
-				'forced'    => 'resources',
 				'default'	=> 'resources'
 			),
 			'default_private' => array(
