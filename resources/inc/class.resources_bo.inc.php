@@ -23,6 +23,11 @@ use EGroupware\Api\Vfs;
  */
 class resources_bo
 {
+	/**
+	 * Path where the icons are stored (relative to webserver_url)
+	 */
+	const ICON_PATH = '/api/images';
+
 	const DELETED = 'deleted';
 	const PICTURE_NAME = '.picture.jpg';
 	var $resource_icons = '/resources/templates/default/images/resource_icons/';
@@ -833,7 +838,7 @@ class resources_bo
 				$picture = Api\Categories::id2name($resource['cat_id'], 'data');
 				if($picture['icon'])
 				{
-					$picture = !$fullsize?$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon']:'/phpgwapi/images/'.$picture['icon'];
+					$picture = !$fullsize?$GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$picture['icon']:self::ICON_PATH.'/'.$picture['icon'];
 					break;
 				}
 				// fall through

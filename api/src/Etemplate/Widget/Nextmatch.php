@@ -85,6 +85,11 @@ use EGroupware\Api;
  */
 class Nextmatch extends Etemplate\Widget
 {
+	/**
+	 * Path where the icons are stored (relative to webserver_url)
+	 */
+	const ICON_PATH = '/api/images';
+
 	public function __construct($xml='')
 	{
 		if($xml) {
@@ -935,9 +940,9 @@ class Nextmatch extends Etemplate\Widget
 					'no_lang' => true,
 				);
 				// add category icon
-				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.'/phpgwapi/images/'.basename($cat['data']['icon'])))
+				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
 				{
-					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$cat['data']['icon'];
+					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$cat['data']['icon'];
 				}
 			}
 		}
@@ -974,9 +979,9 @@ class Nextmatch extends Etemplate\Widget
 					'prefix' => $prefix,
 				);
 				// add category icon
-				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.'/phpgwapi/images/'.basename($cat['data']['icon'])))
+				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
 				{
-					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$cat['data']['icon'];
+					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$cat['data']['icon'];
 				}
 				unset($cats[$key]);
 			}

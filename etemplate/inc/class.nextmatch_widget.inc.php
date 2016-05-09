@@ -78,6 +78,11 @@
 class nextmatch_widget
 {
 	/**
+	 * Path where the icons are stored (relative to webserver_url)
+	 */
+	const ICON_PATH = '/api/images';
+
+	/**
 	 * Prefix for custom field names
 	 *
 	 */
@@ -810,9 +815,9 @@ class nextmatch_widget
 					'no_lang' => true,
 				);
 				// add category icon
-				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.'/phpgwapi/images/'.basename($cat['data']['icon'])))
+				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
 				{
-					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$cat['data']['icon'];
+					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$cat['data']['icon'];
 				}
 			}
 		}
@@ -849,9 +854,9 @@ class nextmatch_widget
 					'prefix' => $prefix,
 				);
 				// add category icon
-				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.'/phpgwapi/images/'.basename($cat['data']['icon'])))
+				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
 				{
-					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/images/'.$cat['data']['icon'];
+					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$cat['data']['icon'];
 				}
 				unset($cats[$key]);
 			}

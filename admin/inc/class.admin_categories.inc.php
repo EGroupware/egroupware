@@ -34,7 +34,7 @@ class admin_categories
 	/**
 	 * Path where the icons are stored (relative to webserver_url)
 	 */
-	const ICON_PATH = '/phpgwapi/images';
+	const ICON_PATH = '/api/images';
 
 	protected $appname = 'admin';
 	protected $get_rows = 'admin.admin_categories.get_rows';
@@ -332,25 +332,26 @@ class admin_categories
 	}
 
 	/**
-	 * Return icons from /phpgwapi/images
+	 * Return icons from /api/images
 	 *
 	 * @return array filename => label
 	 */
 	static function get_icons()
 	{
-		$dir = dir(EGW_SERVER_ROOT.self::ICON_PATH);
 		$icons = array();
-		$matches = null;
-		while(($file = $dir->read()))
+		if (file_exists($image_dir=EGW_SERVER_ROOT.self::ICON_PATH) && ($dir = dir($image_dir)))
 		{
-			if (preg_match('/^(.*)\\.(png|gif|jpe?g)$/i',$file,$matches))
+			$matches = null;
+			while(($file = $dir->read()))
 			{
-				$icons[$file] = ucfirst($matches[1]);
+				if (preg_match('/^(.*)\\.(png|gif|jpe?g)$/i',$file,$matches))
+				{
+					$icons[$file] = ucfirst($matches[1]);
+				}
 			}
+			$dir->close();
+			asort($icons);
 		}
-		$dir->close();
-		asort($icons);
-
 		return $icons;
 	}
 
