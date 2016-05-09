@@ -35,7 +35,7 @@ if (!is_object(@$GLOBALS['egw']))	// called from outside eGW ==> setup
 	$is_setup = true;
 }
 $db_backup = new Api\Db\Backup();
-$asyncservice = new Api\AsyncService();
+$asyncservice = new Api\Asyncservice();
 
 // download a backup, has to be before any output !!!
 if ($_POST['download'])

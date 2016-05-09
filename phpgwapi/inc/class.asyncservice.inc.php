@@ -17,6 +17,6 @@ use EGroupware\Api;
 /**
  * The class implements a general eGW service to execute callbacks at a given time.
  *
- * @deprecated use Api\AsyncService
+ * @deprecated use Api\Asyncservice
  */
 class asyncservice extends Api\Asyncservice {}

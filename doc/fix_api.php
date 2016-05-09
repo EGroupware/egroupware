@@ -59,7 +59,7 @@ foreach(array(
 	'EGW_ACL_CUSTOM_2' => 'Api\\Acl::CUSTOM2',
 	'EGW_ACL_CUSTOM_3' => 'Api\\Acl::CUSTOM3',
 	'applications' => 'Api\\Egw\\Applications',
-	'asyncservice' => 'Api\\AsyncService',
+	'asyncservice' => 'Api\\Asyncservice',
 	'auth' => 'Api\\Auth',
 	'categories' => 'Api\\Categories',
 	'config::get_customfields' => 'Api\\Storage\\Customfields::get',

@@ -745,7 +745,7 @@ class mail_sieve
 			throw new Api\Exception\WrongParameter('No acc_id given!');
 		}
 		// setting up an async job to enable/disable the vacation message
-		$async = new Api\AsyncService();
+		$async = new Api\Asyncservice();
 		if (empty($_vacation['account_id'])) $_vacation['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
 		$async_id = !empty($_vacation['id']) ? $_vacation['id'] : 'mail-vacation-'.$_vacation['account_id'];
 		$async->delete($async_id);

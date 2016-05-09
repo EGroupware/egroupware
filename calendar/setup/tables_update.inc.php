@@ -1617,7 +1617,7 @@ function calendar_upgrade1_5_001()
 function calendar_upgrade1_5_002()
 {
 	// update the alarm methods
-	$async = new Api\AsyncService();
+	$async = new Api\Asyncservice();
 	foreach((array)$async->read('cal:%') as $job)
 	{
 		if ($job['method'] == 'calendar.bocalupdate.send_alarm')

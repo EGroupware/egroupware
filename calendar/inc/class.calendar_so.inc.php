@@ -111,7 +111,7 @@ class calendar_so
 	/**
 	 * instance of the async object
 	 *
-	 * @var Api\AsyncService
+	 * @var Api\Asyncservice
 	 */
 	var $async;
 	/**

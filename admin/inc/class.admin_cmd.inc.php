@@ -841,7 +841,7 @@ abstract class admin_cmd
 		{
 			return admin_cmd::run_queued_jobs();
 		}
-		$async = new Api\AsyncService();
+		$async = new Api\Asyncservice();
 
 		// we cant use this class as callback, as it's abstract and ExecMethod used by the async service instanciated the class!
 		list($app) = explode('_',$class=$next['type']);
