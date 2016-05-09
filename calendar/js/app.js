@@ -2226,7 +2226,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					},this,et2_calendar_timegrid);
 				}
 			}
-			else
+			else if($j(view.etemplates[0].DOMContainer).is(':visible'))
 			{
 				$j(view.etemplates[0].DOMContainer).css("width","100%");
 				view.etemplates[0].widgetContainer.iterateOver(function(w) {
