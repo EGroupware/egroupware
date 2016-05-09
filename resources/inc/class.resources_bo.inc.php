@@ -673,10 +673,10 @@ class resources_bo
 									$res_info_cache[$resource_id]['useable'] = 1;
 								}
 								// now decrement this quantity useable
-								// TODO : decrement with real event quantity, not 1
-								// but this quantity is not given by calendar search, we should re-use a cal object
-								// to load specific cal infos, like quantity... lot of requests
-								$res_info_cache[$resource_id]['useable']--;
+								$quantity = 1;
+								$this->bocal->so->split_status($part_detail,$quantity);
+								
+								$res_info_cache[$resource_id]['useable']-=$quantity;
 							}
 						}
 					}
