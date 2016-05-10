@@ -441,7 +441,7 @@ class addressbook_bo extends addressbook_so
 				'org_name' => $contact['org_name'],
 				'org_unit' => $contact['org_unit'],
 				'adr_one_locality' => $contact['adr_one_locality'],
-				'bday'     => (int)$contact['bday'] ? DateTime::to($contact['bday'], true) : $contact['bday'],
+				'bday'     => (int)$contact['bday'] ? egw_time::to($contact['bday'], true) : $contact['bday'],
 			)));
 
 		while ($fileas[0] == ':' ||  $fileas[0] == ',')
