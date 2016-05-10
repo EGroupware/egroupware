@@ -78,6 +78,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	// List of queries in progress, to prevent home from requesting the same thing
 	_queries_in_progress: [],
 
+	// Calendar-wide autorefresh
+	_autorefresh_timer: null,
+
 	/**
 	 * Constructor
 	 *
@@ -133,6 +136,13 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false);
 		egw_unregisterGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false);
+
+		// Stop autorefresh
+		if(this._autorefresh_timer)
+		{
+			window.clearInterval(this._autorefresh_timer);
+			this._autorefresh_timer = null;
+		}
 	},
 
 	/**
@@ -2365,6 +2375,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Update app header
 			this.set_app_header(view.header(state.state));
 
+			// Reset auto-refresh timer
+			this._set_autorefresh();
+
 			// Sidebox is updated, we can clear the flag
 			this.state_update_in_progress = false;
 
@@ -3415,7 +3428,77 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				egw.loading_prompt(this.appname,false);
 			}, this),1000);
 
+			// Start calendar-wide autorefresh timer to include more than just nm
+			this._set_autorefresh();
 		}
+	},
+
+	/**
+	 * Set a refresh timer that works for the current view.
+	 * The nextmatch goes into an infinite loop if we let it autorefresh while
+	 * hidden.
+	 */
+	_set_autorefresh: function() {
+		var nm = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+		if(!nm) return;
+		
+		var refresh_preference = "nextmatch-" + nm.options.settings.columnselection_pref + "-autorefresh";
+		var time = this.egw.preference(refresh_preference, 'calendar');
+
+		if(this.state.view == 'listview' && time)
+		{
+			nm._set_autorefresh(time);
+			return;
+		}
+		else
+		{
+			window.clearInterval(nm._autorefresh_timer);
+		}
+		var refresh = function() {
+			// Deleted events are not coming properly, so clear it all
+			this._clear_cache();
+			// Force redraw to current state
+			this.setState({state: this.state});
+
+			// This is a fast update, but misses deleted events
+			//app.calendar._fetch_data(app.calendar.state);
+		};
+		
+		// Start / update timer
+		if (this._autorefresh_timer)
+		{
+			window.clearInterval(this._autorefresh_timer);
+			this._autorefresh_timer = null;
+		}
+		if(time > 0)
+		{
+			this._autorefresh_timer = setInterval(jQuery.proxy(refresh, this), time * 1000);
+		}
+
+		// Bind to tab show/hide events, so that we don't bother refreshing in the background
+		$j(nm.getInstanceManager().DOMContainer.parentNode).on('hide.calendar', jQuery.proxy(function(e) {
+			// Stop
+			window.clearInterval(this._autorefresh_timer);
+			$j(e.target).off(e);
+
+			// If the autorefresh time is up, bind once to trigger a refresh
+			// (if needed) when tab is activated again
+			this._autorefresh_timer = setTimeout(jQuery.proxy(function() {
+				// Check in case it was stopped / destroyed since
+				if(!this._autorefresh_timer) return;
+
+				$j(nm.getInstanceManager().DOMContainer.parentNode).one('show.calendar',
+					// Important to use anonymous function instead of just 'this.refresh' because
+					// of the parameters passed
+					jQuery.proxy(function() {refresh();},this)
+				);
+			},this), time*1000);
+		},this));
+		$j(nm.getInstanceManager().DOMContainer.parentNode).on('show.calendar', jQuery.proxy(function(e) {
+			// Start normal autorefresh timer again
+			this._set_autorefresh(this.egw.preference(refresh_preference, 'calendar'));
+			$j(e.target).off(e);
+		},this));
 	},
 
 	/**
