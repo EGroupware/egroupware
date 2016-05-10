@@ -2953,11 +2953,12 @@ class Mail
 						$isAutoFolder=false;
 						foreach($autoFoldersTmp as $afk=>$aF)
 						{
-							//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
+							//error_log(__METHOD__.__LINE__.$k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
 							if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
-								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter || //k may be child of an autofolder
+								stristr($mySpecialUseFolders[$aF],$k.$delimiter)!==false)) // k is parent of an autofolder
 							{
-								//error_log($k.'->'.$mySpecialUseFolders[$aF]);
+								//error_log(__METHOD__.__LINE__.$k.'->'.$mySpecialUseFolders[$aF]);
 								$isAutoFolder=true;
 								$autoFolderObjects[$k]=$f;
 								break;
@@ -2979,7 +2980,8 @@ class Mail
 						{
 							//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
 							if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
-								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter|| //k may be child of an autofolder
+								stristr($mySpecialUseFolders[$aF],$k.$delimiter)!==false)) // k is parent of an autofolder
 							{
 								//error_log($k.'->'.$mySpecialUseFolders[$aF]);
 								$isAutoFolder=true;
@@ -2997,7 +2999,8 @@ class Mail
 					{
 						//error_log($k.':'.$aF.'->'.$mySpecialUseFolders[$aF]);
 						if($aF && strlen($mySpecialUseFolders[$aF])&&/*strlen($k)>=strlen($mySpecialUseFolders[$aF])&&*/
-								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+								($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter|| //k may be child of an autofolder
+								stristr($mySpecialUseFolders[$aF],$k.$delimiter)!==false)) // k is parent of an autofolder
 						{
 							//error_log($k.'->'.$mySpecialUseFolders[$aF]);
 							$isAutoFolder=true;
@@ -3025,7 +3028,7 @@ class Mail
 					}
 				}
 			}
-			//error_log(__METHOD__.__LINE__.array2string($autoFoldersTmp));
+			//error_log(__METHOD__.__LINE__.array2string($autoFolderObjects));
 			// avoid calling sortByAutoFolder as it is not regarding subfolders
 			$autoFolderObjectsTmp = $autoFolderObjects;
 			unset($autoFolderObjects);
@@ -3034,7 +3037,9 @@ class Mail
 			{
 				foreach($autoFolderObjectsTmp as $k => $f)
 				{
-					if($aF && ($mySpecialUseFolders[$aF]==$k || substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter))
+					if($aF && ($mySpecialUseFolders[$aF]==$k ||
+						substr($k,0,strlen($mySpecialUseFolders[$aF].$delimiter))==$mySpecialUseFolders[$aF].$delimiter ||
+						stristr($mySpecialUseFolders[$aF],$k.$delimiter)!==false))
 					{
 						$autoFolderObjects[$k]=$f;
 					}
