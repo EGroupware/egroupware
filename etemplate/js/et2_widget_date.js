@@ -603,7 +603,7 @@ var et2_date_duration = et2_date.extend(
 
 		// Get translations
 		this.time_formats = {
-			"d": this.options.short_labels ? this.egw().lang("m") : this.egw().lang("Days"),
+			"d": this.options.short_labels ? this.egw().lang("d") : this.egw().lang("Days"),
 			"h": this.options.short_labels ? this.egw().lang("h") : this.egw().lang("Hours"),
 			"m": this.options.short_labels ? this.egw().lang("m") : this.egw().lang("Minutes")
 		},
