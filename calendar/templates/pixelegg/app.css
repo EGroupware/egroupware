@@ -11,7 +11,7 @@
  * @package calendar
  * @version $Id$
  */
-/* $Id: app.css 56001 2016-05-03 21:58:58Z nathangray $ */
+/* $Id: app.css 56059 2016-05-06 09:32:17Z hnategh $ */
 /*Media print classes*/
 @media print {
   #calendar-view.et2_container,
@@ -21,7 +21,7 @@
     height: auto !important;
   }
   #calendar-todo.et2_container {
-    display: none;
+    display: none !important;
   }
   .calendar_calDayTodos .calendar_calDayTodosTable {
     position: relative;
@@ -2625,3 +2625,5 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 #calendar_merge {
   margin: 9px 0 0 0;
 }
+/* ########################################################################################
+/* * Calendar END */

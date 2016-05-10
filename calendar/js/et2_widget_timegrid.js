@@ -1912,17 +1912,20 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			this._resizeTimes();
 		}
 
-		// update day widgets
-		var day_width = (100 / this.day_widgets.length);
-		for(var i = 0; i < this.day_widgets.length; i++)
+		// update day widgets, if not on single day view
+		if(this.day_widgets.length > 1)
 		{
-			var day = this.day_widgets[i];
+			var day_width = (100 / this.day_widgets.length);
+			for(var i = 0; i < this.day_widgets.length; i++)
+			{
+				var day = this.day_widgets[i];
 
-			// Position
-			day.set_left((i*day_width) + '%');
-			day.set_width(day_width + '%');
-			// For some reason the column's method does not set it correctly in Chrome
-			day.header[0].style.width = day_width + '%';
+				// Position
+				day.set_left((i*day_width) + '%');
+				day.set_width(day_width + '%');
+				// For some reason the column's method does not set it correctly in Chrome
+				day.header[0].style.width = day_width + '%';
+			}
 		}
 
 		// Stop Firefox from scrolling the day to the top - this would break printing in Chrome
@@ -1935,6 +1938,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				// Explicitly transform to the correct place
 				.css({
 					'transform': 'translateY(-'+this.scrolling.scrollTop()+'px)',
+					'margin-bottom': '-'+this.scrolling.scrollTop()+'px',
 					'height': height+'px'
 			});
 			this.div.css({'height':'','max-height':''});
@@ -1955,7 +1959,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				// Re-enable out-of-view formatting on scroll
 				.on('scroll', jQuery.proxy(this._scroll, this))
 				// Remove translation
-				.css('transform','');
+				.css({'transform':'', 'margin-bottom':''});
 		}
 	}
 });}).call(this);

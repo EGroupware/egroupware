@@ -7,7 +7,7 @@
 		height: auto !important;
 	}
 	#calendar-todo.et2_container {
-		display: none;
+		display: none !important;
 	}
 	.calendar_calDayTodos .calendar_calDayTodosTable {
 		position: relative;
