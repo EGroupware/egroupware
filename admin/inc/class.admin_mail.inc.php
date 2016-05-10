@@ -1158,7 +1158,7 @@ class admin_mail
 			try {
 				$sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
 					$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
-					$sel_options['acc_folder_junk'] = $sel_options['notify_folders'] =
+					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] = $sel_options['notify_folders'] =
 						self::mailboxes(self::imap_client ($content));
 			}
 			catch(Exception $e) {
