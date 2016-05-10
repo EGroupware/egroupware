@@ -699,7 +699,7 @@ var et2_date_duration = et2_date.extend(
 			}
 			else
 			{
-				this.format.text(this.time_formats[display.unit]);
+				this.format.text(display.unit ? this.time_formats[display.unit] : '');
 			}
 		}
 	},
