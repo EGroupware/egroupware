@@ -3293,6 +3293,19 @@ var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_taglist.e
 	},
 
 	/**
+	 * Disable toggle if there are 2 or less options
+	 * @param {Object[]} options
+	 */
+	set_select_options: function(options)
+	{
+		if(options && options.length <= 2 && this.options.multiple == 'toggle')
+		{
+			this.set_multiple(false)
+		}
+		this._super.apply(this, arguments);
+	},
+
+	/**
 	 * Set nextmatch is the function which has to be implemented for the
 	 * et2_INextmatchHeader interface.
 	 *
