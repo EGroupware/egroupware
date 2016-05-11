@@ -359,7 +359,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			else if (event)
 			{
 				// Got an ID that doesn't belong
-				event_ids.splice(i,1);
+				event_ids.splice(i--,1);
 			}
 		}
 		if(!this._parent.disabled)

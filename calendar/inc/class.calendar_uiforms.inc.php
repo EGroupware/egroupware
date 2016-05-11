@@ -2812,6 +2812,56 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
+	 *
+	 * @param string $_eventId id of the event to be changed.  For recurring events
+	 *	it may contain the instance date
+	 * @param string[] $invite Resources to invite
+	 * @param string[] $remove Remove resource from participants
+	 */
+	public function ajax_invite($_eventId, $invite = array(), $remove = array())
+	{
+		list($eventId, $date) = explode(':', $_eventId,2);
+
+		$old_event=$event=$this->bo->read($eventId);
+		foreach($remove as $participant)
+		{
+			unset($event['participants'][$participant]);
+		}
+		foreach($invite as $participant)
+		{
+			$event['participants'][$participant] = 'U';
+		}
+		$conflicts=$this->bo->update($event,false, true, false, true, $message);
+
+		$this->update_client($event['id'],$d);
+		$response = Api\Json\Response::get();
+		if(!is_array($conflicts) && $conflicts)
+		{
+			if(is_int($conflicts))
+			{
+				$event['id'] = $conflicts;
+				$response->call('egw.refresh', '','calendar',$event['id'],'edit');
+			}
+		}
+		else if ($conflicts)
+		{
+			$response->call(
+				'egw_openWindowCentered2',
+				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit
+					&cal_id='.$event['id']
+					.'&start='.$event['start']
+					.'&end='.$event['end']
+					.'&non_interactive=true'
+					.'&cancel_needs_refresh=true',
+				'',750,410);
+		}
+		else if ($message)
+		{
+			$response->call('egw.message',  implode('<br />', $message));
+		}
+	}
+
+	/**
 	 * imports a mail as Calendar
 	 *
 	 * @param array $mailContent = null mail content

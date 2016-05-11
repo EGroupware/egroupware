@@ -1006,7 +1006,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 		do
 		{
-			if(show_weekend || !show_weekend && [0,6].indexOf(this.date_helper.date.getUTCDay()) === -1 || end_date == start_date)
+			if(show_weekend || !show_weekend && [0,6].indexOf(this.date_helper.date.getUTCDay()) === -1 || end_date === start_date)
 			{
 				day_list.push(''+this.date_helper.get_year() + sprintf('%02d',this.date_helper.get_month()) + sprintf('%02d',this.date_helper.get_date()));
 			}
@@ -1047,6 +1047,29 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				break;
 			}
 		}
+		// Determine if we allow a dropped event to use the invite/change actions
+		var _invite_enabled = function(action, event, target)
+		{
+			var event = event.iface.getWidget();
+			var timegrid = target.iface.getWidget() || false;
+			if(event === timegrid || !event || !timegrid ||
+				!event.options.value.owner || !timegrid.options.owner ) return false;
+			var owner_match = false;
+			if(event.options.value.participants)
+			{
+				for(var id in event.options.value.participants)
+				{
+					if(timegrid.options.owner === id ||
+						timegrid.options.owner.indexOf &&
+						timegrid.options.owner.indexOf(id) >= 0)
+					{
+						owner_match = true;
+					}
+				}
+			}
+			return timegrid.options.owner.toString() !== event.options.value.owner.toString() &&
+				!owner_match;
+		};
 
 		// This binds into the egw action system.  Most user interactions (drag to move, resize)
 		// are handled internally using jQuery directly.
@@ -1068,7 +1091,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				var dropEnd = false;
 				var helper = $j('.calendar_d-n-d_timeCounter',_data.ui.helper)[0];
 				if(helper && helper.dropEnd && helper.dropEnd.length >= 1)
-				if (typeof this.dropEnd != 'undefined' && this.dropEnd.length >= 1)
+				if (typeof this.dropEnd !== 'undefined' && this.dropEnd.length >= 1)
 				{
 					dropEnd = helper.dropEnd[0].dataset || false;
 				}
@@ -1092,6 +1115,24 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					// Remove formatting for out-of-view events (full day non-blocking)
 					$j('.calendar_calEventHeader',_data.ui.helper).css('top','');
 					$j('.calendar_calEventBody',_data.ui.helper).css('padding-top','');
+
+					// Disable invite / change actions for same calendar or already participant
+					var event = _data.ui.draggable.data('selected')[0];
+					if(!event || event.id && event.id.indexOf('calendar') !== 0)
+					{
+						event = false;
+					}
+					var enabled = event ? _invite_enabled(
+						widget_object.getActionLink('invite').actionObj,
+						event,
+						widget_object
+					) : false;
+
+					widget_object.getActionLink('invite').enabled = enabled;
+					widget_object.getActionLink('change_participant').enabled = enabled;
+
+					// If invite or change participant are enabled, drag is not
+					widget_object.getActionLink('egw_link_drop').enabled = !enabled;
 
 					if(time.length)
 					{
@@ -1160,19 +1201,21 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	_init_links_dnd: function(mgr,actionLinks) {
 		var self = this;
 
-		var drop_action = mgr.getActionById('egw_link_drop');
+		var drop_link = mgr.getActionById('egw_link_drop');
+		var drop_change_participant = mgr.getActionById('change_participant');
+		var drop_invite = mgr.getActionById('invite');
 		var drag_action = mgr.getActionById('egw_link_drag');
 
 		// Check if this app supports linking
 		if(!egw.link_get_registry(this.dataStorePrefix || 'calendar', 'query') ||
 			egw.link_get_registry(this.dataStorePrefix || 'calendar', 'title'))
 		{
-			if(drop_action)
+			if(drop_link)
 			{
-				drop_action.remove();
-				if(actionLinks.indexOf(drop_action.id) >= 0)
+				drop_link.remove();
+				if(actionLinks.indexOf(drop_link.id) >= 0)
 				{
-					actionLinks.splice(actionLinks.indexOf(drop_action.id),1);
+					actionLinks.splice(actionLinks.indexOf(drop_link.id),1);
 				}
 			}
 			if(drag_action)
@@ -1185,12 +1228,11 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			}
 			return;
 		}
-
 		// Don't re-add
-		if(drop_action == null)
+		if(drop_link == null)
 		{
 			// Create the drop action that links entries
-			drop_action = mgr.addAction('drop', 'egw_link_drop', egw.lang('Create link'), egw.image('link'), function(action, source, target) {
+			drop_link = mgr.addAction('drop', 'egw_link_drop', egw.lang('Create link'), egw.image('link'), function(action, source, target) {
 
 				// Extract link IDs
 				var links = [];
@@ -1256,18 +1298,62 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				}
 
 			},true);
+
+			drop_link.acceptedTypes = ['default','link'];
+			drop_link.hideOnDisabled = true;
+			
+			// Create the drop action for moving events between calendars
+			var invite_action = function(action, source, target) {
+
+				// Extract link IDs
+				var links = [];
+				var id = '';
+				for(var i = 0; i < source.length; i++)
+				{
+					// Check for no ID (invalid) or same manager (dragging an event)
+					if(!source[i].id) continue;
+					if(source[i].manager === target.manager)
+					{
+
+						// Find the timegrid, could have dropped on an event
+						var timegrid = target.iface.getWidget();
+						while(target.parent && timegrid.instanceOf && !timegrid.instanceOf(et2_calendar_timegrid))
+						{
+							target = target.parent;
+							timegrid = target.iface.getWidget();
+						}
+
+						// Leave the helper there until the update is done
+						var loading = action.ui.helper.clone(true).appendTo($j('body'));
+						var cal_id = source[i].id.split('::');
+						egw().json('calendar.calendar_uiforms.ajax_invite', [
+								cal_id[1],
+								timegrid.options.owner,
+								action.id === 'change_participant' ? self.options.owner : []
+							],
+							function() { loading.remove();}
+						).sendRequest(true);
+						// Ok, stop.
+						return false;
+					}
+				}
+			};
+
+			drop_change_participant = mgr.addAction('drop', 'change_participant', egw.lang('Change to'), egw.image('participant'), invite_action,true);
+			drop_change_participant.acceptedTypes = ['calendar'];
+			drop_change_participant.hideOnDisabled = true;
+
+			drop_invite = mgr.addAction('drop', 'invite', egw.lang('Invite'), egw.image('participant'), invite_action,true);
+			drop_invite.acceptedTypes = ['calendar'];
+			drop_invite.hideOnDisabled = true;
 		}
-		if(actionLinks.indexOf(drop_action.id) < 0)
+		if(actionLinks.indexOf(drop_link.id) < 0)
 		{
-			actionLinks.push(drop_action.id);
+			actionLinks.push(drop_link.id);
 		}
-		// Accept other links, and files dragged from the filemanager
-		// This does not handle files dragged from the desktop.  They are
-		// handled by et2_nextmatch, since it needs DOM stuff
-		if(drop_action.acceptedTypes.indexOf('link') == -1)
-		{
-			drop_action.acceptedTypes.push('link');
-		}
+
+		actionLinks.push(drop_invite.id);
+		actionLinks.push(drop_change_participant.id);
 
 		// Don't re-add
 		if(drag_action == null)
@@ -1287,7 +1373,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		{
 			actionLinks.push(drag_action.id);
 		}
-		drag_action.set_dragType('link');
+		drag_action.set_dragType(['link','calendar']);
 	},
 
 	/**

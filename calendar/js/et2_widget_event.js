@@ -866,6 +866,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		var action_links = this._get_action_links(actions);
 		action_links.push('egw_link_drag');
 		action_links.push('egw_link_drop');
+		action_links.push('invite');
 		this._actionObject.updateActionLinks(action_links);
 	},
 
@@ -933,12 +934,6 @@ et2_calendar_event.owner_check = function owner_check(event, parent)
 				owner_match = true;
 				break;
 			}
-		}
-		if(!owner_match)
-		{
-			owner_match = (parent.options.owner == event.owner ||
-				parent_owner.indexOf &&
-				parent_owner.indexOf(event.owner) >= 0);
 		}
 	}
 	return owner_match;
