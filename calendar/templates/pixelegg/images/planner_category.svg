@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<?xml-stylesheet type="text/css" href="../../../../pixelegg/less/svg.css" ?>
-<svg version="1.1" id="calendar_planner_category" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
 <g>
 	<g>
+		<path fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" d="M25.991,0.996h-4.976v2.985h3.98c1.648,0,2.984,1.336,2.984,2.985
+			v17.91c0,1.647-1.336,2.985-2.984,2.985H7.084c-1.648,0-2.985-1.338-2.985-2.985V19.9H1.114v5.971
+			c0,2.748,2.228,4.977,4.976,4.977h19.902c2.748,0,4.977-2.229,4.977-4.977v-19.9C30.968,3.223,28.738,0.996,25.991,0.996z"/>
+	</g>
+</g>
+<g>
+	<g>
 		<g>
-			<path fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" d="M7.617,1.495c0,0-3.182-0.531-4.242,0.529
-				c-1.061,1.061-0.53,4.243-0.53,4.243L8.678,12.1l4.773-4.772L7.617,1.495z"/>
+			<path fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" d="M9.864,1.243c0,0-5.751-0.968-7.667,0.964
+				C0.28,4.141,1.241,9.94,1.241,9.94L11.78,20.571l8.626-8.698L9.864,1.243z"/>
 		</g>
 	</g>
-	
-		<circle fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke="#E6E6E6" stroke-width="0.75" stroke-miterlimit="10" cx="5.056" cy="3.889" r="1.125"/>
+	<ellipse fill="#696969" stroke="#E6E6E6" stroke-width="0.75" stroke-miterlimit="10" cx="5.236" cy="5.606" rx="2.034" ry="2.051"/>
 </g>
-<polygon fill-rule="evenodd" clip-rule="evenodd" fill="#696969" stroke="#E6E6E6" stroke-miterlimit="10" points="11.617,2.552 
-	16.372,7.307 8.904,14.921 3.917,9.934 3.917,30.639 27.896,30.639 27.896,2.552 "/>
 </svg>
