@@ -201,7 +201,7 @@ class Sql
 			if (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']) &&
 				!preg_match('/^[0-9a-f]{32}$/',$data['account_passwd']))	// md5 hash
 			{
-				$data['account_passwd'] = $GLOBALS['egw']->auth->encrypt_sql($data['account_passwd']);
+				$data['account_passwd'] = Api\Auth::encrypt_sql($data['account_passwd']);
 			}
 			$to_write['account_pwd'] = $data['account_passwd'];
 			$to_write['account_lastpwd_change'] = time();

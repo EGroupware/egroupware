@@ -937,7 +937,7 @@ class Session
 		$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
 		if (!$this->account_id)
 		{
-			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) !accounts::name2id('$this->account_lid')");
+			if (self::ERROR_LOG_DEBUG) error_log("*** Session::verify($sessionid) !accounts::name2id('$this->account_lid')");
 			return false;
 		}
 
@@ -955,7 +955,7 @@ class Session
 
 		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
 		{
-			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) accounts is expired");
+			if (self::ERROR_LOG_DEBUG) error_log("*** Session::verify($sessionid) accounts is expired");
 			return false;
 		}
 		$this->passwd = base64_decode(Cache::getSession('phpgwapi', 'password'));
@@ -966,7 +966,7 @@ class Session
 		}
 		if ($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
-			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) wrong domain");
+			if (self::ERROR_LOG_DEBUG) error_log("*** Session::verify($sessionid) wrong domain");
 			return false;
 		}
 
@@ -975,7 +975,7 @@ class Session
 			if (strtoupper(substr(PHP_OS,0,3)) != 'WIN' && (!$GLOBALS['egw_info']['user']['session_ip'] ||
 				$GLOBALS['egw_info']['user']['session_ip'] != $this->getuser_ip()))
 			{
-				if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) wrong IP");
+				if (self::ERROR_LOG_DEBUG) error_log("*** Session::verify($sessionid) wrong IP");
 				return false;
 			}
 		}
@@ -988,7 +988,7 @@ class Session
 		}
 		if (!$this->account_lid)
 		{
-			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) !account_lid");
+			if (self::ERROR_LOG_DEBUG) error_log("*** Session::verify($sessionid) !account_lid");
 			return false;
 		}
 
@@ -1007,13 +1007,13 @@ class Session
 			$_REQUEST[self::EGW_SESSION_NAME] === $this->sessionid &&
 			(!isset($_COOKIE[self::EGW_SESSION_NAME]) || $_COOKIE[self::EGW_SESSION_NAME] !== $_REQUEST[self::EGW_SESSION_NAME]))
 		{
-			if (self::ERROR_LOG_DEBUG) error_log("--> session::verify($sessionid) SUCCESS, but NO required cookies set --> setting them now");
+			if (self::ERROR_LOG_DEBUG) error_log("--> Session::verify($sessionid) SUCCESS, but NO required cookies set --> setting them now");
 			self::egw_setcookie(self::EGW_SESSION_NAME,$this->sessionid);
 			self::egw_setcookie('kp3',$this->kp3);
 			self::egw_setcookie('domain',$this->account_domain);
 		}
 
-		if (self::ERROR_LOG_DEBUG) error_log("--> session::verify($sessionid) SUCCESS");
+		if (self::ERROR_LOG_DEBUG) error_log("--> Session::verify($sessionid) SUCCESS");
 
 		return true;
 	}

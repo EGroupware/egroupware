@@ -683,7 +683,7 @@ class Acl
 						if (!$grantor) continue;	// can happen if group has no members
 
 						// Don't allow to override private with group ACL's!
-						$rights &= ~EGW_ACL_PRIVATE;
+						$rights &= ~self::PRIVAT;
 
 						if(!isset($grants[$grantor]))
 						{

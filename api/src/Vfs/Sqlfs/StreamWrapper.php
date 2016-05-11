@@ -1855,7 +1855,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		{
 			return false;
 		}
-		if (!Vfs::check_access($path,EGW_ACL_EDIT,$stat))
+		if (!Vfs::check_access($path,Api\Acl::EDIT,$stat))
 		{
 			return false;	// permission denied
 		}

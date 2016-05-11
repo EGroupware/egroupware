@@ -556,7 +556,7 @@ class DateTime extends \DateTime
 				self::$server_timezone = new DateTimeZone('Europe/Berlin');
 			}
 			error_log(__METHOD__."() invalid server_timezone='{$GLOBALS['egw_info']['server']['server_timezone']}' setting now '".self::$server_timezone->getName()."'!");
-			config::save_value('server_timezone',$GLOBALS['egw_info']['server']['server_timezone'] = self::$server_timezone->getName(),'phpgwapi');
+			Config::save_value('server_timezone',$GLOBALS['egw_info']['server']['server_timezone'] = self::$server_timezone->getName(),'phpgwapi');
 		}
 		if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
 		{

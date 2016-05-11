@@ -1278,7 +1278,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			return $entry ? $entry : "404 Not found";
 		}
 
-		if (!Link::file_access($handler->app, $entry['id'], EGW_ACL_EDIT))
+		if (!Link::file_access($handler->app, $entry['id'], Acl::EDIT))
 		{
 			return '403 Forbidden';
 		}
@@ -1386,7 +1386,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	{
 		error_log(__METHOD__."('$app', $id, attach=".array2string($attach).", delete_via_put=".array2string($delete_via_put).')');
 
-		if (!Link::file_access($app, $id, EGW_ACL_EDIT))
+		if (!Link::file_access($app, $id, Acl::EDIT))
 		{
 			error_log(__METHOD__."('$app', $id, ...) no rights to update attachments");
 			return;	// no rights --> nothing to do
@@ -1836,7 +1836,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		$handler = self::app_handler($app);
 
 		// TODO recursive locks on directories not supported yet
-		if (!$id || !empty($options['depth']) || !$handler->check_access(EGW_ACL_EDIT,$id))
+		if (!$id || !empty($options['depth']) || !$handler->check_access(Acl::EDIT,$id))
 		{
 			return '409 Conflict';
 		}

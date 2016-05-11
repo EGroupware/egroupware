@@ -238,7 +238,7 @@ class Categories
 			}
 
 			// check for read permission
-			if(!$this->check_perms(EGW_ACL_READ, $cat, $globals === 'all_no_acl'))
+			if(!$this->check_perms(Acl::READ, $cat, $globals === 'all_no_acl'))
 			{
 				continue;
 			}
@@ -470,7 +470,7 @@ class Categories
 	 * Checks category permissions for a given list of commaseparated category ids
 	 * and truncates it by the ones the user does not have the requested permission on
 	 *
-	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param int $needed necessary ACL right: Acl::{READ|EDIT|DELETE}
 	 * @param string $cat_list commaseparated list of category ids
 	 * @return string truncated commaseparated list of category ids
 	 */
@@ -487,7 +487,7 @@ class Categories
 		{
 			foreach($cat_arr as $id=>$cat_id)
 			{
-				if (!$this->check_perms($needed, $cat_id, false, $needed == EGW_ACL_READ))	// allow reading all global cats
+				if (!$this->check_perms($needed, $cat_id, false, $needed == Acl::READ))	// allow reading all global cats
 				{
 					unset($cat_arr[$id]);
 				}
@@ -503,7 +503,7 @@ class Categories
 	 *
 	 * If the access of a category is set to private, one needs a private grant for the application
 	 *
-	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param int $needed necessary ACL right: Acl::{READ|EDIT|DELETE}
 	 * @param mixed $category category as array or the category_id
 	 * @param boolean $no_acl_check =false if true, grants are NOT checked, gives access to all non-private categories of all users
 	 * @param boolean $allow_global_read if true, global cats are allowed (independent of app) for reading
@@ -525,7 +525,7 @@ class Categories
 		}
 
 		// Read access to global categories
-		if ($needed == EGW_ACL_READ && (($is_global=array_intersect(explode(',',$category['owner']),$this->global_owners)) ||
+		if ($needed == Acl::READ && (($is_global=array_intersect(explode(',',$category['owner']),$this->global_owners)) ||
 			$no_acl_check && $category['access'] == 'public') &&	// no_acl_check only means public cats
 			($category['appname'] == self::GLOBAL_APPNAME || $category['appname'] == $this->app_name ||
 			$is_global && $allow_global_read))
@@ -558,7 +558,7 @@ class Categories
 		foreach(explode(',',$category['owner']) as $owner)
 		{
 			$owner_grant = $owner_grant || (($this->grants[$owner] & $needed) &&
-				($category['access'] == 'public' ||  ($this->grants[$owner] & EGW_ACL_PRIVATE)));
+				($category['access'] == 'public' ||  ($this->grants[$owner] & Acl::PRIVAT)));
 		}
 		return $acl_grant && $owner_grant;
 	}
@@ -704,7 +704,7 @@ class Categories
 		if (isset($values['old_parent']) && (int)$values['old_parent'] != (int)$values['parent'])
 		{
 			$ret = $this->check_consistency4update($values);
-			if ($ret !== true) throw new Exception\WrongUserinput($ret);
+			if ($ret !== true) throw new Exception\WrongUserInput($ret);
 			// everything seems in order -> proceed
 			$values['level'] = ($values['parent'] ? $this->id2name($values['parent'],'level')+1:0);
 			$this->adapt_level_in_subtree($values);
@@ -717,7 +717,7 @@ class Categories
 			if ($values['parent'] > 0)
 			{
 				$ret = $this->check_consistency4update($values);
-				if ($ret !== true) throw new Exception\WrongUserinput($ret);
+				if ($ret !== true) throw new Exception\WrongUserInput($ret);
 
 				// everything seems in order -> proceed
 				$values['main']  = $this->id2name($values['parent'],'main');
@@ -1056,7 +1056,7 @@ class Categories
 		static $cat2color = array();
 
 		// ACL check
-		$cats = $GLOBALS['egw']->categories->check_list(EGW_ACL_READ, $_cats);
+		$cats = $GLOBALS['egw']->categories->check_list(Acl::READ, $_cats);
 
 		if (!$cats) return null;
 

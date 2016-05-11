@@ -66,7 +66,7 @@ class Config
 	/**
 	 * reads the whole repository for $this->appname, appname has to be set via the constructor
 	 *
-	 * You can also use the static config::read($app) method, without instanciating the class.
+	 * You can also use the static Config::read($app) method, without instanciating the class.
 	 *
 	 * @return array the whole config-array for that app
 	 */
@@ -95,7 +95,7 @@ class Config
 				if (!isset($this->config_data[$name]))	// has been deleted
 				{
 					self::save_value($name, null, $this->appname, false);
-					//self::$db->delete(config::TABLE,array('config_app'=>$this->appname,'config_name'=>$name),__LINE__,__FILE__);
+					//self::$db->delete(self::TABLE,array('config_app'=>$this->appname,'config_name'=>$name),__LINE__,__FILE__);
 				}
 			}
 
@@ -126,9 +126,8 @@ class Config
 	{
 		if (!$app && (!isset($this) || !is_a($this,__CLASS__)))
 		{
-			throw new Exception\WrongParameter('$app parameter required for static call of config::save_value($name,$value,$app)!');
+			throw new Exception\WrongParameter('$app parameter required for static call of Config::save_value($name,$value,$app)!');
 		}
-		//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
 		if (!$app || isset($this) && is_a($this,__CLASS__) && $app == $this->appname)
 		{
 			$app = $this->appname;
@@ -138,7 +137,7 @@ class Config
 		{
 			self::init_static();
 		}
-		//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
+
 		if (isset(self::$configs[$app][$name]) && self::$configs[$app][$name] === $value)
 		{
 			return True;	// no change ==> exit
@@ -147,13 +146,13 @@ class Config
 		if (!isset($value) || $value === '')
 		{
 			if (isset(self::$configs[$app])) unset(self::$configs[$app][$name]);
-			self::$db->delete(config::TABLE,array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
+			self::$db->delete(self::TABLE,array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
 		else
 		{
 			self::$configs[$app][$name] = $value;
 			if(is_array($value)) $value = json_encode($value);
-			self::$db->insert(config::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
+			self::$db->insert(self::TABLE,array('config_value'=>$value),array('config_app'=>$app,'config_name'=>$name),__LINE__,__FILE__);
 		}
 		if ($update_cache)
 		{
@@ -176,7 +175,7 @@ class Config
 		{
 			self::init_static();
 		}
-		self::$db->delete(config::TABLE,array('config_app' => $this->appname),__LINE__,__FILE__);
+		self::$db->delete(self::TABLE,array('config_app' => $this->appname),__LINE__,__FILE__);
 
 		unset(self::$configs[$this->appname]);
 		Cache::setInstance(__CLASS__, 'configs', self::$configs);
@@ -345,7 +344,7 @@ class Config
 		if (!(self::$configs = Cache::getInstance(__CLASS__, 'configs')) || !is_array(self::$configs['phpgwapi']))
 		{
 			self::$configs = array();
-			foreach(self::$db->select(config::TABLE,'*',false,__LINE__,__FILE__) as $row)
+			foreach(self::$db->select(self::TABLE,'*',false,__LINE__,__FILE__) as $row)
 			{
 				self::$configs[$row['config_app']][$row['config_name']] = self::unserialize($row['config_value']);
 				//error_log(__METHOD__."() configs[$row[config_app]][$row[config_name]]=".array2string(self::$configs[$row['config_app']][$row['config_name']]));

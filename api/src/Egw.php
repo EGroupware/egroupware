@@ -371,7 +371,7 @@ class Egw extends Egw\Base
 					{
 						$GLOBALS['egw']->session->destroy($sessionid);
 					}
-					throw new Exception\Redirect(egw::link('/logout.php'));
+					throw new Exception\Redirect(self::link('/logout.php'));
 				}
 				if ($currentapp == 'admin' || $GLOBALS['egw_info']['flags']['admin_only'])
 				{

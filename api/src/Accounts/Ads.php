@@ -865,7 +865,7 @@ class Ads
 		}
 		else	// we need to run the unlimited query
 		{
-			$query = ldap::quote(strtolower($param['query']));
+			$query = Api\Ldap::quote(strtolower($param['query']));
 
 			$accounts = array();
 			if($param['type'] !== 'groups')
@@ -916,7 +916,7 @@ class Ads
 			}
 			if ($param['type'] === 'groups' || $param['type'] === 'both')
 			{
-				$query = ldap::quote(strtolower($param['query']));
+				$query = Api\Ldap::quote(strtolower($param['query']));
 
 				$filter = null;
 				if(!empty($query) && $query != '*')

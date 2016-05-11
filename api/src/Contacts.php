@@ -334,13 +334,13 @@ class Contacts extends Contacts\Storage
 	/**
 	 * Get the availible addressbooks of the user
 	 *
-	 * @param int $required =EGW_ACL_READ required rights on the addressbook or multiple rights or'ed together,
+	 * @param int $required =Acl::READ required rights on the addressbook or multiple rights or'ed together,
 	 * 	to return only addressbooks fullfilling all the given rights
 	 * @param string $extra_label first label if given (already translated)
 	 * @param int $user =null account_id or null for current user
 	 * @return array with owner => label pairs
 	 */
-	function get_addressbooks($required=EGW_ACL_READ,$extra_label=null,$user=null)
+	function get_addressbooks($required=Acl::READ,$extra_label=null,$user=null)
 	{
 		if (is_null($user))
 		{
@@ -371,11 +371,11 @@ class Contacts extends Contacts\Storage
 			asort($to_sort);
 			$addressbooks += $to_sort;
 		}
-		if ($required != EGW_ACL_ADD &&	// do NOT allow to set accounts as default addressbook (AB can add accounts)
+		if ($required != Acl::ADD &&	// do NOT allow to set accounts as default addressbook (AB can add accounts)
 			!$preferences['addressbook']['hide_accounts'] && (
 				($grants[0] & $required) == $required ||
 				$preferences['common']['account_selection'] == 'groupmembers' &&
-				$this->account_repository != 'ldap' && ($required & EGW_ACL_READ)))
+				$this->account_repository != 'ldap' && ($required & Acl::READ)))
 		{
 			$addressbooks[0] = lang('Accounts');
 		}
@@ -808,7 +808,7 @@ class Contacts extends Contacts\Storage
 			$id = is_array($c) ? $c['id'] : $c;
 
 			$ok = false;
-			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete))
+			if ($this->check_perms(Acl::DELETE,$c,$deny_account_delete))
 			{
 				if (!($old = $this->read($id))) return false;
 				// check if we only mark contacts as deleted, or really delete them
@@ -895,7 +895,7 @@ class Contacts extends Contacts\Storage
 		{
 			$contact['private'] = 0;
 		}
-		if(!$ignore_acl && !$this->check_perms($isUpdate ? EGW_ACL_EDIT : EGW_ACL_ADD,$contact))
+		if(!$ignore_acl && !$this->check_perms($isUpdate ? Acl::EDIT : Acl::ADD,$contact))
 		{
 			$this->error = 'access denied';
 			return false;
@@ -1087,7 +1087,7 @@ class Contacts extends Contacts\Storage
 		{
 			$data = null;	// not found
 		}
-		elseif (!$ignore_acl && !$this->check_perms(EGW_ACL_READ,$data))
+		elseif (!$ignore_acl && !$this->check_perms(Acl::READ,$data))
 		{
 			$data = false;	// no view perms
 		}
@@ -1118,7 +1118,7 @@ class Contacts extends Contacts\Storage
 	 * If the access of a contact is set to private, one need a private grant for a personal addressbook
 	 * or the group membership for a group-addressbook
 	 *
-	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param int $needed necessary ACL right: Acl::{READ|EDIT|DELETE}
 	 * @param mixed $contact contact as array or the contact-id
 	 * @param boolean $deny_account_delete =false if true never allow to delete accounts
 	 * @param int $user =null for which user to check, default current user
@@ -1147,17 +1147,17 @@ class Contacts extends Contacts\Storage
 		$owner = $contact['owner'];
 
 		// allow the user to edit his own account
-		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $user && $this->own_account_acl)
+		if (!$owner && $needed == Acl::EDIT && $contact['account_id'] == $user && $this->own_account_acl)
 		{
 			$access = true;
 		}
 		// dont allow to delete own account (as admin handels it too)
-		elseif (!$owner && $needed == EGW_ACL_DELETE && ($deny_account_delete || $contact['account_id'] == $user))
+		elseif (!$owner && $needed == Acl::DELETE && ($deny_account_delete || $contact['account_id'] == $user))
 		{
 			$access = false;
 		}
 		// for reading accounts (owner == 0) and account_selection == groupmembers, check if current user and contact are groupmembers
-		elseif ($owner == 0 && $needed == EGW_ACL_READ &&
+		elseif ($owner == 0 && $needed == Acl::READ &&
 			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
@@ -1166,7 +1166,7 @@ class Contacts extends Contacts\Storage
 		else
 		{
 			$access = ($grants[$owner] & $needed) &&
-				(!$contact['private'] || ($grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$memberships));
+				(!$contact['private'] || ($grants[$owner] & Acl::PRIVAT) || in_array($owner,$memberships));
 		}
 		//error_log(__METHOD__."($needed,$contact[id],$deny_account_delete,$user) returning ".array2string($access));
 		return $access;
@@ -1176,7 +1176,7 @@ class Contacts extends Contacts\Storage
 	 * Check access to the file store
 	 *
 	 * @param int|array $id id of entry or entry array
-	 * @param int $check EGW_ACL_READ for read and EGW_ACL_EDIT for write or delete access
+	 * @param int $check Acl::READ for read and Acl::EDIT for write or delete access
 	 * @param string $rel_path =null currently not used in InfoLog
 	 * @param int $user =null for which user to check, default current user
 	 * @return boolean true if access is granted or false otherwise
@@ -1410,7 +1410,7 @@ class Contacts extends Contacts\Storage
 			}
 			if ($fields)
 			{
-				if (!$this->check_perms(EGW_ACL_EDIT,$member) || !$this->save($member))
+				if (!$this->check_perms(Acl::EDIT,$member) || !$this->save($member))
 				{
 					++$failed_members;
 				}
@@ -1765,7 +1765,7 @@ class Contacts extends Contacts\Storage
 			$target = $contacts[0];
 			unset($contacts[0]);
 		}
-		if (!$this->check_perms(EGW_ACL_EDIT,$target))
+		if (!$this->check_perms(Acl::EDIT,$target))
 		{
 			echo $this->error = 'No edit permission for the target contact!';
 			return 0;
@@ -1809,7 +1809,7 @@ class Contacts extends Contacts\Storage
 		$success = 1;
 		foreach($contacts as $contact)
 		{
-			if (!$this->check_perms(EGW_ACL_DELETE,$contact))
+			if (!$this->check_perms(Acl::DELETE,$contact))
 			{
 				continue;
 			}
@@ -1875,7 +1875,7 @@ class Contacts extends Contacts\Storage
 	 */
 	function add_list($keys,$owner,$contacts=array(),array &$data=array())
 	{
-		if (!$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner)) return false;
+		if (!$this->check_list(null,Acl::ADD|Acl::EDIT,$owner)) return false;
 
 		try {
 			$ret = parent::add_list($keys,$owner,$contacts,$data);
@@ -1899,7 +1899,7 @@ class Contacts extends Contacts\Storage
 	 */
 	function add2list($contact,$list,array $existing=null)
 	{
-		if (!$this->check_list($list,EGW_ACL_EDIT)) return false;
+		if (!$this->check_list($list,Acl::EDIT)) return false;
 
 		unset(self::$list_cache[$list]);
 
@@ -1915,7 +1915,7 @@ class Contacts extends Contacts\Storage
 	 */
 	function remove_from_list($contact,$list=null)
 	{
-		if ($list && !$this->check_list($list,EGW_ACL_EDIT)) return false;
+		if ($list && !$this->check_list($list,Acl::EDIT)) return false;
 
 		if ($list)
 		{
@@ -1937,7 +1937,7 @@ class Contacts extends Contacts\Storage
 	 */
 	function delete_list($list)
 	{
-		if (!$this->check_list($list,EGW_ACL_DELETE)) return false;
+		if (!$this->check_list($list,Acl::DELETE)) return false;
 
 		foreach((array)$list as $l)
 		{
@@ -2050,7 +2050,7 @@ class Contacts extends Contacts\Storage
 			{
 				foreach ($old_categories as $cat_id)
 				{
-					if (!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					if (!$this->categories->check_perms(Acl::READ, $cat_id))
 					{
 						$old_cats_preserve[] = $cat_id;
 					}
@@ -2108,7 +2108,7 @@ class Contacts extends Contacts\Storage
 		$cat_list = array();
 		foreach($cat_id_list as $cat_id)
 		{
-			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
+			if ($cat_id && $this->categories->check_perms(Acl::READ, $cat_id) &&
 					($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
 			{
 				$cat_list[] = $cat_name;

@@ -892,7 +892,7 @@ class Account implements \ArrayAccess
 	/**
 	 * Check which rights current user has on mail-account
 	 *
-	 * @param int $rights EGW_ACL_(READ|EDIT|DELETE)
+	 * @param int $rights Api\Acl::(READ|EDIT|DELETE)
 	 * @param array|Account $account account array or object
 	 * @return boolean
 	 */
@@ -920,12 +920,12 @@ class Account implements \ArrayAccess
 			{
 				switch($rights)
 				{
-					case EGW_ACL_READ:
+					case Api\Acl::READ:
 						$access = true;
 						break;
 
-					case EGW_ACL_EDIT:
-					case EGW_ACL_DELETE:
+					case Api\Acl::EDIT:
+					case Api\Acl::DELETE:
 						// users have only edit/delete rights on accounts marked as user-editable AND belonging to them personally
 						if (!$account['acc_user_editable'])
 						{

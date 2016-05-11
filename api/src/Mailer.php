@@ -541,7 +541,7 @@ class Mailer extends Horde_Mime_Mail
 			if (!isset($flowed)) $flowed = $this->_body && $this->_body->getType() != 'multipart/encrypted';
 
 			// check if flowed is disabled in mail site configuration
-			if (($config = config::read('mail')) && $config['disable_rfc3676_flowed'])
+			if (($config = Config::read('mail')) && $config['disable_rfc3676_flowed'])
 			{
 				$flowed = false;
 			}

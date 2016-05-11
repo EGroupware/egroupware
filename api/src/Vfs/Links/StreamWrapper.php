@@ -111,8 +111,8 @@ class StreamWrapper extends LinksParent
 		// which gives him then read AND write access to the file store of the entry
 		else
 		{
-			// vfs & stream-wrapper use posix rights, Api\Link::file_access uses EGW_ACL_{EDIT|READ}!
-			$required = $check & Vfs::WRITABLE ? EGW_ACL_EDIT : EGW_ACL_READ;
+			// vfs & stream-wrapper use posix rights, Api\Link::file_access uses Api\Acl::{EDIT|READ}!
+			$required = $check & Vfs::WRITABLE ? Api\Acl::EDIT : Api\Acl::READ;
 			$access = Api\Link::file_access($app,$id,$required,$rel_path,Vfs::$user);
 			$what = "from Api\Link::file_access('$app',$id,$required,'$rel_path,".Vfs::$user.")";
 		}

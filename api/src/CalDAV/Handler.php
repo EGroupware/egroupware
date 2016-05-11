@@ -58,9 +58,9 @@ abstract class Handler
 	 * @var array
 	 */
 	var $method2acl = array(
-		'GET' => EGW_ACL_READ,
-		'PUT' => EGW_ACL_EDIT,
-		'DELETE' => EGW_ACL_DELETE,
+		'GET' => Api\Acl::READ,
+		'PUT' => Api\Acl::EDIT,
+		'DELETE' => Api\Acl::DELETE,
 	);
 	/**
 	 * eGW application responsible for the handler
@@ -212,7 +212,7 @@ abstract class Handler
 	/**
 	 * Check if user has the neccessary rights on an entry
 	 *
-	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
+	 * @param int $acl Api\Acl::READ, Api\Acl::EDIT or Api\Acl::DELETE
 	 * @param array|int $entry entry-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
@@ -291,7 +291,7 @@ abstract class Handler
 		}
 		$extra_acl = $this->method2acl[$method];
 		if ($id && !($entry = $this->read($id, $options['path'])) && ($method != 'PUT' || $entry === false) ||
-			($extra_acl != EGW_ACL_READ && $this->check_access($extra_acl,$entry) === false))
+			($extra_acl != Api\Acl::READ && $this->check_access($extra_acl,$entry) === false))
 		{
 			if ($return_no_access && !is_null($entry))
 			{
@@ -496,7 +496,7 @@ abstract class Handler
 	/**
 	 * Get grants of current user and app
 	 *
-	 * @return array user-id => EGW_ACL_ADD|EGW_ACL_READ|EGW_ACL_EDIT|EGW_ACL_DELETE pairs
+	 * @return array user-id => Api\Acl::ADD|Api\Acl::READ|Api\Acl::EDIT|Api\Acl::DELETE pairs
 	 */
 	public function get_grants()
 	{
@@ -523,22 +523,22 @@ abstract class Handler
 		}
 		$priviledes = array('read-current-user-privilege-set' => 'read-current-user-privilege-set');
 
-		if (is_null($user) || $grants[$user] & EGW_ACL_READ)
+		if (is_null($user) || $grants[$user] & Api\Acl::READ)
 		{
 			$priviledes['read'] = 'read';
 			// allows on all calendars/addressbooks to write properties, as we store them on a per-user basis
 			// and only allow to modify explicit named properties in CalDAV, CardDAV or Calendarserver name-space
 			$priviledes['write-properties'] = 'write-properties';
 		}
-		if (is_null($user) || $grants[$user] & EGW_ACL_ADD)
+		if (is_null($user) || $grants[$user] & Api\Acl::ADD)
 		{
 			$priviledes['bind'] = 'bind';	// PUT for new resources
 		}
-		if (is_null($user) || $grants[$user] & EGW_ACL_EDIT)
+		if (is_null($user) || $grants[$user] & Api\Acl::EDIT)
 		{
 			$priviledes['write-content'] = 'write-content';	// otherwise iOS calendar does not allow to add events
 		}
-		if (is_null($user) || $grants[$user] & EGW_ACL_DELETE)
+		if (is_null($user) || $grants[$user] & Api\Acl::DELETE)
 		{
 			$priviledes['unbind'] = 'unbind';	// DELETE
 		}
@@ -645,7 +645,7 @@ abstract class Handler
 		$privileges = array('read', 'read-current-user-privilege-set');
 		if ($this->caldav->prop_requested('current-user-privilege-set') === true && !isset($props['current-user-privilege-set']))
 		{
-			if ($this->check_access(EGW_ACL_EDIT, $entry))
+			if ($this->check_access(Api\Acl::EDIT, $entry))
 			{
 				$privileges[] = 'write-content';
 			}

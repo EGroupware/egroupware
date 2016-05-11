@@ -1581,7 +1581,7 @@ class Link extends Link\Storage
 	 * @param string $app
 	 * @param int|string $id
 	 * @param string $title title string or null
-	 * @param int $file_access =null EGW_ACL_READ, EGW_ACL_EDIT or both or'ed together
+	 * @param int $file_access =null Acl::READ, Acl::EDIT or both or'ed together
 	 */
 	public static function set_cache($app,$id,$title,$file_access=null)
 	{
@@ -1682,12 +1682,12 @@ class Link extends Link\Storage
 	 * @ToDo $rel_path is not yet implemented, as no app use it currently
 	 * @param string $app
 	 * @param string|int $id id of entry
-	 * @param int $required =EGW_ACL_READ EGW_ACL_{READ|EDIT}
+	 * @param int $required =Acl::READ Acl::{READ|EDIT}
 	 * @param string $rel_path =null
 	 * @param int $user =null default null = current user
 	 * @return boolean true if access granted, false otherwise
 	 */
-	static function file_access($app,$id,$required=EGW_ACL_READ,$rel_path=null,$user=null)
+	static function file_access($app,$id,$required=Acl::READ,$rel_path=null,$user=null)
 	{
 		// are we called for an other user
 		if ($user && $user != $GLOBALS['egw_info']['user']['account_id'])
@@ -1709,15 +1709,15 @@ class Link extends Link\Storage
 
 		$cache =& self::get_cache($app,$id,'file_access');
 
-		if (!isset($cache) || $required == EGW_ACL_EDIT && !($cache & $required))
+		if (!isset($cache) || $required == Acl::EDIT && !($cache & $required))
 		{
 			if(($method = self::get_registry($app,'file_access')))
 			{
-				$cache |= ExecMethod2($method,$id,$required,$rel_path) ? $required|EGW_ACL_READ : 0;
+				$cache |= ExecMethod2($method,$id,$required,$rel_path) ? $required|Acl::READ : 0;
 			}
 			else
 			{
-				$cache |= self::title($app,$id) ? EGW_ACL_READ|EGW_ACL_EDIT : 0;
+				$cache |= self::title($app,$id) ? Acl::READ|Acl::EDIT : 0;
 			}
 			//error_log(__METHOD__."($app,$id,$required,$rel_path) got $cache --> ".($cache & $required ? 'true' : 'false'));
 		}

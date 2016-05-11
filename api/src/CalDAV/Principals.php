@@ -921,7 +921,7 @@ class Principals extends Handler
 		{
 			$addressbooks[] = '/';
 		}
-		foreach(array_keys($GLOBALS['egw']->contacts->get_addressbooks(EGW_ACL_READ)) as $id)
+		foreach(array_keys($GLOBALS['egw']->contacts->get_addressbooks(Api\Acl::READ)) as $id)
 		{
 			if ((in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
 				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
@@ -1366,8 +1366,8 @@ class Principals extends Handler
 			case 'users':
 			case 'groups':
 				$account = $location = $this->accounts->name2id($account, 'account_lid', $account_type[0]);
-				$right = $what == 'write' ? EGW_ACL_EDIT : EGW_ACL_READ;
-				$mask = $what == 'write' ? EGW_ACL_EDIT : EGW_ACL_EDIT|EGW_ACL_READ;	// do NOT report write+read in read
+				$right = $what == 'write' ? Api\Acl::EDIT : Api\Acl::READ;
+				$mask = $what == 'write' ? Api\Acl::EDIT : Api\Acl::EDIT|Api\Acl::READ;	// do NOT report write+read in read
 				break;
 
 			case 'locations':
@@ -1522,13 +1522,13 @@ class Principals extends Handler
 		$set = array();
 		foreach($this->acl->get_grants($app, $app != 'addressbook', $account) as $account_id => $rights)
 		{
-			if ($account_id != $account && ($rights & EGW_ACL_READ) &&
+			if ($account_id != $account && ($rights & Api\Acl::READ) &&
 				($account_lid = $this->accounts->id2name($account_id)) &&
 				$this->accounts->visible($account_lid))	// only add visible accounts, gives error in iCal otherwise
 			{
 				$set[] = Api\CalDAV::mkprop('href', $this->base_uri.'/principals/'.
 					($account_id < 0 ? 'groups/' : 'users/').
-					$account_lid.'/'.$app.'-proxy-'.($rights & EGW_ACL_EDIT ? 'write' : 'read').'/');
+					$account_lid.'/'.$app.'-proxy-'.($rights & Api\Acl::EDIT ? 'write' : 'read').'/');
 			}
 		}
 		return $set;
@@ -1694,13 +1694,13 @@ class Principals extends Handler
 	/**
 	 * Check if user has the neccessary rights on an entry
 	 *
-	 * @param int $acl EGW_ACL_READ, EGW_ACL_EDIT or EGW_ACL_DELETE
+	 * @param int $acl Api\Acl::READ, Api\Acl::EDIT or Api\Acl::DELETE
 	 * @param array|int $entry entry-array or id
 	 * @return boolean null if entry does not exist, false if no access, true if access permitted
 	 */
 	function check_access($acl,$entry)
 	{
-		if ($acl != EGW_ACL_READ)
+		if ($acl != Api\Acl::READ)
 		{
 			return false;
 		}

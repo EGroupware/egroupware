@@ -124,7 +124,7 @@ class Taglist extends Etemplate\Widget
 				}
 				if($this->type == 'taglist-email' && $this->attrs['include_lists'] && is_numeric($val))
 				{
-					$lists = $GLOBALS['egw']->contacts->get_lists(EGW_ACL_READ);
+					$lists = $GLOBALS['egw']->contacts->get_lists(Api\Acl::READ);
 					if(!array_key_exists($val, $lists))
 					{
 						self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($lists))),'');

@@ -344,20 +344,20 @@ class Storage
 			// ToDo: be more specific for 'groupmembers', they should be able to see the groupmembers
 			if (!in_array($preferences['common']['account_selection'], array('none','groupmembers')))
 			{
-				$grants[0] = EGW_ACL_READ;
+				$grants[0] = Api\Acl::READ;
 			}
 			// add account grants for admins (only for current user!)
 			if ($user == $this->user && $this->is_admin())	// admin rights can be limited by ACL!
 			{
-				$grants[0] = EGW_ACL_READ;	// admins always have read-access
-				if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $grants[0] |= EGW_ACL_EDIT;
-				if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $grants[0] |= EGW_ACL_ADD;
-				if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $grants[0] |= EGW_ACL_DELETE;
+				$grants[0] = Api\Acl::READ;	// admins always have read-access
+				if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $grants[0] |= Api\Acl::EDIT;
+				if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $grants[0] |= Api\Acl::ADD;
+				if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $grants[0] |= Api\Acl::DELETE;
 			}
 			// allow certain groups to edit contact-data of accounts
 			if (self::allow_account_edit($user))
 			{
-				$grants[0] |= EGW_ACL_READ|EGW_ACL_EDIT;
+				$grants[0] |= Api\Acl::READ|Api\Acl::EDIT;
 			}
 		}
 		else
@@ -985,12 +985,12 @@ class Storage
 	/**
 	 * Get the availible distribution lists for a user
 	 *
-	 * @param int $required =EGW_ACL_READ required rights on the list or multiple rights or'ed together,
+	 * @param int $required =Api\Acl::READ required rights on the list or multiple rights or'ed together,
 	 * 	to return only lists fullfilling all the given rights
 	 * @param string $extra_labels =null first labels if given (already translated)
 	 * @return array with id => label pairs or false if backend does not support lists
 	 */
-	function get_lists($required=EGW_ACL_READ,$extra_labels=null)
+	function get_lists($required=Api\Acl::READ,$extra_labels=null)
 	{
 		if (!method_exists($this->somain,'get_lists')) return false;
 
