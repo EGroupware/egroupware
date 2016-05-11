@@ -500,7 +500,7 @@ abstract class Merge
 			$exportLimitStore[$app] = $GLOBALS['egw_info']['server']['export_limit'];
 			if ($app !='common')
 			{
-				$app_limit = $GLOBALS['egw']->hooks->single('export_limit',$app);
+				$app_limit = Api\Hooks::single('export_limit',$app);
 				if ($app_limit) $exportLimitStore[$app] = $app_limit;
 			}
 			//error_log(__METHOD__.__LINE__.' building cache for app:'.$app.' -> '.$exportLimitStore[$app]);

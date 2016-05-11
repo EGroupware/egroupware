@@ -323,7 +323,7 @@ class Widget
 			}
 
 			// Use hook to load custom widgets from other apps
-			$widgets = $GLOBALS['egw']->hooks->process('etemplate2_register_widgets',array(),true);
+			$widgets = Api\Hooks::process('etemplate2_register_widgets',array(),true);
 			foreach($widgets as $list)
 			{
 				if (is_array($list))

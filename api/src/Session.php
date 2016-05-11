@@ -566,7 +566,7 @@ class Session
 				$this->session_flags = 'N';
 			}
 
-			if (($hook_result = $GLOBALS['egw']->hooks->process(array(
+			if (($hook_result = Hooks::process(array(
 				'location'       => 'session_creation',
 				'sessionid'      => $this->sessionid,
 				'session_flags'  => $this->session_flags,
@@ -1042,7 +1042,7 @@ class Session
 				),__LINE__,__FILE__)->fetchColumn();
 		}
 
-		$GLOBALS['egw']->hooks->process(array(
+		Hooks::process(array(
 			'location'  => 'session_destroyed',
 			'sessionid' => $sessionid,
 		),'',true);	// true = run hooks from all apps, not just the ones the current user has perms to run

@@ -992,7 +992,7 @@ class Contacts extends Contacts\Storage
 				$GLOBALS['egw']->accounts->cache_invalidate($contact['account_id']);
 				// call edit-accout hook, to let other apps know about changed account (names or email)
 				$GLOBALS['hook_values'] = $GLOBALS['egw']->accounts->read($contact['account_id']);
-				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+				Hooks::process($GLOBALS['hook_values']+array(
 					'location' => 'editaccount',
 				),False,True);	// called for every app now, not only enabled ones)
 			}
@@ -1000,7 +1000,7 @@ class Contacts extends Contacts\Storage
 			if (!$to_write['owner'] && $to_write['account_id'] && $isUpdate)
 			{
 				$to_write['location'] = 'editaccountcontact';
-				$GLOBALS['egw']->hooks->process($to_write,False,True);	// called for every app now, not only enabled ones));
+				Hooks::process($to_write,False,True);	// called for every app now, not only enabled ones));
 			}
 			// Notify linked apps about changes in the contact data
 			Link::notify_update('addressbook',  $contact['id'], $contact);

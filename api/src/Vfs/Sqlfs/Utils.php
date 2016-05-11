@@ -125,7 +125,7 @@ class Utils extends StreamWrapper
 			if ($check_msgs) $msgs = array_merge($msgs, $check_msgs);
 		}
 
-		foreach ($GLOBALS['egw']->hooks->process(array(
+		foreach (Api\Hooks::process(array(
 			'location' => 'fsck',
 			'check_only' => $check_only)
 		) as $app_msgs)

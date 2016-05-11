@@ -1768,7 +1768,7 @@ class Vfs extends Vfs\StreamWrapper
 			$extra[] = $extra_info;
 		}
 
-		if (($vfs_extra = $GLOBALS['egw']->hooks->process(array(
+		if (($vfs_extra = Hooks::process(array(
 			'location' => 'vfs_extra',
 			'path' => $path,
 			'content' => $content,

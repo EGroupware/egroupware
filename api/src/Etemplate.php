@@ -102,7 +102,7 @@ class Etemplate extends Etemplate\Widget\Template
 	 */
 	function exec($method,array $content,array $sel_options=null,array $readonlys=null,array $preserv=null,$output_mode=0,$ignore_validation='',array $changes=null)
 	{
-		$hook_data = $GLOBALS['egw']->hooks->process(
+		$hook_data = Hooks::process(
 			array('hook_location'   => 'etemplate2_before_exec') +
 			array('location_name'   => $this->name) +
 			array('location_object' => &$this) +
@@ -351,7 +351,7 @@ class Etemplate extends Etemplate\Widget\Template
 		// tell request call to remove request, if it is not modified eg. by call to exec in callback
 		self::$request->remove_if_not_modified();
 
-		foreach($GLOBALS['egw']->hooks->process(array(
+		foreach(Hooks::process(array(
 			'hook_location'   => 'etemplate2_before_process',
 			'location_name'   => $template->id,
 		) + self::complete_array_merge(self::$request->preserv, $validated)) as $extras)
@@ -374,7 +374,7 @@ class Etemplate extends Etemplate\Widget\Template
 		$tcontent = is_array($content) ? $content :
 			self::complete_array_merge(self::$request->preserv, $validated);
 
-		$hook_data = $GLOBALS['egw']->hooks->process(
+		$hook_data = Hooks::process(
 			array(
 				'hook_location'   => 'etemplate2_after_process',
 				'location_name'   => $template->id

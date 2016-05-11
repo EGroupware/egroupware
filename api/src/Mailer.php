@@ -503,7 +503,7 @@ class Mailer extends Horde_Mime_Mail
 		}
 		$body_sha1 = null;	// skip sha1, it requires whole mail in memory, which we traing to avoid now
 
-		$mail_id = $GLOBALS['egw']->hooks->process(array(
+		$mail_id = Hooks::process(array(
 			'location' => 'send_mail',
 			'subject' => $subject=$this->getHeader('Subject'),
 			'from' => $this->getHeader('Return-Path') ? $this->getHeader('Return-Path') : $this->getHeader('From'),
@@ -578,7 +578,7 @@ class Mailer extends Horde_Mime_Mail
 		}
 		catch (\Exception $e) {
 			// in case of errors/exceptions call hook again with previous returned mail_id and error-message to log
-			$GLOBALS['egw']->hooks->process(array(
+			Hooks::process(array(
 				'location' => 'send_mail',
 				'subject' => $subject,
 				'from' => $this->getHeader('Return-Path') ? $this->getHeader('Return-Path') : $this->getHeader('From'),

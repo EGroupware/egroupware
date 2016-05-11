@@ -14,6 +14,8 @@
 
 namespace EGroupware\Api\Mail;
 
+use EGroupware\Api;
+
 class Types
 {
 	/**
@@ -26,7 +28,7 @@ class Types
 	static public function getSMTPServerTypes($extended=true)
 	{
 		$retData = self::server_types(false, $extended);
-		foreach($GLOBALS['egw']->hooks->process(array(
+		foreach(Api\Hooks::process(array(
 			'location' => 'smtp_server_types',
 			'extended' => $extended,
 		), array('managementserver'), true) as $app => $data)
@@ -56,7 +58,7 @@ class Types
 	static public function getIMAPServerTypes($extended=true)
 	{
 		$retData = self::server_types(true, $extended);
-		foreach($GLOBALS['egw']->hooks->process(array(
+		foreach(Api\Hooks::process(array(
 			'location' => 'imap_server_types',
 			'extended' => $extended,
 		), array('managementserver'), true) as $app => $data)

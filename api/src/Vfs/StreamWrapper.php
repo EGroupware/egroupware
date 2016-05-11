@@ -360,7 +360,7 @@ class StreamWrapper implements StreamWrapperIface
 
 		if (isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
 		{
-			$GLOBALS['egw']->hooks->process(array(
+			Api\Hooks::process(array(
 				'location' => str_replace('b','',$this->opened_stream_mode) == 'r' ? 'vfs_read' :
 					($this->opened_stream_is_new ? 'vfs_added' : 'vfs_modified'),
 				'path' => $this->opened_stream_path,
@@ -507,7 +507,7 @@ class StreamWrapper implements StreamWrapperIface
 		// call "vfs_unlink" hook only after successful unlink, with data from (not longer possible) stat call
 		if ($ok && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
 		{
-			$GLOBALS['egw']->hooks->process(array(
+			Api\Hooks::process(array(
 				'location' => 'vfs_unlink',
 				'path' => $path[0] == '/' ? $path : self::parse_url($path, PHP_URL_PATH),
 				'url'  => $url,
@@ -560,7 +560,7 @@ class StreamWrapper implements StreamWrapperIface
 		// call "vfs_rename" hook
 		if ($ret && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
 		{
-			$GLOBALS['egw']->hooks->process(array(
+			Api\Hooks::process(array(
 				'location' => 'vfs_rename',
 				'from' => $path_from[0] == '/' ? $path_from : self::parse_url($path_from, PHP_URL_PATH),
 				'to' => $path_to[0] == '/' ? $path_to : self::parse_url($path_to, PHP_URL_PATH),
@@ -593,7 +593,7 @@ class StreamWrapper implements StreamWrapperIface
 		// call "vfs_mkdir" hook
 		if ($ret && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
 		{
-			$GLOBALS['egw']->hooks->process(array(
+			Api\Hooks::process(array(
 				'location' => 'vfs_mkdir',
 				'path' => $path[0] == '/' ? $path : self::parse_url($path, PHP_URL_PATH),
 				'url' => $url,
@@ -631,7 +631,7 @@ class StreamWrapper implements StreamWrapperIface
 		// call "vfs_rmdir" hook, only after successful rmdir
 		if ($ok && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
 		{
-			$GLOBALS['egw']->hooks->process(array(
+			Api\Hooks::process(array(
 				'location' => 'vfs_rmdir',
 				'path' => $path[0] == '/' ? $path : self::parse_url($path, PHP_URL_PATH),
 				'url' => $url,

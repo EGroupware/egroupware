@@ -1057,7 +1057,7 @@ class Accounts
 		}
 		// call hook to notify interested apps about the new account
 		$GLOBALS['hook_values'] = $data;
-		$GLOBALS['egw']->hooks->process($data+array(
+		Hooks::process($data+array(
 			'location' => 'addaccount',
 			// at login-time only the hooks from the following apps will be called
 			'order' => array('felamimail','fudforum'),

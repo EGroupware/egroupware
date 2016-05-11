@@ -260,7 +260,7 @@ class Auth
 				'old_passwd'  => $old_passwd,
 				'new_passwd'  => $new_passwd,
 			);
-			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+			Hooks::process($GLOBALS['hook_values']+array(
 				'location' => 'changepassword'
 			),False,True);	// called for every app now, not only enabled ones)
 		}

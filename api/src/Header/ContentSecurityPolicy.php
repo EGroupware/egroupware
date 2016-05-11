@@ -12,6 +12,8 @@
 
 namespace EGroupware\Api\Header;
 
+use EGroupware\Api;
+
 /**
  * Content Security Policy headers
  */
@@ -50,8 +52,8 @@ class ContentSecurityPolicy
 			// set frame-src attrs of API and apps via hook
 			if ($source == 'frame-src' && !isset($attrs))
 			{
-				$attrs = array('manual.egroupware.org', 'www.egroupware.org');
-				if (($app_additional = $GLOBALS['egw']->hooks->process('csp-frame-src')))
+				$attrs = array('www.egroupware.org');
+				if (($app_additional = Api\Hooks::process('csp-frame-src')))
 				{
 					foreach($app_additional as $addtional)
 					{

@@ -626,11 +626,11 @@ class Categories
 		);
 		if($this->is_global($cat_id, true))	// true = application global (otherwise eg. global addressbook categories call all apps)
 		{
-			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values'],False,True);  // called for every app now, not only enabled ones)
+			Hooks::process($GLOBALS['hook_values'],False,True);  // called for every app now, not only enabled ones)
 		}
 		else
 		{
-			$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'], self::id2name($cat_id,'appname'));
+			Hooks::single($GLOBALS['hook_values'], self::id2name($cat_id,'appname'));
 		}
 
 		$this->db->delete(self::TABLE,$where,__LINE__,__FILE__);

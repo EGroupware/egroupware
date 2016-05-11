@@ -207,7 +207,7 @@ class Link extends Link\Storage
 		// for performance reasons, we do it only once / cache it in the session
 		if (!($search_link_hooks = Cache::getSession(__CLASS__, 'search_link_hooks')))
 		{
-			$search_link_hooks = $GLOBALS['egw']->hooks->process('search_link',array(), (bool)$GLOBALS['egw_info']['flags']['async-service']);
+			$search_link_hooks = Hooks::process('search_link',array(), (bool)$GLOBALS['egw_info']['flags']['async-service']);
 			Cache::setSession(__CLASS__, 'search_link_hooks', $search_link_hooks);
 		}
 		if (is_array($search_link_hooks))

@@ -487,7 +487,7 @@ class Backup
 		Api\Cache::flush(Api\Cache::INSTANCE);
 
 		// search-and-register-hooks
-		$GLOBALS['egw']->hooks->register_all_hooks();
+		Api\Hooks::read(true);
 
 		return '';
 	}
