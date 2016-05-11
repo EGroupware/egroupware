@@ -65,9 +65,6 @@
 				<column width="100%"/>
 			</columns>
 			<rows>
-				<row class="dialogHeader">
-					<description value="Access control" class=""/>
-				</row>
 				<row>
 					<nextmatch id="nm" template="admin.acl.rows" header_left="admin.acl.add" height="400"/>
 				</row>

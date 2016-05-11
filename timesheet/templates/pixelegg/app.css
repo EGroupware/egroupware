@@ -33,6 +33,9 @@
   display: inline-block;
   float: left;
 }
+#timesheet-index_nm.et2_nextmatch .egwGridView_outer thead tr {
+  border-left: 12px solid transparent;
+}
 /*###########################################
 #                                           #
 #       dialogHeader                       #

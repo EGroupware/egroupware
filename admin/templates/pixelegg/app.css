@@ -18,7 +18,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 55790 2016-04-20 18:52:55Z ralfbecker $
+ * @version $Id: app.css 55801 2016-04-21 16:39:59Z ralfbecker $
  */
 .admin_tree table,
 .admin_tree tr,
@@ -173,6 +173,9 @@ select#admin-mailaccount_ident_id {
 #admin-site-config span.subHeader {
   font-weight: bold;
   font-size: 110%;
+}
+#admin-acl {
+  width: 99%;
 }
 @media all {
   div.dhtmlxTree td.standartTreeRow span.selectedTreeRow {

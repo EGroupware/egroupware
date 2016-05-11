@@ -878,3 +878,5 @@ div.mailComposeHeaderSection>table {
 	vertical-align: middle;
 }
 .sieve-title .ruleID::before {content:'#'}
+
+#mail-index_nm.et2_nextmatch .egwGridView_outer thead tr {border-left: 12px solid transparent;}
