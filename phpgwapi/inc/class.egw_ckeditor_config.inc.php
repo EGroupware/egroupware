@@ -68,14 +68,6 @@ class egw_ckeditor_config
 		$labels = array(
 			'kama'  => lang('kama theme'),
 			'moono'	=> lang('moono theme (default)'),
-			'moonocolor'	=> lang('moono color theme'),
-			'moono-dark'	=> lang('dark moono theme'),
-			'Moono_blue'	=> lang('blue moono theme'),
-			'bootstrapck'	=> lang('bootstrap theme for ckeditor'),
-			'icy_orange'	=> lang('icy-orange theme for ckeditor'),
-			'office2013'	=> lang('office-2013 theme for ckeditor'),
-			'minimalist'	=> lang('Minimalist theme'),
-			'flat'			=> lang('Flat theme')
 		);
 		$skins = array();
 
@@ -218,30 +210,14 @@ class egw_ckeditor_config
 					break;
 				case 'silver':
 				case 'bootstrapck':
-					$skin = "bootstrapck";
-					break;
 				case 'moono-dark':
-					$skin = "moono-dark";
-					break;
 				case 'Moono_blue':
-					$skin = "Moono_blue";
-					break;
 				case 'icy_orange':
-					$skin = "icy_orange";
-					break;
 				case 'office2013':
-					$skin = "office2013";
-					break;
 				case 'office2003':
 				case 'moonocolor':
-					$skin = "moonocolor";
-					break;
 				case 'minimalist':
-					$skin = "minimalist";
-					break;
 				case 'flat':
-					$skin = "flat";
-					break;
 				case 'moono':
 				case 'default':
 				default:
@@ -327,7 +303,7 @@ class egw_ckeditor_config
 			// to use browsers native spellchecker, you have to hold CMD/CTRL button on rightclick to
 			// access the browsers spell correction options
 			if ($GLOBALS['egw_info']['server']['enabled_spellcheck']!='YesNoSCAYT') $config['disableNativeSpellChecker'] = false;
-			
+
 			if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
 				is_executable($GLOBALS['egw_info']['server']['aspell_path']) &&
 				($GLOBALS['egw_info']['server']['enabled_spellcheck']!='YesUseWebSpellCheck' &&
