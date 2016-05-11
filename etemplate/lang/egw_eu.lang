@@ -225,3 +225,8 @@ update a single entry by passing the fields.	etemplate	eu	Eguneratu sarrera baka
 upload	etemplate	eu	Kargatu
 view this linked entry in its application	etemplate	eu	zure aplikazioarekin lotura duen sarrera hau ikusi
 wk	etemplate	eu	Astea
+download	developer_tools	eu	Deskargatu
+installed applications	developer_tools	eu	Aplikazioak instalatuta
+no file	developer_tools	eu	ez dago fitxategirik
+remove	developer_tools	eu	ezabatu
+translation	developer_tools	eu	Itzulpena

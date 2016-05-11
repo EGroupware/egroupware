@@ -14,18 +14,13 @@
 	$file = Array(
 		'eTemplate Editor' => $GLOBALS['egw']->link('/index.php','menuaction=etemplate.editor.edit'),
 		'DB-Tools' => $GLOBALS['egw']->link('/index.php','menuaction=etemplate.db_tools.edit'),
+		'_NewLine_', // give a newline
+		'developer_tools' => $GLOBALS['egw']->link('/index.php','menuaction=etemplate.uilangfile.index'),
 	);
-	if (@$GLOBALS['egw_info']['user']['apps']['developer_tools'])
+	if($GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate')
 	{
-		$file += array(
-			'_NewLine_', // give a newline
-			'developer_tools' => $GLOBALS['egw']->link('/index.php','menuaction=developer_tools.uilangfile.index'),
-		);
-	 }
-	 if($GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate')
-	 {
 		display_sidebox($appname,$menu_title,$file);
-	 }
+	}
 	$menu_title = lang('Documentation');
 	$docs = $GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/doc/';
 	$file = Array(

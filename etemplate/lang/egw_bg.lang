@@ -58,3 +58,6 @@ update a single entry by passing the fields.	etemplate	bg	Актуализаци
 view this linked entry in its application	etemplate	bg	показва свързания запис в съотв. приложение
 wk	etemplate	bg	Седм.
 you can respond by visiting:	etemplate	bg	За преглед посетете:
+download	developer_tools	bg	Изтегляне
+remove	developer_tools	bg	премахване
+translation	developer_tools	bg	Превод

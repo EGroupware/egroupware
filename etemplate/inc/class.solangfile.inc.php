@@ -6,7 +6,8 @@
  * @author Miles Lott <milos(at)groupwhere.org>
  * @author Ralf Becker <RalfBecker(at)outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package translationtools
+ * @package etemplate
+ * @subpackage translationtools
  * @version $Id$
  */
 

@@ -24,3 +24,6 @@ select a category	etemplate	lo	ເລືອກໝວດໝູ່
 selectbox	etemplate	lo	ຊ່ອງສໍາລັບເລືອກ
 show	etemplate	lo	ສະແດງ
 wk	etemplate	lo	ອາທິດໜຶ່ງ
+download	developer_tools	lo	ດາວໂຫຼດ
+installed applications	developer_tools	lo	ຕິດຕັ້ງ ແອັບພຼິເຄຊັນສ
+remove	developer_tools	lo	ລຶບອອກ
