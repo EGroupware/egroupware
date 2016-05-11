@@ -315,7 +315,7 @@ class Nextmatch extends Etemplate\Widget
 			{
 				if(is_array($val) && count($val) == 0)
 				{
-					$val = null;
+					unset($filters['col_filter'][$col]);
 				}
 			}
 			//error_log($this . " Valid filters: " . array2string($filters));
