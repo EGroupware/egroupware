@@ -3275,7 +3275,7 @@ var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_taglist.e
 				this.nextmatch.applyFilters({col_filter: col_filter});
 			}
 		},
-		rows: { default: 3}
+		rows: { default: 2}
 	},
 
 	/**
@@ -3326,7 +3326,9 @@ var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_taglist.e
 
 	// Make sure selectbox is not longer than the column
 	resize: function() {
+		this.div.css("height",'');
 		this.div.css("max-width",jQuery(this.parentNode).innerWidth() + "px");
+		this._super.apply(this, arguments);
 	}
 
 });}).call(this);
@@ -3394,13 +3396,8 @@ var et2_nextmatch_accountfilterheader = (function(){ "use strict"; return et2_ta
 	},
 	// Make sure selectbox is not longer than the column
 	resize: function() {
-		var max = jQuery(this.parentNode).innerWidth() - 4;
-		var surroundings = this.getSurroundings()._widgetSurroundings;
-		for(var i = 0; i < surroundings.length; i++)
-		{
-			max -= jQuery(surroundings[i]).outerWidth();
-		}
-		this.div.css("max-width",max + "px");
+		this.div.css("max-width",jQuery(this.parentNode).innerWidth() + "px");
+		this._super.apply(this, arguments);
 	}
 
 });}).call(this);
