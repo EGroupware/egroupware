@@ -1,0 +1,74 @@
+add	developer_tools	en	Add
+add change	developer_tools	en	Add change
+add more	developer_tools	en	Add more
+add new phrase	developer_tools	en	Add new phrase
+add phrase	developer_tools	en	Add phrase
+allows you to add a single phrase	developer_tools	en	Allows you to add a single phrase
+application	developer_tools	en	Application
+back	developer_tools	en	Back
+cancel	developer_tools	en	Cancel
+change	developer_tools	en	Change
+changelog entry has been added	developer_tools	en	Changelog entry has been added.
+changelogs	developer_tools	en	Changelogs
+clears the internal buffer, all changes made sofar are lost	developer_tools	en	Clears the internal buffer, all changes made so far are lost
+create new language file	developer_tools	en	Create new language file
+create sgml file	developer_tools	en	Create SGML file
+developer tools - preferences	developer_tools	en	Developer tools - preferences
+developer_tools	common	en	Translation Tools
+diary	developer_tools	en	Diary
+done	developer_tools	en	Done
+download	developer_tools	en	Download
+download the lang-file to be saved in the apps setup-dir	developer_tools	en	Download the language file to be saved in the apps setup-dir
+edit	developer_tools	en	Edit
+installed applications	developer_tools	en	Installed applications
+language file management	developer_tools	en	Language file management
+list changelogs	developer_tools	en	List changelogs
+load	developer_tools	en	Load
+loading source langfile	developer_tools	en	Loading source langfile
+loading target langfile	developer_tools	en	Loading target langfile
+loads the selected lang-files, to be modified in the next steps	developer_tools	en	Loads the selected lang-files to be modified in the next steps
+message	developer_tools	en	Message
+message_id in english	developer_tools	en	message_id in English
+no file	developer_tools	en	No file
+ok	developer_tools	en	Ok
+original	developer_tools	en	Original
+phrase in english (or empty if identical)	developer_tools	en	Phrase in English, or empty if identical
+preferences	developer_tools	en	Preferences
+preferences have been updated	developer_tools	en	Preferences have been updated.
+project	developer_tools	en	Project
+remove	developer_tools	en	Remove
+removed %1 phrases from the target language, as they are not present in the source language!	developer_tools	en	Removed %1 phrases from the target language as they are not present in the source language!
+returns to the application list, not saved changes get lost !!!	developer_tools	en	Returns to the application list, not saved changes get lost!
+revert	developer_tools	en	Revert
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	en	Saves the added/changed translations to an internal buffer, to be used in further steps
+search changelogs	developer_tools	en	Search changelogs
+search for missing phrase	developer_tools	en	Search for missing phrase
+search new phrases	developer_tools	en	Search new phrases
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	en	Searches the source code for phrases not in the actual source lang file
+select project	developer_tools	en	Select project
+sf project tracker	developer_tools	en	SF project tracker
+sf project tracker preferences	preferences	en	SF project tracker preferences
+source language	developer_tools	en	Source language
+sourceforge project id	developer_tools	en	Sourceforge project ID
+sourceforge project tracker	developer_tools	en	Sourceforge project tracker
+sourceforge project tracker preferences	developer_tools	en	Sourceforge project tracker preferences
+step	developer_tools	en	Step
+submit	developer_tools	en	Submit
+target language	developer_tools	en	Target language
+title	developer_tools	en	Title
+translate	developer_tools	en	Translate
+translation	developer_tools	en	Translation
+translation of phrase	developer_tools	en	Translation of phrase
+update	developer_tools	en	Update
+update database	developer_tools	en	Update database
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	en	Updates the translations of both lang files in your database, so you can verify your work immediately.
+version	developer_tools	en	Version
+write	developer_tools	en	Write
+write the lang-file to the apps setup-dir	developer_tools	en	Write the lang file to the apps setup-dir
+write to lang table	developer_tools	en	Write to lang table
+writing langfile for '%1' ...	developer_tools	en	Writing langfile for '%1' ...
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	en	You have to [Save] every manual change in the above fields, before you can go to the next step!
+you must a version	developer_tools	en	You must a version
+you must enter a change	developer_tools	en	You must enter a change.
+you must select a project	developer_tools	en	You must select a project.
+you need to set your preferences for this app	developer_tools	en	You need to set your preferences for this app!

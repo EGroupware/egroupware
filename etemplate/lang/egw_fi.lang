@@ -1,0 +1,74 @@
+add	developer_tools	fi	Lisää
+add change	developer_tools	fi	Lisää muutos
+add more	developer_tools	fi	Lisää enemmän
+add new phrase	developer_tools	fi	Uusi fraasi
+add phrase	developer_tools	fi	Lisää fraasi
+allows you to add a single phrase	developer_tools	fi	Lisää yksi fraasi
+application	developer_tools	fi	Sovellus
+back	developer_tools	fi	Takaisin
+cancel	developer_tools	fi	Peruuta
+change	developer_tools	fi	Muuta
+changelog entry has been added	developer_tools	fi	Kirjaus muutoslokiin tehty
+changelogs	developer_tools	fi	Muutoslokit
+clears the internal buffer, all changes made sofar are lost	developer_tools	fi	Tyhjentää sisäisen puskurin, tähän asti tekemäsi muutokset poistuvat
+create new language file	developer_tools	fi	Uusi kielitiedosto
+create sgml file	developer_tools	fi	Uusi SGML -tiedosto
+developer tools - preferences	developer_tools	fi	Kehittäjän työkalut - asetukset
+developer_tools	common	fi	Käännöstyökalu
+diary	developer_tools	fi	Päiväkirja
+done	developer_tools	fi	Valmis
+download	developer_tools	fi	Lataa
+download the lang-file to be saved in the apps setup-dir	developer_tools	fi	Lataa kielitiedosto tallennettavaksi sovelluksen setup -hakemistoon
+edit	developer_tools	fi	Muokkaa
+installed applications	developer_tools	fi	Asennetut sovellukset
+language file management	developer_tools	fi	Kielitiedostojen hallinta
+list changelogs	developer_tools	fi	Listaa muutoslokit
+load	developer_tools	fi	Lataa
+loading source langfile	developer_tools	fi	Ladataan lähdekielen kielitiedostoa
+loading target langfile	developer_tools	fi	Ladataan kohdekielen kielitiedostoa
+loads the selected lang-files, to be modified in the next steps	developer_tools	fi	Lataa valitut kielitiedostot muokattaviksi seuraavassa vaiheessa
+message	developer_tools	fi	Viesti
+message_id in english	developer_tools	fi	message_id (englanniksi)
+no file	developer_tools	fi	Ei tiedostoa
+ok	developer_tools	fi	OK
+original	developer_tools	fi	Alkuperäinen
+phrase in english (or empty if identical)	developer_tools	fi	Fraasi englanniksi (tai tyhjä jos sama)
+preferences	developer_tools	fi	Asetukset
+preferences have been updated	developer_tools	fi	Asetukset päivitetty
+project	developer_tools	fi	Projekti
+remove	developer_tools	fi	Poista
+removed %1 phrases from the target language, as they are not present in the source language!	developer_tools	fi	Poistettu %1 fraasi kohdekielestä, koska sitä ei löydy lähdekielestä!
+returns to the application list, not saved changes get lost !!!	developer_tools	fi	Palaa takaisin sovellusluetteloon, tallentamattomat muutokset menetetään !!!!
+revert	developer_tools	fi	Hylkää muutokset
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	fi	Tallentaa lisätyt/muuttuneet käännökset sisäiseen puskuriin käytettäviksi seuraavassa vaiheessa
+search changelogs	developer_tools	fi	Etsi muutoslokeista
+search for missing phrase	developer_tools	fi	Etsi puuttuvat fraasit
+search new phrases	developer_tools	fi	Etsi uusia fraaseja
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	fi	Etsi lähdekoodista lähdekielitiedostosta puuttuvia fraaseja
+select project	developer_tools	fi	Valitse projekti
+sf project tracker	developer_tools	fi	SF projektinseuranta
+sf project tracker preferences	preferences	fi	SF projektinseurannan asetukset
+source language	developer_tools	fi	Lähdekieli
+sourceforge project id	developer_tools	fi	Sourceforge projekti-ID
+sourceforge project tracker	developer_tools	fi	Sourceforge projektinseuranta
+sourceforge project tracker preferences	developer_tools	fi	Sourceforge projektinseurannan asetukset
+step	developer_tools	fi	Vaihe
+submit	developer_tools	fi	Lähetä
+target language	developer_tools	fi	Kohdekieli
+title	developer_tools	fi	Otsikko
+translate	developer_tools	fi	Käännä
+translation	developer_tools	fi	Käännös
+translation of phrase	developer_tools	fi	Fraasin käännös
+update	developer_tools	fi	Päivitä
+update database	developer_tools	fi	Päivitä tietokanta
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	fi	Päivittää molemmista kielitiedostoista ladatut käännökset tietokantaan, jolloin näet lopputuloksen heti.
+version	developer_tools	fi	Versio
+write	developer_tools	fi	Kirjoita
+write the lang-file to the apps setup-dir	developer_tools	fi	Kirjoita kielitiedosto sovelluksen setup -kansioon
+write to lang table	developer_tools	fi	Kirjoita kielitiedostoon
+writing langfile for '%1' ...	developer_tools	fi	Kirjoitetaan kielitiedostoa '%1' ...
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	fi	Jos teit muutoksia, muista painaa [Tallenna] ennen kuin jatkat !!!
+you must a version	developer_tools	fi	Anna versio
+you must enter a change	developer_tools	fi	Anna muutos
+you must select a project	developer_tools	fi	Valitse projekti
+you need to set your preferences for this app	developer_tools	fi	Tarkasta sovelluksen asetukset

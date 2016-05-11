@@ -1,0 +1,73 @@
+add	developer_tools	ko	추가
+add change	developer_tools	ko	변경 추가
+add more	developer_tools	ko	더 추가
+add new phrase	developer_tools	ko	새 구문 추가
+add phrase	developer_tools	ko	구문 추가
+allows you to add a single phrase	developer_tools	ko	단일 구문 추가 허용
+application	developer_tools	ko	응용프로그램
+back	developer_tools	ko	뒤로
+cancel	developer_tools	ko	취소
+change	developer_tools	ko	변경
+changelog entry has been added	developer_tools	ko	Changelog 항목이 추가되었습니다
+changelogs	developer_tools	ko	Changlogs
+clears the internal buffer, all changes made sofar are lost	developer_tools	ko	내부 버퍼를 지우고, 이제까지 변경한 것은 모두 잃게됩니다
+create new language file	developer_tools	ko	새 언어파일 생성
+create sgml file	developer_tools	ko	SGML 파일 생성
+developer tools - preferences	developer_tools	ko	개발 도구 - 환경설정
+developer_tools	common	ko	번역 도구
+diary	developer_tools	ko	일기
+done	developer_tools	ko	완료
+download	developer_tools	ko	내려받기
+download the lang-file to be saved in the apps setup-dir	developer_tools	ko	내려받은 언어-파일은 응용프로그램 설정-디렉토리에 저장됩니다
+edit	developer_tools	ko	편집
+installed applications	developer_tools	ko	설치된 응용프로그램
+language file management	developer_tools	ko	언어파일 관리
+list changelogs	developer_tools	ko	changelogs 목록
+load	developer_tools	ko	불러오기
+loading source langfile	developer_tools	ko	원본 언어파일 불러오는중
+loading target langfile	developer_tools	ko	대상 언어파일 불러오는중
+loads the selected lang-files, to be modified in the next steps	developer_tools	ko	다음 단계에서 변경하기 위해, 선택된 언어파일들을 불러옵니다
+message	developer_tools	ko	메세지
+message_id in english	developer_tools	ko	영어 message_id
+no file	developer_tools	ko	파일 없음
+ok	developer_tools	ko	확인
+original	developer_tools	ko	원본
+phrase in english (or empty if identical)	developer_tools	ko	영어로 된 구문(이나 뜻이 명확하다면 비워도됨)
+preferences	developer_tools	ko	환경설정
+preferences have been updated	developer_tools	ko	환경설정이 갱신되었습니다
+project	developer_tools	ko	프로젝트
+remove	developer_tools	ko	삭제
+returns to the application list, not saved changes get lost !!!	developer_tools	ko	응용프로그램 목록으로 돌아갑니다, 단 저장되지 않은 변경사항은 모두 잃게됩니다!!
+revert	developer_tools	ko	반전(Revert)
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	ko	추가/변경된 번역내용을 내부버퍼로 저장, 이는 다음 단계에서 사용하게 됩니다
+search changelogs	developer_tools	ko	changelogs 검색
+search for missing phrase	developer_tools	ko	없는 구문 검색
+search new phrases	developer_tools	ko	새로운 구문 검색
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	ko	소스-언어-파일에 실제나타나지 않은 구문을 소스코드에서 탐색
+select project	developer_tools	ko	프로젝트를 선택
+sf project tracker	developer_tools	ko	SF 프로젝트 추적기
+sf project tracker preferences	preferences	ko	SF 프로젝트 추적기 환경설정
+source language	developer_tools	ko	소스 언어
+sourceforge project id	developer_tools	ko	소스포지 프로젝트 ID
+sourceforge project tracker	developer_tools	ko	소스포지 프로젝트 추적기
+sourceforge project tracker preferences	developer_tools	ko	소스포지 프로젝트 추적기 환경설정
+step	developer_tools	ko	단계
+submit	developer_tools	ko	보냄(Submit)
+target language	developer_tools	ko	타겟 언어
+title	developer_tools	ko	제목
+translate	developer_tools	ko	번역하기
+translation	developer_tools	ko	번역
+translation of phrase	developer_tools	ko	구문 번역
+update	developer_tools	ko	갱신
+update database	developer_tools	ko	데이터베이스 갱신
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	ko	두개의 언어파일 번역을 데이터베이스에 갱신하고, 작업내역을 즉시 확인할수 있습니다
+version	developer_tools	ko	버전
+write	developer_tools	ko	쓰기
+write the lang-file to the apps setup-dir	developer_tools	ko	어플리케이션 설정디렉토리에 언어-파일 쓰기
+write to lang table	developer_tools	ko	언어 테이블 쓰기
+writing langfile for '%1' ...	developer_tools	ko	'%1' , 언어파일을 쓰고 있습니다.
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	ko	직접 수정하신 모든 것은 반드시 [저장] 하셔야 하며, 다음단계로 진행하기 전에 꼭 해주세요!!
+you must a version	developer_tools	ko	** 버전을 반드시 입력
+you must enter a change	developer_tools	ko	** 변경점을 반드시 입력하세요
+you must select a project	developer_tools	ko	프로젝트를 반드시 선택하셔야 합니다.
+you need to set your preferences for this app	developer_tools	ko	이 응용프로그램의 환경설정을 반드시 하셔야합니다.

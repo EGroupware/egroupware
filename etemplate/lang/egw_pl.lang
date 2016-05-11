@@ -1,0 +1,74 @@
+add	developer_tools	pl	Dodaj
+add change	developer_tools	pl	Dodaj zmianę
+add more	developer_tools	pl	Dodaj więcej
+add new phrase	developer_tools	pl	Dodaj nowe zdanie
+add phrase	developer_tools	pl	Dodaj zdanie
+allows you to add a single phrase	developer_tools	pl	Pozwala dodać pojedyńcze zdanie
+application	developer_tools	pl	Aplikacja
+back	developer_tools	pl	Wstecz
+cancel	developer_tools	pl	Anuluj
+change	developer_tools	pl	Zmień
+changelog entry has been added	developer_tools	pl	Wpis dodany do dzienniku zmian
+changelogs	developer_tools	pl	Dziennik zmian
+clears the internal buffer, all changes made sofar are lost	developer_tools	pl	Czyści bufor wewnętrzny, wszelkie dotychczasowe zmiany zostaną utracone
+create new language file	developer_tools	pl	Utwórz nowy plik językowy
+create sgml file	developer_tools	pl	Utwórz plik sgml
+developer tools - preferences	developer_tools	pl	Ustawienia narzędzi tłumacza
+developer_tools	common	pl	Narzędzie Tłumacza
+diary	developer_tools	pl	Dziennik
+done	developer_tools	pl	wykonane
+download	developer_tools	pl	Pobierz
+download the lang-file to be saved in the apps setup-dir	developer_tools	pl	Ściągnij na twój dysk lokalny plik językowy, który ma być zapisany w katalogu setupu aplikacji.
+edit	developer_tools	pl	Edycja
+installed applications	developer_tools	pl	Zainstalowane aplikacje
+language file management	developer_tools	pl	Zarządzanie wersjami językowymi
+list changelogs	developer_tools	pl	Lista zmian
+load	developer_tools	pl	Załaduj
+loading source langfile	developer_tools	pl	Wczytywanie pliku języka źródłowego
+loading target langfile	developer_tools	pl	Wczytywanie pliku języka docelowego
+loads the selected lang-files, to be modified in the next steps	developer_tools	pl	Ładuje wybrany plik językowy do opracowywania w następnych krokach
+message	developer_tools	pl	Komunikat
+message_id in english	developer_tools	pl	ID komunikatu po angielsku
+no file	developer_tools	pl	Nie ma pliku
+ok	developer_tools	pl	OK
+original	developer_tools	pl	Oryginał
+phrase in english (or empty if identical)	developer_tools	pl	Fraza w języku angielskim (lub puste, jeżeli identyczne)
+preferences	developer_tools	pl	Ustawienia
+preferences have been updated	developer_tools	pl	Zaktualizowano ustawienia
+project	developer_tools	pl	Projekt
+remove	developer_tools	pl	Usuń
+removed %1 phrases from the target language, as they are not present in the source language!	developer_tools	pl	Usunięto %1 fraz z języka docelowego, ponieważ nie były obecne w źródłowym!
+returns to the application list, not saved changes get lost !!!	developer_tools	pl	Powrót do listy aplikacji, wszelkie niezapisane zmiany bedą stracone !!!
+revert	developer_tools	pl	Cofnij
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	pl	Zapisuje dodane/zmienione tłumaczenia do wewnętrznego bufora, by móc użyć ich w dalszych krokach.
+search changelogs	developer_tools	pl	Szukaj zmian
+search for missing phrase	developer_tools	pl	Szukaj brakujących zdań
+search new phrases	developer_tools	pl	Znajdź nowe zdania
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	pl	Przeszukuje kod źródłowy, by znaleść frazy nie zawarte w pliku językowym.
+select project	developer_tools	pl	Wybierz projekt
+sf project tracker	developer_tools	pl	Tracker projektu SF
+sf project tracker preferences	preferences	pl	Ustawienia trackera projektu SF
+source language	developer_tools	pl	Język źródłowy
+sourceforge project id	developer_tools	pl	ID projektu w Sourceforge
+sourceforge project tracker	developer_tools	pl	Tracker projektu Sourceforge
+sourceforge project tracker preferences	developer_tools	pl	Ustawienia trackera projektu Sourceforge
+step	developer_tools	pl	Krok
+submit	developer_tools	pl	Wyślij
+target language	developer_tools	pl	Język docelowy
+title	developer_tools	pl	Tytuł
+translate	developer_tools	pl	Tłumaczenie
+translation	developer_tools	pl	Tłumaczenie
+translation of phrase	developer_tools	pl	Tłumaczenie frazy
+update	developer_tools	pl	Aktualizacja
+update database	developer_tools	pl	Zaktualizuj baze
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	pl	Aktualizuje tłumaczenia obydwu plików w twojej bazie, abyś mógł natychmiastowo sprawdzić swoje tłumaczenie.
+version	developer_tools	pl	Wersja
+write	developer_tools	pl	Zapisz
+write the lang-file to the apps setup-dir	developer_tools	pl	Zapisz plik językowy do katalogu setupu aplikacji
+write to lang table	developer_tools	pl	Zapisz do tabeli LANG
+writing langfile for '%1' ...	developer_tools	pl	Zapisuje plik jezykowy dla %1 ...
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	pl	Musisz [zapisać] kazdą zmianę w polach wyżej przed uruchomieniem następnego kroku !!!
+you must a version	developer_tools	pl	Musisz wersję
+you must enter a change	developer_tools	pl	Musisz wprowadzić zmianę
+you must select a project	developer_tools	pl	Musisz wybrać projekt
+you need to set your preferences for this app	developer_tools	pl	Powinienieś ustawić swoje preferencje dla tej aplikacji

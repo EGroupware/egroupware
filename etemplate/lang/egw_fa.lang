@@ -1,0 +1,64 @@
+add	developer_tools	fa	اضافه کردن
+add change	developer_tools	fa	اضافه کردن تغییرات
+add more	developer_tools	fa	اضافه کردن بیشتر
+add new phrase	developer_tools	fa	اضافه کردن عبارت جدید
+add phrase	developer_tools	fa	اضافه کردن عبارت
+allows you to add a single phrase	developer_tools	fa	به شما اجازه می دهد که یک عبارت جدید اضافه کنید
+application	developer_tools	fa	برنامه
+back	developer_tools	fa	بازگشت
+cancel	developer_tools	fa	لغو
+change	developer_tools	fa	تغییر
+changelog entry has been added	developer_tools	fa	ثبت تغییرات اضافه شد
+changelogs	developer_tools	fa	ثبتهای تغییرات
+create new language file	developer_tools	fa	ایجاد پرنده زبان جدید
+create sgml file	developer_tools	fa	ایجاد پرونده SGML جدید
+developer tools - preferences	developer_tools	fa	تنظیمات ابزارهای توسعه دهندگان
+developer_tools	common	fa	ابزارهای ترجمه
+done	developer_tools	fa	انجام شد
+download	developer_tools	fa	دریافت
+download the lang-file to be saved in the apps setup-dir	developer_tools	fa	دریافت پرونده زبان برای قراردادن در پوشه برپاسازی برنامه
+edit	developer_tools	fa	ویراستن
+installed applications	developer_tools	fa	برنامه های نصب شده
+language file management	developer_tools	fa	مدیریت پرونده زبان
+list changelogs	developer_tools	fa	لیست ثبت تغییرات
+load	developer_tools	fa	بارگذاری
+loading source langfile	developer_tools	fa	بارگذاری پرونده زبان مبدأ
+loading target langfile	developer_tools	fa	بارگذاری پرونده زبان مقصد
+loads the selected lang-files, to be modified in the next steps	developer_tools	fa	پرونده زبان انتخاب شده را برای ترجمه در مرحله بعد بارگذاری می کند
+message	developer_tools	fa	پیام
+message_id in english	developer_tools	fa	کد پیام به انگلیسی
+no file	developer_tools	fa	پرونده ای نیست
+ok	developer_tools	fa	تأیید
+original	developer_tools	fa	اصلی
+phrase in english (or empty if identical)	developer_tools	fa	عبارت به انگلیسی
+preferences	developer_tools	fa	تنظیمات
+preferences have been updated	developer_tools	fa	تنظیمات به روز شد
+project	developer_tools	fa	پروژه
+remove	developer_tools	fa	حذف
+revert	developer_tools	fa	برگرداندن
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	fa	ترجمه های انجام شده را در یک بافر داخلی ذخیره میکند تا در مرحله بعدی استفاده شود
+search changelogs	developer_tools	fa	جستجوی ثبت تغییرات
+search for missing phrase	developer_tools	fa	جستجو برای عبارت گم شده
+search new phrases	developer_tools	fa	جستجو برای عبارت جدید
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	fa	کد منبع را برای عبارتی که در پرونده زبان موجود نیست جستجو می کند
+select project	developer_tools	fa	جستجوی پروژه
+source language	developer_tools	fa	زبان مبدأ
+step	developer_tools	fa	مرحله
+submit	developer_tools	fa	ثبت
+target language	developer_tools	fa	زبان مقصد
+title	developer_tools	fa	عنوان
+translate	developer_tools	fa	ترجمه
+translation	developer_tools	fa	ترجمه
+translation of phrase	developer_tools	fa	ترجمه عبارت
+update	developer_tools	fa	به روز
+update database	developer_tools	fa	به روز کردن پایگاه داده
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	fa	پایگاه داده را فورا به روز می کند و شما می توانید نتیجه کارتان را ببینید
+version	developer_tools	fa	نسخه
+write	developer_tools	fa	نوشتن
+write the lang-file to the apps setup-dir	developer_tools	fa	نوشتن پرونده زبان در پوشه برنامه برپا سازی
+write to lang table	developer_tools	fa	نوشتن در جدول زبان
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	fa	شما باید هر تغییراتی که در فیلدهای بالا انجام داده اید ذخیره کنید تا بتوانید به مرحله بعد بروید
+you must a version	developer_tools	fa	شما باید یک نسخه باشید
+you must enter a change	developer_tools	fa	شما باید تغییراتی وارد کنید
+you must select a project	developer_tools	fa	شما باید پروژه ای انتخاب کنید
+you need to set your preferences for this app	developer_tools	fa	شما نیاز دارید که تنظیمات خود را برای برنامه مورد نظر انجام دهید

@@ -1,0 +1,64 @@
+add	developer_tools	id	Tambah
+add change	developer_tools	id	Tambah perubahan
+add more	developer_tools	id	Tambah lagi
+add new phrase	developer_tools	id	Tambah frasa baru
+add phrase	developer_tools	id	tambah frasa
+allows you to add a single phrase	developer_tools	id	Mengijinkan anda menambah frasa tunggal
+application	developer_tools	id	Aplikasi
+back	developer_tools	id	Kembali
+cancel	developer_tools	id	Batal
+change	developer_tools	id	Perubahan
+changelog entry has been added	developer_tools	id	Entri log pengubahan telah ditambahkan
+changelogs	developer_tools	id	Log pengubahan
+clears the internal buffer, all changes made sofar are lost	developer_tools	id	Bersihkan buffer internal, semua pengubahan selama ini akan hilang
+create new language file	developer_tools	id	Bikin Berkas Bahasa Baru
+create sgml file	developer_tools	id	Bikin berkas SGML
+developer tools - preferences	developer_tools	id	Kesukaan - Alat-alat Pengembang
+developer_tools	common	id	Penerjemahan
+diary	developer_tools	id	Diari
+done	developer_tools	id	selesai
+download	developer_tools	id	Unduh
+download the lang-file to be saved in the apps setup-dir	developer_tools	id	Unduh berkas bahasa untuk disimpan ke direktori setup aplikasi
+edit	developer_tools	id	Edit
+installed applications	developer_tools	id	Aplikasi terpasang
+language file management	developer_tools	id	Manajemen berkas bahasa
+list changelogs	developer_tools	id	Daftar log pengubahan
+load	developer_tools	id	Muatkan
+loading source langfile	developer_tools	id	Memuat berkas bahasa sumber
+loading target langfile	developer_tools	id	Memuat berkas bahasa tujuan
+loads the selected lang-files, to be modified in the next steps	developer_tools	id	Memuat berkas bahasa terpilih untuk diubah pada langkah berikutnya
+message	developer_tools	id	Pesan
+message_id in english	developer_tools	id	message_id dalam bahasa Inggris
+no file	developer_tools	id	tiada berkas
+ok	developer_tools	id	ok
+original	developer_tools	id	Asal-Muasal
+phrase in english (or empty if identical)	developer_tools	id	Frasa dalam bahasa Inggris (atau kosongkan bila sama)
+preferences	developer_tools	id	Kesukaan
+preferences have been updated	developer_tools	id	Kesukaan telah diperbarui
+project	developer_tools	id	Proyek
+remove	developer_tools	id	Buang
+removed %1 phrases from the target language, as they are not present in the source language!	developer_tools	id	%1 frasa dibuang dari bahasa sasaran, karena tidak tersedia dalam bahasa sumber!
+returns to the application list, not saved changes get lost !!!	developer_tools	id	Kembali ke daftar aplikasi, pengubahan yang tidak disimpan akan hilang !!!
+revert	developer_tools	id	Kembalikan
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	id	Simpan penambahan/pengubahan penerjemahan ke dalam buffer internal, untuk digunakan pada langkah berikutnya
+search changelogs	developer_tools	id	Cari di log-perubahan
+search for missing phrase	developer_tools	id	Cari frasa yang hilang
+search new phrases	developer_tools	id	Cari frasa baru
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	id	Cari frasa dalam kode-sumber yang tidak terdapat dalam berkas bahasa-sumber
+select project	developer_tools	id	Pilih proyek
+source language	developer_tools	id	Bahasa Sumber
+step	developer_tools	id	Langkah
+submit	developer_tools	id	Kirim
+target language	developer_tools	id	Bahasa Tujuan
+title	developer_tools	id	Judul
+translate	developer_tools	id	Terjemahkan
+translation	developer_tools	id	Terjemahan
+translation of phrase	developer_tools	id	Frasa terjemahan
+update	developer_tools	id	Perbarui
+update database	developer_tools	id	Perbarui Database
+version	developer_tools	id	Versi
+write	developer_tools	id	Tulis
+write the lang-file to the apps setup-dir	developer_tools	id	Tulis berkas bahasa ke direktori setup aplikasi
+write to lang table	developer_tools	id	Tulis ke tabel bahasa
+writing langfile for '%1' ...	developer_tools	id	Menuliskan berkas bahasa '%1' ...
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	id	Anda harus [Simpan] setiap melakukan pengubahan baris diatas, sebelum melanjutkan langkah berikutnya !!!

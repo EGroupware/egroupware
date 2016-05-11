@@ -1,0 +1,72 @@
+add	developer_tools	ja	追加
+add change	developer_tools	ja	履歴追加
+add more	developer_tools	ja	さらに追加
+add new phrase	developer_tools	ja	文言追加
+add phrase	developer_tools	ja	文言追加
+allows you to add a single phrase	developer_tools	ja	文言をひとつ追加します
+application	developer_tools	ja	アプリケーション
+back	developer_tools	ja	戻る
+cancel	developer_tools	ja	キャンセル
+change	developer_tools	ja	変更内容
+changelog entry has been added	developer_tools	ja	変更履歴が追加されました
+changelogs	developer_tools	ja	変更履歴
+clears the internal buffer, all changes made sofar are lost	developer_tools	ja	内部バッファをクリアします(全ての変更は破棄されます)
+create new language file	developer_tools	ja	新しい言語ファイルを作成する
+create sgml file	developer_tools	ja	SGMLファイル作成
+developer tools - preferences	developer_tools	ja	Developer tools - ユーザ設定
+developer_tools	common	ja	翻訳ツール
+diary	developer_tools	ja	日誌
+done	developer_tools	ja	done
+download	developer_tools	ja	ダウンロード
+download the lang-file to be saved in the apps setup-dir	developer_tools	ja	アプリケーションのsetupディレクトリに保存するためにダウンロードする
+edit	developer_tools	ja	編集
+installed applications	developer_tools	ja	インストールされているアプリケーション
+language file management	developer_tools	ja	言語ファイル管理
+list changelogs	developer_tools	ja	履歴一覧
+load	developer_tools	ja	読み込み
+loading source langfile	developer_tools	ja	元の言語ファイル読み込み
+loading target langfile	developer_tools	ja	対象言語ファイル読み込み
+loads the selected lang-files, to be modified in the next steps	developer_tools	ja	次のステップで修正するために選択されたlang-fileを読み込む
+message	developer_tools	ja	メッセージ
+message_id in english	developer_tools	ja	メッセージID(英語)
+no file	developer_tools	ja	ファイルなし
+ok	developer_tools	ja	OK
+original	developer_tools	ja	オリジナル
+phrase in english (or empty if identical)	developer_tools	ja	英語の文言(同一なら空)
+preferences	developer_tools	ja	ユーザ設定
+preferences have been updated	developer_tools	ja	ユーザ設定が更新されました
+project	developer_tools	ja	プロジェクト
+remove	developer_tools	ja	削除
+returns to the application list, not saved changes get lost !!!	developer_tools	ja	アプリケーションの一覧に戻ります。保存されていない変更点は破棄されます!!!
+revert	developer_tools	ja	やり直し
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	ja	以降のステップで使うために追加/変更した翻訳文を内部バッファに保存します
+search changelogs	developer_tools	ja	履歴検索
+search for missing phrase	developer_tools	ja	欠落文言検索
+search new phrases	developer_tools	ja	新しい文言を検索
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	ja	source-lang-fileに無い文言をソースコードから検索
+select project	developer_tools	ja	プロジェクト選択
+sf project tracker	developer_tools	ja	SF Project tracker
+sf project tracker preferences	preferences	ja	SF Project tracker ユーザ設定
+source language	developer_tools	ja	元の言語
+sourceforge project id	developer_tools	ja	Sourceforge project ID
+sourceforge project tracker	developer_tools	ja	Sourceforge project tracker
+sourceforge project tracker preferences	developer_tools	ja	Sourceforge project tracker ユーザ設定
+step	developer_tools	ja	ステップ
+submit	developer_tools	ja	Submit
+target language	developer_tools	ja	対象言語
+title	developer_tools	ja	Title
+translate	developer_tools	ja	Translate
+translation	developer_tools	ja	翻訳
+translation of phrase	developer_tools	ja	翻訳文言
+update	developer_tools	ja	訂正
+update database	developer_tools	ja	データベースの更新
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	ja	データベースの両方のlang-fileの翻訳を更新します。結果をすぐに確認できます。
+version	developer_tools	ja	バージョン
+write	developer_tools	ja	Write
+write the lang-file to the apps setup-dir	developer_tools	ja	アプリケーションのsetupディレクトリにlang-fileを保存する
+write to lang table	developer_tools	ja	書き込み
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	ja	上の項目を変更したら、次のステップに進む前に毎回[保存]する必要があります!!!
+you must a version	developer_tools	ja	バージョンを入力して下さい
+you must enter a change	developer_tools	ja	変更内容を入力して下さい
+you must select a project	developer_tools	ja	プロジェクトを選択して下さい
+you need to set your preferences for this app	developer_tools	ja	このアプリケーションのユーザ設定を行う必要があります

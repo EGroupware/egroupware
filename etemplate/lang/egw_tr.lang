@@ -1,0 +1,73 @@
+add	developer_tools	tr	ekle
+add change	developer_tools	tr	Deðiþiklik ekle
+add more	developer_tools	tr	Daha fazla ekle
+add new phrase	developer_tools	tr	Yeni ifade ekle
+add phrase	developer_tools	tr	ifade ekle
+allows you to add a single phrase	developer_tools	tr	Bir tek ifade eklemenizi saðlar
+application	developer_tools	tr	Uygulama
+back	developer_tools	tr	Geri
+cancel	developer_tools	tr	Ýptal
+change	developer_tools	tr	Deðiþtir
+changelog entry has been added	developer_tools	tr	Deðiþilik kütüðü girdisi yaratýldý
+changelogs	developer_tools	tr	Deðiþiklik kütüðü
+clears the internal buffer, all changes made sofar are lost	developer_tools	tr	Dahili tamponu temizler, þimdiye dek yapýlmýþ tüm deðiþiklikler kaybedilir.
+create new language file	developer_tools	tr	Yeni Dil Dosyasý Oluþtur
+create sgml file	developer_tools	tr	Yeni SGML dosyasý
+developer tools - preferences	developer_tools	tr	Geliþtirici Araçlarý - Seçenekler
+developer_tools	common	tr	Çeviri Araçlarý
+diary	developer_tools	tr	Günlük
+done	developer_tools	tr	tamam
+download	developer_tools	tr	Ýndir
+download the lang-file to be saved in the apps setup-dir	developer_tools	tr	Uygulamanýn kurulum dizinine kaydedilecek dil dosyasýný indir
+edit	developer_tools	tr	Düzenle
+installed applications	developer_tools	tr	Yüklenmiþ uygulamalar
+language file management	developer_tools	tr	Dil dosyasý yönetimi
+list changelogs	developer_tools	tr	Deðiþiklik kütüðünü listele
+load	developer_tools	tr	Yükle
+loading source langfile	developer_tools	tr	Kaynak dil dosyasý yükleniyor
+loading target langfile	developer_tools	tr	Hedef dil dosyasý yükleniyor
+loads the selected lang-files, to be modified in the next steps	developer_tools	tr	Sýradaki adýmlarda düzenlenecek dil dosyalarýný yükler
+message	developer_tools	tr	Mesaj
+message_id in english	developer_tools	tr	Ýngilizce Mesaj ID'si
+no file	developer_tools	tr	dosya yok
+ok	developer_tools	tr	Tamam
+original	developer_tools	tr	Orjinal
+phrase in english (or empty if identical)	developer_tools	tr	Ýfadenin Ýngilizcesi (ayný ise boþ býrakýnýz)
+preferences	developer_tools	tr	Seçenekler
+preferences have been updated	developer_tools	tr	Seçenekler güncellendi
+project	developer_tools	tr	Proje
+remove	developer_tools	tr	Kaldýr
+returns to the application list, not saved changes get lost !!!	developer_tools	tr	Uygulama listesine geri dön, kaydedilmiþ deðiþiklikler kaybedilecek !!!
+revert	developer_tools	tr	Eski durumuna getir
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	tr	Ýlerki adýmlarda kullanýlacak eklenmiþ/deðiþtirilmiþ çevirileri dahili tampona kaydeder.
+search changelogs	developer_tools	tr	Deðiþiklik kütüðünü ara
+search for missing phrase	developer_tools	tr	Eksik ifadeleri ara
+search new phrases	developer_tools	tr	Yeni ifadeleri ara
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	tr	Kaynak kodu, etkin dil dosyasýnda bulunmayan ifadeler için arar
+select project	developer_tools	tr	Proje seçiniz
+sf project tracker	developer_tools	tr	SF Proje Ýzleyicisi
+sf project tracker preferences	preferences	tr	SF proje izleyici seçenekleri
+source language	developer_tools	tr	Kaynak dil
+sourceforge project id	developer_tools	tr	Sourceforge proje id
+sourceforge project tracker	developer_tools	tr	Sourceforge Proje Ýzleyicisi
+sourceforge project tracker preferences	developer_tools	tr	Sourceforge proje izleyici seçenekleri
+step	developer_tools	tr	Adým
+submit	developer_tools	tr	Gönder
+target language	developer_tools	tr	Hedef Dil
+title	developer_tools	tr	Baþlýk
+translate	developer_tools	tr	Çeviri Yap
+translation	developer_tools	tr	Çeviri
+translation of phrase	developer_tools	tr	Ýfadenin çevirisi
+update	developer_tools	tr	Güncelle
+update database	developer_tools	tr	Veritabanýný Güncelle
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	tr	Veritabanýnýzdaki her iki dil dosyanýzý da günceller, bu sayede çalýþmanýzý hemen doðrulayabilirsiniz
+version	developer_tools	tr	Sürüm
+write	developer_tools	tr	Yaz
+write the lang-file to the apps setup-dir	developer_tools	tr	Dil dosyasýný uygulama kurulum dizinine yaz
+write to lang table	developer_tools	tr	Dil tablosuna yaz
+writing langfile for '%1' ...	developer_tools	tr	'%1' dil dosyasý yazýlýyor ...
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	tr	Sýradaki adýma geçmeden yukarýdaki alanlardaki her manuel deðiþikliði [Kaydet]meniz gerekir.
+you must a version	developer_tools	tr	Bir sürüm girmelisiniz
+you must enter a change	developer_tools	tr	Bir deðiþiklik girmelisiniz
+you must select a project	developer_tools	tr	Bir proje seçmelisiniz
+you need to set your preferences for this app	developer_tools	tr	Bu uygulama için seçeneklerinizi ayarlamalýsýnýz

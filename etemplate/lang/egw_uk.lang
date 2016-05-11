@@ -1,0 +1,62 @@
+add	developer_tools	uk	Додати
+add change	developer_tools	uk	Додати зміни
+add new phrase	developer_tools	uk	Додати нову фразу
+add phrase	developer_tools	uk	Додати фразу
+allows you to add a single phrase	developer_tools	uk	Дозволяє додати одну фразу
+application	developer_tools	uk	Приложення
+back	developer_tools	uk	Назад
+cancel	developer_tools	uk	Відмова
+change	developer_tools	uk	Змінити
+changelog entry has been added	developer_tools	uk	Добавлено запис протоколу змін
+changelogs	developer_tools	uk	протоколи змін
+clears the internal buffer, all changes made sofar are lost	developer_tools	uk	Очищає внутрішній буфер, всі зроблені зміни губляться
+create new language file	developer_tools	uk	Створити новий файл мови
+create sgml file	developer_tools	uk	Створити SGML файл
+developer tools - preferences	developer_tools	uk	Developer tools - параметри
+developer_tools	common	uk	Перекладач
+diary	developer_tools	uk	Щоденник
+done	developer_tools	uk	виконано
+download	developer_tools	uk	Загрузити
+download the lang-file to be saved in the apps setup-dir	developer_tools	uk	Загрузити файл мови, що буде збережено в каталозі setup приложення
+edit	developer_tools	uk	Редагувати
+installed applications	developer_tools	uk	Встановлені приложення
+language file management	developer_tools	uk	Керування файлами мов
+load	developer_tools	uk	Вгрузити
+loading source langfile	developer_tools	uk	Вгружається вхідний файл мови
+loading target langfile	developer_tools	uk	Вгружається ціловий файл мови
+loads the selected lang-files, to be modified in the next steps	developer_tools	uk	Вгружає вирані файли мов, що будуть змінюватись на наступних кроках
+message	developer_tools	uk	Повідомлення
+message_id in english	developer_tools	uk	message_id в англійській
+no file	developer_tools	uk	файлу немає
+ok	developer_tools	uk	ok
+original	developer_tools	uk	Оригінальне
+preferences	developer_tools	uk	Параметри
+preferences have been updated	developer_tools	uk	Параметри змінено
+project	developer_tools	uk	Проект
+remove	developer_tools	uk	Видалити
+returns to the application list, not saved changes get lost !!!	developer_tools	uk	Повертає до переліку приложень, всі незбережені зміни будуть загублені!!!
+revert	developer_tools	uk	Перевернути
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	uk	Зберігає додані/змінені перклади до внутрішнього буферу, для використання в наступних кроках
+search changelogs	developer_tools	uk	Шукати в протоколах змін
+search for missing phrase	developer_tools	uk	Шукати пропущену фразу
+search new phrases	developer_tools	uk	Шукати нові фрази
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	uk	Шукає в вихідному коді фрази, які не знаходяться в поточному вхідному мовному файлі
+select project	developer_tools	uk	Вибрати проект
+source language	developer_tools	uk	Вхідна мова
+step	developer_tools	uk	Крок
+submit	developer_tools	uk	Передати
+target language	developer_tools	uk	Цільова мова
+title	developer_tools	uk	Назва
+translate	developer_tools	uk	Перекласти
+translation	developer_tools	uk	Переклад
+update	developer_tools	uk	Поновити
+update database	developer_tools	uk	Поновити базу даних
+version	developer_tools	uk	Версія
+write	developer_tools	uk	Записати
+write the lang-file to the apps setup-dir	developer_tools	uk	Записує мовний файл в каталог setup приложення
+write to lang table	developer_tools	uk	Записати мовну таблицю
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	uk	Необхідно [Зберегти] кожну ручну зміну в полях перед тим як перейти до наступного кроку !!!
+you must a version	developer_tools	uk	Необхідно встановити версію
+you must enter a change	developer_tools	uk	Необхідно внести зміни
+you must select a project	developer_tools	uk	Необхідно вибрати проект
+you need to set your preferences for this app	developer_tools	uk	Необхідно встановити параметри цього приложення

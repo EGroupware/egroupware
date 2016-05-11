@@ -1,0 +1,74 @@
+add	developer_tools	sk	Pridať
+add change	developer_tools	sk	Pridať zmenu
+add more	developer_tools	sk	Pridať viacero
+add new phrase	developer_tools	sk	Pridať novú frázu
+add phrase	developer_tools	sk	Pridať frázu
+allows you to add a single phrase	developer_tools	sk	Umožní vám pridať jednu frázu
+application	developer_tools	sk	Aplikácia
+back	developer_tools	sk	Späť
+cancel	developer_tools	sk	Zrušiť
+change	developer_tools	sk	Zmeniť
+changelog entry has been added	developer_tools	sk	Bola pridaná položka v zázname zmien
+changelogs	developer_tools	sk	Záznamy zmien
+clears the internal buffer, all changes made sofar are lost	developer_tools	sk	Vyčistí vnútorný bufer, všetky doposiaľ vykonané zmeny sa stratia
+create new language file	developer_tools	sk	Vytvoriť nový jazykový súbor
+create sgml file	developer_tools	sk	Vytvoriť SGML súbor
+developer tools - preferences	developer_tools	sk	Vývojové Nástroje -predvoľby
+developer_tools	common	sk	Prekladateľské Nástroje
+diary	developer_tools	sk	Diár
+done	developer_tools	sk	Hotovo
+download	developer_tools	sk	Stiahnuť
+download the lang-file to be saved in the apps setup-dir	developer_tools	sk	Stiahnuť jazykový súbor, uložiť do setup adresára aplikácie
+edit	developer_tools	sk	Upraviť
+installed applications	developer_tools	sk	Nainštalované aplikácie
+language file management	developer_tools	sk	Správa jazykových súborov
+list changelogs	developer_tools	sk	Zobraziť záznamy o zmenách
+load	developer_tools	sk	Načítať
+loading source langfile	developer_tools	sk	Načítavam zdrojový jazykový súbor
+loading target langfile	developer_tools	sk	Načítavam cieľový jazykový súbor
+loads the selected lang-files, to be modified in the next steps	developer_tools	sk	Načítajú sa vybrané jazykové súbory, ktoré majú byť zmenené v nasledujúcich krokoch
+message	developer_tools	sk	Správa
+message_id in english	developer_tools	sk	ID správy v angličtine
+no file	developer_tools	sk	Žiadny súbor
+ok	developer_tools	sk	OK
+original	developer_tools	sk	Originál
+phrase in english (or empty if identical)	developer_tools	sk	Fráza v angličtine (alebo prázdne, ak sú totožné)
+preferences	developer_tools	sk	Predvoľby
+preferences have been updated	developer_tools	sk	Predvoľby boli aktualizované
+project	developer_tools	sk	Projekt
+remove	developer_tools	sk	Odstrániť
+removed %1 phrases from the target language, as they are not present in the source language!	developer_tools	sk	Odstránených bolo %1 fráz z cieľového jazyka, nakoľko sa už nevyskytujú ani v zdrojovom jazyku!
+returns to the application list, not saved changes get lost !!!	developer_tools	sk	Návrat do zoznamu aplikácií -neuložené zmeny sa stratia!!!
+revert	developer_tools	sk	Naspäť
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	sk	Uloží pridané/zmenené preklady do vnútorného bufera, pre použitie v ďalších krokoch
+search changelogs	developer_tools	sk	Hľadať v záznamoch o zmenách
+search for missing phrase	developer_tools	sk	Hľadať chýbajúcu frázu
+search new phrases	developer_tools	sk	Hľadať nové frázy
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	sk	Prehľadá zdrojové kódy pre frázy, ktoré nie sú uvedené v súčasnom zdrojovom jazykovom súbore
+select project	developer_tools	sk	Vyberte projekt
+sf project tracker	developer_tools	sk	SF sledovač projektov
+sf project tracker preferences	preferences	sk	Nastavenia SF sledovača projektov
+source language	developer_tools	sk	Zdrojový jazyk
+sourceforge project id	developer_tools	sk	Projektové ID pre Sourceforge
+sourceforge project tracker	developer_tools	sk	Sourceforge sledovač projektov
+sourceforge project tracker preferences	developer_tools	sk	Nastavenia Sourceforge sledovača projektov
+step	developer_tools	sk	Krok
+submit	developer_tools	sk	Odoslať
+target language	developer_tools	sk	Cieľový jazyk
+title	developer_tools	sk	Titul
+translate	developer_tools	sk	Preložiť
+translation	developer_tools	sk	Preklad
+translation of phrase	developer_tools	sk	Preklad frázy
+update	developer_tools	sk	Aktualizovať
+update database	developer_tools	sk	Aktualizovať databázu
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	sk	Aktualizuje preklady oboch jazykových súborov vo vašej databáze, takže môžete okamžite skontrolovať vašu prácu
+version	developer_tools	sk	Verzia
+write	developer_tools	sk	Zapísať
+write the lang-file to the apps setup-dir	developer_tools	sk	Zapísať jazykový súbor do setup adresára aplikácie
+write to lang table	developer_tools	sk	Zapísať do jazykovej tabuľky
+writing langfile for '%1' ...	developer_tools	sk	Zapisujem jazykový súbor pre '%1' ...
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	sk	Skôr, než budete pokračovať v ďalších krokoch, musíte Uložiť každú manuálnu zmenu v horeuvedených poliach!!!
+you must a version	developer_tools	sk	Musíte verziu
+you must enter a change	developer_tools	sk	Musíte zadať zmenu
+you must select a project	developer_tools	sk	Musíte vybrať projekt
+you need to set your preferences for this app	developer_tools	sk	Mali by ste nastaviť svoje predvoľby pre túto aplikáciu

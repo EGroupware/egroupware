@@ -1,0 +1,74 @@
+add	developer_tools	de	Zufügen
+add change	developer_tools	de	Änderung zufügen
+add more	developer_tools	de	Weitere zufügen
+add new phrase	developer_tools	de	Neuer Text
+add phrase	developer_tools	de	Text zufügen
+allows you to add a single phrase	developer_tools	de	Erlaubt einen einzelnen Text zuzufügen
+application	developer_tools	de	Anwendung
+back	developer_tools	de	Zurück
+cancel	developer_tools	de	Abbruch
+change	developer_tools	de	Ändern
+changelog entry has been added	developer_tools	de	Änderungslog Eintrag wurde zugefügt
+changelogs	developer_tools	de	Änderungslog
+clears the internal buffer, all changes made sofar are lost	developer_tools	de	Löscht den internen Speicher, alle bisherigen Änderungen gehen verloren
+create new language file	developer_tools	de	Neue Sprachdatei erzeugen
+create sgml file	developer_tools	de	SGML Datei erzeugen
+developer tools - preferences	developer_tools	de	Entwicklerwerkzeuge - Einstellungen
+developer_tools	common	de	Übersetzungswerkzeuge
+diary	developer_tools	de	Tagebuch
+done	developer_tools	de	Fertig
+download	developer_tools	de	Download
+download the lang-file to be saved in the apps setup-dir	developer_tools	de	Download der Übersetzungsdatei, um sie im Setup-Verzeichnis der Anwendung zu speichern
+edit	developer_tools	de	Bearbeiten
+installed applications	developer_tools	de	Installierte Anwendungen
+language file management	developer_tools	de	Sprachdateiverwaltung
+list changelogs	developer_tools	de	Änderungslogs anzeigen
+load	developer_tools	de	Laden
+loading source langfile	developer_tools	de	Quell-Sprachdatei laden
+loading target langfile	developer_tools	de	Ziel-Sprachdatei laden
+loads the selected lang-files, to be modified in the next steps	developer_tools	de	Lädt die ausgewählten Sprachen, um sie in den nächsten Schritten zu bearbeiten
+message	developer_tools	de	Text
+message_id in english	developer_tools	de	Text-Schlüssel in Englisch
+no file	developer_tools	de	keine Datei
+ok	developer_tools	de	Ok
+original	developer_tools	de	Original
+phrase in english (or empty if identical)	developer_tools	de	Text in Englisch (oder leer wenn identisch)
+preferences	developer_tools	de	Einstellungen
+preferences have been updated	developer_tools	de	Einstellungen wurden geschrieben
+project	developer_tools	de	Projekt
+remove	developer_tools	de	Entfernen
+removed %1 phrases from the target language, as they are not present in the source language!	developer_tools	de	%1 Phrasen der Zielsprache entfernt die nicht in der Quellsprache vorhanden sind!
+returns to the application list, not saved changes get lost !!!	developer_tools	de	Kehrt zur Liste der Anwendungen zurück, nicht gespeicherte Änderungen gehen verloren !!!
+revert	developer_tools	de	Rückgängig machen
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	de	Speichert die zugefügten/geänderten Übersetzungen intern, für die weiteren Schritte
+search changelogs	developer_tools	de	Änderungslog durchsuchen
+search for missing phrase	developer_tools	de	fehlende Texte suchen
+search new phrases	developer_tools	de	Neue Texte suchen
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	de	Durchsucht den Quellcode nach neuen Texten die noch nicht in der Quell-Datei sind
+select project	developer_tools	de	Projekt auswählen
+sf project tracker	developer_tools	de	SF Projekt Tracker
+sf project tracker preferences	preferences	de	SF Projekt Tracker Einstellungen
+source language	developer_tools	de	Quell-Sprache
+sourceforge project id	developer_tools	de	Sourceforge Projekt-ID
+sourceforge project tracker	developer_tools	de	Sourceforge Projekt Tracker
+sourceforge project tracker preferences	developer_tools	de	Sourceforge Projekt Tracker Einstellungen
+step	developer_tools	de	Schritt
+submit	developer_tools	de	Übertragen
+target language	developer_tools	de	Ziel-Sprache
+title	developer_tools	de	Titel
+translate	developer_tools	de	Übersetzen
+translation	developer_tools	de	Übersetzung
+translation of phrase	developer_tools	de	Übersetzung des Textes
+update	developer_tools	de	Schreiben
+update database	developer_tools	de	Datenbank aktualisieren
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	de	Aktualisiert die Übersetzungen für beide Sprachen in Ihrer Datenbank, damit Sie Ihre Arbeit sofort überprüfen können
+version	developer_tools	de	Version
+write	developer_tools	de	Schreiben
+write the lang-file to the apps setup-dir	developer_tools	de	Schreibt die Übersetzungsdatei in das Setup-Verzeichnis der Anwendung
+write to lang table	developer_tools	de	Datenbank schreiben
+writing langfile for '%1' ...	developer_tools	de	Sprachdatei für '%1' schreiben ...
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	de	!!! Sie müssen nach jeder manuellen Änderung in den obigen Feldern [Speichern], bevor sie zum nächsten Schritt weitergehen !!!
+you must a version	developer_tools	de	Sie benötigen eine Version
+you must enter a change	developer_tools	de	Sie müssen eine Änderungen eingeben
+you must select a project	developer_tools	de	Sie müssen ein Projekt auswählen
+you need to set your preferences for this app	developer_tools	de	Sie müssen Ihre Einstellungen für diese Anwendung setzen

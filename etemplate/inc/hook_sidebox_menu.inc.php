@@ -18,7 +18,7 @@ if (@$GLOBALS['egw_info']['user']['apps']['developer_tools'])
 {
 	$file += array(
 		'_NewLine_', // give a newline
-		'developer_tools' => $GLOBALS['egw']->link('/index.php','menuaction=developer_tools.uilangfile.index'),
+		'developer_tools' => $GLOBALS['egw']->link('/index.php','menuaction=etemplate.uilangfile.index'),
 	);
  }
  if($GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate')

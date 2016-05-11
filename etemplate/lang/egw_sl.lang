@@ -1,0 +1,73 @@
+add	developer_tools	sl	dodaj
+add change	developer_tools	sl	Dodaj spremembo
+add more	developer_tools	sl	Dodaj več
+add new phrase	developer_tools	sl	Dodaj novo frazo
+add phrase	developer_tools	sl	dodaj frazo
+allows you to add a single phrase	developer_tools	sl	Omogoča dodajanje posamezne fraze
+application	developer_tools	sl	Program
+back	developer_tools	sl	Nazaj
+cancel	developer_tools	sl	Prekliči
+change	developer_tools	sl	Spremeni
+changelog entry has been added	developer_tools	sl	Vnešen je bil zapis v dnevnik sprememb
+changelogs	developer_tools	sl	Dnevnik sprememb
+clears the internal buffer, all changes made sofar are lost	developer_tools	sl	Zbriše notranji pomnilnik, vse neshranjene spremembe so izgubljene
+create new language file	developer_tools	sl	Ustvari novo jezikovno datoteko
+create sgml file	developer_tools	sl	Ustvari SGML datoteko
+developer tools - preferences	developer_tools	sl	Razvojna orodja - nastavitve
+developer_tools	common	sl	Orodja za prevajanje
+diary	developer_tools	sl	Dnevnik
+done	developer_tools	sl	končano
+download	developer_tools	sl	Prenesi
+download the lang-file to be saved in the apps setup-dir	developer_tools	sl	Prenesi jezikovno datoteko in jo shrani v namestitveno mapo programa
+edit	developer_tools	sl	Uredi
+installed applications	developer_tools	sl	Nameščeni programi
+language file management	developer_tools	sl	Upravljanje z jezikovnimi datotekami
+list changelogs	developer_tools	sl	Izpiše dnevnike sprememb
+load	developer_tools	sl	Naloži
+loading source langfile	developer_tools	sl	Nalagam izvorno jezikovno datoteko
+loading target langfile	developer_tools	sl	Nalagam ciljno jezikovno datoteko
+loads the selected lang-files, to be modified in the next steps	developer_tools	sl	Naloži označene jezikovne datoteke za nadaljnje spreminjanje
+message	developer_tools	sl	Sporočilo
+message_id in english	developer_tools	sl	message_id v angleščini
+no file	developer_tools	sl	ni datoteke
+ok	developer_tools	sl	V redu
+original	developer_tools	sl	Izvirnik
+phrase in english (or empty if identical)	developer_tools	sl	Fraza v angleščini (ali prazno, če je istoveten)
+preferences	developer_tools	sl	Nastavitve
+preferences have been updated	developer_tools	sl	Nastavitve so bile obnovljene
+project	developer_tools	sl	Projekt
+remove	developer_tools	sl	Odstrani
+returns to the application list, not saved changes get lost !!!	developer_tools	sl	Povratek na seznam programov, neshranjene spremembe bodo izgubljene!
+revert	developer_tools	sl	Povrni
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	sl	Shrani dodane/spremenjene prevode v notranji pomnilnik za nadaljno uporabo
+search changelogs	developer_tools	sl	Shrani dnevnik spremem
+search for missing phrase	developer_tools	sl	Iskanje manjkajoče fraze
+search new phrases	developer_tools	sl	Iskanje novih fraz
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	sl	Poišče izvorno kodo za fraze, ki niso v trenutni jezikovni datoteki
+select project	developer_tools	sl	Izbira projektov
+sf project tracker	developer_tools	sl	SF nadzornik projektov
+sf project tracker preferences	preferences	sl	Nastavitve SF nadzornika projektov
+source language	developer_tools	sl	Izvorni jezik
+sourceforge project id	developer_tools	sl	SF ID projekta
+sourceforge project tracker	developer_tools	sl	SF sledenje projekta
+sourceforge project tracker preferences	developer_tools	sl	Nastaviteve SF sledenja projekta
+step	developer_tools	sl	Korak
+submit	developer_tools	sl	Potrdi
+target language	developer_tools	sl	Ciljni jezik
+title	developer_tools	sl	Naslov
+translate	developer_tools	sl	Prevedi
+translation	developer_tools	sl	Prevod
+translation of phrase	developer_tools	sl	Prevod fraz
+update	developer_tools	sl	Posodobi
+update database	developer_tools	sl	Posodobi podatkovno bazo
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	sl	Posodobi prevode obeh jezikovnih datotek v podatkovni bazi, tako da je omogočeno takojšnje preverjanje
+version	developer_tools	sl	Različica
+write	developer_tools	sl	Zapiši
+write the lang-file to the apps setup-dir	developer_tools	sl	Zapiši jezikovno datoteko v namestitveno mapo programa
+write to lang table	developer_tools	sl	Zapiši v jezikovno tabelo
+writing langfile for '%1' ...	developer_tools	sl	Pišem v jezikovno datoteko za '%1' ...
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	sl	Potrebno je [Shraniti] vsako ročno spremembo gornjih polj pred nadaljevanjem na naslednje korake!
+you must a version	developer_tools	sl	Različico morate vnesti
+you must enter a change	developer_tools	sl	Morate spremeniti
+you must select a project	developer_tools	sl	Izbrati morate projekt
+you need to set your preferences for this app	developer_tools	sl	Potrebno je določiti nastavitve za ta program

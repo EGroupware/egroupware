@@ -1,0 +1,74 @@
+add	developer_tools	ru	добавить
+add change	developer_tools	ru	Добавить изменение
+add more	developer_tools	ru	Добавить еще
+add new phrase	developer_tools	ru	Добавить новую фразу
+add phrase	developer_tools	ru	добавить фразу
+allows you to add a single phrase	developer_tools	ru	Разрешает вам добавить одиночную фразу
+application	developer_tools	ru	Приложение
+back	developer_tools	ru	Назад
+cancel	developer_tools	ru	Отменить
+change	developer_tools	ru	Изменить
+changelog entry has been added	developer_tools	ru	Добавлена запись в список изменений
+changelogs	developer_tools	ru	Списки изменений
+clears the internal buffer, all changes made sofar are lost	developer_tools	ru	Очищает внутренний буфер, все изменения сделанные ранее будут утеряны
+create new language file	developer_tools	ru	Создать новый файл перевода
+create sgml file	developer_tools	ru	Создать SGML файл
+developer tools - preferences	developer_tools	ru	Инструменты разработчика - настройки
+developer_tools	common	ru	Локализация
+diary	developer_tools	ru	Дневник
+done	developer_tools	ru	готово
+download	developer_tools	ru	Получить
+download the lang-file to be saved in the apps setup-dir	developer_tools	ru	Получить файл перевода для сохранения в папку setup приложения
+edit	developer_tools	ru	Редактировать
+installed applications	developer_tools	ru	Установленные приложения
+language file management	developer_tools	ru	Управление файлами переводов
+list changelogs	developer_tools	ru	Пролистать список изменений
+load	developer_tools	ru	Загрузить
+loading source langfile	developer_tools	ru	Загрузка исходного  файла перевода
+loading target langfile	developer_tools	ru	Загрузка конечного  файла перевода
+loads the selected lang-files, to be modified in the next steps	developer_tools	ru	Загрузить выбранные файлы переводов, которые будут изменены на следующих шагах
+message	developer_tools	ru	Сообщение
+message_id in english	developer_tools	ru	ID сообщения на Английском
+no file	developer_tools	ru	нет файла
+ok	developer_tools	ru	оk
+original	developer_tools	ru	Оригинал
+phrase in english (or empty if identical)	developer_tools	ru	Фраза на Английском (или оставить пустым, если идентично)
+preferences	developer_tools	ru	Настройки
+preferences have been updated	developer_tools	ru	Параметры обновлены
+project	developer_tools	ru	Проект
+remove	developer_tools	ru	Удалить
+removed %1 phrases from the target language, as they are not present in the source language!	developer_tools	ru	Удалено %1 фраз из языка назначения, т.к. они отсутствуют в исходном языке
+returns to the application list, not saved changes get lost !!!	developer_tools	ru	Вернуться в список приложений, не сохраненные изменения будут потеряны!!!
+revert	developer_tools	ru	Обратить
+saves the added/changed translations to an internal buffer, to be used in further steps	developer_tools	ru	Сохраняет добавленные/измененные переводы во внутренний буфер для использования в следующих шагах
+search changelogs	developer_tools	ru	Искать в списке изменений
+search for missing phrase	developer_tools	ru	Поиск отсутствующих фраз
+search new phrases	developer_tools	ru	Поиск новых фраз
+searches the source-code for phrases not in the actual source-lang-file	developer_tools	ru	Искать исходный текст фразы не только в текущем файле перевода
+select project	developer_tools	ru	Выбрать проект
+sf project tracker	developer_tools	ru	Отслеживание Проекта на SF
+sf project tracker preferences	preferences	ru	Настройки для Отслеживания Проекта на SF
+source language	developer_tools	ru	Исходный язык
+sourceforge project id	developer_tools	ru	ID проекта на Sourceforge
+sourceforge project tracker	developer_tools	ru	Отслеживание Проекта на Sourceforge
+sourceforge project tracker preferences	developer_tools	ru	Настройки для Отслеживания Проекта на Sourceforge
+step	developer_tools	ru	Шаг
+submit	developer_tools	ru	Отправить
+target language	developer_tools	ru	Конечный язык
+title	developer_tools	ru	Заголовок
+translate	developer_tools	ru	Перевести
+translation	developer_tools	ru	Перевод
+translation of phrase	developer_tools	ru	Перевод фразы
+update	developer_tools	ru	Обновить
+update database	developer_tools	ru	Обновить базу данных
+updates the translations of both lang-files in your database, so you can verify your work immediately	developer_tools	ru	Обновить переводы обоих файлов переводов в Ваше базе, так Вы сможете проверить свою работу немедленно
+version	developer_tools	ru	Версия
+write	developer_tools	ru	Записать
+write the lang-file to the apps setup-dir	developer_tools	ru	Записать файл перевода в папку setup приложения
+write to lang table	developer_tools	ru	Записать в таблицу перевода
+writing langfile for '%1' ...	developer_tools	ru	Запись файла перевода для '%1'
+you have to [save] every manual change in the above fields, before you can go to the next step !!!	developer_tools	ru	Следует [Сохранить] сделанные изменения, прежде чем перейти к следующему шагу!
+you must a version	developer_tools	ru	Вы должны указать версию
+you must enter a change	developer_tools	ru	Вы должны внести изменение
+you must select a project	developer_tools	ru	Вы должны выбрать проект
+you need to set your preferences for this app	developer_tools	ru	Вы должны установить свои настройки для этого приложения
