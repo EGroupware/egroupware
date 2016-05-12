@@ -387,6 +387,7 @@ class translation
 		'jscalendar' => array('phpgwapi'),
 		'sitemgr-link' => array('sitemgr'),
 		'groupdav' => array('phpgwapi'),
+		'developer_tools' => array('etemplate'),
 		'login' => array('phpgwapi','registration'),
 	);
 
