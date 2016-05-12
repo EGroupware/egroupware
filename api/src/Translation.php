@@ -378,7 +378,7 @@ class Translation
 	 * How to load translations for a given app
 	 *
 	 * Translations for common, preferences or admin are in spread over all applications.
-	 * API has translations for some pseudo-apps.
+	 * Api, old phpgwapi and etemplate have translations for some pseudo-apps.
 	 *
 	 * @var array app => app(s) or string 'all-apps'
 	 */
@@ -388,8 +388,9 @@ class Translation
 		'admin' => 'all-apps',
 		'jscalendar' => array('phpgwapi'),
 		'sitemgr-link' => array('sitemgr'),
-		'groupdav' => array('phpgwapi'),
-		'login' => array('phpgwapi','registration'),
+		'groupdav' => array('api'),
+		'developer_tools' => array('etemplate'),
+		'login' => array('api','registration'),
 	);
 
 	/**
