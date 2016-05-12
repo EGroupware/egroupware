@@ -42,7 +42,7 @@ checkout = git clone git@github.com:EGroupware/projectmanager.git
 ###
 #[phpgwapi]
 # old api used by non 16.1 apps
-#checkout = git clone git@github.com:EGroupware/bookmarks.git
+#checkout = git clone git@github.com:EGroupware/phpgwapi.git
 
 #[jdots]
 # alternative "Stylite" template set
