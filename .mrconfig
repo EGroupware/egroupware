@@ -8,8 +8,8 @@ checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trun
 
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
-checkout = ~/bin/composer.phar install
-update = ~/bin/composer.phar install
+checkout = /usr/bin/env composer.phar install
+update = /usr/bin/env composer.phar install
 
 ###
 ### Optional apps you can enable by uncommenting them and (re-)run: mr up
@@ -27,37 +27,37 @@ checkout = git clone -b 14.2 git@github.com:EGroupware/tracker.git
 # projectmanagement and Ganttcharts
 checkout = git clone -b 14.2 git@github.com:EGroupware/projectmanager.git
 
-#[bookmarks]
+[bookmarks]
 # record and share bookmarks
-#checkout = git clone -b 14.2 git@github.com:EGroupware/bookmarks.git
+checkout = git clone -b 14.2 git@github.com:EGroupware/bookmarks.git
 
-#[news_admin]
+[news_admin]
 # publish and agregate RSS or ATOM feeds
-#checkout = git clone -b 14.2 git@github.com:EGroupware/news_admin.git
+checkout = git clone -b 14.2 git@github.com:EGroupware/news_admin.git
 
-#[registration]
+[registration]
 # allows (after configuration!) to selfregister accounts and recover lost passwords
-#checkout = git clone -b 14.2 git@github.com:EGroupware/registration.git
+checkout = git clone -b 14.2 git@github.com:EGroupware/registration.git
 
-#[phpbrain]
+[phpbrain]
 # knowledge base
-#checkout = git clone -b 14.2 git@github.com:EGroupware/phpbrain.git
+checkout = git clone -b 14.2 git@github.com:EGroupware/phpbrain.git
 
-#[wiki]
+[wiki]
 # wiki application
-#checkout = git clone -b 14.2 git@github.com:EGroupware/wiki.git
+checkout = git clone -b 14.2 git@github.com:EGroupware/wiki.git
 
-#[sambaadmin]
+[sambaadmin]
 # keeps passwords in sync with Samba3 using same LDAP as EGroupware (for Samba4 use Active Directory)
-#checkout = git clone -b 14.2 git@github.com:EGroupware/sambaadmin.git
+checkout = git clone -b 14.2 git@github.com:EGroupware/sambaadmin.git
 
-#[sitemgr]
+[sitemgr]
 # content managment application
-#checkout = git clone -b 14.2 git@github.com:EGroupware/sitemgr.git
+checkout = git clone -b 14.2 git@github.com:EGroupware/sitemgr.git
 
-#[phpfreechat]
+[phpfreechat]
 # chat application
-#checkout = git clone -b 14.2 git@github.com:EGroupware/phpfreechat.git
+checkout = git clone -b 14.2 git@github.com:EGroupware/phpfreechat.git
 
 ###
 ### EPL apps not publicly available
