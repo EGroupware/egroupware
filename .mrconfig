@@ -1,0 +1,69 @@
+# Installing EGroupware dependencies
+# - install myrepo utility (https://myrepos.branchable.com/)
+# - to install or update run inside EGroupware dir: mr up
+# - alternativly you can also run the commands manually
+
+[api/js/ckeditor]
+checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
+
+[]
+# to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
+checkout = ~/bin/composer.phar install
+update = ~/bin/composer.phar install
+
+###
+### Optional apps you can enable by uncommenting them and (re-)run: mr up
+###
+[activesync]
+# synchronise mobile phone via Z-Push and ActiveSync protocoll
+checkout = git clone -b 14.2 git@github.com:EGroupware/activesync.git
+chain = true
+
+[tracker]
+# tracking or helpdesk application
+checkout = git clone -b 14.2 git@github.com:EGroupware/tracker.git
+
+[projectmanager]
+# projectmanagement and Ganttcharts
+checkout = git clone -b 14.2 git@github.com:EGroupware/projectmanager.git
+
+#[bookmarks]
+# record and share bookmarks
+#checkout = git clone -b 14.2 git@github.com:EGroupware/bookmarks.git
+
+#[news_admin]
+# publish and agregate RSS or ATOM feeds
+#checkout = git clone -b 14.2 git@github.com:EGroupware/news_admin.git
+
+#[registration]
+# allows (after configuration!) to selfregister accounts and recover lost passwords
+#checkout = git clone -b 14.2 git@github.com:EGroupware/registration.git
+
+#[phpbrain]
+# knowledge base
+#checkout = git clone -b 14.2 git@github.com:EGroupware/phpbrain.git
+
+#[wiki]
+# wiki application
+#checkout = git clone -b 14.2 git@github.com:EGroupware/wiki.git
+
+#[sambaadmin]
+# keeps passwords in sync with Samba3 using same LDAP as EGroupware (for Samba4 use Active Directory)
+#checkout = git clone -b 14.2 git@github.com:EGroupware/sambaadmin.git
+
+#[sitemgr]
+# content managment application
+#checkout = git clone -b 14.2 git@github.com:EGroupware/sitemgr.git
+
+#[phpfreechat]
+# chat application
+#checkout = git clone -b 14.2 git@github.com:EGroupware/phpfreechat.git
+
+###
+### EPL apps not publicly available
+###
+#[stylite]
+#checkout = svn checkout -b 14.2 svn+ssh://stylite@svn.stylite.de/stylite/trunk/stylite
+
+#[esyncpro]
+#checkout = svn checkout -b 14.2 svn+ssh://stylite@svn.stylite.de/stylite/trunk/esyncpro
