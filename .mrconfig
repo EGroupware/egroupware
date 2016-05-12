@@ -63,7 +63,7 @@ checkout = git clone -b 14.2 git@github.com:EGroupware/phpfreechat.git
 ### EPL apps not publicly available
 ###
 #[stylite]
-#checkout = svn checkout -b 14.2 svn+ssh://stylite@svn.stylite.de/stylite/trunk/stylite
+#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/stylite
 
 #[esyncpro]
-#checkout = svn checkout -b 14.2 svn+ssh://stylite@svn.stylite.de/stylite/trunk/esyncpro
+#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/esyncpro
