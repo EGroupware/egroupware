@@ -9,9 +9,10 @@ checkout = git clone git@github.com:EGroupware/ADOdb.git
 [api/js/ckeditor]
 checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
 
-#[vendor]
+[]
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
-#checkout = composer.phar install
+checkout = /usr/bin/env composer.phar install
+update = /usr/bin/env composer.phar install
 
 ###
 ### Optional apps you can enable by uncommenting them and (re-)run: mr up
