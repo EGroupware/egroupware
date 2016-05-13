@@ -986,7 +986,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 		if(recurType && recurData)
 		{
-			recurData.set_disabled(recurType.get_value() != 2);
+			recurData.set_disabled(recurType.get_value() != 2 && recurType.get_value() != 4);
 		}
 	},
 
@@ -3441,7 +3441,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	_set_autorefresh: function() {
 		var nm = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
 		if(!nm) return;
-		
+
 		var refresh_preference = "nextmatch-" + nm.options.settings.columnselection_pref + "-autorefresh";
 		var time = this.egw.preference(refresh_preference, 'calendar');
 
@@ -3463,7 +3463,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// This is a fast update, but misses deleted events
 			//app.calendar._fetch_data(app.calendar.state);
 		};
-		
+
 		// Start / update timer
 		if (this._autorefresh_timer)
 		{
