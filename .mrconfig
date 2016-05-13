@@ -58,6 +58,7 @@ checkout = git clone -b 14.2 git@github.com:EGroupware/sitemgr.git
 [phpfreechat]
 # chat application
 checkout = git clone -b 14.2 git@github.com:EGroupware/phpfreechat.git
+chain = true
 
 ###
 ### EPL apps not publicly available
