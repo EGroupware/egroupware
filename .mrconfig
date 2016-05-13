@@ -11,8 +11,10 @@ checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trun
 
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
-checkout = /usr/bin/env composer.phar install
-update = /usr/bin/env composer.phar install
+checkout = git clone git@github.com:EGroupware/egroupware.git &&
+	/usr/bin/env composer.phar install
+update = git pull &&
+	/usr/bin/env composer.phar install
 
 ###
 ### Optional apps you can enable by uncommenting them and (re-)run: mr up
