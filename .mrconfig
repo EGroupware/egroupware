@@ -76,6 +76,7 @@ checkout = git clone git@github.com:EGroupware/projectmanager.git
 #[phpfreechat]
 # chat application
 #checkout = git clone git@github.com:EGroupware/phpfreechat.git
+#chain = true
 
 ###
 ### EPL apps not publicly available
