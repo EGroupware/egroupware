@@ -2034,14 +2034,14 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		// Defer the printing to ask about columns & rows
 		var defer = jQuery.Deferred();
 
-		
+
 		var pref = this.options.settings.columnselection_pref;
 		if(pref.indexOf('nextmatch') == 0)
 		{
 			pref = 'nextmatch-'+pref;
 		}
 		var app = this.getInstanceManager().app;
-		
+
 		var columns = {};
 		var columnMgr = this.dataview.getColumnMgr();
 		pref += '_print';
@@ -2200,7 +2200,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				window.setTimeout(function() {defer.resolve();}, 0);
 			}
 		},this);
-		
+
 		var dialog = et2_createWidget("dialog",{
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: callback,	// return false to prevent dialog closing
@@ -2953,7 +2953,7 @@ var et2_nextmatch_header = (function(){ "use strict"; return et2_baseWidget.exte
 		this.label = _value;
 
 		this.labelNode.text(_value);
-		
+
 		// add class if label is empty
 		this.labelNode.toggleClass('et2_label_empty', !_value);
 	}
@@ -3275,7 +3275,8 @@ var et2_nextmatch_filterheader = (function(){ "use strict"; return et2_taglist.e
 				this.nextmatch.applyFilters({col_filter: col_filter});
 			}
 		},
-		rows: { default: 2}
+		rows: { default: 2},
+		class: {default: 'nm_filterheader_taglist'},
 	},
 
 	/**
@@ -3420,7 +3421,7 @@ var et2_nextmatch_entryheader = (function(){ "use strict"; return et2_link_entry
 		col_filter[this.id] = this.get_value();
 		this.nextmatch.applyFilters.call(this.nextmatch, {col_filter: col_filter});
 	},
-	
+
 	/**
 	 * Override to always return a string appname:id (or just id) for simple (one real selection)
 	 * cases, parent returns an object.  If multiple are selected, or anything other than app and

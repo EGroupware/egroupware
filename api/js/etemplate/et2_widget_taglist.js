@@ -650,7 +650,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		this.taglist.setMaxSelection(this._multiple ? this.options.maxSelection : 1);
 		if(!this._multiple && this.taglist.getValue().length > 1)
 		{
-			this.set_value(this.taglist.getValue());
+			this.set_value(multiple?this.taglist.getValue():this.taglist.getValue()[0]);
 		}
 
 		// This changes sizes, so
@@ -829,9 +829,9 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		min_width += this.taglist.trigger ? this.taglist.trigger.outerWidth(true) : 0;
 
 		// Not enough for one
-		if(min_width > this.div.width() ||
+		if(this.options.multiple && (min_width > this.div.width() ||
 			this.taglist.container.width() > this.div.width() || this.taglist.container.height() > this.div.height()
-		)
+		))
 		{
 			this._setup_small();
 		}

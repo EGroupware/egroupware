@@ -1110,7 +1110,7 @@ div .et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 	overflow: hidden;
 }
 div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
-	width: calc(100% - 43px);
+	width: calc(100% - 30px);
 }
 .et2_taglist_single div.ms-sel-item > span:first-child {
 	max-width: 100%;
@@ -1183,6 +1183,10 @@ div .et2_taglist_small.et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
 .et2_taglist_small div.ms-sel-item {
 	white-space: nowrap;
 	overflow: hidden;
+}
+
+.et2_taglist.et2_taglist_single.nm_filterheader_taglist div.ms-ctn input {
+	min-width: calc(100% - 30px);
 }
 
 /* Taglist category */
