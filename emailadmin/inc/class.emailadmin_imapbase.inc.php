@@ -5534,7 +5534,7 @@ class emailadmin_imapbase
 		if ($ext && stripos($filename,'.')===false && stripos($filename,$ext)===false) $filename = trim($filename).'.'.$ext;
 		if (!$part)
 		{
-			throw new egw_exception_wrong_parameter("Error: Could not fetch attachment for Uid=$_uid, PartId=$_partID, WinMailNr=$_winmail_nr, folder=$_folder");
+			throw new egw_exception_wrong_parameter("Error: Could not fetch attachment for Uid=".array2string($_uid).", PartId=$_partID, WinMailNr=$_winmail_nr, folder=$_folder");
 		}
 		$attachmentData = array(
 			'type'		=> $structure_mime,
