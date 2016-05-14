@@ -3,7 +3,7 @@
 # - to install or update run inside EGroupware dir: mr up
 # - alternativly you can also run the commands manually
 
-[api/js/ckeditor]
+[phpgwapi/js/ckeditor]
 checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
 
 []
