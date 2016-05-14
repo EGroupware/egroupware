@@ -4,9 +4,9 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2013-14 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2013-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
+ * @version $Id: app.js 56051 2016-05-06 07:58:37Z ralfbecker $
  */
 
 /**
@@ -115,7 +115,9 @@ app.classes.admin = AppJS.extend(
 	 */
 	load: function(_url)
 	{
-		if (this.iframe && this.iframe.getDOMNode().contentDocument.location.href.match(/menuaction=admin.admin_statistics.submit/))
+		if (this.iframe && this.iframe.getDOMNode().contentDocument.location.href
+			.match(/menuaction=admin.admin_statistics.submit/) &&
+			!_url.match(/statistics=(postpone|canceled|submitted)/))
 		{
 			this.egw.message(this.egw.lang('Please submit (or postpone) statistic first'), 'info');
 			return;	// do not allow to leave statistics submit
@@ -717,39 +719,50 @@ app.classes.admin = AppJS.extend(
 	 *
 	 * @param {DOM} form
 	 * @param {string} submit_url
-	 * @param {string} confirm_msg
-	 * @param {string} action own action, if called via window_set_timeout
-	 * @param {string} exec_id own exec_id
 	 * @return {boolean}
 	 */
-	submit_statistic: function(form,submit_url,confirm_msg,action,exec_id)
+	submit_statistic: function(form, submit_url)
 	{
-		if (submit_url) {
-			if (!confirm(confirm_msg)) return false;
-
-			var own_action = form.action;
-			var own_exec_id = form['etemplate_exec_id'].value;
-			var that = this;
-
-			// submit to own webserver
-			window.setTimeout(function() {
-				that.submit_statistic.call(this, form, '', '', own_action, own_exec_id);
-			},100);
-
+		var that = this;
+		var submit = function(_button)
+		{
 			// submit to egroupware.org
+			var method=form.method;
+			form.method='POST';
+			var action = form.action;
 			form.action=submit_url;
-			form['etemplate_exec_id'].value='';
+			var target = form.target;
 			form.target='_blank';
-		} else {
-			// submit to own webserver
-			form.action = action;
-			form['etemplate_exec_id'].value=exec_id;
-			form.target='';
-
 			form.submit();
-		}
 
-		return true;
+			// submit to own webserver
+			form.method=method;
+			form.action=action;
+			form.target=target;
+			that.et2.getInstanceManager().submit('submit');
+		};
+
+		// Safari does NOT allow to call form.submit() outside of onclick callback
+		// so we have to use browsers ugly synchron confirm
+		if (navigator.userAgent.match(/Safari/) && !navigator.userAgent.match(/Chrome/))
+		{
+			if (confirm(this.egw.lang('Submit displayed information?')))
+			{
+				submit();
+			}
+		}
+		else
+		{
+			et2_dialog.show_dialog(function(_button)
+			{
+				if (_button == et2_dialog.YES_BUTTON)
+				{
+					submit();
+				}
+			}, this.egw.lang('Submit displayed information?'), '', {},
+				et2_dialog.BUTTON_YES_NO, et2_dialog.QUESTION_MESSAGE, undefined, egw);
+		}
+		return false;
 	},
 
 	/**

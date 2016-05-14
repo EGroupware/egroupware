@@ -5,11 +5,13 @@
 	<template id="admin.statistics" template="" lang="" group="0" version="1.7.001">
 		<groupbox span="all" class="bigger">
 			<caption label="Official EGroupware usage statistic"/>
-			<description value="We ask for the data to improve our profile in the press and to get a better understanding of EGroupware's user base and it's needs."/>
-			<html label="The cumulated and anonymised data will be publically available:" id="statistic_url"/>
-			<description value="We hope you understand the importance for this voluntary statistic and not deny it lightly." class="bold"/>
-			<description value="Only below displayed information is directly submitted to %s." id="submit_host"/>
-			<textbox label="To allow us to track the growth of your individual installation use this submit ID, otherwise delete it:" id="submit_id" size="40" maxlength="40"/>
+			<vbox>
+				<description value="We ask for the data to improve our profile in the press and to get a better understanding of EGroupware's user base and it's needs."/>
+				<url label="The cumulated and anonymised data will be publically available:" id="statistic_url" readonly="true"/>
+				<description value="We hope you understand the importance for this voluntary statistic and not deny it lightly." class="bold"/>
+				<description label="Only below displayed information is directly submitted to %s." id="submit_host"/>
+				<textbox label="To allow us to track the growth of your individual installation use this submit ID, otherwise delete it:" id="submit_id" size="42" maxlength="40"/>
+			</vbox>
 		</groupbox>
 		<grid>
 			<columns>
@@ -23,15 +25,11 @@
 				</row>
 				<row>
 					<description options=",,,country" value="Country"/>
-					<menulist>
-						<menupopup type="select-country" id="country" options="International use"/>
-					</menulist>
+					<select type="select-country" id="country" options="International use"/>
 				</row>
 				<row>
 					<description value="Usage" options=",,,usage_type"/>
-					<menulist>
-						<menupopup id="usage_type"/>
-					</menulist>
+					<select id="usage_type"/>
 				</row>
 				<row>
 					<description value="Number of users" options=",,,users"/>
@@ -43,7 +41,7 @@
 				</row>
 				<row>
 					<description value="EGroupware Version"/>
-					<textbox id="version" size="-8" readonly="true"/>
+					<textbox id="version" size="-16" readonly="true"/>
 				</row>
 				<row>
 					<description value="Operating System"/>
@@ -74,9 +72,7 @@
 				<row>
 					<button label="Submit" statustext="Submit to egroupware.org" onclick="$cont[onclick]" id="submit"/>
 					<hbox>
-						<menulist>
-							<menupopup id="postpone" options="Postpone for" onchange="1"/>
-						</menulist>
+						<select id="postpone" options="Postpone for" onchange="1"/>
 						<button id="cancel" label="Cancel" statustext="Go directly to admin menu, returning here the next time you click on administration." align="right"/>
 					</hbox>
 				</row>
@@ -84,10 +80,10 @@
 		</grid>
 		<styles>
 			.bold { font-weight: bold; }
-fieldset.bigger legend { 
-  font-weight: bold; 
-  font-size: 125%; 
-  padding-left: 5px; 
+fieldset.bigger legend {
+  font-weight: bold;
+  font-size: 125%;
+  padding-left: 5px;
   padding-right: 5px;
 }
 		</styles>

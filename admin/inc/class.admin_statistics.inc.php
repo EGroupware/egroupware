@@ -40,29 +40,29 @@ class admin_statistics
 	/**
 	 * Display and allow to submit statistical data
 	 *
-	 * @param array $content=null
+	 * @param array $_content =null
 	 */
-	public function submit($content=null)
+	public function submit($_content=null)
 	{
-		if (is_array($content))
+		if (is_array($_content))
 		{
 			$config = new config(self::CONFIG_APP);
-			if ($content['postpone'])
+			if ($_content['postpone'])
 			{
-				config::save_value(self::CONFIG_POSTPONE_SUBMIT,time()+$content['postpone'],self::CONFIG_APP);
+				config::save_value(self::CONFIG_POSTPONE_SUBMIT,time()+$_content['postpone'],self::CONFIG_APP);
 				$what = 'postpone';
 			}
-			elseif(!$content['cancel'])
+			elseif(!$_content['cancel'])
 			{
 				config::save_value(self::CONFIG_LAST_SUBMIT,time(),self::CONFIG_APP);
-				config::save_value(self::CONFIG_SUBMIT_ID,empty($content['submit_id']) ? '***none***' : $content['submit_id'],self::CONFIG_APP);
-				config::save_value(self::CONFIG_COUNTRY,empty($content['country']) ? '***multinational***' : $content['country'],self::CONFIG_APP);
-				config::save_value(self::CONFIG_USAGE_TYPE,$content['usage_type'],self::CONFIG_APP);
-				config::save_value(self::CONFIG_INSTALL_TYPE,$content['install_type'],self::CONFIG_APP);
+				config::save_value(self::CONFIG_SUBMIT_ID,empty($_content['submit_id']) ? '***none***' : $_content['submit_id'],self::CONFIG_APP);
+				config::save_value(self::CONFIG_COUNTRY,empty($_content['country']) ? '***multinational***' : $_content['country'],self::CONFIG_APP);
+				config::save_value(self::CONFIG_USAGE_TYPE,$_content['usage_type'],self::CONFIG_APP);
+				config::save_value(self::CONFIG_INSTALL_TYPE,$_content['install_type'],self::CONFIG_APP);
 				config::save_value(self::CONFIG_POSTPONE_SUBMIT,null,self::CONFIG_APP);	// remove evtl. postpone time
-				$what = 'submited';
+				$what = 'submitted';
 			}
-			egw::redirect_link('/admin/index.php','statistics='.($what ? $what : 'cancled'));
+			egw::redirect_link('/admin/index.php','ajax=true&statistics='.($what ? $what : 'canceled'),'admin');
 		}
 		$sel_options['usage_type'] = array(
 			'commercial'   => lang('Commercial: all sorts of companies'),
@@ -75,6 +75,7 @@ class admin_statistics
 		$sel_options['install_type'] = array(
 			'archive' => lang('Archive: zip or tar'),
 			'package' => lang('RPM or Debian package'),
+			'git'     => lang('Git clone'),
 			'svn'     => lang('Subversion checkout'),
 			'other'   => lang('Other'),
 		);
@@ -92,7 +93,7 @@ class admin_statistics
 		$config = config::read(self::CONFIG_APP);
 		//_debug_array($config);
 		$content = array_merge(self::gather_data(),array(
-			'statistic_url' => html::a_href(self::STATISTIC_URL,self::STATISTIC_URL,'',' target="_blank"'),
+			'statistic_url' => self::STATISTIC_URL,
 			'submit_host' => parse_url(self::SUBMIT_URL,PHP_URL_HOST),
 			'submit_url'  => self::SUBMIT_URL,
 			'last_submitted' => $config[self::CONFIG_LAST_SUBMIT],
@@ -128,7 +129,7 @@ class admin_statistics
 		if (!isset($config[self::CONFIG_LAST_SUBMIT]) || $config[self::CONFIG_LAST_SUBMIT ] <= time()-self::SUBMISION_RATE)
 		{
 			// clear etemplate_exec_id and replace form.action, before submitting the form
-			$content['onclick'] = "return app.admin.submit_statistic(this.form,'$content[submit_url]','".addslashes(lang('Submit displayed information?'))."');";
+			$content['onclick'] = "return app.admin.submit_statistic(this.form,'$content[submit_url]');";
 		}
 		else	// we are not due --> tell it the user
 		{
@@ -137,8 +138,8 @@ class admin_statistics
 				ceil((time()-$config[self::CONFIG_LAST_SUBMIT])/24/3600));
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Submit statistic information');
-		$tmpl = new etemplate('admin.statistics');
-		$tmpl->exec('admin.admin_statistics.submit',$content,$sel_options,$readonlys,$preserv);
+		$tmpl = new etemplate_new('admin.statistics');
+		$tmpl->exec('admin.admin_statistics.submit',$content,$sel_options,$readonlys);
 	}
 
 	/**
@@ -177,7 +178,11 @@ class admin_statistics
 		{
 			$data['os'] .= ': '.str_replace(array("\n","\r"),'',implode(',',file($file)));
 		}
-		if (file_exists('.svn'))
+		if(file_exists(EGW_INCLUDE_ROOT.'/.git'))
+		{
+			$data['install_type'] = 'git';
+		}
+		elseif (file_exists('.svn'))
 		{
 			$data['install_type'] = 'svn';
 		}
@@ -185,7 +190,7 @@ class admin_statistics
 		{
 			$data['install_type'] = 'package';
 		}
-		foreach($GLOBALS['egw_info']['apps'] as $app => $app_data)
+		foreach(array_keys($GLOBALS['egw_info']['apps']) as $app)
 		{
 			if (in_array($app,array(
 				'admin','phpgwapi','emailadmin','sambaadmin','developer_tools',
@@ -271,6 +276,7 @@ class admin_statistics
 				//echo "$app ($table): $entries<br />\n";
 			}
 			catch(egw_exception_db $e) {
+				unset($e);	// not used
 				$entries = null;
 			}
 		}
