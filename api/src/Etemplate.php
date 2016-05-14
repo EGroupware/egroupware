@@ -224,7 +224,7 @@ class Etemplate extends Etemplate\Widget\Template
 			$form_action = "about:blank";
 			if (in_array(Header\UserAgent::type(), array('firefox', 'safari')))
 			{
-				$form_action = $GLOBALS['egw_info']['server']['webserver_url'].'/api/src/Etemplate/empty.html';
+				$form_action = $GLOBALS['egw_info']['server']['webserver_url'].'/api/templates/default/empty.html';
 			}
 			// check if we are in an ajax-exec call from jdots template (or future other tabbed templates)
 			if (isset($GLOBALS['egw']->framework->response))

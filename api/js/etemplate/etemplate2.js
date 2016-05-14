@@ -653,7 +653,7 @@ etemplate2.prototype.autocomplete_fixer = function ()
 		// Safari shows same warning, thought Chrome userAgent also includes Safari
 		if (navigator.userAgent.match(/(firefox|safari|iceweasel)/i) && !navigator.userAgent.match(/chrome/i))
 		{
-			jQuery(form).attr({action: egw.webserverUrl+'/etemplate/empty.html',method:'post'});
+			jQuery(form).attr({action: egw.webserverUrl+'/api/templates/default/empty.html',method:'post'});
 		}
 		// need to trigger submit because submit() would not trigger onsubmit event
 		// since the submit does not get fired directly via user interaction.
