@@ -48,10 +48,3 @@ $setup_info['admin']['depends'][] = array(
 	'appname' => 'api',
 	'versions' => Array('16.1')
 );
-// still using old etemplate in: admin_statistics
-$setup_info['admin']['depends'][] = array(
-	'appname' => 'etemplate',
-	'versions' => Array('14.1')
-);
-
-

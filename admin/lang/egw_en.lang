@@ -7,6 +7,7 @@
 %1 category(s) %2	admin	en	%1 category(s) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	en	%1 category(s) %2, %3 failed because of insufficent rights !!!
 %1 class not instanciated	admin	en	%1 class not instanciated
+%1 entries deleted.	admin	en	%1 entries deleted.
 %1 group %2	admin	en	%1 group %2
 %1 is no command!	admin	en	%1 is no command!
 %1 log entries deleted.	admin	en	%1 log entries deleted.
@@ -18,6 +19,8 @@
 %1 user %2	admin	en	%1 user %2
 (de)activate mail accounts	admin	en	(de)activate mail accounts
 (default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you dont use it
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	en	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)
+(no subject)	admin	en	(no subject)
 (stored password will not be shown here)	admin	en	Stored password will not be shown here!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	en	-  type
@@ -30,14 +33,18 @@ account "%1" has no email address --> not notified!	admin	en	Account "%1" has no
 account "%1" has no plaintext password!	admin	en	Account "%1" has NO plaintext password!
 account %1 %2	admin	en	Account %1 %2
 account '%1' deleted.	admin	en	Account '%1' deleted.
+account '%1' not found !!!	admin	en	Account '%1' not found!
 account active	admin	en	Account active
+account deleted.	admin	en	Account deleted.
 account has been created	common	en	Account has been created.
 account has been deleted	common	en	Account has been deleted.
 account has been updated	common	en	Account has been updated.
 account id	admin	en	Account ID
 account list	admin	en	Account list
+account not found!	common	en	Account not found!
 account permissions	admin	en	Account permissions
 account preferences	admin	en	Account preferences
+account saved.	admin	en	Account saved.
 account-id's have to be integers!	admin	en	Account ID's have to be integers!
 acl added.	admin	en	ACL added.
 acl deleted.	admin	en	ACL deleted.
@@ -51,6 +58,7 @@ action	admin	en	Action
 actions	admin	en	Actions
 activate	admin	en	Activate
 activate wysiwyg-editor	admin	en	Activate WYSIWYG-editor
+active templates	admin	en	Active templates
 add a category	admin	en	Add a category
 add a group	admin	en	Add a group
 add a new account.	admin	en	Add a new account
@@ -65,14 +73,19 @@ add global category for %1	admin	en	Add global category for %1
 add group	admin	en	Add group
 add new account	admin	en	Add new account
 add new application	admin	en	Add new application
+add new email address:	admin	en	Add new email address:
 add peer server	admin	en	Add Peer Server
+add profile	admin	en	Add profile
 add sub-category	admin	en	Add sub category
 add user	admin	en	Add user
 add user or group	admin	en	Add user or group
+admin dn	admin	en	Admin dn
 admin email	admin	en	Admin email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	en	Admin email addresses, comma-separated, to be notified about the blocked user accounts and IP. Empty = no notification.
 admin name	admin	en	Admin name
+admin password	admin	en	Admin password
 admin queue and history	admin	en	Admin queue and history
+admin username	admin	en	Admin user name
 administration	admin	en	Administration
 admins	admin	en	Admins
 advanced options	admin	en	Advanced options
@@ -86,11 +99,16 @@ all records and account information will be lost!	admin	en	All records and accou
 all users	admin	en	All users
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
 allow remote administration from following install id's (comma separated)	admin	en	Allow remote administration from following install ID's, comma separated.
+allow users to change forwards	admin	en	Allow users to change forwards
 alternate email address	admin	en	Alternate email address
+and logged in	admin	en	and logged in
 anonymous user	admin	en	Anonymous user
 anonymous user (not shown in list sessions)	admin	en	Anonymous user. Not shown in list sessions.
 anonymous user does not exist!	admin	en	Anonymous user does NOT exist!
 anonymous user has no run-rights for the application!	admin	en	Anonymous user has NO run-rights for the application!
+any application	admin	en	Any application
+any group	admin	en	Any group
+any user	admin	en	Any user
 appearance	admin	en	Appearance
 application	admin	en	Application
 application '%1' not found (maybe not installed or misspelled)!	admin	en	Application '%1' not found. Maybe it is not installed or is misspelled!
@@ -123,14 +141,22 @@ attributes	admin	en	Attributes
 authentication / accounts	admin	en	Authentication | Accounts
 auto create account records for authenticated users	admin	en	Auto create account records for authenticated users.
 available placeholders	admin	en	Available placeholders
+back to admin/grouplist	admin	en	Back to Admin / Group list
+back to admin/userlist	admin	en	Back to Admin / User list
 back to the list	admin	en	Back to the list
 backup directory %1 mounted as %2	admin	en	Backup directory %1 mounted as %2
+bad login name or password.	admin	en	Bad login name or password.
+bad or malformed request. server responded: %s	admin	en	Bad or malformed request. %s
+bad request: %s	admin	en	Bad request: %s
 bi-dir passthrough	admin	en	bi-dir passthrough
 bi-directional	admin	en	bi-directional
 bottom	admin	en	Bottom
 bulk password reset	admin	en	Bulk password reset
 calculate next run	admin	en	Calculate next run
 calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizon in days. Default = 1000.
+can be used by application	admin	en	Can be used by application
+can be used by group	admin	en	Can be used by group
+can be used by user	admin	en	Can be used by user
 can change password	admin	en	Can change password
 can not change users into groups, same sign required!	admin	en	Can NOT change users into groups, same sign required!
 cancel testjob!	admin	en	Cancel TestJob!
@@ -163,12 +189,21 @@ command scheduled to run at %1	admin	en	Command scheduled to run at %1
 commercial: all sorts of companies	admin	en	Commercial: all sorts of companies
 config password or md5 hash from the header.inc.php	admin	en	Config password or md5 hash from the header.inc.php.
 configuration saved.	admin	en	Configuration saved.
+connection dropped by imap server.	admin	en	Connection dropped by IMAP server.
+connection is not secure! everyone can read eg. your credentials.	admin	en	Connection is NOT secure! Everyone can read eg. your credentials.
+continue	admin	en	Continue
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain. Default empty uses full domain name. E.g. in Site Manager ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path. Allows multiple EGroupware sessions with different directories.
+could not append message:	admin	en	Could not append Message:
+could not complete request. reason given: %s	admin	en	Could not complete request. %s
+could not open secure connection to the imap server. %s : %s.	admin	en	Could not open secure connection to the IMAP server. %s : %s.
 could not remote execute the command	admin	en	Could not remote execute the command
 country	admin	en	Country
 country selection	admin	en	Country selection
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	en	CRAM-MD5 or DIGEST-MD5 requires the Auth_SASL package to be installed.
 create group	admin	en	Create group
+create new account	admin	en	Create new account
+create new identity	admin	en	Create new identity
 created	admin	en	Created
 created with id #%1	admin	en	Created with id #%1
 creates / updates user accounts from csv file	admin	en	Creates / updates user accounts from CSV file
@@ -178,7 +213,8 @@ crontab only (recomended)	admin	en	Crontab only (recommended)
 current hash	admin	en	Current hash
 custom fields	admin	en	Custom fields
 custom translation	admin	en	Custom translation
-cyrus imap server	admin	en	Cyrus IMAP Server
+cyrus imap server	admin	en	Cyrus IMAP server
+cyrus imap server administration	admin	en	Cyrus IMAP server administration
 data	admin	en	Data
 data from	admin	en	Data from
 day	admin	en	Day
@@ -196,11 +232,13 @@ delete all records	admin	en	Delete all records
 delete application	admin	en	Delete application
 delete category	admin	en	Delete category
 delete group	admin	en	Delete group
+delete identity	admin	en	Delete identity
 delete peer server	admin	en	Delete peer server
 delete selected entries	admin	en	Delete selected entries
 delete the category	admin	en	Delete the category
 delete the group	admin	en	Delete the group
 delete the selected entries	admin	en	Delete the selected entries
+delete this account	admin	en	Delete this account
 delete this category	admin	en	Delete this category
 delete this group	admin	en	Delete this group
 delete this log entry	admin	en	Delete this log entry
@@ -236,12 +274,18 @@ disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
 disabled (not recomended)	admin	en	Disabled (not recommended)
 display	admin	en	Display
 displayed length of input field (set rows=1 to limit length)	admin	en	displayed length of input field (set rows=1 to limit length)
+displaying html messages is disabled	admin	en	displaying html messages is disabled
+displaying plain messages is disabled	admin	en	displaying plain messages is disabled
 do not delete the category and return back to the list	admin	en	Do NOT delete the category and return back to the list
 do not offer introduction video	admin	en	Do not offer introduction video
+do not validate certificate	admin	en	Do not validate certificate
 do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global sub categories?
+do you really want to delete this profile	admin	en	Do you really want to delete this profile?
+do you really want to reset the filter for the profile listing	admin	en	Do you really want to reset the filter for the profile listing?
 do you want to delete all global subcategories ?	admin	en	Do you want to delete all global sub categories?
 do you want to move all global subcategories one level down ?	admin	en	Do you want to move all global sub categories one level down?
 document root (default)	admin	en	Document root (default)
+domainname	admin	en	Domain name
 down	admin	en	Down
 download csv	admin	en	Download CSV
 each value is a line like id[=label], or use @path to read options from a file in egroupware directory	admin	en	each value is a line like id[=label], or use @path to read options from a file in EGroupware directory
@@ -269,14 +313,22 @@ egroupware version	admin	en	EGroupware version
 either install id and config password needed or the remote hash!	admin	en	Either install ID AND config password needed OR the remote hash!
 email account active	admin	en	Email account active
 email address	admin	en	Email address
+email settings	common	en	Email settings
+emailadmin	admin	en	eMailAdmin
+emailadmin: group assigned profile	common	en	eMailAdmin: Group assigned profile
+emailadmin: user assigned profile	common	en	eMailAdmin: User assigned profile
 empty to not change	admin	en	empty to NOT change
 enable	admin	en	Enable
+enable cyrus imap server administration	admin	en	Enable Cyrus IMAP server administration
 enable debug-messages	admin	en	Enable debug messages.
+enable sieve	admin	en	Enable Sieve
 enable spellcheck in rich text editor	admin	en	Enable spellcheck in rich text editor
 enable the soap service	admin	en	Enable the soap service.
 enable the xmlrpc service	admin	en	Enable the xmlrpc service.
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup window
+encrypted connection	admin	en	Encrypted connection
+encryption settings	admin	en	Encryption settings
 enter a description for the category	admin	en	Enter a description for the category
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	en	Enter some random text for app_session <br>encryption, requires mcrypt
 enter the background color for the login page	admin	en	Enter the background color for the login page
@@ -298,20 +350,28 @@ enter the url where your logo should link to	admin	en	Enter the URL where the lo
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.<br>The path MUST start with / and be readable by all users
 enter your default ftp server	admin	en	Enter your default FTP server
 enter your default mail domain ( from: user@domain )	admin	en	Enter your default mail domain (from: user@domain)
+enter your default mail domain (from: user@domain)	admin	en	Enter your default mail domain from: user@domain
 enter your http proxy server	admin	en	Enter your HTTP proxy server
 enter your http proxy server port	admin	en	Enter your HTTP proxy server port
 enter your smtp server hostname or ip address	admin	en	Enter your SMTP server hostname or IP address
 enter your smtp server port	admin	en	Enter your SMTP server port
+entry saved	admin	en	Entry saved
 error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer, maybe there's none set!
 error changing the password for %1 !!!	admin	en	Error changing the password for %1 !
+error connecting to imap server. %s : %s.	admin	en	Error connecting to IMAP server. %s : %s.
+error connecting to imap server: [%s] %s.	admin	en	Error connecting to IMAP server: [%s] %s.
+error deleting entry!	admin	en	Error deleting entry!
 error deleting log entry!	admin	en	Error deleting log entry!
 error saving	admin	en	Error saving!
 error saving account!	admin	en	Error saving account!
 error saving the command!	admin	en	Error saving the command!
+error saving the entry!!!	admin	en	Error saving the entry!
 error saving to db:	admin	en	Error saving to db:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	en	Error setting timer, wrong syntax or maybe there's one already running!
 error! no appname found	admin	en	Error: No app name found!
+error, no username!	admin	en	Error, no username!
 error: %1 not found or other error !!!	admin	en	Error: %1 not found or other error!
+event details follow	admin	en	Event Details follow
 exists	admin	en	Exists
 expired	admin	en	Expired
 expires	admin	en	Expires
@@ -320,23 +380,31 @@ exports groups into a csv file.	admin	en	Exports groups into a CSV file.
 exports users into a csv file.	admin	en	Exports users into a CSV file.
 failed to change password for account "%1"!	admin	en	Failed to change password for account "%1"!
 failed to change password.	admin	en	Failed to change password.
+failed to delete account!	admin	en	Failed to delete account!
 failed to mount backup directory!	admin	en	Failed to mount Backup directory!
 failed to save user!	admin	en	Failed to save user!
 fallback (after each pageview)	admin	en	Fallback, after each page view.
 false	admin	en	False
 field '%1' already exists !!!	admin	en	Field '%1' already exists!
+file rejected, no %2. is:%1	admin	en	File rejected, no %2. Is:%1
 file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer
+filtered by account	admin	en	Filtered by account
+filtered by group	admin	en	Filtered by group
+folder acl	admin	en	Folder ACL
 for the times above	admin	en	For the times above
 for the times below (empty values count as '*', all empty = every minute)	admin	en	For the times below: empty values count as '*', all empty = every minute.
 force selectbox	admin	en	Force select box
 force users to change their password regularily?(empty for no,number for after that number of days	admin	en	Set recurrent forced password change. Set a number of days. Empty = No
 forward also to	admin	en	Forward also to
+forward email's to	admin	en	Forward email's to
 forward emails to	admin	en	Forward emails to
 forward only	admin	en	Forward only
+forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	en	Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.
 full name	admin	en	Full name
 general	admin	en	General
 global categories	common	en	Global categories
+global options	admin	en	Global options
 go directly to admin menu, returning here the next time you click on administration.	admin	en	Go directly to admin menu, returning here the next time you click on administration.
 governmental: incl. state or municipal authorities or services	admin	en	Governmental: incl. state or municipal authorities or services
 grant	admin	en	Grant
@@ -358,17 +426,37 @@ hide php information	admin	en	Hide php information
 hide sidebox video tutorials	admin	en	Hide sidebox video tutorials
 home directory	admin	en	Home directory
 host information	admin	en	Host information
+hostname or ip	admin	en	Hostname or IP
 hour<br>(0-23)	admin	en	Hour<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	en	Maximum pixel size of thumbnails for linked images.
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	en	How many days should entries remain in the access log before they get deleted. Default = 90
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	en	How many entries should non-admins be able to export. Empty = no limit, no = no export
 how many minutes should an account or ip be blocked (default 30) ?	admin	en	How many minutes should an account or IP be blocked. Default = 30
 how should email addresses for new users be constructed?	admin	en	Select default email address format for new user accounts
+how username get constructed	admin	en	How username get constructed
 icon	admin	en	Icon
+identity deleted	admin	en	Identity deleted
+identity saved.	admin	en	Identity saved.
 idle	admin	en	idle
+if different from email address	admin	en	if different from EMail address
 if no acl records for user or any group the user is a member of	admin	en	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	en	If using LDAP, do you want to manage home directory and loginshell attributes?
+if using ssl or tls, you must have the php openssl extension loaded.	admin	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	en	if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)
+imap admin password	admin	en	IMAP admin password
+imap admin user	admin	en	IMAP admin user
+imap c-client version < 2001	admin	en	IMAP C-Client Version < 2001
+imap server	admin	en	IMAP server
+imap server closed the connection.	admin	en	IMAP server closed the connection.
+imap server closed the connection. server responded: %s	admin	en	IMAP Server closed the connection. Server Responded: %s
+imap server hostname or ip address	admin	en	IMAP server hostname or ip address
+imap server logintyp	admin	en	IMAP server login type
+imap server name	admin	en	IMAP server name
+imap server port	admin	en	IMAP server port
+imap/pop3 server name	admin	en	IMAP/POP3 server name
+importance	admin	en	importance
 in mbyte	admin	en	in MByte
+inactive	admin	en	Inactive
 inbound	admin	en	inbound
 initial	admin	en	Initial
 install crontab	admin	en	Install crontab
@@ -398,6 +486,7 @@ last password change	admin	en	Last password change
 last submission:	admin	en	Last submission:
 last time read	admin	en	Last time read
 ldap accounts context	admin	en	LDAP accounts context
+ldap basedn	admin	en	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	en	LDAP default home directory prefix (e.g. /home for /home/username)
 ldap default shell (e.g. /bin/bash)	admin	en	LDAP default shell (e.g. /bin/bash)
 ldap encryption type	admin	en	LDAP encryption type
@@ -405,6 +494,12 @@ ldap groups context	admin	en	LDAP groups context
 ldap host	admin	en	LDAP host
 ldap root password	admin	en	LDAP root password
 ldap rootdn	admin	en	LDAP rootdn
+ldap server	admin	en	LDAP server
+ldap server accounts dn	admin	en	LDAP server accounts DN
+ldap server admin dn	admin	en	LDAP server admin DN
+ldap server admin password	admin	en	LDAP server admin password
+ldap server hostname or ip address	admin	en	LDAP server host name or IP address
+ldap settings	admin	en	LDAP settings
 leave empty for no quota	admin	en	Leave empty for no quota
 leave the category untouched and return back to the list	admin	en	Leave the category untouched and return back to the list.
 leave the group untouched and return back to the list	admin	en	Leave the group untouched and return back to the list.
@@ -434,9 +529,12 @@ mail settings	admin	en	Mail settings
 main email-address	admin	en	Main email address
 main screen message	admin	en	Main screen message
 manage mapping	admin	en	Manage mapping
+manage stationery templates	admin	en	Manage stationery templates
 manager	admin	en	Manager
+manual entry	admin	en	Manual entry
 maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account id, e.g. 65535 or 1000000
 maximum entries in click path history	admin	en	Maximum entries in click path history
+mb used	admin	en	MB used
 members	admin	en	Members
 message has been updated	admin	en	Message has been updated
 method	admin	en	Method
@@ -449,6 +547,7 @@ more secure	admin	en	More secure
 mount backup directory to %1	admin	en	Mount backup directory to %1
 must change password upon next login	admin	en	Must change password upon next login
 name must not be empty !!!	admin	en	Name must not be empty!
+name of organisation	admin	en	Name of organization
 name of the egroupware instance, eg. default	admin	en	Name of the EGroupware instance
 new group name	admin	en	New group name
 new name	admin	en	New name
@@ -456,16 +555,22 @@ new password	admin	en	New password
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 next run	admin	en	Next run
 no algorithms available	admin	en	No algorithms available!
-no alternate email address	admin	en	No alternate email address!
+no alternate email address	admin	en	No alternate email address
 no default account found!	admin	en	No default account found!
+no encryption	admin	en	No encryption
+no forwarding email address	admin	en	No forwarding email address
 no jobs in the database !!!	admin	en	No jobs in the database!
 no login history exists for this user	admin	en	No login history exists for this user!
 no matches found	admin	en	No matches found!
+no message returned.	admin	en	No message returned
 no modes available	admin	en	No modes available!
 no permission to add groups	admin	en	No permission to add groups!
 no permission to add users	admin	en	No permission to add users!
 no permission to create groups	admin	en	No permission to create groups!
+no plain text part found	admin	en	no plain text part found
 no profile defined for user %1	admin	en	No profile defined for user %1
+no sieve support detected, either fix configuration manually or leave it switched off.	admin	en	No sieve support detected, either fix configuration manually or leave it switched off.
+no supported imap authentication method could be found.	admin	en	No supported IMAP authentication method could be found.
 non profit: clubs, associations, ...	admin	en	Non profit: Clubs, Associations, ...
 note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support.
 notification mail	admin	en	Notification mail
@@ -486,6 +591,7 @@ one week	admin	en	One week
 only below displayed information is directly submitted to %s.	admin	en	Only below displayed information is directly submitted to %s.
 operating system	admin	en	Operating system
 order	admin	en	Order
+organisation	admin	en	Organisation
 outbound	admin	en	Outbound
 own categories	admin	en	Own categories
 own install id	admin	en	Own install ID
@@ -517,17 +623,31 @@ please enter a name for that server !	admin	en	Enter a name for that server!
 please run setup to become current	admin	en	Run setup to become current
 please select	admin	en	Please select
 please submit (or postpone) statistic first	admin	en	Please submit (or postpone) statistic first
+plesk can't rename users --> request ignored	admin	en	Plesk can't rename users --> request ignored
+plesk imap server (courier)	admin	en	Plesk IMAP Server (Courier)
+plesk mail script '%1' not found !!!	admin	en	Plesk mail script '%1' not found!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	en	Plesk requires passwords to have at least 5 characters and not contain the account name --> password NOT set!
+plesk smtp-server (qmail)	admin	en	Plesk SMTP-Server (Qmail)
+pop3 server hostname or ip address	admin	en	POP3 server hostname or IP address
+pop3 server port	admin	en	POP3 server port
+port	admin	en	Port
 postfix with ldap	admin	en	Postfix with LDAP
 postpone for	admin	en	Postpone for
 preferences	admin	en	Preferences
 primary group	admin	en	Primary group
-qmaildotmode	admin	en	Qmaildotmode
+processing of file %1 failed. failed to meet basic restrictions.	admin	en	Processing of file %1 failed. Failed to meet basic restrictions.
+profile access rights	admin	en	Profile access rights
+profile is active	admin	en	Profile is active
+profile list	admin	en	Profile list
+profile name	admin	en	Profile name
+qmaildotmode	admin	en	qmaildotmode
 quota settings	admin	en	Quota settings
 quota size in mbyte	admin	en	Quota size in MByte
 re-enter password	admin	en	Re-enter password
 read this list of methods.	admin	en	Read this list of methods.
 register application hooks	admin	en	Register application hooks
 reject passwords containing part of username or full name (3 or more characters long)	admin	en	Reject passwords containing part of username or full name (3 or more characters long)
+relay access checked	admin	en	Relay access checked
 remote administration instances	admin	en	Remote administration instances
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote instance saved	admin	en	Remote instance saved.
@@ -536,6 +656,8 @@ remove all users from this group	admin	en	Remove all users from this group
 remove all users from this group ?	admin	en	Remove all users from this group?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	en	Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:
 requested	admin	en	Requested
+required pear class mail/mimedecode.php not found.	admin	en	Required PEAR class Mail/mimeDecode.php not found.
+reset filter	admin	en	Reset filter
 return to admin mainscreen	admin	en	Return to admin main screen
 return to view account	admin	en	Return to view account
 rights	admin	en	Rights
@@ -544,29 +666,37 @@ rows	admin	en	Rows
 rpm or debian package	admin	en	RPM or Debian package
 run	admin	en	run
 run asynchronous services	admin	en	Run Asynchronous services
+save of message %1 failed. could not save message to folder %2 due to: %3	admin	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
 save the category	admin	en	Save the category.
 save the category and return back to the list	admin	en	Save the category and return back to the list.
 saves the changes made and leaves	admin	en	Saves the changes made and leaves.
 saves this entry	admin	en	Saves this entry.
+saving of message %1 failed. destination folder %2 does not exist.	admin	en	Saving of message %1 failed. Destination Folder %2 does not exist.
 scheduled	admin	en	Scheduled
 search accounts	admin	en	Search accounts
 search categories	admin	en	Search categories
 search groups	admin	en	Search groups
 search peer servers	admin	en	Search peer servers
+secure connection	admin	en	Secure connection
 security	admin	en	Security
 select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for.
 select group managers	admin	en	Select group managers
 select permissions this group will have	admin	en	Select permissions for this group
 select the parent category. if this is a main category select no category	admin	en	Select the parent category. If this is a main category select NO CATEGORY.
+select type of imap server	admin	en	Select type of IMAP server
+select type of imap/pop3 server	admin	en	Select type of IMAP/POP3 server
+select type of smtp server	admin	en	Select type of SMTP server
 select users	admin	en	Select users
 select users for inclusion	admin	en	Select users for inclusion
 select where you want to store/retrieve filesystem information	admin	en	Select where you want to store/retrieve filesystem information.
 select where you want to store/retrieve user accounts	admin	en	Select where you want to store/retrieve user accounts.
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right).
 selectbox	admin	en	Select box
+send using this email-address	admin	en	Send using this email address
 server %1 has been updated	admin	en	Server %1 has been updated
 server list	admin	en	Server list
 server password	admin	en	Server password
+server settings	admin	en	Server settings
 server type(mode)	admin	en	Server type (mode)
 server url	admin	en	Server URL
 server username	admin	en	Server user name
@@ -582,7 +712,19 @@ show error log	admin	en	Show error log
 show members	admin	en	Show members
 show phpinfo()	admin	en	Show phpinfo()
 show session ip address	admin	en	Show session IP address
+sieve server hostname or ip address	admin	en	Sieve server hostname or IP address
+sieve server port	admin	en	Sieve server port
+sieve settings	admin	en	Sieve settings
 site	admin	en	Site
+skip imap	admin	en	Skip IMAP
+skipping imap configuration!	admin	en	Skipping IMAP configuration!
+smtp authentication	admin	en	SMTP authentication
+smtp options	admin	en	SMTP options
+smtp server	admin	en	SMTP server
+smtp server name	admin	en	SMTP server name
+smtp settings	admin	en	SMTP settings
+smtp-server hostname or ip address	admin	en	SMTP server hostname or IP address
+smtp-server port	admin	en	SMTP server port
 soap	admin	en	SOAP
 sorry, that group name has already been taken.	admin	en	Sorry, that group name has already been taken.
 sorry, the above users are still a member of the group %1	admin	en	Sorry, the above users are still a member of the group %1 .
@@ -591,11 +733,14 @@ sort the entries	admin	en	Sort the entries
 source account #%1 does not exist!	admin	en	Source account #%1 does NOT exist!
 ssl	admin	en	ssl
 standard	admin	en	Standard
+standard identity	admin	en	Standard identity
 standard imap server	admin	en	Standard IMAP server
 standard pop3 server	admin	en	Standard POP3 server
 standard smtp-server	admin	en	Standard SMTP server
 start	admin	en	Start
 start testjob!	admin	en	Start TestJob!
+starts with	admin	en	Starts with
+stationery	admin	en	Stationery
 submit changes	admin	en	Submit changes
 submit displayed information?	admin	en	Submit displayed information
 submit statistic information	admin	en	Submit statistic information
@@ -604,8 +749,12 @@ submit to egroupware.org	admin	en	Submit to egroupware.org
 subtype	admin	en	Sub type
 subversion checkout	admin	en	Subversion checkout
 success	admin	en	Success
+successful connected to %1 server%2.	admin	en	Successful connected to %1 server%2.
+switch back to standard identity to save account.	admin	en	Switch back to standard identity to save account.
+switch back to standard identity to save other account data.	admin	en	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	en	Switch it off, if users are randomly logged out
 template selection	admin	en	Template selection
+templates	admin	en	Templates
 text entry	admin	en	Text entry
 that application name already exists.	admin	en	That application name already exists.
 that application order must be a number.	admin	en	That application order must be a number.
@@ -616,9 +765,11 @@ the api is current	admin	en	The API is current
 the api requires an upgrade	admin	en	The API requires an upgrade
 the cumulated and anonymised data will be publically available:	admin	en	The accumulated and anonymous data will be publicly available:
 the groups must include the primary group	admin	en	The groups must include the primary group.
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	en	The IMAP server does not appear to support the authentication method selected. Contact your system administrator.
 the install id of an instance can be found under admin > site configuration	admin	en	The install ID of an instance can be found under Admin > Site configuration
 the login and password can not be the same	admin	en	The login and password can not be the same.
 the loginid can not be more then 8 characters	admin	en	The login ID can not be more than 8 characters.
+the mimeparser can not parse this message.	admin	en	The mimeparser can not parse this message.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
 the testjob sends you a mail everytime it is called.	admin	en	The TestJob sends you a mail every time it is called.
 the text displayed to the user	admin	en	The text displayed to the user
@@ -630,10 +781,13 @@ this application is current	admin	en	This application is current.
 this application requires an upgrade	admin	en	This application requires an upgrade.
 this category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
 this controls exports and merging.	admin	en	This controls exports and merge prints.
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!\n\nAccount will be deleted for ALL users!\n\nAre you really sure you want to do that?
+this php has no imap support compiled in!!	admin	en	This PHP has no IMAP support compiled in!!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	en	Timeout for application session data in seconds. Default 86400 = 1 day
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for sessions in seconds. Default 14400 = 4 hours
 times	admin	en	Times
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	en	To allow us to track the growth of your individual installation use this submit ID, otherwise delete it:
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	en	To use a TLS connection, you must be running a version of PHP 5.1.0 or higher.
 top	admin	en	Top
 total of %1 id's changed.	admin	en	Total of %1 id's changed.
 total records	admin	en	Total records
@@ -649,27 +803,53 @@ type '%1' already exists !!!	admin	en	Type '%1' already exists!
 type of customfield	admin	en	Type of custom field
 type of field	admin	en	Type of field
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under windows you need to install the async service %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page view!
+unexpected response from server to authenticate command.	admin	en	Unexpected response from server to AUTHENTICATE command.
+unexpected response from server to digest-md5 response.	admin	en	Unexpected response from server to Digest-MD5 response.
+unexpected response from server to login command.	admin	en	Unexpected response from server to LOGIN command.
 unknown account: %1 !!!	admin	en	Unknown account: %1 !
 unknown command %1!	admin	en	Unknown command %1!
+unknown imap response from the server. server responded: %s	admin	en	Unknown IMAP response from the server. %s
 unknown option %1	admin	en	Unknown option %1 !
+unsupported action '%1' !!!	admin	en	Unsupported action '%1' !
 unwilling to save category with current settings. check for inconsistency:	admin	en	Unable to save category with current settings. Check for inconsistency:
 up	admin	en	Up
+update current email address:	admin	en	Update current email address:
 updated	admin	en	Updated
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware
 usage	admin	en	Usage
 use cookies to pass sessionid	admin	en	Use cookies to pass session ID
+use default	admin	en	use default
+use ldap defaults	admin	en	Use LDAP defaults
+use predefined username and password defined below	admin	en	Use predefined username and password defined below
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code
 use secure cookies (transmitted only via https)	admin	en	Use secure cookies (transmitted only via https)
+use smtp auth	admin	en	Use SMTP authentication
 use theme	admin	en	Use theme
+use tls authentication	admin	en	Use TLS authentication
+use tls encryption	admin	en	Use TLS encryption
+use users email-address (as seen in useraccount)	admin	en	Use users email address, as set in user account
 user accounts	admin	en	User accounts
+user can edit forwarding address	admin	en	User can edit forwarding address
 user csv export	admin	en	User CSV export
 user csv import	admin	en	User CSV import
 user data	common	en	User data
 user for smtp-authentication (leave it empty if no auth required)	admin	en	User for SMTP authentication. Leave it empty if no authentication is required.
 user groups	admin	en	User groups
 userdata	admin	en	User data
+userid@domain eg. u1234@domain	admin	en	UserId@domain eg. u1234@domain
+username (standard)	admin	en	Username (standard)
+username specified below for all	admin	en	Username specified below for all
+username/password defined by admin	admin	en	Username / Password defined by admin
+username@domainname (virtual mail manager)	admin	en	username@domainname (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	admin	en	Users can define their own email accounts
+users can define their own identities	admin	en	Users can define their own identities
+users can define their own signatures	admin	en	Users can define their own signatures
+users can utilize these stationery templates	admin	en	Users can utilize these stationery templates
 users choice	admin	en	Users choice
+using data from mozilla ispdb for provider %1	admin	en	Using data from Mozilla ISPDB for provider %1
+vacation messages with start- and end-date require an admin account to be set	admin	en	Vacation messages with start and end date require an admin account to be set!
+vacation notice	admin	en	Vacation notice
 value for column %1 is not unique!	admin	en	Value for column %1 is not unique!
 vfs directory "%1" not found!	admin	en	VFS directory "%1" NOT found!
 view access log	admin	en	View access log
@@ -679,6 +859,7 @@ view error log	admin	en	View error log
 view sessions	admin	en	View sessions
 view this user	admin	en	View this user
 view user account	admin	en	View user account
+virtual mail manager	admin	en	Virtual MAIL ManaGeR
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	en	Set number of days to inform users in advance about upcoming forced password change. Empty = No information
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	en	Information is asked only to get an overview about the use of EGroupware worldwide.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	en	We're not saving any data regarding your identity.
@@ -693,11 +874,15 @@ wrong admin-account or -password !!!	admin	en	Wrong admin account or password!
 xml-rpc	admin	en	XML-RPC
 yes, but no scayt	admin	en	Yes, but no Spell Check As You Type (online)
 yes, use browser based spell checking engine	admin	en	Yes, use browser based spell checking engine
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	en	Yes, use credentials below only for alarms and notifications, otherwise use credentials of current user
+yes, use credentials of current user or if given credentials below	admin	en	Yes, use credentials of current user or if given credentials below
 yes, use webspellchecker	admin	en	Yes, use online WebSpellChecker
 you can not use --dry-run together with --skip-checks!	admin	en	You can NOT use --dry-run together with --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	en	You can change the hash only, if you set a random password or currently use plaintext passwords!
+you can use wizard to fix account settings or delete account.	admin	en	You can use wizard to fix account settings or delete account.
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date!
 you have no email address for your user set !!!	admin	en	You have no email address set for your user!
+you have received a new message on the	admin	en	You have received a new message on the
 you have to enter a name, to create a new field!!!	admin	en	You have to enter a name, to create a new field!
 you have to enter a name, to create a new type!!!	admin	en	You have to enter a name, to create a new type!
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account!
@@ -712,219 +897,9 @@ you must select at least one group member.	admin	en	You must select at least one
 you need to enter install id and password!	admin	en	You need to enter install ID AND password!
 you need to select as least one action!	admin	en	You need to select as least one action!
 you need to select some users first!	admin	en	You need to select some users first!
+you need to specify a forwarding address, when checking "%1"!	admin	en	You need to specify a forwarding address, when checking "%1"!
 you will need to remove the subcategories before you can delete this category	admin	en	Remove the sub categories before deleting this category!
 your last submission was less then %1 days ago!	admin	en	Your last submission was less than %1 days ago!
-your session could not be verified.	admin	en	Your session could not be verified.
-%1 entries deleted.	admin	en	%1 entries deleted.
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	en	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)
-(no subject)	admin	en	(no subject)
-account '%1' not found !!!	admin	en	Account '%1' not found!
-account deleted.	admin	en	Account deleted.
-account not found!	common	en	Account not found!
-account saved.	admin	en	Account saved.
-active templates	admin	en	Active templates
-add new email address:	admin	en	Add new email address:
-add profile	admin	en	Add profile
-admin dn	admin	en	Admin dn
-admin password	admin	en	Admin password
-admin username	admin	en	Admin user name
-advanced options	admin	en	Advanced options
-allow users to change forwards	admin	en	Allow users to change forwards
-alternate email address	admin	en	Alternate email address
-and logged in	admin	en	and logged in
-any application	admin	en	Any application
-any group	admin	en	Any group
-any user	admin	en	Any user
-back to admin/grouplist	admin	en	Back to Admin / Group list
-back to admin/userlist	admin	en	Back to Admin / User list
-bad login name or password.	admin	en	Bad login name or password.
-bad or malformed request. server responded: %s	admin	en	Bad or malformed request. %s
-bad request: %s	admin	en	Bad request: %s
-can be used by application	admin	en	Can be used by application
-can be used by group	admin	en	Can be used by group
-can be used by user	admin	en	Can be used by user
-connection dropped by imap server.	admin	en	Connection dropped by IMAP server.
-connection is not secure! everyone can read eg. your credentials.	admin	en	Connection is NOT secure! Everyone can read eg. your credentials.
-continue	admin	en	Continue
-could not append message:	admin	en	Could not append Message:
-could not complete request. reason given: %s	admin	en	Could not complete request. %s
-could not open secure connection to the imap server. %s : %s.	admin	en	Could not open secure connection to the IMAP server. %s : %s.
-cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	en	CRAM-MD5 or DIGEST-MD5 requires the Auth_SASL package to be installed.
-create new account	admin	en	Create new account
-create new identity	admin	en	Create new identity
-cyrus imap server	admin	en	Cyrus IMAP server
-cyrus imap server administration	admin	en	Cyrus IMAP server administration
-default	admin	en	Default
-delete identity	admin	en	Delete identity
-delete this account	admin	en	Delete this account
-deliver extern	admin	en	Deliver extern
-displaying html messages is disabled	admin	en	displaying html messages is disabled
-displaying plain messages is disabled	admin	en	displaying plain messages is disabled
-do not validate certificate	admin	en	Do not validate certificate
-do you really want to delete this profile	admin	en	Do you really want to delete this profile?
-do you really want to reset the filter for the profile listing	admin	en	Do you really want to reset the filter for the profile listing?
-domainname	admin	en	Domain name
-edit email settings	admin	en	Edit email settings
-email account active	admin	en	Email account active
-email address	admin	en	Email address
-email settings	common	en	Email settings
-emailadmin	admin	en	eMailAdmin
-emailadmin: group assigned profile	common	en	eMailAdmin: Group assigned profile
-emailadmin: user assigned profile	common	en	eMailAdmin: User assigned profile
-enable cyrus imap server administration	admin	en	Enable Cyrus IMAP server administration
-enable sieve	admin	en	Enable Sieve
-encrypted connection	admin	en	Encrypted connection
-encryption settings	admin	en	Encryption settings
-enter your default mail domain (from: user@domain)	admin	en	Enter your default mail domain from: user@domain
-entry saved	admin	en	Entry saved
-error connecting to imap server. %s : %s.	admin	en	Error connecting to IMAP server. %s : %s.
-error connecting to imap server: [%s] %s.	admin	en	Error connecting to IMAP server: [%s] %s.
-error deleting entry!	admin	en	Error deleting entry!
-error saving account!	admin	en	Error saving account!
-error saving the entry!!!	admin	en	Error saving the entry!
-error, no username!	admin	en	Error, no username!
-event details follow	admin	en	Event Details follow
-failed to delete account!	admin	en	Failed to delete account!
-file rejected, no %2. is:%1	admin	en	File rejected, no %2. Is:%1
-filtered by account	admin	en	Filtered by account
-filtered by group	admin	en	Filtered by group
-folder acl	admin	en	Folder ACL
-forward also to	admin	en	Forward also to
-forward email's to	admin	en	Forward email's to
-forward only	admin	en	Forward only
-forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	en	Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.
-global options	admin	en	Global options
-hostname or ip	admin	en	Hostname or IP
-how username get constructed	admin	en	How username get constructed
-identity deleted	admin	en	Identity deleted
-identity saved.	admin	en	Identity saved.
-if different from email address	admin	en	if different from EMail address
-if using ssl or tls, you must have the php openssl extension loaded.	admin	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
-if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	en	if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)
-imap admin password	admin	en	IMAP admin password
-imap admin user	admin	en	IMAP admin user
-imap c-client version < 2001	admin	en	IMAP C-Client Version < 2001
-imap server	admin	en	IMAP server
-imap server closed the connection.	admin	en	IMAP server closed the connection.
-imap server closed the connection. server responded: %s	admin	en	IMAP Server closed the connection. Server Responded: %s
-imap server hostname or ip address	admin	en	IMAP server hostname or ip address
-imap server logintyp	admin	en	IMAP server login type
-imap server name	admin	en	IMAP server name
-imap server port	admin	en	IMAP server port
-imap/pop3 server name	admin	en	IMAP/POP3 server name
-importance	admin	en	importance
-in mbyte	admin	en	in MByte
-inactive	admin	en	Inactive
-ldap basedn	admin	en	LDAP basedn
-ldap server	admin	en	LDAP server
-ldap server accounts dn	admin	en	LDAP server accounts DN
-ldap server admin dn	admin	en	LDAP server admin DN
-ldap server admin password	admin	en	LDAP server admin password
-ldap server hostname or ip address	admin	en	LDAP server host name or IP address
-ldap settings	admin	en	LDAP settings
-leave empty for no quota	admin	en	Leave empty for no quota
-mail settings	admin	en	Mail settings
-manage stationery templates	admin	en	Manage stationery templates
-manual entry	admin	en	Manual entry
-mb used	admin	en	MB used
-name of organisation	admin	en	Name of organization
-no alternate email address	admin	en	No alternate email address
-no encryption	admin	en	No encryption
-no forwarding email address	admin	en	No forwarding email address
-no message returned.	admin	en	No message returned
-no plain text part found	admin	en	no plain text part found
-no sieve support detected, either fix configuration manually or leave it switched off.	admin	en	No sieve support detected, either fix configuration manually or leave it switched off.
-no supported imap authentication method could be found.	admin	en	No supported IMAP authentication method could be found.
-order	admin	en	Order
-organisation	admin	en	Organisation
-plesk can't rename users --> request ignored	admin	en	Plesk can't rename users --> request ignored
-plesk imap server (courier)	admin	en	Plesk IMAP Server (Courier)
-plesk mail script '%1' not found !!!	admin	en	Plesk mail script '%1' not found!
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	en	Plesk requires passwords to have at least 5 characters and not contain the account name --> password NOT set!
-plesk smtp-server (qmail)	admin	en	Plesk SMTP-Server (Qmail)
-pop3 server hostname or ip address	admin	en	POP3 server hostname or IP address
-pop3 server port	admin	en	POP3 server port
-port	admin	en	Port
-postfix with ldap	admin	en	Postfix with LDAP
-processing of file %1 failed. failed to meet basic restrictions.	admin	en	Processing of file %1 failed. Failed to meet basic restrictions.
-profile access rights	admin	en	Profile access rights
-profile is active	admin	en	Profile is active
-profile list	admin	en	Profile list
-profile name	admin	en	Profile name
-qmaildotmode	admin	en	qmaildotmode
-quota settings	admin	en	Quota settings
-quota size in mbyte	admin	en	Quota size in MByte
-relay access checked	admin	en	Relay access checked
-remove	admin	en	Remove
-required pear class mail/mimedecode.php not found.	admin	en	Required PEAR class Mail/mimeDecode.php not found.
-reset filter	admin	en	Reset filter
-save of message %1 failed. could not save message to folder %2 due to: %3	admin	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
-saving of message %1 failed. destination folder %2 does not exist.	admin	en	Saving of message %1 failed. Destination Folder %2 does not exist.
-secure connection	admin	en	Secure connection
-select type of imap server	admin	en	Select type of IMAP server
-select type of imap/pop3 server	admin	en	Select type of IMAP/POP3 server
-select type of smtp server	admin	en	Select type of SMTP server
-send using this email-address	admin	en	Send using this email address
-server settings	admin	en	Server settings
-sieve server hostname or ip address	admin	en	Sieve server hostname or IP address
-sieve server port	admin	en	Sieve server port
-sieve settings	admin	en	Sieve settings
-skip imap	admin	en	Skip IMAP
-skipping imap configuration!	admin	en	Skipping IMAP configuration!
-smtp authentication	admin	en	SMTP authentication
-smtp options	admin	en	SMTP options
-smtp server	admin	en	SMTP server
-smtp server name	admin	en	SMTP server name
-smtp settings	admin	en	SMTP settings
-smtp-server hostname or ip address	admin	en	SMTP server hostname or IP address
-smtp-server port	admin	en	SMTP server port
-standard	admin	en	Standard
-standard identity	admin	en	Standard identity
-standard imap server	admin	en	Standard IMAP server
-standard pop3 server	admin	en	Standard POP3 server
-standard smtp-server	admin	en	Standard SMTP server
-starts with	admin	en	Starts with
-stationery	admin	en	Stationery
-successful connected to %1 server%2.	admin	en	Successful connected to %1 server%2.
-switch back to standard identity to save account.	admin	en	Switch back to standard identity to save account.
-switch back to standard identity to save other account data.	admin	en	Switch back to standard identity to save other account data.
-templates	admin	en	Templates
-the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	en	The IMAP server does not appear to support the authentication method selected. Contact your system administrator.
-the mimeparser can not parse this message.	admin	en	The mimeparser can not parse this message.
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!\n\nAccount will be deleted for ALL users!\n\nAre you really sure you want to do that?
-this php has no imap support compiled in!!	admin	en	This PHP has no IMAP support compiled in!!
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	en	To use a TLS connection, you must be running a version of PHP 5.1.0 or higher.
-unexpected response from server to authenticate command.	admin	en	Unexpected response from server to AUTHENTICATE command.
-unexpected response from server to digest-md5 response.	admin	en	Unexpected response from server to Digest-MD5 response.
-unexpected response from server to login command.	admin	en	Unexpected response from server to LOGIN command.
-unknown imap response from the server. server responded: %s	admin	en	Unknown IMAP response from the server. %s
-unsupported action '%1' !!!	admin	en	Unsupported action '%1' !
-update current email address:	admin	en	Update current email address:
-use default	admin	en	use default
-use ldap defaults	admin	en	Use LDAP defaults
-use predefined username and password defined below	admin	en	Use predefined username and password defined below
-use smtp auth	admin	en	Use SMTP authentication
-use tls authentication	admin	en	Use TLS authentication
-use tls encryption	admin	en	Use TLS encryption
-use users email-address (as seen in useraccount)	admin	en	Use users email address, as set in user account
-user can edit forwarding address	admin	en	User can edit forwarding address
-userid@domain eg. u1234@domain	admin	en	UserId@domain eg. u1234@domain
-username (standard)	admin	en	Username (standard)
-username specified below for all	admin	en	Username specified below for all
-username/password defined by admin	admin	en	Username / Password defined by admin
-username@domainname (virtual mail manager)	admin	en	username@domainname (Virtual MAIL ManaGeR)
-users can define their own emailaccounts	admin	en	Users can define their own email accounts
-users can define their own identities	admin	en	Users can define their own identities
-users can define their own signatures	admin	en	Users can define their own signatures
-users can utilize these stationery templates	admin	en	Users can utilize these stationery templates
-using data from mozilla ispdb for provider %1	admin	en	Using data from Mozilla ISPDB for provider %1
-vacation messages with start- and end-date require an admin account to be set	admin	en	Vacation messages with start and end date require an admin account to be set!
-vacation notice	admin	en	Vacation notice
-virtual mail manager	admin	en	Virtual MAIL ManaGeR
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	en	Yes, use credentials below only for alarms and notifications, otherwise use credentials of current user
-yes, use credentials of current user or if given credentials below	admin	en	Yes, use credentials of current user or if given credentials below
-you can use wizard to fix account settings or delete account.	admin	en	You can use wizard to fix account settings or delete account.
-you have received a new message on the	admin	en	You have received a new message on the
-you need to specify a forwarding address, when checking "%1"!	admin	en	You need to specify a forwarding address, when checking "%1"!
 your message to  %1 was displayed.	admin	en	Your message to  %1 was displayed.
 your name	admin	en	Your name
+your session could not be verified.	admin	en	Your session could not be verified.

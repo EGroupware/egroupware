@@ -12,6 +12,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Egw;
+use EGroupware\Api\Etemplate;
 
 /**
  * Submit statistical data to egroupware.org
@@ -63,9 +64,9 @@ class admin_statistics
 				Api\Config::save_value(self::CONFIG_USAGE_TYPE,$_content['usage_type'],self::CONFIG_APP);
 				Api\Config::save_value(self::CONFIG_INSTALL_TYPE,$_content['install_type'],self::CONFIG_APP);
 				Api\Config::save_value(self::CONFIG_POSTPONE_SUBMIT,null,self::CONFIG_APP);	// remove evtl. postpone time
-				$what = 'submited';
+				$what = 'submitted';
 			}
-			Egw::redirect_link('/admin/index.php','statistics='.($what ? $what : 'cancled'));
+			Egw::redirect_link('/admin/index.php','ajax=true&statistics='.($what ? $what : 'canceled'),'admin');
 		}
 		$sel_options['usage_type'] = array(
 			'commercial'   => lang('Commercial: all sorts of companies'),
@@ -78,6 +79,7 @@ class admin_statistics
 		$sel_options['install_type'] = array(
 			'archive' => lang('Archive: zip or tar'),
 			'package' => lang('RPM or Debian package'),
+			'git'     => lang('Git clone'),
 			'svn'     => lang('Subversion checkout'),
 			'other'   => lang('Other'),
 		);
@@ -95,7 +97,7 @@ class admin_statistics
 		$config = Api\Config::read(self::CONFIG_APP);
 		//_debug_array($config);
 		$content = array_merge(self::gather_data(),array(
-			'statistic_url' => Api\Html::a_href(self::STATISTIC_URL,self::STATISTIC_URL,'',' target="_blank"'),
+			'statistic_url' => self::STATISTIC_URL,
 			'submit_host' => parse_url(self::SUBMIT_URL,PHP_URL_HOST),
 			'submit_url'  => self::SUBMIT_URL,
 			'last_submitted' => $config[self::CONFIG_LAST_SUBMIT],
@@ -131,7 +133,7 @@ class admin_statistics
 		if (!isset($config[self::CONFIG_LAST_SUBMIT]) || $config[self::CONFIG_LAST_SUBMIT ] <= time()-self::SUBMISION_RATE)
 		{
 			// clear etemplate_exec_id and replace form.action, before submitting the form
-			$content['onclick'] = "return app.admin.submit_statistic(this.form,'$content[submit_url]','".addslashes(lang('Submit displayed information?'))."');";
+			$content['onclick'] = "return app.admin.submit_statistic(this.form,'$content[submit_url]');";
 		}
 		else	// we are not due --> tell it the user
 		{
@@ -140,7 +142,7 @@ class admin_statistics
 				ceil((time()-$config[self::CONFIG_LAST_SUBMIT])/24/3600));
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Submit statistic information');
-		$tmpl = new etemplate('admin.statistics');
+		$tmpl = new Etemplate('admin.statistics');
 		$tmpl->exec('admin.admin_statistics.submit',$content,$sel_options,$readonlys);
 	}
 
@@ -157,7 +159,7 @@ class admin_statistics
 		$data['country'] = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
 
 		// api version
-		$data['version'] = $GLOBALS['egw_info']['apps']['phpgwapi']['version'];
+		$data['version'] = $GLOBALS['egw_info']['apps']['api']['version'];
 		// append EPL version
 		if (isset($GLOBALS['egw_info']['apps']['stylite']))
 		{
@@ -180,7 +182,11 @@ class admin_statistics
 		{
 			$data['os'] .= ': '.str_replace(array("\n","\r"),'',implode(',',file($file)));
 		}
-		if (file_exists('.svn'))
+		if(file_exists(EGW_INCLUDE_ROOT.'/.git'))
+		{
+			$data['install_type'] = 'git';
+		}
+		elseif (file_exists('.svn'))
 		{
 			$data['install_type'] = 'svn';
 		}
