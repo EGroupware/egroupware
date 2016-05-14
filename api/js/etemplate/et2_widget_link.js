@@ -663,7 +663,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 				item.label = extra.label ? extra.label : extra;
 				if(extra['style.backgroundColor'] || extra.color)
 				{
-					li.css('backgroundColor', extra.color ? extra.color : extra['style.backgroundColor']);
+					li.css({'border-left': '5px solid ' + (extra.color ? extra.color : extra['style.backgroundColor'])});
 				}
 				// Careful with this, some browsers may have trouble loading all at once, which can slow display
 				if(extra.icon)
@@ -682,7 +682,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 			// Normal stuff
 			li.append(jQuery( "<a></a>" ).text( item.label ))
 				.appendTo(ul);
-
+			window.setTimeout(function(){ul.toggleClass('ui-menu-rtl',(ul.offset().left + ul.width() > window.outerWidth))}, 300);
 			return li;
 		};
 

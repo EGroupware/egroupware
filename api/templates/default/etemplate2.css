@@ -704,8 +704,11 @@ div.et2_link_entry select {
   width: 40%;
   margin-right: 10px;
 }
+div.et2_link_entry .ui-autocomplete.ui-menu.ui-menu-rtl {left:auto !important;right:0px;}
+div.et2_link_entry .ui-autocomplete.ui-menu .ui-menu-item {border-left:5px solid transparent;}
 div.et2_link_entry input.ui-autocomplete-input {
   padding-bottom: 1px;
+  width: calc(60% - 10px);
 }
 .et2_link_entry.no_app input.ui-autocomplete-input {
   width: 100%;
