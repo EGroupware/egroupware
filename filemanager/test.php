@@ -106,4 +106,4 @@ if (isset($path) && !empty($path))
 		echo "<p><b>bytes(file_get_contents(Vfs::PREFIX.'$path'))</b>=".array2string(bytes(file_get_contents(Vfs::PREFIX.$path)))."</p>\n";
 	}
 }
-$GLOBALS['egw']->framework->footer();
+echo $GLOBALS['egw']->framework->footer();

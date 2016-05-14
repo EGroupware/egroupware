@@ -436,7 +436,7 @@ X-MS-OLK-CONFTYPE:0
 END:VEVENT
 END:VCALENDAR
 ';
-	 $GLOBALS['egw']->framework->header();
+	echo $GLOBALS['egw']->framework->header();
 	//$ical_file = fopen('/tmp/KalenderFelicitasKubala.ics');
 	if (!is_resource($ical_file)) echo "<pre>$ical_file</pre>\n";
 	//$calendar_ical = new calendar_ical();

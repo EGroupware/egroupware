@@ -2969,8 +2969,8 @@ window.egw_LAB.wait(function() {
 	function migrate2ldap()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Migration to LDAP');
-		$GLOBALS['egw']->framework->header();
-		parse_navbar();
+		echo $GLOBALS['egw']->framework->header();
+		echo $GLOBALS['egw']->framework->navbar();
 
 		if (!$this->is_admin())
 		{
@@ -2981,7 +2981,7 @@ window.egw_LAB.wait(function() {
 			parent::migrate2ldap($_GET['type']);
 			echo '<p style="margin-top: 20px;"><b>'.lang('Migration finished')."</b></p>\n";
 		}
-		$GLOBALS['egw']->framework->footer();
+		echo $GLOBALS['egw']->framework->footer();
 	}
 
 	/**
@@ -2994,8 +2994,8 @@ window.egw_LAB.wait(function() {
 	{
 		Api\Translation::add_app('admin');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Contact maintenance');
-		$GLOBALS['egw']->framework->header();
-		parse_navbar();
+		echo $GLOBALS['egw']->framework->header();
+		echo $GLOBALS['egw']->framework->navbar();
 
 		// check if user has admin rights AND if a valid fileas type is given (Security)
 		if (!$this->is_admin() || $_GET['type'] != '' && !in_array($_GET['type'],$this->fileas_types))
@@ -3008,7 +3008,7 @@ window.egw_LAB.wait(function() {
 			$updated = parent::set_all_fileas($_GET['type'],(boolean)$_GET['all'],$errors,true);	// true = ignore Acl
 			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
-		$GLOBALS['egw']->framework->footer();
+		echo $GLOBALS['egw']->framework->footer();
 	}
 
 	/**
@@ -3019,8 +3019,8 @@ window.egw_LAB.wait(function() {
 	{
 		Api\Translation::add_app('admin');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Contact maintenance');
-		$GLOBALS['egw']->framework->header();
-		parse_navbar();
+		echo $GLOBALS['egw']->framework->header();
+		echo $GLOBALS['egw']->framework->navbar();
 
 		// check if user has admin rights (Security)
 		if (!$this->is_admin())
@@ -3033,7 +3033,7 @@ window.egw_LAB.wait(function() {
 			$updated = parent::set_all_cleanup($errors,true);	// true = ignore Acl
 			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
-		$GLOBALS['egw']->framework->footer();
+		echo $GLOBALS['egw']->framework->footer();
 	}
 
 	/**

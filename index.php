@@ -132,8 +132,8 @@ if($windowed && $_GET['cd'] == 'yes')
 		'nonavbar'   => False,
 		'currentapp' => 'eGroupWare'
 	);
-	$GLOBALS['egw']->framework->header();
-	$GLOBALS['egw']->framework->footer();
+	echo $GLOBALS['egw']->framework->header();
+	echo $GLOBALS['egw']->framework->footer();
 }
 else
 {
@@ -196,6 +196,6 @@ else
 
 	if(!isset($GLOBALS['egw_info']['nofooter']))
 	{
-		$GLOBALS['egw']->framework->footer();
+		echo $GLOBALS['egw']->framework->footer();
 	}
 }

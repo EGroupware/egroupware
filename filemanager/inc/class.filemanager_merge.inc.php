@@ -229,7 +229,7 @@ class filemanager_merge extends Api\Storage\Merge
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('filemanager').' - '.lang('Replacements for inserting entries into documents');
 		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
-		$GLOBALS['egw']->framework->header();
+		echo $GLOBALS['egw']->framework->header();
 
 		echo "<table width='90%' align='center'>\n";
 		echo '<tr><td colspan="4"><h3>'.lang('Filemanager fields:')."</h3></td></tr>";
@@ -287,6 +287,6 @@ class filemanager_merge extends Api\Storage\Merge
 
 		echo "</table>\n";
 
-		$GLOBALS['egw']->framework->footer();
+		echo $GLOBALS['egw']->framework->footer();
 	}
 }

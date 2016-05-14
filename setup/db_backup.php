@@ -79,8 +79,8 @@ else
 	$setup_tpl->set_block('T_db_backup','setup_header');
 	$setup_tpl->set_var('setup_header','');
 	$GLOBALS['egw_info']['flags']['app_header'] = $stage_title;
-	$GLOBALS['egw']->framework->header();
-	parse_navbar();
+	echo $GLOBALS['egw']->framework->header();
+	echo $GLOBALS['egw']->framework->navbar();
 	$run_in_egw = true;
 }
 // save backup housekeeping settings
@@ -304,7 +304,7 @@ $setup_tpl->pparse('out','T_db_backup');
 
 if ($run_in_egw)
 {
-	$GLOBALS['egw']->framework->footer();
+	echo $GLOBALS['egw']->framework->footer();
 }
 else
 {

@@ -48,6 +48,6 @@ class admin_db_backup
 		include EGW_SERVER_ROOT.'/setup/db_backup.php';
 
 		unset($tpl_root, $self);
-		$GLOBALS['egw']->framework->footer();
+		echo $GLOBALS['egw']->framework->footer();
 	}
 }

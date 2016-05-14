@@ -53,8 +53,8 @@ class ui_acl
 			Egw::redirect_link('/admin/index.php');
 		}
 
-		$GLOBALS['egw']->framework->header();
-		echo parse_navbar();
+		echo $GLOBALS['egw']->framework->header();
+		echo $GLOBALS['egw']->framework->navbar();
 
 		if ($_POST['btnSave'])
 		{
@@ -121,12 +121,13 @@ class ui_acl
 			}
 		}
 		$template->pfp('out','acl',True);
+		echo $GLOBALS['egw']->framework->footer();
 	}
 
 	function selectlist($right,$users_only=false)
 	{
-		static $accountList;
-		static $groupList;
+		static $accountList=null;
+		static $groupList=null;
 		switch($GLOBALS['egw_info']['user']['preferences']['common']['account_display'])
 		{
 			case 'firstname':
@@ -147,13 +148,13 @@ class ui_acl
 				'type' => 'accounts',
 				'order' => $order,
 			));
-			uasort($accountList,array($this,($order=='n_given,n_family'?"sortByNGiven":($order=='n_family,n_given'?"sortByNLast":"sortByLid"))));	
+			uasort($accountList,array($this,($order=='n_given,n_family'?"sortByNGiven":($order=='n_family,n_given'?"sortByNLast":"sortByLid"))));
 			$resultList = $accountList;
 		}
 		else
 		{
 			$resultList = $accountList;
-		}		
+		}
 		if (is_null($groupList) && $users_only==false)
 		{
 			$groupList = $GLOBALS['egw']->accounts->search(array(
@@ -162,9 +163,14 @@ class ui_acl
 				));
 			uasort($groupList,array($this,"sortByLid"));
 		}
-		if (count($groupList)>0 && $users_only==false) foreach ($groupList as $k => $val) $resultList[$k] = $val;
-		
-		foreach ($resultList as $num => $account)
+		if (count($groupList)>0 && $users_only==false)
+		{
+			foreach ($groupList as $k => $val)
+			{
+				$resultList[$k] = $val;
+			}
+		}
+		foreach ($resultList as $account)
 		{
 			$selectlist .= '<option value="' . $account['account_id'] . '"';
 			if($this->rights[$account['account_id']] & $right)

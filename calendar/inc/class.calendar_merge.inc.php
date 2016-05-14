@@ -602,7 +602,7 @@ class calendar_merge extends Api\Storage\Merge
 		Api\Translation::add_app('calendar');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar').' - '.lang('Replacements for inserting events into documents');
 		$GLOBALS['egw_info']['flags']['nonavbar'] = true;
-		$GLOBALS['egw']->framework->header();
+		echo $GLOBALS['egw']->framework->header();
 
 		echo "<table width='90%' align='center'>\n";
 		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')."</h3></td></tr>";
@@ -722,6 +722,6 @@ class calendar_merge extends Api\Storage\Merge
 
 		echo "</table>\n";
 
-		$GLOBALS['egw']->framework->footer();
+		echo $GLOBALS['egw']->framework->footer();
 	}
 }
