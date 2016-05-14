@@ -1,6 +1,6 @@
 <?php
 /**
- * EGgroupware administration
+ * EGgroupware admin - Deny access
  *
  * @link http://www.egroupware.org
  * @package admin
@@ -8,13 +8,11 @@
  * @version $Id$
  */
 
-use EGroupware\Api;
-
 $GLOBALS['acl_manager']['admin']['site_config_acce'] = array(
 	'name' => 'Deny access to site configuration',
 	'rights' => array(
-		'List Api\Config settings'   => 1,
-		'Change Api\Config settings' => 2
+		'List config settings'   => 1,
+		'Change config settings' => 2
 	)
 );	// added and working ralfbecker
 

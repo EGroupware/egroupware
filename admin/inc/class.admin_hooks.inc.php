@@ -90,7 +90,7 @@ class admin_hooks
 
 			if (!$GLOBALS['egw']->acl->check('mainscreen_messa',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_messa',2,'admin'))
 			{
-				$file['Change Main Screen Message'] = Egw::link('/index.php','menuaction=admin.uimainscreen.index');
+				$file['Change Main Screen Message'] = Egw::link('/index.php','menuaction=admin.admin_messages.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('current_sessions',1,'admin'))
@@ -121,7 +121,7 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('asyncservice_acc',1,'admin'))
 			{
-				$file['Asynchronous timed services'] = Egw::link('/index.php','menuaction=admin.uiasyncservice.index');
+				$file['Asynchronous timed services'] = Egw::link('/index.php','menuaction=admin.admin_asyncservice.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('db_backup_access',1,'admin'))
@@ -210,7 +210,7 @@ class admin_hooks
 			$actions[] = array(
 				'description' => 'Deny access',
 				'url'         => '/index.php',
-				'extradata'   => 'menuaction=admin.uiaclmanager.list_apps',
+				'extradata'   => 'menuaction=admin.admin_denyaccess.list_apps',
 				'icon'        => 'cancel',
 			);
 		}

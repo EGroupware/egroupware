@@ -11,7 +11,10 @@
 use EGroupware\Api;
 use EGroupware\Api\Framework;
 
-class uimainscreen
+/**
+ * Mainscreen and login message
+ */
+class admin_messages
 {
 	var $public_functions = array('index' => True);
 
@@ -35,7 +38,7 @@ class uimainscreen
 			$GLOBALS['egw']->redirect_link('/admin/index.php');
 		}
 
-		Framework::includeJS('ckeditor','ckeditor','phpgwapi');
+		Framework::includeJS('ckeditor','ckeditor');
 
 		$GLOBALS['egw']->template->set_file(array('message' => 'mainscreen_message.tpl'));
 		$GLOBALS['egw']->template->set_block('message','form','form');
@@ -67,10 +70,9 @@ class uimainscreen
 		}
 		if (empty($section))
 		{
-			$GLOBALS['egw']->framework->header();
-			echo parse_navbar();
+			echo $GLOBALS['egw']->framework->header();
 
-			$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index'));
+			$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.admin_messages.index'));
 			$GLOBALS['egw']->template->set_var('value','&nbsp;');
 			$GLOBALS['egw']->template->fp('rows','row_2',True);
 
@@ -114,10 +116,9 @@ class uimainscreen
 					Api\Html::htmlspecialchars($current_message) . '</textarea>';
 				 $htmlarea_button = Api\Html::submit_button("yes", lang('activate WYSIWYG-editor'));
 			}
-			$GLOBALS['egw']->framework->header();
-			echo parse_navbar();
+			echo $GLOBALS['egw']->framework->header();
 
-			$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index'));
+			$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.admin_messages.index'));
 			$GLOBALS['egw']->template->set_var('select_lang',$select_lang);
 			$GLOBALS['egw']->template->set_var('section',$section);
 			$GLOBALS['egw']->template->set_var('value','&nbsp;');
@@ -135,5 +136,7 @@ class uimainscreen
 
 		$GLOBALS['egw']->template->set_var('lang_cancel',lang('Cancel'));
 		$GLOBALS['egw']->template->pparse('out','form');
+
+		echo $GLOBALS['egw']->framework->footer();
 	}
 }

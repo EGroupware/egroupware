@@ -15,7 +15,7 @@ use EGroupware\Api\Egw;
 /**
  * Class to admin cron-job like timed calls of eGroupWare methods
  */
-class uiasyncservice
+class admin_asyncservice
 {
 	var $public_functions = array(
 		'index' => True,
@@ -29,8 +29,7 @@ class uiasyncservice
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Asynchronous timed services');
 
-		$GLOBALS['egw']->framework->header();
-		echo parse_navbar();
+		echo $GLOBALS['egw']->framework->header();
 
 		$async = $GLOBALS['egw']->asyncservice;	// use an own instance, as we might set debug=True
 
@@ -62,7 +61,7 @@ class uiasyncservice
 				{
 					echo '<p><b>'.lang("You have no email address for your user set !!!")."</b></p>\n";
 				}
-				elseif (!$async->set_timer($times,'test','admin.uiasyncservice.test',$GLOBALS['egw_info']['user']['account_email']))
+				elseif (!$async->set_timer($times,'test','admin.admin_asyncservice.test',$GLOBALS['egw_info']['user']['account_email']))
 				{
 					echo '<p><b>'.lang("Error setting timer, wrong syntax or maybe there's one already running !!!")."</b></p>\n";
 				}
@@ -87,7 +86,7 @@ class uiasyncservice
 		{
 			$times = array('min' => '*/5');		// set some default
 		}
-		echo '<form action="'.$GLOBALS['egw']->link('/index.php',array('menuaction'=>'admin.uiasyncservice.index')).'" method="POST">'."\n<p>";
+		echo '<form action="'.$GLOBALS['egw']->link('/index.php',array('menuaction'=>'admin.admin_asyncservice.index')).'" method="POST">'."\n<p>";
 		echo '<div style="text-align: left; margin: 10px;">'."\n";
 
 		$last_run = $async->last_check_run();
@@ -188,6 +187,7 @@ class uiasyncservice
 		}
 		echo '<p><input type="submit" name="update" value="'.lang('Update').'"></p>'."\n";
 		echo "</form>\n";
+		echo $GLOBALS['egw']->framework->footer();
 	}
 
 	function test($to)
