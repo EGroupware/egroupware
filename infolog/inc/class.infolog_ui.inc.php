@@ -543,6 +543,8 @@ class infolog_ui
 		{
 			$rows['sel_options']['info_status']['deleted'] = 'deleted';
 		}
+		// Update actions for selected type / status / etc.
+		$query['actions'] = $this->get_actions($query);
 
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog' && !$this->called_by)
 		{
