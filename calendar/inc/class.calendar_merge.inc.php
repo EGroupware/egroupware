@@ -220,6 +220,19 @@ class calendar_merge extends bo_merge
 		} else {
 			$event = $id;
 		}
+
+		$record = new calendar_egw_record($event['id']);
+
+		// Convert to human friendly values
+		$types = calendar_egw_record::$types;
+		importexport_export_csv::convert($record, $types, 'calendar');
+
+		$array = $record->get_record_array();
+		foreach($array as $key => $value)
+		{
+			$replacements['$$'.($prefix?$prefix.'/':'').$key.'$$'] = $value;
+		}
+
 		$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_id'. '$$'] = $event['id'];
 		foreach($this->bo->event2array($event) as $name => $data)
 		{
