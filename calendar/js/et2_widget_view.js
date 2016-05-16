@@ -329,10 +329,19 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		}
 		if(typeof label === 'undefined')
 		{
-			// Not found?  Ask the sidebox owner widget, it gets updated
+			// Not found?  Ask the sidebox owner widget (it gets updated) or the original arrayMgr
+			var options = false
 			if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 			{
-				user = app.calendar.sidebox_et2.getWidgetById('owner').options.select_options.find(function(element) {return element.id == user;}) || {};
+				options = app.calendar.sidebox_et2.getWidgetById('owner').options.select_options;
+			}
+			else
+			{
+				options = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+			}
+			if(options && options.find)
+			{
+				user = options.find(function(element) {return element.id == user;}) || {};
 				label = user.label;
 			}
 			else

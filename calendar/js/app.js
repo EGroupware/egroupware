@@ -3446,7 +3446,11 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 * hidden.
 	 */
 	_set_autorefresh: function() {
+		// Listview not loaded
+		if(typeof app.classes.calendar.views.listview.etemplates[0] == 'string') return;
+		
 		var nm = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+		// nextmatch missing
 		if(!nm) return;
 
 		var refresh_preference = "nextmatch-" + nm.options.settings.columnselection_pref + "-autorefresh";

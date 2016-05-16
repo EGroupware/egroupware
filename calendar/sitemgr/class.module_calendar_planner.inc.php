@@ -306,6 +306,9 @@ class module_calendar_planner extends Module
 			$search_params['end'] = $ui->last;
 			$search_params['owner'] = $ui->owner;
 			$search_params['enum_groups'] = $ui->sortby == 'user';
+
+			$content = array();
+			$sel_options = array();
 			$content['planner'] = $ui->bo->search($search_params);
 			foreach($content['planner'] as &$event)
 			{
@@ -318,7 +321,19 @@ class module_calendar_planner extends Module
 			$tmpl->setElementAttribute('planner','end_date', Api\DateTime::to($ui->last, Api\DateTime::ET2));
 			$tmpl->setElementAttribute('planner','owner', $search_params['owner']);
 			$tmpl->setElementAttribute('planner','group_by', $ui->sortby);
-			$tmpl->exec(__METHOD__, $content,array(), array('__ALL__' => true),array(),2);
+
+			// Make sure all used owners are there, faking
+			// calendar_owner_etemplate_widget::beforeSendToClient() since the
+			// rest of the calendar app is probably missing.
+			foreach($search_params['owner'] as $owner)
+			{
+				$sel_options['owner'][] = Array(
+					'id' => $owner,
+					'value' => $owner,
+					'label' => calendar_owner_etemplate_widget::get_owner_label($owner)
+				);
+			}
+			$tmpl->exec(__METHOD__, $content,$sel_options, array('__ALL__' => true),array(),2);
 			$html .= ob_get_contents();
 			$html .= '<script>'
 			. '	window.egw_LAB.wait(function() {$j(function() {'

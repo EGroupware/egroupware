@@ -1779,7 +1779,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			}
 			return result;
 		}
-		else if (!jQuery.isEmptyObject(_ev.target.dataset))
+		else if (this.gridHeader.has(_ev.target).length > 0 && !jQuery.isEmptyObject(_ev.target.dataset))
 		{
 			// Click on a header, we can go there
 			_ev.data = jQuery.extend({},_ev.target.parentNode.dataset, _ev.target.dataset);

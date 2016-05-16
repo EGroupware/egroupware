@@ -199,7 +199,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	 * Get just the label for a single owner
 	 * @param string $id
 	 */
-	protected static function get_owner_label($id)
+	public static function get_owner_label($id)
 	{
 		static $bo;
 		if(!$bo) $bo = new calendar_bo();
