@@ -245,6 +245,19 @@ class calendar_merge extends Api\Storage\Merge
 		} else {
 			$event = $id;
 		}
+
+		$record = new calendar_egw_record($event['id']);
+
+		// Convert to human friendly values
+		$types = calendar_egw_record::$types;
+		importexport_export_csv::convert($record, $types, 'calendar');
+
+		$array = $record->get_record_array();
+		foreach($array as $key => $value)
+		{
+			$replacements['$$'.($prefix?$prefix.'/':'').$key.'$$'] = $value;
+		}
+
 		$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_id'. '$$'] = $event['id'];
 		foreach($this->bo->event2array($event) as $name => $data)
 		{
@@ -304,12 +317,6 @@ class calendar_merge extends Api\Storage\Merge
 		if($content && strpos($content, '$$#') !== 0)
 		{
 			$this->cf_link_to_expand($event, $content, $replacements);
-		}
-
-		$custom = Api\Storage\Customfields::get('calendar');
-		foreach(array_keys($custom) as $name)
-		{
-			$replacements['$$'.($prefix?$prefix.'/':'').'#'.$name.'$$'] = $event['#'.$name];
 		}
 
 		// Links
