@@ -294,12 +294,6 @@ class calendar_merge extends bo_merge
 			$this->cf_link_to_expand($event, $content, $replacements);
 		}
 
-		$custom = config::get_customfields('calendar');
-		foreach(array_keys($custom) as $name)
-		{
-			$replacements['$$'.($prefix?$prefix.'/':'').'#'.$name.'$$'] = $event['#'.$name];
-		}
-
 		// Links
 		$replacements += $this->get_all_links('calendar', $event['id'], $prefix, $content);
 
