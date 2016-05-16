@@ -181,7 +181,14 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				this.sidebox_et2 = _et2.widgetContainer;
 				this.sidebox_hooked_templates.push(this.sidebox_et2);
 				$j(_et2.DOMContainer).hide();
+
+				// Set client side holiday cache for this year
+				egw.window.et2_calendar_view.holiday_cache[content.data.year] = content.data.holidays;
+				delete content.data.holidays;
+				delete content.data.year;
+
 				this._setup_sidebox_filters();
+				
 				this.state = content.data;
 				break;
 

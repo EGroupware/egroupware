@@ -557,6 +557,9 @@ class calendar_ui
 		$cont['view'] = $this->view ? $this->view : 'week';
 		$cont['date'] = $this->date ? $this->date : Api\DateTime();
 
+		$cont['year'] = (int)Api\DateTime::to($cont['date'],'Y');
+		$cont['holidays'] = $this->bo->read_holidays($cont['year']);
+
 		$readonlys = array();
 		$sel_options['status_filter'] = array(
 			array('value' => 'default',     'label' => lang('Not rejected'), 'title' => lang('Show all status, but rejected')),
