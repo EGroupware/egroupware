@@ -836,8 +836,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					$preferences = new Api\Preferences($userid);
 					$GLOBALS['egw_info']['user']['preferences'] = $part_prefs = $preferences->read_repository();
-					$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$tfn,$tln);
-					$fullname = Api\Accounts::format_username('',$tfn,$tln);
+					$fullname = Api\Accounts::username($userid);
 				}
 				else	// external email address: use Api\Preferences of event-owner, plus some hardcoded settings (eg. ical notification)
 				{
