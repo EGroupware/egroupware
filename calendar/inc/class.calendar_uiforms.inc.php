@@ -702,6 +702,13 @@ class calendar_uiforms extends calendar_ui
 					unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 					$this->bo->update($recur_event,true);	// no conflict check here
 
+					if(Api\Json\Response::isJSONResponse())
+					{
+						// Sending null will trigger a removal of the original
+						// for that date
+						Api\Json\Response::get()->generic('data', array('uid' => 'calendar::'.$content['reference'].':'.$content['actual_date'], 'data' => null));
+					}
+
 					unset($recur_event);
 					unset($event['edit_single']);			// if we further edit it, it's just a single event
 					unset($preserv['edit_single']);
@@ -2625,6 +2632,10 @@ class calendar_uiforms extends calendar_ui
 				unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
 				unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 				$this->bo->update($recur_event,true);	// no conflict check here
+
+				// Sending null will trigger a removal of the original for that date
+				Api\Json\Response::get()->generic('data', array('uid' => 'calendar::'.$_eventId, 'data' => null));
+
 				unset($recur_event);
 				unset($event['edit_single']);			// if we further edit it, it's just a single event
 				unset($preserv['edit_single']);
