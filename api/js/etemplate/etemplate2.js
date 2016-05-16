@@ -784,9 +784,9 @@ etemplate2.prototype.postSubmit = function()
 	{
 		// unbind our session-destroy handler, as we are submitting
 		this.unbind_unload();
-
+		
 		var form = jQuery("<form id='form' action='"+egw().webserverUrl +
-			"/etemplate/process_exec.php?menuaction=" + this.widgetContainer.egw().getAppName()+ "&ajax=true' method='POST'>");
+			"/index.php?menuaction=" + this.widgetContainer.egw().getAppName()+".EGroupware\\Api\\Etemplate.process_exec&ajax=true' method='POST'>");
 
 		var etemplate_id = jQuery(document.createElement("input"))
 			.attr("name",'etemplate_exec_id')
