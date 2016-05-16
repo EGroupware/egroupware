@@ -1,15 +1,12 @@
 <?php
 /**
- * eGroupWare: About informations
- * 
+ * EGroupware: About informations
+ *
  * rewrite of the old PHPLib based about page
- * it now uses eTemplate
- * new class about ist stored at phpgwapi/inc/class.about.inc.php
+ * it now uses eTemplate2
+ * new class about ist stored at api/src/Framework/About.php
  *
- * This is NO typical eTemplate application as it is not stored in the
- * correct namespace
- *
- * LICENSE:  GPL.
+ * LICENSE:  GPL
  *
  * @package     api
  * @subpackage  about
@@ -17,21 +14,8 @@
  * @author		Ralf Becker <RalfBecker@outdoor-training.de>
  * @license     http://www.gnu.org/copyleft/gpl.html
  * @link        http://www.egroupware.org
- * @version     SVN: $Id$ 
+ * @version     SVN: $Id$
  */
- 
-$GLOBALS['egw_info'] = array(
-	'flags' => array(
-		'currentapp' => 'home', //'about',
-		'disable_Template_class' => true,
-		'noheader' => true,
-		'nonavbar' => true
-	)
-);
 
-include('header.inc.php');
- 
-// create the about page
-require_once(EGW_API_INC.'/class.about.inc.php');
-
-$aboutPage = new about();
+header('Location: index.php?menuaction=api.EGroupware\\Api\\Framework\\About.index'.
+	(isset($_GET['sessionid']) ? '&sessionid='.$_GET['sessionid'].'&kp3='.$_GET['kp3'] : ''));
