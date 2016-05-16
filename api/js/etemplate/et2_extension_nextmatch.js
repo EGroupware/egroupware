@@ -1797,6 +1797,46 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 	},
 
 	/**
+	 * Directly change filter value, with no server query.
+	 * 
+	 * This allows the server app code to change filter value, and have it
+	 * updated in the client UI.
+	 * 
+	 * @param {String|number} value
+	 */
+	set_filter: function(value) {
+		var update = this.update_in_progress;
+		this.update_in_progress = true;
+		
+		this.activeFilters.filter = value;
+
+		// Update the header
+		this.header.setFilters(this.activeFilters);
+
+		this.update_in_progress = update;
+	},
+
+	/**
+	 * Directly change filter2 value, with no server query.
+	 *
+	 * This allows the server app code to change filter2 value, and have it
+	 * updated in the client UI.
+	 *
+	 * @param {String|number} value
+	 */
+	set_filter2: function(value) {
+		var update = this.update_in_progress;
+		this.update_in_progress = true;
+		
+		this.activeFilters.filter2 = value;
+
+		// Update the header
+		this.header.setFilters(this.activeFilters);
+
+		this.update_in_progress = update;
+	},
+
+	/**
 	 * If nextmatch starts disabled, it will need a resize after being shown
 	 * to get all the sizing correct.  Override the parent to add the resize
 	 * when enabling.
