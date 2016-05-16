@@ -76,12 +76,6 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 			"type": "string",
 			"description": "widthxheight, if popup should be used, eg. 640x480"
 		},
-		"extra_link_title": {
-			"name": "Link Title",
-			"type": "string",
-			"description": "Link title which is displayed on mouse over.",
-			"translate": true
-		},
 		"expose_view":{
 			name: "Expose view",
 			type: "boolean",
@@ -103,7 +97,7 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 	},
 
 	legacyOptions: ["font_style", "href", "activate_links", "for",
-		"extra_link_target", "extra_link_popup", "extra_link_title"],
+		"extra_link_target", "extra_link_popup", "statustext"],
 
 	/**
 	 * Constructor
