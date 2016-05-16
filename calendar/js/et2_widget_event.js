@@ -902,12 +902,18 @@ et2_register_widget(et2_calendar_event, ["calendar-event"]);
  * @param {Object} event - Event information
  * @param {et2_widget_daycol|et2_widget_planner_row} parent - potential parent object
  *	that has an owner option
+ * @param {boolean} owner_too - Include the event owner in consideration, or only
+ *	event participants
  *
  * @return {boolean} Should the event be displayed
  */
-et2_calendar_event.owner_check = function owner_check(event, parent)
+et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 {
 	var owner_match = true;
+	if(typeof owner_too === 'undefined' && app.calendar.state.status_filter)
+	{
+		owner_too = app.calendar.state.status_filter === 'owner';
+	}
 	if(event.participants && parent.options.owner)
 	{
 		var parent_owner = typeof parent.options.owner !== 'object' ?
@@ -925,8 +931,18 @@ et2_calendar_event.owner_check = function owner_check(event, parent)
 				});
 			}
 		}
-		for(var id in event.participants)
+		var participants = jQuery.extend([],Object.keys(event.participants));
+		for(var i = 0; i < participants.length; i++ )
 		{
+			var id = participants[i];
+			// Expand group invitations
+			if (parseInt(id) < 0)
+			{
+				// Add in groups, if we can get them (this is syncronous)
+				egw.accountData(id,'account_id',true,function(members) {
+					participants = participants.concat(Object.keys(members));
+				});
+			}
 			if(parent.options.owner == id ||
 				parent_owner.indexOf &&
 				parent_owner.indexOf(id) >= 0)
@@ -935,6 +951,12 @@ et2_calendar_event.owner_check = function owner_check(event, parent)
 				break;
 			}
 		}
+	}
+	if(owner_too && !owner_match)
+	{
+		owner_match = (parent.options.owner == event.owner ||
+			parent_owner.indexOf &&
+			parent_owner.indexOf(event.owner) >= 0);
 	}
 	return owner_match;
 };
