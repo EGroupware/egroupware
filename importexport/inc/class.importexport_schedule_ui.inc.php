@@ -29,16 +29,19 @@ class importexport_schedule_ui
 
 	protected static $template;
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->template = new Etemplate();
 	}
 
-	public function index($content = array()) {
+	public function index($content = array())
+	{
 		if(is_array($content['scheduled']))
 		{
 			foreach($content['scheduled'] as $row)
 			{
-				if($row['delete']) {
+				if($row['delete'])
+				{
 					$key = urldecode(key($row['delete']));
 					ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
 				}
@@ -46,8 +49,10 @@ class importexport_schedule_ui
 		}
 		$async_list = ExecMethod('phpgwapi.asyncservice.read', 'importexport%');
 		$data = array();
-		if(is_array($async_list)) {
-			foreach($async_list as $id => $async) {
+		if(is_array($async_list))
+		{
+			foreach($async_list as $id => $async)
+			{
 				foreach(array('errors', 'warnings', 'result') as $messages)
 				{
 					if(is_array($async['data'][$messages]))
@@ -63,7 +68,8 @@ class importexport_schedule_ui
 						$async['data'][$messages] = $list;
 					}
 				}
-				if(is_numeric($async['data']['record_count'])) {
+				if(is_numeric($async['data']['record_count']))
+				{
 					$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
 				}
 				$data['scheduled'][] = array_merge($async['data'], array(
@@ -82,7 +88,8 @@ class importexport_schedule_ui
 		$this->template->exec('importexport.importexport_schedule_ui.index', $data, $sel_options);
 	}
 
-	public function edit($content = array()) {
+	public function edit($content = array())
+	{
 		$id = $_GET['id'] ? urldecode($_GET['id']) : $content['id'];
 		$definition_id = $_GET['definition'];
 		$async = new Api\Asyncservice();
@@ -92,7 +99,8 @@ class importexport_schedule_ui
 		$data = $content;
 
 		// Deal with incoming
-		if($content['save'] && self::check_target($content) === true) {
+		if($content['save'] && self::check_target($content) === true)
+		{
 			unset($content['save']);
 			$async->cancel_timer($id);
 			$id = self::generate_id($content);
@@ -102,7 +110,8 @@ class importexport_schedule_ui
 			unset($content['schedule']);
 
 			// Remove any left blank
-			foreach($schedule as $key => &$value) {
+			foreach($schedule as $key => &$value)
+			{
 				if($value == '') unset($schedule[$key]);
 			}
 			$result = $async->set_timer(
@@ -111,35 +120,50 @@ class importexport_schedule_ui
 				'importexport.importexport_schedule_ui.exec',
 				$content
 			);
-			if($result) {
+			if($result)
+			{
 				Framework::refresh_opener('', 'admin',$id,'update','admin');
 				Framework::window_close();
-			} else {
+			}
+			else
+			{
 				$data['message'] = lang('Unable to schedule');
 				unset($id);
 			}
 		}
 
-		if($id) {
+		if($id)
+		{
+
 			$preserve['id'] = $id;
 			$async = $async->read($id);
-			if(is_array($async[$id]['data'])) {
+			if(is_array($async[$id]['data']))
+			{
 				$data += $async[$id]['data'];
 				$data['schedule'] = $async[$id]['times'];
 				unset($data['times']);
 
 				// Async sometimes changes minutes to an array - show user what they typed
-				if(is_array($data['schedule']['min'])) $data['schedule']['min'] = $data['min'];
-			} else {
+				if(is_array($data['schedule']['min']))
+				{
+					$data['schedule']['min'] = $data['min'];
+				}
+			}
+			else
+			{
 				$data['message'] = lang('Schedule not found');
 			}
-		} else {
+		}
+		else
+		{
 			$data['type'] = $content['type'] ? $content['type'] : 'import';
 
-			if((int)$definition_id) {
+			if((int)$definition_id)
+			{
 				$bo = new importexport_definitions_bo();
 				$definition = $bo->read($definition_id);
-				if($definition['definition_id']) {
+				if($definition['definition_id'])
+				{
 					$data['type'] = $definition['type'];
 					$data['appname'] = $definition['application'];
 					$data['plugin'] = $definition['plugin'];
@@ -148,9 +172,13 @@ class importexport_schedule_ui
 			}
 		}
 
-		if($data['target'] && $data['type']) {
+		if($data['target'] && $data['type'])
+		{
 			$file_check = self::check_target($data);
-			if($file_check !== true) $data['message'] .= ($data['message'] ? "\n" . $file_check : $file_check);
+			if($file_check !== true)
+			{
+				$data['message'] .= ($data['message'] ? "\n" . $file_check : $file_check);
+			}
 		}
 
 		$data['no_delete_files'] = $data['type'] != 'import';
@@ -169,7 +197,8 @@ class importexport_schedule_ui
 	/**
 	* Get options for select boxes
 	*/
-	public static function get_select_options(Array $data) {
+	public static function get_select_options(Array $data)
+	{
 		$options = array(
 			'type'	=>	array(
 				'import'	=> lang('import'),
@@ -178,15 +207,22 @@ class importexport_schedule_ui
 		);
 
 		(array)$apps = importexport_helper_functions::get_apps($data['type'] ? $data['type'] : 'all');
-		if(count($apps)) {
+		if(count($apps))
+		{
 			$options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
 		}
 
 		$plugins = importexport_helper_functions::get_plugins($data['appname'] ? $data['appname'] : 'all', $data['type']);
-		if(is_array($plugins)) {
-			foreach($plugins as $types) {
-				if(!is_array($types[$data['type']])) continue;
-				foreach($types[$data['type']] as $key => $title) {
+		if(is_array($plugins))
+		{
+			foreach($plugins as $types)
+			{
+				if(!is_array($types[$data['type']]))
+				{
+					continue;
+				}
+				foreach($types[$data['type']] as $key => $title)
+				{
 					$options['plugin'][$key] = $title;
 				}
 			}
@@ -200,15 +236,20 @@ class importexport_schedule_ui
 		$query['application'] = $data['application'];
 		$query['plugin'] = $data['plugin'];
 		$definitions = new importexport_definitions_bo($query);
-		foreach ((array)$definitions->get_definitions() as $identifier) {
-			try {
+		foreach ((array)$definitions->get_definitions() as $identifier)
+		{
+			try
+			{
 				$definition = new importexport_definition($identifier);
-			} catch (Exception $e) {
+			}
+			catch (Exception $e)
+			{
 				unset($e);
 				// permission error
 				continue;
 			}
-			if (($title = $definition->get_title())) {
+			if (($title = $definition->get_title()))
+			{
 				$options['definition'][$title] = $title;
 			}
 			unset($definition);
@@ -221,7 +262,8 @@ class importexport_schedule_ui
 	/**
 	* Generate a async key
 	*/
-	public static function generate_id($data) {
+	public static function generate_id($data)
+	{
 
 		$query = array(
 			'name' => $data['definition']
@@ -235,66 +277,6 @@ class importexport_schedule_ui
 	}
 
 	/**
-	* Get plugins via ajax
-	*/
-	public function ajax_get_plugins($type, $appname, &$response = null) {
-		// todo nathan: xajaxResponse needs to be replaced with Api\Json\Response, assign('exec[plugin]' is not eT2, is that code still used?
-		// please remove of not, or fix it
-		if($response) {
-			$return = false;
-		} else {
-			$response = new xajaxResponse();
-		}
-		$options = self::get_select_options(array('type' => $type, 'appname'=>$appname));
-		$response->addScript("clear_options('exec[plugin]');");
-		$response->addScript("selectbox_add_option('exec[plugin]','".lang('Select...')."', '',false);");
-		if(is_array($options['plugin'])) {
-			foreach ($options['plugin'] as $value => $title) {
-				$response->addScript("selectbox_add_option('exec[plugin]','$title', '$value',false);");
-			}
-		}
-		if(count($options['plugin']) == 1) {
-			$this->ajax_get_definitions($appname, $value, $response);
-			$response->assign('exec[plugin]','value',$value);
-		} else {
-			$response->addScript("xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', '$appname', document.getElementById('exec[plugin]').value);");
-		}
-		// Trigger chosen
-		$response->addScript("\$j(document.getElementById('exec[plugin]')).trigger('liszt:updated');");
-
-		return $response->getXML();
-	}
-
-	/**
-	* Get definitions via ajax
-	*/
-	public function ajax_get_definitions($appname, $plugin, &$response = null) {
-		// todo nathan: xajaxResponse needs to be replaced with Api\Json\Response, assign('exec[plugin]' is not eT2, is that code still used?
-		// please remove of not, or fix it
-		$options = self::get_select_options(array('appname'=>$appname, 'plugin'=>$plugin));
-		if($response) {
-			$return = false;
-		} else {
-			$response = new xajaxResponse();
-		}
-		$response->addScript("clear_options('exec[definition]');");
-		$response->addScript("selectbox_add_option('exec[definition]','".lang('Select...')."', '',false);");
-		if(is_array($options['definition'])) {
-			foreach ($options['definition'] as $value => $title) {
-				$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',false);");
-			}
-		}
-		if(count($options['definition']) == 1) {
-			$response->assign('exec[definition]','value',$value);
-		} else {
-			$response->addScript("document.getElementById('exec[definition]').value = ''");
-		}
-		// Trigger chosen
-		$response->addScript("\$j(document.getElementById('exec[definition]')).trigger('liszt:updated');");
-		return $response->getXML();
-	}
-
-	/**
 	* Check that the target is valid for the type (readable or writable)
 	* and that they're not trying to write directly to the filesystem
 	*
@@ -302,9 +284,11 @@ class importexport_schedule_ui
 	*/
 	public static function check_target(Array $data) {
 		$scheme = parse_url($data['target'], PHP_URL_SCHEME);
-		if($scheme == '' || $scheme == 'file') {
+		if($scheme == '' || $scheme == 'file')
+		{
 			return 'Direct file access not allowed';
 		}
+
 		if($scheme == Vfs::SCHEME  && !in_array(Vfs::SCHEME, stream_get_wrappers())) {
 			stream_wrapper_register(Vfs::SCHEME, 'vfs_stream_wrapper', STREAM_IS_URL);
 		}
@@ -335,7 +319,8 @@ class importexport_schedule_ui
 			}
 			return lang('%1 is not readable',$data['target']);
 		}
-		elseif ($data['type'] == 'export' && !self::is__writable($data['target'])) {
+		elseif ($data['type'] == 'export' && !self::is__writable($data['target']))
+		{
 			return lang('%1 is not writable',$data['target']);
 		}
 
@@ -348,21 +333,33 @@ class importexport_schedule_ui
 	*
 	* @param path Path to check
 	*/
-	private static function is__writable($path) {
-		if ($path{strlen($path)-1}=='/') // recursively return a temporary file path
+	private static function is__writable($path)
+	{
+		if ($path{strlen($path)-1}=='/')
+		{
+			// recursively return a temporary file path
 			return self::is__writable($path.uniqid(mt_rand()).'.tmp');
+		}
 		else if (is_dir($path))
+		{
 			return self::is__writable($path.'/'.uniqid(mt_rand()).'.tmp');
+		}
+		
 		// check tmp file for read/write capabilities
 		$rm = file_exists($path);
 		$f = @fopen($path, 'a');
 
 		if ($f===false)
+		{
 			return false;
+		}
 
 		fclose($f);
+
 		if (!$rm)
+		{
 			@unlink($path);
+		}
 		return true;
 	}
 
@@ -402,7 +399,8 @@ class importexport_schedule_ui
 
 		// check file
 		$file_check = self::check_target($data);
-		if($file_check !== true) {
+		if($file_check !== true)
+		{
 			$data['errors'] = array($file_check=>'');
 			// Update job with results
 			self::update_job($data);
@@ -413,7 +411,8 @@ class importexport_schedule_ui
 		}
 
 		$definition = new importexport_definition($data['definition']);
-		if( $definition->get_identifier() < 1 ) {
+		if( $definition->get_identifier() < 1 )
+		{
 			$data['errors'] = array('Definition not found!');
 			// Update job with results
 			self::update_job($data);
@@ -434,7 +433,10 @@ class importexport_schedule_ui
 				$targets = array();
 				foreach(scandir($data['target']) as $target)
 				{
-					if ($target == '.' || $target == '..') continue;
+					if ($target == '.' || $target == '..')
+					{
+						continue;
+					}
 					$target = $data['target'].(substr($data['target'],-1) == '/' ? '' : '/').$target;
 
 					// Check modification time, make sure it's not currently being written
@@ -463,7 +465,6 @@ class importexport_schedule_ui
 			$targets = array($data['target']);
 		}
 
-
 		if($type == 'export')
 		{
 			// Set to export all or filter, if set
@@ -476,7 +477,10 @@ class importexport_schedule_ui
 				foreach($definition->filter as $field => $value)
 				{
 					 // Handle multiple values
-					if(!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
+					if(!is_array($value) && strpos($value,',') !== false)
+					{
+						$value = explode(',',$value);
+					}
 
 					$filters[$field] = $value;
 
@@ -503,12 +507,16 @@ class importexport_schedule_ui
 			self::update_job($data, true);
 
 			$resource = null;
-			try {
-				if (($resource = @fopen( $target, $data['type'] == 'import' ? 'rb' : 'wb' ))) {
+			try
+			{
+				if (($resource = @fopen( $target, $data['type'] == 'import' ? 'rb' : 'wb' )))
+				{
 					$result = $po->$type( $resource, $definition );
 
 					fclose($resource);
-				} else {
+				}
+				else
+				{
 					error_log('importexport_schedule: ' . date('c') . ": File $target not readable! \n");
 					$data['errors'][$target][] = lang('%1 is not readable',$target);
 				}
@@ -520,33 +528,42 @@ class importexport_schedule_ui
 			}
 
 
-			if(method_exists($po, 'get_warnings') && $po->get_warnings()) {
+			if(method_exists($po, 'get_warnings') && $po->get_warnings())
+			{
 				$buffer = 'importexport_schedule: ' . date('c') . ": Import warnings:\n#\tWarning\n";
-				foreach($po->get_warnings() as $record => $msg) {
+				foreach($po->get_warnings() as $record => $msg)
+				{
 					$data['warnings'][$target][] = "#$record: $msg";
 					$buffer += "$record\t$msg\n";
 				}
 				error_log($buffer);
 			}
-			if(method_exists($po, 'get_errors') && $po->get_errors()) {
+			if(method_exists($po, 'get_errors') && $po->get_errors())
+			{
 				$buffer = 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n";
-				foreach($po->get_errors() as $record => $error) {
+				foreach($po->get_errors() as $record => $error)
+				{
 					$data['errors'][$target][] = "#$record: $error";
 					$buffer += "$record\t$error\n";
 				}
 				error_log($buffer);
 			}
 
-			if($po instanceof importexport_iface_import_plugin) {
-				if(is_numeric($result)) {
+			if($po instanceof importexport_iface_import_plugin)
+			{
+				if(is_numeric($result))
+				{
 					$data['record_count'] += $result;
 					$data['result'][$target][] = lang('%1 records processed', $result);
 				}
 				$data['result'][$target] = array();
-				foreach($po->get_results() as $action => $count) {
+				foreach($po->get_results() as $action => $count)
+				{
 					$data['result'][$target][] = lang($action) . ": $count";
 				}
-			} else {
+			}
+			else
+			{
 				if($result instanceof importexport_iface_export_record)
 				{
 					$data['record_count'] += $result->get_num_of_records();
@@ -595,12 +612,15 @@ class importexport_schedule_ui
 	 * Update the async job with current status, and send a notification
 	 * to user if there were any errors.
 	 */
-	private static function update_job($data, $no_notification = false) {
+	private static function update_job($data, $no_notification = false)
+	{
 		$id = self::generate_id($data);
 		$async = new Api\Asyncservice();
 		$jobs = $async->read($id);
 		$job = $jobs[$id];
-		if(is_array($job)) {
+		
+		if(is_array($job))
+		{
 			$async->cancel_timer($id);
 			$result = $async->set_timer(
 				$async['times'],
@@ -609,7 +629,10 @@ class importexport_schedule_ui
 				$data
 			);
 		}
-		if($no_notification) return $result;
+		if($no_notification)
+		{
+			return $result;
+		}
 
 		// Send notification to user
 		if($data['warnings'] || $data['errors'])
