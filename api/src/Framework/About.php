@@ -100,21 +100,10 @@ from community developers.</p>
 		});
 		array_unshift($apps, false);	// first empty row for eTemplate
 
-		// get informations about the templates
-		$templates = array();
-		$templates[] = ''; // first empty row for eTemplate
+		// putting templates below apps
 		foreach($GLOBALS['egw']->framework->list_templates(true) as $info)
 		{
-			$templates[] = $this->_getParsedTemplateInfo($info);
-		}
-
-		// get informations about installed languages
-		$translations = array();
-		$translations[] = ''; // first empty row for eTemplate
-		foreach(Api\Translation::get_installed_langs() as $translation => $translationinfo) {
-			$translations[] = array(
-				'langName'	=>	$translationinfo.' ('.$translation.')'
-			);
+			$apps[] = $this->_getParsedTemplateInfo($info);
 		}
 
 		// fill content array for eTemplate
@@ -122,8 +111,6 @@ from community developers.</p>
 		$content = array(
 			'apiVersion'	=> '<p>'.lang('EGroupware version').' <b>'.Api\Framework::api_version($changelog).'</b></p>',
 			'applications'	=> $apps,
-			'templates'		=> $templates,
-			'translations'	=> $translations,
 			'text_content'  => $text_content,
 			'changelog'     => file_exists($changelog) ? file_get_contents($changelog) : 'not available',
 		);
