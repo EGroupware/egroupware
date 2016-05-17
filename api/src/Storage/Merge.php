@@ -604,7 +604,7 @@ abstract class Merge
 
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
-				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/openoffice.xslt');
+				$doc->load(EGW_INCLUDE_ROOT.'/api/templates/default/Merge/openoffice.xslt');
 				$xslt->importStyleSheet($doc);
 
 //echo $content;die();
@@ -642,7 +642,7 @@ abstract class Merge
 				$doc = new DOMDocument();
 				$xslt = new XSLTProcessor();
 				$xslt_file = $mimetype == 'application/xml' ? 'wordml.xslt' : 'msoffice.xslt';
-				$doc->load(EGW_INCLUDE_ROOT.'/etemplate/templates/default/'.$xslt_file);
+				$doc->load(EGW_INCLUDE_ROOT.'/api/templates/default/Merge/'.$xslt_file);
 				$xslt->importStyleSheet($doc);
 				break;
 		}
