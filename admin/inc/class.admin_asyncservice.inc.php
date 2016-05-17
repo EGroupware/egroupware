@@ -90,7 +90,7 @@ class admin_asyncservice
 		echo '<div style="text-align: left; margin: 10px;">'."\n";
 
 		$last_run = $async->last_check_run();
-		$lr_date = $last_run['end'] ? Api\DateTime::server2user($last_run['end']) : lang('never');
+		$lr_date = $last_run['end'] ? Api\DateTime::server2user($last_run['end'],'') : lang('never');
 		echo '<p><b>'.lang('Async services last executed').'</b>: '.$lr_date.' ('.$last_run['run_by'].")</p>\n<hr>\n";
 
 		if (isset($_POST['asyncservice']) && $_POST['asyncservice'] != $GLOBALS['egw_info']['server']['asyncservice'])
@@ -160,7 +160,7 @@ class admin_asyncservice
 		{
 			$next = $async->next_run($times,True);
 
-			echo "<p>asyncservice::next_run(";print_r($times);echo")=".($next === False ? 'False':"'$next'=".Api\DateTime::server2user($next))."</p>\n";
+			echo "<p>asyncservice::next_run(";print_r($times);echo")=".($next === False ? 'False':"'$next'=".Api\DateTime::server2user($next,''))."</p>\n";
 		}
 		echo '<hr><p><input type="submit" name="cancel" value="'.lang('Cancel TestJob!')."\"> &nbsp;\n";
 		echo '<input type="submit" name="test" value="'.lang('Start TestJob!')."\">\n";
@@ -170,10 +170,10 @@ class admin_asyncservice
 		echo '<hr><p><b>'.lang('Jobs').":</b>\n";
 		if (($jobs = $async->read('%')))
 		{
-			echo "<table border=1>\n<tr>\n<th>Id</th><th>".lang('Next run').'</th><th>'.lang('Times').'</th><th>'.lang('Method').'</th><th>'.lang('Data')."</th><th>".lang('LoginID')."</th></tr>\n";
+			echo "<table border=1>\n<tr>\n<th>Id</th><th style='width:18ex;'>".lang('Next run').'</th><th>'.lang('Times').'</th><th>'.lang('Method').'</th><th>'.lang('Data')."</th><th>".lang('LoginID')."</th></tr>\n";
 			foreach($jobs as $job)
 			{
-				echo "<tr>\n<td>$job[id]</td><td>".Api\DateTime::server2user($job['next'])."</td><td>";
+				echo "<tr>\n<td>$job[id]</td><td>".Api\DateTime::server2user($job['next'],'')."</td><td>";
 				print_r($job['times']);
 				echo "</td><td>$job[method]</td><td>";
 				print_r($job['data']);
