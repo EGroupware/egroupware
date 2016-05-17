@@ -434,7 +434,7 @@ class preferences
 				default:
 					foreach($values as $app => $vals)
 					{
-						$this->group[$app] = $vals + (array)$this->group[$app];
+						$this->group[$app] = (array)$vals + (array)$this->group[$app];
 					}
 					break;
 			}
