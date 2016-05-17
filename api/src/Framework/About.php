@@ -92,7 +92,10 @@ from community developers.</p>
 		foreach (array_keys(isset($GLOBALS['egw_info']['user']['apps']['admin']) ?
 			$GLOBALS['egw_info']['apps'] : $GLOBALS['egw_info']['user']['apps']) as $app)
 		{
-			$apps[] = $this->_getParsedAppInfo($app);
+			if (($app_info = $this->_getParsedAppInfo($app)))
+			{
+				$apps[] = $app_info;
+			}
 		}
 		usort($apps, function($a, $b)
 		{
@@ -165,7 +168,9 @@ from community developers.</p>
 				}
 			}
 		}
-		$app_info  = array_merge($GLOBALS['egw_info']['apps'][$app],$setup_info[$app]);
+		if (!isset($setup_info[$app]) || !is_array($setup_info[$app])) return null;	// app got eg. removed in filesystem
+
+		$app_info  = array_merge($GLOBALS['egw_info']['apps'][$app], $setup_info[$app]);
 
 		// define the return array
 		$icon_app = isset($app_info['icon_app']) ? $app_info['icon_app'] : $app;
