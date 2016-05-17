@@ -1407,10 +1407,10 @@ input#calendar-edit_location {
   background-image: linear-gradient(top, #828282, #828282) !important;
   background-repeat: repeat-x !important;
 }
-.egw_fw_ui_category_content {
+#calendar_sidebox_content .egw_fw_ui_category_content {
   padding-left: 0px !important;
 }
-.egw_fw_ui_category_content img.egw_fw_ui_sidemenu_listitem_icon {
+#calendar_sidebox_content .egw_fw_ui_category_content img.egw_fw_ui_sidemenu_listitem_icon {
   display: none;
 }
 img.sideboxstar {
