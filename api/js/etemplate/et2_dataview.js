@@ -163,6 +163,9 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 		{
 			this.width = _w;
 
+			// Take grid border width into account
+			_w -= (this.table.outerWidth(true) - this.table.innerWidth());
+
 			// Take grid header border's width into account. eg. category colors may add extra pixel into width
 			_w = _w - (this.thead.find('tr').outerWidth() - this.thead.find('tr').innerWidth());
 
