@@ -289,7 +289,7 @@ class calendar_merge extends bo_merge
 			$replacements['$$'.($prefix?$prefix.'/':'').'calendar_owner/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($event['owner'],'account_primary_group'));
 		}
 
-		if($content && strpos($content, '$$#') !== 0)
+		if($content && strpos($content, '$$#') !== FALSE)
 		{
 			$this->cf_link_to_expand($event, $content, $replacements);
 		}
