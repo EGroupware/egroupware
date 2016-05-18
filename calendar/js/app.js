@@ -188,7 +188,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				delete content.data.year;
 
 				this._setup_sidebox_filters();
-				
+
 				this.state = content.data;
 				break;
 
@@ -3448,7 +3448,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	_set_autorefresh: function() {
 		// Listview not loaded
 		if(typeof app.classes.calendar.views.listview.etemplates[0] == 'string') return;
-		
+
 		var nm = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
 		// nextmatch missing
 		if(!nm) return;
@@ -3465,11 +3465,12 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			window.clearInterval(nm._autorefresh_timer);
 		}
+		var self = this;
 		var refresh = function() {
 			// Deleted events are not coming properly, so clear it all
-			this._clear_cache();
+			self._clear_cache();
 			// Force redraw to current state
-			this.setState({state: this.state});
+			self.setState({state: self.state});
 
 			// This is a fast update, but misses deleted events
 			//app.calendar._fetch_data(app.calendar.state);
