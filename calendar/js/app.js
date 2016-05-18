@@ -3601,7 +3601,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		 */
 		granularity: function(state) {
 			var list = egw.preference('use_time_grid','calendar');
-			if(list === 0) return parseInt(egw.preference('interval','calendar')) || 30;
+			if(list === 0 || typeof list === 'undefined')
+			{
+				return parseInt(egw.preference('interval','calendar')) || 30;
+			}
 			if(typeof list == 'string') list = list.split(',');
 			if(!list.indexOf && jQuery.isPlainObject(list))
 			{
