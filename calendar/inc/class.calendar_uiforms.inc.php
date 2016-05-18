@@ -2764,22 +2764,20 @@ class calendar_uiforms extends calendar_ui
 	{
 		list($eventId, $date) = explode(':', $_eventId);
 		$event = $this->bo->read($eventId);
-
+		if($date)
+		{
+			$d = new Api\DateTime($date, Api\DateTime::$user_timezone);
+		}
+		
 		// If we have a recuring event for a particular day, make an exception
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
 		{
-			$d = new Api\DateTime($date, Api\DateTime::$user_timezone);
 			if (!empty($event['whole_day']))
 			{
 				$d =& $this->bo->so->startOfDay($date);
 				$d->setUser();
 			}
 			$event = $this->bo->read($eventId, $d, true);
-			$preserv['actual_date'] = $d;		// remember the date clicked
-
-			// For DnD, always create an exception
-			$this->_create_exception($event,$preserv);
-			unset($event['id']);
 			$date = $d->format('ts');
 		}
 		if($event['participants'][$uid])
@@ -2787,12 +2785,12 @@ class calendar_uiforms extends calendar_ui
 			$q = $r = null;
 			calendar_so::split_status($event['participants'][$uid],$q,$r);
 			$event['participants'][$uid] = $status = calendar_so::combine_status($status,$q,$r);
-			$this->bo->set_status($event['id'],$uid,$status,0,true);
+			$this->bo->set_status($event['id'],$uid,$status,$date,true);
 		}
 
 		// Directly update stored data.  If event is still visible, it will
 		// be notified & update itself.
-		$this->update_client($_eventId);
+		$this->update_client($eventId,$d);
 	}
 
 	/**
