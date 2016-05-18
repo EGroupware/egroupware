@@ -102,7 +102,7 @@ class infolog_merge extends Api\Storage\Merge
 			if(!in_array('info_'.$name, $types['select'])) $types['select'][] = 'info_'.$name;
 		}
 
-		if($content && strpos($content, '$$#') !== 0)
+		if($content && strpos($content, '$$#') !== FALSE)
 		{
 			$this->cf_link_to_expand($record->get_record_array(), $content, $info);
 		}
