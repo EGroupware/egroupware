@@ -225,6 +225,7 @@
   .ui-datepicker .ui-datepicker-prev:hover,
   .ui-datepicker .ui-datepicker-next:hover {
     border: none;
+    background-color: transparent;
   }
   .ui-datepicker .ui-datepicker-prev span {
     background-image: url(../images/previous.svg) !important;
@@ -238,6 +239,7 @@
   }
   .ui-datepicker .ui-datepicker-next span:hover {
     border: none;
+    background-color: transparent;
   }
   .et2_file .progress li:hover div.remove {
     width: 16px;
@@ -1441,13 +1443,7 @@ div#ui-datepicker-div {
 .ui-datepicker button.ui-datepicker-current .ui-state-hover {
   background-color: #1aa200 !important;
 }
-.ui-datepicker button.ui-datepicker-current .ui-state-hover:hover {
-  background-color: #1aa200;
-}
 .ui-datepicker button.ui-datepicker-current .ui-state-hover:active {
-  background-color: #1aa200;
-}
-.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current:hover {
   background-color: #1aa200;
 }
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current:active {
@@ -2460,7 +2456,6 @@ button[id="add"] {
 button[id="add"]:active {
   background-color: #1aa200 !important;
 }
-/*Button Ende #######################################################*/
 /**
  * EGroupware: Stylite Pixelegg template
  *
