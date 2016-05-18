@@ -302,7 +302,7 @@
 			}
 
 			//Send the sort order to the server via ajax
-			var req = egw.jsonq('api.jdots_framework.ajax_appsort.template', [name_array]);
+			var req = egw.jsonq('EGroupware\\Api\\Framework\\Ajax::ajax_appsort', [name_array]);
 		},
 
 		/**

@@ -423,7 +423,7 @@ abstract class Ajax extends Api\Framework
 	 *
 	 * @param string $tz
 	 */
-	function ajax_tz_selection($tz)
+	static function ajax_tz_selection($tz)
 	{
 		Api\DateTime::setUserPrefs($tz);	// throws exception, if tz is invalid
 
@@ -660,7 +660,7 @@ abstract class Ajax extends Api\Framework
 	 * @param $tablist is an array which contains each tab as an associative array
 	 *   with the keys 'appName' and 'active'
 	 */
-	public function ajax_tab_changed_state($tablist)
+	public static function ajax_tab_changed_state($tablist)
 	{
 		$tabs = array();
 		foreach($tablist as $data)
@@ -727,7 +727,7 @@ abstract class Ajax extends Api\Framework
 	 * @param $appname the name of the application
 	 * @param $width the width set
 	 */
-	public function ajax_sideboxwidth($appname, $width)
+	public static function ajax_sideboxwidth($appname, $width)
 	{
 		//error_log(__METHOD__."($appname, $width)");
 		//Check whether the supplied parameters are valid
@@ -742,7 +742,7 @@ abstract class Ajax extends Api\Framework
 	 *
 	 * @param array $apps
 	 */
-	public function ajax_appsort(array $apps)
+	public static function ajax_appsort(array $apps)
 	{
 		$order = array();
 		$i = 0;
