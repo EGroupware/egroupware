@@ -1698,7 +1698,7 @@ window.egw_LAB.wait(function() {
 				if (is_null($prefer_marker))
 				{
 					// as et2 adds options with .text(), it can't be entities, but php knows no string literals with utf-8
-					$prefer_marker = html_entity_decode(' &#9733;', ENT_NOQUOTES, 'utf-8');
+					$prefer_marker = html_entity_decode(' &#9734;', ENT_NOQUOTES, 'utf-8');
 				}
 				foreach($tel2show as $name)
 				{
