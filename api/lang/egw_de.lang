@@ -1113,7 +1113,7 @@ do you want to send the message to all selected entries, without further editing
 document '%1' does not exist or is not readable for you!	preferences	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
 documentation	common	de	Dokumentation
 doesn't matter	common	de	spielt keine Rolle
-done	common	de	Schliessen
+done	common	de	erledigt
 drop a table - this can not be undone	common	de	Tabelle löschen (drop) - NICHT rückgängig zu machen
 drop table	common	de	Tabelle löschen
 dump4setup	common	de	Dump4Setup
