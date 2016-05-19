@@ -1,3 +1,13 @@
+egroupware-epl (14.3.20160612) hardy; urgency=low
+
+  * TranslationTools: move remaining code from developer_tools directory to etemplate
+  * Mail/Addressbook/Calendar: add and use charset when sending/receiving mails with vCard/iCals, change default vCard charset preference to utf-8
+  * Import/Export: Fix export with multi-select customfields does not work
+  * Addressbook: adding "Lastname, Firstname (birthday)" as fileas and link-title
+  * Preferences/CKEditor: Remove unsupported skins from CKEditor
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 12 May 2016 00:00:00 +0200
+
 egroupware-epl (14.3.20160428) hardy; urgency=low
 
   * CardDAV: fix not working creation of new CardDAV account with OS X 10.11.4 addressbook (it stays empty)
@@ -6,7 +16,7 @@ egroupware-epl (14.3.20160428) hardy; urgency=low
   * ProjectManager: fix PHP 5.3 problem: PHP Parse error:  syntax error, unexpected "["
   * LDAP: fix "Protocol error" on creating new accounts, if "Do you want to manage home directory and login shell attributes?" is set to yes, but fields are left empty
   * Admin: clear cache after admin-cli.php commands, so they become active automatically, also backported feedback for "Clear cache and register hooks" from trunk
-  * Bookmark: Fix bookmark preview image not getting a right size 
+  * Bookmark: Fix bookmark preview image not getting a right size
   * Bookmarks: fixed not displayed favicon for new bookmarks
   * Wiki/PostgreSQL: fix SQL error while searching
 
@@ -44,7 +54,7 @@ egroupware-epl (14.3.20160112) hardy; urgency=low
   * Addressbook: Fix email action in context menu does not send a valid email to compose dialog for certain email addresses
   * All applications/ Tutorials:
    -Fix discarding tutorials prompt not working if the configuration is set to sidebox
-   -Rephrase tutorials siteconfiguration labels for ease of comprehension	
+   -Rephrase tutorials siteconfiguration labels for ease of comprehension
   * Fix mail printing style
   * Admin: Add (de)activating mail accounts into admin contextmenu
   * Addressbook/CardDAV: fix contacts created with "Copy instead of move" checked in "Move to addressbook" context menu sync not correctly (already created ones need to be deleted!)
