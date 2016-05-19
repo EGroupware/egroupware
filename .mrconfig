@@ -3,6 +3,10 @@
 # - to install or update run inside EGroupware dir: mr up
 # - alternativly you can also run the commands manually
 
+[DEFAULT]
+git_update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null || true
+jobs = 5
+
 [api/src/Db/ADOdb]
 checkout = git clone git@github.com:EGroupware/ADOdb.git
 
@@ -13,7 +17,7 @@ checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trun
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
 checkout = git clone git@github.com:EGroupware/egroupware.git &&
 	/usr/bin/env composer.phar install
-update = git pull &&
+update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null || true;
 	/usr/bin/env composer.phar install
 
 ###
