@@ -6698,8 +6698,12 @@ class emailadmin_imapbase
 		foreach($ret as $i => $adr)
 		{
 			//mailaddresses enclosed in single quotes like 'me@you.com' show up as 'me as mailbox and you.com' as host
-			if ($adr->mailbox && stripos($adr->mailbox,"'")!==false) $adr->mailbox = str_replace("'","",$adr->mailbox);
-			if ($adr->host && stripos($adr->host,"'")!==false) $adr->host = str_replace("'","",$adr->host);
+			if ($adr->mailbox && stripos($adr->mailbox,"'")== 0 &&
+					$adr->host && stripos($adr->host,"'")== (strlen($adr->host) -1))
+			{
+				$adr->mailbox = str_replace("'","",$adr->mailbox);
+				$adr->host = str_replace("'","",$adr->host);
+			}
 			// no mailbox or host part as 'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>' is parsed as 2 addresses separated by ','
 			//#'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>'
 			//#Horde_Mail_Rfc822_List Object([_data:protected] => Array(
