@@ -1,3 +1,5 @@
+*.old
+*.old.xet
 /api/js/etemplate/etemplate2.min.js
 /api/js/etemplate/etemplate2.min.js.map
 /api/js/jsapi.min.js
