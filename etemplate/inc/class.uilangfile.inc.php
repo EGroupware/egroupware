@@ -42,15 +42,22 @@ class uilangfile
 	 */
 	var $nextmatchs;
 
+	var $use_app = 'developer_tools';
+
 	function __construct()
 	{
-		$this->template = $GLOBALS['egw']->template;
+		$this->template = new Template(EGW_SERVER_ROOT.'/etemplate/templates/default');
 		$this->template->egroupware_hack = False;	// else the phrases got translated
 		$this->bo = new bolangfile();
 		$this->nextmatchs = new nextmatchs();
 		translation::add_app('developer_tools');
 		translation::add_app('common');
 		egw_framework::csp_script_src_attrs('unsafe-inline');
+
+		if (empty($GLOBALS['egw_info']['user']['apps']['developer_tools']))
+		{
+			$this->use_app = 'etemplate';
+		}
 	}
 
 	function addphrase()
@@ -82,7 +89,7 @@ class uilangfile
 			if (!$_POST['more'])
 			{
 				$GLOBALS['egw']->redirect_link('/index.php',array(
-					'menuaction' => 'etemplate.uilangfile.edit',
+					'menuaction' => $this->use_app.'.uilangfile.edit',
 					'app_name'   => $app_name,
 					'sourcelang' => $sourcelang,
 					'targetlang' => $targetlang
@@ -95,7 +102,7 @@ class uilangfile
 		common::egw_header();
 		echo parse_navbar();
 
-		$this->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=etemplate.uilangfile.addphrase'));
+		$this->template->set_var('form_action',$GLOBALS['egw']->link('/index.php', "menuaction=$this->use_app.uilangfile.addphrase"));
 		$this->template->set_var('sourcelang',$sourcelang);
 		$this->template->set_var('targetlang',$targetlang);
 		$this->template->set_var('app_name',$app_name);
@@ -131,7 +138,7 @@ class uilangfile
 		// we have to redirect here, as solangfile defines function sidebox_menu, which clashes with the iDots func.
 		//
 		$GLOBALS['egw']->redirect_link('/index.php',array(
-			'menuaction' => 'etemplate.uilangfile.missingphrase2',
+			'menuaction' => $this->use_app.'.uilangfile.missingphrase2',
 			'app_name'   => $app_name,
 			'sourcelang' => $sourcelang,
 			'targetlang' => $targetlang
@@ -189,7 +196,7 @@ class uilangfile
 
 			$this->bo->save_sessiondata();
 			$GLOBALS['egw']->redirect_link('/index.php',array(
-				'menuaction' => 'etemplate.uilangfile.edit',
+				'menuaction' => $this->use_app.'.uilangfile.edit',
 				'app_name'   => $app_name,
 				'sourcelang' => $sourcelang,
 				'targetlang' => $targetlang
@@ -203,7 +210,7 @@ class uilangfile
 		$this->template->set_var('lang_update',lang('Add'));
 		$this->template->set_var('lang_view',lang('Cancel'));
 
-		$this->template->set_var('action_url',$GLOBALS['egw']->link('/index.php','menuaction=etemplate.uilangfile.missingphrase2'));
+		$this->template->set_var('action_url',$GLOBALS['egw']->link('/index.php', "menuaction=$this->use_app.uilangfile.missingphrase2"));
 		$this->template->set_var('sourcelang',$sourcelang);
 		$this->template->set_var('targetlang',$targetlang);
 		$this->template->set_var('app_name',$app_name);
@@ -217,7 +224,7 @@ class uilangfile
 			$this->template->set_var('view_link',
 				$GLOBALS['egw']->link(
 					'/index.php',
-					'menuaction=etemplate.uilangfile.edit&app_name='.$app_name.'&sourcelang=' . $sourcelang . '&targetlang=' . $targetlang
+					"menuaction=$this->use_app.uilangfile.edit&app_name=".$app_name.'&sourcelang=' . $sourcelang . '&targetlang=' . $targetlang
 				)
 			);
 			$this->template->pfp('out','postheader');
@@ -241,7 +248,7 @@ class uilangfile
 	{
 		if ($_POST['cancel'])
 		{
-			$GLOBALS['egw']->redirect_link('/index.php','menuaction=etemplate.uilangfile.index');
+			$GLOBALS['egw']->redirect_link('/index.php', "menuaction=$this->use_app.uilangfile.index");
 		}
 		$app_name   = get_var('app_name',array('POST','GET'));
 		$sourcelang = get_var('sourcelang',array('POST','GET'));
@@ -251,7 +258,7 @@ class uilangfile
 		if($_POST['addphrase'] || $_POST['missingphrase'])
 		{
 			$GLOBALS['egw']->redirect_link('/index.php',array(
-				'menuaction' => 'etemplate.uilangfile.'.($_POST['addphrase']?'addphrase':'missingphrase'),
+				'menuaction' => $this->use_app.'.uilangfile.'.($_POST['addphrase']?'addphrase':'missingphrase'),
 				'app_name'   => $app_name,
 				'sourcelang' => $sourcelang,
 				'targetlang' => $targetlang
@@ -282,7 +289,7 @@ class uilangfile
 		$this->template->set_block('langfile','detail_long','detail_long');
 		$this->template->set_block('langfile','footer','footer');
 
-		$this->template->set_var('action_url',$GLOBALS['egw']->link('/index.php','menuaction=etemplate.uilangfile.edit'));
+		$this->template->set_var('action_url',$GLOBALS['egw']->link('/index.php', "menuaction=$this->use_app.uilangfile.edit"));
 		$this->template->set_var('lang_remove',lang('Remove'));
 		$this->template->set_var('lang_application',lang('Application'));
 		$this->template->set_var('lang_source',lang('Source Language'));
@@ -582,14 +589,14 @@ class uilangfile
 			$limit = $total;
 		}
 
-		$this->template->set_var('sort_title',$this->nextmatchs->show_sort_order($sort,'title','title','/index.php',lang('Title'),'&menuaction=etemplate.uilangfile.index'));
+		$this->template->set_var('sort_title',$this->nextmatchs->show_sort_order($sort,'title','title','/index.php',lang('Title'),"&menuaction=$this->use_app.uilangfile.index"));
 		$this->template->set_var('lang_showing',$this->nextmatchs->show_hits($total,$start));
-		$this->template->set_var('left',$this->nextmatchs->left('/index.php',$start,$total,'&menuaction=etemplate.uilangfile.index'));
-		$this->template->set_var('right',$this->nextmatchs->right('/index.php',$start,$total,'&menuaction=etemplate.uilangfile.index'));
+		$this->template->set_var('left',$this->nextmatchs->left('/index.php',$start,$total,"&menuaction=$this->use_app.uilangfile.index"));
+		$this->template->set_var('right',$this->nextmatchs->right('/index.php',$start,$total,"&menuaction=$this->use_app.uilangfile.index"));
 
 		$this->template->set_var('lang_edit',lang('Edit'));
 		//$this->template->set_var('lang_translate',lang('Translate'));
-		$this->template->set_var('new_action',$GLOBALS['egw']->link('/index.php','menuaction=etemplate.uilangfile.create'));
+		$this->template->set_var('new_action',$GLOBALS['egw']->link('/index.php', "menuaction=$this->use_app.uilangfile.create"));
 		$this->template->set_var('create_new',lang('Create New Language File'));
 
 		$i = 0;
@@ -601,8 +608,8 @@ class uilangfile
 
 				$this->template->set_var('name',$data['title']);
 
-				$this->template->set_var('edit','<a href="' . $GLOBALS['egw']->link('/index.php','menuaction=etemplate.uilangfile.edit&app_name=' . urlencode($data['name'])) . '"> ' . lang('Edit') . ' </a>');
-			//	$this->template->set_var('translate','<a href="' . $GLOBALS['egw']->link('/index.php','menuaction=etemplate.uilangfile.translate&app_name=' . urlencode($app['name'])) . '"> ' . lang('Translate') . ' </a>');
+				$this->template->set_var('edit','<a href="' . $GLOBALS['egw']->link('/index.php', "menuaction=$this->use_app.uilangfile.edit&app_name=" . urlencode($data['name'])) . '"> ' . lang('Edit') . ' </a>');
+			//	$this->template->set_var('translate','<a href="' . $GLOBALS['egw']->link('/index.php',"menuaction=$this->use_app.uilangfile.translate&app_name=" . urlencode($app['name'])) . '"> ' . lang('Translate') . ' </a>');
 
 				$this->template->set_var('status',$status);
 
