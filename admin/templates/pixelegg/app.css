@@ -18,7 +18,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 55801 2016-04-21 16:39:59Z ralfbecker $
+ * @version $Id$
  */
 .admin_tree table,
 .admin_tree tr,
@@ -179,8 +179,8 @@ select#admin-mailaccount_ident_id {
 }
 @media all {
   div.dhtmlxTree td.standartTreeRow span.selectedTreeRow {
-    background-color: #ffdd73;
-    color: #1e1e1e;
+    background-color: #FFDD73;
+    color: #1E1E1E;
   }
   /* #############################################################################
 	// iframe

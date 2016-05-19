@@ -174,14 +174,14 @@ table.egwGridView_grid img {
 /*Dialog filemanager*/
 #filemanager-select .dialogHeader .et2_button_icon {
   margin: 4px 4px 0 4px;
-  border-top: solid 1px #ffffff;
-  border-left: solid 1px #ffffff;
-  border-right: solid 1px #ffffff;
-  border-bottom: solid 1px #ffffff;
+  border-top: solid 1px #FFFFFF;
+  border-left: solid 1px #FFFFFF;
+  border-right: solid 1px #FFFFFF;
+  border-bottom: solid 1px #FFFFFF;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   height: auto;
   width: 24px;
 }
@@ -206,7 +206,7 @@ table.egwGridView_grid img {
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
 #filemanager-select table#filemanager-select_dir tr:nth-child(even) {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 #filemanager-select table#filemanager-select_dir tr:nth-child(odd) {
   background: #f2f2f2;
@@ -276,9 +276,9 @@ div#stylite-filemanager-upload .et2_file {
   height: 24px;
 }
 div#stylite-filemanager-upload .et2_file input {
-  color: #ffffff;
+  color: #FFFFFF;
   width: 250px;
-  background-color: #0c5da5;
+  background-color: #0C5DA5;
 }
 div#stylite-filemanager-upload .et2_file input:hover {
   background-color: #189800 !important;
@@ -320,7 +320,7 @@ div#stylite-filemanager-upload .dialogFooterToolbar button {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #E6E6E6;
   padding-left: 30px;
   background-position: 6px center;
   background-repeat: no-repeat;

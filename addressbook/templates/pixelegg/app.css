@@ -259,7 +259,7 @@ select#addressbook-index_col_filter\[tid\] {
     -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-    background-color: #0c5da5 !important;
+    background-color: #0C5DA5 !important;
     -webkit-border-radius: 3px;
     -webkit-border-top-left-radius: 10px;
     -moz-border-radius: 3px;
@@ -285,7 +285,7 @@ select#addressbook-index_col_filter\[tid\] {
     -ms-transform: scale(1.3);
     transform: scale(1.3);
     margin: 0.5em;
-    background: #ffffff;
+    background: #FFFFFF;
   }
   .et2_container[id^="infolog-index-addressbook"] .egwGridView_scrollarea {
     overflow-y: scroll !important;
@@ -297,7 +297,7 @@ select#addressbook-index_col_filter\[tid\] {
     margin: 6px 2px;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     padding: -0.5em;
-    background-color: #e6e6e6 !important;
+    background-color: #E6E6E6 !important;
     background-size: 16px 16px;
     -webkit-border-radius: 3px;
     -webkit-border-top-left-radius: 10px;
@@ -310,7 +310,7 @@ select#addressbook-index_col_filter\[tid\] {
   button#tracker-index-addressbook_add:before {
     content: "";
     font-size: 2em;
-    color: #0c5da5;
+    color: #0C5DA5;
     line-height: 0.6em;
     padding-left: 0.1em;
     padding-right: 100em;

@@ -991,12 +991,12 @@ body {
 .egw_fw_ui_category_content .selectedTreeRow,
 .egw_fw_ui_category_content .selectedTreeRow_lor {
   background-color: #ffc200;
-  color: #1e1e1e;
+  color: #1E1E1E;
   text-decoration: none;
 }
 .egw_fw_ui_category_content .standartTreeRow_lor {
   background-color: rgba(103, 159, 210, 0.2);
-  color: #1e1e1e;
+  color: #1E1E1E;
   text-decoration: none;
 }
 /* ##################################################################################
@@ -1040,7 +1040,7 @@ body {
 }
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-send {
   background-color: #189800;
-  color: #ffffff;
+  color: #FFFFFF;
 }
 #mail-compose #mail-compose_composeToolbar button#composeToolbar-send:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -1089,11 +1089,11 @@ body {
 }
 #mail-compose .mailComposeHeaders span.ui-state-error,
 #mail-compose .mailComposeHeadersSection span.ui-state-error {
-  color: #ae1d00;
+  color: #AE1D00;
 }
 #mail-compose .mailComposeHeaders div.ms-res-item-active,
 #mail-compose .mailComposeHeadersSection div.ms-res-item-active {
-  background: #0c5da5;
+  background: #0C5DA5;
 }
 #mail-compose .mailComposeHeaders div.ms-res-item-active span,
 #mail-compose .mailComposeHeadersSection div.ms-res-item-active span {
@@ -1133,7 +1133,7 @@ body {
   -moz-transition-timing-function: linear;
   -o-transition-timing-function: linear;
   transition-timing-function: linear;
-  background-color: #e6e6e6;
+  background-color: #E6E6E6;
   float: left;
   width: 55px;
   margin: 3px;
@@ -1153,7 +1153,7 @@ body {
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   background-color: #189800;
-  color: #ffffff;
+  color: #FFFFFF;
 }
 #mail-compose .mailComposeHeaders input#mail-compose_subject,
 #mail-compose .mailComposeHeadersSection input#mail-compose_subject {
@@ -1393,13 +1393,13 @@ body {
 #mail-display #mail-display_toolbar #toolbar-actionlist button [src*="svg"],
 #mail-display mail-display_displayToolbar #toolbar-actionlist button [src*="svg"] {
   background-color: #1e1e1e;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMWUxZTFlIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #1e1e1e, #1e1e1e);
-  background-image: -ms-linear-gradient(top, #1e1e1e, #1e1e1e);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1e1e1e), to(#1e1e1e));
-  background-image: -webkit-linear-gradient(top, #1e1e1e, #1e1e1e);
-  background-image: -o-linear-gradient(top, #1e1e1e, #1e1e1e);
-  background-image: linear-gradient(top, #1e1e1e, #1e1e1e);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjMUUxRTFFIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjMUUxRTFFIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #1E1E1E, #1E1E1E);
+  background-image: -ms-linear-gradient(top, #1E1E1E, #1E1E1E);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1E1E1E), to(#1E1E1E));
+  background-image: -webkit-linear-gradient(top, #1E1E1E, #1E1E1E);
+  background-image: -o-linear-gradient(top, #1E1E1E, #1E1E1E);
+  background-image: linear-gradient(top, #1E1E1E, #1E1E1E);
   background-repeat: repeat-x;
 }
 #mail-display .et2_toolbar #toolbar-actionlist button[id*="toolbar-composeasnew"]:hover,
@@ -1489,7 +1489,7 @@ body {
 #mail-display .mailDisplayAttachments {
   max-height: 12%;
   position: fixed;
-  border: 0px solid #560ead;
+  border: 0px solid #560EAD;
   border-bottom: 0px;
   opacity: 1;
   -moz-opacity: 1;
@@ -1506,16 +1506,16 @@ body {
 * et2_toolbar
 */
 .et2_toolbar-dropdown {
-  background: #e6e6e6 !important;
-  background-color: #e6e6e6 !important;
+  background: #E6E6E6 !important;
+  background-color: #E6E6E6 !important;
 }
 .et2_toolbar-dropdown button {
-  background: #e6e6e6 !important;
-  background-color: #e6e6e6 !important;
+  background: #E6E6E6 !important;
+  background-color: #E6E6E6 !important;
 }
 .et2_toolbar-dropdown-menulist button {
-  background: #e6e6e6 !important;
-  background-color: #e6e6e6 !important;
+  background: #E6E6E6 !important;
+  background-color: #E6E6E6 !important;
 }
 div.ui-toolbar-menulist {
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -1525,7 +1525,7 @@ div.ui-toolbar-menulist {
   margin: 0;
 }
 .ui-toolbar-menulist div {
-  background-color: #e6e6e6 !important;
+  background-color: #E6E6E6 !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
 .et2_toolbar_actionlist .et2_toolbar-dropdown {
@@ -1549,8 +1549,8 @@ div.ui-toolbar-menulist {
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-  background: #e6e6e6 !important;
-  background-color: #e6e6e6 !important;
+  background: #E6E6E6 !important;
+  background-color: #E6E6E6 !important;
 }
 .et2_toolbar_actionlist .et2_toolbar-dropdown .et2_dropdown button img {
   width: 16px;
@@ -1606,13 +1606,13 @@ div#displayToolbar-menulist img {
 #mail-subscribe .selectedTreeRow_lor,
 #mail-folder_management .selectedTreeRow_lor {
   background-color: #ffc200;
-  color: #1e1e1e;
+  color: #1E1E1E;
   text-decoration: none;
 }
 #mail-subscribe .standartTreeRow_lor,
 #mail-folder_management .standartTreeRow_lor {
   background-color: rgba(103, 159, 210, 0.2);
-  color: #1e1e1e;
+  color: #1E1E1E;
   text-decoration: none;
 }
 .mail_subscription_header,
@@ -2142,75 +2142,81 @@ input[type=button] {
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:focus,
 #mail-index_toolbar button[id*="toolbar-delete"]:focus {
+  background-color: #AE1D00;
   background-color: #ae1d00;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
-  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -ms-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#AE1D00), to(#AE1D00));
+  background-image: -webkit-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: linear-gradient(top, #AE1D00, #AE1D00);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:focus img[src$="svg"],
 #mail-index_toolbar button[id*="toolbar-delete"]:focus img[src$="svg"] {
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
-  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: linear-gradient(top, #ae1d00, #ae1d00);
-  background-repeat: repeat-x;
   background-color: #ae1d00;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -ms-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#AE1D00), to(#AE1D00));
+  background-image: -webkit-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: linear-gradient(top, #AE1D00, #AE1D00);
+  background-repeat: repeat-x;
+  background-color: #AE1D00;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:hover,
 #mail-index_toolbar button[id*="toolbar-delete"]:hover {
+  background-color: #AE1D00;
   background-color: #ae1d00;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
-  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -ms-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#AE1D00), to(#AE1D00));
+  background-image: -webkit-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: linear-gradient(top, #AE1D00, #AE1D00);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:hover img[src$="svg"],
 #mail-index_toolbar button[id*="toolbar-delete"]:hover img[src$="svg"] {
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
-  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: linear-gradient(top, #ae1d00, #ae1d00);
-  background-repeat: repeat-x;
   background-color: #ae1d00;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -ms-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#AE1D00), to(#AE1D00));
+  background-image: -webkit-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: linear-gradient(top, #AE1D00, #AE1D00);
+  background-repeat: repeat-x;
+  background-color: #AE1D00;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:active,
 #mail-index_toolbar button[id*="toolbar-delete"]:active {
+  background-color: #AE1D00;
   background-color: #ae1d00;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
-  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: linear-gradient(top, #ae1d00, #ae1d00);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -ms-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#AE1D00), to(#AE1D00));
+  background-image: -webkit-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: linear-gradient(top, #AE1D00, #AE1D00);
   background-repeat: repeat-x;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:active img[src$="svg"],
 #mail-index_toolbar button[id*="toolbar-delete"]:active img[src$="svg"] {
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjYWUxZDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
-  background-image: -moz-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -ms-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ae1d00), to(#ae1d00));
-  background-image: -webkit-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: -o-linear-gradient(top, #ae1d00, #ae1d00);
-  background-image: linear-gradient(top, #ae1d00, #ae1d00);
-  background-repeat: repeat-x;
   background-color: #ae1d00;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzc0MyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjAiLz48c3RvcCBzdG9wLWNvbG9yPSIjQUUxRDAwIiBvZmZzZXQ9IjEiLz48L2xpbmVhckdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZzc0MykiLz48L3N2Zz4=);
+  background-image: -moz-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -ms-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#AE1D00), to(#AE1D00));
+  background-image: -webkit-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
+  background-image: linear-gradient(top, #AE1D00, #AE1D00);
+  background-repeat: repeat-x;
+  background-color: #AE1D00;
 }
 #mail-index_toolbar button[id*="toolbar-infolog"]:focus,
 #mail-index_toolbar button[id*="toolbar-tracker"]:focus,
@@ -2341,7 +2347,7 @@ div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
 }
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;
-  border-color: #e6e6e6;
+  border-color: #E6E6E6;
   border: 1px solid rgba(0, 0, 0, 0.15);
   max-height: 3.6em;
 }

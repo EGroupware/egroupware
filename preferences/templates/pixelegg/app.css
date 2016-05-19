@@ -18,7 +18,7 @@
  * @package preferences
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id: app.css 52139 2015-03-16 10:28:46Z hnategh $
+ * @version $Id$
  */
 table.prefTable {
   width: 100%;
@@ -108,13 +108,13 @@ tr.prefRow > td {
 }
 .prefHelp {
   position: fixed;
-  background-color: #e6e6e6;
+  background-color: #E6E6E6;
   /*border-radius: 10px;*/
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   /*        .border_normal;*/
-  border: 3px solid #679fd2;
+  border: 3px solid #679FD2;
   -webkit-border-top-right-radius: 0px;
   -webkit-border-bottom-right-radius: 15px;
   -webkit-border-bottom-left-radius: 15px;
