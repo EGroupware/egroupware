@@ -682,6 +682,25 @@ class addressbook_ui extends addressbook_bo
 				'hideOnMobile' => true
 			);
 		}
+
+		$actions['geolocation'] = array(
+			'caption' => 'GeoLocation',
+			'icon' => 'map',
+			//'enabled' => 'javaScript:app.addressbook.geoLocation',
+			'group' => ++$group,
+			'children' => array (
+				'private' => array(
+					'caption' => 'Private Address',
+					'enabled' => 'javaScript:app.addressbook.geoLocation_enabled',
+					'onExecute' => 'javaScript:app.addressbook.geoLocationExec'
+				),
+				'business' => array(
+					'caption' => 'Buisness Address',
+					'enabled' => 'javaScript:app.addressbook.geoLocation_enabled',
+					'onExecute' => 'javaScript:app.addressbook.geoLocationExec'
+				)
+			)
+		);
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
 		$exception = Api\Storage\Merge::is_export_limit_excepted();
 		if ((isset($GLOBALS['egw_info']['user']['apps']['admin']) || $exception)  || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])

@@ -526,7 +526,11 @@ class addressbook_hooks
 			$repositories['ldap'] = 'LDAP';
 			$repositories['sql-ldap'] = 'SQL --> LDAP ('.lang('read only').')';
 		}
-
+		// geolocation pre-defined maps
+		$geoLocation = array(
+			array('id' => 'http://maps.google.com/?q=%s+%t+%z+%c', 'label' => 'Google Maps'),
+			array('id' => 'https://www.bing.com/maps/?q=%s+%t+%z+%c', 'label' => 'Bing Maps')
+		);
 		$ret = array(
 			'sel_options' => array(
 				'own_account_acl' => $own_account_acl,
@@ -534,6 +538,7 @@ class addressbook_hooks
 				'copy_fields' => $copy_fields,
 				'fileas' => $bocontacts->fileas_options(),
 				'contact_repository' => $repositories,
+				'geolocation_url' => $geoLocation
 			),
 		);
 		return $ret;

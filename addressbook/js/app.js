@@ -912,5 +912,74 @@ app.classes.addressbook = AppJS.extend(
 	{
 		var widget = this.et2.getWidgetById('n_fn');
 		if(widget) return widget.options.value;
+	},
+
+	/**
+	 * Enable/Disable geolocation action items in contextmenu base on address availabilty
+	 *
+	 * @param {action object} egw action
+	 * @param {object} selected action row
+	 *
+	 * @returns {boolean} return false if no address found
+	 */
+	geoLocation_enabled: function(_action, _selected)
+	{
+		var content = egw.dataGetUIDdata(_selected[0].id);
+		return this.geoLocationUrl(content.data,_action.id === 'business'?'one':'two');
+	},
+
+	/**
+	 * Generate a geo location URL based on geolocation_url in
+	 * site configuration
+	 *
+	 * @param {object} _data
+	 * @param {string} _type type of address, it can be either 'one' as business
+	 *	or 'two' as private address.
+	 *
+	 * @returns {Boolean|string} return url and return false if no address
+	 */
+	geoLocationUrl: function (_data, _type)
+	{
+		var type = _type || 'one';
+		var url = egw.config('geolocation_url');
+		if (url) url = url[0];
+
+		// exit if no url or invalide url given
+		if (!url || typeof url === 'undefined' || typeof url !== 'string')
+		{
+			egw.debug('warn','no url or invalid url given as geoLocationUrl');
+			return false;
+		}
+
+		// array of placeholders with their representing values
+		var ph = [
+			{id:'s',val:_data['adr_'+type+'_street']},
+			{id:'t',val:_data['adr_'+type+'_locality']},
+			{id:'c',val:_data['adr_'+type+'_countrycode']},
+			{id:'z',val:_data['adr_'+type+'_postalcode']}
+		];
+		var empty = true;
+
+		// Replcae placeholders with acctual values
+		for (var i=0;i < ph.length; i++)
+		{
+			empty = ph[i]['val']? false : true;
+			url = url.replace('%'+ph[i]['id'], ph[i]['val']? ph[i]['val'] : "");
+		}
+
+		return (url !== '' && !empty ? url:false);
+	},
+
+	/**
+	 * Open a popup base on selected address in provided map
+	 *
+	 * @param {object} _action
+	 * @param {object} _selected
+	 */
+	geoLocationExec: function (_action, _selected)
+	{
+		var content = egw.dataGetUIDdata(_selected[0].id);
+		var url = this.geoLocationUrl(content.data,_action.id === 'business'?'one':'two');
+		window.open(url,'_blank');
 	}
 });
