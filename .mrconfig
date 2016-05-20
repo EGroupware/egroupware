@@ -6,9 +6,12 @@
 [DEFAULT]
 git_update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null || true
 jobs = 5
+git_tag = git stash -q || true ; git tag -a $1 -m "$2" ; git push ; git stash pop -q 2>/dev/null || true
+svn_tag = svn copy -m "$2" $(svn info|grep ^URL|cut -f 2 -d ' ') $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "s:/(branches/[0-9.]+|trunk)/.*$:/tags/$1/:")
 
 [phpgwapi/js/ckeditor]
 checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
+skip = [ $1 = "tag" ]
 
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
@@ -74,3 +77,6 @@ chain = true
 
 #[esyncpro]
 #checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/esyncpro
+
+#[archive]
+#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/trunk/archive
