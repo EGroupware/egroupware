@@ -23,16 +23,17 @@ $config = array(
 	'packaging' => date('Ymd'), // '20160520'
 	'branch'  => '14.2',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
-	'egwdir' => 'egroupware',
 	'checkoutdir' => realpath(__DIR__.'/../..'),
 	'egw_buildroot' => '/tmp/build_root/epl_14.2_buildroot',
 	'sourcedir' => '/home/download/stylite-epl/egroupware-epl-14.2',
+	/* svn-config currently not used, as we use .mrconfig to define modules and urls
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
 	'stylitebase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
 	'svnbranch' => 'branches/14.2',         //'trunk', // 'branches/1.6' or 'tags/1.6.001'
 	'svnalias' => 'aliases/default-ssh',    // default alias
-	'aliasdir' => 'egroupware',             // directory created by the alias
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
+	*/
+	'aliasdir' => 'egroupware',             // directory created by the alias
 	'types' => array('tar.bz2','tar.gz','zip'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),
@@ -148,7 +149,7 @@ foreach(array_diff($config['run'],$config['skip']) as $func)
 /**
  * Read changelog for given branch from (last) tag or given revision from svn
  *
- * @param string $_path relativ path to repo
+ * @param string $_path relativ path to repo starting with $config['aliasdir']
  * @param string $log_pattern =null	a preg regular expression or start of line a log message must match, to be returned
  * 	if regular perl regular expression given only first expression in brackets \\1 is used,
  * 	for a start of line match, only the first line is used, otherwise whole message is used
@@ -161,8 +162,8 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
 	//echo __FUNCTION__."('$branch_url','$log_pattern','$revision','$prefix')\n";
 	global $config;
 
-	$path = $config['checkoutdir'].($_path ? '/'.$_path : '');
-	if (!file_exists($path) || !is_dir($path) || file_exists($path.'/.git'))
+	$path = str_replace($config['aliasdir'], $config['checkoutdir'], $_path);
+	if (!file_exists($path) || !is_dir($path) || !file_exists($path.'/.git'))
 	{
 		throw new Exception("$path is not a git repository!");
 	}
@@ -172,13 +173,14 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
 	}
 
 	$cmd = $config['git'].' log '.escapeshellarg($last_tag.'..HEAD');
+	if (getcwd() != $path) $cmd = 'cd '.$path.'; '.$cmd;
 	$output = null;
 	run_cmd($cmd, $output);
 
 	$changelog = '';
-	foreach(explode("\n", $output) as $line)
+	foreach($output as $line)
 	{
-		if (($msg = _match_log_pattern(substr($line, 4), $log_pattern, $prefix)))
+		if (substr($line, 0, 4) == "    " && ($msg = _match_log_pattern(substr($line, 4), $log_pattern, $prefix)))
 		{
 			$changelog .= $msg."\n";
 		}
@@ -187,13 +189,22 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
 }
 
 /**
- * Get module name per svn repro
+ * Get module path (starting with $config['aliasdir']) per repo from .mrconfig for svn and git
  *
- * @return array with $repro_url => $path => $url
+ * @return array with $repro_url => $path => $url, eg. array(
+ *		"git@github.com:EGroupware/egroupware.git" => array(
+ *			"egroupware" => "git@github.com:EGroupware/egroupware.git"),
+ *		"git@github.com:EGroupware/tracker.git" => array(
+ *			"egroupware/tracker" => "git@github.com:EGroupware/tracker.git"),
+ *		"svn+ssh://stylite@svn.stylite.de/stylite" => array(
+ *			"egroupware/stylite] => svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/stylite",
+ *			"egroupware/esyncpro] => svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/esyncpro",
  */
-function get_modules_per_repro()
+function get_modules_per_repo()
 {
 	global $config, $verbose;
+
+	if ($verbose) echo "Get modules from .mrconfig in checkoutdir $config[checkoutdir]\n";
 
 	if (!is_dir($config['checkoutdir']))
 	{
@@ -208,7 +219,7 @@ function get_modules_per_repro()
 	foreach(explode("\n", $mrconfig) as $line)
 	{
 		$matches = null;
-		if ($line[0] == '[' || preg_match('/^\[([^]]*)\]$', $line, $matches))
+		if ($line && $line[0] == '[' && preg_match('/^\[([^]]*)\]/', $line, $matches))
 		{
 			if (in_array($matches[1], array('DEFAULT', 'api/js/ckeditor', 'phpgwapi/js/ckeditor')))
 			{
@@ -217,17 +228,16 @@ function get_modules_per_repro()
 			}
 			$module = (string)$matches[1];
 		}
-		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git clone (-b [0-9.]+) (git[^ ]+)|svn checkout ((svn|http)[^ ]+)/', $line, $matches))
+		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git clone (-b [0-9.]+)? (git[^ ]+)|svn checkout ((svn|http)[^ ]+))/', $line, $matches))
 		{
-			$repo = $matches[2];
-			if (substr($matches[1], 0, 3) == 'svn') $repo = preg_replace('|/[^/]+$|', '', $repo);
-			$modules[$repo][$module] = $matches[2];
+			$repo = $url = substr($matches[1], 0, 3) == 'svn' ? $matches[4] : $matches[3];
+			if (substr($matches[1], 0, 3) == 'svn') $repo = preg_replace('#/(trunk|branches)/.*$#', '', $repo);
+			$modules[$repo][$config['aliasdir'].($module ? '/'.$module : '')] = $url;
 		}
 	}
 	if ($verbose) print_r($modules);
 	return $modules;
 }
-
 
 /**
  * Get commit of last git tag matching a given pattern
@@ -355,34 +365,25 @@ function do_editchangelog()
 {
 	global $config,$svn;
 
-	echo "Querying changelog from SVN\n";
+	echo "Querying changelog from Git/SVN\n";
 	if (!isset($config['modules']))
 	{
-		get_modules_per_repro();
+		$config['modules'] = get_modules_per_repo();
 	}
 	// query changelog per repo
 	$changelog = '';
-	foreach($config['modules'] as /*$repo =>*/ $modules)
+	$last_tag = null;
+	foreach($config['modules'] as $branch_url => $modules)
 	{
-		$branch_url = '';
-		$revision = $last_tag = null;
-		foreach($modules as $path => $url)
+		$revision = null;
+		if (substr($branch_url, -4) == '.git')
 		{
-			$module = basename($path);
-			$burl = substr($url,0,-strlen($module)-1);
-			if (empty($branch_url) || $burl != $branch_url)
-			{
-				if (empty($branch_url)) $url = $branch_url = $burl;
-				//if (count($config['modules']) > 1) $changelog .= $url."\n";
-				if (substr($url, 0, 3) == 'git')
-				{
-					$changelog .= get_changelog_from_git($path, $config['editchangelog'], $last_tag);
-				}
-				else
-				{
-					$changelog .= get_changelog_from_svn($url, $config['editchangelog'], $revision);
-				}
-			}
+			list($path) = each($modules);
+			$changelog .= get_changelog_from_git($path, $config['editchangelog'], $last_tag);
+		}
+		else
+		{
+			$changelog .= get_changelog_from_svn($branch_url, $config['editchangelog'], $revision);
 		}
 	}
 	$logfile = tempnam('/tmp','checkout-build-archives');
@@ -490,7 +491,7 @@ function _match_log_pattern($msg, $log_pattern, $prefix='* ')
 	}
 	elseif($log_pattern)
 	{
-		$msg = null;
+		return null;
 	}
 	if ($prefix_len && substr($msg,0,$prefix_len) != $prefix) $msg = $prefix.$msg;
 
@@ -844,7 +845,7 @@ function do_svncheckout()
 	{
 		if (!isset($config['modules']))
 		{
-			get_modules_per_repro();
+			get_modules_per_repo();
 		}
 		$config['svntag'] = config_translate('svntag');	// in case svntag command did not run, translate tag name
 
@@ -924,11 +925,14 @@ function do_svncheckout()
 }
 
 /**
- * Get module name per svn repro
+ * Get module path per svn repo from our config
  *
- * @return array with $repro_url => array(module1, ..., moduleN) pairs
+ * @return array with $repro_url => $path => $url, eg. array(
+ *		"svn+ssh://svn@dev.egroupware.org/egroupware" => array(
+ *			"egroupware" => "svn+ssh://svn@dev.egroupware.org/egroupware/branches/14.2/egroupware",
+ *			"egroupware/addressbook" => "svn+ssh://svn@dev.egroupware.org/egroupware/branches/14.2/addressbook",
  */
-function get_modules_per_svn_repro()
+function get_modules_per_svn_repo()
 {
 	global $config,$svn,$verbose;
 
@@ -963,6 +967,7 @@ function get_modules_per_svn_repro()
 		if ($repo == 'http://svn.egroupware.org/egroupware') $repo = 'svn+ssh://svn@dev.egroupware.org/egroupware';
 		$config['modules'][$repo][$config['aliasdir'].'/'.$module] = $url;
 	}
+	if ($verbose) print_r($config['modules']);
 	return $config['modules'];
 }
 
@@ -980,7 +985,7 @@ function do_svntag()
 	echo "Creating SVN tag $config[svntag]\n";
 	if (!isset($config['modules']))
 	{
-		get_modules_per_repro();
+		get_modules_per_repo();
 	}
 	// create tags (per repo)
 	foreach($config['modules'] as $repo => $modules)
@@ -994,7 +999,7 @@ function do_svntag()
  * Runs given shell command, exists with error-code after echoing the output of the failed command (if not already running verbose)
  *
  * @param string $cmd
- * @param array &$output=null $output of command, only if !$verbose !!!
+ * @param array& $output=null $output of command, only if !$verbose !!!
  * @param int|array $no_bailout =null exit code(s) to NOT bail out
  * @return int exit code of $cmd
  */
@@ -1002,7 +1007,7 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 {
 	global $verbose;
 
-	if ($verbose)
+	if ($verbose && func_num_args() == 1)
 	{
 		echo $cmd."\n";
 		$ret = null;
@@ -1012,6 +1017,7 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 	{
 		$output[] = $cmd;
 		exec($cmd,$output,$ret);
+		if ($verbose) echo implode("\n",$output)."\n";
 	}
 	if ($ret && !in_array($ret,(array)$no_bailout))
 	{
