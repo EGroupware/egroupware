@@ -571,7 +571,7 @@ function do_obs($only_update_changelog=false)
 		if (basename(dirname($path)) == '.osc' ||
 			!preg_match('/\/('.preg_quote($config['packagename']).
 				($config['obs_package_alias'] ? '|'.preg_quote($config['obs_package_alias']) : '').
-				')[a-z-]*-('.preg_quote($config['version']).'|trunk)/',$path))
+				')[a-z-]*-('.preg_quote($config['version']).'|14.2|trunk)/',$path))
 		{
 			continue;
 		}
@@ -646,7 +646,7 @@ function parse_current_changelog()
 {
 	global $config;
 
-	$changelog = file_get_contents(__DIR__.'/debian.changes');
+	$changelog = file_get_contents($config['checkoutdir'].'/doc/rpm-build/debian.changes');
 	$lines = explode("\n", $changelog, 100);
 	foreach($lines as $n => $line)
 	{
