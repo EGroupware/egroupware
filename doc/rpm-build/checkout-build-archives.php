@@ -317,6 +317,10 @@ function do_release()
 {
 	global $config,$verbose;
 
+	// push local changes to Github incl. tags
+	run_cmp($config['git'].' push');	// regular commits like changelog
+	run_cmd($config['mr']. ' push origin '.config_translate($config['tag']));	// pushing tags in all apps
+
 	$target = config_translate('release');	// allow to use config vars like $svnbranch in module
 	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
 	if ($verbose) echo $cmd."\n";
@@ -402,20 +406,22 @@ function do_editchangelog()
 		die("\nChangelog must not be empty --> aborting\n\n");
 	}
 	// commit changelog
-	$changelog = $config['checkoutdir'].'doc/rpm-build/debian.changes';
-	if (file_exists($changelog))
+	$changelog = $config['checkoutdir'].'/doc/rpm-build/debian.changes';
+	if (!file_exists($changelog))
 	{
-		file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
-		if (file_exist($config['checkoutdir'].'/.git'))
-		{
-			$cmd = $config['git']." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
-		}
-		else
-		{
-			$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
-		}
-		run_cmd($cmd);
+		throw new Exception("Changelog '$changelog' not found!");
 	}
+	file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
+	if (file_exist($config['checkoutdir'].'/.git'))
+	{
+		$cmd = $config['git']." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+	}
+	else
+	{
+		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+	}
+	run_cmd($cmd);
+
 	// update obs changelogs (so all changlogs are updated in case of a later error and changelog step can be skiped)
 	do_obs(true);	// true: only update debian.changes in obs checkouts
 }
@@ -1090,6 +1096,7 @@ function usage($error=null)
 
 	echo "Usage: $prog [-h|--help] [-v|--verbose] [options, ...]\n\n";
 	echo "options and their defaults:\n";
+	unset($config['modules']);	// they give an error, because of nested array and are quite lengthy
 	foreach($config as $name => $default)
 	{
 		if (is_array($default)) $default = implode(' ',$default);
