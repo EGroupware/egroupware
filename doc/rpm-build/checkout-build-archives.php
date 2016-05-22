@@ -33,6 +33,7 @@ $config = array(
 	'svnalias' => 'aliases/default-ssh',    // default alias
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	*/
+	'extra' => array('stylite', 'esyncpro', 'archive'),	// create an extra archive for given apps
 	'aliasdir' => 'egroupware',             // directory created by the alias
 	'types' => array('tar.bz2','tar.gz','zip'),
 	// diverse binaries we need
