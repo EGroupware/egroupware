@@ -50,7 +50,7 @@ $config = array(
 	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs' : '',
 	'after-checkout' => 'rm -rf */source */templates/*/source pixelegg/content-element-library',
 	'packager' => 'build@stylite.de',
-	'obs' => './obs',
+	'obs' => '/home/stylite/obs/stylite-epl',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
@@ -412,7 +412,7 @@ function do_editchangelog()
 		throw new Exception("Changelog '$changelog' not found!");
 	}
 	file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
-	if (file_exist($config['checkoutdir'].'/.git'))
+	if (file_exists($config['checkoutdir'].'/.git'))
 	{
 		$cmd = $config['git']." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
 	}
