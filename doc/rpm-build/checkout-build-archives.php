@@ -59,7 +59,7 @@ $config = array(
 	'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	'copychangelog' => '$sourcedir/README', //'$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
-	'run' => array('checkout','editchangelog','tag','checkout','copy','virusscan','create','sign','obs','copychangelog'),
+	'run' => array('checkout','editchangelog','tag','copy','virusscan','create','sign','obs','copychangelog'),
 	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
 );
 
@@ -797,16 +797,34 @@ function do_virusscan()
 }
 
 /**
- * Copy non .svn parts to egw_buildroot and fix permissions and ownership
+ * Copy non .svn/.git parts to egw_buildroot and fix permissions and ownership
+ *
+ * We need to stash local modifications (currently only in egroupware main module) to revert eg. .mrconfig modifications
  */
 function do_copy()
 {
 	global $config;
 
 	// copy everything, but .svn dirs from checkoutdir to egw_buildroot
-	echo "Copying non-svn dirs to buildroot\n";
-	$cmd = '/usr/bin/rsync -r --delete --exclude .svn --exclude .git '.$config['checkoutdir'].'/'.$config['aliasdir'].' '.$config['egw_buildroot'];
-	run_cmd($cmd);
+	echo "Copying non-svn/git dirs to buildroot\n";
+
+	if (!file_exists($config['egw_buildroot']))
+	{
+		run_cmd("mkdir -p $config[egw_buildroot]");
+	}
+
+	// we need to stash uncommited changes like .mrconfig, before copying
+	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("cd $config[checkoutdir]; git stash");
+
+	try {
+		$cmd = '/usr/bin/rsync -r --delete --exclude .svn --exclude .git '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
+		run_cmd($cmd);
+	}
+	catch (Exception $e) {
+		// catch failures to pop stash, before throwing exception
+	}
+	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("git stash pop");
+	if (isset($e)) throw $e;
 
 	if (($cmd = config_translate('patchCmd')) && $cmd[0] != '#')
 	{
@@ -817,7 +835,7 @@ function do_copy()
 	echo "Fixing permissions\n";
 	chdir($config['egw_buildroot'].'/'.$config['aliasdir']);
 	run_cmd('/bin/chmod -R a-x,u=rwX,g=rX,o=rX .');
-	run_cmd('/bin/chmod +x */*cli.php phpgwapi/cron/*.php svn-helper.php doc/rpm-build/*.php');
+	run_cmd('/bin/chmod +x */*cli.php phpgwapi/cron/*.php doc/rpm-build/*.php');
 }
 
 /**
