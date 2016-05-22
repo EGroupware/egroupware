@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 14.3.20151012
+Version: 14.3.20160522
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -60,7 +60,7 @@ Prefix: /usr/share
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
 	%define distribution Fedora Core %{?fedora_version}
-	%define extra_requires httpd php-mysql php-xml php-tidy php-posix
+	%define extra_requires httpd php-mysqli php-xml php-tidy php-posix
 %endif
 %if 0%{?mandriva_version}
 	%define osversion %{?mandriva_version}
@@ -73,12 +73,12 @@ Prefix: /usr/share
 %if 0%{?rhel_version}
 	%define osversion %{?rhel_version}
 	%define distribution Red Hat %{?rhel_version}
-	%define extra_requires httpd php-mysql php-xml php-tidy php-posix
+	%define extra_requires httpd php-mysqli php-xml php-tidy php-posix
 %endif
 %if 0%{?centos_version}
 	%define osversion %{?centos_version}
 	%define distribution CentOS %{?centos_version}
-	%define extra_requires httpd php-mysql php-xml php-tidy php-posix
+	%define extra_requires httpd php-mysqli php-xml php-tidy php-posix
 %endif
 
 Distribution: %{distribution}
@@ -108,7 +108,6 @@ Requires: %{name}-jdots           = %{version}
 Requires: %{name}-esync           = %{version}
 Requires: %{name}-bookmarks       = %{version}
 Requires: %{name}-calendar        = %{version}
-Requires: %{name}-developer_tools = %{version}
 Requires: %{name}-emailadmin      = %{version}
 Requires: %{name}-filemanager     = %{version}
 Requires: %{name}-infolog         = %{version}
@@ -170,6 +169,7 @@ Obsoletes: %{egw_packagename}-polls
 Obsoletes: %{name}-egw-pear
 # packages no longer in 14.3
 Obsoletes: %{name}-manual
+Obsoletes: %{name}-developer_tools
 
 %post
 # Check binary paths and create links for opensuse/sles
@@ -267,17 +267,6 @@ Obsoletes: %{egw_packagename}-calendar
 %description calendar
 Powerful calendar with meeting request system, Alarms, ICal and E-Mail support,
 and ACL security.
-
-%package developer_tools
-Version: %{version}
-Summary: The EGroupware developer_tools application
-Group: Web/Database
-AutoReqProv: no
-Requires: egw-core >= %{version}
-Obsoletes: %{egw_packagename}-developer_tools
-%description developer_tools
-The TranslationTools allow to create and extend translations-files for EGroupware.
-They can search the sources for new / added phrases and show you the ones missing in your language.
 
 %package emailadmin
 Version: %{version}
@@ -574,8 +563,8 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/rpc.php
 %{egwdir}/share.php
 %{egwdir}/status.php
-%{egwdir}/svn-helper.php
 %{egwdir}/groupdav.php
+%{egwdir}/README.md
 %{egwdir}/groupdav.htaccess
 %{egwdir}/webdav.php
 %{egwdir}/addressbook
@@ -619,10 +608,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %%files calendar
 %defattr(-,root,root)
 %{egwdir}/calendar
-
-%files developer_tools
-%defattr(-,root,root)
-%{egwdir}/developer_tools
 
 %files emailadmin
 %defattr(-,root,root)
