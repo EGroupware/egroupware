@@ -402,11 +402,18 @@ function do_editchangelog()
 		die("\nChangelog must not be empty --> aborting\n\n");
 	}
 	// commit changelog
-	$changelog = __DIR__.'/debian.changes';
+	$changelog = $config['checkoutdir'].'doc/rpm-build/debian.changes';
 	if (file_exists($changelog))
 	{
 		file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
-		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+		if (file_exist($config['checkoutdir'].'/.git'))
+		{
+			$cmd = $config['git']." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+		}
+		else
+		{
+			$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+		}
 		run_cmd($cmd);
 	}
 	// update obs changelogs (so all changlogs are updated in case of a later error and changelog step can be skiped)
