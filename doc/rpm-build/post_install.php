@@ -727,7 +727,7 @@ function _ucr_secret($name)
  */
 function check_fix_php_apc_ini()
 {
-	if (extension_loaded('apc'))
+	if (extension_loaded('apc') || extension_loaded('apcu'))
 	{
 		$shm_size = ini_get('apc.shm_size');
 		$shm_segments = ini_get('apc.shm_segments');
