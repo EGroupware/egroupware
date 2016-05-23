@@ -102,7 +102,8 @@ abstract class Framework extends Framework\Extra
 	{
 		// we prefer Pixelegg template, if it is available
 		if (file_exists(EGW_SERVER_ROOT.'/pixelegg') &&
-			(Header\UserAgent::mobile() || $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile' ||
+			(empty($GLOBALS['egw_info']['flags']['deny_mobile']) && Header\UserAgent::mobile() ||
+			$GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile' ||
 			empty($GLOBALS['egw_info']['server']['template_set'])))
 		{
 			$GLOBALS['egw_info']['server']['template_set'] = 'pixelegg';
