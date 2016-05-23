@@ -6735,8 +6735,8 @@ span.egw_tutorial_title {
  *
  * Mobile FW - Applications colors
  *
- * Please do NOT change app.css directly, instead change app.less and compile it!
- * Pixleegg Template app.css
+ * Please do NOT change *.css directly, instead change *.less and compile it!
+ *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Hadi Nategh <hn@stylite.de>
@@ -7738,7 +7738,7 @@ form[id^="tracker-"] .dialogHeadbar {
     padding-top: 60px !important;
     padding-left: 8px;
     padding-right: 8px;
-    overflow-x: hidden;
+    overflow-x: auto;
     /* Exceptional cases to not get the general left padding*/
   }
   body .popupMainDiv * {
