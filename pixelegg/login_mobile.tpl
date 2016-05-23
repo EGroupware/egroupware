@@ -31,7 +31,6 @@
                 <!-- END language_select -->
                 <!-- BEGIN domain_selection -->
                 <tr>
-                    <td align="right">{lang_domain}:&nbsp;</td>
                     <td>{select_domain}</td>
                 </tr>
                 <!-- END domain_selection -->
