@@ -3,18 +3,13 @@ egroupware-epl (14.3.20160522) hardy; urgency=low
   * First release build with sources from Github
   * All applications: Fix file upload from file_selection dialog not working in IE and Safari
   * Mail: Fix emails with single quote in local address not getting parsed correctly  (eg. test.o'test@example.com)
-
- -- Ralf Becker <rb@stylite.de>  Sun, 22 May 2016 11:45:23 +0200
-
-egroupware-epl (14.3.20160612) hardy; urgency=low
-
   * TranslationTools: move remaining code from developer_tools directory to etemplate
   * Mail/Addressbook/Calendar: add and use charset when sending/receiving mails with vCard/iCals, change default vCard charset preference to utf-8
   * Import/Export: Fix export with multi-select customfields does not work
   * Addressbook: adding "Lastname, Firstname (birthday)" as fileas and link-title
   * Preferences/CKEditor: Remove unsupported skins from CKEditor
 
- -- Ralf Becker <rb@stylite.de>  Thu, 12 May 2016 00:00:00 +0200
+ -- Ralf Becker <rb@stylite.de>  Sun, 22 May 2016 11:45:23 +0200
 
 egroupware-epl (14.3.20160428) hardy; urgency=low
 
