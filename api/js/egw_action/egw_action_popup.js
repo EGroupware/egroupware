@@ -273,7 +273,6 @@ function egwPopupActionImplementation()
 					// Enable onhold trigger till we define a better handler for tree contextmenu
 				//	return;
 				}
-				jQuery('.nm-mob-header .nm_action_header').toggleClass('back', _egw_active_menu);
 			}
 
 			//Obtain the event object
