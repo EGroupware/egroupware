@@ -1,3 +1,9 @@
+egroupware-epl (14.3.20160524) hardy; urgency=low
+
+  * Support for Ubuntu-16.04 with php 7.0.4
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 24 May 2016 18:02:52 +0200
+
 egroupware-epl (14.3.20160522) hardy; urgency=low
 
   * First release build with sources from Github
