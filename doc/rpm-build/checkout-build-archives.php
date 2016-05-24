@@ -27,6 +27,7 @@ $config = array(
 	'egw_buildroot' => '/tmp/build_root/epl_14.2_buildroot',
 	'sourcedir' => '/home/download/stylite-epl/egroupware-epl-14.2',
 	/* svn-config currently not used, as we use .mrconfig to define modules and urls
+	'svntag' => 'tags/$version.$packaging',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
 	'stylitebase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
 	'svnbranch' => 'branches/14.2',         //'trunk', // 'branches/1.6' or 'tags/1.6.001'
@@ -322,8 +323,10 @@ function do_release()
 
 	// push local changes to Github incl. tags
 	if ($verbose) echo "Pushing changes and tags\n";
-	run_cmp($config['git'].' push');	// regular commits like changelog
-	$tag = config_translate($config['tag']);
+	run_cmd($config['mr']. ' up');		// in case someone else pushed something
+	chdir($config['checkoutdir']);
+	run_cmd($config['git'].' push');	// regular commits like changelog
+	$tag = config_translate('tag');
 	run_cmd($config['mr']. ' push origin '.$tag);	// pushing tags in all apps
 
 	if (empty($config['github_user']) || empty($config['github_token']))
@@ -337,14 +340,17 @@ function do_release()
 	$data = array(
 		'tag_name' => $tag,
 		'name' => $tag,
+		'target_commitish' => $config['branch'],
 		'body' => $config['changelog'],
 	);
 	$response = github_api("/repos/EGroupware/egroupware/releases", $data);
+	$upload_url = preg_replace('/{\?[^}]+}$/', '', $response['upload_url']);	// remove {?name,label} template
 
-	$archives = $config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'*';
+	$archives = $config['sourcedir'].'/egroupware-epl-'.$config['version'].'.'.$config['packaging'].'*';
 
 	foreach(glob($archives) as $path)
 	{
+		$label = null;
 		if (substr($path, -4) == '.zip')
 		{
 			$content_type = 'application/zip';
@@ -360,13 +366,16 @@ function do_release()
 		elseif(substr($path, -10) == '.txt.asc')
 		{
 			$content_type = 'text/plain';
+			$label = 'Signed hashes of downloads';
 		}
 		else
 		{
 			continue;
 		}
-		github_api($response['upload_url'], array(
-			'name' => basename($path),
+		$name = basename($path);
+		github_api($upload_url, array(
+			'name' => $name,
+			'label' => isset($label) ? $label : $name,
 		), 'FILE', $path, $content_type);
 	}
 
@@ -401,7 +410,6 @@ function github_api($_url, $data, $method='POST', $upload=null, $content_type=nu
 	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($c, CURLOPT_USERAGENT, basename(__FILE__));
 	curl_setopt($c, CURLOPT_TIMEOUT, 240);
-	curl_setopt($c, CURLOPT_HEADER, true);
 	curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
 
 	switch($method)
@@ -412,7 +420,6 @@ function github_api($_url, $data, $method='POST', $upload=null, $content_type=nu
 			curl_setopt($c, CURLOPT_POSTFIELDS, $data);
 			break;
 		case 'GET':
-			curl_setopt($c, CURLOPT_GET, true);
 			if(count($data)) $url .= '?' . http_build_query($data);
 			break;
 		case 'FILE':
@@ -425,18 +432,20 @@ function github_api($_url, $data, $method='POST', $upload=null, $content_type=nu
 			throw new Exception(__FUNCTION__.": Unknown/unimplemented method=$method!");
 	}
 	curl_setopt($c, CURLOPT_URL, $url);
-	//curl_setopt($c, CURLOPT_SSL_VERIFYHOST, 0);
-	//curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
 
-	$short_data = strlen($data) > 100 ? substr($data, 0, 100).' ...' : $data;
-	if ($verbose) echo "Sending $method request to $url ".($method!='GET'?$short_data:'')."\n";
+	if (is_string($data)) $short_data = strlen($data) > 100 ? substr($data, 0, 100).' ...' : $data;
+	if ($verbose) echo "Sending $method request to $url ".(isset($short_data)&&$method!='GET'?$short_data:'')."\n";
 
 	if (($response = curl_exec($c)) === false)
 	{
-		throw new Exception("$method request to $url failed ".($method!='GET'?$short_data:''));
+		// run failed request again to display response including headers
+		curl_setopt($c, CURLOPT_HEADER, true);
+		curl_setopt($c, CURLOPT_RETURNTRANSFER, false);
+		curl_exec($c);
+		throw new Exception("$method request to $url failed ".(isset($short_data)&&$method!='GET'?$short_data:''));
 	}
 
-	if ($verbose) echo (strlen($response) > 100 ? substr($response, 0, 100).' ...' : $response)."\n";
+	if ($verbose) echo (strlen($response) > 200 ? substr($response, 0, 200).' ...' : $response)."\n";
 
 	curl_close($c);
 
@@ -1225,4 +1234,3 @@ function usage($error=null)
 	}
 	exit(0);
 }
-
