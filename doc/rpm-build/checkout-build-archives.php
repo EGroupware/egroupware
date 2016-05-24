@@ -323,6 +323,7 @@ function do_release()
 
 	// push local changes to Github incl. tags
 	if ($verbose) echo "Pushing changes and tags\n";
+	chdir($config['checkoutdir']);
 	run_cmd($config['mr']. ' up');		// in case someone else pushed something
 	chdir($config['checkoutdir']);
 	run_cmd($config['git'].' push');	// regular commits like changelog
@@ -346,7 +347,7 @@ function do_release()
 	$response = github_api("/repos/EGroupware/egroupware/releases", $data);
 	$upload_url = preg_replace('/{\?[^}]+}$/', '', $response['upload_url']);	// remove {?name,label} template
 
-	$archives = $config['sourcedir'].'/egroupware-epl-'.$config['version'].'.'.$config['packaging'].'*';
+	$archives = $config['sourcedir'].'/*egroupware-epl-'.$config['version'].'.'.$config['packaging'].'*';
 
 	foreach(glob($archives) as $path)
 	{
