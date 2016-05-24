@@ -364,7 +364,7 @@ function do_release()
 		{
 			$content_type = 'application/x-bzip2';
 		}
-		elseif(substr($path, -10) == '.txt.asc')
+		elseif(substr($path, -8) == '.txt.asc')
 		{
 			$content_type = 'text/plain';
 			$label = 'Signed hashes of downloads';
