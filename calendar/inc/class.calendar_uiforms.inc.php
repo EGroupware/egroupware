@@ -2787,6 +2787,20 @@ class calendar_uiforms extends calendar_ui
 			$event['participants'][$uid] = $status = calendar_so::combine_status($status,$q,$r);
 			$this->bo->set_status($event['id'],$uid,$status,$date,true);
 		}
+		else
+		{
+			// Group membership
+			foreach($event['participants'] as $id => $status)
+			{
+				if($GLOBALS['egw']->accounts->get_type($id) == 'g' && in_array($uid,$GLOBALS['egw']->accounts->members($id,true)))
+				{
+					calendar_so::split_status($event['participants'][$uid],$q,$r);
+					$event['participants'][$uid] = $status = calendar_so::combine_status($status,$q,$r);
+					$this->bo->set_status($event['id'],$uid,$status,$date,true);
+					break;
+				}
+			}
+		}
 
 		// Directly update stored data.  If event is still visible, it will
 		// be notified & update itself.
