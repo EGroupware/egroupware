@@ -723,12 +723,14 @@ app.classes.mail = AppJS.extend(
 	 *					{build_children, data_one, data, widget, line}
 	 *
 	 * @param {object} _dataElem includes data of the widget which need to be expand
+	 * @param {object} widget container of relevant template, default is this.et2
 	 *
 	 * @return _dataElem content of widgets
 	 */
-	url_email_expandOnClick: function (_expContent, _dataElem)
+	url_email_expandOnClick: function (_expContent, _dataElem, _et2)
 	{
 
+		var et2 = _et2 || this.et2;
 		for(var j = 0; j < _expContent.length; j++)
 		{
 			var field = _expContent[j] || [];
@@ -748,10 +750,10 @@ app.classes.mail = AppJS.extend(
 			}
 
 			// Disable whole box if there are none
-			var line = this.et2.getWidgetById(field.line);
+			var line = et2.getWidgetById(field.line);
 			if(line != null) line.set_disabled(content.length == 0);
 
-			var widget = this.et2.getWidgetById(field.widget);
+			var widget = et2.getWidgetById(field.widget);
 			if(widget == null) continue;
 			$j(widget.getDOMNode()).removeClass('visible');
 
@@ -5301,6 +5303,12 @@ app.classes.mail = AppJS.extend(
 			if (!content.ccaddress) $details.hide();
 
 			toolbar.set_actions(content.toolbar);
+
+			// Build expanded series of addresses
+			var expand_content = [
+				{build_children: true, data_one: 'toaddress', data: 'additionaltoaddress', widget: 'tohbox', line: 'headerTo'},
+			];
+			self.url_email_expandOnClick(expand_content, {data:content}, self.et2_view.widgetContainer);
 
 			// Request email body from server
 			iframe.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:id}));
