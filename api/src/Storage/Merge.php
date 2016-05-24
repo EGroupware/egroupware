@@ -1574,6 +1574,7 @@ abstract class Merge
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,$ext).'-').$ext;
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'content.xml');
+				$this->parse_html_styles = true;
 				break;
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
 				$mimetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';

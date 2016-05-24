@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
 	xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
 	xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
 	xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+	xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
 	xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
@@ -238,7 +239,14 @@
 		<text:p><xsl:apply-templates/></text:p>
 	</xsl:template>
 	<xsl:template match="ul[ancestor::office:spreadsheet]/li | ol[ancestor::office:spreadsheet]/li" >
-<text:tab-stop />&#8226; <xsl:value-of select="normalize-space()" /><text:line-break />
+		<text:tab-stop />&#8226; <xsl:value-of select="normalize-space()" /><text:line-break />
+	</xsl:template>
+
+	<!-- Avoid duplicate frame names, that doesn't work after LibreOffice v5.1-->
+	<xsl:template match="draw:frame/@draw:name">
+		<xsl:attribute name="draw:name">
+            <xsl:value-of select="concat(., '-', generate-id())"/>
+        </xsl:attribute>
 	</xsl:template>
 
 	<xsl:template match="li">
