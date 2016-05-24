@@ -2415,6 +2415,70 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
+     * Export events as vCalendar version 2.0 files (iCal)
+     *
+     * @param int|array $content numeric cal_id or submitted content from etempalte::exec
+     * @param boolean $return_error should an error-msg be returned or a regular page with it generated (default)
+     * @return string error-msg if $return_error
+     */
+    function export($content=0,$return_error=false)
+    {
+		$boical = new calendar_ical();
+		#error_log(__METHOD__.print_r($content,true));
+		if (is_numeric($cal_id = $content ? $content : $_REQUEST['cal_id']))
+		{
+			if (!($ical =& $boical->exportVCal(array($cal_id),'2.0','PUBLISH',false)))
+			{
+				$msg = lang('Permission denied');
+
+				if ($return_error) return $msg;
+			}
+			else
+			{
+				html::content_header('event.ics','text/calendar',bytes($ical));
+				echo $ical;
+				common::egw_exit();
+			}
+		}
+		if (is_array($content))
+		{
+			$events =& $this->bo->search(array(
+				'start' => $content['start'],
+				'end'   => $content['end'],
+				'enum_recuring' => false,
+				'daywise'       => false,
+				'owner'         => $this->owner,
+				'date_format'   => 'server',    // timestamp in server time for boical class
+			));
+			if (!$events)
+			{
+				$msg = lang('No events found');
+			}
+			else
+			{
+				$ical =& $boical->exportVCal($events,'2.0','PUBLISH',false);
+				html::content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
+				echo $ical;
+				common::egw_exit();
+			}
+		}
+		if (!is_array($content))
+		{
+			$content = array(
+				'start' => $this->bo->date2ts($_REQUEST['start'] ? $_REQUEST['start'] : $this->date),
+				'end'   => $this->bo->date2ts($_REQUEST['end'] ? $_REQUEST['end'] : $this->date),
+				'file'  => 'event.ics',
+				'version' => '2.0',
+			);
+		}
+		$content['msg'] = $msg;
+
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Export');
+		$etpl = new etemplate_new('calendar.export');
+		$etpl->exec('calendar.calendar_uiforms.export',$content);
+    }
+	
+	/**
 	 * Edit category ACL (admin only)
 	 *
 	 * @param array $_content
