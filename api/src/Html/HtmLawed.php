@@ -118,7 +118,13 @@ class HtmLawed
 		// we allow filtered style sections now throughout egroupware
 		/*if ($Config['hook_tag'] =="hl_email_tag_transform")*/ $styles = self::getStyles($html2check);
 		//error_log(__METHOD__.__LINE__.array2string($styles));
+		//error_log(__METHOD__.__LINE__.' Config:'.array2string($Config));
 
+		// mind our namespace when defining a function as hook. we handle our own defined hooks here.
+		if ($Config['hook_tag']=="hl_my_tag_transform" || $Config['hook_tag']=="hl_email_tag_transform")
+		{
+			$Config['hook_tag']=__NAMESPACE__.'\\'.$Config['hook_tag'];
+		}
 		return ($styles?$styles:'').htmLawed($html2check, $Config, $Spec);
 	}
 
@@ -335,7 +341,7 @@ function hl_my_tag_transform($element, $attribute_array=0)
  */
 function hl_email_tag_transform($element, $attribute_array=0)
 {
-	//error_log(__METHOD__.__LINE__.$element.array2string($attribute_array));
+	//error_log(__METHOD__.__LINE__.$element.'=>'.array2string($attribute_array));
 	static $lastelement = null;
 	static $throwawaycounter = null;
 	if (is_null($lastelement)) $lastelement='';
