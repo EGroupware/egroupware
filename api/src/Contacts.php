@@ -1586,7 +1586,7 @@ class Contacts extends Contacts\Storage
 			$data[] = array(
 				'res_id' => $id,
 				'email' => $contact['email'] ? $contact['email'] : $contact['email_home'],
-				'rights' => EGW_ACL_READ_FOR_PARTICIPANTS,
+				'rights' => Acl::CUSTOM1,
 				'name' => $this->link_title($contact),
 				'cn' => trim($contact['n_given'].' '.$contact['n_family']),
 			);

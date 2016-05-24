@@ -371,9 +371,9 @@ class calendar_uilist extends calendar_ui
 		{
 			$search_params['users'] = is_array($params['col_filter']['participant']) ? $params['col_filter']['participant'] : array( $params['col_filter']['participant']);
 		}
-		elseif (!$params['col_filter'] || !array_key_exists('participant',$params['col_filter']))
+		elseif (!$params['col_filter'] || !$params['col_filter']['participant'])
 		{
-			$search_params['users'] = explode(',',$this->owner);
+			$search_params['users'] = $params['owner'] ? $params['owner'] : explode(',',$this->owner);
 		}
 		if ($params['col_filter'])
 		{
@@ -396,6 +396,7 @@ class calendar_uilist extends calendar_ui
 				(count($search_params['users']) == 1 ? $this->bo->participant_name($search_params['users'][0]).': ' : '') .
 				$label);
 		}
+		error_log(__METHOD__ . ' ' .array2string($search_params));
 		foreach((array) $this->bo->search($search_params, !empty($col_filter) ? $col_filter : null) as $event)
 		{
 
