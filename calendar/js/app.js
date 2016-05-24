@@ -3493,6 +3493,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			window.clearInterval(this._autorefresh_timer);
 			$j(e.target).off(e);
 
+			if(!time) return;
+			
 			// If the autorefresh time is up, bind once to trigger a refresh
 			// (if needed) when tab is activated again
 			this._autorefresh_timer = setTimeout(jQuery.proxy(function() {
