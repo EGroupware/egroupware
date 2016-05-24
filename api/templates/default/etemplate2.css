@@ -1391,6 +1391,12 @@ div.message.floating {
 .et2_nextmatch {
   /*	background-color: silver;*/
 }
+
+/* Allow space for category color indicators, preserving column calculations */
+.egwGridView_outer thead tr {
+	border-left: 12px solid transparent;
+}
+
 /* Left & right headers*/
 .et2_nextmatch > div > .header {
   margin-top: -20px;
