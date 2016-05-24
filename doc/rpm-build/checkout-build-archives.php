@@ -56,12 +56,14 @@ $config = array(
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
 	'editchangelog' => '* ',
-	'sfuser' => 'ralfbecker',
-	'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
+	//'sfuser' => 'ralfbecker',
+	//'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	'copychangelog' => '$sourcedir/README', //'$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
 	'run' => array('checkout','editchangelog','tag','copy','virusscan','create','sign','obs','copychangelog'),
 	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
+	'github_user' => 'ralfbecker',	// Github user for following token
+	'github_token' => '',	// Github repo personal access token from above user
 );
 
 // process config from command line
@@ -319,13 +321,126 @@ function do_release()
 	global $config,$verbose;
 
 	// push local changes to Github incl. tags
+	if ($verbose) echo "Pushing changes and tags\n";
 	run_cmp($config['git'].' push');	// regular commits like changelog
-	run_cmd($config['mr']. ' push origin '.config_translate($config['tag']));	// pushing tags in all apps
+	$tag = config_translate($config['tag']);
+	run_cmd($config['mr']. ' push origin '.$tag);	// pushing tags in all apps
 
-	$target = config_translate('release');	// allow to use config vars like $svnbranch in module
-	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
-	if ($verbose) echo $cmd."\n";
-	passthru($cmd);
+	if (empty($config['github_user']) || empty($config['github_token']))
+	{
+		throw new Exception("No personal Github user or access token specified (--github_token)!");
+	}
+	if (empty($config['changelog']))
+	{
+		$config['changelog'] = parse_current_changelog();
+	}
+	$data = array(
+		'tag_name' => $tag,
+		'name' => $tag,
+		'body' => $config['changelog'],
+	);
+	$response = github_api("/repos/EGroupware/egroupware/releases", $data);
+
+	$archives = $config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'*';
+
+	foreach(glob($archives) as $path)
+	{
+		if (substr($path, -4) == '.zip')
+		{
+			$content_type = 'application/zip';
+		}
+		elseif(substr($path, -7) == '.tar.gz')
+		{
+			$content_type = 'application/x-gzip';
+		}
+		elseif(substr($path, -8) == '.tar.bz2')
+		{
+			$content_type = 'application/x-bzip2';
+		}
+		elseif(substr($path, -10) == '.txt.asc')
+		{
+			$content_type = 'text/plain';
+		}
+		else
+		{
+			continue;
+		}
+		github_api($response['upload_url'], array(
+			'name' => basename($path),
+		), 'FILE', $path, $content_type);
+	}
+
+	if (!empty($config['release']))
+	{
+		$target = config_translate('release');	// allow to use config vars like $svnbranch in module
+		$cmd = $config['rsync'].' '.$archives.' '.$target;
+		if ($verbose) echo $cmd."\n";
+		passthru($cmd);
+	}
+}
+
+/**
+ * Sending a Github API request
+ *
+ * @param string $_url url of just path where to send request to (https://api.github.com is added automatic)
+ * @param string|array $data payload, array get automatic added as get-parameter or json_encoded for POST
+ * @param string $method ='POST'
+ * @param string $upload =null path of file to upload, payload for request with $method='FILE'
+ * @param string $content_type =null
+ * @throws Exception
+ * @return array with response
+ */
+function github_api($_url, $data, $method='POST', $upload=null, $content_type=null)
+{
+	global $config, $verbose;
+
+	$url = $_url[0] == '/' ? 'https://api.github.com'.$_url : $_url;
+	$c = curl_init();
+	curl_setopt($c, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+	curl_setopt($c, CURLOPT_USERPWD, $config['github_user'].':'.$config['github_token']);
+	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($c, CURLOPT_USERAGENT, basename(__FILE__));
+	curl_setopt($c, CURLOPT_TIMEOUT, 240);
+	curl_setopt($c, CURLOPT_HEADER, true);
+	curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
+
+	switch($method)
+	{
+		case 'POST':
+			curl_setopt($c, CURLOPT_POST, true);
+			if (is_array($data)) $data = json_encode($data, JSON_FORCE_OBJECT);
+			curl_setopt($c, CURLOPT_POSTFIELDS, $data);
+			break;
+		case 'GET':
+			curl_setopt($c, CURLOPT_GET, true);
+			if(count($data)) $url .= '?' . http_build_query($data);
+			break;
+		case 'FILE':
+			curl_setopt($c, CURLOPT_HTTPHEADER, array("Content-type: $content_type"));
+			curl_setopt($c, CURLOPT_POST, true);
+			curl_setopt($c, CURLOPT_POSTFIELDS, file_get_contents($upload));
+			if(count($data)) $url .= '?' . http_build_query($data);
+			break;
+		default:
+			throw new Exception(__FUNCTION__.": Unknown/unimplemented method=$method!");
+	}
+	curl_setopt($c, CURLOPT_URL, $url);
+	//curl_setopt($c, CURLOPT_SSL_VERIFYHOST, 0);
+	//curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
+
+	$short_data = strlen($data) > 100 ? substr($data, 0, 100).' ...' : $data;
+	if ($verbose) echo "Sending $method request to $url ".($method!='GET'?$short_data:'')."\n";
+
+	if (($response = curl_exec($c)) === false)
+	{
+		throw new Exception("$method request to $url failed ".($method!='GET'?$short_data:''));
+	}
+
+	if ($verbose) echo (strlen($response) > 100 ? substr($response, 0, 100).' ...' : $response)."\n";
+
+	curl_close($c);
+
+	return json_decode($response, true);
 }
 
 /**
