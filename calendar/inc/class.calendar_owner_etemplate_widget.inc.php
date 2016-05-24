@@ -34,7 +34,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 	{
 
 		Framework::includeJS('.','et2_widget_owner','calendar');
-		Framework::includeCSS('calendar');
+		Framework::includeCSS('calendar','calendar');
 
 		$bo = new calendar_bo();
 
