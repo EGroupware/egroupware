@@ -2572,6 +2572,9 @@ div.mailComposeHeaderSection > table {
   body #popupMainDiv div#mail-view {
     height: 100%;
   }
+  body #popupMainDiv #mail-view_toaddressdetails {
+    color: #26537c;
+  }
   body #popupMainDiv #tempPrintDiv {
     display: block;
   }

@@ -19,13 +19,26 @@
 			<hbox class="mail-d-h2" align="right" width="100%">
 				<date-time id="date" readonly="true"/>
 			</hbox>
-			<hbox class="mail-d-h2" disabled="!@toaddress" width="100%" id="headerTo">
+			<hbox class="mail-d-h2" disabled="!@toaddress" width="100%">
 				<description value="To"/>
-				<hbox id="tohbox" readonly="true" class="mail_extraEmails"/>
-				<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
+				<url-email id="toaddress" readonly="true"/>
+				<description id = "toaddressdetails"/>
 			</hbox>
 			<hbox>
 				<details class="details" title="show details" toggle_align="left">
+					<hbox class="mail-d-h2" disabled="!@toaddress" width="100%">
+						<description value="To"/>
+						<grid id="additionaltoaddress">
+							<columns>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<url-email id="${row}"/>
+								</row>
+							</rows>
+						</grid>
+					</hbox>
 					<hbox class="mail-d-h2" disabled="!@ccaddress"  width="100%">
 						<description value="Cc"/>
 						<grid id="ccaddress">

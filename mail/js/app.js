@@ -5300,15 +5300,17 @@ app.classes.mail = AppJS.extend(
 				$attachment.parent().hide();
 			}
 			// disable the detials if there's no details
-			if (!content.ccaddress) $details.hide();
+			if (!content.ccaddress && !content.additionaltoaddress) $details.hide();
 
 			toolbar.set_actions(content.toolbar);
-
-			// Build expanded series of addresses
-			var expand_content = [
-				{build_children: true, data_one: 'toaddress', data: 'additionaltoaddress', widget: 'tohbox', line: 'headerTo'},
-			];
-			self.url_email_expandOnClick(expand_content, {data:content}, self.et2_view.widgetContainer);
+			var toaddressdetails = self.et2_view.widgetContainer.getWidgetById('toaddressdetails');
+			if (toaddressdetails && content.additionaltoaddress)
+			{
+				toaddressdetails.set_value('... ' +content.additionaltoaddress.length + egw.lang(' more'));
+				jQuery(toaddressdetails.getDOMNode()).off().on('click', function(){
+					$details.find('.et2_details_toggle').click();
+				});
+			}
 
 			// Request email body from server
 			iframe.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:id}));
