@@ -290,6 +290,7 @@ message saved successfully.	mail	en	Message saved successfully.
 message send failed: %1	mail	en	Message send failed: %1
 message send successfully.	mail	en	Message send successfully.
 miscellaneous	mail	en	Miscellaneous
+move	mail	en	Move
 move folder	mail	en	Move Folder
 move selected mails to archive	mail	en	Move selected mails to archive
 move selected to	mail	en	Move selected to

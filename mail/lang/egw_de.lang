@@ -290,6 +290,7 @@ message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
 message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
 message send successfully.	mail	de	Nachricht wurde erfolgreich versendet.
 miscellaneous	mail	de	Verschiedenes
+move	mail	de	Verschieben
 move folder	mail	de	Ordner verschieben
 move selected mails to archive	mail	de	Verschiebe ausgewählte Nachrichten in den konfigurierten Archiv Ordner
 move selected to	mail	de	Verschiebe ausgewählte nach
