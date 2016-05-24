@@ -12,7 +12,10 @@
  * To install grunt to build minified javascript files you need to run:
  *
  *		sudo npm install -g grunt-cli
- *		npm init	# create package.json and node_modules directory for local installs
+ *		npm install # installs everything from package.json into node_modules dir
+ *
+ * To generate the now existing package.json:
+ *		npm init
  *		npm install grunt --save-dev
  *		npm install grunt-contrib-uglify --save-dev
  *		npm install grunt-newer --save-dev
