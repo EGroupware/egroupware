@@ -515,15 +515,6 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 					var li = $j(this);
 					li.siblings().removeClass('ui-state-highlight');
 
-					// Wait an arbitrary 50ms to avoid having the class removed again
-					// by the change handler.
-					if(li.attr('data-id') !== 'blank')
-					{
-						window.setTimeout(function() {
-							li.addClass('ui-state-highlight');
-						},50);
-					}
-
 					var state = {};
 					var pref = egw.preference('favorite_' + this.dataset.id, self.appname);
 					if(pref)
@@ -935,6 +926,10 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				{
 					match_count++;
 				}
+				else if (state_key == 'selectcols')
+				{
+					// Skip, might be set, might not
+				}
 				else if (typeof state[state_key] != 'undefined' && state[state_key] && typeof state[state_key] === 'object'
 							&& typeof favorite.state != 'undefined' && typeof favorite.state[state_key] != 'undefined' && favorite.state[state_key] && typeof favorite.state[state_key] === 'object')
 				{
@@ -950,6 +945,13 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 						}
 						// One has a value and the other doesn't, no match
 						return;
+					}
+					else if (state[state_key].length !== 'undefined' && typeof favorite.state[state_key].length !== 'undefined' &&
+						state[state_key].length === 0 && favorite.state[state_key].length === 0)
+					{
+						// Both set, but both empty
+						match_count++;
+						continue;
 					}
 					// Consider sub-objects (column filters) individually
 					for(var sub_key in state[state_key])
@@ -967,17 +969,12 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 								match_count++;
 							}
 						}
-						else if(state[state_key][sub_key] && state[state_key][sub_key] != favorite.state[state_key][sub_key])
+						else if(typeof state[state_key][sub_key] !== 'undefined' && state[state_key][sub_key] != favorite.state[state_key][sub_key])
 						{
 							// Different values, do not match
 							return;
 						}
-
 					}
-				}
-				else if (state_key == 'selectcols')
-				{
-					// Skip, might be set, might not
 				}
 				else if (typeof state[state_key] !== 'undefined'
 						 && typeof favorite.state != 'undefined'&&typeof favorite.state[state_key] !== 'undefined'
