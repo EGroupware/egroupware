@@ -315,7 +315,7 @@ class setup_cmd_ldap extends setup_cmd
 		// check if ads base does exist
 		if (!@ldap_read($ads->ds, $this->ads_context, 'objectClass=*'))
 		{
-			throw new Api\Exception\WrongUserInput(lang('Ads dn "%1" NOT found!',$this->ads_context));
+			throw new Api\Exception\WrongUserinput(lang('Ads dn "%1" NOT found!',$this->ads_context));
 		}
 
 		// connect to source ldap
@@ -324,7 +324,7 @@ class setup_cmd_ldap extends setup_cmd
 		// check if ldap base does exist
 		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
 		{
-			throw new Api\Exception\WrongUserInput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+			throw new Api\Exception\WrongUserinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
 		}
 
 		if (!($sr = ldap_search($this->test_ldap->ds,$this->ldap_base,
@@ -799,7 +799,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * @param string $dn =null default $this->ldap_root_dn
 	 * @param string $pw =null default $this->ldap_root_pw
 	 * @param string $host =null default $this->ldap_host, hostname, ip or ldap-url
-	 * @throws Api\Exception\WrongUserInput Can not connect to ldap ...
+	 * @throws Api\Exception\WrongUserinput Can not connect to ldap ...
 	 */
 	private function connect($dn=null,$pw=null,$host=null)
 	{
@@ -809,7 +809,7 @@ class setup_cmd_ldap extends setup_cmd
 
 		if (!$pw)	// Api\Ldap::ldapConnect use the current eGW's pw otherwise
 		{
-			throw new Api\Exception\WrongUserInput(lang('You need to specify a password!'));
+			throw new Api\Exception\WrongUserinput(lang('You need to specify a password!'));
 		}
 
 		try {
@@ -817,7 +817,7 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		catch (Api\Exception\NoPermission $e) {
 			_egw_log_exception($e);
-			throw new Api\Exception\WrongUserInput(lang('Can not connect to LDAP server on host %1 using DN %2!',
+			throw new Api\Exception\WrongUserinput(lang('Can not connect to LDAP server on host %1 using DN %2!',
 				$host,$dn).($this->test_ldap->ds ? ' ('.ldap_error($this->test_ldap->ds).')' : ''));
 		}
 		return lang('Successful connected to LDAP server on %1 using DN %2.',$this->ldap_host,$dn);
@@ -827,7 +827,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * Count active (not expired) users
 	 *
 	 * @return int number of active users
-	 * @throws Api\Exception\WrongUserInput
+	 * @throws Api\Exception\WrongUserinput
 	 */
 	private function users()
 	{
@@ -852,7 +852,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * Check and if does not yet exist create the new database and user
 	 *
 	 * @return string with success message
-	 * @throws Api\Exception\WrongUserInput
+	 * @throws Api\Exception\WrongUserinput
 	 */
 	private function create()
 	{
@@ -898,7 +898,7 @@ class setup_cmd_ldap extends setup_cmd
 		// check if base does exist
 		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
 		{
-			throw new Api\Exception\WrongUserInput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+			throw new Api\Exception\WrongUserinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
 		}
 		return lang('LDAP dn="%1" with %2 entries deleted.',
 			$this->ldap_base,$this->rdelete($this->ldap_base));
@@ -954,7 +954,7 @@ class setup_cmd_ldap extends setup_cmd
 		// check if base does exist
 		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
 		{
-			throw new Api\Exception\WrongUserInput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+			throw new Api\Exception\WrongUserinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
 		}
 		$object_class = $this->object_class ? $this->object_class : 'qmailUser';
 		$mbox_attr = $this->mbox_attr ? $this->mbox_attr : 'mailmessagestore';

@@ -704,7 +704,7 @@ class Categories
 		if (isset($values['old_parent']) && (int)$values['old_parent'] != (int)$values['parent'])
 		{
 			$ret = $this->check_consistency4update($values);
-			if ($ret !== true) throw new Exception\WrongUserInput($ret);
+			if ($ret !== true) throw new Exception\WrongUserinput($ret);
 			// everything seems in order -> proceed
 			$values['level'] = ($values['parent'] ? $this->id2name($values['parent'],'level')+1:0);
 			$this->adapt_level_in_subtree($values);
@@ -717,7 +717,7 @@ class Categories
 			if ($values['parent'] > 0)
 			{
 				$ret = $this->check_consistency4update($values);
-				if ($ret !== true) throw new Exception\WrongUserInput($ret);
+				if ($ret !== true) throw new Exception\WrongUserinput($ret);
 
 				// everything seems in order -> proceed
 				$values['main']  = $this->id2name($values['parent'],'main');

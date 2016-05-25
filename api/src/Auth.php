@@ -231,7 +231,7 @@ class Auth
 	 * @param string $old_passwd must be cleartext
 	 * @param string $new_passwd must be cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
-	 * @throws Exception\WrongUserInput if configured password strength is not meat
+	 * @throws Exception\WrongUserinput if configured password strength is not meat
 	 * @throws Exception from backends having extra requirements
 	 * @return boolean true if password successful changed, false otherwise
 	 */
@@ -239,7 +239,7 @@ class Auth
 	{
 		if (($err = self::crackcheck($new_passwd,null,null,null,$account_id)))
 		{
-			throw new Exception\WrongUserInput($err);
+			throw new Exception\WrongUserinput($err);
 		}
 		if (($ret = $this->backend->change_password($old_passwd, $new_passwd, $account_id)))
 		{

@@ -1088,7 +1088,7 @@ class Vfs extends Vfs\StreamWrapper
 			if (!preg_match($use='/^([ugoa]*)([+=-]+)([rwx]+)$/',$s,$matches))
 			{
 				$use = str_replace(array('/','^','$','(',')'),'',$use);
-				throw new Exception\WrongUserInput("$s is not an allowed mode, use $use !");
+				throw new Exception\WrongUserinput("$s is not an allowed mode, use $use !");
 			}
 			$base = (strpos($matches[3],'r') !== false ? self::READABLE : 0) |
 				(strpos($matches[3],'w') !== false ? self::WRITABLE : 0) |
