@@ -225,7 +225,7 @@ function get_modules_per_repo()
 		$matches = null;
 		if ($line && $line[0] == '[' && preg_match('/^\[([^]]*)\]/', $line, $matches))
 		{
-			if (in_array($matches[1], array('DEFAULT', 'api/js/ckeditor', 'phpgwapi/js/ckeditor')))
+			if (in_array($matches[1], array('DEFAULT', 'api/js/ckeditor', 'api/src/Accounts/Ads', 'phpgwapi/js/ckeditor', 'phpgwapi/inc/adldap')))
 			{
 				$module = null;
 				continue;
