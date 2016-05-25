@@ -472,7 +472,7 @@ class timesheet_ui extends timesheet_bo
 	{
 		$this->show_sums = false;
 
-		$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$query_in['enddate'] ? $query_in['enddate'] : false);
+		$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$query_in['enddate']);
 
 		if ($query_in['startdate'])
 		{
