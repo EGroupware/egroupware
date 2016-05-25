@@ -447,7 +447,11 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		// close button
 		var close = jQuery(document.createElement('span'))
 				.addClass('egw_fw_mobile_popup_close loaded')
-				.click(function(){destroy.call(app[self.appname]);})
+				.click(function(){
+					destroy.call(app[self.appname]);
+					//disable selected actions after close
+					egw_globalObjectManager.setAllSelected(false);
+				})
 				.appendTo(this.viewContainer);
 		if (!noEdit)
 		{
