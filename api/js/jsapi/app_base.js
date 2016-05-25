@@ -926,8 +926,10 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			if(!favorite || jQuery.isEmptyObject(favorite)) return;
 
 			var match_count = 0;
+			var extra_keys = Object.keys(favorite.state);
 			for(var state_key in state)
 			{
+				extra_keys.splice(extra_keys.indexOf(state_key),1);
 				if(typeof favorite.state != 'undefined' && typeof state[state_key] != 'undefined'&&typeof favorite.state[state_key] != 'undefined' && ( state[state_key] == favorite.state[state_key] || !state[state_key] && !favorite.state[state_key]))
 				{
 					match_count++;
@@ -989,6 +991,11 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 					// Different values, do not match
 					return;
 				}
+			}
+			// Check for anything set that the current one does not have
+			for(var i = 0; i < extra_keys.length; i++)
+			{
+				if(favorite.state[extra_keys[i]]) return;
 			}
 			if(match_count > best_count)
 			{
