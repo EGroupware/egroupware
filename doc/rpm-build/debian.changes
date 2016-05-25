@@ -1,3 +1,9 @@
+egroupware-epl (14.3.20160525) hardy; urgency=low
+
+  * ActiveDirectory: fix not working integration, because of missing code after move to Git
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 25 May 2016 10:48:35 +0200
+
 egroupware-epl (14.3.20160524) hardy; urgency=low
 
   * Support for Ubuntu-16.04 with php 7.0.4
