@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker@outdoor-training.de
- * @copyright (c) 2009-14 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2009-16 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
 
@@ -19,44 +19,55 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-epl',
-	'version' => '16.1',                            // '1.6'
-	'packaging' => date('Ymd'),                     // '001'
-	'egwdir' => 'egroupware',
-	'svndir' => '/tmp/build_root/epl_trunk_buildroot-svn',
-	'egw_buildroot' => '/tmp/build_root/epl_trunk_buildroot',
-	'sourcedir' => '/srv/obs/download/stylite-epl/egroupware-epl-trunk',
+	'version' => '16.1',        // '14.3'
+	'packaging' => date('Ymd'), // '20160520'
+	'branch'  => 'master',        // checked out branch
+	'tag' => '$version.$packaging',	// name of tag
+	'checkoutdir' => realpath(__DIR__.'/../..'),
+	'egw_buildroot' => '/tmp/build_root/epl_16.1_buildroot',
+	'sourcedir' => '/home/download/stylite-epl/egroupware-epl-16.1',
+	/* svn-config currently not used, as we use .mrconfig to define modules and urls
+	'svntag' => 'tags/$version.$packaging',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
 	'stylitebase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
-	'svnbranch' => 'trunk', // 'branches/1.6' or 'tags/1.6.001'
+	'svnbranch' => 'branches/16.1',         //'trunk', // 'branches/1.6' or 'tags/1.6.001'
 	'svnalias' => 'aliases/default-ssh',    // default alias
+	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
+	*/
+	'extra' => array('stylite', 'esyncpro', 'archive',	// create an extra archive for given apps
+		// these apps are placed in egroupware-epl-contrib archive
+		'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sambaadmin', 'sitemgr', 'phpfreechat')),
 	'aliasdir' => 'egroupware',             // directory created by the alias
-	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/$svnbranch/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),
 	'tar' => trim(`which tar`),
 	'mv' => trim(`which mv`),
+	'rm' => trim(`which rm`),
 	'zip' => trim(`which zip`),
 	'clamscan' => trim(`which clamscan`),
 	'freshclam' => trim(`which freshclam`),
+	'git' => trim(`which git`),
+	'mr'  => trim(`which mr`),
 	'gpg' => trim(`which gpg`),
 	'editor' => trim(`which vi`),
 	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
 	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs' : '',
 	'after-checkout' => 'rm -rf */source */templates/*/source pixelegg/content-element-library',
 	'packager' => 'build@stylite.de',
-	'obs' => './obs',
+	'obs' => '/home/stylite/obs/stylite-epl-trunk',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
-	'editsvnchangelog' => '* ',
-	'svntag' => 'tags/$version.$packaging',
-	'sfuser' => 'ralfbecker',
-	'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
+	'editchangelog' => '* ',
+	//'sfuser' => 'ralfbecker',
+	//'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	'copychangelog' => '$sourcedir/README', //'$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
-	'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs','copychangelog'),
+	'run' => array('checkout','editchangelog','tag','copy','virusscan','create','sign','obs','copychangelog'),
 	'patchCmd' => '# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
+	'github_user' => 'ralfbecker',	// Github user for following token
+	'github_token' => '',	// Github repo personal access token from above user
 );
 
 // process config from command line
@@ -97,17 +108,18 @@ while(($arg = array_shift($argv)))
 				break;
 
 			case 'svntag':
+			case 'tag':
 			case 'release':
 			case 'copychangelog':
 				$config[$name] = $value;
 				if ($value) array_unshift($config['run'],$name);
 				break;
 
-			case 'editsvnchangelog':
+			case 'editchangelog':
 				$config[$name] = $value ? $value : true;
-				if (!in_array('editsvnchangelog',$config['run']))
+				if (!in_array('editchangelog',$config['run']))
 				{
-					array_unshift($config['run'],'editsvnchangelog');
+					array_unshift($config['run'],'editchangelog');
 				}
 				break;
 
@@ -142,16 +154,306 @@ foreach(array_diff($config['run'],$config['skip']) as $func)
 }
 
 /**
+ * Read changelog for given branch from (last) tag or given revision from svn
+ *
+ * @param string $_path relativ path to repo starting with $config['aliasdir']
+ * @param string $log_pattern =null	a preg regular expression or start of line a log message must match, to be returned
+ * 	if regular perl regular expression given only first expression in brackets \\1 is used,
+ * 	for a start of line match, only the first line is used, otherwise whole message is used
+ * @param string& $last_tag =null from which tag on to query logs
+ * @param string $prefix ='* ' prefix, which if not presend should be added to all log messages
+ * @return string with changelog
+ */
+function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $prefix='* ')
+{
+	//echo __FUNCTION__."('$branch_url','$log_pattern','$revision','$prefix')\n";
+	global $config;
+
+	$path = str_replace($config['aliasdir'], $config['checkoutdir'], $_path);
+	if (!file_exists($path) || !is_dir($path) || !file_exists($path.'/.git'))
+	{
+		throw new Exception("$path is not a git repository!");
+	}
+	if (empty($last_tag))
+	{
+		$last_tag = get_last_git_tag();
+	}
+
+	$cmd = $config['git'].' log '.escapeshellarg($last_tag.'..HEAD');
+	if (getcwd() != $path) $cmd = 'cd '.$path.'; '.$cmd;
+	$output = null;
+	run_cmd($cmd, $output);
+
+	$changelog = '';
+	foreach($output as $line)
+	{
+		if (substr($line, 0, 4) == "    " && ($msg = _match_log_pattern(substr($line, 4), $log_pattern, $prefix)))
+		{
+			$changelog .= $msg."\n";
+		}
+	}
+	return $changelog;
+}
+
+/**
+ * Get module path (starting with $config['aliasdir']) per repo from .mrconfig for svn and git
+ *
+ * @return array with $repro_url => $path => $url, eg. array(
+ *		"git@github.com:EGroupware/egroupware.git" => array(
+ *			"egroupware" => "git@github.com:EGroupware/egroupware.git"),
+ *		"git@github.com:EGroupware/tracker.git" => array(
+ *			"egroupware/tracker" => "git@github.com:EGroupware/tracker.git"),
+ *		"svn+ssh://stylite@svn.stylite.de/stylite" => array(
+ *			"egroupware/stylite] => svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/stylite",
+ *			"egroupware/esyncpro] => svn+ssh://stylite@svn.stylite.de/stylite/branches/14.2/esyncpro",
+ */
+function get_modules_per_repo()
+{
+	global $config, $verbose;
+
+	if ($verbose) echo "Get modules from .mrconfig in checkoutdir $config[checkoutdir]\n";
+
+	if (!is_dir($config['checkoutdir']))
+	{
+		throw new Exception("checkout directory '{$config['checkoutdir']} does NOT exists or is NO directory!");
+	}
+	if (!($mrconfig = file_get_contents($path=$config['checkoutdir'].'/.mrconfig')))
+	{
+		throw new Exception("$path not found!");
+	}
+	$module = null;
+	$modules = array();
+	foreach(explode("\n", $mrconfig) as $line)
+	{
+		$matches = null;
+		if ($line && $line[0] == '[' && preg_match('/^\[([^]]*)\]/', $line, $matches))
+		{
+			if (in_array($matches[1], array('DEFAULT', 'api/js/ckeditor', 'api/src/Accounts/Ads', 'phpgwapi/js/ckeditor', 'phpgwapi/inc/adldap')))
+			{
+				$module = null;
+				continue;
+			}
+			$module = (string)$matches[1];
+		}
+		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git clone (-b [0-9.]+)? (git[^ ]+)|svn checkout ((svn|http)[^ ]+))/', $line, $matches))
+		{
+			$repo = $url = substr($matches[1], 0, 3) == 'svn' ? $matches[4] : $matches[3];
+			if (substr($matches[1], 0, 3) == 'svn') $repo = preg_replace('#/(trunk|branches)/.*$#', '', $repo);
+			$modules[$repo][$config['aliasdir'].($module ? '/'.$module : '')] = $url;
+		}
+	}
+	if ($verbose) print_r($modules);
+	return $modules;
+}
+
+/**
+ * Get commit of last git tag matching a given pattern
+ *
+ * @return string name of last tag matching $config['version'].'.*'
+ */
+function get_last_git_tag()
+{
+	global $config;
+
+	if (!is_dir($config['checkoutdir']))
+	{
+		throw new Exception("checkout directory '{$config['checkoutdir']} does NOT exists or is NO directory!");
+	}
+	chdir($config['checkoutdir']);
+
+	$cmd = $config['git'].' tag -l '.escapeshellarg($config['version'].'.*');
+	$output = null;
+	run_cmd($cmd, $output);
+
+	return trim(array_pop($output));
+}
+
+/**
+ * Checkout or update EGroupware
+ *
+ * Ensures an existing checkout is from the correct branch! Otherwise it get's deleted
+ */
+function do_checkout()
+{
+	global $config;
+
+	echo "Starting checkout/update\n";
+	if (!file_exists($config['checkoutdir']))
+	{
+		$cmd = $config['git'].' clone '.(!empty($config['branch']) ? ' -b '.$config['branch'] : '').
+			' git@github.com:EGroupware/egroupware.git '.$config['checkoutdir'];
+		run_cmd($cmd);
+		run_cmd('mr up');	// need to run mr up twice for new checkout, because chained .mrconfig wont run first time (because not there yet!)
+	}
+	elseif (!is_dir($config['checkoutdir']) || !is_writable($config['checkoutdir']))
+	{
+		throw new Exception("svn checkout directory '{$config['checkoutdir']} exists and is NO directory or NOT writable!");
+	}
+	chdir($config['checkoutdir']);
+
+	run_cmd('mr up');
+}
+
+/**
+ * Create a tag using mr in svn or git for current checked out branch
+ */
+function do_tag()
+{
+	global $config;
+
+	if (!is_dir($config['checkoutdir']))
+	{
+		throw new Exception("checkout directory '{$config['checkoutdir']} does NOT exists or is NO directory!");
+	}
+	chdir($config['checkoutdir']);
+
+	$config['tag'] = config_translate('tag');	// allow to use config vars like $version in tag
+
+	if (empty($config['tag'])) return;	// otherwise we copy everything in svn root!
+
+	echo "Creating tag $config[tag]\n";
+
+	$cmd = $config['mr'].' tag '.escapeshellarg($config['tag']).' '.escapeshellarg('Creating '.$config['tag']);
+	run_cmd($cmd);
+}
+
+/**
  * Release sources by rsync'ing them to a distribution / download directory
  */
 function do_release()
 {
 	global $config,$verbose;
 
-	$target = config_translate('release');	// allow to use config vars like $svnbranch in module
-	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
-	if ($verbose) echo $cmd."\n";
-	passthru($cmd);
+	// push local changes to Github incl. tags
+	if ($verbose) echo "Pushing changes and tags\n";
+	chdir($config['checkoutdir']);
+	run_cmd($config['mr']. ' up');		// in case someone else pushed something
+	chdir($config['checkoutdir']);
+	run_cmd($config['git'].' push');	// regular commits like changelog
+	$tag = config_translate('tag');
+	run_cmd($config['mr']. ' push origin '.$tag);	// pushing tags in all apps
+
+	if (empty($config['github_user']) || empty($config['github_token']))
+	{
+		throw new Exception("No personal Github user or access token specified (--github_token)!");
+	}
+	if (empty($config['changelog']))
+	{
+		$config['changelog'] = parse_current_changelog();
+	}
+	$data = array(
+		'tag_name' => $tag,
+		'name' => $tag,
+		'target_commitish' => $config['branch'],
+		'body' => $config['changelog'],
+	);
+	$response = github_api("/repos/EGroupware/egroupware/releases", $data);
+	$upload_url = preg_replace('/{\?[^}]+}$/', '', $response['upload_url']);	// remove {?name,label} template
+
+	$archives = $config['sourcedir'].'/*egroupware-epl{,-contrib}-'.$config['version'].'.'.$config['packaging'].'*';
+
+	foreach(glob($archives) as $path)
+	{
+		$label = null;
+		if (substr($path, -4) == '.zip')
+		{
+			$content_type = 'application/zip';
+		}
+		elseif(substr($path, -7) == '.tar.gz')
+		{
+			$content_type = 'application/x-gzip';
+		}
+		elseif(substr($path, -8) == '.tar.bz2')
+		{
+			$content_type = 'application/x-bzip2';
+		}
+		elseif(substr($path, -8) == '.txt.asc')
+		{
+			$content_type = 'text/plain';
+			$label = 'Signed hashes of downloads';
+		}
+		else
+		{
+			continue;
+		}
+		$name = basename($path);
+		github_api($upload_url, array(
+			'name' => $name,
+			'label' => isset($label) ? $label : $name,
+		), 'FILE', $path, $content_type);
+	}
+
+	if (!empty($config['release']))
+	{
+		$target = config_translate('release');	// allow to use config vars like $svnbranch in module
+		$cmd = $config['rsync'].' '.$archives.' '.$target;
+		if ($verbose) echo $cmd."\n";
+		passthru($cmd);
+	}
+}
+
+/**
+ * Sending a Github API request
+ *
+ * @param string $_url url of just path where to send request to (https://api.github.com is added automatic)
+ * @param string|array $data payload, array get automatic added as get-parameter or json_encoded for POST
+ * @param string $method ='POST'
+ * @param string $upload =null path of file to upload, payload for request with $method='FILE'
+ * @param string $content_type =null
+ * @throws Exception
+ * @return array with response
+ */
+function github_api($_url, $data, $method='POST', $upload=null, $content_type=null)
+{
+	global $config, $verbose;
+
+	$url = $_url[0] == '/' ? 'https://api.github.com'.$_url : $_url;
+	$c = curl_init();
+	curl_setopt($c, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+	curl_setopt($c, CURLOPT_USERPWD, $config['github_user'].':'.$config['github_token']);
+	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($c, CURLOPT_USERAGENT, basename(__FILE__));
+	curl_setopt($c, CURLOPT_TIMEOUT, 240);
+	curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
+
+	switch($method)
+	{
+		case 'POST':
+			curl_setopt($c, CURLOPT_POST, true);
+			if (is_array($data)) $data = json_encode($data, JSON_FORCE_OBJECT);
+			curl_setopt($c, CURLOPT_POSTFIELDS, $data);
+			break;
+		case 'GET':
+			if(count($data)) $url .= '?' . http_build_query($data);
+			break;
+		case 'FILE':
+			curl_setopt($c, CURLOPT_HTTPHEADER, array("Content-type: $content_type"));
+			curl_setopt($c, CURLOPT_POST, true);
+			curl_setopt($c, CURLOPT_POSTFIELDS, file_get_contents($upload));
+			if(count($data)) $url .= '?' . http_build_query($data);
+			break;
+		default:
+			throw new Exception(__FUNCTION__.": Unknown/unimplemented method=$method!");
+	}
+	curl_setopt($c, CURLOPT_URL, $url);
+
+	if (is_string($data)) $short_data = strlen($data) > 100 ? substr($data, 0, 100).' ...' : $data;
+	if ($verbose) echo "Sending $method request to $url ".(isset($short_data)&&$method!='GET'?$short_data:'')."\n";
+
+	if (($response = curl_exec($c)) === false)
+	{
+		// run failed request again to display response including headers
+		curl_setopt($c, CURLOPT_HEADER, true);
+		curl_setopt($c, CURLOPT_RETURNTRANSFER, false);
+		curl_exec($c);
+		throw new Exception("$method request to $url failed ".(isset($short_data)&&$method!='GET'?$short_data:''));
+	}
+
+	if ($verbose) echo (strlen($response) > 200 ? substr($response, 0, 200).' ...' : $response)."\n";
+
+	curl_close($c);
+
+	return json_decode($response, true);
 }
 
 /**
@@ -190,33 +492,31 @@ function do_copychangelog()
 }
 
 /**
- * Query changelog from svn and let user edit it
+ * Query changelog and let user edit it
  */
-function do_editsvnchangelog()
+function do_editchangelog()
 {
 	global $config,$svn;
 
-	echo "Querying changelog from SVN\n";
+	echo "Querying changelog from Git/SVN\n";
 	if (!isset($config['modules']))
 	{
-		get_modules_per_repro();
+		$config['modules'] = get_modules_per_repo();
 	}
 	// query changelog per repo
 	$changelog = '';
-	foreach($config['modules'] as /*$repo =>*/ $modules)
+	$last_tag = null;
+	foreach($config['modules'] as $branch_url => $modules)
 	{
-		$branch_url = '';
 		$revision = null;
-		foreach($modules as $path => $url)
+		if (substr($branch_url, -4) == '.git')
 		{
-			$module = basename($path);
-			$burl = substr($url,0,-strlen($module)-1);
-			if (empty($branch_url) || $burl != $branch_url)
-			{
-				if (empty($branch_url)) $url = $branch_url = $burl;
-				//if (count($config['modules']) > 1) $changelog .= $url."\n";
-				$changelog .= get_changelog_from_svn($url,$config['editsvnchangelog'],$revision);
-			}
+			list($path) = each($modules);
+			$changelog .= get_changelog_from_git($path, $config['editchangelog'], $last_tag);
+		}
+		else
+		{
+			$changelog .= get_changelog_from_svn($branch_url, $config['editchangelog'], $revision);
 		}
 	}
 	$logfile = tempnam('/tmp','checkout-build-archives');
@@ -235,13 +535,22 @@ function do_editsvnchangelog()
 		die("\nChangelog must not be empty --> aborting\n\n");
 	}
 	// commit changelog
-	$changelog = __DIR__.'/debian.changes';
-	if (file_exists($changelog))
+	$changelog = $config['checkoutdir'].'/doc/rpm-build/debian.changes';
+	if (!file_exists($changelog))
 	{
-		file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
-		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
-		run_cmd($cmd);
+		throw new Exception("Changelog '$changelog' not found!");
 	}
+	file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
+	if (file_exists($config['checkoutdir'].'/.git'))
+	{
+		$cmd = $config['git']." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+	}
+	else
+	{
+		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+	}
+	run_cmd($cmd);
+
 	// update obs changelogs (so all changlogs are updated in case of a later error and changelog step can be skiped)
 	do_obs(true);	// true: only update debian.changes in obs checkouts
 }
@@ -255,6 +564,7 @@ function do_editsvnchangelog()
  * 	for a start of line match, only the first line is used, otherwise whole message is used
  * @param string $revision =null from which to HEAD the log should be retrieved, default search revision of latest tag in ^/tags
  * @param string $prefix ='* ' prefix, which if not presend should be added to all log messages
+ * @return string with changelog
  */
 function get_changelog_from_svn($branch_url, $log_pattern=null, &$revision=null, $prefix='* ')
 {
@@ -266,7 +576,7 @@ function get_changelog_from_svn($branch_url, $log_pattern=null, &$revision=null,
 		list($tags_url,$branch) = preg_split('#/(branches/|trunk)#',$branch_url);
 		if (empty($branch)) $branch = $config['version'];
 		$tags_url .= '/tags';
-		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.[0-9.]+)/');
+		$pattern='/tags\/(14\.3\.[0-9.]+)/';//str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.[0-9.]+)/');
 		$matches = null;
 		$revision = get_last_svn_tag($tags_url,$pattern,$matches);
 		$tag = $matches[1];
@@ -288,29 +598,46 @@ function get_changelog_from_svn($branch_url, $log_pattern=null, &$revision=null,
 
 	$xml = simplexml_load_string($output=implode("\n",$output));
 	$message = '';
-	$pattern_len = strlen($log_pattern);
-	$prefix_len = strlen($prefix);
 	foreach($xml as $log)
 	{
-		$msg = $log->msg;
-		if ($log_pattern[0] == '/' && preg_match($log_pattern,$msg,$matches))
-		{
-			$msg = $matches[1];
-		}
-		elseif($log_pattern && $log_pattern[0] != '/' && substr($msg,0,$pattern_len) == $log_pattern)
-		{
-			list($msg) = explode("\n",$msg);
-		}
-		elseif($log_pattern)
-		{
-			continue;	// no match --> ignore
-		}
-		if ($prefix_len && substr($msg,0,$prefix_len) != $prefix) $msg = $prefix.$msg;
+		if (!($msg = _match_log_pattern($log->msg, $log_pattern, $prefix))) continue;	// no match --> ignore
+
 		$message .= $msg."\n";
 	}
 	if ($verbose) echo $message;
 
 	return $message;
+}
+
+/**
+ * Return first row of matching log lines always prefixed with $prefix
+ *
+ * @param string $msg whole log message
+ * @param string $log_pattern
+ * @param string $prefix ='* '
+ * @return string
+ */
+function _match_log_pattern($msg, $log_pattern, $prefix='* ')
+{
+	$pattern_len = strlen($log_pattern);
+	$prefix_len = strlen($prefix);
+
+	$matches = null;
+	if ($log_pattern[0] == '/' && preg_match($log_pattern,$msg,$matches))
+	{
+		$msg = $matches[1];
+	}
+	elseif($log_pattern && $log_pattern[0] != '/' && substr($msg,0,$pattern_len) == $log_pattern)
+	{
+		list($msg) = explode("\n",$msg);
+	}
+	elseif($log_pattern)
+	{
+		return null;
+	}
+	if ($prefix_len && substr($msg,0,$prefix_len) != $prefix) $msg = $prefix.$msg;
+
+	return $msg;
 }
 
 /**
@@ -373,7 +700,7 @@ function do_obs($only_update_changelog=false)
 		if (basename(dirname($path)) == '.osc' ||
 			!preg_match('/\/('.preg_quote($config['packagename']).
 				($config['obs_package_alias'] ? '|'.preg_quote($config['obs_package_alias']) : '').
-				')[a-z-]*-('.preg_quote($config['version']).'|trunk)/',$path))
+				')[a-z-]*-('.preg_quote($config['version']).'|14.2|trunk)/',$path))
 		{
 			continue;
 		}
@@ -448,7 +775,7 @@ function parse_current_changelog()
 {
 	global $config;
 
-	$changelog = file_get_contents(__DIR__.'/debian.changes');
+	$changelog = file_get_contents($config['checkoutdir'].'/doc/rpm-build/debian.changes');
 	$lines = explode("\n", $changelog, 100);
 	foreach($lines as $n => $line)
 	{
@@ -536,11 +863,15 @@ function do_create()
 
 	if($config['extra'])
 	{
-		foreach($config['extra'] as $key => $module)
+		$exclude = array();
+		foreach($config['extra'] as $modules)
 		{
-			if (strpos($module,'/') !== false) $config['extra'][$key] = basename($module);
+			foreach((array)$modules as $module)
+			{
+				$exclude[] = basename($module);
+			}
 		}
-		$exclude_extra = ' --exclude=egroupware/'.implode(' --exclude=egroupware/',$config['extra']);
+		$exclude_extra = ' --exclude=egroupware/'.implode(' --exclude=egroupware/', $exclude);
 	}
 	foreach($config['types'] as $type)
 	{
@@ -555,25 +886,29 @@ function do_create()
 				$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.' '.$exclude_extra.' egroupware';
 				break;
 			case 'zip':
-				$cmd = $config['mv'].' egroupware/'.implode(' egroupware/',$config['extra']).' . ;';
+				$cmd = file_exists($file) ? $config['rm'].' -f '.$file.'; ' : '';
+				$cmd .= $config['mv'].' egroupware/'.implode(' egroupware/', $exclude).' . ;';
 				$cmd .= $config['zip'].' -q -r -9 '.$file.' egroupware ;';
-				$cmd .= $config['mv'].' '.implode(' ',$config['extra']).' egroupware';
+				$cmd .= $config['mv'].' '.implode(' ', $exclude).' egroupware';
 				break;
 		}
 		run_cmd($cmd);
 		$sums .= sha1_file($file)."\t".basename($file)."\n";
 
-		foreach($config['extra'] as $module)
+		foreach($config['extra'] as $name => $modules)
 		{
-			$file = $config['sourcedir'].'/'.$config['packagename'].'-'.$module.'-'.$config['version'].'.'.$config['packaging'].'.'.$type;
+			if (is_numeric($name)) $name = $modules;
+			$dirs = ' egroupware/'.implode(' egroupware/', (array)$modules);
+			$file = $config['sourcedir'].'/'.$config['packagename'].'-'.$name.'-'.$config['version'].'.'.$config['packaging'].'.'.$type;
 			switch($type)
 			{
 				case 'tar.bz2':
 				case 'tar.gz':
-					$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.' egroupware/'.$module;
+					$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.$dirs;
 					break;
 				case 'zip':
-					$cmd = $config['zip'].' -q -r -9 '.$file.' egroupware/'.$module;
+					$cmd = file_exists($file) ? $config['rm'].' -f '.$file.'; ' : '';
+					$cmd .= $config['zip'].' -q -r -9 '.$file.$dirs;
 					break;
 			}
 			run_cmd($cmd);
@@ -612,16 +947,34 @@ function do_virusscan()
 }
 
 /**
- * Copy non .svn parts to egw_buildroot and fix permissions and ownership
+ * Copy non .svn/.git parts to egw_buildroot and fix permissions and ownership
+ *
+ * We need to stash local modifications (currently only in egroupware main module) to revert eg. .mrconfig modifications
  */
 function do_copy()
 {
 	global $config;
 
-	// copy everything, but .svn dirs from svndir to egw_buildroot
-	echo "Copying non-svn dirs to buildroot\n";
-	$cmd = '/usr/bin/rsync -r --delete --exclude .svn '.$config['svndir'].'/'.$config['aliasdir'].' '.$config['egw_buildroot'];
-	run_cmd($cmd);
+	// copy everything, but .svn dirs from checkoutdir to egw_buildroot
+	echo "Copying non-svn/git dirs to buildroot\n";
+
+	if (!file_exists($config['egw_buildroot']))
+	{
+		run_cmd("mkdir -p $config[egw_buildroot]");
+	}
+
+	// we need to stash uncommited changes like .mrconfig, before copying
+	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("cd $config[checkoutdir]; git stash");
+
+	try {
+		$cmd = '/usr/bin/rsync -r --delete --exclude .svn --exclude .git '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
+		run_cmd($cmd);
+	}
+	catch (Exception $e) {
+		// catch failures to pop stash, before throwing exception
+	}
+	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("git stash pop");
+	if (isset($e)) throw $e;
 
 	if (($cmd = config_translate('patchCmd')) && $cmd[0] != '#')
 	{
@@ -632,7 +985,7 @@ function do_copy()
 	echo "Fixing permissions\n";
 	chdir($config['egw_buildroot'].'/'.$config['aliasdir']);
 	run_cmd('/bin/chmod -R a-x,u=rwX,g=rX,o=rX .');
-	run_cmd('/bin/chmod +x */*cli.php phpgwapi/cron/*.php svn-helper.php doc/rpm-build/*.php');
+	run_cmd('/bin/chmod +x */*cli.php phpgwapi/cron/*.php doc/rpm-build/*.php');
 }
 
 /**
@@ -640,27 +993,27 @@ function do_copy()
  *
  * Ensures an existing checkout is from the correct branch! Otherwise it get's deleted
  */
-function do_checkout()
+function do_svncheckout()
 {
 	global $config,$svn;
 
 	echo "Starting svn checkout/update\n";
-	if (!file_exists($config['svndir']))
+	if (!file_exists($config['checkoutdir']))
 	{
-		mkdir($config['svndir'],0755,true);
+		mkdir($config['checkoutdir'],0755,true);
 	}
-	elseif (!is_dir($config['svndir']) || !is_writable($config['svndir']))
+	elseif (!is_dir($config['checkoutdir']) || !is_writable($config['checkoutdir']))
 	{
-		throw new Exception("svn checkout directory '{$config['svndir']} exists and is NO directory or NOT writable!");
+		throw new Exception("svn checkout directory '{$config['checkoutdir']} exists and is NO directory or NOT writable!");
 	}
-	chdir($config['svndir']);
+	chdir($config['checkoutdir']);
 
 	// do we use a just created tag --> list of taged modules
 	if ($config['svntag'])
 	{
 		if (!isset($config['modules']))
 		{
-			get_modules_per_repro();
+			get_modules_per_repo();
 		}
 		$config['svntag'] = config_translate('svntag');	// in case svntag command did not run, translate tag name
 
@@ -740,11 +1093,14 @@ function do_checkout()
 }
 
 /**
- * Get module name per svn repro
+ * Get module path per svn repo from our config
  *
- * @return array with $repro_url => array(module1, ..., moduleN) pairs
+ * @return array with $repro_url => $path => $url, eg. array(
+ *		"svn+ssh://svn@dev.egroupware.org/egroupware" => array(
+ *			"egroupware" => "svn+ssh://svn@dev.egroupware.org/egroupware/branches/14.2/egroupware",
+ *			"egroupware/addressbook" => "svn+ssh://svn@dev.egroupware.org/egroupware/branches/14.2/addressbook",
  */
-function get_modules_per_repro()
+function get_modules_per_svn_repo()
 {
 	global $config,$svn,$verbose;
 
@@ -779,6 +1135,7 @@ function get_modules_per_repro()
 		if ($repo == 'http://svn.egroupware.org/egroupware') $repo = 'svn+ssh://svn@dev.egroupware.org/egroupware';
 		$config['modules'][$repo][$config['aliasdir'].'/'.$module] = $url;
 	}
+	if ($verbose) print_r($config['modules']);
 	return $config['modules'];
 }
 
@@ -796,7 +1153,7 @@ function do_svntag()
 	echo "Creating SVN tag $config[svntag]\n";
 	if (!isset($config['modules']))
 	{
-		get_modules_per_repro();
+		get_modules_per_repo();
 	}
 	// create tags (per repo)
 	foreach($config['modules'] as $repo => $modules)
@@ -810,7 +1167,7 @@ function do_svntag()
  * Runs given shell command, exists with error-code after echoing the output of the failed command (if not already running verbose)
  *
  * @param string $cmd
- * @param array &$output=null $output of command, only if !$verbose !!!
+ * @param array& $output=null $output of command, only if !$verbose !!!
  * @param int|array $no_bailout =null exit code(s) to NOT bail out
  * @return int exit code of $cmd
  */
@@ -818,7 +1175,7 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 {
 	global $verbose;
 
-	if ($verbose)
+	if ($verbose && func_num_args() == 1)
 	{
 		echo $cmd."\n";
 		$ret = null;
@@ -828,6 +1185,7 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 	{
 		$output[] = $cmd;
 		exec($cmd,$output,$ret);
+		if ($verbose) echo implode("\n",$output)."\n";
 	}
 	if ($ret && !in_array($ret,(array)$no_bailout))
 	{
@@ -875,6 +1233,7 @@ function usage($error=null)
 
 	echo "Usage: $prog [-h|--help] [-v|--verbose] [options, ...]\n\n";
 	echo "options and their defaults:\n";
+	unset($config['modules']);	// they give an error, because of nested array and are quite lengthy
 	foreach($config as $name => $default)
 	{
 		if (is_array($default)) $default = implode(' ',$default);
@@ -887,4 +1246,3 @@ function usage($error=null)
 	}
 	exit(0);
 }
-
