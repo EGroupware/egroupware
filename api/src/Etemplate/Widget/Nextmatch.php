@@ -392,7 +392,9 @@ class Nextmatch extends Etemplate\Widget
 				// check if we need to send the data
 				//error_log("$id Known: " . (array_search($id, $knownUids) !== false ? 'Yes' : 'No') . ' Modified: ' . Api\DateTime::to($row[$row_modified]) . ' > ' . Api\DateTime::to($lastModified).'? ' . ($row[$row_modified] > $lastModified ? 'Yes' : 'No'));
 				if (!$row_id || !$knownUids || ($kUkey = array_search($id, $knownUids)) === false ||
-					!$lastModified || !isset($modified) || $modified > $lastModified)
+					!$lastModified || !isset($modified) || $modified > $lastModified ||
+					$queriedRange['refresh'] && $id == $queriedRange['refresh']
+				)
 				{
 					$result['data'][$id] = $row;
 				}

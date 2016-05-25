@@ -129,6 +129,20 @@ app.classes.addressbook = AppJS.extend(
 			}
 			return false;
 		}
+		else if(_app === 'calendar')
+		{
+			// Event changed, update any [known] contacts participating
+			var content = egw.dataGetUIDdata(_app+'::'+_id);
+			if (content.data && content.data.participant_types && content.data.participant_types.c)
+			{
+				for(var contact in content.data.participant_types.c)
+				{
+					// Refresh handles checking to see if the contact is known,
+					// and updating it directly
+					egw.dataRefreshUID('addressbook::'+contact);
+				}
+			}
+		}
 
 		return true;
 	},
