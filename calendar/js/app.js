@@ -2245,7 +2245,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			}
 			else if($j(view.etemplates[0].DOMContainer).is(':visible'))
 			{
-				$j(view.etemplates[0].DOMContainer).css("width","100%");
+				$j(view.etemplates[0].DOMContainer).css("width","");
 				view.etemplates[0].widgetContainer.iterateOver(function(w) {
 					w.set_width('100%');
 				},this,et2_calendar_timegrid);

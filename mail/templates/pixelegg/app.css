@@ -888,6 +888,10 @@ iframe#mail-display_mailDisplayBodySrc {
 body {
   background-color: white;
 }
+#mail-index {
+  /* Keeps the scrollbar in the window in chrome */
+  margin-right: -10px;
+}
 #mail-index div#mail-index_nm div.nextmatch_header div.filters select {
   margin-top: 9px;
 }

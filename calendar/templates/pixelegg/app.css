@@ -1407,6 +1407,10 @@ input#calendar-edit_location {
   background-image: linear-gradient(top, #828282, #828282) !important;
   background-repeat: repeat-x !important;
 }
+#calendar-list {
+  /* Keeps the scrollbar in the window in chrome */
+  margin-right: 10px;
+}
 #calendar_sidebox_content .egw_fw_ui_category_content {
   padding-left: 0px !important;
 }

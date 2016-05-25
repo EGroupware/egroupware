@@ -537,11 +537,6 @@ which caused click on free space infront of a tag stops nm row selection*/
 	display: table-row;
 }
 
-/*Default cat color*/
-tr.row_category {
-	border-left: 6px solid transparent;
-}
-
 /*
 These are set via javascript before printing to help tame nextmatch's layout
 for printing
@@ -1393,8 +1388,16 @@ div.message.floating {
 }
 
 /* Allow space for category color indicators, preserving column calculations */
-.egwGridView_outer thead tr {
-	border-left: 12px solid transparent;
+.egwGridView_outer thead tr > th:first-child {
+	border-left: 6px solid transparent;
+}
+.egwGridView_scrollarea tr.row_category > td:first-child  {
+	border-left: 6px solid transparent;
+}
+.egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child > div {
+	margin-left:-6px;
+	margin-right: -4px;
+	padding-left: 4px;
 }
 
 /* Left & right headers*/

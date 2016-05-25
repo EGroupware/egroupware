@@ -11,7 +11,7 @@
 		</hbox>
 	</template>
 	<template id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
-		<grid width="100%">
+		<grid>
 			<columns>
 				<column width="125"/>
 				<column width="80%"/>
@@ -102,7 +102,7 @@
 		</grid>
 	</template>
 	<template id="calendar.list" template="" lang="" group="0" version="1.9.003">
-		<grid width="100%">
+		<grid>
 			<columns>
 				<column/>
 				<column width="30%"/>
