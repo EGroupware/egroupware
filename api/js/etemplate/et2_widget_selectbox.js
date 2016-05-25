@@ -847,7 +847,10 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		if (this.options.tags) {
 			// Always hide input options
-			this.input.hide();
+			if(this.input)
+			{
+				this.input.hide();
+			}
 
 			if (_disable)
 			{
