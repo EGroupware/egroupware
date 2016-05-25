@@ -1,11 +1,11 @@
 Name: egroupware-epl
-Version: 16.1.20151109
+Version: 16.1.20160525
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
 License: GPLv2 with exception of stylite and esyncpro module, which is proprietary
 URL: http://www.stylite.de/EPL
-Vendor: Stylite GmbH, http://www.stylite.de/
+Vendor: Stylite AG, http://www.stylite.de/
 Packager: Ralf Becker <rb@stylite.de>
 Prefix: /usr/share
 %define egwdir %{prefix}/egroupware
@@ -60,7 +60,7 @@ Prefix: /usr/share
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
 	%define distribution Fedora Core %{?fedora_version}
-	%define extra_requires httpd php-mysql php-xml php-tidy php-posix
+	%define extra_requires httpd php-mysqli php-xml php-tidy php-posix
 %endif
 %if 0%{?mandriva_version}
 	%define osversion %{?mandriva_version}
@@ -73,12 +73,12 @@ Prefix: /usr/share
 %if 0%{?rhel_version}
 	%define osversion %{?rhel_version}
 	%define distribution Red Hat %{?rhel_version}
-	%define extra_requires httpd php-mysql php-xml php-tidy php-posix
+	%define extra_requires httpd php-mysqli php-xml php-tidy php-posix
 %endif
 %if 0%{?centos_version}
 	%define osversion %{?centos_version}
 	%define distribution CentOS %{?centos_version}
-	%define extra_requires httpd php-mysql php-xml php-tidy php-posix
+	%define extra_requires httpd php-mysqli php-xml php-tidy php-posix
 %endif
 
 Distribution: %{distribution}
@@ -87,11 +87,11 @@ Source0: %{name}-%{version}.tar.gz
 Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-archive-%{version}.tar.bz2
 Source4: %{name}-esyncpro-%{version}.tar.bz2
-#Source5: %{name}-jdots-%{version}.tar.bz2
+Source5: %{name}-contrib-%{version}.tar.gz
 Source6: phpfreechat_data_public.tar.gz
 Source8: %{name}-rpmlintrc
 #Source9: %{name}-gallery-%{version}.tar.bz2
-Patch0: class.uiasyncservice.inc.php.patch
+Patch0: asyncservice.patch
 #Patch1: revert-php-path-suse.patch
 #Patch2: mandriva_upload_tmp_dir.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
@@ -104,31 +104,27 @@ AutoReqProv: no
 
 Requires: %{name}-core            = %{version}
 Requires: %{name}-stylite         = %{version}
-Requires: %{name}-jdots           = %{version}
 Requires: %{name}-esync           = %{version}
 Requires: %{name}-bookmarks       = %{version}
 Requires: %{name}-calendar        = %{version}
-Requires: %{name}-developer_tools = %{version}
-Requires: %{name}-emailadmin      = %{version}
 Requires: %{name}-filemanager     = %{version}
 Requires: %{name}-infolog         = %{version}
 Requires: %{name}-importexport    = %{version}
-Requires: %{name}-jdots           = %{version}
+#Requires: %{name}-jdots           = %{version}
 Requires: %{name}-mail            = %{version}
 Requires: %{name}-news_admin      = %{version}
 Requires: %{name}-notifications   = %{version}
-Requires: %{name}-phpbrain        = %{version}
-Requires: %{name}-phpfreechat     = %{version}
-Requires: %{name}-pixelegg        = %{version}
+#Requires: %{name}-phpbrain        = %{version}
+#Requires: %{name}-phpfreechat     = %{version}
 Requires: %{name}-projectmanager  = %{version}
 Requires: %{name}-registration    = %{version}
 Requires: %{name}-resources       = %{version}
-Requires: %{name}-sambaadmin      = %{version}
-Requires: %{name}-sitemgr         = %{version}
+#Requires: %{name}-sambaadmin      = %{version}
+#Requires: %{name}-sitemgr         = %{version}
 Requires: %{name}-timesheet       = %{version}
 Requires: %{name}-tracker         = %{version}
 Requires: %{name}-vendor          = %{version}
-Requires: %{name}-wiki            = %{version}
+#Requires: %{name}-wiki            = %{version}
 Obsoletes: %{egw_packagename}
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-egw-pear
@@ -170,6 +166,7 @@ Obsoletes: %{egw_packagename}-polls
 Obsoletes: %{name}-egw-pear
 # packages no longer in 14.3
 Obsoletes: %{name}-manual
+Obsoletes: %{name}-developer_tools
 
 %post
 # Check binary paths and create links for opensuse/sles
@@ -197,9 +194,9 @@ EGroupware EPL combines Stylite's actual EGroupware enhancements and the recent 
 
 This package automatically requires the EGroupware default applications:
 
-egroupware core with: admin, api, docs, etemplate, prefereces and setup,
-addressbook, bookmarks, calendar, translation-tools, emailadmin, mail,
-filemanager, infolog, news admin, knowledgebase, polls, jdots, pixelegg,
+egroupware core with: admin, api, docs, prefereces and setup,
+addressbook, bookmarks, calendar, mail,
+filemanager, infolog, news admin, knowledgebase
 projectmanager, resources, sambaadmin, sitemgr, eSync, timesheet, tracker, wiki
 
 It also provides an API for developing additional applications.
@@ -209,19 +206,29 @@ Further contributed applications are available as separate packages.
 %package core
 Summary: The EGroupware core
 Group: Web/Database
-Requires: %{php} >= 5.3.2
+Requires: %{php} >= 5.4.0
 Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
 Provides: egw-core %{version}
-Provides: egw-etemplate %{version}
 Provides: egw-addressbook %{version}
 %if 0%{?suse_version}
 Provides: /usr/bin/php
 %endif
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-addressbook
+Obsoletes: %{name}-emailadmin
+Obsoletes: %{name}-pixelegg
 %description core
 This package provides the EGroupware core applications
 (API, admin, etemplate, preferences and setup) plus addressbook.
+
+%package compat
+Summary: Compatibility to old api
+Group: Web/Database
+Provides: egw-compat %{version}
+Provides: egw-etemplate %{version}
+%description compat
+This package provides compatibility to old / pre 16.1 EGroupware api.
+So to speak the phpgwapi and etemplate directories.
 
 %package esync
 Version: %{version}
@@ -268,35 +275,12 @@ Obsoletes: %{egw_packagename}-calendar
 Powerful calendar with meeting request system, Alarms, ICal and E-Mail support,
 and ACL security.
 
-%package developer_tools
-Version: %{version}
-Summary: The EGroupware developer_tools application
-Group: Web/Database
-AutoReqProv: no
-Requires: egw-core >= %{version}
-Obsoletes: %{egw_packagename}-developer_tools
-%description developer_tools
-The TranslationTools allow to create and extend translations-files for EGroupware.
-They can search the sources for new / added phrases and show you the ones missing in your language.
-
-%package emailadmin
-Version: %{version}
-Summary: The EGroupware emailadmin application
-Group: Web/Database
-AutoReqProv: no
-Requires: egw-core >= %{version}
-Requires: %{php}-bcmath
-Obsoletes: %{egw_packagename}-emailadmin
-%description emailadmin
-EmailAdmin allow to maintain User email accounts
-
 %package mail
 Version: %{version}
 Summary: The EGroupware Webmail application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}
-Requires: %{name}-emailadmin >= %{version}
 Obsoletes: %{egw_packagename}-felamimail
 Obsoletes: %{name}-felamimail
 %description mail
@@ -338,18 +322,9 @@ Summary: Old tab-based EPL template based on idots look
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}
+Requires: egw-compat >= %{version}
 %description jdots
 EPL 11.1 default template.
-
-%package pixelegg
-Version: %{version}
-Summary: New default template for EGroupware
-Group: Web/Database
-AutoReqProv: no
-Requires: egw-core >= %{version}
-Requires: %{name}-jdots >= %{version}
-%description pixelegg
-New 14.1 default template from Pixelegg.
 
 %package news_admin
 Version: %{version}
@@ -376,20 +351,28 @@ Version: %{version}
 Summary: The EGroupware phpbrain application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core >= %{version}
+Requires: egw-compat >= %{version}
 Obsoletes: %{egw_packagename}-phpbrain
 %description phpbrain
 This is a knowledgebase for EGroupware.
+
+%post phpbrain
+# update/install phpbrain, as no longer installed by default
+%{post_install} --install-update-app phpbrain 2>&1 | tee -a %{install_log}
 
 %package phpfreechat
 Version: %{version}
 Summary: The EGroupware chat application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core >= %{version}
+Requires: egw-compat >= %{version}
 Obsoletes: %{egw_packagename}-phpfreechat
 %description phpfreechat
 Chat with other EGroupware users. A port of phpFreeChat for EGroupware.
+
+%post phpfreechat
+# update/install phpfreechat, as no longer installed by default
+%{post_install} --install-update-app phpfreechat 2>&1 | tee -a %{install_log}
 
 %package projectmanager
 Version: %{version}
@@ -429,20 +412,28 @@ Version: %{version}
 Summary: The EGroupware sambaadmin application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core >= %{version}
+Requires: egw-compat >= %{version}
 Obsoletes: %{egw_packagename}-sambaadmin
 %description sambaadmin
-Manage LDAP based sambaacounts and workstations.
+Manage LDAP based sambaacounts and workstations for Samba3.
+
+%post sambaadmin
+# update/install sambaadmin, as no longer installed by default
+%{post_install} --install-update-app sambaadmin 2>&1 | tee -a %{install_log}
 
 %package sitemgr
 Version: %{version}
 Summary: The EGroupware Sitemanager CMS application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core >= %{version}
+Requires: egw-compat >= %{version}
 Obsoletes: %{egw_packagename}-sitemgr
 %description sitemgr
 This is the Sitemanager CMS app for EGroupware.
+
+%post sitemgr
+# update/install sitemgr, as no longer installed by default
+%{post_install} --install-update-app sitemgr 2>&1 | tee -a %{install_log}
 
 %package stylite
 Version: %{version}
@@ -484,10 +475,14 @@ Version: %{version}
 Summary: The EGroupware wiki application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-core >= %{version},
+Requires: egw-compat >= %{version},
 Obsoletes: %{egw_packagename}-wiki
 %description wiki
 This is the wiki app for EGroupware.
+
+%post wiki
+# update/install wiki, as no longer installed by default
+%{post_install} --install-update-app wiki 2>&1 | tee -a %{install_log}
 
 %package vendor
 Version: %{version}
@@ -525,7 +520,7 @@ echo "post_install: %{post_install}"
 %setup2 -T -D -a 2 -n %{egwdirname}
 %setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
-#%setup5 -T -D -a 5 -n %{egwdirname}
+%setup5 -T -D -a 5 -n %{egwdirname}
 %setup6 -T -D -a 6 -n %{egwdirname}
 #%setup9 -T -D -a 9 -n %{egwdirname}
 %patch0 -p 0
@@ -571,21 +566,22 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/logout.php
 %{egwdir}/redirect.php
 %{egwdir}/remote.php
-%{egwdir}/rpc.php
 %{egwdir}/share.php
 %{egwdir}/status.php
-%{egwdir}/svn-helper.php
 %{egwdir}/groupdav.php
+%{egwdir}/README.md
+%{egwdir}/package.json
+%{egwdir}/Gruntfile.js
+%{egwdir}/updateGruntfile.php
 %{egwdir}/groupdav.htaccess
 %{egwdir}/webdav.php
 %{egwdir}/addressbook
 %{egwdir}/admin
 %{egwdir}/api
 %{egwdir}/doc
-%{egwdir}/etemplate
 %{egwdir}/files
 %{egwdir}/home
-%{egwdir}/phpgwapi
+%{egwdir}/pixelegg
 %{egwdir}/preferences
 %{egwdir}/setup
 %config(noreplace) %attr(0644,root,root) /etc/cron.d/egroupware
@@ -599,6 +595,11 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default/files
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default/backup
 %config(noreplace) %attr(0640,%{apache_user},%{apache_group}) %{egwdatadir}/header.inc.php
+
+%files compat
+%defattr(-,root,root)
+%{egwdir}/phpgwapi
+%{egwdir}/etemplate
 
 %files archive
 %defattr(-,root,root)
@@ -620,14 +621,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %{egwdir}/calendar
 
-%files developer_tools
-%defattr(-,root,root)
-%{egwdir}/developer_tools
-
-%files emailadmin
-%defattr(-,root,root)
-%{egwdir}/emailadmin
-
 %files filemanager
 %defattr(-,root,root)
 %{egwdir}/filemanager
@@ -639,10 +632,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %files importexport
 %defattr(-,root,root)
 %{egwdir}/importexport
-
-%files pixelegg
-%defattr(-,root,root)
-%{egwdir}/pixelegg
 
 %files jdots
 %defattr(-,root,root)
