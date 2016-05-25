@@ -1417,7 +1417,7 @@ input#calendar-edit_location {padding-left: 0;}
 	.calendar_calDayColHeader:first-child:nth-last-child(4)  > div[data-date] .short_date,
 	.calendar_calDayColHeader:first-child:nth-last-child(4) ~ .calendar_calDayColHeader  > div[data-date] .short_date,
 	.calendar_calDayColHeader:first-child:nth-last-child(5)  > div[data-date] .short_date,
-	.calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader  > div[data-date] .short_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader  > div[data-date] .short_date
 	{
 		display: inline;
 	}
@@ -1425,7 +1425,7 @@ input#calendar-edit_location {padding-left: 0;}
 	.calendar_calDayColHeader:first-child:nth-last-child(1)  > div[data-date] .long_date,
 	.calendar_calDayColHeader:first-child:nth-last-child(1) ~ .calendar_calDayColHeader  > div[data-date] .long_date,
 	.calendar_calDayColHeader:first-child:nth-last-child(2)  > div[data-date] .long_date,
-	.calendar_calDayColHeader:first-child:nth-last-child(2) ~ .calendar_calDayColHeader  > div[data-date] .long_date,
+	.calendar_calDayColHeader:first-child:nth-last-child(2) ~ .calendar_calDayColHeader  > div[data-date] .long_date
 	{
 		display:inline;
 	}
