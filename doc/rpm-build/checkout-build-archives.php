@@ -994,7 +994,7 @@ function do_copy()
 	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("cd $config[checkoutdir]; git stash");
 
 	try {
-		$cmd = '/usr/bin/rsync -r --delete --exclude .svn --exclude .git '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
+		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude .mrconfig --exclude node_modules/ '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
 		run_cmd($cmd);
 	}
 	catch (Exception $e) {
