@@ -6,7 +6,7 @@
 
 ### Installing EGroupware 16.1 from github:
 * cd /path/to/your/docroot
-* git clone git@github.com:EGroupware/egroupware.git
+* git clone https://github.com/EGroupware/egroupware.git # or git@github.com:EGroupware/egroupware.git for ssh
 * cd egroupware
 * # install composer.phar from https://getcomposer.org/download/
 * # install myrepos (mr) from https://myrepos.branchable.com/ or your distribution package manager
