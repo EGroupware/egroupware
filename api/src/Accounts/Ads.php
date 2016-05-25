@@ -15,7 +15,7 @@ namespace EGroupware\Api\Accounts;
 
 use EGroupware\Api;
 
-require_once EGW_API_INC.'/adldap/adLDAP.php';
+require_once __DIR__.'/Ads/adLDAP.php';
 use adLDAPException;
 
 /**

@@ -5,13 +5,23 @@
 
 [DEFAULT]
 git_update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null || true
+# run 5 jobs parallel, does NOT work with more then one svn module for (un)tag!
 jobs = 5
+git_tag = git tag -a $1 -m "$2"
+git_untag = git tag -d $1
+svn_tag = svn cp --parents -m "$2" $(svn info|grep ^URL|cut -f 2 -d ' ') $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "s:/(branches/[0-9.]+|trunk)/:/tags/$1/:")
+svn_untag = svn rm -m "remove tag" $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "s:/(branches/[0-9.]+|trunk)/.*$:/tags/$1/:")
 
 [api/src/Db/ADOdb]
-checkout = git clone git@github.com:EGroupware/ADOdb.git
+checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/ADOdb.git
+
+[api/src/Accounts/Ads]
+checkout = svn checkout https://svn.code.sf.net/p/adldap/code/trunk/src Ads
+skip = [ $1 = "tag" -o $1 = "untag" ]
 
 [api/js/ckeditor]
 checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
+skip = [ $1 = "tag" -o $1 = "untag" ]
 
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
@@ -25,63 +35,63 @@ update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null
 ###
 [activesync]
 # synchronise mobile phone via Z-Push and ActiveSync protocoll
-checkout = git clone git@github.com:EGroupware/activesync.git
+checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/activesync.git
 chain = true
 
 [tracker]
 # tracking or helpdesk application
-checkout = git clone git@github.com:EGroupware/tracker.git
+checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/tracker.git
 
 [projectmanager]
 # projectmanagement and Ganttcharts
-checkout = git clone git@github.com:EGroupware/projectmanager.git
+checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/projectmanager.git
 
 #[bookmarks]
 # record and share bookmarks
-#checkout = git clone git@github.com:EGroupware/bookmarks.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/bookmarks.git
 
 #[news_admin]
 # publish and agregate RSS or ATOM feeds
-#checkout = git clone git@github.com:EGroupware/news_admin.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/news_admin.git
+
+#[registration]
+# allows (after configuration!) to selfregister accounts and recover lost passwords
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/registration.git
 
 ###
 ### Older apps requiring to install phpgwapi and etemplate!
 ###
 #[phpgwapi]
 # old api used by non 16.1 apps
-#checkout = git clone git@github.com:EGroupware/phpgwapi.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/phpgwapi.git
 
 #[jdots]
 # alternative "Stylite" template set
-#checkout = git clone git@github.com:EGroupware/jdots.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/jdots.git
 
 #[etemplate]
 # old templating system superseeded by eTemplate2 in 16.1+ api
-#checkout = git clone git@github.com:EGroupware/etemplate.git
-
-#[registration]
-# allows (after configuration!) to selfregister accounts and recover lost passwords
-#checkout = git clone git@github.com:EGroupware/registration.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/etemplate.git
 
 #[phpbrain]
 # knowledge base
-#checkout = git clone git@github.com:EGroupware/phpbrain.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/phpbrain.git
 
 #[wiki]
 # wiki application
-#checkout = git clone git@github.com:EGroupware/wiki.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/wiki.git
 
 #[sambaadmin]
 # keeps passwords in sync with Samba3 using same LDAP as EGroupware (for Samba4 use Active Directory)
-#checkout = git clone git@github.com:EGroupware/sambaadmin.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/sambaadmin.git
 
 #[sitemgr]
 # content managment application
-#checkout = git clone git@github.com:EGroupware/sitemgr.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/sitemgr.git
 
 #[phpfreechat]
 # chat application
-#checkout = git clone git@github.com:EGroupware/phpfreechat.git
+#checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/phpfreechat.git
 #chain = true
 
 ###
@@ -92,3 +102,6 @@ checkout = git clone git@github.com:EGroupware/projectmanager.git
 
 #[esyncpro]
 #checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/trunk/esyncpro
+
+#[archive]
+#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/trunk/archive
