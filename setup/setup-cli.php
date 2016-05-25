@@ -248,7 +248,7 @@ function do_backup($arg,$quite_check=false)
 		}
 		else
 		{
-			$db_backup = new db_backup();
+			$db_backup = new Api\Db\Backup();
 			if (is_resource($f = $db_backup->fopen_backup($backup)))
 			{
 				echo lang('Backup started, this might take a few minutes ...')."\n";
