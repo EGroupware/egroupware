@@ -32,7 +32,8 @@ update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null
 # uncomment for minified javascript and css, IF you have nodejs and grunt installed: npm install -g grunt-cli
 #post_checkout = /usr/bin/env npm install && /usr/bin/env grunt
 #post_update = /usr/bin/env npm install && /usr/bin/env grunt
-order = 20	# to run after all other checkout/updates, as some apps (eg. projectmanager) need to update first
+# to run after all other checkout/updates, as some apps (eg. projectmanager) need to update first
+order = 20
 
 ###
 ### Optional apps you can enable by uncommenting them and (re-)run: mr up
