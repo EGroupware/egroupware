@@ -224,6 +224,8 @@ This package provides the EGroupware core applications
 %package compat
 Summary: Compatibility to old api
 Group: Web/Database
+AutoReqProv: no
+Requires: egw-core >= %{version}
 Provides: egw-compat %{version}
 Provides: egw-etemplate %{version}
 %description compat
