@@ -6,7 +6,7 @@
 
 ### Installing EGroupware 14.3 from github:
 * cd /path/to/your/docroot
-* git clone -b 14.2 git@github.com:EGroupware/egroupware.git
+* git clone -b 14.2 https://github.com/EGroupware/egroupware.git # or git@github.com:EGroupware/egroupware.git for ssh
 * cd egroupware
 * # install composer.phar from https://getcomposer.org/download/
 * # install myrepos (mr) from https://myrepos.branchable.com/ or your distribution package manager
