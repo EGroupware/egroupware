@@ -216,14 +216,14 @@ class addressbook_hooks
 
 		$settings['geolocation_src'] = array(
 			'type'   => 'select',
-			'label'  => 'Default geolocation source address',
+			'label'  => 'Default GeoLocation source address',
 			'name'   => 'geolocation_src',
 			'values' => array(
 				'browser' => lang('Browser location'),
 				'one' => lang('Business address'),
 				'two' => lang('Private address')
 			),
-			'help'   => 'Select a source address to be used in geolocation routing system',
+			'help'   => 'Select a source address to be used in GeoLocation routing system',
 			'xmlrpc' => True,
 			'admin'  => false,
 			'default'=> 'browser',

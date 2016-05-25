@@ -946,7 +946,8 @@ class timesheet_ui extends timesheet_bo
 				'popup' => Link::get_registry('timesheet', 'add_popup'),
 				'group' => $group=1,
 				'disableClass' => 'th',
-				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.timesheet.viewEntry':''
+				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.timesheet.viewEntry':'',
+				'mobileViewTemplate' => 'edit?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/timesheet/templates/mobile/edit.xet'))
 			),
 /*
 			'view' => array(

@@ -151,7 +151,7 @@ class filemanager_ui
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
-				'mobileViewTemplate' => 'file'
+				'mobileViewTemplate' => 'file?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/filemanager/templates/mobile/file.xet'))
 			),
 			'mkdir' => array(
 				'caption' => lang('Create directory'),

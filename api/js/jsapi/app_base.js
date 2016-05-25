@@ -465,8 +465,10 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				.addClass('et2_mobile-view-container popupMainDiv')
 				.appendTo(this.viewContainer);
 
-		var templateName = _action.data.mobileViewTemplate || 'edit';
-		var templateURL = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/'+templateName+'.xet'+'?1';
+		var mobileViewTemplate = (_action.data.mobileViewTemplate ||'edit').split('?');
+		var templateName = mobileViewTemplate[0];
+		var templateTimestamp = mobileViewTemplate[1];
+		var templateURL = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/'+templateName+'.xet'+'?'+templateTimestamp;
 		var data = {content:content, readonlys:{'__ALL__':true,'link_to':false}, currentapp:this.appname};
 
 		// etemplate2 object for view
