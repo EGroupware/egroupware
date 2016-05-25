@@ -240,35 +240,35 @@ abstract class setup_cmd extends admin_cmd
 
 		$versions =& $GLOBALS['egw_info']['server']['versions'];
 
-		if (!$versions['phpgwapi'])
+		if (!$versions['api'])
 		{
-			if (!include(EGW_INCLUDE_ROOT.'/phpgwapi/setup/setup.inc.php'))
+			if (!include(EGW_INCLUDE_ROOT.'/api/setup/setup.inc.php'))
 			{
-				throw new Api\Exception\WrongUserinput(lang("eGroupWare sources in '%1' are not complete, file '%2' missing !!!",realpath('..'),'phpgwapi/setup/setup.inc.php'),99);	// should not happen ;-)
+				throw new Api\Exception\WrongUserinput(lang("EGroupware sources in '%1' are not complete, file '%2' missing !!!",realpath('..'),'api/setup/setup.inc.php'),99);	// should not happen ;-)
 			}
-			$versions['phpgwapi'] = $setup_info['phpgwapi']['version'];
+			$versions['api'] = $setup_info['api']['version'];
 			unset($setup_info);
 		}
 		if ($header_checks)
 		{
-			$messages[] = self::_echo_message($verbose,lang('eGroupWare API version %1 found.',$versions['phpgwapi']));
+			$messages[] = self::_echo_message($verbose,lang('EGroupware API version %1 found.',$versions['api']));
 		}
 		$header_stage = self::$egw_setup->detection->check_header();
 		if ($stop && in_array($header_stage,$stop)) return true;
 
 		switch ($header_stage)
 		{
-			case 1: throw new Api\Exception\WrongUserinput(lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'),1);
+			case 1: throw new Api\Exception\WrongUserinput(lang('EGroupware configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'),1);
 
-//			case 2: throw new Api\Exception\WrongUserinput(lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No header admin password set! Use --edit-header <password>[,<user>] to set one (--usage gives more options).'),2);
+//			case 2: throw new Api\Exception\WrongUserinput(lang('EGroupware configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No header admin password set! Use --edit-header <password>[,<user>] to set one (--usage gives more options).'),2);
 
-			case 3: throw new Api\Exception\WrongUserinput(lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No eGroupWare domains / database instances exist! Use --edit-header --domain to add one (--usage gives more options).'),3);
+			case 3: throw new Api\Exception\WrongUserinput(lang('EGroupware configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No EGroupware domains / database instances exist! Use --edit-header --domain to add one (--usage gives more options).'),3);
 
-			case 4: throw new Api\Exception\WrongUserinput(lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('It needs upgrading to version %1! Use --update-header <password>[,<user>] to do so (--usage gives more options).',$versions['current_header']),4);
+			case 4: throw new Api\Exception\WrongUserinput(lang('EGroupware configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('It needs upgrading to version %1! Use --update-header <password>[,<user>] to do so (--usage gives more options).',$versions['current_header']),4);
 		}
 		if ($header_checks)
 		{
-			$messages[] = self::_echo_message($verbose,lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',
+			$messages[] = self::_echo_message($verbose,lang('EGroupware configuration file (header.inc.php) version %1 exists%2',
 				$versions['header'],' '.lang('and is up to date')));
 		}
 		unset($header_checks);	// no further output of the header checks
@@ -286,7 +286,7 @@ abstract class setup_cmd extends admin_cmd
 			if (count($GLOBALS['egw_domain']) > 1)
 			{
 				self::_echo_message($verbose);
-				$messages[] = self::_echo_message($verbose,lang('eGroupWare domain/instance %1(%2):',$domain,$data['db_type']));
+				$messages[] = self::_echo_message($verbose,lang('EGroupware domain/instance %1(%2):',$domain,$data['db_type']));
 			}
 			$setup_info = self::$egw_setup->detection->get_versions();
 			// check if there's already a db-connection and close if, otherwise the db-connection of the previous domain will be used
@@ -312,9 +312,9 @@ abstract class setup_cmd extends admin_cmd
 			{
 				case 1: throw new Api\Exception\WrongUserinput(lang('Your Database is not working!')." $db: ".self::$egw_setup->db->Error,11);
 
-				case 3: throw new Api\Exception\WrongUserinput(lang('Your database is working, but you dont have any applications installed')." ($db). ".lang("Use --install to install eGroupWare."),13);
+				case 3: throw new Api\Exception\WrongUserinput(lang('Your database is working, but you dont have any applications installed')." ($db). ".lang("Use --install to install EGroupware."),13);
 
-				case 4: throw new Api\Exception\WrongUserinput(lang('eGroupWare API needs a database (schema) update from version %1 to %2!',$setup_info['phpgwapi']['currentver'],$versions['phpgwapi']).' '.lang('Use --update to do so.'),14);
+				case 4: throw new Api\Exception\WrongUserinput(lang('EGroupware API needs a database (schema) update from version %1 to %2!',$setup_info['phpgwapi']['currentver'],$versions['phpgwapi']).' '.lang('Use --update to do so.'),14);
 
 				case 10:	// also check apps of updates
 					self::$apps_to_upgrade = self::$apps_to_install = array();
@@ -343,12 +343,12 @@ abstract class setup_cmd extends admin_cmd
 					}
 					break;
 			}
-			$messages[] = self::_echo_message($verbose,lang("database is version %1 and up to date.",$setup_info['phpgwapi']['currentver']));
+			$messages[] = self::_echo_message($verbose,lang("database is version %1 and up to date.",$setup_info['api']['currentver']));
 
 			self::$egw_setup->detection->check_config();
 			if ($GLOBALS['egw_info']['setup']['config_errors'] && $stop && !in_array(15,$stop))
 			{
-				throw new Api\Exception\WrongUserinput(lang('You need to configure eGroupWare:')."\n- ".@implode("\n- ",$GLOBALS['egw_info']['setup']['config_errors']),15);
+				throw new Api\Exception\WrongUserinput(lang('You need to configure EGroupware:')."\n- ".@implode("\n- ",$GLOBALS['egw_info']['setup']['config_errors']),15);
 			}
 		}
 		return $messages;

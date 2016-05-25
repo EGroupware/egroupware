@@ -314,7 +314,7 @@ class setup_detection
 			$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
 			return 1;
 		}
-		if(!isset($setup_info['phpgwapi']['currentver']))
+		if(!isset($setup_info['api']['currentver']))
 		{
 			$setup_info = $this->get_db_versions($setup_info);
 		}
