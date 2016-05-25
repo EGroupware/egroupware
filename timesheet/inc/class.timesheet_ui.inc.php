@@ -471,13 +471,13 @@ class timesheet_ui extends timesheet_bo
 	function get_rows(&$query_in,&$rows,&$readonlys,$id_only=false)
 	{
 		$this->show_sums = false;
-
-		$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$query_in['enddate']);
+		$end_date = $query_in['enddate'] ? $query_in['enddate'] : false;
+		$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$end_date);
 
 		if ($query_in['startdate'])
 		{
 			$start = explode('-',date('Y-m-d',$query_in['startdate']+12*60*60));
-			$end   = explode('-',date('Y-m-d',$query_in['enddate'] ? $query_in['enddate'] : $query_in['startdate']+7.5*24*60*60));
+			$end   = explode('-',date('Y-m-d',$end_date ? $end_date : $query_in['startdate']+7.5*24*60*60));
 
 			// show year-sums, if we are year-aligned (show full years)?
 			if ((int)$start[2] == 1 && (int)$start[1] == 1 && (int)$end[2] == 31 && (int)$end[1] == 12)
@@ -518,6 +518,7 @@ class timesheet_ui extends timesheet_bo
 		$query_in['actions'] = $this->get_actions($query_in);
 
 		$query = $query_in;	// keep the original query
+		$query['enddate'] = $end_date;
 
 		if($this->ts_viewtype == 'short') $query_in['options-selectcols'] = array('ts_quantity'=>false,'ts_unitprice'=>false,'ts_total'=>false);
 		if ($query['no_status']) $query_in['options-selectcols']['ts_status'] = false;
@@ -652,7 +653,7 @@ class timesheet_ui extends timesheet_bo
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . Api\DateTime::to($query['startdate']+12*60*60, $df);
 				if ($start != $end)
 				{
-					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.Api\DateTime::to($query['enddate']+12*60*60, $df);
+					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.Api\DateTime::to($query['enddate'] ? $query['enddate']+12*60*60:'now', $df);
 				}
 			}
 		}
