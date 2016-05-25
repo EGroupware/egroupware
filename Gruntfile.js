@@ -401,9 +401,9 @@ module.exports = function (grunt) {
 	// Load the plugin that runs tasks only on modified files
 	grunt.loadNpmTasks('grunt-newer');
 
-	// run Gruntfile.js in apps / sub-directories
-	grunt.loadNpmTasks('grunt-hub');
+	// uncomment to run Gruntfile.js in apps / sub-directories
+	//grunt.loadNpmTasks('grunt-hub');
 
 	// Default task(s).
-	grunt.registerTask('default', ['newer:uglify', 'newer:cssmin', 'hub']);
+	grunt.registerTask('default', ['newer:uglify', 'newer:cssmin']);//, 'hub']);
 };
