@@ -996,10 +996,10 @@ app.classes.addressbook = AppJS.extend(
 			]
 		];
 
-		var src_param = url.match(/{{%sr=.*%s}}/ig);
+		var src_param = url.match(/{{%sr=.*%sr}}/ig);
 		if (src_param[0])
 		{
-			src_param = src_param[0].replace(/{{$sr=/,'');
+			src_param = src_param[0].replace(/{{%sr=/,'');
 			src_param = src_param.replace(/%sr}}/,'');
 			url = url.replace(/{{%sr=.*%sr}}/, src_param)
 		}
