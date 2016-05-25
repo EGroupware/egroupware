@@ -16,6 +16,10 @@ svn_untag = svn rm -m "remove tag" $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "
 checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
 skip = [ $1 = "tag" -o $1 = "untag" ]
 
+[phpgwapi/inc/adldap]
+checkout = svn checkout https://svn.code.sf.net/p/adldap/code/trunk/src adldap
+skip = [ $1 = "tag" -o $1 = "untag" ]
+
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
 checkout = git clone -b 14.2 git@github.com:EGroupware/egroupware.git &&
