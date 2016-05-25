@@ -695,7 +695,7 @@ class addressbook_ui extends addressbook_bo
 
 				),
 				'business' => array(
-					'caption' => 'Buisness Address',
+					'caption' => 'Business Address',
 					'enabled' => 'javaScript:app.addressbook.geoLocation_enabled',
 					'onExecute' => 'javaScript:app.addressbook.geoLocationExec',
 
