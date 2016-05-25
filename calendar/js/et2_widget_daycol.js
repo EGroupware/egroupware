@@ -857,6 +857,9 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 	 */
 	position_event: function(event)
 	{
+		// If hidden, skip it - it takes too long
+		if(!this.div.is(':visible')) return;
+		
 		// Sort events into minimally-overlapping columns
 		var columns = this._spread_events();
 
