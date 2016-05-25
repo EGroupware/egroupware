@@ -924,8 +924,34 @@ app.classes.addressbook = AppJS.extend(
 	 */
 	geoLocation_enabled: function(_action, _selected)
 	{
+		// multiple selection is not supported
+		if (_selected.length>1) return false;
+
+		var url = egw.config('geolocation_url');
+		if (url) url = url[0];
+
+		// exit if no url or invalide url given
+		if (!url || typeof url === 'undefined' || typeof url !== 'string')
+		{
+			egw.debug('warn','no url or invalid url given as geoLocationUrl');
+			return false;
+		}
 		var content = egw.dataGetUIDdata(_selected[0].id);
-		return this.geoLocationUrl(content.data,_action.id === 'business'?'one':'two');
+		var type = _action.id === 'business'?'one':'two';
+		var addrs = [
+			content.data['adr_'+type+'_street'],
+			content.data['adr_'+type+'_locality'],
+			content.data['adr_'+type+'_countrycode'],
+			content.data['adr_'+type+'_postalcode']
+		];
+
+		var fields = '';
+		// Replcae placeholders with acctual values
+		for (var i=0;i < addrs.length; i++)
+		{
+			fields += addrs[i] ? addrs[i] : '';
+		}
+		return (url !== '' && fields !== '')?true:false;
 	},
 
 	/**
@@ -933,14 +959,16 @@ app.classes.addressbook = AppJS.extend(
 	 * site configuration
 	 *
 	 * @param {object} _data
-	 * @param {string} _type type of address, it can be either 'one' as business
-	 *	or 'two' as private address.
+	 * @param {string} _dest_type type of destination address ('one'| 'two')
+	 * @param {object} _src_data address data to be used as source contact data|coordination object
+	 * @param {string} _src_type type of source address ('browser'|'one'|'two')
+	 *
 	 *
 	 * @returns {Boolean|string} return url and return false if no address
 	 */
-	geoLocationUrl: function (_data, _type)
+	geoLocationUrl: function (_dest_data, _dest_type,_src_data, _src_type)
 	{
-		var type = _type || 'one';
+		var dest_type = _dest_type || 'one';
 		var url = egw.config('geolocation_url');
 		if (url) url = url[0];
 
@@ -952,22 +980,47 @@ app.classes.addressbook = AppJS.extend(
 		}
 
 		// array of placeholders with their representing values
-		var ph = [
-			{id:'s',val:_data['adr_'+type+'_street']},
-			{id:'t',val:_data['adr_'+type+'_locality']},
-			{id:'c',val:_data['adr_'+type+'_countrycode']},
-			{id:'z',val:_data['adr_'+type+'_postalcode']}
-		];
-		var empty = true;
+		var	addrs = [
 
-		// Replcae placeholders with acctual values
-		for (var i=0;i < ph.length; i++)
+			[ // source address
+				{id:'s0',val:_src_type === 'browser'?_src_data.latitude:_src_data['adr_'+_src_type+'_street']},
+				{id:'t0',val:_src_type === 'browser'?_src_data.longitude:_src_data['adr_'+_src_type+'_locality']},
+				{id:'c0',val:_src_type === 'browser'?'':_src_data['adr_'+_src_type+'_countrycode']},
+				{id:'z0',val:_src_type === 'browser'?'':_src_data['adr_'+_src_type+'_postalcode']}
+			],
+			[ // destination address
+				{id:'s1',val:_dest_data['adr_'+dest_type+'_street']},
+				{id:'t1',val:_dest_data['adr_'+dest_type+'_locality']},
+				{id:'c1',val:_dest_data['adr_'+dest_type+'_countrycode']},
+				{id:'z1',val:_dest_data['adr_'+dest_type+'_postalcode']}
+			]
+		];
+
+		var src_param = url.match(/{{%sr=.*%s}}/ig);
+		if (src_param[0])
 		{
-			empty = ph[i]['val']? false : true;
-			url = url.replace('%'+ph[i]['id'], ph[i]['val']? ph[i]['val'] : "");
+			src_param = src_param[0].replace(/{{$sr=/,'');
+			src_param = src_param.replace(/%sr}}/,'');
+			url = url.replace(/{{%sr=.*%sr}}/, src_param)
 		}
 
-		return (url !== '' && !empty ? url:false);
+		var d_param = url.match(/{{%d=.*%d}}/ig);
+		if (d_param[0])
+		{
+			d_param = d_param[0].replace(/{{%d=/,'');
+			d_param = d_param.replace(/%d}}/,'');
+			url = url.replace(/{{%d=.*%d}}/, d_param)
+		}
+
+		// Replcae placeholders with acctual values
+		for (var j=0;j<addrs.length;j++)
+		{
+			for (var i=0;i < addrs[j].length; i++)
+			{
+				url = url.replace('%'+addrs[j][i]['id'], addrs[j][i]['val']? addrs[j][i]['val'] : "");
+			}
+		}
+		return url !== ''? url : false;
 	},
 
 	/**
@@ -979,7 +1032,26 @@ app.classes.addressbook = AppJS.extend(
 	geoLocationExec: function (_action, _selected)
 	{
 		var content = egw.dataGetUIDdata(_selected[0].id);
-		var url = this.geoLocationUrl(content.data,_action.id === 'business'?'one':'two');
-		window.open(url,'_blank');
+		var geolocation_src = egw.preference('geolocation_src','addressbook');
+		var self = this;
+
+		if (geolocation_src === 'browser' && navigator.geolocation)
+		{
+			navigator.geolocation.getCurrentPosition(function(position){
+				if (position && position.coords)
+				{
+					var url = self.geoLocationUrl(content.data,_action.id === 'business'?'one':'two', position.coords, 'browser');
+					window.open(url,'_blank');
+				}
+			});
+		}
+		else
+		{
+			egw.json('addressbook.addressbook_ui.ajax_get_contact', [egw.user('account_id')],function(_data){
+				var url = self.geoLocationUrl(content.data,_action.id === 'business'?'one':'two', _data, geolocation_src === 'browser'?'one':geolocation_src);
+				window.open(url,'_blank');
+			}).sendRequest();
+
+		}
 	}
 });

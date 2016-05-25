@@ -686,18 +686,19 @@ class addressbook_ui extends addressbook_bo
 		$actions['geolocation'] = array(
 			'caption' => 'GeoLocation',
 			'icon' => 'map',
-			//'enabled' => 'javaScript:app.addressbook.geoLocation',
 			'group' => ++$group,
 			'children' => array (
 				'private' => array(
 					'caption' => 'Private Address',
 					'enabled' => 'javaScript:app.addressbook.geoLocation_enabled',
-					'onExecute' => 'javaScript:app.addressbook.geoLocationExec'
+					'onExecute' => 'javaScript:app.addressbook.geoLocationExec',
+
 				),
 				'business' => array(
 					'caption' => 'Buisness Address',
 					'enabled' => 'javaScript:app.addressbook.geoLocation_enabled',
-					'onExecute' => 'javaScript:app.addressbook.geoLocationExec'
+					'onExecute' => 'javaScript:app.addressbook.geoLocationExec',
+
 				)
 			)
 		);
@@ -1002,6 +1003,18 @@ window.egw_LAB.wait(function() {
 		));
 		// Success, just update selectbox to new value
 		Api\Json\Response::get()->data($new_id == $list_id ? "true" : $new_id);
+	}
+
+	/**
+	 * Ajax function to get contact data out of provided account_id
+	 *
+	 * @param type $account_id
+	 */
+	function ajax_get_contact ($account_id)
+	{
+		$bo = new Api\Contacts();
+		$contact = $bo->read('account:'.$account_id[0]);
+		Api\Json\Response::get()->data($contact);
 	}
 
 	/**

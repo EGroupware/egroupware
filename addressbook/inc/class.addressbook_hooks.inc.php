@@ -213,6 +213,22 @@ class addressbook_hooks
 			'admin'  => false,
 			'default'=> 'infolog',
 		);
+
+		$settings['geolocation_src'] = array(
+			'type'   => 'select',
+			'label'  => 'Default geolocation source address',
+			'name'   => 'geolocation_src',
+			'values' => array(
+				'browser' => lang('Browser location'),
+				'one' => lang('Business address'),
+				'two' => lang('Private address')
+			),
+			'help'   => 'Select a source address to be used in geolocation routing system',
+			'xmlrpc' => True,
+			'admin'  => false,
+			'default'=> 'browser',
+		);
+
 		$settings[] = array(
 			'type'  => 'section',
 			'title' => lang('Data exchange settings'),
@@ -528,8 +544,9 @@ class addressbook_hooks
 		}
 		// geolocation pre-defined maps
 		$geoLocation = array(
-			array('id' => 'http://maps.google.com/?q=%s+%t+%z+%c', 'label' => 'Google Maps'),
-			array('id' => 'https://www.bing.com/maps/?q=%s+%t+%z+%c', 'label' => 'Bing Maps')
+			array('id' => 'https://maps.here.com/directions/drive{{%sr=/%sr}}%s0,%t0,%z0,%c0{{%d=/%d}}%s1,%t1,%z1', 'label' => 'Here Maps'),
+			array('id' => 'http://maps.google.com/{{%sr=?saddr=%sr}}%s0+%t0+%z0+%c0{{%d=&daddr=%d}}%s1+%t1+%z1+%c1', 'label' => 'Google Maps'),
+			array('id' => 'https://www.bing.com/maps/{{%sr=?rtp=adr.%sr}}%s0+%t0+%z0+%c0{{%d=~adr.%d}}%s1+%t1+%z1+%c1', 'label' => 'Bing Maps')
 		);
 		$ret = array(
 			'sel_options' => array(
