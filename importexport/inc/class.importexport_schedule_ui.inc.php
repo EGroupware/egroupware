@@ -36,6 +36,7 @@ class importexport_schedule_ui
 
 	public function index($content = array())
 	{
+		$async = new Api\Asyncservice();
 		if(is_array($content['scheduled']))
 		{
 			foreach($content['scheduled'] as $row)
@@ -43,11 +44,11 @@ class importexport_schedule_ui
 				if($row['delete'])
 				{
 					$key = urldecode(key($row['delete']));
-					ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
+					$async->cancel_timer($key);
 				}
 			}
 		}
-		$async_list = ExecMethod('phpgwapi.asyncservice.read', 'importexport%');
+		$async_list = $async->read('importexport%');
 		$data = array();
 		if(is_array($async_list))
 		{
@@ -344,7 +345,7 @@ class importexport_schedule_ui
 		{
 			return self::is__writable($path.'/'.uniqid(mt_rand()).'.tmp');
 		}
-		
+
 		// check tmp file for read/write capabilities
 		$rm = file_exists($path);
 		$f = @fopen($path, 'a');
@@ -618,7 +619,7 @@ class importexport_schedule_ui
 		$async = new Api\Asyncservice();
 		$jobs = $async->read($id);
 		$job = $jobs[$id];
-		
+
 		if(is_array($job))
 		{
 			$async->cancel_timer($id);

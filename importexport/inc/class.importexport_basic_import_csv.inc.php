@@ -192,7 +192,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			{
 				set_time_limit(10);
 			}
-			
+
 			// Keep a few records for preview, but process the whole file
 			if($this->dry_run && $import_csv->get_current_position() < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])
 			{
@@ -481,7 +481,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		if(!is_null($n_given)) $n_given = trim($n_given);
 		if (!is_object($contacts))
 		{
-			$contacts =& CreateObject('phpgwapi.contacts');
+			$contacts = new Api\Contacts();
 		}
 		if (!is_null($org_name))	// org_name given?
 		{
@@ -649,7 +649,7 @@ error_log("Searching for $custom_field = $value");
 	public function get_warnings() {
 		return $this->warnings;
 	}
-	
+
 	/**
 	* Returns errors that were encountered during importing
 	* Maximum of one error message per record, but you can append if you need to
