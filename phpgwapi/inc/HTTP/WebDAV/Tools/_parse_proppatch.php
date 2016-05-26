@@ -94,10 +94,10 @@ class _parse_proppatch
      * constructor
      *
      * @param  string  path of input stream
-     * @param boolean $store_request=false if true whole request data will be made available in $this->request
+     * @param boolean $store_request =false if true whole request data will be made available in $this->request
      * @access public
      */
-    function _parse_proppatch($path, $store_request=false)
+    function __construct($path, $store_request=false)
     {
         $this->success = true;
 

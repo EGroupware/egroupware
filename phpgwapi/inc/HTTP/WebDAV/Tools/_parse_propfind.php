@@ -109,9 +109,9 @@ class _parse_propfind
      *
      * @access public
      * @param string $path
-     * @param boolean $store_request=false if true whole request data will be made available in $this->request
+     * @param boolean $store_request =false if true whole request data will be made available in $this->request
      */
-    function _parse_propfind($path, $store_request=false)
+    function __construct($path, $store_request=false)
     {
         // success state flag
         $this->success = true;
