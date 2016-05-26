@@ -1,4 +1,4 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	es-es	¡%1 '%2' NO existe, no tiene permiso de lectura para el servidor web o no contiene ninguna instalación de eGroupWare!
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	es-es	¡%1 '%2' NO existe, no tiene permiso de lectura para el servidor web o no contiene ninguna instalación de EGroupware!
 %1 already exists in %2.	setup	es-es	%1 ya existe en %2.
 %1 created in %2.	setup	es-es	%1 creado en %2.
 %1 database %2 on %3 already contains the following tables:	setup	es-es	La base de datos %1 %2 en %3 ya contiene las siguientes tablas:
@@ -32,7 +32,7 @@ activate safe password check	setup	es-es	Activar la comprobación para guardar c
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	es-es	Añadir usuarios creados automáticamente a este grupo (si está vacío, se le asignará el grupo predeterminado)
 add new database instance (egw domain)	setup	es-es	Añadir nueva instancia de base de datos (dominio eGW)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	es-es	añadir o editar un dominio: [nombre dominio (default)], [nombre base de datos (egroupware)], [usuario de la base de datos (egroupware)], contraseña de la base de datos,[tipo de base de datos [mysql)], [servidor de la base de datos (localhost)],[puerto de la base de datos (específico de la base de datos)], [usuario de configuración (como encabezado)], [contraseña de configuración (como encabezado)]
-adding, editing or deleting an egroupware domain / database instance:	setup	es-es	Añadir, editar o borrar un dominio o instancia de eGroupWare
+adding, editing or deleting an egroupware domain / database instance:	setup	es-es	Añadir, editar o borrar un dominio o instancia de EGroupware
 additional options and there defaults (in brackets)	setup	es-es	Opciones adicionales y predeterminadas (entre corchetes)
 additional settings	setup	es-es	Configuración adicional
 admin account successful created.	setup	es-es	La cuenta de administrador se ha creado correctamente
@@ -143,7 +143,7 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	es-es	Comprobando si PEAR %1 está instalado
 checking php.ini	setup	es-es	Comprobando php.ini
 checking required php version %1 (recommended %2)	setup	es-es	Comprobando la versión necesaria de PHP: %1 (recomendada: %2)
-checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
+checking the egroupware installation	setup	es-es	Comprobando la instalación de EGroupware
 checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	es-es	comprueba si eGrouWare está instalado, sus versiones y las actualizaciones necesarias (para los valores de retorno, ver --exit-codes)
 clear cache and register hooks	setup	es-es	Limpiar la caché y registrar los hooks
 click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
@@ -175,7 +175,7 @@ create admin account	setup	es-es	Crear cuenta de administración
 create database	setup	es-es	Crear base de datos
 create demo accounts	setup	es-es	Crear cuentas de demostración
 create one now	setup	es-es	Crear una ahora
-create or edit the egroupware configuration file: header.inc.php:	setup	es-es	Crear o editar el fichero de configuración de eGroupWare: header,inc.php:
+create or edit the egroupware configuration file: header.inc.php:	setup	es-es	Crear o editar el fichero de configuración de EGroupware: header,inc.php:
 create the empty database -	setup	es-es	Crear la base de datos en blanco
 create the empty database and grant user permissions -	setup	es-es	Crear la base de datos en blanco y conceder permisos a los usuarios -
 create your header.inc.php	setup	es-es	Crear un fichero header.inc.php propio
@@ -242,15 +242,15 @@ edit current configuration	setup	es-es	Editar configuración actual
 edit your existing header.inc.php	setup	es-es	Editar el fichero header.inc.php existente
 edit your header.inc.php	setup	es-es	Editar el fichero header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	es-es	p. ej. /egroupware o http://domain.com/egroupware, predeterminado: %1
-egroupware administration manual	setup	es-es	Manual de Administración de eGroupWare
+egroupware administration manual	setup	es-es	Manual de Administración de EGroupware
 egroupware api needs a database (schema) update from version %1 to %2!	setup	es-es	¡La API de eGrupWare necesita una actualización del esquema de la base de datos de la versión %1 a %2!
-egroupware api version %1 found.	setup	es-es	Se ha encontrado la versión %1 d la API de eGroupWare
-egroupware configuration file (header.inc.php) does not exist.	setup	es-es	El fichero de configuración de eGroupWare (header.inc.php) NO existe.
-egroupware configuration file (header.inc.php) version %1 exists%2	setup	es-es	El fichero de configuración de eGroupWare (header.inc.php) versión %1 existe%2.
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	es-es	El fichero de configuración de eGroupWare (header.inc.php) ya existe. ¡Necesita usar --edit-header o borrarlo primero!
-egroupware domain/instance %1(%2):	setup	es-es	Instancia o dominio de eGroupWare %1(%2):
-egroupware is already installed!	setup	es-es	¡eGroupWare ya está instalado!
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	es-es	El código fuente de eGroupWare en '%1' no está completo: ¡¡falta el fichero '%2'!!
+egroupware api version %1 found.	setup	es-es	Se ha encontrado la versión %1 d la API de EGroupware
+egroupware configuration file (header.inc.php) does not exist.	setup	es-es	El fichero de configuración de EGroupware (header.inc.php) NO existe.
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	es-es	El fichero de configuración de EGroupware (header.inc.php) versión %1 existe%2.
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	es-es	El fichero de configuración de EGroupware (header.inc.php) ya existe. ¡Necesita usar --edit-header o borrarlo primero!
+egroupware domain/instance %1(%2):	setup	es-es	Instancia o dominio de EGroupware %1(%2):
+egroupware is already installed!	setup	es-es	¡EGroupware ya está instalado!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	es-es	El código fuente de EGroupware en '%1' no está completo: ¡¡falta el fichero '%2'!!
 email (standard maildomain should be set)	setup	es-es	correo (debe indicarse el dominio de correo estándar)
 emailadmin profile updated:	setup	es-es	Se ha actualizado el perfil de administración de correo:
 enable for extra debug-messages	setup	es-es	activar los mensajes de depuración extra
@@ -263,7 +263,7 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	es-es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br />Ejemplo: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	es-es	Introduzca la ruta completa al directorio de la copia de seguridad.<br />Si está vacio: directorio de los ficheros
 enter the hostname of the machine on which this server is running	setup	es-es	Introduzca el nombre de la máquina en la se está ejecutando esta instalación
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	es-es	Introduzca la URL de eGroupWare.<br />Ejemplo: http://www.dominio.com/egroupware o   /egroupware<br /><b>Sin barra invertida al final</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	es-es	Introduzca la URL de EGroupware.<br />Ejemplo: http://www.dominio.com/egroupware o   /egroupware<br /><b>Sin barra invertida al final</b>
 enter the site password for peer servers	setup	es-es	Introduzca la contraseña del sitio para los servidores peer
 enter the site username for peer servers	setup	es-es	Introduzca el nombre de usuario del sitio para servidores peer
 enter the title for your site	setup	es-es	Introduzca el título para su sitio
@@ -380,15 +380,15 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	es-es	Administrar aplicaciones
 manage languages	setup	es-es	Administrar idiomas
 manual / help	setup	es-es	Manual / Ayuda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	es-es	max_execution_time está puesto a menos de 30 (segundos): eGroupWare a veces necesita un valor mayor para execution_time, así que puede haber fallos ocasionales.
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	es-es	max_execution_time está puesto a menos de 30 (segundos): EGroupware a veces necesita un valor mayor para execution_time, así que puede haber fallos ocasionales.
 maximum account id (e.g. 65535 or 1000000)	setup	es-es	Id máximo de cuenta (p. ej. 65535 o 1000000)
 may be broken	setup	es-es	puede estar roto
 mcrypt algorithm (default tripledes)	setup	es-es	Algoritmo mcrypt (predeterminado TRIPLEDES)
 mcrypt initialization vector	setup	es-es	Vector de inicialización MCrypt
 mcrypt mode (default cbc)	setup	es-es	Modo de MCrypt (predeterminado CBC)
 mcrypt settings (requires mcrypt php extension)	setup	es-es	Configuración de MCrypt (necesita la extensión PHP mcrypt)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	es-es	memory_limit está puesto a menos de %1. Algunas aplicaciones de eGroupWare necesitan más de los recomendados 8M, así que puede haber fallos ocasionales
-migration between egroupware account repositories	setup	es-es	Migración entre repositorios de cuentas de eGroupWare
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	es-es	memory_limit está puesto a menos de %1. Algunas aplicaciones de EGroupware necesitan más de los recomendados 8M, así que puede haber fallos ocasionales
+migration between egroupware account repositories	setup	es-es	Migración entre repositorios de cuentas de EGroupware
 min backup count	setup	es-es	Número ḿínimo de copias de seguridad que mantener (cero: todas / sin límite)
 minimum account id (e.g. 500 or 100, etc.)	setup	es-es	Id mínimo para la cuenta (p. ej. 500 ó 100, etc)
 minute	setup	es-es	minuto
@@ -400,7 +400,7 @@ month	setup	es-es	mes
 mount backup directory to %1	setup	es-es	Montar el directorio de la copia de seguridad en %1
 multi-language support setup	setup	es-es	Configuración del soporte multi-Idioma
 name of database	setup	es-es	Nombre de la base de datos
-name of db user egroupware uses to connect	setup	es-es	Nombre del usuario de la base de datos que usa eGroupWare para conectar
+name of db user egroupware uses to connect	setup	es-es	Nombre del usuario de la base de datos que usa EGroupware para conectar
 never	setup	es-es	nunca
 new	setup	es-es	Nueva
 next run	setup	es-es	siguiente ejecución
@@ -408,14 +408,14 @@ no	setup	es-es	No
 no %1 support found. disabling	setup	es-es	No se encontró soporte para %1. Deshabilitando
 no accounts existing	setup	es-es	No existen cuentas
 no algorithms available	setup	es-es	no hay algoritmos disponibles
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	es-es	¡No existe ningún dominio ni instancia de eGroupWare! Use --edit-header --domain para añadir uno (--usage da más opciones).
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	es-es	¡No existe ningún dominio ni instancia de EGroupware! Use --edit-header --domain para añadir uno (--usage da más opciones).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	es-es	¡No se ha indicado ninguna contraseña para el administrador de encabezados! Use --edit-header <contraseña>[,<usuario>] para poner una (--usage da más opciones).
 no modes available	setup	es-es	No hay modos disponibles
 no update necessary, domain %1(%2) is up to date.	setup	es-es	No hace falta actualizar. El dominio %1(%2) está actualizado.
 no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	es-es	¡No se ha indicado una zona horaria válida! ("%1" NO es suficiente, tiene que usar un identificador de zona horaria como "%2". Vea la %3lista completa de identificadores válidos%4)
 no xml support found. disabling	setup	es-es	No se encontró soporte para XML. Desactivando.
 not	setup	es-es	no
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	es-es	No todos los algoritmos y modos de mcrypt funcionan con eGroupWare. Si tiene problemas, intente desactivarlo.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	es-es	No todos los algoritmos y modos de mcrypt funcionan con EGroupware. Si tiene problemas, intente desactivarlo.
 not complete	setup	es-es	sin completar
 not completed	setup	es-es	Sin completar
 not ready for this stage yet	setup	es-es	No está listo para esta fase todavía
@@ -439,13 +439,13 @@ password for smtp-authentication	setup	es-es	Contraseña para identificacion SMT
 password needed for domain configuration.	setup	es-es	Contraseña necesaria para la configuración del dominio.
 password of db user	setup	es-es	Contraseña del usuario de la base de datos
 passwords did not match, please re-enter	setup	es-es	Las contraseñas no coinciden. Por favor, vuelva a introducirlas
-path (not url!) to your egroupware installation.	setup	es-es	Ruta (¡no URL!) a la instalación de eGroupWare.
+path (not url!) to your egroupware installation.	setup	es-es	Ruta (¡no URL!) a la instalación de EGroupware.
 path information	setup	es-es	Información de la ruta
-path of egroupware install directory (default auto-detected)	setup	es-es	Ruta al directorio de instalación de eGroupWare (por defecto se detecta automáticamente)
+path of egroupware install directory (default auto-detected)	setup	es-es	Ruta al directorio de instalación de EGroupware (por defecto se detecta automáticamente)
 path to user and group files has to be outside of the webservers document-root!!!	setup	es-es	¡¡La ruta a los ficheros de usuarios y grupos HA DE ESTAR FUERA de la raíz del servidor web!!
 path to various directories: have to exist and be writeable by the webserver	setup	es-es	ruta a varios directorios: tienen que existir y tener permiso de escritura para el servidor web
 pear (%1) is a php repository and is usually in a package called %2.	setup	es-es	PEAR (%1) es un repositorio PHP y normalmente está en un paquete llamado %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	es-es	Muchas aplicaciones eGroupWare requieren las extensiones PEAR, por lo que PEAR es una base requerida para cada extensión.
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	es-es	Muchas aplicaciones EGroupware requieren las extensiones PEAR, por lo que PEAR es una base requerida para cada extensión.
 pear%1 is needed by: %2.	setup	es-es	Se necesita PEAR para: %2.
 pem certificate	setup	es-es	Certificado PEM
 persistent connections	setup	es-es	Conexiones persistentes
@@ -454,13 +454,13 @@ php proxy	setup	es-es	Proxy PHP
 php session handler enabled in php.ini	setup	es-es	Manejador de sesiones PHP activado en php.ini
 please check for sql scripts within the application's directory	setup	es-es	Por favor, compruebe los scripts sql en el directorio de la aplicación
 please check read/write permissions on directories, or back up and use another option.	setup	es-es	Por favor, compruebe los permisos de lectura y escritura en los directorios, o vuelva y use otra opción
-please configure egroupware for your environment	setup	es-es	Por favor, configure eGroupWare para su entorno
+please configure egroupware for your environment	setup	es-es	Por favor, configure EGroupware para su entorno
 please consult the %1.	setup	es-es	Por favor, consulte el %1
 please download a recent version from %1 and install it as %2.	setup	es-es	Por favor, descargue una versión reciente de %1 e instálela como %2.
 please fix the above errors (%1) and warnings(%2)	setup	es-es	Por favor, corrija los errores de arriba (%1) y avisos (%2)
 please install	setup	es-es	Por favor, instale
 please login	setup	es-es	Por favor, inicie la sesión
-please login to egroupware and run the admin application for additional site configuration	setup	es-es	Por favor, inicie la sesión en eGroupWare y ejecute la aplicación de administración para configuración adicional del sitio
+please login to egroupware and run the admin application for additional site configuration	setup	es-es	Por favor, inicie la sesión en EGroupware y ejecute la aplicación de administración para configuración adicional del sitio
 please make the following change in your php.ini	setup	es-es	Por favor, haga el siguiente cambio en su php.ini
 please wait...	setup	es-es	Por favor, espere...
 pop/imap mail server hostname or ip address	setup	es-es	Nombre o dirección IP del servidor de correo POP/IMAP
@@ -480,7 +480,7 @@ read translations from	setup	es-es	Leer traducciones de
 readable by the webserver	setup	es-es	lectura para el servidor web
 really uninstall all applications	setup	es-es	REALMENTE quiere desinstalar todas las aplicaciones
 refusing to delete dn "%1"!	setup	es-es	¡Se ha rechazado borrar dn "%1"!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	es-es	register_globals está activado, y eGroupWare NO lo necesita, así que es más seguro tenerlo en Off (desactivado).
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	es-es	register_globals está activado, y EGroupware NO lo necesita, así que es más seguro tenerlo en Off (desactivado).
 registered	setup	es-es	registrado
 rejected lines	setup	es-es	Líneas rechazadas
 remove	setup	es-es	Eliminar
@@ -542,7 +542,7 @@ some or all of its tables are missing	setup	es-es	Algunas o todas de sus tablas 
 sources deleted/missing	setup	es-es	El código fuente falta o ha sido borrado
 sql encryption type	setup	es-es	Tipo de cifrado SQL para contraseñas (predeterminado - md5)
 ssl validation:	setup	es-es	Validación SSL:
-standard (login-name identical to egroupware user-name)	setup	es-es	estándar (el usuario es idéntico al de eGroupWare)
+standard (login-name identical to egroupware user-name)	setup	es-es	estándar (el usuario es idéntico al de EGroupware)
 standard mailserver settings (used for mail authentication too)	setup	es-es	Configuración del servidor de correo estándar (también se usa para identificación de correo)
 standard, as defined above	setup	es-es	Estándar, como se ha definido arriba
 start the postmaster	setup	es-es	Iniciar el postmaster
@@ -573,7 +573,7 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	es-es	La ext
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	es-es	La extensión ctype es necesaria para que HTMLpurifier compruebe el contenido de FCKeditor contra Cross Site Scripting.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	es-es	El tipo de base de datos en predeterminados (%1) no está soportado en este servidor. Usando el primer tipo soportado
 the file	setup	es-es	el fichero
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	es-es	El primer paso al instalar eGroupWare es asegurarse que el entorno tiene la configuración necesaria para ejecutar la aplicación correctamente.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	es-es	El primer paso al instalar EGroupware es asegurarse que el entorno tiene la configuración necesaria para ejecutar la aplicación correctamente.
 the following applications are not installed:	setup	es-es	Las siguients aplicaciones NO están instaladas:
 the following applications are required, but not installed:	setup	es-es	Se requieren las siguientes aplicaciones, pero NO están instaladas:
 the following applications need to be upgraded:	setup	es-es	Las siguientes aplicaciones necesitan una actualización:
@@ -596,10 +596,10 @@ this has to be outside the webservers document-root!!!	setup	es-es	¡Tiene que e
 this might take a while, please wait ...	setup	es-es	Esto puede tardar un poco. Por favor, espere...
 this program lets you backup your database, schedule a backup or restore it.	setup	es-es	Este programa permite hacer copia de seguridad de la base de datos, planificar una copia o restaurarla.
 this program will convert your database to a new system-charset.	setup	es-es	Este programa convertirá la base de datos a un nuevo juego de caracteres del sistema.
-this program will help you upgrade or install different languages for egroupware	setup	es-es	Este programa le ayudará a actualizar o instalar los distintos idiomas para eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	es-es	Este programa le ayudará a actualizar o instalar los distintos idiomas para EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	es-es	Debe ser una cadena de unos 30 caracteres.<br />Nota: la predeterminada se ha generado aleatoriamente.
 this stage is completed<br />	setup	es-es	Esta fase está completada<br />
-this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	es-es	Esto creará un primer usuario en eGroupWare o restablecerá la contraseña y derechos de administrador de un usuario existente
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	es-es	Esto creará un primer usuario en EGroupware o restablecerá la contraseña y derechos de administrador de un usuario existente
 to a version it does not know about	setup	es-es	a una versión que no conoce
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	es-es	para permitir identificación por contraseña, añadir la línea siguiente al fichero pg_hba.conf (encima de las otras) Y reiniciar postgres:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	es-es	Para cambiar el juego de caracteres: haga una copia de seguridad de la base de datos, desinstale todas las aplicaciones y reinstale la copia de seguridad marcando la opción "convertir la copia de seguridad al juego de caracteres seleccionado".
@@ -609,7 +609,7 @@ translations added	setup	es-es	Traducciones añadidas
 translations removed	setup	es-es	Traducciones eliminadas
 translations upgraded	setup	es-es	Traducciones actualizadas
 true	setup	es-es	Verdadero
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	es-es	Intente configurar php para soportar uno de los mencionados SGBD, o instale eGroupWare a mano.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	es-es	Intente configurar php para soportar uno de los mencionados SGBD, o instale EGroupware a mano.
 two weeks	setup	es-es	dos semanas
 uninstall	setup	es-es	desinstalar
 uninstall all applications	setup	es-es	Desinstalar todas las aplicaciones
@@ -650,13 +650,13 @@ we can proceed	setup	es-es	Podemos proceder
 we could not determine the version of %1, please make sure it is at least %2	setup	es-es	No se ha podido determinar la versión de %1. Por favor, asegúrese de es al menos %2
 we will automatically update your tables/records to %1	setup	es-es	Actualizaremos automáticamente sus tablas/registros a %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	es-es	Ahora se ejecutarán una serie de pruebas, que pueden durar unos pocos minutos. Pulse el enlace de debajo para proceder.
-welcome to the egroupware installation	setup	es-es	Bienvenido a la instalación de eGroupWare
-where should egroupware store file content	setup	es-es	Dónde debe eGroupWare almacenar el contenido de los ficheros
-which database type do you want to use with egroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con eGroupWare?
+welcome to the egroupware installation	setup	es-es	Bienvenido a la instalación de EGroupware
+where should egroupware store file content	setup	es-es	Dónde debe EGroupware almacenar el contenido de los ficheros
+which database type do you want to use with egroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con EGroupware?
 world readable	setup	es-es	lectura para todo el mundo
 world writable	setup	es-es	escritura para todo el mundo
-would you like egroupware to cache the phpgw info array ?	setup	es-es	Desea que eGroupWare guarde en caché el array de phpgw info?
-would you like egroupware to check for a new version<br />when admins login ?	setup	es-es	¿Desea que eGroupWare compruebe si existe una versión nueva<br />cuando un administrador inicie la sesión?
+would you like egroupware to cache the phpgw info array ?	setup	es-es	Desea que EGroupware guarde en caché el array de phpgw info?
+would you like egroupware to check for a new version<br />when admins login ?	setup	es-es	¿Desea que EGroupware compruebe si existe una versión nueva<br />cuando un administrador inicie la sesión?
 would you like to show each application's upgrade status ?	setup	es-es	¿Desea mostrar el estado de la actualización de cada aplicación?
 writable by the webserver	setup	es-es	escritura para el servidor web
 write	setup	es-es	Escribir
@@ -664,13 +664,13 @@ wrong credentials to access the header.inc.php file!	setup	es-es	¡Las credencia
 year	setup	es-es	año
 yes	setup	es-es	Sí
 yes, with lowercase usernames	setup	es-es	Sí, con los nombres de usuario en minúsculas
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	es-es	Parece que está ejecutando una versión pre-beta de eGroupWare.<br />Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas en la instalación.<br />Puede que desee actualizar primero a la 0.9.10 (la última versión con soporte de actualizaciones pre-beta)<br />y luego actualizar desde ahí a la versión actual.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	es-es	Parece que está ejecutando una versión antigua de PHP<br />Se recomienda que actualice a una nueva versión.<br />Las versiones antiguas de PHP puede que no funcionen correctamente o ni siquiera funcionen en eGroupWare.<br /><br />Por favor, actualice al menos a la versión %1
-you appear to be running version %1 of egroupware	setup	es-es	Parece que está ejecutando la versión %1 de eGroupWare
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	es-es	Parece que está ejecutando una versión pre-beta de EGroupware.<br />Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas en la instalación.<br />Puede que desee actualizar primero a la 0.9.10 (la última versión con soporte de actualizaciones pre-beta)<br />y luego actualizar desde ahí a la versión actual.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	es-es	Parece que está ejecutando una versión antigua de PHP<br />Se recomienda que actualice a una nueva versión.<br />Las versiones antiguas de PHP puede que no funcionen correctamente o ni siquiera funcionen en EGroupware.<br /><br />Por favor, actualice al menos a la versión %1
+you appear to be running version %1 of egroupware	setup	es-es	Parece que está ejecutando la versión %1 de EGroupware
 you appear to have %1 support.	setup	es-es	Parece que tiene soporte para %1.
 you appear to have xml support enabled	setup	es-es	Parece que tiene activado el soporte XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	es-es	Está listo para esta fase, pero esta fase aún no está escrita.<br />
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	es-es	Está usando la versión %1 de PHP. eGroupWare tiene como requisito %2 o superior, siendo la recomendada PHP %3.
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	es-es	Está usando la versión %1 de PHP. EGroupware tiene como requisito %2 o superior, siendo la recomendada PHP %3.
 you can install it by running:	setup	es-es	Puede instalarlo ejecutando:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	es-es	También puede usar el usuario y contraseña del encabezado para cada dominio. Si la contraseña no se indica en la línea de comando, se lee desde la variable de entorno EGW_CLI_PASSWORD, o se le pregunta al usuario.
 you didn't enter a config password for domain %1	setup	es-es	No ha introducido una contraseña de configuración para el dominio %1
@@ -682,22 +682,22 @@ you dont have jpgraph version %1 or higher installed! it is needed from projectm
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	es-es	¡No ha creado todavía el fichero header.inc.php!<br />Puede crearlo ahora.
 you have successfully logged out	setup	es-es	Ha cerrado la sesión correctamente
 you must enter a username for the admin	setup	es-es	Debe introducir un nombre de usuario para el administrador
-you need to add at least one egroupware domain / database instance.	setup	es-es	Necesita añadir al menos una instancia o dominio de la base de datos de eGroupWare.
-you need to configure egroupware:	setup	es-es	Necesita configurar eGroupWare:
+you need to add at least one egroupware domain / database instance.	setup	es-es	Necesita añadir al menos una instancia o dominio de la base de datos de EGroupware.
+you need to configure egroupware:	setup	es-es	Necesita configurar EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	es-es	¡Necesita corregir los errores de arriba, antes de que se pueda escribir el fichero de configuración header.inc.php!
 you need to select your current charset!	setup	es-es	¡Necesita seleccionar el juego de caracteres!
 you need to specify a password!	setup	es-es	¡Necesita especificar una contraseña!
 you should %1log out%2 and in again, to update your current session!	setup	es-es	¡Debe %1cerrar sesión%2 e iniciarla de nuevo, para actualizar su sesión actual!
 you should either install the sources or uninstall it, to get rid of the tables	setup	es-es	Tiene que instalar el código fuente o desinstalarlo para deshacerse de las tablas
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	es-es	Usted puede desinstalarla y volverla a instalar, o puede intentar una reparación manual
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	es-es	¡¡NO podrá iniciar sesión en eGroupWare usando sesiones PHP: "la sesión no se pudo verificar"!!
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	es-es	¡¡NO podrá iniciar sesión en EGroupware usando sesiones PHP: "la sesión no se pudo verificar"!!
 you're using an old configuration file format...	setup	es-es	Está usando un fichero de configuración con formato antiguo
 your applications are current	setup	es-es	Sus aplicaciones están actualizadas
 your backup directory '%1' %2	setup	es-es	Su directorio de copias '%1' %2
 your database does not exist	setup	es-es	Su base de datos no existe
 your database is not working!	setup	es-es	¡Su base de datos no está funcionando!
 your database is working, but you dont have any applications installed	setup	es-es	Su base de datos está funcionando, pero no tiene aplicaciones instaladas
-your egroupware api is current	setup	es-es	La API de eGroupWare está actualizada
+your egroupware api is current	setup	es-es	La API de EGroupware está actualizada
 your files directory '%1' %2	setup	es-es	Su directorio de ficheros '%1' %2
 your header admin password is not set. please set it now!	setup	es-es	La contraseña de administrador de cabeceras no está configurada. Por favor, ponga una ahora.
 your header.inc.php needs upgrading.	setup	es-es	Su header.inc.php necesita actualización

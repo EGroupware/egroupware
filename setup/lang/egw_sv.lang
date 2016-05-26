@@ -1,4 +1,4 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	sv	%1 '%2' finns inte, är inte läsbar av webbservern eller innehåller ingen eGroupWare installation!
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	sv	%1 '%2' finns inte, är inte läsbar av webbservern eller innehåller ingen EGroupware installation!
 %1 already exists in %2.	setup	sv	%1 finns redan i %2
 %1 created in %2.	setup	sv	%1 skapad i %2
 %1 does not exist !!!	setup	sv	%1 existerar inte!
@@ -21,7 +21,7 @@ activate safe password check	setup	sv	Aktivera säkra lösenords kontrollen
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sv	Lägg till automatiskt skapade användare till denna grupp ('Default' kommer att användas om denna är tom)
 add new database instance (egw domain)	setup	sv	Lägg till ny databas instans (eGW domän)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	sv	Lägg till eller ändra en domän: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
-adding, editing or deleting an egroupware domain / database instance:	setup	sv	Lägger till, ändrar eller raderar en eGroupWare domän / databas instans:
+adding, editing or deleting an egroupware domain / database instance:	setup	sv	Lägger till, ändrar eller raderar en EGroupware domän / databas instans:
 additional options and there defaults (in brackets)	setup	sv	Övriga inställningar och deras standard (inom klammer)
 additional settings	setup	sv	Övriga inställningar
 admin account successful created.	setup	sv	Administratörs konto skapad
@@ -111,8 +111,8 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	sv	Kontrollerar att PEAR%1 är installerad
 checking php.ini	setup	sv	Kontrollerar php.ini
 checking required php version %1 (recommended %2)	setup	sv	Kontrollerar PHP version %1 (recommenderar %2)
-checking the egroupware installation	setup	sv	Kontrollerar eGroupWare installationen
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	sv	Kontrollerar om eGroupWare är installerat, dess version och nödvändiga uppdateringar (retur kod se --exit-codes)
+checking the egroupware installation	setup	sv	Kontrollerar EGroupware installationen
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	sv	Kontrollerar om EGroupware är installerat, dess version och nödvändiga uppdateringar (retur kod se --exit-codes)
 click <a href="index.php">here</a> to return to setup.	setup	sv	Klicka <a href="index.php">här</a> för att återgå till installationen
 click here	setup	sv	Klicka här
 click here to re-run the installation tests	setup	sv	Klicka här för att kontrollera på nytt
@@ -141,7 +141,7 @@ create admin account	setup	sv	Skapa administratörs konto
 create database	setup	sv	Skapa databas
 create demo accounts	setup	sv	Skapa demo konton
 create one now	setup	sv	Skapa ett nu
-create or edit the egroupware configuration file: header.inc.php:	setup	sv	Skapa eller ändra eGroupWare konfigurationsfil: header.inc.php:
+create or edit the egroupware configuration file: header.inc.php:	setup	sv	Skapa eller ändra EGroupware konfigurationsfil: header.inc.php:
 create the empty database -	setup	sv	Skapa den tomma databasen
 create the empty database and grant user permissions -	setup	sv	Skapa den tomma databasen och tilldela användarkontot behörighet
 create your header.inc.php	setup	sv	Skapa din header.inc.php
@@ -202,15 +202,15 @@ edit current configuration	setup	sv	Redigera nuvarande konfiguration
 edit your existing header.inc.php	setup	sv	Redigera din existerande header.inc.php
 edit your header.inc.php	setup	sv	Redigera din header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	sv	t.ex. /egroupware eller http://domain.com/egroupware, standard: %1
-egroupware administration manual	setup	sv	eGroupWare administrationsmanual
-egroupware api needs a database (schema) update from version %1 to %2!	setup	sv	eGroupWare API behöver en databas (schema) uppdatering från version %1 till %2!
-egroupware api version %1 found.	setup	sv	eGroupWare API version %1
-egroupware configuration file (header.inc.php) does not exist.	setup	sv	eGroupWare konfigurationsfil (header.inc.php) finns inte!
-egroupware configuration file (header.inc.php) version %1 exists%2	setup	sv	eGroupWare konfigurationsfil (header.inc.php) version %1 %2
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	sv	eGroupWare konfigurationsfil (header.inc.php) finns redan. Använd --edit-header eller radera den först!
-egroupware domain/instance %1(%2):	setup	sv	eGroupWare domän/instans %1(%2):
-egroupware is already installed!	setup	sv	eGroupWare är redan installerat!
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	sv	eGroupWare kääkod i '%1' är inte komplett. Filen '%2' saknas!
+egroupware administration manual	setup	sv	EGroupware administrationsmanual
+egroupware api needs a database (schema) update from version %1 to %2!	setup	sv	EGroupware API behöver en databas (schema) uppdatering från version %1 till %2!
+egroupware api version %1 found.	setup	sv	EGroupware API version %1
+egroupware configuration file (header.inc.php) does not exist.	setup	sv	EGroupware konfigurationsfil (header.inc.php) finns inte!
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	sv	EGroupware konfigurationsfil (header.inc.php) version %1 %2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	sv	EGroupware konfigurationsfil (header.inc.php) finns redan. Använd --edit-header eller radera den först!
+egroupware domain/instance %1(%2):	setup	sv	EGroupware domän/instans %1(%2):
+egroupware is already installed!	setup	sv	EGroupware är redan installerat!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	sv	EGroupware kääkod i '%1' är inte komplett. Filen '%2' saknas!
 emailadmin profile updated:	setup	sv	E-postadmin profil uppdaterades:
 enable for extra debug-messages	setup	sv	Visa extra debug information
 enable mcrypt	setup	sv	Aktivera MCrypt
@@ -222,7 +222,7 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	sv	Ange fullständig sökväg för användar- och gruppfiler <br />T ex: /files, e:\files
 enter the full path to the backup directory.<br />if empty: files directory	setup	sv	Ange fullständig sökväg för backupkatalog <br />om tomt: samma som användarfiler
 enter the hostname of the machine on which this server is running	setup	sv	Ange värdnamn för maskinen som kör denna server
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sv	Ange eGroupWare:s URL.<br />T ex: http://www.doman.com/egroupware  eller  /egroupware<br /><b>Ingen avslutande slash</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sv	Ange EGroupware:s URL.<br />T ex: http://www.doman.com/egroupware  eller  /egroupware<br /><b>Ingen avslutande slash</b>
 enter the site password for peer servers	setup	sv	Ange sajtlösenord för peer-servers
 enter the site username for peer servers	setup	sv	Ange sajtanvändarnamn för peer-servers
 enter the title for your site	setup	sv	Ange titel för din webbplats
@@ -325,15 +325,15 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	sv	Hantera applikationer
 manage languages	setup	sv	Hantera språk
 manual / help	setup	sv	Manual / hjälp
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sv	max_execution_time är satt till mindre än 30 sekunder. eGroupWare behöver ibland mer tid på sig. Förvänta dig problem emellanåt.
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sv	max_execution_time är satt till mindre än 30 sekunder. EGroupware behöver ibland mer tid på sig. Förvänta dig problem emellanåt.
 maximum account id (e.g. 65535 or 1000000)	setup	sv	Maximalt kontoID (dvs 65535 eller 1000000)
 may be broken	setup	sv	kan vara trasig
 mcrypt algorithm (default tripledes)	setup	sv	MCrypt algoritm (standard 3DES)
 mcrypt initialization vector	setup	sv	MCrypt initialisationsvektor
 mcrypt mode (default cbc)	setup	sv	MCrypt (standard CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sv	MCrypt alternativ (kräver MCrypt PHP utökning)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sv	memory_limit är satt till mindre än %1B. En del applikationer i eGroupWare kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
-migration between egroupware account repositories	setup	sv	Migrering mellan eGroupWare kontodatabaser
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sv	memory_limit är satt till mindre än %1B. En del applikationer i EGroupware kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
+migration between egroupware account repositories	setup	sv	Migrering mellan EGroupware kontodatabaser
 minimum account id (e.g. 500 or 100, etc.)	setup	sv	Minimum kontoID (dvs 500 eller 100 t ex)
 minute	setup	sv	Minut
 missing or uncomplete mailserver configuration	setup	sv	E-postserver inställningar saknas eller är felaktiga
@@ -343,7 +343,7 @@ modify	setup	sv	Ändra
 month	setup	sv	Månad
 multi-language support setup	setup	sv	Flerspråksstöd
 name of database	setup	sv	Databasnamn
-name of db user egroupware uses to connect	setup	sv	Namnet på det användarkonto eGroupWare skall använda för att ansluta till databasen
+name of db user egroupware uses to connect	setup	sv	Namnet på det användarkonto EGroupware skall använda för att ansluta till databasen
 never	setup	sv	Aldrig
 new	setup	sv	Ny
 next run	setup	sv	Nästa körning
@@ -351,13 +351,13 @@ no	setup	sv	Nej
 no %1 support found. disabling	setup	sv	Inget %1 stöd hittades. Inaktiverar
 no accounts existing	setup	sv	Det existerar inga konton
 no algorithms available	setup	sv	Det existerar inga algoritmer
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	sv	Inga eGroupWare domäner /databas instanser finns! Använd --edit-header --domain för att lägga till en (--usage ger fler alternativ).
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	sv	Inga EGroupware domäner /databas instanser finns! Använd --edit-header --domain för att lägga till en (--usage ger fler alternativ).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	sv	Inget header admin lösenord satt! Använd -edit-header <password>[,<user>] för att göra det (--usage ger fler alternativ).
 no modes available	setup	sv	Inga lägen tillgängliga
 no update necessary, domain %1(%2) is up to date.	setup	sv	Ingen uppdatering behövs, domänen %1(%2) är klar
 no xml support found. disabling	setup	sv	Inget stöd för XML. Inaktiverar
 not	setup	sv	inte
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	sv	Inte alla mcrypt algoritmer och lägen fungerar med eGroupWare. Om du upplever problem bör du testa att inaktivera stödet.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	sv	Inte alla mcrypt algoritmer och lägen fungerar med EGroupware. Om du upplever problem bör du testa att inaktivera stödet.
 not complete	setup	sv	Inte färdigt
 not completed	setup	sv	Inte avslutat
 not ready for this stage yet	setup	sv	Inte redå för detta stadium ännu
@@ -380,9 +380,9 @@ password for smtp-authentication	setup	sv	Lösenord för SMTP autenticering
 password needed for domain configuration.	setup	sv	Lösenord krävs för domän inställningar
 password of db user	setup	sv	Databasanvändarens lösenord
 passwords did not match, please re-enter	setup	sv	Lösenorden är inte identiska, försök igen
-path (not url!) to your egroupware installation.	setup	sv	Sökväg (inte URL) till din eGroupWare installation.
+path (not url!) to your egroupware installation.	setup	sv	Sökväg (inte URL) till din EGroupware installation.
 path information	setup	sv	Sökvägsinformation
-path of egroupware install directory (default auto-detected)	setup	sv	Sökväg till eGroupWare installationskatalog (standard)
+path of egroupware install directory (default auto-detected)	setup	sv	Sökväg till EGroupware installationskatalog (standard)
 path to user and group files has to be outside of the webservers document-root!!!	setup	sv	Sökväg till användar- och gruppfiler MÅSTE LIGGA UTANFÖR webbserverns dokumentrot.
 path to various directories: have to exist and be writeable by the webserver	setup	sv	Sökväg till olika kataloger: måste vara befintliga och skrivbara av webbservern
 pear (%1) is a php repository and is usually in a package called %2.	setup	sv	PEAR (%1) är ett PHP bibloitek och finns oftast i paketet %2.
@@ -390,12 +390,12 @@ pear%1 is needed by: %2.	setup	sv	PEAR%1 behövs för: %2.
 persistent connections	setup	sv	Ständig koppling (Persistent connections)
 please check for sql scripts within the application's directory	setup	sv	Var god och kontrollera efter sqlskript i applikationens katalog
 please check read/write permissions on directories, or back up and use another option.	setup	sv	Var god och kontrollera läs/skrivrättigheter på katalogerna, eller ta backup och använd ett annat alternativ
-please configure egroupware for your environment	setup	sv	Var god och gör eGroupWare inställningar för din miljö
+please configure egroupware for your environment	setup	sv	Var god och gör EGroupware inställningar för din miljö
 please consult the %1.	setup	sv	Var god och konsultera %1
 please fix the above errors (%1) and warnings(%2)	setup	sv	Var god och åtgärda felen (%1) och varningar (%2)
 please install	setup	sv	Var god och installera
 please login	setup	sv	Var god och logga in
-please login to egroupware and run the admin application for additional site configuration	setup	sv	Var god och logga in i eGroupWare och kör admin applikationen för fler alternativ
+please login to egroupware and run the admin application for additional site configuration	setup	sv	Var god och logga in i EGroupware och kör admin applikationen för fler alternativ
 please make the following change in your php.ini	setup	sv	Var god och gör följande ändringar i din php.ini
 please wait...	setup	sv	Vänta
 pop/imap mail server hostname or ip address	setup	sv	POP/IMAP e-postserver värdnamn eller IP adress
@@ -414,7 +414,7 @@ re-enter password	setup	sv	Återge lösenordet igen
 read translations from	setup	sv	Läs in översättningar från
 readable by the webserver	setup	sv	läsbar av webservern
 really uninstall all applications	setup	sv	Vill du verkligen avinstallera samtliga installationer
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sv	register_globals är PÅslagen, eGroupWare kräver inte det och det är säkrare med det AVslaget.
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sv	register_globals är PÅslagen, EGroupware kräver inte det och det är säkrare med det AVslaget.
 registered	setup	sv	registrerad
 rejected lines	setup	sv	Ej godtagna rader
 remove	setup	sv	Radera
@@ -471,7 +471,7 @@ smtp server hostname or ip address	setup	sv	SMTP server värdnamn eller IP adres
 smtp server port	setup	sv	SMTP server port
 some or all of its tables are missing	setup	sv	Några eller samtliga av dess tabeller saknas
 sql encryption type	setup	sv	SQL kryptering för lösenord (standard: SSHA)
-standard (login-name identical to egroupware user-name)	setup	sv	Standard (inloggningsnamn identiskt med eGroupWare användarnamn)
+standard (login-name identical to egroupware user-name)	setup	sv	Standard (inloggningsnamn identiskt med EGroupware användarnamn)
 standard mailserver settings (used for mail authentication too)	setup	sv	Standard e-postserver inställningar (används även för e-post autenticering
 start the postmaster	setup	sv	Starta postmaster
 start updating languages %1 ...	setup	sv	Påbörjar uppdatering av språk %1 ...
@@ -495,7 +495,7 @@ the %1 extension is needed from: %2.	setup	sv	Utökningen %1 behövs av: %2
 the %1 extension is needed, if you plan to use a %2 database.	setup	sv	Utökningen %1 behövs om du vill använda en %2 databas
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	sv	db_type i defaults (%1) supporteras inte av servern. Använder den först supportade
 the file	setup	sv	filen
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	sv	Det första steget i en installation av eGroupWare är att försäkra sig att allt är rätt inställt för eGroupWare
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	sv	Det första steget i en installation av EGroupware är att försäkra sig att allt är rätt inställt för EGroupware
 the following applications need to be upgraded:	setup	sv	Följande applikationer behöver uppgraderas:
 the function %1 is needed from: %2.	setup	sv	Fuktionen %1 behövs av: %2
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	sv	Imagecreatefromjpeg funtionen hanteras av gd utökningen (kompilerad med jpeg stöd). Den behövs för att ladda upp bilder på kontakter.
@@ -511,10 +511,10 @@ this has to be outside the webservers document-root!!!	setup	sv	Måste ligga uta
 this might take a while, please wait ...	setup	sv	Detta kan ta ett tag, vänta...
 this program lets you backup your database, schedule a backup or restore it.	setup	sv	Detta program låter dig backa upp din databas, schemalägga en backup eller återställa en backup.
 this program will convert your database to a new system-charset.	setup	sv	Detta program låter dig konvertera din databas till en ny systemteckentabell
-this program will help you upgrade or install different languages for egroupware	setup	sv	Detta program hjälper dig att installera eller uppgradera de språk du vill använda i eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	sv	Detta program hjälper dig att installera eller uppgradera de språk du vill använda i EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	sv	Detta bör vara ca 30 bytes i längd. <br />Not: Förifyllda är slumpmässigt genererat.
 this stage is completed<br />	setup	sv	Detta läge klart<br />
-this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	sv	Detta skapar en första användare till eGroupWare, eller återställer lösenordet och adminrättigheter för en befintlig användare.
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	sv	Detta skapar en första användare till EGroupware, eller återställer lösenordet och adminrättigheter för en befintlig användare.
 to a version it does not know about	setup	sv	till en okänd version
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	sv	För att tillåta lösenordsautentisering, lägg till följande rad i din pg_hba.conf (överst) och starta om postgres:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	sv	För att ändra teckenuppsättning: backa upp databasen, avinstallera alla applikationer och återställ backupen med "konvertera backup till vald teckenuppsättning" markerad.
@@ -524,7 +524,7 @@ translations added	setup	sv	Översättningar tillagda
 translations removed	setup	sv	Översättningar borttagna
 translations upgraded	setup	sv	Översättningar uppgraderade
 true	setup	sv	Sant
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	sv	Försök konfigurera php att stödja någon av databaserna ovan, eller installera eGroupWare för hand.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	sv	Försök konfigurera php att stödja någon av databaserna ovan, eller installera EGroupware för hand.
 two weeks	setup	sv	två veckor
 uninstall	setup	sv	Avinstallera
 uninstall all applications	setup	sv	Avinstallera samtliga applikationer
@@ -540,7 +540,7 @@ uploads a backup and installs it on your db	setup	sv	Laddar upp en backup och in
 uploads a backup to the backup-dir, from where you can restore it	setup	sv	Laddar upp backupen till backup-katalogen, från vilken du kan återställa den.
 usage: %1 command [additional options]	setup	sv	Använd: %1 kommandot [övriga alternativ]
 use --create-header to create the configuration file (--usage gives more options).	setup	sv	Använd --create-header för att skapa konfigurationsfilen (--usage visar fler alternativ)
-use --install to install egroupware.	setup	sv	Använd --install för att installera eGroupWare.
+use --install to install egroupware.	setup	sv	Använd --install för att installera EGroupware.
 use --update to do so.	setup	sv	Använd --update för att göra det
 use cookies to pass sessionid	setup	sv	Använd cookies för att lagra sessionid
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	sv	Använd mcrypt för att kryptera sessionsdata: {off(standard) | on},[mcrypt-init-vector(standard slumpmässigt genererad)],[mcrypt-version]
@@ -562,25 +562,25 @@ warning!	setup	sv	Varning!
 we can proceed	setup	sv	Vi kan forstätta
 we will automatically update your tables/records to %1	setup	sv	Vi kommer automatiskt att uppdatera dina tabeller/poster till %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	sv	Vi kör nu ett antal teste vilket kan ta några minuter. Klicka på länken nedan för att fortsätta
-welcome to the egroupware installation	setup	sv	Välkommen till installation av eGroupWare
-which database type do you want to use with egroupware?	setup	sv	Vilken typ av databas vill du använda med eGroupWare?
+welcome to the egroupware installation	setup	sv	Välkommen till installation av EGroupware
+which database type do you want to use with egroupware?	setup	sv	Vilken typ av databas vill du använda med EGroupware?
 world readable	setup	sv	Läsbar av alla (world readable)
 world writable	setup	sv	Skrivbar av alla (world writable)
-would you like egroupware to cache the phpgw info array ?	setup	sv	Vill du att eGroupWare skall cacha phpgw info array?
-would you like egroupware to check for a new version<br />when admins login ?	setup	sv	Vill du att eGroupWare skall kontrollera om det finns nya versioner<br />när admin loggar in?
+would you like egroupware to cache the phpgw info array ?	setup	sv	Vill du att EGroupware skall cacha phpgw info array?
+would you like egroupware to check for a new version<br />when admins login ?	setup	sv	Vill du att EGroupware skall kontrollera om det finns nya versioner<br />när admin loggar in?
 would you like to show each application's upgrade status ?	setup	sv	Vill du visa varje applikations uppgraderingsstatus?
 writable by the webserver	setup	sv	Skrivbar av webservern
 write	setup	sv	Skriv
 year	setup	sv	År
 yes	setup	sv	Ja
 yes, with lowercase usernames	setup	sv	Ja, användarkonton med gemener
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	sv	Du verkar köra en pre-beta version av eGroupWare.<br />Dessa versioner stöds inte längre och det finns ingen uppgraderingsväg via setup.<br />Du måste först uppgradera till 0.9.10(sista versionen som stödde detta)<br /> och sedan uppgradera igen med denna version.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sv	Du verkar köra en äldre version av PHP.<br />Det är rekommenderat att du uppgraderar till en nyare version.<br />Äldre versioner av PHP kanske inte kör eGroupWare korrekt, om alls.<br /><br />Du rekommenderas starkt att uppgradera till åtminstone version %1
-you appear to be running version %1 of egroupware	setup	sv	Du verkar använda version eGroupWare %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	sv	Du verkar köra en pre-beta version av EGroupware.<br />Dessa versioner stöds inte längre och det finns ingen uppgraderingsväg via setup.<br />Du måste först uppgradera till 0.9.10(sista versionen som stödde detta)<br /> och sedan uppgradera igen med denna version.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sv	Du verkar köra en äldre version av PHP.<br />Det är rekommenderat att du uppgraderar till en nyare version.<br />Äldre versioner av PHP kanske inte kör EGroupware korrekt, om alls.<br /><br />Du rekommenderas starkt att uppgradera till åtminstone version %1
+you appear to be running version %1 of egroupware	setup	sv	Du verkar använda version EGroupware %1
 you appear to have %1 support.	setup	sv	Du verkar ha stöd för %1
 you appear to have xml support enabled	setup	sv	Du verkar ha stöd för XML aktiverat
 you are ready for this stage, but this stage is not yet written.<br />	setup	sv	Du är redo för detta stadium, men detta stadium är inte skrivet ännu.<br />
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	sv	Du använder  PHP version %1. eGroupWare kräver numera version %2 eller senare. Rekomenderar PHP %3
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	sv	Du använder  PHP version %1. EGroupware kräver numera version %2 eller senare. Rekomenderar PHP %3
 you can install it by running:	setup	sv	Du kan installera detta genom att exekvera:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	sv	Du kan använda header användare och lösenord för alla domäner också. Om lösenordet inte anges från kommandoprompten läses den från miljövariablen EGW_CLI_PASSWORD eller frågas efter.
 you didn't enter a config password for domain %1	setup	sv	Du angav inget config-lösenord  för domän %1
@@ -591,19 +591,19 @@ you do not have any languages installed. please install one now <br />	setup	sv	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	sv	Du har inte skapat din header.php.inc ännu!<br />Du kan skapa den nu.
 you have successfully logged out	setup	sv	Du har nu loggat ut.
 you must enter a username for the admin	setup	sv	Du måste ange ett lösenord för admin
-you need to add at least one egroupware domain / database instance.	setup	sv	Du måste lägga till en eGroupWare domän/database instans.
-you need to configure egroupware:	setup	sv	Du behöver konfigurera eGroupWare:
+you need to add at least one egroupware domain / database instance.	setup	sv	Du måste lägga till en EGroupware domän/database instans.
+you need to configure egroupware:	setup	sv	Du behöver konfigurera EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sv	Du måste rätta till felen ovanför, innan header.inc.php kan skrivas!
 you need to select your current charset!	setup	sv	Du måste välja teckenuppsättning
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	sv	Du måste antingen avinstallera och installera om, eller reparera manuellt.
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sv	Du kan inte använda PHP sessioner i eGroupWare: "sessionen kunde inte verifieras"!
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sv	Du kan inte använda PHP sessioner i EGroupware: "sessionen kunde inte verifieras"!
 you're using an old configuration file format...	setup	sv	Du använder ett äldre format på konfigurationsfilen ...
 your applications are current	setup	sv	Dina applikationer är aktuella
 your backup directory '%1' %2	setup	sv	Din backupkatalog '%1' %2
 your database does not exist	setup	sv	Din databas existerar inte
 your database is not working!	setup	sv	Din databas fungerar inte
 your database is working, but you dont have any applications installed	setup	sv	Din databas fungerar men du har inga installerade applikationer
-your egroupware api is current	setup	sv	Ditt eGroupWare API är aktuell
+your egroupware api is current	setup	sv	Ditt EGroupware API är aktuell
 your files directory '%1' %2	setup	sv	Din katalog '%1' %2
 your header admin password is not set. please set it now!	setup	sv	Ditt header adminlösenord är inte satt. Skriv in det nu!
 your header.inc.php needs upgrading.	setup	sv	Din header.inc.php behöver uppgraderas.

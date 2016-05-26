@@ -2,7 +2,7 @@
 %1 is %2%3 !!!	setup	pt	%1 é %2%3 !!!
 (searching accounts and changing passwords)	setup	pt	(a pesquisar contas e alterar senhas)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pt	*** NÃO actualize a sua base de dados através da configuração, uma vez que a actualização pode ser interrompida pelo tempo máximo de execução (max_execution_time), o que deixará a sua base de dados num estado irrecuperável (os seus dados serão perdidos) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pt	*** Tem de fazer as alterações manualmente no seu php.ini (normalmente em /ect em linux) para que o eGroupWare funcione correctamente !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pt	*** Tem de fazer as alterações manualmente no seu php.ini (normalmente em /ect em linux) para que o EGroupware funcione correctamente !!!
 00 (disable)	setup	pt	00 (desactivar / recomendado)
 13 (ntp)	setup	pt	13 (ntp)
 80 (http)	setup	pt	80 (http)
@@ -10,7 +10,7 @@
 accounts existing	setup	pt	Contas existentes
 actions	setup	pt	Acções
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pt	Adicionar utilizadores criados automaticamente para este grupo ('Por omissão' será tentado se este campo estiver vazio.)
-add new database instance (egw domain)	setup	pt	Adicionar nova instância de base de dados (domínio eGroupWare)
+add new database instance (egw domain)	setup	pt	Adicionar nova instância de base de dados (domínio EGroupware)
 additional settings	setup	pt	Definições adicionais
 admin first name	setup	pt	Nome próprio do administrador
 admin last name	setup	pt	Apelido do administrador
@@ -90,7 +90,7 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	pt	A verificar se PEAR%1 está instalado
 checking php.ini	setup	pt	A verificar php.ini
 checking required php version %1 (recommended %2)	setup	pt	A verificar a versão %1 do PHP necessária (%2 recomendada)
-checking the egroupware installation	setup	pt	A verificar a instalação eGroupWare
+checking the egroupware installation	setup	pt	A verificar a instalação EGroupware
 click <a href="index.php">here</a> to return to setup.	setup	pt	Clique <a href="index.php">aqui</a> para voltar às configurações.
 click here	setup	pt	Clique aqui
 click here to re-run the installation tests	setup	pt	Clique aqui para voltar a executar os testes de instalação
@@ -126,7 +126,7 @@ current system-charset	setup	pt	Charset de sistema actual
 current system-charset is %1.	setup	pt	O charset de sistema actual é %1.
 current version	setup	pt	Versão actual
 currently installed languages: %1 <br />	setup	pt	Idiomas instalados actualmente: %1 <br />
-database instance (egw domain)	setup	pt	Instância da base de dados (domínio do eGroupWare)
+database instance (egw domain)	setup	pt	Instância da base de dados (domínio do EGroupware)
 database successfully converted from '%1' to '%2'	setup	pt	A base de dados foi convertida de'%1' para '%2' com sucesso
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pt	Porto Datetime.<br>Se utilizar o porto 13, por favor configure as regras da firewall apropriadamente antes de enviar esta página.<br>(Porto: 13 / Servidor: 129.6.15.28)
 day	setup	pt	Dia
@@ -166,7 +166,7 @@ download	setup	pt	Transferir
 edit current configuration	setup	pt	Editar configuração actual
 edit your existing header.inc.php	setup	pt	Editar o seu header.inc.php existente
 edit your header.inc.php	setup	pt	Editar o seu header.inc.php
-egroupware administration manual	setup	pt	Manual da administração do eGroupWare
+egroupware administration manual	setup	pt	Manual da administração do EGroupware
 enable for extra debug-messages	setup	pt	Activar para mensagens extra de debug
 enable mcrypt	setup	pt	Activar MCrypt
 enter some random text for app session encryption	setup	pt	Insira algum texto aleatório para encriptação de sessão da aplicação
@@ -175,7 +175,7 @@ enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt	I
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt	Insira o caminho completo para ficheiros de utilizadores e grupos.<br />Exemplos: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	pt	Insira o caminho completo para a directoria de cópias de segurança.<br />se estiver vazia: directoria de ficheiros
 enter the hostname of the machine on which this server is running	setup	pt	Insira o nome da máquina em que este sistema está a ser executado
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt	Insira a URL do eGroupWare.<br />Exemplo: http://www.dominio.com.br/egroupware ou   /egroupware<br /><b>Sem a barra final</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt	Insira a URL do EGroupware.<br />Exemplo: http://www.dominio.com.br/egroupware ou   /egroupware<br /><b>Sem a barra final</b>
 enter the site password for peer servers	setup	pt	Insira a senha do sítio para servidores remotos
 enter the site username for peer servers	setup	pt	Insira o nome de utilizador do sítio para servidores remotos
 enter the title for your site	setup	pt	Insira o título para o seu sítio
@@ -210,7 +210,7 @@ hour (0-24)	setup	pt	Hora (0-24)
 however, the application is otherwise installed	setup	pt	No entanto, a aplicação está instalada
 however, the application may still work	setup	pt	No entanto, a aplicação pode ainda funcionar
 if no acl records for user or any group the user is a member of	setup	pt	Se não existirem registos ACL do utilizador ou grupo, o utilizador é um membro de
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pt	Se o modo de segurança estiver activo, o eGroupWare não pode alterar determinadas configurações em execução, nem pode carregar módulos não carregados.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pt	Se o modo de segurança estiver activo, o EGroupware não pode alterar determinadas configurações em execução, nem pode carregar módulos não carregados.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	pt	Se a aplicação não tiver tabelas definidas, actualizar deve resolver o problema
 if using ads (active directory)	setup	pt	Se estiver a utilizar a autenticação ADS (Directoria Activa)
 if using ldap	setup	pt	Se estiver a utilizar LDAP
@@ -259,14 +259,14 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	pt	Configurar aplicações
 manage languages	setup	pt	Configurar idiomas
 manual / help	setup	pt	Manual / ajuda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt	O tempo máximo de execução (max_execution_time) é configurado para menos de 30 (segundos): o eGroupWare necessita, por vezes, de um maior tempo de execução (execution_time). Espere falhas ocasionais.
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt	O tempo máximo de execução (max_execution_time) é configurado para menos de 30 (segundos): o EGroupware necessita, por vezes, de um maior tempo de execução (execution_time). Espere falhas ocasionais.
 maximum account id (e.g. 65535 or 1000000)	setup	pt	Id máximo para contas (Exemplo: 65535 ou 1000000)
 may be broken	setup	pt	pode estar partida
 mcrypt algorithm (default tripledes)	setup	pt	Algoritmo Mcrypt (por omissão TRIPLEDES)
 mcrypt initialization vector	setup	pt	Vector de inicialização MCrypt
 mcrypt mode (default cbc)	setup	pt	Modo Mcrypt (por omissão CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pt	Configurações para Mcrypt (requer extensão mcrypt do PHP)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt	O limite de memória (memory_limit) está configurado para menos de %1: algumas aplicações do eGroupWare necessitam de mais de 8M. Espere falhas ocasionais.
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt	O limite de memória (memory_limit) está configurado para menos de %1: algumas aplicações do EGroupware necessitam de mais de 8M. Espere falhas ocasionais.
 minimum account id (e.g. 500 or 100, etc.)	setup	pt	Id mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	setup	pt	Minuto
 missing or uncomplete mailserver configuration	setup	pt	Configuração do servidor de correio electrónico em falta ou por concluir
@@ -276,7 +276,7 @@ modify	setup	pt	Modificar
 month	setup	pt	Mês
 multi-language support setup	setup	pt	Configuração de suporte a idiomas
 name of database	setup	pt	Nome da base de dados
-name of db user egroupware uses to connect	setup	pt	Nome do utilizador da base de dados que o eGroupWare utiliza para aceder
+name of db user egroupware uses to connect	setup	pt	Nome do utilizador da base de dados que o EGroupware utiliza para aceder
 never	setup	pt	nunca
 new	setup	pt	Novo/a
 next run	setup	pt	Execução seguinte
@@ -287,7 +287,7 @@ no algorithms available	setup	pt	Nenhum algoritmo disponível
 no modes available	setup	pt	nenhum modo disponível
 no xml support found. disabling	setup	pt	Nenhum suporte XML foi encontrado. A desactivar...
 not	setup	pt	não
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pt	Nem todos os algoritmos e modos mcrypt trabalham com o eGroupWare. Se tiver problemas, tente desligá-los.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pt	Nem todos os algoritmos e modos mcrypt trabalham com o EGroupware. Se tiver problemas, tente desligá-los.
 not complete	setup	pt	incompleto
 not completed	setup	pt	Incompleto
 not ready for this stage yet	setup	pt	Não está pronto para este passo ainda
@@ -314,7 +314,7 @@ path to user and group files has to be outside of the webservers document-root!!
 persistent connections	setup	pt	Ligações persistentes
 please check for sql scripts within the application's directory	setup	pt	Por favor, procure por scripts sql dentro da directoria da aplicação
 please check read/write permissions on directories, or back up and use another option.	setup	pt	Por favor verifique as permissões de leitura/escrita em directorias, ou volte atrás e escolha outra opção
-please configure egroupware for your environment	setup	pt	Por favor, configure o eGroupWare para o seu ambiente
+please configure egroupware for your environment	setup	pt	Por favor, configure o EGroupware para o seu ambiente
 please consult the %1.	setup	pt	Por favor, consulte o %1.
 please fix the above errors (%1) and warnings(%2)	setup	pt	Por favor, corrija os erros (%1) e avisos (%2) apresentados
 please install	setup	pt	Por favor, instale
@@ -337,7 +337,7 @@ re-enter password	setup	pt	Re-insira a senha
 read translations from	setup	pt	Ler traduções de
 readable by the webserver	setup	pt	Legível pelo servidor Web
 really uninstall all applications	setup	pt	Desinstalar REALMENTE  todas as aplicações
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt	A opção register_globals está activa. O eGroupWare NÃO necessita desta opção. Geralmente é mais seguro desactivá-la.
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt	A opção register_globals está activa. O EGroupware NÃO necessita desta opção. Geralmente é mais seguro desactivá-la.
 registered	setup	pt	registado
 rejected lines	setup	pt	Rejeitar linhas
 remove	setup	pt	Remover
@@ -384,14 +384,14 @@ setup	setup	pt	Configuração
 setup main menu	setup	pt	Configurar menu principal
 setup the database	setup	pt	Configurar a base de dados
 setup/config admin login	setup	pt	Definir/configurar o acesso administrativo
-show 'powered by' logo on	setup	pt	Área para exibição da logomarca do eGroupWare
+show 'powered by' logo on	setup	pt	Área para exibição da logomarca do EGroupware
 size	setup	pt	Tamanho
 skip the installation tests (not recommended)	setup	pt	Saltar os testes de instalação (não recomendado)
 smtp server hostname or ip address	setup	pt	Nome do servidor SMTP ou endereço IP
 smtp server port	setup	pt	Porto do servidor SMTP
 some or all of its tables are missing	setup	pt	Algumas ou todas tabelas estão faltando
 sql encryption type	setup	pt	Tipo de cifra SQL para senhas (por omissão - md5)
-standard (login-name identical to egroupware user-name)	setup	pt	Por omissão (nome de acesso igual ao nome de utilizador do eGroupWare)
+standard (login-name identical to egroupware user-name)	setup	pt	Por omissão (nome de acesso igual ao nome de utilizador do EGroupware)
 standard mailserver settings (used for mail authentication too)	setup	pt	Configurações do servidor de correio electrónico por omissão (utilizado também para a autenticação de correio electrónico)
 start the postmaster	setup	pt	Iniciar o servidor de correio electrónico
 status	setup	pt	Estado
@@ -412,7 +412,7 @@ text entry	setup	pt	Entrada de texto
 the %1 extension is needed, if you plan to use a %2 database.	setup	pt	É necessária a extensão %1 se quiser utilizar a base de dados %2.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	pt	O tipo de base de dados (db_type) por omissão (%1) não é suportada neste servidor. Utilizar o primeiro tipo suportando.
 the file	setup	pt	o ficheiro
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pt	O primeiro passo de instalação do eGroupWare é assegurar que o seu ambiente tem as configurações necessárias para correr a aplicação correctamente.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pt	O primeiro passo de instalação do EGroupware é assegurar que o seu ambiente tem as configurações necessárias para correr a aplicação correctamente.
 the following applications need to be upgraded:	setup	pt	As aplicações seguintes necessitam de actualização:
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt	É necessária a extensão mbstring para suportar o unicodo (UTF-8) ou outros charsets multi-byte inteiramente
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt	É necessário que o mbstring.func_overload = 7 para que o unicode (UTF-8) ou outros charsets multi-byte sejam suportados inteiramente.
@@ -425,7 +425,7 @@ this has to be outside the webservers document-root!!!	setup	pt	Tem de ser exter
 this might take a while, please wait ...	setup	pt	Esta acção pode demorar, por favor, aguarde...
 this program lets you backup your database, schedule a backup or restore it.	setup	pt	Este programa possibilita fazer uma cópia de segurança da sua base de dados, agendar uma cópia de segurança ou repô-la.
 this program will convert your database to a new system-charset.	setup	pt	Este programa irá converter a sua base de dados num novo charset de sistema.
-this program will help you upgrade or install different languages for egroupware	setup	pt	Este programa irá ajudá-lo a actualizar ou instalar diferentes idiomas para o eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	pt	Este programa irá ajudá-lo a actualizar ou instalar diferentes idiomas para o EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pt	Deve ter cerca de 30 bytes de comprimentos.<br />Nota: Os valores por omissão foram gerados ao acaso.
 this stage is completed<br />	setup	pt	Este passo está completo<br />
 to a version it does not know about	setup	pt	para uma versão sobre a qual nada sabe
@@ -437,7 +437,7 @@ translations added	setup	pt	Traduções adicionadas
 translations removed	setup	pt	Traduções removidas
 translations upgraded	setup	pt	Traduções actualizadas
 true	setup	pt	Verdadeiro
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	pt	Tente configurar o seu php para suportar umas das bases de dados MS mencionadas anteriormente, ou instale o eGroupWare manualmente.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	pt	Tente configurar o seu php para suportar umas das bases de dados MS mencionadas anteriormente, ou instale o EGroupware manualmente.
 two weeks	setup	pt	duas semanas
 uninstall	setup	pt	Desinstalar
 uninstall all applications	setup	pt	Desinstalar todas aplicações
@@ -464,21 +464,21 @@ warning!	setup	pt	Aviso!
 we can proceed	setup	pt	Podemos continuar...
 we will automatically update your tables/records to %1	setup	pt	As tabelas/registos serão automaticamente actualizados para %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pt	Iremos executar um conjunto de testes, que pode demorar alguns minutos. Clique na ligação para continuar.
-welcome to the egroupware installation	setup	pt	Bem-vindo à instalação do eGroupWare
-which database type do you want to use with egroupware?	setup	pt	Que tipo de base de dados deseja utilizar com o eGroupWare?
+welcome to the egroupware installation	setup	pt	Bem-vindo à instalação do EGroupware
+which database type do you want to use with egroupware?	setup	pt	Que tipo de base de dados deseja utilizar com o EGroupware?
 world readable	setup	pt	legível por todos
 world writable	setup	pt	editável por todos
-would you like egroupware to cache the phpgw info array ?	setup	pt	Deseja que o eGroupWare faça cache do vector de informações phpgw ?
-would you like egroupware to check for a new version<br />when admins login ?	setup	pt	Deseja que o eGroupWare verifique a existência de uma nova versão<br />quando administradores estiverem liados ?
+would you like egroupware to cache the phpgw info array ?	setup	pt	Deseja que o EGroupware faça cache do vector de informações phpgw ?
+would you like egroupware to check for a new version<br />when admins login ?	setup	pt	Deseja que o EGroupware verifique a existência de uma nova versão<br />quando administradores estiverem liados ?
 would you like to show each application's upgrade status ?	setup	pt	Deseja exibir se cada aplicação está actualizada ?
 writable by the webserver	setup	pt	editável pelo servidor Web
 write	setup	pt	Gravar
 year	setup	pt	Ano
 yes	setup	pt	Sim
 yes, with lowercase usernames	setup	pt	Sim, com nomes de utilizador em minúsculas
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pt	Aparentemente está a utilizar uma versão pré-beta do eGroupWare.<br />Estas versões já não são suportadas, e não existe uma forma de a actualizar nas configurações.<br /> Deve actualizar para versão 0.9.10 (a última versão que suporta actualização de pré-betas) <br />e e só então actualizar para a versão actual.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pt	Aparentemente está a utilizar uma versão antiga do PHP <br />Recomendamos que actualize para uma nova versão.<br />As versões antigas de PHP podem não executar o eGroupWare correctamente. <br /><br />Por favor, actualize-a pelo menos com a versão %1.
-you appear to be running version %1 of egroupware	setup	pt	Aparentemente esta versão do eGroupWare é a %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pt	Aparentemente está a utilizar uma versão pré-beta do EGroupware.<br />Estas versões já não são suportadas, e não existe uma forma de a actualizar nas configurações.<br /> Deve actualizar para versão 0.9.10 (a última versão que suporta actualização de pré-betas) <br />e e só então actualizar para a versão actual.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pt	Aparentemente está a utilizar uma versão antiga do PHP <br />Recomendamos que actualize para uma nova versão.<br />As versões antigas de PHP podem não executar o EGroupware correctamente. <br /><br />Por favor, actualize-a pelo menos com a versão %1.
+you appear to be running version %1 of egroupware	setup	pt	Aparentemente esta versão do EGroupware é a %1
 you appear to have %1 support.	setup	pt	Aparentemente tem o suporte %1.
 you appear to have xml support enabled	setup	pt	Aparentemente tem o suporte XML activado
 you are ready for this stage, but this stage is not yet written.<br />	setup	pt	Está preparado para este passo, mas esta fase ainda não foi escrita.<br />
@@ -493,14 +493,14 @@ you have successfully logged out	setup	pt	Saiu com sucesso
 you must enter a username for the admin	setup	pt	É necessário atribuir um nome de utilizador ao administrador
 you need to select your current charset!	setup	pt	É necessário seleccionar o seu charset actual!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pt	Deve desinstalar e reinstalar, ou tentar reparar manualmente
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt	Não será capaz de aceder ao eGroupWare utilizando sessões PHP: "sessão não pôde ser verificada" !!!
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt	Não será capaz de aceder ao EGroupware utilizando sessões PHP: "sessão não pôde ser verificada" !!!
 you're using an old configuration file format...	setup	pt	Está a utilizar um formato antigo de ficheiro de configuração...
 your applications are current	setup	pt	As suas aplicações estão actualizadas
 your backup directory '%1' %2	setup	pt	A sua directoria de cópia de segurança'%1' %2
 your database does not exist	setup	pt	A sua base de dados não existe
 your database is not working!	setup	pt	A sua base de dados não está a funcionar!
 your database is working, but you dont have any applications installed	setup	pt	A sua base de dados está a funcionar, mas não tem nenhuma aplicação instalada
-your egroupware api is current	setup	pt	O seu API eGroupWare está actualizado
+your egroupware api is current	setup	pt	O seu API EGroupware está actualizado
 your files directory '%1' %2	setup	pt	A sua directoria de ficheiros '%1' %2
 your header admin password is not set. please set it now!	setup	pt	A sua senha de administração de cabeçalhos NÃO está definida. Por favor, defina-a agora!
 your header.inc.php needs upgrading.	setup	pt	É necessário actualizar o seu header.inc.php.

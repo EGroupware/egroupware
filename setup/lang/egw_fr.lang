@@ -1,4 +1,4 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	fr	%1 '%2' n'existe PAS, n'est pas lisible par le serveur web ou ne contient pas d'installation eGroupWare !
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	fr	%1 '%2' n'existe PAS, n'est pas lisible par le serveur web ou ne contient pas d'installation EGroupware !
 %1 already exists in %2.	setup	fr	%1 existe déjà dans %2.
 %1 created in %2.	setup	fr	%1 créé dans %2.
 %1 database %2 on %3 already contains the following tables:	setup	fr	%1 base de données %2 sur %3 déjà contenant déjà les tables suivantes :
@@ -16,7 +16,7 @@
 '%1' must be integer	setup	fr	%1 doit être un nombre entier.
 (searching accounts and changing passwords)	setup	fr	Recherche des comptes et modification des mots de passe.
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fr	*** Ne mettez PAS à jour votre base de données via le setup, car elle pourrait être pertubée par l'option "max_execution_time", qui laisserait votre base de donnée dans un état irrécupérable (vos données seraient perdues) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fr	*** Vous devez faire ce changement manuellement dans votre configuration PHP (php.ini, généralement stocké dans /etc sous Linux) pour utiliser eGroupWare convenablement.
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fr	*** Vous devez faire ce changement manuellement dans votre configuration PHP (php.ini, généralement stocké dans /etc sous Linux) pour utiliser EGroupware convenablement.
 00 (disable)	setup	fr	00 (désactivé / recommandé)
 13 (ntp)	setup	fr	13 (ntp)
 80 (http)	setup	fr	80 (http)
@@ -32,7 +32,7 @@ activate safe password check	setup	fr	Activer la vérification de la sécurité 
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-créés à ce groupe (le groupe 'Default' sera tenté si ceci est vide.)
 add new database instance (egw domain)	setup	fr	Ajouter une nouvelle instance de base de données (domaine eGW)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	fr	ajouter ou modifier un domaine: [domain-name(par défaut)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(hôte local)],[db-port(spécifique base de données)],[config-user(comme En-tête)],[config-passwd(comme En-tête)]
-adding, editing or deleting an egroupware domain / database instance:	setup	fr	Ajouter, modifier ou supprimer un domaine / instance base de données eGroupWare :
+adding, editing or deleting an egroupware domain / database instance:	setup	fr	Ajouter, modifier ou supprimer un domaine / instance base de données EGroupware :
 additional options and there defaults (in brackets)	setup	fr	Options supplémentaires et leurs valeurs par défaut (entre parenthèses)
 additional settings	setup	fr	Réglages supplémentaires
 admin account successful created.	setup	fr	Compte administrateur créé avec succès.
@@ -149,8 +149,8 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	fr	Vérification si PEAR%1 est installé
 checking php.ini	setup	fr	Vérification de php.ini
 checking required php version %1 (recommended %2)	setup	fr	Vérification de la version PHP %1 requise (%2 recommandée)
-checking the egroupware installation	setup	fr	Vérification de l'installation eGroupWare
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	fr	Vérification de l'installation d'eGroupWare, sa version et ses mises à jour requises (pour les valeurs de retour voir --exit-codes)
+checking the egroupware installation	setup	fr	Vérification de l'installation EGroupware
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	fr	Vérification de l'installation d'EGroupware, sa version et ses mises à jour requises (pour les valeurs de retour voir --exit-codes)
 clear cache and register hooks	setup	fr	Vider le cache et enregistrer les dépendances
 click <a href="index.php">here</a> to return to setup.	setup	fr	Cliquez <a href="index.php">ici</a> pour revenir au setup.
 click here	setup	fr	Cliquez ici
@@ -182,7 +182,7 @@ create admin account	setup	fr	Création du compte Administrateur
 create database	setup	fr	Créer la base de données
 create demo accounts	setup	fr	Créer les comptes de démonstration
 create one now	setup	fr	Créer un exemplaire maintenant
-create or edit the egroupware configuration file: header.inc.php:	setup	fr	Créer ou modifier le fichier de configuration eGroupWare header.inc.php :
+create or edit the egroupware configuration file: header.inc.php:	setup	fr	Créer ou modifier le fichier de configuration EGroupware header.inc.php :
 create the empty database -	setup	fr	Créer une base de données vide -
 create the empty database and grant user permissions -	setup	fr	Créer une base de données vide et attribuer des autorisations aux utilisateurs -
 create your header.inc.php	setup	fr	Créer votre fichier header.inc.php
@@ -249,15 +249,15 @@ edit your existing header.inc.php	setup	fr	Modifier votre fichier header.inc.php
 edit your header.inc.php	setup	fr	Modifier votre fichier header.inc.php
 eg. "cn=users,dc=domain,dc=com" for ads domain "domain.com"	setup	fr	ie. "CN=Users,DC=domain,DC=com" pour le domaine ADS "domain.com"
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	fr	c'est-à-dire /egroupware ou http://domain.com/egroupware, par défaut: %1
-egroupware administration manual	setup	fr	Manuel d'administration eGroupWare
-egroupware api needs a database (schema) update from version %1 to %2!	setup	fr	l'API eGroupWare a besoin d'une mise à jour de la base de données (schéma) de la version %1 vers %2 !
-egroupware api version %1 found.	setup	fr	API eGroupWare :  version %1 trouvée.
-egroupware configuration file (header.inc.php) does not exist.	setup	fr	le fichier de configuration eGroupWare (header.inc.php) m'existe PAS.
-egroupware configuration file (header.inc.php) version %1 exists%2	setup	fr	un fichier de configuration eGroupWare (header.inc.php) version %1 existe%2
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	fr	un fichier de configuration eGroupWare (header.inc.php) existe déjà, vous devez utiliser --edit-header ou le supprimer auparavant !
-egroupware domain/instance %1(%2):	setup	fr	domaine/instance eGroupWare %1 (%2) :
-egroupware is already installed!	setup	fr	eGroupWare est déjà installé !
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	fr	les sources eGroupWare dans '%1' sont incomplètes, le fichier '%2' est manquant !!!
+egroupware administration manual	setup	fr	Manuel d'administration EGroupware
+egroupware api needs a database (schema) update from version %1 to %2!	setup	fr	l'API EGroupware a besoin d'une mise à jour de la base de données (schéma) de la version %1 vers %2 !
+egroupware api version %1 found.	setup	fr	API EGroupware :  version %1 trouvée.
+egroupware configuration file (header.inc.php) does not exist.	setup	fr	le fichier de configuration EGroupware (header.inc.php) m'existe PAS.
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	fr	un fichier de configuration EGroupware (header.inc.php) version %1 existe%2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	fr	un fichier de configuration EGroupware (header.inc.php) existe déjà, vous devez utiliser --edit-header ou le supprimer auparavant !
+egroupware domain/instance %1(%2):	setup	fr	domaine/instance EGroupware %1 (%2) :
+egroupware is already installed!	setup	fr	EGroupware est déjà installé !
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	fr	les sources EGroupware dans '%1' sont incomplètes, le fichier '%2' est manquant !!!
 email (standard maildomain should be set)	setup	fr	Email (le domaine de mail standard doit être défini)
 emailadmin profile updated:	setup	fr	profil EMailAdmin mis à jour :
 enable for extra debug-messages	setup	fr	Activer pour les messages de déboguage supplémentaires
@@ -271,7 +271,7 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	fr	Entrez le chemin complet pour les fichiers d'utilisateurs et de groupes.<br />Exemples: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	fr	Entrez le chemin complet vers le répertoire de sauvegarde.<br />si vide: répertoire des fichiers
 enter the hostname of the machine on which this server is running	setup	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL de eGroupWare.<br />Exemple: http://www.domain.com/egroupware   ou   /egroupware<br /><b>Pas de / (slash ou division) à la fin</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL de EGroupware.<br />Exemple: http://www.domain.com/egroupware   ou   /egroupware<br /><b>Pas de / (slash ou division) à la fin</b>
 enter the site password for peer servers	setup	fr	Entrez le mot de passe du site pour les serveurs pairs
 enter the site username for peer servers	setup	fr	Entrez le nom d'utilisateur du site pour les serveurs pairs
 enter the title for your site	setup	fr	Entrez le titre pour votre site
@@ -326,7 +326,7 @@ however, the application is otherwise installed	setup	fr	Par ailleurs, l'applica
 however, the application may still work	setup	fr	Malgré tout l'application pourrait encore fonctionner
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	fr	Types d'authentification HTTP pour éviter la page de login (liste séparé par des virgules), ex : "NTLM"
 if no acl records for user or any group the user is a member of	setup	fr	Si aucun enregistrement d'ACL pour un utilisateur ou groupe, l'utilisateur est un membre de
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	fr	Si safe_mode est activé, eGroupWare sera incapable de modifier certaines options ou d'activer certains modules.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	fr	Si safe_mode est activé, EGroupware sera incapable de modifier certaines options ou d'activer certains modules.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	fr	Si l'application n'a pas défini de tables, choisir mise à jour devrait résoudre le problème
 if using ads (active directory)	setup	fr	Si vous utilisez l'authentification ADS (Active Directory)
 if using cas (central authentication service):	setup	fr	Si vous utilisez l'authentification CAS (Central Authentication Service) :
@@ -400,7 +400,7 @@ mcrypt initialization vector	setup	fr	Vecteur d'initialisation MCrypt
 mcrypt mode (default cbc)	setup	fr	Mode Mcrypt (par défaut CBC)
 mcrypt settings (requires mcrypt php extension)	setup	fr	Réglages Mcrypt (nécessite l'extension PHP mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	fr	L'option memory_limit est positionnée en dessous de %1: <br/>certaines applications ont requièrent plus de 8M, ceci peut entraîner des problèmes.
-migration between egroupware account repositories	setup	fr	Migration entre les dépôts de comptes eGroupWare
+migration between egroupware account repositories	setup	fr	Migration entre les dépôts de comptes EGroupware
 migration of group will fail, as sql does not allow identical ids.	setup	fr	La migration des groupes va échouer car SQL n'autorise pas d'avoir des ID identiques.
 min backup count	setup	fr	Nombre de sauvegardes à garder au moins (0: tout et pas de limite)
 minimum account id (e.g. 500 or 100, etc.)	setup	fr	ID de compte minimum (p.e. 500 ou 100, etc.)
@@ -413,7 +413,7 @@ month	setup	fr	mois
 mount backup directory to %1	setup	fr	Monter le répertoire de backup sur %1
 multi-language support setup	setup	fr	Setup pour le support multilingue
 name of database	setup	fr	Nom de la base de données
-name of db user egroupware uses to connect	setup	fr	Nom de l'utilisateur de la base de données dont eGroupWare se sert pour se connecter
+name of db user egroupware uses to connect	setup	fr	Nom de l'utilisateur de la base de données dont EGroupware se sert pour se connecter
 needs extra configuration on dc and webserver!	setup	fr	Nécessite du paramétrage supplémentaire sur le DC et le serveur web
 never	setup	fr	Jamais
 new	setup	fr	Nouveau
@@ -422,14 +422,14 @@ no	setup	fr	Non
 no %1 support found. disabling	setup	fr	Aucun support pour %1 trouvé. Désactivation
 no accounts existing	setup	fr	Aucun compte n'existe
 no algorithms available	setup	fr	aucun algorithme disponible
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	fr	Aucun domaine / instance eGroupWare! Utilisez --edit-header --domain pour en ajouter un (--usage donne plus d'options).
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	fr	Aucun domaine / instance EGroupware! Utilisez --edit-header --domain pour en ajouter un (--usage donne plus d'options).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	fr	Aucun mot de passe admin header configuré! Utilisez --edit-header <password>[,<user>] pour en configurer un (--usage donne plus d'options).
 no modes available	setup	fr	aucun mode disponible
 no update necessary, domain %1(%2) is up to date.	setup	fr	Aucune mise à jour nécessaire, le domaine %1(%2) est à jour.
 no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	fr	Aucun timezone valide défini !  ("%1" ne suffit pas, vous devez utiliser un identifiant de timezone tel que  "%2", voir %3la liste de complète des identifiants valides%4)
 no xml support found. disabling	setup	fr	Aucun support XML trouvé. Désactivation
 not	setup	fr	n'a pas
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	fr	Pas tous les algorithmes et modes fonctionnent avec eGroupWare. Si vous rencontrez des problèmes, essayez de le désactiver.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	fr	Pas tous les algorithmes et modes fonctionnent avec EGroupware. Si vous rencontrez des problèmes, essayez de le désactiver.
 not complete	setup	fr	incomplet
 not completed	setup	fr	Pas Terminé
 not ready for this stage yet	setup	fr	Pas encore prêt pour cette partie
@@ -454,9 +454,9 @@ password for smtp-authentication	setup	fr	Mot de passe pour l'authentification S
 password needed for domain configuration.	setup	fr	Un mot de passe est nécessaire pour la configuration du domaine.
 password of db user	setup	fr	Mot de passe de l'utilisateur de la base de données
 passwords did not match, please re-enter	setup	fr	Les mots de passe ne correspondaient pas, essayez encore SVP
-path (not url!) to your egroupware installation.	setup	fr	Chemin (pas l'URL!) vers votre installation eGroupWare
+path (not url!) to your egroupware installation.	setup	fr	Chemin (pas l'URL!) vers votre installation EGroupware
 path information	setup	fr	Information de chemin
-path of egroupware install directory (default auto-detected)	setup	fr	chemin vers le répertoire d'installation eGroupWare (par défaut auto-détection)
+path of egroupware install directory (default auto-detected)	setup	fr	chemin vers le répertoire d'installation EGroupware (par défaut auto-détection)
 path to user and group files has to be outside of the webservers document-root!!!	setup	fr	Le chemin vers les fichiers utilisateur et groupe DOIT ETRE EN DEHORS du répertoire racine des serveurs web!!!
 path to various directories: have to exist and be writeable by the webserver	setup	fr	le chemin vers divers répertoires: doivent exister et le serveur web doit pouvoir y écrire
 pear (%1) is a php repository and is usually in a package called %2.	setup	fr	PEAR (%1) est un dépôt PHP et est généralement fourni par un paquetge appelé %2.
@@ -469,7 +469,7 @@ php proxy	setup	fr	php Proxy
 php session handler enabled in php.ini	setup	fr	"PHP session handler" autorisé dans php.ini
 please check for sql scripts within the application's directory	setup	fr	SVP vérifiez la présence de scripts SQL dans le répertoire setup de l'application
 please check read/write permissions on directories, or back up and use another option.	setup	fr	SVP vérifiez les permissions de lecture/écriture sur les répertoires, ou faîtes une sauvegarde et utilisez une autre option.
-please configure egroupware for your environment	setup	fr	SVP configurez eGroupWare pour votre environnement
+please configure egroupware for your environment	setup	fr	SVP configurez EGroupware pour votre environnement
 please consult the %1.	setup	fr	SVP consultez le %1.
 please download a recent version from %1 and install it as %2.	setup	fr	Veuillez télécharger une version récente de %1 et l'installer comme  %2.
 please fix the above errors (%1) and warnings(%2)	setup	fr	Résolvez SVP les erreurs (%1) et les messages d'avertissement (%2)
@@ -495,7 +495,7 @@ read translations from	setup	fr	Lire les traductions depuis
 readable by the webserver	setup	fr	lisible par le serveur Web
 really uninstall all applications	setup	fr	Désinstaller VRAIMENT toutes les applications
 refusing to delete dn "%1"!	setup	fr	Refus de la suppression de dn "%1" !
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fr	L'option register_globals est activé, eGroupWare n'a pas besoin de cela et cela est il est généralement plus sécurisé en le désactivant.
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fr	L'option register_globals est activé, EGroupware n'a pas besoin de cela et cela est il est généralement plus sécurisé en le désactivant.
 registered	setup	fr	Enregistré
 rejected lines	setup	fr	Lignes rejetées
 remove	setup	fr	Enlever
@@ -561,7 +561,7 @@ some or all of its tables are missing	setup	fr	Certaines ou toutes ses tables ma
 sources deleted/missing	setup	fr	Code source supprimé ou manquant
 sql encryption type	setup	fr	Type de chiffrement SQL (par défaut - md5)
 ssl validation:	setup	fr	Validation SSL :
-standard (login-name identical to egroupware user-name)	setup	fr	standard (login identique à l'utilisateur eGroupWare)
+standard (login-name identical to egroupware user-name)	setup	fr	standard (login identique à l'utilisateur EGroupware)
 standard mailserver settings (used for mail authentication too)	setup	fr	Paramètres standard du serveur de messagerie (utilisé aussi pour l'authentification d'emails)
 standard, as defined above	setup	fr	Standard,tel que défini ci-dessus
 start installing application %1 ...	setup	fr	Démarrage de l'installation de l'application %1 ...
@@ -592,7 +592,7 @@ the %1 extension is needed from: %2.	setup	fr	L'extension %1 est requise par : %
 the %1 extension is needed, if you plan to use a %2 database.	setup	fr	L'extension %1 est nécessaire si vous décidez d'utiliser la base de donnée %2<br />
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fr	Le type de base de données (db_type) des valeurs par défaut (%1) n'est pas supporté sur ce serveur. Utilisation du premier type supporté.
 the file	setup	fr	le fichier
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fr	La première étape lors de l'installation d'eGroupWare est la vérification de votre environnement système.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fr	La première étape lors de l'installation d'EGroupware est la vérification de votre environnement système.
 the following applications are not installed:	setup	fr	Les applications suivantes ne sont pas installées :
 the following applications are required, but not installed:	setup	fr	Les applications suivantes sont nécessaires mais pas installées :
 the following applications need to be upgraded:	setup	fr	L'application suivante a besoin d'une mise à jour :
@@ -617,10 +617,10 @@ this has to be outside the webservers document-root!!!	setup	fr	Ceci doit figure
 this might take a while, please wait ...	setup	fr	Cela peu prendre un certain temps, veuillez patienter ...
 this program lets you backup your database, schedule a backup or restore it.	setup	fr	Ce programme vous permet de sauvegarder votre base de données, planifier une sauvegarde ou la restaurer.
 this program will convert your database to a new system-charset.	setup	fr	Ce programme va convertir les informations de votre base de données vers le nouveau jeu de caractères.
-this program will help you upgrade or install different languages for egroupware	setup	fr	Ce programme va vous aider à mettre à jour ou installer les différentes langues dans eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	fr	Ce programme va vous aider à mettre à jour ou installer les différentes langues dans EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fr	Ceci devrait faire environ 30 octets de long.<br />Note: la valeur par défaut a été générée aléatoirement.
 this stage is completed<br />	setup	fr	Cette étape est complétée<br />
-this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	fr	Ceci va créer un premier utilisateur eGroupWare ou réinitialiser le mot de passe et les droits administrateur d'un utilisateur existant
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	fr	Ceci va créer un premier utilisateur EGroupware ou réinitialiser le mot de passe et les droits administrateur d'un utilisateur existant
 to a version it does not know about	setup	fr	vers une version qu'il ne connaît pas
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	fr	pour permettre une authentification par mot de passe ajoutez la ligne suivante dans votre pg_hba.conf (au-dessus de toutes les autres) ET redémarrez postgres:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	fr	Pour modifier le jeu de caractères: sauvegardez votre base de données, désinstallez toutes les applications et réinstallez la sauvegarde avec "convertir la sauvegarde vers le jeu de caractères sélectionné"
@@ -630,7 +630,7 @@ translations added	setup	fr	Traductions ajoutées.
 translations removed	setup	fr	Traductions enlevées.
 translations upgraded	setup	fr	Traductions mises à jour.
 true	setup	fr	Vrai
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	fr	Essayez de configurer php pour qu'il supporte une des bases de données mentionnées ci-dessus, ou installez eGroupWare à la main.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	fr	Essayez de configurer php pour qu'il supporte une des bases de données mentionnées ci-dessus, ou installez EGroupware à la main.
 two weeks	setup	fr	deux semaines
 uninstall	setup	fr	Désinstaller
 uninstall all applications	setup	fr	Désinstaller toutes les applications
@@ -646,7 +646,7 @@ uploads a backup and installs it on your db	setup	fr	uploader un fichier de sauv
 uploads a backup to the backup-dir, from where you can restore it	setup	fr	uploader un fichier de sauvegarde dans le répertoire de sauvegarde, d'où vous pouvez lancer la restauration
 usage: %1 command [additional options]	setup	fr	Usage: %1 commande [options supplémentaires]
 use --create-header to create the configuration file (--usage gives more options).	setup	fr	Utilisez --create-header pour créer la configuration (--create-header donne plus d'options).
-use --install to install egroupware.	setup	fr	Utilisez --install pour installer eGroupWare.
+use --install to install egroupware.	setup	fr	Utilisez --install pour installer EGroupware.
 use --update to do so.	setup	fr	Utilisez --update pour le faire.
 use cookies to pass sessionid	setup	fr	Utiliser les cookies pour passer l'ID de session
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	fr	utiliser mcrypt pour chiffrer les données de session: {off(par défaut) | on},[mcrypt-init-vector(par défaut généré aléatoirement)],[mcrypt-version]
@@ -673,13 +673,13 @@ we can proceed	setup	fr	Nous pouvons continuer
 we could not determine the version of %1, please make sure it is at least %2	setup	fr	Le serveur n'a pu déterminer la version de %1, veuillez vous assurer qu'elle est au moins en %2
 we will automatically update your tables/records to %1	setup	fr	Nous allons automatiquement mettre à jour vos tables/enregistrements vers %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	fr	Nous allons démarrer une série de tests qui vont prendre quelques minutes. Cliquez sur le lien ci-dessous pour commencer.
-welcome to the egroupware installation	setup	fr	Bienvenue sur l'installateur eGroupWare
+welcome to the egroupware installation	setup	fr	Bienvenue sur l'installateur EGroupware
 where should egroupware store file content	setup	fr	Où eGroupware doit-il stocker les fichiers
-which database type do you want to use with egroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec eGroupWare ?
+which database type do you want to use with egroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec EGroupware ?
 world readable	setup	fr	visible par tous
 world writable	setup	fr	accès en écriture pour tous
-would you like egroupware to cache the phpgw info array ?	setup	fr	Voulez-vous qu'eGroupWare mette en cache le tableau d'informations phpgw ?
-would you like egroupware to check for a new version<br />when admins login ?	setup	fr	Voudriez-vous que eGroupWare vérifie la disponibilité d'une nouvelle version<br />quand les administrateurs se connectent ?
+would you like egroupware to cache the phpgw info array ?	setup	fr	Voulez-vous qu'EGroupware mette en cache le tableau d'informations phpgw ?
+would you like egroupware to check for a new version<br />when admins login ?	setup	fr	Voudriez-vous que EGroupware vérifie la disponibilité d'une nouvelle version<br />quand les administrateurs se connectent ?
 would you like to show each application's upgrade status ?	setup	fr	Voulez-vous afficher le statut de mise à jour de chaque application ?
 writable by the webserver	setup	fr	accès en écriture pour le serveur Web
 write	setup	fr	Ecrire
@@ -687,13 +687,13 @@ wrong credentials to access the header.inc.php file!	setup	fr	Mauvais éléments
 year	setup	fr	année
 yes	setup	fr	Oui
 yes, with lowercase usernames	setup	fr	Oui, avec les utilisateurs en minuscules
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fr	Vous semblez utiliser une version pre-beta de eGroupWare.<br />Ces versions ne sont plus supportées, et il n'y a pas de possibilité de mise à jour pour elles dans le setup.<br /> Vous devriez d'abord mettre votre version à jour vers la version 0.9.10 (la dernière version à supporter les mises à jour pre-beta) <br />puis mettre à jour depuis cette version jusqu'à la version actuelle.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fr	Vous semblez utiliser une ancienne version de PHP<br />Il est recommandé de faire une mise à jour.<br />Les anciennes versions de PHP pourraient ne pas fonctionner correctement, ou pas du tout, avec eGroupWare.<br /><br />SVP faites une mise à jour à la dernière version %1
-you appear to be running version %1 of egroupware	setup	fr	Vous semblez utiliser la version %1 d'eGroupWare
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fr	Vous semblez utiliser une version pre-beta de EGroupware.<br />Ces versions ne sont plus supportées, et il n'y a pas de possibilité de mise à jour pour elles dans le setup.<br /> Vous devriez d'abord mettre votre version à jour vers la version 0.9.10 (la dernière version à supporter les mises à jour pre-beta) <br />puis mettre à jour depuis cette version jusqu'à la version actuelle.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fr	Vous semblez utiliser une ancienne version de PHP<br />Il est recommandé de faire une mise à jour.<br />Les anciennes versions de PHP pourraient ne pas fonctionner correctement, ou pas du tout, avec EGroupware.<br /><br />SVP faites une mise à jour à la dernière version %1
+you appear to be running version %1 of egroupware	setup	fr	Vous semblez utiliser la version %1 d'EGroupware
 you appear to have %1 support.	setup	fr	Votre support %1 semble activé
 you appear to have xml support enabled	setup	fr	Votre support XML semble activé
 you are ready for this stage, but this stage is not yet written.<br />	setup	fr	Vous êtes prêt pour cette étape, mais ceci n'est pas encore écrit.<br />
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	fr	Vous utilisez PHP version %1. eGroupWare requiert à présent %2 ou plus, PHP %3 est recommandé.
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	fr	Vous utilisez PHP version %1. EGroupware requiert à présent %2 ou plus, PHP %3 est recommandé.
 you can install it by running:	setup	fr	Vous pouvez l'installer en exécutant:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	fr	Vous pouvez utiliser l'utilisateur et le mot de passe header pour chaque domaine. Si le mot de passe n'est pas configuré via la ligne de commande, il est lu depuis la variable d'environnement EGW_CLI_PASSWORD ou demandé à l'utilisateur.
 you didn't enter a config password for domain %1	setup	fr	Vous n'avez pas entré de mot de passe de configuration pour le domaine %1
@@ -706,22 +706,22 @@ you dont have tnef or ytnef installed! it is needed to decode winmail.dat attach
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	fr	Vous n'avez pas encore créé votre fichier header.inc.php!<br /> Vous pouvez le créer maintenant.
 you have successfully logged out	setup	fr	Vous vous êtes déconnecté avec succès
 you must enter a username for the admin	setup	fr	Vous devez entrer un nom d'utilisateur pour le compte admin
-you need to add at least one egroupware domain / database instance.	setup	fr	Vous devez ajouter au moins un domaine / instance de base de données eGroupWare.
-you need to configure egroupware:	setup	fr	Vous devez configurer eGroupWare:
+you need to add at least one egroupware domain / database instance.	setup	fr	Vous devez ajouter au moins un domaine / instance de base de données EGroupware.
+you need to configure egroupware:	setup	fr	Vous devez configurer EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	fr	Vous devez résoudre les erreurs ci-dessus, avant que le fichier de configuration header.inc.php puisse être écrit!
 you need to select your current charset!	setup	fr	Vous devez sélectionner votre jeu de caractères!
 you need to specify a password!	setup	fr	Vous devez spécifier un mot de passe !
 you should %1log out%2 and in again, to update your current session!	setup	fr	Vous devez vous %1déconnecter%2 et essayer à nouveau, pour mettre à jour votre session actuelle !
 you should either install the sources or uninstall it, to get rid of the tables	setup	fr	Vous devez soit installer les sources soit les désinstaller pour vous débarrasser des tables.
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	fr	Vous devriez soit le désinstaller et le ré-installer, soit tenter une réparation manuelle
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	fr	Vous ne pourrez PAS vous connecter à eGroupWare en utilisant des sessions PHP: "la session n'a pas pu être vérifiée" !!!
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	fr	Vous ne pourrez PAS vous connecter à EGroupware en utilisant des sessions PHP: "la session n'a pas pu être vérifiée" !!!
 you're using an old configuration file format...	setup	fr	Vous utilisez un ancien format de fichier de configuration...
 your applications are current	setup	fr	Vos applications sont à jour
 your backup directory '%1' %2	setup	fr	Votre répertoire de sauvegarde '%1' %2
 your database does not exist	setup	fr	Votre base de données n'existe pas
 your database is not working!	setup	fr	Votre base de données ne fonctionne pas !
 your database is working, but you dont have any applications installed	setup	fr	Votre base de données fonctionne, mais vous n'avez pas d'application installée
-your egroupware api is current	setup	fr	Votre API eGroupWare est à jour
+your egroupware api is current	setup	fr	Votre API EGroupware est à jour
 your files directory '%1' %2	setup	fr	Votre répertoire de fichiers '%1' %2
 your header admin password is not set. please set it now!	setup	fr	Votre mot de passe d'administration d'En-tête n'est PAS configuré. Veuillez le configurer maintenant!
 your header.inc.php needs upgrading.	setup	fr	Votre fichier header.inc.php a besoin d'une mise à jour.

@@ -1,4 +1,4 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	ca	%1 '%2' no existeix, el servidor web no el pot llegir o no conté una instal·lació eGroupWare!
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	ca	%1 '%2' no existeix, el servidor web no el pot llegir o no conté una instal·lació EGroupware!
 %1 already exists in %2.	setup	ca	%1 ja existeix en %2.
 %1 created in %2.	setup	ca	%1 creat en %2.
 %1 does not exist !!!	setup	ca	%1 no existeix !!!
@@ -105,7 +105,7 @@ checking function %1 exists	setup	ca	Comprovant si funció %1 existeix
 checking pear%1 is installed	setup	ca	Comprovant si s'ha instral·lat PEAR%1
 checking php.ini	setup	ca	Comprovant php.ini
 checking required php version %1 (recommended %2)	setup	ca	Comprovant si hi ha PHP versió %1 (recomanat %2)
-checking the egroupware installation	setup	ca	Comprovant la instal·lació d'eGroupWare
+checking the egroupware installation	setup	ca	Comprovant la instal·lació d'EGroupware
 click <a href="index.php">here</a> to return to setup.	setup	ca	Premeu <a href="index.php">aquí</a> per a tornar a la instal·lació.
 click here	setup	ca	Premeu aquí
 click here to re-run the installation tests	setup	ca	Premeu aquí per a tornar a arrancar els tests d'instal·lació
@@ -190,9 +190,9 @@ download	setup	ca	Descarregar
 edit current configuration	setup	ca	Editar configuració actual
 edit your existing header.inc.php	setup	ca	Editar l'arxiu header.inc.php existent
 edit your header.inc.php	setup	ca	Editar l'arxiu header.inc.php
-egroupware administration manual	setup	ca	Manual d'Administració d'eGroupWare
-egroupware api version %1 found.	setup	ca	S'ha trobat eGroupWare API versió %1.
-egroupware is already installed!	setup	ca	eGroupWare ja està instal·lat!
+egroupware administration manual	setup	ca	Manual d'Administració d'EGroupware
+egroupware api version %1 found.	setup	ca	S'ha trobat EGroupware API versió %1.
+egroupware is already installed!	setup	ca	EGroupware ja està instal·lat!
 emailadmin profile updated:	setup	ca	Perfil EMailAdmin actualitzat:
 enable for extra debug-messages	setup	ca	activar els missatges de depuració extra
 enable mcrypt	setup	ca	Activar MCrypt
@@ -299,14 +299,14 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	ca	Administrar aplicacions
 manage languages	setup	ca	Administrar idiomes
 manual / help	setup	ca	Manual / ajuda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ca	max_execution_time te un valor menor de 30 (segons): eGroupWare a vegades necessita un temps d'execució major. Hi pot haver petades ocasionals
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ca	max_execution_time te un valor menor de 30 (segons): EGroupware a vegades necessita un temps d'execució major. Hi pot haver petades ocasionals
 maximum account id (e.g. 65535 or 1000000)	setup	ca	Id màxim de compte (ex. 65535 o 1000000)
 may be broken	setup	ca	pot estar trencat
 mcrypt algorithm (default tripledes)	setup	ca	Algorisme Mcrypt (predeterminat: TRIPLEDES)
 mcrypt initialization vector	setup	ca	Vector d' inicialització Mcrypt
 mcrypt mode (default cbc)	setup	ca	Modus Mcrypt (predeterminat: CBC)
 mcrypt settings (requires mcrypt php extension)	setup	ca	Configuració Mcrypt (necessita la extensió mcrypt de PHP)
-migration between egroupware account repositories	setup	ca	Migració entre comptes de repositoris eGroupWare
+migration between egroupware account repositories	setup	ca	Migració entre comptes de repositoris EGroupware
 minimum account id (e.g. 500 or 100, etc.)	setup	ca	Id mínim de compte (ex. 500 o 100, etc)
 minute	setup	ca	minut
 missing or uncomplete mailserver configuration	setup	ca	Configuració del servidor de correu desconeguda o incompleta
@@ -316,7 +316,7 @@ modify	setup	ca	Modificar
 month	setup	ca	mes
 multi-language support setup	setup	ca	Configuració del suport Multi-Idioma
 name of database	setup	ca	Nom de la base de dades
-name of db user egroupware uses to connect	setup	ca	Nom de l'usuari de la base de dades que usa eGroupWare per a connectar
+name of db user egroupware uses to connect	setup	ca	Nom de l'usuari de la base de dades que usa EGroupware per a connectar
 never	setup	ca	mai
 new	setup	ca	Nou
 next run	setup	ca	pròxima execució
@@ -328,7 +328,7 @@ no modes available	setup	ca	no hi han modes disponibles
 no update necessary, domain %1(%2) is up to date.	setup	ca	Actualització no necessària, domini %1(%2) està al dia.
 no xml support found. disabling	setup	ca	No s'ha trobat suport per a XML. Desactivant
 not	setup	ca	no
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	ca	No tots els algorismes i modes de mcrypt funcionen amb eGroupWare. Si teniu problemes, proveu a desactivar-ho.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	ca	No tots els algorismes i modes de mcrypt funcionen amb EGroupware. Si teniu problemes, proveu a desactivar-ho.
 not complete	setup	ca	incomplet
 not completed	setup	ca	Incomplet
 not ready for this stage yet	setup	ca	No esteu preparats encara per aquesta fase
@@ -351,9 +351,9 @@ password for smtp-authentication	setup	ca	Contrasenya per l'autentificació SMTP
 password needed for domain configuration.	setup	ca	Contrasenya és necessària per la configuració del domini.
 password of db user	setup	ca	Contrasenya de l'usuari de la base de dades
 passwords did not match, please re-enter	setup	ca	Les contrasenyes no coincideixen, torneu a entrar-les
-path (not url!) to your egroupware installation.	setup	ca	Camí (no URL!) a la teva instal·lació eGroupWare
+path (not url!) to your egroupware installation.	setup	ca	Camí (no URL!) a la teva instal·lació EGroupware
 path information	setup	ca	Informació del camí
-path of egroupware install directory (default auto-detected)	setup	ca	camí del directori d'instal·lació d'eGroupWare (per defecte l'autodetecta)
+path of egroupware install directory (default auto-detected)	setup	ca	camí del directori d'instal·lació d'EGroupware (per defecte l'autodetecta)
 path to user and group files has to be outside of the webservers document-root!!!	setup	ca	El camí als arxius d'usuaris i grups HA D'ESTAR FORA de l'arrel del servidor web!!
 path to various directories: have to exist and be writeable by the webserver	setup	ca	camí a varis directoris: han d'existir i que el servidor web hi pugui escriure
 pear (%1) is a php repository and is usually in a package called %2.	setup	ca	PEAR (%1) és una llibreria PHP i normalment està en un paquet anomenat %2.
@@ -361,12 +361,12 @@ pear%1 is needed by: %2.	setup	ca	PEAR%1 és necessari per: %2.
 persistent connections	setup	ca	Connexions persistents
 please check for sql scripts within the application's directory	setup	ca	Si us plau, comproveu els arxius d'ordres sql en el directori de l'aplicació
 please check read/write permissions on directories, or back up and use another option.	setup	ca	Si us plau, comproveu els permisos de lectura i escriptura als directoris, o torneu i feu servir una altra opció
-please configure egroupware for your environment	setup	ca	Configureu eGroupWare per al vostre entorn
+please configure egroupware for your environment	setup	ca	Configureu EGroupware per al vostre entorn
 please consult the %1.	setup	ca	Consulteu el %1
 please fix the above errors (%1) and warnings(%2)	setup	ca	Si us plau, corregiu els errors (%1) i avisos(%2) citats a dalt
 please install	setup	ca	Instal·leu
 please login	setup	ca	Inicieu la sessió
-please login to egroupware and run the admin application for additional site configuration	setup	ca	Si us plau, inicieu la sessió en eGroupWare i executeu l'aplicació d'administració per a la configuració addicional del lloc
+please login to egroupware and run the admin application for additional site configuration	setup	ca	Si us plau, inicieu la sessió en EGroupware i executeu l'aplicació d'administració per a la configuració addicional del lloc
 please make the following change in your php.ini	setup	ca	Si us plau, feu els canvis següents al vostre php.ini
 please wait...	setup	ca	Si us plau, espereu...
 pop/imap mail server hostname or ip address	setup	ca	Nom del servidor de correus POP/IMAP o adreça IP
@@ -385,7 +385,7 @@ re-enter password	setup	ca	Confirmeu la contrasenya
 read translations from	setup	ca	Llegir traduccions de
 readable by the webserver	setup	ca	pot ser llegit pel servidor web
 really uninstall all applications	setup	ca	REALMENT voleu desinstal·lar totes les aplicacions
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ca	register_globals està activat. eGroupWare NO ho necessita i generalment és més segur tenir-ho desactivat.
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ca	register_globals està activat. EGroupware NO ho necessita i generalment és més segur tenir-ho desactivat.
 registered	setup	ca	registrat
 rejected lines	setup	ca	Línies rebutjades
 remove	setup	ca	Esborrar
@@ -465,7 +465,7 @@ the %1 extension is needed from: %2.	setup	ca	L'extensió %1 és necessària per
 the %1 extension is needed, if you plan to use a %2 database.	setup	ca	L'extensió %1 és necessaria si vols utilitzar una base de dades %2.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ca	El tipus de base de dades en predeterminats (%1) no està suportat en aquest servidor. Es fa servir el primer tipus suportat
 the file	setup	ca	l'arxiu
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ca	La primera passa per instal·lar eGroupWare consisteix en assegurar-se de que el vostre entorn té les configuracions necessàries per a poder executar correctament l'aplicació.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ca	La primera passa per instal·lar EGroupware consisteix en assegurar-se de que el vostre entorn té les configuracions necessàries per a poder executar correctament l'aplicació.
 the following applications need to be upgraded:	setup	ca	Les aplicacions següents necessiten actualitzar-se:
 the function %1 is needed from: %2.	setup	ca	La funció %1 és necessària per: %2.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ca	L'extensió mbstring és necessària per a suportar completament l'unicode (utf-8) o altres conjunts de caràcters de més d'un byte.
@@ -479,7 +479,7 @@ this has to be outside the webservers document-root!!!	setup	ca	Això ha d'estar
 this might take a while, please wait ...	setup	ca	Això pot trigar una estona, espereu si us plau ...
 this program lets you backup your database, schedule a backup or restore it.	setup	ca	Aquest programa et permet fer còpies de seguretat de la teva base de dades, programar una còpia de seguretat o restaurar-la.
 this program will convert your database to a new system-charset.	setup	ca	Aquest programa convertirà la base de dades a un nou joc de caràcters del sistema.
-this program will help you upgrade or install different languages for egroupware	setup	ca	Aquest programa us ajudarà a actualitzar o instal·lar els diferents idiomes per a eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	ca	Aquest programa us ajudarà a actualitzar o instal·lar els diferents idiomes per a EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	ca	Hauria de tenir una longitud al voltant dels 30 bytes.<br />Nota: El valor per defecte ha estat generat de manera aleatòria.
 this stage is completed<br />	setup	ca	Aquest nivell s'ha completat<br />
 to a version it does not know about	setup	ca	a una versió que no coneix
@@ -491,7 +491,7 @@ translations added	setup	ca	Traduccions afegides
 translations removed	setup	ca	Traduccions esborrades
 translations upgraded	setup	ca	Traduccions actualitzades
 true	setup	ca	Cert
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ca	Intenteu configurar php per a suportar un dels esmentats SGBD, o instal·leu eGroupWare manualment.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ca	Intenteu configurar php per a suportar un dels esmentats SGBD, o instal·leu EGroupware manualment.
 two weeks	setup	ca	dues setmanes
 uninstall	setup	ca	desinstal·lar
 uninstall all applications	setup	ca	Desinstal·lar totes les aplicacions
@@ -523,11 +523,11 @@ warning!	setup	ca	Atenció!!
 we can proceed	setup	ca	Podem procedir
 we will automatically update your tables/records to %1	setup	ca	Actualitzarem automàticament les vostres taules/registres a %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ca	Ara executarem una sèrie de proves que duraran uns pocs minuts. Pitjeu sobre l'enllaç d'abaix per continuar.
-welcome to the egroupware installation	setup	ca	Benvinguts a la Instal·lació de eGroupWare
-which database type do you want to use with egroupware?	setup	ca	Quin tipus de base de dades voleu usar amb eGroupWare?
+welcome to the egroupware installation	setup	ca	Benvinguts a la Instal·lació de EGroupware
+which database type do you want to use with egroupware?	setup	ca	Quin tipus de base de dades voleu usar amb EGroupware?
 world readable	setup	ca	pot ser llegit per tothom
 world writable	setup	ca	pot ser modificat per tothom
-would you like egroupware to cache the phpgw info array ?	setup	ca	Voleu que eGroupWare desi en memòria cau la matriu d'informació phpgw?
+would you like egroupware to cache the phpgw info array ?	setup	ca	Voleu que EGroupware desi en memòria cau la matriu d'informació phpgw?
 would you like egroupware to check for a new version<br />when admins login ?	setup	ca	Vols que eGroupware comprovi si hi ha una nova versió<br />quan l'administrador entri?
 would you like to show each application's upgrade status ?	setup	ca	Voleu mostrar l'estat de l'actualització de cada aplicació?
 writable by the webserver	setup	ca	pot ser modificat pel servidor web
@@ -537,7 +537,7 @@ yes	setup	ca	Sí
 yes, with lowercase usernames	setup	ca	Sí, amb nom d'usuaris en minúscules
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ca	Pareix que executes una versió pre-beta d'eGroupware.<br />Aquestes versions ja no tenen suport i no hi ha cap ruta per actualitzar-les a la instal·lació.<br /> Potser t'estimes més actualitzar primer a la versió 0.9.10 (la darrera versió que suporta actualitzacions pre-beta) <br /> i després actualitzar a partir de la versió actual.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ca	Pareix que executes una versió pre-beta d'eGroupware.<br />És recomanable que actualitzis a una versió nova. <br />Les versions antigues de PHP poden fer que eGroupware no funcioni correctament, o gens ni mica. <br /><br />Per favor, actualitza a la darrera versió %1
-you appear to be running version %1 of egroupware	setup	ca	Sembla que esteu executant la versió %1 d'eGroupWare
+you appear to be running version %1 of egroupware	setup	ca	Sembla que esteu executant la versió %1 d'EGroupware
 you appear to have %1 support.	setup	ca	Pareix que tens suport %1.
 you appear to have xml support enabled	setup	ca	Sembla que teniu activat el suport de XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	ca	Estàs a punt per a aquest nivell, però aquest nivell esncara no s'ha guardat.<br />
@@ -550,7 +550,7 @@ you do not have any languages installed. please install one now <br />	setup	ca	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	ca	Encara no has creat el teu header.inc.php!<br /> El pots crear ara.
 you have successfully logged out	setup	ca	Us heu desconnectat correctament.
 you must enter a username for the admin	setup	ca	Heu d'introduir un nom d'usuari per a l'administrador
-you need to configure egroupware:	setup	ca	Heu de configurar eGroupWare:
+you need to configure egroupware:	setup	ca	Heu de configurar EGroupware:
 you need to select your current charset!	setup	ca	Heu de seleccionar el joc de caràcters actual!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	ca	Podeu desintalar-la i tornar-la a instal·lar, o podeu intentar una reparació manual
 you're using an old configuration file format...	setup	ca	Esteu usant un arxiu de configuració amb format antic

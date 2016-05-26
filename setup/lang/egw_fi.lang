@@ -131,8 +131,8 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	fi	Tarkistetaan onko PEAR%1 asennettu
 checking php.ini	setup	fi	Tarkistetaan tiedostoa php.ini
 checking required php version %1 (recommended %2)	setup	fi	Tarkistetaan tarvittava PHP versio %1 (suositellaan %2)
-checking the egroupware installation	setup	fi	eGroupWaren asennuksen tarkistus
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	fi	tarkistaa eGroupWaren asennukset, niiden versiot ja tarvittavat päivitykset (palautus arvot, katso --exit-codes)
+checking the egroupware installation	setup	fi	EGroupwaren asennuksen tarkistus
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	fi	tarkistaa EGroupwaren asennukset, niiden versiot ja tarvittavat päivitykset (palautus arvot, katso --exit-codes)
 click <a href="index.php">here</a> to return to setup.	setup	fi	Napsauta <a href="index.php">tästä</a> palataksesi asennukseen.
 click here	setup	fi	Napsauta tästä
 click here to re-run the installation tests	setup	fi	Napsauta tähän, jos haluat ajaa asennustestin uudelleen
@@ -161,7 +161,7 @@ create admin account	setup	fi	Luo ylläpitäjän tunnus
 create database	setup	fi	Luo tietokanta
 create demo accounts	setup	fi	Luo demotunnukset
 create one now	setup	fi	Luo nyt
-create or edit the egroupware configuration file: header.inc.php:	setup	fi	Luo tai muokkaa eGroupWaren asetustiedosto: header.inc.php
+create or edit the egroupware configuration file: header.inc.php:	setup	fi	Luo tai muokkaa EGroupwaren asetustiedosto: header.inc.php
 create the empty database -	setup	fi	Luo tyhjä tietokanta -
 create the empty database and grant user permissions -	setup	fi	Luo tyhjä tietokanta ja anna käyttöoikeudet -
 create your header.inc.php	setup	fi	Luo header.inc.php
@@ -241,7 +241,7 @@ enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fi	An
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.<br />Esimerkkejä: /files, E:\FILES
 enter the full path for users and group files.<br />examples: /files, e:files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.<br />Esimerkkejä: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	fi	Enter the hostname of the machine on which this server is running
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fi	Anna eGroupWaren URL.<br />Esimerkki: http://www.yritys.com/egroupware   tai   /egroupware<br />(<b>ei kauttaviivaa loppuun</b>)
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fi	Anna EGroupwaren URL.<br />Esimerkki: http://www.yritys.com/egroupware   tai   /egroupware<br />(<b>ei kauttaviivaa loppuun</b>)
 enter the site password for peer servers	setup	fi	Anna peer-palvelinten site-salasana
 enter the site username for peer servers	setup	fi	Anna peer-palvelinten site-tunnus
 enter the title for your site	setup	fi	Anna sivustosi otsikko
@@ -334,7 +334,7 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	fi	Sovellusten hallinta
 manage languages	setup	fi	Kielten hallinta
 manual / help	setup	fi	Käsikirja / Ohje
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fi	max_execution_time on vähemmän kuin 30 (sekuntia): eGroupWare tarvitsee toisinaan pidempää suoritusaikaa, voit odottaa ongelmia
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fi	max_execution_time on vähemmän kuin 30 (sekuntia): EGroupware tarvitsee toisinaan pidempää suoritusaikaa, voit odottaa ongelmia
 maximum account id (e.g. 65535 or 1000000)	setup	fi	Käyttäjätunnisteen maksimiarvo (esim. 65535 tai 1000000)
 may be broken	setup	fi	voi olla rikki
 mcrypt algorithm (default tripledes)	setup	fi	Mcrypt-algoritmi (oletus TRIPLEDES)
@@ -351,7 +351,7 @@ modify	setup	fi	Muokkaa
 month	setup	fi	kuukausi
 multi-language support setup	setup	fi	Kielituen asennus
 name of database	setup	fi	Tietokannan nimi
-name of db user egroupware uses to connect	setup	fi	Tietokantakäyttäjä, jota eGroupWare käyttää
+name of db user egroupware uses to connect	setup	fi	Tietokantakäyttäjä, jota EGroupware käyttää
 never	setup	fi	ei koskaan
 new	setup	fi	Uusi
 next run	setup	fi	Suoritetaan seuraavan kerran
@@ -362,7 +362,7 @@ no modes available	setup	fi	ei käytettävissä olevaa tilaa
 no update necessary, domain %1(%2) is up to date.	setup	fi	Päivitystä ei tarvita, domain %1(%2) on päivitetty.
 no xml support found. disabling	setup	fi	Ei XML-tukea. Otetaan pois käytöstä
 not	setup	fi	ei
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	fi	Kaikki MCrypt-algoritmit eivät toimi eGroupWaressa. Jos kohtaat ongelmia, ota MCrypt-tuki pois käytöstä.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	fi	Kaikki MCrypt-algoritmit eivät toimi EGroupwaressa. Jos kohtaat ongelmia, ota MCrypt-tuki pois käytöstä.
 not complete	setup	fi	ei valmis
 not completed	setup	fi	Ei valmis
 not ready for this stage yet	setup	fi	Tätä vaihetta ei voida tehdä vielä
@@ -385,7 +385,7 @@ password for smtp-authentication	setup	fi	SMTP-tunnistuksen salasana
 password needed for domain configuration.	setup	fi	Domainin konfiguraatio vaatii salasanan
 password of db user	setup	fi	Tietokannan käyttäjän salasana
 passwords did not match, please re-enter	setup	fi	Salasanat eivät ole samoja, yritä uudelleen
-path (not url!) to your egroupware installation.	setup	fi	Polku (ei URL!) eGroupWareen
+path (not url!) to your egroupware installation.	setup	fi	Polku (ei URL!) EGroupwareen
 path information	setup	fi	Polkumääritykset
 path to user and group files has to be outside of the webservers document-root!!!	setup	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA www-palvelimen asiakirjajuuren ulkopuolella!!!
 pem certificate	setup	fi	PEM sertifikaatti
@@ -394,12 +394,12 @@ php client	setup	fi	PHP Client
 php proxy	setup	fi	PHP Proxy
 please check for sql scripts within the application's directory	setup	fi	Tarkista sovelluksen hakemistossa olevat SQL-skriptit
 please check read/write permissions on directories, or back up and use another option.	setup	fi	Tarkista hakemistojen luku/kirjoitusoikeudet, tai peruuta ja valitse jokin toinen vaihtoehto.
-please configure egroupware for your environment	setup	fi	Konfiguroi eGroupWare ympäristöösi
+please configure egroupware for your environment	setup	fi	Konfiguroi EGroupware ympäristöösi
 please consult the %1.	setup	fi	Katso %1.
 please fix the above errors (%1) and warnings(%2)	setup	fi	Korjaa ylläolevat virheet (%1) ja varoitukset (%2)
 please install	setup	fi	Asenna
 please login	setup	fi	Kirjaudu sisään
-please login to egroupware and run the admin application for additional site configuration	setup	fi	Kirjaudu eGroupWareen, ja määrittele asetukset ylläpitosovelluksessa
+please login to egroupware and run the admin application for additional site configuration	setup	fi	Kirjaudu EGroupwareen, ja määrittele asetukset ylläpitosovelluksessa
 please make the following change in your php.ini	setup	fi	Muuta seuraavat asetukset php.ini-tiedostossa
 please wait...	setup	fi	Odota hetki...
 pop/imap mail server hostname or ip address	setup	fi	POP/IMAP postipalvelimen nimi tai IP osoite
@@ -416,7 +416,7 @@ re-enter password	setup	fi	Anna salasana uudelleen
 read translations from	setup	fi	Lue käännökset
 readable by the webserver	setup	fi	www-palvelimen luettavissa
 really uninstall all applications	setup	fi	Haluan VARMASTI poistaa kaikki sovellukset
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fi	register_globals on päällä. eGroupWare ei vaadi tätä, ja on turvallisempaa ottaa se pois käytöstä (Off).
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fi	register_globals on päällä. EGroupware ei vaadi tätä, ja on turvallisempaa ottaa se pois käytöstä (Off).
 registered	setup	fi	rekisteröity
 rejected lines	setup	fi	Hylätyt rivit
 remove	setup	fi	Poista
@@ -491,7 +491,7 @@ text entry	setup	fi	Tekstitietue
 the %1 extension is needed, if you plan to use a %2 database.	setup	fi	Laajennus %1 tarvitaan, jos haluat käyttää %2-tietokantaa.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fi	Oletuksena käytettävä tietokanta (%1) ei toimi tällä palvelimella. Käytetään ensimmäistä toimivaa tyyppiä.
 the file	setup	fi	tiedosto
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fi	eGroupWaren asennuksen ensimmäisessä vaiheess tarkistetaan, että järjestelmässäsi on tarpeeliset asetukset kunnossa.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fi	EGroupwaren asennuksen ensimmäisessä vaiheess tarkistetaan, että järjestelmässäsi on tarpeeliset asetukset kunnossa.
 the following applications are not installed:	setup	fi	Seuraavat sovellukset EIVÄT ole asennettuna
 the following applications need to be upgraded:	setup	fi	Nämä sovellukset on päivitettävä:
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fi	mbstring-laajennusta tarvitaan utf-8 tai muitten monibittisten merkistöjen täyteen tukeen.
@@ -503,7 +503,7 @@ there was a problem trying to connect to your ldap server. <br />please check yo
 this has to be outside the webservers document-root!!!	setup	fi	Hakemiston on oltava www-palvelimen asiakirjajuuren ulkopuolella!!!
 this might take a while, please wait ...	setup	fi	Voi kestää hetken, odota ...
 this program will convert your database to a new system-charset.	setup	fi	Tämä ohjelma muuntaa tietokantasi uuteen merkistöön.
-this program will help you upgrade or install different languages for egroupware	setup	fi	Päivitä tai asenna eGroupWaren kieliä
+this program will help you upgrade or install different languages for egroupware	setup	fi	Päivitä tai asenna EGroupwaren kieliä
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fi	Tämän pitäisi olla noin 30 tavua pitkä.<br />Huom: oletusarvo on luotu satunnaisesti.
 this stage is completed<br />	setup	fi	Tämä vaihe on valmis<br />
 to a version it does not know about	setup	fi	versioon jota se ei tunne
@@ -513,7 +513,7 @@ translations added	setup	fi	Käännökset lisätty
 translations removed	setup	fi	Käännökset poistettu
 translations upgraded	setup	fi	Käännökset päivitetty
 true	setup	fi	Kyllä
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	fi	Asenna jonkin ylläolevan tietokannan tuki PHP:lle, tai asenna eGroupWare käsin.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	fi	Asenna jonkin ylläolevan tietokannan tuki PHP:lle, tai asenna EGroupware käsin.
 two weeks	setup	fi	kaksi viikkoa
 uninstall	setup	fi	poista asennus
 uninstall all applications	setup	fi	Poista kaikki sovellukset
@@ -541,12 +541,12 @@ warning!	setup	fi	Varoitus!
 we can proceed	setup	fi	Voidaan jatkaa
 we will automatically update your tables/records to %1	setup	fi	Taulut/tietueet päivitetään versioon %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	fi	Seuraavaksi ajetaan muutamia testejä, joiden suorittaminen voi viedä joitakin minuutteja. Napsauta allaolevaa linkkiä jatkaaksesi.
-welcome to the egroupware installation	setup	fi	Tervetuloa eGroupWaren asennukseen
+welcome to the egroupware installation	setup	fi	Tervetuloa EGroupwaren asennukseen
 which database type do you want to use with egroupware?	setup	fi	Mitä tietokantatyyppiä käytät?
 world readable	setup	fi	kaikkien luettavissa
 world writable	setup	fi	kaikkien kirjoitettavissa
-would you like egroupware to cache the phpgw info array ?	setup	fi	Haluatko, että eGroupWare pitää phpgw -tietorakenteen muistissa?
-would you like egroupware to check for a new version<br />when admins login ?	setup	fi	Haluatko, että eGroupWare tarkistaa onko uusia versioita julkaistu, kun pääkäyttäjä sisäänkirjautuu?
+would you like egroupware to cache the phpgw info array ?	setup	fi	Haluatko, että EGroupware pitää phpgw -tietorakenteen muistissa?
+would you like egroupware to check for a new version<br />when admins login ?	setup	fi	Haluatko, että EGroupware tarkistaa onko uusia versioita julkaistu, kun pääkäyttäjä sisäänkirjautuu?
 would you like to show each application's upgrade status ?	setup	fi	Haluatko näyttää kunkin sovelluksen päivitystilan?
 writable by the webserver	setup	fi	www-palvelimen kirjoitettavissa
 write	setup	fi	Kirjoita
@@ -554,9 +554,9 @@ wrong credentials to access the header.inc.php file!	setup	fi	Virheellinen tunnu
 year	setup	fi	Vuosi
 yes	setup	fi	Kyllä
 yes, with lowercase usernames	setup	fi	Kyllä, pienellä kirjoitetut käyttäjätunnukset
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fi	Käytät eGroupWaren esibetaversiota.<br />Näitä versioita ei tueta enää, ja niitä ei voi päivittää asennuksessa.<br />Päivitä versioon 0.9.10 (viimeisin versio, joka tukee esibetaversioita) <br />ja päivitä sitten nykyiseen versioon.
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fi	Käytät EGroupwaren esibetaversiota.<br />Näitä versioita ei tueta enää, ja niitä ei voi päivittää asennuksessa.<br />Päivitä versioon 0.9.10 (viimeisin versio, joka tukee esibetaversioita) <br />ja päivitä sitten nykyiseen versioon.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fi	Käytät vanhaa PHP-versiota.<br />On suositeltavaa päivittää PHP uudempaan versioon.<br />Vanhat PHP-versiot eivät toimi oikein.<br />Päivitä vähintään versioon %1.
-you appear to be running version %1 of egroupware	setup	fi	Ajat eGroupWaren versiota %1
+you appear to be running version %1 of egroupware	setup	fi	Ajat EGroupwaren versiota %1
 you appear to have xml support enabled	setup	fi	XML on käytettävissä
 you are ready for this stage, but this stage is not yet written.<br />	setup	fi	Olet valmis tätä vaihetta varten, mutta tätä vaihetta ei ole vielä kirjoitettu.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	fi	Käytät PHP versiota %1. EGroupware vaatii %2 tai uudemman, suositus on PHP %3.

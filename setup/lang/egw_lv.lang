@@ -2,7 +2,7 @@
 %1 is %2%3 !!!	setup	lv	%1 ir %2%3 !!!
 (searching accounts and changing passwords)	setup	lv	(meklē kontus un maina paroles)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	lv	***Iestatīšana neatjaunina tavu datubāzi, atjaunināšana var būt pārtraukta maksimālā_izpildāmā_laika dēļ, kas atstāj tavu DB neatgūstamajā stāvoklī(tavi dati pazaudēti)!!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	lv	***Lai eGroupWare strādatu pilnīgi, tev jāveic izmaiņas ar roku php.ini(parasti iekšā/piem., uz linux)
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	lv	***Lai EGroupware strādatu pilnīgi, tev jāveic izmaiņas ar roku php.ini(parasti iekšā/piem., uz linux)
 00 (disable)	setup	lv	00 (nav atļauts/ rekomendēts)
 13 (ntp)	setup	lv	13 (ntp)
 80 (http)	setup	lv	80 (http)
@@ -75,7 +75,7 @@ checking file-permissions of %1 for %2 %3: %4	setup	lv	Pārbauda faila atļaujas
 checking for gd support...	setup	lv	Pārbauda GD atbalstu...
 checking pear%1 is installed	setup	lv	Pārbauda vai PEAR %1 ir iestatīts
 checking php.ini	setup	lv	Pārbauda php.ini
-checking the egroupware installation	setup	lv	Parbauda eGroupWare instalāciju
+checking the egroupware installation	setup	lv	Parbauda EGroupware instalāciju
 click <a href="index.php">here</a> to return to setup.	setup	lv	Noklikšķini <a href="index.php">šeit</a> lai atgrieztos uz iestatīšanu
 click here	setup	lv	Noklikšķini šeit
 click here to re-run the installation tests	setup	lv	Noklikšķini šeit, lai palaistu vēlreiz  instalēšanas pārbaudes
@@ -146,13 +146,13 @@ download	setup	lv	Lejupielādēt
 edit current configuration	setup	lv	Rediģēt esošo konfigurāciju
 edit your existing header.inc.php	setup	lv	Rediģēt esošo header.inc.php
 edit your header.inc.php	setup	lv	Rediģēt tavu header.inc.php
-egroupware administration manual	setup	lv	eGroupWare administrēšanas rokasgrāmata
+egroupware administration manual	setup	lv	EGroupware administrēšanas rokasgrāmata
 enable for extra debug-messages	setup	lv	atļauts ekstra atkļūdošanas ziņojumiem
 enable mcrypt	setup	lv	Atļaut MCrypt
 enter some random text for app session encryption	setup	lv	Ievadi brīvi izvēlētu tekstu aplikāciju sesijas šifrēšanai
 enter the full path to the backup directory.<br />if empty: files directory	setup	lv	Ievadi pilno ceļu uz dublējuma direktoriju.<br/>ja tukšs: failu direktoriju
 enter the hostname of the machine on which this server is running	setup	lv	Ievadi servera hostdatora vārdu
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	lv	Ievadi eGroupWare URL atrašanos.<br/>Piemērams:http://www.domain.com/egroupware   vai   /egroupware<br /><b>Bez slīpsvītras</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	lv	Ievadi EGroupware URL atrašanos.<br/>Piemērams:http://www.domain.com/egroupware   vai   /egroupware<br /><b>Bez slīpsvītras</b>
 enter the site password for peer servers	setup	lv	Ievadi vietnes paroli vienādranga serveriem
 enter the site username for peer servers	setup	lv	Ievadi vietnes lietotājvārdu vienādranga serveriem
 enter the title for your site	setup	lv	Ievadi savas vietnes nosaukumu
@@ -238,7 +238,7 @@ modify	setup	lv	Modificēt
 month	setup	lv	mēnesis
 multi-language support setup	setup	lv	Daudzvalodu atbalsta iestatīšana
 name of database	setup	lv	Datubāzes nosaukums
-name of db user egroupware uses to connect	setup	lv	DB lietotāja vārds, ko eGroupWare lieto, lai pieslēgtos
+name of db user egroupware uses to connect	setup	lv	DB lietotāja vārds, ko EGroupware lieto, lai pieslēgtos
 never	setup	lv	nekad
 new	setup	lv	Jauns
 next run	setup	lv	nākošais gājiens
@@ -272,12 +272,12 @@ path information	setup	lv	Ceļa informācija
 persistent connections	setup	lv	Pastāvīgs pieslēgums
 please check for sql scripts within the application's directory	setup	lv	Lūdzu pārbaudi sql skriptus aplikāciju direktorijā
 please check read/write permissions on directories, or back up and use another option.	setup	lv	Lūdzu pārbaudi lasīšanas/rakstīšanas atļaujas direktorijās, vai izveido dublikātu un lieto citu iespēju
-please configure egroupware for your environment	setup	lv	Lūdzu konfigurē eGroupWare savai videi
+please configure egroupware for your environment	setup	lv	Lūdzu konfigurē EGroupware savai videi
 please consult the %1.	setup	lv	Lūdzu konsultējies ar %1
 please fix the above errors (%1) and warnings(%2)	setup	lv	Lūdzu piefiksē kļūdas (%1) un brīdinajumus(%2)
 please install	setup	lv	Lūdzu instalē
 please login	setup	lv	Lūdzu piesakies
-please login to egroupware and run the admin application for additional site configuration	setup	lv	Lūdzu piesakies eGroupWare un palaid administratora programmatūru papildus vietnes konfigurēšanai
+please login to egroupware and run the admin application for additional site configuration	setup	lv	Lūdzu piesakies EGroupware un palaid administratora programmatūru papildus vietnes konfigurēšanai
 please make the following change in your php.ini	setup	lv	Lūdzu izdari sekojošas izmaiņas savā php.ini
 please wait...	setup	lv	Lūdzu uzgaidi...
 pop/imap mail server hostname or ip address	setup	lv	POP.IMAP pasta servera hosta vārds vai IP adrese
@@ -356,7 +356,7 @@ tcp port number of database server	setup	lv	datubāzes servera TCP porta numurs
 text entry	setup	lv	Teksta ievadīšana
 the %1 extension is needed, if you plan to use a %2 database.	setup	lv	Ja domā lietot %2 datubāzi, nepieciešami paplašinajumi%1
 the file	setup	lv	datne
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	lv	Pirmais solis, instalējot eGroupWare, ir pārliecināties, ka tavai videi ir neppieciešamie uzstādījumi, lai programmatūra darbotos pareizi
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	lv	Pirmais solis, instalējot EGroupware, ir pārliecināties, ka tavai videi ir neppieciešamie uzstādījumi, lai programmatūra darbotos pareizi
 the following applications need to be upgraded:	setup	lv	Nepieciešams atjaunināt sekojošas aplikācijas:
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	lv	mbstring.func_overload = 7 nepieciešams pilnīgs unikoda(utf-8) vai citas daudzbaitu rakstzīmju kopas atbalsts
 the table definition was correct, and the tables were installed	setup	lv	Tabulas nosacījumi bija pareizi, un tabulas tika uzinstalētas
@@ -367,14 +367,14 @@ this has to be outside the webservers document-root!!!	setup	lv	Tam jābūt ārp
 this might take a while, please wait ...	setup	lv	Tas var aizņemt kādu brīdi, lūdzu uzgaidīt
 this program lets you backup your database, schedule a backup or restore it.	setup	lv	Šī programma ļauj tev dublēt tavu datubāzi, sastādīt dublējuma sarakstu vai atjaunot to.
 this program will convert your database to a new system-charset.	setup	lv	Programma konvertēs tavu datubāzi jaunajā sistēmas rakstzīmju kopā
-this program will help you upgrade or install different languages for egroupware	setup	lv	Šī programma palīdzēs tev atjaunināt vai uzinstalēt dažādas valodas eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	lv	Šī programma palīdzēs tev atjaunināt vai uzinstalēt dažādas valodas EGroupware
 to setup 1 admin account and 3 demo accounts.	setup	lv	iestatīt 1 administratora kontu un 3 demo kontus
 top	setup	lv	augšā
 translations added	setup	lv	Tulkojumi pievienoti
 translations removed	setup	lv	Tulkojumi pārvietoti
 translations upgraded	setup	lv	Tulkojumi atjaunināti
 true	setup	lv	Patiess
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	lv	Mēģini konfigurēt savu php, lai atbalstītu vienu no minētajiem DBMS, vai instalē eGroupWare
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	lv	Mēģini konfigurēt savu php, lai atbalstītu vienu no minētajiem DBMS, vai instalē EGroupware
 two weeks	setup	lv	divas nedēļas
 uninstall	setup	lv	atinstalēt
 uninstall all applications	setup	lv	Atinstalēt programmatūru
@@ -400,19 +400,19 @@ warning!	setup	lv	Brīdinājums!
 we can proceed	setup	lv	Mēs varam turpināt
 we will automatically update your tables/records to %1	setup	lv	Mēs automatiski atjauninām tavu tabulu/ierakstus uz %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	lv	Mēs palaidīsim dažus testus, kas var prasīt dažas minūtes laika. Noklikšķini uz saites, lai turpinātu
-welcome to the egroupware installation	setup	lv	Laipni lūdzam eGroupWare instalēšanā
-which database type do you want to use with egroupware?	setup	lv	Kadu datubāzes tipu tu vēlies lietot eGroupWare?
+welcome to the egroupware installation	setup	lv	Laipni lūdzam EGroupware instalēšanā
+which database type do you want to use with egroupware?	setup	lv	Kadu datubāzes tipu tu vēlies lietot EGroupware?
 world readable	setup	lv	pasaulē lasāms
 world writable	setup	lv	pasaulē rakstāms
-would you like egroupware to cache the phpgw info array ?	setup	lv	Vai vēlies, lai eGroupWare saglaba kešatmiņā phpgw informācijas masīvu?
-would you like egroupware to check for a new version<br />when admins login ?	setup	lv	Vai vēlies, lai eGroupWare pārbauda jauno versiju<br/> kad administrators piesakās?
+would you like egroupware to cache the phpgw info array ?	setup	lv	Vai vēlies, lai EGroupware saglaba kešatmiņā phpgw informācijas masīvu?
+would you like egroupware to check for a new version<br />when admins login ?	setup	lv	Vai vēlies, lai EGroupware pārbauda jauno versiju<br/> kad administrators piesakās?
 would you like to show each application's upgrade status ?	setup	lv	Vai vēlies, lai tiktu parādīts katras aplikācijas atjaunināsanās stāvoklis?
 writable by the webserver	setup	lv	rakstāms tīmekļa serverī
 write	setup	lv	Rakstīt
 year	setup	lv	gads
 yes	setup	lv	Jā
 yes, with lowercase usernames	setup	lv	Jā, lietotājvārdi ar maziem burtiem
-you appear to be running version %1 of egroupware	setup	lv	Tu palaid eGroupWare versiju %1
+you appear to be running version %1 of egroupware	setup	lv	Tu palaid EGroupware versiju %1
 you appear to have %1 support.	setup	lv	Tev atļauts %1 atbalsts
 you appear to have xml support enabled	setup	lv	Tev ir  atļauts XML atbalsts
 you didn't enter a config password for domain %1	setup	lv	Tu neesi ievadījis konfigurēšanas paroli domēnam %1

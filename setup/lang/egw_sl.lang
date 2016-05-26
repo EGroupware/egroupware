@@ -1,4 +1,4 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	sl	%1 '%2' ne obstaja, ni berljiva za spletni strežnik ali ne vsebuje namestitve eGroupWare!
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	sl	%1 '%2' ne obstaja, ni berljiva za spletni strežnik ali ne vsebuje namestitve EGroupware!
 %1 already exists in %2.	setup	sl	%1 že obstaja v %2.
 %1 created in %2.	setup	sl	%1 je ustvarjena v %2.
 %1 database %2 on %3 already contains the following tables:	setup	sl	Zbirka podatkov %1 %2 na %3 že vsebuje sledeče tabele:
@@ -27,7 +27,7 @@ activate safe password check	setup	sl	Aktivira varno preverjanje gesel
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sl	Samodejno kreirani uporabniki se dodajo v to skupino (Če pustite prazno, bo uporabljena skupina 'Privzeto')
 add new database instance (egw domain)	setup	sl	Dodaj novo zbirko podatkov (domeno eGW)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	sl	Doda ali uredi domeno:
-adding, editing or deleting an egroupware domain / database instance:	setup	sl	Dodajanje, urejanje ali brisanje domene eGroupWare / zbirke podatkov:
+adding, editing or deleting an egroupware domain / database instance:	setup	sl	Dodajanje, urejanje ali brisanje domene EGroupware / zbirke podatkov:
 additional options and there defaults (in brackets)	setup	sl	Nadaljnje možnosti in privzete vrednosti (v oklepajih)
 additional settings	setup	sl	Dodatne nastavitve
 admin account successful created.	setup	sl	Administratorki račun je bil uspešno ustvarjen.
@@ -129,8 +129,8 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	sl	Preverjam, če je nameščen PEAR%1
 checking php.ini	setup	sl	Preverjam php.ini
 checking required php version %1 (recommended %2)	setup	sl	Preverjam zahtevano različico PHP %1 (priporočena je %2)
-checking the egroupware installation	setup	sl	Preverjam eGroupWare namestitev
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	sl	Preveri nameščen eGroupWare, različico in potrebne nadgradnje (za vrnjene vrednosti glejte --exit-codes)
+checking the egroupware installation	setup	sl	Preverjam EGroupware namestitev
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	sl	Preveri nameščen EGroupware, različico in potrebne nadgradnje (za vrnjene vrednosti glejte --exit-codes)
 click <a href="index.php">here</a> to return to setup.	setup	sl	Kliknite <a href="index.php">tukaj</a> za vrnitev v namestitev.
 click here	setup	sl	Kliknite tukaj
 click here to re-run the installation tests	setup	sl	Kliknite tukaj za ponovno preverjanje namestitve
@@ -159,7 +159,7 @@ create admin account	setup	sl	Kreiraj upravljalski račun
 create database	setup	sl	Kreiraj podatkovno bazo
 create demo accounts	setup	sl	Kreiraj demo uporabniške račune.
 create one now	setup	sl	Kreiraj enega sedaj
-create or edit the egroupware configuration file: header.inc.php:	setup	sl	Uredi ali ustvari konfiguracijsko datoteko eGroupWare: header.inc.php:
+create or edit the egroupware configuration file: header.inc.php:	setup	sl	Uredi ali ustvari konfiguracijsko datoteko EGroupware: header.inc.php:
 create the empty database -	setup	sl	Ustvari prazno zbirko podatkov -
 create the empty database and grant user permissions -	setup	sl	Ustvari prazno zbirko podatkov in dodeli pravice dostopa
 create your header.inc.php	setup	sl	Ustvari datoteko header.inc.php
@@ -226,14 +226,14 @@ edit your existing header.inc.php	setup	sl	Uredi obstoječo datoteko header.inc.
 edit your header.inc.php	setup	sl	Uredi datoteko header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	sl	npr. /egroupware ali http://domena.si/egroupware, privzeto: %1
 egroupware administration manual	setup	sl	eGroupware upravljalski priročnik
-egroupware api needs a database (schema) update from version %1 to %2!	setup	sl	eGroupWare API mora posodobiti zbirko podatkov (shemo) z različice %1 na različico %2!
-egroupware api version %1 found.	setup	sl	Najdena je različica %1 eGroupWare API
+egroupware api needs a database (schema) update from version %1 to %2!	setup	sl	EGroupware API mora posodobiti zbirko podatkov (shemo) z različice %1 na različico %2!
+egroupware api version %1 found.	setup	sl	Najdena je različica %1 EGroupware API
 egroupware configuration file (header.inc.php) does not exist.	setup	sl	Konfiguracijska datoteka (header.inc.php) ne obstaja.
-egroupware configuration file (header.inc.php) version %1 exists%2	setup	sl	Konfiguracijska datoteka eGroupWare (header.inc.php), različica %1 obstaja%2
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	sl	Konfiguracijska datoteka eGroupWare header.inc.php že obstaja. Uporabiti morate --edit-header ali pa jo najprej izbrisati!
-egroupware domain/instance %1(%2):	setup	sl	Domena eGroupWare %1(%2):
-egroupware is already installed!	setup	sl	eGroupWare je že nameščen!
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	sl	Izvorna koda eGroupWare v '%1' ni popolna, manjka datoteka '%2'!
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	sl	Konfiguracijska datoteka EGroupware (header.inc.php), različica %1 obstaja%2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	sl	Konfiguracijska datoteka EGroupware header.inc.php že obstaja. Uporabiti morate --edit-header ali pa jo najprej izbrisati!
+egroupware domain/instance %1(%2):	setup	sl	Domena EGroupware %1(%2):
+egroupware is already installed!	setup	sl	EGroupware je že nameščen!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	sl	Izvorna koda EGroupware v '%1' ni popolna, manjka datoteka '%2'!
 emailadmin profile updated:	setup	sl	Profil EMailAdmin posodobljen:
 enable for extra debug-messages	setup	sl	Vključi za izpis dodatnih razhroščevalnih sporočil
 enable mcrypt	setup	sl	Omogoči mcrypt
@@ -245,7 +245,7 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	sl	Vnesite polno pot do uporabniških datotek.<br />Na primer: /files, c:\files
 enter the full path to the backup directory.<br />if empty: files directory	setup	sl	Vpišite pot do arhivske mape.<br />Če je prazno bo uporabljena splošna pot za datoteke
 enter the hostname of the machine on which this server is running	setup	sl	Vnesite ime strežnika, na katerem teče projekt
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sl	Vnesite eGroupWareov URL na vašem računalniku.<br />Na primer: http://www.podjetje.si/egroupware   ali   /egroupware<br /><b>Naslov naj bo brez zaključne poševnice</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sl	Vnesite EGroupwareov URL na vašem računalniku.<br />Na primer: http://www.podjetje.si/egroupware   ali   /egroupware<br /><b>Naslov naj bo brez zaključne poševnice</b>
 enter the site password for peer servers	setup	sl	Vnesite geslo za vzporedne strežnike.
 enter the site username for peer servers	setup	sl	Vnesite uporabniško ime za vzporedne strežnike
 enter the title for your site	setup	sl	Vnesite naziv vašega spletnega mesta
@@ -363,7 +363,7 @@ mcrypt initialization vector	setup	sl	Mcrypt začetni vektor
 mcrypt mode (default cbc)	setup	sl	Mcrypt način (privzeto CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sl	Mcrypt nastavitve (zahteva mcrypt razširitev PHPja)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sl	Omejitev spomina (memory_limit) je nastavljena na manj kot 16 Mb: nekatere aplikacije v eGW potrebujejo več kot priporočljivih 8 Mb zato se lahko pojavijo občasne napake
-migration between egroupware account repositories	setup	sl	Migracija med repozitoriji uporabniških računov eGroupWare
+migration between egroupware account repositories	setup	sl	Migracija med repozitoriji uporabniških računov EGroupware
 minimum account id (e.g. 500 or 100, etc.)	setup	sl	Najnižji ID računa (npr. 500 ali 100)
 minute	setup	sl	minuta
 missing or uncomplete mailserver configuration	setup	sl	Manjkajoča ali nepopolna konfiguracija poštnega strežnika
@@ -381,7 +381,7 @@ no	setup	sl	Ne
 no %1 support found. disabling	setup	sl	Ni bila najdena podpora za %1. Onemogočeno.
 no accounts existing	setup	sl	Noben račun ne obstaja
 no algorithms available	setup	sl	Ni razpoložljivih algoritmov
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	sl	Ne obstaja domena/zbirka podatkov eGroupWare. Uporabite --edit-header --domain da dodate novo (--usage prikaže več možnosti).
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	sl	Ne obstaja domena/zbirka podatkov EGroupware. Uporabite --edit-header --domain da dodate novo (--usage prikaže več možnosti).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	sl	Ni nastavljeno geslo upravljalca glave! Uporabite --edit-header <password>[,<user>], da ga nastavite. (--usage prikaže več možnosti).
 no modes available	setup	sl	Ni razpoložljivih načinov
 no update necessary, domain %1(%2) is up to date.	setup	sl	Posodobitev ni potrebna, domena %1 (%2) je posodobljena.
@@ -411,9 +411,9 @@ password for smtp-authentication	setup	sl	Geslo za avtentikacijo SMTP
 password needed for domain configuration.	setup	sl	Za konfiguracijo domene je potrebno geslo.
 password of db user	setup	sl	Geslo za dostop do baze
 passwords did not match, please re-enter	setup	sl	Gesli se ne ujemata, prosim, ponovite
-path (not url!) to your egroupware installation.	setup	sl	Pot (ne URL) do namestitve eGroupWare.
+path (not url!) to your egroupware installation.	setup	sl	Pot (ne URL) do namestitve EGroupware.
 path information	setup	sl	Podatki o poti
-path of egroupware install directory (default auto-detected)	setup	sl	Pot do namestitvene mape eGroupWare (privzeto je samodejna zaznava)
+path of egroupware install directory (default auto-detected)	setup	sl	Pot do namestitvene mape EGroupware (privzeto je samodejna zaznava)
 path to user and group files has to be outside of the webservers document-root!!!	setup	sl	Pot do uporabnikovih in skupinskih datotek <b>mora biti zunaj</b> strežnikovega spletnega področja!
 path to various directories: have to exist and be writeable by the webserver	setup	sl	Pot do več map: morajo obstojati in biti zapisljive s strani spletnega strežnika.
 pear (%1) is a php repository and is usually in a package called %2.	setup	sl	PEAR (%1) je v repozitoriju PHP in je ponavadi del paketa %2.
@@ -511,7 +511,7 @@ some or all of its tables are missing	setup	sl	Manjka nekaj ali vse njene tabele
 sources deleted/missing	setup	sl	Izvor je izbrisan/manjka.
 sql encryption type	setup	sl	Enkripcija za SQL geslo (privzeta je SSHA)
 ssl validation:	setup	sl	Preverjanje SSL:
-standard (login-name identical to egroupware user-name)	setup	sl	Standardno (uporabniško ime enako uuporabniškemu imenu eGroupWare)
+standard (login-name identical to egroupware user-name)	setup	sl	Standardno (uporabniško ime enako uuporabniškemu imenu EGroupware)
 standard mailserver settings (used for mail authentication too)	setup	sl	Standardne nastavitve poštnega strežnika (uporabljeno je tudi za  avtentikacijo pošte)
 standard, as defined above	setup	sl	Standardno, kot je določeno zgoraj.
 start the postmaster	setup	sl	Poženi "postmasterja"
@@ -541,7 +541,7 @@ the %1 extension is needed from: %2.	setup	sl	Razširitev %1 je potrebna za: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	sl	Potrebujem dodatek: %1, če želite uporabljati %2 podatkovno bazo.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	sl	Privzet tip podatkovne baze (%1) ni podprt na tem strežniku. Uporabljam prvi razpoložljivi tip.
 the file	setup	sl	Datoteka
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	sl	Prvi korak pri nameščanju eGroupWarea je prilagoditev okolja in obveznih nastavitev za delovanje aplikacij.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	sl	Prvi korak pri nameščanju EGroupwarea je prilagoditev okolja in obveznih nastavitev za delovanje aplikacij.
 the following applications are not installed:	setup	sl	Sledeče aplikacije niso nameščene:
 the following applications need to be upgraded:	setup	sl	Naslednje aplikacije potrebujejo nadgradnjo:
 the function %1 is needed from: %2.	setup	sl	Funkcija %1 je potrebna za: %2.
@@ -561,10 +561,10 @@ this has to be outside the webservers document-root!!!	setup	sl	To mora biti izv
 this might take a while, please wait ...	setup	sl	To lahko traja nekaj časa, prosim počakajte ...
 this program lets you backup your database, schedule a backup or restore it.	setup	sl	Ta program vam omogoča arhiviranje vaše podatkovne baze, upravljanje urnikov arhiviranja ali pa restavriranje arhiva.
 this program will convert your database to a new system-charset.	setup	sl	Ta program bo prevedel podatkovno bazo na nov sistemski nabor znakov.
-this program will help you upgrade or install different languages for egroupware	setup	sl	Ta program vam bo pomagal pri posodabljanju ali namestitvi različnih jezikov za eGroupWare.
+this program will help you upgrade or install different languages for egroupware	setup	sl	Ta program vam bo pomagal pri posodabljanju ali namestitvi različnih jezikov za EGroupware.
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	sl	To naj bo dolgo približno 30 bajtov. <br /> Privzeto besedilo je bilo naključno generirano.
 this stage is completed<br />	setup	sl	Korak je zaključen. <br />
-this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	sl	To bo ustvarilo prvega uporabnika v eGroupWare ali ponastavilo geslo in pravice skrbnika obstoječega uporabnika.
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	sl	To bo ustvarilo prvega uporabnika v EGroupware ali ponastavilo geslo in pravice skrbnika obstoječega uporabnika.
 to a version it does not know about	setup	sl	v različico, ki je ne pozna
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	sl	Če želite dovoliti avtentikacijo z geslom, dodajte v pg_hba.conf sledečo vrstico (nad vsemi) IN ponovno zaženite Postgres:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	sl	Če želite spremeniti nabor znakov: naredite varnostno kopijo zbirke podatkov, odstranite vse programe in ponovno namestite podatke iz varnostne kopije z označenim poljem "pretvori varnostno kopijo v označeni nabor znakov".
@@ -574,7 +574,7 @@ translations added	setup	sl	prevodi dodani
 translations removed	setup	sl	prevodi odstranjeni
 translations upgraded	setup	sl	prevodi posodobljeni
 true	setup	sl	DA
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	sl	Poizkusite konfigurirati vašo php podporo na enega od zgoraj naštetih DBMS, ali pa ročno namestite eGroupWare.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	sl	Poizkusite konfigurirati vašo php podporo na enega od zgoraj naštetih DBMS, ali pa ročno namestite EGroupware.
 two weeks	setup	sl	Čez dva tedna
 uninstall	setup	sl	Odstrani
 uninstall all applications	setup	sl	Odstrani vse aplikacije
@@ -590,7 +590,7 @@ uploads a backup and installs it on your db	setup	sl	Prenese arhiv in ga namesti
 uploads a backup to the backup-dir, from where you can restore it	setup	sl	prenese arhiv v arhivsko mapo, od koder ga lahko obnovite
 usage: %1 command [additional options]	setup	sl	Uporaba: %1 ukaz [dodatne možnosti]
 use --create-header to create the configuration file (--usage gives more options).	setup	sl	Uporabite --create-header, da ustvarite konfiguracijsko datoteko (--usage prikaže več možnosti).
-use --install to install egroupware.	setup	sl	Uporabite --install za namestitev eGroupWare.
+use --install to install egroupware.	setup	sl	Uporabite --install za namestitev EGroupware.
 use --update to do so.	setup	sl	Uporabite --update za to.
 use cookies to pass sessionid	setup	sl	Uporabi piškotke za pošiljanje ID-ja sej
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	sl	Uporabi mcrypt za šifriranje podatkov seje: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
@@ -615,13 +615,13 @@ we can proceed	setup	sl	Lahko nadaljujem.
 we could not determine the version of %1, please make sure it is at least %2	setup	sl	Različice %1 ni bilo mogoče določiti. Preverite, da je vsaj različica %2
 we will automatically update your tables/records to %1	setup	sl	Vaše tabele/zapise bom avtomatično nadgradil na %1.
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	sl	Sedaj bom pognal nekaj testov, ki lahko trajajo nekaj minut. Kliknite na povezavo za nadaljevanje.
-welcome to the egroupware installation	setup	sl	Dobrodošli v namestitvi eGroupWarea
+welcome to the egroupware installation	setup	sl	Dobrodošli v namestitvi EGroupwarea
 where should egroupware store file content	setup	sl	Kam naj eGroupware shranjuje vsebino datotek
-which database type do you want to use with egroupware?	setup	sl	Kater tip podatkovne baze želite uporabljati za eGroupWare?
+which database type do you want to use with egroupware?	setup	sl	Kater tip podatkovne baze želite uporabljati za EGroupware?
 world readable	setup	sl	Berljivo za vse
 world writable	setup	sl	Zapisljivo za vse
-would you like egroupware to cache the phpgw info array ?	setup	sl	Ali želite, da eGroupWare shrani phpgw_info polje v predpomnilnik?
-would you like egroupware to check for a new version<br />when admins login ?	setup	sl	Ali želite, da eGroupWare preveri za novo različico ob prijavi upravljalca?
+would you like egroupware to cache the phpgw info array ?	setup	sl	Ali želite, da EGroupware shrani phpgw_info polje v predpomnilnik?
+would you like egroupware to check for a new version<br />when admins login ?	setup	sl	Ali želite, da EGroupware preveri za novo različico ob prijavi upravljalca?
 would you like to show each application's upgrade status ?	setup	sl	Ali želite pokazati stanje nadgradnje aplikacije?
 writable by the webserver	setup	sl	Spletni strežnik lahko zapisuje
 write	setup	sl	Zapiši
@@ -630,12 +630,12 @@ year	setup	sl	Leto
 yes	setup	sl	Da
 yes, with lowercase usernames	setup	sl	Da, z malimi črkami uporabniška imena
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	sl	Videti je, da uporabljate pred-beta različico egroupWare.<br /> Te različice niso več podprte in nadgradnja z njih ni mogoča.<br /> Prosimo, da najprej nadgradite na 0.9.10, (zadnja različica, ki podpira pred-beta posodabljanje) <br /> in potem nadgradite na posodobljeno različico.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sl	Videti je, da uporabljate staro različico PHP.<br />Priporočamo, da nadgradite na novo različico.<br />Starejše različice morda ne bodo pravilno izvajale eGroupWare programov, če jih sploh bodo.<br /><br />Prosim, nadgradite vsaj na PHP različico %1.
-you appear to be running version %1 of egroupware	setup	sl	Videti je, da imate eGroupWare različico %1.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sl	Videti je, da uporabljate staro različico PHP.<br />Priporočamo, da nadgradite na novo različico.<br />Starejše različice morda ne bodo pravilno izvajale EGroupware programov, če jih sploh bodo.<br /><br />Prosim, nadgradite vsaj na PHP različico %1.
+you appear to be running version %1 of egroupware	setup	sl	Videti je, da imate EGroupware različico %1.
 you appear to have %1 support.	setup	sl	Kaže, da imate podporo za %1.
 you appear to have xml support enabled	setup	sl	Videti je, da imate omogočeno podporo XML.
 you are ready for this stage, but this stage is not yet written.<br />	setup	sl	Pripravljeni ste za ta korak vendar še ni zapisan.<br />
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	sl	Uporabljate PHP različico %1. eGroupWare zdaj zahteva različico %2 ali novejšo, priporočena je %3.
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	sl	Uporabljate PHP različico %1. EGroupware zdaj zahteva različico %2 ali novejšo, priporočena je %3.
 you can install it by running:	setup	sl	Namestite jo lahko tako, da poženete:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	sl	Uporabniško ime in geslo glave lahko uporabite tudi za dostop do vseh domen. Če geslo ni podano preko ukazne vrstice, se prebere iz sistemske nastavitve EGW_CLI_PASSWORD ali povpraša uporabnika.
 you didn't enter a config password for domain %1	setup	sl	Niste vnesli konfiguracijskega gesla za domeno %1
@@ -646,21 +646,21 @@ you do not have any languages installed. please install one now <br />	setup	sl	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	sl	Niste še ustvarili header.inc.php!<br />Lahko ga ustvarite sedaj.
 you have successfully logged out	setup	sl	Uspešno ste se odjavili.
 you must enter a username for the admin	setup	sl	Vnesti morate upravljačevo uporabniško ime.
-you need to add at least one egroupware domain / database instance.	setup	sl	Dodati morate najmanj eno instanco domene/zbirke podatkov eGroupWare.
-you need to configure egroupware:	setup	sl	eGroupWare morate konfigurirati.
+you need to add at least one egroupware domain / database instance.	setup	sl	Dodati morate najmanj eno instanco domene/zbirke podatkov EGroupware.
+you need to configure egroupware:	setup	sl	EGroupware morate konfigurirati.
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sl	Preden zapišete header.inc.php, morate odpraviti zgornje napake.
 you need to select your current charset!	setup	sl	Izbrati morate vaš trenutni nabor znakov.
 you need to specify a password!	setup	sl	Določiti morate geslo!
 you should either install the sources or uninstall it, to get rid of the tables	setup	sl	Da se znebite tabel, morate namestiti izvor ali pa ga odstraniti.
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	sl	Morate jo ali odstraniti in ponovno namestiti, ali pa ročno popraviti.
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sl	V eGroupWare se ne boste mogli prijaviti z uporabo sej PHP: "session could not be verified"!
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sl	V EGroupware se ne boste mogli prijaviti z uporabo sej PHP: "session could not be verified"!
 you're using an old configuration file format...	setup	sl	Uporabljate star format konfiguracijskih datotek.
 your applications are current	setup	sl	Vaše aplikacije so najnovejše
 your backup directory '%1' %2	setup	sl	Vaša arhivska mapa '%1' %2
 your database does not exist	setup	sl	Vaša podatkovna baza ne obstaja.
 your database is not working!	setup	sl	Vaša podatkovna baza ne deluje.
 your database is working, but you dont have any applications installed	setup	sl	Vaša podatkovna baza deluje, a nimate nameščenih nobenih aplikacij.
-your egroupware api is current	setup	sl	Vaš eGroupWare API je trenutni.
+your egroupware api is current	setup	sl	Vaš EGroupware API je trenutni.
 your files directory '%1' %2	setup	sl	Vaša splošna mapa za datoteke '%1' %2
 your header admin password is not set. please set it now!	setup	sl	Vaše upravljalsko geslo NI nastavljeno. Prosim, vnesite ga sedaj.
 your header.inc.php needs upgrading.	setup	sl	Vaša header.inc.php datoteka je potrebna posodobitve.

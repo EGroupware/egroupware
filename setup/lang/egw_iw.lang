@@ -64,7 +64,7 @@ check ip address of all sessions	setup	iw	של כל המושים IP-בדוק א�
 checking extension %1 is loaded or loadable	setup	iw	מוודא שסיומת %1 טעון או לפחות ניתן לטעינה
 checking for gd support...	setup	iw	GD-בודק תמיכה ב
 checking php.ini	setup	iw	php.ini בודק את
-checking the egroupware installation	setup	iw	eGroupWare בודק את ההתקנה
+checking the egroupware installation	setup	iw	EGroupware בודק את ההתקנה
 click <a href="index.php">here</a> to return to setup.	setup	iw	.לחץ <a href="index.php">כאן</a> כדי לחזור להגדרה
 click here	setup	iw	הקלק כאן
 click here to re-run the installation tests	setup	iw	הקלק כאן לפבצע שוב את בדיקות ההתקנה
@@ -131,7 +131,7 @@ download	setup	iw	הורדה
 edit current configuration	setup	iw	ערוך קונפיגורציה נוכחית
 edit your existing header.inc.php	setup	iw	הנוכיחי שלך header.inc.php לערוך את
 edit your header.inc.php	setup	iw	שלך header.inc.php לערוך את
-egroupware administration manual	setup	iw	eGroupWare מדריך הניהול של
+egroupware administration manual	setup	iw	EGroupware מדריך הניהול של
 enable for extra debug-messages	setup	iw	נוספות debug לאפשר לקבלת הודעות
 enable mcrypt	setup	iw	MCrypt לאפשר
 enter some random text for app session encryption	setup	iw	הכנס טקסט אקראי כלשהו עבור הצפנת יישומים
@@ -139,7 +139,7 @@ enter some random text for app_session <br />encryption (requires mcrypt)	setup	
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	iw	.הכנס את המסלול המלא אל קבצים זמניים
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	iw	.הכנס את המסלול המלא אל קבצים של משתמשים וקבוצות
 enter the hostname of the machine on which this server is running	setup	iw	הכנס את שם המחשב בו שרת זה רץ
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	iw	eGroupWare של URL-הכנס את מיקום ה
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	iw	EGroupware של URL-הכנס את מיקום ה
 enter the site password for peer servers	setup	iw	הכנס סיסמה עבור שרתים חברים
 enter the site username for peer servers	setup	iw	הכנס שם משתמש עבור שרתים חברים
 enter the title for your site	setup	iw	הכנס כותרת לאתר שלך
@@ -169,7 +169,7 @@ hostname/ip of database server	setup	iw	של שרת בסיס הנתונים IP/�
 however, the application is otherwise installed	setup	iw	יחד עם זאת, לכל עניין אחר היישום מותקן
 however, the application may still work	setup	iw	יחד עם זאת, יתכן שהיישום יפעל
 if no acl records for user or any group the user is a member of	setup	iw	-בחבר אם אין רשומות למשתמש או לכל קבוצה בה הוא חבר בשום רשימת גישה המשתמש יהיה חבר ב
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	iw	רץ במצב בטוח eGroupWare אם
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	iw	רץ במצב בטוח EGroupware אם
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	iw	.ליישום אין כל טבלאות מוגדרות . בחירת עדכון אמורה לתקן בעיה זו
 if using ldap	setup	iw	LDAP-אם משתמשים ב
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	iw	?הכניסה shell האם ברצונך לנהל את מחיצות הבית ואת, LDAP-אם משתמשים ב
@@ -224,7 +224,7 @@ modify	setup	iw	שינוי
 month	setup	iw	חודש
 multi-language support setup	setup	iw	הגדרות תמיכה רב-לשונית
 name of database	setup	iw	שם בסיס הנתונים
-name of db user egroupware uses to connect	setup	iw	משתמש כדי להתחבר eGroupWare-שם משתמש בסיס הנתונים ש
+name of db user egroupware uses to connect	setup	iw	משתמש כדי להתחבר EGroupware-שם משתמש בסיס הנתונים ש
 never	setup	iw	לעולם לא
 new	setup	iw	חדש
 next run	setup	iw	ההרצה הבאה
@@ -234,7 +234,7 @@ no algorithms available	setup	iw	אין אלגוריטמים זמינים
 no modes available	setup	iw	אין מודולים זמינים
 no xml support found. disabling	setup	iw	הופך ללא זמין .XML-לא נמצאה תמיכה ב
 not	setup	iw	אינו
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	iw	.eGroupWare עובדים עם MCrypt לא כל האלגוריטמים ומצבים של
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	iw	.EGroupware עובדים עם MCrypt לא כל האלגוריטמים ומצבים של
 not complete	setup	iw	לא הושלם
 not completed	setup	iw	לא הסתיים
 not ready for this stage yet	setup	iw	עדיין לא מוכן לשלב זה
@@ -259,12 +259,12 @@ path to user and group files has to be outside of the webservers document-root!!
 persistent connections	setup	iw	חיבורים דביקים
 please check for sql scripts within the application's directory	setup	iw	בתוך מחיצת היישום SQL נא לבדוק שקיימים סקריפטים
 please check read/write permissions on directories, or back up and use another option.	setup	iw	.נא לבדוק הרשאות קריאה/כתיבה במחיצות, או חזור אחורה ובחר אפשרות אחרת
-please configure egroupware for your environment	setup	iw	לסביבה שלך eGroupWare נא לקנפג
+please configure egroupware for your environment	setup	iw	לסביבה שלך EGroupware נא לקנפג
 please consult the %1.	setup	iw	.נא עיין ב%1
 please fix the above errors (%1) and warnings(%2)	setup	iw	נא לתקן את השגיאות (%1) ואזהרות (%2) לעיל
 please install	setup	iw	נא להתקין
 please login	setup	iw	נא להיכנס למערכת
-please login to egroupware and run the admin application for additional site configuration	setup	iw	והרץ את יישום הניהול עבור קונפיגורציה נוספת eGroupWare אנא היכנס למערכת
+please login to egroupware and run the admin application for additional site configuration	setup	iw	והרץ את יישום הניהול עבור קונפיגורציה נוספת EGroupware אנא היכנס למערכת
 please make the following change in your php.ini	setup	iw	שלפך php.ini-נא לבצע את השינוים הבאים ב
 please wait...	setup	iw	...המתן בבקשה
 possible reasons	setup	iw	סיבות אפשריות
@@ -280,7 +280,7 @@ re-enter password	setup	iw	הכנס שוב את הסיסמא
 read translations from	setup	iw	-קרא תרגומים מ
 readable by the webserver	setup	iw	ניתן לקריאה על ידי שרת הווב
 really uninstall all applications	setup	iw	באמת להסיר את התקנת כל היישומים
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	iw	אינו מחייב זאת, ובאופן כללי מאובטח יותר באשר הוא כבוי eGroupWare-דלוק, ו register-globals
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	iw	אינו מחייב זאת, ובאופן כללי מאובטח יותר באשר הוא כבוי EGroupware-דלוק, ו register-globals
 registered	setup	iw	רשום
 rejected lines	setup	iw	שורות נדחו
 remove	setup	iw	הסר
@@ -340,7 +340,7 @@ text entry	setup	iw	רשומת טקסט
 the %1 extension is needed, if you plan to use a %2 database.	setup	iw	.צריכים הרחבת %1 אם ברצונך להשתמש בבסיס נתונים מסוג %2
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	iw	.בסיס הנתונים בברירות המחדל (%1) לא נתמך בשרת זה, משתמש בסוג הראשון הנתמך
 the file	setup	iw	הקובץ
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	iw	.הוא לוודא שלסביבה שלך ההגדרות הדרושות להרצה נכונה של היישומים eGroupWare הצעד הראשן בהתקנת
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	iw	.הוא לוודא שלסביבה שלך ההגדרות הדרושות להרצה נכונה של היישומים EGroupware הצעד הראשן בהתקנת
 the following applications need to be upgraded:	setup	iw	:יש לשדרג את היישומים הבאים
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	iw	אחרים multibyte או סט תווים (utf-8) כדי לספק תמיכה צלאה ביוניקוד mbstring צריכים את ההרחבות של
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	iw	אחרים multibyte או בסט תווים (utf-8) כדי לספק תמיכה מלאה ביוניקוד mbstring.func_overload=7 צריכים
@@ -351,7 +351,7 @@ there was a problem trying to connect to your ldap server. <br />please check yo
 this has to be outside the webservers document-root!!!	setup	iw	!זה חייב להיות מחוץ לשורש המסמכים של שרת הווב
 this might take a while, please wait ...	setup	iw	..זה עשוי להמשך זמן מה, המתן בבקשה
 this program will convert your database to a new system-charset.	setup	iw	.תוכנית זו ימיר את בסיס הנתונים שלך לסט תווים מערכתי חדש
-this program will help you upgrade or install different languages for egroupware	setup	iw	eGroupWare תוכנית זו תעזור להתקין או לשדרג שפות שונות עבור
+this program will help you upgrade or install different languages for egroupware	setup	iw	EGroupware תוכנית זו תעזור להתקין או לשדרג שפות שונות עבור
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	iw	.זה צריך להיות באורך של כ-30 בתים
 this stage is completed<br />	setup	iw	שלב זה הסתיים<br />
 to a version it does not know about	setup	iw	לגירסה לא מוכרת לו
@@ -361,7 +361,7 @@ translations added	setup	iw	נוספו תרגומים
 translations removed	setup	iw	הוסרו תרגומים
 translations upgraded	setup	iw	עודכנו תרגומים
 true	setup	iw	נכון
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	iw	.ידנית eGroupWare לתמוך באחד מבסיסי הנתונים הרשומים מעלה, או התקן php נסה לקנפג את
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	iw	.ידנית EGroupware לתמוך באחד מבסיסי הנתונים הרשומים מעלה, או התקן php נסה לקנפג את
 two weeks	setup	iw	שבועיים
 uninstall	setup	iw	הסר התקנה
 uninstall all applications	setup	iw	הסר התקנת כל היישומים
@@ -384,14 +384,14 @@ warning!	setup	iw	!אזהרה
 we can proceed	setup	iw	אפשר להמשיך
 we will automatically update your tables/records to %1	setup	iw	נעדכן אוטומטית את הטבלאות/רשומות שלך ל-%1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	iw	.נריץ כעת סדרת בדיקות, מה שעלול להארך זמן מה. הקלק על הקישור למטה להמשיך
-welcome to the egroupware installation	setup	iw	eGroupWare ברוך בואך אל התקנת
-which database type do you want to use with egroupware?	setup	iw	?eGroupWare איזה סוג בסיס נתונים ברצונך להשמש עם
-would you like egroupware to cache the phpgw info array ?	setup	iw	?phpgw יטמין את מערך המידע של eGroupWare-ברצונך ש
-would you like egroupware to check for a new version<br />when admins login ?	setup	iw	יבדוק אם יש גרסה חדשה eGroupWare-ברצונך ש
+welcome to the egroupware installation	setup	iw	EGroupware ברוך בואך אל התקנת
+which database type do you want to use with egroupware?	setup	iw	?EGroupware איזה סוג בסיס נתונים ברצונך להשמש עם
+would you like egroupware to cache the phpgw info array ?	setup	iw	?phpgw יטמין את מערך המידע של EGroupware-ברצונך ש
+would you like egroupware to check for a new version<br />when admins login ?	setup	iw	יבדוק אם יש גרסה חדשה EGroupware-ברצונך ש
 would you like to show each application's upgrade status ?	setup	iw	?ברצונך הלציג את סטטוס העדכון של כל יישום
 write	setup	iw	כתוב
 yes	setup	iw	כן
-you appear to be running version %1 of egroupware	setup	iw	eGroupWare כנראה אתה מריץ גרסה %1 של
+you appear to be running version %1 of egroupware	setup	iw	EGroupware כנראה אתה מריץ גרסה %1 של
 you appear to have xml support enabled	setup	iw	מאפשרת XML-כנראה שתמיכה ב
 you are ready for this stage, but this stage is not yet written.<br />	setup	iw	.אתה מוכן לשלב הזה, אבל השלב הזה עוד לא נכתב<br />
 you didn't enter a config password for domain %1	setup	iw	לא הכנסת סיסמת קונפיגורציה עבור דומיין %1

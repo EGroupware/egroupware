@@ -65,7 +65,7 @@ check ip address of all sessions	setup	hr	check ip address of all sessions
 checking extension %1 is loaded or loadable	setup	hr	Checking extension %1 is loaded or loadable
 checking for gd support...	setup	hr	Checking for GD support...
 checking php.ini	setup	hr	Checking php.ini
-checking the egroupware installation	setup	hr	Checking the eGroupWare Installation
+checking the egroupware installation	setup	hr	Checking the EGroupware Installation
 click <a href="index.php">here</a> to return to setup.	setup	hr	Click <a href="index.php">here</a> to return to setup.
 click here	setup	hr	Click Here
 click here to re-run the installation tests	setup	hr	Click here to re-run the installation tests
@@ -132,7 +132,7 @@ download	setup	hr	Download
 edit current configuration	setup	hr	Edit Current Configuration
 edit your existing header.inc.php	setup	hr	Edit your existing header.inc.php
 edit your header.inc.php	setup	hr	Edit your header.inc.php
-egroupware administration manual	setup	hr	eGroupWare Administration Manual
+egroupware administration manual	setup	hr	EGroupware Administration Manual
 enable for extra debug-messages	setup	hr	enable for extra debug-messages
 enable mcrypt	setup	hr	Enable MCrypt
 enter some random text for app session encryption	setup	hr	Enter some random text for app session encryption
@@ -140,7 +140,7 @@ enter some random text for app_session <br />encryption (requires mcrypt)	setup	
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	hr	Enter the full path for temporary files.<br />Examples: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	hr	Enter the full path for users and group files.<br />Examples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	hr	Enter the hostname of the machine on which this server is running
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	hr	Enter the location of eGroupWare's URL.<br />Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>No trailing slash</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	hr	Enter the location of EGroupware's URL.<br />Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>No trailing slash</b>
 enter the site password for peer servers	setup	hr	Enter the site password for peer servers
 enter the site username for peer servers	setup	hr	Enter the site username for peer servers
 enter the title for your site	setup	hr	Enter the title for your site
@@ -209,14 +209,14 @@ mail server login type	setup	hr	Vrsta prijave mail poslužitelja
 make sure that your database is created and the account permissions are set	setup	hr	Make sure that your database is created and the account permissions are set
 manage applications	setup	hr	Manage Applications
 manage languages	setup	hr	Manage Languages
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	hr	max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	hr	max_execution_time is set to less than 30 (seconds): EGroupware sometimes needs a higher execution_time, expect occasional failures
 maximum account id (e.g. 65535 or 1000000)	setup	hr	Maximum account id (e.g. 65535 or 1000000)
 may be broken	setup	hr	may be broken
 mcrypt algorithm (default tripledes)	setup	hr	Mcrypt algorithm (default TRIPLEDES)
 mcrypt initialization vector	setup	hr	MCrypt initialization vector
 mcrypt mode (default cbc)	setup	hr	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	hr	Mcrypt Settings (requires mcrypt PHP extension)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	hr	memory_limit is set to less than %1: some applications of eGroupWare need more than the recommend 8M, expect occasional failures
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	hr	memory_limit is set to less than %1: some applications of EGroupware need more than the recommend 8M, expect occasional failures
 minimum account id (e.g. 500 or 100, etc.)	setup	hr	Minimum account id (e.g. 500 or 100, etc.)
 minute	setup	hr	Minuta
 modifications have been completed!	setup	hr	Modifications have been completed!
@@ -225,7 +225,7 @@ modify	setup	hr	Modify
 month	setup	hr	Mjesec
 multi-language support setup	setup	hr	Multi-Language support setup
 name of database	setup	hr	Name of database
-name of db user egroupware uses to connect	setup	hr	Name of db user eGroupWare uses to connect
+name of db user egroupware uses to connect	setup	hr	Name of db user EGroupware uses to connect
 never	setup	hr	never
 new	setup	hr	New
 next run	setup	hr	Next run
@@ -235,7 +235,7 @@ no algorithms available	setup	hr	no algorithms available
 no modes available	setup	hr	no modes available
 no xml support found. disabling	setup	hr	No XML support found. Disabling
 not	setup	hr	not
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	hr	Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	hr	Not all mcrypt algorithms and modes work with EGroupware. If you experience problems try switching it off.
 not complete	setup	hr	not complete
 not completed	setup	hr	Not Completed
 not ready for this stage yet	setup	hr	Not ready for this stage yet
@@ -260,12 +260,12 @@ path to user and group files has to be outside of the webservers document-root!!
 persistent connections	setup	hr	Persistent connections
 please check for sql scripts within the application's directory	setup	hr	Please check for sql scripts within the application's directory
 please check read/write permissions on directories, or back up and use another option.	setup	hr	Please check read/write permissions on directories, or back up and use another option.
-please configure egroupware for your environment	setup	hr	Please configure eGroupWare for your environment
+please configure egroupware for your environment	setup	hr	Please configure EGroupware for your environment
 please consult the %1.	setup	hr	Please consult the %1.
 please fix the above errors (%1) and warnings(%2)	setup	hr	Please fix the above errors (%1) and warnings(%2)
 please install	setup	hr	Please install
 please login	setup	hr	Please login
-please login to egroupware and run the admin application for additional site configuration	setup	hr	Please login to eGroupWare and run the admin application for additional site configuration
+please login to egroupware and run the admin application for additional site configuration	setup	hr	Please login to EGroupware and run the admin application for additional site configuration
 please make the following change in your php.ini	setup	hr	Please make the following change in your php.ini
 please wait...	setup	hr	Please Wait...
 possible reasons	setup	hr	Possible Reasons
@@ -281,7 +281,7 @@ re-enter password	setup	hr	Re-enter password
 read translations from	setup	hr	Read translations from
 readable by the webserver	setup	hr	readable by the webserver
 really uninstall all applications	setup	hr	REALLY Uninstall all applications
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	hr	register_globals is turned On, eGroupWare does NOT require it and it's generaly more secure to have it turned Off
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	hr	register_globals is turned On, EGroupware does NOT require it and it's generaly more secure to have it turned Off
 registered	setup	hr	registered
 rejected lines	setup	hr	Rejected lines
 remove	setup	hr	Remove
@@ -341,7 +341,7 @@ text entry	setup	hr	Text Entry
 the %1 extension is needed, if you plan to use a %2 database.	setup	hr	The %1 extension is needed, if you plan to use a %2 database.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	hr	The db_type in defaults (%1) is not supported on this server. using first supported type.
 the file	setup	hr	the file
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	hr	The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	hr	The first step in installing EGroupware is to ensure your environment has the necessary settings to correctly run the application.
 the following applications need to be upgraded:	setup	hr	The following applications need to be upgraded:
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	hr	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
 the table definition was correct, and the tables were installed	setup	hr	The table definition was correct, and the tables were installed
@@ -351,7 +351,7 @@ there was a problem trying to connect to your ldap server. <br />please check yo
 this has to be outside the webservers document-root!!!	setup	hr	This has to be outside the webservers document-root!!!
 this might take a while, please wait ...	setup	hr	This might take a while, please wait ...
 this program will convert your database to a new system-charset.	setup	hr	This program will convert your database to a new system-charset.
-this program will help you upgrade or install different languages for egroupware	setup	hr	This program will help you upgrade or install different languages for eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	hr	This program will help you upgrade or install different languages for EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	hr	This should be around 30 bytes in length.<br />Note: The default has been randomly generated.
 this stage is completed<br />	setup	hr	This stage is completed<br />
 to a version it does not know about	setup	hr	to a version it does not know about
@@ -361,7 +361,7 @@ translations added	setup	hr	Translations Added
 translations removed	setup	hr	Translations Removed
 translations upgraded	setup	hr	Translations Upgraded
 true	setup	hr	True
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	hr	Try to configure your php to support one of the above mentioned DBMS, or install eGroupWare by hand.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	hr	Try to configure your php to support one of the above mentioned DBMS, or install EGroupware by hand.
 two weeks	setup	hr	two weeks
 uninstall	setup	hr	uninstall
 uninstall all applications	setup	hr	Uninstall all applications
@@ -384,19 +384,19 @@ warning!	setup	hr	Warning!
 we can proceed	setup	hr	We can proceed
 we will automatically update your tables/records to %1	setup	hr	We will automatically update your tables/records to %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	hr	We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.
-welcome to the egroupware installation	setup	hr	Welcome to the eGroupWare Installation
-which database type do you want to use with egroupware?	setup	hr	Which database type do you want to use with eGroupWare?
+welcome to the egroupware installation	setup	hr	Welcome to the EGroupware Installation
+which database type do you want to use with egroupware?	setup	hr	Which database type do you want to use with EGroupware?
 world readable	setup	hr	world readable
 world writable	setup	hr	world writable
-would you like egroupware to cache the phpgw info array ?	setup	hr	Would you like eGroupWare to cache the phpgw info array ?
-would you like egroupware to check for a new version<br />when admins login ?	setup	hr	Would you like eGroupWare to check for a new version<br />when admins login ?
+would you like egroupware to cache the phpgw info array ?	setup	hr	Would you like EGroupware to cache the phpgw info array ?
+would you like egroupware to check for a new version<br />when admins login ?	setup	hr	Would you like EGroupware to check for a new version<br />when admins login ?
 would you like to show each application's upgrade status ?	setup	hr	Would you like to show each application's upgrade status ?
 writable by the webserver	setup	hr	writable by the webserver
 write	setup	hr	Zapiši
 yes	setup	hr	Yes
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	hr	You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	hr	You appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version %1
-you appear to be running version %1 of egroupware	setup	hr	You appear to be running version %1 of eGroupWare
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	hr	You appear to be running a pre-beta version of EGroupware.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	hr	You appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run EGroupware correctly, if at all. <br /><br />Please upgrade to at least version %1
+you appear to be running version %1 of egroupware	setup	hr	You appear to be running version %1 of EGroupware
 you appear to have xml support enabled	setup	hr	You appear to have XML support enabled
 you are ready for this stage, but this stage is not yet written.<br />	setup	hr	You are ready for this stage, but this stage is not yet written.<br />
 you didn't enter a config password for domain %1	setup	hr	You didn't enter a config password for domain %1

@@ -65,7 +65,7 @@ check ip address of all sessions	setup	ko	모든 세션에 ip 주소 확인
 checking extension %1 is loaded or loadable	setup	ko	%1 확장이 이미 로드되었거나 로드가 가능한지 확인
 checking for gd support...	setup	ko	GD 지원여부 확인..
 checking php.ini	setup	ko	php.ini 확인
-checking the egroupware installation	setup	ko	eGroupWare 설치 확인
+checking the egroupware installation	setup	ko	EGroupware 설치 확인
 click <a href="index.php">here</a> to return to setup.	setup	ko	설정으로 돌아가려면 <a href="index.php">여기</a>를 클릭하세요
 click here	setup	ko	여기를 클릭하세요
 click here to re-run the installation tests	setup	ko	설치 테스트를 다시 수행하기위해서 여기를 클릭하세요
@@ -132,7 +132,7 @@ download	setup	ko	내려받기
 edit current configuration	setup	ko	현재구성을 편집
 edit your existing header.inc.php	setup	ko	기존 header.inc.php를 편집
 edit your header.inc.php	setup	ko	귀하의 header.inc.php를 편집
-egroupware administration manual	setup	ko	eGroupWare 관리자 메뉴얼
+egroupware administration manual	setup	ko	EGroupware 관리자 메뉴얼
 enable for extra debug-messages	setup	ko	자세한 디버그-메세지 출력
 enable mcrypt	setup	ko	MCrypt 활성화
 enter some random text for app session encryption	setup	ko	응용프로그램 세션 암호화에 사용할 무작위 문자열 입력
@@ -140,7 +140,7 @@ enter some random text for app_session <br />encryption (requires mcrypt)	setup	
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ko	임시 파일의 완전한경로를 입력하세요.<br />예: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	ko	사용자와 그룹파일을 위한 완전한경로를 입력하세요. <br />예: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	ko	이 서버가 실행되고 있는 장비의 호스트 이름을 입력하세요
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ko	eGroupWare의 URL을 입력<br />예: http://domain.com/egroupware &nbsp;이나 &nbsp/egroupware<br /><b>단 슬래시(/)로 끝나지 않게 하세요</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ko	EGroupware의 URL을 입력<br />예: http://domain.com/egroupware &nbsp;이나 &nbsp/egroupware<br /><b>단 슬래시(/)로 끝나지 않게 하세요</b>
 enter the site password for peer servers	setup	ko	피어서버의 사이트암호 입력
 enter the site username for peer servers	setup	ko	피어서버의 사이트사용자이름 입력
 enter the title for your site	setup	ko	귀하의 사이트 제목을 입력
@@ -209,14 +209,14 @@ logout	setup	ko	접속해제
 make sure that your database is created and the account permissions are set	setup	ko	귀하의 데이터베이스는 생성되었고 계정의 권한도 설정되었음을 확인하세요
 manage applications	setup	ko	응용프로그램 관리
 manage languages	setup	ko	언어 관리
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ko	max_execution_time 이 30초 이하로 설정되어 있습니다: eGroupWare는 가끔 보다 더 긴 실행시간이 걸릴수도 있습니다, 물론 가끔 실패하는 경우는 예외입니다
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ko	max_execution_time 이 30초 이하로 설정되어 있습니다: EGroupware는 가끔 보다 더 긴 실행시간이 걸릴수도 있습니다, 물론 가끔 실패하는 경우는 예외입니다
 maximum account id (e.g. 65535 or 1000000)	setup	ko	최대 계정ID  (예 65535 나 1000000)
 may be broken	setup	ko	는 깨진것 같습니다.
 mcrypt algorithm (default tripledes)	setup	ko	Mcrypt 알고리즘 (기본 TRIPLEDES)
 mcrypt initialization vector	setup	ko	MCrypt 초기화 백터
 mcrypt mode (default cbc)	setup	ko	Mcrypt 방식 (기본 CBC)
 mcrypt settings (requires mcrypt php extension)	setup	ko	Mcrypt 설정 (mcrypt PHP 확장에 필요함)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ko	memory_limit 이 %1이하로 설정되어 있습니다: eGroupWare의 특정 응용프로그램은 8M이상 권장할 수도 있습니다, 물론 가씀 실패하는 경우는 예외입니다
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ko	memory_limit 이 %1이하로 설정되어 있습니다: EGroupware의 특정 응용프로그램은 8M이상 권장할 수도 있습니다, 물론 가씀 실패하는 경우는 예외입니다
 minimum account id (e.g. 500 or 100, etc.)	setup	ko	최소 계정ID (예 500 나 100, 기타.)
 modifications have been completed!	setup	ko	변경이 완료되었습니다!
 modified	setup	ko	변경됨
@@ -224,7 +224,7 @@ modify	setup	ko	변경
 month	setup	ko	월
 multi-language support setup	setup	ko	다중-언어 지원 설정
 name of database	setup	ko	데이터베이스 이름
-name of db user egroupware uses to connect	setup	ko	eGroupWare가 사용할 DB 사용자 이름
+name of db user egroupware uses to connect	setup	ko	EGroupware가 사용할 DB 사용자 이름
 never	setup	ko	절대(never)
 new	setup	ko	새로만들기
 next run	setup	ko	다음 실행
@@ -234,7 +234,7 @@ no algorithms available	setup	ko	가능한 알고리즘이 없습니다
 no modes available	setup	ko	가능한 방식이 없음
 no xml support found. disabling	setup	ko	XML을 지원할 수 없습니다. 지원해제합니다.
 not	setup	ko	아니(not)
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	ko	모든 mcrypt 알고리즘과 모드들이 eGroupWare와 같이 동작할수 있는 것은 아닙니다 만약 문제점이 발견되면 꺼주세요
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	ko	모든 mcrypt 알고리즘과 모드들이 EGroupware와 같이 동작할수 있는 것은 아닙니다 만약 문제점이 발견되면 꺼주세요
 not complete	setup	ko	완료 안됨
 not completed	setup	ko	완료되지 않았습니다
 not ready for this stage yet	setup	ko	현재 스테이지가 아직 준비안됐습니다
@@ -259,12 +259,12 @@ path to user and group files has to be outside of the webservers document-root!!
 persistent connections	setup	ko	지속적 연결
 please check for sql scripts within the application's directory	setup	ko	응용프로그램 디렉토리에 포함된 sql 스크립트들을 확인해보세요
 please check read/write permissions on directories, or back up and use another option.	setup	ko	디렉토리의 읽기/쓰기 권한을 확인하시가나 돌아가셔서 다른 옵션을 사용해주세요
-please configure egroupware for your environment	setup	ko	귀하에게 맞는 eGroupWare 설정을 해주세요
+please configure egroupware for your environment	setup	ko	귀하에게 맞는 EGroupware 설정을 해주세요
 please consult the %1.	setup	ko	** %1 을(를) 고려해주세요.
 please fix the above errors (%1) and warnings(%2)	setup	ko	위와 같은 에러 (%1) 와 경고(%2)를 수정해주세요
 please install	setup	ko	설치해 주세요
 please login	setup	ko	로그인 해주세요
-please login to egroupware and run the admin application for additional site configuration	setup	ko	추가적인 사이트 구성작업을 하시려면 eGroupWare에 로그인 하시고 관리 어플리케이션을 이용해 주세요
+please login to egroupware and run the admin application for additional site configuration	setup	ko	추가적인 사이트 구성작업을 하시려면 EGroupware에 로그인 하시고 관리 어플리케이션을 이용해 주세요
 please make the following change in your php.ini	setup	ko	귀하의 php.ini에 다음과 같은 것을 변경해주세요
 please wait...	setup	ko	잠시만 기다리세요...
 possible reasons	setup	ko	가능한 이유들
@@ -280,7 +280,7 @@ re-enter password	setup	ko	암호 재입력
 read translations from	setup	ko	번역내용 읽기
 readable by the webserver	setup	ko	웹 서버가 읽을수 있음
 really uninstall all applications	setup	ko	모든 응용프로그램을 삭제
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ko	register_globals 이 켜져 있습니다, eGroupWare에서는 필요없는 기능이며 보안상으로도 Off로 설정하시는 것이 좋습니다
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ko	register_globals 이 켜져 있습니다, EGroupware에서는 필요없는 기능이며 보안상으로도 Off로 설정하시는 것이 좋습니다
 registered	setup	ko	등록됨
 rejected lines	setup	ko	거부된 라인
 remove	setup	ko	삭제
@@ -339,7 +339,7 @@ text entry	setup	ko	텍스트 엔트리(Text entry)
 the %1 extension is needed, if you plan to use a %2 database.	setup	ko	%2 데이터베이스를 사용할 계획이라면 %1 확장이 필요합니다
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ko	이 서버에서 기본설정 %1 db_type 은 지원하지 않습니다. 먼저 지원하는 타입을 선택하세요
 the file	setup	ko	** 파일(the file)
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ko	eGroupWare를 설치하는 가장 첫 단계는 응용프로그램을 구동하기위한 환경설정을 하는 것입니다
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ko	EGroupware를 설치하는 가장 첫 단계는 응용프로그램을 구동하기위한 환경설정을 하는 것입니다
 the following applications need to be upgraded:	setup	ko	다음의 응용프로그램은 업그레이드가 해야합니다:
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ko	mbstring 확장은 유니코드(UTF-8)이나 기타 다중바이트-문자셋을 완벽히 지원하는데 필요합니다
 the table definition was correct, and the tables were installed	setup	ko	테이블 정의가 수정되었고 테이블들이 설치되었습니다
@@ -349,7 +349,7 @@ there was a problem trying to connect to your ldap server. <br />please check yo
 this has to be outside the webservers document-root!!!	setup	ko	웹서버의 DocumentRoot 외부에 있어야 합니다!!!
 this might take a while, please wait ...	setup	ko	약간 시간이 걸립니다, 잠시만 기다리세요...
 this program will convert your database to a new system-charset.	setup	ko	이 프로그램은 귀하의 데이터베이스를 새 시스템-문자셋으로 변환해줍니다
-this program will help you upgrade or install different languages for egroupware	setup	ko	이 프로그램은 eGroupWare의 다른 언어를 설치하거나 업그레이드하는데 도움을 줍니다
+this program will help you upgrade or install different languages for egroupware	setup	ko	이 프로그램은 EGroupware의 다른 언어를 설치하거나 업그레이드하는데 도움을 줍니다
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	ko	30 바이트 내외여야 합니다.<br /> 주의: 기본설정은 아무값이나 생성됩니다
 this stage is completed<br />	setup	ko	스테이지가 완료됨<br />
 to a version it does not know about	setup	ko	잘 알수 없는 버전으로
@@ -359,7 +359,7 @@ translations added	setup	ko	번역 추가됨
 translations removed	setup	ko	번역 삭제됨
 translations upgraded	setup	ko	번역 업그레이드됨
 true	setup	ko	참
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ko	위에서 언급한 DBMS중 하나를 지원하기위해서 php를 구성하시거나 eGroupWare를 수동으로 설치하세요
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ko	위에서 언급한 DBMS중 하나를 지원하기위해서 php를 구성하시거나 EGroupware를 수동으로 설치하세요
 two weeks	setup	ko	2주일
 uninstall	setup	ko	설치제거
 uninstall all applications	setup	ko	모든 응용프로그램을 설치제거
@@ -382,19 +382,19 @@ warning!	setup	ko	경고!
 we can proceed	setup	ko	진행 가능
 we will automatically update your tables/records to %1	setup	ko	귀하의 테이블/레코드들을 자동으로 %1로 변환합니다.
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ko	연속적인 테스트를 수행합니다, 몇분정도 걸릴수 있습니다. 계속하려면 링크를 클릭하세요
-welcome to the egroupware installation	setup	ko	eGroupWare 설치를 환영합니다
-which database type do you want to use with egroupware?	setup	ko	eGroupWare와 함께 사용할 데이터베이스 타입은?
+welcome to the egroupware installation	setup	ko	EGroupware 설치를 환영합니다
+which database type do you want to use with egroupware?	setup	ko	EGroupware와 함께 사용할 데이터베이스 타입은?
 world readable	setup	ko	누구나 읽을수 있음
 world writable	setup	ko	누구나 쓸수 있음
-would you like egroupware to cache the phpgw info array ?	setup	ko	eGroupWare가 phpgw info 배열을 캐쉬하길 원하십니까?
-would you like egroupware to check for a new version<br />when admins login ?	setup	ko	관리자가 로그인했을때 <br /> eGroupWare 새버전을 확인할까요?
+would you like egroupware to cache the phpgw info array ?	setup	ko	EGroupware가 phpgw info 배열을 캐쉬하길 원하십니까?
+would you like egroupware to check for a new version<br />when admins login ?	setup	ko	관리자가 로그인했을때 <br /> EGroupware 새버전을 확인할까요?
 would you like to show each application's upgrade status ?	setup	ko	각 응용프로그램의 업그레이드 상태를 보여줄까요?
 writable by the webserver	setup	ko	웹서버가 쓸수 있음
 write	setup	ko	쓰기
 yes	setup	ko	예
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ko	eGroupWare 베타버전을 사용하시고 계십니다.<br />이 버전은 더이상 지원하지 않으며 설정에 업그레이드할 경로도 없습니다<br /> 먼저 0.9.10 버전(베타업그레이드 지원 마지막버전)으로 업그레이드 하시고<br />그 후에 최신 버전으로 업그레이드 하세요.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ko	PHP버전이 오래되었습니다<br />새로운 버전으로 업그레이드 하시길 권장합니다.<br />이전 버전의 PHP는 eGroupWare가 정상적으로 동작하지 않습니다<br /><br />적어도 %1 버전으로는 업그레이드 해주셔야 합니다.
-you appear to be running version %1 of egroupware	setup	ko	eGroupWare 버전 %1을 사용하고 있습니다
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ko	EGroupware 베타버전을 사용하시고 계십니다.<br />이 버전은 더이상 지원하지 않으며 설정에 업그레이드할 경로도 없습니다<br /> 먼저 0.9.10 버전(베타업그레이드 지원 마지막버전)으로 업그레이드 하시고<br />그 후에 최신 버전으로 업그레이드 하세요.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ko	PHP버전이 오래되었습니다<br />새로운 버전으로 업그레이드 하시길 권장합니다.<br />이전 버전의 PHP는 EGroupware가 정상적으로 동작하지 않습니다<br /><br />적어도 %1 버전으로는 업그레이드 해주셔야 합니다.
+you appear to be running version %1 of egroupware	setup	ko	EGroupware 버전 %1을 사용하고 있습니다
 you appear to have xml support enabled	setup	ko	XML을 지원합니다.
 you are ready for this stage, but this stage is not yet written.<br />	setup	ko	현재 스테이지를 수행할 준비가 되었습니다만, 아직 완전히 작성되지는 않았습니다.<br />
 you didn't enter a config password for domain %1	setup	ko	%1도메인의 구성암호를 입력하지 않았습니다

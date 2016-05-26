@@ -1,4 +1,4 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	nl	%1 '%2' bestaat niet, is niet leesbaar door de webserver of bevat geen eGroupWare installatie!
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	nl	%1 '%2' bestaat niet, is niet leesbaar door de webserver of bevat geen EGroupware installatie!
 %1 already exists in %2.	setup	nl	%1 bestaat reeds in %2.
 %1 created in %2.	setup	nl	%1 aangemaakt in %2.
 %1 database %2 on %3 already contains the following tables:	setup	nl	%1 database %2 op %3 bevat reeds de volgende tabellen:
@@ -12,7 +12,7 @@
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	nl	'%1' is niet toegestaan als %2. argumenten van optie %3 !!!
 (searching accounts and changing passwords)	setup	nl	(zoekt accounts en wijzigt wachtwoorden)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	nl	*** Werk uw database niet via Setup bij omdat de update mogelijk onderbroken kan worden door de max_execution_time van PHP. Dit laat uw database achter in een niet repareerbare staat en uw data zal verloren zijn.
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	nl	*** U heeft moet handmatig wijzigingen aanbrengen in uw php.ini om eGroupWare volledig aan het werk te krijkgen.
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	nl	*** U heeft moet handmatig wijzigingen aanbrengen in uw php.ini om EGroupware volledig aan het werk te krijkgen.
 00 (disable)	setup	nl	00 (deactiveer / aanbevolen)
 13 (ntp)	setup	nl	13 (ntp)
 80 (http)	setup	nl	80 (http)
@@ -27,7 +27,7 @@ activate safe password check	setup	nl	Activeer de veilige wachtwoorden controle
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	nl	Automatisch gecreërde gebruikers toevoegen aan deze groep ('Standaard' wordt gebruikt als dit veld leeg is)
 add new database instance (egw domain)	setup	nl	Voeg een nieuwe database instantie toe (eGW domein)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	nl	Voeg toe of bewerk domein: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
-adding, editing or deleting an egroupware domain / database instance:	setup	nl	Toevoegen, bewerken of verwijderen van een eGroupWare domein / database instantie:
+adding, editing or deleting an egroupware domain / database instance:	setup	nl	Toevoegen, bewerken of verwijderen van een EGroupware domein / database instantie:
 additional options and there defaults (in brackets)	setup	nl	Additionele opties en hun standaardwaarden (tussen haken)
 additional settings	setup	nl	Overige instellingen
 admin account successful created.	setup	nl	Beheerders account succesvol aangemaakt.
@@ -129,8 +129,8 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	nl	Controleert of PEAR%1 is geinstalleerd
 checking php.ini	setup	nl	Controleert php.ini
 checking required php version %1 (recommended %2)	setup	nl	Controleerrt de ereiste PHP versie %1 (%2 aanbevolen)
-checking the egroupware installation	setup	nl	Controleert de eGroupWare installatie
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	nl	controleert of eGroupWare is geinstalleerd, de versies en de benodigde upgrades (return values see --exit-codes)
+checking the egroupware installation	setup	nl	Controleert de EGroupware installatie
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	nl	controleert of EGroupware is geinstalleerd, de versies en de benodigde upgrades (return values see --exit-codes)
 click <a href="index.php">here</a> to return to setup.	setup	nl	Klik <a href="index.php">hier</a> om terug te gaan naar Setup.
 click here	setup	nl	Klik hier
 click here to re-run the installation tests	setup	nl	Klik hier om de installatie testen nogmaals uit te voeren
@@ -160,7 +160,7 @@ create admin account	setup	nl	Beheerdersaccount aanmaken
 create database	setup	nl	Database aanmaken
 create demo accounts	setup	nl	Demo accounts aanmaken
 create one now	setup	nl	Nu aanmaken
-create or edit the egroupware configuration file: header.inc.php:	setup	nl	Maak of bewerk het eGroupWare configuratie bestand: header.inc.php:
+create or edit the egroupware configuration file: header.inc.php:	setup	nl	Maak of bewerk het EGroupware configuratie bestand: header.inc.php:
 create the empty database -	setup	nl	De leze database aanmaken -
 create the empty database and grant user permissions -	setup	nl	De lege databae aanmaken en gebruikersrechten instellen -
 create your header.inc.php	setup	nl	Uw header.inc.php aanmaken
@@ -226,15 +226,15 @@ edit current configuration	setup	nl	Huidige configuratie bewerken
 edit your existing header.inc.php	setup	nl	Uw huidige header.inc.php bewerken
 edit your header.inc.php	setup	nl	Uw header.inc.php bewerken
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	nl	bijvoorbeeld /egroupware of http://domein.com/egroupware, standaard: %1
-egroupware administration manual	setup	nl	eGroupWare Beheershandleiding
-egroupware api needs a database (schema) update from version %1 to %2!	setup	nl	eGroupWare API vereist een database (schema) update van versie %1 naar %2!
-egroupware api version %1 found.	setup	nl	eGroupWare API versie %1 gevonden.
-egroupware configuration file (header.inc.php) does not exist.	setup	nl	eGroupWare configuratie bestand (header.inc.php) bestaat NIET.
-egroupware configuration file (header.inc.php) version %1 exists%2	setup	nl	eGroupWare configuratie bestand (header.inc.php) versie %1 bestaat %2
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	nl	eGroupWare configuratie bestand header.inc.php bestaat reeds, u moet --edit-header gebruiken of het eerst verwijderen!
-egroupware domain/instance %1(%2):	setup	nl	eGroupWare domein/instantie %1(%2)
-egroupware is already installed!	setup	nl	eGroupWare is reeds geinstalleerd!
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	nl	eGroupWare bronbestanden in '%1' zijn niet compleet, bestand '%2' ontbreekt !!!
+egroupware administration manual	setup	nl	EGroupware Beheershandleiding
+egroupware api needs a database (schema) update from version %1 to %2!	setup	nl	EGroupware API vereist een database (schema) update van versie %1 naar %2!
+egroupware api version %1 found.	setup	nl	EGroupware API versie %1 gevonden.
+egroupware configuration file (header.inc.php) does not exist.	setup	nl	EGroupware configuratie bestand (header.inc.php) bestaat NIET.
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	nl	EGroupware configuratie bestand (header.inc.php) versie %1 bestaat %2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	nl	EGroupware configuratie bestand header.inc.php bestaat reeds, u moet --edit-header gebruiken of het eerst verwijderen!
+egroupware domain/instance %1(%2):	setup	nl	EGroupware domein/instantie %1(%2)
+egroupware is already installed!	setup	nl	EGroupware is reeds geinstalleerd!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	nl	EGroupware bronbestanden in '%1' zijn niet compleet, bestand '%2' ontbreekt !!!
 emailadmin profile updated:	setup	nl	Email beheerder profiel bijgewerkt:
 enable for extra debug-messages	setup	nl	inschakelen voor extra debug-messages
 enable mcrypt	setup	nl	MCrypt inschakelen
@@ -246,7 +246,7 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	nl	Vul het volledige pad naar de gebruikers- en groepsbestanden in. <br />Voorbeelden: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	nl	Vul het volledige pad naar de backup directory in,<br />indien leeg: bestanden directory
 enter the hostname of the machine on which this server is running	setup	nl	Vul de hostnaam in van de machine waarop deze server draait
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	nl	Vul de locatie van eGroupWare's URL in.<br />Voorbeeld: http://www.domein.nl/egroupware  of  /egroupware<br /><b>Geen afsluitende slash<b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	nl	Vul de locatie van EGroupware's URL in.<br />Voorbeeld: http://www.domein.nl/egroupware  of  /egroupware<br /><b>Geen afsluitende slash<b>
 enter the site password for peer servers	setup	nl	Vul het site wachtwoord in voor peer servers
 enter the site username for peer servers	setup	nl	Vul de site gebruikersnaam in voor peer servers
 enter the title for your site	setup	nl	Vul de titel van uw site in
@@ -356,15 +356,15 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	nl	Toepassingen beheren
 manage languages	setup	nl	Talen beheren
 manual / help	setup	nl	Handleiding / help
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	nl	max_execution_time is ingesteld op minder dan 30 (seconden): eGroupWare heeft somes een hogere execution_time, reken er dus op dat er af en toe fouten optreden
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	nl	max_execution_time is ingesteld op minder dan 30 (seconden): EGroupware heeft somes een hogere execution_time, reken er dus op dat er af en toe fouten optreden
 maximum account id (e.g. 65535 or 1000000)	setup	nl	Maximum account id (voorbeeld 65535 of 1000000)
 may be broken	setup	nl	kan verbroken zijn
 mcrypt algorithm (default tripledes)	setup	nl	MCrypt algoritme (standaard TRIPLEDES)
 mcrypt initialization vector	setup	nl	MCrypt initialisatie vector
 mcrypt mode (default cbc)	setup	nl	MCrypt modus (standaard CBC)
 mcrypt settings (requires mcrypt php extension)	setup	nl	MCrypt instellingen (vereist de mcrypt PHP extensie)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	nl	memory_limit is ingesteld op minder dan %1; sommige toepassingen van eGroupWare hebben meer nodig dan de aanbevolen 8M, reken er dus op at er af en toe fouten optreden
-migration between egroupware account repositories	setup	nl	Migratie tussen eGroupWare account repositories
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	nl	memory_limit is ingesteld op minder dan %1; sommige toepassingen van EGroupware hebben meer nodig dan de aanbevolen 8M, reken er dus op at er af en toe fouten optreden
+migration between egroupware account repositories	setup	nl	Migratie tussen EGroupware account repositories
 minimum account id (e.g. 500 or 100, etc.)	setup	nl	Minimum account ID (voorbeeld: 500 of 100, enz.)
 minute	setup	nl	minuut
 missing or uncomplete mailserver configuration	setup	nl	Ontbrekende of incomplete mailserver configuratie
@@ -374,7 +374,7 @@ modify	setup	nl	Aanpassen
 month	setup	nl	maand
 multi-language support setup	setup	nl	meertalige ondersteuning instellen
 name of database	setup	nl	Naam van de database
-name of db user egroupware uses to connect	setup	nl	Naam van de db gebruiker die eGroupWare gebruikt om verbinding te maken
+name of db user egroupware uses to connect	setup	nl	Naam van de db gebruiker die EGroupware gebruikt om verbinding te maken
 never	setup	nl	nooit
 new	setup	nl	Nieuw
 next run	setup	nl	volgende keer
@@ -382,13 +382,13 @@ no	setup	nl	Nee
 no %1 support found. disabling	setup	nl	Geen %1 ondersteuning aangetroffen. Wordt uitgeschakeld
 no accounts existing	setup	nl	Geen bestaande accounts
 no algorithms available	setup	nl	geen algoritmes aanwezig
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	nl	Er bestaan geen eGroupWare domeinen / database instanties! Gebruik --edit-header --domain om er een aan te maken (--usage geeft meer opties).
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	nl	Er bestaan geen EGroupware domeinen / database instanties! Gebruik --edit-header --domain om er een aan te maken (--usage geeft meer opties).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	nl	Er is geen beheerder wachtwoord ingesteld! Gebruik --edit-header <wachtwoord>[,<gebruiker>] om er een in te stellen (--usage geeft meer opties).
 no modes available	setup	nl	geen modi aanwezig
 no update necessary, domain %1(%2) is up to date.	setup	nl	Geen update nodig, domein %1(%2) is actueel.
 no xml support found. disabling	setup	nl	Geen XML ondersteuning aangetroffen. Wordt uitgeschakeld
 not	setup	nl	niet
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	nl	Niet alle MCrypt algoritmes en modi werken met eGroupWare. Als u problemen ervaart probeer dit dan uit te schakelen.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	nl	Niet alle MCrypt algoritmes en modi werken met EGroupware. Als u problemen ervaart probeer dit dan uit te schakelen.
 not complete	setup	nl	niet compeet
 not completed	setup	nl	Niet voltooid
 not ready for this stage yet	setup	nl	Nog niet gereed voor deze fase
@@ -412,13 +412,13 @@ password for smtp-authentication	setup	nl	Wachtwoord voor SMTP-authenticatie
 password needed for domain configuration.	setup	nl	Wachtwoord nodig voor domein configuratie.
 password of db user	setup	nl	Wachtwoord van de db gebruiker
 passwords did not match, please re-enter	setup	nl	Wachtwoord zijn ongelijk, vul ze nogmaals in
-path (not url!) to your egroupware installation.	setup	nl	Pad (geen URL!) naar uw eGroupWare installatie.
+path (not url!) to your egroupware installation.	setup	nl	Pad (geen URL!) naar uw EGroupware installatie.
 path information	setup	nl	Pad informatie
-path of egroupware install directory (default auto-detected)	setup	nl	pad van de eGroupWare installatie directory (standaard wordt deze automatisch gedetecteerd)
+path of egroupware install directory (default auto-detected)	setup	nl	pad van de EGroupware installatie directory (standaard wordt deze automatisch gedetecteerd)
 path to user and group files has to be outside of the webservers document-root!!!	setup	nl	Pad naar gebruikers- en groepsbestanden MOETEN BUITEN de webserver's document-root liggen!!!
 path to various directories: have to exist and be writeable by the webserver	setup	nl	pad naar verschillende directories: moeten bestaan en schrijfbaar zijn voor de webserver
 pear (%1) is a php repository and is usually in a package called %2.	setup	nl	PEAR (%1) is een PHP repository en is nomaliter aanwezig in een package genaamd %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	nl	PEAR extensies zijn vereist voor veel eGroupWare toepassingen, PEAR zelf is de vereiste basis voor iedere extensie!
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	nl	PEAR extensies zijn vereist voor veel EGroupware toepassingen, PEAR zelf is de vereiste basis voor iedere extensie!
 pear%1 is needed by: %2.	setup	nl	PEAR %1 wordt vereist door: %2.
 pem certificate	setup	nl	PEM certificaat
 persistent connections	setup	nl	Persistente connecties
@@ -427,12 +427,12 @@ php proxy	setup	nl	PHP proxy
 php session handler enabled in php.ini	setup	nl	PHP session handler ingeschakeld in php.ini
 please check for sql scripts within the application's directory	setup	nl	Controleer a.u.b. op de aanwezigheid van SQL scripts in de programma directory
 please check read/write permissions on directories, or back up and use another option.	setup	nl	Controleer a.u.b. de lees/schrijfrechten op directories, of ga terug en gebruik een andere optie
-please configure egroupware for your environment	setup	nl	Configureer eGroupWare a.u.b. voor uw omgeving
+please configure egroupware for your environment	setup	nl	Configureer EGroupware a.u.b. voor uw omgeving
 please consult the %1.	setup	nl	Raadpleeg a.u.b. de %1.
 please fix the above errors (%1) and warnings(%2)	setup	nl	Herstel a.u.b. de bovenstaande fouten (%1) en waarschuwingen (%2)
 please install	setup	nl	A.u.b. installeren
 please login	setup	nl	A.u.b. inloggen
-please login to egroupware and run the admin application for additional site configuration	setup	nl	A.u.b. inloggen in eGroupWare en de beheerstoepassing uitvoeren ten behoeve van aanvullende site configuratie
+please login to egroupware and run the admin application for additional site configuration	setup	nl	A.u.b. inloggen in EGroupware en de beheerstoepassing uitvoeren ten behoeve van aanvullende site configuratie
 please make the following change in your php.ini	setup	nl	Maak a.u.b. de volgende wijzizing in uw php.ini
 please wait...	setup	nl	Wacht a.u.b....
 pop/imap mail server hostname or ip address	setup	nl	POP/IMAP mail server hostnaam of IP adres
@@ -451,7 +451,7 @@ re-enter password	setup	nl	Wachtwoord opnieuw invullen
 read translations from	setup	nl	Vertalingen lezen uit
 readable by the webserver	setup	nl	leesbaar door de webserver
 really uninstall all applications	setup	nl	WERKELIJK all toepassingen de-installeren
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	nl	register_globals is ingeschakeld, eGroupWare heeft dit niet nodig en het is in het algemeen veiliger om dit uitgeschakeld te houden
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	nl	register_globals is ingeschakeld, EGroupware heeft dit niet nodig en het is in het algemeen veiliger om dit uitgeschakeld te houden
 registered	setup	nl	geregistreerd
 rejected lines	setup	nl	Afgekeurde regels
 remove	setup	nl	Verwijderen
@@ -512,7 +512,7 @@ some or all of its tables are missing	setup	nl	Enkele of alle tabellen ontbreken
 sources deleted/missing	setup	nl	Bronbestanden verwijderd/ontbreken
 sql encryption type	setup	nl	SQL encryptie type voor wachtwoorden (standaard - md5)
 ssl validation:	setup	nl	SSL validatie:
-standard (login-name identical to egroupware user-name)	setup	nl	standaard (loginnaam gelijk aan de eGroupWare gebruikersnaam)
+standard (login-name identical to egroupware user-name)	setup	nl	standaard (loginnaam gelijk aan de EGroupware gebruikersnaam)
 standard mailserver settings (used for mail authentication too)	setup	nl	Standaard mailserver instellingen (worden ook gebruikt voor Mail authenticatie)
 standard, as defined above	setup	nl	Standaard, zoals hierboven gedefinieerd
 start the postmaster	setup	nl	Start de postmaster
@@ -542,7 +542,7 @@ the %1 extension is needed from: %2.	setup	nl	De %1 extensie is nodig voor: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	nl	De %1 extensie is vereist indien u van plan bent om een %2 database te gebruiken.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	nl	De db_type in standaardwaarden (%1) wordt niet ondersteund door deze server, gebruikt het eerste ondersteunde type.
 the file	setup	nl	het bestand
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	nl	De eerste stap bij het installeren van eGroupWare is vaststellen dat uw omgeving de juiste instellingen heeft om het programma correct te kunnen uitvoeren.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	nl	De eerste stap bij het installeren van EGroupware is vaststellen dat uw omgeving de juiste instellingen heeft om het programma correct te kunnen uitvoeren.
 the following applications are not installed:	setup	nl	De volgende toepassingen zijn NIET geinstalleerd:
 the following applications need to be upgraded:	setup	nl	De volgende toepassingen moeten ge-upgrade worden:
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	nl	De imagecreatefromjpeg functie wordt ondersteund door de GD extensie (gecompileerd met jpeg ondersteuning). Het is nodig of foto's van contactpersonen te uploaden.
@@ -561,10 +561,10 @@ this has to be outside the webservers document-root!!!	setup	nl	Dit moet buiten 
 this might take a while, please wait ...	setup	nl	Dit kan een tijdje duren, geduld a.u.b. ...
 this program lets you backup your database, schedule a backup or restore it.	setup	nl	Dit programma laat u een backup van uw database maken, agendeer een backup of zet de database terug.
 this program will convert your database to a new system-charset.	setup	nl	Dit programma zal uw database converteren naar een nieuwe systeemkarakterset.
-this program will help you upgrade or install different languages for egroupware	setup	nl	Dit programma zal u helpen verschillende talen voor eGroupWare te upgraden of te installeren
+this program will help you upgrade or install different languages for egroupware	setup	nl	Dit programma zal u helpen verschillende talen voor EGroupware te upgraden of te installeren
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	nl	Dit zou ongeveer 30 bytes lang moeten zijn.<br />Noot: De standaard is willekeurig samengesteld.
 this stage is completed<br />	setup	nl	Deze fase is voltooid<br />
-this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	nl	Dit maakt een eerste gebruiker aan in eGroupWare of herstelt het wachtwoord en beheerders rechten van een bestaande gebruiker
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	nl	Dit maakt een eerste gebruiker aan in EGroupware of herstelt het wachtwoord en beheerders rechten van een bestaande gebruiker
 to a version it does not know about	setup	nl	naar een versie waar het niets vanaf weet
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	nl	om wachtwoord authentificatie toe te staan moet u de volgende regel toevoegen aan uw pg_hba.conf bestand (boven alle andere regels) EN postgres herstarten:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	nl	Om de karakterset te wijzigen: maak een backup van uw database, de-installeer alle toepassingen en herinstalleer de backup met "convert backup to charset selected" aangevinkt.
@@ -574,7 +574,7 @@ translations added	setup	nl	Vertalingen toegevoegd
 translations removed	setup	nl	Vertalingen verwijderd
 translations upgraded	setup	nl	Vertalingen ge-upgrade
 true	setup	nl	Waar
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	nl	Probeer uw PHP zo te configureren dat een van de hierboven genoemde DBMS-sen ondersteund wordt of installeer eGroupWare handmatig.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	nl	Probeer uw PHP zo te configureren dat een van de hierboven genoemde DBMS-sen ondersteund wordt of installeer EGroupware handmatig.
 two weeks	setup	nl	twee weken
 uninstall	setup	nl	deinstalleren
 uninstall all applications	setup	nl	Alle toepassingen deinstalleren
@@ -590,8 +590,8 @@ uploads a backup and installs it on your db	setup	nl	verzendt de backup en insta
 uploads a backup to the backup-dir, from where you can restore it	setup	nl	verzendt een backup naar de backup directory vanwaar u de hem kunt terugzetten
 usage: %1 command [additional options]	setup	nl	Gebrui: %1 commando [extra opties]
 use --create-header to create the configuration file (--usage gives more options).	setup	nl	Gebruik --create-header om het configuratie bestand aan te maken (--usage toont meer opties).
-use --install to install egroupware.	setup	nl	Gebruik --install om eGroupWare te installeren.
-use --update to do so.	setup	nl	Gebruik --update om eGroupWare te actualiseren.
+use --install to install egroupware.	setup	nl	Gebruik --install om EGroupware te installeren.
+use --update to do so.	setup	nl	Gebruik --update om EGroupware te actualiseren.
 use cookies to pass sessionid	setup	nl	Gebruik cookies om de sessie ID door te geven
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	nl	gebruik mcrypt to encrypt sessie-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	nl	gebruik persistente database connecties: {on(default) | off}
@@ -615,13 +615,13 @@ we can proceed	setup	nl	We kunnen doorgaan
 we could not determine the version of %1, please make sure it is at least %2	setup	nl	We konden de versie van %1 niet bepalen, controleer svp dat het minstens %2 is
 we will automatically update your tables/records to %1	setup	nl	We zullen automatisch uw tabellen/records bijwerken naar %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	nl	We zullen nu een serie testen uitvoeren die een paar minuten in beslag kunnen nemen. Klik op de link hieronder om door te gaan.
-welcome to the egroupware installation	setup	nl	Welkom bij de eGroupWare installatieprocedure
-where should egroupware store file content	setup	nl	Waar moet eGroupWare bestanden opslaan
-which database type do you want to use with egroupware?	setup	nl	Welk database type wilt u gebruiken met eGroupWare?
+welcome to the egroupware installation	setup	nl	Welkom bij de EGroupware installatieprocedure
+where should egroupware store file content	setup	nl	Waar moet EGroupware bestanden opslaan
+which database type do you want to use with egroupware?	setup	nl	Welk database type wilt u gebruiken met EGroupware?
 world readable	setup	nl	world leesbaar
 world writable	setup	nl	world schrijfbaar
-would you like egroupware to cache the phpgw info array ?	setup	nl	Wilt u dat eGroupWare de phpgw info array cacht ?
-would you like egroupware to check for a new version<br />when admins login ?	setup	nl	Wilt u dat eGroupWare controleert of er een nieuwe versie is<br />als beheerders inloggen ?
+would you like egroupware to cache the phpgw info array ?	setup	nl	Wilt u dat EGroupware de phpgw info array cacht ?
+would you like egroupware to check for a new version<br />when admins login ?	setup	nl	Wilt u dat EGroupware controleert of er een nieuwe versie is<br />als beheerders inloggen ?
 would you like to show each application's upgrade status ?	setup	nl	Wilt u de upgrade status van iedere toepassing laten weergeven ?
 writable by the webserver	setup	nl	schijfbaar voor de webserver
 write	setup	nl	Schrijven
@@ -629,13 +629,13 @@ wrong credentials to access the header.inc.php file!	setup	nl	Verkeerde gegevens
 year	setup	nl	jaar
 yes	setup	nl	Ja
 yes, with lowercase usernames	setup	nl	Ja, met gebruikersnamen in kleine letters
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	nl	Het blijkt dat u een pre-beta versie van eGroupWare draait.<br />Deze versies worden niet meer ondersteund en er is ook geen upgrade pad hiervoor in de setup beschikbaar. U kunt mogelijk eerst upgraden naar versie 0.9.10 (de laatste versie die pre-beta upgrades biedt)<br />en daarna upgrade naar de huidige actuele versie.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	nl	Het blijkt dat u een oude versie van PHP draait.<br />Het wordt aanbevolen om naar een nieuwe versie te upgraden.<br />Oudere versies van PHP kunnen mogelijk eGroupWare niet correct laten draaien als eGroupWare al wil starten.<br /><br />Upgrade a.u.b. tot minimaal versie %1.
-you appear to be running version %1 of egroupware	setup	nl	U lijkt eGroupWare versie %1 te draaien
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	nl	Het blijkt dat u een pre-beta versie van EGroupware draait.<br />Deze versies worden niet meer ondersteund en er is ook geen upgrade pad hiervoor in de setup beschikbaar. U kunt mogelijk eerst upgraden naar versie 0.9.10 (de laatste versie die pre-beta upgrades biedt)<br />en daarna upgrade naar de huidige actuele versie.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	nl	Het blijkt dat u een oude versie van PHP draait.<br />Het wordt aanbevolen om naar een nieuwe versie te upgraden.<br />Oudere versies van PHP kunnen mogelijk EGroupware niet correct laten draaien als EGroupware al wil starten.<br /><br />Upgrade a.u.b. tot minimaal versie %1.
+you appear to be running version %1 of egroupware	setup	nl	U lijkt EGroupware versie %1 te draaien
 you appear to have %1 support.	setup	nl	U blijkt ondersteuning voor %1 te hebben.
 you appear to have xml support enabled	setup	nl	XML ondersteuning lijkt te zijn geactiveerd.
 you are ready for this stage, but this stage is not yet written.<br />	setup	nl	U bent klaar voor dit stadium, maar dit stadium is nog niet weggeschreven.</br>
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	nl	U gebruikt PHP versie %1. eGroupWare vereist nu %2 of hoger, aanbevolen is PHP %3.
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	nl	U gebruikt PHP versie %1. EGroupware vereist nu %2 of hoger, aanbevolen is PHP %3.
 you can install it by running:	setup	nl	U kunt het installeren door het uitvoeren van:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	nl	U kunt de header gebruiker en wachtwoord gebruiker voor ieder domein. Indien het wachtwoord niet ingesteld is via de commandoregel wordt het uit de enviromentvariabele EGW_CLI_PASSWORD gehaald of opgehaald uit het gebruikersrecord.
 you didn't enter a config password for domain %1	setup	nl	U heeft geen configuratie wachtwoord ingevoerd voor domein %1.
@@ -646,21 +646,21 @@ you do not have any languages installed. please install one now <br />	setup	nl	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	nl	U heeft nog geen header.inc.php gemaakt! <br/> U kunt dit nu doen.
 you have successfully logged out	setup	nl	U bent correct uitgelogd.
 you must enter a username for the admin	setup	nl	U moet een gebruikersnaam geven voor de beheerder
-you need to add at least one egroupware domain / database instance.	setup	nl	U moet minstens 1 eGroupWare domein / database instantie toevoegen.
-you need to configure egroupware:	setup	nl	U moet eGroupWare configureren:
+you need to add at least one egroupware domain / database instance.	setup	nl	U moet minstens 1 EGroupware domein / database instantie toevoegen.
+you need to configure egroupware:	setup	nl	U moet EGroupware configureren:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	nl	U moet de bovenvermelde fouten herstellen voordat het configuratiebestand header.inc.php weggeschreven kan worden!
 you need to select your current charset!	setup	nl	U moet een huidige karakterset kiezen!
 you need to specify a password!	setup	nl	U moet een wachtwoord opgeven!
 you should either install the sources or uninstall it, to get rid of the tables	setup	nl	U moet de bronbestanden installeren of de-installeren om van de tabellen af te komen
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	nl	U moet of proberen de de-installeren en vervolgens opnieuw te installeren of u kunt  handmatige reparaties doen
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	nl	U kunt niet inloggen in eGroupWare met gebruik making van PHP sessies: "session kon niet geverifieerd worden" !!!
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	nl	U kunt niet inloggen in EGroupware met gebruik making van PHP sessies: "session kon niet geverifieerd worden" !!!
 you're using an old configuration file format...	setup	nl	U gebruikt een verouderd bestandsformaat voor de configuratie
 your applications are current	setup	nl	Uw toepassingen zijn actueel
 your backup directory '%1' %2	setup	nl	Uw backup directory '%1' %2
 your database does not exist	setup	nl	U database bestaat niet!
 your database is not working!	setup	nl	U database werkt niet!
 your database is working, but you dont have any applications installed	setup	nl	U database werkt, maar u heeft nog geen toepassingen geïnstalleerd.
-your egroupware api is current	setup	nl	Uw eGroupWare API is actueel
+your egroupware api is current	setup	nl	Uw EGroupware API is actueel
 your files directory '%1' %2	setup	nl	Uw bestanden directory '%1' %2
 your header admin password is not set. please set it now!	setup	nl	Uw header-beheerderwachtwoord is niet ingesteld. Doe dit nu!
 your header.inc.php needs upgrading.	setup	nl	Het is noodzakelijk uw header.inc.php bij te werken

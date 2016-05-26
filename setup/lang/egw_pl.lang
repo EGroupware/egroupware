@@ -1,4 +1,4 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	pl	%1 '%2' nie istnieje, nie może być odczytane przez serwer WWW lub nie zawiera instalacji eGroupWare
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	pl	%1 '%2' nie istnieje, nie może być odczytane przez serwer WWW lub nie zawiera instalacji EGroupware
 %1 already exists in %2.	setup	pl	%1 już istnieje w %2.
 %1 created in %2.	setup	pl	%1 utworzono w %2.
 %1 database %2 on %3 already contains the following tables:	setup	pl	%1 baza danych %2 w %3 zawiera następujące tabele:
@@ -30,9 +30,9 @@ accounts existing	setup	pl	Konta istnieją
 actions	setup	pl	Akcje
 activate safe password check	setup	pl	Aktywuj sprawdzanie bezpiecznego hasła
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pl	Dodawaj automatycznie tworzonych użytkowników do tej grupy ('Domyślna' będzie wybierana jeżeli zostawisz puste.)
-add new database instance (egw domain)	setup	pl	Dodaj nową instancję bazy danych (domenę eGroupWare)
+add new database instance (egw domain)	setup	pl	Dodaj nową instancję bazy danych (domenę EGroupware)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	pl	dodaj lub edytuj domenę: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
-adding, editing or deleting an egroupware domain / database instance:	setup	pl	Dodawanie, edytowanie lub usuwanie domeny eGroupWare (instancji bazy danych)
+adding, editing or deleting an egroupware domain / database instance:	setup	pl	Dodawanie, edytowanie lub usuwanie domeny EGroupware (instancji bazy danych)
 additional options and there defaults (in brackets)	setup	pl	Dodatkowe opcje oraz wartości domyślne (w nawiasach)
 additional settings	setup	pl	Ustawienia dodatkowe
 admin account successful created.	setup	pl	Konto administratora zostało pomyślnie utworzone
@@ -142,7 +142,7 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	pl	Sprawdzam czy PEAR%1 jest zainstalowany
 checking php.ini	setup	pl	Sprawdzam plik php.ini
 checking required php version %1 (recommended %2)	setup	pl	Sprawdzam wersje PHP (wymana %1, pożądana %2)
-checking the egroupware installation	setup	pl	Sprawdzam instalację eGroupWare
+checking the egroupware installation	setup	pl	Sprawdzam instalację EGroupware
 checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	pl	Sprawdzam instalacje eGW, jego wersję i ważne aktualizacje (zwraca wartość --kod-wyjścia)
 click <a href="index.php">here</a> to return to setup.	setup	pl	wybierz <a href="index.php">here</a> by wrócić do menu setup.
 click here	setup	pl	Kliknij tutaj
@@ -173,7 +173,7 @@ create admin account	setup	pl	Utwórz konto administratora
 create database	setup	pl	Tworzenie bazy danych
 create demo accounts	setup	pl	Utwórz konta demonstracyjne
 create one now	setup	pl	Create one now
-create or edit the egroupware configuration file: header.inc.php:	setup	pl	Utwórz lub edytuj plik konfiguracyjny eGroupWare: 'header.inc.php'
+create or edit the egroupware configuration file: header.inc.php:	setup	pl	Utwórz lub edytuj plik konfiguracyjny EGroupware: 'header.inc.php'
 create the empty database -	setup	pl	Utwórz pustą bazę danych -
 create the empty database and grant user permissions -	setup	pl	Utwórz pustą bazę danych i nadaj uprawnienia użytkowikowi
 create your header.inc.php	setup	pl	Utwórz plik 'header.inc.php'
@@ -191,7 +191,7 @@ custom handler: %1	setup	pl	Niestandardowa obsługa: %1
 custom set via %1	setup	pl	Niestandardowe ustawienie przez %1
 cyrus imap: admin user,password	setup	pl	Cyrus IMAP: użytkownik Admin, Hasło
 database	setup	pl	Baza danych
-database instance (egw domain)	setup	pl	Instancja bazy danych domena (eGroupWare)
+database instance (egw domain)	setup	pl	Instancja bazy danych domena (EGroupware)
 database is version %1 and up to date.	setup	pl	wersja bazy danych to %1 i jest to najnowsza dostępna wersja
 database successfully converted from '%1' to '%2'	setup	pl	Baza danych poprawnie skonwertowana z '%1' do '%2'
 datebase %1 droped.	setup	pl	Baza danych %1 usunięta.
@@ -240,14 +240,14 @@ edit your existing header.inc.php	setup	pl	Edytuj obecny plik header.inc.php
 edit your header.inc.php	setup	pl	Edytuj header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	pl	np. /egroupware or http://domain.com/egroupware, domyślnie: %1
 egroupware administration manual	setup	pl	Pomoc administratora eGroupware
-egroupware api needs a database (schema) update from version %1 to %2!	setup	pl	eGroupWare API wymaga aktualizacji (schematu) z wersji %1 do %2
-egroupware api version %1 found.	setup	pl	Wersja eGroupWare API %1 znaleziona.
-egroupware configuration file (header.inc.php) does not exist.	setup	pl	Plik konfiguracyjny eGroupWare (header.inc.php ) nie istnieje.
-egroupware configuration file (header.inc.php) version %1 exists%2	setup	pl	Plik konfiguracyjny eGroupWare (header.inc.php )wersja %1 dostępna %2
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	pl	Plik konfiguracyjny eGroupWare (header.inc.php ) istnieje, użyj --edit-header lub usuń go najpierw!
-egroupware domain/instance %1(%2):	setup	pl	Domena/instancja eGroupWare  %1(%2)  :
-egroupware is already installed!	setup	pl	eGroupWare poprwnie zainstalowany!
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	pl	Źródło eGroupWare w '%1' nie jest kompletne, brak pliku '%2' !!!
+egroupware api needs a database (schema) update from version %1 to %2!	setup	pl	EGroupware API wymaga aktualizacji (schematu) z wersji %1 do %2
+egroupware api version %1 found.	setup	pl	Wersja EGroupware API %1 znaleziona.
+egroupware configuration file (header.inc.php) does not exist.	setup	pl	Plik konfiguracyjny EGroupware (header.inc.php ) nie istnieje.
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	pl	Plik konfiguracyjny EGroupware (header.inc.php )wersja %1 dostępna %2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	pl	Plik konfiguracyjny EGroupware (header.inc.php ) istnieje, użyj --edit-header lub usuń go najpierw!
+egroupware domain/instance %1(%2):	setup	pl	Domena/instancja EGroupware  %1(%2)  :
+egroupware is already installed!	setup	pl	EGroupware poprwnie zainstalowany!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	pl	Źródło EGroupware w '%1' nie jest kompletne, brak pliku '%2' !!!
 email (standard maildomain should be set)	setup	pl	e-mail (ustaw standardową domenę mailową)
 emailadmin profile updated:	setup	pl	aktualizacja profilu EMailAdmin:
 enable for extra debug-messages	setup	pl	uaktywnij dla dodatkowych informacji debug
@@ -260,7 +260,7 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	pl	Podaj pełną śieżkę do plików użytkowników i grup.<br />Na przykład: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	pl	Wprowadź pełną ścieżkę do katalogu kopii bezpieczeństwa. <br/> jeśli pusta: katalog plików
 enter the hostname of the machine on which this server is running	setup	pl	Podaj nazwę komputera, na którym jest uruchomiony serwer
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala eGroupWare's URL.<br />Na przykład: http://www.domain.com/egroupware   or   /egroupware<br /><b>Bez kończącego ciacha (,,/'')</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala EGroupware's URL.<br />Na przykład: http://www.domain.com/egroupware   or   /egroupware<br /><b>Bez kończącego ciacha (,,/'')</b>
 enter the site password for peer servers	setup	pl	Wprowadź hasło serwisu dla serwerów równorzędnych (peer servers)
 enter the site username for peer servers	setup	pl	Wprowadź nazwę użytkownika serwisu dla serwerów równorzędnych (peer servers)
 enter the title for your site	setup	pl	Podaj nazwę swojego portala (serwisu)
@@ -444,13 +444,13 @@ php proxy	setup	pl	Proxy PHP
 php session handler enabled in php.ini	setup	pl	Obsługa sesji php w php.ini
 please check for sql scripts within the application's directory	setup	pl	Proszę sprawdzić skrypty SQL w katalogu aplikacji
 please check read/write permissions on directories, or back up and use another option.	setup	pl	Proszę sprawdź uprawnienia do odczytu/zapisu w katalogach lub cofnij się i użyj innej opcji.
-please configure egroupware for your environment	setup	pl	Proszę skonfigurować eGroupWare dla Twojego środowiska
+please configure egroupware for your environment	setup	pl	Proszę skonfigurować EGroupware dla Twojego środowiska
 please consult the %1.	setup	pl	Rozważ %1.
 please download a recent version from %1 and install it as %2.	setup	pl	Pobierz ostatnią wersję z %1 i zainstaluj jako %2.
 please fix the above errors (%1) and warnings(%2)	setup	pl	Usuń powyższe błędy (%1) i ostrzeżenia (%2).
 please install	setup	pl	Proszę zainstalować
 please login	setup	pl	Proszę się zalogować
-please login to egroupware and run the admin application for additional site configuration	setup	pl	Proszę zalogować się się do eGroupWare i wejść do modułu Administracja dla dalszej konfiguracji
+please login to egroupware and run the admin application for additional site configuration	setup	pl	Proszę zalogować się się do EGroupware i wejść do modułu Administracja dla dalszej konfiguracji
 please make the following change in your php.ini	setup	pl	Wykonaj następujące zmiany w pliku php.ini
 pop/imap mail server hostname or ip address	setup	pl	nazwa lub adres IP serwera mail - POP/IMAP
 possible reasons	setup	pl	Prawdopodobne przyczyny
@@ -582,7 +582,7 @@ this has to be outside the webservers document-root!!!	setup	pl	Wybierz lokaliza
 this might take a while, please wait ...	setup	pl	To może zająć chwilę, proszę czekać...
 this program lets you backup your database, schedule a backup or restore it.	setup	pl	Program ten pozwala na wykonanie kopii bezpieczeństwa bazy danych, planowanie wykonania kopii oraz ich przywracanie.
 this program will convert your database to a new system-charset.	setup	pl	Program ten skonwertuje bazę danych do nowego systemu kodowania znaków.
-this program will help you upgrade or install different languages for egroupware	setup	pl	Ten program pomoże Ci zainstalować lub uaktualnić wersje językowe eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	pl	Ten program pomoże Ci zainstalować lub uaktualnić wersje językowe EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pl	Wymagana długość ok 30bajtów długości. <br/>Uwaga: przykład został wygenerowany losowo.
 this stage is completed<br />	setup	pl	Etap zakończony<br />
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	pl	Zostanie utworzony pierwszy użytkownik eGW lub hasło nadpisane ustawienia obecnego użytkownika admin.
@@ -638,17 +638,17 @@ where should egroupware store file content	setup	pl	Gdzie eGW powinien przechowy
 which database type do you want to use with egroupware?	setup	pl	Którą bazę danych chcesz używać z eGroupware
 world readable	setup	pl	do odczytu
 world writable	setup	pl	do zapisu
-would you like egroupware to cache the phpgw info array ?	setup	pl	Would you like eGroupWare to cache the phpgw info array ?
-would you like egroupware to check for a new version<br />when admins login ?	setup	pl	Chcesz sprawdzać czy jest nowa wersja eGroupWare<br />gdy loguje się administrator?
+would you like egroupware to cache the phpgw info array ?	setup	pl	Would you like EGroupware to cache the phpgw info array ?
+would you like egroupware to check for a new version<br />when admins login ?	setup	pl	Chcesz sprawdzać czy jest nowa wersja EGroupware<br />gdy loguje się administrator?
 would you like to show each application's upgrade status ?	setup	pl	Would you like to show each application's upgrade status ?
 writable by the webserver	setup	pl	do zapisu przez serwer WEB
 write	setup	pl	Zapisz
 wrong credentials to access the header.inc.php file!	setup	pl	Błędne uprawnienia dostępu do pliku header.inc.php!
 yes	setup	pl	Tak
 yes, with lowercase usernames	setup	pl	Tak, nazwa użytkownika pisana małymi literami
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of EGroupware.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pl	Prawdopodobnie używasz starszej wersji PHP<br/> Zalecana jest aktualizacja do nowej wersji. <br/> eGroupware może nie działać ze starszymi wersjami PHP, jeśli w ogóle. <br/><br/> Wykonaj aktualizację przynajmniej do wersji %1.
-you appear to be running version %1 of egroupware	setup	pl	You appear to be running version %1 of eGroupWare
+you appear to be running version %1 of egroupware	setup	pl	You appear to be running version %1 of EGroupware
 you appear to have %1 support.	setup	pl	Wygląda na to że masz wsparcie dla %1
 you appear to have xml support enabled	setup	pl	Wygląda na to, że jest dostępne wsparcie dla XML.
 you are ready for this stage, but this stage is not yet written.<br />	setup	pl	You are ready for this stage, but this stage is not yet written.<br />
@@ -662,10 +662,10 @@ you didn't enter a header admin username	setup	pl	Nie podano nazwy użytkownika 
 you do not have any languages installed. please install one now <br />	setup	pl	You do not have any languages installed. Please install one now <br />
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	pl	JPGraph wersja %1 lub wyższa nie zainstalowana! Wymagane do działania Menadźera projektów - wykresów Ganta
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	pl	Nie utworzono dotąd pliku konfiguracyjnego 'header.inc.php'!<br />Możesz zrobić to teraz.
-you have successfully logged out	setup	pl	Pomyślnie wylogowano z eGroupWare
+you have successfully logged out	setup	pl	Pomyślnie wylogowano z EGroupware
 you must enter a username for the admin	setup	pl	Musisz podać nazwę administratora
-you need to add at least one egroupware domain / database instance.	setup	pl	Należy dodać przynajmniej jedną domenę eGroupWare (instancję bazy danych) w pliku 'header.inc.php'
-you need to configure egroupware:	setup	pl	Musisz przeprowadzić konfigurację eGroupWare:
+you need to add at least one egroupware domain / database instance.	setup	pl	Należy dodać przynajmniej jedną domenę EGroupware (instancję bazy danych) w pliku 'header.inc.php'
+you need to configure egroupware:	setup	pl	Musisz przeprowadzić konfigurację EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	pl	Należy poprawić poniższe błędy zanim plik konfiguracyjny 'header.inc.php' zostanie zapisany!
 you need to select your current charset!	setup	pl	Należy wybrać bieżący zestaw znaków!
 you need to specify a password!	setup	pl	Musisz podać hasło!
@@ -679,7 +679,7 @@ your backup directory '%1' %2	setup	pl	Katalog kopii zapasowych '%1' %2
 your database does not exist	setup	pl	Baza danych nie istnieje
 your database is not working!	setup	pl	Baza danych nie pracuje!
 your database is working, but you dont have any applications installed	setup	pl	Twoja baza pracuje, ale nie ma zainstalowanej żadnej aplikacji
-your egroupware api is current	setup	pl	eGroupWare API jest w najnowszej wersji
+your egroupware api is current	setup	pl	EGroupware API jest w najnowszej wersji
 your files directory '%1' %2	setup	pl	Katalog plików '%1' %2
 your header admin password is not set. please set it now!	setup	pl	Brak hasła administratora domen eGW. Proszę ustawić hasło teraz!
 your header.inc.php needs upgrading.	setup	pl	Plik 'header.inc.php' wymaga aktualizacji

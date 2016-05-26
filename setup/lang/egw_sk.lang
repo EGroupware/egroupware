@@ -245,7 +245,7 @@ edit your header.inc.php	setup	sk	Upraviť header.inc.php
 eg. "cn=users,dc=domain,dc=com" for ads domain "domain.com"	setup	sk	napr. "CN=Users,DC=domain,DC=com" pre ADS doménu "domain.com"
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	sk	napríklad /egroupware alebo http://domain.com/egroupware, predvolené: %1
 egroupware administration manual	setup	sk	Správcovský manuál EGroupware
-egroupware api needs a database (schema) update from version %1 to %2!	setup	sk	eGroupWare API potrebuje aktualizáciu databázy (schémy) z verzie %1 na %2!
+egroupware api needs a database (schema) update from version %1 to %2!	setup	sk	EGroupware API potrebuje aktualizáciu databázy (schémy) z verzie %1 na %2!
 egroupware api version %1 found.	setup	sk	Našlo sa EGroupware API verzie %1.
 egroupware configuration file (header.inc.php) does not exist.	setup	sk	Konfiguračný súbor EGroupware (header.inc.php) NEexistuje.
 egroupware configuration file (header.inc.php) version %1 exists%2	setup	sk	Konfiguračný súbor EGroupware (header.inc.php) verzie %1 existuje%2.

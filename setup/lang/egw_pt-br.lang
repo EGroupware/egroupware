@@ -12,7 +12,7 @@
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	pt-br	'%1' não é permitido como argumento %2 da opção %3 !!!
 (searching accounts and changing passwords)	setup	pt-br	(procurando contas e alterando senhas)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pt-br	Não atualize sua base de dados usando o configurador, já que a atualização pode ser interrompida pelo limite máximo de tempo seu servidor. Isto pode deixar sua base de dados em uma situação irrecuperável, provocando perda de dados.
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pt-br	Você terá que modificar seu php.ini manualmente (normalmente em /etc) antes que o eGroupWare esteja completamente operacional.
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pt-br	Você terá que modificar seu php.ini manualmente (normalmente em /etc) antes que o EGroupware esteja completamente operacional.
 00 (disable)	setup	pt-br	00 (desabilitado / recomendado)
 13 (ntp)	setup	pt-br	13 (ntp)
 80 (http)	setup	pt-br	80 (http)
@@ -123,7 +123,7 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	pt-br	Verificando se PEAR %1 está instalado
 checking php.ini	setup	pt-br	Verificando php.ini
 checking required php version %1 (recommended %2)	setup	pt-br	Verificando versão do PHP requerida %1 (recomandada %2)
-checking the egroupware installation	setup	pt-br	Verificando a instalação do eGroupWare
+checking the egroupware installation	setup	pt-br	Verificando a instalação do EGroupware
 checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	pt-br	Verifica se o eGroupware está instalado, suas versões e atualizações necessárias (retona valores... veja --exit-codes)
 click <a href="index.php">here</a> to return to setup.	setup	pt-br	Clique <a href="index.php">aqui</a> para voltar ao configurador
 click here	setup	pt-br	Clique aqui
@@ -219,15 +219,15 @@ edit current configuration	setup	pt-br	Editar configuração atual
 edit your existing header.inc.php	setup	pt-br	Editar o seu arquivo header.inc.php existente
 edit your header.inc.php	setup	pt-br	Editar o seu arquivo header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	pt-br	exemplo: /egroupware ou http://dominio.com/egroupware, padrão: %1
-egroupware administration manual	setup	pt-br	Manual de  Administração do eGroupWare
+egroupware administration manual	setup	pt-br	Manual de  Administração do EGroupware
 egroupware api needs a database (schema) update from version %1 to %2!	setup	pt-br	A API do eGroupware precisa atualizar a base de dados (esquema) da versão %1 para %2!
-egroupware api version %1 found.	setup	pt-br	API do eGroupWare versão %1 encontrada.
-egroupware configuration file (header.inc.php) does not exist.	setup	pt-br	Arquivo de configuração do eGroupWare (header.inc.php) não existe.
-egroupware configuration file (header.inc.php) version %1 exists%2	setup	pt-br	Arquivo de configuração do eGroupWare (header.inc.php) versão %1 existe %2
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	pt-br	Arquivo de configuração do eGroupWare (header.inc.php) já existe. Você precisa usar --edit-header ou deletá-lo antes!
-egroupware domain/instance %1(%2):	setup	pt-br	Domínio/instância do eGroupWare %1 (%2)
-egroupware is already installed!	setup	pt-br	eGroupWare já está instalado!
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	pt-br	Arquivos do eGroupWare em '%2' não estão completos: arquivo '%2' está faltando !!!
+egroupware api version %1 found.	setup	pt-br	API do EGroupware versão %1 encontrada.
+egroupware configuration file (header.inc.php) does not exist.	setup	pt-br	Arquivo de configuração do EGroupware (header.inc.php) não existe.
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	pt-br	Arquivo de configuração do EGroupware (header.inc.php) versão %1 existe %2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	pt-br	Arquivo de configuração do EGroupware (header.inc.php) já existe. Você precisa usar --edit-header ou deletá-lo antes!
+egroupware domain/instance %1(%2):	setup	pt-br	Domínio/instância do EGroupware %1 (%2)
+egroupware is already installed!	setup	pt-br	EGroupware já está instalado!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	pt-br	Arquivos do EGroupware em '%2' não estão completos: arquivo '%2' está faltando !!!
 emailadmin profile updated:	setup	pt-br	Perfil EMailAdmin atualizado:
 enable for extra debug-messages	setup	pt-br	Habilitar mensagens de depuração extras
 enable mcrypt	setup	pt-br	Habilitar MCrypt
@@ -239,7 +239,7 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br />Exemplos: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	pt-br	Informe o caminho completo para o diretório de backup.<br/>Se vazio: diretório de arquivos
 enter the hostname of the machine on which this server is running	setup	pt-br	Digite o nome da máquina em que este servidor está sendo executado
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt-br	Digite a URL do eGroupWare.<br />Ex.: http://www.dominio.com.br/egroupware   ou   /egroupware<br /><b>Sem a barra final</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt-br	Digite a URL do EGroupware.<br />Ex.: http://www.dominio.com.br/egroupware   ou   /egroupware<br /><b>Sem a barra final</b>
 enter the site password for peer servers	setup	pt-br	Digite a senha do servidor para uso com servidores parceiros
 enter the site username for peer servers	setup	pt-br	Digite o usuário do servidor para uso com  servidores parceiros
 enter the title for your site	setup	pt-br	Digite o título para o site
@@ -347,7 +347,7 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	pt-br	Configurar aplicações
 manage languages	setup	pt-br	Configurar idiomas
 manual / help	setup	pt-br	Manual / Ajuda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt-br	O tempo limite de execução está setado para menos de 30 segundos. Algumas vezes, o eGroupWare necessita de um limite maior que esse. É possível que ocorram problemas.
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt-br	O tempo limite de execução está setado para menos de 30 segundos. Algumas vezes, o EGroupware necessita de um limite maior que esse. É possível que ocorram problemas.
 maximum account id (e.g. 65535 or 1000000)	setup	pt-br	Id máximo para contas (Exemplo: 65535 ou 1000000)
 may be broken	setup	pt-br	pode estar quebrado
 mcrypt algorithm (default tripledes)	setup	pt-br	Algoritmo Mcrypt (padrão TRIPLEDES)
@@ -355,7 +355,7 @@ mcrypt initialization vector	setup	pt-br	Vetor de iniciação do MCrypt
 mcrypt mode (default cbc)	setup	pt-br	Modo Mcrypt (padrão CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pt-br	Configurações para Mcrypt (requer extensão mcrypt do PHP)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt-br	O Valor de limite de memória está menor que %1. Alguns aplicativos do eGroupware necessitam mais que os 8M recomendados. É possível que ocorram problemas.
-migration between egroupware account repositories	setup	pt-br	Migração entre respositórios de contas do eGroupWare
+migration between egroupware account repositories	setup	pt-br	Migração entre respositórios de contas do EGroupware
 minimum account id (e.g. 500 or 100, etc.)	setup	pt-br	Id mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	setup	pt-br	minuto
 missing or uncomplete mailserver configuration	setup	pt-br	Configuração do servidor de e-mail está faltando
@@ -365,7 +365,7 @@ modify	setup	pt-br	Modificar
 month	setup	pt-br	mês
 multi-language support setup	setup	pt-br	Configuração de suporte a idiomas
 name of database	setup	pt-br	Nome da base de dados
-name of db user egroupware uses to connect	setup	pt-br	Nome do usuário da base de dados que o eGroupWare deve usar para conexão
+name of db user egroupware uses to connect	setup	pt-br	Nome do usuário da base de dados que o EGroupware deve usar para conexão
 never	setup	pt-br	nunca
 new	setup	pt-br	NOVO
 next run	setup	pt-br	próxima execução
@@ -373,7 +373,7 @@ no	setup	pt-br	Não
 no %1 support found. disabling	setup	pt-br	Não há suporte para %1. Desabilitando.
 no accounts existing	setup	pt-br	Não há contas existentes
 no algorithms available	setup	pt-br	Nenhum algoritmo disponível
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	pt-br	Nenhum domínio / base de dados do eGroupWare existe! Use --edit-header --domain para adicionar um (--usage retorna mais opções).
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	pt-br	Nenhum domínio / base de dados do EGroupware existe! Use --edit-header --domain para adicionar um (--usage retorna mais opções).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	pt-br	Nenhuma senha para configuração do servidor definida! Use --edit-header <senha>[,<user>] para definir uma (--usage retorna mais opções).
 no modes available	setup	pt-br	nenhum modo disponível
 no update necessary, domain %1(%2) is up to date.	setup	pt-br	Nenhuma atualização é necessária. Domínio %1 (%2) está atualizado.
@@ -397,29 +397,29 @@ only add new phrases	setup	pt-br	Somente adicionar novas frases
 or	setup	pt-br	ou
 or %1continue to the header admin%2	setup	pt-br	ou %1Prosseguir para a Configuração do Servidor%2
 or http://webdav.domain.com (webdav)	setup	pt-br	ou http://webdav.domain.com (WebDAV)
-or we can attempt to create the database for you:	setup	pt-br	Ou eGroupWare pode criar a base de dados para você:
+or we can attempt to create the database for you:	setup	pt-br	Ou EGroupware pode criar a base de dados para você:
 or you can install a previous backup.	setup	pt-br	Ou você pode instalar um backup anterior.
 password for smtp-authentication	setup	pt-br	Senha para autenticação SMTP.
 password needed for domain configuration.	setup	pt-br	Senha necessária para administrador domínio.
 password of db user	setup	pt-br	Senha do usuário da base de dados
 passwords did not match, please re-enter	setup	pt-br	Senhas não conferem, digite novamente
-path (not url!) to your egroupware installation.	setup	pt-br	Caminho (não URL!) para sua instalação do eGroupWare
+path (not url!) to your egroupware installation.	setup	pt-br	Caminho (não URL!) para sua instalação do EGroupware
 path information	setup	pt-br	Informação de Caminho do sistema (Path)
-path of egroupware install directory (default auto-detected)	setup	pt-br	caminho para o diretório de instalação do eGroupWare (padrão auto-dectável)
+path of egroupware install directory (default auto-detected)	setup	pt-br	caminho para o diretório de instalação do EGroupware (padrão auto-dectável)
 path to user and group files has to be outside of the webservers document-root!!!	setup	pt-br	Caminho para ser usado para arquivos de usuários e grupos. TEM QUE ESTAR FORA do diretório de documentos do servidor web.
 path to various directories: have to exist and be writeable by the webserver	setup	pt-br	caminho para vários diretórios: devem existir e o servidor web deve ter permissão de escrita neles
 pear (%1) is a php repository and is usually in a package called %2.	setup	pt-br	PEAR (%1) é um repositório PHP e normalmente está em um pacote chamado %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	pt-br	Extensões PEAR são requeridas por muitos aplicativos eGroupWare, o próprio PEAR é requerimento básico para cada extensão!
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	pt-br	Extensões PEAR são requeridas por muitos aplicativos EGroupware, o próprio PEAR é requerimento básico para cada extensão!
 pear%1 is needed by: %2.	setup	pt-br	PEAR %1 é requerido por: %2.
 persistent connections	setup	pt-br	Conexões Persistentes
 please check for sql scripts within the application's directory	setup	pt-br	Por favor verifique os scripts SQL no diretório da aplicação
 please check read/write permissions on directories, or back up and use another option.	setup	pt-br	Porfavor verifique os direitos de escrita/leitura. ou faça uma cópia de segurança e use outra opção.
-please configure egroupware for your environment	setup	pt-br	Por favor configure o eGroupWare para o seu ambiente
+please configure egroupware for your environment	setup	pt-br	Por favor configure o EGroupware para o seu ambiente
 please consult the %1.	setup	pt-br	Por Favor consulte %1
 please fix the above errors (%1) and warnings(%2)	setup	pt-br	Por favor corrija os erros acima (%1) e avisos (%2)
 please install	setup	pt-br	Por favor instale
 please login	setup	pt-br	Por favor conecte-se
-please login to egroupware and run the admin application for additional site configuration	setup	pt-br	Por favor, conecte-se no eGroupWare e execute o aplicativo de administração para executar as outras configurações do servidor
+please login to egroupware and run the admin application for additional site configuration	setup	pt-br	Por favor, conecte-se no EGroupware e execute o aplicativo de administração para executar as outras configurações do servidor
 please make the following change in your php.ini	setup	pt-br	Por favor faça a seguinte alteração no seu php.ini
 please wait...	setup	pt-br	Por favor aguarde...
 pop/imap mail server hostname or ip address	setup	pt-br	Endereço IP ou nome do servidor POP/MAIL do servidor de e-mail
@@ -438,7 +438,7 @@ re-enter password	setup	pt-br	Digite novamente a senha
 read translations from	setup	pt-br	Ler as traduções de
 readable by the webserver	setup	pt-br	Leitura pelo servidor web
 really uninstall all applications	setup	pt-br	REALMENTE desinstalar todas aplicações
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt-br	A variável register_globais está ligada. O eGroupWare não necessita desse recurso e geralmente é mais seguro manter essa variável desligada.
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt-br	A variável register_globais está ligada. O EGroupware não necessita desse recurso e geralmente é mais seguro manter essa variável desligada.
 registered	setup	pt-br	registrado
 rejected lines	setup	pt-br	Linhas rejeitadas.
 remove	setup	pt-br	Remover
@@ -487,7 +487,7 @@ setup	setup	pt-br	Configurador
 setup main menu	setup	pt-br	Menu principal de configuração
 setup the database	setup	pt-br	Configurar a base de dados
 setup/config admin login	setup	pt-br	Definir/Configurar a conexão do Administrador
-show 'powered by' logo on	setup	pt-br	Área para exibição 'powered by  eGroupWare'
+show 'powered by' logo on	setup	pt-br	Área para exibição 'powered by  EGroupware'
 sieve: host[,port(4190)]	setup	pt-br	Sieve: servidor[,port(4190)]
 size	setup	pt-br	tamanho
 skip the installation tests (not recommended)	setup	pt-br	Pular os testes de instalação (não recomendado)
@@ -496,7 +496,7 @@ smtp server port	setup	pt-br	Porta do servidor SMTP
 some or all of its tables are missing	setup	pt-br	Estão faltando algumas tabelas (ou todas)
 sources deleted/missing	setup	pt-br	Fontes removidas/faltando
 sql encryption type	setup	pt-br	Tipo de criptografia para senhas  SQL(padrão Md5)
-standard (login-name identical to egroupware user-name)	setup	pt-br	padrão (nome de login idêntico ao nome de usuário do eGroupWare)
+standard (login-name identical to egroupware user-name)	setup	pt-br	padrão (nome de login idêntico ao nome de usuário do EGroupware)
 standard mailserver settings (used for mail authentication too)	setup	pt-br	Configurações de servidor de e-mail padrão (também usadas para autenticação)
 standard, as defined above	setup	pt-br	Padrão, como definido acima
 start the postmaster	setup	pt-br	Iniciar o postmaster
@@ -526,7 +526,7 @@ the %1 extension is needed from: %2.	setup	pt-br	A extensão %1 é requerida por
 the %1 extension is needed, if you plan to use a %2 database.	setup	pt-br	A extensão %1 é necessária, se você está planejando usar a base de dados %2
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	pt-br	O valor da variável db_type (%1) indica um banco de dados que não tem suporte nesse servidor. Usaremos o primeiro tipo encontrado que tenha suporte nesse servidor.
 the file	setup	pt-br	o arquivo
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pt-br	O primeiro passo ao instalar eGroupWare é assegurar que seu ambiente possui as configurações necessárias para executar corretamente a aplicação.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pt-br	O primeiro passo ao instalar EGroupware é assegurar que seu ambiente possui as configurações necessárias para executar corretamente a aplicação.
 the following applications are not installed:	setup	pt-br	O seguinte aplicativo NÃO está instalado:
 the following applications need to be upgraded:	setup	pt-br	As seguintes aplicações precisam ser atualizadas:
 the function %1 is needed from: %2.	setup	pt-br	A função %1 é necessária para: %2
@@ -546,10 +546,10 @@ this has to be outside the webservers document-root!!!	setup	pt-br	Isto tem que 
 this might take a while, please wait ...	setup	pt-br	Isto pode demorar um pouco, por favo aquarde...
 this program lets you backup your database, schedule a backup or restore it.	setup	pt-br	Este aplicativo permite você fazer backup de sua base dados, agendar um backup ou restaurá-lo.
 this program will convert your database to a new system-charset.	setup	pt-br	Este programa converterá a sua base de dados para um novo sistema-charset.
-this program will help you upgrade or install different languages for egroupware	setup	pt-br	Este programa ajudará a atualizar ou instalar idiomas diferentes para o eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	pt-br	Este programa ajudará a atualizar ou instalar idiomas diferentes para o EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pt-br	Isto deve ter aproximadamente 30 bytes.<br /> Nota: o valor padrão foi aleatóriamente gerado
 this stage is completed<br />	setup	pt-br	Este passo está completo<br />
-this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	pt-br	Isto criará um primeiro usuário no eGroupWare ou resetar a senha e poderes administrativos de um usuário existente
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	pt-br	Isto criará um primeiro usuário no EGroupware ou resetar a senha e poderes administrativos de um usuário existente
 to a version it does not know about	setup	pt-br	para uma versão desconhecida
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	pt-br	Para permitir autenticação de senhas, adicione a seguinte linha em seu arquivo pg_hba.conf (acima de todas as outras) E reinicie o serviço postgres:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	pt-br	Para alterar a codificação de caracteres: faça backup de sua base de dados, desinstale todos os aplicativos e reinstale o backup com "converter backup para a codificação selecionada" marcada.
@@ -559,7 +559,7 @@ translations added	setup	pt-br	Traduções adicionadas
 translations removed	setup	pt-br	Traduções removidas
 translations upgraded	setup	pt-br	Traduções atualizadas
 true	setup	pt-br	Verdadeiro
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	pt-br	Tente configurar seu PHP para suportar um dos Banco de Dados mencionados acima, ou instale o eGroupWare manualmente
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	pt-br	Tente configurar seu PHP para suportar um dos Banco de Dados mencionados acima, ou instale o EGroupware manualmente
 two weeks	setup	pt-br	2 semanas
 uninstall	setup	pt-br	desinstalar
 uninstall all applications	setup	pt-br	Desinstalar todas aplicações
@@ -575,7 +575,7 @@ uploads a backup and installs it on your db	setup	pt-br	Carrega um backup e o in
 uploads a backup to the backup-dir, from where you can restore it	setup	pt-br	Carrega um backup para o diretório de backups, de onde você pode restaurá-lo.
 usage: %1 command [additional options]	setup	pt-br	Uso: comando %1 [opções adicionais]
 use --create-header to create the configuration file (--usage gives more options).	setup	pt-br	Use --create-header para criar o arquivo de configuração (--usage fornece mais opções)
-use --install to install egroupware.	setup	pt-br	Use --install para instalar o eGroupWare
+use --install to install egroupware.	setup	pt-br	Use --install para instalar o EGroupware
 use --update to do so.	setup	pt-br	Use --update para atualizar.
 use cookies to pass sessionid	setup	pt-br	Usar cookies para transmitir id de sessão
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	pt-br	Usar mcrypt para criptografar dados da sessão: {off(default) | on},{mcrypt-init-vector(default: gerado aleatoriamente)],[versão-mcrypt]
@@ -599,13 +599,13 @@ we can proceed	setup	pt-br	Podemos prosseguir
 we could not determine the version of %1, please make sure it is at least %2	setup	pt-br	Não foi possível determinar a versão de %1. Por favor, certifique-se que seja, ao menos, %2.
 we will automatically update your tables/records to %1	setup	pt-br	As tabelas/registros serão automaticamente atualizadas para %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pt-br	Nós iremos executar neste momento uma série de testes que poderão levar alguns minutos. Clique noa link abaixo para prosseguir.
-welcome to the egroupware installation	setup	pt-br	Bem-vindo(a) à instalação do eGroupWare
-where should egroupware store file content	setup	pt-br	Onde o eGroupWare deve armazenar o conteúdo de arquivos
-which database type do you want to use with egroupware?	setup	pt-br	Qual tipo de base de dados você pretende usar com o eGroupWare?
+welcome to the egroupware installation	setup	pt-br	Bem-vindo(a) à instalação do EGroupware
+where should egroupware store file content	setup	pt-br	Onde o EGroupware deve armazenar o conteúdo de arquivos
+which database type do you want to use with egroupware?	setup	pt-br	Qual tipo de base de dados você pretende usar com o EGroupware?
 world readable	setup	pt-br	Leitura permitida para todos
 world writable	setup	pt-br	Escrita permitida para todos
-would you like egroupware to cache the phpgw info array ?	setup	pt-br	Deseja que o eGroupWare armazene o vetor de informações phpgw? (cache)
-would you like egroupware to check for a new version<br />when admins login ?	setup	pt-br	Deseja que o eGroupWare verifique se há uma nova versão disponível <br />quando administradores estejam acessando o sistema?
+would you like egroupware to cache the phpgw info array ?	setup	pt-br	Deseja que o EGroupware armazene o vetor de informações phpgw? (cache)
+would you like egroupware to check for a new version<br />when admins login ?	setup	pt-br	Deseja que o EGroupware verifique se há uma nova versão disponível <br />quando administradores estejam acessando o sistema?
 would you like to show each application's upgrade status ?	setup	pt-br	Deseja exibir o status de atualização de cada aplicativo?
 writable by the webserver	setup	pt-br	Escrita permitida para o servidor Web
 write	setup	pt-br	Gravar
@@ -613,13 +613,13 @@ wrong credentials to access the header.inc.php file!	setup	pt-br	Credenciais inc
 year	setup	pt-br	ano
 yes	setup	pt-br	Sim
 yes, with lowercase usernames	setup	pt-br	Sim, com nome de usuários em letras minúsculas
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pt-br	Aparentemente você está usando uma versão pré-beta do eGroupWare.<br />Estas versões não são mais suportadas, e não há como usar o configurador para atualizá-las.<br /> Você deve primeiro atualizar para a versão 0.9.10 (a última versão que suporta atualização de pré-betas) <br />e então atualizar a partir desta versão para a versão atual.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pt-br	Aparentemente você está rodando uma versão antiga do PHP <br /> é altamente recomendável que você faça a atualização para uma versão mais nova <br /> Versões antigas do PHP podem não rodar corretamente com o eGroupWare. <br /><br />Por favor atualize para, no mínimo, a versão %1
-you appear to be running version %1 of egroupware	setup	pt-br	Aparentemente você está rodando a versão %1 do eGroupWare
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pt-br	Aparentemente você está usando uma versão pré-beta do EGroupware.<br />Estas versões não são mais suportadas, e não há como usar o configurador para atualizá-las.<br /> Você deve primeiro atualizar para a versão 0.9.10 (a última versão que suporta atualização de pré-betas) <br />e então atualizar a partir desta versão para a versão atual.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pt-br	Aparentemente você está rodando uma versão antiga do PHP <br /> é altamente recomendável que você faça a atualização para uma versão mais nova <br /> Versões antigas do PHP podem não rodar corretamente com o EGroupware. <br /><br />Por favor atualize para, no mínimo, a versão %1
+you appear to be running version %1 of egroupware	setup	pt-br	Aparentemente você está rodando a versão %1 do EGroupware
 you appear to have %1 support.	setup	pt-br	Aparentemente você tem suporte a %1
 you appear to have xml support enabled	setup	pt-br	Aparentemente você tem suporte a XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	pt-br	Você está pronto para este passo, mas este estágio não está escrito ainda.<br />
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pt-br	Você está usando PHP versão %1. eGroupWare requer %2 ou superior, %3 é recomendada.
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pt-br	Você está usando PHP versão %1. EGroupware requer %2 ou superior, %3 é recomendada.
 you can install it by running:	setup	pt-br	Você pode instalá-lo rodando:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pt-br	Você pode usar o usuário e senha de configuração do servidor para todos os domínios também. Se a senha não for definida pela linha de comando, ela é lida da variável de ambiente EGW_CLI_PASSWORD ou requisitada ao usuário.
 you didn't enter a config password for domain %1	setup	pt-br	Você não digitou uma senha de configuração para o domínio  %1
@@ -630,21 +630,21 @@ you do not have any languages installed. please install one now <br />	setup	pt-
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	pt-br	Você ainda não criou seu arquivo heades.inc.php!<br /> Você pode criá-lo agora.
 you have successfully logged out	setup	pt-br	Você foi desconectado com sucesso.
 you must enter a username for the admin	setup	pt-br	Você deve especificar um nome de usuário para o Administrador
-you need to add at least one egroupware domain / database instance.	setup	pt-br	Você precisa adicionar ao menos um domínio / base de dados ao eGroupWare.
-you need to configure egroupware:	setup	pt-br	Você precisa configurar o eGroupWare:
+you need to add at least one egroupware domain / database instance.	setup	pt-br	Você precisa adicionar ao menos um domínio / base de dados ao EGroupware.
+you need to configure egroupware:	setup	pt-br	Você precisa configurar o EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	pt-br	Você precisa corrigir os erros acima antes que o arquivo header.inc.php possa ser gravado!
 you need to select your current charset!	setup	pt-br	Você  precisa selecionar seu conjunto de carácteres atual
 you need to specify a password!	setup	pt-br	Você precisa informar uma senha!
 you should either install the sources or uninstall it, to get rid of the tables	setup	pt-br	Você deve instalar as fontes ou desinstalá-las, para se livrar das tabelas
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pt-br	Você pode tentar desinstalar e então reinstalar ou tentar executar reparos manuais.
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt-br	Você não poderá logar no eGroupWare usando sessões PHP: "sessão não poderá ser verificada !!"
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt-br	Você não poderá logar no EGroupware usando sessões PHP: "sessão não poderá ser verificada !!"
 you're using an old configuration file format...	setup	pt-br	Você está usando um formato de arquivo de configuração antigo
 your applications are current	setup	pt-br	Suas aplicações estão atualizadas
 your backup directory '%1' %2	setup	pt-br	Seu diretório de backup '%1' %2
 your database does not exist	setup	pt-br	Sua base de dados não existe
 your database is not working!	setup	pt-br	Sua base de dados não está funcionando!
 your database is working, but you dont have any applications installed	setup	pt-br	Sua base de dados está funcionando, mas não há nenhuma aplicação instalada
-your egroupware api is current	setup	pt-br	Sua atual API do eGroupWare é
+your egroupware api is current	setup	pt-br	Sua atual API do EGroupware é
 your files directory '%1' %2	setup	pt-br	Seu diretório de arquivos '%1' %2
 your header admin password is not set. please set it now!	setup	pt-br	Sua senha de configuração do servidor não está definida. Por favor defina uma agora.
 your header.inc.php needs upgrading.	setup	pt-br	Seu arquivo header.inc.php precisa ser atualizado

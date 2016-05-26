@@ -32,7 +32,7 @@ activate safe password check	setup	cs	Aktivovat kontrolu bezpečnosti hesla
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	cs	Přidat automaticky vytvořené uživatele do této skupiny (Ponecháte-li prázdné, zkusím skupinu 'Default'.)
 add new database instance (egw domain)	setup	cs	Přidat novou instanci databáze (eGW doménu)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	cs	přidat nebo editovat doménu:[název domény(default)],[název databáze(egroupware)],[uživatel databáze(egroupware)],heslo databáze,[typ databáze(mysql)],[databázový server(localhost)],[port databáze(db specific)],[administrátor konfigurace(jako admin. hlaviček)],[heslo administrátora konfigurace(jako admin. hlaviček)]
-adding, editing or deleting an egroupware domain / database instance:	setup	cs	Přidání, editace nebo mazání eGroupWare domény / instance databáze
+adding, editing or deleting an egroupware domain / database instance:	setup	cs	Přidání, editace nebo mazání EGroupware domény / instance databáze
 additional options and there defaults (in brackets)	setup	cs	Další volby a jejich výchozí hodnoty (v závorkách)
 additional settings	setup	cs	Další nastavení
 admin account successful created.	setup	cs	Účet administrátora byl úspěšně vytvořen.
@@ -142,8 +142,8 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	cs	Kontroluji, zda je instalaván PEAR%1
 checking php.ini	setup	cs	Kontroluji php.ini
 checking required php version %1 (recommended %2)	setup	cs	Kontroluji požadovanou verzi PHP %1 (doporučeno %2)
-checking the egroupware installation	setup	cs	Kontroluji instalaci eGroupWare
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	cs	zkontroluje, že je eGroupWare nainstalován, jeho verze a potřebné aktualizace (pro návratové hodnoty se podívejte na --exit-codes)
+checking the egroupware installation	setup	cs	Kontroluji instalaci EGroupware
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	cs	zkontroluje, že je EGroupware nainstalován, jeho verze a potřebné aktualizace (pro návratové hodnoty se podívejte na --exit-codes)
 click <a href="index.php">here</a> to return to setup.	setup	cs	klikněte <a href="index.php">sem</a> pro návrat do Instalátoru.
 click here	setup	cs	Klikněte sem
 click here to re-run the installation tests	setup	cs	Klikněte sem pro opakované spuštění instalačních testů
@@ -240,14 +240,14 @@ edit current configuration	setup	cs	Editovat aktuální konfiguraci
 edit your existing header.inc.php	setup	cs	Editovat Váš stávající header.inc.php
 edit your header.inc.php	setup	cs	Editovat Váš header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	cs	např. /egroupware nebo http://domena.cz/egroupware, výchozí: %1
-egroupware administration manual	setup	cs	Manuál pro administraci eGroupWare
-egroupware api needs a database (schema) update from version %1 to %2!	setup	cs	eGroupWare API vyžaduje aktualizaci (schématu) databáze z verze %1 na %2!
-egroupware api version %1 found.	setup	cs	Nalezeno eGroupWare API verze %1.
+egroupware administration manual	setup	cs	Manuál pro administraci EGroupware
+egroupware api needs a database (schema) update from version %1 to %2!	setup	cs	EGroupware API vyžaduje aktualizaci (schématu) databáze z verze %1 na %2!
+egroupware api version %1 found.	setup	cs	Nalezeno EGroupware API verze %1.
 egroupware configuration file (header.inc.php) does not exist.	setup	cs	Konfigurační soubor eGroupWaru (header.inc.php) NEexistuje.
 egroupware configuration file (header.inc.php) version %1 exists%2	setup	cs	Konfigurační soubor eGroupWaru (header.inc.php) verze %1 existuje %2
 egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	cs	Konfigurační soubor eGroupWaru header.inc.php již existuje, musíte použít --edit-header nebo ho nejprve smazat!
-egroupware domain/instance %1(%2):	setup	cs	eGroupWare doména/instance %1(%2):
-egroupware is already installed!	setup	cs	eGroupWare jej již nainstalován!
+egroupware domain/instance %1(%2):	setup	cs	EGroupware doména/instance %1(%2):
+egroupware is already installed!	setup	cs	EGroupware jej již nainstalován!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	cs	Zdrojové soubory eGroupWaru v '%1' nejsou kompletní, soubor '%2' chybí !!!
 email (standard maildomain should be set)	setup	cs	e-mail (měla by být nastavena standardní poštovní doména)
 emailadmin profile updated:	setup	cs	Profil Administrátora pošty aktualizován:
@@ -375,7 +375,7 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	cs	Spravovat aplikace
 manage languages	setup	cs	Spravovat jazyky
 manual / help	setup	cs	Manuál / Nápověda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	cs	Parametr max_execution_time je nastaven na méně než 30 (vteřin): eGroupWare někdy potřebuje vyšší hodnotu, očekávejte nahodilé chyby
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	cs	Parametr max_execution_time je nastaven na méně než 30 (vteřin): EGroupware někdy potřebuje vyšší hodnotu, očekávejte nahodilé chyby
 maximum account id (e.g. 65535 or 1000000)	setup	cs	Maximální id účtu (např. 65535 nebo 1000000)
 may be broken	setup	cs	může být poškozen
 mcrypt algorithm (default tripledes)	setup	cs	Mcrypt algoritmus (výchozí TRIPLEDES)
@@ -383,7 +383,7 @@ mcrypt initialization vector	setup	cs	Mcrypt inicializační vektor
 mcrypt mode (default cbc)	setup	cs	Mcyrpt  režim (výchozí CBC)
 mcrypt settings (requires mcrypt php extension)	setup	cs	Nastavení mcyrpt (vyžaduje PHP rozšíření mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	cs	Parametr memory_limit je nastaven na méně než %1: některé aplikace eGroupWaru vyžadují více paměti než doporučených 8M, můžete proto očekávat, že bude docházet k náhodným chybám.
-migration between egroupware account repositories	setup	cs	Migrace mezi databázemi eGroupWare účtů
+migration between egroupware account repositories	setup	cs	Migrace mezi databázemi EGroupware účtů
 min backup count	setup	cs	Minimální počet záloh, které by měly zůstat zachovány (nula znamená žádné / bez limitu)
 minimum account id (e.g. 500 or 100, etc.)	setup	cs	Minimální id účtu (např. 500 nebo 100, atp.)
 minute	setup	cs	minuta
@@ -394,7 +394,7 @@ modify	setup	cs	Změnit
 month	setup	cs	měsíc
 multi-language support setup	setup	cs	Nastavení podpory více jazyků
 name of database	setup	cs	Název databáze
-name of db user egroupware uses to connect	setup	cs	Jméno databaz. uživatele, kterým se eGroupWare připojuje
+name of db user egroupware uses to connect	setup	cs	Jméno databaz. uživatele, kterým se EGroupware připojuje
 never	setup	cs	nikdy
 new	setup	cs	Nové
 next run	setup	cs	další spuštění
@@ -402,14 +402,14 @@ no	setup	cs	Ne
 no %1 support found. disabling	setup	cs	Nebyla nalezena podpora %1. Zakazuji
 no accounts existing	setup	cs	Neexistují žádné účty
 no algorithms available	setup	cs	žádný algoritmus není k dispozici
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	cs	Žádná eGroupWare doména / instance databáze neexistuje! Pro pro vytvoření použijte --edit-header --domain (--usage nabídne další volby).
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	cs	Žádná EGroupware doména / instance databáze neexistuje! Pro pro vytvoření použijte --edit-header --domain (--usage nabídne další volby).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	cs	Není nastaveno heslo administrátora hlaviček! Pro nastavení použijte --edit-header <heslo>[,<uživatel>] (--usage nabídne další volby).
 no modes available	setup	cs	žádné režimy nejsou k dispozici
 no update necessary, domain %1(%2) is up to date.	setup	cs	Není potřeba žádná aktualizace, doména %1(%2) je aktuální.
 no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	cs	Není nastaveno platné časové pásmo! ("%1" nestačí, musíte použít identifikátor časového pásma ve stylu "%2", podívejte se na %3kompletní seznam platných identifikátorů%4)
 no xml support found. disabling	setup	cs	Nebyla nalezena podpora XML. Zakazuji
 not	setup	cs	ne
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	cs	Ne všechny algoritmy a režimy mcryptu pracují s eGroupWarem. Pokud zaznamenáte problémy, zkuste ho vypnout.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	cs	Ne všechny algoritmy a režimy mcryptu pracují s EGroupwarem. Pokud zaznamenáte problémy, zkuste ho vypnout.
 not complete	setup	cs	nedokončené
 not completed	setup	cs	Nedokončené
 not ready for this stage yet	setup	cs	Na tuto fázi ještě nejsme připraveni
@@ -448,7 +448,7 @@ php proxy	setup	cs	PHP proxy
 php session handler enabled in php.ini	setup	cs	PHP správce relací povolen v  php.ini
 please check for sql scripts within the application's directory	setup	cs	Podívejte se prosím na sql skripty v adresáři aplikace
 please check read/write permissions on directories, or back up and use another option.	setup	cs	Zkontrolujte prosím oprávnění ke čtení/zápisu na adresáře, nebo se vraťte zpět a zkuste jinou volbu.
-please configure egroupware for your environment	setup	cs	Zkonfigurujte prosím eGroupWare pro Vaše prostředí
+please configure egroupware for your environment	setup	cs	Zkonfigurujte prosím EGroupware pro Vaše prostředí
 please consult the %1.	setup	cs	Konsultujte prosím %1.
 please download a recent version from %1 and install it as %2.	setup	cs	Stáhněte si prosím aktuální verzi z %1 a nainstalujte jí jako %2.
 please fix the above errors (%1) and warnings(%2)	setup	cs	Opravte prosím výše uvedené chyby (%1) a varování (%2)
@@ -474,7 +474,7 @@ read translations from	setup	cs	Načíst překlady z
 readable by the webserver	setup	cs	čitelné webovým serverem
 really uninstall all applications	setup	cs	OPRAVDU odinstalovat všechny aplikace
 refusing to delete dn "%1"!	setup	cs	Odmítám smazat dn "%1"!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	cs	Parametr register_globals je zapnutý, přitom eGroupWare ho nepotřebuje a obecně je bezpečnější ho vypnout
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	cs	Parametr register_globals je zapnutý, přitom EGroupware ho nepotřebuje a obecně je bezpečnější ho vypnout
 registered	setup	cs	zaregistrované
 rejected lines	setup	cs	Zamítnuté řádky
 remove	setup	cs	Odstranit
@@ -573,7 +573,7 @@ the following applications are required, but not installed:	setup	cs	Následují
 the following applications need to be upgraded:	setup	cs	Následující aplikace potřebují aktualizovat:
 the function %1 is needed from: %2.	setup	cs	Funkce %1 je vyžadována (čím): %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	cs	Funkce imagecreatefromjpeg je součástí rozšíření gd (zkompilovaného s podporou jpeg!). Je zapotřebí pro uploady fotek ke kontaktům.
-the json extension is required by egroupware for ajax.	setup	cs	eGroupWare vyžaduje json rozšíření kvůli AJAXu.
+the json extension is required by egroupware for ajax.	setup	cs	EGroupware vyžaduje json rozšíření kvůli AJAXu.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	cs	Rozšíření pro LDAP je zapotřebí v případě, pokud chcete LDAP používat pro ukládání uživatelských účtů nebo kontaktů nebo se chcete autentikovat vůči LDAP či Active Directory. Není potřeba pro standardní SQL instalaci.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Rozšíření mbstring je zapotřebí pro plnou podporu unicode (utf-8) a dalších vícebajtových znakových sad.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Parametr mbstring.func_overload = 7 musí být nastaven pro plnou podporu unicode (utf-8) a dalších vícebajtových znakových sad.
@@ -590,7 +590,7 @@ this has to be outside the webservers document-root!!!	setup	cs	Cesta musí být
 this might take a while, please wait ...	setup	cs	Operace může chvíli trvat, prosím čekejte ...
 this program lets you backup your database, schedule a backup or restore it.	setup	cs	Tento program Vám umožní zazálohovat Vaší databázi, naplánovat zálohu nebo provést obnovu zálohy.
 this program will convert your database to a new system-charset.	setup	cs	Tento program zkonvertuje Vaší databázi do nové znakové sady systému.
-this program will help you upgrade or install different languages for egroupware	setup	cs	Tento program Vám pomůže zaktualizovat nebo nainstalovat různé jazyky pro eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	cs	Tento program Vám pomůže zaktualizovat nebo nainstalovat různé jazyky pro EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	cs	Měl by mít délku kolem 30 bajtů.<br />Poznámka: Výchozí byl náhodně vygenerován
 this stage is completed<br />	setup	cs	Tato fáze je dokončena<br />
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	cs	Tímto vytvoříte prvního uživatele v eGroupWaru nebo vyresetujete heslo a administrátorská práva stávajícího uživatele
@@ -603,7 +603,7 @@ translations added	setup	cs	Překlady byly přidány
 translations removed	setup	cs	Překlady byly odstraněny
 translations upgraded	setup	cs	Překlady byly zaktualizovány
 true	setup	cs	Ano
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	cs	Zkuste zkonfigurovat Vaše PHP, aby podporovalo jeden z uvedených databázových systémů nebo nainstalujte eGroupWare ručně.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	cs	Zkuste zkonfigurovat Vaše PHP, aby podporovalo jeden z uvedených databázových systémů nebo nainstalujte EGroupware ručně.
 two weeks	setup	cs	dva týdny
 uninstall	setup	cs	odinstalovat
 uninstall all applications	setup	cs	Odinstalovat všechny aplikace
@@ -645,12 +645,12 @@ we could not determine the version of %1, please make sure it is at least %2	set
 we will automatically update your tables/records to %1	setup	cs	Automaticky zaktualizujeme Vaše tabulky/záznamy na %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	cs	Nyní spustíme sérii testů, které mohou trvat několik minut. Pro pokračování klikněte na odkaz níže.
 welcome to the egroupware installation	setup	cs	Vítejte v instalaci eGroupWaru
-where should egroupware store file content	setup	cs	Kam by měl eGroupWare ukládat obsah souborů
-which database type do you want to use with egroupware?	setup	cs	Jaký typ databáze chcete pro eGroupWare používat?
+where should egroupware store file content	setup	cs	Kam by měl EGroupware ukládat obsah souborů
+which database type do you want to use with egroupware?	setup	cs	Jaký typ databáze chcete pro EGroupware používat?
 world readable	setup	cs	veřejně čitelné
 world writable	setup	cs	veřejně zapisovatelné
-would you like egroupware to cache the phpgw info array ?	setup	cs	Chcete aby eGroupWare ukládal do cache array z phpgw info?
-would you like egroupware to check for a new version<br />when admins login ?	setup	cs	Chcete aby eGroupWare kontroloval dostupnost nové verze<br />po přihlášení administrátora ?
+would you like egroupware to cache the phpgw info array ?	setup	cs	Chcete aby EGroupware ukládal do cache array z phpgw info?
+would you like egroupware to check for a new version<br />when admins login ?	setup	cs	Chcete aby EGroupware kontroloval dostupnost nové verze<br />po přihlášení administrátora ?
 would you like to show each application's upgrade status ?	setup	cs	Chcete zobrazovat stav aktualizace každé z aplikací ?
 writable by the webserver	setup	cs	zapisovatelné webovým serverem
 write	setup	cs	Uložit
@@ -659,12 +659,12 @@ year	setup	cs	rok
 yes	setup	cs	Ano
 yes, with lowercase usernames	setup	cs	Ano, s uživatelskými jmény obsahujícími jen malá písmena
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	cs	Zdá se, že provozujete pre-beta verzi eGroupWaru.<br />Takové verze už nejsou podporovány a neexistuje pro ně aktualizace prostřednictvím instalátoru.<br />Můžete zkusit zaktualizovat na 0.9.10 (poslední verze podporující aktualizace z pre-beta) a z ní provést aktualizaci na aktuální verzi.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	cs	Zdá se, že provozujete starou verzi PHP<br />Doporučujeme aktualizaci na novou verzi.<br />Na starých verzích nemusí eGroupWare běžet správně, pokud vůbec.<br /><br />Proveďte prosím aktualizaci nejméně na verzi %1
-you appear to be running version %1 of egroupware	setup	cs	Zdá se, že provozujete eGroupWare verze %1
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	cs	Zdá se, že provozujete starou verzi PHP<br />Doporučujeme aktualizaci na novou verzi.<br />Na starých verzích nemusí EGroupware běžet správně, pokud vůbec.<br /><br />Proveďte prosím aktualizaci nejméně na verzi %1
+you appear to be running version %1 of egroupware	setup	cs	Zdá se, že provozujete EGroupware verze %1
 you appear to have %1 support.	setup	cs	Zdá se, že máte podporu %1.
 you appear to have xml support enabled	setup	cs	Zdá se, že máte povolenou podporu XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	cs	Pro tuto fázi jste připraven(a), ale tato fáze zatím nebyla napsána.<br />
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	cs	Používáte PHP verze %1. eGroupWare nyní vyžaduje verzi %2 nebo novější, doporučeno je PHP %3.
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	cs	Používáte PHP verze %1. EGroupware nyní vyžaduje verzi %2 nebo novější, doporučeno je PHP %3.
 you can install it by running:	setup	cs	Můžete ho nainstalovat spuštěním:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	cs	Uživatelské jméno a heslo administrátora hlaviček můžete také použít pro každou doménu. Pokud není heslo nastaveno prostřednictvím příkazové řádky, je načteno z proměnné prostředí EGW_CLI_PASSWORD nebo vyžádáno od uživatele.
 you didn't enter a config password for domain %1	setup	cs	Nezadal(a) jste heslo administrátora konfigurace pro doménu %1
@@ -676,8 +676,8 @@ you dont have jpgraph version %1 or higher installed! it is needed from projectm
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	cs	Zatím jste nevytvořil(a) svůj header.inc.php!<br />Můžete ho teď vytvořit.
 you have successfully logged out	setup	cs	Byl(a) jste úspěšně odhlášen(a)
 you must enter a username for the admin	setup	cs	Musíte zadat uživatelské jméno pro administrátora
-you need to add at least one egroupware domain / database instance.	setup	cs	Musíte přidat alespoň jednu eGroupWare doménu / instanci databáze.
-you need to configure egroupware:	setup	cs	Musíte nakonfigurovat eGroupWare:
+you need to add at least one egroupware domain / database instance.	setup	cs	Musíte přidat alespoň jednu EGroupware doménu / instanci databáze.
+you need to configure egroupware:	setup	cs	Musíte nakonfigurovat EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	cs	Než bude konfigurační soubor header.inc.php zapsán, musíte opravit výše uvedené chyby!
 you need to select your current charset!	setup	cs	Musíte vybrat svou aktuální znakovou sadu!
 you need to specify a password!	setup	cs	Musíte zadat heslo!
@@ -691,7 +691,7 @@ your backup directory '%1' %2	setup	cs	Váš adresář se zálohami '%1' %2
 your database does not exist	setup	cs	Vaše databáze neexistuje
 your database is not working!	setup	cs	Vaše databáze nefunguje!
 your database is working, but you dont have any applications installed	setup	cs	Vaše databáze funguje, ale nemáte nainstalovány žádné aplikace
-your egroupware api is current	setup	cs	Vaše eGroupWare API je aktuální
+your egroupware api is current	setup	cs	Vaše EGroupware API je aktuální
 your files directory '%1' %2	setup	cs	Váš adresář pro soubory '%1' %2
 your header admin password is not set. please set it now!	setup	cs	Vaše heslo pro administrátora hlaviček NENÍ nastaveno. Nastavte ho prosím nyní!
 your header.inc.php needs upgrading.	setup	cs	Váš header.inc.php potřebuje zaktualizovat.

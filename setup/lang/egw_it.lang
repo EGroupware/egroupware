@@ -140,7 +140,7 @@ check can only be performed, if called via a webserver, as the user-id/-name of 
 check installation	setup	it	Controlla installazione
 check ip address of all sessions	setup	it	controlla l'indirizzo ip di tutte le sessioni
 checking php.ini	setup	it	Esecuzione controllo di php.ini
-checking the egroupware installation	setup	it	Esecuzione controllo installazione eGroupWare
+checking the egroupware installation	setup	it	Esecuzione controllo installazione EGroupware
 clear cache and register hooks	setup	it	Pulisci la memoria temporanea e registra gli agganci
 click here	setup	it	Clicca qui
 click here to re-run the installation tests	setup	it	Clicca qui per rieseguire i test di installazione
@@ -197,7 +197,7 @@ domain select box on login	setup	it	Casella selezione dominio al Login
 dont touch my data	setup	it	Non toccare i miei dati
 download	setup	it	Download
 edit current configuration	setup	it	Modifica la Configurazione Esistente
-egroupware administration manual	setup	it	Manuale Amministrazione eGroupWare
+egroupware administration manual	setup	it	Manuale Amministrazione EGroupware
 enable mcrypt	setup	it	Abilita MCrypt
 enter some random text for app session encryption	setup	it	Inserisci del testo casuale per il crittaggio della sessione
 enter the hostname of the machine on which this server is running	setup	it	Inserisci l'hostname della macchina su cui sta girando questo server
@@ -290,7 +290,7 @@ passwords did not match, please re-enter	setup	it	Le password non corrispondono,
 path information	setup	it	Informazioni sul Path
 persistent connections	setup	it	Connessioni persistenti
 please check for sql scripts within the application's directory	setup	it	Per favore controlla gli script sql nella cartella dell'applicazione
-please configure egroupware for your environment	setup	it	Per favore configura eGroupWare per il tuo Sistema
+please configure egroupware for your environment	setup	it	Per favore configura EGroupware per il tuo Sistema
 please consult the %1.	setup	it	Prego consulta il %1.
 please fix the above errors (%1) and warnings(%2)	setup	it	Prego sistema i soprastanti errori (%1) e avvertimenti (%2)
 please install	setup	it	Per favore installa
@@ -356,7 +356,7 @@ text entry	setup	it	Voce di testo
 the file	setup	it	il file
 the tables	setup	it	le tabelle
 this might take a while, please wait ...	setup	it	Questa operazione può richiedere del tempo, prego attendere...
-this program will help you upgrade or install different languages for egroupware	setup	it	Questo programma ti aiuterà ad aggiornare o ad installare lingue differenti per eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	it	Questo programma ti aiuterà ad aggiornare o ad installare lingue differenti per EGroupware
 this stage is completed<br />	setup	it	Questo passaggio è stato completato<br />
 true	setup	it	Vero
 two weeks	setup	it	due settimane
@@ -378,8 +378,8 @@ we will automatically update your tables/records to %1	setup	it	Aggiornerò auto
 would you like to show each application's upgrade status ?	setup	it	Vuoi che venga mostrato lo stato di aggiornamento di ogni applicazione?
 write	setup	it	Scrivi
 yes	setup	it	Sì
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di eGroupWare.<br />Queste versioni non sono più supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br /> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br />e poi aggiornare da lì usando questa versione.
-you appear to be running version %1 of egroupware	setup	it	Sembra che tu sta utilizzando la versione %1 di eGroupWare
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di EGroupware.<br />Queste versioni non sono più supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br /> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br />e poi aggiornare da lì usando questa versione.
+you appear to be running version %1 of egroupware	setup	it	Sembra che tu sta utilizzando la versione %1 di EGroupware
 you are ready for this stage, but this stage is not yet written.<br />	setup	it	Sei pronto per questo passaggio, ma questa procedura non è ancora stata scritta.<br />
 you do not have any languages installed. please install one now <br />	setup	it	Non hai nessuna lingua installata. Per favore installane una adesso.<br />
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	it	Non hai JPGraph nella versione %1 o superiore installato! E' un componente necessario per la generazione del grafico Gantt.

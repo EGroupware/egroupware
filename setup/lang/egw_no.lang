@@ -82,7 +82,7 @@ checking extension %1 is loaded or loadable	setup	no	Kontrollerer att utökning 
 checking file-permissions of %1 for %2 %3: %4	setup	no	Kontrollerer fil-tillatelser på %1 for %2 %3: %4
 checking for gd support...	setup	no	Kontrollerer GD-support...
 checking php.ini	setup	no	Kontrollerer php.ini
-checking the egroupware installation	setup	no	Kontrollerer eGroupWare-installasjonen
+checking the egroupware installation	setup	no	Kontrollerer EGroupware-installasjonen
 click <a href="index.php">here</a> to return to setup.	setup	no	Klicka <a href="index.php">här</a> för att återgå till setup
 click here	setup	no	Klikk her
 click here to re-run the installation tests	setup	no	Klicka här för att kontrollera på nytt
@@ -155,7 +155,7 @@ download	setup	no	Laste ned
 edit current configuration	setup	no	Rediger nåværende konfiguration
 edit your existing header.inc.php	setup	no	Rediger din eksisterende header.inc.php
 edit your header.inc.php	setup	no	Rediger din header.inc.php
-egroupware administration manual	setup	no	eGroupWare administrasjonsmanual
+egroupware administration manual	setup	no	EGroupware administrasjonsmanual
 enable for extra debug-messages	setup	no	visa extra debug-meddelanden
 enable mcrypt	setup	no	Muliggjør MCrypt
 enter some random text for app session encryption	setup	no	Skriv in lite slumpmässig text för kryptering av sessionsinformation
@@ -164,7 +164,7 @@ enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	no	A
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	no	Ange fullständig sökväg för användar- och gruppfiler <br />T ex: /files, e:\files
 enter the full path to the backup directory.<br />if empty: files directory	setup	no	Ange fullständig sökväg för backupkatalog <br />om tomt: samma som användarfiler
 enter the hostname of the machine on which this server is running	setup	no	Ange hostnamn för maskinen som kör denna server
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	no	Ange eGroupWare:s URL.<br />T ex: http://www.doman.com/egroupware  eller  /egroupware<br /><b>Ingen avslutande slash</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	no	Ange EGroupware:s URL.<br />T ex: http://www.doman.com/egroupware  eller  /egroupware<br /><b>Ingen avslutande slash</b>
 enter the site password for peer servers	setup	no	Ange sitelösenord för peer-servers
 enter the site username for peer servers	setup	no	Ange siteanvändarnamn för peer-servers
 enter the title for your site	setup	no	Ange titel för din webbplats
@@ -241,14 +241,14 @@ mail server login type	setup	no	E-post tjener innloggingstype
 make sure that your database is created and the account permissions are set	setup	no	Förvissa dig om att din databas är skapad, och att åtkomst är konfigurerad rätt
 manage applications	setup	no	Håndtere programmer
 manage languages	setup	no	Håndtere språk
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	no	max_execution_time är satt till mindre än 30 sekunder. eGroupWare behöver ibland mer tid på sig. Förvänta dig problem emellanåt.
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	no	max_execution_time är satt till mindre än 30 sekunder. EGroupware behöver ibland mer tid på sig. Förvänta dig problem emellanåt.
 maximum account id (e.g. 65535 or 1000000)	setup	no	Maximalt kontoID (dvs 65535 eller 1000000)
 may be broken	setup	no	kan være brutt
 mcrypt algorithm (default tripledes)	setup	no	Algoritme for MCrypt (default 3DES)
 mcrypt initialization vector	setup	no	MCrypt initialisasjonsvektor
 mcrypt mode (default cbc)	setup	no	MCrypt-läge (Default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	no	MCryptinställningar (kräver mcrypt PHP extension)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	no	memory_limit är satt till mindre än %1B. En del applikationer i eGroupWare kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	no	memory_limit är satt till mindre än %1B. En del applikationer i EGroupware kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
 minimum account id (e.g. 500 or 100, etc.)	setup	no	Minimum kontoID (dvs 500 eller 100 t ex)
 minute	setup	no	Minutt
 modifications have been completed!	setup	no	Förändringarna genomförda
@@ -268,7 +268,7 @@ no algorithms available	setup	no	Det finnes ingen algoritmer
 no modes available	setup	no	Inga lägen tillgängliga
 no xml support found. disabling	setup	no	Ikke støtte for XML, kobler fra
 not	setup	no	ikke
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	no	Inte alla mcrypt-algoritmer och lägen fungerar med eGroupWare. Om du upplever problem bör du testa att inaktivera stödet.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	no	Inte alla mcrypt-algoritmer och lägen fungerar med EGroupware. Om du upplever problem bör du testa att inaktivera stödet.
 not complete	setup	no	Ikke ferdig
 not completed	setup	no	Ikke ferdigstilt
 not ready for this stage yet	setup	no	Ikke klar for dette stadiet ennå
@@ -294,12 +294,12 @@ path to user and group files has to be outside of the webservers document-root!!
 persistent connections	setup	no	Ständig koppling (Persistent connections)
 please check for sql scripts within the application's directory	setup	no	Vänligen leta efter sql-skript inom applikationskatalogen
 please check read/write permissions on directories, or back up and use another option.	setup	no	Var vänlig kontrollera läs/skrivrättighet på katalogerna, eller ta backup och använd ett annat alternativ
-please configure egroupware for your environment	setup	no	Var vänlig och konfigurera eGroupWare för din miljö
+please configure egroupware for your environment	setup	no	Var vänlig och konfigurera EGroupware för din miljö
 please consult the %1.	setup	no	Var vänlig konsultera %1
 please fix the above errors (%1) and warnings(%2)	setup	no	Var vänlig fixa fel (%1) och varningar (%2)
 please install	setup	no	Var vänlig installera
 please login	setup	no	Var vänlig och logga in
-please login to egroupware and run the admin application for additional site configuration	setup	no	Var vänlig och logga in i eGroupWare och kör admin-applikationen för ytterligare konfiguration
+please login to egroupware and run the admin application for additional site configuration	setup	no	Var vänlig och logga in i EGroupware och kör admin-applikationen för ytterligare konfiguration
 please make the following change in your php.ini	setup	no	Var vänlig gör följande förändringar i din php.ini
 please wait...	setup	no	Vennligst vent...
 possible reasons	setup	no	Möjliga anledningar
@@ -315,7 +315,7 @@ re-enter password	setup	no	Skriv inn passord igen
 read translations from	setup	no	Läs översättningar från
 readable by the webserver	setup	no	läsbar av webservern
 really uninstall all applications	setup	no	Vill du verkligen avinstallera samtliga installationer
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	no	register_globals är PÅslagen, eGroupWare kräver inte det och det är säkrare med det AVslaget.
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	no	register_globals är PÅslagen, EGroupware kräver inte det och det är säkrare med det AVslaget.
 registered	setup	no	registrert
 rejected lines	setup	no	Ej godtagna rader
 remove	setup	no	Fjerne
@@ -385,7 +385,7 @@ text entry	setup	no	Tekstfelt
 the %1 extension is needed, if you plan to use a %2 database.	setup	no	%1 utökningen behövs, om du vill använda en %2 databas
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	no	db_type i defaults (%1) supportas inte på denna server. Använder den första supportade typen
 the file	setup	no	filen
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	no	Det första steget i en installation av eGroupWare är att försäkra sig att allt är rätt inställt för eGroupWare
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	no	Det första steget i en installation av EGroupware är att försäkra sig att allt är rätt inställt för EGroupware
 the following applications need to be upgraded:	setup	no	Följande applikationer behöver uppgraderas:
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	no	mbstring-utökningen behövs för att fullt ut kunna stödja Unicode (UTF-8) eller andra multi-byte teckenuppsättningar
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	no	mbstring.func_overload = 7 behövs för att fullt ut kunna stödja Unicode (UTF-8) eller andra multi-byte teckenuppsättningar
@@ -397,7 +397,7 @@ this has to be outside the webservers document-root!!!	setup	no	Måste ligga uta
 this might take a while, please wait ...	setup	no	Dette kan ta sin tid, vennligst vent ...
 this program lets you backup your database, schedule a backup or restore it.	setup	no	Detta program låter dig backa upp din databas, schemalägga en backup eller återställa en backup.
 this program will convert your database to a new system-charset.	setup	no	Detta program låter dig konvertera din databas till en ny systemteckentabell
-this program will help you upgrade or install different languages for egroupware	setup	no	Detta program hjälper dig att installera eller uppgradera de språk du vill använda i eGroupWare
+this program will help you upgrade or install different languages for egroupware	setup	no	Detta program hjälper dig att installera eller uppgradera de språk du vill använda i EGroupware
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	no	Detta bör vara ca 30 bytes i längd. <br />Not: Default är slumpmässigt genererat.
 this stage is completed<br />	setup	no	Dette stadiet er klart
 to a version it does not know about	setup	no	til en ukjent versjon
@@ -407,7 +407,7 @@ translations added	setup	no	Översättningar tillagda
 translations removed	setup	no	Översättningar borttagna
 translations upgraded	setup	no	Översättningar uppgraderade
 true	setup	no	Sant
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	no	Försök konfigurera php att stödja någon av databaserna ovan, eller installera eGroupWare för hand.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	no	Försök konfigurera php att stödja någon av databaserna ovan, eller installera EGroupware för hand.
 two weeks	setup	no	to uker
 uninstall	setup	no	Avinstallere
 uninstall all applications	setup	no	Avinstallera samtliga applikationer
@@ -433,21 +433,21 @@ warning!	setup	no	Advarsel!
 we can proceed	setup	no	Vi kan fortsette
 we will automatically update your tables/records to %1	setup	no	Vi kommer automatiskt att uppdatera dina tabeller/poster till %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	no	Vi kör nu ett antal teste vilket kan ta några minuter. Klicka på länken nedan för att fortsätta
-welcome to the egroupware installation	setup	no	Välkommen till installation av eGroupWare
-which database type do you want to use with egroupware?	setup	no	Vilken typ av databas vill du använda med eGroupWare?
+welcome to the egroupware installation	setup	no	Välkommen till installation av EGroupware
+which database type do you want to use with egroupware?	setup	no	Vilken typ av databas vill du använda med EGroupware?
 world readable	setup	no	Lesbar av alle (world readable)
 world writable	setup	no	Skrivbar av alle (world writable)
-would you like egroupware to cache the phpgw info array ?	setup	no	Vill du att eGroupWare skall cacha phpgw info array?
-would you like egroupware to check for a new version<br />when admins login ?	setup	no	Vill du att eGroupWare skall kontrollera om det finns nya versioner<br />när admin loggar in?
+would you like egroupware to cache the phpgw info array ?	setup	no	Vill du att EGroupware skall cacha phpgw info array?
+would you like egroupware to check for a new version<br />when admins login ?	setup	no	Vill du att EGroupware skall kontrollera om det finns nya versioner<br />när admin loggar in?
 would you like to show each application's upgrade status ?	setup	no	Vill du visa varje applikations uppgraderingsstatus?
 writable by the webserver	setup	no	Skrivbar av nettstedstjeneren
 write	setup	no	Lagre
 year	setup	no	år
 yes	setup	no	Ja
 yes, with lowercase usernames	setup	no	Ja, med brukernavn i små bokstaver
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	no	Du verkar köra en pre-beta version av eGroupWare.<br />Dessa versioner stöds inte längre och det finns ingen uppgraderingsväg via setup.<br />Du måste först uppgradera till 0.9.10(sista versionen som stödde detta)<br /> och sedan uppgradera igen med denna version.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	no	Du verkar köra en äldre version av PHP.<br />Det är rekommenderat att du uppgraderar till en nyare version.<br />Äldre versioner av PHP kanske inte kör eGroupWare korrekt, om alls.<br /><br />Du rekommenderas starkt att uppgradera till åtminstone version %1
-you appear to be running version %1 of egroupware	setup	no	Du verkar köra version %1 av eGroupWare
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	no	Du verkar köra en pre-beta version av EGroupware.<br />Dessa versioner stöds inte längre och det finns ingen uppgraderingsväg via setup.<br />Du måste först uppgradera till 0.9.10(sista versionen som stödde detta)<br /> och sedan uppgradera igen med denna version.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	no	Du verkar köra en äldre version av PHP.<br />Det är rekommenderat att du uppgraderar till en nyare version.<br />Äldre versioner av PHP kanske inte kör EGroupware korrekt, om alls.<br /><br />Du rekommenderas starkt att uppgradera till åtminstone version %1
+you appear to be running version %1 of egroupware	setup	no	Du verkar köra version %1 av EGroupware
 you appear to have %1 support.	setup	no	Du synes å ha %1 support
 you appear to have xml support enabled	setup	no	Du synes å ha støtte for XML aktivert
 you are ready for this stage, but this stage is not yet written.<br />	setup	no	Du är redo för detta stadium, men detta stadium är inte skrivet ännu.<br />

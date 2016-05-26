@@ -28,7 +28,7 @@ charset	setup	bg	utf-8
 check installation	setup	bg	Проверка на инсталацията
 checking for gd support...	setup	bg	Проверка за поддръжка на GD
 checking php.ini	setup	bg	Проверка на php.ini
-checking the egroupware installation	setup	bg	Проверка на инсталацията на eGroupWare
+checking the egroupware installation	setup	bg	Проверка на инсталацията на EGroupware
 click here	setup	bg	Натиснете тук
 completed	setup	bg	Готово
 configuration	setup	bg	Настройка
@@ -112,7 +112,7 @@ version	setup	bg	версия
 version mismatch	setup	bg	Разминаване във версиите
 view	setup	bg	Преглед
 warning!	setup	bg	Внимание
-welcome to the egroupware installation	setup	bg	Добре дошли в инсталацията на eGroupWare
+welcome to the egroupware installation	setup	bg	Добре дошли в инсталацията на EGroupware
 writable by the webserver	setup	bg	с права за запис от уеб-сървъра
 yes	setup	bg	Да
 your database does not exist	setup	bg	Базата ви данни не съществува

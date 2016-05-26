@@ -60,7 +60,7 @@ create admin account	setup	et	Loo admin konto
 create database	setup	et	Loo Andmebaas
 create demo accounts	setup	et	Loo demao kontod
 create one now	setup	et	Loo üks nüüd
-create or edit the egroupware configuration file: header.inc.php:	setup	et	Loo või muuda eGroupWare konfiguratsiooni faili: header.inc.php:
+create or edit the egroupware configuration file: header.inc.php:	setup	et	Loo või muuda EGroupware konfiguratsiooni faili: header.inc.php:
 create the empty database -	setup	et	Loo tühi andmebaas -
 create the empty database and grant user permissions -	setup	et	Loo tühi andmebaas ja võimalda kasutaja õigused -
 create your header.inc.php	setup	et	Loo oma header.inc.php
@@ -84,7 +84,7 @@ domain name	setup	et	Doomeni nimi
 download	setup	et	Lae alla
 edit current configuration	setup	et	Muuda Käesolevat Konfiguratsiooni
 edit your header.inc.php	setup	et	Muuda oma header.inc.php
-egroupware administration manual	setup	et	eGroupWare Administreerimise Manual
+egroupware administration manual	setup	et	EGroupware Administreerimise Manual
 emailadmin profile updated:	setup	et	EMailAdmin profiil uuendatud:
 enable mcrypt	setup	et	Luba MCrypt
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	et	Sisesta täis teekond ajutiste failidejaoks.<br />Näiteks: /tmp, C:\TEMP
@@ -161,7 +161,7 @@ or	setup	et	või
 password for smtp-authentication	setup	et	Parool SMTP-audentimiseks
 path information	setup	et	Teekonna informatsioon
 please install	setup	et	Palun Installeeri
-please login to egroupware and run the admin application for additional site configuration	setup	et	Palun logi sisse eGroupWare ja kasuta admin rakendust täiendavaks konfigureerimiseks
+please login to egroupware and run the admin application for additional site configuration	setup	et	Palun logi sisse EGroupware ja kasuta admin rakendust täiendavaks konfigureerimiseks
 please make the following change in your php.ini	setup	et	Palun tee järgmised muudatused oma php.ini failis
 please wait...	setup	et	Palun Oota...
 pop/imap mail server hostname or ip address	setup	et	POP/IMAP mail serveri hostinimi või IP aadress
@@ -207,7 +207,7 @@ smtp server hostname or ip address	setup	et	SMTP serveri hostinimi või IP aadre
 smtp server port	setup	et	SMTP serveri port
 some or all of its tables are missing	setup	et	Mõni või kõik tabelid puuduvad
 sql encryption type	setup	et	SQL krüpteeringu tüüp paroolidejaoks (vaikimisi - md5)
-standard (login-name identical to egroupware user-name)	setup	et	standartne (sisselogimise nimi identne eGroupWare kasutaja nimega)
+standard (login-name identical to egroupware user-name)	setup	et	standartne (sisselogimise nimi identne EGroupware kasutaja nimega)
 standard mailserver settings (used for mail authentication too)	setup	et	Standard mailserver seadistused (kautatakse samuti Mail audentimiseks)
 status	setup	et	Staatus
 succesfully uploaded file %1	setup	et	täielikult üleslaetud fail %1

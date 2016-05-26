@@ -58,8 +58,8 @@ domain	setup	ja	ドメイン
 edit current configuration	setup	ja	環境設定
 enter some random text for app session encryption	setup	ja	アプリケーションセッション暗号化のための任意テキスト入力
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	ja	ファイルマネージャのファイル保存先（フルパス）<br />例：/files や E:\FILES など
-enter the hostname of the machine on which this server is running	setup	ja	eGroupWare が動作するホスト名
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ja	eGroupWare の URL<BR>例：http://www.itheart.com/egroupware &nbsp; や &nbsp; /egroupware など<BR><b>最後はスラッシュを指定しないこと</b>
+enter the hostname of the machine on which this server is running	setup	ja	EGroupware が動作するホスト名
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ja	EGroupware の URL<BR>例：http://www.itheart.com/egroupware &nbsp; や &nbsp; /egroupware など<BR><b>最後はスラッシュを指定しないこと</b>
 enter the site password for peer servers	setup	ja	同等サーバのパスワード
 enter the site username for peer servers	setup	ja	同等サーバのユーザ名
 enter the title for your site	setup	ja	タイトル名
@@ -122,7 +122,7 @@ path information	setup	ja	パス情報
 please check for sql scripts within the application's directory	setup	ja	Please check for sql scripts within the application's directory
 please install	setup	ja	Please install
 please login	setup	ja	ログイン
-please login to egroupware and run the admin application for additional site configuration	setup	ja	eGroupWare にログインして、admin アプリケーション内の各アプリケーションサイト環境設定を実行して下さい
+please login to egroupware and run the admin application for additional site configuration	setup	ja	EGroupware にログインして、admin アプリケーション内の各アプリケーションサイト環境設定を実行して下さい
 possible solutions	setup	ja	Possible Solutions
 potential problem	setup	ja	Potential Problem
 preferences	setup	ja	ユーザ設定情報
@@ -175,8 +175,8 @@ users choice	setup	ja	ユーザ選択
 version	setup	ja	バージョン
 version mismatch	setup	ja	Version Mismatch
 we will automatically update your tables/records to %1	setup	ja	セットアップは、%1 用のテーブルやデータに自動アップグレードします。
-would you like egroupware to cache the phpgw info array ?	setup	ja	eGroupWare のキャッシュにphpgw info 配列を利用する
-would you like egroupware to check for a new version<br />when admins login ?	setup	ja	管理者でログイン時、eGroupWareのバージョンチェックを行う
+would you like egroupware to cache the phpgw info array ?	setup	ja	EGroupware のキャッシュにphpgw info 配列を利用する
+would you like egroupware to check for a new version<br />when admins login ?	setup	ja	管理者でログイン時、EGroupwareのバージョンチェックを行う
 would you like to show each application's upgrade status ?	setup	ja	アプリケーションのアップグレード状況表示
 write	setup	ja	Write
 year	setup	ja	年
