@@ -14,3 +14,12 @@ div.resources_pictureFile div.progress{
 	position: absolute;
 	width:226px;
 }
+
+#resources-acl_edit .permissions {
+	margin: 2em 0em;
+	height: auto;
+}
+
+#resources-acl_edit .permissions .th {
+	border-bottom: 1px solid #696969;
+}

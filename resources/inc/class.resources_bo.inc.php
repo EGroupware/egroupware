@@ -41,7 +41,7 @@ class resources_bo
 	/**
 	 * Instance of resources Acl class
 	 *
-	 * @var bo_acl
+	 * @var resources_acl_bo
 	 */
 	var $acl;
 	/**
@@ -84,13 +84,13 @@ class resources_bo
 	function __construct($user=null)
 	{
 		$this->so = new resources_so();
-		$this->acl = CreateObject('resources.bo_acl', $user);
+		$this->acl = new resources_acl_bo($user);
 		$this->cats = $this->acl->egw_cats;
 
 		$this->cal_right_transform = array(
-			EGW_ACL_CALREAD 	=> Acl::READ,
-			EGW_ACL_DIRECT_BOOKING 	=> Acl::READ | Acl::ADD | Acl::EDIT | Acl::DELETE,
-			EGW_ACL_CAT_ADMIN 	=> Acl::READ | Acl::ADD | Acl::EDIT | Acl::DELETE,
+			resources_acl_bo::CAL_READ	=> Acl::READ,
+			resources_acl_bo::DIRECT_BOOKING 	=> Acl::READ | Acl::ADD | Acl::EDIT | Acl::DELETE,
+			resources_acl_bo::CAT_ADMIN 	=> Acl::READ | Acl::ADD | Acl::EDIT | Acl::DELETE,
 		);
 	}
 
@@ -231,7 +231,7 @@ class resources_bo
 				$resource['class'] .= 'no_book ';
 				$resource['class'] .= 'no_view_calendar ';
 			}
-			if(!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_CALREAD))
+			if(!$this->acl->is_permitted($resource['cat_id'],resources_acl_bo::CAL_READ))
 			{
 				$readonlys["calendar[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_view_calendar ';
@@ -560,7 +560,7 @@ class resources_bo
 		{
 			return false;
 		}
-		return $this->acl->is_permitted($data['cat_id'],EGW_ACL_DIRECT_BOOKING) ? A : U;
+		return $this->acl->is_permitted($data['cat_id'],resources_acl_bo::DIRECT_BOOKING) ? A : U;
 	}
 
 	/**

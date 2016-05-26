@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="resources.acl_edit" template="" lang="" group="0" version="16.1">
+		<grid width="100%">
+			<columns>
+				<column width="90"/>
+				<column width="300"/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description value="Category" for="name"/>
+					<description id="name" class="et2_fullWidth"/>
+				</row>
+				<row valign="top">
+					<description value="Description" for="description"/>
+					<textbox multiline="true" id="description" rows="5" cols="50" readonly="true"/>
+				</row>
+				<row>
+					<description value="Category owner" for="owner"/>
+					<select-account id="owner" account_type="both" needed="1" multiple="true" tags="true"/>
+				</row>
+				<row class="nmr" disabled="@no_private">
+					<description value="Locations / rooms"/>
+					<checkbox id="location"/>
+				</row>
+				<row>
+					<grid span="all" class="permissions">
+						<columns>
+							<column width="25%"/>
+							<column width="25%"/>
+							<column width="25%"/>
+							<column width="25%"/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description label="Read permissions" />
+								<vbox>
+									<description label="Write permissions" />
+									<description label="implies read permission"/>
+								</vbox>
+								<description label="Read Calendar permissions" />
+								<vbox>
+									<description label="Direct booking permissions" />
+									<description label="implies booking permission"/>
+								</vbox>
+							</row>
+							<row valign="top">
+								<select-account account_type="both" id="read" multiple="true" tags="true"/>
+								<select-account account_type="both" id="write" multiple="true" tags="true"/>
+								<select-account account_type="both" id="calread" multiple="true" tags="true"/>
+								<select-account account_type="both" id="calwrite" multiple="true" tags="true"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row  class="dialogFooterToolbar">
+					<hbox span="all">
+						<button label="Save" id="button[save]" image="save" background_image="1"/>
+						<button label="Apply" id="button[apply]" image="apply" background_image="1"/>
+						<buttononly label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

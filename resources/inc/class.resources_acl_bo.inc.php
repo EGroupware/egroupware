@@ -18,7 +18,7 @@ use EGroupware\Api\Acl;
  * Current rights and the ones inherited from parents get ORed together,
  * while for admins the "closest" cat-admin will be used.
  */
-class bo_acl
+class resources_acl_bo
 {
 	var $acl;
 	var $start = 0;
@@ -30,6 +30,9 @@ class bo_acl
 	var $debug;
 	var $use_session = False;
 
+	const CAT_ADMIN = 64;
+	const DIRECT_BOOKING = 128;
+	const CAL_READ = 256;
 	/**
 	 * Instance of categories class for resources
 	 *
@@ -45,10 +48,6 @@ class bo_acl
 	 */
 	function __construct($session=False, $user=null)
 	{
-		define('EGW_ACL_CAT_ADMIN',64);
-		define('EGW_ACL_DIRECT_BOOKING',128);
-		define('EGW_ACL_CALREAD',256);
-
 		$this->egw_cats = new Api\Categories($user, 'resources');
 		$this->debug = False;
 
@@ -74,22 +73,10 @@ class bo_acl
 	}
 
 	/**
-	 * PHP4 constructor
-	 *
-	 * @param boolean $session
-	 * @deprecated use __construct()
-	 * @return bo_acl
-	 */
-	function bo_acl($session=False)
-	{
-		self::__construct($session);
-	}
-
-	/**
 	* get list of cats where current user has given rights
 	*
 	* @author Cornelius Weiss <egw@von-und-zu-weiss.de>
-	* @param int $perm_type one of Acl::READ, Acl::ADD, Acl::EDIT, Acl::DELETE, EGW_ACL_DIRECT_BOOKING
+	* @param int $perm_type one of Acl::READ, Acl::ADD, Acl::EDIT, Acl::DELETE, self::DIRECT_BOOKING
 	* @param int $parent_id=0 cat_id of parent to return only children of that category
 	* @return array cat_id => cat_name
 	* TODO mark subcats and so on!
@@ -141,7 +128,7 @@ class bo_acl
 		$cat_rights = self::get_rights($cat_id);
 		foreach ($cat_rights as $userid => $right)
 		{
-			if ($right & EGW_ACL_CAT_ADMIN)
+			if ($right & self::CAT_ADMIN)
 			{
 				return $userid;
 			}
@@ -189,7 +176,7 @@ class bo_acl
 	/**
 	 * checks one of the following rights for current user:
 	 *
-	 * Acl::READ, Acl::ADD, Acl::EDIT, Acl::DELETE, EGW_ACL_DIRECT_BOOKING
+	 * Acl::READ, Acl::ADD, Acl::EDIT, Acl::DELETE, self::DIRECT_BOOKING
 	 *
 	 * @param int $cat_id
 	 * @param int $right
@@ -244,7 +231,7 @@ class bo_acl
 		$this->limit = $data['limit'];
 	}
 
-	function set_rights($cat_id,$read,$write,$calread,$calbook,$admin)
+	public static function set_rights($cat_id,$read,$write,$calread,$calbook,$admin)
 	{
 		// Clear cache
 		unset(self::$permissions[$cat_id]);
@@ -263,8 +250,8 @@ class bo_acl
 			$rights = false;
 			$rights = in_array($account_id,$readcat) ? ($rights | Acl::READ) : false;
 			$rights = in_array($account_id,$writecat) ? ($rights | Acl::READ | Acl::ADD | Acl::EDIT | Acl::DELETE): $rights;
-			$rights = in_array($account_id,$calreadcat) ? ($rights | EGW_ACL_CALREAD) : $rights;
-			$rights = in_array($account_id,$calbookcat) ? ($rights | EGW_ACL_DIRECT_BOOKING | EGW_ACL_CALREAD) : $rights;
+			$rights = in_array($account_id,$calreadcat) ? ($rights | self::CAL_READ) : $rights;
+			$rights = in_array($account_id,$calbookcat) ? ($rights | self::DIRECT_BOOKING | self::CAL_READ) : $rights;
 			$rights = in_array($account_id,$admincat) ? ($rights = 511) : $rights;
 			if ($rights)
 			{

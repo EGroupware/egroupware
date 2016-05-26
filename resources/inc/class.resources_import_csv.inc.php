@@ -38,7 +38,7 @@ class resources_import_csv extends importexport_basic_import_csv  {
 		$this->bo = new resources_bo();
 
 		// For adding ACLs
-		$this->acl_bo = CreateObject('resources.bo_acl',True);
+		$this->acl_bo = new resources_acl_bo(True);
 
 		// For checking categories
 		$this->start_time = time();

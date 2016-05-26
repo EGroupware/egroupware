@@ -24,7 +24,7 @@ class resources_hooks
 {
 	function admin_prefs_sidebox($args)
 	{
-		$this->acl = CreateObject('resources.bo_acl');
+		$this->acl = new resources_acl_bo();
 
 		$appname = 'resources';
 		$location = is_array($args) ? $args['location'] : $args;
@@ -59,7 +59,7 @@ class resources_hooks
 					'appname'    => $appname,
 					'global_cats'=> true)),
 				'Configure Access Permissions' => Egw::link('/index.php',
-					'menuaction=resources.ui_acl.acllist'),
+					'menuaction=resources.resources_acl_ui.index&ajax=true'),
 				'Custom Fields'=>egw::link('/index.php',
 					'menuaction=admin.customfields.index&appname=resources'),
 			);
@@ -142,7 +142,7 @@ class resources_hooks
 						'parent'	=> 0
 					));
 					$admin = -2;
-					ExecMethod2('resources.bo_acl.set_rights', $new_cat_id, array($admin), array($admin), array($admin), array($admin),array($admin));
+					resources_acl_bo::set_rights($new_cat_id, array($admin), array($admin), array($admin), array($admin),array($admin));
 				}
 			}
 		}

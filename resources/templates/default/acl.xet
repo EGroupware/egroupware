@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<overlay>
+	<template id="resources.acl.rows">
+		<grid width="100%">
+			<columns>
+				<column width="20%"/>
+				<column width="50"/>
+				<column width="150"/>
+				<column width="50"/>
+				<column width="150"/>
+				<column width="150"/>
+				<column width="150"/>
+				<column width="150"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header label="Category" id="id"/>
+					<nextmatch-header label="icon"/>
+					<nextmatch-header statustext="Category admin" id="owner" empty_label="Category admin"/>
+					<nextmatch-header id="location" empty_label="Locations / rooms"/>
+					<nextmatch-header label="Read permissions" />
+					<vbox>
+						<nextmatch-header label="Write permissions" />
+						<description label="implies read permission"/>
+					</vbox>
+					<nextmatch-header label="Read Calendar permissions" />
+					<vbox>
+						<nextmatch-header label="Direct booking permissions" />
+						<description label="implies booking permission"/>
+					</vbox>
+				</row>
+				<row class="$row_cont[id] $row_cont[class]">
+					<hbox>
+						<html id="${row}[level_spacer]"/>
+						<description id="${row}[name]" class="$row_cont[class]"/>
+					</hbox>
+					<image align="center" src="${row}[icon_url]"/>
+					<menulist>
+						<menupopup type="select-account" id="${row}[owner]" readonly="true" options="All users,groups"/>
+					</menulist>
+					<checkbox align="center" id="${row}[location]" readonly="true"/>
+					<listbox type="select-account" id="${row}[read]" readonly="true" rows="5"/>
+					<listbox type="select-account" id="${row}[write]" readonly="true" rows="5"/>
+					<listbox type="select-account" id="${row}[calread]" readonly="true" rows="5"/>
+					<listbox type="select-account" id="${row}[calwrite]" readonly="true" rows="5"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.acl" template="" lang="" group="0" version="">
+		<nextmatch id="nm" template="resources.acl.rows" />		
+	</template>
+</overlay>
