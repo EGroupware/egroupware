@@ -468,7 +468,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	 */
 	find_option: function(_value)
 	{
-		return jQuery("option[value='"+_value.replace(this._escape_value_replace, this._escape_value_with)+"']", this.input);
+		return jQuery("option[value='"+(typeof _value === 'string' ? _value.replace(this._escape_value_replace, this._escape_value_with) : _value)+"']", this.input);
 	},
 
 	/**
@@ -565,7 +565,10 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	 */
 	find_multi_option: function(_value)
 	{
-		return jQuery("input[value='"+_value.replace(this._escape_value_replace, this._escape_value_with)+"']", this.multiOptions);
+		return jQuery("input[value='"+ 
+			(typeof _value === 'string' ? _value.replace(this._escape_value_replace, this._escape_value_with) : _value)+
+			"']", this.multiOptions
+		);
 	},
 
 	set_multi_value: function(_value)
