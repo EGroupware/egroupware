@@ -879,7 +879,8 @@ function do_create()
 				$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.' '.$exclude_extra.' egroupware';
 				break;
 			case 'zip':
-				$cmd = $config['mv'].' egroupware/'.implode(' egroupware/',$config['extra']).' . ;';
+				$cmd = file_exists($file) ? $config['rm'].' -f '.$file.'; ' : '';
+				$cmd .= $config['mv'].' egroupware/'.implode(' egroupware/',$config['extra']).' . ;';
 				$cmd .= $config['zip'].' -q -r -9 '.$file.' egroupware ;';
 				$cmd .= $config['mv'].' '.implode(' ',$config['extra']).' egroupware';
 				break;
@@ -897,7 +898,8 @@ function do_create()
 					$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.' egroupware/'.$module;
 					break;
 				case 'zip':
-					$cmd = $config['zip'].' -q -r -9 '.$file.' egroupware/'.$module;
+					$cmd = file_exists($file) ? $config['rm'].' -f '.$file.'; ' : '';
+					$cmd .= $config['zip'].' -q -r -9 '.$file.' egroupware/'.$module;
 					break;
 			}
 			run_cmd($cmd);
@@ -957,6 +959,7 @@ function do_copy()
 
 	try {
 		$cmd = '/usr/bin/rsync -r --delete --exclude .svn --exclude .git '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
+		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude .mrconfig '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
 		run_cmd($cmd);
 	}
 	catch (Exception $e) {
