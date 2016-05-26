@@ -401,7 +401,10 @@ else
 	// get user from header and replace password, as we dont know it
 	$old_password = patch_header($config['header'],$config['config_user'],$config['config_passwd']);
 	// register a shutdown function to put old password back in any case
-	register_shutdown_function('patch_header',$config['header'],$config['config_user'],$old_password);
+	register_shutdown_function(function() use (&$config, $old_password)
+	{
+		patch_header($config['header'], $config['config_user'], $old_password);
+	});
 
 	// update egroupware
 	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd'].',,'.$config['install-update-app']);
