@@ -66,15 +66,15 @@ function lang($key,$vars=null)
 	return $GLOBALS['egw_setup']->translation->translate("$key", $vars);
 }
 
-if(file_exists(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'))
+if(file_exists(EGW_SERVER_ROOT.'/api/setup/setup.inc.php'))
 {
-	include(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'); /* To set the current core version */
+	include(EGW_SERVER_ROOT.'/api/setup/setup.inc.php'); /* To set the current core version */
 	/* This will change to just use setup_info */
-	$GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
+	$GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['api']['versions']['current_header'];
 }
 else
 {
-	$GLOBALS['egw_info']['server']['versions']['phpgwapi'] = 'Undetected';
+	$GLOBALS['egw_info']['server']['versions']['api'] = 'Undetected';
 }
 
 $GLOBALS['egw_info']['server']['app_images'] = 'templates/default/images';

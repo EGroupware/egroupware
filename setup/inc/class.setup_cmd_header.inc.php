@@ -51,7 +51,7 @@ class setup_cmd_header extends setup_cmd
 		admin_cmd::__construct($sub_command);
 
 		// header is 3 levels lower then this command in setup/inc
-		$this->header_path = dirname(dirname(dirname(__FILE__))).'/header.inc.php';
+		$this->header_path = dirname(dirname(__DIR__)).'/header.inc.php';
 
 		// if header is a symlink --> work on it's target
 		if (is_link($this->header_path))
@@ -59,7 +59,7 @@ class setup_cmd_header extends setup_cmd
 			$this->header_path = readlink($this->header_path);
 			if ($this->header_path[0] != '/' && $this->header_path[1] != ':')
 			{
-				$this->header_path = dirname(dirname(dirname(__FILE__))).'/'.$this->header_path;
+				$this->header_path = dirname(dirname(__DIR__)).'/'.$this->header_path;
 			}
 		}
 		$this->setup_header = new setup_header();
@@ -83,7 +83,7 @@ class setup_cmd_header extends setup_cmd
 		{
 			if ($this->sub_command != 'create')
 			{
-				throw new Api\Exception\WrongUserinput(lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'),1);
+				throw new Api\Exception\WrongUserinput(lang('EGroupware configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'),1);
 			}
 			$this->defaults(false);
 		}
@@ -92,7 +92,7 @@ class setup_cmd_header extends setup_cmd
 			if ($this->sub_command == 'create')
 			{
 				throw new Api\Exception\WrongUserinput(
-					lang('eGroupWare configuration file header.inc.php already exists, you need to use --edit-header or delete it first!'),20);
+					lang('EGroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!'),20);
 			}
 			if ($this->arguments)
 			{

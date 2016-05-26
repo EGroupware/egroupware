@@ -65,7 +65,7 @@ class setup_header
 	 */
 	function defaults($domain='default')
 	{
-		$egw_root = realpath(dirname(__FILE__).'/../..');
+		$egw_root = realpath(__DIR__.'/../..');
 		$GLOBALS['egw_info']['server']['server_root'] = $GLOBALS['egw_info']['server']['include_root'] = $egw_root;
 		define('EGW_SERVER_ROOT',$egw_root);	// this is usally already defined by setup and cant be changed
 		define('EGW_INCLUDE_ROOT',$egw_root);
@@ -113,9 +113,9 @@ class setup_header
 	{
 		$errors = null;
 
-		if (!is_dir($path) || !is_readable($path) || !is_dir($path.'/phpgwapi'))
+		if (!is_dir($path) || !is_readable($path) || !is_dir($path.'/api'))
 		{
-			$errors[] = lang("%1 '%2' does NOT exist, is not readable by the webserver or contains no eGroupWare installation!",lang('Server root'),$path);
+			$errors[] = lang("%1 '%2' does NOT exist, is not readable by the webserver or contains no EGroupware installation!",lang('Server root'),$path);
 		}
 		if(!$GLOBALS['egw_info']['server']['header_admin_password'])
 		{
@@ -127,7 +127,7 @@ class setup_header
 		}
 		if (!is_array($GLOBALS['egw_domain']) || !count($GLOBALS['egw_domain']))
 		{
-			$errors[] = lang('You need to add at least one eGroupWare domain / database instance.');
+			$errors[] = lang('You need to add at least one EGroupware domain / database instance.');
 		}
 		else
 		{
