@@ -439,6 +439,14 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 			},
 			beforeActivate: function ()
 			{
+				if (egwIsMobile())
+				{
+					menulist.height(screen.availHeight - 50);
+				}
+				else
+				{
+					menulist.css({height:'inherit'})
+				}
 				// Nothing to show in menulist
 				if (menulist.children().length == 0)	return false;
 			}

@@ -913,7 +913,7 @@
   }
   div.ui-toolbar-menulist {
     position: absolute;
-    height: inherit !important;
+    height: inherit;
     z-index: 999 !important;
     overflow: hidden !important;
     border: solid black 1px;
