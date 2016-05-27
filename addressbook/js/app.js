@@ -951,6 +951,10 @@ app.classes.addressbook = AppJS.extend(
 			return false;
 		}
 		var content = egw.dataGetUIDdata(_selected[0].id);
+		
+		// Selected, but data not found
+		if(!content || typeof content.data === 'undefined') return false;
+
 		var type = _action.id === 'business'?'one':'two';
 		var addrs = [
 			content.data['adr_'+type+'_street'],
