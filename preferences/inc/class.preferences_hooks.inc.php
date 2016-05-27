@@ -93,8 +93,8 @@ class preferences_hooks
 		if ($hook_data['setup'])	// called via setup
 		{
 			$lang = setup::get_lang();
-			if (empty($lang)) $lang = 'en';
 		}
+		if (empty($lang)) $lang = 'en';
 		list(,$country) = explode('-',$lang);
 		if (empty($country) && class_exists('Locale')) $country = Locale::getRegion(Locale::getDefault());
 		if (empty($country)) $country = 'de';
