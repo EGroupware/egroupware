@@ -47,6 +47,7 @@ $config = array(
 	'mv' => trim(`which mv`),
 	'rm' => trim(`which rm`),
 	'zip' => trim(`which zip`),
+	'bzip2' => trim(`which bzip2`),
 	'clamscan' => trim(`which clamscan`),
 	'freshclam' => trim(`which freshclam`),
 	'git' => trim(`which git`),
@@ -889,16 +890,18 @@ function do_create()
 		switch($type)
 		{
 			case 'all.tar.bz2':	// single tar-ball for debian builds not easily supporting to use multiple
-				$cmd = $config['tar'].' --owner=root --group=root -cjf '.$file.$exclude_all_extra.' egroupware';
+				$file = $config['sourcedir'].'/'.$config['packagename'].'-all-'.$config['version'].'.'.$config['packaging'].'.tar';
+				$cmd = $config['tar'].' --owner=root --group=root -cf '.$file.$exclude_all_extra.' egroupware';
 				if (!empty($config['all-add']))
 				{
 					foreach((array)$config['all-add'] as $add)
 					{
 						if (substr($add, -4) != '.tar') continue;	// probably a module
-						if (!($add = realpath($add))) throw new Exception("File '$add' not found!");
-						$cmd .= '; '.$config['tar'].' --owner=root --group=root -Ajf '.$file.' '.$add;
+						if (!($tar = realpath($add))) throw new Exception("File '$add' not found!");
+						$cmd .= '; '.$config['tar'].' --owner=root --group=root -Af '.$file.' '.$tar;
 					}
 				}
+				$cmd .= '; '.$config['bzip2'].' '.$file;
 				break;
 			case 'tar.bz2':
 			case 'tar.gz':
