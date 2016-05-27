@@ -13,6 +13,7 @@
 
 @import (reference) "../../../pixelegg/less/def_buttons.less";
 @import (reference) "../../../pixelegg/less/def_mobile.less";
+@import "../pixelegg/app.less";
 /* tablets and smartphones  */
 @media all {
 	#filemanager-index_nm {
@@ -40,11 +41,12 @@
 				}
 			}
 		}
-		#filemanager-index_buttons {
+		.buttons {
 			position: relative;
 			display: inline-block;
 			overflow:auto;
 			width:100%;
+			padding-top:5px;
 			img{
 				width: 32px;
 				height: 32px;
@@ -53,6 +55,15 @@
 		}
 		#filemanager-index_tarp {display: none !important;}
 		#filemanager-index_filemanager-index-header_left {height:auto;}
+		.nextmatch_header {
+			.filemanager_navigation {
+				height: auto;
+				#filemanager-index_path {height:50px;width:99%;}
+			}
+			div.filtersContainer {margin-top:0px;border-bottom: 1px solid silver;}
+		}
+		select#filemanager-index_filter {width:100%;}
+		.nextmatch_header_row div.header_row_right {height:auto;position: relative !important;}
 	}
 	.et2_file.plus_button {
 		position: absolute !important;
