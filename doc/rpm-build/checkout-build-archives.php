@@ -40,7 +40,7 @@ $config = array(
 	'aliasdir' => 'egroupware',             // directory created by the alias
 	'types' => array('tar.bz2','tar.gz','zip','all.tar.bz2'),
 	// add given extra-apps or (uncompressed!) archives to above all.tar.bz2 archive
-	'all-add' => array('contrib', __DIR__.'/../phpfreechat_data_public.tar'),
+	'all-add' => array('contrib', '/home/stylite/epl-trunk/phpfreechat_data_public.tar'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),
 	'tar' => trim(`which tar`),
@@ -901,8 +901,11 @@ function do_create()
 						$cmd .= '; '.$config['tar'].' --owner=root --group=root -Af '.$file.' '.$tar;
 					}
 				}
+				if (file_exists($file.'.bz2')) $cmd .= '; rm -f '.$file.'.bz2';
 				$cmd .= '; '.$config['bzip2'].' '.$file;
-				break;
+				// run cmd now and continue without adding all tar-ball to sums, as we dont want to publish it
+				run_cmd($cmd);
+				continue 2;
 			case 'tar.bz2':
 			case 'tar.gz':
 				$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.$exclude_extra.' egroupware';
