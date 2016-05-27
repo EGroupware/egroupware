@@ -702,7 +702,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			this.widget.update_timer = null;
 			this.widget.doInvalidate = true;
 
-			window.setTimeout(jQuery.proxy(function() {if(this.loader) this.loader.hide();},this.widget),100);
+			window.setTimeout(jQuery.proxy(function() {if(this.loader) this.loader.hide();},this.widget),500);
 		},{widget:this,"trigger":trigger}),ET2_GRID_INVALIDATE_TIMEOUT);
 	},
 
@@ -1779,7 +1779,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			}
 			return result;
 		}
-		else if (this.gridHeader.has(_ev.target).length > 0 && !jQuery.isEmptyObject(_ev.target.dataset))
+		else if (this.gridHeader.has(_ev.target).length > 0 && !jQuery.isEmptyObject(_ev.target.dataset) ||
+			$j(_ev.target).hasClass('calendar_plannerRowHeader') && !jQuery.isEmptyObject(_ev.target.dataset))
 		{
 			// Click on a header, we can go there
 			_ev.data = jQuery.extend({},_ev.target.parentNode.dataset, _ev.target.dataset);

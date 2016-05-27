@@ -2850,9 +2850,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						app.calendar._fetch_data(state, instance, start + data.order.length);
 					}, 100);
 				}
-
 				// Hide AJAX loader
-				if(typeof framework !== 'undefined')
+				else if(typeof framework !== 'undefined')
 				{
 					framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
 				}
