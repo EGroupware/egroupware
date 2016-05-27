@@ -38,7 +38,9 @@ $config = array(
 		// these apps are placed in egroupware-epl-contrib archive
 		'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sambaadmin', 'sitemgr', 'phpfreechat')),
 	'aliasdir' => 'egroupware',             // directory created by the alias
-	'types' => array('tar.bz2','tar.gz','zip'),
+	'types' => array('tar.bz2','tar.gz','zip','all.tar.bz2'),
+	// add given extra-apps or (uncompressed!) archives to above all.tar.bz2 archive
+	'all-add' => array('contrib', __DIR__.'/../phpfreechat_data_public.tar'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),
 	'tar' => trim(`which tar`),
@@ -863,15 +865,20 @@ function do_create()
 
 	if($config['extra'])
 	{
-		$exclude = array();
-		foreach($config['extra'] as $modules)
+		$exclude = $exclude_all = array();
+		foreach($config['extra'] as $name => $modules)
 		{
 			foreach((array)$modules as $module)
 			{
 				$exclude[] = basename($module);
+				if (!empty($config['all-add']) && !in_array($module, $config['all-add']) && (is_int($name) || !in_array($name, $config['all-add'])))
+				{
+					$exclude_all[] = basename($module);
+				}
 			}
 		}
 		$exclude_extra = ' --exclude=egroupware/'.implode(' --exclude=egroupware/', $exclude);
+		$exclude_all_extra =  $exclude_all ? ' --exclude=egroupware/'.implode(' --exclude=egroupware/', $exclude_all) : '';
 	}
 	foreach($config['types'] as $type)
 	{
@@ -881,9 +888,21 @@ function do_create()
 		$file = $config['sourcedir'].'/'.$config['packagename'].'-'.$config['version'].'.'.$config['packaging'].'.'.$type;
 		switch($type)
 		{
+			case 'all.tar.bz2':	// single tar-ball for debian builds not easily supporting to use multiple
+				$cmd = $config['tar'].' --owner=root --group=root -cjf '.$file.$exclude_all_extra.' egroupware';
+				if (!empty($config['all-add']))
+				{
+					foreach((array)$config['all-add'] as $add)
+					{
+						if (substr($add, -4) != '.tar') continue;	// probably a module
+						if (!($add = realpath($add))) throw new Exception("File '$add' not found!");
+						$cmd .= '; '.$config['tar'].' --owner=root --group=root -Ajf '.$file.' '.$add;
+					}
+				}
+				break;
 			case 'tar.bz2':
 			case 'tar.gz':
-				$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.' '.$exclude_extra.' egroupware';
+				$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.$exclude_extra.' egroupware';
 				break;
 			case 'zip':
 				$cmd = file_exists($file) ? $config['rm'].' -f '.$file.'; ' : '';
@@ -902,6 +921,8 @@ function do_create()
 			$file = $config['sourcedir'].'/'.$config['packagename'].'-'.$name.'-'.$config['version'].'.'.$config['packaging'].'.'.$type;
 			switch($type)
 			{
+				case 'all.tar.bz2':
+					break;	// nothing to do
 				case 'tar.bz2':
 				case 'tar.gz':
 					$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.$dirs;
