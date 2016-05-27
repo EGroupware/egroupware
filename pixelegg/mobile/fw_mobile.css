@@ -935,7 +935,7 @@
   }
   div.ui-toolbar-menulist {
     position: absolute;
-    height: inherit !important;
+    height: inherit;
     z-index: 999 !important;
     overflow: hidden !important;
     border: solid black 1px;
@@ -7870,7 +7870,6 @@ form[id^="tracker-"] .dialogHeadbar {
   body div.et2_toolbar.et2_head_toolbar div.ui-toolbar-menulist {
     width: 100%;
     left: 0px;
-    height: 322px !important;
     overflow-y: auto !important;
     box-shadow: 2px 3px 13px #666666;
     -moz-box-shadow: 2px 3px 13px #666666;

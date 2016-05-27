@@ -67,7 +67,6 @@ then
 				--admin_user "$admin_user" \
 				--admin_passwd "$admin_password" \
 				--lang "$lang" \
-				--db_type mysql \
 				--db_root "$db_root" \
 				--db_root_pw "$db_root_pw" 2>&1 | /usr/bin/tee -a $install_log
 		fi

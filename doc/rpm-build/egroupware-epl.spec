@@ -83,12 +83,12 @@ Prefix: /usr/share
 
 Distribution: %{distribution}
 
-Source0: %{name}-%{version}.tar.gz
+Source0: %{name}-all-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-archive-%{version}.tar.bz2
 Source4: %{name}-esyncpro-%{version}.tar.bz2
-Source5: %{name}-contrib-%{version}.tar.gz
-Source6: phpfreechat_data_public.tar.gz
+#Source5: %{name}-contrib-%{version}.tar.gz
+#Source6: phpfreechat_data_public.tar.gz
 Source8: %{name}-rpmlintrc
 #Source9: %{name}-gallery-%{version}.tar.bz2
 Patch0: asyncservice.patch
@@ -522,8 +522,8 @@ echo "post_install: %{post_install}"
 %setup2 -T -D -a 2 -n %{egwdirname}
 %setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
-%setup5 -T -D -a 5 -n %{egwdirname}
-%setup6 -T -D -a 6 -n %{egwdirname}
+#%setup5 -T -D -a 5 -n %{egwdirname}
+#%setup6 -T -D -a 6 -n %{egwdirname}
 #%setup9 -T -D -a 9 -n %{egwdirname}
 %patch0 -p 0
 #%patch1 -p 0

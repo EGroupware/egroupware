@@ -6,9 +6,9 @@ SHELL = /bin/sh -e
 PACKAGES := $(shell dh_listpackages)
 MODULES = $(filter-out core,$(patsubst egroupware-epl-%,%,$(filter egroupware-epl-%,$(PACKAGES))))
 COREDIR = debian/egroupware-epl-core/usr/share/egroupware
-COREDOC = debian/egroupware-epl-core/usr/share/doc/egroupware-core
+COREDOC = debian/egroupware-epl-core/usr/share/doc/egroupware-epl-core
 PACKAGEDIR = debian/egroupware-epl-$${APP}/usr/share/egroupware/$${APPDIR}
-PACKAGEDOC = debian/egroupware-epl-$${APP}/usr/share/doc/egroupware-$${APPDIR}
+PACKAGEDOC = debian/egroupware-epl-$${APP}/usr/share/doc/egroupware-epl-$${APPDIR}
 
 COPYRIGHT = -iname 'copyright*' -or -iname 'copying*' -or -iname '*license*'
 CHANGELOG = -iname 'changelog*'
@@ -37,18 +37,23 @@ install: build
 	dh_installdirs
 
 	# apply the patch
-	cat ./doc/rpm-build/class.uiasyncservice.inc.php.patch | patch -p1
+	cat ./doc/rpm-build/asyncservice.patch | patch -p1
 
 	# customize apache config
 	mkdir -p $(CURDIR)/debian/egroupware-epl-core/etc/egroupware
-	sed 's/\/usr\/share\/pear/\/usr\/share\/php:\/usr\/local\/zend\/share\/pear/' $(CURDIR)/doc/rpm-build/apache.conf > $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/apache.conf
+	cp $(CURDIR)/doc/rpm-build/apache.conf $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/apache.conf
 
 	# install core modules
 
-	for DIR in admin api home phpgwapi preferences etemplate addressbook setup doc; do \
+	for DIR in api admin home preferences addressbook setup doc pixelegg; do \
 	  cd $(CURDIR)/$${DIR}; \
 	  find $(FINDOPT) $(APPFILES) \
 	    -exec $(INSTALL) {} $(CURDIR)/$(COREDIR)/$${DIR}/{} \; ; \
+	  if [ -d $(CURDIR)/$${DIR}/doc ] ; then \
+	    cd $(CURDIR)/$${DIR}/doc; \
+	    find $(FINDOPT) $(DOCFILES) \
+	      -exec $(INSTALL) {} $(CURDIR)/$(COREDOC)/{} \; ;\
+	  fi ; \
 	done
 
 	# install applications
@@ -56,10 +61,26 @@ install: build
     # lv: activesync (tm) microsoft and has to be renamed
 
 	for APP in $(MODULES) ; do \
-	  APPDIR=$$(echo $${APP} | sed 's/-/_/g') ; \
-      if [ "$${APP}" = "esync" ]; then \
-        APPDIR="activesync"; \
-      fi; \
+      case $${APP} in \
+		"esync") \
+		  APPDIR="activesync"; \
+		  ;; \
+		"compat") \
+		  APPDIR="phpgwapi"; \
+	      cd $(CURDIR)/$${APPDIR}; \
+	      find $(FINDOPT) $(APPFILES) \
+	        -exec $(INSTALL) {} $(CURDIR)/$(PACKAGEDIR)/{} \; ; \
+	      if [ -d $(CURDIR)/$${APPDIR}/doc ] ; then \
+	        cd $(CURDIR)/$${APPDIR}/doc; \
+	        find $(FINDOPT) $(DOCFILES) \
+	          -exec $(INSTALL) {} $(CURDIR)/$(PACKAGEDOC)/{} \; ;\
+	      fi ; \
+		  APPDIR="etemplate"; \
+		  ;; \
+		*) \
+		  APPDIR=$$(echo $${APP} | sed 's/-/_/g') ; \
+		  ;; \
+	  esac; \
 	  if [ -d $(CURDIR)/$${APPDIR} ] ; then \
 	    cd $(CURDIR)/$${APPDIR}; \
 	    find $(FINDOPT) $(APPFILES) \

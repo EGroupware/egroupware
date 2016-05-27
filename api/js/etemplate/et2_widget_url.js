@@ -258,6 +258,12 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 		this.value = "";
 		this.span = $j(document.createElement("a"))
 			.addClass("et2_textbox readonly");
+		// Do not a tag if no call_link is set and not in mobile, empty a tag may conflict
+		// with some browser telephony addons (eg. telify in FF)
+		if (!egw.config('call_link') && this._type == 'url-phone' && !egwIsMobile()){
+			this.span = jQuery(document.createElement("span"))
+				.addClass("et2_textbox readonly");
+		}
 		if(this._type == 'url-email')
 		{
 			this.span.addClass('et2_email');
