@@ -1392,15 +1392,16 @@ class translation
 			6 => '~<br[^>]*>~si',
 			7 => '~<p[^>]*>\r*\n*~si',
 			8 => '~<div[^>]*>\r*\n*~si',
-			9 => '~<hr[^>]*>\r*\n*~si',
-			10 => '/<blockquote type="cite">/',
-			11 => '/<blockquote>/',
-			12 => '~</blockquote>~si',
-			13 => '~<blockquote[^>]*>~si',
-			14 => '/<=([1234567890])/',
-			15 => '/>=([1234567890])/',
-			16 => '/<([1234567890])/',
-			17 => '/>([1234567890])/',
+			9 => '~<span[^>]*>\r*\n*~si',
+			10 => '~<hr[^>]*>\r*\n*~si',
+			11 => '/<blockquote type="cite">/',
+			12 => '/<blockquote>/',
+			13 => '~</blockquote>~si',
+			14 => '~<blockquote[^>]*>~si',
+			15 => '/<=([1234567890])/',
+			16 => '/>=([1234567890])/',
+			17 => '/<([1234567890])/',
+			18 => '/>([1234567890])/',
 		);
 		$Replace = array (
 			0 => "\r\n",
@@ -1412,17 +1413,19 @@ class translation
 			6 => "\r\n",
 			7 => "\r\n",
 			8 => "\r\n",
-			9 => "\r\n__________________________________________________\r\n",
-			10 => '#blockquote#type#cite#',
+			9 => "",
+			10 => "\r\n__________________________________________________\r\n",
 			11 => '#blockquote#type#cite#',
-			12 => '#blockquote#end#cite#',
-			13 => '#blockquote#type#cite#',
-			14 => '#lowerorequal#than#$1',
-			15 => '#greaterorequal#than#$1',
-			16 => '#lower#than#$1',
-			17 => '#greater#than#$1',
+			12 => '#blockquote#type#cite#',
+			13 => '#blockquote#end#cite#',
+			14 => '#blockquote#type#cite#',
+			15 => '#lowerorequal#than#$1',
+			16 => '#greaterorequal#than#$1',
+			17 => '#lower#than#$1',
+			18 => '#greater#than#$1',
 		);
 		$_html = preg_replace($tags,$Replace,$_html);
+		//error_log(__METHOD__.__LINE__.'#'.$_html);
 		$_html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]*>~si',' - ',$_html);
 		$_html = preg_replace('~<img[^>]+>~s','',$_html);
 		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
