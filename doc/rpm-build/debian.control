@@ -11,65 +11,62 @@ Architecture: all
 Depends:
  egroupware-epl-core (= ${binary:Version}),
  egroupware-epl-vendor (= ${binary:Version}),
- egroupware-epl-jdots (= ${binary:Version}),
- egroupware-epl-pixelegg (= ${binary:Version}),
- egroupware-epl-stylite (= ${binary:Version}),
  egroupware-epl-esync (= ${binary:Version}),
  egroupware-epl-bookmarks (= ${binary:Version}),
  egroupware-epl-calendar (= ${binary:Version}),
- egroupware-epl-developer-tools (= ${binary:Version}),
- egroupware-epl-emailadmin (= ${binary:Version}),
  egroupware-epl-mail (= ${binary:Version}),
  egroupware-epl-filemanager (= ${binary:Version}),
  egroupware-epl-infolog (= ${binary:Version}),
  egroupware-epl-importexport (= ${binary:Version}),
  egroupware-epl-news-admin (= ${binary:Version}),
  egroupware-epl-notifications (= ${binary:Version}),
- egroupware-epl-phpbrain (= ${binary:Version}),
- egroupware-epl-phpfreechat (= ${binary:Version}),
  egroupware-epl-projectmanager (= ${binary:Version}),
  egroupware-epl-registration (= ${binary:Version}),
  egroupware-epl-resources (= ${binary:Version}),
- egroupware-epl-sambaadmin (= ${binary:Version}),
- egroupware-epl-sitemgr (= ${binary:Version}),
+ egroupware-epl-stylite (= ${binary:Version}),
  egroupware-epl-timesheet (= ${binary:Version}),
  egroupware-epl-tracker (= ${binary:Version}),
- egroupware-epl-wiki (= ${binary:Version}),
  ${misc:Depends}
-Recommends: egroupware-epl-archive (= ${binary:Version})
 Replaces: egroupware
 Conflicts: egroupware
+# suggest no longer by default installed packages (all requiring egroupware-epl-compat)
+Suggests: egroupware-epl-jdots,
+ egroupware-epl-phpbrain,
+ egroupware-epl-phpfreechat,
+ egroupware-epl-sambaadmin,
+ egroupware-epl-sitemgr,
+ egroupware-epl-wiki
 Description: web-based groupware suite - metapackage
  ${commondesc}
  .
- This package is a metapackage containing dependencies on all the
- EGroupware applications.  It can be used to conveniently install
- EGroupware with all available applications.
+ This package is a metapackage containing dependencies on default
+ EGroupware applications. Further contrib applications can then be
+ installed individually, when needed.
 
 Package: egroupware-epl-core
 Architecture: all
 Depends: apache2,
- php5 (>= 5.3.3),
- php5-cli,
- php5-sqlite,
- php5-mysql | php5-pgsql | php5-odbc,
- php5-json,
- php5-gd,
- php5-mcrypt,
- php5-xsl,
+ php5 (>= 5.4.0) | libapache2-mod-php (>=7.0),
+ php5-cli | php-cli,
+ php5-mysql | php5-pgsql | php-mysql | php-pgsql,
+ php5-json | php-json,
+ php5-gd | php-gd,
+ php5-mcrypt | php-mcrypt,
+ php5-xsl | php-xsl,
  ${misc:Depends}
-Recommends: mariadb-server | mysql-server, php-apc, php5-pecl-smb, php5-tidy, mariadb-client | mysql-client | postgresql-client
-Suggests: egroupware-epl,
- php5-ldap,
- php5-mhash,
- php5-auth-pam,
- php-log
-Provides: egroupware-epl-addressbook, egroupware-epl-etemplate, egroupware-epl-pear
-Replaces: egroupware-core, egroupware-addressbook, egroupware-epl-addressbook, egroupware-etemplate, egroupware-epl-etemplate,
+Recommends: mariadb-server | mysql-server, php-opcache | php-apc, php-apcu, php5-pecl-smb, php5-tidy | php-tidy,
+ mariadb-client | mysql-client | postgresql-client, php5-bcmath | php-bcmath,
+ php5-ldap | php-ldap,
+ php5-mhash | php-mhash
+Suggests: egroupware-epl
+Provides: egroupware-epl-addressbook, egroupware-epl-pear
+Replaces: egroupware-core, egroupware-addressbook, egroupware-epl-addressbook,
  egroupware-syncml, egroupware-epl-syncml, egroupware-polls, egroupware-epl-polls, egroupware-phpsysinfo, egroupare-epl-phpsysinfo,
- egroupware-epl-pear, egroupware-pear, egroupware-epl-manual, egroupware-manual
+ egroupware-epl-pear, egroupware-pear, egroupware-epl-manual, egroupware-manual, egroupware-developer-tools, egroupware-epl-developer-tools,
+ egroupware-emailadmin, egroupware-epl-emailadmin, egroupware-epl-pixelegg
 Conflicts: egroupware-syncml, egroupware-epl-syncml, egroupware-polls, egroupware-epl-polls, egroupware-phpsysinfo, egroupware-epl-phpsysinfo,
- egroupware-epl-pear, egroupware-pear, egroupware-epl-manual, egroupware-manual
+ egroupware-epl-pear, egroupware-pear, egroupware-epl-manual, egroupware-manual, egroupware-epl-developer-tools,
+ egroupware-emailadmin, egroupware-epl-emailadmin, egroupware-epl-pixelegg
 Description: web-based groupware suite - core modules
  ${commondesc}
  .
@@ -78,6 +75,19 @@ Description: web-based groupware suite - core modules
  does not, by itself, provide any groupware functionality.  The actual
  EGroupware applications are shipped separately in packages named
  "egroupware-epl-<name>".
+
+Package: egroupware-epl-compat
+Architecture: all
+Provides: egroupware-epl-etemplate
+Replaces: egroupware-etemplate, egroupware-epl-etemplate
+Conflicts: egroupware-etemplate, egroupware-epl-etemplate
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - old / compatibility api
+ ${commondesc}
+ .
+ This package provides compatibility to old / pre 16.1 EGroupware api.
+ So to speak the phpgwapi and etemplate directories.
 
 Package: egroupware-epl-bookmarks
 Architecture: all
@@ -103,34 +113,6 @@ Description: web-based groupware suite - calendar management application
  This EGroupware application provides a powerful calendar with a meeting
  request system, alarms, iCal and e-Mail support, and ACL security.
 
-Package: egroupware-epl-developer-tools
-Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}),
- ${misc:Depends}
-Conflicts: egroupware-developer-tools
-Replaces: egroupware-developer-tools
-Description: web-based groupware suite - developer tools
- ${commondesc}
- .
- This EGroupware application contains tools for EGroupware developers
- and translators.  The translation tools allow creating and extending
- translation files for EGroupware.  They can search the sources for new
- or added phrases and show the ones missing in a given language.
-
-Package: egroupware-epl-emailadmin
-Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}),
- ${misc:Depends}
-Recommends: php5-bcmath
-Conflicts: egroupware-emailadmin
-Replaces: egroupware-emailadmin
-Description: web-based groupware suite - e-mail user administration application
- ${commondesc}
- .
- This EGroupware application allows the administration of e-mail user
- accounts.  It is intended to be used with the package
- egroupware-epl-mail.
-
 Package: egroupware-epl-esync
 Architecture: all
 Depends: egroupware-epl-core (>= ${binary:Version}),
@@ -144,7 +126,7 @@ Description: web-based groupware suite - esync application
 
 Package: egroupware-epl-phpfreechat
 Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}),
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-compat (>= ${binary:Version}),
  ${misc:Depends}
 Replaces: egroupware-phpfreechat
 Conflicts: egroupware-phpfreechat
@@ -155,7 +137,7 @@ Description: web-based groupware suite - chat application
 
 Package: egroupware-epl-mail
 Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-emailadmin (>= ${binary:Version}),
+Depends: egroupware-epl-core (>= ${binary:Version}),
  ${misc:Depends}
 Provides: mail-reader, imap-client
 Conflicts: egroupware-felamimail, egroupware-epl-felamimail
@@ -169,7 +151,6 @@ Package: egroupware-epl-filemanager
 Architecture: all
 Depends: egroupware-epl-core (>= ${binary:Version}),
  ${misc:Depends}
-Suggests: php5-cli
 Conflicts: egroupware-filemanager
 Replaces: egroupware-filemanager
 Description: web-based groupware suite - file manager application
@@ -179,7 +160,7 @@ Description: web-based groupware suite - file manager application
  Abilities include all common file actions (upload, mkdir, rename,
  delete, copy, move), creating, and editing text files, and syncing with
  the file system.  Per file/directory comments are stored, and version
- history is tracked.  Group sharing and ACLs are fully supported.
+ history is tracked (EPL only).  Group sharing and ACLs are fully supported.
 
 Package: egroupware-epl-importexport
 Architecture: all
@@ -230,7 +211,7 @@ Description: web-based groupware suite - notifications
 
 Package: egroupware-epl-phpbrain
 Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}),
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-compat (>= ${binary:Version}),
  ${misc:Depends}
 Conflicts: egroupware-phpbrain
 Replaces: egroupware-phpbrain
@@ -278,15 +259,15 @@ Description: web-based groupware suite - resource manager application
 
 Package: egroupware-epl-sambaadmin
 Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}),
- php5-ldap,
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-compat (>= ${binary:Version}),
+ php5-ldap | php-ldap,
  ${misc:Depends}
 Conflicts: egroupware-sambaadmin
 Replaces: egroupware-sambaadmin
 Description: web-based groupware suite - Samba administration application
  ${commondesc}
  .
- This EGroupware application allows managing LDAP-based Samba servers.
+ This EGroupware application allows managing LDAP-based Samba3 servers.
 
 Package: egroupware-epl-sitemgr
 Architecture: all
@@ -337,7 +318,7 @@ Description: web-based groupware suite - external dependencies
 
 Package: egroupware-epl-wiki
 Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}),
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-compat (>= ${binary:Version}),
  ${misc:Depends}
 Conflicts: egroupware-wiki
 Replaces: egroupware-wiki
@@ -348,12 +329,9 @@ Description: web-based groupware suite - wiki application
 
 Package: egroupware-epl-jdots
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, egroupware-epl-core (>= ${binary:Version}),
-Description: Stylite Template set for EGroupware EPL
+Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-compat (>= ${binary:Version}),
+ ${misc:Depends}
+Description: Old tab-based EPL template based on idots look
  ${commondesc}
-
-Package: egroupware-epl-pixelegg
-Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, egroupware-epl-core (>= ${binary:Version}), egroupware-epl-jdots (>= ${binary:Version})
-Description: Pixelegg Template set for EGroupware 14.1
- ${commondesc}
+ .
+ EPL 11.1 default template.
