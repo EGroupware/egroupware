@@ -471,7 +471,13 @@ class timesheet_ui extends timesheet_bo
 	function get_rows(&$query_in,&$rows,&$readonlys,$id_only=false)
 	{
 		$this->show_sums = false;
+
+		// Date filter
 		$end_date = $query_in['enddate'] ? $query_in['enddate'] : false;
+		if($end_date || $query_in['filter'] === 'custom')
+		{
+			$query_in['startdate'] = $query_in['startdate'] ? $query_in['startdate'] : 1;
+		}
 		$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$end_date);
 
 		if ($query_in['startdate'])
