@@ -7643,25 +7643,27 @@ form[id^="tracker-"] .dialogHeadbar {
   body .et2_nextmatch table.egwGridView_grid tbody tr.focused {
     background-image: none;
   }
-  body .et2_nextmatch table.egwGridView_grid tbody tr.selected {
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) {
     background: #696969 !important;
   }
-  body .et2_nextmatch table.egwGridView_grid tbody tr.selected * {
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) * {
     color: white !important;
   }
-  body .et2_nextmatch table.egwGridView_grid tbody tr.selected td:last-child:before {
+  body .et2_nextmatch table.egwGridView_grid tbody tr.selected:not([class*="tile"]) td:last-child:before {
     content: " ";
     position: absolute;
-    background: #696969;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    right: 0;
+    background: #62A28E;
+    right: 2px;
+    bottom: 2px;
     color: white;
     background-image: url(../images/topmenu_items/mobile/check.svg);
     background-repeat: no-repeat;
-    background-position: center;
     height: auto;
+    background-size: 20px;
+    background-position: center;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
   }
   body .et2_nextmatch table.egwGridView_grid tbody tr:hover {
     background: transparent;
