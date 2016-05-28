@@ -294,7 +294,7 @@ function do_update($arg)
 		{
 			do_backup($arg,true);
 
-			$cmd = new setup_cmd_update($domain,$user,$password,$backup,true,$app);
+			$cmd = new setup_cmd_update($domain,$user,$password,$backup,false,$app);
 			echo $cmd->run()."\n";
 		}
 	}
