@@ -19,6 +19,7 @@ matrix:
 
 #services:
 #  - mysql
+#  - postgres
 
 sudo: false
 
