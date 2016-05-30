@@ -665,9 +665,9 @@ class Sharing
 	}
 }
 
-if (file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'))
+if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'))
 {
-	require_once __DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php';
+	require_once __DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php';
 
 	class SharingUi extends filemanager_ui
 	{
