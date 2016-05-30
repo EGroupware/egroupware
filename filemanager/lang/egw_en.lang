@@ -27,7 +27,7 @@
 %d files successfully copied.	filemanager	en	%d files successfully copied.
 %d files successfully moved.	filemanager	en	%d files successfully moved.
 / = everywhere	filemanager	en	/ = everywhere
-0 means all, -n newer then n days	filemanager	en	0 means all, -N newer then N days
+0 means all, -n newer then n days	filemanager	en	0 means all, -N newer than N days
 accessrights	filemanager	en	Access rights
 acl added.	filemanager	en	ACL added.
 acl deleted.	filemanager	en	ACL deleted.
@@ -79,7 +79,7 @@ cut	filemanager	en	Cut
 cut to clipboard	filemanager	en	Cut to clipboard
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default = No. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
 default document to insert entries	filemanager	en	Default document to insert entries
-delete all older versions and deleted files older then %s days	filemanager	en	Delete all older versions and deleted files older then %s days
+delete all older versions and deleted files older then %s days	filemanager	en	Delete all older versions and deleted files older than %s days
 delete these files or directories?	filemanager	en	Delete these files or directories?
 delete these shares?	filemanager	en	Delete these shares?
 delete this file or directory	filemanager	en	Delete this file or directory
