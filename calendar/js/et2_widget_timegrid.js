@@ -1790,9 +1790,6 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		var day = null;
 		var time = null;
 
-		for(var id in this.gridHover[0].dataset) {
-			delete this.gridHover[0].dataset[id];
-		}
 		var node = document.elementFromPoint(x,y);
 		var $node = $j(node);
 
@@ -1803,7 +1800,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		{
 			return [];
 		}
-
+		for(var id in this.gridHover[0].dataset) {
+			delete this.gridHover[0].dataset[id];
+		}
 		while(node && node != this.node && node.tagName != 'BODY' && path.length < 10)
 		{
 			path.push(node);
