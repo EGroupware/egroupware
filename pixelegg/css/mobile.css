@@ -782,11 +782,14 @@
     background-image: url(../images/personal.png);
     background-size: 12px 12px;
     background-position: 0 0;
+    margin-right: 9px;
+    margin-left: 2px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a div.sideboxstar {
     width: 3px;
     height: 11px;
-    margin-left: 3px;
+    margin-left: 5px;
+    margin-right: 10px;
     background-image: url(../images/bullet.png);
     background-size: 12px 12px;
     background-position: 0 0;
@@ -795,7 +798,8 @@
   .sidebox-favorites ul.favorites li.ui-menu-item img {
     width: 12px;
     height: 12px;
-    margin-left: 4px;
+    margin-left: 5px;
+    margin-right: 10px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item [data-id="blank"] div.ui-icon-heart {
     background-image: url(../images/trash.png);
@@ -4045,7 +4049,7 @@ td.message span.message {
 }
 #egw_fw_sidebar #egw_fw_sidemenu {
   position: absolute;
-  top: 0px;
+  top: 3px;
   bottom: 4px;
   left: 4px;
   right: 8px;
@@ -4080,7 +4084,7 @@ td.message span.message {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header h1 {
   margin: 0 0 10px 0;
-  padding-top: 0.31em;
+  padding-top: 0.4em;
   padding-left: 3em;
   color: #999999;
   /*font-size: 12px;*/
@@ -4121,7 +4125,7 @@ td.message span.message {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active img {
   padding-left: 9px;
-  padding-top: 6px;
+  padding-top: 7px;
   height: 18px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_scrollarea_outerdiv .egw_fw_ui_sidemenu_entry_header_active h1 {
@@ -4360,7 +4364,7 @@ td.message span.message {
   height: 30px;
   position: relative;
   z-index: 1;
-  top: 4px;
+  top: 5px;
   margin-top: 0;
   margin-bottom: -30px;
   float: right;
@@ -4392,8 +4396,8 @@ td.message span.message {
   position: absolute;
   left: 0;
   top: -9px;
-  width: 12px;
-  height: 3px;
+  width: 10px;
+  height: 2px;
   background-color: #606060;
   backface-visibility: hidden;
   border-radius: 2px;
