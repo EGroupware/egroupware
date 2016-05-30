@@ -9,7 +9,9 @@
 cd `dirname $0`
 cd ..
 
-find ${@-.} -name '*.php' -exec php -l {} \; 2>&1 | \
+# exclude old / not used PEAR Autoloader giving PHP Fatal error:  Method PEAR_Autoloader::__call() must take exactly 2 arguments
+
+find ${@-.} -name '*.php' ! -path '*vendor/pear-pear.php.net/PEAR/PEAR/Autoloader.php' -exec php -l {} \; 2>&1 | \
 	#grep -v 'No syntax errors detected in' | \
 	grep '^PHP' | \
 	perl -pe 'END { exit $status } $status=1 if /^PHP (Fatal|Parse error)/;'
