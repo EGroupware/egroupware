@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * eGroupWare - resources
-	 * http://www.egroupware.org 
+	 * http://www.egroupware.org
 	 *
 	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 * @package resources
@@ -9,12 +9,12 @@
 	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
 	 * @version $Id$
 	 */
-	
+
 	require_once (EGW_INCLUDE_ROOT.'/etemplate/inc/class.sitemgr_module.inc.php');
-	
+
 	class module_resources extends sitemgr_module
 	{
-		function module_resources()
+		function __construct()
 		{
 			$this->arguments = array();
 			$this->properties = array();
