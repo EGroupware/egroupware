@@ -208,7 +208,7 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 			};
 			for (var nAction in actions)
 			{
-				if (that.flat_list)
+				if (that.options.flat_list)
 				{
 					totalCount += childCounter(actions[nAction],1);
 				}
@@ -269,7 +269,7 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 						}
 						children[id] = info;
 
-						if (that.flat_list)
+						if (that.options.flat_list)
 						{
 							childaction = root.children[id];
 							if (typeof pref === 'undefined' && !isDefault)
@@ -300,7 +300,7 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 					}
 				};
 				add_children(action, children);
-				if (this.flat_list && children)
+				if (this.options.flat_list && children)
 				{
 					continue;
 				}
