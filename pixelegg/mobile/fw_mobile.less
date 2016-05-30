@@ -799,14 +799,16 @@
 				tbody {
 					tr.focused{background-image: none;}
 					tr.selected:not([class*="tile"]) {
-						background: #696969 !important;
+						background: #b0bfd8 !important;
 						* {color:white !important;}
 						td:last-child:before {
 							content: " ";
 							position: absolute;
-							background: #62A28E;
-							right: 2px;
-							bottom: 2px;
+							background: #b0bfd8;
+							right: 0px;
+							bottom: 0px;
+							left: -8px;
+							top:0px;
 							color: white;
 							background-image: url(../images/topmenu_items/mobile/check.svg);
 							background-repeat: no-repeat;
@@ -814,9 +816,8 @@
 							height: auto;
 							background-size: 20px;
 							background-position: center;
-							height: 32px;
-							width: 32px;
-							border-radius: 50%;
+							height: 99%;
+							width: 99%;
 						}
 					}
 					tr {
