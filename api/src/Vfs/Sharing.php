@@ -320,7 +320,7 @@ class Sharing
 			// or unsupported browsers like ie < 10
 			Api\Header\UserAgent::type() == 'msie' && Api\Header\UserAgent::version() < 10.0 ||
 			// or if no filemanager installed (WebDAV has own autoindex)
-			!file_exists(__DIR__.'/../../filemanager/inc/class.filemanager_ui.inc.php'));
+			!file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'));
 	}
 
 	/**
