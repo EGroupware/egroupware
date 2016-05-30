@@ -20,17 +20,14 @@ matrix:
 #  - mysql
 #  - postgres
 
-sudo: false
-
-addons:
- apt:
-   packages:
-   - myrepos
+sudo: required
 
 before_script:
   # - mysql -e 'create database egroupware'
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   #- composer update --prefer-source $LOWEST_DEPS
+  - sudo apt-get update -qq
+  - sudo apt-get install myrepos
   - mr --trust-all --stats up
 
 script:
