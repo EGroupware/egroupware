@@ -22,11 +22,15 @@ matrix:
 
 sudo: false
 
+addons:
+ apt:
+   packages:
+   - myrepos
+
 before_script:
   # - mysql -e 'create database egroupware'
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   #- composer update --prefer-source $LOWEST_DEPS
-  - aptitude install myrepos
   - mr --trust-all --stats up
 
 script:
