@@ -377,9 +377,10 @@ class filemanager_ui
 				in_array($user,preg_split('/, */',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
 				$GLOBALS['egw']->auth->authenticate($user, $password, 'text');
 		}
-		//echo "<p>".__METHOD__."('$user','$password',$is_setup) user_pw_hash(...)='".Api\Session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root)."</p>\n";
+		//error_log(__METHOD__."('$user','$password',$is_setup) user_pw_hash(...)='".Api\Session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root));
 		Api\Cache::setSession('filemanager', 'is_setup',$is_setup);
-		return Api\Cache::setSession('filemanager', 'is_root',Vfs::$is_root = $is_root);
+		Api\Cache::setSession('filemanager', 'is_root',Vfs::$is_root = $is_root);
+		return Vfs::$is_root;
 	}
 
 	/**
