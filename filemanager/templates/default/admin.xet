@@ -66,7 +66,7 @@
 		<vbox class="filemanager_config">
 			<button label="Mount /etemplates to allow customizing of eTemplates" id="etemplates"/>
 			<menulist>
-				<menupopup id="allow_delete_versions" onchange="1" label="Who should be allowed to finally delete deleted files or old versions of a file:" disabled="!@versioning"/>
+				<menupopup id="allow_delete_versions" onchange="1" label="Who should be allowed to finally delete deleted files or old versions of a file:" empty_label="Noone" disabled="!@versioning"/>
 			</menulist>
 			<hbox disabled="!@versioning">
 				<integer id="mtime" label="Delete all older versions and deleted files older then %s days" statustext="0 means all, -N newer then N days"/>
