@@ -21,6 +21,7 @@ matrix:
 #  - postgres
 
 sudo: required
+dist: trusty
 
 before_script:
   # - mysql -e 'create database egroupware'
