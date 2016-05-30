@@ -16,11 +16,11 @@ svn_untag = svn rm -m "remove tag" $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "
 checkout = git clone $(git config --get remote.origin.url|sed 's|/egroupware.git||')/ADOdb.git
 
 [api/src/Accounts/Ads]
-checkout = svn checkout https://svn.code.sf.net/p/adldap/code/trunk/src Ads
+checkout = svn checkout -q https://svn.code.sf.net/p/adldap/code/trunk/src Ads
 skip = [ $1 = "tag" -o $1 = "untag" ]
 
 [api/js/ckeditor]
-checkout = svn checkout https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
+checkout = svn checkout -q https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
 skip = [ $1 = "tag" -o $1 = "untag" ]
 
 []
