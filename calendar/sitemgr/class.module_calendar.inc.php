@@ -12,9 +12,9 @@
 /**
  * Calendar day selection for sitemgr
  */
-class module_calendar extends Module 
+class module_calendar extends Module
 {
-	function module_calendar()  
+	function __construct()
 	{
 		$this->arguments = array(
 			'redirect' => array(
@@ -31,6 +31,11 @@ class module_calendar extends Module
 	{
 		$date = (int) (strtotime(get_var('date',array('POST','GET'))));
 		$redirect = $arguments['redirect'] ? $arguments['redirect'] : '#';
+
+		if (!file_exists(EGW_SERVER_ROOT.'/phpgwapi'))
+		{
+			return 'Requires old phpgwapi!';
+		}
 
 		return $GLOBALS['egw']->jscalendar->get_javascript().
 			$GLOBALS['egw']->jscalendar->flat($redirect,$date);

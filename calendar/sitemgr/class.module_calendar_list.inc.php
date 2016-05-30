@@ -85,7 +85,7 @@ class module_calendar_list extends Module
 	 */
 	var $ui;
 
-	function module_calendar_list()
+	function __construct()
 	{
 		$this->arguments = array(
 			'category' => array(
@@ -157,7 +157,7 @@ class module_calendar_list extends Module
 	{
 		//_debug_array($GLOBALS['Common_BO']->sites->current_site);
 		// copied from bookmarks module.
-		$cat = createobject('phpgwapi.categories','','calendar');
+		$cat = new Api\Categories('','calendar');
 		$cats = $cat->return_array('all',0,False,'','cat_name','',True);
 		$cat_ids = array();
 		while (list(,$category) = @each($cats))

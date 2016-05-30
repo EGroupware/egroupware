@@ -48,7 +48,7 @@ class module_calendar_month extends Module
 	 */
 	var $default_css = '/calendar/templates/default/app.css';
 
-	function module_calendar_month()
+	function __construct()
 	{
 		$this->bo = new calendar_bo();
 		$this->arguments = array(
