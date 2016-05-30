@@ -26,9 +26,12 @@ before_script:
   # - mysql -e 'create database egroupware'
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   #- composer update --prefer-source $LOWEST_DEPS
+  - aptitude install myrepos
+  - mr --trust-all --stats up
 
 script:
-  - find . -name "*.php" | xargs -n1 php -l
+  #- find . -name "*.php" | xargs -n1 php -l
+  ./doc/php_syntax_check.sh
   #- ./vendor/bin/sabre-cs-fixer fix . --dry-run --diff
 
 cache:
