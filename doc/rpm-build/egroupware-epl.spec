@@ -232,6 +232,14 @@ Provides: egw-etemplate %{version}
 This package provides compatibility to old / pre 16.1 EGroupware api.
 So to speak the phpgwapi and etemplate directories.
 
+%post compat
+# install phpgwapi&etemplate, "$1" = "1" means install, not update, as there will be no more updates
+if [ "$1" = "1" ]
+then
+	%{post_install} --install-update-app phpgwapi 2>&1 | tee -a %{install_log}
+	%{post_install} --install-update-app etemplate 2>&1 | tee -a %{install_log}
+fi
+
 %package esync
 Version: %{version}
 Summary: The EGroupware eSync application
