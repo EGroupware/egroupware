@@ -898,7 +898,7 @@ class Account implements \ArrayAccess
 	 */
 	public static function check_access($rights, $account)
 	{
-		if (!is_array($account) && !is_a($account, 'Account'))
+		if (!is_array($account) && !($account instanceof Account))
 		{
 			throw new Api\Exception\WrongParameter('$account must be either an array or an Account object!');
 		}

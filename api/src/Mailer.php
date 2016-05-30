@@ -107,7 +107,7 @@ class Mailer extends Horde_Mime_Mail
 	 */
 	function  setAccount($account=null)
 	{
-		if (is_a($account, 'Mail\Account'))
+		if ($account instanceof Mail\Account)
 		{
 			$this->account = $account;
 		}
