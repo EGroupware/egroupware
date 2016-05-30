@@ -191,7 +191,10 @@ class Vfs extends Vfs\StreamWrapper
 		$old_props = self::file_exists($to) ? self::propfind($to,null) : array();
 		// copy properties (eg. file comment), if there are any and evtl. existing old properties
 		$props = self::propfind($from,null);
-
+		if(!$props)
+		{
+			$props = array();
+		}
 		foreach($old_props as $prop)
 		{
 			if (!self::find_prop($props,$prop))
