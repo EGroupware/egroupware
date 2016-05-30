@@ -544,9 +544,9 @@ class addressbook_hooks
 		}
 		// geolocation pre-defined maps
 		$geoLocation = array(
-			array('value' => 'https://maps.here.com/directions/drive{{%sr=/%sr}}%s0,%t0,%z0,%c0{{%d=/%d}}%s1,%t1,%z1+%c1', 'label' => 'Here Maps'),
-			array('value' => 'http://maps.google.com/{{%sr=?saddr=%sr}}%s0+%t0+%z0+%c0{{%d=&daddr=%d}}%s1+%t1+%z1+%c1', 'label' => 'Google Maps'),
-			array('value' => 'https://www.bing.com/maps/{{%sr=?rtp=adr.%sr}}%s0+%t0+%z0+%c0{{%d=~adr.%d}}%s1+%t1+%z1+%c1', 'label' => 'Bing Maps')
+			array('value' => 'https://maps.here.com/directions/drive{{%rs=/%rs}}%r0,%t0,%z0,%c0{{%d=/%d}}%r1,%t1,%z1+%c1', 'label' => 'Here Maps'),
+			array('value' => 'http://maps.google.com/{{%rs=?saddr=%rs}}%r0+%t0+%z0+%c0{{%d=&daddr=%d}}%r1+%t1+%z1+%c1', 'label' => 'Google Maps'),
+			array('value' => 'https://www.bing.com/maps/{{%rs=?rtp=adr.%rs}}%r0+%t0+%z0+%c0{{%d=~adr.%d}}%r1+%t1+%z1+%c1', 'label' => 'Bing Maps')
 		);
 		$ret = array(
 			'sel_options' => array(

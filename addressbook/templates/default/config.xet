@@ -24,7 +24,7 @@
 					<description value="GeoLocation integration" span="all" class="subHeader"/>
 				</row>
 				<row>
-					<description value="Choose pre-defined map source or use custom URL (use %s = street, %t = town, %c = country, %z = zipcode)"/>
+					<description value="Choose pre-defined map source or use custom URL (use %r = street, %t = city, %c = country, %z = zipcode)" label="%s:"/>
 					<taglist id="newsettings[geolocation_url]" maxSelection="1" empty_label="Select a map or write an URL"/>
 				</row>
 				<row>

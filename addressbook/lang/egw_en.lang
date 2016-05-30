@@ -110,6 +110,7 @@ check all	addressbook	en	Check all
 choose an icon for this contact type	admin	en	Choose an icon for this contact type
 choose charset	addressbook	en	Choose charset
 choose owner of imported data	addressbook	en	Choose owner of imported data
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	en	Choose pre-defined map source or use custom URL (use %r = street, %t = city, %c = country, %z = zipcode)
 chosse an etemplate for this contact type	admin	en	Chose an eTemplate for this contact type
 city	common	en	City
 city (private)	addressbook	en	City (private)
@@ -258,6 +259,7 @@ general	admin	en	General
 general fields:	addressbook	en	General fields:
 general settings	addressbook	en	General settings
 geo	addressbook	en	GEO
+geolocation integration	admin	en	GeoLocation integration
 global categories	addressbook	en	Global categories
 grant addressbook access	common	en	Grant address book access
 group %1	addressbook	en	Group %1
@@ -406,6 +408,7 @@ role	addressbook	en	Occupation
 room	addressbook	en	Room
 search letter	addressbook	en	Search letter
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	en	Select a portrait format jpeg photo. It will be re-sized to 60 pixel width.
+select a source address to be used in geolocation routing system	addressbook	en	Select a source address to be used in GeoLocation routing system
 select a view	addressbook	en	Select a view
 select addressbook type	addressbook	en	Select address book type
 select all	addressbook	en	Select all
@@ -480,8 +483,8 @@ upload or delete the photo	addressbook	en	Upload or delete the photo
 url (business)	addressbook	en	url (business)
 url (private)	addressbook	en	url (private)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to. Use %1 = number to call, %u = account name, %t = account phone.
-use addressbooks "own sorting" attribute	addressbook	en	use addressbooks "own sorting" attribute
 use a category tree?	addressbook	en	Use a tree for selecting categories
+use addressbooks "own sorting" attribute	addressbook	en	use addressbooks "own sorting" attribute
 use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields
 use country list	addressbook	en	Use country list
 use setup for a full account-migration	admin	en	Use setup for a full account migration

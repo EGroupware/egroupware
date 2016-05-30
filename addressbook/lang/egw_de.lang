@@ -109,6 +109,7 @@ check all	addressbook	de	Alle auswählen
 choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
 choose charset	addressbook	de	Zeichensatz auswählen
 choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	de	Wählen Sie einen vordefinierten Kartenanbieter aus oder geben Sie eine Url an mit folgenden Platzhaltern: %r = Strasse, %t = Stadt, %c = Land, %z = Postleitzahl
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
 city	common	de	Stadt
 city (private)	addressbook	de	Stadt (Privat)
@@ -257,6 +258,7 @@ general	admin	de	Allgemein
 general fields:	addressbook	de	Allgemeine Felder:
 general settings	addressbook	de	Allgemeine Einstellungen
 geo	addressbook	de	GEO
+geolocation integration	admin	de	Integration Routenplanung
 global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
 group %1	addressbook	de	Gruppe %1
@@ -405,6 +407,7 @@ role	addressbook	de	Beruf
 room	addressbook	de	Raum
 search letter	addressbook	de	Suche nach Buchstaben
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	de	Wählen Sie ein hochformatiges jpeg Foto. Es wird 60 Pixel breit skaliert.
+select a source address to be used in geolocation routing system	addressbook	de	Legen Sie fest, wie der Startpunkt für die Routenplanung gesetzt wird.
 select a view	addressbook	de	Eine Ansicht auswählen
 select addressbook type	addressbook	de	Typ des Adressbuchs auswählen
 select all	addressbook	de	Alles auswählen

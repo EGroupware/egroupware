@@ -951,7 +951,7 @@ app.classes.addressbook = AppJS.extend(
 			return false;
 		}
 		var content = egw.dataGetUIDdata(_selected[0].id);
-		
+
 		// Selected, but data not found
 		if(!content || typeof content.data === 'undefined') return false;
 
@@ -1001,25 +1001,25 @@ app.classes.addressbook = AppJS.extend(
 		var	addrs = [
 
 			[ // source address
-				{id:'s0',val:_src_type === 'browser'?_src_data.latitude:_src_data['adr_'+_src_type+'_street']},
+				{id:'r0',val:_src_type === 'browser'?_src_data.latitude:_src_data['adr_'+_src_type+'_street']},
 				{id:'t0',val:_src_type === 'browser'?_src_data.longitude:_src_data['adr_'+_src_type+'_locality']},
 				{id:'c0',val:_src_type === 'browser'?'':_src_data['adr_'+_src_type+'_countrycode']},
 				{id:'z0',val:_src_type === 'browser'?'':_src_data['adr_'+_src_type+'_postalcode']}
 			],
 			[ // destination address
-				{id:'s1',val:_dest_data['adr_'+dest_type+'_street']},
+				{id:'r1',val:_dest_data['adr_'+dest_type+'_street']},
 				{id:'t1',val:_dest_data['adr_'+dest_type+'_locality']},
 				{id:'c1',val:_dest_data['adr_'+dest_type+'_countrycode']},
 				{id:'z1',val:_dest_data['adr_'+dest_type+'_postalcode']}
 			]
 		];
 
-		var src_param = url.match(/{{%sr=.*%sr}}/ig);
+		var src_param = url.match(/{{%rs=.*%rs}}/ig);
 		if (src_param[0])
 		{
-			src_param = src_param[0].replace(/{{%sr=/,'');
-			src_param = src_param.replace(/%sr}}/,'');
-			url = url.replace(/{{%sr=.*%sr}}/, src_param)
+			src_param = src_param[0].replace(/{{%rs=/,'');
+			src_param = src_param.replace(/%rs}}/,'');
+			url = url.replace(/{{%rs=.*%rs}}/, src_param)
 		}
 
 		var d_param = url.match(/{{%d=.*%d}}/ig);
