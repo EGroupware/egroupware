@@ -188,11 +188,6 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 			targetUrl = "index.php?menuaction=" + matches[1];
 			useIframe = false;
 		}
-		// External link, but we'd still like to use everything without iframe
-		if(_url.indexOf('no_popup=1') > 0)
-		{
-			useIframe = false;
-		}
 
 		// Destroy application js
 		if(app[this.app.appName] && app[this.app.appName].destroy)
