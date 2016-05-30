@@ -108,9 +108,7 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			for (var x = 0; x < w; x++)
 			{
 				// Some columns (nm) we do not parse into a boolean
-				var col_disabled = typeof _colData[x].disabled == 'boolean' ?
-						_colData[x].disabled :
-						this.getArrayMgr("content").parseBoolExpression(_colData[x].disabled);
+				var col_disabled = _colData[x].disabled;
 				cells[y][x] = {
 					"td": null,
 					"widget": null,
@@ -466,7 +464,7 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 				}
 
 				// Create the element
-				if(!cell.disabled)
+				if(!cell.disabled || cell.disabled && typeof cell.disabled === 'string')
 				{
 					//Skip if it is a nextmatch while the nextmatch handles row adjustment by itself
 					if(!nm)
@@ -487,8 +485,14 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 						}
 
 					}
-
-					var widget = this.createElementFromNode(node, nodeName);
+					if(!nm && typeof cell.disabled === 'string')
+					{
+						cell.disabled = this.getArrayMgr("content").parseBoolExpression(cell.disabled);
+					}
+					if(nm || !cell.disabled)
+					{
+						var widget = this.createElementFromNode(node, nodeName);
+					}
 				}
 
 				// Fill all cells the widget is spanning
@@ -712,7 +716,7 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 					if (cell.disabled)
 					{
 						td.hide();
-						cell.widget.options = cell.disabled;
+						cell.widget.options.disabled = cell.disabled;
 					}
 
 					if (cell.width != "auto")
