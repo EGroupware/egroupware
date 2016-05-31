@@ -112,11 +112,13 @@ class Base
 			case 'framework':
 				return $this->framework = Api\Framework::factory();
 			case 'template':	// need to be instancated for the current app
-				if (!($tpl_dir = Api\Framework\Template::get_dir($this->currentapp)))
-				{
+				try {
+					return $this->template = new Api\Framework\Template(Api\Framework\Template::get_dir($this->currentapp));
+				}
+				catch (EGroupware\Api\Exception\WrongParameter $e) {
+					unset($e);
 					return null;
 				}
-				return $this->template = new Api\Framework\Template($tpl_dir);
 			case 'ldap':
 				return $this->ldap = Api\Ldap::factory(false);
 			default:

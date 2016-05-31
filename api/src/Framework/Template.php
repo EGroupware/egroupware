@@ -564,7 +564,8 @@ class Template
 	 * get template dir of an application
 	 *
 	 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-	 * @return string|boolean dir or false if no dir is found
+	 * @return string template directory
+	 * @throws Api\Exception\WrongParameter if no directory is found
 	 */
 	static function get_dir($appname = '')
 	{
@@ -612,6 +613,6 @@ class Template
 		{
 			return $tpldir_default;
 		}
-		return False;
+		throw new Api\Exception\WrongParameter("Template directory for app '$appname' not found!");
 	}
 }

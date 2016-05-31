@@ -18,6 +18,7 @@ namespace EGroupware\Api;
 // they are only used, if phpgwapi is installed
 use accounts as egw_accounts;
 use egw_session;
+use common;
 
 /**
  * New written class to create the eGW enviroment AND restore it from a php-session
@@ -409,14 +410,20 @@ class Egw extends Egw\Base
 		// A few hacker resistant constants that will be used throught the program
 		if (file_exists(EGW_SERVER_ROOT.'/phpgwapi'))
 		{
-			define('EGW_TEMPLATE_DIR', $this->common->get_tpl_dir('phpgwapi'));
-			define('EGW_IMAGES_DIR', $this->common->get_image_path('phpgwapi'));
-			define('EGW_IMAGES_FILEDIR', $this->common->get_image_dir('phpgwapi'));
-			define('EGW_APP_ROOT', $this->common->get_app_dir());
-			define('EGW_APP_INC', $this->common->get_inc_dir());
-			define('EGW_APP_TPL', $this->common->get_tpl_dir());
-			define('EGW_IMAGES', $this->common->get_image_path());
-			define('EGW_APP_IMAGES_DIR', $this->common->get_image_dir());
+			define('EGW_TEMPLATE_DIR', Framework\Template::get_dir('phpgwapi'));
+			define('EGW_IMAGES_DIR', common::get_image_path('phpgwapi'));
+			define('EGW_IMAGES_FILEDIR', common::get_image_dir('phpgwapi'));
+			define('EGW_APP_ROOT', common::get_app_dir());
+			define('EGW_APP_INC', common::get_inc_dir());
+			try {
+				define('EGW_APP_TPL', Framework\Template::get_dir());
+			}
+			catch (Exception\WrongParameter $e) {
+				unset($e);
+				define('EGW_APP_TPL', null);
+			}
+			define('EGW_IMAGES', common::get_image_path());
+			define('EGW_APP_IMAGES_DIR', common::get_image_dir());
 			// and the old ones
 			define('PHPGW_TEMPLATE_DIR',EGW_TEMPLATE_DIR);
 			define('PHPGW_IMAGES_DIR',EGW_IMAGES_DIR);
