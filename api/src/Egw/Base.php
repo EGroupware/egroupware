@@ -17,11 +17,6 @@ namespace EGroupware\Api\Egw;
 
 use EGroupware\Api;
 
-// explicitly list old, non-namespaced classes
-// they are only used, if phpgwapi is installed
-use accounts as egw_accounts;
-use egw_session;
-
 /**
  * Egw\Base object used in setup, does not instanciate anything by default
  *
@@ -119,6 +114,12 @@ class Base
 					unset($e);
 					return null;
 				}
+			case 'session':
+				$class = file_exists(EGW_SERVER_ROOT.'/phpgwapi') ? 'egw_session' : 'EGroupware\\Api\\Session';
+				break;
+			case 'accounts':
+				$class = file_exists(EGW_SERVER_ROOT.'/phpgwapi') ? 'accounts' : 'EGroupware\\Api\\Accounts';
+				break;
 			case 'ldap':
 				return $this->ldap = Api\Ldap::factory(false);
 			default:
