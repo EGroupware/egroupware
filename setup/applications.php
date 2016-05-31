@@ -436,7 +436,7 @@ else
 			switch($value['status'])
 			{
 				case 'C':
-					$setup_tpl->set_var('remove', in_array($key, array('api', 'phpgwapi')) ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+					$setup_tpl->set_var('remove', $key == 'api' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 					$setup_tpl->set_var('upgrade','&nbsp;');
 					if (!$GLOBALS['egw_setup']->detection->check_app_tables($value['name']))
 					{
