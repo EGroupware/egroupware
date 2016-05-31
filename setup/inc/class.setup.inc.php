@@ -627,8 +627,11 @@ class setup
 		$this->db->delete(Api\Categories::TABLE, array('cat_appname'=>$appname),__LINE__,__FILE__);
 		Api\Categories::invalidate_cache($appname);
 
-		// Remove config
-		$this->db->delete(Api\Config::TABLE, array('config_app'=>$appname),__LINE__,__FILE__);
+		// Remove config, if we are not deinstalling old phpgwapi (as that's global api config!)
+		if ($appname != 'phpgwapi')
+		{
+			$this->db->delete(Api\Config::TABLE, array('config_app'=>$appname),__LINE__,__FILE__);
+		}
 		//echo 'DELETING application: ' . $appname;
 		$this->db->delete($this->applications_table,array('app_name'=>$appname),__LINE__,__FILE__);
 
