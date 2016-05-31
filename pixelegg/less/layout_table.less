@@ -80,7 +80,7 @@ table.egwGridView_outer{
                 background-position: -200px;
 
                 font-weight: normal;
-                padding: 3px 0 3px 4px;
+                padding: 3px 1px 3px 4px;
                 border-color: @gray_30;
                 border-left: 0px solid transparent;
                 border-top: 0px solid transparent;
@@ -222,11 +222,12 @@ table.egwGridView_grid{
 
      td {
 
-         // maybe problem width width + height calc
-        padding: 3px 0 3px 3px;
         border-bottom: 1px solid @gray_10;
         color: @gray_100;
-
+		.innerContainer {
+			// Needs to be innerContainer to avoid problem width width + height calc
+		   padding: 3px 0 3px 3px;
+		}
         // Custom fields
         table.customfields{
                 tbody{

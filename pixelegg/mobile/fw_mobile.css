@@ -3600,7 +3600,6 @@ td.message span.message {
 }
 .egwGridView_scrollarea {
   width: 100%;
-  overflow-y: scroll;
   overflow-x: hidden;
 }
 /**
@@ -5249,7 +5248,7 @@ table.egwGridView_outer thead {
 table.egwGridView_outer thead tr th {
   background-position: -200px;
   font-weight: normal;
-  padding: 3px 0 3px 4px;
+  padding: 3px 1px 3px 4px;
   border-color: #B4B4B4;
   border-left: 0px solid transparent;
   border-top: 0px solid transparent;
@@ -5364,9 +5363,11 @@ table.egwGridView_grid tbody tr.focused {
   background-repeat: repeat;
 }
 table.egwGridView_grid tbody td {
-  padding: 3px 0 3px 3px;
   border-bottom: 1px solid #E6E6E6;
   color: #000000;
+}
+table.egwGridView_grid tbody td .innerContainer {
+  padding: 3px 0 3px 3px;
 }
 table.egwGridView_grid tbody td table.customfields tbody {
   border-bottom: 0px;
