@@ -115,7 +115,7 @@ class Base
 				try {
 					return $this->template = new Api\Framework\Template(Api\Framework\Template::get_dir($this->currentapp));
 				}
-				catch (EGroupware\Api\Exception\WrongParameter $e) {
+				catch (Api\Exception\WrongParameter $e) {
 					unset($e);
 					return null;
 				}
