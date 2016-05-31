@@ -35,7 +35,7 @@
  * get_selector();  //returns array
  */
 interface importexport_iface_export_plugin {
-	
+
 	/**
 	 * exports entries according to given definition object.
 	 *
@@ -43,28 +43,28 @@ interface importexport_iface_export_plugin {
 	 * @param importexport_definition $_definition
 	 */
 	public function export($_stream, importexport_definition $_definition);
-	
+
 	/**
 	 * returns translated name of plugin
 	 *
 	 * @return string name
 	 */
 	public static function get_name();
-	
+
 	/**
 	 * returns translated (user) description of plugin
 	 *
 	 * @return string descriprion
 	 */
 	public static function get_description();
-	
+
 	/**
 	 * retruns file suffix for exported file (e.g. csv)
 	 *
 	 * @return string suffix
 	 */
 	public static function get_filesuffix();
-	
+
 	/**
 	 * returns mime type for exported file
 	 *
@@ -86,7 +86,7 @@ interface importexport_iface_export_plugin {
 	 * )
 	 */
 	public function get_options_etpl();
-	
+
 	/**
 	 * returns etemplate name for slectors of this plugin
 	 *
@@ -109,6 +109,5 @@ interface importexport_iface_export_plugin {
 	 *
 	 * @return string;
 	 */
-	public static function get_egw_record_class();
+	//public static function get_egw_record_class();
 } // end of iface_export_plugin
-?>
