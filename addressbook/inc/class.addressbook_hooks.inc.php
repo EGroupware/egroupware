@@ -556,8 +556,10 @@ class addressbook_hooks
 				'fileas' => $bocontacts->fileas_options(),
 				'contact_repository' => $repositories,
 				'geolocation_url' => $geoLocation
-			),
+			)
 		);
+
+		if (empty($config['geolocation_url']))	$ret ['geolocation_url'] = $geoLocation[0]['value'];
 		return $ret;
 	}
 }

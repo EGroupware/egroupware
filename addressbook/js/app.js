@@ -941,8 +941,7 @@ app.classes.addressbook = AppJS.extend(
 		// multiple selection is not supported
 		if (_selected.length>1) return false;
 
-		var url = egw.config('geolocation_url');
-		if (url) url = url[0];
+		var url = this.getGeolocationConfig();
 
 		// exit if no url or invalide url given
 		if (!url || typeof url === 'undefined' || typeof url !== 'string')
@@ -987,8 +986,7 @@ app.classes.addressbook = AppJS.extend(
 	geoLocationUrl: function (_dest_data, _dest_type,_src_data, _src_type)
 	{
 		var dest_type = _dest_type || 'one';
-		var url = egw.config('geolocation_url');
-		if (url) url = url[0];
+		var url = this.getGeolocationConfig();
 
 		// exit if no url or invalide url given
 		if (!url || typeof url === 'undefined' || typeof url !== 'string')
@@ -1071,5 +1069,20 @@ app.classes.addressbook = AppJS.extend(
 			}).sendRequest();
 
 		}
+	},
+
+	/**
+	 * Get geolocation_url stored in config|default url
+	 *
+	 * @returns {String}
+	 */
+	getGeolocationConfig: function()
+	{
+		// This default url should be identical to the first value of geolocation_url array
+		// defined in addressbook_hooks::config
+		var default_url = 'https://maps.here.com/directions/drive{{%rs=/%rs}}%r0,%t0,%z0,%c0{{%d=/%d}}%r1,%t1,%z1+%c1';
+		var geo_url = egw.config('geolocation_url');
+		if (geo_url) geo_url = geo_url[0];
+		return geo_url || default_url;
 	}
 });
