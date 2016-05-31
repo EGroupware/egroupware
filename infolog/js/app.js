@@ -804,6 +804,43 @@ app.classes.infolog = AppJS.extend(
 	},
 
 	/**
+	 * Action handler for context menu change responsible action
+	 *
+	 * We populate the dialog with the current value.
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected
+	 */
+	change_responsible: function(_action, _selected)
+	{
+		var et2 = _selected[0].manager.data.nextmatch.getInstanceManager();
+		var responsible = et2.widgetContainer.getWidgetById('responsible');
+		if(responsible)
+		{
+			responsible.set_value([]);
+			et2.widgetContainer.getWidgetById('responsible_action[title]').set_value('');
+			et2.widgetContainer.getWidgetById('responsible_action[title]').set_class('');
+			et2.widgetContainer.getWidgetById('responsible_action[ok]').set_disabled(_selected.length !== 1);
+			et2.widgetContainer.getWidgetById('responsible_action[add]').set_disabled(_selected.length === 1)
+			et2.widgetContainer.getWidgetById('responsible_action[delete]').set_disabled(_selected.length === 1)
+		}
+
+		if(_selected.length === 1)
+		{
+			var data = egw.dataGetUIDdata(_selected[0].id);
+
+			if(responsible && data && data.data)
+			{
+				et2.widgetContainer.getWidgetById('responsible_action[title]').set_value(data.data.info_subject);
+				et2.widgetContainer.getWidgetById('responsible_action[title]').set_class(data.data.sub_class)
+				responsible.set_value(data.data.info_responsible);
+			}
+		}
+		
+		nm_open_popup(_action, _selected);
+	},
+
+	/**
 	 * Handle encrypted info_desc for print purpose
 	 * and triggers print action after decryption
 	 *

@@ -159,9 +159,13 @@
 						<box id="responsible_popup" class="action_popup prompt">
 							<vbox>
 								<description value="Change responsible" class="promptheader"/>
-								<description value="Select users or groups"/>
-								<listbox type="select-account" id="responsible" rows="5" account_type="both" class="action_popup-content"/>
+								<vbox class="action_popup-content">
+									<description id="responsible_action[title]"/>
+									<description value="Select users or groups"/>
+									<taglist-account id="responsible" rows="5" account_type="both" class=" et2_fullWidth" empty_label="Delegation"/>
+								</vbox>
 								<hbox>
+									<button label="Ok" id="responsible_action[ok]" onclick="nm_submit_popup(this); return false;"/>
 									<button label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"/>
 									<button label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"/>
 									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>

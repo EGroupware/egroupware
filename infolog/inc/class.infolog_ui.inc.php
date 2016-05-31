@@ -1159,6 +1159,7 @@ class infolog_ui
 						'group' => $group,
 						'icon' => 'users',
 						'nm_action' => 'open_popup',
+						'onExecute' => 'javaScript:app.infolog.change_responsible'
 					),
 					'link' => array(
 						'caption' => 'Links',
@@ -1499,7 +1500,7 @@ class infolog_ui
 
 				case 'responsible':
 					list($add_remove, $user_str) = explode('_', $settings, 2);
-					$action_msg = ($add_remove == 'add' ? lang('added') : lang('removed')) . ' ';
+					$action_msg = ($add_remove == 'ok' ? lang('changed') : ($add_remove == 'add' ? lang('added') : lang('removed'))) . ' ';
 					$names = array();
 					$users = explode(',', $user_str);
 					foreach($users as $account_id)
@@ -1507,8 +1508,15 @@ class infolog_ui
 						$names[] = Api\Accounts::username($account_id);
 					}
 					$action_msg .= implode(', ', $names);
-					$function = $add_remove == 'add' ? 'array_merge' : 'array_diff';
-					$entry['info_responsible'] = array_unique($function($entry['info_responsible'], (array)$users));
+					if($add_remove == 'ok')
+					{
+						$entry['info_responsible'] = (array)$users;
+					}
+					else
+					{
+						$function = $add_remove == 'add' ? 'array_merge' : 'array_diff';
+						$entry['info_responsible'] = array_unique($function($entry['info_responsible'], (array)$users));
+					}
 					if($this->bo->write($entry, true,true,true,$skip_notifications))
 					{
 						$success++;
