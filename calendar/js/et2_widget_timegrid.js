@@ -1067,8 +1067,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					}
 				}
 			}
-			return timegrid.options.owner.toString() !== event.options.value.owner.toString() &&
-				!owner_match;
+			return !owner_match;
 		};
 
 		// This binds into the egw action system.  Most user interactions (drag to move, resize)
@@ -1325,21 +1324,40 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 						// Leave the helper there until the update is done
 						var loading = action.ui.helper.clone(true).appendTo($j('body'));
-						var cal_id = source[i].id.split('::');
-						egw().json('calendar.calendar_uiforms.ajax_invite', [
-								cal_id[1],
-								timegrid.options.owner,
-								action.id === 'change_participant' ? self.options.owner : []
-							],
-							function() { loading.remove();}
-						).sendRequest(true);
+
+						// and add a loading icon so user knows something is happening
+						if($j('.calendar_timeDemo',loading).length == 0)
+						{
+							$j('.calendar_calEventHeader',loading).addClass('loading');
+						}
+						else
+						{
+							$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
+						}
+						
+						var event_data = egw.dataGetUIDdata(source[i].id).data;
+						et2_calendar_event.recur_prompt(event_data, function(button_id) {
+							if(button_id === 'cancel' || !button_id)
+							{
+								return;
+							}
+							egw().json('calendar.calendar_uiforms.ajax_invite', [
+									button_id==='series' ? event_data.id : event_data.app_id,
+									timegrid.options.owner,
+									action.id === 'change_participant' ? 
+										jQuery.extend([],source[i].iface.getWidget().getParent().options.owner) :
+										[]
+								],
+								function() { loading.remove();}
+							).sendRequest(true);
+						});
 						// Ok, stop.
 						return false;
 					}
 				}
 			};
 
-			drop_change_participant = mgr.addAction('drop', 'change_participant', egw.lang('Change to'), egw.image('participant'), invite_action,true);
+			drop_change_participant = mgr.addAction('drop', 'change_participant', egw.lang('Move to'), egw.image('participant'), invite_action,true);
 			drop_change_participant.acceptedTypes = ['calendar'];
 			drop_change_participant.hideOnDisabled = true;
 
