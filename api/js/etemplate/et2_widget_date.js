@@ -367,7 +367,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 				{
 					_value = new Date(_value);
 					// Add timezone offset back in, or formatDate will lose those hours
-					var formatDate = new Date(_value + this.date.getTimezoneOffset() * 60 * 1000);
+					var formatDate = new Date(_value.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 					if(this._type == 'date')
 					{
 						_value = jQuery.datepicker.formatDate(this.dateFormat, formatDate);
@@ -421,7 +421,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 				{
 					_value = new Date(_value);
 					// Add timezone offset back in, or formatDate will lose those hours
-					var formatDate = new Date(_value + this.date.getTimezoneOffset() * 60 * 1000);
+					var formatDate = new Date(_value.valueOf() + this.date.getTimezoneOffset() * 60 * 1000);
 					if(this._type == 'date')
 					{
 						_value = jQuery.datepicker.formatDate(this.dateFormat, formatDate);
