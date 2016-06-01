@@ -1216,6 +1216,13 @@ class Account implements \ArrayAccess
 		// add imap credentials
 		$cred_type = $data['acc_imap_username'] == $data['acc_smtp_username'] &&
 			$data['acc_imap_password'] == $data['acc_smtp_password'] ? 3 : 1;
+		// if both passwords are unavailable, they seem identical, do NOT store them together, as they are not!
+		if ($cred_type == 3 && $data['acc_imap_password'] == Credentials::UNAVAILABLE &&
+			$data['acc_imap_password'] == Credentials::UNAVAILABLE &&
+			$data['acc_imap_cred_id'] != $data['acc_smtp_cred_id'])
+		{
+			$cred_type = 1;
+		}
 		Credentials::write($data['acc_id'], $data['acc_imap_username'], $data['acc_imap_password'],
 			$cred_type, $valid_for, $data['acc_imap_cred_id']);
 		// add smtp credentials if necessary and different from imap
@@ -1224,6 +1231,11 @@ class Account implements \ArrayAccess
 			Credentials::write($data['acc_id'], $data['acc_smtp_username'], $data['acc_smtp_password'],
 				2, $valid_for, $data['acc_smtp_cred_id'] != $data['acc_imap_cred_id'] ?
 					$data['acc_smtp_cred_id'] : null);
+		}
+		// delete evtl. existing SMTP credentials, after storing IMAP&SMTP together now
+		elseif ($data['acc_smtp_cred_id'])
+		{
+			Credentials::delete($data['acc_id'], $valid_for, Credentials::SMTP, true);
 		}
 		// store or delete admin credentials
 		if ($data['acc_imap_admin_username'] && $data['acc_imap_admin_password'])
@@ -1263,7 +1275,7 @@ class Account implements \ArrayAccess
 	 *
 	 * @param array|Account $account
 	 * @param int $account_id =null
-	 * @return boolean
+	 * @return int account_id for whom credentials are valid or 0 for all
 	 */
 	protected static function credentials_valid_for($account, $account_id=null)
 	{
