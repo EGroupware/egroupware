@@ -73,15 +73,15 @@ spl_autoload_register(function($class)
 		file_exists($file = EGW_INCLUDE_ROOT.'/api/inc/class.'.$class.'.inc.php') ||
 		// classes using the new naming schema app_class_name, eg. admin_cmd
 		isset($components[0]) && file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$app.'_'.$components[0].'.inc.php') ||
-		// classes with an underscore in their name
-		!isset($GLOBALS['egw_info']['apps'][$app]) && isset($GLOBALS['egw_info']['apps'][$app . '_' . $components[0]]) &&
-			file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0].'/inc/class.'.$class.'.inc.php') ||
 		// eGW api classes using the old naming schema, eg. html
 		file_exists($file = EGW_API_INC.'/class.'.$class.'.inc.php') ||
 		// eGW api classes containing multiple classes in on file, eg. egw_exception
 		isset($components[0]) && file_exists($file = EGW_API_INC.'/class.'.$app.'_'.$components[0].'.inc.php') ||
 		// eGW eTemplate classes using the old naming schema, eg. etemplate
 		file_exists($file = EGW_INCLUDE_ROOT.'/etemplate/inc/class.'.$class.'.inc.php') ||
+		// classes with an underscore in their name
+		!file_exists(EGW_INCLUDE_ROOT.'/'.$app) && file_exists(EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0]) &&
+			file_exists($file = EGW_INCLUDE_ROOT.'/'.$app.'_'.$components[0].'/inc/class.'.$class.'.inc.php') ||
 		// include PEAR and PSR0 classes from include_path
 		// need to use include (not include_once) as eg. a previous included EGW_API_INC/horde/Horde/String.php causes
 		// include_once('Horde/String.php') to return true, even if the former was included with an absolute path
