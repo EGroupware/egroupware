@@ -1522,7 +1522,9 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 			var widget = this.columns[i].widget;
 			var colName = this._getColumnName(widget);
-			if(column_list.indexOf(colName) !== -1)
+			if(column_list.indexOf(colName) !== -1 &&
+				typeof visibility[columnMgr.columns[i].id] !== 'undefined'
+			)
 			{
 				visibility[columnMgr.columns[i].id].visible = true;
 			}
