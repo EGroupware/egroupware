@@ -2599,13 +2599,14 @@ td.avatar {
 	background-size: 35px 35px;
 	background-repeat: no-repeat;
 	background-position: center;
-
 	bottom:25%;
 	top:25%;
 }
 .avatar img{
 	padding-top:0 !important;
 	width:50px;
+	border:none;
+	box-shadow: none;
 }
 
 .et2_searchbox {
