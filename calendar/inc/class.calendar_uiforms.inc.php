@@ -2931,7 +2931,7 @@ class calendar_uiforms extends calendar_ui
 			unset($event['id']);
 
 			$messages = null;
-			$conflicts = $this->bo->update($event,false,true,false,true,$messages);
+			$conflicts = $this->bo->update($event,true,true,false,true,$messages);
 			if (!is_array($conflicts) && $conflicts)
 			{
 				// now we need to add the original start as recur-execption to the series
@@ -2961,18 +2961,14 @@ class calendar_uiforms extends calendar_ui
 		}
 		$conflicts=$this->bo->update($event,false, true, false, true, $message);
 
-		$this->update_client($event['id'],$d);
 		$response = Api\Json\Response::get();
-		if(!is_array($conflicts) && $conflicts)
+
+		if (is_array($conflicts) && $conflicts)
 		{
-			if(is_int($conflicts))
-			{
-				$event['id'] = $conflicts;
-				$response->call('egw.refresh', '','calendar',$event['id'],'edit');
-			}
-		}
-		else if ($conflicts)
-		{
+			// Save it anyway, was done with explicit user interaction,
+			// and if we don't we lose the invite
+			$this->bo->update($event,true);	// no conflict check here
+			$this->update_client($event['id'],$d);
 			$response->call(
 				'egw_openWindowCentered2',
 				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit
@@ -2986,6 +2982,18 @@ class calendar_uiforms extends calendar_ui
 		else if ($message)
 		{
 			$response->call('egw.message',  implode('<br />', $message));
+		}
+		if($conflicts)
+		{
+			$this->update_client($event['id'],$d);
+			if(is_int($conflicts))
+			{
+				$event['id'] = $conflicts;
+			}
+			if($event['id'])
+			{
+				$response->call('egw.refresh', '','calendar',$event['id'],'edit');
+			}
 		}
 	}
 

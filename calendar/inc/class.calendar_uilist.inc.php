@@ -396,7 +396,6 @@ class calendar_uilist extends calendar_ui
 				(count($search_params['users']) == 1 ? $this->bo->participant_name($search_params['users'][0]).': ' : '') .
 				$label);
 		}
-		error_log(__METHOD__ . ' ' .array2string($search_params));
 		foreach((array) $this->bo->search($search_params, !empty($col_filter) ? $col_filter : null) as $event)
 		{
 

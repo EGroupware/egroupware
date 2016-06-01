@@ -837,10 +837,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			this.day_list = this._calculate_day_list(this.options.start_date, this.options.end_date, this.options.show_weekend);
 		}
 		// For a single day, we show each owner in their own daycol
-		var daily_owner = this.day_list.length === 1 &&
+		this.daily_owner = this.day_list.length === 1 &&
 			this.options.owner.length > 1 &&
 			this.options.owner.length < (parseInt(egw.preference('day_consolidate','calendar')) || 6);
-		var daycols_needed = daily_owner ? this.options.owner.length : this.day_list.length;
+		var daycols_needed = this.daily_owner ? this.options.owner.length : this.day_list.length;
 		var day_width = ( Math.min( $j(this.getInstanceManager().DOMContainer).width(),this.days.width())/daycols_needed);
 		if(!day_width || !this.day_list)
 		{
@@ -856,7 +856,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 		while(daycols_needed > this.day_widgets.length)
 		{
-			var existing_index = this.day_widgets[add_index] && !daily_owner ? this.day_list.indexOf(this.day_widgets[add_index].options.date) : -1;
+			var existing_index = this.day_widgets[add_index] && !this.daily_owner ?
+				this.day_list.indexOf(this.day_widgets[add_index].options.date) :
+				-1;
 			before = existing_index > add_index;
 
 			var day = et2_createWidget('calendar-daycol',{
@@ -920,7 +922,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 			// Position
 			day.set_left((day_width * i) + 'px');
-			if(daily_owner)
+			if(this.daily_owner)
 			{
 				// Each 'day' is the same date, different user
 				day.set_id(this.day_list[0]+'-'+this.options.owner[i]);
@@ -945,7 +947,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		// Don't hold on to value any longer, use the data cache for best info
 		this.value = {};
 
-		if(daily_owner)
+		if(this.daily_owner)
 		{
 			this.set_label('');
 		}
@@ -1038,6 +1040,11 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			return;
 		}
 
+		// This binds into the egw action system.  Most user interactions (drag to move, resize)
+		// are handled internally using jQuery directly.
+		var widget_object = this._actionObject || parent.getObjectById(this.id);
+		var aoi = new et2_action_object_impl(this,this.getDOMNode());
+
 		for(var i = 0; i < parent.children.length; i++)
 		{
 			var parent_finder = jQuery(parent.children[i].iface.doGetDOMNode()).find(this.div);
@@ -1053,11 +1060,11 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			var event = event.iface.getWidget();
 			var timegrid = target.iface.getWidget() || false;
 			if(event === timegrid || !event || !timegrid ||
-				!event.options.value.owner || !timegrid.options.owner ) return false;
+				!event.options || !event.options.value.participants || !timegrid.options.owner ) return false;
 			var owner_match = false;
-			if(event.options.value.participants)
+			for(var id in event.options.value.participants)
 			{
-				for(var id in event.options.value.participants)
+				if(!timegrid.daily_owner)
 				{
 					if(timegrid.options.owner === id ||
 						timegrid.options.owner.indexOf &&
@@ -1066,14 +1073,23 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 						owner_match = true;
 					}
 				}
+				else
+				{
+					timegrid.iterateOver(function(col) {
+						if(col.div.has(timegrid.gridHover).length)
+						{
+							owner_match = owner_match || col.options.owner.indexOf(id) !== -1;
+						}
+					}, this, et2_calendar_daycol);
+				}
 			}
-			return !owner_match;
-		};
+			var enabled = !owner_match;
+			widget_object.getActionLink('invite').enabled = enabled;
+			widget_object.getActionLink('change_participant').enabled = enabled;
 
-		// This binds into the egw action system.  Most user interactions (drag to move, resize)
-		// are handled internally using jQuery directly.
-		var widget_object = this._actionObject || parent.getObjectById(this.id);
-		var aoi = new et2_action_object_impl(this,this.getDOMNode());
+			// If invite or change participant are enabled, drag is not
+			widget_object.getActionLink('egw_link_drop').enabled = !enabled;
+		};
 
 		aoi.doTriggerEvent = function(_event, _data) {
 			// Determine target node
@@ -1096,8 +1112,16 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				}
 				this.getWidget()._event_drop.call($j('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],this.getWidget(),event, _data.ui, dropEnd);
 			}
-			var drag_listener = function(event, ui) {
+			var drag_listener = function(_event, ui) {
 				aoi.getWidget()._drag_helper($j('.calendar_d-n-d_timeCounter',ui.helper)[0],ui.helper[0],0);
+				if(aoi.getWidget().daily_owner)
+				{
+					_invite_enabled(
+						widget_object.getActionLink('invite').actionObj,
+						event,
+						widget_object
+					);
+				}
 			};
 			var time = $j('.calendar_d-n-d_timeCounter',_data.ui.helper);
 			switch(_event)
@@ -1121,17 +1145,14 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					{
 						event = false;
 					}
-					var enabled = event ? _invite_enabled(
-						widget_object.getActionLink('invite').actionObj,
-						event,
-						widget_object
-					) : false;
-
-					widget_object.getActionLink('invite').enabled = enabled;
-					widget_object.getActionLink('change_participant').enabled = enabled;
-
-					// If invite or change participant are enabled, drag is not
-					widget_object.getActionLink('egw_link_drop').enabled = !enabled;
+					if(event)
+					{
+						_invite_enabled(
+							widget_object.getActionLink('invite').actionObj,
+							event,
+							widget_object
+						);
+					}
 
 					if(time.length)
 					{
@@ -1341,9 +1362,20 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 							{
 								return;
 							}
+							var add_owner = jQuery.extend([],timegrid.options.owner);
+							if(timegrid.daily_owner)
+							{
+								timegrid.iterateOver(function(col) {
+									if(col.div.has(timegrid.gridHover).length)
+									{
+										add_owner = col.options.owner;
+									}
+								}, this, et2_calendar_daycol);
+							}
+							debugger;
 							egw().json('calendar.calendar_uiforms.ajax_invite', [
 									button_id==='series' ? event_data.id : event_data.app_id,
-									timegrid.options.owner,
+									add_owner,
 									action.id === 'change_participant' ? 
 										jQuery.extend([],source[i].iface.getWidget().getParent().options.owner) :
 										[]
