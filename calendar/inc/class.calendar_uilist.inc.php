@@ -244,20 +244,21 @@ class calendar_uilist extends calendar_ui
 	{
 		unset($readonlys);	// not used;
 		//echo "uilist::get_rows() params="; _debug_array($params);
+		$this->filter = $params['filter'];
 		if ($params['filter'] == 'custom')
 		{
 			if (!$params['startdate'] && !$params['enddate'])
 			{
-				$params['filter'] = 'all';
+				$this->filter = 'all';
 			}
 			elseif (!$params['startdate'])
 			{
-				$params['filter'] = 'before';
+				$this->filter = 'before';
 				$this->manage_states(array('date' => $this->bo->date2string($params['enddate'])));
 			}
 			elseif (!$params['enddate'])
 			{
-				$params['filter'] = 'after';
+				$this->filter = 'after';
 				$this->manage_states(array('date' => $this->bo->date2string($params['startdate'])));
 			}
 		}
@@ -293,7 +294,7 @@ class calendar_uilist extends calendar_ui
 		}
 		$search_params = array(
 			'cat_id'  => $params['cat_id'] ? $params['cat_id'] : 0,
-			'filter'  => isset($params['filter']) ? $params['filter'] : $this->filter,
+			'filter'  => $this->filter,
 			'query'   => $params['search'],
 			'offset'  => (int) $params['start'],
 			'num_rows'=> $params['num_rows'],
@@ -303,7 +304,7 @@ class calendar_uilist extends calendar_ui
 		// Non-blocking events above blocking
 		$search_params['order'] .= ', cal_non_blocking DESC';
 
-		switch($params['filter'])
+		switch($this->filter)
 		{
 			case 'all':
 				break;
