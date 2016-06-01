@@ -75,7 +75,6 @@
 	<template id="mail.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="25"/>
 				<column width="20"/>
 				<column width="20"/>
 				<column width="40%"/>
@@ -88,7 +87,6 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader label="ID" id="uid" readonly="true"/>
 					<nextmatch-header statustext="Status" label="St." id="status"/>
 					<nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
 					<nextmatch-sortheader label="subject" id="subject"/>
@@ -100,7 +98,6 @@
 					<nextmatch-sortheader align="center" label="size" id="size"/>
 				</row>
 				<row class="$row_cont[class]">
-					<description id="${row}[uid]" no_lang="1" readonly="true"/>
 					<description span="1" class="status_img"/>
 					<html id="${row}[attachments]"/>
 					<vbox>

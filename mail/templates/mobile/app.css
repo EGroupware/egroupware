@@ -50,7 +50,7 @@ tr.mail div {
   cursor: default;
   white-space: nowrap;
 }
-tr.mail {
+tr.mail td:first-child {
   border-left: 6px solid white;
 }
 tr.mail a {
@@ -68,28 +68,28 @@ tr.unseen a {
   color: #003075;
   font-weight: bold;
 }
-tr.mail.labelone {
+tr.mail.labelone td:first-child {
   border-left: 6px solid #ff0080 !important;
 }
-tr.mail.labeltwo {
+tr.mail.labeltwo td:first-child {
   border-left: 6px solid  #ff8000 !important;
 }
-tr.mail.labelthree {
+tr.mail.labelthree td:first-child {
   border-left: 6px solid  #008000 !important;
 }
-tr.mail.labelfour {
+tr.mail.labelfour td:first-child {
   border-left: 6px solid #0000ff !important;
 }
-tr.mail.labelfive {
+tr.mail.labelfive td:first-child {
   border-left: 6px solid #8000ff !important;
 }
-tr.mail.flagged {
+tr.mail.flagged td:first-child {
   border-left: 6px solid #ff0000 !important;
 }
-tr.mail.prio_high {
+tr.mail.prio_high td:first-child {
   border-left: 6px solid #ac0000 !important;
 }
-tr.mail.deleted {
+tr.mail.deleted td:first-child {
   border-left: 6px solid silver;
   text-decoration: line-through;
 }
@@ -1724,28 +1724,28 @@ tr.unseen a {
   color: #003075;
   font-weight: bold;
 }
-tr.mail.labelone {
+tr.mail.labelone td:first-child {
   border-left: 6px solid #ff0080 !important;
 }
-tr.mail.labeltwo {
+tr.mail.labeltwo td:first-child {
   border-left: 6px solid #ff8000 !important;
 }
-tr.mail.labelthree {
+tr.mail.labelthree td:first-child {
   border-left: 6px solid #008000 !important;
 }
-tr.mail.labelfour {
+tr.mail.labelfour td:first-child {
   border-left: 6px solid #0000ff !important;
 }
-tr.mail.labelfive {
+tr.mail.labelfive td:first-child {
   border-left: 6px solid #8000ff !important;
 }
-tr.mail.flagged {
+tr.mail.flagged td:first-child {
   border-left: 6px solid #ff0000 !important;
 }
-tr.mail.prio_high {
+tr.mail.prio_high td:first-child {
   border-left: 6px solid #ac0000 !important;
 }
-tr.mail.deleted {
+tr.mail.deleted td:first-child {
   border-left: 6px solid silver;
   text-decoration: line-through;
 }
