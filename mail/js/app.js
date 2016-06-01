@@ -385,8 +385,10 @@ app.classes.mail = AppJS.extend(
 					case 'add':
 						tree.refreshItem(0);	// refresh root
 						break;
+					default: // null
 				}
 		}
+		return undefined;
 	},
 
 	/**
@@ -4739,7 +4741,7 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Window title getter function in order to set the window title
 	 *
-	 * @returns {string} window title
+	 * @returns {string|undefined} window title
 	 */
 	getWindowTitle: function ()
 	{
@@ -4755,6 +4757,7 @@ app.classes.mail = AppJS.extend(
 				if (widget) return widget.get_value();
 				break;
 		}
+		return undefined;
 	},
 
 	/**
