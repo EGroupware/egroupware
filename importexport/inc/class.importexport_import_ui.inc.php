@@ -37,7 +37,6 @@ use EGroupware\Api\Etemplate;
 
 		public function __construct() {
 			$this->plugins = importexport_helper_functions::get_plugins('all','import');
-			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		}
 
 		/**
@@ -271,21 +270,6 @@ use EGroupware\Api\Etemplate;
 			}
 
 			return $options;
-		}
-
-		/**
-		* Get definitions via ajax
-		*/
-		public function ajax_get_definitions($appname, $file=null) {
-			$options = self::get_select_options(array('appname'=>$appname, 'file'=>$file));
-			$response = new xajaxResponse();
-			$response->addScript("clear_options('exec[definition]');");
-			if(is_array($options['definition'])) {
-				foreach ($options['definition'] as $value => $title) {
-					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',false);");
-				}
-			}
-			return $response->getXML();
 		}
 
 		/**

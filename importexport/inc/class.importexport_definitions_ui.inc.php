@@ -52,13 +52,6 @@ class importexport_definitions_ui
 	 */
 	var $plugin;
 
-	/**
-	 * xajax response object
-	 *
-	 * @var object
-	 */
-	var $response = true;
-
 	function __construct()
 	{
 		// we cant deal with notice and warnings, as we are on ajax!

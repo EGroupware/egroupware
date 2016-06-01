@@ -40,7 +40,6 @@ class importexport_export_ui {
 		Framework::includeJS('.','importexport','importexport');
 		$this->user = $GLOBALS['egw_info']['user']['user_id'];
 		$this->export_plugins = importexport_helper_functions::get_plugins('all','export');
-		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 
 	}
 
@@ -400,38 +399,6 @@ class importexport_export_ui {
 		}
 		//error_log(print_r($content,true));
 		return $et->exec(self::_appname. '.importexport_export_ui.export_dialog',$content,$sel_options,$readonlys,$preserv,2);
-	}
-
-	public function ajax_get_definitions($_appname, xajaxResponse &$response = null) {
-		if(is_null($response)) {
-			$response = new xajaxResponse();
-		} else {
-			$no_return = true;
-		}
-		if (!$_appname) {
-			$response->jquery('tr.select_definition','hide');
-			return $no_return ? '' : $response->getXML();
-		}
-
-		$definitions = new importexport_definitions_bo(array(
-			'type' => 'export',
-			'application' => $_appname
-		));
-		foreach ((array)$definitions->get_definitions() as $identifier) {
-			try {
-				$definition = new importexport_definition($identifier);
-			} catch (Exception $e) {
-				// Permission error
-				continue;
-			}
-				if ($title = $definition->get_title()) {
-					if (!$selected_plugin) $selected_plugin = $title;
-					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',".($selected_plugin == $title ? 'true' : 'false').");");
-				}
-				unset($definition);
-		}
-		unset($definitions);
-		$response->addScript("selectbox_add_option('exec[definition]','" . lang('Expert options') . "', 'expert',".($selected_plugin == $title ? 'true' : 'false').");");
 	}
 
 	public function ajax_get_definition_description($_definition) {
