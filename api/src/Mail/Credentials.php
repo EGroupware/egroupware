@@ -271,7 +271,7 @@ class Credentials
 		// check if password is unavailable (admin edits an account with password encrypted with users session PW) and NOT store it
 		if ($password == self::UNAVAILABLE)
 		{
-			error_log(__METHOD__."(".array2string(func_get_args()).") can NOT store unavailable password, storing without password!");
+			//error_log(__METHOD__."(".array2string(func_get_args()).") can NOT store unavailable password, storing without password!");
 			unset($data['cred_password'], $data['cred_pw_enc']);
 		}
 		//error_log(__METHOD__."($acc_id, '$username', '$password', $type, $account_id, $cred_id, $mcrypt) storing ".array2string($data).' '.function_backtrace());
