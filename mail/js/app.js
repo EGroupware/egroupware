@@ -261,7 +261,13 @@ app.classes.mail = AppJS.extend(
 				});
 
 				//Resize compose after window resize to not getting scrollbar
-				jQuery(window).on ('resize',function() {
+				jQuery(window).on ('resize',function(e) {
+					// Stop immediately the resize event if we are in mobile template
+					if (egwIsMobile())
+					{
+						e.stopImmediatePropagation();
+						return false;
+					}
 					that.compose_resizeHandler();
 				});
 
@@ -4091,7 +4097,7 @@ app.classes.mail = AppJS.extend(
 		// which is more convenient on small devices. Also resize mailbody with
 		// ckeditor may causes performance regression, especially on devices with
 		// very limited resources and slow proccessor.
-		if (egwIsMobile()) return;
+		if (egwIsMobile()) return false;
 
 		try {
 			var bodyH = egw_getWindowInnerHeight();
