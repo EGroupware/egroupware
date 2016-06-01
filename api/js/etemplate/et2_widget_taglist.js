@@ -726,7 +726,16 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 	 */
 	set_value: function(value)
 	{
-		if (value === '' || value === null) value = [];
+
+		if (value === '' || value === null)
+		{
+			value = [];
+		}
+		else if (typeof value === 'string' && this.options.multiple)
+		{
+			value = value.split(',');
+		}
+
 		var values = jQuery.isArray(value) ? jQuery.extend([],value) : [value];
 
 		if(!value && this.taglist)
