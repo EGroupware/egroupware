@@ -236,7 +236,6 @@ tr.dialogHeader4{
 
 .et2_tabheader {
     padding-left: 0em;
-    border-bottom: 3px solid @gray_10;
     margin: 0;
     background-image: none;
     background-color: @gray_0;
@@ -246,7 +245,7 @@ tr.dialogHeader4{
 }
 .et2_tabflag {border:none;}
 .et2_tabflag, .etemplate_tab > div, .etemplate_tab_active > div {
-    margin: 1em 3px -1px 0;
+    margin: 1em 5px -1px 0;
     padding: 4px;
     background-color: white;
     -webkit-user-select: none;
@@ -256,8 +255,11 @@ tr.dialogHeader4{
 	border-bottom:3px solid @gray_10;
 	margin-bottom:-3px;
    &:hover {
-        .background_color_egw_lighter;
+        .background_color_10_gray;
 		border:none;
+		border-bottom: 3px solid @gray_60;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
     }
 }
 td.etemplate_tab_active.th {
@@ -283,10 +285,12 @@ td.etemplate_tab_active.th {
 .et2_tabs, .tab_body {
 	border:none;
     border-bottom:1px solid @gray_10;
+	border-top: 1px solid @gray_10;
     padding: 5px;
     background-color: @gray_0;
     margin-bottom: 11px;
-	margin-top:11px;
+	margin-top:3px;
+	padding-top: 15px;
 }
 
 .tab_body {

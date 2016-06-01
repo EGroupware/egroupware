@@ -3014,7 +3014,6 @@ tr.dialogHeader4 .et2_label {
  */
 .et2_tabheader {
   padding-left: 0em;
-  border-bottom: 3px solid #E6E6E6;
   margin: 0;
   background-image: none;
   background-color: #FFFFFF;
@@ -3028,7 +3027,7 @@ tr.dialogHeader4 .et2_label {
 .et2_tabflag,
 .etemplate_tab > div,
 .etemplate_tab_active > div {
-  margin: 1em 3px -1px 0;
+  margin: 1em 5px -1px 0;
   padding: 4px;
   background-color: white;
   -webkit-user-select: none;
@@ -3041,8 +3040,11 @@ tr.dialogHeader4 .et2_label {
 .et2_tabflag:hover,
 .etemplate_tab > div:hover,
 .etemplate_tab_active > div:hover {
-  background-color: #FFDD73;
+  background-color: #f0f0f0;
   border: none;
+  border-bottom: 3px solid #696969;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 td.etemplate_tab_active.th {
   background-color: transparent;
@@ -3064,10 +3066,12 @@ td.etemplate_tab_active.th {
 .tab_body {
   border: none;
   border-bottom: 1px solid #E6E6E6;
+  border-top: 1px solid #E6E6E6;
   padding: 5px;
   background-color: #FFFFFF;
   margin-bottom: 11px;
-  margin-top: 11px;
+  margin-top: 3px;
+  padding-top: 15px;
 }
 .tab_body {
   border-top-width: 1px;
