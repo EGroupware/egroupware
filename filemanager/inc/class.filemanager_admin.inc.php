@@ -267,7 +267,6 @@ class filemanager_admin extends filemanager_ui
 		$readonlys['url'] = !self::$is_setup;
 
 		$sel_options['allow_delete_versions'] = array(
-			''         => lang('Noone'),
 			'root'     => lang('Superuser (root)'),
 			'admins'   => lang('Administrators'),
 			'everyone' => lang('Everyone'),
