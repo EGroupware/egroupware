@@ -1008,12 +1008,12 @@ window.egw_LAB.wait(function() {
 	/**
 	 * Ajax function to get contact data out of provided account_id
 	 *
-	 * @param type $account_id
+	 * @param string $account_id
 	 */
 	function ajax_get_contact ($account_id)
 	{
 		$bo = new Api\Contacts();
-		$contact = $bo->read('account:'.$account_id[0]);
+		$contact = $bo->read('account:'.$account_id);
 		Api\Json\Response::get()->data($contact);
 	}
 
