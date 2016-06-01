@@ -55,6 +55,11 @@ class emailadmin_credentials
 	const SYSTEM = 2;
 
 	/**
+	 * Returned for passwords, when an admin reads an accounts with a password encrypted with users session password
+	 */
+	const UNAVAILABLE = '**unavailable**';
+
+	/**
 	 * Translate type to prefix
 	 *
 	 * @var array
@@ -249,6 +254,12 @@ class emailadmin_credentials
 			'cred_type' => $type,
 			'cred_pw_enc' => $pw_enc,
 		);
+		// check if password is unavailable (admin edits an account with password encrypted with users session PW) and NOT store it
+		if ($password == self::UNAVAILABLE)
+		{
+			//error_log(__METHOD__."(".array2string(func_get_args()).") can NOT store unavailable password, storing without password!");
+			unset($data['cred_password'], $data['cred_pw_enc']);
+		}
 		//error_log(__METHOD__."($acc_id, '$username', '$password', $type, $account_id, $cred_id, $mcrypt) storing ".array2string($data).' '.function_backtrace());
 		if ($cred_id > 0)
 		{
@@ -276,9 +287,10 @@ class emailadmin_credentials
 	 * @param int $acc_id
 	 * @param int|array $account_id =null
 	 * @param int $type =self::ALL self::IMAP, self::SMTP or self::ADMIN
+	 * @param boolean $exact_type =false true: delete only cred_type=$type, false: delete cred_type&$type
 	 * @return int number of rows deleted
 	 */
-	public static function delete($acc_id, $account_id=null, $type=self::ALL)
+	public static function delete($acc_id, $account_id=null, $type=self::ALL, $exact_type=false)
 	{
 		if (!($acc_id > 0) && !isset($account_id))
 		{
@@ -287,8 +299,14 @@ class emailadmin_credentials
 		$where = array();
 		if ($acc_id > 0) $where['acc_id'] = $acc_id;
 		if (isset($account_id)) $where['account_id'] = $account_id;
-		if ($type != self::ALL) $where[] = '(cred_type & '.(int)$type.') > 0';	// postgreSQL require > 0, or gives error as it expects boolean
-
+		if ($exact_type)
+		{
+			$where['cred_type'] = $type;
+		}
+		elseif ($type != self::ALL)
+		{
+			$where[] = '(cred_type & '.(int)$type.') > 0';	// postgreSQL require > 0, or gives error as it expects boolean
+		}
 		self::$db->delete(self::TABLE, $where, __LINE__, __FILE__, self::APP);
 
 		// invalidate cache: we allways unset everything about an account to simplify cache handling
@@ -345,6 +363,11 @@ class emailadmin_credentials
 				return base64_decode($row['cred_password']);
 
 			case self::USER:
+				if ($row['account_id'] != $GLOBALS['egw_info']['user']['account_id'])
+				{
+					return self::UNAVAILABLE;
+				}
+				// fall through
 			case self::SYSTEM:
 				if (($row['cred_pw_enc'] != self::USER || !$mcrypt) &&
 					!($mcrypt = self::init_crypt($row['cred_pw_enc'] == self::USER)))
