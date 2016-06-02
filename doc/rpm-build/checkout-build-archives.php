@@ -35,13 +35,19 @@ $config = array(
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	*/
 	'extra' => array('stylite', 'esyncpro', 'archive'),	// create an extra archive for given apps
+		// these apps are placed in egroupware-epl-contrib archive
+		//'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sambaadmin', 'sitemgr', 'phpfreechat')),
 	'aliasdir' => 'egroupware',             // directory created by the alias
-	'types' => array('tar.bz2','tar.gz','zip'),
+	'types' => array('tar.bz2','tar.gz','zip','all.tar.bz2'),
+	// add given extra-apps or (uncompressed!) archives to above all.tar.bz2 archive
+	'all-add' => array(/*'contrib',*/ '/home/stylite/epl-trunk/phpfreechat_data_public.tar'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),
 	'tar' => trim(`which tar`),
 	'mv' => trim(`which mv`),
+	'rm' => trim(`which rm`),
 	'zip' => trim(`which zip`),
+	'bzip2' => trim(`which bzip2`),
 	'clamscan' => trim(`which clamscan`),
 	'freshclam' => trim(`which freshclam`),
 	'git' => trim(`which git`),
@@ -218,11 +224,15 @@ function get_modules_per_repo()
 	{
 		throw new Exception("$path not found!");
 	}
-	$module = null;
+	$module = $baseurl = null;
 	$modules = array();
 	foreach(explode("\n", $mrconfig) as $line)
 	{
 		$matches = null;
+		if (isset($baseurl))
+		{
+			$line = str_replace("\$(git config --get remote.origin.url|sed 's|/egroupware.git||')", $baseurl, $line);
+		}
 		if ($line && $line[0] == '[' && preg_match('/^\[([^]]*)\]/', $line, $matches))
 		{
 			if (in_array($matches[1], array('DEFAULT', 'api/js/ckeditor', 'api/src/Accounts/Ads', 'phpgwapi/js/ckeditor', 'phpgwapi/inc/adldap')))
@@ -232,11 +242,12 @@ function get_modules_per_repo()
 			}
 			$module = (string)$matches[1];
 		}
-		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git clone (-b [0-9.]+)? (git[^ ]+)|svn checkout ((svn|http)[^ ]+))/', $line, $matches))
+		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git\s+clone\s+(-b\s+[0-9.]+\s+)?((git|http)[^ ]+)|svn\s+checkout\s+((svn|http)[^ ]+))/', $line, $matches))
 		{
-			$repo = $url = substr($matches[1], 0, 3) == 'svn' ? $matches[4] : $matches[3];
+			$repo = $url = substr($matches[1], 0, 3) == 'svn' ? $matches[5] : $matches[3];
 			if (substr($matches[1], 0, 3) == 'svn') $repo = preg_replace('#/(trunk|branches)/.*$#', '', $repo);
 			$modules[$repo][$config['aliasdir'].($module ? '/'.$module : '')] = $url;
+			if ($module === '' && !isset($baseurl)) $baseurl = str_replace('/egroupware.git', '', $url);
 		}
 	}
 	if ($verbose) print_r($modules);
@@ -559,7 +570,7 @@ function do_editchangelog()
  * @param string $log_pattern =null	a preg regular expression or start of line a log message must match, to be returned
  * 	if regular perl regular expression given only first expression in brackets \\1 is used,
  * 	for a start of line match, only the first line is used, otherwise whole message is used
- * @param string $revision =null from which to HEAD the log should be retrieved, default search revision of latest tag in ^/tags
+ * @param string& $revision =null from which to HEAD the log should be retrieved, default search revision of latest tag in ^/tags
  * @param string $prefix ='* ' prefix, which if not presend should be added to all log messages
  * @return string with changelog
  */
@@ -662,11 +673,12 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 	array_shift($output);	// remove the command
 
 	$xml = simplexml_load_string($output=implode("\n",$output));
+	$is_regexp = $pattern[0] == substr($pattern, -1);
 	foreach($xml as $log)
 	{
 		//print_r($log);
-		if ($pattern[0] != '/' && strpos($log->paths->path, $pattern) !== false ||
-			$pattern[0] == '/' && preg_match($pattern, $log->paths->path, $matches))
+		if (!$is_regexp && strpos($log->paths->path, $pattern) !== false ||
+			$is_regexp && preg_match($pattern, $log->paths->path, $matches))
 		{
 			if ($verbose) echo "Revision {$log['revision']} matches".($matches?': '.$matches[1] : '')."\n";
 			return (int)$log['revision'];
@@ -860,11 +872,20 @@ function do_create()
 
 	if($config['extra'])
 	{
-		foreach($config['extra'] as $key => $module)
+		$exclude = $exclude_all = array();
+		foreach($config['extra'] as $name => $modules)
 		{
-			if (strpos($module,'/') !== false) $config['extra'][$key] = basename($module);
+			foreach((array)$modules as $module)
+			{
+				$exclude[] = basename($module);
+				if (!empty($config['all-add']) && !in_array($module, $config['all-add']) && (is_int($name) || !in_array($name, $config['all-add'])))
+				{
+					$exclude_all[] = basename($module);
+				}
+			}
 		}
-		$exclude_extra = ' --exclude=egroupware/'.implode(' --exclude=egroupware/',$config['extra']);
+		$exclude_extra = ' --exclude=egroupware/'.implode(' --exclude=egroupware/', $exclude);
+		$exclude_all_extra =  $exclude_all ? ' --exclude=egroupware/'.implode(' --exclude=egroupware/', $exclude_all) : '';
 	}
 	foreach($config['types'] as $type)
 	{
@@ -874,32 +895,53 @@ function do_create()
 		$file = $config['sourcedir'].'/'.$config['packagename'].'-'.$config['version'].'.'.$config['packaging'].'.'.$type;
 		switch($type)
 		{
+			case 'all.tar.bz2':	// single tar-ball for debian builds not easily supporting to use multiple
+				$file = $config['sourcedir'].'/'.$config['packagename'].'-all-'.$config['version'].'.'.$config['packaging'].'.tar';
+				$cmd = $config['tar'].' --owner=root --group=root -cf '.$file.$exclude_all_extra.' egroupware';
+				if (!empty($config['all-add']))
+				{
+					foreach((array)$config['all-add'] as $add)
+					{
+						if (substr($add, -4) != '.tar') continue;	// probably a module
+						if (!($tar = realpath($add))) throw new Exception("File '$add' not found!");
+						$cmd .= '; '.$config['tar'].' --owner=root --group=root -Af '.$file.' '.$tar;
+					}
+				}
+				if (file_exists($file.'.bz2')) $cmd .= '; rm -f '.$file.'.bz2';
+				$cmd .= '; '.$config['bzip2'].' '.$file;
+				// run cmd now and continue without adding all tar-ball to sums, as we dont want to publish it
+				run_cmd($cmd);
+				continue 2;
 			case 'tar.bz2':
 			case 'tar.gz':
-				$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.' '.$exclude_extra.' egroupware';
+				$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.$exclude_extra.' egroupware';
 				break;
 			case 'zip':
 				$cmd = file_exists($file) ? $config['rm'].' -f '.$file.'; ' : '';
-				$cmd .= $config['mv'].' egroupware/'.implode(' egroupware/',$config['extra']).' . ;';
+				$cmd .= $config['mv'].' egroupware/'.implode(' egroupware/', $exclude).' . ;';
 				$cmd .= $config['zip'].' -q -r -9 '.$file.' egroupware ;';
-				$cmd .= $config['mv'].' '.implode(' ',$config['extra']).' egroupware';
+				$cmd .= $config['mv'].' '.implode(' ', $exclude).' egroupware';
 				break;
 		}
 		run_cmd($cmd);
 		$sums .= sha1_file($file)."\t".basename($file)."\n";
 
-		foreach($config['extra'] as $module)
+		foreach($config['extra'] as $name => $modules)
 		{
-			$file = $config['sourcedir'].'/'.$config['packagename'].'-'.$module.'-'.$config['version'].'.'.$config['packaging'].'.'.$type;
+			if (is_numeric($name)) $name = $modules;
+			$dirs = ' egroupware/'.implode(' egroupware/', (array)$modules);
+			$file = $config['sourcedir'].'/'.$config['packagename'].'-'.$name.'-'.$config['version'].'.'.$config['packaging'].'.'.$type;
 			switch($type)
 			{
+				case 'all.tar.bz2':
+					break;	// nothing to do
 				case 'tar.bz2':
 				case 'tar.gz':
-					$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.' egroupware/'.$module;
+					$cmd = $config['tar'].' --owner=root --group=root -c'.$tar_type.'f '.$file.$dirs;
 					break;
 				case 'zip':
 					$cmd = file_exists($file) ? $config['rm'].' -f '.$file.'; ' : '';
-					$cmd .= $config['zip'].' -q -r -9 '.$file.' egroupware/'.$module;
+					$cmd .= $config['zip'].' -q -r -9 '.$file.$dirs;
 					break;
 			}
 			run_cmd($cmd);
@@ -958,8 +1000,7 @@ function do_copy()
 	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("cd $config[checkoutdir]; git stash");
 
 	try {
-		$cmd = '/usr/bin/rsync -r --delete --exclude .svn --exclude .git '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
-		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude .mrconfig '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
+		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude .mrconfig --exclude node_modules/ '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
 		run_cmd($cmd);
 	}
 	catch (Exception $e) {
