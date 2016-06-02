@@ -565,7 +565,7 @@ function do_editchangelog()
  * @param string $log_pattern =null	a preg regular expression or start of line a log message must match, to be returned
  * 	if regular perl regular expression given only first expression in brackets \\1 is used,
  * 	for a start of line match, only the first line is used, otherwise whole message is used
- * @param string $revision =null from which to HEAD the log should be retrieved, default search revision of latest tag in ^/tags
+ * @param string& $revision =null from which to HEAD the log should be retrieved, default search revision of latest tag in ^/tags
  * @param string $prefix ='* ' prefix, which if not presend should be added to all log messages
  * @return string with changelog
  */
@@ -579,7 +579,7 @@ function get_changelog_from_svn($branch_url, $log_pattern=null, &$revision=null,
 		list($tags_url,$branch) = preg_split('#/(branches/|trunk)#',$branch_url);
 		if (empty($branch)) $branch = $config['version'];
 		$tags_url .= '/tags';
-		$pattern='/tags\/(14\.3\.[0-9.]+)/';//str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.[0-9.]+)/');
+		$pattern='/tags\/('.preg_quote($config['version'], '/').'\.[0-9.]+)/';
 		$matches = null;
 		$revision = get_last_svn_tag($tags_url,$pattern,$matches);
 		$tag = $matches[1];
