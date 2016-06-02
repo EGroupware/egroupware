@@ -141,7 +141,7 @@ class Link extends Link\Storage
 	 */
 	static $app_register = array(
 		'api-accounts' => array(	// user need run-rights for home
-			'app' => 'home',
+			'app' => 'api',
 			'name' => 'Accounts',
 			'icon' => 'addressbook/accounts',
 			'query' => 'EGroupware\\Api\\Accounts::link_query',
