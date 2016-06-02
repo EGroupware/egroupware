@@ -336,7 +336,7 @@ class module_calendar_planner extends Module
 			$tmpl->exec(__METHOD__, $content,$sel_options, array('__ALL__' => true),array(),2);
 			$html .= ob_get_contents();
 			$html .= '<script>'
-			. '	window.egw_LAB.wait(function() {$j(function() {'
+			. '	window.egw_LAB.wait(function() {jQuery(function() {'
 			. 'app.calendar.set_state(' . json_encode(array(
 					'owner' => $search_params['owner'],
 					'sortby' => $ui->sortby,

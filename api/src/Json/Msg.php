@@ -104,7 +104,7 @@ abstract class Msg
 	}
 
 	/**
-	 * Allows to call a jquery function on a selector with given parameters: $j($selector).$func($parmeters)
+	 * Allows to call a jquery function on a selector with given parameters: jQuery($selector).$func($parmeters)
 	 *
 	 * @param string $selector jquery selector
 	 * @param string $method name of the jquery to call
