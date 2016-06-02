@@ -4539,6 +4539,9 @@ td.message span.message {
   position: relative;
   min-height: 18px;
   background-color: #FFFFFF;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .egw_fw_ui_sidemenu_listitem:hover {
   color: #000000;

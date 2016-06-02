@@ -1529,9 +1529,9 @@ div.message.floating {
 }
 .sidebox-favorites .favorites div.ui-icon-heart {
   position: relative;
-  float: left;
+  vertical-align: middle;
   display: inline-block;
-  margin: -2px 1px 0px 1px;
+  margin: -1px 1px 0px 1px;
 }
 .sidebox-favorites .favorites div.ui-icon-trash {
   margin-top: -5px;
