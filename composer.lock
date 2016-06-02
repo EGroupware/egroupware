@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5b33779bf01f47934692a782730827c0",
-    "content-hash": "544d779540f319f5180df8e085e2fe80",
+    "hash": "a1fb9e8c63ad53c630a9eeabdb97d3ac",
+    "content-hash": "7cab728fe2b7e0f8619f1f8aab9722c4",
     "packages": [
         {
             "name": "pear-pear.horde.org/Horde_Compress",
