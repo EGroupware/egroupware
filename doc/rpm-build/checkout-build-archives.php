@@ -224,11 +224,15 @@ function get_modules_per_repo()
 	{
 		throw new Exception("$path not found!");
 	}
-	$module = null;
+	$module = $baseurl = null;
 	$modules = array();
 	foreach(explode("\n", $mrconfig) as $line)
 	{
 		$matches = null;
+		if (isset($baseurl))
+		{
+			$line = str_replace("\$(git config --get remote.origin.url|sed 's|/egroupware.git||')", $baseurl, $line);
+		}
 		if ($line && $line[0] == '[' && preg_match('/^\[([^]]*)\]/', $line, $matches))
 		{
 			if (in_array($matches[1], array('DEFAULT', 'api/js/ckeditor', 'api/src/Accounts/Ads', 'phpgwapi/js/ckeditor', 'phpgwapi/inc/adldap')))
@@ -238,11 +242,12 @@ function get_modules_per_repo()
 			}
 			$module = (string)$matches[1];
 		}
-		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git clone (-b [0-9.]+)? (git[^ ]+)|svn checkout ((svn|http)[^ ]+))/', $line, $matches))
+		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git\s+clone\s+(-b\s+[0-9.]+\s+)?((git|http)[^ ]+)|svn\s+checkout\s+((svn|http)[^ ]+))/', $line, $matches))
 		{
 			$repo = $url = substr($matches[1], 0, 3) == 'svn' ? $matches[4] : $matches[3];
 			if (substr($matches[1], 0, 3) == 'svn') $repo = preg_replace('#/(trunk|branches)/.*$#', '', $repo);
 			$modules[$repo][$config['aliasdir'].($module ? '/'.$module : '')] = $url;
+			if ($module === '' && !isset($baseurl)) $baseurl = str_replace('/egroupware.git', '', $url);
 		}
 	}
 	if ($verbose) print_r($modules);
@@ -667,11 +672,12 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 	array_shift($output);	// remove the command
 
 	$xml = simplexml_load_string($output=implode("\n",$output));
+	$is_regexp = $pattern[0] == substr($pattern, -1);
 	foreach($xml as $log)
 	{
 		//print_r($log);
-		if ($pattern[0] != '/' && strpos($log->paths->path, $pattern) !== false ||
-			$pattern[0] == '/' && preg_match($pattern, $log->paths->path, $matches))
+		if (!$is_regexp && strpos($log->paths->path, $pattern) !== false ||
+			$is_regexp && preg_match($pattern, $log->paths->path, $matches))
 		{
 			if ($verbose) echo "Revision {$log['revision']} matches".($matches?': '.$matches[1] : '')."\n";
 			return (int)$log['revision'];
