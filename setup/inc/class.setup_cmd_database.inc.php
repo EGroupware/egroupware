@@ -184,7 +184,7 @@ class setup_cmd_database extends setup_cmd
 				substr(str_replace(array('.', '-'), '_', $this->db_name),0,self::MAX_DB_NAME_LEN);
 		}
 		try {
-			$msg = $this->connect();
+			$msg = @$this->connect();
 		}
 		catch (Api\Exception\WrongUserinput $e) {
 			// db or user not working --> connect as root and create it
