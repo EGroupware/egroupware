@@ -165,7 +165,7 @@ function egwPopupActionImplementation()
 		};
 
 		if (egwIsMobile()) {
-			$j(_node).bind('click', defaultHandler);
+			jQuery(_node).bind('click', defaultHandler);
 		} else {
 			_node.ondblclick = defaultHandler;
 		}
@@ -301,8 +301,8 @@ function egwPopupActionImplementation()
 		};
 		// Safari still needs the taphold to trigger contextmenu
 		// Chrome has default event on touch and hold which acts like right click
-		$j(_node).bind('taphold', contextHandler);
-		$j(_node).on('contextmenu', contextHandler);
+		jQuery(_node).bind('taphold', contextHandler);
+		jQuery(_node).on('contextmenu', contextHandler);
 	};
 
 	ai.doRegisterAction = function(_aoi, _callback, _context)
@@ -353,8 +353,8 @@ function egwPopupActionImplementation()
 				// Calculate context menu position from the given DOM-Node
 				var node = _context;
 
-				x = $j(node).offset().left;
-				y = $j(node).offset().top;
+				x = jQuery(node).offset().left;
+				y = jQuery(node).offset().top;
 
 				_context = {"posx": x, "posy": y};
 			}
@@ -727,7 +727,7 @@ function egwPopupActionImplementation()
 
 					if(document.queryCommandSupported('copy'))
 					{
-						$j(action.data.target).trigger('copy');
+						jQuery(action.data.target).trigger('copy');
 					}
 				},true);
 				clipboard_action.group = 2.5;
@@ -735,9 +735,9 @@ function egwPopupActionImplementation()
 			var os_clipboard_caption = this._context.event.originalEvent.target.innerHTML.trim();
 			clipboard_action.set_caption(egw.lang('Copy "%1"', os_clipboard_caption.length>20 ? os_clipboard_caption.substring(0,20)+'...':os_clipboard_caption));
 			clipboard_action.data.target = this._context.event.originalEvent.target;
-			$j(clipboard_action.data.target).off('copy').on('copy', function(event) {
+			jQuery(clipboard_action.data.target).off('copy').on('copy', function(event) {
 				// Cancel any no-select css
-				var target = $j(clipboard_action.data.target);
+				var target = jQuery(clipboard_action.data.target);
 				var old_select = target.css('user-select');
 				target.css('user-select','all');
 
@@ -754,12 +754,12 @@ function egwPopupActionImplementation()
 					// only supported in IE, and make sure there's clipboardData object
 					if (typeof event.target.setActive !='undefined' && window.clipboardData)
 					{
-						window.clipboardData.setData('Text', $j(clipboard_action.data.target).text().trim());
+						window.clipboardData.setData('Text', jQuery(clipboard_action.data.target).text().trim());
 					}
 					if(event.clipboardData)
 					{
-						event.clipboardData.setData('text/plain', $j(clipboard_action.data.target).text().trim());
-						event.clipboardData.setData('text/html', $j(clipboard_action.data.target).html());
+						event.clipboardData.setData('text/plain', jQuery(clipboard_action.data.target).text().trim());
+						event.clipboardData.setData('text/html', jQuery(clipboard_action.data.target).html());
 					}
 					// Show fail message, just in case
 					egw.message(egw.lang('Use Ctrl-C/Cmd-C to copy'));

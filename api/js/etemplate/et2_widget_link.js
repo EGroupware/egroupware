@@ -127,29 +127,29 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 	},
 
 	createInputWidget: function() {
-		this.div = $j(document.createElement("div")).addClass("et2_link_to et2_toolbar");
+		this.div = jQuery(document.createElement("div")).addClass("et2_link_to et2_toolbar");
 
 		// Need a div for file upload widget
-		this.file_div = $j(document.createElement("div")).css({display:'inline-block'}).appendTo(this.div);
+		this.file_div = jQuery(document.createElement("div")).css({display:'inline-block'}).appendTo(this.div);
 
 		// Filemanager link popup
-		this.filemanager_button = $j(document.createElement("div")).css({display:'inline-block'}).appendTo(this.div);
+		this.filemanager_button = jQuery(document.createElement("div")).css({display:'inline-block'}).appendTo(this.div);
 
 		// Need a div for link-to widget
-		this.link_div = $j(document.createElement("div"))
+		this.link_div = jQuery(document.createElement("div"))
 			.addClass('div_link')
 			// Leave room for link button
 			.appendTo(this.div);
 
                 // One common link button
-		this.link_button = $j(document.createElement("button"))
+		this.link_button = jQuery(document.createElement("button"))
 			.text(this.egw().lang(this.options.link_label))
 			.appendTo(this.div).hide()
 			.addClass('link')
 			.click(this, this.createLink);
 
                 // Span for indicating status
-		this.status_span = $j(document.createElement("span"))
+		this.status_span = jQuery(document.createElement("span"))
 			.appendTo(this.div).addClass("status").hide();
 
 		this.setDOMNode(this.div[0]);
@@ -184,7 +184,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 			button_caption: ''
 		};
 		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
-		$j(this.vfs_select.getDOMNode()).change( function() {
+		jQuery(this.vfs_select.getDOMNode()).change( function() {
 			var values = true;
 			// If entry not yet saved, store for linking on server
 			if(!self.options.value.to_id || typeof self.options.value.to_id == 'object')
@@ -583,10 +583,10 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 
 	createInputWidget: function() {
 		var self = this;
-		this.div = $j(document.createElement("div")).addClass("et2_link_entry");
+		this.div = jQuery(document.createElement("div")).addClass("et2_link_entry");
 
 		// Application selection
-		this.app_select = $j(document.createElement("select")).appendTo(this.div)
+		this.app_select = jQuery(document.createElement("select")).appendTo(this.div)
 			.change(function(e) {
 				// Clear cache when app changes
 				self.cache = {};
@@ -600,7 +600,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 		var opt_count = 0;
 		for(var key in this.options.select_options) {
 			opt_count++;
-			var option = $j(document.createElement("option"))
+			var option = jQuery(document.createElement("option"))
 				.attr("value", key)
 				.text(this.options.select_options[key]);
 			option.appendTo(this.app_select);
@@ -618,7 +618,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 		}
 
 		// Search input
-		this.search = $j(document.createElement("input"))
+		this.search = jQuery(document.createElement("input"))
 			// .attr("type", "search") // Fake it for all browsers below
 			.focus(function(){if(!self.options.only_app) {
 				// Adjust width, leave room for app select & link button
@@ -699,7 +699,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 		});
 
 		// Clear / last button
-		this.clear = $j(document.createElement("span"))
+		this.clear = jQuery(document.createElement("span"))
 			.addClass("ui-icon ui-icon-close")
 			.click(function(e){
 				if (!self.search) return;	// only gives an error, we should never get into that situation
@@ -1096,9 +1096,9 @@ var	et2_link = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.label_span = $j(document.createElement("label"))
+		this.label_span = jQuery(document.createElement("label"))
 			.addClass("et2_label");
-		this.link = $j(document.createElement("span"))
+		this.link = jQuery(document.createElement("span"))
 			.addClass("et2_link")
 			.appendTo(this.label_span);
 
@@ -1286,7 +1286,7 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.list = $j(document.createElement("ul"))
+		this.list = jQuery(document.createElement("ul"))
 			.addClass("et2_link_string");
 
 		if(this.options['class']) this.list.addClass(this.options['class']);
@@ -1386,7 +1386,7 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 	},
 	_add_link: function(_link_data) {
 		var self = this;
-		var link = $j(document.createElement("li"))
+		var link = jQuery(document.createElement("li"))
 			.appendTo(this.list)
 			.addClass("et2_link loading")
 			.click( function(e){
@@ -1426,7 +1426,7 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 		// Create the label container if it didn't exist yet
 		if (this._labelContainer == null)
 		{
-			this._labelContainer = $j(document.createElement("label"))
+			this._labelContainer = jQuery(document.createElement("label"))
 					.addClass("et2_label");
 			this.getSurroundings().insertDOMNode(this._labelContainer[0]);
 			this.getSurroundings().update();
@@ -1442,7 +1442,7 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 		// Create the label container if it didn't exist yet
 		if (this._labelContainer == null)
 		{
-			this._labelContainer = $j(document.createElement("label"))
+			this._labelContainer = jQuery(document.createElement("label"))
 				.addClass("et2_label");
 			this.getSurroundings().insertDOMNode(this._labelContainer[0]);
 		}
@@ -1460,12 +1460,12 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 	 *      given values.
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
-		this.list = $j(_nodes[0]);
+		this.list = jQuery(_nodes[0]);
 
 		this.set_value(_values["value"]);
 
 		// Special detached, to prevent DOM node modification of the normal method
-		this._labelContainer = _nodes.length > 1 ? $j(_nodes[1]) : null;
+		this._labelContainer = _nodes.length > 1 ? jQuery(_nodes[1]) : null;
 		if(_values['label'])
 		{
 			this.set_label(_values['label']);
@@ -1514,7 +1514,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.list = $j(document.createElement("table"))
+		this.list = jQuery(document.createElement("table"))
 			.addClass("et2_link_list");
 		if(this.options['class']) this.list.addClass(this.options['class']);
 		this.setDOMNode(this.list[0]);
@@ -1606,7 +1606,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 				}
 
 				// Multiple file download for those that support it
-				a = $j(a)
+				a = jQuery(a)
 					.prop('href', url)
 					.prop('download', link_data.title || "")
 					.appendTo(self.getInstanceManager().DOMContainer);
@@ -1623,7 +1623,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 		this.context.addItem("zip", this.egw().lang("Save as Zip"), this.egw().image('save_zip'), function(menu_item) {
 			// Highlight files for nice UI indicating what will be in the zip.
 			// Files have negative IDs.
-			$j('[id^="link_-"]',this.list).effect('highlight',{},2000);
+			jQuery('[id^="link_-"]',this.list).effect('highlight',{},2000);
 
 			// Download ZIP
 			window.location = self.egw().link('/index.php',{
@@ -1714,7 +1714,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 	},
 
 	_add_link: function(_link_data) {
-		var row = $j(document.createElement("tr"))
+		var row = jQuery(document.createElement("tr"))
 			.attr("id", "link_"+(_link_data.dom_id ? _link_data.dom_id : (typeof _link_data.link_id == "string" ? _link_data.link_id.replace(/[:\.]/g,'_'):_link_data.link_id ||_link_data.id)))
 			.attr("draggable", _link_data.app == 'file' ? "true" : "")
 			.appendTo(this.list);
@@ -1727,7 +1727,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 		}
 
 		// Icon
-		var icon = $j(document.createElement("td"))
+		var icon = jQuery(document.createElement("td"))
 			.appendTo(row)
 			.addClass("icon");
 		if(_link_data.icon)
@@ -1759,7 +1759,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 
 		var self = this;
 		for(var i = 0; i < columns.length; i++) {
-			var $td = $j(document.createElement("td"))
+			var $td = jQuery(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
 				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
@@ -1790,14 +1790,14 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 		if (typeof _link_data.title == 'undefined')
 		{
 			// Title will be fetched from server and then set
-			$j('td.title',row).addClass("loading");
+			jQuery('td.title',row).addClass("loading");
 			var title = this.egw().link_title(_link_data.app, _link_data.id, function(title) {
-				$j('td.title',this).removeClass("loading").text(title+"");
+				jQuery('td.title',this).removeClass("loading").text(title+"");
 			}, row);
 		}
 		// Date
 		/*
-		var date_row = $j(document.createElement("td"))
+		var date_row = jQuery(document.createElement("td"))
 			.appendTo(row);
 		if(_link_data.lastmod)
 		{
@@ -1811,9 +1811,9 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 		// build delete button if the link is not readonly
 		if (!this.options.readonly)
 		{
-			var delete_button = $j(document.createElement("td"))
+			var delete_button = jQuery(document.createElement("td"))
 				.appendTo(row);
-			$j("<div />")
+			jQuery("<div />")
 				.appendTo(delete_button)
 				// We don't use ui-icon because it assigns a bg image
 				.addClass("delete icon")
@@ -1840,7 +1840,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 			self.context.getItem("file_info").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 			self.context.getItem("save").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 			// Zip download only offered if there are at least 2 files
-			self.context.getItem("zip").set_enabled($j('[id^="link_-"]',this.list).length >= 2);
+			self.context.getItem("zip").set_enabled(jQuery('[id^="link_-"]',this.list).length >= 2);
 			// Show delete item only if the widget is not readonly
 			self.context.getItem("delete").set_enabled(!self.options.readonly);
 
@@ -1889,7 +1889,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 					return;
 				}
 				//event.dataTransfer.setDragImage(event.delegate.target,0,0);
-				var div = $j(document.createElement("div"))
+				var div = jQuery(document.createElement("div"))
 					.attr('id', 'drag_helper')
 					.css({
 						position: 'absolute',
@@ -1904,7 +1904,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 				event.dataTransfer.setDragImage(div.get(0),0,0);
 			})
 			.on('drag', function() {
-				$j('#drag_helper',self.list).remove();
+				jQuery('#drag_helper',self.list).remove();
 			});
 		}
 	},
@@ -1975,7 +1975,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 		// VFS link - check for same dir as above, and hide dir
 		var reformat = false;
 		var span_size = 0.3;
-		var prev = $j('td.title',$td.parent().prev('tr'));
+		var prev = jQuery('td.title',$td.parent().prev('tr'));
 		if(prev.length === 1)
 		{
 			var prev_dirs = (prev.attr('data-title') || '').split('/');

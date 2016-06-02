@@ -108,7 +108,7 @@ var et2_portlet = (function(){ "use strict"; return et2_valueWidget.extend(
 		var self = this;
 
 		// Create DOM nodes
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass(this.options.class)
 			.addClass("ui-widget ui-widget-content ui-corner-all")
 			.addClass("et2_portlet")
@@ -136,12 +136,12 @@ var et2_portlet = (function(){ "use strict"; return et2_valueWidget.extend(
 					self.iterateOver(function(widget) {widget.resize();},null,et2_IResizeable);
 				}
 			});
-		this.header = $j(document.createElement("div"))
+		this.header = jQuery(document.createElement("div"))
 			.attr('id', this.getInstanceManager().uniqueId+'_'+this.id.replace(/\./g, '-') + '_header')
 			.addClass("ui-widget-header ui-corner-all")
 			.appendTo(this.div)
 			.html(this.options.title);
-		this.content = $j(document.createElement("div"))
+		this.content = jQuery(document.createElement("div"))
 			.attr('id', this.getInstanceManager().uniqueId+'_'+this.id.replace(/\./g, '-') + '_content')
 			.appendTo(this.div);
 

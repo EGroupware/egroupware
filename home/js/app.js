@@ -106,7 +106,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 			this._do_ordering();
 
 			// Accept drops of favorites, which aren't part of action system
-			$j(this.et2.getDOMNode().parentNode).droppable({
+			jQuery(this.et2.getDOMNode().parentNode).droppable({
 				hoverClass: 'drop-hover',
 				accept: function(draggable) {
 					// Check for direct support for that application
@@ -166,10 +166,10 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 				}
 			}
 			// It's in the right place for original load, but move it into portlet
-			var misplaced = $j(etemplate2.getById('home-index').DOMContainer).siblings('#'+et2.DOMContainer.id);
+			var misplaced = jQuery(etemplate2.getById('home-index').DOMContainer).siblings('#'+et2.DOMContainer.id);
 			if(portlet)
 			{
-				portlet.content = $j(et2.DOMContainer).appendTo(portlet.content);
+				portlet.content = jQuery(et2.DOMContainer).appendTo(portlet.content);
 				portlet.addChild(et2.widgetContainer);
 				et2.resize();
 			}
@@ -185,7 +185,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 		// Special handling to deal with legacy (non-et2) calendar links
 		if(name == 'home.legacy')
 		{
-			$j('.calendar_calDayColHeader a, .calendar_plannerDayScale a, .calendar_plannerWeekScale a, .calendar_plannerMonthScale a, .calendar_calGridHeader a', et2.DOMContainer)
+			jQuery('.calendar_calDayColHeader a, .calendar_plannerDayScale a, .calendar_plannerWeekScale a, .calendar_plannerMonthScale a, .calendar_calGridHeader a', et2.DOMContainer)
 				.on('click', function(e) {
 					egw.link_handler(this.href,'calendar');
 					return false;
@@ -255,7 +255,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 		// Try to put it about where the menu was opened
 		if(action.menu_context)
 		{
-			var $portlet_container = $j(this.portlet_container.getDOMNode());
+			var $portlet_container = jQuery(this.portlet_container.getDOMNode());
 			attrs.row = Math.max(1,Math.round((action.menu_context.posy - $portlet_container.offset().top )/ this.GRID)+1);
 			attrs.col = Math.max(1,Math.round((action.menu_context.posx - $portlet_container.offset().left) / this.GRID)+1);
 		}
@@ -273,7 +273,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 		portlet._process_edit(et2_dialog.OK_BUTTON, attrs);
 
 		// Set up sorting/grid of new portlet
-		var $portlet_container = $j(this.portlet_container.getDOMNode());
+		var $portlet_container = jQuery(this.portlet_container.getDOMNode());
 		$portlet_container.data("gridster").add_widget(
 			portlet.getDOMNode(),
 			this.DEFAULT.WIDTH, this.DEFAULT.HEIGHT,
@@ -295,7 +295,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 			return this.add(action);
 		}
 
-		var $portlet_container = $j(this.portlet_container.getDOMNode());
+		var $portlet_container = jQuery(this.portlet_container.getDOMNode());
 
 		// Basic portlet attributes
 		var attrs = {
@@ -473,7 +473,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 	 * Set up the drag / drop / re-order of portlets
 	 */
 	_do_ordering: function() {
-		var $portlet_container = $j(this.portlet_container.getDOMNode());
+		var $portlet_container = jQuery(this.portlet_container.getDOMNode());
 		$portlet_container
 			.addClass("home ui-helper-clearfix")
 			.disableSelection()
@@ -512,7 +512,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 						var changed = this.serialize_changed();
 
 						// Reset changed, or they keep accumulating
-						this.$changed = $j([]);
+						this.$changed = jQuery([]);
 
 						for (var key in changed)
 						{
@@ -539,7 +539,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 			e.stopPropagation();
 		});
 		// Bind window resize to re-layout gridster
-		$j(window).one("resize."+this.et2._inst.uniqueId, function() {
+		jQuery(window).one("resize."+this.et2._inst.uniqueId, function() {
 			// Note this doesn't change the positions, just makes them invalid
 			$portlet_container.data('gridster').recalculate_faux_grid();
 		});
@@ -710,7 +710,7 @@ app.classes.home = (function(){ "use strict"; return AppJS.extend(
 		}
 
 		// Aim to match the size
-		var portlet_dom = $j('[id$='+id+'][data-sizex]',this.portlet_container.getDOMNode());
+		var portlet_dom = jQuery('[id$='+id+'][data-sizex]',this.portlet_container.getDOMNode());
 		var width = portlet_dom.attr('data-sizex') * this.GRID;
 		var height = portlet_dom.attr('data-sizey') * this.GRID;
 
@@ -789,7 +789,7 @@ app.classes.home.home_link_portlet = app.classes.home.home_portlet.extend({
 		// Check for tooltip
 		if(this.portlet)
 		{
-			var content = $j('.tooltip',this.portlet.content);
+			var content = jQuery('.tooltip',this.portlet.content);
 			if(content.length && content.children().length)
 			{
 				//Check if the tooltip is already initialized
@@ -811,10 +811,10 @@ app.classes.home.home_link_portlet = app.classes.home.home_portlet.extend({
 					close: function(event,ui) {
 						ui.tooltip.hover(
 							function() {
-								$j(this).stop(true).fadeTo(100,1);
+								jQuery(this).stop(true).fadeTo(100,1);
 							},
 							function() {
-								$j(this).slideUp("400",function() {$j(this).remove();});
+								jQuery(this).slideUp("400",function() {jQuery(this).remove();});
 							}
 						);
 					}

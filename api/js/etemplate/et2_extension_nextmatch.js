@@ -192,12 +192,12 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			global_data.fields = cfs;
 		}
 
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass("et2_nextmatch");
 
 
 		this.header = et2_createWidget("nextmatch_header_bar", {}, this);
-		this.innerDiv = $j(document.createElement("div"))
+		this.innerDiv = jQuery(document.createElement("div"))
 			.appendTo(this.div);
 
 		// Create the dynheight component which dynamically scales the inner
@@ -209,7 +209,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		this.dataview = new et2_dataview(this.innerDiv, this.egw());
 
 		// Blank placeholder
-		this.blank = $j(document.createElement("div"))
+		this.blank = jQuery(document.createElement("div"))
 			.appendTo(this.dataview.table);
 
 		// We cannot create the grid controller now, as this depends on the grid
@@ -229,8 +229,8 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			this._autorefresh_timer = null;
 		}
 		// Unbind handler used for toggling autorefresh
-		$j(this.getInstanceManager().DOMContainer.parentNode).off('show.et2_nextmatch');
-		$j(this.getInstanceManager().DOMContainer.parentNode).off('hide.et2_nextmatch');
+		jQuery(this.getInstanceManager().DOMContainer.parentNode).off('show.et2_nextmatch');
+		jQuery(this.getInstanceManager().DOMContainer.parentNode).off('hide.et2_nextmatch');
 
 		// Free the grid components
 		this.dataview.free();
@@ -292,7 +292,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			{
 				var self = this;
 				// Register a handler
-				$j(this.div)
+				jQuery(this.div)
 					.on('dragenter','.egwGridView_grid tr',function(e) {
 						// Figure out _which_ row
 						var row = self.controller.getRowByNode(this);
@@ -322,13 +322,13 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			}
 		}
 		// stop invalidation in no visible tabs
-		$j(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function(e) {
+		jQuery(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function(e) {
 			if(this.controller && this.controller._grid)
 			{
 				this.controller._grid.doInvalidate = false;
 			}
 		},this));
-		$j(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function(e) {
+		jQuery(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function(e) {
 			if(this.controller && this.controller._grid)
 			{
 				this.controller._grid.doInvalidate = true;
@@ -580,7 +580,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		}
 		if (!this.div.is(':visible'))	// run refresh, once we become visible again
 		{
-			$j(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
+			jQuery(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
 				// Important to use anonymous function instead of just 'this.refresh' because
 				// of the parameters passed
 				jQuery.proxy(function() {this.refresh();},this)
@@ -594,7 +594,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			this.applyFilters();
 
 			// Trigger an event so app code can act on it
-			$j(this).triggerHandler("refresh",[this]);
+			jQuery(this).triggerHandler("refresh",[this]);
 
 			return;
 		}
@@ -664,7 +664,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			}
 		}
 		// Trigger an event so app code can act on it
-		$j(this).triggerHandler("refresh",[this,_row_ids,_type]);
+		jQuery(this).triggerHandler("refresh",[this,_row_ids,_type]);
 	},
 
 	/**
@@ -1000,7 +1000,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 		// If a custom field column was added, throw away cache to deal with
 		// efficient apps that didn't send all custom fields in the first request
-		var cf_added = $j(changed).filter($j(custom_fields)).length > 0;
+		var cf_added = jQuery(changed).filter(jQuery(custom_fields)).length > 0;
 
 		// Save visible columns
 		// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
@@ -1132,11 +1132,11 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		if(this.options.settings.no_columnselection)
 		{
 			this.dataview.selectColumnsClick = function() {return false;};
-			$j('span.selectcols',this.dataview.headTr).hide();
+			jQuery('span.selectcols',this.dataview.headTr).hide();
 		}
 		else
 		{
-			$j('span.selectcols',this.dataview.headTr).show();
+			jQuery('span.selectcols',this.dataview.headTr).show();
 			this.dataview.selectColumnsClick = function(event) {
 				self._selectColumnsClick(event);
 			};
@@ -1607,10 +1607,10 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			this._autorefresh_timer = setInterval(jQuery.proxy(this.controller.update, this.controller), time * 1000);
 
 			// Bind to tab show/hide events, so that we don't bother refreshing in the background
-			$j(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function(e) {
+			jQuery(this.getInstanceManager().DOMContainer.parentNode).on('hide.et2_nextmatch', jQuery.proxy(function(e) {
 				// Stop
 				window.clearInterval(this._autorefresh_timer);
-				$j(e.target).off(e);
+				jQuery(e.target).off(e);
 
 				// If the autorefresh time is up, bind once to trigger a refresh
 				// (if needed) when tab is activated again
@@ -1618,17 +1618,17 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 					// Check in case it was stopped / destroyed since
 					if(!this._autorefresh_timer || !this.getInstanceManager()) return;
 
-					$j(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
+					jQuery(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch',
 						// Important to use anonymous function instead of just 'this.refresh' because
 						// of the parameters passed
 						jQuery.proxy(function() {this.refresh();},this)
 					);
 				},this), time*1000);
 			},this));
-			$j(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function(e) {
+			jQuery(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function(e) {
 				// Start normal autorefresh timer again
 				this._set_autorefresh(this._get_autorefresh());
-				$j(e.target).off(e);
+				jQuery(e.target).off(e);
 			},this));
 		}
 	},
@@ -1962,7 +1962,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		if(row.row.tr)
 		{
 			// Ignore most of the UI, just use the status indicators
-			var status = $j(document.createElement("div"))
+			var status = jQuery(document.createElement("div"))
 				.addClass('et2_link_to')
 				.width(row.row.tr.width())
 				.position({my: "left top", at: "left top", of: row.row.tr})
@@ -1974,7 +1974,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			link.div.on('link.et2_link_to', function(e, linked) {
 				if(!linked)
 				{
-					$j("li.success", link.file_upload.progress)
+					jQuery("li.success", link.file_upload.progress)
 						.removeClass('success').addClass('validation_error');
 				}
 				else
@@ -2153,7 +2153,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				// Add the class, gives more reliable sizing
 				this.div.addClass('print');
 				// Show it all
-				$j('.egwGridView_scrollarea',this.div).css('height','auto');
+				jQuery('.egwGridView_scrollarea',this.div).css('height','auto');
 			}
 			// We need more rows
 			if(button === 'dialog[all]' || rows > loaded_count)
@@ -2205,9 +2205,9 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 							egw.css(nm.print_row_selector, 'display: none');
 
 							// No scrollbar in print view
-							$j('.egwGridView_scrollarea',this.div).css('overflow-y','hidden');
+							jQuery('.egwGridView_scrollarea',this.div).css('overflow-y','hidden');
 							// Show it all
-							$j('.egwGridView_scrollarea',this.div).css('height','auto');
+							jQuery('.egwGridView_scrollarea',this.div).css('height','auto');
 
 							// Grid needs to redraw before it can be printed, so wait
 							window.setTimeout(jQuery.proxy(function() {
@@ -2229,7 +2229,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				// Don't need more rows, limit to requested and finish
 
 				// Show it all
-				$j('.egwGridView_scrollarea',this.div).css('height','auto');
+				jQuery('.egwGridView_scrollarea',this.div).css('height','auto');
 
 				// Use CSS to hide all but the requested rows
 				// Prevents us from showing more than requested, if actual height was less than average
@@ -2237,7 +2237,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 				egw.css(this.print_row_selector, 'display: none');
 
 				// No scrollbar in print view
-				$j('.egwGridView_scrollarea',this.div).css('overflow-y','hidden');
+				jQuery('.egwGridView_scrollarea',this.div).css('overflow-y','hidden');
 				// Give dialog a chance to close, or it will be in the print
 				window.setTimeout(function() {defer.resolve();}, 0);
 			}
@@ -2272,7 +2272,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 		this.div.removeClass('print');
 
 		// Put scrollbar back
-		$j('.egwGridView_scrollarea',this.div).css('overflow-y','');
+		jQuery('.egwGridView_scrollarea',this.div).css('overflow-y','');
 
 		// Correct size of grid, and trigger resize to fix it
 		this.controller._grid.setScrollHeight(this.old_height);
@@ -2756,7 +2756,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 		this.favorites = et2_createWidget('favorites', widget_options, this);
 
 		// Add into header
-		$j(this.favorites.getDOMNode(this.favorites)).prependTo(egwIsMobile()?this.search_box.find('.nm_favorites_div'):this.right_div);
+		jQuery(this.favorites.getDOMNode(this.favorites)).prependTo(egwIsMobile()?this.search_box.find('.nm_favorites_div'):this.right_div);
 	},
 
 	/**
@@ -2846,10 +2846,10 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 		if(this.nextmatch.options.settings.lettersearch)
 		{
 			jQuery("td",this.lettersearch).removeClass("lettersearch_active");
-			$j(filters.searchletter ? "td#"+filters.searchletter : "td.lettersearch[id='']").addClass("lettersearch_active");
+			jQuery(filters.searchletter ? "td#"+filters.searchletter : "td.lettersearch[id='']").addClass("lettersearch_active");
 
 			// Set activeFilters to current value
-			filters.searchletter = $j("td.lettersearch_active").attr("id");
+			filters.searchletter = jQuery("td.lettersearch_active").attr("id");
 		}
 
 		// Reset flag
@@ -2971,7 +2971,7 @@ var et2_nextmatch_header = (function(){ "use strict"; return et2_baseWidget.exte
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.labelNode = $j(document.createElement("span"));
+		this.labelNode = jQuery(document.createElement("span"));
 		this.nextmatch = null;
 
 		this.setDOMNode(this.labelNode[0]);

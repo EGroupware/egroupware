@@ -133,7 +133,7 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 		// Find expanded rows
 		var nm = this._widget;
 		var controller = this;
-		$j('.arrow.opened',this._widget.getDOMNode(this._widget)).each(function() {
+		jQuery('.arrow.opened',this._widget.getDOMNode(this._widget)).each(function() {
 			var entry = controller.getRowByNode(this);
 			if(entry && entry.uid)
 			{
@@ -429,11 +429,11 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 			// Create drag action that allows linking
 			drag_action = mgr.addAction('drag', 'egw_link_drag', this.egw.lang('link'), 'link', function(action, selected) {
 				// Drag helper - list titles.  Arbitrarily limited to 10.
-				var helper = $j(document.createElement("div"));
+				var helper = jQuery(document.createElement("div"));
 				for(var i = 0; i < selected.length && i < 10; i++)
 				{
 					var id = selected[i].id.split('::');
-					var span = $j(document.createElement('span')).appendTo(helper);
+					var span = jQuery(document.createElement('span')).appendTo(helper);
 					self.egw.link_title(id[0],id[1], function(title) {
 						this.append(title);
 						this.append('<br />');

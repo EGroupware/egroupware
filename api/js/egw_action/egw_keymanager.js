@@ -145,11 +145,11 @@ function _egw_nodeIsInInput(_node)
 /**
  * Register the onkeypress handler on the document 
  */
-$j(document).ready(function() {
+jQuery(document).ready(function() {
 
 	// Fetch the key down event and translate it into browser-independent and
 	// easy to use key codes and shift states
-	$j(document).keydown( function(e) {
+	jQuery(document).keydown( function(e) {
 
 		// Translate the given key code and make it valid
 		var keyCode = e.which;
@@ -178,7 +178,7 @@ $j(document).ready(function() {
 /**
  * Required to catch the context menu
  */
-$j(window).on("contextmenu",document, function(event) {
+jQuery(window).on("contextmenu",document, function(event) {
 	// Check for actual key press
 	if(!(event.originalEvent.x == 1 && event.originalEvent.y == 1)) return true;
 	if(!event.ctrlKey && egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))

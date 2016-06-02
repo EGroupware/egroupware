@@ -79,7 +79,7 @@ var et2_dataview_tile = (function(){ "use strict"; return et2_dataview_row.exten
 	invalidate: function() {
 		if(this._inTree && this.tr)
 		{
-			var template_width = $j('.innerContainer',this.tr).children().outerWidth(true);
+			var template_width = jQuery('.innerContainer',this.tr).children().outerWidth(true);
 			if(template_width)
 			{
 

@@ -52,7 +52,7 @@ var et2_html = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDe
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
 
-		this.htmlNode = $j(document.createElement("span"));
+		this.htmlNode = jQuery(document.createElement("span"));
 		if(this._type == 'htmlarea')
 		{
 			this.htmlNode.addClass('et2_textbox_ro');

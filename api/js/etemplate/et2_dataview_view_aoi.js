@@ -40,7 +40,7 @@ function et2_dataview_rowAOI(_node)
 
 	aoi.selectMode = EGW_SELECTMODE_DEFAULT;
 
-	aoi.checkBox = null; //($j(":checkbox", aoi.node))[0];
+	aoi.checkBox = null; //(jQuery(":checkbox", aoi.node))[0];
 
 	// Rows without a checkbox OR an id set are unselectable
 	aoi.doGetDOMNode = function() {
@@ -49,7 +49,7 @@ function et2_dataview_rowAOI(_node)
 
 	// Prevent the browser from selecting the content of the element, when
 	// a special key is pressed.
-	$j(_node).mousedown(egwPreventSelect);
+	jQuery(_node).mousedown(egwPreventSelect);
 
 	/**
 	 * Now append some action code to the node
@@ -106,7 +106,7 @@ function et2_dataview_rowAOI(_node)
 	};
 
 	if (egwIsMobile()) {
-		$j(_node).swipe({
+		jQuery(_node).swipe({
 				allowPageScroll: "vertical",
 				longTapThreshold: 10,
 				swipe: function (event, direction, distance)
@@ -125,10 +125,10 @@ function et2_dataview_rowAOI(_node)
 
 		});
 	} else {
-		$j(_node).click(selectHandler);
+		jQuery(_node).click(selectHandler);
 	}
 
-	$j(aoi.checkBox).change(function() {
+	jQuery(aoi.checkBox).change(function() {
 		aoi.updateState(EGW_AO_STATE_SELECTED, this.checked, EGW_AO_SHIFT_STATE_MULTI);
 	});
 
@@ -140,9 +140,9 @@ function et2_dataview_rowAOI(_node)
 			this.checkBox.checked = selected;
 		}
 
-		$j(this.node).toggleClass('focused',
+		jQuery(this.node).toggleClass('focused',
 			egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
-		$j(this.node).toggleClass('selected',
+		jQuery(this.node).toggleClass('selected',
 			selected);
 	};
 

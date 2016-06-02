@@ -23,7 +23,7 @@ var et2_IDOMNode = new Interface({
 	 * a plain DOM node. If you want to return an jQuery object as you receive
 	 * it with
 	 *
-	 * 	obj = $j(node);
+	 * 	obj = jQuery(node);
 	 *
 	 * simply return obj[0];
 	 *

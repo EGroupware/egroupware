@@ -63,7 +63,7 @@
 		init: function()
 		{
 			this._super.apply(this,arguments);
-			var $baseDiv = $j(this.baseDiv);
+			var $baseDiv = jQuery(this.baseDiv);
 			$baseDiv.swipe({
 				swipe: function (e, direction,distance)
 				{
@@ -123,8 +123,8 @@
 		 */
 		disable: function ()
 		{
-			$j(this.baseDiv).hide();
-			$j('#egw_fw_top_toolbar').hide();
+			jQuery(this.baseDiv).hide();
+			jQuery('#egw_fw_top_toolbar').hide();
 		},
 
 		/**
@@ -132,8 +132,8 @@
 		 */
 		enable: function ()
 		{
-			$j(this.baseDiv).show();
-			$j('#egw_fw_top_toolbar').show();
+			jQuery(this.baseDiv).show();
+			jQuery('#egw_fw_top_toolbar').show();
 		}
 	});
 
@@ -149,13 +149,13 @@
 		init:function(_wnd)
 		{
 			var self = this;
-			this.$container = $j(document.createElement('div')).addClass('egw_fw_mobile_popup_container');
-			this.$iFrame = $j(document.createElement('iframe'))
+			this.$container = jQuery(document.createElement('div')).addClass('egw_fw_mobile_popup_container');
+			this.$iFrame = jQuery(document.createElement('iframe'))
 					.addClass('egw_fw_mobile_popupFrame')
 					.appendTo(this.$container);
 			this.$container.appendTo('body');
 			// Create close button for popups
-			var $closeBtn = $j(document.createElement('span'))
+			var $closeBtn = jQuery(document.createElement('span'))
 				.addClass('egw_fw_mobile_popup_close')
 				.click(function (){self.close(framework.popup_idx(self.$iFrame[0].contentWindow));});
 			this.$container.prepend($closeBtn);
@@ -182,7 +182,7 @@
 			//After the popup is fully loaded
 			this.$iFrame.on('onpopupload', function (){
 				var popupWindow = this.contentWindow;
-				var $appHeader = $j(popupWindow.document).find('#divAppboxHeader');
+				var $appHeader = jQuery(popupWindow.document).find('#divAppboxHeader');
 				$appHeader.addClass('egw_fw_mobile_popup_appHeader');
 				self.$container.find('.egw_fw_mobile_popup_close').addClass('loaded');
 				//Remove the loading class
@@ -210,9 +210,9 @@
 				function ()
 				{
 					var popupWindow = this.contentWindow;
-					var $appHeader = $j(popupWindow.document).find('#divAppboxHeader');
-					var $et2_container = $j(popupWindow.document).find('.et2_container');
-					$j(popupWindow.document.body).css({'overflow-y':'auto'});
+					var $appHeader = jQuery(popupWindow.document).find('#divAppboxHeader');
+					var $et2_container = jQuery(popupWindow.document).find('.et2_container');
+					jQuery(popupWindow.document.body).css({'overflow-y':'auto'});
 					if ($appHeader.length > 0)
 					{
 						// Extend the dialog to 100% width
@@ -292,7 +292,7 @@
 
 			this.sideboxCollapsedSize = egwIsMobile()?1:72;
 			//Bind handler to orientation change
-			$j(window).on("orientationchange",function(){
+			jQuery(window).on("orientationchange",function(){
 				self.orientation();
 			});
 
@@ -300,7 +300,7 @@
 			this.mobileMenu = document.getElementById(_mobileMenu);
 
 			//Bind the click handler to menu
-			$j(this.mobileMenu).on({
+			jQuery(this.mobileMenu).on({
 				click:function()
 				{
 					self.toggleMenu();
@@ -421,7 +421,7 @@
 			var state = _state || this.getToggleMenuState();
 			var collapseSize = this.sideboxCollapsedSize;
 			var expandSize = this.sideboxSize;
-			var $toggleMenu = $j(this.baseContainer);
+			var $toggleMenu = jQuery(this.baseContainer);
 			var self = this;
 			if (state === 'on')
 			{
@@ -446,7 +446,7 @@
 			}
 
 			//Audio effect for toggleMenu
-			var audio = $j('#egw_fw_menuAudioTag');
+			var audio = jQuery('#egw_fw_menuAudioTag');
 			if (egw.preference('audio_effect','common') == '1')	audio[0].play();
 			jQuery('#egw_fw_firstload').remove();
 		},
@@ -458,7 +458,7 @@
 		 */
 		getToggleMenuState: function ()
 		{
-			var $toggleMenu = $j(this.baseContainer);
+			var $toggleMenu = jQuery(this.baseContainer);
 			var state = '';
 			if (this.activeApp && typeof this.activeApp.preferences.toggleMenu!='undefined')
 			{
@@ -494,7 +494,7 @@
 		 */
 		setSidebarState: function(_state)
 		{
-			var $toggleMenu = $j(this.baseContainer);
+			var $toggleMenu = jQuery(this.baseContainer);
 			if (_state === 'off')
 			{
 				$toggleMenu.addClass('sidebar-toggle');
@@ -568,11 +568,11 @@
 			this.notifyTabChangeEnabled = true;
 
 			// Transfer tabs to the sidebar
-			var $tabs = $j('.egw_fw_ui_tabs_header');
+			var $tabs = jQuery('.egw_fw_ui_tabs_header');
 			$tabs.remove();
 
 			// Disable loader, if present
-			$j('#egw_fw_loading').hide();
+			jQuery('#egw_fw_loading').hide();
 
 		},
 
@@ -672,8 +672,8 @@
 				// we need to wrap them all with a div and apply overflow:scroll
 				if (this.getUserAgent() === 'iOS')
 				{
-					$j(_iframe.parentNode).css({"-webkit-overflow-scrolling": "touch", "overflow-y":"scroll"});
-					var $body =  $j(_iframe.contentWindow.document).find('body');
+					jQuery(_iframe.parentNode).css({"-webkit-overflow-scrolling": "touch", "overflow-y":"scroll"});
+					var $body =  jQuery(_iframe.contentWindow.document).find('body');
 					if ($body.children().length >1)
 					{
 						$body.children().wrapAll('<div style="height:100%;overflow:scroll;-webkit-overflow-scrolling:touch;"></div>');
@@ -877,11 +877,11 @@
 		 */
 		get_wExcessHeight: function (_wnd)
 		{
-			var $popup = $j(_wnd.document);
+			var $popup = jQuery(_wnd.document);
 			var $appHeader = $popup.find('#divAppboxHeader');
 
 			//Calculate the excess height
-			var excess_height = egw(_wnd).is_popup()? $j(_wnd).height() - $popup.find('#popupMainDiv').height() - $appHeader.outerHeight()+10: false;
+			var excess_height = egw(_wnd).is_popup()? jQuery(_wnd).height() - $popup.find('#popupMainDiv').height() - $appHeader.outerHeight()+10: false;
 			// Recalculate excess height if the appheader is shown, e.g. mobile framework dialogs
 			if ($appHeader.length > 0 && $appHeader.is(':visible')) excess_height -= $appHeader.outerHeight()-9;
 
@@ -958,7 +958,7 @@
 			sidebar.style.width = _size + 'px';
 		}
 
-		$j(document).ready(function() {
+		jQuery(document).ready(function() {
 			window.framework = new fw_mobile("egw_fw_sidemenu", "egw_fw_tabs",
 					window.egw_webserverUrl, egw_setSideboxSize, 300, 'egw_fw_basecontainer', 'egw_fw_menu');
 			window.callManual = window.framework.callManual;

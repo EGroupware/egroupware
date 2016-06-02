@@ -124,7 +124,7 @@ var et2_tree = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		this.input = null;
 
-		this.div = $j(document.createElement("div")).addClass("dhtmlxTree");
+		this.div = jQuery(document.createElement("div")).addClass("dhtmlxTree");
 		this.setDOMNode(this.div[0]);
 	},
 

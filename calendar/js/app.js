@@ -130,7 +130,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if(this.sidebox_et2)
 		{
 			var date = this.sidebox_et2.getWidgetById('date');
-			$j(window).off('resize.calendar'+date.dom_id);
+			jQuery(window).off('resize.calendar'+date.dom_id);
 		}
 		this.sidebox_hooked_templates = null;
 
@@ -170,7 +170,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if(sidebox.length == 0 && egw_getFramework() != null)
 		{
 			var egw_fw = egw_getFramework();
-			sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
+			sidebox= jQuery('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
 		}
 
 		var content = this.et2.getArrayMgr('content');
@@ -180,7 +180,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			case 'calendar.sidebox':
 				this.sidebox_et2 = _et2.widgetContainer;
 				this.sidebox_hooked_templates.push(this.sidebox_et2);
-				$j(_et2.DOMContainer).hide();
+				jQuery(_et2.DOMContainer).hide();
 
 				// Set client side holiday cache for this year
 				egw.window.et2_calendar_view.holiday_cache[content.data.year] = content.data.holidays;
@@ -376,7 +376,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 				q.menuaction = 'calendar.calendar_uiviews.index';
 				this.sidebox_et2.getWidgetById('iframe').set_src(egw.link('/index.php',q));
-				$j(this.sidebox_et2.parentNode).show();
+				jQuery(this.sidebox_et2.parentNode).show();
 				return true;
 			}
 			// Known AJAX view
@@ -404,13 +404,13 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			var iframe = this.sidebox_et2.getWidgetById('iframe');
 			if(!iframe) return false;
 			iframe.set_src(_url);
-			$j(this.sidebox_et2.parentNode).show();
+			jQuery(this.sidebox_et2.parentNode).show();
 			// Hide other views
 			for(var _view in app.classes.calendar.views)
 			{
 				for(var i = 0; i < app.classes.calendar.views[_view].etemplates.length; i++)
 				{
-					$j(app.classes.calendar.views[_view].etemplates[i].DOMContainer).hide();
+					jQuery(app.classes.calendar.views[_view].etemplates[i].DOMContainer).hide();
 				}
 			}
 			this.state.view = '';
@@ -524,7 +524,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				},
 				start: function (event, ui)
 				{
-					$j('.calendar_calTimeGrid',ui.helper).css('position', 'absolute');
+					jQuery('.calendar_calTimeGrid',ui.helper).css('position', 'absolute');
 					// Put owners into row IDs
 					app.classes.calendar.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget) {
 						if(widget.options.owner && !widget.disabled)
@@ -606,7 +606,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						handle: '> div:first',
 						helper: function(event, element) {
 							var scroll = element.parentsUntil('.calendar_calTimeGrid').last().next();
-							var helper = $j(document.createElement('div'))
+							var helper = jQuery(document.createElement('div'))
 								.append(element.clone())
 								.css('height',scroll.parent().css('height'))
 								.css('background-color','white')
@@ -650,7 +650,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			if(app.calendar._scroll_disabled) return;
 
 			// Find the template
-			var id = $j(this).closest('.et2_container').attr('id');
+			var id = jQuery(this).closest('.et2_container').attr('id');
 			if(id)
 			{
 				var template = etemplate2.getById(id);
@@ -679,12 +679,12 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			/* Disabled
 			 *
 			// We clone the nodes so we can animate the transition
-			var original = $j(widget.getDOMNode()).closest('.et2_grid');
+			var original = jQuery(widget.getDOMNode()).closest('.et2_grid');
 			var cloned = original.clone(true).attr("id","CLONE");
 
 			// Moving this stuff around scrolls things around too
 			// We need this later
-			var scrollTop = $j('.calendar_calTimeGridScroll',original).scrollTop();
+			var scrollTop = jQuery('.calendar_calTimeGridScroll',original).scrollTop();
 
 			// This is to hide the scrollbar
 			var wrapper = original.parent();
@@ -704,7 +704,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			wrapper.width(direction == "left" || direction == "right" ? 2 * original.outerWidth() : original.outerWidth());
 
 			// Re-scroll to previous to avoid "jumping"
-			$j('.calendar_calTimeGridScroll',original).scrollTop(scrollTop);
+			jQuery('.calendar_calTimeGridScroll',original).scrollTop(scrollTop);
 			switch(direction)
 			{
 				case "up":
@@ -735,7 +735,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					break;
 			}
 			// Scroll clone to match to avoid "jumping"
-			$j('.calendar_calTimeGridScroll',cloned).scrollTop(scrollTop);
+			jQuery('.calendar_calTimeGridScroll',cloned).scrollTop(scrollTop);
 
 			// Remove
 			var remove = function() {
@@ -824,7 +824,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					var at_bottom = direction !== -1;
 					var at_top = direction !== 1;
 
-					$j(this).children(":not(.calendar_calGridHeader)").each(function() {
+					jQuery(this).children(":not(.calendar_calGridHeader)").each(function() {
 						// Check for less than 2px from edge, as sometimes we can't scroll anymore, but still have
 						// 2px left to go
 						at_bottom = at_bottom && Math.abs(this.scrollTop - (this.scrollHeight - this.offsetHeight)) <= 2;
@@ -853,7 +853,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 							var at_bottom = direction !== -1;
 							var at_top = direction !== 1;
 
-							$j(this).children(":not(.calendar_calGridHeader)").each(function() {
+							jQuery(this).children(":not(.calendar_calGridHeader)").each(function() {
 								// Check for less than 2px from edge, as sometimes we can't scroll anymore, but still have
 								// 2px left to go
 								at_bottom = at_bottom && Math.abs(this.scrollTop - (this.scrollHeight - this.offsetHeight)) <= 2;
@@ -866,7 +866,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						// But we animate in the opposite direction to the swipe
 						var opposite = {"down": "up", "up": "down", "left": "right", "right": "left"};
 						direction = opposite[direction];
-						scroll_animate.call($j(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta)
+						scroll_animate.call(jQuery(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta)
 						return false;
 					},
 					allowPageScroll: jQuery.fn.swipe.pageScroll.VERTICAL,
@@ -1072,7 +1072,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					this.et2._inst.submit();
 					break;
 				case 'infolog':
-					this.egw.open_link('infolog.infolog_ui.edit&action=calendar&action_id='+($j.isPlainObject(event)?event['id']:event),'_blank','700x600','infolog');
+					this.egw.open_link('infolog.infolog_ui.edit&action=calendar&action_id='+(jQuery.isPlainObject(event)?event['id']:event),'_blank','700x600','infolog');
 					this.et2._inst.submit();
 					break;
 				case 'ical':
@@ -1873,14 +1873,14 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					if(typeof app.classes.calendar.views[_view].etemplates[i] !== 'string' &&
 						view.etemplates.indexOf(app.classes.calendar.views[_view].etemplates[i]) == -1)
 					{
-						$j(app.classes.calendar.views[_view].etemplates[i].DOMContainer).hide();
+						jQuery(app.classes.calendar.views[_view].etemplates[i].DOMContainer).hide();
 					}
 				}
 			}
 		}
 		if(this.sidebox_et2)
 		{
-			$j(this.sidebox_et2.getInstanceManager().DOMContainer).hide();
+			jQuery(this.sidebox_et2.getInstanceManager().DOMContainer).hide();
 		}
 
 		// Check for valid cache
@@ -1994,7 +1994,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Needs to be visible while updating so sizing works
 			for(var i = 0; i < view.etemplates.length; i++)
 			{
-				$j(view.etemplates[i].DOMContainer).show();
+				jQuery(view.etemplates[i].DOMContainer).show();
 			}
 
 			/*
@@ -2010,7 +2010,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				var date = new Date(state.state.first);
 
 				// Hide all but the first day header
-				$j(grid.getDOMNode()).toggleClass(
+				jQuery(grid.getDOMNode()).toggleClass(
 					'hideDayColHeader',
 					state.state.view == 'week' || state.state.view == 'day4'
 				);
@@ -2102,26 +2102,26 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 									// Swap DOM nodes
 									var a = grid._children[0].getDOMNode().parentNode.parentNode;
-									var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop();
+									var a_scroll = jQuery('.calendar_calTimeGridScroll',a).scrollTop();
 									var b = grid._children[1].getDOMNode().parentNode.parentNode;
 									a.parentNode.insertBefore(a,b);
 
 									// Moving nodes changes scrolling, so set it back
-									var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop(a_scroll);
+									var a_scroll = jQuery('.calendar_calTimeGridScroll',a).scrollTop(a_scroll);
 								}
 							}
 							else if (row_index > i)
 							{
 								// Swap DOM nodes
 								var a = grid._children[row_index].getDOMNode().parentNode.parentNode;
-								var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop();
+								var a_scroll = jQuery('.calendar_calTimeGridScroll',a).scrollTop();
 								var b = grid._children[i].getDOMNode().parentNode.parentNode;
 
 								// Simple scroll forward, put top on the bottom
 								// This makes it faster if they scroll back next
 								if(i==0 && row_index == 1)
 								{
-									$j(b).appendTo(b.parentNode);
+									jQuery(b).appendTo(b.parentNode);
 									grid._children.push(grid._children.shift());
 								}
 								else
@@ -2132,7 +2132,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 								}
 
 								// Moving nodes changes scrolling, so set it back
-								var a_scroll = $j('.calendar_calTimeGridScroll',a).scrollTop(a_scroll);
+								var a_scroll = jQuery('.calendar_calTimeGridScroll',a).scrollTop(a_scroll);
 							}
 							break;
 						}
@@ -2214,15 +2214,15 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			if(state.state.last && state.state.last.toJSON) state.state.last = state.state.last.toJSON();
 
 			// Toggle todos
-			if((state.state.view == 'day' || this.state.view == 'day') && $j(view.etemplates[0].DOMContainer).is(':visible'))
+			if((state.state.view == 'day' || this.state.view == 'day') && jQuery(view.etemplates[0].DOMContainer).is(':visible'))
 			{
 				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile())
 				{
 					view.etemplates[0].widgetContainer.iterateOver(function(w) {
-						w.set_width($j(view.etemplates[0].DOMContainer).width() * 0.69);
+						w.set_width(jQuery(view.etemplates[0].DOMContainer).width() * 0.69);
 					},this,et2_calendar_timegrid);
 
-					$j(view.etemplates[1].DOMContainer).css({"left":"69%", "height":($j(framework.tabsUi.activeTab.contentDiv).height()-30)+'px'});
+					jQuery(view.etemplates[1].DOMContainer).css({"left":"69%", "height":(jQuery(framework.tabsUi.activeTab.contentDiv).height()-30)+'px'});
 					// TODO: Maybe some caching here
 					this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
 						this.getWidgetById('label').set_value(data.label||'');
@@ -2232,20 +2232,20 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 				else
 				{
-					$j(app.classes.calendar.views.day.etemplates[1].DOMContainer).show();
-					$j(app.classes.calendar.views.day.etemplates[1].DOMContainer).css("left","100%");
+					jQuery(app.classes.calendar.views.day.etemplates[1].DOMContainer).show();
+					jQuery(app.classes.calendar.views.day.etemplates[1].DOMContainer).css("left","100%");
 					window.setTimeout(jQuery.proxy(function() {
-						$j(this).hide();
+						jQuery(this).hide();
 					},app.classes.calendar.views.day.etemplates[1].DOMContainer),1000);
-					$j(app.classes.calendar.views.day.etemplates[0].DOMContainer).css("width","100%");
+					jQuery(app.classes.calendar.views.day.etemplates[0].DOMContainer).css("width","100%");
 					view.etemplates[0].widgetContainer.iterateOver(function(w) {
 						w.set_width('100%');
 					},this,et2_calendar_timegrid);
 				}
 			}
-			else if($j(view.etemplates[0].DOMContainer).is(':visible'))
+			else if(jQuery(view.etemplates[0].DOMContainer).is(':visible'))
 			{
-				$j(view.etemplates[0].DOMContainer).css("width","");
+				jQuery(view.etemplates[0].DOMContainer).css("width","");
 				view.etemplates[0].widgetContainer.iterateOver(function(w) {
 					w.set_width('100%');
 				},this,et2_calendar_timegrid);
@@ -2471,7 +2471,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		this.state = jQuery.extend({},state.state);
 		if(this.sidebox_et2)
 		{
-			$j(this.sidebox_et2.getInstanceManager().DOMContainer).show();
+			jQuery(this.sidebox_et2.getInstanceManager().DOMContainer).show();
 		}
 
 		var query = jQuery.extend({menuaction: menuaction},state.state||{});
@@ -2509,11 +2509,11 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Also check classes, usually indicating permission
 			if(_action.data && _action.data.enableClass)
 			{
-				is_widget = is_widget && ($j( _selected[i].iface.getDOMNode()).hasClass(_action.data.enableClass));
+				is_widget = is_widget && (jQuery( _selected[i].iface.getDOMNode()).hasClass(_action.data.enableClass));
 			}
 			if(_action.data && _action.data.disableClass)
 			{
-				is_widget = is_widget && !($j( _selected[i].iface.getDOMNode()).hasClass(_action.data.disableClass));
+				is_widget = is_widget && !(jQuery( _selected[i].iface.getDOMNode()).hasClass(_action.data.disableClass));
 			}
 
 		}
@@ -3178,20 +3178,20 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if(date_widget)
 		{
 			// Dynamic resize of sidebox calendar to fill sidebox
-			var preferred_width = $j('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
-			var font_ratio = 12 / parseFloat($j('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
+			var preferred_width = jQuery('#calendar-sidebox_date .ui-datepicker-inline').outerWidth();
+			var font_ratio = 12 / parseFloat(jQuery('#calendar-sidebox_date .ui-datepicker-inline').css('font-size'));
 			var calendar_resize = function() {
 				try {
-					var percent = 1+(($j(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
+					var percent = 1+((jQuery(date_widget.getDOMNode()).width() - preferred_width) / preferred_width);
 					percent *= font_ratio;
-					$j('#calendar-sidebox_date .ui-datepicker-inline')
+					jQuery('#calendar-sidebox_date .ui-datepicker-inline')
 						.css('font-size',(percent*100)+'%');
 
 					// Position go and today
-					var buttons = $j('#calendar-sidebox_date .ui-datepicker-header a span');
+					var buttons = jQuery('#calendar-sidebox_date .ui-datepicker-header a span');
 					if(today.length && go_button.length)
 					{
-						go_button.position({my: 'left+15px center', at: 'right center-1',of: $j('#calendar-sidebox_date .ui-datepicker-year')});
+						go_button.position({my: 'left+15px center', at: 'right center-1',of: jQuery('#calendar-sidebox_date .ui-datepicker-year')});
 						today.css({
 							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
 							'top': go_button.css('top')
@@ -3252,10 +3252,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 			// Clickable week numbers
 			date_widget.input_date.on('mouseenter','.ui-datepicker-week-col', function() {
-					$j(this).siblings().find('a').addClass('ui-state-hover');
+					jQuery(this).siblings().find('a').addClass('ui-state-hover');
 				})
 				.on('mouseleave','.ui-datepicker-week-col', function() {
-					$j(this).siblings().find('a').removeClass('ui-state-hover');
+					jQuery(this).siblings().find('a').removeClass('ui-state-hover');
 				})
 				.on('click', '.ui-datepicker-week-col', function() {
 					var view = app.calendar.state.view;
@@ -3293,7 +3293,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 
 			// Set today button
-			var today = $j('#calendar-sidebox_header_today');
+			var today = jQuery('#calendar-sidebox_header_today');
 			today.attr('title',egw.lang('today'));
 
 			// Set go button
@@ -3313,17 +3313,17 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			}
 		}
 
-		$j(window).on('resize.calendar'+date_widget.dom_id,calendar_resize).trigger('resize');
+		jQuery(window).on('resize.calendar'+date_widget.dom_id,calendar_resize).trigger('resize');
 
 		// Avoid wrapping owner icons if user has group + search
-		var button = $j('#calendar-sidebox_owner ~ span.et2_clickable');
+		var button = jQuery('#calendar-sidebox_owner ~ span.et2_clickable');
 		if(button.length == 1)
 		{
 			button.parent().css('margin-right',button.outerWidth(true)+2);
 			button.parent().parent().css('white-space','nowrap');
 		}
-		$j(window).on('resize.calendar-owner', function() {
-			var preferred_width = $j('#calendar-et2_target').children().first().outerWidth()||0;
+		jQuery(window).on('resize.calendar-owner', function() {
+			var preferred_width = jQuery('#calendar-et2_target').children().first().outerWidth()||0;
 			if(app.calendar && app.calendar.sidebox_et2)
 			{
 				var owner = app.calendar.sidebox_et2.getWidgetById('owner');
@@ -3360,7 +3360,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				view_et2 = true;
 				app.classes.calendar.views[view].etemplates[index] = _et2;
 				// If a template disappears, we want to release it
-				$j(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
+				jQuery(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
 					this.view.etemplates[this.index] = _name;
 				},jQuery.extend({},{view: app.classes.calendar.views[view], index: ""+index, name: _name})));
 
@@ -3404,7 +3404,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			if(hidden)
 			{
-				$j(_et2.DOMContainer).hide();
+				jQuery(_et2.DOMContainer).hide();
 			}
 		}
 		else
@@ -3415,7 +3415,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				// A template from another application?  Keep it up to date as state changes
 				this.sidebox_hooked_templates.push(_et2.widgetContainer);
 				// If it leaves (or reloads) remove it
-				$j(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
+				jQuery(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
 					if(app.calendar)
 					{
 						app.calendar.sidebox_hooked_templates.splice(this,1,0);
@@ -3425,7 +3425,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		}
 		if(all_loaded)
 		{
-			$j(window).trigger('resize');
+			jQuery(window).trigger('resize');
 			this.setState({state:this.state});
 
 			// Hide loader after 1 second as a fallback, it will also be hidden
@@ -3487,10 +3487,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		}
 
 		// Bind to tab show/hide events, so that we don't bother refreshing in the background
-		$j(nm.getInstanceManager().DOMContainer.parentNode).on('hide.calendar', jQuery.proxy(function(e) {
+		jQuery(nm.getInstanceManager().DOMContainer.parentNode).on('hide.calendar', jQuery.proxy(function(e) {
 			// Stop
 			window.clearInterval(this._autorefresh_timer);
-			$j(e.target).off(e);
+			jQuery(e.target).off(e);
 
 			if(!time) return;
 			
@@ -3500,17 +3500,17 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				// Check in case it was stopped / destroyed since
 				if(!this._autorefresh_timer) return;
 
-				$j(nm.getInstanceManager().DOMContainer.parentNode).one('show.calendar',
+				jQuery(nm.getInstanceManager().DOMContainer.parentNode).one('show.calendar',
 					// Important to use anonymous function instead of just 'this.refresh' because
 					// of the parameters passed
 					jQuery.proxy(function() {refresh();},this)
 				);
 			},this), time*1000);
 		},this));
-		$j(nm.getInstanceManager().DOMContainer.parentNode).on('show.calendar', jQuery.proxy(function(e) {
+		jQuery(nm.getInstanceManager().DOMContainer.parentNode).on('show.calendar', jQuery.proxy(function(e) {
 			// Start normal autorefresh timer again
 			this._set_autorefresh(this.egw.preference(refresh_preference, 'calendar'));
-			$j(e.target).off(e);
+			jQuery(e.target).off(e);
 		},this));
 	},
 

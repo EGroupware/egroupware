@@ -85,32 +85,32 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		this._super.apply(this, arguments);
 
 		// Main container
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass("calendar_calTimeGrid")
 			.addClass("calendar_TimeGridNoLabel");
 
 		// Headers
-		this.gridHeader = $j(document.createElement("div"))
+		this.gridHeader = jQuery(document.createElement("div"))
 			.addClass("calendar_calGridHeader")
 			.appendTo(this.div);
-		this.dayHeader = $j(document.createElement("div"))
+		this.dayHeader = jQuery(document.createElement("div"))
 			.appendTo(this.gridHeader);
 
 		// Contains times / rows
-		this.scrolling = $j(document.createElement('div'))
+		this.scrolling = jQuery(document.createElement('div'))
 			.addClass("calendar_calTimeGridScroll")
 			.appendTo(this.div)
 			.append('<div class="calendar_calTimeLabels"></div>');
 
 		// Contains days / columns
-		this.days = $j(document.createElement("div"))
+		this.days = jQuery(document.createElement("div"))
 			.addClass("calendar_calDayCols")
 			.appendTo(this.scrolling);
 
 		// Used for owners
 		this.owner = et2_createWidget('select-account_ro',{},this);
 
-		this._labelContainer = $j(document.createElement("label"))
+		this._labelContainer = jQuery(document.createElement("label"))
 			.addClass("et2_label et2_link")
 			.appendTo(this.gridHeader);
 
@@ -134,7 +134,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		// Stop listening to tab changes
 		if(framework.getApplicationByName('calendar').tab)
 		{
-			$j(framework.getApplicationByName('calendar').tab.contentDiv).off('show.' + this.id);
+			jQuery(framework.getApplicationByName('calendar').tab.contentDiv).off('show.' + this.id);
 		}
 
 		this._super.apply(this, arguments);
@@ -166,7 +166,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		// Listen to tab show to make sure we scroll to the day start, not top
 		if(framework.getApplicationByName('calendar').tab)
 		{
-			$j(framework.getApplicationByName('calendar').tab.contentDiv)
+			jQuery(framework.getApplicationByName('calendar').tab.contentDiv)
 				.on('show.' + this.id, jQuery.proxy(
 					function()
 					{
@@ -206,7 +206,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			var that = this;
 
 			//Resizable event handler
-			$j(this).resizable
+			jQuery(this).resizable
 			({
 				distance: 10,
 				// Grid matching preference
@@ -254,13 +254,13 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 							event_widget.options.value.end_m = eT;
 							event_widget.options.value.duration = e.data.duration;
 						}
-						$j(this).trigger(e);
+						jQuery(this).trigger(e);
 						event_widget._update(event_widget.options.value);
 
 						// That cleared the resize handles, so remove for re-creation...
-						if($j(this).resizable('instance'))
+						if(jQuery(this).resizable('instance'))
 						{
-							$j(this).resizable('destroy');
+							jQuery(this).resizable('destroy');
 						}
 					}
 					// Clear the helper, re-draw
@@ -295,17 +295,17 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		// Customize and override some draggable settings
 		this.div
 			.on('dragcreate','.calendar_calEvent', function(event, ui) {
-				$j(this).draggable('option','cancel','.rowNoEdit');
+				jQuery(this).draggable('option','cancel','.rowNoEdit');
 				// Act like you clicked the header, makes it easier to position
 				// but put it to the side (-5) so we can still do the hover
-				$j(this).draggable('option','cursorAt', {top: 5, left: -5});
+				jQuery(this).draggable('option','cursorAt', {top: 5, left: -5});
 			})
 			.on('dragstart', '.calendar_calEvent', function(event,ui) {
-				$j('.calendar_calEvent',ui.helper).width($j(this).width())
-					.height($j(this).outerHeight())
+				jQuery('.calendar_calEvent',ui.helper).width(jQuery(this).width())
+					.height(jQuery(this).outerHeight())
 					.css('top', '').css('left','')
 					.appendTo(ui.helper);
-				ui.helper.width($j(this).width());
+				ui.helper.width(jQuery(this).width());
 			})
 			.on('mousemove', function(event) {
 				timegrid._get_time_from_position(event.clientX, event.clientY);
@@ -361,7 +361,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			{
 				// No times, keep what's in the event
 				// Add class to helper to keep formatting
-				$j(helper).addClass('calendar_calTimeGridList');
+				jQuery(helper).addClass('calendar_calTimeGridList');
 			}
 			else
 			{
@@ -382,7 +382,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		{
 			element.innerHTML = '<div class="calendar_d-n-d_forbiden" style="height:100%"></div>';
 		}
-		$j(element).width($j(helper).width());
+		jQuery(element).width(jQuery(helper).width());
 		return element.dropEnd;
 	},
 
@@ -439,15 +439,15 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				}
 
 				// Leave the helper there until the update is done
-				var loading = ui.helper.clone(true).appendTo($j('body'));
+				var loading = ui.helper.clone(true).appendTo(jQuery('body'));
 				// and add a loading icon so user knows something is happening
-				if($j('.calendar_timeDemo',loading).length == 0)
+				if(jQuery('.calendar_timeDemo',loading).length == 0)
 				{
-					$j('.calendar_calEventHeader',loading).addClass('loading');
+					jQuery('.calendar_calEventHeader',loading).addClass('loading');
 				}
 				else
 				{
-					$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
+					jQuery('.calendar_timeDemo',loading).after('<div class="loading"></div>');
 				}
 
 				event_widget.recur_prompt(function(button_id) {
@@ -568,7 +568,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 	detachFromDOM: function() {
 		// Remove the binding to the change handler
-		$j(this.div).off(".et2_calendar_timegrid");
+		jQuery(this.div).off(".et2_calendar_timegrid");
 
 		this._super.apply(this, arguments);
 	},
@@ -577,7 +577,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		this._super.apply(this, arguments);
 
 		// Add the binding for the event change handler
-		$j(this.div).on("change.et2_calendar_timegrid", '.calendar_calEvent', this, function(e) {
+		jQuery(this.div).on("change.et2_calendar_timegrid", '.calendar_calEvent', this, function(e) {
 			// Make sure function gets a reference to the widget
 			var args = Array.prototype.slice.call(arguments);
 			if(args.indexOf(this) == -1) args.push(this);
@@ -586,7 +586,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		});
 
 		// Add the binding for the change handler
-		$j(this.div).on("change.et2_calendar_timegrid", '*:not(.calendar_calEvent)', this, function(e) {
+		jQuery(this.div).on("change.et2_calendar_timegrid", '*:not(.calendar_calEvent)', this, function(e) {
 			return e.data.change.call(e.data, e, this);
 		});
 
@@ -650,7 +650,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	 * lines (mostly via CSS) that span the whole date range.
 	 */
 	_drawTimes: function() {
-		$j('.calendar_calTimeRow',this.div).remove();
+		jQuery('.calendar_calTimeRow',this.div).remove();
 
 		this.div.toggleClass('calendar_calTimeGridList', this.options.granularity === 0);
 
@@ -746,7 +746,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 
 		// Set heights in pixels for scrolling
-		$j('.calendar_calTimeLabels',this.scrolling)
+		jQuery('.calendar_calTimeLabels',this.scrolling)
 			.empty()
 			.height(this.rowHeight*i)
 			.append(html);
@@ -802,7 +802,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		var old_height = this.rowHeight;
 		this.rowHeight = new_height;
 
-		$j('.calendar_calTimeLabels', this.scrolling).height(this.rowHeight*row_count);
+		jQuery('.calendar_calTimeLabels', this.scrolling).height(this.rowHeight*row_count);
 		this.days.css('height', this.options.granularity === 0 ?
 			'100%' :
 			(this.rowHeight*row_count)+'px'
@@ -841,7 +841,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			this.options.owner.length > 1 &&
 			this.options.owner.length < (parseInt(egw.preference('day_consolidate','calendar')) || 6);
 		var daycols_needed = this.daily_owner ? this.options.owner.length : this.day_list.length;
-		var day_width = ( Math.min( $j(this.getInstanceManager().DOMContainer).width(),this.days.width())/daycols_needed);
+		var day_width = ( Math.min( jQuery(this.getInstanceManager().DOMContainer).width(),this.days.width())/daycols_needed);
 		if(!day_width || !this.day_list)
 		{
 			// Hidden on another tab, or no days for some reason
@@ -872,7 +872,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			if(existing_index != -1 && parseInt(this.day_list[add_index]) < parseInt(this.day_list[existing_index]))
 			{
 				this.day_widgets.unshift(day);
-				$j(this.getDOMNode(day)).prepend(day.getDOMNode(day));
+				jQuery(this.getDOMNode(day)).prepend(day.getDOMNode(day));
 			}
 			else
 			{
@@ -1104,16 +1104,16 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			if(event.type === 'drop')
 			{
 				var dropEnd = false;
-				var helper = $j('.calendar_d-n-d_timeCounter',_data.ui.helper)[0];
+				var helper = jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper)[0];
 				if(helper && helper.dropEnd && helper.dropEnd.length >= 1)
 				if (typeof this.dropEnd !== 'undefined' && this.dropEnd.length >= 1)
 				{
 					dropEnd = helper.dropEnd[0].dataset || false;
 				}
-				this.getWidget()._event_drop.call($j('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],this.getWidget(),event, _data.ui, dropEnd);
+				this.getWidget()._event_drop.call(jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],this.getWidget(),event, _data.ui, dropEnd);
 			}
 			var drag_listener = function(_event, ui) {
-				aoi.getWidget()._drag_helper($j('.calendar_d-n-d_timeCounter',ui.helper)[0],ui.helper[0],0);
+				aoi.getWidget()._drag_helper(jQuery('.calendar_d-n-d_timeCounter',ui.helper)[0],ui.helper[0],0);
 				if(aoi.getWidget().daily_owner)
 				{
 					_invite_enabled(
@@ -1123,7 +1123,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					);
 				}
 			};
-			var time = $j('.calendar_d-n-d_timeCounter',_data.ui.helper);
+			var time = jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper);
 			switch(_event)
 			{
 				// Triggered once, when something is dragged into the timegrid's div
@@ -1136,8 +1136,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					});
 
 					// Remove formatting for out-of-view events (full day non-blocking)
-					$j('.calendar_calEventHeader',_data.ui.helper).css('top','');
-					$j('.calendar_calEventBody',_data.ui.helper).css('padding-top','');
+					jQuery('.calendar_calEventHeader',_data.ui.helper).css('top','');
+					jQuery('.calendar_calEventBody',_data.ui.helper).css('padding-top','');
 
 					// Disable invite / change actions for same calendar or already participant
 					var event = _data.ui.draggable.data('selected')[0];
@@ -1303,7 +1303,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				else if (links.length)
 				{
 					// Get date and time
-					var params = jQuery.extend({},$j('.drop-hover[data-date]',target.iface.getDOMNode())[0].dataset || {});
+					var params = jQuery.extend({},jQuery('.drop-hover[data-date]',target.iface.getDOMNode())[0].dataset || {});
 
 					// Add link IDs
 					var app_registry = egw.link_get_registry('calendar');
@@ -1344,16 +1344,16 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 						}
 
 						// Leave the helper there until the update is done
-						var loading = action.ui.helper.clone(true).appendTo($j('body'));
+						var loading = action.ui.helper.clone(true).appendTo(jQuery('body'));
 
 						// and add a loading icon so user knows something is happening
-						if($j('.calendar_timeDemo',loading).length == 0)
+						if(jQuery('.calendar_timeDemo',loading).length == 0)
 						{
-							$j('.calendar_calEventHeader',loading).addClass('loading');
+							jQuery('.calendar_calEventHeader',loading).addClass('loading');
 						}
 						else
 						{
-							$j('.calendar_timeDemo',loading).after('<div class="loading"></div>');
+							jQuery('.calendar_timeDemo',loading).after('<div class="loading"></div>');
 						}
 						
 						var event_data = egw.dataGetUIDdata(source[i].id).data;
@@ -1577,7 +1577,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			this.owner.options.application = 'api-accounts';
 			this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
 			this.set_label('');
-			$j(this.getDOMNode(this.owner)).prepend(this.owner.getDOMNode());
+			jQuery(this.getDOMNode(this.owner)).prepend(this.owner.getDOMNode());
 		}
 
 		if(this.isAttached() && (
@@ -1744,7 +1744,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		var result = true;
 
 		// Is this click in the event stuff, or in the header?
-		if(_ev.target.dataset.id || $j(_ev.target).parents('.calendar_calEvent').length)
+		if(_ev.target.dataset.id || jQuery(_ev.target).parents('.calendar_calEvent').length)
 		{
 			// Event came from inside, maybe a calendar event
 			var event = this._get_event_info(_ev.originalEvent.target);
@@ -1757,7 +1757,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				result = this.onclick.apply(this, args);
 			}
 
-			var event_node = $j(event.event_node);
+			var event_node = jQuery(event.event_node);
 			if(event.id && result && !this.disabled && !this.options.readonly &&
 				// Permissions - opening will fail if we try
 				event_node && !(event_node.hasClass('rowNoView'))
@@ -1802,11 +1802,11 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 		// No time grid, click on a day
 		else if (this.options.granularity === 0 &&
-			($j(_ev.target).hasClass('event_wrapper') || $j(_ev.target).hasClass('.calendar_calDayCol'))
+			(jQuery(_ev.target).hasClass('event_wrapper') || jQuery(_ev.target).hasClass('.calendar_calDayCol'))
 		)
 		{
 			// Default handler to open a new event at the selected time
-			var target = $j(_ev.target).hasClass('event_wrapper') ? _ev.target.parentNode : _ev.target;
+			var target = jQuery(_ev.target).hasClass('event_wrapper') ? _ev.target.parentNode : _ev.target;
 			var options = {
 				date: target.dataset.date || this.options.date,
 				hour: target.dataset.hour || this._parent.options.day_start,
@@ -1841,7 +1841,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		var time = null;
 
 		var node = document.elementFromPoint(x,y);
-		var $node = $j(node);
+		var $node = jQuery(node);
 
 		// Ignore high level & non-time (grid itself, header parent & week label)
 		if([this.node, this.gridHeader[0], this._labelContainer[0]].indexOf(node) !== -1 ||
@@ -1857,7 +1857,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		{
 			path.push(node);
 			node.style.display = 'none';
-			$node = $j(node);
+			$node = jQuery(node);
 			if($node.hasClass('calendar_calDayColHeader')) {
 				for(var id in node.dataset) {
 					this.gridHover[0].dataset[id] = node.dataset[id];
@@ -1923,7 +1923,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	},
 
 	setDetachedAttributes: function(_nodes, _values) {
-		this.div = $j(_nodes[0]);
+		this.div = jQuery(_nodes[0]);
 
 		if(_values.start_date)
 		{
@@ -1961,10 +1961,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		},this, et2_calendar_timegrid);
 
 		// Take the whole tab height
-		var height = $j(this.getInstanceManager().DOMContainer).parent().innerHeight();
+		var height = jQuery(this.getInstanceManager().DOMContainer).parent().innerHeight();
 
 		// Allow for toolbar
-		height -= $j('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
+		height -= jQuery('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
 
 		this.options.height = Math.floor(height / rowCount);
 
@@ -1978,7 +1978,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			this.gridHeader.outerHeight();
 		var too_small = needed > this.options.height && this.options.granularity != 0;
 
-		$j(this.getInstanceManager().DOMContainer)
+		jQuery(this.getInstanceManager().DOMContainer)
 			.css({
 				'overflow-y': too_small || _too_small ? 'auto' : 'hidden',
 				'overflow-x': 'hidden',
@@ -2013,8 +2013,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 
 		// Try to resize width, though animations cause problems
-		var total_width = $j(this.getInstanceManager().DOMContainer).parent().innerWidth() - this.days.position().left;
-		var day_width = (total_width > 0 ? total_width : $j(this.getInstanceManager().DOMContainer).width())/this.day_widgets.length;
+		var total_width = jQuery(this.getInstanceManager().DOMContainer).parent().innerWidth() - this.days.position().left;
+		var day_width = (total_width > 0 ? total_width : jQuery(this.getInstanceManager().DOMContainer).width())/this.day_widgets.length;
 		// update day widgets
 		for(var i = 0; i < this.day_widgets.length; i++)
 		{

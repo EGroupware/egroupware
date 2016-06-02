@@ -118,7 +118,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		// Send the request via AJAX using the jquery ajax function
 		// we need to use jQuery of window of egw object, as otherwise the one from main window is used!
 		// (causing eg. apply from server with app.$app.method to run in main window instead of popup)
-		this.request = (this.egw.window?this.egw.window.$j:$j).ajax({
+		this.request = (this.egw.window?this.egw.window.jQuery:jQuery).ajax({
 			url: this.url,
 			async: this.async,
 			context: this,
@@ -163,8 +163,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				this.egw.includeJS(js_files, function() {
 					var end_time = (new Date).getTime();
 					this.handleResponse(data);
-					var gen_time_div = $j('#divGenTime_'+this.egw.appname);
-					if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
+					var gen_time_div = jQuery('#divGenTime_'+this.egw.appname);
+					if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
 					gen_time_div.append('<span class="asyncIncludeTime">'+egw.lang('async includes took %1s', (end_time-start_time)/1000)+'</span>');
 				}, this);
 				return;
@@ -434,7 +434,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			try
 			{
-				var jQueryObject = $j(res.data.select, req.context);
+				var jQueryObject = jQuery(res.data.select, req.context);
 				jQueryObject[res.data.func].apply(jQueryObject,	res.data.parms);
 			}
 			catch (e)

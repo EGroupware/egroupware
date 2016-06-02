@@ -51,9 +51,9 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 		}
 
 		// Call the resize handler (we have to use the jquery object of the iframe!)
-		if (wnd && typeof wnd.$j != "undefined")
+		if (wnd && typeof wnd.jQuery != "undefined")
 		{
-			wnd.$j(wnd).trigger("resize");
+			wnd.jQuery(wnd).trigger("resize");
 		}
 	},
 
@@ -86,7 +86,7 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 		if (_type != this.type)
 		{
 			//Destroy the iframe and/or the contentDiv
-			$j(this.baseDiv).empty();
+			jQuery(this.baseDiv).empty();
 			this.iframe = null;
 			this.contentDiv = null;
 			if(this.loadingDeferred && this.type)
@@ -99,8 +99,8 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 				//Create the div for displaying the content
 				case EGW_BROWSER_TYPE_DIV:
 					this.contentDiv = document.createElement('div');
-					$j(this.contentDiv).addClass('egw_fw_content_browser_div');
-					$j(this.baseDiv).append(this.contentDiv);
+					jQuery(this.contentDiv).addClass('egw_fw_content_browser_div');
+					jQuery(this.baseDiv).append(this.contentDiv);
 
 					break;
 
@@ -111,8 +111,8 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 					this.iframe.style.borderWidth = 0;
 					this.iframe.frameBorder = 0;
 					this.iframe.name = 'egw_app_iframe_' + this.app.appName;
-					$j(this.iframe).addClass('egw_fw_content_browser_iframe');
-					$j(this.baseDiv).append(this.iframe);
+					jQuery(this.iframe).addClass('egw_fw_content_browser_iframe');
+					jQuery(this.baseDiv).append(this.iframe);
 
 					break;
 			}
@@ -199,7 +199,7 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 		if(typeof etemplate2 == "function")
 		{
 			// Clear all etemplates on this tab, regardless of application, by using DOM nodes
-			$j('.et2_container',this.contentDiv||this.baseDiv).each(function() {
+			jQuery('.et2_container',this.contentDiv||this.baseDiv).each(function() {
 				var et = etemplate2.getById(this.id);
 				if(et !== null)
 				{
@@ -215,7 +215,7 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 				{
 					// Clear all etemplates on this tab, regardless of application, by using DOM nodes
 					var content = this.iframe.contentWindow;
-					$j('.et2_container',this.iframe.contentWindow).each(function() {
+					jQuery('.et2_container',this.iframe.contentWindow).each(function() {
 						var et = content.etemplate2.getById(this.id);
 						if(et !== null)
 						{
@@ -283,7 +283,7 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 				if (this.app.sidemenuEntry)
 					this.app.sidemenuEntry.showAjaxLoader();
 				this.data = "";
-				$j(this.contentDiv).empty();
+				jQuery(this.contentDiv).empty();
 				var self_egw = egw(this.app.appName);
 				var req = self_egw.json(
 					this.app.getMenuaction('ajax_exec'),
@@ -330,11 +330,11 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 		egw_seperateJavaScript(content);
 
 		// Insert the content
-		$j(this.contentDiv).append(content.html);
+		jQuery(this.contentDiv).append(content.html);
 
 		// Run the javascript code
 		//console.log(content.js);
-		$j(this.contentDiv).append(content.js);
+		jQuery(this.contentDiv).append(content.js);
 
 		if(this.loadingDeferred)
 		{

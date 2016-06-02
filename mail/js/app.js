@@ -106,7 +106,7 @@ app.classes.mail = AppJS.extend(
 			var nm = this.et2.getWidgetById(this.nm_index);
 			if(nm != null)
 			{
-				$j(nm).off('refresh');
+				jQuery(nm).off('refresh');
 			}
 		}
 
@@ -175,7 +175,7 @@ app.classes.mail = AppJS.extend(
 				if(nm != null && (typeof jQuery._data(nm).events=='undefined'||typeof jQuery._data(nm).events.refresh == 'undefined'))
 				{
 					var self = this;
-					$j(nm).on('refresh',function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);});
+					jQuery(nm).on('refresh',function() {self.mail_refreshFolderStatus.call(self,undefined,undefined,false);});
 				}
 				var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 				if (tree_wdg)
@@ -763,7 +763,7 @@ app.classes.mail = AppJS.extend(
 
 			var widget = et2.getWidgetById(field.widget);
 			if(widget == null) continue;
-			$j(widget.getDOMNode()).removeClass('visible');
+			jQuery(widget.getDOMNode()).removeClass('visible');
 
 			// Programatically build the child elements
 			if(field.build_children)
@@ -811,8 +811,8 @@ app.classes.mail = AppJS.extend(
 					// Disable if only 1 address
 					content.length <=1 || (
 					// Disable if all content is visible
-					$j(widget.getDOMNode()).innerWidth() >= widget.getDOMNode().scrollWidth &&
-					$j(widget.getDOMNode()).innerHeight() >= widget.getDOMNode().scrollHeight)
+					jQuery(widget.getDOMNode()).innerWidth() >= widget.getDOMNode().scrollWidth &&
+					jQuery(widget.getDOMNode()).innerHeight() >= widget.getDOMNode().scrollHeight)
 				);
 			},this,et2_button);
 		}
@@ -1041,7 +1041,7 @@ app.classes.mail = AppJS.extend(
 		list.toggleClass('visible');
 
 		// Revert if user clicks elsewhere
-		$j('body').one('click', list, function(ev) {
+		jQuery('body').one('click', list, function(ev) {
 			ev.data.removeClass('visible');
 		});
 	},
@@ -1181,7 +1181,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	drag_attachment: function(_action, _elems)
 	{
-		var div = $j(document.createElement("div"))
+		var div = jQuery(document.createElement("div"))
 			.css({
 				position: 'absolute',
 				top: '0px',
@@ -1191,7 +1191,7 @@ app.classes.mail = AppJS.extend(
 
 		var data = _elems[0].data || {};
 
-		var text = $j(document.createElement('div')).css({left: '30px', position: 'absolute'});
+		var text = jQuery(document.createElement('div')).css({left: '30px', position: 'absolute'});
 		// add filename or number of files for multiple files
 		text.text(_elems.length > 1 ? _elems.length+' '+this.egw.lang('files') : data.name || '');
 		div.append(text);
@@ -2991,7 +2991,7 @@ app.classes.mail = AppJS.extend(
 				// Check that the ID & interface is there.  Paste is missing iface.
 				if (_actionObjects[i].id.length>0 && _actionObjects[i].iface)
 				{
-					var dataElem = $j(_actionObjects[i].iface.getDOMNode());
+					var dataElem = jQuery(_actionObjects[i].iface.getDOMNode());
 					dataElem.addClass(_class);
 
 				}
@@ -3044,7 +3044,7 @@ app.classes.mail = AppJS.extend(
 			{
 				if (_actionObjects[i].id.length>0)
 				{
-					var dataElem = $j(_actionObjects[i].iface.getDOMNode());
+					var dataElem = jQuery(_actionObjects[i].iface.getDOMNode());
 					dataElem.removeClass(_class);
 
 				}

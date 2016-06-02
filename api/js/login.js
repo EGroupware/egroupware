@@ -13,31 +13,31 @@ if (top !== window) top.location = window.location;
 
 egw_LAB.wait(function()
 {
-	$j(document).ready(function()
+	jQuery(document).ready(function()
 	{
 		// lock the device orientation in portrait view
 		if (screen.orientation) screen.orientation.lock('portrait');
 
 		function do_social(_data)
 		{
-			var isPixelegg = $j('link[href*="pixelegg.css"]')[0];
-			var social = $j(document.createElement('div'))
+			var isPixelegg = jQuery('link[href*="pixelegg.css"]')[0];
+			var social = jQuery(document.createElement('div'))
 				.attr({
 					id: "socialMedia",
 					class: "socialMedia"
 				})
-				 .appendTo($j( isPixelegg? 'form' : '#socialBox'));
+				 .appendTo(jQuery( isPixelegg? 'form' : '#socialBox'));
 
 			for(var i=0; i < _data.length; ++i)
 			{
 				var data = _data[i];
-				var url = (data.lang ? data.lang[$j('meta[name="language"]').attr('content')] : null) || data.url;
-				$j(document.createElement('a')).attr({
+				var url = (data.lang ? data.lang[jQuery('meta[name="language"]').attr('content')] : null) || data.url;
+				jQuery(document.createElement('a')).attr({
 					href: url,
 					target: '_blank'
 				})
 				.appendTo(social)
-				.append($j(document.createElement('img'))
+				.append(jQuery(document.createElement('img'))
 					.attr('src', data.svg));
 			}
 		}

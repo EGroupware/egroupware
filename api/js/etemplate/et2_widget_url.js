@@ -51,7 +51,7 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 	 * @memberOf et2_url
 	 */
 	createInputWidget: function() {
-		this.input = $j(document.createElement("input"))
+		this.input = jQuery(document.createElement("input"))
 			.blur(this,this.validate)
 			.blur(this,function(e){e.data.set_value(e.data.getValue());});
 
@@ -89,7 +89,7 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 			// Create button if it doesn't exist yet
 			if(this._button == null)
 			{
-				this._button = $j(document.createElement("a")).addClass("et2_url");
+				this._button = jQuery(document.createElement("a")).addClass("et2_url");
 				this.getSurroundings().insertDOMNode(this._button[0]);
 				this.getSurroundings().update();
 			}
@@ -256,7 +256,7 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.span = $j(document.createElement("a"))
+		this.span = jQuery(document.createElement("a"))
 			.addClass("et2_textbox readonly");
 		// Do not a tag if no call_link is set and not in mobile, empty a tag may conflict
 		// with some browser telephony addons (eg. telify in FF)

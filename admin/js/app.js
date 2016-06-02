@@ -892,8 +892,8 @@ app.classes.admin = AppJS.extend(
 	 */
 	wizard_popup_resize: function ()
 	{
-		var $main_div = $j('#popupMainDiv');
-		var $et2 = $j('.et2_container');
+		var $main_div = jQuery('#popupMainDiv');
+		var $et2 = jQuery('.et2_container');
 		var w = {
 			width: egw_getWindowInnerWidth(),
 			height: egw_getWindowInnerHeight()

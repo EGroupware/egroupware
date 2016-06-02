@@ -399,7 +399,7 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 			var ids = [];
 			var data = {};
 			jQuery('#'+widget.getInstanceManager().uniqueId + '_selected li',select_col).each(function() {
-				var id = $j(this).attr("data-id");
+				var id = jQuery(this).attr("data-id");
 				// Add to list
 				ids.push(id);
 

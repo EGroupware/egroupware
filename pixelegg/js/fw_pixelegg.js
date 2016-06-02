@@ -46,7 +46,7 @@
 			document.getElementById('egw_fw_sidebar').style.width = _size + 'px';
 		}
 
-		$j(document).ready(function() {
+		jQuery(document).ready(function() {
 			window.framework = new fw_pixelegg("egw_fw_sidemenu", "egw_fw_tabs",
 					window.egw_webserverUrl, egw_setSideboxSize,"egw_fw_splitter", 255, 245);	// should be identical to jdots_framework::(DEFAULT|MIN)_SIDEBAR_WIDTH
 			window.callManual = window.framework.callManual;

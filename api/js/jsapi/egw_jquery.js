@@ -36,11 +36,11 @@ egw.extend('jquery', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		this.webserverUrl + '/api/js/jquery/jquery-ui.js',
 		this.webserverUrl + '/api/js/jquery/jquery.html5_upload.js'
 	], function () {
-		this.constant('jquery', '$j', _wnd.$j, _wnd);
+		this.constant('jquery', 'jQuery', _wnd.jQuery, _wnd);
 		ready.readyDone(token);
 	}, this);
 
 	return {
-		'$j': null
+		'jQuery': null
 	};
 });

@@ -38,8 +38,8 @@ function widget_browser(list_div, widget_div)
 	this.et2.widgetContainer.setArrayMgrs(this.et2._createArrayManagers(_data));
 
 	// Set up UI
-	this.list_div = $j(list_div);
-	this.widget_div = $j(widget_div);
+	this.list_div = jQuery(list_div);
+	this.widget_div = jQuery(widget_div);
 	this.attribute_list = null;
 
 	// Create and popuplate the widget list
@@ -58,7 +58,7 @@ widget_browser.prototype._init_list = function()
 	var self = this;
 
 	// Create list
-	var list = $j(document.createElement('ul'))
+	var list = jQuery(document.createElement('ul'))
 		.attr('id', 'widgets')
 		.click(function(e) {self.select_widget(e);})
 		.appendTo(this.list_div);
@@ -77,14 +77,14 @@ widget_browser.prototype._init_list = function()
 	}
 
 	// Build attribute table
-	attribute_table = $j(document.createElement('table'));
+	attribute_table = jQuery(document.createElement('table'));
 	attribute_table.append('<thead class = "ui-widget-header"><td>'+egw().lang('Name')+"</td><td>"+egw().lang("Data type") +
 		"</td><td>"+egw().lang("Value") + "</td></thead>");
-	this.attribute_list = $j(document.createElement('tbody'))
+	this.attribute_list = jQuery(document.createElement('tbody'))
 		.appendTo(attribute_table);
 
 	this.list_div.append(
-		$j(document.createElement('div'))
+		jQuery(document.createElement('div'))
 			.attr('id', 'widget_attributes')
 			.append(attribute_table)
 	);
@@ -130,7 +130,7 @@ widget_browser.prototype.dump_attributes = function(_type)
 widget_browser.prototype.select_widget = function(e,f)
 {
 	// UI prettyness - clear selected
-	$j(e.target).parent().children().removeClass("ui-state-active");
+	jQuery(e.target).parent().children().removeClass("ui-state-active");
 
 	// Clear previous widget
 	if(this.widget)
@@ -141,14 +141,14 @@ widget_browser.prototype.select_widget = function(e,f)
 	}
 
 	// Get the type of widget
-	var type = $j(e.target).text();
+	var type = jQuery(e.target).text();
 	if(!type || e.target.nodeName != 'LI')
 	{
 		return;
 	}
 
 	// UI prettyness - show item as selected
-	$j(e.target).addClass('ui-state-active');
+	jQuery(e.target).addClass('ui-state-active');
 
 	// Widget attributes
 	var attrs = {};
@@ -180,14 +180,14 @@ widget_browser.prototype.select_widget = function(e,f)
 widget_browser.prototype.create_attribute = function(name, settings)
 {
 	var set_function_name = "set_"+name;
-	var row = $j(document.createElement("tr"))
+	var row = jQuery(document.createElement("tr"))
 		.addClass(typeof this.widget[set_function_name] == 'function' ? 'ui-state-default':'ui-state-disabled')
 		// Human Name
-		.append($j(document.createElement('td'))
+		.append(jQuery(document.createElement('td'))
 			.text(settings.name)
 		)
 		// Data type
-		.append($j(document.createElement('td'))
+		.append(jQuery(document.createElement('td'))
 			.text(settings.type)
 		);
 	// Add attribute name & description as a tooltip
@@ -197,7 +197,7 @@ widget_browser.prototype.create_attribute = function(name, settings)
 	}
 
 	// Value
-	var value = $j(document.createElement('td')).appendTo(row);
+	var value = jQuery(document.createElement('td')).appendTo(row);
 	if(row.hasClass('ui-state-disabled'))
 	{
 		// No setter - just use text
@@ -211,14 +211,14 @@ widget_browser.prototype.create_attribute = function(name, settings)
 	switch(settings.type)
 	{
 		case 'string':
-			input = $j('<input/>')
+			input = jQuery('<input/>')
 				.change(function(e) {
-					self.widget[set_function_name].apply(self.widget, [$j(e.target).val()]);
+					self.widget[set_function_name].apply(self.widget, [jQuery(e.target).val()]);
 				});
 			input.val(this.widget.options[name]);
 			break;
 		case 'boolean':
-			input = $j('<input type="checkbox"/>')
+			input = jQuery('<input type="checkbox"/>')
 				.attr("checked", this.widget.options[name])
 				.change(function(e) {
 					self.widget[set_function_name].apply(self.widget, [e.target.checked]);
@@ -253,7 +253,7 @@ widget_browser.prototype._init_dtd = function ()
 	var self = this;
 
 	// Create DTD Generator button and bind click handler on it
-	var dtd_btn = $j(document.createElement('button'))
+	var dtd_btn = jQuery(document.createElement('button'))
 			.attr({id:'dtd_btn', title:'Generates Document Type Definition (DTD) for all widgets'})
 			.click(function(){
 				self._dtd_builder();

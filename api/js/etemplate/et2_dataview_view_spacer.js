@@ -40,7 +40,7 @@ var et2_dataview_spacer = (function(){ "use strict"; return et2_dataview_contain
 		// Get the spacer row and append it to the container
 		this.spacerNode = _rowProvider.getPrototype("spacer",
 			this._createSpacerPrototype, this);
-		this._phDiv = $j("td", this.spacerNode);
+		this._phDiv = jQuery("td", this.spacerNode);
 		this.appendNode(this.spacerNode);
 	},
 
@@ -90,9 +90,9 @@ var et2_dataview_spacer = (function(){ "use strict"; return et2_dataview_contain
 	/* ---- PRIVATE FUNCTIONS ---- */
 
 	_createSpacerPrototype: function (_outerId, _columnIds) {
-		var tr = $j(document.createElement("tr"));
+		var tr = jQuery(document.createElement("tr"));
 
-		var td = $j(document.createElement("td"))
+		var td = jQuery(document.createElement("td"))
 			.addClass("egwGridView_spacer")
 			.addClass(_outerId + "_spacer_fullRow")
 			.attr("colspan", _columnIds.length)

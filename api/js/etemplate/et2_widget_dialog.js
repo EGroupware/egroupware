@@ -75,7 +75,7 @@
  *				// If you override, 'this' will be the dialog DOMNode.
  *				// Things get more complicated.
  *				// Do what you like, but don't forget this line:
- *				$j(this).dialog("close")
+ *				jQuery(this).dialog("close")
  *			}, class="ui-state-error"},
  *
  *		],
@@ -246,7 +246,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			}
 		}
 
-		this.div = $j(document.createElement("div"));
+		this.div = jQuery(document.createElement("div"));
 
 		this._createDialog();
 	},
@@ -312,7 +312,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 
 		this.div.empty()
 			.append("<img class='dialog_icon' />")
-			.append($j('<div/>').text(message));
+			.append(jQuery('<div/>').text(message));
 	},
 
 	/**
@@ -336,11 +336,11 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 	set_icon: function(icon_url) {
 		if(icon_url == "")
 		{
-			$j("img.dialog_icon",this.div).hide();
+			jQuery("img.dialog_icon",this.div).hide();
 		}
 		else
 		{
-			$j("img.dialog_icon",this.div).show().attr("src", icon_url);
+			jQuery("img.dialog_icon",this.div).show().attr("src", icon_url);
 		}
 	},
 
@@ -399,7 +399,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			this.div.dialog("option", "buttons", buttons);
 
 			// Focus default button so enter works
-			$j('.ui-dialog-buttonpane button[default]',this.div.parent()).focus();
+			jQuery('.ui-dialog-buttonpane button[default]',this.div.parent()).focus();
 		}
 	},
 
@@ -440,7 +440,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			// File name provided, fetch from server
 			this.template.load("",template,this.options.value||{}, jQuery.proxy(function() {
 				// Set focus to the first input
-				$j('input',this.div).first().focus();
+				jQuery('input',this.div).first().focus();
 			},this));
 		}
 		else
@@ -480,7 +480,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			title: this.options.title,
 			open: function() {
 				// Focus default button so enter works
-				$j(this).parents('.ui-dialog-buttonpane button[default]').focus();
+				jQuery(this).parents('.ui-dialog-buttonpane button[default]').focus();
 			},
 			close: jQuery.proxy(function() {this.destroy();},this),
 			beforeClose: this.options.beforeClose
@@ -693,7 +693,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 			{"button_id": et2_dialog.CANCEL_BUTTON,"text": egw.lang('cancel'), click: function() {
 				// Cancel run
 				cancel = true;
-				$j("button[button_id="+et2_dialog.CANCEL_BUTTON+"]", dialog.div.parent()).button("disable");
+				jQuery("button[button_id="+et2_dialog.CANCEL_BUTTON+"]", dialog.div.parent()).button("disable");
 				update.call(_list.length,'');
 			}}
 		];
@@ -719,7 +719,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 		}, parent);
 
 		// OK starts disabled
-		$j("button[button_id="+et2_dialog.OK_BUTTON+"]", dialog.div.parent()).button("disable");
+		jQuery("button[button_id="+et2_dialog.OK_BUTTON+"]", dialog.div.parent()).button("disable");
 
 		var log = null;
 		var progressbar = null;
@@ -761,8 +761,8 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 			{
 				// All done
 				if(!cancel) progressbar.set_value(100);
-				$j("button[button_id="+et2_dialog.CANCEL_BUTTON+"]", dialog.div.parent()).button("disable");
-				$j("button[button_id="+et2_dialog.OK_BUTTON+"]", dialog.div.parent()).button("enable");
+				jQuery("button[button_id="+et2_dialog.CANCEL_BUTTON+"]", dialog.div.parent()).button("disable");
+				jQuery("button[button_id="+et2_dialog.OK_BUTTON+"]", dialog.div.parent()).button("enable");
 				if (!cancel && typeof _callback == "function")
 				{
 					_callback.call(dialog, true, response);
@@ -770,9 +770,9 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 			}
 		};
 
-		$j(dialog.template.DOMContainer).on('load', function() {
+		jQuery(dialog.template.DOMContainer).on('load', function() {
 			// Get access to template widgets
-			log = $j(dialog.template.widgetContainer.getWidgetById('log').getDOMNode());
+			log = jQuery(dialog.template.widgetContainer.getWidgetById('log').getDOMNode());
 			progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
 
 			// Start

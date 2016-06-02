@@ -103,9 +103,9 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 
 	createInputWidget: function()
 	{
-		this.span = $j(document.createElement(this.options.inline ? 'div' : "span")).addClass("et2_date");
+		this.span = jQuery(document.createElement(this.options.inline ? 'div' : "span")).addClass("et2_date");
 
-		this.input_date = $j(document.createElement(this.options.inline ? "div" : "input"));
+		this.input_date = jQuery(document.createElement(this.options.inline ? "div" : "input"));
 		if (this.options.blur) this.input_date.attr('placeholder', this.egw().lang(this.options.blur));
 		this.input_date.addClass("et2_date").attr("type", "text")
 			.attr("size", 7)	// strlen("10:00pm")=7
@@ -707,16 +707,16 @@ var et2_date_duration = (function(){ "use strict"; return et2_date.extend(
 
 	createInputWidget: function() {
 		// Create nodes
-		this.node = $j(document.createElement("span"))
+		this.node = jQuery(document.createElement("span"))
 						.addClass('et2_date_duration');
-		this.duration = $j(document.createElement("input"))
+		this.duration = jQuery(document.createElement("input"))
 						.addClass('et2_date_duration')
 						.attr({type: 'number', size: 3});
 		this.node.append(this.duration);
 
 		if(this.options.display_format.length > 1)
 		{
-			this.format = $j(document.createElement("select"))
+			this.format = jQuery(document.createElement("select"))
 							.addClass('et2_date_duration');
 			this.node.append(this.format);
 
@@ -726,18 +726,18 @@ var et2_date_duration = (function(){ "use strict"; return et2_date.extend(
 		}
 		else if (this.time_formats[this.options.display_format])
 		{
-			this.format = $j("<span>"+this.time_formats[this.options.display_format]+"</span>").appendTo(this.node);
+			this.format = jQuery("<span>"+this.time_formats[this.options.display_format]+"</span>").appendTo(this.node);
 		}
 		else
 		{
-			this.format = $j("<span>"+this.time_formats["m"]+"</span>").appendTo(this.node);
+			this.format = jQuery("<span>"+this.time_formats["m"]+"</span>").appendTo(this.node);
 		}
 	},
 	attachToDOM: function() {
 		var node = this.getInputNode();
 		if (node)
 		{
-			$j(node).bind("change.et2_inputWidget", this, function(e) {
+			jQuery(node).bind("change.et2_inputWidget", this, function(e) {
 				e.data.change(this);
 			});
 		}
@@ -790,7 +790,7 @@ var et2_date_duration = (function(){ "use strict"; return et2_date.extend(
 		if(display.unit != this.options.display_format)
 		{
 			if(this.format && this.format.children().length > 1) {
-				$j("option[value='"+display.unit+"']",this.format).attr('selected','selected');
+				jQuery("option[value='"+display.unit+"']",this.format).attr('selected','selected');
 			}
 			else
 			{
@@ -892,9 +892,9 @@ var et2_date_duration_ro = (function(){ "use strict"; return et2_date_duration.e
 	 * @memberOf et2_date_duration_ro
 	 */
 	createInputWidget: function() {
-		this.node = $j(document.createElement("span"));
-		this.duration = $j(document.createElement("span")).appendTo(this.node);
-		this.format = $j(document.createElement("span")).appendTo(this.node);
+		this.node = jQuery(document.createElement("span"));
+		this.duration = jQuery(document.createElement("span")).appendTo(this.node);
+		this.format = jQuery(document.createElement("span")).appendTo(this.node);
 	},
 
 	/**
@@ -995,10 +995,10 @@ var et2_date_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
-		this._labelContainer = $j(document.createElement("label"))
+		this._labelContainer = jQuery(document.createElement("label"))
 			.addClass("et2_label");
 		this.value = "";
-		this.span = $j(document.createElement(this._type == "date-since" || this._type == "date-time_today" ? "span" : "time"))
+		this.span = jQuery(document.createElement(this._type == "date-since" || this._type == "date-time_today" ? "span" : "time"))
 			.addClass("et2_date_ro et2_label")
 			.appendTo(this._labelContainer);
 
@@ -1274,12 +1274,12 @@ var et2_date_range = (function(){ "use strict"; return et2_inputWidget.extend({
 		this.options.relative = _value;
 		if(this.options.relative)
 		{
-			$j(this.from.getDOMNode()).hide();
-			$j(this.to.getDOMNode()).hide();
+			jQuery(this.from.getDOMNode()).hide();
+			jQuery(this.to.getDOMNode()).hide();
 		}
 		else
 		{
-			$j(this.select.getDOMNode()).hide();
+			jQuery(this.select.getDOMNode()).hide();
 		}
 	},
 
@@ -1323,7 +1323,7 @@ var et2_date_range = (function(){ "use strict"; return et2_inputWidget.extend({
 	{
 		if(this.options.relative)
 		{
-			$j(this.select.getDOMNode()).show();
+			jQuery(this.select.getDOMNode()).show();
 		}
 		// Show description
 		this.select.set_value(_value);

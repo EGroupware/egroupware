@@ -113,14 +113,14 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 	createInputWidget: function() {
 		var _self = this;
 
-		this.div = $j(document.createElement("div"));
-		this.left = $j(document.createElement("div"));
-		this.right = $j(document.createElement("div"));
-		this.right_container = $j(document.createElement("div"));
-		this.app_select = $j(document.createElement("ul"));
-		this.search = $j(document.createElement("input"));
-		this.clear = $j(document.createElement("span"));
-		this.itemlist = $j(document.createElement("div"));
+		this.div = jQuery(document.createElement("div"));
+		this.left = jQuery(document.createElement("div"));
+		this.right = jQuery(document.createElement("div"));
+		this.right_container = jQuery(document.createElement("div"));
+		this.app_select = jQuery(document.createElement("ul"));
+		this.search = jQuery(document.createElement("input"));
+		this.clear = jQuery(document.createElement("span"));
+		this.itemlist = jQuery(document.createElement("div"));
 
 		// Container elements
 		this.div.addClass("et2_itempicker");
@@ -136,12 +136,12 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 			if(img_icon === null) {
 				continue;
 			}
-			var img = $j(document.createElement("img"));
+			var img = jQuery(document.createElement("img"));
 			img.attr("src", img_icon);
-			var item = $j(document.createElement("li"));
+			var item = jQuery(document.createElement("li"));
 			item.attr("id", key)
 				.click(function() {
-					_self.selectApplication($j(this));
+					_self.selectApplication(jQuery(this));
 				})
 				.append(img);
 			if(item_count == 0) {
@@ -155,7 +155,7 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 		this.search.addClass("et2_itempicker_search");
 		this.search.keyup(function() {
 			var request = {};
-			request.term = $j(this).val();
+			request.term = jQuery(this).val();
 			_self.query(request);
 		});
 		this.set_blur(this.options.blur, this.search);
@@ -170,7 +170,7 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		// Action button
 		this.button_action = et2_createWidget("button");
-		$j(this.button_action.getDOMNode()).addClass("et2_itempicker_button_action");
+		jQuery(this.button_action.getDOMNode()).addClass("et2_itempicker_button_action");
 		this.button_action.set_label(this.egw().lang(this.options.action_label));
 		this.button_action.click = function() { _self.doAction(); };
 
@@ -208,8 +208,8 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 	getSelectedItems: function()
 	{
 		var items = [];
-		$j(this.itemlist).children("ul").children("li.selected").each(function(index) {
-			items[index] = $j(this).attr("id");
+		jQuery(this.itemlist).children("ul").children("li.selected").each(function(index) {
+			items[index] = jQuery(this).attr("id");
 		});
 		return items;
 	},
@@ -253,7 +253,7 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 
 	selectApplication: function(app) {
 		this.clearSearchResults();
-		$j(".et2_itempicker_app_select li").removeClass("selected");
+		jQuery(".et2_itempicker_app_select li").removeClass("selected");
 		app.addClass("selected");
 		this.current_app = app.attr("id");
 		return true;
@@ -314,11 +314,11 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 	},
 
 	updateItemList: function(data) {
-		var list = $j(document.createElement("ul"));
+		var list = jQuery(document.createElement("ul"));
 		var item_count = 0;
 		var _self = this;
 		for(var id in data) {
-			var item = $j(document.createElement("li"));
+			var item = jQuery(document.createElement("li"));
 			if(item_count%2 == 0) {
 				item.addClass("row_on");
 			} else {
@@ -329,16 +329,16 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 				.click(function(e) {
 					if(e.ctrlKey || e.metaKey) {
 						// add to selection
-						$j(this).addClass("selected");
+						jQuery(this).addClass("selected");
 					} else if(e.shiftKey) {
 						// select range
-						var start = $j(this).siblings(".selected").first();
+						var start = jQuery(this).siblings(".selected").first();
 						if(start == 0) {
 							// no start item - cannot select range - select single item
-							$j(this).addClass("selected");
+							jQuery(this).addClass("selected");
 							return true;
 						}
-						var end = $j(this);
+						var end = jQuery(this);
 						// swap start and end if start appears after end in dom hierarchy
 						if(start.index() > end.index()) {
 							var startOld = start;
@@ -351,8 +351,8 @@ var et2_itempicker = (function(){ "use strict"; return et2_inputWidget.extend(
 						end.addClass("selected");
 					} else {
 						// select single item
-						$j(this).siblings(".selected").removeClass("selected");
-						$j(this).addClass("selected");
+						jQuery(this).siblings(".selected").removeClass("selected");
+						jQuery(this).addClass("selected");
 					}
 				});
 			list.append(item);

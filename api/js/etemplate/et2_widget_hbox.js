@@ -43,7 +43,7 @@ var et2_hbox = (function(){ "use strict"; return et2_baseWidget.extend(
 		this.leftDiv = null;
 		this.rightDiv = null;
 
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass("et2_" + this._type)
 			.addClass("et2_box_widget");
 
@@ -73,7 +73,7 @@ var et2_hbox = (function(){ "use strict"; return et2_baseWidget.extend(
 				// "right"
 				if (this.alignData.hasRight)
 				{
-					this.rightDiv = $j(document.createElement("div"))
+					this.rightDiv = jQuery(document.createElement("div"))
 						.addClass("et2_hbox_right")
 						.appendTo(this.div);
 				}
@@ -83,7 +83,7 @@ var et2_hbox = (function(){ "use strict"; return et2_baseWidget.extend(
 				if (this.alignData.hasCenter)
 				{
 					// Create the left div if an element is centered
-					this.leftDiv = $j(document.createElement("div"))
+					this.leftDiv = jQuery(document.createElement("div"))
 						.addClass("et2_hbox_left")
 						.appendTo(this.div);
 

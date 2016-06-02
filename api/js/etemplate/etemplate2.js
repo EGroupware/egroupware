@@ -149,16 +149,16 @@ etemplate2.prototype.resize = function(e)
 			self.resize_timeout = false;
 			if (self.widgetContainer)
 			{
-				var appHeader = $j('#divAppboxHeader');
+				var appHeader = jQuery('#divAppboxHeader');
 
 				//Calculate the excess height
-				excess_height = egw(window).is_popup()? $j(window).height() - $j(self.DOMContainer).height() - appHeader.outerHeight()+11: false;
+				excess_height = egw(window).is_popup()? jQuery(window).height() - jQuery(self.DOMContainer).height() - appHeader.outerHeight()+11: false;
 				// Recalculate excess height if the appheader is shown
 				if (appHeader.length > 0 && appHeader.is(':visible')) excess_height -= appHeader.outerHeight()-9;
 
 				// Do not resize if the template height is bigger than screen available height
 				// For templates which have sub templates and they are bigger than screenHeight
-				if(screen.availHeight < $j(self.DOMContainer).height()) excess_height = 0;
+				if(screen.availHeight < jQuery(self.DOMContainer).height()) excess_height = 0;
 
 				// Call the "resize" event of all functions which implement the
 				// "IResizeable" interface
@@ -185,12 +185,12 @@ etemplate2.prototype.resize = function(e)
  */
 etemplate2.prototype.clear = function()
 {
-	$j(this.DOMContainer).trigger('clear');
+	jQuery(this.DOMContainer).trigger('clear');
 
 	// Remove any handlers on window (resize)
 	if(this.uniqueId)
 	{
-		$j(window).off("."+this.uniqueId);
+		jQuery(window).off("."+this.uniqueId);
 	}
 
 	// call our destroy_session handler, if it is not already unbind, and unbind it after
@@ -207,7 +207,7 @@ etemplate2.prototype.clear = function()
 		this.widgetContainer.free();
 		this.widgetContainer = null;
 	}
-	$j(this.DOMContainer).empty();
+	jQuery(this.DOMContainer).empty();
 
 	// Remove self from the index
 	for(name in this.templates)
@@ -393,7 +393,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 	}
 
 	// require necessary translations from server, if not already loaded
-	if (!$j.isArray(_data.langRequire)) _data.langRequire = [];
+	if (!jQuery.isArray(_data.langRequire)) _data.langRequire = [];
 	egw(currentapp, window).langRequire(window, _data.langRequire, function()
 	{
 		// Initialize application js
@@ -476,7 +476,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 			this.widgetContainer.loadingFinished(deferred);
 
 			// Connect to the window resize event
-			$j(window).on("resize."+this.uniqueId, this, function(e) {e.data.resize(e);});
+			jQuery(window).on("resize."+this.uniqueId, this, function(e) {e.data.resize(e);});
 
 			// Insert the document fragment to the DOM Container
 			this.DOMContainer.appendChild(frag);
@@ -488,7 +488,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 			if(deferred.length > 0)
 			{
 				var still_deferred = 0;
-				$j(deferred).each(function() {if(this.state() == "pending") still_deferred++;});
+				jQuery(deferred).each(function() {if(this.state() == "pending") still_deferred++;});
 				if(still_deferred > 0)
 				{
 					egw.debug("log", "Template loaded, waiting for %d/%d deferred to finish...",still_deferred, deferred.length);
@@ -508,14 +508,14 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 				this.resize();
 
 				// Automatically set focus to first visible input for popups
-				if(this.widgetContainer._egw.is_popup() && $j('[autofocus]',this.DOMContainer).focus().length == 0)
+				if(this.widgetContainer._egw.is_popup() && jQuery('[autofocus]',this.DOMContainer).focus().length == 0)
 				{
-					var $input = $j('input:visible',this.DOMContainer)
+					var $input = jQuery('input:visible',this.DOMContainer)
 						// Date fields open the calendar popup on focus
 						.not('.et2_date')
 						.filter(function() {
 						// Skip inputs that are out of tab ordering
-						var $this = $j(this);
+						var $this = jQuery(this);
 						return !$this.attr('tabindex') || $this.attr('tabIndex')>=0;
 					}).first();
 
@@ -540,7 +540,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 					app[this.app].et2_ready(this, this.name);
 				}
 
-				$j(this.DOMContainer).trigger('load', this);
+				jQuery(this.DOMContainer).trigger('load', this);
 
 				// Profiling
 				if(egw.debug_level() >= 4)
@@ -554,8 +554,8 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 						console.profileEnd(_name);
 					}
 					var end_time = (new Date).getTime();
-					var gen_time_div = $j('#divGenTime_'+appname);
-					if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
+					var gen_time_div = jQuery('#divGenTime_'+appname);
+					if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
 					gen_time_div.find('.et2RenderTime').remove();
 					gen_time_div.append('<span class="et2RenderTime">'+egw.lang('eT2 rendering took %1s', (end_time-start_time)/1000)+'</span>');
 				}
@@ -1275,8 +1275,8 @@ function xajax_eT_wrapper(obj,widget)
 	egw().debug("warn", "xajax_eT_wrapper() is deprecated, replace with widget.getInstanceManager().submit()");
 	if(typeof obj == "object")
 	{
-		$j("div.popupManual div.noPrint").hide();
-		$j("div.ajax-loader").show();
+		jQuery("div.popupManual div.noPrint").hide();
+		jQuery("div.ajax-loader").show();
 		if(typeof widget == "undefined" && obj.id)
 		{
 			// Try to find the widget by ID so we don't have to change every call
@@ -1291,7 +1291,7 @@ function xajax_eT_wrapper(obj,widget)
 	}
 	else
 	{
-		$j("div.popupManual div.noPrint").show();
-		$j("div.ajax-loader").hide();
+		jQuery("div.popupManual div.noPrint").show();
+		jQuery("div.ajax-loader").hide();
 	}
 }

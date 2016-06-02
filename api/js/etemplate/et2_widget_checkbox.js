@@ -83,7 +83,7 @@ var et2_checkbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	},
 
 	createInputWidget: function() {
-		this.input = $j(document.createElement("input")).attr("type", "checkbox");
+		this.input = jQuery(document.createElement("input")).attr("type", "checkbox");
 
 		this.input.addClass("et2_checkbox");
 
@@ -91,7 +91,7 @@ var et2_checkbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			var self = this;
 			// checkbox container
-			this.toggle = $j(document.createElement('span'))
+			this.toggle = jQuery(document.createElement('span'))
 					.addClass('et2_checkbox_slideSwitch')
 					.append(this.input);
 			// update switch status on change
@@ -200,7 +200,7 @@ var et2_checkbox_ro = (function(){ "use strict"; return et2_checkbox.extend(
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.span = $j(document.createElement("span"))
+		this.span = jQuery(document.createElement("span"))
 			.addClass("et2_checkbox_ro");
 
 		this.setDOMNode(this.span[0]);

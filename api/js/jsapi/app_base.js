@@ -1,4 +1,4 @@
-/* global $j, et2_dialog, Promise, et2_nextmatch, Class, etemplate2, et2_favorites, mailvelope */
+/* global jQuery, et2_dialog, Promise, et2_nextmatch, Class, etemplate2, et2_favorites, mailvelope */
 
 /**
  * EGroupware clientside Application javascript base object
@@ -127,7 +127,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			if(sidebox.length == 0 && egw_getFramework() != null)
 			{
 				var egw_fw = egw_getFramework();
-				sidebox= $j('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
+				sidebox= jQuery('#favorite_sidebox_'+this.appname,egw_fw.sidemenuDiv);
 			}
 			// Make sure we're running in the top window when we init sidebox
 			if(window.app[this.appname] === this && window.top.app[this.appname] !== this && window.top.app[this.appname])
@@ -499,7 +499,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		if (!this.egw.is_popup())
 		{
 			var egw_fw = egw_getFramework();
-			var tutorial = $j('#egw_tutorial_'+this.appname+'_sidebox', egw_fw ? egw_fw.sidemenuDiv : document);
+			var tutorial = jQuery('#egw_tutorial_'+this.appname+'_sidebox', egw_fw ? egw_fw.sidemenuDiv : document);
 			// _init_sidebox gets currently called multiple times, which needs to be fixed
 			if (tutorial.length && !this.tutorial_initialised)
 			{
@@ -518,7 +518,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				.on("click.sidebox","div.ui-icon-trash", this, this.delete_favorite)
 				// need to install a favorite handler, as we switch original one off with .off()
 				.on('click.sidebox','li[data-id]', this, function(event) {
-					var li = $j(this);
+					var li = jQuery(this);
 					li.siblings().removeClass('ui-state-highlight');
 
 					var state = {};
@@ -567,7 +567,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			if(egw_fw && egw_fw.applications[this.appname] && egw_fw.applications[this.appname].browser
 				&& egw_fw.applications[this.appname].browser.baseDiv)
 			{
-				$j(egw_fw.applications[this.appname].browser.baseDiv)
+				jQuery(egw_fw.applications[this.appname].browser.baseDiv)
 					.off('.sidebox')
 					.on('change.sidebox', function() {
 						self.highlight_favorite();
@@ -632,11 +632,11 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			filter_list.push("</ul>");
 		};
 		add_to_popup(this.favorite_popup.state);
-		$j("#"+this.appname+"_favorites_popup_state",this.favorite_popup)
+		jQuery("#"+this.appname+"_favorites_popup_state",this.favorite_popup)
 			.replaceWith(
-				$j(filter_list.join("")).attr("id",this.appname+"_favorites_popup_state")
+				jQuery(filter_list.join("")).attr("id",this.appname+"_favorites_popup_state")
 			);
-		$j("#"+this.appname+"_favorites_popup_state",this.favorite_popup)
+		jQuery("#"+this.appname+"_favorites_popup_state",this.favorite_popup)
 			.hide()
 			.siblings(".ui-icon-circle-plus")
 			.removeClass("ui-icon-circle-minus");
@@ -690,7 +690,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		}
 
 		// Create popup
-		this.favorite_popup = $j('<div id="'+this.dom_id + '_nm_favorites_popup" title="' + egw().lang("New favorite") + '">\
+		this.favorite_popup = jQuery('<div id="'+this.dom_id + '_nm_favorites_popup" title="' + egw().lang("New favorite") + '">\
 			<form>\
 			<label for="name">'+
 				this.egw.lang("name") +
@@ -706,10 +706,10 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			// still running under iframe and that gets into conflict with et2 object created for
 			// video tutorials in sidebox.
 			// TODO: this.appname != 'calendar' should be removed after we released new calendar
-		).appendTo(this.et2 && this.appname != 'calendar' ? this.et2.getDOMNode() : $j('body'));
+		).appendTo(this.et2 && this.appname != 'calendar' ? this.et2.getDOMNode() : jQuery('body'));
 
-		$j(".ui-icon-circle-plus",this.favorite_popup).prev().andSelf().click(function() {
-			var details = $j("#"+self.appname+"_favorites_popup_state",self.favorite_popup)
+		jQuery(".ui-icon-circle-plus",this.favorite_popup).prev().andSelf().click(function() {
+			var details = jQuery("#"+self.appname+"_favorites_popup_state",self.favorite_popup)
 				.slideToggle()
 				.siblings(".ui-icon-circle-plus")
 				.toggleClass("ui-icon-circle-minus");
@@ -740,7 +740,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			default: true,
 			click: function() {
 				// Add a new favorite
-				var name = $j("#name",this);
+				var name = jQuery("#name",this);
 
 				if(name.val())
 				{
@@ -781,7 +781,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 					if(self.sidebox)
 					{
 						// Remove any existing with that name
-						$j('[data-id="'+safe_name+'"]',self.sidebox).remove();
+						jQuery('[data-id="'+safe_name+'"]',self.sidebox).remove();
 
 						// Create new item
 						var html = "<li data-id='"+safe_name+"' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
@@ -791,7 +791,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 							favorite.name;
 						html += "<div class='ui-icon ui-icon-trash' title='" + egw.lang('Delete') + "'/>";
 						html += "</a></li>\n";
-						$j(html).insertBefore($j('li',self.sidebox).last());
+						jQuery(html).insertBefore(jQuery('li',self.sidebox).last());
 						self._init_sidebox(self.sidebox);
 					}
 
@@ -801,9 +801,9 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				// Reset form
 				delete self.favorite_popup.state;
 				name.val("");
-				$j("#filters",self.favorite_popup).empty();
+				jQuery("#filters",self.favorite_popup).empty();
 
-				$j(this).dialog("close");
+				jQuery(this).dialog("close");
 			}
 		};
 		buttons[this.egw.lang("cancel")] = function() {
@@ -811,7 +811,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			{
 				self.favorite_popup.group.set_value(null);
 			}
-			$j(this).dialog("close");
+			jQuery(this).dialog("close");
 		};
 
 		this.favorite_popup.dialog({
@@ -830,7 +830,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			if(e.keyCode == jQuery.ui.keyCode.ENTER && tagName !== 'textarea' && tagName !== 'select' && tagName !=='button')
 			{
 				e.preventDefault();
-				$j('button[default]',this.favorite_popup.parent()).trigger('click');
+				jQuery('button[default]',this.favorite_popup.parent()).trigger('click');
 				return false;
 			}
 		},this));
@@ -850,9 +850,9 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		event.stopImmediatePropagation();
 
 		var app = event.data;
-		var id = $j(this).parentsUntil('li').parent().attr("data-id");
-		var group = $j(this).parentsUntil('li').parent().attr("data-group") || '';
-		var line = $j('li[data-id="'+id+'"]',app.sidebox);
+		var id = jQuery(this).parentsUntil('li').parent().attr("data-id");
+		var group = jQuery(this).parentsUntil('li').parent().attr("data-group") || '';
+		var line = jQuery('li[data-id="'+id+'"]',app.sidebox);
 		var name = line.first().text();
 		var trash = this;
 		line.addClass('loading');
@@ -867,7 +867,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			}
 
 			// Hide the trash
-			$j(trash).hide();
+			jQuery(trash).hide();
 
 			// Delete preference server side
 			var request = egw.json("EGroupware\\Api\\Framework::ajax_set_favorite",
@@ -889,9 +889,9 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 						line.removeClass('loading').addClass('ui-state-error');
 					}
 				},
-				$j(trash).parentsUntil("li").parent(),
+				jQuery(trash).parentsUntil("li").parent(),
 				true,
-				$j(trash).parentsUntil("li").parent()
+				jQuery(trash).parentsUntil("li").parent()
 			);
 			request.sendRequest(true);
 		};
@@ -915,9 +915,9 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		var best_count = 0;
 		var self = this;
 
-		$j('li[data-id]',this.sidebox).removeClass('ui-state-highlight');
+		jQuery('li[data-id]',this.sidebox).removeClass('ui-state-highlight');
 
-		$j('li[data-id]',this.sidebox).each(function(i,href) {
+		jQuery('li[data-id]',this.sidebox).each(function(i,href) {
 			var favorite = {};
 			if(this.dataset.id && egw.preference('favorite_'+this.dataset.id,self.appname))
 			{
@@ -1005,7 +1005,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		});
 		if(best_match)
 		{
-			$j('li[data-id="'+best_match+'"]',this.sidebox).addClass('ui-state-highlight');
+			jQuery('li[data-id="'+best_match+'"]',this.sidebox).addClass('ui-state-highlight');
 		}
 	},
 

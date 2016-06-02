@@ -107,7 +107,7 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 		this.hideMessage(false, true);
 
 		// Create the message div and add it to the "surroundings" manager
-		this._messageDiv = $j(document.createElement("div"))
+		this._messageDiv = jQuery(document.createElement("div"))
 			.addClass("message")
 			.addClass(_type)
 			.addClass(_floating ? "floating" : "")
@@ -187,7 +187,7 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 		// Remove the binding to the click handler
 		if (this.node)
 		{
-			$j(this.node).unbind("click.et2_baseWidget");
+			jQuery(this.node).unbind("click.et2_baseWidget");
 		}
 
 		this._super.apply(this, arguments);
@@ -199,10 +199,10 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 		// Add the binding for the click handler
 		if (this.node)
 		{
-			$j(this.node).bind("click.et2_baseWidget", this, function(e) {
+			jQuery(this.node).bind("click.et2_baseWidget", this, function(e) {
 				return e.data.click.call(e.data, e, this);
 			});
-			if (typeof this.onclick == 'function') $j(this.node).addClass('et2_clickable');
+			if (typeof this.onclick == 'function') jQuery(this.node).addClass('et2_clickable');
 		}
 
 		// Update the statustext
@@ -262,7 +262,7 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 		this.statustext = _value;
 
 		//Get the domnode the tooltip should be attached to
-		var elem = $j(this.getTooltipElement());
+		var elem = jQuery(this.getTooltipElement());
 
 		if (elem)
 		{
@@ -354,15 +354,15 @@ var et2_placeholder = (function(){ "use strict"; return et2_baseWidget.extend([e
 		this.visible = false;
 
 		// Create the placeholder div
-		this.placeDiv = $j(document.createElement("span"))
+		this.placeDiv = jQuery(document.createElement("span"))
 			.addClass("et2_placeholder");
 
-		var headerNode = $j(document.createElement("span"))
+		var headerNode = jQuery(document.createElement("span"))
 			.text(this._type || "")
 			.addClass("et2_caption")
 			.appendTo(this.placeDiv);
 
-		var attrsCntr = $j(document.createElement("span"))
+		var attrsCntr = jQuery(document.createElement("span"))
 			.appendTo(this.placeDiv)
 			.hide();
 
@@ -384,7 +384,7 @@ var et2_placeholder = (function(){ "use strict"; return et2_baseWidget.extend([e
 			{
 				if (typeof this.attrNodes[key] == "undefined")
 				{
-					this.attrNodes[key] = $j(document.createElement("span"))
+					this.attrNodes[key] = jQuery(document.createElement("span"))
 						.addClass("et2_attr");
 					attrsCntr.append(this.attrNodes[key]);
 				}

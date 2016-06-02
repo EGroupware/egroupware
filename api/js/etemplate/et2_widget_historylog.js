@@ -64,10 +64,10 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass("et2_historylog");
 
-		this.innerDiv = $j(document.createElement("div"))
+		this.innerDiv = jQuery(document.createElement("div"))
 			.appendTo(this.div);
 	},
 
@@ -171,12 +171,12 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		// Write something inside the column headers
 		for (var i = 0; i < this.columns.length; i++)
 		{
-			$j(this.dataview.getHeaderContainerNode(i)).text(this.columns[i].caption);
+			jQuery(this.dataview.getHeaderContainerNode(i)).text(this.columns[i].caption);
 		}
 
 		// Register a resize callback
 		var self = this;
-		$j(window).on('resize.' +this.options.value.app + this.options.value.id, function() {
+		jQuery(window).on('resize.' +this.options.value.app + this.options.value.id, function() {
 			if (self && typeof self.dynheight != 'undefined') self.dynheight.update(function(_w, _h) {
 				self.dataview.resize(_w, _h);
 			});
@@ -190,7 +190,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		// Unbind, if bound
 		if(this.options.value && !this.options.value.id)
 		{
-			$j(window).off('.' +this.options.value.app + this.options.value.id);
+			jQuery(window).off('.' +this.options.value.app + this.options.value.id);
 		}
 
 		// Free the widgets
@@ -227,7 +227,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				var attrs = {'readonly': true, 'id': (i == this.FIELD ? this.options.status_id : this.columns[i].id)};
 				this.columns[i].widget = et2_createWidget(this.columns[i].widget_type, attrs, this);
 				this.columns[i].widget.transformAttributes(attrs);
-				this.columns[i].nodes = $j(this.columns[i].widget.getDetachedNodes());
+				this.columns[i].nodes = jQuery(this.columns[i].widget.getDetachedNodes());
 			}
 		}
 
@@ -459,7 +459,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 
 		var row = this.dataview.rowProvider.getPrototype("default");
 		var self = this;
-		$j("div", row).each(function (i) {
+		jQuery("div", row).each(function (i) {
 			var nodes = [];
 			var widget = self.columns[i].widget;
 			if(typeof widget == 'undefined' && typeof self.fields[_data.status] != 'undefined')
@@ -527,7 +527,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 				if(widget._children.length)
 				{
 					// Multi-part values
-					var box = $j(widget.getDOMNode()).clone();
+					var box = jQuery(widget.getDOMNode()).clone();
 					for(var j = 0; j < widget._children.length; j++)
 					{
 						widget._children[j].setDetachedAttributes(nodes[j], {value:_data[self.columns[i].id][j]});
@@ -540,9 +540,9 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 					widget.setDetachedAttributes(nodes, {value:_data[self.columns[i].id]});
 				}
 			}
-			$j(this).append(nodes);
+			jQuery(this).append(nodes);
 		});
-		$j(tr).append(row.children());
+		jQuery(tr).append(row.children());
 
 		return tr;
 	},

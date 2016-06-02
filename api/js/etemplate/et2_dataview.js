@@ -61,7 +61,7 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 	init: function(_parentNode, _egw) {
 
 		// Copy the arguments
-		this.parentNode = $j(_parentNode);
+		this.parentNode = jQuery(_parentNode);
 		this.egw = _egw;
 
 		// Initialize some variables
@@ -235,15 +235,15 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 			</table>
 		*/
 
-		this.containerTr = $j(document.createElement("tr"));
-		this.headTr = $j(document.createElement("tr"));
+		this.containerTr = jQuery(document.createElement("tr"));
+		this.headTr = jQuery(document.createElement("tr"));
 
-		this.thead = $j(document.createElement("thead"))
+		this.thead = jQuery(document.createElement("thead"))
 			.append(this.headTr);
-		this.tbody = $j(document.createElement("tbody"))
+		this.tbody = jQuery(document.createElement("tbody"))
 			.append(this.containerTr);
 
-		this.table = $j(document.createElement("table"))
+		this.table = jQuery(document.createElement("table"))
 			.addClass("egwGridView_outer")
 			.append(this.thead, this.tbody)
 			.appendTo(this.parentNode);
@@ -330,14 +330,14 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 				var subBorder = 0;
 				var subHBorder = 0;
 				/*
-				if ($j.browser.mozilla)
+				if (jQuery.browser.mozilla)
 				{
-					var maj = $j.browser.version.split(".")[0];
+					var maj = jQuery.browser.version.split(".")[0];
 					if (maj < 2) {
 						subBorder = 1; // Versions <= FF 3.6
 					}
 				}
-				if ($j.browser.webkit)
+				if (jQuery.browser.webkit)
 				{
 					if (!first)
 					{
@@ -345,7 +345,7 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 					}
 					subHBorder = 1;
 				}
-				if (($j.browser.msie || $j.browser.opera) && first)
+				if ((jQuery.browser.msie || jQuery.browser.opera) && first)
 				{
 					subBorder = -1;
 				}
@@ -399,11 +399,11 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 			var col = this.columns[i];
 
 			// Create the column header and the container element
-			var cont = $j(document.createElement("div"))
+			var cont = jQuery(document.createElement("div"))
 				.addClass("innerContainer")
 				.addClass(col.divClass);
 
-			var column = $j(document.createElement("th"))
+			var column = jQuery(document.createElement("th"))
 				.addClass(col.tdClass)
 				.attr("align", "left")
 				.append(cont)
@@ -472,12 +472,12 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 	 */
 	_buildSelectCol: function() {
 		// Build the "select columns" icon
-		this.selectColIcon = $j(document.createElement("span"))
+		this.selectColIcon = jQuery(document.createElement("span"))
 			.addClass("selectcols")
-			.css('display', 'inline-block');	// otherwise $j('span.selectcols',this.dataview.headTr).show() set it to "inline" causing it to not show up because 0 height
+			.css('display', 'inline-block');	// otherwise jQuery('span.selectcols',this.dataview.headTr).show() set it to "inline" causing it to not show up because 0 height
 
 		// Build the option column
-		this.selectCol = $j(document.createElement("th"))
+		this.selectCol = jQuery(document.createElement("th"))
 			.addClass("optcol")
 			.append(this.selectColIcon)
 			// Toggle display of option popup
@@ -511,7 +511,7 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 		this.grid = new et2_dataview_grid(null, null, this.egw, this.rowProvider, 19);
 
 		// Insert the grid into the DOM-Tree
-		var tr = $j(this.grid._nodes[0]);
+		var tr = jQuery(this.grid._nodes[0]);
 		this.containerTr.replaceWith(tr);
 		this.containerTr = tr;
 	},
@@ -526,7 +526,7 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 		{
 			// Clone the table and attach it to the outer body tag
 			var clone = this.table.clone();
-			$j(window.top.document.getElementsByTagName("body")[0])
+			jQuery(window.top.document.getElementsByTagName("body")[0])
 				.append(clone);
 
 			// Read the scrollbar width
@@ -553,18 +553,18 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 		// Create a temporary td and two divs, which are inserted into the
 		// DOM-Tree. The outer div has a fixed size and "overflow" set to auto.
 		// When the second div is inserted, it will be forced to display a scrollbar.
-		var div_inner = $j(document.createElement("div"))
+		var div_inner = jQuery(document.createElement("div"))
 			.css("height", "1000px");
-		var div_outer = $j(document.createElement("div"))
+		var div_outer = jQuery(document.createElement("div"))
 			.css("height", "100px")
 			.css("width", "100px")
 			.css("overflow", "auto")
 			.append(div_inner);
-		var td = $j(document.createElement("td"))
+		var td = jQuery(document.createElement("td"))
 			.append(div_outer);
 
 		// Store the scrollbar width statically.
-		$j("tbody tr", _table).append(td);
+		jQuery("tbody tr", _table).append(td);
 		var width = Math.max(10, div_outer.outerWidth() - div_inner.outerWidth());
 
 		// Remove the elements again
@@ -578,14 +578,14 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 	 */
 	_getHeaderBorderWidth: function(_table) {
 		// Create a temporary th which is appended to the outer thead row
-		var cont = $j(document.createElement("div"))
+		var cont = jQuery(document.createElement("div"))
 			.addClass("innerContainer");
 
-		var th = $j(document.createElement("th"))
+		var th = jQuery(document.createElement("th"))
 			.append(cont);
 
 		// Insert the th into the document tree
-		$j("thead tr", _table).append(th);
+		jQuery("thead tr", _table).append(th);
 
 		// Calculate the total border width
 		var width = th.outerWidth(true) - cont.width();
@@ -601,14 +601,14 @@ var et2_dataview = (function(){ "use strict"; return Class.extend({
 	 */
 	_getColumnBorderWidth : function(_table) {
 		// Create a temporary th which is appended to the outer thead row
-		var cont = $j(document.createElement("div"))
+		var cont = jQuery(document.createElement("div"))
 			.addClass("innerContainer");
 
-		var td = $j(document.createElement("td"))
+		var td = jQuery(document.createElement("td"))
 			.append(cont);
 
 		// Insert the th into the document tree
-		$j("tbody tr", _table).append(td);
+		jQuery("tbody tr", _table).append(td);
 
 		// Calculate the total border width
 		_table.addClass("egwGridView_grid");

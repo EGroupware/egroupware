@@ -38,7 +38,7 @@ var et2_box = (function(){ "use strict"; return et2_baseWidget.extend([et2_IDeta
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass("et2_" + this._type)
 			.addClass("et2_box_widget");
 
@@ -143,7 +143,7 @@ var et2_box = (function(){ "use strict"; return et2_baseWidget.extend([et2_IDeta
 			for(var i=0; i < pairs.length; ++i)
 			{
 				var name_value = pairs[i].split(':');
-				$j(_nodes[0]).attr('data-'+name_value[0], name_value[1]);
+				jQuery(_nodes[0]).attr('data-'+name_value[0], name_value[1]);
 			}
 		}
 	}

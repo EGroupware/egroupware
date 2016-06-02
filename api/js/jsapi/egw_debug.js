@@ -390,22 +390,22 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 
 			if(window.jQuery && window.jQuery.ui.dialog)
 			{
-				var $wrapper = $j(wrapper);
+				var $wrapper = jQuery(wrapper);
 				// Start hidden
-				$j('tr',$wrapper).addClass('hidden')
+				jQuery('tr',$wrapper).addClass('hidden')
 					.on('click', function() {
-						$j(this).toggleClass('hidden',{});
-						$j(this).find('.stack').children().toggleClass('ui-icon ui-icon-circle-plus');
+						jQuery(this).toggleClass('hidden',{});
+						jQuery(this).find('.stack').children().toggleClass('ui-icon ui-icon-circle-plus');
 					});
 				// Wrap in div so we can control height
-				$j('td',$wrapper).wrapInner('<div/>')
+				jQuery('td',$wrapper).wrapInner('<div/>')
 					.filter('.stack').children().addClass('ui-icon ui-icon-circle-plus');
 
 				$wrapper.dialog({
 					title: egw.lang('Error log'),
 					buttons: [
-						{text: egw.lang('OK'), click: function() {$j(this).dialog( "close" ); }},
-						{text: egw.lang('clear'), click: function() {clear_client_log(); $j(this).empty();}}
+						{text: egw.lang('OK'), click: function() {jQuery(this).dialog( "close" ); }},
+						{text: egw.lang('clear'), click: function() {clear_client_log(); jQuery(this).empty();}}
 					],
 					width: 800,
 					height: 400

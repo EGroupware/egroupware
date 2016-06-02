@@ -23,6 +23,6 @@ function itempickerDocumentAction(context, data)
 		+ "<input type='hidden' name='data_document_dir' value='" + data.value.dir + "' />"
 		+ "<input type='hidden' name='data_checked' value='" + data.checked.join(',') + "' />"
 		+ "</form>";
-	$j("body").append(form);
-	$j("#" + formid).submit().remove();
+	jQuery("body").append(form);
+	jQuery("#" + formid).submit().remove();
 }

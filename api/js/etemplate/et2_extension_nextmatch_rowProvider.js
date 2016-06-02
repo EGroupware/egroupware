@@ -217,11 +217,11 @@ var et2_nextmatch_rowProvider = (function(){ "use strict"; return ClassWithAttri
 	_createEmptyPrototype: function() {
 		var label = this._context && this._context.options && this._context.options.settings.placeholder;
 
-		var placeholder = $j(document.createElement("td"))
+		var placeholder = jQuery(document.createElement("td"))
                                 .attr("colspan",this._rowProvider.getColumnCount())
                                 .css("height","19px")
                                 .text(typeof label != "undefined" && label ? label : egw().lang("No matches found"));
-		this._rowProvider._prototypes["empty"] = $j(document.createElement("tr"))
+		this._rowProvider._prototypes["empty"] = jQuery(document.createElement("tr"))
 			.addClass("egwGridView_empty")
 			.append(placeholder);
 	},

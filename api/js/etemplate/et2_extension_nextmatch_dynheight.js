@@ -36,8 +36,8 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 	 * @memberOf et2_dynheight
 	 */
 	init: function(_outerNode, _innerNode, _minHeight) {
-		this.outerNode = $j(_outerNode);
-		this.innerNode = $j(_innerNode);
+		this.outerNode = jQuery(_outerNode);
+		this.innerNode = jQuery(_innerNode);
 		this.minHeight = _minHeight;
 
 		this.bottomNodes = [];
@@ -109,10 +109,10 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 			// Some checking to make sure it doesn't overflow the width when user
 			// resizes the window
 			var w = this.outerNode.width();
-			if (w > $j(window).width())
+			if (w > jQuery(window).width())
 			{
 				// 50px border, totally arbitrary, but we just need to make sure it's inside
-				w = $j(window).width()-50;
+				w = jQuery(window).width()-50;
 			}
 			if(w != this.innerNode.outerWidth())
 			{
@@ -144,7 +144,7 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 		if (_node)
 		{
 			// Accumulate the outer margin of the parent elements
-			var node = $j(_node);
+			var node = jQuery(_node);
 			var ooh = node.outerHeight(true);
 			var oh = node.height();
 			this.outerMargin += (ooh - oh) / 2; // Divide by 2 as the value contains margin-top and -bottom
@@ -153,8 +153,8 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 			// recursively to the parent nodes until the _outerNode or body is
 			// reached.
 			var self = this;
-			$j(_node).children().each(function() {
-				var $this = $j(this);
+			jQuery(_node).children().each(function() {
+				var $this = jQuery(this);
 				var top = $this.offset().top;
 				if (this != self.innerNode[0] && top >= _bottom)
 				{
@@ -162,7 +162,7 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 				}
 			});
 
-			if (_node != this.outerNode[0] && _node != $j("body")[0])
+			if (_node != this.outerNode[0] && _node != jQuery("body")[0])
 			{
 				this._collectBottomNodes(_node.parentNode, _bottom);
 			}

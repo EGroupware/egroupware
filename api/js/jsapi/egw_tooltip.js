@@ -63,8 +63,8 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			};
 
 			//Calculate how much space is left on each side of the rectangle
-			var window_width = $j(_wnd.document).width();
-			var window_height = $j(_wnd.document).height();
+			var window_width = jQuery(_wnd.document).width();
+			var window_height = jQuery(_wnd.document).height();
 			var space_left = {
 				left: (cursor_rect.left),
 				top: (cursor_rect.top),
@@ -113,11 +113,11 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		hide();
 
 		//Generate the tooltip div, set it's text and append it to the body tag
-		tooltip_div = $j(_wnd.document.createElement('div'));
+		tooltip_div = jQuery(_wnd.document.createElement('div'));
 		tooltip_div.hide();
 		tooltip_div.append(_html);
 		tooltip_div.addClass("egw_tooltip");
-		$j(_wnd.document.body).append(tooltip_div);
+		jQuery(_wnd.document.body).append(tooltip_div);
 
 		//The tooltip should automatically hide when the mouse comes over it
 		tooltip_div.mouseenter(function() {

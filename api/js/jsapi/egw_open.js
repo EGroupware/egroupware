@@ -113,16 +113,16 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		else if(compose.length > 1)
 		{
 			// Need to prompt
-			var prompt = $j(document.createElement('ul'));
+			var prompt = jQuery(document.createElement('ul'));
 			for(var i = 0; i < compose.length; i++)
 			{
 				var w = window.open('',compose[i],'100x100');
 				if(w.closed) continue;
 				w.blur();
 				var title = w.document.title || egw.lang("compose");
-				$j("<li data-window = '" + compose[i] + "'>"+ title + "</li>")
+				jQuery("<li data-window = '" + compose[i] + "'>"+ title + "</li>")
 					.click(function() {
-						var w = egw.open_link('',$j(this).attr("data-window"),'100x100','mail');
+						var w = egw.open_link('',jQuery(this).attr("data-window"),'100x100','mail');
 						w.app.mail.setCompose(w.name, content);
 						prompt.dialog("close");
 					})
@@ -133,7 +133,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			}, 200);
 			var _buttons = {};
 			_buttons[egw.lang("cancel")] = function() {
-				$j(this).dialog("close");
+				jQuery(this).dialog("close");
 			};
 			prompt.dialog({
 				buttons: _buttons
@@ -264,7 +264,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				}
 				else if (typeof extra == 'object')
 				{
-					$j.extend(params, extra);
+					jQuery.extend(params, extra);
 				}
 				popup = app_registry[type+'_popup'];
 			}
@@ -515,7 +515,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 
 // Add protocol handler as an option if mail handling is not forced so mail can handle mailto:
 /* Not working consistantly yet
-$j(function() {
+jQuery(function() {
 try {
 	if(egw.user('apps').mail && (egw.preference('force_mailto','addressbook')||true) != '0')
 	{

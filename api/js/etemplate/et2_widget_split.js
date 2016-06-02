@@ -67,7 +67,7 @@ var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IRes
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass('et2_split');
 
 		// Create the dynheight component which dynamically scales the inner
@@ -78,8 +78,8 @@ var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IRes
 		);
 
 		// Add something so we can see it - will be replaced if there's children
-		this.left = $j("<div>Top / Left</div>").appendTo(this.div);
-		this.right = $j("<div>Bottom / Right</div>").appendTo(this.div);
+		this.left = jQuery("<div>Top / Left</div>").appendTo(this.div);
+		this.right = jQuery("<div>Bottom / Right</div>").appendTo(this.div);
 
 		// Deferred object so we can wait for children
 		this.loading = jQuery.Deferred();
@@ -119,13 +119,13 @@ var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IRes
 			if(this._children[0])
 			{
 				this.left.detach();
-				this.left = $j(this._children[0].getDOMNode(this._children[0]))
+				this.left = jQuery(this._children[0].getDOMNode(this._children[0]))
 					.appendTo(this.div);
 			}
 			if(this._children[1])
 			{
 				this.right.detach();
-				this.right = $j(this._children[1].getDOMNode(this._children[1]))
+				this.right = jQuery(this._children[1].getDOMNode(this._children[1]))
 					.appendTo(this.div);
 			}
 		}
@@ -230,7 +230,7 @@ var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IRes
 				if(this.orientation == "v" && pref['sizeLeft'] < this.dynheight.outerNode.width() ||
 					this.orientation == "h" && pref['sizeTop'] < this.dynheight.outerNode.height())
 				{
-					options = $j.extend(options, pref);
+					options = jQuery.extend(options, pref);
 					this.prefSize = pref[this.orientation == "v" ?'sizeLeft' : 'sizeTop'];
 				}
 			}
@@ -270,7 +270,7 @@ var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IRes
 			+ (this.dock_side ? "solid" : "dotted") + "-"
 			+ (this.orientation == "h" ? "horizontal" : "vertical");
 
-		$j(document.createElement("div"))
+		jQuery(document.createElement("div"))
 			.addClass("ui-icon")
 			.addClass(icon)
 			.appendTo(this.left.next());
@@ -419,7 +419,7 @@ var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IRes
 	 * @return boolean
 	 */
 	isDocked: function() {
-		var bar = $j('.splitter-bar',this.div);
+		var bar = jQuery('.splitter-bar',this.div);
 		return bar.hasClass('splitter-bar-horizontal-docked') || bar.hasClass('splitter-bar-vertical-docked');
 	},
 

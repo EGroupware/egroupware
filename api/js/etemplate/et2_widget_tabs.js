@@ -59,16 +59,16 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 	 */
 	init: function() {
 		// Create the outer tabbox container
-		this.container = $j(document.createElement("div"))
+		this.container = jQuery(document.createElement("div"))
 			.addClass("et2_tabbox");
 
 		// Create the upper container for the tab flags
-		this.flagContainer = $j(document.createElement("div"))
+		this.flagContainer = jQuery(document.createElement("div"))
 			.addClass("et2_tabheader")
 			.appendTo(this.container);
 
 		// Create the lower tab container
-		this.tabContainer = $j(document.createElement("div"))
+		this.tabContainer = jQuery(document.createElement("div"))
 			.addClass("et2_tabs")
 			.appendTo(this.container);
 
@@ -322,7 +322,7 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 		for (var i = 0; i < this.tabData.length; i++)
 		{
 			var entry = this.tabData[i];
-			entry.flagDiv = $j(document.createElement("span"))
+			entry.flagDiv = jQuery(document.createElement("span"))
 				.addClass("et2_tabflag")
 				.appendTo(this.flagContainer);
 			// Class to tab's div container
@@ -341,13 +341,13 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					e.data.tabs.setActiveTab(e.data.idx);
 				});
 			}
-			entry.contentDiv = $j(document.createElement("div"))
+			entry.contentDiv = jQuery(document.createElement("div"))
 				.addClass("et2_tabcntr")
 				.appendTo(this.tabContainer);
 			if (this.options.align_tabs == 'v') {
 				entry.flagDiv.unbind('click');
 				entry.flagDiv.text("");
-				$j(document.createElement('div'))
+				jQuery(document.createElement('div'))
 						.addClass('et2_tabtitle')
 						.text(entry.label || "Tab")
 						.click({"tabs": this, "idx": i}, function(e) {
@@ -399,7 +399,7 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 		this.selected_index = _idx;
 
 		// Remove the "active" flag from all tabs-flags
-		$j(".et2_tabflag", this.flagContainer).removeClass("active");
+		jQuery(".et2_tabflag", this.flagContainer).removeClass("active");
 
 		// Hide all tab containers
 		this.tabContainer.children().hide();

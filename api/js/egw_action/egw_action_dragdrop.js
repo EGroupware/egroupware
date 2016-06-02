@@ -88,11 +88,11 @@ function egwDragActionImplementation()
 	ai.defaultDDHelper = function (_selected)
 	{
 		// Table containing clone of rows
-		var table = $j(document.createElement("table")).addClass('egwGridView_grid et2_egw_action_ddHelper_row');
+		var table = jQuery(document.createElement("table")).addClass('egwGridView_grid et2_egw_action_ddHelper_row');
 		// tr element to use as last row to show lable more ...
-		var moreRow = $j(document.createElement('tr')).addClass('et2_egw_action_ddHelper_moreRow');
+		var moreRow = jQuery(document.createElement('tr')).addClass('et2_egw_action_ddHelper_moreRow');
 		// Main div helper container
-		var div = $j(document.createElement("div")).append(table);
+		var div = jQuery(document.createElement("div")).append(table);
 
 		var rows = [];
 		// Maximum number of rows to show
@@ -103,7 +103,7 @@ function egwDragActionImplementation()
 		var index = 0;
 		for (var i = 0; i < _selected.length;i++)
 		{
-			var row = $j(_selected[i].iface.getDOMNode()).clone();
+			var row = jQuery(_selected[i].iface.getDOMNode()).clone();
 			if (row)
 			{
 				rows.push(row);
@@ -113,7 +113,7 @@ function egwDragActionImplementation()
 			if (index == maxRows)
 			{
 				// Lable to show number of items
-				var spanCnt = $j(document.createElement('span'))
+				var spanCnt = jQuery(document.createElement('span'))
 						.addClass('et2_egw_action_ddHelper_itemsCnt')
 						.appendTo(div);
 
@@ -129,7 +129,7 @@ function egwDragActionImplementation()
 			}
 		}
 
-		var text = $j(document.createElement('div')).addClass('et2_egw_action_ddHelper_tip');
+		var text = jQuery(document.createElement('div')).addClass('et2_egw_action_ddHelper_tip');
 		div.append(text);
 
 		// Add notice of Ctrl key, if supported
@@ -192,24 +192,24 @@ function egwDragActionImplementation()
 				// Tell jQuery to include this property
 				jQuery.event.props.push('dataTransfer');
 
-				$j(node).off("mousedown")
+				jQuery(node).off("mousedown")
 					.on("mousedown", function(event) {
 							var dragOut = _context.isDragOut(event);
-							$j(this).attr("draggable", dragOut? "true" : "");
-							$j(node).draggable("option","disabled",dragOut);
+							jQuery(this).attr("draggable", dragOut? "true" : "");
+							jQuery(node).draggable("option","disabled",dragOut);
 							if (dragOut)
 							{
 								// Disabling draggable adds some UI classes, but we don't care so remove them
-								$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
+								jQuery(node).removeClass("ui-draggable-disabled ui-state-disabled");
 
 							}
 							else
 							{
 								if (_context.isSelection(event))
 								{
-									$j(node).draggable("disable");
+									jQuery(node).draggable("disable");
 									// Disabling draggable adds some UI classes, but we don't care so remove them
-									$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
+									jQuery(node).removeClass("ui-draggable-disabled ui-state-disabled");
 								}
 								else if(event.which != 3)
 								{
@@ -220,7 +220,7 @@ function egwDragActionImplementation()
 					})
 					.on ("mouseup", function (event){
 						if (_context.isSelection(event))
-							$j(node).draggable("enable");
+							jQuery(node).draggable("enable");
 					})
 					.on("dragstart", function(event) {
 						if(_context.isSelection(event)) return;
@@ -272,7 +272,7 @@ function egwDragActionImplementation()
 						// Create drag icon
 						_callback.call(_context, _context, ai);
 						// Drag icon must be visible for setDragImage() - we'll remove it on drag
-						$j("body").append(ai.helper);
+						jQuery("body").append(ai.helper);
 						event.dataTransfer.setDragImage(ai.helper[0],-12,-12);
 					})
 					.on("drag", function(e) {
@@ -287,13 +287,13 @@ function egwDragActionImplementation()
 			else
 			{
 				// Use Ctrl key in order to select content
-				$j(node).off("mousedown")
+				jQuery(node).off("mousedown")
 						.on({
 							mousedown: function(event){
 								if (_context.isSelection(event)){
-									$j(node).draggable("disable");
+									jQuery(node).draggable("disable");
 									// Disabling draggable adds some UI classes, but we don't care so remove them
-									$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
+									jQuery(node).removeClass("ui-draggable-disabled ui-state-disabled");
 								}
 								else if(event.which != 3)
 								{
@@ -301,13 +301,13 @@ function egwDragActionImplementation()
 								}
 							},
 							mouseup: function (){
-								$j(node).draggable("enable");
+								jQuery(node).draggable("enable");
 								// Set cursor back to auto. Seems FF can't handle cursor reversion
-								$j('body').css({cursor:'auto'});
+								jQuery('body').css({cursor:'auto'});
 							}
 				});
 			}
-			$j(node).draggable(
+			jQuery(node).draggable(
 				{
 					"distance": 20,
 					"cursor": "move",
@@ -322,8 +322,8 @@ function egwDragActionImplementation()
 						// and the multiple dragDropTypes (ai.ddTypes)
 						 _callback.call(_context, false, ai);
 
-						$j(node).data("ddTypes", ai.ddTypes);
-						$j(node).data("selected", ai.selected);
+						jQuery(node).data("ddTypes", ai.ddTypes);
+						jQuery(node).data("selected", ai.selected);
 
 						if (ai.helper)
 						{
@@ -334,12 +334,12 @@ function egwDragActionImplementation()
 							// fixes a bug in IE: If the element isn't inserted into
 							// the DOM-tree jquery appends it to the parent node.
 							// In case this is a table it doesn't work correctly
-							$j("body").append(ai.helper);
+							jQuery("body").append(ai.helper);
 							return ai.helper;
 						}
 
 						// Return an empty div if the helper dom node is not set
-						return ai.defaultDDHelper(ai.selected);//$j(document.createElement("div")).addClass('et2_egw_action_ddHelper');
+						return ai.defaultDDHelper(ai.selected);//jQuery(document.createElement("div")).addClass('et2_egw_action_ddHelper');
 					},
 					"start": function(e) {
 						return ai.helper != null;
@@ -396,8 +396,8 @@ function egwDragActionImplementation()
 	{
 		var node = _aoi.getDOMNode();
 
-		if (node && $j(node).data("uiDraggable")){
-			$j(node).draggable("destroy");
+		if (node && jQuery(node).data("uiDraggable")){
+			jQuery(node).draggable("destroy");
 		}
 	};
 
@@ -435,7 +435,7 @@ function egwDragActionImplementation()
 				// Push the dragType of the associated action object onto the
 				// drag type list - this allows an element to support multiple
 				// drag/drop types.
-				var type = $j.isArray(_links[k].actionObj.dragType) ? _links[k].actionObj.dragType : [_links[k].actionObj.dragType];
+				var type = jQuery.isArray(_links[k].actionObj.dragType) ? _links[k].actionObj.dragType : [_links[k].actionObj.dragType];
 				for(var i = 0; i < type.length; i++)
 				{
 					if (this.ddTypes.indexOf(type[i]) == -1)
@@ -544,7 +544,7 @@ function egwDropActionImplementation()
 
 		if (node)
 		{
-			$j(node).droppable(
+			jQuery(node).droppable(
 				{
 					"accept": function(_draggable) {
 						if (typeof _draggable.data("ddTypes") != "undefined")
@@ -646,7 +646,7 @@ function egwDropActionImplementation()
 							}, 0); // Timeout is needed to have it working in IE
 						}
 						// Set cursor back to auto. Seems FF can't handle cursor reversion
-						$j('body').css({cursor:'auto'});
+						jQuery('body').css({cursor:'auto'});
 
 						_aoi.triggerEvent(EGW_AI_DRAG_OUT,{event: event,ui:ui});
 					},
@@ -672,8 +672,8 @@ function egwDropActionImplementation()
 	{
 		var node = _aoi.getDOMNode();
 
-		if (node && $j(node).data("uiDroppable")) {
-			$j(node).droppable("destroy");
+		if (node && jQuery(node).data("uiDroppable")) {
+			jQuery(node).droppable("destroy");
 		}
 	};
 

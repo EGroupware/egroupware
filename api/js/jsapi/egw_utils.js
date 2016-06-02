@@ -217,7 +217,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		 * @see http://www.foliotek.com/devblog/getting-the-width-of-a-hidden-element-with-jquery-using-width/
 		 */
 		getHiddenDimensions: function(element, boolOuter) {
-			var $item = $j(element);
+			var $item = jQuery(element);
 			var props = { position: "absolute", visibility: "hidden", display: "block" };
 			var dim = { "w":0, "h":0 , "left":0, "top":0};
 			var $hiddenParents = $item.parents().andSelf().not(":visible");
@@ -228,7 +228,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 				for ( var name in props ) {
 					old[ name ] = this.style[ name ];
 				}
-				$j(this).show();
+				jQuery(this).show();
 				oldProps.push(old);
 			});
 

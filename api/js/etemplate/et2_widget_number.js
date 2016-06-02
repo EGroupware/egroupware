@@ -87,7 +87,7 @@ var et2_number = (function(){ "use strict"; return et2_textbox.extend(
 	},
 
 	createInputWidget: function() {
-		this.input = $j(document.createElement("input"));
+		this.input = jQuery(document.createElement("input"));
 		this.input.attr("type", "number");
 		this.input.addClass("et2_textbox");
 		// bind invalid event to change, to trigger our validation

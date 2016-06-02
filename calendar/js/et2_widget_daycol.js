@@ -60,20 +60,20 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		this._super.apply(this, arguments);
 
 		// Main container
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass("calendar_calDayCol")
 			.css('width',this.options.width)
 			.css('left', this.options.left);
-		this.header = $j(document.createElement('div'))
+		this.header = jQuery(document.createElement('div'))
 			.addClass("calendar_calDayColHeader")
 			.css('width',this.options.width)
 			.css('left', this.options.left);
-		this.title = $j(document.createElement('div'))
+		this.title = jQuery(document.createElement('div'))
 			.appendTo(this.header);
-		this.all_day = $j(document.createElement('div'))
+		this.all_day = jQuery(document.createElement('div'))
 			.addClass("calendar_calDayColAllDay")
 			.appendTo(this.header);
-		this.event_wrapper = $j(document.createElement('div'))
+		this.event_wrapper = jQuery(document.createElement('div'))
 			.addClass("event_wrapper")
 			.appendTo(this.div);
 
@@ -156,7 +156,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 	 */
 	_draw: function() {
 		// Remove any existing
-		$j('.calendar_calAddEvent',this.div).remove();
+		jQuery('.calendar_calAddEvent',this.div).remove();
 
 		// Grab real values from parent
 		if(this._parent && this._parent.instanceOf(et2_calendar_timegrid))
@@ -529,7 +529,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		this.div.children('.hiddenEventAfter').remove();
 		this.event_wrapper.css('overflow','visible');
 		this.all_day.removeClass('overflown');
-		$j('.calendar_calEventBody', this.div).css({'padding-top': '','margin-top':''});
+		jQuery('.calendar_calEventBody', this.div).css({'padding-top': '','margin-top':''});
 
 		var timegrid = this._parent;
 
@@ -561,7 +561,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		// In gridlist view, we can quickly check if we need it at all
 		if(this.display_settings.granularity === 0 && this._children.length)
 		{
-			$j('div.calendar_calEvent',this.div).show(0);
+			jQuery('div.calendar_calEvent',this.div).show(0);
 			if(Math.ceil(this.div.height() / this._children[0].div.height()) > this._children.length)
 			{
 				return;
@@ -607,7 +607,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			// Too many in gridlist view, show indicator
 			else if (this.display_settings.granularity === 0 && hidden)
 			{
-				if($j('.hiddenEventAfter',this.div).length == 0)
+				if(jQuery('.hiddenEventAfter',this.div).length == 0)
 				{
 					this.event_wrapper.css('overflow','hidden');
 				}
@@ -649,9 +649,9 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		if(top)
 		{
 			// Create if not already there
-			if($j('.hiddenEventBefore',this.header).length === 0)
+			if(jQuery('.hiddenEventBefore',this.header).length === 0)
 			{
-				indicator = $j('<div class="hiddenEventBefore"></div>')
+				indicator = jQuery('<div class="hiddenEventBefore"></div>')
 					.appendTo(this.header)
 					.attr('data-hidden_count', 1);
 				if(!fixed_height)
@@ -659,14 +659,14 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 					indicator
 						.text(event.options.value.title)
 						.on('click', typeof onclick === 'function' ? onclick : function() {
-								$j('.calendar_calEvent',day.div).first()[0].scrollIntoView();
+								jQuery('.calendar_calEvent',day.div).first()[0].scrollIntoView();
 							return false;
 						});
 				}
 			}
 			else
 			{
-				indicator = $j('.hiddenEventBefore',this.header);
+				indicator = jQuery('.hiddenEventBefore',this.header);
 				indicator.attr('data-hidden_count', parseInt(indicator.attr('data-hidden_count')) + 1);
 
 				if (!fixed_height)
@@ -678,18 +678,18 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		// Event is after displayed times
 		else
 		{
-			indicator = $j('.hiddenEventAfter',this.div);
+			indicator = jQuery('.hiddenEventAfter',this.div);
 			// Create if not already there
 			if(indicator.length === 0)
 			{
-				indicator = $j('<div class="hiddenEventAfter"></div>')
+				indicator = jQuery('<div class="hiddenEventAfter"></div>')
 					.attr('data-hidden_count', 0)
 					.appendTo(this.div);
 				if(!fixed_height)
 				{
 					indicator
 						.on('click', typeof onclick === 'function' ? onclick : function() {
-							$j('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
+							jQuery('.calendar_calEvent',day.div).last()[0].scrollIntoView(false);
 							// Better re-run this to clean up
 							day._out_of_view();
 							return false;
@@ -975,10 +975,10 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		// custom here.
 		if (!this.onclick)
 		{
-			$j(this.node).off("click");
+			jQuery(this.node).off("click");
 		}
 		// But we do want to listen to certain clicks, and handle them internally
-		$j(this.node).on('click.et2_daycol',
+		jQuery(this.node).on('click.et2_daycol',
 			'.calendar_calDayColHeader,.calendar_calAddEvent',
 			jQuery.proxy(this.click, this)
 		);
@@ -997,7 +997,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 	click: function(_ev)
 	{
 		// Click on the title
-		if ($j(_ev.target).hasClass('calendar_calAddEvent'))
+		if (jQuery(_ev.target).hasClass('calendar_calAddEvent'))
 		{
 			if(this.header.has(_ev.target).length == 0 && !_ev.target.dataset.whole_day)
 			{
@@ -1015,7 +1015,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 				return false;
 			}
 			// Header, all day non-blocking
-			else if (this.header.has(_ev.target).length && !$j('.hiddenEventBefore',this.header).has(_ev.target).length ||
+			else if (this.header.has(_ev.target).length && !jQuery('.hiddenEventBefore',this.header).has(_ev.target).length ||
 			this.header.is(_ev.target)
 			)
 			{

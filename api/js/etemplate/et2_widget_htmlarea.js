@@ -95,7 +95,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
-		this.htmlNode = $j(document.createElement("textarea"))
+		this.htmlNode = jQuery(document.createElement("textarea"))
 			.css('height', this.options.height)
 			.addClass('et2_textbox_ro');
 		this.setDOMNode(this.htmlNode[0]);

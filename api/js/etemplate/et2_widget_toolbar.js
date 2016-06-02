@@ -59,18 +59,18 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
-		this.div = $j(document.createElement('div'))
+		this.div = jQuery(document.createElement('div'))
 			.addClass('et2_toolbar ui-widget-header ui-corner-all');
 
 		// Set proper id and dom_id for the widget
 		this.set_id(this.id);
 
 		//actionbox is the div for stored actions
-		this.actionbox = $j(document.createElement('div'))
+		this.actionbox = jQuery(document.createElement('div'))
 				.addClass("et2_toolbar_more")
 				.attr('id',this.id +'-'+ 'actionbox');
 		//actionlist is div for active actions
-		this.actionlist = $j(document.createElement('div'))
+		this.actionlist = jQuery(document.createElement('div'))
 				.addClass("et2_toolbar_actionlist")
 				.attr('id',this.id +'-'+ 'actionlist');
 
@@ -237,10 +237,10 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 			// Add in divider
 			if(last_group_id != action.group)
 			{
-				last_group = $j('[data-group="' + action.group + '"]',this.actionlist);
+				last_group = jQuery('[data-group="' + action.group + '"]',this.actionlist);
 				if(last_group.length == 0)
 				{
-						$j('<span data-group="'+action.group+'">').appendTo(this.actionlist);
+						jQuery('<span data-group="'+action.group+'">').appendTo(this.actionlist);
 					}
 				last_group_id = action.group;
 			}
@@ -344,10 +344,10 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 					}
 					//console.debug(selected, this, action);
 				},dropdown);
-				$j(dropdown.getDOMNode())
+				jQuery(dropdown.getDOMNode())
 						.attr('id',this.id + '-' + dropdown.id)
 						.addClass(this.preference[action.id]?'et2_toolbar-dropdown et2_toolbar-dropdown-menulist':'et2_toolbar-dropdown')
-						.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
+						.appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
 			}
 			else
 			{
@@ -426,16 +426,16 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 				var menubox = event.target;
 				if (ui.oldHeader.length == 0)
 				{
-					$j('html').on('click.outsideOfMenu', function (event){
-						$j(menubox).accordion( "option", "active", 2);
-						$j(this).unbind(event);
+					jQuery('html').on('click.outsideOfMenu', function (event){
+						jQuery(menubox).accordion( "option", "active", 2);
+						jQuery(this).unbind(event);
 						// Remove the focus class, user clicked elsewhere
-						$j(menubox).children().removeClass('ui-state-focus');
+						jQuery(menubox).children().removeClass('ui-state-focus');
 					});
 				}
 			},
 			create: function (event, ui) {
-				$j('html').unbind('click.outsideOfMenu');
+				jQuery('html').unbind('click.outsideOfMenu');
 			},
 			beforeActivate: function ()
 			{
@@ -476,12 +476,12 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 	{
 		var button_options = {
 		};
-		var button = $j(document.createElement('button'))
+		var button = jQuery(document.createElement('button'))
 			.addClass("et2_button et2_button_text et2_button_with_image")
 			.attr('id', this.id+'-'+action.id)
 			.attr('title', (action.hint ? action.hint : action.caption))
 			.attr('type', 'button')
-			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:$j('[data-group='+action.group+']',this.actionlist));
+			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
 
 		if (action && action.checkbox)
 		{

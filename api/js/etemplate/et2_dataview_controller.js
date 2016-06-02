@@ -266,7 +266,7 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 	 */
 	getRowByNode: function(node) {
 		// Whatever the node, find a TR
-		var row_node = $j(node).closest('tr');
+		var row_node = jQuery(node).closest('tr');
 		var row = false
 
 		// Check index map - simple case
@@ -371,7 +371,7 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 			// Get the average height, the "-5" derives from the td padding
 			var avg = Math.round(this._grid.getAverageHeight() - 5) + "px";
 			var prototype = this._grid.getRowProvider().getPrototype("loading");
-			$j("div", prototype).css("height", avg);
+			jQuery("div", prototype).css("height", avg);
 			var node = _entry.row.getJNode();
 			node.empty();
 			node.append(prototype.children());
@@ -629,13 +629,13 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 			var d = this.self.getDepth();
 			if (d > 0)
 			{
-				$j(tr).addClass("subentry");
-				$j("td:first",tr).children("div").last().addClass("level_" + d + " indentation");
+				jQuery(tr).addClass("subentry");
+				jQuery("td:first",tr).children("div").last().addClass("level_" + d + " indentation");
 
 				if(this.entry.idx == 0)
 				{
 					// Set the CSS for the level - required so columns line up
-					var indent = $j("<span class='indentation'/>").appendTo('body');
+					var indent = jQuery("<span class='indentation'/>").appendTo('body');
 					egw.css(".subentry td div.innerContainer.level_"+d,
 						"margin-right:" + (parseInt(indent.css("margin-right")) * d) + "px"
 					);
@@ -879,7 +879,7 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 		}
 		else
 		{
-			var row = $j(".egwGridView_empty",this.self._grid.innerTbody).remove();
+			var row = jQuery(".egwGridView_empty",this.self._grid.innerTbody).remove();
 			this.self._selectionMgr.unregisterRow("",0,row.get(0));
 		}
 
@@ -899,13 +899,13 @@ var et2_dataview_controller = (function(){ "use strict"; return Class.extend({
 	 */
 	_emptyRow: function()
 	{
-		$j(".egwGridView_empty",this._grid.innerTbody).remove();
+		jQuery(".egwGridView_empty",this._grid.innerTbody).remove();
 		if(typeof this._grid._rowProvider != "undefined" && this._grid._rowProvider.getPrototype("empty"))
                 {
                         var placeholder = this._grid._rowProvider.getPrototype("empty");
-                        if($j("td",placeholder).length == 1)
+                        if(jQuery("td",placeholder).length == 1)
                         {
-                                $j("td",placeholder).css("width",this._grid.outerCell.width() + "px")
+                                jQuery("td",placeholder).css("width",this._grid.outerCell.width() + "px")
                         }
                         placeholder.appendTo(this._grid.innerTbody);
 

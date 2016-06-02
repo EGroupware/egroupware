@@ -341,7 +341,7 @@ function nm_compare_field(_action, _senders, _target)
 	}
 	else
 	{
-		value = $j(field).val();
+		value = jQuery(field).val();
 	}
 	if (!field) return false;
 
@@ -466,7 +466,7 @@ function nm_submit_popup(button)
 	if (nm_popup_action.data.nextmatch)
 	{
 		// Find the associated widget
-		var widget_id = $j(button).attr("id").replace(nm_popup_action.data.nextmatch.getInstanceManager().uniqueId+'_', '');
+		var widget_id = jQuery(button).attr("id").replace(nm_popup_action.data.nextmatch.getInstanceManager().uniqueId+'_', '');
 		nm_popup_action.data.nextmatch.getRoot().getWidgetById(widget_id).clicked = true;
 	}
 
@@ -519,5 +519,5 @@ function nm_hide_popup(element, div_id)
  */
 function nm_activate_link(_action, _senders)
 {
-	$j(_senders[0].iface.getDOMNode()).find('.et2_clickable:first').trigger('click');
+	jQuery(_senders[0].iface.getDOMNode()).find('.et2_clickable:first').trigger('click');
 }

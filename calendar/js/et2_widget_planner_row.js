@@ -47,13 +47,13 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		this._super.apply(this, arguments);
 
 		// Main container
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass("calendar_plannerRowWidget")
 			.css('width',this.options.width);
-		this.title = $j(document.createElement('div'))
+		this.title = jQuery(document.createElement('div'))
 			.addClass("calendar_plannerRowHeader")
 			.appendTo(this.div);
-		this.rows = $j(document.createElement('div'))
+		this.rows = jQuery(document.createElement('div'))
 			.addClass("calendar_eventRows")
 			.appendTo(this.div);
 
@@ -259,7 +259,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 	position_event: function(event)
 	{
 		var rows = this._spread_events();
-		var row = $j('<div class="calendar_plannerEventRowWidget"></div>').appendTo(this.rows);
+		var row = jQuery('<div class="calendar_plannerEventRowWidget"></div>').appendTo(this.rows);
 		var height = rows.length * (parseInt(window.getComputedStyle(row[0]).getPropertyValue("height")) || 20);
 		row.remove();
 

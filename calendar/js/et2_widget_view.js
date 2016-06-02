@@ -55,7 +55,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		this.date_helper = et2_createWidget('date-time',{},null);
 		this.date_helper.loadingFinished();
 
-		this.loader = $j('<div class="egw-loading-prompt-container ui-front loading"></div>');
+		this.loader = jQuery('<div class="egw-loading-prompt-container ui-front loading"></div>');
 		this.update_timer = null;
 	},
 
@@ -363,8 +363,8 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 	_get_event_info: function _get_event_info(dom_node)
 	{
 		// Determine as much relevant info as can be found
-		var event_node = $j(dom_node).closest('[data-id]',this.div)[0];
-		var day_node = $j(event_node).closest('[data-date]',this.div)[0];
+		var event_node = jQuery(dom_node).closest('[data-id]',this.div)[0];
+		var day_node = jQuery(event_node).closest('[data-date]',this.div)[0];
 
 		var result = jQuery.extend({
 				event_node: event_node,

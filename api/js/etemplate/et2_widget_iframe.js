@@ -63,7 +63,7 @@ var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
 
-		this.htmlNode = $j(document.createElement("iframe"));
+		this.htmlNode = jQuery(document.createElement("iframe"));
 		if(this.options.label)
 		{
 			this.htmlNode.append('<span class="et2_label">'+this.options.label+'</span>');
@@ -126,7 +126,7 @@ var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 			else
 			{
 				// Load the new page, but display a loader
-				var loader = $j('<div class="et2_iframe loading"/>');
+				var loader = jQuery('<div class="et2_iframe loading"/>');
 				this.htmlNode
 					.before(loader);
 				window.setTimeout(jQuery.proxy(function() {

@@ -121,7 +121,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 								egw.setLocalStorageItem(egw.app_name(),'discardedMsgs',JSON.stringify(discarded));
 							}
 						}
-						$j(this).remove();
+						jQuery(this).remove();
 					})
 					.css('position', 'absolute');
 

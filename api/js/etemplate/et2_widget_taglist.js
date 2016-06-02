@@ -210,7 +210,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		}
 
 		// MagicSuggest would replaces our div, so add a wrapper instead
-		this.taglist = $j('<div/>').appendTo(this.div);
+		this.taglist = jQuery('<div/>').appendTo(this.div);
 
 		this.taglist_options = jQuery.extend( {
 			// magisuggest can NOT work setting an empty autocomplete url, it will then call page url!
@@ -255,7 +255,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		}
 
 		this.taglist = this.taglist.magicSuggest(this.taglist_options);
-		this.$taglist = $j(this.taglist);
+		this.$taglist = jQuery(this.taglist);
 		if(this.options.value)
 		{
 			this.taglist.addToSelection(this.options.value,true);
@@ -276,10 +276,10 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		this.$taglist
 		// Display / hide a loading icon while fetching
 			.on("beforeload", function() {this.container.prepend('<div class="ui-icon loading"/>');})
-			.on("load", function() {$j('.loading',this.container).remove();})
+			.on("load", function() {jQuery('.loading',this.container).remove();})
 		// Keep focus when selecting from the list
 			.on("selectionchange", function() {
-				$j('input',this.container).focus();
+				jQuery('input',this.container).focus();
 				widget.resize();
 			})
 		// Bind keyup so we can start ajax search when we like
@@ -292,7 +292,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			}, this))
 		// Hide tooltip when you're editing, it can get annoying otherwise
 			.on('focus', function() {
-				$j('.egw_tooltip').hide();
+				jQuery('.egw_tooltip').hide();
 				widget.div.addClass('ui-state-active');
 			})
 			// If not using autoSelect, avoid some errors with selection starting
@@ -332,18 +332,18 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 
 				// Make sure it doesn't go out of the window
 				var bottom = (wrapper.offset().top + this.taglist.combobox.outerHeight(true));
-				if(bottom > $j(window).height())
+				if(bottom > jQuery(window).height())
 				{
-					this.taglist.combobox.height(this.taglist.combobox.height() - (bottom - $j(window).height()) - 5);
+					this.taglist.combobox.height(this.taglist.combobox.height() - (bottom - jQuery(window).height()) - 5);
 				}
 
 				// Close dropdown if click elsewhere or scroll the sidebox,
 				// but wait until after or it will close immediately
 				window.setTimeout(function() {
-					$j('.egw_fw_ui_scrollarea').one('scroll mousewheel', function() {
+					jQuery('.egw_fw_ui_scrollarea').one('scroll mousewheel', function() {
 						taglist.collapse();
 					});
-					$j('body').one('click',function() {
+					jQuery('body').one('click',function() {
 						taglist.collapse();
 						taglist.input.focus();
 					});},100
@@ -356,12 +356,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 				widget.div.removeClass('expanded');
 			});
 
-		$j('.ms-trigger',this.div).on('click', function(e) {
+		jQuery('.ms-trigger',this.div).on('click', function(e) {
 			e.stopPropagation();
 		});
 		// Unbind change handler of widget's ancestor to stop it from bubbling
 		// taglist has its own onchange
-		$j(this.getDOMNode()).unbind('change.et2_inputWidget');
+		jQuery(this.getDOMNode()).unbind('change.et2_inputWidget');
 
 		// This handles clicking on a suggestion from the list in an et2 friendly way
 		// onChange
@@ -376,7 +376,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			this.div.unbind("click.et2_baseWidget")
 				.on("click.et2_baseWidget", '.ms-sel-item', jQuery.proxy(function(event) {
 				// Pass the target as expected, but also the data for that tag
-				this.click(/*event.target,*/ $j(event.target).parent().data("json"));
+				this.click(/*event.target,*/ jQuery(event.target).parent().data("json"));
 			},this));
 		}
 
@@ -441,7 +441,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			// selected), do not ask server
 			var filtered = [];
 			var selected = this.taglist.getSelection();
-			$j.each(this.options.select_options, function(index, obj) {
+			jQuery.each(this.options.select_options, function(index, obj) {
 				var name = obj.label;
 				if(selected.indexOf(obj) < 0 && name.toLowerCase().indexOf(query.toLowerCase()) > -1)
 				{
@@ -683,11 +683,11 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 				{
 					window.clearTimeout(this._hide_timeout);
 				}
-				$j('.egw_tooltip').hide();
+				jQuery('.egw_tooltip').hide();
 			},this))
 			.on('mouseleave.small_size', jQuery.proxy(function(event) {
 					// Ignore tooltip
-					if(event.toElement && $j(event.toElement).hasClass('egw_tooltip')) return;
+					if(event.toElement && jQuery(event.toElement).hasClass('egw_tooltip')) return;
 
 					if(this._hide_timeout)
 					{
@@ -754,7 +754,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			}
 			else if (this.options.select_options &&
 				// Check options
-				(result = $j.grep(this.options.select_options, function(e) {
+				(result = jQuery.grep(this.options.select_options, function(e) {
 					return e.id == v;
 				})) && result.length
 			)
@@ -772,7 +772,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			}
 			else if (this.taglist &&
 				// Check current selection to avoid going back to server
-				(result = $j.grep(this.taglist.getSelection(), function(e) {
+				(result = jQuery.grep(this.taglist.getSelection(), function(e) {
 					return e.id == v;
 				})) && result.length)
 			{
@@ -829,12 +829,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		this.div.removeClass('et2_taglist_small');
 
 		// How much space is needed for first one?
-		var min_width = $j('.ms-sel-item',this.div ).first().outerWidth() || this.div.children().first().width();
+		var min_width = jQuery('.ms-sel-item',this.div ).first().outerWidth() || this.div.children().first().width();
 
 		// Not ready yet
 		if(min_width === null) return;
 
-		min_width += (this.options.multiple === 'toggle' ? $j('.toggle',this.div).outerWidth() : 0);
+		min_width += (this.options.multiple === 'toggle' ? jQuery('.toggle',this.div).outerWidth() : 0);
 		min_width += this.taglist.trigger ? this.taglist.trigger.outerWidth(true) : 0;
 
 		// Not enough for one
@@ -966,11 +966,11 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 			if (typeof v == 'object' && v.id === v.label) v = v.id;
 			if (this.options.select_options &&
 				// Check options
-				(result = $j.grep(this.options.select_options, function(e) {
+				(result = jQuery.grep(this.options.select_options, function(e) {
 					return e.id == v;
 				})) ||
 				// Check current selection to avoid going back to server
-				(result = $j.grep(this.taglist.getSelection(), function(e) {
+				(result = jQuery.grep(this.taglist.getSelection(), function(e) {
 					return e.id == v;
 				}))
 			)
@@ -1248,13 +1248,13 @@ var et2_taglist_ro = (function(){ "use strict"; return et2_selectbox_ro.extend(
 		this.span = jQuery('<div><ul /></div>')
 			.addClass('et2_taglist_ro');
 		this.setDOMNode(this.span[0]);
-		this.span = $j('ul',this.span)
+		this.span = jQuery('ul',this.span)
 			.addClass('ms-sel-ctn');
 	},
 
 	set_value: function(_value) {
 		this._super.apply(this, arguments);
-		$j('li',this.span).addClass('ms-sel-item');
+		jQuery('li',this.span).addClass('ms-sel-item');
 	}
 });}).call(this);
 et2_register_widget(et2_taglist_ro, ["taglist_ro","taglist_email_ro", "taglist_account_ro" ]);

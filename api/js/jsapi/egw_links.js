@@ -296,7 +296,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			var othervars = url_othervars[1];
 			if (_extravars && typeof _extravars == 'object')
 			{
-				$j.extend(vars, _extravars);
+				jQuery.extend(vars, _extravars);
 				_extravars = othervars;
 			}
 			else

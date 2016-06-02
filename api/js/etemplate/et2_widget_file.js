@@ -158,26 +158,26 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 	},
 
 	createInputWidget: function() {
-		this.node = $j(document.createElement("div")).addClass("et2_file");
-		this.span = $j(document.createElement("span"))
+		this.node = jQuery(document.createElement("div")).addClass("et2_file");
+		this.span = jQuery(document.createElement("span"))
 			.addClass('et2_file_span et2_button')
 			.appendTo (this.node);
 		if (this.options.label != '') this.span.addClass('et2_button_text');
 		var span = this.span;
-		this.input = $j(document.createElement("input"))
+		this.input = jQuery(document.createElement("input"))
 			.attr("type", "file").attr("placeholder", this.options.blur)
 			.addClass ("et2_file_upload")
 			.appendTo(this.node)
 			.hover(function(e){
-				$j(span)
+				jQuery(span)
 					.toggleClass('et2_file_spanHover');
 			})
 			.on({
 				mousedown:function (e){
-					$j(span).addClass('et2_file_spanActive');
+					jQuery(span).addClass('et2_file_spanActive');
 				},
 				mouseup:function (e){
-					$j(span).removeClass('et2_file_spanActive');
+					jQuery(span).removeClass('et2_file_spanActive');
 				}
 			});
 		var self = this;
@@ -203,12 +203,12 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			if(widget)
 			{
 				//may be not available at createInputWidget time
-				this.progress = $j(widget.getDOMNode());
+				this.progress = jQuery(widget.getDOMNode());
 			}
 		}
 		if(!this.progress)
 		{
-			this.progress = $j(document.createElement("div")).appendTo(this.node);
+			this.progress = jQuery(document.createElement("div")).appendTo(this.node);
 		}
 		this.progress.addClass("progress");
 
@@ -424,7 +424,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		this.hideMessage();
 
 		// Disable buttons
-		this.disabled_buttons = $j("input[type='submit'], button")
+		this.disabled_buttons = jQuery("input[type='submit'], button")
 				.not("[disabled]")
 				.attr("disabled", true)
 				.addClass('et2_button_ro')
@@ -530,22 +530,22 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			var widget = this.getRoot().getWidgetById(this.options.progress);
 			if(widget)
 			{
-				this.progress = $j(widget.getDOMNode());
+				this.progress = jQuery(widget.getDOMNode());
 				this.progress.addClass("progress");
 			}
 		}
 		if(this.progress)
 		{
 			var fileName = file.fileName || 'file';
-			var status = $j("<li data-file='"+fileName+"'>"+fileName
+			var status = jQuery("<li data-file='"+fileName+"'>"+fileName
 					+"<div class='remove'/><span class='progressBar'><p/></span></li>")
 				.appendTo(this.progress);
-			$j("div.remove",status).on('click', file, jQuery.proxy(this.cancel,this));
+			jQuery("div.remove",status).on('click', file, jQuery.proxy(this.cancel,this));
 			if(error != "")
 			{
 				status.addClass("message ui-state-error");
 				status.append("<div>"+error+"</diff>");
-				$j(".progressBar",status).css("display", "none");
+				jQuery(".progressBar",status).css("display", "none");
 			}
 		}
 		return error == "";
@@ -554,7 +554,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 	_fileProgress: function(file) {
 		if(this.progress)
 		{
-			$j("li[data-file='"+file.fileName+"'] > span.progressBar > p").css("width", Math.ceil(file.progress()*100)+"%");
+			jQuery("li[data-file='"+file.fileName+"'] > span.progressBar > p").css("width", Math.ceil(file.progress()*100)+"%");
 
 		}
 		return true;
@@ -577,7 +577,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 				if(typeof response.response[0].data[key] == "string")
 				{
 					// Message from server - probably error
-					$j("[data-file='"+name+"']",this.progress)
+					jQuery("[data-file='"+name+"']",this.progress)
 						.addClass("error")
 						.css("display", "block")
 						.text(response.response[0].data[key]);
@@ -587,14 +587,14 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 					this.options.value[key] = response.response[0].data[key];
 					if(this.progress)
 					{
-						$j("[data-file='"+name+"']",this.progress).addClass("message success");
+						jQuery("[data-file='"+name+"']",this.progress).addClass("message success");
 					}
 				}
 			}
 		}
 		else if (this.progress)
 		{
-			$j("[data-file='"+name+"']",this.progress)
+			jQuery("[data-file='"+name+"']",this.progress)
 				.addClass("ui-state-error")
 				.css("display", "block")
 				.text(this.egw().lang("Server error"));
@@ -628,7 +628,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			if(this.options.value[key].name == file.fileName)
 			{
 				delete this.options.value[key];
-				$j('[data-file="'+file.fileName+'"]',this.node).remove();
+				jQuery('[data-file="'+file.fileName+'"]',this.node).remove();
 				return;
 			}
 		}
@@ -642,13 +642,13 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 	{
 		e.preventDefault();
 		// Look for file name in list
-		var target = $j(e.target).parents("li");
+		var target = jQuery(e.target).parents("li");
 
 		this.remove_file(e.data);
 
 		// In case it didn't make it to the list (error)
 		target.remove();
-		$j(e.target).remove();
+		jQuery(e.target).remove();
 	},
 
 	/**

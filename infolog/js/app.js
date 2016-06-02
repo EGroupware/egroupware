@@ -60,7 +60,7 @@ app.classes.infolog = AppJS.extend(
 				var filter2 = nm.getWidgetById('filter2');
 				this.show_details(filter2.value == 'all',nm.getDOMNode(nm));
 				// Remove the rule added by show_details() if the template is removed
-				$j(_et2.DOMContainer).on('clear', function() {egw.css('#infolog-index_nm .et2_box.infoDes');});
+				jQuery(_et2.DOMContainer).on('clear', function() {egw.css('#infolog-index_nm .et2_box.infoDes');});
 
 				// Enable decrypt on hover
 				if(this.egw.user('apps').stylite)
@@ -89,7 +89,7 @@ app.classes.infolog = AppJS.extend(
 						// Decrypt history on hover
 						var history = this.et2.getWidgetById('history');
 						app.stylite.decrypt_hover(history,'span');
-						$j(history.getDOMNode(history))
+						jQuery(history.getDOMNode(history))
 							.tooltip('option','position',{my:'top left', at: 'top left', of: history.getDOMNode(history)});
 
 					},this));},this));
@@ -298,7 +298,7 @@ app.classes.infolog = AppJS.extend(
 		{
 			for(var i = 0; i < _senders.length; i++)
 			{
-				if ($j(_senders[i].iface.node).hasClass('infolog_rowHasSubs'))
+				if (jQuery(_senders[i].iface.node).hasClass('infolog_rowHasSubs'))
 				{
 					children = true;
 					break;
@@ -331,7 +331,7 @@ app.classes.infolog = AppJS.extend(
 		{
 			for(var i = 0; i < _senders.length; i++)
 			{
-				if ($j(_senders[i].iface.getDOMNode()).hasClass('infolog_rowHasSubs'))
+				if (jQuery(_senders[i].iface.getDOMNode()).hasClass('infolog_rowHasSubs'))
 				{
 					children = true;
 					break;
@@ -422,7 +422,7 @@ app.classes.infolog = AppJS.extend(
 				if (completed != (status.value == 'done' || status.value == 'billed') ||
 					(status.value == 'not-started') != (percent.value == 0))
 				{
-					status.value = percent.value == 0 ? ($j('[value="not-started"]',status).length ? 'not-started':'ongoing') : (percent.value == 100 ? 'done' : 'ongoing');
+					status.value = percent.value == 0 ? (jQuery('[value="not-started"]',status).length ? 'not-started':'ongoing') : (percent.value == 100 ? 'done' : 'ongoing');
 				}
 				break;
 

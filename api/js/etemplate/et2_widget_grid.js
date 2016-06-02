@@ -60,13 +60,13 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 	 */
 	init: function() {
 		// Create the table body and the table
-		this.table = $j(document.createElement("table"))
+		this.table = jQuery(document.createElement("table"))
 			.addClass("et2_grid");
-		this.thead = $j(document.createElement("thead"))
+		this.thead = jQuery(document.createElement("thead"))
 			.appendTo(this.table);
-		this.tfoot = $j(document.createElement("tfoot"))
+		this.tfoot = jQuery(document.createElement("tfoot"))
 			.appendTo(this.table);
-		this.tbody = $j(document.createElement("tbody"))
+		this.tbody = jQuery(document.createElement("tbody"))
 			.appendTo(this.table);
 
 		// Call the parent constructor
@@ -678,7 +678,7 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 					}
 					break;
 			}
-			var tr = $j(document.createElement("tr")).appendTo(parent)
+			var tr = jQuery(document.createElement("tr")).appendTo(parent)
 				.addClass(this.rowData[y]["class"]);
 
 			if (this.rowData[y].disabled)
@@ -710,7 +710,7 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 				if (cell.td == null && cell.widget != null)
 				{
 					// Create the cell
-					var td = $j(document.createElement("td")).appendTo(tr)
+					var td = jQuery(document.createElement("td")).appendTo(tr)
 						.addClass(cell["class"]);
 
 					if (cell.disabled)
@@ -903,8 +903,8 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 		}
 
 		// Make sure rows have IDs, so sortable has something to return
-		$j('tr', this.tbody).each(function(index) {
-			var $this = $j(this);
+		jQuery('tr', this.tbody).each(function(index) {
+			var $this = jQuery(this);
 
 			// Header does not participate in sorting
 			if($this.hasClass('th')) return;
@@ -965,7 +965,7 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			if(content)
 			{
 				// Add a new action object to the object manager
-				var row = $j('tr', this.tbody)[r];
+				var row = jQuery('tr', this.tbody)[r];
 				var aoi = new et2_action_object_impl(this, row);
 				var obj = widget_object.addObject(content.id || "row_"+r, aoi);
 

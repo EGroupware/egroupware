@@ -64,7 +64,7 @@ var et2_radiobox = (function(){ "use strict"; return et2_inputWidget.extend(
 	},
 
 	createInputWidget: function() {
-		this.input = $j(document.createElement("input"))
+		this.input = jQuery(document.createElement("input"))
 			.val(this.options.set_value)
 			.attr("type", "radio");
 
@@ -200,7 +200,7 @@ var et2_radiobox_ro = (function(){ "use strict"; return et2_valueWidget.extend([
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.span = $j(document.createElement("span"))
+		this.span = jQuery(document.createElement("span"))
 			.addClass("et2_radiobox");
 
 		this.setDOMNode(this.span[0]);
@@ -308,7 +308,7 @@ var et2_radioGroup = (function(){ "use strict"; return et2_valueWidget.extend([e
 	 */
 	init: function(parent, attrs) {
 		this._super.apply(this, arguments);
-		this.node = $j(document.createElement("div"))
+		this.node = jQuery(document.createElement("div"))
 			.addClass("et2_vbox")
 			.addClass("et2_box_widget");
 		if(this.options.needed)
@@ -387,7 +387,7 @@ var et2_radioGroup = (function(){ "use strict"; return et2_valueWidget.extend([e
 			// Create the label container if it didn't exist yet
 			if (this._labelContainer == null)
 			{
-				this._labelContainer = $j(document.createElement("label"));
+				this._labelContainer = jQuery(document.createElement("label"));
 				this.getSurroundings().insertDOMNode(this._labelContainer[0]);
 			}
 

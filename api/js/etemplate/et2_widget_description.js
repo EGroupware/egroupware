@@ -108,7 +108,7 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 		this._super.apply(this, arguments);
 
 		// Create the span/label tag which contains the label text
-		this.span = $j(document.createElement(this.options["for"] ? "label" : "span"))
+		this.span = jQuery(document.createElement(this.options["for"] ? "label" : "span"))
 			.addClass("et2_label");
 
 		if (this.options["for"])
@@ -149,7 +149,7 @@ var et2_description = (function(){ "use strict"; return expose(et2_baseWidget.ex
 			// Create the label container if it didn't exist yet
 			if (this._labelContainer == null)
 			{
-				this._labelContainer = $j(document.createElement("label"))
+				this._labelContainer = jQuery(document.createElement("label"))
 					.addClass("et2_label");
 				this.getSurroundings().insertDOMNode(this._labelContainer[0]);
 			}

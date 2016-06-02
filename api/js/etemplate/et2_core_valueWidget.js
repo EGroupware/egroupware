@@ -81,7 +81,7 @@ var et2_valueWidget = (function(){ "use strict"; return et2_baseWidget.extend(
 			// Create the label container if it didn't exist yet
 			if (this._labelContainer == null)
 			{
-				this._labelContainer = $j(document.createElement("label"))
+				this._labelContainer = jQuery(document.createElement("label"))
 					.addClass("et2_label");
 				this.getSurroundings().insertDOMNode(this._labelContainer[0]);
 			}

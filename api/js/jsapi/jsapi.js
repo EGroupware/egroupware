@@ -756,8 +756,8 @@ function addOption(id,label,value,do_onchange)
 /**
  * Install click handlers for popup and multiple triggers of uiaccountselection
  */
-$j(function(){
-	$j(document).on('click', '.uiaccountselection_trigger',function(){
+jQuery(function(){
+	jQuery(document).on('click', '.uiaccountselection_trigger',function(){
 		var selectBox = document.getElementById(this.id.replace(/(_multiple|_popup)$/, ''));
 		if (selectBox)
 		{
@@ -773,7 +773,7 @@ $j(function(){
 				selectBox.multiple = true;
 				if (selectBox.options[0].value=='') selectBox.options[0] = null;
 
-				if (!$j(selectBox).hasClass('groupmembers') && !$j(selectBox).hasClass('selectbox'))	// no popup!
+				if (!jQuery(selectBox).hasClass('groupmembers') && !jQuery(selectBox).hasClass('selectbox'))	// no popup!
 				{
 					this.src = egw.image('search');
 					this.title = egw.lang('Search accounts');
@@ -786,7 +786,7 @@ $j(function(){
 			}
 		}
 	});
-	$j(document).on('change', 'select.uiaccountselection',function(e){
+	jQuery(document).on('change', 'select.uiaccountselection',function(e){
 		if (this.value == 'popup')
 		{
 			var link = this.getAttribute('data-popup-link');

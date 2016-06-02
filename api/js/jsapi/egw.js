@@ -203,8 +203,8 @@
 
 		if(typeof console != "undefined" && console.timeEnd) console.timeEnd("egw");
 		var end_time = (new Date).getTime();
-		var gen_time_div = $j('#divGenTime_'+window.egw_appName);
-		if (!gen_time_div.length) gen_time_div = $j('.pageGenTime');
+		var gen_time_div = jQuery('#divGenTime_'+window.egw_appName);
+		if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
 		gen_time_div.append('<span class="asyncIncludeTime">'+egw.lang('async includes took %1s', (end_time-start_time)/1000)+'</span>');
 
 		// Make sure opener knows when we close - start a heartbeat
@@ -233,8 +233,8 @@
 		var resize_attempt = 0;
 		var resize_popup = function()
 		{
-			var $main_div = $j('#popupMainDiv');
-			var $et2 = $j('.et2_container');
+			var $main_div = jQuery('#popupMainDiv');
+			var $et2 = jQuery('.et2_container');
 			var w = {
 				width: egw_getWindowInnerWidth(),
 				height: egw_getWindowInnerHeight()
@@ -277,9 +277,9 @@
 		};
 
 		// rest needs DOM to be ready
-		$j(function() {
+		jQuery(function() {
 			// load etemplate2 template(s)
-			$j('form.et2_container[data-etemplate]').each(function(index, node){
+			jQuery('form.et2_container[data-etemplate]').each(function(index, node){
 				var data = JSON.parse(node.getAttribute('data-etemplate')) || {};
 				var currentapp = data.data.currentapp || window.egw_appName;
 				if(popup || window.opener && !egwIsMobile())

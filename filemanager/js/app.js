@@ -76,7 +76,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 			this.path_widget[et2.DOMContainer.id] = path_widget;
 			// Bind to removal to remove from list
-			$j(et2.DOMContainer).on('clear', function(e) {
+			jQuery(et2.DOMContainer).on('clear', function(e) {
 				if (app.filemanager && app.filemanager.path_widget) delete app.filemanager.path_widget[e.target.id];
 			});
 		}
@@ -629,7 +629,7 @@ app.classes.filemanager = AppJS.extend(
 			}
 
 			// Multiple file download for those that support it
-			a = $j(a)
+			a = jQuery(a)
 				.prop('href', url)
 				.prop('download', data ? data.data.name : "")
 				.appendTo(this.et2.getDOMNode());

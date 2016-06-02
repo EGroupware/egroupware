@@ -85,7 +85,7 @@
 		egwpopup_message.innerHTML = notifymessages[show];
 
 		// Activate links
-		$j('div[data-id],div[data-url]', egwpopup_message).on('click',
+		jQuery('div[data-id],div[data-url]', egwpopup_message).on('click',
 			function() {
 				if(this.dataset.id)
 				{

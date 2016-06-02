@@ -153,13 +153,13 @@ var egw_json_files = {};
 /**
  * Initialize the egw_json_files object with all files which are already bound in
  */
-$j(document).ready(function() {
-	$j("script, link").each(function() {
+jQuery(document).ready(function() {
+	jQuery("script, link").each(function() {
 		var file = false;
-		if ($j(this).attr("src")) {
-			file = $j(this).attr("src");
-		} else if ($j(this).attr("href")) {
-			file = $j(this).attr("href");
+		if (jQuery(this).attr("src")) {
+			file = jQuery(this).attr("src");
+		} else if (jQuery(this).attr("href")) {
+			file = jQuery(this).attr("href");
 		}
 		if (file) {
 			egw_json_files[file] = true;
@@ -327,7 +327,7 @@ Use egw.json(menuaction, parameters [,callback, context, async, sender]).sendReq
 	};
 
 	//Send the request via the jquery AJAX interface to the server
-	this.request = $j.ajax({url: this.url,
+	this.request = jQuery.ajax({url: this.url,
 		async: is_async,
 		context: this,
 		data: request_obj,
@@ -514,7 +514,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 						{
 							try
 							{
-								var jQueryObject = $j(res.data.select, this.context);
+								var jQueryObject = jQuery(res.data.select, this.context);
 								jQueryObject[res.data.func].apply(jQueryObject,	res.data.parms);
 							}
 							catch (e)
@@ -764,7 +764,7 @@ function _egw_json_getFormValues(serialized, children, _filterClass)
 		if (typeof child.childNodes != "undefined")
 			_egw_json_getFormValues(serialized, child.childNodes, _filterClass);
 
-		if ((!_filterClass || $j(child).hasClass(_filterClass)) && typeof child.name != "undefined")
+		if ((!_filterClass || jQuery(child).hasClass(_filterClass)) && typeof child.name != "undefined")
 		{
 			//alert('_egw_json_getFormValues(,,'+_filterClass+') calling _egw_json_getFormValue for name='+child.name+', class='+child.class+', value='+child.value);
 			_egw_json_getFormValue(serialized, child);

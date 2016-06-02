@@ -245,7 +245,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			return this._appendMultiOption(_value, _label, _title, dom_element);
 		}
 
-		var option = $j(document.createElement("option"))
+		var option = jQuery(document.createElement("option"))
 			.attr("value", _value)
 			.text(_label+"");
 
@@ -328,7 +328,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	 */
 	createInputWidget: function() {
 		// Create the base input widget
-		this.input = $j(document.createElement("select"))
+		this.input = jQuery(document.createElement("select"))
 			.addClass("et2_selectbox")
 			.attr("size", this.options.rows);
 
@@ -630,7 +630,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			if (!this.expand_button)
 			{
 				var button_id = this.getInstanceManager().uniqueId+'_'+this.id.replace(/\./g, '-') + "_expand";
-				this.expand_button = $j("<button class='et2_button et2_button_icon et2_selectbox_expand ui-icon' id='" + button_id + "'/>")
+				this.expand_button = jQuery("<button class='et2_button et2_button_icon et2_selectbox_expand ui-icon' id='" + button_id + "'/>")
 					.addClass(this.options.multiple ? 'ui-icon-minus' : 'ui-icon-plus')
 					.on("click", jQuery.proxy(function(e) {
 						if(typeof this.input.attr('size') !== 'undefined' && this.input.attr('size') != 1)
@@ -744,7 +744,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				if(typeof _options[key]["label"] == 'undefined' && typeof _options[key]["title"] == "undefined")
 				{
 					var label = isNaN(key) ? key : _options[key].value;
-					var group = $j(document.createElement("optgroup"))
+					var group = jQuery(document.createElement("optgroup"))
 						.attr("label", this.options.no_lang ? label : this.egw().lang(label))
 						.appendTo(this.input);
 					if(this.input == null)
@@ -829,7 +829,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			var value = this.getValue();
 			// Array comparison
-			return !($j(this._oldValue).not(value).length == 0 && $j(value).not(this._oldValue).length == 0);
+			return !(jQuery(this._oldValue).not(value).length == 0 && jQuery(value).not(this._oldValue).length == 0);
 		}
 		else
 		{
@@ -1324,7 +1324,7 @@ var et2_selectbox_ro = (function(){ "use strict"; return et2_selectbox.extend([e
 	},
 
 	createInputWidget: function() {
-		this.span = $j(document.createElement("span"))
+		this.span = jQuery(document.createElement("span"))
 			.addClass("et2_selectbox readonly")
 			.text(this.options.empty_label);
 
@@ -1333,7 +1333,7 @@ var et2_selectbox_ro = (function(){ "use strict"; return et2_selectbox.extend([e
 
 	// Handle read-only multiselects in the same way
 	createMultiSelect: function() {
-		this.span = $j(document.createElement("ul"))
+		this.span = jQuery(document.createElement("ul"))
 			.addClass("et2_selectbox readonly");
 
 		this.setDOMNode(this.span[0]);
@@ -1405,7 +1405,7 @@ var et2_selectbox_ro = (function(){ "use strict"; return et2_selectbox.extend([e
 					}
 					else
 					{
-						$j('<li>')
+						jQuery('<li>')
 							.text(label)
 							.attr('data-value', _value[i])
 							.appendTo(this.span);
@@ -1509,7 +1509,7 @@ et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro"
 		// Only allow other options inside of this element
 		this.supportedWidgetClasses = [et2_option];
 
-		this.option = $j(document.createElement("option"))
+		this.option = jQuery(document.createElement("option"))
 			.attr("value", this.options.value)
 			.attr("selected", this._parent.options.value == this.options.value ?
 				"selected" : "");

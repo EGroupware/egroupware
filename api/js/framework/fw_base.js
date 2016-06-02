@@ -40,13 +40,13 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		this.activeApp = null;
 
 		//Register the resize handler
-		$j(window).resize(function(){window.framework.resizeHandler();});
+		jQuery(window).resize(function(){window.framework.resizeHandler();});
 
 		//Register the global alert handler
 		window.egw_alertHandler = this.alertHandler;
 
 		//Register the key press handler
-		//$j(document).keypress(this.keyPressHandler);
+		//jQuery(document).keypress(this.keyPressHandler);
 
 		//Override the app_window function
 		window.egw_appWindow = this.egw_appWindow;
@@ -217,8 +217,8 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	 */
 	getIFrameHeight: function(_iframe)
 	{
-		var $header = $j(this.tabsUi.appHeaderContainer);
-		var height = $j(this.sidemenuDiv).height()-this.tabsUi.appHeaderContainer.outerHeight();
+		var $header = jQuery(this.tabsUi.appHeaderContainer);
+		var height = jQuery(this.sidemenuDiv).height()-this.tabsUi.appHeaderContainer.outerHeight();
 		return height;
 	},
 
@@ -302,7 +302,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				// Stop ajax loader spinner icon in case there's no data and still is not stopped
 				if (_data.length <= 0) _app.sidemenuEntry.hideAjaxLoader();
 				//Rewrite all form actions if they contain some javascript
-				var forms = $j('form', contDiv).toArray();
+				var forms = jQuery('form', contDiv).toArray();
 				for (var i = 0; i < forms.length; ++i)
 				{
 					var form = forms[i];
@@ -318,7 +318,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				_app.sidebox_md5 = _md5;
 
 				//console.log(contJS);
-				$j(contDiv).append(contJS);
+				jQuery(contDiv).append(contJS);
 			}
 
 			_app.hasSideboxMenuContent = true;
@@ -336,7 +336,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				// reliable init sidebox, as app.js might initialise earlier
 				if (typeof app[_app.appName] == 'object')
 				{
-					var sidebox = $j('#favorite_sidebox_'+_app.appName, this.sidemenuDiv);
+					var sidebox = jQuery('#favorite_sidebox_'+_app.appName, this.sidemenuDiv);
 					var self = this;
 					var currentAppName = _app.appName;
 					// make sidebox
@@ -982,7 +982,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				// et2 available, let its widgets prepare
 				var deferred = [];
 				var et2_list = [];
-				$j('.et2_container',this.activeApp.tab.contDiv).each(function() {
+				jQuery('.et2_container',this.activeApp.tab.contDiv).each(function() {
 					var et2 = etemplate2.getById(this.id);
 					if(et2 && jQuery(et2.DOMContainer).filter(':visible').length)
 					{

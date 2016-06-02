@@ -144,7 +144,7 @@ function expose (widget)
 		{
 			//Add load class if it's really a slide with error
 			if (gallery.slidesContainer.find('[data-index="'+index+'"]').hasClass(gallery.options.slideErrorClass))
-				$j(gallery.slides[index])
+				jQuery(gallery.slides[index])
 					.addClass(gallery.options.slideLoadingClass)
 					.removeClass(gallery.options.slideErrorClass);
 			return;
@@ -152,7 +152,7 @@ function expose (widget)
 		// Remove the loading class if the slide is loaded
 		else
 		{
-			$j(gallery.slides[index]).removeClass(gallery.options.slideLoadingClass);
+			jQuery(gallery.slides[index]).removeClass(gallery.options.slideLoadingClass);
 		}
 
 		// Just use add to let gallery create everything it needs
@@ -173,19 +173,19 @@ function expose (widget)
 		{
 			var var_name = dom_nodes[i];
 			// Remove old one from DOM
-			$j(gallery[var_name][index]).remove();
+			jQuery(gallery[var_name][index]).remove();
 			// Move new one into it's place in gallery
 			gallery[var_name][index] = gallery[var_name][new_index];
 			// Move into place in DOM
-			var node = $j(gallery[var_name][index]);
+			var node = jQuery(gallery[var_name][index]);
 			node.attr('data-index', index)
-				.insertAfter($j("[data-index='"+(index-1)+"']",node.parent()));
+				.insertAfter(jQuery("[data-index='"+(index-1)+"']",node.parent()));
 			if(active) node.addClass(gallery.options.activeIndicatorClass);
 			gallery[var_name].splice(new_index,1);
 		}
 		if(active)
 		{
-			gallery.activeIndicator = $j(gallery.indicators[index]);
+			gallery.activeIndicator = jQuery(gallery.indicators[index]);
 		}
 
 		// positions
@@ -496,22 +496,22 @@ function expose (widget)
 								{
 									return;
 								}
-								$j(this).css('left',min(0,parseInt($j(this).css('left'))-(distance*30))+'px');
+								jQuery(this).css('left',min(0,parseInt(jQuery(this).css('left'))-(distance*30))+'px');
 							});
 							// Bind the mousewheel handler for FF (DOMMousewheel), and other browsers (mousewheel)
 							$indicator.bind('mousewheel DOMMousewheel',function(event, _delta) {
 								var delta = _delta || event.originalEvent.wheelDelta / 120;
-								if(delta > 0 && parseInt($j(this).css('left')) > gallery.container.width() / 2)	return;
+								if(delta > 0 && parseInt(jQuery(this).css('left')) > gallery.container.width() / 2)	return;
 
 								//Reload next pictures into the gallery by scrolling on thumbnails
-								if (delta<0 && $j(this).width() + parseInt($j(this).css('left')) < gallery.container.width())
+								if (delta<0 && jQuery(this).width() + parseInt(jQuery(this).css('left')) < gallery.container.width())
 								{
 									var nextIndex = gallery.indicatorContainer.find('[title="loading"]')[0];
 									if (nextIndex) self.expose_onslideend(gallery,nextIndex.dataset.index -1);
 									return;
 								}
 								// Move it about 5 indicators
-								$j(this).css('left',parseInt($j(this).css('left'))-(-delta*gallery.activeIndicator.width()*5)+'px');
+								jQuery(this).css('left',parseInt(jQuery(this).css('left'))-(-delta*gallery.activeIndicator.width()*5)+'px');
 
 								event.preventDefault();
 							});
@@ -533,7 +533,7 @@ function expose (widget)
 				{
 					// See if we need to move the indicator
 					var indicator = gallery.container.find('.indicator');
-					var current = $j('.active',indicator).position();
+					var current = jQuery('.active',indicator).position();
 
 					if(current)
 					{

@@ -613,7 +613,7 @@ function et2_insertLinkText(_text, _node, _target)
 				egw.debug("warn", "et2_activateLinks gave bad data", s, _node, _target);
 				s.href = "";
 			}
-			var a = $j(document.createElement("a"))
+			var a = jQuery(document.createElement("a"))
 				.attr("href", s.href)
 				.text(s.text);
 

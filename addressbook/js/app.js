@@ -62,8 +62,8 @@ app.classes.addressbook = AppJS.extend(
 				var content = this.et2.getArrayMgr('content').data;
 				if (typeof content.showsearchbuttons == 'undefined' || !content.showsearchbuttons)
 				{
-					this.show_custom_country($j('select[id*="adr_one_countrycode"]').get(0));
-					this.show_custom_country($j('select[id*="adr_two_countrycode"]').get(0));
+					this.show_custom_country(jQuery('select[id*="adr_one_countrycode"]').get(0));
+					this.show_custom_country(jQuery('select[id*="adr_two_countrycode"]').get(0));
 
 					// Instanciate infolog JS too - wrong app, so it won't be done automatically
 					if(typeof window.app.infolog != 'object' && typeof window.app.classes['infolog'] == 'function')
@@ -179,7 +179,7 @@ app.classes.addressbook = AppJS.extend(
 	{
 		// Find the infolog list
 		var list = etemplate2.getById(
-			$j(this.et2.getInstanceManager().DOMContainer).nextAll('.et2_container').attr('id')
+			jQuery(this.et2.getInstanceManager().DOMContainer).nextAll('.et2_container').attr('id')
 		);
 		var nm = list ? list.widgetContainer.getWidgetById('nm') : null;
 		if(nm)
@@ -547,7 +547,7 @@ app.classes.addressbook = AppJS.extend(
 			{
 				selectbox.value = "-custom-";
 				// Chosen needs this to update
-				$j(selectbox).trigger("liszt:updated");
+				jQuery(selectbox).trigger("liszt:updated");
 
 				custom_field.style.display = "inline";
 			}

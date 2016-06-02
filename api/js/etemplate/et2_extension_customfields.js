@@ -72,8 +72,8 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 		if(typeof this.options.prefix != 'undefined') this.prefix = this.options.prefix;
 
 		// Create the table body and the table
-		this.tbody = $j(document.createElement("tbody"));
-		this.table = $j(document.createElement("table"))
+		this.tbody = jQuery(document.createElement("tbody"));
+		this.table = jQuery(document.createElement("table"))
 			.addClass("et2_grid et2_customfield_list");
 		this.table.append(this.tbody);
 
@@ -557,8 +557,8 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 		{
 			// Complicated case, a single custom field you get multiple widgets
 			// Handle it all here, since this is the exception
-			var row = $j('tr',this.tbody).last();
-			var cf = $j('td',row);
+			var row = jQuery('tr',this.tbody).last();
+			var cf = jQuery('td',row);
 			// Label in first column, widget in 2nd
 			cf.text(field.label + "");
 			cf = jQuery(document.createElement("td"))
@@ -606,8 +606,8 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 		{
 			// Complicated case, a single custom field you get multiple widgets
 			// Handle it all here, since this is the exception
-			var row = $j('tr',this.tbody).last();
-			var cf = $j('td',row);
+			var row = jQuery('tr',this.tbody).last();
+			var cf = jQuery('td',row);
 
 			// Label in first column, widget in 2nd
 			cf.text(field.label + "");
@@ -619,7 +619,7 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 
 			// This controls where the widget is placed in the DOM
 			this.rows[attrs.id] = cf[0];
-			$j(widget.getDOMNode(widget)).css('vertical-align','top');
+			jQuery(widget.getDOMNode(widget)).css('vertical-align','top');
 
 			// Add a link to existing VFS file
 			var select_attrs = jQuery.extend({},
@@ -638,7 +638,7 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 
 			// Do not store in the widgets list, one name for multiple widgets would cause problems
 			widget = et2_createWidget(select_attrs.type, select_attrs, this);
-			$j(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
+			jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 		}
 		return false;
 	},
@@ -689,7 +689,7 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 		{
 			// toggle() needs a boolean to do what we want
 			var key = _nodes[i].getAttribute('data-field');
-			$j(_nodes[i]).toggle(_values.fields[key] && _values.value[this.prefix + key]?true:false);
+			jQuery(_nodes[i]).toggle(_values.fields[key] && _values.value[this.prefix + key]?true:false);
 		}
 	}
 });}).call(this);

@@ -91,11 +91,11 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
-		this.sidebox_target = $j("#"+this.options.sidebox_target);
+		this.sidebox_target = jQuery("#"+this.options.sidebox_target);
 		if(this.sidebox_target.length == 0 && egw_getFramework() != null)
 		{
 			var egw_fw = egw_getFramework();
-			this.sidebox_target = $j("#"+this.options.sidebox_target,egw_fw.sidemenuDiv);
+			this.sidebox_target = jQuery("#"+this.options.sidebox_target,egw_fw.sidemenuDiv);
 		}
 		// Store array of sorted items
 		this.favSortedList = ['blank'];
@@ -124,20 +124,20 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 		var self = this;
 
 		// Add a listener on the radio buttons to set default filter
-		$j(this.menu).on("click","input:radio", function(event){
+		jQuery(this.menu).on("click","input:radio", function(event){
 			// Don't do the menu
 			event.stopImmediatePropagation();
 
 			// Save as default favorite - used when you click the button
-			self.egw().set_preference(self.options.app,self.options.default_pref,$j(this).val());
-			self.preferred = $j(this).val();
+			self.egw().set_preference(self.options.app,self.options.default_pref,jQuery(this).val());
+			self.preferred = jQuery(this).val();
 
 			// Update sidebox, if there
 			if(self.sidebox_target.length)
 			{
 				self.sidebox_target.find("div.ui-icon-heart")
 					.replaceWith("<div class='sideboxstar'/>");
-				$j("li[data-id='"+self.preferred+"'] div.sideboxstar",self.sidebox_target)
+				jQuery("li[data-id='"+self.preferred+"'] div.sideboxstar",self.sidebox_target)
 					.replaceWith("<div class='ui-icon ui-icon-heart'/>");
 			}
 
@@ -161,7 +161,7 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 		};
 
 		//Add Sortable handler to nm fav. menu
-		$j(this.menu).sortable({
+		jQuery(this.menu).sortable({
 
 			items:'li:not([data-id$="add"])',
 			placeholder:'ui-fav-sortable-placeholder',
@@ -183,8 +183,8 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 			})
 			// Wrap and unwrap because jQueryUI styles use a parent, and we don't want to change the state of the menu item
 			// Wrap in a span instead of a div because div gets a border
-			.on("mouseenter","div.ui-icon-trash", function() {$j(this).wrap("<span class='ui-state-active'/>");})
-			.on("mouseleave","div.ui-icon-trash", function() {$j(this).unwrap();});
+			.on("mouseenter","div.ui-icon-trash", function() {jQuery(this).wrap("<span class='ui-state-active'/>");})
+			.on("mouseleave","div.ui-icon-trash", function() {jQuery(this).unwrap();});
 
 		// Trigger refresh of menu options now that events are registered
 		// to update sidebox
@@ -292,7 +292,7 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 		widget.set_select_options.call(widget,options);
 
 		// Set radio to current value
-		$j("input[value='"+ this.preferred +"']:radio", this.menu).attr("checked",true);
+		jQuery("input[value='"+ this.preferred +"']:radio", this.menu).attr("checked",true);
 	},
 
 	set_nm_filters: function(filters)
@@ -329,11 +329,11 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 
 	// Apply the favorite when you pick from the list
 	change: function(selected_node) {
-		this.value = $j(selected_node).attr("data-id");
+		this.value = jQuery(selected_node).attr("data-id");
 		if(this.value == "add" && this.nextmatch)
 		{
 			// Get current filters
-			var current_filters = $j.extend({},this.nextmatch.activeFilters);
+			var current_filters = jQuery.extend({},this.nextmatch.activeFilters);
 
 			// Add in extras
 			for(var extra in this.options.filters)

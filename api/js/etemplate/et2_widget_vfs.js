@@ -47,7 +47,7 @@ var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDet
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.span = $j(document.createElement("ul"))
+		this.span = jQuery(document.createElement("ul"))
 			.addClass('et2_vfs');
 
 		this.setDOMNode(this.span[0]);
@@ -115,7 +115,7 @@ var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDet
 							var link_title = this.egw().link_title(path_parts[2],path_parts[3],
 								function(title) {
 									if(!title || this.value.name == title) return;
-									$j('li',this.span).last().text(title);
+									jQuery('li',this.span).last().text(title);
 								}, this
 							);
 							if(link_title && typeof link_title !== 'undefined') text = link_title;
@@ -125,7 +125,7 @@ var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDet
 			}
 			var self = this;
 			var data = {path: path, type: i < path_parts.length-1 ? this.DIR_MIME_TYPE : _value.mime };
-			$j(document.createElement("li"))
+			jQuery(document.createElement("li"))
 				.addClass("vfsFilename")
 				.text(text + (i < path_parts.length-1 ? '/' : ''))
 				//.attr('title', egw.decodePath(path))
@@ -666,7 +666,7 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 	 */
 	init: function(_parent, attrs) {
 		this._super.apply(this, arguments);
-		$j(this.node).addClass("et2_vfs");
+		jQuery(this.node).addClass("et2_vfs");
 
 		if(!this.options.path)
 		{
@@ -677,7 +677,7 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 		{
 			this.set_multiple(true);
 		}
-		this.list = $j(document.createElement('table')).appendTo(this.node);
+		this.list = jQuery(document.createElement('table')).appendTo(this.node);
 	},
 
 	/**
@@ -720,14 +720,14 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 		if(sender !== this && sender._type.indexOf('vfs') >= 0 )
 		{
 			var value = sender.getValue && sender.getValue() || sender.options.value || {};
-			var row =  $j('[data-path="'+(value.path)+'"]',this.list);
+			var row =  jQuery('[data-path="'+(value.path)+'"]',this.list);
 			if(sender._type === 'vfs-mime')
 			{
-				return $j('.icon',row).get(0) || null;
+				return jQuery('.icon',row).get(0) || null;
 			}
 			else
 			{
-				return $j('.title',row).get(0) || null;
+				return jQuery('.title',row).get(0) || null;
 			}
 		}
 		else
@@ -751,15 +751,15 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 	},
 
 	_addFile: function(file_data) {
-		var row = $j(document.createElement("tr"))
+		var row = jQuery(document.createElement("tr"))
 			.attr("data-path", file_data.path)
 			.attr("draggable", "true")
 			.appendTo(this.list);
-		var mime = $j(document.createElement("td"))
+		var mime = jQuery(document.createElement("td"))
 			.addClass('icon')
 			.appendTo(row);
 
-		var title = $j(document.createElement("td"))
+		var title = jQuery(document.createElement("td"))
 			.addClass('title')
 			.appendTo(row);
 		var mime = et2_createWidget('vfs-mime',{value: file_data},this);
@@ -769,9 +769,9 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 		if (!this.options.readonly)
 		{
 			var self = this;
-			var delete_button = $j(document.createElement("td"))
+			var delete_button = jQuery(document.createElement("td"))
 				.appendTo(row);
-			$j("<div />")
+			jQuery("<div />")
 				.appendTo(delete_button)
 				// We don't use ui-icon because it assigns a bg image
 				.addClass("delete icon")
@@ -868,7 +868,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
 
-		this.button = $j(document.createElement("button"))
+		this.button = jQuery(document.createElement("button"))
 			.attr("title", this.egw().lang("Select file(s) from VFS"))
 			.addClass("et2_button et2_vfs_btn")
 			.css("background-image","url("+this.egw().image("filemanager/navbar")+")");
@@ -930,7 +930,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 					if(popup.closed) {
 						self.egw().window.clearInterval(poll);
 						// Fire a change event so any handlers run
-						$j(self.node).change();
+						jQuery(self.node).change();
 					}
 				},1000
 			);

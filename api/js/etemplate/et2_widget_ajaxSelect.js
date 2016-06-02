@@ -104,7 +104,7 @@ var et2_ajaxSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 	},
 
 	createInputWidget: function() {
-		this.input = $j(document.createElement("input"));
+		this.input = jQuery(document.createElement("input"));
 
 		this.input.addClass("et2_textbox");
 
@@ -216,7 +216,7 @@ var et2_ajaxSelect_ro = (function(){ "use strict"; return et2_valueWidget.extend
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.span = $j(document.createElement("span"));
+		this.span = jQuery(document.createElement("span"));
 
 		this.setDOMNode(this.span[0]);
 	},

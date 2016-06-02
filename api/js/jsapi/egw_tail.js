@@ -18,7 +18,7 @@ jQuery(function()
 	var that = this;
 
 	var log_tail_start=0;
-	var filename = $j('pre[id^="log"]');
+	var filename = jQuery('pre[id^="log"]');
 	if (typeof filename !='undefined' && filename.length > 0)
 	{
 		filename = filename.attr('data-filename');
@@ -30,7 +30,7 @@ jQuery(function()
 			egw.json("api.EGroupware\\Api\\Json\\Tail.ajax_delete",[filename,buttonId=="empty_log"])
 				.sendRequest(true);
 		}
-		$j("#log").text("");
+		jQuery("#log").text("");
 	}
 	function refresh_log()
 	{
@@ -38,33 +38,33 @@ jQuery(function()
 		{
 			if (_data.length) {
 				log_tail_start = _data.next;
-				var log = $j("#log").append(_data.content.replace(/</g,"&lt;"));
+				var log = jQuery("#log").append(_data.content.replace(/</g,"&lt;"));
 				log.animate({ scrollTop: log.prop("scrollHeight") - log.height() + 20 }, 500);
 			}
 			if (_data.size === false)
 			{
-				$j("#download_log").hide();
+				jQuery("#download_log").hide();
 			}
 			else
 			{
-				$j("#download_log").show().attr("title",this.egw.lang('Size')+_data.size);
+				jQuery("#download_log").show().attr("title",this.egw.lang('Size')+_data.size);
 			}
 			if (_data.writable === false)
 			{
-				$j("#purge_log").hide();
-				$j("#empty_log").hide();
+				jQuery("#purge_log").hide();
+				jQuery("#empty_log").hide();
 			}
 			else
 			{
-				$j("#purge_log").show();
-				$j("#empty_log").show();
+				jQuery("#purge_log").show();
+				jQuery("#empty_log").show();
 			}
 			window.setTimeout(refresh_log,_data.length?200:2000);
 		}).sendRequest(true);
 	}
 	function resize_log()
 	{
-		$j("#log").width(egw_getWindowInnerWidth()-20).height(egw_getWindowInnerHeight()-33);
+		jQuery("#log").width(egw_getWindowInnerWidth()-20).height(egw_getWindowInnerHeight()-33);
 	}
 	jQuery('input[id^="clear_log"]').on('click',function(){
 		button_log(this.getAttribute('id'));
@@ -76,7 +76,7 @@ jQuery(function()
 		button_log(this.getAttribute('id'));
 	});
 	egw_LAB.wait(function() {
-		$j(document).ready(function()
+		jQuery(document).ready(function()
 		{
 			if (typeof filename !='undefined' && filename.length > 0)
 			{
@@ -84,6 +84,6 @@ jQuery(function()
 				refresh_log();
 			}
 		});
-		$j(window).resize(resize_log);
+		jQuery(window).resize(resize_log);
 	});
 });

@@ -55,26 +55,26 @@ app.classes.importexport = AppJS.extend(
 			if(!this.et2.getArrayMgr("content").getEntry("definition"))
 			{
 				// et2 doesn't understand a disabled button in the normal sense
-				$j(this.et2.getWidgetById('export').getDOMNode()).attr('disabled','disabled');
-				$j(this.et2.getWidgetById('preview').getDOMNode()).attr('disabled','disabled');
+				jQuery(this.et2.getWidgetById('export').getDOMNode()).attr('disabled','disabled');
+				jQuery(this.et2.getWidgetById('preview').getDOMNode()).attr('disabled','disabled');
 			}
 			if(!this.et2.getArrayMgr("content").getEntry("filter"))
 			{
-				$j('input[value="filter"]').parent().hide();
+				jQuery('input[value="filter"]').parent().hide();
 			}
 
 			// Disable / hide definition filter if not selected
 			if(this.et2.getArrayMgr("content").getEntry("selection") != 'filter')
 			{
-				$j('div.filters').hide();
+				jQuery('div.filters').hide();
 			}
 		}
 	},
 
 	export_preview: function(event, widget)
 	{
-		var preview = $j(widget.getRoot().getWidgetById('preview_box').getDOMNode());
-		$j('.content',preview).empty()
+		var preview = jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode());
+		jQuery('.content',preview).empty()
 			.append('<div class="loading" style="width:100%;height:100%"></div>');
 
 		preview
@@ -92,15 +92,15 @@ app.classes.importexport = AppJS.extend(
 		if(test.getValue() == test.options.unselected_value) return true;
 
 		// Show preview
-		var preview = $j(widget.getRoot().getWidgetById('preview_box').getDOMNode());
-		$j('.content',preview).empty();
+		var preview = jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode());
+		jQuery('.content',preview).empty();
 		preview
 			.addClass('loading')
 			.show(100, jQuery.proxy(function() {
 				widget.clicked = true;
 				widget.getInstanceManager().submit(false, true);
 					widget.clicked = false;
-					$j(widget.getRoot().getWidgetById('preview_box').getDOMNode())
+					jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode())
 						.removeClass('loading');
 			},this));
 		return false;
@@ -160,7 +160,7 @@ app.classes.importexport = AppJS.extend(
 				}
 
 				// A little highlight to call attention to the change
-				$j('input[value="'+special+'"]',node).parent().parent().effect('highlight',{},500);
+				jQuery('input[value="'+special+'"]',node).parent().parent().effect('highlight',{},500);
 				break;
 			}
 		}

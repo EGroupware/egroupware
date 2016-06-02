@@ -1237,7 +1237,7 @@ var et2_dataview_grid = (function(){ "use strict"; return et2_dataview_container
 			if (this._map.length === 0)
 			{
 				// Add a dummy element to the grid
-				var dummy = $j(document.createElement("tr"));
+				var dummy = jQuery(document.createElement("tr"));
 				this.innerTbody.append(dummy);
 
 				// Append the spacer to the grid
@@ -1324,9 +1324,9 @@ var et2_dataview_grid = (function(){ "use strict"; return et2_dataview_container
 	 */
 	_createNodes: function() {
 
-		this.tr = $j(document.createElement("tr"));
+		this.tr = jQuery(document.createElement("tr"));
 
-		this.outerCell = $j(document.createElement("td"))
+		this.outerCell = jQuery(document.createElement("td"))
 			.addClass("frame")
 			.attr("colspan", this._rowProvider.getColumnCount()
 					+ (this._parentGrid ? 0 : 1))
@@ -1336,7 +1336,7 @@ var et2_dataview_grid = (function(){ "use strict"; return et2_dataview_container
 		this.scrollarea = null;
 		if (this._parentGrid == null)
 		{
-			this.scrollarea = $j(document.createElement("div"))
+			this.scrollarea = jQuery(document.createElement("div"))
 				.addClass("egwGridView_scrollarea")
 				.scroll(this, function(e) {
 
@@ -1374,15 +1374,15 @@ var et2_dataview_grid = (function(){ "use strict"; return et2_dataview_container
 		}
 
 		// Create the inner table
-		var table = $j(document.createElement("table"))
+		var table = jQuery(document.createElement("table"))
 			.addClass("egwGridView_grid")
 			.appendTo(this.scrollarea ? this.scrollarea : this.outerCell);
 
-		this.innerTbody = $j(document.createElement("tbody"))
+		this.innerTbody = jQuery(document.createElement("tbody"))
 			.appendTo(table);
 
 		// Set the tr as container element
-		this.appendNode($j(this.tr[0]));
+		this.appendNode(jQuery(this.tr[0]));
 	}
 
 });}).call(this);

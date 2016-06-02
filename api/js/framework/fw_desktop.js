@@ -43,11 +43,11 @@
 			this.setBottomLine(this.parent.entries);
 			//Make the base Div sortable. Set all elements with the style "egw_fw_ui_sidemenu_entry_header"
 			//as handle
-			if($j(this.elemDiv).data('uiSortable'))
+			if(jQuery(this.elemDiv).data('uiSortable'))
 			{
-				$j(this.elemDiv).sortable("destroy");
+				jQuery(this.elemDiv).sortable("destroy");
 			}
-			$j(this.elemDiv).sortable({
+			jQuery(this.elemDiv).sortable({
 				handle: ".egw_fw_ui_sidemenu_entry_header",
 				distance: 15,
 				start: function(event, ui)
@@ -79,11 +79,11 @@
 		   //If this is the last tab in the tab list, the bottom line must be closed
 		   for (var i = 0; i < _entryList.length; i++)
 		   {
-			   $j(_entryList[i].contentDiv).removeClass("egw_fw_ui_sidemenu_entry_content_bottom");
-			   $j(_entryList[i].headerDiv).removeClass("egw_fw_ui_sidemenu_entry_header_bottom");
+			   jQuery(_entryList[i].contentDiv).removeClass("egw_fw_ui_sidemenu_entry_content_bottom");
+			   jQuery(_entryList[i].headerDiv).removeClass("egw_fw_ui_sidemenu_entry_header_bottom");
 		   }
-		   $j(this.contentDiv).addClass("egw_fw_ui_sidemenu_entry_content_bottom");
-		   $j(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header_bottom");
+		   jQuery(this.contentDiv).addClass("egw_fw_ui_sidemenu_entry_content_bottom");
+		   jQuery(this.headerDiv).addClass("egw_fw_ui_sidemenu_entry_header_bottom");
 	   }
 	});
 
@@ -106,8 +106,8 @@
 		{
 			if (this.activeEntry)
 			{
-				$j(this.activeEntry.marker).show();
-				$j(this.elemDiv).sortable("refresh");
+				jQuery(this.activeEntry.marker).show();
+				jQuery(this.elemDiv).sortable("refresh");
 			}
 		},
 
@@ -119,8 +119,8 @@
 		{
 			if (this.activeEntry)
 			{
-				$j(this.activeEntry.marker).hide();
-				$j(this.elemDiv).sortable("refresh");
+				jQuery(this.activeEntry.marker).hide();
+				jQuery(this.elemDiv).sortable("refresh");
 			}
 		},
 
@@ -248,7 +248,7 @@
 
 			this.scrollAreaUi.update();
 			// Disable loader, if present
-			$j('#egw_fw_loading').hide();
+			jQuery('#egw_fw_loading').hide();
 
 		},
 
@@ -394,10 +394,10 @@
 		checkTabOverflow: function()
 		{
 			var width = 0;
-			var outer_width = $j(this.tabsUi.contHeaderDiv).width();
-			var spans = $j(this.tabsUi.contHeaderDiv).children('span');
+			var outer_width = jQuery(this.tabsUi.contHeaderDiv).width();
+			var spans = jQuery(this.tabsUi.contHeaderDiv).children('span');
 			spans.css('max-width','');
-			spans.each(function() { width += $j(this).outerWidth(true);});
+			spans.each(function() { width += jQuery(this).outerWidth(true);});
 			if(width > outer_width)
 			{
 				var max_width = Math.floor(outer_width / this.tabsUi.contHeaderDiv.childElementCount) -

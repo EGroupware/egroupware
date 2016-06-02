@@ -257,7 +257,7 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 	set_parent_node: function(_node) {
 		if(typeof _node == "string")
 		{
-			var parent = $j('#'+_node);
+			var parent = jQuery('#'+_node);
 			if(parent.length == 0 )
 			{
 				this.egw().debug('warn','Unable to find DOM parent node with ID "%s" for widget %o.',_node,this);
@@ -361,11 +361,11 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 
 			if (_value)
 			{
-				$j(node).hide();
+				jQuery(node).hide();
 			}
 			else
 			{
-				$j(node).show();
+				jQuery(node).show();
 			}
 		}
 	},
@@ -376,7 +376,7 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 		var node = this.getDOMNode(this);
 		if (node)
 		{
-			$j(node).css("width", _value);
+			jQuery(node).css("width", _value);
 		}
 	},
 
@@ -386,7 +386,7 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 		var node = this.getDOMNode(this);
 		if (node)
 		{
-			$j(node).css("height", _value);
+			jQuery(node).css("height", _value);
 		}
 	},
 
@@ -396,9 +396,9 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 		{
 			if (this["class"])
 			{
-				$j(node).removeClass(this["class"]);
+				jQuery(node).removeClass(this["class"]);
 			}
-			$j(node).addClass(_value);
+			jQuery(node).addClass(_value);
 		}
 
 		this["class"] = _value;
@@ -410,7 +410,7 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 		var node = this.getDOMNode(this);
 		if (node)
 		{
-			$j(node).css("overflow", _value);
+			jQuery(node).css("overflow", _value);
 		}
 	},
 
@@ -423,7 +423,7 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 			for(var i=0; i < pairs.length; ++i)
 			{
 				var name_value = pairs[i].split(':');
-				$j(node).attr('data-'+name_value[0], name_value[1]);
+				jQuery(node).attr('data-'+name_value[0], name_value[1]);
 			}
 		}
 	},
@@ -818,10 +818,10 @@ function et2_action_object_impl(widget, node)
 		switch(_event)
 		{
 			case EGW_AI_DRAG_OVER:
-				$j(this.node).addClass("ui-state-active");
+				jQuery(this.node).addClass("ui-state-active");
 				break;
 			case EGW_AI_DRAG_OUT:
-				$j(this.node).removeClass("ui-state-active");
+				jQuery(this.node).removeClass("ui-state-active");
 				break;
 		}
 	};

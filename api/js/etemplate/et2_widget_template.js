@@ -195,7 +195,7 @@ var et2_template = (function(){ "use strict"; return et2_DOMWidget.extend(
 		this._super.apply(this, arguments);
 
 		// Fire load event when done loading
-		this.loading.done(jQuery.proxy(function() {$j(this).trigger("load");},this.div));
+		this.loading.done(jQuery.proxy(function() {jQuery(this).trigger("load");},this.div));
 
 		// Not done yet, but widget will let you know
 		return this.loading.promise();

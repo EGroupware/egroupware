@@ -80,7 +80,7 @@ var et2_image = (function(){ "use strict"; return expose(et2_baseWidget.extend([
 		this._super.apply(this, arguments);
 
 		// Create the image or a/image tag
-		this.image = $j(document.createElement("img"));
+		this.image = jQuery(document.createElement("img"));
 		if (this.options.label)
 		{
 			this.image.attr("alt", this.options.label).attr("title", this.options.label);
@@ -252,7 +252,7 @@ var et2_image = (function(){ "use strict"; return expose(et2_baseWidget.extend([
 
 	setDetachedAttributes: function(_nodes, _values) {
 		// Set the given DOM-Nodes
-		this.image = $j(_nodes[0]);
+		this.image = jQuery(_nodes[0]);
 
 		// Set the attributes
 		if (_values["src"])

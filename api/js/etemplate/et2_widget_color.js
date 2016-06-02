@@ -235,7 +235,7 @@ var et2_color_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.$node = $j(document.createElement("div"))
+		this.$node = jQuery(document.createElement("div"))
 			.addClass("et2_color");
 
 		this.setDOMNode(this.$node[0]);

@@ -84,12 +84,12 @@ var et2_dataview_rowProvider = (function(){ "use strict"; return Class.extend(
 
 
 	_createFullRowPrototype: function() {
-		var tr = $j(document.createElement("tr"));
-		var td = $j(document.createElement("td"))
+		var tr = jQuery(document.createElement("tr"));
+		var td = jQuery(document.createElement("td"))
 			.addClass(this._outerId + "_td_fullRow")
 			.attr("colspan", this._columnIds.length)
 			.appendTo(tr);
-		var div = $j(document.createElement("div"))
+		var div = jQuery(document.createElement("div"))
 			.addClass(this._outerId + "_div_fullRow")
 			.appendTo(td);
 
@@ -97,15 +97,15 @@ var et2_dataview_rowProvider = (function(){ "use strict"; return Class.extend(
 	},
 
 	_createDefaultPrototype: function() {
-		var tr = $j(document.createElement("tr"));
+		var tr = jQuery(document.createElement("tr"));
 
 		// Append a td for each column
 		for (var i = 0; i < this._columnIds.length; i++)
 		{
-			var td = $j(document.createElement("td"))
+			var td = jQuery(document.createElement("td"))
 				.addClass(this._outerId + "_td_" + this._columnIds[i])
 				.appendTo(tr);
-			var div = $j(document.createElement("div"))
+			var div = jQuery(document.createElement("div"))
 				.addClass(this._outerId + "_div_" + this._columnIds[i])
 				.addClass("innerContainer")
 				.appendTo(td);
@@ -115,12 +115,12 @@ var et2_dataview_rowProvider = (function(){ "use strict"; return Class.extend(
 	},
 
 	_createEmptyPrototype: function() {
-		this._prototypes["empty"] = $j(document.createElement("tr"));
+		this._prototypes["empty"] = jQuery(document.createElement("tr"));
 	},
 
 	_createLoadingPrototype: function() {
 		var fullRow = this.getPrototype("fullRow");
-		$j("div", fullRow).addClass("loading");
+		jQuery("div", fullRow).addClass("loading");
 
 		this._prototypes["loading"] = fullRow;
 	}

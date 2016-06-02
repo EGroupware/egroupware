@@ -66,7 +66,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		var event = this;
 
 		// Main container
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.addClass("calendar_calEvent")
 			.addClass(this.options.class)
 			.css('width',this.options.width)
@@ -79,16 +79,16 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				}
 				// Hacky to remove egw's tooltip border and let the mouse in
 				window.setTimeout(function() {
-					$j('body .egw_tooltip')
+					jQuery('body .egw_tooltip')
 						.css('border','none')
 						.on('mouseenter', function() {
 							event.div.off('mouseleave.tooltip');
-							$j('body.egw_tooltip').remove();
-							$j('body').append(this);
-							$j(this).stop(true).fadeTo(400, 1)
+							jQuery('body.egw_tooltip').remove();
+							jQuery('body').append(this);
+							jQuery(this).stop(true).fadeTo(400, 1)
 								.on('mouseleave', function() {
-									$j(this).fadeOut('400', function() {
-										$j(this).remove();
+									jQuery(this).fadeOut('400', function() {
+										jQuery(this).remove();
 										// Set up to work again
 										event.set_statustext(event._tooltip());
 									});
@@ -97,13 +97,13 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 
 				},105);
 			});
-		this.title = $j(document.createElement('div'))
+		this.title = jQuery(document.createElement('div'))
 			.addClass("calendar_calEventHeader")
 			.appendTo(this.div);
-		this.body = $j(document.createElement('div'))
+		this.body = jQuery(document.createElement('div'))
 			.addClass("calendar_calEventBody")
 			.appendTo(this.div);
-		this.icons = $j(document.createElement('div'))
+		this.icons = jQuery(document.createElement('div'))
 			.addClass("calendar_calEventIcons")
 			.appendTo(this.title);
 
@@ -145,7 +145,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		this.div.remove();
 		this.div = null;
 
-		$j('body.egw_tooltip').remove();
+		jQuery('body.egw_tooltip').remove();
 
 		// Unregister, or we'll continue to be notified...
 		if(this.options.value)
@@ -487,7 +487,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			if(typeof cat_label != 'string')
 			{
 				cat.span.children().each(function() {
-					cat_label.push($j(this).text());
+					cat_label.push(jQuery(this).text());
 				});
 				cat_label = cat_label.join(', ');
 			}
@@ -780,7 +780,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		// custom here.
 		if (!this.onclick)
 		{
-			$j(this.node).off("click");
+			jQuery(this.node).off("click");
 		}
 	},
 

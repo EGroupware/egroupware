@@ -124,7 +124,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 		// Create the individual UI elements
 
 		// Menu is a UL
-		this.menu = $j(this.default_menu).attr("id",this.internal_ids.menu)
+		this.menu = jQuery(this.default_menu).attr("id",this.internal_ids.menu)
 			.hide()
 			.menu({
 				select: function(event,ui) {
@@ -132,24 +132,24 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 				}
 			});
 
-		this.buttons = $j(document.createElement("div"))
+		this.buttons = jQuery(document.createElement("div"))
 			.addClass("et2_dropdown");
 
 		// Main "wrapper" div
-		this.div = $j(document.createElement("div"))
+		this.div = jQuery(document.createElement("div"))
 			.attr("id", this.internal_ids.div)
 			.append(this.buttons)
 			.append(this.menu);
 
 		// Left side - activates click action
-		this.button = $j(document.createElement("button"))
+		this.button = jQuery(document.createElement("button"))
 			.attr("id", this.internal_ids.button)
 			.attr("type", "button")
 			.addClass("ui-widget ui-corner-left").removeClass("ui-corner-all")
 			.appendTo(this.buttons);
 
 		// Right side - shows dropdown
-		this.arrow = $j(document.createElement("button"))
+		this.arrow = jQuery(document.createElement("button"))
 			.addClass("ui-widget ui-corner-right").removeClass("ui-corner-all")
 			.attr("type", "button")
 			.click(function() {
@@ -166,7 +166,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 					of: self.buttons
 				});
 				// Hide menu if clicked elsewhere
-				$j( document ).one( "click", function() {
+				jQuery( document ).one( "click", function() {
 					menu.hide();
 				});
 				return false;
@@ -179,8 +179,8 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 		this.buttons.children("button")
 			.addClass("ui-state-default")
 			.hover(
-				function() {$j(this).addClass("ui-state-hover");},
-				function() {$j(this).removeClass("ui-state-hover");}
+				function() {jQuery(this).addClass("ui-state-hover");},
+				function() {jQuery(this).removeClass("ui-state-hover");}
 			);
 
 		// Icon
@@ -303,7 +303,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 		this._super.apply(this, arguments);
 
 		// Move the parent's handler to the button, or we can't tell the difference between the clicks
-		$j(this.node).unbind("click.et2_baseWidget");
+		jQuery(this.node).unbind("click.et2_baseWidget");
 		this.button.bind("click.et2_baseWidget", this, function(e) {
 			return e.data.click.call(e.data, this);
 		});
@@ -341,23 +341,23 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 					var item;
 					if(typeof options[key] == "string")
 					{
-						item = $j("<li data-id='"+key+"'><a href='#'>"+options[key]+"</a></li>");
+						item = jQuery("<li data-id='"+key+"'><a href='#'>"+options[key]+"</a></li>");
 					}
 					else if (options[key]["label"])
 					{
-						item =$j("<li data-id='"+key+"'><a href='#'>"+options[key]["label"]+"</a></li>");
+						item =jQuery("<li data-id='"+key+"'><a href='#'>"+options[key]["label"]+"</a></li>");
 					}
 					// Optgroup
 					else
 					{
-						item = $j("<li><a href='#'>"+key+"</a></li>");
+						item = jQuery("<li><a href='#'>"+key+"</a></li>");
 						add_complex(node.append("<ul>"), options[key]);
 					}
 					node.append(item);
 					if(item && options[key].icon)
 					{
 						// we supply a applicable class for item images
-						$j('a',item).prepend('<img class="et2_button_icon" src="' + options[key].icon +'"/>');
+						jQuery('a',item).prepend('<img class="et2_button_icon" src="' + options[key].icon +'"/>');
 					}
 				}
 			}
@@ -374,7 +374,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 	},
 
 	set_value: function(new_value) {
-		var menu_item = $j("[data-id='"+new_value+"']",this.menu);
+		var menu_item = jQuery("[data-id='"+new_value+"']",this.menu);
 		if(menu_item.length)
 		{
 			this.value = new_value;

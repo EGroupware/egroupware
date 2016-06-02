@@ -99,7 +99,7 @@ var et2_textbox = (function(){ "use strict"; return et2_inputWidget.extend([et2_
 	createInputWidget: function() {
 		if (this.options.multiline || this.options.rows > 1 || this.options.cols > 1)
 		{
-			this.input = $j(document.createElement("textarea"));
+			this.input = jQuery(document.createElement("textarea"));
 
 			if (this.options.rows > 0)
 			{
@@ -113,7 +113,7 @@ var et2_textbox = (function(){ "use strict"; return et2_inputWidget.extend([et2_
 		}
 		else
 		{
-			this.input = $j(document.createElement("input"));
+			this.input = jQuery(document.createElement("input"));
 			switch(this.options.type)
 			{
 				case "passwd":
@@ -171,7 +171,7 @@ var et2_textbox = (function(){ "use strict"; return et2_inputWidget.extend([et2_
 
 	destroy: function() {
 		var node = this.getInputNode();
-		if (node) $j(node).unbind("keypress");
+		if (node) jQuery(node).unbind("keypress");
 
 		this._super.apply(this, arguments);
 	},
@@ -336,9 +336,9 @@ var et2_textbox_ro = (function(){ "use strict"; return et2_valueWidget.extend([e
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.span = $j(document.createElement("label"))
+		this.span = jQuery(document.createElement("label"))
 			.addClass("et2_label");
-		this.value_span = $j(document.createElement("span"))
+		this.value_span = jQuery(document.createElement("span"))
 			.addClass("et2_textbox_ro")
 			.appendTo(this.span);
 
@@ -609,7 +609,7 @@ var et2_searchbox = (function(){ "use strict"; return et2_textbox.extend(
 		var node = this.getInputNode();
 		if (node)
 		{
-			$j(node).off('.et2_inputWidget');
+			jQuery(node).off('.et2_inputWidget');
 		}
 	},
 });}).call(this);

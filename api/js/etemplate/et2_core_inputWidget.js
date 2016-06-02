@@ -81,8 +81,8 @@ var et2_inputWidget = (function(){ "use strict"; return et2_valueWidget.extend([
 		var node = this.getInputNode();
 		if (node)
 		{
-			$j(node).unbind("change.et2_inputWidget");
-			$j(node).unbind("focus");
+			jQuery(node).unbind("change.et2_inputWidget");
+			jQuery(node).unbind("focus");
 		}
 
 		this._super.apply(this, arguments);
@@ -113,7 +113,7 @@ var et2_inputWidget = (function(){ "use strict"; return et2_valueWidget.extend([
 		var node = this.getInputNode();
 		if (node)
 		{
-			$j(node)
+			jQuery(node)
 				.off('.et2_inputWidget')
 				.bind("change.et2_inputWidget", this, function(e) {
 					e.data.change.call(e.data, this);
@@ -125,13 +125,13 @@ var et2_inputWidget = (function(){ "use strict"; return et2_valueWidget.extend([
 
 		this._super.apply(this,arguments);
 
-//		$j(this.getInputNode()).attr("novalidate","novalidate"); // Stop browser from getting involved
-//		$j(this.getInputNode()).validator();
+//		jQuery(this.getInputNode()).attr("novalidate","novalidate"); // Stop browser from getting involved
+//		jQuery(this.getInputNode()).validator();
 	},
 
 	detatchFromDOM: function() {
 //		if(this.getInputNode()) {
-//			$j(this.getInputNode()).data("validator").destroy();
+//			jQuery(this.getInputNode()).data("validator").destroy();
 //		}
 		this._super.apply(this,arguments);
 	},
@@ -183,10 +183,10 @@ var et2_inputWidget = (function(){ "use strict"; return et2_valueWidget.extend([
 		var node = this.getInputNode();
 		if (node)
 		{
-			$j(node).val(_value);
+			jQuery(node).val(_value);
 			if(this.isAttached() && this._oldValue !== et2_no_init && this._oldValue !== _value)
 			{
-				$j(node).change();
+				jQuery(node).change();
 			}
 		}
 		this._oldValue = _value;
@@ -220,7 +220,7 @@ var et2_inputWidget = (function(){ "use strict"; return et2_valueWidget.extend([
 		if (node)
 		{
 			if(_value && !this.options.readonly) {
-				$j(node).attr("required", "required");
+				jQuery(node).attr("required", "required");
 			} else {
 				node.removeAttribute("required");
 			}
@@ -235,12 +235,12 @@ var et2_inputWidget = (function(){ "use strict"; return et2_valueWidget.extend([
 			if (_value === false)
 			{
 				this.hideMessage();
-				$j(node).removeClass("invalid");
+				jQuery(node).removeClass("invalid");
 			}
 			else
 			{
 				this.showMessage(_value, "validation_error");
-				$j(node).addClass("invalid");
+				jQuery(node).addClass("invalid");
 
 				// If on a tab, switch to that tab so user can see it
 				var widget = this;
@@ -274,7 +274,7 @@ var et2_inputWidget = (function(){ "use strict"; return et2_valueWidget.extend([
 		var node = this.getInputNode();
 		if (node)
 		{
-			var val = $j(node).val();
+			var val = jQuery(node).val();
 
 			return val;
 		}

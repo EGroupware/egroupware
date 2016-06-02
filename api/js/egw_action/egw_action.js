@@ -492,7 +492,7 @@ egwAction.prototype.updateActions = function(_actions, _app)
  */
 egwAction.prototype.not_disableClass = function(_action, _senders, _target)
 {
-	return !$j(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
+	return !jQuery(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
 };
 
 /**
@@ -505,7 +505,7 @@ egwAction.prototype.not_disableClass = function(_action, _senders, _target)
  */
 egwAction.prototype.enableClass = function(_action, _senders, _target)
 {
-	return $j(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
+	return jQuery(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
 };
 
 /**

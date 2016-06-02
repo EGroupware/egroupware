@@ -118,8 +118,8 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 			var current_app = this.app_name();
 			var query = {current_app: current_app};
 			// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
-			if ($j.isArray(apps) && $j.inArray(current_app, apps) == -1 && (name != 'prefs' && name != 'acl') ||
-				!$j.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
+			if (jQuery.isArray(apps) && jQuery.inArray(current_app, apps) == -1 && (name != 'prefs' && name != 'acl') ||
+				!jQuery.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
 			{
 				egw_message(egw.lang('Not supported by current application!'), 'warning');
 			}
@@ -130,13 +130,13 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 				{
 					case 'prefs':
 						query.menuaction ='preferences.preferences_settings.index';
-						if ($j.inArray(current_app, apps) != -1) query.appname=current_app;
+						if (jQuery.inArray(current_app, apps) != -1) query.appname=current_app;
 						egw.open_link(egw.link(url, query), '_blank', '900x450');
 						break;
 
 					case 'acl':
 						query.menuaction='preferences.preferences_acl.index';
-						if ($j.inArray(current_app, apps) != -1) query.acl_app=current_app;
+						if (jQuery.inArray(current_app, apps) != -1) query.acl_app=current_app;
 						egw.open_link(egw.link(url, query), '_blank', '900x450');
 						break;
 

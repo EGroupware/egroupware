@@ -33,7 +33,7 @@ var et2_dataview_row = (function(){ "use strict"; return et2_dataview_container.
 		this._super(_parent);
 
 		// Create the outer "tr" tag and append it to the container
-		this.tr = $j(document.createElement("tr"));
+		this.tr = jQuery(document.createElement("tr"));
 		this.appendNode(this.tr);
 
 		// Grid row which gets expanded when clicking on the corresponding
@@ -65,7 +65,7 @@ var et2_dataview_row = (function(){ "use strict"; return et2_dataview_container.
 			// Create the tr and the button if this has not been done yet
 			if (!this.expansionButton)
 			{
-				this.expansionButton = $j(document.createElement("span"));
+				this.expansionButton = jQuery(document.createElement("span"));
 				this.expansionButton.addClass("arrow closed");
 			}
 
@@ -76,7 +76,7 @@ var et2_dataview_row = (function(){ "use strict"; return et2_dataview_container.
 					e.stopImmediatePropagation();
 			});
 
-			$j("td:first", this.tr).prepend(this.expansionButton);
+			jQuery("td:first", this.tr).prepend(this.expansionButton);
 		}
 		else
 		{
@@ -157,7 +157,7 @@ var et2_dataview_row = (function(){ "use strict"; return et2_dataview_container.
 
 		// Toggle the visibility of the expansion tr
 		this.expansionVisible = !this.expansionVisible;
-		$j(this.expansionContainer._nodes[0]).toggle(this.expansionVisible);
+		jQuery(this.expansionContainer._nodes[0]).toggle(this.expansionVisible);
 
 		// Set the class of the arrow
 		if (this.expansionVisible)
@@ -183,7 +183,7 @@ var et2_dataview_row = (function(){ "use strict"; return et2_dataview_container.
 		    && this.expansionContainer.implements(et2_dataview_IViewRange))
 		{
 			// Substract the height of the own row from the container
-			var oh = $j(this._nodes[0]).height();
+			var oh = jQuery(this._nodes[0]).height();
 			_range.top -= oh;
 
 			// Proxy the setViewRange call to the expansion container

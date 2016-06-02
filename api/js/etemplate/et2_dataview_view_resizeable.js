@@ -54,14 +54,14 @@
 			}
 
 			// Indicate resizing is in progress
-			$j(_outerElem).addClass('egwResizing');
+			jQuery(_outerElem).addClass('egwResizing');
 
 			// Reset the "didResize" flag
 			didResize = false;
 
 			// Create the resize helper
 			var left = _elem.offset().left;
-			helper = $j(document.createElement("div"))
+			helper = jQuery(document.createElement("div"))
 				.addClass("egwResizeHelper")
 				.appendTo("body")
 				.css("top", _elem.offset().top + "px")
@@ -69,7 +69,7 @@
 				.css("height", _outerElem.outerHeight(true) + "px");
 
 			// Create the overlay which will be catching the mouse movements
-			overlay = $j(document.createElement("div"))
+			overlay = jQuery(document.createElement("div"))
 				.addClass("egwResizeOverlay")
 
 				.bind("mousemove", function(e) {
@@ -99,7 +99,7 @@
 	function stopResize(_outerElem)
 	{
 
-		$j(_outerElem).removeClass('egwResizing');
+		jQuery(_outerElem).removeClass('egwResizing');
 		if (helper != null)
 		{
 			helper.remove();
