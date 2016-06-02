@@ -1448,20 +1448,35 @@ class Mail
 				$_headerObject = $headersNew->get($id);
 				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_headerObject));
 				$headerObject = array();
+				$bodyPreview = null;
 				$uid = $headerObject['UID']= ($_headerObject->getUid()?$_headerObject->getUid():$id);
 				$headerObject['MSG_NUM'] = $_headerObject->getSeq();
 				$headerObject['SIZE'] = $_headerObject->getSize();
 				$headerObject['INTERNALDATE'] = $_headerObject->getImapDate();
 
 				// Get already cached headers, 'fetchHeaders' is a label matchimg above
-				$headerForPrio = array_change_key_case($_headerObject->getHeaders('fetchHeaders',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray(), CASE_UPPER);
+				$headerForPrio = $_headerObject->getHeaders('fetchHeaders',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray();
 				// Try to fetch header with key='' as some servers might have no fetchHeaders index. e.g. yandex.com
-				if (empty($headerForPrio)) $headerForPrio = array_change_key_case($_headerObject->getHeaders('',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray(), CASE_UPPER);
+				if (empty($headerForPrio)) $headerForPrio = $_headerObject->getHeaders('',Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray();
+				//fetch the fullMsg part if all conditions match to be available in case $_headerObject->getHeaders returns
+				//nothing worthwhile (as it does for googlemail accounts, when preview is switched on
+				if ($_fetchPreviews)
+				{
+					// on enabled preview $bodyPreview is needed lateron. fetched here, for fallback-reasons
+					// in case of failed Header-Retrieval
+					$bodyPreview = $_headerObject->getFullMsg();
+					if (empty($headerForPrio)||(is_array($headerForPrio)&&count($headerForPrio)===1&&$headerForPrio['']))
+					{
+						$length = strpos($bodyPreview, Horde_Mime_Part::RFC_EOL.Horde_Mime_Part::RFC_EOL);
+						if ($length===false) $length = strlen($bodyPreview);
+						$headerForPrio =  Horde_Mime_Headers::parseHeaders(substr($bodyPreview, 0,$length))->toArray();
+					}
+				}
+				$headerForPrio = array_change_key_case($headerForPrio, CASE_UPPER);
 				if (self::$debug) {
 					error_log(__METHOD__.' ('.__LINE__.') '.array2string($_headerObject).'UID:'.$_headerObject->getUid().' Size:'.$_headerObject->getSize().' Date:'.$_headerObject->getImapDate().'/'.DateTime::to($_headerObject->getImapDate(),'Y-m-d H:i:s'));
 					error_log(__METHOD__.' ('.__LINE__.') '.array2string($headerForPrio));
 				}
-
 				// message deleted from server but cache still reporting its existence ; may happen on QRESYNC with No permanent modsequences
 				if (empty($headerForPrio))
 				{
@@ -1517,7 +1532,9 @@ class Mail
 				// existance (and the details) for attachments)
 				if ($_fetchPreviews)
 				{
-					$bodyPreview = $_headerObject->getFullMsg();
+					// $bodyPreview is populated at the beginning of the loop, as it may be
+					// needed to parse the Headers of the Message
+					if (empty($bodyPreview)) $bodyPreview = $_headerObject->getFullMsg();
 					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($bodyPreview));
 					$base = Horde_Mime_Part::parseMessage($bodyPreview);
 					foreach($base->partIterator() as $part)
