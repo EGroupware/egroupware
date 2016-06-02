@@ -508,10 +508,9 @@ function do_editchangelog()
 	}
 	// query changelog per repo
 	$changelog = '';
-	$last_tag = null;
+	$last_tag = $revision = null;
 	foreach($config['modules'] as $branch_url => $modules)
 	{
-		$revision = null;
 		if (substr($branch_url, -4) == '.git')
 		{
 			list($path) = each($modules);
@@ -579,7 +578,7 @@ function get_changelog_from_svn($branch_url, $log_pattern=null, &$revision=null,
 		list($tags_url,$branch) = preg_split('#/(branches/|trunk)#',$branch_url);
 		if (empty($branch)) $branch = $config['version'];
 		$tags_url .= '/tags';
-		$pattern='/tags\/('.preg_quote($config['version'], '/').'\.[0-9.]+)/';
+		$pattern='|/tags/('.preg_quote($config['version'], '|').'\.[0-9.]+)|';
 		$matches = null;
 		$revision = get_last_svn_tag($tags_url,$pattern,$matches);
 		$tag = $matches[1];
@@ -656,7 +655,7 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 {
 	global $verbose,$svn;
 
-	$cmd = $svn.' log --xml --limit 40 '.escapeshellarg($tags_url);
+	$cmd = $svn.' log --xml --limit 40 -v '.escapeshellarg($tags_url);
 	if (($v = $verbose))
 	{
 		echo "Querying SVN for last tags\n$cmd\n";
@@ -671,8 +670,8 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 	foreach($xml as $log)
 	{
 		//print_r($log);
-		if ($pattern[0] != '/' && strpos($log->msg,$pattern) !== false ||
-			$pattern[0] == '/' && preg_match($pattern,$log->msg,$matches))
+		if ($pattern[0] != '/' && strpos($log->paths->path, $pattern) !== false ||
+			$pattern[0] == '/' && preg_match($pattern, $log->paths->path, $matches))
 		{
 			if ($verbose) echo "Revision {$log['revision']} matches".($matches?': '.$matches[1] : '')."\n";
 			return (int)$log['revision'];
