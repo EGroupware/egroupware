@@ -1,15 +1,12 @@
 {
-	"config": {
-		"secure-http": false
-	},
 	"repositories": [
-		{
+	{
             "type": "pear",
             "url": "https://pear.php.net"
-		},
+	},
         {
             "type": "pear",
-            "url": "http://pear.horde.org"
+            "url": "https://pear.horde.org"
         }
     ],
 	"require": {
