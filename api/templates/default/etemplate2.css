@@ -1510,7 +1510,7 @@ div.message.floating {
   height: 9px;
   display: inline-block;
   padding: 0px 4px;
-  margin: 0px 5px;
+  margin: -2px 5px;
   /* TODO: This is template specific */
   background-image: url(images/bullet.png);
 }
@@ -1531,7 +1531,7 @@ div.message.floating {
   position: relative;
   float: left;
   display: inline-block;
-  margin: -3px 1px 0px 1px;
+  margin: -2px 1px 0px 1px;
 }
 .sidebox-favorites .favorites div.ui-icon-trash {
   margin-top: -5px;
