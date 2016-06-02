@@ -192,15 +192,9 @@ class mail_tree
 
 		try
 		{
-			// User defined folders based on account
-			$definedFolders = array(
-				'Trash'     => $this->ui->mail_bo->getTrashFolder(false),
-				'Templates' => $this->ui->mail_bo->getTemplateFolder(false),
-				'Drafts'    => $this->ui->mail_bo->getDraftFolder(false),
-				'Sent'      => $this->ui->mail_bo->getSentFolder(false),
-				'Junk'      => $this->ui->mail_bo->getJunkFolder(false),
-				'Outbox'    => $this->ui->mail_bo->getOutboxFolder(false),
-			);
+			// *** Note: Should not apply any imap transaction, because in case of exception it will stop the
+			// process of rendering root node
+
 			if ($_parent && !self::isAccountNode($_parent)) // Single node loader
 			{
 				$nodeInfo = self::pathToFolderData($_parent, $hDelimiter);
@@ -241,6 +235,16 @@ class mail_tree
 
 				//List of folders
 				$foldersList = $this->ui->mail_bo->getFolderArrays(null, true, $_allInOneGo?0:2,$_subscribedOnly, true);
+
+				// User defined folders based on account
+				$definedFolders = array(
+					'Trash'     => $this->ui->mail_bo->getTrashFolder(false),
+					'Templates' => $this->ui->mail_bo->getTemplateFolder(false),
+					'Drafts'    => $this->ui->mail_bo->getDraftFolder(false),
+					'Sent'      => $this->ui->mail_bo->getSentFolder(false),
+					'Junk'      => $this->ui->mail_bo->getJunkFolder(false),
+					'Outbox'    => $this->ui->mail_bo->getOutboxFolder(false),
+				);
 				foreach ($foldersList as &$folder)
 				{
 					$path = $parent = $parts = explode($folder['delimiter'], $folder['MAILBOX']);
@@ -505,7 +509,7 @@ class mail_tree
 		{
 			if ($account[tree::ID] == $_profileID)
 			{
-				$account = $branches;
+				array_merge($account , $branches);
 			}
 		}
 		return $tree;
