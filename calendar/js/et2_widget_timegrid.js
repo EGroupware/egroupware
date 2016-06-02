@@ -1076,7 +1076,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				else
 				{
 					timegrid.iterateOver(function(col) {
-						if(col.div.has(timegrid.gridHover).length)
+						// Check scroll section or header section
+						if(col.div.has(timegrid.gridHover).length || col.header.has(timegrid.gridHover).length)
 						{
 							owner_match = owner_match || col.options.owner.indexOf(id) !== -1;
 						}
