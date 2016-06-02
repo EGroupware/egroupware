@@ -244,7 +244,7 @@ function get_modules_per_repo()
 		}
 		elseif (isset($module) && preg_match('/^checkout\s*=\s*(git\s+clone\s+(-b\s+[0-9.]+\s+)?((git|http)[^ ]+)|svn\s+checkout\s+((svn|http)[^ ]+))/', $line, $matches))
 		{
-			$repo = $url = substr($matches[1], 0, 3) == 'svn' ? $matches[4] : $matches[3];
+			$repo = $url = substr($matches[1], 0, 3) == 'svn' ? $matches[5] : $matches[3];
 			if (substr($matches[1], 0, 3) == 'svn') $repo = preg_replace('#/(trunk|branches)/.*$#', '', $repo);
 			$modules[$repo][$config['aliasdir'].($module ? '/'.$module : '')] = $url;
 			if ($module === '' && !isset($baseurl)) $baseurl = str_replace('/egroupware.git', '', $url);
@@ -513,9 +513,10 @@ function do_editchangelog()
 	}
 	// query changelog per repo
 	$changelog = '';
-	$last_tag = $revision = null;
+	$last_tag = null;
 	foreach($config['modules'] as $branch_url => $modules)
 	{
+		$revision = null;
 		if (substr($branch_url, -4) == '.git')
 		{
 			list($path) = each($modules);
