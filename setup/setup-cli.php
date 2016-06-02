@@ -1,4 +1,4 @@
-#!/usr/bin/php -qC
+#!/usr/bin/env php -qC
 <?php
 /**
  * Setup - Command line interface
