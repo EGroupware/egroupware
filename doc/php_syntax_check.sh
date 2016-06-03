@@ -9,13 +9,16 @@
 cd `dirname $0`
 cd ..
 
-# exclude old / not used PEAR Autoloader giving PHP Fatal error:  Method PEAR_Autoloader::__call() must take exactly 2 arguments
-# exclude composer conditional included autoload_static.php, as it requires PHP 5.6+
-
-find ${@-.} -name '*.php' \
-	-a ! -path '*vendor/pear-pear.php.net/PEAR/PEAR/Autoloader.php' \
-	-a ! -path '*vendor/composer/autoload_static.php' \
-	-exec php -l {} \; 2>&1 | \
-	#grep -v 'No syntax errors detected in' | \
+find ${@-.} -name '*.php' -exec php -l {} \; 2>&1 | \
+	# only show errors and PHP Deprecated, no success messages
 	egrep '^(PHP|Parse error)' | \
-	perl -pe 'END { exit $status } $status=1 if /^(PHP Fatal|(PHP )?Parse error)/;'
+	# output everything to stderr
+	tee /dev/fd/2 | \
+	# exclude several known problems, to be able to find new ones
+	# exclude old / not used PEAR Autoloader giving PHP Fatal error:  Method PEAR_Autoloader::__call() must take exactly 2 arguments
+	grep -v 'vendor/pear-pear.php.net/PEAR/PEAR/Autoloader.php' | \
+	# exclude composer conditional included autoload_static.php, as it requires PHP 5.6+
+	grep -v 'vendor/composer/autoload_static.php' | \
+	# phpFreeChat does not work with PHP7
+	grep -v 'phpfreechat/phpfreechat/' | \
+	perl -pe 'END { exit $status } $status=1 if /^(PHP Fatal|(PHP )?Parse error)/;'  > /dev/null
