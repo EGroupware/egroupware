@@ -1,4 +1,4 @@
-egroupware-epl (14.3.20160525) hardy; urgency=low
+egroupware-epl (16.1.20160603) hardy; urgency=low
 
   * 1. public release candidate 16.1RC1
   * Calendar: complete rewrite of user interface for improved functionality, drag&drop, context menu
@@ -11,12 +11,6 @@ egroupware-epl (14.3.20160525) hardy; urgency=low
   * SambaAdmin: fix long timeouts and warnings by NOT running hooks, if LDAP is not used for accounts or authentication
 
  -- Ralf Becker <rb@stylite.de>  Fri, 03 Jun 2016 09:48:30 +0200
-
-egroupware-epl (14.3.20160525) hardy; urgency=low
-
-  * first 16.1 testbuild
-
- -- Ralf Becker <rb@stylite.de>  Wed, 25 May 2016 17:02:15 +0200
 
 egroupware-epl (14.3.20160525) hardy; urgency=low
 
