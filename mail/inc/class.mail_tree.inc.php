@@ -509,7 +509,7 @@ class mail_tree
 		{
 			if ($account[tree::ID] == $_profileID)
 			{
-				array_merge($account , $branches);
+				$account = array_merge($account , $branches);
 			}
 		}
 		return $tree;
