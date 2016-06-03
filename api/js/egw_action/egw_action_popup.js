@@ -516,7 +516,7 @@ function egwPopupActionImplementation()
 						}
 						item.set_groupIndex(link.actionObj.radioGroup);
 
-						if (link.actionObj.shortcut)
+						if (link.actionObj.shortcut && !egwIsMobile())
 						{
 							var sc = link.actionObj.shortcut;
 							item.set_shortcutCaption(sc.caption);
