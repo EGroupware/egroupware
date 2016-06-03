@@ -11,7 +11,6 @@ matrix:
   fast_finish: true
   allow_failures:
     - php: hhvm
-    - php: 7
 
 #env:
   #matrix:
@@ -28,11 +27,9 @@ before_script:
   # - mysql -e 'create database egroupware'
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   #- composer update --prefer-source $LOWEST_DEPS
-  # remove certain files failing php syntax checks in PHP 7.0
-  - phpenv version-name | grep "PHP 7" && rm -f phpgwapi/inc/horde/Horde/String.php || true
 
 script:
-  - find . -name "*.php" | xargs -n1 php -l
+  - ./doc/php_syntax_check.sh
   #- ./vendor/bin/sabre-cs-fixer fix . --dry-run --diff
 
 cache:
