@@ -116,6 +116,11 @@ class setup_detection
 			unset($e);
 			// ignore db errors
 		}
+		// remove emailadmin, if it is not already installed, it exists only to allow to update to from versions before 16.1
+		if (isset($setup_info['emailadmin']) && empty($setup_info['emailadmin']['currentver']))
+		{
+			unset($setup_info['emailadmin']);
+		}
 		// _debug_array($setup_info);
 		return $setup_info;
 	}

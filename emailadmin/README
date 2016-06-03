@@ -1,0 +1,1 @@
+EMailAdmin directory only exists in 16.1+ to allow updating from previous versions, without loosing email configuration.

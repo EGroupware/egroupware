@@ -91,6 +91,8 @@ class setup_process
 			{
 				$pass['phpgwapi'] = $setup_info['phpgwapi'];
 			}
+			// ignore emailadmin, it's only there for updates
+			unset($setup_info['emailadmin']);
 		}
 		$pass['admin']    = $setup_info['admin'];
 		$pass['preferences'] = $setup_info['preferences'];
