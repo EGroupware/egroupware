@@ -3191,7 +3191,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					var buttons = jQuery('#calendar-sidebox_date .ui-datepicker-header a span');
 					if(today.length && go_button.length)
 					{
-						go_button.position({my: 'left+15px center', at: 'right center-1',of: jQuery('#calendar-sidebox_date .ui-datepicker-year')});
+						go_button.position({my: 'left+8px center', at: 'right center-1',of: jQuery('#calendar-sidebox_date .ui-datepicker-year')});
 						today.css({
 							'left': (buttons.first().offset().left + buttons.last().offset().left)/2 - Math.ceil(today.outerWidth(true)/2),
 							'top': go_button.css('top')
@@ -3493,7 +3493,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			jQuery(e.target).off(e);
 
 			if(!time) return;
-			
+
 			// If the autorefresh time is up, bind once to trigger a refresh
 			// (if needed) when tab is activated again
 			this._autorefresh_timer = setTimeout(jQuery.proxy(function() {
