@@ -1,5 +1,19 @@
 egroupware-epl (14.3.20160525) hardy; urgency=low
 
+  * 1. public release candidate 16.1RC1
+  * Calendar: complete rewrite of user interface for improved functionality, drag&drop, context menu
+  * Mobile: new mobile phone and tablet user interface offering compact display for mobile phones
+  * Desktop: new brighter desktop template, lots of work on usebility and look & feel
+  * Mail/InfoLog: PGP end-to-end encryption using Mailvelope plugin (InfoLog requires EPL subscription)
+  * eSync: update to Z-Push 2.3 fixing several Android problems
+  * All apps: many improvments and updates
+  * Admin/Mail: fix admin editing (personal) mail account of other user destroys password, because it was encrypted with users session password and therefore not available
+  * SambaAdmin: fix long timeouts and warnings by NOT running hooks, if LDAP is not used for accounts or authentication
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 03 Jun 2016 09:48:30 +0200
+
+egroupware-epl (14.3.20160525) hardy; urgency=low
+
   * first 16.1 testbuild
 
  -- Ralf Becker <rb@stylite.de>  Wed, 25 May 2016 17:02:15 +0200
