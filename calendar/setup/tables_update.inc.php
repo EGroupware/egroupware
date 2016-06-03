@@ -2434,14 +2434,9 @@ WHERE recur_type=5 AND cal.range_end IS NOT NULL AND ABS(cal.cal_modified-$value
  */
 function calendar_upgrade14_2_002()
 {
-	$GLOBALS['egw_setup']->db->update('egw_cal_holidays', array(
-		'hol_mday' => 26,
-		'hol_month_num' => 5
-	), array(
-		'hol_locale' => 'DE',
-		'hol_name' => 'Fronleichnam',
-		'hol_occurence' => 2016,
-	), __LINE__, __FILE__, 'calendar');
+	$GLOBALS['egw_setup']->db->query("UPDATE egw_cal_holidays SET hol_mday=26,hol_month_num=5".
+		" WHERE hol_locale='DE' AND hol_name='Fronleichnam' AND hol_occurence=2016",
+		__LINE__, __FILE__, 'calendar');
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '14.2.003';
 }
@@ -2732,6 +2727,6 @@ function calendar_upgrade16_1_001()
 
 	Api\Preferences::change_preference('calendar', 'defaultresource_sel', 'resources', 'addressbook', 'forced');
 	Api\Preferences::change_preference('calendar', 'defaultresource_sel', 'resources', 'addressbook', 'default');
-	
+
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1.002';
 }
