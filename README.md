@@ -1,5 +1,7 @@
 # EGroupware
-[![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=14.2)](https://travis-ci.org/EGroupware/egroupware)
+| Build | Composer |
+| ----- | -------- |
+| [![Build Status](https://travis-ci.org/EGroupware/egroupware.svg?branch=14.2)](https://travis-ci.org/EGroupware/egroupware) | [![Dependency Status](https://www.versioneye.com/user/projects/57527e0c7757a0003bd4aecb/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57527e0c7757a0003bd4aecb) |
 ### Default and prefered installation method for EGroupware is via your package manager:
 
   https://software.opensuse.org/download.html?project=server%3AeGroupWare&package=egroupware-epl
