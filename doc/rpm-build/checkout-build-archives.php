@@ -56,7 +56,7 @@ $config = array(
 	'editor' => trim(`which vi`),
 	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
 	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs' : '',
-	'after-checkout' => 'rm -rf */source */templates/*/source pixelegg/content-element-library',
+	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@stylite.de',
 	'obs' => '/home/stylite/obs/stylite-epl-trunk',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
@@ -85,6 +85,10 @@ while(($arg = array_shift($argv)))
 	}
 	elseif($arg == '-h' || $arg == '--help')
 	{
+		if (in_array('editchangelog', $config['skip']) || !in_array('editchangelog', $config['run']))
+		{
+			$config['changelog'] = parse_current_changelog(true);
+		}
 		usage();
 	}
 	elseif(substr($arg,0,2) == '--' && isset($config[$name=substr($arg,2)]))
@@ -96,17 +100,33 @@ while(($arg = array_shift($argv)))
 			case 'types':
 			case 'skip':
 			case 'run':
-				if ($value[0] == '+')
+			case 'types':
+			case 'add-all':
+			case 'modules':
+				$op = '=';
+				if (in_array($value[0], array('+', '-')))
 				{
-					$config[$name] = array_unique(array_merge($config[$name],preg_split('/[ ,]+/',substr($value,1))));
+					$op = $value[0];
+					$value = substr($value, 1);
 				}
-				elseif ($value[0] == '-')
+				if (in_array($value[0], array('[', '{')) && ($json = json_decode($value, true)))
 				{
-					$config[$name] = array_diff($config[$name],preg_split('/[ ,]+/',substr($value,1)));
+					$value = $json;
 				}
 				else
 				{
-					$config[$name] = array_unique(preg_split('/[ ,]+/',$value));
+					$value = array_unique(preg_split('/[ ,]+/', $value));
+				}
+				switch($op)
+				{
+					case '+':
+						$config[$name] = array_unique(array_merge($config[$name], $value));
+						break;
+					case '-':
+						$config[$name] = array_diff($config[$name], $value);
+						break;
+					default:
+						$config[$name] = $value;
 				}
 				break;
 
@@ -145,12 +165,18 @@ while(($arg = array_shift($argv)))
 }
 if ($verbose > 1)
 {
-	echo "Using following config:\n";
-	print_r($config);
+	echo "Using following config:\n".json_encode($config, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES)."\n\n";
 }
 $svn = $config['svn'];
 
-foreach(array_diff($config['run'],$config['skip']) as $func)
+$run = array_diff($config['run'],$config['skip']);
+
+// if we dont edit the changelog, set packaging from changelog
+if (!in_array('editchangelog', $run))
+{
+	parse_current_changelog(true);
+}
+foreach($run as $func)
 {
 	chdir(dirname(__FILE__));	// make relative filenames work, if other command changes dir
 	call_user_func('do_'.$func);
@@ -778,18 +804,25 @@ function do_obs($only_update_changelog=false)
 /**
  * Parse current changelog from debian.changes file
  *
+ * @param boolean $set_packaging =false true: set packaging from last changelog entry
  * @return string changelog entries without header and footer lines
  */
-function parse_current_changelog()
+function parse_current_changelog($set_packaging=false)
 {
 	global $config;
 
 	$changelog = file_get_contents($config['checkoutdir'].'/doc/rpm-build/debian.changes');
 	$lines = explode("\n", $changelog, 100);
+	$matches = null;
 	foreach($lines as $n => $line)
 	{
-		if (preg_match($preg='/^'.preg_quote($config['packagename']).' \('.preg_quote($config['version'].'.'.$config['packaging']).'/', $line))
+		if (preg_match($preg='/^'.preg_quote($config['packagename']).' \('.preg_quote($config['version']).'\.'.
+			($set_packaging ? '([0-9]+)' : preg_quote($config['packaging'])).'/', $line, $matches))
 		{
+			if ($set_packaging)
+			{
+				$config['packaging'] = $matches[1];
+			}
 			$n += empty($lines[$n+1]) ? 2 : 1;	// overead empty line behind header
 			$logentry = '';
 			while($lines[$n])	// entry is terminated by empty line
@@ -1262,14 +1295,21 @@ function array2string($var)
  */
 function usage($error=null)
 {
-	global $prog,$config;
+	global $prog,$config,$verbose;
 
 	echo "Usage: $prog [-h|--help] [-v|--verbose] [options, ...]\n\n";
 	echo "options and their defaults:\n";
-	unset($config['modules']);	// they give an error, because of nested array and are quite lengthy
+	if ($verbose)
+	{
+		if (!isset($config['modules'])) $config['modules'] = get_modules_per_repo();
+	}
+	else
+	{
+		unset($config['modules']);	// they give an error, because of nested array and are quite lengthy
+	}
 	foreach($config as $name => $default)
 	{
-		if (is_array($default)) $default = implode(' ',$default);
+		if (is_array($default)) $default = json_encode ($default, JSON_UNESCAPED_SLASHES);
 		echo '--'.str_pad($name,20).$default."\n";
 	}
 	if ($error)
