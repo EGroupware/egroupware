@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 16.1.20160525
+Version: 16.1.20160603
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -11,6 +11,7 @@ Prefix: /usr/share
 %define egwdir %{prefix}/egroupware
 %define egwdatadir /var/lib/egroupware
 %define egw_packagename eGroupware
+%define egwdirname %{name}
 #
 # Define opensuse_version to tell opensuse 11.1 (1110) from sles11 (1110) and suse 10.1 from sles 10
 %if "0%{?suse_version:1}%{!?sles_version:0}" == "010"
@@ -376,6 +377,8 @@ Summary: The EGroupware chat application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-compat >= %{version}
+# phpFreeChat does NOT work with php7
+Requires: %{php} < 7.0.0
 Obsoletes: %{egw_packagename}-phpfreechat
 %description phpfreechat
 Chat with other EGroupware users. A port of phpFreeChat for EGroupware.
@@ -589,6 +592,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/admin
 %{egwdir}/api
 %{egwdir}/doc
+%{egwdir}/emailadmin
 %{egwdir}/files
 %{egwdir}/home
 %{egwdir}/pixelegg

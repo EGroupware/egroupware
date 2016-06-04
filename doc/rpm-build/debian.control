@@ -126,8 +126,9 @@ Description: web-based groupware suite - esync application
 
 Package: egroupware-epl-phpfreechat
 Architecture: all
+# phpFreeChat does NOT work with php7 (called php or php7 again, not php5!)
 Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-compat (>= ${binary:Version}),
- ${misc:Depends}
+ ${misc:Depends}, php5 (>= 5.3.0)
 Replaces: egroupware-phpfreechat
 Conflicts: egroupware-phpfreechat
 Description: web-based groupware suite - chat application

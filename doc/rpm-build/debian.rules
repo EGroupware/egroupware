@@ -45,7 +45,7 @@ install: build
 
 	# install core modules
 
-	for DIR in api admin home preferences addressbook setup doc pixelegg; do \
+	for DIR in api admin home emailadmin preferences addressbook setup doc pixelegg; do \
 	  cd $(CURDIR)/$${DIR}; \
 	  find $(FINDOPT) $(APPFILES) \
 	    -exec $(INSTALL) {} $(CURDIR)/$(COREDIR)/$${DIR}/{} \; ; \
