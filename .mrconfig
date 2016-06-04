@@ -32,47 +32,47 @@ update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null
 ###
 [activesync]
 # synchronise mobile phone via Z-Push and ActiveSync protocoll
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/activesync.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/activesync.git
 
 [tracker]
 # tracking or helpdesk application
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/tracker.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/tracker.git
 
 [projectmanager]
 # projectmanagement and Ganttcharts
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/projectmanager.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/projectmanager.git
 
 [bookmarks]
 # record and share bookmarks
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/bookmarks.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/bookmarks.git
 
 [news_admin]
 # publish and agregate RSS or ATOM feeds
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/news_admin.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/news_admin.git
 
 [registration]
 # allows (after configuration!) to selfregister accounts and recover lost passwords
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/registration.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/registration.git
 
 [phpbrain]
 # knowledge base
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/phpbrain.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpbrain.git
 
 [wiki]
 # wiki application
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/wiki.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/wiki.git
 
 [sambaadmin]
 # keeps passwords in sync with Samba3 using same LDAP as EGroupware (for Samba4 use Active Directory)
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/sambaadmin.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/sambaadmin.git
 
 [sitemgr]
 # content managment application
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/sitemgr.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/sitemgr.git
 
 [phpfreechat]
 # chat application
-checkout = git clone -b 14.2 $(git config --get remote.origin.url|sed 's|/egroupware.git||')/phpfreechat.git
+checkout = git clone -b 14.2 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpfreechat.git
 chain = true
 
 ###
