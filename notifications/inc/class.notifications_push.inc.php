@@ -110,10 +110,13 @@ class notifications_push implements Json\PushBackend
 	 */
 	protected static function cleanup_push_msgs()
 	{
-		self::$db->delete(self::TABLE, array(
-			'notify_type' => self::TYPE,
-			'notify_created < '.self::$db->from_unixtime(Api\Session::heartbeat_limit()),
-		), __LINE__, __FILE__, self::APP);
+		if (($ts = self::$db->from_unixtime(Api\Session::heartbeat_limit())))
+		{
+			self::$db->delete(self::TABLE, array(
+				'notify_type' => self::TYPE,
+				'notify_created < '.$ts,
+			), __LINE__, __FILE__, self::APP);
+		}
 	}
 
 	/**
