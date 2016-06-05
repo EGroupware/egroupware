@@ -79,8 +79,7 @@ function temp_dir($settings)
 
 function files_dir($settings)
 {
-	if ($settings['file_repository'] == 'sql' && $settings['file_store_contents'] == 'filesystem' &&
-		!setup_detection::check_dir($settings['files_dir'],$error_msg,true))
+	if (!setup_detection::check_dir($settings['files_dir'],$error_msg,true))
 	{
 		$GLOBALS['config_error'] = lang("Your files directory '%1' %2",$settings['files_dir'],$error_msg);
 	}
@@ -88,7 +87,7 @@ function files_dir($settings)
 
 function backup_dir(&$settings)
 {
-	if (@is_writeable($settings['files_dir']) && !$settings['backup_dir'] && $settings['file_store_contents'] == 'filesystem')
+	if (@is_writeable($settings['files_dir']) && empty($settings['backup_dir']))
 	{
 		$settings['backup_dir'] = $settings['files_dir'].'/db_backup';
 	}
