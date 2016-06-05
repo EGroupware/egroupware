@@ -88,14 +88,14 @@ class Hooks
 
 			try {
 				$account = new Account($params);
-				if ($account->acc_smtp_type != 'emailadmin_smtp' && ($smtp = $account->smtpServer(true)) &&
-					is_a($smtp, 'emailadmin_smtp') && get_class($smtp) != 'emailadmin_smtp')
+				if ($account->acc_smtp_type != __NAMESPACE__.'\\Smtp' && ($smtp = $account->smtpServer(true)) &&
+					is_a($smtp, __NAMESPACE__.'\\Smtp') && get_class($smtp) != __NAMESPACE__.'\\Smtp')
 				{
 					$smtp->$method($data);
 				}
-				if ($account->acc_imap_type != 'emailadmin_imap' && $account->acc_imap_admin_username &&
+				if ($account->acc_imap_type != __NAMESPACE__.'\\Imap' && $account->acc_imap_admin_username &&
 					$account->acc_imap_admin_password && ($imap = $account->imapServer(true)) &&
-					is_a($imap, 'emailadmin_imap') && get_class($imap) != 'emailadmin_imap')
+					is_a($imap, __NAMESPACE__.'\\Imap') && get_class($imap) != __NAMESPACE__.'\\Imap')
 				{
 					$imap->$method($data);
 				}
