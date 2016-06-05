@@ -404,14 +404,12 @@ class setup_detection
 			$config_errors[] = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
 		}
 
-		if ((!isset($config['file_repository']) || $config['file_repository'] == 'sql') &&
-			(!isset($config['file_store_contents']) || $config['file_store_contents'] == 'filesystem') &&
-			!$this->check_dir($config['files_dir'],$error_msg,true))
+		if (!$this->check_dir($config['files_dir'],$error_msg,true))
 		{
 			$config_errors[] = lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
 		}
 		// set and create the default backup_dir
-		if (@is_writeable($config['files_dir']) && !$config['backup_dir'] && $config['file_store_contents'] == 'filesystem')
+		if (@is_writeable($config['files_dir']) && empty($config['backup_dir']))
 		{
 			$config['backup_dir'] = $config['files_dir'].'/db_backup';
 			if (!is_dir($config['backup_dir']) && mkdir($config['backup_dir']))
