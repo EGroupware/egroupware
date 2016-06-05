@@ -479,7 +479,7 @@ else
 						if ($value['tables'] && $GLOBALS['egw_setup']->detection->check_app_tables($value['name'],True))
 						{
 							// Some tables missing
-							$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+							$setup_tpl->set_var('remove',$key == 'api' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 							$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&badinstall=True">' . lang('Potential Problem') . '</a>');
 							$status = lang('Requires reinstall or manual repair') . ' - ' . $value['status'];
 						}
@@ -503,7 +503,7 @@ else
 						$setup_tpl->set_var('install','&nbsp;');
 						// TODO display some info about breakage if you mess with this app
 						$setup_tpl->set_var('upgrade','<input type="checkbox" name="upgrade[' . $value['name'] . ']" />');
-						$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+						$setup_tpl->set_var('remove',$key == 'api' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 						$setup_tpl->set_var('resolution','');
 						$status = lang('Requires upgrade') . ' - ' . $value['status'];
 					}
@@ -512,7 +512,7 @@ else
 					$setup_tpl->set_var('instimg','incomplete.png');
 					$setup_tpl->set_var('instalt',lang('Not Completed'));
 					$setup_tpl->set_var('install','&nbsp;');
-					$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+					$setup_tpl->set_var('remove',$key == 'api' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 					if ($value['version'] == 'deleted')
 					{
 						$setup_tpl->set_var('bg_color','CCAAAA');
@@ -536,7 +536,7 @@ else
 					$setup_tpl->set_var('install','&nbsp;');
 					if ($values['currentver'])
 					{
-						$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+						$setup_tpl->set_var('remove',$key == 'api' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 						$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '">' . lang('Possible Solutions') . '</a>');
 					}
 					else
