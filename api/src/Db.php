@@ -298,7 +298,7 @@ class Db
 	 * @throws Db\Exception\Connection
 	 * @return ADOConnection
 	 */
-	function connect($Database = NULL, $Host = NULL, $Port = NULL, $User = NULL, $Password = NULL,$Type = NULL)
+	function connect($Database = NULL, $Host = NULL, $Port = NULL, $User = NULL, $Password = NULL, $Type = NULL)
 	{
 		/* Handle defaults */
 		if (!is_null($Database) && $Database)
@@ -347,7 +347,7 @@ class Db
 				return $this->Link_ID;
 			}
 			catch(Db\Exception\Connection $e) {
-				_egw_log_exception($e);
+				//_egw_log_exception($e);
 				$this->disconnect();	// force a new connect
 				$this->Type = $this->setupType;	// get set to "mysql" for "mysqli"
 				$use_host_from_session = false;	// re-try with next host from list
