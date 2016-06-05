@@ -365,7 +365,7 @@ class egw_db
 				return $this->Link_ID;
 			}
 			catch(egw_exception_db_connection $e) {
-				_egw_log_exception($e);
+				//_egw_log_exception($e);
 				$this->disconnect();	// force a new connect
 				$this->Type = $this->setupType;	// get set to "mysql" for "mysqli"
 				$use_host_from_session = false;	// re-try with next host from list
