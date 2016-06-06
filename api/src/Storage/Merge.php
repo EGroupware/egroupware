@@ -229,7 +229,12 @@ abstract class Merge
 				case 'bday':
 					if ($value)
 					{
-						$value = Api\DateTime::to($value, true);
+						try {
+							$value = Api\DateTime::to($value, true);
+						}
+						catch (Exception $e) {
+							unset($e);	// ignore exception caused by wrongly formatted date
+						}
 					}
 					break;
 				case 'owner': case 'creator': case 'modifier':
