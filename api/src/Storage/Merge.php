@@ -232,7 +232,7 @@ abstract class Merge
 						try {
 							$value = Api\DateTime::to($value, true);
 						}
-						catch (Exception $e) {
+						catch (\Exception $e) {
 							unset($e);	// ignore exception caused by wrongly formatted date
 						}
 					}
@@ -1280,7 +1280,7 @@ abstract class Merge
 								Api\DateTime::$user_timezone
 							);
 							if($date) break;
-						} catch (Exception $e) {
+						} catch (\Exception $e) {
 
 						}
 					}
@@ -1630,7 +1630,7 @@ abstract class Merge
 			{
 				$this->apply_styles($merged, $mimetype);
 			}
-			catch (Exception $e)
+			catch (\Exception $e)
 			{
 				// Error converting HTML styles over
 				error_log($e->getMessage());
