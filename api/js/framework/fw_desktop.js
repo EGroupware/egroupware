@@ -9,7 +9,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	vendor.bower-asset.jquery.dist.jquery;
 	framework.fw_base;
 	framework.fw_browser;
 	framework.fw_ui;

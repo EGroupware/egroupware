@@ -13,7 +13,7 @@
 /*egw:uses
 	egw_action.egw_action_common;
 	egw_action.egw_action;
-	/api/js/jquery/TouchSwipe/jquery.touchSwipe.js;
+	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
 */
 
 /**

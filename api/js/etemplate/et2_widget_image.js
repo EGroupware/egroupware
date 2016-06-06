@@ -11,7 +11,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	/vendor/bower-asset/jquery/dist/jquery.js;
 	et2_core_interfaces;
 	et2_core_baseWidget;
 	expose;

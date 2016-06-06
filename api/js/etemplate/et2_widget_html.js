@@ -12,7 +12,7 @@
 
 /*egw:uses
 	jsapi.jsapi; // Needed for egw_seperateJavaScript
-	jquery.jquery;
+	/vendor/bower-asset/jquery/dist/jquery.js;
 	et2_core_baseWidget;
 */
 

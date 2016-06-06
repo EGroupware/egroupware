@@ -10,7 +10,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	vendor.bower-asset.jquery.dist.jquery;
 	egw_action;
 */
 
@@ -143,7 +143,7 @@ function _egw_nodeIsInInput(_node)
 }
 
 /**
- * Register the onkeypress handler on the document 
+ * Register the onkeypress handler on the document
  */
 jQuery(document).ready(function() {
 
@@ -197,7 +197,7 @@ jQuery(window).on("contextmenu",document, function(event) {
  */
 function egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt)
 {
-	return "_" + _keyCode + "_" + 
+	return "_" + _keyCode + "_" +
 		(_shift ? "S" : "") +
 		(_ctrl ? "C" : "") +
 		(_alt ? "A" : "");
@@ -262,7 +262,7 @@ function egw_keyHandler(_keyCode, _shift, _ctrl, _alt) {
 		var result = shortcut.handler.call(shortcut.context, shortcut.shortcut);
 		if(result) return result;
 	}
-	
+
 	// Pass the keypress to the currently focused action object
 
 	// Get the object manager and fetch the container of the currently

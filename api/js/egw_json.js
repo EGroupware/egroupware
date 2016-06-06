@@ -11,7 +11,7 @@
 
 /*egw:uses
 	jsapi.jsapi; // Contains some helper functions
-	jquery.jquery; // Used for the ajax requests
+	vendor.bower-asset.jquery.dist.jquery; // Used for the ajax requests
 */
 
 /* The egw_json_request is the javaScript side implementation of class.egw_json.inc.php.*/

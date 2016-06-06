@@ -11,7 +11,7 @@
  */
 
 /*egw:uses
-        jquery.jquery;
+    /vendor/bower-asset/jquery/dist/jquery.js;
 	jquery.splitter;
         et2_core_baseWidget;
 */

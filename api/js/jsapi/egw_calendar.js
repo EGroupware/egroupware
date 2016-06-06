@@ -11,7 +11,7 @@
  */
 
 /*egw:uses
-	jquery.jquery-ui;
+	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 	jquery.jquery-ui-timepicker-addon;
 
 	egw_core;

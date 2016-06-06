@@ -11,8 +11,8 @@
  */
 
 /*egw:uses
-	jquery.jquery;
-	jquery.jquery-ui;
+	/vendor/bower-asset/jquery/dist/jquery.js;
+	/vendor/bower-asset/jquery-ui/jquery-ui.js;
 	lib/jsdifflib/difflib;
 	lib/jsdifflib/diffview;
 	et2_core_valueWidget;

@@ -7,7 +7,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	vendor.bower-asset.jquery.dist.jquery;
 	egw_action.egw_action_common;
 	egw_inheritance.js;
 */

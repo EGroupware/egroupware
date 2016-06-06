@@ -42,7 +42,7 @@ class WidgetBrowser
 
 		// Include the jQuery-UI CSS - many more complex widgets use it
 		$theme = 'redmond';
-		Api\Framework::includeCSS("/api/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
+		Api\Framework::includeCSS("/vendor/bower-asset/jquery-ui/themes/$theme/jquery-ui-1.10.3.custom.css");
 
 		Api\Framework::includeCSS('/api/templates/default/etemplate2.css');
 

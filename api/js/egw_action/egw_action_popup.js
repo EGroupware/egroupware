@@ -10,7 +10,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	vendor.bower-asset.jquery.dist.jquery;
 	egw_menu;
 	/api/js/jquery/jquery-tap-and-hold/jquery.tapandhold.js;
 */
@@ -268,7 +268,7 @@ function egwPopupActionImplementation()
 		var contextHandler = function(e) {
 			if(egwIsMobile())
 			{
-				if (e.originalEvent.which == 3)
+				if (e.which == 3)
 				{
 					// Enable onhold trigger till we define a better handler for tree contextmenu
 				//	return;

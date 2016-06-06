@@ -10,9 +10,9 @@
  */
 
 /*egw:uses
-	jquery.jquery;
-	jquery.jquery-ui;
-	/api/js/jquery/gridster/jquery.gridster.js;
+	/vendor/bower-asset/jquery/dist/jquery.js;
+	/vendor/bower-asset/jquery-ui/jquery-ui.js;
+	/vendor/npm-asset/gridster/dist/jquery.gridster.js;
 */
 
 /**

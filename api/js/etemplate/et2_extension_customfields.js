@@ -12,7 +12,7 @@
 
 /*egw:uses
 	lib/tooltip;
-	jquery.jquery;
+	/vendor/bower-asset/jquery/dist/jquery.js;
 	et2_core_xml;
 	et2_core_DOMWidget;
 	et2_core_inputWidget;

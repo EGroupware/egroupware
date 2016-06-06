@@ -11,7 +11,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	/vendor/bower-asset/jquery/dist/jquery.js;
 	lib/tooltip;
 	et2_core_DOMWidget;
 */

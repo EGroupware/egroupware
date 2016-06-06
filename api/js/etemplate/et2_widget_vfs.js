@@ -11,7 +11,7 @@
 */
 
 /*egw:uses
-	jquery.jquery;
+	/vendor/bower-asset/jquery/dist/jquery.js;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
 	et2_widget_description;

@@ -8,7 +8,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	vendor.bower-asset.jquery.dist.jquery;
 	/api/js/jquery/mousewheel/mousewheel.js;
 	egw_inheritance.js;
 */

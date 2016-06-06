@@ -12,7 +12,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	/vendor/bower-asset/jquery/dist/jquery.js;
 	/api/js/jquery/chosen/chosen.jquery.js;
 	et2_core_xml;
 	et2_core_DOMWidget;
@@ -565,7 +565,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 	 */
 	find_multi_option: function(_value)
 	{
-		return jQuery("input[value='"+ 
+		return jQuery("input[value='"+
 			(typeof _value === 'string' ? _value.replace(this._escape_value_replace, this._escape_value_with) : _value)+
 			"']", this.multiOptions
 		);
@@ -836,7 +836,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			return this._super.apply(this, arguments);
 		}
 	},
-	
+
 	/**
 	 * override set disabled for tags as the tags using
 	 * chosen dom and need to be treated different

@@ -9,7 +9,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	/vendor/bower-asset/jquery/dist/jquery.js;
 	framework.fw_desktop;
 	/pixelegg/js/slider.js;
 */

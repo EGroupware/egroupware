@@ -41,7 +41,7 @@ class home_ui
 		self::setup_default_home();
 
 		// CSS for Gridster grid layout
-		Framework::includeCSS('/api/js/jquery/gridster/jquery.gridster.css');
+		Framework::includeCSS('/vendor/npm-asset/gridster/dist/jquery.gridster.css');
 
 		$template = new Etemplate('home.index');
 

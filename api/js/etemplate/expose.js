@@ -11,7 +11,7 @@
  */
 
 /*egw:uses
-	jquery.jquery;
+	/vendor/bower-asset/jquery/dist/jquery.js;
 	/api/js/jquery/blueimp/js/blueimp-gallery.min.js;
 */
 

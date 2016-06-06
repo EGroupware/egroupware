@@ -55,7 +55,7 @@ class Bundle
 			{
 				// to facilitate move to new api/et2 location, can be removed after 16.1 release
 				if ($name == 'et21' && !in_array('/api/js/etemplate/etemplate2.js', $files) ||
-					$name == 'api' && !in_array('/api/js/jquery/jquery.js', $files))
+					$name == 'api' && !in_array('/vendor/bower-asset/jquery/dist/jquery.js', $files))
 				{
 					Cache::unsetTree(__CLASS__, 'bundles');
 					return self::js_includes($js_includes);
@@ -213,8 +213,8 @@ class Bundle
 		$max_mod = array();
 
 		// generate api bundle
-		$inc_mgr->include_js_file('/api/js/jquery/jquery.js');
-		$inc_mgr->include_js_file('/api/js/jquery/jquery-ui.js');
+		$inc_mgr->include_js_file('/vendor/bower-asset/jquery/dist/jquery.js');
+		$inc_mgr->include_js_file('/vendor/bower-asset/jquery-ui/jquery-ui.js');
 		$inc_mgr->include_js_file('/api/js/jsapi/jsapi.js');
 		$inc_mgr->include_js_file('/api/js/egw_json.js');
 		$inc_mgr->include_js_file('/api/js/jsapi/egw.js');

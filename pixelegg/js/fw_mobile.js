@@ -8,9 +8,9 @@
 
 
 /*egw:uses
-	jquery.jquery;
-	/api/js/jquery/TouchSwipe/jquery.touchSwipe.js;
-	/api/js/jquery/fastclick/lib/fastclick.js;
+	/vendor/bower-asset/jquery/dist/jquery.js;
+	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
+	/vendor/bower-asset/fastclick/lib/fastclick.js;
 	framework.fw_base;
 	framework.fw_browser;
 	framework.fw_ui;
