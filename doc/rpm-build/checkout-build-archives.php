@@ -65,6 +65,8 @@ $config = array(
 	'editchangelog' => '* ',
 	//'sfuser' => 'ralfbecker',
 	//'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
+	// what gets uploaded with upload
+	'upload' => '$sourcedir/*egroupware-epl{,-contrib}-$version.$packaging*',
 	'copychangelog' => '$sourcedir/README', //'$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/README',
 	'skip' => array(),
 	'run' => array('checkout','editchangelog','tag','copy','virusscan','create','sign','obs','copychangelog'),
@@ -382,9 +384,26 @@ function do_release()
 		'body' => $config['changelog'],
 	);
 	$response = github_api("/repos/EGroupware/egroupware/releases", $data);
-	$upload_url = preg_replace('/{\?[^}]+}$/', '', $response['upload_url']);	// remove {?name,label} template
+	$config['upload_url'] = preg_replace('/{\?[^}]+}$/', '', $response['upload_url']);	// remove {?name,label} template
 
-	$archives = $config['sourcedir'].'/*egroupware-epl{,-contrib}-'.$config['version'].'.'.$config['packaging'].'*';
+	do_upload();
+}
+
+/**
+ * Upload archives
+ */
+function do_upload()
+{
+	global $config,$verbose;
+
+	if (empty($config['upload_url']))
+	{
+		$response = github_api("/repos/EGroupware/egroupware/releases", array(), 'GET');
+		$config['upload_url'] = preg_replace('/{\?[^}]+}$/', '', $response[0]['upload_url']);	// remove {?name,label} template
+	}
+
+	$archives = config_translate('upload');
+	echo "Uploading $archives\n";
 
 	foreach(glob($archives) as $path)
 	{
@@ -410,8 +429,9 @@ function do_release()
 		{
 			continue;
 		}
+		if ($verbose) echo "Uploading $path as $content_type\n";
 		$name = basename($path);
-		github_api($upload_url, array(
+		github_api($config['upload_url'], array(
 			'name' => $name,
 			'label' => isset($label) ? $label : $name,
 		), 'FILE', $path, $content_type);
