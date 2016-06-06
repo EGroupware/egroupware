@@ -318,7 +318,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param array|boolean $start =false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function propfind_callback($path,array $filter,$start=false)
+	function &propfind_callback($path,array $filter,$start=false)
 	{
 		if ($this->debug) $starttime = microtime(true);
 
