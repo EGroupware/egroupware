@@ -403,9 +403,9 @@ function do_upload()
 	}
 
 	$archives = config_translate('upload');
-	echo "Uploading $archives\n";
+	echo "Uploading $archives to $config[upload_url]\n";
 
-	foreach(glob($archives) as $path)
+	foreach(glob($archives, GLOB_BRACE) as $path)
 	{
 		$label = null;
 		if (substr($path, -4) == '.zip')
