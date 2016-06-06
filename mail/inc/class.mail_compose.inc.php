@@ -664,7 +664,8 @@ class mail_compose
 				$_htmlConfig = Mail::$htmLawed_config;
 				Mail::$htmLawed_config['comment'] = 2;
 				Mail::$htmLawed_config['transform_anchor'] = false;
-				$oldSigTextCleaned = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,null,array(),true):$oldSigText));
+				$oldSigTextCleaned = str_replace(array("\r", "\t", "<br />\n", ": "), array("", "", "<br />", ":"),
+					$_currentMode == 'html' ? Api\Html::purify($oldSigText, null, array(), true) : $oldSigText);
 				//error_log(__METHOD__.'Old(clean):'.$oldSigTextCleaned.'#');
 				if ($_currentMode == 'html')
 				{
@@ -672,7 +673,8 @@ class mail_compose
 					$styles = Mail::getStyles(array(array('body'=>$content['body'])));
 					if (stripos($content['body'],'style')!==false) Api\Mail\Html::replaceTagsCompletley($content['body'],'style',$endtag='',true); // clean out empty or pagewide style definitions / left over tags
 				}
-				$content['body'] = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($content['body'],Mail::$htmLawed_config,array(),true):$content['body']));
+				$content['body'] = str_replace(array("\r", "\t", "<br />\n", ": "), array("", "", "<br />", ":"),
+					$_currentMode == 'html' ? Api\Html::purify($content['body'], Mail::$htmLawed_config, array(), true) : $content['body']);
 				Mail::$htmLawed_config = $_htmlConfig;
 				if ($_currentMode == 'html')
 				{
