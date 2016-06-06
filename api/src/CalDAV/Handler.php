@@ -152,12 +152,11 @@ abstract class Handler
 	 * @param string $path
 	 * @param array $filter
 	 * @param array|boolean $start false=return all or array(start,num)
-	 * @param int &$total
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function &propfind_callback($path, array $filter,$start,&$total)
+	function &propfind_callback($path, array $filter, $start)
 	{
-		unset($path, $filter, $start, $total);	// not used, but required by function signature
+		unset($path, $filter, $start);	// not used, but required by function signature
 	}
 
 	/**
