@@ -45,7 +45,7 @@ class Hooks
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
 		// create a user-dir
 		Api\Vfs::$is_root = true;
-		if (Api\Vfs::mkdir($dir='/home/'.$data['account_lid'],0700,0))
+		if (Api\Vfs::file_exists($dir='/home/'.$data['account_lid']) || Api\Vfs::mkdir($dir, 0700, 0))
 		{
 			Api\Vfs::chown($dir,$data['account_id']);
 			Api\Vfs::chgrp($dir,0);
@@ -124,7 +124,7 @@ class Hooks
 
 		// create a group-dir
 		Api\Vfs::$is_root = true;
-		if (Api\Vfs::mkdir($dir='/home/'.$data['account_lid'],0070,0))
+		if (Api\Vfs::file_exists($dir='/home/'.$data['account_lid']) || Api\Vfs::mkdir($dir, 0070, 0))
 		{
 			Api\Vfs::chown($dir,0);
 			Api\Vfs::chgrp($dir,abs($data['account_id']));	// gid in Vfs is positiv!
