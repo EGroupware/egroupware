@@ -335,20 +335,10 @@ class importexport_definitions_ui
 		$bodefinitions = new importexport_definitions_bo(false, true);
 
 		switch($action) {
-			case 'execute':
-				// There's probably a way to do this in just JS, all the info should be there...
-				foreach($selected as $id) {
-					$definition = $bodefinitions->read((int)$id);
-					$link = Egw::link('/index.php', array(
-						'menuaction' => 'importexport.importexport_'.$definition['type'].'_ui.'.$definition['type'].'_dialog',
-						'appname' => $definition['application'],
-						'definition' => $definition['name']
-					));
-					Framework::set_onload("egw_openWindowCentered2('$link','_blank',850,440,'yes');");
-				}
-				break;
 			case 'allowed':
-				$action = 'allowed_users';// Field is allowed_users, popup doesn't like _
+				// Field is allowed_users, popup doesn't like _
+				$action = 'allowed_users';
+				// Fall through
 			case 'owner':
 				$action_msg = lang('changed'. ' ' . $action);
 				foreach($selected as $id) {
