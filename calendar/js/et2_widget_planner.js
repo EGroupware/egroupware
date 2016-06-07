@@ -923,15 +923,16 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			var title = this.egw().lang(date('F',new Date(t.valueOf() + t.getTimezoneOffset() * 60 * 1000)));
 			if (days_in_month > 10)
 			{
-				title += ' '+t.getUTCFullYear();
+				title += '</span> <span class="et2_clickable et2_link" data-sortby="month">'+t.getUTCFullYear();
 			}
 			else if (days_in_month < 5)
 			{
 				title = '&nbsp;';
 			}
-			content += '<div class="calendar_plannerMonthScale et2_clickable et2_link" data-date="'+first.toJSON()+ '" data-planner_view="month' +
-				'" style="left: '+left+'%; width: '+(day_width*days_in_month)+'%;">'+
-				title+"</div>";
+			content += '<div class="calendar_plannerMonthScale" data-date="'+first.toJSON()+
+				'" style="left: '+left+'%; width: '+(day_width*days_in_month)+'%;"><span'+
+				' data-planner_view="month" class="et2_clickable et2_link">'+
+				title+"</span></div>";
 		}
 		content += "</div>";		// end of plannerScale
 
