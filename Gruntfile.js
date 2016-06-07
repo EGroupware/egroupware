@@ -132,7 +132,6 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_entry.js",
 						"api/js/etemplate/et2_widget_textbox.js",
 						"api/js/etemplate/et2_widget_number.js",
-						"api/js/jquery/jquery.base64.js",
 						"api/js/etemplate/et2_widget_url.js",
 						"api/js/etemplate/et2_widget_selectbox.js",
 						"api/js/etemplate/et2_widget_checkbox.js",
@@ -153,7 +152,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_dataview_interfaces.js",
 						"api/js/etemplate/et2_dataview_view_container.js",
 						"api/js/etemplate/et2_dataview_view_row.js",
-						"/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js",
+						"vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js",
 						"api/js/etemplate/et2_dataview_view_aoi.js",
 						"api/js/etemplate/et2_dataview_controller_selection.js",
 						"api/js/etemplate/et2_dataview_controller.js",
@@ -234,7 +233,7 @@ module.exports = function (grunt) {
 			mobile: {
 				files: {
 					"pixelegg/js/fw_mobile.min.js": [
-						"/vendor/bower-asset/fastclick/lib/fastclick.js",
+						"vendor/bower-asset/fastclick/lib/fastclick.js",
 						"api/js/framework/fw_base.js",
 						"api/js/framework/fw_browser.js",
 						"api/js/jquery/mousewheel/mousewheel.js",
