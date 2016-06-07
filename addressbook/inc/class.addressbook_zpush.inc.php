@@ -185,7 +185,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 				'parent'=>	'0',
 			);
 		}
-		//debugLog(__METHOD__."() returning ".array2string($folderlist));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() returning ".array2string($folderlist));
 		//error_log(__METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
 	}
@@ -219,7 +219,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		if (is_null($folderObj->displayname))
 		{
 			$folderObj = false;
-			debugLog(__METHOD__."($id) returning ".array2string($folderObj));
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($id) returning ".array2string($folderObj));
 		}
 */
 		//error_log(__METHOD__."('$id') returning ".array2string($folderObj));
@@ -254,11 +254,11 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		if (is_null($stat['mod']))
 		{
 			$stat = false;
-			debugLog(__METHOD__."('$id') ".function_backtrace());
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$id') ".function_backtrace());
 		}
 */
 		//error_log(__METHOD__."('$id') returning ".array2string($stat));
-		debugLog(__METHOD__."('$id') returning ".array2string($stat));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$id') returning ".array2string($stat));
 		return $stat;
 	}
 
@@ -337,7 +337,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		//$truncsize = Utils::GetTruncSize($contentparameters->GetTruncation());
 		//$mimesupport = $contentparameters->GetMimeSupport();
 		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
-		//debugLog (__METHOD__."('$folderid', $id, ...) truncsize=$truncsize, mimesupport=$mimesupport, bodypreference=".array2string($bodypreference));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, ...) truncsize=$truncsize, mimesupport=$mimesupport, bodypreference=".array2string($bodypreference));
 
 		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
@@ -456,7 +456,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 				'flags' => 1,
 			);
 		}
-		//debugLog (__METHOD__."('$folderid',".array2string($id).") returning ".array2string($stat));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',".array2string($id).") returning ".array2string($stat));
 		//error_log(__METHOD__."('$folderid',$contact) returning ".array2string($stat));
 		return $stat;
 	}
@@ -475,7 +475,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
 		unset($id, $oldid, $displayname, $type);	// not used, but required by function signature
-		debugLog(__METHOD__." not implemented");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__." not implemented");
 	}
 
 	/**
@@ -491,7 +491,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	public function DeleteFolder($parentid, $id)
 	{
 		unset($parentid, $id);
-		debugLog(__METHOD__." not implemented");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__." not implemented");
 	}
 
 	/**
@@ -528,12 +528,12 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		// error_log(__METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
 		if ($type != 'addressbook') // || !($contact = $this->addressbook->read($id)))
 		{
-			debugLog(__METHOD__." Folder wrong or contact not existing");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__." Folder wrong or contact not existing");
 			return false;
 		}
 		if ($account == 0)	// as a precausion, we currently do NOT allow to change Api\Accounts
 		{
-			debugLog(__METHOD__." Changing of Api\Accounts denied!");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__." Changing of Api\Accounts denied!");
 			return false;			//no changing of Api\Accounts
 		}
 		$contact = array();
@@ -585,7 +585,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 						}
 						else
 						{
-							debugLog(__METHOD__. " Warning : php-imap not available");
+							ZLog::Write(LOGLEVEL_DEBUG, __METHOD__. " Warning : php-imap not available");
 							$contact[$attr] = $message->$key;
 						}
 						break;
@@ -624,7 +624,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 			//error_log(__METHOD__."($folderid,$id) contact=".array2string($contact)." returning ".array2string($newid));
 			return $this->StatMessage($folderid, $newid);
 		}
-		debugLog(__METHOD__."($folderid, $id) returning false: Permission denied");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid, $id) returning false: Permission denied");
 		return false;
 	}
 
@@ -649,10 +649,10 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		unset($contentParameters);	// not used, but required by function signature
 		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
 		{
-			debugLog(__METHOD__."('$folderid', $id, $newfolderid) NOT allowed for an all-in-one addressbook --> returning false");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, $newfolderid) NOT allowed for an all-in-one addressbook --> returning false");
 			return false;
 		}
-		debugLog(__METHOD__."('$folderid', $id, $newfolderid) NOT implemented --> returning false");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, $newfolderid) NOT implemented --> returning false");
 		return false;
 	}
 
@@ -677,7 +677,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
 		$ret = $this->addressbook->delete($id);
-		debugLog(__METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
 		return $ret;
 	}
 

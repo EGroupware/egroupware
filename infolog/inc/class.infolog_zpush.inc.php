@@ -100,7 +100,7 @@ class infolog_zpush implements activesync_plugin_write
 				'parent'=>	'0',
 			);
 		}
-		//debugLog(__METHOD__."() returning ".array2string($folderlist));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
 	}
 
@@ -133,10 +133,10 @@ class infolog_zpush implements activesync_plugin_write
 		if (is_null($folderObj->displayname))
 		{
 			$folderObj = false;
-			debugLog(__METHOD__."($id) returning ".array2string($folderObj));
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($id) returning ".array2string($folderObj));
 		}
 */
-		//debugLog(__METHOD__."('$id') returning ".array2string($folderObj));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$id') returning ".array2string($folderObj));
 		return $folderObj;
 	}
 
@@ -168,11 +168,11 @@ class infolog_zpush implements activesync_plugin_write
 		if (is_null($stat['mod']))
 		{
 			$stat = false;
-			debugLog(__METHOD__."('$id') ".function_backtrace());
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$id') ".function_backtrace());
 		}
 */
 		//error_log(__METHOD__."('$id') returning ".array2string($stat));
-		debugLog(__METHOD__."('$id') returning ".array2string($stat));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$id') returning ".array2string($stat));
 		return $stat;
 	}
 
@@ -239,7 +239,7 @@ class infolog_zpush implements activesync_plugin_write
 		$mimesupport = $contentparameters->GetMimeSupport();
 		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
-		debugLog (__METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
 		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
 		if ($type != 'infolog' || !($infolog = $this->infolog->read($id, true, 'server')))
@@ -263,7 +263,7 @@ class infolog_zpush implements activesync_plugin_write
 					{
 						if (strlen ($infolog[$attr]) > 0)
 						{
-							debugLog("airsyncbasebody!");
+							ZLog::Write(LOGLEVEL_DEBUG, "airsyncbasebody!");
 							$message->asbody = new SyncBaseBody();
 							$message->nativebodytype=1;
 							$this->backend->note2messagenote($infolog[$attr], $bodypreference, $message->asbody);
@@ -295,7 +295,7 @@ class infolog_zpush implements activesync_plugin_write
 					if (!empty($infolog[$attr])) $message->$key = $infolog[$attr];
 			}
 		}
-		//debugLog(__METHOD__."(folder='$folderid',$id,...) returning ".array2string($message));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."(folder='$folderid',$id,...) returning ".array2string($message));
 		return $message;
 	}
 
@@ -331,7 +331,7 @@ class infolog_zpush implements activesync_plugin_write
 				'flags' => 1,
 			);
 		}
-		//debugLog (__METHOD__."('$folderid',".array2string($id).") returning ".array2string($stat));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',".array2string($id).") returning ".array2string($stat));
 		//error_log(__METHOD__."('$folderid',$infolog) returning ".array2string($stat));
 		return $stat;
 	}
@@ -351,7 +351,7 @@ class infolog_zpush implements activesync_plugin_write
 	{
 		unset($id, $oldid, $displayname, $type);	// not used
 
-		debugLog(__METHOD__." not implemented");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__." not implemented");
 	}
 
 	/**
@@ -368,7 +368,7 @@ class infolog_zpush implements activesync_plugin_write
 	{
 		unset($parentid, $id);	// not used
 
-		debugLog(__METHOD__." not implemented");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__." not implemented");
 	}
 
 	/**
@@ -394,10 +394,10 @@ class infolog_zpush implements activesync_plugin_write
 		unset($contentParameters); // not used but required
 		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
-		//debugLog(__METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
 		if ($type != 'infolog') // || !($infolog = $this->addressbook->read($id)))
 		{
-			debugLog(__METHOD__." Folder wrong or infolog not existing");
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__." Folder wrong or infolog not existing");
 			return false;
 		}
 		$infolog = array();
@@ -443,7 +443,7 @@ class infolog_zpush implements activesync_plugin_write
 			// $infolog['info_owner'] = $account;
 			if (!empty($id)) $infolog['info_id'] = $id;
 			$newid = $this->infolog->write($infolog);
-			debugLog(__METHOD__."($folderid,$id) infolog(".array2string($infolog).") returning ".array2string($newid));
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid,$id) infolog(".array2string($infolog).") returning ".array2string($newid));
 			return $this->StatMessage($folderid, $newid);
 		}
 		return false;
@@ -467,7 +467,7 @@ class infolog_zpush implements activesync_plugin_write
 	 */
 	public function MoveMessage($folderid, $id, $newfolderid, $contentParameters)
 	{
-		debugLog(__METHOD__."('$folderid', $id, $newfolderid, ".array2string($contentParameters).") NOT implemented --> returning false");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, $newfolderid, ".array2string($contentParameters).") NOT implemented --> returning false");
 		return false;
 	}
 
@@ -493,7 +493,7 @@ class infolog_zpush implements activesync_plugin_write
 		if (!isset($this->infolog)) $this->infolog = new infolog_bo();
 
 		$ret = $this->infolog->delete($id);
-		debugLog(__METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
 		return $ret;
 	}
 
@@ -574,7 +574,7 @@ class infolog_zpush implements activesync_plugin_write
 			$syncstate = $ctag;
 			$changes = array(array('type' => 'fakeChange'));
 		}
-		//debugLog(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
 		return $changes;
 	}
 
