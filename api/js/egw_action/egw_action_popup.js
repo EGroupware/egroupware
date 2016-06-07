@@ -268,7 +268,7 @@ function egwPopupActionImplementation()
 		var contextHandler = function(e) {
 			if(egwIsMobile())
 			{
-				if (e.which == 3)
+				if (e.originalEvent.which == 3)
 				{
 					// Enable onhold trigger till we define a better handler for tree contextmenu
 				//	return;
