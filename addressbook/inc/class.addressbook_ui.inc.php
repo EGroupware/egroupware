@@ -931,36 +931,6 @@ window.egw_LAB.wait(function() {
 		),'infolog');
 	}
 
-	function ajax_add_whole_list($list, $email_type = 'email')
-	{
-		$query = Api\Cache::getSession('addressbook', 'email');
-		$query['filter2'] = (int)$list;
-		$success = $failed = $action_msg = $msg = null;
-		$this->action($email_type,array(),true,$success,$failed,$action_msg,$query,$msg);
-
-		$response = Api\Json\Response::get();
-
-		if ($success) $response->addScript(Framework::set_onload(''));
-
-		// close window only if no errors AND something added
-		if ($failed || !$success)
-		{
-			if (!$msg) $msg = $failed ? lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed) :
-				lang('%1 contact(s) %2',$success,$action_msg);
-
-			$response->addScript("alert('".addslashes($msg)."')");
-			// reset the filter
-			$response->addScript("document.getElementById('exec[nm][filter2]').value='';");
-		}
-		else
-		{
-			if (!$msg) $msg = lang('%1 contact(s) %2',$success,$action_msg);
-			$response->addScript("alert('".addslashes($msg)."')");
-			$response->addScript('egw(window).close();');
-		}
-
-	}
-
 	/**
 	 * Create or rename an existing email list
 	 *

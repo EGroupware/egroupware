@@ -519,20 +519,6 @@ app.classes.addressbook = AppJS.extend(
 		egw.json('addressbook.addressbook_ui.ajax_check_values', [values, widget.id, own_id],this._confirmdialog_callback,this,true,this).sendRequest();
 	},
 
-	add_whole_list: function(list)
-	{
-		if (document.getElementById("exec[nm][email_type][email_home]").checked == true)
-		{
-			email_type = "email_home";
-		}
-		else
-		{
-			email_type = "email";
-		}
-		var request = new egw_json_request("addressbook.addressbook_ui.ajax_add_whole_list",list,email_type);
-		request.sendRequest(true);
-	},
-
 	show_custom_country: function(selectbox)
 	{
 		if(!selectbox) return;
@@ -649,19 +635,6 @@ app.classes.addressbook = AppJS.extend(
 		{
 			this.add_new_list(typeof widget == 'undefined' ? this.et2.getWidgetById('filter').value : widget.header.filter.get_value());
 			this.value='';
-		}
-	},
-
-	filter2_onchnage_email: function ()
-	{
-		this.form.submit();
-		if (this.value && confirm('Add emails of whole distribution list?'))
-		{
-			this.add_whole_list(this.value);
-		}
-		else
-		{
-			this.form.submit();
 		}
 	},
 
