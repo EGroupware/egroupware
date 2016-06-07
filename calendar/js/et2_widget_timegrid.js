@@ -1367,13 +1367,12 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 							if(timegrid.daily_owner)
 							{
 								timegrid.iterateOver(function(col) {
-									if(col.div.has(timegrid.gridHover).length)
+									if(col.div.has(timegrid.gridHover).length || col.header.has(timegrid.gridHover).length)
 									{
 										add_owner = col.options.owner;
 									}
 								}, this, et2_calendar_daycol);
 							}
-							debugger;
 							egw().json('calendar.calendar_uiforms.ajax_invite', [
 									button_id==='series' ? event_data.id : event_data.app_id,
 									add_owner,
