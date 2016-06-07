@@ -13,7 +13,7 @@
 /*egw:uses
 	et2_textbox;
 	et2_valueWidget;
-	phpgwapi.jquery.jquery.base64;
+	/api/js/jquery/jquery.base64.js;
 */
 
 /**

@@ -10,7 +10,7 @@
  */
 
 /*egw:uses
-	phpgwapi.jquery.jquery.base64;
+	/api/js/jquery/jquery.base64.js;
 */
 
 jQuery(function()
