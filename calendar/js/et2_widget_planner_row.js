@@ -136,7 +136,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		if(this._parent.options.group_by === 'month')
 		{
 			this.title.attr('data-date', this.options.start_date.toJSON());
-			this.title.attr('data-view', 'month');
+			this.title.attr('data-sortby', 'user');
 			this.title.addClass('et2_clickable et2_link');
 		}
 		else
