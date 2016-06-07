@@ -182,6 +182,7 @@ class Mail
 	 * @var array
 	 */
 	private static $instances = array();
+	private static $profileDefunct = array();
 
 	/**
 	 * Singleton for Mail
@@ -201,6 +202,10 @@ class Mail
 		if (is_null($_reuseCache)) $_reuseCache = $_restoreSession;
 		//error_log(__METHOD__.' ('.__LINE__.') '.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.'/'.Mail\Account::get_default_acc_id().' for user:'.$GLOBALS['egw_info']['user']['account_lid'].' called from:'.function_backtrace());
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_oldImapServerObject));
+		if (isset(self::$profileDefunct[$_profileID]) && self::$profileDefunct[$_profileID]===true)
+		{
+			throw new Exception(__METHOD__." failed to instanciate Mail for $_profileID / ".$this->profileID." with error:".$e->getMessage().($e->details?', '.$e->details:''));
+		}
 		if ($_oldImapServerObject instanceof Mail\Imap)
 		{
 			if (!is_object(self::$instances[$_profileID]))
@@ -277,7 +282,7 @@ class Mail
 				}
 				else
 				{
-					throw $e;
+					throw new Exception(__METHOD__." failed to load the Profile for ProfileID for $_profileID / ".$this->profileID." with error:".$e->getMessage().($e->details?', '.$e->details:''));
 				}
 			}
 			self::storeActiveProfileIDToPref(self::$instances[$_profileID]->icServer, $_profileID, $_validate );
@@ -409,7 +414,7 @@ class Mail
 		}
 		catch (\Exception $e)
 		{
-			throw new Exception(__METHOD__." failed to instanciate Mail for $_profileID / ".$this->profileID." with error:".$e->getMessage());;
+			throw new Exception(__METHOD__." failed to instanciate Mail for $_profileID / ".$this->profileID." with error:".$e->getMessage());
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($acc->imapServer()));
 		$this->icServer = ($_oldImapServerObject?$acc->oldImapServer():$acc->imapServer());
@@ -904,12 +909,30 @@ class Mail
 	{
 		static $quota;
 		if (isset($quota)) return $quota;
-		$this->icServer->getCurrentMailbox();
-		if(!$this->icServer->hasCapability('QUOTA')) {
-			$quota = false;
+		if (isset(self::$profileDefunct[$this->profileID]) && self::$profileDefunct[$this->profileID]===true)
+		{
+			// something is wrong. Do not proceed. either no folder or profile is marked as defunct for this request
 			return false;
 		}
-		$quota = $this->icServer->getStorageQuotaRoot('INBOX');
+		try
+		{
+			$this->icServer->getCurrentMailbox();
+			if(!$this->icServer->hasCapability('QUOTA')) {
+				$quota = false;
+				return false;
+			}
+			$quota = $this->icServer->getStorageQuotaRoot('INBOX');
+		}
+		catch (Exception $e)
+		{
+			//error_log(__METHOD__.array2string($e));
+			//error_log(__METHOD__." failed to fetch quota on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:'')/*.function_backtrace()*/);
+			if ($e->getCode()==102)
+			{
+				self::$profileDefunct[$this->profileID]=true;
+				throw new Exception(__METHOD__." failed to fetch quota on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:''));
+			}
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($quota));
 		if(is_array($quota)) {
 			$quota = array(
@@ -1024,6 +1047,7 @@ class Mail
 		}
 		catch(\Exception $e)
 		{
+			if ($e->getCode()==102) self::$profileDefunct[$this->profileID]=true;
 			unset($e);
 			$HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 		}
@@ -1110,7 +1134,7 @@ class Mail
 		}
 		catch (\Exception $e)
 		{
-			throw new Exception(__METHOD__.' ('.__LINE__.') '." failed for $folderName with error:".$e->getMessage());
+			throw new Exception(__METHOD__.' ('.__LINE__.') '." failed for $folderName with error:".$e->getMessage().($e->details?', '.$e->details:''));
 		}
 		return $folderStatus[$this->icServer->ImapServerId][$folderName];
 	}
@@ -1129,8 +1153,9 @@ class Mail
 	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true)
 	{
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '." called with:$_folderName,$ignoreStatusCache,$basicInfoOnly");
-		if (!is_string($_folderName) || empty($_folderName)) // something is wrong. Do not proceed
+		if (!is_string($_folderName) || empty($_folderName)||(isset(self::$profileDefunct[$this->profileID]) && self::$profileDefunct[$this->profileID]===true))
 		{
+			// something is wrong. Do not proceed. either no folder or profile is marked as defunct for this request
 			return false;
 		}
 		static $folderInfoCache = null; // reduce traffic on single request
@@ -1152,7 +1177,17 @@ class Mail
 		// does the folder exist???
 		if (is_null($folderInfoCache) || !isset($folderInfoCache[$_folderName]))
 		{
-			$ret = $this->icServer->getMailboxes($_folderName, 1, true);
+			try
+			{
+				$ret = $this->icServer->getMailboxes($_folderName, 1, true);
+			}
+			catch (\Exception $e)
+			{
+				//error_log(__METHOD__.array2string($e));
+				//error_log(__METHOD__." failed to fetch Mailbox $_folderName on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:'')/*.function_backtrace()*/);
+				self::$profileDefunct[$this->profileID]=true;
+				throw new Exception(__METHOD__." failed to fetch Mailbox $_folderName on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:''));
+			}
 			//error_log(__METHOD__.' ('.__LINE__.') '.$_folderName.' '.array2string($ret));
 			if (is_array($ret))
 			{
@@ -1173,6 +1208,10 @@ class Mail
 			}
 			catch (\Exception $e)
 			{
+				//error_log(__METHOD__.array2string($e));
+				error_log(__METHOD__." failed to fetch status for $_folderName on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:'')/*.function_backtrace()*/);
+				self::$profileDefunct[$this->profileID]=true;
+				//throw new Exception(__METHOD__." failed to fetch status for $_folderName on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:''));
 				$folderInfo=null;
 			}
 			if (!is_array($folderInfo))
@@ -3662,7 +3701,8 @@ class Mail
 		}
 		catch (\Exception $e)
 		{
-			//error_log(__METHOD__.__LINE__.$e->getMessage());
+			error_log(__METHOD__.__LINE__.$e->getMessage().($e->details?', '.$e->details:''));
+			self::$profileDefunct[$this->profileID]=true;
 			$folderInfo[$this->profileID][$_folder] = false;
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.' Folder Exists:'.$folderInfo[$this->profileID][$_folder].function_backtrace());

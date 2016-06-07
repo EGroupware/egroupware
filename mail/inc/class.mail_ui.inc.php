@@ -449,7 +449,17 @@ class mail_ui
 				// These must always be set, even if $content is an array
 				$content[self::$nm_index]['cat_is_select'] = true;    // Category select is just a normal selectbox
 				$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
-				$content[self::$nm_index]['actions'] = self::get_actions();
+				try
+				{
+					$content[self::$nm_index]['actions'] = self::get_actions();
+				}
+				catch (Exception $e)
+				{
+					// do not exit here. mail-tree should be build. if we exit here, we never get there
+					self::callWizard($e->getMessage().($e->details?', '.$e->details:''),false, 'error');
+					unset($e);
+					//return false;
+				}
 				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
 				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
@@ -752,7 +762,10 @@ class mail_ui
 		}
 		catch (Exception $e)
 		{
-			self::callWizard($e->getMessage(),true, 'error');
+			// do not exit here. mail-tree should be build. if we exit here, we never get there
+			error_log(__METHOD__.__LINE__.$e->getMessage().($e->details?', '.$e->details:''));
+			self::callWizard(__METHOD__.$e->getMessage().$e->getMessage().($e->details?', '.$e->details:''),false, 'error');
+			//return false;
 		}
 		// Check preview pane is enabled, then show spliter
 		if ($this->mail_bo->mailPreferences['previewPane']) $etpl->setElementAttribute('mail.index.spliter', 'template', 'mail.index.nospliter');
@@ -3485,7 +3498,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		//error_log(__METHOD__.__LINE__.array2string($_folder));
 		if ($_folder)
 		{
-			$this->mail_bo->getHierarchyDelimiter(false);
+			try
+			{
+				$this->mail_bo->getHierarchyDelimiter(false);
+			} catch (Exception $e)
+			{
+				continue;
+			}
 			$oA = array();
 			foreach ($_folder as $_folderName)
 			{
@@ -3495,7 +3514,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					if ($profileID != $this->mail_bo->profileID) continue; // only current connection
 					if ($folderName)
 					{
-						$fS = $this->mail_bo->getFolderStatus($folderName,false,false,false);
+						try
+						{
+							$fS = $this->mail_bo->getFolderStatus($folderName,false,false,false);
+						}
+						catch (Exception $e)
+						{
+							continue;
+						}
 						if (in_array($fS['shortDisplayName'],Mail::$autoFolders)) $fS['shortDisplayName']=lang($fS['shortDisplayName']);
 						//error_log(__METHOD__.__LINE__.array2string($fS));
 						if ($fS['unseen'])
@@ -4253,6 +4279,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		} catch (Exception $e) {
 			$quota['limit'] = 'NOT SET';
 			error_log(__METHOD__.__LINE__." ".$e->getMessage());
+			unset($e);
 		}
 
 		if($quota !== false && $quota['limit'] != 'NOT SET') {
