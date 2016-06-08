@@ -2663,6 +2663,14 @@ class calendar_uiforms extends calendar_ui
 		{
 			$duration=$event['end']-$event['start'];
 		}
+		// Drag a normal event to whole day non-blocking
+		else if ($durationT == 'whole_day')
+		{
+			$event['whole_day'] = true;
+			$event['non_blocking'] = true;
+			// Make duration whole days, less 1 second
+			$duration = round(($event['end']-$event['start'])/DAY_s) * DAY_s - 1;
+		}
 		else
 		{
 			$duration = (int)$durationT;
@@ -2742,12 +2750,6 @@ class calendar_uiforms extends calendar_ui
 
 			// Whole day non blocking with DAY_s would add a day
 			if($duration==DAY_s) $duration=0;
-		}
-		// Drag a normal event to whole day non-blocking
-		else if ($durationT == 'whole_day')
-		{
-			$event['whole_day'] = true;
-			$event['non_blocking'] = true;
 		}
 
 		$status_reset_to_unknown = false;

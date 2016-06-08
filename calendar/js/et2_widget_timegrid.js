@@ -476,8 +476,11 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					{
 						//Edit calendar event
 
-						// Duration - check for whole day dropped on a time, change it to full day
-						var duration = event_widget.options.value.whole_day && dropEnd.hour ? 86400-1 : false;
+						// Duration - check for whole day dropped on a time, change it to full days
+						var duration = event_widget.options.value.whole_day && dropEnd.hour ?
+							// Make duration whole days, less 1 second
+							(Math.round((event_widget.options.value.end - event_widget.options.value.start) / (1000 * 86400)) * 86400) -1 :
+							false;
 						// Event (whole day or not) dropped on whole day section, change to whole day non blocking
 						if(dropEnd.whole_day) duration = 'whole_day';
 
