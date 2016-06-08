@@ -800,7 +800,10 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 			{
 				if (this.managementArray[i].widget == _sender)
 				{
-					vis = !(this.managementArray[i].disabled);
+					vis = !(typeof this.managementArray[i].disabled === 'boolean' ?
+						this.managementArray[i].disabled :
+						this.getArrayMgr("content").parseBoolExpression(this.managementArray[i].disabled)
+					);
 					break;
 				}
 			}
