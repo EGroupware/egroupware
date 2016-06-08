@@ -190,15 +190,22 @@ class admin_asyncservice
 		echo $GLOBALS['egw']->framework->footer();
 	}
 
+	/**
+	 * Callback for test-job
+	 *
+	 * @param string $to email address to send mail to
+	 */
 	function test($to)
 	{
-		$returncode = $GLOBALS['egw']->send->msg('email',$to,$subject='Asynchronous timed services','Greetings from cron ;-)');
-
-		if (!$returncode)	// not nice, but better than failing silently
-		{
-			echo "<p>bocalendar::send_update: sending message to '$to' subject='$subject' failed !!!<br>\n";
-			echo $GLOBALS['egw']->send->err['desc']."</p>\n";
+		try {
+			$mail = new Api\Mailer();
+			$mail->setBody('Greetings from cron ;-)');
+			$mail->addHeader('Subject', 'Asynchronous timed services');
+			$mail->addAddress($to);
+			$mail->send();
 		}
-		//print_r($GLOBALS['egw_info']['user']);
+		catch (Exception $e) {
+			_egw_log_exception($e);
+		}
 	}
 }
