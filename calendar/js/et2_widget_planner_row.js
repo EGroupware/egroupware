@@ -108,10 +108,11 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		if (this._parent.options.group_by === 'month')
 		{
 			days = new Date(this.options.end_date.getUTCFullYear(),this.options.end_date.getUTCMonth()+1,0).getUTCDate();
+			
 			if(days < 31)
 			{
-				width = 100*days/31;
-				this.rows.css('width','calc('+width+'% - 162px)');
+				var diff = 31 - days;
+				width = 'calc('+(diff * 3.23) + '% - ' + (diff * 7) + 'px)';
 			}
 		}
 
@@ -125,7 +126,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		{
 			// add a filler for non existing days in that month
 			this.rows.after('<div class="calendar_eventRowsFiller"'+
-				' style="width:'+(99.5-width)+'%;" ></div>');
+				' style="width:'+width+';" ></div>');
 		}
 	},
 
@@ -191,7 +192,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 	 */
 	_yearlyPlannerMarkDays: function(start,days)
 	{
-		var day_width = 100/days;
+		var day_width = 3.23;
 		var t = new Date(start);
 		var content = '';
 		for(var i = 0; i < days;i++)
