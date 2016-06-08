@@ -70,7 +70,7 @@ if (!isset($GLOBALS['egw_domain'][$_REQUEST['domain']]) || empty($db_type))
 	die($msg);
 }
 
-include(EGW_API_INC.'/functions.inc.php');
+include(EGW_SERVER_ROOT.'/api/src/loader.php');
 
 $async = new Asyncservice();
 $num = $async->check_run(isset($_REQUEST['run_by']) ? $_REQUEST['run_by'] : 'crontab');
