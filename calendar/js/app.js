@@ -366,6 +366,15 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			delete q.ajax;
 			delete q.menuaction;
 			if(!view && q.view || q.view != view && view == 'index') view = q.view;
+			
+			// No specific view requested, looks like a reload from framework
+			if(this.sidebox_et2 && typeof view === 'undefined')
+			{
+				this._clear_cache();
+				this.setState({state: this.state});
+				return false;
+			}
+
 			if (this.sidebox_et2 && typeof app.classes.calendar.views[view] == 'undefined' && view != 'index')
 			{
 				if(q.owner)
