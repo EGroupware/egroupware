@@ -939,9 +939,12 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." bodypreference 4 requested");
 					$output->asbody->type = SYNC_BODYPREFERENCE_MIME;//4;
 					// use Api\Mailer::convert to convert charset of all text parts to utf-8, which is a z-push or AS requirement!
+					// ToDo: check if above is true for mime-message, otherwise with could use a stream without conversion
 					$Body = Api\Mailer::convert($this->mail->getMessageRawBody($id, '', $_folderName));
 					if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Body);
-					$output->asbody->data = $Body;
+					if ((string)$Body === '') $Body = ' ';
+					$output->asbody->data = StringStreamWrapper::Open($Body);
+					$output->asbody->estimatedDataSize = strlen($Body);
 				}
 				else if ($bpReturnType==2) //SYNC_BODYPREFERENCE_HTML
 				{
@@ -975,7 +978,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					}
 					// output->nativebodytype is used as marker that the original message was of type ... but is now converted to, as type 2 is requested.
 					$output->nativebodytype = 2;
-					$output->asbody->data = $htmlbody;
+					$output->asbody->data = StringStreamWrapper::Open($htmlbody);
+					$output->asbody->estimatedDataSize = strlen($htmlbody);
 				}
 				else
 				{
@@ -996,16 +1000,16 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						$plainBody = Utils::Utf8_truncate($plainBody, $truncsize);
 						$output->asbody->truncated = 1;
 					}
-					$output->asbody->data = $plainBody;
+					$output->asbody->data = StringStreamWrapper::Open((string)$plainBody !== '' ? $plainBody : ' ');
+					$output->asbody->estimatedDataSize = strlen($plainBody);
 				}
 				// In case we have nothing for the body, send at least a blank...
 				// dw2412 but only in case the body is not rtf!
-				if ($output->asbody->type != 3 && (!isset($output->asbody->data) || strlen($output->asbody->data) == 0))
+				if ($output->asbody->type != 3 && !isset($output->asbody->data))
 				{
-					$output->asbody->data = " ";
+					$output->asbody->data = StringStreamWrapper::Open(" ");
+					$output->asbody->estimatedDataSize = 1;
 				}
-				// determine estimated datasize for all the above cases ...
-				$output->asbody->estimatedDataSize = strlen($output->asbody->data);
 			}
 			// end AS12 Stuff
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' gather Header info:'.$headers['SUBJECT'].' from:'.$headers['DATE']);
