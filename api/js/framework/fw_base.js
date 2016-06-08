@@ -857,12 +857,16 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 	tzSelection: function(_tz)
 	{
 		//Perform an AJAX request to tell server
-		var req = egw.json('EGroupware\Api\Framework\Ajax::ajax_tz_selection',[_tz],null,null,false); // false = synchron
+		var req = egw.json('EGroupware\\Api\\Framework\\Ajax::ajax_tz_selection',[_tz],null,null,false); // false = synchron
 		req.sendRequest();
 
-		if (this.activeApp.browser)
+		// Reload apps so they can use the new setting
+		for (var app in this.applications)
 		{
-			this.activeApp.browser.reload();
+			if (this.applications[app].browser)
+			{
+				this.applications[app].browser.reload();
+			}
 		}
 	},
 

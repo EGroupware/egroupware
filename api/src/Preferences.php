@@ -521,20 +521,13 @@ class Preferences
 	 */
 	function check_set_tz_offset()
 	{
-		$prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
+		$prefs =& $this->data['common'];
 
 		if (!empty($prefs['tz']))
 		{
 			DateTime::setUserPrefs($prefs['tz'],$prefs['dateformat'],$prefs['timeformat']);
 			// set the old preference for compatibilty with old code
 			$prefs['tz_offset'] = DateTime::tz_offset_s()/3600;
-			//echo "<p>".__METHOD__."() tz=$prefs[tz] --> tz_offset=$prefs[tz_offset]</p>\n";
-
-			// ToDo: get rid of that
-			if (isset($GLOBALS['egw']) && ($GLOBALS['egw'] instanceof egw))
-			{
-				$GLOBALS['egw']->unset_datetime();	// to force an update
-			}
 		}
 	}
 
