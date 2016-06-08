@@ -3498,13 +3498,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		//error_log(__METHOD__.__LINE__.array2string($_folder));
 		if ($_folder)
 		{
-			try
-			{
-				$this->mail_bo->getHierarchyDelimiter(false);
-			} catch (Exception $e)
-			{
-				continue;
-			}
+			$this->mail_bo->getHierarchyDelimiter(false);
 			$oA = array();
 			foreach ($_folder as $_folderName)
 			{
