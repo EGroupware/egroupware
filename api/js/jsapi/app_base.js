@@ -926,7 +926,9 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			if(!favorite || jQuery.isEmptyObject(favorite)) return;
 
 			var match_count = 0;
-			var extra_keys = Object.keys(favorite.state);
+			var extra_keys = favorite.state ? 
+				Object.keys(favorite.state) : // New
+				Object.keys(favorite.filter); // Old
 			for(var state_key in state)
 			{
 				extra_keys.splice(extra_keys.indexOf(state_key),1);
