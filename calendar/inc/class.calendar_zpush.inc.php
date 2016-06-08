@@ -522,7 +522,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 * Note that this function will never be called on E-mail items as you can't change e-mail items, you
 	 * can only set them as 'read'.
 	 */
-	public function ChangeMessage($folderid, $_id, $message, $contentParameters)
+	public function ChangeMessage($folderid, $_id, SyncAppointment $message, $contentParameters)
 	{
 		unset($contentParameters);	// unused, but required by function signature
 
