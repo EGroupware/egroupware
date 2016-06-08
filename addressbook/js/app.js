@@ -133,7 +133,7 @@ app.classes.addressbook = AppJS.extend(
 		{
 			// Event changed, update any [known] contacts participating
 			var content = egw.dataGetUIDdata(_app+'::'+_id);
-			if (content.data && content.data.participant_types && content.data.participant_types.c)
+			if (content && content.data && content.data.participant_types && content.data.participant_types.c)
 			{
 				for(var contact in content.data.participant_types.c)
 				{
