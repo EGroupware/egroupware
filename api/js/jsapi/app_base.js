@@ -916,11 +916,15 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				favorite = egw.preference('favorite_'+this.dataset.id,self.appname);
 			}
 			if(!favorite || jQuery.isEmptyObject(favorite)) return;
+			
+			// Handle old style by making it like new style
+			if(favorite.filter && !favorite.state)
+			{
+				favorite.state = favorite.filter;
+			}
 
 			var match_count = 0;
-			var extra_keys = favorite.state ?
-				Object.keys(favorite.state) : // New
-				Object.keys(favorite.filter); // Old
+			var extra_keys = Object.keys(favorite.state);
 			for(var state_key in state)
 			{
 				extra_keys.splice(extra_keys.indexOf(state_key),1);
