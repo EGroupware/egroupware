@@ -332,7 +332,7 @@
 					{
 						if (_button_id == "show" )
 						{
-							egw.open_link(egw.link('/index.php', 'menuaction=home.home_tutorial_ui.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','960x580');
+							egw.open_link(egw.link('/index.php', 'menuaction=api.EGroupware\\Api\\Framework\\Tutorial.popup&tuid=introduction-'+egw.preference('lang')+'-0-a'),'_blank','960x580');
 						}
 						if(_button_id != "later")
 						{

@@ -702,11 +702,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			<ul id="'+this.appname+'_favorites_popup_state"/>\
 			</form>\
 			</div>'
-			// Ugly hack to exclude calendar from using this.et2 since calendar in 14.3
-			// still running under iframe and that gets into conflict with et2 object created for
-			// video tutorials in sidebox.
-			// TODO: this.appname != 'calendar' should be removed after we released new calendar
-		).appendTo(this.et2 && this.appname != 'calendar' ? this.et2.getDOMNode() : jQuery('body'));
+		).appendTo(this.et2 ? this.et2.getDOMNode() : jQuery('body'));
 
 		jQuery(".ui-icon-circle-plus",this.favorite_popup).prev().andSelf().click(function() {
 			var details = jQuery("#"+self.appname+"_favorites_popup_state",self.favorite_popup)
@@ -726,11 +722,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				empty_label: "Groups",
 				no_lang: true,
 				parent_node: this.appname+'_favorites_popup_admin'
-			// Ugly hack to exclude calendar from using this.et2 since calendar in 14.3
-			// still running under iframe and that gets into conflict with et2 object created for
-			// video tutorials in sidebox.
-			// TODO: this.appname != 'calendar' should be removed after we released new calendar
-			},(this.et2 && this.appname != 'calendar'? this.et2:null));
+			},(this.et2 || null));
 			this.favorite_popup.group.loadingFinished();
 		}
 
@@ -926,7 +918,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			if(!favorite || jQuery.isEmptyObject(favorite)) return;
 
 			var match_count = 0;
-			var extra_keys = favorite.state ? 
+			var extra_keys = favorite.state ?
 				Object.keys(favorite.state) : // New
 				Object.keys(favorite.filter); // Old
 			for(var state_key in state)
@@ -1128,9 +1120,13 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		{
 			var resolve = _resolve;
 			var reject = _reject;
-			self.egw.json('EGroupware\\Api\\Framework\\Tutorial::ajax_data', [self.egw.app_name()], function(_data){
-				resolve(_data);
-			}).sendRequest();
+			// delay the execution and let the rendering catches up. Seems only FF problem
+			window.setTimeout(function(){
+				self.egw.json('EGroupware\\Api\\Framework\\Tutorial::ajax_data', [self.egw.app_name()], function(_data){
+					resolve(_data);
+				}).sendRequest();
+			},0);
+
 		});
 	},
 
