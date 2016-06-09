@@ -34,7 +34,7 @@ use EGroupware\Api;
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
-class StreamWrapper implements Vfs\StreamWrapperIface
+class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 {
 	/**
 	 * Mime type of directories, the old vfs uses 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
@@ -141,12 +141,6 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @var array $path => info-array pairs
 	 */
 	static protected $stat_cache = array();
-	/**
-	 * Reference to the PDO object we use
-	 *
-	 * @var \PDO
-	 */
-	static protected $pdo;
 	/**
 	 * Array with filenames of dir opened with dir_opendir
 	 *
@@ -1622,116 +1616,6 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		);
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($info[name]) = ".array2string($stat));
 		return $stat;
-	}
-
-	public static $pdo_type;
-	/**
-	 * Case sensitive comparison operator, for mysql we use ' COLLATE utf8_bin ='
-	 *
-	 * @var string
-	 */
-	public static $case_sensitive_equal = '=';
-
-	/**
-	 * Reconnect to database
-	 */
-	static public function reconnect()
-	{
-		self::$pdo = self::_pdo();
-	}
-
-	/**
-	 * Create pdo object / connection, as long as pdo is not generally used in eGW
-	 *
-	 * @return \PDO
-	 */
-	static protected function _pdo()
-	{
-		$egw_db = isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
-
-		switch($egw_db->Type)
-		{
-			case 'mysqli':
-			case 'mysqlt':
-			case 'mysql':
-				self::$case_sensitive_equal = '= BINARY ';
-				self::$pdo_type = 'mysql';
-				break;
-			default:
-				self::$pdo_type = $egw_db->Type;
-				break;
-		}
-		// get host used be egw_db
-		$egw_db->connect();
-		$host = $egw_db->get_host();
-
-		$dsn = self::$pdo_type.':dbname='.$egw_db->Database.($host ? ';host='.$host.($egw_db->Port ? ';port='.$egw_db->Port : '') : '');
-		// check once if pdo extension and DB specific driver is loaded or can be loaded
-		static $pdo_available=null;
-		if (is_null($pdo_available))
-		{
-			foreach(array('pdo','pdo_'.self::$pdo_type) as $ext)
-			{
-				check_load_extension($ext,true);	// true = throw Exception
-			}
-			$pdo_available = true;
-		}
-		// set client charset of the connection
-		switch(self::$pdo_type)
-		{
-			case 'mysql':
-				$dsn .= ';charset=utf8';
-				break;
-			case 'pgsql':
-				$query = "SET NAMES 'utf-8'";
-				break;
-		}
-		try {
-			self::$pdo = new \PDO($dsn,$egw_db->User,$egw_db->Password,array(
-				\PDO::ATTR_ERRMODE=>\PDO::ERRMODE_EXCEPTION,
-			));
-		}
-		catch(\PDOException $e)
-		{
-			unset($e);
-			// Exception reveals password, so we ignore the exception and connect again without pw, to get the right exception without pw
-			self::$pdo = new \PDO($dsn,$egw_db->User,'$egw_db->Password');
-		}
-		if ($query)
-		{
-			self::$pdo->exec($query);
-		}
-		return self::$pdo;
-	}
-
-	/**
-	 * Just a little abstration 'til I know how to organise stuff like that with PDO
-	 *
-	 * @param mixed $time
-	 * @return string Y-m-d H:i:s
-	 */
-	static protected function _pdo_timestamp($time)
-	{
-		if (is_numeric($time))
-		{
-			$time = date('Y-m-d H:i:s',$time);
-		}
-		return $time;
-	}
-
-	/**
-	 * Just a little abstration 'til I know how to organise stuff like that with PDO
-	 *
-	 * @param boolean $val
-	 * @return string '1' or '0' for mysql, 'true' or 'false' for everyone else
-	 */
-	static protected function _pdo_boolean($val)
-	{
-		if (self::$pdo_type == 'mysql')
-		{
-			return $val ? '1' : '0';
-		}
-		return $val ? 'true' : 'false';
 	}
 
 	/**
