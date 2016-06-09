@@ -773,11 +773,6 @@ class filemanager_ui
 	 */
 	function get_rows(&$query, &$rows)
 	{
-		// show projectmanager sidebox for projectmanager path
-		if (substr($query['path'],0,20) == '/apps/projectmanager' && isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
-		{
-			$GLOBALS['egw_info']['flags']['currentapp'] = 'projectmanager';
-		}
 		// do NOT store query, if hierarchical data / children are requested
 		if (!$query['csv_export'])
 		{
