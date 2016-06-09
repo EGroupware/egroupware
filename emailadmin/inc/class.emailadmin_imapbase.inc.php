@@ -6487,8 +6487,10 @@ class emailadmin_imapbase
 						// Parse destinations for placeholders
 						foreach(egw_mailer::$type2header as $type => $h)
 						{
-							//error_log($type . ': ' . $mailObject->getHeader(egw_mailer::$type2header[$type]) . ' -> ' .$bo_merge->merge_string($mailObject->getHeader(egw_mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset));
-							$mailObject->addAddress($bo_merge->merge_string($mailObject->getHeader(egw_mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset),'',$type);
+							// Parse destinations for placeholders
+							$merged = $bo_merge->merge_string($mailObject->getHeader(egw_mailer::$type2header[$type]),$val,$e,'text/plain',array(),self::$displayCharset);
+							//error_log($type . ': ' . $mailObject->getHeader(Mailer::$type2header[$type]) . ' -> ' .$merged);
+							$mailObject->addAddress(trim($merged,'"'),'',$type);
 						}
 
 						// No addresses from placeholders?  Treat it as just a contact ID
