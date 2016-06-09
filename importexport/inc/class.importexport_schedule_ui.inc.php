@@ -624,7 +624,7 @@ class importexport_schedule_ui
 		{
 			$async->cancel_timer($id);
 			$result = $async->set_timer(
-				$async['times'],
+				$job['times'],
 				$id,
 				'importexport.importexport_schedule_ui.exec',
 				$data
