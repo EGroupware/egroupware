@@ -107,7 +107,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		var width = 100;
 		if (this._parent.options.group_by === 'month')
 		{
-			days = new Date(this.options.end_date.getUTCFullYear(),this.options.end_date.getUTCMonth()+1,0).getUTCDate();
+			days = this.options.end_date.getUTCDate();
 			
 			if(days < 31)
 			{
@@ -480,7 +480,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		else
 		{
 			// 2678400 is the number of seconds in 31 days
-			//pos = (t - start) / 2678400000;
+			pos = (t - start) / 2678400000;
 		}
 		pos = 100 * pos;
 

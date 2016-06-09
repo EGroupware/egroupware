@@ -504,11 +504,16 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			draw_row: function(sort_key, label, events)
 			{
 				var key = sort_key.split('-');
-				this._drawRow(
-					sort_key, label, events,
-					new Date(key[0]+"-"+sprintf("%02d",parseInt(key[1])+1)+"-01T00:00:00Z"),
-					new Date(key[0],parseInt(key[1])+1,0)
-				);
+				var start = new Date(key[0]+"-"+sprintf("%02d",parseInt(key[1])+1)+"-01T00:00:00Z");
+				// Use some care to avoid issues with timezones and daylight savings
+				var end = new Date(start);
+				end.setUTCMonth(start.getUTCMonth() + 1);
+				end.setUTCDate(1);
+				end.setUTCHours(0);
+				end.setUTCMinutes(0);
+				end = new Date(end.valueOf() - 1000);
+				end.setUTCMonth(start.getUTCMonth())
+				this._drawRow(sort_key, label, events, start, end);
 			}
 		},
 		// Group by category has one row for each [sub]category
@@ -1820,7 +1825,10 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		x = Math.round(x);
 		y = Math.round(y);
 
+		// Relative horizontal position, as a percentage
 		var rel_x = Math.min(x / jQuery('.calendar_eventRows',this.div).width(),1);
+
+		// Relative time, in minutes from start
 		var rel_time = 0;
 
 		// Simple math, the x is offset from start date
@@ -1844,8 +1852,12 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			}
 			if(row_widget)
 			{
-				rel_x = Math.min((x-row_widget.rows.offset().left)/row_widget.rows.width(),1);
-				rel_time = (new Date(row_widget.options.end_date) - new Date(row_widget.options.start_date))*rel_x/1000;
+				// Not sure where the extra -1 and +2 are coming from, but it makes it work out
+				// in FF & Chrome
+				rel_x = Math.min((x-row_widget.rows.offset().left-1)/(row_widget.rows.width()+2),1);
+
+				// 2678400 is the number of seconds in 31 days
+				rel_time = (2678400)*rel_x;
 				this.date_helper.set_value(row_widget.options.start_date.toJSON());
 			}
 			else
