@@ -850,7 +850,29 @@ app.classes.addressbook = AppJS.extend(
 			egw.open('',this.appname,'list',{'favorite': safe_name},this.appname);
 			return false;
 		}
-		return this._super.apply(this, arguments);
+		else if (jQuery.isEmptyObject(state))
+		{
+			// Regular handling first to clear everything but advanced search
+			this._super.apply(this, arguments);
+
+			// Clear advanced search, which is in session and etemplate
+			egw.json('addressbook.addressbook_ui.ajax_clear_advanced_search',[], function() {
+				framework.setWebsiteTitle('addressbook','');
+				var index = etemplate2.getById('addressbook-index');
+				if(index && index.widgetContainer)
+				{
+					var nm = index.widgetContainer.getWidgetById('nm');
+					if(nm)
+					{
+						nm.applyFilters({
+							advanced_search: false
+						});
+					}
+				}
+			},this).sendRequest(true);
+			return false;
+		}
+		return 
 	},
 
 	/**

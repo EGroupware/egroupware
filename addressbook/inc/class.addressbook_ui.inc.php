@@ -988,6 +988,20 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
+	 * Disable / clear advanced search
+	 *
+	 * Advanced search is stored server side in session no matter what the nextmatch
+	 * sends, so we have to clear it here.
+	 */
+	public static function ajax_clear_advanced_search()
+	{
+		$query = Api\Cache::getSession('addressbook', 'index');
+		unset($query['advanced_search']);
+		Api\Cache::setSession('addressbook','index',$query);
+		Api\Cache::setSession('addressbook', 'advanced_search', false);
+	}
+	
+	/**
 	 * apply an action to multiple contacts
 	 *
 	 * @param string/int $action 'delete', 'vcard', 'csv' or nummerical account_id to move contacts to that addessbook
@@ -1363,7 +1377,8 @@ window.egw_LAB.wait(function() {
 			{
 				unset($store_query[$key]);
 			}
-			$old_state = Api\Cache::setSession('addressbook', $what, $store_query);
+			$old_state = $store_query;
+			Api\Cache::setSession('addressbook', $what, $store_query);
 		}
 		else
 		{
@@ -1384,7 +1399,7 @@ window.egw_LAB.wait(function() {
 			//unset($query['advanced_search']);
 			if(!$query['search'] && $old_state['advanced_search']) $query['advanced_search'] = $old_state['advanced_search'];
 		}
-		elseif(!$query['search'] && $old_state['advanced_search'])	// eg. paging in an advanced search
+		elseif(!$query['search'] && array_key_exists('advanced_search',$old_state))	// eg. paging in an advanced search
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
