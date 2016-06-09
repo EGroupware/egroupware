@@ -2032,8 +2032,10 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * Serve WebDAV HTTP request
 	 *
 	 * Reimplemented to add logging
+	 *
+     * @param  $prefix =null prefix filesystem path with given path, eg. "/webdav" for owncloud 4.5 remote.php
 	 */
-	function ServeRequest()
+	function ServeRequest($prefix=null)
 	{
 		if ((self::$log_level=$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level']) === 'r' ||
 			self::$log_level === 'f' || $this->debug)
@@ -2045,7 +2047,7 @@ class CalDAV extends HTTP_WebDAV_Server
 				substr($_SERVER['CONTENT_TYPE'], 0, 5) == 'text/';
 			ob_start();
 		}
-		parent::ServeRequest();
+		parent::ServeRequest($prefix);
 
 		if (self::$request_starttime) self::log_request();
 	}
