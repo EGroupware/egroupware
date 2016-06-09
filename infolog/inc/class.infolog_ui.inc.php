@@ -1884,7 +1884,10 @@ class infolog_ui
 			$print = (int) $_REQUEST['print'];
 			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
-			$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
+			if (!($content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id )))
+			{
+				egw_framework::window_close(lang('Permission denied!'));
+			}
 			if (!(strpos($content['info_addr'],',')===false) && strpos($content['info_addr'],', ')===false) $content['info_addr'] = str_replace(',',', ',$content['info_addr']);
 			foreach(array('info_subject', 'info_des') as $key)
 			{
@@ -2534,7 +2537,7 @@ class infolog_ui
 			egw_link::get_data ($_GET['egw_data']);
 			return false;
 		}
-		
+
 		return $this->edit($this->bo->import_mail($mailContent['addresses'],
 				$mailContent['subject'],
 				$mailContent['message'],
