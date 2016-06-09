@@ -177,7 +177,10 @@ function egw_error_handler ($errno, $errstr, $errfile, $errline)
 		case E_USER_WARNING:
 			// skip message for warnings supressed via @-error-control-operator (eg. @is_dir($path))
 			// can be commented out to get suppressed warnings too!
-			if (error_reporting())
+			if (error_reporting() &&
+				// silence "Declaration of $class::$method should be compatible with $parent::$method" warning
+				!(substr($errstr, 0, 15) === 'Declaration of ' &&
+					strpos($errstr, ' should be compatible with ') !== false))
 			{
 				_egw_log_exception(new egw_exception_warning($errstr.' in '.$errfile.' on line '.$errline));
 			}
