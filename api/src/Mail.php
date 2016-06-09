@@ -202,9 +202,10 @@ class Mail
 		if (is_null($_reuseCache)) $_reuseCache = $_restoreSession;
 		//error_log(__METHOD__.' ('.__LINE__.') '.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.'/'.Mail\Account::get_default_acc_id().' for user:'.$GLOBALS['egw_info']['user']['account_lid'].' called from:'.function_backtrace());
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($_oldImapServerObject));
-		if (isset(self::$profileDefunct[$_profileID]) && self::$profileDefunct[$_profileID]===true)
+		self::$profileDefunct = Cache::getCache(Cache::INSTANCE,'email','profileDefunct'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),5*1);
+		if (isset(self::$profileDefunct[$_profileID]) && strlen(self::$profileDefunct[$_profileID]))
 		{
-			throw new Exception(__METHOD__." failed to instanciate Mail for $_profileID / ".$this->profileID." with error:".$e->getMessage().($e->details?', '.$e->details:''));
+			throw new Exception(__METHOD__." failed to instanciate Mail for Profile #$_profileID Reason:".self::$profileDefunct[$_profileID]);
 		}
 		if ($_oldImapServerObject instanceof Mail\Imap)
 		{
@@ -909,7 +910,7 @@ class Mail
 	{
 		static $quota;
 		if (isset($quota)) return $quota;
-		if (isset(self::$profileDefunct[$this->profileID]) && self::$profileDefunct[$this->profileID]===true)
+		if (isset(self::$profileDefunct[$this->profileID]) && strlen(self::$profileDefunct[$this->profileID]))
 		{
 			// something is wrong. Do not proceed. either no folder or profile is marked as defunct for this request
 			return false;
@@ -929,7 +930,8 @@ class Mail
 			//error_log(__METHOD__." failed to fetch quota on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:'')/*.function_backtrace()*/);
 			if ($e->getCode()==102)
 			{
-				self::$profileDefunct[$this->profileID]=true;
+				self::$profileDefunct[$this->profileID]=$e->getMessage().($e->details?', '.$e->details:'');
+				Cache::setCache(Cache::INSTANCE,'email','profileDefunct'.trim($GLOBALS['egw_info']['user']['account_id']),self::$profileDefunct, $expiration=5*1);
 				throw new Exception(__METHOD__." failed to fetch quota on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:''));
 			}
 		}
@@ -1047,7 +1049,11 @@ class Mail
 		}
 		catch(\Exception $e)
 		{
-			if ($e->getCode()==102) self::$profileDefunct[$this->profileID]=true;
+			if ($e->getCode()==102)
+			{
+				self::$profileDefunct[$this->profileID]=$e->getMessage().($e->details?', '.$e->details:'');
+				Cache::setCache(Cache::INSTANCE,'email','profileDefunct'.trim($GLOBALS['egw_info']['user']['account_id']),self::$profileDefunct, $expiration=5*1);
+			}
 			unset($e);
 			$HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 		}
@@ -1153,7 +1159,7 @@ class Mail
 	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true)
 	{
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '." called with:$_folderName,$ignoreStatusCache,$basicInfoOnly");
-		if (!is_string($_folderName) || empty($_folderName)||(isset(self::$profileDefunct[$this->profileID]) && self::$profileDefunct[$this->profileID]===true))
+		if (!is_string($_folderName) || empty($_folderName)||(isset(self::$profileDefunct[$this->profileID]) && strlen(self::$profileDefunct[$this->profileID])))
 		{
 			// something is wrong. Do not proceed. either no folder or profile is marked as defunct for this request
 			return false;
@@ -1185,7 +1191,8 @@ class Mail
 			{
 				//error_log(__METHOD__.array2string($e));
 				//error_log(__METHOD__." failed to fetch Mailbox $_folderName on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:'')/*.function_backtrace()*/);
-				self::$profileDefunct[$this->profileID]=true;
+				self::$profileDefunct[$this->profileID]=$e->getMessage().($e->details?', '.$e->details:'');
+				Cache::setCache(Cache::INSTANCE,'email','profileDefunct'.trim($GLOBALS['egw_info']['user']['account_id']),self::$profileDefunct, $expiration=5*1);
 				throw new Exception(__METHOD__." failed to fetch Mailbox $_folderName on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:''));
 			}
 			//error_log(__METHOD__.' ('.__LINE__.') '.$_folderName.' '.array2string($ret));
@@ -1210,7 +1217,8 @@ class Mail
 			{
 				//error_log(__METHOD__.array2string($e));
 				error_log(__METHOD__." failed to fetch status for $_folderName on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:'')/*.function_backtrace()*/);
-				self::$profileDefunct[$this->profileID]=true;
+				self::$profileDefunct[$this->profileID]=$e->getMessage().($e->details?', '.$e->details:'');
+				Cache::setCache(Cache::INSTANCE,'email','profileDefunct'.trim($GLOBALS['egw_info']['user']['account_id']),self::$profileDefunct, $expiration=5*1);
 				//throw new Exception(__METHOD__." failed to fetch status for $_folderName on ".$this->profileID.' Reason:'.$e->getMessage().($e->details?', '.$e->details:''));
 				$folderInfo=null;
 			}
@@ -3704,7 +3712,7 @@ class Mail
 		catch (\Exception $e)
 		{
 			error_log(__METHOD__.__LINE__.$e->getMessage().($e->details?', '.$e->details:''));
-			self::$profileDefunct[$this->profileID]=true;
+			self::$profileDefunct[$this->profileID]=$e->getMessage().($e->details?', '.$e->details:'');
 			$folderInfo[$this->profileID][$_folder] = false;
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.' Folder Exists:'.$folderInfo[$this->profileID][$_folder].function_backtrace());

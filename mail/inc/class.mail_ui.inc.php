@@ -160,8 +160,14 @@ class mail_ui
 		}
 		catch (Exception $e)
 		{
-			// redirect to mail wizard to handle it (redirect works for ajax too)
-			self::callWizard($e->getMessage(),true,'error');
+			// we need this to handle failed JSONRequests
+			if (Api\Json\Request::isJSONRequest() && $_GET['menuaction'] != 'mail.mail_ui.index')
+			{
+				$response = Api\Json\Response::get();
+				$response->call('egw.message',$e->getMessage(),'error');
+			}
+			// redirect to mail wizard to handle it (redirect works for ajax too), unless index is called. we want the sidebox
+			if ($_GET['menuaction'] != 'mail.mail_ui.index') self::callWizard($e->getMessage(),true,'error',false);
 		}
 		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 	}
@@ -173,7 +179,7 @@ class mail_ui
 	 * @param boolean $exit If true, will call exit() after opening the wizardpopup
 	 * @param string $msg_type = 'success' message type
 	 */
-	static function callWizard($message, $exit=true, $msg_type='success')
+	static function callWizard($message, $exit=true, $msg_type='success',$reset_sidebox_on_index=true)
 	{
 		//error_log(__METHOD__."('$message', $exit) ".function_backtrace());
 		$linkData=(self::$icServerID ? array(
@@ -192,7 +198,7 @@ class mail_ui
 			$windowName = "editMailAccount".self::$icServerID;
 			$response->call("egw.open_link", Egw::link('/index.php', $linkData), $windowName, "600x480",null,true);
 			Framework::message($message, 'error');
-			if ($_GET['menuaction'] == 'mail.mail_ui.index')
+			if ($_GET['menuaction'] == 'mail.mail_ui.index' && $reset_sidebox_on_index)
 			{
 				$response->call('framework.setSidebox','mail',array(),'md5');
 			}
@@ -203,7 +209,8 @@ class mail_ui
 		}
 		else	// regular GET request eg. in idots template
 		{
-			Framework::popup(Framework::link('/index.php',$linkData));
+			$windowName = "editMailAccount".self::$icServerID;
+			Framework::popup(Framework::link('/index.php',$linkData),$windowName);
 			$GLOBALS['egw']->framework->render($message,'',true);
 			if ($exit)
 			{
@@ -449,17 +456,7 @@ class mail_ui
 				// These must always be set, even if $content is an array
 				$content[self::$nm_index]['cat_is_select'] = true;    // Category select is just a normal selectbox
 				$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
-				try
-				{
-					$content[self::$nm_index]['actions'] = self::get_actions();
-				}
-				catch (Exception $e)
-				{
-					// do not exit here. mail-tree should be build. if we exit here, we never get there
-					self::callWizard($e->getMessage().($e->details?', '.$e->details:''),false, 'error');
-					unset($e);
-					//return false;
-				}
+				$content[self::$nm_index]['actions'] = self::get_actions();
 				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
 				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
@@ -555,196 +552,8 @@ class mail_ui
 				$etpl = new Etemplate('mail.index');
 				//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
 				$content[self::$nm_index]['cat_id_onchange'] = "app.mail.mail_searchtype_change()";
-				// Start at 2 so auto-added copy+paste actions show up as second group
-				// Needed because there's no 'select all' action to push things down
-				$group=1;
-				// Set tree actions
-				$tree_actions = array(
-					'drop_move_mail' => array(
-						'type' => 'drop',
-						'acceptedTypes' => 'mail',
-						'icon' => 'move',
-						'caption' => 'Move to',
-						'onExecute' => 'javaScript:app.mail.mail_move'
-					),
-					'drop_copy_mail' => array(
-						'type' => 'drop',
-						'acceptedTypes' => 'mail',
-						'icon' => 'copy',
-						'caption' => 'Copy to',
-						'onExecute' => 'javaScript:app.mail.mail_copy'
-					),
-					'drop_cancel' => array(
-						'icon' => 'cancel',
-						'caption' => 'Cancel',
-						'acceptedTypes' => 'mail',
-						'type' => 'drop',
-					),
-					'drop_move_folder' => array(
-						'caption' => 'Move folder',
-						'hideOnDisabled' => true,
-						'type' => 'drop',
-						'acceptedTypes' => 'mailFolder',
-						'onExecute' => 'javaScript:app.mail.mail_MoveFolder'
-					),
-					// Tree does support this one
-					'add' => array(
-						'caption' => 'Add Folder',
-						'onExecute' => 'javaScript:app.mail.mail_AddFolder',
-						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-						'group'		=> $group,
-					),
-					'edit' => array(
-						'caption' => 'Rename Folder',
-						'onExecute' => 'javaScript:app.mail.mail_RenameFolder',
-						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-						'group'		=> $group,
-					),
-					'move' => array(
-						'caption' => 'Move Folder',
-						'type' => 'drag',
-						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-						'dragType' => array('mailFolder'),
-						'group'		=> $group,
-					),
-					'delete' => array(
-						'caption' => 'Delete Folder',
-						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-						'onExecute' => 'javaScript:app.mail.mail_DeleteFolder',
-						'group'		=> $group,
-					),
-					'subscribe' => array(
-						'caption' => 'Subscribe folder ...',
-						//'icon' => 'configure',
-						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-						'onExecute' => 'javaScript:app.mail.edit_subscribe',
-						'group'		=> $group
-					),
-					'unsubscribe' => array(
-						'caption' => 'Unsubscribe folder',
-						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-						'onExecute' => 'javaScript:app.mail.unsubscribe_folder',
-						'group'		=> $group,
-					),
-					'foldermanagement' => array(
-						'caption' => 'Folder Management ...',
-						'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-						'onExecute' => 'javaScript:app.mail.folderManagement',
-						'group'		=> $group,
-						'hideOnMobile' => true
-					),
-					'sieve' => array(
-						'caption' => 'Mail filter',
-						'onExecute' => 'javaScript:app.mail.edit_sieve',
-
-						'enabled'	=> 'javaScript:app.mail.sieve_enabled',
-						'icon' => 'mail/filter',	// funnel
-						'hideOnMobile' => true
-					),
-					'vacation' => array(
-						'caption' => 'Vacation notice',
-						'icon' => 'mail/navbar',	// mail as in admin
-						'onExecute' => 'javaScript:app.mail.edit_vacation',
-						'enabled'	=> 'javaScript:app.mail.sieve_enabled',
-					),
-					'edit_account' => array(
-						'caption' => 'Edit account ...',
-						'icon' => 'configure',
-						'onExecute' => 'javaScript:app.mail.edit_account',
-					),
-					'edit_acl'	=> array(
-						'caption' => 'Edit folder ACL ...',
-						'icon'	=> 'lock',
-						'enabled'	=> 'javaScript:app.mail.acl_enabled',
-						'onExecute' => 'javaScript:app.mail.edit_acl',
-					),
-				);
-				// the preference prefaskformove controls actually if there is a popup on target or not
-				// if there are multiple options there is a popup on target, 0 for prefaskformove means
-				// that only move is available; 1 stands for move and cancel; 2 (should be the default if
-				// not set); so we are assuming this, when not set
-				if (isset($this->mail_bo->mailPreferences['prefaskformove']))
-				{
-					switch ($this->mail_bo->mailPreferences['prefaskformove'])
-					{
-						case 0:
-							unset($tree_actions['drop_copy_mail']);
-							unset($tree_actions['drop_cancel']);
-							break;
-						case 1:
-							unset($tree_actions['drop_copy_mail']);
-							break;
-						default:
-							// everything is fine
-					}
-				}
-				//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
-				if ($this->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
-				{
-					unset($tree_actions['subscribe']);
-					unset($tree_actions['unsubscribe']);
-				}
-				++$group;	// put delete in own group
-				switch($GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'])
-				{
-					case 'move_to_trash':
-						$tree_actions['empty_trash'] = array(
-							'caption' => 'empty trash',
-							'icon' => 'dhtmlxtree/MailFolderTrash',
-							'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
-							'group'	=> $group,
-						);
-						break;
-					case 'mark_as_deleted':
-						$tree_actions['compress_folder'] = array(
-							'caption' => 'compress folder',
-							'icon' => 'dhtmlxtree/MailFolderTrash',
-							'onExecute' => 'javaScript:app.mail.mail_compressFolder',
-							'group'	=> $group,
-						);
-						break;
-				}
-
-				$junkFolder = $this->mail_bo->getJunkFolder();
-				//error_log(__METHOD__.__LINE__.$junkFolder);
-				if ($junkFolder && !empty($junkFolder))
-				{
-					$tree_actions['empty_spam'] = array(
-						'caption' => 'empty junk',
-						'icon' => 'dhtmlxtree/MailFolderJunk',
-						'enabled'	=> 'javaScript:app.mail.spamfolder_enabled',
-						'onExecute' => 'javaScript:app.mail.mail_emptySpam',
-						'group'	=> $group,
-					);
-				}
-				$tree_actions['sieve']['group']	= $tree_actions['vacation']['group'] = ++$group;	// new group for filter
-				$tree_actions['edit_account']['group'] = $tree_actions['edit_acl']['group']	= ++$group;
-
-
-				// enforce global (group-specific) ACL
-				if (!mail_hooks::access('aclmanagement'))
-				{
-					unset($tree_actions['edit_acl']);
-				}
-				if (!mail_hooks::access('editfilterrules'))
-				{
-					unset($tree_actions['sieve']);
-				}
-				if (!mail_hooks::access('absentnotice'))
-				{
-					unset($tree_actions['vacation']);
-				}
-				if (!mail_hooks::access('managefolders'))
-				{
-					unset($tree_actions['add']);
-					unset($tree_actions['move']);
-					unset($tree_actions['delete']);
-					unset($tree_actions['foldermanagement']);
-					// manage folders should not affect the ability to subscribe or unsubscribe
-					// to existing folders, it should only affect add/rename/move/delete
-				}
-
-				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $tree_actions);
+				// set the actions on tree
+				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions());
 
 				// sending preview toolbar actions
 				if ($content['mailSplitter']) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
@@ -762,15 +571,224 @@ class mail_ui
 		}
 		catch (Exception $e)
 		{
-			// do not exit here. mail-tree should be build. if we exit here, we never get there
-			error_log(__METHOD__.__LINE__.$e->getMessage().($e->details?', '.$e->details:''));
-			self::callWizard(__METHOD__.$e->getMessage().$e->getMessage().($e->details?', '.$e->details:''),false, 'error');
+			// do not exit here. mail-tree should be build. if we exit here, we never get there.
+			error_log(__METHOD__.__LINE__.$e->getMessage().($e->details?', '.$e->details:'').' Menuaction:'.$_GET['menuaction'].'.'.function_backtrace());
+			if (empty($etpl))
+			{
+				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+				$etpl = new Etemplate('mail.index');
+			}
+			$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions(false));
+			$readonlys = $preserv = array();
+			if (empty($content)) $content=array();
+
+			self::callWizard($e->getMessage().$e->getMessage().($e->details?', '.$e->details:''),false, 'error',false);
 			//return false;
 		}
 		// Check preview pane is enabled, then show spliter
 		if ($this->mail_bo->mailPreferences['previewPane']) $etpl->setElementAttribute('mail.index.spliter', 'template', 'mail.index.nospliter');
 
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
+	}
+
+	/**
+	 * Get tree actions / context menu for tree
+	 *
+	 * Changes here, may require to log out, as $content[self::$nm_index] get stored in session!
+	 * @param {boolean} $imap_actions set to false if you want to avoid to talk to the imap-server
+	 * @return array
+	 */
+	function get_tree_actions($imap_actions=true)
+	{
+		// Start at 2 so auto-added copy+paste actions show up as second group
+		// Needed because there's no 'select all' action to push things down
+		$group=1;
+		// Set tree actions
+		$tree_actions = array(
+			'drop_move_mail' => array(
+				'type' => 'drop',
+				'acceptedTypes' => 'mail',
+				'icon' => 'move',
+				'caption' => 'Move to',
+				'onExecute' => 'javaScript:app.mail.mail_move'
+			),
+			'drop_copy_mail' => array(
+				'type' => 'drop',
+				'acceptedTypes' => 'mail',
+				'icon' => 'copy',
+				'caption' => 'Copy to',
+				'onExecute' => 'javaScript:app.mail.mail_copy'
+			),
+			'drop_cancel' => array(
+				'icon' => 'cancel',
+				'caption' => 'Cancel',
+				'acceptedTypes' => 'mail',
+				'type' => 'drop',
+			),
+			'drop_move_folder' => array(
+				'caption' => 'Move folder',
+				'hideOnDisabled' => true,
+				'type' => 'drop',
+				'acceptedTypes' => 'mailFolder',
+				'onExecute' => 'javaScript:app.mail.mail_MoveFolder'
+			),
+			// Tree does support this one
+			'add' => array(
+				'caption' => 'Add Folder',
+				'onExecute' => 'javaScript:app.mail.mail_AddFolder',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'group'		=> $group,
+			),
+			'edit' => array(
+				'caption' => 'Rename Folder',
+				'onExecute' => 'javaScript:app.mail.mail_RenameFolder',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'group'		=> $group,
+			),
+			'move' => array(
+				'caption' => 'Move Folder',
+				'type' => 'drag',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'dragType' => array('mailFolder'),
+				'group'		=> $group,
+			),
+			'delete' => array(
+				'caption' => 'Delete Folder',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder',
+				'group'		=> $group,
+			),
+			'subscribe' => array(
+				'caption' => 'Subscribe folder ...',
+				//'icon' => 'configure',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'onExecute' => 'javaScript:app.mail.edit_subscribe',
+				'group'		=> $group
+			),
+			'unsubscribe' => array(
+				'caption' => 'Unsubscribe folder',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'onExecute' => 'javaScript:app.mail.unsubscribe_folder',
+				'group'		=> $group,
+			),
+			'foldermanagement' => array(
+				'caption' => 'Folder Management ...',
+				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'onExecute' => 'javaScript:app.mail.folderManagement',
+				'group'		=> $group,
+				'hideOnMobile' => true
+			),
+			'sieve' => array(
+				'caption' => 'Mail filter',
+				'onExecute' => 'javaScript:app.mail.edit_sieve',
+
+				'enabled'	=> 'javaScript:app.mail.sieve_enabled',
+				'icon' => 'mail/filter',	// funnel
+				'hideOnMobile' => true
+			),
+			'vacation' => array(
+				'caption' => 'Vacation notice',
+				'icon' => 'mail/navbar',	// mail as in admin
+				'onExecute' => 'javaScript:app.mail.edit_vacation',
+				'enabled'	=> 'javaScript:app.mail.sieve_enabled',
+			),
+			'edit_account' => array(
+				'caption' => 'Edit account ...',
+				'icon' => 'configure',
+				'onExecute' => 'javaScript:app.mail.edit_account',
+			),
+			'edit_acl'	=> array(
+				'caption' => 'Edit folder ACL ...',
+				'icon'	=> 'lock',
+				'enabled'	=> 'javaScript:app.mail.acl_enabled',
+				'onExecute' => 'javaScript:app.mail.edit_acl',
+			),
+		);
+		// the preference prefaskformove controls actually if there is a popup on target or not
+		// if there are multiple options there is a popup on target, 0 for prefaskformove means
+		// that only move is available; 1 stands for move and cancel; 2 (should be the default if
+		// not set); so we are assuming this, when not set
+		if (isset($this->mail_bo->mailPreferences['prefaskformove']))
+		{
+			switch ($this->mail_bo->mailPreferences['prefaskformove'])
+			{
+				case 0:
+					unset($tree_actions['drop_copy_mail']);
+					unset($tree_actions['drop_cancel']);
+					break;
+				case 1:
+					unset($tree_actions['drop_copy_mail']);
+					break;
+				default:
+					// everything is fine
+			}
+		}
+		//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
+		if ($this->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
+		{
+			unset($tree_actions['subscribe']);
+			unset($tree_actions['unsubscribe']);
+		}
+		++$group;	// put delete in own group
+		switch($GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'])
+		{
+			case 'move_to_trash':
+				$tree_actions['empty_trash'] = array(
+					'caption' => 'empty trash',
+					'icon' => 'dhtmlxtree/MailFolderTrash',
+					'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
+					'group'	=> $group,
+				);
+				break;
+			case 'mark_as_deleted':
+				$tree_actions['compress_folder'] = array(
+					'caption' => 'compress folder',
+					'icon' => 'dhtmlxtree/MailFolderTrash',
+					'onExecute' => 'javaScript:app.mail.mail_compressFolder',
+					'group'	=> $group,
+				);
+				break;
+		}
+		$junkFolder = ($imap_actions?$this->mail_bo->getJunkFolder():null);
+
+		//error_log(__METHOD__.__LINE__.$junkFolder);
+		if ($junkFolder && !empty($junkFolder))
+		{
+			$tree_actions['empty_spam'] = array(
+				'caption' => 'empty junk',
+				'icon' => 'dhtmlxtree/MailFolderJunk',
+				'enabled'	=> 'javaScript:app.mail.spamfolder_enabled',
+				'onExecute' => 'javaScript:app.mail.mail_emptySpam',
+				'group'	=> $group,
+			);
+		}
+		$tree_actions['sieve']['group']	= $tree_actions['vacation']['group'] = ++$group;	// new group for filter
+		$tree_actions['edit_account']['group'] = $tree_actions['edit_acl']['group']	= ++$group;
+
+
+		// enforce global (group-specific) ACL
+		if (!mail_hooks::access('aclmanagement'))
+		{
+			unset($tree_actions['edit_acl']);
+		}
+		if (!mail_hooks::access('editfilterrules'))
+		{
+			unset($tree_actions['sieve']);
+		}
+		if (!mail_hooks::access('absentnotice'))
+		{
+			unset($tree_actions['vacation']);
+		}
+		if (!mail_hooks::access('managefolders'))
+		{
+			unset($tree_actions['add']);
+			unset($tree_actions['move']);
+			unset($tree_actions['delete']);
+			unset($tree_actions['foldermanagement']);
+			// manage folders should not affect the ability to subscribe or unsubscribe
+			// to existing folders, it should only affect add/rename/move/delete
+		}
+		return $tree_actions;
 	}
 
 	/**
@@ -1305,6 +1323,7 @@ class mail_ui
 				}
 				catch(Exception $e)
 				{
+					unset($e);
 					$rows=array();
 					return 0;
 				}
@@ -1313,7 +1332,16 @@ class mail_ui
 		}
 		if (!isset($mail_ui))
 		{
-			$mail_ui = new mail_ui(true);	// run constructor for current profile
+			try
+			{
+				$mail_ui = new mail_ui(true);	// run constructor for current profile
+			}
+			catch(Exception $e)
+			{
+				unset($e);
+				$rows=array();
+				return 0;
+			}
 			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->profileID.self::$delimiter.'INBOX';
 		}
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
@@ -4177,13 +4205,20 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		if (!$vacation)
 		{
-			// Create mail app object
-			$mail = new mail_ui();
+			try
+			{
+				// Create mail app object
+				$mail = new mail_ui();
 
-			if (empty($icServerID)) $icServerID = $mail->Mail->profileID;
-			if ($icServerID != $mail->Mail->profileID) return;
+				if (empty($icServerID)) $icServerID = $mail->Mail->profileID;
+				if ($icServerID != $mail->Mail->profileID) return;
 
-			$vacation = $mail->gatherVacation($cachedVacations);
+				$vacation = $mail->gatherVacation($cachedVacations);
+			} catch (Exception $e) {
+				$vacation=false;
+				error_log(__METHOD__.__LINE__." ".$e->getMessage());
+				unset($e);
+			}
 		}
 
 		if($vacation) {
@@ -4262,13 +4297,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		Api\Translation::add_app('mail');
 		if (is_null($icServerID)) $icServerID = $this->mail_bo->profileID;
 		$rememberServerID = $this->mail_bo->profileID;
-		if ($icServerID && $icServerID != $this->mail_bo->profileID)
-		{
-			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
-			$this->changeProfile($icServerID);
-		}
 		try
 		{
+			if ($icServerID && $icServerID != $this->mail_bo->profileID)
+			{
+				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+				$this->changeProfile($icServerID);
+			}
 			$quota = $this->mail_bo->getQuotaRoot();
 		} catch (Exception $e) {
 			$quota['limit'] = 'NOT SET';
@@ -4289,8 +4324,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
-			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
-			$this->changeProfile($rememberServerID);
+			try
+			{
+				//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
+				$this->changeProfile($rememberServerID);
+			} catch (Exception $e) {
+				//error_log(__METHOD__.__LINE__." ".$e->getMessage());
+				unset($e);
+			}
 		}
 		$response = Api\Json\Response::get();
 		$response->call('app.mail.mail_setQuotaDisplay',array('data'=>$content));
