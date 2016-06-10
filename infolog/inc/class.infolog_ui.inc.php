@@ -1903,7 +1903,7 @@ class infolog_ui
 			$print = (int) $_REQUEST['print'];
 			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
-			if (!($content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id )))
+			if ($info_id && !($content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id )))
 			{
 				Framework::window_close(lang('Permission denied!'));
 			}
