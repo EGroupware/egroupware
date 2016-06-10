@@ -370,7 +370,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->From 	= $activeMailProfile['ident_email'];
 		$mailObject->FromName = Mail::generateIdentityString($activeMailProfile,false);
-		$mailObject->AddCustomHeader('X-Mailer: mail-Activesync');
+		$mailObject->addHeader('X-Mailer', 'mail-Activesync');
 
 
 		// prepare addressee list; moved the adding of addresses to the mailobject down
