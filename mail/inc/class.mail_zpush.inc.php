@@ -369,7 +369,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->From 	= $activeMailProfile['ident_email'];
-		$mailObject->FromName = $mailObject->EncodeHeader(Mail::generateIdentityString($activeMailProfile,false));
+		$mailObject->FromName = Mail::generateIdentityString($activeMailProfile,false);
 		$mailObject->AddCustomHeader('X-Mailer: mail-Activesync');
 
 
@@ -665,7 +665,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
 						$attachmentNames .= $attachment['name']."\n";
 						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],0,false,false,$folder);
-						/*$x =*/ $mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), $attachment['mimeType']);
+						/*$x =*/ $mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['mimeType']);
 						ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' added part with number:'.$x);
 					}
 				}
