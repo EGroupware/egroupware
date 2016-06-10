@@ -1971,36 +1971,77 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	private $folderHashes;
 
 	/**
+	 * Statemaschine instance used to store folders
+	 *
+	 * @var activesync_statemaschine
+	 */
+	private $fh_state_maschine;
+
+	/**
+	 * state_type (and _key) used to store folder hashes
+	 */
+	const FOLDER_STATE_TYPE = 'folder_hashes';
+
+	/**
 	 * Read hashfile from state dir
 	 */
 	private function readFolderHashes()
 	{
-		if ((file_exists($file = $this->hashFile()) || file_exists($file = $this->hashFile(true))) &&
-			($hashes = file_get_contents($file)))
+		if (!isset($this->fh_state_maschine))
 		{
-			$this->folderHashes = json_decode($hashes,true);
-			// fallback in case hashes have been serialized instead of being json-encoded
-			if (json_last_error()!=JSON_ERROR_NONE)
-			{
-				//error_log(__METHOD__.__LINE__." error decoding with json");
-				$this->folderHashes = unserialize($hashes);
-			}
+			$this->fh_state_maschine = new activesync_statemachine($this->backend);
 		}
-		else
-		{
-			$this->folderHashes = array();
+		try {
+			$this->folderHashes = $this->fh_state_maschine->getState(Request::GetDeviceID(),
+				self::FOLDER_STATE_TYPE, self::FOLDER_STATE_TYPE, 0);
+		}
+		catch (Exception $e) {
+			_egw_log_exception($e);
+			if ((file_exists($file = $this->hashFile()) || file_exists($file = $this->hashFile(true))) &&
+				($hashes = file_get_contents($file)))
+			{
+				$this->folderHashes = json_decode($hashes,true);
+				// fallback in case hashes have been serialized instead of being json-encoded
+				if (json_last_error()!=JSON_ERROR_NONE)
+				{
+					//error_log(__METHOD__.__LINE__." error decoding with json");
+					$this->folderHashes = unserialize($hashes);
+				}
+				// store folder-hashes to state
+				try {
+					$this->storeFolderHashes();
+				}
+				catch(Exception $e) {
+
+				}
+			}
+			else
+			{
+				$this->folderHashes = array();
+			}
 		}
 	}
 
 	/**
-	 * Store hashfile in state dir
+	 * Store hashfile via state-maschine
 	 *
 	 * return int|boolean false on error
 	 */
 	private function storeFolderHashes()
 	{
-		// make sure $this->folderHashes is an array otherwise json_encode may fail on decode for string,integer,float or boolean
-		return file_put_contents($this->hashFile(), json_encode((is_array($this->folderHashes)?$this->folderHashes:array($this->folderHashes))));
+		if (!isset($this->fh_state_maschine))
+		{
+			$this->fh_state_maschine = new activesync_statemachine($this->backend);
+		}
+		try {
+			$this->fh_state_maschine->setState($this->folderHashes, Request::GetDeviceID(),
+				self::FOLDER_STATE_TYPE, self::FOLDER_STATE_TYPE, 0);
+		}
+		catch (Exception $e) {
+			_egw_log_exception($e);
+			return false;
+		}
+		return true;
 	}
 
 	/**
