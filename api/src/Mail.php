@@ -1307,7 +1307,8 @@ class Mail
 				try
 				{
 					$byUid=true;
-					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, array('status'=>array('UNSEEN','UNDELETED')),$byUid,false);
+					$_reverse=1;
+					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse, array('status'=>array('UNSEEN','UNDELETED')),$byUid,false);
 					$retValue['unseen'] = $sortResult['count'];
 				}
 				catch (\Exception $ee)
@@ -1825,7 +1826,8 @@ class Mail
 			if (self::$debugTimes) $starttime = microtime(true);
 			if (is_null($eMailListContainsDeletedMessages) || empty($eMailListContainsDeletedMessages[$this->profileID]) || empty($eMailListContainsDeletedMessages[$this->profileID][$_folderName])) $eMailListContainsDeletedMessages = Cache::getCache(Cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*1);
 			$five=true;
-			$deletedMessages = $this->getSortedList($_folderName, 0, $three=1, array('status'=>array('DELETED')),$five,false);
+			$dReverse=1;
+			$deletedMessages = $this->getSortedList($_folderName, 0, $dReverse, array('status'=>array('DELETED')),$five,false);
 			if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') Found DeletedMessages:'.array2string($eMailListContainsDeletedMessages));
 			$eMailListContainsDeletedMessages[$this->profileID][$_folderName] =$deletedMessages['count'];
 			Cache::setCache(Cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, 60*60*1);
