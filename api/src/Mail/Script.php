@@ -16,7 +16,7 @@
 
 namespace EGroupware\Api\Mail;
 
-use EGroupware\Translation;
+use EGroupware\Api\Translation;
 
 /**
  * Support for Sieve scripts
