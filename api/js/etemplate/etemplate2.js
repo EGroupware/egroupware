@@ -426,10 +426,6 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 			};
 		}
 
-		// Create the document fragment into which the HTML will be injected
-		var frag = document.createDocumentFragment();
-
-
 		// Clear any existing instance
 		this.clear();
 
@@ -477,9 +473,6 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback, _app, _no_et
 
 			// Connect to the window resize event
 			jQuery(window).on("resize."+this.uniqueId, this, function(e) {e.data.resize(e);});
-
-			// Insert the document fragment to the DOM Container
-			this.DOMContainer.appendChild(frag);
 
 			if(egw.debug_level() >= 3 && console.groupEnd)
 			{
@@ -784,7 +777,7 @@ etemplate2.prototype.postSubmit = function()
 	{
 		// unbind our session-destroy handler, as we are submitting
 		this.unbind_unload();
-		
+
 		var form = jQuery("<form id='form' action='"+egw().webserverUrl +
 			"/index.php?menuaction=" + this.widgetContainer.egw().getAppName()+".EGroupware\\Api\\Etemplate.process_exec&ajax=true' method='POST'>");
 
