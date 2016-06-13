@@ -37,4 +37,16 @@ class preferences_categories_ui extends admin_categories {
 		$rows['edit_link'] = 'preferences.preferences_categories_ui.edit';
 		return $count;
 	}
+
+	/**
+	 * Overriding index to set currentapp to be app whos categories we display
+	 *
+	 * @param array $content
+	 */
+	public function index(array $content=null)
+	{
+		$GLOBALS['egw_info']['flags']['currentapp'] = $_GET['cats_app'];
+
+		parent::index($content);
+	}
 }
