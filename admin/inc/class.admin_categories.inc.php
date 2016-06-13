@@ -608,6 +608,9 @@ class admin_categories
 		}
 
 		$tmpl = new Etemplate('admin.categories.index');
+		// we need to set a different dom-id for each application and also global categories of that app
+		// otherwise eT2 objects are overwritter when a second categories template is shown
+		$tmpl->set_dom_id($appname.'.'.$this->appname.'.categories.index');
 
 		// Category styles
 		Categories::css($appname);
