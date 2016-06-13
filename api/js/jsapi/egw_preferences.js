@@ -116,7 +116,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		show_preferences: function (name, apps)
 		{
 			var current_app = this.app_name();
-			var query = {current_app: current_app};
+			var query = {menuaction:'',current_app: current_app};
 			// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
 			if (jQuery.isArray(apps) && jQuery.inArray(current_app, apps) == -1 && (name != 'prefs' && name != 'acl') ||
 				!jQuery.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
@@ -150,11 +150,10 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 						}
 						else
 						{
-							delete query.current_app;
 							query.menuaction='preferences.preferences_categories_ui.index';
 							query.cats_app=current_app;
-							query.ajax = true;
 						}
+						query.ajax = true;
 						egw.link_handler(egw.link(url, query), current_app);
 						break;
 				}
