@@ -221,7 +221,7 @@ class admin_categories
 
 					if ($button == 'save')
 					{
-						Framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
+						Framework::refresh_opener($msg, $this->appname, $content['id'], $change_color ? null : 'update', $refresh_app);
 						Framework::window_close();
 					}
 					break;
@@ -244,7 +244,7 @@ class admin_categories
 					break;
 			}
 			// This should probably refresh the application $this->appname in the target tab $refresh_app, but that breaks pretty much everything
-			Framework::refresh_opener($msg, $refresh_app, $content['id'], $change_color ? null : 'update', $this->appname);
+			Framework::refresh_opener($msg, $this->appname, $content['id'], $change_color ? null : 'update', $refresh_app);
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;

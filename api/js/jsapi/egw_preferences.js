@@ -150,8 +150,10 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 						}
 						else
 						{
+							delete query.current_app;
 							query.menuaction='preferences.preferences_categories_ui.index';
 							query.cats_app=current_app;
+							query.ajax = true;
 						}
 						egw.link_handler(egw.link(url, query), current_app);
 						break;

@@ -927,6 +927,11 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		}
 		// Call appropriate default / fallback refresh
 		var win = window;
+
+		// Preferences app is running under admin app, we need to trigger admin refersh
+		// in order to refresh categories list
+		_app = _app === 'preferences'?'admin':_app;
+
 		var app = this.getApplicationByName(_app);
 		if (app)
 		{
