@@ -88,7 +88,13 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 */
 	init: function()
 	{
-		// make calendar object available, even if not running in top window, as sidebox does
+		// categories have nothing to do with calendar, but eT2 objects loads calendars app.js
+		if (framework.applications.calendar.browser.currentLocation.match('menuaction=preferences\.preferences_categories_ui\.index'))
+		{
+			this._super.apply(this, arguments);
+			return;
+		}
+		else// make calendar object available, even if not running in top window, as sidebox does
 		if (window.top !== window && !egw(window).is_popup() && window.top.app.calendar)
 		{
 			window.app.calendar = window.top.app.calendar;
@@ -159,7 +165,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		this._super.apply(this, arguments);
 
 		// Avoid many problems with home
-		if(_et2.app !== 'calendar')
+		if(_et2.app !== 'calendar' || _name == 'admin.categories.index')
 		{
 			egw.loading_prompt(this.appname,false);
 			return;
@@ -293,14 +299,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 				break;
 			case 'calendar':
-				// Categories
-				if(this.state.view == '')
-				{
-					var iframe = this.sidebox_et2.getWidgetById('iframe');
-					if(!iframe) return;
-					iframe.set_src(iframe.node.src);
-					return false;
-				}
 				// Regular refresh
 				var event = false;
 				if(_id)
@@ -310,7 +308,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				if(event && event.data && event.data.date || _type === 'delete')
 				{
 					// Intelligent refresh without reloading everything
-					var recurrences = Object.keys(egw.dataSearchUIDs(new RegExp('^calendar::'+_id+':')))
+					var recurrences = Object.keys(egw.dataSearchUIDs(new RegExp('^calendar::'+_id+':')));
 					var ids = event && event.data.recur_type && typeof _id === 'string' && _id.indexOf(':') < 0 || recurrences.length ?
 						recurrences :
 						['calendar::'+_id];
@@ -349,7 +347,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 */
 	linkHandler: function(_url)
 	{
-		if (_url == 'about:blank')
+		if (_url == 'about:blank' || _url.match('menuaction=preferences\.preferences_categories_ui\.index'))
 		{
 			return false;
 		}
@@ -366,7 +364,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			delete q.ajax;
 			delete q.menuaction;
 			if(!view && q.view || q.view != view && view == 'index') view = q.view;
-			
+
 			// No specific view requested, looks like a reload from framework
 			if(this.sidebox_et2 && typeof view === 'undefined')
 			{
@@ -515,7 +513,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		}
 		else
 		{
-			var sortable = weekly
+			var sortable = weekly;
 			if(daily.sortable('instance')) daily.sortable('disable');
 		}
 		if(!sortable.sortable('instance'))
@@ -558,7 +556,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						// No duplicates, no empties
 						sortedArr = sortedArr.filter(function(value, index, self) {
 							return value !== '' && self.indexOf(value) === index;
-						})
+						});
 
 						var parent = null;
 						var children = [];
@@ -674,7 +672,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			app.calendar._scroll_disabled = true;
 
 			// Animate the transition, if possible
-			var widget = null
+			var widget = null;
 			template.widgetContainer.iterateOver(function(w) {
 				if (w.getDOMNode() == this) widget = w;
 			},this,et2_widget);
@@ -875,7 +873,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						// But we animate in the opposite direction to the swipe
 						var opposite = {"down": "up", "up": "down", "left": "right", "right": "left"};
 						direction = opposite[direction];
-						scroll_animate.call(jQuery(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta)
+						scroll_animate.call(jQuery(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta);
 						return false;
 					},
 					allowPageScroll: jQuery.fn.swipe.pageScroll.VERTICAL,
@@ -888,7 +886,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_UP, false, false, false, function() {
 				if(app.calendar.state.view == 'listview')
 				{
-					return false
+					return false;
 				}
 				scroll_animate.call(this,"up", -1);
 				return true;
@@ -896,7 +894,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			egw_registerGlobalShortcut(jQuery.ui.keyCode.PAGE_DOWN, false, false, false, function() {
 				if(app.calendar.state.view == 'listview')
 				{
-					return false
+					return false;
 				}
 				scroll_animate.call(this,"down", 1);
 				return true;
@@ -947,7 +945,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					// Remove loading spinner
 					function() {if(widget && widget.div) widget.div.removeClass('loading');}
 				).sendRequest(true);
-			}
+			};
 			if(dialog_button == 'series' && widget.options.value.recur_type)
 			{
 				widget.series_split_prompt(function(_button_id)
@@ -1351,7 +1349,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					// Able to extract something from the widget
 					context = _events[0].iface.getWidget().getValue ?
 						_events[0].iface.getWidget().getValue() :
-						_events[0].iface.getWidget().options.value || {}
+						_events[0].iface.getWidget().options.value || {};
 					extra = {};
 				}
 				// Try to pull whatever we can from the event
@@ -1684,8 +1682,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 * always has a start and end date) we need to call merge on the nextmatch
 	 * if the current view is listview, so the user gets the results they expect.
 	 *
-	 * @param Event event UI event
-	 * @param et2_widget widget Should be the merge selectbox
+	 * @param {Event} event UI event
+	 * @param {et2_widget} widget Should be the merge selectbox
 	 */
 	sidebox_merge: function(event, widget)
 	{
@@ -1697,7 +1695,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// menu and process it through the nextmatch
 			var nm = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm') || false;
 			var selected = nm ? nm.controller._objectManager.getSelectedLinks() : [];
-			var action = nm.controller._actionManager.getActionById('document_'+widget.getValue())
+			var action = nm.controller._actionManager.getActionById('document_'+widget.getValue());
 			if(nm && (!selected || !selected.length))
 			{
 				nm.controller._selectionMgr.selectAll(true);
@@ -1954,7 +1952,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			// Remove duplicates
 			state.state.owner = state.state.owner.filter(function(value, index, self) {
 				return self.indexOf(value) === index;
-			})
+			});
 			// Make sure they're all strings
 			state.state.owner = state.state.owner.map(function(owner) { return ''+owner;});
 			// Keep sort order
@@ -1985,7 +1983,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			switch(state.state.view)
 			{
 				case 'day':
-					grid_count = 1
+					grid_count = 1;
 					break;
 				case 'day4':
 				case 'week':
@@ -2062,7 +2060,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						var end = state.state.last = view.end_date(state.state).toJSON();
 						for(var owner = 0; owner < grid_count && owner < state.state.owner.length; owner++)
 						{
-							var _owner = grid_count > 1 ? state.state.owner[owner] || 0 : state.state.owner
+							var _owner = grid_count > 1 ? state.state.owner[owner] || 0 : state.state.owner;
 							value.push({
 								id: app.classes.calendar._daywise_cache_id(date,_owner),
 								start_date: date,
@@ -2651,7 +2649,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		var last_owner = value.length ? value[0].owner || 0 : 0;
 		for(var i = 0; i < value.length && !seperate_owners; i++)
 		{
-			seperate_owners = seperate_owners || (last_owner !== value[i].owner)
+			seperate_owners = seperate_owners || (last_owner !== value[i].owner);
 		}
 
 		for(var i = 0; i < value.length; i++)
@@ -2878,7 +2876,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 * callbacks.
 	 *
 	 * @param {Object} state Current state for update, used to determine what to update
-	 *
+	 * @param data
 	 */
 	_update_events: function(state, data) {
 		var updated_days = {};
@@ -2921,7 +2919,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				// Date must stay a string or we might cause problems with nextmatch
 				var dates = {
 					start: typeof record.data.start === 'string' ? record.data.start : record.data.start.toJSON(),
-					end: typeof record.data.end === 'string' ? record.data.end : record.data.end.toJSON(),
+					end: typeof record.data.end === 'string' ? record.data.end : record.data.end.toJSON()
 				};
 				if(dates.start.substr(0,10) !== dates.end.substr(0,10))
 				{
@@ -3010,9 +3008,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		* Take care of any timezone issues before you pass the dates in.
 		*
 		* @param {Date} first first date
-		* @param {Date} last=0 last date for range, or false for a single date
-		* @param {boolean} display_time=false should a time be displayed too
-		* @param {boolean} display_day=false should a day-name prefix the date, eg. monday June 20, 2006
+		* @param {Date} last =0 last date for range, or false for a single date
+		* @param {boolean} display_time =false should a time be displayed too
+		* @param {boolean} display_day =false should a day-name prefix the date, eg. monday June 20, 2006
 		* @return string with formatted date
 		*/
 		long_date: function(first, last, display_time, display_day)
@@ -3125,7 +3123,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		*
 		* We adjust the day, if user prefs want a different week-start-day
 		*
-		* @param string|Date date
+		* @param {string|Date} _date
 		* @return string
 		*/
 		week_number: function(_date)
@@ -3545,6 +3543,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 		/**
 		 * If one owner, get the owner text
+		 *
+		 * @param {object} state
 		 */
 		_owner: function(state) {
 			var owner = '';
@@ -3591,7 +3591,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		 * This is always the owner from the given state, we use a function
 		 * to trigger setting the widget value.
 		 *
-		 * @param {number[]|String} state.owner List of owner IDs, or a comma seperated list
+		 * @param {number[]|String} state state.owner List of owner IDs, or a comma seperated list
 		 * @returns {number[]|String}
 		 */
 		owner: function(state) {
@@ -3600,6 +3600,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		/**
 		 * Should the view show the weekends
 		 *
+		 * @param {object} state
 		 * @returns {boolean} Current preference to show 5 or 7 days in weekview
 		 */
 		show_weekend: function(state)
@@ -3608,6 +3609,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		},
 		/**
 		 * How big or small are the displayed time chunks?
+		 *
+		 * @param {object} state
 		 */
 		granularity: function(state) {
 			var list = egw.preference('use_time_grid','calendar');
@@ -3618,7 +3621,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			if(typeof list == 'string') list = list.split(',');
 			if(!list.indexOf && jQuery.isPlainObject(list))
 			{
-				list = jQuery.map(list, function(el) { return el });
+				list = jQuery.map(list, function(el) { return el; });
 			}
 			return list.indexOf(state.view) >= 0 ?
 				0 :
@@ -3745,7 +3748,7 @@ jQuery.extend(app.classes.calendar,{
 				}
 				return app.calendar.View._owner(state) + app.calendar.egw.lang('Week') + ' ' +
 					app.calendar.date.week_number(state.first) + ': ' +
-					app.calendar.date.long_date(state.first, end_date)
+					app.calendar.date.long_date(state.first, end_date);
 			},
 			start_date: function(state) {
 				return app.calendar.date.start_of_week(app.calendar.View.start_date.call(this,state));
@@ -3765,7 +3768,7 @@ jQuery.extend(app.classes.calendar,{
 				return  app.calendar.View._owner(state) + app.calendar.egw.lang('Week') + ' ' +
 					app.calendar.date.week_number(state.first) + ' - ' +
 					app.calendar.date.week_number(state.last) + ': ' +
-					app.calendar.date.long_date(state.first, state.last)
+					app.calendar.date.long_date(state.first, state.last);
 			},
 			start_date: function(state) {
 				return app.calendar.date.start_of_week(app.calendar.View.start_date.call(this,state));
@@ -3883,7 +3886,7 @@ jQuery.extend(app.classes.calendar,{
 				// Yearly view, grouped by month - scroll 1 month
 				if(app.calendar.state.sortby === 'month')
 				{
-					d.setUTCMonth(d.getUTCMonth() + delta)
+					d.setUTCMonth(d.getUTCMonth() + delta);
 					d.setUTCDate(1);
 					d.setUTCHours(0);
 					d.setUTCMinutes(0);
