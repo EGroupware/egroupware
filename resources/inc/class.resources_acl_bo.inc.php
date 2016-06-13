@@ -244,9 +244,8 @@ class resources_acl_bo
 
 		$GLOBALS['egw']->acl->delete_repository('resources','L' . $cat_id,false);
 
-		foreach($GLOBALS['egw']->accounts->get_list() as $num => $account)
+		foreach(array_unique(array_intersect($readcat, $writecat, $calreadcat, $calbookcat, $admincat)) as $account_id)
 		{
-			$account_id = $account['account_id'];
 			$rights = false;
 			$rights = in_array($account_id,$readcat) ? ($rights | Acl::READ) : false;
 			$rights = in_array($account_id,$writecat) ? ($rights | Acl::READ | Acl::ADD | Acl::EDIT | Acl::DELETE): $rights;
