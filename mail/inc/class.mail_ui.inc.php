@@ -1059,7 +1059,7 @@ class mail_ui
 		$actions['move2'.$this->mail_bo->profileID.self::$delimiter.$archiveFolder] = array( //toarchive
 			'caption' => 'Move to archive',
 			'hint' => 'move selected mails to archive',
-			'icon' => 'move',
+			'icon' => 'archive',
 			'group' => $group++,
 			'enabled' => 'javaScript:app.mail.archivefolder_enabled',
 			//'hideOnDisabled' => true, // does not work as expected on message-list
