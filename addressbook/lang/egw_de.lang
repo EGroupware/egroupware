@@ -99,6 +99,7 @@ categorie added	addressbook	de	Kategorie (n) hinzugefügt
 categorie delete	addressbook	de	Kategorie (n) gelöscht
 categories, notes, ...	addressbook	de	Kategorien, Notizen, ...
 category path	addressbook	de	Kategorien Pfad
+category tree	admin	de	Kategoriebaum
 cell phone	addressbook	de	Mobiltelefon
 change all organisation members	addressbook	de	Alle Mitglieder der Organisation ändern
 charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
