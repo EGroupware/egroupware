@@ -151,12 +151,7 @@
 
 	window.egw_LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:window.egw_webserverUrl+'/'});
 	var include = JSON.parse(egw_script.getAttribute('data-include'));
-	var jquery = include.shift();
-
-	window.egw_LAB.script([jquery]).wait(function(){
-			// tell jQuery to remove $, as EGroupware does NOT use it and it conflicts with eg. mootools
-			jQuery.noConflict();
-		}).script(include).wait(function()
+	window.egw_LAB.script(include).wait(function()
 	{
 		// call egw.link_handler, if attr specified
 		var egw_redirect = egw_script.getAttribute('data-egw-redirect');
