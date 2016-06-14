@@ -141,6 +141,18 @@ app.classes.addressbook = AppJS.extend(
 					// and updating it directly
 					egw.dataRefreshUID('addressbook::'+contact);
 				}
+				return true;
+			}
+			else if (!content)
+			{
+				// No data on the event, we'll have to reload if calendar column is visible
+				// to get the updated information
+				var nm = etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm')
+				var pref = nm ? nm._getPreferences() : false;
+				if(pref && pref.visible.indexOf('calendar_calendar') > -1)
+				{
+					nm.refresh(null,'update');
+				}
 			}
 		}
 
