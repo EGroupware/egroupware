@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8b794c96135d8b790c51780c3165db61",
-    "content-hash": "bdf96a3c1e221e78b881c4da11f67fcf",
+    "hash": "80680a7a70d1702ede01e6285703061e",
+    "content-hash": "4fc2d79cb30d5c041f0212fd789816ad",
     "packages": [
         {
             "name": "bower-asset/fastclick",
@@ -36,16 +36,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "2.2.4",
+            "version": "1.12.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jquery/jquery-dist.git",
-                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
+                "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/c0185ab7c75aab88762c5aae780b9d83b80eda72",
-                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72",
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/5e89585e0121e72ff47de177c5ef604f3089a53d",
+                "reference": "5e89585e0121e72ff47de177c5ef604f3089a53d",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -86,16 +86,16 @@
         },
         {
             "name": "bower-asset/jquery-ui",
-            "version": "1.11.4",
+            "version": "1.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jqueryui.git",
-                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
+                "reference": "396781474d936959061271505f506b78398fe6a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jqueryui/zipball/c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
-                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/396781474d936959061271505f506b78398fe6a2",
+                "reference": "396781474d936959061271505f506b78398fe6a2",
                 "shasum": ""
             },
             "require": {
@@ -286,7 +286,7 @@
             "version": "2.1.5",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Compress-2.1.5.tgz",
+                "url": "https://pear.horde.org/get/Horde_Compress-2.1.5.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -319,7 +319,7 @@
             "version": "1.1.1",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.1.tgz",
+                "url": "https://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -350,7 +350,7 @@
             "version": "2.3.0",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Date-2.3.0.tgz",
+                "url": "https://pear.horde.org/get/Horde_Date-2.3.0.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -382,7 +382,7 @@
             "version": "2.0.8",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Exception-2.0.8.tgz",
+                "url": "https://pear.horde.org/get/Horde_Exception-2.0.8.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -412,7 +412,7 @@
             "version": "2.1.4",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Icalendar-2.1.4.tgz",
+                "url": "https://pear.horde.org/get/Horde_Icalendar-2.1.4.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -447,7 +447,7 @@
             "version": "1.0.4",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Idna-1.0.4.tgz",
+                "url": "https://pear.horde.org/get/Horde_Idna-1.0.4.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -518,7 +518,7 @@
             "version": "1.2.4",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_ListHeaders-1.2.4.tgz",
+                "url": "https://pear.horde.org/get/Horde_ListHeaders-1.2.4.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -550,7 +550,7 @@
             "version": "2.6.3",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Mail-2.6.3.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mail-2.6.3.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -585,7 +585,7 @@
             "version": "1.0.1",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_ManageSieve-1.0.1.tgz",
+                "url": "https://pear.horde.org/get/Horde_ManageSieve-1.0.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -617,7 +617,7 @@
             "version": "1.0.8",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Mapi-1.0.8.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mapi-1.0.8.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -687,7 +687,7 @@
             "version": "2.2.0",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Nls-2.2.0.tgz",
+                "url": "https://pear.horde.org/get/Horde_Nls-2.2.0.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -718,7 +718,7 @@
             "version": "2.0.6",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Secret-2.0.6.tgz",
+                "url": "https://pear.horde.org/get/Horde_Secret-2.0.6.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -751,7 +751,7 @@
             "version": "1.9.3",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Smtp-1.9.3.tgz",
+                "url": "https://pear.horde.org/get/Horde_Smtp-1.9.3.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -786,7 +786,7 @@
             "version": "2.1.1",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Socket_Client-2.1.1.tgz",
+                "url": "https://pear.horde.org/get/Horde_Socket_Client-2.1.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -816,7 +816,7 @@
             "version": "1.6.3",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Stream-1.6.3.tgz",
+                "url": "https://pear.horde.org/get/Horde_Stream-1.6.3.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -846,7 +846,7 @@
             "version": "2.0.4",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Stream_Filter-2.0.4.tgz",
+                "url": "https://pear.horde.org/get/Horde_Stream_Filter-2.0.4.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -875,7 +875,7 @@
             "version": "2.1.3",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Stream_Wrapper-2.1.3.tgz",
+                "url": "https://pear.horde.org/get/Horde_Stream_Wrapper-2.1.3.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -904,7 +904,7 @@
             "version": "2.1.5",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Support-2.1.5.tgz",
+                "url": "https://pear.horde.org/get/Horde_Support-2.1.5.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -936,7 +936,7 @@
             "version": "2.0.3",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Text_Flowed-2.0.3.tgz",
+                "url": "https://pear.horde.org/get/Horde_Text_Flowed-2.0.3.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -966,7 +966,7 @@
             "version": "2.2.1",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Translation-2.2.1.tgz",
+                "url": "https://pear.horde.org/get/Horde_Translation-2.2.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -995,7 +995,7 @@
             "version": "2.5.7",
             "dist": {
                 "type": "file",
-                "url": "http://pear.horde.org/get/Horde_Util-2.5.7.tgz",
+                "url": "https://pear.horde.org/get/Horde_Util-2.5.7.tgz",
                 "reference": null,
                 "shasum": null
             },

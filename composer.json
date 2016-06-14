@@ -27,10 +27,10 @@
 		"pear-pear.php.net/XML_Feed_Parser": "*",
 		"pear-pear.php.net/Log": "*",
 		"pear-pear.php.net/Text_Diff": "*",
-		"bower-asset/jquery": "2.2.*",
+		"bower-asset/jquery": "1.12.4",
 		"bower-asset/fastclick":"1.0.*",
 		"bower-asset/jquery-touchswipe": "1.6.*",
-		"bower-asset/jquery-ui":"1.11.*",
+		"bower-asset/jquery-ui":"1.11.2",
 		"npm-asset/as-jqplot" : "1.0.*",
 		"npm-asset/gridster":"0.5.*"
 	}
