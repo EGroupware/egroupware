@@ -354,26 +354,19 @@
 			this._super.apply(this,arguments);
 			this.setSidebarState(this.activeApp.preferences.toggleMenu);
 			var self = this;
-			var $apps = jQuery('#egw_fw_appsToggle');
 			var $user = jQuery('#egw_fw_userinfo .user');
 
 			var $avatar = jQuery('#egw_fw_userinfo .avatar img');
 			$avatar.attr('src', egw.webserverUrl + '/index.php?menuaction=addressbook.addressbook_ui.photo&account_id=' + egw.user('account_id'));
+
 			var $sidebar = jQuery('#egw_fw_sidebar');
 			$sidebar.removeClass('avatarSubmenu');
+			this.updateAppsToggle();
 			// Open edit contact on click
 			$avatar.off().on('click',function(){
 				$sidebar.toggleClass('avatarSubmenu',!$sidebar.hasClass('avatarSubmenu'));
 			});
-			$apps.attr('style','');
-			$apps.off().on('click',function(){
-				var $sidebar = jQuery('#'+egw.app_name()+'_sidebox_content');
-				$sidebar.toggle();
-				jQuery(this).css({
-					'background-image':'url('+egw.webserverUrl+'/' + ($sidebar.is(":visible")?'pixelegg/images/apps.svg':egw.app_name()+'/templates/mobile/images/navbar.svg)')
-				});
 
-			});
 
 		},
 
@@ -630,6 +623,7 @@
 		applicationClickCallback: function(_sender)
 		{
 			this._super.apply(this,arguments);
+			framework.updateAppsToggle();
 		},
 
 		/**
@@ -934,6 +928,21 @@
 			var index = _index || 1;
 			history.pushState({type:_type, index:_index}, _type, '#'+ egw.app_name()+"."+_type);
 			history.pushState({type:_type, index:_index}, _type, '#'+ egw.app_name()+"."+_type + '#' + index);
+		},
+
+		updateAppsToggle: function ()
+		{
+			var $apps = jQuery('#egw_fw_appsToggle');
+			var $sidebar = jQuery('#egw_fw_sidebar');
+			$apps.attr('style','');
+			$apps.off().on('click',function(){
+				var $sidebar = jQuery('#'+egw.app_name()+'_sidebox_content');
+				$sidebar.toggle();
+				jQuery(this).css({
+					'background-image':'url('+egw.webserverUrl+'/' + ($sidebar.is(":visible")?'pixelegg/images/apps.svg':egw.app_name()+'/templates/mobile/images/navbar.svg)')
+				});
+
+			});
 		}
 	});
 
