@@ -172,6 +172,22 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			'default' => 'sendifnocalnotif',
 			'admin'  => False,
 		);
+/*
+		$settings['mail-useSignature'] = array(
+			'type'   => 'select',
+			'label'  => 'control if and which available signature is added to outgoing mails',
+			'name'   => 'mail-useSignature',
+			'help'   => 'control the use of signatures',
+			'values' => array(
+				'sendifnocalnotif'=>'only send if there is no notification in calendar',
+				'send'=>'yes, always add EGroupware signatures to outgoing mails',
+				'nosend'=>'no, never add EGroupware signatures to outgoing mails',
+			),
+			'xmlrpc' => True,
+			'default' => 'nosend',
+			'admin'  => False,
+		);
+*/
 		return $settings;
 	}
 
@@ -1190,29 +1206,11 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 *
      * @param string $fid - id
      * @param string $attname - should contain (folder)id
-	 * @return true, prints the content of the attachment
+	 * @return SyncItemOperationsAttachment-object
 	 */
 	function GetAttachmentData($fid,$attname) {
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')".function_backtrace());
-		//error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
-		list($folderid, $id, $part) = explode(":", $attname);
-
-		$this->splitID($folderid, $account, $folder);
-
-		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
-
-		$this->mail->reopen($folder);
-		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
-        $SIOattachment = new SyncItemOperationsAttachment();
-		fseek($attachment['attachment'], 0, SEEK_SET);	// z-push requires stream seeked to start
-        $SIOattachment->data = $attachment['attachment'];
-		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname') Data:".$attachment['attachment']);
-        if (isset($attachment['type']) )
-            $SIOattachment->contenttype = $attachment['type'];
-
-		unset($attachment);
-
-        return $SIOattachment;
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')");
+		return $this->_GetAttachmentData($fid,$attname);
 	}
 
 	/**
@@ -1226,6 +1224,21 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @return SyncItemOperationsAttachment-object
 	 */
 	function ItemOperationsGetAttachmentData($fid,$attname) {
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')");
+		return $this->_GetAttachmentData($fid,$attname);
+	}
+
+	/**
+	 * _GetAttachmentData implements
+	 * -ItemOperationsGetAttachmentData
+	 * -GetAttachmentData
+	 *
+     * @param string $fid - id
+     * @param string $attname - should contain (folder)id
+	 * @return SyncItemOperationsAttachment-object
+	 */
+	private function _GetAttachmentData($fid,$attname)
+	{
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')".function_backtrace());
 		//error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
 		list($folderid, $id, $part) = explode(":", $attname);
@@ -1236,15 +1249,16 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
-        $SIOattachment = new SyncItemOperationsAttachment();
+		$SIOattachment = new SyncItemOperationsAttachment();
 		fseek($attachment['attachment'], 0, SEEK_SET);	// z-push requires stream seeked to start
-        $SIOattachment->data = $attachment['attachment'];
-        if (isset($attachment['type']) )
-            $SIOattachment->contenttype = $attachment['type'];
+		$SIOattachment->data = $attachment['attachment'];
+		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname') Data:".$attachment['attachment']);
+		if (isset($attachment['type']) )
+			$SIOattachment->contenttype = $attachment['type'];
 
 		unset($attachment);
 
-        return $SIOattachment;
+		return $SIOattachment;
 	}
 
 	/**
