@@ -1458,12 +1458,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			if ($maxMessages > 75)
 			{
+				$rByUid = true;
 				$_sR = $mail_ui->mail_bo->getSortedList(
 					$_folderName,
 					$sort,
 					$reverse,
 					$filter,
-					$rByUid=true
+					$rByUid
 				);
 				$rowsFetched['messages'] = $_sR['count'];
 				$ids = $_sR['match']->ids;
@@ -4568,12 +4569,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						{
 							$filter2toggle['status'][] = $query['filter'];
 						}
+						$rByUid = true;
+						$reverse = 1;
 						$_sRt = $this->mail_bo->getSortedList(
 							$folder,
 							$sort=0,
-							$reverse=1,
+							$reverse,
 							$filter2toggle,
-							$rByUid=true,
+							$rByUid,
 							false
 						);
 						$messageListForToggle = $_sRt['match']->ids;
@@ -4582,12 +4585,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						{
 							$filter['status'][] = $query['filter'];
 						}
+						$rByUid=true;
+						$reverse = 1;
 						$_sR = $this->mail_bo->getSortedList(
 							$folder,
 							$sort=0,
-							$reverse=1,
+							$reverse,
 							$filter,
-							$rByUid=true,
+							$rByUid,
 							false
 						);
 						$messageList = $_sR['match']->ids;
@@ -4617,12 +4622,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$_flag = ($query['filter']=='unseen' && $_flag=='read' ? 'read' : ($query['filter']=='seen'&& $_flag=='read'?'unread':($_flag==$query['filter']?'un'.$_flag:$_flag)));
 						}
 						if(Mail::$debug) error_log(__METHOD__.__LINE__." flag all with $_flag on filter used:".array2string($filter));
+						$rByUid = true;
+						$reverse = 1;
 						$_sR = $this->mail_bo->getSortedList(
 							$folder,
 							$sort=0,
-							$reverse=1,
+							$reverse,
 							$filter,
-							$rByUid=true,
+							$rByUid,
 							false
 						);
 						$messageList = $_sR['match']->ids;
