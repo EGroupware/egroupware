@@ -417,25 +417,77 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			{
 				if (typeof holidays[i]['birthyear'] !== 'undefined')
 				{
-					this.title.addClass('calendar_calBirthday');
-
-					//If the birthdays are already displayed as event, don't
-					//show them in the caption
-					if (!this.options.display_birthday_as_event)
+					// Show holidays as events on mobile
+					if(egwIsMobile())
 					{
+						// Create event
+						this._parent.date_helper.set_value(this.options.date.substring(0,4)+'-'+
+							(this.options.date.substring(4,6))+'-'+this.options.date.substring(6,8)+
+							'T00:00:00Z');
+						var event = et2_createWidget('calendar-event',{
+							id:'event_'+holidays[i].name,
+							value: {
+								title: holidays[i].name,
+								whole_day: true,
+								whole_day_on_top: true,
+								start: new Date(this._parent.date_helper.get_value()),
+								end: this.options.date,
+								owner: this.options.owner,
+								participants: this.options.owner,
+								app: 'calendar'
+							},
+							readonly: true,
+							class: 'calendar_calBirthday'
+						},this);
+						event.doLoadingFinished();
+						event._update();
+					}
+					else
+					{
+						//If the birthdays are already displayed as event, don't
+						//show them in the caption
+						this.title.addClass('calendar_calBirthday');
 						holiday_list.push(holidays[i]['name']);
 					}
 				}
 				else
 				{
-					this.title.addClass('calendar_calHoliday');
-					this.title.attr('data-holiday', holidays[i]['name']);
-
-					//If the birthdays are already displayed as event, don't
-					//show them in the caption
-					if (!this.options.display_holiday_as_event)
+					// Show holidays as events on mobile
+					if(egwIsMobile())
 					{
-						holiday_list.push(holidays[i]['name']);
+						// Create event
+						this._parent.date_helper.set_value(this.options.date.substring(0,4)+'-'+
+							(this.options.date.substring(4,6))+'-'+this.options.date.substring(6,8)+
+							'T00:00:00Z');
+						var event = et2_createWidget('calendar-event',{
+							id:'event_'+holidays[i].name,
+							value: {
+								title: holidays[i].name,
+								whole_day: true,
+								whole_day_on_top: true,
+								start: new Date(this._parent.date_helper.get_value()),
+								end: this.options.date,
+								owner: this.options.owner,
+								participants: this.options.owner,
+								app: 'calendar'
+							},
+							readonly: true,
+							class: 'calendar_calHoliday'
+						},this);
+						event.doLoadingFinished();
+						event._update();
+					}
+					else
+					{
+						this.title.addClass('calendar_calHoliday');
+						this.title.attr('data-holiday', holidays[i]['name']);
+
+						//If the birthdays are already displayed as event, don't
+						//show them in the caption
+						if (!this.options.display_holiday_as_event)
+						{
+							holiday_list.push(holidays[i]['name']);
+						}
 					}
 				}
 			}
@@ -498,6 +550,13 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			}
 		}
 
+
+		// Show holidays as events on mobile
+		if(egwIsMobile())
+		{
+			this.day_class_holiday();
+		}
+		
 		// Apply styles to hidden events
 		this._out_of_view();
 	},

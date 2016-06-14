@@ -121,16 +121,6 @@ class calendar_uiviews extends calendar_ui
 	var $allowEdit = true;
 
 	/**
-	 * Display holidays as event, currenlty only used in day-view
-	 *
-	 * @var array
-	 */
-	var $display_holiday_event_types = array(
-		'bdays' => false,
-		'hdays' => false
-	);
-
-	/**
 	 * Constructor
 	 *
 	 * @param array $set_states = null to manualy set / change one of the states, default NULL = use $_REQUEST
