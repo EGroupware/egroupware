@@ -909,6 +909,7 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 	 */
 	_get_accounts: function()
 	{
+		var existing = [];
 		if (!jQuery.isArray(this.options.select_options))
 		{
 			var options = jQuery.extend({}, this.options.select_options);
@@ -927,6 +928,14 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 				{
 					this.options.select_options.push({value: key, label: options[key]});
 				}
+				existing.push(key);
+			}
+		}
+		else
+		{
+			for(var i = 0; i < this.options.select_options.length; i++)
+			{
+				existing.push(this.options.select_options[i].value);
 			}
 		}
 		var type = this.egw().preference('account_selection', 'common');
@@ -944,7 +953,15 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 		{
 			accounts = this.egw().accounts(this.options.account_type);
 		}
-		return this.options.select_options.concat(accounts);
+		for(var i = 0; i < accounts.length; i++)
+		{
+			if(existing.indexOf(accounts[i].value) === -1)
+			{
+				this.options.select_options.push(accounts[i]);
+			}
+		}
+
+		return this.options.select_options;
 	},
 
 	int_reg_exp: /^-?[0-9]+$/,
@@ -964,16 +981,16 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 			var v = values[i];
 			var result = [];
 			if (typeof v == 'object' && v.id === v.label) v = v.id;
-			if (this.options.select_options &&
+			if (this.options.select_options && (
 				// Check options
-				(result = jQuery.grep(this.options.select_options, function(e) {
+				((result = jQuery.grep(this.options.select_options, function(e) {
 					return e.id == v;
-				})) ||
+				})) && result.length) ||
 				// Check current selection to avoid going back to server
-				(result = jQuery.grep(this.taglist.getSelection(), function(e) {
+				(this.taglist && (result = jQuery.grep(this.taglist.getSelection(), function(e) {
 					return e.id == v;
-				}))
-			)
+				})) && result.length)
+			))
 			{
 				// Options should have been provided, but they weren't
 				// This can happen for ajax source with an existing value
