@@ -70,6 +70,9 @@ a:hover,a:active
 
 .pageGenTime {
 	margin-top: 1em;
+	position: absolute;
+	bottom:-18px;
+	left:25%;
 }
 
 .pageGenTime > span:after {

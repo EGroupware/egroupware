@@ -564,9 +564,6 @@ div.mail-compose_fileselector {
 #mail-display_mailDisplayBodySrc {
 	height:100%;
 }
-#divGenTime_mail {
-	display: none;
-}
 div.mail-display > div:first-parent > div.first-parent
 {
 	height: 99%;
