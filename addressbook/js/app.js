@@ -294,7 +294,7 @@ app.classes.addressbook = AppJS.extend(
 		}
 		else
 		{
-			var ids = "";
+			var ids = egw.user('account_id')+',';
 			for (var i = 0; i < _senders.length; i++)
 			{
 				// Remove UID prefix for just contact_id
