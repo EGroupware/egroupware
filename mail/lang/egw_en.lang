@@ -258,6 +258,7 @@ importance	mail	en	importance
 important	mail	en	important
 in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2, and PartID: %3
 inbox	mail	en	INBOX
+initialization of mail failed. Please use the Wizard to cope with the problem.	mail	en	Initialization of mail failed. Please use the Wizard to cope with the problem.
 inline	mail	en	Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 job	mail	en	job
