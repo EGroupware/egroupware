@@ -168,6 +168,7 @@ class mail_tree
 	{
 		//Init mail folders
 		$tree = array(Tree::ID=> $_parent?$_parent:0,Tree::CHILDREN => array());
+		if (!isset($this->ui->mail_bo)) throw new Api\Exception\WrongUserinput(lang('Initialization of mail failed. Please use the Wizard to cope with the problem'));
 		$hDelimiter = $this->ui->mail_bo->getHierarchyDelimiter();
 
 		if ($_parent) list($_profileID) = explode(self::DELIMITER, $_parent);

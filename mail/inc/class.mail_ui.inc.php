@@ -240,7 +240,7 @@ class mail_ui
 		$this->mail_bo = Mail::getInstance(false,self::$icServerID,true, false, true);
 		if (Mail::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
-		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID)
+		if (!isset($this->mail_bo) || !isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID)
 		{
 			self::$icServerID = $_icServerID;
 			throw new Api\Exception('Profile change failed!');
@@ -420,6 +420,7 @@ class mail_ui
 	{
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		try	{
+				if (!isset($this->mail_bo)) throw new Api\Exception\WrongUserinput(lang('Initialization of mail failed. Please use the Wizard to cope with the problem.')); 
 				//error_log(__METHOD__.__LINE__.function_backtrace());
 				if (Mail::$debugTimes) $starttime = microtime (true);
 				$this->mail_bo->restoreSessionData();
@@ -573,16 +574,19 @@ class mail_ui
 		{
 			// do not exit here. mail-tree should be build. if we exit here, we never get there.
 			error_log(__METHOD__.__LINE__.$e->getMessage().($e->details?', '.$e->details:'').' Menuaction:'.$_GET['menuaction'].'.'.function_backtrace());
-			if (empty($etpl))
+			if (isset($this->mail_bo))
 			{
-				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
-				$etpl = new Etemplate('mail.index');
+				if (empty($etpl))
+				{
+					$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+					$etpl = new Etemplate('mail.index');
+				}
+				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions(false));
 			}
-			$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions(false));
 			$readonlys = $preserv = array();
 			if (empty($content)) $content=array();
 
-			self::callWizard($e->getMessage().$e->getMessage().($e->details?', '.$e->details:''),false, 'error',false);
+			self::callWizard($e->getMessage().($e->details?', '.$e->details:''),(isset($this->mail_bo)?false:true), 'error',false);
 			//return false;
 		}
 		// Check preview pane is enabled, then show spliter
