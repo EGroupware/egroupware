@@ -35,7 +35,8 @@ class resources_acl_ui
 		'read' => Acl::READ,
 		'write' => Acl::ADD,
 		'calread' => resources_acl_bo::CAL_READ,
-		'calwrite' => resources_acl_bo::DIRECT_BOOKING
+		'calwrite' => resources_acl_bo::DIRECT_BOOKING,
+		'admin' => resources_acl_bo::CAT_ADMIN
 	);
 
 	function __construct()
@@ -64,7 +65,7 @@ class resources_acl_ui
 			'row_id'         => 'id',    // I  key into row content to set it's value as row-id, eg. 'id'
 			'parent_id'      =>	'parent',// I  key into row content of children linking them to their parent, also used as col_filter to query children
 			'dataStorePrefix'=> 'categories',// Avoid conflict with user list when in admin
-			'actions'        => $this->get_actions(),    // I  array with actions, see nextmatch_widget::egw_actions
+			'actions'        => self::get_actions(),    // I  array with actions, see nextmatch_widget::egw_actions
 			'placeholder_actions' => array('add')    //  I Array Optional list of actions allowed on the placeholder.  If not provided, it's ["add"].
 		);
 		$template = new Etemplate('resources.acl');
@@ -73,7 +74,7 @@ class resources_acl_ui
 		$template->exec(__METHOD__, $content, $sel_options, $readonlys);
 	}
 	
-	protected function get_actions($appname='resources') {
+	protected static function get_actions($appname='resources') {
 
 		$actions = array(
 			'open' => array(        // does edit if allowed, otherwise view
@@ -163,6 +164,10 @@ class resources_acl_ui
 		{
 			$this->deny();
 		}
+
+		$config = Api\Config::read('resources');
+		$location_cats = $config['location_cats'] ? explode(',', $config['location_cats']) : array();
+
 		if (!isset($content))
 		{
 			if (!(isset($_GET['cat_id']) && $_GET['cat_id'] > 0 &&
@@ -193,8 +198,18 @@ class resources_acl_ui
 						try {
 							$cats->edit($content);
 							resources_acl_bo::set_rights(
-								$content['id'], $content['read'], $content['write'], $content['calread'], $content['calwrite'], null
+								$content['id'], $content['read'], $content['write'], $content['calread'], $content['calwrite'], Array($content['admin'])
 							);
+							if($content['location'])
+							{
+								$location_cats[] = $content['id'];
+								$location_cats = array_unique($location_cats);
+							}
+							else if(($key = array_search($content['id'], $location_cats)) !== false)
+							{
+								unset($location_cats[$key]);
+							}
+							config::save_value('location_cats', implode(',', $location_cats), 'resources');
 							$msg = lang('Category saved.');
 						}
 						catch (Api\Exception\WrongUserinput $e)
@@ -224,24 +239,24 @@ class resources_acl_ui
 			$content['icon_url'] = $content['base_url'] . $content['data']['icon'];
 		}
 
-		// Make sure $content['owner'] is an array otherwise it wont show up values in the multiselectbox
-		if($content['owner'] == 0)
-		{
-			unset($content['owner']);
-		}
-		else if (!is_array($content['owner']))
-		{
-			$content['owner'] = explode(',',$content['owner']);
-		}
 
 		foreach(self::$acl_map as $field => $acl)
 		{
 			$content[$field] = $GLOBALS['egw']->acl->get_ids_for_location('L'.$content['id'], $acl, 'resources');
 		}
 
+		// Make sure $content['admin'] is an array otherwise it wont show up values in the multiselectbox
+		if($content['admin'] == 0)
+		{
+			unset($content['admin']);
+		}
+		else if (!is_array($content['admin']))
+		{
+			$content['admin'] = explode(',',$content['admin']);
+		}
+
 		// Location
-		$config = Api\Config::read('resources');
-		$content['location'] = in_array($content['id'],$config['location_cats'] ? explode(',', $config['location_cats']) : array());
+		$content['location'] = in_array($content['id'],$location_cats);
 
 		$tmpl = new Etemplate('resources.acl_edit');
 		$tmpl->exec('resources.resources_acl_ui.edit',$content,$sel_options,$readonlys,$content,2);

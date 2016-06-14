@@ -18,8 +18,8 @@
 					<textbox multiline="true" id="description" rows="5" cols="50" readonly="true"/>
 				</row>
 				<row>
-					<description value="Category owner" for="owner"/>
-					<select-account id="owner" account_type="both" needed="1" multiple="true" tags="true"/>
+					<description value="Category admin" for="admin"/>
+					<select-account id="admin" account_type="both" tags="true" empty_label="Choose categories admin"/>
 				</row>
 				<row class="nmr" disabled="@no_private">
 					<description value="Locations / rooms"/>

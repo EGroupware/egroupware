@@ -7,6 +7,7 @@
 				<column width="20%"/>
 				<column width="50"/>
 				<column width="150"/>
+				<column width="150"/>
 				<column width="50"/>
 				<column width="150"/>
 				<column width="150"/>
@@ -16,17 +17,18 @@
 			<rows>
 				<row class="th">
 					<nextmatch-header label="Category" id="id"/>
-					<nextmatch-header label="icon"/>
-					<nextmatch-header statustext="Category admin" id="owner" empty_label="Category admin"/>
-					<nextmatch-header id="location" empty_label="Locations / rooms"/>
-					<nextmatch-header label="Read permissions" />
+					<nextmatch-header label="Icon" id="icon"/>
+					<nextmatch-header statustext="Category admin" id="admin" label="Category admin"/>
+					<nextmatch-header statustext="Category admin" id="owner" label="Category owner"/>
+					<nextmatch-header id="location" label="Locations / rooms"/>
+					<nextmatch-header label="Read permissions" id="read"/>
 					<vbox>
-						<nextmatch-header label="Write permissions" />
+						<nextmatch-header label="Write permissions" id="write" />
 						<description label="implies read permission"/>
 					</vbox>
-					<nextmatch-header label="Read Calendar permissions" />
+					<nextmatch-header label="Read Calendar permissions" id="calread"/>
 					<vbox>
-						<nextmatch-header label="Direct booking permissions" />
+						<nextmatch-header label="Direct booking permissions" id="calwrite"/>
 						<description label="implies booking permission"/>
 					</vbox>
 				</row>
@@ -36,6 +38,9 @@
 						<description id="${row}[name]" class="$row_cont[class]"/>
 					</hbox>
 					<image align="center" src="${row}[icon_url]"/>
+					<menulist>
+						<menupopup type="select-account" id="${row}[admin]" readonly="true" options="All users,groups"/>
+					</menulist>
 					<menulist>
 						<menupopup type="select-account" id="${row}[owner]" readonly="true" options="All users,groups"/>
 					</menulist>
