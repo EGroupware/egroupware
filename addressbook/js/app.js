@@ -872,7 +872,7 @@ app.classes.addressbook = AppJS.extend(
 			},this).sendRequest(true);
 			return false;
 		}
-		return 
+		return this._super.apply(this, arguments);
 	},
 
 	/**
