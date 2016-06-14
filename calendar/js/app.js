@@ -15,6 +15,7 @@
 	/calendar/js/et2_widget_owner.js;
 	/calendar/js/et2_widget_timegrid.js;
 	/calendar/js/et2_widget_planner.js;
+	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
 */
 
 /**
@@ -850,7 +851,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		*/
 		if(typeof framework !== 'undefined' && framework.applications.calendar && framework.applications.calendar.tab)
 		{
-			jQuery(framework.applications.calendar.tab.contentDiv).swipe('destroy')
+			jQuery(framework.applications.calendar.tab.contentDiv)
+				.swipe('destroy');
+
+			jQuery(framework.applications.calendar.tab.contentDiv)
 				.swipe({
 					//Generic swipe handler for all directions
 					swipe:function(event, direction, distance, duration, fingerCount) {
