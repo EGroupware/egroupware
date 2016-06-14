@@ -225,6 +225,12 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					}
 				}
 				this.alarm_custom_date();
+
+				// If title is pre-filled for a new (no ID) event, highlight it
+				if(content.data && !content.data.id && content.data.title)
+				{
+					this.et2.getWidgetById('title').input.select();
+				}
 				break;
 
 			case 'calendar.freetimesearch':
