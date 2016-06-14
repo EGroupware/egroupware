@@ -90,7 +90,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	init: function()
 	{
 		// categories have nothing to do with calendar, but eT2 objects loads calendars app.js
-		if (framework.applications.calendar.browser.currentLocation.match('menuaction=preferences\.preferences_categories_ui\.index'))
+		if (framework && framework.applications.calendar.browser &&
+			framework.applications.calendar.browser.currentLocation.match('menuaction=preferences\.preferences_categories_ui\.index'))
 		{
 			this._super.apply(this, arguments);
 			return;
