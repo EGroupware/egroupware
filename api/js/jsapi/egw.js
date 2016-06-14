@@ -154,6 +154,9 @@
 
 	window.egw_LAB.script(include).wait(function()
 	{
+		// tell jQuery to remove $, as EGroupware does NOT use it and it conflicts with eg. mootools
+		jQuery.noConflict();
+
 		// call egw.link_handler, if attr specified
 		var egw_redirect = egw_script.getAttribute('data-egw-redirect');
 		if (egw_redirect)
