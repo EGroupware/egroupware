@@ -1020,10 +1020,9 @@ ul.et2_link_string {
 	padding-right: 0;
 }
 .et2_taglist div.ms-ctn input {
-	padding: 3px 5px;
+	padding: 3px 0px;
 	min-width:20px;
-	max-width: 93% !important;
-	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .et2_taglist .ms-res-ctn .ms-res-item {
