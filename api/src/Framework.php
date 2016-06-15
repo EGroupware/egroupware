@@ -168,6 +168,7 @@ abstract class Framework extends Framework\Extra
 
 			// allways load jquery (not -ui) first
 			'/vendor/bower-asset/jquery/dist/jquery.js',
+			'/api/js/jquery/jquery.noconflict.js',
 			// always include javascript helper functions
 			'/api/js/jsapi/jsapi.js',
 			'/api/js/jsapi/egw.js',

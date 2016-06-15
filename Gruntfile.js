@@ -54,6 +54,7 @@ module.exports = function (grunt) {
 				files: {
 					"api/js/jsapi.min.js": [
 						"vendor/bower-asset/jquery/dist/jquery.js",
+						"api/js/jquery/jquery.noconflict.js",
 						"vendor/bower-asset/jquery-ui/jquery-ui.js",
 						"api/js/jsapi/jsapi.js",
 						"api/js/egw_json.js",

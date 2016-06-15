@@ -1,0 +1,16 @@
+/**
+ * EGroupware API: switch jQuery to NOT use $ as early as possible
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage ajax
+ * @author Ralf Becker <rb@stylite.de>
+ * @version $Id$
+ */
+
+/*egw:uses
+	/vendor/bower-asset/jquery/dist/jquery.js;
+*/
+
+jQuery.noConflict();
