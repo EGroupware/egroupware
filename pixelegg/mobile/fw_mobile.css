@@ -8002,6 +8002,9 @@ form[id^="tracker-"] .dialogHeadbar {
   body .et2_taglist.ui-state-active.expanded .ms-res-ctn.dropdown-menu {
     min-height: 100px;
   }
+  body .et2_taglist.ui-state-active.expanded .ms-res-ctn.dropdown-menu .ms-res-item {
+    line-height: 25px;
+  }
   body .et2_mobile_view {
     display: block;
   }
