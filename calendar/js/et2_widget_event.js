@@ -494,7 +494,8 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			cat.destroy();
 		}
 
-		return '<div class="calendar_calEventTooltip ' + this._status_class() + '" style="border-color: '+border+'; background-color: '+bg_color+';">'+
+		return '<div class="calendar_calEventTooltip ' + this._status_class() +' '+ this.options.class +
+			'" style="border-color: '+border+'; background-color: '+bg_color+';">'+
 			'<div class="calendar_calEventHeaderSmall">'+
 				'<font style="color:'+header_color+'">'+timespan+'</font>'+
 				this.icons[0].outerHTML+

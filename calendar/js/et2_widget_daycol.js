@@ -434,7 +434,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 								end: this.options.date,
 								owner: this.options.owner,
 								participants: this.options.owner,
-								app: 'calendar'
+								app: 'calendar',
+								class: 'calendar_calBirthday'
 							},
 							readonly: true,
 							class: 'calendar_calBirthday'
@@ -469,7 +470,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 								end: this.options.date,
 								owner: this.options.owner,
 								participants: this.options.owner,
-								app: 'calendar'
+								app: 'calendar',
+								class: 'calendar_calBirthday'
 							},
 							readonly: true,
 							class: 'calendar_calHoliday'
