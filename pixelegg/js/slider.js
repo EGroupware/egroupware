@@ -129,7 +129,7 @@ egw_LAB.wait(function() {
 
 		// hide header, if pref says it is not shown
 		if (egw.preference('pixelegg_header_hidden')) {
-			hide_pixelegg_header(jQuery('#slidetoggle'),0);
+			setTimeout(function(){hide_pixelegg_header(jQuery('#slidetoggle'),0)},1);
 		}
 
 	});
@@ -160,8 +160,8 @@ egw_LAB.wait(function() {
 		},
 		mouseout: function(ev){
 			// do NOT react on bubbeling events from contained selectbox
-			if (ev.target && ev.relatedTarget && ev.target.id != 'quick_add_selectbox' 
-					&& ev.relatedTarget.id != 'quick_add' 
+			if (ev.target && ev.relatedTarget && ev.target.id != 'quick_add_selectbox'
+					&& ev.relatedTarget.id != 'quick_add'
 					&& ev.relatedTarget.id !='quick_add_selectbox'
 					&& ev.relatedTarget.tagName != "OPTION")
 			{
