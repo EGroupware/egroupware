@@ -24,7 +24,7 @@ matrix:
 sudo: false
 
 before_script:
-  - for app in activesync tracker projectmanager bookmarks news_admin registration phpbrain wiki sambaadmin sitemgr phpfreechat ; do git clone https://github.com/EGroupware/$app.git ; done
+  - for app in activesync tracker projectmanager bookmarks news_admin registration phpbrain wiki sambaadmin sitemgr phpfreechat ; do git clone --depth=50 --branch=14.2 https://github.com/EGroupware/$app.git ; done
   - svn -q checkout https://svn.code.sf.net/p/adldap/code/trunk/src phpgwapi/inc/adldap
 
 script:
