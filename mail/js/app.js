@@ -4548,7 +4548,7 @@ app.classes.mail = AppJS.extend(
 				}
 
 				var draggedValue = ui.draggable.text();
-
+			
 				// index of draggable item in selection list
 				var dValueKey = draggedValue;
 
@@ -4588,7 +4588,7 @@ app.classes.mail = AppJS.extend(
 					if (!jQuery.isEmptyObject(fromWidget)
 							&& !(ui.draggable.attr('class').search('mailCompose_copyEmail') > -1))
 					{
-						if (!_removeDragged(fromWidget, dValueKey))
+						if (widget.node != fromWidget.node && !_removeDragged(fromWidget, dValueKey))
 						{
 							//Not successful remove, returns the item to its origin
 							jQuery(ui.draggable).draggable('option','revert',true);
@@ -4609,8 +4609,6 @@ app.classes.mail = AppJS.extend(
 							delete dragItems.splice(i,1);
 						}
 					});
-					//Destroy draggables after dropping, we need to enable them again
-					dragItems.draggable('destroy');
 				}
 			}
 		});
