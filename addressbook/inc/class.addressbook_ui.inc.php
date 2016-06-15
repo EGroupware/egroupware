@@ -1000,7 +1000,7 @@ window.egw_LAB.wait(function() {
 		Api\Cache::setSession('addressbook','index',$query);
 		Api\Cache::setSession('addressbook', 'advanced_search', false);
 	}
-	
+
 	/**
 	 * apply an action to multiple contacts
 	 *
@@ -2471,7 +2471,7 @@ window.egw_LAB.wait(function() {
 		// if email changed, check for doublicates
 		if (in_array($name, array('email', 'email_home')))
 		{
-			if (preg_match('/^'.url_widget::EMAIL_PREG.'$/i', $values[$name]))	// only search for real email addresses, to not return to many contacts
+			if (preg_match('/^'.Etemplate\Widget\Url::EMAIL_PREG.'$/i', $values[$name]))	// only search for real email addresses, to not return to many contacts
 			{
 				$contacts = parent::search(array(
 					'email' => $values[$name],
