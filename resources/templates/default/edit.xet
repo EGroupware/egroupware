@@ -198,7 +198,7 @@
 					<hbox span="3">
 						<button statustext="Saves entry and exits" label="Save" id="button[save]" image="save" background_image="1"/>
 						<button label="Apply" id="button[apply]" image="apply" background_image="1"/>
-						<button label="Cancel" id="button[cancel]" onclick="window.close();" image="close" background_image="1"/>
+						<button label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>
 					</hbox>
 					<button align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Do you really want do delte this resource?','Delete')" image="delete" background_image="1"/>
 				</row>
