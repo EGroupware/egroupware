@@ -23,9 +23,9 @@ skip = [ $1 = "tag" -o $1 = "untag" ]
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
 checkout = git clone -b 14.2 git@github.com:EGroupware/egroupware.git &&
-	/usr/bin/env composer.phar install
+	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install
 update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null || true;
-	/usr/bin/env composer.phar install
+	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install
 
 ###
 ### Optional apps you can enable by uncommenting them and (re-)run: mr up
