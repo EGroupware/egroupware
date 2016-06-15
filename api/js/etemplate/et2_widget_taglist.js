@@ -832,7 +832,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		var min_width = jQuery('.ms-sel-item',this.div ).first().outerWidth() || this.div.children().first().width();
 
 		// Not ready yet
-		if(min_width === null) return;
+		if(min_width === null || !this.taglist) return;
 
 		min_width += (this.options.multiple === 'toggle' ? jQuery('.toggle',this.div).outerWidth() : 0);
 		min_width += this.taglist.trigger ? this.taglist.trigger.outerWidth(true) : 0;
