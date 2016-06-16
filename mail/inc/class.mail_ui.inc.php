@@ -420,7 +420,7 @@ class mail_ui
 	{
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		try	{
-				if (!isset($this->mail_bo)) throw new Api\Exception\WrongUserinput(lang('Initialization of mail failed. Please use the Wizard to cope with the problem.')); 
+				if (!isset($this->mail_bo)) throw new Api\Exception\WrongUserinput(lang('Initialization of mail failed. Please use the Wizard to cope with the problem.'));
 				//error_log(__METHOD__.__LINE__.function_backtrace());
 				if (Mail::$debugTimes) $starttime = microtime (true);
 				$this->mail_bo->restoreSessionData();
@@ -677,6 +677,7 @@ class mail_ui
 			),
 			'foldermanagement' => array(
 				'caption' => 'Folder Management ...',
+				'icon' => 'folder_management',
 				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.folderManagement',
 				'group'		=> $group,
