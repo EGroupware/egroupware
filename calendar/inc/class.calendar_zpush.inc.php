@@ -1081,7 +1081,8 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		$message->md5body = md5($event['description']);
 
 		$message->organizername  = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_fullname');
-		$message->organizeremail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+		// at least iOS calendar crashes, if organizer has no email address (true = generate an email, if user has none)
+		$message->organizeremail = $GLOBALS['egw']->accounts->id2name($event['owner'], 'account_email', true);
 
 		$message->sensitivity = $event['public'] ? 0 : 2;	// 0=normal, 1=personal, 2=private, 3=confidential
 
@@ -1102,7 +1103,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			if (is_numeric($uid))
 			{
 				$attendee->name = $GLOBALS['egw']->accounts->id2name($uid,'account_fullname');
-				$attendee->email = $GLOBALS['egw']->accounts->id2name($uid,'account_email');
+				$attendee->email = $GLOBALS['egw']->accounts->id2name($uid, 'account_email', true);
 			}
 			else
 			{
@@ -1113,7 +1114,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 
 				if (!$info['email'] && $info['responsible'])
 				{
-					$info['email'] = $GLOBALS['egw']->accounts->id2name($info['responsible'],'account_email');
+					$info['email'] = $GLOBALS['egw']->accounts->id2name($info['responsible'], 'account_email', true);
 				}
 				$attendee->name = empty($info['cn']) ? $info['name'] : $info['cn'];
 				$attendee->email = $info['email'];

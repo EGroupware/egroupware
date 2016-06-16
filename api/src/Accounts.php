@@ -536,6 +536,7 @@ class Accounts
 			$underscore = '_';
 		}
 		if (!$domain) $domain = $GLOBALS['egw_info']['server']['mail_suffix'];
+		if (!$domain) $domain = $_SERVER['SERVER_NAME'];
 
 		$email = str_replace(array('first','last','initial','account','dot','underscore','-'),
 			array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
@@ -736,9 +737,10 @@ class Accounts
 	 *
 	 * @param int|string $account_id numeric account_id or account_lid
 	 * @param string $which ='account_lid' type to convert to: account_lid (default), account_email, ...
+	 * @param boolean $generate_email =false true: generate an email address, if user has none
 	 * @return string|boolean converted value or false on error ($account_id not found)
 	 */
-	static function id2name($account_id, $which='account_lid')
+	static function id2name($account_id, $which='account_lid', $generate_email=false)
 	{
 		if (!is_numeric($account_id) && !($account_id = self::getInstance()->name2id($account_id)))
 		{
@@ -750,6 +752,10 @@ class Accounts
 		catch (Exception $e) {
 			unset($e);
 			return false;
+		}
+		if ($generate_email && $which === 'account_email' && empty($data[$which]))
+		{
+			return self::email($data['account_firstname'], $data['account_lastname'], $data['account_lid']);
 		}
 		return $data[$which];
 	}
