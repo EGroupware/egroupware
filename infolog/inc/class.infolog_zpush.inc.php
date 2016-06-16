@@ -410,7 +410,6 @@ class infolog_zpush implements activesync_plugin_write
 				switch ($attr)
 				{
 					case 'info_des':
-						if (is_null($message->asbody)) $message->asbody = new SyncBaseBody();
 						// only change info_des, if one given, as iOS5 skips description in ChangeMessage
 						// --> we ignore empty / not set description, so description get no longer lost, but you cant empty it via eSync
 						if (($description = $this->backend->messagenote2note($message->body, $message->rtf, $message->asbody)))
