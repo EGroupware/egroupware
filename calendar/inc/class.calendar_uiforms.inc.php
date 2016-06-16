@@ -479,6 +479,9 @@ class calendar_uiforms extends calendar_ui
 									$new_status = calendar_so::combine_status($status, $quantity, $role);
 									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0, false, true, $content['no_notifications']))
 									{
+										// Update main window
+										$client_updated = $this->update_client($event['id'], $content['edit_single']);
+										
 										// refreshing the calendar-view with the changed participant-status
 										if($event['recur_type'] != MCAL_RECUR_NONE)
 										{
@@ -497,7 +500,7 @@ class calendar_uiforms extends calendar_ui
 											{
 												$msg = lang('Status changed');
 												//Refresh the event in the main window after changing status
-												Framework::refresh_opener($msg, 'calendar', $event['id']);
+												Framework::refresh_opener($msg, 'calendar', $event['id'], $client_updated ? 'update' : 'delete');
 											}
 										}
 										if (!$content['no_popup'])
@@ -787,6 +790,11 @@ class calendar_uiforms extends calendar_ui
 				{
 					$update_type = 'edit';
 				}
+				// Changing category may affect event filtering
+				if($this->cal_prefs['saved_states']['cat_id'] && $old_event['category'] != $event['category'])
+				{
+					$update_type = 'edit';
+				}
 				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages,$content['no_notifications']);
 				unset($event['ignore']);
 			}
@@ -893,11 +901,11 @@ class calendar_uiforms extends calendar_ui
 				$response = Api\Json\Response::get();
 				if($response && $update_type != 'delete')
 				{
-					$this->update_client($event['id']);
+					$client_updated = $this->update_client($event['id']);
 				}
 
 				$msg = $message . ($msg ? ', ' . $msg : '');
-				Framework::refresh_opener($msg, 'calendar', $event['id'], $event['recur_type'] ? 'edit' : $update_type);
+				Framework::refresh_opener($msg, 'calendar', $event['id'], $client_updated ? ($event['recur_type'] ? 'edit' : $update_type) : 'delete');
 				// writing links for new entry, existing ones are handled by the widget itself
 				if (!$content['id'] && is_array($content['link_to']['to_id']))
 				{
@@ -997,7 +1005,7 @@ class calendar_uiforms extends calendar_ui
 		$response = Api\Json\Response::get();
 		if($response && !$content['id'] && $event['id'])
 		{
-			$this->update_client($event['id']);
+			$client_updated = $this->update_client($event['id']);
 		}
 		if (in_array($button,array('cancel','save','delete','delete_exceptions','delete_keep_exceptions')) && $noerror)
 		{
@@ -1018,7 +1026,9 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				Framework::refresh_opener($msg, 'calendar', $event['id'], $button == 'save' ? ($content['id'] ? $update_type : 'add') : 'delete');
+				Framework::refresh_opener($msg, 'calendar', $event['id'], 
+					$button == 'save' && $client_updated ? ($content['id'] ? $update_type : 'add') : 'delete'
+				);
 			}
 			Framework::window_close();
 			exit();

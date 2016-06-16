@@ -606,17 +606,37 @@ class calendar_ui
 	 *
 	 * @param int $event_id
 	 * @param Api\DateTime $recurrence_date
+	 *
+	 * @return boolean True if the event was updated, false if it could not be
+	 *	updated or was removed.
 	 */
 	public function update_client($event_id, Api\DateTime $recurrence_date = null)
 	{
-		if(!$event_id) return;
+		if(!$event_id) return false;
 
 		// Directly update stored data.
 		// Make sure we have the whole event
 		$event = $this->bo->read($event_id, $recurrence_date);
 		$response = Api\Json\Response::get();
 
-		if(!$event)
+
+		// Check filters to see if they still match, may have to remove
+		// the event because it should no longer be displayed
+		$filter_match = true;
+		if($this->cal_prefs['saved_states']['status_filter'] != 'all' ||
+			$this->cal_prefs['saved_states']['cat_id'])
+		{
+			$filter_check = array(
+				'start' => $event['start'],
+				'users' => $this->cal_prefs['saved_states']['owner'],
+				'cat_id' => $this->cal_prefs['saved_states']['cat_id'],
+				'filter' => $this->cal_prefs['saved_states']['status_filter'],
+				'num_rows' => 1
+			);
+			$filter_match = count($this->bo->search($filter_check, $this->bo->so->cal_table.".cal_id = {$event['id']}")) > 0;
+		}
+
+		if(!$event || !$filter_match)
 		{
 			// Sending null will trigger a removal
 			$response->generic('data', array('uid' => 'calendar::'.$event_id, 'data' => null));
@@ -644,6 +664,7 @@ class calendar_ui
 			}
 			while ($rrule->valid() && $occurrence <= $this_month );
 		}
+		return true;
 	}
 
 	/**

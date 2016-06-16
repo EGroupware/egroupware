@@ -317,7 +317,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				{
 					// Intelligent refresh without reloading everything
 					var recurrences = Object.keys(egw.dataSearchUIDs(new RegExp('^calendar::'+_id+':')));
-					var ids = event && event.data.recur_type && typeof _id === 'string' && _id.indexOf(':') < 0 || recurrences.length ?
+					var ids = event && event.data && event.data.recur_type && typeof _id === 'string' && _id.indexOf(':') < 0 || recurrences.length ?
 						recurrences :
 						['calendar::'+_id];
 
