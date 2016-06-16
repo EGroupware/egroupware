@@ -282,7 +282,7 @@ class Mail
 				}
 				else
 				{
-					throw new Exception(__METHOD__." failed to load the Profile for ProfileID for $_profileID / ".$this->profileID." with error:".$e->getMessage().($e->details?', '.$e->details:''));
+					throw new Exception(__METHOD__." failed to load the Profile for ProfileID for $_profileID with error:".$e->getMessage().($e->details?', '.$e->details:''));
 				}
 			}
 			self::storeActiveProfileIDToPref(self::$instances[$_profileID]->icServer, $_profileID, $_validate );
