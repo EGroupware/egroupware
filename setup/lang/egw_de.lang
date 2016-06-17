@@ -620,6 +620,7 @@ the tables	setup	de	die Tabellen
 the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	de	Die tidy PHP Erweiterung wird im Sammeldruck benötigt um HTML zu reinigen bevor es in Office Dokumente eingefügt wird.
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	Die Benutzernamen/Passworte sind: demo/guest, demo2/guest und demo3/guest
 the xmlreader extension is required by egroupware in several applications.	setup	de	Die xmlreader PHP Erweiterung wird in EGroupware von vielen Anwendungen benötigt.
+the zip extension is required for merge-print with office documents.	setup	de	Die PHP Erweiterung zip ist für den Sammeldruck von Office Dateien zwingend erforderlich.
 there was a problem trying to connect to your ldap server. <br />	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss außerhalb des Wurzelverzeichnisses (document root) des Webservers sein!!!
