@@ -1078,8 +1078,6 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 				$this->backend->note2messagenote($event['description'], $bodypreference, $message->asbody);
 			}
 		}
-		$message->md5body = md5($event['description']);
-
 		$message->organizername  = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_fullname');
 		// at least iOS calendar crashes, if organizer has no email address (true = generate an email, if user has none)
 		$message->organizeremail = $GLOBALS['egw']->accounts->id2name($event['owner'], 'account_email', true);
