@@ -3548,9 +3548,10 @@ class Mail
 	 * isSentFolder is the given folder the sent folder or at least a subfolder of it
 	 * @param string $_folderName folder to perform the check on
 	 * @param boolean $_checkexistance trigger check for existance
+	 * @param boolean $_exactMatch make the check more strict. return false if folder is subfolder only
 	 * @return boolean
 	 */
-	function isSentFolder($_folderName, $_checkexistance=TRUE)
+	function isSentFolder($_folderName, $_checkexistance=TRUE, $_exactMatch=false)
 	{
 		$sentFolder = $this->getSentFolder($_checkexistance);
 		if(empty($sentFolder)) {
@@ -3561,10 +3562,19 @@ class Mail
 			return false;
 		}
 
-		if(false !== stripos($_folderName, $sentFolder)) {
-			return true;
+		if ($_exactMatch)
+		{
+			if(false !== stripos($_folderName, $sentFolder)&& strlen($_folderName)==strlen($sentFolder)) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
-			return false;
+			if(false !== stripos($_folderName, $sentFolder)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -3572,9 +3582,10 @@ class Mail
 	 * checks if the Outbox folder exists and is part of the foldername to be checked
 	 * @param string $_folderName folder to perform the check on
 	 * @param boolean $_checkexistance trigger check for existance
+	 * @param boolean $_exactMatch make the check more strict. return false if folder is subfolder only
 	 * @return boolean
 	 */
-	function isOutbox($_folderName, $_checkexistance=TRUE)
+	function isOutbox($_folderName, $_checkexistance=TRUE, $_exactMatch=false)
 	{
 		if (stripos($_folderName, 'Outbox')===false) {
 			return false;
@@ -3582,10 +3593,19 @@ class Mail
 		// does the folder exist???
 		if ($_checkexistance && $GLOBALS['egw_info']['user']['apps']['activesync'] && !$this->folderExists($_folderName)) {
 			$outboxFolder = $this->getOutboxFolder($_checkexistance);
-			if(false !== stripos($_folderName, $outboxFolder)) {
-				return true;
+			if ($_exactMatch)
+			{
+				if(false !== stripos($_folderName, $outboxFolder)&& strlen($_folderName)==strlen($outboxFolder)) {
+					return true;
+				} else {
+					return false;
+				}
 			} else {
-				return false;
+				if(false !== stripos($_folderName, $outboxFolder)) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 		return true;
@@ -3595,9 +3615,10 @@ class Mail
 	 * isDraftFolder is the given folder the sent folder or at least a subfolder of it
 	 * @param string $_folderName folder to perform the check on
 	 * @param boolean $_checkexistance trigger check for existance
+	 * @param boolean $_exactMatch make the check more strict. return false if folder is subfolder only
 	 * @return boolean
 	 */
-	function isDraftFolder($_folderName, $_checkexistance=TRUE)
+	function isDraftFolder($_folderName, $_checkexistance=TRUE, $_exactMatch=false)
 	{
 		$draftFolder = $this->getDraftFolder($_checkexistance);
 		if(empty($draftFolder)) {
@@ -3608,10 +3629,19 @@ class Mail
 			return false;
 		}
 		if (is_a($_folderName,"Horde_Imap_Client_Mailbox")) $_folderName = $_folderName->utf8;
-		if(false !== stripos($_folderName, $draftFolder)) {
-			return true;
+		if ($_exactMatch)
+		{
+			if(false !== stripos($_folderName, $draftFolder)&& strlen($_folderName)==strlen($draftFolder)) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
-			return false;
+			if(false !== stripos($_folderName, $draftFolder)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -3619,9 +3649,10 @@ class Mail
 	 * isTrashFolder is the given folder the sent folder or at least a subfolder of it
 	 * @param string $_folderName folder to perform the check on
 	 * @param boolean $_checkexistance trigger check for existance
+	 * @param boolean $_exactMatch make the check more strict. return false if folder is subfolder only
 	 * @return boolean
 	 */
-	function isTrashFolder($_folderName, $_checkexistance=TRUE)
+	function isTrashFolder($_folderName, $_checkexistance=TRUE, $_exactMatch=false)
 	{
 		$trashFolder = $this->getTrashFolder($_checkexistance);
 		if(empty($trashFolder)) {
@@ -3632,10 +3663,19 @@ class Mail
 			return false;
 		}
 
-		if(false !== stripos($_folderName, $trashFolder)) {
-			return true;
+		if ($_exactMatch)
+		{
+			if(false !== stripos($_folderName, $trashFolder)&& strlen($_folderName)==strlen($trashFolder)) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
-			return false;
+			if(false !== stripos($_folderName, $trashFolder)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -3643,9 +3683,10 @@ class Mail
 	 * isTemplateFolder is the given folder the sent folder or at least a subfolder of it
 	 * @param string $_folderName folder to perform the check on
 	 * @param boolean $_checkexistance trigger check for existance
+	 * @param boolean $_exactMatch make the check more strict. return false if folder is subfolder only
 	 * @return boolean
 	 */
-	function isTemplateFolder($_folderName, $_checkexistance=TRUE)
+	function isTemplateFolder($_folderName, $_checkexistance=TRUE, $_exactMatch=false)
 	{
 		$templateFolder = $this->getTemplateFolder($_checkexistance);
 		if(empty($templateFolder)) {
@@ -3655,11 +3696,19 @@ class Mail
 		if ($_checkexistance && !$this->folderExists($_folderName)) {
 			return false;
 		}
-
-		if(false !== stripos($_folderName, $templateFolder)) {
-			return true;
+		if ($_exactMatch)
+		{
+			if(false !== stripos($_folderName, $templateFolder)&& strlen($_folderName)==strlen($templateFolder)) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
-			return false;
+			if(false !== stripos($_folderName, $templateFolder)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 

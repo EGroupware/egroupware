@@ -1643,27 +1643,27 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		{
 			$folderObj->type = SYNC_FOLDER_TYPE_INBOX;
 		}
-		elseif($this->mail->isDraftFolder($folder, false))
+		elseif($this->mail->isDraftFolder($folder, false, true))
 		{
 			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' isDraft');
 			$folderObj->type = SYNC_FOLDER_TYPE_DRAFTS;
 			$folderObj->parentid = 0; // required by devices
 		}
-		elseif($this->mail->isTrashFolder($folder, false))
+		elseif($this->mail->isTrashFolder($folder, false, true))
 		{
 			$folderObj->type = SYNC_FOLDER_TYPE_WASTEBASKET;
 			$this->_wasteID = $folder;
 			//error_log(__METHOD__.__LINE__.' TrashFolder:'.$this->_wasteID);
 			$folderObj->parentid = 0; // required by devices
 		}
-		elseif($this->mail->isSentFolder($folder, false))
+		elseif($this->mail->isSentFolder($folder, false, true))
 		{
 			$folderObj->type = SYNC_FOLDER_TYPE_SENTMAIL;
 			$folderObj->parentid = 0; // required by devices
 			$this->_sentID = $folder;
 			//error_log(__METHOD__.__LINE__.' SentFolder:'.$this->_sentID);
 		}
-		elseif($this->mail->isOutbox($folder, false))
+		elseif($this->mail->isOutbox($folder, false, true))
 		{
 			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' isOutbox');
 			$folderObj->type = SYNC_FOLDER_TYPE_OUTBOX;
