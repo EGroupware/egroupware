@@ -222,6 +222,10 @@ $checks = array(
 		'func' => 'extension_check',
 		'error' => lang('The json extension is required by EGroupware for AJAX.'),
 	),
+	'zip' => array(
+		'func' => 'extension_check',
+		'warning' => lang('The zip extension is required for merge-print with office documents.'),
+	),
 	'tidy' => array(
 		'func' => 'extension_check',
 		'warning' => lang('The tidy extension is need in merge-print to clean up html before inserting it in office documents.'),

@@ -620,6 +620,7 @@ the tables	setup	en	the tables
 the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	en	The tidy extension is need in merge-print to clean up html before inserting it in office documents.
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 the xmlreader extension is required by egroupware in several applications.	setup	en	The xmlreader extension is required by EGroupware in several applications.
+the zip extension is required for merge-print with office documents.	setup	en	The zip extension is required for merge-print with office documents.
 there was a problem trying to connect to your ldap server. <br />	setup	en	There was a problem trying to connect to your LDAP server. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br />please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the web servers document-root!
