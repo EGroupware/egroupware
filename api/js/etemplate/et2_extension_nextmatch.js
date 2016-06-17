@@ -1800,16 +1800,16 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 
 	/**
 	 * Directly change filter value, with no server query.
-	 * 
+	 *
 	 * This allows the server app code to change filter value, and have it
 	 * updated in the client UI.
-	 * 
+	 *
 	 * @param {String|number} value
 	 */
 	set_filter: function(value) {
 		var update = this.update_in_progress;
 		this.update_in_progress = true;
-		
+
 		this.activeFilters.filter = value;
 
 		// Update the header
@@ -1829,7 +1829,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 	set_filter2: function(value) {
 		var update = this.update_in_progress;
 		this.update_in_progress = true;
-		
+
 		this.activeFilters.filter2 = value;
 
 		// Update the header
@@ -2473,6 +2473,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 			// Context menu
 			this.action_header = jQuery(document.createElement('button'))
 					.addClass('nm_action_header')
+					.hide()
 					.click (function(e){
 						jQuery('tr.selected',self.nextmatch.div).trigger({type:'contextmenu',which:3,originalEvent:e});
 					})
@@ -3418,7 +3419,7 @@ et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter
 /**
  * Filter allowing multiple values to be selected, base on a taglist instead
  * of a regular selectbox
- * 
+ *
  * @augments et2_taglist
  */
 var et2_nextmatch_taglistheader = (function(){ "use strict"; return et2_taglist.extend([et2_INextmatchHeader, et2_IResizeable],
@@ -3504,7 +3505,7 @@ et2_register_widget(et2_nextmatch_taglistheader, ['nextmatch-taglistheader']);
 /**
  * Filter allowing multiple values to be selected, base on a taglist instead
  * of a regular selectbox
- * 
+ *
  * @augments et2_taglist
  */
 var et2_nextmatch_taglistheader = (function(){ "use strict"; return et2_taglist.extend([et2_INextmatchHeader, et2_IResizeable],

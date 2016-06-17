@@ -661,6 +661,10 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 			senders = [];
 		}
 		if(!this._widget) return;
+
+		// inform mobile framework about nm selections, need to update status of header objects on selection
+		if (egwIsMobile()) framework.nm_onselect_ctrl(this._widget, action, senders);
+		
 		this._widget.onselect.call(this._widget, action,senders);
 	},
 
