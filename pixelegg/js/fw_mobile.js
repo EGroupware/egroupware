@@ -930,6 +930,10 @@
 			history.pushState({type:_type, index:_index}, _type, '#'+ egw.app_name()+"."+_type + '#' + index);
 		},
 
+		/**
+		 * Update the app header icon used for toggling between list of apps and
+		 * application menu in sidebar
+		 */
 		updateAppsToggle: function ()
 		{
 			var $apps = jQuery('#egw_fw_appsToggle');
@@ -943,6 +947,20 @@
 				});
 
 			});
+		},
+
+		/**
+		 * Function runs after nextmatch selection callback gets called by object manager,
+		 * which we can update status of header DOM objects (eg. action_header, favorite, ...)
+		 *
+		 * @param {object} _widget nextmatch widget
+		 * @param {object} _action action object
+		 * @param {object} _sender selected row action object
+		 */
+		nm_onselect_ctrl: function(_widget, _action, _sender)
+		{
+			// Update action_header status (3dots)
+			_widget.header.action_header.toggle(typeof _widget.getSelection().ids != 'undefined' && _widget.getSelection().ids.length > 0);
 		}
 	});
 
