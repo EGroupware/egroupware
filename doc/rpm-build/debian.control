@@ -54,7 +54,7 @@ Depends: apache2,
  php5-mcrypt | php-mcrypt,
  php5-xsl | php-xsl,
  ${misc:Depends}
-Recommends: mariadb-server | mysql-server, php-opcache | php-apc, php-apcu, php5-pecl-smb, php5-tidy | php-tidy,
+Recommends: mariadb-server | mysql-server, php-opcache | php-apc, php-apcu, php5-pecl-smb, php5-tidy | php-tidy, php5-zip | php-zip,
  mariadb-client | mysql-client | postgresql-client, php5-bcmath | php-bcmath,
  php5-ldap | php-ldap,
  php5-mhash | php-mhash
