@@ -172,6 +172,22 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			'default' => 'sendifnocalnotif',
 			'admin'  => False,
 		);
+/*
+		$settings['mail-useSignature'] = array(
+			'type'   => 'select',
+			'label'  => 'control if and which available signature is added to outgoing mails',
+			'name'   => 'mail-useSignature',
+			'help'   => 'control the use of signatures',
+			'values' => array(
+				'sendifnocalnotif'=>'only send if there is no notification in calendar',
+				'send'=>'yes, always add EGroupware signatures to outgoing mails',
+				'nosend'=>'no, never add EGroupware signatures to outgoing mails',
+			),
+			'xmlrpc' => True,
+			'default' => 'nosend',
+			'admin'  => False,
+		);
+*/
 		return $settings;
 	}
 
@@ -369,8 +385,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->From 	= $activeMailProfile['ident_email'];
-		$mailObject->FromName = $mailObject->EncodeHeader(Mail::generateIdentityString($activeMailProfile,false));
-		$mailObject->AddCustomHeader('X-Mailer: mail-Activesync');
+		$mailObject->FromName = Mail::generateIdentityString($activeMailProfile,false);
+		$mailObject->addHeader('X-Mailer', 'mail-Activesync');
 
 
 		// prepare addressee list; moved the adding of addresses to the mailobject down
@@ -665,7 +681,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
 						$attachmentNames .= $attachment['name']."\n";
 						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],0,false,false,$folder);
-						/*$x =*/ $mailObject->AddStringAttachment($attachmentData['attachment'], $mailObject->EncodeHeader($attachment['name']), $attachment['mimeType']);
+						/*$x =*/ $mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['mimeType']);
 						ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' added part with number:'.$x);
 					}
 				}
@@ -939,9 +955,12 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." bodypreference 4 requested");
 					$output->asbody->type = SYNC_BODYPREFERENCE_MIME;//4;
 					// use Api\Mailer::convert to convert charset of all text parts to utf-8, which is a z-push or AS requirement!
+					// ToDo: check if above is true for mime-message, otherwise with could use a stream without conversion
 					$Body = Api\Mailer::convert($this->mail->getMessageRawBody($id, '', $_folderName));
 					if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Body);
-					$output->asbody->data = $Body;
+					if ((string)$Body === '') $Body = ' ';
+					$output->asbody->data = StringStreamWrapper::Open($Body);
+					$output->asbody->estimatedDataSize = strlen($Body);
 				}
 				else if ($bpReturnType==2) //SYNC_BODYPREFERENCE_HTML
 				{
@@ -975,7 +994,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					}
 					// output->nativebodytype is used as marker that the original message was of type ... but is now converted to, as type 2 is requested.
 					$output->nativebodytype = 2;
-					$output->asbody->data = $htmlbody;
+					$output->asbody->data = StringStreamWrapper::Open($htmlbody);
+					$output->asbody->estimatedDataSize = strlen($htmlbody);
 				}
 				else
 				{
@@ -996,16 +1016,16 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						$plainBody = Utils::Utf8_truncate($plainBody, $truncsize);
 						$output->asbody->truncated = 1;
 					}
-					$output->asbody->data = $plainBody;
+					$output->asbody->data = StringStreamWrapper::Open((string)$plainBody !== '' ? $plainBody : ' ');
+					$output->asbody->estimatedDataSize = strlen($plainBody);
 				}
 				// In case we have nothing for the body, send at least a blank...
 				// dw2412 but only in case the body is not rtf!
-				if ($output->asbody->type != 3 && (!isset($output->asbody->data) || strlen($output->asbody->data) == 0))
+				if ($output->asbody->type != 3 && !isset($output->asbody->data))
 				{
-					$output->asbody->data = " ";
+					$output->asbody->data = StringStreamWrapper::Open(" ");
+					$output->asbody->estimatedDataSize = 1;
 				}
-				// determine estimated datasize for all the above cases ...
-				$output->asbody->estimatedDataSize = strlen($output->asbody->data);
 			}
 			// end AS12 Stuff
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' gather Header info:'.$headers['SUBJECT'].' from:'.$headers['DATE']);
@@ -1186,29 +1206,11 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 *
      * @param string $fid - id
      * @param string $attname - should contain (folder)id
-	 * @return true, prints the content of the attachment
+	 * @return SyncItemOperationsAttachment-object
 	 */
 	function GetAttachmentData($fid,$attname) {
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')".function_backtrace());
-		//error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
-		list($folderid, $id, $part) = explode(":", $attname);
-
-		$this->splitID($folderid, $account, $folder);
-
-		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
-
-		$this->mail->reopen($folder);
-		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
-        $SIOattachment = new SyncItemOperationsAttachment();
-		fseek($attachment['attachment'], 0, SEEK_SET);	// z-push requires stream seeked to start
-        $SIOattachment->data = $attachment['attachment'];
-		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname') Data:".$attachment['attachment']);
-        if (isset($attachment['type']) )
-            $SIOattachment->contenttype = $attachment['type'];
-
-		unset($attachment);
-
-        return $SIOattachment;
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')");
+		return $this->_GetAttachmentData($fid,$attname);
 	}
 
 	/**
@@ -1222,6 +1224,21 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @return SyncItemOperationsAttachment-object
 	 */
 	function ItemOperationsGetAttachmentData($fid,$attname) {
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')");
+		return $this->_GetAttachmentData($fid,$attname);
+	}
+
+	/**
+	 * _GetAttachmentData implements
+	 * -ItemOperationsGetAttachmentData
+	 * -GetAttachmentData
+	 *
+     * @param string $fid - id
+     * @param string $attname - should contain (folder)id
+	 * @return SyncItemOperationsAttachment-object
+	 */
+	private function _GetAttachmentData($fid,$attname)
+	{
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname')".function_backtrace());
 		//error_log(__METHOD__.__LINE__." Fid: $fid (attname: '$attname')");
 		list($folderid, $id, $part) = explode(":", $attname);
@@ -1232,15 +1249,16 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
-        $SIOattachment = new SyncItemOperationsAttachment();
+		$SIOattachment = new SyncItemOperationsAttachment();
 		fseek($attachment['attachment'], 0, SEEK_SET);	// z-push requires stream seeked to start
-        $SIOattachment->data = $attachment['attachment'];
-        if (isset($attachment['type']) )
-            $SIOattachment->contenttype = $attachment['type'];
+		$SIOattachment->data = $attachment['attachment'];
+		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname') Data:".$attachment['attachment']);
+		if (isset($attachment['type']) )
+			$SIOattachment->contenttype = $attachment['type'];
 
 		unset($attachment);
 
-        return $SIOattachment;
+		return $SIOattachment;
 	}
 
 	/**
@@ -1967,36 +1985,72 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	private $folderHashes;
 
 	/**
+	 * Statemaschine instance used to store folders
+	 *
+	 * @var activesync_statemaschine
+	 */
+	private $fh_state_maschine;
+
+	/**
+	 * state_type (and _key) used to store folder hashes
+	 */
+	const FOLDER_STATE_TYPE = 'folder_hashes';
+
+	/**
 	 * Read hashfile from state dir
 	 */
 	private function readFolderHashes()
 	{
-		if ((file_exists($file = $this->hashFile()) || file_exists($file = $this->hashFile(true))) &&
-			($hashes = file_get_contents($file)))
+		if (!isset($this->fh_state_maschine))
 		{
-			$this->folderHashes = json_decode($hashes,true);
-			// fallback in case hashes have been serialized instead of being json-encoded
-			if (json_last_error()!=JSON_ERROR_NONE)
-			{
-				//error_log(__METHOD__.__LINE__." error decoding with json");
-				$this->folderHashes = unserialize($hashes);
-			}
+			$this->fh_state_maschine = new activesync_statemachine($this->backend);
 		}
-		else
-		{
-			$this->folderHashes = array();
+		try {
+			$this->folderHashes = $this->fh_state_maschine->getState(Request::GetDeviceID(),
+				self::FOLDER_STATE_TYPE, self::FOLDER_STATE_TYPE, 0);
+		}
+		catch (Exception $e) {
+			unset($e);
+			if ((file_exists($file = $this->hashFile()) || file_exists($file = $this->hashFile(true))) &&
+				($hashes = file_get_contents($file)))
+			{
+				$this->folderHashes = json_decode($hashes,true);
+				// fallback in case hashes have been serialized instead of being json-encoded
+				if (json_last_error()!=JSON_ERROR_NONE)
+				{
+					//error_log(__METHOD__.__LINE__." error decoding with json");
+					$this->folderHashes = unserialize($hashes);
+				}
+				// store folder-hashes to state
+				$this->storeFolderHashes();
+			}
+			else
+			{
+				$this->folderHashes = array();
+			}
 		}
 	}
 
 	/**
-	 * Store hashfile in state dir
+	 * Store hashfile via state-maschine
 	 *
 	 * return int|boolean false on error
 	 */
 	private function storeFolderHashes()
 	{
-		// make sure $this->folderHashes is an array otherwise json_encode may fail on decode for string,integer,float or boolean
-		return file_put_contents($this->hashFile(), json_encode((is_array($this->folderHashes)?$this->folderHashes:array($this->folderHashes))));
+		if (!isset($this->fh_state_maschine))
+		{
+			$this->fh_state_maschine = new activesync_statemachine($this->backend);
+		}
+		try {
+			$this->fh_state_maschine->setState($this->folderHashes, Request::GetDeviceID(),
+				self::FOLDER_STATE_TYPE, self::FOLDER_STATE_TYPE, 0);
+		}
+		catch (Exception $e) {
+			_egw_log_exception($e);
+			return false;
+		}
+		return true;
 	}
 
 	/**
