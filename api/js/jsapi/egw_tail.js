@@ -15,8 +15,6 @@ jQuery(function()
 {
 	"use strict";
 
-	var that = this;
-
 	var log_tail_start=0;
 	var filename = jQuery('pre[id^="log"]');
 	if (typeof filename !='undefined' && filename.length > 0)
@@ -47,7 +45,7 @@ jQuery(function()
 			}
 			else
 			{
-				jQuery("#download_log").show().attr("title",this.egw.lang('Size')+_data.size);
+				jQuery("#download_log").show().attr("title", egw(window).lang('Size')+_data.size);
 			}
 			if (_data.writable === false)
 			{
