@@ -1492,7 +1492,7 @@ class Account implements \ArrayAccess
 							unset($x);
 							continue;
 						}
-						if ($account->acc_smtp_pw_enc == Credentials::USER) continue;
+						if (Credentials::isUser($account->acc_smtp_pw_enc)) continue;
 					}
 				}
 				else

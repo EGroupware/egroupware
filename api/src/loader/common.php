@@ -247,6 +247,7 @@ function array2string($var)
  * @param string $extension
  * @param boolean $throw =false should we throw an exception, if $extension could not be loaded, default false = no
  * @return boolean true if loaded now, false otherwise
+ * @throws Api\Exception\AssertionFailed
  */
 function check_load_extension($extension,$throw=false)
 {
@@ -259,7 +260,7 @@ function check_load_extension($extension,$throw=false)
 
 	if (!$loaded && $throw)
 	{
-		throw new Exception ("PHP extension '$extension' not loaded AND can NOT be loaded via dl('$dl')!");
+		throw new Api\Exception\AssertionFailed("PHP extension '$extension' not loaded AND can NOT be loaded via dl('$dl')!");
 	}
 	return $loaded;
 }

@@ -22,6 +22,14 @@ use EGroupware\Api;
  *
  * Passwords in credentials are encrypted with either user password from session
  * or the database password.
+ *
+ * If OpenSSL extension is available it is used to store credentials with AES-128-CBC,
+ * with key generated via hash_pbkdf2 sha256 hash and 12 byte binary salt (=16 char base64).
+ * OpenSSL can be also used to read old MCrypt credentials (OpenSSL 'des-ede3').
+ *
+ * If only MCrypt is available (or EGroupware versions 14.x) credentials are are stored
+ * with MCrypt algo 'tripledes' and mode 'ecb'. Key is direct user password or system secret,
+ * key-size 24 (truncated to 23 byte, if greater then 24 byte! This is a bug, but thats how it is stored.).
  */
 class Credentials
 {
@@ -61,12 +69,30 @@ class Credentials
 	const CLEARTEXT = 0;
 	/**
 	 * Password encrypted with user password
+	 *
+	 * MCrypt algo 'tripledes' and mode 'ecb' or OpenSSL 'des-ede3'
+	 * Key is direct user password, key-size 24 (truncated to 23 byte, if greater then 24 byte!)
 	 */
 	const USER = 1;
 	/**
 	 * Password encrypted with system secret
+	 *
+	 * MCrypt algo 'tripledes' and mode 'ecb' or OpenSSL 'des-ede3'
+	 * Key is direct system secret, key-size 24 (truncated to 23 byte, if greater then 24 byte!)
 	 */
 	const SYSTEM = 2;
+	/**
+	 * Password encrypted with user password
+	 *
+	 * OpenSSL: AES-128-CBC, with key generated via hash_pbkdf2 sha256 hash and 12 byte binary salt (=16 char base64)
+	 */
+	const USER_AES = 3;
+	/**
+	 * Password encrypted with system secret
+	 *
+	 * OpenSSL: AES-128-CBC, with key generated via hash_pbkdf2 sha256 hash and 12 byte binary salt (=16 char base64)
+	 */
+	const SYSTEM_AES = 4;
 
 	/**
 	 * Returned for passwords, when an admin reads an accounts with a password encrypted with users session password
@@ -241,10 +267,9 @@ class Credentials
 	 * @param int $type self::IMAP, self::SMTP or self::ADMIN
 	 * @param int $account_id if of user-account for whom credentials are
 	 * @param int $cred_id =null id of existing credentials to update
-	 * @param ressource $mcrypt =null mcrypt ressource for user, default calling self::init_crypt(true)
 	 * @return int cred_id
 	 */
-	public static function write($acc_id, $username, $password, $type, $account_id=0, $cred_id=null, $mcrypt=null)
+	public static function write($acc_id, $username, $password, $type, $account_id=0, $cred_id=null)
 	{
 		//error_log(__METHOD__."(acc_id=$acc_id, '$username', \$password, type=$type, account_id=$account_id, cred_id=$cred_id)");
 		if (!empty($cred_id) && !is_numeric($cred_id) || !is_numeric($account_id))
@@ -264,7 +289,7 @@ class Credentials
 			'account_id' => $account_id,
 			'cred_username' => $username,
 			'cred_password' => (string)$password === '' ? '' :
-				self::encrypt($password, $account_id, $pw_enc, $mcrypt),
+				self::encrypt($password, $account_id, $pw_enc),
 			'cred_type' => $type,
 			'cred_pw_enc' => $pw_enc,
 		);
@@ -274,7 +299,7 @@ class Credentials
 			//error_log(__METHOD__."(".array2string(func_get_args()).") can NOT store unavailable password, storing without password!");
 			unset($data['cred_password'], $data['cred_pw_enc']);
 		}
-		//error_log(__METHOD__."($acc_id, '$username', '$password', $type, $account_id, $cred_id, $mcrypt) storing ".array2string($data).' '.function_backtrace());
+		//error_log(__METHOD__."($acc_id, '$username', '$password', $type, $account_id, $cred_id) storing ".array2string($data).' '.function_backtrace());
 		if ($cred_id > 0)
 		{
 			self::$db->update(self::TABLE, $data, array('cred_id' => $cred_id), __LINE__, __FILE__, self::APP);
@@ -334,18 +359,118 @@ class Credentials
 	}
 
 	/**
-	 * Encrypt password for storing in database
+	 * Encrypt password for storing in database with MCrypt and tripledes mode cbc
 	 *
 	 * @param string $password cleartext password
 	 * @param int $account_id user-account password is for
 	 * @param int &$pw_enc on return encryption used
-	 * @param ressource $mcrypt =null mcrypt ressource for user, default calling self::init_crypt(true)
 	 * @return string encrypted password
 	 */
-	protected static function encrypt($password, $account_id, &$pw_enc, $mcrypt=null)
+	protected static function encrypt($password, $account_id, &$pw_enc)
+	{
+		try {
+			return self::encrypt_openssl_aes($password, $account_id, $pw_enc);
+		}
+		catch (Api\Exception\AssertionFailed $ex) {
+			try {
+				return self::encrypt_mcrypt_3des($password, $account_id, $pw_enc);
+			}
+			catch (Api\Exception\AssertionFailed $ex) {
+				$pw_enc = self::CLEARTEXT;
+				return base64_encode($password);
+			}
+		}
+	}
+
+	/**
+	 * OpenSSL method to use for AES encrypted credentials
+	 */
+	const AES_METHOD = 'AES-128-CBC';
+
+	/**
+	 * Len (binary) of salt/iv used for pbkdf2 and openssl
+	 */
+	const SALT_LEN = 16;
+
+	/**
+	 * Len of base64 encoded salt prefixing AES encoded credentials (4*ceil(SALT_LEN/3))
+	 */
+	const SALT_LEN64 = 24;
+
+	/**
+	 * Encrypt password for storing in database via OpenSSL and AES
+	 *
+	 * @param string $password cleartext password
+	 * @param int $account_id user-account password is for
+	 * @param int &$pw_enc on return encryption used
+	 * @param string $key =null key/password to use, default password according to account_id
+	 * @return string encrypted password
+	 */
+	protected static function encrypt_openssl_aes($password, $account_id, &$pw_enc, $key=null)
+	{
+		if (empty($key))
+		{
+			if ($account_id > 0 && $account_id == $GLOBALS['egw_info']['user']['account_id'] &&
+				($key = Api\Cache::getSession('phpgwapi', 'password')))
+			{
+				$pw_enc = self::USER_AES;
+				$key = base64_decode($key);
+			}
+			else
+			{
+				$pw_enc = self::SYSTEM_AES;
+				$key = self::$db->Password;
+			}
+		}
+		// using a pbkdf2 password derivation with a (stored) salt
+		$salt = null;
+		$aes_key = self::aes_key($key, $salt);
+
+		return base64_encode($salt).base64_encode(openssl_encrypt($password, self::AES_METHOD, $aes_key, OPENSSL_RAW_DATA, $salt));
+	}
+
+	/**
+	 * Derive an encryption key from a password
+	 *
+	 * Using a pbkdf2 password derivation with a (stored) salt
+	 * With a 12 byte binary (16 byte base64) salt we can store 39 byte password in our varchar(80) column.
+	 *
+	 * @param string $password
+	 * @param string& $salt binary salt to use or null to generate one, on return used salt
+	 * @param int $iterations =2048 iterations of passsword
+	 * @param int $length =16 length of binary aes key
+	 * @param string $hash ='sha256'
+	 * @return string
+	 */
+	protected static function aes_key($password, &$salt, $iterations=2048, $length=16, $hash='sha256')
+	{
+		if (empty($salt))
+		{
+			$salt = openssl_random_pseudo_bytes(self::SALT_LEN);
+		}
+		// load hash_pbkdf2 polyfill for php < 5.5
+		if (!function_exists('hash_pbkdf2'))
+		{
+			require_once __DIR__.'/hash_pbkdf2.php';
+		}
+		$aes_key = hash_pbkdf2($hash, $password, $salt, $iterations, $length, true);
+
+		//error_log(__METHOD__."('$password', '".base64_encode($salt)."') returning ".base64_encode($aes_key).' '.function_backtrace());
+		return $aes_key;
+	}
+
+	/**
+	 * Encrypt password for storing in database with MCrypt and tripledes mode cbc
+	 *
+	 * @param string $password cleartext password
+	 * @param int $account_id user-account password is for
+	 * @param int &$pw_enc on return encryption used
+	 * @return string encrypted password
+	 */
+	protected static function encrypt_mcrypt_3des($password, $account_id, &$pw_enc)
 	{
 		if ($account_id > 0 && $account_id == $GLOBALS['egw_info']['user']['account_id'] &&
-			($mcrypt || ($mcrypt = self::init_crypt(true))))
+			($mcrypt = self::init_crypt(true)))
 		{
 			$pw_enc = self::USER;
 			$password = mcrypt_generic($mcrypt, $password);
@@ -367,30 +492,144 @@ class Credentials
 	 * Decrypt password from database
 	 *
 	 * @param array $row database row
-	 * @param ressource $mcrypt =null mcrypt ressource for user, default calling self::init_crypt(true)
+	 * @return string cleartext password
+	 * @throws Api\Exception\WrongParameter
+	 * @throws Api\Exception\AssertionFailed if neither OpenSSL nor MCrypt extension available
 	 */
-	protected static function decrypt(array $row, $mcrypt=null)
+	protected static function decrypt(array $row)
 	{
-		switch ($row['cred_pw_enc'])
+		// empty/unset passwords only give warnings ...
+		if (empty($row['cred_password'])) return '';
+
+		if (self::isUser($row['cred_pw_enc']) && $row['account_id'] != $GLOBALS['egw_info']['user']['account_id'])
+		{
+			return self::UNAVAILABLE;
+		}
+
+		switch($row['cred_pw_enc'])
 		{
 			case self::CLEARTEXT:
 				return base64_decode($row['cred_password']);
 
+			case self::USER_AES:
+			case self::SYSTEM_AES:
+				return self::decrypt_openssl_aes($row);
+
 			case self::USER:
-				if ($row['account_id'] != $GLOBALS['egw_info']['user']['account_id'])
-				{
-					return self::UNAVAILABLE;
-				}
-				// fall through
 			case self::SYSTEM:
-				if (($row['cred_pw_enc'] != self::USER || !$mcrypt) &&
-					!($mcrypt = self::init_crypt($row['cred_pw_enc'] == self::USER)))
-				{
-					throw new Api\Exception\WrongParameter("Password encryption type $row[cred_pw_enc] NOT available for mail account #$row[acc_id] and user #$row[account_id]/$row[cred_username]!");
+				try {
+					$password = self::decrypt_openssl_3des($row);
+					// ToDo store as AES
+					return $password;
 				}
-				return !empty($row['cred_password']) ? trim(mdecrypt_generic($mcrypt, base64_decode($row['cred_password']))) : '';
+				catch(Api\Exception\AssertionFailed $e) {
+					unset($e);
+					// try Mcrypt
+					return self::decrypt_mcrypt_3des($row);
+				}
 		}
-		throw new Api\Exception\WrongParameter("Unknow password encryption type $row[cred_pw_enc]!");
+		throw new Api\Exception\WrongParameter("Password encryption type $row[cred_pw_enc] NOT available for mail account #$row[acc_id] and user #$row[account_id]/$row[cred_username]!");
+	}
+
+	/**
+	 * Decrypt tripledes password from database with Mcrypt
+	 *
+	 * @param array $row database row
+	 * @return string cleartext password
+	 * @throws Api\Exception\WrongParameter
+	 * @throws Api\Exception\AssertionFailed if MCrypt extension not available
+	 */
+	protected static function decrypt_mcrypt_3des(array $row)
+	{
+		check_load_extension('mcrypt', true);
+
+		if (!($mcrypt = self::init_crypt($row['cred_pw_enc'] == self::USER)))
+		{
+			throw new Api\Exception\WrongParameter("Password encryption type $row[cred_pw_enc] NOT available for mail account #$row[acc_id] and user #$row[account_id]/$row[cred_username]!");
+		}
+		return trim(mdecrypt_generic($mcrypt, base64_decode($row['cred_password'])), "\0");
+	}
+
+	/**
+	 * Get key/password to decrypt credentials
+	 *
+	 * @param int $pw_enc self::(SYSTEM|USER)(_AES)?
+	 * @return string
+	 * @throws Api\Exception\AssertionFailed if not session password is available
+	 */
+	protected static function get_key($pw_enc)
+	{
+		if (self::isUser($pw_enc))
+		{
+			$session_key = Api\Cache::getSession('phpgwapi', 'password');
+			if (empty($session_key))
+			{
+				throw new Api\Exception\AssertionFailed("No session password available!");
+			}
+			$key = base64_decode($session_key);
+		}
+		else
+		{
+			$key = self::$db->Password;
+		}
+		return $key;
+	}
+
+	/**
+	 * OpenSSL equivalent for Mcrypt  $algo='tripledes', $mode='ecb'
+	 */
+	const TRIPLEDES_ECB_METHOD = 'des-ede3';
+
+	/**
+	 * Decrypt tripledes password from database with OpenSSL
+	 *
+	 * Seems iv is NOT used for mcrypt "tripledes/ecb" = openssl "des-ede3", only key-size 24.
+	 *
+	 * @link https://github.com/tom--/mcrypt2openssl/blob/master/mapping.md
+	 * @link http://thefsb.tumblr.com/post/110749271235/using-opensslendecrypt-in-php-instead-of
+	 * @param array $row database row
+	 * @param string $key =null password to use
+	 * @return string cleartext password
+	 * @throws Api\Exception\WrongParameter
+	 * @throws Api\Exception\AssertionFailed if OpenSSL extension not available
+	 */
+	protected static function decrypt_openssl_3des(array $row, $key=null)
+	{
+		check_load_extension('openssl', true);
+
+		if (!isset($key) || !is_string($key))
+		{
+			$key = self::get_key($row['cred_pw_enc']);
+		}
+		// seems iv is NOT used for mcrypt "tripledes/ecb" = openssl "des-ede3", only key-size 24
+		$keySize = 24;
+		if (bytes($key) > $keySize) $key = cut_bytes($key,0,$keySize-1);	// $keySize-1 is wrong, but that's what's used!
+		return trim(openssl_decrypt($row['cred_password'], self::TRIPLEDES_ECB_METHOD, $key, OPENSSL_ZERO_PADDING, ''), "\0");
+	}
+
+	/**
+	 * Decrypt aes encrypted and salted password from database via OpenSSL and AES
+	 *
+	 * @param array $row database row
+	 * @param string $key =null password to use
+	 * @param string $salt_len =16 len of base64 encoded salt (binary is 3/4)
+	 * @return string cleartext password
+	 * @throws Api\Exception\WrongParameter
+	 * @throws Api\Exception\AssertionFailed if OpenSSL extension not available
+	 */
+	protected static function decrypt_openssl_aes(array $row, $key=null)
+	{
+		check_load_extension('openssl', true);
+
+		if (!isset($key) || !is_string($key))
+		{
+			$key = self::get_key($row['cred_pw_enc']);
+		}
+		$salt = base64_decode(substr($row['cred_password'], 0, self::SALT_LEN64));
+		$aes_key = self::aes_key($key, $salt);
+
+		return trim(openssl_decrypt(base64_decode(substr($row['cred_password'], self::SALT_LEN64)),
+			self::AES_METHOD, $aes_key, OPENSSL_RAW_DATA, $salt), "\0");
 	}
 
 	/**
@@ -468,7 +707,9 @@ class Credentials
 			{
 				$key = self::$db->Password;
 			}
-			if (!check_load_extension('mcrypt'))
+			check_load_extension('mcrypt', true);
+
+			if (!($mcrypt = mcrypt_module_open($algo, '', $mode, '')))
 			{
 				error_log(__METHOD__."() required PHP extension mcrypt not loaded and can not be loaded, passwords can be NOT encrypted!");
 				$mcrypt = false;
@@ -496,6 +737,17 @@ class Credentials
 		}
 		//error_log(__METHOD__."(".array2string($user).") key=".array2string($key)." returning ".array2string($mcrypt));
 		return $mcrypt;
+	}
+
+	/**
+	 * Check if credentials are encrypted with users session password
+	 *
+	 * @param string $pw_enc
+	 * @return boolean
+	 */
+	static public function isUser($pw_enc)
+	{
+		return $pw_enc == self::USER_AES || $pw_enc == self::USER;
 	}
 
 	/**
