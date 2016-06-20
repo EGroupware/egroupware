@@ -916,7 +916,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				favorite = egw.preference('favorite_'+this.dataset.id,self.appname);
 			}
 			if(!favorite || jQuery.isEmptyObject(favorite)) return;
-			
+
 			// Handle old style by making it like new style
 			if(favorite.filter && !favorite.state)
 			{
@@ -1269,6 +1269,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 
 	/**
 	 * mailvelope object contains SyncHandlers
+	 *
 	 * @property {function} descriptionuploadSync function called by Mailvelope to upload encrypted private key backup
 	 * @property {function} downloadSync function called by Mailvelope to download encrypted private key backup
 	 * @property {function} backup function called by Mailvelope to upload a public keyring backup
@@ -1285,7 +1286,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		uploadSync: function(_uploadObj)
 		{
 			return new Promise(function(_resolve,_reject){});
-					},
+		},
 
 		/**
 		 * function called by Mailvelope to download a public keyring
@@ -1312,7 +1313,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				// Store backup sync packet into .PK_PGP file in user directory
 				jQuery.ajax({
 					method:'PUT',
-					url: egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PK_PGP',
+					url: egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PGP-Keychain',
 					contentType: 'application/json',
 					data: JSON.stringify(_backup),
 					success:function(){
@@ -1327,6 +1328,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 
 		/**
 		 * function called by Mailvelope to restore an encrypted private key backup
+		 *
 		 * @returns {Promise.<BackupSyncPacket, Error>}
 		 * @todo
 		 */
@@ -1336,7 +1338,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				var resolve = _resolve;
 				var reject = _reject;
 				jQuery.ajax({
-					url:egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PK_PGP',
+					url:egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PGP-Keychain',
 					method: 'GET',
 					success: function(_backup){
 						resolve(JSON.parse(_backup));
@@ -1357,7 +1359,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	 * @param {type} _cmd command to operate
 	 *	- PUT: to store backup file
 	 *	- GET: to read backup file
-	 *	- DELTET: to delete backup file
+	 *	- DELETE: to delete backup file
 	 *
 	 * @param {type} _successCallback function called when the operation is successful
 	 * @param {type} _errorCallback function called when the operation fails
@@ -1366,7 +1368,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	_mailvelopeBackupFileOperator: function(_url, _cmd, _successCallback, _errorCallback, _data)
 	{
 		var ajaxObj = {
-			url: _url || egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PK_PGP',
+			url: _url || egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PGP-Key-Backup',
 			method: _cmd,
 			success: _successCallback,
 			error: _errorCallback
@@ -1621,7 +1623,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 							}
 							else
 							{
-								et2_dialog.alert(lang('Mailvelope addon installation faild! Please try agian.'));
+								et2_dialog.alert(lang('Mailvelope addon installation failed! Please try again.'));
 							}
 						});
 				}
