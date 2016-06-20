@@ -267,11 +267,11 @@ class calendar_uiviews extends calendar_ui
 				'toolbarDefault' => true,
 			),
 			'day_view' => array(
-				'caption' => 'Day view',
+				'caption' => 'Dayview',
 				'icon'	=> 'day',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
-				'hint' => 'Day view',
+				'hint' => 'Dayview',
 				'toolbarDefault' => true,
 				'data' => array('state' => array('view' => 'day'))
 			),
@@ -285,11 +285,11 @@ class calendar_uiviews extends calendar_ui
 				'data' => array('state' => array('view' => 'day4'))
 			),
 			'week_view' => array(
-				'caption' => 'Week view',
+				'caption' => 'Weekview',
 				'icon'	=> 'week',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
-				'hint' => 'Week view',
+				'hint' => 'Weekview',
 				'toolbarDefault' => true,
 				'data' => array('state' => array('view' => 'week'))
 			),
@@ -303,11 +303,11 @@ class calendar_uiviews extends calendar_ui
 				'data' => array('state' => array('view' => 'weekN'))
 			),
 			'month_view' => array(
-				'caption' => 'Month view',
+				'caption' => 'Monthview',
 				'icon'	=> 'month',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
-				'hint' => 'Month view',
+				'hint' => 'Monthview',
 				'toolbarDefault' => false,
 				'data' => array('state' => array('view' => 'month'))
 			),
