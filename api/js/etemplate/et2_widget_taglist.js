@@ -279,7 +279,11 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			.on("load", function() {jQuery('.loading',this.container).remove();})
 		// Keep focus when selecting from the list
 			.on("selectionchange", function() {
-				jQuery('input',this.container).focus();
+				if(document.activeElement === document.body || 
+					widget.div.has(document.activeElement).length > 0)
+				{
+					jQuery('input',this.container).focus();
+				}
 				widget.resize();
 			})
 		// Bind keyup so we can start ajax search when we like
@@ -345,7 +349,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 					});
 					jQuery('body').one('click',function() {
 						taglist.collapse();
-						taglist.input.focus();
+
+						if(document.activeElement === document.body ||
+							widget.div.has(document.activeElement).length > 0)
+						{
+							taglist.input.focus();
+						}
 					});},100
 				);
 				this.$taglist.one('collapse', function() {
