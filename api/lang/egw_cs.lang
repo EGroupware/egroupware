@@ -1,22 +1,49 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	cs	%1 (%2 nových) zpráv zapsaných pro aplikaci '%3' a jazyky '%4'
 %1 email addresses inserted	common	cs	%1 e-mailových adres vloženo
+%1 entries found, select one ...	common	cs	Nalezeno %1 záznamů, vyberte jeden ...
+%1 etemplates deleted	common	cs	%1 eŠablon smazáno
+%1 etemplates for application '%2' dumped to '%3'	common	cs	%1 eŠablon pro aplikaci '%2' vytvořilo výpis do '%3'
+%1 etemplates found	common	cs	%1 eŠablon nalezeno
 %1 file	common	cs	soubor  %1
 %1 is not executable by the webserver !!!	common	cs	%1 není spustitelný pro webový server
+%1 matches on search criteria	common	cs	%1 shod s kritériem vyhledávání
+%1 more...	common	cs	%1 více...
+%1 new etemplates imported for application '%2'	common	cs	%1 nových eŠablon importováno pro aplikaci '%2'
+%1 not implemented for %2!	common	cs	%1 není implementováno pro %2!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	cs	%1Zvolte jiný adresář%2<br />nebo nastavte práva na %3 tak, aby do něj mohl zapisovat webový server
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	cs	%1eGroupWare%2 je víceuživatelský groupware postavený na webových technologiích napsaný v jazyce %3PHP%4.
-'%1' is no php file in the egw server root (%2)!	common	cs	'%1' není php souborem v server root eGW (%2)!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	cs	%1EGroupware%2 je víceuživatelský groupware postavený na webových technologiích napsaný v jazyce %3PHP%4.
+%s disabled	common	cs	%s zablokováno
+%s needed	common	cs	%s zapotřebí
+%s notranslation	common	cs	%s bez překladu
+%s onchange	common	cs	%s onChange (při změně)
+%s readonly	common	cs	%s jen ke čtení
+'%1' has an invalid format !!!	common	cs	%1' má neplatný formát !!!
+'%1' is no php file in the egw server root (%2)!	common	cs	'%1' není php souborem v server root EGw (%2)!
+'%1' is not a valid date !!!	common	cs	%1' není platné datum !!!
+'%1' is not a valid floatingpoint number !!!	common	cs	%1' není platné číslo s pohyblivou desetinnou čárkou !!!
+'%1' is not a valid integer !!!	common	cs	%1' není platné celé číslo
+'%1' is not allowed ('%2')!	common	cs	'%1' NENÍ povoleno ('%2')!
 (session restored in %1 seconds)	common	cs	(relace obnovena za %1 sekund)
 00 (disable)	admin	cs	00 (zakázat)
 1 day	common	cs	1 Den
 1 hour	common	cs	1 Hodina
+1 minute	common	cs	1 Minuty
 1 month	common	cs	1 Měsíc
 1 week	common	cs	1 Týden
 13 (ntp)	admin	cs	13 (ntp)
+15 minutes	common	cs	15 Minuty
+30 minutes	common	cs	30 Minuty
+5 minutes	common	cs	5 Minuty
 80 (http)	admin	cs	80 (http)
+a pattern to be searched for	common	cs	hledaný výraz
 about	common	cs	O
 about %1	common	cs	O %1
-about egroupware	common	cs	O eGroupWare
+about egroupware	common	cs	O EGroupware
 access	common	cs	Přístup
 access not permitted	common	cs	Přístup zakázán
+accesskey	common	cs	Přístupový klíč
+accesskeys can also be specified with an & in the label (eg. &name)	common	cs	Přístupové klíče mohou být specifikovány také s & v označení (např. &Name)
+account contactdata	common	cs	Kontaktní údaje účtu
 account has been created	common	cs	Účet byl vytvořen
 account has been deleted	common	cs	Účet byl smazán
 account has been updated	common	cs	Účet byl aktualizován
@@ -25,35 +52,59 @@ accounts	common	cs	Účty
 acl	common	cs	ACL
 action	common	cs	Akce
 actions	common	cs	Akce
+actions...	common	cs	Akce...
 active	common	cs	Aktivní
 add	common	cs	Přidat
 add %1 category for	common	cs	Přidat kategorii %1 pro
+add a new column (after the existing ones)	common	cs	Přidat nový sloupec (za stávající)
 add a new contact	common	cs	Přidat nový kontakt
+add a new entry of the selected application	common	cs	Přidat nový záznam vybrané aplikace
+add a new multi-column index	common	cs	Přidat nový vicesloupcový index
 add category	common	cs	Přidat kategorii
+add column	common	cs	Přidat sloupec
 add current	common	cs	Uložit aktuální náhled
+add index	common	cs	Přidat index
+add new	common	cs	Přidat nový
 add shortcut	common	cs	Přidat zástupce
 add sub	common	cs	Přidat pod
+add table	common	cs	Přidat tabulku
+add to clipboard	common	cs	Přidat do schránky
 addressbook	common	cs	Adresář
 admin	common	cs	Administrátor
 administration	common	cs	Administrace
+advanced search	common	cs	Rozšířené hledání
 afghanistan	common	cs	AFGHÁNISTÁN
 albania	common	cs	ALBÁNIE
 algeria	common	cs	ALŽÍRSKO
+align	common	cs	Zarovnat
+alignment of label and input-field in table-cell	common	cs	zarovnání popisku a vstupního pole v buňce tabulky
+alignment of the v/hbox containing table-cell	common	cs	Zarovnání V/HBoxu obsahujícího buňku tabulky
 all	common	cs	Vše
+all days	common	cs	všechny dny
 all fields	common	cs	všechna pole
 all languages	common	cs	všechny jazyky
+all operations save the template!	common	cs	všechny operace ukládají šablonu !
+all users	common	cs	Všichni uživatelé
+allowed file type: %1	common	cs	Povolený typ souboru: %1
 alphabet	common	cs	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	cs	Alternativní formátovací sada
+am	common	cs	am
 american samoa	common	cs	AMERICKÁ SAMOA
 an error happened	common	cs	Došlo k chybě
 an existing and by the webserver readable directory enables the image browser and upload.	common	cs	Existující adresář pro který má web server práva pro čtení povolí prohlížeč obrázků a upload.
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	cs	indexy vytvořené pro sloupec zrychlují vyhledávání v daném sloupci (ale také zabírají místo na disku !!!)
 and	common	cs	A
 andorra	common	cs	ANDORA
 angola	common	cs	ANGOLA
 anguilla	common	cs	ANGUILLA
 antarctica	common	cs	ANTARKTIDA
 antigua and barbuda	common	cs	ANTIGUA A BARBUDA
+api	common	cs	eGroupWare API
 application	common	cs	Aplikace
+application name needed to write a langfile or dump the etemplates !!!	common	cs	Název aplikace potřeboval zapsat jazykový soubor nebo vypsat eŠablony !!!
+applications	common	cs	Aplikace
+applies the changes made	common	cs	použije provedené změny
+applies the changes to the given version of the template	common	cs	použije změny provedené v dané verzi šablony
 apply	common	cs	Použít
 april	common	cs	Duben
 are you sure you want to delete these entries ?	common	cs	Určitě chcete smazat tyto záznamy?
@@ -61,6 +112,9 @@ are you sure you want to delete this entry ?	common	cs	Určitě chcete smazat te
 argentina	common	cs	AFGENTINA
 armenia	common	cs	ARMÉNIE
 aruba	common	cs	ARUBA
+as default	common	cs	jako výchozí
+attach	common	cs	Připojit
+attach file	common	cs	připojit soubor
 august	common	cs	Srpen
 australia	common	cs	AUSTRÁLIE
 austria	common	cs	RAKOUSKO
@@ -80,6 +134,7 @@ bahamas	common	cs	BAHAMY
 bahrain	common	cs	BAHRAJN
 bangladesh	common	cs	BANGLADÉŠ
 barbados	common	cs	BARBADOS
+baseline	common	cs	Základna
 bcc	common	cs	Skrytá kopie
 belarus	common	cs	BĚLORUSKO
 belgium	common	cs	BELGIE
@@ -88,13 +143,17 @@ benin	common	cs	BENIN
 bermuda	common	cs	BERMUNDY
 bhutan	common	cs	BHÚTÁN
 blocked, too many attempts	common	cs	Přístup zablokován, přiliš mnoho pokusů
+blurtext	common	cs	rozmazaný text
 bold	common	cs	Tučné
 bolivia	common	cs	BOLÍVIE
 border	common	cs	Okraj
+border-line-thickness for the table-tag	common	cs	Tloušťka okraje pro tag tabulky
 bosnia and herzegovina	common	cs	BOSNA A HERCEGOVINA
 botswana	common	cs	BOTSWANA
 bottom	common	cs	Dolní okraj
 bouvet island	common	cs	BOUVETŮV OSTROV
+box	common	cs	Rámeček
+box...	common	cs	Rámeček...
 brazil	common	cs	BRAZÍLIE
 british indian ocean territory	common	cs	BRITSKÉ INDICKOOCEÁNSKÉ ÚZEMÍ
 brunei darussalam	common	cs	BRUNEJ DARUSSALAM
@@ -105,9 +164,13 @@ burundi	common	cs	BURUNDI
 calendar	common	cs	Kalendář
 cambodia	common	cs	KAMBODŽA
 cameroon	common	cs	KAMERUN
+can not have special sql-value null	common	cs	nemůže mít speciální SQL hodnotu NULL
 canada	common	cs	KANADA
-cancel	common	cs	Storno
+cancel	common	cs	Zrušit
 cannot replace %1 because it is a directory	common	cs	Nemohu přepsat %1 protože je to adresář
+cant delete a single widget from a grid !!!	common	cs	nemohu smazat jednotlivý widget z mřížky !!!
+cant delete the only column of a grid !!!	common	cs	nemohu smazat jediný sloupec ve mřížce !!!
+cant delete the only row in a grid !!!	common	cs	nemohu smazat jediný řádek ve mřížce !!!
 cant open %1, needs ziparchive	common	cs	Nemohu otevřít %1, vyžaduje knihovnu ZipArchive
 cant open '%1' for %2	common	cs	Nemohu otevřít '%1' pro %2
 cape verde	common	cs	KAPVERDSKÉ OSTROVY
@@ -117,15 +180,25 @@ categories for	common	cs	kategorie pro
 category	common	cs	Kategorie
 category %1 has been added !	common	cs	Kategorie %1 byla přidána!
 category %1 has been updated !	common	cs	Kategorie %1 byla aktualizována!
+category tree	common	cs	Strom kategorií
 cayman islands	common	cs	KAJMANSKÉ OSTROVY
 cc	common	cs	Kopie
+cellpadding for the table-tag	common	cs	Vzdálenost mezi buňkou a jejím obsahem pro tag tabulky
+cells	common	cs	Buňky
+cellspacing for the table-tag	common	cs	Vzdálenost mezi buňkami pro tag tabulky
+center	common	cs	Střed
 centered	common	cs	vystředěný
 central african republic	common	cs	STŘEDOAFRICKÁ REPUBLIKA
 chad	common	cs	ČAD
 change	common	cs	Změnit
+changed	common	cs	Změněno
 charset	common	cs	utf-8
+check all	common	cs	Označit všechny
+check if content should only be displayed but not altered (the content is not send back then!)	common	cs	zaškrtněte, pokud má být obsah jen zobrazen, nikoli měněn (obsah pak není posílán zpět!)
+check if field has to be filled by user	common	cs	zaškrtněte, pokud musí uživatel položku vyplnit
 check installation	common	cs	Kontrola instalace
 check now	common	cs	Zkontroluj
+checkbox	common	cs	Zaškrtávací políčko
 chile	common	cs	CHILE
 china	common	cs	ČÍNA
 choose a background color	common	cs	Vyberte barvu pozadí
@@ -137,53 +210,109 @@ choose file...	common	cs	vyberte soubory ...
 choose the category	common	cs	Vyberte kategorii
 choose the parent category	common	cs	Vyberte nadřazenou kategorii
 christmas island	common	cs	VÁNOČNÍ OSTROV
+class	common	cs	Třída
+class, valign	common	cs	třída, svislé zarovnání
 clear	common	cs	Vymazat
 clear form	common	cs	Vymazat od
 click	common	cs	Kliknout
+click here to attach the file	common	cs	klikněte sem pro připojení souboru
+click here to create the link	common	cs	klikněte sem pro vytvoření odkazu
 click here to resume your egroupware session.	common	cs	Klikněte sem pro obnovení Vaší eGroupWare relace.
+click here to start the search	common	cs	Klikněte sem pro zahájení hledání
+click here to upload the file	common	cs	Klikněte sem pro upload souboru
 click or mouse over to show menus	common	cs	Klikněte nebo přejeďte myší pro zobrazení menu
 click or mouse over to show menus?	common	cs	Kliknout nebo přejet myší pro zobrazení menu?
 click this image on the navbar: %1	common	cs	Klikněte na tento obrázek v navigační liště: %1
+click to order after that criteria	common	cs	klikněte sem pro řazení dle daného kritéria
+clickable path	common	cs	rozkliknutelná cesta
 close	common	cs	Zavřít
 close sidebox	common	cs	Zavřít postranní panel
+closes the window without saving the changes	common	cs	uzavře okno bez uložení změn
 cocos (keeling) islands	common	cs	KOKOSOVÉ OSTROVY
 collection empty.	common	cs	Prázdná kolekce.
 collection listing	common	cs	Výpis kolekce
 colombia	common	cs	KOLUMBIE
+column...	common	cs	Sloupec...
+columnname	common	cs	Jméno sloupce
+comment	common	cs	Komentář
 common preferences	common	cs	Společné předvolby
 comoros	common	cs	KOMORSKÉ OSTROVY
 company	common	cs	Společnost
+confirm	common	cs	potvrdit
+confirmation message or custom javascript (returning true or false)	common	cs	Potvrzující zpráva nebo uživatelsky definovaný javascript (vracející true nebo false)
+confirmation necesary or custom java-script	common	cs	vyžadováno potvrzení nebo uživatelský javaskript
 congo	common	cs	KONGO
 congo, the democratic republic of the	common	cs	DEMOKRATICKÁ REPUBLIKA KONGO
+contact	common	cs	Kontakt
+contact field to show	common	cs	Zobrazit položku kontaktu
+contact fields	common	cs	Kontaktní položky
 contacting server...	common	cs	Kontaktuji server...
+contains	common	cs	obsahuje
 content type	common	cs	Typ obsahu
 cook islands	common	cs	COOKOVY OSTROVY
 copy	common	cs	Kopírovat
+copy "%1"	common	cs	Kopie "%1"
+copy to clipboard	common	cs	Kopírovat do clipboardu
 costa rica	common	cs	KOSTARIKA
 cote d ivoire	common	cs	REPUBLIKA POBŘEŹÍ SLONOVINY
 could not contact server. operation timed out!	common	cs	Nemohu kontaktovat server. Časový limit vypršel!
 create	common	cs	Vytvořit
+create a new table for the application	common	cs	Vytvořit novou tabulku pro aplikaci
 created by	common	cs	Vytvořil(a)
+creates an english ('en') langfile from label and helptexts (for application in name)	common	cs	vytvoří nový anglický jazykový soubor ('en') z označení a pomocných textů (pro aplikaci uvedenou v Názvu)
+creator	preferences	cs	Tvůrce
 croatia	common	cs	CHORVATSKO
+css class for the table-tag	common	cs	CSS třída pro tag tabulky
+css properties	common	cs	Vlastnosti CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	cs	název CSS třídy pro tento řádek, přednastaveno: 'nmh' = NextMatch header (záhlaví DalšíShoda),'nmr' = alternating NM row (střídavý NM řádek),'nmr0'+'nmr1' NM řádky
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	cs	název CSS třídy pro tento řádek, přednastaveno: 'th' = záhlaví, 'row' = střídavý řádek, řádky 'row_off'+'row_on'
+css-styles	common	cs	CSS styly
 cuba	common	cs	KUBA
 currency	common	cs	Měna
 current	common	cs	Aktuální
 current users	common	cs	Aktuální uživatelé
+custom	common	cs	uživatelsky definované
+custom fields	common	cs	uživatelsky definované položky
+custom javascript for onchange	common	cs	uživatelsky definovaný javaskript pro onChange (při změně)
+cut	common	cs	Vyjmout
 cyprus	common	cs	KYPR
 czech republic	common	cs	ČESKÁ REPUBLIKA
 database error	common	cs	Databázová chyba
 database error!	common	cs	Databázová chyba!
 date	common	cs	Datum
 date due	common	cs	Do data
+date+time	common	cs	Datum a čas
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	cs	Port pro datum a čas.<br>Pokud používáte port 13, nastavte prosím příslušná pravidla na firewallu dříve, než odešlete tuto stránku.<br>(Port: 13 / Host: 129.6.15.28)
+day	common	cs	Den
+days	common	cs	Dny
+db ensures that every row has a unique value in that column	common	cs	Databáze zajišťuje, že každý řádek má v tomto sloupci unikátní hodnotu
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	cs	volby indexu (oddělené čárkou) specifické pro databázi, např. mysql(FULLTEXT) nebo mysql(100) pro indexovanou délku sloupce
+db-tools	common	cs	Databázové nástroje
 december	common	cs	Prosinec
+deck	common	cs	Paluba (interní)
+default	common	cs	Výchozí
 default category	common	cs	Výchozí kategorie
 default height for the windows	common	cs	Výchozí výška oken
 default width for the windows	common	cs	Výchozí šířka oken
 delete	common	cs	Smazat
+delete a single entry by passing the id.	common	cs	Vymazat záznam vložením ID.
+delete all selected etemplates, without further inquiry	common	cs	smazat VŠECHNY vybrané eŠablony BEZ dalšího dotazu
+delete and cut save the template!	common	cs	smazat a šablonu vyjmout a uložit !
 delete category	common	cs	Smazat kategorii
+delete column	common	cs	Smazat sloupec
+delete index	common	cs	Smazat index
 delete row	common	cs	Smazat řádek
+delete the spezified etemplate	common	cs	Smazat určenou eŠablonu
+delete this column	common	cs	smazat tento sloupec
 delete this entry	common	cs	smazat záznam
+delete this etemplate	common	cs	smazat tuto eŠablonu
+delete this file	common	cs	Smazat tento soubor
+delete this row	common	cs	smazat tento řádek
+delete whole column (can not be undone!!!)	common	cs	smazat celý sloupec (nelze vrátit zpět!!!)
+deletes the above spez. etemplate from the database, can not be undone	common	cs	vymaže výše uvedenou eŠablonu z databáze, nelze vrátit zpět
+deletes the etemplate spez. above	common	cs	smaže výše uvedenou eŠablonu
+deletes this column	common	cs	Smaže tento sloupec
+deletes this index	common	cs	Smaže tento index
 denmark	common	cs	DÁNSKO
 description	common	cs	Popis
 detail	common	cs	Detail
@@ -197,12 +326,20 @@ disable slider effects	common	cs	Zakázat efekty posuvníku
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	cs	Zakázat animované efekty posuvníku při zobrazení nebo skrývání menu na stránce? Uživatelé Opery a Konqueroru patrně budou muset nastavit.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	cs	Zablokovat spouštění skriptu pro opravu chyby v Internet Exploreru 5.5 a vyšších, který umožňuje zobrazit průhlednost v obrázcích formátu .PNG?
 disabled	common	cs	Zakázano
+discard changes	common	cs	zahodit změny
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	cs	zobrazeno před vstupem nebo je vstup vložen za '%s' v označení (tlačítka pro odeslání nebo názvu souboru s obrázkem)
+displayed in statusline of browser if input-field gets focus	common	cs	zobrazeno ve stavové liště prohlížeče pokud vstupní pole získá fokus
+displayed in the top line of the groupbox (legend)	common	cs	zobrazeno v horní řádce rámečku skupiny (v legendě)
 djibouti	common	cs	DŽIBUTSKO
 do not notify	common	cs	Neupozorňovat
 do you also want to delete all subcategories ?	common	cs	Chcete také smazat všechny podkategorie?
+do you want to save the changes you made in table %s?	common	cs	Chcete uložit změny, které jste udělal(a)v tabulce %s?
 doctype:	common	cs	Typ dokumentu:
+document '%1' does not exist or is not readable for you!	preferences	cs	Dokument '%1' neexistuje nebo nemáte oprávnění k jeho čtení!
 document properties	common	cs	Vlastnosti dokumentu
 document title:	common	cs	Název dokumentu:
+documentation	common	cs	Dokumentace
+doesn't matter	common	cs	nezáleží na tom
 domain	common	cs	Doména
 domain name for mail-address, eg. "%1"	common	cs	jméno domény pro e-mailovou adresu, např. "%1"
 domestic	common	cs	Vnitrostátní
@@ -210,6 +347,10 @@ dominica	common	cs	DOMINIKA
 dominican republic	common	cs	DOMINIKÁNSKÁ REPUBLIKA
 done	common	cs	Hotovo
 download	common	cs	Stáhnout
+drop a table - this can not be undone	common	cs	Smazat tabulku - nelze vrátit zpět
+drop table	common	cs	Smazat Tabulku
+dump4setup	common	cs	Vypsat pro setup
+duration	common	cs	Trvání
 e-mail	common	cs	E-Mail
 east timor	common	cs	VÝCHODNÍ TIMOR
 eastern european	common	cs	Východoevropské
@@ -218,32 +359,67 @@ edit	common	cs	Editovat
 edit %1 category for	common	cs	Editovat kategorii %1 pro
 edit categories	common	cs	Editovat kategorie
 edit category	common	cs	Editovat kategorii
+edit embeded css styles or of the applications app.css file	common	cs	upravit vložené CSS styly nebo CSS styly aplikací v souboru app.css
+edit the etemplate spez. above	common	cs	upravit výše uvedenou eŠablonu
+edit...	common	cs	Editovat....
+editable templates - db-tools	common	cs	Editovatelné šablony - Databázové nástroje
+editable templates - delete template	common	cs	Editovatelné šablony - Smazat šablonu
+editable templates - editor	common	cs	Editovatelné šablony - Editor
+editable templates - search	common	cs	Editovatelné šablony - Hledat
+editable templates - show template	common	cs	Editovatelné šablony - Zobrazit šablonu
 egroupware	common	cs	eGroupWare
-egroupware api version	common	cs	verze eGroupWare API
+egroupware api version	common	cs	verze EGroupware API
 egroupware version	common	cs	Verze eGroupWaru
 egroupware: login blocked for user '%1', ip %2	common	cs	eGroupWare: zablokováno přihlášení uživatele '%1', IP %2
 egypt	common	cs	EGYPT
 el salvador	common	cs	EL SALVADOR
 email	common	cs	E-Mail
 email-address of the user, eg. "%1"	common	cs	e-mailová adresa uživatele, např. "%1"
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	cs	vložené CSS styly, např. '.red { background: red; }' (všimněte si tečky před názvem třídy) nebo '@import url(...)' (názvy tříd jsou globální pro celou stránku!)
+enable javascript onchange submit	common	cs	povolit odesílání onChange v javaskriptu
 enabled	common	cs	Povoleno
 end date	common	cs	Datum ukončení
 end time	common	cs	Čas ukončení
+enter '' for an empty default, nothing mean no default	common	cs	zadejte '' pro prázdnou hodnotu jako výchozí, nic znamená bez výchozí hodnoty
+enter a search pattern	common	cs	Zadejte hledaný výraz
+enter filename to upload and attach, use [browse...] to search for it	common	cs	Zadejte název souboru, který chcete uploadovat a připojit, použijte [Procházet] pro vyhledání souboru
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	cs	Zadejte umístění URL eGroupwaru.<br>Příklad: http://www.domain.com/egroupware   nebo   /egroupware<br><b>Bez koncového lomítka</b>
+enter the new version number here (> old_version), empty for no update-file	common	cs	sem zadejte číslo nové verze (> stará_verze), ponechte prázdné pokud nechcete aktualizovat soubor
+enter the new version number here (has to be > old_version)	common	cs	sem zadejte číslo nové verze (musí být > stará_verze)
 entry has been deleted sucessfully	common	cs	Záznam byl úspěšně smazán
 entry not found!	common	cs	Záznam nebyl nalezen!
+entry saved	common	cs	Záznam uložen
 entry updated sucessfully	common	cs	Záznam byl úspěšně zaktualizován
 equatorial guinea	common	cs	ROVNÍKOVÁ GUINEA
 eritrea	common	cs	ERITREA
 error	common	cs	Chyba
+error copying uploaded file to vfs!	common	cs	Chyba při kopírování uploadovaného souboru do vfs!
+error create parent directory %1!	common	cs	Chyba při vytváření nadřazeného adresáře %1!
 error creating %1 %2 directory	common	cs	Chyba při vytáření adresáře %1 %2
 error deleting %1 %2 directory	common	cs	Chyba při mazání adresáře %1 %2
+error deleting %1!	common	cs	Chyba při mazání %1!
 error renaming %1 %2 directory	common	cs	Chyba při přejmenování adresáře %1 %2
+error uploading file!	filemanager	cs	Chyba při uploadu souboru!
+error: template not found !!!	common	cs	Chyba: Šablona nebyla nalezena !!!
+error: webserver is not allowed to write into '%1' !!!	common	cs	Chyba: webový server nemá oprávnění k zápisu do '%1' !!!
+error: while saving !!!	common	cs	Chyba při ukládání !!!
+error: writing file (no write-permission for the webserver) !!!	common	cs	Chyba při ukládání souboru (webový server nemá oprávnění k zápisu) !!!
 estonia	common	cs	ESTONSKO
 etag	common	cs	ETag
+etemplate	common	cs	eŠablona
+etemplate '%1' imported, use save to put it in the database	common	cs	eŠablona '%1' naimportována, použijte Uložit pro zápis do databáze
+etemplate '%1' written to '%2'	common	cs	eŠablona '%1'  zapsána do '%2'
+etemplate editor	common	cs	Editor eŠablon
+etemplate reference	common	cs	Referenční příručka eŠablon
+etemplate tutorial	common	cs	Výuka eŠablon
 ethiopia	common	cs	ETIOPIE
 everything	common	cs	Vše
 exact	common	cs	přesný (výraz)
+exchange this row with the one above	common	cs	zaměnit tento řádek s řádkem nad ním
+exchange this two columns	common	cs	zaměnit tyto dva sloupce
+export the loaded etemplate into a xml-file	common	cs	exportovat načtenou eŠablonu do XML souboru
+export xml	common	cs	Exportovat XML
+extensions loaded:	common	cs	Načtená rozšíření:
 failed to change password.	common	cs	Nepodařilo se změnit heslo.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	cs	Nepodařilo se zkontaktovat server nebo jeho odpověď byla chybná. Zkuste se přihlásit znovu a v případě chyby kontaktujte administrátora.
 falkland islands (malvinas)	common	cs	FALKLANDSKÉ OSTROVY
@@ -252,19 +428,31 @@ favorites	common	cs	Oblíbené
 fax number	common	cs	číslo faxu
 features of the editor?	common	cs	Vlastnosti editoru?
 february	common	cs	Únor
+field	common	cs	Položka
+field must not be empty !!!	common	cs	Položka nesmí být prázdná !!!
 fields	common	cs	Pole
 fiji	common	cs	FIDŽI
+file	common	cs	Soubor
+file '%1' not found!	common	cs	Soubor '%1' nebyl nalezen!
+file contains more than one etemplate, last one is shown !!!	common	cs	Soubor obsahuje více jak jednu eŠablonu, zobrazena je poslední !!!
+file is of wrong type (%1 != %2)!	common	cs	Soubor je špatného typu (%1 != %2)!
+file writen	common	cs	Soubor zapsán
 files	common	cs	Soubory
+fileupload	common	cs	Upload souboru
 filter	common	cs	Filtr
 finland	common	cs	FINSKO
+first	common	cs	První
 first name	common	cs	Křestní jméno
 first name of the user, eg. "%1"	common	cs	křestní jméno uživatele, např. "%1"
 first page	common	cs	První strana
 firstname	common	cs	Křestní jméno
 fixme!	common	cs	OPRAV MĚ!
+floating point	common	cs	Plovoucí desetinná čárka
 folder already exists.	common	cs	Složka již existuje
 force selectbox	common	cs	Vynutit rozbalovací nabídku
+foreign key	common	cs	Cizí klíč
 forever	common	cs	Napořád
+formatted text (html)	common	cs	Formátovaný text (HTML)
 france	common	cs	FRANCIE
 french guiana	common	cs	FRANCOUZSKÁ GUYANA
 french polynesia	common	cs	FRANCOUZSKÁ POLYNÉSIE
@@ -275,6 +463,7 @@ fullname	common	cs	Celé jméno
 fullscreen mode	common	cs	Zobrazení na celou obrazovku
 gabon	common	cs	GABUN
 gambia	common	cs	GAMBIE
+general fields:	preferences	cs	Obecné položky:
 general menu	common	cs	Hlavní menu
 georgia	common	cs	GEORGIE
 german	common	cs	Německý
@@ -283,11 +472,18 @@ ghana	common	cs	GHANA
 gibraltar	common	cs	DŽIBRALTAR
 global	common	cs	Globální
 global public	common	cs	Přístupný všem
+go to the first entry	common	cs	jít na první záznam
+go to the last entry	common	cs	jít na poslední záznam
+go to the next page of entries	common	cs	jít na další stránku záznamů
+go to the previous page of entries	common	cs	jít na předchozí stránku záznamů
 grant access	common	cs	Povolit přístup
 greece	common	cs	ŘECKO
 greek	common	cs	řečtina
 greenland	common	cs	GRÓNSKO
 grenada	common	cs	GRENADA
+grid	common	cs	Mřížka
+grid column attributes	common	cs	Atributy sloupců ve mřížce
+grid row attributes	common	cs	Atributy řádků ve mřížce
 group	common	cs	Skupina
 group access	common	cs	Skupinový přístup
 group has been added	common	cs	Skupina byla přidána
@@ -295,6 +491,7 @@ group has been deleted	common	cs	Skupina byla smazána
 group has been updated	common	cs	Skupina byla aktualizována
 group name	common	cs	název skupiny
 group public	common	cs	Přístupný skupině
+groupbox	common	cs	Rámeček skupiny
 groupdav	common	cs	CalDAV, CardDAV a GroupDAV server
 groups	common	cs	Skupiny
 groups with permission for %1	common	cs	Skupiny s právy na %1
@@ -305,33 +502,68 @@ guatemala	common	cs	GUATEMALA
 guinea	common	cs	GUINEA
 guinea-bissau	common	cs	GUINEA-BISSAU
 guyana	common	cs	GUYANA
+h	common	cs	h
 haiti	common	cs	HAITI
+hbox	common	cs	Vodorovný rámeček
 heard island and mcdonald islands	common	cs	HEARDŮV OSTROV A McDONALDOVY OSTROVY
-height	common	cs	Šířka
+height	common	cs	Výška
+height of row (in % or pixel)	common	cs	výška řádku (v % nebo pixelech)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	cs	výška řádku (v % nebo pixelech), zakázání řádku: [! = not]<hodnota>[=<kontrola>] např.: '!@data' zakáže řádek pokud obsah data je prázdný
+height of the table in % or pixels for the table-tag and (optional) div	common	cs	Výška tabulky v % nebo pixelech pro tag tabulky a (volitelně) div
+height, disabled	common	cs	Výška, vypnuto
 help	common	cs	Nápověda
 high	common	cs	Vysoká
 highest	common	cs	Nejvyšší
+history log	common	cs	Protokol historie
 holy see (vatican city state)	common	cs	VATIKÁN
 home	common	cs	Hlavní strana
 home email	common	cs	domácí e-mail
 honduras	common	cs	HONDURAS
 hong kong	common	cs	HONGKONG
+horizontal rule	common	cs	Vodorovné pravítko
+hour	common	cs	Hodina
+hours	common	cs	hodin
+how many entries should the list show	common	cs	Kolik záznamů má seznam zobrazovat
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	cs	Kolik ikon se má zobrazovat v navigační liště (v záhlaví stránky). Další ikony se přesunou do roletového menu, které zobrazíte kliknutím na symbol na pravé straně navigační lišty.
 how to show the general egroupware menu ?	common	cs	Jak zobrazovat hlavní menu eGroupWare?
+html	common	cs	HTML
 hungary	common	cs	MAĎARSKO
 iceland	common	cs	ISLAND
+id	common	cs	ID
 iespell not detected. click ok to go to download page.	common	cs	ieSpell nebyl nalezen. Klikněte na OK pro přesun na stránku ke stažení.
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	cs	pokud je položka zakázaná, je zobrazena prázdná buňka tabulky pro (dočasné) odstranění položky/buňky
 if the clock is enabled would you like it to update it every second or every minute?	common	cs	Pokud budou hodiny povoleny, chcete je aktualizovat každou vteřinu nebo každou minutu?
 if there are some images in the background folder you can choose the one you would like to see.	common	cs	Pokud máte ve složce pozadí nějaké obrázky, můžete si vybrat ten, který se má zobrazovat.
+image	common	cs	Obrázek
 image directory relative to document root (use / !), example:	common	cs	Adresář pro obrázky relativní ke kořenovému adresáři dokumentů (použijte / !), například:
 image url	common	cs	URL obrázku
+import	common	cs	Importovat
+import an etemplate from a xml-file	common	cs	importovat eŠablonu z XML souboru
+import table-definitions from existing db-table	common	cs	Importovat definice tabulky ze stavající databázové tabulky
+import xml	common	cs	Importovat XML
+increment version to not overwrite the existing template	common	cs	zvyšte číslo verze, aby nedošlo k přepsání stávající šablony
+index/name of returned content (name of the template, link / method for image)	common	cs	index/název vráceného obsahu (název šablony, odkaz/metoda pro obrázek)
+indexed	common	cs	Indexovaný
+indexoptions	common	cs	Volby indexu
 india	common	cs	INDIE
 indonesia	common	cs	INDONÉSIE
+insert a column before	common	cs	vložit sloupec před
+insert a column behind	common	cs	vložit sloupec za
+insert a row above	common	cs	vložit řádek nad
+insert a row below	common	cs	vložit řádek pod
+insert a widget before	common	cs	vložit widget před
+insert a widget behind	common	cs	vložit widget za
 insert all %1 addresses of the %2 contacts in %3	common	cs	Vložit všech %1 adres z %2 kontaktů v %3
 insert column after	common	cs	Vložit sloupec za
 insert column before	common	cs	Vložit sloupec před
+insert in document	common	cs	Vložit do dokumentu
+insert new column behind this one	common	cs	vložit nový sloupec za tento
+insert new column in front of all	common	cs	vložit nový sloupec před všechny ostatní
+insert new row after this one	common	cs	vložit nový řádek za tento
+insert new row in front of first line	common	cs	vložit nový řádek před první řádek
 insert row after	common	cs	Vložit řádek za
 insert row before	common	cs	Vložit řádek před
+integer	common	cs	Celé číslo
 international	common	cs	Mezinárodní
 invalid filename	common	cs	Neplatné jméno souboru
 invalid ip address	common	cs	Neplatná IP adresa
@@ -358,6 +590,7 @@ justify left	common	cs	Zarovnej nalevo
 justify right	common	cs	Zarovnej napravo
 kazakstan	common	cs	KAZACHSTÁN
 kenya	common	cs	KEŇA
+key	common	cs	Klíč
 keywords	common	cs	Klíčová slova
 kiribati	common	cs	KIRIBATI
 korea, democratic peoples republic of	common	cs	KOREA
@@ -365,9 +598,14 @@ korea, republic of	common	cs	KOREA
 korean	common	cs	korejština
 kuwait	common	cs	KUWAIT
 kyrgyzstan	common	cs	KYRGYZSTÁN
+label	common	cs	Jmenovka
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	cs	Jmenovka:[bold][italic] Text:[len][,max] Čísla:[min][,[max][,len]] Textová oblast:[rows][,cols] Přepínací tlačítko:value Vodorovné pravítko:[width] Šablona:[IndexInContent] Výběr:[multiselect] Datum:[hodnoty: např. 'Y-m-d']
+lang	common	cs	Jazyk
 language	common	cs	Jazyk
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	cs	zkratka jazyka (např. 'en' u angličtiny) pro jazykově závislou šablonu ('' načte Vaše předvolené jazyky nebo výchozí, použijte 'výchozí' pro načtení výchozí šablony '')
 language_direction_rtl	common	cs	směr_jazyka_zprava_doleva
 lao peoples democratic republic	common	cs	LAOS
+last	common	cs	Poslední
 last modified	common	cs	Naposledy změněno
 last name	common	cs	Příjmení
 last name of the user, eg. "%1"	common	cs	příjmení uživatele, např. "%1"
@@ -377,6 +615,7 @@ latvia	common	cs	LOTYŠSKO
 ldap-mgr	common	cs	LDAP-Manažer
 lebanon	common	cs	LIBANON
 left	common	cs	Levý
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	cs	délka pro char+varchar, přesnost celých čísel: 2, 4, 8 a desetinných: 4, 8
 lesotho	common	cs	LESOTHO
 liberia	common	cs	LIBÉRIE
 libyan arab jamahiriya	common	cs	LIBYE
@@ -384,10 +623,19 @@ license	common	cs	Licence
 liechtenstein	common	cs	LICHTENŠTEJNSKO
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'<br><b>csv data neobsahují ##last-check-run## tabulky %3 ==> ignorován</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'<br><b>csv data neodpovídají počtu sloupců v tabulce %3 ==> ignorován</b>
+link	common	cs	Odkaz
+link target %1 not found!	common	cs	Odkaz na cíl %1 nebyl nalezen!
+linkapps	common	cs	Odkaz na aplikace
+linkentry	common	cs	Záznam odkazu
+linklist	common	cs	Seznam odkazů
+linkstring	common	cs	Řetězec odkazu
+linkto	common	cs	Odkaz na
 list	common	cs	Seznam
 list members	common	cs	Seznam členů
 lithuania	common	cs	LITVA
 load	common	cs	Nahrát
+load this template into the editor	common	cs	Načíst tuto šablonu do editoru
+loading	common	cs	nahrávám
 local	common	cs	Lokální
 locations	common	cs	umístění
 login	common	cs	Přihlásit
@@ -416,49 +664,77 @@ martinique	common	cs	MARTINIK
 mauritania	common	cs	MAURITÁNIE
 mauritius	common	cs	MAURICIUS
 max number of icons in navbar	common	cs	Maximální počet ikon v navigační liště
+maximum size for uploads	filemanager	cs	Maximální velikost pro uploady
 may	common	cs	Květen
 mayotte	common	cs	MAYOTTE
 medium	common	cs	Střední
 menu	common	cs	Menu
 message	common	cs	Zpráva
+message ...	common	cs	Zpráva...
 mexico	common	cs	MEXIKO
 micronesia, federated states of	common	cs	MIKRONÉSIE
-minute	common	cs	minuta
+middle	common	cs	Prostřední
+minute	common	cs	Minuta
+minutes	common	cs	Minuty
 moldova, republic of	common	cs	MOLDAVSKO
 monaco	common	cs	MONAKO
 monday	common	cs	Pondělí
 mongolia	common	cs	MONGOLSKO
 montenegro	common	cs	ČERNÁ HORA
+month	common	cs	Měsíc
 montserrat	common	cs	MONTSERRAT
+more	common	cs	Více
+more than 1 match for '%1'	common	cs	Více než jeden záznam pro '%1'
 morocco	common	cs	MAROKO
 mozambique	common	cs	MOSAMBIK
+multicolumn indices	common	cs	Vícesloupcové indexy
 multiple	common	cs	vícenásobný
 myanmar	common	cs	MYANMAR
 name	common	cs	Jméno
+name of other table where column is a key from	common	cs	název jiné tabulky kde je skoupec klíčem
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	cs	název skupiny šablon z phpgw (např. verdilak): '' = výchozí (načte předvolenou šablonu, použijte 'výchozí' pro načtení výchozí šablony '')
+name of table to add	common	cs	Název tabulky, která se má přidat
+name of the etemplate, should be in form application.function[.subtemplate]	common	cs	název eŠablony, měl by být ve tvaru aplikace.funkce.[.podŠablona]
 name of the user, eg. "%1"	common	cs	jméno uživatele, např. "%1"
 namespace	common	cs	Jmenný prostor
 namibia	common	cs	NAMIBIE
 nauru	common	cs	NAURU
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	cs	musí být unikátní v rámci tabulky a nesmí být rezervovaným slovem SQL, nejlepší je všechny opatřit společnou dvoupísmennou zkratkou aplikace, např. 'et_'
 nepal	common	cs	NEPÁL
 netherlands	common	cs	NIZOZEMSKO
 netherlands antilles	common	cs	NIZOZEMSKÉ ANTILY
 never	common	cs	Nikdy
+new	common	cs	Nová
 new caledonia	common	cs	NOVÁ KALEDONIE
 new entry added sucessfully	common	cs	Nový záznam byl úspěšně přidán
 new main category	common	cs	Nová hlavní kategorie
+new search	common	cs	Nové hledání
+new table created	common	cs	Nová tabulka vytvořena
 new value	common	cs	Nová hodnota
 new zealand	common	cs	NOVÝ ZÉLAND
+newer version '%1' exists !!!	common	cs	existuje novější verze '%1'  !!!
 next	common	cs	Další
 next page	common	cs	Další strana
+nextmatch	common	cs	Nextmatch (Další shoda)
+nextmatch accountfilter	common	cs	Další shoda s filtrem účtů
+nextmatch custom filterheader	common	cs	Další shoda s uživatelským filtrem záhlaví
+nextmatch filterheader	common	cs	Další shoda s filtrem záhlaví
+nextmatch header	common	cs	Další shoda záhlaví
+nextmatch sortheader	common	cs	Další shoda setříděného záhlaví
 nicaragua	common	cs	NIKARAGUA
 niger	common	cs	NIGER
 nigeria	common	cs	NIGÉRIE
 niue	common	cs	NIUE
 no	common	cs	Ne
 no - cancel	common	cs	Ne - Zrušit
+no column to swap with !!!	common	cs	není sloupec, za který se dá prohodit !!!
 no entries found, try again ...	common	cs	žádné záznamy nebyly nalezeny, zkuste znovu...
+no file	common	cs	žádný soubor
+no filename given or selected via browse...	common	cs	nebyl zadán název souboru ani vybrán přes Procházet
 no filters	common	cs	Odebrat filtr
 no history for this record	common	cs	Žádná historie pro tento záznam
+no matches found	common	cs	Nenalezeny žádné záznamy
+no row to swap with !!!	common	cs	není řádek, za který se dá prohodit !!!
 no savant2 template directories were found in:	common	cs	Nebyly nalezeny šablony adresářů Savant2 v:
 no subject	common	cs	Žádný subjekt
 none	common	cs	Žádné
@@ -469,19 +745,31 @@ norway	common	cs	NORSKO
 not	common	cs	ne
 not a user yet? register now	common	cs	Nemáte dosud uživatelský účet? Zaregistrujte se
 not assigned	common	cs	nepřidělen
+not null	common	cs	NENÍ NULL
 not readable %1 entry of user %2	common	cs	Nečitelný %1 záznam uživatele %2
 note	common	cs	Poznámka
 notes	common	cs	Poznámky
+nothing	common	cs	nic
+nothing found - try again !!!	common	cs	Nic nenalezeno - zkuste znovu !!!
+nothing in clipboard to paste !!!	common	cs	v clipboardu není nic ke vložení !!!
+nothing matched search criteria !!!	common	cs	Zadanému kritériu hledání nic neodpovídá !!!
 notifications	common	cs	upozornění
 notify window	common	cs	Okno s upozorněním
 notify your administrator to correct this situation	common	cs	Uvědomte prosím svého administrátora, aby tuto situaci vyřešil.
 november	common	cs	Listopad
+now	common	cs	Nyní
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	cs	počet sloupců, přes které se má pole/buňka roztáhnout nebo 'all' pro zbývající sloupce, jméno CSS třídy (pro tag TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	cs	počet řádků/sloupců ve Svislém/Vodorovném rámečku, vzdálenost mezi buňkou a jejím obsahem, vzdálenost mezi buňkami
 october	common	cs	Říjen
+of	common	cs	z
 ok	common	cs	OK
 old value	common	cs	Stará hodnota
 oman	common	cs	OMÁN
 on *nix systems please type: %1	common	cs	Na systémech typu *nix zadejte prosím: %1
 on mouse over	common	cs	Při pohybu myši přes
+onchange	common	cs	onChange (při změně)
+onclick	common	cs	onClick (při kliknutí)
+only an other version found !!!	common	cs	našla se jen jiná verze !!!
 only private	common	cs	jen soukromé
 only yours	common	cs	jen Vaše
 oops! you caught us in the middle of system maintainance.	common	cs	Omlouváme se! Zastihnul(a) jste nás uprostřed údržby systému.
@@ -489,12 +777,19 @@ open	common	cs	Otevřít
 open notify window	common	cs	Otevřít okno s upozorněním
 open popup window	common	cs	Otevřít překryvné okno
 open sidebox	common	cs	Otevřít postranní panel
+open the online help.	common	cs	Otevřit online nápovědu.
+operator	common	cs	Operátor
+optional note about the link	common	cs	volitelná poznámka o odkazu
+options	common	cs	Volby
 or	common	cs	nebo
+order to navigating by tab key through the form	common	cs	Pořadí v navigaci fomulářem pomocí klávesy tabulátor
 ordered list	common	cs	Setříděný seznam
 original	common	cs	Původní
 other	common	cs	Ostatní
+overflow	common	cs	Přetečení
 overview	common	cs	Přehled
 owner	common	cs	Vlastník
+padding	common	cs	Odsazení
 page	common	cs	Strana
 page was generated in %1 seconds	common	cs	Strana vygenerována za %1 sekund
 pakistan	common	cs	PÁKISTÁN
@@ -505,6 +800,7 @@ papua new guinea	common	cs	PAPUA - NOVÁ GUINEA
 paraguay	common	cs	PARAGUAY
 parcel	common	cs	Zásilka
 parent category	common	cs	Nadřazená kategorie
+parent is a '%1' !!!	common	cs	nadřazený je '%1' !!!
 password	common	cs	Heslo
 password could not be changed	common	cs	Heslo nemohlo být změněno
 password has been updated	common	cs	Heslo bylo zaktualizováno
@@ -513,6 +809,8 @@ password must contain at least %1 numbers	common	cs	Heslo musí obsahovat nejmé
 password must contain at least %1 special characters	common	cs	Heslo musí obsahovat nejméně %1 speciálních znaků
 password must contain at least %1 uppercase letters	common	cs	Heslo musí obsahovat nejméně %1 velkých písmen
 password must have at least %1 characters	common	cs	Heslo musí mít nejméně %1 znaků
+paste	common	cs	Vložit
+path	common	cs	Cesta
 path to user and group files has to be outside of the webservers document-root!!!	common	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenový adresář dokumentů webového serveru!!!
 permission denied!	common	cs	Přístup zamítnut!
 permissions to the files/users directory	common	cs	práva k souborům / uživatelským adresářům
@@ -521,24 +819,30 @@ personal	common	cs	Osobní
 peru	common	cs	PERU
 philippines	common	cs	FILIPÍNY
 phone number	common	cs	telefonní číslo
-api	common	cs	eGroupWare API
 pitcairn	common	cs	PITCAIRN
 please %1 by hand	common	cs	Prosím %1 ručně
 please enter a name	common	cs	Zadejte prosím jméno!
+please enter table-name first !!!	common	cs	Zadejte prosím nejprve název tabulky !!!
 please run setup to become current	common	cs	Spusťte prosím setup pro aktualizaci
 please select	common	cs	Prosím zvolte
 please set your global preferences	common	cs	Upravte prosím své globální předvolby!
 please set your preferences for this application	common	cs	Upravte prosím své předvolby pro tuto aplikaci!
 please wait...	common	cs	Prosím čekejte...
 please, check back with us shortly.	common	cs	Prosíme, navštivte nás až za chvíli.
+pm	common	cs	pm
 poland	common	cs	POLSKO
+popup	common	cs	Překryvné
 popup with search	common	cs	Překryvné okno s hledáním
 portugal	common	cs	PORTUGALSKO
 postal	common	cs	Poštovní
 powered by	common	cs	Založeno na
+precision	common	cs	Přesnost
 preferences	common	cs	Předvolby
+prev	common	cs	Předchozí
 previous page	common	cs	Predchozí strana
 primary group	common	cs	primární skupina
+primary key	common	cs	Primární klíč
+primary key for the table, gets automaticaly indexed	common	cs	Primární klíč tabulky, je automaticky indexován
 primary style-sheet:	common	cs	Primární formátovací sada:
 print	common	cs	Tisknout
 priority	common	cs	Priorita
@@ -549,27 +853,39 @@ properties	common	cs	Vlastnosti
 public	common	cs	Veřejné
 puerto rico	common	cs	PORTORIKO
 qatar	common	cs	KATAR
+radiobutton	common	cs	Přepínací tlačítko
 read	common	cs	Číst
+read a list of entries.	common	cs	Načíst seznam záznamů
+read a single entry by passing the id and fieldlist.	common	cs	Načíst jednotlivý záznam zadáním jeho id a seznamu polí
+read etemplate from database (for the keys above)	common	cs	načíst eŠablonu z databáze (pro výše uvedené klíče)
 read this list of methods.	common	cs	Číst tento seznam metod.
 reading	common	cs	čtení
+readonly	common	cs	jen pro čtení
+refresh	common	cs	Obnovit
 register	common	cs	Registrovat
 regular	common	cs	Normální
 reject	common	cs	Odmítnout
 remember me	common	cs	Zapamatuj si mě
+remove row (can not be undone!!!)	common	cs	odstranit řádek (nelze vrátit zpět!!!)
 remove selected accounts	common	cs	odstranit vybrané účty
 remove shortcut	common	cs	Odstranit zástupce
+remove this link (not the entry itself)	common	cs	Odstranit tento odkaz (ne celý záznam)
 rename	common	cs	Přejmenovat
 replace	common	cs	Nahradit
 replace with	common	cs	Nahradit s
+required	common	cs	Vyžadováno
+reset	common	cs	Vynulovat
 resource type	common	cs	Typ zdroje
 resources	common	cs	Zdroje
 restore failed	common	cs	Obnovení se nezdařilo
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	cs	Vrací kompletní seznam účtů v systému. Varování: výpis může být velmi dlouhý.
 returns an array of todo items	common	cs	Vrací pole s položkami úkolů
+returns savely, without deleting	common	cs	vrátí bezpečně zpět, BEZ smazání
 returns struct of users application access	common	cs	Vrací strukturu uživatelských přístupů k aplikaci
 reunion	common	cs	RÉUNION
 right	common	cs	Pravý
 romania	common	cs	RUMUNSKO
+row...	common	cs	Řádek...
 russian	common	cs	ruština
 russian federation	common	cs	RUSKO
 rwanda	common	cs	RWANDA
@@ -585,27 +901,73 @@ saturday	common	cs	Sobota
 saudi arabia	common	cs	SAÚDSKÁ ARÁBIE
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	cs	Verze Savant2 se liší od verze Savant2 wrapperu. <br/>Tato verze: %1 <br/>Verze Savantu: %2
 save	common	cs	Uložit
+save all	common	cs	Uložit vše
+save as	common	cs	Uložit jako
+save as zip	common	cs	Uložit jako ZIP soubor
+save selected columns as default preference for all users.	common	cs	Uložit vybrané sloupce jako výchozí předvolbu pro všechny uživatele.
+save the changes made and close the window	common	cs	Uložit provedené změny a zavřít okno
+save the etemplate under the above keys (name, ...), change them for a saveas	common	cs	uložit eŠablonu pod výše uvedenými klíči (název, ...), změnit je pro Uložit jako
+saves changes to tables_current.inc.php	common	cs	uloží změny do tables_current.inc.php
+saves the template with given version number and closes the window	common	cs	uloží šablonu s daným číslem verze a zavře okno
+scale	common	cs	Škála
+scale for float	common	cs	Škála pro plovoucí
 search	common	cs	Hledat
 search %1 '%2'	common	cs	Hledat %1 '%2'
 search accounts	common	cs	Hledat v účtech
 search for '%1'	common	cs	Hledat '%1'
 search or select accounts	common	cs	vyhledat nebo vybrat účty
+search...	common	cs	vyhledávání ...
 second	common	cs	sekunda
 section	common	cs	Sekce
 select	common	cs	Vybrat
+select a category	common	cs	vybrat kategorii
+select a primary contact, to show in the list	common	cs	Vybrat primární kontakt, který má být zobrazen v seznamu
+select access	common	cs	Vybrat přístup
+select account	common	cs	Vybrat účet
 select action	common	cs	Vybrat akci
 select all	common	cs	Vybrat vše
 select all %1 %2 for %3	common	cs	Vybrat vše %1 %2 pro %3
+select an app first !!!	common	cs	Vyberte nejprve aplikaci !!!
+select an app to search in	common	cs	Vybrat aplikaci k prohledání
+select an application	common	cs	Vybrat aplikaci
+select an application, (*) = uninstalled	common	cs	Vybrat aplikaci, (*) = nenainstalovaná
+select an entry to link with	common	cs	Vybrat záznam, na který se má odkazovat
+select an table of the application	common	cs	Vybrat tabulku aplikace
+select application	common	cs	Vybrat aplikaci
+select application to search	common	cs	Vybrat aplikaci k prohledání
 select category	common	cs	Vybrat kategorii
+select columns	common	cs	Vybrat sloupce
+select country	common	cs	Vybrat zemi
 select date	common	cs	Vybrat datum
+select day	common	cs	Vybrat den
+select day of week	common	cs	vybrat den v týdnu
+select entry	common	cs	Vybrat záznam
+select file(s) from vfs	common	cs	Vyberte soubory z File Manager
+select files from filemanager ...	common	cs	Vyberte soubory ze správce souborů ...
 select group	common	cs	Vybrat skupinu
 select home email address	common	cs	Vybrat domácí e-mailovou adresu
+select hour	common	cs	Vybrat hodinu
+select if content of field should not be translated (label gets always translated)	common	cs	vyberte pokud nemá být obsah pole přeložen (jmenovka je přeložena vždy)
+select language	common	cs	Vybrat jazyk
+select month	common	cs	Vybrat měsíc
 select multiple accounts	common	cs	vybrat více účtů
+select number	common	cs	Vybrat číslo
 select one	common	cs	Vybrat jeden
+select one ...	common	cs	Vybrat jeden ...
+select percentage	common	cs	Vybrat procento
+select priority	common	cs	Vybrat prioritu
+select state	common	cs	Vybrat stát
+select the columns to display in the list	common	cs	Vybrat sloupce, které mají být zobrazeny v seznamu
 select the default height for the application windows	common	cs	Vyberte výchozí výšku pro okno aplikace
 select the default width for the application windows	common	cs	Vyberte výchozí šířku pro okno aplikace
+select the indexed columns in their desired order	common	cs	Vybrat indexované sloupce v požadovaném pořadí
+select this etemplate to delete it	common	cs	vybrat tuto eŠablonu ke smazání
 select user	common	cs	Vybrat uživatele
+select which accounts to show	common	cs	vybrat účty ke zobrazení
+select which values to show	common	cs	vybrat hodnoty ke zobrazení
 select work email address	common	cs	Vybrat pracovní e-mailovou adresu
+select year	common	cs	Vybrat rok
+selectbox	common	cs	Rozbalovací nabídka
 selection	common	cs	Výběr
 send	common	cs	Odeslat
 senegal	common	cs	SENEGAL
@@ -616,10 +978,16 @@ server answered. processing response...	common	cs	Server odpověděl. Zpracováv
 server contacted. waiting for response...	common	cs	Server zkontaktován. Čekám na odpověď...
 server name	common	cs	Název serveru
 session has been killed	common	cs	Relace byla ukončena
+set as default	common	cs	Nastavit jako výchozí
+sets today as date	common	cs	nastaví dnešek jako datum
 setup	common	cs	Setup
 setup main menu	common	cs	Nastavit hlavní menu
 seychelles	common	cs	SEYCHELY
+should the form be submitted or any custom javascript be executed	common	cs	Má být odeslán formulář nebo spuštěn libovolný uživatelský javascript
+show	common	cs	Zobrazit
+show (no save)	common	cs	Zobrazit (neukládat)
 show all	common	cs	zobrazit vše
+show all / cancel filter	common	cs	Zobrazit vše / zrušit filtr
 show all categorys	common	cs	Zobrazit všechny kategorie
 show as topmenu	common	cs	Zobrazit jako horní menu
 show clock?	common	cs	Zobrazit hodiny?
@@ -631,9 +999,13 @@ show page generation time	common	cs	Zobrazit časy generování stránek
 show page generation time on the bottom of the page?	common	cs	Přejete si zobrazit čas generování stránky na jejím zápatí?
 show page generation time?	common	cs	Zobrazit čas generovaní stránky?
 show the logo's of egroupware and x-desktop on the desktop.	common	cs	Zobrazit logo eGroupWare a x-desktopu na pracovní ploše.
+show values	common	cs	Zobrazit hodnoty
 show_more_apps	common	cs	zobrazit_více_aplikací
+showing	common	cs	zobrazuji
 showing %1	common	cs	zobrazeno %1
 showing %1 - %2 of %3	common	cs	zobrazeno %1 - %2 z %3
+shows / allows you to enter values into the etemplate for testing	common	cs	zobrazí / umožní Vám zadat hodnoty do eŠablony pro testování
+shows/displays etemplate for testing, does not save it before	common	cs	zobrazí eŠablonu pro testování, předtím jí NEukládá
 sierra leone	common	cs	SIERRA LEONE
 simple	common	cs	Jednoduchý
 singapore	common	cs	SINGAPUR
@@ -646,9 +1018,15 @@ somalia	common	cs	SOMÁLSKÁ REPUBLIKA
 sorry, your login has expired	login	cs	Lituji, Váše přihlášení vypršelo
 south africa	common	cs	JIHOAFRICKÁ REPUBLIKA
 south georgia and the south sandwich islands	common	cs	JIŽNÍ GEORGIE A JIŽNÍ SANDWICHOVY OSTROVY
+spacing	common	cs	Rozestupy
 spain	common	cs	ŠPANĚLSKO
+span	common	cs	Roztažení
+span, class	common	cs	Roztažení, Třída
 sri lanka	common	cs	SRÍ LANKA
+stack	common	cs	Zásobník
+start a new search, cancel this link	common	cs	začít nové hledání, zrušit tento odkaz
 start date	common	cs	Počáteční datum
+start new search for the above pattern	common	cs	začít nové hledání pro výše uvedený výraz
 start time	common	cs	Počáteční čas
 start with	common	cs	začíná s
 starting up...	common	cs	Startuji...
@@ -656,26 +1034,44 @@ status	common	cs	Stav
 stretched	common	cs	roztažený
 subject	common	cs	Předmět
 submit	common	cs	Odeslat
+submit form	common	cs	odeslat formulář
+submitbutton	common	cs	Tlačitko pro odeslání
 substitutions and their meanings:	common	cs	Substituce a jejich významy:
 sudan	common	cs	SÚDÁN
 sunday	common	cs	Neděle
 suriname	common	cs	SURINAM
 svalbard and jan mayen	common	cs	SVALBARD A OSTROV JAN MAYEN
+swap	common	cs	prohodit
+swap widget with next one	common	cs	prohodit widget s následujícím
+swap with next column	common	cs	prohodit s následujícím sloupcem
+swap with next row	common	cs	prohodit s následujícím řádkem
 swaziland	common	cs	SVAZIJSKO
 sweden	common	cs	ŠVÉDSKO
+switch to a parent widget	common	cs	přepnout na nadřízený widget
+switch to an other widgets of that container	common	cs	přepnout na jiné widgety v daném kontejneru
 switzerland	common	cs	ŠVÝCARSKO
 syrian arab republic	common	cs	SÝRIE
+tabindex	common	cs	Index tabulek
 table %1 is excluded from backup and restore. data will not be restored.	common	cs	Tabulka %1 je vyjmuta ze zálohování a obnovy. Data nebudou obnovena.
 table properties	common	cs	Vlastnosti tabulky
+table unchanged, no write necessary !!!	common	cs	Tabulka se nezměnila, zápis není zapotřebí !!!
+tablename	common	cs	Název tabulky
+tabs	common	cs	Záložky
 taiwan	common	cs	TCHAJ-WAN
 tajikistan	common	cs	TÁDŽIKISTÁN
 tanzania, united republic of	common	cs	TANZANIE
+template	common	cs	Šablona
+template deleted	common	cs	Šablona smazána
+template saved	common	cs	Šablona uložena
+text	common	cs	Text
 text color:	common	cs	Barva textu:
+textarea	common	cs	Textová oblast
 thailand	common	cs	THAJSKO
 the following applications require upgrades	common	cs	Následující aplikace vyžadují aktualizaci
 the mail server returned	common	cs	Poštovní server odpověděl
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	cs	Systémový uživatel tohoto jména již existuje. Uživatelé by neměli mít stejná jména jako systémoví uživatelé.
 this name has been used already	common	cs	Takové jméno již bylo použito!
+this text gets displayed if the input-field is empty and has no focus (blur)	common	cs	tento text se zobrazí, pokud je vstupní pole prázdné a nemá fokus
 thursday	common	cs	Čtvrtek
 tiled	common	cs	dlaždice
 time	common	cs	Čas
@@ -684,16 +1080,21 @@ time zone offset	common	cs	Posun časové zóny
 title	common	cs	Titul(ek) / Název
 to	common	cs	Komu
 to correct this error for the future you will need to properly set the	common	cs	Pokud chcete do budoucna zamezit této chybě, musíte správně nastavit
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	cs	pro zákaz: [! = not]<hodnota>[=<kontrola>] např.: '!@data' zakáže pokud obsah data je prázdný
 to go back to the msg list, click <a href= %1 >here</a>	common	cs	Pro návrat do seznamu zpráv, klikněte <a href="%1">sem</a>
+to start the db-tools	common	cs	pro start databázových nástrojů
+to start the etemplate editor	common	cs	pro start editoru eŠablon
+to start the search	common	cs	pro start hledání
 today	common	cs	Dnes
 todays date, eg. "%1"	common	cs	dnešní datum, např. "%1"
 togo	common	cs	TOGO
 tokelau	common	cs	TOKELAU
 tonga	common	cs	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	cs	Příliš mnoho neúspěšných pokusů o přihlášení: %1 pro uživatele '%2', %3 pro IP %4
-top	common	cs	Záhlaví
+top	common	cs	Horní okraj
 total	common	cs	Celkem
 transparant bg for the icons?	common	cs	Transparentní pozadí pro ikony?
+tree	common	cs	Strom
 trinidad and tobago	common	cs	TRINIDAD A TOBAGO
 tuesday	common	cs	Úterý
 tunisia	common	cs	TUNISKO
@@ -702,15 +1103,21 @@ turkmenistan	common	cs	TURKMENISTÁN
 turks and caicos islands	common	cs	TURKS A CAICOS
 tuvalu	common	cs	TUVALU
 type	common	cs	Typ
+type of the column	common	cs	typ sloupce
+type of the field (select label if field should be empty)	common	cs	typ pole (vyberte Jmenovku, pokud má být pole prázdné)
 uganda	common	cs	UGANDA
 ukraine	common	cs	UKRAJINA
 underline	common	cs	Podtrhnout
+unique	common	cs	Unikátní
 united arab emirates	common	cs	SPOJENÉ ARABSKÉ EMIRÁTY
 united kingdom	common	cs	SPOJENÉ KRÁLOVSTVÍ
 united states	common	cs	SPOJENÉ STÁTY
 united states minor outlying islands	common	cs	MENŠÍ ODLEHLÉ OSTROVY USA
 unknown	common	cs	Neznámý
+unlink	common	cs	Zrušit odkaz
 update	common	cs	Aktualizovat
+update a single entry by passing the fields.	common	cs	Aktualizovat záznam vyplněním položek.
+update from version '%s' to	common	cs	Aktualizovat z verze '%s' na
 update the clock per minute or per second	common	cs	Aktualizovat čas každou minutu nebo sekundu
 upload	common	cs	Uploadovat
 upload directory does not exist, or is not writeable by webserver	common	cs	Adresář pro upload neexistuje nebo do něj webový server nemá právo zápisu.
@@ -728,37 +1135,62 @@ username	common	cs	Uživatelské jméno
 users	common	cs	uživatelé
 users choice	common	cs	Uživatelská volba
 uzbekistan	common	cs	UZBEKISTÁN
+valign	common	cs	svislé zarovnání
 value	common	cs	Hodnota
+value has to be at least '%1' !!!	common	cs	Hodnota musí být nejméně '%1' !!!
+value has to be at maximum '%1' !!!	common	cs	Hodnota musí být nejvýše '%1' !!!
 vanuatu	common	cs	VANUATU
+vbox	common	cs	Svislý rámeček
 venezuela	common	cs	VENEZUELA
 version	common	cs	Verze
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	cs	číslo verze, mělo být mít podobu: hlavní.vedlejší.revize.číslo (např. 0.9.13.001 všechna čísla doplněná nulami)
+vertical alignment of row	common	cs	svislé zarovnání řádku
 viet nam	common	cs	VIETNAM
 view	common	cs	Zobrazit
+view this etemplate	common	cs	zobrazit tuto eŠablonu
+view this linked entry in its application	common	cs	zobrazit odkazovaný záznam v jeho aplikaci
 virgin islands, british	common	cs	BRITSKÉ PANENSKÉ OSTROVY
 virgin islands, u.s.	common	cs	AMERICKÉ PANENSKÉ OSTROVY
 wallis and futuna	common	cs	WALLIS A FUTUNA
 wednesday	common	cs	Středa
+weekend	common	cs	víkend
 welcome	common	cs	Vítejte
 western european	common	cs	Západoevropské
 western sahara	common	cs	ZÁPADNÍ SAHARA
 what color should all the blank space on the desktop have	common	cs	Jakou barvu by měla mít všechna prázdná místa na pracovní ploše?
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	cs	co se stane s přetékajícím obsahem: viditelný (výchozí), skrytý,rolovat,auto(rozhoduje prohlížeč)
 what style would you like the image to have?	common	cs	Jaký styl mají mít obrázky?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	cs	Odpovíte-li ano, potom tlačítka pro hlavní stranu a odhlášení budou přítomna ve vrchní aplikační liště.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	cs	Kde a jak budou zobrazeny v eGrouWaru odkazy jako předvolby, o aplikaci nebo odhlášení.
 which groups	common	cs	Které skupiny
 whole query	common	cs	celý dotaz
+widget copied into clipboard	common	cs	widget zkopírovaný do klipboradu
 width	common	cs	Šířka
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	cs	šířka sloupce (v % nebo pixelech), zakázat sloupec: [! = not]<hodnota>[=<kontrola>] např.: '!@data' zakázat sloupec pokud je obsah data prázdný
+width of column (in % or pixel)	common	cs	šířka sloupce (v % nebo pixelech)
+width of the table in % or pixels for the table-tag and (optional) div	common	cs	Šířka tabulky (v % nebo pixelech) pro tag tabulky a (volitelně) div
+width, disabled	common	cs	Šířka, vypnuto
+wk	common	cs	Týd.
 work email	common	cs	pracovní e-mail
+working days	common	cs	pracovní dny
 would you like to display the page generation time at the bottom of every window?	common	cs	Chcete zobrazit čas generování každého okna na jeho zápatí?
+write <app>/setup/tables_current.inc.php	common	cs	Zapsat <app>/setup/tables_current.inc.php
+write langfile	common	cs	Zapsat jazykový soubor
+write tables	common	cs	Zapsat tabulky
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	cs	zapíše soubor 'etemplates.inc.php' (pro aplikaci v Názvu) do setup adresáře aplikace
 writing	common	cs	psaní
 written by:	common	cs	Napsal(a):
+xml-file to import	common	cs	XML soubor pro import
+xslt template	common	cs	XSLT šablona
 year	common	cs	Rok
 yemen	common	cs	JEMEN
 yes	common	cs	Ano
 yes - delete	common	cs	Ano - Smazat
 yes - delete including sub-entries	common	cs	Ano - Smazat včetně podpoložek
+you are not allowed to export more than %1 entries!	common	cs	Nemáte oprávnění exportovat více než %1 záznamů!
 you are required to change your password during your first login	common	cs	Během svého prvního přihlášení si musíte změnit heslo
 you can customize how many icons and toolbars the editor shows.	common	cs	Můžete navolit kolik ikon a nástrojových lišt editor zobrazuje.
+you can respond by visiting:	common	cs	Můžete odpovědět navštívením:
 you have been successfully logged out	login	cs	Byl(a) jste úspěšně odhlášen(a)
 you have not entered a title	common	cs	Nevložil(a) jste název
 you have not entered a valid date	common	cs	Nevložil(a) jste platné datum
@@ -770,6 +1202,7 @@ you have successfully logged out	common	cs	Úspěšně jste se odhlásil(a)
 you need to %1set your timezone preference%2.	common	cs	Musíte %1nastavit časovou zónu%1.
 you need to add the webserver user '%1' to the group '%2'.	common	cs	Musíte přidat uživatele webového serveru '%1' do skupiny '%2'.
 you need to be an egroupware administrator to access this functionality!	common	cs	Musíte být administrátorem eGroupWaru, abyste měl(a) přístup k této funkci.
+you need to select a file first!	common	cs	Nejprve musíte vybrat soubor!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	cs	Pokusil(a) jste se otevřít aplikaci eGroupWaru: %1, ale nemáte oprávnění pro přístup k této aplikaci.
 your message could <b>not</b> be sent!<br>	common	cs	Vaše zpráva <b>nemůže</b> být odeslána!<br>
 your message has been sent	common	cs	Vaše zpráva byla odeslána
@@ -779,459 +1212,3 @@ your settings have been updated	common	cs	Vaše nastavení byla zaktualizována
 zambia	common	cs	ZAMBIE
 zimbabwe	common	cs	ZIMBABWE
 zoom	common	cs	Lupa
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	cs	%1 (%2 nových) zpráv zapsaných pro aplikaci '%3' a jazyky '%4'
-%1 entries found, select one ...	common	cs	Nalezeno %1 záznamů, vyberte jeden ...
-%1 etemplates deleted	common	cs	%1 eŠablon smazáno
-%1 etemplates for application '%2' dumped to '%3'	common	cs	%1 eŠablon pro aplikaci '%2' vytvořilo výpis do '%3'
-%1 etemplates found	common	cs	%1 eŠablon nalezeno
-%1 matches on search criteria	common	cs	%1 shod s kritériem vyhledávání
-%1 more...	common	cs	%1 více...
-%1 new etemplates imported for application '%2'	common	cs	%1 nových eŠablon importováno pro aplikaci '%2'
-%1 not implemented for %2!	common	cs	%1 není implementováno pro %2!
-%s disabled	common	cs	%s zablokováno
-%s needed	common	cs	%s zapotřebí
-%s notranslation	common	cs	%s bez překladu
-%s onchange	common	cs	%s onChange (při změně)
-%s readonly	common	cs	%s jen ke čtení
-'%1' has an invalid format !!!	common	cs	%1' má neplatný formát !!!
-'%1' is no php file in the egw server root (%2)!	common	cs	'%1' není php souborem v server root eGW (%2)!
-'%1' is not a valid date !!!	common	cs	%1' není platné datum !!!
-'%1' is not a valid floatingpoint number !!!	common	cs	%1' není platné číslo s pohyblivou desetinnou čárkou !!!
-'%1' is not a valid integer !!!	common	cs	%1' není platné celé číslo
-'%1' is not allowed ('%2')!	common	cs	'%1' NENÍ povoleno ('%2')!
-1 minute	common	cs	1 Minuty
-15 minutes	common	cs	15 Minuty
-30 minutes	common	cs	30 Minuty
-5 minutes	common	cs	5 Minuty
-a pattern to be searched for	common	cs	hledaný výraz
-accesskey	common	cs	Přístupový klíč
-accesskeys can also be specified with an & in the label (eg. &name)	common	cs	Přístupové klíče mohou být specifikovány také s & v označení (např. &Name)
-account contactdata	common	cs	Kontaktní údaje účtu
-actions...	common	cs	Akce...
-add a new column (after the existing ones)	common	cs	Přidat nový sloupec (za stávající)
-add a new entry of the selected application	common	cs	Přidat nový záznam vybrané aplikace
-add a new multi-column index	common	cs	Přidat nový vicesloupcový index
-add column	common	cs	Přidat sloupec
-add index	common	cs	Přidat index
-add new	common	cs	Přidat nový
-add table	common	cs	Přidat tabulku
-add to clipboard	common	cs	Přidat do schránky
-advanced search	common	cs	Rozšířené hledání
-align	common	cs	Zarovnat
-alignment of label and input-field in table-cell	common	cs	zarovnání popisku a vstupního pole v buňce tabulky
-alignment of the v/hbox containing table-cell	common	cs	Zarovnání V/HBoxu obsahujícího buňku tabulky
-all days	common	cs	všechny dny
-all operations save the template!	common	cs	všechny operace ukládají šablonu !
-all users	common	cs	Všichni uživatelé
-allowed file type: %1	common	cs	Povolený typ souboru: %1
-am	common	cs	am
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	cs	indexy vytvořené pro sloupec zrychlují vyhledávání v daném sloupci (ale také zabírají místo na disku !!!)
-and	common	cs	A
-application	common	cs	Aplikace
-application name needed to write a langfile or dump the etemplates !!!	common	cs	Název aplikace potřeboval zapsat jazykový soubor nebo vypsat eŠablony !!!
-applications	common	cs	Aplikace
-applies the changes made	common	cs	použije provedené změny
-applies the changes to the given version of the template	common	cs	použije změny provedené v dané verzi šablony
-as default	common	cs	jako výchozí
-attach	common	cs	Připojit
-attach file	common	cs	připojit soubor
-baseline	common	cs	Základna
-blurtext	common	cs	rozmazaný text
-border	common	cs	Okraj
-border-line-thickness for the table-tag	common	cs	Tloušťka okraje pro tag tabulky
-bottom	common	cs	Dolní okraj
-box	common	cs	Rámeček
-box...	common	cs	Rámeček...
-can not have special sql-value null	common	cs	nemůže mít speciální SQL hodnotu NULL
-cancel	common	cs	Zrušit
-cant delete a single widget from a grid !!!	common	cs	nemohu smazat jednotlivý widget z mřížky !!!
-cant delete the only column of a grid !!!	common	cs	nemohu smazat jediný sloupec ve mřížce !!!
-cant delete the only row in a grid !!!	common	cs	nemohu smazat jediný řádek ve mřížce !!!
-category	common	cs	Kategorie
-category tree	common	cs	Strom kategorií
-cellpadding for the table-tag	common	cs	Vzdálenost mezi buňkou a jejím obsahem pro tag tabulky
-cells	common	cs	Buňky
-cellspacing for the table-tag	common	cs	Vzdálenost mezi buňkami pro tag tabulky
-center	common	cs	Střed
-changed	common	cs	Změněno
-check all	common	cs	Označit všechny
-check if content should only be displayed but not altered (the content is not send back then!)	common	cs	zaškrtněte, pokud má být obsah jen zobrazen, nikoli měněn (obsah pak není posílán zpět!)
-check if field has to be filled by user	common	cs	zaškrtněte, pokud musí uživatel položku vyplnit
-checkbox	common	cs	Zaškrtávací políčko
-class	common	cs	Třída
-class, valign	common	cs	třída, svislé zarovnání
-click here to attach the file	common	cs	klikněte sem pro připojení souboru
-click here to create the link	common	cs	klikněte sem pro vytvoření odkazu
-click here to start the search	common	cs	Klikněte sem pro zahájení hledání
-click here to upload the file	common	cs	Klikněte sem pro upload souboru
-click to order after that criteria	common	cs	klikněte sem pro řazení dle daného kritéria
-clickable path	common	cs	rozkliknutelná cesta
-closes the window without saving the changes	common	cs	uzavře okno bez uložení změn
-column...	common	cs	Sloupec...
-columnname	common	cs	Jméno sloupce
-comment	common	cs	Komentář
-confirm	common	cs	potvrdit
-confirmation message or custom javascript (returning true or false)	common	cs	Potvrzující zpráva nebo uživatelsky definovaný javascript (vracející true nebo false)
-confirmation necesary or custom java-script	common	cs	vyžadováno potvrzení nebo uživatelský javaskript
-contact	common	cs	Kontakt
-contact field to show	common	cs	Zobrazit položku kontaktu
-contact fields	common	cs	Kontaktní položky
-contains	common	cs	obsahuje
-copy "%1"	common	cs	Kopie "%1"
-copy to clipboard	common	cs	Kopírovat do clipboardu
-create a new table for the application	common	cs	Vytvořit novou tabulku pro aplikaci
-creates an english ('en') langfile from label and helptexts (for application in name)	common	cs	vytvoří nový anglický jazykový soubor ('en') z označení a pomocných textů (pro aplikaci uvedenou v Názvu)
-creator	preferences	cs	Tvůrce
-css class for the table-tag	common	cs	CSS třída pro tag tabulky
-css properties	common	cs	Vlastnosti CSS
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	cs	název CSS třídy pro tento řádek, přednastaveno: 'nmh' = NextMatch header (záhlaví DalšíShoda),'nmr' = alternating NM row (střídavý NM řádek),'nmr0'+'nmr1' NM řádky
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	cs	název CSS třídy pro tento řádek, přednastaveno: 'th' = záhlaví, 'row' = střídavý řádek, řádky 'row_off'+'row_on'
-css-styles	common	cs	CSS styly
-custom	common	cs	uživatelsky definované
-custom fields	common	cs	uživatelsky definované položky
-custom javascript for onchange	common	cs	uživatelsky definovaný javaskript pro onChange (při změně)
-cut	common	cs	Vyjmout
-date+time	common	cs	Datum a čas
-day	common	cs	Den
-days	common	cs	Dny
-db ensures that every row has a unique value in that column	common	cs	Databáze zajišťuje, že každý řádek má v tomto sloupci unikátní hodnotu
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	cs	volby indexu (oddělené čárkou) specifické pro databázi, např. mysql(FULLTEXT) nebo mysql(100) pro indexovanou délku sloupce
-db-tools	common	cs	Databázové nástroje
-deck	common	cs	Paluba (interní)
-default	common	cs	Výchozí
-delete a single entry by passing the id.	common	cs	Vymazat záznam vložením ID.
-delete all selected etemplates, without further inquiry	common	cs	smazat VŠECHNY vybrané eŠablony BEZ dalšího dotazu
-delete and cut save the template!	common	cs	smazat a šablonu vyjmout a uložit !
-delete column	common	cs	Smazat sloupec
-delete index	common	cs	Smazat index
-delete the spezified etemplate	common	cs	Smazat určenou eŠablonu
-delete this column	common	cs	smazat tento sloupec
-delete this etemplate	common	cs	smazat tuto eŠablonu
-delete this file	common	cs	Smazat tento soubor
-delete this row	common	cs	smazat tento řádek
-delete whole column (can not be undone!!!)	common	cs	smazat celý sloupec (nelze vrátit zpět!!!)
-deletes the above spez. etemplate from the database, can not be undone	common	cs	vymaže výše uvedenou eŠablonu z databáze, nelze vrátit zpět
-deletes the etemplate spez. above	common	cs	smaže výše uvedenou eŠablonu
-deletes this column	common	cs	Smaže tento sloupec
-deletes this index	common	cs	Smaže tento index
-discard changes	common	cs	zahodit změny
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	cs	zobrazeno před vstupem nebo je vstup vložen za '%s' v označení (tlačítka pro odeslání nebo názvu souboru s obrázkem)
-displayed in statusline of browser if input-field gets focus	common	cs	zobrazeno ve stavové liště prohlížeče pokud vstupní pole získá fokus
-displayed in the top line of the groupbox (legend)	common	cs	zobrazeno v horní řádce rámečku skupiny (v legendě)
-do you want to save the changes you made in table %s?	common	cs	Chcete uložit změny, které jste udělal(a)v tabulce %s?
-document '%1' does not exist or is not readable for you!	preferences	cs	Dokument '%1' neexistuje nebo nemáte oprávnění k jeho čtení!
-documentation	common	cs	Dokumentace
-doesn't matter	common	cs	nezáleží na tom
-drop a table - this can not be undone	common	cs	Smazat tabulku - nelze vrátit zpět
-drop table	common	cs	Smazat Tabulku
-dump4setup	common	cs	Vypsat pro setup
-duration	common	cs	Trvání
-edit	common	cs	Editovat
-edit embeded css styles or of the applications app.css file	common	cs	upravit vložené CSS styly nebo CSS styly aplikací v souboru app.css
-edit the etemplate spez. above	common	cs	upravit výše uvedenou eŠablonu
-edit...	common	cs	Editovat....
-editable templates - db-tools	common	cs	Editovatelné šablony - Databázové nástroje
-editable templates - delete template	common	cs	Editovatelné šablony - Smazat šablonu
-editable templates - editor	common	cs	Editovatelné šablony - Editor
-editable templates - search	common	cs	Editovatelné šablony - Hledat
-editable templates - show template	common	cs	Editovatelné šablony - Zobrazit šablonu
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	cs	vložené CSS styly, např. '.red { background: red; }' (všimněte si tečky před názvem třídy) nebo '@import url(...)' (názvy tříd jsou globální pro celou stránku!)
-enable javascript onchange submit	common	cs	povolit odesílání onChange v javaskriptu
-enter '' for an empty default, nothing mean no default	common	cs	zadejte '' pro prázdnou hodnotu jako výchozí, nic znamená bez výchozí hodnoty
-enter a search pattern	common	cs	Zadejte hledaný výraz
-enter filename to upload and attach, use [browse...] to search for it	common	cs	Zadejte název souboru, který chcete uploadovat a připojit, použijte [Procházet] pro vyhledání souboru
-enter the new version number here (> old_version), empty for no update-file	common	cs	sem zadejte číslo nové verze (> stará_verze), ponechte prázdné pokud nechcete aktualizovat soubor
-enter the new version number here (has to be > old_version)	common	cs	sem zadejte číslo nové verze (musí být > stará_verze)
-entry saved	common	cs	Záznam uložen
-error copying uploaded file to vfs!	common	cs	Chyba při kopírování uploadovaného souboru do vfs!
-error create parent directory %1!	common	cs	Chyba při vytváření nadřazeného adresáře %1!
-error deleting %1!	common	cs	Chyba při mazání %1!
-error uploading file!	filemanager	cs	Chyba při uploadu souboru!
-error: template not found !!!	common	cs	Chyba: Šablona nebyla nalezena !!!
-error: webserver is not allowed to write into '%1' !!!	common	cs	Chyba: webový server nemá oprávnění k zápisu do '%1' !!!
-error: while saving !!!	common	cs	Chyba při ukládání !!!
-error: writing file (no write-permission for the webserver) !!!	common	cs	Chyba při ukládání souboru (webový server nemá oprávnění k zápisu) !!!
-etemplate	common	cs	eŠablona
-etemplate '%1' imported, use save to put it in the database	common	cs	eŠablona '%1' naimportována, použijte Uložit pro zápis do databáze
-etemplate '%1' written to '%2'	common	cs	eŠablona '%1'  zapsána do '%2'
-etemplate editor	common	cs	Editor eŠablon
-etemplate reference	common	cs	Referenční příručka eŠablon
-etemplate tutorial	common	cs	Výuka eŠablon
-exchange this row with the one above	common	cs	zaměnit tento řádek s řádkem nad ním
-exchange this two columns	common	cs	zaměnit tyto dva sloupce
-export the loaded etemplate into a xml-file	common	cs	exportovat načtenou eŠablonu do XML souboru
-export xml	common	cs	Exportovat XML
-extensions loaded:	common	cs	Načtená rozšíření:
-field	common	cs	Položka
-field must not be empty !!!	common	cs	Položka nesmí být prázdná !!!
-file	common	cs	Soubor
-file '%1' not found!	common	cs	Soubor '%1' nebyl nalezen!
-file contains more than one etemplate, last one is shown !!!	common	cs	Soubor obsahuje více jak jednu eŠablonu, zobrazena je poslední !!!
-file is of wrong type (%1 != %2)!	common	cs	Soubor je špatného typu (%1 != %2)!
-file writen	common	cs	Soubor zapsán
-fileupload	common	cs	Upload souboru
-first	common	cs	První
-floating point	common	cs	Plovoucí desetinná čárka
-foreign key	common	cs	Cizí klíč
-formatted text (html)	common	cs	Formátovaný text (HTML)
-general fields:	preferences	cs	Obecné položky:
-go to the first entry	common	cs	jít na první záznam
-go to the last entry	common	cs	jít na poslední záznam
-go to the next page of entries	common	cs	jít na další stránku záznamů
-go to the previous page of entries	common	cs	jít na předchozí stránku záznamů
-grid	common	cs	Mřížka
-grid column attributes	common	cs	Atributy sloupců ve mřížce
-grid row attributes	common	cs	Atributy řádků ve mřížce
-groupbox	common	cs	Rámeček skupiny
-h	common	cs	h
-hbox	common	cs	Vodorovný rámeček
-height	common	cs	Výška
-height of row (in % or pixel)	common	cs	výška řádku (v % nebo pixelech)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	cs	výška řádku (v % nebo pixelech), zakázání řádku: [! = not]<hodnota>[=<kontrola>] např.: '!@data' zakáže řádek pokud obsah data je prázdný
-height of the table in % or pixels for the table-tag and (optional) div	common	cs	Výška tabulky v % nebo pixelech pro tag tabulky a (volitelně) div
-height, disabled	common	cs	Výška, vypnuto
-help	common	cs	Nápověda
-history log	common	cs	Protokol historie
-horizontal rule	common	cs	Vodorovné pravítko
-hour	common	cs	Hodina
-hours	common	cs	hodin
-how many entries should the list show	common	cs	Kolik záznamů má seznam zobrazovat
-html	common	cs	HTML
-id	common	cs	ID
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	cs	pokud je položka zakázaná, je zobrazena prázdná buňka tabulky pro (dočasné) odstranění položky/buňky
-image	common	cs	Obrázek
-import	common	cs	Importovat
-import an etemplate from a xml-file	common	cs	importovat eŠablonu z XML souboru
-import table-definitions from existing db-table	common	cs	Importovat definice tabulky ze stavající databázové tabulky
-import xml	common	cs	Importovat XML
-increment version to not overwrite the existing template	common	cs	zvyšte číslo verze, aby nedošlo k přepsání stávající šablony
-index/name of returned content (name of the template, link / method for image)	common	cs	index/název vráceného obsahu (název šablony, odkaz/metoda pro obrázek)
-indexed	common	cs	Indexovaný
-indexoptions	common	cs	Volby indexu
-insert a column before	common	cs	vložit sloupec před
-insert a column behind	common	cs	vložit sloupec za
-insert a row above	common	cs	vložit řádek nad
-insert a row below	common	cs	vložit řádek pod
-insert a widget before	common	cs	vložit widget před
-insert a widget behind	common	cs	vložit widget za
-insert in document	common	cs	Vložit do dokumentu
-insert new column behind this one	common	cs	vložit nový sloupec za tento
-insert new column in front of all	common	cs	vložit nový sloupec před všechny ostatní
-insert new row after this one	common	cs	vložit nový řádek za tento
-insert new row in front of first line	common	cs	vložit nový řádek před první řádek
-integer	common	cs	Celé číslo
-key	common	cs	Klíč
-label	common	cs	Jmenovka
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	cs	Jmenovka:[bold][italic] Text:[len][,max] Čísla:[min][,[max][,len]] Textová oblast:[rows][,cols] Přepínací tlačítko:value Vodorovné pravítko:[width] Šablona:[IndexInContent] Výběr:[multiselect] Datum:[hodnoty: např. 'Y-m-d']
-lang	common	cs	Jazyk
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	cs	zkratka jazyka (např. 'en' u angličtiny) pro jazykově závislou šablonu ('' načte Vaše předvolené jazyky nebo výchozí, použijte 'výchozí' pro načtení výchozí šablony '')
-last	common	cs	Poslední
-left	common	cs	Levý
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	cs	délka pro char+varchar, přesnost celých čísel: 2, 4, 8 a desetinných: 4, 8
-link	common	cs	Odkaz
-link target %1 not found!	common	cs	Odkaz na cíl %1 nebyl nalezen!
-linkapps	common	cs	Odkaz na aplikace
-linkentry	common	cs	Záznam odkazu
-linklist	common	cs	Seznam odkazů
-linkstring	common	cs	Řetězec odkazu
-linkto	common	cs	Odkaz na
-load this template into the editor	common	cs	Načíst tuto šablonu do editoru
-loading	common	cs	nahrávám
-maximum size for uploads	filemanager	cs	Maximální velikost pro uploady
-message ...	common	cs	Zpráva...
-middle	common	cs	Prostřední
-minute	common	cs	Minuta
-minutes	common	cs	Minuty
-month	common	cs	Měsíc
-more	common	cs	Více
-more than 1 match for '%1'	common	cs	Více než jeden záznam pro '%1'
-multicolumn indices	common	cs	Vícesloupcové indexy
-name	common	cs	Jméno
-name of other table where column is a key from	common	cs	název jiné tabulky kde je skoupec klíčem
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	cs	název skupiny šablon z phpgw (např. verdilak): '' = výchozí (načte předvolenou šablonu, použijte 'výchozí' pro načtení výchozí šablony '')
-name of table to add	common	cs	Název tabulky, která se má přidat
-name of the etemplate, should be in form application.function[.subtemplate]	common	cs	název eŠablony, měl by být ve tvaru aplikace.funkce.[.podŠablona]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	cs	musí být unikátní v rámci tabulky a nesmí být rezervovaným slovem SQL, nejlepší je všechny opatřit společnou dvoupísmennou zkratkou aplikace, např. 'et_'
-new	common	cs	Nová
-new search	common	cs	Nové hledání
-new table created	common	cs	Nová tabulka vytvořena
-newer version '%1' exists !!!	common	cs	existuje novější verze '%1'  !!!
-nextmatch	common	cs	Nextmatch (Další shoda)
-nextmatch accountfilter	common	cs	Další shoda s filtrem účtů
-nextmatch custom filterheader	common	cs	Další shoda s uživatelským filtrem záhlaví
-nextmatch filterheader	common	cs	Další shoda s filtrem záhlaví
-nextmatch header	common	cs	Další shoda záhlaví
-nextmatch sortheader	common	cs	Další shoda setříděného záhlaví
-no column to swap with !!!	common	cs	není sloupec, za který se dá prohodit !!!
-no file	common	cs	žádný soubor
-no filename given or selected via browse...	common	cs	nebyl zadán název souboru ani vybrán přes Procházet
-no filters	common	cs	Odebrat filtr
-no matches found	common	cs	Nenalezeny žádné záznamy
-no row to swap with !!!	common	cs	není řádek, za který se dá prohodit !!!
-not null	common	cs	NENÍ NULL
-nothing	common	cs	nic
-nothing found - try again !!!	common	cs	Nic nenalezeno - zkuste znovu !!!
-nothing in clipboard to paste !!!	common	cs	v clipboardu není nic ke vložení !!!
-nothing matched search criteria !!!	common	cs	Zadanému kritériu hledání nic neodpovídá !!!
-now	common	cs	Nyní
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	cs	počet sloupců, přes které se má pole/buňka roztáhnout nebo 'all' pro zbývající sloupce, jméno CSS třídy (pro tag TD)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	cs	počet řádků/sloupců ve Svislém/Vodorovném rámečku, vzdálenost mezi buňkou a jejím obsahem, vzdálenost mezi buňkami
-of	common	cs	z
-onchange	common	cs	onChange (při změně)
-onclick	common	cs	onClick (při kliknutí)
-only an other version found !!!	common	cs	našla se jen jiná verze !!!
-open the online help.	common	cs	Otevřit online nápovědu.
-operator	common	cs	Operátor
-optional note about the link	common	cs	volitelná poznámka o odkazu
-options	common	cs	Volby
-or	common	cs	nebo
-order to navigating by tab key through the form	common	cs	Pořadí v navigaci fomulářem pomocí klávesy tabulátor
-overflow	common	cs	Přetečení
-padding	common	cs	Odsazení
-parent is a '%1' !!!	common	cs	nadřazený je '%1' !!!
-paste	common	cs	Vložit
-path	common	cs	Cesta
-please enter table-name first !!!	common	cs	Zadejte prosím nejprve název tabulky !!!
-pm	common	cs	pm
-popup	common	cs	Překryvné
-precision	common	cs	Přesnost
-primary key	common	cs	Primární klíč
-primary key for the table, gets automaticaly indexed	common	cs	Primární klíč tabulky, je automaticky indexován
-radiobutton	common	cs	Přepínací tlačítko
-read	common	cs	Číst
-read a list of entries.	common	cs	Načíst seznam záznamů
-read a single entry by passing the id and fieldlist.	common	cs	Načíst jednotlivý záznam zadáním jeho id a seznamu polí
-read etemplate from database (for the keys above)	common	cs	načíst eŠablonu z databáze (pro výše uvedené klíče)
-readonly	common	cs	jen pro čtení
-refresh	common	cs	Obnovit
-remove row (can not be undone!!!)	common	cs	odstranit řádek (nelze vrátit zpět!!!)
-remove this link (not the entry itself)	common	cs	Odstranit tento odkaz (ne celý záznam)
-required	common	cs	Vyžadováno
-reset	common	cs	Vynulovat
-returns savely, without deleting	common	cs	vrátí bezpečně zpět, BEZ smazání
-right	common	cs	Pravý
-row...	common	cs	Řádek...
-save all	common	cs	Uložit vše
-save selected columns as default preference for all users.	common	cs	Uložit vybrané sloupce jako výchozí předvolbu pro všechny uživatele.
-save the changes made and close the window	common	cs	Uložit provedené změny a zavřít okno
-save the etemplate under the above keys (name, ...), change them for a saveas	common	cs	uložit eŠablonu pod výše uvedenými klíči (název, ...), změnit je pro Uložit jako
-saves changes to tables_current.inc.php	common	cs	uloží změny do tables_current.inc.php
-saves the template with given version number and closes the window	common	cs	uloží šablonu s daným číslem verze a zavře okno
-scale	common	cs	Škála
-scale for float	common	cs	Škála pro plovoucí
-search	common	cs	Hledat
-select a category	common	cs	vybrat kategorii
-select a primary contact, to show in the list	common	cs	Vybrat primární kontakt, který má být zobrazen v seznamu
-select access	common	cs	Vybrat přístup
-select account	common	cs	Vybrat účet
-select an app first !!!	common	cs	Vyberte nejprve aplikaci !!!
-select an app to search in	common	cs	Vybrat aplikaci k prohledání
-select an application	common	cs	Vybrat aplikaci
-select an application, (*) = uninstalled	common	cs	Vybrat aplikaci, (*) = nenainstalovaná
-select an entry to link with	common	cs	Vybrat záznam, na který se má odkazovat
-select an table of the application	common	cs	Vybrat tabulku aplikace
-select application	common	cs	Vybrat aplikaci
-select application to search	common	cs	Vybrat aplikaci k prohledání
-select category	common	cs	Vybrat kategorii
-select columns	common	cs	Vybrat sloupce
-select country	common	cs	Vybrat zemi
-select day	common	cs	Vybrat den
-select day of week	common	cs	vybrat den v týdnu
-select entry	common	cs	Vybrat záznam
-select files from filemanager ...	common	cs	Vyberte soubory ze správce souborů ...
-select hour	common	cs	Vybrat hodinu
-select if content of field should not be translated (label gets always translated)	common	cs	vyberte pokud nemá být obsah pole přeložen (jmenovka je přeložena vždy)
-select language	common	cs	Vybrat jazyk
-select month	common	cs	Vybrat měsíc
-select number	common	cs	Vybrat číslo
-select one ...	common	cs	Vybrat jeden ...
-select percentage	common	cs	Vybrat procento
-select priority	common	cs	Vybrat prioritu
-select state	common	cs	Vybrat stát
-select the columns to display in the list	common	cs	Vybrat sloupce, které mají být zobrazeny v seznamu
-select the indexed columns in their desired order	common	cs	Vybrat indexované sloupce v požadovaném pořadí
-select this etemplate to delete it	common	cs	vybrat tuto eŠablonu ke smazání
-select which accounts to show	common	cs	vybrat účty ke zobrazení
-select which values to show	common	cs	vybrat hodnoty ke zobrazení
-select year	common	cs	Vybrat rok
-selectbox	common	cs	Rozbalovací nabídka
-set as default	common	cs	Nastavit jako výchozí
-sets today as date	common	cs	nastaví dnešek jako datum
-should the form be submitted or any custom javascript be executed	common	cs	Má být odeslán formulář nebo spuštěn libovolný uživatelský javascript
-show	common	cs	Zobrazit
-show (no save)	common	cs	Zobrazit (neukládat)
-show all / cancel filter	common	cs	Zobrazit vše / zrušit filtr
-show values	common	cs	Zobrazit hodnoty
-showing	common	cs	zobrazuji
-shows / allows you to enter values into the etemplate for testing	common	cs	zobrazí / umožní Vám zadat hodnoty do eŠablony pro testování
-shows/displays etemplate for testing, does not save it before	common	cs	zobrazí eŠablonu pro testování, předtím jí NEukládá
-spacing	common	cs	Rozestupy
-span	common	cs	Roztažení
-span, class	common	cs	Roztažení, Třída
-stack	common	cs	Zásobník
-start a new search, cancel this link	common	cs	začít nové hledání, zrušit tento odkaz
-start new search for the above pattern	common	cs	začít nové hledání pro výše uvedený výraz
-submit form	common	cs	odeslat formulář
-submitbutton	common	cs	Tlačitko pro odeslání
-swap	common	cs	prohodit
-swap widget with next one	common	cs	prohodit widget s následujícím
-swap with next column	common	cs	prohodit s následujícím sloupcem
-swap with next row	common	cs	prohodit s následujícím řádkem
-switch to a parent widget	common	cs	přepnout na nadřízený widget
-switch to an other widgets of that container	common	cs	přepnout na jiné widgety v daném kontejneru
-tabindex	common	cs	Index tabulek
-table unchanged, no write necessary !!!	common	cs	Tabulka se nezměnila, zápis není zapotřebí !!!
-tablename	common	cs	Název tabulky
-tabs	common	cs	Záložky
-template	common	cs	Šablona
-template deleted	common	cs	Šablona smazána
-template saved	common	cs	Šablona uložena
-text	common	cs	Text
-textarea	common	cs	Textová oblast
-this text gets displayed if the input-field is empty and has no focus (blur)	common	cs	tento text se zobrazí, pokud je vstupní pole prázdné a nemá fokus
-time	common	cs	Čas
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	cs	pro zákaz: [! = not]<hodnota>[=<kontrola>] např.: '!@data' zakáže pokud obsah data je prázdný
-to start the db-tools	common	cs	pro start databázových nástrojů
-to start the etemplate editor	common	cs	pro start editoru eŠablon
-to start the search	common	cs	pro start hledání
-today	common	cs	Dnes
-top	common	cs	Horní okraj
-tree	common	cs	Strom
-type	common	cs	Typ
-type of the column	common	cs	typ sloupce
-type of the field (select label if field should be empty)	common	cs	typ pole (vyberte Jmenovku, pokud má být pole prázdné)
-unique	common	cs	Unikátní
-unlink	common	cs	Zrušit odkaz
-update a single entry by passing the fields.	common	cs	Aktualizovat záznam vyplněním položek.
-update from version '%s' to	common	cs	Aktualizovat z verze '%s' na
-upload	common	cs	Uploadovat
-valign	common	cs	svislé zarovnání
-value	common	cs	Hodnota
-value has to be at least '%1' !!!	common	cs	Hodnota musí být nejméně '%1' !!!
-value has to be at maximum '%1' !!!	common	cs	Hodnota musí být nejvýše '%1' !!!
-vbox	common	cs	Svislý rámeček
-version	common	cs	Verze
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	cs	číslo verze, mělo být mít podobu: hlavní.vedlejší.revize.číslo (např. 0.9.13.001 všechna čísla doplněná nulami)
-vertical alignment of row	common	cs	svislé zarovnání řádku
-view this etemplate	common	cs	zobrazit tuto eŠablonu
-view this linked entry in its application	common	cs	zobrazit odkazovaný záznam v jeho aplikaci
-weekend	common	cs	víkend
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	cs	co se stane s přetékajícím obsahem: viditelný (výchozí), skrytý,rolovat,auto(rozhoduje prohlížeč)
-widget copied into clipboard	common	cs	widget zkopírovaný do klipboradu
-width	common	cs	Šířka
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	cs	šířka sloupce (v % nebo pixelech), zakázat sloupec: [! = not]<hodnota>[=<kontrola>] např.: '!@data' zakázat sloupec pokud je obsah data prázdný
-width of column (in % or pixel)	common	cs	šířka sloupce (v % nebo pixelech)
-width of the table in % or pixels for the table-tag and (optional) div	common	cs	Šířka tabulky (v % nebo pixelech) pro tag tabulky a (volitelně) div
-width, disabled	common	cs	Šířka, vypnuto
-wk	common	cs	Týd.
-working days	common	cs	pracovní dny
-write <app>/setup/tables_current.inc.php	common	cs	Zapsat <app>/setup/tables_current.inc.php
-write langfile	common	cs	Zapsat jazykový soubor
-write tables	common	cs	Zapsat tabulky
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	cs	zapíše soubor 'etemplates.inc.php' (pro aplikaci v Názvu) do setup adresáře aplikace
-xml-file to import	common	cs	XML soubor pro import
-xslt template	common	cs	XSLT šablona
-year	common	cs	Rok
-you are not allowed to export more than %1 entries!	common	cs	Nemáte oprávnění exportovat více než %1 záznamů!
-you can respond by visiting:	common	cs	Můžete odpovědět navštívením:
-you need to select a file first!	common	cs	Nejprve musíte vybrat soubor!

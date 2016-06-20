@@ -349,7 +349,7 @@ default	common	de	Vorgabe
 default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
-del	common	de	Ent
+del	common	de	entf
 delete	common	de	Löschen
 delete a single entry by passing the id.	common	de	Löscht einen einzelnen Eintrag über seine Id.
 delete all selected etemplates, without further inquiry	common	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
@@ -685,7 +685,7 @@ ireland	common	de	IRLAND
 israel	common	de	ISRAEL
 it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert.
 it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
-it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	de	Es wird empfohlen Ihren öffentlichen Schlüssel im Adressbuch zu speichern, damit andere Benutzer Ihnen verschlüsselte EMails schreiben können.
+it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	de	Es wird empfohlen Ihren öffentlichen Schlüssel im Adressbuch zu speichern, damit andere Benutzer Ihnen verschlüsselte E-Mails schreiben können.
 italic	common	de	Kursiv
 italy	common	de	ITALIEN
 jamaica	common	de	JAMAICA
@@ -971,14 +971,14 @@ permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien
 permisson denied!	common	de	Zugriff verweigert!
 personal	common	de	persönlich
 peru	common	de	PERU
-pg down	common	de	Pg down
-pg up	common	de	Pg up
+pg down	common	de	Seite runter
+pg up	common	de	Seite hoch
 pgp encryption	common	de	PGP Verschlüsselung
 pgp encryption installation	common	de	Installation der PGP Verschlüsselung
 philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
 pitcairn	common	de	PITCAIRN
-placeholders	common	de	Platzhalter für den Seriendruck
+placeholders	common	de	Platzhalter
 please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
@@ -1127,7 +1127,7 @@ select date	common	de	Datum auswählen
 select day	common	de	Tag auswählen
 select day of week	common	de	Wochentag auswählen
 select entry	common	de	Eintrag auswählen
-select file(s) from vfs	common	de	Datein aus dem VFS wählen
+select file(s) from vfs	common	de	Dateien aus dem Egroupware Dateimanager auswählen
 select files from filemanager ...	common	de	Dateien aus Dateimanager auswählen ...
 select group	common	de	Gruppe auswählen
 select home email address	common	de	private E-Mail-Adresse auswählen
@@ -1370,7 +1370,7 @@ venezuela	common	de	VENEZUELA
 version	common	de	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
 vertical alignment of row	common	de	vertikale Ausrichtung der Zeile
-vfs upload directory	common	de	VFS Upload Verzeichnis
+vfs upload directory	common	de	Dateimanager Upload Verzeichnis
 viet nam	common	de	VIETNAM
 view	common	de	Anzeigen
 view this etemplate	common	de	dieses eTemplate anzeigen

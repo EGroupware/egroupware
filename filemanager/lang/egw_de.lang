@@ -173,7 +173,7 @@ link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
-mail paste	filemanager	de	per Mail versenden
+mail paste	filemanager	de	per E-Mail versenden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	verändert
@@ -234,7 +234,7 @@ search for '%1'	filemanager	de	nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
 select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen.
-select file(s) from vfs	common	de	Datein aus dem VFS wählen
+select file(s) from vfs	common	de	Dateien aus dem Egroupware Dateimanager auswählen
 setting for document merge saved.	filemanager	de	Einstellungen für Serienbriefe gespeichert.
 shared files	filemanager	de	Freigegebene Dateien
 shared with	filemanager	de	Geteilt mit

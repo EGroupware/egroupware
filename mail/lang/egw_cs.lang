@@ -4,12 +4,17 @@
 activating by date requires a start- and end-date!	mail	cs	Aktivace datumem vyžaduje nastavení počátečního A koncového data!
 add folder	mail	cs	Přidat složku
 add to addressbook	mail	cs	přidat do adresáře
+after reply, visible during compose	mail	cs	Pozice podpisu při přeposlaném textu, nad – pod textem
+all messages in the folder will be lost	mail	cs	Všechny zprávy ve vybrané složce budou smazány.
 all of	mail	cs	vše z
+allow external images	mail	cs	Umožnit náhled  z externích zdrojů
 allow images from external sources in html emails	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech
 allways a new window	mail	cs	Vždy nové okno
 always show html emails	mail	cs	Vždy zobrazovat HTML e-maily
 any of	mail	cs	kterýkoli z
 any status	mail	cs	jakýkoli status
+attach vcard	mail	cs	Přidat vCard
+attachment	mail	cs	Příloha
 attachments	mail	cs	Přílohy
 by date	mail	cs	datumem
 check message against next rule also	mail	cs	zkontrolovat zprávu také proti následujícímu pravidlu
@@ -25,6 +30,7 @@ date(oldest first)	mail	cs	Datum (od nejstaršího)
 default sorting order	mail	cs	Výchozí třídění
 delete folder	mail	cs	Smazat složku
 deleted	mail	cs	smazáno
+details	mail	cs	S krátkým náhledem
 disable	mail	cs	Zakázat
 discard	mail	cs	zahodit
 discard message	mail	cs	zahodit zprávu
@@ -67,6 +73,7 @@ everyone	mail	cs	všichni
 extended	mail	cs	Rozšířený
 file into	mail	cs	soubor do
 filemanager	mail	cs	Správce souborů
+flag or unflag a mail	mail	cs	Označení nebo neoznačení zprávy
 flagged	mail	cs	s příznakem
 folder	mail	cs	složka
 folder management ...	mail	cs	Složka - vedení ...
@@ -80,7 +87,9 @@ from(a->z)	mail	cs	Od (A->Z)
 from(z->a)	mail	cs	Od (Z->A)
 general	admin	cs	Obecné
 greater than	mail	cs	větší než
+header	mail	cs	Záhlaví
 header lines	mail	cs	Řádky hlavičky
+hide	mail	cs	Schovat
 how to forward messages	mail	cs	Jak přeposílat zprávy
 html	mail	cs	HTML
 identity	mail	cs	Identita
@@ -93,6 +102,7 @@ import message	mail	cs	importovat zprávu
 importance	mail	cs	Důležitost
 important	mail	cs	důležitý
 inbox	mail	cs	INBOX
+inline	mail	cs	Přeposlat jako E-mail
 job	mail	cs	obchodní
 junk	mail	cs	Spam
 keep a copy of the message in your inbox	mail	cs	zachovat kopii zprávy ve Vašem inboxu
@@ -111,6 +121,7 @@ move to trash	mail	cs	Přesunout do koše
 never display html emails	mail	cs	Nikdy nezobrazovat HTML e-maily
 no access	mail	cs	Přístup zakázán
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	cs	Nebyly zadány adresy Komu/Kopie/Skrytá kopie ani složka pro uložení zprávy.
+no details	mail	cs	Bez krátkém náhledu
 no folders	mail	cs	žádné složky
 no plain text part found	mail	cs	nebyla nalezena část ve formě prostého textu
 no recipient address given!	mail	cs	Nebyla zadána adresa příjemce!
@@ -129,8 +140,10 @@ please configure access to an existing individual imap account.	mail	cs	Nakonfig
 please select a address	mail	cs	Prosím vyberte adresu
 please select the number of days to wait between responses	mail	cs	Vyberte prosím počet dní, jak dlouho čekat mezi odpovědmi
 please supply the message to send with auto-responses	mail	cs	Zadejte prosím zprávu, která se má odesílat v rámci automatické odpovědi
+preview pane	mail	cs	Přehled - E-mail
 printview	mail	cs	tiskový náhled
 quicksearch	mail	cs	Rychlé hledání
+read / unread	mail	cs	Přečtené / nepřečtené
 refresh time in minutes	mail	cs	Čas obnovování v minutách
 reject with	mail	cs	zamítnout s
 remove all	mail	cs	Odstranit vše
@@ -139,24 +152,32 @@ rename folder	mail	cs	Přejmenovat složku
 replied	mail	cs	odpovězené
 reply	mail	cs	Odpovědět
 reply all	mail	cs	Odpovědět všem
+reply message type	mail	cs	Formátovat  e-mail při odpovídání / přeposílání
 reply to	mail	cs	Odpovědět (komu)
 replyto	mail	cs	Odpovědět (komu)
 row order style	mail	cs	Způsob řazení řádků
 save all	mail	cs	Uložit vše
+save as calendar	mail	cs	Termín uložit do kalendáře
 save as draft	mail	cs	Uložit jako rozepsané
 save as infolog	mail	cs	Uložit jako infolog
 save message to disk	mail	cs	Uložit zprávu na disk
+save message to filemanager	mail	cs	Uložení správce souborů EGroupware
+save to disk	mail	cs	Uložit jako ...
 select all	mail	cs	Vybrat vše
 sender	mail	cs	Odesílatel
 sent	mail	cs	Odeslané
 sent folder	mail	cs	Odeslané
 set / remove flags	mail	cs	Označit
+show	mail	cs	Ukázat
+show all folders	mail	cs	Vyberte všechny složky
 sieve script name	mail	cs	Jméno sieve skriptu
 signature	mail	cs	Podpis
+signature position and visibility	mail	cs	Pozice a viditelnost podpisu
 size(...->0)	mail	cs	Velikost (...->0)
 size(0->...)	mail	cs	Velikost (0->...)
 small view	mail	cs	malé zobrazení
 sort order	mail	cs	Pořadí řazení
+source	mail	cs	Záhlaví
 start new messages with mime type plain/text or html?	mail	cs	Začínat psaní nových zpráv jako MIME typ plain/text nebo html?
 subject(a->z)	mail	cs	Předmět (A->Z)
 subject(z->a)	mail	cs	Předmět (Z->A)
@@ -175,6 +196,7 @@ trash folder	mail	cs	Koš
 unflagged	mail	cs	bez příznaku
 unread	mail	cs	nepřečtené
 unsubscribe folder	mail	cs	Složku odebrat
+use source as displayed, if applicable	mail	cs	Formát jako e-mailová zpráva
 vacation notice	mail	cs	Odpověď v nepřítomnosti
 vacation notice is active	mail	cs	Odpověď v nepřítomnosti je aktivní
 vacation start-date must be before the end-date!	mail	cs	Počáteční datum automatické odpovědi musí PŘEDCHÁZET koncovému datu!

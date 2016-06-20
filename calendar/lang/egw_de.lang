@@ -15,7 +15,7 @@
 (without a custom url we use nation of user preference to load holidays from %s)	calendar	de	(Ohne eine eigene URL laden wir die Feiertage entsprechen des Landes in den Benutzereinstellung aus den %s)
 , exceptions preserved	calendar	de	und Ausnahmen erhalten
 , stati of participants reset	calendar	de	, Status der Teilnehmer zurückgesetzt
-a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keine Konflikt mit anderen Terminen
+a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keinen Terminkonflikt mit anderen Terminen
 accept	calendar	de	Zusagen
 accept or reject an invitation	calendar	de	Einladung zu- oder absagen
 accepted	calendar	de	Zugesagt

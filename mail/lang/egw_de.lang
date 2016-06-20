@@ -1,7 +1,7 @@
 %1 attachments	mail	de	%1 Anhänge
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie
 %1 mails selected	mail	de	%1 E-Mail(s)  ausgewählt
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*)  Achtung: Weiterleitung an mehr als 4 Emailadressen, funktioniert bei den meisten Mailservern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie Ihren Administrator.
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*)  Achtung: Weiterleitung an mehr als 4 E-Mail-Adressen, funktioniert bei den meisten Mailservern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie Ihren Administrator.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
 (*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben. Zur Verwendung von Ausrufezeichen (!), das NICHT als "NICHT" interprtiert werden soll, muss ein regulärer Ausdruck verwendet werden und ein Backslash - also "\!".
 (leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
@@ -26,7 +26,7 @@ all	mail	de	alle
 all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
 all filtered	mail	de	alle gefilterten
-all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht werden.
+all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht.
 all my email addresses	mail	de	alle meine E-Mail-Adressen
 all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
@@ -93,7 +93,6 @@ date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
 default your name and email	common	de	z.B. Ihr Name und Ihre Mail-Adresse
-details	mail	de	Kurzvorschau in der Liste
 delete folder	mail	de	Ordner Löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
 deleted	mail	de	gelöscht
@@ -102,6 +101,7 @@ deleted!	mail	de	gelöscht!
 deleting %1 folders in progress ...	mail	de	%1 Ordner in Bearbeitung zum Löschen
 deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
+details	mail	de	Kurzvorschau in der Liste
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
@@ -173,6 +173,7 @@ error:could not save the acl! because some names are empty!	mail	de	Fehler: Zugr
 esync will fail without a working email configuration!	mail	de	eSync steht Ihnen nicht zur Verfügung, weil kein gültiges Mailkonto eingestellt wurde!
 event details follow	mail	de	Details zum Termin folgen
 everyone	mail	de	Alle Anwender
+examine namespace to retrieve folders in others and shared	mail	de	Untersuche Namespace für Mail-Ordner in den Bereichen OTHERS and SHARED
 extended	mail	de	Erweitert
 extra sent folders	mail	de	Anzeigeschema Gesendet Ordner
 failed to delete %1	mail	de	Löschen von %1 fehlgeschlagen
@@ -258,7 +259,7 @@ importance	mail	de	Wichtigkeit
 important	mail	de	wichtig
 in mailbox: %1, with id: %2, and partid: %3	mail	de	Im Mailordner: %1, mit der ID: %2 und der PartID: %3
 inbox	mail	de	Posteingang
-initialization of mail failed. Please use the Wizard to cope with the problem.	mail	de	Die Initializierung des Mail-Moduls ist fehlgeschlagen. Bitte benutzen Sie den Konfigurationshilfeassistenten um die Situation zu bereinigen. 
+initialization of mail failed. please use the wizard to cope with the problem.	mail	de	Die Initializierung des Mail-Moduls ist fehlgeschlagen. Bitte benutzen Sie den Konfigurationshilfeassistenten um die Situation zu bereinigen.
 inline	mail	de	Weiterleiten Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
 job	mail	de	dienstlich
@@ -295,8 +296,8 @@ move	mail	de	Verschieben
 move folder	mail	de	Ordner verschieben
 move selected mails to archive	mail	de	Verschiebe ausgewählte Nachrichten in den konfigurierten Archiv Ordner
 move selected to	mail	de	Verschiebe ausgewählte nach
-move to archive	mail	de	Verschiebe in den Archivordner
 move to	mail	de	verschieben
+move to archive	mail	de	Verschiebe in den Archivordner
 move to trash	mail	de	in den Papierkorb verschieben
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt
@@ -404,14 +405,14 @@ save as infolog	mail	de	Als Infolog speichern
 save as infolog on send	mail	de	Als Infolog speichern
 save as ticket	mail	de	Als Ticket speichern
 save as tracker on send	mail	de	Als Ticket speichern
-save into vfs	mail	de	In das virtuelle Dateisystem (VFS) speichern
-save message to disk	mail	de	Nachricht auf Ihrer Festplatte speichern
+save into vfs	mail	de	Im EGroupware Dateimanager speichern
+save message to disk	mail	de	Nachricht speichern ...
 save message to filemanager	mail	de	Im EGroupware Dateimanager speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
 save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf im EGroupware Dateimanager ab.
-save to disk	mail	de	Speichern
+save to disk	mail	de	Speichern unter ...
 save to filemanager	mail	de	Nachricht im Dateimananger speichern
-save to vfs	mail	de	Dateimanager
+save to vfs	mail	de	Im EGroupware Dateimanager speichern
 save:	mail	de	Speichern
 saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speichern der Nachricht %1 ist fehlgeschlagen. Ziel Ordner %2 existiert nicht.
 saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
@@ -440,7 +441,7 @@ set it as default:	mail	de	als Vorgabe speichern
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	de	Soll die Signatur nach (Standard) oder vor dem zitierten Text eingefügt werden und diese bearbeitbar sein?
 show	mail	de	anzeigen
-show all folders	mail	de	Darstellung aller E-Mail Ordner
+show all folders	mail	de	Anzeige aller Ordner
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	de	Zeige alle Ordner, die in Ihrem Postfach eingerichtet sind. Expliziere Deaktivierung der Abonnement-Funktion des E-Mail Programms. Dies kann sich negativ auf die Performance Ihrer EGroupware auswirken.
 show new messages on home page	mail	de	Anzeigen von neuen E-Mails auf der Startseite
 show test connection section and control the level of info displayed?	mail	de	Zeige Verbindungstest Link an und spezifiziere das Ausmaß der angezeigten Information?
@@ -453,7 +454,7 @@ sieve script name	mail	de	Stellen Sie den Sieve Skript Namen ein.
 sieve server	mail	de	Sieve Server
 signature	mail	de	Signatur
 signature at top	mail	de	Signatur am Anfang der Nachricht
-signature position and visibility	mail	de	Position der Signatur und Sichtbarkeit
+signature position and visibility	mail	de	Position und Sichtbarkeit der Signatur
 size(...->0)	mail	de	Größe(...->0)
 size(0->...)	mail	de	Größe(0->...)
 small view	mail	de	schmale Ansicht
@@ -556,4 +557,3 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail im EGroupware Dateimanager speichern können.
 you will loose current message body, unless you save it to your clipboard!	mail	de	Sie werden Ihren aktuellen Nachrichtentext verlieren, sofern Sie ihn nicht in der Zwischenablage speichern!
 you've got new mail	mail	de	Sie haben neue E-Mails
-examine namespace to retrieve folders in others and shared	mail	de	Untersuche Namespace für Mail-Ordner in den Bereichen OTHERS and SHARED

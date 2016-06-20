@@ -160,6 +160,7 @@ search for '%1'	filemanager	cs	Hledat '%1'
 searchstring	filemanager	cs	hledaný řetězec
 select action...	filemanager	cs	Vyberte akci...
 select file to upload in current directory	filemanager	cs	Vyberte soubor k uploadu do aktuálního adresáře
+select file(s) from vfs	common	cs	Vyberte soubory z File Manager
 show	filemanager	cs	Zobrazit
 show hidden files	filemanager	cs	Zobrazit skryté soubory
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	cs	Zobrazit odkaz na kořenový adresář správce souborů (/) v postranním panelu?
