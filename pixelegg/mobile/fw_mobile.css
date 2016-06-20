@@ -7973,6 +7973,12 @@ form[id^="tracker-"] .dialogHeadbar {
     width: 46px;
     height: 46px !important;
   }
+  body span.et2_file_span:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none;
+    color: transparent;
+  }
   body .chzn-container ul.chzn-choices {
     background: none;
     border: none;
