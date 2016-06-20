@@ -1384,7 +1384,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 */
 	public static function handle_attach($app, $id, $attach, $delete_via_put=false)
 	{
-		error_log(__METHOD__."('$app', $id, attach=".array2string($attach).", delete_via_put=".array2string($delete_via_put).')');
+		//error_log(__METHOD__."('$app', $id, attach=".array2string($attach).", delete_via_put=".array2string($delete_via_put).')');
 
 		if (!Link::file_access($app, $id, Acl::EDIT))
 		{
@@ -1447,17 +1447,17 @@ class CalDAV extends HTTP_WebDAV_Server
 				}
 				if (!($to = self::fopen_attachment($app, $id, $filename=$attr['params']['FILENAME'], $attr['params']['FMTTYPE'], $path)) ||
 					// Horde Icalendar does NOT decode automatic
-					($copied=fwrite($to, $attr['params']['ENCODING'] == 'BASE64' ? base64_decode($attr['value']) : $attr['value'])) === false)
+					(/*$copied=*/fwrite($to, $attr['params']['ENCODING'] == 'BASE64' ? base64_decode($attr['value']) : $attr['value'])) === false)
 				{
 					error_log(__METHOD__."('$app', $id, ...) failed to add attachment ".array2string($attr).") ");
 					continue;
 				}
 				fclose($to);
-				error_log(__METHOD__."('$app', $id, ...)) content-type={$attr['params']['FMTTYPE']}, filename=$filename: $path created $copied bytes copied");
+				//error_log(__METHOD__."('$app', $id, ...)) content-type={$attr['params']['FMTTYPE']}, filename=$filename: $path created $copied bytes copied");
 			}
 			else
 			{
-				error_log(__METHOD__."('$app', $id, ...) unsupported URI attachment ".array2string($attr));
+				//error_log(__METHOD__."('$app', $id, ...) unsupported URI attachment ".array2string($attr));
 			}
 		}
 	}
