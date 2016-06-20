@@ -19,7 +19,7 @@ $phpgw_baseline = array(
 			'info_from' => array('type' => 'varchar','precision' => '255','comment' => 'text of the primary link'),
 			'info_addr' => array('type' => 'varchar','precision' => '255','comment' => 'textfield for phone-number or email of the primary contact'),
 			'info_subject' => array('type' => 'varchar','precision' => '255','comment' => 'title of the infolog-entry'),
-			'info_des' => array('type' => 'text','comment' => 'desciption of the infolog-entry'),
+			'info_des' => array('type' => 'longtext','comment' => 'desciption of the infolog-entry'),
 			'info_owner' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'comment' => 'owner of the entry, can be account or group'),
 			'info_responsible' => array('type' => 'ascii','meta' => 'account-commasep','precision' => '255','nullable' => False,'default' => '0','comment' => 'responsible users or groups (multiple)'),
 			'info_access' => array('type' => 'ascii','precision' => '10','default' => 'public','comment' => 'public or privat'),

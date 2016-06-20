@@ -803,3 +803,19 @@ function infolog_upgrade14_3()
 {
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '16.1';
 }
+
+
+/**
+ * Change description column from text (64K) to longtext (4G)
+ *
+ * @return string
+ */
+function infolog_upgrade16_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','info_des',array(
+		'type' => 'longtext',
+		'comment' => 'desciption of the infolog-entry'
+	));
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '16.1.001';
+}
