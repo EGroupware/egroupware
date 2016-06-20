@@ -103,10 +103,11 @@ class groupdav_hooks
 				$logs = array();
 				if (file_exists($log_dir=$GLOBALS['egw_info']['server']['files_dir'].'/groupdav') && ($files = scandir($log_dir)))
 				{
-					$account_lid_len = strlen($GLOBALS['egw_info']['user']['account_lid']);
+					$account_lid = accounts::id2name($hook_data['account_id']);
+					$account_lid_len = strlen($account_lid);
 					foreach($files as $log)
 					{
-						if (substr($log,0,$account_lid_len+1) == $GLOBALS['egw_info']['user']['account_lid'].'-' &&
+						if (substr($log,0,$account_lid_len+1) == $account_lid.'-' &&
 							substr($log,-4) == '.log')
 						{
 							$logs['groupdav/'.$log] = egw_time::to(filemtime($log_dir.'/'.$log)).': '.
@@ -149,7 +150,9 @@ class groupdav_hooks
 	public function log()
 	{
 		$filename = $_GET['filename'];
-		if (!preg_match('|^groupdav/'.preg_quote($GLOBALS['egw_info']['user']['account_lid'],'|').'-[^/]+\.log$|',$filename))
+		$matches = null;
+		if (!preg_match('|^groupdav/'.($GLOBALS['egw_info']['user']['apps']['admin'] ? '[^-]+' :
+			preg_quote($GLOBALS['egw_info']['user']['account_lid'], '|')).'-(.*)\.log$|', $filename, $matches))
 		{
 			throw new egw_exception_wrong_parameter("Access denied to file '$filename'!");
 		}
@@ -157,8 +160,7 @@ class groupdav_hooks
 body { background-color: #e0e0e0; overflow: hidden; }
 pre.tail { background-color: white; padding-left: 5px; margin-left: 5px; }
 ';
-		$header = str_replace('!','/',substr($filename,10+strlen($GLOBALS['egw_info']['user']['account_lid']),-4));
 		$tail = new egw_tail($filename);
-		$GLOBALS['egw']->framework->render($tail->show($header),false,false);
+		$GLOBALS['egw']->framework->render($tail->show(str_replace('!', '/', $matches[1])),false,false);
 	}
 }
