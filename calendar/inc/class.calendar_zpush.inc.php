@@ -16,7 +16,7 @@ use EGroupware\Api;
 use EGroupware\Api\Acl;
 
 /**
- * Required for TZID <--> AS timezone blog test, if script is called directly via URL
+ * Required for TZID <--> AS timezone blob test, if script is called directly via URL
  */
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)
 {
@@ -993,9 +993,10 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 * @param string $folderid
 	 * @param string|array $id cal_id or event array (used internally)
 	 * @param ContentParameters   $contentparameters
+	 * @param string $class ='SyncAppointment' or 'SyncAppointmentException'
 	 * @return SyncAppointment|boolean false on error
 	 */
-	public function GetMessage($folderid, $id, $contentparameters)
+	public function GetMessage($folderid, $id, $contentparameters, $class='SyncAppointment')
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 		//error_log(__METHOD__.__LINE__.array2string($contentparameters).function_backtrace());
@@ -1025,7 +1026,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		{
 			ZLog::Write(LOGLEVEL_DEBUG, "exception=$ex=".date('Y-m-d H:i:s',$ex));
 		}
-		$message = new SyncAppointment();
+		$message = new $class();
 
 		// set timezone
 		try {
@@ -1192,7 +1193,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 				foreach($ex_events as $ex_event)
 				{
 					if ($ex_event['id'] == $event['id']) continue;	// ignore series master
-					$exception = $this->GetMessage($folderid, $ex_event, $contentparameters);
+					$exception = $this->GetMessage($folderid, $ex_event, $contentparameters, 'SyncAppointmentException');
 					$exception->exceptionstarttime = $exception_time = $ex_event['recurrence'];
 					foreach(array('attendees','recurrence','uid','timezone','organizername','organizeremail') as $not_supported)
 					{
