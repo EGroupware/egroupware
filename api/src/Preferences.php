@@ -961,11 +961,11 @@ class Preferences
 	 *
 	 * This method uses the language and nationalty set in the users common prefs.
 	 *
-	 * @param $category =LC_ALL category to set, see setlocal function
+	 * @param $category =LC_MESSAGES category to set, see setlocal function
 	 * @param $charset =null default system charset
 	 * @return string the local (or best estimate) set
 	 */
-	static function setlocale($category=LC_ALL,$charset=null)
+	static function setlocale($category=LC_MESSAGES,$charset=null)
 	{
 		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
