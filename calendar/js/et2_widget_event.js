@@ -184,7 +184,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 */
 	_UID_callback: function _UID_callback(event) {
 		// Copy to avoid changes, which may cause nm problems
-		var value = jQuery.extend({},event);
+		var value = event === null ? null : jQuery.extend({},event);
 
 		// Make sure id is a string, check values
 		if(value)
@@ -757,12 +757,12 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		{
 			var old_daywise = egw.dataGetUIDdata(old_cache_id);
 			old_daywise = old_daywise && old_daywise.data ? old_daywise.data : [];
-			old_daywise.splice(old_daywise.indexOf(this.options.value.id),1);
+			old_daywise.splice(old_daywise.indexOf(this.options.value.row_id),1);
 			egw.dataStoreUID(old_cache_id,old_daywise);
 
-			if (new_daywise.indexOf(event.id) < 0)
+			if (new_daywise.indexOf(event.row_id) < 0)
 			{
-				new_daywise.push(event.id);
+				new_daywise.push(event.row_id);
 			}
 			if(new_daywise.data !== null)
 			{

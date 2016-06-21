@@ -1022,7 +1022,8 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				Framework::refresh_opener($msg, 'calendar', $event['id'], 
+				Framework::refresh_opener($msg, 'calendar', 
+					$event['id'] . ($content['edit_single'] ? ':' . (int)$content['edit_single'] : '' ),
 					$button == 'save' && $client_updated ? ($content['id'] ? $update_type : 'add') : 'delete'
 				);
 			}
