@@ -1310,10 +1310,10 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		backup: function(_backup)
 		{
 			return new Promise(function(_resolve,_reject){
-				// Store backup sync packet into .PK_PGP file in user directory
+				// Store backup sync packet into .PGP-Key-Backup file in user directory
 				jQuery.ajax({
 					method:'PUT',
-					url: egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PGP-Keychain',
+					url: egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PGP-Key-Backup',
 					contentType: 'application/json',
 					data: JSON.stringify(_backup),
 					success:function(){
@@ -1338,14 +1338,32 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				var resolve = _resolve;
 				var reject = _reject;
 				jQuery.ajax({
-					url:egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PGP-Keychain',
+					url:egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PGP-Key-Backup',
 					method: 'GET',
 					success: function(_backup){
 						resolve(JSON.parse(_backup));
 						egw.message('Your key has been restored successfully.');
 					},
 					error: function(_err){
-						reject(_err);
+						//Try with old back file name
+						if (_err.status == 404)
+						{
+							jQuery.ajax({
+								method:'GET',
+								url: egw.webserverUrl+'/webdav.php/home/'+egw.user('account_lid')+'/.PK_PGP',
+								success: function(_backup){
+									resolve(JSON.parse(_backup));
+									egw.message('Your key has been restored successfully.');
+								},
+								error: function(_err){
+									_reject(_err);
+								}
+							});
+						}
+						else
+						{
+							_reject(_err);
+						}
 					}
 				});
 			});
@@ -1420,6 +1438,10 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				_keyring.createKeyBackupContainer(selector, options).then(function(_popupId){
 					var $backup_selector = jQuery('iframe[src^="chrome-extension"],iframe[src^="about:blank?mvelo"]');
 					$backup_selector.css({position:'absolute', "z-index":1});
+					_popupId.isReady().then(function(result){
+						egw.message('Your key has been backedup into  .PGP-Key-Backup successfully.');
+						jQuery(selector).empty();
+					});
 					resolve(_popupId);
 				},
 				function(_err){
