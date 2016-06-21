@@ -214,10 +214,6 @@ $checks = array(
 		'func' => 'extension_check',
 		'error' => lang("The ctype extension is needed by HTMLpurifier to check content of FCKeditor agains Cross Site Skripting."),
 	),
-	'mcrypt' => array(
-		'func' => 'extension_check',
-		'warning' => lang('The mcrypt extension is used, to store eTemplate form state on the client, which is the prefered way to store it.'),
-	),
 	'json' => array(
 		'func' => 'extension_check',
 		'error' => lang('The json extension is required by EGroupware for AJAX.'),
