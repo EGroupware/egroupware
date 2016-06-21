@@ -121,11 +121,7 @@ class calendar_uiforms extends calendar_ui
 				{
 					foreach($owner as $uid)
 					{
-						// only add users or a single ressource, not all ressources displayed by a category
-						if (is_numeric($uid) || $owner == $uid)
-						{
-							$extra_participants[] = $uid;
-						}
+						$extra_participants[] = $uid;
 					}
 				}
 			}
