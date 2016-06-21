@@ -846,6 +846,9 @@ abstract class Framework extends Framework\Extra
 			{
 				//error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
 				self::includeCSS($theme_min_css);
+
+				// Global category styles
+				Categories::css(Categories::GLOBAL_APPNAME);
 			}
 			else
 			{
