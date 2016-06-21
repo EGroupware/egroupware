@@ -905,126 +905,130 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." getBodyPreferenceBestMatch: ".array2string($bpReturnType));
 				// set the protocoll class
 				$output->asbody = new SyncBaseBody();
-				// fetch the body (try to gather data only once)
-				$css ='';
-				$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', null, true,$_folderName);
-				if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
-				$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
-				if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only:'.$body);
-				if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
-					// may be html
-					if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "MIME Body".' Type:html (fetched with html_only)');
-					$css = $this->mail->getStyles($bodyStruct);
-					$output->nativebodytype=2;
-				} else {
-					// plain text Message
-					if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "MIME Body".' Type:plain, fetch text (HTML, if no text available)');
-					$output->nativebodytype=1;
-					$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
-					if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' plain text Struct:'.array2string($bodyStruct));
-					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
-					if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' never display html(plain text only):'.$body);
-				}
-				// whatever format decode (using the correct encoding)
-				if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__."MIME Body".' Type:'.($output->nativebodytype==2?' html ':' plain ').$body);
-				//$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
-				// prepare plaintextbody
-				$plainBody='';
-				if ($output->nativebodytype == 2)
-				{
-					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
-					if(isset($bodyStructplain[0])&&isset($bodyStructplain[0]['error'])&&$bodyStructplain[0]['error']==1)
-					{
-						$plainBody = Api\Mail\Html::convertHTMLToText($body); // always display with preserved HTML
-					}
-					else
-					{
-						$plainBody = $this->mail->getdisplayableBody($this->mail,$bodyStructplain,false,false);
-					}
-				}
-				//if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "MIME Body".$body);
-				$plainBody = preg_replace("/<style.*?<\/style>/is", "", (strlen($plainBody)?$plainBody:$body));
-				// remove all other html
-				$plainBody = preg_replace("/<br.*>/is","\r\n",$plainBody);
-				$plainBody = strip_tags($plainBody);
-				if ($this->debugLevel>3 && $output->nativebodytype==1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Plain Text:'.$plainBody);
-				//$body = str_replace("\n","\r\n", str_replace("\r","",$body)); // do we need that?
-				if ($bpReturnType==SYNC_BODYPREFERENCE_MIME)//4)//$mimesupport==2 || $mimesupport ==1 && stristr($headers['CONTENT-TYPE'],'signed') !== false)
+
+				// return full mime-message without any (charset) conversation directly as stream
+				if ($bpReturnType==SYNC_BODYPREFERENCE_MIME)
 				{
 					//SYNC_BODYPREFERENCE_MIME
-					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." bodypreference 4 requested");
-					$output->asbody->type = SYNC_BODYPREFERENCE_MIME;//4;
-					// use Api\Mailer::convert to convert charset of all text parts to utf-8, which is a z-push or AS requirement!
-					// ToDo: check if above is true for mime-message, otherwise with could use a stream without conversion
-					$Body = Api\Mailer::convert($this->mail->getMessageRawBody($id, '', $_folderName));
-					if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.__LINE__." Setting Mailobjectcontent to output:".$Body);
-					if ((string)$Body === '') $Body = ' ';
-					$output->asbody->data = StringStreamWrapper::Open($Body);
-					$output->asbody->estimatedDataSize = strlen($Body);
-				}
-				else if ($bpReturnType==2) //SYNC_BODYPREFERENCE_HTML
-				{
-					if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "HTML Body with requested pref 2");
-					// Send HTML if requested and native type was html
-					$output->asbody->type = 2;
-					$htmlbody = '<html>'.
-						'<head>'.
-						'<meta name="Generator" content="Z-Push">'.
-						'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
-						$css.
-						'</head>'.
-						'<body>';
-					if ($output->nativebodytype==2)
-					{
-						// as we fetch html, and body is HTML, we may not need to handle this
-						$htmlbody .= $body;
-					}
-					else
-					{
-						// html requested but got only plaintext, so fake html
-						$htmlbody .= str_replace("\n","<BR>",str_replace("\r","<BR>", str_replace("\r\n","<BR>",$plainBody)));
-					}
-					$htmlbody .= '</body>'.
-							'</html>';
-
-					if(isset($truncsize) && strlen($htmlbody) > $truncsize)
-					{
-						$htmlbody = Utils::Utf8_truncate($htmlbody,$truncsize);
-						$output->asbody->truncated = 1;
-					}
-					// output->nativebodytype is used as marker that the original message was of type ... but is now converted to, as type 2 is requested.
-					$output->nativebodytype = 2;
-					$output->asbody->data = StringStreamWrapper::Open($htmlbody);
-					$output->asbody->estimatedDataSize = strlen($htmlbody);
+					$output->asbody->type = SYNC_BODYPREFERENCE_MIME;
+					$stream = $this->mail->getMessageRawBody($id, '', $_folderName, true);
+					$fstat = fstat($stream);
+					fseek($stream, 0, SEEK_SET);
+					$output->asbody->data = $stream;
+					$output->asbody->estimatedDataSize = $fstat['size'];
+					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." bodypreference 4=SYNC_BODYPREFERENCE_MIME=full mime message requested, size=$fstat[size]");
 				}
 				else
 				{
-					// Send Plaintext as Fallback or if original body is plainttext
-					if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "Plaintext Body:".$plainBody);
-					/* we use plainBody (set above) instead
-					$bodyStruct = $this->mail->getMessageBody($id,'only_if_no_text'); //'never_display');
-					$plain = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
-					$plain = html_entity_decode($plain,ENT_QUOTES,$this->mail->detect_encoding($plain));
-					$plain = strip_tags($plain);
-					//$plain = str_replace("\n","\r\n",str_replace("\r","",$plain));
-					*/
-					$output->asbody->type = 1;
-					$output->nativebodytype = 1;
-					if(isset($truncsize) &&
-			    		strlen($plainBody) > $truncsize)
-					{
-						$plainBody = Utils::Utf8_truncate($plainBody, $truncsize);
-						$output->asbody->truncated = 1;
+					// fetch the body (try to gather data only once)
+					$css ='';
+					$bodyStruct = $this->mail->getMessageBody($id, 'html_only', '', null, true,$_folderName);
+					if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only Struct:'.array2string($bodyStruct));
+					$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,true,false);
+					if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' html_only:'.$body);
+					if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
+						// may be html
+						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "MIME Body".' Type:html (fetched with html_only)');
+						$css = $this->mail->getStyles($bodyStruct);
+						$output->nativebodytype=2;
+					} else {
+						// plain text Message
+						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "MIME Body".' Type:plain, fetch text (HTML, if no text available)');
+						$output->nativebodytype=1;
+						$bodyStruct = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
+						if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' plain text Struct:'.array2string($bodyStruct));
+						$body = $this->mail->getdisplayableBody($this->mail,$bodyStruct,false,false);
+						if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' never display html(plain text only):'.$body);
 					}
-					$output->asbody->data = StringStreamWrapper::Open((string)$plainBody !== '' ? $plainBody : ' ');
-					$output->asbody->estimatedDataSize = strlen($plainBody);
-				}
-				// In case we have nothing for the body, send at least a blank...
-				// dw2412 but only in case the body is not rtf!
-				if ($output->asbody->type != 3 && !isset($output->asbody->data))
-				{
-					$output->asbody->data = StringStreamWrapper::Open(" ");
-					$output->asbody->estimatedDataSize = 1;
+					// whatever format decode (using the correct encoding)
+					if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__."MIME Body".' Type:'.($output->nativebodytype==2?' html ':' plain ').$body);
+					//$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
+					// prepare plaintextbody
+					$plainBody='';
+					if ($output->nativebodytype == 2)
+					{
+						$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', null, true,$_folderName); //'only_if_no_text');
+						if(isset($bodyStructplain[0])&&isset($bodyStructplain[0]['error'])&&$bodyStructplain[0]['error']==1)
+						{
+							$plainBody = Api\Mail\Html::convertHTMLToText($body); // always display with preserved HTML
+						}
+						else
+						{
+							$plainBody = $this->mail->getdisplayableBody($this->mail,$bodyStructplain,false,false);
+						}
+					}
+					//if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "MIME Body".$body);
+					$plainBody = preg_replace("/<style.*?<\/style>/is", "", (strlen($plainBody)?$plainBody:$body));
+					// remove all other html
+					$plainBody = preg_replace("/<br.*>/is","\r\n",$plainBody);
+					$plainBody = strip_tags($plainBody);
+					if ($this->debugLevel>3 && $output->nativebodytype==1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Plain Text:'.$plainBody);
+					//$body = str_replace("\n","\r\n", str_replace("\r","",$body)); // do we need that?
+
+					if ($bpReturnType==2) //SYNC_BODYPREFERENCE_HTML
+					{
+						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "HTML Body with requested pref 2");
+						// Send HTML if requested and native type was html
+						$output->asbody->type = 2;
+						$htmlbody = '<html>'.
+							'<head>'.
+							'<meta name="Generator" content="Z-Push">'.
+							'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
+							$css.
+							'</head>'.
+							'<body>';
+						if ($output->nativebodytype==2)
+						{
+							// as we fetch html, and body is HTML, we may not need to handle this
+							$htmlbody .= $body;
+						}
+						else
+						{
+							// html requested but got only plaintext, so fake html
+							$htmlbody .= str_replace("\n","<BR>",str_replace("\r","<BR>", str_replace("\r\n","<BR>",$plainBody)));
+						}
+						$htmlbody .= '</body>'.
+								'</html>';
+
+						if(isset($truncsize) && strlen($htmlbody) > $truncsize)
+						{
+							$htmlbody = Utils::Utf8_truncate($htmlbody,$truncsize);
+							$output->asbody->truncated = 1;
+						}
+						// output->nativebodytype is used as marker that the original message was of type ... but is now converted to, as type 2 is requested.
+						$output->nativebodytype = 2;
+						$output->asbody->data = StringStreamWrapper::Open($htmlbody);
+						$output->asbody->estimatedDataSize = strlen($htmlbody);
+					}
+					else
+					{
+						// Send Plaintext as Fallback or if original body is plainttext
+						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "Plaintext Body:".$plainBody);
+						/* we use plainBody (set above) instead
+						$bodyStruct = $this->mail->getMessageBody($id,'only_if_no_text'); //'never_display');
+						$plain = $this->mail->getdisplayableBody($this->mail,$bodyStruct);
+						$plain = html_entity_decode($plain,ENT_QUOTES,$this->mail->detect_encoding($plain));
+						$plain = strip_tags($plain);
+						//$plain = str_replace("\n","\r\n",str_replace("\r","",$plain));
+						*/
+						$output->asbody->type = 1;
+						$output->nativebodytype = 1;
+						if(isset($truncsize) &&
+							strlen($plainBody) > $truncsize)
+						{
+							$plainBody = Utils::Utf8_truncate($plainBody, $truncsize);
+							$output->asbody->truncated = 1;
+						}
+						$output->asbody->data = StringStreamWrapper::Open((string)$plainBody !== '' ? $plainBody : ' ');
+						$output->asbody->estimatedDataSize = strlen($plainBody);
+					}
+					// In case we have nothing for the body, send at least a blank...
+					// dw2412 but only in case the body is not rtf!
+					if ($output->asbody->type != 3 && !isset($output->asbody->data))
+					{
+						$output->asbody->data = StringStreamWrapper::Open(" ");
+						$output->asbody->estimatedDataSize = 1;
+					}
 				}
 			}
 			// end AS12 Stuff

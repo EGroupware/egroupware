@@ -5456,15 +5456,16 @@ class Mail
 	 * @param string/int $_uid the messageuid,
 	 * @param string/int $_partID = '' , the partID, may be omitted
 	 * @param string $_folder folder to work on
+	 * @param boolean $_stream =false true: return a stream, false: return string, stream suppresses any caching
 	 * @return string the message body
 	 */
-	function getMessageRawBody($_uid, $_partID = '', $_folder='')
+	function getMessageRawBody($_uid, $_partID = '', $_folder='', $_stream=false)
 	{
 		//TODO: caching einbauen static!
 		static $rawBody;
 		if (is_null($rawBody)) $rawBody = array();
 		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
-		if (isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
+		if (!$_stream && isset($rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.' ('.__LINE__.') '." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
 			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)];
@@ -5487,7 +5488,7 @@ class Mail
 		));
 		if (is_object($headersNew)) {
 			foreach($headersNew as &$_headerObject) {
-				$body = $_headerObject->getFullMsg();
+				$body = $_headerObject->getFullMsg($_stream);
 				if ($_partID != '')
 				{
 					$mailStructureObject = $_headerObject->getStructure();
@@ -5496,14 +5497,17 @@ class Mail
 					{
 						if ($mime_id==$_partID)
 						{
-							$body = $_headerObject->getBodyPart($mime_id);
+							$body = $_headerObject->getBodyPart($mime_id, $_stream);
 						}
 					}
 				}
 			}
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '."[$this->icServer->ImapServerId][$_folder][$_uid][".(empty($_partID)?'NIL':$_partID)."]");
-		$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)] = $body;
+		if (!$_stream)
+		{
+			$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][(empty($_partID)?'NIL':$_partID)] = $body;
+		}
 		return $body;
 	}
 
