@@ -1,5 +1,5 @@
 diff --git egroupware/admin/inc/class.admin_asyncservice.inc.php egroupware/admin/inc/class.admin_asyncservice.inc.php
-index 88d9388..52cf515 100644
+index cb19e5f..2e58ce3 100644
 --- egroupware/admin/inc/class.admin_asyncservice.inc.php
 +++ egroupware/admin/inc/class.admin_asyncservice.inc.php
 @@ -97,16 +97,20 @@ class admin_asyncservice
@@ -43,10 +43,10 @@ index 88d9388..52cf515 100644
 
  		echo "<hr><table border=0><tr>\n";
 diff --git egroupware/api/src/Egw.php egroupware/api/src/Egw.php
-index f324f5e..1e52db0 100644
+index bfbb4fb..28e3eee 100644
 --- egroupware/api/src/Egw.php
 +++ egroupware/api/src/Egw.php
-@@ -599,12 +599,14 @@ class Egw extends Egw\Base
+@@ -589,12 +589,14 @@ class Egw extends Egw\Base
  					_egw_log_exception($ex);
  				}
  			}
