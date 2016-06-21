@@ -48,7 +48,7 @@ use EGroupware\Api\Etemplate;
 
 			// We use some inline js in preview results if it fails
 			Api\Header\ContentSecurityPolicy::add('script-src', "unsafe-inline");
-			
+
 			$template = new Etemplate('importexport.import_dialog');
 
 			// Load application's translations
@@ -102,7 +102,7 @@ use EGroupware\Api\Etemplate;
 					// Destination if we need to hold the file
 					if($file)
 					{
-						$cachefile = new egw_cache_files(array());
+						$cachefile = new Api\Cache\Files(array());
 						$dst_file = $cachefile->filename(Api\Cache::keys(Api\Cache::INSTANCE, 'importexport',
 							'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id']), true),true);
 						// Keep file
