@@ -1,3 +1,22 @@
+egroupware-epl (16.1.20160621) hardy; urgency=low
+
+  * eSync: YOU NEED TO RECREATE EXCHANGE ACCOUNTS ON YOUR DEVICES, Z-Push SQL state backend is used now
+  * eSync: Z-Push 2.3 allows to sync Outlook 2013 & 2016
+  * Mail/Api: replace decrecated Mcrypt PHP extension with OpenSSL, use AES128 with pbkdf2 streching of passwords
+  * PGP: renamed (hidden) backup-file in users home-directory to .PGP-Key-Backup
+  * InfoLog: change description to longtext (4GB) to not overflow on long comments or PGP encrypted files
+  * Addressbook/Mail: fix PHP Fatal error when clicking on "add new contact" icon in mail
+  * Resources: fix PHP Fatal call to undefined method Api\Accounts::get_list() when editing ACL
+  * Mail: fix PHP Fatal error when saving Sieve scripts
+  * ImportExport: scheduled im/exports fail with PHP Fatal error
+  * Filemanager/Projectmanager: fix broken layout when showing /apps/projectmanager eg. opening Filemanager from PM
+  * Setup: some authtication types eg. Cas were not shown in setup
+  * API: async service failed to run on a default install (no phpgwapi)
+  * Admin: fix async service testjob to run on a default install (no phpgwapi)
+  * Mail: fix PHP Fatal when switching identities
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 21 Jun 2016 12:57:58 +0200
+
 egroupware-epl (16.1.20160603) hardy; urgency=low
 
   * 1. public release candidate 16.1RC1
