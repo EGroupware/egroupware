@@ -1079,7 +1079,7 @@ class infolog_ui
 				'url' => 'menuaction=infolog.infolog_ui.edit&info_id=$id',
 				'popup' => Link::get_registry('infolog', 'add_popup'),
 				'group' => $group=1,
-				'mobileViewTemplate' => 'edit?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/infolog/templates/mobile/edit.xet'))
+				'mobileViewTemplate' => 'view?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/infolog/templates/mobile/view.xet'))
 			),
 			'parent' => array(
 				'caption' => 'View parent with children',

@@ -954,7 +954,7 @@ class timesheet_ui extends timesheet_bo
 				'group' => $group=1,
 				'disableClass' => 'th',
 				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.timesheet.viewEntry':'',
-				'mobileViewTemplate' => 'edit?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/timesheet/templates/mobile/edit.xet'))
+				'mobileViewTemplate' => 'view?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/timesheet/templates/mobile/view.xet'))
 			),
 /*
 			'view' => array(

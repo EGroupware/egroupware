@@ -196,6 +196,8 @@ class resources_ui
 				'popup' => Link::get_registry('resources', 'add_popup'),
 				'group' => $group=1,
 				'disableClass' => 'rowNoEdit',
+				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.resources.viewEntry':'',
+				'mobileViewTemplate' => 'view?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/resources/templates/mobile/view.xet'))
 			),
 			'add' => array(
 				'caption' => 'New resource',
