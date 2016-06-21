@@ -2,72 +2,8 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="resources.view.general" template="" lang="" group="0" version="">
-		<grid width="100%">
-			<columns>
-				<column width = "120"/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<description value="Inventory number"/>
-					<textbox  id="inventory_number" class="et2_fullWidth"/>
-				</row>
-				<row>
-					<description value="Accessory of"/>
-					<vbox class="et2_fullWidth">
-						<menulist class="et2_fullWidth">
-							<menupopup id="accessory_of" no_lang="1" />
-						</menulist>
-						<description id="accessory_label"/>
-					</vbox>
-				</row>
-				<row>
-					<description value="Description (short)"/>
-					<textbox statustext="Short description of resource" id="short_description"  size="50" maxlength="100" class="et2_fullWidth"/>
-				</row>
-				<row>
-					<description value="Storage information"/>
-					<textbox statustext="Information about storage" id="storage_info"  maxlength="100" size="50" class="et2_fullWidth" span="all"/>
-				</row>
-				<row>
-					<description value="Location"/>
-					<textbox statustext="Where to find this resource?" id="location"  maxlength="100" size="50" class="et2_fullWidth" />
-				</row>
-				<row>
-					<description disabled="true" value="Buyable"/>
-					<checkbox disabled="true" statustext="Is resource buyable?" id="buyable" span="all" class="et2_fullWidth" />
-				</row>
-				<row>
-					<description value="Picture"/>
-					<grid>
-						<columns>
-							<column width="10%"/>
-							<column width="90%"/>
-						</columns>
-						<rows>
-
-							<row>
-								<radio id="picture_src" options="gen_src"/>
-								<description value="Use general resources icon"/>
-							</row>
-							<row>
-								<radio id="picture_src" options="cat_src"/>
-								<description value="Use the category's icon"/>
-							</row>
-							<row>
-								<radio id="picture_src" options="own_src"/>
-								<description value="Use own picture"/>
-							</row>
-
-						</rows>
-					</grid>
-				</row>
-			</rows>
-		</grid>
-	</template>
 	<template id="resources.view.page" template="" lang="" group="0" version="">
-		<htmlarea statustext="Web-Site for this resource" id="long_description" height="200" toolbar="true"/>
+		<textbox statustext="Short description of resource" id="short_description"  size="50" maxlength="100" class="et2_fullWidth"/>
 	</template>
 	<template id="resources.view.custom" template="" lang="" group="0" version="">
 		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
@@ -129,9 +65,8 @@
 					<description/>
 					<box>
 						<hbox class="avatar">
-							<image src="resource_picture" href="$cont[picture_original]" expose_view="true" align="center"/>
+							<image src="picture_thumb" href="$cont[picture_original]" expose_view="true" align="center"/>
 						</hbox>
-
 					</box>
 				</row>
 				<row class="dialogHeader">
@@ -159,14 +94,12 @@
 				<row>
 					<tabbox id="tabs" span="all" width="100%" tab_height="250" align_tabs="v">
 						<tabs>
-							<tab id="page" label="Description" statustext="Informations about the location of resource"/>
-							<tab id="general" label="Details" statustext="General informations about resource"/>
+							<tab id="page" label="Description (short)" statustext="Informations about the location of resource"/>
 							<tab id="custom" label="Custom" statustext="Pictures or resource"/>
 							<tab id="ownership" label="Ownership"/>
 						</tabs>
 						<tabpanels>
 							<template id="resources.view.page"/>
-							<template id="resources.view.general"/>
 							<template id="resources.view.custom"/>
 							<template id="resources.view.ownership"/>
 						</tabpanels>

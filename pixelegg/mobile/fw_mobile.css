@@ -8024,6 +8024,16 @@ form[id^="tracker-"] .dialogHeadbar {
   body .et2_mobile_view table.et2_grid tr td {
     padding: 10px 5px 10px 0;
   }
+  body .et2_mobile_view div.et2_hbox.avatar {
+    width: 100px;
+    display: block;
+    height: 100px;
+    margin: auto;
+  }
+  body .et2_mobile_view div.et2_hbox.avatar img {
+    width: 100px;
+    height: 100px;
+  }
   body .mobile-view-editBtn {
     position: fixed;
     top: 2px;
