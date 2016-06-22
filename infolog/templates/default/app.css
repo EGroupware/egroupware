@@ -38,7 +38,7 @@ table.infolog_fullWidth { width: 100%; }
 }
 
 tr.infolog_rowHasParent > td:first-child {
-	background-image: url(../../../phpgwapi/templates/default/images/egw_action/arrow_up.png);
+	background-image: url(../../../api/templates/default/images/egw_action/arrow_up.png);
 	background-repeat: no-repeat;
 	background-position: 6px -2px;
 }
