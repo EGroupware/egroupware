@@ -4474,6 +4474,9 @@ app.classes.mail = AppJS.extend(
 				 */
 				revert: function (){
 					this.parent().find('.ms-sel-item').css('position','relative');
+					var $input = this.parent().children('input');
+					// Make sure input field not getting into second line after revert
+					$input.width($input.width()-10);
 					return true;
 				},
 				/**
@@ -4548,7 +4551,7 @@ app.classes.mail = AppJS.extend(
 				}
 
 				var draggedValue = ui.draggable.text();
-			
+
 				// index of draggable item in selection list
 				var dValueKey = draggedValue;
 
