@@ -895,6 +895,9 @@ body {
 #mail-index div#mail-index_nm div.nextmatch_header div.filters input#mail-index_search {
   /*height: 20px !important;*/
 }
+#mail-index div#mail-index_nm .egwGridView_outer {
+  margin-right: 10px;
+}
 #mail-index div#mail-index_nm tr.mail td img {
   max-height: 50px;
   -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
