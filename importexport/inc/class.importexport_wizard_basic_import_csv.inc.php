@@ -36,14 +36,14 @@ class importexport_wizard_basic_import_csv
 		'wizard_step50' => 'importexport.wizard_basic_import_csv.fieldmapping',
 		'wizard_step55' => 'importexport.wizard_basic_import_csv.conditions'
 	);
-		
+
 
 	/**
 	* Destination fields for the mapping
 	* Key is the field name, value is the human version
 	*/
 	protected $mapping_fields = array();
-	
+
 	/**
 	* List of conditions your plugin supports
 	*/
@@ -81,7 +81,7 @@ class importexport_wizard_basic_import_csv
 				case 'next':
 					// Move sample file to temp
 					if($content['file']['tmp_name']) {
-						$GLOBALS['egw']->session->appsession('csvfile',$content['application'],$content['file']['tmp_name']);
+						Api\Cache::setSession($content['application'], 'csvfile', $content['file']['tmp_name']);
 					}
 					unset($content['file']);
 					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
@@ -100,12 +100,12 @@ class importexport_wizard_basic_import_csv
 			$content['step'] = 'wizard_step30';
 			$preserv = $content;
 			unset ($preserv['button']);
-			
+
 			return $this->step_templates[$content['step']];
 		}
-		
+
 	}
-	
+
 	/**
 	 * choose fieldseperator, charset and headerline
 	 *
@@ -259,9 +259,9 @@ class importexport_wizard_basic_import_csv
 			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
 		}
-		
+
 	}
-	
+
 	/**
 	* Process the sample file, get the fields out of it, then allow them to be mapped onto
 	* the fields the destination understands.  Also, set any translations to be done to the field.
@@ -340,13 +340,13 @@ class importexport_wizard_basic_import_csv
 			}
 			$preserv = $content;
 			$sel_options['field'] = array('--NONE--' => lang('none')) + $this->mapping_fields;
-			
+
 			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
 		}
-		
+
 	}
-	
+
 	/**
 	* Edit conditions
 	*/
