@@ -767,10 +767,6 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	 * We use a timeout to avoid doing it multiple times if redrawing or resizing.
 	 */
 	resizeTimes: function() {
-
-		// Hide resizing from user
-		this.loader.show();
-
 		// Wait a bit to see if anything else changes, then re-draw the times
 		if(this.resize_timer)
 		{
@@ -828,8 +824,6 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				child.resize();
 			},this, et2_IResizeable);
 		}
-
-		this.loader.hide();
 	},
 
 	/**

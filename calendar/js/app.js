@@ -2023,16 +2023,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			*/
 			if(grid)
 			{
-				// Show loading div to hide redrawing
-				egw.loading_prompt(
-					this.appname,true,egw.lang('please wait...'),
-					typeof framework !== 'undefined' ? framework.applications.calendar.tab.contentDiv : false,
-					egwIsMobile()?'horizental':'spinner'
-				);
-
-				var loading = false;
-
-
 				var value = [];
 				state.state.first = view.start_date(state.state).toJSON();
 				// We'll modify this one, so it needs to be a new object
@@ -2106,11 +2096,11 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 							owner: state.state.owner[i]
 						});
 					}
-					loading = this._need_data(day_value,state.state);
+					this._need_data(day_value,state.state);
 				}
 				else
 				{
-					loading = this._need_data(value,state.state);
+					this._need_data(value,state.state);
 				}
 
 				var row_index = 0;
@@ -2236,7 +2226,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					}
 				}
 				var value = [{start_date: state.state.first, end_date: state.state.last}];
-				loading = this._need_data(value,state.state);
+				this._need_data(value,state.state);
 			}
 			// Include first & last dates in state, mostly for server side processing
 			if(state.state.first && state.state.first.toJSON) state.state.first = state.state.first.toJSON();
@@ -2278,6 +2268,13 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				view.etemplates[0].widgetContainer.iterateOver(function(w) {
 					w.set_width('100%');
 				},this,et2_calendar_timegrid);
+			}
+
+			// Trigger resize to get correct sizes, as they may have sized while
+			// hidden
+			for(var i = 0; i < view.etemplates.length; i++)
+			{
+				view.etemplates[i].resize();
 			}
 
 			// List view (nextmatch) has slightly different fields
@@ -2417,23 +2414,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				save[this.states_to_save[i]] = this.state[this.states_to_save[i]];
 			}
 			egw.set_preference('calendar','saved_states', save);
-
-			// Trigger resize to get correct sizes, as they may have sized while
-			// hidden
-			for(var i = 0; i < view.etemplates.length; i++)
-			{
-				view.etemplates[i].resize();
-			}
-
-			// If we need to fetch data from the server, it will hide the loader
-			// when done but if everything is in the cache, hide from here.
-			if(!loading)
-			{
-				window.setTimeout(jQuery.proxy(function() {
-
-					egw.loading_prompt(this.appname,false);
-				},this),500);
-			}
 
 			return;
 		}
@@ -2671,8 +2651,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 *
 	 * @param {Object} value
 	 * @param {Object} state
-	 *
-	 * @return {boolean} Data was requested
 	 */
 	_need_data: function(value, state)
 	{
@@ -2750,8 +2728,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				this.sidebox_et2 ? null : this.et2.getInstanceManager()
 			);
 		}
-
-		return need_data;
 	},
 
 	/**
