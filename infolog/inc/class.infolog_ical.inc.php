@@ -315,7 +315,8 @@ class infolog_ical extends infolog_bo
 			$vevent->setAttribute($field, $value, $options);
 		}
 
-		if ($taskData['info_startdate'])
+		// only export startdate < duedate, as some clients (eg. CalDAV Sync for Android) have problems with that
+		if ($taskData['info_startdate'] && (empty($taskData['info_enddate']) || $taskData['info_startdate'] <= $taskData['info_enddate']))
 		{
 			self::setDateOrTime($vevent, 'DTSTART', $taskData['info_startdate'], $tzid);
 		}
