@@ -269,7 +269,6 @@ class infolog_zpush implements activesync_plugin_write
 							$this->backend->note2messagenote($infolog[$attr], $bodypreference, $message->asbody);
 						}
 					}
-					$message->md5body = md5($infolog[$attr]);
 					break;
 
 				case 'info_cat':
@@ -285,7 +284,16 @@ class infolog_zpush implements activesync_plugin_write
 					break;
 
 				case 'info_status': 	// 0 or 1 <--> 'done', ....
-					$message->key = (int)(in_array($infolog[$attr], self::$done_status));
+					$message->$key = (int)(in_array($infolog[$attr], self::$done_status));
+					break;
+
+				case 'info_startdate':
+					// only export startdate, if <= enddate, as eg. Outlook crashes, if startdate > enddate
+					if (!empty($infolog['info_startdate']) && (empty($infolog['info_enddate']) ||
+						$infolog['info_startdate'] <= $infolog['info_enddate']))
+					{
+						$message->$key = $infolog[$attr];
+					}
 					break;
 
 				case 'info_priority':
