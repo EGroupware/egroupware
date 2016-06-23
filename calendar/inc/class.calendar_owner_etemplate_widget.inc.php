@@ -155,7 +155,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 					$account_options = $options + array('account_type' => $a_type);
 					$_results += Api\Accounts::link_query($query,$account_options);
 				}
-				$_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
+				if (!$options['exec']['nocheckgrants']) $_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
 			}
 			else if ($data['app'] && Link::get_registry($data['app'], 'query'))
 			{
@@ -209,7 +209,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		{
 			$resource = $bo->resources[substr($id, 0,1)];
 			$label = Link::title($resource['app'], substr($id,1));
-			
+
 			// Could not get via link, try via resources info
 			if($label === false)
 			{

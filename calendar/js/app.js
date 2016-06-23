@@ -1060,7 +1060,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			start: content.start,
 			end: content.end,
 			duration: content.duration,
-			whole_day: content.whole_day
+			whole_day: content.whole_day,
+			nocheckgrants: true
 		}});
 	},
 
@@ -2030,7 +2031,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				);
 
 				var loading = false;
-							
+
 
 				var value = [];
 				state.state.first = view.start_date(state.state).toJSON();
@@ -2423,7 +2424,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			{
 				view.etemplates[i].resize();
 			}
-			
+
 			// If we need to fetch data from the server, it will hide the loader
 			// when done but if everything is in the cache, hide from here.
 			if(!loading)
@@ -2433,7 +2434,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					egw.loading_prompt(this.appname,false);
 				},this),500);
 			}
-			
+
 			return;
 		}
 		// old calendar state handling on server-side (incl. switching to and from listview)
