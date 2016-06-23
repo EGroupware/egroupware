@@ -904,7 +904,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				}
 				ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." getBodyPreferenceBestMatch: ".array2string($bpReturnType));
 				// set the protocoll class
-				$output->asbody = new SyncBaseBody();
+				$output->asbody = new SyncBaseBodyCloseStream();
 
 				// return full mime-message without any (charset) conversation directly as stream
 				if ($bpReturnType==SYNC_BODYPREFERENCE_MIME)
@@ -1253,7 +1253,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$this->mail->reopen($folder);
 		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
-		$SIOattachment = new SyncItemOperationsAttachment();
+		$SIOattachment = new SyncItemOperationsAttachmentCloseStream();
 		fseek($attachment['attachment'], 0, SEEK_SET);	// z-push requires stream seeked to start
 		$SIOattachment->data = $attachment['attachment'];
 		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": $fid (attname: '$attname') Data:".$attachment['attachment']);
@@ -2081,5 +2081,27 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			mkdir($dir);
 		}
 		return $dir.'/'.$dev_id.'.hashes';
+	}
+}
+
+/**
+ * Extend SyncBaseBody to close streams on destruction to free memory
+ */
+class SyncBaseBodyCloseStream extends SyncBaseBody
+{
+	function __destruct()
+	{
+		if (is_resource($this->data)) fclose($this->data);
+	}
+}
+
+/**
+ * Extend SyncItemOperationsAttachment to close streams on destruction to free memory
+ */
+class SyncItemOperationsAttachmentCloseStream extends SyncItemOperationsAttachment
+{
+	function __destruct()
+	{
+		if (is_resource($this->data)) fclose($this->data);
 	}
 }
