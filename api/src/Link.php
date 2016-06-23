@@ -1127,6 +1127,9 @@ class Link extends Link\Storage
 				case 'name':
 					$reg[$name] = $app;
 					break;
+				case 'entry':
+					$reg[$name] = $app;
+					break;
 				case 'icon':
 					if (isset($GLOBALS['egw_info']['apps'][$app]['icon']))
 					{

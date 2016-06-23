@@ -67,6 +67,7 @@ actions...	common	en	Actions...
 active	common	en	Active
 active directory requires ssl or tls to change passwords!	common	en	Active directory requires SSL or TLS to change passwords!
 add	common	en	Add
+add	%1	common	en	Add %1
 add %1 category for	common	en	Add %1 category for
 add a new column (after the existing ones)	common	en	Add a new column
 add a new contact	common	en	Add a new contact
