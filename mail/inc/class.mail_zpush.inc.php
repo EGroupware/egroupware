@@ -1036,24 +1036,24 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$output->read = $stat["flags"];
 
 			$output->flag = new SyncMailFlags();
-			if ($this->messages[$id]['flagged'] == 1)
+			if ($stat['flagged'] == 1)
 			{
 				$output->flag->flagstatus = 2;
 				//$output->flag->flagtype = "Flag for Follow up";
 			} else {
 				$output->flag->flagstatus = 0;
 			}
-			if ($this->messages[$id]['answered'])
+			if ($stat['answered'])
 			{
 				$output->lastverexecuted = AS_REPLYTOSENDER;
 			}
-			elseif ($this->messages[$id]['forwarded'])
+			elseif ($stat['forwarded'])
 			{
 				$output->lastverexecuted = AS_FORWARD;
 			}
-			$output->subject = $this->messages[$id]['subject'];
-			$output->importance = $this->messages[$id]['priority'] > 3 ? 0 :
-				($this->messages[$id]['priority'] < 3 ? 2 : 1) ;
+			$output->subject = $stat['subject'];
+			$output->importance = $stat['priority'] > 3 ? 0 :
+				($stat['priority'] < 3 ? 2 : 1) ;
 			$output->datereceived = $this->mail->_strtotime($headers['DATE'],'ts',true);
 //error_log(__METHOD__.__LINE__.' To:'.$headers['TO']);
 			$output->to = $headers['TO'];
@@ -1064,8 +1064,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if (isset($headers['REPLY_TO']) && $headers['REPLY_TO']) $output->reply_to = ($headers['REPLY_TO']?$headers['REPLY_TO']:null);
 
 			$output->messageclass = "IPM.Note";
-			if (stripos($this->messages[$id]['mimetype'],'multipart')!== false &&
-				stripos($this->messages[$id]['mimetype'],'signed')!== false)
+			if (stripos($stat['mimetype'],'multipart')!== false &&
+				stripos($stat['mimetype'],'signed')!== false)
 			{
 				$output->messageclass = "IPM.Note.SMIME.MultipartSigned";
 			}
@@ -1267,6 +1267,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 	/**
 	 * StatMessage should return message stats, analogous to the folder stats (StatFolder). Entries are:
+	 *
 	 * 'id'	 => Server unique identifier for the message. Again, try to keep this short (under 20 chars)
 	 * 'flags'	 => simply '0' for unread, '1' for read
 	 * 'mod'	=> modification signature. As soon as this signature changes, the item is assumed to be completely
@@ -1274,15 +1275,14 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 *			 time for this field, which will change as soon as the contents have changed.
 	 *
 	 * @param string $folderid
-	 * @param int|array $id event id or array or cal_id:recur_date for virtual exception
+	 * @param int $id id (uid) of message
 	 * @return array
 	 */
 	public function StatMessage($folderid, $id)
 	{
-		$messages = $this->fetchMessages($folderid, NULL, (array)$id);
-		$stat = array_shift($messages);
-		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid','$id') returning ".array2string($stat));
-		return $stat;
+		$messages = $this->fetchMessages($folderid, NULL, $id);
+		//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid','$id') returning ".array2string($messages[$id]));
+		return $messages[$id];
 	}
 
 	/**
@@ -1352,36 +1352,53 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	}
 
 	/**
-	 *  This function is analogous to GetMessageList.
+	 *  Get all messages of a folder with optional cutoffdate
 	 *
-	 *  @ToDo loop over available email accounts
+	 *  @param int $cutoffdate =null timestamp with cutoffdate, default 12 weeks
 	 */
 	public function GetMessageList($folderid, $cutoffdate=NULL)
 	{
-		static $cutdate=null;
-		if (!empty($cutoffdate) && $cutoffdate >0 && (empty($cutdate) || $cutoffdate != $cutdate))  $cutdate = $cutoffdate;
-		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.' for Folder:'.$folderid.' SINCE:'.$cutdate.'/'.date("d-M-Y", $cutdate));
-		if (empty($cutdate))
+		if ($cutoffdate > 0)
 		{
-			$cutdate = Api\DateTime::to('now','ts')-(3600*24*28*3);
-			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' Client set no truncationdate. Using 12 weeks.'.date("d-M-Y", $cutdate));
+			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.' for Folder:'.$folderid.' SINCE:'.$cutoffdate.'/'.date("d-M-Y", $cutoffdate));
 		}
-		return $this->fetchMessages($folderid, $cutdate);
+		else
+		{
+			$cutoffdate = Api\DateTime::to('now','ts')-(3600*24*28*3);
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' Client set no truncationdate. Using 12 weeks.'.date("d-M-Y", $cutoffdate));
+		}
+		return $this->fetchMessages($folderid, $cutoffdate);
 	}
 
+	/**
+	 * Fetch headers for one or all mail of a folder using optional cutoffdate
+	 *
+	 * Headers of last fetchMessage call of complate folder are cached in static $headers,
+	 * to allow to use them without fetching them again.
+	 * Next call clears cache
+	 *
+	 * @param int $folderid
+	 * @param int $cutoffdate timestamp with cutoffdate
+	 * @param string $_id =null uid of single message to fetch
+	 * @return array uid => array StatMessage($folderid, $_id)
+	 */
 	private function fetchMessages($folderid, $cutoffdate=NULL, $_id=NULL)
 	{
+		static $headers = array();
+
 		if ($this->debugLevel>1) $gstarttime = microtime (true);
 		//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__);
 		$rv_messages = array();
 		// if the message is still available within the class, we use it instead of fetching it again
-		if (is_array($_id) && count($_id)==1 && is_array($this->messages) && isset($this->messages[$_id[0]]) && is_array($this->messages[$_id[0]]))
+		if ($_id && isset($headers[$_id]) && is_array($headers[$_id]))
 		{
 			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." the message ".$_id[0]." is still available within the class, we use it instead of fetching it again");
-			$rv_messages = array('header'=>array($this->messages[$_id[0]]));
+			$rv_messages = array('header'=>array($headers[$_id]));
 		}
-		if (empty($rv_messages))
+		else
 		{
+			$headers = array();	// clear cache to not use too much memory
+
 			if ($this->debugLevel>1) $starttime = microtime (true);
 			$this->_connect($this->account);
 			if ($this->debugLevel>1)
@@ -1418,7 +1435,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		foreach ((array)$rv_messages['header'] as $k => $vars)
 		{
 			if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ID to process:'.$vars['uid'].' Subject:'.$vars['subject']);
-			$this->messages[$vars['uid']] = $vars;
+			$headers[$vars['uid']] = $vars;
 			if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' MailID:'.$k.'->'.array2string($vars));
 			if (!empty($vars['deleted'])) continue; // cut of deleted messages
 			if ($cutoffdate && $vars['date'] < $cutoffdate) continue; // message is out of range for cutoffdate, ignore it
@@ -1724,23 +1741,22 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$account = $folder = null;
 		$this->splitID($folderid, $account, $folder);
 		if (is_numeric($account)) $type = 'mail';
-        ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": on $folderid -> $folder ($account) type: ". $type);
+
 		if ($type != 'mail') return false;
 
 		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 
-		$changes = array();
-        ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": on $folderid ($folder) stat: ". $syncstate);
         $this->mail->reopen($folder);
-        $status = $this->mail->getFolderStatus($folder,$ignoreStatusCache=true);
-        if (!$status) {
+
+		if (!($status = $this->mail->getFolderStatus($folder,$ignoreStatusCache=true)))
+		{
             ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": could not stat folder $folder ");
             return false;
-        } else {
-            $syncstate = "M:". $status['messages'] ."-R:". $status['recent'] ."-U:". $status['unseen']."-NUID:".$status['uidnext']."-UIDV:".$status['uidvalidity'];
         }
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' called with ('.$folderid.', ....) returning '.array2string($syncstate));
-		return $changes;
+		$syncstate = "M:". $status['messages'] ."-R:". $status['recent'] ."-U:". $status['unseen']."-NUID:".$status['uidnext']."-UIDV:".$status['uidvalidity'];
+
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($folderid, ...) $folder ($account) returning ".array2string($syncstate));
+		return array();
 	}
 
 	/**
@@ -2076,10 +2092,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		{
 			return STATE_DIR.$dev_id.'/'.$dev_id.'.hashes';
 		}
-		if (!file_exists($dir = activesync_statemachine::getDeviceDirectory($dev_id)))
-		{
-			mkdir($dir);
-		}
+		$dir = activesync_statemachine::getDeviceDirectory($dev_id);
+
 		return $dir.'/'.$dev_id.'.hashes';
 	}
 }
