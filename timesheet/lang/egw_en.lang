@@ -136,6 +136,7 @@ timesheet csv export	timesheet	en	TimeSheet CSV export
 timesheet csv import	timesheet	en	TimeSheet CSV import
 timesheet fields:	timesheet	en	TimeSheet fields:
 timesheet id	timesheet	en	TimeSheet ID
+timesheet list	timesheet	en	Time Sheet list
 timesheet modified by %1 at %2	timesheet	en	TimeSheet modified by %1 at %2
 timesheet openoffice export	timesheet	en	TimeSheet OpenOffice export
 timesheet status-%1 '%2' added.	timesheet	en	TimeSheet status-%1 '%2' added.
