@@ -1098,7 +1098,7 @@ class emailadmin_wizard
 					catch (Horde_Imap_Client_Exception $e)
 					{
 						_egw_log_exception($e);
-						$tpl->set_validation_error('acc_imap_admin_username', $msg=lang($e->getMessage()));
+						$tpl->set_validation_error('acc_imap_admin_username', $msg=lang($e->getMessage()).($e->details?', '.lang($e->details):''));
 						$msg_type = 'error';
 						$content['tabs'] = 'emailadmin.account.imap';	// should happen automatic
 						break;
