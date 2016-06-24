@@ -807,15 +807,13 @@ class mail_ui
 	{
 		//Change the Mail object to related profileId
 		$this->changeProfile($_acc_id);
-
-		if($this->mail_bo->icServer->subscribeMailbox($_folderName, $_status))
-		{
+		try{
+			$this->mail_bo->icServer->subscribeMailbox($_folderName, $_status);
 			$this->mail_bo->resetFolderObjectCache($_acc_id);
 			$this->ajax_reloadNode($_acc_id,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
-		}
-		else
-		{
-			error_log(__METHOD__.__LINE__."()". lang('Folder %1 %2 failed!',$_folderName,$_status?'subscribed':'unsubscribed'));
+		} catch (Horde_Imap_Client_Exception $ex) {
+			error_log(__METHOD__.__LINE__."()". lang('Folder %1 %2 failed because of %3!',$_folderName,$_status?'subscribed':'unsubscribed', $ex));
+			Framework::message(lang('Folder %1 %2 failed!',$_folderName,$_status));
 		}
 	}
 
