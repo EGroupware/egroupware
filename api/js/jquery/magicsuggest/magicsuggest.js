@@ -568,7 +568,7 @@
             self._processSuggestions();
         };
 
-		/**
+        /**
 		 * Set the maximum allowed selections
 		 * @param {integer} name
 		 */
@@ -576,7 +576,7 @@
 		{
 			cfg.maxSelection = max;
 		};
-		
+
         /**
          * Sets the name for the input field so it can be fetched in the form
          * @param name
@@ -644,7 +644,7 @@
         {
             cfg.dataUrlParams = $.extend({},params);
         };
-		
+
         /**********  PRIVATE ************/
         var _selection = [],      // selected objects
             _comboItemHeight = 0, // height for each combo item.
@@ -1061,9 +1061,9 @@
 							if (cfg.allowFreeEntries === true){
 								selectedItemEl.dblclick($.proxy(handlers._onTagEditTriggerDblClick, ref));
 							}
-                        }
+						}
                     }
-					
+
                     items.push(selectedItemEl);
                 });
                 ms.selectionContainer.prepend(items);
@@ -1082,12 +1082,12 @@
                 });
                 ms._valueContainer.appendTo(ms.selectionContainer);
 
-                if(cfg.selectionPosition === 'inner' && !cfg.selectionContainer && ms.container.is(':visible')) {
+                if(cfg.selectionPosition === 'inner' && !cfg.selectionContainer && (ms.container.is(':visible')||ms.getValue().length>0)) {
 					var inputPadding = ms.input.outerWidth(true) - ms.input.width();
-                    ms.input.width(0);
+					ms.input.width(0);
 					inputOffset = Math.max(0,ms.input.offset().left - ms.selectionContainer.offset().left);
 					w = ms.container.width() - inputOffset - (cfg.hideTrigger ? inputPadding : 42);
-					ms.input.width(w);
+                    ms.input.width(w);
                 }
 
                 if(_selection.length === cfg.maxSelection){
@@ -1229,7 +1229,7 @@
                     }
                 }
                 return true;
-			}
+            }
         };
 
         var handlers = {
@@ -1290,10 +1290,10 @@
              * Triggered when focusing on the container div. Will focus on the input field instead.
              * @private
              */
-             _onFocus: function() {
+            _onFocus: function() {
 				if (!_cntInMf)
 				{
-					ms.input.focus();
+                ms.input.focus();
 				}
 				else
 				{
@@ -1500,8 +1500,8 @@
             _onTagTriggerClick: function(e) {
                 ms.removeFromSelection($(e.currentTarget).data('json'));
             },
-			
-			/**
+
+            /**
 			 * Triggerd when double clicking upon selected item in order to edit its content
 			 * @param e
 			 * @private
@@ -1516,7 +1516,7 @@
 					_cntInMf = true; // item is in modification mode
 				}
 			},
-			
+
             /**
              * Triggered when clicking on the small trigger in the right
              * @private
