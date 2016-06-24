@@ -2897,6 +2897,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				else if(typeof framework !== 'undefined')
 				{
 					framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
+					egw.loading_prompt('calendar',false)
+
 				}
 			}, this,null
 		);
