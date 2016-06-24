@@ -203,23 +203,33 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		);
 
 		$messagelist = array();
-		foreach ($this->calendar->search($filter) as $event)
+		// reading events in chunks of 100, to keep memory down for huge calendars
+		$num_rows = 100;
+		for($start=0; ($events = $this->calendar->search($filter+array(
+			'offset'   => $start,
+			'num_rows' => $num_rows,
+		))); $start += $num_rows)
 		{
-			if ($not_uids && in_array($event['uid'], $not_uids)) continue;
-			$messagelist[] = $this->StatMessage($id, $event);
-
-			// add virtual exceptions for recuring events too
-			// (we need to read event, as get_recurrence_exceptions need all infos!)
-/*			if ($event['recur_type'] != calendar_rrule::NONE)// && ($event = $this->calendar->read($event['id'],0,true,'server')))
+			foreach ($events as $event)
 			{
+				if ($not_uids && in_array($event['uid'], $not_uids)) continue;
+				$messagelist[] = $this->StatMessage($id, $event);
 
-				foreach($this->calendar->so->get_recurrence_exceptions($event,
-					Api\DateTime::$server_timezone->getName(), $cutoffdate, 0, 'all') as $recur_date)
+				// add virtual exceptions for recuring events too
+				// (we need to read event, as get_recurrence_exceptions need all infos!)
+	/*			if ($event['recur_type'] != calendar_rrule::NONE)// && ($event = $this->calendar->read($event['id'],0,true,'server')))
 				{
-					$messagelist[] = $this->StatMessage($id, $event['id'].':'.$recur_date);
-				}
-			}*/
+
+					foreach($this->calendar->so->get_recurrence_exceptions($event,
+						Api\DateTime::$server_timezone->getName(), $cutoffdate, 0, 'all') as $recur_date)
+					{
+						$messagelist[] = $this->StatMessage($id, $event['id'].':'.$recur_date);
+					}
+				}*/
+			}
+			if (count($events) < $num_rows) break;
 		}
+		//error_log(__METHOD__."($id, $cutoffdate, ".array2string($not_uids).") type=$type, user=$user returning ".count($messagelist)." messages ".function_backtrace());
 		return $messagelist;
 	}
 
