@@ -3684,9 +3684,8 @@ jQuery.extend(app.classes.calendar,{
 			date =  date.getUTCFullYear() + sprintf('%02d',date.getUTCMonth()+1) + sprintf('%02d',date.getUTCDate());
 		}
 
-		// If the owner is not set, 0, or the current user, don't bother adding it
-		var state_owner = app.calendar ? app.calendar.state.owner.toString() || '' : '';
-		var _owner = (owner && owner.toString() != '0' && owner !== state_owner) ? owner.toString() : '';
+	// If the owner is not set, 0, or the current user, don't bother adding it
+		var _owner = (owner && owner.toString() != '0') ? owner.toString() : '';
 		if(_owner == egw.user('account_id'))
 		{
 			_owner = '';
