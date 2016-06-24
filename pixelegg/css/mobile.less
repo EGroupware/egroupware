@@ -40,7 +40,7 @@
 			padding-top:15px;
 		}
 		div.egw_fw_mobile_popup_appHeader {
-			display: none !important;
+			display: block !important;
 			height: 32px !important;
 			background-size	: 2px;
 			font-size: 150% !important;
@@ -123,7 +123,7 @@
 			background-repeat: no-repeat;
 			z-index: 1000;
 			padding-right: 5px;
-			top:2px;
+			top:-7px;
 			left: 10px;
 			background-position: 3px 7px;
 			position: fixed;
@@ -150,6 +150,7 @@
 				position:absolute;
 				.egw_fw_logout {
 					display:inline-block;
+					margin-left:60px;
 					a#topmenu_logout{
 						background-image: url(../images/logout.png);
 						background-repeat: no-repeat;
@@ -160,7 +161,7 @@
 						background-position: center;
 					}
 				}
-
+				#egw_fw_appsToggle {display: none;}
 				div.egw_fw_ui_tabs_header{
 					max-height: 60px;
 					width: 60%;
@@ -287,6 +288,7 @@
 				height:60px;
 				z-index:1000;
 				display: inline-block;
+				float:right;
 				span.avatar {
 					display: inline-block;
 					float:left;
