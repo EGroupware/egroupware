@@ -279,7 +279,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			.on("load", function() {jQuery('.loading',this.container).remove();})
 		// Keep focus when selecting from the list
 			.on("selectionchange", function() {
-				if(document.activeElement === document.body || 
+				if(document.activeElement === document.body ||
 					widget.div.has(document.activeElement).length > 0)
 				{
 					jQuery('input',this.container).focus();
@@ -481,7 +481,9 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 	* @returns {Boolean}
 	*/
 	_keyup: function(e, taglist, event) {
-		if(event.which === jQuery.ui.keyCode.ENTER && taglist.combobox.find('.ms-res-item.ms-res-item-active').length==0)
+		if(event.which === jQuery.ui.keyCode.ENTER
+				&& taglist.combobox.find('.ms-res-item.ms-res-item-active').length==0
+				&& this._type !== 'taglist-email')
 		{
 			// Change keycode to abort the validation process
 			// This means enter does not add a tag
