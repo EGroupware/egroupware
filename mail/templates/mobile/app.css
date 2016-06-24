@@ -202,7 +202,6 @@ table tr.attachmentRow > td > img {
   overflow: auto;
 }
 #popupattachmentDIV {
-  position: top;
   background-color: #efefdf;
   bottom: 0px;
   min-height: 80px;
@@ -904,9 +903,6 @@ body {
 #mail-index div#mail-index_nm div.nextmatch_header div.filters select {
   margin-top: 9px;
 }
-#mail-index div#mail-index_nm div.nextmatch_header div.filters input#mail-index_search {
-  /*height: 20px !important;*/
-}
 #mail-index div#mail-index_nm .egwGridView_outer {
   margin-right: 10px;
 }
@@ -977,15 +973,6 @@ body {
 #            #                               #
 #            #                               #
 ############################################## */
-.egw_fw_ui_category_content {
-  /*new mail in FOlder
-    span.standartTreeRow b {color: @egw_color_2_a;}
-  */
-  /*move Mail*/
-  /*    .draggedOver {
-        background-color: @color_hint;
-    }*/
-}
 .egw_fw_ui_category_content span#mail-tree_target {
   max-height: 50%;
 }
@@ -1204,11 +1191,7 @@ body {
 #mail-display {
   min-height: 768px;
   padding: 5px;
-  /*.mailDisplayHeaderSection{*/
-  /*top: 0;*/
-  /*position: relative;*/
   /*Toolbar*/
-  /*}*/
 }
 #mail-display .et2_toolbar,
 #mail-display #mail-display_toolbar,
@@ -1217,9 +1200,7 @@ body {
   background-color: transparent;
   color: #000000;
   clear: both;
-  /*            padding: 5px 3px;*/
   height: 36px;
-  /*display: -webkit-box;*/
   /*OPEN SINGLE WINDOW AFTER CLICK ON MAIL*/
 }
 #mail-display .et2_toolbar div.et2_toolbar_actionlist,
@@ -1528,8 +1509,6 @@ div.ui-toolbar-menulist {
   border: 1px solid rgba(0, 0, 0, 0.15);
 }
 .et2_toolbar_actionlist .et2_toolbar-dropdown {
-  /*            background: @gray_10 !important;
-            background-color: @gray_10 !important;*/
   margin: -4px 5px 2px 1px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -1833,7 +1812,6 @@ A.sieveRowInActive {
   overflow: auto;
 }
 #popupattachmentDIV {
-  position: top;
   background-color: #efefdf;
   bottom: 0px;
   min-height: 80px;
@@ -1845,8 +1823,6 @@ A.sieveRowInActive {
 pre {
   white-space: pre-wrap;
   /* Mozilla, since 1999 */
-  white-space: -pre-wrap;
-  /* Opera 4-6 */
   white-space: -o-pre-wrap;
   /* Opera 7 */
   width: 99%;
@@ -2084,6 +2060,7 @@ input[type=button] {
   background-image: -o-linear-gradient(top, #189800, #189800);
   background-image: linear-gradient(top, #189800, #189800);
   background-repeat: repeat-x;
+  color: white;
 }
 #mail-index_toolbar button[id*="toolbar-composeasnew"]:hover img[src$="svg"],
 #mail-index_toolbar button[id*="toolbar-reply"]:hover img[src$="svg"],
@@ -2177,6 +2154,7 @@ input[type=button] {
   background-image: -o-linear-gradient(top, #AE1D00, #AE1D00);
   background-image: linear-gradient(top, #AE1D00, #AE1D00);
   background-repeat: repeat-x;
+  color: white;
 }
 #mail-index_toolbar button[id*="toolbar-unflagged"]:hover img[src$="svg"],
 #mail-index_toolbar button[id*="toolbar-delete"]:hover img[src$="svg"] {
@@ -2295,43 +2273,6 @@ input[type=button] {
   background-repeat: repeat-x;
   background-color: #ffc200;
 }
-/*#toolbar-actionbox{.dimension_height_s;}*/
-/*
-h.ui-toolbar-menulistHeader,
-#ui-accordion-toolbar-actionbox-header-0{
-
-    .dimension_height_s;
-    background-color: @gray_50;
-    color: @gray_0;
-    margin:0;
-
-    // little ICON
-    .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
-		margin-top: -11px;
-		color: @gray_0;
-	}
-
-}
-
-// accordion, where Button be placed
-div#toolbar-menulist{
-    background-color: @gray_50;
-    color: @gray_0;
-
-           Elemente
-
-           button {
-                height: 24px !important;
-
-                img[src$="svg"]{
-
-                                .gradient_vertical (@gray_60, @gray_60);
-                                background-color: @gray_100;
-                                }
-
-                }
-
-}*/
 /*AN / To*/
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;

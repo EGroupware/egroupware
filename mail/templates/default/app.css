@@ -199,7 +199,6 @@ table tr.attachmentRow > td > img {
 }
 
 #popupattachmentDIV {
-	position:top;
 	background-color:#efefdf;
 	bottom:0px;
 	min-height:80px;
