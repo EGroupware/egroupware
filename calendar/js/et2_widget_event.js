@@ -624,7 +624,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			}
 			else
 			{
-				timespan = egw.lang('Whole day');
+				timespan = this.egw().lang('Whole day');
 			}
 		}
 		else
