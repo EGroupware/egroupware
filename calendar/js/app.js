@@ -90,7 +90,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	init: function()
 	{
 		// categories have nothing to do with calendar, but eT2 objects loads calendars app.js
-		if (framework && framework.applications.calendar.browser &&
+		if (window.framework && framework.applications.calendar.browser &&
 			framework.applications.calendar.browser.currentLocation.match('menuaction=preferences\.preferences_categories_ui\.index'))
 		{
 			this._super.apply(this, arguments);
@@ -2031,7 +2031,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				);
 
 				var loading = false;
-							
+
 
 				var value = [];
 				state.state.first = view.start_date(state.state).toJSON();
@@ -2424,7 +2424,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			{
 				view.etemplates[i].resize();
 			}
-			
+
 			// If we need to fetch data from the server, it will hide the loader
 			// when done but if everything is in the cache, hide from here.
 			if(!loading)
@@ -2434,7 +2434,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					egw.loading_prompt(this.appname,false);
 				},this),500);
 			}
-			
+
 			return;
 		}
 		// old calendar state handling on server-side (incl. switching to and from listview)

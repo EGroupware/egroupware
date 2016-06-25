@@ -344,13 +344,13 @@ class module_calendar_planner extends Module
 				)).');'
 			. '});});'
 			. '</script>';
+
+			ob_end_clean();
 		}
 		else
 		{
 			$html .= '<div class="message" align="center">'.lang('No owner selected').'</div>';
 		}
-
-		while(@ob_end_clean());
 
 		return $html;
 	}
