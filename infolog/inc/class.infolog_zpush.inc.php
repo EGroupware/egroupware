@@ -210,12 +210,15 @@ class infolog_zpush implements activesync_plugin_write
 		);
 
 		$messagelist = array();
-		if (($infologs =& $this->infolog->search($filter)))
+		// reading tasks in chunks of 100, to keep memory down for huge infologs
+		$filter['num_rows'] = 100;
+		for($filter['start']=0; ($infologs = $this->infolog->search($filter)); $filter['start'] += $filter['num_rows'])
 		{
 			foreach($infologs as $infolog)
 			{
 				$messagelist[] = $this->StatMessage($id, $infolog);
 			}
+			if (count($infologs) < $filter['num_rows']) break;
 		}
 		//error_log(__METHOD__."('$id', $cutoffdate) filter=".array2string($filter)." returning ".count($messagelist).' entries');
 		return $messagelist;
