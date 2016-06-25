@@ -1045,7 +1045,8 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		}
 		catch(Exception $e) {
 			unset($e);
-			// ignore exception, simply set no timezone, as it is optional
+			// z-push (2.3 at least) requires a timezone for recurring events
+			if ($event['recur_type']) $message->timezone = self::UTC_BLOB;
 		}
 
 		// copying timestamps (they are already read in servertime, so non tz conversation)
@@ -1329,6 +1330,11 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	}
 
 	/**
+	 * AS Timezone blob for UTC
+	 */
+	const UTC_BLOB = 'AAAAAAAoAEcATQBUACkAIABHAHIAZQBlAG4AdwBpAGMAaAAgAE0AZQBhAG4AIABUAGkAbQBlADoAIABEAHUAYgBsAGkAAAoAAAAFAAIAAAAAAAAAAAAAAAAoAEcATQBUACkAIABHAHIAZQBlAG4AdwBpAGMAaAAgAE0AZQBhAG4AIABUAGkAbQBlADoAIABEAHUAYgBsAGkAAAMAAAAFAAEAAAAAAAAAxP///w==';
+
+	/**
 	 * Return AS timezone data from given timezone and time
 	 *
 	 * AS spezifies the timezone by the date it changes to dst and back and the offsets.
@@ -1393,6 +1399,8 @@ END:VTIMEZONE
 			'dstendyear' => 0, 'dstendmonth' => 0, 'dstendday' => 0, 'dstendweek' => 0,
 			'dstendhour' => 0, 'dstendminute' => 0, 'dstendsecond' => 0, 'dstendmillis' => 0,
 		);
+
+		if ($tz === 'UTC') return $data;
 
 		$name = $component = is_a($tz,'DateTimeZone') ? $tz->getName() : $tz;
 		if (strpos($component, 'VTIMEZONE') === false) $component = calendar_timezones::tz2id($name,'component');
@@ -1690,12 +1698,14 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		'Pacific/Auckland' => 'MP3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAABAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAFAAMAAAAAAAAAxP///w==',
 		'Australia/Sydney' => 'qP3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAFAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAFAAIAAAAAAAAAxP///w==',
 		'Etc/GMT+3'        => 'TP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==',
+		'UTC'              => calendar_zpush::UTC_BLOB,
 	) as $tz => $sync_blob)
 	{
 		// get as timezone data for a given timezone
 		$ical = calendar_timezones::tz2id($tz,'component');
 		//echo "<pre>".print_r($ical,true)."</pre>\n";
-		$ical_arr = calendar_zpush::ical2array($ical_tz=$ical);
+		$ical_tz = $ical;
+		$ical_arr = calendar_zpush::ical2array($ical_tz);
 		//echo "<pre>".print_r($ical_arr,true)."</pre>\n";
 		$as_tz = calendar_zpush::tz2as($tz);
 		//echo "$tz=<pre>".print_r($as_tz,true)."</pre>\n";
