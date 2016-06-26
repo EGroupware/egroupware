@@ -302,7 +302,8 @@ class StreamWrapper extends LinksParent
 			return true;
 		}
 		// create not existing entry directories on the fly
-		if ($mode[0] != 'r' && !parent::url_stat($dir = Vfs::dirname($url),0) && self::check_extended_acl($dir,Vfs::WRITABLE))
+		if ($mode[0] != 'r' && ($dir = Vfs::dirname($url)) &&
+			!parent::url_stat($dir, 0) && self::check_extended_acl($dir, Vfs::WRITABLE))
 		{
 			self::mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
