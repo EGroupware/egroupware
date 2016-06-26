@@ -6933,7 +6933,7 @@ class Mail
 			case 'vfs':
 				break;
 			case 'egw-data':
-				$message = Link::get_data(parse_url($tmpFileName, PHP_URL_HOST), true);
+				$message = ($host = parse_url($tmpFileName, PHP_URL_HOST)) ? Link::get_data($host, true) : false;
 				break;
 			default:
 				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($tmpFileName);
