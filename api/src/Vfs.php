@@ -1620,7 +1620,7 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		// we require write rights to lock/unlock a resource
 		if (!$path || $update && !$token || $check_writable &&
-			!(self::is_writable($path) || !self::file_exists($path) && self::is_writable(self::dirname($path))))
+			!(self::is_writable($path) || !self::file_exists($path) && ($dir=self::dirname($path)) && self::is_writable($dir)))
 		{
 			return false;
 		}
@@ -2050,7 +2050,7 @@ class Vfs extends Vfs\StreamWrapper
 			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).",$check_is_uploaded_file) returning FALSE !is_uploaded_file()");
 			return false;
 		}
-		if (!(self::is_writable($target) || self::is_writable(self::dirname($target))))
+		if (!(self::is_writable($target) || ($dir = self::dirname($target)) && self::is_writable($dir)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).",$check_is_uploaded_file) returning FALSE !writable");
 			return false;
