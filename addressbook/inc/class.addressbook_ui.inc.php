@@ -1616,7 +1616,7 @@ window.egw_LAB.wait(function() {
 				// Make sure op & wildcard are only valid options
 				$op = $query['advanced_search']['operator'] == $op ? $op : 'AND';
 				unset($query['advanced_search']['operator']);
-				$wildcard = $query['advanced_search']['meth_select'] == $wildcard ? $wildcard : false;
+				$wildcard = $query['advanced_search']['meth_select'] == $wildcard ? $wildcard : '';
 				unset($query['advanced_search']['meth_select']);
 			}
 			//if ($do_email ) $email_only = array('id','owner','tid','n_fn','n_family','n_given','org_name','email','email_home');
