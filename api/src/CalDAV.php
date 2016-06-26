@@ -1332,7 +1332,7 @@ class CalDAV extends HTTP_WebDAV_Server
 						($filename = Vfs::basename($matches[1])) != Vfs::basename($path))
 					{
 						$old_path = $path;
-						if (!Vfs::rename($old_path, $path = Vfs::concat(Vfs::dirname($path), $filename)))
+						if (!($dir = Vfs::dirname($path)) || !Vfs::rename($old_path, $path = Vfs::concat($dir, $filename)))
 						{
 							self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
 							return '403 Forbidden';
@@ -1499,7 +1499,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		if ($i >= 100) return null;
 
-		if (!Vfs::file_exists($dir = Vfs::dirname($path)) && !Vfs::mkdir($dir, 0777, STREAM_MKDIR_RECURSIVE))
+		if (!($dir = Vfs::dirname($path)) || !Vfs::file_exists($dir) && !Vfs::mkdir($dir, 0777, STREAM_MKDIR_RECURSIVE))
 		{
 			error_log(__METHOD__."('$app', $id, ...) failed to create entry dir $dir!");
 			return false;
