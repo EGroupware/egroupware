@@ -1300,7 +1300,7 @@ class Link extends Link\Storage
 		if (($Ok = !file_exists($url) || Vfs::remove($url,true)) && ((int)$app > 0 || $fname))
 		{
 			// try removing the dir, in case it's empty
-			@Vfs::rmdir(Vfs::dirname($url));
+			if (($dir = Vfs::dirname($url))) @Vfs::rmdir($dir);
 		}
 		if (!is_null($current_is_root))
 		{
