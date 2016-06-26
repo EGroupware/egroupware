@@ -277,7 +277,7 @@ class Accounts
 				foreach($account_search[$serial]['data'] as &$account)
 				{
 					// add default description for Admins and Default group
-					if ($account['account_type'] === 'g' && empty($account['account_description']))
+					if ($account['account_type'] === 'g')
 					{
 						self::add_default_group_description($account);
 					}
@@ -379,7 +379,7 @@ class Accounts
 		$data = self::cache_read($id);
 
 		// add default description for Admins and Default group
-		if ($data['account_type'] === 'g' && empty($data['account_description']))
+		if ($data['account_type'] === 'g')
 		{
 			self::add_default_group_description($data);
 		}
@@ -553,17 +553,24 @@ class Accounts
 	 */
 	protected static function add_default_group_description(array &$data)
 	{
-		switch($data['account_lid'])
+		if (empty($data['account_description']))
 		{
-			case 'Default':
-				$data['account_description'] = lang('EGroupware all users group, do NOT delete');
-				break;
-			case 'Admins':
-				$data['account_description'] = lang('EGroupware administrators group, do NOT delete');
-				break;
-			case 'NoGroup':
-				$data['account_description'] = lang('EGroupware anonymous users group, do NOT delete');
-				break;
+			switch($data['account_lid'])
+			{
+				case 'Default':
+					$data['account_description'] = lang('EGroupware all users group, do NOT delete');
+					break;
+				case 'Admins':
+					$data['account_description'] = lang('EGroupware administrators group, do NOT delete');
+					break;
+				case 'NoGroup':
+					$data['account_description'] = lang('EGroupware anonymous users group, do NOT delete');
+					break;
+			}
+		}
+		else
+		{
+			$data['account_description'] = lang($data['account_description']);
 		}
 	}
 
