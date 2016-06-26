@@ -254,7 +254,7 @@ class Vfs extends File
 		{
 			$path .= Api\Vfs::encodePathComponent($filename);
 		}
-		if (!Api\Vfs::file_exists($dir = Api\Vfs::dirname($path)) && !Api\Vfs::mkdir($dir,null,STREAM_MKDIR_RECURSIVE))
+		if (!($dir = Api\Vfs::dirname($path)) || !Api\Vfs::file_exists($dir) && !Api\Vfs::mkdir($dir,null,STREAM_MKDIR_RECURSIVE))
 		{
 			self::set_validation_error($name,lang('Error create parent directory %1!',Api\Vfs::decodePath($dir)));
 			return false;
