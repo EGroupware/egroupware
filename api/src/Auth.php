@@ -504,7 +504,7 @@ class Auth
 	 * Create a password for storage in the accounts table
 	 *
 	 * @param string $password
-	 * @param string $type =null default $GLOBALS['egw_info']['server']['sql_encryption_type']
+	 * @param string $type =null default $GLOBALS['egw_info']['server']['sql_encryption_type'], if valid otherwise blowfish_crypt
 	 * @return string hash
 	 */
 	static function encrypt_sql($password, $type=null)
@@ -527,9 +527,12 @@ class Auth
 				$e_password = md5($password);
 				break;
 
+
+			default:
+				$type = 'blowfisch_crypt';
+				// fall throught
 			// all other types are identical to ldap, so no need to doublicate the code here
 			case 'des':
-			case 'blowish_crypt':	// was for some time a typo in setup
 			case 'crypt':
 			case 'sha256_crypt':
 			case 'sha512_crypt':
@@ -540,11 +543,6 @@ class Auth
 			case 'sha':
 			case 'ssha':
 				$e_password = self::encrypt_ldap($password, $type);
-				break;
-
-			default:
-				self::$error = 'no valid encryption available';
-				$e_password = false;
 				break;
 		}
 		//error_log(__METHOD__."('$password') using '$type' returning ".array2string($e_password).(self::$error ? ' error='.self::$error : ''));
