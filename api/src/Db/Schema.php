@@ -348,7 +348,7 @@ class Schema
 	{
 		unset($aTableDef);	// not used, but required by function signature
 
-		$table_def = $this->GetTableDefinition($sTableName);
+		if (!($table_def = $this->GetTableDefinition($sTableName))) return 0;
 		unset($table_def['fd'][$sColumnName]);
 
 		$aSql = $this->dict->DropColumnSql($sTableName,$sColumnName,$ado_table=$this->_egw2adodb_columndef($table_def));
@@ -369,7 +369,7 @@ class Schema
 		// we create a new table, copy the content and drop the old one
 		if ($this->sType == 'pgsql')
 		{
-			$table_def = $this->GetTableDefinition($sOldTableName);
+			if (!($table_def = $this->GetTableDefinition($sOldTableName))) return 0;
 
 			if ($this->_PostgresHasOldSequence($sOldTableName,True) || count($table_def['pk']) ||
 				count($table_def['ix']) || count($table_def['uc']))
@@ -447,7 +447,7 @@ class Schema
 	 */
 	function AlterColumn($sTableName, $sColumnName, $aColumnDef)
 	{
-		$table_def = $this->GetTableDefinition($sTableName);
+		if (!($table_def = $this->GetTableDefinition($sTableName))) return 0;
 
 		// PostgreSQL: varchar or ascii column shortened, use substring to avoid error if current content is to long
 		if($this->sType == 'pgsql' && in_array($table_def['fd'][$sColumnName]['type'], array('varchar', 'ascii')) &&
