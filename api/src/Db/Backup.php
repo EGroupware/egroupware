@@ -502,7 +502,7 @@ class Backup
 	function db_restore($f, $insert_n_rows=10)
 	{
 		$convert_to_system_charset = true;
-		$table = False;
+		$table = null;
 		$n = 0;
 		$rows = array();
 		while(!feof($f))
