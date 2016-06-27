@@ -23,5 +23,5 @@
 * # run grunt manually after every update, or better uncomment grunt steps in .mrconfig
  
 ### Switching to stable 16.1 branch from 14.x or master
-for d in . * ; do [ -d $d/.git ] && (echo $d; cd $d; git checkout master); done
+for d in . * activesync/vendor/z-push/z-push ; do [ -d $d/.git ] && (echo $d; cd $d; git checkout 16.1); done
 
