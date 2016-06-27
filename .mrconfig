@@ -9,19 +9,21 @@ git_update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/
 jobs = 5
 git_tag = git tag -a $1 -m "$2"
 git_untag = git tag -d $1
+git_branch = git checkout -b $1
 svn_tag = svn cp --parents -m "$2" $(svn info|grep ^URL|cut -f 2 -d ' ') $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "s:/(branches/[0-9.]+|trunk)/:/tags/$1/:")
 svn_untag = svn rm -m "remove tag" $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "s:/(branches/[0-9.]+|trunk)/.*$:/tags/$1/:")
+svn_branch = svn cp --parents -m "$2" $(svn info|grep ^URL|cut -f 2 -d ' ') $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "s:/(branches/[0-9.]+|trunk)/:/branches/$1/:"); svn switch ^/branches/$1/$(svn info|grep ^URL|cut -f 2 -d ' '|sed 's/^.*\///') .
 
 [api/src/Db/ADOdb]
 checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/ADOdb.git
 
 [api/src/Accounts/Ads]
 checkout = svn checkout -q https://svn.code.sf.net/p/adldap/code/trunk/src Ads
-skip = [ $1 = "tag" -o $1 = "untag" ]
+skip = [ $1 = "tag" -o $1 = "untag" -o $1 = "branch" ]
 
 [api/js/ckeditor]
 checkout = svn checkout -q https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
-skip = [ $1 = "tag" -o $1 = "untag" ]
+skip = [ $1 = "tag" -o $1 = "untag" -o $1 = "branch" ]
 
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
