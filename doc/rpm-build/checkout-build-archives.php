@@ -257,7 +257,7 @@ function get_modules_per_repo()
 		$matches = null;
 		if (isset($baseurl))
 		{
-			$line = str_replace("\$(git config --get remote.origin.url|sed 's|/egroupware.git||')", $baseurl, $line);
+			$line = str_replace("\${EGW_REPO_BASE:-\$(git config --get remote.origin.url|sed 's|/egroupware.git||')}", $baseurl, $line);
 		}
 		if ($line && $line[0] == '[' && preg_match('/^\[([^]]*)\]/', $line, $matches))
 		{
