@@ -1,3 +1,18 @@
+egroupware-epl (16.1.20160627) hardy; urgency=low
+
+  * 16.1RC3 third and probably last release candidate for 16.1
+  * eSync: several fixes to improve syncing with Outlook and avoid running out of memory
+  * MySQL/Ubuntu 16.04: switch off sql_mode ONLY_FULL_GROUP_BY enabled in MySQL 5.7+
+  * Mobile: fix error popup when changing application on mobile device in minimal 16.1 install
+  * eSync/Calendar: reading events in chunks of 100, to keep memory down for huge calendars
+  * Mail: Fix mail unsubscribe does not refresh mail tree anymore
+  * CalDAV/InfoLog: do not export stardate > duedate, as some clients (eg. CalDAV Sync for Android) have problems with it
+  * eSync/InfoLog: do not export stardate > duedate, as it crashes Outlook
+  * ImportExport: fix PHP Fatal in import wizard in minimal install
+  * Projectmanager: booking new timesheets on project did not updated total in project sums
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 27 Jun 2016 20:42:37 +0200
+
 egroupware-epl (16.1.20160621) hardy; urgency=low
 
   * eSync: YOU NEED TO RECREATE EXCHANGE ACCOUNTS ON YOUR DEVICES, Z-Push SQL state backend is used now
