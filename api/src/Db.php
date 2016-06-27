@@ -524,6 +524,12 @@ class Db
 				{
 					$this->ServerInfo = $this->Link_ID->ServerInfo();
 					$this->set_capabilities($Type,$this->ServerInfo['version']);
+
+					// switch off MySQL 5.7+ ONLY_FULL_GROUP_BY sql_mode
+					if (substr($this->Type, 0, 5) == 'mysql' && $this->ServerInfo['version'] > 5.7 && $this->ServerInfo['version'] < 10.0)
+					{
+						$this->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))", __LINE__, __FILE__);
+					}
 				}
 				if (!$Ok)
 				{
