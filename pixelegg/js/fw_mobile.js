@@ -610,7 +610,7 @@
 			{
 				this.serializedTabState = serialized;
 
-				egw.jsonq("home.jdots_framework.ajax_tab_changed_state", [data]);
+				egw.jsonq("EGroupware\\Api\\Framework\\Ajax::ajax_tab_changed_state", [data]);
 			}
 		},
 
