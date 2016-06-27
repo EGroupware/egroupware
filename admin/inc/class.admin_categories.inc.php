@@ -95,7 +95,7 @@ class admin_categories
 	public function edit(array $content=null,$msg='')
 	{
 		// read the session, as the global_cats param is stored with it.
-		$appname = $content['appname'] ? $content['appname'] : ($_GET['appname']?$_GET['appname']:categories::GLOBAL_APPNAME);
+		$appname = $content['appname'] ? $content['appname'] : ($_GET['appname']?$_GET['appname']:Api\Categories::GLOBAL_APPNAME);
 		$session = Api\Cache::getSession(__CLASS__.$appname,'nm');
 		unset($session);
 		if (!isset($content))
@@ -395,7 +395,7 @@ class admin_categories
 		foreach($rows as $key => &$row)
 		{
 			$row['owner'] = explode(',',$row['owner']);
-			if(($owner && !in_array($owner, $row['owner'])) || ((string)$query['filter'] === (string)categories::GLOBAL_ACCOUNT && $row['owner'][0] > 0))
+			if(($owner && !in_array($owner, $row['owner'])) || ((string)$query['filter'] === (string)Api\Categories::GLOBAL_ACCOUNT && $row['owner'][0] > 0))
 			{
 				unset($rows[$key]);
 				$count--;
@@ -499,7 +499,7 @@ class admin_categories
 					'row_id'         => 'id',
 					'dataStorePrefix' => 'categories' // Avoid conflict with user list when in admin
 				);
-				$content['nm']['filter'] = $this->appname == 'admin'?categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
+				$content['nm']['filter'] = $this->appname == 'admin'?Api\Categories::GLOBAL_ACCOUNT:$GLOBALS['egw_info']['user']['account_id'];
 			}
 			else
 			{
@@ -620,7 +620,7 @@ class admin_categories
 		));
 	}
 
-	protected function get_actions($appname=categories::GLOBAL_APPNAME) {
+	protected function get_actions($appname=Api\Categories::GLOBAL_APPNAME) {
 
 		$actions = array(
 			'open' => array(        // does edit if allowed, otherwise view

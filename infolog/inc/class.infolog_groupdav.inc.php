@@ -636,7 +636,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			// make sure category is global, as otherwise it will not be transmitted to other users
 			if (!Api\Categories::is_global($task['info_cat']))
 			{
-				$cat_obj = new Api\Categories(categories::GLOBAL_ACCOUNT, 'infolog');
+				$cat_obj = new Api\Categories(Api\Categories::GLOBAL_ACCOUNT, 'infolog');
 				$cat = Api\Categories::read($task['info_cat']);
 				$cat['owner'] = Api\Categories::GLOBAL_ACCOUNT;
 				$cat['access'] = 'public';
