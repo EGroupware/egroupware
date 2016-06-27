@@ -86,6 +86,7 @@ var et2_calendar_owner = (function(){ "use strict"; return et2_taglist_email.ext
 			return label;
 		}
 	},
+
 	getValue: function()
 	{
 		if(this.taglist == null) return null;

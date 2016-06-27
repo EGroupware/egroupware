@@ -1061,7 +1061,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			end: content.end,
 			duration: content.duration,
 			whole_day: content.whole_day,
-			nocheckgrants: true
 		}});
 	},
 

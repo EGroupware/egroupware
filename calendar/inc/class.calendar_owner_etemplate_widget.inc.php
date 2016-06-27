@@ -149,13 +149,9 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			// Handle Api\Accounts seperately
 			if($type == '')
 			{
-				$list = array('accounts', 'owngroups');
-				foreach($list as $a_type)
-				{
-					$account_options = $options + array('account_type' => $a_type);
-					$_results += Api\Accounts::link_query($query,$account_options);
-				}
-				if (!$options['exec']['nocheckgrants']) $_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
+				$account_options = $options + array('account_type' => 'both');
+				$_results += Api\Accounts::link_query($query, $account_options);
+				if (!empty($_REQUEST['checkgrants'])) $_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
 			}
 			else if ($data['app'] && Link::get_registry($data['app'], 'query'))
 			{
