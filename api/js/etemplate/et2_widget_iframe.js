@@ -92,6 +92,7 @@ var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 	set_seamless: function(_seamless) {
 		this.options.seamless = _seamless;
 		this.htmlNode.attr("seamless", _seamless);
+		this.htmlNode.attr("scrolling", _seamless ? 'no' : 'auto');
 	},
 
 	set_value: function(_value) {
