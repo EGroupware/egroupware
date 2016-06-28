@@ -46,6 +46,7 @@
 5 minutes	common	en	5 Minutes
 80 (http)	admin	en	80 (http)
 a pattern to be searched for	common	en	Pattern to be searched for
+a request to the egroupware server returned with an error	common	en	A request to the EGroupware server returned with an error
 about	common	en	About
 about %1	common	en	About %1
 about egroupware	common	en	About EGroupware
@@ -66,8 +67,7 @@ actions	common	en	Actions
 actions...	common	en	Actions...
 active	common	en	Active
 active directory requires ssl or tls to change passwords!	common	en	Active directory requires SSL or TLS to change passwords!
-add	common	en	Add
-add	%1	common	en	Add %1
+add	%1	en	en
 add %1 category for	common	en	Add %1 category for
 add a new column (after the existing ones)	common	en	Add a new column
 add a new contact	common	en	Add a new contact
@@ -91,7 +91,6 @@ admin	common	en	Admin
 administration	common	en	Administration
 advanced search	common	en	Advanced search
 afghanistan	common	en	AFGHANISTAN
-ajax request failed	common	en	Ajax request failed
 albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
 align	common	en	Align
@@ -639,6 +638,7 @@ id	common	en	id
 iespell not detected. click ok to go to download page.	common	en	ieSpell not detected. Click OK to go to download page.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	en	If field is disabled an empty table cell is displayed
 if the clock is enabled would you like it to update it every second or every minute?	common	en	If the clock is enabled would you like it to update it every second or every minute.
+if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	en	If the error persists, contact your administrator for help and ask to check the error-log of the webserver.
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a directory, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	en	If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
@@ -985,6 +985,7 @@ placeholders	common	en	Placeholders
 please %1 by hand	common	en	Please %1 by hand
 please enter a name	common	en	Enter a name!
 please enter table-name first !!!	common	en	Enter table name first!
+please reload the egroupware desktop (f5 / cmd+r).	common	en	Please reload the EGroupware desktop (F5 / Cmd+r).
 please run setup to become current	common	en	Run setup to become current
 please select	common	en	Please select
 please set your global preferences	common	en	Set your global preferences!
@@ -1167,7 +1168,6 @@ server %1 has been added	common	en	Server %1 has been added.
 server answered. processing response...	common	en	Server answered. Processing response...
 server contacted. waiting for response...	common	en	Server contacted. Waiting for response...
 server error	common	en	Server error
-server error log should contain more information about the problem.	common	en	Server error log should contain more information about the problem.
 server is unwilling to perform.	common	en	Server is unwilling to perform.
 server name	common	en	Server name
 session has been killed	common	en	Session has been killed.
@@ -1314,7 +1314,6 @@ total	common	en	Total
 transparant bg for the icons?	common	en	Transparant bg for the icons
 tree	common	en	Tree
 trinidad and tobago	common	en	TRINIDAD AND TOBAGO
-trying it again will usually not help!	common	en	Trying it again will usually not help!
 tu	common	en	Tu
 tuesday	common	en	Tuesday
 tunisia	common	en	TUNISIA
