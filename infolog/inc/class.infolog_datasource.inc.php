@@ -11,6 +11,7 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
 use EGroupware\Api\Link;
 use EGroupware\Api\Acl;
 
@@ -97,9 +98,11 @@ class infolog_datasource extends datasource
 	 * @param array $element source project element representing an InfoLog entry, $element['pe_app_id'] = info_id
 	 * @param int $target target project id
 	 * @param array $extra =null data of target-project, atm not used by the infolog datasource
+	 * @param DateInterval[] $date_offsets = Array() - When copying, a list of date fields
+	 *	and the amount to offset them from the original while copying
 	 * @return array/boolean array(info_id,link_id) on success, false otherwise
 	 */
-	function copy($element,$target,$extra=null)
+	function copy($element,$target,$extra=null,$date_offsets = Array())
 	{
 		unset($extra);	// not used, but required by function signature
 
@@ -118,6 +121,19 @@ class infolog_datasource extends datasource
 		{
 			unset($info[$key]);
 		}
+
+		// Apply date offsets, if any
+		$map = array('planned_start' => 'info_startdate', 'planned_end' => 'info_enddate', 'real_end' => 'info_datecompleted');
+		foreach($map as $offset_field => $info_field)
+		{
+			if($date_offsets[$offset_field] && $info[$info_field])
+			{
+				//error_log($offset_field . ' ' . Api\DateTime::to($info[$info_field]) . ' ' . $date_offsets[$offset_field]->format('%R%a days') . ' ' . date_add(new Api\DateTime($info[$info_field]), $date_offsets[$offset_field]) );
+
+				$info[$info_field] = date_add(new Api\DateTime($info[$info_field]), $date_offsets[$offset_field])->format('ts');
+			}
+		}
+		
 		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
 
 		// link the new infolog against the project and setting info_link_id and evtl. info_from
