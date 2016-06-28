@@ -46,6 +46,7 @@
 5 minutes	common	de	5 Minuten
 80 (http)	admin	de	80 (http)
 a pattern to be searched for	common	de	ein Muster nach dem gesucht werden soll
+a request to the egroupware server returned with an error	common	de	Eine Anfrage an den EGroupware Server ergab einen Fehler
 about	common	de	Über
 about %1	common	de	Über %1
 about egroupware	common	de	Über EGroupware
@@ -66,8 +67,7 @@ actions	common	de	Befehle
 actions...	common	de	Aktionen...
 active	common	de	Aktiv
 active directory requires ssl or tls to change passwords!	common	de	Active Directory benötigt eine SSL oder TLS Verbindung um Passwörter zu ändern!
-add	common	de	Hinzufügen
-add %1	common	de	%1 hinzufügen
+add	%1	de	Hinzufügen
 add %1 category for	common	de	%1 Kategorie hinzufügen für
 add a new column (after the existing ones)	common	de	Neue Spalte hinzufügen (hinter den bestehenden)
 add a new contact	common	de	Neuen Kontakt erstellen
@@ -91,7 +91,6 @@ admin	common	de	Admin
 administration	common	de	Administration
 advanced search	common	de	Erweiterte Suche
 afghanistan	common	de	AFGHANISTAN
-ajax request failed	common	de	Ajax Anfrage fehlgeschlagen
 albania	common	de	ALBANIEN
 algeria	common	de	ALGERIEN
 align	common	de	Ausrichtung
@@ -637,6 +636,7 @@ id	common	de	Id
 iespell not detected. click ok to go to download page.	common	de	ieSpell nicht gefunden. OK klicken um zur Download Seite zu gehen.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
 if the clock is enabled would you like it to update it every second or every minute?	common	de	Möchten Sie bei aktivierter Uhr, dass diese sekündlich aktualisiert wird?
+if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	de	Wenn der Fehler weiterhin auftritt, bitten Sie Ihren Administrator um Hilfe und das Fehler-Protokoll (error-log) des Webservers anzuschauen.
 if there are some images in the background folder you can choose the one you would like to see.	common	de	Wenn mehrere Bilder im Hintergrund Ordner sind können Sie wählen, welches Sie sehen möchten.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
@@ -983,6 +983,7 @@ placeholders	common	de	Platzhalter
 please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
+please reload the egroupware desktop (f5 / cmd+r).	common	de	Bitte laden Sie die EGroupware Oberfläche neu (F5 / Cmd+r).
 please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
 please select	common	de	Bitte wählen
 please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
@@ -1165,7 +1166,6 @@ server %1 has been added	common	de	Server %1 wurde zugefügt
 server answered. processing response...	common	de	Server antwortet. Bearbeite Antwort...
 server contacted. waiting for response...	common	de	Server kontaktiert. Warte auf Antwort...
 server error	common	de	Serverfehler
-server error log should contain more information about the problem.	common	de	Das Fehlerprotokoll des Servers sollte mehr Informationen über das Problem enthalten.
 server is unwilling to perform.	common	de	Server ist zur Ausführung nicht bereit.
 server name	common	de	Server Name
 session has been killed	common	de	Session wurde beendet
@@ -1312,7 +1312,6 @@ total	common	de	Gesamt
 transparant bg for the icons?	common	de	Transparenter Hintergrund für Symbole
 tree	common	de	Baum
 trinidad and tobago	common	de	TRINIDAD AND TOBAGO
-trying it again will usually not help!	common	de	Es nochmal zu versuchen hilft im Allgemeinen nicht!
 tu	common	de	Di
 tuesday	common	de	Dienstag
 tunisia	common	de	TUNISIEN
