@@ -397,7 +397,7 @@ displayed in the top line of the groupbox (legend)	common	de	wird oben in der Um
 distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
 djibouti	common	de	DSCHIBUTI
 do not notify	common	de	Nicht benachrichtigen
-do not notify of these changes	common	de	Keine Benachrichtigung
+do not notify of these changes	common	de	Es werden keine Benachrichtigungen beim Anlegen oder Ändern versendet.
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 do you want to save the changes you made in table %s?	common	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
 do you want to send the message to all selected entries, without further editing?	common	de	Wollen Sie die Nachricht an alle ausgewählten Einträge OHNE weitere Bearbeitung versenden?

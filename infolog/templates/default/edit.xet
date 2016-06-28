@@ -259,7 +259,7 @@
 						<menulist>
 							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.infolog.edit_actions()" options="Actions..."/>
 						</menulist>
-						<checkbox label="Do not notify" id="no_notifications"/>
+						<checkbox label="Do not notify" id="no_notifications" statustext="Do not notify of these changes"/>
 					</hbox>
 					<button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete" background_image="1" span="all"/>
 				</row>
