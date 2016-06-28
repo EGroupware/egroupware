@@ -1447,10 +1447,10 @@ div#ui-datepicker-div {
 .ui-datepicker div.ui-timepicker-div dt.ui_tpicker_minute_label {
   font-size: 0.9em;
 }
-.ui-datepicker div.ui-timepicker-div div.ui_tpicker_hour_slider a.ui-slider-handle {
+.ui-datepicker div.ui-timepicker-div div.ui_tpicker_hour_slider span.ui-slider-handle {
   background-color: #0C5DA5;
 }
-.ui-datepicker div.ui-timepicker-div div.ui_tpicker_minute_slider a.ui-slider-handle {
+.ui-datepicker div.ui-timepicker-div div.ui_tpicker_minute_slider span.ui-slider-handle {
   background-color: #0C5DA5;
 }
 .ui-datepicker div.ui-datepicker-buttonpane {
