@@ -120,9 +120,6 @@ class filemanager_hooks
 	 */
 	static function settings()
 	{
-		$config = Api\Config::read(self::$appname);
-		if (!empty($config['max_folderlinks'])) self::$foldercount = (int)$config['max_folderlinks'];
-
 		$yes_no = array(
 			'no'  => lang('No'),
 			'yes' => lang('Yes')
