@@ -301,7 +301,7 @@ app.classes.admin = AppJS.extend(
 	/**
 	 * Callback to load an etemplate
 	 * 
-	 * @param {Object} data
+	 * @param {Object[]} _data
 	 */
 	_ajax_load_callback: function(_data)
 	{
