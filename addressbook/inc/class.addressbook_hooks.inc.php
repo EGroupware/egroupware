@@ -72,11 +72,13 @@ class addressbook_hooks
 				'Site configuration' => Egw::link('/index.php',array(
 					'menuaction' => 'admin.uiconfig.index',
 					'appname'    => $appname,
+					'ajax'       => 'true',
 				)),
 				'Global Categories'  => Egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
 					'global_cats'=> True,
+					'ajax'       => 'true',
 				)),
 			);
 			// custom fields are not availible in LDAP
