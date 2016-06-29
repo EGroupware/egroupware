@@ -637,10 +637,12 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			if (!Api\Categories::is_global($task['info_cat']))
 			{
 				$cat_obj = new Api\Categories(Api\Categories::GLOBAL_ACCOUNT, 'infolog');
-				$cat = Api\Categories::read($task['info_cat']);
-				$cat['owner'] = Api\Categories::GLOBAL_ACCOUNT;
-				$cat['access'] = 'public';
-				$cat_obj->edit($cat);
+				if (($cat = Api\Categories::read($task['info_cat'])))
+				{
+					$cat['owner'] = Api\Categories::GLOBAL_ACCOUNT;
+					$cat['access'] = 'public';
+					$cat_obj->edit($cat);
+				}
 			}
 			// if replace, remove user of old category from responsible
 			if ($action == 'replace' && $oldTask && $oldTask['info_cat'] &&
