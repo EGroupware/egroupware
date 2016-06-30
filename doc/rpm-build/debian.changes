@@ -1,3 +1,11 @@
+egroupware-epl (16.1.20160630) hardy; urgency=low
+
+  * 16.1 final release
+  * Admin: show new eT2 based pages without iframe, fixes additional scrollbars sometimes shown
+  * Mobile: fix error popup when changing application on mobile device in minimal 16.1 install
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 30 Jun 2016 11:27:35 +0200
+
 egroupware-epl (16.1.20160627) hardy; urgency=low
 
   * 16.1RC3 third and probably last release candidate for 16.1
