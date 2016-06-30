@@ -1858,6 +1858,10 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .long_task .message {
 	height: inherit;
 }
+.long_task .message.error {
+	color: white;
+	background-color: red;
+}
 div.ui-dialog div.ui-dialog-content > div[id] {
 	width: 100%;
 }

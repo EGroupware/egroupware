@@ -3494,13 +3494,26 @@ class mail_compose
 
 		// Actually do the merge
 		$folder = $merged_mail_id = null;
-		$results = $this->mail_bo->importMessageToMergeAndSend(
-			$document_merge, Vfs::PREFIX . $_REQUEST['document'],
-			// Send an extra non-numeric ID to force actual send of document
-			// instead of save as draft
-			array((int)$contact_id, ''),
-			$folder,$merged_mail_id
-		);
+		try
+		{
+			$results = $this->mail_bo->importMessageToMergeAndSend(
+				$document_merge, Vfs::PREFIX . $_REQUEST['document'],
+				// Send an extra non-numeric ID to force actual send of document
+				// instead of save as draft
+				array((int)$contact_id, ''),
+				$folder,$merged_mail_id
+			);
+		}
+		catch (Exception $e)
+		{
+			$contact = $document_merge->contacts->read((int)$contact_id);
+			//error_log(__METHOD__.' ('.__LINE__.') '.' ID:'.$val.' Data:'.array2string($contact));
+			$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
+			$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
+			$response->error(lang('Sending mail to "%1" failed', "$nfn <$email>").
+				"\n".$e->getMessage()
+			);
+		}
 
 		if($results['success'])
 		{
