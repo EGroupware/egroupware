@@ -65,6 +65,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		owner: egw.user('account_id')
 	},
 
+	/**
+	 * These are the keys we keep to set & remember the status, others are discarded
+	 */
 	states_to_save: ['owner','status_filter','filter','cat_id','view','sortby','planner_view','weekend'],
 
 	// If you are in one of these views and select a date in the sidebox, the view
@@ -527,7 +530,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if(!sortable.sortable('instance'))
 		{
 			sortable.sortable({
-				cancel: "#divAppboxHeader, .calendar_calWeekNavHeader, .calendar_plannerHeader",
+				cancel: "#divAppboxHeader, .calendar_calWeekNavHeader, .calendar_calDayColHeader, .calendar_plannerHeader",
 				handle: '.calendar_calGridHeader',
 				//placeholder: "srotable_cal_wk_ph",
 				axis:"y",

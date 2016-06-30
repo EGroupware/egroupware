@@ -306,16 +306,43 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					.css('top', '').css('left','')
 					.appendTo(ui.helper);
 				ui.helper.width(jQuery(this).width());
+
+				// Cancel drag to create, we're dragging an existing event
+				timegrid.drag_create.start = null;
 			})
 			.on('mousemove', function(event) {
 				timegrid._get_time_from_position(event.clientX, event.clientY);
+
+				if(timegrid.drag_create.event && timegrid.drag_create.parent && timegrid.drag_create.end)
+				{
+					var end = jQuery.extend({}, timegrid.gridHover[0].dataset);
+					if(end.date)
+					{
+						timegrid.date_helper.set_year(end.date.substring(0,4));
+						timegrid.date_helper.set_month(end.date.substring(4,6));
+						timegrid.date_helper.set_date(end.date.substring(6,8));
+						if(end.hour)
+						{
+							timegrid.date_helper.set_hours(end.hour);
+						}
+						if(end.minute)
+						{
+							timegrid.date_helper.set_minutes(end.minute);
+						}
+						timegrid.drag_create.end.date = timegrid.date_helper.get_value();
+					}
+					timegrid._drag_update_event();
+				}
 			})
 			.on('mouseout', function(event) {
 				if(timegrid.div.has(event.relatedTarget).length === 0)
 				{
 					timegrid.gridHover.hide();
 				}
-			});
+			})
+			.on('mousedown', jQuery.proxy(this._mouse_down, this))
+			.on('mouseup', jQuery.proxy(this._mouse_up, this));
+		
 		return true;
 	},
 
@@ -1751,6 +1778,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	click: function(_ev)
 	{
 		var result = true;
+		
+		// Drag to create in progress
+		if(this.drag_create.start !== null) return;
 
 		// Is this click in the event stuff, or in the header?
 		if(_ev.target.dataset.id || jQuery(_ev.target).parents('.calendar_calEvent').length)
@@ -1831,6 +1861,67 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	},
 
 	/**
+	 * Mousedown handler to support drag to create
+	 * 
+	 * @param {jQuery.Event} event
+	 */
+	_mouse_down: function(event)
+	{
+		var start = jQuery.extend({},this.gridHover[0].dataset);
+		if(start.date)
+		{
+			// Set parent for event
+			this.drag_create.parent = this.getWidgetById(start.date);
+
+			// Format date
+			this.date_helper.set_year(start.date.substring(0,4));
+			this.date_helper.set_month(start.date.substring(4,6));
+			this.date_helper.set_date(start.date.substring(6,8));
+			if(start.hour)
+			{
+				this.date_helper.set_hours(start.hour);
+			}
+			if(start.minute)
+			{
+				this.date_helper.set_minutes(start.minute);
+			}
+			start.date = this.date_helper.get_value();
+
+
+			this.gridHover.css('cursor', 'ns-resize');
+		}
+		return this._drag_create_start(start);
+	},
+
+	/**
+	 * Mouseup handler to support drag to create
+	 *
+	 * @param {jQuery.Event} event
+	 */
+	_mouse_up: function(event)
+	{
+		var end = jQuery.extend({}, this.gridHover[0].dataset);
+		if(end.date)
+		{
+			this.date_helper.set_year(end.date.substring(0,4));
+			this.date_helper.set_month(end.date.substring(4,6));
+			this.date_helper.set_date(end.date.substring(6,8));
+			if(end.hour)
+			{
+				this.date_helper.set_hours(end.hour);
+			}
+			if(end.minute)
+			{
+				this.date_helper.set_minutes(end.minute);
+			}
+			end.date = this.date_helper.get_value();
+		}
+
+		this.gridHover.css('cursor', '');
+		return this._drag_create_end(end);
+	},
+
+	/**
 	 * Get time from position for drag and drop
 	 *
 	 * This does not return an actual time on a clock, but finds the closest
@@ -1878,6 +1969,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					height: $node.css('padding-bottom')
 				});
 				day = node;
+				this.gridHover
+					.attr('data-non_blocking','true');
 				break;
 			}
 			if($node.hasClass('calendar_calDayCol'))

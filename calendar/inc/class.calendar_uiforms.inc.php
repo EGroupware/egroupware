@@ -203,12 +203,14 @@ class calendar_uiforms extends calendar_ui
 				'id'	=> 1,
 			);
 		}
+		$duration = isset($_GET['duration']) ? (int)$_GET['duration'] : (int) $this->bo->cal_prefs['defaultlength']*60;
+		$end = isset($_GET['end']) ? Api\DateTime::to($_GET['end'], 'ts') : $start + $duration;
 		return array(
 			'participant_types' => $participant_types,
 			'participants' => $participants,
 			'owner' => $owner,
 			'start' => $start,
-			'end'   => $start + (int) $this->bo->cal_prefs['defaultlength']*60,
+			'end'   => $end,
 			'tzid'  => $this->bo->common_prefs['tz'],
 			'priority' => 2,	// normal
 			'public'=> $this->cal_prefs['default_private'] ? 0 : 1,

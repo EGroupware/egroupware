@@ -129,10 +129,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			this._drawGrid();
 		}
 
-		// Actions may be set on a parent, so we need to explicitly get in here
-		// and get ours
-		this._link_actions(this.options.actions || this._parent.options.actions || []);
-
 		// Automatically bind drag and resize for every event using jQuery directly
 		// - no action system -
 		var planner = this;
@@ -263,13 +259,26 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					planner.vertical_bar
 						.html('<span>'+date(egw.preference('timeformat','calendar') == 12 ? 'h:ia' : 'H:i',formatDate)+'</span>')
 						.show();
+
+					if(planner.drag_create.event && planner.drag_create.parent && planner.drag_create.end)
+					{
+
+						planner.drag_create.end.date = time.toJSON()
+						planner._drag_update_event();
+					}
 				}
 				else
 				{
 					// No (valid) time, just hide
 					planner.vertical_bar.hide();
 				}
-			});
+			})
+			.on('mousedown', jQuery.proxy(this._mouse_down, this))
+			.on('mouseup', jQuery.proxy(this._mouse_up, this));
+
+		// Actions may be set on a parent, so we need to explicitly get in here
+		// and get ours
+		this._link_actions(this.options.actions || this._parent.options.actions || []);
 
 		// Customize and override some draggable settings
 		this.div.on('dragcreate','.calendar_calEvent', function(event, ui) {
@@ -693,12 +702,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			this.widget.value = this.widget._fetch_data();
 
 			this.widget._drawGrid();
-
-			// Update actions
-			if(this.widget._actionManager)
-			{
-				this.widget._link_actions(this.widget._actionManager.children);
-			}
 
 			if(this.trigger)
 			{
@@ -1742,6 +1745,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	{
 		var result = true;
 
+		// Drag to create in progress
+		if(this.drag_create.start !== null) return;
+		
 		// Is this click in the event stuff, or in the header?
 		if(!this.options.readonly && this.gridHeader.has(_ev.target).length === 0 && !jQuery(_ev.target).hasClass('calendar_plannerRowHeader'))
 		{
@@ -1871,6 +1877,59 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		this.date_helper.set_minutes(Math.round(rel_time / (60 * interval))*interval);
 
 		return new Date(this.date_helper.getValue());
+	},
+
+	/**
+	 * Mousedown handler to support drag to create
+	 *
+	 * @param {jQuery.Event} event
+	 */
+	_mouse_down: function(event)
+	{
+		// Get time at mouse
+		if(this.options.group_by === 'month')
+		{
+			var time = this._get_time_from_position(event.clientX, event.clientY);
+		}
+		else
+		{
+			var time = this._get_time_from_position(event.offsetX, event.offsetY);
+		}
+
+		this.div.css('cursor', 'ew-resize');
+
+		// Find the correct row so we know the parent
+		var row = event.target.closest('.calendar_plannerRowWidget');
+		var row_widget = null;
+		for(var i = 0; i < this._children.length && row; i++)
+		{
+			if(this._children[i].div[0] === row)
+			{
+				this.drag_create.parent = this._children[i];
+				break;
+			}
+		}
+		return this._drag_create_start({date: time.toJSON()});
+	},
+
+	/**
+	 * Mouseup handler to support drag to create
+	 *
+	 * @param {jQuery.Event} event
+	 */
+	_mouse_up: function(event)
+	{
+		// Get time at mouse
+		if(this.options.group_by === 'month')
+		{
+			var time = this._get_time_from_position(event.clientX, event.clientY);
+		}
+		else
+		{
+			var time = this._get_time_from_position(event.offsetX, event.offsetY);
+		}
+
+		return this._drag_create_end({date: time.toJSON()});
 	},
 
 	/**
