@@ -427,8 +427,6 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 	/**
 	 * Create or update an event used for feedback while dragging on empty space,
 	 * so user can see something is happening
-	 *
-	 * @param {type} start
 	 */
 	_drag_create_event: function()
 	{
