@@ -26,7 +26,7 @@ var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 			ignore: false,
 			name: "Label",
 			translate: true,
-			type: "string",
+			type: "string"
 		},
 		"needed": {
 			"ignore": true
@@ -49,7 +49,7 @@ var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 			"default": false,
 			description: "Make the iframe compatible to be a fullscreen video player mode",
 			type: "boolean"
-		},
+		}
 	},
 
 	/**
@@ -92,7 +92,6 @@ var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 	set_seamless: function(_seamless) {
 		this.options.seamless = _seamless;
 		this.htmlNode.attr("seamless", _seamless);
-		this.htmlNode.attr("scrolling", _seamless ? 'no' : 'auto');
 	},
 
 	set_value: function(_value) {
