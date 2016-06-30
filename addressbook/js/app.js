@@ -147,7 +147,7 @@ app.classes.addressbook = AppJS.extend(
 			{
 				// No data on the event, we'll have to reload if calendar column is visible
 				// to get the updated information
-				var nm = etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm')
+				var nm = etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm');
 				var pref = nm ? nm._getPreferences() : false;
 				if(pref && pref.visible.indexOf('calendar_calendar') > -1)
 				{
@@ -938,9 +938,8 @@ app.classes.addressbook = AppJS.extend(
 	/**
 	 * Enable/Disable geolocation action items in contextmenu base on address availabilty
 	 *
-	 * @param {action object} egw action
-	 * @param {object} selected action row
-	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected selected rows
 	 * @returns {boolean} return false if no address found
 	 */
 	geoLocation_enabled: function(_action, _selected)
@@ -982,12 +981,10 @@ app.classes.addressbook = AppJS.extend(
 	 * Generate a geo location URL based on geolocation_url in
 	 * site configuration
 	 *
-	 * @param {object} _data
+	 * @param {object} _dest_data
 	 * @param {string} _dest_type type of destination address ('one'| 'two')
 	 * @param {object} _src_data address data to be used as source contact data|coordination object
 	 * @param {string} _src_type type of source address ('browser'|'one'|'two')
-	 *
-	 *
 	 * @returns {Boolean|string} return url and return false if no address
 	 */
 	geoLocationUrl: function (_dest_data, _dest_type,_src_data, _src_type)
@@ -1024,7 +1021,7 @@ app.classes.addressbook = AppJS.extend(
 		{
 			src_param = src_param[0].replace(/{{%rs=/,'');
 			src_param = src_param.replace(/%rs}}/,'');
-			url = url.replace(/{{%rs=.*%rs}}/, src_param)
+			url = url.replace(/{{%rs=.*%rs}}/, src_param);
 		}
 
 		var d_param = url.match(/{{%d=.*%d}}/ig);
@@ -1032,7 +1029,7 @@ app.classes.addressbook = AppJS.extend(
 		{
 			d_param = d_param[0].replace(/{{%d=/,'');
 			d_param = d_param.replace(/%d}}/,'');
-			url = url.replace(/{{%d=.*%d}}/, d_param)
+			url = url.replace(/{{%d=.*%d}}/, d_param);
 		}
 
 		// Replcae placeholders with acctual values
