@@ -129,10 +129,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			this._drawGrid();
 		}
 
-		// Actions may be set on a parent, so we need to explicitly get in here
-		// and get ours
-		this._link_actions(this.options.actions || this._parent.options.actions || []);
-
 		// Automatically bind drag and resize for every event using jQuery directly
 		// - no action system -
 		var planner = this;
@@ -268,13 +264,26 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					planner.vertical_bar
 						.html('<span>'+date(egw.preference('timeformat','calendar') == 12 ? 'h:ia' : 'H:i',formatDate)+'</span>')
 						.show();
+
+					if(planner.drag_create.event && planner.drag_create.parent && planner.drag_create.end)
+					{
+
+						planner.drag_create.end.date = time.toJSON()
+						planner._drag_update_event();
+					}
 				}
 				else
 				{
 					// No (valid) time, just hide
 					planner.vertical_bar.hide();
 				}
-			});
+			})
+			.on('mousedown', jQuery.proxy(this._mouse_down, this))
+			.on('mouseup', jQuery.proxy(this._mouse_up, this));
+
+		// Actions may be set on a parent, so we need to explicitly get in here
+		// and get ours
+		this._link_actions(this.options.actions || this._parent.options.actions || []);
 
 		// Customize and override some draggable settings
 		this.div.on('dragcreate','.calendar_calEvent', function(event, ui) {
@@ -741,12 +750,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			this.widget.value = this.widget._fetch_data();
 
 			this.widget._drawGrid();
-
-			// Update actions
-			if(this.widget._actionManager)
-			{
-				this.widget._link_actions(this.widget._actionManager.children);
-			}
 
 			if(this.trigger)
 			{
@@ -1909,6 +1912,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	{
 		var result = true;
 
+		// Drag to create in progress
+		if(this.drag_create.start !== null) return;
+		
 		// Is this click in the event stuff, or in the header?
 		if(!this.options.readonly && this.gridHeader.has(_ev.target).length === 0 && !jQuery(_ev.target).hasClass('calendar_plannerRowHeader'))
 		{
