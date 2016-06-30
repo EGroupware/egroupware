@@ -736,8 +736,39 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 			switch(response.type)
 			{
 				case 'error':
-					log.append("<div class='message error'>"+response.data+"</div>");
-					break;
+					jQuery("<div class='message error'></div>")
+						.text(response.data)
+						.appendTo(log);
+
+					// Ask to retry / ignore / abort
+					et2_createWidget("dialog", {
+						callback:function(button) {
+							switch(button)
+							{
+								case 'dialog[cancel]':
+									cancel = true;
+									return update.call(index,'');
+								case 'dialog[skip]':
+									// Continue with next index
+									return update.call(index,'');
+								default:
+									// Try again with previous index
+									return update.call(index-1,'');
+							}
+
+						},
+						message: response.data,
+						title: '',
+						buttons: [
+							// These ones will use the callback, just like normal
+							{text: egw.lang("Abort"),id:'dialog[cancel]',},
+							{text: egw.lang("Retry"),id:'dialog[retry]'},
+							{text: egw.lang("Skip"),id:'dialog[skip]', class:"ui-priority-primary", default: true}
+						],
+						dialog_type: et2_dialog.ERROR_MESSAGE
+					}, parent);
+					// Early exit
+					return;
 				default:
 					if(response)
 					{
@@ -755,6 +786,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 				if(typeof parameters != 'object') parameters = [parameters];
 
 				// Async request, we'll take the next step in the callback
+				// We can't pass index = 0, it looks like false and causes issues
 				egw.json(_menuaction, parameters, update, index+1,true,index+1).sendRequest();
 			}
 			else
