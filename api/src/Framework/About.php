@@ -70,21 +70,16 @@ class About
 	function index()
 	{
 		$text_content = str_replace('GPLLINK',self::$knownLicenses['GPL'][0],'
-<p><b>EGroupware is a <a href="GPLLINK" title="read more about open source and the GPL" target="_blank">free</a>
-enterprise ready groupware software</b> for your network. It enables you to manage contacts, appointments, todos
-and many more for your whole business.</p>
-<p><b>EGroupware is a groupware server.</b> It comes with a native web-interface which allowes to access your data
-from any platform all over the planet. Moreover you also have the choice to access the EGroupware server with
-your favorite groupware client (Kontact, Evolution, Outlook, iCal, Lightning) and also with your mobile or PDA
-via eSync.</p>
-<p><b>EGroupware is international.</b> At the time, it supports more than
-<a href="http://community.egroupware.org/languages" target="_blank">25 languages</a> including rtl support.</p>
-<p><b>EGroupware is platform independent.</b> The server runs on Linux, Mac, Windows and many more other operating systems.
-On the client side, all you need is a internet browser such as Chrome, Firefox, Safari or Internet Explorer
-and many more.</p>
-<p><b>EGroupware is developed by <a href="http://www.stylite.de/" target="_blank">Stylite AG</a></b> with contributions
+<p><b>EGroupware is an enterprise ready multilingual groupware solution</b> for your team.
+It enables you to manage and share your e-mail, contacts, appointments, tasks
+and files within your organisation.</p>
+<p>The <b>native web-interface</b> for EGroupware allowes to access your data from any platform wherever you are.
+Chrome, Firefox and Safari are prefered internet browsers for best EGroupware expierience.</p>
+<p><EGroupware is platform independent. The server runs on Linux, Mac, Windows and many more other operating systems.
+EGroupware can be integrated easily into existing authentication solutions such as LDAP or Active Directory.</p>
+<p>EGroupware offers CalDAV, CardDAV, WebDAV and Active Sync for synchronising data to your smartphone or desktop client.</p>
+<p>EGroupware is developed by <a href="http://www.stylite.de/" target="_blank">Stylite AG</a> with contributions
 from community developers.</p>
-<br />
 <p><b>For more information visit the <a href="http://www.egroupware.org" target="_blank">EGroupware Website</a></b></p>');
 
 		// get informations about the applications
