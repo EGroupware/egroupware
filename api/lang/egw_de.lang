@@ -68,7 +68,7 @@ actions...	common	de	Aktionen...
 active	common	de	Aktiv
 active directory requires ssl or tls to change passwords!	common	de	Active Directory benötigt eine SSL oder TLS Verbindung um Passwörter zu ändern!
 add	common	de	Hinzufügen
-add %1	common	de	% hinzufügen
+add %1	common	de	%1 hinzufügen
 add %1 category for	common	de	%1 Kategorie hinzufügen für
 add a new column (after the existing ones)	common	de	Neue Spalte hinzufügen (hinter den bestehenden)
 add a new contact	common	de	Neuen Kontakt erstellen
