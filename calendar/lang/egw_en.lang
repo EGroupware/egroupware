@@ -317,6 +317,7 @@ location, start- and endtimes, ...	calendar	en	Location, start and end times, ..
 mail all participants	calendar	en	Mail all participants
 make freebusy information available to not loged in persons?	calendar	en	Make Free/Busy information available to not logged in persons
 manage mapping	calendar	en	Manage mapping
+mark event as private to hide title and description	calendar	en	Mark event as private to hide title and description
 max. number of entries to show (leave empty for no restriction)	calendar	en	Max. number of entries to show. Leave empty for no restriction.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
 meeting canceled	calendar	en	Meeting canceled

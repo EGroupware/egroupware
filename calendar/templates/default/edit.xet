@@ -210,15 +210,15 @@
 					<description for="start" value="Start" width="88"/>
 					<date-time id="start" needed="1" class="required" onchange="app.calendar.edit_update_participant"/>
 					<description for="duration" value="Duration" id="calendar_edit_duration" />
-					<menulist >
+					<menulist>
 						<menupopup statustext="Duration of the meeting" class="et2_fullWidth" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
 					</menulist>
 					<date-time id="end" onchange="app.calendar.edit_update_participant"/>
 				</row>
 				<row class="dialogHeader2" height="28">
 					<label value="options"/>
-					<checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"/>
-					<checkbox label="Private" id="public" options="0,1"/>
+					<checkbox statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"/>
+					<checkbox label="Private" id="public" options="0,1" statustext="Mark event as private to hide title and description"/>
 					<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
 					<hbox>
 						<label for="priority" value="Priority"/>
@@ -277,7 +277,7 @@
 			<menulist>
 				<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
 			</menulist>
-			<checkbox label="Do not notify" id="no_notifications"/>
+			<checkbox label="Do not notify" id="no_notifications" statustext="Do not notify of these changes"/>
 			<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="timesheet" background_image="1" span="all"/>
 			<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete" background_image="1"/>
 			<textbox type="hidden" id="delete_exceptions"/>

@@ -391,14 +391,16 @@ class resources_bo
 			Link::unlink(0,'resources',$resource['res_id'],'','resources',$old['accessory_of']);
 
 			// Check for resource changing to accessory - move its accessories to resource
-			if($old['accessory_of'] == -1 && $accessories = $this->get_acc_list($resource['res_id']))
+			if($old['accessory_of'] == -1 && ($accessories = $this->get_acc_list($resource['res_id'])))
 			{
 				foreach($accessories as $accessory => $name)
 				{
 					Link::unlink(0,'resources',$accessory,'','resources',$resource['res_id']);
-					$acc = $this->read($accessory);
-					$acc['accessory_of'] = -1;
-					$this->so->save($acc);
+					if (($acc = $this->read($accessory)))
+					{
+						$acc['accessory_of'] = -1;
+						$this->so->save($acc);
+					}
 				}
 			}
 		}
@@ -412,10 +414,12 @@ class resources_bo
 			$accessories = $this->get_acc_list($resource['res_id']);
 			foreach($accessories as $accessory => $name)
 			{
-				$acc = $this->so->read($accessory);
-				$acc['cat_id'] = $resource['cat_id'];
-				$this->so->data = $acc;
-				$this->so->save();
+				if (($acc = $this->so->read($accessory)))
+				{
+					$acc['cat_id'] = $resource['cat_id'];
+					$this->so->data = $acc;
+					$this->so->save();
+				}
 			}
 		}
 
@@ -439,6 +443,7 @@ class resources_bo
 	 *
 	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
 	 * @param int $res_id id of resource
+	 * @return string|false string with error or false on success
 	 */
 	function delete($res_id)
 	{
@@ -448,9 +453,12 @@ class resources_bo
 		}
 
 		// check if we only mark resources as deleted, or really delete them
-		$old = $this->read($res_id);
 		$config = Api\Config::read('resources');
-		if ($config['history'] != '' && $old['deleted'] == null)
+		if (!($old = $this->read($res_id)))
+		{
+			// error is returned at end of function
+		}
+		elseif ($config['history'] != '' && $old['deleted'] == null)
 		{
 			$old['deleted'] = time();
 			$this->save($old);
@@ -459,8 +467,7 @@ class resources_bo
 			foreach($accessories as $acc_id => $name)
 			{
 				// Don't purge already deleted accessories
-				$acc = $this->read($acc_id);
-				if(!$acc['deleted'])
+				if (($acc = $this->read($acc_id)) && !$acc['deleted'])
 				{
 					$acc['deleted'] = time();
 					$this->save($acc);
@@ -474,9 +481,8 @@ class resources_bo
 			$accessories = $this->get_acc_list($res_id, true);
 			foreach($accessories as $acc_id => $name)
 			{
-				if($this->delete($acc_id))
+				if($this->delete($acc_id) && ($acc = $this->read($acc_id)))
 				{
-					$acc = $this->read($acc_id);
 					$acc['accessory_of'] = -1;
 					$this->save($acc);
 				}
@@ -675,7 +681,7 @@ class resources_bo
 								// now decrement this quantity useable
 								$quantity = 1;
 								$this->bocal->so->split_status($part_detail,$quantity);
-								
+
 								$res_info_cache[$resource_id]['useable']-=$quantity;
 							}
 						}

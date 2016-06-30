@@ -1133,9 +1133,9 @@ class timesheet_ui extends timesheet_bo
 				$cat_name = Api\Categories::id2name($settings);
 				$action_msg = lang('changed category to %1', $cat_name);
 				foreach((array)$checked as $n => $id) {
-					$entry = $this->read($id);
-					$entry['cat_id'] = $settings;
-					if($this->save($entry) == 0)
+					if (($entry = $this->read($id)) &&
+						($entry['cat_id'] = $settings) &&
+						$this->save($entry) == 0)
 					{
 						$success++;
 					}

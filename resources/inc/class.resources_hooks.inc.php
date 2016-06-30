@@ -57,7 +57,9 @@ class resources_hooks
 				'Global Categories'  => Egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
-					'global_cats'=> true)),
+					'global_cats'=> true,
+					'ajax' => 'true'
+				)),
 				'Configure Access Permissions' => Egw::link('/index.php',
 					'menuaction=resources.resources_acl_ui.index&ajax=true'),
 				'Custom Fields'=>egw::link('/index.php',

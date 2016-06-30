@@ -90,7 +90,6 @@ class admin_ui
 		{
 			$vars = $_GET;
 			$vars['menuaction'] = $vars['load'];
-			unset($vars['ajax']);
 			unset($vars['load']);
 			$content['iframe'] = Egw::link('/index.php', $vars);
 		}

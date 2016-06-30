@@ -36,6 +36,13 @@ app.classes.admin = AppJS.extend(
 	nm: null,
 
 	/**
+	 * Refarence to div to hold AJAX loadable pages
+	 *
+	 * {et2_box}
+	 */
+	ajax_target: null,
+
+	/**
 	 * Reference to ACL edit dialog (not the list)
 	 */
 	acl_dialog: null,
@@ -82,6 +89,7 @@ app.classes.admin = AppJS.extend(
 			case 'admin.index':
 				var iframe = this.iframe = this.et2.getWidgetById('iframe');
 				this.nm = this.et2.getWidgetById('nm');
+				this.ajax_target = this.et2.getWidgetById('ajax_target');
 				if (iframe)
 				{
 					var self = this;
@@ -130,9 +138,35 @@ app.classes.admin = AppJS.extend(
 			window.open(_url, '_blank');
 			return;
 		}
+		var ajax = false;
 		if (_url)
 		{
-			this.iframe.set_src(_url);
+			// Try to load it without the iframe
+			ajax = _url.match(/ajax=true/);
+			if(ajax)
+			{
+
+				if(this.ajax_target.node.children.length)
+				{
+					// Node has children already?  Check for loading over an
+					// existing etemplate, and remove it first
+					jQuery(this.ajax_target.node.children).each(function() {
+						var old = etemplate2.getById(this.id);
+						if(old) old.clear();
+					});
+					jQuery(this.ajax_target.node).empty();
+				}
+				this.egw.json(
+					framework.activeApp.getMenuaction('ajax_exec'),
+					// It's important that the context is null, or etemplate2
+					// won't load the template properly
+					[_url], this._ajax_load_callback,null, true, this
+				).sendRequest();
+			}
+			else
+			{
+				this.iframe.set_src(_url);
+			}
 		}
 		else
 		{
@@ -140,8 +174,9 @@ app.classes.admin = AppJS.extend(
 			// blank iframe, to not keep something running there
 			this.iframe.getDOMNode().contentDocument.location.href = 'about:blank';
 		}
-		this.iframe.set_disabled(!_url);
-		this.nm.set_disabled(!!_url);
+		this.iframe.set_disabled(!_url || ajax);
+		this.nm.set_disabled(!!_url || ajax);
+		this.ajax_target.set_disabled(!ajax);
 	},
 
 	/**
@@ -264,6 +299,19 @@ app.classes.admin = AppJS.extend(
 	},
 
 	/**
+	 * Callback to load an etemplate
+	 * 
+	 * @param {Object[]} _data
+	 */
+	_ajax_load_callback: function(_data)
+	{
+		if(!_data || _data.type != undefined) return;
+
+		// Insert the content, etemplate will load into it
+		jQuery(this.ajax_target.node).append(_data[0]);
+	},
+
+	/**
 	 * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
 	 *
 	 * @param _url
@@ -276,7 +324,7 @@ app.classes.admin = AppJS.extend(
 		{
 			if (matches)
 			{
-				_url = _url.replace(/menuaction=admin.admin_ui.index/, 'menuaction='+matches[1]).replace(/&(ajax=true|load=[^&]+)/g, '');
+				_url = _url.replace(/menuaction=admin.admin_ui.index/, 'menuaction='+matches[1]).replace(/&(load=[^&]+)/g, '');
 			}
 			this.load(_url);
 			return true;
