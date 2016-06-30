@@ -142,7 +142,7 @@ app.classes.admin = AppJS.extend(
 		if (_url)
 		{
 			// Try to load it without the iframe
-			ajax = _url.match(/ajax=true/);
+			ajax = _url.match(/ajax=true/) && _url.match(/menuaction=/);
 			if(ajax)
 			{
 
@@ -300,7 +300,7 @@ app.classes.admin = AppJS.extend(
 
 	/**
 	 * Callback to load an etemplate
-	 * 
+	 *
 	 * @param {Object[]} _data
 	 */
 	_ajax_load_callback: function(_data)
