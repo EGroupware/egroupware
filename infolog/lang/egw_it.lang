@@ -153,7 +153,6 @@ description	infolog	it	Descrizione
 determines the order the fields are displayed	infolog	it	Determina l'ordine di visualizzazone dei campi
 directory with documents to insert entries	infolog	it	Cartella con documenti per l'inserimento
 disables a status without deleting it	infolog	it	Disabilita lo stato senza cancellarlo
-do not notify of these changes	infolog	it	Non inviare notifiche quando la scheda viene aggiornata
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	it	vuoi una conferma dal responsabile su: accettazione, completamento dei ToDo o entrambe
 do you want a notification if items owned by groups you are part of get updated ?	infolog	it	Vuoi una notifica quando elementi di cui sono proprietari i tuoi gruppi di appartenenza vengono modificati?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	it	Inviare notifica quando ti vengono assegnate delle schede o quando vengono aggiornate.

@@ -143,7 +143,6 @@ description	infolog	es-es	Descripción
 determines the order the fields are displayed	infolog	es-es	determina el orden en el que se muestran los campos
 directory with documents to insert entries	infolog	es-es	Directorio con documentos para insertar entradas
 disables a status without deleting it	infolog	es-es	deshabilita un estado sin eliminarlo
-do not notify of these changes	infolog	es-es	No notificar estos cambios
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	es-es	¿Desea una confirmación del responsable al aceptar, terminar la tarea, o ambos?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	es-es	¿Desea una notificación, si se le asignan elementos o se actualizan los elementos asignados?
 do you want a notification, if items you are responsible for are about to start?	infolog	es-es	¿Desea una notificación, si los elementos de los que usted es responsable van a empezar?
