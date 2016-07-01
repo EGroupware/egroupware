@@ -168,6 +168,21 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					},
 
 					/**
+					 * If dragging to resize an event, abort drag to create
+					 *
+					 * @param {jQuery.Event} event
+					 * @param {Object} ui
+					 */
+					start: function(event, ui)
+					{
+						if(planner.drag_create.start)
+						{
+							// Abort drag to create, we're dragging to resize
+							planner._drag_create_end({});
+						}
+					},
+
+					/**
 					 * Triggered at the end of resizing the calEvent.
 					 *
 					 * @param {event} event
@@ -646,7 +661,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 						// Get its children immediately
 						egw.json(
-							this.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
+							'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
 							['select-cat',',,,calendar,'+cat_id[i]],
 							function(data) {
 								labels = labels.concat(data);
