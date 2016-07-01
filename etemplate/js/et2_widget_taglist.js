@@ -39,7 +39,7 @@ var et2_taglist = et2_selectbox.extend(
 		"select_options": {
 			"type": "any",
 			"name": "Select options",
-			"default": null, //[{id: "a", label: "Alpha"},{id:"b", label: "Beta"}],
+			"default": {}, //[{id: "a", label: "Alpha"},{id:"b", label: "Beta"}],
 			"description": "Internaly used to hold the select options."
 		},
 
@@ -97,7 +97,7 @@ var et2_taglist = et2_selectbox.extend(
 			"description": "The maximum number of items the user can select if multiple selection is allowed."
 		},
 		// Selectbox attributes that are not applicable
-		"multiple": { ignore: true},
+		"multiple": { default: true},
 		"rows": { ignore: true},
 		"tags": { ignore: true},
 		useCommaKey: {
@@ -311,44 +311,74 @@ var et2_taglist = et2_selectbox.extend(
 	 */
 	set_value: function(value)
 	{
-		this.options.value = value;
-		if(this.taglist == null) return;
+		if (value === '' || value === null)
+		{
+			value = [];
+		}
+		else if (typeof value === 'string' && this.options.multiple)
+		{
+			value = value.split(',');
+		}
 
-		this.taglist.clear(true);
-		if(!value) return;
+		var values = jQuery.isArray(value) ? jQuery.extend([],value) : [value];
 
-		var values = jQuery.isArray(value) ? value : [value];
+		if(!value && this.taglist)
+		{
+			this.taglist.clear(true);
+			return;
+		}
+
+		var result = [];
 		for(var i=0; i < values.length; ++i)
 		{
 			var v = values[i];
 			if (v && typeof v == 'object' && typeof v.id != 'undefined' && typeof v.label != 'undefined')
 			{
-				// alread in correct format
+				// already in correct format
 			}
-			else if (this.options.select_options && typeof this.options.select_options[v] == 'undefined' || typeof v == 'string')
+			else if (this.options.select_options &&
+				// Check options
+				(result = jQuery.grep(this.options.select_options, function(e) {
+					return e.id == v;
+				})) && result.length
+			)
 			{
 				// Options should have been provided, but they weren't
 				// This can happen for ajax source with an existing value
-				if(this.options.select_options == null)
+				if(this.options.select_options === null)
 				{
-					this.options.select_options = {};
+					this.options.select_options = [];
 				}
-				values[i] = {
+				values[i] = result[0] ? result[0] : {
 					id: v,
 					label: v
 				};
 			}
-			else(this.options.select_options)
+			else if (this.taglist &&
+				// Check current selection to avoid going back to server
+				(result = jQuery.grep(this.taglist.getSelection(), function(e) {
+					return e.id == v;
+				})) && result.length)
 			{
-				if (typeof values[i].id == 'undefined')
+				values[i] = result[0] ? result[0] : {
+					id: v,
+					label: v
+				};
+			}
+			else
+			{
+				if (typeof values[i].id === 'undefined')
 				{
 					values[i] = {
 						id: v,
-						label: this.options.select_options[v]
+						label: v
 					};
 				}
 			}
 		}
+		this.options.value = values;
+
+		if(this.taglist === null) return;
 
 		this.taglist.addToSelection(values);
 	},

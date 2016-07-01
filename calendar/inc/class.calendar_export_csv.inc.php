@@ -286,10 +286,22 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				'criteria'	=> array(
 					'start'		=> is_object($start) ? $start->format('ts') : $start,
 					'end'		=> is_object($end) ? $end->format('ts') : $end,
-					'owner'		=> $states['owner']
+					'owner'		=> is_array($states['owner']) ? $states['owner'] : explode(',',$states['owner'])
 				)
+			),
+			'sel_options' => array(
+				'owner' => array()
 			)
 		);
+		// Pass current owner labels
+		foreach($data['content']['criteria']['owner'] as $owner)
+		{
+			$data['sel_options']['owner'][] = array(
+				'id' => $owner,
+				'value' => $owner,
+				'label' => $this->bo->participant_name($owner)
+			);
+		}
 		return $data;
 	}
 
