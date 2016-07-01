@@ -144,7 +144,6 @@ description	infolog	fi	Kuvaus
 determines the order the fields are displayed	infolog	fi	Määrittelee näkyvissä olevien kenttien järjestyksen
 directory with documents to insert entries	infolog	fi	Asiakirjojen oletuskansio
 disables a status without deleting it	infolog	fi	Ota tila pois käytöstä poistamatta sitä
-do not notify of these changes	infolog	fi	Älä lähetä huomautusta
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fi	Haluatko vahvistuksen vastuuhenkilöltä: tehtävän hyväksymisestä, tehtävän valmistumisesta vai molemmista?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	fi	Haluatko muistutusviestin, jos sinulle delegoidaan tai delegoimaasi merkintää/tehtävää päivitetään?
 do you want a notification, if items you are responsible for are about to start?	infolog	fi	Haluatko muistutusviestin, kun merkinnän/tehtävän alkamispäivä lähestyy, jos olet vastuuhenkilönä?
