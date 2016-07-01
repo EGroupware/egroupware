@@ -1057,6 +1057,9 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 	 */
 	click: function(_ev)
 	{
+		// Drag to create in progress
+		if(this._parent.drag_create.start !== null) return;
+
 		// Click on the title
 		if (jQuery(_ev.target).hasClass('calendar_calAddEvent'))
 		{

@@ -168,6 +168,21 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					},
 
 					/**
+					 * If dragging to resize an event, abort drag to create
+					 *
+					 * @param {jQuery.Event} event
+					 * @param {Object} ui
+					 */
+					start: function(event, ui)
+					{
+						if(planner.drag_create.start)
+						{
+							// Abort drag to create, we're dragging to resize
+							planner._drag_create_end({});
+						}
+					},
+
+					/**
 					 * Triggered at the end of resizing the calEvent.
 					 *
 					 * @param {event} event
@@ -598,7 +613,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 						// Get its children immediately
 						egw.json(
-							this.getInstanceManager().app+'.etemplate_widget_menupopup.ajax_get_options.etemplate',
+							'EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options',
 							['select-cat',',,,calendar,'+cat_id[i]],
 							function(data) {
 								labels = labels.concat(data);
@@ -1900,16 +1915,17 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		// Find the correct row so we know the parent
 		var row = event.target.closest('.calendar_plannerRowWidget');
-		var row_widget = null;
 		for(var i = 0; i < this._children.length && row; i++)
 		{
 			if(this._children[i].div[0] === row)
 			{
 				this.drag_create.parent = this._children[i];
+				// Clear cached events for re-layout
+				this._children[i]._cached_rows = [];
 				break;
 			}
 		}
-		return this._drag_create_start({date: time.toJSON()});
+		return this._drag_create_start(jQuery.extend({},this.drag_create.parent.node.dataset,{date: time.toJSON()}));
 	},
 
 	/**

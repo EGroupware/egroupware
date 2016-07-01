@@ -231,6 +231,21 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				},
 
 				/**
+				 * If dragging to resize an event, abort drag to create
+				 * 
+				 * @param {jQuery.Event} event
+				 * @param {Object} ui
+				 */
+				start: function(event, ui)
+				{
+					if(timegrid.drag_create.start)
+					{
+						// Abort drag to create, we're dragging to resize
+						timegrid._drag_create_end({});
+					}
+				},
+
+				/**
 				 * Triggered at the end of resizing the calEvent.
 				 *
 				 * @param {event} event
@@ -1871,7 +1886,24 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		if(start.date)
 		{
 			// Set parent for event
-			this.drag_create.parent = this.getWidgetById(start.date);
+			if(this.daily_owner)
+			{
+				// Each 'day' is the same date, different user
+				// Find the correct row so we know the parent
+				var col = event.target.closest('.calendar_calDayCol');
+				for(var i = 0; i < this._children.length && col; i++)
+				{
+					if(this._children[i].node === col)
+					{
+						this.drag_create.parent = this._children[i];
+						break;
+					}
+				}
+			}
+			else
+			{
+				this.drag_create.parent = this.getWidgetById(start.date);
+			}
 
 			// Format date
 			this.date_helper.set_year(start.date.substring(0,4));
@@ -1918,6 +1950,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 
 		this.gridHover.css('cursor', '');
+
+		event.preventDefault();
 		return this._drag_create_end(end);
 	},
 

@@ -516,9 +516,16 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			jQuery.extend(options,this.drag_create.start, end);
 			delete(options.date);
 
-			if (this.options.owner !== app.calendar.state.owner && !options.owner)
+			// Make sure parent is set, if needed
+			if (this.drag_create.parent && this.drag_create.parent.options.owner !== app.calendar.state.owner && !options.owner)
 			{
-				options.owner = this.options.owner;
+				options.owner = this.drag_create.parent.options.owner;
+			}
+
+			// Remove empties
+			for(var key in options)
+			{
+				if(!options[key]) delete options[key];
 			}
 			this.egw().open(null, 'calendar', 'add', options, '_blank');
 
@@ -540,8 +547,11 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		this.drag_create.start = null;
 		this.drag_create.end = null;
 		this.drag_create.parent = null;
-		this.drag_create.event.destroy();
-		this.drag_create.event = null;
+		if(this.drag_create.event)
+		{
+			this.drag_create.event.destroy();
+			this.drag_create.event = null;
+		}
 		return false;
 	}
 
