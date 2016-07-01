@@ -3137,6 +3137,11 @@ var et2_nextmatch_customfields = (function(){ "use strict"; return et2_customfie
 				}, this);
 			}
 
+			// If this is already attached, widget needs to be finished explicitly
+			if(this.isAttached() && !widget.isAttached())
+			{
+				widget.doLoadingFinished();
+			}
 			// Check for column filter
 			if(!jQuery.isEmptyObject(this.options.fields) && (
 				this.options.fields[field_name] == false || typeof this.options.fields[field_name] == 'undefined'))
