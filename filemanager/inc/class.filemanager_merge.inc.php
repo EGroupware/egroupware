@@ -101,7 +101,7 @@ class filemanager_merge extends Api\Storage\Merge
 		$file['ctime'] = Api\DateTime::to($file['ctime']);
 
 		$file['name'] = Vfs::basename($id);
-		$file['dir'] = Vfs::decodePath(Vfs::dirname($id));
+		$file['dir'] = ($dir = Vfs::dirname($id)) ? Vfs::decodePath($dir) : '';
 		$dirlist = explode('/',$file['dir']);
 		$file['folder'] = array_pop($dirlist);
 		$file['folder_file'] = $file['folder'] . '/'.$file['name'];
