@@ -339,7 +339,7 @@ class filemanager_ui
 				}
 				else
 				{
-					$msg .= lang('The requested path %1 is not available.',Vfs::decodePath($path));
+					$msg .= lang('The requested path %1 is not available.', $path ? Vfs::decodePath($path) : "false");
 				}
 				// reset lettersearch as it confuses users (they think the dir is empty)
 				$content['nm']['searchletter'] = false;
