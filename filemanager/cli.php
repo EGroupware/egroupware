@@ -474,9 +474,8 @@ switch($cmd)
  */
 function load_wrapper($url)
 {
-	$scheme = parse_url($url,PHP_URL_SCHEME);
-
-	if (!in_array($scheme,stream_get_wrappers()))
+	if (($scheme = parse_url($url,PHP_URL_SCHEME)) &&
+		!in_array($scheme, stream_get_wrappers()))
 	{
 		switch($scheme)
 		{
@@ -484,15 +483,15 @@ function load_wrapper($url)
 			case 'webdavs':
 				require_once('HTTP/WebDAV/Client.php');
 				break;
-			case '':	// default scheme is file and always available
-				break;
+
 			default:
-				if (!isset($GLOBALS['egw']) && !in_array($scheme,array('smb','imap')))
+				if (!isset($GLOBALS['egw']) && !in_array($scheme,array('smb','imap')) &&
+					($user = parse_url($url,PHP_URL_USER)) && ($pass = parse_url($url,PHP_URL_PASS)))
 				{
-					load_egw(parse_url($url,PHP_URL_USER), parse_url($url,PHP_URL_PASS), parse_url($url,PHP_URL_HOST));
+					load_egw($user, $pass, ($host = parse_url($url,PHP_URL_HOST)) ? $host : 'default');
 				}
 				// get eGW's __autoload() function
-				include_once(EGW_API_INC.'/common_functions.inc.php');
+				include_once(EGW_SERVER_ROOT.'/api/src/loader/common.php');
 
 				if (!Vfs::load_wrapper($scheme))
 				{
