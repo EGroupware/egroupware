@@ -333,7 +333,7 @@ class filemanager_ui
 						$path = static::get_home_dir();
 						break;
 				}
-				if ($path[0] == '/' && Vfs::stat($path,true) && Vfs::is_dir($path) && Vfs::check_access($path,Vfs::READABLE))
+				if ($path && $path[0] == '/' && Vfs::stat($path,true) && Vfs::is_dir($path) && Vfs::check_access($path,Vfs::READABLE))
 				{
 					$content['nm']['path'] = $path;
 				}
@@ -946,7 +946,7 @@ class filemanager_ui
 			{
 				$content = $stat;
 				$content['name'] = $content['itempicker_merge']['name'] = Vfs::basename($path);
-				$content['dir'] = $content['itempicker_merge']['dir'] = Vfs::decodePath(Vfs::dirname($path));
+				$content['dir'] = $content['itempicker_merge']['dir'] = ($dir = Vfs::dirname($path)) ? Vfs::decodePath($dir) : '';
 				$content['path'] = $path;
 				$content['hsize'] = Vfs::hsize($stat['size']);
 				$content['mime'] = Vfs::mime_content_type($path);
@@ -1018,7 +1018,13 @@ class filemanager_ui
 					{
 						if ($name == 'name')
 						{
-							$to = Vfs::concat(Vfs::dirname($path),$content['name']);
+							if (!($dir = Vfs::dirname($path)))
+							{
+								$msg .= lang('File or directory not found!')." Vfs::dirname('$path')===false";
+								if ($button == 'save') $button = 'apply';
+								continue;
+							}
+							$to = Vfs::concat($dir, $content['name']);
 							if (file_exists(Vfs::PREFIX.$to) && $content['confirm_overwrite'] !== $to)
 							{
 								$tpl->set_validation_error('name',lang("There's already a file with that name!").'<br />'.
@@ -1177,7 +1183,7 @@ class filemanager_ui
 				$readonlys['perms['.$name.']'] = true;
 			}
 		}
-		$readonlys['name'] = $path == '/' || !Vfs::is_writable(Vfs::dirname($path));
+		$readonlys['name'] = $path == '/' || !($dir = Vfs::dirname($path)) || !Vfs::is_writable($dir);
 		$readonlys['comment'] = !Vfs::is_writable($path);
 		$readonlys['tabs']['filemanager.file.preview'] = $readonlys['tabs']['filemanager.file.perms'] = $content['is_link'];
 
