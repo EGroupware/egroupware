@@ -1028,7 +1028,8 @@ class Ldap
 	 * Query the members of a group
 	 *
 	 * @param int $_gid
-	 * @return array with uidnumber => uid pairs
+	 * @return array|boolean array with uidnumber => uid pairs,
+	 *	false if $_git is not nummeric and can't be resolved to a nummeric gid
 	 */
 	function members($_gid)
 	{
@@ -1084,7 +1085,7 @@ class Ldap
 		// adding new memberships
 		foreach($old_memberships ? array_diff($groups,$old_memberships) : $groups as $gid)
 		{
-			$members = $this->members($gid);
+			if (!($members = $this->members($gid))) $members = array();
 			$members[$account_id] = $this->id2name($account_id);
 			$this->set_members($members,$gid);
 		}
