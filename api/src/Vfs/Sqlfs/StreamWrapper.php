@@ -203,7 +203,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		if (!is_null($overwrite_new) || !($stat = static::url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
-			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
+			if (!$dir || $mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' && $stat ||	// or file should not exist, but does
 				!($dir_stat=static::url_stat($dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
 				!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat))	// or we are not allowed to 																																			create it
@@ -550,10 +550,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
 		// need to get parent stat from Sqlfs, not Vfs
-		if (!isset($parent_stat)) $parent_stat = static::url_stat(Vfs::dirname($path), STREAM_URL_STAT_LINK);
+		if (!isset($parent_stat))
+		{
+			$parent_stat = !($dir = Vfs::dirname($path)) ? false :
+				static::url_stat($dir, STREAM_URL_STAT_LINK);
+		}
 
 		if (!$parent_stat || !($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) ||
-			!Vfs::check_access(Vfs::dirname($path),Vfs::WRITABLE, $parent_stat))
+			!Vfs::check_access($dir, Vfs::WRITABLE, $parent_stat))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
@@ -605,8 +609,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$to_dir = Vfs::dirname($path_to);
 		$operation = self::url2operation($url_from);
 
-		// we have to use array($class,'url_stat'), as $class.'::url_stat' requires PHP 5.2.3 and we currently only require 5.2+
-		if (!($from_stat = static::url_stat($path_from, 0)) ||
+		if (!($from_stat = static::url_stat($path_from, 0)) || !$from_dir ||
 			!Vfs::check_access($from_dir, Vfs::WRITABLE, $from_dir_stat = static::url_stat($from_dir, 0)))
 		{
 			self::_remove_password($url_from);
@@ -614,7 +617,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
 			return false;	// no permission or file does not exist
 		}
-		if (!Vfs::check_access($to_dir, Vfs::WRITABLE, $to_dir_stat = static::url_stat($to_dir, 0)))
+		if (!$to_dir || !Vfs::check_access($to_dir, Vfs::WRITABLE, $to_dir_stat = static::url_stat($to_dir, 0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
@@ -702,12 +705,20 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) already exist!");
 			if (!($options & STREAM_REPORT_ERRORS))
 			{
-				//throw new Exception(__METHOD__."('$url',$mode,$options) already exist!");
 				trigger_error(__METHOD__."('$url',$mode,$options) already exist!",E_USER_WARNING);
 			}
 			return false;
 		}
-		$parent_path = Vfs::dirname($path);
+		if (!($parent_path = Vfs::dirname($path)))
+		{
+			self::_remove_password($url);
+			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) dirname('$path')===false!");
+			if (!($options & STREAM_REPORT_ERRORS))
+			{
+				trigger_error(__METHOD__."('$url',$mode,$options) dirname('$path')===false!", E_USER_WARNING);
+			}
+			return false;
+		}
 		if (($query = Vfs::parse_url($url,PHP_URL_QUERY))) $parent_path .= '?'.$query;
 		$parent = self::url_stat($parent_path,STREAM_URL_STAT_QUIET);
 
@@ -782,9 +793,9 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
-		$parent = Vfs::dirname($path);
 
-		if (!($stat = self::url_stat($path,0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
+		if (!($parent = Vfs::dirname($path)) ||
+			!($stat = self::url_stat($path, 0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
 			!Vfs::check_access($parent, Vfs::WRITABLE, static::url_stat($parent,0)))
 		{
 			self::_remove_password($url);
