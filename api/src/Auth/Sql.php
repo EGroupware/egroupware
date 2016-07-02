@@ -90,10 +90,9 @@ class Sql implements Backend
 							}
 						}
 					}
-					if ($match)
+					if ($match && ($encrypted_passwd = Api\Auth::encrypt_sql($passwd)))
 					{
-						$encrypted_passwd = Api\Auth::encrypt_sql($passwd);
-						$this->_update_passwd($encrypted_passwd,$passwd,$row['account_id'],false,true);
+						$this->_update_passwd($encrypted_passwd, $row['account_id'], false, true);
 					}
 				}
 				if (!$match) return false;
@@ -229,8 +228,13 @@ class Sql implements Backend
 			return false;
 		}
 
+		if (!($encrypted_passwd = Api\Auth::encrypt_sql($new_passwd)))
+		{
+			return false;
+		}
+
 		// old password ok, or admin called the function from the admin application (no old passwd available).
-		return $this->_update_passwd(Api\Auth::encrypt_sql($new_passwd),$new_passwd,$account_id,$admin);
+		return $this->_update_passwd($encrypted_passwd, $account_id, $admin);
 	}
 
 	/**
@@ -243,10 +247,8 @@ class Sql implements Backend
 	 * @param boolean $update_lastpw_change =true
 	 * @return boolean true if password successful changed, false otherwise
 	 */
-	private function _update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin=false,$update_lastpw_change=true)
+	private function _update_passwd($encrypted_passwd, $account_id, $admin=false, $update_lastpw_change=true)
 	{
-		unset($new_passwd);	// not used, but required by function signature
-
 		$update = array('account_pwd' => $encrypted_passwd);
 		if ($update_lastpw_change) $update['account_lastpwd_change'] = time();
 
