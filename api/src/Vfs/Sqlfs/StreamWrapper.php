@@ -557,7 +557,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		}
 
 		if (!$parent_stat || !($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) ||
-			!Vfs::check_access($dir, Vfs::WRITABLE, $parent_stat))
+			!$dir || !Vfs::check_access($dir, Vfs::WRITABLE, $parent_stat))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
