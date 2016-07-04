@@ -473,7 +473,16 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		var templateName = mobileViewTemplate[0];
 		var templateTimestamp = mobileViewTemplate[1];
 		var templateURL = egw.webserverUrl+ '/' + this.appname + '/templates/mobile/'+templateName+'.xet'+'?'+templateTimestamp;
-		var data = {content:content, readonlys:{'__ALL__':true,'link_to':false}, currentapp:this.appname};
+
+		var data = {
+			'content': content,
+			'readonlys': {'__ALL__':true,'link_to':false},
+			'currentapp': this.appname,
+			'langRequire': this.et2.getArrayMgr('langRequire').data,
+			'sel_options': this.et2.getArrayMgr('sel_options').data,
+			'modifications': this.et2.getArrayMgr('modifications').data,
+			'validation_errors': this.et2.getArrayMgr('validation_errors').data
+		};
 
 		// etemplate2 object for view
 		this.et2_view = new etemplate2 (this.viewTemplate[0], false);
