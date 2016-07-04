@@ -26,6 +26,8 @@
   .et2_mobile_view #addressbook-view_n_fn {
     border: none;
     text-align: center;
+    display: inline-block;
+    width: 99%;
     font-size: 15pt;
   }
   .et2_mobile_view #addressbook-view_n_fn span {
