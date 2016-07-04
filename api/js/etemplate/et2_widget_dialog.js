@@ -761,7 +761,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 						title: '',
 						buttons: [
 							// These ones will use the callback, just like normal
-							{text: egw.lang("Abort"),id:'dialog[cancel]',},
+							{text: egw.lang("Abort"),id:'dialog[cancel]'},
 							{text: egw.lang("Retry"),id:'dialog[retry]'},
 							{text: egw.lang("Skip"),id:'dialog[skip]', class:"ui-priority-primary", default: true}
 						],
