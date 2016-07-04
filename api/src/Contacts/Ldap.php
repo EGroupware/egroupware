@@ -114,7 +114,7 @@ class Ldap
 	 */
 	var $search_attributes = array(
 		'n_family','n_middle','n_given','org_name','org_unit',
-		'adr_one_location','adr_two_location','note',
+		'adr_one_locality','adr_two_locality','note',
 		'email','mozillasecondemail','uidnumber',
 	);
 
