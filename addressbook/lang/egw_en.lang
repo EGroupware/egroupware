@@ -50,6 +50,7 @@ addressbook	common	en	Address Book
 addressbook csv export	addressbook	en	Address Book CSV export
 addressbook csv import	addressbook	en	Address Book CSV import
 addressbook field	addressbook	en	Address book field
+addressbook list	addressbook	en	Address book list
 addressbook menu	addressbook	en	Address Book menu
 addressbook of	addressbook	en	Address book of
 addressbook preferences	addressbook	en	Address Book preferences
