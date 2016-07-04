@@ -47,6 +47,7 @@
 80 (http)	admin	de	80 (http)
 a pattern to be searched for	common	de	ein Muster nach dem gesucht werden soll
 a request to the egroupware server returned with an error	common	de	Eine Anfrage an den EGroupware Server ergab einen Fehler
+abort	common	de	Abbrechen
 about	common	de	Über
 about %1	common	de	Über %1
 about egroupware	common	de	Über EGroupware
@@ -1057,6 +1058,7 @@ restore all application templates, overwriting existing ones with identical vers
 restore failed	common	de	Wiederherstellung fehlgeschlagen
 restore key	common	de	Schlüssel wiederherstellen
 restore password	common	de	Passwort wiederherstellen
+retry	common	de	Wiederholen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
 returns an array of todo items	common	de	Liefert eine Aufstellung mit ToDo Einträgen
 returns savely, without deleting	common	de	Abbruch, OHNE zu löschen
@@ -1211,6 +1213,7 @@ simple	common	de	Einfach
 singapore	common	de	SINGAPUR
 site configuration	common	de	Konfiguration der Anwendung
 size	common	de	Größe
+skip	common	de	Auslassen
 slovakia	common	de	SLOVAKEI
 slovenia	common	de	SLOVENIEN
 solomon islands	common	de	SOLOMON INSELN
