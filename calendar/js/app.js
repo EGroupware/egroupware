@@ -2263,11 +2263,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 				else
 				{
-					jQuery(app.classes.calendar.views.day.etemplates[1].DOMContainer).show();
 					jQuery(app.classes.calendar.views.day.etemplates[1].DOMContainer).css("left","100%");
-					window.setTimeout(jQuery.proxy(function() {
-						jQuery(this).hide();
-					},app.classes.calendar.views.day.etemplates[1].DOMContainer),1000);
+					jQuery(app.classes.calendar.views.day.etemplates[1].DOMContainer).hide();
 					jQuery(app.classes.calendar.views.day.etemplates[0].DOMContainer).css("width","100%");
 					view.etemplates[0].widgetContainer.iterateOver(function(w) {
 						w.set_width('100%');

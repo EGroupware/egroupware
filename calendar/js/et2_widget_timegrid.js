@@ -2150,6 +2150,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 		// Try to resize width, though animations cause problems
 		var total_width = jQuery(this.getInstanceManager().DOMContainer).parent().innerWidth() - this.days.position().left;
+		// Space for todos, if there
+		total_width -= jQuery(this.getInstanceManager().DOMContainer).siblings().has(':visible').not('#calendar-toolbar').outerWidth()
+		
 		var day_width = (total_width > 0 ? total_width : jQuery(this.getInstanceManager().DOMContainer).width())/this.day_widgets.length;
 		// update day widgets
 		for(var i = 0; i < this.day_widgets.length; i++)
