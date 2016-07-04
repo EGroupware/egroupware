@@ -979,6 +979,11 @@ abstract class Framework extends Framework\Extra
 	function list_themes()
 	{
 		$list = array();
+		if (file_exists($file=EGW_SERVER_ROOT.$this->template_dir.'/setup/setup.inc.php') &&
+			(include $file) && isset($GLOBALS['egw_info']['template'][$this->template]['themes']))
+		{
+			$list = $GLOBALS['egw_info']['template'][$this->template]['themes'];
+		}
 		if (($dh = @opendir(EGW_SERVER_ROOT.$this->template_dir.'/css')))
 		{
 			while (($file = readdir($dh)))
@@ -986,7 +991,7 @@ abstract class Framework extends Framework\Extra
 				if (preg_match('/'."\.css$".'/i', $file))
 				{
 					list($name) = explode('.',$file);
-					$list[$name] = $name;
+					if (!isset($list[$name])) $list[$name] = ucfirst ($name);
 				}
 			}
 			closedir($dh);
