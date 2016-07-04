@@ -362,6 +362,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					return false;
 				}
 				break;
+			default:
+				return undefined;
 		}
 	},
 
