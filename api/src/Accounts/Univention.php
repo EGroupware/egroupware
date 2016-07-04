@@ -87,7 +87,7 @@ class Univention extends Ldap
 						}
 						$hostname = $account->acc_imap_host;
 					}
-					catch(Exception $e) {
+					catch(\Exception $e) {
 						unset($e);
 					}
 					if (empty($hostname)) $hostname = trim(system('hostname -f'));
