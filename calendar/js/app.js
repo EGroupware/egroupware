@@ -304,9 +304,24 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				}
 				if (do_refresh)
 				{
-					// Discard cache, reload
+					// Discard cache
 					this._clear_cache();
-					this.setState({state: this.state});
+
+					// Calendar is the current application, refresh now
+					if(framework.activeApp.appName == this.appName)
+					{
+						this.setState({state: this.state});
+					}
+					// Bind once to trigger a refresh when tab is activated again
+					else if(framework.applications.calendar && framework.applications.calendar.tab &&
+						framework.applications.calendar.tab.contentDiv)
+					{
+						jQuery(framework.applications.calendar.tab.contentDiv)
+							.off('show.calendar')
+							.one('show.calendar',
+								jQuery.proxy(function() {this.setState({state: this.state});},this)
+							);
+					}
 				}
 				break;
 			case 'calendar':
