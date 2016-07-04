@@ -3140,7 +3140,7 @@ var et2_nextmatch_customfields = (function(){ "use strict"; return et2_customfie
 			// If this is already attached, widget needs to be finished explicitly
 			if(this.isAttached() && !widget.isAttached())
 			{
-				widget.doLoadingFinished();
+				widget.loadingFinished();
 			}
 			// Check for column filter
 			if(!jQuery.isEmptyObject(this.options.fields) && (
