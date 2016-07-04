@@ -10,7 +10,7 @@
  */
 
 $GLOBALS['egw_info']['template']['pixelegg']['name']      = 'pixelegg';
-$GLOBALS['egw_info']['template']['pixelegg']['title']     = 'Pixelegg';
+$GLOBALS['egw_info']['template']['pixelegg']['title']     = 'Standard';
 $GLOBALS['egw_info']['template']['pixelegg']['version']   = '16.1';
 
 $GLOBALS['egw_info']['template']['pixelegg']['author'] = array(
@@ -24,6 +24,12 @@ $GLOBALS['egw_info']['template']['pixelegg']['maintainer'] = array(
 );
 $GLOBALS['egw_info']['template']['pixelegg']['description'] = "Pixelegg is the new EGroupware 14.1 template using jQuery.";
 $GLOBALS['egw_info']['template']['pixelegg']['windowed'] = true;
+
+// specify (different) labels for default themes
+$GLOBALS['egw_info']['template']['pixelegg']['themes'] = array(
+	'pixelegg' => 'Standard',
+	'mobile'   => 'Compact',
+);
 
 // Dependencies for this template to work
 $GLOBALS['egw_info']['template']['pixelegg']['depends'][] = array(

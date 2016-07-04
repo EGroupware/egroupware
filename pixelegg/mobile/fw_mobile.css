@@ -3291,9 +3291,6 @@ body > div#egw_message {
 #egw_fw_footer a {
   color: #696969;
 }
-#egw_fw_footer a:last-child:after {
-  content: " + Layout: pixelegg";
-}
 #egw_fw_footer:hover {
   opacity: 0.1;
   transition: opacity 0.5s ease-out;
