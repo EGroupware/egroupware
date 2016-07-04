@@ -16,7 +16,6 @@
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="50"/>
 				<column width="135"/>
 				<column width="70%"/>
 				<column width="15%"/>
@@ -25,12 +24,12 @@
 				<column width="60" disabled="@no_ts_unitprice"/>
 				<column width="60" disabled="@no_ts_total"/>
 				<column width="130" disabled="@no_owner_col"/>
+				<column width="50"/>
 				<column width="10%" disabled="@no_ts_status"/>
 				<column width="15%"/>
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader label="ID" id="ts_id"/>
 					<nextmatch-sortheader label="Date" id="ts_start"/>
 					<grid spacing="0" padding="0">
 						<columns>
@@ -66,11 +65,11 @@
 						<textbox type="float" id="price" readonly="true" precision="2"/>
 					</vbox>
 					<nextmatch-filterheader id="ts_owner" no_lang="1" options="User" class="$cont[ownerClass]"/>
+					<nextmatch-sortheader label="ID" id="ts_id"/>
 					<nextmatch-filterheader id="ts_status" options="Status"/>
 					<nextmatch-customfields id="customfields"/>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]">
-					<description id="${row}[ts_id]"/>
 					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
 					<vbox>
 						<link id="${row}[ts_link]" no_lang="1"/>
@@ -87,6 +86,7 @@
 					<menulist class="$cont[ownerClass]">
 						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
 					</menulist>
+					<description id="${row}[ts_id]"/>
 					<menulist>
 						<menupopup id="${row}[ts_status]" readonly="true"/>
 					</menulist>
