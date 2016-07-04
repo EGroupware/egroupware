@@ -724,6 +724,12 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 		var log = null;
 		var progressbar = null;
 		var cancel = false;
+		var totals = {
+			success: 0,
+			skipped: 0,
+			failed: 0,
+			widget: null
+		};
 
 		// Updates progressbar & log, calls next step
 		var update = function(response) {
@@ -731,6 +737,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 			var index = this || 0;
 
 			progressbar.set_value(100*(index/_list.length));
+			progressbar.set_label(index +' / ' + _list.length);
 
 			// Display response information
 			switch(response.type)
@@ -739,6 +746,8 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 					jQuery("<div class='message error'></div>")
 						.text(response.data)
 						.appendTo(log);
+
+					totals.failed++
 
 					// Ask to retry / ignore / abort
 					et2_createWidget("dialog", {
@@ -750,6 +759,7 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 									return update.call(index,'');
 								case 'dialog[skip]':
 									// Continue with next index
+									totals.skipped++;
 									return update.call(index,'');
 								default:
 									// Try again with previous index
@@ -772,12 +782,19 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 				default:
 					if(response)
 					{
+						totals.success++;
 						log.append("<div class='message'>"+response+"</div>");
 					}
 			}
 			// Scroll to bottom
 			var height = log[0].scrollHeight;
 			log.scrollTop(height);
+
+			// Update totals
+			totals.widget.set_value(egw.lang(
+				"Total: %1 Successful: %2 Failed: %3 Skipped: %4",
+				_list.length, totals.success, totals.failed, totals.skipped
+			));
 
 			// Fire next step
 			if(!cancel && index < _list.length)
@@ -806,6 +823,8 @@ jQuery.extend(et2_dialog, //(function(){ "use strict"; return
 			// Get access to template widgets
 			log = jQuery(dialog.template.widgetContainer.getWidgetById('log').getDOMNode());
 			progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
+			progressbar.set_label('0 / ' + _list.length);
+			totals.widget = dialog.template.widgetContainer.getWidgetById('totals');
 
 			// Start
 			window.setTimeout(function() {update.call(0,'');},0);
