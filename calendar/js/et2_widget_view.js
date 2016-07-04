@@ -552,7 +552,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			this.drag_create.event.destroy();
 			this.drag_create.event = null;
 		}
-		return false;
+		return true;
 	}
 
 });}).call(this);

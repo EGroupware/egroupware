@@ -327,27 +327,6 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			})
 			.on('mousemove', function(event) {
 				timegrid._get_time_from_position(event.clientX, event.clientY);
-
-				if(timegrid.drag_create.event && timegrid.drag_create.parent && timegrid.drag_create.end)
-				{
-					var end = jQuery.extend({}, timegrid.gridHover[0].dataset);
-					if(end.date)
-					{
-						timegrid.date_helper.set_year(end.date.substring(0,4));
-						timegrid.date_helper.set_month(end.date.substring(4,6));
-						timegrid.date_helper.set_date(end.date.substring(6,8));
-						if(end.hour)
-						{
-							timegrid.date_helper.set_hours(end.hour);
-						}
-						if(end.minute)
-						{
-							timegrid.date_helper.set_minutes(end.minute);
-						}
-						timegrid.drag_create.end.date = timegrid.date_helper.get_value();
-					}
-					timegrid._drag_update_event();
-				}
 			})
 			.on('mouseout', function(event) {
 				if(timegrid.div.has(event.relatedTarget).length === 0)
@@ -1919,8 +1898,33 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			}
 			start.date = this.date_helper.get_value();
 
-
 			this.gridHover.css('cursor', 'ns-resize');
+
+			// Start update
+			var timegrid = this;
+			this.div.on('mousemove.dragcreate', function()
+			{
+				if(timegrid.drag_create.event && timegrid.drag_create.parent && timegrid.drag_create.end)
+				{
+					var end = jQuery.extend({}, timegrid.gridHover[0].dataset);
+					if(end.date)
+					{
+						timegrid.date_helper.set_year(end.date.substring(0,4));
+						timegrid.date_helper.set_month(end.date.substring(4,6));
+						timegrid.date_helper.set_date(end.date.substring(6,8));
+						if(end.hour)
+						{
+							timegrid.date_helper.set_hours(end.hour);
+						}
+						if(end.minute)
+						{
+							timegrid.date_helper.set_minutes(end.minute);
+						}
+						timegrid.drag_create.end.date = timegrid.date_helper.get_value();
+					}
+					timegrid._drag_update_event();
+				}
+			});
 		}
 		return this._drag_create_start(start);
 	},
@@ -1948,10 +1952,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			}
 			end.date = this.date_helper.get_value();
 		}
-
+		this.div.off('mousemove.dragcreate');
 		this.gridHover.css('cursor', '');
 
-		event.preventDefault();
 		return this._drag_create_end(end);
 	},
 
