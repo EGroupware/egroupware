@@ -56,13 +56,10 @@
 			<rows>
 				<row  class="dialogHeadbar" >
 					<hbox>
-						<button id="button[apply]" image="apply" background_image="1"/>
-						<button id="button[delete]" onclick="et2_dialog.confirm(widget,'Do you really want do delte this resource?','Delete')" image="delete" background_image="1"/>
 						<textbox type="integer" id="res_id" readonly="true" class="entry_id"/>
 					</hbox>
 				</row>
 				<row>
-					<description/>
 					<box>
 						<hbox class="avatar">
 							<image src="picture_thumb" href="$cont[picture_original]" expose_view="true" align="center"/>
