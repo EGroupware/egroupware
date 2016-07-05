@@ -953,6 +953,8 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 					if ($this->debugLevel>0) debugLog("MIME Body -> ".$body); // body is retrieved up
 					if ($output->airsyncbasenativebodytype==2) { //html
 						if ($this->debugLevel>0) debugLog("HTML Body with requested pref 4");
+						// if we happen to extract css from body. then remove it
+						if ($css) translation::replaceTagsCompletley($body,'style');
 						$html = '<html>'.
 	    					    '<head>'.
 						        '<meta name="Generator" content="Z-Push">'.
