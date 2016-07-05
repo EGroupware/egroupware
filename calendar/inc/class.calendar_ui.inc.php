@@ -613,6 +613,11 @@ class calendar_ui
 	public function update_client($event_id, Api\DateTime $recurrence_date = null)
 	{
 		if(!$event_id) return false;
+		if(is_string($event_id) && strpos($event_id,':') !== FALSE)
+		{
+			list($event_id, $date) = explode(':',$event_id);
+			$recurrence_date = new Api\DateTime($date);
+		}
 
 		// Directly update stored data.
 		// Make sure we have the whole event

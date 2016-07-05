@@ -324,6 +324,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 
 				// Cancel drag to create, we're dragging an existing event
 				timegrid.drag_create.start = null;
+				timegrid._drag_create_end();
 			})
 			.on('mousemove', function(event) {
 				timegrid._get_time_from_position(event.clientX, event.clientY);

@@ -488,6 +488,10 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 	_drag_create_end: function(end)
 	{
 		this.div.css('cursor','');
+		if(typeof end === 'undefined')
+		{
+			end = {};
+		}
 		
 		if(this.drag_create.start && end.date &&
 			JSON.stringify(this.drag_create.start.date) !== JSON.stringify(end.date))
