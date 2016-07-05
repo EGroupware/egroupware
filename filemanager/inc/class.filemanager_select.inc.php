@@ -196,7 +196,7 @@ class filemanager_select
 						if ($download_url[0] == '/') $download_url = Egw::link($download_url);
 						$js = "window.opener.CKEDITOR.tools.callFunction(".
 							$content['ckeditorfuncnum'].",'".
-							htmlspecialchars($download_url)."',".
+							str_replace("'", "\\'", $download_url)."',".
 							"'');\negw(window).close();";
 					}
 					if(Api\Json\Response::isJSONResponse() && !($content['method'] == 'ckeditor_return'))
