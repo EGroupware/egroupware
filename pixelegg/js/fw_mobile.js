@@ -200,7 +200,42 @@
 
 				// An iframe scrolling fix for iOS Safari
 				if (framework.getUserAgent() === 'iOS') {
-					window.setTimeout(function(){jQuery(self.$iFrame).height(popupWindow.document.body.scrollHeight);}, 500);
+					window.setTimeout(function(){
+						jQuery(self.$iFrame).height(popupWindow.document.body.scrollHeight);
+						// scrolling node
+						var node = jQuery(popupWindow.document.body);
+						// start point Y, X
+						var startY, startX = 0;
+
+						// kill delays on transitions
+						// and set the start value for transition
+						node.css ({
+							transition: 'all 0s',
+							transform:'translateX(0px) translateY(0px)',
+						});
+
+						node.on({
+							touchmove: function (e){
+								var $w = jQuery(window);
+								// current touch y position
+								var currentY = e.originalEvent.touches ? e.originalEvent.touches[0].screenY : e.originalEvent.screenY;
+								// current touch x position
+								var currentX = e.originalEvent.touches ? e.originalEvent.touches[0].screenX : e.originalEvent.screenX;
+								// check if we are the top
+								var isAtTop = (startY <= currentY && $w.scrollTop() <= 0);
+								// check if we are at the bottom
+								var isAtBottom = (startY >= currentY && node[0].scrollHeight - $w.scrollTop() === node.height());
+								// check if it's left or right touch move
+								var isLeftOrRight = (Math.abs(startX - currentX) > Math.abs(startY - currentY));
+
+								if (isAtTop || isAtBottom || isLeftOrRight) e.originalEvent.preventDefault();
+							},
+							touchstart: function (e){
+								startY = e.originalEvent.touches ? e.originalEvent.touches[0].screenY : e.originalEvent.screenY;
+								startX = e.originalEvent.touches ? e.originalEvent.touches[0].screenX : e.originalEvent.screenX;
+							}
+						});
+					}, 500);
 				}
 			});
 
