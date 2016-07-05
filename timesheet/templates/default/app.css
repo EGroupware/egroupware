@@ -25,3 +25,5 @@
 	display: inline-block;
 	float: left;
 }
+
+label[id^='timesheet-index_'][id$='ts_start]'] time {padding-left:5px;}
