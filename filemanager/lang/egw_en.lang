@@ -96,6 +96,7 @@ disable	filemanager	en	Disable
 disable versioning for this mountpoint	filemanager	en	Disable versioning for this mountpoint
 display and modification of content	filemanager	en	Display and modification of content
 display of content	filemanager	en	Display of content
+do you want more information about epl subscription?	common	en	Do you want more information about EPL subscription?
 do you want to overwrite existing file %1 in directory %2?	filemanager	en	Do you want to overwrite existing file %1 in directory %2?
 do you want to overwrite the existing file %1?	filemanager	en	Do you want to overwrite the existing file %1?
 download	filemanager	en	Download
@@ -131,6 +132,7 @@ file	common	en	File
 file %1 already exists	filemanager	en	File %1 already exists
 file %1 could not be created.	filemanager	en	File %1 could not be created.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 might be too big.
+file a file is only available with an epl subscription.	filemanager	en	File a file is only available with an EPL subscription.
 file deleted.	filemanager	en	File deleted.
 file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
 file or directory not found!	filemanager	en	File or directory not found!
@@ -282,6 +284,7 @@ wrong username or password!	filemanager	en	Wrong username or password!
 you are not allowed to finally delete older versions and deleted files!	filemanager	en	You are NOT allowed to finally delete older versions and deleted files!
 you are not allowed to upload a script!	filemanager	en	You are NOT allowed to upload a script!
 you can only grant additional rights, you can not take rights away!	filemanager	en	You can only grant additional rights, you can NOT take rights away!
+you can use regular upload [+] button to upload files.	filemanager	en	You can use regular upload [+] button to upload files.
 you do not have access to %1	filemanager	en	You do not have access to %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	en	You need to become root, to enable or disable versioning on a directory!
 you need to select an owner!	filemanager	en	You need to select an owner!

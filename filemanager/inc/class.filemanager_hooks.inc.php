@@ -46,10 +46,8 @@ class filemanager_hooks
 				// add "file a file" (upload) dialog
 				$file[] = array(
 					'text' => 'File a file',
-					'link' => "javascript:egw_openWindowCentered2('".Egw::link('/index.php',array(
-							'menuaction'=>'stylite.stylite_filemanager.upload',
-						),false)."','_blank',550,350)",
-					'app'  => 'phpgwapi',
+					'link' => "javascript:app.filemanager.fileafile()",
+					'app'  => 'api',
 					'icon' => 'upload',
 				);
 			}
