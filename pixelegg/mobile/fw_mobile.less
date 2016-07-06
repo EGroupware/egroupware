@@ -1341,6 +1341,33 @@
 			}
 		}
 		.et2_toolbar_more span.et2_checkbox_slideSwitch > span.slideSwitch_container {float:right}
+
+		.et2_checkbox_slideSwitch.notification_check {
+			.on {
+				background-image: url(../images/topmenu_items/mobile/notify_off.svg);
+				height: 16px;
+				background-size: 16px;
+				background-repeat: no-repeat;
+				background-position: center;
+				&:before {
+					content: " ";
+					width: 1px;
+					transform: rotateZ(45deg);
+					background: #bcbcbc;
+					height: 20px;
+					display: inline-block;
+					margin-top: -2px;
+				}
+			}
+			.off {
+				background-image: url(../images/topmenu_items/mobile/notify_on.svg);
+				height: 16px;
+				background-size: 16px;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+
+		}
 		/*************** CKEDITOR **************/
 		/***************************************/
 		.cke_inner {

@@ -8207,6 +8207,29 @@ form[id^="tracker-"] .dialogHeadbar {
   body .et2_toolbar_more span.et2_checkbox_slideSwitch > span.slideSwitch_container {
     float: right;
   }
+  body .et2_checkbox_slideSwitch.notification_check .on {
+    background-image: url(../images/topmenu_items/mobile/notify_off.svg);
+    height: 16px;
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  body .et2_checkbox_slideSwitch.notification_check .on:before {
+    content: " ";
+    width: 1px;
+    transform: rotateZ(45deg);
+    background: #bcbcbc;
+    height: 20px;
+    display: inline-block;
+    margin-top: -2px;
+  }
+  body .et2_checkbox_slideSwitch.notification_check .off {
+    background-image: url(../images/topmenu_items/mobile/notify_on.svg);
+    height: 16px;
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
   body .cke_inner .cke_toolbox .cke_toolbox_main {
     height: 30px;
     white-space: nowrap;
