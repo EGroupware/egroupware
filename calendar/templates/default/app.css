@@ -128,6 +128,12 @@
 	background-color: white;
 }
 
+/* Conflict display */
+div.calendar_conflicts {
+	max-height: 540px;
+	overflow-y: auto;
+}
+
 /* Loader - hide sizing behind overlay*/
 #egw-loadin-prompt_calendar::before {
 	opacity: 1;

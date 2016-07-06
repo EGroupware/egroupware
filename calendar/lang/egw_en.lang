@@ -397,6 +397,7 @@ people holiday	calendar	en	People holiday
 permission denied	calendar	en	Permission denied.
 planner by category	calendar	en	Planner by category
 planner by user	calendar	en	Planner by user
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	en	Please note: conflict check is never done in the past and always limited by above recurrence horizont.
 please note: you can configure the field assignments after you uploaded the file.	calendar	en	Note: You can configure the field assignments AFTER you uploaded the file.
 preselected group for entering the planner	calendar	en	Pre-selected group for entering the planner
 prevent deleting of entries	admin	en	Prevent deleting of entries
@@ -414,6 +415,7 @@ recover	calendar	en	Recover
 recovered	calendar	en	Recovered.
 recurrence	calendar	en	Recurrence
 recurrence enddate	calendar	en	Recurrence end date
+recurrences and conflict check	calendar	en	Recurrences and conflict check
 recurring event	calendar	en	Recurring event
 reject	calendar	en	Reject
 rejected	calendar	en	Rejected

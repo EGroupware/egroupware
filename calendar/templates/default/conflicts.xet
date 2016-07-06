@@ -4,25 +4,27 @@
 <overlay>
 	<template id="calendar.conflicts" template="" lang="" group="0" version="1.0.1.001">
 		<description value="Scheduling conflict" class="calendar_size120b"/>
-		<grid>
-			<columns>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<image src="conflicts[$row][icon_participants]" statustext="@conflicts[$row][tooltip_participants]" no_lang="1"/>
-					<image src="conflicts[$row][icon_recur]" label="@conflicts[$row][text_recur]" no_lang="1"/>
-					<description id="conflicts[$row][time]" no_lang="1"/>
-					<vbox statustext="conflict[$row][tooltip]" orient=",0,0">
-						<description id="conflicts[$row][title]" no_lang="1" options="b"/>
-						<description id="conflicts[$row][conflicting_participants]" no_lang="1"/>
-					</vbox>
-				</row>
-			</rows>
-		</grid>
+		<box class="calendar_conflicts">
+			<grid>
+				<columns>
+					<column/>
+					<column/>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row valign="top">
+						<image src="conflicts[$row][icon_participants]" statustext="@conflicts[$row][tooltip_participants]" no_lang="1"/>
+						<image src="conflicts[$row][icon_recur]" label="@conflicts[$row][text_recur]" no_lang="1"/>
+						<description id="conflicts[$row][time]" no_lang="1"/>
+						<vbox statustext="conflict[$row][tooltip]" orient=",0,0">
+							<description id="conflicts[$row][title]" no_lang="1" options="b"/>
+							<description id="conflicts[$row][conflicting_participants]" no_lang="1"/>
+						</vbox>
+					</row>
+				</rows>
+			</grid>
+		</box>
 		<hbox>
 			<button label="Ignore conflict" id="button[ignore]" statustext="Saves the event ignoring the conflict"/>
 			<button id="button[reedit]" label="Re-Edit event" statustext="Allows to edit the event again"/>

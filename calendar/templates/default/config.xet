@@ -84,7 +84,7 @@
 					</select>
 				</row>
 				<row>
-					<description value="Birthdays" span="all" class="subHeader"/>
+					<description value="Addressbook" span="all" class="subHeader"/>
 				</row>
 				<row>
 					<description value="Show birthdays from addressbook" label="%s:"/>
@@ -95,10 +95,6 @@
 					</select>
 				</row>
 				<row>
-					<description value="Calendar recurrence horizont in days (default 1000)" label="%s:"/>
-					<textbox id="newsettings[calendar_horizont]" size="5"/>
-				</row>
-				<row>
 					<description value="Create links for participants from addressbook" label="%s:"/>
 					<select id="newsettings[link_contacts]">
 						<option value="">No</option>
@@ -106,7 +102,14 @@
 					</select>
 				</row>
 				<row>
-					<description value="Scheduling conflict" span="all" class="subHeader"/>
+					<description value="Recurrences and conflict check" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Calendar recurrence horizont in days (default 1000)"/>
+					<textbox id="newsettings[calendar_horizont]" size="5"/>
+				</row>
+				<row>
+					<description value="Please note: conflict check is never done in the past and always limited by above recurrence horizont." span="all"/>
 				</row>
 				<row>
 					<description value="Limit search for conflicts in recurrences to given time in seconds (default 3)"/>
