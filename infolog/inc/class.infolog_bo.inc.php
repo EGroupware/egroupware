@@ -725,6 +725,7 @@ class infolog_bo
 			return false;
 		}
 		// we need to get the old values to update the links in customfields and for the tracking
+		$old = array();
 		if ($values['info_id'])
 		{
 			$old = $this->read($values['info_id'], false, 'server');
