@@ -972,5 +972,30 @@ app.classes.filemanager = AppJS.extend(
 					};
 			}
 		}
+	},
+
+	/**
+	 * Open file a file dialog from EPL, warn if EPL is not available
+	 *
+	 * @param {jQuery.event} _event
+	 * @param {et2_widget} _widget
+	 */
+	fileafile: function(_event, _widget)
+	{
+		if (this.egw.user('apps').stylite)
+		{
+			this.egw.open_link('stylite.stylite_filemanager.upload', '_blank', '670x320');
+		}
+		else
+		{
+			et2_dialog.show_dialog(function(_button)
+			{
+				if (_button == et2_dialog.YES_BUTTON) window.open('http://www.egroupware.org/EPL', '_blank');
+				return true;
+			}, this.egw.lang('File a file is only available with an EPL subscription.')+"\n\n"+
+				this.egw.lang('You can use regular upload [+] button to upload files.')+"\n\n"+
+				this.egw.lang('Do you want more information about EPL subscription?'),
+			this.egw.lang('File a file'), undefined, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+		}
 	}
 });
