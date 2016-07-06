@@ -196,6 +196,12 @@ class calendar_bo
 	 * @var Api\Categories
 	 */
 	var $categories;
+	/**
+	 * Config values for "calendar", only used for horizont, regular calendar config is under phpgwapi
+	 *
+	 * @var array
+	 */
+	var $config;
 
 	/**
 	 * Does a user require an extra invite grant, to be able to invite an other user, default no
@@ -253,7 +259,7 @@ class calendar_bo
 		}
 		//error_log(__METHOD__ . " registered resources=". array2string($this->resources));
 
-		$this->config = Api\Config::read('calendar');	// only used for horizont, regular calendar Api\Config is under phpgwapi
+		$this->config = Api\Config::read('calendar');	// only used for horizont, regular calendar config is under phpgwapi
 		$this->require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];
 
 		$this->categories = new Api\Categories($this->user,'calendar');
@@ -1343,6 +1349,7 @@ class calendar_bo
 							$param = "'$param'";
 						}
 						break;
+					case 'EGroupware\\Api\\DateTime':
 					case 'egw_time':
 					case 'datetime':
 						$p = $param;
@@ -1363,6 +1370,7 @@ class calendar_bo
 			}
 			$msg = str_replace('%'.($i-1),$param,$msg);
 		}
+		error_log($msg);
 		if ($backtrace) error_log(function_backtrace(1));
 	}
 

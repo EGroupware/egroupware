@@ -230,135 +230,18 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 		// check for conflicts only happens !$ignore_conflicts AND if start + end date are given
-		if (!$ignore_conflicts && !$event['non_blocking'] && isset($event['start']) && isset($event['end']))
+		$checked_excluding = null;
+		if (!$ignore_conflicts && !$event['non_blocking'] && isset($event['start']) && isset($event['end']) &&
+			(($conflicts = $this->conflicts($event, $checked_excluding)) || $checked_excluding))
 		{
-			$types_with_quantity = array();
-			foreach($this->resources as $type => $data)
+			if ($checked_excluding)	// warn user if not all recurrences have been checked
 			{
-				if ($data['max_quantity']) $types_with_quantity[] = $type;
+				$conflicts['warning'] = array(
+					'start' => $checked_excluding,
+					'title' => lang('Only recurrences until %1 (excluding) have been checked!', $checked_excluding->format(true)),
+				);
 			}
-			// get all NOT rejected participants and evtl. their quantity
-			$quantity = $users = array();
-			foreach($event['participants'] as $uid => $status)
-			{
-				calendar_so::split_status($status,$q,$r);
-				if ($status[0] == 'R') continue;	// ignore rejected participants
-
-				if ($uid < 0)	// group, check it's members too
-				{
-					$users += (array)$GLOBALS['egw']->accounts->members($uid,true);
-					$users = array_unique($users);
-				}
-				$users[] = $uid;
-				if (in_array($uid[0],$types_with_quantity))
-				{
-					$quantity[$uid] = $q;
-				}
-			}
-			//$start = microtime(true);
-			$overlapping_events =& $this->search(array(
-				'start' => $event['start'],
-				'end'   => $event['end'],
-				'users' => $users,
-				'ignore_acl' => true,	// otherwise we get only events readable by the user
-				'enum_groups' => true,	// otherwise group-events would not block time
-				'query' => array(
-					'cal_non_blocking' => 0,
-				),
-				'no_integration' => true,	// do NOT use integration of other apps
-			));
-			//error_log(__METHOD__."() conflict check took ".number_format(microtime(true)-$start, 3).'s');
-			if ($this->debug > 2 || $this->debug == 'update')
-			{
-				$this->debug_message('calendar_boupdate::update() checking for potential overlapping events for users %1 from %2 to %3',false,$users,$event['start'],$event['end']);
-			}
-			$max_quantity = $possible_quantity_conflicts = $conflicts = array();
-			foreach((array) $overlapping_events as $k => $overlap)
-			{
-				if ($overlap['id'] == $event['id'] ||	// that's the event itself
-					$overlap['id'] == $event['reference'] ||	// event is an exception of overlap
-					$overlap['non_blocking'])			// that's a non_blocking event
-				{
-					continue;
-				}
-				if ($this->debug > 3 || $this->debug == 'update')
-				{
-					$this->debug_message('calendar_boupdate::update() checking overlapping event %1',false,$overlap);
-				}
-				// check if the overlap is with a rejected participant or within the allowed quantity
-				$common_parts = array_intersect($users,array_keys($overlap['participants']));
-				foreach($common_parts as $n => $uid)
-				{
-					$status = $overlap['participants'][$uid];
-					calendar_so::split_status($status, $q, $r);
-					if ($status == 'R')
-					{
-						unset($common_parts[$n]);
-						continue;
-					}
-					if (is_numeric($uid) || !in_array($uid[0],$types_with_quantity))
-					{
-						continue;	// no quantity check: quantity allways 1 ==> conflict
-					}
-					if (!isset($max_quantity[$uid]))
-					{
-						$res_info = $this->resource_info($uid);
-						$max_quantity[$uid] = $res_info[$this->resources[$uid[0]]['max_quantity']];
-					}
-					$quantity[$uid] += $q;
-					if ($quantity[$uid] <= $max_quantity[$uid])
-					{
-						$possible_quantity_conflicts[$uid][] =& $overlapping_events[$k];	// an other event can give the conflict
-						unset($common_parts[$n]);
-						continue;
-					}
-					// now we have a quantity conflict for $uid
-				}
-				if (count($common_parts))
-				{
-					if ($this->debug > 3 || $this->debug == 'update')
-					{
-						$this->debug_message('calendar_boupdate::update() conflicts with the following participants found %1',false,$common_parts);
-					}
-					$conflicts[$overlap['id'].'-'.$this->date2ts($overlap['start'])] =& $overlapping_events[$k];
-				}
-			}
-			// check if we are withing the allowed quantity and if not add all events using that resource
-			// seems this function is doing very strange things, it gives empty conflicts
-			foreach($max_quantity as $uid => $max)
-			{
-				if ($quantity[$uid] > $max)
-				{
-					foreach((array)$possible_quantity_conflicts[$uid] as $conflict)
-					{
-						$conflicts[$conflict['id'].'-'.$this->date2ts($conflict['start'])] =& $possible_quantity_conflicts[$k];
-					}
-				}
-			}
-			unset($possible_quantity_conflicts);
-
-			if (count($conflicts))
-			{
-				foreach($conflicts as $key => $conflict)
-				{
-						$conflict['participants'] = array_intersect_key((array)$conflict['participants'],$event['participants']);
-					if (!$this->check_perms(Acl::READ,$conflict))
-					{
-						$conflicts[$key] = array(
-							'id'    => $conflict['id'],
-							'title' => lang('busy'),
-							'participants' => $conflict['participants'],
-							'start' => $conflict['start'],
-							'end'   => $conflict['end'],
-						);
-					}
-				}
-				if ($this->debug > 2 || $this->debug == 'update')
-				{
-					$this->debug_message('calendar_boupdate::update() %1 conflicts found %2',false,count($conflicts),$conflicts);
-				}
-				return $conflicts;
-			}
+			return $conflicts;
 		}
 
 		//echo "saving $event[id]="; _debug_array($event);
@@ -400,6 +283,182 @@ class calendar_boupdate extends calendar_bo
 		return $cal_id;
 	}
 
+	/**
+	 * Check given event for conflicts and return them
+	 *
+	 * For recurring events we check a configurable fixed number of recurrences
+	 * or we try for a fixed maximum time.
+	 *
+	 * @param array $event
+	 * @param Api\DateTime& $checked_excluding =null time until which (excluding) recurrences have been checked
+	 * @return array or events
+	 */
+	function conflicts(array $event, &$checked_excluding=null)
+	{
+		$types_with_quantity = array();
+		foreach($this->resources as $type => $data)
+		{
+			if ($data['max_quantity']) $types_with_quantity[] = $type;
+		}
+		// get all NOT rejected participants and evtl. their quantity
+		$quantity = $users = array();
+		foreach($event['participants'] as $uid => $status)
+		{
+			$q = $r = null;
+			calendar_so::split_status($status,$q,$r);
+			if ($status[0] == 'R') continue;	// ignore rejected participants
+
+			if ($uid < 0)	// group, check it's members too
+			{
+				$users = array_unique(array_merge($users, (array)$GLOBALS['egw']->accounts->members($uid,true)));
+			}
+			$users[] = $uid;
+			if (in_array($uid[0],$types_with_quantity))
+			{
+				$quantity[$uid] = $q;
+			}
+		}
+		$max_quantity = $possible_quantity_conflicts = $conflicts = array();
+
+		if ($event['recur_type'])
+		{
+			$recurences = calendar_rrule::event2rrule($event);
+		}
+		else
+		{
+			$recurences = array(new Api\DateTime((int)$event['start']));
+		}
+		$checked_excluding = null;
+		$max_checked = $GLOBALS['egw_info']['server']['conflict_max_checked'];
+		if (($max_check_time = (float)$GLOBALS['egw_info']['server']['conflict_max_check_time']) < 1.0)
+		{
+			$max_check_time = 3.0;
+		}
+		$checked = 0;
+		$start = microtime(true);
+		$duration = $event['end']-$event['start'];
+		foreach($recurences as $date)
+		{
+			$startts = $date->format('ts');
+
+			// abort check if configured limits are exceeded
+			if ($event['recur_type'] &&
+				($checked++ > $max_checked && $max_checked > 0 || // maximum number of checked recurrences exceeded
+				microtime(true) > $start+$max_check_time ||	// max check time exceeded
+				$startts > $this->config['horizont']))	// we are behind horizont for which recurring events are rendered
+			{
+				if ($this->debug > 2 || $this->debug == 'conflicts')
+				{
+					$this->debug_message(__METHOD__.'() conflict check limited to %1 recurrences, %2 seconds, until (excluding) %3',
+						$checked, microtime(true)-$start, $date);
+				}
+				$checked_excluding = $date;
+				break;
+			}
+			$overlapping_events =& $this->search(array(
+				'start' => $startts,
+				'end'   => $startts+$duration,
+				'users' => $users,
+				'ignore_acl' => true,	// otherwise we get only events readable by the user
+				'enum_groups' => true,	// otherwise group-events would not block time
+				'query' => array(
+					'cal_non_blocking' => 0,
+				),
+				'no_integration' => true,	// do NOT use integration of other apps
+			));
+			if ($this->debug > 2 || $this->debug == 'conflicts')
+			{
+				$this->debug_message(__METHOD__.'() checking for potential overlapping events for users %1 from %2 to %3',false,$users,$startts,$startts+$duration);
+			}
+			foreach((array) $overlapping_events as $k => $overlap)
+			{
+				if ($overlap['id'] == $event['id'] ||	// that's the event itself
+					$overlap['id'] == $event['reference'] ||	// event is an exception of overlap
+					$overlap['non_blocking'])			// that's a non_blocking event
+				{
+					continue;
+				}
+				if ($this->debug > 3 || $this->debug == 'conflicts')
+				{
+					$this->debug_message(__METHOD__.'() checking overlapping event %1',false,$overlap);
+				}
+				// check if the overlap is with a rejected participant or within the allowed quantity
+				$common_parts = array_intersect($users,array_keys($overlap['participants']));
+				foreach($common_parts as $n => $uid)
+				{
+					$status = $overlap['participants'][$uid];
+					calendar_so::split_status($status, $q, $r);
+					if ($status == 'R')
+					{
+						unset($common_parts[$n]);
+						continue;
+					}
+					if (is_numeric($uid) || !in_array($uid[0],$types_with_quantity))
+					{
+						continue;	// no quantity check: quantity allways 1 ==> conflict
+					}
+					if (!isset($max_quantity[$uid]))
+					{
+						$res_info = $this->resource_info($uid);
+						$max_quantity[$uid] = $res_info[$this->resources[$uid[0]]['max_quantity']];
+					}
+					$quantity[$uid] += $q;
+					if ($quantity[$uid] <= $max_quantity[$uid])
+					{
+						$possible_quantity_conflicts[$uid][] =& $overlapping_events[$k];	// an other event can give the conflict
+						unset($common_parts[$n]);
+						continue;
+					}
+					// now we have a quantity conflict for $uid
+				}
+				if (count($common_parts))
+				{
+					if ($this->debug > 3 || $this->debug == 'conflicts')
+					{
+						$this->debug_message(__METHOD__.'() conflicts with the following participants found %1',false,$common_parts);
+					}
+					$conflicts[$overlap['id'].'-'.$this->date2ts($overlap['start'])] =& $overlapping_events[$k];
+				}
+			}
+		}
+		//error_log(__METHOD__."() conflict check took ".number_format(microtime(true)-$start, 3).'s');
+		// check if we are withing the allowed quantity and if not add all events using that resource
+		// seems this function is doing very strange things, it gives empty conflicts
+		foreach($max_quantity as $uid => $max)
+		{
+			if ($quantity[$uid] > $max)
+			{
+				foreach((array)$possible_quantity_conflicts[$uid] as $conflict)
+				{
+					$conflicts[$conflict['id'].'-'.$this->date2ts($conflict['start'])] =& $possible_quantity_conflicts[$k];
+				}
+			}
+		}
+		unset($possible_quantity_conflicts);
+
+		if (count($conflicts))
+		{
+			foreach($conflicts as $key => $conflict)
+			{
+					$conflict['participants'] = array_intersect_key((array)$conflict['participants'],$event['participants']);
+				if (!$this->check_perms(Acl::READ,$conflict))
+				{
+					$conflicts[$key] = array(
+						'id'    => $conflict['id'],
+						'title' => lang('busy'),
+						'participants' => $conflict['participants'],
+						'start' => $conflict['start'],
+						'end'   => $conflict['end'],
+					);
+				}
+			}
+			if ($this->debug > 2 || $this->debug == 'conflicts')
+			{
+				$this->debug_message(__METHOD__.'() %1 conflicts found %2',false,count($conflicts),$conflicts);
+			}
+		}
+		return $conflicts;
+	}
 	/**
 	 * Remove participants current user has no right to invite
 	 *

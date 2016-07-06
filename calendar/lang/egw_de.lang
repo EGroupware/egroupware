@@ -304,6 +304,8 @@ last changed	calendar	de	letzte Änderung
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length of the time interval	calendar	de	Länge des Zeitintervalls
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	de	Anzahl Zeilen der Beschreibung in der Listenansicht (voreingestellt 5, 0 für alle)
+limit search for conflicts in recurrences to given number of recurrences	calendar	de	Begrenze Suche nach Terminkonflikten auf die angegebene Anzahl Wiederholungen
+limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	de	Begrenze Suche nach Terminkonflikten auf die angegebene Zeit in Sekunden (Vorgabe 3)
 link title for events to show	calendar	de	Erweiterung des Link-Titels für Kalender-Einträge
 link to view the event	calendar	de	Verweis (Weblink) um den Termin anzuzeigen
 links	calendar	de	Verknüpfungen
@@ -379,6 +381,7 @@ one month	calendar	de	ein Monat
 one week	calendar	de	eine Woche
 one year	calendar	de	ein Jahr
 only group-events	calendar	de	nur Gruppentermine
+only recurrences until %1 (excluding) have been checked!	calendar	de	Wiederholungen wurden nur bis %1 (ausschließlich) überprüft!
 only the initial date of that recuring event is checked!	calendar	de	Nur das Startdatum diese wiederholenden Termins wird geprüft!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	de	Wird nur bei der Erstanzeige des Kalenders benutzt, danach immer die zuletzt ausgewählte Anzeige.
 open todo's:	calendar	de	unerledigte Aufgaben:
