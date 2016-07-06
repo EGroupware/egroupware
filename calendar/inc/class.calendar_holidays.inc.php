@@ -23,6 +23,11 @@ use EGroupware\Api;
  * Holidays are cached on tree or instance level, later for custom urls.
  * As fetching and parsing iCal files is expensive, we always render them
  * from previous (requested) year until next 5 years.
+ *
+ * Holiday urls are from Mozilla Calendar project:
+ * @link https://www.mozilla.org/en-US/projects/calendar/holidays/
+ * @link https://www.mozilla.org/media/caldata/calendars.json (json from which above page is generated)
+ * @link https://github.com/mozilla/bedrock/tree/master/media/caldata
  */
 class calendar_holidays
 {
