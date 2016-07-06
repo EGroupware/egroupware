@@ -287,7 +287,10 @@ class calendar_boupdate extends calendar_bo
 	 * Check given event for conflicts and return them
 	 *
 	 * For recurring events we check a configurable fixed number of recurrences
-	 * or we try for a fixed maximum time.
+	 * and for a fixed maximum time (default 3s).
+	 *
+	 * Conflict check skips past events/recurrences and is always limited by recurrence horizont,
+	 * as it would only report non-recurring events after.
 	 *
 	 * @param array $event
 	 * @param Api\DateTime& $checked_excluding =null time until which (excluding) recurrences have been checked
@@ -341,11 +344,14 @@ class calendar_boupdate extends calendar_bo
 		{
 			$startts = $date->format('ts');
 
+			// skip past events or recurrences
+			if ($startts+$duration < $this->now_su) continue;
+
 			// abort check if configured limits are exceeded
 			if ($event['recur_type'] &&
-				($checked++ > $max_checked && $max_checked > 0 || // maximum number of checked recurrences exceeded
+				(++$checked > $max_checked && $max_checked > 0 || // maximum number of checked recurrences exceeded
 				microtime(true) > $start+$max_check_time ||	// max check time exceeded
-				$startts > $this->config['horizont']))	// we are behind horizont for which recurring events are rendered
+				$startts > $this->config['horizont']))	// we are behind horizon for which recurrences are rendered
 			{
 				if ($this->debug > 2 || $this->debug == 'conflicts')
 				{

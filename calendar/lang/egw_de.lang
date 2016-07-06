@@ -397,6 +397,7 @@ people holiday	calendar	de	Feiertag
 permission denied	calendar	de	Zugriff verweigert
 planner by category	calendar	de	Planer nach Kategorien
 planner by user	calendar	de	Planer nach Benutzern
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	de	Bitte beachten: Konfliktprüfung findet nie in der Vergangenheit statt und ist immer durch den obigen Wiederholungs-Bereich beschränkt.
 please note: you can configure the field assignments after you uploaded the file.	calendar	de	Bitte beachten: Die Feldzuordnung kann NACH dem Hochladen der Datei konfiguriert werden.
 preselected group for entering the planner	calendar	de	Vorausgewählte Gruppe beim Planer-Aufruf
 prevent deleting of entries	admin	de	Das Löschen von Einträgen verhindern
@@ -413,6 +414,8 @@ receive summary of appointments	calendar	de	Zusammenfassung der Termine erhalten
 recover	calendar	de	Wiederherstellen
 recovered	calendar	de	wieder hergestellt
 recurrence	calendar	de	Wiederholung
+recurrence enddate	calendar	de	Enddatum der Wiederholung
+recurrences and conflict check	calendar	de	Wiederholungen und Konfliktprüfung
 recurring event	calendar	de	Wiederholender Termin
 reject	calendar	de	Absagen
 rejected	calendar	de	Abgesagt
