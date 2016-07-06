@@ -1786,7 +1786,7 @@ body {
 #loginMainDiv div#centerBox form table.divLoginbox td {
   padding: 0.5em;
   font-weight: bold;
-  color: #ffc200;
+  color: #26537C;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select {
   /*.box_shadow_standard_light;*/
@@ -8048,6 +8048,9 @@ form[id^="tracker-"] .dialogHeadbar {
   body .et2_mobile_view div.et2_hbox.avatar img {
     width: 100px;
     height: 100px;
+  }
+  body .et2_mobile_view .et2_tabbox {
+    padding-left: 8px;
   }
   body .mobile-view-editBtn {
     position: fixed;
