@@ -105,6 +105,17 @@
 						<option value="yes">Yes</option>
 					</select>
 				</row>
+				<row>
+					<description value="Scheduling conflict" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Limit search for conflicts in recurrences to given time in seconds (default 3)"/>
+					<float id="newsettings[conflict_max_check_time]" min="1" max="30"/>
+				</row>
+				<row>
+					<description value="Limit search for conflicts in recurrences to given number of recurrences"/>
+					<float id="newsettings[conflict_max_checked]"/>
+				</row>
 			</rows>
 		</grid>
 	</template>

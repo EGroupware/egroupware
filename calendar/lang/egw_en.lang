@@ -304,6 +304,8 @@ last changed	calendar	en	Last changed
 lastname of person to notify	calendar	en	Last name of a person to notify
 length of the time interval	calendar	en	Length of the time interval
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	en	Limit number of description lines in list view. Default is 5, 0 for no limit.
+limit search for conflicts in recurrences to given number of recurrences	calendar	en	Limit search for conflicts in recurrences to given number of recurrences
+limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	en	Limit search for conflicts in recurrences to given time in seconds (default 3)
 link title for events to show	calendar	en	Link title for events to show
 link to view the event	calendar	en	Link to view the event
 links	calendar	en	Links
@@ -379,6 +381,7 @@ one month	calendar	en	One month
 one week	calendar	en	One week
 one year	calendar	en	One year
 only group-events	calendar	en	Only group events
+only recurrences until %1 (excluding) have been checked!	calendar	en	Only recurrences until %1 (excluding) have been checked!
 only the initial date of that recuring event is checked!	calendar	en	Only the initial date of that recurring event is checked!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	en	Only used for first viewing of calendar, afterwards last selected view is used.
 open todo's:	calendar	en	Open ToDo's:
