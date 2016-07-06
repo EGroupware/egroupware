@@ -2755,6 +2755,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					jQuery.extend({}, state, {owner: value[i].owner}),
 					this.sidebox_et2 ? null : this.et2.getInstanceManager()
 				);
+				need_data = false;
 			}
 		}
 

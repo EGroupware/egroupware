@@ -927,6 +927,10 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 		var length = parent_owner.length;
 		for(var i = 0; i < length; i++ )
 		{
+			// Exception for mailing lists, they won't match and we don't have the
+			// list client side.
+			if(parent_owner[i][0] === 'l') return true;
+			
 			if (parseInt(parent_owner[i]) < 0)
 			{
 				// Add in groups, if we can get them (this is syncronous)

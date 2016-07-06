@@ -251,6 +251,11 @@ class calendar_bo
 				'info' => __CLASS__.'::email_info',
 				'app'  => 'email',
 			);
+			$this->resources['l'] = array(
+				'type' => 'l',// one char type-identifier for this resources
+				'info' => __CLASS__ .'::mailing_lists',// info method, returns array with id, type & name for a given id
+				'app' => 'Mailing list'
+			);
 			$this->resources[''] = array(
 				'type' => '',
 				'app' => 'api-accounts',
@@ -328,6 +333,36 @@ class calendar_bo
 	}
 
 	/**
+	 * returns info about mailing lists as participants
+	 *
+	 * @param int|array $ids single mailing list ID or array of id's
+	 * @return array
+	 */
+	static function mailing_lists($ids)
+	{
+		if(!is_array($ids))
+		{
+			$ids = array($ids);
+		}
+		$data = array();
+
+		// Email list
+		$contacts_obj = new Api\Contacts();
+		foreach($ids as $id)
+		{
+			$list = $contacts_obj->read_list((int)$id);
+
+			$data[] = array(
+				'res_id' => $id,
+				'rights' => self::ACL_READ_FOR_PARTICIPANTS,
+				'name' => $list['list_name'],
+			);
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Add group-members as participants with status 'G'
 	 *
 	 * @param array $event event-array
@@ -374,6 +409,35 @@ class calendar_bo
 		foreach($_users as $user)
 		{
 			$user = trim($user);
+
+			// Handle email lists
+			if(!is_numeric($user) && $user[0] == 'l')
+			{
+				$contacts = new Api\Contacts();
+				if($contacts->check_list((int)substr($user,1), ACL::READ))
+				{
+					$users[] = $user;
+
+					$options = array('list' => substr($user,1));
+					$lists = $contacts->search('',true,'','','',false,'AND',false,$options);
+					if(!$lists)
+					{
+						continue;
+					}
+					foreach($lists as &$contact)
+					{
+						$contact = 'c'.$contact['id'];
+						if ($ignore_acl || $this->check_perms(ACL::READ|self::ACL_READ_FOR_PARTICIPANTS|($use_freebusy?self::ACL_FREEBUSY:0),0,$contact))
+						{
+							if ($contact && !in_array($contact,$users))	// already added?
+							{
+								$users[] = $contact;
+							}
+						}
+					}
+				}
+				continue;
+			}
 			if ($ignore_acl || $this->check_perms(ACL::READ|self::ACL_READ_FOR_PARTICIPANTS|($use_freebusy?self::ACL_FREEBUSY:0),0,$user))
 			{
 				if ($user && !in_array($user,$users))	// already added?

@@ -825,6 +825,7 @@ class calendar_boupdate extends calendar_bo
 		$event = $msg_type == MSG_ADDED || $msg_type == MSG_MODIFIED ? $new_event : $old_event;
 
 		// add all group-members to the notification, unless they are already participants
+		$contact_obj = false;
 		foreach($to_notify as $userid => $statusid)
 		{
 			if (is_numeric($userid) && $GLOBALS['egw']->accounts->get_type($userid) == 'g' &&
@@ -835,6 +836,28 @@ class calendar_boupdate extends calendar_bo
 					if (!isset($to_notify[$member]))
 					{
 						$to_notify[$member] = 'G';	// Group-invitation
+					}
+				}
+			}
+			// Mailing lists
+			else if (!is_numeric($userid) && $userid[0] == 'l')
+			{
+				if(!$contact_obj)
+				{
+					$contact_obj = new Api\Contacts();
+				}
+				$options = array('list' => substr($user,1));
+				$contacts = $contact_obj->search('',true,'','','',false,'AND',false,$options);
+				if(!$contacts)
+				{
+					continue;
+				}
+				foreach($contacts as &$contact)
+				{
+					$contact = 'c'.$contact['id'];
+					if ($contact && !isset($to_notify[$contact]))	// already added?
+					{
+						$to_notify[$contact] = 'G';
 					}
 				}
 			}
