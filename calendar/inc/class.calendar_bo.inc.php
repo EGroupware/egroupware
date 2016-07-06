@@ -251,6 +251,11 @@ class calendar_bo
 				'info' => __CLASS__.'::email_info',
 				'app'  => 'email',
 			);
+			$this->resources['l'] = array(
+				'type' => 'l',// one char type-identifier for this resources
+				'info' => __CLASS__ .'::mailing_lists',// info method, returns array with id, type & name for a given id
+				'app' => 'Mailing list'
+			);
 			$this->resources[''] = array(
 				'type' => '',
 				'app' => 'api-accounts',

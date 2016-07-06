@@ -345,7 +345,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			var options = false
 			if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 			{
-				options = app.calendar.sidebox_et2.getWidgetById('owner').options.select_options;
+				options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
 			}
 			else
 			{

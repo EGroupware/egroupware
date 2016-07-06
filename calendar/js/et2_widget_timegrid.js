@@ -108,7 +108,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			.appendTo(this.scrolling);
 
 		// Used for owners
-		this.owner = et2_createWidget('select-account_ro',{},this);
+		this.owner = et2_createWidget('description',{},this);
 
 		this._labelContainer = jQuery(document.createElement("label"))
 			.addClass("et2_label et2_link")
@@ -1586,17 +1586,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		if(typeof _owner == 'string' && isNaN(_owner))
 		{
 			this.set_label('');
-			switch(_owner[0])
-			{
-				case 'c':
-					this.owner.options.application = 'addressbook';
-					this.owner.set_value(_owner.substr(1));
-					break;
-				case 'r':
-					this.owner.options.application = 'resources';
-					this.owner.set_value(_owner.substr(1));
-					break;
-			}
+			this.owner.set_value(this._get_owner_name(_owner));
 
 			// Label is empty, but give extra space for the owner name
 			this.div.removeClass('calendar_TimeGridNoLabel');
@@ -1615,7 +1605,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		else
 		{
 			this.owner.options.application = 'api-accounts';
-			this.owner.set_value(typeof _owner == "string" || typeof _owner == "number" ? _owner : jQuery.extend([],_owner));
+			this.owner.set_value(this._get_owner_name(_owner));
 			this.set_label('');
 			jQuery(this.getDOMNode(this.owner)).prepend(this.owner.getDOMNode());
 		}
