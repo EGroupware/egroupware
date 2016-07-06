@@ -92,6 +92,12 @@
   #infolog-view tr.dialogHeadbar div.et2_hbox {
     display: none;
   }
+  #infolog-view .et2_label.et2_label_empty {
+    padding-left: 0px;
+  }
+  #infolog-view .et2_label.et2_label_empty * {
+    padding-left: 0px;
+  }
   .infolog_CompletedClmn .infoPercent {
     height: 23px;
     float: right;
