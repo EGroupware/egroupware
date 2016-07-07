@@ -107,15 +107,15 @@ class resources_import_csv extends importexport_basic_import_csv  {
 		if(!$record->accessory_of) $record->accessory_of = -1;
 		//error_log(__METHOD__.__LINE__.array2string($_definition->plugin_options['conditions']));
 		if ($this->definition->plugin_options['conditions']) {
-		
+
 			foreach ( $this->definition->plugin_options['conditions'] as $condition ) {
 				$results = array();
 				switch ( $condition['type'] ) {
 					// exists
 					case 'exists' :
-						if($record->$condition['string']) {
+						if($record->{$condition['string']}) {
 							$results = $this->bo->so->search(
-								array( $condition['string'] => $record->$condition['string']),
+								array( $condition['string'] => $record->{$condition['string']}),
 								False
 							);
 						}
@@ -170,7 +170,7 @@ class resources_import_csv extends importexport_basic_import_csv  {
 
 				// Merge to deal with fields not in import record
 				$_data = array_merge($old, $_data);
-				
+
 				// Fall through
 			case 'insert' :
 				if($_action == 'insert') {
@@ -193,7 +193,7 @@ class resources_import_csv extends importexport_basic_import_csv  {
 				}
 			default:
 				throw new Api\Exception('Unsupported action');
-			
+
 		}
 	}
 

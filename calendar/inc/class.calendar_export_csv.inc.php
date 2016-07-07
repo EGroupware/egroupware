@@ -103,7 +103,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 							if(method_exists($ui, $states['view']))
 							{
 								ob_start();
-								$ui->$states['view']();
+								$ui->{$states['view']}();
 								ob_end_clean();
 							}
 							$query += array(
