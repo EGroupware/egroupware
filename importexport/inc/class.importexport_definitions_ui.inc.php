@@ -58,7 +58,7 @@ class importexport_definitions_ui
 		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 		Api\Translation::add_app(self::_appname);
 		$GLOBALS['egw_info']['flags']['currentapp'] = self::_appname;
-		
+
 		$this->etpl = new Etemplate();
 		$this->clock = Api\Html::image(self::_appname,'clock');
 		$this->steps = array(
@@ -544,11 +544,11 @@ class importexport_definitions_ui
 				}
 				if(!key_exists($content['step'],$this->steps))
 				{
-					$next_step = $this->plugin->$content['step']($content,$sel_options,$readonlys,$preserv);
+					$next_step = $this->plugin->{$content['step']}($content,$sel_options,$readonlys,$preserv);
 				}
 				else
 				{
-					$next_step = $this->$content['step']($content,$sel_options,$readonlys,$preserv);
+					$next_step = $this->{$content['step']}($content,$sel_options,$readonlys,$preserv);
 				}
 			}
 			else
@@ -578,15 +578,15 @@ class importexport_definitions_ui
 				{
 					if(!key_exists($content['step'],$this->steps))
 					{
-						$next_step = $this->plugin->$content['step']($content);
+						$next_step = $this->plugin->{$content['step']}($content);
 					}
 					else
 					{
-						$next_step = $this->$content['step']($content);
+						$next_step = $this->{$content['step']}($content);
 					}
 				}
 			} while($this->wizard_content_template == self::SKIP);
-			
+
 			if(!$this->can_edit($content))
 			{
 				$readonlys[$this->wizard_content_template] = true;
@@ -868,7 +868,7 @@ class importexport_definitions_ui
 				$content['no_all_users'] = true;
 			}
 			unset ($preserv['button']);
-			
+
 			$readonlys['button[next]'] = true;
 			return 'importexport.wizard_chooseallowedusers';
 		}

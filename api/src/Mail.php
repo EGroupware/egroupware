@@ -3391,7 +3391,7 @@ class Mail
 		//highest precedence
 		try
 		{
-			$_folderName = $this->icServer->$types[$_type]['profileKey'];
+			$_folderName = $this->icServer->{$types[$_type]['profileKey']};
 		}
 		catch (\Exception $e)
 		{
