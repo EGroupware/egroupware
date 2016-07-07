@@ -173,16 +173,32 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			'admin'  => False,
 		);
 /*
+		$sigOptions = array(
+				'send'=>'yes, always add EGroupware signatures to outgoing mails',
+				'nosend'=>'no, never add EGroupware signatures to outgoing mails',
+			);
+		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group'))&&$hook_data['account_id'])
+		{
+			$pID=self::$profileID;
+			if ($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-ActiveSyncProfileID']=='G')
+			{
+				$pID=Mail\Account::get_default_acc_id();
+			}
+			$acc = Mail\Account::read($pID);
+			error_log(__METHOD__.__LINE__.':'.$pID.'->'.array2string($acc));
+			$Identities = Mail\Account::identities($pID);
+			foreach($Identities as &$identity)
+			{
+				$Identity = self::identity_name($identity);
+			}
+			error_log(__METHOD__.__LINE__.array2string($Identities));
+		}
 		$settings['mail-useSignature'] = array(
 			'type'   => 'select',
 			'label'  => 'control if and which available signature is added to outgoing mails',
 			'name'   => 'mail-useSignature',
 			'help'   => 'control the use of signatures',
-			'values' => array(
-				'sendifnocalnotif'=>'only send if there is no notification in calendar',
-				'send'=>'yes, always add EGroupware signatures to outgoing mails',
-				'nosend'=>'no, never add EGroupware signatures to outgoing mails',
-			),
+			'values' => $sigOptions,
 			'xmlrpc' => True,
 			'default' => 'nosend',
 			'admin'  => False,
@@ -979,6 +995,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 							'<body>';
 						if ($output->nativebodytype==2)
 						{
+							if ($css) Api\Mail\Html::replaceTagsCompletley($body,'style');
 							// as we fetch html, and body is HTML, we may not need to handle this
 							$htmlbody .= $body;
 						}
