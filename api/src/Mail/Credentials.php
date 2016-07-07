@@ -674,7 +674,7 @@ class Credentials
 				}
 			}
 		}
-		catch(Exception $e) {
+		catch(\Exception $e) {
 			// do not stall regular use, if password migration fails
 			_egw_log_exception($e);
 		}
