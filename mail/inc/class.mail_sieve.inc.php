@@ -1149,7 +1149,7 @@ class mail_sieve
 		$sessionData['sieve_rules']		= $this->rules;
 		$sessionData['sieve_rulesByID'] = $this->rulesByID;
 		$sessionData['sieve_scriptToEdit']	= $this->scriptToEdit;
-		$GLOBALS['egw']->session->appsession('sieve_session_data','',$sessionData);
+		Api\Cache::setSession(__CLASS__, 'sieve_session_data', $sessionData);
 	}
 
 	/**
@@ -1193,7 +1193,7 @@ class mail_sieve
 	 */
 	function restoreSessionData()
 	{
-		$sessionData = $GLOBALS['egw']->session->appsession('sieve_session_data');
+		$sessionData = Api\Cache::getSession(__CLASS__, 'sieve_session_data');
 		$this->rules		= $sessionData['sieve_rules'];
 		$this->rulesByID = $sessionData['sieve_rulesByID'];
 		$this->scriptToEdit	= $sessionData['sieve_scriptToEdit'];
