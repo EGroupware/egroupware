@@ -897,7 +897,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 			request.sendRequest(true);
 		};
 		et2_dialog.show_dialog(do_delete, (egw.lang("Delete") + " " +name +"?"),
-			"Delete", et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
+			egw.lang("Delete"), et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
 
 		return false;
 	},
