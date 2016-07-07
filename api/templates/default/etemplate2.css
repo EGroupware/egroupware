@@ -1390,7 +1390,8 @@ div.message.floating {
 .et2_nextmatch .egwGridView_outer thead tr > th:first-child {
 	border-left: 6px solid transparent;
 }
-.egwGridView_scrollarea tr.row_category > td:first-child  {
+.egwGridView_scrollarea tr.row_category > td:first-child,
+.select-cat li{
 	border-left: 6px solid transparent;
 }
 .et2_nextmatch .egwGridView_grid, .et2_nextmatch .egwGridView_outer {
@@ -2677,4 +2678,29 @@ tr.dialogHeader2 td {padding-top:15px;}
 	background-color: initial !important;
 	box-shadow: none !important;
 	cursor: default !important;
+}
+
+/*et2_selectbox select-cat chosen (cats selectbox with colors) */
+.nextmatch_header_row .et2_selectbox.select-cat .chzn-single
+{
+	border: none;
+	border-left: 6px solid transparent;
+	background: transparent;
+	box-shadow: none;
+	margin-top: 1px;
+	border-radius: 0;
+}
+.nextmatch_header_row .et2_selectbox.select-cat
+{
+    padding-right: 3px !important;
+    -webkit-appearance: none;
+	height: 22px !important;
+    margin: 1px 4px 1px 0;
+    background-color: #fafafa;
+    border: 1px solid silver;
+    border-radius: 3px;
+    padding-left: 5px;
+    display: inline-block;
+    float: left;
+	min-height: 20px;
 }

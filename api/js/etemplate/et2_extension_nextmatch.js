@@ -2677,7 +2677,14 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 				this.egw().debug('warn', 'Nextmatch filter options in a weird place - "%s".  Should be in sel_options[%s].',row_id,name);
 			}
 		}
-
+		if (name == 'cat_id')
+		{
+			jQuery.extend(widget_options, {
+				multiple: false,
+				tags: true,
+				class: "select-cat"
+			});
+		}
 		// Legacy: Add in 'All' option for cat_id, if not provided.
 		if(name == 'cat_id' && options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != ''))
 		{
