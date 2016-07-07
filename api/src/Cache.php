@@ -555,7 +555,7 @@ class Cache
 			}
 			if (!$providers[$level] && $log_not_found) error_log(__METHOD__."($level) no provider found ($reason)!".function_backtrace());
 		}
-		//error_log(__METHOD__."($level) = ".array2string($providers[$level]).', cache_provider='.array2string($GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)]));
+		error_log(__METHOD__."($level) = ".array2string($providers[$level]).', cache_provider='.array2string($GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)]));
 		return $providers[$level];
 	}
 
@@ -730,11 +730,13 @@ class Cache
 	}
 }
 
-// setting apc as default provider, if apc_fetch function exists AND further checks in Api\Cache\Apc recommed it
+// setting apc(u) as default provider, if apc(u)_fetch function exists AND further checks in Api\Cache\Apc(u) recommed it
 if (is_null(Cache::$default_provider))
 {
-	Cache::$default_provider = function_exists('apc_fetch') && Cache\Apc::available() ?
-		'EGroupware\Api\Cache\Apc' : 'EGroupware\Api\Cache\Files';
+	Cache::$default_provider =
+		function_exists('apcu_fetch') && Cache\Apcu::available() ? 'EGroupware\Api\Cache\Apcu' :
+			(function_exists('apc_fetch') && Cache\Apc::available() ? 'EGroupware\Api\Cache\Apc' :
+				'EGroupware\Api\Cache\Files');
 }
 
 //error_log('Cache::$default_provider='.array2string(Cache::$default_provider));
