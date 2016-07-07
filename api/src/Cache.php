@@ -555,7 +555,7 @@ class Cache
 			}
 			if (!$providers[$level] && $log_not_found) error_log(__METHOD__."($level) no provider found ($reason)!".function_backtrace());
 		}
-		error_log(__METHOD__."($level) = ".array2string($providers[$level]).', cache_provider='.array2string($GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)]));
+		//error_log(__METHOD__."($level) = ".array2string($providers[$level]).', cache_provider='.array2string($GLOBALS['egw_info']['server']['cache_provider_'.strtolower($level)]));
 		return $providers[$level];
 	}
 
