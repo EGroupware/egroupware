@@ -659,14 +659,17 @@ class Credentials
 	static function migrate($acc_id)
 	{
 		try {
-			foreach((array)self::$cache[$acc_id] as $account_id => &$rows)
+			if (isset(self::$cache[$acc_id]))
 			{
-				foreach($rows as $cred_type => &$row)
+				foreach(self::$cache[$acc_id] as $account_id => &$rows)
 				{
-					if (self::needMigration($row['cred_pw_enc']) && ($row['cred_pw_enc'] != self::USER ||
-						$row['cred_pw_enc'] == self::USER && $account_id == $GLOBALS['egw_info']['user']['account_id']))
+					foreach($rows as $cred_type => &$row)
 					{
-						self::write($acc_id, $row['cred_username'], self::decrypt($row), $cred_type, $account_id, $row['cred_id']);
+						if (self::needMigration($row['cred_pw_enc']) && ($row['cred_pw_enc'] != self::USER ||
+							$row['cred_pw_enc'] == self::USER && $account_id == $GLOBALS['egw_info']['user']['account_id']))
+						{
+							self::write($acc_id, $row['cred_username'], self::decrypt($row), $cred_type, $account_id, $row['cred_id']);
+						}
 					}
 				}
 			}
