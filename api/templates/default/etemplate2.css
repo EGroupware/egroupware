@@ -2684,11 +2684,13 @@ tr.dialogHeader2 td {padding-top:15px;}
 .nextmatch_header_row .et2_selectbox.select-cat .chzn-single
 {
 	border: none;
-	border-left: 6px solid transparent;
-	background: transparent;
-	box-shadow: none;
-	margin-top: 1px;
-	border-radius: 0;
+    padding-left: 3px;
+    background: transparent;
+    box-shadow: none;
+    margin-top: 0px;
+    border-radius: 3px;
+    height: 22px;
+    border-left: 6px solid transparent;
 }
 .nextmatch_header_row .et2_selectbox.select-cat
 {
@@ -2699,8 +2701,9 @@ tr.dialogHeader2 td {padding-top:15px;}
     background-color: #fafafa;
     border: 1px solid silver;
     border-radius: 3px;
-    padding-left: 5px;
+    padding-left: 0px;
     display: inline-block;
     float: left;
 	min-height: 20px;
+	min-width: 160px;
 }
