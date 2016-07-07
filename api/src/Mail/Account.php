@@ -236,6 +236,13 @@ class Account implements \ArrayAccess
 	);
 
 	/**
+	 * Callable to run on successful login to eg. run Credentials::migrate
+	 *
+	 * @var array with callable and further arguments
+	 */
+	protected $on_login;
+
+	/**
 	 * Constructor
 	 *
 	 * Should be protected, but php5.3 does NOT keep class context in closures.
@@ -248,7 +255,7 @@ class Account implements \ArrayAccess
 	/*protected*/ function __construct(array $params, $called_for=null)
 	{
 		// read credentials from database
-		$params += Credentials::read($params['acc_id'], null, $called_for ? array(0, $called_for) : $called_for);
+		$params += Credentials::read($params['acc_id'], null, $called_for ? array(0, $called_for) : $called_for, $this->on_login);
 
 		if (!isset($params['notify_folders']))
 		{
@@ -365,6 +372,14 @@ class Account implements \ArrayAccess
 
 			$class = $this->params['acc_imap_type'];
 			$this->imapServer = new $class($this->params, $_adminConnection, $_timeout);
+
+			// if Credentials class told us to run something on successful login, tell it to Imap class
+			if ($this->on_login)
+			{
+				$func = array_shift($this->on_login);
+				$this->imapServer->runOnLogin($func, $this->on_login);
+				unset($this->on_login);
+			}
 		}
 		return $this->imapServer;
 	}

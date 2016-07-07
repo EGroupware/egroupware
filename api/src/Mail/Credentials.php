@@ -144,9 +144,11 @@ class Credentials
 	 * @param int $acc_id
 	 * @param int $type =null default return all credentials
 	 * @param int|array $account_id =null default use current user or all (in that order)
+	 * @param array& $on_login =null on return array with callable and further arguments
+	 *	to run on successful login to trigger password migration
 	 * @return array with values for (imap|smtp|admin)_(username|password|cred_id)
 	 */
-	public static function read($acc_id, $type=null, $account_id=null)
+	public static function read($acc_id, $type=null, $account_id=null, &$on_login=null)
 	{
 		if (is_null($type)) $type = self::ALL;
 		if (is_null($account_id))
@@ -176,6 +178,7 @@ class Credentials
 			$rows = call_user_func_array('array_merge', $rows);
 			//error_log(__METHOD__."($acc_id, $type, ".array2string($account_id).") read from cache ".array2string($rows));
 		}
+		$on_login = null;
 		$results = array();
 		foreach($rows as $row)
 		{
@@ -184,6 +187,11 @@ class Credentials
 			{
 				self::$cache[$acc_id][$row['account_id']][$row['cred_type']] = $row;
 				//error_log(__METHOD__."($acc_id, $type, ".array2string($account_id).") stored to cache ".array2string($row));
+
+				if (!isset($on_login) && self::needMigration($row['cred_pw_enc']))
+				{
+					$on_login = array(__CLASS__.'::migrate', $acc_id);
+				}
 			}
 			$password = self::decrypt($row);
 
@@ -630,6 +638,43 @@ class Credentials
 
 		return trim(openssl_decrypt(base64_decode(substr($row['cred_password'], self::SALT_LEN64)),
 			self::AES_METHOD, $aes_key, OPENSSL_RAW_DATA, $salt), "\0");
+	}
+
+	/**
+	 * Check if credentials need migration to AES
+	 *
+	 * @param string $pw_enc
+	 * @return boolean
+	 */
+	static public function needMigration($pw_enc)
+	{
+		return $pw_enc == self::USER || $pw_enc == self::SYSTEM || $pw_enc == self::CLEARTEXT;
+	}
+
+	/**
+	 * Run password migration for credentials of given account
+	 *
+	 * @param int $acc_id
+	 */
+	static function migrate($acc_id)
+	{
+		try {
+			foreach((array)self::$cache[$acc_id] as $account_id => &$rows)
+			{
+				foreach($rows as $cred_type => &$row)
+				{
+					if (self::needMigration($row['cred_pw_enc']) && ($row['cred_pw_enc'] != self::USER ||
+						$row['cred_pw_enc'] == self::USER && $account_id == $GLOBALS['egw_info']['user']['account_id']))
+					{
+						self::write($acc_id, $row['cred_username'], self::decrypt($row), $cred_type, $account_id, $row['cred_id']);
+					}
+				}
+			}
+		}
+		catch(Exception $e) {
+			// do not stall regular use, if password migration fails
+			_egw_log_exception($e);
+		}
 	}
 
 	/**

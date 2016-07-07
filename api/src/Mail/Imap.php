@@ -239,6 +239,41 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 	}
 
 	/**
+	 * Methods to run on successful login
+	 *
+	 * @var array
+	 */
+	protected $run_on_login=array();
+
+	/**
+	 * Run given function on successful login
+	 *
+	 * @param callable $func
+	 * @param array $params =array()
+	 */
+	public function runOnLogin($func, array $params=array())
+	{
+		$this->run_on_login[] = array($func, $params);
+	}
+
+	/**
+	 * Login to the IMAP server.
+	 *
+	 * @throws Horde_Imap_Client_Exception
+	 */
+	public function login()
+	{
+		parent::login();
+
+		foreach($this->run_on_login as $key => $data)
+		{
+			call_user_func_array($data[0], $data[1]);
+
+			unset($this->run_on_login[$key]);
+		}
+	}
+
+	/**
 	 * Allow read access to former public attributes
 	 *
 	 * @param type $name
