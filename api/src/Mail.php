@@ -1450,7 +1450,7 @@ class Mail
 			// Pre-cache the headers we want, 'fetchHeaders' is a label into the cache
 			$fquery->headers('fetchHeaders',array(
 				'DISPOSITION-NOTIFICATION-TO','RETURN-RECEIPT-TO','X-CONFIRM-READING-TO',
-				'DATE','SUBJECT','FROM','TO','CC',
+				'DATE','SUBJECT','FROM','TO','CC','REPLY-TO',
 				'X-PRIORITY'
 			),array(
 				// Cache headers, we'll look at them below
@@ -1545,8 +1545,9 @@ class Mail
 				$headerObject['FROM'] = (array)($headerForPrio['FROM']?$headerForPrio['FROM']:($headerForPrio['REPLY-TO']?$headerForPrio['REPLY-TO']:$headerForPrio['RETURN-PATH']));
 				$headerObject['TO'] = (array)$headerForPrio['TO'];
 				$headerObject['CC'] = isset($headerForPrio['CC'])?(array)$headerForPrio['CC']:array();
+				$headerObject['REPLY-TO'] = isset($headerForPrio['REPLY-TO'])?(array)$headerForPrio['REPLY-TO']:array();
 				$headerObject['PRIORITY'] = isset($headerForPrio['X-PRIORITY'])?$headerForPrio['X-PRIORITY']:null;
-				foreach (array('FROM','TO','CC') as $key)
+				foreach (array('FROM','TO','CC','REPLY-TO') as $key)
 				{
 					$address = array();
 					foreach ($headerObject[$key] as $k => $ad)
@@ -1701,6 +1702,9 @@ class Mail
 				//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].'->'.array2string($_headerObject->getEnvelope()->__get('from')));
 				if(is_array($headerObject['FROM']) && $headerObject['FROM'][0]) {
 					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0],true);
+				}
+				if(is_array($headerObject['REPLY-TO']) && $headerObject['REPLY-TO'][0]) {
+					$retValue['header'][$sortOrder[$uid]]['reply_to_address'] = self::decode_header($headerObject['REPLY-TO'][0],true);
 				}
 				if(is_array($headerObject['TO']) && $headerObject['TO'][0]) {
 					$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0],true);
