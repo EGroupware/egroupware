@@ -864,20 +864,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$account = $_folderName = $xid = null;
 		$this->splitID($folderid,$account,$_folderName,$xid);
 		$this->mail->reopen($_folderName);
-		$stat = $this->StatMessage($folderid, $id);
-		if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($stat));
+		$messages = $this->fetchMessages($folderid, NULL, $id, true);	// true: return all headers
+		$headers = $messages[$id];
+		if ($this->debugLevel>3) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.array2string($headers));
 		// StatMessage should reopen the folder in question, so we dont need folderids in the following statements.
-		if ($stat)
+		if ($headers)
 		{
-			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." Message $id with stat ".array2string($stat));
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__." Message $id with stat ".array2string($headers));
 			// initialize the object
 			$output = new SyncMail();
-			$headers = $this->mail->getMessageHeader($id,'',true,true,$_folderName);
-			if (empty($headers))
-			{
-				error_log(__METHOD__.__LINE__.' Retrieval of Headers Failed! for .'.$this->account.'/'.$GLOBALS['egw_info']['user']['account_lid'].' ServerID:'.self::$profileID.'FolderID:'.$folderid.'/'.$_folderName.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference).' Stat was:'.array2string($stat));
-				return $output;//empty object
-			}
 			//$rawHeaders = $this->mail->getMessageRawHeader($id);
 			// simple style
 			// start AS12 Stuff (bodypreference === false) case = old behaviour
@@ -1049,40 +1044,38 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				}
 			}
 			// end AS12 Stuff
-			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' gather Header info:'.$headers['SUBJECT'].' from:'.$headers['DATE']);
-			$output->read = $stat["flags"];
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' gather Header info:'.$headers['subject'].' from:'.$headers['date']);
+			$output->read = $headers["flags"];
 
 			$output->flag = new SyncMailFlags();
-			if ($stat['flagged'] == 1)
+			if ($headers['flagged'] == 1)
 			{
 				$output->flag->flagstatus = 2;
 				//$output->flag->flagtype = "Flag for Follow up";
 			} else {
 				$output->flag->flagstatus = 0;
 			}
-			if ($stat['answered'])
+			if ($headers['answered'])
 			{
 				$output->lastverexecuted = AS_REPLYTOSENDER;
 			}
-			elseif ($stat['forwarded'])
+			elseif ($headers['forwarded'])
 			{
 				$output->lastverexecuted = AS_FORWARD;
 			}
-			$output->subject = $stat['subject'];
-			$output->importance = $stat['priority'] > 3 ? 0 :
-				($stat['priority'] < 3 ? 2 : 1) ;
-			$output->datereceived = $this->mail->_strtotime($headers['DATE'],'ts',true);
-//error_log(__METHOD__.__LINE__.' To:'.$headers['TO']);
-			$output->to = $headers['TO'];
-			if ($headers['TO']) $output->displayto = ($headers['TO'] ? $headers['TO']:null); //$stat['FETCHED_HEADER']['to_name']
-//error_log(__METHOD__.__LINE__.' From:'.$headers['FROM']);
-			$output->from = $headers['FROM'];
-			if (isset($headers['CC']) && $headers['CC']) $output->cc = ($headers['CC'] ? $headers['CC']:null);
-			if (isset($headers['REPLY_TO']) && $headers['REPLY_TO']) $output->reply_to = ($headers['REPLY_TO']?$headers['REPLY_TO']:null);
+			$output->subject = $headers['subject'];
+			$output->importance = $headers['priority'] > 3 ? 0 :
+				($headers['priority'] < 3 ? 2 : 1) ;
+			$output->datereceived = $this->mail->_strtotime($headers['date'],'ts',true);
+			$output->to = $headers['to_address'];
+			if ($headers['to']) $output->displayto = $headers['to_address']; //$headers['FETCHED_HEADER']['to_name']
+			$output->from = $headers['sender_address'];
+			if (isset($headers['cc_addresses']) && $headers['cc_addresses']) $output->cc = $headers['cc_addresses'];
+			if (isset($headers['reply_to_address']) && $headers['reply_to_address']) $output->reply_to = $headers['reply_to_address'];
 
 			$output->messageclass = "IPM.Note";
-			if (stripos($stat['mimetype'],'multipart')!== false &&
-				stripos($stat['mimetype'],'signed')!== false)
+			if (stripos($headers['mimetype'],'multipart')!== false &&
+				stripos($headers['mimetype'],'signed')!== false)
 			{
 				$output->messageclass = "IPM.Note.SMIME.MultipartSigned";
 			}
@@ -1397,9 +1390,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @param int $folderid
 	 * @param int $cutoffdate timestamp with cutoffdate
 	 * @param string $_id =null uid of single message to fetch
+	 * @param boolean $return_all_headers =false true: additinal contain all headers eg. "subject"
 	 * @return array uid => array StatMessage($folderid, $_id)
 	 */
-	private function fetchMessages($folderid, $cutoffdate=NULL, $_id=NULL)
+	private function fetchMessages($folderid, $cutoffdate=NULL, $_id=NULL, $return_all_headers=false)
 	{
 		static $headers = array();
 
@@ -1457,6 +1451,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if (!empty($vars['deleted'])) continue; // cut of deleted messages
 			if ($cutoffdate && $vars['date'] < $cutoffdate) continue; // message is out of range for cutoffdate, ignore it
 			if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ID to report:'.$vars['uid'].' Subject:'.$vars['subject']);
+			$mess = $return_all_headers ? $vars : array();
 			$mess["mod"] = self::doFlagsMod($vars).$vars['date'];
 			$mess["id"] = $vars['uid'];
 			// 'seen' aka 'read' is the only flag we want to know about
