@@ -1310,6 +1310,7 @@ tonga	common	de	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	de	Zu viele ungültige Anmeldeversuche: %1 für den Benutzer '%2', %3 für die IP %4
 top	common	de	Oben
 total	common	de	Gesamt
+total: %1 successful: %2 failed: %3 skipped: %4	common	en	Gesamt: %1 Erfolgreich: %2 Fehlgeschlagen: %3 Ausgelassen: %4
 transparant bg for the icons?	common	de	Transparenter Hintergrund für Symbole
 tree	common	de	Baum
 trinidad and tobago	common	de	TRINIDAD AND TOBAGO
