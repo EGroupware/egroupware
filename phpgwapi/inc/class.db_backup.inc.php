@@ -368,7 +368,18 @@ class db_backup
 				$system_config[] = $row;
 			}
 		}
-		if (substr($this->db->Type,0,5) != 'mysql') $this->db->transaction_begin();
+
+		// as MySQL 5.7+ has sql_mode STRICT_(ALL|TRANS)_TABLES enabled by default,
+		// it will no longer restore '0000-00-00 00:00:00' in timestamps it created before,
+		// so switching strict-mode off temporary for the restore (we dont create these!)
+		if (substr($this->db->Type,0,5) == 'mysql')
+		{
+			$this->db->query("SET SESSION sql_mode=(SELECT REPLACE(REPLACE(@@sql_mode,'STRICT_ALL_TABLES',''),'STRICT_TRANS_TABLES',''))", __LINE__, __FILE__);
+		}
+		else
+		{
+			$this->db->transaction_begin();
+		}
 
 		// drop all existing tables
 		foreach($this->adodb->MetaTables('TABLES') as $table)
