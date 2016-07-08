@@ -262,9 +262,9 @@ class admin_hooks
 	public static function config(array $config)
 	{
 		$ret = array();
-		if (empty($config['fw_mobile_app_list']) && class_exists('jdots_framework'))
+		if (empty($config['fw_mobile_app_list']))
 		{
-			$ret['fw_mobile_app_list'] = jdots_framework::DEFAULT_MOBILE_APPS;
+			$ret['fw_mobile_app_list'] = Api\Framework\Ajax::DEFAULT_MOBILE_APPS;
 		}
 		return $ret;
 	}
