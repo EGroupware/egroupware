@@ -8230,6 +8230,10 @@ form[id^="tracker-"] .dialogHeadbar {
     background-repeat: no-repeat;
     background-position: center;
   }
+  body .et2_checkbox_slideSwitch.notification_check input {
+    width: 100% !important;
+    height: 100% !important;
+  }
   body .cke_inner .cke_toolbox .cke_toolbox_main {
     height: 30px;
     white-space: nowrap;
