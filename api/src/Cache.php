@@ -560,6 +560,19 @@ class Cache
 	}
 
 	/**
+	 * Get class-name of caching provider
+	 *
+	 * @param string $level
+	 * @return string class-name of provider
+	 */
+	public static function getProvider($level=self::INSTANCE)
+	{
+		$provider = self::get_provider($level);
+
+		return get_class($provider);
+	}
+
+	/**
 	 * Get a system configuration, even if in setup and it's not read
 	 *
 	 * @param string $name
