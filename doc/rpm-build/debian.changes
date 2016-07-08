@@ -1,3 +1,18 @@
+egroupware-epl (14.3.20160708) hardy; urgency=low
+
+  * Filemanager/CKEditor: correctly encoding selected files, causing eg. images to not show
+  * CalDAV/CardDAV: admin was not able to see logs of an user, if opening his preferences via administration app
+  * Filemanager/Projectmanager: fix broken layout when showing /apps/projectmanager eg. opening Filemanager from PM
+  * Mail: Fix mail tree throws xml error when tries to call wizard popup
+  * Admin/Mail: fix admin editing (personal) mail account of other user destroys password, because it was encrypted with users session password and therefore not available
+  * All applications: Fix phone-urls with no call_link prevent browser telephony addons (eg. telify in FF) to cope properly with phone numbers
+  * ProjectManager: links created to new project from template sometimes get lost (are with template not new project)
+  * ProjectManager: fix PHP Fatal error when using PHP 5.3
+  * SambaAdmin: fix long timeouts and warnings by NOT running hooks, if LDAP is not used for accounts or authentication
+  * Calendar: fix CSV export shows participant IDs instead of labels
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 08 Jul 2016 12:38:26 +0200
+
 egroupware-epl (14.3.20160525) hardy; urgency=low
 
   * ActiveDirectory: fix not working integration, because of missing code after move to Git
