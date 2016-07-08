@@ -248,7 +248,10 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		var option = jQuery(document.createElement("option"))
 			.attr("value", _value)
 			.text(_label+"");
-
+		if (this.options.tags && this._type == 'select-cat')
+		{
+			option.addClass('cat_'+_value);
+		}
 		if (typeof _title != "undefined" && _title)
 		{
 			option.attr("title", _title);
@@ -491,6 +494,16 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			// No options set yet
 			this.set_select_options(this.options.select_options);
+		}
+		// select-cat set/unset right cat_ color for selected value
+		if (this._type == 'select-cat' && this.options.tags) {
+			var chosen = this.input.siblings();
+			this.input.removeClass('cat_'+this._oldValue);
+			this.input.addClass('cat_'+this.value);
+			if (chosen.length > 0) {
+				chosen.removeClass('cat_'+this._oldValue);
+				chosen.addClass('cat_'+this.value);
+			}
 		}
 		this._oldValue = this.value;
 		if(this.input !== null && (this.options.tags || this.options.search))
