@@ -360,7 +360,7 @@ class Backup
 		// so switching strict-mode off temporary for the restore (we dont create these!)
 		if (substr($this->db->Type,0,5) == 'mysql')
 		{
-			$this->query("SET SESSION sql_mode=(SELECT REPLACE(REPLACE(@@sql_mode,'STRICT_ALL_TABLES',''),'STRICT_TRANS_TABLES',''))", __LINE__, __FILE__);
+			$this->db->query("SET SESSION sql_mode=(SELECT REPLACE(REPLACE(@@sql_mode,'STRICT_ALL_TABLES',''),'STRICT_TRANS_TABLES',''))", __LINE__, __FILE__);
 		}
 		else
 		{
