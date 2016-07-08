@@ -10,6 +10,7 @@ egroupware-epl (14.3.20160708) hardy; urgency=low
   * ProjectManager: fix PHP Fatal error when using PHP 5.3
   * SambaAdmin: fix long timeouts and warnings by NOT running hooks, if LDAP is not used for accounts or authentication
   * Calendar: fix CSV export shows participant IDs instead of labels
+  * MySQL 5.7: backport two sql_mode fixes from 16.1
 
  -- Ralf Becker <rb@stylite.de>  Fri, 08 Jul 2016 12:38:26 +0200
 
