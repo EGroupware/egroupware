@@ -1,3 +1,46 @@
+egroupware-epl (16.1.20160708) hardy; urgency=low
+
+  * Admin: add used caching provider and APCu stats to "PHP Information"
+  * eSync: fix not synced subject and other headers, after RC3 Outlook memory reduction
+  * Restore: fix failed restore under MySQL 5.7 by temp. disabling strict mode to allow inserting zero dates
+  * PHP7/ImportExport: fix different evaluation order of PHP 5 and 7 gives eg. error "Function name must be string" in wizard
+  * APCu/PHP7: fixed not used APCu under PHP7, as it has no APC compatible interface
+  * Mail/Sieve: fix PHP Fatal error on minimal install when trying to edit rules or vacation notice
+  * Calendar: check recurrences for conflicts too (until configured search-time is exceeded, default 3s)
+  * Filemanager/CKEditor: correctly encoding selected files, causing eg. images to not show
+  * Univention: fix not working 16.1 install in UCS: Account not found! (acc_id=1)
+  * Setup: fix install check was (false) reporting missing PHP extension "addressbook_zip"
+  * Template: relabeled Pixelegg template/theme to "Standard", and mobile theme for desktop to "Compact"
+  * Tracker/Mobile template:
+  * ProjectManager: links created to new project from template sometimes get lost (are with template not new project)
+  * Api/Setup: show new version 16.1.002 even if old header.inc.php is used
+  * All apps: show category color and search in category filter of lists
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 08 Jul 2016 13:28:16 +0200
+
+egroupware-epl (16.1.20160630) hardy; urgency=low
+
+  * 16.1 final release
+  * Admin: show new eT2 based pages without iframe, fixes additional scrollbars sometimes shown
+  * Mobile: fix error popup when changing application on mobile device in minimal 16.1 install
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 30 Jun 2016 11:27:35 +0200
+
+egroupware-epl (16.1.20160627) hardy; urgency=low
+
+  * 16.1RC3 third and probably last release candidate for 16.1
+  * eSync: several fixes to improve syncing with Outlook and avoid running out of memory
+  * MySQL/Ubuntu 16.04: switch off sql_mode ONLY_FULL_GROUP_BY enabled in MySQL 5.7+
+  * Mobile: fix error popup when changing application on mobile device in minimal 16.1 install
+  * eSync/Calendar: reading events in chunks of 100, to keep memory down for huge calendars
+  * Mail: Fix mail unsubscribe does not refresh mail tree anymore
+  * CalDAV/InfoLog: do not export stardate > duedate, as some clients (eg. CalDAV Sync for Android) have problems with it
+  * eSync/InfoLog: do not export stardate > duedate, as it crashes Outlook
+  * ImportExport: fix PHP Fatal in import wizard in minimal install
+  * Projectmanager: booking new timesheets on project did not updated total in project sums
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 27 Jun 2016 20:42:37 +0200
+
 egroupware-epl (16.1.20160621) hardy; urgency=low
 
   * eSync: YOU NEED TO RECREATE EXCHANGE ACCOUNTS ON YOUR DEVICES, Z-Push SQL state backend is used now
