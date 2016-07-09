@@ -16,10 +16,8 @@ use EGroupware\Api;
 
 /**
  * Authentication based on SQL table and X.509 certificates
- *
- * @todo rewrite using auth_sql backend class
  */
-class auth_sqlssl extends auth_sql
+class Sqlssl extends Sql
 {
 	/**
 	 * password authentication
