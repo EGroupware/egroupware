@@ -703,8 +703,10 @@ abstract class Merge
 		}
 		// alternative syntax using double curly brackets (eg. {{cat_id}} instead $$cat_id$$),
 		// agressivly removing all xml-tags eg. Word adds within placeholders
-		$content = preg_replace_callback('/{{[^}]+}}/i',create_function('$p','return \'$$\'.strip_tags(substr($p[0],2,-2)).\'$$\';'),$_content);
-
+		$content = preg_replace_callback('/{{[^}]+}}/i', function($matches)
+		{
+			return '$$'.strip_tags(substr($matches[0], 2, -2)).'$$';
+		}, $_content);
 		// Handle escaped placeholder markers in RTF, they won't match when escaped
 		if($mimetype == 'application/rtf')
 		{

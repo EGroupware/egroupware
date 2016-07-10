@@ -1854,7 +1854,12 @@ class calendar_bo
 				if ($bdays)
 				{
 					// sort by month and day only
-					usort($bdays,create_function('$a,$b','return (int) $a[\'bday\'] == (int) $b[\'bday\'] ? strcmp($a[\'bday\'],$b[\'bday\']) : (int) $a[\'bday\'] - (int) $b[\'bday\'];'));
+					usort($bdays, function($a, $b)
+					{
+						return (int) $a['bday'] == (int) $b['bday'] ?
+							strcmp($a['bday'], $b['bday']) :
+							(int) $a['bday'] - (int) $b['bday'];
+					});
 					foreach($bdays as $pers)
 					{
 						if (empty($pers['bday']) || $pers['bday']=='0000-00-00 0' || $pers['bday']=='0000-00-00' || $pers['bday']=='0.0.00')

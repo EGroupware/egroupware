@@ -141,7 +141,10 @@ class setup_translation
 				}
 			}
 			$d->close();
-			uasort($languages,create_function('$a,$b','return strcmp(@$a[\'descr\'],@$b[\'descr\']);'));
+			uasort($languages, function($a, $b)
+			{
+				return strcmp(@$a['descr'], @$b['descr']);
+			});
 		}
 		else
 		{

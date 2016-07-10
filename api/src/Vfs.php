@@ -570,14 +570,11 @@ class Vfs extends Vfs\StreamWrapper
 				self::_check_add($options,$path,$result);
 			}
 		}
-		// sort code, to place directories before files, if $dirsontop enabled
-		$dirsfirst = $dirsontop ? '($a[mime]==\''.self::DIR_MIME_TYPE.'\')!==($b[mime]==\''.self::DIR_MIME_TYPE.'\')?'.
-			'($a[mime]==\''.self::DIR_MIME_TYPE.'\'?-1:1):' : '';
 		// ordering of the rows
 		if (isset($options['order']))
 		{
-			$sort = strtolower($options['sort']) == 'desc' ? '-' : '';
-			switch($options['order'])
+			$sort_desc = strtolower($options['sort']) == 'desc';
+			switch($order = $options['order'])
 			{
 				// sort numerical
 				case 'size':
@@ -586,32 +583,46 @@ class Vfs extends Vfs\StreamWrapper
 				case 'mode':
 				case 'ctime':
 				case 'mtime':
-					$code = $dirsfirst.$sort.'($a[\''.$options['order'].'\']-$b[\''.$options['order'].'\']);';
-					// always use name as second sort criteria
-					$code = '$cmp = '.$code.' return $cmp ? $cmp : strcasecmp($a[\'name\'],$b[\'name\']);';
-					$ok = uasort($result,create_function('$a,$b',$code));
+					$ok = uasort($result, function($a, $b) use ($dirsontop, $sort_desc, $order)
+					{
+						$cmp = $a[$order] - $b[$order];
+						// sort code, to place directories before files, if $dirsontop enabled
+						if ($dirsontop && ($a['mime'] == self::DIR_MIME_TYPE) !== ($b['mime'] == self::DIR_MIME_TYPE))
+						{
+							$cmp = $a['mime' ] == self::DIR_MIME_TYPE ? -1 : 1;
+							$sort_desc = false;
+						}
+						// reverse sort for descending
+						if ($sort_desc) $cmp *= -1;
+						// always use name as second sort criteria
+						if (!$cmp) $cmp = strcasecmp($a['name'], $b['name']);
+						return $cmp;
+					});
 					break;
 
 				// sort alphanumerical
 				default:
-					$options['order'] = 'name';
+					$order = 'name';
 					// fall throught
 				case 'name':
 				case 'mime':
-					$code = $dirsfirst.$sort.'strcasecmp($a[\''.$options['order'].'\'],$b[\''.$options['order'].'\']);';
-					if ($options['order'] != 'name')
+					$ok = uasort($result, function($a, $b) use ($dirsontop, $order, $sort_desc)
 					{
+						$cmp = strcasecmp($a[$order], $b[$order]);
+						// sort code, to place directories before files, if $dirsontop enabled
+						if ($dirsontop && ($a['mime'] == self::DIR_MIME_TYPE) !== ($b['mime'] == self::DIR_MIME_TYPE))
+						{
+							$cmp = $a['mime' ] == self::DIR_MIME_TYPE ? -1 : 1;
+							$sort_desc = false;
+						}
+						// reverse sort for descending
+						if ($sort_desc) $cmp *= -1;
 						// always use name as second sort criteria
-						$code = '$cmp = '.$code.' return $cmp ? $cmp : strcasecmp($a[\'name\'],$b[\'name\']);';
-					}
-					else
-					{
-						$code = 'return '.$code;
-					}
-					$ok = uasort($result,create_function('$a,$b',$code));
+						if (!$cmp && $order != 'name') $cmp = strcasecmp($a['name'], $b['name']);
+						return $cmp;
+					});
 					break;
 			}
-			//echo "<p>order='$options[order]', sort='$options[sort]' --> uasort($result,create_function(,'$code'))=".array2string($ok)."</p>>\n";
 		}
 		// limit resultset
 		self::$find_total = count($result);

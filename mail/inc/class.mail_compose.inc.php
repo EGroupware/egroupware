@@ -850,7 +850,10 @@ class mail_compose
 									if ($contacts && $accounts)
 									{
 										$contacts = array_merge($contacts,$accounts);
-										usort($contacts,create_function('$a,$b','return strcasecmp($a["n_fn"],$b["n_fn"]);'));
+										usort($contacts, function($a, $b)
+										{
+											return strcasecmp($a['n_fn'], $b['n_fn']);
+										});
 									}
 									elseif($accounts)
 									{
