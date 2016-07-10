@@ -12,6 +12,8 @@ cd ..
 find ${@-.} -name '*.php' -exec php -l {} \; 2>&1 | \
 	# only show errors and PHP Deprecated, no success messages
 	egrep '^(PHP|Parse error)' | \
+	# suppress PHP Deprecated in vendor, as they need to be solved by the vendor
+	egrep -v '^PHP Deprecated.*/vendor/' | \
 	# output everything to stderr
 	tee /dev/fd/2 | \
 	# exclude several known problems, to be able to find new ones
