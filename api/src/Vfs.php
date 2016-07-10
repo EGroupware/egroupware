@@ -590,10 +590,12 @@ class Vfs extends Vfs\StreamWrapper
 						if ($dirsontop && ($a['mime'] == self::DIR_MIME_TYPE) !== ($b['mime'] == self::DIR_MIME_TYPE))
 						{
 							$cmp = $a['mime' ] == self::DIR_MIME_TYPE ? -1 : 1;
-							$sort_desc = false;
 						}
-						// reverse sort for descending
-						if ($sort_desc) $cmp *= -1;
+						// reverse sort for descending, if no directory sorted to top
+						elseif ($sort_desc)
+						{
+							 $cmp *= -1;
+						}
 						// always use name as second sort criteria
 						if (!$cmp) $cmp = strcasecmp($a['name'], $b['name']);
 						return $cmp;
@@ -613,10 +615,12 @@ class Vfs extends Vfs\StreamWrapper
 						if ($dirsontop && ($a['mime'] == self::DIR_MIME_TYPE) !== ($b['mime'] == self::DIR_MIME_TYPE))
 						{
 							$cmp = $a['mime' ] == self::DIR_MIME_TYPE ? -1 : 1;
-							$sort_desc = false;
 						}
 						// reverse sort for descending
-						if ($sort_desc) $cmp *= -1;
+						elseif ($sort_desc)
+						{
+							$cmp *= -1;
+						}
 						// always use name as second sort criteria
 						if (!$cmp && $order != 'name') $cmp = strcasecmp($a['name'], $b['name']);
 						return $cmp;
