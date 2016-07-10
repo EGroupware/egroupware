@@ -259,7 +259,8 @@ foreach(array('php','source_dir','data_dir','setup-cli') as $name)
 // fix important php.ini and conf.d/*.ini settings
 check_fix_php_apc_ini();
 
-$setup_cli = $config['php'].' -d memory_limit=256M '.$config['setup-cli'];
+// not limiting memory, as backups might fail with limit we set
+$setup_cli = $config['php'].' -d memory_limit=-1 '.$config['setup-cli'];
 
 if (!file_exists($config['header']) || filesize($config['header']) < 200)	// default header redirecting to setup is 147 bytes
 {
@@ -406,8 +407,9 @@ else
 		patch_header($config['header'], $config['config_user'], $old_password);
 	});
 
-	// update egroupware
-	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd'].',,'.$config['install-update-app']);
+	// update egroupware, or single app(s), in later case skip backup
+	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd'].
+		(empty($config['install-update-app']) ? '' : ',no,'.$config['install-update-app']));
 	$ret = run_cmd($setup_update,$output,array(4,15));
 
 	switch($ret)
