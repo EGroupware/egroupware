@@ -20,6 +20,7 @@ if (!defined('EGW_SERVER_ROOT'))
 	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
 	define('EGW_INCLUDE_ROOT', EGW_SERVER_ROOT);
 	define('EGW_API_INC', __DIR__);
+	error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 }
 
 /**

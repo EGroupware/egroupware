@@ -33,5 +33,8 @@
 		"bower-asset/jquery-ui":"=1.11.2",
 		"npm-asset/as-jqplot" : "1.0.*",
 		"npm-asset/gridster":"0.5.*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "5.4.*"
 	}
 }
