@@ -600,8 +600,19 @@ abstract class egw_framework
 			$tmpl->set_block('login_form','change_password');
 			$tmpl->set_var('change_password', '');
 			$tmpl->set_var('lang_password',lang('password'));
-			$tmpl->set_var('cd',check_logoutcode($_GET['cd']));
-			$tmpl->set_var('cd_class', isset($_GET['cd']) && $_GET['cd'] != 1 ? 'error' : '');
+
+			// display login-message depending on $_GET[cd] and what's in database/header for "login_message"
+			$cd_msg = check_logoutcode($_GET['cd']);
+			if (!empty($GLOBALS['egw_info']['server']['login_message']))
+			{
+				$cd_msg = $GLOBALS['egw_info']['server']['login_message'].
+					// only add non-empty and not "successful loged out" message below
+					(!empty($cd_msg) && $cd_msg != '&nbsp;' && $_GET['cd'] != 1 ? "\n\n".$cd_msg : '');
+			}
+			$tmpl->set_var('cd', $cd_msg);
+			$tmpl->set_var('cd_class', isset($_GET['cd']) && $_GET['cd'] != 1 ||
+				!empty($GLOBALS['egw_info']['server']['login_message']) ? 'error' : '');
+
 			$last_loginid = $_COOKIE['last_loginid'];
 			$last_domain  = $_COOKIE['last_domain'];
 			$tmpl->set_var('passwd', '');
