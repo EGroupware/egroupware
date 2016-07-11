@@ -730,6 +730,10 @@ class infolog_bo
 		{
 			$old = $this->read($values['info_id'], false, 'server');
 		}
+		if(!$old)
+		{
+			$old = array();
+		}
 
 		if (($status_only = $values['info_id'] && !$this->check_access($values,EGW_ACL_EDIT)))
 		{
