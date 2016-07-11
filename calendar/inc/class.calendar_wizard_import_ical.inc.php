@@ -78,7 +78,5 @@ class calendar_wizard_import_ical
 
 			return $this->step_templates[$content['step']];
 		}
-
-		return $result;
 	}
 }
