@@ -28,7 +28,7 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 	// Notification permission, the default value is 'default' which is equivalent to 'denied'
 	var permission = 'default';
-	
+
 	if (typeof Notification != 'undefined')
 	{
 		permission = Notification.permission;
@@ -89,6 +89,15 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			// Callback function dispatches on error
 			notification.onerror = options.onerror || function (e) {egw.debug('Notification failed because of ' + e);};
 
+		},
+
+		/**
+		 * Check Notification availability by browser
+		 * 
+		 * @returns {Boolean} true if notification is supported and permitted otherwise false
+		 */
+		checkNotification: function () {
+			return (Notification && Notification.requestPermission && permission == 'granted');
 		}
 
 	};
