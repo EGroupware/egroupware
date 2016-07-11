@@ -13,7 +13,7 @@
 class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 {
 
-	/**
+    /**
 	 * constructor
 	 */
 	function __construct()
@@ -24,6 +24,9 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 			'wizard_step50' => lang('Manage mapping'),
 		);
 
+		// Override conditions template to add conflict option
+		$this->step_templates['wizard_step55'] = 'calendar.import.conditions';
+				
 		// Field mapping
 		$tracking = new calendar_tracking();
 		$this->mapping_fields = array('id' => 'Calendar ID') + $tracking->field2label;
@@ -65,6 +68,11 @@ class calendar_wizard_import_csv extends importexport_wizard_basic_import_csv
 		$sel_options['string'] = array(
 			'id'	=>	'Calendar ID'
 		);
+		
+		if(!$content['skip_conflicts'] && $content['plugin_options']['skip_conflicts'])
+		{
+			$content['skip_conflicts'] = $content['plugin_options']['skip_conflicts'];
+		}
 		return $result;
 	}
 }
