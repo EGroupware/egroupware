@@ -608,6 +608,11 @@ class Translation
 						self::$load_via[$l_app][] = $app_dir;
 						$updated_load_via = true;
 					}
+					else if ($l_app != $app_dir &&
+						array_intersect((array)self::$load_via[$l_app], array('all-apps', $app_dir)))
+					{
+						$loaded[$l_id] = $l_translation;
+					}
 					continue;
 				}
 				$loaded[$l_id] = $l_translation;
