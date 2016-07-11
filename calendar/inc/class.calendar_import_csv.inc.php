@@ -97,7 +97,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 		{
 			$record->owner = $options['owner'];
 		}
-
+		
 		// Handle errors in length or start/end date
 		if($record->start > $record->end)
 		{
@@ -148,7 +148,8 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 						else
 						{
 							// Search app via link query
-							$result = Link::query($resource['app'], $search, $options);
+							$link_options = array();
+							$result = Link::query($resource['app'], $search, $link_options);
 
 							if($result)
 							{
@@ -294,13 +295,39 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 				}
 				if ( $this->dry_run ) {
 					//print_r($_data);
+					// User is interested in conflict checks, do so for dry run
+					// Otherwise, conflicts are just ignored and imported anyway
+					if($this->definition->plugin_options['skip_conflicts'])
+					{
+						$conflicts = $this->bo->conflicts($_data);
+						if($conflicts)
+						{
+							$this->conflict_warning($record_num, $conflicts);
+							$this->results['skipped']++;
+							return false;
+						}
+					}
 					$this->results[$_action]++;
 					return true;
 				} else {
-					$result = $this->bo->save( $_data, $this->is_admin);
-					if(!$result) {
+					$messages = null;
+					$result = $this->bo->update( $_data, 
+						!$this->definition->plugin_options['skip_conflicts'],
+						true, $this->is_admin, true, $messages,
+						$this->definition->plugin_options['no_notification']
+					);
+					if(!$result)
+					{
 						$this->errors[$record_num] = lang('Unable to save');
-					} else {
+					}
+					else if (is_array($result))
+					{
+						$this->conflict_warning($record_num, $result);
+						$this->results['skipped']++;
+						return false;
+					}
+					else
+					{
 						$this->results[$_action]++;
 						// This does nothing (yet?) but update the identifier
 						$record->save($result);
@@ -310,6 +337,21 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 			default:
 				throw new Api\Exception('Unsupported action');
 
+		}
+	}
+	
+	/**
+	 * Add a warning message about conflicting events
+	 * 
+	 * @param int $record_num Current record index
+	 * @param Array $conflicts List of found conflicting events
+	 */
+	protected function conflict_warning($record_num, &$conflicts)
+	{
+		$this->warnings[$record_num] = lang('Conflicts') . ':';
+		foreach($conflicts as $conflict)
+		{
+			$this->warnings[$record_num] .= "<br />\n" . Api\DateTime::to($conflict['start']) . "\t" . $conflict['title'];
 		}
 	}
 

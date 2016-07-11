@@ -168,7 +168,13 @@ class calendar_ical extends calendar_boupdate
 	var $log = false;
 	var $logfile="/tmp/log-vcal";
 
-
+	/**
+	 * Conflict callback
+	 * If set, conflict checking will be enabled, and the event as well as 
+	 * conflicts are passed as parameters to this callback
+	 */
+	var $conflict_callback = null;
+	
 	/**
 	 * Constructor
 	 *
@@ -1386,7 +1392,7 @@ class calendar_ical extends calendar_boupdate
 				// to not loose him, as EGroupware knows events without owner/ORGANIZER as participant
 				if (isset($event_info['stored_event']['participants'][$event['owner']]) && !isset($event['participants'][$event['owner']]))
 				{
-					$event['participant'][$event['owner']] = $event_info['stored_event']['participants'][$event['owner']];
+					$event['participants'][$event['owner']] = $event_info['stored_event']['participants'][$event['owner']];
 				}
 			}
 			else // common adjustments for new events
@@ -1765,6 +1771,41 @@ class calendar_ical extends calendar_boupdate
 		return $updated_id === 0 ? 0 : $return_id;
 	}
 
+	/**
+	 * Override parent update function to handle conflict checking callback, if set
+	 * 
+	 * @param array &$event event-array, on return some values might be changed due to set defaults
+	 * @param boolean $ignore_conflicts =false just ignore conflicts or do a conflict check and return the conflicting events.
+	 *	Set to false if $this->conflict_callback is set
+	 * @param boolean $touch_modified =true NOT USED ANYMORE (was only used in old csv-import), modified&modifier is always updated!
+	 * @param boolean $ignore_acl =false should we ignore the acl
+	 * @param boolean $updateTS =true update the content history of the event
+	 * @param array &$messages=null messages about because of missing ACL removed participants or categories
+	 * @param boolean $skip_notification =false true: send NO notifications, default false = send them
+	 * @return mixed on success: int $cal_id > 0, on error or conflicts false.
+	 *	Conflicts are passed to $this->conflict_callback
+	 */
+	public function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null, $skip_notification=false)
+	{
+		if($this->conflict_callback !== null)
+		{
+			// calendar_ical overrides search(), which breaks conflict checking
+			// so we make sure to use the original from parent
+			static $bo;
+			if(!$bo)
+			{
+				$bo = new calendar_boupdate();
+			}
+			$conflicts = $bo->conflicts($event);
+			if(is_array($conflicts) && count($conflicts) > 0)
+			{
+				call_user_func_array($this->conflict_callback, array(&$event, &$conflicts));
+				return false;
+			}
+		}
+		return parent::update($event, $ignore_conflicts, $touch_modified, $ignore_acl, $updateTS, $messages, $skip_notification);
+	}
+	
 	/**
 	 * Sync alarms of current user: add alarms added on client and remove the ones removed
 	 *

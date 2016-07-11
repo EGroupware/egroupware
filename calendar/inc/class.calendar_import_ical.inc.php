@@ -94,9 +94,9 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 	protected $errors = array();
 
 	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
+	* List of actions, and how many times that action was taken
+	*/
+	protected $results = array();
 
 	/**
 	 * imports entries according to given definition object.
@@ -136,18 +136,44 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 		{
 			$_definition->plugin_options['no_notification'] = true;
 		}
+		// User wants conflicting events to not be imported
+		if($_definition->plugin_options['skip_conflicts'])
+		{
+			$calendar_ical->conflict_callback = array($this, 'conflict_warning');
+		}
 		if (!$calendar_ical->importVCal($_stream, -1,null,false,0,'',null,null,null,$_definition->plugin_options['no_notification']))
 		{
 			$this->errors[] = lang('Error: importing the iCal');
 		}
 		else
 		{
-			$this->results['imported'] = $calendar_ical->events_imported;
+			$this->results['imported'] += $calendar_ical->events_imported;
 		}
 
 		return $calendar_ical->events_imported;
 	}
 
+	
+	/**
+	 * Add a warning message about conflicting events
+	 * 
+	 * @param int $record_num Current record index
+	 * @param Array $conflicts List of found conflicting events
+	 */
+	public function conflict_warning(&$event, &$conflicts)
+	{
+		$warning = EGroupware\Api\DateTime::to($event['start']) . ' ' . $event['title'] . ' ' . lang('Conflicts') . ':';
+		foreach($conflicts as $conflict)
+		{
+			$warning .= "<br />\n" . EGroupware\Api\DateTime::to($conflict['start']) . "\t" . $conflict['title'];
+		}
+		$this->warnings[] = $warning;
+
+		// iCal will always count as imported, even if it wasn't
+		$this->results['imported'] -= 1;
+		
+		$this->results['skipped']++;
+	}
 
 	/**
 	 * returns translated name of plugin
