@@ -128,6 +128,11 @@ input.et2_radiobox {
 #addressbook-index .filtersContainer select {
   width: 31.5%;
 }
+/* category filter chosen. !important is neccessary to override the width set by chosen*/
+#addressbook-index .nextmatch_header_row .et2_selectbox.select-cat {
+  min-width: auto;
+  width: 31.5% !important;
+}
 select#addressbook-index_col_filter\[tid\] {
   width: 82px;
 }
