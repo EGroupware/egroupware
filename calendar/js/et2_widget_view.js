@@ -57,6 +57,14 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 
 		this.loader = jQuery('<div class="egw-loading-prompt-container ui-front loading"></div>');
 		this.update_timer = null;
+
+		// Used to support dragging on empty space to create an event
+		this.drag_create = {
+			start: null,
+			end: null,
+			parent: null,
+			event: null
+		};
 	},
 
 	destroy: function destroy() {
