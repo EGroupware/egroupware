@@ -131,38 +131,6 @@ else
 	   exit;
 	}
 
-	function check_logoutcode($code)
-	{
-		switch($code)
-		{
-			case 1:
-				return lang('You have been successfully logged out');
-			case 2:
-				return lang('Sorry, your login has expired');
-			case 4:
-				return lang('Cookies are required to login to this site');
-			case Api\Session::CD_BAD_LOGIN_OR_PASSWORD:
-				return lang('Bad login or password');
-			case Api\Session::CD_FORCE_PASSWORD_CHANGE:
-				return lang('You must change your password!');
-			case Api\Session::CD_ACCOUNT_EXPIRED:
-				return lang('Account is expired');
-			case Api\Session::CD_BLOCKED:
-				return lang('Blocked, too many attempts');
-			case 10:
-				$GLOBALS['egw']->session->egw_setcookie('sessionid');
-				$GLOBALS['egw']->session->egw_setcookie('kp3');
-				$GLOBALS['egw']->session->egw_setcookie('domain');
-				return lang('Your session timed out, please log in again');
-			default:
-				if (!$code)
-				{
-					return '&nbsp;';
-				}
-				return htmlspecialchars($code);
-		}
-	}
-
 	/* Program starts here */
 
 	// some apache mod_auth_* modules use REMOTE_USER instead of PHP_AUTH_USER, thanks to Sylvain Beucler
