@@ -67,7 +67,7 @@ class Login
 			$tmpl->set_block('login_form','change_password');
 			$tmpl->set_var('change_password', '');
 			$tmpl->set_var('lang_password',lang('password'));
-			$tmpl->set_var('cd',check_logoutcode($_GET['cd']));
+			$tmpl->set_var('cd', self::check_logoutcode($_GET['cd']));
 			$tmpl->set_var('cd_class', isset($_GET['cd']) && $_GET['cd'] != 1 ? 'error' : '');
 			$last_loginid = $_COOKIE['last_loginid'];
 			$last_domain  = $_COOKIE['last_domain'];
@@ -251,4 +251,42 @@ class Login
 
 		$this->framework->render($tmpl->fp('loginout','login_form'),false,false);
 	}
- }
+
+	/**
+	 * Return verbose message for nummeric logout code ($_GET[cd])
+	 *
+	 * @param int|string $code
+	 * @return string
+	 */
+	static function check_logoutcode($code)
+	{
+		switch($code)
+		{
+			case 1:
+				return lang('You have been successfully logged out');
+			case 2:
+				return lang('Sorry, your login has expired');
+			case 4:
+				return lang('Cookies are required to login to this site');
+			case Api\Session::CD_BAD_LOGIN_OR_PASSWORD:
+				return lang('Bad login or password');
+			case Api\Session::CD_FORCE_PASSWORD_CHANGE:
+				return lang('You must change your password!');
+			case Api\Session::CD_ACCOUNT_EXPIRED:
+				return lang('Account is expired');
+			case Api\Session::CD_BLOCKED:
+				return lang('Blocked, too many attempts');
+			case 10:
+				$GLOBALS['egw']->session->egw_setcookie('sessionid');
+				$GLOBALS['egw']->session->egw_setcookie('kp3');
+				$GLOBALS['egw']->session->egw_setcookie('domain');
+				return lang('Your session timed out, please log in again');
+			default:
+				if (!$code)
+				{
+					return '&nbsp;';
+				}
+				return htmlspecialchars($code);
+		}
+	}
+}
