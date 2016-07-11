@@ -5463,9 +5463,6 @@ table.customfields tbody tr:nth-child(2n) {
 table.customfields tr {
   background-color: inherit !important;
 }
-table.customfields td {
-  line-height: 11px;
-}
 table.customfields td span > div {
   display: inherit;
   margin: 0px;
