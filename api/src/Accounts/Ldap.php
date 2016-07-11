@@ -704,6 +704,8 @@ class Ldap
 							// fall-through
 						case 'start':
 							$query .= '*';
+							// use now exact, as otherwise groups have "**pattern**", which dont match anything
+							$param['query_type'] = 'exact';
 							// fall-through
 						case 'exact':
 							$filter .= "(|(uid=$query)(sn=$query)(cn=$query)(givenname=$query)(mail=$query))";
