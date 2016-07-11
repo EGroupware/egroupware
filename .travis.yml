@@ -33,7 +33,7 @@ before_script:
   - sudo apt-get install -y myrepos
   - mr --trust-all --stats up
   # installing phpunit in version suitable for used PHP version
-  - composer.phar update phpunit/phpunit
+  - composer update phpunit/phpunit
 
 script:
   - ./doc/php_syntax_check.sh
