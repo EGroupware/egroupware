@@ -307,6 +307,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					.css('top', '').css('left','')
 					.appendTo(ui.helper);
 				ui.helper.width(jQuery(this).width());
+
+				// Cancel drag to create, we're dragging an existing event
+				planner._drag_create_end();
 			});
 		return true;
 	},
@@ -1910,6 +1913,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		{
 			var time = this._get_time_from_position(event.offsetX, event.offsetY);
 		}
+		if(!time) return false;
 
 		this.div.css('cursor', 'ew-resize');
 

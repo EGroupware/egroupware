@@ -414,7 +414,10 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		// Clear some stuff, if last time did not complete
 		if(this.drag_create.event)
 		{
-			this.drag_create.event.destroy();
+			if(this.drag_create.event.destroy)
+			{
+				this.drag_create.event.destroy();
+			}
 			this.drag_create.event = null;
 		}
 		// Wait a bit before adding an "event", it may be just a click
@@ -467,7 +470,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 	_drag_update_event: function()
 	{
 		if(!this.drag_create.event || !this.drag_create.start || !this.drag_create.end
-			|| !this.drag_create.parent)
+			|| !this.drag_create.parent || !this.drag_create.event._type)
 		{
 			return;
 		}
@@ -540,7 +543,10 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 				this.drag_create.parent = null;
 				if(this.drag_create.event)
 				{
-					this.drag_create.event.destroy();
+					if(this.drag_create.event.destroy)
+					{
+						this.drag_create.event.destroy();
+					}
 					this.drag_create.event = null;
 				}
 			},this),100);
@@ -553,7 +559,10 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		this.drag_create.parent = null;
 		if(this.drag_create.event)
 		{
-			this.drag_create.event.destroy();
+			if(this.drag_create.event.destroy)
+			{
+				this.drag_create.event.destroy();
+			}
 			this.drag_create.event = null;
 		}
 		return true;
