@@ -55,7 +55,7 @@ $config = array(
 	'gpg' => trim(`which gpg`),
 	'editor' => trim(`which vi`),
 	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
-	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs' : '',
+	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs --no-dev' : '',
 	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@stylite.de',
 	'obs' => '/home/stylite/obs/stylite-epl-trunk',

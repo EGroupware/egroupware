@@ -18,13 +18,13 @@ use EGroupware\Api;
 
 /**
  * Mail account credentials are stored in egw_ea_credentials for given
- * acocunt-id, users and types (imap, smtp and optional admin connection).
+ * account_id, users and types (imap, smtp and optional admin connection).
  *
  * Passwords in credentials are encrypted with either user password from session
  * or the database password.
  *
  * If OpenSSL extension is available it is used to store credentials with AES-128-CBC,
- * with key generated via hash_pbkdf2 sha256 hash and 12 byte binary salt (=16 char base64).
+ * with key generated via hash_pbkdf2 sha256 hash and 16 byte binary salt (=24 char base64).
  * OpenSSL can be also used to read old MCrypt credentials (OpenSSL 'des-ede3').
  *
  * If only MCrypt is available (or EGroupware versions 14.x) credentials are are stored
@@ -412,9 +412,10 @@ class Credentials
 	 * @param int $account_id user-account password is for
 	 * @param int &$pw_enc on return encryption used
 	 * @param string $key =null key/password to use, default password according to account_id
+	 * @param string $salt =null (binary) salt to use, default generate new random salt
 	 * @return string encrypted password
 	 */
-	protected static function encrypt_openssl_aes($password, $account_id, &$pw_enc, $key=null)
+	protected static function encrypt_openssl_aes($password, $account_id, &$pw_enc, $key=null, $salt=null)
 	{
 		if (empty($key))
 		{
@@ -431,7 +432,6 @@ class Credentials
 			}
 		}
 		// using a pbkdf2 password derivation with a (stored) salt
-		$salt = null;
 		$aes_key = self::aes_key($key, $salt);
 
 		return base64_encode($salt).base64_encode(openssl_encrypt($password, self::AES_METHOD, $aes_key, OPENSSL_RAW_DATA, $salt));

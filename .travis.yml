@@ -22,6 +22,8 @@ matrix:
 
 sudo: required
 dist: trusty
+# this myy fix hhvm builds according to https://docs.travis-ci.com/user/languages/php#HHVM-versions-on-Trusty
+group: edge
 
 before_script:
   # - mysql -e 'create database egroupware'
@@ -32,9 +34,8 @@ before_script:
   - mr --trust-all --stats up
 
 script:
-  #- find . -name "*.php" | xargs -n1 php -l
   ./doc/php_syntax_check.sh
-  #- ./vendor/bin/sabre-cs-fixer fix . --dry-run --diff
+  ./doc/test-cli.php
 
 cache:
   directories:
