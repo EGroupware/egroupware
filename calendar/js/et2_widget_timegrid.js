@@ -1069,8 +1069,14 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			var event = event.iface.getWidget();
 			var timegrid = target.iface.getWidget() || false;
 			if(event === timegrid || !event || !timegrid ||
-				!event.options || !event.options.value.participants || !timegrid.options.owner ) return false;
+				!event.options || !event.options.value.participants || !timegrid.options.owner
+			)
+			{
+				return false;
+			}
 			var owner_match = false;
+			var own_timegrid = event.getParent().getParent() === timegrid && !timegrid.daily_owner;
+
 			for(var id in event.options.value.participants)
 			{
 				if(!timegrid.daily_owner)
@@ -1089,11 +1095,15 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 						if(col.div.has(timegrid.gridHover).length || col.header.has(timegrid.gridHover).length)
 						{
 							owner_match = owner_match || col.options.owner.indexOf(id) !== -1;
+							own_timegrid = (col === event.getParent());
 						}
 					}, this, et2_calendar_daycol);
 				}
 			}
-			var enabled = !owner_match;
+			var enabled = !owner_match && 
+				// Not inside its own timegrid
+				!own_timegrid;
+				
 			widget_object.getActionLink('invite').enabled = enabled;
 			widget_object.getActionLink('change_participant').enabled = enabled;
 

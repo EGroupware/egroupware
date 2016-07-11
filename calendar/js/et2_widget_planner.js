@@ -283,6 +283,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					.css('top', '').css('left','')
 					.appendTo(ui.helper);
 				ui.helper.width(jQuery(this).width());
+
+				// Cancel drag to create, we're dragging an existing event
+				planner._drag_create_end();
 			});
 		return true;
 	},
@@ -1871,6 +1874,61 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		this.date_helper.set_minutes(Math.round(rel_time / (60 * interval))*interval);
 
 		return new Date(this.date_helper.getValue());
+	},
+
+	/**
+	 * Mousedown handler to support drag to create
+	 *
+	 * @param {jQuery.Event} event
+	 */
+	_mouse_down: function(event)
+	{
+		// Get time at mouse
+		if(this.options.group_by === 'month')
+		{
+			var time = this._get_time_from_position(event.clientX, event.clientY);
+		}
+		else
+		{
+			var time = this._get_time_from_position(event.offsetX, event.offsetY);
+		}
+		if(!time) return false;
+
+		this.div.css('cursor', 'ew-resize');
+
+		// Find the correct row so we know the parent
+		var row = event.target.closest('.calendar_plannerRowWidget');
+		for(var i = 0; i < this._children.length && row; i++)
+		{
+			if(this._children[i].div[0] === row)
+			{
+				this.drag_create.parent = this._children[i];
+				// Clear cached events for re-layout
+				this._children[i]._cached_rows = [];
+				break;
+			}
+		}
+		return this._drag_create_start(jQuery.extend({},this.drag_create.parent.node.dataset,{date: time.toJSON()}));
+	},
+
+	/**
+	 * Mouseup handler to support drag to create
+	 *
+	 * @param {jQuery.Event} event
+	 */
+	_mouse_up: function(event)
+	{
+		// Get time at mouse
+		if(this.options.group_by === 'month')
+		{
+			var time = this._get_time_from_position(event.clientX, event.clientY);
+		}
+		else
+		{
+			var time = this._get_time_from_position(event.offsetX, event.offsetY);
+		}
+
+		return this._drag_create_end({date: time.toJSON()});
 	},
 
 	/**

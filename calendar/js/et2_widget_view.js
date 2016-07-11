@@ -383,6 +383,181 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			result.widget_id = 'event_' + widget_id.join('');
 		}
 		return result;
+	},
+
+	/**
+	 * Starting (mousedown) handler to support drag to create
+	 *
+	 * Extending classes need to set this.drag_create.parent, which is the
+	 * parent container (child of extending class) that will directly hold the
+	 * event.
+	 *
+	 * @param {String} start Date string (JSON format)
+	 */
+	_drag_create_start: function(start)
+	{
+		this.drag_create.start = jQuery.extend({},start);
+		if(!this.drag_create.start.date)
+		{
+			this.drag_create.start = null;
+		}
+		this.drag_create.end = start;
+		
+		// Clear some stuff, if last time did not complete
+		if(this.drag_create.event)
+		{
+			if(this.drag_create.event.destroy)
+			{
+				this.drag_create.event.destroy();
+			}
+			this.drag_create.event = null;
+		}
+		// Wait a bit before adding an "event", it may be just a click
+		window.setTimeout(jQuery.proxy(function() {
+			// Create event
+			this._drag_create_event();
+		}, this), 250);
+	},
+
+	/**
+	 * Create or update an event used for feedback while dragging on empty space,
+	 * so user can see something is happening
+	 */
+	_drag_create_event: function()
+	{
+		if(!this.drag_create.parent || !this.drag_create.start)
+		{
+			return;
+		}
+		if(!this.drag_create.event)
+		{
+			this.date_helper.set_value(this.drag_create.start.date);
+			var value = jQuery.extend({},
+				this.drag_create.start,
+				this.drag_create.end,
+				{
+					start: this.drag_create.start.date,
+					end: this.drag_create.end && this.drag_create.end.date || this.drag_create.start.date,
+					date:  ""+this.date_helper.get_year()+
+						sprintf("%02d",this.date_helper.get_month())+
+						sprintf("%02d",this.date_helper.get_date()),
+					title: '',
+					description: '',
+					owner: this.options.owner,
+					participants: this.options.owner,
+					app: 'calendar',
+					whole_day_on_top: this.drag_create.start.whole_day
+				}
+			);
+			this.drag_create.event = et2_createWidget('calendar-event',{
+				id:'event_drag',
+				value: value
+			},this.drag_create.parent);
+			this.drag_create.event._values_check(value);
+			this.drag_create.event.doLoadingFinished();
+		}
+		
+	},
+
+	_drag_update_event: function()
+	{
+		if(!this.drag_create.event || !this.drag_create.start || !this.drag_create.end
+			|| !this.drag_create.parent || !this.drag_create.event._type)
+		{
+			return;
+		}
+		else if (this.drag_create.end)
+		{
+			this.drag_create.event.options.value.end = this.drag_create.end.date;
+			this.drag_create.event._values_check(this.drag_create.event.options.value);
+		}
+		this.drag_create.event._update()
+		this.drag_create.parent.position_event(this.drag_create.event);
+	},
+
+	/**
+	 * Ending (mouseup) handler to support drag to create
+	 *
+	 * @param {String} end Date string (JSON format)
+	 */
+	_drag_create_end: function(end)
+	{
+		this.div.css('cursor','');
+		if(typeof end === 'undefined')
+		{
+			end = {};
+		}
+		
+		if(this.drag_create.start && end.date &&
+			JSON.stringify(this.drag_create.start.date) !== JSON.stringify(end.date))
+		{
+			// Drag from start to end, open dialog
+			var options = {
+				start: this.drag_create.start.date < end.date ? this.drag_create.start.date : end.date,
+				end: this.drag_create.start.date < end.date ? end.date : this.drag_create.start.date
+			};
+
+			// Whole day needs to go from 00:00 to 23:59
+			if(end.whole_day || this.drag_create.start.whole_day)
+			{
+				var start = new Date(options.start);
+				start.setUTCHours(0);
+				start.setUTCMinutes(0);
+				options.start = start.toJSON();
+				
+				var end = new Date(options.end);
+				end.setUTCHours(23);
+				end.setUTCMinutes(59);
+				options.end = end.toJSON();
+			}
+
+			// Add anything else that was set, but not date
+			jQuery.extend(options,this.drag_create.start, end);
+			delete(options.date);
+
+			// Make sure parent is set, if needed
+			if (this.drag_create.parent && this.drag_create.parent.options.owner !== app.calendar.state.owner && !options.owner)
+			{
+				options.owner = this.drag_create.parent.options.owner;
+			}
+
+			// Remove empties
+			for(var key in options)
+			{
+				if(!options[key]) delete options[key];
+			}
+			this.egw().open(null, 'calendar', 'add', options, '_blank');
+
+			// Wait a bit, having these stops the click
+			window.setTimeout(jQuery.proxy(function() {
+				this.drag_create.start = null;
+				this.drag_create.end = null;
+				this.drag_create.parent = null;
+				if(this.drag_create.event)
+				{
+					if(this.drag_create.event.destroy)
+					{
+						this.drag_create.event.destroy();
+					}
+					this.drag_create.event = null;
+				}
+			},this),100);
+
+			return false;
+		}
+
+		this.drag_create.start = null;
+		this.drag_create.end = null;
+		this.drag_create.parent = null;
+		if(this.drag_create.event)
+		{
+			if(this.drag_create.event.destroy)
+			{
+				this.drag_create.event.destroy();
+			}
+			this.drag_create.event = null;
+		}
+		return true;
 	}
 
 });}).call(this);
