@@ -168,7 +168,7 @@ use EGroupware\Api\Etemplate;
 					if(count($plugin->get_warnings())) {
 						$this->message .= "<br />\n".lang('Warnings').':';
 						foreach($plugin->get_warnings() as $record => $message) {
-							$this->message .= "\n$record: $message";
+							$this->message .= "<br />\n$record: $message";
 						}
 					}
 					if(count($plugin->get_errors())) {
