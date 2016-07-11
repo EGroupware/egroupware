@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "80680a7a70d1702ede01e6285703061e",
-    "content-hash": "4fc2d79cb30d5c041f0212fd789816ad",
+    "hash": "009f06a925baf30630ab38c3ef2bac93",
+    "content-hash": "968cf8ac77e0822699f36e476c475abc",
     "packages": [
         {
             "name": "bower-asset/fastclick",
@@ -111,16 +111,16 @@
         },
         {
             "name": "fxp/composer-asset-plugin",
-            "version": "v1.1.4",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/francoispluchino/composer-asset-plugin.git",
-                "reference": "c3d803cc890fad5a7fb61a4036c5d973faae34af"
+                "url": "https://github.com/fxpio/composer-asset-plugin.git",
+                "reference": "8d74bc7c714aadbda54622c216b2e7bf786595cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/francoispluchino/composer-asset-plugin/zipball/c3d803cc890fad5a7fb61a4036c5d973faae34af",
-                "reference": "c3d803cc890fad5a7fb61a4036c5d973faae34af",
+                "url": "https://api.github.com/repos/fxpio/composer-asset-plugin/zipball/8d74bc7c714aadbda54622c216b2e7bf786595cb",
+                "reference": "8d74bc7c714aadbda54622c216b2e7bf786595cb",
                 "shasum": ""
             },
             "require": {
@@ -134,7 +134,7 @@
             "extra": {
                 "class": "Fxp\\Composer\\AssetPlugin\\FxpAssetPlugin",
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -153,7 +153,7 @@
                 }
             ],
             "description": "NPM/Bower Dependency Manager for Composer",
-            "homepage": "https://github.com/francoispluchino/composer-asset-plugin",
+            "homepage": "https://github.com/fxpio/composer-asset-plugin",
             "keywords": [
                 "asset",
                 "bower",
@@ -163,7 +163,7 @@
                 "npm",
                 "package"
             ],
-            "time": "2016-04-22 08:48:58"
+            "time": "2016-07-01 12:04:16"
         },
         {
             "name": "npm-asset/as-jqplot",
@@ -347,10 +347,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Date",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Date-2.3.0.tgz",
+                "url": "https://pear.horde.org/get/Horde_Date-2.3.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -361,7 +361,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_date": "== 2.3.0.0"
+                "pear-horde/horde_date": "== 2.3.1.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -475,10 +475,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Imap_Client",
-            "version": "2.29.7",
+            "version": "2.29.8",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.7.tgz",
+                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.8.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -497,7 +497,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_imap_client": "== 2.29.7.0"
+                "pear-horde/horde_imap_client": "== 2.29.8.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -646,10 +646,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Mime",
-            "version": "2.9.5",
+            "version": "2.10.0",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mime-2.9.5.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mime-2.10.0.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -666,7 +666,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_mime": "== 2.9.5.0"
+                "pear-horde/horde_mime": "== 2.10.0.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -992,10 +992,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Util",
-            "version": "2.5.7",
+            "version": "2.5.8",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Util-2.5.7.tgz",
+                "url": "https://pear.horde.org/get/Horde_Util-2.5.8.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -1004,7 +1004,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_util": "== 2.5.7.0"
+                "pear-horde/horde_util": "== 2.5.8.0"
             },
             "type": "pear-library",
             "autoload": {
