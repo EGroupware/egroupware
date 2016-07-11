@@ -86,7 +86,7 @@ class notifications_winpopup implements notifications_iface {
 		if(!$this->netbios_command) {
 			throw new Exception(	'Winpopup plugin not configured yet. Skipped sending notification message. '.
 									'Please check var "netbios_command" in winpopup backend '.
-									'('.EGW_INCLUDE_ROOT. SEP. self::_appname. SEP. 'inc'. SEP. 'class.notifications_winpopup.inc.php).');
+									'('.EGW_INCLUDE_ROOT. '/'. self::_appname. '/inc/class.notifications_winpopup.inc.php).');
 		}
 		$this->sender = $_sender;
 		$this->recipient = $_recipient;

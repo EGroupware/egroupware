@@ -1863,7 +1863,7 @@ class mail_compose
 		// attachment data in temp_dir, only use basename of given name, to not allow path traversal
 		else
 		{
-			$attachment['tmp_name'] = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['tmp_name']);
+			$attachment['tmp_name'] = $GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($attachment['tmp_name']);
 		}
 		if(!file_exists($attachment['tmp_name']))
 		{
@@ -2451,7 +2451,7 @@ class mail_compose
 						}
 						else	// non-vfs file has to be in temp_dir
 						{
-							$tmp_path = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file']);
+							$tmp_path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($attachment['file']);
 						}
 						$_mailObject->addAttachment (
 							$tmp_path,
@@ -2489,7 +2489,7 @@ class mail_compose
 			if (empty($path)) continue;	// we only care about file attachments, not forwarded messages or parts
 			if (parse_url($attachment['file'],PHP_URL_SCHEME) != 'vfs')
 			{
-				$path = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($path);
+				$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($path);
 			}
 			// create share
 			if ($filemode == Vfs\Sharing::WRITABLE || $expiration || $password)

@@ -140,9 +140,9 @@ class mail_integration {
 						}
 						//make sure we search for our attached file in our configured temp_dir
 						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) != 'vfs' &&
-							file_exists($GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file'])))
+							file_exists($GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($attachment['file'])))
 						{
-							$attachment['file'] = $GLOBALS['egw_info']['server']['temp_dir'].SEP.basename($attachment['file']);
+							$attachment['file'] = $GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($attachment['file']);
 						}
 						if(in_array($attachment['name'], $file_list))
 						{
