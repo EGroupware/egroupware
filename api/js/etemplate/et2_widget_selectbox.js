@@ -708,6 +708,44 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				width: _width || size.w + "px"
 			})
 			.change(this.onchange);
+
+			// multi selection with limited show line of single row
+			if (this.options.multiple && this.options.rows == 1 && this.options.height)
+			{
+				var $chosen_div = jQuery(this.input.siblings());
+				var self = this;
+
+				/**
+				 * A function to set counter for multi tags limited for single row
+				 * @returns {undefined}
+				 */
+				var _update_item_counter = function ()
+				{
+					$chosen_div.find('ul.chzn-choices').attr('data-after',self.getValue().length);
+				};
+
+				// Update the item counter
+				_update_item_counter();
+				// Initialize the single row class
+				$chosen_div.toggleClass('et2_selectbox_single_row', true);
+
+				// bind hover actions
+				$chosen_div
+					.off()
+					.hover(
+						//mouseIn
+						function(e){
+							jQuery(this).toggleClass('et2_selectbox_multi_row', true);
+							jQuery(this).toggleClass('et2_selectbox_single_row', false);
+						},
+						//mouseOut
+						function(e){
+							jQuery(this).toggleClass('et2_selectbox_multi_row', false);
+							jQuery(this).toggleClass('et2_selectbox_single_row', true);
+							_update_item_counter();
+						}
+				);
+			}
 		}
 	},
 

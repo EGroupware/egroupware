@@ -2728,3 +2728,31 @@ tr.dialogHeader2 td {padding-top:15px;}
 	min-width: 160px;
 }
 .nextmatch_header_row .et2_selectbox.select-cat.chzn-container .chzn-results {max-height: 340px;}
+
+/* Implementation for et2_selectbox mulit tags with single row*/
+.et2_selectbox_multi_row ul.chzn-choices {
+	height: auto;
+}
+.nextmatch_header_row .et2_selectbox.chzn-container-multi { margin-top: 1px;}
+.et2_selectbox_single_row ul.chzn-choices {
+	height: 24px !important;
+}
+.et2_selectbox_single_row ul.chzn-choices:after {
+    content: attr(data-after);
+    width: 30px;
+    background: #fafafa;
+    z-index: 10000;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    background-position: center;
+    background-size: 6px;
+    background-repeat: no-repeat;
+    border-left: dotted 1px silver;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #888888;
+    text-align: center;
+    padding-top: 2px;
+	box-shadow: 0px 0px 10px 2px #888888;
+}
