@@ -93,10 +93,16 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 		/**
 		 * Check Notification availability by browser
-		 * 
+		 *
 		 * @returns {Boolean} true if notification is supported and permitted otherwise false
 		 */
 		checkNotification: function () {
+			// Ask for permission if there's nothing decided yet
+			if (Notification && Notification.requestPermission && permission == 'default') {
+				Notification.requestPermission (function(_permission){
+					permission = _permission;
+				});
+			}
 			return (Notification && Notification.requestPermission && permission == 'granted');
 		}
 
