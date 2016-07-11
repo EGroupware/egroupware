@@ -58,7 +58,7 @@
 	 * Check to see if browser supports / allows desktop notifications
 	 */
 	notifications.prototype.check_browser_notify = function() {
-		return window.webkitNotifications && window.webkitNotifications.checkPermission() == EGW_BROWSER_NOTIFY_ALLOWED;
+		return egw.checkNotification();
 	};
 
 	/**
@@ -82,7 +82,7 @@
 		egwpopup.style.top = (Browserheight/4) + "px";
 		egwpopup_message.style.maxHeight = (Browserheight/2) + "px";
 		for(var show in notifymessages) break;
-		egwpopup_message.innerHTML = notifymessages[show];
+		egwpopup_message.innerHTML = notifymessages[show]['message'];
 
 		// Activate links
 		jQuery('div[data-id],div[data-url]', egwpopup_message).on('click',
@@ -188,54 +188,70 @@
 	notifications.prototype.append = function(_id, _message, _browser_notify) {
 		if(!this.check_browser_notify() || typeof notifymessages[_id] != 'undefined')
 		{
-			notifymessages[_id] = _message;
+			notifymessages[_id] = {message:_message};
 			return;
 		}
-		// Prevent the same thing popping up multiple times
-		notifymessages[_id] = _message;
 
+		var data = this.getData(_message);
+		// Prevent the same thing popping up multiple times
+		notifymessages[_id] = {message:_message, data: data};
 		// Notification API
 		if(_browser_notify)
 		{
-			var notice = null;
-			if(webkitNotifications.createHTMLNotification)
-			{
-				notice = webkitNotifications.createHTMLNotification(_browser_notify);
-			}
-			else if (webkitNotifications.createNotification)
-			{
-				// Pull the subject of the messasge, if possible
-				var message = /<b>(.*?)<\/b>/.exec(_message);
-				if(message && message[1])
-				{
-					_message = message[1];
-				}
-				else
-				{
-					_message = _message.replace(/<(?:.|\n)*?>/gm, '');
-				}
-				notice = webkitNotifications.createNotification('', "Egroupware",_message);
+			egw.notification(data.title, {
+				tag: data.app+":"+_id,
+				body: data.message,
+				icon: data.icon,
+				onclose:function(e){
+					// notification id
+					var id = this.tag.split(":");
+					// confirm the message
+					var request = egw.json("notifications.notifications_ajax.confirm_message", [id[1]]);
+					request.sendRequest();
+				},
+				onclick:function(e){
+					// notification id
+					var id = this.tag.split(":");
 
-				// When they click, bring up the popup for full info
-				notice.onclick = function() {
-					window.focus();
-					window.app.notifications.display();
+					// get the right data from messages object
+					var notify = notifymessages[id[1]];
+
+					if (!notifymessages[id[1]]) this.close();
+
+					if (notify && notify.data && notify.data.id)
+					{
+						egw.open(notify.data.id, notify.data.app);
+					}
+					else if (notify && notify.data)
+					{
+						egw.open_link(notify.data.url,'_blank',notify.data.popup);
+					}
+
+					var request = egw.json("notifications.notifications_ajax.confirm_message", [id[1]]);
+					request.sendRequest();
+					delete notifymessages[id[1]];
 					this.close();
-				};
-			}
-			if(notice)
-			{
-				notice.ondisplay = function() {
-					// Confirm when user gets to see it - no close needed
-					// Wait a bit to let it load first, or it might not be there when requested.
-					window.setTimeout( function() {
-						var request = egw.json("notifications.notifications_ajax.confirm_message", _id);
-						request.sendRequest(true);
-					}, 2000);
-				};
-				notice.show();
-			}
+				}
+			});
 		}
+	};
+
+	/**
+	 * Extract useful data out of HTML message
+	 *
+	 * @param {type} _message
+	 * @returns {notificationajaxpopup_L15.notifications.prototype.getData.data}
+	 */
+	notifications.prototype.getData = function (_message) {
+		var dom = jQuery(document.createElement('div')).html(_message);;
+		var link = dom.find('div[data-id],div[data-url]');
+		var data = {
+			message: dom.text(),
+			title: link.text(),
+			icon: link.find('img').attr('src')
+		};
+		jQuery.extend(data,link.data());
+		return typeof data == 'object'? data: {};
 	};
 
 	var lab = egw_LAB || $LAB;
