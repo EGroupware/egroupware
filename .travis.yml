@@ -32,10 +32,12 @@ before_script:
   - sudo apt-get update -qq
   - sudo apt-get install -y myrepos
   - mr --trust-all --stats up
+  # installing phpunit in version suitable for used PHP version
+  - composer.phar update phpunit/phpunit
 
 script:
-  ./doc/php_syntax_check.sh
-  ./doc/test-cli.php
+  - ./doc/php_syntax_check.sh
+  - ./doc/test-cli.php
 
 cache:
   directories:
