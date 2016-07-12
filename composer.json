@@ -21,7 +21,7 @@
 		"pear-pear.horde.org/Horde_Compress": "^2.0.8",
 		"pear-pear.horde.org/Horde_Icalendar": "^2.1.1",
 		"pear-pear.horde.org/Horde_Mapi": "^1.0.0",
-		"pear-pear.horde.org/Horde_ManageSieve": "^1.0.1",
+		"pear-pear.horde.org/Horde_ManageSieve": "^1.0.2",
 		"pear-pear.php.net/PEAR": "*",
 		"pear-pear.php.net/Auth_SASL": "*",
 		"pear-pear.php.net/XML_Feed_Parser": "*",
