@@ -751,45 +751,7 @@ class Link extends Link\Storage
 			echo "Options: "; _debug_array($options);
 		}
 
-		// See etemplate's nextmatch widget, following was copied from there
-		// allow static callbacks
-		if(strpos($method,'::') !== false)
-		{
-			//  workaround for php < 5.3: do NOT call it static, but allow application code to specify static callbacks
-			if (version_compare(PHP_VERSION,'5.3','<')) list($class,$method) = explode('::',$method);
-		}
-		else
-		{
-			list($app,$class,$method) = explode('.',$method);
-		}
-		if ($class)
-		{
-			if (!$app && !is_object($GLOBALS[$class]))
-			{
-				$GLOBALS[$class] = new $class();
-			}
-			if (is_object($GLOBALS[$class]))        // use existing instance (put there by a previous CreateObject)
-			{
-				$obj = $GLOBALS[$class];
-			}
-			else
-			{
-				$obj = CreateObject($app.'.'.$class);
-			}
-		}
-		if(is_callable($method))        // php5.3+ call
-		{
-			$result = call_user_func($method,$pattern,$options);
-		}
-		elseif(is_object($obj) && method_exists($obj,$method))
-		{
-			$result = $obj->$method($pattern,$options);
-		}
-		else
-		{
-			// if there is no object or no method, give a more explaining error message
-			throw new Exception\AssertionFailed("Object has no method '$reg[query]'!");
-		}
+		$result = self::exec($method, $pattern, $options);
 
 		if (!isset($options['total']))
 		{
@@ -848,7 +810,7 @@ class Link extends Link\Storage
 		}
 		$method = $reg['title'];
 
-		if (true) $title = ExecMethod($method,$id);
+		if (true) $title = self::exec($method,$id);
 
 		if ($id && is_null($title))	// $app,$id has been deleted ==> unlink all links to it
 		{
@@ -909,7 +871,7 @@ class Link extends Link\Storage
 		{
 			for ($n = 0; ($ids = array_slice($ids_to_query,$n*self::MAX_TITLES_QUERY,self::MAX_TITLES_QUERY)); ++$n)
 			{
-				foreach(ExecMethod(self::$app_register[$app]['titles'],$ids) as $id => $t)
+				foreach(self::exec(self::$app_register[$app]['titles'],$ids) as $id => $t)
 				{
 					$title =& self::get_cache($app,$id);
 					$titles[$id] = $title = $t;
@@ -1533,7 +1495,7 @@ class Link extends Link\Storage
 			$method = $args['method'];
 			unset($args['method']);
 			//error_log(__METHOD__."() calling $method(".array2string($args).')');
-			ExecMethod($method, $args);
+			self::exec($method, $args);
 		}
 	}
 
@@ -1649,7 +1611,7 @@ class Link extends Link\Storage
 		{
 			throw new Exception\WrongParameter(__METHOD__."('$id')");
 		}
-		$ret = call_user_func_array('ExecMethod2', $data);
+		$ret = call_user_func_array('self::exec', $data);
 
 		if (is_resource($ret)) fseek($ret, 0);
 
@@ -1703,7 +1665,7 @@ class Link extends Link\Storage
 			}
 			else
 			{
-				$ret = ExecMethod2($method,$id,$required,$rel_path,$user);
+				$ret = self::exec($method,$id,$required,$rel_path,$user);
 				$err = "(from $method)";
 			}
 			//error_log(__METHOD__."('$app',$id,$required,'$rel_path',$user) returning $err ".array2string($ret));
@@ -1716,7 +1678,7 @@ class Link extends Link\Storage
 		{
 			if(($method = self::get_registry($app,'file_access')))
 			{
-				$cache |= ExecMethod2($method,$id,$required,$rel_path) ? $required|Acl::READ : 0;
+				$cache |= self::exec($method,$id,$required,$rel_path) ? $required|Acl::READ : 0;
 			}
 			else
 			{
@@ -1726,6 +1688,42 @@ class Link extends Link\Storage
 		}
 		//else error_log(__METHOD__."($app,$id,$required,$rel_path) using cached value $cache --> ".($cache & $required ? 'true' : 'false'));
 		return !!($cache & $required);
+	}
+
+	/**
+	 * Execute a static method or $app.$class.$method string with given arguments
+	 *
+	 * In case of a non-static method as shared instance of the class is used.
+	 * This is a replacement for global ExecMethod(2) functions.
+	 *
+	 * @param callable|string $method "$app.$class.$method" or static method
+	 * @param mixed args variable number of arguments
+	 */
+	protected static function exec($method)
+	{
+		static $objs = array();
+
+		$params = func_get_args();
+		array_shift($params);
+
+		// static methods or callables can be called directly
+		if (is_callable($method))
+		{
+			return call_user_func_array($method, $params);
+		}
+
+		list($app, $class, $m) = $parts = explode('.', $method);
+		if (count($parts) != 3) throw Api\Exception\WrongParameter("Wrong dot-delimited method string '$method'!");
+
+		if (!isset($objs[$class]))
+		{
+			if (!class_exists($class))
+			{
+				require_once EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php';
+			}
+			$objs[$class] = new $class;
+		}
+		return call_user_func_array(array($objs[$class], $m), $params);
 	}
 }
 Link::init_static();
