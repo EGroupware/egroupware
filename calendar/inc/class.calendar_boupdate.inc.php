@@ -839,28 +839,6 @@ class calendar_boupdate extends calendar_bo
 					}
 				}
 			}
-			// Mailing lists
-			else if (!is_numeric($userid) && $userid[0] == 'l')
-			{
-				if(!$contact_obj)
-				{
-					$contact_obj = new Api\Contacts();
-				}
-				$options = array('list' => substr($user,1));
-				$contacts = $contact_obj->search('',true,'','','',false,'AND',false,$options);
-				if(!$contacts)
-				{
-					continue;
-				}
-				foreach($contacts as &$contact)
-				{
-					$contact = 'c'.$contact['id'];
-					if ($contact && !isset($to_notify[$contact]))	// already added?
-					{
-						$to_notify[$contact] = 'G';
-					}
-				}
-			}
 		}
 		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
 		$startdate = new Api\DateTime($event['start']);

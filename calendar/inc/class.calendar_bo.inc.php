@@ -363,6 +363,45 @@ class calendar_bo
 	}
 
 	/**
+	 * Enumerates the contacts in a contact list, and returns the list of contact IDs
+	 *
+	 * This is used to enable mailing lists as owner/participant
+	 *
+	 * @param string $id Mailing list participant ID, which is the mailing list
+	 *	ID prefixed with 'l'
+	 * @param boolean $ignore_acl = false Flag to skip ACL checks
+	 * @param boolean $use_freebusy =true should freebusy rights are taken into account, default true, can be set to false eg. for a search
+	 *
+	 * @return array
+	 */
+	public function enum_mailing_list($id, $ignore_acl= false, $use_freebusy = true)
+	{
+		$contact_list = array();
+		$contacts = new Api\Contacts();
+		if($contacts->check_list((int)substr($id,1), ACL::READ))
+		{
+			$options = array('list' => substr($id,1));
+			$lists = $contacts->search('',true,'','','',false,'AND',false,$options);
+			if(!$lists)
+			{
+				return $contact_list;
+			}
+			foreach($lists as &$contact)
+			{
+				$contact = 'c'.$contact['id'];
+				if ($ignore_acl || $this->check_perms(ACL::READ|self::ACL_READ_FOR_PARTICIPANTS|($use_freebusy?self::ACL_FREEBUSY:0),0,$contact))
+				{
+					if ($contact && !in_array($contact,$contact_list))	// already added?
+					{
+						$contact_list[] = $contact;
+					}
+				}
+			}
+		}
+		return $contact_list;
+	}
+	
+	/**
 	 * Add group-members as participants with status 'G'
 	 *
 	 * @param array $event event-array
@@ -413,27 +452,11 @@ class calendar_bo
 			// Handle email lists
 			if(!is_numeric($user) && $user[0] == 'l')
 			{
-				$contacts = new Api\Contacts();
-				if($contacts->check_list((int)substr($user,1), ACL::READ))
+				foreach($this->enum_mailing_list($user, $ignore_acl, $use_freebusy) as $contact)
 				{
-					$users[] = $user;
-
-					$options = array('list' => substr($user,1));
-					$lists = $contacts->search('',true,'','','',false,'AND',false,$options);
-					if(!$lists)
+					if ($contact && !in_array($contact,$users))	// already added?
 					{
-						continue;
-					}
-					foreach($lists as &$contact)
-					{
-						$contact = 'c'.$contact['id'];
-						if ($ignore_acl || $this->check_perms(ACL::READ|self::ACL_READ_FOR_PARTICIPANTS|($use_freebusy?self::ACL_FREEBUSY:0),0,$contact))
-						{
-							if ($contact && !in_array($contact,$users))	// already added?
-							{
-								$users[] = $contact;
-							}
-						}
+						$users[] = $contact;
 					}
 				}
 				continue;
