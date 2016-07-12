@@ -7416,6 +7416,44 @@ form[id^="tracker-"] .dialogHeadbar {
     height: 50px;
     font-size: 12pt;
   }
+  body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat,
+  body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat {
+    height: 50px !important;
+    width: 100%  !important;
+    margin: 0;
+    padding-left: 0px;
+    background: white;
+  }
+  body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat a.chzn-single,
+  body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat a.chzn-single {
+    height: 100%;
+    border-right: none;
+    box-shadow: none;
+    background: white;
+    border-top: none;
+    border-bottom: none;
+    border-left-width: 10px;
+    border-radius: 0;
+  }
+  body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat a.chzn-single span,
+  body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat a.chzn-single span {
+    height: 100%;
+    line-height: 46px;
+    color: #26537C;
+  }
+  body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat a.chzn-single div,
+  body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat a.chzn-single div {
+    width: 40px;
+  }
+  body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat a.chzn-single div b,
+  body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat a.chzn-single div b {
+    background: white url(../images/selectarrowdown.png) no-repeat center !important;
+    background-size: 32px !important;
+  }
+  body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat div.chzn-drop,
+  body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat div.chzn-drop {
+    width: 100%;
+  }
   body .et2_nextmatch .nextmatch_header.nm_header_hide {
     display: none !important;
   }
