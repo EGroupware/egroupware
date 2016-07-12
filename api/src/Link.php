@@ -734,10 +734,10 @@ class Link extends Link\Storage
 	 *
 	 * @param string $app app to search
 	 * @param string $pattern pattern to search
-	 * @param string $type Search only a certain sub-type of records (optional)
+	 * @param array& $options passed to callback: type, start, num_rows, filter; on return value for "total"
 	 * @return array with $id => $title pairs of matching entries of app
 	 */
-	static function query($app,$pattern, &$options = array())
+	static function query($app, $pattern, &$options = array())
 	{
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['query']))
 		{
@@ -751,7 +751,7 @@ class Link extends Link\Storage
 			echo "Options: "; _debug_array($options);
 		}
 
-		$result = self::exec($method, $pattern, $options);
+		$result = self::exec($method, array($pattern, &$options));
 
 		if (!isset($options['total']))
 		{
@@ -810,7 +810,7 @@ class Link extends Link\Storage
 		}
 		$method = $reg['title'];
 
-		if (true) $title = self::exec($method,$id);
+		if (true) $title = self::exec($method, array($id));
 
 		if ($id && is_null($title))	// $app,$id has been deleted ==> unlink all links to it
 		{
@@ -871,7 +871,7 @@ class Link extends Link\Storage
 		{
 			for ($n = 0; ($ids = array_slice($ids_to_query,$n*self::MAX_TITLES_QUERY,self::MAX_TITLES_QUERY)); ++$n)
 			{
-				foreach(self::exec(self::$app_register[$app]['titles'],$ids) as $id => $t)
+				foreach(self::exec(self::$app_register[$app]['titles'], array($ids)) as $id => $t)
 				{
 					$title =& self::get_cache($app,$id);
 					$titles[$id] = $title = $t;
@@ -1495,7 +1495,7 @@ class Link extends Link\Storage
 			$method = $args['method'];
 			unset($args['method']);
 			//error_log(__METHOD__."() calling $method(".array2string($args).')');
-			self::exec($method, $args);
+			self::exec($method, array($args));
 		}
 	}
 
@@ -1665,7 +1665,7 @@ class Link extends Link\Storage
 			}
 			else
 			{
-				$ret = self::exec($method,$id,$required,$rel_path,$user);
+				$ret = self::exec($method, array($id, $required, $rel_path, $user));
 				$err = "(from $method)";
 			}
 			//error_log(__METHOD__."('$app',$id,$required,'$rel_path',$user) returning $err ".array2string($ret));
@@ -1678,7 +1678,7 @@ class Link extends Link\Storage
 		{
 			if(($method = self::get_registry($app,'file_access')))
 			{
-				$cache |= self::exec($method,$id,$required,$rel_path) ? $required|Acl::READ : 0;
+				$cache |= self::exec($method, array($id, $required, $rel_path)) ? $required|Acl::READ : 0;
 			}
 			else
 			{
@@ -1697,14 +1697,12 @@ class Link extends Link\Storage
 	 * This is a replacement for global ExecMethod(2) functions.
 	 *
 	 * @param callable|string $method "$app.$class.$method" or static method
-	 * @param mixed args variable number of arguments
+	 * @param array $params array with arguments incl. references
+	 * @return mixed
 	 */
-	protected static function exec($method)
+	protected static function exec($method, array $params=array())
 	{
 		static $objs = array();
-
-		$params = func_get_args();
-		array_shift($params);
 
 		// static methods or callables can be called directly
 		if (is_callable($method))
@@ -1723,6 +1721,7 @@ class Link extends Link\Storage
 			}
 			$objs[$class] = new $class;
 		}
+		// php5.6+: return $objs[$class]->$m(...$params);
 		return call_user_func_array(array($objs[$class], $m), $params);
 	}
 }
