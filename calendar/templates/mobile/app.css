@@ -63,10 +63,10 @@
     overflow-y: hidden !important;
   }
   /* Let hidden user names be visible */
-  #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > ul {
+  #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > span.et2_label {
     position: static;
   }
-  #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > ul > li {
+  #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > span.et2_label {
     overflow: visible !important;
   }
 }
@@ -149,6 +149,11 @@
 #calendar-sidebox_owner .ms-helper {
   padding: 2px;
   background-color: white;
+}
+/* Conflict display */
+div.calendar_conflicts {
+  max-height: 540px;
+  overflow-y: auto;
 }
 /* Loader - hide sizing behind overlay*/
 #egw-loadin-prompt_calendar::before {
@@ -323,12 +328,12 @@ Hide subsequent headers in week view with non-consolidated owners
 #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader .calendar_calDayColHeader > div[data-date] {
   display: none;
 }
-#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > ul > li {
+#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > span.et2_label {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > ul:hover {
+#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > span.et2_label:hover {
   overflow: visible;
   width: auto;
   background-color: inherit;
@@ -539,7 +544,7 @@ Hide subsequent headers in week view with non-consolidated owners
   width: 58px;
   text-align: center;
 }
-.calendar_calGridHeader > ul {
+.calendar_calGridHeader > span.et2_label {
   position: absolute;
   width: 55px;
 }
@@ -2687,6 +2692,9 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   .calDates .dash {
     text-align: center;
     padding: 0px 5px 0 5px !important;
+  }
+  #calendar-list {
+    margin-right: 0px;
   }
   #calendar-list button.plus_button {
     bottom: 85px ;
