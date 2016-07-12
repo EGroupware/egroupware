@@ -46,13 +46,13 @@ function vfs_image_dir($vfs_image_dir)
  * Do NOT store the default to allow changing it if more apps become available
  *
  * @param type $app_list
- * @param \EGroupware\Api\Config $c
+ * @param Api\Config $c
  */
 function fw_mobile_app_list($app_list, Api\Config $c)
 {
 	// normalize lists
 	sort($app_list);
-	$default_list = explode(',', jdots_framework::DEFAULT_MOBILE_APPS);
+	$default_list = explode(',', Api\Framework\Ajax::DEFAULT_MOBILE_APPS);
 	sort($default_list);
 
 	if ($app_list == $default_list)
