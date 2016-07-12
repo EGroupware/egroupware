@@ -18,7 +18,7 @@ matrix:
 
 services:
   - memcached
-#  - mysql
+  - mysql
 #  - postgres
 
 sudo: required
@@ -27,6 +27,13 @@ dist: trusty
 group: edge
 
 before_script:
+  - if [ "$TRAVIS_PHP_VERSION" == "7.0" ] || [ $(echo "$TRAVIS_PHP_VERSION 7.0" | tr " " "\n" | sort -V | head -n1) = "7.0" ];
+    then
+        phpenv config-add .travis.php7.ini;
+    else
+        phpenv config-add .travis.ini;
+    fi
+  - php -m
   # - mysql -e 'create database egroupware'
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   #- composer update --prefer-source $LOWEST_DEPS
@@ -35,11 +42,16 @@ before_script:
   - mr --trust-all --stats up
   # installing phpunit in version suitable for used PHP version
   - composer update phpunit/phpunit
+  # install egroupware
+  - sudo mkdir /var/lib/egroupware
+  - sudo chown travis /var/lib/egroupware
 
 script:
-  - ./doc/php_syntax_check.sh
-  # Ubuntu has problems with #!/usr/bin/evn php, it stalls forever
+  - php doc/rpm-build/post_install.php --sourcedir `pwd`
+  - mysql -e 'show tables' egroupware
+  # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
+  - ./doc/php_syntax_check.sh
 
 cache:
   directories:
