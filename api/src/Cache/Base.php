@@ -13,6 +13,10 @@
 
 namespace EGroupware\Api\Cache;
 
+/*if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)
+{
+	require_once dirname(__DIR__).'/loader/common.php';
+}*/
 use EGroupware\Api;
 
 /**
@@ -183,7 +187,9 @@ abstract class Base implements Provider
 	if (isset($_SERVER['HTTP_HOST'])) echo "<pre style='whitespace: nowrap'>\n";
 
 	foreach(array(
+		'EGroupware\Api\Cache\Apcu' => array(),
 		'EGroupware\Api\Cache\Apc' => array(),
+		'EGroupware\Api\Cache\Memcached' => array('localhost'),
 		'EGroupware\Api\Cache\Memcache' => array('localhost'),
 		'EGroupware\Api\Cache\Files' => array('/tmp'),
 	) as $class => $param)
@@ -199,7 +205,7 @@ abstract class Base implements Provider
 			}
 			printf("$failed checks failed, $n iterations took %5.3f sec\n\n", microtime(true)-$start);
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			printf($e->getMessage()."\n\n");
 		}
 	}

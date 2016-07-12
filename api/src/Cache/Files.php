@@ -69,7 +69,7 @@ class Files extends Base implements Provider
 	function add(array $keys,$data,$expiration=0)
 	{
 		// open only if file does NOT exist
-		if (!($ret = fopen($fname=$this->filename($keys,true), 'x')))
+		if (!($ret = @fopen($fname=$this->filename($keys,true), 'x')))
 		{
 			// if file exists, check if it is expired
 			if (file_exists($fname_expiration=$fname.self::EXPIRATION_EXTENSION) &&
