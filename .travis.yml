@@ -31,7 +31,7 @@ group: edge
 
 before_script:
   - sudo apt-get update -qq
-  - sudo apt-get install -y myrepos libprce3-dev
+  - sudo apt-get install -y myrepos libpcre3-dev
   - case $(phpenv version-name) in
     "5.4"|"5.5"|"5.6")
        yes "" | pecl install apcu-4.0.11;
