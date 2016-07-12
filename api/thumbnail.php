@@ -183,7 +183,14 @@ function read_thumbnail($src)
 			list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
 				Api\Image::find($app, $icon), 2);
 			$dst = EGW_SERVER_ROOT.$path;
-			$output_mime = mime_content_type($dst);
+			if (function_exist('mime_content_type'))
+			{
+				$output_mime = mime_content_type($dst);
+			}
+			else
+			{
+				$output_mime = Api\MimeMagic::filename2mime($dst);
+			}
 		}
 
 		if ($dst)
