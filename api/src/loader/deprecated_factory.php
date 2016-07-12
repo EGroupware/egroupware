@@ -17,7 +17,7 @@ use EGroupware\Api;
  * Load a class and include the class file if not done so already.
  *
  * This function is used to create an instance of a class, and if the class file has not been included it will do so.
- * $GLOBALS['egw']->acl =& CreateObject('phpgwapi.acl');
+ * $GLOBALS['egw']->acl = CreateObject('phpgwapi.acl');
  *
  * @author RalfBecker@outdoor-training.de
  * @param $classname name of class
@@ -97,7 +97,6 @@ function CreateObject($class)
 
 /**
  * Execute a function with multiple arguments
- * We take object $GLOBALS[classname] from class if exists
  *
  * @param string app.class.method method to execute
  * @example ExecObject('etemplates.so_sql.search',$criteria,$key_only,...);
@@ -106,25 +105,17 @@ function CreateObject($class)
  */
 function &ExecMethod2($acm)
 {
-	// class::method is php5.2.3+
-	if (strpos($acm,'::') !== false && version_compare(PHP_VERSION,'5.2.3','<'))
-	{
-		list($class,$method) = explode('::',$acm);
-		$acm = array($class,$method);
-	}
 	if (!is_callable($acm))
 	{
 		list(,$class,$method) = explode('.',$acm);
-		if (!is_object($obj =& $GLOBALS[$class]))
+
+		if (class_exists($class))
 		{
-			if (class_exists($class))
-			{
-				$obj = new $class;
-			}
-			else
-			{
-				$obj = CreateObject($acm);
-			}
+			$obj = new $class;
+		}
+		else
+		{
+			$obj = CreateObject($acm);
 		}
 
 		if (!method_exists($obj,$method))
@@ -162,29 +153,26 @@ function ExecMethod($method, $functionparam = '_UNDEF_', $loglevel = 3, $classpa
 	if (!is_callable($method) && $partscount == 2)
 	{
 		list($appname,$classname,$functionname) = explode(".", $method);
-		if (!is_object($GLOBALS[$classname]))
+
+		if ($classparams != '_UNDEF_' && ($classparams || $classparams != 'True'))
 		{
-			// please note: no reference assignment (=&) here, as $GLOBALS is a reference itself!!!
-			if ($classparams != '_UNDEF_' && ($classparams || $classparams != 'True'))
-			{
-				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
-			}
-			elseif (class_exists($classname))
-			{
-				$GLOBALS[$classname] = new $classname;
-			}
-			else
-			{
-				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname);
-			}
+			$obj = CreateObject($appname.'.'.$classname, $classparams);
+		}
+		elseif (class_exists($classname))
+		{
+			$obj = new $classname;
+		}
+		else
+		{
+			$obj = CreateObject($appname.'.'.$classname);
 		}
 
-		if (!method_exists($GLOBALS[$classname],$functionname))
+		if (!method_exists($obj, $functionname))
 		{
 			error_log("ExecMethod('$method', ...) No methode '$functionname' in class '$classname'! ".function_backtrace());
 			return false;
 		}
-		$method = array($GLOBALS[$classname],$functionname);
+		$method = array($obj, $functionname);
 	}
 	if (is_callable($method))
 	{
