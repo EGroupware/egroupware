@@ -40,17 +40,21 @@ before_script:
        echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        yes "" | pecl install igbinary;
        echo "extension=igbinary.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        ;;
     "5.5"|"5.6")
        yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
        yes "" | pecl install igbinary;
+       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        ;;
     "7")
        yes "" | pecl install apcu;
+       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       ;;
+    "hhvm")
        ;;
     esac
-  - echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - php -m
   # - mysql -e 'create database egroupware'
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
