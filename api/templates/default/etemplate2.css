@@ -2699,7 +2699,7 @@ tr.dialogHeader2 td {padding-top:15px;}
 }
 
 /*et2_selectbox select-cat chosen (cats selectbox with colors) */
-.nextmatch_header_row chzn-container.et2_selectbox.select-cat .chzn-single
+.nextmatch_header_row .chzn-container.et2_selectbox.select-cat .chzn-single
 {
 	border: none;
     padding-left: 3px;
