@@ -18,8 +18,11 @@ matrix:
 
 services:
   - memcached
-  - mysql
+#  - mysql
 #  - postgres
+
+addons:
+  mariadb: '10.0'
 
 sudo: required
 dist: trusty
@@ -27,12 +30,9 @@ dist: trusty
 group: edge
 
 before_script:
-  - if [ "$TRAVIS_PHP_VERSION" == "7.0" ] || [ $(echo "$TRAVIS_PHP_VERSION 7.0" | tr " " "\n" | sort -V | head -n1) = "7.0" ];
-    then
-        phpenv config-add .travis.php7.ini;
-    else
-        phpenv config-add .travis.ini;
-    fi
+  - pecl install apcu
+  - pecl install memcache
+  - echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - php -m
   # - mysql -e 'create database egroupware'
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
@@ -47,7 +47,7 @@ before_script:
   - sudo chown travis /var/lib/egroupware
 
 script:
-  - php doc/rpm-build/post_install.php --sourcedir `pwd`
+  - php doc/rpm-build/post_install.php --source_dir `pwd`
   - mysql -e 'show tables' egroupware
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
