@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "161dd6c4337c9045e752743d66e4dbe2",
-    "content-hash": "5b29daae29d01f2d83431519723683a1",
+    "hash": "7dfe0794bda17cb35ba87b68d1c6f49c",
+    "content-hash": "60a9736be80b34714f237b6a4429fe5e",
     "packages": [
         {
             "name": "bower-asset/fastclick",
@@ -582,10 +582,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_ManageSieve",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_ManageSieve-1.0.1.tgz",
+                "url": "https://pear.horde.org/get/Horde_ManageSieve-1.0.2.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -596,7 +596,7 @@
                 "php": ">=5.4.0.0"
             },
             "replace": {
-                "pear-horde/horde_managesieve": "== 1.0.1.0"
+                "pear-horde/horde_managesieve": "== 1.0.2.0"
             },
             "type": "pear-library",
             "autoload": {
