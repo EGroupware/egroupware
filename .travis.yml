@@ -30,9 +30,18 @@ dist: trusty
 group: edge
 
 before_script:
-  - pecl install apcu
-  - pecl install memcache
   - echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo $(phpenv version-name)
+  - case $(phpenv version-name) in;
+    "5.4"|"5.5"|"5.6")
+       yes "" | pecl install apcu-4.0.11
+       yes "" | pecl install igbinary
+       ;;
+    "7.0")
+       yes "" | pecl install apcu
+       ;;
+    esac
+  - yes "" | pecl install memcache
   - php -m
   # - mysql -e 'create database egroupware'
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
