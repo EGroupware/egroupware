@@ -38,7 +38,8 @@ before_script:
 
 script:
   - ./doc/php_syntax_check.sh
-  - ./doc/test-cli.php
+  # Ubuntu has problems with #!/usr/bin/evn php, it stalls forever
+  - php -dapc.enable_cli=1 doc/test-cli.php
 
 cache:
   directories:

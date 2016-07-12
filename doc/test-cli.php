@@ -12,7 +12,7 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling as web-pag
 	die('<h1>test-cli.php must NOT be called as web-page --> exiting !!!</h1>');
 }
 
-require_once './api/src/loader/common.php';
+require_once dirname(__DIR__).'/api/src/loader/common.php';
 
 $_SERVER['argv'][] = '--verbose';
 $_SERVER['argv'][] = 'EgroupwareTestRunner';
