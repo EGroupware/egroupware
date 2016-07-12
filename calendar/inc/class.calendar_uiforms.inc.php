@@ -158,6 +158,16 @@ class calendar_uiforms extends calendar_ui
 			}
 			elseif (is_array($this->bo->resources[$uid[0]]))
 			{
+				// Expand mailing lists
+				if($uid[0] == 'l')
+				{
+					foreach($this->bo->enum_mailing_list($uid) as $contact)
+					{
+						$participants[$contact] = $participant_types['c'][substr($contact,1)] =
+							calendar_so::combine_status('U',1,'REQ-PARTICIPANT');
+					}
+					continue;
+				}
 				// if contact is a user, use the user instead (as the GUI)
 				if ($uid[0] == 'c' && ($account_id = $GLOBALS['egw']->accounts->name2id(substr($uid,1),'person_id')))
 				{
@@ -423,6 +433,16 @@ class calendar_uiforms extends calendar_ui
 										ExecMethod($this->bo->resources[$type]['new_status'],$id) :
 										($uid == $this->bo->user ? 'A' : 'U');
 
+									// Expand mailing lists
+									if($type == 'l')
+									{
+										foreach($this->bo->enum_mailing_list($participant) as $contact)
+										{
+											$event['participants'][$contact] = $event['participant_types']['c'][substr($contact,1)] = 
+												calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
+										}
+										continue;
+									}
 									if ($status)
 									{
 										$res_info = $this->bo->resource_info($uid);
