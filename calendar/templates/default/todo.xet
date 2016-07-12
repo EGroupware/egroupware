@@ -15,6 +15,7 @@ Egroupware
 	<template id="calendar.todo" width="30%">
 		<box class="calendar_calDayTodos">
 			<box class="calendar_calDayTodosHeader" width="100%">
+				<button align="left" statustext="Add" id="add" image="add" background_image="true" onclick="egw.open('','infolog','add',{action: 'new',type:'task'});"/>
 				<label id="label" class="calendar_calDayTodosHeader" width="100%" />
 			</box>
 			<box class="calendar_calDayTodosTable">
