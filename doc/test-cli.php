@@ -1,4 +1,4 @@
-#!/usr/bin/env php
+#!/usr/bin/env php -dapc.enable_cli=1
 <?php
 /**
  * EGroupware Test Runner

@@ -16,13 +16,14 @@ matrix:
     #- LOWEST_DEPS=""
     #- LOWEST_DEPS="--prefer-lowest"
 
-#services:
+services:
+  - memcached
 #  - mysql
 #  - postgres
 
 sudo: required
 dist: trusty
-# this myy fix hhvm builds according to https://docs.travis-ci.com/user/languages/php#HHVM-versions-on-Trusty
+# this fixes hhvm builds according to https://docs.travis-ci.com/user/languages/php#HHVM-versions-on-Trusty
 group: edge
 
 before_script:
