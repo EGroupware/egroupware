@@ -1611,7 +1611,8 @@ class Link extends Link\Storage
 		{
 			throw new Exception\WrongParameter(__METHOD__."('$id')");
 		}
-		$ret = call_user_func_array('self::exec', $data);
+		$method = array_shift($data);
+		$ret = self::exec($method, $data);
 
 		if (is_resource($ret)) fseek($ret, 0);
 
