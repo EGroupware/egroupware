@@ -7440,6 +7440,7 @@ form[id^="tracker-"] .dialogHeadbar {
     height: 100%;
     line-height: 46px;
     color: #26537C;
+    font-size: 12pt;
   }
   body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat a.chzn-single div,
   body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat a.chzn-single div {
@@ -7453,6 +7454,14 @@ form[id^="tracker-"] .dialogHeadbar {
   body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat div.chzn-drop,
   body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat div.chzn-drop {
     width: 100%;
+  }
+  body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat div.chzn-drop ul,
+  body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat div.chzn-drop ul {
+    font-size: 12pt;
+  }
+  body .et2_nextmatch .nextmatch_header_row .chzn-container.et2_selectbox.select-cat div.chzn-drop ul li,
+  body .et2_nextmatch .nextmatch_header .chzn-container.et2_selectbox.select-cat div.chzn-drop ul li {
+    line-height: 24px;
   }
   body .et2_nextmatch .nextmatch_header.nm_header_hide {
     display: none !important;
