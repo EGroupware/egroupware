@@ -928,18 +928,20 @@ Hide subsequent headers in week view with non-consolidated owners
   margin: 0px;
   padding: 2px;
   font-weight: bold;
+  height: 23px;
+  line-height: 23px;
 }
 .calendar_calDayTodos .calendar_calDayTodosTable {
   overflow: auto;
   position: absolute;
-  top: 2em;
+  top: 3em;
   bottom: 8px;
   width: 100%;
 }
 .calendar_calDayTodos {
   width: 98%;
   margin-left: 10px;
-  border: 1px solid silver;
+  border-bottom: 1px solid silver;
 }
 .calendar_calDayTodosHeader {
   text-align: center;
@@ -949,6 +951,17 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 .calendar_calDayTodosTable tr td span:first-child {
   white-space: nowrap;
+}
+.calendar_calDayTodosHeader button {
+  width: 24px;
+  height: 24px;
+  padding-left: 0px;
+  margin: 0px 4px 1px 0;
+  border-radius: 3px;
+  border: 1px solid silver;
+  background-color: #fafafa;
+  position: absolute;
+  left: 12px;
 }
 /******************************************************
  * CSS settings for the planner views (calendar_plannerWidget) *
