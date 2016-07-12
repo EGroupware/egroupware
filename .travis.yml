@@ -32,22 +32,21 @@ group: edge
 before_script:
   - sudo apt-get update -qq
   - sudo apt-get install -y myrepos libpcre3-dev
-  - echo $(phpenv version-name)
   - case $(phpenv version-name) in
     "5.4")
-       yes "" | pecl install memcache
-       echo "extension=memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+       yes "" | pecl install memcache;
+       echo "extension=memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        yes "" | pecl install apcu-4.0.11;
        echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        yes "" | pecl install igbinary;
        echo "extension=igbinary.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        ;;
     "5.5"|"5.6")
-       yes "" | pecl install memcache
+       yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
        yes "" | pecl install igbinary;
        ;;
-    "7.0")
+    "7")
        yes "" | pecl install apcu;
        ;;
     esac
@@ -64,8 +63,9 @@ before_script:
   - sudo chown travis /var/lib/egroupware
 
 script:
-  - php doc/rpm-build/post_install.php --source_dir `pwd`
-  - mysql -e 'show tables' egroupware
+  - php doc/rpm-build/post_install.php
+    --source_dir `pwd` --start_db '' --autostart_db '' || true
+  - mysql -uroot -e 'show tables' egroupware || true
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
   - ./doc/php_syntax_check.sh
