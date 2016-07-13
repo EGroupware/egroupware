@@ -2644,18 +2644,21 @@ input {
     &:hover{.Complete_Button_input_hover;}
     &:focus{.Complete_Button_input_focus;}*/
 }
-select {
+select,
+.et2_selectbox.select-cat {
   margin: 0;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
-select:hover {
+select:hover,
+.et2_selectbox.select-cat:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
-select:focus {
+select:focus,
+.et2_selectbox.select-cat:focus {
   outline: 0;
   border-width: 1px;
   border-style: solid;
