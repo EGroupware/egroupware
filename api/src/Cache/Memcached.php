@@ -86,8 +86,6 @@ class Memcached extends Base implements ProviderMultiple
 			\Memcached::OPT_CONNECT_TIMEOUT => $this->timeout,
 			\Memcached::OPT_SEND_TIMEOUT => $this->timeout,
 			\Memcached::OPT_RECV_TIMEOUT => $this->timeout,
-			// use igbinary, if available
-			\Memcached::OPT_SERIALIZER => \Memcached::HAVE_IGBINARY ? \Memcached::SERIALIZER_IGBINARY : \Memcached::SERIALIZER_JSON,
 			// use more effician binary protocol (also required for consistent hashing
 			\Memcached::OPT_BINARY_PROTOCOL => true,
 			// enable Libketama compatible consistent hashing
@@ -98,6 +96,15 @@ class Memcached extends Base implements ProviderMultiple
 			// setting a prefix for all keys
 			\Memcached::OPT_PREFIX_KEY => $prefix,
 		));
+		// use igbinary, if available
+		if (\Memcached::HAVE_IGBINARY)
+		{
+			$this->memcache->setOption(\Memcached::OPT_SERIALIZER, \Memcached::SERIALIZER_IGBINARY);
+		}
+		elseif(\Memcached::HAVE_JSON)
+		{
+			$this->memcache->setOption(\Memcached::OPT_SERIALIZER, \Memcached::SERIALIZER_JSON);
+		}
 
 		// with persistent connections, only add servers, if they not already added!
 		if (!count($this->memcache->getServerList()))
