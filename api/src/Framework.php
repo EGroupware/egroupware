@@ -349,6 +349,23 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * Calculate page-generation- and session-restore times
+	 *
+	 * @return array values for keys 'page_generation_time' and 'session_restore_time', if display is an
+	 */
+	public static function get_page_generation_time()
+	{
+		$times = array(
+			'page_generation_time' => sprintf('%4.2lf', microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time']),
+		);
+		if ($GLOBALS['egw_info']['flags']['session_restore_time'])
+		{
+			$times['session_restore_time'] = sprintf('%4.2lf', $GLOBALS['egw_info']['flags']['session_restore_time']);
+		}
+		return $times;
+	}
+
+	/**
 	 * Get footer as array to eg. set as vars for a template (from idots' head.inc.php)
 	 *
 	 * @return array
@@ -362,13 +379,15 @@ abstract class Framework extends Framework\Extra
 		$var['page_generation_time'] = '';
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
 		{
-			$totaltime = sprintf('%4.2lf',microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time']);
+			$times = self::get_page_generation_time();
 
-			$var['page_generation_time'] = '<div class="pageGenTime" id="divGenTime_'.$GLOBALS['egw_info']['flags']['currentapp'].'"><span>'.lang('Page was generated in %1 seconds',$totaltime);
-			if ($GLOBALS['egw_info']['flags']['session_restore_time'])
+			$var['page_generation_time'] = '<div class="pageGenTime" id="divGenTime_'.$GLOBALS['egw_info']['flags']['currentapp'].'"><span>'.
+				lang('Page was generated in %1 seconds', $times['page_generation_time']);
+
+			if (isset($times['session_restore_time']))
 			{
 				$var['page_generation_time'] .= ' '.lang('(session restored in %1 seconds)',
-					sprintf('%4.2lf',$GLOBALS['egw_info']['flags']['session_restore_time']));
+					$times['session_restore_time']);
 			}
 			$var['page_generation_time'] .= '</span></div>';
 		}
