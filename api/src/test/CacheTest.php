@@ -120,7 +120,7 @@ class CacheTest extends TestCase
 			}
 		}
 		catch (\Exception $e) {
-			error_log($e->getMessage());
+			$this->markTestSkipped($e->getMessage());
 		}
 	}
 
