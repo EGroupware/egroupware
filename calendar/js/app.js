@@ -3069,6 +3069,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			{
 				first = new Date(first);
 			}
+			var first_format = new Date(first.valueOf() + first.getTimezoneOffset() * 60 * 1000);
+
 			if(typeof last == 'string' && last)
 			{
 				last = new Date(last);
@@ -3076,6 +3078,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			if(!last || typeof last !== 'object')
 			{
 				 last = false;
+			}
+			if(last)
+			{
+				var last_format = new Date(last.valueOf() + last.getTimezoneOffset() * 60 * 1000);
 			}
 
 			if(!display_time) display_time = false;
@@ -3091,7 +3097,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 			if (display_day)
 			{
-				range = jQuery.datepicker.formatDate('DD',first)+(datefmt[0] != 'd' ? ' ' : ', ');
+				range = jQuery.datepicker.formatDate('DD',first_format)+(datefmt[0] != 'd' ? ' ' : ', ');
 			}
 			for (var i = 0; i < 5; i += 2)
 			{
@@ -3099,11 +3105,11 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				 {
 					 case 'd':
 						 range += first.getUTCDate()+ (datefmt[1] == '.' ? '.' : '');
-						 if (last && (first.getUTCMonth() != last.getUTCMonth() || first.getFullYear() != last.getFullYear()))
+						 if (last && (first.getUTCMonth() != last.getUTCMonth() || first.getUTCFullYear() != last.getUTCFullYear()))
 						 {
 							 if (!month_before_day)
 							 {
-								 range += jQuery.datepicker.formatDate('MM',first);
+								 range += jQuery.datepicker.formatDate('MM',first_format);
 							 }
 							 if (first.getFullYear() != last.getFullYear() && datefmt[0] != 'Y')
 							 {
@@ -3111,7 +3117,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 							 }
 							 if (display_time)
 							 {
-								 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),first);
+								 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),first_format);
 							 }
 							 if (!last)
 							 {
@@ -3121,19 +3127,19 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 							 if (first.getFullYear() != last.getFullYear() && datefmt[0] == 'Y')
 							 {
-								 range += last.getFullYear() + ', ';
+								 range += last.getUTCFullYear() + ', ';
 							 }
 
 							 if (month_before_day)
 							 {
-								 range += jQuery.datepicker.formatDate('MM',last);
+								 range += jQuery.datepicker.formatDate('MM',last_format);
 							 }
 						 }
 						 else
 						 {
 							 if (display_time)
 							 {
-								 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last);
+								 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last_format);
 							 }
 							 if(last)
 							 {
@@ -3147,23 +3153,23 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						 break;
 					 case 'm':
 					 case 'M':
-						 range += ' '+jQuery.datepicker.formatDate('MM',month_before_day ? first : last) + ' ';
+						 range += ' '+jQuery.datepicker.formatDate('MM',month_before_day ? first_format : last_format) + ' ';
 						 break;
 					 case 'Y':
 						 if (datefmt[0] != 'm')
 						 {
-							 range += ' ' + (datefmt[0] == 'Y' ? first.getFullYear()+(datefmt[2] == 'd' ? ', ' : ' ') : last.getFullYear()+' ');
+							 range += ' ' + (datefmt[0] == 'Y' ? first.getUTCFullYear()+(datefmt[2] == 'd' ? ', ' : ' ') : last.getUTCFullYear()+' ');
 						 }
 						 break;
 				 }
 			}
 			if (display_time && last)
 			{
-				 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last);
+				 range += ' '+jQuery.datepicker.formatDate(dateTimeFormat(timefmt),last_format);
 			}
 			if (datefmt[4] == 'Y' && datefmt[0] == 'm')
 			{
-				 range += ', ' + last.getFullYear();
+				 range += ', ' + last.getUTCFullYear();
 			}
 			return range;
 		},
