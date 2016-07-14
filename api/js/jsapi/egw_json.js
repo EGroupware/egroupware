@@ -146,6 +146,11 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	json_request.prototype.handleResponse = function(data) {
 		if (data && typeof data.response != 'undefined')
 		{
+			if (egw.preference('show_generation_time', 'common'))
+			{
+				var gen_time_div = jQuery('#divGenTime').length > 0 ? jQuery('#divGenTime')
+				:jQuery('<div id="divGenTime" class="pageGenTime"><span class="pageTime"></span></div>').appendTo('#egw_fw_footer');
+			}
 			// Load files first
 			var js_files = [];
 			for (var i = data.response.length - 1; i > 0; --i)
@@ -163,7 +168,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				this.egw.includeJS(js_files, function() {
 					var end_time = (new Date).getTime();
 					this.handleResponse(data);
-					var gen_time_div = jQuery('#divGenTime_'+this.egw.appname);
+					var gen_time_div = jQuery('#divGenTime');
 					if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
 					gen_time_div.append('<span class="asyncIncludeTime">'+egw.lang('async includes took %1s', (end_time-start_time)/1000)+'</span>');
 				}, this);
@@ -190,7 +195,21 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 							try {
 								// Get a reference to the plugin
 								var plugin = handler_level[res.type][j];
-
+								if (res.type.match(/et2_load/))
+								{
+									if (egw.preference('show_generation_time', 'common'))
+									{
+										if (gen_time_div.length > 0)
+										{
+											gen_time_div.find('span.pageTime').text(egw.lang("Page was generated in %1 seconds ", data.page_generation_time));
+											if (data.session_restore_time)
+											{
+												var gen_time_session_span = gen_time_div.find('span.session').length > 0 ? gen_time_div.find('span.session'):gen_time_div.append('<span class="session"></span>');
+												gen_time_session_span.text(egw.lang("session restore time in %1 seconds ", data.page_generation_time));
+											}
+										}
+									}
+								}
 								// Call the plugin callback
 								plugin.callback.call(
 									plugin.context ? plugin.context : this.context,
