@@ -96,6 +96,7 @@ default your name and email	common	en	default your name and email
 details	mail	en	short preview in list	
 delete folder	mail	en	Delete Folder
 delete folder %1 ?	mail	en	DELETE Folder %1 ?
+delete this acl	mail	en	Delete this ACL
 deleted	mail	en	deleted
 deleted %1 messages in %2	mail	en	deleted %1 messages in %2
 deleted!	mail	en	deleted!
@@ -143,6 +144,7 @@ download attachments	mail	en	Download attachments
 draft folder	mail	en	draft folder
 drafts	mail	en	Drafts
 drafts folder	mail	en	Drafts folder
+duplicate warning	mail	en	Duplicate warning
 edit account	mail	en	Edit Account
 edit account ...	mail	en	Edit account ...
 edit folder acl	mail	en	Edit folder ACL
@@ -197,6 +199,7 @@ flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
 folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
 folder %1 is moving to folder %2	mail	en	Folder %1 is moving to folder %2
+folder management	mail	en	Folder Management
 folder management ...	mail	en	Folder Management ...
 folder settings	mail	en	Folder settings
 for e.g.: mpeg	mail	en	for e.g.: mpeg
@@ -413,6 +416,9 @@ save to disk	mail	en	Save to disk
 save to filemanager	mail	en	Save to filemanager
 save to vfs	mail	en	Save to VFS
 save:	mail	en	Save:
+saves subscription changes	mail	en	Save subscription changes
+saves this acl	mail	en	Save this ACL
+saves this rule	mail	en	Save this rule
 saving of message %1 failed. destination folder %2 does not exist.	mail	en	Saving of message %1 failed. Destination Folder %2 does not exist.
 saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 succeeded. Check Folder %2.
 saving the rule failed:	mail	en	Saving the rule failed:
@@ -423,6 +429,7 @@ select file to attach to message	mail	en	Select file to attach to message
 select file to import into folder	mail	en	Select file to import into Folder
 select file(s) from vfs	mail	en	Select file(s) from VFS
 select files to upload	mail	en	Select files to upload
+select multiple	mail	en	Select multiple
 selected	mail	en	selected
 selected date range (with quicksearch)	mail	en	Selected date range (with quicksearch)
 send a reject message:	mail	en	Send a reject message:
@@ -515,6 +522,7 @@ use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see wikipedia for information on POSIX regular expressions)
 use source as displayed, if applicable	mail	en	use source as displayed, if applicable
 use username+password from current user	mail	en	Use username+password from current user
+use wizard to detect or verify configuration	mail	en	Use wizard to detect or verify configuration
 vacation messages with start and end date require an admin account to be set!	mail	en	Vacation messages with start and end date require an admin account to be set!
 vacation notice	mail	en	Vacation notice
 vacation notice is active	mail	en	Vacation notice is active
