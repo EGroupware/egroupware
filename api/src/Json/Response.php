@@ -223,8 +223,10 @@ class Response extends Msg
 	{
 		$inst = self::get();
 
-		/* Wrap the result array into a parent "response" Object */
-		$res = array('response' => $inst->responseArray);
+		// Wrap the result array into a parent "response" Object
+		$res = array(
+			'response' => $inst->responseArray,
+		)+Api\Framework::get_page_generation_time();
 
 		return self::json_encode($res);	//PHP5.3+, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 	}
