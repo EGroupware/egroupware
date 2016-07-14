@@ -73,6 +73,8 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 
 		this.set_label(this.options.label);
 		this._draw();
+		
+		this._link_actions([]);
 		return true;
 	},
 
@@ -94,6 +96,225 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		{
 			return this.rows[0];
 		}
+	},
+
+	/**
+	 * Link the actions to the DOM nodes / widget bits.
+	 *
+	 * @param {object} actions {ID: {attributes..}+} map of egw action information
+	 */
+	_link_actions: function(actions)
+	{
+		// Get the parent?  Might be a grid row, might not.  Either way, it is
+		// just a container with no valid actions
+		var objectManager = egw_getObjectManager(this.getInstanceManager().app,true,1);
+		objectManager = objectManager.getObjectById(this.getInstanceManager().uniqueId,2) || objectManager;
+		var parent = objectManager.getObjectById(this.id,1) || objectManager.getObjectById(this._parent.id,1) || objectManager;
+		if(!parent)
+		{
+			debugger;
+			egw.debug('error','No parent objectManager found');
+			return;
+		}
+
+		// This binds into the egw action system.  Most user interactions (drag to move, resize)
+		// are handled internally using jQuery directly.
+		var widget_object = this._actionObject || parent.getObjectById(this.id);
+		var aoi = new et2_action_object_impl(this,this.getDOMNode());
+		var planner = this.getParent();
+
+		for(var i = 0; i < parent.children.length; i++)
+		{
+			var parent_finder = jQuery(parent.children[i].iface.doGetDOMNode()).find(this.div);
+			if(parent_finder.length > 0)
+			{
+				parent = parent.children[i];
+				break;
+			}
+		}
+		
+		// Determine if we allow a dropped event to use the invite/change actions
+		var _invite_enabled = function(action, event, target)
+		{
+			var event = event.iface.getWidget();
+			var row = target.iface.getWidget() || false;
+			if(event === row || !event || !row ||
+				!event.options || !event.options.value.participants
+			)
+			{
+				return false;
+			}
+			
+			var owner_match = false;
+			var own_row = event.getParent() === row;
+
+			for(var id in event.options.value.participants)
+			{
+				owner_match = owner_match || row.node.dataset.participants === ''+id;
+			}
+
+			var enabled = !owner_match &&
+				// Not inside its own timegrid
+				!own_row;
+
+			widget_object.getActionLink('invite').enabled = enabled;
+			widget_object.getActionLink('change_participant').enabled = enabled;
+
+			// If invite or change participant are enabled, drag is not
+			widget_object.getActionLink('egw_link_drop').enabled = !enabled;
+		};
+
+		aoi.doTriggerEvent = function(_event, _data) {
+
+			// Determine target node
+			var event = _data.event || false;
+			if(!event) return;
+			if(_data.ui.draggable.hasClass('rowNoEdit')) return;
+			/*
+			We have to handle the drop in the normal event stream instead of waiting
+			for the egwAction system so we can get the helper, and destination
+			*/
+			if(event.type === 'drop' && widget_object.getActionLink('egw_link_drop').enabled)
+			{
+				this.getWidget().getParent()._event_drop.call(
+					jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper)[0],
+					this.getWidget().getParent(), event, _data.ui,
+					this.getWidget()
+				);
+			}
+			var drag_listener = function(_event, ui) {
+				if(planner.options.group_by === 'month')
+				{
+					var position = {left: _event.clientX, top: _event.clientY};
+				}
+				else
+				{
+					var position = {top:ui.position.top, left: ui.position.left - jQuery(this).parent().offset().left};
+				}
+				aoi.getWidget().getParent()._drag_helper(
+					jQuery('.calendar_d-n-d_timeCounter',ui.helper)[0],
+					position,0
+				);
+
+				var event = _data.ui.draggable.data('selected')[0];
+				if(!event || event.id && event.id.indexOf('calendar') !== 0)
+				{
+					event = false;
+				}
+				if(event)
+				{
+					_invite_enabled(
+						widget_object.getActionLink('invite').actionObj,
+						event,
+						widget_object
+					);
+				}
+			};
+			var time = jQuery('.calendar_d-n-d_timeCounter',_data.ui.helper);
+			switch(_event)
+			{
+				// Triggered once, when something is dragged into the timegrid's div
+				case EGW_AI_DRAG_OVER:
+					// Listen to the drag and update the helper with the time
+					// This part lets us drag between different timegrids
+					_data.ui.draggable.on('drag.et2_timegrid_row'+widget_object.id, drag_listener);
+					_data.ui.draggable.on('dragend.et2_timegrid_row'+widget_object.id, function() {
+						_data.ui.draggable.off('drag.et2_timegrid_row' + widget_object.id);
+					});
+					widget_object.iface.getWidget().div.addClass('drop-hover');
+
+					// Disable invite / change actions for same calendar or already participant
+					var event = _data.ui.draggable.data('selected')[0];
+					if(!event || event.id && event.id.indexOf('calendar') !== 0)
+					{
+						event = false;
+					}
+					if(event)
+					{
+						_invite_enabled(
+							widget_object.getActionLink('invite').actionObj,
+							event,
+							widget_object
+						);
+					}
+					if(time.length)
+					{
+						// The out will trigger after the over, so we count
+						time.data('count',time.data('count')+1);
+					}
+					else
+					{
+						_data.ui.helper.prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
+					}
+
+
+					break;
+
+				// Triggered once, when something is dragged out of the timegrid
+				case EGW_AI_DRAG_OUT:
+					// Stop listening
+					_data.ui.draggable.off('drag.et2_timegrid_row'+widget_object.id);
+					// Remove highlight
+					widget_object.iface.getWidget().div.removeClass('drop-hover');
+					
+					// Out triggers after the over, count to not accidentally remove
+					time.data('count',time.data('count')-1);
+					if(time.length && time.data('count') <= 0)
+					{
+						time.remove();
+					}
+					break;
+			}
+		};
+
+		if (widget_object == null) {
+			// Add a new container to the object manager which will hold the widget
+			// objects
+			widget_object = parent.insertObject(false, new egwActionObject(
+				this.id, parent, aoi,
+				this._actionManager|| parent.manager.getActionById(this.id) || parent.manager
+			));
+		}
+		else
+		{
+			widget_object.setAOI(aoi);
+		}
+		this._actionObject = widget_object;
+
+		// Delete all old objects
+		widget_object.clear();
+		widget_object.unregisterActions();
+
+		// Go over the widget & add links - this is where we decide which actions are
+		// 'allowed' for this widget at this time
+		var action_links = this._get_action_links(actions);
+
+		this.getParent()._init_links_dnd(widget_object.manager, action_links);
+
+		widget_object.updateActionLinks(action_links);
+	},
+
+	/**
+	 * Get all action-links / id's of 1.-level actions from a given action object
+	 *
+	 * Here we are only interested in drop events.
+	 *
+	 * @param actions
+	 * @returns {Array}
+	 */
+	_get_action_links: function(actions)
+	{
+		var action_links = [];
+		// TODO: determine which actions are allowed without an action (empty actions)
+		for(var i in actions)
+		{
+			var action = actions[i];
+			if(action.type == 'drop')
+			{
+				action_links.push(typeof action.id != 'undefined' ? action.id : i);
+			}
+		}
+		return action_links;
 	},
 
 	/**

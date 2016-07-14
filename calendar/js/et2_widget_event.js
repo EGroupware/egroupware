@@ -840,7 +840,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		if(!this._actionObject)
 		{
 			// Get the top level element - timegrid or so
-			var objectManager = this.getParent().getParent()._actionObject ||
+			var objectManager = this.getParent()._actionObject || this.getParent().getParent()._actionObject ||
 			   egw_getAppObjectManager(true).getObjectById(this._parent._parent._parent.id) || egw_getAppObjectManager(true);
 			this._actionObject = objectManager.getObjectById('calendar::'+this.options.value.row_id);
 		}

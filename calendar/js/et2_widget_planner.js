@@ -225,10 +225,15 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					 */
 					resize:function(event, ui)
 					{
-						planner._drag_helper(this,{
-							top:ui.position.top,
-							left: ui.position.left + ui.helper.width()
-						},ui.helper.outerHeight());
+						if(planner.options.group_by == 'month')
+						{
+							var position = {left: event.clientX, top: event.clientY};
+						}
+						else
+						{
+							var position = {top:ui.position.top, left: ui.position.left + ui.helper.width()};
+						}
+						planner._drag_helper(this,position,ui.helper.outerHeight());
 					}
 				});
 			})
@@ -1197,6 +1202,51 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		var aoi = new et2_action_object_impl(this,this.getDOMNode());
 
+		/**
+		 * Determine if we allow a dropped event to use the invite/change actions,
+		 * and enable or disable them appropriately
+		 * 
+		 * @param {egwAction} action
+		 * @param {et2_calendar_event} event The event widget being dragged
+		 * @param {egwActionObject} target Planner action object
+		 */
+		var _invite_enabled = function(action, event, target)
+		{
+			var event = event.iface.getWidget();
+			var planner = target.iface.getWidget() || false;
+			//debugger;
+			if(event === planner || !event || !planner ||
+				!event.options || !event.options.value.participants || !planner.options.owner
+			)
+			{
+				return false;
+			}
+			var owner_match = false;
+			var own_row = false;
+
+			for(var id in event.options.value.participants)
+			{
+				planner.iterateOver(function(row) {
+					// Check scroll section or header section
+					if(row.div.hasClass('drop-hover') || row.div.has(':hover'))
+					{
+						owner_match = owner_match || row.node.dataset[planner.options.group_by] === ''+id;
+						own_row = (row === event.getParent());
+					}
+				}, this, et2_calendar_planner_row);
+
+			}
+			var enabled = !owner_match &&
+				// Not inside its own row
+				!own_row;
+
+			widget_object.getActionLink('invite').enabled = enabled;
+			widget_object.getActionLink('change_participant').enabled = enabled;
+
+			// If invite or change participant are enabled, drag is not
+			widget_object.getActionLink('egw_link_drop').enabled = !enabled;
+		};
+
 		aoi.doTriggerEvent = function(_event, _data) {
 
 			// Determine target node
@@ -1276,7 +1326,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		this._init_links_dnd(widget_object.manager, action_links);
 
-		widget_object.updateActionLinks(action_links);
+		//widget_object.updateActionLinks(action_links);
 		this._actionObject = widget_object;
 	},
 
@@ -1293,6 +1343,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var self = this;
 
 		var drop_action = mgr.getActionById('egw_link_drop');
+		var drop_change_participant = mgr.getActionById('change_participant');
+		var drop_invite = mgr.getActionById('invite');
 		var drag_action = mgr.getActionById('egw_link_drag');
 
 		// Check if this app supports linking
@@ -1353,11 +1405,83 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					).sendRequest();
 				}
 			},true);
+
+			drop_action.acceptedTypes = ['default','link'];
+			drop_action.hideOnDisabled = true;
+
+			// Create the drop action for moving events between planner rows
+			var invite_action = function(action, source, target) {
+
+				// Extract link IDs
+				var links = [];
+				var id = '';
+				for(var i = 0; i < source.length; i++)
+				{
+					// Check for no ID (invalid) or same manager (dragging an event)
+					if(!source[i].id) continue;
+					if(source[i].manager === target.manager)
+					{
+
+						// Find the row, could have dropped on an event
+						var row = target.iface.getWidget();
+						while(target.parent && row.instanceOf && !row.instanceOf(et2_calendar_planner_row))
+						{
+							target = target.parent;
+							row = target.iface.getWidget();
+						}
+
+						// Leave the helper there until the update is done
+						var loading = action.ui.helper.clone(true).appendTo(jQuery('body'));
+
+						// and add a loading icon so user knows something is happening
+						if(jQuery('.calendar_timeDemo',loading).length == 0)
+						{
+							jQuery('.calendar_calEventHeader',loading).addClass('loading');
+						}
+						else
+						{
+							jQuery('.calendar_timeDemo',loading).after('<div class="loading"></div>');
+						}
+
+						var event_data = egw.dataGetUIDdata(source[i].id).data;
+						et2_calendar_event.recur_prompt(event_data, function(button_id) {
+							if(button_id === 'cancel' || !button_id)
+							{
+								return;
+							}
+							var add_owner = jQuery.extend([],row.node.dataset.participants);
+
+							egw().json('calendar.calendar_uiforms.ajax_invite', [
+									button_id==='series' ? event_data.id : event_data.app_id,
+									add_owner,
+									action.id === 'change_participant' ?
+										jQuery.extend([],source[i].iface.getWidget().getParent().node.dataset.participants) :
+										[]
+								],
+								function() { loading.remove();}
+							).sendRequest(true);
+						});
+						// Ok, stop.
+						return false;
+					}
+				}
+			};
+
+			drop_change_participant = mgr.addAction('drop', 'change_participant', egw.lang('Move to'), egw.image('participant'), invite_action,true);
+			drop_change_participant.acceptedTypes = ['calendar'];
+			drop_change_participant.hideOnDisabled = true;
+
+			drop_invite = mgr.addAction('drop', 'invite', egw.lang('Invite'), egw.image('participant'), invite_action,true);
+			drop_invite.acceptedTypes = ['calendar'];
+			drop_invite.hideOnDisabled = true;
 		}
 		if(actionLinks.indexOf(drop_action.id) < 0)
 		{
 			actionLinks.push(drop_action.id);
 		}
+		actionLinks.push(drop_invite.id);
+		actionLinks.push(drop_change_participant.id);
+		
 		// Accept other links, and files dragged from the filemanager
 		// This does not handle files dragged from the desktop.  They are
 		// handled by et2_nextmatch, since it needs DOM stuff
@@ -1382,7 +1506,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		{
 			actionLinks.push(drag_action.id);
 		}
-		drag_action.set_dragType('link');
+		drag_action.set_dragType(['link','calendar']);
 	},
 
 	/**
@@ -1843,7 +1967,29 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		else
 		{
 			// Find the correct row so we know which month, then get the offset
-			var row = jQuery(document.elementFromPoint(x, y)).closest('.calendar_plannerRowWidget');
+			var hidden_nodes = [];
+			var row = null;
+			// Hide any drag or tooltips that may interfere
+			do
+			{
+				row = document.elementFromPoint(x, y);
+				if(this.div.has(row).length == 0)
+				{
+					hidden_nodes.push(jQuery(row).hide());
+				}
+				else
+				{
+					break;
+				}
+			} while(row.nodeName !== 'BODY');
+			// Restore hidden nodes
+			for(var i = 0; i < hidden_nodes.length; i++)
+			{
+				hidden_nodes[i].show();
+			}
+			row = jQuery(row).closest('.calendar_plannerRowWidget');
+
+
 			var row_widget = null;
 			for(var i = 0; i < this._children.length && row.length > 0; i++)
 			{
