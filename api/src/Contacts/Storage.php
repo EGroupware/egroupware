@@ -959,6 +959,7 @@ class Storage
 				{
 					$contact = $ldap_contacts->read($contact['id']);
 				}
+				$old_contact_id = $contact['id'];
 				unset($contact['id']);	// ldap uid/account_lid
 				if ($contact['account_id'] && ($old = $sql_contacts->read(array('account_id' => $contact['account_id']))))
 				{
@@ -971,7 +972,25 @@ class Storage
 				{
 					echo '<p style="margin: 0px;">'.$n.': '.$contact['n_fn'].
 						($contact['org_name'] ? ' ('.$contact['org_name'].')' : '')." --> SQL (".
-						($contact['owner']?lang('User'):lang('Contact')).")</p>\n";
+						($contact['owner']?lang('User'):lang('Contact')).")<br>\n";
+
+					$new_contact_id = $sql_contacts->data['id'];
+					echo "&nbsp;&nbsp;&nbsp;&nbsp;" . $old_contact_id . " --> " . $new_contact_id . " / ";
+
+					$tq = $this->db->update('egw_links',array(
+						'link_id1' => $new_contact_id,
+					),array(
+						'link_app1' => 'addressbook',
+						'link_id1' => $old_contact_id
+					),__LINE__,__FILE__);
+
+					$tq = $this->db->update('egw_links',array(
+						'link_id2' => $new_contact_id,
+					),array(
+						'link_app2' => 'addressbook',
+						'link_id2' => $old_contact_id
+					),__LINE__,__FILE__);
+					echo "</p>\n";
 				}
 				else
 				{
