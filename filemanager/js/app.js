@@ -766,7 +766,10 @@ app.classes.filemanager = AppJS.extend(
 		}
 		else
 		{
-			egw.open({path: path, type: data.data.mime, download_url: data.data.download_url}, 'file','view',null,'_browser');
+			// Build ViewerJS url
+			if (data.data.mime.match(/application\/vnd\.oasis\.opendocument/)) var url = '/ViewerJS/#..' + data.data.download_url;
+			
+			egw.open({path: path, type: data.data.mime, download_url: url}, 'file','view',null,'_browser');
 		}
 		return false;
 	},
