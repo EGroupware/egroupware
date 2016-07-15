@@ -724,7 +724,7 @@ function _ucr_secret($name)
  */
 function check_fix_php_apc_ini()
 {
-	if (extension_loaded('apc'))
+	if (extension_loaded('apc') || extension_loaded('apcu'))
 	{
 		$shm_size = ini_get('apc.shm_size');
 		$shm_segments = ini_get('apc.shm_segments');
@@ -741,7 +741,7 @@ function check_fix_php_apc_ini()
 			phpinfo();
 			$phpinfo = ob_get_clean();
 			$matches = null;
-			if (preg_match('#(/[a-z0-5./-]+apcu?.ini)(,| |$)#mi', $phpinfo, $matches) &&
+			if (preg_match('#(/[a-z0-9./-]+apcu?.ini)(,| |$)#mi', $phpinfo, $matches) &&
 				file_exists($path = $matches[1]) && ($apc_ini = file_get_contents($path)))
 			{
 				$new_shm_size = 128 / $shm_segments;
