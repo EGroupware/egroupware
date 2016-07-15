@@ -146,7 +146,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	json_request.prototype.handleResponse = function(data) {
 		if (data && typeof data.response != 'undefined')
 		{
-			if (egw.preference('show_generation_time', 'common', false))
+			if (egw.preference('show_generation_time', 'common', false) == "1")
 			{
 				var gen_time_div = jQuery('#divGenTime').length > 0 ? jQuery('#divGenTime')
 				:jQuery('<div id="divGenTime" class="pageGenTime"><span class="pageTime"></span></div>').appendTo('#egw_fw_footer');
@@ -168,11 +168,14 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				this.egw.includeJS(js_files, function() {
 					var end_time = (new Date).getTime();
 					this.handleResponse(data);
-					var gen_time_div = jQuery('#divGenTime');
-					if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
-					var gen_time_async = jQuery('.asyncIncludeTime').length > 0 ? jQuery('.asyncIncludeTime'):
+					if (egw.preference('show_generation_time', 'common') == "1")
+					{
+						var gen_time_div = jQuery('#divGenTime');
+						if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
+						var gen_time_async = jQuery('.asyncIncludeTime').length > 0 ? jQuery('.asyncIncludeTime'):
 							gen_time_div.append('<span class="asyncIncludeTime"></span>').find('.asyncIncludeTime');
-					gen_time_async.text(egw.lang('async includes took %1s', (end_time-start_time)/1000));
+						gen_time_async.text(egw.lang('async includes took %1s', (end_time-start_time)/1000));
+					}
 				}, this);
 				return;
 			}
@@ -199,7 +202,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 								var plugin = handler_level[res.type][j];
 								if (res.type.match(/et2_load/))
 								{
-									if (egw.preference('show_generation_time', 'common'))
+									if (egw.preference('show_generation_time', 'common') == "1")
 									{
 										if (gen_time_div.length > 0)
 										{
