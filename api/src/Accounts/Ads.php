@@ -15,7 +15,7 @@ namespace EGroupware\Api\Accounts;
 
 use EGroupware\Api;
 
-require_once EGW_INCLUDE_ROOT.'vendor/adldap2/adldap2/src/adLDAP.php';
+require_once EGW_INCLUDE_ROOT.'/vendor/adldap2/adldap2/src/adLDAP.php';
 use adLDAPException;
 
 /**
