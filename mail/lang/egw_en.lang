@@ -446,6 +446,8 @@ set it as default:	mail	en	set it as default:
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.
 show	mail	en	show
+show all addresses	mail	en	Show all Addresses
+show all attachments	mail	en	Show all attachments
 show all folders	mail	en	show all Folders
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	en	show all folders, (subscribed AND unsubscribed) in Main Screen Folder Pane
 show new messages on home page	mail	en	show new messages on home page
