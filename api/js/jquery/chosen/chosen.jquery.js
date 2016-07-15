@@ -433,7 +433,19 @@
       }
       return true;
     };
+	AbstractChosen.prototype.search_results_touchstart = function(evt) {
+      this.touch_started = true;
+    };
 
+    AbstractChosen.prototype.search_results_touchmove = function(evt) {
+      this.touch_started = false;
+    };
+
+    AbstractChosen.prototype.search_results_touchend = function(evt) {
+      if (this.touch_started) {
+        return this.search_results_mouseup(evt);
+      }
+    };
     AbstractChosen.default_multiple_text = "Select Some Options";
 
     AbstractChosen.default_single_text = "Select an Option";
@@ -565,13 +577,8 @@
         _this.mouse_leave(evt);
       });
 	  this.container.bind('touchstart', function(evt) {
-		_this.container_mousedown(evt);
-		 return evt.preventDefault();
-	  });
-	  this.container.bind('touchend', function(evt) {
-		 _this.mouse_leave(evt);
-		 return evt.preventDefault();
-	  });
+		  _this.container_mousedown(evt);
+      });
       this.search_results.mouseup(function(evt) {
         _this.search_results_mouseup(evt);
       });
@@ -581,11 +588,14 @@
       this.search_results.mouseout(function(evt) {
         _this.search_results_mouseout(evt);
       });
-	   this.search_results.bind('touchstart', function(evt) {
-		 _this.search_results_mouseover(evt);
+	  this.search_results.bind('touchstart', function(evt) {
+		_this.search_results_touchstart(evt);
 	  });
+	  this.search_results.bind('touchmove', function(evt) {
+        _this.search_results_touchmove(evt);
+      });
 	  this.search_results.bind('touchend', function(evt) {
-		 _this.search_results_mouseup(evt);
+		_this.search_results_touchend(evt);
 	  });
       this.search_results.bind('mousewheel DOMMouseScroll', function(evt) {
         _this.search_results_mousewheel(evt);
