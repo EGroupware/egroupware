@@ -4,9 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7dfe0794bda17cb35ba87b68d1c6f49c",
-    "content-hash": "60a9736be80b34714f237b6a4429fe5e",
+    "hash": "9a74cc9727567f9100d4d1311228aede",
+    "content-hash": "d6ed8efbe2b9261641cf2d9ca9f1d01b",
     "packages": [
+        {
+            "name": "adldap2/adldap2",
+            "version": "v4.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Adldap2/Adldap2.git",
+                "reference": "58702274158a785817c1e983343180051c44a6f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/58702274158a785817c1e983343180051c44a6f4",
+                "reference": "58702274158a785817c1e983343180051c44a6f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "ext-ldap": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Scott Barnett",
+                    "email": "scott@wiggumworld.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Richard Hyland",
+                    "email": "adldap@richardhyland.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "adLDAP, PHP LDAP library for manipulating Active Directory",
+            "keywords": [
+                "active directory",
+                "ldap",
+                "windows"
+            ],
+            "time": "2016-07-14 18:11:24"
+        },
         {
             "name": "bower-asset/fastclick",
             "version": "v1.0.6",

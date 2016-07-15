@@ -15,7 +15,7 @@ namespace EGroupware\Api\Accounts;
 
 use EGroupware\Api;
 
-require_once __DIR__.'/Ads/adLDAP.php';
+require_once EGW_INCLUDE_ROOT.'vendor/adldap2/adldap2/src/adLDAP.php';
 use adLDAPException;
 
 /**
@@ -27,9 +27,9 @@ use adLDAPException;
  * Easiest way to enable SSL on a win2008r2 DC is to install role "Active Director Certificate Services"
  * or in German "Active Directory-Zertificatsdienste" AND reboot.
  *
- * Changing passwords currently requires ads_admin user (configured in setup) to have "Reset Password"
- * priveledges, as PHP can not delete unicodePwd attribute with old password and set it in same
- * operation with new password!
+ * Changing passwords require ldap_modify_batch method available in PHP 5.4 >= 5.4.26,
+ * PHP 5.5 >= 5.5.10 or PHP 5.6+. In earlier PHP versions ads_admin user (configured in setup)
+ * has to have "Reset Password" priveledges!
  *
  * @access internal only use the interface provided by the accounts class
  * @link http://www.selfadsi.org/user-attributes-w2k8.htm
