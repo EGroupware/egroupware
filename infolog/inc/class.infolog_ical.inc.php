@@ -542,7 +542,7 @@ class infolog_ical extends infolog_bo
 		}
 
 		// setting owner or responsible for new tasks based on folder
-		if (!is_null($user) && $_taskID == -1)
+		if (!is_null($user) && $_taskID <= 0)
 		{
 			if ($this->check_access($taskData, Acl::ADD))
 			{
