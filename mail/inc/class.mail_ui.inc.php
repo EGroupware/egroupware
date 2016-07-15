@@ -547,7 +547,7 @@ class mail_ui
 				//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']));
 				$content[self::$nm_index]['cat_id'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType'];
 				$sel_options['filter'] = $this->statusTypes;
-				$sel_options['filter2'] = array(''=>lang('No details'),1=>lang('Details'));
+				$sel_options['filter2'] = array(''=>lang('No Sneak Preview in list'),1=>lang('Sneak Preview in list'));
 				$content[self::$nm_index]['filter2'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails'];
 
 				$etpl = new Etemplate('mail.index');
@@ -4286,7 +4286,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$response = Api\Json\Response::get();
 		$response->call('app.mail.mail_refreshCatIdOptions',$this->searchTypes);
 		$response->call('app.mail.mail_refreshFilterOptions',$this->statusTypes);
-		$response->call('app.mail.mail_refreshFilter2Options',array(''=>lang('No details'),1=>lang('Details')));
+		$response->call('app.mail.mail_refreshFilter2Options',array(''=>lang('No Sneak Preview in list'),1=>lang('Sneak Preview in list')));
 
 	}
 
