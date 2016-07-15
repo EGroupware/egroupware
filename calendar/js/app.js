@@ -308,7 +308,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					this._clear_cache();
 
 					// Calendar is the current application, refresh now
-					if(framework.activeApp.appName == this.appName)
+					if(framework.activeApp.appName === this.appname)
 					{
 						this.setState({state: this.state});
 					}
