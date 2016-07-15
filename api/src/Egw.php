@@ -322,7 +322,7 @@ class Egw extends Egw\Base
 			$query = preg_replace('/[&]?sessionid(=|%3D)[^&]+&kp3(=|%3D)[^&]+&domain=.*$/','',$_SERVER['QUERY_STRING']);
 			if ($GLOBALS['egw_info']['server']['http_auth_types'])
 			{
-				$redirect = '/phpgwapi/ntlm/index.php?';
+				$redirect = '/api/ntlm/index.php?';
 			}
 			else
 			{
