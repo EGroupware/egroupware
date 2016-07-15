@@ -204,7 +204,9 @@
 		var end_time = (new Date).getTime();
 		var gen_time_div = jQuery('#divGenTime_'+window.egw_appName);
 		if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
-		gen_time_div.append('<span class="asyncIncludeTime">'+egw.lang('async includes took %1s', (end_time-start_time)/1000)+'</span>');
+		var gen_time_async = jQuery('.asyncIncludeTime').length > 0 ? jQuery('.asyncIncludeTime'):
+				gen_time_div.append('<span class="asyncIncludeTime"></span>').find('.asyncIncludeTime');
+		gen_time_async.text(egw.lang('async includes took %1s', (end_time-start_time)/1000));
 
 		// Make sure opener knows when we close - start a heartbeat
 		if((popup || window.opener) && window.name != '')
