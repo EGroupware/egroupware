@@ -758,7 +758,7 @@ class Ads
 					case 'account_primary_group':
 						// setting a primary group seems to fail, if user is no member of that group
 						if (isset($old['memberships'][$data[$egw]]) ||
-							$this->adldap->group()->addUser($group=$this->id2name($data[$egw]), $data['account_id']))
+							($group=$this->id2name($data[$egw])) && $this->adldap->group()->addUser($group, $data['account_id']))
 						{
 							$old['memberships'][$data[$egw]] = $group;
 							$ldap[$adldap] = abs($data[$egw]);
@@ -1267,7 +1267,7 @@ class adLDAP extends \adLDAP
     *
     * Extended to use mbstring to convert from arbitrary charset to utf-8
 	*/
-	protected function encode8Bit(&$item, $key)
+	public function encode8Bit(&$item, $key)
 	{
 		if ($this->charset != 'utf-8' && $key != 'password')
 		{
@@ -1416,7 +1416,7 @@ class adLDAPUsers extends \adLDAPUsers
     public function encodePassword($password)
     {
         $password="\"".$password."\"";
-        if (function_exists('mb_convert_encoding'))
+        if (function_exists('mb_convert_encoding') && !empty($this->adldap->charset))
         {
             return mb_convert_encoding($password, 'UTF-16LE', $this->adldap->charset);
         }
