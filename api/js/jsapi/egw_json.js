@@ -170,7 +170,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					this.handleResponse(data);
 					var gen_time_div = jQuery('#divGenTime');
 					if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
-					gen_time_div.append('<span class="asyncIncludeTime">'+egw.lang('async includes took %1s', (end_time-start_time)/1000)+'</span>');
+					var gen_time_async = jQuery('.asyncIncludeTime').length > 0 ? jQuery('.asyncIncludeTime'):
+							gen_time_div.append('<span class="asyncIncludeTime"></span>').find('.asyncIncludeTime');
+					gen_time_async.text(egw.lang('async includes took %1s', (end_time-start_time)/1000));
 				}, this);
 				return;
 			}
@@ -204,7 +206,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 											gen_time_div.find('span.pageTime').text(egw.lang("Page was generated in %1 seconds ", data.page_generation_time));
 											if (data.session_restore_time)
 											{
-												var gen_time_session_span = gen_time_div.find('span.session').length > 0 ? gen_time_div.find('span.session'):gen_time_div.append('<span class="session"></span>');
+												var gen_time_session_span = gen_time_div.find('span.session').length > 0 ? gen_time_div.find('span.session'):
+														gen_time_div.append('<span class="session"></span>').find('.session');
 												gen_time_session_span.text(egw.lang("session restore time in %1 seconds ", data.page_generation_time));
 											}
 										}
