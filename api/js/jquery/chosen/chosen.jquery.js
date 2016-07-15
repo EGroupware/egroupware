@@ -564,6 +564,14 @@
       this.container.mouseleave(function(evt) {
         _this.mouse_leave(evt);
       });
+	  this.container.bind('touchstart', function(evt) {
+		_this.container_mousedown(evt);
+		 return evt.preventDefault();
+	  });
+	  this.container.bind('touchend', function(evt) {
+		 _this.mouse_leave(evt);
+		 return evt.preventDefault();
+	  });
       this.search_results.mouseup(function(evt) {
         _this.search_results_mouseup(evt);
       });
@@ -573,6 +581,12 @@
       this.search_results.mouseout(function(evt) {
         _this.search_results_mouseout(evt);
       });
+	   this.search_results.bind('touchstart', function(evt) {
+		 _this.search_results_mouseover(evt);
+	  });
+	  this.search_results.bind('touchend', function(evt) {
+		 _this.search_results_mouseup(evt);
+	  });
       this.search_results.bind('mousewheel DOMMouseScroll', function(evt) {
         _this.search_results_mousewheel(evt);
       });
@@ -607,13 +621,13 @@
         });
       }
     };
-    Chosen.prototype.unregister_observers = function() {	 
-      return this.form_field_jq.unbind();	 
-    };	 
- 	 
-    Chosen.prototype.remove_html = function() {	 
-      this.form_field_jq.show().removeClass('chzn-done');	 
-      return this.container.remove();	 
+    Chosen.prototype.unregister_observers = function() {
+      return this.form_field_jq.unbind();
+    };
+
+    Chosen.prototype.remove_html = function() {
+      this.form_field_jq.show().removeClass('chzn-done');
+      return this.container.remove();
     };
 
     Chosen.prototype.unregister_observers = function() {
@@ -803,11 +817,11 @@
       return this.results_showing = false;
     };
 
-    Chosen.prototype.reset_tab_index = function() {	 
-      var tabbed_item;	 
-      tabbed_item = this.is_multiple ? this.search_field : this.selected_item;	 
-      this.form_field_jq.attr("tabindex",tabbed_item.attr("tabindex"));	 
-      return tabbed_item.attr("tabindex") - 1;	 
+    Chosen.prototype.reset_tab_index = function() {
+      var tabbed_item;
+      tabbed_item = this.is_multiple ? this.search_field : this.selected_item;
+      this.form_field_jq.attr("tabindex",tabbed_item.attr("tabindex"));
+      return tabbed_item.attr("tabindex") - 1;
     };
 
     Chosen.prototype.set_tab_index = function(el) {
