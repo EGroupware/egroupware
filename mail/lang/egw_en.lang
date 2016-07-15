@@ -93,7 +93,6 @@ date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
 default sorting order	mail	en	Default sorting order
 default your name and email	common	en	default your name and email
-details	mail	en	short preview in list	
 delete folder	mail	en	Delete Folder
 delete folder %1 ?	mail	en	DELETE Folder %1 ?
 delete this acl	mail	en	Delete this ACL
@@ -312,7 +311,6 @@ no access	mail	en	no access
 no action defined!	mail	en	No action defined!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	en	No Address TO/CC/BCC supplied, and no folder to save message to provided.
 no adress, to send this mail to, supplied	mail	en	no adress, to send this mail to, supplied
-no details	mail	en	no short preview in list
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	en	No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.
 no folders	mail	en	no folders
 no message body supplied	mail	en	no message body supplied
@@ -320,6 +318,7 @@ no plain text part found	mail	en	no plain text part found
 no recipient address given!	mail	en	No recipient address given!
 no send folder set in preferences	mail	en	No Send Folder set in preferences
 no signature	mail	en	no signature
+no sneak preview in list	mail	en	No sneak preview in list
 no subject given!	mail	en	No subject given!
 no subject supplied	mail	en	no subject supplied
 no text body supplied, check attachments for message text	mail	en	no text body supplied, check attachments for message text
@@ -465,6 +464,7 @@ size(...->0)	mail	en	size(...->0)
 size(0->...)	mail	en	size(0->...)
 small view	mail	en	small view
 smtp	mail	en	SMTP
+sneak preview in list	mail	en	Sneak preview in list
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	en	Some clients fail to detect correct charset, if flowed lines are enabled.
 sort order	mail	en	Sort order
 source	mail	en	Source

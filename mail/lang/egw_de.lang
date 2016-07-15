@@ -102,7 +102,6 @@ deleted!	mail	de	gelöscht!
 deleting %1 folders in progress ...	mail	de	%1 Ordner in Bearbeitung zum Löschen
 deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
-details	mail	de	Mit Kurzvorschau
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
@@ -313,7 +312,6 @@ no access	mail	de	Kein Zugriff
 no action defined!	mail	de	Keine Aktion ausgewählt!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	de	Keine Empfänger-Adresse (An/Kopie/Blindkopie) angegeben und kein Ordner zur Ablage der E-Mail spezifiziert.
 no adress, to send this mail to, supplied	mail	de	Keine Empfängeradresse angegeben!
-no details	mail	de	Ohne Kurzvorschau
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	de	Es sind keine Zielordner oder andere Methoden (als Infolog/Tracker ablegen) angegeben, um die Nachricht nach dem Senden zu speichern.
 no folders	mail	de	Keine Ordner
 no message body supplied	mail	de	Keinen Nachrichtentext - Teil gefunden.
@@ -321,6 +319,7 @@ no plain text part found	mail	de	Kein Text Teil gefunden.
 no recipient address given!	mail	de	Keine Empfängeradresse angegeben!
 no send folder set in preferences	mail	de	Es ist kein Gesendet Ordner hinterlegt
 no signature	mail	de	keine Signatur
+no sneak preview in list	mail	de	Ohne Kurzvorschau
 no subject given!	mail	de	Kein Betreff angegeben!
 no subject supplied	mail	de	Kein Betreff angegeben!
 no text body supplied, check attachments for message text	mail	de	Keine Text vorhanden, bitte sehen Sie sich die Anlagen dieser E-Mail an.
@@ -466,6 +465,7 @@ size(...->0)	mail	de	Größe(...->0)
 size(0->...)	mail	de	Größe(0->...)
 small view	mail	de	schmale Ansicht
 smtp	mail	de	Postausgang-Server
+sneak preview in list	mail	de	Mit Kurzvorschau
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	de	Einige Mailprogramme haben Probleme den Zeichensatz zu erkennen, wenn variabler Zeilenumbruch verwendet wird.
 sort order	mail	de	Sortierreihenfolge
 source	mail	de	Quelltext
