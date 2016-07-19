@@ -60,6 +60,7 @@ before_script:
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   #- composer update --prefer-source $LOWEST_DEPS
   - mr --trust-all --stats up
+  - (cd activesync; mr --trust-all --stats up)
   # installing phpunit in version suitable for used PHP version
   - composer update phpunit/phpunit
   # install egroupware
