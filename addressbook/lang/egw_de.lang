@@ -196,6 +196,7 @@ don't hide empty columns	addressbook	de	Leere Spalten nicht ausblenden
 download	addressbook	de	Herunterladen
 download export file (uncheck to debug output in browser)	addressbook	de	Download Export-Datei (zur Vorschau im Browser Ankreuzfeld frei lassen)
 download this contact as vcard file	addressbook	de	Diese Adresse als vCard Datei herunterladen
+duplicate warning	addressbook	de	Duplikat-Warnung
 duration	addressbook	de	Dauer
 each category in its own field	addressbook	de	Jede Kategorie in einem eigenen Feld
 each option in its own field	addressbook	de	Jede Option in einem eigenen Feld
