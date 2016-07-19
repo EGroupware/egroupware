@@ -143,7 +143,6 @@ download attachments	mail	de	Attachments herunterladen
 draft folder	mail	de	Entwurfs Ordner
 drafts	mail	de	Entwürfe
 drafts folder	mail	de	Ordner für Entwürfe
-duplicate warning	mail	de	Duplikat-Warnung
 edit account	mail	de	Konto Einstellungen
 edit account ...	mail	de	Konto bearbeiten ...
 edit folder acl	mail	de	Berechtigungen bearbeiten
@@ -416,7 +415,7 @@ save to disk	mail	de	Speichern unter ...
 save to filemanager	mail	de	Nachricht im Dateimananger speichern
 save to vfs	mail	de	Im EGroupware Dateimanager speichern
 save:	mail	de	Speichern
-saves subscription changes	mail	de		Änderungen speichern
+saves subscription changes	mail	de	Änderungen speichern
 saves this acl	mail	de	Zugriffsrechte speichern
 saves this rule	mail	de	Filter-Regel speichern
 saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speichern der Nachricht %1 ist fehlgeschlagen. Ziel Ordner %2 existiert nicht.
