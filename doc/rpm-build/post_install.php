@@ -423,10 +423,12 @@ else
 	// fix egw_cache evtl. created by root, stoping webserver from accessing it
 	fix_perms();
 
-	// restart running Apache, to force APC to update changed sources and/or Apache configuration
-	$output = array();
-	run_cmd(build_cmd('start_webserver', 'status').' && '.build_cmd('start_webserver', 'restart'), $output, true);
-
+	if (!empty($config['start_webserver']))
+	{
+		// restart running Apache, to force APC to update changed sources and/or Apache configuration
+		$output = array();
+		run_cmd(build_cmd('start_webserver', 'status').' && '.build_cmd('start_webserver', 'restart'), $output, true);
+	}
 	exit($ret);
 }
 
@@ -577,7 +579,7 @@ function fix_perms()
 {
 	global $config;
 
-	if (file_exists('/tmp/egw_cache'))
+	if (file_exists('/tmp/egw_cache') && !empty($config['webserver_user']))
 	{
 		system('/bin/chown -R '.$config['webserver_user'].' /tmp/egw_cache');
 		system('/bin/chmod 700 /tmp/egw_cache');
