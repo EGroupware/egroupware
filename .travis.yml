@@ -32,6 +32,7 @@ before_script:
   - sudo apt-get update -qq
   - sudo apt-get install -y myrepos
   - mr --trust-all --stats up
+  - (cd activesync; mr --trust-all --stats up)
   # installing phpunit in version suitable for used PHP version
   - composer update phpunit/phpunit
 
