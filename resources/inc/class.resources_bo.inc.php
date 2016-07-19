@@ -520,20 +520,112 @@ class resources_bo
 	}
 
 	/**
+	 * Search for resources for calendar to select as participants
+	 * 
+	 * Search and options match Link::query()
+	 * 
+	 * Resources return actual resources as well as categories that match
+	 * 
+	 * @param String $search - Search string
+	 * @param Array $options - search options
+	 * @see Link::query()
+	 * 
+	 * @return Array List of ID => Title entries matching search string
+	 */
+	public static function calendar_search($search, $options)
+	{
+		// Resources
+		$list = Link::query('resources', $search, $options);
+
+		// Categories
+		$bo = new resources_bo();
+		$cats = $bo->acl->get_cats(Acl::READ);
+		foreach($cats as $cat_id => $cat)
+		{
+			if($cat && stripos($cat, $search) !== FALSE)
+			{
+				// Get resources for that category
+				$resources = $bo->get_resources_by_category($cat_id);
+
+				// Edit dialog sends exec as an option, don't add categories
+				if(count($resources) && !$options['exec'])
+				{
+					$list['cat-'.$cat_id] = array(
+						'label'	=>	$cat,
+						'resources'	=>	$resources,
+					);
+				}
+				else if ($resources && $options['exec'])
+				{
+					array_map(
+						function($id,$name) use (&$list) { $list[''+$id] = $name;},
+						array_keys($resources), $resources
+					);
+				}
+			}
+		}
+
+		return $list;
+	}
+
+	/**
+	 * Get a list of resources (ID => name) matching a single category ID
+	 * @param int $cat_id
+	 * @return array()
+	 */
+	public function get_resources_by_category($cat_id)
+	{
+		$resources = array();
+		$filter = array(
+			'cat_id' => $cat_id,
+			//'accessory_of' => '-1'
+			'deleted' => null
+		);
+		$only_keys = 'res_id,name';
+		$data = $this->so->search(array(),$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
+		foreach($data as $resource)
+		{
+			$resources[$resource['res_id']] = $resource['name'];
+		}
+
+		return $resources;
+	}
+
+	/**
 	 * returns info about resource for calender
 	 * @author Cornelius Weiss<egw@von-und-zu-weiss.de>
-	 * @param int|array $res_id single id or array $num => $res_id
+	 * @param int|array|string $res_id single id, array $num => $res_id or
+	 *	'cat-<cat_id>' for the whole category
 	 * @return array
 	 */
 	function get_calendar_info($res_id)
 	{
-		//echo "<p>resources_bo::get_calendar_info(".print_r($res_id,true).")</p>\n";
+		//error_log(__METHOD__ . "(".print_r($res_id,true).")");
+
+		// Resource category
+		if(is_string($res_id) && strpos($res_id, 'cat-') === 0)
+		{
+			$cat_id = (int)substr($res_id, 4);
+			if(!$this->acl->is_permitted($cat_id, Acl::READ))
+			{
+				return array();
+			}
+			return array( array(
+				'name' => $this->acl->get_cat_name($cat_id),
+				'rights' => $this->acl->get_permissions($cat_id),
+				'resources' => array_map(
+					function($id) { return 'r'.$id;},
+					array_keys($this->get_resources_by_category($cat_id))
+				)
+			));
+		}
+		
 		if(!is_array($res_id) && $res_id < 1) return;
 
 		$data = $this->so->search(array('res_id' => $res_id),self::TITLE_COLS.',useable');
 		if (!is_array($data))
 		{
-			error_log(__METHOD__." No Calendar Data found for Resource with id $res_id");
+			//error_log(__METHOD__." No Calendar Data found for Resource with id $res_id");
 			return array();
 		}
 		foreach($data as $num => &$resource)
@@ -611,10 +703,11 @@ class resources_bo
 		{
 			$filter['accessory_of'] = $options['accessory_of'];
 		}
+		$list = array();
 		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
 		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
 		$show_conflict=False;
-		if ($options['exec'] && $GLOBALS['egw_info']['preferences']['calendar']['defaultresource_sel'] !== 'resources')
+		if ($data && $options['exec'] && $GLOBALS['egw_info']['preferences']['calendar']['defaultresource_sel'] !== 'resources')
 		{
 			// we'll use a cache for resources info taken from database
 			static $res_info_cache = array();
