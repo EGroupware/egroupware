@@ -195,6 +195,7 @@ don't hide empty columns	addressbook	en	Hide empty columns
 download	addressbook	en	Download
 download export file (uncheck to debug output in browser)	addressbook	en	Download export file. Un-check to debug output in browser.
 download this contact as vcard file	addressbook	en	Download this contact as vCard file
+duplicate warning	addressbook	en	Duplicate warning
 duration	addressbook	en	Duration
 each category in its own field	addressbook	en	Each category in its own field
 each option in its own field	addressbook	en	Each option in its own field
