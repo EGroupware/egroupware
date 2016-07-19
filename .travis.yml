@@ -55,22 +55,22 @@ before_script:
     "hhvm")
        ;;
     esac
-  - php -m
-  # - mysql -e 'create database egroupware'
+  #- php -m
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   #- composer update --prefer-source $LOWEST_DEPS
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
   # installing phpunit in version suitable for used PHP version
   - composer update phpunit/phpunit
-  # install egroupware
+  # create data directory
   - sudo mkdir /var/lib/egroupware
   - sudo chown travis /var/lib/egroupware
 
 script:
+  # install egroupware
   - php doc/rpm-build/post_install.php
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
-  - mysql -uroot -e 'show tables' egroupware
+  #- mysql -uroot -e 'show tables' egroupware
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
   - ./doc/php_syntax_check.sh
