@@ -67,9 +67,17 @@ use HTTP_WebDAV_Server;
  * Vfs::parse_url($url, $component=-1), Vfs::dirname($url) and Vfs::basename($url) work
  * on urls containing utf-8 characters, which get NOT urlencoded in our VFS!
  */
-class Vfs extends Vfs\StreamWrapper
+class Vfs
 {
 	const PREFIX = 'vfs://default';
+	/**
+	 * Scheme / protocol used for this stream-wrapper
+	 */
+	const SCHEME = Vfs\StreamWrapper::SCHEME;
+	/**
+	 * Mime type of directories, the old vfs used 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
+	 */
+	const DIR_MIME_TYPE = Vfs\StreamWrapper::DIR_MIME_TYPE;
 	/**
 	 * Readable bit, for dirs traversable
 	 */
@@ -238,7 +246,7 @@ class Vfs extends Vfs\StreamWrapper
 	 */
 	static function stat($path,$try_create_home=false)
 	{
-		if ($path[0] != '/')
+		if ($path[0] != '/' && strpos($path, self::PREFIX.'/') !== 0)
 		{
 			throw new Exception\AssertionFailed("File '$path' is not an absolute path!");
 		}
@@ -319,69 +327,7 @@ class Vfs extends Vfs\StreamWrapper
 	 */
 	static function mount($url=null,$path=null,$check_url=null,$persitent_mount=true,$clear_fstab=false)
 	{
-		if (is_null($check_url)) $check_url = strpos($url,'$') === false;
-
-		if (!isset($GLOBALS['egw_info']['server']['vfs_fstab']))	// happens eg. in setup
-		{
-			$api_config = Config::read('phpgwapi');
-			if (isset($api_config['vfs_fstab']) && is_array($api_config['vfs_fstab']))
-			{
-				self::$fstab = $api_config['vfs_fstab'];
-			}
-			else
-			{
-				self::$fstab = array(
-					'/' => 'sqlfs://$host/',
-					'/apps' => 'links://$host/apps',
-				);
-			}
-			unset($api_config);
-		}
-		if (is_null($url) || is_null($path))
-		{
-			if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns '.array2string(self::$fstab));
-			return self::$fstab;
-		}
-		if (!self::$is_root)
-		{
-			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') permission denied, you are NOT root!');
-			return false;	// only root can mount
-		}
-		if ($clear_fstab)
-		{
-			self::$fstab = array();
-		}
-		if (isset(self::$fstab[$path]) && self::$fstab[$path] === $url)
-		{
-			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') already mounted.');
-			return true;	// already mounted
-		}
-		self::load_wrapper(self::parse_url($url,PHP_URL_SCHEME));
-
-		if ($check_url && (!file_exists($url) || opendir($url) === false))
-		{
-			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') url does NOT exist!');
-			return false;	// url does not exist
-		}
-		self::$fstab[$path] = $url;
-
-		uksort(self::$fstab, function($a, $b)
-		{
-			return strlen($a) - strlen($b);
-		});
-
-		if ($persitent_mount)
-		{
-			Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
-			$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-			// invalidate session cache
-			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
-			{
-				$GLOBALS['egw']->invalidate_session_cache();
-			}
-		}
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful new mount).');
-		return true;
+		return Vfs\StreamWrapper::mount($url, $path, $check_url, $persitent_mount, $clear_fstab);
 	}
 
 	/**
@@ -391,27 +337,18 @@ class Vfs extends Vfs\StreamWrapper
 	 */
 	static function umount($path)
 	{
-		if (!self::$is_root)
-		{
-			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($path).','.array2string($path).') permission denied, you are NOT root!');
-			return false;	// only root can mount
-		}
-		if (!isset(self::$fstab[$path]) && ($path = array_search($path,self::$fstab)) === false)
-		{
-			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($path).') NOT mounted!');
-			return false;	// $path not mounted
-		}
-		unset(self::$fstab[$path]);
+		return Vfs\StreamWrapper::umount($path);
+	}
 
-		Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
-		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-		// invalidate session cache
-		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
-		{
-			$GLOBALS['egw']->invalidate_session_cache();
-		}
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($path).') returns true (successful unmount).');
-		return true;
+	/**
+	 * Returns mount url of a full url returned by resolve_url
+	 *
+	 * @param string $fullurl full url returned by resolve_url
+	 * @return string|NULL mount url or null if not found
+	 */
+	static function mount_url($fullurl)
+	{
+		return Vfs\StreamWrapper::mount_url($fullurl);
 	}
 
 	/**
@@ -666,12 +603,12 @@ class Vfs extends Vfs\StreamWrapper
 
 		if ($options['url'])
 		{
-			$stat = @lstat($path);
+			$lstat = @lstat($path);
+			$stat = array_slice($lstat,13);	// remove numerical indices 0-12
 		}
 		else
 		{
-			$vfs = new Vfs\StreamWrapper();
-			$stat = $vfs->url_stat($path,STREAM_URL_STAT_LINK);
+			$stat = self::stat($path, STREAM_URL_STAT_LINK);
 		}
 		if (!$stat)
 		{
@@ -682,7 +619,6 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			return;	// wrong type
 		}
-		$stat = array_slice($stat,13);	// remove numerical indices 0-12
 		$stat['path'] = self::parse_url($path,PHP_URL_PATH);
 		$stat['name'] = $options['remove'] > 0 ? implode('/',array_slice(explode('/',$stat['path']),$options['remove'])) : self::basename($path);
 
@@ -1296,6 +1232,59 @@ class Vfs extends Vfs\StreamWrapper
 		$parts = explode('/',$path);
 
 		return array_pop($parts);
+	}
+
+	/**
+	 * Utf-8 save version of parse_url
+	 *
+	 * Does caching withing request, to not have to parse urls over and over again.
+	 *
+	 * @param string $url
+	 * @param int $component =-1 PHP_URL_* constants
+	 * @return array|string|boolean on success array or string, if $component given, or false on failure
+	 */
+	static function parse_url($url, $component=-1)
+	{
+		static $component2str = array(
+			PHP_URL_SCHEME => 'scheme',
+			PHP_URL_HOST => 'host',
+			PHP_URL_PORT => 'port',
+			PHP_URL_USER => 'user',
+			PHP_URL_PASS => 'pass',
+			PHP_URL_PATH => 'path',
+			PHP_URL_QUERY => 'query',
+			PHP_URL_FRAGMENT => 'fragment',
+		);
+		static $cache = array();	// some caching
+
+		$result =& $cache[$url];
+
+		if (!isset($result))
+		{
+			// Build arrays of values we need to decode before parsing
+			static $entities = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D');
+			static $replacements = array('!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "$", ",", "/", "?", "#", "[", "]");
+			static $str_replace = null;
+			if (!isset($str_replace)) $str_replace = function_exists('mb_str_replace') ? 'mb_str_replace' : 'str_replace';
+
+			// Create encoded URL with special URL characters decoded so it can be parsed
+			// All other characters will be encoded
+			$encodedURL = $str_replace($entities, $replacements, urlencode($url));
+
+			// Parse the encoded URL
+			$result = $encodedParts = parse_url($encodedURL);
+
+			// Now, decode each value of the resulting array
+			if ($encodedParts)
+			{
+				$result = array();
+				foreach ($encodedParts as $key => $value)
+				{
+					$result[$key] = urldecode($str_replace($replacements, $entities, $value));
+				}
+			}
+		}
+		return $component >= 0 ? $result[$component2str[$component]] : $result;
 	}
 
 	/**
@@ -2139,6 +2128,310 @@ class Vfs extends Vfs\StreamWrapper
 		fclose($fp2);
 		//error_log(__METHOD__."($file1, $file2) returning ".array2string($read1 === $read2)." (content differs)");
 		return $read1 === $read2;
+	}
+
+	/**
+	 * Resolve the given path according to our fstab AND symlinks
+	 *
+	 * @param string $_path
+	 * @param boolean $file_exists =true true if file needs to exists, false if not
+	 * @param boolean $resolve_last_symlink =true
+	 * @param array|boolean &$stat=null on return: stat of existing file or false for non-existing files
+	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
+	 */
+	static function resolve_url_symlinks($_path,$file_exists=true,$resolve_last_symlink=true,&$stat=null)
+	{
+		$vfs = new Vfs\StreamWrapper();
+		return $vfs->resolve_url_symlinks($_path, $file_exists, $resolve_last_symlink, $stat);
+	}
+
+	/**
+	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
+	 *
+	 * It should attempt to create the directory specified by path.
+	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories.
+	 *
+	 * @param string $path
+	 * @param int $mode
+	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
+	 * @return boolean TRUE on success or FALSE on failure
+	 */
+	static function mkdir ($path, $mode=0750, $options=0)
+	{
+		return $path[0] == '/' && mkdir(self::PREFIX.$path, $mode, $options);
+	}
+
+	/**
+	 * This method is called in response to rmdir() calls on URL paths associated with the wrapper.
+	 *
+	 * It should attempt to remove the directory specified by path.
+	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support removing directories.
+	 *
+	 * @param string $path
+	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
+	 * @return boolean TRUE on success or FALSE on failure.
+	 */
+	static function rmdir ( $path, $options=0 )
+	{
+		return $path[0] == '/' && rmdir(self::PREFIX.$path, $options);
+	}
+
+	/**
+	 * This method is called in response to unlink() calls on URL paths associated with the wrapper.
+	 *
+	 * It should attempt to delete the item specified by path.
+	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support unlinking!
+	 *
+	 * @param string $path
+	 * @return boolean TRUE on success or FALSE on failure
+	 */
+	static function unlink ( $path )
+	{
+		return $path[0] == '/' && unlink(self::PREFIX.$path);
+	}
+
+	/**
+	 * Allow to call methods of the underlying stream wrapper: touch, chmod, chgrp, chown, ...
+	 *
+	 * We cant use a magic __call() method, as it does not work for static methods!
+	 *
+	 * @param string $name
+	 * @param array $params first param has to be the path, otherwise we can not determine the correct wrapper
+	 * @param boolean $fail_silent =false should only false be returned if function is not supported by the backend,
+	 * 	or should an E_USER_WARNING error be triggered (default)
+	 * @param int $path_param_key =0 key in params containing the path, default 0
+	 * @return mixed return value of backend or false if function does not exist on backend
+	 */
+	static protected function _call_on_backend($name,$params,$fail_silent=false,$path_param_key=0)
+	{
+		$pathes = $params[$path_param_key];
+
+		$scheme2urls = array();
+		foreach(is_array($pathes) ? $pathes : array($pathes) as $path)
+		{
+			if (!($url = self::resolve_url_symlinks($path,false,false)))
+			{
+				return false;
+			}
+			$k=(string)self::parse_url($url,PHP_URL_SCHEME);
+			if (!(is_array($scheme2urls[$k]))) $scheme2urls[$k] = array();
+			$scheme2urls[$k][$path] = $url;
+		}
+		$ret = array();
+		foreach($scheme2urls as $scheme => $urls)
+		{
+			if ($scheme)
+			{
+				if (!class_exists($class = self::scheme2class($scheme)) || !method_exists($class,$name))
+				{
+					if (!$fail_silent) trigger_error("Can't $name for scheme $scheme!\n",E_USER_WARNING);
+					return false;
+				}
+				if (!is_array($pathes))
+				{
+					$params[$path_param_key] = $url;
+
+					return call_user_func_array(array($class,$name),$params);
+				}
+				$params[$path_param_key] = $urls;
+				if (!is_array($r = call_user_func_array(array($class,$name),$params)))
+				{
+					return $r;
+				}
+				// we need to re-translate the urls to pathes, as they can eg. contain symlinks
+				foreach($urls as $path => $url)
+				{
+					if (isset($r[$url]) || isset($r[$url=self::parse_url($url,PHP_URL_PATH)]))
+					{
+						$ret[$path] = $r[$url];
+					}
+				}
+			}
+			// call the filesystem specific function (dont allow to use arrays!)
+			elseif(!function_exists($name) || is_array($pathes))
+			{
+				return false;
+			}
+			else
+			{
+				$time = null;
+				return $name($url,$time);
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * @param string $path
+	 * @param int $time =null modification time (unix timestamp), default null = current time
+	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 * @return boolean true on success, false otherwise
+	 */
+	static function touch($path,$time=null,$atime=null)
+	{
+		return self::_call_on_backend('touch',array($path,$time,$atime));
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * Requires owner or root rights!
+	 *
+	 * @param string $path
+	 * @param string $mode mode string see Vfs::mode2int
+	 * @return boolean true on success, false otherwise
+	 */
+	static function chmod($path,$mode)
+	{
+		return self::_call_on_backend('chmod',array($path,$mode));
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * Requires root rights!
+	 *
+	 * @param string $path
+	 * @param int $owner numeric user id
+	 * @return boolean true on success, false otherwise
+	 */
+	static function chown($path,$owner)
+	{
+		return self::_call_on_backend('chown',array($path,$owner));
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * Requires owner or root rights!
+	 *
+	 * @param string $path
+	 * @param int $group numeric group id
+	 * @return boolean true on success, false otherwise
+	 */
+	static function chgrp($path,$group)
+	{
+		return self::_call_on_backend('chgrp',array($path,$group));
+	}
+
+	/**
+	 * Returns the target of a symbolic link
+	 *
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * @param string $path
+	 * @return string|boolean link-data or false if no link
+	 */
+	static function readlink($path)
+	{
+		$ret = self::_call_on_backend('readlink',array($path),true);	// true = fail silent, if backend does not support readlink
+		//error_log(__METHOD__."('$path') returning ".array2string($ret).' '.function_backtrace());
+		return $ret;
+	}
+
+	/**
+	 * Creates a symbolic link
+	 *
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * @param string $target target of the link
+	 * @param string $link path of the link to create
+	 * @return boolean true on success, false on error
+	 */
+	static function symlink($target,$link)
+	{
+		if (($ret = self::_call_on_backend('symlink',array($target,$link),false,1)))	// 1=path is in $link!
+		{
+			self::symlinkCache_remove($link);
+		}
+		return $ret;
+	}
+
+	/**
+	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 *
+	 * The methods use the following ways to get the mime type (in that order)
+	 * - directories (is_dir()) --> self::DIR_MIME_TYPE
+	 * - stream implemented by class defining the STAT_RETURN_MIME_TYPE constant --> use mime-type returned by url_stat
+	 * - for regular filesystem use mime_content_type function if available
+	 * - use eGW's mime-magic class
+	 *
+	 * @param string $path
+	 * @param boolean $recheck =false true = do a new check, false = rely on stored mime type (if existing)
+	 * @return string mime-type (self::DIR_MIME_TYPE for directories)
+	 */
+	static function mime_content_type($path,$recheck=false)
+	{
+		if (!($url = self::resolve_url_symlinks($path)))
+		{
+			return false;
+		}
+		if (($scheme = self::parse_url($url,PHP_URL_SCHEME)) && !$recheck)
+		{
+			// check it it's an eGW stream wrapper returning mime-type via url_stat
+			// we need to first check if the constant is defined, as we get a fatal error in php5.3 otherwise
+			if (class_exists($class = self::scheme2class($scheme)) &&
+				defined($class.'::STAT_RETURN_MIME_TYPE') &&
+				($mime_attr = constant($class.'::STAT_RETURN_MIME_TYPE')))
+			{
+				$inst = new $class;
+				$stat = $inst->url_stat(self::parse_url($url,PHP_URL_PATH),0);
+				if ($stat && $stat[$mime_attr])
+				{
+					$mime = $stat[$mime_attr];
+				}
+			}
+		}
+		if (!$mime && is_dir($url))
+		{
+			$mime = self::DIR_MIME_TYPE;
+		}
+		// if we operate on the regular filesystem and the mime_content_type function is available --> use it
+		if (!$mime && !$scheme && function_exists('mime_content_type'))
+		{
+			$mime = mime_content_type($path);
+		}
+		// using EGw's own mime magic (currently only checking the extension!)
+		if (!$mime)
+		{
+			$mime = MimeMagic::filename2mime(self::parse_url($url,PHP_URL_PATH));
+		}
+		//error_log(__METHOD__."($path,$recheck) mime=$mime");
+		return $mime;
+	}
+
+	/**
+	 * Get the class-name for a scheme
+	 *
+	 * A scheme is not allowed to contain an underscore, but allows a dot and a class names only allow or need underscores, but no dots
+	 * --> we replace dots in scheme with underscored to get the class-name
+	 *
+	 * @param string $scheme eg. vfs
+	 * @return string
+	 */
+	static function scheme2class($scheme)
+	{
+		return Vfs\StreamWrapper::scheme2class($scheme);
+	}
+
+	/**
+	 * Clears our internal stat and symlink cache
+	 *
+	 * Normaly not necessary, as it is automatically cleared/updated, UNLESS Vfs::$user changes!
+	 *
+	 * We have to clear the symlink cache before AND after calling the backend,
+	 * because auf traversal rights may be different when Vfs::$user changes!
+	 *
+	 * @param string $path ='/' path of backend, whos cache to clear
+	 */
+	static function clearstatcache($path='/')
+	{
+		//error_log(__METHOD__."('$path')");
+		Vfs\StreamWrapper::clearstatcache($path);
+		self::_call_on_backend('clearstatcache', array($path), true, 0);
+		Vfs\StreamWrapper::clearstatcache($path);
 	}
 }
 
