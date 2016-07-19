@@ -1300,7 +1300,7 @@ class Link extends Link\Storage
 		if (!is_array($fileinfo))
 		{
 			$url = Vfs\Sqlfs\StreamWrapper::id2path($fileinfo);
-			if (!($fileinfo = Vfs::url_stat($url,STREAM_URL_STAT_QUIET)))
+			if (!($fileinfo = Vfs::stat($url,STREAM_URL_STAT_QUIET)))
 			{
 				return false;
 			}

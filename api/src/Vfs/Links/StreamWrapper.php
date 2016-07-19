@@ -137,7 +137,7 @@ class StreamWrapper extends LinksParent
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @return array
 	 */
-	static function url_stat ( $url, $flags )
+	function url_stat ( $url, $flags )
 	{
 		$eacl_check=self::check_extended_acl($url,Vfs::READABLE);
 
@@ -232,7 +232,7 @@ class StreamWrapper extends LinksParent
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE, we allways use recursive!
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir($path,$mode,$options)
+	function mkdir($path,$mode,$options)
 	{
 		unset($mode);	// not used, but required by function signature
 

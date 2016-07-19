@@ -150,9 +150,10 @@ class Utils extends StreamWrapper
 		);
 		$stmt = $delete_stmt = null;
 		$msgs = array();
+		$sqlfs = Vfs\Sqlfs();
 		foreach($dirs as $path => $id)
 		{
-			if (!($stat = self::url_stat($path, STREAM_URL_STAT_LINK)))
+			if (!($stat = $sqlfs->url_stat($path, STREAM_URL_STAT_LINK)))
 			{
 				if ($check_only)
 				{
@@ -308,6 +309,7 @@ class Utils extends StreamWrapper
 	{
 		$lostnfound = null;
 		$msgs = array();
+		$sqlfs = Vfs\Sqlfs();
 		foreach(self::$pdo->query('SELECT fs.* FROM '.self::TABLE.' fs'.
 			' LEFT JOIN '.self::TABLE.' dir ON dir.fs_id=fs.fs_dir'.
 			' WHERE fs.fs_id > 1 AND dir.fs_id IS NULL') as $row)
@@ -322,13 +324,13 @@ class Utils extends StreamWrapper
 			if (!isset($lostnfound))
 			{
 				// check if we already have /lost+found, create it if not
-				if (!($lostnfound = self::url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
+				if (!($lostnfound = $sqlfs->url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
 				{
 					Vfs::$is_root = true;
 					if (!self::mkdir(self::LOST_N_FOUND, self::LOST_N_FOUND_MOD, 0) ||
 						!(!($admins = $GLOBALS['egw']->accounts->name2id(self::LOST_N_FOUND_GRP)) ||
 						   self::chgrp(self::LOST_N_FOUND, $admins) && self::chmod(self::LOST_N_FOUND,self::LOST_N_FOUND_MOD)) ||
-						!($lostnfound = self::url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
+						!($lostnfound = $sqlfs->url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
 					{
 						$msgs[] = lang("Can't create directory %1 to connect found unconnected nodes to it!",self::LOST_N_FOUND);
 					}
