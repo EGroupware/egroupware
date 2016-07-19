@@ -52,6 +52,9 @@ function expose (widget)
 	// For filtering to only show things we can handle
 	var mime_regex = new RegExp(/(video\/(mp4|ogg|webm))|(image\/:*(?!tif|x-xcf|pdf))/);
 
+	// open office document mime type currently supported by webodf editor
+	var mime_odf_regex = new RegExp(/application\/vnd\.oasis\.opendocument\.text/);
+
 	// IE only supports video/mp4 mime type
 	if (navigator.userAgent.match(/(MSIE|Trident)/)) mime_regex.compile(/(video\/mp4)|(image\/:*(?!tif|x-xcf|pdf))/);
 
@@ -392,7 +395,7 @@ function expose (widget)
 
 				var self=this;
 				// If the media type is not supported do not bind the click handler
-				if (!_value || typeof _value.mime != 'string' || !_value.mime.match(mime_regex,'ig') || typeof _value.download_url == 'undefined')
+				if (!_value || typeof _value.mime != 'string' || (!_value.mime.match(mime_regex,'ig') && !_value.mime.match(mime_odf_regex,'ig')) || typeof _value.download_url == 'undefined')
 				{
 					return;
 				}
@@ -400,7 +403,17 @@ function expose (widget)
 				{
 					jQuery(this.node).on('click', function(event){
 						// Do not trigger expose view if one of the operator keys are held
-						if (!event.altKey && !event.ctrlKey && !event.shiftKey && !event.metaKey) self._init_blueimp_gallery(event, _value);
+						if (!event.altKey && !event.ctrlKey && !event.shiftKey && !event.metaKey)
+						{
+							if (_value.mime.match(mime_regex,'ig'))
+							{
+								self._init_blueimp_gallery(event, _value);
+							}
+							else if(_value.mime.match(mime_odf_regex,'ig'))
+							{
+								self._init_odf_editor (event, _value);
+							}
+						}
 						event.stopImmediatePropagation();
 					}).addClass('et2_clickable');
 				}
@@ -601,7 +614,21 @@ function expose (widget)
 					nm.applyFilters({col_filter: {mime: ''}});
 				}
 			},
-			expose_onclosed: function (event){}
+			expose_onclosed: function (event){},
 
+			/**
+			 * Initialise odf editor handler for expose mime type handling
+			 *
+			 * @param {type} _event
+			 * @param {type} _value
+			 * @returns {undefined}
+			 */
+			_init_odf_editor: function (_event, _value)
+			{
+				egw.open_link(egw.link('/index.php', {
+					menuaction: 'filemanager.filemanager_ui.editor',
+					path: _value.download_url
+				}), '', '800x600');
+			}
 	});
 }
