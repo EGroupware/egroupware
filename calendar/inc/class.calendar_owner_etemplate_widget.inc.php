@@ -78,9 +78,14 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		foreach($value as &$owner)
 		{
 			$label = self::get_owner_label($owner);
+			$info = array();
 			if(!is_numeric($owner))
 			{
 				$resource = $bo->resources[substr($owner, 0,1)];
+				if($resource['info'])
+				{
+					$info = $bo->resource_info($owner);
+				}
 			}
 			else if (!in_array($owner, array_keys($accounts)))
 			{
@@ -90,7 +95,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				continue;
 			}
-			$sel_options[] = array('value' => $owner, 'label' => $label, 'app' => lang($resource['app']));
+			$sel_options[] = array('value' => $owner, 'label' => $label, 'app' => lang($resource['app'])) + $info;
 		}
 	}
 
@@ -135,6 +140,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 
 		$bo = new calendar_bo();
 		$query = $_REQUEST['query'];
+		
 		// Arbitrarily limited to 50 / resource
 		$options = array('start' => 0, 'num_rows' => 50) +
 			array_diff_key($_REQUEST, array_flip(array('menuaction','query')));
@@ -155,6 +161,10 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				{
 					$_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
 				}
+			}
+			else if ($data['app'] && $data['search'])
+			{
+				$_results = call_user_func_array($data['search'], array($query, $options));
 			}
 			else if ($data['app'] && Link::get_registry($data['app'], 'query'))
 			{

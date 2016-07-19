@@ -101,7 +101,7 @@ class resources_hooks
 	function calendar_resources($args)
 	{
 		return array(
-			'widget' => 'resources_select',// widget to use for the selection of resources
+			'search' => 'resources_bo::calendar_search',// method to use for the selection of resources, otherwise Link system is used
 			'info' => 'resources.resources_bo.get_calendar_info',// info method, returns array with id, type & name for a given id
 			'max_quantity' => 'useable',// if set, key for max. quantity in array returned by info method
 			'new_status' => 'resources.resources_bo.get_calendar_new_status',// method returning the status for new items, else 'U' is used
