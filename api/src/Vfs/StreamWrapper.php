@@ -157,11 +157,11 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param array|boolean &$stat=null on return: stat of existing file or false for non-existing files
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url_symlinks($_path,$file_exists=true,$resolve_last_symlink=true,&$stat=null)
+	function resolve_url_symlinks($_path,$file_exists=true,$resolve_last_symlink=true,&$stat=null)
 	{
 		$path = self::get_path($_path);
 
-		if (!($stat = self::url_stat($path,$resolve_last_symlink?0:STREAM_URL_STAT_LINK)) && !$file_exists)
+		if (!($stat = $this->url_stat($path,$resolve_last_symlink?0:STREAM_URL_STAT_LINK)) && !$file_exists)
 		{
 			$url = null;
 			$stat = self::check_symlink_components($path,0,$url);
@@ -316,7 +316,7 @@ class StreamWrapper implements StreamWrapperIface
 		$this->opened_stream = null;
 
 		$stat = null;
-		if (!($url = self::resolve_url_symlinks($path,$mode[0]=='r',true,$stat)))
+		if (!($url = $this->resolve_url_symlinks($path,$mode[0]=='r',true,$stat)))
 		{
 			return false;
 		}
@@ -489,9 +489,9 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param string $path
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function unlink ( $path )
+	function unlink ( $path )
 	{
-		if (!($url = self::resolve_url_symlinks($path,true,false)))	// true,false file need to exist, but do not resolve last component
+		if (!($url = $this->resolve_url_symlinks($path,true,false)))	// true,false file need to exist, but do not resolve last component
 		{
 			return false;
 		}
@@ -499,7 +499,7 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
-		$stat = self::url_stat($path, STREAM_URL_STAT_LINK);
+		$stat = $this->url_stat($path, STREAM_URL_STAT_LINK);
 
 		self::symlinkCache_remove($path);
 		$ok = unlink($url);
@@ -529,10 +529,10 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param string $path_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function rename ( $path_from, $path_to )
+	function rename ( $path_from, $path_to )
 	{
-		if (!($url_from = self::resolve_url_symlinks($path_from,true,false)) ||
-			!($url_to = self::resolve_url_symlinks($path_to,false)))
+		if (!($url_from = $this->resolve_url_symlinks($path_from,true,false)) ||
+			!($url_to = $this->resolve_url_symlinks($path_to,false)))
 		{
 			return false;
 		}
@@ -547,7 +547,7 @@ class StreamWrapper implements StreamWrapperIface
 			$ret = stream_copy_to_stream($from,$to) !== false;
 			fclose($from);
 			fclose($to);
-			if ($ret) self::unlink($path_from);
+			if ($ret) $this->unlink($path_from);
 		}
 		else
 		{
@@ -582,9 +582,9 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir ( $path, $mode, $options )
+	function mkdir ( $path, $mode, $options )
 	{
-		if (!($url = self::resolve_url_symlinks($path,false)))	// false = directory does not need to exists
+		if (!($url = $this->resolve_url_symlinks($path,false)))	// false = directory does not need to exists
 		{
 			return false;
 		}
@@ -612,10 +612,10 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	static function rmdir ( $path, $options )
+	function rmdir ( $path, $options )
 	{
 		unset($options);	// not uses but required by function signature
-		if (!($url = self::resolve_url_symlinks($path)))
+		if (!($url = $this->resolve_url_symlinks($path)))
 		{
 			return false;
 		}
@@ -623,7 +623,7 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
-		$stat = self::url_stat($path, STREAM_URL_STAT_LINK);
+		$stat = $this->url_stat($path, STREAM_URL_STAT_LINK);
 
 		self::symlinkCache_remove($path);
 		$ok = rmdir($url);
@@ -658,9 +658,10 @@ class StreamWrapper implements StreamWrapperIface
 		$pathes = $params[$path_param_key];
 
 		$scheme2urls = array();
+		$vfs = new Vfs\StreamWrapper();
 		foreach(is_array($pathes) ? $pathes : array($pathes) as $path)
 		{
-			if (!($url = self::resolve_url_symlinks($path,false,false)))
+			if (!($url = $vfs->resolve_url_symlinks($path,false,false)))
 			{
 				return false;
 			}
@@ -815,7 +816,8 @@ class StreamWrapper implements StreamWrapperIface
 	 */
 	static function mime_content_type($path,$recheck=false)
 	{
-		if (!($url = self::resolve_url_symlinks($path)))
+		$vfs = new self();
+		if (!($url = $vfs->resolve_url_symlinks($path)))
 		{
 			return false;
 		}
@@ -827,7 +829,8 @@ class StreamWrapper implements StreamWrapperIface
 				defined($class.'::STAT_RETURN_MIME_TYPE') &&
 				($mime_attr = constant($class.'::STAT_RETURN_MIME_TYPE')))
 			{
-				$stat = call_user_func(array($class,'url_stat'),self::parse_url($url,PHP_URL_PATH),0);
+				$inst = new $class;
+				$stat = $inst->url_stat(self::parse_url($url,PHP_URL_PATH),0);
 				if ($stat && $stat[$mime_attr])
 				{
 					$mime = $stat[$mime_attr];
@@ -864,7 +867,7 @@ class StreamWrapper implements StreamWrapperIface
 		$this->dir_url_params = array();
 		$this->extra_dir_ptr = 0;
 
-		if (!($this->opened_dir_url = self::resolve_url_symlinks($path)))
+		if (!($this->opened_dir_url = $this->resolve_url_symlinks($path)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."( $path,$options) resolve_url_symlinks() failed!");
 			return false;
@@ -922,7 +925,7 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param boolean $check_symlink_components =true check if path contains symlinks in path components other then the last one
 	 * @return array
 	 */
-	static function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true, $check_symlink_depth=self::MAX_SYMLINK_DEPTH, $try_reconnect=true )
+	function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true, $check_symlink_depth=self::MAX_SYMLINK_DEPTH, $try_reconnect=true )
 	{
 		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
 		{
@@ -956,7 +959,7 @@ class StreamWrapper implements StreamWrapperIface
 						$url = Vfs::PREFIX.$lpath;
 						if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
 						// try reading the stat of the link
-						if (($stat = self::url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1)))
+						if (($stat = $this->url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1)))
 						{
 							$stat_query = parse_url($stat['url'], PHP_URL_QUERY);
 							if($u_query || $stat_query)
@@ -982,7 +985,7 @@ class StreamWrapper implements StreamWrapperIface
 			{
 				// reconnect to db
 				Vfs\Sqlfs\StreamWrapper::reconnect();
-				return self::url_stat($path, $flags, $try_create_home, $check_symlink_components, $check_symlink_depth, false);
+				return $this->url_stat($path, $flags, $try_create_home, $check_symlink_components, $check_symlink_depth, false);
 			}
 			// if numer of tries is exceeded, re-throw exception
 			throw $e;
@@ -1000,7 +1003,7 @@ class StreamWrapper implements StreamWrapperIface
 			);
 			call_user_func(array(__NAMESPACE__.'\\Hooks',$hook_data['location']),$hook_data);
 			unset($hook_data);
-			$stat = self::url_stat($path,$flags,false);
+			$stat = $this->url_stat($path,$flags,false);
 		}
 		$query = parse_url($url, PHP_URL_QUERY);
 		if (!$stat && $check_symlink_components)	// check if there's a symlink somewhere inbetween the path
@@ -1043,7 +1046,7 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param string &$url=null already resolved path
 	 * @return array|boolean stat array or false if not found
 	 */
-	static private function check_symlink_components($path,$flags=0,&$url=null)
+	private function check_symlink_components($path,$flags=0,&$url=null)
 	{
 		if (is_null($url) && !($url = self::resolve_url($path)))
 		{
@@ -1055,7 +1058,7 @@ class StreamWrapper implements StreamWrapperIface
 		while (($rel_path = Vfs::basename($url).($rel_path ? '/'.$rel_path : '')) &&
 		       ($url = Vfs::dirname($url)))
 		{
-			if (($stat = self::url_stat($url,0,false,false)))
+			if (($stat = $this->url_stat($url,0,false,false)))
 			{
 				if (is_link($url) && ($lpath = self::readlink($url)))
 				{
@@ -1068,7 +1071,7 @@ class StreamWrapper implements StreamWrapperIface
 					//self::symlinkCache_add($path,Vfs::PREFIX.$lpath);
 					$url = Vfs::PREFIX.Vfs::concat($lpath,$rel_path);
 					if (self::LOG_LEVEL > 1) error_log("$log --> lpath='$lpath', url='$url'");
-					return self::url_stat($url,$flags);
+					return $this->url_stat($url,$flags);
 				}
 				$url = Vfs::concat($url,$rel_path);
 				if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,'$url') returning null");

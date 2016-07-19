@@ -242,7 +242,8 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			throw new Exception\AssertionFailed("File '$path' is not an absolute path!");
 		}
-		if (($stat = self::url_stat($path,0,$try_create_home)))
+		$vfs = new Vfs\StreamWrapper();
+		if (($stat = $vfs->url_stat($path,0,$try_create_home)))
 		{
 			$stat = array_slice($stat,13);	// remove numerical indices 0-12
 		}
@@ -262,7 +263,8 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			throw new Exception\AssertionFailed("File '$path' is not an absolute path!");
 		}
-		if (($stat = self::url_stat($path,STREAM_URL_STAT_LINK,$try_create_home)))
+		$vfs = new Vfs\StreamWrapper();
+		if (($stat = $vfs->url_stat($path,STREAM_URL_STAT_LINK,$try_create_home)))
 		{
 			$stat = array_slice($stat,13);	// remove numerical indices 0-12
 		}
@@ -668,7 +670,8 @@ class Vfs extends Vfs\StreamWrapper
 		}
 		else
 		{
-			$stat = self::url_stat($path,STREAM_URL_STAT_LINK);
+			$vfs = new Vfs\StreamWrapper();
+			$stat = $vfs->url_stat($path,STREAM_URL_STAT_LINK);
 		}
 		if (!$stat)
 		{
@@ -787,11 +790,12 @@ class Vfs extends Vfs\StreamWrapper
 		{
 			$url = self::PREFIX . $url;
 		}
+		$vfs = new Vfs\StreamWrapper();
 		if (is_dir($url) && !is_link($url))
 		{
-			return self::rmdir($url,0);
+			return $vfs->rmdir($url,0);
 		}
-		return self::unlink($url);
+		return $vfs->unlink($url);
 	}
 
 	/**
@@ -832,7 +836,8 @@ class Vfs extends Vfs\StreamWrapper
 			{
 				self::clearstatcache($path);
 
-				$path_user_stat[$path][$user] = self::url_stat($path, 0);
+				$vfs = new Vfs\StreamWrapper();
+				$path_user_stat[$path][$user] = $vfs->url_stat($path, 0);
 
 				self::clearstatcache($path);	// we need to clear the stat-cache after the call too, as the next call might be the regular user again!
 			}
@@ -874,7 +879,8 @@ class Vfs extends Vfs\StreamWrapper
 		// query stat array, if not given
 		if (is_null($stat))
 		{
-			$stat = self::url_stat($path,0);
+			if (!isset($vfs)) $vfs = new Vfs\StreamWrapper();
+			$stat = $vfs->url_stat($path,0);
 		}
 		//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check)");
 
@@ -1331,8 +1337,11 @@ class Vfs extends Vfs\StreamWrapper
 	 */
 	static function has_owner_rights($path,array $stat=null)
 	{
-		if (!$stat) $stat = self::url_stat($path,0);
-
+		if (!$stat)
+		{
+			$vfs = new Vfs\StreamWrapper();
+			$stat = $vfs->url_stat($path,0);
+		}
 		return $stat['uid'] == self::$user ||	// user is the owner
 			self::$is_root ||					// class runs with root rights
 			!$stat['uid'] && $stat['gid'] && self::$is_admin;	// group directory and user is an eGW admin
@@ -2005,11 +2014,12 @@ class Vfs extends Vfs\StreamWrapper
 	{
 		if (self::is_dir($dst))
 		{
+			$vfs = new Vfs\StreamWrapper();
 			foreach($src as $file)
 			{
 				$target = self::concat($dst, self::basename($file));
 
-				if ($file != $target && self::rename($file, $target))
+				if ($file != $target && $vfs->rename($file, $target))
 				{
 					$moved[] = $file;
 				}

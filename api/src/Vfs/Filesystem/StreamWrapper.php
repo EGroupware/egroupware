@@ -306,7 +306,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @param string $url
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function unlink ( $url )
+	function unlink ( $url )
 	{
 		$path = Vfs::decodePath(Vfs::parse_url($url,PHP_URL_PATH));
 
@@ -331,7 +331,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @param string $url_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function rename ( $url_from, $url_to )
+	function rename ( $url_from, $url_to )
 	{
 		$from = Vfs::parse_url($url_from);
 		$to   = Vfs::parse_url($url_to);
@@ -381,7 +381,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir ( $url, $mode, $options )
+	function mkdir ( $url, $mode, $options )
 	{
 		unset($mode);	// not used, but required by interface
 
@@ -415,7 +415,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	static function rmdir ( $url, $options )
+	function rmdir ( $url, $options )
 	{
 		unset($options);	// not used, but required by interface
 
@@ -552,7 +552,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @return array
 	 */
-	static function url_stat ( $url, $flags )
+	function url_stat ( $url, $flags )
 	{
 		$parts = Vfs::parse_url($url);
 		$path = Vfs::decodePath($parts['path']);
