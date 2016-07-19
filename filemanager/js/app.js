@@ -9,6 +9,11 @@
  * @version $Id$
  */
 
+/*egw:uses
+	/api/js/webodf/wodotexteditor/wodotexteditor/wodotexteditor.js;
+	/api/js/webodf/wodotexteditor/wodotexteditor/webodf.js;
+ */
+
 /**
  * UI for filemanager
  *
@@ -25,6 +30,11 @@ app.classes.filemanager = AppJS.extend(
 	 * Are files cut into clipboard - need to be deleted at source on paste
 	 */
 	clipboard_is_cut: false,
+
+	/*
+	 * odf editor object
+	 */
+	editor: {},
 
 	/**
 	 * Constructor
@@ -54,6 +64,8 @@ app.classes.filemanager = AppJS.extend(
 	destroy: function()
 	{
 		delete this.et2;
+
+		delete this.editor;
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -100,6 +112,11 @@ app.classes.filemanager = AppJS.extend(
 		{
 			this.set_readonly.apply(this, this.readonly);
 			delete this.readonly;
+		}
+
+		if (name == "filemanager.editor")
+		{
+			this._init_odf_editor ();
 		}
 	},
 
@@ -768,7 +785,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 			// Build ViewerJS url
 			if (data.data.mime.match(/application\/vnd\.oasis\.opendocument/)) var url = '/ViewerJS/#..' + data.data.download_url;
-			
+
 			egw.open({path: path, type: data.data.mime, download_url: url}, 'file','view',null,'_browser');
 		}
 		return false;
@@ -1000,5 +1017,193 @@ app.classes.filemanager = AppJS.extend(
 				this.egw.lang('Do you want more information about EPL subscription?'),
 			this.egw.lang('File a file'), undefined, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
 		}
+	},
+
+	/**
+	 * Initiate odf editor popup & load given file_path
+	 *
+	 */
+	_init_odf_editor: function ()
+	{
+		var file_path = this.et2.getArrayMgr('content').getEntry('file_path');
+		var self = this;
+
+		var onEditorCreated = function (err ,editor)
+		{
+			if (err)
+			{
+				console.log('Something went wrong whilst loading editor.'+ err);
+				return;
+			}
+			self.editor = editor;
+			self.editor.openDocumentFromUrl(egw.webserverUrl+file_path);
+		};
+
+		var editorOptions = {
+			allFeaturesEnabled: true
+		};
+
+		var editor = this.et2.getWidgetById('odfEditor');
+		if (editor)
+		{
+			Wodo.createTextEditor('filemanager-editor_odfEditor', editorOptions, onEditorCreated);
+		}
+	},
+
+	/**
+	 * Method to close an opened document
+	 *
+	 * @param {object} _egwAction egw action object
+	 */
+	editor_close: function (_egwAction) {
+		var self = this;
+		var action = _egwAction.id;
+		if (this.editor)
+		{
+			var closeFn = function ()
+			{
+				self.editor.closeDocument(function(){});
+				if (action != 'new')
+				{
+					self.editor.destroy(function(){});
+					window.close();
+				}
+			}
+
+			// warn user about unsaved changes
+			if (this.editor.isDocumentModified())
+			{
+				et2_dialog.show_dialog(
+					function(_btn)
+					{
+						if (_btn == 2)
+						{
+							closeFn();
+						}
+					},
+					'There are unsaved changes. Are you sure you want to close this document without saving them?',
+					'unsaved changes',
+					null,
+					et2_dialog.BUTTONS_YES_NO,
+					et2_dialog.WARNING_MESSAGE
+				);
+			}
+			else
+			{
+				closeFn();
+			}
+		}
+	},
+
+	/**
+	 * Method to create a new document
+	 * @param {object} _egwAction egw action object
+	 *
+	 * @todo: creating new empty odt file
+	 */
+	editor_new: function (_egwAction) {
+		return egw(window).message('Sorry creating new odt document is not fully implemented yet. Please try later.');
+		var mimeType = 'application/vnd.oasis.opendocument.text';
+		var bytes = new Uint8Array('');
+		var blob = new Blob([bytes.buffer], {type:mimeType});
+		var egwAction = _egwAction;
+		var self = this;
+		this.editor_file_operation({
+			url: egw.webserverUrl+'/webdav.php?/home/'+egw.user('account_lid')+'/'+this.et2._inst.etemplate_exec_id+'.odt',
+			method: 'PUT',
+			success: function(_data) {
+				egw(window).message('');
+				self.editor_close(egwAction);
+			},
+			error: function (_err) {
+				egw(window).message('Create new document faild because of %1', _err);
+			},
+			data: blob,
+			processData: false,
+			mimeType: mimeType
+		});
+	},
+
+	/**
+	 * Method call for saving edited document
+	 */
+	editor_save: function () {
+		var self = this;
+		var file_path = this.et2.getArrayMgr('content').getEntry('file_path');
+
+		if (this.editor)
+		{
+			function saveByteArrayLocally(err, data) {
+				if (err) {
+					alert(err);
+					return;
+				}
+
+				var mimetype = "application/vnd.oasis.opendocument.text",
+					filename = file_path.split('/webdav.php'),
+					blob = new Blob([data.buffer], {type: mimetype});
+
+				self.editor_file_operation({
+						url: egw.webserverUrl+file_path,
+						method: 'PUT',
+						processData: false,
+						success: function(data) {
+							egw(window).message(egw.lang('Document %1 successfully has been saved.', filename[1]));
+							self.editor.setDocumentModified(false);
+
+						},
+						error: function () {},
+						data: blob,
+						mimeType: mimetype
+				});
+			}
+			this.editor.getDocumentAsByteArray(saveByteArrayLocally);
+		}
+	},
+
+	/**
+	 * Method to delete loaded file in editor
+	 * @param {type} _egwAction
+	 */
+	editor_delete: function (_egwAction) {
+		var fullpath = this.et2.getArrayMgr('content').getEntry('file_path');
+		fullpath = fullpath.split('/webdav.php')[1];
+		var selected = fullpath.split('/');
+		selected.pop();
+		var path = selected.join('/');
+		this._do_action('delete', [fullpath], false, path);
+
+		this.editor_close(_egwAction);
+	},
+
+	/**
+	 * Function to handle file operations (PGD) for editor
+	 *
+	 * @param {object} _params jquery ajax parameters
+	 */
+	editor_file_operation: function (_params)
+	{
+		var ajaxObj = {
+			url: egw.webserverUrl+'/webdav.php?/home/'+egw.user('account_lid')+'/default.odt',
+		};
+		jQuery.extend(ajaxObj, _params);
+		switch (ajaxObj && ajaxObj.cmd)
+		{
+			case 'PUT':
+				jQuery.extend({},ajaxObj, {
+					data: JSON.stringify(ajaxObj.data),
+					contentType: 'application/json'
+				});
+				break;
+			case 'GET':
+				jQuery.extend({},ajaxObj, {
+					dataType: 'json'
+				});
+				break;
+			case 'DELETE':
+				break;
+		}
+		jQuery.ajax(ajaxObj);
 	}
+
 });
