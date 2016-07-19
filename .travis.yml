@@ -69,8 +69,8 @@ before_script:
 
 script:
   - php doc/rpm-build/post_install.php
-    --source_dir `pwd` --start_db '' --autostart_db '' || true
-  - mysql -uroot -e 'show tables' egroupware || true
+    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  - mysql -uroot -e 'show tables' egroupware
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
   - ./doc/php_syntax_check.sh
