@@ -1489,7 +1489,7 @@ class filemanager_ui
 		$actions = array (
 			'save' => array(
 				'caption' => 'Save',
-				'icon' => 'save',
+				'icon' => 'apply',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.filemanager.editor_save',
 				'allowOnMultiple' => false,
@@ -1508,6 +1508,14 @@ class filemanager_ui
 				'icon' => 'close',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.filemanager.editor_close',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => true
+			),
+			'saveas' => array(
+				'caption' => 'Save As',
+				'icon' => 'save_all',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_save',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
 			),
