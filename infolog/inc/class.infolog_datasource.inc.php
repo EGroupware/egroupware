@@ -123,7 +123,12 @@ class infolog_datasource extends datasource
 		}
 
 		// Apply date offsets, if any
-		$map = array('planned_start' => 'info_startdate', 'planned_end' => 'info_enddate', 'real_end' => 'info_datecompleted');
+		$map = array(
+			'planned_start' => 'info_startdate',
+			'planned_end' => 'info_enddate',
+			'real_start' => 'info_startdate',
+			'real_end' => 'info_datecompleted'
+		);
 		foreach($map as $offset_field => $info_field)
 		{
 			if($date_offsets[$offset_field] && $info[$info_field])
