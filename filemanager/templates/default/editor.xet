@@ -6,12 +6,12 @@
 		<grid width="100%" height="100%">
 			<columns>
 				<column width="100%"/>
-				<column width="100%"/>
 			</columns>
 			<rows>
-				<row height="30">
-					<box>
+				<row height="45" class="dialogHeader">
+					<box height="30">
 						<toolbar id="tools"/>
+						<description id="file_path"/>
 					</box>
 				</row>
 				<row>

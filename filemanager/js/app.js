@@ -781,6 +781,13 @@ app.classes.filemanager = AppJS.extend(
 		{
 			mime_dom.click();
 		}
+		else if (_action.id == 'modify' && mime && data.data.mime.match(mime.mime_odf_regex))
+		{
+			egw.open_link(egw.link('/index.php', {
+				menuaction: 'filemanager.filemanager_ui.editor',
+				path: data.data.download_url
+			}), '', '800x600');
+		}
 		else
 		{
 			// Build ViewerJS url
@@ -1204,6 +1211,17 @@ app.classes.filemanager = AppJS.extend(
 				break;
 		}
 		jQuery.ajax(ajaxObj);
+	},
+
+	/**
+	 * Function to check wheter selected file is editable. ATM only .odt is supported.
+	 *
+	 * @returns {boolean} returns true if is editable otherwise false
+	 */
+	isEditable: function (_egwAction, _senders) {
+		var data = egw.dataGetUIDdata(_senders[0].id);
+		var mime = this.et2._inst.widgetContainer.getWidgetById('$row');
+		return data.data.mime.match(mime.mime_odf_regex)?true:false;
 	}
 
 });
