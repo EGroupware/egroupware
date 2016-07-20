@@ -1145,7 +1145,7 @@ app.classes.filemanager = AppJS.extend(
 	/**
 	 * Method call for saving edited document
 	 */
-	editor_save: function () {
+	editor_save: function (_egwAction) {
 		var self = this,
 			widgetFilePath = this.et2.getWidgetById('file_path'),
 			file_path = widgetFilePath.value;
@@ -1176,7 +1176,7 @@ app.classes.filemanager = AppJS.extend(
 			}
 
 			//existed file
-			if (file_path != '') {
+			if (file_path != '' && _egwAction.id != 'saveas') {
 				this.editor.getDocumentAsByteArray(saveByteArrayLocally);
 			}
 			// new file
@@ -1187,7 +1187,7 @@ app.classes.filemanager = AppJS.extend(
 					id:'savefile',
 					mode: 'saveas',
 					button_caption:"",
-					button_label:"save",
+					button_label:_egwAction.id == 'saveas'?"save as":"save",
 					value: "doc.odt"
 				}, this.et2);
 
