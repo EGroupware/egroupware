@@ -583,9 +583,12 @@ class resources_bo
 		);
 		$only_keys = 'res_id,name';
 		$data = $this->so->search(array(),$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
-		foreach($data as $resource)
+		if(is_array($data) && $data)
 		{
-			$resources[$resource['res_id']] = $resource['name'];
+			foreach($data as $resource)
+			{
+				$resources[$resource['res_id']] = $resource['name'];
+			}
 		}
 
 		return $resources;
