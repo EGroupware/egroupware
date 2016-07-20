@@ -36,6 +36,7 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	editor: {},
 
+	editor_mime: RegExp(/application\/vnd\.oasis\.opendocument\.text/),
 	/**
 	 * Constructor
 	 *
@@ -1032,8 +1033,10 @@ app.classes.filemanager = AppJS.extend(
 	 */
 	_init_odf_editor: function ()
 	{
-		var file_path = this.et2.getArrayMgr('content').getEntry('file_path');
-		var self = this;
+		var widgetFilePath = this.et2.getWidgetById('file_path'),
+			file_path = widgetFilePath.value,
+			isNew = file_path == '/api/js/webodf/template.odt'? true: false,
+			self = this;
 
 		var onEditorCreated = function (err ,editor)
 		{
@@ -1044,10 +1047,17 @@ app.classes.filemanager = AppJS.extend(
 			}
 			self.editor = editor;
 			self.editor.openDocumentFromUrl(egw.webserverUrl+file_path);
+			if (isNew) {
+				widgetFilePath.set_value('');
+			}
 		};
 
 		var editorOptions = {
-			allFeaturesEnabled: true
+			allFeaturesEnabled: true,
+			userData: {
+				fullName: egw.user('account_fullName'),
+				color: 'blue'
+			}
 		};
 
 		var editor = this.et2.getWidgetById('odfEditor');
@@ -1062,9 +1072,11 @@ app.classes.filemanager = AppJS.extend(
 	 *
 	 * @param {object} _egwAction egw action object
 	 */
-	editor_close: function (_egwAction) {
-		var self = this;
-		var action = _egwAction.id;
+	editor_close: function (_egwAction, _callback) {
+		var self = this,
+			action = _egwAction.id,
+			callback = _callback;
+
 		if (this.editor)
 		{
 			var closeFn = function ()
@@ -1075,6 +1087,7 @@ app.classes.filemanager = AppJS.extend(
 					self.editor.destroy(function(){});
 					window.close();
 				}
+				callback.call(this);
 			}
 
 			// warn user about unsaved changes
@@ -1109,34 +1122,33 @@ app.classes.filemanager = AppJS.extend(
 	 * @todo: creating new empty odt file
 	 */
 	editor_new: function (_egwAction) {
-		return egw(window).message('Sorry creating new odt document is not fully implemented yet. Please try later.');
-		var mimeType = 'application/vnd.oasis.opendocument.text';
-		var bytes = new Uint8Array('');
-		var blob = new Blob([bytes.buffer], {type:mimeType});
-		var egwAction = _egwAction;
-		var self = this;
-		this.editor_file_operation({
-			url: egw.webserverUrl+'/webdav.php?/home/'+egw.user('account_lid')+'/'+this.et2._inst.etemplate_exec_id+'.odt',
-			method: 'PUT',
-			success: function(_data) {
-				egw(window).message('');
-				self.editor_close(egwAction);
-			},
-			error: function (_err) {
-				egw(window).message('Create new document faild because of %1', _err);
-			},
-			data: blob,
-			processData: false,
-			mimeType: mimeType
-		});
+		var self = this,
+			template_url = '/api/js/webodf/template.odt';
+
+		if (Object.keys(this.editor).length > 0)
+		{
+			this.editor_close(_egwAction, function(){
+				self.editor.openDocumentFromUrl(egw.webserverUrl+template_url);
+				self.et2.getWidgetById('file_path').set_value('');
+			});
+		}
+		else
+		{
+			egw.open_link(egw.link('/index.php', {
+				menuaction: 'filemanager.filemanager_ui.editor',
+				path: template_url,
+				isNew: true,
+			}), '', '800x600');
+		}
 	},
 
 	/**
 	 * Method call for saving edited document
 	 */
 	editor_save: function () {
-		var self = this;
-		var file_path = this.et2.getArrayMgr('content').getEntry('file_path');
+		var self = this,
+			widgetFilePath = this.et2.getWidgetById('file_path'),
+			file_path = widgetFilePath.value;
 
 		if (this.editor)
 		{
@@ -1146,9 +1158,8 @@ app.classes.filemanager = AppJS.extend(
 					return;
 				}
 
-				var mimetype = "application/vnd.oasis.opendocument.text",
-					filename = file_path.split('/webdav.php'),
-					blob = new Blob([data.buffer], {type: mimetype});
+				var filename = file_path.split('/webdav.php'),
+					blob = new Blob([data.buffer], {type: self.editor_mime});
 
 				self.editor_file_operation({
 						url: egw.webserverUrl+file_path,
@@ -1157,14 +1168,40 @@ app.classes.filemanager = AppJS.extend(
 						success: function(data) {
 							egw(window).message(egw.lang('Document %1 successfully has been saved.', filename[1]));
 							self.editor.setDocumentModified(false);
-
 						},
 						error: function () {},
 						data: blob,
-						mimeType: mimetype
+						mimeType: self.editor_mime
 				});
 			}
-			this.editor.getDocumentAsByteArray(saveByteArrayLocally);
+
+			//existed file
+			if (file_path != '') {
+				this.editor.getDocumentAsByteArray(saveByteArrayLocally);
+			}
+			// new file
+			else
+			{
+				// create file selector
+				var vfs_select = et2_createWidget('vfs-select', {
+					id:'savefile',
+					mode: 'saveas',
+					button_caption:"",
+					button_label:"save",
+					value: "doc.odt"
+				}, this.et2);
+
+				// bind change handler for setting the selected path and calling save
+				jQuery(vfs_select.getDOMNode()).on('change', function (){
+					file_path = '/webdav.php'+vfs_select.get_value();
+					// Add odt extension if not exist
+					if (!file_path.match(/\.odt$/,'ig')) file_path += '.odt';
+					widgetFilePath.set_value(file_path);
+					self.editor.getDocumentAsByteArray(saveByteArrayLocally);
+				});
+				// start the file selector dialog
+				jQuery(vfs_select.getDOMNode()).click();
+			}
 		}
 	},
 
@@ -1173,7 +1210,7 @@ app.classes.filemanager = AppJS.extend(
 	 * @param {type} _egwAction
 	 */
 	editor_delete: function (_egwAction) {
-		var fullpath = this.et2.getArrayMgr('content').getEntry('file_path');
+		var fullpath = this.et2.getWidgetById('file_path').value;
 		fullpath = fullpath.split('/webdav.php')[1];
 		var selected = fullpath.split('/');
 		selected.pop();
@@ -1219,8 +1256,9 @@ app.classes.filemanager = AppJS.extend(
 	 * @returns {boolean} returns true if is editable otherwise false
 	 */
 	isEditable: function (_egwAction, _senders) {
-		var data = egw.dataGetUIDdata(_senders[0].id);
-		var mime = this.et2._inst.widgetContainer.getWidgetById('$row');
+		var data = egw.dataGetUIDdata(_senders[0].id),
+			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
+
 		return data.data.mime.match(mime.mime_odf_regex)?true:false;
 	}
 
