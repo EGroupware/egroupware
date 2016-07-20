@@ -174,12 +174,19 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				// Include mailing lists
 				$contacts_obj = new Api\Contacts();
-				$_results += array_filter(
+				$lists = array_filter(
 					$contacts_obj->get_lists(Api\Acl::READ),
 					function($element) use($query) {
 						return (stripos($element, $query) !== false);
 					}
 				);
+				foreach($lists as $list_id => $list)
+				{
+					$_results[$list_id] = array(
+						'label' => $list,
+						'resources' => $bo->enum_mailing_list($type.$list_id)
+					);
+				}
 			}
 			if(!$_results)
 			{
