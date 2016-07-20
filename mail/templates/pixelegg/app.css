@@ -2273,6 +2273,9 @@ div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   width: 24px;
   height: 24px;
 }
+div.mailPreviewHeaders img.et2_button_icon {
+  background-color: inherit;
+}
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;
   border-color: #E6E6E6;

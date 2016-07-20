@@ -785,8 +785,8 @@ class setup_cmd_ldap extends setup_cmd
 			array(
 				'account_repository' => $GLOBALS['egw_info']['server']['account_repository'],
 			) + $this->as_array()) ||
-			!is_a(self::$egw_setup->accounts,'accounts') ||
-			!is_a(self::$egw_setup->accounts->backend,'accounts_'.$type))
+			!is_a(self::$egw_setup->accounts, 'EGroupware\\Api\\Accounts') ||
+			!is_a(self::$egw_setup->accounts->backend, 'EGroupware\\Api\\Accounts\\'.ucfirst($type)))
 		{
 			throw new Exception(lang("Can NOT instancate accounts object for %1", strtoupper($type)));
 		}

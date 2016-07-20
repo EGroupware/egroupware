@@ -93,9 +93,9 @@ date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
 default sorting order	mail	en	Default sorting order
 default your name and email	common	en	default your name and email
-details	mail	en	short preview in list	
 delete folder	mail	en	Delete Folder
 delete folder %1 ?	mail	en	DELETE Folder %1 ?
+delete this acl	mail	en	Delete this ACL
 deleted	mail	en	deleted
 deleted %1 messages in %2	mail	en	deleted %1 messages in %2
 deleted!	mail	en	deleted!
@@ -197,6 +197,7 @@ flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
 folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
 folder %1 is moving to folder %2	mail	en	Folder %1 is moving to folder %2
+folder management	mail	en	Folder Management
 folder management ...	mail	en	Folder Management ...
 folder settings	mail	en	Folder settings
 for e.g.: mpeg	mail	en	for e.g.: mpeg
@@ -309,7 +310,6 @@ no access	mail	en	no access
 no action defined!	mail	en	No action defined!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	en	No Address TO/CC/BCC supplied, and no folder to save message to provided.
 no adress, to send this mail to, supplied	mail	en	no adress, to send this mail to, supplied
-no details	mail	en	no short preview in list
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	en	No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.
 no folders	mail	en	no folders
 no message body supplied	mail	en	no message body supplied
@@ -317,6 +317,7 @@ no plain text part found	mail	en	no plain text part found
 no recipient address given!	mail	en	No recipient address given!
 no send folder set in preferences	mail	en	No Send Folder set in preferences
 no signature	mail	en	no signature
+no sneak preview in list	mail	en	No sneak preview in list
 no subject given!	mail	en	No subject given!
 no subject supplied	mail	en	no subject supplied
 no text body supplied, check attachments for message text	mail	en	no text body supplied, check attachments for message text
@@ -413,6 +414,9 @@ save to disk	mail	en	Save to disk
 save to filemanager	mail	en	Save to filemanager
 save to vfs	mail	en	Save to VFS
 save:	mail	en	Save:
+saves subscription changes	mail	en	Save subscription changes
+saves this acl	mail	en	Save this ACL
+saves this rule	mail	en	Save this rule
 saving of message %1 failed. destination folder %2 does not exist.	mail	en	Saving of message %1 failed. Destination Folder %2 does not exist.
 saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 succeeded. Check Folder %2.
 saving the rule failed:	mail	en	Saving the rule failed:
@@ -423,6 +427,7 @@ select file to attach to message	mail	en	Select file to attach to message
 select file to import into folder	mail	en	Select file to import into Folder
 select file(s) from vfs	mail	en	Select file(s) from VFS
 select files to upload	mail	en	Select files to upload
+select multiple	mail	en	Select multiple
 selected	mail	en	selected
 selected date range (with quicksearch)	mail	en	Selected date range (with quicksearch)
 send a reject message:	mail	en	Send a reject message:
@@ -440,6 +445,8 @@ set it as default:	mail	en	set it as default:
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.
 show	mail	en	show
+show all addresses	mail	en	Show all Addresses
+show all attachments	mail	en	Show all attachments
 show all folders	mail	en	show all Folders
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	en	show all folders, (subscribed AND unsubscribed) in Main Screen Folder Pane
 show new messages on home page	mail	en	show new messages on home page
@@ -458,6 +465,7 @@ size(...->0)	mail	en	size(...->0)
 size(0->...)	mail	en	size(0->...)
 small view	mail	en	small view
 smtp	mail	en	SMTP
+sneak preview in list	mail	en	Sneak preview in list
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	en	Some clients fail to detect correct charset, if flowed lines are enabled.
 sort order	mail	en	Sort order
 source	mail	en	Source
@@ -515,6 +523,7 @@ use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see wikipedia for information on POSIX regular expressions)
 use source as displayed, if applicable	mail	en	use source as displayed, if applicable
 use username+password from current user	mail	en	Use username+password from current user
+use wizard to detect or verify configuration	mail	en	Use wizard to detect or verify configuration
 vacation messages with start and end date require an admin account to be set!	mail	en	Vacation messages with start and end date require an admin account to be set!
 vacation notice	mail	en	Vacation notice
 vacation notice is active	mail	en	Vacation notice is active

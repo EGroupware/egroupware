@@ -231,12 +231,6 @@ class Etemplate extends Etemplate\Widget\Template
 			{
 				$content = '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container"></form>'."\n".
 					'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
-				// add server-side page-generation times
-				if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
-				{
-					$vars = $GLOBALS['egw']->framework->_get_footer();
-					$content .= "\n".$vars['page_generation_time'];
-				}
 				$GLOBALS['egw']->framework->response->generic("data", array($content));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+Framework::get_extra());
 				Framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)

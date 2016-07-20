@@ -31,6 +31,7 @@ class filemanager_ui
 	var $public_functions = array(
 		'index' => true,
 		'file' => true,
+		'editor' => true
 	);
 
 	/**
@@ -129,6 +130,13 @@ class filemanager_ui
 				'allowOnMultiple' => false,
 				'onExecute' => 'javaScript:app.filemanager.open',
 				'default' => true
+			),
+			'modify' => array(
+				'caption' => lang('Edit'),
+				'group' => $group,
+				'icon' => 'edit',
+				'onExecute' => 'javaScript:app.filemanager.open',
+				'enabled' => 'javaScript:app.filemanager.isEditable',
 			),
 			'saveas' => array(
 				'caption' => lang('Save as'),
@@ -1455,5 +1463,63 @@ class filemanager_ui
 			$mode |= 0x201;
 		}
 		return $mode;
+	}
+
+	/**
+	 * Editor for odf files
+	 *
+	 * @param array $content
+	 */
+	function editor(array $content=null)
+	{
+		$tmpl = new Etemplate('filemanager.editor');
+		$file_path = $_GET['path'];
+
+		$tmpl->setElementAttribute('tools', 'actions', self::getActions_edit());
+		$preserve = $content = array('file_path' => $file_path);
+		$tmpl->exec('filemanager.filemanager_ui.editor',$content,array(),array(),$preserve,2);
+	}
+
+	/**
+	 * Editor dialog's toolbar actions
+	 *
+	 * @return array return array of actions
+	 */
+	static function getActions_edit() {
+		$actions = array (
+			'save' => array(
+				'caption' => 'Save',
+				'icon' => 'save',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_save',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => true
+			),
+			'new' => array(
+				'caption' => 'New',
+				'icon' => 'add',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_new',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => true
+			),
+			'close' => array(
+				'caption' => 'Close',
+				'icon' => 'close',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_close',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => true
+			),
+			'delete' => array(
+				'caption' => 'Delete',
+				'icon' => 'delete',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_delete',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => false
+			)
+		);
+		return $actions;
 	}
 }

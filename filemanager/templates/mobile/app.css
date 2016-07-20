@@ -165,6 +165,12 @@ input.displayNone {
 .previewImage {
   width: 100%;
 }
+#filemanager-editor_file_path {
+  font-size: 11pt;
+  display: inline-block;
+  margin-top: 5px;
+  margin-left: 10px;
+}
 /*/*****************************************************************
 // sidebar
 

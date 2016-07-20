@@ -348,6 +348,7 @@ class calendar_bo
 
 		// Email list
 		$contacts_obj = new Api\Contacts();
+		$bo = new calendar_bo();
 		foreach($ids as $id)
 		{
 			$list = $contacts_obj->read_list((int)$id);
@@ -356,6 +357,7 @@ class calendar_bo
 				'res_id' => $id,
 				'rights' => self::ACL_READ_FOR_PARTICIPANTS,
 				'name' => $list['list_name'],
+				'resources' => $bo->enum_mailing_list('l'.$id, false, false)
 			);
 		}
 
@@ -465,6 +467,22 @@ class calendar_bo
 			{
 				if ($user && !in_array($user,$users))	// already added?
 				{
+					// General expansion check
+					if (!is_numeric($user) && $this->resources[$user[0]]['info'])
+					{
+						$info = $this->resource_info($user);
+						if($info && $info['resources'])
+						{
+							foreach($info['resources'] as $_user)
+							{
+								if($_user && !in_array($_user, $users))
+								{
+									$users[] = $_user;
+								}
+							}
+							continue;
+						}
+					}
 					$users[] = $user;
 				}
 			}

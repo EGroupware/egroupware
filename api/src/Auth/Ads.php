@@ -216,8 +216,15 @@ class Ads implements Backend
 		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
 		{
 			$admin = false;
-			$username = $GLOBALS['egw_info']['user']['account_lid'];
-			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			if (!empty($GLOBALS['egw_info']['user']['account_id']) && $GLOBALS['egw_info']['user']['account_id'] > 0)
+			{
+				$username = $GLOBALS['egw_info']['user']['account_lid'];
+				$account_id = $GLOBALS['egw_info']['user']['account_id'];
+			}
+			else
+			{
+				$username = $GLOBALS['egw']->accounts->id2name($account_id);
+			}
 		}
 		else
 		{

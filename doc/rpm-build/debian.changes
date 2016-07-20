@@ -1,3 +1,24 @@
+egroupware-epl (16.1.20160715) hardy; urgency=low
+
+  * Calendar: Fix Generate Page Time's indicator screws calendar view up
+  * CalDAV/InfoLog: fix error when creating a task for a different user
+  * Setup/LDAP: fix exception when migration accounts to/from LDAP
+  * NTLM: move ntlm login code from phpgwapi to api to allow NTLM login in 16.1 minimal install
+  * ActiveDirectory: using adLDAP now from adldap2/adldap2=4.0.4 via composer
+  * Mail: update Horde_ManageSieve to 1.0.2 to fix PHP Fatal with Auth_SASL class
+  * Admin: fix PHP Fatal Class jdots_framework does not exist in minimal install
+  * Api: fix not working asynchron service (eg. alarms) in minimal install
+  * LDAP/UCS: groups not found when searching for them eg. in custom fields (account-type=both)
+  * Mail: mailing attachments failed in minimal install caused by using deprecate path-separator constant "SEP"
+  * Package install/update: no more limit memory as backup might fail, do not run backup for single apps
+  * Setup/Auth: fix PHP Fatal with Sqlssl authentication (Class EGroupware\Api\Auth\auth_sql not found)
+  * Tracker/ProjectManager: fix PHP Fatal error on changing status of ticket used in a project
+  * ProjectManger/InfoLog: fix PHP Fatal error:  Class 'boetemplate' not found happening under some conditions in minimal install
+  * Calendar: Fix calendar view overlaps the sidebar menu in Stylite template
+  * WiKi: handle expunge of page when deleting empty page in html-edit-mode
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 15 Jul 2016 11:38:41 +0200
+
 egroupware-epl (16.1.20160708) hardy; urgency=low
 
   * Admin: add used caching provider and APCu stats to "PHP Information"

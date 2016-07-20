@@ -840,7 +840,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		if(!this._actionObject)
 		{
 			// Get the top level element - timegrid or so
-			var objectManager = this.getParent().getParent()._actionObject ||
+			var objectManager = this.getParent()._actionObject || this.getParent().getParent()._actionObject ||
 			   egw_getAppObjectManager(true).getObjectById(this._parent._parent._parent.id) || egw_getAppObjectManager(true);
 			this._actionObject = objectManager.getObjectById('calendar::'+this.options.value.row_id);
 		}
@@ -918,18 +918,36 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 	{
 		owner_too = app.calendar.state.status_filter === 'owner';
 	}
+	var options = false
+	if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
+	{
+		options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+	}
+	else
+	{
+		options = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+	}
 	if(event.participants && parent.options.owner)
 	{
-		var parent_owner = typeof parent.options.owner !== 'object' ?
+		var parent_owner = jQuery.extend([], typeof parent.options.owner !== 'object' ?
 			[parent.options.owner] :
-			parent.options.owner;
+			parent.options.owner);
 		owner_match = false;
 		var length = parent_owner.length;
 		for(var i = 0; i < length; i++ )
 		{
-			// Exception for mailing lists, they won't match and we don't have the
-			// list client side.
-			if(parent_owner[i][0] === 'l') return true;
+			// Handle grouped resources like mailing lists, they won't match so
+			// we need the list - pull it from sidebox owner
+			if(isNaN(parent_owner[i]) && options && options.find)
+			{
+				var resource = options.find(function(element) {return element.id == parent_owner[i];}) || {};
+				if(resource && resource.resources)
+				{
+					parent_owner.splice(i,1);
+					parent_owner = parent_owner.concat(resource.resources);
+					continue;
+				}
+			}
 			
 			if (parseInt(parent_owner[i]) < 0)
 			{

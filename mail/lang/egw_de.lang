@@ -95,13 +95,13 @@ default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
 default your name and email	common	de	z.B. Ihr Name und Ihre Mail-Adresse
 delete folder	mail	de	Ordner löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
+delete this acl	mail	de	Zugriffsrechte löschen
 deleted	mail	de	gelöscht
 deleted %1 messages in %2	mail	de	Es wurden %1 Nachricht(en) in %2 gelöscht
 deleted!	mail	de	gelöscht!
 deleting %1 folders in progress ...	mail	de	%1 Ordner in Bearbeitung zum Löschen
 deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
-details	mail	de	Mit Kurzvorschau
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
@@ -198,6 +198,7 @@ flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
 folder %1 is moving to folder %2	mail	de	Ordner %1 wird in den Ordner %2 verschoben
+folder management	mail	de	Ordner-Verwaltung
 folder management ...	mail	de	Ordner-Verwaltung ...
 folder settings	mail	de	Ordner-Einstellungen
 for e.g.: mpeg	mail	de	z.B. mpeg
@@ -310,7 +311,6 @@ no access	mail	de	Kein Zugriff
 no action defined!	mail	de	Keine Aktion ausgewählt!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	de	Keine Empfänger-Adresse (An/Kopie/Blindkopie) angegeben und kein Ordner zur Ablage der E-Mail spezifiziert.
 no adress, to send this mail to, supplied	mail	de	Keine Empfängeradresse angegeben!
-no details	mail	de	Ohne Kurzvorschau
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	de	Es sind keine Zielordner oder andere Methoden (als Infolog/Tracker ablegen) angegeben, um die Nachricht nach dem Senden zu speichern.
 no folders	mail	de	Keine Ordner
 no message body supplied	mail	de	Keinen Nachrichtentext - Teil gefunden.
@@ -318,6 +318,7 @@ no plain text part found	mail	de	Kein Text Teil gefunden.
 no recipient address given!	mail	de	Keine Empfängeradresse angegeben!
 no send folder set in preferences	mail	de	Es ist kein Gesendet Ordner hinterlegt
 no signature	mail	de	keine Signatur
+no sneak preview in list	mail	de	Ohne Kurzvorschau
 no subject given!	mail	de	Kein Betreff angegeben!
 no subject supplied	mail	de	Kein Betreff angegeben!
 no text body supplied, check attachments for message text	mail	de	Keine Text vorhanden, bitte sehen Sie sich die Anlagen dieser E-Mail an.
@@ -414,6 +415,9 @@ save to disk	mail	de	Speichern unter ...
 save to filemanager	mail	de	Nachricht im Dateimananger speichern
 save to vfs	mail	de	Im EGroupware Dateimanager speichern
 save:	mail	de	Speichern
+saves subscription changes	mail	de	Änderungen speichern
+saves this acl	mail	de	Zugriffsrechte speichern
+saves this rule	mail	de	Filter-Regel speichern
 saving of message %1 failed. destination folder %2 does not exist.	mail	de	Speichern der Nachricht %1 ist fehlgeschlagen. Ziel Ordner %2 existiert nicht.
 saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht %1 war erfolgreich. Prüfen Sie den Ziel Ordner %2
 saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
@@ -424,6 +428,7 @@ select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an
 select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
 select file(s) from vfs	mail	de	Dateien aus dem EGroupware Dateimanager anhängen.
 select files to upload	mail	de	Dateien anhängen.
+select multiple	mail	de	Mehrfachauswahl
 selected	mail	de	ausgewählt
 selected date range (with quicksearch)	mail	de	Datumsbereich (mit Schnellsuche)
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
@@ -441,6 +446,8 @@ set it as default:	mail	de	als Vorgabe speichern
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	de	Soll die Signatur nach (Standard) oder vor dem zitierten Text eingefügt werden und diese bearbeitbar sein?
 show	mail	de	anzeigen
+show all addresses	mail	de	alle Adressaten anzeigen
+show all attachments	mail	de	alle Anhänge anzeigen
 show all folders	mail	de	Anzeige aller Ordner
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	de	Zeige alle Ordner, die in Ihrem Postfach eingerichtet sind. Expliziere Deaktivierung der Abonnement-Funktion des E-Mail Programms. Dies kann sich negativ auf die Performance Ihrer EGroupware auswirken.
 show new messages on home page	mail	de	Anzeigen von neuen E-Mails auf der Startseite
@@ -459,6 +466,7 @@ size(...->0)	mail	de	Größe(...->0)
 size(0->...)	mail	de	Größe(0->...)
 small view	mail	de	schmale Ansicht
 smtp	mail	de	Postausgang-Server
+sneak preview in list	mail	de	Mit Kurzvorschau
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	de	Einige Mailprogramme haben Probleme den Zeichensatz zu erkennen, wenn variabler Zeilenumbruch verwendet wird.
 sort order	mail	de	Sortierreihenfolge
 source	mail	de	Quelltext
@@ -516,6 +524,7 @@ use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	reguläre Ausdrücke verwenden (siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
 use source as displayed, if applicable	mail	de	Format wie E-Mail-Anzeige
 use username+password from current user	mail	de	verwendet Benutzername+Passwort des angemeldeten Benutzers
+use wizard to detect or verify configuration	mail	de	Benutze Assistent um die Konfiguration zu erstellen und/oder zu verifizieren
 vacation messages with start and end date require an admin account to be set!	mail	de	Um zeitgesteuerte Abwesenheitsnachrichten zu aktivieren, benötigen Sie einen Administrations-Benutzer. Diesen können Sie unter Posteingang-Server eintragen
 vacation notice	mail	de	Abwesenheitsnotiz
 vacation notice is active	mail	de	Abwesenheitsnotiz ist aktiv

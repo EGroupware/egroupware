@@ -53,8 +53,9 @@ class Apcu extends Base implements Provider
 	/**
 	 * Check if APC is available for caching user data
 	 *
-	 * Default shared memory size of 32M is just enough for the byte code cache,
-	 * but not for caching user data, we only use APC by default if we have at least 64M.
+	 * Default shared memory size of 32M, which is used only for user data in APCu.
+	 * Unlike APC which shares the total memory with it's opcode cache 32M is ok
+	 * for a small install.
 	 *
 	 * @return boolean true: apc available, false: not
 	 */
@@ -75,8 +76,8 @@ class Apcu extends Base implements Provider
 			}
 			$size *= ini_get('apc.shm_segments');
 
-			// only cache in APC, if we have at least 64M available (default is 32M)
-			$available = $size >= 67108864;
+			// only cache in APCu, if we have at least 32M available (default is 32M)
+			$available = $size >= 33554432;
 		}
 		//error_log(__METHOD__."() size=$size returning ".array2string($available));
 		return $available;
