@@ -55,7 +55,8 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 *
 		 * @param {string} _name name of the preference, eg. 'dateformat', or '*' to get all the application's preferences
 		 * @param {string} _app default 'common'
-		 * @param {function} _callback optional callback, if preference needs loading first
+		 * @param {function|false|undefined} _callback optional callback, if preference needs loading first
+		 * if false given and preference is not loaded, undefined is return and no (synchronious) request is send to server
 		 * @param {object} _context context for callback
 		 * @return string|bool preference value or false, if callback given and preference not yet loaded
 		 */
@@ -65,6 +66,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 
 			if (typeof prefs[_app] == 'undefined')
 			{
+				if (_callback === false) return undefined;
 				var request = this.json('EGroupware\\Api\\Framework::ajax_get_preference', [_app], _callback, _context);
 				request.sendRequest(typeof _callback == 'function', 'GET');	// use synchronous (cachable) GET request
 				if (typeof prefs[_app] == 'undefined') prefs[_app] = {};
