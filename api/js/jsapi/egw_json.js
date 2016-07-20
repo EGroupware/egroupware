@@ -146,7 +146,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	json_request.prototype.handleResponse = function(data) {
 		if (data && typeof data.response != 'undefined')
 		{
-			if (egw.preference('show_generation_time', 'common') == "1")
+			if (egw.preference('show_generation_time', 'common', false) == "1")
 			{
 				var gen_time_div = jQuery('#divGenTime').length > 0 ? jQuery('#divGenTime')
 				:jQuery('<div id="divGenTime" class="pageGenTime"><span class="pageTime"></span></div>').appendTo('#egw_fw_footer');
