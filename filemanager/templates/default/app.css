@@ -121,3 +121,10 @@ table.egwGridView_grid .tile .file_tile {
 
 .mimeIcon {width:65px;}
 .previewImage {width:100%;}
+
+#filemanager-editor_file_path {
+	font-size: 11pt;
+	display: inline-block;
+	margin-top: 5px;
+	margin-left: 10px;
+}

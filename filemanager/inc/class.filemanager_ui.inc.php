@@ -131,6 +131,13 @@ class filemanager_ui
 				'onExecute' => 'javaScript:app.filemanager.open',
 				'default' => true
 			),
+			'modify' => array(
+				'caption' => lang('Edit'),
+				'group' => $group,
+				'icon' => 'edit',
+				'onExecute' => 'javaScript:app.filemanager.open',
+				'enabled' => 'javaScript:app.filemanager.isEditable',
+			),
 			'saveas' => array(
 				'caption' => lang('Save as'),
 				'group' => $group,
