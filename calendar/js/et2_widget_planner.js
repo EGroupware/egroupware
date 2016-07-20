@@ -1449,13 +1449,13 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 							{
 								return;
 							}
-							var add_owner = jQuery.extend([],row.node.dataset.participants);
+							var add_owner = [row.node.dataset.participants];
 
 							egw().json('calendar.calendar_uiforms.ajax_invite', [
 									button_id==='series' ? event_data.id : event_data.app_id,
 									add_owner,
 									action.id === 'change_participant' ?
-										jQuery.extend([],source[i].iface.getWidget().getParent().node.dataset.participants) :
+										[source[i].iface.getWidget().getParent().node.dataset.participants] :
 										[]
 								],
 								function() { loading.remove();}
