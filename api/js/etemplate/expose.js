@@ -215,6 +215,7 @@ function expose (widget)
 			{
 				this._super.apply(this, arguments);
 				this.mime_regexp = mime_regex;
+				this.mime_odf_regex = mime_odf_regex;
 				var self=this;
 				this.expose_options = {
 					// The Id, element or querySelector of the gallery widget:
