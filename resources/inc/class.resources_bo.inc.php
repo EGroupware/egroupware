@@ -550,15 +550,19 @@ class resources_bo
 				// Edit dialog sends exec as an option, don't add categories
 				if(count($resources) && !$options['exec'])
 				{
+					$_resources = array_map(
+						function($id) { return 'r'.$id;},
+						array_keys($resources)
+					);
 					$list['cat-'.$cat_id] = array(
 						'label'	=>	$cat,
-						'resources'	=>	$resources,
+						'resources'	=>	$_resources,
 					);
 				}
 				else if ($resources && $options['exec'])
 				{
 					array_map(
-						function($id,$name) use (&$list) { $list[''+$id] = $name;},
+						function($id,$name) use (&$list) { $list[''.$id] = $name;},
 						array_keys($resources), $resources
 					);
 				}
