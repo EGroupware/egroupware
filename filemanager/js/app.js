@@ -1194,10 +1194,13 @@ app.classes.filemanager = AppJS.extend(
 				// bind change handler for setting the selected path and calling save
 				jQuery(vfs_select.getDOMNode()).on('change', function (){
 					file_path = '/webdav.php'+vfs_select.get_value();
-					// Add odt extension if not exist
-					if (!file_path.match(/\.odt$/,'ig')) file_path += '.odt';
-					widgetFilePath.set_value(file_path);
-					self.editor.getDocumentAsByteArray(saveByteArrayLocally);
+					if (vfs_select.get_value())
+					{
+						// Add odt extension if not exist
+						if (!file_path.match(/\.odt$/,'ig')) file_path += '.odt';
+						widgetFilePath.set_value(file_path);
+						self.editor.getDocumentAsByteArray(saveByteArrayLocally);
+					}
 				});
 				// start the file selector dialog
 				jQuery(vfs_select.getDOMNode()).click();
