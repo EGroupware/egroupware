@@ -352,7 +352,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 		$this->warnings[$record_num] = lang('Conflicts') . ':';
 		foreach($conflicts as $conflict)
 		{
-			$this->warnings[$record_num] .= "<br />\n" . Api\DateTime::to($conflict['start']) . "\t" . $conflict['title'];
+			$this->warnings[$record_num] .= "<br />\n" . egw_time::to($conflict['start']) . "\t" . $conflict['title'];
 		}
 	}
 
