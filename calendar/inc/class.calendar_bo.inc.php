@@ -254,7 +254,7 @@ class calendar_bo
 			$this->resources['l'] = array(
 				'type' => 'l',// one char type-identifier for this resources
 				'info' => __CLASS__ .'::mailing_lists',// info method, returns array with id, type & name for a given id
-				'app' => 'Mailing list'
+				'app' => 'Distribution list'
 			);
 			$this->resources[''] = array(
 				'type' => '',
