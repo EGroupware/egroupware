@@ -1224,9 +1224,23 @@ app.classes.filemanager = AppJS.extend(
 		var selected = fullpath.split('/');
 		selected.pop();
 		var path = selected.join('/');
-		this._do_action('delete', [fullpath], false, path);
+		var self =this;
 
-		this.editor_close(_egwAction);
+		et2_dialog.show_dialog(
+			function(_btn)
+			{
+				if (_btn == 2)
+				{
+					self._do_action('delete', [fullpath], false, path);
+					self.editor_close(_egwAction);
+				}
+			},
+			egw.lang('Delete file %1?', path),
+			'Delete file',
+			null,
+			et2_dialog.BUTTONS_YES_NO,
+			et2_dialog.WARNING_MESSAGE
+		);
 	},
 
 	/**
