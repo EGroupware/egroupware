@@ -656,7 +656,8 @@ span.et2_file_span{
 	margin-top:0;
 }
 div.et2_file input.et2_file_upload{
-	display: none;
+	opacity:0;
+	position: absolute;
 }
 /**
  * Autocomplete - used in link widget
