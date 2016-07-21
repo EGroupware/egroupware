@@ -356,8 +356,7 @@ class mail_activesync implements activesync_plugin_write, activesync_plugin_send
 		$this->mail->parseRawMessageIntoMailObject($mailObject,$rfc822);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
-		$mailObject->From 	= $activeMailProfile['ident_email'];
-		$mailObject->FromName = $mailObject->EncodeHeader(mail_bo::generateIdentityString($activeMailProfile,false));
+		$mailObject->setFrom($activeMailProfile['ident_email'],$mailObject->EncodeHeader(mail_bo::generateIdentityString($activeMailProfile,false)));
 		$mailObject->AddCustomHeader('X-Mailer: mail-Activesync');
 
 
