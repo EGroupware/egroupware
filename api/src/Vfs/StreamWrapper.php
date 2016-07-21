@@ -953,7 +953,7 @@ class StreamWrapper implements StreamWrapperIface
 	 *
 	 * @param string $_path vfs path
 	 */
-	static protected function symlinkCache_remove($_path)
+	static public function symlinkCache_remove($_path)
 	{
 		$path = self::get_path($_path);
 
