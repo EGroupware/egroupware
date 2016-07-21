@@ -918,7 +918,7 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 	{
 		owner_too = app.calendar.state.status_filter === 'owner';
 	}
-	var options = false
+	var options = false;
 	if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 	{
 		options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
