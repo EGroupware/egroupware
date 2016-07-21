@@ -925,7 +925,7 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 	}
 	else
 	{
-		options = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+		options = parent.getArrayMgr("sel_options").getRoot().getEntry('owner');
 	}
 	if(event.participants && parent.options.owner)
 	{
