@@ -1787,10 +1787,12 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 */
 	static function proppatch($path,array $props)
 	{
+		static $inst = null;
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."(".array2string($path).','.array2string($props));
 		if (!is_numeric($path))
 		{
-			if (!($stat = $vfs->url_stat($path,0)))
+			if (!isset($inst)) $inst = new self();
+			if (!($stat = $inst->url_stat($path,0)))
 			{
 				return false;
 			}
@@ -1852,13 +1854,15 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 */
 	static function propfind($path_ids,$ns=Vfs::DEFAULT_PROP_NAMESPACE)
 	{
+		static $inst = null;
+
 		$ids = is_array($path_ids) ? $path_ids : array($path_ids);
 		foreach($ids as &$id)
 		{
 			if (!is_numeric($id))
 			{
-				$vfs = new self();
-				if (!($stat = $vfs->url_stat($id,0)))
+				if (!isset($inst)) $inst = new self();
+				if (!($stat = $inst->url_stat($id,0)))
 				{
 					if (self::LOG_LEVEL) error_log(__METHOD__."(".array2string($path_ids).",$ns) path '$id' not found!");
 					return false;
