@@ -117,6 +117,8 @@ app.classes.filemanager = AppJS.extend(
 
 		if (name == "filemanager.editor")
 		{
+			// need to make body rock solid to avoid extra scrollbars
+			jQuery('body').css({overflow:'hidden'});
 			this._init_odf_editor ();
 		}
 	},
