@@ -1205,6 +1205,7 @@ app.classes.filemanager = AppJS.extend(
 						if (!file_path.match(/\.odt$/,'ig')) file_path += '.odt';
 						widgetFilePath.set_value(file_path);
 						self.editor.getDocumentAsByteArray(saveByteArrayLocally);
+						egw.refresh('','filemanager');
 					}
 				});
 				// start the file selector dialog
