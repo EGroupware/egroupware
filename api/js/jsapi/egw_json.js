@@ -168,7 +168,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				this.egw.includeJS(js_files, function() {
 					var end_time = (new Date).getTime();
 					this.handleResponse(data);
-					if (egw.preference('show_generation_time', 'common') == "1")
+					if (egw.preference('show_generation_time', 'common', false) == "1")
 					{
 						var gen_time_div = jQuery('#divGenTime');
 						if (!gen_time_div.length) gen_time_div = jQuery('.pageGenTime');
@@ -202,7 +202,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 								var plugin = handler_level[res.type][j];
 								if (res.type.match(/et2_load/))
 								{
-									if (egw.preference('show_generation_time', 'common') == "1")
+									if (egw.preference('show_generation_time', 'common', false) == "1")
 									{
 										if (gen_time_div.length > 0)
 										{
