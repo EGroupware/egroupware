@@ -383,7 +383,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			}
 			foreach((array)$fields['select-bool'] as $name) {
 				if($record[$name] != null && $record[$name] != '') {
-					$record[$name] = ($record[$name] == lang('Yes') || $record[$name] == '1' ? 1 : 0);
+					$record[$name] = (strtolower($record[$name]) == strtolower(lang('Yes')) || $record[$name] == '1' ? 1 : 0);
 				}
 			}
 			foreach((array)$fields['date-time'] as $name) {
