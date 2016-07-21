@@ -330,6 +330,29 @@ class StreamWrapper extends LinksParent
 	}
 
 	/**
+	 * Reimplemented to create an entry directory on the fly AND delete our stat cache!
+	 *
+	 * @param string $url
+	 * @param int $time =null modification time (unix timestamp), default null = current time
+	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 */
+	protected function touch($url,$time=null,$atime=null)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$time,$atime)");
+
+ 		if (!($stat = self::url_stat($url,STREAM_URL_STAT_QUIET)))
+		{
+			// file does not exist --> create an empty one
+			if (!($f = fopen(self::SCHEME.'://default'.Vfs::parse_url($url,PHP_URL_PATH),'w')) || !fclose($f))
+			{
+				return false;
+			}
+		}
+
+		return is_null($time) ? true : parent::touch($url,$time,$atime);
+	}
+
+	/**
 	 * Register this stream-wrapper
 	 */
 	public static function register()

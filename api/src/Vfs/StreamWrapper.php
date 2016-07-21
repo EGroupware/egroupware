@@ -481,6 +481,55 @@ class StreamWrapper implements StreamWrapperIface
 	}
 
 	/**
+	 * StreamWrapper method (PHP 5.4+) for touch, chmod, chown and chgrp
+	 *
+	 * @param string $path
+	 * @param int $option STREAM_META_(TOUCH|ACCESS|((OWNER|GROUP)(_NAME)?))
+	 * @param array|int|string $value
+	 * - STREAM_META_TOUCH array($time, $atime)
+	 * - STREAM_META_ACCESS int
+	 * - STREAM_(OWNER|GROUP) int
+	 * - STREAM_(OWNER|GROUP)_NAME string
+	 * @return boolean true on success, false on failure
+	 */
+	function stream_metadata($path, $option, $value)
+	{
+		if (!($url = $this->resolve_url_symlinks($path, $option == STREAM_META_TOUCH, false)))	// true,false file need to exist, but do not resolve last component
+		{
+			return false;
+		}
+		if (self::url_is_readonly($url))
+		{
+			return false;
+		}
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path', $option, ".array2string($value).") url=$url");
+
+		switch($option)
+		{
+			case STREAM_META_TOUCH:
+				return touch($url, $value[0]);	// atime is not supported
+
+			case STREAM_META_ACCESS:
+				return chmod($url, $value);
+
+			case STREAM_META_OWNER_NAME:
+				if (($value = $GLOBALS['egw']->account->name2id($value, 'account_lid', 'u')) === false)
+					return false;
+				// fall through
+			case STREAM_META_OWNER:
+				return chown($url, $value);
+
+			case STREAM_META_GROUP_NAME:
+				if (($value = $GLOBALS['egw']->account->name2id($value, 'account_lid', 'g')) === false)
+					return false;
+				// fall through
+			case STREAM_META_GROUP:
+				return chgrp($url, $value);
+		}
+		return false;
+	}
+
+	/**
 	 * This method is called in response to unlink() calls on URL paths associated with the wrapper.
 	 *
 	 * It should attempt to delete the item specified by path.
