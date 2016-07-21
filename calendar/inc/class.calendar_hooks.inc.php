@@ -306,6 +306,16 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False
 			),
+			'limit_all_day_lines' => array(
+				'type'   => 'input',
+				'size'   => 5,
+				'label'  => 'Limit number of lines for all day events',
+				'name'   => 'limit_all_day_lines',
+				'help'   => 'How many lines of all day events should be directly visible. Further lines are available via a mouseover.',
+				'xmlrpc' => True,
+				'default'=> 3,
+				'admin'  => False
+			),
 			'planner_show_empty_rows' => array(
 				'type'   => 'select',
 				'label'  => 'Show empty rows in Planner',
