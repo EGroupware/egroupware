@@ -150,7 +150,7 @@ class Utils extends StreamWrapper
 		);
 		$stmt = $delete_stmt = null;
 		$msgs = array();
-		$sqlfs = Vfs\Sqlfs();
+		$sqlfs = new StreamWrapper();
 		foreach($dirs as $path => $id)
 		{
 			if (!($stat = $sqlfs->url_stat($path, STREAM_URL_STAT_LINK)))
@@ -309,7 +309,7 @@ class Utils extends StreamWrapper
 	{
 		$lostnfound = null;
 		$msgs = array();
-		$sqlfs = Vfs\Sqlfs();
+		$sqlfs = new StreamWrapper();
 		foreach(self::$pdo->query('SELECT fs.* FROM '.self::TABLE.' fs'.
 			' LEFT JOIN '.self::TABLE.' dir ON dir.fs_id=fs.fs_dir'.
 			' WHERE fs.fs_id > 1 AND dir.fs_id IS NULL') as $row)
