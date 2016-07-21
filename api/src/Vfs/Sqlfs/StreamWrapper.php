@@ -836,13 +836,56 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	}
 
 	/**
+	 * StreamWrapper method (PHP 5.4+) for touch, chmod, chown and chgrp
+	 *
+	 * We use protected helper methods touch, chmod, chown and chgrp to implement the functionality.
+	 *
+	 * @param string $path
+	 * @param int $option STREAM_META_(TOUCH|ACCESS|((OWNER|GROUP)(_NAME)?))
+	 * @param array|int|string $value
+	 * - STREAM_META_TOUCH array($time, $atime)
+	 * - STREAM_META_ACCESS int
+	 * - STREAM_(OWNER|GROUP) int
+	 * - STREAM_(OWNER|GROUP)_NAME string
+	 * @return boolean true on success, false on failure
+	 */
+	function stream_metadata($path, $option, $value)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path, $option, ".array2string($value).")");
+
+		switch($option)
+		{
+			case STREAM_META_TOUCH:
+				return $this->touch($path, $value[0]);	// atime is not supported
+
+			case STREAM_META_ACCESS:
+				return $this->chmod($path, $value);
+
+			case STREAM_META_OWNER_NAME:
+				if (($value = $GLOBALS['egw']->account->name2id($value, 'account_lid', 'u')) === false)
+					return false;
+				// fall through
+			case STREAM_META_OWNER:
+				return $this->chown($path, $value);
+
+			case STREAM_META_GROUP_NAME:
+				if (($value = $GLOBALS['egw']->account->name2id($value, 'account_lid', 'g')) === false)
+					return false;
+				// fall through
+			case STREAM_META_GROUP:
+				return $this->chgrp($path, $value);
+		}
+		return false;
+	}
+
+	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
 	 *
 	 * @param string $url
 	 * @param int $time =null modification time (unix timestamp), default null = current time
 	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
 	 */
-	static function touch($url,$time=null,$atime=null)
+	protected function touch($url,$time=null,$atime=null)
 	{
 		unset($atime);	// not used
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url, $time)");
@@ -880,7 +923,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param int $owner
 	 * @return boolean
 	 */
-	static function chown($url,$owner)
+	protected function chown($url,$owner)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
 
@@ -925,7 +968,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param int $owner
 	 * @return boolean
 	 */
-	static function chgrp($url,$owner)
+	protected function chgrp($url,$owner)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
 
@@ -971,7 +1014,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param int $mode
 	 * @return boolean
 	 */
-	static function chmod($url,$mode)
+	protected function chmod($url,$mode)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url, $mode)");
 

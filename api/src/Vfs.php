@@ -95,6 +95,14 @@ class Vfs
 	 */
 	const LOCK_TABLE = 'egw_locks';
 	/**
+	 * How much should be logged to the apache error-log
+	 *
+	 * 0 = Nothing
+	 * 1 = only errors
+	 * 2 = all function calls and errors (contains passwords too!)
+	 */
+	const LOG_LEVEL = 1;
+	/**
 	 * Current user has root rights, no access checks performed!
 	 *
 	 * @var boolean
@@ -618,8 +626,10 @@ class Vfs
 
 		if ($options['url'])
 		{
-			$lstat = @lstat($path);
-			$stat = array_slice($lstat,13);	// remove numerical indices 0-12
+			if (($stat = @lstat($path)))
+			{
+				$stat = array_slice($stat,13);	// remove numerical indices 0-12
+			}
 		}
 		else
 		{
@@ -2161,6 +2171,21 @@ class Vfs
 	}
 
 	/**
+	 * Resolve the given path according to our fstab
+	 *
+	 * @param string $_path
+	 * @param boolean $do_symlink =true is a direct match allowed, default yes (must be false for a lstat or readlink!)
+	 * @param boolean $use_symlinkcache =true
+	 * @param boolean $replace_user_pass_host =true replace $user,$pass,$host in url, default true, if false result is not cached
+	 * @param boolean $fix_url_query =false true append relativ path to url query parameter, default not
+	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
+	 */
+	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true,$fix_url_query=false)
+	{
+		Vfs\StreamWrapper::resolve_url($_path, $do_symlink, $use_symlinkcache, $replace_user_pass_host, $fix_url_query);
+	}
+
+	/**
 	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
 	 *
 	 * It should attempt to create the directory specified by path.
@@ -2277,7 +2302,7 @@ class Vfs
 	}
 
 	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 * touch just running on VFS path
 	 *
 	 * @param string $path
 	 * @param int $time =null modification time (unix timestamp), default null = current time
@@ -2286,11 +2311,11 @@ class Vfs
 	 */
 	static function touch($path,$time=null,$atime=null)
 	{
-		return self::_call_on_backend('touch',array($path,$time,$atime));
+		return $path[0] == '/' && touch(self::PREFIX.$path, $time, $atime);
 	}
 
 	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 * chmod just running on VFS path
 	 *
 	 * Requires owner or root rights!
 	 *
@@ -2300,35 +2325,35 @@ class Vfs
 	 */
 	static function chmod($path,$mode)
 	{
-		return self::_call_on_backend('chmod',array($path,$mode));
+		return $path[0] == '/' && chmod(self::PREFIX.$path, $mode);
 	}
 
 	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 * chmod just running on VFS path
 	 *
 	 * Requires root rights!
 	 *
 	 * @param string $path
-	 * @param int $owner numeric user id
+	 * @param int|string $owner numeric user id or account-name
 	 * @return boolean true on success, false otherwise
 	 */
 	static function chown($path,$owner)
 	{
-		return self::_call_on_backend('chown',array($path,$owner));
+		return $path[0] == '/' && chown(self::PREFIX.$path, $owner);
 	}
 
 	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 * chgrp just running on VFS path
 	 *
 	 * Requires owner or root rights!
 	 *
 	 * @param string $path
-	 * @param int $group numeric group id
+	 * @param int|string $group numeric group id or group-name
 	 * @return boolean true on success, false otherwise
 	 */
 	static function chgrp($path,$group)
 	{
-		return self::_call_on_backend('chgrp',array($path,$group));
+		return $path[0] == '/' && chown(self::PREFIX.$path, $group);
 	}
 
 	/**
