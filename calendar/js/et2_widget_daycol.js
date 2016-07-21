@@ -72,6 +72,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			.appendTo(this.header);
 		this.all_day = jQuery(document.createElement('div'))
 			.addClass("calendar_calDayColAllDay")
+			.css('max-height', (egw.preference('limit_all_day_lines', 'calendar') || 3 ) * 1.4 + 'em')
 			.appendTo(this.header);
 		this.event_wrapper = jQuery(document.createElement('div'))
 			.addClass("event_wrapper")
