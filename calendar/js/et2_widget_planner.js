@@ -339,10 +339,50 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			row_labels: function() {
 				var labels = [];
 				var already_added = [];
+				var options = false;
+				if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
+				{
+					options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+				}
+				else
+				{
+					options = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+				}
 				for(var i = 0; i < this.options.owner.length; i++)
 				{
 					var user = this.options.owner[i];
-					if (user < 0)	// groups
+					// Handle grouped resources like mailing lists - pull it from sidebox owner
+					// and expand to their contents
+					if(isNaN(user) && options && options.find)
+					{
+						var resource = options.find(function(element) {return element.id == user;}) || {};
+						if(resource && resource.resources)
+						{
+							for(var j = 0; j < resource.resources.length; j++)
+							{
+								var id = resource.resources[j];
+								if(already_added.indexOf(''+id) < 0)
+								{
+									labels.push({
+										id: id,
+										label: this._get_owner_name(id),
+										data: {participants:id,owner:id}
+									});
+									already_added.push(''+id);
+								}
+							}
+						}
+						else if(already_added.indexOf(''+user) < 0)
+						{
+							labels.push({
+								id: user,
+								label: this._get_owner_name(user),
+								data: {participants:id,owner:id}
+							});
+							already_added.push(''+user);
+						}
+					}
+					else if (user < 0)	// groups
 					{
 						egw.accountData(user,'account_fullname',true,function(result) {
 							for(var id in result)
