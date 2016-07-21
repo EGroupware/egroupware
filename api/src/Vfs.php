@@ -786,6 +786,8 @@ class Vfs
 	 */
 	static function check_access($path, $check, $stat=null, $user=null)
 	{
+		static $vfs = null;
+
 		if (is_null($stat) && $user && $user != self::$user)
 		{
 			static $path_user_stat = array();
@@ -797,7 +799,7 @@ class Vfs
 			{
 				self::clearstatcache($path);
 
-				$vfs = new Vfs\StreamWrapper();
+				if (!isset($vfs)) $vfs = new Vfs\StreamWrapper();
 				$path_user_stat[$path][$user] = $vfs->url_stat($path, 0);
 
 				self::clearstatcache($path);	// we need to clear the stat-cache after the call too, as the next call might be the regular user again!
@@ -2384,7 +2386,7 @@ class Vfs
 	{
 		if (($ret = self::_call_on_backend('symlink',array($target,$link),false,1)))	// 1=path is in $link!
 		{
-			self::symlinkCache_remove($link);
+			Vfs\StreamWrapper::symlinkCache_remove($link);
 		}
 		return $ret;
 	}
@@ -2472,6 +2474,35 @@ class Vfs
 		Vfs\StreamWrapper::clearstatcache($path);
 		self::_call_on_backend('clearstatcache', array($path), true, 0);
 		Vfs\StreamWrapper::clearstatcache($path);
+	}
+
+	/**
+	 * This method is called in response to rename() calls on URL paths associated with the wrapper.
+	 *
+	 * It should attempt to rename the item specified by path_from to the specification given by path_to.
+	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support renaming.
+	 *
+	 * The regular filesystem stream-wrapper returns an error, if $url_from and $url_to are not either both files or both dirs!
+	 *
+	 * @param string $path_from
+	 * @param string $path_to
+	 * @return boolean TRUE on success or FALSE on failure
+	 */
+	function rename ( $path_from, $path_to )
+	{
+		$vfs = new Vfs\StreamWrapper();
+		return $vfs->rename($path_from, $path_to);
+	}
+
+	/**
+	 * Load stream wrapper for a given schema
+	 *
+	 * @param string $scheme
+	 * @return boolean
+	 */
+	static function load_wrapper($scheme)
+	{
+		return Vfs\StreamWrapper::load_wrapper($scheme);
 	}
 }
 
