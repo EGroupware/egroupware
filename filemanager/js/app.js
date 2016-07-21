@@ -1073,6 +1073,7 @@ app.classes.filemanager = AppJS.extend(
 	 * Method to close an opened document
 	 *
 	 * @param {object} _egwAction egw action object
+	 * @param {function} _callback callback function gets called after close operation
 	 */
 	editor_close: function (_egwAction, _callback) {
 		var self = this,
@@ -1090,7 +1091,7 @@ app.classes.filemanager = AppJS.extend(
 					window.close();
 				}
 				callback.call(this);
-			}
+			};
 
 			// warn user about unsaved changes
 			if (this.editor.isDocumentModified())
@@ -1139,13 +1140,15 @@ app.classes.filemanager = AppJS.extend(
 			egw.open_link(egw.link('/index.php', {
 				menuaction: 'filemanager.filemanager_ui.editor',
 				path: template_url,
-				isNew: true,
+				isNew: true
 			}), '', '800x600');
 		}
 	},
 
 	/**
 	 * Method call for saving edited document
+	 *
+	 * @param {object} _egwAction egw action object
 	 */
 	editor_save: function (_egwAction) {
 		var self = this,
@@ -1233,7 +1236,7 @@ app.classes.filemanager = AppJS.extend(
 	editor_file_operation: function (_params)
 	{
 		var ajaxObj = {
-			url: egw.webserverUrl+'/webdav.php?/home/'+egw.user('account_lid')+'/default.odt',
+			url: egw.webserverUrl+'/webdav.php?/home/'+egw.user('account_lid')+'/default.odt'
 		};
 		jQuery.extend(ajaxObj, _params);
 		switch (ajaxObj && ajaxObj.cmd)
@@ -1257,6 +1260,9 @@ app.classes.filemanager = AppJS.extend(
 
 	/**
 	 * Function to check wheter selected file is editable. ATM only .odt is supported.
+	 *
+	 * @param {object} _egwAction egw action object
+	 * @param {object} _senders object of selected row
 	 *
 	 * @returns {boolean} returns true if is editable otherwise false
 	 */
