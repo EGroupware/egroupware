@@ -306,7 +306,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @param string $url
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function unlink ( $url )
+	function unlink ( $url )
 	{
 		$path = Vfs::decodePath(Vfs::parse_url($url,PHP_URL_PATH));
 
@@ -331,7 +331,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @param string $url_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function rename ( $url_from, $url_to )
+	function rename ( $url_from, $url_to )
 	{
 		$from = Vfs::parse_url($url_from);
 		$to   = Vfs::parse_url($url_to);
@@ -381,7 +381,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir ( $url, $mode, $options )
+	function mkdir ( $url, $mode, $options )
 	{
 		unset($mode);	// not used, but required by interface
 
@@ -415,7 +415,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	static function rmdir ( $url, $options )
+	function rmdir ( $url, $options )
 	{
 		unset($options);	// not used, but required by interface
 
@@ -432,16 +432,27 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	}
 
 	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
+	 * StreamWrapper method (PHP 5.4+) for touch, chmod, chown and chgrp
+	 *
+	 * We only implement touch, as other functionality would require webserver to run as root.
 	 *
 	 * @param string $url
-	 * @param int $time =null modification time (unix timestamp), default null = current time
-	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
-	 * @return boolean true on success, false otherwise
+	 * @param int $option STREAM_META_(TOUCH|ACCESS|((OWNER|GROUP)(_NAME)?))
+	 * @param array|int|string $value
+	 * - STREAM_META_TOUCH array($time, $atime)
+	 * - STREAM_META_ACCESS int
+	 * - STREAM_(OWNER|GROUP) int
+	 * - STREAM_(OWNER|GROUP)_NAME string
+	 * @return boolean true on success, false on failure
 	 */
-	static function touch($url,$time=null,$atime=null)
+	function stream_metadata($url, $option, $value)
 	{
-		$path = Vfs::decodePath(Vfs::parse_url($url,PHP_URL_PATH));
+ 		if ($option != STREAM_META_TOUCH)
+		{
+			return false;	// not implemented / supported
+		}
+
+		$path = Vfs::decodePath(Vfs::parse_url($url, PHP_URL_PATH));
 		$parent = dirname($path);
 
 		// check access rights (in real filesystem AND by mount perms)
@@ -450,55 +461,9 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url) permission denied!");
 			return false;
 		}
-		return touch($path,$time,$atime);
-	}
 
-	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
-	 *
-	 * Not supported, as it would require root rights!
-	 *
-	 * @param string $path
-	 * @param string $mode mode string see Vfs::mode2int
-	 * @return boolean true on success, false otherwise
-	 */
-	static function chmod($path,$mode)
-	{
-		unset($path, $mode);	// not used, but required by interface
-
-		return false;
-	}
-
-	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
-	 *
-	 * Not supported, as it would require root rights!
-	 *
-	 * @param string $path
-	 * @param int $owner numeric user id
-	 * @return boolean true on success, false otherwise
-	 */
-	static function chown($path,$owner)
-	{
-		unset($path, $owner);	// not used, but required by interface
-
-		return false;
-	}
-
-	/**
-	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
-	 *
-	 * Not supported, as it would require root rights!
-	 *
-	 * @param string $path
-	 * @param int $group numeric group id
-	 * @return boolean true on success, false otherwise
-	 */
-	static function chgrp($path,$group)
-	{
-		unset($path, $group);	// not used, but required by interface
-
-		return false;
+		array_unshift($value, $path);
+		return call_user_func_array('touch', $value);
 	}
 
 	/**
@@ -552,7 +517,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @return array
 	 */
-	static function url_stat ( $url, $flags )
+	function url_stat ( $url, $flags )
 	{
 		$parts = Vfs::parse_url($url);
 		$path = Vfs::decodePath($parts['path']);

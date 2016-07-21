@@ -137,7 +137,7 @@ class StreamWrapper extends LinksParent
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @return array
 	 */
-	static function url_stat ( $url, $flags )
+	function url_stat ( $url, $flags )
 	{
 		$eacl_check=self::check_extended_acl($url,Vfs::READABLE);
 
@@ -232,7 +232,7 @@ class StreamWrapper extends LinksParent
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE, we allways use recursive!
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir($path,$mode,$options)
+	function mkdir($path,$mode,$options)
 	{
 		unset($mode);	// not used, but required by function signature
 
@@ -327,6 +327,29 @@ class StreamWrapper extends LinksParent
 			return true;
 		}
 		return parent::dir_opendir($url, $options);
+	}
+
+	/**
+	 * Reimplemented to create an entry directory on the fly AND delete our stat cache!
+	 *
+	 * @param string $url
+	 * @param int $time =null modification time (unix timestamp), default null = current time
+	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 */
+	protected function touch($url,$time=null,$atime=null)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$time,$atime)");
+
+ 		if (!($stat = self::url_stat($url,STREAM_URL_STAT_QUIET)))
+		{
+			// file does not exist --> create an empty one
+			if (!($f = fopen(self::SCHEME.'://default'.Vfs::parse_url($url,PHP_URL_PATH),'w')) || !fclose($f))
+			{
+				return false;
+			}
+		}
+
+		return is_null($time) ? true : parent::touch($url,$time,$atime);
 	}
 
 	/**

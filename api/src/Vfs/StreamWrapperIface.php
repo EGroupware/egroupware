@@ -143,7 +143,7 @@ interface StreamWrapperIface
 	 * @param string $path
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function unlink ( $path );
+	function unlink ( $path );
 
 	/**
 	 * This method is called in response to rename() calls on URL paths associated with the wrapper.
@@ -157,7 +157,7 @@ interface StreamWrapperIface
 	 * @param string $path_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function rename ( $path_from, $path_to );
+	function rename ( $path_from, $path_to );
 
 	/**
 	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
@@ -170,7 +170,7 @@ interface StreamWrapperIface
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir ( $path, $mode, $options );
+	function mkdir ( $path, $mode, $options );
 
 	/**
 	 * This method is called in response to rmdir() calls on URL paths associated with the wrapper.
@@ -182,7 +182,7 @@ interface StreamWrapperIface
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	static function rmdir ( $path, $options );
+	function rmdir ( $path, $options );
 
 	/**
 	 * This method is called immediately when your stream object is created for examining directory contents with opendir().
@@ -218,7 +218,7 @@ interface StreamWrapperIface
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @return array
 	 */
-	static function url_stat ( $path, $flags );
+	function url_stat ( $path, $flags );
 
 	/**
 	 * This method is called in response to readdir().

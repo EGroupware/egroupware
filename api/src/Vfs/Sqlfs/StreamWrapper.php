@@ -543,7 +543,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param string $url
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function unlink ( $url, $parent_stat=null )
+	function unlink ( $url, $parent_stat=null )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
@@ -553,10 +553,10 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		if (!isset($parent_stat))
 		{
 			$parent_stat = !($dir = Vfs::dirname($path)) ? false :
-				static::url_stat($dir, STREAM_URL_STAT_LINK);
+				$this->url_stat($dir, STREAM_URL_STAT_LINK);
 		}
 
-		if (!$parent_stat || !($stat = self::url_stat($path,STREAM_URL_STAT_LINK)) ||
+		if (!$parent_stat || !($stat = $this->url_stat($path,STREAM_URL_STAT_LINK)) ||
 			!$dir || !Vfs::check_access($dir, Vfs::WRITABLE, $parent_stat))
 		{
 			self::_remove_password($url);
@@ -599,7 +599,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param string $url_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function rename ( $url_from, $url_to)
+	function rename ( $url_from, $url_to)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url_from,$url_to)");
 
@@ -693,13 +693,13 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir ( $url, $mode, $options )
+	function mkdir ( $url, $mode, $options )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__." called from:".function_backtrace());
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
-		if (self::url_stat($path,STREAM_URL_STAT_QUIET))
+		if ($this->url_stat($path,STREAM_URL_STAT_QUIET))
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) already exist!");
@@ -720,7 +720,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			return false;
 		}
 		if (($query = Vfs::parse_url($url,PHP_URL_QUERY))) $parent_path .= '?'.$query;
-		$parent = self::url_stat($parent_path,STREAM_URL_STAT_QUIET);
+		$parent = $this->url_stat($parent_path,STREAM_URL_STAT_QUIET);
 
 		// check if we should also create all non-existing path components and our parent does not exist,
 		// if yes call ourself recursive with the parent directory
@@ -731,7 +731,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			{
 				return false;
 			}
-			$parent = self::url_stat($parent_path,0);
+			$parent = $this->url_stat($parent_path,0);
 		}
 		if (!$parent || !Vfs::check_access($parent_path,Vfs::WRITABLE,$parent))
 		{
@@ -788,14 +788,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	static function rmdir ( $url, $options )
+	function rmdir ( $url, $options )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url)");
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
 		if (!($parent = Vfs::dirname($path)) ||
-			!($stat = self::url_stat($path, 0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
+			!($stat = $this->url_stat($path, 0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
 			!Vfs::check_access($parent, Vfs::WRITABLE, static::url_stat($parent,0)))
 		{
 			self::_remove_password($url);
@@ -836,20 +836,64 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	}
 
 	/**
+	 * StreamWrapper method (PHP 5.4+) for touch, chmod, chown and chgrp
+	 *
+	 * We use protected helper methods touch, chmod, chown and chgrp to implement the functionality.
+	 *
+	 * @param string $path
+	 * @param int $option STREAM_META_(TOUCH|ACCESS|((OWNER|GROUP)(_NAME)?))
+	 * @param array|int|string $value
+	 * - STREAM_META_TOUCH array($time, $atime)
+	 * - STREAM_META_ACCESS int
+	 * - STREAM_(OWNER|GROUP) int
+	 * - STREAM_(OWNER|GROUP)_NAME string
+	 * @return boolean true on success, false on failure
+	 */
+	function stream_metadata($path, $option, $value)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path, $option, ".array2string($value).")");
+
+		switch($option)
+		{
+			case STREAM_META_TOUCH:
+				return $this->touch($path, $value[0]);	// atime is not supported
+
+			case STREAM_META_ACCESS:
+				return $this->chmod($path, $value);
+
+			case STREAM_META_OWNER_NAME:
+				if (($value = $GLOBALS['egw']->account->name2id($value, 'account_lid', 'u')) === false)
+					return false;
+				// fall through
+			case STREAM_META_OWNER:
+				return $this->chown($path, $value);
+
+			case STREAM_META_GROUP_NAME:
+				if (($value = $GLOBALS['egw']->account->name2id($value, 'account_lid', 'g')) === false)
+					return false;
+				// fall through
+			case STREAM_META_GROUP:
+				return $this->chgrp($path, $value);
+		}
+		return false;
+	}
+
+	/**
 	 * This is not (yet) a stream-wrapper function, but it's necessary and can be used static
 	 *
 	 * @param string $url
 	 * @param int $time =null modification time (unix timestamp), default null = current time
 	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
 	 */
-	static function touch($url,$time=null,$atime=null)
+	protected function touch($url,$time=null,$atime=null)
 	{
 		unset($atime);	// not used
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url, $time)");
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($path,STREAM_URL_STAT_QUIET)))
+		$vfs = new self();
+		if (!($stat = $vfs->url_stat($path,STREAM_URL_STAT_QUIET)))
 		{
 			// file does not exist --> create an empty one
 			if (!($f = fopen(self::SCHEME.'://default'.$path,'w')) || !fclose($f))
@@ -860,7 +904,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			{
 				return true;	// new (empty) file created with current mod time
 			}
-			$stat = self::url_stat($path,0);
+			$stat = $vfs->url_stat($path,0);
 		}
 		unset(self::$stat_cache[$path]);
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_modified=:fs_modified,fs_modifier=:fs_modifier WHERE fs_id=:fs_id');
@@ -879,13 +923,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param int $owner
 	 * @return boolean
 	 */
-	static function chown($url,$owner)
+	protected function chown($url,$owner)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($path,0)))
+		$vfs = new self();
+		if (!($stat = $vfs->url_stat($path,0)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) no such file or directory!");
 			trigger_error("No such file or directory $url !",E_USER_WARNING);
@@ -923,13 +968,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param int $owner
 	 * @return boolean
 	 */
-	static function chgrp($url,$owner)
+	protected function chgrp($url,$owner)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$owner)");
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($path,0)))
+		$vfs = new self();
+		if (!($stat = $vfs->url_stat($path,0)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$owner) no such file or directory!");
 			trigger_error("No such file or directory $url !",E_USER_WARNING);
@@ -968,13 +1014,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param int $mode
 	 * @return boolean
 	 */
-	static function chmod($url,$mode)
+	protected function chmod($url,$mode)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url, $mode)");
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($path,0)))
+		$vfs = new self();
+		if (!($stat = $vfs->url_stat($path,0)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url, $mode) no such file or directory!");
 			trigger_error("No such file or directory $url !",E_USER_WARNING);
@@ -1018,7 +1065,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
-		if (!($stat = self::url_stat($url,0)) || 		// dir not found
+		if (!($stat = $this->url_stat($url,0)) || 		// dir not found
 			$stat['mime'] != self::DIR_MIME_TYPE ||		// no dir
 			!Vfs::check_access($url,Vfs::EXECUTABLE|Vfs::READABLE,$stat))	// no access
 		{
@@ -1078,7 +1125,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 * @param boolean $eacl_access =null allows extending classes to pass the value of their check_extended_acl() method (no lsb!)
 	 * @return array
 	 */
-	static function url_stat ( $url, $flags, $eacl_access=null )
+	function url_stat ( $url, $flags, $eacl_access=null )
 	{
 		static $max_subquery_depth=null;
 		if (is_null($max_subquery_depth))
@@ -1187,7 +1234,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			error_log(__METHOD__."() decremented max_subquery_depth to $max_subquery_depth");
 			Api\Config::save_value('max_subquery_depth', $max_subquery_depth, 'phpgwapi');
 			if (method_exists($GLOBALS['egw'],'invalidate_session_cache')) $GLOBALS['egw']->invalidate_session_cache();
-			return self::url_stat($url, $flags, $eacl_access);
+			return $this->url_stat($url, $flags, $eacl_access);
 		}
 		self::$stat_cache[$path] = $info;
 
@@ -1284,7 +1331,8 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 */
 	static function readlink($path)
 	{
-		$link = !($lstat = self::url_stat($path,STREAM_URL_STAT_LINK)) || is_null($lstat['readlink']) ? false : $lstat['readlink'];
+		$vfs = new self();
+		$link = !($lstat = $vfs->url_stat($path,STREAM_URL_STAT_LINK)) || is_null($lstat['readlink']) ? false : $lstat['readlink'];
 
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path') = $link");
 
@@ -1302,7 +1350,8 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$target','$link')");
 
-		if (self::url_stat($link,0))
+		$vfs = new self();
+		if ($vfs->url_stat($link,0))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') $link exists, returning false!");
 			return false;	// $link already exists
@@ -1422,7 +1471,8 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		}
 		if (is_null($fs_id))
 		{
-			if (!($stat = self::url_stat($path,0)))
+			$vfs = new self();
+			if (!($stat = $vfs->url_stat($path,0)))
 			{
 				if (self::LOG_LEVEL) error_log(__METHOD__."($path,$rights,$owner,$fs_id) no such file or directory!");
 				return false;	// $path not found
@@ -1740,7 +1790,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."(".array2string($path).','.array2string($props));
 		if (!is_numeric($path))
 		{
-			if (!($stat = self::url_stat($path,0)))
+			if (!($stat = $vfs->url_stat($path,0)))
 			{
 				return false;
 			}
@@ -1807,7 +1857,8 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		{
 			if (!is_numeric($id))
 			{
-				if (!($stat = self::url_stat($id,0)))
+				$vfs = new self();
+				if (!($stat = $vfs->url_stat($id,0)))
 				{
 					if (self::LOG_LEVEL) error_log(__METHOD__."(".array2string($path_ids).",$ns) path '$id' not found!");
 					return false;
