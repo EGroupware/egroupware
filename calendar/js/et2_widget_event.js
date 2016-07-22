@@ -948,7 +948,7 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 					continue;
 				}
 			}
-			
+
 			if (parseInt(parent_owner[i]) < 0)
 			{
 				// Add in groups, if we can get them (this is syncronous)
@@ -1021,7 +1021,16 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
 {
 	var edit_id = event_data.app_id;
 	var edit_date = event_data.start;
-	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
+
+	// seems window.opener somehow in certian conditions could be from different origin
+	// we try to catch the exception and in this case retrive the egw object from current window.
+	try {
+		var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
+	}
+	catch(e){
+		var egw = window.egw('calendar');
+	}
+
 	var that = this;
 
 	var extra_params = extra_data && typeof extra_data == 'object' ? extra_data : {};
@@ -1085,7 +1094,15 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
  */
 et2_calendar_event.series_split_prompt = function(event_data, instance_date, callback)
 {
-	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
+	// seems window.opener somehow in certian conditions could be from different origin
+	// we try to catch the exception and in this case retrive the egw object from current window.
+	try {
+		var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
+	}
+	catch(e){
+		var egw = window.egw('calendar');
+	}
+
 	var that = this;
 
 	if(typeof instance_date == 'string')
