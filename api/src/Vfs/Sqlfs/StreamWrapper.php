@@ -201,11 +201,11 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		parse_str(parse_url($url, PHP_URL_QUERY), $this->dir_url_params);
 
-		if (!is_null($overwrite_new) || !($stat = static::url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
+		if (!is_null($overwrite_new) || !($stat = $this->url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if (!$dir || $mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' && $stat ||	// or file should not exist, but does
-				!($dir_stat=static::url_stat($dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
+				!($dir_stat=$this->url_stat($dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
 				!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat))	// or we are not allowed to 																																			create it
 			{
 				self::_remove_password($url);
@@ -609,15 +609,15 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$to_dir = Vfs::dirname($path_to);
 		$operation = self::url2operation($url_from);
 
-		if (!($from_stat = static::url_stat($path_from, 0)) || !$from_dir ||
-			!Vfs::check_access($from_dir, Vfs::WRITABLE, $from_dir_stat = static::url_stat($from_dir, 0)))
+		if (!($from_stat = $this->url_stat($path_from, 0)) || !$from_dir ||
+			!Vfs::check_access($from_dir, Vfs::WRITABLE, $from_dir_stat = $this->url_stat($from_dir, 0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
 			return false;	// no permission or file does not exist
 		}
-		if (!$to_dir || !Vfs::check_access($to_dir, Vfs::WRITABLE, $to_dir_stat = static::url_stat($to_dir, 0)))
+		if (!$to_dir || !Vfs::check_access($to_dir, Vfs::WRITABLE, $to_dir_stat = $this->url_stat($to_dir, 0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
@@ -626,7 +626,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		}
 		// the filesystem stream-wrapper does NOT allow to rename files to directories, as this makes problems
 		// for our vfs too, we abort here with an error, like the filesystem one does
-		if (($to_stat = static::url_stat($path_to, 0)) &&
+		if (($to_stat = $this->url_stat($path_to, 0)) &&
 			($to_stat['mime'] === self::DIR_MIME_TYPE) !== ($from_stat['mime'] === self::DIR_MIME_TYPE))
 		{
 			self::_remove_password($url_from);
@@ -796,7 +796,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 
 		if (!($parent = Vfs::dirname($path)) ||
 			!($stat = $this->url_stat($path, 0)) || $stat['mime'] != self::DIR_MIME_TYPE ||
-			!Vfs::check_access($parent, Vfs::WRITABLE, static::url_stat($parent,0)))
+			!Vfs::check_access($parent, Vfs::WRITABLE, $this->url_stat($parent,0)))
 		{
 			self::_remove_password($url);
 			$err_msg = __METHOD__."($url,$options) ".(!$stat ? 'not found!' :
@@ -1350,14 +1350,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$target','$link')");
 
-		$vfs = new self();
-		if ($vfs->url_stat($link,0))
+		$inst = new static();
+		if ($inst->url_stat($link,0))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') $link exists, returning false!");
 			return false;	// $link already exists
 		}
 		if (!($dir = Vfs::dirname($link)) ||
-			!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat=static::url_stat($dir,0)))
+			!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat=$inst->url_stat($dir,0)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') returning false! (!is_writable('$dir'), dir_stat=".array2string($dir_stat).")");
 			return false;	// parent dir does not exist or is not writable
@@ -1526,7 +1526,8 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	 */
 	static function get_eacl($path)
 	{
-		if (!($stat = static::url_stat($path, STREAM_URL_STAT_QUIET)))
+		$inst = new static();
+		if (!($stat = $inst->url_stat($path, STREAM_URL_STAT_QUIET)))
 		{
 			error_log(__METHOD__.__LINE__.' '.array2string($path).' not found!');
 			return false;	// not found

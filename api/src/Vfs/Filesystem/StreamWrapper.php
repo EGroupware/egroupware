@@ -131,12 +131,12 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		$read_only = str_replace('b','',$mode) == 'r';
 
 		// check access rights, based on the eGW mount perms
-		if (!($stat = self::url_stat($url,0)) || $mode[0] == 'x')	// file not found or file should NOT exist
+		if (!($stat = $this->url_stat($url,0)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' ||	// or file should not exist, but does
 				!($dir = Vfs::dirname($url)) ||
-				!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat=self::url_stat($dir,0)))	// or we are not allowed to 																																			create it
+				!Vfs::check_access($dir,Vfs::WRITABLE,$dir_stat=$this->url_stat($dir,0)))	// or we are not allowed to 																																			create it
 			{
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
 				if (!($options & STREAM_URL_STAT_QUIET))
@@ -294,7 +294,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 	 */
 	function stream_stat ( )
 	{
-		return self::url_stat($this->opened_stream_url,0);
+		return $this->url_stat($this->opened_stream_url,0);
 	}
 
 	/**
@@ -337,12 +337,12 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		$to   = Vfs::parse_url($url_to);
 
 		// check access rights
-		if (!($from_stat = self::url_stat($url_from,0)) || !($dir = Vfs::dirname($url_from)) || !Vfs::check_access($dir,Vfs::WRITABLE))
+		if (!($from_stat = $this->url_stat($url_from,0)) || !($dir = Vfs::dirname($url_from)) || !Vfs::check_access($dir,Vfs::WRITABLE))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $from[path] permission denied!");
 			return false;	// no permission or file does not exist
 		}
-		if (!($to_dir = Vfs::dirname($url_to)) || !Vfs::check_access($to_dir,Vfs::WRITABLE,$to_dir_stat = self::url_stat($to_dir,0)))
+		if (!($to_dir = Vfs::dirname($url_to)) || !Vfs::check_access($to_dir,Vfs::WRITABLE,$to_dir_stat = $this->url_stat($to_dir,0)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $to_dir permission denied!");
 			return false;	// no permission or parent-dir does not exist
@@ -354,7 +354,7 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 		}
 		// the filesystem stream-wrapper does NOT allow to rename files to directories, as this makes problems
 		// for our vfs too, we abort here with an error, like the filesystem one does
-		if (($to_stat = self::url_stat($to['path'],0)) &&
+		if (($to_stat = $this->url_stat($to['path'],0)) &&
 			($to_stat['mime'] === self::DIR_MIME_TYPE) !== ($from_stat['mime'] === self::DIR_MIME_TYPE))
 		{
 			$is_dir = $to_stat['mime'] === self::DIR_MIME_TYPE ? 'a' : 'no';
