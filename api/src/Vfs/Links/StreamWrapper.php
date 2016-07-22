@@ -262,7 +262,7 @@ class StreamWrapper extends LinksParent
 	/**
 	 * This method is called immediately after your stream object is created.
 	 *
-	 * Reimplemented from sqlfs to ensure self::url_stat is called, to fill sqlfs stat cache with our eacl!
+	 * Reimplemented from sqlfs to ensure $this->url_stat is called, to fill sqlfs stat cache with our eacl!
 	 * And to return vcard for url /apps/addressbook/$id/.entry
 	 *
 	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
@@ -277,7 +277,7 @@ class StreamWrapper extends LinksParent
 	function stream_open ( $url, $mode, $options, &$opened_path )
 	{
 		// the following call is necessary to fill sqlfs_stream_wrapper::$stat_cache, WITH the extendes ACL!
-		$stat = self::url_stat($url,0);
+		$stat = $this->url_stat($url,0);
 		//error_log(__METHOD__."('$url', '$mode', $options) stat=".array2string($stat));
 
 		// return vCard as /.entry
@@ -321,7 +321,7 @@ class StreamWrapper extends LinksParent
 	 */
 	function dir_opendir ( $url, $options )
 	{
-		if (!parent::url_stat($url, STREAM_URL_STAT_QUIET) && self::url_stat($url, STREAM_URL_STAT_QUIET))
+		if (!parent::url_stat($url, STREAM_URL_STAT_QUIET) && $this->url_stat($url, STREAM_URL_STAT_QUIET))
 		{
 			$this->opened_dir = array();
 			return true;
@@ -340,7 +340,7 @@ class StreamWrapper extends LinksParent
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$time,$atime)");
 
- 		if (!($stat = self::url_stat($url,STREAM_URL_STAT_QUIET)))
+ 		if (!($stat = $this->url_stat($url,STREAM_URL_STAT_QUIET)))
 		{
 			// file does not exist --> create an empty one
 			if (!($f = fopen(self::SCHEME.'://default'.Vfs::parse_url($url,PHP_URL_PATH),'w')) || !fclose($f))

@@ -2169,7 +2169,7 @@ class Vfs
 	 */
 	static function resolve_url($_path,$do_symlink=true,$use_symlinkcache=true,$replace_user_pass_host=true,$fix_url_query=false)
 	{
-		Vfs\StreamWrapper::resolve_url($_path, $do_symlink, $use_symlinkcache, $replace_user_pass_host, $fix_url_query);
+		return Vfs\StreamWrapper::resolve_url($_path, $do_symlink, $use_symlinkcache, $replace_user_pass_host, $fix_url_query);
 	}
 
 	/**
