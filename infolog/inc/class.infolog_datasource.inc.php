@@ -138,6 +138,15 @@ class infolog_datasource extends datasource
 				$info[$info_field] = date_add(new Api\DateTime($info[$info_field]), $date_offsets[$offset_field])->format('ts');
 			}
 		}
+		// Sanity check - not due or ended before it starts
+		if($info['info_startdate'] && $info['info_enddate'] && $info['info_startdate'] > $info['info_enddate'])
+		{
+			unset($info['info_enddate']);
+		}
+		if($info['info_startdate'] && $info['info_datecompleted'] && $info['info_startdate'] > $info['info_datecompleted'])
+		{
+			unset($info['info_datecompleted']);
+		}
 		
 		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
 
