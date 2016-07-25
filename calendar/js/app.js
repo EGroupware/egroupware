@@ -211,6 +211,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					{
 						this.set_enddate_visibility();
 						this.check_recur_type();
+						this.edit_start_change();
 						this.et2.getWidgetById('recur_exception').set_disabled(!content.data.recur_exception ||
 							typeof content.data.recur_exception[0] == 'undefined');
 					}
@@ -1030,6 +1031,32 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if(recurType && recurData)
 		{
 			recurData.set_disabled(recurType.get_value() != 2 && recurType.get_value() != 4);
+		}
+	},
+
+	/**
+	 * Actions for when the user changes the event start date in edit dialog
+	 * 
+	 * @returns {undefined}
+	 */
+	edit_start_change: function(input, widget)
+	{
+		if(!widget)
+		{
+			widget = etemplate2.getById('calendar-edit').widgetContainer.getWidgetById('start');
+		}
+		
+		// Update settings for querying participants
+		this.edit_update_participant(widget);
+
+		// Update recurring date limit, if not set it can't be before start
+		if(widget)
+		{
+			var recur_end = widget.getRoot().getWidgetById('recur_enddate');
+			if(recur_end && !recur_end.getValue())
+			{
+				recur_end.set_min(widget.getValue());
+			}
 		}
 	},
 
