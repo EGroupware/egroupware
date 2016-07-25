@@ -368,76 +368,79 @@ class calendar_uiforms extends calendar_ui
 						case 'participant':
 							foreach($data as $participant)
 							{								// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>")
-								$email = array();
-								if(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$participant,$email))
-								{
-									$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
-									if (($data = $GLOBALS['egw']->accounts->name2id($email[2],'account_email')) && $this->bo->check_acl_invite($data))
-									{
-										$event['participants'][$data] = $event['participant_types']['u'][$data] = $status;
-									}
-									elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
-										'email' => $email[2],
-										'email_home' => $email[2],
-									),true,'','','',false,'OR')))
-									{
-										$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = $status;
-									}
-									else
-									{
-										$event['participants']['e'.$participant] = $event['participant_types']['e'][$participant] = $status;
-									}
-								}
-								else
-								{
-									if(is_numeric($participant))
-									{
-										$uid = 'u'.$participant;
-										$id = $participant;
-										$resource = $this->bo->resources[''];
-									}
-									else
-									{
-										$uid = $participant;
-										$id = substr($participant,1);
-										$resource = $this->bo->resources[$participant[0]];
-									}
-									if(!$this->bo->check_acl_invite($uid))
-									{
-										if(!$msg_permission_denied_added)
-										{
-											$msg .= lang('Permission denied!');
-											$msg_permission_denied_added = true;
-										}
-										continue;
-									}
+                                                                if (!is_null($participant))
+                                                                {
+                                                                    $email = array();
+                                                                    if(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$participant,$email))
+                                                                    {
+                                                                            $status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
+                                                                            if (($data = $GLOBALS['egw']->accounts->name2id($email[2],'account_email')) && $this->bo->check_acl_invite($data))
+                                                                            {
+                                                                                    $event['participants'][$data] = $event['participant_types']['u'][$data] = $status;
+                                                                            }
+                                                                            elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
+                                                                                    'email' => $email[2],
+                                                                                    'email_home' => $email[2],
+                                                                            ),true,'','','',false,'OR')))
+                                                                            {
+                                                                                    $event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = $status;
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                    $event['participants']['e'.$participant] = $event['participant_types']['e'][$participant] = $status;
+                                                                            }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                            if(is_numeric($participant))
+                                                                            {
+                                                                                    $uid = 'u'.$participant;
+                                                                                    $id = $participant;
+                                                                                    $resource = $this->bo->resources[''];
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                    $uid = $participant;
+                                                                                    $id = substr($participant,1);
+                                                                                    $resource = $this->bo->resources[$participant[0]];
+                                                                            }
+                                                                            if(!$this->bo->check_acl_invite($uid))
+                                                                            {
+                                                                                    if(!$msg_permission_denied_added)
+                                                                                    {
+                                                                                            $msg .= lang('Permission denied!');
+                                                                                            $msg_permission_denied_added = true;
+                                                                                    }
+                                                                                    continue;
+                                                                            }
 
-									$type = $resource['type'];
-									$status = isset($this->bo->resources[$type]['new_status']) ?
-										ExecMethod($this->bo->resources[$type]['new_status'],$id) :
-										($uid == $this->bo->user ? 'A' : 'U');
+                                                                            $type = $resource['type'];
+                                                                            $status = isset($this->bo->resources[$type]['new_status']) ?
+                                                                                    ExecMethod($this->bo->resources[$type]['new_status'],$id) :
+                                                                                    ($uid == $this->bo->user ? 'A' : 'U');
 
-									if ($status)
-									{
-										$res_info = $this->bo->resource_info($uid);
-										// todo check real availability = maximum - already booked quantity
-										if (isset($res_info['useable']) && $content['participants']['quantity'] > $res_info['useable'])
-										{
-											$msg .= lang('Maximum available quantity of %1 exceeded!',$res_info['useable']);
-											foreach(array('quantity','resource','role') as $n)
-											{
-												$event['participants'][$n] = $content['participants'][$n];
-											}
-											continue;
-										}
-										else
-										{
-											$event['participants'][$uid] = $event['participant_types'][$type][$id] =
-												calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
-										}
-									}
-								}
-							}
+                                                                            if ($status)
+                                                                            {
+                                                                                    $res_info = $this->bo->resource_info($uid);
+                                                                                    // todo check real availability = maximum - already booked quantity
+                                                                                    if (isset($res_info['useable']) && $content['participants']['quantity'] > $res_info['useable'])
+                                                                                    {
+                                                                                            $msg .= lang('Maximum available quantity of %1 exceeded!',$res_info['useable']);
+                                                                                            foreach(array('quantity','resource','role') as $n)
+                                                                                            {
+                                                                                                    $event['participants'][$n] = $content['participants'][$n];
+                                                                                            }
+                                                                                            continue;
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                            $event['participants'][$uid] = $event['participant_types'][$type][$id] =
+                                                                                                    calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
+                                                                                    }
+                                                                            }
+                                                                    }
+                                                            }
+                                                        }
 							break;
 						case 'add':
 							if (!$content['participants']['participant'])
