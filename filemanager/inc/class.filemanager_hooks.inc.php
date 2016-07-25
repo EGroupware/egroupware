@@ -256,6 +256,7 @@ class filemanager_hooks
 			'merge' => true,
 			'entry' => 'File',
 			'entries' => 'Files',
+			'view_popup' => '850x750',
 		);
 	}
 }

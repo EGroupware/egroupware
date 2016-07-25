@@ -629,7 +629,7 @@ function expose (widget)
 				egw.open_link(egw.link('/index.php', {
 					menuaction: 'filemanager.filemanager_ui.editor',
 					path: _value.download_url
-				}), '', '800x600');
+				}), '', egw.link_get_registry('filemanager','view_popup'));
 			}
 	});
 }

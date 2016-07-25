@@ -789,7 +789,7 @@ app.classes.filemanager = AppJS.extend(
 			egw.open_link(egw.link('/index.php', {
 				menuaction: 'filemanager.filemanager_ui.editor',
 				path: data.data.download_url
-			}), '', '800x600');
+			}), '', egw.link_get_registry('filemanager','view_popup'));
 		}
 		else
 		{
@@ -1139,9 +1139,8 @@ app.classes.filemanager = AppJS.extend(
 		{
 			egw.open_link(egw.link('/index.php', {
 				menuaction: 'filemanager.filemanager_ui.editor',
-				path: template_url,
-				isNew: true
-			}), '', '800x600');
+				path: template_url
+			}), '', egw.link_get_registry('filemanager','view_popup'));
 		}
 	},
 
