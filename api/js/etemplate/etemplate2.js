@@ -305,6 +305,13 @@ etemplate2.prototype.unbind_unload = function()
 	{
 		window.onbeforeunload = null;
 	}
+	else
+	{
+		var onbeforeunload = window.onbeforeunload;
+		window.onbeforeunload = null;
+		// bind unload handler again (can NOT do it direct, as this would be quick enough to be still triggered!)
+		window.setTimeout(function(){window.onbeforeunload = onbeforeunload;}, 100);
+	}
 	delete this.destroy_session;
 };
 
@@ -756,8 +763,10 @@ etemplate2.prototype.submit = function(button, async, no_validation, _container)
 };
 
 /**
- * Does a full form post submit.
- * Only use this one if you need it, use the ajax submit() instead
+ * Does a full form post submit necessary for downloads
+ *
+ * Only use this one if you need it, use the ajax submit() instead.
+ * It ensures eT2 session continues to exist on server by unbinding unload handler and rebinding it.
  */
 etemplate2.prototype.postSubmit = function()
 {
@@ -793,6 +802,9 @@ etemplate2.prototype.postSubmit = function()
 		input.value = egw().jsonEncode(values);
 		form.append(input);
 		form.appendTo(jQuery('body')).submit();
+
+		// bind unload handler again (can NOT do it direct, as this would be quick enough to be still triggered!)
+		window.setTimeout(jQuery.proxy(this.bind_unload, this), 100);
 	}
 };
 
