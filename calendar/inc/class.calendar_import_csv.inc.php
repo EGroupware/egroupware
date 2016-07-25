@@ -275,10 +275,13 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 				}
 
 				// Merge to deal with fields not in import record
-				$_data = array_merge($old, $_data);
-				$changed = $this->tracking->changed_fields($_data, $old);
-				if(count($changed) == 0) {
-					return true;
+				if($old)
+				{
+					$_data = array_merge($old, $_data);
+					$changed = $this->tracking->changed_fields($_data, $old);
+					if(count($changed) == 0) {
+						return true;
+					}
 				}
 				// Fall through
 			case 'insert' :
