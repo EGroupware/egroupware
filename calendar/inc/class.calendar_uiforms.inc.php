@@ -367,7 +367,13 @@ class calendar_uiforms extends calendar_ui
 							break;
 						case 'participant':
 							foreach($data as $participant)
-							{								// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>")
+							{
+								if (is_null($participant))
+								{
+									continue;
+								}
+								
+								// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>")
 								$email = array();
 								if(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$participant,$email))
 								{
