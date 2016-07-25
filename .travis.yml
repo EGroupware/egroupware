@@ -21,6 +21,9 @@ services:
 #  - mysql
 #  - postgres
 
+addons:
+  mariadb: '10.0'
+
 sudo: required
 dist: trusty
 # this fixes hhvm builds according to https://docs.travis-ci.com/user/languages/php#HHVM-versions-on-Trusty
@@ -55,8 +58,6 @@ before_script:
   #- php -m
   - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
   #- composer update --prefer-source $LOWEST_DEPS
-  - sudo apt-get update -qq
-  - sudo apt-get install -y myrepos
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
   # installing phpunit in version suitable for used PHP version
@@ -73,7 +74,6 @@ script:
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
   - ./doc/php_syntax_check.sh
-  - ./doc/test-cli.php
 
 cache:
   directories:
