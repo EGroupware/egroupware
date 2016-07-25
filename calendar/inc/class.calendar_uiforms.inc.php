@@ -766,7 +766,7 @@ class calendar_uiforms extends calendar_ui
 								calendar_so::split_status($status,$q,$r);
 								if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
 								{
-									$preferences = CreateObject('phpgwapi.preferences',$uid);
+									$preferences = new Preferences($uid);
 									$part_prefs = $preferences->read_repository();
 									switch ($part_prefs['calendar']['reset_stati'])
 									{
@@ -2773,7 +2773,7 @@ class calendar_uiforms extends calendar_ui
 			calendar_so::split_status($status,$q,$r);
 			if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
 			{
-				$preferences = CreateObject('phpgwapi.preferences',$uid);
+				$preferences = new Preferenes($uid);
 				$part_prefs = $preferences->read_repository();
 				switch ($part_prefs['calendar']['reset_stati'])
 				{
