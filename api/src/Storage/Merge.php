@@ -578,6 +578,7 @@ abstract class Merge
 		try {
 			$content = $this->merge_string($content,$ids,$err,$mimetype,$fix);
 		} catch (\Exception $e) {
+			_egw_log_exception($e);
 			$err = $e->getMessage();
 			return false;
 		}
