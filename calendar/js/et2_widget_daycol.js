@@ -1081,16 +1081,21 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			}
 			// Header, all day non-blocking
 			else if (this.header.has(_ev.target).length && !jQuery('.hiddenEventBefore',this.header).has(_ev.target).length ||
-			this.header.is(_ev.target)
+				this.header.is(_ev.target)
 			)
 			{
 				// Click on the header, but not the title.  That's an all-day non-blocking
 				var end = this.date.getFullYear() + '-' + (this.date.getUTCMonth()+1) + '-' + this.date.getUTCDate() + 'T23:59';
-				this.egw().open(null, 'calendar', 'add', {
+				var options = {
 					start: this.date.toJSON(),
 					end: end,
 					non_blocking: true
-				} , '_blank');
+				}
+				if (this.options.owner != app.calendar.state.owner)
+				{
+					options.owner = this.options.owner;
+				}
+				this.egw().open(null, 'calendar', 'add', options, '_blank');
 				return false;
 			}
 		}
