@@ -1864,6 +1864,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	 */
 	_mouse_down: function(event)
 	{
+		if(event.which !== 1) return;
+		
 		var start = jQuery.extend({},this.gridHover[0].dataset);
 		if(start.date)
 		{
@@ -1993,6 +1995,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		for(var id in this.gridHover[0].dataset) {
 			delete this.gridHover[0].dataset[id];
 		}
+		if(this.options.granularity == 0)
+		{
+			this.gridHover.css('height','');
+		}
 		while(node && node != this.node && node.tagName != 'BODY' && path.length < 10)
 		{
 			path.push(node);
@@ -2006,7 +2012,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					position: 'absolute',
 					top: '',
 					bottom: '0px',
-					height: $node.css('padding-bottom')
+					// Use 100% height if we're hiding the day labels to avoid
+					// any remaining space from the hidden labels
+					height: $node.height() > parseInt($node.css('line-height')) ?
+						$node.css('padding-bottom') : '100%'
 				});
 				day = node;
 				this.gridHover
