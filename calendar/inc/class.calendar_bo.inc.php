@@ -255,6 +255,11 @@ class calendar_bo
 				'type' => '',
 				'app' => 'api-accounts',
 			);
+			$this->resources['l'] = array(
+				'type' => 'l',// one char type-identifier for this resources
+				'info' => __CLASS__ .'::mailing_lists',// info method, returns array with id, type & name for a given id
+				'app' => 'Distribution list'
+			);
 			Api\Cache::setSession('calendar', 'resources', $this->resources);
 		}
 		//error_log(__METHOD__ . " registered resources=". array2string($this->resources));
@@ -445,6 +450,19 @@ class calendar_bo
 		foreach($_users as $user)
 		{
 			$user = trim($user);
+			
+			// Handle email lists
+			if(!is_numeric($user) && $user[0] == 'l')
+			{
+				foreach($this->enum_mailing_list($user, $ignore_acl, $use_freebusy) as $contact)
+				{
+					if ($contact && !in_array($contact,$users))	// already added?
+					{
+						$users[] = $contact;
+					}
+				}
+				continue;
+			}
 			if ($ignore_acl || $this->check_perms(ACL::READ|self::ACL_READ_FOR_PARTICIPANTS|($use_freebusy?self::ACL_FREEBUSY:0),0,$user))
 			{
 				if ($user && !in_array($user,$users))	// already added?

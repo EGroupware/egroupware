@@ -157,7 +157,10 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				$account_options = $options + array('account_type' => 'both');
 				$_results += Api\Accounts::link_query($query, $account_options);
-				if (!empty($_REQUEST['checkgrants'])) $_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
+				if (!empty($_REQUEST['checkgrants']))
+				{
+					$_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
+				}
 			}
 			else if ($data['app'] && $data['search'])
 			{
@@ -167,7 +170,28 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				$_results = Link::query($data['app'], $query,$options);
 			}
-			if(!$_results) continue;
+			if ($type == 'l')
+			{
+				// Include mailing lists
+				$contacts_obj = new Api\Contacts();
+				$lists = array_filter(
+					$contacts_obj->get_lists(Api\Acl::READ),
+					function($element) use($query) {
+						return (stripos($element, $query) !== false);
+					}
+				);
+				foreach($lists as $list_id => $list)
+				{
+					$_results[$list_id] = array(
+						'label' => $list,
+						'resources' => $bo->enum_mailing_list($type.$list_id)
+					);
+				}
+			}
+			if(!$_results)
+			{
+				continue;
+			}
 
 			foreach(array_unique($_results) as $id => $title)
 			{
