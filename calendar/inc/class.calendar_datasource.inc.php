@@ -92,10 +92,7 @@ class calendar_datasource extends datasource
 
 			if (!is_array($this->pm_config))
 			{
-				$c =& CreateObject('phpgwapi.config','projectmanager');
-				$c->read_repository();
-				$this->pm_config = $c->config_data;
-				unset($c);
+				$this->pm_config = Api\Config::read('projectmanager');
 				if (!$this->pm_config['hours_per_workday']) $this->pm_config['hours_per_workday'] = 8;
 			}
 			$ds['pe_planned_time'] -= $nights * 60 * (24 - $this->pm_config['hours_per_workday']);
