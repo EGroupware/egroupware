@@ -600,7 +600,7 @@ class calendar_uiforms extends calendar_ui
 			unset($event['modified']);
 			unset($event['modifier']);
 			unset($event['caldav_name']);
-			$event['owner'] = !(int)$this->owner || !$this->bo->check_perms(Acl::ADD,0,$this->owner) ? $this->user : $this->owner;
+			$event['owner'] = !(int)$event['owner'] || !$this->bo->check_perms(Acl::ADD,0,$evnet['owner']) ? $this->user : $event['owner'];
 
 			// Clear participant stati
 			foreach($event['participant_types'] as $type => &$participants)
