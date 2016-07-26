@@ -3968,11 +3968,11 @@ jQuery.extend(app.classes.calendar,{
 		listview: app.classes.calendar.prototype.View.extend({
 			header: function(state)
 			{
-				var startDate = new Date(state.first);
+				var startDate = new Date(state.first || state.date);
 				startDate = new Date(startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000);
 				var start_check = ''+startDate.getFullYear() + startDate.getMonth() + startDate.getDate();
 
-				var endDate = new Date(state.last);
+				var endDate = new Date(state.last || state.date);
 				endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
 				var end_check = ''+endDate.getFullYear() + endDate.getMonth() + endDate.getDate();
 				return app.calendar.View._owner(state) +
