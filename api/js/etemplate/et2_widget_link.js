@@ -682,7 +682,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 			// Normal stuff
 			li.append(jQuery( "<a></a>" ).text( item.label ))
 				.appendTo(ul);
-			window.setTimeout(function(){ul.toggleClass('ui-menu-rtl',(ul.offset().left + ul.width() > window.outerWidth))}, 300);
+			window.setTimeout(function(){ul.css('max-width', jQuery('.et2_container').width()-ul.offset().left)}, 300);
 			return li;
 		};
 
