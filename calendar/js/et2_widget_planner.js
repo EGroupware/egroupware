@@ -389,7 +389,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 								{
 									labels.push({
 										id: id,
-										label: this._get_owner_name(id),
+										label: this._get_owner_name(id)||'',
 										data: {participants:id,owner:id}
 									});
 									already_added.push(''+id);
