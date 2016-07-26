@@ -31,7 +31,7 @@ class Http implements Backend
 	 */
 	function authenticate($username, $passwd, $passwd_type='text')
 	{
-		unset($username, $passwd, $passwd_type);	// not used, but required by interface
+		unset($passwd, $passwd_type);	// not used, but required by interface
 
 		return isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER'] === $username;
 	}
