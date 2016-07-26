@@ -219,7 +219,7 @@ class Ldap implements Backend
 	}
 
 	/**
-	 * changes account_lastpwd_change in ldap datababse
+	 * changes account_lastpwd_change in ldap database
 	 *
 	 * @param int $account_id account id of user whose passwd should be changed
 	 * @param string $passwd must be cleartext, usually not used, but may be used to authenticate as user to do the change -> ldap
@@ -255,7 +255,7 @@ class Ldap implements Backend
 
 		if(!$admin && $passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
 		{
-			$ds = Api\Ldap::factory('', $dn, $passwd);
+			$ds = Api\Ldap::factory(true, '', $dn, $passwd);
 		}
 		if (!@ldap_modify($ds, $dn, $entry))
 		{
@@ -309,7 +309,7 @@ class Ldap implements Backend
 		if($old_passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
 		{
 			try {
-				$ds = Api\Ldap\factory('',$dn,$old_passwd);
+				$ds = Api\Ldap::factory(true, '', $dn, $old_passwd);
 			}
 			catch (Api\Exception\NoPermission $e) {
 				unset($e);
