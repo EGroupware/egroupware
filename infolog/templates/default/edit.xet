@@ -185,12 +185,12 @@
 						<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="widget.getInstanceManager().submit(null,false,true); return false;" />
 					</menulist>
 					<description/>
-					<description value="Contact"/>
-					<link-entry id="info_contact"/>
+					<description value="Startdate" for="info_startdate"/>
+					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" class="et2_fullWidth"/>
 				</row>
 				<row class="dialogHeader3">
-                	<description value="Startdate" for="info_startdate"/>
-					<date-time statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)" id="info_startdate" class="et2_fullWidth"/>
+					<description value="Contact"/>
+					<link-entry id="info_contact"/>
 					<description/>
 					<description value="Enddate" for="info_enddate"/>
 					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="4"/>
