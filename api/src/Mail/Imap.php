@@ -1085,7 +1085,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 	{
 		if (is_numeric($_username))
 		{
-			$_username = $GLOBALS['egw']->accounts->id2name($_username);
+			$_username = $GLOBALS['egw']->accounts->id2name($accountID=$_username);
 		}
 		else
 		{
@@ -1094,16 +1094,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 		switch ($this->loginType)
 		{
 			case 'email':
-				$accountemail = $GLOBALS['egw']->accounts->id2name($accountID,'account_email');
-				//$accountemail = $GLOBALS['egw']->accounts->read($GLOBALS['egw']->accounts->name2id($_username,'account_email'));
-				if (!empty($accountemail))
-				{
-					list($lusername,$domain) = explode('@',$accountemail,2);
-					if (strtolower($domain) == strtolower($this->domainName) && !empty($lusername))
-					{
-						$_username = $lusername;
-					}
-				}
+				$_username = $GLOBALS['egw']->accounts->id2name($accountID,'account_email');
 				break;
 
 			case 'vmailmgr':
@@ -1113,6 +1104,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 			case 'uidNumber':
 				$_username = 'u'.$accountID;
 				break;
+
 			default:
 				if (empty($this->loginType))
 				{
@@ -1139,11 +1131,6 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 		{
 			case 'email':
 				$account_id = $GLOBALS['egw']->accounts->name2id($_username, 'account_email');
-				if (!$account_id)
-				{
-					list($uid) = explode('@', $_username);
-					$account_id = $GLOBALS['egw']->accounts->name2id($uid, 'account_lid');
-				}
 				break;
 
 			case 'uidNumber':
