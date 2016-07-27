@@ -7581,6 +7581,21 @@ form[id^="tracker-"] .dialogHeadbar {
     -webkit-filter: none!important;
     background-color: white !important;
   }
+  body .et2_nextmatch .nm-mob-header div.nm_select_counter {
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    border-left: 1px solid silver;
+    border: 0;
+    color: white;
+    width: 50px;
+    height: 50px;
+    display: block;
+    float: right;
+    text-align: center;
+    font-size: 20pt;
+    line-height: 40pt;
+  }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
     background-position: center;
     background-repeat: no-repeat;
