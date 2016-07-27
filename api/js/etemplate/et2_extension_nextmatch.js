@@ -2455,6 +2455,9 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 					.text(egw.lang(egw.app_name()))
 					.appendTo(this.search_box);
 
+			this.select_counter = jQuery(document.createElement('div'))
+					.addClass('nm_select_counter')
+					.prependTo(this.search_box);
 			// toggle header
 			// add new button
 			this.fav_span = jQuery(document.createElement('div'))

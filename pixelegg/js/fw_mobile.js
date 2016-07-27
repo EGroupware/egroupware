@@ -996,6 +996,19 @@
 		{
 			// Update action_header status (3dots)
 			_widget.header.action_header.toggle(typeof _widget.getSelection().ids != 'undefined' && _widget.getSelection().ids.length > 0);
+
+			// Update selection counter in nm header
+			if (_widget._type == 'nextmatch' && _widget.getSelection().ids.length > 0)
+			{
+
+				_widget.header.select_counter
+						.show()
+						.text(_widget.getSelection().ids.length);
+			}
+			else
+			{
+				_widget.header.select_counter.hide();
+			}
 		}
 	});
 
