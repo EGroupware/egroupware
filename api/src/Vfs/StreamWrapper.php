@@ -1220,7 +1220,7 @@ class StreamWrapper implements StreamWrapperIface
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns '.array2string(self::$fstab));
 			return self::$fstab;
 		}
-		if (!self::$is_root)
+		if (!Vfs::$is_root)
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') permission denied, you are NOT root!');
 			return false;	// only root can mount
@@ -1269,7 +1269,7 @@ class StreamWrapper implements StreamWrapperIface
 	 */
 	static function umount($path)
 	{
-		if (!self::$is_root)
+		if (!Vfs::$is_root)
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($path).','.array2string($path).') permission denied, you are NOT root!');
 			return false;	// only root can mount
