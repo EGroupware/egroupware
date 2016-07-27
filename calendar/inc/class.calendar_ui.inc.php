@@ -753,7 +753,17 @@ class calendar_ui
 		// set id for grid
 		$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.Api\DateTime::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts') : '');
 
-		$event['parts'] = implode(",\n",$this->bo->participants($event,false));
+		// Set up participant section of tooltip
+		$participants = $this->bo->participants($event,false);
+		$event['parts'] = implode("\n",$participants);
+		$event['participant_types'] = array();
+		foreach($participants as $uid => $text)
+		{
+			$user_type = $user_id = null;
+			calendar_so::split_user($uid, $user_type, $user_id);
+			$type_name = lang($this->bo->resources[$user_type]['app']);
+			$event['participant_types'][$type_name ? $type_name : ''][] = $text;
+		}
 		$event['date'] = $this->bo->date2string($event['start']);
 
 		// Change dates
