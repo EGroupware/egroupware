@@ -493,6 +493,15 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			}
 			cat.destroy();
 		}
+		var participants = '';
+		for(var type_name in this.options.value.participant_types)
+		{
+			if(type_name)
+			{
+				participants += '</p><p><span class="calendar_calEventLabel">'+type_name+'</span>:<br />';
+			}
+			participants += this.options.value.participant_types[type_name].join("<br />");
+		}
 
 		return '<div class="calendar_calEventTooltip ' + this._status_class() +' '+ this.options.class +
 			'" style="border-color: '+border+'; background-color: '+bg_color+';">'+
@@ -508,7 +517,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' + this.options.value.location+'</p>' : '')+
 				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label +'</p>' : '')+
 				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
-					(this.options.value.parts ? this.options.value.parts.replace("\n","<br />"):'')+'</p>'+
+					participants + '</p>'+
 			'</div>'+
 		'</div>';
 	},
