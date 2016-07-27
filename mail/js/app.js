@@ -967,15 +967,17 @@ app.classes.mail = AppJS.extend(
 				{build_children: false, data: 'attachmentsBlock', widget:'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
 			];
 
-			dataElem = this.url_email_expandOnClick(expand_content,dataElem);
+			// Undock the preview before running expandOnClick, because we
+			// need to have the DOM ready for calculation.
+			this.mail_disablePreviewArea(false);
 
+			dataElem = this.url_email_expandOnClick(expand_content,dataElem);
 
 			// Update the internal list of selected mails, if needed
 			if(this.mail_selectedMails.indexOf(_id) < 0)
 			{
 				this.mail_selectedMails.push(_id);
 			}
-			this.mail_disablePreviewArea(false);
 
 			// Request email body from server
 			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
