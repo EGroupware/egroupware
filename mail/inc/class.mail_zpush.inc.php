@@ -67,6 +67,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 	static $profileID;
 
+	// to control how deep one may dive into the past
+	const PAST_LIMIT = 178;
+
 	/**
 	 * debugLevel - enables more debug
 	 *
@@ -172,6 +175,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			'default' => 'sendifnocalnotif',
 			'admin'  => False,
 		);
+		$settings['mail-maximumSyncRange'] = array(
+			'type'   => 'input',
+			'label'  => lang('How many days to sync in the past when client does not specify a date-range (default %1)', self::PAST_LIMIT),
+			'name'   => 'mail-maximumSyncRange',
+			'help'   => 'if the client sets no sync range, you may override the setting (preventing client crash that may be caused by too many mails/too much data). If you want to sync way-back into the past: set a large number',
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+
 /*
 		$sigOptions = array(
 				'send'=>'yes, always add EGroupware signatures to outgoing mails',
@@ -1373,8 +1385,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		else
 		{
-			$cutoffdate = Api\DateTime::to('now','ts')-(3600*24*28*3);
-			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' Client set no truncationdate. Using 12 weeks.'.date("d-M-Y", $cutoffdate));
+			$maximumSyncRangeInDays = self::PAST_LIMIT; // corresponds to our default value
+			if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-maximumSyncRange']))
+			{
+				$maximumSyncRangeInDays = $GLOBALS['egw_info']['user']['preferences']['activesync']['mail-maximumSyncRange'];
+			}
+			$cutoffdate = (is_numeric($maximumSyncRangeInDays) ? Api\DateTime::to('now','ts')-(3600*24*$maximumSyncRangeInDays):null);
+			if (is_numeric($maximumSyncRangeInDays)) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' Client set no truncationdate. Using '.$maximumSyncRangeInDays.' days.'.date("d-M-Y", $cutoffdate));
 		}
 		return $this->fetchMessages($folderid, $cutoffdate);
 	}
