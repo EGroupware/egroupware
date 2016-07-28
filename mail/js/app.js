@@ -251,7 +251,7 @@ app.classes.mail = AppJS.extend(
 					{
 						textAreaWidget.ckeditor.on('instanceReady', function(){
 							that.compose_fieldExpander();
-							if (egwIsMobile()) jQuery(jQuery('iframe.cke_wysiwyg_frame')[0].contentWindow.document.body).css({margin:'0'})
+							if (egwIsMobile()) jQuery(jQuery('iframe.cke_wysiwyg_frame')[0].contentWindow.document.body).css({margin:'0'});
 						});
 					}
 					else
@@ -731,7 +731,7 @@ app.classes.mail = AppJS.extend(
 	 *					{build_children, data_one, data, widget, line}
 	 *
 	 * @param {object} _dataElem includes data of the widget which need to be expand
-	 * @param {object} widget container of relevant template, default is this.et2
+	 * @param {object} _et2 widget container of relevant template, default is this.et2
 	 *
 	 * @return _dataElem content of widgets
 	 */
@@ -1559,6 +1559,7 @@ app.classes.mail = AppJS.extend(
 	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
 	 *
 	 * @param {boolean} _isPopup
+	 * @param {boolean} _refreshVacationNotice
 	 */
 	mail_refreshMessageGrid: function(_isPopup, _refreshVacationNotice) {
 		if (typeof _isPopup == 'undefined') _isPopup = false;
