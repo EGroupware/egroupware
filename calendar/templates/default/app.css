@@ -46,7 +46,11 @@
 		overflow: visible !important;
 	}
 
-	div.calendar_calEvent {opacity:1;}
+	div.calendar_calEvent {
+		opacity:1;
+		filter:opacity(0.85);
+		-webkit-filter:opacity(0.85);
+	}
 }
 
 /**
@@ -643,6 +647,7 @@ Hide subsequent headers in week view with non-consolidated owners
 	transition: none !important;
 
 	opacity: 0.85;
+	-moz-opacity: 0.85;
 
 /* set via inline style on runtime:
  *  top: depending on startime
