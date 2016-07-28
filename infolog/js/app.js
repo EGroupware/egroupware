@@ -60,7 +60,7 @@ app.classes.infolog = AppJS.extend(
 				var filter2 = nm.getWidgetById('filter2');
 				this.show_details(filter2.value == 'all',nm.getDOMNode(nm));
 				// Remove the rule added by show_details() if the template is removed
-				jQuery(_et2.DOMContainer).on('clear', function() {egw.css('#infolog-index_nm .et2_box.infoDes');});
+				jQuery(_et2.DOMContainer).on('clear', jQuery.proxy(function() {egw.css(this);}, '#' + nm.getDOMNode(nm).id + ' .et2_box.infoDes'));
 
 				// Enable decrypt on hover
 				if(this.egw.user('apps').stylite)
@@ -258,7 +258,10 @@ app.classes.infolog = AppJS.extend(
 			var colData = nm.columns.slice();
 			for(var i = 0; i < nm.columns.length; i++) colData[i].visible=false;
 
-			nm.set_columns(egw.preference(nm.options.settings.columnselection_pref,'infolog').split(','));
+			if(egw.preference(nm.options.settings.columnselection_pref,'infolog'))
+			{
+				nm.set_columns(egw.preference(nm.options.settings.columnselection_pref,'infolog').split(','));
+			}
 			nm._applyUserPreferences(nm.columns, colData);
 
 			// Now apply them to columns
