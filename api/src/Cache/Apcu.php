@@ -143,11 +143,20 @@ class Apcu extends Base implements Provider
 	/**
 	 * Delete all data under given keys
 	 *
-	 * @param array $keys eg. array($level,$app,$location)
-	 * @return boolean true on success, false on error (eg. $key not set)
+	 * If no keys are given whole APCu cache is cleared, which should allways
+	 * work and can not run out of memory as the iterator sometimes does.
+	 *
+	 * @param array $keys eg. array($level,$app,$location) or array() to clear whole cache
+	 * @return boolean true on success, false on error (eg. on iterator available)
 	 */
 	function flush(array $keys)
 	{
+		if (!$keys && function_exists('apcu_clear_cache'))
+		{
+			apcu_clear_cache();
+
+			return true;
+		}
 		// APCu > 5 has APCUIterator
 		if (class_exists('APCUIterator'))
 		{
@@ -160,7 +169,7 @@ class Apcu extends Base implements Provider
 		}
 		else
 		{
-			if (function_exists('apcu_clear_cache')) apcu_clear_cache ();
+			if (function_exists('apcu_clear_cache')) apcu_clear_cache();
 
 			return false;
 		}

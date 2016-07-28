@@ -1142,5 +1142,21 @@ app.classes.admin = AppJS.extend(
 		{
 			this.egw.open_link(_action.data.url, _action.data.target || '_blank', _action.data.popup);
 		}
+	},
+
+	/**
+	 * Clear instance cache
+	 *
+	 * If there is an error on server-side, resend request with an parameter allowing
+	 * cache to use different method not requiring eg. so much memory
+	 */
+	clear_cache: function()
+	{
+		this.egw.message(this.egw.lang('Clear cache and register hooks')+"\n"+this.egw.lang('Please wait...'),'info');
+
+		this.egw.json('admin.admin_hooks.ajax_clear_cache').sendRequest(true, undefined, jQuery.proxy(function(_xmlhttp, _err)
+		{
+			this.egw.json('admin.admin_hooks.ajax_clear_cache&errored=1').sendRequest(true);
+		}, this));
 	}
 });

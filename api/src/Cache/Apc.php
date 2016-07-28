@@ -144,15 +144,18 @@ class Apc extends Base implements Provider
 	/**
 	 * Delete all data under given keys
 	 *
+	 * If no keys are given whole APC cache is cleared, which should allways
+	 * work and can not run out of memory as the iterator sometimes does.
+	 *
 	 * @param array $keys eg. array($level,$app,$location)
-	 * @return boolean true on success, false on error (eg. $key not set)
+	 * @return boolean true on success, false on error (eg. on iterator available)
 	 */
 	function flush(array $keys)
 	{
 		// APC >= 3.1.1, but also seems to be missing if apc is disabled eg. for cli
-		if (!class_exists('APCIterator'))
+		if (!class_exists('APCIterator') || !$keys)
 		{
-			if (function_exists('apc_clear_cache')) apc_clear_cache ('user');
+			if (function_exists('apc_clear_cache')) apc_clear_cache('user');
 
 			return false;
 		}
