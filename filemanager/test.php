@@ -42,8 +42,8 @@ if (isset($path) && !empty($path))
 	}
 	echo "</h2>\n";
 
-	echo "<p><b>egw_vfs::propfind('$path')</b>=".array2string(Vfs::propfind($path))."</p>\n";
-	echo "<p><b>egw_vfs::resolve_url('$path')</b>=".array2string(Vfs::resolve_url($path))."</p>\n";
+	echo "<p><b>Vfs::propfind('$path')</b>=".array2string(Vfs::propfind($path))."</p>\n";
+	echo "<p><b>Vfs::resolve_url('$path')</b>=".array2string(Vfs::resolve_url($path))."</p>\n";
 
 	$is_dir = Vfs::is_dir($path);
 	echo "<p><b>is_dir('$path')</b>=".array2string($is_dir)."</p>\n";
@@ -82,8 +82,8 @@ if (isset($path) && !empty($path))
 		echo "<p>".array2string($stat)."</p>\n";
 	}
 
-	echo "<p><b>egw_vfs::is_readable('$path')</b>=".array2string(Vfs::is_readable($path))."</p>\n";
-	echo "<p><b>egw_vfs::is_writable('$path')</b>=".array2string(Vfs::is_writable($path))."</p>\n";
+	echo "<p><b>Vfs::is_readable('$path')</b>=".array2string(Vfs::is_readable($path))."</p>\n";
+	echo "<p><b>Vfs::is_writable('$path')</b>=".array2string(Vfs::is_writable($path))."</p>\n";
 
 	echo "<p><b>is_link('$path')</b>=".array2string(Vfs::is_link($path))."</p>\n";
 	echo "<p><b>readlink('$path')</b>=".array2string(Vfs::readlink($path))."</p>\n";
@@ -101,7 +101,7 @@ if (isset($path) && !empty($path))
 	}
 	if (!$is_dir && $stat)
 	{
-		echo "<p><b>egw_vfs::mime_content_type('$path')</b>=".array2string(Vfs::mime_content_type($path))."</p>\n";
+		echo "<p><b>Vfs::mime_content_type('$path')</b>=".array2string(Vfs::mime_content_type($path))."</p>\n";
 		echo "<p><b>filesize(Vfs::PREFIX.'$path')</b>=".array2string(filesize(Vfs::PREFIX.$path))."</p>\n";
 		echo "<p><b>bytes(file_get_contents(Vfs::PREFIX.'$path'))</b>=".array2string(bytes(file_get_contents(Vfs::PREFIX.$path)))."</p>\n";
 	}
