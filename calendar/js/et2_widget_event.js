@@ -655,7 +655,18 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				{"ampm": (egw.preference("timeformat") === "12")}
 			).trim();
 
-			timespan += ' ' + duration;
+			timespan += ' - ' + jQuery.datepicker.formatTime(
+				egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
+				{
+					hour: event.end_m / 60,
+					minute: event.end_m % 60,
+					seconds: 0,
+					timezone: 0
+				},
+				{"ampm": (egw.preference("timeformat") === "12")}
+			).trim();
+
+			timespan += ': ' + duration;
 		}
 		return timespan;
 	},
