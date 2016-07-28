@@ -1066,11 +1066,12 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$path = Vfs::parse_url($url,PHP_URL_PATH);
 
 		if (!($stat = $this->url_stat($url,0)) || 		// dir not found
-			$stat['mime'] != self::DIR_MIME_TYPE ||		// no dir
+			!($stat['mode'] & self::MODE_DIR) && $stat['mime'] != self::DIR_MIME_TYPE ||		// no dir
 			!Vfs::check_access($url,Vfs::EXECUTABLE|Vfs::READABLE,$stat))	// no access
 		{
 			self::_remove_password($url);
-			$msg = $stat['mime'] != self::DIR_MIME_TYPE ? "$url is no directory" : 'permission denied';
+			$msg = !($stat['mode'] & self::MODE_DIR) && $stat['mime'] != self::DIR_MIME_TYPE ?
+				"$url is no directory" : 'permission denied';
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$options) $msg!");
 			$this->opened_dir = null;
 			return false;
