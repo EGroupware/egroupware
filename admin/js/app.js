@@ -308,7 +308,7 @@ app.classes.admin = AppJS.extend(
 		if(!_data || _data.type != undefined) return;
 
 		// Insert the content, etemplate will load into it
-		jQuery(this.ajax_target.node).append(_data[0]);
+		jQuery(this.ajax_target.node).append(typeof _data === 'string' ? _data : _data[0]);
 	},
 
 	/**
