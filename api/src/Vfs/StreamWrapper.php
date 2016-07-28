@@ -358,7 +358,7 @@ class StreamWrapper implements StreamWrapperIface
 		// causing eg. notifications to be ignored, because of previous size 0, when using WebDAV
 		clearstatcache(false);
 
-		if (isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		if (!class_exists('setup_process', false))
 		{
 			Api\Hooks::process(array(
 				'location' => str_replace('b','',$this->opened_stream_mode) == 'r' ? 'vfs_read' :
@@ -554,7 +554,7 @@ class StreamWrapper implements StreamWrapperIface
 		$ok = unlink($url);
 
 		// call "vfs_unlink" hook only after successful unlink, with data from (not longer possible) stat call
-		if ($ok && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		if ($ok && !class_exists('setup_process', false))
 		{
 			Api\Hooks::process(array(
 				'location' => 'vfs_unlink',
@@ -607,7 +607,7 @@ class StreamWrapper implements StreamWrapperIface
 			error_log(__METHOD__."('$path_from','$path_to') url_from='$url_from', url_to='$url_to' returning ".array2string($ret));
 		}
 		// call "vfs_rename" hook
-		if ($ret && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		if ($ret && !class_exists('setup_process', false))
 		{
 			Api\Hooks::process(array(
 				'location' => 'vfs_rename',
@@ -640,7 +640,7 @@ class StreamWrapper implements StreamWrapperIface
 		$ret = mkdir($url,$mode,$options);
 
 		// call "vfs_mkdir" hook
-		if ($ret && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		if ($ret && !class_exists('setup_process', false))
 		{
 			Api\Hooks::process(array(
 				'location' => 'vfs_mkdir',
@@ -678,7 +678,7 @@ class StreamWrapper implements StreamWrapperIface
 		$ok = rmdir($url);
 
 		// call "vfs_rmdir" hook, only after successful rmdir
-		if ($ok && isset($GLOBALS['egw']) && isset($GLOBALS['egw']->hooks))
+		if ($ok && !class_exists('setup_process', false))
 		{
 			Api\Hooks::process(array(
 				'location' => 'vfs_rmdir',
