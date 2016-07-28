@@ -1100,7 +1100,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			}
 		}
 		// Day label
-		else if(this.title.is(_ev.target) || this.title.has(_ev.target))
+		else if(this.title.is(_ev.target) || this.title.has(_ev.target).length)
 		{
 			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
 			return false;
