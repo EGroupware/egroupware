@@ -617,7 +617,7 @@ class Cache
 	 * Flush (delete) whole (instance) cache or application/class specific part of it
 	 *
 	 * @param string $level =self::INSTANCE
-	 * @param string $app =null
+	 * @param string $app =null app-name or "all" to empty complete cache
 	 */
 	static public function flush($level=self::INSTANCE, $app=null)
 	{
@@ -628,7 +628,7 @@ class Cache
 		}
 		else
 		{
-			if (!$provider->flush(self::keys($level, $app)))
+			if (!$provider->flush($app !== "all" ? self::keys($level, $app) : array()))
 			{
 				if ($level == self::INSTANCE)
 				{

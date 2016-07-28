@@ -114,8 +114,7 @@ class admin_hooks
 				$file['Clear cache and register hooks'] = array(
 					'id' => 'admin/clear_cache',
 					'no_lang' => true,
-					'link' => "javascript:egw.message('".lang('Clear cache and register hooks') . "<br />" .lang('Please wait...')."','info'); " .
-						"egw.json('admin.admin_hooks.ajax_clear_cache').sendRequest(true);"
+					'link' => "javascript:app.admin.clear_cache();",
 				 );
 			}
 
@@ -164,7 +163,7 @@ class admin_hooks
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
-		Api\Cache::flush(Api\Cache::INSTANCE);
+		Api\Cache::flush(Api\Cache::INSTANCE, !empty($_GET['errored']) ? "all" : null);
 
 		Api\Image::invalidate();
 

@@ -97,10 +97,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * Sends the assembled request to the server
 	 * @param {boolean} [async=false] Overrides async provided in constructor to give an easy way to make simple async requests
 	 * @param {string} method ='POST' allow to eg. use a (cachable) 'GET' request instead of POST
+	 * @param {function} error option error callback(_xmlhttp, _err) used instead our default this.error
 	 *
 	 * @return {jqXHR} jQuery jqXHR request object
 	 */
-	json_request.prototype.sendRequest = function(async,method) {
+	json_request.prototype.sendRequest = function(async, method, error)
+	{
 		if(typeof async != "undefined")
 		{
 			this.async = async;
@@ -126,21 +128,29 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			dataType: 'json',
 			type: method || 'POST',
 			success: this.handleResponse,
-			error: function(_xmlhttp, _err) {
-				// Don't error about an abort
-				if(_err !== 'abort')
-				{
-					this.egw.message.call(this.egw, this.egw.lang('A request to the EGroupware server returned with an error')+': '+_xmlhttp.statusText+' ('+_xmlhttp.status+
-						")\n\n"+this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).')+"\n"+
-						this.egw.lang('If the error persists, contact your administrator for help and ask to check the error-log of the webserver.')+
-						"\n\nURL: "+this.url+"\n"+(_xmlhttp.getAllResponseHeaders() ? _xmlhttp.getAllResponseHeaders().match(/^Date:.*$/m)[0]:''));
-
-					this.egw.debug('error', 'Ajax request to', this.url, ' failed: ', _err, _xmlhttp.status, _xmlhttp.statusText);
-				}
-			}
+			error: error || this.handleError
 		});
 
 		return this.request;
+	};
+
+	/**
+	 * Default error callback displaying error via egw.message
+	 *
+	 * @param {XMLHTTP} _xmlhttp
+	 * @param {string} _err
+	 */
+	json_request.prototype.handleError = function(_xmlhttp, _err) {
+		// Don't error about an abort
+		if(_err !== 'abort')
+		{
+			this.egw.message.call(this.egw, this.egw.lang('A request to the EGroupware server returned with an error')+': '+_xmlhttp.statusText+' ('+_xmlhttp.status+
+				")\n\n"+this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).')+"\n"+
+				this.egw.lang('If the error persists, contact your administrator for help and ask to check the error-log of the webserver.')+
+				"\n\nURL: "+this.url+"\n"+(_xmlhttp.getAllResponseHeaders() ? _xmlhttp.getAllResponseHeaders().match(/^Date:.*$/m)[0]:''));
+
+			this.egw.debug('error', 'Ajax request to', this.url, ' failed: ', _err, _xmlhttp.status, _xmlhttp.statusText);
+		}
 	};
 
 	json_request.prototype.handleResponse = function(data) {
