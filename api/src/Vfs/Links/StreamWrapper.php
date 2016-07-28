@@ -249,8 +249,9 @@ class StreamWrapper extends LinksParent
 			$current_is_root = Vfs::$is_root; Vfs::$is_root = true;
 			$current_user = Vfs::$user; Vfs::$user = 0;
 
-			$ret = parent::mkdir($path,0,$options|STREAM_MKDIR_RECURSIVE);
-			if ($id) parent::chmod($path,0);	// no other rights
+			$sqlfs = new parent();
+			$ret = $sqlfs->mkdir($path,0,$options|STREAM_MKDIR_RECURSIVE);
+			if ($id) $sqlfs->chmod($path,0);	// no other rights
 
 			Vfs::$user = $current_user;
 			Vfs::$is_root = $current_is_root;
