@@ -91,6 +91,10 @@ class Vfs
 	 */
 	const EXECUTABLE = 1;
 	/**
+	 * mode-bits, which have to be set for links
+	 */
+	const MODE_LINK = Vfs\StreamWrapper::MODE_LINK;
+	/**
 	 * Name of the lock table
 	 */
 	const LOCK_TABLE = 'egw_locks';
