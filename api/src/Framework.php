@@ -104,7 +104,9 @@ abstract class Framework extends Framework\Extra
 		if (file_exists(EGW_SERVER_ROOT.'/pixelegg') &&
 			(empty($GLOBALS['egw_info']['flags']['deny_mobile']) && Header\UserAgent::mobile() ||
 			$GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile' ||
-			empty($GLOBALS['egw_info']['server']['template_set'])))
+			empty($GLOBALS['egw_info']['server']['template_set'])) ||
+			// change old idots and jerryr to our standard template (pixelegg)
+			in_array($GLOBALS['egw_info']['server']['template_set'], array('idots', 'jerryr')))
 		{
 			$GLOBALS['egw_info']['server']['template_set'] = 'pixelegg';
 		}
@@ -113,29 +115,8 @@ abstract class Framework extends Framework\Extra
 		{
 			$GLOBALS['egw_info']['server']['template_set'] = 'jdots';
 		}
-		// and last, if installed old phpgwapi idots etc.
-		if (file_exists(EGW_SERVER_ROOT.'/phpgwapi'))
-		{
-			// default to idots, if no template_set set, to eg. not stall installations if settings use self::link
-			if (empty($GLOBALS['egw_info']['server']['template_set'])) $GLOBALS['egw_info']['server']['template_set'] = 'idots';
-			// setup the new eGW framework (template sets)
-			$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
-			if (!class_exists($class) &&	// first try to autoload the class
-				file_exists($file=EGW_INCLUDE_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.$class.'.inc.php'))
-			{
-				require_once($file);
-				if (!in_array($file,(array)$_SESSION['egw_required_files']))
-				{
-					$_SESSION['egw_required_files'][] = $file;	// automatic load the used framework class, when the object get's restored
-				}
-			}
-		}
-		else
-		{
-			$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
-		}
 		// eg. "default" is only used for login at the moment
-		if (!class_exists($class))
+		if (!class_exists($class=$GLOBALS['egw_info']['server']['template_set'].'_framework'))
 		{
 			$class = __CLASS__.'\\Minimal';
 		}
@@ -1026,31 +1007,7 @@ abstract class Framework extends Framework\Extra
 	 */
 	static function list_templates($full_data=false)
 	{
-		$list = array('pixelegg'=>null,'jdots'=>null,'idots'=>null);
-		// templates packaged in old phpgwapi
-		if (file_exists(EGW_SERVER_ROOT . '/phpgwapi') && ($d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates')))
-		{
-			while (($entry=$d->read()))
-			{
-				if ($entry != '..' && file_exists(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry .'/class.'.$entry.'_framework.inc.php'))
-				{
-					if (file_exists ($f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/setup/setup.inc.php'))
-					{
-						include($f);
-						$list[$entry] = $full_data ? $GLOBALS['egw_info']['template'][$entry] :
-							$GLOBALS['egw_info']['template'][$entry]['title'];
-					}
-					else
-					{
-						$list[$entry] = $full_data ? array(
-							'name'  => $entry,
-							'title' => $entry,
-						) : $entry;
-					}
-				}
-			}
-			$d->close();
-		}
+		$list = array('pixelegg'=>null);
 		// templates packaged like apps in own directories (containing as setup/setup.inc.php file!)
 		$dr = dir(EGW_SERVER_ROOT);
 		while (($entry=$dr->read()))
