@@ -176,7 +176,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			'admin'  => False,
 		);
 		$settings['mail-maximumSyncRange'] = array(
-			'type'   => 'input',
+			'type'   => 'integer',
 			'label'  => lang('How many days to sync in the past when client does not specify a date-range (default %1)', self::PAST_LIMIT),
 			'name'   => 'mail-maximumSyncRange',
 			'help'   => 'if the client sets no sync range, you may override the setting (preventing client crash that may be caused by too many mails/too much data). If you want to sync way-back into the past: set a large number',
