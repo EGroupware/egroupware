@@ -306,6 +306,13 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False
 			),
+			'birthdays_as_events' => array(
+				'type'   => 'checkbox',
+				'label'  => 'Show birthdays as events',
+				'name'   => 'birthdays_as_events',
+				'help'   => 'Show birthdays as all day non-blocking events instead of via mouseover of the date.',
+				'default'=> FALSE
+			),
 			'limit_all_day_lines' => array(
 				'type'   => 'input',
 				'size'   => 5,

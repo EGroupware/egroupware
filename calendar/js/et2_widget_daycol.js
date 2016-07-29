@@ -418,8 +418,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			{
 				if (typeof holidays[i]['birthyear'] !== 'undefined')
 				{
-					// Show holidays as events on mobile
-					if(egwIsMobile())
+					// Show holidays as events on mobile or by preference
+					if(egwIsMobile() || egw.preference('birthdays_as_events','calendar'))
 					{
 						// Create event
 						this._parent.date_helper.set_value(this.options.date.substring(0,4)+'-'+
@@ -472,7 +472,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 								owner: this.options.owner,
 								participants: this.options.owner,
 								app: 'calendar',
-								class: 'calendar_calBirthday'
+								class: 'calendar_calHoliday'
 							},
 							readonly: true,
 							class: 'calendar_calHoliday'
@@ -554,8 +554,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		}
 
 
-		// Show holidays as events on mobile
-		if(egwIsMobile())
+		// Show holidays as events on mobile or by preference
+		if(egwIsMobile() || egw.preference('birthdays_as_events','calendar'))
 		{
 			this.day_class_holiday();
 		}
