@@ -435,7 +435,6 @@ class preferences_settings
 				'type' => $setting['type'],
 				'label' => preg_replace('|<br[ /]*>|i', "\n", $setting['label']),
 				'help' => lang($setting['help']),	// is html
-				//'size' => $setting['size'],	// old eT
 				'default' => !empty($default) ? lang('Default').': '.$default : null,
 				'onchange' => $setting['onchange'],
 			);

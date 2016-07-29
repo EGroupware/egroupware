@@ -1638,7 +1638,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			'admin'  => False,
 		);
 		$settings['calendar-past-limit'] = array(
-			'type'   => 'input',
+			'type'   => 'integer',
 			'label'  => lang('How many days to sync in the past (default %1)', self::PAST_LIMIT),
 			'name'   => 'calendar-past-limit',
 			'help'   => 'Clients not explicitly stating a limit get limited to these many days. A too high limit may cause problems with some clients.',
@@ -1646,7 +1646,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			'admin'  => False,
 		);
 		$settings['calendar-future-limit'] = array(
-			'type'   => 'input',
+			'type'   => 'integer',
 			'label'  => lang('How many days to sync in the future (default %1)', self::FUTURE_LIMIT),
 			'name'   => 'calendar-future-limit',
 			'help'   => 'Clients not explicitly stating a limit get limited to these many days. A too high limit may cause problems with some clients.',
