@@ -367,7 +367,7 @@ class Session
 	/**
 	 * Decrypt the variables in the session
 	 *
-	 * Is called by self::init_handler from phpgwapi/inc/functions.inc.php (called from the header.inc.php)
+	 * Is called by self::init_handler from api/src/loader.php (called from the header.inc.php)
 	 * before the restore of the eGW enviroment takes place, so that the whole thing can be encrypted
 	 */
 	static function decrypt()
@@ -815,7 +815,7 @@ class Session
 		{
 			// we generate a pseudo-sessionid from the basic auth credentials
 			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.
-				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php').
+				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/api/setup/setup.inc.php').
 				// for ActiveSync we add the DeviceID
 				(isset($_GET['DeviceId']) && $_SERVER['SCRIPT_NAME'] === '/Microsoft-Server-ActiveSync' ? ':'.$_GET['DeviceId'] : '').
 				':'.$_SERVER['HTTP_USER_AGENT']);
@@ -829,7 +829,7 @@ class Session
 			// can't use full $_SERVER['PHP_AUTH_DIGEST'], as it changes (contains eg. the url)
 			$data = Header\Authenticate::parse_digest($_SERVER['PHP_AUTH_DIGEST']);
 			$sessionid = md5($data['username'].':'.$data['realm'].':'.$data['nonce'].':'.$_SERVER['HTTP_HOST'].
-				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php').
+				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/api/setup/setup.inc.php').
 				':'.$_SERVER['HTTP_USER_AGENT']);
 		}
 		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
