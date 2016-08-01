@@ -914,6 +914,8 @@ class calendar_uiviews extends calendar_ui
 		$actions['add']['onExecute'] =  'javaScript:app.calendar.action_open';
 		$actions['copy']['open'] = '{"app": "calendar", "type": "add", "extra": "cal_id=$id&action=copy"}';
 		$actions['copy']['onExecute'] = 'javaScript:app.calendar.action_open';
+		$actions['print']['open'] = '{"app": "calendar", "type": "add", "extra": "cal_id=$id&print=1"}';
+		$actions['print']['onExecute'] = 'javaScript:app.calendar.action_open';
 
 		foreach($actions['status']['children'] as $id => &$status)
 		{
