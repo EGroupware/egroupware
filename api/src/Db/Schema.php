@@ -371,12 +371,15 @@ class Schema
 		{
 			if (!($table_def = $this->GetTableDefinition($sOldTableName))) return 0;
 
-			if ($this->_PostgresHasOldSequence($sOldTableName,True) || count($table_def['pk']) ||
-				count($table_def['ix']) || count($table_def['uc']))
+			// only use old PostgreSQL stuff, if we have an old sequence, otherwise rely on it being new enough
+			if ($this->_PostgresHasOldSequence($sOldTableName,True) &&
+				(count($table_def['pk']) || count($table_def['ix']) || count($table_def['uc'])))
 			{
 				if ($this->adodb->BeginTrans() &&
 					$this->CreateTable($sNewTableName,$table_def,True) &&
 					$this->m_odb->query("INSERT INTO $sNewTableName SELECT * FROM $sOldTableName",__LINE__,__FILE__) &&
+					// sequence must be updated, after inserts containing pkey, otherwise new inserst will fail!
+					(count($table_def['pk']) !== 1 || $this->UpdateSequence($sNewTableName, $table_def['pk'][0])) &&
 					$this->DropTable($sOldTableName))
 				{
 					$this->adodb->CommitTrans();
