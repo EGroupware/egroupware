@@ -1576,6 +1576,28 @@ class Db
 	}
 
 	/**
+	 * Data used by (get|set)_table_defintion and get_column_attribute
+	 *
+	 * @var array
+	 */
+	protected static $all_app_data = array();
+
+	/**
+	 * Set/changes definition of one table
+	 *
+	 * If you set or change defition of a single table of an app, other tables
+	 * are not loaded from $app/setup/tables_current.inc.php!
+	 *
+	 * @param string $app name of the app $table belongs too
+	 * @param string $table table name
+	 * @param array $definition table definition
+	 */
+	public static function set_table_definitions($app, $table, array $definition)
+	{
+		self::$all_app_data[$app][$table] = $definition;
+	}
+
+	/**
 	* reads the table-definitions from the app's setup/tables_current.inc.php file
 	*
 	* The already read table-definitions are shared between all db-instances via a static var.
@@ -1592,10 +1614,9 @@ class Db
 		// ease the transition to api
 		if ($app === 'phpgwapi') $app = 'api';
 
-		static $all_app_data = array();
 		if ($app === true && $table)
 		{
-			foreach($all_app_data as $app => &$app_data)
+			foreach(self::$all_app_data as $app => &$app_data)
 			{
 				if (isset($app_data[$table]))
 				{
@@ -1605,25 +1626,25 @@ class Db
 			// $table not found in loaded apps, check not yet loaded ones
 			foreach(scandir(EGW_INCLUDE_ROOT) as $app)
 			{
-				if ($app[0] == '.' || !is_dir(EGW_INCLUDE_ROOT.'/'.$app) || isset($all_app_data[$app]))
+				if ($app[0] == '.' || !is_dir(EGW_INCLUDE_ROOT.'/'.$app) || isset(self::$all_app_data[$app]))
 				{
 					continue;
 				}
 				$tables_current = EGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
 				if (!@file_exists($tables_current))
 				{
-					$all_app_data[$app] = False;
+					self::$all_app_data[$app] = False;
 				}
 				else
 				{
 					$phpgw_baseline = null;
 					include($tables_current);
-					$all_app_data[$app] =& $phpgw_baseline;
+					self::$all_app_data[$app] =& $phpgw_baseline;
 					unset($phpgw_baseline);
 
-					if (isset($all_app_data[$app][$table]))
+					if (isset(self::$all_app_data[$app][$table]))
 					{
-						return $all_app_data[$app][$table];
+						return self::$all_app_data[$app][$table];
 					}
 				}
 			}
@@ -1633,7 +1654,7 @@ class Db
 		{
 			$app = $this->app ? $this->app : $GLOBALS['egw_info']['flags']['currentapp'];
 		}
-		$app_data =& $all_app_data[$app];
+		$app_data =& self::$all_app_data[$app];
 
 		if (!isset($app_data))
 		{
