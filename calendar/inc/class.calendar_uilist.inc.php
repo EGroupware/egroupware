@@ -890,6 +890,14 @@ class calendar_uilist extends calendar_ui
 				'popup' => Link::get_registry('calendar', 'view_popup'),
 				'allowOnMultiple' => false,
 			),
+			'print' => array(
+				'caption' => 'Print',
+				'group' => $group,
+				'disableClass' => 'rowNoView',
+				'url' => 'menuaction=calendar.calendar_uiforms.edit&cal_id=$id&print=1',
+				'popup' => Link::get_registry('calendar', 'view_popup'),
+				'allowOnMultiple' => false,
+			),
 			'select_all' => array(
 				'caption' => 'Whole query',
 				'checkbox' => true,
