@@ -273,6 +273,7 @@ class calendar_uilist extends calendar_ui
 			if ($old_params['search'] != $params['search'])
 			{
 				$this->adjust_for_search($params['search'],$params);
+				$this->filter = $params['filter'];
 			}
 		}
 		if (!$params['csv_export']) Api\Cache::setSession('calendar', 'calendar_list', $params);
