@@ -1201,7 +1201,7 @@ class StreamWrapper implements StreamWrapperIface
 
 		if (!isset($GLOBALS['egw_info']['server']['vfs_fstab']))	// happens eg. in setup
 		{
-			$api_config = Config::read('phpgwapi');
+			$api_config = Api\Config::read('phpgwapi');
 			if (isset($api_config['vfs_fstab']) && is_array($api_config['vfs_fstab']))
 			{
 				self::$fstab = $api_config['vfs_fstab'];
@@ -1250,7 +1250,7 @@ class StreamWrapper implements StreamWrapperIface
 
 		if ($persitent_mount)
 		{
-			Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
+			Api\Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 			$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
 			// invalidate session cache
 			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
@@ -1281,7 +1281,7 @@ class StreamWrapper implements StreamWrapperIface
 		}
 		unset(self::$fstab[$path]);
 
-		Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
+		Api\Config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
 		// invalidate session cache
 		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
