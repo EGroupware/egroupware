@@ -161,7 +161,6 @@ foreach(array(
 foreach(array(
 	'sessions_checkip' => 'True',
 	'asyncservice'     => 'fallback',
-	'install_id'       => md5(microtime(true).Api\Auth::randomstring(15)),
 ) as $name => $value)
 {
 	$oProc->insert($GLOBALS['egw_setup']->config_table,array(
