@@ -151,6 +151,11 @@ class Apcu extends Base implements Provider
 	 */
 	function flush(array $keys)
 	{
+		// do NOT try instanciating APCuIterator, if APCu is not enabled, as it gives a PHP Fatal Error
+		if (!ini_get('apc.enabled') || php_sapi_name() === 'cli' && !ini_get('apc.cli_enabled'))
+		{
+			return false;
+		}
 		if (!$keys && function_exists('apcu_clear_cache'))
 		{
 			apcu_clear_cache();
