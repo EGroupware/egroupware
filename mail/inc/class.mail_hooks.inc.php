@@ -388,77 +388,60 @@ class mail_hooks
 	{
 		unset($hook_data);	// not used, but required by function signature
 
+		//error_log(__METHOD__);
 		// always show the side bar
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 		$appname = 'mail';
+		$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'];
 
-		// Mail sidebox menus
-		$menus = array(
-			array(
-				'title' => $GLOBALS['egw_info']['apps'][$appname]['title'],
-				'enable' => true,
-				'items' => array(
-					array(
-						'no_lang' => true,
-						'text'=>'<span id="mail-index_buttonmailcreate" class="button" />',
-						'link'=>false,
-						'icon' => false
-					),
-					array(
-						'no_lang' => true,
-						'text'=>'<span id="mail-tree_target" class="dtree" />',
-						'link'=>false,
-						'icon' => false
-					)
-				)
-			),
-			array (
-				'title' => lang('Mail Menu'),
-				'enable' => true,
-				'items' => array (
-					'menuOpened'  => false,
-					array (
-						'text' => 'import message',
-						'link' => "javascript:egw_openWindowCentered2('".
-								Egw::link('/index.php', array('menuaction' => 'mail.mail_ui.importMessage') ,false).
-								"','importMessageDialog',600,100,'no','$appname');"
-					),
-					array (
-						'enable' => self::access('createaccount'),
-						'text'=>'create new account',
-						'link'=> "javascript:egw_openWindowCentered2('" .
-								Egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
-								"','_blank',640,480,'yes')",
-					),
-				)
-			),
-			array (
-				'title' => lang('Admin'),
-				'enable' => $GLOBALS['egw_info']['user']['apps']['admin'] && !Api\Header\UserAgent::mobile(),
-				'items' => array (
-					'Site Configuration' => Egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
-				)
-			)
+		$file=array();
+		// Destination div for folder tree
+		$file[] = array(
+			'no_lang' => true,
+			'text'=>'<span id="mail-index_buttonmailcreate" class="button" />',
+			'link'=>false,
+			'icon' => false
+		);
+		$file[] = array(
+			'no_lang' => true,
+			'text'=>'<span id="mail-tree_target" class="dtree" />',
+			'link'=>false,
+			'icon' => false
+		);
+		// display Mail Tree
+		display_sidebox($appname,$menu_title,$file);
+
+		$linkData = array(
+			'menuaction' => 'mail.mail_ui.importMessage',
 		);
 
-		// Menu generator
-		foreach ($menus as &$menu)
+		$file = array(
+			'import message' => "javascript:egw_openWindowCentered2('".Egw::link('/index.php', $linkData,false)."','importMessageDialog',600,100,'no','$appname');",
+		);
+
+		// create account wizard
+		if (self::access('createaccount'))
 		{
-			foreach ($menu['items'] as &$item)
-			{
-				if (!is_array($item)) continue;
-				if (array_key_exists('enable', $item) && !$item['enable']) {
-					unset($item);
-				}
-			}
-			if (!(array_key_exists('enable', $menu) && !$menu['enable']))
-			{
-				display_sidebox($appname,$menu['title'],$menu['items']);
-			}
+			$file += array(
+				'create new account' => "javascript:egw_openWindowCentered2('" .
+					Egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
+					"','_blank',640,480,'yes')",
+			);
+		}
+		// display Mail Menu
+		display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
+
+		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !Api\Header\UserAgent::mobile())
+		{
+			$file = Array(
+				'Site Configuration' => Egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
+			);
+			display_sidebox($appname,lang('Admin'),$file);
 		}
 
 		// add pgp encryption menu at the end
 		Api\Hooks::pgp_encryption_menu('mail');
+
 	}
 
 	/**
