@@ -446,6 +446,7 @@ class mail_hooks
 		{
 			foreach ($menu['items'] as &$item)
 			{
+				if (!is_array($item)) continue;
 				if (array_key_exists('enable', $item) && !$item['enable']) {
 					unset($item);
 				}
