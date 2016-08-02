@@ -2198,13 +2198,13 @@ class Vfs
 	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories.
 	 *
 	 * @param string $path
-	 * @param int $mode
-	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE
+	 * @param int $mode =0750
+	 * @param boolean $recursive =false true: create missing parents too
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir ($path, $mode=0750, $options=0)
+	static function mkdir ($path, $mode=0750, $recursive=false)
 	{
-		return $path[0] == '/' && mkdir(self::PREFIX.$path, $mode, $options);
+		return $path[0] == '/' && mkdir(self::PREFIX.$path, $mode, $recursive);
 	}
 
 	/**
@@ -2217,9 +2217,9 @@ class Vfs
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
 	 */
-	static function rmdir ( $path, $options=0 )
+	static function rmdir($path)
 	{
-		return $path[0] == '/' && rmdir(self::PREFIX.$path, $options);
+		return $path[0] == '/' && rmdir(self::PREFIX.$path);
 	}
 
 	/**
@@ -2359,7 +2359,7 @@ class Vfs
 	 */
 	static function chgrp($path,$group)
 	{
-		return $path[0] == '/' && chown(self::PREFIX.$path, $group);
+		return $path[0] == '/' && chgrp(self::PREFIX.$path, $group);
 	}
 
 	/**
