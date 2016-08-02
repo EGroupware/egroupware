@@ -278,6 +278,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	observer: function(_msg, _app, _id, _type, _msg_type, _links)
 	{
 		var do_refresh = false;
+		if(this.state.view === 'listview')
+		{
+			app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm').refresh(_id,_type);
+		}
 		switch(_app)
 		{
 			case 'infolog':
