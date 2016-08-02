@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="mail.index.spliter" height="100%" template="" lang="" group="0" version="1.9.001">
+	<template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
 		<split dock_side="bottomDock" id="mailSplitter" orientation="h">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right"/>
 			<vbox id="mailPreview" width="100%">
@@ -69,7 +69,7 @@
 			</vbox>
 		</split>
 	</template>
-	<template id="mail.index.nospliter" template="" lang="" group="0" version="1.9.001">
+	<template id="mail.index.nosplitter" template="" lang="" group="0" version="1.9.001">
 		<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right"/>
 	</template>
 	<template id="mail.index.rows" template="" lang="" group="0" version="1.9.001">
@@ -130,7 +130,7 @@
 	</template>
 	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
 		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder" parent_node="mail-tree_target" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd" highlighting="true"/>
-		<template id="mail.index.spliter" height="100%" template="mail.index.spliter"/>
+		<template id="splitter" height="100%" template="mail.index.splitter"/>
 		<iframe frameborder="1" id="extra_iframe" scrolling="auto" disabled="true"/>
 	</template>
 </overlay>
