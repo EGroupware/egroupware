@@ -235,13 +235,12 @@ class Sql
 			}
 		}
 		// store group-email in mailaccounts table
-		if ($data['account_id'] < 0 && class_exists('Api\Mail\Smtp\Sql', isset($data['account_email'])))
+		if ($data['account_id'] < 0 && class_exists('EGroupware\\Api\\Mail\\Smtp\\Sql', isset($data['account_email'])))
 		{
 			try {
-				if (isset($GLOBALS['egw_info']['apps']) && !isset($GLOBALS['egw_info']['apps']['emailadmin']) ||
-					isset($GLOBALS['egw_setup']) && !in_array(Api\Mail\Smtp\Sql::TABLE, $this->db->table_names(true)))
+				if (isset($GLOBALS['egw_setup']) && !in_array(Api\Mail\Smtp\Sql::TABLE, $this->db->table_names(true)))
 				{
-					// cant store email, if emailadmin not (yet) installed
+					// cant store email, if table not yet exists
 				}
 				elseif (empty($data['account_email']))
 				{
