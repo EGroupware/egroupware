@@ -142,7 +142,9 @@ if( $definition->get_identifier() < 1 ) {
 
 $GLOBALS['egw_info']['flags']['currentapp'] = $definition->application;
 
-$definition->plugin_options['dry_run'] = $dryrun;
+$plugin_options = $definition->plugin_options;
+$plugin_options['dry_run'] = $dryrun;
+$definition->plugin_options = $plugin_options;
 $type = $definition->type;
 
 $po = new $definition->plugin;
