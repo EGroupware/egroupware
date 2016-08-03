@@ -132,9 +132,11 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 			return;
 		}
 		// switch off notifications by default
+		$plugin_options = $_definition->plugin_options;
 		if (!isset($_definition->plugin_options['no_notification']))
 		{
-			$_definition->plugin_options['no_notification'] = true;
+			$plugin_options['no_notification'] = true;
+			$_definition->plugin_options = $plugin_options;
 		}
 		// User wants conflicting events to not be imported
 		if($_definition->plugin_options['skip_conflicts'])

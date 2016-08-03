@@ -144,8 +144,10 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 		}
 
 		// set Owner
-		$_definition->plugin_options['record_owner'] = isset( $_definition->plugin_options['record_owner'] ) ?
+		$plugin_options = $_definition->plugin_options;
+		$plugin_options['record_owner'] = isset( $_definition->plugin_options['record_owner'] ) ?
 			$_definition->plugin_options['record_owner'] : $this->user;
+		$_definition->plugin_options = $plugin_options;
 
 		// Used to try to automatically match names to account IDs
 		$addressbook = new Api\Contacts\Storage();
