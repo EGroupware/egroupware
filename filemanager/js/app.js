@@ -1070,6 +1070,38 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * Initiate odf collab editor popup & load given file_path as active session
+	 */
+	_init_odf_collab_editor: function ()
+	{
+
+		var widgetFilePath = this.et2.getWidgetById('file_path'),
+			file_path = widgetFilePath.value,
+			base64 = new core.Base64();
+
+
+		var serverOptions = {
+			"serverParams": {
+					url:egw.webserverUrl+'/api/js/webodf/poll.php?action=poll',
+					genesisUrl:egw.webserverUrl+file_path
+				},
+			"sessionId": base64.toBase64(egw.webserverUrl+file_path),
+			editorOptions: {
+				allFeaturesEnabled: true,
+				userData: {
+					fullName: egw.user('account_fullName'),
+					color: 'blue'
+				}
+			}
+		};
+		var editor = this.et2.getWidgetById('odfEditor');
+		if (editor)
+		{
+			this.create_collab_editor(serverOptions);
+		}
+	},
+
+	/**
 	 * Method to close an opened document
 	 *
 	 * @param {object} _egwAction egw action object
@@ -1285,6 +1317,97 @@ app.classes.filemanager = AppJS.extend(
 			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 
 		return data.data.mime.match(mime.mime_odf_regex)?true:false;
+	},
+
+	/**
+	 * Function to create collab editor
+	 *
+	 * @param {type} _args parameteres to be set for server factory and texteditor
+	 */
+	create_collab_editor: function (_args)
+	{
+
+		var serverFactory,
+			server,
+			serverParams = _args.serverParams,
+			sessionId = _args.sessionId,
+			editorOptions = jQuery.extend(_args.editorOptions,{networkSecurityToken:'', closeCallback:this.editor_close}),
+			userId = egw.user('account_lid'),
+			memberId,
+			self = this;
+
+		/**
+		 * Editor error handler function
+		 * @param {type} e
+		 */
+		function handleEditingError (e)
+		{
+			console.log(e)
+		};
+
+		function onEditing ()
+		{
+
+		};
+
+		/**
+		 * Callback function which gets called after the collab editor is created
+		 *
+		 * @param {string} _err
+		 * @param {object} _editor webodf collabtexteditor object
+		 *
+		 * @return {undefined} return undefined if something goes wrong
+		 */
+		function onEditorCreated (_err, _editor)
+		{
+			if (_err)
+			{
+				console.log('Something went wrong whilst loading editor.'+ _err);
+				return;
+			}
+			self.editor = _editor;
+			self.editor.addEventListener(Wodo.EVENT_UNKNOWNERROR, handleEditingError);
+			self.editor.joinSession(serverFactory.createSessionBackend(sessionId, memberId, server), onEditing);
+
+		};
+
+		/**
+		 * Function to join a doc session
+		 *
+		 * @param {type} _sessionId session id of the opened document
+		 */
+		function joinSession(_sessionId)
+		{
+			var sid = _sessionId;
+			server.joinSession(userId, sid, function (_memberId) {
+				memberId = _memberId;
+				if (self.editor) {
+					Wodo.createCollabTextEditor('filemanager-editor_odfEditor', editorOptions, onEditorCreated);
+				} else {
+					self.editor.joinSession(serverFactory.createSessionBackend(sid, _memberId, server), onEditing);
+				}
+			}, function(err) {
+				console.log(err);
+			});
+		};
+
+		require(["webodf/editor/backend/pullbox/ServerFactory"], function (ServerFactory) {
+			serverFactory = new ServerFactory();
+			server = serverFactory.createServer(serverParams);
+			server.connect(8000, function (state) {
+				switch (state)
+				{
+					case "ready":
+						joinSession(sessionId);
+						break;
+					case "timeout":
+						console.log('did not connect to server because of timeout.')
+						break;
+					default:
+						console.log('server is not available.')
+				}
+			});
+		});
 	}
 
 });

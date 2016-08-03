@@ -1485,6 +1485,10 @@ class filemanager_ui
 	{
 		$tmpl = new Etemplate('filemanager.editor');
 		$file_path = $_GET['path'];
+		// Include css files used by wodocollabeditor
+		Api\Framework::includeCSS('/api/js/webodf/collab/app/resources/app.css');
+		Api\Framework::includeCSS('/api/js/webodf/collab/wodocollabpane.css');
+		Api\Framework::includeCSS('/api/js/webodf/collab/wodotexteditor.css');
 
 		$tmpl->setElementAttribute('tools', 'actions', self::getActions_edit());
 		$preserve = $content = array('file_path' => $file_path);
