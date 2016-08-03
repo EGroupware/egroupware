@@ -3489,6 +3489,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				{
 					this.state.keywords = nm.activeFilters.search;
 				}
+				// Bind to keep search up to date
+				jQuery(nm.getWidgetById('search').getDOMNode()).on('change', function() {
+					app.calendar.state.search = jQuery('input',this).val();
+				});
 				nm.set_startdate = jQuery.proxy(function(date) {
 					this.state.first = this.date.toString(new Date(date));
 				},this);
