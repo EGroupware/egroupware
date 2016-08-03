@@ -142,30 +142,32 @@ class Vfs
 	 *
 	 * @param string $path filename with absolute path in the eGW VFS
 	 * @param string $mode 'r', 'w', ... like fopen
+	 * @param resource $context =null context to pass to stream-wrapper
 	 * @return resource
 	 */
-	static function fopen($path,$mode)
+	static function fopen($path, $mode, $context=null)
 	{
 		if ($path[0] != '/')
 		{
 			throw new Exception\AssertionFailed("Filename '$path' is not an absolute path!");
 		}
-		return fopen(self::PREFIX.$path,$mode);
+		return $context ? fopen(self::PREFIX.$path, $mode, false, $context) : fopen(self::PREFIX.$path, $mode);
 	}
 
 	/**
 	 * opendir working on just the eGW VFS: returns resource for readdir() etc.
 	 *
 	 * @param string $path filename with absolute path in the eGW VFS
+	 * @param resource $context =null context to pass to stream-wrapper
 	 * @return resource
 	 */
-	static function opendir($path)
+	static function opendir($path, $context=null)
 	{
 		if ($path[0] != '/')
 		{
 			throw new Exception\AssertionFailed("Directory '$path' is not an absolute path!");
 		}
-		return opendir(self::PREFIX.$path);
+		return $context ? opendir(self::PREFIX.$path, $context) : opendir(self::PREFIX.$path);
 	}
 
 	/**
@@ -2096,13 +2098,16 @@ class Vfs
 			if (!self::stat($target))
 			{
 				self::touch($target);	// create empty file, to be able to attach properties
-				self::$treat_as_new = true;	// notify as new
+				// tell vfs stream-wrapper to treat file in following copy as a new file notification-wises
+				$context = stream_context_create(array(
+					self::SCHEME => array('treat_as_new' => true)
+				));
 			}
 			self::proppatch($target, $props);
 		}
 		if (is_resource($tmp_name))
 		{
-			$ret = ($dest = self::fopen($target, 'w')) &&
+			$ret = ($dest = self::fopen($target, 'w', $context)) &&
 				stream_copy_to_stream($tmp_name, $dest) !== false &&
 				fclose($dest) ? self::stat($target) : false;
 
@@ -2110,7 +2115,9 @@ class Vfs
 		}
 		else
 		{
-			$ret = copy($tmp_name,self::PREFIX.$target) ? self::stat($target) : false;
+			$ret = ($context ? copy($tmp_name, self::PREFIX.$target, $context) :
+				copy($tmp_name, self::PREFIX.$target)) ?
+				self::stat($target) : false;
 		}
 		if (self::LOG_LEVEL > 1 || !$ret && self::LOG_LEVEL) error_log(__METHOD__."($tmp_name, $target, ".array2string($props).") returning ".array2string($ret));
 		return $ret;
