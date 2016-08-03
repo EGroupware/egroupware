@@ -476,7 +476,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 
 		var times = !this.options.value.multiday ?
 			'<span class="calendar_calEventLabel">'+this.egw().lang('Time')+'</span>:' + timespan :
-			'<span class="calendar_calEventLabel">'+this.egw().lang('Start') + '</span>:' +start+
+			'<span class="calendar_calEventLabel">'+this.egw().lang('Start') + '</span>:' +start+ ' ' +
 			'<span class="calendar_calEventLabel">'+this.egw().lang('End') + '</span>:' + end;
 		var cat_label = '';
 		if(this.options.value.category)
