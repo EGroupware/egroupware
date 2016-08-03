@@ -900,7 +900,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			{
 				return false;
 			}
-			if (is_null($time))
+			if (!$time)
 			{
 				return true;	// new (empty) file created with current mod time
 			}

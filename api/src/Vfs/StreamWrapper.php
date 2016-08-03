@@ -292,13 +292,6 @@ class StreamWrapper implements StreamWrapperIface
 	}
 
 	/**
-	 * Can be used from egw_vfs to tell vfs notifications to treat an opened file as a new file
-	 *
-	 * @var boolean
-	 */
-	static protected $treat_as_new;
-
-	/**
 	 * This method is called immediately after your stream object is created.
 	 *
 	 * @param string $path URL that was passed to fopen() and that this object is expected to retrieve
@@ -335,11 +328,12 @@ class StreamWrapper implements StreamWrapperIface
 		$this->opened_stream_is_new = !$stat;
 
 		// are we requested to treat the opened file as new file (only for files opened NOT for reading)
-		if ($mode[0] != 'r' && !$this->opened_stream_is_new && self::$treat_as_new)
+		if ($mode[0] != 'r' && !$this->opened_stream_is_new && $this->context &&
+			($opts = stream_context_get_params($this->context)) &&
+			$opts['options'][self::SCHEME]['treat_as_new'])
 		{
 			$this->opened_stream_is_new = true;
-			//error_log(__METHOD__."($path,$mode,...) stat=$stat, treat_as_new=".self::$treat_as_new." --> ".array2string($this->opened_stream_is_new));
-			self::$treat_as_new = null;
+			//error_log(__METHOD__."($path,$mode,...) stat=$stat, context=".array2string($opts)." --> ".array2string($this->opened_stream_is_new));
 		}
 		return true;
 	}
@@ -494,7 +488,7 @@ class StreamWrapper implements StreamWrapperIface
 	 */
 	function stream_metadata($path, $option, $value)
 	{
-		if (!($url = $this->resolve_url_symlinks($path, $option == STREAM_META_TOUCH, false)))	// true,false file need to exist, but do not resolve last component
+		if (!($url = $this->resolve_url_symlinks($path, $option != STREAM_META_TOUCH, false)))	// true,false file need to exist, but do not resolve last component
 		{
 			return false;
 		}
