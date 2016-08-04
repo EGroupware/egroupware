@@ -1650,7 +1650,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		array_pop($parent);
 		$parent = implode($delimiter,$parent);
 
-		$id = $parent ? $this->createID($account, $parent) : '0';
+		$id = $parent && $this->folders[$parent] ? $this->createID($account, $parent) : '0';
 		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$folder') --> parent=$parent --> $id");
 		return $id;
 	}
