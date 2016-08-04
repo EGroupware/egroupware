@@ -310,7 +310,7 @@ class calendar_hooks
 				'type'   => 'checkbox',
 				'label'  => 'Show birthdays as events',
 				'name'   => 'birthdays_as_events',
-				'help'   => 'Show birthdays as all day non-blocking events instead of via mouseover of the date.',
+				'help'   => 'Show birthdays as all day non-blocking events as well as via mouseover of the date.',
 				'default'=> FALSE
 			),
 			'limit_all_day_lines' => array(

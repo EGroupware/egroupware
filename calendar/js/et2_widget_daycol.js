@@ -444,7 +444,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 						event.doLoadingFinished();
 						event._update();
 					}
-					else
+					if (!egwIsMobile())
 					{
 						//If the birthdays are already displayed as event, don't
 						//show them in the caption
