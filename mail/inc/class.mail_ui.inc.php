@@ -2977,6 +2977,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
 			}
 			//error_log(__METHOD__.__LINE__.'reports:'.$singleBodyPart['charSet']);
+			if ($singleBodyPart['charSet']=='us-ascii')
+			{
+				$orgCharSet=$singleBodyPart['charSet'];
+				$singleBodyPart['charSet'] = Api\Translation::detect_encoding($singleBodyPart['body']);
+				error_log(__METHOD__.__LINE__.'reports:'.$orgCharSet.' but seems to be:'.$singleBodyPart['charSet']);
+			}
 			$singleBodyPart['body'] = Api\Translation::convert_jsonsafe($singleBodyPart['body'],$singleBodyPart['charSet']);
 			//error_log(__METHOD__.__LINE__.array2string($singleBodyPart));
 			if($singleBodyPart['mimeType'] == 'text/plain')
