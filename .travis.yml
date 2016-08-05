@@ -57,7 +57,8 @@ before_script:
        ;;
     esac
   #- php -m
-  - rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+  #- rm -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+  - phpenv config-rm xdebug.ini
   #- composer update --prefer-source $LOWEST_DEPS
   - curl https://svn.stylite.de/fix_mrconfig 2>/dev/null | php
   - mr --trust-all --stats up
@@ -72,7 +73,7 @@ script:
   # install egroupware (PostgreSQL need some specific handling as it is not the default and we can not create users via sql)
   - case $DB in
     postgres)
-      php doc/rpm-build/post_install.php --db_type postgres --db_port 5432 --db_user postgres --db_pass '' --db_root postgres --db_root_pw ''
+      php doc/rpm-build/post_install.php --db_type pgsql --db_port 5432 --db_user postgres --db_pass '' --db_root postgres --db_root_pw ''
         --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
       ;;
     *)
