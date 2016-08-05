@@ -11,15 +11,15 @@ matrix:
   allow_failures:
     - php: hhvm
 
-#env:
-  #matrix:
-    #- LOWEST_DEPS=""
-    #- LOWEST_DEPS="--prefer-lowest"
+# test installation and run all tests with these databases
+env:
+  -DB=mysql
+  -DB=postgres
 
 services:
   - memcached
-#  - mysql
-#  - postgres
+#  - mysql we use mariadb instead installed via addons below
+  - postgres
 
 addons:
   mariadb: '10.0'
@@ -67,8 +67,9 @@ before_script:
   - sudo chown travis /var/lib/egroupware
 
 script:
-  # install egroupware
-  - php doc/rpm-build/post_install.php
+  # install egroupware (PostgreSQL need some specific handling as it is not the default and we can not create users via sql)
+  - test "$DB" = "postgres" && DB_SPECIFIC="--db_type postgres --db_port 5432 --db_user postgres --db_pass '' --db_root postgres --db_root_pw ''" || true
+  - php doc/rpm-build/post_install.php $DB_SPECIFIC
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   #- mysql -uroot -e 'show tables' egroupware
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
