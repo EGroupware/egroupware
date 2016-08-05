@@ -144,16 +144,6 @@ define("webodf/editor/backend/pullbox/Server", [], function () {
          * @return {undefined}
          */
         this.login = function (login, password, successCb, failCb) {
-			successCb ({
-				'full_name' :'Hadi Nategh',
-				'uid' : 'sysop',
-				'securityToken' : '10000',
-				'token' : '10000',
-				'sessiondata_list' : [],
-				'success' : true,
-				'member_id' : 'sysop'
-			});
-			return;
 			call({
                 command: "login",
                 args: {
@@ -183,8 +173,6 @@ define("webodf/editor/backend/pullbox/Server", [], function () {
          * @return {undefined}
          */
         this.joinSession = function (userId, sessionId, successCb, failCb) {
-			successCb('sysop');
-			return;
             call({
                 command: "join_session",
                 args: {

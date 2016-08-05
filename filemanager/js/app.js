@@ -1381,7 +1381,7 @@ app.classes.filemanager = AppJS.extend(
 			var sid = _sessionId;
 			server.joinSession(userId, sid, function (_memberId) {
 				memberId = _memberId;
-				if (self.editor) {
+				if (Object.keys(self.editor).length == 0) {
 					Wodo.createCollabTextEditor('filemanager-editor_odfEditor', editorOptions, onEditorCreated);
 				} else {
 					self.editor.joinSession(serverFactory.createSessionBackend(sid, _memberId, server), onEditing);
@@ -1391,7 +1391,7 @@ app.classes.filemanager = AppJS.extend(
 			});
 		};
 
-		require(["webodf/editor/backend/pullbox/ServerFactory"], function (ServerFactory) {
+		require(["egwCollab/ServerFactory"], function (ServerFactory) {
 			serverFactory = new ServerFactory();
 			server = serverFactory.createServer(serverParams);
 			server.connect(8000, function (state) {
