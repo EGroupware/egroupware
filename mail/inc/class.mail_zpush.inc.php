@@ -390,10 +390,38 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$activeMailProfile = Mail::getStandardIdentityForProfile($activeMailProfiles,self::$profileID);
 
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.")".' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
+		// collect identity / signature for later usage, and to determine if we may have to manipulate TransferEncoding and Charset
+		try
+		{
+			$acc = Mail\Account::read($this->mail->icServer->ImapServerId);
+			//error_log(__METHOD__.__LINE__.array2string($acc));
+			$_signature = Mail\Account::read_identity($acc['ident_id'],true);
+		}
+		catch (Exception $e)
+		{
+			$_signature=array();
+		}
+		$signature = $_signature['ident_signature'];
+		if ((isset($preferencesArray['disableRulerForSignatureSeparation']) &&
+			$preferencesArray['disableRulerForSignatureSeparation']) ||
+			empty($signature) || trim(Api\Mail\Html::convertHTMLToText($signature)) =='')
+		{
+			$disableRuler = true;
+		}
+		$beforePlain = $beforeHtml = "";
+		$beforeHtml = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
+		$beforePlain = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
+		$sigText = Mail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Signature to use:'.$sigText);
+		$sigTextHtml = $beforeHtml.$sigText;
+		$sigTextPlain = $beforePlain.Api\Mail\Html::convertHTMLToText($sigText);
 
+		$force8bit=false;
+		if (Api\Translation::detect_encoding($sigTextPlain)!='ascii') $force8bit=true;
 		// initialize the new Api\Mailer object for sending
 		$mailObject = new Api\Mailer(self::$profileID);
-		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime);
+
+		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime,$force8bit);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->setFrom($activeMailProfile['ident_email'],Mail::generateIdentityString($activeMailProfile,false));
@@ -544,32 +572,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$body = str_replace("\r",((preg_match("^text/html^i", $ContentType))?'<br>':""),$body); // what is this for?
 		if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' retrieved Body (modified):'.$body);
 */
-		// add signature!! -----------------------------------------------------------------
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ActiveMailProfile:'.array2string($activeMailProfile));
-		try
-		{
-			$acc = Mail\Account::read($this->mail->icServer->ImapServerId);
-			//error_log(__METHOD__.__LINE__.array2string($acc));
-			$_signature = Mail\Account::read_identity($acc['ident_id'],true);
-		}
-		catch (Exception $e)
-		{
-			$_signature=array();
-		}
-		$signature = $_signature['ident_signature'];
-		if ((isset($preferencesArray['disableRulerForSignatureSeparation']) &&
-			$preferencesArray['disableRulerForSignatureSeparation']) ||
-			empty($signature) || trim(Api\Mail\Html::convertHTMLToText($signature)) =='')
-		{
-			$disableRuler = true;
-		}
-		$beforePlain = $beforeHtml = "";
-		$beforeHtml = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
-		$beforePlain = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
-		$sigText = Mail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
-		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Signature to use:'.$sigText);
-		$sigTextHtml = $beforeHtml.$sigText;
-		$sigTextPlain = $beforePlain.Api\Mail\Html::convertHTMLToText($sigText);
+		// actually use prepared signature --------------------collected earlier--------------------------
 		$isreply = $isforward = false;
 		// reply ---------------------------------------------------------------------------
 		if ($smartdata_task == 'reply' && isset($smartdata->source->itemid) &&
@@ -701,18 +704,21 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// add signature, in case its not already added in forward or reply
 		if (!$isreply && !$isforward)
 		{
-				$Body = $Body.$sigTextPlain;
-				$AltBody = $AltBody.$sigTextHtml;
+			//error_log(__METHOD__.__LINE__.'adding Signature');
+			$Body = $Body.$sigTextPlain;
+			$AltBody = $AltBody.$sigTextHtml;
 		}
 		// now set the body
 		if ($AltBody && ($html_body = $mailObject->findBody('html')))
 		{
 			if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' -> '.$AltBody);
+			//error_log(__METHOD__.__LINE__.' html:'.$AltBody);
 			$html_body->setContents($AltBody,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		if ($Body && ($text_body = $mailObject->findBody('plain')))
 		{
 			if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' -> '.$Body);
+			//error_log(__METHOD__.__LINE__.' text:'.$Body);
 			$text_body->setContents($Body,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		//advanced debugging

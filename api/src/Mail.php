@@ -6959,13 +6959,20 @@ class Mail
 	 *
 	 * @param Mailer $mailer instance of SMTP Mailer object
 	 * @param string|ressource|Horde_Mime_Part $message string or resource containing the RawMessage / object Mail_mimeDecoded message (part))
+	 * @param boolean $force8bitOnPrimaryPart (default false. force transferEncoding and charset to 8bit/utf8 if we have a textpart as primaryPart)
 	 * @throws Exception\WrongParameter when the required Horde_Mail_Part not found
 	 */
-	function parseRawMessageIntoMailObject(Mailer $mailer, $message)
+	function parseRawMessageIntoMailObject(Mailer $mailer, $message, $force8bitOnPrimaryPart=false)
 	{
 		if (is_string($message) || is_resource($message))
 		{
 			$structure = Horde_Mime_Part::parseMessage($message);
+			//error_log(__METHOD__.__LINE__.'#'.$structure->getPrimaryType().'#');
+			if ($force8bitOnPrimaryPart&&$structure->getPrimaryType()=='text')
+			{
+				$structure->setTransferEncoding('8bit');
+				$structure->setCharset('utf-8');
+			}
 			$mailer->setBasePart($structure);
 			//error_log(__METHOD__.__LINE__.':'.array2string($structure));
 
