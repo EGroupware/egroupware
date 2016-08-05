@@ -46,7 +46,7 @@
 					</vbox>
 					<nextmatch-sortheader label="Owner" id="cal_owner" readonly="true"/>
 					<nextmatch-sortheader label="Location" id="cal_location"/>
-					<nextmatch-accountfilter label="Participants" id="participant" empty_label="All" account_type="both"/>
+					<nextmatch-header label="Participants" id="participant" statustext="Use side menu to filter participants"/>
 					<vbox>
 						<nextmatch-sortheader label="Created" id="cal_created" sortmode="DESC"/>
 						<nextmatch-header label="Creator" id="cal_creator" options="Creator"/>
