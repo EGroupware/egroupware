@@ -13,8 +13,9 @@ matrix:
 
 # test installation and run all tests with these databases
 env:
-  -DB=mysql
-  -DB=postgres
+  matrix:
+    - DB=mysql
+    - DB=postgres
 
 services:
   - memcached
@@ -68,9 +69,16 @@ before_script:
 
 script:
   # install egroupware (PostgreSQL need some specific handling as it is not the default and we can not create users via sql)
-  - test "$DB" = "postgres" && DB_SPECIFIC="--db_type postgres --db_port 5432 --db_user postgres --db_pass '' --db_root postgres --db_root_pw ''" || true
-  - php doc/rpm-build/post_install.php $DB_SPECIFIC
-    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  - case $DB in
+    postgres)
+      php doc/rpm-build/post_install.php --db_type postgres --db_port 5432 --db_user postgres --db_pass '' --db_root postgres --db_root_pw ''
+        --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+      ;;
+    *)
+      php doc/rpm-build/post_install.php
+        --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+      ;;
+    esac
   #- mysql -uroot -e 'show tables' egroupware
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
