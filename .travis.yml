@@ -58,7 +58,7 @@ before_script:
     esac
   #- php -m
   - phpenv config-rm xdebug.ini
-  - phpevn config-add pgsql.ini
+  - phpenv config-add pgsql.ini
   #- composer update --prefer-source $LOWEST_DEPS
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
