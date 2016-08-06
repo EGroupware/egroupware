@@ -71,14 +71,12 @@ script:
   # install egroupware (PostgreSQL need some specific handling as it is not the default and we can not create users via sql)
   - case $DB in
     postgres)
-      /usr/bin/php --version;
-      `which php`;
       psql -U postgres -c 'create database egroupware';
-      php doc/rpm-build/post_install.php --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
+      php doc/rpm-build/post_install.php --php `which php` --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
         --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
       ;;
     *)
-      php doc/rpm-build/post_install.php
+      php doc/rpm-build/post_install.php --php `which php`
         --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
       ;;
     esac
