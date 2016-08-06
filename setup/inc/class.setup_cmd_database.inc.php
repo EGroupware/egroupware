@@ -58,7 +58,7 @@ class setup_cmd_database extends setup_cmd
 	{
 		if (!is_array($domain))
 		{
-			$domain = array(
+			$data = array(
 				'domain'  => $domain,
 				'db_type' => $db_type,
 				'db_host' => $db_host,
@@ -73,8 +73,12 @@ class setup_cmd_database extends setup_cmd
 				'make_db_name_unique' => $make_db_name_unique,
 			);
 		}
-		//error_log(__METHOD__.'('.array2string($domain).") make_db_name_unique=".array2string($domain['make_db_name_unique']));
-		admin_cmd::__construct($domain);
+		else
+		{
+			$data = $domain;
+		}
+		// need to incorporate correct defaults for given database type
+		admin_cmd::__construct(array_merge(self::defaults($data['db_type']), array_diff($data, array(null))));
 	}
 
 	/**
