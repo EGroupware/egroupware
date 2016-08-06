@@ -15,7 +15,7 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling post_insta
 }
 $verbose = false;
 $config = array(
-	'php'         => '/usr/bin/php',
+	'php'         => PHP_BINARY,
 	'source_dir'  => '/usr/share/egroupware',
 	'data_dir'    => '/var/lib/egroupware',
 	'header'      => '$data_dir/header.inc.php',	// symlinked to source_dir by rpm
@@ -165,7 +165,7 @@ function set_distro_defaults($distro=null)
 set_distro_defaults();
 
 // read config from command line
-$argv = $_SERVER['argv'];
+$argv = str_replace(array("''", '""'), '', $_SERVER['argv']);
 $prog = array_shift($argv);
 
 // check if we have EGW_POST_INSTALL set and prepend it to the command line (command line has precedence)
@@ -254,7 +254,26 @@ check_fix_php_apc_ini();
 // not limiting memory, as backups might fail with limit we set
 $setup_cli = $config['php'].' -d memory_limit=-1 '.$config['setup-cli'];
 
-if (!file_exists($config['header']) || filesize($config['header']) < 200)	// default header redirecting to setup is 147 bytes
+// if we have a header, include it
+if (file_exists($config['header']) && filesize($config['header']) >= 200)	// default header redirecting to setup is 147 bytes
+{
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noapi' => true,
+		)
+	);
+	include $config['header'];
+
+	// get user from header and replace password, as we dont know it
+	$old_password = patch_header($config['header'],$config['config_user'],$config['config_passwd']);
+	// register a shutdown function to put old password back in any case
+	register_shutdown_function(function() use (&$config, $old_password)
+	{
+		patch_header($config['header'], $config['config_user'], $old_password);
+	});
+}
+// new header or does not include requested domain (!= "default") --> new install
+if (!isset($GLOBALS['egw_domain']) ||  $config['domain'] !== 'default' && !isset($GLOBALS['egw_domain'][$config['domain']]))
 {
 	// --> new install
 	$extra_config = '';
@@ -319,8 +338,9 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 		run_cmd($config['php5enmod']);
 	}
 
-	// create header
-	$setup_header = $setup_cli.' --create-header '.escapeshellarg($config['config_passwd'].','.$config['config_user']).
+	// create or edit header header
+	$setup_header = $setup_cli.(isset($GLOBALS['egw_domain']) ? ' --edit-header ' : ' --create-header ').
+		escapeshellarg($config['config_passwd'].','.$config['config_user']).
 		' --domain '.escapeshellarg($config['domain'].','.$config['db_name'].','.$config['db_user'].','.$config['db_pass'].
 			','.$config['db_type'].','.$config['db_host'].','.$config['db_port']);
 	run_cmd($setup_header);
@@ -390,14 +410,6 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 else
 {
 	// --> existing install --> update
-
-	// get user from header and replace password, as we dont know it
-	$old_password = patch_header($config['header'],$config['config_user'],$config['config_passwd']);
-	// register a shutdown function to put old password back in any case
-	register_shutdown_function(function() use (&$config, $old_password)
-	{
-		patch_header($config['header'], $config['config_user'], $old_password);
-	});
 
 	// update egroupware, or single app(s), in later case skip backup
 	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd'].

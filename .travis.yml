@@ -11,12 +11,6 @@ matrix:
   allow_failures:
     - php: hhvm
 
-# test installation and run all tests with these databases
-env:
-  matrix:
-    - DB=mysql
-    - DB=postgres
-
 services:
   - memcached
 #  - mysql we use mariadb instead installed via addons below
@@ -70,19 +64,13 @@ before_script:
   - sudo chown travis /var/lib/egroupware
 
 script:
-  # install egroupware (PostgreSQL need some specific handling as it is not the default and we can not create users via sql)
-  - case $DB in
-    postgres)
-      psql -U postgres -c 'create database egroupware';
-      php doc/rpm-build/post_install.php --php `which php` --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
-        --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
-      ;;
-    *)
-      php doc/rpm-build/post_install.php --php `which php`
-        --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
-      ;;
-    esac
-  #- mysql -uroot -e 'show tables' egroupware
+  # install egroupware using MariaDB as domain "default"
+  - php doc/rpm-build/post_install.php --domain default
+    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
+  - psql -U postgres -c 'create database egroupware';
+  - php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
+    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
   - ./doc/php_syntax_check.sh
