@@ -1063,14 +1063,15 @@ class Db
 				$sqls[] = "GRANT ALL ON `$currentDatabase`.* TO $currentUser@'$grant_host' IDENTIFIED BY ".$this->quote($currentPassword);
 				break;
 			default:
-				echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented for DB-type '$this->Type'</p>\n";
-				break;
+				throw new Exception\WrongParameter(__METHOD__."(user=$adminname, \$pw) not yet implemented for DB-type '$this->Type'");
 		}
+		error_log(__METHOD__."() this->Type=$this->Type: sqls=".array2string($sqls));
 		foreach($sqls as $sql)
 		{
 			$this->query($sql,__LINE__,__FILE__);
 		}
 		$this->disconnect();
+		error_log(__METHOD__."() this->Type=$this->Type: sqls run, disconnecting now as admin");
 
 		$this->User = $currentUser;
 		$this->Password = $currentPassword;
