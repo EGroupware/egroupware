@@ -42,21 +42,23 @@ before_script:
        yes "" | pecl install igbinary;
        echo "extension=igbinary.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       phpenv config-rm xdebug.ini;
        ;;
     "5.5"|"5.6")
        yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
        yes "" | pecl install igbinary;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       phpenv config-rm xdebug.ini;
        ;;
     "7")
        yes "" | pecl install apcu;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       phpenv config-rm xdebug.ini;
        ;;
     "hhvm")
        ;;
     esac
-  - phpenv config-rm xdebug.ini
   #- php -m
   - curl https://svn.stylite.de/fix_mrconfig 2>/dev/null | php
   - mr --trust-all --stats up
