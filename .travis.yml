@@ -58,8 +58,8 @@ before_script:
     esac
   - phpenv config-rm xdebug.ini
   - php -m
-  - echo "extension=pgsql.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
-  - php -m
+  - php -r 'var_dump(extension_loaded("pgsql"));'
+  - php -r 'var_dump(get_loaded_extensions());'
   #- composer update --prefer-source $LOWEST_DEPS
   - curl https://svn.stylite.de/fix_mrconfig 2>/dev/null | php
   - mr --trust-all --stats up
