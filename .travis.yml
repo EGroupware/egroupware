@@ -56,9 +56,10 @@ before_script:
     "hhvm")
        ;;
     esac
-  #- php -m
   - phpenv config-rm xdebug.ini
-  - phpenv config-add pgsql.ini
+  - php -m
+  - echo "extension=pgsql.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+  - php -m
   #- composer update --prefer-source $LOWEST_DEPS
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
