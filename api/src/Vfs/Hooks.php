@@ -47,7 +47,7 @@ class Hooks
 		Api\Vfs::$is_root = true;
 		if (Api\Vfs::file_exists($dir='/home/'.$data['account_lid']) || Api\Vfs::mkdir($dir, 0700, 0))
 		{
-			Api\Vfs::chown($dir,$data['account_id']);
+			Api\Vfs::chown($dir,(int)$data['account_id']);
 			Api\Vfs::chgrp($dir,0);
 			Api\Vfs::chmod($dir,0700);	// only user has access
 		}
