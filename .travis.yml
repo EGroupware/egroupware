@@ -57,10 +57,8 @@ before_script:
        ;;
     esac
   - phpenv config-rm xdebug.ini
-  - php -m
-  - php -r 'var_dump(extension_loaded("pgsql"));'
-  - php -r 'var_dump(get_loaded_extensions());'
-  #- composer update --prefer-source $LOWEST_DEPS
+  #- php -m
+  - curl https://svn.stylite.de/fix_mrconfig 2>/dev/null | php
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
   # installing phpunit in version suitable for used PHP version
