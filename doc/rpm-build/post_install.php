@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 /**
  * EGroupware - RPM post install: automatic install or update EGroupware
@@ -16,7 +16,7 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling post_insta
 $verbose = false;
 $config = array(
 	'php'         => PHP_BINARY,
-	'source_dir'  => '/usr/share/egroupware',
+	'source_dir'  => realpath(__DIR__.'/../..'),
 	'data_dir'    => '/var/lib/egroupware',
 	'header'      => '$data_dir/header.inc.php',	// symlinked to source_dir by rpm
 	'setup-cli'   => '$source_dir/setup/setup-cli.php',
@@ -404,7 +404,8 @@ if (!isset($GLOBALS['egw_domain']) ||  $config['domain'] !== 'default' && !isset
 
 	if (empty($config['db_root_pw']))
 	{
-		echo "*** Database has no root password set, please fix that immediatly: mysqladmin -u root password NEWPASSWORD\n\n";
+		echo "*** Database has no root password set, please fix that immediatly".
+			(substr($config['db_type'], 0, 5) === 'mysql' ? ": mysqladmin -u root password NEWPASSWORD\n\n" : "!\n\n");
 	}
 }
 else

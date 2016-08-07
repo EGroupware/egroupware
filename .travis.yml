@@ -62,6 +62,7 @@ before_script:
   # create data directory
   - sudo mkdir /var/lib/egroupware
   - sudo chown travis /var/lib/egroupware
+  - ln -s /var/lib/egroupware/header.inc.php
 
 script:
   # install egroupware using MariaDB as domain "default"
