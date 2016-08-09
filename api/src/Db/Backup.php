@@ -943,7 +943,7 @@ class Backup
 
 			if ($lock_table || empty($pk) && is_null($lock_table))
 			{
-				$this->db->Link_ID->RowLock($table);
+				$this->db->Link_ID->RowLock($table, 'true');	// PostgreSQL drive from ADOdb requires 2. param $where!
 			}
 			$total = $max = 0;
 			do {
