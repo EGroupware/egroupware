@@ -424,7 +424,7 @@ class customfields
 			if (count($this->content_types)==0)
 			{
 				// if you define your default types of your app with the search_link hook, they are available here, if no types were found
-				$this->content_types = (array)egw_link::get_registry($this->appname,'default_types');
+				$this->content_types = (array)Api\Link::get_registry($this->appname, 'default_types');
 			}
 			foreach($this->content_types as $type => $entry)
 			{
