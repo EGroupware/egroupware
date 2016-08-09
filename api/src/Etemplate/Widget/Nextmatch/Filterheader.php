@@ -22,4 +22,4 @@ class Filterheader extends Widget\Taglist
 {
 }
 
-Customfilter::registerWidget(__NAMESPACE__.'\\Filterheader', array('nextmatch-filterheader'));
+Widget::registerWidget(__NAMESPACE__.'\\Filterheader', array('nextmatch-filterheader'));

@@ -79,4 +79,4 @@ class Customfilter extends Widget\Transformer
 		$valid = $value ? $value : null;
 	}
 }
-Customfilter::registerWidget(__NAMESPACE__.'\\Customfilter', array('nextmatch-customfilter'));
+Widget::registerWidget(__NAMESPACE__.'\\Customfilter', array('nextmatch-customfilter'));
