@@ -10,6 +10,7 @@ acl grants have been updated	preferences	sk	Práva ACL boli aktualizované.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sk	Akýkoľvek zoznam v EGroupware zobrazí tento počet riadkov na stránku.<br>Ak dáte priveľa, stránka sa bude zobrazovať pomaly. Ak dáte málo, zúži sa váš rozhľad.
 are you sure you want to delete this category ?	preferences	sk	Skutočne chcete odstrániť túto kategóriu?
 audio effect	preferences	sk	Zvukový efekt
+audio effect enables|disables sound effects used in the theme	preferences	sk	Zvukový efekt - zapne/vypne zvukvé efekty použité v tejto téme
 automatically start with this font	preferences	sk	Automaticky začať s týmto písmom
 automatically start with this font size	preferences	sk	Automaticky začať s touto veľkosťou písma
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sk	Zmeniť používateľské heslo zadaním starého a nového hesla. Vráti TRUE v prípade úspechu a FALSE v prípade neúspechu.
@@ -22,6 +23,8 @@ charset for the csv export/import	preferences	sk	Znaková sada
 click to select a color	preferences	sk	Ak chcete vybrať farbu, kliknite sem
 color	preferences	sk	Farba
 country	preferences	sk	Krajina
+custom login box color, defaults to above color darkened	preferences	sk	Vlastná farba pre prihlasovacie okno, predvolený je tmavší odtieň vyššieuvedenej farby
+custom sidebar menu active color, defaults to above color darkened	preferences	sk	Vlastná farba pre bočný panel, predvolený je tmavší odtieň vyššieuvedenej farby
 dark moono theme	preferences	sk	Tmavá Moono téma
 data exchange settings	preferences	sk	Nastavenia pre výmenu údajov
 date format	preferences	sk	Formát dátumu

@@ -502,14 +502,16 @@ values for selectbox	infolog	it	Valori per la selectbox
 view all subs of this entry	infolog	it	Visualizza tutti le sub voci
 view other subs	infolog	it	visualizza altri sub
 view parent	infolog	it	Visualizza i padri
-view subs	infolog	it	visualizza sub
+view parent with children	infolog	it	Visualizza genitore con figli
+view subs	infolog	it	Visualizza sotto-attività
 view the parent of this entry and all his subs	infolog	it	Visualizza i padri di queste voci e tutte i suoi subs
-view this linked entry in its application	infolog	it	visualizza le voci linkate nella sua applicazione
+view this linked entry in its application	infolog	it	Visualizza le voci linkate nella sua applicazione
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	it	quando i ToDo e le Chiamate Telefoniche iniziano, vengono visualizzati dalla data impostata sul filtro aperti o propri aperti (pagina iniziale)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	it	Che campi aggiuntivi sarà permesso modificare al responsabile senza avere diritti di modifica?<br />Stato, percentuale e data completamento sono sempre permessi.
 which implicit acl rights should the responsible get?	infolog	it	Che diritti ACL impliciti otterrà il responsabile?
 which participants should be preselected when scheduling an appointment.	infolog	it	Quali partecipanti dovrebbero essere preselezionati quando si programma un appuntamento?
 which types should the calendar show	infolog	it	Quali tipi di calendario mostrare?
+which types should the calendar show like events?	infolog	it	Quali tipi dovrebbe mostrare l'agenda come eventi?
 will-call	infolog	it	Chiamerà
 write (add or update) a record by passing its fields.	infolog	it	Scrivi (aggiungi o aggiorna) un record fornendo i suoi campi.
 yes - close	infolog	it	Sì, chiudi

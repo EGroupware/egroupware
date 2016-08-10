@@ -680,7 +680,7 @@ integer	common	de	Ganzzahl
 international	common	de	International
 introduction	common	de	Einführung
 invalid filename	common	de	Ungültiger Dateiname
-invalid ip address	common	de	Ungültige IP Adresse
+invalid ip address	common	de	Ungültige IP-Adresse
 invalid password	common	de	Ungültiges Passwort
 iran, islamic republic of	common	de	IRAN, ISLAMISCHE REPUBLIC
 iraq	common	de	IRAK
@@ -745,7 +745,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	de	Link wird an die Mail anfügt und erlaubt Adressaten den aktuellen Inhalt der angehangen Dateien herunter zu laden
 link target %1 not found!	common	de	Keine Verknüpfung zu %1 gefunden!
 linkapps	common	de	VerknüpfungAnwendungen
-linked	common	de	Verknüptf
+linked	common	de	Verknüpft
 linkentry	common	de	VerknüpfungEintrag
 linklist	common	de	VerknüpfungListe
 links and attached files	preferences	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
@@ -801,7 +801,7 @@ medium	common	de	Mittel
 menu	common	de	Menü
 message	common	de	Nachricht
 message ...	common	de	Nachricht ...
-message prepared for sending.	common	de	Nachricht zum Versand vorbereitet.
+message prepared for sending.	common	de	Nachricht zum Versand vorbereitet
 message(s) send failed!	common	de	Senden der Nachricht(en) fehlgeschlagen!
 message(s) send ok.	common	de	Nachricht(en) erfolgreich versandt.
 mexico	common	de	MEXICO
@@ -1132,7 +1132,7 @@ select date	common	de	Datum auswählen
 select day	common	de	Tag auswählen
 select day of week	common	de	Wochentag auswählen
 select entry	common	de	Eintrag auswählen
-select file(s) from vfs	common	de	Dateien aus dem Egroupware Dateimanager auswählen
+select file(s) from vfs	common	de	Dateien aus dem EGroupware-Dateimanager auswählen
 select files from filemanager ...	common	de	Dateien aus Dateimanager auswählen ...
 select group	common	de	Gruppe auswählen
 select home email address	common	de	private E-Mail-Adresse auswählen
@@ -1231,7 +1231,7 @@ sri lanka	common	de	SRI LANKA
 stack	common	de	Stapel
 start a new search, cancel this link	common	de	neue Suche Starten, diese Verknüpfung abbrechen
 start date	common	de	Startdatum
-start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	de	Startverzeichnis für Bildsuche des Editors für formatierten Text im EGroupware VFS (Dateimanager).
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	de	Startverzeichnis für Bildsuche des Editors für formatierten Text im EGroupware-Dateimanager
 start new search for the above pattern	common	de	neue Suche für das obige Muster starten
 start time	common	de	Startzeit
 start with	common	de	beginnt mit
@@ -1313,7 +1313,7 @@ tonga	common	de	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	de	Zu viele ungültige Anmeldeversuche: %1 für den Benutzer '%2', %3 für die IP %4
 top	common	de	Oben
 total	common	de	Gesamt
-total: %1 successful: %2 failed: %3 skipped: %4	common	en	Gesamt: %1 Erfolgreich: %2 Fehlgeschlagen: %3 Ausgelassen: %4
+total: %1 successful: %2 failed: %3 skipped: %4	common	de	Gesamt: %1 Erfolgreich: %2 Fehlgeschlagen: %3 Ausgelassen: %4
 transparant bg for the icons?	common	de	Transparenter Hintergrund für Symbole
 tree	common	de	Baum
 trinidad and tobago	common	de	TRINIDAD AND TOBAGO
@@ -1348,7 +1348,7 @@ update from version '%s' to	common	de	Update von Version '%s' auf
 update the clock per minute or per second	common	de	Uhr pro Minute oder pro Sekunde aktualisieren
 upload	common	de	Hochladen
 upload directory does not exist, or is not writeable by webserver	common	de	Das Verzeichnis zum Hochladen existiert nicht oder der Webserver hat dort keine Schreibrechte.
-upload file(s) from filemanager...	common	de	Dateien aus dem Dateimanager (VFS)..
+upload file(s) from filemanager...	common	de	Dateien aus dem Dateimanager hochladen..
 upload requires the directory to be writable by the webserver!	common	de	Der Upload verlangt, dass der Webserver Schreibrechte auf diesem Verzeichnis hat!
 uppercase letters	common	de	Grossbuchstaben
 url	common	de	Webseite

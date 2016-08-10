@@ -17,7 +17,7 @@
 %1 run rights for applications	admin	de	Ausführungsrechte für Anwendungen von %1
 %1 sessions killed	admin	de	%1 Sitzungen beendet
 %1 user %2	admin	de	%1 Benutzer %2
-(de)activate mail accounts	admin	de	EMail-Konten (de)aktivieren
+(de)activate mail accounts	admin	de	E-Mail-Konten (de)aktivieren
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benutzt)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	de	(Die IMAP Klasse muss dieses Verfahren unterstützen indem es den entsprechenden Konfigurationswert der Instanz ausliest und als Default Quota an den IMAP Server meldet.)
 (no subject)	admin	de	(Kein Betreff)
@@ -29,7 +29,7 @@ access control	admin	de	Zugriffsrechte
 access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
 account	admin	de	Konto
-account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine E-Mail Adresse --> nicht benachrichtigt!
+account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine E-Mail-Adresse --> nicht benachrichtigt!
 account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext Passwort!
 account %1 %2	admin	de	Benutzerkonto %1 %2
 account '%1' deleted.	admin	de	Konto '%1' gelöscht.
@@ -73,7 +73,7 @@ add global category for %1	admin	de	Globale Kategorie für %1 hinzufügen
 add group	admin	de	Gruppe hinzufügen
 add new account	admin	de	Neues Benutzerkonto hinzufügen
 add new application	admin	de	Neue Anwendung hinzufügen
-add new email address:	admin	de	Neue E-Mailadresse hinzufügen
+add new email address:	admin	de	Neue E-Mail-Adresse hinzufügen
 add peer server	admin	de	Server zu Serververbund hinzufügen
 add profile	admin	de	Profil hinzufügen
 add sub-category	admin	de	Unterkategorie hinzufügen
@@ -169,7 +169,7 @@ category saved.	admin	de	Kategorie gespeichert
 change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
-change domain of email address and aliases	admin	de	ändert Domain von E-Mail Adressen oder Aliase
+change domain of email address and aliases	admin	de	ändert Domain von E-Mail-Adressen oder Aliase
 change main screen message	admin	de	Nachricht der Startseite ändern
 change owner	admin	de	Besitzer ändern
 change password for %1	admin	de	Ändern des Passworts für %1
@@ -233,6 +233,7 @@ delete application	admin	de	Anwendung löschen
 delete category	admin	de	Kategorie löschen
 delete group	admin	de	Gruppe löschen
 delete identity	admin	de	Identität löschen
+delete including sub-enteries	admin	de	Löschen mit Unter-Kategorie(en)
 delete peer server	admin	de	Server von Serververbund löschen
 delete selected entries	admin	de	Ausgewählte Einträge löschen
 delete the category	admin	de	Kategorie löschen
@@ -524,7 +525,7 @@ login-status	admin	de	Angemeldet-Status
 loginid	admin	de	Login-ID
 logintime	admin	de	Anmeldezeit
 logoutime	admin	de	Abmeldezeit
-mail account	admin	de	EMail Konto
+mail account	admin	de	E-Mail Konto
 mail settings	admin	de	E-Mail-Einstellungen
 main email-address	admin	de	Stamm-E-Mail-Adresse
 main screen message	admin	de	Nachricht der Startseite
@@ -692,7 +693,7 @@ select where you want to store/retrieve filesystem information	admin	de	Wo möch
 select where you want to store/retrieve user accounts	admin	de	Wo möchten Sie die Benutzerkonten speichern
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
 selectbox	admin	de	Auswahlfeld
-send using this email-address	admin	de	zum Versenden wird diese E-Mail Adresse benutzt
+send using this email-address	admin	de	zum Versenden wird diese E-Mail-Adresse benutzt
 server %1 has been updated	admin	de	Server %1 wurde aktualisiert
 server list	admin	de	Server-Liste
 server password	admin	de	Server-Passwort
@@ -769,7 +770,7 @@ the imap server does not appear to support the authentication method selected. p
 the install id of an instance can be found under admin > site configuration	admin	de	Installations ID für diese Instanz wird unter Admin >> Konfiguration der Anwendung angezeigt
 the login and password can not be the same	admin	de	Benutzername und Passwort dürfen nicht identisch sein
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nicht länger als 8 Zeichen sein
-the mimeparser can not parse this message.	admin	de	Der Mimiparser versteht diese Nachricht nicht
+the mimeparser can not parse this message.	admin	de	Der Mimeparser versteht diese Nachricht nicht
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzter Name (<= 20 Buchstaben), Veränderungen machen existierende Daten unerreichbar !
 the testjob sends you a mail everytime it is called.	admin	de	Der Testjob sendet Ihnen jedesmal eine E-Mail wenn er aufgerufen wird.
 the text displayed to the user	admin	de	für den Benutzer angezeigter Text
@@ -813,7 +814,7 @@ unknown option %1	admin	de	Unbekannte Option %1
 unsupported action '%1' !!!	admin	de	Nicht unterstützte Aktion '%1' !!!
 unwilling to save category with current settings. check for inconsistency:	admin	de	Kategorie kann mit den aktuellen Einstellungen nicht gespeichert werden. Bitte überprüfen sie die Einstellungen auf Ungereimtheiten
 up	admin	de	hoch
-update current email address:	admin	de	Aktualisiere aktuelle E-Mailadresse
+update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
 updated	admin	de	aktualisiert
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, kleine Buchstaben, Zahlen, Sonderzeichen
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. http://domain.com/egroupware

@@ -136,6 +136,7 @@ timesheet csv export	timesheet	it	Esportazione folgio ore in CSV
 timesheet csv import	timesheet	it	Importazione folgio ore da CSV
 timesheet fields:	timesheet	it	Campi foglio ore:
 timesheet id	timesheet	it	ID foglio ore
+timesheet list	timesheet	it	Elenco fogli ore
 timesheet modified by %1 at %2	timesheet	it	Foglio ore modificato da %1 alle %2
 timesheet openoffice export	timesheet	it	Esportazione foglio ore  in openoffice
 timesheet status-%1 '%2' added.	timesheet	it	Stato %1 '%2' aggiunto al foglio ore
