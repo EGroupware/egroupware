@@ -2,6 +2,7 @@
 %1 days	calendar	sk	%1 dní
 %1 event(s) %2	calendar	sk	%1 udalost(i) %2
 %1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	sk	%1 udalost(i) %2, %3 zlyhalo kvôli nedostatočným oprávneniam !!!
+%1 events in ical file, only first one imported and displayed!	calendar	sk	%1 udalostí v súbore iCal, naimportovala a zobrazila sa len prvá!
 %1 hours	calendar	sk	%1 hodín
 %1 minutes	calendar	sk	%1 minút
 %1 participants removed because of missing invite grants	calendar	sk	%1 účastníkov odstránených kvôli chýbajúcim oprávneniam k (ich) pozvaniu
@@ -11,9 +12,9 @@
 %s the event	calendar	sk	%s túto udalosť
 (%1 events in %2 seconds)	calendar	sk	(%1 udalostí za %2 sekundy)
 (empty = use global limit, no = no export at all)	admin	sk	(prázdne = použiť globálny limit, nie = žiadny export)
+(without a custom url we use nation of user preference to load holidays from %s)	calendar	sk	(Ak nie je zadaný vlastný URL, používame národnosť používateľa ako podklad pre načítanie sviatkov z %s)
 , exceptions preserved	calendar	sk	, výnimky uchované
 , stati of participants reset	calendar	sk	, stanovisko účastníkov vynulované
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	sk	<b>Upozornenie:</b>V Kalendári sa používajú sviatky, ktoré platia vo Vašej krajine. Tá je nastavená na %1. Môžete ju zmeniť v ponuke %2.<br />Sviatky sa %3 automaticky inštalujú z %4. Môžete to zmeniť v %5.
 a non blocking event will not conflict with other events	calendar	sk	Neblokujúca udalosť nebude v konflikte s ostatnými udalosťami
 accept	calendar	sk	Prijať
 accept or reject an invitation	calendar	sk	Prijať alebo odmietnuť pozvanie
@@ -54,8 +55,6 @@ always	calendar	sk	Vždy
 apply the action on the whole query, not only the shown events	calendar	sk	Vykonať túto akciu pre celý dopyt, NIELEN pre zobrazené udalosti
 apply the changes	calendar	sk	Vykonať uvedené zmeny
 appointment settings	calendar	sk	Nastavenia udalostí
-are you sure you want to delete this country ?	calendar	sk	Naozaj odstrániť túto krajinu?
-are you sure you want to delete this holiday ?	calendar	sk	Naozaj odstrániť tento sviatok?
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	sk	Iná možnosť - môžete %1stiahnuť MYSQL dump%2 a naimportovať ho ručne do tabuľky egw_cal_timezones.
 automatically purge old events after	admin	sk	Automaticky vymazať udalosti staršie než
 back half a month	calendar	sk	Späť o pol mesiaca
@@ -78,7 +77,6 @@ calendar csv export	calendar	sk	Kalendár - CSV export
 calendar csv import	calendar	sk	Kalendár - CSV import
 calendar event	calendar	sk	Udalosť v kalendári
 calendar fields:	calendar	sk	Polia Kalendára:
-calendar holiday management	admin	sk	Správa sviatkov v kalendári
 calendar ical export	calendar	sk	Kalendár - iCal export
 calendar ical import	calendar	sk	Kalendár - iCal import
 calendar id	calendar	sk	ID Kalendára
@@ -119,6 +117,7 @@ csv-fieldname	calendar	sk	Pole v CSV
 csv-filename	calendar	sk	CSV súbor
 custom	calendar	sk	Vlastné
 custom fields	common	sk	Vlastné polia
+custom url for ical with holidays for all users	calendar	sk	Vlastný URL pre iCal obsahujúci sviatky pre všetkých používateľov
 custom_2	common	sk	zaneprázdnenosť
 daily	calendar	sk	Denne
 daily tables	calendar	sk	Denné tabuľky
@@ -168,11 +167,11 @@ do you want to be notified about new or changed appointments? you be notified ab
 do you want to edit this event as an exception or the whole series?	calendar	sk	Chcete upraviť túto udalosť ako výnimku alebo celú sériu?
 do you want to keep the series exceptions in your calendar?	calendar	sk	Chcete ponechať výnimky tejto série v kalendári?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sk	Chcete dostávať E-mailom pravidelný súhrn vašich schôdzok?<br>Súhrn sa bude posielať na vašu bežnú adresu každé ráno, prípadne v pondelok pre týždenný súhrn.<br>Posiela sa len vtedy, ak máte plánované nejaké schôdzky na daný deň alebo týždeň.
-do you wish to autoload calendar holidays files dynamically?	admin	sk	Mám automaticky načítavať súbory sviatkov?
 download	calendar	sk	Stiahnuť
 download this event as ical	calendar	sk	Stiahnuť túto udalosť ako iCal
 duration	calendar	sk	Trvanie
 duration of the meeting	calendar	sk	Dĺžka trvania stretnutia
+edit event in calendar	calendar	sk	Upraviť udalosť v kalendári
 edit exception	calendar	sk	Upraviť výnimku
 edit series	calendar	sk	Upraviť sériu
 edit status or alarms for this particular day	calendar	sk	Upraviť stav alebo pripomienky pre tento konkrétny deň
@@ -261,8 +260,7 @@ hide private infos	calendar	sk	Skryť súkromné informácie
 high priority	calendar	sk	vysoká priorita
 history	calendar	sk	História
 history logging	admin	sk	Zaznamenávanie histórie
-holiday	calendar	sk	Sviatky
-holiday management	calendar	sk	Správa sviatkov
+holiday	calendar	sk	Sviatok
 holidays	calendar	sk	Sviatky
 holidays only	calendar	sk	Iba sviatky
 hours	calendar	sk	hodín
@@ -279,7 +277,6 @@ ical export	calendar	sk	Export iCal
 ical file	calendar	sk	Súbor iCal
 ical import	calendar	sk	Import iCal
 ical successful imported	calendar	sk	iCal úspešne naimportovaný
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	sk	Ak začiarknete toto pole a sviatok pripadne na víkend, automaticky se presunie na nasledujúci pondelok.
 if start day differs	calendar	sk	Ak sa líši deň začiatku
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sk	Ak tu nezadáte heslo, informácia sa sprístupní každému kto pozná URL adresu!!!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	sk	Ak vyberiete interval (mesiac, týždeň apod) namiesto zoznamu položiek, budú dostupné tieto prídavné polia.
@@ -307,6 +304,8 @@ last changed	calendar	sk	Naposledy zmenené
 lastname of person to notify	calendar	sk	Priezvisko upozorňovanej osoby
 length of the time interval	calendar	sk	Dĺžka časového intervalu
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	sk	Obmedziť počet riadkov popisu v zobrazení zoznamu (predvolené 5, 0 znamená bez obmedzenia)
+limit search for conflicts in recurrences to given number of recurrences	calendar	sk	Obmedziť vyhľadávanie konfliktov v opakovaniach na daný počet opakovaní
+limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	sk	Obmedziť vyhľadávanie konfliktov v opakovaniach na daný čas v sekundách (predvolené: 3)
 link to view the event	calendar	sk	Odkaz na zobrazenie udalosti
 links	calendar	sk	Odkazy
 links and attached files	calendar	sk	Odkazy a priložené súbory
@@ -315,13 +314,14 @@ links, attachments	calendar	sk	Odkazy, prílohy
 list of files linked to the current record	calendar	sk	Zoznam súborov priložených k súčasnému záznamu
 listview	calendar	sk	Zoznam udalostí
 location	calendar	sk	Miesto konania
-location to autoload from	admin	sk	Umiestnenie zdroja pre automatické načítavanie
 location, start- and endtimes, ...	calendar	sk	Miesto konania, časy začiatku a konca,...
 mail all participants	calendar	sk	Oboslať všetkých účastníkov
 make freebusy information available to not loged in persons?	calendar	sk	Sprístupniť informácie o zaneprázdnení všetkým, aj neprihláseným osobám?
 manage mapping	calendar	sk	Správa mapovania
+mark event as private to hide title and description	calendar	sk	Označenie udalosti ako súkromnú skryje titulok a popis
 max. number of entries to show (leave empty for no restriction)	calendar	sk	Maximálny počet položiek, ktorý sa má zobraziť (ak nechcete obmedziť, ponechajte prázdne)
 maximum available quantity of %1 exceeded!	calendar	sk	Prekročená najvyššie povolené množstvo %1!
+meeting canceled	calendar	sk	Stretnutie zrušené
 meeting request	calendar	sk	Požiadavka na stretnutie
 meetingrequest to all participants	calendar	sk	Požiadavka na stretnutie všetkým účastníkom
 merge document...	calendar	sk	Zlúčiť dokument...
@@ -380,6 +380,7 @@ one month	calendar	sk	jeden mesiac
 one week	calendar	sk	jeden týždeň
 one year	calendar	sk	jeden rok
 only group-events	calendar	sk	Iba skupinové udalosti
+only recurrences until %1 (excluding) have been checked!	calendar	sk	Boli ozčené len opakovania po %1 (okrem)!
 only the initial date of that recuring event is checked!	calendar	sk	Kontroluje sa iba úvodný dátum tejto pravidelnej udalosti!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	sk	Použije sa len pre prvý pohľad na Kalendár, potom sa už používa naposledy použitý pohľad.
 open todo's:	calendar	sk	Otvorené Úlohy:
@@ -395,6 +396,7 @@ people holiday	calendar	sk	osobná dovolenka
 permission denied	calendar	sk	Prístup bol odmietnutý
 planner by category	calendar	sk	Plánovač - podľa kategórie
 planner by user	calendar	sk	Plánovač - podľa používateľa
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	sk	Upozornenie: zisťovanie konfliktov sa nikdy nerobí do minulosti a vždy je obmedzené vyššieuvedeným horizontom opakovaní.
 please note: you can configure the field assignments after you uploaded the file.	calendar	sk	Upozornenie: až keď odovzdáte súbor, môžete nastaviť priradenia polí.
 preselected group for entering the planner	calendar	sk	Predvolená skupina pre vstup do plánovača
 prevent deleting of entries	admin	sk	Zabrániť odstraňovaniu položiek
@@ -411,6 +413,8 @@ receive summary of appointments	calendar	sk	Dostávať súhrn udalostí
 recover	calendar	sk	Obnoviť
 recovered	calendar	sk	Obnovené.
 recurrence	calendar	sk	Pravidelné opakovanie
+recurrence enddate	calendar	sk	Dáum ukončenia opakovania
+recurrences and conflict check	calendar	sk	Opakovania a zisťovanie konfliktov
 recurring event	calendar	sk	Opakujúca se udalosť
 reject	calendar	sk	Odmietnuť
 rejected	calendar	sk	Odmietnuté
@@ -455,7 +459,6 @@ select who should get the alarm	calendar	sk	Vybrať kto dostane pripomienku
 selected range	calendar	sk	Vybraný rozsah
 send meetingrequest to all participants after the event is saved	calendar	sk	Po uložení udalosti, poslať požiadavku na stretnutie všetkým účastníkom
 series deleted	calendar	sk	Séria odstránená
-set a year only for one-time / non-regular holidays.	calendar	sk	Rok nastavte iba pre jednorázové a nepravidelné udalosti.
 set new events to private	calendar	sk	Nastaviť nové udalosti ako súkromné
 setting lock time calender	admin	sk	Nastavenie Datalock času pre Kalendár (predvolené: 1 sek.)
 shall the date parameter be accepted (e.g. from calendar module)?	calendar	sk	Má byť tento parameter akceptovaný (napr. z modulu Kalendár)?
@@ -520,6 +523,7 @@ this entry is opened by user:	calendar	sk	Tento záznam bol otvorený počas nas
 this event is part of a series	calendar	sk	Táto udalosť je súčasťou série
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	sk	Táto skupina bude automaticky vybratá pri vstupe do plánovača. V plánovači ju môžete zmeniť podľa ľubovôle.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	sk	Toto je opakovaná udalosť. Chcete odstrániť len tento dátum, alebo celú sériu?
+this mail cancels a meeting	calendar	sk	Táto správa ruší stretnutia
 this mail contains a meeting request	calendar	sk	Táto správa obsahuje požiadavku na stretnutie
 this mail contains a reply to a meeting request	calendar	sk	Táto sprá obsahuje odpoveď na požiadavku na stretnutie
 this message is sent for canceled or deleted events.	calendar	sk	Táto správa se posiela pri zrušení či odstránení udalostí.
@@ -559,6 +563,7 @@ unable to save	calendar	sk	Nedá sa uložiť
 update timezones	common	sk	Aktualizovať časové pásma
 updated	calendar	sk	Aktualizované
 use end date	calendar	sk	použiť dátum ukončenia
+use range-views to optimise calendar queries?	calendar	sk	Použiť interval zobrazenia na optimizáciu kalendára?
 use the selected time and close the popup	calendar	sk	Použiť zvolený čas a zavrieť okno
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	sk	Túto značku použite pre adresové štítky. Obsah, ktorý chcete opakovať, vložte medzi dve značky.
 use this timezone to export calendar data.	calendar	sk	Použiť toto časové pásmo pre export údajov kalendára
@@ -585,6 +590,7 @@ weeks offset (for multi-column display)	calendar	sk	Posun týždňov (pre viacst
 weekview	calendar	sk	Týždenný pohľad
 weekview with weekend	calendar	sk	Týždenný pohľad s víkendom
 weekview without weekend	calendar	sk	Týždenný pohľad bez víkendu
+what should links to the calendar events display in other applications.	calendar	sk	Čo majú zobrazovať odkazy na udalosť kalendára v iných aplikáciách.
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	sk	Keď je označené, narodeniny a/alebo sviatky sa zobrazia ako udalosti v kalendári. Upozornenie: táto možnosť zmení len zobrazenie v rámci EGroupware, nezmení však informácie posielané cez iCal alebo iné rozhrania Kalendára.
 which view to show on home page	calendar	sk	Aký pohľad použiť pre domovskú stránku
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	sk	Minimálny počet používateľov pre zobrazenie denného a týždenného pohľadu v konsolidovanom tvare. Predvolené = 5.

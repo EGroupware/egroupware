@@ -46,6 +46,8 @@
 5 minutes	common	it	5 minuti
 80 (http)	admin	it	80 (http)
 a pattern to be searched for	common	it	un pattern da cercare
+a request to the egroupware server returned with an error	common	it	Una richiesta al server di EGroupware ha restituito un errore
+abort	common	it	Interrompi
 about	common	it	Info
 about %1	common	it	Info su %1
 about egroupware	common	it	Info su eGroupware
@@ -67,6 +69,7 @@ actions...	common	it	Azioni
 active	common	it	Attivo
 active directory requires ssl or tls to change passwords!	common	it	L'Active Directory richiede SSL o TLS per modificare le password!
 add	common	it	Aggiungi
+add %1	common	it	aggiungi %1
 add %1 category for	common	it	Aggiungi %1 categoria per
 add a new column (after the existing ones)	common	it	Aggiungi una nuova colonna (dopo quelle esistenti)
 add a new contact	common	it	Aggiungi un nuovo contatto
@@ -90,7 +93,6 @@ admin	common	it	Amministra
 administration	common	it	Amministrazione
 advanced search	common	it	Ricerca avanzata
 afghanistan	common	it	AFGHANISTAN
-ajax request failed	common	it	La richiesta AJAX non è riuscita
 albania	common	it	ALBANIA
 algeria	common	it	ALGERIA
 align	common	it	Allinea
@@ -637,6 +639,7 @@ id	common	it	ID
 iespell not detected. click ok to go to download page.	common	it	ieSpell non trovato. Clicca OK per andare alla pagina di download.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	it	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 if the clock is enabled would you like it to update it every second or every minute?	common	it	Se l'orologio è abilitato, vuoi che si aggiorni ogni secondo oppure ogni minuto?
+if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	it	Se l'errore persiste, contattare il proprio amministratore e chiedere di controllare il registro degli errori del server web.
 if there are some images in the background folder you can choose the one you would like to see.	common	it	Se ci sono diverse immagini nella cartella sfondi, puoi scegliere quale vuoi vedere.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra una azione per ogni documento. Quella azione permette di scaricare il documento specificato con la data inserita.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra un'icona di documento aggiuntiva per ogni inserimento. Quella icona permette di scaricare il documento specificato con la data inserita.
@@ -983,6 +986,7 @@ placeholders	common	it	Segnaposto (variabili metasintattiche)
 please %1 by hand	common	it	Per favore %1 a mano
 please enter a name	common	it	Per favore inserisci un nome!
 please enter table-name first !!!	common	it	Please enter table-name first !!!
+please reload the egroupware desktop (f5 / cmd+r).	common	it	Per favore ricaricare il desktop di EGroupware (F5 / Ctrl+r).
 please run setup to become current	common	it	Per favore esegui setup per aggiornare
 please select	common	it	Per favore Seleziona
 please set your global preferences	common	it	Per favore imposta le preferenze globali !
@@ -1055,6 +1059,7 @@ restore all application templates, overwriting existing ones with identical vers
 restore failed	common	it	Rirpristino fallito
 restore key	common	it	Chiave di ripristino
 restore password	common	it	Password di ripristino
+retry	common	it	Riprovare
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
 returns an array of todo items	common	it	Restituisce un elenco delle cose da fare
 returns savely, without deleting	common	it	returns savely, WITHOUT deleting
@@ -1165,7 +1170,6 @@ server %1 has been added	common	it	Server %1 aggiunto
 server answered. processing response...	common	it	Il Server ha risposto. Elaborazione risposta in corso...
 server contacted. waiting for response...	common	it	Server contattato. Attesa risposta...
 server error	common	it	Errore del server
-server error log should contain more information about the problem.	common	it	Il registro errori del server dovrebbe contenere maggiori informazioni sul problema.
 server is unwilling to perform.	common	it	Il server non accetta di procedere.
 server name	common	it	Nome Server
 session has been killed	common	it	La sessione è stata terminata
@@ -1210,6 +1214,7 @@ simple	common	it	Semplice
 singapore	common	it	SINGAPORE
 site configuration	common	it	Configurazione per tutto il Sito
 size	common	it	Dimensione
+skip	common	it	Salta
 slovakia	common	it	SLOVACCHIA
 slovenia	common	it	SLOVENIA
 solomon islands	common	it	ISOLE DI SOLOMONE
@@ -1309,10 +1314,10 @@ tonga	common	it	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	it	Troppi tentativi di login falliti: %1 per l'utente '%2', %3 dall'IP %4
 top	common	it	In cima
 total	common	it	Totale
+total: %1 successful: %2 failed: %3 skipped: %4	common	it	Totale: %1 A buon fine: %2 Falliti: %3 Saltati: %4
 transparant bg for the icons?	common	it	Sfondo trasparente per le icone?
 tree	common	it	Albero
 trinidad and tobago	common	it	TRINIDAD E TOBAGO
-trying it again will usually not help!	common	it	Riprovare di solito non aiuta!
 tu	common	it	Tu
 tuesday	common	it	Martedì
 tunisia	common	it	TUNISIA
@@ -1349,13 +1354,13 @@ upload requires the directory to be writable by the webserver!	common	it	Il cari
 uppercase letters	common	it	lettere maiuscole
 url	common	it	URL
 uruguay	common	it	URUGUAY
-use button to search for	common	it	usa il Pulsante per cercare
-use button to search for address	common	it	usa il Pulsante per cercare l'Indirizzo
-use button to search for calendarevent	common	it	usa il Pulsante per cercare un Evento in Agenda
-use button to search for project	common	it	usa il Pulsante per cercare un Progetto
+use button to search for	common	it	Usa il pulsante per cercare
+use button to search for address	common	it	Usa il pulsante per cercare l'Indirizzo
+use button to search for calendarevent	common	it	Usa il pulsante per cercare un Evento in Agenda
+use button to search for project	common	it	Usa il pulsante per cercare un Progetto
 user	common	it	Utente
-user accounts	common	it	account utente
-user groups	common	it	gruppi utente
+user accounts	common	it	Account utente
+user groups	common	it	Gruppi di utenti
 user-agent & action	common	it	User-agent e azione
 username	common	it	Username
 users	common	it	Utenti
@@ -1374,8 +1379,8 @@ vertical alignment of row	common	it	allineamento verticale della riga
 vfs upload directory	common	it	Directory di upload VFS
 viet nam	common	it	VIET NAM
 view	common	it	Visualizza
-view this etemplate	common	it	visualizza questo eTemplate
-view this linked entry in its application	common	it	vedi questa voce collegata nella sua applicazione
+view this etemplate	common	it	Visualizza questo eTemplate
+view this linked entry in its application	common	it	Visualizza questa voce collegata nella sua applicazione
 virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
 virgin islands, u.s.	common	it	ISOLE VERGINI, U.S.
 wallis and futuna	common	it	WALLIS E FUTUNA
@@ -1383,7 +1388,7 @@ was not able to delete the backup key because %1	common	it	Non è stato possibil
 we	common	it	We
 we would like to introduce you to egroupware by showing a short introduction video.	common	it	Vorremmo introdurti a EGroupware con un breve filmato introduttivo.
 wednesday	common	it	Mercoledì
-weekend	common	it	weekend
+weekend	common	it	Weekend
 welcome	common	it	Benvenuto
 western european	common	it	Europeo occidentale
 western sahara	common	it	SAHARA OCCIDENTALE
@@ -1452,8 +1457,8 @@ your password does not have required strength:	common	it	La tua password non è 
 your password failed the following criteria:	common	it	La tua password non ha soddisfatto i seguenti criteri:
 your password is about to expire in %1 days, you may change your password now	common	it	La tua password scade in %1 giorni, puoi cambiare la tua password adesso.
 your password might not match the password policy.	common	it	La tua password non corrisponde ai criteri di sicurezza predefiniti.
-your search returned %1 matchs	common	it	la tua ricerca ha restituito %1 risultati
-your search returned 1 match	common	it	la tua ricerca ha restituito 1 risultato
+your search returned %1 matchs	common	it	La tua ricerca ha restituito %1 risultati
+your search returned 1 match	common	it	La tua ricerca ha restituito 1 risultato
 your session timed out, please log in again	login	it	La tua sessione è scaduta, per favore effettua di nuovo l'accesso
 your settings have been updated	common	it	Le tue impostazioni sono state aggiornate
 zambia	common	it	ZAMBIA

@@ -3,7 +3,9 @@
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	it	%1 contatto/i %2, %3 fallita a causa di diritti insufficienti !!!
 %1 contacts updated (%2 errors).	addressbook	it	%1 contatti aggiornati (%2 errori)
 %1 fields in %2 other organisation member(s) changed	addressbook	it	%1 campi in %2 altro/i membro/i dell'organizzazione modificati.
+%1 key(s) added to public keyserver "%2".	addressbook	it	%1 chiavi aggiunte nel server pubblico "%2"
 %1 not implemented for %2!	addressbook	it	%1 non implementato per %2!
+%1 public keys added.	addressbook	it	%1 chiavi pubbliche aggiunte
 %1 records imported	addressbook	it	%1 record importati
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, è possibile tornare %2indietro%3 e deselezionare Test Importazione)
 %1 starts with '%2'	addressbook	it	%1 inizia con '%2'
@@ -48,6 +50,7 @@ addressbook	common	it	Rubrica
 addressbook csv export	addressbook	it	Esportazione CSV della Rubrica
 addressbook csv import	addressbook	it	Importazione da CSV rubrica
 addressbook field	addressbook	it	Campo della Rubrica
+addressbook list	addressbook	it	Elenco rubrica
 addressbook menu	addressbook	it	Menù Rubrica
 addressbook of	addressbook	it	Rubrica di
 addressbook preferences	addressbook	it	Preferenze Rubrica
@@ -58,8 +61,10 @@ addressbook vcard import	addressbook	it	Importazione da vCard rubrica
 addressbook-fieldname	addressbook	it	Rubrica - Nome del Campo
 addvcard	addressbook	it	Aggiungi Vcard
 advanced search	addressbook	it	Ricerca avanzata
+all addressbooks	addressbook	it	Tutte le rubriche
 all contacts	addressbook	it	Tutti i contatti
 all in one field	addressbook	it	Tutto in un Campo
+all types	addressbook	it	Tutti i tipi
 allow members of following groups to edit contact-data of accounts	addressbook	it	Permettere ai membri dei seguenti gruppi di modificare i dati di contatto degli account
 allow users to maintain their own account-data	admin	it	Permetti agli utenti di gestire i dati del proprio account
 alt. csv import	addressbook	it	Importazione CSV Alternativa
@@ -106,6 +111,7 @@ check all	addressbook	it	Seleziona tutto
 choose an icon for this contact type	admin	it	Scegli un'icona per questo tipo di contatto
 choose charset	addressbook	it	Seleziona set di caratteri
 choose owner of imported data	addressbook	it	Modifica proprietario dei dati importati
+choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	it	Selezionare una sorgente di mappa predefinita oppure un URL personalizzato (usare %r=via, %t=città, %c=Paese, %z=CAP)
 chosse an etemplate for this contact type	admin	it	Scegli un eTemplate per questo tipo di contatto
 city	common	it	Città
 city (private)	addressbook	it	Città (privato)
@@ -254,6 +260,7 @@ general	admin	it	Generale
 general fields:	addressbook	it	Campi generali
 general settings	addressbook	it	Impostazioni generali
 geo	addressbook	it	GEO
+geolocation integration	admin	it	Integrazione Geolocalizzazione
 global categories	addressbook	it	Categorie Globali
 grant addressbook access	common	it	Permetti accesso alla Rubrica
 group %1	addressbook	it	Gruppo %1
@@ -346,6 +353,7 @@ new contact submitted by %1 at %2	addressbook	it	Nuovo contatto inviato da %1 al
 new window opened to edit infolog for your selection	addressbook	it	Nuova finestra aperta per modificare la scheda di Attività
 next date	addressbook	it	Prossima data
 no categories selected	addressbook	it	Nessuna categoria selezionata
+no distribution list	addressbook	it	Nessuna lista di distribuzione
 no fallback	addressbook	it	Nessun fallback
 no vcard	addressbook	it	Nessuna VCard
 number	addressbook	it	Numero
@@ -367,6 +375,7 @@ pager	common	it	Cercapersone
 parcel	addressbook	it	Parcel
 participants	addressbook	it	Partecipanti
 permission denied !!!	addressbook	it	Permesso negato !!!
+permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	it	Permesso negato! Chiedere all'amministratore di permettere agli utenti di aggiornare le proprie chiavi pubbliche
 phone number	common	it	Numero di Telefono
 phone numbers	common	it	Numeri di telefono
 photo	addressbook	it	Foto
@@ -400,6 +409,7 @@ role	addressbook	it	Ruolo
 room	addressbook	it	Stanza
 search letter	addressbook	it	Cerca per lettera
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	it	Seleziona una foto jpeg in formato ritratto. Sarà ridimensionata ad una larghezza di 60 pixel.
+select a source address to be used in geolocation routing system	addressbook	it	Selezionare un indirizzo sorgente da utilizzare nel sistema di routing della Geolocalizzazione
 select a view	addressbook	it	Seleziona una vista
 select addressbook type	addressbook	it	Seleziona il tipo di rubrica
 select all	addressbook	it	Seleziona tutto
@@ -474,8 +484,8 @@ upload or delete the photo	addressbook	it	Carica o cancella la foto
 url (business)	addressbook	it	URL (ufficio)
 url (private)	addressbook	it	URL (privato)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	it	URL per collegare numeri di telefono. Usare %1 = numero da chiamare, %u = nome account, %t = telefono acccount
+use a category tree?	addressbook	it	Usare una vista ad albero per selezionare categorie
 use addressbooks "own sorting" attribute	addressbook	it	usare il "proprio ordinamento" della rubrica
-use an extra category tab?	addressbook	it	Usa una liguetta extra per le categorie
 use an extra tab for private custom fields?	admin	it	Usa una liguetta extra per i campi personalizzati privati
 use country list	addressbook	it	Usa la lista delle nazioni
 use setup for a full account-migration	admin	it	Usare il setup per una migrazione account completa
@@ -521,6 +531,7 @@ you must select at least 1 column to display	addressbook	it	Devi selezionare alm
 you need to select a distribution list	addressbook	it	Seleziona lista di distribuzione
 you need to select some contacts first	addressbook	it	Devi prima selezionare qualche contatto
 you need to select some entries first	addressbook	it	Devi prima selezionare alcune voci.
+your new public key has been stored in accounts addressbook.	addressbook	it	La tua nuova chiave pubblica è stata salvata nella rubrica degli account.
 zip code	common	it	CAP
 zip code (private)	addressbook	it	CAP (privato)
 zip_note	addressbook	it	<p><b>Note:</b> Il file deve essere uno zip contentente file .csv, .vcf, o .ldif.  Tuttavia, non mischiare i tipi di file da importare

@@ -324,6 +324,7 @@ if using ads (active directory)	setup	sk	Ak používate ADS (ActiveDirectory) au
 if using cas (central authentication service):	setup	sk	Ak používate cas (Centrálnu Autentifikačnú Službu):
 if using ldap	setup	sk	Ak používate LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	sk	Ak používate LDAP, chcete spravovať domovský adresár a atribúty login shell?
+if using mail authentication	setup	sk	Ak sa používa emailová autentifikácia
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	sk	Ak sa dostanete len na docroot, zvoľte <b>Databáza</b> ako miesto ukladania súborov A použite rovnakú cestu ako pre dočasné súbory.
 if you did not receive any errors, your applications have been	setup	sk	Ak ste neobdržali žiadne chyby, vaše aplikácie boli
 if you did not receive any errors, your tables have been	setup	sk	Ak ste neobdržali žiadne chyby, vaše tabuľky boli
@@ -376,6 +377,7 @@ login as user postgres, eg. by using su as root	setup	sk	Prihlásiť sa ako pou�
 login to mysql -	setup	sk	Prihlásiť do mysql -
 loginname needed for domain configuration	setup	sk	Potrebné prihlasovacie meno pre konfiguráciu domény
 logout	setup	sk	Odhlásenie
+mail account of %1 migraged	setup	sk	Poštový účet %1 premigrovaný
 mail domain (for virtual mail manager)	setup	sk	Poštová doména (pre virtuálneho emailového manažéra)
 mail server login type	setup	sk	Typ prihlásenia poštového servera
 mail server protocol	setup	sk	Protokol poštového servera
