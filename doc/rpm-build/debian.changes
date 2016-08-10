@@ -1,3 +1,15 @@
+egroupware-epl (16.1.20160810) hardy; urgency=low
+
+  * Mail: fix lost mail account password on user password change
+  * PostgreSQL/Setup: fix SQL error in Backup or update: Invalid SQL: SELECT * FROM egw_pm_members
+  * Admin: fix email address for groups could not be stored for accounts in SQL
+  * Admin: fix PHP Fatal error when editing custom fields in a minimal install
+  * Calendar: Add print action to event context menu
+  * Api/Filemanager: add mime icons to minimal install
+  * EPL/Filemanager: fix PHP Fatal using file-a-file dialog (upload with setting eg. a comment)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 10 Aug 2016 15:49:55 +0200
+
 egroupware-epl (16.1.20160801) hardy; urgency=low
 
   * Templates: disable old idots and jerryr template, as new calendar does not work with them
