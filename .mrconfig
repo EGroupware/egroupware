@@ -28,8 +28,8 @@ checkout = git clone git@github.com:EGroupware/egroupware.git &&
 update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null || true;
 	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install
 # uncomment for minified javascript and css, IF you have nodejs and grunt installed: npm install -g grunt-cli
-post_checkout = /usr/bin/env npm install && /usr/bin/env grunt
-post_update = /usr/bin/env npm install && /usr/bin/env grunt
+#post_checkout = /usr/bin/env npm install && /usr/bin/env grunt
+#post_update = /usr/bin/env npm install && /usr/bin/env grunt
 # to run after all other checkout/updates, as some apps (eg. projectmanager) need to update first
 order = 20
 
@@ -49,51 +49,50 @@ checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.u
 # projectmanagement and Ganttcharts
 checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/projectmanager.git
 
-[bookmarks]
+#[bookmarks]
 # record and share bookmarks
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/bookmarks.git
 
-[news_admin]
+#[news_admin]
 # publish and agregate RSS or ATOM feeds
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/news_admin.git
 
-[registration]
+#[registration]
 # allows (after configuration!) to selfregister accounts and recover lost passwords
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/registration.git
 
 ###
 ### Older apps requiring to install phpgwapi and etemplate!
 ###
-[phpgwapi]
+#[phpgwapi]
 # old api used by non 16.1 apps
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpgwapi.git
-=======
 
-[jdots]
+#[jdots]
 # alternative "Stylite" template set
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/jdots.git
 
-[etemplate]
+#[etemplate]
 # old templating system superseeded by eTemplate2 in 16.1+ api
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/etemplate.git
 
-[phpbrain]
+#[phpbrain]
 # knowledge base
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpbrain.git
 
-[wiki]
+#[wiki]
 # wiki application
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/wiki.git
 
-[sambaadmin]
+#[sambaadmin]
 # keeps passwords in sync with Samba3 using same LDAP as EGroupware (for Samba4 use Active Directory)
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/sambaadmin.git
 
-[sitemgr]
+#[sitemgr]
 # content managment application
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/sitemgr.git
 
-[phpfreechat]
+#[phpfreechat]
 # chat application
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpfreechat.git
 #chain = true
@@ -107,3 +106,5 @@ checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.u
 #[esyncpro]
 #checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/branches/16.1/esyncpro
 
+#[archive]		
+#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/trunk/archive
