@@ -1910,16 +1910,20 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id', '$oldid', '$displayname', $type)");
-		$this->splitID($id, $account, $parentFolder);
+		$account = $parent_id = null;
+		$this->splitID($id, $account, $parent_id);
+
+		$parentFolder = $this->hash2folder($account, $parent_id);
+		$old_hash = $oldFolder = null;
+
 		if (empty($oldid))
 		{
 			$action = 'create';
-		} elseif (!empty($oldid)) {
+		}
+		else
+		{
 			$action = 'rename';
-			$this->splitID($oldid, $account, $oldFolder);
-		} else {
-			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname', $type) NOT supported!");
-			return false;
+			$this->splitID($oldid, $account, $oldFolder, $old_hash);
 		}
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.":{$action}Folder('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname', $type)");
 		$this->_connect($this->account);
@@ -1928,7 +1932,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			if ($action=='rename')
 			{
 				$newFolderName = $this->mail->renameFolder($oldFolder, $parentFolder, $displayname);
-			} elseif ($action=='create')
+			}
+			elseif ($action=='create')
 			{
 				$error=null;
 				$newFolderName = $this->mail->createFolder($parentFolder, $displayname, $error);
@@ -1936,11 +1941,14 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		catch (\Exception $e)
 		{
-			throw new Exception(__METHOD__." $action failed for $oldFolder ($action: $newFolderName) with error:".$e->getMessage());;
+			//throw new Exception(__METHOD__." $action failed for $oldFolder ($action: $displayname) with error:".$e->getMessage());
+			return false;
 		}
-		$newID = $this->createID($account,$newFolderName);
+		$newHash = $this->rename_folder_hash($account, $old_hash, $newFolderName);
+		$newID = $this->createID($account, $newHash);
+
 		ZLog::Write(LOGLEVEL_DEBUG,":{$action}Folder('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname' => $newFolderName (ID:$newID))");
-		return (bool)$newFolderName;
+		return $this->StatFolder($newID);
 	}
 
 	/**
@@ -2066,6 +2074,25 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if(!isset($this->folderHashes)) $this->readFolderHashes();
 
 		return isset($this->folderHashes[$account]) ? $this->folderHashes[$account][$index] : null;
+	}
+
+	/**
+	 * Rename or create a folder in hash table
+	 *
+	 * @param int $account
+	 * @param int $index or null to create
+	 * @param string $new_name
+	 * @return int $index or new hash if $index is not found
+	 */
+	private function rename_folder_hash($account, $index, $new_name)
+	{
+		if ((string)$index === '' || !$this->hash2folder($account, $index))
+		{
+			return $this->folder2hash($account, $new_name);
+		}
+		$this->folderHashes[$account][$index] = $new_name;
+
+		return $index;
 	}
 
 	private $folderHashes;
