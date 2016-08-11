@@ -1904,12 +1904,43 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @param string $displayname => new folder name (to be created, or to be renamed to)
 	 * @param string $type folder type, ignored in IMAP
 	 *
+	 * @throws StatusException              could throw specific SYNC_FSSTATUS_* exceptions
 	 * @return array|boolean stat array or false on error
 	 */
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id', '$oldid', '$displayname', $type) NOT supported!");
-		return false;
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id', '$oldid', '$displayname', $type)");
+		$this->splitID($id, $account, $parentFolder);
+		if (empty($oldid))
+		{
+			$action = 'create';
+		} elseif (!empty($oldid)) {
+			$action = 'rename';
+			$this->splitID($oldid, $account, $oldFolder);
+		} else {
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname', $type) NOT supported!");
+			return false;
+		}
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.":{$action}Folder('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname', $type)");
+		$this->_connect($this->account);
+		try
+		{
+			if ($action=='rename')
+			{
+				$newFolderName = $this->mail->renameFolder($oldFolder, $parentFolder, $displayname);
+			} elseif ($action=='create')
+			{
+				$error=null;
+				$newFolderName = $this->mail->createFolder($parentFolder, $displayname, $error);
+			}
+		}
+		catch (\Exception $e)
+		{
+			throw new Exception(__METHOD__." $action failed for $oldFolder ($action: $newFolderName) with error:".$e->getMessage());;
+		}
+		$newID = $this->createID($account,$newFolderName);
+		ZLog::Write(LOGLEVEL_DEBUG,":{$action}Folder('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname' => $newFolderName (ID:$newID))");
+		return (bool)$newFolderName;
 	}
 
 	/**
@@ -1918,12 +1949,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @param string $parentid of the folder to delete
 	 * @param string $id of the folder to delete
 	 *
-	 * @return
-	 * @TODO check what is to be returned
+	 * @throws StatusException              could throw specific SYNC_FSSTATUS_* exceptions
+	 * @return array|boolean stat array or false on error
 	 */
 	public function DeleteFolder($parentid, $id)
 	{
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$parentid', '$id') NOT supported!");
+		error_log(__METHOD__."('$parentid', '$id') NOT supported!");
 		return false;
 	}
 
