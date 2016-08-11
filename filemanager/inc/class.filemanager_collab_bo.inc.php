@@ -115,7 +115,7 @@ class filemanager_collab_bo
 		$date = new DateTime();
 		$op = array(
 			'optype' => 'AddMember',
-			'memberid' => (string) $member_id,
+			'member' => (string) $member_id,
 			'timestamp' => $date->getTimestamp(),
 			'setProperties' => array(
 				'fullName' => $full_name,
@@ -128,6 +128,32 @@ class filemanager_collab_bo
 	}
 
 	/**
+	 * Function to get top head seq for a given session
+	 *
+	 * @param string $es_id
+	 *
+	 * @return string returns head seq or '' if none exists
+	 * @throws Exception throws exception if no session is given
+	 */
+	protected function OP_getHeadSeq($es_id)
+	{
+		if (!$es_id) throw new Exception ('Session id must be given, none given!');
+
+		$headSeq = $this->db->select(
+				self::OP_TABLE,
+				'collab_seq',
+				array('collab_es_id' => $es_id),
+				__LINE__,
+				__FILE__,
+				FALSE,
+				'ORDER BY collab_seq DESC LIMIT 1',
+				'filemanager'
+		);
+
+		return $headSeq->fields? $headSeq->fields['collab_seq']: '';
+	}
+
+	/**
 	 * Insert op data into OP table in database
 	 *
 	 * @param array $op op data
@@ -137,7 +163,7 @@ class filemanager_collab_bo
 	{
 		$data = array (
 			'collab_es_id' => $es_id,
-			'collab_member' => $op['member_id'],
+			'collab_member' => $op['member'],
 			'collab_optype' => $op['optype'],
 			'collab_opspec' => json_encode($op)
 		);
@@ -162,6 +188,28 @@ class filemanager_collab_bo
 	}
 
 	/**
+	 * Function to get member record of specific member id
+	 *
+	 * @param string $member_id member id
+	 *
+	 * @return array returns an array consist of member record
+	 * @throws Exception throws exception if no member id is given
+	 */
+	protected function MEMBER_getMember ($member_id)
+	{
+		if (!$member_id) throw new Exception ('Member id must be given, none given!');
+		$member = $this->db->select(
+				self::MEMBER_TABLE,
+				'*',
+				array('collab_member_id' => $member_id),
+				__LINE__,
+				__FILE__
+		);
+
+		return $member->fields? self::db2id($member->fileds): [];
+	}
+
+	/**
 	 * Utility function to map DB fields to ids
 	 *
 	 * @param array $data
@@ -182,7 +230,16 @@ class filemanager_collab_bo
 	 */
 	protected function MEMBER_getLastMember()
 	{
-		$last_row = $this->db->select(self::MEMBER_TABLE, 'collab_member_id','',__LINE__,__FILE__,false,"ORDER BY `collab_member_id` DESC LIMIT 1;");
+		$last_row = $this->db->select(
+				self::MEMBER_TABLE,
+				'collab_member_id',
+				'',
+				__LINE__,
+				__FILE__,
+				false,
+				"ORDER BY `collab_member_id` DESC LIMIT 1;"
+		);
+
 		return $last_row->fields? $last_row->fields['collab_member_id']: 0;
 	}
 }
