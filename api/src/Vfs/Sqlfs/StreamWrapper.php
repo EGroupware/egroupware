@@ -862,14 +862,14 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 				return $this->chmod($path, $value);
 
 			case STREAM_META_OWNER_NAME:
-				if (($value = $GLOBALS['egw']->account->name2id($value, 'account_lid', 'u')) === false)
+				if (($value = $GLOBALS['egw']->accounts->name2id($value, 'account_lid', 'u')) === false)
 					return false;
 				// fall through
 			case STREAM_META_OWNER:
 				return $this->chown($path, $value);
 
 			case STREAM_META_GROUP_NAME:
-				if (($value = $GLOBALS['egw']->account->name2id($value, 'account_lid', 'g')) === false)
+				if (($value = $GLOBALS['egw']->accounts->name2id($value, 'account_lid', 'g')) === false)
 					return false;
 				// fall through
 			case STREAM_META_GROUP:
