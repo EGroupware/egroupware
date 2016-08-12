@@ -221,13 +221,11 @@ class calendar_uilist extends calendar_ui
 		$params['order'] = 'cal_start';
 		if ($keywords)
 		{
-			$params['filter'] = 'all';
 			$params['sort'] = 'DESC';
 			unset($params['col_filter']['participant']);
 		}
 		else
 		{
-			$params['filter'] = 'after';
 			$params['sort'] = 'ASC';
 		}
 	}
