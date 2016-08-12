@@ -1955,17 +1955,22 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	/**
 	 * Deletes (really delete) a Folder
 	 *
-	 * @param string $parentid of the folder to delete
 	 * @param string $id of the folder to delete
+	 * @param string $parentid (=false) of the folder to delete, may be false/not set
 	 *
 	 * @throws StatusException              could throw specific SYNC_FSSTATUS_* exceptions
-	 * @return array|boolean stat array or false on error
+	 * @return boolean true or false on error
 	 */
-	public function DeleteFolder($parentid, $id)
+	public function DeleteFolder($id, $parentid=false)
 	{
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$parentid', '$id') NOT supported!");
-		error_log(__METHOD__."('$parentid', '$id') NOT supported!");
-		return false;
+		$account = $parent_id = $app = null;
+		$this->splitID($id, $account, $folder, $app);
+		$old_hash = $this->folder2hash($account, $folder);
+		if ($parentid) $this->splitID($parentid, $account, $parentfolder, $app);
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."( '$id (-> $folder)','$parentid ".($parentid?'(->'.$parentfolder.')':'')."') called!");
+		$ret = $this->mail->deleteFolder($folder);
+		if ($ret) $newHash = $this->rename_folder_hash($account, $old_hash, "##Dele#edFolder#$folder##");
+		return $ret;
 	}
 
 	/**
