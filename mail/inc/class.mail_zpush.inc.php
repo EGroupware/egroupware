@@ -1911,9 +1911,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	{
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id', '$oldid', '$displayname', $type)");
 		$account = $parent_id = null;
-		$this->splitID($id, $account, $parent_id);
+		$this->splitID($id, $account, $parentFolder, $app);
 
-		$parentFolder = $this->hash2folder($account, $parent_id);
+		$parent_id = $this->folder2hash($account, $parentFolder);
 		$old_hash = $oldFolder = null;
 
 		if (empty($oldid))
@@ -1923,9 +1923,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		else
 		{
 			$action = 'rename';
-			$this->splitID($oldid, $account, $oldFolder, $old_hash);
+			$this->splitID($oldid, $account, $oldFolder, $app);
+			$old_hash = $this->folder2hash($account, $oldFolder);
 		}
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.":{$action}Folder('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname', $type)");
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.":{$action}Folder('$id'=>($parentFolder ($parent_id)), '$oldid'".($oldid?"=>($oldFolder ($old_hash))":'').", '$displayname', $type)");
 		$this->_connect($this->account);
 		try
 		{
@@ -2014,22 +2015,22 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	}
 
 	/**
-	 * Split an ID string into $app, $folder and $id
+	 * Split an ID string into $app, $account $folder and $appid
 	 *
 	 * @param string $str
 	 * @param int &$account mail account id
 	 * @param string &$folder
-	 * @param int &$id=null
+	 * @param int &$appid=null (for mail=mail is to be expected)
 	 * @throws Api\Exception\WrongParameter
 	 */
-	private function splitID($str,&$account,&$folder,&$id=null)
+	private function splitID($str,&$account,&$folder,&$appid=null)
 	{
-		$this->backend->splitID($str, $account, $folder, $id);
+		$this->backend->splitID($str, $account, $folder, $appid);
 
 		// convert numeric folder-id back to folder name
 		$folder = $this->hash2folder($account,$f=$folder);
 
-		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$str','$account','$folder',$id)");
+		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$str','$account','$folder',$appid)");
 	}
 
 	/**
@@ -2091,7 +2092,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			return $this->folder2hash($account, $new_name);
 		}
 		$this->folderHashes[$account][$index] = $new_name;
-
+		$this->storeFolderHashes();
 		return $index;
 	}
 
