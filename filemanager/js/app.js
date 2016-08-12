@@ -10,8 +10,9 @@
  */
 
 /*egw:uses
-	/api/js/webodf/wodotexteditor/wodotexteditor/wodotexteditor.js;
-	/api/js/webodf/wodotexteditor/wodotexteditor/webodf.js;
+	/api/js/webodf/collab/webodf.js;
+	/api/js/webodf/collab/wodocollabtexteditor.js;
+	/api/js/webodf/collab/dojo-amalgamation.js;
  */
 
 /**
@@ -119,7 +120,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 			// need to make body rock solid to avoid extra scrollbars
 			jQuery('body').css({overflow:'hidden'});
-			this._init_odf_editor ();
+			this._init_odf_collab_editor ();
 		}
 	},
 
@@ -1082,10 +1083,12 @@ app.classes.filemanager = AppJS.extend(
 
 		var serverOptions = {
 			"serverParams": {
-					url:egw.webserverUrl+'/api/js/webodf/poll.php?action=poll',
+					url:egw.link('/index.php?', {
+						menuaction: 'filemanager.filemanager_collab.poll'
+					}),
 					genesisUrl:egw.webserverUrl+file_path
 				},
-			"sessionId": base64.toBase64(egw.webserverUrl+file_path),
+			"sessionId": egw.webserverUrl+file_path,
 			editorOptions: {
 				allFeaturesEnabled: true,
 				userData: {
@@ -1332,7 +1335,7 @@ app.classes.filemanager = AppJS.extend(
 			serverParams = _args.serverParams,
 			sessionId = _args.sessionId,
 			editorOptions = jQuery.extend(_args.editorOptions,{networkSecurityToken:'', closeCallback:this.editor_close}),
-			userId = egw.user('account_lid'),
+			userId = egw.user('account_id'),
 			memberId,
 			self = this;
 

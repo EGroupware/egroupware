@@ -58,22 +58,28 @@ class filemanager_collab_bo
 	 */
 	protected function initSession ($es_id)
 	{
-		$session = $this->db->select(self::SESSION_TABLE,'*', array('collab_es_id' => $es_id));
+		$query = $this->db->select(self::SESSION_TABLE,'*', array('collab_es_id' => $es_id),__LINE__,__FILE__);
 		$full_name = $GLOBALS['egw_info']['user']['account_fullname'];
-		$color = $GLOBALS['egw_info']['user']['prefs']['collab_user_color'];
+		$color = $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_user_color'];
 		$user_id = $GLOBALS['egw_info']['user']['account_id'];
 
+		$imageUrl = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=addressbook.addressbook_ui.photo&account_id='.$user_id;
 
-		if (!($result = self::db2id($session->fields)) && $es_id)
+		if (!($result = self::db2id($query->fetchRow())) && $es_id)
 		{
 			$result = self::db2id($this->SESSION_add2Db($es_id));
 		}
 
-		$this->MEMBER_add2Db($es_id, $user_id, $color);
+		if (is_null($result['member_id'] = $this->MEMBER_getUserMemberId($es_id, $user_id)))
+		{
+			$this->MEMBER_add2Db($es_id, $user_id, $color);
 
-		$member_id = $this->MEMBER_getLastMember();
+			$result['member_id'] = $this->MEMBER_getLastMember();
 
-		$this->OP_addMember($es_id, $member_id, $full_name, $user_id, $color);
+			$this->OP_addMember($es_id, $result['member_id'], $full_name, $user_id, $color, $imageUrl);
+		}
+
+		return $result;
 	}
 
 	/**
@@ -99,7 +105,6 @@ class filemanager_collab_bo
 		return $data;
 	}
 
-
 	/**
 	 * OP addMember function is backend equivalent to addMember from frontend
 	 *
@@ -110,12 +115,12 @@ class filemanager_collab_bo
 	 * @param string $color
 	 * @param string $imageUrl
 	 */
-	protected function OP_addMember($es_id, $member_id, $full_name, $user_id, $color, $imageUrl)
+	protected function OP_addMember($es_id, $member_id, $full_name, $user_id, $color='', $imageUrl='')
 	{
 		$date = new DateTime();
 		$op = array(
 			'optype' => 'AddMember',
-			'member' => (string) $member_id,
+			'memberid' => (string) $member_id,
 			'timestamp' => $date->getTimestamp(),
 			'setProperties' => array(
 				'fullName' => $full_name,
@@ -139,7 +144,7 @@ class filemanager_collab_bo
 	{
 		if (!$es_id) throw new Exception ('Session id must be given, none given!');
 
-		$headSeq = $this->db->select(
+		$query = $this->db->select(
 				self::OP_TABLE,
 				'collab_seq',
 				array('collab_es_id' => $es_id),
@@ -149,8 +154,58 @@ class filemanager_collab_bo
 				'ORDER BY collab_seq DESC LIMIT 1',
 				'filemanager'
 		);
+		$head_seq = $query->fetchRow();
+		return is_array($head_seq)? $head_seq['collab_seq']: '';
+	}
 
-		return $headSeq->fields? $headSeq->fields['collab_seq']: '';
+	/**
+	 * Function to get opsepcs of session base on seq head
+	 *
+	 * @param string $es_id session id
+	 * @param string $seq_head sequence head
+	 *
+	 * @return array returns array of opspecs
+	 */
+	protected function OP_getOPSECS($es_id, $seq_head)
+	{
+		if ($seq_head == "")
+		{
+			$seq_head = -1;
+		}
+		$ops = array();
+		$query = $this->db->select(
+				self::OP_TABLE,
+				'collab_opspec',
+				'collab_es_id ="'. $es_id.'" AND collab_seq >'.$seq_head,
+				__LINE__,
+				__FILE__,
+				false, 'ORDER BY collab_seq ASC','filemanager');
+
+		foreach ($query as $spec)
+		{
+				$op = json_decode($spec['collab_opspec'], true);
+				$op['memberid'] = strval($op['memberid']);
+				$ops [] = $op;
+		}
+		return $ops;
+	}
+
+	/**
+	 * Function to ops data array into op table
+	 *
+	 * @param string $es_id session id
+	 * @param string $member_id member id
+	 * @param array $client_ops array of ops
+	 * @throws Exception if no array of ops given
+	 */
+	protected function OP_addOPS ($es_id, $member_id, $client_ops)
+	{
+		if (count($client_ops)<= 0) throw new Exception ('ops need to be an array of op data, none array given!');
+
+		foreach ($client_ops as $op)
+		{
+			$this->OP_add2Db($op, $es_id);
+		}
 	}
 
 	/**
@@ -163,7 +218,7 @@ class filemanager_collab_bo
 	{
 		$data = array (
 			'collab_es_id' => $es_id,
-			'collab_member' => $op['member'],
+			'collab_member' => $op['memberid'],
 			'collab_optype' => $op['optype'],
 			'collab_opspec' => json_encode($op)
 		);
@@ -192,21 +247,21 @@ class filemanager_collab_bo
 	 *
 	 * @param string $member_id member id
 	 *
-	 * @return array returns an array consist of member record
+	 * @return string member id or null
 	 * @throws Exception throws exception if no member id is given
 	 */
-	protected function MEMBER_getMember ($member_id)
+	protected function MEMBER_getUserMemberId ($es_id, $user_id)
 	{
-		if (!$member_id) throw new Exception ('Member id must be given, none given!');
-		$member = $this->db->select(
+		if (!$es_id || !$user_id) throw new Exception ('Member id must be given, none given!');
+		$query = $this->db->select(
 				self::MEMBER_TABLE,
-				'*',
-				array('collab_member_id' => $member_id),
+				'collab_member_id',
+				array('collab_es_id' => $es_id, 'collab_uid' => $user_id),
 				__LINE__,
 				__FILE__
 		);
-
-		return $member->fields? self::db2id($member->fileds): [];
+		$member = $query->fetchRow();
+		return is_array($member)? $member['collab_member_id']: null;
 	}
 
 	/**
@@ -230,7 +285,7 @@ class filemanager_collab_bo
 	 */
 	protected function MEMBER_getLastMember()
 	{
-		$last_row = $this->db->select(
+		$query = $this->db->select(
 				self::MEMBER_TABLE,
 				'collab_member_id',
 				'',
@@ -239,7 +294,7 @@ class filemanager_collab_bo
 				false,
 				"ORDER BY `collab_member_id` DESC LIMIT 1;"
 		);
-
-		return $last_row->fields? $last_row->fields['collab_member_id']: 0;
+		$last_row = $query->fetchRow();
+		return is_array($last_row)? $last_row['collab_member_id']: 0;
 	}
 }

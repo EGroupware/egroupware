@@ -124,6 +124,13 @@ class filemanager_hooks
 		);
 
         $settings = array(
+			'sections.1' => array(
+				'type'  => 'section',
+				'title' => lang('General settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
+				'admin'  => False
+			),
 			'startfolder'	=> array(
 				'type'		=> 'input',
 				'name'		=> 'startfolder',
@@ -227,6 +234,26 @@ class filemanager_hooks
 				'admin'  => False,
 			);
 		}
+
+		$settings += array (
+			'sections.2' => array(
+				'type'  => 'section',
+				'title' => lang('Collab Editor settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
+				'admin'  => False
+			),
+			'collab_user_color' => array(
+				'type' => 'color',
+				'label' => lang('User color indicator'),
+				'name' => 'collab_user_color',
+				'help' => lang('Use eg. %1 or %2','#FF0000','orange'),
+				'no_lang'=> true,
+				'xmlrpc' => True,
+				'admin'  => False,
+			)
+		);
+
 		return $settings;
 	}
 
