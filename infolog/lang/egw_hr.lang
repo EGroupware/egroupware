@@ -64,7 +64,7 @@ custom	infolog	hr	Proizvoljno
 custom contact-address, leave empty to use information from most recent link	infolog	hr	Proizvoljna adresa za kontakt, ostavite prazno za upotrebu informacija iz zadnjeg lika-a
 custom contact-information, leave emtpy to use information from most recent link	infolog	hr	Custom contact-information, leave emtpy to use information from most recent link
 custom fields	infolog	hr	Proizvoljna polja
-custom fields, typ and status	common	hr	Proizvoljna polja, vrste i status
+custom fields, type and status	common	hr	Proizvoljna polja, vrste i status
 custom regarding	infolog	hr	Custom regarding
 custom status for typ	infolog	hr	Proizvoljan status za tip
 customfields	infolog	hr	Proizvoljna polja

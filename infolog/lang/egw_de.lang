@@ -120,7 +120,7 @@ custom	infolog	de	Benutzerdefiniert
 custom contact-address, leave empty to use information from most recent link	infolog	de	benutzerdefinierte Kontaktadresse, leer lassen um die Daten der Verknüpfung zu verwenden
 custom contact-information, leave emtpy to use information from most recent link	infolog	de	benutzerdefinierte Kontaktinformationen, leer lassen um die Daten der Verknüpfung zu verwenden
 custom fields	infolog	de	Benutzerdefinierte Felder
-custom fields, typ and status	common	de	Benutzerdefinierte Felder, Typen und Status
+custom fields, type and status	common	de	Benutzerdefinierte Felder, Typen und Status
 custom from	infolog	de	Benutzerdefinierter  Kontakt
 custom regarding	infolog	de	Benutzerdefinierter Bezug
 custom status for typ	infolog	de	Benutzerdefinierter Status für Typ

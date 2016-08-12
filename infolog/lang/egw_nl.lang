@@ -91,7 +91,7 @@ custom	infolog	nl	Aangepast
 custom contact-address, leave empty to use information from most recent link	infolog	nl	Aangepast contactadres, laat dit leeg om de informatie te gebruiken van de meest recente link
 custom contact-information, leave emtpy to use information from most recent link	infolog	nl	Aangepaste contactinformatie, laat dit leeg om de informatie te gebruiken van de meest recente link
 custom fields	infolog	nl	Aangepast velden
-custom fields, typ and status	common	nl	Aangepaste velden, type en status
+custom fields, type and status	common	nl	Aangepaste velden, type en status
 custom from	infolog	nl	Aangepast van
 custom regarding	infolog	nl	Aangepast m.b.t.
 custom status for typ	infolog	nl	Aangepaste status voor type

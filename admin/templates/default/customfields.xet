@@ -83,7 +83,7 @@
 		</grid>
 	</template>
 	<template id="admin.customfields.add" template="" lang="" group="0" version="1.9.001">
-		<buttononly label="Add" id="add" onclick="egw.open_link('admin.customfields.edit&amp;appname='+widget.getArrayMgr('content').getRoot().getEntry('nm[appname]')+'&amp;use_private='+widget.getArrayMgr('content').getRoot().getEntry('use_private'),false,'450x380');"/>
+		<buttononly label="Add" id="add" onclick="egw.open_link('admin.admin_customfields.edit&amp;appname='+widget.getArrayMgr('content').getRoot().getEntry('nm[appname]')+'&amp;use_private='+widget.getArrayMgr('content').getRoot().getEntry('use_private'),false,'450x380');"/>
 	</template>
 	<template id="admin.customfields" template="" lang="" group="0" version="1.9.001">
 		<template id="@type_template"/>

@@ -114,7 +114,7 @@ custom	infolog	pt	Personalizar
 custom contact-address, leave empty to use information from most recent link	infolog	pt	Personalizar endereço de contacto, deixar vazio para utilizar informação da ligação mais recente
 custom contact-information, leave emtpy to use information from most recent link	infolog	pt	Personalizar informação de contacto, deixar vazio para utilizar informação da ligação mais recente
 custom fields	infolog	pt	Personalizar campos
-custom fields, typ and status	common	pt	Personalizar campos, tipo e estado
+custom fields, type and status	common	pt	Personalizar campos, tipo e estado
 custom from	infolog	pt	Personalizado
 custom regarding	infolog	pt	Personalizar tendo em conta
 custom status for typ	infolog	pt	Personalizar estado do tipo

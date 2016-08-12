@@ -63,7 +63,7 @@ csv-filename	infolog	eu	CSV-fitxategiaren izena
 csv-import	common	eu	CSV-inportatu
 custom	infolog	eu	Pertsonalizatua
 custom fields	infolog	eu	Eremu pertsonalizatuak
-custom fields, typ and status	common	eu	Eremu pertsonalizatuak, mota eta egoera
+custom fields, type and status	common	eu	Eremu pertsonalizatuak, mota eta egoera
 custom regarding	infolog	eu	Oroitzapen pertsonalak
 custom status for typ	infolog	eu	Egoera pertsonalizatua motarentzat
 customfields	infolog	eu	Eremu pertsonalizatuak

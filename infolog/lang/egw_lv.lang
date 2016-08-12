@@ -63,7 +63,7 @@ custom	infolog	lv	Klients
 custom contact-address, leave empty to use information from most recent link	infolog	lv	Klienta kontakts-adrese, atstāj tukšu, lai izmantotu informāciju no pēdējās saites
 custom contact-information, leave emtpy to use information from most recent link	infolog	lv	Klienta kontakts- informācija, atstāj tukšu, lai izmantotu informāciju no pēdējās saites
 custom fields	infolog	lv	Klienta lauki
-custom fields, typ and status	common	lv	Klienta lauki, tips un statuss
+custom fields, type and status	common	lv	Klienta lauki, tips un statuss
 custom regarding	infolog	lv	Par klientu
 custom status for typ	infolog	lv	Klienta veida statuss
 customfields	infolog	lv	Klienta lauki

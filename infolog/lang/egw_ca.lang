@@ -77,7 +77,7 @@ custom	infolog	ca	Personalitzat
 custom contact-address, leave empty to use information from most recent link	infolog	ca	Adreça de contacte personalitzada. Deixar en blanc per usar la informació de l'enllaç més recent
 custom contact-information, leave emtpy to use information from most recent link	infolog	ca	Informació de contacte personalitzada. Deixar en blanc per usar la informació de l'enllaç més recent
 custom fields	infolog	ca	Camps personalitzats
-custom fields, typ and status	common	ca	Camps personalitzats, tipus i estat
+custom fields, type and status	common	ca	Camps personalitzats, tipus i estat
 custom regarding	infolog	ca	Records personals
 custom status for typ	infolog	ca	Estat personalitzat per al tipus
 customfields	infolog	ca	Camps personalitzats

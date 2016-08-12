@@ -75,7 +75,7 @@ custom	infolog	zh	自定义
 custom contact-address, leave empty to use information from most recent link	infolog	zh	请输入联系方式. 留空将自动设为首要关联
 custom contact-information, leave emtpy to use information from most recent link	infolog	zh	请输入联系人信息. 留空将自动设为首要关联
 custom fields	infolog	zh	自定义字段
-custom fields, typ and status	common	zh	自定义字段, 类型及状态
+custom fields, type and status	common	zh	自定义字段, 类型及状态
 custom regarding	infolog	zh	自定义关于
 custom status for typ	infolog	zh	自定义该类型的可选状态:
 customfields	infolog	zh	Customfields

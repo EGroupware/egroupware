@@ -81,7 +81,7 @@ csv-filename	infolog	id	CSV-Filename
 csv-import	common	id	CSV-Import
 custom	infolog	id	Custom
 custom fields	infolog	id	Custom Fields
-custom fields, typ and status	common	id	Custom fields, tipe dan status
+custom fields, type and status	common	id	Custom fields, tipe dan status
 custom from	infolog	id	Custom from
 custom regarding	infolog	id	Custom regarding
 customfields	infolog	id	Customfields

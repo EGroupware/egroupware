@@ -90,7 +90,7 @@ custom	infolog	zh-tw	自訂
 custom contact-address, leave empty to use information from most recent link	infolog	zh-tw	自訂聯絡住址，如果空白就會使用最近連結資訊
 custom contact-information, leave emtpy to use information from most recent link	infolog	zh-tw	自訂聯絡資訊，如果空白就會使用最近連結資訊
 custom fields	infolog	zh-tw	自訂欄位
-custom fields, typ and status	common	zh-tw	自訂欄位、格式與狀態
+custom fields, type and status	common	zh-tw	自訂欄位、格式與狀態
 custom regarding	infolog	zh-tw	自訂關於
 custom status for typ	infolog	zh-tw	自訂格式的狀態
 customfields	infolog	zh-tw	自定欄位

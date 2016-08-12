@@ -93,7 +93,7 @@ custom	infolog	hu	Egyedi
 custom contact-address, leave empty to use information from most recent link	infolog	hu	Egyedi kapcsolat cím, hagyja üresen annak az információnak a használatához ami a legújabb hivatkozásban található
 custom contact-information, leave emtpy to use information from most recent link	infolog	hu	Egyedi kapcsolat információ, hagyja üresen annak az információnak a használatához ami a legújabb hivatkozásban található
 custom fields	infolog	hu	Egyedi mezők
-custom fields, typ and status	common	hu	Egyedi mezők, típus és státusz
+custom fields, type and status	common	hu	Egyedi mezők, típus és státusz
 custom from	infolog	hu	Egyedi innen
 custom regarding	infolog	hu	Egyedi vonatkozás
 custom status for typ	infolog	hu	Típus egyedi státusza

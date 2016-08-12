@@ -118,7 +118,7 @@ custom	infolog	sk	Používateľom definované
 custom contact-address, leave empty to use information from most recent link	infolog	sk	Používateľom definovaná kontaktná adresa - ak necháte prázdne, použije sa údaj z najčerstvejšieho odkazu
 custom contact-information, leave emtpy to use information from most recent link	infolog	sk	Používateľom definované kontaktné informácie - ak necháte prázdne, použije sa údaj z najčerstvejšieho odkazu
 custom fields	infolog	sk	Používateľské polia
-custom fields, typ and status	common	sk	Používateľské polia, typ a stav
+custom fields, type and status	common	sk	Používateľské polia, typ a stav
 custom from	infolog	sk	Používateľom definované od
 custom regarding	infolog	sk	Používateľom definované ohľadom
 custom status for typ	infolog	sk	Používateľom definovaný stav pre typ

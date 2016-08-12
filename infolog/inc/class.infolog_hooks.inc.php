@@ -110,13 +110,19 @@ class infolog_hooks
 		{
 			$file = Array(
 				'Site configuration' => Egw::link('/index.php',array(
-					'menuaction' => 'infolog.infolog_ui.admin' )),
+					'menuaction' => 'infolog.infolog_ui.admin',
+					'ajax' => 'true',
+				)),
 				'Global Categories'  => Egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
-					'global_cats'=> True)),
-				'Custom fields, typ and status' => Egw::link('/index.php',array(
-					'menuaction' => 'infolog.infolog_customfields.index')),
+					'global_cats'=> True,
+					'ajax' => 'true',
+				)),
+				'Custom fields, type and status' => Egw::link('/index.php',array(
+					'menuaction' => 'infolog.infolog_customfields.index',
+					'ajax' => 'true',
+				)),
 			);
 			if ($location == 'admin')
 			{

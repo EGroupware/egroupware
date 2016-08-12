@@ -85,7 +85,7 @@ class addressbook_hooks
 			if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
 			{
 				$file['Custom fields'] = Egw::link('/index.php',array(
-					'menuaction' => 'admin.customfields.index',
+					'menuaction' => 'admin.admin_customfields.index',
 					'appname'    => $appname,
 					'use_private'=> 1,
 					'ajax'       => 'true'

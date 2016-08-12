@@ -132,12 +132,14 @@ class timesheet_hooks
 		{
 			$file = Array(
 				'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname,'&ajax=true'),
-				'Custom fields' => Egw::link('/index.php','menuaction=admin.customfields.index&appname='.$appname.'&use_private=1'),
+				'Custom fields' => Egw::link('/index.php','menuaction=admin.customfields.index&appname='.$appname.'&use_private=1&ajax=true'),
 				'Global Categories'  => Egw::link('/index.php',array(
 					'menuaction' => 'admin.admin_categories.index',
 					'appname'    => $appname,
-					'global_cats'=> True)),
-				'Edit Status' => Egw::link('/index.php','menuaction=timesheet.timesheet_ui.editstatus'),
+					'global_cats'=> True,
+					'ajax' => 'true',
+				)),
+				'Edit Status' => Egw::link('/index.php','menuaction=timesheet.timesheet_ui.editstatus&ajax=true'),
 			);
 			if ($location == 'admin')
 			{

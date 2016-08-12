@@ -63,7 +63,7 @@ class resources_hooks
 				'Configure Access Permissions' => Egw::link('/index.php',
 					'menuaction=resources.resources_acl_ui.index&ajax=true'),
 				'Custom Fields'=>egw::link('/index.php',
-					'menuaction=admin.customfields.index&appname=resources'),
+					'menuaction=admin.customfields.index&appname=resources&ajax=true'),
 			);
 			if ($location == 'admin')
 			{
