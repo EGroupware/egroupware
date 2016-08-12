@@ -617,8 +617,8 @@ class StreamWrapper implements StreamWrapperIface
 	/**
 	 * This method is called in response to mkdir() calls on URL paths associated with the wrapper.
 	 *
-	 * It should attempt to create the directory specified by path.
-	 * In order for the appropriate error message to be returned, do not define this method if your wrapper does not support creating directories.
+	 * Not all wrappers, eg. smb(client) support recursive directory creation.
+	 * Therefore we handle that here instead of passing the options to underlaying wrapper.
 	 *
 	 * @param string $path
 	 * @param int $mode
@@ -631,6 +631,17 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
+		// check if recursive option is set and needed
+		if (($options & STREAM_MKDIR_RECURSIVE) &&
+			($parent_url = Vfs::dirname($url)) &&
+			!($this->url_stat($parent_url, STREAM_URL_STAT_QUIET)) &&
+			Vfs::parse_url($parent_url, PHP_URL_PATH) !== '/')
+		{
+			if (!mkdir($parent_url, $mode, $options)) return false;
+		}
+		// unset it now, as it was handled above
+		$options &= ~STREAM_MKDIR_RECURSIVE;
+
 		$ret = mkdir($url,$mode,$options);
 
 		// call "vfs_mkdir" hook
