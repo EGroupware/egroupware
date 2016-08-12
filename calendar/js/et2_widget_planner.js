@@ -2012,6 +2012,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		x = Math.round(x);
 		y = Math.round(y);
+		
+		// Round to user's preferred event interval
+		var interval = egw.preference('interval','calendar') || 30;
 
 		// Relative horizontal position, as a percentage
 		var rel_x = Math.min(x / jQuery('.calendar_eventRows',this.div).width(),1);
@@ -2019,11 +2022,36 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		// Relative time, in minutes from start
 		var rel_time = 0;
 
+		var day_header = jQuery('.calendar_plannerScaleDay',this.headers);
+
 		// Simple math, the x is offset from start date
-		if(this.options.group_by !== 'month')
+		if(this.options.group_by !== 'month' && (
+			// Either all days are visible, or only 1 day (no day header)
+			this.options.show_weekend || day_header.length === 0
+		))
 		{
 			rel_time = (new Date(this.options.end_date) - new Date(this.options.start_date))*rel_x/1000;
 			this.date_helper.set_value(this.options.start_date.toJSON());
+		}
+		// Not so simple math, need to account for missing days
+		else if(this.options.group_by !== 'month' && !this.options.show_weekend)
+		{
+			// Find which day
+			if(day_header.length === 0) return false;
+			var day = document.elementFromPoint(
+				day_header.offset().left + rel_x * this.headers.innerWidth(),
+				day_header.offset().top
+			);
+
+			// Use day, and find time in that day
+			if(day && day.dataset && day.dataset.date)
+			{
+				this.date_helper.set_value(day.dataset.date);
+				rel_time = ((x - jQuery(day).position().left) / jQuery(day).outerWidth(true)) * 24*60;
+				this.date_helper.set_minutes(Math.round(rel_time/interval) * interval);
+				return new Date(this.date_helper.getValue());
+			}
+			return false;
 		}
 		else
 		{
@@ -2077,7 +2105,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		}
 		if(rel_time < 0) return false;
 
-		var interval = egw.preference('interval','calendar') || 30;
 		this.date_helper.set_minutes(Math.round(rel_time / (60 * interval))*interval);
 
 		return new Date(this.date_helper.getValue());
@@ -2090,6 +2117,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	 */
 	_mouse_down: function(event)
 	{
+		// Ignore headers
+		if(jQuery(event.target, this.headers).length !== 0) return false;
+		
 		// Get time at mouse
 		if(this.options.group_by === 'month')
 		{
@@ -2135,7 +2165,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			var time = this._get_time_from_position(event.offsetX, event.offsetY);
 		}
 
-		return this._drag_create_end({date: time.toJSON()});
+		return this._drag_create_end(time ? {date: time.toJSON()} : false);
 	},
 
 	/**
