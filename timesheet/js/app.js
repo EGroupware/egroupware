@@ -103,6 +103,60 @@ app.classes.timesheet = AppJS.extend(
 	},
 
 	/**
+	 * Wrapper so add action in the context menu can pass current
+	 * filter values into new edit dialog
+	 *
+	 * @see add_with_extras
+	 *
+	 * @param {egwAction} action
+	 * @param {egwActionObject[]} selected
+	 */
+	add_action_handler: function(action, selected)
+	{
+		var nm = action.getManager().data.nextmatch || false;
+		if(nm)
+		{
+			this.add_with_extras(nm);
+		}
+	},
+
+	/**
+	 * Opens a new edit dialog with some extra url parameters pulled from
+	 * nextmatch filters.
+	 * 
+	 * @param {et2_widget} widget Originating/calling widget
+	 */
+	add_with_extras: function(widget)
+	{
+		var nm = widget.getRoot().getWidgetById('nm');
+		var nm_value = nm.getValue() || {};
+
+		var extras = {};
+		if(nm_value.cat_id)
+		{
+			extras.cat_id = nm_value.cat_id;
+		}
+		
+		if(nm_value.col_filter && nm_value.col_filter.linked)
+		{
+			var split = nm_value.col_filter.linked.split(':') || '';
+			extras.link_app = split[0] || '';
+			extras.link_id = split[1] || '';
+		}
+		if(nm_value.col_filter && nm_value.col_filter.pm_id)
+		{
+			extras.link_app = 'projectmanager';
+			extras.link_id = nm_value.col_filter.pm_id;
+		}
+		else if (nm_value.col_filter && nm_value.col_filter.ts_project)
+		{
+			extras.ts_project = nm_value.col_filter.ts_project;
+		}
+
+		egw.open('','timesheet','add',extras);
+	},
+
+	/**
 	 * Change handler for project selection to set empty ts_project string, if project get deleted
 	 *
 	 * @param {type} _egw

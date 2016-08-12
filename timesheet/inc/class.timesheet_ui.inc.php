@@ -85,6 +85,8 @@ class timesheet_ui extends timesheet_bo
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id'   => (int) $_REQUEST['cat_id'],
 					'ts_status'=> $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
+					'ts_project' => $_REQUEST['ts_project'],
+					'ts_title_blur' => $_REQUEST['ts_project'],
 				);
 			}
 			$matches = null;
@@ -97,7 +99,10 @@ class timesheet_ui extends timesheet_bo
 				$only_admin_edit = true;
 				$msg = lang('only Admin can edit this status');
 			}
-			$this->data['ts_project_blur'] = $this->data['pm_id'] ? Link::title('projectmanager', $this->data['pm_id']) : '';
+			if(!$this->data['ts_project_blur'])
+			{
+				$this->data['ts_project_blur'] = $this->data['pm_id'] ? Link::title('projectmanager', $this->data['pm_id']) : '';
+			}
 		}
 		else
 		{
@@ -976,8 +981,7 @@ class timesheet_ui extends timesheet_bo
 */
 			'add' => array(
 				'caption' => 'Add',
-				'url' => 'menuaction=timesheet.timesheet_ui.edit',
-				'popup' => Link::get_registry('timesheet', 'add_popup'),
+				'onExecute' => 'javaScript:app.timesheet.add_action_handler',
 				'group' => $group,
 			),
 			'cat' => Etemplate\Widget\Nextmatch::category_action(
