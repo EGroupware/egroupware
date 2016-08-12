@@ -158,7 +158,7 @@ class calendar_hooks
 		{
 			$times = Api\Etemplate\Widget\Select::typeOptions('select-hour', '');
 		}
-		for ($i = 2; $i <= 4; ++$i)
+		for ($i = 2; $i <= 9; ++$i)
 		{
 			$muliple_weeks[$i] = lang('%1 weeks',$i);
 		}
