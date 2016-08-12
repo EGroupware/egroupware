@@ -112,7 +112,7 @@ custom	infolog	fi	Muokkaa
 custom contact-address, leave empty to use information from most recent link	infolog	fi	Yhteystieto, jätä tyhjäksi jos viimeisintä linkkiä käytetään
 custom contact-information, leave emtpy to use information from most recent link	infolog	fi	Yhteystieto, jätä tyhjäksi jos viimeisintä linkkiä käytetään
 custom fields	infolog	fi	Lisäkentät
-custom fields, typ and status	common	fi	Lisäkentät, tyyppi ja tila
+custom fields, type and status	common	fi	Lisäkentät, tyyppi ja tila
 custom from	infolog	fi	Muokkaa:
 custom regarding	infolog	fi	Muokkaa:
 custom status for typ	infolog	fi	Muokattava tila tehtävätyypille

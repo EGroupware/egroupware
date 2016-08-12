@@ -87,7 +87,7 @@ custom	infolog	bg	По избор
 custom contact-address, leave empty to use information from most recent link	infolog	bg	Адрес на контакт по избор, ако не се попълни използва последната връзка
 custom contact-information, leave emtpy to use information from most recent link	infolog	bg	Информация за контакт по избор, ако не се попълни използва последната връзка
 custom fields	infolog	bg	Полета по избор
-custom fields, typ and status	common	bg	По избор - полета, тип и статус
+custom fields, type and status	common	bg	По избор - полета, тип и статус
 custom from	infolog	bg	Форма по избор
 custom regarding	infolog	bg	По избор - относно
 custom status for typ	infolog	bg	По избор - статус за тип

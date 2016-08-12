@@ -78,7 +78,7 @@ custom	infolog	el	Προσαρμογή
 custom contact-address, leave empty to use information from most recent link	infolog	el	Προσαρμοσμένη διεύθυνση επαφής, να μένει κενό για τη χρησιμοποίηση των πιο πρόσφατων συνδέσμων
 custom contact-information, leave emtpy to use information from most recent link	infolog	el	Προσαρμοσμένες πληροφορίες επαφής, να μένει κενό για τη χρησιμοποίηση των πιο πρόσφατων συνδέσμων
 custom fields	infolog	el	Προσαρμοσμένα πεδία
-custom fields, typ and status	common	el	Προσαρμοσμένα πεδία,τύπος και κατάσταση
+custom fields, type and status	common	el	Προσαρμοσμένα πεδία,τύπος και κατάσταση
 custom regarding	infolog	el	Προσαρμοσμένη αναφορά
 custom status for typ	infolog	el	Προσαρμοσμένη κατάσταση για τον τύπο
 customfields	infolog	el	Προσαρμοσμένα πεδία

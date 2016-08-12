@@ -13,11 +13,10 @@
 use EGroupware\Api;
 use EGroupware\Api\Etemplate;
 
-require_once(EGW_INCLUDE_ROOT . '/admin/inc/class.customfields.inc.php');
 /**
  * Administration of custom fields, type and status
  */
-class infolog_customfields extends customfields
+class infolog_customfields extends admin_customfields
 {
 	public $appname = 'infolog';
 	/**
@@ -50,6 +49,8 @@ class infolog_customfields extends customfields
 		$this->config_data = Api\Config::read('infolog');
 		$this->fields = &$this->bo->customfields;
 		$this->group_owners =& $this->bo->group_owners;
+
+		Api\Translation::add_app('infolog');
 	}
 
 

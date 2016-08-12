@@ -55,7 +55,7 @@ custom	infolog	iw	מותאם אישית
 custom contact-address, leave empty to use information from most recent link	infolog	iw	כתובת איש קשר מותאם אישית -פ להשאיר ריק כדי להשתמש במידע מהקישור האחרון
 custom contact-information, leave emtpy to use information from most recent link	infolog	iw	נתוני איש קשר מותאם אישית -פ להשאיר ריק כדי להשתמש במידע מהקישור האחרון
 custom fields	infolog	iw	שדות מותאמים אישית
-custom fields, typ and status	common	iw	שדות מותאמים אישית, סוג וסטאטוס
+custom fields, type and status	common	iw	שדות מותאמים אישית, סוג וסטאטוס
 custom regarding	infolog	iw	בנושא מותאם אישית
 custom status for typ	infolog	iw	סטאטוס מותאם אישית עבור סוג
 customfields	infolog	iw	שדות מותאמים אישית

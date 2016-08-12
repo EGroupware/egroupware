@@ -94,7 +94,7 @@ custom	infolog	cs	Uživatelsky definované
 custom contact-address, leave empty to use information from most recent link	infolog	cs	Uživatelsky definovaná kontaktní adresa, ponechte prázdné pokud chcete použít informace z posledního odkazu
 custom contact-information, leave emtpy to use information from most recent link	infolog	cs	Uživatelsky definované kontaktní údaje, ponechte prázdné pro použití informací z posledního odkazu
 custom fields	infolog	cs	Uživatelsky definované položky
-custom fields, typ and status	common	cs	Uživatelsky definované položky, typy a stavy
+custom fields, type and status	common	cs	Uživatelsky definované položky, typy a stavy
 custom from	infolog	cs	Uživatelsky definované od
 custom regarding	infolog	cs	Uživatelsky definovaný ohled
 custom status for typ	infolog	cs	Uživatelsky definovaný stav pro typ

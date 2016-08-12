@@ -120,7 +120,7 @@ custom	infolog	it	Personalizzato
 custom contact-address, leave empty to use information from most recent link	infolog	it	Indirizzo personalizzato, lascia vuoto per usare le informazioni dal link più recente
 custom contact-information, leave emtpy to use information from most recent link	infolog	it	Informazione personalizzata del contatto, lascia vuoto per usare le informazioni dal link più recente
 custom fields	infolog	it	Campi Personalizzati
-custom fields, typ and status	common	it	Campi personalizzati, tipo e stato
+custom fields, type and status	common	it	Campi personalizzati, tipo e stato
 custom from	infolog	it	Campo Da personalizzato
 custom regarding	infolog	it	Considerazione personale
 custom status for typ	infolog	it	Stato personalizzato per il tipo

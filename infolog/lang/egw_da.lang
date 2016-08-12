@@ -67,7 +67,7 @@ custom	infolog	da	Egne
 custom contact-address, leave empty to use information from most recent link	infolog	da	Egen kontakt-adresser, efterlad tom for at bruge informationen fra det seneste link
 custom contact-information, leave emtpy to use information from most recent link	infolog	da	Egen kontakt-information, efterlad tom for at bruge informationen fra det seneste link
 custom fields	infolog	da	Egne felter
-custom fields, typ and status	common	da	Egne felter, type og status
+custom fields, type and status	common	da	Egne felter, type og status
 custom status for typ	infolog	da	Egen status for type
 customfields	infolog	da	Egne felter
 datecreated	infolog	da	dato oprettet

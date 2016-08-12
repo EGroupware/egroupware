@@ -57,7 +57,7 @@ custom	infolog	uk	Власне
 custom contact-address, leave empty to use information from most recent link	infolog	uk	Додаткові адреси контактів, залиште порожнім, щоб використати інформацію з останнього посилання
 custom contact-information, leave emtpy to use information from most recent link	infolog	uk	Додаткові інформація контактів, залиште порожнім, щоб використати інформацію з останнього посилання
 custom fields	infolog	uk	Власні поля
-custom fields, typ and status	common	uk	Власні поля, типи та статуси
+custom fields, type and status	common	uk	Власні поля, типи та статуси
 custom status for typ	infolog	uk	Власний статус типу
 customfields	infolog	uk	Власні поля
 datecreated	infolog	uk	Дата створення
