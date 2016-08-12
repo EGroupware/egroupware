@@ -2352,7 +2352,7 @@ class Vfs
 	 */
 	static function chown($path,$owner)
 	{
-		return $path[0] == '/' && chown(self::PREFIX.$path, $owner);
+		return $path[0] == '/' && chown(self::PREFIX.$path, is_numeric($owner) ? abs($owner) : $owner);
 	}
 
 	/**
@@ -2366,7 +2366,7 @@ class Vfs
 	 */
 	static function chgrp($path,$group)
 	{
-		return $path[0] == '/' && chgrp(self::PREFIX.$path, $group);
+		return $path[0] == '/' && chgrp(self::PREFIX.$path, is_numeric($group) ? abs($group) : $group);
 	}
 
 	/**
