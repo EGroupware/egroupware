@@ -26,7 +26,7 @@
 				</row>
 				<row>
 					<description value="Password" for="account_passwd"/>
-					<passwd id="account_passwd" class="et2_fullWidth"/>
+					<passwd id="account_passwd" class="et2_fullWidth" onchange="app.addressbook.account_change"/>
 					<description/>
 					<description value="Re-enter password" for="account_passwd_2"/>
 					<passwd id="account_passwd_2" class="et2_fullWidth" onchange="app.addressbook.account_change"/>
@@ -74,7 +74,7 @@
 					<description value="Last password change"/>
 					<date-time id="account_lastpwd_change" readonly="true"/>
 					<description/>
-				</row> 
+				</row>
 			</rows>
 		</grid>
 	</template>
