@@ -32,6 +32,7 @@ class Url extends Etemplate\Widget
 	 * but NOT:
 	 * - "Becker, Ralf <rb@stylite.de>" (contains comma outside " or ' enclosed block)
 	 * - "Becker < Ralf <rb@stylite.de>" (contains <    ----------- " ---------------)
+	 * - ToDo: "\u200Bfrancesca.klein@ikem.de" (starts with a "zero width space")
 	 *
 	 * About umlaut or IDN domains: we currently only allow German umlauts in domain part!
 	 *
