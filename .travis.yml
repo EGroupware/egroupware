@@ -31,14 +31,11 @@ before_script:
     "5.4")
        php -m;
        pecl config-show;
-       which pecl;
-       pecl config-show|grep /5.6|cut -c 32-|sed "s/5\.6\.[0-9]*/$(phpenv version-name)/g"|xargs -t -L 1 pecl config-set;
+       pecl config-show|grep /5.6|cut -c 32-|sed "s/5\.6\.[0-9]*/$(phpenv version)/g"|xargs -t -L 1 pecl config-set;
        pecl config-show;
        yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
-       phpenv config-add apcu;
        yes "" | pecl install igbinary;
-       phpenv config-add igbinary.so;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
        php -m;
@@ -75,7 +72,9 @@ script:
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
   - psql -U postgres -c 'create database egroupware';
-  - php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
+  # disable postgres install for 5.4 and hhvm, as there is no psql extension
+  - test $(phpenv version-name) = '5.4' -o $(phpenv version-name) = 'hhvm' ||
+    php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # install egroupware with LDAP for account and MySQL as domain "ldap"
   #- php doc/rpm-build/post_install.php --domain ldap --db_name ldap --db_user ldap
