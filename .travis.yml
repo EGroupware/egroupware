@@ -30,12 +30,14 @@ before_script:
   - case $(phpenv version-name) in
     "5.4")
        php -m;
+       pecl config-show;
+       pecl config-set ext_dir ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/no-debug-zts-20121212;
        yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
        phpenv config-add apcu;
        yes "" | pecl install igbinary;
        phpenv config-add igbinary.so;
-       phpenv config-add memcached.so;
+       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
        php -m;
        ;;
@@ -43,12 +45,12 @@ before_script:
        yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
        yes "" | pecl install igbinary;
-       phpenv config-add memcached.so;
+       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
        ;;
     "7")
        yes "" | pecl install apcu;
-       phpenv config-add memcached.so;
+       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
        ;;
     "hhvm")
