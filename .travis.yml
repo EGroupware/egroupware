@@ -29,14 +29,16 @@ before_script:
   - sudo apt-get install -y myrepos libpcre3-dev
   - case $(phpenv version-name) in
     "5.4")
+       php -m;
        yes "" | pecl install memcache;
-       echo "extension=memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       //echo "extension=memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        yes "" | pecl install apcu-4.0.11;
-       echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       //echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        yes "" | pecl install igbinary;
-       echo "extension=igbinary.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       //echo "extension=igbinary.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
+       php -m;
        ;;
     "5.5"|"5.6")
        yes "" | pecl install memcache;
@@ -72,6 +74,10 @@ script:
   - psql -U postgres -c 'create database egroupware';
   - php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  # install egroupware with LDAP for account and MySQL as domain "ldap"
+  #- php doc/rpm-build/post_install.php --domain ldap --db_name ldap --db_user ldap
+  #  --account-auth ldap --ldap_suffix dc=local --ldap_admin 'cn=admin,$suffix' --ldap_admin_pw secret
+  #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
   - ./doc/php_syntax_check.sh
