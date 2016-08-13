@@ -29,14 +29,16 @@ before_script:
   - sudo apt-get install -y myrepos libpcre3-dev
   - case $(phpenv version-name) in
     "5.4")
+       php -m;
+       pecl config-show;
+       pecl config-show|grep /5.6|cut -c 32-|sed "s/5\.6\.[0-9]*/5.4.45/g"|xargs -t -L 1 pecl config-set;
+       pecl config-show;
        yes "" | pecl install memcache;
-       echo "extension=memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        yes "" | pecl install apcu-4.0.11;
-       echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        yes "" | pecl install igbinary;
-       echo "extension=igbinary.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
+       php -m;
        ;;
     "5.5"|"5.6")
        yes "" | pecl install memcache;
@@ -70,11 +72,14 @@ script:
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
   - psql -U postgres -c 'create database egroupware';
-  - php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
+  # disable postgres install for 5.4 and hhvm, as there is no psql extension
+  - test $(phpenv version-name) = '5.4' -o $(phpenv version-name) = 'hhvm' ||
+    php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
-  - ./doc/php_syntax_check.sh
+  # do not run syntax check for hhvm, as it always fails / get terminated after 10m
+  - test $(phpenv version-name) = 'hhvm' || ./doc/php_syntax_check.sh
 
 cache:
   directories:
