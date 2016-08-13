@@ -31,12 +31,11 @@ before_script:
     "5.4")
        php -m;
        yes "" | pecl install memcache;
-       //echo "extension=memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        yes "" | pecl install apcu-4.0.11;
-       //echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       phpenv config-add apcu;
        yes "" | pecl install igbinary;
-       //echo "extension=igbinary.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
-       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       phpenv config-add igbinary.so;
+       phpenv config-add memcached.so;
        phpenv config-rm xdebug.ini;
        php -m;
        ;;
@@ -44,12 +43,12 @@ before_script:
        yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
        yes "" | pecl install igbinary;
-       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       phpenv config-add memcached.so;
        phpenv config-rm xdebug.ini;
        ;;
     "7")
        yes "" | pecl install apcu;
-       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+       phpenv config-add memcached.so;
        phpenv config-rm xdebug.ini;
        ;;
     "hhvm")
