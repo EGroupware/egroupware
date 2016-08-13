@@ -31,7 +31,7 @@ before_script:
     "5.4")
        php -m;
        pecl config-show;
-       pecl config-show|grep /5.6|cut -c 32-|sed "s/5\.6\.[0-9]*/$(phpenv version)/g"|xargs -t -L 1 pecl config-set;
+       pecl config-show|grep /5.6|cut -c 32-|sed "s/5\.6\.[0-9]*/5.4.45/g"|xargs -t -L 1 pecl config-set;
        pecl config-show;
        yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
