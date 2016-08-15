@@ -50,7 +50,7 @@ use EGroupware\Api;
  *
  * Please note:
  * - for more info see class constants below
- * - all images have to be under url specified in attribute "image_path", default $websererUrl/phpgwapi/templates/default/image/dhtmlxtree
+ * - all images have to be under url specified in attribute "image_path", default $websererUrl/api/templates/default/image/dhtmlxtree
  * - you can use attribute "std_images" to supply different standard images from default
  *	[ "leaf.gif", "folderOpen.gif", "folderClosed.gif" ]
  * - images can also be specified as standard "app/image" string, client-side will convert them to url relativ to image_path
@@ -207,6 +207,8 @@ class Tree extends Etemplate\Widget
 		});
 	}
 
+	const UNAVAILABLE_CAT_POSTFIX = '-unavailable';
+
 	/**
 	 * Validate input
 	 *
@@ -244,6 +246,19 @@ class Tree extends Etemplate\Widget
 			// return values for cat-tree as string, but not for regular tree as it can have id's with comma!
 			if (is_array($value) && $this->type == 'tree-cat')
 			{
+				// unavailable cats need to be merged in again
+				$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
+				if (isset(self::$request->preserv[$unavailable_name]))
+				{
+					if ($this->attrs['multiple'])
+					{
+						$value = array_merge($value, (array)self::$request->preserv[$unavailable_name]);
+					}
+					elseif(!$value)	// for single cat, we only restore unavailable one, if no other was selected
+					{
+						$value = self::$request->preserv[$unavailable_name];
+					}
+				}
 				$value = implode(',',$value);
 			}
 			if ($ok && $value === '' && $this->attrs['needed'])
@@ -276,7 +291,7 @@ class Tree extends Etemplate\Widget
 		{
 			// += to keep further options set by app code
 			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options'],
-				$no_lang=null, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
+				$no_lang=null, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name), $form_name);
 
 			// if no_lang was modified, forward modification to the client
 			if ($no_lang != $this->attr['no_lang'])
@@ -303,7 +318,7 @@ class Tree extends Etemplate\Widget
 	/**
 	 * Get template specific image path
 	 *
-	 * @param string $image_path =null default path to use, or empty to use default of /phpgwapi/templates/default/images/dhtmlxtree
+	 * @param string $image_path =null default path to use, or empty to use default of /api/templates/default/images/dhtmlxtree
 	 * @return string templated url if available, otherwise default path
 	 */
 	public static function templateImagePath($image_path=null)
@@ -311,7 +326,7 @@ class Tree extends Etemplate\Widget
 		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
 		if (empty($image_path))
 		{
-			$image_path = $webserver_url.'/phpgwapi/templates/default/images/dhtmlxtree/';
+			$image_path = $webserver_url.'/api/templates/default/images/dhtmlxtree/';
 		}
 		// check if we have template-set specific image path
 		if ($webserver_url && $webserver_url != '/')
@@ -319,7 +334,7 @@ class Tree extends Etemplate\Widget
 			list(,$image_path) = explode($webserver_url, $image_path, 2);
 		}
 		$templated_path = strtr($image_path, array(
-			'/phpgwapi/templates/default' => $GLOBALS['egw']->framework->template_dir,
+			'/api/templates/default' => $GLOBALS['egw']->framework->template_dir,
 			'/default/' => '/'.$GLOBALS['egw']->framework->template.'/',
 		));
 		if (file_exists(EGW_SERVER_ROOT.$templated_path))
@@ -403,9 +418,10 @@ class Tree extends Etemplate\Widget
 	 * @param boolean $no_lang=false initial value of no_lang attribute (some types set it to true)
 	 * @param boolean $readonly =false
 	 * @param mixed $value =null value for readonly
+	 * @param string $form_name form-name of widget, used to store unavailable cats
 	 * @return array with value => label pairs
 	 */
-	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, $value=null)
+	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, $value=null, $form_name=null)
 	{
 		list($rows,$type,$type2,$type3) = explode(',',$legacy_options);
 
@@ -462,7 +478,7 @@ class Tree extends Etemplate\Widget
 				// change cat-ids to pathes and preserv unavailible cats (eg. private user-cats)
 				if ($value)
 				{
-					$pathes = $extension_data['unavailable'] = array();
+					$pathes = $unavailable = array();
 					foreach(is_array($value) ? $value : explode(',',$value) as $cat)
 					{
 						if (isset($cat2path[$cat]))
@@ -471,8 +487,15 @@ class Tree extends Etemplate\Widget
 						}
 						else
 						{
-							$extension_data['unavailable'][] = $cat;
+							$unavailable[] = $cat;
 						}
+					}
+					// unavailable cats need to be stored, so we can merge them in again in validate
+					if ($unavailable && $form_name)
+					{
+						// unavailable cats need to be merged in again
+						$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
+						self::$request->preserv[$unavailable_name] = $unavailable;
 					}
 					$value = $rows ? $pathes : $pathes[0];
 				}
