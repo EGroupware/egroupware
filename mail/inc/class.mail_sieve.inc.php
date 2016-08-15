@@ -446,7 +446,7 @@ class mail_sieve
 		if (is_null($accountID)) $accountID = $GLOBALS['egw_info']['user']['account_id'];
 
 		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(Api\Accounts::id2name($accountID));
-		$allAliases = array($this->account->ident_email);
+		$allAliases = $this->account->ident_email !=''? array($this->account->ident_email): array();
 		foreach ($accAllIdentities as &$arrVal)
 		{
 			if ($arrVal['type'] !='default')
