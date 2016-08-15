@@ -252,14 +252,25 @@ class IncludeMgr
 	/**
 	 * Includes the given module files - this function will have the task to
 	 * cache/shrink/concatenate the files in the future.
+	 *
+	 * @param array $modules pathes to include
+	 * @param boolean $append =true false: prepend modules before already included ones, keeping their order
 	 */
-	private function include_module(array $module)
+	private function include_module(array $modules, $append=true)
 	{
 		if (self::$DEBUG_MODE)
 		{
-			foreach ($module as $path)
+			if ($append)
 			{
-				$this->included_files[$path] = true;
+				foreach ($modules as $path)
+				{
+					$this->included_files[$path] = true;
+				}
+			}
+			else
+			{
+				$this->included_files = array_merge(array_combine($modules, array_fill(0, count($modules), true)),
+					$this->included_files);
 			}
 		}
 		else
@@ -346,8 +357,9 @@ class IncludeMgr
 	 * @param string $package package or complete path (relative to EGW_SERVER_ROOT) to be included
 	 * @param string|array $file =null file to be included - no ".js" on the end or array with get params
 	 * @param string $app ='phpgwapi' application directory to search - default = phpgwapi
+	 * @param boolean $append =true true append file, false prepend (add as first) file used eg. for template itself
 	 */
-	public function include_js_file($package, $file = null, $app = 'phpgwapi')
+	public function include_js_file($package, $file = null, $app = 'phpgwapi', $append=true)
 	{
 		// Translate the given parameters into a valid path - false is returned
 		// if the file is not found or the file is already included/has already

@@ -1240,9 +1240,9 @@ abstract class Framework extends Framework\Extra
 	* @param string $app ='phpgwapi' application directory to search - default = phpgwapi
 	* @param boolean $append =true should the file be added
 	*/
-	static function includeJS($package, $file=null, $app='phpgwapi')
+	static function includeJS($package, $file=null, $app='phpgwapi', $append=true)
 	{
-		self::$js_include_mgr->include_js_file($package, $file, $app);
+		self::$js_include_mgr->include_js_file($package, $file, $app, $append);
 	}
 
 	/**
