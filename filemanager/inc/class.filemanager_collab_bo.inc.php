@@ -117,11 +117,10 @@ class filemanager_collab_bo
 	 */
 	protected function OP_addMember($es_id, $member_id, $full_name, $user_id, $color='', $imageUrl='')
 	{
-		$date = new DateTime();
 		$op = array(
 			'optype' => 'AddMember',
 			'memberid' => (string) $member_id,
-			'timestamp' => $date->getTimestamp(),
+			'timestamp' => self::getTimeStamp(),
 			'setProperties' => array(
 				'fullName' => $full_name,
 				'color' => $color,
@@ -129,6 +128,24 @@ class filemanager_collab_bo
 				'uid' => $user_id,
 			)
 		);
+		$this->OP_add2Db($op, $es_id);
+	}
+
+	/**
+	 * Function to remove  cursor for a member
+	 *
+	 * @param string $es_id session id
+	 * @param string $member_id member id
+	 */
+	protected function OP_removeCursor ($es_id, $member_id)
+	{
+		$op = array(
+			'optype' => 'RemoveCursor',
+			'memberid' => (string) $member_id,
+			'reason' => 'server-idle',
+			'timestamp' => self::getTimeStamp()
+		);
+
 		$this->OP_add2Db($op, $es_id);
 	}
 
@@ -296,5 +313,15 @@ class filemanager_collab_bo
 		);
 		$last_row = $query->fetchRow();
 		return is_array($last_row)? $last_row['collab_member_id']: 0;
+	}
+
+	/**
+	 * Get timestamp
+	 * @return int returns current time as timestamp
+	 */
+	static function getTimeStamp ()
+	{
+		$date = new DateTime();
+		return $date->getTimestamp();
 	}
 }

@@ -120,6 +120,8 @@ app.classes.filemanager = AppJS.extend(
 		{
 			// need to make body rock solid to avoid extra scrollbars
 			jQuery('body').css({overflow:'hidden'});
+			var self = this;
+			jQuery(window).on('unload', function(){self.editor.leaveSession()});
 			this._init_odf_collab_editor ();
 		}
 	},
@@ -1077,8 +1079,7 @@ app.classes.filemanager = AppJS.extend(
 	{
 
 		var widgetFilePath = this.et2.getWidgetById('file_path'),
-			file_path = widgetFilePath.value,
-			base64 = new core.Base64();
+			file_path = widgetFilePath.value;
 
 
 		var serverOptions = {
@@ -1088,7 +1089,7 @@ app.classes.filemanager = AppJS.extend(
 					}),
 					genesisUrl:egw.webserverUrl+file_path
 				},
-			"sessionId": egw.webserverUrl+file_path,
+			"sessionId": this.editor_getSessionId(),
 			editorOptions: {
 				allFeaturesEnabled: true,
 				userData: {
@@ -1119,10 +1120,9 @@ app.classes.filemanager = AppJS.extend(
 		{
 			var closeFn = function ()
 			{
-				self.editor.closeDocument(function(){});
+				self.editor.leaveSession(function(){});
 				if (action != 'new')
 				{
-					self.editor.destroy(function(){});
 					window.close();
 				}
 				callback.call(this);
@@ -1238,7 +1238,9 @@ app.classes.filemanager = AppJS.extend(
 						// Add odt extension if not exist
 						if (!file_path.match(/\.odt$/,'ig')) file_path += '.odt';
 						widgetFilePath.set_value(file_path);
+						self.editor.leaveSession(function(){});
 						self.editor.getDocumentAsByteArray(saveByteArrayLocally);
+						self._init_odf_collab_editor();
 						egw.refresh('','filemanager');
 					}
 				});
@@ -1320,6 +1322,19 @@ app.classes.filemanager = AppJS.extend(
 			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 
 		return data.data.mime.match(mime.mime_odf_regex)?true:false;
+	},
+
+	/**
+	 * Function to generate session id
+	 *
+	 * @returns {String} retruns session id
+	 */
+	editor_getSessionId: function ()
+	{
+		var widgetFilePath = this.et2.getWidgetById('file_path'),
+			file_path = widgetFilePath.value,
+			es_id = egw.webserverUrl+file_path;
+		return es_id;
 	},
 
 	/**
