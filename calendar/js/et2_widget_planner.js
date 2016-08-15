@@ -249,8 +249,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				});
 			})
 			.on('mousemove', function(event) {
-				// Not when over header
-				if(jQuery(event.target).closest('.calendar_eventRows').length == 0)
+				// Ignore headers
+				if(planner.headers.has(event.target).length !== 0)
 				{
 					planner.vertical_bar.hide();
 					return;
@@ -264,7 +264,12 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				planner.vertical_bar.css('top','0px');
 
 				// Get time at mouse
-				if(planner.options.group_by == 'month')
+				if(jQuery(event.target).closest('.calendar_eventRows').length == 0)
+				{
+					// "Invalid" times, from space after the last planner row, or header
+					var time = planner._get_time_from_position(event.pageX - planner.grid.offset().left, 10);
+				}
+				else if(planner.options.group_by == 'month')
 				{
 					var time = planner._get_time_from_position(event.clientX, event.clientY);
 				}
@@ -1954,7 +1959,12 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			{
 				// Clicked in row, but not on an event
 				// Default handler to open a new event at the selected time
-				if(this.options.group_by == 'month')
+				if(jQuery(event.target).closest('.calendar_eventRows').length == 0)
+				{
+					// "Invalid" times, from space after the last planner row, or header
+					var date = this._get_time_from_position(_ev.pageX - this.grid.offset().left, _ev.pageY - this.grid.offset().top);
+				}
+				else if(this.options.group_by == 'month')
 				{
 					var date = this._get_time_from_position(_ev.clientX, _ev.clientY);
 				}
@@ -2070,7 +2080,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				{
 					break;
 				}
-			} while(row.nodeName !== 'BODY');
+			} while(row && row.nodeName !== 'BODY');
+			if(!row) return false;
+			
 			// Restore hidden nodes
 			for(var i = 0; i < hidden_nodes.length; i++)
 			{
@@ -2118,7 +2130,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	_mouse_down: function(event)
 	{
 		// Ignore headers
-		if(jQuery(event.target, this.headers).length !== 0) return false;
+		if(this.headers.has(event.target).length !== 0) return false;
 		
 		// Get time at mouse
 		if(this.options.group_by === 'month')
@@ -2130,8 +2142,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			var time = this._get_time_from_position(event.offsetX, event.offsetY);
 		}
 		if(!time) return false;
-
-		this.div.css('cursor', 'ew-resize');
 
 		// Find the correct row so we know the parent
 		var row = event.target.closest('.calendar_plannerRowWidget');
@@ -2145,6 +2155,10 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				break;
 			}
 		}
+		if(!this.drag_create.parent) return false;
+
+		this.div.css('cursor', 'ew-resize');
+
 		return this._drag_create_start(jQuery.extend({},this.drag_create.parent.node.dataset,{date: time.toJSON()}));
 	},
 
