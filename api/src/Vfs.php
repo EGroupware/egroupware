@@ -727,7 +727,7 @@ class Vfs
 				throw new Exception\AssertionFailed(__METHOD__.'('.array2string($urls).") Cautiously rejecting to remove folder '$url'!");
 			}
 		}
-		return self::find($urls,array('depth'=>true,'url'=>$allow_urls,'hidden'=>true),array(__CLASS__,'_rm_rmdir'));
+		return self::find($urls, array('depth'=>true,'url'=>$allow_urls,'hidden'=>true), __CLASS__.'::_rm_rmdir');
 	}
 
 	/**
