@@ -96,7 +96,7 @@ class Hooks
 			}
 			Api\Vfs::rename('/home/'.$data['account_lid'],$new_dir);
 			// make the new owner the owner of the dir and it's content
-			Api\Vfs::find($new_dir,array(),array('egw_vfs','chown'),$data['new_owner']);
+			Api\Vfs::find($new_dir, array(), 'EGroupware\Api\Vfs::chown', $data['new_owner']);
 		}
 		elseif(!empty($data['account_lid']) && $data['account_lid'] != '/')
 		{
