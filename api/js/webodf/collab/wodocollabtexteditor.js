@@ -431,6 +431,43 @@ window.Wodo = window.Wodo || (function () {
             return editorSession.sessionController.getMetadataController().getMetadata(property);
         }
 
+		/**
+         * Sets the current state of the document to be either the unmodified state
+         * or a modified state.
+         * If @p modified is @true and the current state was already a modified state,
+         * this call has no effect and also does not remove the unmodified flag
+         * from the state which has it set.
+         *
+         * @name TextEditor#setDocumentModified
+         * @function
+         * @param {!boolean} modified
+         * @return {undefined}
+         */
+        this.setDocumentModified = function (modified) {
+            runtime.assert(editorSession, "editorSession should exist here.");
+
+            if (undoRedoEnabled) {
+                editorSession.sessionController.getUndoManager().setDocumentModified(modified);
+            }
+        };
+
+        /**
+         * Returns if the current state of the document matches the unmodified state.
+         * @name TextEditor#isDocumentModified
+         * @function
+         * @return {!boolean}
+         */
+        this.isDocumentModified = function () {
+            runtime.assert(editorSession, "editorSession should exist here.");
+
+            if (undoRedoEnabled) {
+                return editorSession.sessionController.getUndoManager().isDocumentModified();
+            }
+
+            return false;
+        };
+
+
         /**
          * @return {undefined}
          */
