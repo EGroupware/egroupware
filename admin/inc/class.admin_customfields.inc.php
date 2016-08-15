@@ -52,6 +52,13 @@ class admin_customfields
 	var $content_types,$fields;
 
 	/**
+	 * Does App uses content-types
+	 *
+	 * @var boolean
+	 */
+	protected $manage_content_types = false;
+
+	/**
 	 * Currently selected content type (if used by app)
 	 * @var string
 	 */
@@ -457,9 +464,9 @@ class admin_customfields
 	 * Allow extending apps a change to interfere and add content to support
 	 * their custom template.  This is called right before etemplate->exec().
 	 */
-	protected function app_index(&$content, &$sel_options, &$readonlys)
+	protected function app_index(&$content, &$sel_options, &$readonlys, &$preserve)
 	{
-		unset($content, $sel_options, $readonlys);	// not used, as this is a stub
+		unset($content, $sel_options, $readonlys, $preserve);	// not used, as this is a stub
 		// This is just a stub.
 	}
 
