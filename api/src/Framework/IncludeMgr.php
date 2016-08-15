@@ -377,7 +377,7 @@ class IncludeMgr
 			$module = array();
 			$this->parse_deps($path, $module);
 
-			$this->include_module($module);
+			$this->include_module($module, $append);
 		}
 	}
 
