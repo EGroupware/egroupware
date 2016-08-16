@@ -17,7 +17,7 @@ use EGroupware\Api\Egw;
 use EGroupware\Api\Etemplate;
 
 use EGroupware\Api\Vfs;
-
+use filemanager_collab_bo;
 /**
  * Filemanage user interface class
  */
@@ -1489,9 +1489,10 @@ class filemanager_ui
 		Api\Framework::includeCSS('/api/js/webodf/collab/app/resources/app.css');
 		Api\Framework::includeCSS('/api/js/webodf/collab/wodocollabpane.css');
 		Api\Framework::includeCSS('/api/js/webodf/collab/wodotexteditor.css');
+		Api\Framework::includeJS('/filemanager/js/collab.js',null, 'filemanager');
 
 		$tmpl->setElementAttribute('tools', 'actions', self::getActions_edit());
-		$preserve = $content = array('file_path' => $file_path);
+			$preserve = $content = array('file_path' => $file_path);
 		$tmpl->exec('filemanager.filemanager_ui.editor',$content,array(),array(),$preserve,2);
 	}
 
