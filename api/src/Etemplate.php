@@ -214,7 +214,7 @@ class Etemplate extends Etemplate\Widget\Template
 			list($app) = explode('.',$this->name);
 			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
 			{
-				Framework::includeJS('.','app',$app,false);
+				Framework::includeJS('.','app',$app,true);
 			}
 			// Category styles
 			Categories::css($app);
