@@ -39,6 +39,16 @@ class filemanager_collab_bo
 	const DB_FILEDS_PREFIX = 'collab_';
 
 	/**
+	 * Exception message for no session found
+	 */
+	const EXCEPTION_MESSAGE_NO_SESSION = 'Session id must be given, none given!';
+
+	/**
+	 * Exception message for no OP
+	 */
+	const EXCEPTION_MESSAGE_NO_OPS = 'ops need to be an array of op data, none array given!';
+
+	/**
 	 * Database object
 	 * @var Api\Db
 	 */
@@ -97,12 +107,65 @@ class filemanager_collab_bo
 				'collab_es_id' => $es_id,
 				'collab_genesis_url' => '',
 				'collab_genesis_hash' => '',
+				'collab_last_saved' => self::getTimeStamp(),
 				'account_id' => $GLOBALS['egw_info']['user']['account_id']
 			);
 
 			$this->db->insert(self::SESSION_TABLE, $data,false,__LINE__, __FILE__,'filemanager');
 		}
 		return $data;
+	}
+
+	/**
+	 * Method to clean up left over modifications data
+	 *
+	 * @param type $es_id session id
+	 *
+	 * @throws Exception
+	 */
+	public function SESSION_cleanup ($es_id)
+	{
+		if (!$es_id) throw new Exception (self::EXCEPTION_MESSAGE_NO_SESSION);
+
+		$this->db->delete(
+				self::OP_TABLE,
+				array('collab_es_id' => $es_id),
+				__LINE__,
+				__FILE__
+		);
+		$this->db->delete(
+				self::SESSION_TABLE,
+				array('collab_es_id' => $es_id),
+				__LINE__,
+				__FILE__
+		);
+		$this->db->delete(
+				self::MEMBER_TABLE,
+				array('collab_es_id' => $es_id),
+				__LINE__,
+				__FILE__
+		);
+	}
+
+	/**
+	 * Method to update last time saved in session table
+	 *
+	 * @param type $es_id
+	 *
+	 * @return boolean returns true if update is successful otherwise false
+	 * @throws Exception
+	 */
+	public function SESSION_Save ($es_id)
+	{
+		if (!$es_id) throw new Exception (self::EXCEPTION_MESSAGE_NO_SESSION);
+		$query = $this->db->update(
+				self::SESSION_TABLE,
+				array('collab_last_save' => self::getTimeStamp()),
+				array('collab_es_id' => $es_id),
+				__LINE__,
+				__FILE__,
+				'filemanager');
+		return !$query? false: true;
 	}
 
 	/**
@@ -159,7 +222,7 @@ class filemanager_collab_bo
 	 */
 	protected function OP_getHeadSeq($es_id)
 	{
-		if (!$es_id) throw new Exception ('Session id must be given, none given!');
+		if (!$es_id) throw new Exception (self::EXCEPTION_MESSAGE_NO_SESSION);
 
 		$query = $this->db->select(
 				self::OP_TABLE,
@@ -217,7 +280,7 @@ class filemanager_collab_bo
 	 */
 	protected function OP_addOPS ($es_id, $member_id, $client_ops)
 	{
-		if (count($client_ops)<= 0) throw new Exception ('ops need to be an array of op data, none array given!');
+		if (count($client_ops)<= 0) throw new Exception (self::EXCEPTION_MESSAGE_NO_OPS);
 
 		foreach ($client_ops as $op)
 		{
@@ -269,7 +332,7 @@ class filemanager_collab_bo
 	 */
 	protected function MEMBER_getUserMemberId ($es_id, $user_id)
 	{
-		if (!$es_id || !$user_id) throw new Exception ('Member id must be given, none given!');
+		if (!$es_id || !$user_id) throw new Exception (self::EXCEPTION_MESSAGE_NO_SESSION);
 		$query = $this->db->select(
 				self::MEMBER_TABLE,
 				'collab_member_id',
