@@ -108,9 +108,11 @@ class Link extends Etemplate\Widget
 
 		$links = Api\Link::query($app, $pattern, $options);
 
+		// Add ' ' to key so javascript does not parse it as a number.
+		// This preserves the order set by the application.
 		$linksc = array_combine(array_map(function($k)
 		{
-			return (string)$k;
+			return (string)" ".$k;
 		}, array_keys($links)), $links);
 
 		$response = Api\Json\Response::get();
