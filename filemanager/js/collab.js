@@ -8,6 +8,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+
 /*egw:uses
 	/filemanager/js/collab_config.js;
 	/api/js/webodf/collab/dojo-amalgamation.js;
@@ -23,11 +24,19 @@
  */
 app.classes.filemanager = app.classes.filemanager.extend({
 	/*
-	 * odf editor object
+	 * @var editor odf editor object
 	 */
 	editor: {},
 
+	/**
+	 * @var regexp for acceptable mime types
+	 */
 	editor_mime: RegExp(/application\/vnd\.oasis\.opendocument\.text/),
+
+	/**
+	 * @var collab_server server object
+	 */
+	collab_server: {},
 
 	/**
 	 * Destructor
@@ -36,6 +45,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	{
 		delete this.editor;
 		delete editor_mime;
+		delete collab_server;
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -58,7 +68,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			// need to make body rock solid to avoid extra scrollbars
 			jQuery('body').css({overflow:'hidden'});
 			var self = this;
-			jQuery(window).on('unload', function(){self.editor.leaveSession()});
+			jQuery(window).on('unload', function(){self.editor_leaveSession()});
 			this._init_odf_collab_editor ();
 		}
 	},
@@ -137,6 +147,16 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	},
 
 	/**
+	 * Function to leave the current editing session
+	 * and as result it will call client-side and server leave session.
+	 */
+	editor_leaveSession: function ()
+	{
+		this.editor.leaveSession(function(){});
+		this.collab_server.server.leaveSession(this.collab_server.es_id, this.collab_server.memberid);
+	},
+
+	/**
 	 * Method to close an opened document
 	 *
 	 * @param {object} _egwAction egw action object
@@ -151,7 +171,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		{
 			var closeFn = function ()
 			{
-				self.editor.leaveSession(function(){});
+				self.editor_leaveSession();
 				if (action != 'new')
 				{
 					window.close();
@@ -185,33 +205,6 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	},
 
 	/**
-	 * Method to create a new document
-	 * @param {object} _egwAction egw action object
-	 *
-	 * @todo: creating new empty odt file
-	 */
-	editor_new: function (_egwAction) {
-		var self = this,
-			template_url = '/api/js/webodf/template.odt';
-
-		if (Object.keys(this.editor).length > 0)
-		{
-			this.editor_close(_egwAction, function(){
-
-				// TODO create new temp file
-
-			});
-		}
-		else
-		{
-			egw.open_link(egw.link('/index.php', {
-				menuaction: 'filemanager.filemanager_ui.editor',
-				path: template_url
-			}), '', egw.link_get_registry('filemanager','view_popup'));
-		}
-	},
-
-	/**
 	 * Method call for saving edited document
 	 *
 	 * @param {object} _egwAction egw action object
@@ -239,6 +232,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						success: function(data) {
 							egw(window).message(egw.lang('Document %1 successfully has been saved.', filename[1]));
 							self.editor.setDocumentModified(false);
+							egw.json('filemanager.filemanager_collab.ajax_actions',[self.editor_getSessionId(), 'save']).sendRequest();
 						},
 						error: function () {},
 						data: blob,
@@ -270,7 +264,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						// Add odt extension if not exist
 						if (!file_path.match(/\.odt$/,'ig')) file_path += '.odt';
 						widgetFilePath.set_value(file_path);
-						self.editor.leaveSession(function(){});
+						self.editor_leaveSession();
 						self.editor.getDocumentAsByteArray(saveByteArrayLocally);
 						self._init_odf_collab_editor();
 						egw.refresh('','filemanager');
@@ -429,8 +423,12 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		function joinSession(_sessionId)
 		{
 			var sid = _sessionId;
+
 			server.joinSession(userId, sid, function (_memberId) {
 				memberId = _memberId;
+				// Set server object for current session
+				self.collab_server = {server:server, memberid: memberId, es_id: sid};
+
 				if (Object.keys(self.editor).length == 0) {
 					Wodo.createCollabTextEditor('filemanager-editor_odfEditor', editorOptions, onEditorCreated);
 				} else {
@@ -459,6 +457,5 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			});
 		});
 	}
-
 });
 

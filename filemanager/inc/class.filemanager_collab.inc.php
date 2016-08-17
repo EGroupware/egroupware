@@ -40,14 +40,35 @@ class filemanager_collab extends filemanager_collab_bo {
 	 */
 	function join_session ($es_id)
 	{
-		$response = $this->initSession($es_id);
+		$paths = explode('/webdav.php', $es_id);
+		if (Api\Vfs::check_access($paths[1], Api\Vfs::READABLE))
+		{
+			$response = $this->initSession($es_id);
+			$response['success'] = true;
+		}
 		$response += array (
 			'id' => $GLOBALS['egw_info']['user']['account_id'],
-			'full_name' => $GLOBALS['egw_info']['user']['account_fullname'],
-			'success' => true
+			'full_name' => $GLOBALS['egw_info']['user']['account_fullname']
 		);
 
 		return $response;
+	}
+
+	/**
+	 * This function gets called when user leaves the session
+	 *
+	 * @param string $es_id
+	 * @param string $member_id
+	 *
+	 * @return array returns an array of data as response for client-side
+	 */
+	function leave_session ($es_id, $member_id)
+	{
+		return array (
+			'session_id' => $es_id,
+			'memberid' => $member_id,
+			'success' => $this->OP_removeMember($es_id, $member_id)
+		);
 	}
 
 	/**
@@ -63,10 +84,14 @@ class filemanager_collab extends filemanager_collab_bo {
 		$response = array();
 		if (is_array($params))
 		{
+			$paths = explode('/webdav.php', $params['args']['es_id']);
 			switch ($params['command'])
 			{
 				case 'join_session':
 					$response = $this->join_session($params['args']['es_id'],$params['args']['user_id']);
+					break;
+				case 'leave_session':
+					$response = $this->leave_session($params['args']['es_id'],$params['args']['member_id']);
 					break;
 				case 'sync_ops':
 					try
@@ -78,7 +103,7 @@ class filemanager_collab extends filemanager_collab_bo {
 						{
 							$client_ops = $params['args']['client_ops']? $params['args']['client_ops']: [];
 							$current_seq_head = $this->OP_getHeadSeq($es_id);
-							if ($seq_head == $current_seq_head) {
+							if ($seq_head == $current_seq_head && $this->is_collabAllowed($es_id)) {
 
 								if (count($client_ops)>0)
 								{
@@ -141,4 +166,26 @@ class filemanager_collab extends filemanager_collab_bo {
 		return $this->OP_getHeadSeq($es_id);
 	}
 
+	/**
+	 *
+	 * @param type $es_id
+	 * @param type $action
+	 */
+	function ajax_actions ($es_id, $action)
+	{
+		switch ($action)
+		{
+			case 'save':
+				$this->SESSION_Save($es_id);
+				break;
+		}
+	}
+
+	function is_collabAllowed ($es_id)
+	{
+		$paths = explode('/webdav.php', $es_id);
+		$allowed =	Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE) &&
+					!preg_match('/\/api\/js\/webodf\/template.odf$/', $es_id);
+		return $allowed;
+	}
 }

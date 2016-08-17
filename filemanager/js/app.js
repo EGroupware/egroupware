@@ -1016,7 +1016,7 @@ app.classes.filemanager = AppJS.extend(
 	 *
 	 * @todo: creating new empty odt file
 	 */
-	list_editor_new: function (_egwAction) {
+	editor_new: function (_egwAction) {
 		var self = this,
 		template_url = '/api/js/webodf/template.odt';
 		egw.open_link(egw.link('/index.php', {

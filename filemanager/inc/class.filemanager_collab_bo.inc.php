@@ -80,14 +80,12 @@ class filemanager_collab_bo
 			$result = self::db2id($this->SESSION_add2Db($es_id));
 		}
 
-		if (is_null($result['member_id'] = $this->MEMBER_getUserMemberId($es_id, $user_id)))
-		{
-			$this->MEMBER_add2Db($es_id, $user_id, $color);
 
-			$result['member_id'] = $this->MEMBER_getLastMember();
+		$this->MEMBER_add2Db($es_id, $user_id, $color);
 
-			$this->OP_addMember($es_id, $result['member_id'], $full_name, $user_id, $color, $imageUrl);
-		}
+		$result['member_id'] = $this->MEMBER_getLastMember();
+
+		$this->OP_addMember($es_id, $result['member_id'], $full_name, $user_id, $color, $imageUrl);
 
 		return $result;
 	}
@@ -213,6 +211,24 @@ class filemanager_collab_bo
 	}
 
 	/**
+	 * Function to remove member from list
+	 *
+	 * @param string $es_id session id
+	 * @param string $member_id membe id
+	 *
+	 * @return boolean returns true if remove member is successful otherwise false
+	 */
+	function OP_removeMember ($es_id, $member_id)
+	{
+		$op = array (
+			'optype' => 'RemoveMember',
+			'memberid' => (string) $member_id,
+			'timestamp' => self::getTimeStamp()
+		);
+		return $this->OP_add2Db($op, $es_id)?true:false;
+	}
+
+	/**
 	 * Function to get top head seq for a given session
 	 *
 	 * @param string $es_id
@@ -302,7 +318,7 @@ class filemanager_collab_bo
 			'collab_optype' => $op['optype'],
 			'collab_opspec' => json_encode($op)
 		);
-		$this->db->insert(self::OP_TABLE, $data,false,__LINE__, __FILE__,'filemanager');
+		return $this->db->insert(self::OP_TABLE, $data,false,__LINE__, __FILE__,'filemanager');
 	}
 
 	/**
@@ -339,6 +355,30 @@ class filemanager_collab_bo
 				array('collab_es_id' => $es_id, 'collab_uid' => $user_id),
 				__LINE__,
 				__FILE__
+		);
+		$member = $query->fetchRow();
+		return is_array($member)? $member['collab_member_id']: null;
+	}
+
+	/**
+	 * Function to get member record of specific member id
+	 *
+	 * @param string $member_id member id
+	 *
+	 * @return string member id or null
+	 * @throws Exception throws exception if no member id is given
+	 */
+	protected function MEMBER_getUserLastMemberId ($es_id, $user_id)
+	{
+		if (!$es_id || !$user_id) throw new Exception (self::EXCEPTION_MESSAGE_NO_SESSION);
+		$query = $this->db->select(
+				self::MEMBER_TABLE,
+				'collab_member_id',
+				array('collab_es_id' => $es_id, 'collab_uid' => $user_id),
+				__LINE__,
+				__FILE__,
+				false,
+				"ORDER BY `collab_member_id` DESC LIMIT 1;"
 		);
 		$member = $query->fetchRow();
 		return is_array($member)? $member['collab_member_id']: null;
