@@ -248,6 +248,11 @@ class Link extends Etemplate\Widget
 	public static function link_existing($app_id, $files)
 	{
 		list($app, $id, $dest_file) = explode(':', $app_id);
+
+		if (empty($app_id) || empty($id))
+		{
+			return;	// cant do anything
+		}
 		if($id && $dest_file && trim($dest_file) !== '')
 		{
 			$id .= "/$dest_file";
