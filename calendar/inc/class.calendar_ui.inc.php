@@ -555,7 +555,7 @@ class calendar_ui
 		$cont = $this->cal_prefs['saved_states'];
 		if (!is_array($cont)) $cont = array();
 		$cont['view'] = $this->view ? $this->view : 'week';
-		$cont['date'] = $this->date ? $this->date : Api\DateTime();
+		$cont['date'] = $this->date ? $this->date : new Api\DateTime();
 
 		$cont['year'] = (int)Api\DateTime::to($cont['date'],'Y');
 		$cont['holidays'] = $this->bo->read_holidays($cont['year']);
