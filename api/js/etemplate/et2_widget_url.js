@@ -244,6 +244,12 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 			"type": "boolean",
 			"default": false,
 			"description": "Allow to add email as contact to addressbook"
+		},
+		"full_email": {
+			"name": "Show full email address",
+			"type": "boolean",
+			"default": true,
+			"description": "Allow to show full email address if ture otherwise show only name"
 		}
 	},
 
@@ -315,7 +321,7 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 					}
 				}
 				// wrap email address if there's a name
-				if (this.span.text() && this.span.text().split("<"))
+				if (this.span.text() && this.span.text().split("<") && this.options.full_email)
 				{
 					var val = this.span.text().split("<");
 					val = val[0] != ""? val[0]: val[2];

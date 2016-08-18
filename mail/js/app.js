@@ -792,7 +792,14 @@ app.classes.mail = AppJS.extend(
 					else
 					{
 						var value = remembervalue+(remembervalue?',':'')+content[i];
-						var email = et2_createWidget('url-email',{id:widget.id+'_'+i, value:value,readonly:true, contact_plus:true},widget);
+						var url_email_options = {
+							id:widget.id+'_'+i,
+							value:value,
+							readonly:true,
+							contact_plus:true,
+							full_email:typeof field['full_email'] !='undefined'?field['full_email']:true
+						};
+						var email = et2_createWidget('url-email',url_email_options,widget);
 						email.loadingFinished();
 						remembervalue = '';
 					}
@@ -830,7 +837,7 @@ app.classes.mail = AppJS.extend(
 		var dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
 		var content = this.et2.getArrayMgr('content').data;
 		var expand_content = [
-			{build_children: true, data_one: 'FROM', data: 'FROM', widget: 'FROM', line: 'mailDisplayHeadersFrom'},
+			{build_children: true, data_one: 'FROM', data: 'FROM', widget: 'FROM', line: 'mailDisplayHeadersFrom', full_email:false},
 			{build_children: true,  data: 'SENDER', widget: 'SENDER', line: 'mailDisplayHeadersSender'},
 			{build_children: true, data: 'TO', widget: 'TO', line: 'mailDisplayHeadersTo'},
 			{build_children: true, data: 'CC', widget: 'CC', line: 'mailDisplayHeadersCc'},
