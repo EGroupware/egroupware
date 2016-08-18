@@ -179,7 +179,8 @@ class mail_compose
 				'group' => $group,
 				'checkbox' => true,
 				'hint' => 'check to save as trackerentry on send',
-				'onExecute' => 'javaScript:app.mail.compose_setToggle'
+				'onExecute' => 'javaScript:app.mail.compose_setToggle',
+				'mail_import' => Api\Hooks::single(array('location' => 'mail_import'),'tracker'),
 			),
 			'to_calendar' => array(
 				'caption' => 'Calendar',
@@ -3155,6 +3156,7 @@ class mail_compose
 		{
 			foreach(array('to_infolog','to_tracker','to_calendar') as $app_key)
 			{
+				$entryid = $_formData['to_integrate_ids'][0][$app_key];
 				if ($_formData[$app_key] == 'on')
 				{
 					$app_name = substr($app_key,3);
@@ -3166,11 +3168,7 @@ class mail_compose
 					$eml_fp = fopen($eml, 'w');
 					stream_copy_to_stream($mail->getRaw(), $eml_fp);
 					fclose($eml_fp);
-
-					// Open the app called for integration in a popup
-					// and store the mail raw data as egw_data, in order to
-					// be stored from registered app method later
-					Framework::popup(Egw::link('/index.php', array(
+					$target = array(
 						'menuaction' => $hook['menuaction'],
 						'egw_data' => Link::set_data(null,'mail_integration::integrate',array(
 							$mailaddresses,
@@ -3181,7 +3179,12 @@ class mail_compose
 							$eml,
 							$_formData['serverID']),true),
 						'app' => $app_name
-					)),'_blank',$hook['popup']);
+					);
+					if ($entryid) $target['entry_id'] = $entryid;
+					// Open the app called for integration in a popup
+					// and store the mail raw data as egw_data, in order to
+					// be stored from registered app method later
+					Framework::popup(Egw::link('/index.php', $target),'_blank',$hook['popup']);
 				}
 			}
 		}
