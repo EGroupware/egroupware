@@ -95,7 +95,7 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
 				$ret = !empty($deleted[$options['path']]);
 				//error_log(__METHOD__."() Vfs::remove($options[path]) returned ".array2string($deleted)." --> ".array2string($ret));
 			}
-			catch (\Exception $e) {
+			catch (Exception\ProtectedDirectory $e) {
 				return '403 Forbidden: '.$e->getMessage();
 			}
 		}
@@ -221,9 +221,14 @@ class WebDAV extends HTTP_WebDAV_Server_Filesystem
         }
 
         if ($del) {
-            if (!rename($source, $dest)) {
-                return "500 Internal server error";
-            }
+			try {
+				if (!rename($source, $dest)) {
+					return "500 Internal server error";
+				}
+			}
+			catch (Exception\ProtectedDirectory $e) {
+				return "403 Forbidden: ".$e->getMessage();
+			}
         } else {
             if (is_dir($source) && $options['depth'] == 'infinity') {
             	$files = Vfs::find($source,array('depth' => true,'url' => true));	// depth=true: return dirs first, url=true: allow urls!

@@ -732,7 +732,7 @@ class filemanager_ui
 			// some precaution to never allow to (recursivly) remove /, /apps or /home
 			foreach((array)$selected as $path)
 			{
-				if (preg_match('/^\/?(home|apps|)\/*$/',$path))
+				if (Vfs::isProtectedDir($path))
 				{
 					$errs++;
 					return lang("Cautiously rejecting to remove folder '%1'!",Vfs::decodePath($path));
