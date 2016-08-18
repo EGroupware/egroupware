@@ -1421,7 +1421,12 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						target = target.parentNode;
 					}
 
-					context = extra = target.dataset;
+					context = extra = jQuery.extend({},target.dataset);
+					var owner = jQuery(target).closest('[data-owner]').get(0);
+					if(owner && owner.dataset.owner && owner.dataset.owner != this.state.owner)
+					{
+						extra.owner = owner.dataset.owner.split(',');
+					}
 				}
 				if(context.date) extra.date = context.date;
 				if(context.app) extra.app = context.app;
