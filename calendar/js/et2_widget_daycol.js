@@ -300,6 +300,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		this.title
 			.attr("data-owner", _owner);
 		this.header.attr('data-owner',_owner);
+		this.div.attr('data-owner',_owner);
 
 		// Simple comparison, both numbers
 		if(_owner === this.options.owner) return;
