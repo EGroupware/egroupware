@@ -2876,7 +2876,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				));
 				$this->mail_bo->htmlOptions = $bufferHtmlOptions;
 				Api\Translation::add_app('calendar');
-				return ExecMethod( 'calendar.calendar_uiforms.meeting',
+				ExecMethod( 'calendar.calendar_uiforms.meeting',
 					array('event'=>null,'msg'=>'','useSession'=>true)
 				);
 			}
