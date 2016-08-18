@@ -973,6 +973,9 @@ abstract class Ajax extends Api\Framework
 		{
 			throw new Api\Exception\WrongParameter(__METHOD__."('$link') no menuaction set!");
 		}
+		// set session action
+		$GLOBALS['egw']->session->set_action('Ajax: '.$_GET['menuaction']);
+
 		list($app,$class,$method) = explode('.',$_GET['menuaction']);
 
 		if (!isset($GLOBALS['egw_info']['user']['apps'][$app]))
