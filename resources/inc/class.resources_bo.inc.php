@@ -555,7 +555,7 @@ class resources_bo
 						array_keys($resources)
 					);
 					$list['cat-'.$cat_id] = array(
-						'label'	=>	$cat,
+						'label'	=>	$bo->acl->egw_cats->id2name($cat_id),
 						'resources'	=>	$_resources,
 					);
 				}
