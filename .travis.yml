@@ -28,7 +28,7 @@ before_script:
   - sudo apt-get update -qq
   - sudo apt-get install -y myrepos libpcre3-dev
   - case $(phpenv version-name) in
-    "5.4*")
+    "5.4"|"5.4.44")
        php -m;
        pecl config-show;
        pecl config-show|grep /5.6|cut -c 32-|sed "s/5\.6\.[0-9]*/5.4.45/g"|xargs -t -L 1 pecl config-set;
