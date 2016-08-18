@@ -69,8 +69,8 @@ script:
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
   - psql -U postgres -c 'create database egroupware';
-  # disable postgres install for 5.4 and hhvm, as there is no psql extension
-  - test $(phpenv version-name) = '5.4' -o $(phpenv version-name) = 'hhvm' ||
+  # disable postgres install for hhvm, as there is no psql extension
+  - test $(phpenv version-name) = 'hhvm' ||
     php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # install egroupware with LDAP for account and MySQL as domain "ldap"
