@@ -724,22 +724,41 @@ class Vfs
 	}
 
 	/**
+	 * Check if given directory is protected (user not allowed to remove or rename)
+	 *
+	 * Following directorys are protected:
+	 * - /
+	 * - /apps incl. subdirectories
+	 * - /home
+	 * - /templates incl. subdirectories
+	 *
+	 * @param string $dir path or url
+	 * @return boolean true for protected dirs, false otherwise
+	 */
+	static function isProtectedDir($dir)
+	{
+		if ($dir[0] != '/') $dir = self::parse_url($dir, PHP_URL_PATH);
+
+		return preg_match('#^/(apps(/[^/]+)?|home|templates(/[^/]+)?)?/*$#', $dir) > 0;
+	}
+
+	/**
 	 * Recursiv remove all given url's, including it's content if they are files
 	 *
 	 * @param string|array $urls url or array of url's
 	 * @param boolean $allow_urls =false allow to use url's, default no only pathes (to stay within the vfs)
-	 * @throws Exception\AssertionFailed when trainig to remove /, /apps or /home
+	 * @throws Vfs\Exception\ProtectedDirectory if trying to delete a protected directory, see Vfs::isProtected()
 	 * @return array
 	 */
 	static function remove($urls,$allow_urls=false)
 	{
 		//error_log(__METHOD__.'('.array2string($urls).')');
-		// some precaution to never allow to (recursivly) remove /, /apps or /home
 		foreach((array)$urls as $url)
 		{
-			if (preg_match('/^\/?(home|apps|)\/*$/',self::parse_url($url,PHP_URL_PATH)))
+			// some precaution to never allow to (recursivly) remove /, /apps or /home, see Vfs::isProtected()
+			if (self::isProtectedDir($url))
 			{
-				throw new Exception\AssertionFailed(__METHOD__.'('.array2string($urls).") Cautiously rejecting to remove folder '$url'!");
+				throw new Vfs\Exception\ProtectedDirectory("Deleting protected directory '$url' rejected!");
 			}
 		}
 		return self::find($urls, array('depth'=>true,'url'=>$allow_urls,'hidden'=>true), __CLASS__.'::_rm_rmdir');

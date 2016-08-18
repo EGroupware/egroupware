@@ -571,9 +571,14 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param string $path_from
 	 * @param string $path_to
 	 * @return boolean TRUE on success or FALSE on failure
+	 * @throws Exception\ProtectedDirectory if trying to delete a protected directory, see Vfs::isProtected()
 	 */
 	function rename ( $path_from, $path_to )
 	{
+		if (Vfs::isProtectedDir($path_from))
+		{
+			throw new Exception\ProtectedDirectory("Renaming protected directory '$path_from' rejected!");
+		}
 		if (!($url_from = $this->resolve_url_symlinks($path_from,true,false)) ||
 			!($url_to = $this->resolve_url_symlinks($path_to,false)))
 		{
@@ -665,9 +670,14 @@ class StreamWrapper implements StreamWrapperIface
 	 * @param string $path
 	 * @param int $options Possible values include STREAM_REPORT_ERRORS.
 	 * @return boolean TRUE on success or FALSE on failure.
+	 * @throws Exception\ProtectedDirectory if trying to delete a protected directory, see Vfs::isProtected()
 	 */
 	function rmdir ( $path, $options )
 	{
+		if (Vfs::isProtectedDir($path))
+		{
+			throw new Exception\ProtectedDirectory("Deleting protected directory '$path' rejected!");
+		}
 		unset($options);	// not uses but required by function signature
 		if (!($url = $this->resolve_url_symlinks($path)))
 		{
