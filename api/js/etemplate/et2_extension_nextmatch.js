@@ -2243,12 +2243,14 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			}
 		},this);
 
+		var base_url = this.getInstanceManager().template_base_url;
+		if (base_url == '/') base_url = '';	// otherwise we generate a url //api/templates, which is wrong
 		var dialog = et2_createWidget("dialog",{
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: callback,	// return false to prevent dialog closing
 			buttons: et2_dialog.BUTTONS_OK_CANCEL,
 			title: 'Print',
-			template:this.egw().link(this.getInstanceManager().template_base_url+'/api/templates/default/nm_print_dialog.xet'),
+			template:this.egw().link(base_url+'/api/templates/default/nm_print_dialog.xet'),
 			value: {
 				content: {
 					row_count: Math.min(100,total),
@@ -3455,7 +3457,7 @@ var et2_nextmatch_taglistheader = (function(){ "use strict"; return et2_taglist.
 			}
 		},
 		rows: { default: 2},
-		class: {default: 'nm_filterheader_taglist'},
+		class: {default: 'nm_filterheader_taglist'}
 	},
 
 	/**
@@ -3480,7 +3482,7 @@ var et2_nextmatch_taglistheader = (function(){ "use strict"; return et2_taglist.
 	{
 		if(options && options.length <= 2 && this.options.multiple == 'toggle')
 		{
-			this.set_multiple(false)
+			this.set_multiple(false);
 		}
 		this._super.apply(this, arguments);
 	},
@@ -3541,7 +3543,7 @@ var et2_nextmatch_taglistheader = (function(){ "use strict"; return et2_taglist.
 			}
 		},
 		rows: { default: 2},
-		class: {default: 'nm_filterheader_taglist'},
+		class: {default: 'nm_filterheader_taglist'}
 	},
 
 	/**
@@ -3566,7 +3568,7 @@ var et2_nextmatch_taglistheader = (function(){ "use strict"; return et2_taglist.
 	{
 		if(options && options.length <= 2 && this.options.multiple == 'toggle')
 		{
-			this.set_multiple(false)
+			this.set_multiple(false);
 		}
 		this._super.apply(this, arguments);
 	},
@@ -3612,7 +3614,7 @@ var et2_nextmatch_entryheader = (function(){ "use strict"; return et2_link_entry
 	 * @param {object} event
 	 * @param {object} selected
 	 */
-	onchange: function() {
+	onchange: function(event, selected) {
 		var col_filter = {};
 		col_filter[this.id] = this.get_value();
 		this.nextmatch.applyFilters.call(this.nextmatch, {col_filter: col_filter});
