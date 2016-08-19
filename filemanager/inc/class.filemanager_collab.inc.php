@@ -176,8 +176,16 @@ class filemanager_collab extends filemanager_collab_bo {
 		}
 	}
 
-	
-	function is_collabAllowed ($file_path, $_right)
+
+	/**
+	 * Check if the collaboration is allowed for given file path
+	 *
+	 * @param string $file_path file path
+	 * @param int $_right VFS file access right
+	 * 
+	 * @return boolean returns true if allowed
+	 */
+	function is_collabAllowed ($file_path, $_right=null)
 	{
 		$paths = explode('/webdav.php', $file_path);
 		$right = $_right ? $_right : Api\Vfs::WRITABLE;
@@ -186,11 +194,18 @@ class filemanager_collab extends filemanager_collab_bo {
 		return $allowed;
 	}
 
+	/**
+	 * Function to get genesis url by generating a temp genesis temp file
+	 * out of given path, and returnig es_id md5 hash and genesis url to
+	 * client.
+	 *
+	 * @param type $file_path file path
+	 *
+	 */
 	function ajax_getGenesisUrl ($file_path)
 	{
 		$result = array();
 		$es_id = md5($file_path);
-
 		$paths = explode('/webdav.php', $file_path);
 		$dir_parts = explode('/',$paths[1]);
 		array_pop($dir_parts);
@@ -205,7 +220,7 @@ class filemanager_collab extends filemanager_collab_bo {
 				'genesis_url' => $session['genesis_url']
 			);
 		}
-		else if ($this->is_collabAllowed($file_path))
+		else if ($this->is_collabAllowed($file_path, Api\Vfs::WRITABLE))
 		{
 			$genesis_file = $dir.'/.'.$es_id.'.webodf.odt';
 			$genesis_url = $paths[0].'/webdav.php'.$genesis_file;

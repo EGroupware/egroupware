@@ -233,7 +233,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						success: function(data) {
 							egw(window).message(egw.lang('Document %1 successfully has been saved.', filename[1]));
 							self.editor.setDocumentModified(false);
-							egw.json('filemanager.filemanager_collab.ajax_actions',[self.editor_getFilePath(), 'save']).sendRequest();
+							egw.json('filemanager.filemanager_collab.ajax_actions',[self.collab_server.es_id, 'save']).sendRequest();
 						},
 						error: function () {},
 						data: blob,

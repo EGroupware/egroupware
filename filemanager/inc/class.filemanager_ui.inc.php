@@ -1481,7 +1481,7 @@ class filemanager_ui
 	 *
 	 * @param array $content
 	 */
-	function editor(array $content=null)
+	function editor($content=null)
 	{
 		$tmpl = new Etemplate('filemanager.editor');
 		$file_path = $_GET['path'];
@@ -1500,7 +1500,7 @@ class filemanager_ui
 				$content['file_path'] = $file_path;
 			}
 		}
-		
+
 		$actions = self::getActions_edit();
 		if (!Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE))
 		{
