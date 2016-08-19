@@ -214,7 +214,7 @@ class Html
 		if($enhanced) {
 			Framework::includeJS('/api/js/jquery/chosen/chosen.jquery.js');
 			Framework::includeCSS('/api/js/jquery/chosen/chosen.css',null,false);
-			$out .= "<script>var lab = egw_LAB || \$LAB; lab.wait(function() {\jQuery(function() {if(\jQuery().chosen) \jQuery('select[name=\"$name\"]').chosen({width: '100%'});});})</script>\n";
+			$out .= "<script>var lab = egw_LAB || \$LAB; lab.wait(function() {jQuery(function() {if(jQuery().chosen) jQuery('select[name=\"$name\"]').chosen({width: '100%'});});})</script>\n";
 		}
 		return $out;
 	}
