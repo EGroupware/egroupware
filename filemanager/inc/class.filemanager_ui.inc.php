@@ -1492,6 +1492,15 @@ class filemanager_ui
 		Api\Framework::includeCSS('/api/js/webodf/collab/wodotexteditor.css');
 		Api\Framework::includeJS('/filemanager/js/collab.js',null, 'filemanager');
 
+		if (!$content)
+		{
+			if ($file_path)
+			{
+				$content['es_id'] = md5 ($file_path);
+				$content['file_path'] = $file_path;
+			}
+		}
+		
 		$actions = self::getActions_edit();
 		if (!Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE))
 		{
@@ -1499,7 +1508,7 @@ class filemanager_ui
 			unset ($actions['delete']);
 		}
 		$tmpl->setElementAttribute('tools', 'actions', $actions);
-		$preserve = $content = array('file_path' => $file_path);
+		$preserve = $content;
 		$tmpl->exec('filemanager.filemanager_ui.editor',$content,array(),array(),$preserve,2);
 	}
 

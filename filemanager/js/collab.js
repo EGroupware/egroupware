@@ -118,42 +118,43 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	 */
 	_init_odf_collab_editor: function ()
 	{
+		var	self = this;
 
-		var widgetFilePath = this.et2.getWidgetById('file_path'),
-			file_path = widgetFilePath.value;
-
-
-		var serverOptions = {
-			"serverParams": {
-					url:egw.link('/index.php?', {
-						menuaction: 'filemanager.filemanager_collab.poll'
-					}),
-					genesisUrl:egw.webserverUrl+file_path
-				},
-			"sessionId": this.editor_getSessionId(),
-			editorOptions: {
-				allFeaturesEnabled: true,
-				userData: {
-					fullName: egw.user('account_fullName'),
-					color: 'blue'
+		egw.json('filemanager.filemanager_collab.ajax_getGenesisUrl',[this.editor_getFilePath()], function (_data){
+			var serverOptions = {
+				serverParams: {
+						url:egw.link('/index.php?', {
+							menuaction: 'filemanager.filemanager_collab.poll'
+						}),
+						genesisUrl:_data.genesis_url
+					},
+				sessionId: _data.es_id,
+				editorOptions: {
+					allFeaturesEnabled: true,
+					userData: {
+						fullName: egw.user('account_fullName'),
+						color: 'blue'
+					}
 				}
+			};
+			var editor = self.et2.getWidgetById('odfEditor');
+			if (editor)
+			{
+				self.create_collab_editor(serverOptions);
 			}
-		};
-		var editor = this.et2.getWidgetById('odfEditor');
-		if (editor)
-		{
-			this.create_collab_editor(serverOptions);
-		}
+		}).sendRequest();
 	},
 
 	/**
 	 * Function to leave the current editing session
 	 * and as result it will call client-side and server leave session.
+	 *
+	 * @param {function} _successCallback function to gets called after leave session is successful
 	 */
-	editor_leaveSession: function ()
+	editor_leaveSession: function (_successCallback)
 	{
 		this.editor.leaveSession(function(){});
-		this.collab_server.server.leaveSession(this.collab_server.es_id, this.collab_server.memberid);
+		this.collab_server.server.leaveSession(this.collab_server.es_id, this.collab_server.memberid, _successCallback);
 	},
 
 	/**
@@ -232,7 +233,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						success: function(data) {
 							egw(window).message(egw.lang('Document %1 successfully has been saved.', filename[1]));
 							self.editor.setDocumentModified(false);
-							egw.json('filemanager.filemanager_collab.ajax_actions',[self.editor_getSessionId(), 'save']).sendRequest();
+							egw.json('filemanager.filemanager_collab.ajax_actions',[self.editor_getFilePath(), 'save']).sendRequest();
 						},
 						error: function () {},
 						data: blob,
@@ -264,9 +265,10 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						// Add odt extension if not exist
 						if (!file_path.match(/\.odt$/,'ig')) file_path += '.odt';
 						widgetFilePath.set_value(file_path);
-						self.editor_leaveSession();
 						self.editor.getDocumentAsByteArray(saveByteArrayLocally);
-						self._init_odf_collab_editor();
+						self.editor_leaveSession(function(){
+							self._init_odf_collab_editor();
+						});
 						egw.refresh('','filemanager');
 					}
 				});
@@ -351,16 +353,16 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	},
 
 	/**
-	 * Function to generate session id
+	 * Function to get full file path
 	 *
-	 * @returns {String} retruns session id
+	 * @returns {String} retruns file path
 	 */
-	editor_getSessionId: function ()
+	editor_getFilePath: function ()
 	{
 		var widgetFilePath = this.et2.getWidgetById('file_path'),
 			file_path = widgetFilePath.value,
-			es_id = egw.webserverUrl+file_path;
-		return es_id;
+			path = egw.webserverUrl+file_path;
+		return path;
 	},
 
 	/**

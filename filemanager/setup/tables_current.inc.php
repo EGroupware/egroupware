@@ -45,8 +45,6 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'collab_es_id' => array('type' => 'varchar','precision' => '64','nullable' => False, 'comment' => 'Editing session id'),
 			'collab_genesis_url' => array('type' => 'varchar','precision' => '512', 'comment' => 'Relative to owner documents storage /template.odt'),
-			'collab_genesis_hash' => array('type' => 'varchar','precision' => '128','nullable' => False, 'comment' => 'To be sure the genesis did not change'),
-			'collab_file_id' => array('type' => 'varchar','precision' => '512', 'comment' => 'Relative to storage e.g. /template.odt'),
 			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False, 'comment' => 'user who created the session'),
 			'collab_last_save' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of the last save')
 		),

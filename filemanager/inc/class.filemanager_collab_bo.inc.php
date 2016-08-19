@@ -94,18 +94,17 @@ class filemanager_collab_bo
 	 * Add session data with provided session id into DB
 	 *
 	 * @param string $es_id session id
-	 *
+	 * @param string $genesis_url generated url out of genesis temp file
 	 * @return array returns an array contains of session data
 	 */
-	protected function SESSION_add2Db ($es_id)
+	protected function SESSION_add2Db ($es_id, $genesis_url='')
 	{
 		if ($es_id)
 		{
 			$data = array (
 				'collab_es_id' => $es_id,
-				'collab_genesis_url' => '',
-				'collab_genesis_hash' => '',
-				'collab_last_saved' => self::getTimeStamp(),
+				'collab_genesis_url' => $genesis_url,
+				'collab_last_save' => self::getTimeStamp(),
 				'account_id' => $GLOBALS['egw_info']['user']['account_id']
 			);
 
@@ -164,6 +163,28 @@ class filemanager_collab_bo
 				__FILE__,
 				'filemanager');
 		return !$query? false: true;
+	}
+
+	/**
+	 * Get session information based on session id
+	 *
+	 * @param string $es_id session id
+	 *
+	 * @return array|boolean return session info or false if nothing found
+	 * @throws Exception
+	 */
+	public function SESSION_Get($es_id)
+	{
+		if (!$es_id) throw new Exception (self::EXCEPTION_MESSAGE_NO_SESSION);
+		$query = $this->db->select(
+				self::SESSION_TABLE,
+				'*',
+				array('collab_es_id' => $es_id),
+				__LINE__,
+				__FILE__
+		);
+		$session = $query->fetchrow();
+		return is_array($session)? self::db2id($session): false;
 	}
 
 	/**

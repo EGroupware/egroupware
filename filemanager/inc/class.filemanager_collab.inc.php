@@ -40,15 +40,11 @@ class filemanager_collab extends filemanager_collab_bo {
 	 */
 	function join_session ($es_id)
 	{
-		$paths = explode('/webdav.php', $es_id);
-		if (Api\Vfs::check_access($paths[1], Api\Vfs::READABLE))
-		{
-			$response = $this->initSession($es_id);
-			$response['success'] = true;
-		}
+		$response = $this->initSession($es_id);
 		$response += array (
 			'id' => $GLOBALS['egw_info']['user']['account_id'],
-			'full_name' => $GLOBALS['egw_info']['user']['account_fullname']
+			'full_name' => $GLOBALS['egw_info']['user']['account_fullname'],
+			'success' => true
 		);
 
 		return $response;
@@ -84,7 +80,6 @@ class filemanager_collab extends filemanager_collab_bo {
 		$response = array();
 		if (is_array($params))
 		{
-			$paths = explode('/webdav.php', $params['args']['es_id']);
 			switch ($params['command'])
 			{
 				case 'join_session':
@@ -103,7 +98,7 @@ class filemanager_collab extends filemanager_collab_bo {
 						{
 							$client_ops = $params['args']['client_ops']? $params['args']['client_ops']: [];
 							$current_seq_head = $this->OP_getHeadSeq($es_id);
-							if ($seq_head == $current_seq_head && $this->is_collabAllowed($es_id)) {
+							if ($seq_head == $current_seq_head) {
 
 								if (count($client_ops)>0)
 								{
@@ -181,11 +176,46 @@ class filemanager_collab extends filemanager_collab_bo {
 		}
 	}
 
-	function is_collabAllowed ($es_id)
+	
+	function is_collabAllowed ($file_path, $_right)
 	{
-		$paths = explode('/webdav.php', $es_id);
-		$allowed =	Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE) &&
-					!preg_match('/\/api\/js\/webodf\/template.odf$/', $es_id);
+		$paths = explode('/webdav.php', $file_path);
+		$right = $_right ? $_right : Api\Vfs::WRITABLE;
+		$allowed =	Api\Vfs::check_access($paths[1], $right) &&
+					!preg_match('/\/api\/js\/webodf\/template.odf$/', $file_path);
 		return $allowed;
+	}
+
+	function ajax_getGenesisUrl ($file_path)
+	{
+		$result = array();
+		$es_id = md5($file_path);
+
+		$paths = explode('/webdav.php', $file_path);
+		$dir_parts = explode('/',$paths[1]);
+		array_pop($dir_parts);
+		$dir = join('/', $dir_parts);
+		$response = Api\Json\Response::get();
+		$session = $this->SESSION_Get($es_id);
+
+		if ($session && $session['genesis_url'] !== '')
+		{
+			$result = array (
+				'es_id' => $session['es_id'],
+				'genesis_url' => $session['genesis_url']
+			);
+		}
+		else if ($this->is_collabAllowed($file_path))
+		{
+			$genesis_file = $dir.'/.'.$es_id.'.webodf.odt';
+			$genesis_url = $paths[0].'/webdav.php'.$genesis_file;
+			$result = array (
+				'es_id' => $es_id,
+				'genesis_url' => $genesis_url
+			);
+			Api\Vfs::copy($paths[1], $genesis_file);
+			$this->SESSION_add2Db($es_id, $genesis_url);
+		}
+		$response->data($result);
 	}
 }
