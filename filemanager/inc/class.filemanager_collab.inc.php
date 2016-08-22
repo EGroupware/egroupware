@@ -60,7 +60,7 @@ class filemanager_collab extends filemanager_collab_bo {
 	 */
 	function leave_session ($es_id, $member_id)
 	{
-		if (!$this->is_sessionValid($es_id)) throw new Exception ('Session is not valid!');
+		if (!$this->is_sessionValid($es_id) || !$this->is_memberValid($es_id, $member_id)) throw new Exception ('Session is not valid!');
 		return array (
 			'session_id' => $es_id,
 			'memberid' => $member_id,
@@ -95,6 +95,17 @@ class filemanager_collab extends filemanager_collab_bo {
 						$memberid = $params['args']['member_id']? $params['args']['member_id']: '';
 						$es_id = $params['args']['es_id'];
 						$seq_head = (string) isset($params['args']['seq_head'])? $params['args']['seq_head']: null;
+						// we need to inform clients about session changes to update themselves
+						// based on that. For instance, after discarding changes other participants
+						// should get notified to reload their session.
+						if (!$this->is_memberValid($es_id, $memberid)) {
+							$response = array (
+								'result' => 'error',
+								'error' => 'ENOSESSION'
+							);
+							throw new Exception('Session is not valid!');
+						}
+
 						if(!is_null($seq_head))
 						{
 							$client_ops = $params['args']['client_ops']? $params['args']['client_ops']: [];
@@ -163,6 +174,8 @@ class filemanager_collab extends filemanager_collab_bo {
 	}
 
 	/**
+	 * Ajax function to handle actions called by client-side
+	 * types: save, delete, discard
 	 *
 	 * @param type $es_id
 	 * @param type $action
@@ -177,6 +190,11 @@ class filemanager_collab extends filemanager_collab_bo {
 			case 'delete':
 				$this->SESSION_cleanup($es_id);
 				break;
+			case 'discard':
+				$this->OP_Discard($es_id);
+				break;
+			default:
+				//
 		}
 	}
 
@@ -209,6 +227,20 @@ class filemanager_collab extends filemanager_collab_bo {
 	{
 		$session = $this->SESSION_Get($es_id);
 		return $session? true : false;
+	}
+
+	/**
+	 * Check if the member id of the session has valid status
+	 * status: 1 is valid 0 is invalid
+	 *
+	 * @param type $es_id
+	 * @param type $member_id
+	 * @return boolean returns true if it's valid
+	 */
+	function is_memberValid ($es_id, $member_id)
+	{
+		$member = $this->MEMBER_getMember($es_id, $member_id);
+		return $member && $member['status'] != 0 ? true: false;
 	}
 
 	/**

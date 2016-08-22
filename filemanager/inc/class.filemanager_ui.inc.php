@@ -1505,6 +1505,7 @@ class filemanager_ui
 		if (!Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE))
 		{
 			unset ($actions['save']);
+			unset ($actions['discard']);
 			unset ($actions['delete']);
 		}
 		$tmpl->setElementAttribute('tools', 'actions', $actions);
@@ -1556,6 +1557,14 @@ class filemanager_ui
 				'icon' => 'delete',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.filemanager.editor_delete',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => false
+			),
+			'discard' => array(
+				'caption' => 'Discard',
+				'icon' => 'delete',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_discard',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => false
 			)

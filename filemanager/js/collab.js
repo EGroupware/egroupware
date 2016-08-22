@@ -366,6 +366,39 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	},
 
 	/**
+	 * This function gets called after discard action to
+	 * notify particioant to join to the new session or
+	 * save as the document to not lose changes.
+	 *
+	 */
+	editor_discarded: function ()
+	{
+		var self = this;
+		var buttons = [
+			{"button_id": 1,"text": 'reload', id: 'reload', image: 'check' },
+			{"button_id": 0,"text": 'save as', id: 'save', image: 'cancel', "default":true}
+		]
+		et2_dialog.show_dialog(
+			function(_btn)
+			{
+				if (_btn == 'save')
+				{
+					self.editor_save({id:'saveas'});
+				}
+				else if (_btn == 'reload')
+				{
+					window.location.reload();
+				}
+			},
+			egw.lang('All the changes has been discarded and new session created! Save as your local changes if you need them or reload to join new session.'),
+			'Delete file',
+			null,
+			buttons,
+			et2_dialog.WARNING_MESSAGE
+		);
+	},
+
+	/**
 	 * Function to create collab editor
 	 *
 	 * @param {type} _args parameteres to be set for server factory and texteditor
@@ -384,11 +417,24 @@ app.classes.filemanager = app.classes.filemanager.extend({
 
 		/**
 		 * Editor error handler function
-		 * @param {type} e
+		 *
+		 * this function also been used in order to notify
+		 * participant about session changes.
+		 *
+		 * @param {string} e
 		 */
 		function handleEditingError (e)
 		{
-			console.log(e)
+			switch (e)
+			{
+				// This type of error happens when the session is discarded or
+				// the document has been deleted and all records in database's been removed.
+				case 'sessionDoesNotExist':
+					this.editor_discarded();
+					break;
+				default:
+					console.log(e)
+			}
 		};
 
 		function onEditing ()
@@ -412,7 +458,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 				return;
 			}
 			self.editor = _editor;
-			self.editor.addEventListener(Wodo.EVENT_UNKNOWNERROR, handleEditingError);
+			self.editor.addEventListener(Wodo.EVENT_UNKNOWNERROR, jQuery.proxy(handleEditingError, self));
 			self.editor.joinSession(serverFactory.createSessionBackend(sessionId, memberId, server), onEditing);
 
 		};
@@ -467,8 +513,42 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		switch(_data.action)
 		{
 			case 'delete':
-				if (!_data.errs) egw.json('filemanager.filemanager_collab.ajax_actions', [this.collab_server.es_id, 'delete']).sendRequest();
+				if (!_data.errs) egw.json('filemanager.filemanager_collab.ajax_actions', [this.collab_server.es_id, 'delete'], function(){window.close();}).sendRequest();
 		}
+	},
+
+	/**
+	 * Discard stacked modification in session from all participants
+	 * it will warn user about the consequences which would be removing
+	 * all stored OP modfifications in DB. Then as result it will notify
+	 * other participants about the action and prompt them to reload the
+	 * session or save as the current session if they want to keep their
+	 * changes.
+	 *
+	 */
+	editor_discard: function ()
+	{
+		var self = this;
+		var buttons = [
+			{"button_id": 1,"text": 'discard', id: 'discard', image: 'check' },
+			{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancel', "default":true}
+		]
+		et2_dialog.show_dialog(
+			function(_btn)
+			{
+				if (_btn == 'discard')
+				{
+					egw.json('filemanager.filemanager_collab.ajax_actions',[self.collab_server.es_id, 'discard'], function(){
+						window.location.reload();
+					}).sendRequest();
+				}
+			},
+			egw.lang('You are about to discard all modifications applied to this document by you and other participants. Be aware this will affect all participants and their changes on this document too.'),
+			'Discard all changes',
+			null,
+			buttons,
+			et2_dialog.WARNING_MESSAGE
+		);
 	}
 });
 

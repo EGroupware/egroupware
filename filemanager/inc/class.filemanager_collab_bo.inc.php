@@ -232,6 +232,35 @@ class filemanager_collab_bo
 	}
 
 	/**
+	 * Function to discard all changes applied to a session
+	 * @param type $es_id
+	 */
+	public function OP_Discard ($es_id)
+	{
+		$this->db->update(
+				self::MEMBER_TABLE,
+				array('collab_status' => 0),
+				array('collab_es_id' => $es_id),
+				__LINE__,
+				__FILE__,
+				'filemanager'
+		);
+		$this->db->delete(
+				self::OP_TABLE,
+				array('collab_es_id' => $es_id),
+				__LINE__,
+				__FILE__,
+				'filemanager'
+		);
+		$this->db->delete(
+				self::SESSION_TABLE,
+				array('collab_es_id' => $es_id),
+				__LINE__,
+				__FILE__
+		);
+	}
+
+	/**
 	 * Function to remove member from list
 	 *
 	 * @param string $es_id session id
@@ -403,6 +432,28 @@ class filemanager_collab_bo
 		);
 		$member = $query->fetchRow();
 		return is_array($member)? $member['collab_member_id']: null;
+	}
+
+	/**
+	 * Function to get member record of a session
+	 *
+	 * @param string $es_id session id
+	 *
+	 * @return array array of records or null
+	 * @throws Exception throws exception if no member id is given
+	 */
+	protected function MEMBER_getMember ($es_id, $member_id)
+	{
+		if (!$es_id) throw new Exception (self::EXCEPTION_MESSAGE_NO_SESSION);
+		$query = $this->db->select(
+				self::MEMBER_TABLE,
+				'*',
+				array('collab_es_id' => $es_id, 'collab_member_id' => $member_id),
+				__LINE__,
+				__FILE__
+		);
+		$member = $query->fetchRow();
+		return is_array($member)? self::db2id($member): null;
 	}
 
 	/**
