@@ -848,51 +848,54 @@ function egwPopupActionImplementation()
 			}
 
 			// Add into links so it's included in menu
-			if(typeof _links[paste_action.id] == 'undefined')
+			if(paste_action && paste_action.enabled.exec())
 			{
-				_links[paste_action.id] = {
-					"actionObj": paste_action,
-					"enabled": false,
-					"visible": clipboard != null,
-					"cnt": 0
-				};
-			}
-			while(paste_action.children.length > 0)
-			{
-				paste_action.children[0].remove();
-			}
-
-			// If nothing [valid] in the clipboard, don't bother with children
-			if(clipboard == null || typeof clipboard.type != 'object')
-			{
-				return;
-			}
-
-			// Add in actual actions as children
-			for(var k in drop)
-			{
-				// Add some choices - need to be a copy, or they interfere with
-				// the original
-				var drop_clone = jQuery.extend({},drop[k].actionObj);
-				drop_clone.parent = paste_action;
-				drop_clone.onExecute = new egwFnct(this, null, []);
-				drop_clone.set_onExecute(paste_exec);
-				paste_action.children.push(drop_clone);
-				paste_action.allowOnMultiple = paste_action.allowOnMultiple && drop_clone.allowOnMultiple;
-				_links[k] = jQuery.extend({},drop[k]);
-				_links[k].actionObj = drop_clone;
-
-				// Drop is allowed if clipboard types intersect drop types
-				_links[k].enabled = false;
-				_links[k].visible = false;
-				for (var i = 0; i < drop_clone.acceptedTypes.length; i++)
+				if(typeof _links[paste_action.id] == 'undefined')
 				{
-					if (clipboard.type.indexOf(drop_clone.acceptedTypes[i]) != -1)
+					_links[paste_action.id] = {
+						"actionObj": paste_action,
+						"enabled": false,
+						"visible": clipboard != null,
+						"cnt": 0
+					};
+				}
+				while(paste_action.children.length > 0)
+				{
+					paste_action.children[0].remove();
+				}
+
+				// If nothing [valid] in the clipboard, don't bother with children
+				if(clipboard == null || typeof clipboard.type != 'object')
+				{
+					return;
+				}
+
+				// Add in actual actions as children
+				for(var k in drop)
+				{
+					// Add some choices - need to be a copy, or they interfere with
+					// the original
+					var drop_clone = jQuery.extend({},drop[k].actionObj);
+					drop_clone.parent = paste_action;
+					drop_clone.onExecute = new egwFnct(this, null, []);
+					drop_clone.set_onExecute(paste_exec);
+					paste_action.children.push(drop_clone);
+					paste_action.allowOnMultiple = paste_action.allowOnMultiple && drop_clone.allowOnMultiple;
+					_links[k] = jQuery.extend({},drop[k]);
+					_links[k].actionObj = drop_clone;
+
+					// Drop is allowed if clipboard types intersect drop types
+					_links[k].enabled = false;
+					_links[k].visible = false;
+					for (var i = 0; i < drop_clone.acceptedTypes.length; i++)
 					{
-						_links[paste_action.id].enabled = true;
-						_links[k].enabled = true;
-						_links[k].visible = true;
-						break;
+						if (clipboard.type.indexOf(drop_clone.acceptedTypes[i]) != -1)
+						{
+							_links[paste_action.id].enabled = true;
+							_links[k].enabled = true;
+							_links[k].visible = true;
+							break;
+						}
 					}
 				}
 			}
