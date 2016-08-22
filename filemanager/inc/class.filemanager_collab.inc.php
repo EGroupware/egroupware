@@ -60,6 +60,7 @@ class filemanager_collab extends filemanager_collab_bo {
 	 */
 	function leave_session ($es_id, $member_id)
 	{
+		if (!$this->is_sessionValid($es_id)) throw new Exception ('Session is not valid!');
 		return array (
 			'session_id' => $es_id,
 			'memberid' => $member_id,
@@ -173,6 +174,9 @@ class filemanager_collab extends filemanager_collab_bo {
 			case 'save':
 				$this->SESSION_Save($es_id);
 				break;
+			case 'delete':
+				$this->SESSION_cleanup($es_id);
+				break;
 		}
 	}
 
@@ -182,7 +186,7 @@ class filemanager_collab extends filemanager_collab_bo {
 	 *
 	 * @param string $file_path file path
 	 * @param int $_right VFS file access right
-	 * 
+	 *
 	 * @return boolean returns true if allowed
 	 */
 	function is_collabAllowed ($file_path, $_right=null)
@@ -192,6 +196,19 @@ class filemanager_collab extends filemanager_collab_bo {
 		$allowed =	Api\Vfs::check_access($paths[1], $right) &&
 					!preg_match('/\/api\/js\/webodf\/template.odf$/', $file_path);
 		return $allowed;
+	}
+
+	/**
+	 * Check if session is valid
+	 *
+	 * @param type $es_id
+	 *
+	 * @return boolean return true if session is valid otherwise false
+	 */
+	function is_sessionValid ($es_id)
+	{
+		$session = $this->SESSION_Get($es_id);
+		return $session? true : false;
 	}
 
 	/**

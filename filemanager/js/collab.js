@@ -295,7 +295,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			{
 				if (_btn == 2)
 				{
-					self._do_action('delete', [fullpath], false, path);
+					self._do_action('delete', [fullpath,path+'/.'+self.collab_server.es_id+'.webodf.odt'], false, path);
 					self.editor_close(_egwAction);
 				}
 			},
@@ -458,6 +458,17 @@ app.classes.filemanager = app.classes.filemanager.extend({
 				}
 			});
 		});
+	},
+
+	_do_action_callback:function(_data)
+	{
+		this._super.apply(this,arguments);
+
+		switch(_data.action)
+		{
+			case 'delete':
+				if (!_data.errs) egw.json('filemanager.filemanager_collab.ajax_actions', [this.collab_server.es_id, 'delete']).sendRequest();
+		}
 	}
 });
 
