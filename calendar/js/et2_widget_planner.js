@@ -1389,7 +1389,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		this._init_links_dnd(widget_object.manager, action_links);
 
-		//widget_object.updateActionLinks(action_links);
+		widget_object.updateActionLinks(action_links);
 		this._actionObject = widget_object;
 	},
 
@@ -1409,6 +1409,14 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var drop_change_participant = mgr.getActionById('change_participant');
 		var drop_invite = mgr.getActionById('invite');
 		var drag_action = mgr.getActionById('egw_link_drag');
+		var paste_action = mgr.getActionById('egw_paste');
+
+		// Disable paste action
+		if(paste_action == null)
+		{
+			paste_action = mgr.addAction('popup', 'egw_paste', egw.lang('Paste'), egw.image('editpaste'), function(){},true);
+		}
+		paste_action.set_enabled(false);
 
 		// Check if this app supports linking
 		if(!egw.link_get_registry(this.dataStorePrefix || 'calendar', 'query') ||
@@ -1583,15 +1591,24 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	_get_action_links: function(actions)
 	{
 		var action_links = [];
-		// TODO: determine which actions are allowed without an action (empty actions)
+
+		// Only these actions are allowed without a selection (empty actions)
+		var empty_actions = ['add'];
+
 		for(var i in actions)
 		{
 			var action = actions[i];
-			if(action.type === 'drop')
+			if(empty_actions.indexOf(action.id) !== -1 ||  action.type === 'drop')
 			{
 				action_links.push(typeof action.id !== 'undefined' ? action.id : i);
 			}
 		}
+		// Disable automatic paste action, it doesn't have what is needed to work
+		action_links.push({
+			"actionObj": 'egw_paste',
+			"enabled": false,
+			"visible": false
+		});
 		return action_links;
 	},
 
@@ -2129,6 +2146,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	 */
 	_mouse_down: function(event)
 	{
+		// Only left mouse button
+		if(event.which !== 1) return;
+		
 		// Ignore headers
 		if(this.headers.has(event.target).length !== 0) return false;
 		
