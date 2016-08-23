@@ -68,7 +68,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			// need to make body rock solid to avoid extra scrollbars
 			jQuery('body').css({overflow:'hidden'});
 			var self = this;
-			jQuery(window).on('unload', function(){self.editor_leaveSession()});
+			jQuery(window).on('unload', function(){self.editor_leaveSession();});
 			this._init_odf_collab_editor ();
 		}
 	},
@@ -346,7 +346,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		var buttons = [
 			{"button_id": 1,"text": 'reload', id: 'reload', image: 'check' },
 			{"button_id": 0,"text": 'save as', id: 'save', image: 'cancel', "default":true}
-		]
+		];
 		et2_dialog.show_dialog(
 			function(_btn)
 			{
@@ -402,7 +402,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 					this.editor_discarded();
 					break;
 				default:
-					console.log(e)
+					console.log(e);
 			}
 		};
 
@@ -466,10 +466,10 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						joinSession(sessionId);
 						break;
 					case "timeout":
-						console.log('did not connect to server because of timeout.')
+						console.log('did not connect to server because of timeout.');
 						break;
 					default:
-						console.log('server is not available.')
+						console.log('server is not available.');
 				}
 			});
 		});
@@ -501,7 +501,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		var buttons = [
 			{"button_id": 1,"text": 'discard', id: 'discard', image: 'check' },
 			{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancel', "default":true}
-		]
+		];
 		et2_dialog.show_dialog(
 			function(_btn)
 			{
