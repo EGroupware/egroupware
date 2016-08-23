@@ -360,21 +360,6 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	},
 
 	/**
-	 * Function to check wheter selected file is editable. ATM only .odt is supported.
-	 *
-	 * @param {object} _egwAction egw action object
-	 * @param {object} _senders object of selected row
-	 *
-	 * @returns {boolean} returns true if is editable otherwise false
-	 */
-	isEditable: function (_egwAction, _senders) {
-		var data = egw.dataGetUIDdata(_senders[0].id),
-			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
-
-		return data.data.mime.match(mime.mime_odf_regex)?true:false;
-	},
-
-	/**
 	 * Function to get full file path
 	 *
 	 * @returns {String} retruns file path

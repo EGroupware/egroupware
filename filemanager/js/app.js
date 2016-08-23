@@ -1017,11 +1017,25 @@ app.classes.filemanager = AppJS.extend(
 	 * @todo: creating new empty odt file
 	 */
 	editor_new: function (_egwAction) {
-		var self = this,
 		template_url = '/api/js/webodf/template.odt';
 		egw.open_link(egw.link('/index.php', {
 			menuaction: 'filemanager.filemanager_ui.editor',
 			path: template_url
 		}), '', egw.link_get_registry('filemanager','view_popup'));
+	},
+
+	/**
+	 * Function to check wheter selected file is editable. ATM only .odt is supported.
+	 *
+	 * @param {object} _egwAction egw action object
+	 * @param {object} _senders object of selected row
+	 *
+	 * @returns {boolean} returns true if is editable otherwise false
+	 */
+	isEditable: function (_egwAction, _senders) {
+		var data = egw.dataGetUIDdata(_senders[0].id),
+			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
+
+		return data.data.mime.match(mime.mime_odf_regex)?true:false;
 	}
 });
