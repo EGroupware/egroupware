@@ -1012,14 +1012,10 @@ app.classes.filemanager = AppJS.extend(
 
 	/**
 	 * Method to create a new document
-	 * @param {object} _egwAction egw action object
-	 *
-	 * @todo: creating new empty odt file
 	 */
-	editor_new: function (_egwAction) {
-		var template_url = '/api/js/webodf/template.odt';
+	editor_new: function () {
 		egw.open_link(egw.link('/index.php', {
-			menuaction: 'filemanager.filemanager_ui.editor',
+			menuaction: 'filemanager.filemanager_ui.editor'
 		}), '', egw.link_get_registry('filemanager','view_popup'));
 	},
 
