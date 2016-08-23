@@ -1497,7 +1497,7 @@ class filemanager_ui
 			if ($file_path)
 			{
 				$content['es_id'] = md5 ($file_path);
-				$content['file_path'] = $file_path;
+				$content['file_path'] = $paths[1];
 			}
 		}
 

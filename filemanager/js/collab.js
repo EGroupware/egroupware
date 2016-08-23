@@ -237,6 +237,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			widgetFilePath = this.et2.getWidgetById('file_path'),
 			file_path = widgetFilePath.value;
 
+
 		if (this.editor)
 		{
 			function saveByteArrayLocally(err, data) {
@@ -245,15 +246,14 @@ app.classes.filemanager = app.classes.filemanager.extend({
 					return;
 				}
 
-				var filename = file_path.split('/webdav.php'),
-					blob = new Blob([data.buffer], {type: self.editor_mime});
+				var blob = new Blob([data.buffer], {type: self.editor_mime});
 
 				self.editor_file_operation({
-						url: egw.webserverUrl+file_path,
+						url: egw.webserverUrl+'/webdav.php'+file_path,
 						method: 'PUT',
 						processData: false,
 						success: function(data) {
-							egw(window).message(egw.lang('Document %1 successfully has been saved.', filename[1]));
+							egw(window).message(egw.lang('Document %1 successfully has been saved.', file_path));
 							self.editor.setDocumentModified(false);
 							egw.json('filemanager.filemanager_collab.ajax_actions',[self.collab_server.es_id, 'save']).sendRequest();
 						},
@@ -281,7 +281,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 
 				// bind change handler for setting the selected path and calling save
 				jQuery(vfs_select.getDOMNode()).on('change', function (){
-					file_path = '/webdav.php'+vfs_select.get_value();
+					file_path = vfs_select.get_value();
 					if (vfs_select.get_value())
 					{
 						// Add odt extension if not exist
@@ -289,7 +289,8 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						widgetFilePath.set_value(file_path);
 						self.editor.getDocumentAsByteArray(saveByteArrayLocally);
 						self.editor_leaveSession(function(){
-							self._init_odf_collab_editor();
+							var path = window.location.href.split('&path=');
+							window.location.href = path[0]+'&path='+self.editor_getFilePath();
 						});
 						egw.refresh('','filemanager');
 					}
@@ -368,7 +369,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	{
 		var widgetFilePath = this.et2.getWidgetById('file_path'),
 			file_path = widgetFilePath.value,
-			path = egw.webserverUrl+file_path;
+			path = egw.webserverUrl+'/webdav.php'+file_path;
 		return path;
 	},
 
