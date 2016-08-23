@@ -4424,9 +4424,10 @@ class Mail
 	 * @param Horde_Mime_Part $_structure structure for parsing
 	 * @param string $_htmlMode how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @param Horde_Mime_Part& $partCalendar =null on return text/calendar part, if one was contained or false
 	 * @return array containing the desired part
 	 */
-	function getMultipartAlternative($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false)
+	function getMultipartAlternative($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false, &$partCalendar=null)
 	{
 		// a multipart/alternative has exactly 2 parts (text and html  OR  text and something else)
 		// sometimes there are 3 parts, when there is an ics/ical attached/included-> we want to show that
@@ -4459,6 +4460,10 @@ class Mail
 
 						case 'html':
 							if ($mimePart->getBytes() > 0)  $partHTML = $mimePart;
+							break;
+
+						case 'calendar':
+							if ($mimePart->getBytes() > 0)  $partCalendar = $mimePart;
 							break;
 					}
 					break;
@@ -4795,9 +4800,10 @@ class Mail
 	 * @param Horde_Mime_Part $_structure = null if given use structure for parsing
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @param string $_folder folder to work on
+	 * @param Horde_Mime_part& $calendar_part =null on return calendar-part or null, if there is none
 	 * @return array containing the message body, mimeType and charset
 	 */
-	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false, $_folder = '')
+	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false, $_folder = '', &$calendar_part=null)
 	{
 		if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
 		if($_htmlOptions != '') {
@@ -4849,7 +4855,7 @@ class Mail
 				switch($_structure->getSubType())
 				{
 					case 'alternative':
-						$bodyParts = array($this->getMultipartAlternative($_uid, $_structure, $this->htmlOptions, $_preserveSeen));
+						$bodyParts = array($this->getMultipartAlternative($_uid, $_structure, $this->htmlOptions, $_preserveSeen, $calendar_part));
 						break;
 
 					case 'nil': // multipart with no Alternative

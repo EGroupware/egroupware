@@ -2853,33 +2853,24 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (empty($htmlOptions)) $htmlOptions = $this->mail_bo->htmlOptions;
 		// fetching structure now, to supply it to getMessageBody and getMessageAttachment, so it does not get fetched twice
 		$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
-		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox);
+		$calendar_part = null;
+		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox, $calendar_part);
 
-		//error_log(__METHOD__.__LINE__.array2string($bodyParts));
-		// attachments here are only fetched to determine if there is a meeting request
-		// and if. use the appropriate action. so we do not need embedded images
-		$fetchEmbeddedImages = false;
-		$attachments = (array)$this->mail_bo->getMessageAttachments($uid, $partID, $structure, $fetchEmbeddedImages, true,true,$mailbox);
-		//error_log(__METHOD__.__LINE__.array2string($attachments));
-		foreach ($attachments as &$attach)
+		// for meeting requests (multipart alternative with text/calendar part) let calendar render it
+		if ($calendar_part && isset($GLOBALS['egw_info']['user']['apps']['calendar']))
 		{
-			if (strtolower($attach['mimeType']) == 'text/calendar' &&
-				isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
-				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'],$attach['is_winmail'],(strtolower($attach['mimeType']) == 'text/calendar'?false:true))))
-			{
-				//error_log(__METHOD__.__LINE__.array2string($attachment));
-				Api\Cache::setSession('calendar', 'ical', array(
-					'charset' => $attach['charset'] ? $attach['charset'] : 'utf-8',
-					'attachment' => $attachment['attachment'],
-					'method' => $attach['method'],
-					'sender' => $mailbox,
-				));
-				$this->mail_bo->htmlOptions = $bufferHtmlOptions;
-				Api\Translation::add_app('calendar');
-				ExecMethod( 'calendar.calendar_uiforms.meeting',
-					array('event'=>null,'msg'=>'','useSession'=>true)
-				);
-			}
+			$charset = $calendar_part->getContentTypeParameter('charset');
+			$this->mail_bo->fetchPartContents($uid, $calendar_part);
+			Api\Cache::setSession('calendar', 'ical', array(
+				'charset' => $charset ? $charset : 'utf-8',
+				'attachment' => $calendar_part->getContents(),
+				'method' => $calendar_part->getContentTypeParameter('method'),
+			));
+			$this->mail_bo->htmlOptions = $bufferHtmlOptions;
+			Api\Translation::add_app('calendar');
+			return ExecMethod('calendar.calendar_uiforms.meeting',
+				array('event'=>null,'msg'=>'','useSession'=>true)
+			);
 		}
 		// Compose the content of the frame
 		$frameHtml =
