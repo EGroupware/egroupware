@@ -1499,6 +1499,10 @@ class filemanager_ui
 				$content['es_id'] = md5 ($file_path);
 				$content['file_path'] = $paths[1];
 			}
+			else
+			{
+				$content = array();
+			}
 		}
 
 		$actions = self::getActions_edit();

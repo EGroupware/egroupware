@@ -24,6 +24,11 @@ class filemanager_collab extends filemanager_collab_bo {
 	);
 
 	/**
+	 * session identification for an empty new file
+	 */
+	const NEW_FILE_ES_ID = 'new';
+
+	/**
 	 * Constructor
 	 *
 	 */
@@ -35,12 +40,24 @@ class filemanager_collab extends filemanager_collab_bo {
 	/**
 	 * Join session, initialises edit session for opened file by user
 	 *
-	 * @param type $es_id session id
+	 * @param type $es_id session id, 'new' session id means it's an empty
+	 * template opened as new file, and should not be store in DB.
+	 *
 	 * @return array returns an array consists of session data
 	 */
 	function join_session ($es_id)
 	{
-		$response = $this->initSession($es_id);
+		if ($es_id === self::NEW_FILE_ES_ID)
+		{
+			$response = array(
+				'member_id' => '0',
+				'es_id' => self::NEW_FILE_ES_ID
+			);
+		}
+		else
+		{
+			$response = $this->initSession($es_id);
+		}
 		$response += array (
 			'id' => $GLOBALS['egw_info']['user']['account_id'],
 			'full_name' => $GLOBALS['egw_info']['user']['account_fullname'],
@@ -87,11 +104,33 @@ class filemanager_collab extends filemanager_collab_bo {
 					$response = $this->join_session($params['args']['es_id'],$params['args']['user_id']);
 					break;
 				case 'leave_session':
+					if ($params['args']['es_id'] === self::NEW_FILE_ES_ID)
+					{
+						$response = array ('success' => true,'memberid' => '0','session_id'=>self::NEW_FILE_ES_ID);
+						break;
+					}
 					$response = $this->leave_session($params['args']['es_id'],$params['args']['member_id']);
 					break;
 				case 'sync_ops':
 					try
 					{
+						// handle new file operation
+						if ($params['args']['es_id'] === self::NEW_FILE_ES_ID)
+						{
+							if (!$params['args']['client_ops'] && !$params['args']['seq_head'])
+							{
+								$response = $this->prepare_newFile();
+							}
+							else
+							{
+								$response = array(
+									'result' => 'added',
+									'seq_head' => 1
+								);
+							}
+							break;
+						}
+
 						$memberid = $params['args']['member_id']? $params['args']['member_id']: '';
 						$es_id = $params['args']['es_id'];
 						$seq_head = (string) isset($params['args']['seq_head'])? $params['args']['seq_head']: null;
@@ -155,6 +194,37 @@ class filemanager_collab extends filemanager_collab_bo {
 		header('content-type: application/json; charset=utf-8');
 		echo json_encode($response);
 		exit();
+	}
+
+	/**
+	 * This function prepare an op structure for new file operation
+	 * as new file is not saved yet in database we need to satisfy the
+	 * client in order to be able to edit an empty document.
+	 *
+	 * @return array return op structure
+	 */
+	function prepare_newFile()
+	{
+		$date = new Api\DateTime();
+		$use_id = $GLOBALS['egw_info']['user']['account_id'];
+		$response = array (
+			'result' => 'new_ops',
+			'ops'=> array (
+				0 => array (
+					'optype' => 'AddMember',
+					'memberid' => '0',
+					'timestamp' => $date->getTimestamp(),
+					'setProperties' => array(
+						'fullName' => $GLOBALS['egw_info']['user']['account_fullname'],
+						'color' => $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_user_color'],
+						'imageUrl' => $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=addressbook.addressbook_ui.photo&account_id='.$use_id,
+						'uid' => $use_id
+					)
+				)
+			),
+			'head_seq' => '1'
+		);
+		return $response;
 	}
 
 	/**
@@ -249,10 +319,12 @@ class filemanager_collab extends filemanager_collab_bo {
 	 * client.
 	 *
 	 * @param type $file_path file path
-	 *
+	 * @param boolean $_isNew true means this is an empty doc opened as new file
+	 * in client-side and not stored yet therefore no genesis file should get generated for it.
 	 */
-	function ajax_getGenesisUrl ($file_path)
+	function ajax_getGenesisUrl ($file_path, $_isNew)
 	{
+
 		$result = array();
 		$es_id = md5($file_path);
 		$paths = explode('/webdav.php', $file_path);
@@ -260,6 +332,15 @@ class filemanager_collab extends filemanager_collab_bo {
 		array_pop($dir_parts);
 		$dir = join('/', $dir_parts);
 		$response = Api\Json\Response::get();
+		// handle new empty file
+		if ($_isNew)
+		{
+			$response->data(array (
+				'es_id' => self::NEW_FILE_ES_ID,
+				'genesis_url' => $GLOBALS['egw_info']['server']['webserver_url'].'/api/js/webodf/template.odt'
+			));
+			return;
+		}
 		$session = $this->SESSION_Get($es_id);
 
 		if ($session && $session['genesis_url'] !== '')

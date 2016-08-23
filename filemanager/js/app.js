@@ -1020,7 +1020,6 @@ app.classes.filemanager = AppJS.extend(
 		var template_url = '/api/js/webodf/template.odt';
 		egw.open_link(egw.link('/index.php', {
 			menuaction: 'filemanager.filemanager_ui.editor',
-			path: template_url
 		}), '', egw.link_get_registry('filemanager','view_popup'));
 	},
 

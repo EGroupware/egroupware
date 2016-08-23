@@ -74,46 +74,6 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	},
 
 	/**
-	 * Initiate odf editor popup & load given file_path
-	 *
-	 */
-	_init_odf_editor: function ()
-	{
-		var widgetFilePath = this.et2.getWidgetById('file_path'),
-			file_path = widgetFilePath.value,
-			isNew = file_path == '/api/js/webodf/template.odt'? true: false,
-			self = this;
-
-		var onEditorCreated = function (err ,editor)
-		{
-			if (err)
-			{
-				console.log('Something went wrong whilst loading editor.'+ err);
-				return;
-			}
-			self.editor = editor;
-			self.editor.openDocumentFromUrl(egw.webserverUrl+file_path);
-			if (isNew) {
-				widgetFilePath.set_value('');
-			}
-		};
-
-		var editorOptions = {
-			allFeaturesEnabled: true,
-			userData: {
-				fullName: egw.user('account_fullName'),
-				color: 'blue'
-			}
-		};
-
-		var editor = this.et2.getWidgetById('odfEditor');
-		if (editor)
-		{
-			Wodo.createTextEditor('filemanager-editor_odfEditor', editorOptions, onEditorCreated);
-		}
-	},
-
-	/**
 	 * Initiate odf collab editor popup & load given file_path as active session
 	 * editors options:
 	 *		directParagraphStylingEnabled
@@ -129,9 +89,9 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	 */
 	_init_odf_collab_editor: function ()
 	{
-		var	self = this;
-
-		egw.json('filemanager.filemanager_collab.ajax_getGenesisUrl',[this.editor_getFilePath()], function (_data){
+		var	self = this,
+			isNew = window.location.href.search(/&path=/) == -1?true:false;
+		egw.json('filemanager.filemanager_collab.ajax_getGenesisUrl',[this.editor_getFilePath(), isNew], function (_data){
 			var serverOptions = {
 				serverParams: {
 						url:egw.link('/index.php?', {
@@ -188,7 +148,8 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	editor_close: function (_egwAction, _callback) {
 		var self = this,
 			action = _egwAction.id,
-			callback = _callback;
+			callback = _callback,
+			file_path = this.et2.getWidgetById('file_path');
 
 		if (this.editor)
 		{
@@ -202,8 +163,8 @@ app.classes.filemanager = app.classes.filemanager.extend({
 				callback.call(this);
 			};
 
-			// warn user about unsaved changes
-			if (this.editor.isDocumentModified())
+			// it's an unsaved new file try to warn user about unsaved changes
+			if (file_path.value == '')
 			{
 				et2_dialog.show_dialog(
 					function(_btn)
