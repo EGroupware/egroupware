@@ -115,6 +115,17 @@ app.classes.filemanager = app.classes.filemanager.extend({
 
 	/**
 	 * Initiate odf collab editor popup & load given file_path as active session
+	 * editors options:
+	 *		directParagraphStylingEnabled
+	 *		paragraphStyleSelectingEnabled
+	 *		paragraphStyleEditingEnabled
+	 *		zoomingEnabled
+	 *		directTextStylingEnabled
+	 *		imageEditingEnabled
+	 *		hyperlinkEditingEnabled
+	 *		annotationsEnabled
+	 *		unstableFeaturesEnabled
+	 *		reviewModeEnabled
 	 */
 	_init_odf_collab_editor: function ()
 	{
@@ -130,10 +141,21 @@ app.classes.filemanager = app.classes.filemanager.extend({
 					},
 				sessionId: _data.es_id,
 				editorOptions: {
-					allFeaturesEnabled: true,
-					userData: {
-						fullName: egw.user('account_fullName'),
-						color: 'blue'
+					directParagraphStylingEnabled:true,
+					paragraphStyleSelectingEnabled:true,
+					paragraphStyleEditingEnabled:true,
+					zoomingEnabled: true,
+					directTextStylingEnabled:true,
+					imageEditingEnabled:true,
+					hyperlinkEditingEnabled:true,
+					annotationsEnabled:true,
+					unstableFeaturesEnabled:true,
+					// review has to be explicitly disabled to be able to edit the document
+					reviewModeEnabled:false,
+					viewOptions:{
+						editInfoMarkersInitiallyVisible: true,
+						caretAvatarsInitiallyVisible: false,
+						caretBlinksOnRangeSelect: true
 					}
 				}
 			};
@@ -410,7 +432,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			server,
 			serverParams = _args.serverParams,
 			sessionId = _args.sessionId,
-			editorOptions = jQuery.extend(_args.editorOptions,{networkSecurityToken:'', closeCallback:this.editor_close}),
+			editorOptions = jQuery.extend(_args.editorOptions,{}),
 			userId = egw.user('account_id'),
 			memberId,
 			self = this;

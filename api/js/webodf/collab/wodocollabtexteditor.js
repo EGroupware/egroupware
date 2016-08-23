@@ -218,7 +218,7 @@ window.Wodo = window.Wodo || (function () {
             // create session around loaded document
             session = new ops.Session(odfCanvas);
             editorSession = new EditorSession(session, pendingMemberId, {
-                viewOptions: viewOptions,
+                viewOptions: jQuery.extend(viewOptions,editorOptions.viewOptions),
                 directTextStylingEnabled: directTextStylingEnabled,
                 directParagraphStylingEnabled: directParagraphStylingEnabled,
                 paragraphStyleSelectingEnabled: paragraphStyleSelectingEnabled,

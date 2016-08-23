@@ -147,3 +147,27 @@ table.egwGridView_grid .tile .file_tile {
 #filemanager-editor {
 	overflow: hidden;
 }
+
+/* collab editor styling*/
+div.webodfeditor-members {
+	background-color: white !important;
+
+}
+div.webodfeditor-memberList .webodfeditor-memberListButton {
+	border: none !important;
+	background-color: transparent !important;
+	box-shadow: none !important;
+
+}
+div.webodfeditor-memberList .webodfeditor-memberListButton img {
+	border-radius: 50%;
+	box-shadow: none;
+}
+div.webodfeditor-memberList .webodfeditor-memberListLabel {
+	color: #1E1E1E;
+}
+
+div.editInfoMarker {
+	width:5px;
+	border-radius: none;
+}
