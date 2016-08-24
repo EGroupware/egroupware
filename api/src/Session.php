@@ -1414,7 +1414,7 @@ class Session
 			$this->set_action($action);
 		}
 		// update dla in access-log table, if we have an access-log row (non-anonymous session)
-		if ($this->sessionid_access_log && $update_access_log)
+		if ($this->sessionid_access_log && $update_access_log && is_object($GLOBALS['egw']->db))
 		{
 			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
 				'session_dla' => time(),
