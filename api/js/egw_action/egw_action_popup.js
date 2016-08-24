@@ -848,7 +848,7 @@ function egwPopupActionImplementation()
 			}
 
 			// Add into links so it's included in menu
-			if(paste_action && paste_action.enabled.exec())
+			if(paste_action && paste_action.enabled.exec(paste_action, clipboard.selected, _selected[0]))
 			{
 				if(typeof _links[paste_action.id] == 'undefined')
 				{
@@ -876,11 +876,13 @@ function egwPopupActionImplementation()
 					// Add some choices - need to be a copy, or they interfere with
 					// the original
 					var drop_clone = jQuery.extend({},drop[k].actionObj);
-					drop_clone.parent = paste_action;
+					var parent = paste_action.parent === drop_clone.parent ? paste_action : (paste_action.getActionById(drop_clone.parent.id) || paste_action);
+					drop_clone.parent = parent;
 					drop_clone.onExecute = new egwFnct(this, null, []);
+					drop_clone.children = [];
 					drop_clone.set_onExecute(paste_exec);
-					paste_action.children.push(drop_clone);
-					paste_action.allowOnMultiple = paste_action.allowOnMultiple && drop_clone.allowOnMultiple;
+					parent.children.push(drop_clone);
+					parent.allowOnMultiple = paste_action.allowOnMultiple && drop_clone.allowOnMultiple;
 					_links[k] = jQuery.extend({},drop[k]);
 					_links[k].actionObj = drop_clone;
 
