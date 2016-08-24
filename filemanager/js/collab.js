@@ -216,7 +216,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						success: function(data) {
 							egw(window).message(egw.lang('Document %1 successfully has been saved.', file_path));
 							self.editor.setDocumentModified(false);
-							egw.json('filemanager.filemanager_collab.ajax_actions',[self.collab_server.es_id, 'save']).sendRequest();
+							egw.json('filemanager.filemanager_collab.ajax_actions',[self.collab_server.es_id, 'save',egw.webserverUrl+'/webdav.php'+file_path]).sendRequest();
 						},
 						error: function () {},
 						data: blob,
@@ -268,7 +268,6 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	 */
 	editor_delete: function (_egwAction) {
 		var fullpath = this.et2.getWidgetById('file_path').value;
-		fullpath = fullpath.split('/webdav.php')[1];
 		var selected = fullpath.split('/');
 		selected.pop();
 		var path = selected.join('/');
@@ -359,7 +358,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 					window.location.reload();
 				}
 			},
-			egw.lang('All the changes has been discarded and new session created! Save as your local changes if you need them or reload to join new session.'),
+			egw.lang('This session is not valid anymore! Save as your local changes if you need them or reload to join new session.'),
 			'Delete file',
 			null,
 			buttons,

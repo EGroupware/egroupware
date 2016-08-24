@@ -162,6 +162,17 @@ class filemanager_collab_bo
 				__LINE__,
 				__FILE__,
 				'filemanager');
+		$where_query = 'collab_es_id ="'.$es_id.'" AND collab_optype != "AddMember" AND'.
+				' collab_optype != "RemoveMember" AND collab_optype !="AddCursor" AND'.
+				' collab_optype !="RemoveCursor"';
+		// cleanup the op table
+		$this->db->delete(
+				self::OP_TABLE,
+				$where_query,
+				__LINE__,
+				__FILE__,
+				'filemanager'
+		);
 		return !$query? false: true;
 	}
 

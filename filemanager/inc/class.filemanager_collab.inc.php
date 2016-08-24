@@ -249,13 +249,16 @@ class filemanager_collab extends filemanager_collab_bo {
 	 *
 	 * @param type $es_id
 	 * @param type $action
+	 * @param string $file_path
 	 */
-	function ajax_actions ($es_id, $action)
+	function ajax_actions ($es_id, $action, $file_path)
 	{
 		switch ($action)
 		{
 			case 'save':
 				$this->SESSION_Save($es_id);
+				//update genesis file after save happened
+				if ($file_path) self::generateGenesis ($file_path, $es_id);
 				break;
 			case 'delete':
 				$this->SESSION_cleanup($es_id);
@@ -324,13 +327,8 @@ class filemanager_collab extends filemanager_collab_bo {
 	 */
 	function ajax_getGenesisUrl ($file_path, $_isNew)
 	{
-
 		$result = array();
 		$es_id = md5($file_path);
-		$paths = explode('/webdav.php', $file_path);
-		$dir_parts = explode('/',$paths[1]);
-		array_pop($dir_parts);
-		$dir = join('/', $dir_parts);
 		$response = Api\Json\Response::get();
 		// handle new empty file
 		if ($_isNew)
@@ -345,6 +343,8 @@ class filemanager_collab extends filemanager_collab_bo {
 
 		if ($session && $session['genesis_url'] !== '')
 		{
+			$gen_file = explode('/webdav.php',$session['genesis_url']);
+			if (!Api\Vfs::file_exists($gen_file[1])) self::generateGenesis ($file_path, $es_id);
 			$result = array (
 				'es_id' => $session['es_id'],
 				'genesis_url' => $session['genesis_url']
@@ -352,15 +352,32 @@ class filemanager_collab extends filemanager_collab_bo {
 		}
 		else if ($this->is_collabAllowed($file_path, Api\Vfs::WRITABLE))
 		{
-			$genesis_file = $dir.'/.'.$es_id.'.webodf.odt';
-			$genesis_url = $paths[0].'/webdav.php'.$genesis_file;
 			$result = array (
 				'es_id' => $es_id,
-				'genesis_url' => $genesis_url
+				'genesis_url' => self::generateGenesis($file_path, $es_id)
 			);
-			Api\Vfs::copy($paths[1], $genesis_file);
-			$this->SESSION_add2Db($es_id, $genesis_url);
+			$this->SESSION_add2Db($es_id, $result['genesis_url']);
 		}
 		$response->data($result);
+	}
+
+	/**
+	 * Generate a genesis file out of given file path and session id
+	 *
+	 * @param type $file_path file path in webdav format example: egroupware/webdav.php/home/sysop/test.odt
+	 * @param type $es_id session id
+	 *
+	 * @return string returns genesis url
+	 */
+	static function generateGenesis ($file_path, $es_id)
+	{
+		$paths = explode('/webdav.php', $file_path);
+		$dir_parts = explode('/',$paths[1]);
+		array_pop($dir_parts);
+		$dir = join('/', $dir_parts);
+		$genesis_file = $dir.'/.'.$es_id.'.webodf.odt';
+		$genesis_url = $paths[0].'/webdav.php'.$genesis_file;
+		Api\Vfs::copy($paths[1], $genesis_file);
+		return $genesis_url;
 	}
 }
