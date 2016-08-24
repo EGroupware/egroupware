@@ -1263,6 +1263,7 @@ abstract class Merge
 			'!'.Api\DateTime::$user_dateformat . '* ' .Api\DateTime::$user_timeformat,
 			'!'.Api\DateTime::$user_dateformat . '*',
 			'!'.Api\DateTime::$user_dateformat,
+			'!Y-m-d\TH:i:s'
 		);
 
 		// Properly format values for spreadsheet
