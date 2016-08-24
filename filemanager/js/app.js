@@ -799,6 +799,80 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * Callback to check if the drop action is enabled.  We also update the 
+	 * clipboard historical targets here as well
+	 *
+	 * @param {egwAction} _action  drop action we're checking
+	 * @param {egwActionObject[]} _senders selected files
+	 * @param {egwActionObject} _target Drop or context menu activated on this one
+	 * 
+	 * @returns boolean true if enabled, false otherwise
+	 */
+	drop_enabled: function drop_enabled(_action, _senders, _target)
+	{
+		if(_action.canHaveChildren.indexOf('drop') == -1)
+		{
+			_action.canHaveChildren.push('drop');
+		}
+		var actions = [
+			// Current directory
+			{id:_action.id+'_current', caption: this.get_path(), path: this.get_path()}
+		];
+
+		// Target, if directory
+		actions.push({
+			id: _action.id+'_target',
+			caption: this.id2path(_target.id),
+			path: this.id2path(_target.id),
+			enabled: _target && _target.iface && jQuery(_target.iface.getDOMNode()).hasClass('isDir')
+		});
+
+		// Last 10 folders
+		var previous_dsts = jQuery.extend([], egw.preference('drop_history',this.appname));
+		var action_index = 0;
+		for(var i = 0; i < 10; i++)
+		{
+			var path = i < previous_dsts.length ? previous_dsts[i] : '';
+			actions.push({
+				id: _action.id+'_target_'+action_index++,
+				caption: path,
+				path: path,
+				group: 2,
+				enabled: path && !(path === actions[0].path || actions[1] && path === actions[1].path)
+			});
+		}
+
+		// Common stuff, every action needs these
+		for(var i = 0; i < actions.length; i++)
+		{
+			//actions[i].type = 'drop',
+			actions[i].acceptedTypes = _action.acceptedTypes;
+			actions[i].no_lang = true;
+			actions[i].hideOnDisabled = true;
+		}
+
+		_action.updateActions(actions);
+
+		// Create paste action
+		// This injects the clipboard data and calls the original handler
+		var paste_exec = function(action, selected) {
+			// Add in clipboard as a sender
+			var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
+
+			// Set a flag so apps can tell the difference, if they need to
+			action.set_onExecute(action.parent.onExecute.fnct);
+			action.execute(clipboard.selected,selected[0]);
+		};
+		for(var i = 0; i < actions.length; i++)
+		{
+			_action.getActionById(actions[i].id).onExecute = jQuery.extend(true, {}, _action.onExecute);
+
+			_action.getActionById(actions[i].id).set_onExecute(paste_exec);
+		}
+		return true;
+	},
+
+	/**
 	 * File(s) droped
 	 *
 	 * @param _action
@@ -813,10 +887,22 @@ app.classes.filemanager = AppJS.extend(
 
 		// Target will be missing ID if directory is empty
 		// so start with the current directory
-		var nm_dst = this.get_path(_action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
+		var parent = _action;
+		var nm = _target.manager.data.nextmatch;
+		while(!nm && parent.parent)
+		{
+			parent = parent.parent;
+			if(parent.data.nextmatch) nm = parent.data.nextmatch;
+		}
+		var nm_dst = this.get_path(nm.getInstanceManager().uniqueId || false);
 
+		// Action specifies a destination, target does not matter
+		if(_action.data && _action.data.path)
+		{
+			dst = _action.data.path;
+		}
 		// File(s) were dropped on a row, they want them inside
-		if(_target)
+		else if(_target)
 		{
 			var dst = '';
 			var paths = this._elems2paths([_target]);
@@ -833,7 +919,16 @@ app.classes.filemanager = AppJS.extend(
 			}
 		}
 
-		this._do_action(_action.id.replace("file_drop_",''), src, false, dst || nm_dst);
+		// Remember the target for next time
+		var previous_dsts = jQuery.extend([], egw.preference('drop_history',this.appname));
+		previous_dsts.unshift(dst);
+		previous_dsts = Array.from(new Set(previous_dsts)).slice(0,9);
+		egw.set_preference(this.appname, 'drop_history', previous_dsts);
+
+		// Actual action id will be something like file_drop_{move|copy|link}[_other_id],
+		// but we need to send move, copy or link
+		var action_id = _action.id.replace("file_drop_",'').split('_',1)[0];
+		this._do_action(action_id, src, false, dst || nm_dst);
 	},
 
 	/**

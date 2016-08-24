@@ -185,6 +185,18 @@ class filemanager_ui
 				'group' => $group,
 				'children' => array(),
 			),
+			'egw_paste' => array(
+				'enabled' => false,
+				'group' => $group + 0.5,
+				'hideOnDisabled' => true
+			),
+			'paste' => array(
+				'caption' => lang('Paste'),
+				'acceptedTypes' => 'file',
+				'group' => $group + 0.5,
+				'order' => 10,
+				'children' => array()
+			),
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
 				++$group, 'Insert in document', 'document_',
@@ -244,6 +256,19 @@ class filemanager_ui
 					'hint' => $data['title'],
 					'onExecute' => 'javaScript:app.filemanager.mail',
 				);
+			}
+		}
+		// This would be done automatically, but we're overriding
+		foreach($actions as $action_id => $action)
+		{
+			if($action['type'] == 'drop' && $action['caption'])
+			{
+				$action['type'] = 'popup';
+				if($action['acceptedTypes'] == 'file')
+				{
+					$action['enabled'] = 'javaScript:app.filemanager.drop_enabled';
+				}
+				$actions['paste']['children']["{$action_id}_paste"] = $action;
 			}
 		}
 		return $actions;
