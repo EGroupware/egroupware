@@ -786,7 +786,7 @@ class Accounts
 	 */
 	function exists($account_id)
 	{
-		if (!($data = $this->read($account_id)))
+		if (!$account_id || !($data = $this->read($account_id)))
 		{
 			return 0;
 		}
