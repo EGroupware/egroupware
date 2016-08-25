@@ -172,8 +172,9 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						switch (_btn)
 						{
 							case 'save':
-								self.editor_save({id:'save'});
-								leave();
+								self.editor_save({id:'save'}, function(){
+									leave();
+								});
 								break;
 							case 'leave':
 								leave();
@@ -247,10 +248,11 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	 *
 	 * @param {object} _egwAction egw action object
 	 */
-	editor_save: function (_egwAction) {
+	editor_save: function (_egwAction, _afterSaveCallback) {
 		var self = this,
 			widgetFilePath = this.et2.getWidgetById('file_path'),
-			file_path = widgetFilePath.value;
+			file_path = widgetFilePath.value,
+			afterSaveCallback = _afterSaveCallback || function(){};
 
 
 		if (this.editor)
@@ -270,7 +272,9 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						success: function(data) {
 							egw(window).message(egw.lang('Document %1 successfully has been saved.', file_path));
 							self.editor.setDocumentModified(false);
-							egw.json('filemanager.filemanager_collab.ajax_actions',[{'es_id':self.collab_server.es_id, 'file_path': egw.webserverUrl+'/webdav.php'+file_path}, 'save']).sendRequest();
+							egw.json('filemanager.filemanager_collab.ajax_actions',[{'es_id':self.collab_server.es_id, 'file_path': egw.webserverUrl+'/webdav.php'+file_path}, 'save'], function(){
+								afterSaveCallback.call(self,{});
+							}).sendRequest();
 						},
 						error: function () {},
 						data: blob,
@@ -409,6 +413,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 				}
 				else if (_btn == 'reload')
 				{
+					self.collab_server.close = true;
 					window.location.reload();
 				}
 			},
