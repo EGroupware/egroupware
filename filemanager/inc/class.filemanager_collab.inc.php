@@ -78,6 +78,7 @@ class filemanager_collab extends filemanager_collab_bo {
 	function leave_session ($es_id, $member_id)
 	{
 		if (!$this->is_sessionValid($es_id) || !$this->is_memberValid($es_id, $member_id)) throw new Exception ('Session is not valid!');
+		$this->MEMBER_UpdateActiveMember($es_id, $member_id, 0);
 		return array (
 			'session_id' => $es_id,
 			'memberid' => $member_id,
@@ -247,24 +248,28 @@ class filemanager_collab extends filemanager_collab_bo {
 	 * Ajax function to handle actions called by client-side
 	 * types: save, delete, discard
 	 *
-	 * @param type $es_id
-	 * @param type $action
-	 * @param string $file_path
+	 * @param array $params
+	 * @param string $action
 	 */
-	function ajax_actions ($es_id, $action, $file_path)
+	function ajax_actions ($params, $action)
 	{
+		$response = Api\Json\Response::get();
 		switch ($action)
 		{
 			case 'save':
-				$this->SESSION_Save($es_id);
+				$this->SESSION_Save($params['es_id']);
 				//update genesis file after save happened
-				if ($file_path) self::generateGenesis ($file_path, $es_id);
+				if ($params['file_path']) self::generateGenesis ($params['file_path'], $params['es_id']);
 				break;
 			case 'delete':
-				$this->SESSION_cleanup($es_id);
+				$this->SESSION_cleanup($params['es_id']);
 				break;
 			case 'discard':
-				$this->OP_Discard($es_id);
+				$this->OP_Discard($params['es_id']);
+				break;
+			case 'checkLastMember':
+				$activeMembers = $this->MEMBER_getActiveMembers($params['es_id']);
+				$response->data(is_array($activeMembers) && count($activeMembers) > 1?false:true);
 				break;
 			default:
 				//

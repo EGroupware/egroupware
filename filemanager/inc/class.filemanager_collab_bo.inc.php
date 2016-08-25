@@ -250,7 +250,7 @@ class filemanager_collab_bo
 	{
 		$this->db->update(
 				self::MEMBER_TABLE,
-				array('collab_status' => 0),
+				array('collab_status' => 0, 'collab_is_active' => 0),
 				array('collab_es_id' => $es_id),
 				__LINE__,
 				__FILE__,
@@ -385,18 +385,64 @@ class filemanager_collab_bo
 	/**
 	 * Add member data into member table in database
 	 *
-	 * @param type $es_id session id
-	 * @param type $user_id user id
-	 * @param type $color user color code
+	 * @param string $es_id session id
+	 * @param int $user_id user id
+	 * @param string $color user color code
 	 */
 	protected function MEMBER_add2Db ($es_id, $user_id, $color)
 	{
 		$data = array (
 			'collab_es_id' => $es_id,
 			'collab_uid' => $user_id,
-			'collab_color' => $color
+			'collab_color' => $color,
+			'collab_is_active' => 1
 		);
 		$this->db->insert(self::MEMBER_TABLE, $data,false,__LINE__, __FILE__,'filemanager');
+	}
+
+	/**
+	 * Function to update is_active field in member table
+	 *
+	 * @param string $es_id session id
+	 * @param string $member_id member id
+	 * @param int $is_active = 0 flag to show if member is active or not
+	 *
+	 * @throws Exception throws exception if no es_id or member id is given
+	 */
+	protected function MEMBER_UpdateActiveMember ($es_id, $member_id, $is_active = 0)
+	{
+		if (!$es_id || !$member_id) throw new Exception (self::EXCEPTION_MESSAGE_NO_SESSION);
+		$this->db->update(
+				self::MEMBER_TABLE,
+				array('collab_is_active' => $is_active),
+				'collab_es_id ="'.$es_id.'" AND collab_member_id="'.$member_id.'"',
+				__LINE__,
+				__FILE__,
+				'filemanager'
+		);
+	}
+
+	/**
+	 * Function to get active members
+	 *
+	 * @param string $es_id session id
+	 *
+	 * @return array returns array of members records
+	 * @throws Exception throws exception if no es_id is given
+	 */
+	protected function MEMBER_getActiveMembers ($es_id)
+	{
+		if (!$es_id) throw new Exception (self::EXCEPTION_MESSAGE_NO_SESSION);
+		$query = $this->db->select(
+				self::MEMBER_TABLE,
+				'*',
+				array('collab_es_id' => $es_id, 'collab_is_active' => 1),
+				__LINE__,
+				__FILE__,
+				'filemanager'
+		);
+		$members = $query->getRows();
+		return is_array($members)?self::db2id($members):true;
 	}
 
 	/**

@@ -21,7 +21,7 @@ function filemanager_upgrade16_1()
 			'collab_es_id' => array('type' => 'varchar','precision' => '64','nullable' => False, 'comment' => 'Related editing session id'),
 			'collab_uid' => array('type' => 'varchar','precision' => '64'),
 			'collab_color' => array('type' => 'varchar','precision' => '32'),
-			'collab_last_activity' => array('type' => 'int','precision' => '4'),
+			'collab_is_active' => array('type' => 'int','precision' => '2', 'default'=>'0','nullable' => False),
 			'collab_is_guest' => array('type' => 'int','precision' => '2','default' => '0','nullable' => False),
 			'collab_token' => array('type' => 'varchar','precision' => '32'),
 			'collab_status' => array('type' => 'int','precision' => '2','default' => '1','nullable' => False)
