@@ -69,6 +69,16 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			jQuery('body').css({overflow:'hidden'});
 			var self = this;
 			jQuery(window).on('unload', function(){self.editor_leaveSession();});
+			jQuery(window).on('beforeunload', function(){
+				if (!self.collab_server.close)
+				{
+					return true;
+				}
+				else
+				{
+					return ;
+				}
+			});
 			this._init_odf_collab_editor ();
 		}
 	},
@@ -133,34 +143,78 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	 *
 	 * @param {function} _successCallback function to gets called after leave session is successful
 	 */
-	editor_leaveSession: function (_successCallback)
+	editor_leaveSession: function (_successCallback,_checkLastActive)
 	{
-		this.editor.leaveSession(function(){});
-		this.collab_server.server.leaveSession(this.collab_server.es_id, this.collab_server.memberid, _successCallback);
+		var self = this;
+		var successCallback = _successCallback  || function(){window.close();}
+		var leave = function ()
+		{
+			self.editor.leaveSession(function(){});
+			self.collab_server.server.leaveSession(self.collab_server.es_id, self.collab_server.memberid, successCallback);
+			self.collab_server.close = true;
+		};
+		if (!_checkLastActive)
+		{
+			leave();
+		}
+		egw.json('filemanager.filemanager_collab.ajax_actions',[{'es_id':this.collab_server.es_id, 'member_id':this.collab_server.memberid},'checkLastMember'], function(_isLastMember){
+			if (_isLastMember)
+			{
+				var buttons = [
+					{"button_id": 3,"text": 'save and close', id: 'save', image: 'check' },
+					{"button_id": 2,"text": 'keep unsaved changes and leave', id: 'leave', image: 'close' },
+					{"button_id": 1,"text": 'discard all unsaved changes', id: 'discard', image: 'delete' },
+					{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancel', "default":true}
+				];
+				et2_dialog.show_dialog(
+					function(_btn)
+					{
+						switch (_btn)
+						{
+							case 'save':
+								self.editor_save({id:'save'});
+								leave();
+								break;
+							case 'leave':
+								leave();
+								break;
+							case 'discard':
+								self.editor_discard();
+								break;
+							default:
+
+						}
+					},
+					egw.lang('You are the last one on this session. What would you like to do with all changes in this document?'),
+					'Closing session',
+					null,
+					buttons,
+					et2_dialog.WARNING_MESSAGE
+				);
+			}
+			else
+			{
+				leave();
+			}
+		}).sendRequest();
+
 	},
 
 	/**
 	 * Method to close an opened document
 	 *
 	 * @param {object} _egwAction egw action object
-	 * @param {function} _callback callback function gets called after close operation
 	 */
-	editor_close: function (_egwAction, _callback) {
+	editor_close: function (_egwAction) {
 		var self = this,
 			action = _egwAction.id,
-			callback = _callback,
 			file_path = this.et2.getWidgetById('file_path');
 
 		if (this.editor)
 		{
-			var closeFn = function ()
+			var closeFn = function (_checkLastActive)
 			{
-				self.editor_leaveSession();
-				if (action != 'new')
-				{
-					window.close();
-				}
-				callback.call(this);
+				self.editor_leaveSession(null, _checkLastActive);
 			};
 
 			// it's an unsaved new file try to warn user about unsaved changes
@@ -171,7 +225,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 					{
 						if (_btn == 2)
 						{
-							closeFn();
+							closeFn(false);
 						}
 					},
 					'There are unsaved changes. Are you sure you want to close this document without saving them?',
@@ -183,7 +237,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			}
 			else
 			{
-				closeFn();
+				closeFn(true);
 			}
 		}
 	},
@@ -216,7 +270,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						success: function(data) {
 							egw(window).message(egw.lang('Document %1 successfully has been saved.', file_path));
 							self.editor.setDocumentModified(false);
-							egw.json('filemanager.filemanager_collab.ajax_actions',[self.collab_server.es_id, 'save',egw.webserverUrl+'/webdav.php'+file_path]).sendRequest();
+							egw.json('filemanager.filemanager_collab.ajax_actions',[{'es_id':self.collab_server.es_id, 'file_path': egw.webserverUrl+'/webdav.php'+file_path}, 'save']).sendRequest();
 						},
 						error: function () {},
 						data: blob,
@@ -481,7 +535,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		switch(_data.action)
 		{
 			case 'delete':
-				if (!_data.errs) egw.json('filemanager.filemanager_collab.ajax_actions', [this.collab_server.es_id, 'delete'], function(){window.close();}).sendRequest();
+				if (!_data.errs) egw.json('filemanager.filemanager_collab.ajax_actions', [{'es_id':this.collab_server.es_id}, 'delete'], function(){window.close();}).sendRequest();
 		}
 	},
 
@@ -506,7 +560,8 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			{
 				if (_btn == 'discard')
 				{
-					egw.json('filemanager.filemanager_collab.ajax_actions',[self.collab_server.es_id, 'discard'], function(){
+					egw.json('filemanager.filemanager_collab.ajax_actions',[{'es_id': self.collab_server.es_id}, 'discard'], function(){
+						self.collab_server.close = true;
 						window.location.reload();
 					}).sendRequest();
 				}
