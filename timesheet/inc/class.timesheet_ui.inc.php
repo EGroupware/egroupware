@@ -338,6 +338,7 @@ class timesheet_ui extends timesheet_bo
 					switch ($link_app)
 					{
 						case 'projectmanager':
+							$content['pm_id'] = $link_id;
 							$links[] = $link_id;
 							// fall-through;
 						default:
