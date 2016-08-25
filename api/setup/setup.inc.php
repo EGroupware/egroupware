@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['api']['name']      = 'api';
 $setup_info['api']['title']     = 'EGroupware API';
-$setup_info['api']['version']   = '16.1.002';
+$setup_info['api']['version']   = '16.1.003';
 $setup_info['api']['versions']['current_header'] = '1.29';
 $setup_info['api']['enable']    = 3;
 $setup_info['api']['app_order'] = 1;
