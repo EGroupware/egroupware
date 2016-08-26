@@ -2614,11 +2614,12 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   right: 2px;
 }
 #calendar-sidebox_date .ui-datepicker-year {
-  padding-right: 5px !important;
+  padding-right: 0px !important;
   min-width: 65px;
 }
 #calendar-sidebox_date .ui-datepicker-month {
   min-width: 60px;
+  padding-right: 0px !important;
 }
 #calendar-sidebox_date .ui-datepicker-header a span {
   width: 20px;
