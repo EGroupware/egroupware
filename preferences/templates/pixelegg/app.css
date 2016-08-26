@@ -65,6 +65,7 @@ textarea.prefValue {
   font-size: 150%;
   margin-top: 10px;
   margin-right: 5px;
+  width: 50%;
 }
 #preferences-password .dialogHeader td {
   text-align: center;
@@ -109,11 +110,9 @@ tr.prefRow > td {
 .prefHelp {
   position: fixed;
   background-color: #E6E6E6;
-  /*border-radius: 10px;*/
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  /*        .border_normal;*/
   border: 3px solid #679FD2;
   -webkit-border-top-right-radius: 0px;
   -webkit-border-bottom-right-radius: 15px;
@@ -130,12 +129,10 @@ tr.prefRow > td {
   /*.background-clip(padding-box);*/
   right: 5px;
   left: 5px;
-  /*top: 5px;*/
   top: 0px;
   padding: 10px;
   padding-left: 25px;
   background-position-x: 5px;
-  /*border: 2px gray solid;*/
   min-width: 100px;
   max-width: 90%;
   z-index: 100000;
@@ -177,7 +174,7 @@ textarea.prefValue {
 .prefApp {
   background-image: url(../pixelegg/images/setup.png);
   background-repeat: no-repeat;
-  background-position: 93% 50%;
+  background-position: 90% 50%;
   background-size: 16px 16px;
   margin-right: 1em;
 }
@@ -185,7 +182,7 @@ textarea.prefValue {
 .prefType {
   background-image: url(../pixelegg/images/setup.png);
   background-repeat: no-repeat;
-  background-position: 93% 50%;
+  background-position: 90% 50%;
   background-size: 16px 16px;
 }
 /*###############################*/
