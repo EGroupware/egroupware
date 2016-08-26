@@ -603,11 +603,12 @@ abstract class Framework extends Framework\Extra
 	 *
 	 * @param string $username =null username for regular basic Auth
 	 * @param string $password =null password --------- " ----------
+	 * @param array $opts =array() further params for http(s) context, eg. array('timeout' => 123)
 	 * @return resource|null context to use with file_get_context/fopen or null if no proxy configured
 	 */
-	public static function proxy_context($username=null, $password=null)
+	public static function proxy_context($username=null, $password=null, array $opts = array())
 	{
-		$opts = array(
+		$opts += array(
 			'method' => 'GET',
 		);
 		if (!empty($GLOBALS['egw_info']['server']['httpproxy_server']))
