@@ -338,7 +338,6 @@ class timesheet_ui extends timesheet_bo
 					switch ($link_app)
 					{
 						case 'projectmanager':
-							$content['pm_id'] = $link_id;
 							$links[] = $link_id;
 							// fall-through;
 						default:
@@ -378,7 +377,7 @@ class timesheet_ui extends timesheet_bo
 		{
 			$preserv['old_pm_id'] = array_shift($links);
 		}
-		if (!isset($this->data['pm_id']) && $preserv['old_pm_id'])
+		if ((!isset($this->data['pm_id']) || $this->data['pm_id'] === false) && $preserv['old_pm_id'])
 		{
 			$content['pm_id'] = $preserv['old_pm_id'];
 		}
