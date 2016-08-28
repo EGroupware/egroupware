@@ -117,21 +117,16 @@ class Config
 	 *
 	 * @param string $name name of the config-value
 	 * @param mixed $value content, empty or null values are not saved, but deleted
-	 * @param string $app app-name (depreacted to use default of $this->appname set via the constructor!)
+	 * @param string $app app-name
 	 * @param boolean $update_cache =true update instance cache and for phpgwapi invalidate session-cache
 	 * @throws Exception\WrongParameter if no $app parameter given for static call
 	 * @return boolean|int true if no change, else number of affected rows
 	 */
 	static function save_value($name, $value, $app, $update_cache=true)
 	{
-		if (!$app && (!isset($this) || !is_a($this,__CLASS__)))
+		if (!$app)
 		{
-			throw new Exception\WrongParameter('$app parameter required for static call of Config::save_value($name,$value,$app)!');
-		}
-		if (!$app || isset($this) && is_a($this,__CLASS__) && $app == $this->appname)
-		{
-			$app = $this->appname;
-			$this->config_data[$name] = $value;
+			throw new Exception\WrongParameter('$app parameter required for static Config::save_value($name, $value, $app)!');
 		}
 		if (!isset(self::$configs))
 		{
