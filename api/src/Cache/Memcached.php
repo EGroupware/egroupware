@@ -31,9 +31,9 @@ namespace EGroupware\Api\Cache;
 class Memcached extends Base implements ProviderMultiple
 {
 	/**
-	 * Instance of Memcached
+	 * Instance of \Memcached
 	 *
-	 * @var Memcached
+	 * @var \Memcached
 	 */
 	private $memcache;
 
