@@ -781,7 +781,10 @@ class Principals extends Handler
 				if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
 					!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 				{
-					$files[] = $this->add_account($this->accounts->read($GLOBALS['egw_info']['user']['account_id']));
+					if (($account = $this->accounts->read($GLOBALS['egw_info']['user']['account_id'])))
+					{
+						$files[] = $this->add_account($account);
+					}
 				}
 				else
 				{
