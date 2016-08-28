@@ -69,7 +69,7 @@ class Files extends Etemplate\Request
 	/**
 	 * Private constructor to force the instancation of this class only via it's static factory method read
 	 *
-	 * @param array $id
+	 * @param string|null $id =null
 	 */
 	private function __construct($id=null)
 	{
