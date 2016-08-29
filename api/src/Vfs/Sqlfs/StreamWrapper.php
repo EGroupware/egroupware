@@ -385,7 +385,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$ret = fclose($this->opened_stream) && $ret;
 
 		unset(self::$stat_cache[$this->opened_path]);
-		$this->opened_stream = $this->opened_path = $this->opened_mode = $this->opend_fs_id = null;
+		$this->opened_stream = $this->opened_path = $this->opened_mode = $this->opened_fs_id = null;
 		$this->operation = self::DEFAULT_OPERATION;
 
 		return $ret;
