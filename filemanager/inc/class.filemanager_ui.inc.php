@@ -176,6 +176,7 @@ class filemanager_ui
 				'acceptedTypes' => 'file',
 				'group' => $group + 0.5,
 				'order' => 10,
+				'enabled' => 'javaScript:app.filemanager.paste_enabled',
 				'children' => array()
 			),
 			'documents' => filemanager_merge::document_action(
@@ -247,7 +248,7 @@ class filemanager_ui
 				$action['type'] = 'popup';
 				if($action['acceptedTypes'] == 'file')
 				{
-					$action['enabled'] = 'javaScript:app.filemanager.drop_enabled';
+					$action['enabled'] = 'javaScript:app.filemanager.paste_enabled';
 				}
 				$actions['paste']['children']["{$action_id}_paste"] = $action;
 			}
@@ -327,7 +328,7 @@ class filemanager_ui
 					'parent_id'      => 'dir',
 					'is_parent'      => 'is_dir',
 					'favorites'      => true,
-					'placeholder_actions' => array('mkdir','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
+					'placeholder_actions' => array('mkdir','paste','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 				);
 				$content['nm']['path'] = static::get_home_dir();
 			}
@@ -893,8 +894,15 @@ class filemanager_ui
 			}
 			if (Vfs::is_dir($path))
 			{
-				$row['class'] = 'isDir';
-				$row['is_dir'] = 1;
+				if (!isset($dir_is_writable[$path]))
+				{
+					$dir_is_writable[$path] = Vfs::is_writable($path);
+				}
+				if(!$dir_is_writable[$path])
+				{
+					$row['class'] .= 'noEdit ';
+				}
+				$row['class'] .= 'isDir ';
 			}
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
