@@ -345,8 +345,7 @@ class filemanager_ui
 					'row_id'         => 'path',
 					'row_modified'   => 'mtime',
 					'parent_id'      => 'dir',
-					'is_parent'      => 'mime',
-					'is_parent_value'=> Vfs::DIR_MIME_TYPE,
+					'is_parent'      => 'is_dir',
 					'favorites'      => true,
 					'placeholder_actions' => array('mkdir','paste','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 				);
@@ -923,6 +922,7 @@ class filemanager_ui
 					$row['class'] .= 'noEdit ';
 				}
 				$row['class'] .= 'isDir ';
+				$row['is_dir'] = 1;
 			}
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
@@ -1556,7 +1556,9 @@ class filemanager_ui
 	 *
 	 * @return array return array of actions
 	 */
-	static function getActions_edit() {
+	static function getActions_edit()
+	{
+		$group = 0;
 		$actions = array (
 			'save' => array(
 				'caption' => 'Save',
