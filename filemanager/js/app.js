@@ -887,10 +887,13 @@ app.classes.filemanager = AppJS.extend(
 			action.execute(clipboard.selected,selected[0]);
 
 			// Clear the clipboard, the files are not there anymore
-			egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify({
-				type:[],
-				selected:[]
-			}));
+			if(action.id.indexOf('move') !== -1)
+			{
+				egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify({
+					type:[],
+					selected:[]
+				}));
+			}
 		};
 		for(var i = 0; i < actions.length; i++)
 		{
