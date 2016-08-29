@@ -281,7 +281,7 @@ class Vfs
 	 */
 	static function lstat($path,$try_create_home=false)
 	{
-		if ($path[0] != '/')
+		if ($path[0] != '/' && strpos($path, self::PREFIX.'/') !== 0)
 		{
 			throw new Exception\AssertionFailed("File '$path' is not an absolute path!");
 		}
@@ -624,7 +624,7 @@ class Vfs
 		}
 		else
 		{
-			$stat = self::stat($path, STREAM_URL_STAT_LINK);
+			$stat = self::lstat($path);
 		}
 		if (!$stat)
 		{
