@@ -146,7 +146,7 @@ class StreamWrapper extends LinksParent
 			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
 		{
 			$ret = array(
-				'ino'   => md5($url),
+				'ino'   => '#'.md5($url),
 				'name'  => '.entry',
 				'mode'  => self::MODE_FILE|Vfs::READABLE,	// required by the stream wrapper
 				'size'  => 1024,	// fmail does NOT attach files with size 0!
@@ -166,7 +166,7 @@ class StreamWrapper extends LinksParent
 			if ($id && !isset($rel_path))
 			{
 				$ret = array(
-					'ino'   => md5($url),
+					'ino'   => '#'.md5($url),
 					'name'  => $id,
 					'mode'  => self::MODE_DIR,	// required by the stream wrapper
 					'size'  => 0,
