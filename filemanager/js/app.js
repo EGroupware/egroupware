@@ -799,7 +799,7 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
-	 * Callback to check if the drop action is enabled.  We also update the 
+	 * Callback to check if the paste action is enabled.  We also update the
 	 * clipboard historical targets here as well
 	 *
 	 * @param {egwAction} _action  drop action we're checking
@@ -808,23 +808,46 @@ app.classes.filemanager = AppJS.extend(
 	 * 
 	 * @returns boolean true if enabled, false otherwise
 	 */
-	drop_enabled: function drop_enabled(_action, _senders, _target)
+	paste_enabled: function paste_enabled(_action, _senders, _target)
 	{
+		// Need files in the clipboard for this
+		var clipboard_files = this.get_clipboard_files();
+		if(clipboard_files.length === 0)
+		{
+			return false;
+		}
+
+		// Parent action (paste) gets run through here as well, but needs no
+		// further processing
+		if(_action.id == 'paste') return true;
+
 		if(_action.canHaveChildren.indexOf('drop') == -1)
 		{
 			_action.canHaveChildren.push('drop');
 		}
-		var actions = [
-			// Current directory
-			{id:_action.id+'_current', caption: this.get_path(), path: this.get_path()}
-		];
+		var actions = [];
+		var dir = undefined;
+		var current_dir, target_dir = false;
 
-		// Target, if directory
+		// Current directory
+		current_dir = this.get_path();
+		dir = egw.dataGetUIDdata('filemanager::'+current_dir);
+		var path_widget = etemplate2.getById('filemanager-index').widgetContainer.getWidgetById('button[createdir]');
 		actions.push({
-			id: _action.id+'_target',
-			caption: this.id2path(_target.id),
-			path: this.id2path(_target.id),
-			enabled: _target && _target.iface && jQuery(_target.iface.getDOMNode()).hasClass('isDir')
+			id:_action.id+'_current', caption: current_dir, path: current_dir,
+			enabled: dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 ||
+					!dir && path_widget && !path_widget.options.readonly
+		});
+		
+		// Target, if directory
+		target_dir = this.id2path(_target.id);
+		dir = egw.dataGetUIDdata(_target.id);
+		actions.push({
+				id: _action.id+'_target',
+				caption: target_dir,
+				path: target_dir,
+				enabled: _target && _target.iface && jQuery(_target.iface.getDOMNode()).hasClass('isDir') &&
+					(dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 || !dir)
 		});
 
 		// Last 10 folders
@@ -838,7 +861,7 @@ app.classes.filemanager = AppJS.extend(
 				caption: path,
 				path: path,
 				group: 2,
-				enabled: path && !(path === actions[0].path || actions[1] && path === actions[1].path)
+				enabled: path && !(current_dir && path === current_dir || target_dir && path === target_dir)
 			});
 		}
 
@@ -862,6 +885,12 @@ app.classes.filemanager = AppJS.extend(
 			// Set a flag so apps can tell the difference, if they need to
 			action.set_onExecute(action.parent.onExecute.fnct);
 			action.execute(clipboard.selected,selected[0]);
+
+			// Clear the clipboard, the files are not there anymore
+			egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify({
+				type:[],
+				selected:[]
+			}));
 		};
 		for(var i = 0; i < actions.length; i++)
 		{
@@ -869,7 +898,7 @@ app.classes.filemanager = AppJS.extend(
 
 			_action.getActionById(actions[i].id).set_onExecute(paste_exec);
 		}
-		return true;
+		return actions.length > 0;
 	},
 
 	/**
