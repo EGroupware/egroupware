@@ -300,8 +300,7 @@ class filemanager_ui
 					'row_id'         => 'path',
 					'row_modified'   => 'mtime',
 					'parent_id'      => 'dir',
-					'is_parent'      => 'mime',
-					'is_parent_value'=> Vfs::DIR_MIME_TYPE,
+					'is_parent'      => 'is_dir',
 					'favorites'      => true,
 					'placeholder_actions' => array('mkdir','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 				);
@@ -870,6 +869,7 @@ class filemanager_ui
 			if (Vfs::is_dir($path))
 			{
 				$row['class'] = 'isDir';
+				$row['is_dir'] = 1;
 			}
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
@@ -1456,4 +1456,109 @@ class filemanager_ui
 		}
 		return $mode;
 	}
+<<<<<<< HEAD
+=======
+
+	/**
+	 * Editor for odf files
+	 *
+	 * @param array $content
+	 */
+	function editor($content=null)
+	{
+		$tmpl = new Etemplate('filemanager.editor');
+		$file_path = $_GET['path'];
+		$paths = explode('/webdav.php', $file_path);
+		// Include css files used by wodocollabeditor
+		Api\Framework::includeCSS('/api/js/webodf/collab/app/resources/app.css');
+		Api\Framework::includeCSS('/api/js/webodf/collab/wodocollabpane.css');
+		Api\Framework::includeCSS('/api/js/webodf/collab/wodotexteditor.css');
+		Api\Framework::includeJS('/filemanager/js/collab.js',null, 'filemanager');
+
+		if (!$content)
+		{
+			if ($file_path)
+			{
+				$content['es_id'] = md5 ($file_path);
+				$content['file_path'] = $paths[1];
+			}
+			else
+			{
+				$content = array();
+			}
+		}
+
+		$actions = self::getActions_edit();
+		if (!Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE))
+		{
+			unset ($actions['save']);
+			unset ($actions['discard']);
+			unset ($actions['delete']);
+		}
+		$tmpl->setElementAttribute('tools', 'actions', $actions);
+		$preserve = $content;
+		$tmpl->exec('filemanager.filemanager_ui.editor',$content,array(),array(),$preserve,2);
+	}
+
+	/**
+	 * Editor dialog's toolbar actions
+	 *
+	 * @return array return array of actions
+	 */
+	static function getActions_edit()
+	{
+		$group = 0;
+		$actions = array (
+			'save' => array(
+				'caption' => 'Save',
+				'icon' => 'apply',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_save',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => true
+			),
+			'new' => array(
+				'caption' => 'New',
+				'icon' => 'add',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_new',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => true
+			),
+			'close' => array(
+				'caption' => 'Close',
+				'icon' => 'close',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_close',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => true
+			),
+			'saveas' => array(
+				'caption' => 'Save As',
+				'icon' => 'save_all',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_save',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => true
+			),
+			'delete' => array(
+				'caption' => 'Delete',
+				'icon' => 'delete',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_delete',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => false
+			),
+			'discard' => array(
+				'caption' => 'Discard',
+				'icon' => 'delete',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_discard',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => false
+			)
+		);
+		return $actions;
+	}
+>>>>>>> 8325dd8... allow to open symlinks to directories like directories
 }
