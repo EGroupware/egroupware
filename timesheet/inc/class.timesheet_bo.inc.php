@@ -280,15 +280,18 @@ class timesheet_bo extends Api\Storage
 	/**
 	 * get list of specified grants as uid => Username pairs
 	 *
-	 * @param int $required =EGW_ACL_READ
+	 * @param int $required =Acl::READ
+	 * @param boolean $hide_deactive =null default only Acl::EDIT hides deactivates users
 	 * @return array with uid => Username pairs
 	 */
-	function grant_list($required=EGW_ACL_READ)
+	function grant_list($required=Acl::READ, $hide_deactive=null)
 	{
+		if (!isset($hide_deactive)) $hide_deactive = $required == Acl::EDIT;
+
 		$result = array();
 		foreach($this->grants as $uid => $grant)
 		{
-			if ($grant & $required)
+			if ($grant & $required && (!$hide_deactive || Api\Accounts::getInstance()->is_active($uid)))
 			{
 				$result[$uid] = Api\Accounts::username($uid);
 			}
