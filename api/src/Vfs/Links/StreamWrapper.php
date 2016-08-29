@@ -306,7 +306,7 @@ class StreamWrapper extends LinksParent
 		if ($mode[0] != 'r' && ($dir = Vfs::dirname($url)) &&
 			!parent::url_stat($dir, 0) && self::check_extended_acl($dir, Vfs::WRITABLE))
 		{
-			self::mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
+			$this->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
 		return parent::stream_open($url,$mode,$options,$opened_path);
 	}
