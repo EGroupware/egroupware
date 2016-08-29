@@ -727,7 +727,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		if (($options & STREAM_MKDIR_RECURSIVE) && $parent_path != '/' && !$parent)
 		{
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__." creating parents: $parent_path, $mode");
-			if (!self::mkdir($parent_path,$mode,$options))
+			if (!$this->mkdir($parent_path,$mode,$options))
 			{
 				return false;
 			}

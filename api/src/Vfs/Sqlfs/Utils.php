@@ -327,7 +327,7 @@ class Utils extends StreamWrapper
 				if (!($lostnfound = $sqlfs->url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
 				{
 					Vfs::$is_root = true;
-					if (!self::mkdir(self::LOST_N_FOUND, self::LOST_N_FOUND_MOD, 0) ||
+					if (!$sqlfs->mkdir(self::LOST_N_FOUND, self::LOST_N_FOUND_MOD, 0) ||
 						!(!($admins = $GLOBALS['egw']->accounts->name2id(self::LOST_N_FOUND_GRP)) ||
 						   self::chgrp(self::LOST_N_FOUND, $admins) && self::chmod(self::LOST_N_FOUND,self::LOST_N_FOUND_MOD)) ||
 						!($lostnfound = $sqlfs->url_stat(self::LOST_N_FOUND, STREAM_URL_STAT_QUIET)))
