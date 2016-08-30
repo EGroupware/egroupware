@@ -161,7 +161,7 @@ do you want a notification, if items you are responsible for are due?	infolog	de
 do you want a notification, if items you created get updated?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie angelegt haben aktualisiert werden?
 do you want a notification, if items you delegated are about to start?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben beginnen sollen?
 do you want a notification, if items you delegated are due?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben fällig werden?
-do you want to receive notifications as html-mails or plain text?	infolog	de	Wollen Sie die Benachrichtigungen als HTML Mail oder reinen Text empfangen?
+do you want to receive notifications as html-mails or plain text?	infolog	de	Wollen Sie die Benachrichtigungen als HTML-Mail oder als Text-Mail empfangen?
 don't show infolog	infolog	de	InfoLog NICHT anzeigen
 done	infolog	de	geschlossen
 download	infolog	de	Datei laden
@@ -185,7 +185,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	d
 enter a textual description of the log-entry	infolog	de	geben Sie eine textliche Beschreibung des Eintrags ein
 enter the query pattern	infolog	de	geben Sie ein Suchmuster ein
 entry and all files	infolog	de	Eintrag und alle Dateien
-error: importing the ical	infolog	de	Fehler beim Import der iCal Import!
+error: importing the ical	infolog	de	Fehler beim Import der iCal
 error: no mail (mailbox / uid) given!	infolog	de	Fehler: keine Mail (Mailbox / UID) angegeben!
 error: saving the entry	infolog	de	Fehler: beim Speichern des Eintrags
 error: the entry has been updated since you opened it for editing!	infolog	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
@@ -197,8 +197,8 @@ execute a further action for this entry	infolog	de	Eine weitere Aktion für dies
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
 export definition to use for nextmatch export	infolog	de	Exportdefinition für Listenexport
-exports in ical format.	infolog	de	Export im iCal Format.
-exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog Einträge in eine CSV Datei.
+exports in ical format.	infolog	de	Export im iCal Format
+exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog Einträge in eine CSV Datei
 favorites	infolog	de	Favoriten
 fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!
@@ -220,16 +220,16 @@ high	infolog	de	hoch
 history	infolog	de	Historie
 history logging	infolog	de	Protokollierung der Historie
 history logging and deleting of items	infolog	de	Protokollierung der Historie und löschen von Einträgen
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein. Zusätzliche Zeilen können über einen Rollbalken erreicht werden.
-how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	de	Wie breit darf das Beschreibungsfeld sein. Sie können hier einen nummerischen Wert eintragen.
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein. Zusätzliche Zeilen können über einen Rollbalken erreicht werden
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	de	Wie breit darf das Beschreibungsfeld sein. Sie können hier einen nummerischen Wert eintragen
 html link to the current record	infolog	de	HTML-Link zum aktuellen Datensatz
-id	infolog	de	Id
-id#	infolog	de	Id#
+id	infolog	de	ID
+id#	infolog	de	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allgemeinen Einstellungen definiert).
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
-if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export Definition für den Export.
+if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export-Definition für den Export
 import next set	infolog	de	Nächsten Satz importieren
 importance	infolog	de	Wichtigkeit
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	de	Importiert Einträge in das Infolog Modul aus einer CSV Datei (Komma getrennte Werte).
@@ -368,7 +368,7 @@ projectmanager	infolog	de	Projektmanager
 re-planned	infolog	de	Umgeplant
 re-planned time	infolog	de	Umgeplante Zeit
 re:	infolog	de	Re:
-read one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id lesen.
+read one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine ID lesen.
 read rights (default)	infolog	de	Leserechte (Vorgabe)
 receive notifications about due entries you are responsible for	infolog	de	Benachrichtigungen über fällige Einträge für die Sie verantwortlich sind
 receive notifications about due entries you delegated	infolog	de	Benachrichtigungen über fällige Einträge die Sie delegiert haben
@@ -377,7 +377,7 @@ receive notifications about items of type owned by groups you are part of	infolo
 receive notifications about own items	infolog	de	Benachrichtigungen über eigene Einträge
 receive notifications about starting entries you are responsible for	infolog	de	Benachrichtigungen über zu startende Einträge für die Sie verantwortlich sind
 receive notifications about starting entries you delegated	infolog	de	Benachrichtigungen über zu startende Einträge die Sie delegiert haben
-receive notifications as html-mails	infolog	de	Benachrichtigungen als HTML Mails
+receive notifications as html-mails	infolog	de	Benachrichtigungen als HTML-Mails empfangen
 regular expression	infolog	de	Reguläre Ausdrücke
 remark	infolog	de	Bemerkung
 remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
@@ -391,7 +391,7 @@ responsible open and upcoming	infolog	de	verantwortlich offene und zukünftige
 responsible overdue	infolog	de	verantwortlich überfällig
 responsible upcoming	infolog	de	verantwortlich zukünftig
 responsible user, priority	infolog	de	Verantwortlicher, Priorität
-returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen.
+returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen
 rights for the responsible	infolog	de	Rechte für den Verantwortlichen
 rows	infolog	de	Zeilen
 same day	infolog	de	gleichen Tag
@@ -413,7 +413,7 @@ select an action	infolog	de	Befehl oder Aktion auswählen
 select an action...	infolog	de	Befehl oder Aktion auswählen...
 select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
 select an entry to link with	infolog	de	einen Eintrag zum Verknüpfen auswählen
-select multiple contacts for a further action	infolog	de	Wählen Sie mehrere Kontakte für eine weitere Aktion aus.
+select multiple contacts for a further action	infolog	de	Wählen Sie mehrere Kontakte für eine weitere Aktion aus
 select new category	infolog	de	Wählen Sie eine Kategorie
 select to filter by owner	infolog	de	Besitzer zum Filtern auswählen
 select to filter by responsible	infolog	de	Verantwortlichen zum Filtern auswählen
@@ -432,7 +432,7 @@ should infolog use full names (surname and familyname) or just the loginnames.	i
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	de	Soll die InfoLog Liste eine eindeutige Nummer anzeigen, die z.B. als Ticketnummer verwendet werden kann.
 should the infolog list show the column "last modified".	infolog	de	Soll die InfoLog Liste die Spalte "Zuletzt geändert" anzeigen.
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	de	Soll die InfoLog Liste Prozent erledigt nur für den Status "in Arbeit" anzeigen oder zwei separate Icons.
-should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die ACL erlaubt haben
+should this entry only be visible to you and people you grant privat access via the acl	infolog	de	Soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die Zugriffsberechtigungen erlaubt haben
 show a column for used and planned times in the list.	infolog	de	Zeige eine Spalte für benutzte und geplante Zeiten in der List.
 show a x if content equals this compare value, otherwise show nothing	infolog	de	zeigt ein X an, wenn der Inhalt mit dem  Vergleichswert übereinstimmt, ansonsten erfolgt keine Anzeige.
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
@@ -470,7 +470,7 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 20 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
 the text displayed to the user	infolog	de	der Text der dem Benutzer angezeigt wird
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
-til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
+til when should the todo or phonecall be finished	infolog	de	bis wann soll die Aufgabe oder der Anruf erledigt sein
 times	infolog	de	Zeiten
 titles of any entries linked to the current record, excluding attached files	infolog	de	Liste aller Einträge die mit dem aktuellen Datensatz verknüpft sind, mit Ausnahme von Dateianhängen.
 to many might exceed your execution-time-limit	infolog	de	zu viel können Ihre Laufzeitbeschränkung überschreiten
@@ -484,7 +484,7 @@ type	infolog	de	Typ
 type ...	infolog	de	Typ ...
 type of customfield	infolog	de	Typ des benutzerdefinierten Feldes
 type of field	infolog	de	Art des Feldes
-type of the log-entry: note, phonecall or todo	infolog	de	Typ des Eintrags: Notiz, Anruf oder Auftrag
+type of the log-entry: note, phonecall or todo	infolog	de	Typ der InfoLog-Eintrages: Aufgabe, Notiz oder Anruf
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	de	Verknüpfung zu  %3 eines Benutzerdefinierten Feldes "%1": "%4" nicht möglich. %2 würde passen
 unknown type: %1	infolog	de	Unbekannter Typ %1
 unlink	infolog	de	Verknüpfung lösen
@@ -493,7 +493,7 @@ upcoming	infolog	de	zukünftig
 urgency	infolog	de	Priorität
 urgent	infolog	de	Dringend
 use all	infolog	de	Alle Einträge
-use custom notification message	infolog	de	Use custom notification message
+use custom notification message	infolog	de	Benutze benutzerdefinierte Nachrichten
 use field from csv if possible	infolog	de	Verwendet die Felder vom CSV, wenn möglich
 use search results	infolog	de	Verwendet die Suchergebnisse
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	de	Benutzern Sie diesen Platzhalter für Adressetiketten. Fügen Sie den Inhalt, den Sie wiederholen möchten zwischen zwei Platzhalter ein.
@@ -506,7 +506,7 @@ view parent with children	infolog	de	Elterneintrag mit Untereinträgen anzeigen
 view subs	infolog	de	Untereinträge anzeigen
 view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
 view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit dem Auftrag oder Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit der Aufgabe oder dem Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?<br />Status, Prozent und Datum erledigt sind immer erlaubt.
 which implicit acl rights should the responsible get?	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
 which participants should be preselected when scheduling an appointment.	infolog	de	Welche Teilnehmer sollen als Vorgabe ausgewählt sein bei Termin planen.
