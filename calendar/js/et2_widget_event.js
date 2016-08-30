@@ -195,6 +195,14 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		// Check for changing days in the grid view
 		if(!this._sameday_check(value))
 		{
+			// May need to update parent to remove out-of-view events
+			var parent = this._parent;
+			this._parent.removeChild(this);
+			if(event === null && parent && parent._out_of_view)
+			{
+				parent._out_of_view();
+			}
+			
 			// This should now cease to exist, as new events have been created
 			this.free();
 			return;
