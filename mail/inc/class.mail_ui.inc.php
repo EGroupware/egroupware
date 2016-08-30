@@ -2135,7 +2135,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachmentHTML[$key]['mail_id'] = $rowID;
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
-
+				// reset mode array as it should be considered differently for
+				// each attachment
+				$mode = array();
 				switch(strtoupper($value['mimeType']))
 				{
 					case 'MESSAGE/RFC822':
@@ -2154,6 +2156,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					case 'IMAGE/PNG':
 					case 'IMAGE/GIF':
 					case 'IMAGE/BMP':
+						// set mode for media mimetypes because we need
+						// to structure a download url to be used maybe in expose.
+						$mode = array(
+							'mode' => 'save'
+						);
 					case 'APPLICATION/PDF':
 					case 'TEXT/PLAIN':
 					case 'TEXT/HTML':
@@ -2172,14 +2179,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					case 'TEXT/VCARD':
 					case 'TEXT/CALENDAR':
 					case 'TEXT/X-VCALENDAR':
-						$linkData = array
+						$linkData = array_merge(array
 						(
 							'menuaction'	=> 'mail.mail_ui.getAttachment',
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
 							'is_winmail'    => $value['is_winmail'],
 							'mailbox'   => base64_encode($mailbox),
-						);
+						) , $mode);
 						$windowName = 'displayAttachment_'. $uid;
 						$reg = '800x600';
 						// handle calendar/vcard
