@@ -499,7 +499,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		//Add uploading indicator and bind hover handler on it
 		jQuery(this.node).find('span').addClass('totalProgress_loader');
 
-		jQuery(this.node).find('input').hover(function(){
+		jQuery(this.node).find('span.et2_file_span').hover(function(){
 					jQuery('.progress_dropDown_fileList').show();
 		});
 		//Bind click handler to dismiss the dropdown while uploading

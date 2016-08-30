@@ -66,7 +66,7 @@ class File extends DAV\FS\File
 	 */
 	function getETag()
 	{
-		if (($stat = Vfs::url_stat($this->vfs_path, STREAM_URL_STAT_QUIET)))
+		if (($stat = Vfs::stat($this->vfs_path, STREAM_URL_STAT_QUIET)))
 		{
 			return '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"';
 		}

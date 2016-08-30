@@ -685,7 +685,7 @@ class Link extends Link\Storage
 				Storage\History::static_add($app,$id,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app2.':'.$id2);
 				Storage\History::static_add($app2,$id2,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app.':'.$id);
 			}
-			$deleted =& Link\Storage::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2,$hold_for_purge);
+			$deleted = Link\Storage::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2,$hold_for_purge);
 
 			// only notify on real links, not the one cached for writing or fileattachments
 			self::notify_unlink($deleted);
@@ -1197,26 +1197,27 @@ class Link extends Link\Storage
 	 * @param string $app appname to link the file to
 	 * @param string $id id in $app
 	 * @param string $file VFS path to link to
-	 * @param string $comment ='' comment to add to the link
+	 * @return boolean true on success, false on failure
 	 */
-	static function link_file($app,$id,$file)//,$comment='')
+	static function link_file($app,$id,$file)
 	{
 		// Don't try to link into app dir if there is no id
 		if(!$id) return;
 
-		$app_path = self::vfs_path($app,$id);
-		$ok = true;
-		if (Vfs::file_exists($app_path) || ($ok = Vfs::mkdir($app_path,0,true)))
+		if (!Vfs::stat($file))
 		{
-			if (!Vfs::stat($file))
-			{
-				error_log(__METHOD__. ' (Link target ' . Vfs::decodePath($file) . ' not found!');
-				return false;
-			}
+			error_log(__METHOD__. ' (Link target ' . Vfs::decodePath($file) . ' not found!');
+			return false;
 		}
 
-		$link = Vfs::concat($app_path,Vfs::basename($file));
-		return Vfs::symlink($file,$link);
+		$entry_dir = self::vfs_path($app, $id);
+		if (!file_exists($entry_dir) && !mkdir($entry_dir, 0, true))
+		{
+			error_log(__METHOD__."($app,$id,".array2string($file).") Can't mkdir $entry_dir!");
+			return false;
+		}
+
+		return Vfs::symlink($file, Vfs::concat($entry_dir, Vfs::basename($file)));
 	}
 	/**
 	 * deletes a single or all attached files of an entry (for all there's no acl check, as the entry probably not exists any more!)
@@ -1300,7 +1301,7 @@ class Link extends Link\Storage
 		if (!is_array($fileinfo))
 		{
 			$url = Vfs\Sqlfs\StreamWrapper::id2path($fileinfo);
-			if (!($fileinfo = Vfs::url_stat($url,STREAM_URL_STAT_QUIET)))
+			if (!($fileinfo = Vfs::stat($url,STREAM_URL_STAT_QUIET)))
 			{
 				return false;
 			}

@@ -151,9 +151,11 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		}
 
 		// set Owner
-		$_definition->plugin_options['record_owner'] = $_definition->plugin_options['record_owner'] ?
+		$plugin_options = $_definition->plugin_options;
+		$plugin_options['record_owner'] = $_definition->plugin_options['record_owner'] ?
 			$_definition->plugin_options['record_owner'] : $this->user;
-		$_definition->plugin_options['record_owner'] = $this->user;
+		$plugin_options['record_owner'] = $this->user;
+		$_definition->plugin_options = $plugin_options;
 
 		$_lookups = array(
 			'info_type'	=>	$this->boinfolog->enums['type'],

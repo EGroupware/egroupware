@@ -31,9 +31,9 @@ namespace EGroupware\Api\Cache;
 class Memcached extends Base implements ProviderMultiple
 {
 	/**
-	 * Instance of Memcached
+	 * Instance of \Memcached
 	 *
-	 * @var Memcached
+	 * @var \Memcached
 	 */
 	private $memcache;
 
@@ -92,10 +92,14 @@ class Memcached extends Base implements ProviderMultiple
 			\Memcached::OPT_LIBKETAMA_COMPATIBLE => true,
 			// automatic failover and disabling of failed nodes
 			\Memcached::OPT_SERVER_FAILURE_LIMIT => 2,
-			\Memcached::OPT_AUTO_EJECT_HOSTS => true,
 			// setting a prefix for all keys
 			\Memcached::OPT_PREFIX_KEY => $prefix,
 		));
+		// automatic disabling of failed nodes
+		if (@constant('Memcached::OPT_AUTO_EJECT_HOSTS'))
+		{
+			$this->memcache->setOption(\Memcached::OPT_AUTO_EJECT_HOSTS, true);
+		}
 		// use igbinary, if available
 		if (\Memcached::HAVE_IGBINARY)
 		{

@@ -550,15 +550,19 @@ class resources_bo
 				// Edit dialog sends exec as an option, don't add categories
 				if(count($resources) && !$options['exec'])
 				{
+					$_resources = array_map(
+						function($id) { return 'r'.$id;},
+						array_keys($resources)
+					);
 					$list['cat-'.$cat_id] = array(
-						'label'	=>	$cat,
-						'resources'	=>	$resources,
+						'label'	=>	$bo->acl->egw_cats->id2name($cat_id),
+						'resources'	=>	$_resources,
 					);
 				}
 				else if ($resources && $options['exec'])
 				{
 					array_map(
-						function($id,$name) use (&$list) { $list[''+$id] = $name;},
+						function($id,$name) use (&$list) { $list[''.$id] = $name;},
 						array_keys($resources), $resources
 					);
 				}
@@ -583,9 +587,12 @@ class resources_bo
 		);
 		$only_keys = 'res_id,name';
 		$data = $this->so->search(array(),$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
-		foreach($data as $resource)
+		if(is_array($data) && $data)
 		{
-			$resources[$resource['res_id']] = $resource['name'];
+			foreach($data as $resource)
+			{
+				$resources[$resource['res_id']] = $resource['name'];
+			}
 		}
 
 		return $resources;

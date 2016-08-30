@@ -127,8 +127,10 @@ class import_events_csv implements iface_import_plugin  {
 		}
 
 		// set eventOwner
-		$_definition->plugin_options['events_owner'] = isset( $_definition->plugin_options['events_owner'] ) ?
+		$plugin_options = $_definition->plugin_options;
+		$plugin_options['events_owner'] = isset( $_definition->plugin_options['events_owner'] ) ?
 			$_definition->plugin_options['events_owner'] : $this->user;
+		$_definition->plugin_options = $plugin_options;
 
 		// trash_users_records ?
 		if ( $_definition->plugin_options['trash_users_records'] === true ) {

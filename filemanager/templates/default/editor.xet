@@ -8,14 +8,14 @@
 				<column width="100%"/>
 			</columns>
 			<rows>
-				<row height="45" class="dialogHeader">
+				<row height="45">
 					<box height="30">
 						<toolbar id="tools"/>
-						<description id="file_path"/>
+						<textbox id="file_path" readonly="true"/>
 					</box>
 				</row>
 				<row>
-					<grid height="500" width="100%" resize_ratio="1">
+					<grid height="700" width="100%" resize_ratio="1">
 						<columns>
 							<column width="100%"/>
 						</columns>

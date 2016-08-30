@@ -9,11 +9,6 @@
  * @version $Id$
  */
 
-/*egw:uses
-	/api/js/webodf/wodotexteditor/wodotexteditor/wodotexteditor.js;
-	/api/js/webodf/wodotexteditor/wodotexteditor/webodf.js;
- */
-
 /**
  * UI for filemanager
  *
@@ -30,11 +25,6 @@ app.classes.filemanager = AppJS.extend(
 	 * Are files cut into clipboard - need to be deleted at source on paste
 	 */
 	clipboard_is_cut: false,
-
-	/*
-	 * odf editor object
-	 */
-	editor: {},
 
 	/**
 	 * Constructor
@@ -65,7 +55,6 @@ app.classes.filemanager = AppJS.extend(
 	{
 		delete this.et2;
 
-		delete this.editor;
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -112,11 +101,6 @@ app.classes.filemanager = AppJS.extend(
 		{
 			this.set_readonly.apply(this, this.readonly);
 			delete this.readonly;
-		}
-
-		if (name == "filemanager.editor")
-		{
-			this._init_odf_editor ();
 		}
 	},
 
@@ -786,7 +770,7 @@ app.classes.filemanager = AppJS.extend(
 			egw.open_link(egw.link('/index.php', {
 				menuaction: 'filemanager.filemanager_ui.editor',
 				path: data.data.download_url
-			}), '', '800x600');
+			}), '', egw.link_get_registry('filemanager','view_popup'));
 		}
 		else
 		{
@@ -815,6 +799,112 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
+	 * Callback to check if the paste action is enabled.  We also update the
+	 * clipboard historical targets here as well
+	 *
+	 * @param {egwAction} _action  drop action we're checking
+	 * @param {egwActionObject[]} _senders selected files
+	 * @param {egwActionObject} _target Drop or context menu activated on this one
+	 * 
+	 * @returns boolean true if enabled, false otherwise
+	 */
+	paste_enabled: function paste_enabled(_action, _senders, _target)
+	{
+		// Need files in the clipboard for this
+		var clipboard_files = this.get_clipboard_files();
+		if(clipboard_files.length === 0)
+		{
+			return false;
+		}
+
+		// Parent action (paste) gets run through here as well, but needs no
+		// further processing
+		if(_action.id == 'paste') return true;
+
+		if(_action.canHaveChildren.indexOf('drop') == -1)
+		{
+			_action.canHaveChildren.push('drop');
+		}
+		var actions = [];
+		var dir = undefined;
+		var current_dir, target_dir = false;
+
+		// Current directory
+		current_dir = this.get_path();
+		dir = egw.dataGetUIDdata('filemanager::'+current_dir);
+		var path_widget = etemplate2.getById('filemanager-index').widgetContainer.getWidgetById('button[createdir]');
+		actions.push({
+			id:_action.id+'_current', caption: current_dir, path: current_dir,
+			enabled: dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 ||
+					!dir && path_widget && !path_widget.options.readonly
+		});
+		
+		// Target, if directory
+		target_dir = this.id2path(_target.id);
+		dir = egw.dataGetUIDdata(_target.id);
+		actions.push({
+				id: _action.id+'_target',
+				caption: target_dir,
+				path: target_dir,
+				enabled: _target && _target.iface && jQuery(_target.iface.getDOMNode()).hasClass('isDir') &&
+					(dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 || !dir)
+		});
+
+		// Last 10 folders
+		var previous_dsts = jQuery.extend([], egw.preference('drop_history',this.appname));
+		var action_index = 0;
+		for(var i = 0; i < 10; i++)
+		{
+			var path = i < previous_dsts.length ? previous_dsts[i] : '';
+			actions.push({
+				id: _action.id+'_target_'+action_index++,
+				caption: path,
+				path: path,
+				group: 2,
+				enabled: path && !(current_dir && path === current_dir || target_dir && path === target_dir)
+			});
+		}
+
+		// Common stuff, every action needs these
+		for(var i = 0; i < actions.length; i++)
+		{
+			//actions[i].type = 'drop',
+			actions[i].acceptedTypes = _action.acceptedTypes;
+			actions[i].no_lang = true;
+			actions[i].hideOnDisabled = true;
+		}
+
+		_action.updateActions(actions);
+
+		// Create paste action
+		// This injects the clipboard data and calls the original handler
+		var paste_exec = function(action, selected) {
+			// Add in clipboard as a sender
+			var clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
+
+			// Set a flag so apps can tell the difference, if they need to
+			action.set_onExecute(action.parent.onExecute.fnct);
+			action.execute(clipboard.selected,selected[0]);
+
+			// Clear the clipboard, the files are not there anymore
+			if(action.id.indexOf('move') !== -1)
+			{
+				egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify({
+					type:[],
+					selected:[]
+				}));
+			}
+		};
+		for(var i = 0; i < actions.length; i++)
+		{
+			_action.getActionById(actions[i].id).onExecute = jQuery.extend(true, {}, _action.onExecute);
+
+			_action.getActionById(actions[i].id).set_onExecute(paste_exec);
+		}
+		return actions.length > 0;
+	},
+
+	/**
 	 * File(s) droped
 	 *
 	 * @param _action
@@ -829,10 +919,22 @@ app.classes.filemanager = AppJS.extend(
 
 		// Target will be missing ID if directory is empty
 		// so start with the current directory
-		var nm_dst = this.get_path(_action.parent.data.nextmatch.getInstanceManager().uniqueId || false);
+		var parent = _action;
+		var nm = _target.manager.data.nextmatch;
+		while(!nm && parent.parent)
+		{
+			parent = parent.parent;
+			if(parent.data.nextmatch) nm = parent.data.nextmatch;
+		}
+		var nm_dst = this.get_path(nm.getInstanceManager().uniqueId || false);
 
+		// Action specifies a destination, target does not matter
+		if(_action.data && _action.data.path)
+		{
+			dst = _action.data.path;
+		}
 		// File(s) were dropped on a row, they want them inside
-		if(_target)
+		else if(_target)
 		{
 			var dst = '';
 			var paths = this._elems2paths([_target]);
@@ -849,7 +951,16 @@ app.classes.filemanager = AppJS.extend(
 			}
 		}
 
-		this._do_action(_action.id.replace("file_drop_",''), src, false, dst || nm_dst);
+		// Remember the target for next time
+		var previous_dsts = jQuery.extend([], egw.preference('drop_history',this.appname));
+		previous_dsts.unshift(dst);
+		previous_dsts = Array.from(new Set(previous_dsts)).slice(0,9);
+		egw.set_preference(this.appname, 'drop_history', previous_dsts);
+
+		// Actual action id will be something like file_drop_{move|copy|link}[_other_id],
+		// but we need to send move, copy or link
+		var action_id = _action.id.replace("file_drop_",'').split('_',1)[0];
+		this._do_action(action_id, src, false, dst || nm_dst);
 	},
 
 	/**
@@ -1027,201 +1138,26 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
-	 * Initiate odf editor popup & load given file_path
-	 *
-	 */
-	_init_odf_editor: function ()
-	{
-		var file_path = this.et2.getArrayMgr('content').getEntry('file_path');
-		var self = this;
-
-		var onEditorCreated = function (err ,editor)
-		{
-			if (err)
-			{
-				console.log('Something went wrong whilst loading editor.'+ err);
-				return;
-			}
-			self.editor = editor;
-			self.editor.openDocumentFromUrl(egw.webserverUrl+file_path);
-		};
-
-		var editorOptions = {
-			allFeaturesEnabled: true
-		};
-
-		var editor = this.et2.getWidgetById('odfEditor');
-		if (editor)
-		{
-			Wodo.createTextEditor('filemanager-editor_odfEditor', editorOptions, onEditorCreated);
-		}
-	},
-
-	/**
-	 * Method to close an opened document
-	 *
-	 * @param {object} _egwAction egw action object
-	 */
-	editor_close: function (_egwAction) {
-		var self = this;
-		var action = _egwAction.id;
-		if (this.editor)
-		{
-			var closeFn = function ()
-			{
-				self.editor.closeDocument(function(){});
-				if (action != 'new')
-				{
-					self.editor.destroy(function(){});
-					window.close();
-				}
-			}
-
-			// warn user about unsaved changes
-			if (this.editor.isDocumentModified())
-			{
-				et2_dialog.show_dialog(
-					function(_btn)
-					{
-						if (_btn == 2)
-						{
-							closeFn();
-						}
-					},
-					'There are unsaved changes. Are you sure you want to close this document without saving them?',
-					'unsaved changes',
-					null,
-					et2_dialog.BUTTONS_YES_NO,
-					et2_dialog.WARNING_MESSAGE
-				);
-			}
-			else
-			{
-				closeFn();
-			}
-		}
-	},
-
-	/**
 	 * Method to create a new document
-	 * @param {object} _egwAction egw action object
-	 *
-	 * @todo: creating new empty odt file
 	 */
-	editor_new: function (_egwAction) {
-		return egw(window).message('Sorry creating new odt document is not fully implemented yet. Please try later.');
-		var mimeType = 'application/vnd.oasis.opendocument.text';
-		var bytes = new Uint8Array('');
-		var blob = new Blob([bytes.buffer], {type:mimeType});
-		var egwAction = _egwAction;
-		var self = this;
-		this.editor_file_operation({
-			url: egw.webserverUrl+'/webdav.php?/home/'+egw.user('account_lid')+'/'+this.et2._inst.etemplate_exec_id+'.odt',
-			method: 'PUT',
-			success: function(_data) {
-				egw(window).message('');
-				self.editor_close(egwAction);
-			},
-			error: function (_err) {
-				egw(window).message('Create new document faild because of %1', _err);
-			},
-			data: blob,
-			processData: false,
-			mimeType: mimeType
-		});
-	},
-
-	/**
-	 * Method call for saving edited document
-	 */
-	editor_save: function () {
-		var self = this;
-		var file_path = this.et2.getArrayMgr('content').getEntry('file_path');
-
-		if (this.editor)
-		{
-			function saveByteArrayLocally(err, data) {
-				if (err) {
-					alert(err);
-					return;
-				}
-
-				var mimetype = "application/vnd.oasis.opendocument.text",
-					filename = file_path.split('/webdav.php'),
-					blob = new Blob([data.buffer], {type: mimetype});
-
-				self.editor_file_operation({
-						url: egw.webserverUrl+file_path,
-						method: 'PUT',
-						processData: false,
-						success: function(data) {
-							egw(window).message(egw.lang('Document %1 successfully has been saved.', filename[1]));
-							self.editor.setDocumentModified(false);
-
-						},
-						error: function () {},
-						data: blob,
-						mimeType: mimetype
-				});
-			}
-			this.editor.getDocumentAsByteArray(saveByteArrayLocally);
-		}
-	},
-
-	/**
-	 * Method to delete loaded file in editor
-	 * @param {type} _egwAction
-	 */
-	editor_delete: function (_egwAction) {
-		var fullpath = this.et2.getArrayMgr('content').getEntry('file_path');
-		fullpath = fullpath.split('/webdav.php')[1];
-		var selected = fullpath.split('/');
-		selected.pop();
-		var path = selected.join('/');
-		this._do_action('delete', [fullpath], false, path);
-
-		this.editor_close(_egwAction);
-	},
-
-	/**
-	 * Function to handle file operations (PGD) for editor
-	 *
-	 * @param {object} _params jquery ajax parameters
-	 */
-	editor_file_operation: function (_params)
-	{
-		var ajaxObj = {
-			url: egw.webserverUrl+'/webdav.php?/home/'+egw.user('account_lid')+'/default.odt',
-		};
-		jQuery.extend(ajaxObj, _params);
-		switch (ajaxObj && ajaxObj.cmd)
-		{
-			case 'PUT':
-				jQuery.extend({},ajaxObj, {
-					data: JSON.stringify(ajaxObj.data),
-					contentType: 'application/json'
-				});
-				break;
-			case 'GET':
-				jQuery.extend({},ajaxObj, {
-					dataType: 'json'
-				});
-				break;
-			case 'DELETE':
-				break;
-		}
-		jQuery.ajax(ajaxObj);
+	editor_new: function () {
+		egw.open_link(egw.link('/index.php', {
+			menuaction: 'filemanager.filemanager_ui.editor'
+		}), '', egw.link_get_registry('filemanager','view_popup'));
 	},
 
 	/**
 	 * Function to check wheter selected file is editable. ATM only .odt is supported.
 	 *
+	 * @param {object} _egwAction egw action object
+	 * @param {object} _senders object of selected row
+	 *
 	 * @returns {boolean} returns true if is editable otherwise false
 	 */
 	isEditable: function (_egwAction, _senders) {
-		var data = egw.dataGetUIDdata(_senders[0].id);
-		var mime = this.et2._inst.widgetContainer.getWidgetById('$row');
+		var data = egw.dataGetUIDdata(_senders[0].id),
+			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
+
 		return data.data.mime.match(mime.mime_odf_regex)?true:false;
 	}
-
 });

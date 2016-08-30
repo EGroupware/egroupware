@@ -73,7 +73,7 @@ custom	infolog	no	Egendefinert
 custom contact-address, leave empty to use information from most recent link	infolog	no	Egendefinert kontakt-adresse, la være tom for å bruke informasjonen fra sist brukte lenke
 custom contact-information, leave emtpy to use information from most recent link	infolog	no	Egendefinert kontaktinformasjon, la være tom for å bruke informasjonen fra sist brukte lenke
 custom fields	infolog	no	Egendefinert felt
-custom fields, typ and status	common	no	Egendefinerte felter, type og status
+custom fields, type and status	common	no	Egendefinerte felter, type og status
 custom regarding	infolog	no	Egendefinert angående
 custom status for typ	infolog	no	Egendefinert status for type
 customfields	infolog	no	Egendefinertfelt

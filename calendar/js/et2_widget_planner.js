@@ -249,8 +249,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				});
 			})
 			.on('mousemove', function(event) {
-				// Not when over header
-				if(jQuery(event.target).closest('.calendar_eventRows').length == 0)
+				// Ignore headers
+				if(planner.headers.has(event.target).length !== 0)
 				{
 					planner.vertical_bar.hide();
 					return;
@@ -264,7 +264,12 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				planner.vertical_bar.css('top','0px');
 
 				// Get time at mouse
-				if(planner.options.group_by == 'month')
+				if(jQuery(event.target).closest('.calendar_eventRows').length == 0)
+				{
+					// "Invalid" times, from space after the last planner row, or header
+					var time = planner._get_time_from_position(event.pageX - planner.grid.offset().left, 10);
+				}
+				else if(planner.options.group_by == 'month')
 				{
 					var time = planner._get_time_from_position(event.clientX, event.clientY);
 				}
@@ -363,10 +368,50 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			row_labels: function() {
 				var labels = [];
 				var already_added = [];
+				var options = false;
+				if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
+				{
+					options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
+				}
+				else
+				{
+					options = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+				}
 				for(var i = 0; i < this.options.owner.length; i++)
 				{
 					var user = this.options.owner[i];
-					if (user < 0)	// groups
+					// Handle grouped resources like mailing lists - pull it from sidebox owner
+					// and expand to their contents
+					if(isNaN(user) && options && options.find)
+					{
+						var resource = options.find(function(element) {return element.id == user;}) || {};
+						if(resource && resource.resources)
+						{
+							for(var j = 0; j < resource.resources.length; j++)
+							{
+								var id = resource.resources[j];
+								if(already_added.indexOf(''+id) < 0)
+								{
+									labels.push({
+										id: id,
+										label: this._get_owner_name(id)||'',
+										data: {participants:id,owner:id}
+									});
+									already_added.push(''+id);
+								}
+							}
+						}
+						else if(already_added.indexOf(''+user) < 0)
+						{
+							labels.push({
+								id: user,
+								label: this._get_owner_name(user),
+								data: {participants:id,owner:id}
+							});
+							already_added.push(''+user);
+						}
+					}
+					else if (user < 0)	// groups
 					{
 						egw.accountData(user,'account_fullname',true,function(result) {
 							for(var id in result)
@@ -1344,7 +1389,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		this._init_links_dnd(widget_object.manager, action_links);
 
-		//widget_object.updateActionLinks(action_links);
+		widget_object.updateActionLinks(action_links);
 		this._actionObject = widget_object;
 	},
 
@@ -1364,6 +1409,14 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var drop_change_participant = mgr.getActionById('change_participant');
 		var drop_invite = mgr.getActionById('invite');
 		var drag_action = mgr.getActionById('egw_link_drag');
+		var paste_action = mgr.getActionById('egw_paste');
+
+		// Disable paste action
+		if(paste_action == null)
+		{
+			paste_action = mgr.addAction('popup', 'egw_paste', egw.lang('Paste'), egw.image('editpaste'), function(){},true);
+		}
+		paste_action.set_enabled(false);
 
 		// Check if this app supports linking
 		if(!egw.link_get_registry(this.dataStorePrefix || 'calendar', 'query') ||
@@ -1467,13 +1520,13 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 							{
 								return;
 							}
-							var add_owner = jQuery.extend([],row.node.dataset.participants);
+							var add_owner = [row.node.dataset.participants];
 
 							egw().json('calendar.calendar_uiforms.ajax_invite', [
 									button_id==='series' ? event_data.id : event_data.app_id,
 									add_owner,
 									action.id === 'change_participant' ?
-										jQuery.extend([],source[i].iface.getWidget().getParent().node.dataset.participants) :
+										[source[i].iface.getWidget().getParent().node.dataset.participants] :
 										[]
 								],
 								function() { loading.remove();}
@@ -1538,15 +1591,24 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	_get_action_links: function(actions)
 	{
 		var action_links = [];
-		// TODO: determine which actions are allowed without an action (empty actions)
+
+		// Only these actions are allowed without a selection (empty actions)
+		var empty_actions = ['add'];
+
 		for(var i in actions)
 		{
 			var action = actions[i];
-			if(action.type === 'drop')
+			if(empty_actions.indexOf(action.id) !== -1 ||  action.type === 'drop')
 			{
 				action_links.push(typeof action.id !== 'undefined' ? action.id : i);
 			}
 		}
+		// Disable automatic paste action, it doesn't have what is needed to work
+		action_links.push({
+			"actionObj": 'egw_paste',
+			"enabled": false,
+			"visible": false
+		});
 		return action_links;
 	},
 
@@ -1914,7 +1976,12 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			{
 				// Clicked in row, but not on an event
 				// Default handler to open a new event at the selected time
-				if(this.options.group_by == 'month')
+				if(jQuery(event.target).closest('.calendar_eventRows').length == 0)
+				{
+					// "Invalid" times, from space after the last planner row, or header
+					var date = this._get_time_from_position(_ev.pageX - this.grid.offset().left, _ev.pageY - this.grid.offset().top);
+				}
+				else if(this.options.group_by == 'month')
 				{
 					var date = this._get_time_from_position(_ev.clientX, _ev.clientY);
 				}
@@ -1972,6 +2039,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 
 		x = Math.round(x);
 		y = Math.round(y);
+		
+		// Round to user's preferred event interval
+		var interval = egw.preference('interval','calendar') || 30;
 
 		// Relative horizontal position, as a percentage
 		var rel_x = Math.min(x / jQuery('.calendar_eventRows',this.div).width(),1);
@@ -1979,11 +2049,36 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		// Relative time, in minutes from start
 		var rel_time = 0;
 
+		var day_header = jQuery('.calendar_plannerScaleDay',this.headers);
+
 		// Simple math, the x is offset from start date
-		if(this.options.group_by !== 'month')
+		if(this.options.group_by !== 'month' && (
+			// Either all days are visible, or only 1 day (no day header)
+			this.options.show_weekend || day_header.length === 0
+		))
 		{
 			rel_time = (new Date(this.options.end_date) - new Date(this.options.start_date))*rel_x/1000;
 			this.date_helper.set_value(this.options.start_date.toJSON());
+		}
+		// Not so simple math, need to account for missing days
+		else if(this.options.group_by !== 'month' && !this.options.show_weekend)
+		{
+			// Find which day
+			if(day_header.length === 0) return false;
+			var day = document.elementFromPoint(
+				day_header.offset().left + rel_x * this.headers.innerWidth(),
+				day_header.offset().top
+			);
+
+			// Use day, and find time in that day
+			if(day && day.dataset && day.dataset.date)
+			{
+				this.date_helper.set_value(day.dataset.date);
+				rel_time = ((x - jQuery(day).position().left) / jQuery(day).outerWidth(true)) * 24*60;
+				this.date_helper.set_minutes(Math.round(rel_time/interval) * interval);
+				return new Date(this.date_helper.getValue());
+			}
+			return false;
 		}
 		else
 		{
@@ -2002,7 +2097,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				{
 					break;
 				}
-			} while(row.nodeName !== 'BODY');
+			} while(row && row.nodeName !== 'BODY');
+			if(!row) return false;
+			
 			// Restore hidden nodes
 			for(var i = 0; i < hidden_nodes.length; i++)
 			{
@@ -2037,7 +2134,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		}
 		if(rel_time < 0) return false;
 
-		var interval = egw.preference('interval','calendar') || 30;
 		this.date_helper.set_minutes(Math.round(rel_time / (60 * interval))*interval);
 
 		return new Date(this.date_helper.getValue());
@@ -2050,6 +2146,12 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	 */
 	_mouse_down: function(event)
 	{
+		// Only left mouse button
+		if(event.which !== 1) return;
+		
+		// Ignore headers
+		if(this.headers.has(event.target).length !== 0) return false;
+		
 		// Get time at mouse
 		if(this.options.group_by === 'month')
 		{
@@ -2060,8 +2162,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			var time = this._get_time_from_position(event.offsetX, event.offsetY);
 		}
 		if(!time) return false;
-
-		this.div.css('cursor', 'ew-resize');
 
 		// Find the correct row so we know the parent
 		var row = event.target.closest('.calendar_plannerRowWidget');
@@ -2075,6 +2175,10 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				break;
 			}
 		}
+		if(!this.drag_create.parent) return false;
+
+		this.div.css('cursor', 'ew-resize');
+
 		return this._drag_create_start(jQuery.extend({},this.drag_create.parent.node.dataset,{date: time.toJSON()}));
 	},
 
@@ -2095,7 +2199,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			var time = this._get_time_from_position(event.offsetX, event.offsetY);
 		}
 
-		return this._drag_create_end({date: time.toJSON()});
+		return this._drag_create_end(time ? {date: time.toJSON()} : false);
 	},
 
 	/**

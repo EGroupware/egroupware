@@ -243,7 +243,7 @@ class Ads implements Backend
 			//error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) admin=$admin adldap->user()->password('$username', '$new_passwd') returned ".array2string($ret));
 			return $ret;
 		}
-		catch (Exception $e) {
+		catch (\Exception $e) {
 			// as we cant detect what the problem is, we do a password strength check and throw it's message, if it fails
 			$error = Api\Auth::crackcheck($new_passwd,
 				// if admin has nothing configured use windows default of 3 char classes, 7 chars min and name-part-check

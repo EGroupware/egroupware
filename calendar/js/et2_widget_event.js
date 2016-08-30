@@ -476,7 +476,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 
 		var times = !this.options.value.multiday ?
 			'<span class="calendar_calEventLabel">'+this.egw().lang('Time')+'</span>:' + timespan :
-			'<span class="calendar_calEventLabel">'+this.egw().lang('Start') + '</span>:' +start+
+			'<span class="calendar_calEventLabel">'+this.egw().lang('Start') + '</span>:' +start+ ' ' +
 			'<span class="calendar_calEventLabel">'+this.egw().lang('End') + '</span>:' + end;
 		var cat_label = '';
 		if(this.options.value.category)
@@ -493,6 +493,15 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			}
 			cat.destroy();
 		}
+		var participants = '';
+		for(var type_name in this.options.value.participant_types)
+		{
+			if(type_name)
+			{
+				participants += '</p><p><span class="calendar_calEventLabel">'+type_name+'</span>:<br />';
+			}
+			participants += this.options.value.participant_types[type_name].join("<br />");
+		}
 
 		return '<div class="calendar_calEventTooltip ' + this._status_class() +' '+ this.options.class +
 			'" style="border-color: '+border+'; background-color: '+bg_color+';">'+
@@ -508,7 +517,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' + this.options.value.location+'</p>' : '')+
 				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label +'</p>' : '')+
 				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
-					(this.options.value.parts ? this.options.value.parts.replace("\n","<br />"):'')+'</p>'+
+					participants + '</p>'+
 			'</div>'+
 		'</div>';
 	},
@@ -646,7 +655,18 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				{"ampm": (egw.preference("timeformat") === "12")}
 			).trim();
 
-			timespan += ' ' + duration;
+			timespan += ' - ' + jQuery.datepicker.formatTime(
+				egw.preference("timeformat") === "12" ? "h:mmtt" : "HH:mm",
+				{
+					hour: event.end_m / 60,
+					minute: event.end_m % 60,
+					seconds: 0,
+					timezone: 0
+				},
+				{"ampm": (egw.preference("timeformat") === "12")}
+			).trim();
+
+			timespan += ': ' + duration;
 		}
 		return timespan;
 	},
@@ -918,14 +938,14 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 	{
 		owner_too = app.calendar.state.status_filter === 'owner';
 	}
-	var options = false
+	var options = false;
 	if(app.calendar && app.calendar.sidebox_et2 && app.calendar.sidebox_et2.getWidgetById('owner'))
 	{
 		options = app.calendar.sidebox_et2.getWidgetById('owner').taglist.getSelection();
 	}
 	else
 	{
-		options = this.getArrayMgr("sel_options").getRoot().getEntry('owner');
+		options = parent.getArrayMgr("sel_options").getRoot().getEntry('owner');
 	}
 	if(event.participants && parent.options.owner)
 	{
@@ -948,7 +968,7 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 					continue;
 				}
 			}
-			
+
 			if (parseInt(parent_owner[i]) < 0)
 			{
 				// Add in groups, if we can get them (this is syncronous)
@@ -1021,7 +1041,16 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
 {
 	var edit_id = event_data.app_id;
 	var edit_date = event_data.start;
-	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
+
+	// seems window.opener somehow in certian conditions could be from different origin
+	// we try to catch the exception and in this case retrive the egw object from current window.
+	try {
+		var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
+	}
+	catch(e){
+		var egw = window.egw('calendar');
+	}
+
 	var that = this;
 
 	var extra_params = extra_data && typeof extra_data == 'object' ? extra_data : {};
@@ -1085,7 +1114,15 @@ et2_calendar_event.recur_prompt = function(event_data, callback, extra_data)
  */
 et2_calendar_event.series_split_prompt = function(event_data, instance_date, callback)
 {
-	var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
+	// seems window.opener somehow in certian conditions could be from different origin
+	// we try to catch the exception and in this case retrive the egw object from current window.
+	try {
+		var egw = this.egw ? (typeof this.egw == 'function' ? this.egw() : this.egw) : window.opener && typeof window.opener.egw != 'undefined' ? window.opener.egw('calendar'):window.egw('calendar');
+	}
+	catch(e){
+		var egw = window.egw('calendar');
+	}
+
 	var that = this;
 
 	if(typeof instance_date == 'string')

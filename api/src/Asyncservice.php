@@ -632,10 +632,15 @@ class Asyncservice
 	/**
 	 * checks if phpgwapi/cron/asyncservices.php is installed as cron-job
 	 *
+	 * @param array& $other_cronlines =array() on return other cronlines found
 	 * @return array the times asyncservices are run (normaly 'min'=>'* /5') or False if not installed or 0 if crontab not found
 	 * Not implemented for Windows at the moment, always returns 0
 	 */
-	function installed()
+	/**
+	 *
+	 * @return int
+	 */
+	function installed(array &$other_cronlines=array())
 	{
 		if ($this->only_fallback) {
 			return 0;
@@ -648,7 +653,7 @@ class Asyncservice
 			return 0;
 		}
 		$times = False;
-		$this->other_cronlines = array();
+		$other_cronlines = array();
 		if (($crontab = popen('/bin/sh -c "'.$this->crontab.' -l" 2>&1','r')) !== False)
 		{
 			$n = 0;
@@ -678,7 +683,7 @@ class Asyncservice
 				}
 				else
 				{
-					$this->other_cronlines[] = $line;
+					$other_cronlines[] = $line;
 				}
 			}
 			@pclose($crontab);
@@ -701,16 +706,14 @@ class Asyncservice
 		if ($this->only_fallback && $times !== False) {
 			return 0;
 		}
-		$this->installed();	// find other installed cronlines
+		$other_cronlines = array();
+		$this->installed($other_cronlines);	// find other installed cronlines
 
 		if (($crontab = popen('/bin/sh -c "'.$this->crontab.' -" 2>&1','w')) !== False)
 		{
-			if (is_array($this->other_cronlines))
+			foreach ($other_cronlines as $cronline)
 			{
-				foreach ($this->other_cronlines as $cronline)
-				{
-					fwrite($crontab,$cronline);		// preserv the other lines on install
-				}
+				fwrite($crontab,$cronline);		// preserv the other lines on install
 			}
 			if ($times !== False)
 			{

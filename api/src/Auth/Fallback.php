@@ -93,7 +93,7 @@ class Fallback implements Backend
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
-		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
+		if(!$account_id)
 		{
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			$username = $GLOBALS['egw_info']['user']['account_lid'];

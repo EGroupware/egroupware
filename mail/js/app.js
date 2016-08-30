@@ -251,7 +251,7 @@ app.classes.mail = AppJS.extend(
 					{
 						textAreaWidget.ckeditor.on('instanceReady', function(){
 							that.compose_fieldExpander();
-							if (egwIsMobile()) jQuery(jQuery('iframe.cke_wysiwyg_frame')[0].contentWindow.document.body).css({margin:'0'})
+							if (egwIsMobile()) jQuery(jQuery('iframe.cke_wysiwyg_frame')[0].contentWindow.document.body).css({margin:'0'});
 						});
 					}
 					else
@@ -731,7 +731,7 @@ app.classes.mail = AppJS.extend(
 	 *					{build_children, data_one, data, widget, line}
 	 *
 	 * @param {object} _dataElem includes data of the widget which need to be expand
-	 * @param {object} widget container of relevant template, default is this.et2
+	 * @param {object} _et2 widget container of relevant template, default is this.et2
 	 *
 	 * @return _dataElem content of widgets
 	 */
@@ -792,7 +792,14 @@ app.classes.mail = AppJS.extend(
 					else
 					{
 						var value = remembervalue+(remembervalue?',':'')+content[i];
-						var email = et2_createWidget('url-email',{id:widget.id+'_'+i, value:value,readonly:true, contact_plus:true},widget);
+						var url_email_options = {
+							id:widget.id+'_'+i,
+							value:value,
+							readonly:true,
+							contact_plus:true,
+							full_email:typeof field['full_email'] !='undefined'?field['full_email']:true
+						};
+						var email = et2_createWidget('url-email',url_email_options,widget);
 						email.loadingFinished();
 						remembervalue = '';
 					}
@@ -830,7 +837,7 @@ app.classes.mail = AppJS.extend(
 		var dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
 		var content = this.et2.getArrayMgr('content').data;
 		var expand_content = [
-			{build_children: true, data_one: 'FROM', data: 'FROM', widget: 'FROM', line: 'mailDisplayHeadersFrom'},
+			{build_children: true, data_one: 'FROM', data: 'FROM', widget: 'FROM', line: 'mailDisplayHeadersFrom', full_email:false},
 			{build_children: true,  data: 'SENDER', widget: 'SENDER', line: 'mailDisplayHeadersSender'},
 			{build_children: true, data: 'TO', widget: 'TO', line: 'mailDisplayHeadersTo'},
 			{build_children: true, data: 'CC', widget: 'CC', line: 'mailDisplayHeadersCc'},
@@ -967,15 +974,17 @@ app.classes.mail = AppJS.extend(
 				{build_children: false, data: 'attachmentsBlock', widget:'previewAttachmentArea', line: 'mailPreviewHeadersAttachments'}
 			];
 
-			dataElem = this.url_email_expandOnClick(expand_content,dataElem);
+			// Undock the preview before running expandOnClick, because we
+			// need to have the DOM ready for calculation.
+			this.mail_disablePreviewArea(false);
 
+			dataElem = this.url_email_expandOnClick(expand_content,dataElem);
 
 			// Update the internal list of selected mails, if needed
 			if(this.mail_selectedMails.indexOf(_id) < 0)
 			{
 				this.mail_selectedMails.push(_id);
 			}
-			this.mail_disablePreviewArea(false);
 
 			// Request email body from server
 			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
@@ -1557,6 +1566,7 @@ app.classes.mail = AppJS.extend(
 	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
 	 *
 	 * @param {boolean} _isPopup
+	 * @param {boolean} _refreshVacationNotice
 	 */
 	mail_refreshMessageGrid: function(_isPopup, _refreshVacationNotice) {
 		if (typeof _isPopup == 'undefined') _isPopup = false;
@@ -2858,8 +2868,6 @@ app.classes.mail = AppJS.extend(
 		var app = _action.id;
 		var w_h = ['750','580']; // define a default wxh if there's no popup size registered
 
-		var add_as_new = true;
-
 		if (typeof _action.data != 'undefined' )
 		{
 			if (typeof _action.data.popup != 'undefined' && _action.data.popup) w_h = _action.data.popup.split('x');
@@ -2885,67 +2893,73 @@ app.classes.mail = AppJS.extend(
 
 		var url = window.egw_webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
 
-		/**
-		 * Checks the application entry existance and offers user
-		 * to select desire app id to append mail content into it,
-		 * or add the mail content as a new app entry
-		 *
-		 * @param {string} _title select app entry title
-		 * @param {string} _appName app to be integrated
-		 * @param {string} _appCheckCallback registered mail_import hook method
-		 *	for check app entry existance
-		 */
-		check_app_entry = function (_title, _appName, _appCheckCallback)
+		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
 		{
 			var data = egw.dataGetUIDdata(_elems[0].id);
 			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
-			egw.json(_appCheckCallback, subject,function(_entryId){
-
-				// if there's no entry saved already
-				// open dialog in order to select one
-				if (!_entryId)
-				{
-					var buttons = [
-						{text: 'Append', id: 'append', image: 'check', default:true},
-						{text: 'Add as new', id: 'new', image: 'check'},
-						{text: 'Cancel', id: 'cancel', image: 'check'}
-					];
-					et2_createWidget("dialog",
-					{
-						callback: function(_buttons, _value)
-						{
-							if (_buttons == 'cancel') return;
-							if (_buttons == 'append' && _value)
-							{
-								url += '&entry_id=' + _value.id;
-							}
-							egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
-						},
-						title: egw.lang(_title),
-						buttons: buttons||et2_dialog.BUTTONS_OK_CANCEL,
-						value:{
-							content:{
-								appName:_appName // appName to search on its list later
-						}},
-						template: egw.webserverUrl+'/mail/templates/default/integration_to_entry_dialog.xet'
-					},et2_dialog._create_parent('mail'));
-				}
-				else // there is an entry saved related to this mail's subject
-				{
-					egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
-				}
-			},this,true,this).sendRequest();
-		};
-
-		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
-		{
-			check_app_entry('Select '+ app + ' entry', app,  mail_import_hook.app_entry_method);
+			this.integrate_checkAppEntry('Select '+ app + ' entry', app, subject, url,  mail_import_hook.app_entry_method, function (args){
+				egw_openWindowCentered(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''),'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
+			});
 		}
 		else
 		{
 			egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 		}
 
+	},
+
+   /**
+	* Checks the application entry existance and offers user
+	* to select desire app id to append mail content into it,
+	* or add the mail content as a new app entry
+	*
+	* @param {string} _title select app entry title
+	* @param {string} _appName app to be integrated
+	* @param {string} _subject
+	* @param {string} _url
+	* @param {string} _appCheckCallback registered mail_import hook method
+	* @param {function} _execCallback function to get called on dialog actions
+	*/
+	integrate_checkAppEntry: function (_title, _appName, _subject ,_url, _appCheckCallback, _execCallback)
+	{
+	   var subject = _subject || '';
+	   var execCallback = _execCallback;
+	   egw.json(_appCheckCallback, subject,function(_entryId){
+
+		   // if there's no entry saved already
+		   // open dialog in order to select one
+		   if (!_entryId)
+		   {
+			   var buttons = [
+				   {text: 'Append', id: 'append', image: 'check', default:true},
+				   {text: 'Add as new', id: 'new', image: 'check'},
+				   {text: 'Cancel', id: 'cancel', image: 'check'}
+			   ];
+			   et2_createWidget("dialog",
+			   {
+				   callback: function(_buttons, _value)
+				   {
+					   if (_buttons == 'cancel') return;
+					   if (_buttons == 'append' && _value)
+					   {
+						   _entryId = _value.id;
+					   }
+					   execCallback.call(this,{entryid:_entryId,url:_url});
+				   },
+				   title: egw.lang(_title),
+				   buttons: buttons||et2_dialog.BUTTONS_OK_CANCEL,
+				   value:{
+					   content:{
+						   appName:_appName // appName to search on its list later
+				   }},
+				   template: egw.webserverUrl+'/mail/templates/default/integration_to_entry_dialog.xet'
+			   },et2_dialog._create_parent('mail'));
+		   }
+		   else // there is an entry saved related to this mail's subject
+		   {
+			   execCallback.call(this,{entryid:_entryId,url:_url});
+		   }
+	   },this,true,this).sendRequest();
 	},
 
 	/**
@@ -3842,7 +3856,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	loadIframe: function (_url, _iFrame)
 	{
-		var mailSplitter = this.et2.getWidgetById('mail.index.spliter');
+		var mailSplitter = this.et2.getWidgetById('splitter');
 		var quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
 		var iframe = _iFrame || this.et2.getWidgetById('extra_iframe');
 		if (typeof iframe != 'undefined' && iframe)
@@ -4975,10 +4989,13 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Set the relevant widget to toolbar actions and submit
 	 *
-	 * @param {type} _action toolbar action
+	 * @param {object|boolean} _action toolbar action or boolean value to stop extra call on
+	 * compose_integrated_submit
 	 */
 	compose_submitAction: function (_action)
 	{
+		if (this.compose_integrate_submit() && _action) return false;
+
 		if (this.mailvelope_editor)
 		{
 			var self = this;
@@ -4998,6 +5015,55 @@ app.classes.mail = AppJS.extend(
 			return false;
 		}
 		this.et2._inst.submit(null,null,true);
+	},
+
+	/**
+	 * This function runs before client submit (send) mail to server
+	 * and takes care of mail integration modules to popup entry selection
+	 * dialog to give user a choice to which entry of selected app the compose
+	 * should be integereated.
+	 *
+	 * @returns {Boolean} return true if to_tracker is checked otherwise false
+	 */
+	compose_integrate_submit: function (_integIndex)
+	{
+		if (_integIndex == false) return false;
+		var index = _integIndex || 0;
+		var integApps = ['to_tracker', 'to_infolog', 'to_calendar'];
+		var subject = this.et2.getWidgetById('subject');
+		var toolbar = this.et2.getWidgetById('composeToolbar');
+		var to_integrate_ids = this.et2.getWidgetById('to_integrate_ids');
+		var integWidget= {};
+		var self = this;
+
+		integWidget = this.et2.getWidgetById(integApps[index]);
+		if (toolbar.options.actions[integApps[index]] &&
+				typeof toolbar.options.actions[integApps[index]]['mail_import'] != 'undefined' &&
+				typeof toolbar.options.actions[integApps[index]]['mail_import']['app_entry_method'] != 'unefined')
+		{
+			var mail_import_hook = toolbar.options.actions[integApps[index]]['mail_import']['app_entry_method'];
+			if (integWidget.get_value() == 'on')
+			{
+				this.integrate_checkAppEntry(egw.lang('Select %1 entry',integApps[index]), integApps[index].substr(3), subject.get_value(), '', mail_import_hook , function (args){
+					var value = {};
+					value[integApps[index]] = args.entryid;
+					var oldValue = to_integrate_ids.get_value()[0];
+					to_integrate_ids.set_value(jQuery.extend(value,oldValue));
+					index = index<integApps.length? ++index:false;
+					self.compose_integrate_submit(index);
+				});
+				return true;
+			}
+		}
+		else if(index<integApps.length)
+		{
+			this.compose_integrate_submit(++index);
+		}
+		else
+		{
+			this.compose_submitAction(false);
+		}
+		return false;
 	},
 
 	/**

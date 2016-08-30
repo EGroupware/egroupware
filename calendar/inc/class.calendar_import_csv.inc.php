@@ -183,7 +183,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 		{
 			list($record->recur_type, $record->recur_interval) = explode('/',$record->recurrence,2);
 			$record->recur_interval = trim($record->recur_interval);
-			$record->recur_type = array_search(strtolower(trim($record->recur_type)), array_map('strtolower',$lookups['recurrence']));
+			$record->recur_type = array_search(strtolower(trim($record->recur_type)), array_map('strtolower',$this->lookups['recurrence']));
 			unset($record->recurrence);
 		}
 		$record->tzid = calendar_timezones::id2tz($record->tz_id);
@@ -275,10 +275,13 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 				}
 
 				// Merge to deal with fields not in import record
-				$_data = array_merge($old, $_data);
-				$changed = $this->tracking->changed_fields($_data, $old);
-				if(count($changed) == 0) {
-					return true;
+				if($old)
+				{
+					$_data = array_merge($old, $_data);
+					$changed = $this->tracking->changed_fields($_data, $old);
+					if(count($changed) == 0) {
+						return true;
+					}
 				}
 				// Fall through
 			case 'insert' :
@@ -297,7 +300,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 					//print_r($_data);
 					// User is interested in conflict checks, do so for dry run
 					// Otherwise, conflicts are just ignored and imported anyway
-					if($this->definition->plugin_options['skip_conflicts'])
+					if($this->definition->plugin_options['skip_conflicts'] && !$_data['non_blocking'])
 					{
 						$conflicts = $this->bo->conflicts($_data);
 						if($conflicts)
@@ -318,7 +321,8 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 					);
 					if(!$result)
 					{
-						$this->errors[$record_num] = lang('Unable to save');
+						$this->errors[$record_num] = lang('Unable to save') . "\n" .
+							implode("\n",$messages);
 					}
 					else if (is_array($result))
 					{

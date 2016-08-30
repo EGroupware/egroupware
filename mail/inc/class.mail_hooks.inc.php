@@ -392,41 +392,8 @@ class mail_hooks
 		// always show the side bar
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 		$appname = 'mail';
-		$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
-/*
-		$file = array();
-		$profileID = 0;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
-			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		try
-		{
-			$mail_bo = Mail::getInstance(true,$profileID);
-			$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
-		} catch (Exception $e) {
-			//error_log(__METHOD__."()" . $e->getMessage());
-			$profileID = Mail\Account::get_default_acc_id();
-		}
+		$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'];
 
-		$preferences =& $mail_bo->mailPreferences;
-		$serverCounter = $sieveEnabledServerCounter = 0;
-		// account select box
-		$selectedID = $profileID;
-		$allAccountData = Mail\Account::search($only_current_user=true, $just_name=false, $order_by=null);
-		if ($allAccountData) {
-			$rememberFirst=$selectedFound=null;
-			foreach ($allAccountData as $tmpkey => $icServers)
-			{
-				if (is_null($rememberFirst)) $rememberFirst = $tmpkey;
-				if ($tmpkey == $selectedID) $selectedFound=true;
-				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($icServers->acc_imap_host));
-				$host = $icServers->acc_sieve_host;
-				if (empty($host)) continue;
-				if ($icServers->acc_sieve_enabled && $icServers->acc_sieve_port) $sieveEnabledServerCounter++;
-				$serverCounter++;
-				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($identities[$icServers->acc_id]));
-			}
-		}
-*/
 		$file=array();
 		// Destination div for folder tree
 		$file[] = array(
@@ -441,15 +408,16 @@ class mail_hooks
 			'link'=>false,
 			'icon' => false
 		);
+		// display Mail Tree
+		display_sidebox($appname,$menu_title,$file);
 
 		$linkData = array(
 			'menuaction' => 'mail.mail_ui.importMessage',
 		);
 
-		$file += array(
+		$file = array(
 			'import message' => "javascript:egw_openWindowCentered2('".Egw::link('/index.php', $linkData,false)."','importMessageDialog',600,100,'no','$appname');",
 		);
-
 
 		// create account wizard
 		if (self::access('createaccount'))
@@ -460,8 +428,8 @@ class mail_hooks
 					"','_blank',640,480,'yes')",
 			);
 		}
-		// display them all
-		display_sidebox($appname,$menu_title,$file);
+		// display Mail Menu
+		display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && !Api\Header\UserAgent::mobile())
 		{
@@ -470,6 +438,8 @@ class mail_hooks
 			);
 			display_sidebox($appname,lang('Admin'),$file);
 		}
+
+		// add pgp encryption menu at the end
 		Api\Hooks::pgp_encryption_menu('mail');
 
 	}
@@ -624,7 +594,7 @@ class mail_hooks
 	public static function access($feature)
 	{
 		static $config=null;
-		if ($GLOBALS['egw_info']['user']['apps']['admin'] || $GLOBALS['egw_info']['user']['apps']['emailadmin'])
+		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			return true;	// allways give admins or emailadmins all rights, even if they are in a denied group
 		}

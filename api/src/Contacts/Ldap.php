@@ -1147,11 +1147,9 @@ class Ldap
 			error_log(__METHOD__."('$baseDN') baseDN does NOT exist and we cant/wont create it! ldap_errno()=".ldap_errno($this->ds).', ldap_error()='.ldap_error($this->ds));
 			return $this->_error(__LINE__);	// baseDN does NOT exist and we cant/wont create it
 		}
-		// create a admin connection to add the needed DN
-		$adminLDAP = new ldap;
-		$adminDS = $adminLDAP->ldapConnect();
 
 		list(,$ou) = explode(',',$baseDN);
+		$adminDS = null;
 		foreach(array(
 			'ou=contacts,'.$this->allContactsDN,
 			$ou.',ou=contacts,'.$this->allContactsDN,
@@ -1167,16 +1165,16 @@ class Ldap
 					'objectClass' => $var == 'cn' ? 'organizationalRole' : 'organizationalUnit',
 					$var => $val,
 				);
+				// create a admin connection to add the needed DN
+				if (!isset($adminDS)) $adminDS = Api\Ldap::factory();
 				if(!@ldap_add($adminDS, $dn, $data))
 				{
 					//echo "<p>ldap_add($adminDS,'$dn',".print_r($data,true).")</p>\n";
 					$err = lang("Can't create dn %1",$dn).': '.$this->_error(__LINE__,$adminDS);
-					$adminLDAP->ldapDisconnect();
 					return $err;
 				}
 			}
 		}
-		$adminLDAP->ldapDisconnect();
 
 		return false;
 	}

@@ -92,7 +92,7 @@ custom	infolog	pt-br	Personalizado
 custom contact-address, leave empty to use information from most recent link	infolog	pt-br	Personalizar endereço de contato, deixe vazio para usar a informação do link mais recente.
 custom contact-information, leave emtpy to use information from most recent link	infolog	pt-br	Personalizar informações de contato, deixe vazio para utilizar a informação do link mais recente.
 custom fields	infolog	pt-br	Campos Personalizáveis
-custom fields, typ and status	common	pt-br	Campos Personalizáveis, tipo e status
+custom fields, type and status	common	pt-br	Campos Personalizáveis, tipo e status
 custom from	infolog	pt-br	Personalizar de
 custom regarding	infolog	pt-br	Personalizar Atenção
 custom status for typ	infolog	pt-br	Personalizar status por tipo

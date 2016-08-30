@@ -90,7 +90,7 @@ custom	infolog	sl	Lasten
 custom contact-address, leave empty to use information from most recent link	infolog	sl	Lastni kontaktni naslov (pustite prazno za uporabo informacije iz najnovejše povezave)
 custom contact-information, leave emtpy to use information from most recent link	infolog	sl	Lastne kontaktne informacije (pustite prazno za uporabo informacije iz najnovejše povezave)
 custom fields	infolog	sl	Lastna polja
-custom fields, typ and status	common	sl	Lastna polja, tip in status
+custom fields, type and status	common	sl	Lastna polja, tip in status
 custom regarding	infolog	sl	Lastno glede na
 custom status for typ	infolog	sl	Lastni satus za tip
 customfields	infolog	sl	Lastna polja

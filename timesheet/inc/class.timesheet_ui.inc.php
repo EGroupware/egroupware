@@ -85,7 +85,13 @@ class timesheet_ui extends timesheet_bo
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id'   => (int) $_REQUEST['cat_id'],
 					'ts_status'=> $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
+					'ts_project' => $_REQUEST['ts_project'],
+					'ts_title_blur' => $_REQUEST['ts_project'],
 				);
+				if(!is_numeric($_REQUEST['ts_project']))
+				{
+					$this->data['pm_id'] = $this->find_pm_id($_REQUEST['ts_project']);
+				}
 			}
 			$matches = null;
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
@@ -97,7 +103,10 @@ class timesheet_ui extends timesheet_bo
 				$only_admin_edit = true;
 				$msg = lang('only Admin can edit this status');
 			}
-			$this->data['ts_project_blur'] = $this->data['pm_id'] ? Link::title('projectmanager', $this->data['pm_id']) : '';
+			if(!$this->data['ts_project_blur'])
+			{
+				$this->data['ts_project_blur'] = $this->data['pm_id'] ? Link::title('projectmanager', $this->data['pm_id']) : '';
+			}
 		}
 		else
 		{
@@ -368,7 +377,7 @@ class timesheet_ui extends timesheet_bo
 		{
 			$preserv['old_pm_id'] = array_shift($links);
 		}
-		if (!isset($this->data['pm_id']) && $preserv['old_pm_id'])
+		if ((!isset($this->data['pm_id']) || $this->data['pm_id'] === false) && $preserv['old_pm_id'])
 		{
 			$content['pm_id'] = $preserv['old_pm_id'];
 		}
@@ -437,6 +446,10 @@ class timesheet_ui extends timesheet_bo
 		{
 			$content['ts_viewtype'] = $readonlys['tabs']['notes'] = true;
 			$content['ts_description_short'] = $content['ts_description'];
+			if(!$content['pm_id'] && $this->pm_integration != 'full' && $content['ts_project'])
+			{
+				$etpl->setElementAttribute('pm_id','blur',$content['ts_project']);
+			}
 		}
 		if (!$this->customfields) $readonlys['tabs']['customfields'] = true;	// suppress tab if there are not customfields
 		if (!$this->data['ts_id']) $readonlys['tabs']['history']    = true;   //suppress history for the first loading without ID
@@ -976,8 +989,7 @@ class timesheet_ui extends timesheet_bo
 */
 			'add' => array(
 				'caption' => 'Add',
-				'url' => 'menuaction=timesheet.timesheet_ui.edit',
-				'popup' => Link::get_registry('timesheet', 'add_popup'),
+				'onExecute' => 'javaScript:app.timesheet.add_action_handler',
 				'group' => $group,
 			),
 			'cat' => Etemplate\Widget\Nextmatch::category_action(
@@ -1238,5 +1250,27 @@ class timesheet_ui extends timesheet_bo
 		$sel_options['parent'] = $this->status_labels;
 		$etpl = new Etemplate('timesheet.editstatus');
 		$etpl->exec('timesheet.timesheet_ui.editstatus',$content,$sel_options,array(),$preserv);
+	}
+
+	/**
+	 * Try to find a PM ID from project title
+	 *
+	 * @param string $project
+	 */
+	protected function find_pm_id($project)
+	{
+		list($pm_number, $pm_title) = explode(': ', $project, 2);
+		if(!$pm_number || !$pm_title)
+		{
+			return false;
+		}
+
+		$pm = new projectmanager_bo();
+		$pm_ids = $pm->search(array('pm_number' => $pm_number, 'pm_title' => $pm_title));
+		if($pm_ids && count($pm_ids) >= 1)
+		{
+			return $pm_ids[0]['pm_id'];
+		}
+		return false;
 	}
 }

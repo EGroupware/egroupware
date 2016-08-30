@@ -26,7 +26,7 @@ all	mail	de	alle
 all adresses:	mail	de	Alle Adressen
 all available info	admin	de	alle verfügbaren Informationen
 all filtered	mail	de	alle gefilterten
-all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht.
+all messages in the folder will be lost	mail	de	Alle Nachrichten in dem ausgewählten Ordner werden unwiderruflich gelöscht
 all my email addresses	mail	de	alle meine E-Mail-Adressen
 all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
@@ -46,7 +46,7 @@ archive folder	mail	de	Archivordner
 are you sure you want to delete all selected folders?	mail	de	Sollen alle selektierten Ordner gelöcht werden?
 are you sure you want to move folder %1 to folder %2?	mail	de	Soll der Ordner %1 in den Ordner %2 verschoben werden?
 arrival	mail	de	Empfangsdatum
-attach users vcard at compose to every new mail	mail	de	Füge die VCard des aktiven Benutzers an jede neue E-Mail an
+attach users vcard at compose to every new mail	mail	de	Füge die vCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
 attachment	mail	de	Anhang
 attachments	mail	de	Dateien
@@ -56,7 +56,7 @@ before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar w�
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
-canceled deletion due to userinteraction	mail	de	Löschen abgebrochen durch Benutzer
+canceled deletion due to userinteraction	mail	de	Löschen durch Benutzer abgebrochen
 change editor type	mail	de	Als HTML-Mail verfassen
 changed profile	mail	de	Profil geändert
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
@@ -66,7 +66,7 @@ check to save as infolog on send	mail	de	Nach dem Versenden als Infolog erstelle
 check to save as trackerentry on send	mail	de	Nach dem Versenden als Ticket erstellen
 choose file	mail	de	Datei
 common acl	mail	de	Berechtigung
-compose	mail	de	Verfassen
+compose	mail	de	verfassen
 compose as new	mail	de	Als neu bearbeiten
 compress folder	mail	de	Ordner komprimieren
 condition	mail	de	Bedingung
@@ -82,11 +82,11 @@ convert mail to item and attach its attachments to this item (standard)	mail	de	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	de	konvertiere E-Mail zum Eintrag und füge die Anhänge sowie die original E-Mail an.
 convert only mail to item (ignore possible attachments)	mail	de	konvertiere nur den E-Mail-Text zum Eintrag ohne mögliche Anhänge zu beachten
 copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert
-copy to	mail	de	Kopieren
+copy to	mail	de	kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not save the acl! because some names are empty!	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
 create new account	mail	de	Konto hinzufügen
-current folder	mail	de	Akuteller Ordner
+current folder	mail	de	Aktueller Ordner
 currently:	mail	de	Aktuell:
 date(newest first)	mail	de	Datum (neue zuerst)
 date(oldest first)	mail	de	Datum (alte zuerst)
@@ -102,8 +102,14 @@ deleted!	mail	de	gelöscht!
 deleting %1 folders in progress ...	mail	de	%1 Ordner in Bearbeitung zum Löschen
 deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
+<<<<<<< Updated upstream
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
+=======
+details	mail	de	Mit Kurzvorschau
+directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden
+disable	mail	de	deaktivieren
+>>>>>>> Stashed changes
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
 disable use of flowed lines in plain text mails (rfc3676)	mail	de	Variablen Zeilenumbruch in text Mails (RFC3676) abschalten
 disabled!	mail	de	deaktiviert
@@ -112,9 +118,9 @@ discard message	mail	de	Nachricht verwerfen
 display messages in multiple windows	mail	de	Nachrichten in mehreren Fenstern anzeigen
 display of html emails	mail	de	HTML-E-Mails anzeigen
 display of identities	admin	de	Anzeigeformat der verfügbaren Identitätsinformationen
-display only when no plain text is available	mail	de	nur anzeigen wenn kein Plain Text vorhanden ist
-displaying html messages is disabled	mail	de	Die Anzeige von HTML-E-Mails ist deaktiviert.
-displaying plain messages is disabled	mail	de	Die Anzeige von reinen Text-E-Mails ist deaktiviert.
+display only when no plain text is available	mail	de	nur anzeigen wenn kein Plain-Text vorhanden ist
+displaying html messages is disabled	mail	de	Die Anzeige von HTML-E-Mails ist deaktiviert
+displaying plain messages is disabled	mail	de	Die Anzeige von reinen Text-E-Mails ist deaktiviert
 do not auto create folders	mail	de	Automatische Ordnererstellung verhindern für
 do not forward	mail	de	nicht weiterleiten
 do you really want to apply %1 to all messages in the current view?	mail	de	Wollen Sie wirklich %1 auf alle Nachrichten in der aktuellen Ansicht anwenden?
@@ -135,12 +141,12 @@ does not contain	mail	de	enthält nicht
 does not exist on imap server.	mail	de	existiert nicht auf dem IMAP Server
 does not match	mail	de	trifft nicht zu
 does not match regexp	mail	de	trifft nicht zu regulärem Ausdruck
-don't use draft folder	mail	de	keine Entwurfs Ordner verwenden
+don't use draft folder	mail	de	keine Entwurfs-Ordner verwenden
 don't use sent	mail	de	Keinen gesendeten E-Mails speichern
-don't use template folder	mail	de	Keinen Vorlagen Ordner verwenden
+don't use template folder	mail	de	Keinen Vorlagen-Ordner verwenden
 don't use trash	mail	de	Keinen Papierkorb verwenden
-download attachments	mail	de	Attachments herunterladen
-draft folder	mail	de	Entwurfs Ordner
+download attachments	mail	de	Anhänge herunterladen
+draft folder	mail	de	Entwurfs-Ordner
 drafts	mail	de	Entwürfe
 drafts folder	mail	de	Ordner für Entwürfe
 edit account	mail	de	Konto Einstellungen
@@ -156,7 +162,7 @@ emailaddress	admin	de	E-Mail
 emailadmin: profilemanagement	mail	de	E-Mail-Admin: Profilmanagement
 empty junk	mail	de	Spam-Ordner leeren
 empty trash	mail	de	Papierkorb leeren
-enable	mail	de	Aktivieren
+enable	mail	de	aktivieren
 enabled!	mail	de	aktiviert!
 encrypt	mail	de	Verschlüsseln
 enter the name for the new folder:	mail	de	Tragen Sie hier den Namen für den neuen Ordner ein:
@@ -175,7 +181,7 @@ event details follow	mail	de	Details zum Termin folgen
 everyone	mail	de	Alle Anwender
 examine namespace to retrieve folders in others and shared	mail	de	Untersuche Namespace für Mail-Ordner in den Bereichen OTHERS and SHARED
 extended	mail	de	Erweitert
-extra sent folders	mail	de	Anzeigeschema Gesendet Ordner
+extra sent folders	mail	de	Anzeigeschema Gesendet-Ordner
 failed to delete %1	mail	de	Löschen von %1 fehlgeschlagen
 failed to delete %1 ! reason: %2	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
 failed to delete %1. server responded:	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
@@ -188,7 +194,7 @@ file into:	mail	de	verschieben nach:
 file rejected, no %2. is:%1	mail	de	Datei abgelehnt; die vorliegende Datei ist nicht vom Typ %2. Sie ist vom Typ %1
 filemanager	mail	de	Dateimanager
 files	mail	de	Anhang
-flag / unflag	mail	de	Markieren
+flag / unflag	mail	de	markieren
 flag or unflag a mail	mail	de	Markierung setzten oder entfernen
 flagged	mail	de	markiert
 flagged %1 messages as %2 in %3	mail	de	%1 Nachricht(en) wurden als %2 in %3 markiert
@@ -306,7 +312,7 @@ name of account	mail	de	Konten-Bezeichnung
 never display html emails	mail	de	niemals anzeigen
 new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
 new message type	mail	de	Neue E-Mails verfassen als
-no (valid) send folder set in preferences	mail	de	Es ist kein gültiger Gesendet Ordner hinterlegt.
+no (valid) send folder set in preferences	mail	de	Es ist kein gültiger Gesendet-Ordner hinterlegt.
 no access	mail	de	Kein Zugriff
 no action defined!	mail	de	Keine Aktion ausgewählt!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	de	Keine Empfänger-Adresse (An/Kopie/Blindkopie) angegeben und kein Ordner zur Ablage der E-Mail spezifiziert.
@@ -314,9 +320,9 @@ no adress, to send this mail to, supplied	mail	de	Keine Empfängeradresse angege
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	de	Es sind keine Zielordner oder andere Methoden (als Infolog/Tracker ablegen) angegeben, um die Nachricht nach dem Senden zu speichern.
 no folders	mail	de	Keine Ordner
 no message body supplied	mail	de	Keinen Nachrichtentext - Teil gefunden.
-no plain text part found	mail	de	Kein Text Teil gefunden.
+no plain text part found	mail	de	Kein Text-Teil gefunden.
 no recipient address given!	mail	de	Keine Empfängeradresse angegeben!
-no send folder set in preferences	mail	de	Es ist kein Gesendet Ordner hinterlegt
+no send folder set in preferences	mail	de	Es ist kein Gesendet-Ordner hinterlegt
 no signature	mail	de	keine Signatur
 no sneak preview in list	mail	de	Ohne Kurzvorschau
 no subject given!	mail	de	Kein Betreff angegeben!
@@ -411,7 +417,7 @@ save message to disk	mail	de	Nachricht speichern ...
 save message to filemanager	mail	de	Im EGroupware Dateimanager speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
 save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf im EGroupware Dateimanager ab.
-save to disk	mail	de	Speichern unter ...
+save to disk	mail	de	Speichern unter
 save to filemanager	mail	de	Nachricht im Dateimananger speichern
 save to vfs	mail	de	Im EGroupware Dateimanager speichern
 save:	mail	de	Speichern

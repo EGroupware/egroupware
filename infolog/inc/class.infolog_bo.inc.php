@@ -1430,9 +1430,13 @@ class infolog_bo
 					$infos[$row['info_id']]['icon'] = 'infolog/'.$icon;
 				}
 			}
-			foreach($this->anzSubs(array_keys($infos)) as $info_id => $subs)
+			$anzSubs = $this->anzSubs(array_keys($infos));
+			if($anzSubs && is_array($anzSubs))
 			{
-				if ($subs) $infos[$info_id]['class'] .= ' infolog_rowHasSubs';
+				foreach($anzSubs as $info_id => $subs)
+				{
+					if ($subs) $infos[$info_id]['class'] .= ' infolog_rowHasSubs';
+				}
 			}
 		}
 		return $infos;

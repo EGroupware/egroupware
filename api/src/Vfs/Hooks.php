@@ -47,7 +47,7 @@ class Hooks
 		Api\Vfs::$is_root = true;
 		if (Api\Vfs::file_exists($dir='/home/'.$data['account_lid']) || Api\Vfs::mkdir($dir, 0700, 0))
 		{
-			Api\Vfs::chown($dir,$data['account_id']);
+			Api\Vfs::chown($dir,(int)$data['account_id']);
 			Api\Vfs::chgrp($dir,0);
 			Api\Vfs::chmod($dir,0700);	// only user has access
 		}
@@ -96,7 +96,7 @@ class Hooks
 			}
 			Api\Vfs::rename('/home/'.$data['account_lid'],$new_dir);
 			// make the new owner the owner of the dir and it's content
-			Api\Vfs::find($new_dir,array(),array('egw_vfs','chown'),$data['new_owner']);
+			Api\Vfs::find($new_dir, array(), 'EGroupware\Api\Vfs::chown', $data['new_owner']);
 		}
 		elseif(!empty($data['account_lid']) && $data['account_lid'] != '/')
 		{

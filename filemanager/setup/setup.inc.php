@@ -10,10 +10,12 @@
 
 $setup_info['filemanager']['name']    = 'filemanager';
 $setup_info['filemanager']['title']   = 'Filemanager';
-$setup_info['filemanager']['version'] = '16.1';
+$setup_info['filemanager']['version'] = '16.2';
 $setup_info['filemanager']['app_order'] = 6;
 $setup_info['filemanager']['enable']  = 1;
 $setup_info['filemanager']['index']   = 'filemanager.filemanager_ui.index&ajax=true';
+
+$setup_info['filemanager']['tables'] = array('egw_collab_member', 'egw_collab_op', 'egw_collab_session');
 
 $setup_info['filemanager']['author'] =
 $setup_info['filemanager']['maintainer'] = array(

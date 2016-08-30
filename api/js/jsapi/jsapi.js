@@ -60,12 +60,16 @@ if (typeof window.console == 'undefined')
 
 /**
  * Seperates all script tags from the given html code and returns the seperately
- * @param object _html object that the html code from which the script should be seperated. The html code has to be stored in _html.html, the result js will be written to _html.js
+ * 
+ * @param object _html object that the html code
+ *  from which the script should be seperated
+ *	The html code has to be stored in _html.html,
+ *	the result js will be written to _html.js.
  */
 
 egw_seperateJavaScript = function(_html)
 {
-	var html = _html.html;
+	var html = typeof _html.html == 'string'?_html.html:'';
 
 	var in_pos = html.search(/<script/im);
 	var out_pos = html.search(/<\/script>/im);

@@ -315,7 +315,7 @@ class Widget
 					{
 						include_once($path);
 					}
-					catch(Exception $e)
+					catch(\Exception $e)
 					{
 						error_log($e->getMessage());
 					}
@@ -334,7 +334,7 @@ class Widget
 						{
 							class_exists($class);	// trigger autoloader
 						}
-						catch(Exception $e)
+						catch(\Exception $e)
 						{
 							error_log($e->getMessage());
 						}
@@ -961,7 +961,7 @@ class Widget
 	{
 		//error_log(__METHOD__."('$name', '$attr', ...) request=".get_class(self::$request).", response=".get_class(self::$response).function_backtrace());
 		$ref =& self::$request->modifications[$name][$attr];
-		if(self::$request && self::$response && (!isset($this) || $val != $this->attrs[$attr]))
+		if(self::$request && self::$response)
 		{
 			// In an AJAX response - automatically add
 			self::$response->generic('assign',array(
@@ -974,7 +974,6 @@ class Widget
 			self::$request->unset_to_process('');
 			//error_log(__METHOD__."('$name', '$attr', ...) ".function_backtrace());
 		}
-		if (isset($this)) $this->attrs[$attr] = $val;
 		if (!is_null($val)) $ref = $val;
 
 		//error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');

@@ -1862,6 +1862,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	 */
 	_mouse_down: function(event)
 	{
+		if(event.which !== 1) return;
+		
 		var start = jQuery.extend({},this.gridHover[0].dataset);
 		if(start.date)
 		{
@@ -1991,6 +1993,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		for(var id in this.gridHover[0].dataset) {
 			delete this.gridHover[0].dataset[id];
 		}
+		if(this.options.granularity == 0)
+		{
+			this.gridHover.css('height','');
+		}
 		while(node && node != this.node && node.tagName != 'BODY' && path.length < 10)
 		{
 			path.push(node);
@@ -2004,7 +2010,10 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					position: 'absolute',
 					top: '',
 					bottom: '0px',
-					height: $node.css('padding-bottom')
+					// Use 100% height if we're hiding the day labels to avoid
+					// any remaining space from the hidden labels
+					height: $node.height() > parseInt($node.css('line-height')) ?
+						$node.css('padding-bottom') : '100%'
 				});
 				day = node;
 				this.gridHover
@@ -2100,12 +2109,22 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			if(!widget.disabled) rowCount++;
 		},this, et2_calendar_timegrid);
 
-		// Take the whole tab height
-		var height = jQuery(this.getInstanceManager().DOMContainer).parent().innerHeight();
+		// Take the whole tab height, or home portlet
+		if(this.getInstanceManager().app === 'home')
+		{
+			var height = jQuery(this.getParent().getDOMNode()).parentsUntil('.et2_portlet').last().parent().innerHeight();
 
-		// Allow for toolbar
-		height -= jQuery('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
+			// Allow for portlet header
+			height -= jQuery('.ui-widget-header',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
+		}
+		else
+		{
+			var height = jQuery(this.getInstanceManager().DOMContainer).parent().innerHeight();
 
+			// Allow for toolbar
+			height -= jQuery('#calendar-toolbar',this.div.parents('.egw_fw_ui_tab_content')).outerHeight(true);
+		}
+	
 		this.options.height = Math.floor(height / rowCount);
 
 		// Allow for borders & padding
@@ -2118,7 +2137,16 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			this.gridHeader.outerHeight();
 		var too_small = needed > this.options.height && this.options.granularity != 0;
 
-		jQuery(this.getInstanceManager().DOMContainer)
+
+		if(this.getInstanceManager().app === 'home')
+		{
+			var modify_node = jQuery(this.getParent().getDOMNode()).parentsUntil('.et2_portlet').last();
+		}
+		else
+		{
+			var modify_node = jQuery(this.getInstanceManager().DOMContainer);
+		}
+		modify_node
 			.css({
 				'overflow-y': too_small || _too_small ? 'auto' : 'hidden',
 				'overflow-x': 'hidden',
@@ -2153,11 +2181,11 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 
 		// Try to resize width, though animations cause problems
-		var total_width = jQuery(this.getInstanceManager().DOMContainer).parent().innerWidth() - this.days.position().left;
+		var total_width = modify_node.parent().innerWidth() - this.days.position().left;
 		// Space for todos, if there
 		total_width -= jQuery(this.getInstanceManager().DOMContainer).siblings().has(':visible').not('#calendar-toolbar').outerWidth()
 		
-		var day_width = (total_width > 0 ? total_width : jQuery(this.getInstanceManager().DOMContainer).width())/this.day_widgets.length;
+		var day_width = (total_width > 0 ? total_width : modify_node.width())/this.day_widgets.length;
 		// update day widgets
 		for(var i = 0; i < this.day_widgets.length; i++)
 		{

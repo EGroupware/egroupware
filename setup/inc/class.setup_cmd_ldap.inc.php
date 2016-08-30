@@ -546,8 +546,7 @@ class setup_cmd_ldap extends setup_cmd
 				if (!isset($ldap_class))
 				{
 					$ldap_class = false;
-					$ldap = new ldap();
-					$ldap->ldapConnect();
+					$ldap = Api\Ldap::factory(false);
 					foreach(array(	// todo: have these enumerated by emailadmin ...
 						'qmailUser' => 'EGroupware\\Api\\Mail\\Smtp\\Oldqmailuser',
 						'dbMailUser' => 'EGroupware\\Api\\Mail\\Smtp\\Dbmailuser',

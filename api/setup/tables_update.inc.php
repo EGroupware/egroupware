@@ -84,3 +84,36 @@ function api_upgrade16_1_001()
 	}
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.002';
 }
+
+use EGroupware\Api\Vfs;
+
+/**
+ * Create /templates and subdirectories, if they dont exist
+ *
+ * They are create as part of the installation for new installations and allways exist in EPL.
+ * If they dont exist, you can not save the preferences of the concerned applications, unless
+ * you either manually create the directory or remove the path from the default preferences.
+ *
+ * @return string
+ */
+function api_upgrade16_1_002()
+{
+	$admins = $GLOBALS['egw_setup']->add_account('Admins','Admin','Group',False,False);
+
+	Vfs::$is_root = true;
+	foreach(array('','addressbook', 'calendar', 'infolog', 'tracker', 'timesheet', 'projectmanager', 'filemanager') as $app)
+	{
+		if ($app && !file_exists(EGW_SERVER_ROOT.'/'.$app)) continue;
+
+		// create directory and set permissions: Admins writable and other readable
+		$dir = '/templates'.($app ? '/'.$app : '');
+		if (Vfs::file_exists($dir)) continue;
+
+		Vfs::mkdir($dir, 075, STREAM_MKDIR_RECURSIVE);
+		Vfs::chgrp($dir, abs($admins));
+		Vfs::chmod($dir, 075);
+	}
+	Vfs::$is_root = false;
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.003';
+}

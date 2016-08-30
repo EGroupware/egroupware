@@ -68,7 +68,7 @@ class Egw extends Egw\Base
 	 * Called every time the constructor is called.  Also called by sessions to ensure the correct db,
 	 *  in which case we do not recreate the session object.
 	 * @author RalfBecker@outdoor-training.de (moved to setup() by milos@groupwhere.org
-	 * @param array $domain_names array with valid egw-domain names
+	 * @param array|null $domain_names =null array with valid egw-domain names
 	 * @param boolean $createsessionobject True to create the session object (default=True)
 	 */
 	function setup($domain_names,$createsessionobject=True)

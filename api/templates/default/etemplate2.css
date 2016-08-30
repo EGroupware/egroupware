@@ -656,7 +656,7 @@ span.et2_file_span{
 	margin-top:0;
 }
 div.et2_file input.et2_file_upload{
-	display: none;
+	display:none;
 }
 /**
  * Autocomplete - used in link widget
@@ -700,11 +700,8 @@ div.et2_link_entry select {
   width: 40%;
   margin-right: 10px;
 }
-div.et2_link_entry .ui-autocomplete.ui-menu.ui-menu-rtl {left:auto !important;right:0px;}
-div.et2_link_entry .ui-autocomplete.ui-menu .ui-menu-item {border-left:5px solid transparent;}
 div.et2_link_entry input.ui-autocomplete-input {
   padding-bottom: 1px;
-  width: calc(60% - 10px);
 }
 .et2_link_entry.no_app input.ui-autocomplete-input {
   width: 100%;
@@ -1866,6 +1863,7 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
   margin-right: 1em;
   background-position: 3px;
   padding-left: 15px;
+  outline: none;
 }
 .et2_prompt #message {
   white-space: pre-wrap;

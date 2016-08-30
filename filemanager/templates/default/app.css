@@ -128,3 +128,46 @@ table.egwGridView_grid .tile .file_tile {
 	margin-top: 5px;
 	margin-left: 10px;
 }
+
+#filemanager-editor_odfEditor {
+	position: absolute;
+	height: ~"calc(100% - 50px) !important";
+	width:100% !important;
+	top:50px;
+	left: 0px;
+	bottom: 0px;
+	right:0px;
+	padding:0px !important;
+}
+#filemanager-editor_odfEditor .webodfeditor-editor.dijitContentPane {
+	box-shadow: none;
+	left:0px !important;
+	top: 0px !important;
+}
+#filemanager-editor {
+	overflow: hidden;
+}
+
+/* collab editor styling*/
+div.webodfeditor-members {
+	background-color: white !important;
+
+}
+div.webodfeditor-memberList .webodfeditor-memberListButton {
+	border: none !important;
+	background-color: transparent !important;
+	box-shadow: none !important;
+
+}
+div.webodfeditor-memberList .webodfeditor-memberListButton img {
+	border-radius: 50%;
+	box-shadow: none;
+}
+div.webodfeditor-memberList .webodfeditor-memberListLabel {
+	color: #1E1E1E;
+}
+
+div.editInfoMarker {
+	width:5px;
+	border-radius: none;
+}

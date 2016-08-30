@@ -1,3 +1,37 @@
+egroupware-epl (16.1.20160810) hardy; urgency=low
+
+  * Mail: fix lost mail account password on user password change
+  * PostgreSQL/Setup: fix SQL error in Backup or update: Invalid SQL: SELECT * FROM egw_pm_members
+  * Admin: fix email address for groups could not be stored for accounts in SQL
+  * Admin: fix PHP Fatal error when editing custom fields in a minimal install
+  * Calendar: Add print action to event context menu
+  * Api/Filemanager: add mime icons to minimal install
+  * EPL/Filemanager: fix PHP Fatal using file-a-file dialog (upload with setting eg. a comment)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 10 Aug 2016 15:49:55 +0200
+
+egroupware-epl (16.1.20160801) hardy; urgency=low
+
+  * Templates: disable old idots and jerryr template, as new calendar does not work with them
+  * Filemanager/EPL: fix broken notification / subscription to folders
+  * eSync/Mail: add preference to override unlimited date range from client
+  * eSync/Mail: make sure From is set correctly to the identity used, when sending by iOS
+  * Calendar: fix printing calendar view in Firefox does not work
+  * Calendar: fix opening a calendar entry sometimes doesn't work
+  * Calendar: create new events by dragging on empty space
+  * Admin/APC(u): fix error in clear cache: if APC(u) runs out of memory clearing just instance cache clear whole cache
+  * Mail: Fix addresses/attachments expansion plus button is not showing up in mail preview in the first load
+  * Api: fixed not working HTTP authentication
+  * all apps: Fix styling glitches for search links dropdown
+  * all apps: Fix vfs upload button does not work in link tab
+  * all apps: fix not able to set date for empty date fields in mobile template
+  * eMail/UCS: fix setting of mailbox ACL for IMAP login-type "email"
+  * LDAP: fix not working password change by user
+  * Addressbook: change taborder of fields to allow adding information column wise
+  * API/ProjectManager: fixed some errors caused by no longer sharing instanciated objects not designed to be shared
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 01 Aug 2016 20:56:21 +0200
+
 egroupware-epl (16.1.20160715) hardy; urgency=low
 
   * Calendar: Fix Generate Page Time's indicator screws calendar view up

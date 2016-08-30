@@ -72,6 +72,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			.appendTo(this.header);
 		this.all_day = jQuery(document.createElement('div'))
 			.addClass("calendar_calDayColAllDay")
+			.css('max-height', (egw.preference('limit_all_day_lines', 'calendar') || 3 ) * 1.4 + 'em')
 			.appendTo(this.header);
 		this.event_wrapper = jQuery(document.createElement('div'))
 			.addClass("event_wrapper")
@@ -299,6 +300,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		this.title
 			.attr("data-owner", _owner);
 		this.header.attr('data-owner',_owner);
+		this.div.attr('data-owner',_owner);
 
 		// Simple comparison, both numbers
 		if(_owner === this.options.owner) return;
@@ -417,8 +419,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			{
 				if (typeof holidays[i]['birthyear'] !== 'undefined')
 				{
-					// Show holidays as events on mobile
-					if(egwIsMobile())
+					// Show holidays as events on mobile or by preference
+					if(egwIsMobile() || egw.preference('birthdays_as_events','calendar'))
 					{
 						// Create event
 						this._parent.date_helper.set_value(this.options.date.substring(0,4)+'-'+
@@ -443,7 +445,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 						event.doLoadingFinished();
 						event._update();
 					}
-					else
+					if (!egwIsMobile())
 					{
 						//If the birthdays are already displayed as event, don't
 						//show them in the caption
@@ -471,7 +473,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 								owner: this.options.owner,
 								participants: this.options.owner,
 								app: 'calendar',
-								class: 'calendar_calBirthday'
+								class: 'calendar_calHoliday'
 							},
 							readonly: true,
 							class: 'calendar_calHoliday'
@@ -553,8 +555,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		}
 
 
-		// Show holidays as events on mobile
-		if(egwIsMobile())
+		// Show holidays as events on mobile or by preference
+		if(egwIsMobile() || egw.preference('birthdays_as_events','calendar'))
 		{
 			this.day_class_holiday();
 		}
@@ -1080,21 +1082,26 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			}
 			// Header, all day non-blocking
 			else if (this.header.has(_ev.target).length && !jQuery('.hiddenEventBefore',this.header).has(_ev.target).length ||
-			this.header.is(_ev.target)
+				this.header.is(_ev.target)
 			)
 			{
 				// Click on the header, but not the title.  That's an all-day non-blocking
 				var end = this.date.getFullYear() + '-' + (this.date.getUTCMonth()+1) + '-' + this.date.getUTCDate() + 'T23:59';
-				this.egw().open(null, 'calendar', 'add', {
+				var options = {
 					start: this.date.toJSON(),
 					end: end,
 					non_blocking: true
-				} , '_blank');
+				}
+				if (this.options.owner != app.calendar.state.owner)
+				{
+					options.owner = this.options.owner;
+				}
+				this.egw().open(null, 'calendar', 'add', options, '_blank');
 				return false;
 			}
 		}
 		// Day label
-		else if(this.title.is(_ev.target) || this.title.has(_ev.target))
+		else if(this.title.is(_ev.target) || this.title.has(_ev.target).length)
 		{
 			app.calendar.update_state({view: 'day',date: this.date.toJSON()});
 			return false;

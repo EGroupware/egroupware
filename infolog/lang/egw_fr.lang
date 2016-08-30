@@ -119,7 +119,7 @@ custom	infolog	fr	Personnalisé
 custom contact-address, leave empty to use information from most recent link	infolog	fr	Adresse de contact personnalisée, laissez vide pour utiliser l'information du lien le plus récent
 custom contact-information, leave emtpy to use information from most recent link	infolog	fr	Information de contact personnalisée, laissez vide pour utiliser l'information du lien le plus récent
 custom fields	infolog	fr	Champs personnalisés
-custom fields, typ and status	common	fr	Champs, types et statuts personnalisés
+custom fields, type and status	common	fr	Champs, types et statuts personnalisés
 custom from	infolog	fr	Personnalisé de
 custom regarding	infolog	fr	Personnalisé concernant
 custom status for typ	infolog	fr	Statuts personnalisés pour le type

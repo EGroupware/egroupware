@@ -137,7 +137,7 @@ class StreamWrapper extends LinksParent
 	 *                          stat triggers it's own warning anyway, so it makes no sense to trigger one by our stream-wrapper!
 	 * @return array
 	 */
-	static function url_stat ( $url, $flags )
+	function url_stat ( $url, $flags )
 	{
 		$eacl_check=self::check_extended_acl($url,Vfs::READABLE);
 
@@ -146,7 +146,7 @@ class StreamWrapper extends LinksParent
 			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
 		{
 			$ret = array(
-				'ino'   => md5($url),
+				'ino'   => '#'.md5($url),
 				'name'  => '.entry',
 				'mode'  => self::MODE_FILE|Vfs::READABLE,	// required by the stream wrapper
 				'size'  => 1024,	// fmail does NOT attach files with size 0!
@@ -166,7 +166,7 @@ class StreamWrapper extends LinksParent
 			if ($id && !isset($rel_path))
 			{
 				$ret = array(
-					'ino'   => md5($url),
+					'ino'   => '#'.md5($url),
 					'name'  => $id,
 					'mode'  => self::MODE_DIR,	// required by the stream wrapper
 					'size'  => 0,
@@ -232,7 +232,7 @@ class StreamWrapper extends LinksParent
 	 * @param int $options Posible values include STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE, we allways use recursive!
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function mkdir($path,$mode,$options)
+	function mkdir($path,$mode,$options)
 	{
 		unset($mode);	// not used, but required by function signature
 
@@ -249,8 +249,9 @@ class StreamWrapper extends LinksParent
 			$current_is_root = Vfs::$is_root; Vfs::$is_root = true;
 			$current_user = Vfs::$user; Vfs::$user = 0;
 
-			$ret = parent::mkdir($path,0,$options|STREAM_MKDIR_RECURSIVE);
-			if ($id) parent::chmod($path,0);	// no other rights
+			$sqlfs = new parent();
+			$ret = $sqlfs->mkdir($path,0,$options|STREAM_MKDIR_RECURSIVE);
+			if ($id) $sqlfs->chmod($path,0);	// no other rights
 
 			Vfs::$user = $current_user;
 			Vfs::$is_root = $current_is_root;
@@ -262,7 +263,7 @@ class StreamWrapper extends LinksParent
 	/**
 	 * This method is called immediately after your stream object is created.
 	 *
-	 * Reimplemented from sqlfs to ensure self::url_stat is called, to fill sqlfs stat cache with our eacl!
+	 * Reimplemented from sqlfs to ensure $this->url_stat is called, to fill sqlfs stat cache with our eacl!
 	 * And to return vcard for url /apps/addressbook/$id/.entry
 	 *
 	 * @param string $url URL that was passed to fopen() and that this object is expected to retrieve
@@ -277,7 +278,7 @@ class StreamWrapper extends LinksParent
 	function stream_open ( $url, $mode, $options, &$opened_path )
 	{
 		// the following call is necessary to fill sqlfs_stream_wrapper::$stat_cache, WITH the extendes ACL!
-		$stat = self::url_stat($url,0);
+		$stat = $this->url_stat($url,0);
 		//error_log(__METHOD__."('$url', '$mode', $options) stat=".array2string($stat));
 
 		// return vCard as /.entry
@@ -305,7 +306,7 @@ class StreamWrapper extends LinksParent
 		if ($mode[0] != 'r' && ($dir = Vfs::dirname($url)) &&
 			!parent::url_stat($dir, 0) && self::check_extended_acl($dir, Vfs::WRITABLE))
 		{
-			self::mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
+			$this->mkdir($dir,0,STREAM_MKDIR_RECURSIVE);
 		}
 		return parent::stream_open($url,$mode,$options,$opened_path);
 	}
@@ -321,12 +322,35 @@ class StreamWrapper extends LinksParent
 	 */
 	function dir_opendir ( $url, $options )
 	{
-		if (!parent::url_stat($url, STREAM_URL_STAT_QUIET) && self::url_stat($url, STREAM_URL_STAT_QUIET))
+		if (!parent::url_stat($url, STREAM_URL_STAT_QUIET) && $this->url_stat($url, STREAM_URL_STAT_QUIET))
 		{
 			$this->opened_dir = array();
 			return true;
 		}
 		return parent::dir_opendir($url, $options);
+	}
+
+	/**
+	 * Reimplemented to create an entry directory on the fly AND delete our stat cache!
+	 *
+	 * @param string $url
+	 * @param int $time =null modification time (unix timestamp), default null = current time
+	 * @param int $atime =null access time (unix timestamp), default null = current time, not implemented in the vfs!
+	 */
+	protected function touch($url,$time=null,$atime=null)
+	{
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$time,$atime)");
+
+ 		if (!($stat = $this->url_stat($url,STREAM_URL_STAT_QUIET)))
+		{
+			// file does not exist --> create an empty one
+			if (!($f = fopen(self::SCHEME.'://default'.Vfs::parse_url($url,PHP_URL_PATH),'w')) || !fclose($f))
+			{
+				return false;
+			}
+		}
+
+		return is_null($time) ? true : parent::touch($url,$time,$atime);
 	}
 
 	/**

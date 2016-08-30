@@ -410,12 +410,6 @@ class Backup
 				return lang("Cant open '%1' for %2", $filename, lang("reading"))."<br>\n";
 			}
 		}
-		// do not stop if for whatever reason some sql statement fails
-		if ($this->db->Halt_On_Error != 'no')
-		{
-			$backup_db_halt_on_error = $this->db->Halt_On_Error;
-			$this->db->Halt_On_Error = 'no';
-		}
 		$this->db_restore($f, $insert_n_rows);
 
 		if ($convert_to_system_charset)	// store the changed charset
@@ -463,11 +457,6 @@ class Backup
 					'config_name' => 'cookiepath',
 				),__LINE__,__FILE__);
 			}
-		}
-		// restore original Halt_On_Error state (if changed)
-		if ($backup_db_halt_on_error)
-		{
-			$this->db->Halt_On_Error = $backup_db_halt_on_error;
 		}
 		// zip?
 		if($type == 'zip')
@@ -943,7 +932,7 @@ class Backup
 
 			if ($lock_table || empty($pk) && is_null($lock_table))
 			{
-				$this->db->Link_ID->RowLock($table);
+				$this->db->Link_ID->RowLock($table, 'true');	// PostgreSQL drive from ADOdb requires 2. param $where!
 			}
 			$total = $max = 0;
 			do {

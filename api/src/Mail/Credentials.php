@@ -371,7 +371,7 @@ class Credentials
 	 *
 	 * @param string $password cleartext password
 	 * @param int $account_id user-account password is for
-	 * @param int &$pw_enc on return encryption used
+	 * @param int& $pw_enc on return encryption used
 	 * @return string encrypted password
 	 */
 	protected static function encrypt($password, $account_id, &$pw_enc)
@@ -410,7 +410,7 @@ class Credentials
 	 *
 	 * @param string $password cleartext password
 	 * @param int $account_id user-account password is for
-	 * @param int &$pw_enc on return encryption used
+	 * @param int& $pw_enc on return encryption used
 	 * @param string $key =null key/password to use, default password according to account_id
 	 * @param string $salt =null (binary) salt to use, default generate new random salt
 	 * @return string encrypted password
@@ -472,7 +472,7 @@ class Credentials
 	 *
 	 * @param string $password cleartext password
 	 * @param int $account_id user-account password is for
-	 * @param int &$pw_enc on return encryption used
+	 * @param int& $pw_enc on return encryption used
 	 * @return string encrypted password
 	 */
 	protected static function encrypt_mcrypt_3des($password, $account_id, &$pw_enc)
@@ -500,11 +500,12 @@ class Credentials
 	 * Decrypt password from database
 	 *
 	 * @param array $row database row
+	 * @param string $key =null key/password to use, default user pw from session or database pw, see get_key
 	 * @return string cleartext password
 	 * @throws Api\Exception\WrongParameter
 	 * @throws Api\Exception\AssertionFailed if neither OpenSSL nor MCrypt extension available
 	 */
-	protected static function decrypt(array $row)
+	protected static function decrypt(array $row, $key=null)
 	{
 		// empty/unset passwords only give warnings ...
 		if (empty($row['cred_password'])) return '';
@@ -521,12 +522,12 @@ class Credentials
 
 			case self::USER_AES:
 			case self::SYSTEM_AES:
-				return self::decrypt_openssl_aes($row);
+				return self::decrypt_openssl_aes($row, $key);
 
 			case self::USER:
 			case self::SYSTEM:
 				try {
-					$password = self::decrypt_openssl_3des($row);
+					$password = self::decrypt_openssl_3des($row, $key);
 					// ToDo store as AES
 					return $password;
 				}
@@ -544,14 +545,15 @@ class Credentials
 	 *
 	 * @param array $row database row
 	 * @return string cleartext password
+	 * @param string $key =null key/password to use, default user pw from session or database pw, see get_key
 	 * @throws Api\Exception\WrongParameter
 	 * @throws Api\Exception\AssertionFailed if MCrypt extension not available
 	 */
-	protected static function decrypt_mcrypt_3des(array $row)
+	protected static function decrypt_mcrypt_3des(array $row, $key=null)
 	{
 		check_load_extension('mcrypt', true);
 
-		if (!($mcrypt = self::init_crypt($row['cred_pw_enc'] == self::USER)))
+		if (!($mcrypt = self::init_crypt(isset($key) ? $key : $row['cred_pw_enc'] == self::USER)))
 		{
 			throw new Api\Exception\WrongParameter("Password encryption type $row[cred_pw_enc] NOT available for mail account #$row[acc_id] and user #$row[account_id]/$row[cred_username]!");
 		}
@@ -694,21 +696,20 @@ class Credentials
 	{
 		if (empty($data['old_passwd'])) return;
 
-		$old_mcrypt = null;
+		// as self::encrypt will use password in session, check it is identical to given new password
+		if ($data['new_passwd'] !== base64_decode(Api\Cache::getSession('phpgwapi', 'password')))
+		{
+			throw new Api\Exception\AssertionFailed('Password in session !== password given in $data[new_password]!');
+		}
+
 		foreach(self::$db->select(self::TABLE, self::TABLE.'.*', array(
 			'account_id' => $data['account_id']
 		),__LINE__, __FILE__, false, '', self::APP, 0, self::USER_EDITABLE_JOIN.self::$db->quote(true, 'bool')) as $row)
 		{
-			if (!isset($old_mcrypt))
-			{
-				$old_mcrypt = self::init_crypt($data['old_passwd']);
-				$new_mcrypt = self::init_crypt($data['new_passwd']);
-				if (!$old_mcrypt && !$new_mcrypt) return;
-			}
-			$password = self::decrypt($row, $old_mcrypt);
+			$password = self::decrypt($row, self::isUser($row['cred_pw_enc']) ? $data['old_passwd'] : null);
 
 			self::write($row['acc_id'], $row['cred_username'], $password, $row['cred_type'],
-				$row['account_id'], $row['cred_id'], $new_mcrypt);
+				$row['account_id'], $row['cred_id']);
 		}
 	}
 

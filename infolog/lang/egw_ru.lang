@@ -115,7 +115,7 @@ custom	infolog	ru	Пользовательский
 custom contact-address, leave empty to use information from most recent link	infolog	ru	Пользовательский адрес для контакта, оставьте незаполненным для использования информации из наиболее свежей ссылки
 custom contact-information, leave emtpy to use information from most recent link	infolog	ru	Пользовательская информация для контакта, оставьте незаполненным для использования информации из наиболее свежей ссылки
 custom fields	infolog	ru	Пользовательские Поля
-custom fields, typ and status	common	ru	Пользовательские поля, тип и состояние
+custom fields, type and status	common	ru	Пользовательские поля, тип и состояние
 custom from	infolog	ru	Пользовательский из (?)
 custom regarding	infolog	ru	Пользовательский относительно (?)
 custom status for typ	infolog	ru	Пользовательское состояние для типа

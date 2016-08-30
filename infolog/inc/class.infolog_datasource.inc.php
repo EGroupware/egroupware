@@ -123,7 +123,12 @@ class infolog_datasource extends datasource
 		}
 
 		// Apply date offsets, if any
-		$map = array('planned_start' => 'info_startdate', 'planned_end' => 'info_enddate', 'real_end' => 'info_datecompleted');
+		$map = array(
+			'planned_start' => 'info_startdate',
+			'planned_end' => 'info_enddate',
+			'real_start' => 'info_startdate',
+			'real_end' => 'info_datecompleted'
+		);
 		foreach($map as $offset_field => $info_field)
 		{
 			if($date_offsets[$offset_field] && $info[$info_field])
@@ -132,6 +137,15 @@ class infolog_datasource extends datasource
 
 				$info[$info_field] = date_add(new Api\DateTime($info[$info_field]), $date_offsets[$offset_field])->format('ts');
 			}
+		}
+		// Sanity check - not due or ended before it starts
+		if($info['info_startdate'] && $info['info_enddate'] && $info['info_startdate'] > $info['info_enddate'])
+		{
+			unset($info['info_enddate']);
+		}
+		if($info['info_startdate'] && $info['info_datecompleted'] && $info['info_startdate'] > $info['info_datecompleted'])
+		{
+			unset($info['info_datecompleted']);
 		}
 		
 		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;

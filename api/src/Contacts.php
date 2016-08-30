@@ -1882,7 +1882,7 @@ class Contacts extends Contacts\Storage
 			if ($ret) unset(self::$list_cache[$ret]);
 		}
 		// catch sql error, as creating same name&owner list gives a sql error doublicate key
-		catch(Api\Db\Exception\InvalidSql $e) {
+		catch(Db\Exception\InvalidSql $e) {
 			unset($e);	// not used
 			return false;
 		}
@@ -1937,10 +1937,10 @@ class Contacts extends Contacts\Storage
 	 */
 	function delete_list($list)
 	{
-		if (!$this->check_list($list,Acl::DELETE)) return false;
-
 		foreach((array)$list as $l)
 		{
+			if (!$this->check_list($l, Acl::DELETE)) return false;
+
 			unset(self::$list_cache[$l]);
 		}
 

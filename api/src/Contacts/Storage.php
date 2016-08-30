@@ -843,7 +843,7 @@ class Storage
 	 *
 	 * @param array|string|int $keys =null
 	 * @param int $owner =null account_id of owner or 0 for accounts
-	 * @return Sql
+	 * @return Sql|Ldap|Ads|Univention
 	 */
 	function get_backend($keys=null,$owner=null)
 	{
@@ -883,9 +883,9 @@ class Storage
 		{
 			return $all_fields;
 		}
-		$backend =& $this->get_backend($contact_id,$owner);
+		$backend = $this->get_backend($contact_id,$owner);
 
-		$supported_fields = method_exists($backend,supported_fields) ? $backend->supported_fields() : $all_fields;
+		$supported_fields = method_exists($backend, 'supported_fields') ? $backend->supported_fields() : $all_fields;
 
 		if ($type == 'supported')
 		{
@@ -977,14 +977,14 @@ class Storage
 					$new_contact_id = $sql_contacts->data['id'];
 					echo "&nbsp;&nbsp;&nbsp;&nbsp;" . $old_contact_id . " --> " . $new_contact_id . " / ";
 
-					$tq = $this->db->update('egw_links',array(
+					$this->db->update('egw_links',array(
 						'link_id1' => $new_contact_id,
 					),array(
 						'link_app1' => 'addressbook',
 						'link_id1' => $old_contact_id
 					),__LINE__,__FILE__);
 
-					$tq = $this->db->update('egw_links',array(
+					$this->db->update('egw_links',array(
 						'link_id2' => $new_contact_id,
 					),array(
 						'link_app2' => 'addressbook',

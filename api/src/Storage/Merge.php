@@ -578,6 +578,7 @@ abstract class Merge
 		try {
 			$content = $this->merge_string($content,$ids,$err,$mimetype,$fix);
 		} catch (\Exception $e) {
+			_egw_log_exception($e);
 			$err = $e->getMessage();
 			return false;
 		}
@@ -1040,8 +1041,9 @@ abstract class Merge
 						$value = preg_replace('/&[^; ]+;/','',$value);
 					}
 				}
-
-				if(!$this->parse_html_styles)
+				if(!$this->parse_html_styles || (
+					strpos($value, "\n") !== FALSE && strpos($value,'<br') === FALSE && strpos($value, '<span') === FALSE
+				))
 				{
 					// Encode special chars so they don't break the file
 					$value = htmlspecialchars($value,ENT_NOQUOTES);
@@ -1261,6 +1263,7 @@ abstract class Merge
 			'!'.Api\DateTime::$user_dateformat . '* ' .Api\DateTime::$user_timeformat,
 			'!'.Api\DateTime::$user_dateformat . '*',
 			'!'.Api\DateTime::$user_dateformat,
+			'!Y-m-d\TH:i:s'
 		);
 
 		// Properly format values for spreadsheet

@@ -781,7 +781,10 @@ class Principals extends Handler
 				if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
 					!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 				{
-					$files[] = $this->add_account($this->accounts->read($GLOBALS['egw_info']['user']['account_id']));
+					if (($account = $this->accounts->read($GLOBALS['egw_info']['user']['account_id'])))
+					{
+						$files[] = $this->add_account($account);
+					}
 				}
 				else
 				{
@@ -1514,7 +1517,7 @@ class Principals extends Handler
 	 * Get proxy-groups for given user $account: users or groups who GRANT proxy rights to $account
 	 *
 	 * @param int $account who is the proxy
-	 * @param string|array $app ='calendar' applications for which proxys should be added
+	 * @param string $app ='calendar' applications for which proxys should be added
 	 * @return array with href props
 	 */
 	protected function get_calendar_proxy_groups($account, $app='calendar')

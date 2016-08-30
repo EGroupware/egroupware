@@ -178,11 +178,15 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		// Filemanager select
 		var select_attrs = {
-			method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::link_existing',
-			method_id: function() { return self.options.value.to_app + ':' + self.options.value.to_id;},
 			button_label: egw.lang('Link'),
 			button_caption: ''
 		};
+		// only set server-side callback, if we have a real application-id (not null or array)
+		// otherwise it only gives an error on server-side
+		if (self.options.value.to_id && typeof self.options.value.to_id != 'object') {
+			select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::link_existing';
+			select_attrs.method_id = self.options.value.to_app + ':' + self.options.value.to_id;
+		}
 		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
 		jQuery(this.vfs_select.getDOMNode()).change( function() {
 			var values = true;
@@ -682,7 +686,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 			// Normal stuff
 			li.append(jQuery( "<a></a>" ).text( item.label ))
 				.appendTo(ul);
-			window.setTimeout(function(){ul.toggleClass('ui-menu-rtl',(ul.offset().left + ul.width() > window.outerWidth))}, 300);
+			window.setTimeout(function(){ul.css('max-width', jQuery('.et2_container').width()-ul.offset().left)}, 300);
 			return li;
 		};
 

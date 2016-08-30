@@ -108,9 +108,11 @@ class Link extends Etemplate\Widget
 
 		$links = Api\Link::query($app, $pattern, $options);
 
+		// Add ' ' to key so javascript does not parse it as a number.
+		// This preserves the order set by the application.
 		$linksc = array_combine(array_map(function($k)
 		{
-			return (string)$k;
+			return (string)" ".$k;
 		}, array_keys($links)), $links);
 
 		$response = Api\Json\Response::get();
@@ -248,6 +250,11 @@ class Link extends Etemplate\Widget
 	public static function link_existing($app_id, $files)
 	{
 		list($app, $id, $dest_file) = explode(':', $app_id);
+
+		if (empty($app_id) || empty($id))
+		{
+			return;	// cant do anything
+		}
 		if($id && $dest_file && trim($dest_file) !== '')
 		{
 			$id .= "/$dest_file";
@@ -317,8 +324,11 @@ class Link extends Etemplate\Widget
 			$value = $value_in =& self::get_array($content, $form_name);
 
 			// keep values added into request by other ajax-functions, eg. files draged into htmlarea (Vfs)
-			if ((!$value || !$value['to_id']) && is_array($expand['cont'][$this->id]) && !empty($expand['cont'][$this->id]['to_id']))
+			if ((!$value || is_array($value) && !$value['to_id']) && is_array($expand['cont'][$this->id]) && !empty($expand['cont'][$this->id]['to_id']))
 			{
+				if (!is_array($value)) $value = array(
+					'to_app' => $expand['cont'][$this->id]['to_app'],
+				);
 				$value['to_id'] = $expand['cont'][$this->id]['to_id'];
 			}
 

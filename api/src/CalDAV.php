@@ -1131,7 +1131,9 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			if (isset($value[0]['ns']))
 			{
-				$value = $this->_hierarchical_prop_encode($value);
+				$ns_defs = '';
+				$ns_hash = array();
+				$value = $this->_hierarchical_prop_encode($value, '', $ns_defs, $ns_hash);
 			}
 			$value = array2string($value);
 		}

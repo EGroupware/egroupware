@@ -379,7 +379,13 @@ class calendar_uiforms extends calendar_ui
 							break;
 						case 'participant':
 							foreach($data as $participant)
-							{								// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>")
+							{
+								if (is_null($participant))
+								{
+									continue;
+								}
+
+								// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>")
 								$email = array();
 								if(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$participant,$email))
 								{
@@ -434,7 +440,7 @@ class calendar_uiforms extends calendar_ui
 									{
 										foreach($this->bo->enum_mailing_list($participant) as $contact)
 										{
-											$event['participants'][$contact] = $event['participant_types']['c'][substr($contact,1)] = 
+											$event['participants'][$contact] = $event['participant_types']['c'][substr($contact,1)] =
 												calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
 										}
 										continue;
@@ -499,7 +505,7 @@ class calendar_uiforms extends calendar_ui
 									{
 										// Update main window
 										$client_updated = $this->update_client($event['id'], $content['edit_single']);
-										
+
 										// refreshing the calendar-view with the changed participant-status
 										if($event['recur_type'] != MCAL_RECUR_NONE)
 										{
@@ -594,7 +600,7 @@ class calendar_uiforms extends calendar_ui
 			unset($event['modified']);
 			unset($event['modifier']);
 			unset($event['caldav_name']);
-			$event['owner'] = !(int)$this->owner || !$this->bo->check_perms(Acl::ADD,0,$this->owner) ? $this->user : $this->owner;
+			$event['owner'] = !(int)$event['owner'] || !$this->bo->check_perms(Acl::ADD,0,$event['owner']) ? $this->user : $event['owner'];
 
 			// Clear participant stati
 			foreach($event['participant_types'] as $type => &$participants)
@@ -782,7 +788,7 @@ class calendar_uiforms extends calendar_ui
 								calendar_so::split_status($status,$q,$r);
 								if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
 								{
-									$preferences = CreateObject('phpgwapi.preferences',$uid);
+									$preferences = new Api\Preferences($uid);
 									$part_prefs = $preferences->read_repository();
 									switch ($part_prefs['calendar']['reset_stati'])
 									{
@@ -1044,7 +1050,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				Framework::refresh_opener($msg, 'calendar', 
+				Framework::refresh_opener($msg, 'calendar',
 					$event['id'] . ($content['edit_single'] ? ':' . (int)$content['edit_single'] : '' ),
 					$button == 'save' && $client_updated ? ($content['id'] ? $update_type : 'add') : 'delete'
 				);
@@ -2506,7 +2512,7 @@ class calendar_uiforms extends calendar_ui
 		$etpl = new etemplate_new('calendar.export');
 		$etpl->exec('calendar.calendar_uiforms.export',$content);
     }
-	
+
 	/**
 	 * Edit category ACL (admin only)
 	 *
@@ -2789,7 +2795,7 @@ class calendar_uiforms extends calendar_ui
 			calendar_so::split_status($status,$q,$r);
 			if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
 			{
-				$preferences = CreateObject('phpgwapi.preferences',$uid);
+				$preferences = new Api\Preferenes($uid);
 				$part_prefs = $preferences->read_repository();
 				switch ($part_prefs['calendar']['reset_stati'])
 				{
@@ -2863,7 +2869,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$d = new Api\DateTime($date, Api\DateTime::$user_timezone);
 		}
-		
+
 		// If we have a recuring event for a particular day, make an exception
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
 		{

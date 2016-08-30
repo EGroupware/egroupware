@@ -519,8 +519,8 @@ class calendar_ui
 		{
 			$file = Array(
 				'Configuration'=>Egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
-				'Custom Fields'=>Egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
-				'Global Categories' =>Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
+				'Custom Fields'=>Egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar&ajax=true'),
+				'Global Categories' =>Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar&ajax=true'),
 			);
 			$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');
 		}
@@ -555,7 +555,7 @@ class calendar_ui
 		$cont = $this->cal_prefs['saved_states'];
 		if (!is_array($cont)) $cont = array();
 		$cont['view'] = $this->view ? $this->view : 'week';
-		$cont['date'] = $this->date ? $this->date : Api\DateTime();
+		$cont['date'] = $this->date ? $this->date : new Api\DateTime();
 
 		$cont['year'] = (int)Api\DateTime::to($cont['date'],'Y');
 		$cont['holidays'] = $this->bo->read_holidays($cont['year']);
@@ -753,7 +753,17 @@ class calendar_ui
 		// set id for grid
 		$event['row_id'] = $event['id'].($event['recur_type'] ? ':'.Api\DateTime::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts') : '');
 
-		$event['parts'] = implode(",\n",$this->bo->participants($event,false));
+		// Set up participant section of tooltip
+		$participants = $this->bo->participants($event,false);
+		$event['parts'] = implode("\n",$participants);
+		$event['participant_types'] = array();
+		foreach($participants as $uid => $text)
+		{
+			$user_type = $user_id = null;
+			calendar_so::split_user($uid, $user_type, $user_id);
+			$type_name = lang($this->bo->resources[$user_type]['app']);
+			$event['participant_types'][$type_name ? $type_name : ''][] = $text;
+		}
 		$event['date'] = $this->bo->date2string($event['start']);
 
 		// Change dates

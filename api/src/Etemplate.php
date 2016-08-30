@@ -214,7 +214,7 @@ class Etemplate extends Etemplate\Widget\Template
 			list($app) = explode('.',$this->name);
 			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
 			{
-				Framework::includeJS('.','app',$app,false);
+				Framework::includeJS('.','app',$app,true);
 			}
 			// Category styles
 			Categories::css($app);
@@ -316,6 +316,9 @@ class Etemplate extends Etemplate\Widget\Template
 		{
 			throw new Exception\WrongParameter('Can NOT read template '.array2string(self::$request->template));
 		}
+
+		// let session class know, which is the app & method of this request
+		$GLOBALS['egw']->session->set_action('Etemplate: '.self::$request->method);
 
 		// Set current app for validation
 		list($app) = explode('.',self::$request->method);

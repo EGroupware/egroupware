@@ -138,6 +138,17 @@ class filemanager_ui
 				'onExecute' => 'javaScript:app.filemanager.open',
 				'enabled' => 'javaScript:app.filemanager.isEditable',
 			),
+			'new' => array(
+				'caption' => 'New',
+				'group' => $group,
+				'children' => array (
+					'document' => array (
+						'caption' => 'Document',
+						'icon' => 'new',
+						'onExecute' => 'javaScript:app.filemanager.editor_new',
+					)
+				)
+			),
 			'saveas' => array(
 				'caption' => lang('Save as'),
 				'group' => $group,
@@ -173,6 +184,19 @@ class filemanager_ui
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
 				'children' => array(),
+			),
+			'egw_paste' => array(
+				'enabled' => false,
+				'group' => $group + 0.5,
+				'hideOnDisabled' => true
+			),
+			'paste' => array(
+				'caption' => lang('Paste'),
+				'acceptedTypes' => 'file',
+				'group' => $group + 0.5,
+				'order' => 10,
+				'enabled' => 'javaScript:app.filemanager.paste_enabled',
+				'children' => array()
 			),
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
@@ -233,6 +257,19 @@ class filemanager_ui
 					'hint' => $data['title'],
 					'onExecute' => 'javaScript:app.filemanager.mail',
 				);
+			}
+		}
+		// This would be done automatically, but we're overriding
+		foreach($actions as $action_id => $action)
+		{
+			if($action['type'] == 'drop' && $action['caption'])
+			{
+				$action['type'] = 'popup';
+				if($action['acceptedTypes'] == 'file')
+				{
+					$action['enabled'] = 'javaScript:app.filemanager.paste_enabled';
+				}
+				$actions['paste']['children']["{$action_id}_paste"] = $action;
 			}
 		}
 		return $actions;
@@ -308,10 +345,9 @@ class filemanager_ui
 					'row_id'         => 'path',
 					'row_modified'   => 'mtime',
 					'parent_id'      => 'dir',
-					'is_parent'      => 'mime',
-					'is_parent_value'=> Vfs::DIR_MIME_TYPE,
+					'is_parent'      => 'is_dir',
 					'favorites'      => true,
-					'placeholder_actions' => array('mkdir','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
+					'placeholder_actions' => array('mkdir','paste','file_drop_mail','file_drop_move','file_drop_copy','file_drop_symlink')
 				);
 				$content['nm']['path'] = static::get_home_dir();
 			}
@@ -740,7 +776,7 @@ class filemanager_ui
 			// some precaution to never allow to (recursivly) remove /, /apps or /home
 			foreach((array)$selected as $path)
 			{
-				if (preg_match('/^\/?(home|apps|)\/*$/',$path))
+				if (Vfs::isProtectedDir($path))
 				{
 					$errs++;
 					return lang("Cautiously rejecting to remove folder '%1'!",Vfs::decodePath($path));
@@ -877,7 +913,16 @@ class filemanager_ui
 			}
 			if (Vfs::is_dir($path))
 			{
-				$row['class'] = 'isDir';
+				if (!isset($dir_is_writable[$path]))
+				{
+					$dir_is_writable[$path] = Vfs::is_writable($path);
+				}
+				if(!$dir_is_writable[$path])
+				{
+					$row['class'] .= 'noEdit ';
+				}
+				$row['class'] .= 'isDir ';
+				$row['is_dir'] = 1;
 			}
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
@@ -1470,13 +1515,39 @@ class filemanager_ui
 	 *
 	 * @param array $content
 	 */
-	function editor(array $content=null)
+	function editor($content=null)
 	{
 		$tmpl = new Etemplate('filemanager.editor');
 		$file_path = $_GET['path'];
+		$paths = explode('/webdav.php', $file_path);
+		// Include css files used by wodocollabeditor
+		Api\Framework::includeCSS('/api/js/webodf/collab/app/resources/app.css');
+		Api\Framework::includeCSS('/api/js/webodf/collab/wodocollabpane.css');
+		Api\Framework::includeCSS('/api/js/webodf/collab/wodotexteditor.css');
+		Api\Framework::includeJS('/filemanager/js/collab.js',null, 'filemanager');
 
-		$tmpl->setElementAttribute('tools', 'actions', self::getActions_edit());
-		$preserve = $content = array('file_path' => $file_path);
+		if (!$content)
+		{
+			if ($file_path)
+			{
+				$content['es_id'] = md5 ($file_path);
+				$content['file_path'] = $paths[1];
+			}
+			else
+			{
+				$content = array();
+			}
+		}
+
+		$actions = self::getActions_edit();
+		if (!Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE))
+		{
+			unset ($actions['save']);
+			unset ($actions['discard']);
+			unset ($actions['delete']);
+		}
+		$tmpl->setElementAttribute('tools', 'actions', $actions);
+		$preserve = $content;
 		$tmpl->exec('filemanager.filemanager_ui.editor',$content,array(),array(),$preserve,2);
 	}
 
@@ -1485,11 +1556,13 @@ class filemanager_ui
 	 *
 	 * @return array return array of actions
 	 */
-	static function getActions_edit() {
+	static function getActions_edit()
+	{
+		$group = 0;
 		$actions = array (
 			'save' => array(
 				'caption' => 'Save',
-				'icon' => 'save',
+				'icon' => 'apply',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.filemanager.editor_save',
 				'allowOnMultiple' => false,
@@ -1511,11 +1584,27 @@ class filemanager_ui
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
 			),
+			'saveas' => array(
+				'caption' => 'Save As',
+				'icon' => 'save_all',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_save',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => true
+			),
 			'delete' => array(
 				'caption' => 'Delete',
 				'icon' => 'delete',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.filemanager.editor_delete',
+				'allowOnMultiple' => false,
+				'toolbarDefault' => false
+			),
+			'discard' => array(
+				'caption' => 'Discard',
+				'icon' => 'delete',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.filemanager.editor_discard',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => false
 			)

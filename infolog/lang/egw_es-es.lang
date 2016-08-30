@@ -110,7 +110,7 @@ custom	infolog	es-es	Personalizado
 custom contact-address, leave empty to use information from most recent link	infolog	es-es	Dirección de contacto personalizada. Dejar en blanco para usar la información del enlace más reciente
 custom contact-information, leave emtpy to use information from most recent link	infolog	es-es	Información de contacto personalizada. Dejar en blanco para usar la información del enlace más reciente
 custom fields	infolog	es-es	Campos personalizados
-custom fields, typ and status	common	es-es	Campos personalizados, tipo y estado
+custom fields, type and status	common	es-es	Campos personalizados, tipo y estado
 custom from	infolog	es-es	Personalizado desde
 custom regarding	infolog	es-es	Recuerdos personales
 custom status for typ	infolog	es-es	Estado personalizado para el tipo

@@ -67,6 +67,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 	static $profileID;
 
+	// to control how deep one may dive into the past
+	const PAST_LIMIT = 178;
+
 	/**
 	 * debugLevel - enables more debug
 	 *
@@ -172,6 +175,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			'default' => 'sendifnocalnotif',
 			'admin'  => False,
 		);
+		$settings['mail-maximumSyncRange'] = array(
+			'type'   => 'integer',
+			'label'  => lang('How many days to sync in the past when client does not specify a date-range (default %1)', self::PAST_LIMIT),
+			'name'   => 'mail-maximumSyncRange',
+			'help'   => 'if the client sets no sync range, you may override the setting (preventing client crash that may be caused by too many mails/too much data). If you want to sync way-back into the past: set a large number',
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+
 /*
 		$sigOptions = array(
 				'send'=>'yes, always add EGroupware signatures to outgoing mails',
@@ -394,14 +406,41 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$activeMailProfile = Mail::getStandardIdentityForProfile($activeMailProfiles,self::$profileID);
 
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.")".' ProfileID:'.self::$profileID.' ActiveMailProfile:'.array2string($activeMailProfile));
+		// collect identity / signature for later usage, and to determine if we may have to manipulate TransferEncoding and Charset
+		try
+		{
+			$acc = Mail\Account::read($this->mail->icServer->ImapServerId);
+			//error_log(__METHOD__.__LINE__.array2string($acc));
+			$_signature = Mail\Account::read_identity($acc['ident_id'],true);
+		}
+		catch (Exception $e)
+		{
+			$_signature=array();
+		}
+		$signature = $_signature['ident_signature'];
+		if ((isset($preferencesArray['disableRulerForSignatureSeparation']) &&
+			$preferencesArray['disableRulerForSignatureSeparation']) ||
+			empty($signature) || trim(Api\Mail\Html::convertHTMLToText($signature)) =='')
+		{
+			$disableRuler = true;
+		}
+		$beforePlain = $beforeHtml = "";
+		$beforeHtml = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
+		$beforePlain = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
+		$sigText = Mail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Signature to use:'.$sigText);
+		$sigTextHtml = $beforeHtml.$sigText;
+		$sigTextPlain = $beforePlain.Api\Mail\Html::convertHTMLToText($sigText);
 
+		$force8bit=false;
+		if (Api\Translation::detect_encoding($sigTextPlain)!='ascii') $force8bit=true;
 		// initialize the new Api\Mailer object for sending
 		$mailObject = new Api\Mailer(self::$profileID);
-		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime);
+
+		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime,$force8bit);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
-		$mailObject->From 	= $activeMailProfile['ident_email'];
-		$mailObject->FromName = Mail::generateIdentityString($activeMailProfile,false);
+		$mailObject->setFrom($activeMailProfile['ident_email'],Mail::generateIdentityString($activeMailProfile,false));
 		$mailObject->addHeader('X-Mailer', 'mail-Activesync');
 
 
@@ -549,32 +588,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$body = str_replace("\r",((preg_match("^text/html^i", $ContentType))?'<br>':""),$body); // what is this for?
 		if ($this->debugLevel>2) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' retrieved Body (modified):'.$body);
 */
-		// add signature!! -----------------------------------------------------------------
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' ActiveMailProfile:'.array2string($activeMailProfile));
-		try
-		{
-			$acc = Mail\Account::read($this->mail->icServer->ImapServerId);
-			//error_log(__METHOD__.__LINE__.array2string($acc));
-			$_signature = Mail\Account::read_identity($acc['ident_id'],true);
-		}
-		catch (Exception $e)
-		{
-			$_signature=array();
-		}
-		$signature = $_signature['ident_signature'];
-		if ((isset($preferencesArray['disableRulerForSignatureSeparation']) &&
-			$preferencesArray['disableRulerForSignatureSeparation']) ||
-			empty($signature) || trim(Api\Mail\Html::convertHTMLToText($signature)) =='')
-		{
-			$disableRuler = true;
-		}
-		$beforePlain = $beforeHtml = "";
-		$beforeHtml = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
-		$beforePlain = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
-		$sigText = Mail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
-		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Signature to use:'.$sigText);
-		$sigTextHtml = $beforeHtml.$sigText;
-		$sigTextPlain = $beforePlain.Api\Mail\Html::convertHTMLToText($sigText);
+		// actually use prepared signature --------------------collected earlier--------------------------
 		$isreply = $isforward = false;
 		// reply ---------------------------------------------------------------------------
 		if ($smartdata_task == 'reply' && isset($smartdata->source->itemid) &&
@@ -706,18 +720,21 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// add signature, in case its not already added in forward or reply
 		if (!$isreply && !$isforward)
 		{
-				$Body = $Body.$sigTextPlain;
-				$AltBody = $AltBody.$sigTextHtml;
+			//error_log(__METHOD__.__LINE__.'adding Signature');
+			$Body = $Body.$sigTextPlain;
+			$AltBody = $AltBody.$sigTextHtml;
 		}
 		// now set the body
 		if ($AltBody && ($html_body = $mailObject->findBody('html')))
 		{
 			if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' -> '.$AltBody);
+			//error_log(__METHOD__.__LINE__.' html:'.$AltBody);
 			$html_body->setContents($AltBody,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		if ($Body && ($text_body = $mailObject->findBody('plain')))
 		{
 			if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' -> '.$Body);
+			//error_log(__METHOD__.__LINE__.' text:'.$Body);
 			$text_body->setContents($Body,array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
 		}
 		//advanced debugging
@@ -1374,8 +1391,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		else
 		{
-			$cutoffdate = Api\DateTime::to('now','ts')-(3600*24*28*3);
-			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' Client set no truncationdate. Using 12 weeks.'.date("d-M-Y", $cutoffdate));
+			$maximumSyncRangeInDays = self::PAST_LIMIT; // corresponds to our default value
+			if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-maximumSyncRange']))
+			{
+				$maximumSyncRangeInDays = $GLOBALS['egw_info']['user']['preferences']['activesync']['mail-maximumSyncRange'];
+			}
+			$cutoffdate = (is_numeric($maximumSyncRangeInDays) ? Api\DateTime::to('now','ts')-(3600*24*$maximumSyncRangeInDays):null);
+			if (is_numeric($maximumSyncRangeInDays)) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' Client set no truncationdate. Using '.$maximumSyncRangeInDays.' days.'.date("d-M-Y", $cutoffdate));
 		}
 		return $this->fetchMessages($folderid, $cutoffdate);
 	}
@@ -1634,7 +1656,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		array_pop($parent);
 		$parent = implode($delimiter,$parent);
 
-		$id = $parent ? $this->createID($account, $parent) : '0';
+		$id = $parent && $this->folders[$parent] ? $this->createID($account, $parent) : '0';
 		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$folder') --> parent=$parent --> $id");
 		return $id;
 	}
@@ -1882,27 +1904,73 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @param string $displayname => new folder name (to be created, or to be renamed to)
 	 * @param string $type folder type, ignored in IMAP
 	 *
+	 * @throws StatusException              could throw specific SYNC_FSSTATUS_* exceptions
 	 * @return array|boolean stat array or false on error
 	 */
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id', '$oldid', '$displayname', $type) NOT supported!");
-		return false;
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id', '$oldid', '$displayname', $type)");
+		$account = $parent_id = null;
+		$this->splitID($id, $account, $parentFolder, $app);
+
+		$parent_id = $this->folder2hash($account, $parentFolder);
+		$old_hash = $oldFolder = null;
+
+		if (empty($oldid))
+		{
+			$action = 'create';
+		}
+		else
+		{
+			$action = 'rename';
+			$this->splitID($oldid, $account, $oldFolder, $app);
+			$old_hash = $this->folder2hash($account, $oldFolder);
+		}
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.":{$action}Folder('$id'=>($parentFolder ($parent_id)), '$oldid'".($oldid?"=>($oldFolder ($old_hash))":'').", '$displayname', $type)");
+		$this->_connect($this->account);
+		try
+		{
+			if ($action=='rename')
+			{
+				$newFolderName = $this->mail->renameFolder($oldFolder, $parentFolder, $displayname);
+			}
+			elseif ($action=='create')
+			{
+				$error=null;
+				$newFolderName = $this->mail->createFolder($parentFolder, $displayname, $error);
+			}
+		}
+		catch (\Exception $e)
+		{
+			//throw new Exception(__METHOD__." $action failed for $oldFolder ($action: $displayname) with error:".$e->getMessage());
+			return false;
+		}
+		$newHash = $this->rename_folder_hash($account, $old_hash, $newFolderName);
+		$newID = $this->createID($account, $newHash);
+
+		ZLog::Write(LOGLEVEL_DEBUG,":{$action}Folder('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname' => $newFolderName (ID:$newID))");
+		return $this->StatFolder($newID);
 	}
 
 	/**
 	 * Deletes (really delete) a Folder
 	 *
-	 * @param string $parentid of the folder to delete
 	 * @param string $id of the folder to delete
+	 * @param string $parentid (=false) of the folder to delete, may be false/not set
 	 *
-	 * @return
-	 * @TODO check what is to be returned
+	 * @throws StatusException              could throw specific SYNC_FSSTATUS_* exceptions
+	 * @return boolean true or false on error
 	 */
-	public function DeleteFolder($parentid, $id)
+	public function DeleteFolder($id, $parentid=false)
 	{
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$parentid', '$id') NOT supported!");
-		return false;
+		$account = $parent_id = $app = null;
+		$this->splitID($id, $account, $folder, $app);
+		$old_hash = $this->folder2hash($account, $folder);
+		if ($parentid) $this->splitID($parentid, $account, $parentfolder, $app);
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."( '$id (-> $folder)','$parentid ".($parentid?'(->'.$parentfolder.')':'')."') called!");
+		$ret = $this->mail->deleteFolder($folder);
+		if ($ret) $newHash = $this->rename_folder_hash($account, $old_hash, "##Dele#edFolder#$folder##");
+		return $ret;
 	}
 
 	/**
@@ -1952,22 +2020,22 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	}
 
 	/**
-	 * Split an ID string into $app, $folder and $id
+	 * Split an ID string into $app, $account $folder and $appid
 	 *
 	 * @param string $str
 	 * @param int &$account mail account id
 	 * @param string &$folder
-	 * @param int &$id=null
+	 * @param int &$appid=null (for mail=mail is to be expected)
 	 * @throws Api\Exception\WrongParameter
 	 */
-	private function splitID($str,&$account,&$folder,&$id=null)
+	private function splitID($str,&$account,&$folder,&$appid=null)
 	{
-		$this->backend->splitID($str, $account, $folder, $id);
+		$this->backend->splitID($str, $account, $folder, $appid);
 
 		// convert numeric folder-id back to folder name
 		$folder = $this->hash2folder($account,$f=$folder);
 
-		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$str','$account','$folder',$id)");
+		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$str','$account','$folder',$appid)");
 	}
 
 	/**
@@ -2012,6 +2080,25 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if(!isset($this->folderHashes)) $this->readFolderHashes();
 
 		return isset($this->folderHashes[$account]) ? $this->folderHashes[$account][$index] : null;
+	}
+
+	/**
+	 * Rename or create a folder in hash table
+	 *
+	 * @param int $account
+	 * @param int $index or null to create
+	 * @param string $new_name
+	 * @return int $index or new hash if $index is not found
+	 */
+	private function rename_folder_hash($account, $index, $new_name)
+	{
+		if ((string)$index === '' || !$this->hash2folder($account, $index))
+		{
+			return $this->folder2hash($account, $new_name);
+		}
+		$this->folderHashes[$account][$index] = $new_name;
+		$this->storeFolderHashes();
+		return $index;
 	}
 
 	private $folderHashes;

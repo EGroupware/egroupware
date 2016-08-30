@@ -786,11 +786,11 @@
     margin-left: 2px;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item a div.sideboxstar {
-    width: 3px;
-    height: 11px;
+    width: 4px;
+    height: 12px;
     margin-left: 5px;
     margin-right: 10px;
-    background-image: url(../images/bullet.png);
+    background-image: url(../../api/templates/default/images/fav_filter.png);
     background-size: 12px 12px;
     background-position: 0 0;
     background-repeat: no-repeat;
@@ -1633,7 +1633,7 @@ body {
   color: #000000;
   margin: 0px !important;
   padding: 0px !important;
-  width: 99.9% !important;
+  width: 99.9%;
   height: 99.9% !important;
   font-size: 11px;
   line-height: 1.28;
@@ -2038,7 +2038,7 @@ input[type=button]:hover {
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
   background-color: #1aa200;
-  background-size: 20px 20px;
+  background-size: 16px 16px;
 }
 button.et2_button_text:active,
 input[type=button]:active {
@@ -5239,7 +5239,7 @@ table.egwGridView_outer {
 table.egwGridView_outer thead {
   max-height: 118px;
   overflow-y: auto;
-  background: #e0e0e0;
+  background: white;
   border-radius: 5px;
 }
 table.egwGridView_outer thead tr th {
@@ -5247,13 +5247,14 @@ table.egwGridView_outer thead tr th {
   font-weight: normal;
   padding: 3px 1px 3px 4px;
   border-color: #B4B4B4;
-  border-left: 0px solid transparent;
+  border-left: 1px solid white;
   border-top: 0px solid transparent;
-  border-right: 2px solid white;
+  border-right: 1px solid white;
   border-bottom: 0px solid transparent;
   vertical-align: middle;
   overflow: auto;
   border-radius: 5px;
+  background: #e0e0e0;
 }
 table.egwGridView_outer thead tr th:hover {
   background-color: #bfbfbf;

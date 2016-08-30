@@ -85,8 +85,8 @@ class calendar_hooks
 	{
 		$file = Array(
 			'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
-			'Custom fields' => Egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar'),
-			'Global Categories' => Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
+			'Custom fields' => Egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar&ajax=true'),
+			'Global Categories' => Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar&ajax=true'),
 			'Category ACL' => Egw::link('/index.php','menuaction=calendar.calendar_uiforms.cat_acl'),
 			'Update timezones' => Egw::link('/index.php','menuaction=calendar.calendar_timezones.update'),
 		);
@@ -158,7 +158,7 @@ class calendar_hooks
 		{
 			$times = Api\Etemplate\Widget\Select::typeOptions('select-hour', '');
 		}
-		for ($i = 2; $i <= 4; ++$i)
+		for ($i = 2; $i <= 9; ++$i)
 		{
 			$muliple_weeks[$i] = lang('%1 weeks',$i);
 		}
@@ -304,6 +304,23 @@ class calendar_hooks
 				'name'   => 'limit_des_lines',
 				'help'   => 'How many describtion lines should be directly visible. Further lines are available via a scrollbar.',
 				'xmlrpc' => True,
+				'admin'  => False
+			),
+			'birthdays_as_events' => array(
+				'type'   => 'checkbox',
+				'label'  => 'Show birthdays as events',
+				'name'   => 'birthdays_as_events',
+				'help'   => 'Show birthdays as all day non-blocking events as well as via mouseover of the date.',
+				'default'=> FALSE
+			),
+			'limit_all_day_lines' => array(
+				'type'   => 'input',
+				'size'   => 5,
+				'label'  => 'Limit number of lines for all day events',
+				'name'   => 'limit_all_day_lines',
+				'help'   => 'How many lines of all day events should be directly visible. Further lines are available via a mouseover.',
+				'xmlrpc' => True,
+				'default'=> 3,
 				'admin'  => False
 			),
 			'planner_show_empty_rows' => array(

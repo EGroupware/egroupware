@@ -1,11 +1,11 @@
 Name: egroupware-epl
-Version: 16.1.20160603
+Version: 16.1.20160801
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
 License: GPLv2 with exception of stylite and esyncpro module, which is proprietary
 URL: http://www.stylite.de/EPL
-Vendor: Stylite AG, http://www.stylite.de/
+Vendor: Stylite GmbH, http://www.stylite.de/
 Packager: Ralf Becker <rb@stylite.de>
 Prefix: /usr/share
 %define egwdir %{prefix}/egroupware
@@ -48,6 +48,15 @@ Prefix: /usr/share
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
+
+# try fixing zypper does not require secondary dependency to egropware-epl-compat of following packages
+Suggests: %{name}-jdots           = %{version}
+Suggests: %{name}-phpbrain        = %{version}
+Suggests: %{name}-phpfreechat     = %{version}
+Suggests: %{name}-sambaadmin      = %{version}
+Suggests: %{name}-sitemgr         = %{version}
+Suggests: %{name}-wiki            = %{version}
+
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d

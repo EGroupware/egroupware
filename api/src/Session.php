@@ -183,6 +183,13 @@ class Session
 	var $reason;
 
 	/**
+	 * Session action set by update_dla or set_action and stored in __destruct
+	 *
+	 * @var string
+	 */
+	protected $action;
+
+	/**
 	 * Constructor just loads up some defaults from cookies
 	 *
 	 * @param array $domain_names =null domain-names used in this install
@@ -260,18 +267,21 @@ class Session
 	function __wakeup()
 	{
 		ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
+
+		$this->action = null;
 	}
 
 	/**
-	 * Destructor
-	 *
+	 * Destructor: update access-log and encrypt session
 	 */
 	function __destruct()
 	{
-		//if (empty($GLOBALS['egw_info']['user']['passwd']) )//|| empty($this->appsession('password','phpgwapi'))
-		//{
-		//	error_log('__destruct'.'~252'.'->'." REQUEST_URI".$_SERVER['REQUEST_URI']);
-		//}
+		// write dla update on destruct, allows to modify session action by calling Session::set_action()
+		if (!isset($GLOBALS['egw_info']['flags']['no_dla_update']) || !$GLOBALS['egw_info']['flags']['no_dla_update'])
+		{
+			$this->update_dla(true);
+		}
+
 		self::encrypt($this->kp3);
 	}
 
@@ -367,7 +377,7 @@ class Session
 	/**
 	 * Decrypt the variables in the session
 	 *
-	 * Is called by self::init_handler from phpgwapi/inc/functions.inc.php (called from the header.inc.php)
+	 * Is called by self::init_handler from api/src/loader.php (called from the header.inc.php)
 	 * before the restore of the eGW enviroment takes place, so that the whole thing can be encrypted
 	 */
 	static function decrypt()
@@ -815,7 +825,7 @@ class Session
 		{
 			// we generate a pseudo-sessionid from the basic auth credentials
 			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.
-				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php').
+				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/api/setup/setup.inc.php').
 				// for ActiveSync we add the DeviceID
 				(isset($_GET['DeviceId']) && $_SERVER['SCRIPT_NAME'] === '/Microsoft-Server-ActiveSync' ? ':'.$_GET['DeviceId'] : '').
 				':'.$_SERVER['HTTP_USER_AGENT']);
@@ -829,7 +839,7 @@ class Session
 			// can't use full $_SERVER['PHP_AUTH_DIGEST'], as it changes (contains eg. the url)
 			$data = Header\Authenticate::parse_digest($_SERVER['PHP_AUTH_DIGEST']);
 			$sessionid = md5($data['username'].':'.$data['realm'].':'.$data['nonce'].':'.$_SERVER['HTTP_HOST'].
-				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php').
+				EGW_SERVER_ROOT.':'.self::getuser_ip().':'.filemtime(EGW_SERVER_ROOT.'/api/setup/setup.inc.php').
 				':'.$_SERVER['HTTP_USER_AGENT']);
 		}
 		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
@@ -1358,44 +1368,57 @@ class Session
 	}
 
 	/**
+	 * Set action logged in access-log
+	 *
+	 * @param string $action
+	 */
+	public function set_action($action)
+	{
+		$this->action = $action;
+	}
+
+	/**
 	 * Update session_action and session_dla (session last used time)
 	 *
-	 * @param boolean $update_access_log =true false: dont update egw_access_log table
+	 * @param boolean $update_access_log =false false: dont update egw_access_log table, but set $this->action
 	 * @return string action as written to egw_access_log.session_action
 	 */
-	private function update_dla($update_access_log=true)
+	private function update_dla($update_access_log=false)
 	{
 		// This way XML-RPC users aren't always listed as xmlrpc.php
-		if ($this->xmlrpc_method_called)
+		if (!$update_access_log)
 		{
-			$action = $this->xmlrpc_method_called;
-		}
-		elseif (isset($_GET['menuaction']))
-		{
-			$action = $_GET['menuaction'];
-		}
-		else
-		{
-			$action = $_SERVER['PHP_SELF'];
-			// remove EGroupware path, if not installed in webroot
-			$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
-			if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
-			if ($action == '/Microsoft-Server-ActiveSync')
+			if ($this->xmlrpc_method_called)
 			{
-				$action .= '?Cmd='.$_GET['Cmd'].'&DeviceId='.$_GET['DeviceId'];
+				$action = $this->xmlrpc_method_called;
 			}
-			elseif ($egw_path)
+			elseif (isset($_GET['menuaction']))
 			{
-				list(,$action) = explode($egw_path,$action,2);
+				$action = $_GET['menuaction'];
 			}
+			else
+			{
+				$action = $_SERVER['PHP_SELF'];
+				// remove EGroupware path, if not installed in webroot
+				$egw_path = $GLOBALS['egw_info']['server']['webserver_url'];
+				if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
+				if ($action == '/Microsoft-Server-ActiveSync')
+				{
+					$action .= '?Cmd='.$_GET['Cmd'].'&DeviceId='.$_GET['DeviceId'];
+				}
+				elseif ($egw_path)
+				{
+					list(,$action) = explode($egw_path,$action,2);
+				}
+			}
+			$this->set_action($action);
 		}
-
 		// update dla in access-log table, if we have an access-log row (non-anonymous session)
-		if ($this->sessionid_access_log && $update_access_log)
+		if ($this->sessionid_access_log && $update_access_log && is_object($GLOBALS['egw']->db))
 		{
 			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
 				'session_dla' => time(),
-				'session_action' => $action,
+				'session_action' => $this->action,
 				'lo' => null,	// just in case it was (automatic) timed out before
 			),array(
 				'sessionid' => $this->sessionid_access_log,
@@ -1403,10 +1426,10 @@ class Session
 		}
 
 		$_SESSION[self::EGW_SESSION_VAR]['session_dla'] = time();
-		$_SESSION[self::EGW_SESSION_VAR]['session_action'] = $action;
+		$_SESSION[self::EGW_SESSION_VAR]['session_action'] = $this->action;
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() _SESSION['.self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
 
-		return $action;
+		return $this->action;
 	}
 
 	/**

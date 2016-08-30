@@ -304,7 +304,7 @@ function get_account_id($account_id = '',$default_id = '')
 	}
 	elseif (is_string($account_id))
 	{
-		if($GLOBALS['egw']->accounts->exists((int)$account_id) == True)
+		if((int)$account_id && $GLOBALS['egw']->accounts->exists((int)$account_id) == True)
 		{
 			return (int)$account_id;
 		}

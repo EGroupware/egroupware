@@ -67,7 +67,7 @@ class mail_sieve
 	function __construct()
 	{
 		$this->displayCharset = Api\Translation::charset();
-		$this->mail_admin = isset($GLOBALS['egw_info']['user']['apps']['emailadmin']);
+		$this->mail_admin = isset($GLOBALS['egw_info']['user']['apps']['admin']);
 		$this->mailConfig = Api\Config::read('mail');
 
 		$acc_id = isset($_GET['acc_id']) ? (int)$_GET['acc_id'] : Api\Cache::getSession(__CLASS__, 'acc_id');
@@ -446,7 +446,7 @@ class mail_sieve
 		if (is_null($accountID)) $accountID = $GLOBALS['egw_info']['user']['account_id'];
 
 		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(Api\Accounts::id2name($accountID));
-		$allAliases = array($this->account->ident_email);
+		$allAliases = $this->account->ident_email !=''? array($this->account->ident_email): array();
 		foreach ($accAllIdentities as &$arrVal)
 		{
 			if ($arrVal['type'] !='default')

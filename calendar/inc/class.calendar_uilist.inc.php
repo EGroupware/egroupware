@@ -221,13 +221,11 @@ class calendar_uilist extends calendar_ui
 		$params['order'] = 'cal_start';
 		if ($keywords)
 		{
-			$params['filter'] = 'all';
 			$params['sort'] = 'DESC';
 			unset($params['col_filter']['participant']);
 		}
 		else
 		{
-			$params['filter'] = 'after';
 			$params['sort'] = 'ASC';
 		}
 	}
@@ -273,6 +271,7 @@ class calendar_uilist extends calendar_ui
 			if ($old_params['search'] != $params['search'])
 			{
 				$this->adjust_for_search($params['search'],$params);
+				$this->filter = $params['filter'];
 			}
 		}
 		if (!$params['csv_export']) Api\Cache::setSession('calendar', 'calendar_list', $params);
@@ -887,6 +886,14 @@ class calendar_uilist extends calendar_ui
 				'group' => $group,
 				'disableClass' => 'rowNoView',
 				'url' => 'menuaction=calendar.calendar_uiforms.edit&cal_id=$id&action=copy',
+				'popup' => Link::get_registry('calendar', 'view_popup'),
+				'allowOnMultiple' => false,
+			),
+			'print' => array(
+				'caption' => 'Print',
+				'group' => $group,
+				'disableClass' => 'rowNoView',
+				'url' => 'menuaction=calendar.calendar_uiforms.edit&cal_id=$id&print=1',
 				'popup' => Link::get_registry('calendar', 'view_popup'),
 				'allowOnMultiple' => false,
 			),

@@ -356,20 +356,15 @@ class Accounts
 	/**
 	 * Reads the data of one account
 	 *
-	 * It's depricated to use read with out parameter to read the internal data of this class!!!
 	 * All key of the returned array use the 'account_' prefix.
 	 * For backward compatibility some values are additionaly availible without the prefix, using them is depricated!
 	 *
-	 * @param int|string $id numeric account_id or string with account_lid (use of default value of 0 is depricated!!!)
+	 * @param int|string $id numeric account_id or string with account_lid
 	 * @param boolean $set_depricated_names =false set _additionaly_ the depricated keys without 'account_' prefix
 	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
-	function read($id=0,$set_depricated_names=false)
+	function read($id, $set_depricated_names=false)
 	{
-		if (!$id)	// deprecated use!!!
-		{
-			return $this->data ? $this->data : $this->read_repository();
-		}
 		if (!is_int($id) && !is_numeric($id))
 		{
 			$id = $this->name2id($id);
@@ -791,7 +786,7 @@ class Accounts
 	 */
 	function exists($account_id)
 	{
-		if (!($data = $this->read($account_id)))
+		if (!$account_id || !($data = $this->read($account_id)))
 		{
 			return 0;
 		}

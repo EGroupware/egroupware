@@ -83,7 +83,7 @@ class importexport_definition implements importexport_iface_egw_record {
 			try
 			{
 				$options_data = importexport_arrayxml::xml2array( $this->definition['plugin_options'] );
-				$this->definition['plugin_options'] = $options_data['root'];
+				$this->definition['plugin_options'] = (array)$options_data['root'];
 				if($this->definition['filter']) $filter = importexport_arrayxml::xml2array( $this->definition['filter']  );
 				$this->definition['filter'] = $filter['root'];
 			}

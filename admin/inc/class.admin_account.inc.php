@@ -265,6 +265,17 @@ class admin_account
 	 */
 	public static function ajax_check(array $data, $changed)
 	{
+		// for 1. password field just check password complexity
+		if ($changed == 'account_passwd')
+		{
+			$data['account_fullname'] = $data['account_firstname'].' '.$data['account_lastname'];
+			if (($error = Api\Auth::crackcheck($data['account_passwd'], null, null, null, $data)))
+			{
+				$error .= "\n\n".lang('If you ignore that error as admin, you should check "%1"!', lang('Must change password upon next login'));
+			}
+			Api\Json\Response::get()->data($error);
+			return;
+		}
 		// generate default email address, but only for new Api\Accounts
 		if (!$data['account_id'] && in_array($changed, array('n_given', 'n_family', 'account_lid')))
 		{

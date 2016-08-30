@@ -322,6 +322,10 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			// 0 means current user
 			user = egw.user('account_id');
 		}
+		if(et2_calendar_view.owner_name_cache[user])
+		{
+			return et2_calendar_view.owner_name_cache[user];
+		}
 		if (!isNaN(user))
 		{
 			user = parseInt(user);
@@ -349,15 +353,22 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			}
 			if(options && options.find)
 			{
-				user = options.find(function(element) {return element.id == user;}) || {};
-				label = user.label;
+				var found = options.find(function(element) {return element.id == user;}) || {};
+				if(found && found.label)
+				{
+					label = found.label;
+				}
 			}
-			else
+			if(!label)
 			{
 				// No sidebox?  Must be in home or sitemgr (no caching) - ask directly
 				label = '?';
 				egw.json('calendar_owner_etemplate_widget::ajax_owner',user,function(data) {label = data;}, this).sendRequest();
 			}
+		}
+		if(label)
+		{
+			et2_calendar_view.owner_name_cache[user] = label;
 		}
 		return label;
 	},
@@ -591,6 +602,11 @@ jQuery.extend(et2_calendar_view,
 			view === 'week' && owners.length < parseInt(egw.preference('week_consolidate','calendar')))
 		);
 	},
+
+	/**
+	 * Cache to map owner & resource IDs to names, helps cut down on server requests
+	 */
+	owner_name_cache: {},
 
 	holiday_cache: {},
 	/**

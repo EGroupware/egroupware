@@ -82,9 +82,9 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			if(!is_numeric($owner))
 			{
 				$resource = $bo->resources[substr($owner, 0,1)];
-				if($resource['info'])
+				if($resource['info'] && !($info = $bo->resource_info($owner)))
 				{
-					$info = $bo->resource_info($owner);
+					continue;	// ignore that resource, we would get a PHP Fatal: Unsupported operand types
 				}
 			}
 			else if (!in_array($owner, array_keys($accounts)))
@@ -140,7 +140,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 
 		$bo = new calendar_bo();
 		$query = $_REQUEST['query'];
-		
+
 		// Arbitrarily limited to 50 / resource
 		$options = array('start' => 0, 'num_rows' => 50) +
 			array_diff_key($_REQUEST, array_flip(array('menuaction','query')));
@@ -174,12 +174,19 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				// Include mailing lists
 				$contacts_obj = new Api\Contacts();
-				$_results += array_filter(
+				$lists = array_filter(
 					$contacts_obj->get_lists(Api\Acl::READ),
 					function($element) use($query) {
 						return (stripos($element, $query) !== false);
 					}
 				);
+				foreach($lists as $list_id => $list)
+				{
+					$_results[$list_id] = array(
+						'label' => $list,
+						'resources' => $bo->enum_mailing_list($type.$list_id)
+					);
+				}
 			}
 			if(!$_results)
 			{

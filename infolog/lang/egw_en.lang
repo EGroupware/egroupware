@@ -120,7 +120,7 @@ custom	infolog	en	Custom fields
 custom contact-address, leave empty to use information from most recent link	infolog	en	Custom contact address, leave empty to use information from most recent link
 custom contact-information, leave emtpy to use information from most recent link	infolog	en	Custom contact information, leave empty to use information from most recent link
 custom fields	infolog	en	Custom fields
-custom fields, typ and status	common	en	Custom fields, type and status
+custom fields, type and status	common	en	Custom fields, type and status
 custom from	infolog	en	Custom from
 custom regarding	infolog	en	Custom regarding
 custom status for typ	infolog	en	Custom status for type

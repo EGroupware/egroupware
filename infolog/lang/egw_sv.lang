@@ -78,7 +78,7 @@ custom	infolog	sv	Anpassad
 custom contact-address, leave empty to use information from most recent link	infolog	sv	Anpassade kontaktadresser, lämna tom för att använda info från senaste länk
 custom contact-information, leave emtpy to use information from most recent link	infolog	sv	Anpassade kontaktadresser, lämna tom för att använda info från senaste länk
 custom fields	infolog	sv	Anpassade fält
-custom fields, typ and status	common	sv	Anpassade fält, typ och status
+custom fields, type and status	common	sv	Anpassade fält, typ och status
 custom regarding	infolog	sv	Anpassa beträffande
 custom status for typ	infolog	sv	Anpassad status för typ
 customfields	infolog	sv	Anpassat fält

@@ -79,7 +79,7 @@ custom	infolog	pl	Własne
 custom contact-address, leave empty to use information from most recent link	infolog	pl	Własne dane adresowe dla kontaktu, zostaw puste aby użyć informacji z dodawanego linku
 custom contact-information, leave emtpy to use information from most recent link	infolog	pl	Własna informacja dla kontaktu, zostaw puste aby użyć informacji z dodawanego linku
 custom fields	infolog	pl	Pola własne
-custom fields, typ and status	common	pl	Typ i status pola własnego
+custom fields, type and status	common	pl	Typ i status pola własnego
 custom regarding	infolog	pl	Custom regarding
 custom status for typ	infolog	pl	Własny status dla typu
 customfields	infolog	pl	Polawłasne

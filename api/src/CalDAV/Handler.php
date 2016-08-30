@@ -549,12 +549,12 @@ abstract class Handler
 	/**
 	 * Create the path/name for an entry
 	 *
-	 * @param array $entry
+	 * @param int|string|array $entry
 	 * @return string
 	 */
 	function get_path($entry)
 	{
-		return $entry[self::$path_attr].self::$path_extension;
+		return (is_array($entry) ? $entry[self::$path_attr] : $entry).self::$path_extension;
 	}
 
 	/**

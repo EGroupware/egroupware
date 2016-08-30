@@ -211,6 +211,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					{
 						this.set_enddate_visibility();
 						this.check_recur_type();
+						this.edit_start_change();
 						this.et2.getWidgetById('recur_exception').set_disabled(!content.data.recur_exception ||
 							typeof content.data.recur_exception[0] == 'undefined');
 					}
@@ -277,6 +278,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	observer: function(_msg, _app, _id, _type, _msg_type, _links)
 	{
 		var do_refresh = false;
+		if(this.state.view === 'listview')
+		{
+			app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm').refresh(_id,_type);
+		}
 		switch(_app)
 		{
 			case 'infolog':
@@ -1036,6 +1041,32 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	},
 
 	/**
+	 * Actions for when the user changes the event start date in edit dialog
+	 * 
+	 * @returns {undefined}
+	 */
+	edit_start_change: function(input, widget)
+	{
+		if(!widget)
+		{
+			widget = etemplate2.getById('calendar-edit').widgetContainer.getWidgetById('start');
+		}
+		
+		// Update settings for querying participants
+		this.edit_update_participant(widget);
+
+		// Update recurring date limit, if not set it can't be before start
+		if(widget)
+		{
+			var recur_end = widget.getRoot().getWidgetById('recur_enddate');
+			if(recur_end && !recur_end.getValue())
+			{
+				recur_end.set_min(widget.getValue());
+			}
+		}
+	},
+
+	/**
 	 * Show/Hide end date, for both edit and freetimesearch popups,
 	 * based on if "use end date" selected or not.
 	 *
@@ -1392,7 +1423,12 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						target = target.parentNode;
 					}
 
-					context = extra = target.dataset;
+					context = extra = jQuery.extend({},target.dataset);
+					var owner = jQuery(target).closest('[data-owner]').get(0);
+					if(owner && owner.dataset.owner && owner.dataset.owner != this.state.owner)
+					{
+						extra.owner = owner.dataset.owner.split(',');
+					}
 				}
 				if(context.date) extra.date = context.date;
 				if(context.app) extra.app = context.app;
@@ -3458,6 +3494,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				{
 					this.state.keywords = nm.activeFilters.search;
 				}
+				// Bind to keep search up to date
+				jQuery(nm.getWidgetById('search').getDOMNode()).on('change', function() {
+					app.calendar.state.search = jQuery('input',this).val();
+				});
 				nm.set_startdate = jQuery.proxy(function(date) {
 					this.state.first = this.date.toString(new Date(date));
 				},this);
@@ -3971,11 +4011,11 @@ jQuery.extend(app.classes.calendar,{
 		listview: app.classes.calendar.prototype.View.extend({
 			header: function(state)
 			{
-				var startDate = new Date(state.first);
+				var startDate = new Date(state.first || state.date);
 				startDate = new Date(startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000);
 				var start_check = ''+startDate.getFullYear() + startDate.getMonth() + startDate.getDate();
 
-				var endDate = new Date(state.last);
+				var endDate = new Date(state.last || state.date);
 				endDate = new Date(endDate.valueOf() + endDate.getTimezoneOffset() * 60 * 1000);
 				var end_check = ''+endDate.getFullYear() + endDate.getMonth() + endDate.getDate();
 				return app.calendar.View._owner(state) +

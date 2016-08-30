@@ -1817,8 +1817,9 @@ class infolog_ui
 					{
 						//echo "<p>writing links for new entry $info_id</p>\n"; _debug_array($content['link_to']['to_id']);
 						Link::link('infolog',$info_id,$content['link_to']['to_id']);
-						$content['link_to']['to_id'] = $info_id;
 					}
+					$content['link_to']['to_id'] = $info_id;
+
 					if ($info_link_id && strpos($info_link_id,':') !== false)	// updating info_link_id if necessary
 					{
 						list($app,$id) = explode(':',$info_link_id);

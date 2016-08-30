@@ -158,7 +158,7 @@ class calendar_holidays
 			error_log("No holiday iCal for '$country'!");
 			return array();
 		}
-		if (!($f = fopen($url, 'r')))
+		if (!($f = fopen($url, 'r', false, Api\Framework::proxy_context())))
 		{
 			error_log("Can NOT open holiday iCal '$url' for country '$country'!");
 			return array();
@@ -186,12 +186,8 @@ class calendar_holidays
 
 		if (!isset($urls))
 		{
-			$ctx = stream_context_create(array(
-				'http'=> array(
-					'timeout' => 1,
-				)
-			));
-			if (!($json = file_get_contents(self::EGW_HOLIDAY_URL.self::HOLIDAY_PATH, false, $ctx)))
+			if (!($json = file_get_contents(self::EGW_HOLIDAY_URL.self::HOLIDAY_PATH, false,
+				Api\Framework::proxy_context(null, null, array('timeout' => 1)))))
 			{
 				$json = file_get_contents(EGW_SERVER_ROOT.self::HOLIDAY_PATH);
 			}

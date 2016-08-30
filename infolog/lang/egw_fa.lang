@@ -73,7 +73,7 @@ custom	infolog	fa	سفارشی
 custom contact-address, leave empty to use information from most recent link	infolog	fa	نشانی سفارشی مخاطب(ین).ذینفع(ان)، برای استفاده از پیوندهایی که اخیرا استفاده شده اند، خالی بگذارید
 custom contact-information, leave emtpy to use information from most recent link	infolog	fa	اطلاعات سفارشی مخاطب(ین).ذینفع(ان)،  برای استفاده از پیوندهایی که اخیرا استفاده شده اند، خالی بگذارید
 custom fields	infolog	fa	فیلدهای سفارشی
-custom fields, typ and status	common	fa	فیلدهای سفارشی، نوع و وضعیت
+custom fields, type and status	common	fa	فیلدهای سفارشی، نوع و وضعیت
 custom regarding	infolog	fa	عطف سفارشی
 custom status for typ	infolog	fa	وضعیت سفارشی برای نوع
 customfields	infolog	fa	فیلدهای سفارشی

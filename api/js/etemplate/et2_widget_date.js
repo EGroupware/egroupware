@@ -150,6 +150,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 			}
 
 			// Avoid collision of datepicker dialog with input field
+			var widget = this;
 			this.input_date.datepicker('option', 'beforeShow', function(input, inst){
 				var cal = inst.dpDiv;
 				setTimeout(function () {
@@ -166,6 +167,10 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 							of: input
 						});
 					}
+					// Add tooltip to Today/Now button
+					jQuery('[data-handler="today"]',cal).attr('title',
+						widget._type == 'date' ? egw.lang('Today') : egw.lang('Now')
+					);
 
 				},0);
 			})
@@ -467,7 +472,7 @@ String: A string in the user\'s date format, or a relative date. Relative dates 
 			_value = date('Y-m-d\\TH:i:s\\Z', _value);
 		}
 		// Check for full timestamp
-		if(typeof _value == 'string' && _value.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(?:\.\d{3})?(?:Z|[+-](\d{2})\:(\d{2}))/))
+		if(typeof _value == 'string' && _value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})(?:\.\d{3})?(?:Z|[+-](\d{2})\:(\d{2})|)$/))
 		{
 			_value = new Date(_value);
 		}
