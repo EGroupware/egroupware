@@ -71,6 +71,8 @@ a,a:link,a:visited,a:hover {
 /* hide background-image to save print costs and spool time */
 body {
 	background-image: none;
+	/*this webkit force browser to print background and images. should work for Chrome/Safari/Firefox*/
+	-webkit-print-color-adjust: exact;
 }
 
 /* MSIE needs these styles to repeat table header and footer part on each page */
