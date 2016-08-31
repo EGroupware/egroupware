@@ -200,7 +200,7 @@ class Link extends Link\Storage
 		if (Header\UserAgent::type() == 'firefox' && $GLOBALS['egw_info']['user']['preferences']['common']['theme'] == 'mobile' ||
 			Header\UserAgent::mobile())
 		{
-			unset(self::$app_register['home']['mime']['application/pdf']);
+			unset(self::$app_register['api']['mime']['application/pdf']);
 		}
 		// other apps can participate in the linking by implementing a search_link hook, which
 		// has to return an array in the format of an app_register entry
