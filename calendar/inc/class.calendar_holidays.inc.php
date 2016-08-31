@@ -158,6 +158,16 @@ class calendar_holidays
 			error_log("Can NOT open holiday iCal '$url' for country '$country'!");
 			return array();
 		}
+		// php does not automatic gzip decode, but it does not accept that in request headers
+		// iCloud eg. always gzip compresses: https://p16-calendars.icloud.com/holidays/au_en-au.ics
+		foreach($http_response_header as $h)
+		{
+			if (preg_match('/^content-encoding:.*gzip/i', $h))
+			{
+				stream_filter_append($f, 'zlib.inflate', STREAM_FILTER_READ, array('window' => 15|16));
+				break;
+			}
+		}
 		$parser = new calendar_ical();
 		if (!($icals = $parser->icaltoegw($f)))
 		{
