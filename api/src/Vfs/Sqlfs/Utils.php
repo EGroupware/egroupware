@@ -153,7 +153,7 @@ class Utils extends StreamWrapper
 		$sqlfs = new StreamWrapper();
 		foreach($dirs as $path => $id)
 		{
-			if (!($stat = $sqlfs->url_stat($path, STREAM_URL_STAT_LINK)))
+			if (!($stat = $sqlfs->url_stat($path, STREAM_URL_STAT_LINK)) || $stat['ino'] != $id)
 			{
 				if ($check_only)
 				{
