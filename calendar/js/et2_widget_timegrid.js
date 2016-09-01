@@ -935,21 +935,12 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			this.day_widgets.splice(delete_index--,1);
 		}
 
+		this.set_header_classes();
+
 		// Create / update day widgets with dates and data
 		for(var i = 0; i < this.day_widgets.length; i++)
 		{
 			day = this.day_widgets[i];
-
-			// Classes
-			if(app.calendar && app.calendar.state &&
-				this.day_list[i] && parseInt(this.day_list[i].substr(4,2)) !== new Date(app.calendar.state.date).getUTCMonth()+1)
-			{
-				day.set_class('calendar_differentMonth');
-			}
-			else
-			{
-				day.set_class('');
-			}
 
 			// Position
 			day.set_left((day_width * i) + 'px');
@@ -998,6 +989,30 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			this.day_col.setDetachedAttributes(nodes.clone(),)
 		}
 		*/
+	},
+
+	/**
+	 * Set header classes
+	 *
+	 */
+	set_header_classes: function()
+	{
+		var day;
+		for(var i = 0; i < this.day_widgets.length; i++)
+		{
+			day = this.day_widgets[i];
+
+			// Classes
+			if(app.calendar && app.calendar.state &&
+				this.day_list[i] && parseInt(this.day_list[i].substr(4,2)) !== new Date(app.calendar.state.date).getUTCMonth()+1)
+			{
+				day.set_class('calendar_differentMonth');
+			}
+			else
+			{
+				day.set_class('');
+			}
+		}
 	},
 
 	/**
