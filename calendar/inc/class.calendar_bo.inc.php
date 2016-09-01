@@ -395,7 +395,15 @@ class calendar_bo
 			}
 			foreach($lists as &$contact)
 			{
-				$contact = 'c'.$contact['id'];
+				// Check for user account
+				if (($account_id = $GLOBALS['egw']->accounts->name2id($contact['id'],'person_id')))
+				{
+					$contact = ''.$account_id;
+				}
+				else
+				{
+					$contact = 'c'.$contact['id'];
+				}
 				if ($ignore_acl || $this->check_perms(ACL::READ|self::ACL_READ_FOR_PARTICIPANTS|($use_freebusy?self::ACL_FREEBUSY:0),0,$contact))
 				{
 					if ($contact && !in_array($contact,$contact_list))	// already added?

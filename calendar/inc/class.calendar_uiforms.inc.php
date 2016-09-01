@@ -440,7 +440,10 @@ class calendar_uiforms extends calendar_ui
 									{
 										foreach($this->bo->enum_mailing_list($participant) as $contact)
 										{
-											$event['participants'][$contact] = $event['participant_types']['c'][substr($contact,1)] = 
+											// Mailing lists can contain users, so allow for that possibility
+											$_type = is_numeric($contact) ? '' : $contact[0];
+											$_uid = is_numeric($contact) ? $contact : substr($contact,1);
+											$event['participants'][$contact] = $event['participant_types'][$_type][$_uid] =
 												calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
 										}
 										continue;
