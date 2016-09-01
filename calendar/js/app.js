@@ -2252,6 +2252,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						// Do not need to re-set this row, but we do need to re-do
 						// the times, as they may have changed
 						widget.resizeTimes();
+						window.setTimeout(jQuery.proxy(widget.set_header_classes, widget),0);
 
 						// Hide loader
 						widget.loader.hide();
