@@ -502,13 +502,17 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			cat.destroy();
 		}
 		var participants = '';
+		if(this.options.value.participant_types[''])
+		{
+			participants += this.options.value.participant_types[''].join("<br />");
+		}
 		for(var type_name in this.options.value.participant_types)
 		{
 			if(type_name)
 			{
 				participants += '</p><p><span class="calendar_calEventLabel">'+type_name+'</span>:<br />';
+				participants += this.options.value.participant_types[type_name].join("<br />");
 			}
-			participants += this.options.value.participant_types[type_name].join("<br />");
 		}
 
 		return '<div class="calendar_calEventTooltip ' + this._status_class() +' '+ this.options.class +
