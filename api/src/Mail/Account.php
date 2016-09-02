@@ -1502,7 +1502,7 @@ class Account implements \ArrayAccess
 						{
 							$account = new Account($params);
 						}
-						catch (Exception $x)
+						catch (\Exception $x)
 						{
 							unset($x);
 							continue;
