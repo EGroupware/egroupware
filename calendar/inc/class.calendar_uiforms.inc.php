@@ -137,7 +137,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$start = $this->bo->date2ts(array(
 				'full' => isset($_GET['date']) && (int) $_GET['date'] ? (int) $_GET['date'] : $this->date,
-				'hour' => (int) (isset($_GET['hour']) && (int) $_GET['hour'] ? $_GET['hour'] : $this->bo->cal_prefs['workdaystarts']),
+				'hour' => (int) (isset($_GET['hour']) ? $_GET['hour'] : $this->bo->cal_prefs['workdaystarts']),
 				'minute' => (int) $_GET['minute'],
 			));
 		}
