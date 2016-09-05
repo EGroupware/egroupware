@@ -55,6 +55,7 @@ class avatar
 	 *		array (
 	 *			'firstname' => [userFirstname],
 	 *			'lastname'  => [userLastname],
+	 *			'id'		=> [user id]
 	 *		)
 	 * @param array $_color = null an array of RGB color, default
 	 * is nul to get a random color from color library.
@@ -72,10 +73,11 @@ class avatar
 		$firstname = isset($_content['firstname'])? $_content['firstname'] : '';
 		//lastname
 		$lastname = isset($_content['lastname'])? $_content['lastname'] : '';
+		// id
+		$id = isset($_content['id'])? $_content['id']: '';
 
-		$bg_index = rand(0, count(self::$BG_COLORS));
 		// Array of RGB color as background color
-		$bgcolor = $_color ? $_color : self::$BG_COLORS[$bg_index];
+		$bgcolor = $_color ? $_color : self::_getBgColor($firstname.$lastname.$id);
 
 		// Letters to be shown
 		$text = $firstname[0].$lastname[0];
@@ -115,5 +117,24 @@ class avatar
 		{
 			imagedestroy($image);
 		}
+	}
+
+	/**
+	 * Function to select a color code from background colors array
+	 * base on given string phrase. (FirstName LastName Id)
+	 *
+	 * @param string $_str string to convert to a color code
+	 *
+	 * @return string color code
+	 */
+	private static function _getBgColor ($_str)
+	{
+		$hash = 0;
+		for ($i=0; $i< strlen($_str); $i++)
+		{
+			$hash = ord($_str[$i]) + $hash;
+		}
+		$index = $hash % count(self::$BG_COLORS);
+		return self::$BG_COLORS[$index];
 	}
 }
