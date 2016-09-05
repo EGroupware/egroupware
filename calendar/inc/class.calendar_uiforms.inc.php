@@ -507,7 +507,8 @@ class calendar_uiforms extends calendar_ui
 									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0, false, true, $content['no_notifications']))
 									{
 										// Update main window
-										$client_updated = $this->update_client($event['id'], $content['edit_single']);
+										$d = new Api\DateTime($contet['edit_single'], Api\DateTime::$user_timezone);
+										$client_updated = $this->update_client($event['id'], $d);
 
 										// refreshing the calendar-view with the changed participant-status
 										if($event['recur_type'] != MCAL_RECUR_NONE)
