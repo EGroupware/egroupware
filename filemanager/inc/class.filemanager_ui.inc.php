@@ -903,6 +903,7 @@ class filemanager_ui
 					$row['class'] .= 'noEdit ';
 				}
 				$row['class'] .= 'isDir ';
+				$row['is_dir'] = 1;
 			}
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
