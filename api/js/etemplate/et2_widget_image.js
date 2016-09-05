@@ -297,3 +297,122 @@ var et2_appicon = (function(){ "use strict"; return et2_image.extend(
 	}
 });}).call(this);
 et2_register_widget(et2_appicon, ["appicon"]);
+
+/**
+ * Avatar widget to display user profile picture or
+ * user letter avatar based on user's firstname lastname.
+ *
+ * @augments et2_baseWidget
+ */
+
+var et2_avatar = (function(){ "use strict"; return et2_image.extend(
+{
+	attributes: {
+		"contact_id": {
+			name: "Contact id",
+			type: "string",
+			default: "",
+			description: "Contact id should be either user account_id {account:number} or contact_id {contact:number or number}"
+		},
+		"default_src": {
+			"ignore": true
+		},
+		"frame": {
+			name: "Avatar frame",
+			type: "string",
+			default: "circle",
+			description: "Define the shape of frame that avatar will be shown inside it. it can get {circle,rectangle} values which default value is cicle."
+		}
+	},
+
+	init: function ()
+	{
+		this._super.apply(this,arguments);
+		if (this.options.frame == 'circle')
+		{
+			this.image.attr('style', 'border-radius:50%');
+		}
+		if (this.options.contact_id) this.setValue(this.options.contact_id);
+	},
+
+	/**
+	 * Function to set contact id
+	 * contact id could be in one of these formats:
+	 *		'number', will be consider as contact_id
+	 *		'contact:number', similar to above
+	 *		'account:number', will be consider as account id
+	 * @example: contact_id = "account:4"
+	 *
+	 * @param {string} _contact_id contact id could be as above mentioned formats
+	 */
+	set_contact_id: function(_contact_id)
+	{
+		var params = {
+			menuaction: 'addressbook.addressbook_ui.photo',
+			'etag' : ''
+		};
+		var id = 'contact_id';
+
+		if (!_contact_id)
+		{
+			_contact_id = this.egw().user('account_id');
+		}
+		else if(_contact_id.match(/account\:/))
+		{
+			id = 'account_id';
+			_contact_id = _contact_id.replace('account:','');
+		}
+		else
+		{
+			id = 'contact_id';
+			_contact_id = _contact_id.replace('contact:', '');
+		}
+
+		params[id] = _contact_id;
+		this.image.addClass('et2_avatar');
+
+		var url = egw.link('/index.php',params);
+		this.set_src(url);
+	},
+
+	/**
+	 * Function to set value
+	 * @param {string} _value
+	 */
+	setValue: function(_value)
+	{
+		this.set_contact_id(_value);
+	},
+
+	/**
+	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
+	 *
+	 * @param {array} _attrs
+	 */
+	getDetachedAttributes: function(_attrs) {
+		_attrs.push("contact_id", "label", "href");
+	},
+
+	setDetachedAttributes: function (_nodes, _values)
+	{
+		// Set the given DOM-Nodes
+		this.image = jQuery(_nodes[0]);
+
+		if (_values["contact_id"])
+		{
+			this.set_contact_id(_values["contact_id"]);
+		}
+
+		if (_values["label"])
+		{
+			this.set_label(_values["label"]);
+		}
+		if(_values["href"])
+		{
+			this.image.addClass('et2_clickable');
+			this.set_href(_values["href"]);
+		}
+	}
+
+});}).call(this);
+et2_register_widget(et2_avatar, ["avatar"]);
