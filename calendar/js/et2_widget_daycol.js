@@ -70,6 +70,9 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			.css('left', this.options.left);
 		this.title = jQuery(document.createElement('div'))
 			.appendTo(this.header);
+		this.user_spacer = jQuery(document.createElement('div'))
+			.addClass("calendar_calDayColHeader_spacer")
+			.appendTo(this.header);
 		this.all_day = jQuery(document.createElement('div'))
 			.addClass("calendar_calDayColAllDay")
 			.css('max-height', (egw.preference('limit_all_day_lines', 'calendar') || 3 ) * 1.4 + 'em')
@@ -126,6 +129,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 		this.div = null;
 		this.header = null;
 		this.title = null;
+		this.user_spacer = null;
 
 		// date_helper has no parent, so we must explicitly remove it
 		this.date_helper.destroy();
