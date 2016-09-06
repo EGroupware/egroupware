@@ -1,3 +1,28 @@
+egroupware-epl (16.1.20160905) hardy; urgency=low
+
+  * All apps: async notifications were not using SMTP only account, but personal one with unavailable session password
+  * Mail: Fix pdf attachments do not get downloaded in mobile template
+  * Mail: Fix save button in image view mode (expose) does not work for mails attachments
+  * Filemanager: fix missing symlink overlay on mime-icon
+  * Timesheet: do not show deactivated accounts for creating new timesheets (keeping them in list header)
+  * Calendar: use proxy config from setup >> configuration to download holiday calendars
+  * All apps: default preferences wont save because merge-print template directory does not exist
+  * Calendar: fix PHP Fatal: Unsupported operand types caused eg. by deleted resources
+  * Mail: iCal attachments are shown as such, only meeting requests trigger calendar interface with accept/reject buttons
+  * Admin/Mail/ProjectManager: add missing tree images for Stylite template
+  * Filemanager/WebDAV: generally deny user to delete directories /, /home, /apps, /templates (last 2 incl. subdirectories)
+  * All apps: symlink files to not yet saved entries were not working
+  * Calendar: fix PHP Fatal when clicking on a link to accept/decline an invitation mail
+  * Calendar: fix SQL error in eSync with double DISTINCT happening under some conditions
+  * Addresssbook: fixed category tree looses unavailable categories (eg. private categories of other users)
+  * Admin: warn admin if passwords for new accounts / password reset lack in strength
+  * Filemanager: fix not working changing owner or group of a file/directory (as root!)
+  * Filemanager: fix PHP Fatal error when changing ownership or permissions
+  * Timesheet/ProjectManager: fix not working linking timesheets to project by external project-member
+  * Filemanager/EPL: show application and entry directories again with application icon and therefore within files below directories
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 02 Sep 2016 20:13:31 +0200
+
 egroupware-epl (16.1.20160810) hardy; urgency=low
 
   * Mail: fix lost mail account password on user password change
