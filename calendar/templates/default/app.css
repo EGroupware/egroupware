@@ -325,16 +325,27 @@ Hide subsequent headers in week view with non-consolidated owners
 #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader .calendar_calDayColHeader > div[data-date] {
 	display:none;
 }
+#calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader  > span.et2_label
+{
+    position: absolute;
+    top: 2em;
+}
+#calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader .calendar_calDayColHeader_spacer
+{
+	height: ~"calc(1.5em + 5px)";
+}
 #calendar-view_view.hideDayColHeader tr .calendar_calGridHeader  > span.et2_label {
 	white-space:nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-#calendar-view_view.hideDayColHeader tr .calendar_calGridHeader  > span.et2_label:hover {
-	overflow: visible;
-    width: auto;
-	background-color: inherit;
-    z-index: 100;
+	display: block;
+	position: static;
+    width: ~"calc(100% - 58px)";
+	margin-left: 58px;
+    color: white;
+    background-color: #0C5DA5;
+    text-align: center;
+    line-height: 1.5em;
+    font-size: 14px;
+	z-index: 35;
 }
 
 /* single row in the time-line you dont need to set a bgcolor, but you can
@@ -545,6 +556,8 @@ Hide subsequent headers in week view with non-consolidated owners
 	line-height: 27px;
 	width: 58px;
 	text-align: center;
+	position: absolute;
+	top: 0px;
 }
 
 .calendar_calGridHeader > span.et2_label {
@@ -734,7 +747,6 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 .calendar_calDayColHeader .calendar_calEvent .calendar_calEventBody {
 	white-space: nowrap;
-	background-color: #f0f0f0;
 }
 .calendar_calEventTooltip{
 	padding-left: 6px;
