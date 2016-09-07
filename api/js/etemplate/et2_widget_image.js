@@ -322,6 +322,12 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 			type: "string",
 			default: "circle",
 			description: "Define the shape of frame that avatar will be shown inside it. it can get {circle,rectangle} values which default value is cicle."
+		},
+		editable: {
+			name: "Edit avatar",
+			type: "boolean",
+			default: false,
+			description: "Make avatar widget editable to be able to crop profile picture or upload a new photo"
 		}
 	},
 
@@ -411,6 +417,62 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 		{
 			this.image.addClass('et2_clickable');
 			this.set_href(_values["href"]);
+		}
+	},
+
+	/**
+	 * Build Editable Mask Layer (EML) in order to show edit/delete actions
+	 * on top of profile picture.
+	 */
+	_buildEditableLayer: function ()
+	{
+		var self = this;
+		// editable mask layer (eml)
+		var eml = jQuery(document.createElement('div'))
+				.addClass('eml')
+				.insertAfter(this.image);
+
+		// edit button
+		var edit = jQuery(document.createElement('div'))
+				.addClass('emlEdit')
+				.click(function(){
+					// Todo
+				})
+				.appendTo(eml);
+
+		// delete button
+		var del = jQuery(document.createElement('div'))
+				.addClass('emlDelete')
+				.click(function(){
+					et2_dialog.show_dialog(function(_btn){
+						if (_btn == et2_dialog.YES_BUTTON)
+						{
+							//TODO: send delete message to server
+						}
+					}, egw.lang('Delete this photo?'), 'Delete', null, et2_dialog.BUTTONS_YES_NO);
+				})
+				.appendTo(eml);
+		// invisible the mask
+		eml.css('opacity','0');
+
+		eml.parent().css('position', "relative");
+
+		// bind handler for activating actions on editable mask
+		eml.on({
+			mouseover:function(){eml.css('opacity','0.9');},
+			mouseout: function () {eml.css('opacity','0');}
+		});
+	},
+
+	/**
+	 * We need to build the Editable Mask Layer after widget gets loaded
+	 */
+	doLoadingFinished: function ()
+	{
+		this._super.apply(this,arguments);
+		if (this.options.editable)
+		{
+			this._buildEditableLayer();
 		}
 	}
 
