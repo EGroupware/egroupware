@@ -2915,20 +2915,6 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 							widget.set_select_options(widget.options.select_options);
 							widget.set_value(widget.getValue());
 
-							// If updating owner, update listview participants as well
-							// This lets us _add_ to the options, normal nm behaviour will replace.
-							if(field == 'owner')
-							{
-								try {
-									var participant = app.classes.calendar.views.listview.etemplates[0].widgetContainer.getWidgetById('nm').getWidgetById('participant');
-									if(participant)
-									{
-										participant.options.select_options = widget.options.select_options;
-										participant.set_select_options(widget.options.select_options);
-									}
-								} catch(e) {debugger;}
-							}
-
 							app.calendar.state_update_in_progress = in_progress;
 						}
 					}
