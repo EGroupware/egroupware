@@ -576,13 +576,13 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 					day_start -= daylight_diff;
 				}
 
-				event['start_m'] = parseInt((event.start.valueOf()/1000 - day_start) / 60);
+				event['start_m'] = event.start.getUTCHours() * 60 + event.start.getUTCMinutes();
 				if (event['start_m'] < 0)
 				{
 					event['start_m'] = 0;
 					event['multiday'] = true;
 				}
-				event['end_m'] = parseInt((event.end.valueOf()/1000 - day_start) / 60);
+				event['end_m'] = event.end.getUTCHours() * 60 + event.end.getUTCMinutes();
 				if (event['end_m'] >= 24*60)
 				{
 					event['end_m'] = 24*60-1;
