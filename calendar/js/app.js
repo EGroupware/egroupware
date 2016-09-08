@@ -2837,7 +2837,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			if(cat_id.join('') == '') cat_id = false;
 		}
 		// Make sure cat_id reaches to server in array format
-		if (cat_id && typeof cat_id == 'string') cat_id = cat_id.split(',');
+		if (cat_id && typeof cat_id == 'string' && cat_id != "0") cat_id = cat_id.split(',');
 
 		var query = jQuery.extend({}, {
 			get_rows: 'calendar.calendar_uilist.get_rows',
