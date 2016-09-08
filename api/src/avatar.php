@@ -41,7 +41,7 @@ class avatar
 
 	private static $_TEXT_COLOR = array (255, 255, 255);
 	// font path
-	private static $_FONT_PATH = EGW_SERVER_ROOT.'/api/templates/default/fonts/arial.ttf';
+	private static $_FONT_PATH = '/api/templates/default/fonts/arial.ttf';
 
 	public function __construct() {
 	}
@@ -96,14 +96,14 @@ class avatar
 
 		$fontsize = $_size / self::$_FONT_SIZE_RATIO;
 
-		$box = imagettfbbox($fontsize, 0, self::$_FONT_PATH, $text);
+		$box = imagettfbbox($fontsize, 0, EGW_SERVER_ROOT.self::$_FONT_PATH, $text);
 
 		$x = floor(($_size - ($box[2] - $box[0]))/2);
 
 		$y = floor ($_size / self::$_TEXT_Y_RATIO);
 
 		// write a ttf text
-		$ttf = imagettftext($image,	$fontsize, 0, $x, $y, $textcolor, self::$_FONT_PATH, $text);
+		$ttf = imagettftext($image,	$fontsize, 0, $x, $y, $textcolor, EGW_SERVER_ROOT.self::$_FONT_PATH, $text);
 		if ($ttf)
 		{
 			ob_start();
