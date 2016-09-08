@@ -670,6 +670,12 @@ var et2_date_duration = (function(){ "use strict"; return et2_date.extend(
 			"default": false,
 			"type": "boolean",
 			"description": "use d/h/m instead of day/hour/minute"
+		},
+		"step" : {
+			"name": "Step limit",
+			"default": 'any',
+			"type": "string",
+			"description": "Works with the min and max attributes to limit the increments at which a numeric or date-time value can be set."
 		}
 	},
 
@@ -716,7 +722,7 @@ var et2_date_duration = (function(){ "use strict"; return et2_date.extend(
 						.addClass('et2_date_duration');
 		this.duration = jQuery(document.createElement("input"))
 						.addClass('et2_date_duration')
-						.attr({type: 'number', size: 3});
+						.attr({type: 'number', size: 3, step:this.options.step});
 		this.node.append(this.duration);
 
 		if(this.options.display_format.length > 1)
