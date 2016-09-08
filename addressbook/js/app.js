@@ -965,7 +965,6 @@ app.classes.addressbook = AppJS.extend(
 		var addrs = [
 			content.data['adr_'+type+'_street'],
 			content.data['adr_'+type+'_locality'],
-			content.data['adr_'+type+'_countrycode'],
 			content.data['adr_'+type+'_postalcode']
 		];
 
