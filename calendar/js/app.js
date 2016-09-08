@@ -1040,7 +1040,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 	/**
 	 * Actions for when the user changes the event start date in edit dialog
-	 * 
+	 *
 	 * @returns {undefined}
 	 */
 	edit_start_change: function(input, widget)
@@ -1049,7 +1049,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			widget = etemplate2.getById('calendar-edit').widgetContainer.getWidgetById('start');
 		}
-		
+
 		// Update settings for querying participants
 		this.edit_update_participant(widget);
 
@@ -2836,6 +2836,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		{
 			if(cat_id.join('') == '') cat_id = false;
 		}
+		// Make sure cat_id reaches to server in array format
+		if (cat_id && typeof cat_id == 'string') cat_id = cat_id.split(',');
 
 		var query = jQuery.extend({}, {
 			get_rows: 'calendar.calendar_uilist.get_rows',
