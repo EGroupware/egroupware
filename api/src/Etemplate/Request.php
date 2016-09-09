@@ -192,8 +192,18 @@ class Request
 		if (!$request)	// eT2 request/session expired
 		{
 			list($app) = explode('.', $_GET['menuaction']);
-			$index_url = isset($GLOBALS['egw_info']['apps'][$app]['index']) ?
-				'/index.php?menuaction='.$GLOBALS['egw_info']['apps'][$app]['index'] : '/'.$app.'/index.php';
+			$global = false;
+			if(isset($GLOBALS['egw_info']['apps'][$app]))
+			{
+				$index_url = isset($GLOBALS['egw_info']['apps'][$app]['index']) ?
+					'/index.php?menuaction='.$GLOBALS['egw_info']['apps'][$app]['index'] : '/'.$app.'/index.php';
+			}
+			else
+			{
+				$index_url = '/index.php';
+				$global = true;
+				$app = null;
+			}
 			// add a unique token to redirect to avoid client-side framework tries refreshing via nextmatch
 			$index_url .= (strpos($index_url, '?') ? '&' : '?').'redirect='.microtime(true);
 			error_log(__METHOD__."('$id', ...) eT2 request not found / expired --> redirecting app $app to $index_url (_GET[menuaction]=$_GET[menuaction], isJSONRequest()=".array2string(Api\Json\Request::isJSONRequest()).')');
@@ -203,7 +213,7 @@ class Request
 				if (strpos($_GET['menuaction'], '.ajax_destroy_session.etemplate') === false)
 				{
 					$response = Api\Json\Response::get();
-					$response->redirect($index_url, false, $app);
+					$response->redirect($index_url, $global, $app);
 					exit;
 				}
 			}
