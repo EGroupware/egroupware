@@ -824,7 +824,7 @@ class Nextmatch extends Etemplate\Widget
 					'shortcut' => array(
 						'keyCode'	=>	65, // A
 						'ctrl'		=>	true,
-						'caption'	=> 'Ctrl+A'
+						'caption'	=> lang('Ctrl').'+A'
 					),
 					'group' => $action['group'],
 				);
