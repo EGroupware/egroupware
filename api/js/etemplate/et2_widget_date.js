@@ -743,7 +743,30 @@ var et2_date_duration = (function(){ "use strict"; return et2_date.extend(
 		{
 			this.format = jQuery("<span>"+this.time_formats["m"]+"</span>").appendTo(this.node);
 		}
+		var self = this;
+		// seems the 'invalid' event doesn't work in all browsers, eg. FF therefore
+		// we use focusout event to check the valifdity of input right after user
+		// enters the value.
+		this.duration.on('focusout', function(){if(!self.duration[0].checkValidity()) return self.duration.change();});
 	},
+
+	/**
+	 * Clientside validation
+	 *
+	 * @param {array} _messages
+	 */
+	isValid: function(_messages)
+	{
+		var ok = true;
+		// if we have a html5 validation error, show it, as this.input.val() will be empty!
+		if (this.duration && this.duration[0] && this.duration[0].validationMessage && !this.duration[0].validity.stepMismatch)
+		{
+			_messages.push(this.duration[0].validationMessage);
+			ok = false;
+		}
+		return this._super.apply(this, arguments) && ok;
+	},
+
 	attachToDOM: function() {
 		var node = this.getInputNode();
 		if (node)
