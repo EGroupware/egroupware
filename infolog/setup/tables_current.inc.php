@@ -21,7 +21,6 @@ $phpgw_baseline = array(
 			'info_subject' => array('type' => 'varchar','precision' => '255','comment' => 'title of the infolog-entry'),
 			'info_des' => array('type' => 'longtext','comment' => 'desciption of the infolog-entry'),
 			'info_owner' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'comment' => 'owner of the entry, can be account or group'),
-			'info_responsible' => array('type' => 'ascii','meta' => 'account-commasep','precision' => '255','nullable' => False,'default' => '0','comment' => 'responsible users or groups (multiple)'),
 			'info_access' => array('type' => 'ascii','precision' => '10','default' => 'public','comment' => 'public or privat'),
 			'info_cat' => array('type' => 'int','meta' => 'category','precision' => '4','nullable' => False,'default' => '0','comment' => 'category id'),
 			'info_datemodified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'timestamp of the last mofification'),
@@ -51,7 +50,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('info_id'),
 		'fk' => array(),
-		'ix' => array('caldav_name',array('info_owner','info_responsible','info_status','info_startdate'),array('info_id_parent','info_owner','info_responsible','info_status','info_startdate')),
+		'ix' => array('caldav_name','info_owner','info_datemodified','info_id_parent'),
 		'uc' => array()
 	),
 	'egw_infolog_extra' => array(
@@ -64,5 +63,21 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array(),
 		'uc' => array()
+	),
+	'egw_infolog_users' => array(
+		'fd' => array(
+			'info_res_id' => array('type' => 'auto','nullable' => False,'comment' => 'auto id'),
+			'info_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'account_id' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'comment' => 'attendee'),
+			'info_res_deleted' => array('type' => 'bool','comment' => 'NULL or true, not false!'),
+			'info_res_modified' => array('type' => 'timestamp','meta' => 'timestamp','default' => 'current_timestamp','comment' => 'last modification time'),
+			'info_res_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'modifying user'),
+			'info_res_status' => array('type' => 'varchar','precision' => '16','default' => 'NEEDS-ACTION','comment' => 'attendee status'),
+			'info_res_attendee' => array('type' => 'varchar','precision' => '255','comment' => 'attendee email or json object with attr. cn, url, ...')
+		),
+		'pk' => array('info_res_id'),
+		'fk' => array(),
+		'ix' => array('account_id'),
+		'uc' => array(array('info_id','account_id'))
 	)
 );

@@ -59,6 +59,12 @@ class infolog_so
 	 */
 	var $extra_table = 'egw_infolog_extra';
 	/**
+	 * Infolog delegation / iCal attendees
+	 *
+	 * @var string
+	 */
+	var $users_table = 'egw_infolog_users';
+	/**
 	 * Offset between server- and user-time in h
 	 *
 	 * @var int
@@ -154,11 +160,10 @@ class infolog_so
 	 * Filter for a given responsible user: info_responsible either contains a the user or one of his memberships
 	 *
 	 * @param int|array $users one or more account_ids
+	 * @param boolean $deleted_too =false true: also use deleted entries
 	 * @return string
-	 *
-	 * @todo make the responsible a second table and that filter a join with the responsible table
 	 */
-	function responsible_filter($users)
+	function responsible_filter($users, $deleted_too=false)
 	{
 		if (!$users) return '0';
 
@@ -174,12 +179,14 @@ class infolog_so
 		{
 			$responsible = array_unique($responsible);
 		}
-		foreach($responsible as $key => $uid)
+		$sql = "$this->users_table.account_id IN (".implode(',', $responsible).')';
+
+		if (!$deleted_too)
 		{
-			$responsible[$key] = $this->db->concat("','",'info_responsible',"','")." LIKE '%,$uid,%'";
+			// we use NULL or true, not false!
+			$sql .= " AND $this->users_table.info_res_deleted IS NULL";
 		}
-		//echo "<p align=right>responsible_filter($user) = ".'('.implode(' OR ',$responsible).')'."</p>\n";
-		return '('.implode(' OR ',$responsible).')';
+		return $sql;
 	}
 
 	/**
@@ -211,11 +218,11 @@ class infolog_so
 
 		if ($filter == 'my' || $filter == 'responsible')
 		{
-			$filtermethod .= " AND info_responsible='0'";
+			$filtermethod .= " AND $this->users_table.account_id IS NULL";
 		}
 		if ($filter == 'delegated')
 		{
-			$filtermethod .= " AND info_responsible<>'0')";
+			$filtermethod .= " AND $this->users_table.account_id IS NOT NULL)";
 		}
 		else
 		{
@@ -267,7 +274,7 @@ class infolog_so
 			{
 				$filtermethod .= $this->db->expression($this->info_table,' AND (',array(
 					'info_owner' => $f_user,
-				)," AND info_responsible='0' OR ",$this->responsible_filter($f_user),')');
+				)," AND $this->users_table.account_id IS NULL OR ",$this->responsible_filter($f_user),')');
 			}
 		}
 		//echo "<p>aclFilter(filter='$_filter',user='$f_user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
@@ -387,8 +394,18 @@ class infolog_so
 		{
 			$minimum_uid_length = 8;
 		}
+		if (isset($where['info_id']))
+		{
+			$where[] = $this->db->expression($this->info_table, $this->info_table.'.', array('info_id' => $where['info_id']));
+			unset($where['info_id']);
+		}
+		// hide deleted attendees
+		if ($where) $where[] = "$this->users_table.info_res_deleted IS NULL";
 
-		if (!$where || !($this->data = $this->db->select($this->info_table,'*',$where,__LINE__,__FILE__)->fetch()))
+		if (!$where ||
+			!($this->data = $this->db->select($this->info_table, '*,'.$this->db->group_concat('account_id').' AS info_responsible', $where,
+			__LINE__, __FILE__, false, "GROUP BY $this->info_table.info_id", 'infolog', 1,
+			"LEFT JOIN $this->users_table ON $this->info_table.info_id=$this->users_table.info_id")->fetch()))
 		{
 			$this->init( );
 			//error_log(__METHOD__.'('.array2string($where).') returning FALSE');
@@ -432,6 +449,7 @@ class infolog_so
 		}
 		$this->db->delete($this->info_table,array('info_id'=>$info_id),__LINE__,__FILE__);
 		$this->db->delete($this->extra_table,array('info_id'=>$info_id),__LINE__,__FILE__);
+		$this->db->delete($this->users_table,array('info_id'=>$info_id),__LINE__,__FILE__);
 		Link::unlink(0,'infolog',$info_id);
 
 		if ($this->data['info_id'] == $info_id)
@@ -478,6 +496,7 @@ class infolog_so
 	 * @param array $args hook arguments
 	 * @param int $args['account_id'] account to delete
 	 * @param int $args['new_owner']=0 new owner
+	 * @todo test deleting an owner with replace and without
 	 */
 	function change_delete_owner(array $args)  // new_owner=0 means delete
 	{
@@ -492,17 +511,24 @@ class infolog_so
 		{
 			$this->db->update($this->info_table,array('info_owner'=>$args['new_owner']),array('info_owner'=>$args['account_id']),__LINE__,__FILE__,'infolog');
 		}
-		foreach($this->db->select($this->info_table,'info_id,info_responsible',
-			$this->db->concat("','",'info_responsible',"','").' LIKE '.$this->db->quote('%,'.(int)$args['account_id'].',%'),
-			__LINE__,__FILE__,false,'','infolog') as $row)
+
+		if ($args['new_owner'])
 		{
-			$new_responsible = explode(',',$row['info_responsible']);
-			unset($new_responsible[array_search($args['account_id'],$new_responsible)]);
-			if ((int)$args['new_owner']) $new_responsible[] = (int)$args['new_owner'];
-			$this->db->update($this->info_table,array(
-				'info_responsible' => implode(',',$new_responsible),
-			),array('info_id' => $row['info_id']),__LINE__,__FILE__,'infolog');
+			// we cant just set the new owner, as he might be already set and we have a unique index
+			Api\Db::$table_aliases[$this->users_table] = $this->users_table.
+				" LEFT JOIN $this->users_table new_owner ON new_owner.info_id=$this->users_table.info_id".
+				" AND new_owner.account_id=".$this->db->quote($args['new_owner'], 'int');
+
+			$this->db->update($this->users_table, array(
+				'account_id' => $args['new_owner'],
+			), array(
+				'account_id' => $args['account_id'],
+				'new_owner.account_id IS NULL',
+			), __LINE__, __FILE__, 'infolog');
+
+			unset(Api\Db::$table_aliases[$this->users_table]);
 		}
+		$this->db->delete($this->users_table, array('account_id' => $args['account_id']), __LINE__, __FILE__, 'infolog');
 	}
 
 	/**
@@ -527,10 +553,6 @@ class infolog_so
 		//echo "soinfolog::write(,$check_modified) values="; _debug_array($values);
 		$info_id = (int) $values['info_id'];
 
-		if (array_key_exists('info_responsible',$values))	// isset($values['info_responsible']) returns false for NULL!
-		{
-			$values['info_responsible'] = $values['info_responsible'] ? implode(',',$values['info_responsible']) : '0';
-		}
 		$table_def = $this->db->get_table_definitions('infolog',$this->info_table);
 		$to_write = array();
 		foreach($values as $key => $val)
@@ -625,6 +647,45 @@ class infolog_so
 		}
 		// echo "<p>soinfolog.write this->data= "; _debug_array($this->data);
 		//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning id=".$this->data['info_id']);
+
+		// update attendees/delegates
+		if (array_key_exists('info_responsible', $values))
+		{
+			// mark removed attendees as deleted
+			$this->db->update($this->users_table, array(
+				'info_res_deleted' => true,
+				'info_res_modifier' => $this->user,
+			), array(
+				'info_id' => $this->data['info_id'],
+				'info_res_deleted IS NULL',
+			)+(!$values['info_responsible'] ? array() :
+				array(1=>'account_id NOT IN ('.implode(',', array_map('intval', $values['info_responsible'])).')')),
+				__LINE__, __FILE__, 'infolog');
+
+			// add newly added attendees
+			if ($values['info_responsible'])
+			{
+				$old_responsible = array();
+				foreach($this->db->select($this->users_table,'account_id',array(
+					'info_id' => $this->data['info_id'],
+					'info_res_deleted IS NULL',
+				), __LINE__, __FILE__, false, '', 'infolog') as $row)
+				{
+					$old_responsible[] = $row['account_id'];
+				}
+				foreach(array_diff($values['info_responsible'], $old_responsible) as $account_id)
+				{
+					$this->db->insert($this->users_table, array(
+						'info_res_modifier' => $this->user,
+						'info_res_status' => 'NEEDS-ACTION',
+						'info_res_deleted' => null,
+					), array(
+						'info_id' => $this->data['info_id'],
+						'account_id' => $account_id,
+					), __LINE__, __FILE__, 'infolog');
+				}
+			}
+		}
 
 		return $this->data['info_id'];
 	}
@@ -752,7 +813,7 @@ class infolog_so
 						case 'info_responsible':
 							$data = (int) $data;
 							if (!$data) continue;
-							$filtermethod .= ' AND ('.$this->responsible_filter($data)." OR info_responsible='0' AND ".
+							$filtermethod .= ' AND ('.$this->responsible_filter($data)." OR $this->users_table.account_id IS NULL AND ".
 								$this->db->expression($this->info_table,array(
 									'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)
 								)).')';
@@ -817,6 +878,9 @@ class infolog_so
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
 			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
 		}
+		$join .= " LEFT JOIN $this->users_table ON main.info_id=$this->users_table.info_id";
+		$join .= " LEFT JOIN $this->users_table attendees ON main.info_id=attendees.info_id";
+		$group_by = ' GROUP BY attendees.info_id ';
 		$pid = 'AND ' . $this->db->expression($this->info_table,array('info_id_parent' => ($action == 'sp' ?$query['action_id'] : 0)));
 
 		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['listNoSubs'] != '1' && $action != 'sp' ||
@@ -838,7 +902,7 @@ class infolog_so
 			}
 			else
 			{
-				$query['total'] = $this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__)->NumRows();
+				$query['total'] = $this->db->query($sql="SELECT $distinct main.info_id ".$sql_query.$group_by,__LINE__,__FILE__)->NumRows();
 			}
 			$info_customfield = '';
 			if ($sortbycf != '')
@@ -865,7 +929,10 @@ class infolog_so
 				}
 				$cols = isset($query['cols']) ? $query['cols'] : 'main.*';
 				if (is_array($cols)) $cols = implode(',',$cols);
-				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$info_customfield.' '.$sql_query.$query['append'].' '.$ordermethod,__LINE__,__FILE__,
+				$cols .= ','.$this->db->group_concat('attendees.account_id').' AS info_responsible';
+				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$info_customfield.' '.$sql_query.
+					// hide deleted attendees
+					' AND attendees.info_res_deleted IS NULL '.$query['append'].$group_by.' '.$ordermethod,__LINE__,__FILE__,
 					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1,false,Api\Db::FETCH_ASSOC);
 				//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 
@@ -883,7 +950,7 @@ class infolog_so
 			}
 			foreach($rs as $info)
 			{
-				$info['info_responsible'] = $info['info_responsible'] ? explode(',',$info['info_responsible']) : array();
+				$info['info_responsible'] = $info['info_responsible'] ? array_unique(explode(',',$info['info_responsible'])) : array();
 
 				$ids[$info['info_id']] = $info;
 			}

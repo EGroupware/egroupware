@@ -12,9 +12,9 @@
  */
 
 $setup_info['infolog']['name']      = 'infolog';
-$setup_info['infolog']['version']   = '16.1.001';
+$setup_info['infolog']['version']   = '16.1.003';
 $setup_info['infolog']['app_order'] = 5;
-$setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra');
+$setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra','egw_infolog_users');
 $setup_info['infolog']['enable']    = 1;
 $setup_info['infolog']['index']    = 'infolog.infolog_ui.index&ajax=true';
 
@@ -70,4 +70,5 @@ $setup_info['infolog']['depends'][] = array(
 	'appname' => 'api',
 	'versions' => Array('16.1')
 );
+
 
