@@ -855,7 +855,7 @@ function infolog_upgrade16_1_001()
 			"info_responsible<>'0' AND info_responsible<>''", __LINE__, __FILE__,
 			$n*$chunk_size, 'ORDER BY info_id', 'infolog', $chunk_size) as $row)
 		{
-			foreach(explode(',', $row['info_responsible']) as $responsible)
+			foreach(array_unique(explode(',', $row['info_responsible'])) as $responsible)
 			{
 				if ($responsible)
 				{
