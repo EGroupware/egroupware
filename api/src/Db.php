@@ -1109,6 +1109,7 @@ class Db
 	{
 		switch($this->Type)
 		{
+			case 'mysqli':
 			case 'mysql':
 				$sql = 'GROUP_CONCAT('.$expr;
 				if ($order_by) $sql .= ' ORDER BY '.$order_by;
