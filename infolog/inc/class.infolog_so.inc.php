@@ -894,8 +894,9 @@ class infolog_so
 			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
 		}
 		$join .= " LEFT JOIN $this->users_table ON main.info_id=$this->users_table.info_id";
-		$join .= " LEFT JOIN $this->users_table attendees ON main.info_id=attendees.info_id";
-		$group_by = ' GROUP BY attendees.info_id ';
+		// do not return deleted attendees
+		$join .= " LEFT JOIN $this->users_table attendees ON main.info_id=attendees.info_id AND attendees.info_res_deleted IS NULL";
+		$group_by = ' GROUP BY main.info_id ';
 		$pid = 'AND ' . $this->db->expression($this->info_table,array('info_id_parent' => ($action == 'sp' ?$query['action_id'] : 0)));
 
 		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['listNoSubs'] != '1' && $action != 'sp' ||
@@ -946,8 +947,7 @@ class infolog_so
 				if (is_array($cols)) $cols = implode(',',$cols);
 				$cols .= ','.$this->db->group_concat('attendees.account_id').' AS info_responsible';
 				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$info_customfield.' '.$sql_query.
-					// hide deleted attendees
-					' AND attendees.info_res_deleted IS NULL '.$query['append'].$group_by.' '.$ordermethod,__LINE__,__FILE__,
+					$query['append'].$group_by.' '.$ordermethod,__LINE__,__FILE__,
 					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1,false,Api\Db::FETCH_ASSOC);
 				//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 
