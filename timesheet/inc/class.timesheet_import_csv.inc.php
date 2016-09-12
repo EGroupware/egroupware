@@ -97,9 +97,9 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	protected $errors = array();
 
 	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
+	* List of actions, and how many times that action was taken
+	*/
+	protected $results = array();
 
 	/**
 	 * imports entries according to given definition object.
@@ -107,7 +107,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	 * @param string $_charset
 	 * @param definition $_definition
 	 */
-	public function import( $_stream, importexport_definition $_definition ) {
+	public function import( $_stream, importexport_definition $_definition )
+	{
 		$import_csv = new importexport_import_csv( $_stream, array(
 			'fieldsep' => $_definition->plugin_options['fieldsep'],
 			'charset' => $_definition->plugin_options['charset'],
@@ -155,12 +156,12 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 		// For converting human-friendly lookups
 		$categories = new Api\Categories('timesheet');
 		$lookups = array(
-			'ts_status'	=> $this->bo->status_labels,
-//			'cat_id'	=> $categories->return_sorted_array(0,False,'','','',true)
+			'ts_status'	=> $this->bo->status_labels
 		);
 
 		// Status need leading spaces removed
-		foreach($lookups['ts_status'] as $id => &$label) {
+		foreach($lookups['ts_status'] as $id => &$label)
+		{
 			$label = str_replace('&nbsp;', '',trim($label));
 			if($label == '') unset($lookups['ts_status'][$id]);
 		}
@@ -172,7 +173,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 		// Failures
 		$this->errors = array();
 
-		while ( $record = $import_csv->get_record() ) {
+		while ( $record = $import_csv->get_record() )
+		{
 			$success = false;
 
 			// don't import empty records
@@ -182,14 +184,20 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 			if($result) $this->warnings[$import_csv->get_current_position()] = $result;
 
 			// Automatically handle text Api\Categories without explicit Api\Translation
-			foreach(array('ts_status','cat_id') as $field) {
-				if(!is_numeric($record[$field])) {
+			foreach(array('ts_status','cat_id') as $field)
+			{
+				if(!is_numeric($record[$field]))
+				{
 					$translate_key = 'translate'.(substr($field,0,2) == 'ts' ? substr($field,2) : '_cat_id');
-					if(($key = array_search($record[$field], $lookups[$field]))) {
+					if(!is_null($lookups[$field]) && ($key = array_search($record[$field], $lookups[$field])))
+					{
 						$record[$field] = $key;
-					} elseif(array_key_exists($translate_key, $_definition->plugin_options)) {
+					}
+					elseif(array_key_exists($translate_key, $_definition->plugin_options))
+					{
 						$t_field = $_definition->plugin_options[$translate_key];
-						switch ($t_field) {
+						switch ($t_field)
+						{
 							case '':
 							case '0':
 								// Skip that field
@@ -198,16 +206,21 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 							case '~skip~':
 								continue 2;
 							default:
-								if(strpos($t_field, 'add') === 0) {
+								if(strpos($t_field, 'add') === 0)
+								{
 									// Check for a parent
 									list($name, $parent_name) = explode('~',$t_field);
-									if($parent_name) {
+									if($parent_name)
+									{
 										$parent = importexport_helper_functions::cat_name2id($parent_name);
 									}
 
-									if($field == 'cat_id') {
+									if($field == 'cat_id')
+									{
 										$record[$field] = importexport_helper_functions::cat_name2id($record[$field], $parent);
-									} elseif ($field == 'ts_status') {
+									}
+									elseif ($field == 'ts_status')
+									{
 										end($this->bo->status_labels);
 										$id = key($this->bo->status_labels)+1;
 										$this->bo->status_labels[$id] = $record[$field];
@@ -220,9 +233,13 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 										$lookups[$field][$id] = $name;
 										$record[$field] = $id;
 									}
-								} elseif(($key = array_search($t_field, $lookups[$field]))) {
+								}
+								elseif(!is_null($lookups[$field]) && ($key = array_search($t_field, $lookups[$field])))
+								{
 									$record[$field] = $key;
-								} else {
+								}
+								else
+								{
 									$record[$field] = $t_field;
 								}
 								break;
@@ -232,11 +249,14 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 			}
 
 			// Set creator, unless it's supposed to come from CSV file
-			if($_definition->plugin_options['owner_from_csv'] && $record['ts_owner']) {
-				if(!is_numeric($record['ts_owner'])) {
+			if($_definition->plugin_options['owner_from_csv'] && $record['ts_owner'])
+			{
+				if(!is_numeric($record['ts_owner']))
+				{
 					// Automatically handle text owner without explicit Api\Translation
 					$new_owner = importexport_helper_functions::account_name2id($record['ts_owner']);
-					if($new_owner == '') {
+					if($new_owner == '')
+					{
 						$this->errors[$import_csv->get_current_position()] = lang(
 							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
 							$record['ts_owner'],
@@ -244,22 +264,31 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 							lang($this->bo->field2label['ts_owner'])
 						);
 						$record['ts_owner'] = $_definition->plugin_options['record_owner'];
-					} else {
+					}
+					else
+					{
 						$record['ts_owner'] = $new_owner;
 					}
 				}
-			} elseif ($_definition->plugin_options['record_owner']) {
+			}
+			elseif ($_definition->plugin_options['record_owner'])
+			{
 				$record['ts_owner'] = $_definition->plugin_options['record_owner'];
 			}
 
 			// Check account IDs
-			foreach(array('ts_modifier') as $field) {
-				if($record[$field] && !is_numeric($record[$field])) {
+			foreach(array('ts_modifier') as $field)
+			{
+				if($record[$field] && !is_numeric($record[$field]))
+				{
 					// Try an automatic conversion
 					$account_id = importexport_helper_functions::account_name2id($record[$field]);
-					if($account_id && strtoupper(Api\Accounts::username($account_id)) == strtoupper($record[$field])) {
+					if($account_id && strtoupper(Api\Accounts::username($account_id)) == strtoupper($record[$field]))
+					{
 						$record[$field] = $account_id;
-					} else {
+					}
+					else
+					{
 						$this->errors[$import_csv->get_current_position()] = lang(
 							'Unable to convert "%1" to account ID.  Using plugin setting (%2) for %3.',
 							$record[$field],
@@ -277,29 +306,38 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 				$record['addressbook'] = self::addr_id($lastname,$firstname,$org_name);
 			}
 
-			if ( $_definition->plugin_options['conditions'] ) {
-				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
+			if ( $_definition->plugin_options['conditions'] )
+			{
+				foreach ( $_definition->plugin_options['conditions'] as $condition )
+				{
 					$results = array();
-					switch ( $condition['type'] ) {
+					switch ( $condition['type'] )
+					{
 						// exists
 						case 'exists' :
-							if($record[$condition['string']]) {
+							if($record[$condition['string']])
+							{
 								$results = $this->bo->search(array($condition['string'] => $record[$condition['string']]));
 							}
 
-							if ( is_array( $results ) && count( array_keys( $results )) >= 1 ) {
+							if ( is_array( $results ) && count( array_keys( $results )) >= 1 )
+							{
 								// apply action to all records matching this exists condition
 								$action = $condition['true'];
-								foreach ( (array)$results as $result ) {
+								foreach ( (array)$results as $result )
+								{
 									$record['ts_id'] = $result['ts_id'];
-									if ( $_definition->plugin_options['update_cats'] == 'add' ) {
+									if ( $_definition->plugin_options['update_cats'] == 'add' )
+									{
 										if ( !is_array( $result['cat_id'] ) ) $result['cat_id'] = explode( ',', $result['cat_id'] );
 										if ( !is_array( $record['cat_id'] ) ) $record['cat_id'] = explode( ',', $record['cat_id'] );
 										$record['cat_id'] = implode( ',', array_unique( array_merge( $record['cat_id'], $result['cat_id'] ) ) );
 									}
 									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
 								}
-							} else {
+							}
+							else
+							{
 								$action = $condition['false'];
 								$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
 							}
@@ -312,7 +350,9 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 					}
 					if ($action['last']) break;
 				}
-			} else {
+			}
+			else
+			{
 				// unconditional insert
 				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 			}
@@ -328,9 +368,11 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	 * @param array $_data tracker data for the action
 	 * @return bool success or not
 	 */
-	private function action ( $_action, $_data, $record_num = 0 ) {
+	private function action ( $_action, $_data, $record_num = 0 )
+	{
 		$result = true;
-		switch ($_action) {
+		switch ($_action)
+		{
 			case 'none' :
 				return true;
 			case 'update' :
@@ -338,7 +380,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 				$old_record = new timesheet_egw_record($_data['ts_id']);
 				$old = $old_record->get_record_array();
 
-				if(!$this->definition->plugin_options['change_owner']) {
+				if(!$this->definition->plugin_options['change_owner'])
+				{
 					// Don't change creator of an existing ticket
 					unset($_data['ts_owner']);
 				}
@@ -346,36 +389,48 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 				// Merge to deal with fields not in import record
 				$_data = array_merge($old, $_data);
 				$changed = $this->tracking->changed_fields($_data, $old);
-				if(count($changed) == 0 && !$this->definition->plugin_options['update_timestamp']) {
+				if(count($changed) == 0 && !$this->definition->plugin_options['update_timestamp'])
+				{
 					break;
 				}
 
 				// Clear old link, if different
-				if ($_data['ts_id'] && array_key_exists('pm_id', $_data) && $_data['pm_id'] != $old['pm_id']) {
+				if ($_data['ts_id'] && array_key_exists('pm_id', $_data) && $_data['pm_id'] != $old['pm_id'])
+				{
 					Link::unlink2(0,TIMESHEET_APP,$_data['ts_id'],0,'projectmanager',$old['pm_id']);
 				}
 
 				// Fall through
 			case 'insert' :
-				if ( $this->dry_run ) {
+				if ( $this->dry_run )
+				{
 					//print_r($_data);
 					$this->results[$_action]++;
 					break;
-				} else {
+				}
+				else
+				{
 					$result = $this->bo->save( $_data);
 					$_data['ts_id'] = $this->bo->data['ts_id'];
 
 					// Set projectmanager link
-					if ($_data['pm_id']) {
+					if ($_data['pm_id'])
+					{
 						Link::link(TIMESHEET_APP,$_data['ts_id'],'projectmanager',$_data['pm_id']);
+						
+						// notify the link-class about the update, as other apps may be subscribed to it
+						Link::notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 					}
 
-					if($result) {
+					if($result)
+					{
 						$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
 							$GLOBALS['egw']->accounts->id2name($_data['owner']),
 							lang($_action)
 						) . ' ' . $result;
-					} else {
+					}
+					else
+					{
 						$this->results[$_action]++;
 						$result = $this->bo->data['ts_id'];
 					}
@@ -386,25 +441,31 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 		}
 
 		// Process some additional fields
-		if(!is_numeric($result)) {
+		if(!is_numeric($result))
+		{
 			return $result;
 		}
 		$_link_id = false;
-		foreach(self::$special_fields as $field => $desc) {
+		foreach(self::$special_fields as $field => $desc)
+		{
 			if(!$_data[$field]) continue;
 
 			// Links
-			if(strpos('link', $field) === 0) {
-				list($app, $id) = explode(':', $_data[$field]);
-			} else {
-				$app = $field;
-				$id = $_data[$field];
+			if(strpos($field, 'link') === 0)
+			{
+				list($app, $app_id) = explode(':', $_data[$field]);
 			}
-			if ($app && $app_id) {
-				$link_id = Link::link('timesheet',$id,$app,$app_id);
+			else
+			{
+				$app = $field;
+				$app_id = $_data[$field];
+			}
+			if ($app && $app_id)
+			{
+				$link_id = Link::link('timesheet',$_data['ts_id'],$app,$app_id);
 			}
 		}
-		return $result;
+		return true;
 	}
 
 	/**
@@ -412,7 +473,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	 *
 	 * @return string name
 	 */
-	public static function get_name() {
+	public static function get_name()
+	{
 		return lang('Timesheet CSV import');
 	}
 
@@ -421,7 +483,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	 *
 	 * @return string descriprion
 	 */
-	public static function get_description() {
+	public static function get_description()
+	{
 		return lang("Imports entries into the timesheet from a CSV File. ");
 	}
 
@@ -430,7 +493,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	 *
 	 * @return string suffix (comma seperated)
 	 */
-	public static function get_filesuffix() {
+	public static function get_filesuffix()
+	{
 		return 'csv';
 	}
 
@@ -446,7 +510,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	 * 		preserv		=> array,
 	 * )
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl()
+	{
 		// lets do it!
 	}
 
@@ -455,49 +520,54 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 	 *
 	 * @return string etemplate name
 	 */
-	public function get_selectors_etpl() {
+	public function get_selectors_etpl()
+	{
 		// lets do it!
 	}
 
 	/**
-        * Returns warnings that were encountered during importing
-        * Maximum of one warning message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => warning message
-        *       )
-        */
-        public function get_warnings() {
+	* Returns warnings that were encountered during importing
+	* Maximum of one warning message per record, but you can append if you need to
+	*
+	* @return Array (
+	*       record_# => warning message
+	*       )
+	*/
+	public function get_warnings()
+	{
 		return $this->warnings;
 	}
 
 	/**
-        * Returns errors that were encountered during importing
-        * Maximum of one error message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => error message
-        *       )
-        */
-        public function get_errors() {
+	* Returns errors that were encountered during importing
+	* Maximum of one error message per record, but you can append if you need to
+	*
+	* @return Array (
+	*       record_# => error message
+	*       )
+	*/
+	public function get_errors()
+	{
 		return $this->errors;
 	}
 
 	/**
-        * Returns a list of actions taken, and the number of records for that action.
-        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
-        *
-        * @return Array (
-        *       action => record count
-        * )
-        */
-        public function get_results() {
-                return $this->results;
-        }
+	* Returns a list of actions taken, and the number of records for that action.
+	* Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
+	*
+	* @return Array (
+	*       action => record count
+	* )
+	*/
+	public function get_results()
+	{
+			return $this->results;
+	}
 	// end of iface_export_plugin
 
 	// Extra conversion functions - must be static
-	public static function addr_id( $n_family,$n_given=null,$org_name=null ) {
+	public static function addr_id( $n_family,$n_given=null,$org_name=null )
+	{
 
 		// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
 		static $contacts;
