@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9a74cc9727567f9100d4d1311228aede",
-    "content-hash": "d6ed8efbe2b9261641cf2d9ca9f1d01b",
+    "hash": "c53e37027e62153a377bb9adf13d2212",
+    "content-hash": "5e2d4def7fa91436952c7aef101d4023",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -56,6 +56,64 @@
                 "windows"
             ],
             "time": "2016-07-14 18:11:24"
+        },
+        {
+            "name": "bower-asset/cropper",
+            "version": "v2.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fengyuanchen/cropper.git",
+                "reference": "30c58b29ee21010e17e58ebab165fbd84285c685"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fengyuanchen/cropper/zipball/30c58b29ee21010e17e58ebab165fbd84285c685",
+                "reference": "30c58b29ee21010e17e58ebab165fbd84285c685",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/cropper.js",
+                    "dist/cropper.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "tests",
+                    "test",
+                    "examples",
+                    "assets",
+                    "demo",
+                    "docs",
+                    "gulpfile.js",
+                    "CONTRIBUTING.md",
+                    "ISSUE_TEMPLATE.md"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A simple jQuery image cropping plugin.",
+            "keywords": [
+                "crop",
+                "cropper",
+                "cropping",
+                "css",
+                "development",
+                "front-end",
+                "html",
+                "image",
+                "javascript",
+                "jquery",
+                "move",
+                "plugin",
+                "rotate",
+                "scale",
+                "web",
+                "zoom"
+            ]
         },
         {
             "name": "bower-asset/fastclick",

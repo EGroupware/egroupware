@@ -15,6 +15,7 @@
 	et2_core_interfaces;
 	et2_core_baseWidget;
 	expose;
+	/vendor/bower-asset/cropper/dist/cropper.min.js;
 */
 
 /**
@@ -328,6 +329,12 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 			type: "boolean",
 			default: false,
 			description: "Make avatar widget editable to be able to crop profile picture or upload a new photo"
+		},
+		crop: {
+			name: "Crop avatar",
+			type: "boolean",
+			default: false,
+			description: "Create crop container and cropping feature"
 		}
 	},
 
@@ -436,7 +443,36 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 		var edit = jQuery(document.createElement('div'))
 				.addClass('emlEdit')
 				.click(function(){
-					// Todo
+					var buttons = [
+						{"button_id": 1,"text": 'save', id: 'save', image: 'check', "default":true},
+						{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancelled'}
+					];
+					var dialog = function(_title, _value, _buttons, _egw_or_appname)
+					{
+						return et2_createWidget("dialog",
+						{
+							callback: function(_buttons, _value)
+							{
+								if (_buttons == 'save')
+								{
+									var canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
+									self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
+								}
+							},
+							title: _title||egw.lang('Input required'),
+							buttons: _buttons||et2_dialog.BUTTONS_OK_CANCEL,
+							value: {
+								content: _value
+							},
+							width: "90%",
+							height:"90%",
+							resizable: false,
+							position:"top+10",
+							template: egw.webserverUrl+'/api/templates/default/avatar_edit.xet?2'
+						}, et2_dialog._create_parent(_egw_or_appname));
+					};
+
+					dialog(egw.lang('Edit avatar'),{photo:self.options.contact_id},buttons);
 				})
 				.appendTo(eml);
 
@@ -473,6 +509,16 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 		if (this.options.editable)
 		{
 			this._buildEditableLayer();
+		}
+		if (this.options.crop)
+		{
+			var cropped = jQuery(this.image).cropper({
+				aspectRatio: 1/1,
+				crop: function (e){
+					console.log (e);
+				}
+			});
+
 		}
 	}
 

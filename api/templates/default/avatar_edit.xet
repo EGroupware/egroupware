@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.dtd" template="" lang="" group="0" version="16.2">
+		<vbox>
+
+			<avatar crop="true" id="cropper_image" contact_id="$cont[photo]" width ="200" height="auto"/>
+			<hbox>
+				<buttononly id="rotate_reset" label="Reset"  image="" background_image="1" onclick="jQuery('#_cropper_image').cropper('reset');"/>
+				<buttononly id="rotate_l" label="Rotate Left"  image="recur" background_image="1" onclick="jQuery('#_cropper_image').cropper('rotate',-90);"/>
+				<buttononly id="rotate_r" label= "Rotate Right" image="reload" background_image="1" onclick="jQuery('#_cropper_image').cropper('rotate',90);"/>
+				<hbox>
+					<file id='upload_photo' label="upload new photo"/>
+				</hbox>
+			</hbox>
+		</vbox>
+		<styles>
+
+		</styles>
+	</template>
+</overlay>
