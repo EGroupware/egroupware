@@ -1024,20 +1024,21 @@ class infolog_so
 		{
 			$users[] = $row['info_responsible'];
 		}
-		foreach($this->db->select($this->info_table,'DISTINCT info_responsible',$this->statusFilter('open',false),__LINE__,__FILE__) as $row)
+		foreach($this->db->select($this->info_table, "DISTINCT $this->users_table.account_id AS account_id",
+			$this->statusFilter('open',false), __LINE__, __FILE__, false, '', 'infolog', 0,
+			"JOIN $this->users_table ON $this->info_table.info_id=$this->users_table.info_id AND info_res_deleted IS NULL") as $row)
 		{
-			foreach(explode(',', $row['info_responsible']) as $responsible)
+			$responsible = $row['account_id'];
+
+			if ($GLOBALS['egw']->accounts->get_type($responsible) == 'g')
 			{
-				if ($GLOBALS['egw']->accounts->get_type($responsible) == 'g')
+				$responsible = $GLOBALS['egw']->accounts->members($responsible,true);
+			}
+			if ($responsible)
+			{
+				foreach((array)$responsible as $user)
 				{
-					$responsible = $GLOBALS['egw']->accounts->members($responsible,true);
-				}
-				if ($responsible)
-				{
-					foreach(is_array($responsible) ? $responsible : array($responsible) as $user)
-					{
-						if ($user && !in_array($user,$users)) $users[] = $user;
-					}
+					if ($user && !in_array($user,$users)) $users[] = $user;
 				}
 			}
 		}
