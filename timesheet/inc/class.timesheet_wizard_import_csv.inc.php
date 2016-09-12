@@ -113,9 +113,9 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 				);
 			}
 			$sel_options = array(
-                                'translate_status'	=> $options + array($set_to => $ui->status_labels),
-                                'translate_cat_id'	=> $options + array($set_to => $cat_list),
-                        );
+					'translate_status'	=> $options + array($set_to => $ui->status_labels),
+					'translate_cat_id'	=> $options + array($set_to => $cat_list),
+			);
 			$preserv = $content;
 			foreach($sel_options as $field => $options) {
 				if(!array_key_exists($field,$content)) $content[$field] = $content['plugin_options'][$field];
@@ -155,16 +155,16 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 		// init step60
 		else
 		{
-			$content['msg'] = $this->steps['wizard_step60'];
+			$content['message'] = $this->steps['wizard_step60'];
 			$content['step'] = 'wizard_step60';
 			$preserv = $content;
-			if(!array_key_exists($content['record_owner']) && $content['plugin_options']) {
+			if(!array_key_exists('record_owner', $content) && $content['plugin_options']) {
 				$content['record_owner'] = $content['plugin_options']['record_owner'];
 			}
-			if(!array_key_exists($content['owner_from_csv']) && $content['plugin_options']) {
+			if(!array_key_exists('owner_from_csv', $content) && $content['plugin_options']) {
 				$content['owner_from_csv'] = $content['plugin_options']['owner_from_csv'];
 			}
-			if(!array_key_exists($content['change_owner']) && $content['plugin_options']) {
+			if(!array_key_exists('change_owner', $content) && $content['plugin_options']) {
 				$content['change_owner'] = $content['plugin_options']['change_owner'];
 			}
 
@@ -173,7 +173,7 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 			}
 
 			unset ($preserv['button']);
-			return 'infolog.importexport_wizard_chooseowner';
+			return 'timesheet.importexport_wizard_chooseowner';
 		}
 		
 	}
