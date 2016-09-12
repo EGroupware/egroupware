@@ -448,7 +448,7 @@ class Select extends Etemplate\Widget
 			{
 				if (is_array($val))
 				{
-					if (isset($val['value']))
+					if (isset($val['value']) && count($val) <= 2)
 					{
 						$values[] = $val['value'];
 					}
