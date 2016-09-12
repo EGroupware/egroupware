@@ -215,7 +215,7 @@ class infolog_so
 	function aclFilter($_filter = False)
 	{
 		$vars = null;
-		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)(+deleted)?/',$_filter,$vars);
+		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)(\+deleted)?/',$_filter,$vars);
 		$filter = $vars[1];
 		$f_user = $vars[2];
 		$deleted_too = !empty($vars[3]);
@@ -418,8 +418,9 @@ class infolog_so
 		if ($where) $where[] = "$this->users_table.info_res_deleted IS NULL";
 
 		if (!$where ||
-			!($this->data = $this->db->select($this->info_table, '*,'.$this->db->group_concat('account_id').' AS info_responsible', $where,
-			__LINE__, __FILE__, false, "GROUP BY $this->info_table.info_id", 'infolog', 1,
+			!($this->data = $this->db->select($this->info_table,
+			'*,'.$this->db->group_concat('account_id').' AS info_responsible,'.$this->info_table.'.info_id AS info_id',
+			$where, __LINE__, __FILE__, false, "GROUP BY $this->info_table.info_id", 'infolog', 1,
 			"LEFT JOIN $this->users_table ON $this->info_table.info_id=$this->users_table.info_id")->fetch()))
 		{
 			$this->init( );
