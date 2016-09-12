@@ -448,7 +448,7 @@ class Select extends Etemplate\Widget
 			{
 				if (is_array($val))
 				{
-					if (isset($val['value']) && count($val) <= 2)
+					if (isset($val['value']) && count(array_filter(array_keys($val), 'is_int')) == 0)
 					{
 						$values[] = $val['value'];
 					}
@@ -471,7 +471,7 @@ class Select extends Etemplate\Widget
 					$values[] = $key;
 				}
 			}
-			//error_log(__METHOD__."('$name', TRUE) options=".array2string($options).' --> values='.array2string($values));
+			error_log(__METHOD__."('$name', TRUE) options=".array2string($options).' --> values='.array2string($values));
 			$options = $values;
 		}
 		//error_log(__METHOD__."('$name') returning ".array2string($options));
