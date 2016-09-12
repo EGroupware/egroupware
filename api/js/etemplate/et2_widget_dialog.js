@@ -173,6 +173,12 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 			type: "string",
 			description: "Define width of dialog, the default is auto",
 			"default": 'auto'
+		},
+		position: {
+			name: "position",
+			type: "string",
+			description: "Define position of dialog in the main window",
+			default: "center"
 		}
 	},
 
@@ -483,7 +489,8 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 				jQuery(this).parents('.ui-dialog-buttonpane button[default]').focus();
 			},
 			close: jQuery.proxy(function() {this.destroy();},this),
-			beforeClose: this.options.beforeClose
+			beforeClose: this.options.beforeClose,
+			position: {my:this.options.position, at:this.options.position, of:window}
 		});
 	}
 });}).call(this);
