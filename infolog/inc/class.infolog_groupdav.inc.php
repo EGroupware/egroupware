@@ -253,10 +253,16 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			'col_filter'	=> $filter,
 			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
 		);
+		$check_responsible = false;
+		if (substr($task_filter, -8) == '+deleted')
+		{
+			$check_responsible = substr($task_filter, 0, 4) == 'user' ?
+				(int)substr($task_filter, 4) : $GLOBALS['egw_info']['user']['account_id'];
+		}
 
 		if (!$calendar_data)
 		{
-			$query['cols'] = array('info_id', 'info_datemodified', 'info_uid', 'caldav_name', 'info_subject', 'info_status');
+			$query['cols'] = array('main.info_id AS info_id', 'info_datemodified', 'info_uid', 'caldav_name', 'info_subject', 'info_status');
 		}
 
 		if (is_array($start))
@@ -284,7 +290,10 @@ class infolog_groupdav extends Api\CalDAV\Handler
 					unset($requested_multiget_ids[$k]);
 				}
 				// sync-collection report: deleted entry need to be reported without properties
-				if ($task['info_status'] == 'deleted')
+				if ($task['info_status'] == 'deleted' ||
+					// or event is reported as removed from collection, because collection owner is no longer an attendee
+					$check_responsible && $task['info_owner'] != $check_responsible &&
+						!infolog_so::is_responsible_user($task, $check_responsible))
 				{
 					$files[] = array('path' => $path.urldecode($this->get_path($task)));
 					continue;

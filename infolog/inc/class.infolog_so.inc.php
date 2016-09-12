@@ -91,14 +91,28 @@ class infolog_so
 	 * Check if user is responsible for an entry: he or one of his memberships is in responsible
 	 *
 	 * @param array $info infolog entry as array
+	 * @param int $user =null user to check for, default $this->user
 	 * @return boolean
 	 */
 	function is_responsible($info,$user=null)
 	{
 		if (!$user) $user = $this->user;
 
+		return self::is_responsible_user($info, $user);
+	}
+
+	/**
+	 * Check if user is responsible for an entry: he or one of his memberships is in responsible
+	 *
+	 * @param array $info infolog entry as array
+	 * @param int $user =null user to check for
+	 * @return boolean
+	 */
+	static function is_responsible_user($info, $user)
+	{
+
 		static $um_cache = array();
-		if ($user == $this->user) $user_and_memberships =& $um_cache[$user];
+		$user_and_memberships =& $um_cache[$user];
 		if (!isset($user_and_memberships))
 		{
 			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user,true);
@@ -201,9 +215,10 @@ class infolog_so
 	function aclFilter($_filter = False)
 	{
 		$vars = null;
-		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)/',$_filter,$vars);
+		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)(+deleted)?/',$_filter,$vars);
 		$filter = $vars[1];
 		$f_user = $vars[2];
+		$deleted_too = !empty($vars[3]);
 
 		if (isset($this->acl_filter[$filter.$f_user]))
 		{
@@ -247,12 +262,12 @@ class infolog_so
 			}
 			$public_access = $this->db->expression($this->info_table,array('info_owner' => $public_user_list));
 			// implicit read-rights for responsible user
-			$filtermethod .= " OR (".$this->responsible_filter($this->user).')';
+			$filtermethod .= " OR (".$this->responsible_filter($this->user, $deleted_too).')';
 
 			// private: own entries plus the one user is responsible for
 			if ($filter == 'private' || $filter == 'privat' || $filter == 'own')
 			{
-				$filtermethod .= " OR (".$this->responsible_filter($this->user).
+				$filtermethod .= " OR (".$this->responsible_filter($this->user, $deleted_too).
 					($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
 						" OR info_status = 'offer' AND $public_access" : '').")".
 				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
@@ -274,7 +289,7 @@ class infolog_so
 			{
 				$filtermethod .= $this->db->expression($this->info_table,' AND (',array(
 					'info_owner' => $f_user,
-				)," AND $this->users_table.account_id IS NULL OR ",$this->responsible_filter($f_user),')');
+				)," AND $this->users_table.account_id IS NULL OR ",$this->responsible_filter($f_user, $deleted_too),')');
 			}
 		}
 		//echo "<p>aclFilter(filter='$_filter',user='$f_user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
