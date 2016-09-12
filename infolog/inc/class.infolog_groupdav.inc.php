@@ -799,9 +799,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		// calendar description
 		$displayname = Api\Translation::convert(lang('Tasks of'),Api\Translation::charset(),'utf-8').' '.$displayname;
 		$props['calendar-description'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-description',$displayname);
-		// supported components, currently only VEVENT
+		// supported components, currently only VTODO
 		$props['supported-calendar-component-set'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'supported-calendar-component-set',array(
-			Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'comp',array('name' => 'VCALENDAR')),
 			Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'comp',array('name' => 'VTODO')),
 		));
 		// supported reports

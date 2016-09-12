@@ -1500,7 +1500,6 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			$props['calendar-description'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-description',$displayname);
 		}
 		$supported_components = array(
-			Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'comp',array('name' => 'VCALENDAR')),
 			Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'comp',array('name' => 'VEVENT')),
 		);
 		// outbox supports VFREEBUSY too, it is required from OS X iCal to autocomplete locations
