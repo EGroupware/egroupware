@@ -534,11 +534,12 @@ class resources_bo
 	 */
 	public static function calendar_search($search, $options)
 	{
-		// Resources
-		$list = Link::query('resources', $search, $options);
+		$bo = new resources_bo();
+
+		// Resources - call direct to avoid cache
+		$list = $bo->link_query($search, $options);
 
 		// Categories
-		$bo = new resources_bo();
 		$cats = $bo->acl->get_cats(Acl::READ);
 		foreach($cats as $cat_id => $cat)
 		{
@@ -562,7 +563,7 @@ class resources_bo
 				else if ($resources && $options['exec'])
 				{
 					array_map(
-						function($id,$name) use (&$list) { $list[''.$id] = $name;},
+						function($id,$name) use (&$list) { if(!$list[''.$id]) $list[''.$id] = $name;},
 						array_keys($resources), $resources
 					);
 				}
