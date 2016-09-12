@@ -94,7 +94,10 @@ class calendar_uiforms extends calendar_ui
 			$owner = $_GET['owner'];
 			if(is_array($owner))
 			{
-				$extra_participants += $owner;
+				if($this->cal_prefs['default_participant'])
+				{
+					$extra_participants += $owner;
+				}
 				$owner = count($owner) > 1 ? $this->user : $owner[0];
 			}
 			else if ($owner)
