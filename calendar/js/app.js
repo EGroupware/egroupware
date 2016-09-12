@@ -1062,6 +1062,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				recur_end.set_min(widget.getValue());
 			}
 		}
+		// Update currently selected alarm time
+		this.alarm_custom_date();
 	},
 
 	/**
