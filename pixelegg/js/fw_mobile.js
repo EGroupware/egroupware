@@ -1031,7 +1031,7 @@
 			history.pushState({type:'main'}, 'main', '#main');
 			jQuery(window).on('popstate', function(e){
 				// Check if user wants to logout and ask a confirmation
-				if (e.originalEvent.state == null || typeof e.originalEvent.state == 'undefined') {
+				if (window.location.hash == '#main') {
 					et2_dialog.show_dialog(function(button){
 						if (button === 3){
 							history.forward();
@@ -1041,7 +1041,7 @@
 					}, 'Are you sure you want to logout?', 'Logout');
 				}
 				// Execute action based on
-				switch (e.originalEvent.state.type)
+				switch (e.originalEvent.state && e.originalEvent.state.type)
 				{
 					case 'popup':
 						window.framework.popups[e.originalEvent.state.index].close(e.originalEvent.state.index);
