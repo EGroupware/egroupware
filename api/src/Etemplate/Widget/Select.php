@@ -471,7 +471,7 @@ class Select extends Etemplate\Widget
 					$values[] = $key;
 				}
 			}
-			error_log(__METHOD__."('$name', TRUE) options=".array2string($options).' --> values='.array2string($values));
+			//error_log(__METHOD__."('$name', TRUE) options=".array2string($options).' --> values='.array2string($values));
 			$options = $values;
 		}
 		//error_log(__METHOD__."('$name') returning ".array2string($options));
