@@ -1309,7 +1309,7 @@ class CalDAV extends HTTP_WebDAV_Server
 
 			case 'attachment-remove':
 			case 'attachment-update':
-				if (empty($_GET['managed-id']) || !($path = self::managed_id2path($_GET['managed-id'], $handler->app, $id)))
+				if (empty($_GET['managed-id']) || !($path = self::managed_id2path($_GET['managed-id'], $handler->app, $entry['id'])))
 				{
 					self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
 					return '403 Forbidden';
