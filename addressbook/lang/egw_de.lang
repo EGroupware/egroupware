@@ -78,6 +78,7 @@ assistent phone	addressbook	de	Telefon Assistent
 birthday	common	de	Geburtstag
 birthdays	common	de	Geburtstage
 blank	addressbook	de	Leer
+browser location	addressbook	de	Browser-Standort
 business	common	de	Geschäftlich
 business address	addressbook	de	Geschäftsadresse
 business address line 2	addressbook	de	Straße Zeile 2 geschäftl.
@@ -96,8 +97,8 @@ can be changed via setup >> configuration	admin	de	Kann über Setup >> Konfigura
 can't create dn %1	addressbook	de	dn %1 kann nicht erstellt werden
 car phone	addressbook	de	Autotelefon
 categorie	addressbook	de	Kategorie
-categorie added	addressbook	de	Kategorie (n) hinzugefügt
-categorie delete	addressbook	de	Kategorie (n) gelöscht
+categorie added	addressbook	de	Kategorie(n) hinzugefügt
+categorie delete	addressbook	de	Kategorie(n) gelöscht
 categories, notes, ...	addressbook	de	Kategorien, Notizen, ...
 category path	addressbook	de	Kategorien Pfad
 category tree	admin	de	Kategoriebaum
@@ -170,6 +171,7 @@ default document to insert contacts	addressbook	de	Standarddokument zum Einfüge
 default file as format	addressbook	de	Vorgabe für eigene Sortierung
 default filter	addressbook	de	Standardfilter
 default format for fileas, eg. for new entries.	addressbook	de	Vorgegebenes Format für eigene Sortierung, z.B. für neue Einträge
+default geolocation source address	addressbook	de	Startadresse für Routenplaner
 default is to open email addresses in egroupware email application, if user has access to it.	addressbook	de	Vorgabe ist E-Mail Adressen in EGroupware-E-Mail-Anwendung zu öffnen, wenn der Benutzer darauf Zugriff hat.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	de	Legt fest, welche E-Mail-Adresse (geschäftlich oder privat) für Verteilerlisten in E-Mail bevorzugt benutzt werden soll.
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
@@ -389,6 +391,7 @@ preferred phone	addressbook	de	bevorzugte Telefonnummer
 preferred type of email address to add for distribution lists	addressbook	de	bevorzugter Typ der E-Mailadresse für Verteilerlisten
 prefix	addressbook	de	Anrede
 prevent deleting of contacts	admin	de	Das Löschen von Adressen verhindern
+private address	addressbook	de	Privatadresse
 private custom fields	addressbook	de	Private Benutzerdefinierte Felder
 public key	addressbook	de	öffentlicher Schlüssel
 publish into groups:	addressbook	de	In folgenden Gruppen veröffentlichen:
@@ -424,7 +427,7 @@ select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store / retrieve contacts	admin	de	Auswählen wo Sie Adressen speichern möchten
 selected contacts	addressbook	de	ausgewählte Kontakte
 send emailcopy to receiver	addressbook	de	Versendet eine Kopie der E-Mail zu dem Empfänger
-send succeeded to %1	common	de	erfolgreich versent an
+send succeeded to %1	common	de	erfolgreich versandt an
 seperator	addressbook	de	Feldtrenner
 set full name and file as field in contacts of all users (either all or only empty values)	admin	de	Setzt vollen Namen und eigene Sortierung in Kontakten aller Benutzer (entweder alle oder nur leere Werte)
 set only full name	addressbook	de	Nur vollen Namen setzen
@@ -435,6 +438,7 @@ show infolog entries for this organisation	addressbook	de	InfoLog Einträge dies
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen
 similar contacts found:	addressbook	de	Ähnliche Kontakte gefunden:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	de	Größe des Popup (WxH, zB. 400x300, falls ein Popup verwendet werden soll)
+special	addressbook	de	Spezial
 stadt	addressbook	de	Stadt
 start	admin	de	Starten
 startrecord	addressbook	de	Startdatensatz
