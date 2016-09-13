@@ -414,14 +414,12 @@ class infolog_so
 			$where[] = $this->db->expression($this->info_table, $this->info_table.'.', array('info_id' => $where['info_id']));
 			unset($where['info_id']);
 		}
-		// hide deleted attendees
-		if ($where) $where[] = "$this->users_table.info_res_deleted IS NULL";
 
 		if (!$where ||
 			!($this->data = $this->db->select($this->info_table,
 			'*,'.$this->db->group_concat('account_id').' AS info_responsible,'.$this->info_table.'.info_id AS info_id',
 			$where, __LINE__, __FILE__, false, "GROUP BY $this->info_table.info_id", 'infolog', 1,
-			"LEFT JOIN $this->users_table ON $this->info_table.info_id=$this->users_table.info_id")->fetch()))
+			"LEFT JOIN $this->users_table ON $this->info_table.info_id=$this->users_table.info_id AND $this->users_table.info_res_deleted IS NULL")->fetch()))
 		{
 			$this->init( );
 			//error_log(__METHOD__.'('.array2string($where).') returning FALSE');
@@ -895,6 +893,10 @@ class infolog_so
 			$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
 		}
 		$join .= " LEFT JOIN $this->users_table ON main.info_id=$this->users_table.info_id";
+		if (strpos($query['filter'], '+deleted') === false)
+		{
+			$join .= " AND $this->users_table.info_res_deleted IS NULL";
+		}
 		// do not return deleted attendees
 		$join .= " LEFT JOIN $this->users_table attendees ON main.info_id=attendees.info_id AND attendees.info_res_deleted IS NULL";
 		$group_by = ' GROUP BY main.info_id ';
