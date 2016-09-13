@@ -2518,7 +2518,7 @@ class Vfs
 	 * @param string $path_to
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	function rename ( $path_from, $path_to )
+	static function rename ( $path_from, $path_to )
 	{
 		$vfs = new Vfs\StreamWrapper();
 		return $vfs->rename($path_from, $path_to);
