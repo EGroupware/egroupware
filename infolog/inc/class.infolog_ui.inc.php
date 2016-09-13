@@ -1978,7 +1978,7 @@ class infolog_ui
 			}
 			else
 			{
-				$undelete = $this->bo->check_access($info_id,infolog_bo::ACL_UNDELETE);
+				$undelete = $this->bo->check_access($content,infolog_bo::ACL_UNDELETE);
 			}
 			$content['links'] = $content['link_to'] = array(
 				'to_id' => $info_id,
@@ -2123,7 +2123,7 @@ class infolog_ui
 		unset($preserv['links']); unset($preserv['link_to']);
 
 		// for no edit rights or implizit edit of responsible user make all fields readonly, but status and percent
-		if ($info_id && !$this->bo->check_access($info_id,Acl::EDIT) && !$undelete)
+		if ($info_id && !$this->bo->check_access($content, Acl::EDIT) && !$undelete)
 		{
 			$readonlys['__ALL__'] = true;	// make all fields not explicitly set readonly
 			if ($this->bo->is_responsible($content))
@@ -2147,7 +2147,7 @@ class infolog_ui
 			$this->tmpl->setElementAttribute('button[save]', 'label', 'Un-Delete');
 		}
 
-		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($info_id,Acl::DELETE)))
+		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($content, Acl::DELETE)))
 		{
 			$content['info_anz_subs'] = $this->bo->anzSubs($info_id);	// to determine js confirmation of delete or not
 		}
