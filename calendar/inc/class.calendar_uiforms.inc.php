@@ -92,6 +92,10 @@ class calendar_uiforms extends calendar_ui
 		if (isset($_GET['owner']))
 		{
 			$owner = $_GET['owner'];
+			if(!is_array($owner) && strpos($owner, ','))
+			{
+				$owner = explode(',',$owner);
+			}
 			if(is_array($owner))
 			{
 				if($this->cal_prefs['default_participant'])
@@ -109,6 +113,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$owner = !$this->cal_prefs['default_participant'] ? $this->user : $this->owner;
 		}
+		error_log(__METHOD__ . ' owner: ' . array2string($owner));
 
 		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' ||
 			!$this->bo->check_perms(Acl::ADD,0,$owner))
