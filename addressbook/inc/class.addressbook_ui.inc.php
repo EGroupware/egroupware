@@ -2937,6 +2937,35 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
+	 * Ajax method to update edited avatar photo via
+	 * avatar widget.
+	 *
+	 * @param int $contact_id
+	 * @param file string $file = null null means to delete
+	 */
+	function ajax_update_photo ($contact_id, $file= null)
+	{
+		$response = Api\Json\Response::get();
+		$contact = $this->read($contact_id);
+		if ($file)
+		{
+			$filteredFile=substr($file, strpos($file, ",")+1);
+			$decoded = base64_decode($filteredFile);
+		}
+		$contact ['jpegphoto'] = is_null($file)? $file: $decoded;
+
+		$success = $this->save($contact);
+		if (!$success)
+		{
+			$response->alert($message);
+		}
+		else
+		{
+			$response->data(true);
+		}
+	}
+
+	/**
 	 * download photo of the given ($_GET['contact_id'] or $_GET['account_id']) contact
 	 */
 	function photo()

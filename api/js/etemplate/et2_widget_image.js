@@ -361,8 +361,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 	set_contact_id: function(_contact_id)
 	{
 		var params = {
-			menuaction: 'addressbook.addressbook_ui.photo',
-			'etag' : ''
+			menuaction: 'addressbook.addressbook_ui.photo'
 		};
 		var id = 'contact_id';
 
@@ -457,6 +456,9 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 								{
 									var canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
 									self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
+									egw.json('addressbook.addressbook_ui.ajax_update_photo', [self.options.contact_id, canvas.toDataURL('image/jpeg',1.0)], function(res){
+										if (res) egw.refresh('Avatar updated.', egw.app_name());
+									}).sendRequest();
 								}
 							},
 							title: _title||egw.lang('Input required'),
@@ -483,7 +485,13 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 					et2_dialog.show_dialog(function(_btn){
 						if (_btn == et2_dialog.YES_BUTTON)
 						{
-							//TODO: send delete message to server
+							egw.json('addressbook.addressbook_ui.ajax_update_photo', [self.options.contact_id, null], function(res){
+								if (res)
+								{
+									self.image.attr('src','');
+									egw.refresh('Avatar Deleted.', egw.app_name());
+								}
+							}).sendRequest();
 						}
 					}, egw.lang('Delete this photo?'), 'Delete', null, et2_dialog.BUTTONS_YES_NO);
 				})
@@ -496,7 +504,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 		// bind handler for activating actions on editable mask
 		eml.on({
 			mouseover:function(){eml.css('opacity','0.9');},
-			mouseout: function () {eml.css('opacity','0');}
+			mouseout: function (){eml.css('opacity','0');}
 		});
 	},
 
@@ -524,3 +532,24 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 
 });}).call(this);
 et2_register_widget(et2_avatar, ["avatar"]);
+
+jQuery.extend(et2_avatar,
+{
+	/**
+	 * Function runs after uplaod in avatar dialog is finished and it tries to
+	 * update image and cropper container.
+	 * 
+	 * @param {type} e
+	 * @returns {undefined}
+	 */
+	uploadAvatar_onFinish: function (e){
+		var file = e.data.resumable.files[0].file;
+		var reader = new FileReader();
+		reader.onload = function (e)
+		{
+			jQuery('#_cropper_image').attr('src', e.target.result);
+			jQuery('#_cropper_image').cropper('replace',e.target.result);
+		};
+		reader.readAsDataURL(file);
+	}
+});
