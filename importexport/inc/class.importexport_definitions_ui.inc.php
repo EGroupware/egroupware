@@ -555,11 +555,11 @@ class importexport_definitions_ui
 				}
 				if(!key_exists($content['step'],$this->steps))
 				{
-					$next_step = $this->plugin->$content['step']($content,$sel_options,$readonlys,$preserv);
+					$next_step = $this->plugin->{$content['step']}($content,$sel_options,$readonlys,$preserv);
 				}
 				else
 				{
-					$next_step = $this->$content['step']($content,$sel_options,$readonlys,$preserv);
+					$next_step = $this->{$content['step']}($content,$sel_options,$readonlys,$preserv);
 				}
 			}
 			else
@@ -589,11 +589,11 @@ class importexport_definitions_ui
 				{
 					if(!key_exists($content['step'],$this->steps))
 					{
-						$next_step = $this->plugin->$content['step']($content);
+						$next_step = $this->plugin->{$content['step']}($content);
 					}
 					else
 					{
-						$next_step = $this->$content['step']($content);
+						$next_step = $this->{$content['step']}($content);
 					}
 				}
 			} while($this->wizard_content_template == self::SKIP);

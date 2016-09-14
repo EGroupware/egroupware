@@ -342,7 +342,7 @@ class importexport_export_csv implements importexport_iface_export_record
 				}
 				else if ( is_array($record->$name) && $record->$name['app'] && $record->$name['id'])
 				{
-					$record->$name = Link::title($record->$name['app'], $record->$name['id']);
+					$record->$name = egw_link::title($record->$name['app'], $record->$name['id']);
 				}
 			}
 			else

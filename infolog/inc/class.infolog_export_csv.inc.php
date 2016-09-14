@@ -127,8 +127,11 @@ class infolog_export_csv implements importexport_iface_export_plugin
 			$links = egw_link::get_links_multiple('infolog', $ids, true, '!'.egw_link::VFS_APPNAME);
 			foreach($links as $id => $link) {
 				if(!is_array($selection[$id])) break;
-				$selection[$id]['info_link_id'] = $link;
-				if($options['convert']) $selection[$id]['info_link_id'] = egw_link::title($link['app'], $link['id']);
+				$selection[$id]['info_link_id'] = $link = array_pop($link);
+				if(!$options['convert'])
+				{
+					$selection[$id]['info_link_id'] = $link['app'].':'. $link['id'];
+				}
 			}
 		}
 		// If exporting PM fields, pre-load them all at once
