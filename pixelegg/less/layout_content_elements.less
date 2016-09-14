@@ -25,7 +25,8 @@
 
 
 body,
-textarea {
+textarea,
+button {
 	.basefontfamily;
 }
 
@@ -96,8 +97,17 @@ div.selectbox-wrapper {
 
 select {
 	position:relative;
+	padding-right: 20px !important;
+	-webkit-appearance:none;
+	-moz-appearance: none;
+	margin:0;
+	background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+	background-size: 16px auto;
 }
-
+/*IE has no appearance but we can remove arrows by ms-expand*/
+select::-ms-expand {
+	display: none;
+}
 select,input,button
 {
 	.color_100_gray;
@@ -201,13 +211,3 @@ table.table_passord_change {
 
 }
 
-/////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	select {
-		padding-right: 20px !important;
-		-webkit-appearance:none;
-		margin:0;
-		background:  #ffffff url(../images/selectarrowdown.png) no-repeat center right;
-		background-size: 16px auto;
-	}
-}
