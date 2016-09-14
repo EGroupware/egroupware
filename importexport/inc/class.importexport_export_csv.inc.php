@@ -341,8 +341,13 @@ class importexport_export_csv implements importexport_iface_export_record
 					$links[$name] = ($link['link_app1'] == $appname ? $link['link_app2'] : $link['link_app1']);
 					$record->$name = ($link['link_app1'] == $appname ? $link['link_id2'] : $link['link_id1']);
 				}
-				if($links[$name]) {
+				if($links[$name])
+				{
 					$record->$name = Link::title($links[$name], $record->$name);
+				}
+				else if ( is_array($record->$name) && $record->$name['app'] && $record->$name['id'])
+				{
+					$record->$name = Link::title($record->$name['app'], $record->$name['id']);
 				}
 			}
 			else
