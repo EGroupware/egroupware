@@ -876,3 +876,5 @@ div.mailComposeHeaderSection>table {
 .sieve-title .ruleID::before {content:'#'}
 
 #mail-index_nm.et2_nextmatch .egwGridView_outer thead tr {border-left: 12px solid transparent;}
+
+#mail-compose_mailaccount {max-width: 100% !important;}

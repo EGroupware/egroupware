@@ -861,6 +861,9 @@ div.mailComposeHeaderSection > table {
 #mail-index_nm.et2_nextmatch .egwGridView_outer thead tr {
   border-left: 12px solid transparent;
 }
+#mail-compose_mailaccount {
+  max-width: 100% !important;
+}
 #popupMainDiv {
   padding: 5px;
 }
@@ -2284,6 +2287,9 @@ div.mailPreviewHeaders div.mail_extraEmails {
 div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   width: 24px;
   height: 24px;
+}
+div.mailPreviewHeaders img.et2_button_icon {
+  background-color: inherit;
 }
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;
