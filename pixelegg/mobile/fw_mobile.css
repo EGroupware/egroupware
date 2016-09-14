@@ -2637,7 +2637,8 @@ div.client_error_log tr td.stack > div {
 * ########################################################################################
 */
 body,
-textarea {
+textarea,
+button {
   font-family: Verdana, "Lucida Grande", Helvetica, Sans-Serif;
 }
 #egw_fw_basecontainer {
@@ -2707,6 +2708,16 @@ div.selectbox-wrapper ul li {
 }
 select {
   position: relative;
+  padding-right: 20px !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+  background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+  background-size: 16px auto;
+}
+/*IE has no appearance but we can remove arrows by ms-expand*/
+select::-ms-expand {
+  display: none;
 }
 select,
 input,
@@ -2802,15 +2813,6 @@ table.table_passord_change tr {
 }
 table.table_passord_change td:first-child {
   padding-right: 4em;
-}
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  select {
-    padding-right: 20px !important;
-    -webkit-appearance: none;
-    margin: 0;
-    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
-    background-size: 16px auto;
-  }
 }
 /**
  * EGroupware: Stylite Pixelegg template
