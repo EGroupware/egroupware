@@ -2243,14 +2243,12 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			}
 		},this);
 
-		var base_url = this.getInstanceManager().template_base_url;
-		if (base_url == '/') base_url = '';	// otherwise we generate a url //api/templates, which is wrong
 		var dialog = et2_createWidget("dialog",{
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: callback,	// return false to prevent dialog closing
 			buttons: et2_dialog.BUTTONS_OK_CANCEL,
 			title: 'Print',
-			template:this.egw().link(base_url+'/api/templates/default/nm_print_dialog.xet'),
+			template:this.egw().link('/api/templates/default/nm_print_dialog.xet'),
 			value: {
 				content: {
 					row_count: Math.min(100,total),
