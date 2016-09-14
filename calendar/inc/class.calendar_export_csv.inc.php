@@ -49,14 +49,20 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		{
 			case 'criteria':
 				$query = array(
-					'start' => $options['criteria']['start'],
-					'end'   => strtotime('+1 day',$options['criteria']['end'])-1,
 					'categories'	=> $options['categories'] ? $options['categories'] : $options['criteria']['categories'],
 					//'enum_recuring' => false, // we want the recurring events enumerated for csv export
 					'daywise'       => false,
 					'users'         => $options['criteria']['owner'],
 					'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
 				);
+				if($options['criteria']['start'])
+				{
+					$query['start'] = $options['criteria']['start'];
+				}
+				if($options['criteria']['end'])
+				{
+					$query['end'] = strtotime('+1 day',$options['criteria']['end'])-1;
+				}
 				if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
 					$query['offset'] = 0;
 					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
