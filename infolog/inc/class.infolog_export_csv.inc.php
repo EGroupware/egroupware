@@ -14,7 +14,8 @@
 /**
  * export plugin of infolog
  */
-class infolog_export_csv implements importexport_iface_export_plugin {
+class infolog_export_csv implements importexport_iface_export_plugin
+{
 
 
 	public function __construct() {
@@ -28,7 +29,8 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	 *
 	 * @param egw_record $_definition
 	 */
-	public function export( $_stream, importexport_definition $_definition) {
+	public function export( $_stream, importexport_definition $_definition)
+	{
 		$options = $_definition->plugin_options;
 
 		$selection = array();
@@ -49,7 +51,8 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 				// do we need to query the cf's
 				$query['custom_fields'] = false;
 				foreach($options['mapping'] + (array)$_definition->filter as $field => $map) {
-					if($field[0] == '#') {
+					if($field[0] == '#')
+					{
 						$query['custom_fields'] = true;
 						$query['selectcols'] .= ",$field";
 
@@ -83,14 +86,17 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 				}
 				$query['num_rows'] = 500;
 				$query['start'] = 0;
-				do {
+				do
+				{
 					$selection = $this->bo->search($query);
 					$ids = array_keys($selection);
 
 					// Pre-load any cfs that are links
 					$cf_preload = array();
-					foreach($cf_links as $field => $app) {
-						foreach($selection as &$row) {
+					foreach($cf_links as $field => $app)
+					{
+						foreach($selection as &$row)
+						{
 							if($row[$field]) $cf_preload[$app][] = $row[$field];
 						}
 						if($cf_preload[$app]){
@@ -138,8 +144,10 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			}
 		}
 
-		foreach ($selection as $_identifier) {
-			if(!is_array($_identifier)) {
+		foreach ($selection as $_identifier)
+		{
+			if(!is_array($_identifier))
+			{
 				$record = new infolog_egw_record($_identifier);
 				if($link = $links[$record->info_id]) $record->info_link_id = $options['convert'] ? egw_link::title($link['app'], $link['id']) : $link;
 				if($project = $projects[$record->info_id])
@@ -147,12 +155,15 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 					$record->pm_id = current($project);
 					$record->project = egw_link::title('projectmanager', $record->pm_id);
 				}
-			} else {
+			}
+			else
+			{
 				$record = new infolog_egw_record();
 				$record->set_record($_identifier);
 			}
 			// Some conversion
-			if($options['convert']) {
+			if($options['convert'])
+			{
 				$this->selects['info_status'] = $this->bo->get_status($record->info_type);
 				importexport_export_csv::convert($record, infolog_egw_record::$types, 'infolog', $this->selects);
 				$this->convert($record);
@@ -162,9 +173,12 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 				{
 					if($record->$field == 0) $record->$field = '';
 				}
-			} else {
+			}
+			else
+			{
 				// Implode arrays, so they don't say 'Array'
-				foreach($record->get_record_array() as $key => $value) {
+				foreach($record->get_record_array() as $key => $value)
+				{
 					if(is_array($value)) $record->$key = implode(',', $value);
 				}
 			}
@@ -178,7 +192,8 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	 *
 	 * @return string name
 	 */
-	public static function get_name() {
+	public static function get_name()
+	{
 		return lang('Infolog CSV export');
 	}
 
@@ -187,7 +202,8 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	 *
 	 * @return string descriprion
 	 */
-	public static function get_description() {
+	public static function get_description()
+	{
 		return lang("Exports Infolog entries into a CSV File.");
 	}
 
@@ -196,11 +212,13 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	 *
 	 * @return string suffix
 	 */
-	public static function get_filesuffix() {
+	public static function get_filesuffix()
+	{
 		return 'csv';
 	}
 
-	public static function get_mimetype() {
+	public static function get_mimetype()
+	{
 		return 'text/csv';
 	}
 
@@ -223,14 +241,16 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	 *
 	 * @return string html
 	 */
-	public function get_options_etpl() {
+	public function get_options_etpl()
+	{
 	}
 
 	/**
 	 * returns slectors of this plugin via xajax
 	 *
 	 */
-	public function get_selectors_etpl() {
+	public function get_selectors_etpl()
+	{
 		return array(
 			'name'	=> 'infolog.export_csv_selectors',
 		);
@@ -260,7 +280,8 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	*
 	* This is for something specific to Infolog, in addition to the normal conversions.
 	*/
-	public static function convert(infolog_egw_record &$record) {
+	public static function convert(infolog_egw_record &$record)
+	{
 		// Stub, for now
 	}
 
