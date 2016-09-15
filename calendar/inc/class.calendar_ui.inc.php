@@ -621,15 +621,15 @@ class calendar_ui
 
 		// Directly update stored data.
 		// Make sure we have the whole event
-		$event = $this->bo->read($event_id, $recurrence_date);
+		$event = $this->bo->read($event_id, $recurrence_date, false, 'ts', $this->cal_prefs['saved_states']['owner']);
 		$response = Api\Json\Response::get();
 
 
 		// Check filters to see if they still match, may have to remove
 		// the event because it should no longer be displayed
 		$filter_match = true;
-		if($this->cal_prefs['saved_states']['status_filter'] != 'all' ||
-			$this->cal_prefs['saved_states']['cat_id'])
+		if($event && ($this->cal_prefs['saved_states']['status_filter'] != 'all' ||
+			$this->cal_prefs['saved_states']['cat_id']))
 		{
 			$filter_check = array(
 				'start' => $event['start'],

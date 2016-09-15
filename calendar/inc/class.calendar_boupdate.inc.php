@@ -252,8 +252,11 @@ class calendar_boupdate extends calendar_bo
 			return $cal_id;
 		}
 
-		$event = $this->read($cal_id);	// we re-read the event, in case only partial information was update and we need the full info for the notifies
-		//echo "new $cal_id="; _debug_array($event);
+		// we re-read the event, in case only partial information was update and we need the full info for the notifies
+		// The check for new private events is to at least show the private version,
+		// otherwise we get FALSE
+		$event = $this->read($cal_id, null, $ignore_acl, 'ts', $new_event && !$event['public'] ? $this->user : null);
+		//error_log("new $cal_id=". array2string($event));
 
 		if($old_event['deleted'] && $event['deleted'] == null)
 		{
