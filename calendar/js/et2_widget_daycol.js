@@ -885,13 +885,13 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			{
 				event.end = new Date(event.end);
 			}
-			event['start_m'] = event.start.getUTCHours() * 60 + event.start.getUTCMinutes();
+			event['start_m'] = (event.start.valueOf()/1000 - day_start) / 60
 			if (event['start_m'] < 0)
 			{
 				event['start_m'] = 0;
 				event['multiday'] = true;
 			}
-			event['end_m'] = event.end.getUTCHours() * 60 + event.end.getUTCMinutes();
+			event['end_m'] = (event.end.valueOf()/1000 - day_start) / 60;
 			if (event['end_m'] >= 24*60)
 			{
 				event['end_m'] = 24*60-1;
