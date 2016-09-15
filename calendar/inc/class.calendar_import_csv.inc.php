@@ -115,7 +115,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 			list($lines, $p, $names, $quantity, $status, $role) = $participants;
 			foreach($names as $key => $name) {
 				//error_log("Name: $name Quantity: {$quantity[$key]} Status: {$status[$key]} Role: {$role[$key]}");
-
+				
 				// Search for direct account name, then user in accounts first
 				$search = "\"$name\"";
 				$id = importexport_helper_functions::account_name2id($name);
@@ -149,7 +149,7 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 						{
 							// Search app via link query
 							$link_options = array();
-							$result = Link::query($resource['app'], $search, $link_options);
+							$result = egw_link::query($resource['app'], $search, $link_options);
 
 							if($result)
 							{
