@@ -943,7 +943,14 @@ window.egw_LAB.wait(function() {
 	{
 		// Set owner to current user, if not set
 		$owner = $_owner ? $_owner : $GLOBALS['egw_info']['user']['account_id'];
-
+		// if admin forced or set default for add_default pref
+		// consider default_addressbook as owner which already
+		// covered all cases in contacts class.
+		if ($owner == (int)$GLOBALS['egw']->preferences->default['addressbook']['add_default'] ||
+				$owner == (int)$GLOBALS['egw']->preferences->forced['addressbook']['add_default'])
+		{
+			$owner = $this->default_addressbook;
+		}
 		// Check for valid list & permissions
 		if(!(int)$list_id && !$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner))
 		{
