@@ -994,16 +994,30 @@
 		 */
 		nm_onselect_ctrl: function(_widget, _action, _sender)
 		{
+			var sender = _sender? _sender[0]:null;
 			// Update action_header status (3dots)
 			_widget.header.action_header.toggle(typeof _widget.getSelection().ids != 'undefined' && _widget.getSelection().ids.length > 0);
 
 			// Update selection counter in nm header
 			if (_widget._type == 'nextmatch' && _widget.getSelection().ids.length > 0)
 			{
-
-				_widget.header.select_counter
+				if (sender && sender.actionLinks)
+				{
+					var delete_action = null;
+					for (var i=0; i< sender.actionLinks.length;i++)
+					{
+						if (sender.actionLinks[i].actionId == 'delete') delete_action = sender.actionLinks[i];
+					}
+					if (delete_action)
+					{
+						_widget.header.select_counter
 						.show()
-						.text(_widget.getSelection().ids.length);
+						.text(_widget.getSelection().ids.length)
+						.click(function(){
+							if (delete_action) delete_action.actionObj.execute([sender]);
+						});
+					}
+				}
 			}
 			else
 			{
