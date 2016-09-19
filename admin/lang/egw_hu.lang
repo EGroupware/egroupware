@@ -206,7 +206,7 @@ enter the site password for peer servers	admin	hu	Adja meg a site jelszót a pee
 enter the site username for peer servers	admin	hu	Adja meg a site felhasználót a peer szerverhez
 enter the title for your site	admin	hu	A webhely megnevezése
 enter the title of your logo	admin	hu	A logó címe
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	hu	Adja meg a céglogó URL-ét vagy a fájlnevét (phpgwapi/templates/default/images könyvtárból)
+enter the url or filename (in api/templates/default/images) of your logo	admin	hu	Adja meg a céglogó URL-ét vagy a fájlnevét (api/templates/default/images könyvtárból)
 enter the url where your logo should link to	admin	hu	Adja meg az internetes hivatkozást, hogy hová mutasson a céglogó
 enter your default ftp server	admin	hu	Az alapértelmezett FTP-kiszolgáló
 enter your default mail domain ( from: user@domain )	admin	hu	Adja meg az alapértelmezett email tartományt (felhasználó@tartomány alapján)

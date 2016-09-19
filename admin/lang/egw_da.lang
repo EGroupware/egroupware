@@ -170,7 +170,7 @@ enter the site password for peer servers	admin	da	Indtast site adgangskoden for 
 enter the site username for peer servers	admin	da	Indtast site brugernavnet for peer serverene
 enter the title for your site	admin	da	Indtast titlen for dit site
 enter the title of your logo	admin	da	Indtast title for dit logo
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	da	Indtast stien eller filnavnet (i phpgwapi/templates/default/images) på dit logo
+enter the url or filename (in api/templates/default/images) of your logo	admin	da	Indtast stien eller filnavnet (i api/templates/default/images) på dit logo
 enter the url where your logo should link to	admin	da	Indtast stien hvor dit logo skal linke til
 enter your default ftp server	admin	da	Indtast din standard FTP server
 enter your default mail domain ( from: user@domain )	admin	da	Indtast dit standard domæne navn (fra: bruger@domæne)

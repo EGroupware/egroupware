@@ -160,7 +160,7 @@ enter the site password for peer servers	admin	tr	Peer sunucular için site þifre
 enter the site username for peer servers	admin	tr	Peer sunucular için site kullanýcý adý giriniz.
 enter the title for your site	admin	tr	Site baþlýðýný giriniz.
 enter the title of your logo	admin	tr	Logonuzun baþlýðýný giriniz.
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	tr	Logonuzun URL'sini ya da dosya adýný giriniz. (phpgwapi/templates/default/images içinde olmalýdýr.)
+enter the url or filename (in api/templates/default/images) of your logo	admin	tr	Logonuzun URL'sini ya da dosya adýný giriniz. (api/templates/default/images içinde olmalýdýr.)
 enter the url where your logo should link to	admin	tr	Logonuz için link giriniz.
 enter your default ftp server	admin	tr	Varsayýlan FTP sunucusunu giriniz
 enter your default mail domain ( from: user@domain )	admin	tr	Varsayýlan mail domain'ini giriniz ( From: kullanýcý@domain )

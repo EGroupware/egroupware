@@ -165,7 +165,7 @@ enter the site password for peer servers	admin	ko	피어서버의 사이트 암�
 enter the site username for peer servers	admin	ko	피어서버의 사이트 사용자이름 입력
 enter the title for your site	admin	ko	귀하의 사이트 제목을 입력
 enter the title of your logo	admin	ko	귀하의 로고의 제목을 입력
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	ko	귀하의 로고의 URL 이나 파일이름을 입력 ( phpgwapi/templates/default/images 안에 )
+enter the url or filename (in api/templates/default/images) of your logo	admin	ko	귀하의 로고의 URL 이나 파일이름을 입력 ( api/templates/default/images 안에 )
 enter the url where your logo should link to	admin	ko	귀하의 로고가 링크될 URL 을 입력
 enter your default ftp server	admin	ko	기본 FTP 서버주소 입력
 enter your default mail domain ( from: user@domain )	admin	ko	기본 메일 도메인을 입력 ( From : 유저@도메인 )

@@ -203,7 +203,7 @@ enter the site password for peer servers	admin	sl	Vnesite geslo vzporednega stre
 enter the site username for peer servers	admin	sl	Vnesite uporabniško ime vzporednega strežnika
 enter the title for your site	admin	sl	Vnesite naziv strežnika
 enter the title of your logo	admin	sl	Vnesite naziv vašega logotipa
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	sl	Vnesite spletni naslov ali ime datoteke (v phpgwapi/templates/default/images) vašega logotipa
+enter the url or filename (in api/templates/default/images) of your logo	admin	sl	Vnesite spletni naslov ali ime datoteke (v api/templates/default/images) vašega logotipa
 enter the url where your logo should link to	admin	sl	Vnesite URL, na katerega naj kaže vaš logotip
 enter your default ftp server	admin	sl	Vnesite privzeti FTP strežnik
 enter your default mail domain ( from: user@domain )	admin	sl	Vnesite privzeto poštno domeno (Od: uporabnik@domena)

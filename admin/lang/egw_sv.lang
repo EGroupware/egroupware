@@ -194,7 +194,7 @@ enter the site password for peer servers	admin	sv	Ange lösenord för peer serve
 enter the site username for peer servers	admin	sv	Ange användarnamn för peer servers
 enter the title for your site	admin	sv	Namnge din sajt
 enter the title of your logo	admin	sv	Namnge sajtens logotyp
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	sv	Ange URL eller filnamn (om den ligger i phpgwapi/templates/default/images) för webbplatsens logotyp
+enter the url or filename (in api/templates/default/images) of your logo	admin	sv	Ange URL eller filnamn (om den ligger i api/templates/default/images) för webbplatsens logotyp
 enter the url where your logo should link to	admin	sv	Ange vilken URL sajtens logotyp skall länka till
 enter your default ftp server	admin	sv	Ange standard FTP server
 enter your default mail domain ( from: user@domain )	admin	sv	Ange standard e-postdomän (Från: user@domän)

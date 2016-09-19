@@ -220,7 +220,7 @@ enter the site password for peer servers	admin	zh	请输入对等服务器的站
 enter the site username for peer servers	admin	zh	请输入对等服务器的站点用户名
 enter the title for your site	admin	zh	输入您的网站标题
 enter the title of your logo	admin	zh	输入您的网站徽标标题
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	zh	输入您的网站徽标 (Logo) 的网址或文件名 (phpgwapi/templates/default/images)
+enter the url or filename (in api/templates/default/images) of your logo	admin	zh	输入您的网站徽标 (Logo) 的网址或文件名 (api/templates/default/images)
 enter the url where your logo should link to	admin	zh	输入您的 Logo 链接地址 (Url)
 enter your default ftp server	admin	zh	请输入默认的FTP服务器
 enter your default mail domain ( from: user@domain )	admin	zh	输入默认邮件域名 (即邮件地址中"@"号后面的部分)
