@@ -2713,6 +2713,9 @@ div.mailComposeHeaderSection > table {
   #mail-index .mail-index_vacation div {
     text-align: center;
   }
+  #mail-index #mail-index_nm div.search {
+    margin-top: 3px;
+  }
   #mail-index_buttonmailcreate {
     display: none;
   }
