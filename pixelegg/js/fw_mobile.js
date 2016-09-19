@@ -990,30 +990,32 @@
 		 *
 		 * @param {object} _widget nextmatch widget
 		 * @param {object} _action action object
-		 * @param {object} _sender selected row action object
+		 * @param {object} _senders selected row(s) action object
 		 */
-		nm_onselect_ctrl: function(_widget, _action, _sender)
+		nm_onselect_ctrl: function(_widget, _action, _senders)
 		{
-			var sender = _sender? _sender[0]:null;
+			var senders = _senders? _senders:null;
+
 			// Update action_header status (3dots)
 			_widget.header.action_header.toggle(typeof _widget.getSelection().ids != 'undefined' && _widget.getSelection().ids.length > 0);
 
 			// Update selection counter in nm header
 			if (_widget._type == 'nextmatch' && _widget.getSelection().ids.length > 0)
 			{
-				if (sender && sender.actionLinks)
+				if (senders && senders[0].actionLinks)
 				{
 					var delete_action = null;
-					for (var i=0; i< sender.actionLinks.length;i++)
+					for (var i=0; i< senders[0].actionLinks.length;i++)
 					{
-						if (sender.actionLinks[i].actionId == 'delete') delete_action = sender.actionLinks[i];
+						if (senders[0].actionLinks[i].actionId == 'delete') delete_action = senders[0].actionLinks[i];
 					}
-					if (delete_action)
+					if (delete_action && delete_action.enabled)
 					{
 						_widget.header.delete_action
 						.show()
+						.off()
 						.click(function(){
-							if (delete_action) delete_action.actionObj.execute([sender]);
+							if (delete_action) delete_action.actionObj.execute(senders);
 						});
 					}
 				}
