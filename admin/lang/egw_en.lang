@@ -344,7 +344,7 @@ enter the site password for peer servers	admin	en	Enter the site password for pe
 enter the site username for peer servers	admin	en	Enter the site username for peer servers
 enter the title for your site	admin	en	Enter the title for site
 enter the title of your logo	admin	en	Enter the title of logo
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	en	Enter the URL or file name of your logo
+enter the url or filename (in api/templates/default/images) of your logo	admin	en	Enter the URL or file name of your logo
 enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	en	Enter the URL or file name of your favicon
 enter the url where your logo should link to	admin	en	Enter the URL where the logo should link to
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.<br>The path MUST start with / and be readable by all users

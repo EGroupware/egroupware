@@ -198,7 +198,7 @@ enter the site password for peer servers	admin	zh-tw	輸入對接伺服器的主
 enter the site username for peer servers	admin	zh-tw	輸入對接伺服器的主機名稱
 enter the title for your site	admin	zh-tw	輸入此網站的標題
 enter the title of your logo	admin	zh-tw	輸入您的首頁圖示說明文字
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	zh-tw	輸入圖示的網址或檔案名稱(在phpgwapi/templates/default/images)
+enter the url or filename (in api/templates/default/images) of your logo	admin	zh-tw	輸入圖示的網址或檔案名稱(在api/templates/default/images)
 enter the url where your logo should link to	admin	zh-tw	輸入您的首頁圖示連結
 enter your default ftp server	admin	zh-tw	輸入預設的檔案傳輸伺服器主機名稱
 enter your default mail domain ( from: user@domain )	admin	zh-tw	輸入您的預設郵件網域

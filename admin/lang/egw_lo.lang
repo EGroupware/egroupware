@@ -224,7 +224,7 @@ enter the site password for peer servers	admin	lo	ພິມລະຫັດຜ່
 enter the site username for peer servers	admin	lo	ພິມຊື່ສໍາລັບ peer ເຊີບເວີ້
 enter the title for your site	admin	lo	ພິມຫົວຂໍ້ສໍາລັບ ເວບໄຊ້ ຂອງທ່ານ
 enter the title of your logo	admin	lo	ພິມຫົວຂໍ້ສໍາລັບ ໂລໂກ້ ຂອງທ່ານ
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	lo	ພິມ URL ຫຼື filename (ທີ່ phpgwapi/templates/default/images) ສໍາລັບ ໂລໂກ້ ທ່ານ
+enter the url or filename (in api/templates/default/images) of your logo	admin	lo	ພິມ URL ຫຼື filename (ທີ່ api/templates/default/images) ສໍາລັບ ໂລໂກ້ ທ່ານ
 enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	lo	ພິມ URL ຫຼື ຊື່່ຟາຍ (ທີ່ templates image directory ຂອງທ່ານ) ສໍາລັບ ໄອຄອນທີ່່ທ່ານມັກ (ເຊິ່ງຈະສະແດງໄອຄັອນນ້ອຍໆ ຢູ່ໃນ ແທັບສ ຂອງບຣາວເຊີ)
 enter the url where your logo should link to	admin	lo	ພິມ URL ທີ່ ໂລໂກ້ ຂອງທ່ານຈະເຊື່ອມຕໍ່ຫາ
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	lo	ພິມ VFS-Path ບ່ອນທີ່ສາມາດຈັດເກັບ ບັນດາ ຮູບພາບ, ໄອຄອນ ຫຼື ໂລໂກ້ ( ແລະ ຊອກຫາໄດ້ດ້ວຍ ແອັບພຼິເຄຊັນຂອງ EGroupwares ). ພາດເກັບຟາຍ ຕ້ອງສາມາດຂຽນແລະອ່ານໄດ້ດ້ວຍທຸ່ກຜູ້ໃຊ້.

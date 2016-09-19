@@ -181,7 +181,7 @@ enter the site password for peer servers	admin	fa	گذرواژه سایت برا
 enter the site username for peer servers	admin	fa	نام کاربری سایت برای کارگزار کمکی را وارد کنید
 enter the title for your site	admin	fa	عنوان برای سایتتان وارد کنید
 enter the title of your logo	admin	fa	عنوان برای لوگو تان وارد کنید
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	fa	نام یا مسیر کامل لوگو را وارد کنید
+enter the url or filename (in api/templates/default/images) of your logo	admin	fa	نام یا مسیر کامل لوگو را وارد کنید
 enter the url where your logo should link to	admin	fa	نشانی جائی که باید لوگو به آنجا پیوند شود وارد کنید
 enter your default ftp server	admin	fa	کارگزار پیش فرض قاپ را وارد کنید
 enter your default mail domain ( from: user@domain )	admin	fa	حوزه پیش فرض رایانامه را وارد کنید:مثلا: user@domain

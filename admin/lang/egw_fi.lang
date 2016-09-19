@@ -242,7 +242,7 @@ enter the site password for peer servers	admin	fi	Anna salasana rinnakkaispalvel
 enter the site username for peer servers	admin	fi	Anna käyttäjätunnus rinnakkaispalvelimille
 enter the title for your site	admin	fi	Anna palvelun nimi
 enter the title of your logo	admin	fi	Anna logolle selite (näkyy kun hiirtä pitää hetken logon päällä)
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	fi	Anna logon URL tai tiedostonimi (pitää olla hakemistossa phpgwapi/templates/default/images)
+enter the url or filename (in api/templates/default/images) of your logo	admin	fi	Anna logon URL tai tiedostonimi (pitää olla hakemistossa api/templates/default/images)
 enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	fi	Anna faviconin URL tai tiedostonimi (in your templates image directory). Favicon on pieni kuvake selaimen osoiterivillä.
 enter the url where your logo should link to	admin	fi	Anna URL, johon logon napsauttaminen vie
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	fi	Anna VFS-polku lisäkuville, kuvakkeille, logoille. (Kaikkilla sovelluksilla ja käyttäjillä  täytyy olla pääsy tähän kansioon) Polun tulee alkaa /-merkillä.

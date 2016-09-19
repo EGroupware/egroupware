@@ -232,7 +232,7 @@ enter the site password for peer servers	admin	pl	Wprowadź hasło serwisu dla  
 enter the site username for peer servers	admin	pl	Wprowadź nazwę użytkownika serwisu dla serwerów równorzdnych (peer servers)
 enter the title for your site	admin	pl	Nazwa Twojego portalu
 enter the title of your logo	admin	pl	Wpisz nazwę Twojego logo
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	pl	Wpisz URL lub nazwę pliku (w katalogu phpgwapi/templates/default/images) twojego logo
+enter the url or filename (in api/templates/default/images) of your logo	admin	pl	Wpisz URL lub nazwę pliku (w katalogu api/templates/default/images) twojego logo
 enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	pl	Wprowadź URL lub nazwę pliku (w katalogu z obrazkami szablonu) favicon (ikonki pojawiającej się w zakładkach przeglądarki)
 enter the url where your logo should link to	admin	pl	Wpisz URL z którym zlinkować Twoje logo
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	pl	Wprowadź ścieżkę przechowywania dodatkowych obrazków, ikon, logotypów. Ścieżka musi zaczynać się od / i muszą do niej mieć prawa wszyscy użytkownicy.

@@ -177,7 +177,7 @@ enter the site password for peer servers	admin	lv	Ievadi vietnes paroli vienādr
 enter the site username for peer servers	admin	lv	Ievadi vietnes lietotājvārdu vienādranga serveriem
 enter the title for your site	admin	lv	Ievadi savas vietnes nosaukumu
 enter the title of your logo	admin	lv	Ievadi sava logotipa nosaukumu
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	lv	Ievadi logotipa URL vai faila nosaukumu (in phpgwapi/templates/default/images)
+enter the url or filename (in api/templates/default/images) of your logo	admin	lv	Ievadi logotipa URL vai faila nosaukumu (in api/templates/default/images)
 enter the url where your logo should link to	admin	lv	Ievadi URL ar kuru vajadzētu būt saistītam tavam logotipam
 enter your default ftp server	admin	lv	Ievadi noklusēto FTP serveri
 enter your default mail domain ( from: user@domain )	admin	lv	ievadi noklusēto pasta domēnu(no: lietotājs@domēns)

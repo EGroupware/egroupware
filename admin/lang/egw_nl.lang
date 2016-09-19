@@ -226,7 +226,7 @@ enter the site password for peer servers	admin	nl	Voer het websitewachtwoord in 
 enter the site username for peer servers	admin	nl	Voer het websitegebruikersnaam in voor peer-servers
 enter the title for your site	admin	nl	Voer de titel in van uw website
 enter the title of your logo	admin	nl	Voer de titel in van uw logo
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	nl	Vul de URL of bestandsnaam van uw logo in (in phpgwapi/templates/default/images)
+enter the url or filename (in api/templates/default/images) of your logo	admin	nl	Vul de URL of bestandsnaam van uw logo in (in api/templates/default/images)
 enter the url where your logo should link to	admin	nl	Voer de URL in waar uw logo naar moet doorverwijzen
 enter your default ftp server	admin	nl	Voer uw standaard FTP-server in
 enter your default mail domain ( from: user@domain )	admin	nl	Geef uw huidige mail domein (Van: gebruiker@domein)

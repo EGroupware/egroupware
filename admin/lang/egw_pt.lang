@@ -192,7 +192,7 @@ enter the site password for peer servers	admin	pt	Insira a senha do sítio para 
 enter the site username for peer servers	admin	pt	Insira o nome de utilizador do sítio para servidores remotos
 enter the title for your site	admin	pt	Insira o título para o seu sítio
 enter the title of your logo	admin	pt	Insira o título do seu logótipo
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	pt	Insira a URL ou nome do ficheiro (em phpgwapi/templates/default/images) do seu logótipo
+enter the url or filename (in api/templates/default/images) of your logo	admin	pt	Insira a URL ou nome do ficheiro (em api/templates/default/images) do seu logótipo
 enter the url where your logo should link to	admin	pt	Insira a url a que o seu logótipo deve estar ligado
 enter your default ftp server	admin	pt	Insira o seu servidor FTP por omissão
 enter your default mail domain ( from: user@domain )	admin	pt	Insira o seu domínio de correio electrónico por omissão ( De: utilizador@domínio )

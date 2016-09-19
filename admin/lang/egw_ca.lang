@@ -196,7 +196,7 @@ enter the site password for peer servers	admin	ca	Introduïu la contrasenya del 
 enter the site username for peer servers	admin	ca	Introduïu el nom d'usuari del lloc per a servidors parells
 enter the title for your site	admin	ca	Introduïu el títol per al vostre lloc
 enter the title of your logo	admin	ca	Introduïu el títol del vostre logo
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	ca	Introduïu la URL o nom del fitxer (a phpgwapi/templates/default/images) del vostre logo
+enter the url or filename (in api/templates/default/images) of your logo	admin	ca	Introduïu la URL o nom del fitxer (a api/templates/default/images) del vostre logo
 enter the url where your logo should link to	admin	ca	Introduïu l'adreça url a on apunta el logo
 enter your default ftp server	admin	ca	Introduïu el servidor FTP per defecte
 enter your default mail domain ( from: user@domain )	admin	ca	Introduïu el vostre domini de correu per defecte ( De: usuari@domini )

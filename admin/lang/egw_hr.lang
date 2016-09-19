@@ -176,7 +176,7 @@ enter the site password for peer servers	admin	hr	Unesite zaporku za peer poslu�
 enter the site username for peer servers	admin	hr	Unesite korisničko ime za peer poslužitelje
 enter the title for your site	admin	hr	Unesite naslov vaših stranica
 enter the title of your logo	admin	hr	Unesite naslov vašeg logtipa
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	hr	Unesite URL ili ime datoteke (u phpgwapi/templates/default/images) vašeg logotipa
+enter the url or filename (in api/templates/default/images) of your logo	admin	hr	Unesite URL ili ime datoteke (u api/templates/default/images) vašeg logotipa
 enter the url where your logo should link to	admin	hr	Unesite URL na što bi vaš logo trebao biti vezan
 enter your default ftp server	admin	hr	Unesite vaš početno postavljen FTP poslužitelj
 enter your default mail domain ( from: user@domain )	admin	hr	Unesite vašu početno postavljenu domenu za poštu ( Forma: user@domain )

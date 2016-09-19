@@ -51,7 +51,7 @@
 					<textbox id="newsettings[site_title]"/>
 				</row>
 				<row>
-					<description value="Enter the URL or filename (in phpgwapi/templates/default/images) of your logo" label="%s:"/>
+					<description value="Enter the URL or filename (in api/templates/default/images) of your logo" label="%s:"/>
 					<textbox id="newsettings[login_logo_file]"/>
 				</row>
 				<row>

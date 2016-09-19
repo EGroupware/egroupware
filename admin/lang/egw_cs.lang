@@ -231,7 +231,7 @@ enter the site password for peer servers	admin	cs	Zadejte heslo webu pro peer se
 enter the site username for peer servers	admin	cs	Zadejte uživatelské jméno webu pro peer servery
 enter the title for your site	admin	cs	Zadejte nadpis pro Váš web
 enter the title of your logo	admin	cs	Zadejte nadpis pro Vaše logo
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	cs	Zadejte URL nebo název souboru (v adresáři phpgwapi/templates/default/images) pro Vaše logo
+enter the url or filename (in api/templates/default/images) of your logo	admin	cs	Zadejte URL nebo název souboru (v adresáři api/templates/default/images) pro Vaše logo
 enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	cs	Zadejte URL nebo název souboru (musí být uložen v adresáři obrázků k šablonám) pro ikonu, která se zobrazí v adresním řádku nebo panelu prohlížeče
 enter the url where your logo should link to	admin	cs	Zadejte URL, kam by Vaše logo mělo odkazovat
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	cs	Zadejte VFS cestu, kam mohou být umístěny dodatečné obrázky, ikony a loga (kde budou k dispozici pro aplikace eGroupWaru). Cesta MUSÍ začínat lomítkem / a mít nastaveno oprávnění ke čtení pro všechny uživatele.

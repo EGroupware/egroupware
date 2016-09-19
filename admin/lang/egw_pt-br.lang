@@ -223,7 +223,7 @@ enter the site password for peer servers	admin	pt-br	Digite a senha do servidor 
 enter the site username for peer servers	admin	pt-br	Digite o usuário do servidor para comunicação com servidores parceiros
 enter the title for your site	admin	pt-br	Digite o título para o seu site
 enter the title of your logo	admin	pt-br	Digite o título do seu logotipo
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	pt-br	Digite a URL ou o nome do arquivo (em phpgwapi/templates/default/images) do seu logotipo.
+enter the url or filename (in api/templates/default/images) of your logo	admin	pt-br	Digite a URL ou o nome do arquivo (em api/templates/default/images) do seu logotipo.
 enter the url where your logo should link to	admin	pt-br	Digite a url para onde o seu logotipo deve apontar
 enter your default ftp server	admin	pt-br	Digite seu servidor FTP padrão
 enter your default mail domain ( from: user@domain )	admin	pt-br	Digite seu domínio padrão de correio eletrônico (usuario@dominio)

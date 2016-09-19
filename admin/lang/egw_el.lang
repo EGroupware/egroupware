@@ -189,7 +189,7 @@ enter the site password for peer servers	admin	el	Εισήγαγε το συνθ
 enter the site username for peer servers	admin	el	Εισήγαγε το όνομα χρήστη της ιστιοσελίδας για ισότιμους server
 enter the title for your site	admin	el	Εισήγαγε τον τίτλο για την ιστιοσελίδα σου
 enter the title of your logo	admin	el	Εισήγαγε τον τίτλο για το λογοτυπο σου
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	el	Πληκτρολογήστε το URL ή το όνομα του αρχείου(στο phpgwapi/templates/default/images) του λογότυπου σας
+enter the url or filename (in api/templates/default/images) of your logo	admin	el	Πληκτρολογήστε το URL ή το όνομα του αρχείου(στο api/templates/default/images) του λογότυπου σας
 enter the url where your logo should link to	admin	el	Εισήγαγε την url από όπου το λογότυπό σου πρέπει να συνδέεται
 enter your default ftp server	admin	el	Εισήγαγε τον προκαθορισμένο FTP server
 enter your default mail domain ( from: user@domain )	admin	el	Εισαγωγή του προκαθορισμένου ονόματος τομέα αλληλογραφίας (Από:user@domain)

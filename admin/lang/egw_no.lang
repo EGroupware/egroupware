@@ -183,7 +183,7 @@ enter the site password for peer servers	admin	no	Skriv inn site passord for pee
 enter the site username for peer servers	admin	no	Skriv inn sitens brukernavn for peer tjenere
 enter the title for your site	admin	no	Skriv inn sitens tittel
 enter the title of your logo	admin	no	Skriv inn logoens tittel
-enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	no	Angi URL'en eller filnavnet (i phpgwapi/templates/default/images) for din logo
+enter the url or filename (in api/templates/default/images) of your logo	admin	no	Angi URL'en eller filnavnet (i api/templates/default/images) for din logo
 enter the url where your logo should link to	admin	no	Skriv inn URL'en logoen skal linke til
 enter your default ftp server	admin	no	Skriv inn standard FTP server
 enter your default mail domain ( from: user@domain )	admin	no	Skriv inn ditt standard epost domene ( Fra: bruker@domene )
