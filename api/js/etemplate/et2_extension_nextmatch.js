@@ -2457,8 +2457,8 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 					.text(egw.lang(egw.app_name()))
 					.appendTo(this.search_box);
 
-			this.select_counter = jQuery(document.createElement('div'))
-					.addClass('nm_select_counter')
+			this.delete_action = jQuery(document.createElement('div'))
+					.addClass('nm_delete_action')
 					.prependTo(this.search_box);
 			// toggle header
 			// add new button
@@ -2769,7 +2769,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 		this.favorites = et2_createWidget('favorites', widget_options, this);
 
 		// Add into header
-		jQuery(this.favorites.getDOMNode(this.favorites)).prependTo(egwIsMobile()?this.search_box.find('.nm_favorites_div'):this.right_div);
+		jQuery(this.favorites.getDOMNode(this.favorites)).prependTo(egwIsMobile()?this.search_box.find('.nm_favorites_div').show():this.right_div);
 	},
 
 	/**

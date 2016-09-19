@@ -7581,20 +7581,25 @@ form[id^="tracker-"] .dialogHeadbar {
     -webkit-filter: none!important;
     background-color: white !important;
   }
-  body .et2_nextmatch .nm-mob-header div.nm_select_counter {
+  body .et2_nextmatch .nm-mob-header div.nm_delete_action {
+    background-image: url(../images/delete.svg);
+    -webkit-filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
+    background-color: transparent !important;
+    background-size: 24px 24px !important;
+    border: none;
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
     border-left: 1px solid silver;
     border: 0;
-    color: white;
+    color: black;
     width: 50px;
     height: 50px;
-    display: block;
+    display: inline-block;
     float: right;
     text-align: center;
-    font-size: 20pt;
-    line-height: 40pt;
+    display: none;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div {
     background-position: center;
@@ -7605,7 +7610,7 @@ form[id^="tracker-"] .dialogHeadbar {
     color: white;
     width: 50px;
     height: 50px;
-    display: block;
+    display: none;
     float: right;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div:focus {

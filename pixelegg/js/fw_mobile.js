@@ -1010,9 +1010,8 @@
 					}
 					if (delete_action)
 					{
-						_widget.header.select_counter
+						_widget.header.delete_action
 						.show()
-						.text(_widget.getSelection().ids.length)
 						.click(function(){
 							if (delete_action) delete_action.actionObj.execute([sender]);
 						});
@@ -1021,7 +1020,7 @@
 			}
 			else
 			{
-				_widget.header.select_counter.hide();
+				_widget.header.delete_action.hide();
 			}
 		}
 	});
