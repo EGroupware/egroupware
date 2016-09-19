@@ -235,6 +235,8 @@ class preferences_settings
 					}
 					break;
 				case 'Array':	// notify
+					// Make sure the application translation is loaded
+					Api\Translation::add_app($appname);
 					$value = $GLOBALS['egw']->preferences->lang_notify($value, $types[$var], True);
 					break;
 			}
