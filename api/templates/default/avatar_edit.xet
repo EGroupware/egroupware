@@ -6,8 +6,8 @@
 		<vbox>
 			<avatar crop="true" id="cropper_image" contact_id="$cont[photo]" width ="200" height="auto"/>
 			<hbox>
-				<buttononly id="rotate_reset" label="Reset"  image="" background_image="1" onclick="jQuery('#_cropper_image').cropper('reset');"/>
-				<buttononly id="rotate_l" label="Rotate Left"  image="recur" background_image="1" onclick="jQuery('#_cropper_image').cropper('rotate',-90);"/>
+				<buttononly id="rotate_reset" label="Reset"  image="recur" background_image="1" onclick="jQuery('#_cropper_image').cropper('reset');"/>
+				<buttononly id="rotate_l" label="Rotate Left"  image="rotate_l" background_image="1" onclick="jQuery('#_cropper_image').cropper('rotate',-90);"/>
 				<buttononly id="rotate_r" label= "Rotate Right" image="reload" background_image="1" onclick="jQuery('#_cropper_image').cropper('rotate',90);"/>
 				<hbox>
 					<file id='upload_photo' label="upload new photo" onFinishOne="et2_avatar.uploadAvatar_onFinish"/>
@@ -15,7 +15,7 @@
 			</hbox>
 		</vbox>
 		<styles>
-
+			div.et2_file {margin-top: 5px;}
 		</styles>
 	</template>
 </overlay>
