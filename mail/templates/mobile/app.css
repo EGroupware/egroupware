@@ -2605,6 +2605,7 @@ div.mailComposeHeaderSection > table {
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 95%;
+    display: inline-block;
   }
   #mail-index table.egwGridView_outer tbody td span[id^='mail-index_'][id$='attachments]'] {
     float: right;
