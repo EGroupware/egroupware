@@ -5022,7 +5022,8 @@ app.classes.mail = AppJS.extend(
 	 * and takes care of mail integration modules to popup entry selection
 	 * dialog to give user a choice to which entry of selected app the compose
 	 * should be integereated.
-	 *
+	 * @param {int|boolean} _integIndex
+	 * 
 	 * @returns {Boolean} return true if to_tracker is checked otherwise false
 	 */
 	compose_integrate_submit: function (_integIndex)
