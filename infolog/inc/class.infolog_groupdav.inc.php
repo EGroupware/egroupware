@@ -262,7 +262,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 
 		if (!$calendar_data)
 		{
-			$query['cols'] = array('main.info_id AS info_id', 'info_datemodified', 'info_uid', 'caldav_name', 'info_subject', 'info_status');
+			$query['cols'] = array('main.info_id AS info_id', 'info_datemodified', 'info_uid', 'caldav_name', 'info_subject', 'info_status', 'info_owner');
 		}
 
 		if (is_array($start))
