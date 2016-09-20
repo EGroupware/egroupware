@@ -305,6 +305,11 @@ class timesheet_import_csv implements importexport_iface_import_plugin
 				list($lastname,$firstname,$org_name) = explode(',',$record['addressbook']);
 				$record['addressbook'] = self::addr_id($lastname,$firstname,$org_name);
 			}
+			if ($record['pm_id'] && !is_numeric($record['pm_id']))
+			{
+				$pms = Link::query('projectmanager',$record['pm_id']);
+				$record['pm_id'] = key($pms);
+			}
 
 			if ( $_definition->plugin_options['conditions'] )
 			{
