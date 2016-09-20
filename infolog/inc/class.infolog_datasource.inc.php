@@ -129,10 +129,17 @@ class infolog_datasource extends datasource
 			'real_start' => 'info_startdate',
 			'real_end' => 'info_datecompleted'
 		);
+		
+		$startdate_original = $info['info_startdate'];
 		foreach($map as $offset_field => $info_field)
 		{
 			if($date_offsets[$offset_field] && $info[$info_field])
 			{
+				// Don't move startdate twice, but prefer later value
+				if($startdate_original && $info_field == 'info_startdate')
+				{
+					$info[$info_field] = $startdate_original;
+				}
 				//error_log($offset_field . ' ' . Api\DateTime::to($info[$info_field]) . ' ' . $date_offsets[$offset_field]->format('%R%a days') . ' ' . date_add(new Api\DateTime($info[$info_field]), $date_offsets[$offset_field]) );
 
 				$info[$info_field] = date_add(new Api\DateTime($info[$info_field]), $date_offsets[$offset_field])->format('ts');
