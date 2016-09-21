@@ -278,6 +278,8 @@ var et2_tree = (function(){ "use strict"; return et2_inputWidget.extend(
 				var args = jQuery.makeArray(arguments);
 				// splice in widget as 2. parameter, 1. is new node-id, now 3. is old node id
 				args.splice(1, 0, widget);
+				// try to close mobile sidemenu after clicking on node
+				if (egwIsMobile() && typeof args[2] == 'string') framework.toggleMenu('on');
 				return handler.apply(this, args);
 			});
 		}
