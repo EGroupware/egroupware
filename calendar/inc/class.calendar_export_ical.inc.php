@@ -53,18 +53,17 @@ class calendar_export_ical extends calendar_export_csv {
 		// Scheduled export will use 'all', which we don't allow through UI
 		elseif ($options['selection'] == 'search_results' || $options['selection'] == 'all')
 		{
-			$states = Api\Cache::getSession('calendar', 'session_data');
+			$states = $this->bo->cal_prefs['saved_states'];
+			$query = Api\Cache::getSession('calendar', 'calendar_list');
+			$query['num_rows'] = -1;        // all
+			$query['start'] = 0;
+			$query['cfs'] = $cfs;
+			if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
+				$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
+			}
+			$ui = new calendar_uilist();
 			if($states['view'] == 'listview')
 			{
-				$query = Api\Cache::getSession('calendar', 'calendar_list');
-				$query['num_rows'] = -1;        // all
-				$query['start'] = 0;
-				$query['cfs'] = $cfs;
-
-				if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception) {
-					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
-				}
-				$ui = new calendar_uilist();
 				$unused = null;
 				$ui->get_rows($query, $events, $unused);
 			}
@@ -73,42 +72,11 @@ class calendar_export_ical extends calendar_export_csv {
 				$query = Api\Cache::getSession('calendar', 'session_data');
 				$query['users'] = explode(',', $query['owner']);
 				$query['num_rows'] = -1;
-				if(Api\Storage\Merge::hasExportLimit($export_limit) && !$limit_exception)
-				{
-					$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
-				}
 
-				switch($states['view'])
-				{
-					case 'month':
-						$query += calendar_export_csv::get_query_month($states);
-						break;
-					case 'week':
-						$query += calendar_export_csv::get_query_week($states);
-						break;
-					case 'day':
-						$query += calendar_export_csv::get_query_day($states);
-						break;
-					default:
-						// Let UI set the date ranges
-						$ui = new calendar_uiviews($query);
-						if(method_exists($ui, $states['view']))
-						{
-							ob_start();
-							$ui->{$states['view']}();
-							ob_end_clean();
-						}
-						$query += array(
-							'start' => is_array($ui->first) ? $this->bo->date2ts($ui->first) : $ui->first,
-							'end' => is_array($ui->last) ? $this->bo->date2ts($ui->last) : $ui->last
-						);
+				$query['filter'] = 'custom';
+				$events = array();
 
-				}
-				$boupdate = new calendar_boupdate();
-				$events = $boupdate->search($query + array(
-					'offset' => 0,
-					'order' => 'cal_start',
-				));
+				$ui->get_rows($query, $events, $unused);
 			}
 		}
 		// compile list of unique cal_id's, as iCal should contain whole series, not recurrences
