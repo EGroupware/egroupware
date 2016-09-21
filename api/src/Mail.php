@@ -6573,7 +6573,7 @@ class Mail
 	 * @param Mailer $_mailObject instance of the Mailer Object to be used
 	 * @param string $_html2parse the html to parse and to be altered, if conditions meet
 	 * @param $mail_bo mail bo object
-	 * @return void
+	 * @return array|null return inline images stored as tmp file in vfs as array of attachments otherwise null
 	 */
 	static function processURL2InlineImages(Mailer $_mailObject, &$_html2parse, $mail_bo)
 	{
@@ -6678,7 +6678,14 @@ class Mail
 						$_html2parse = str_replace($images[0][$i], $images[1][$i].'="'.$cid.'"', $_html2parse);
 					}
 				}
+				$attachments [] = array(
+					'name' => $filename,
+					'type' => $mimeType,
+					'file' => $attachment_file,
+					'tmp_name' => $attachment_file
+				);
 			}
+			return is_array($attachments) ? $attachments : null;
 		}
 	}
 

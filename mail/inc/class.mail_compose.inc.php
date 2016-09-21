@@ -2223,6 +2223,8 @@ class mail_compose
 	 * @param array $_formData
 	 * @param array $_identity
 	 * @param boolean $_autosaving =false true: autosaving, false: save-as-draft or send
+	 *
+	 * @return array returns found inline images as attachment structure
 	 */
 	function createMessage(Api\Mailer $_mailObject, array $_formData, array $_identity, $_autosaving=false)
 	{
@@ -2356,7 +2358,7 @@ class mail_compose
 				$_mailObject->setBody($this->convertHTMLToText($body, true, true));
 			}
 			// convert URL Images to inline images - if possible
-			if (!$_autosaving) Mail::processURL2InlineImages($_mailObject, $body, $mail_bo);
+			if (!$_autosaving) $inline_images = Mail::processURL2InlineImages($_mailObject, $body, $mail_bo);
 			if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
 			{
 				$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
@@ -2461,6 +2463,7 @@ class mail_compose
 			}
 			if ($connection_opened) $mail_bo->closeConnection();
 		}
+		return is_array($inline_images)?$inline_images:array();
 	}
 
 	/**
@@ -2823,8 +2826,8 @@ class mail_compose
 		}
 		//error_log($this->sessionData['mailaccount']);
 		//error_log(__METHOD__.__LINE__.':'.array2string($this->sessionData['mailidentity']).'->'.array2string($identity));
-		// create the messages
-		$this->createMessage($mail, $_formData, $identity);
+		// create the messages and store inline images
+		$inline_images = $this->createMessage($mail, $_formData, $identity);
 		// remember the identity
 		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') $fromAddress = $mail->From;//$mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
 		#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
@@ -3154,6 +3157,8 @@ class mail_compose
 
 		if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on' || $_formData['to_calendar'] == 'on' )
 		{
+			$this->sessionData['attachments'] = array_merge((array)$this->sessionData['attachments'], (array)$inline_images);
+
 			foreach(array('to_infolog','to_tracker','to_calendar') as $app_key)
 			{
 				$entryid = $_formData['to_integrate_ids'][0][$app_key];
