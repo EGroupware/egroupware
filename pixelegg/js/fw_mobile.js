@@ -46,6 +46,7 @@
 		open: function()
 		{
 			this._super.apply(this,arguments);
+			jQuery('.egw_fw_ui_sidemenu_listitem', this.contentDiv).click(function(){framework.toggleMenu('on');});
 			framework.toggleMenu('on');
 		}
 	});
