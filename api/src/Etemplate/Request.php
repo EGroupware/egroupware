@@ -125,7 +125,7 @@ class Request
 	 *
 	 * @var string
 	 */
-	static public $request_class; // = 'etemplate_request_session';
+	static public $request_class; // = 'EGroupware\Api\Etemplate\Request\Session';
 
 	/**
 	 * Factory method to get a new request object or the one for an existing request
@@ -149,7 +149,7 @@ class Request
 			self::$request_class = __CLASS__.'\\Cache';
 			/* old default to use request if mcrypt and gzcompress are available and session if not
 			self::$request_class = check_load_extension('mcrypt') && function_exists('gzcompress') &&
-				self::init_crypt() ? __CLASS__ : 'etemplate_request_session';
+				self::init_crypt() ? __CLASS__ : 'EGroupware\Api\Etemplate\Request\Session';
 			 */
 		}
 		if (self::$request_class != __CLASS__)
