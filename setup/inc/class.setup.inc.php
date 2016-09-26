@@ -1074,28 +1074,33 @@ class setup
 	 */
 	function accounts_exist()
 	{
-		if (!$this->setup_account_object()) return false;
+		try {
+			if (!$this->setup_account_object()) return false;
 
-		$this->accounts->search(array(
-			'type'   => 'accounts',
-			'start'  => 0,
-			'offset' => 2	// we only need to check 2 accounts, if we just check for not anonymous
-		));
+			$this->accounts->search(array(
+				'type'   => 'accounts',
+				'start'  => 0,
+				'offset' => 2	// we only need to check 2 accounts, if we just check for not anonymous
+			));
 
-		if ($this->accounts->total != 1)
-		{
-			return $this->accounts->total > 1;
+			if ($this->accounts->total != 1)
+			{
+				return $this->accounts->total > 1;
+			}
+
+			// one account, need to check it's not the anonymous one
+			$this->accounts->search(array(
+				'type'   => 'accounts',
+				'start'  => 0,
+				'offset' => 0,
+				'query_type' => 'lid',
+				'query'  => 'anonymous',
+			));
 		}
-
-		// one account, need to check it's not the anonymous one
-		$this->accounts->search(array(
-			'type'   => 'accounts',
-			'start'  => 0,
-			'offset' => 0,
-			'query_type' => 'lid',
-			'query'  => 'anonymous',
-		));
-
+		catch (Api\Db\Exception $e) {
+			_egw_log_exception($e);
+			return false;
+		}
 		return !$this->accounts->total;
 	}
 
