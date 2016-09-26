@@ -344,7 +344,8 @@ class Sql extends Api\Storage
 		}
 		if (isset($filter['list']))
 		{
-			$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND list_id=".(int)$filter['list'];
+			$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND ".
+				$this->db->expression($this->ab2list_table, array('list_id' => $filter['list']));
 			unset($filter['list']);
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)

@@ -396,6 +396,7 @@ class timesheet_bo extends Api\Storage
 	 * search the timesheet
 	 *
 	 * reimplemented to limit result to users we have grants from
+	 * Use $filter['ts_owner'] === false for no ACL check.
 	 *
 	 * @param array|string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
 	 * @param boolean|string $only_keys =true True returns only keys, False returns all cols. comma seperated list of keys to return
@@ -430,6 +431,11 @@ class timesheet_bo extends Api\Storage
 		if (!isset($filter['ts_owner']) || !count($filter['ts_owner']))
 		{
 			$filter['ts_owner'] = array_keys($this->grants);
+		}
+		// $filter['ts_owner'] === false --> no ACL checks
+		elseif ($filter['ts_owner'] === false)
+		{
+			$filter['ts_owner'] = '';
 		}
 		else
 		{

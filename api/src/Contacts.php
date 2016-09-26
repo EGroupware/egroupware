@@ -848,9 +848,10 @@ class Contacts extends Contacts\Storage
 	*
 	* @param array &$contact contact array from etemplate::exec
 	* @param boolean $ignore_acl =false should the acl be checked or not
+	* @param boolean $touch_modified =true should modified/r be updated
 	* @return int/string/boolean id on success, false on failure, the error-message is in $this->error
 	*/
-	function save(&$contact,$ignore_acl=false)
+	function save(&$contact, $ignore_acl=false, $touch_modified=true)
 	{
 		// remember if we add or update a entry
 		if (($isUpdate = $contact['id']))
@@ -885,8 +886,8 @@ class Contacts extends Contacts\Storage
 				$contact['owner'] = $this->default_addressbook ? $this->default_addressbook : $this->user;
 			}
 			// allow admins to import contacts with creator / created date set
-			if (!$contact['creator'] || !$this->is_admin($contact)) $contact['creator'] = $this->user;
-			if (!$contact['created'] || !$this->is_admin($contact)) $contact['created'] = $this->now_su;
+			if (!$contact['creator'] || !$ignore_acl && !$this->is_admin($contact)) $contact['creator'] = $this->user;
+			if (!$contact['created'] || !$ignore_acl && !$this->is_admin($contact)) $contact['created'] = $this->now_su;
 
 			if (!$contact['tid']) $contact['tid'] = 'n';
 		}
@@ -932,8 +933,11 @@ class Contacts extends Contacts\Storage
 		}
 
 		// last modified
-		$contact['modifier'] = $this->user;
-		$contact['modified'] = $this->now_su;
+		if ($touch_modified)
+		{
+			$contact['modifier'] = $this->user;
+			$contact['modified'] = $this->now_su;
+		}
 		// set full name and fileas from the content
 		if (!isset($contact['n_fn']))
 		{
