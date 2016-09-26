@@ -118,7 +118,7 @@ class Sql extends Api\Storage
 		if ($advanced_search || (isset($param['wildcard']) && !empty($param['wildcard']))) $wildcard = ($param['wildcard']?$param['wildcard']:'');
 
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
-		if ((int)$filter['cat_id'])
+		if ($filter['cat_id'])
 		{
 			$filter[] = $this->_cat_filter($filter['cat_id']);
 			unset($filter['cat_id']);
@@ -285,7 +285,7 @@ class Sql extends Api\Storage
 				$filter['cat_id'] = substr($filter['cat_id'],1);
 				$not = 'NOT';
 			}
-			$filter[] = $this->_cat_filter((int)$filter['cat_id'],$not);
+			$filter[] = $this->_cat_filter($filter['cat_id'],$not);
 			unset($filter['cat_id']);
 		}
 
@@ -430,7 +430,7 @@ class Sql extends Api\Storage
 	 * fix cat_id filter to search in comma-separated multiple cats and return subcats
 	 *
 	 * @internal
-	 * @param int $cat_id
+	 * @param int|array $cat_id
 	 * @return string sql to filter by given cat
 	 */
 	function _cat_filter($cat_id, $not='')
@@ -439,7 +439,7 @@ class Sql extends Api\Storage
 		{
 			$GLOBALS['egw']->categories = new Api\Categories;
 		}
-		foreach($GLOBALS['egw']->categories->return_all_children((int)$cat_id) as $cat)
+		foreach($GLOBALS['egw']->categories->return_all_children($cat_id) as $cat)
 		{
 			$cat_filter[] = $this->db->concat("','",cat_id,"','")." $not LIKE '%,$cat,%'";
 		}
