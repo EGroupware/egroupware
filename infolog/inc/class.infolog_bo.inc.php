@@ -712,16 +712,17 @@ class infolog_bo
 	* @param boolean $skip_notification = false true = do NOT send notification, false (default) = send notifications
 	* @param boolean $throw_exception = false Throw an exception (if required fields are not set)
 	* @param string $purge_cfs = null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
+	* @param boolean $ignore_acl =true
 	*
 	* @return int|boolean info_id on a successfull write or false
 	*/
 	function write(&$values_in, $check_defaults=true, $touch_modified=true, $user2server=true,
-		$skip_notification=false, $throw_exception=false, $purge_cfs=null)
+		$skip_notification=false, $throw_exception=false, $purge_cfs=null, $ignore_acl=false)
 	{
 		$values = $values_in;
 		//echo "boinfolog::write()values="; _debug_array($values);
-		if (!$values['info_id'] && !$this->check_access(0,Acl::EDIT,$values['info_owner']) &&
-			!$this->check_access(0,Acl::ADD,$values['info_owner']))
+		if (!$ignore_acl && (!$values['info_id'] && !$this->check_access(0,Acl::EDIT,$values['info_owner']) &&
+			!$this->check_access(0,Acl::ADD,$values['info_owner'])))
 		{
 			return false;
 		}
@@ -750,8 +751,8 @@ class infolog_bo
 				$status_only = $undelete = $this->check_access($values['info_id'],self::ACL_UNDELETE);
 			}
 		}
-		if ($values['info_id'] && !$this->check_access($values['info_id'],Acl::EDIT) && !$status_only ||
-		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],Acl::ADD))
+		if (!$ignore_acl && ($values['info_id'] && !$this->check_access($values['info_id'],Acl::EDIT) && !$status_only ||
+		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],Acl::ADD)))
 		{
 			return false;
 		}
@@ -1031,9 +1032,10 @@ class infolog_bo
 	 * @param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
 	 * @param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
 	 * @param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
+	 * @param boolean $no_acl =false true: ignore all acl
 	 * @return array with id's as key of the matching log-entries
 	 */
-	function &search(&$query)
+	function &search(&$query, $no_acl=false)
 	{
 		//error_log(__METHOD__.'('.array2string($query).')');
 
@@ -1065,14 +1067,14 @@ class infolog_bo
 			}
 		}
 
-		$ret = $this->so->search($query);
+		$ret = $this->so->search($query, $no_acl);
 		$this->total = $query['total'];
 
 		if (is_array($ret))
 		{
 			foreach ($ret as $id => &$data)
 			{
-				if (!$this->check_access($data,Acl::READ))
+				if (!$no_acl && !$this->check_access($data,Acl::READ))
 				{
 					unset($ret[$id]);
 					continue;

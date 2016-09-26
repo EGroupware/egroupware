@@ -747,9 +747,10 @@ class infolog_so
 	 * @param string|array $query[cols]=null what to query, if set the recordset / iterator get's returned
 	 * @param string $query[append]=null get's appended to sql query, eg. for GROUP BY
 	 * @param boolean $query['custom_fields']=false query custom-fields too, default not
+	 * @param boolean $no_acl =false true: ignore all acl
 	 * @return array|iterator with id's as key of the matching log-entries or recordset/iterator if cols is set
 	 */
-	function search(&$query)
+	function search(&$query, $no_acl=false)
 	{
 		//error_log(__METHOD__.'('.array2string($query).')');
 		$action2app = array(
@@ -806,7 +807,7 @@ class infolog_so
 		{
 			$ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
 		}
-		$filtermethod = $this->aclFilter($query['filter']);
+		$filtermethod = $no_acl ? '1=1' : $this->aclFilter($query['filter']);
 		if (!$query['col_filter']['info_status'])  $filtermethod .= $this->statusFilter($query['filter']);
 		$filtermethod .= $this->dateFilter($query['filter']);
 		$cfcolfilter=0;
