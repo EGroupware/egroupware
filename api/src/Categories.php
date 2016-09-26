@@ -156,7 +156,7 @@ class Categories
 	 */
 	function return_all_children($cat_id)
 	{
-		$all_children = (array) $cat_id;
+		$all_children = array_map('intval', (array)$cat_id);
 
 		$children = $this->return_array('subs',0,False,'','','',True,$cat_id,-1,'id');
 		if (is_array($children) && count($children))
