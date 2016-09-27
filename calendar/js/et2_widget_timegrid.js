@@ -1861,7 +1861,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 				hour: target.dataset.hour || this._parent.options.day_start,
 				minute: target.dataset.minute || 0
 			};
-			if (this.options.owner != app.calendar.state.owner)
+			if (this.options.owner.toString() !== app.calendar.state.owner.toString())
 			{
 				options.owner = this.options.owner;
 			}
