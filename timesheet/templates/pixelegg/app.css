@@ -16,6 +16,10 @@
  *
  * @version: $Id$
  */
+/* Allow project list selection in nm header to be large */
+#timesheet-index #timesheet-index_pm_id .ui-autocomplete.ui-menu {
+  max-height: 80%;
+}
 .timesheet_titleSum,
 .timesheet_titleDetails {
   font-weight: bold;
