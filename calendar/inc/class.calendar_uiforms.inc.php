@@ -77,7 +77,9 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function &default_add_event()
 	{
-		$extra_participants = $_GET['participants'] ? explode(',',$_GET['participants']) : array();
+		$extra_participants = $_GET['participants'] ? 
+			(!is_array($_GET['participants']) ? explode(',',$_GET['participants']) : $_GET['participants']) :
+			array();
 
 		// if participant is a contact, add its link title as title
 		foreach($extra_participants as $uid)
@@ -98,7 +100,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			if(is_array($owner))
 			{
-				if($this->cal_prefs['default_participant'])
+				if($this->cal_prefs['default_participant'] || count($participants) === 0 && count($owner) === 1)
 				{
 					$extra_participants += $owner;
 				}

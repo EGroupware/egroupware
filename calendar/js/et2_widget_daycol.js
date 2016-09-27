@@ -1077,7 +1077,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 					hour: _ev.target.dataset.hour || this._parent.options.day_start,
 					minute: _ev.target.dataset.minute || 0
 				};
-				if (this.options.owner != app.calendar.state.owner)
+				if (this.options.owner.toString() !== app.calendar.state.owner.toString())
 				{
 					options.owner = this.options.owner;
 				}
@@ -1096,7 +1096,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 					end: end,
 					non_blocking: true
 				}
-				if (this.options.owner != app.calendar.state.owner)
+				if (this.options.owner.toString() !== app.calendar.state.owner.toString())
 				{
 					options.owner = this.options.owner;
 				}
