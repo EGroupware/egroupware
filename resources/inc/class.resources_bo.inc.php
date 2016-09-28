@@ -546,8 +546,17 @@ class resources_bo
 			if($cat && stripos($cat, $search) !== FALSE)
 			{
 				// Get resources for that category
-				$resources = $bo->get_resources_by_category($cat_id);
-
+				if(!$options['exec'])
+				{
+					$resources = $bo->get_resources_by_category($cat_id);
+				}
+				else
+				{
+					$cat_options = $options;
+					$cat_options['cat_id'] = $cat_id;
+					$resources = $bo->link_query('',$cat_options);
+				}
+				
 				// Edit dialog sends exec as an option, don't add categories
 				if(count($resources) && !$options['exec'])
 				{
@@ -706,6 +715,10 @@ class resources_bo
 		$limit = false;
 		if($options['start'] || $options['num_rows']) {
 			$limit = array($options['start'], $options['num_rows']);
+		}
+		if($options['cat_id'] && in_array($options['cat_id'], $filter['cat_id']))
+		{
+			$filter['cat_id'] = $options['cat_id'];
 		}
 		if($options['accessory_of'])
 		{
