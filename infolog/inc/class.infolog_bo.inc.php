@@ -874,7 +874,7 @@ class infolog_bo
 		if (isset($this->group_owners[$values['info_type']]))
 		{
 			$values['info_owner'] = $this->group_owners[$values['info_type']];
-			if (!($this->grants[$this->group_owners[$values['info_type']]] & Acl::EDIT))
+			if (!$ignore_acl && !($this->grants[$this->group_owners[$values['info_type']]] & Acl::EDIT))
 			{
 				if (!$this->check_access($values['info_id'],Acl::EDIT) ||
 					!$values['info_id'] && !$this->check_access($values,Acl::ADD)
