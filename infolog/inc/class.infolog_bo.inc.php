@@ -760,7 +760,8 @@ class infolog_bo
 		// Make sure status is still valid if the type changes
 		if($old['info_type'] != $values['info_type'] && $values['info_status'])
 		{
-			if(!in_array($values['info_status'], array_keys($this->status[$values['info_type']])))
+			if (isset($this->status[$values['info_type']]) &&
+				!in_array($values['info_status'], array_keys($this->status[$values['info_type']])))
 			{
 				$values['info_status'] = $this->status['defaults'][$values['info_type']];
 			}
