@@ -236,7 +236,7 @@ class calendar_uiviews extends calendar_ui
 		// Load the different views once, we'll switch between them on the client side
 		$todo = new Etemplate('calendar.todo');
 		$label = '';
-		$todo->exec('calendar_uiviews::index',array('todos'=>$this->get_todos($label), 'label' => $label));
+		$todo->exec('calendar_uiviews::index',array('todos'=>'', 'label' => $label));
 
 		// Actually, this takes care of most of it...
 		$this->week();
