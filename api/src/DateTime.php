@@ -39,7 +39,7 @@ use DateInterval;
  * keys: ('year', 'month', 'day') or 'full' plus 'hour', 'minute' and optional 'second' or a DateTime object as parameter.
  * It defaults to user-time, not server time as DateTime!
  *
- * The constructor itself throws an Exception in that case (to be precise it does not handle the one thrown by DateTime constructor).
+ * The constructor itself throws an \Exception in that case (to be precise it does not handle the one thrown by DateTime constructor).
  * Static methods server2user, user2server and to return NULL, if given time could not be parsed.
  *
  * @link http://www.php.net/manual/en/class.datetime.php
@@ -469,7 +469,7 @@ class DateTime extends \DateTime
 			{
 				$time = new DateTime($time);
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				unset($e);
 				return null;	// time could not be parsed
@@ -546,12 +546,12 @@ class DateTime extends \DateTime
 		try {
 			self::$server_timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
 		}
-		catch(Exception $e)
+		catch(\Exception $e)
 		{
 			try {
 				self::$server_timezone = new DateTimeZone(date_default_timezone_get());
 			}
-			catch(Exception $e)
+			catch(\Exception $e)
 			{
 				self::$server_timezone = new DateTimeZone('Europe/Berlin');
 			}
@@ -706,7 +706,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 			echo "<p>DateTime($ts)->format('Y-m-d H:i:s')=".$et->format('Y-m-d H:i:s')."</p>\n";
 			$dt = new DateTime($ts);
 			echo "<p>DateTime($ts)->format('Y-m-d H:i:s')=".$dt->format('Y-m-d H:i:s')."</p>\n";
-		} catch(Exception $e) {
+		} catch(\Exception $e) {
 			echo "<p><b>Exception</b>: ".$e->getMessage()."</p>\n";
 		}
 	}
