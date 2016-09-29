@@ -1521,12 +1521,12 @@ div.message.floating {
   display: inline-block;
 }
 .favorites .sideboxstar {
-  height: 9px;
-  display: inline-block;
-  padding: 0px 4px;
-  margin: -2px 5px;
-  /* TODO: This is template specific */
-  background-image: url(images/bullet.png);
+	height: 9px;
+	display: inline-block;
+	padding: 0px 4px;
+	margin: -2px 5px;
+	background-image: url(images/fav_filter.png);
+	background-size: 9px 9px;
 }
 .sidebox-favorites ul.favorites {
   width: 99%;
