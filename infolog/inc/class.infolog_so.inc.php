@@ -547,7 +547,7 @@ class infolog_so
 		{
 			$where = array('info_id' => $info_id);
 			if ($check_modified) $where['info_datemodified'] = $check_modified;
-			if (!$this->db->update($this->info_table,$to_write,$where,__LINE__,__FILE__))
+			if (!$this->db->insert($this->info_table,$to_write,$where,__LINE__,__FILE__))
 			{
 				//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning false");
 				return false;	// Error
