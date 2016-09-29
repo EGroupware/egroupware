@@ -153,6 +153,7 @@ input.displayNone {
 .previewImage {
   width: 100%;
 }
+#filemanager-index_nm .et2_file div.progress {position:absolute;}
 /*/*****************************************************************
 // sidebar
 
