@@ -209,6 +209,9 @@ div.editInfoMarker {
   width: 5px;
   border-radius: none;
 }
+#filemanager-index_nm .et2_file div.progress {
+  position: absolute;
+}
 /*/*****************************************************************
 // sidebar
 
@@ -483,6 +486,9 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
     width: 60px;
     height: 60px;
     top: 0;
+  }
+  .et2_file.plus_button div.progress {
+    display: none !important;
   }
   .previewImage img {
     max-width: 100%;
