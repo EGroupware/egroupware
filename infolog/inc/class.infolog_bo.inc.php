@@ -729,7 +729,7 @@ class infolog_bo
 		// we need to get the old values to update the links in customfields and for the tracking
 		if ($values['info_id'])
 		{
-			$old = $this->read($values['info_id'], false, 'server');
+			$old = $this->read($values['info_id'], false, 'server', $ignore_acl);
 		}
 
 		if (($status_only = $values['info_id'] && !$this->check_access($values,Acl::EDIT)))
@@ -936,7 +936,7 @@ class infolog_bo
 		{
 			if (!isset($values['info_type']) || $status_only || empty($values['caldav_url']))
 			{
-				$values = $this->read($info_id, true, 'server');
+				$values = $this->read($info_id, true, 'server', $ignore_acl);
 			}
 
 			$values['info_id'] = $info_id;
@@ -1004,7 +1004,7 @@ class infolog_bo
 			// Update modified timestamp of parent
 			if($values['info_id_parent'])
 			{
-				$parent = $this->read($values['info_id_parent'], false, 'server',true);
+				$parent = $this->read($values['info_id_parent'], false, 'server', true);
 				$this->write($parent,false, true, false, true);
 			}
 		}
