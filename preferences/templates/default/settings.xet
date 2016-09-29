@@ -5,18 +5,21 @@
 	<template id="preferences.settings.tab1" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" class="prefTable egwGridView_grid">
 			<columns>
-				<column width="50%"/>
-				<column/>
+				<column width="35%"/>
+				<column />
+				<column width="260px"/>
 			</columns>
 			<rows>
 				<row class="prefRow">
 					<box class="prefName">
 						<description for="@${row}[name]" id="${row}[label]"/>
-						<html id="${row}[help]" class="prefHelp"/>
 					</box>
-					<box>
+					<box class="prefValueColumn">
 						<widget type="@${row}[type]" id="@${row}[name]" onchange="@${row}[onchange]" no_lang="1" class="prefValue"/>
 						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
+					</box>
+					<box class="prefHelpColumn">
+						<html id="${row}[help]" class="prefHelp"/>
 					</box>
 				</row>
 			</rows>

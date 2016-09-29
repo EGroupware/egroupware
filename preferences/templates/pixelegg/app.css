@@ -22,9 +22,20 @@
  */
 table.prefTable {
   width: 100%;
+  position: relative;
+}
+table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
+  background-image: url(../../../api/templates/default/images/hint.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  height: 99%;
 }
 tr.prefRow {
   position: relative;
+}
+tr.prefRow:hover {
+  background-color: #f0f0ff;
 }
 td.prefName {
   width: 50%;
@@ -33,15 +44,21 @@ tr.prefRow > td {
   vertical-align: bottom;
   /* otherwise help will cover bigger prefValue */
 }
+/*.prefValueColumn {border-right:none !important;}*/
+.prefHelpColumn {
+  border: none !important;
+  padding: 0 !important;
+}
 .prefHelp {
-  position: fixed;
+  position: absolute;
   display: none;
-  width: 98%;
-  background-color: lightyellow;
-  border: 1px solid black;
-  border-radius: 10px;
+  width: 255px;
+  max-height: 99%;
+  height: 98%;
+  background-color: #f0f0ff;
   padding: 5px;
-  margin-top: 5px;
+  margin-top: -4px;
+  top: 0;
 }
 tr.prefRow:hover .prefHelp {
   display: block;
@@ -102,6 +119,9 @@ textarea.prefValue {
 table.prefTable {
   width: 100%;
 }
+table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
+  background-image: url(../../../pixelegg/images/dialog_info.png);
+}
 tr.prefRow {
   position: relative;
 }
@@ -113,34 +133,18 @@ tr.prefRow > td {
   /* otherwise help will cover bigger prefValue */
 }
 .prefHelp {
-  position: fixed;
-  background-color: #E6E6E6;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 3px solid #679FD2;
-  -webkit-border-top-right-radius: 0px;
-  -webkit-border-bottom-right-radius: 15px;
-  -webkit-border-bottom-left-radius: 15px;
-  -webkit-border-top-left-radius: 0px;
-  -moz-border-radius-topright: 0px;
-  -moz-border-radius-bottomright: 15px;
-  -moz-border-radius-bottomleft: 15px;
-  -moz-border-radius-topleft: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 0px;
-  /*.background-clip(padding-box);*/
-  right: 5px;
-  left: 5px;
-  top: 0px;
-  padding: 10px;
-  padding-left: 25px;
-  background-position-x: 5px;
-  min-width: 100px;
-  max-width: 90%;
-  z-index: 100000;
+  position: absolute;
+  display: none;
+  width: 254px;
+  max-height: 99%;
+  height: 97%;
+  padding: 5px;
+  margin-top: -4px;
+  top: 0;
+  z-index: 1;
+}
+.prefHelpColumn {
+  border-left: 1px solid #e6e6e6 !important;
 }
 tr.prefRow:hover .prefHelp {
   display: block;
@@ -165,16 +169,12 @@ textarea.prefValue {
   display: inline-block;
   padding-bottom: 5px;
 }
-/*###############################*/
 .prefType,
 .prefApp {
   /*margin: 0.3em;*/
   -webkit-appearance: button;
   /*padding:10px;*/
 }
-/*img[src$="svg"]{
-            .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
-}*/
 /*Preferences APP / left */
 .prefApp {
   background-image: url(../pixelegg/images/setup.png);
@@ -192,19 +192,23 @@ textarea.prefValue {
 }
 /*###############################*/
 /*ADMIN DIALOG*/
-div#preferences-settings {
+#preferences-settings {
   margin: -8px;
 }
-div#preferences-settings div.dialogHeader {
+#preferences-settings .et2_tabs,
+#preferences-settings table.egwGridView_grid tbody {
+  border-bottom: none !important;
+}
+#preferences-settings div.dialogHeader {
   height: 50px;
 }
-div#preferences-settings div.dialogHeader select#preferences-settings_appname {
+#preferences-settings div.dialogHeader select#preferences-settings_appname {
   min-width: 47%;
   margin: 5px;
   -webkit-appearance: button;
   padding: 5px;
 }
-div#preferences-settings div.dialogHeader select#preferences-settings_type {
+#preferences-settings div.dialogHeader select#preferences-settings_type {
   margin: 5px;
   min-width: 48%;
   -webkit-appearance: button;

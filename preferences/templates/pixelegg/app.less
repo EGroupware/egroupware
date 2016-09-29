@@ -42,6 +42,9 @@
 table.prefTable {
 	width: 100%;
 }
+table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
+	background-image:url(../../../pixelegg/images/dialog_info.png);
+}
 tr.prefRow {
 	position: relative;
 }
@@ -52,21 +55,17 @@ tr.prefRow > td {
 	vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
 }
 .prefHelp {
-	position: fixed;
-	background-color: @gray_10;
-	.box_shadow_message;
-	border: 3px solid @egw_color_2_e;
-	.border_radius (0px, 15px, 15px, 0px);
-	right: 5px;
-	left: 5px;
-	top: 0px;
-	padding: 10px;
-	padding-left: 25px;
-	background-position-x: 5px;
-	min-width: 100px;
-	max-width: 90%;
-	z-index: 100000;
+	position: absolute;
+    display: none;
+    width: 254px;
+    max-height: 99%;
+    height: 97%;
+    padding: 5px;
+    margin-top: -4px;
+    top: 0;
+	z-index: 1;
 }
+.prefHelpColumn {border-left:1px solid #e6e6e6 !important;}
 tr.prefRow:hover .prefHelp {
 	display: block;
 	z-index: 10;	/* FF: displays it under next prefName without */
@@ -87,80 +86,49 @@ tr.prefRow:hover .prefHelp {
 	padding-bottom: 5px;
 }
 
-
-
-
-
-
-/*###############################*/
-
-
-
 .prefType, .prefApp {
-    /*margin: 0.3em;*/
-    -webkit-appearance:button;
-    /*padding:10px;*/
+	/*margin: 0.3em;*/
+	-webkit-appearance:button;
+	/*padding:10px;*/
 }
-
-
-
-/*img[src$="svg"]{
-            .gradient_vertical (@egw_color_2_a, @egw_color_2_a);
-}*/
-
-
 
 /*Preferences APP / left */
-.prefApp{
-
-                            background-image: url(../pixelegg/images/setup.png);
-                            background-repeat: no-repeat;
-                            background-position: 90% 50%;
-                            background-size: 16px 16px;
-
-                            margin-right: 1em;
-
-
+.prefApp {
+	background-image: url(../pixelegg/images/setup.png);
+	background-repeat: no-repeat;
+	background-position: 90% 50%;
+	background-size: 16px 16px;
+	margin-right: 1em;
 }
 /*Preferences APP Settings / right*/
-.prefType{
-
-                            background-image: url(../pixelegg/images/setup.png);
-                            background-repeat: no-repeat;
-                            background-position: 90% 50%;
-                            background-size: 16px 16px;
-
-
-
+.prefType {
+	background-image: url(../pixelegg/images/setup.png);
+	background-repeat: no-repeat;
+	background-position: 90% 50%;
+	background-size: 16px 16px;
 }
 
 /*###############################*/
  /*ADMIN DIALOG*/
-div#preferences-settings{
-
-    margin: -8px;
-
-    // Header
-    div.dialogHeader {
-        height: 50px;
-
-    // left
-    select#preferences-settings_appname{
-                                    min-width: 47%;
-                                    margin: 5px;
-                                    -webkit-appearance:button;
-                                    padding:5px;
-                        }
-
-    // right
-    select#preferences-settings_type{
-                                    margin: 5px;
-                                    min-width: 48%;
-                                    -webkit-appearance:button;
-                                    padding:5px;
-
-                        }
-
-                }
-
+#preferences-settings {
+	.et2_tabs,table.egwGridView_grid tbody {border-bottom: none !important;}
+	margin: -8px;
+	// Header
+	div.dialogHeader {
+		height: 50px;
+		// left
+		select#preferences-settings_appname {
+			min-width: 47%;
+			margin: 5px;
+			-webkit-appearance:button;
+			padding:5px;
+		}
+		// right
+		select#preferences-settings_type {
+			margin: 5px;
+			min-width: 48%;
+			-webkit-appearance:button;
+			padding:5px;
+		}
+	}
 }

@@ -10,25 +10,40 @@
 
 table.prefTable {
 	width: 100%;
+	position: relative;
+}
+table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
+	background-image:url(../../../api/templates/default/images/hint.png);
+	background-repeat: no-repeat;
+	background-position: center;
+    position: absolute;
+    height: 99%;
 }
 tr.prefRow {
 	position: relative;
 }
+tr.prefRow:hover {background-color:#f0f0ff}
 td.prefName {
 	width: 50%;
 }
 tr.prefRow > td {
 	vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
 }
+/*.prefValueColumn {border-right:none !important;}*/
+.prefHelpColumn {
+	border: none !important;
+	padding: 0 !important;
+}
 .prefHelp {
-	position: fixed;
-	display: none;
-	width: 98%;
-	background-color: lightyellow;
-	border: 1px solid black;
-	border-radius: 10px;
-	padding: 5px;
-	margin-top: 5px;
+	position: absolute;
+    display: none;
+    width: 255px;
+    max-height: 99%;
+    height: 98%;
+    background-color: #f0f0ff;
+    padding: 5px;
+    margin-top: -4px;
+    top: 0;
 }
 tr.prefRow:hover .prefHelp {
 	display: block;
