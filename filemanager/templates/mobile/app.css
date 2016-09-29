@@ -441,6 +441,9 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
     height: 60px;
     top: 0;
   }
+  .et2_file.plus_button div.progress {
+    display: none !important;
+  }
   .previewImage img {
     max-width: 100%;
   }
