@@ -71,7 +71,7 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 		id: {"default": "favorite"},
 		label: {"default": ""},
 		label_updates: { "default": false},
-		image: {"default": "api/fav_filter"},
+		image: {"default": this.egw().image('fav_filter')},
 		statustext: {"default": "Favorite queries", "type": "string"}
 	},
 
