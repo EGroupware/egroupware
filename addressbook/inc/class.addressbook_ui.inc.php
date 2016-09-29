@@ -2290,6 +2290,14 @@ window.egw_LAB.wait(function() {
 			{
 				$readonlys[$field] = false;
 			}
+			if (!$readonlys['jpegphoto'])
+			{
+				$readonlys = array_merge($readonlys, array(
+					'upload_photo' => false,
+					'delete_photo' => false,
+					'addressbook.edit.upload' => false
+				));
+			}
 		}
 		if (isset($readonlys['n_fileas'])) $readonlys['fileas_type'] = $readonlys['n_fileas'];
 		// disable not needed tabs
