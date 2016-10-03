@@ -950,7 +950,7 @@ class Nextmatch extends Etemplate\Widget
 					'no_lang' => true,
 				);
 				// add category icon
-				if ($cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
+				if (is_array($cat['data']) && $cat['data']['icon'] && file_exists(EGW_SERVER_ROOT.self::ICON_PATH.'/'.basename($cat['data']['icon'])))
 				{
 					$cat_actions[$cat['id']]['iconUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$cat['data']['icon'];
 				}
