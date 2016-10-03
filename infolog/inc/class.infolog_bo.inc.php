@@ -732,7 +732,7 @@ class infolog_bo
 			$old = $this->read($values['info_id'], false, 'server', $ignore_acl);
 		}
 
-		if (($status_only = $values['info_id'] && !$this->check_access($values,Acl::EDIT)))
+		if (($status_only = !$ignore_acl && $values['info_id'] && !$this->check_access($values,Acl::EDIT)))
 		{
 			if (!isset($values['info_responsible']))
 			{
@@ -742,7 +742,7 @@ class infolog_bo
 			{
 				$responsible = $values['info_responsible'];
 			}
-			if (!($status_only = $this->user && in_array($this->user, (array)$responsible)))	// responsible has implicit right to change status
+			if (!($status_only = in_array($this->user, (array)$responsible)))	// responsible has implicit right to change status
 			{
 				$status_only = !!array_intersect((array)$responsible,array_keys($GLOBALS['egw']->accounts->memberships($this->user)));
 			}
