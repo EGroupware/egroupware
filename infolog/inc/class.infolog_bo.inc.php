@@ -742,7 +742,7 @@ class infolog_bo
 			{
 				$responsible = $values['info_responsible'];
 			}
-			if (!($status_only = in_array($this->user, (array)$responsible)))	// responsible has implicit right to change status
+			if (!($status_only = $this->user && in_array($this->user, (array)$responsible)))	// responsible has implicit right to change status
 			{
 				$status_only = !!array_intersect((array)$responsible,array_keys($GLOBALS['egw']->accounts->memberships($this->user)));
 			}
