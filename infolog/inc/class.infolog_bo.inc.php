@@ -1002,10 +1002,10 @@ class infolog_bo
 			$values_in = array_merge($values_in,$values);
 
 			// Update modified timestamp of parent
-			if($values['info_id_parent'])
+			if($values['info_id_parent'] && $touch_modified)
 			{
 				$parent = $this->read($values['info_id_parent'], false, 'server', true);
-				$this->write($parent,false, true, false, true);
+				$this->write($parent, false, true, false, true, false, null, $ignore_acl);
 			}
 		}
 		return $info_id;
