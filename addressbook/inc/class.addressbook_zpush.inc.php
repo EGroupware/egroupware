@@ -397,13 +397,6 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 						$message->categories[] = $this->get_addressbooks($contact['owner'].($contact['private']?'p':''), false, true);
 					}
 					break;
-				case 'email':
-				case 'email_home':
-					if (!empty($contact[$attr]))
-					{
-						$message->$key = ('"'.$emailname.'"'." <$contact[$attr]>");
-					}
-					break;
 				// HTC Desire needs at least one telefon number, otherwise sync of contact fails without error,
 				// but will be retired forerver --> we always return work-phone xml element, even if it's empty
 				// (Mircosoft ActiveSync Contact Class Protocol Specification says all phone-numbers are optional!)
