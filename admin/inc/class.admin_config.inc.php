@@ -162,7 +162,7 @@ class admin_config
 		preg_match_all('/id="newsettings\[([^]]+)\]"/', file_get_contents($path), $matches, PREG_PATTERN_ORDER);
 		foreach($matches[1] as $name)
 		{
-			$content['newsettings'][$name] = $config[$name];
+			$content['newsettings'][$name] = isset($config[$name]) ? $config[$name] : '';
 		}
 
 		// make everything readonly and remove save/apply button, if user has not rights to store config
