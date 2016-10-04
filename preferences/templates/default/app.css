@@ -44,6 +44,8 @@ tr.prefRow > td {
     padding: 5px;
     margin-top: -4px;
     top: 0;
+	overflow-y: auto;
+    z-index: 1;
 }
 tr.prefRow:hover .prefHelp {
 	display: block;
@@ -51,9 +53,15 @@ tr.prefRow:hover .prefHelp {
 }
 .prefDefault, .prefValue {
 	float: left;
+	display: inline-block;
 }
 .prefValue {
 	margin-right: 5px;
+	width:49%;
+}
+.prefDefault {
+	float: right;
+	width:48%;
 }
 .prefValue textarea, textarea.prefValue {
 	width: 99%;
@@ -65,7 +73,7 @@ tr.prefRow:hover .prefHelp {
 	margin-right: 5px;
 }
 .prefType{
-	width:50%;
+	width:49%;
 }
 .prefApp {
 	width:49.50%;

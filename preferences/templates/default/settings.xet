@@ -34,7 +34,7 @@
 				<menupopup id="type" onchange="1" class="prefType"/>
 			</menulist>
 		</hbox>
-		<tabbox id="tabs">
+		<tabbox id="tabs" tab_height="400">
 			<tabs>
 				<tab id="tab1" label="Settings"/>
 			</tabs>
