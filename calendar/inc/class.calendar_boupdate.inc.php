@@ -906,6 +906,8 @@ class calendar_boupdate extends calendar_bo
 					$preferences = new Api\Preferences($userid);
 					$GLOBALS['egw_info']['user']['preferences'] = $part_prefs = $preferences->read_repository();
 					$fullname = Api\Accounts::username($userid);
+					$tfn = Api\Accounts::id2name($userid,'account_firstname');
+					$tln = Api\Accounts::id2name($userid,'account_lastname');
 				}
 				else	// external email address: use Api\Preferences of event-owner, plus some hardcoded settings (eg. ical notification)
 				{
@@ -937,8 +939,8 @@ class calendar_boupdate extends calendar_bo
 				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
 					$action, $event_arr, $disinvited);
 				$details['to-fullname'] = $fullname;
-				if (isset($tfn)) $details['to-firstname'] = $tfn;
-				if (isset($tln)) $details['to-lastname'] = $tln;
+				$details['to-firstname'] = isset($tfn)? $tfn: '';
+				$details['to-lastname'] = isset($tln)? $tln: '';
 
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
 				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
