@@ -686,7 +686,7 @@ class calendar_uiviews extends calendar_ui
 			}
 			else
 			{
-				foreach(array_keys($this->_get_planner_users(false)) as $uid)
+				foreach($users as $uid)
 				{
 					$search_params['users'] = $uid;
 					$content['view'][] = $this->tagWholeDayOnTop($this->bo->search($search_params))
