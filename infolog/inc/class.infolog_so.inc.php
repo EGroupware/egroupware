@@ -551,9 +551,10 @@ class infolog_so
 	 * @param array $values with the data of the log-entry
 	 * @param int $check_modified =0 old modification date to check before update (include in WHERE)
 	 * @param string $purge_cfs =null null=dont, 'ical'=only iCal X-properties (cfs name starting with "#"), 'all'=all cfs
+	 * @param boolean $force_insert =false force using insert, even if an id is given eg. for import
 	 * @return int|boolean info_id, false on error or 0 if the entry has been updated in the meantime
 	 */
-	function write($values, $check_modified=0, $purge_cfs=null)  // did _not_ ensure ACL
+	function write($values, $check_modified=0, $purge_cfs=null, $force_insert=false)  // did _not_ ensure ACL
 	{
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
@@ -571,7 +572,7 @@ class infolog_so
 		$to_write = array();
 		foreach($values as $key => $val)
 		{
-			if ($key != 'info_id' && isset($table_def['fd'][$key]))
+			if (($key != 'info_id' || $force_insert) && isset($table_def['fd'][$key]))
 			{
 				$to_write[$key] = $this->data[$key] = $val;   // update internal data
 			}
@@ -579,11 +580,11 @@ class infolog_so
 		// writing no price as SQL NULL (required by postgres)
 		if ($to_write['info_price'] === '') $to_write['info_price'] = NULL;
 
-		if (($this->data['info_id'] = $info_id))
+		if (($this->data['info_id'] = $info_id) && !$force_insert)
 		{
 			$where = array('info_id' => $info_id);
 			if ($check_modified) $where['info_datemodified'] = $check_modified;
-			if (!$this->db->insert($this->info_table,$to_write,$where,__LINE__,__FILE__))
+			if (!$this->db->update($this->info_table,$to_write,$where,__LINE__,__FILE__))
 			{
 				//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning false");
 				return false;	// Error
