@@ -932,7 +932,7 @@ class infolog_bo
 		//_debug_array($values);
 		// error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($values)."\n",3,'/tmp/infolog');
 
-		if (($info_id = $this->so->write($to_write, $check_modified, $purge_cfs)))
+		if (($info_id = $this->so->write($to_write, $check_modified, $purge_cfs, !isset($old))))
 		{
 			if (!isset($values['info_type']) || $status_only || empty($values['caldav_url']))
 			{
