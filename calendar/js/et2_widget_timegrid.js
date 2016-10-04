@@ -1859,12 +1859,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 			var options = {
 				date: target.dataset.date || this.options.date,
 				hour: target.dataset.hour || this._parent.options.day_start,
-				minute: target.dataset.minute || 0
+				minute: target.dataset.minute || 0,
+				owner: this.options.owner
 			};
-			if (this.options.owner.toString() !== app.calendar.state.owner.toString())
-			{
-				options.owner = this.options.owner;
-			}
 			this.egw().open(null, 'calendar', 'add', options, '_blank');
 			return false;
 		}
