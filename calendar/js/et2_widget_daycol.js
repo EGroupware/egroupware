@@ -1075,12 +1075,9 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 				var options = {
 					date: _ev.target.dataset.date || this.options.date,
 					hour: _ev.target.dataset.hour || this._parent.options.day_start,
-					minute: _ev.target.dataset.minute || 0
+					minute: _ev.target.dataset.minute || 0,
+					owner: this.options.owner
 				};
-				if (this.options.owner.toString() !== app.calendar.state.owner.toString())
-				{
-					options.owner = this.options.owner;
-				}
 				this.egw().open(null, 'calendar', 'add', options, '_blank');
 				return false;
 			}
@@ -1094,11 +1091,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 				var options = {
 					start: this.date.toJSON(),
 					end: end,
-					non_blocking: true
-				}
-				if (this.options.owner.toString() !== app.calendar.state.owner.toString())
-				{
-					options.owner = this.options.owner;
+					non_blocking: true,
+					owner: this.options.owner
 				}
 				this.egw().open(null, 'calendar', 'add', options, '_blank');
 				return false;
