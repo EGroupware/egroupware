@@ -1166,7 +1166,7 @@ class Link extends Link\Storage
 	 * @param string $app appname to linke the file to
 	 * @param string $id id in $app
 	 * @param array $file informations about the file in format of the etemplate file-type
-	 * 	$file['name'] name of the file (no directory)
+	 * 	$file['name'] name of the file (optional incl. a directory)
 	 * 	$file['type'] mine-type of the file
 	 * 	$file['tmp_name'] name of the uploaded file (incl. directory) or resource of opened file
 	 * @param string $comment ='' comment to add to the link
@@ -1174,7 +1174,16 @@ class Link extends Link\Storage
 	 */
 	static function attach_file($app,$id,$file,$comment='')
 	{
-		$entry_dir = self::vfs_path($app,$id);
+		// check if $file['name'] specifies a subdirectory, in which case use and, if necessary, create it
+		if (is_array($file) && strpos($file['name'], '/') && strpos($file['name'], '..') === false)
+		{
+			$entry_dir = self::vfs_path($app, $id, Vfs::dirname($file['name']));
+			$file['name'] = Vfs::basename($file['name']);
+		}
+		else
+		{
+			$entry_dir = self::vfs_path($app,$id);
+		}
 		if (self::DEBUG)
 		{
 			echo "<p>attach_file: app='$app', id='$id', tmp_name='$file[tmp_name]', name='$file[name]', size='$file[size]', type='$file[type]', path='$file[path]', ip='$file[ip]', comment='$comment', entry_dir='$entry_dir'</p>\n";
