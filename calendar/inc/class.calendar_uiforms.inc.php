@@ -77,7 +77,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function &default_add_event()
 	{
-		$extra_participants = $_GET['participants'] ? 
+		$extra_participants = $_GET['participants'] ?
 			(!is_array($_GET['participants']) ? explode(',',$_GET['participants']) : $_GET['participants']) :
 			array();
 
@@ -100,7 +100,8 @@ class calendar_uiforms extends calendar_ui
 			}
 			if(is_array($owner))
 			{
-				if($this->cal_prefs['default_participant'] || count($participants) === 0 && count($owner) === 1)
+				// old behavior "selected" should also be used for not set preference, therefore we need to test for !== '0'
+				if($this->cal_prefs['default_participant'] !== '0' || count($extra_participants) === 0 && count($owner) === 1)
 				{
 					$extra_participants += $owner;
 				}
@@ -113,7 +114,8 @@ class calendar_uiforms extends calendar_ui
 		}
 		else
 		{
-			$owner = !$this->cal_prefs['default_participant'] ? $this->user : $this->owner;
+			// old behavior "selected" should also be used for not set preference, therefore we need to test for === '0'
+			$owner = $this->cal_prefs['default_participant'] === '0' ? $this->user : $this->owner;
 		}
 
 		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' ||
