@@ -522,8 +522,8 @@ var et2_widget = (function(){ "use strict"; return ClassWithAttributes.extend(
 
 				for (var j = 0; j < splitted.length && j < _proto.legacyOptions.length; j++)
 				{
-					// Blank = not set
-					if(splitted[j].trim().length == 0) continue;
+					// Blank = not set, unless there's more legacy options provided after
+					if(splitted[j].trim().length === 0 && _proto.legacyOptions.length >= splitted.length) continue;
 
 					// Check to make sure we don't overwrite a current option with a legacy option
 					if(typeof _target[_proto.legacyOptions[j]] === "undefined")
