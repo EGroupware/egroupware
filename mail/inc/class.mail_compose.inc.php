@@ -594,6 +594,7 @@ class mail_compose
 		unset($_content['body']);
 		unset($_content['mail_htmltext']);
 		unset($_content['mail_plaintext']);
+		$_currentMode = $_content['mimeType'];
 
 		// form was submitted either by clicking a button or by changing one of the triggering selectboxes
 		// identity and signatureid; this might trigger that the signature in mail body may have to be altered
@@ -622,7 +623,7 @@ class mail_compose
 			}
 			$_oldSig = $composeCache['mailidentity'];
 			$_signatureid = ($newSig?$newSig:$_content['mailidentity']);
-			$_currentMode = $_content['mimeType'];
+
 			if ($_oldSig != $_signatureid)
 			{
 				if($this->_debug) error_log(__METHOD__.__LINE__.' old,new ->'.$_oldSig.','.$_signatureid.'#'.$content['body']);
@@ -731,6 +732,9 @@ class mail_compose
 				}
 			}
 		}
+		/*run the purify on compose body unconditional*/
+		$content['body'] = str_replace(array("\r", "\t", "<br />\n", ": "), array("", "", "<br />", ":"),
+		$_currentMode == 'html' ? Api\Html::purify($content['body'], Mail::$htmLawed_config, array(), true) : $content['body']);
 
 		// do not double insert a signature on a server roundtrip
 		if ($buttonClicked) $suppressSigOnTop = true;
