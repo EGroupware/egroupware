@@ -79,7 +79,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.div = null;
+		this.div = jQuery(document.createElement("div")).addClass("et2_link_to et2_toolbar");
 
 		this.link_button = null;
 		this.status_span = null;
@@ -87,7 +87,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 		this.link_entry = null;
 		this.file_upload = null;
 
-		if (!this.options.readonly) this.createInputWidget();
+		this.createInputWidget();
 	},
 
 	destroy: function() {
@@ -127,7 +127,6 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 	},
 
 	createInputWidget: function() {
-		this.div = jQuery(document.createElement("div")).addClass("et2_link_to et2_toolbar");
 
 		// Need a div for file upload widget
 		this.file_div = jQuery(document.createElement("div")).css({display:'inline-block'}).appendTo(this.div);
@@ -141,16 +140,19 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 			// Leave room for link button
 			.appendTo(this.div);
 
-                // One common link button
-		this.link_button = jQuery(document.createElement("button"))
-			.text(this.egw().lang(this.options.link_label))
-			.appendTo(this.div).hide()
-			.addClass('link')
-			.click(this, this.createLink);
+		if (!this.options.readonly)
+		{
+			// One common link button
+			this.link_button = jQuery(document.createElement("button"))
+				.text(this.egw().lang(this.options.link_label))
+				.appendTo(this.div).hide()
+				.addClass('link')
+				.click(this, this.createLink);
 
-                // Span for indicating status
-		this.status_span = jQuery(document.createElement("span"))
-			.appendTo(this.div).addClass("status").hide();
+			// Span for indicating status
+			this.status_span = jQuery(document.createElement("span"))
+				.appendTo(this.div).addClass("status").hide();
+		}
 
 		this.setDOMNode(this.div[0]);
 	},
@@ -413,6 +415,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 
 	set_no_files: function(no_files)
 	{
+		if(this.options.readonly) return;
 		if(no_files)
 		{
 			this.file_div.hide();
