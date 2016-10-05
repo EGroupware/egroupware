@@ -327,6 +327,14 @@ class Vfs extends File
 		}
 		else
 		{
+			if(!is_numeric($id))
+			{
+				$_id = self::expand_name($id,0,0,0,0,self::$request->content);
+				if($_id != $id)
+				{
+					$id = $_id;
+				}
+			}
 			$path = Api\Link::vfs_path($app,$id,'',true);
 		}
 		if (!empty($relpath)) $path .= '/'.$relpath;
