@@ -18,7 +18,7 @@ svn_branch = svn cp --parents -m "$2" $(svn info|grep ^URL|cut -f 2 -d ' ') $(sv
 checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/ADOdb.git
 
 [api/js/ckeditor]
-checkout = svn checkout -q https://github.com/EGroupware/ckeditor-dev/branches/trunk/dev/builder/release/ckeditor
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/ckeditor.git
 skip = [ $1 = "tag" -o $1 = "untag" -o $1 = "branch" ]
 
 []
