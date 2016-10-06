@@ -260,6 +260,7 @@ if (file_exists($config['header']) && filesize($config['header']) >= 200)	// def
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
 			'noapi' => true,
+			'currentapp' => 'login',	// stop PHP Notice: Undefined index "currentapp" in pre 16.1 header
 		)
 	);
 	include $config['header'];
