@@ -98,7 +98,7 @@ class preferences_hooks
 		list(,$country) = explode('-',$lang);
 		if (empty($country) && class_exists('Locale')) $country = Locale::getRegion(Locale::getDefault());
 		if (empty($country)) $country = 'de';
-		
+
 		// check for old rte_font_size pref including px and split it in size and unit
 		if (!isset($GLOBALS['egw_setup']) &&
 			substr($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'], -2) == 'px')
@@ -374,16 +374,6 @@ class preferences_hooks
 				'xmlrpc' => True,
 				'admin'  => false,
 				'default' => '10'
-			),
-			'spellchecker_lang' => array(
-				'type'   => 'select',
-				'label'  => 'Spellchecker language',
-				'name'   => 'spellchecker_lang',
-				'values' => $langs,
-				'help'   => 'Select the language of the spellchecker integrated into the rich text editor.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> $lang,
 			),
 			'rte_enter_mode' => array(
 				'type'   => 'select',

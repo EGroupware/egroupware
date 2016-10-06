@@ -89,7 +89,7 @@ class CkEditorConfig
 			}
 		}
 		uasort($skins, 'strcasecmp');
-		
+
 		// flat skin is reserved for mobile template, although we are not
 		// supporting it on desktop (becuase FF has problem with action icons)
 		if (!\EGroupware\Api\Header\UserAgent::mobile()) unset($skins['flat']);
@@ -127,9 +127,7 @@ class CkEditorConfig
 	private static function read_lang_country()
 	{
 		//use the lang and country information to construct a possible lang info for CKEditor UI and scayt_slang
-		self::$lang = ($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'] ?
-			$GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']:
-			$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
+		self::$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 
 		self::$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
 
