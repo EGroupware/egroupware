@@ -828,7 +828,6 @@ class calendar_boupdate extends calendar_bo
 		$event = $msg_type == MSG_ADDED || $msg_type == MSG_MODIFIED ? $new_event : $old_event;
 
 		// add all group-members to the notification, unless they are already participants
-		$contact_obj = false;
 		foreach($to_notify as $userid => $statusid)
 		{
 			if (is_numeric($userid) && $GLOBALS['egw']->accounts->get_type($userid) == 'g' &&
@@ -1047,6 +1046,10 @@ class calendar_boupdate extends calendar_bo
 
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
 						$notification->send();
+						foreach(notifications::errors(true) as $error)
+						{
+							error_log(__METHOD__."() Error notifying $userid from $senderid: $subject: $error");
+						}
 					}
 					catch (Exception $exception) {
 						error_log(__METHOD__.' error while notifying user '.$userid.':'.$exception->getMessage());

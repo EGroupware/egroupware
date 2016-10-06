@@ -75,7 +75,7 @@ class Mailer extends Horde_Mime_Mail
 
 		if ($account !== false)
 		{
-			$this->_headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+			$this->_headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['api']);
 
 			$this->setAccount($account);
 
@@ -596,7 +596,7 @@ class Mailer extends Horde_Mime_Mail
 		if ($GLOBALS['egw_info']['server']['log_mail'])
 		{
 			$msg = $GLOBALS['egw_info']['server']['log_mail'] !== true ? date('Y-m-d H:i:s')."\n" : '';
-			$msg .= (isset($e) ? 'Mail send' : 'Mail NOT send').
+			$msg .= (!isset($e) ? 'Mail send' : 'Mail NOT send').
 				' to '.implode(', ', $to).' with subject: "'.$subject.'"';
 
 			$msg .= ' from instance '.$GLOBALS['egw_info']['user']['domain'].' and IP '.Session::getuser_ip();
