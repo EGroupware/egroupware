@@ -1,3 +1,26 @@
+egroupware-epl (16.1.20161006) hardy; urgency=low
+
+  * eSync: merge z-push 2.3.2(beta1+13)
+  * eSync: only export raw email for contacts as Outlook seems to have problems with it
+  * Admin: show "check ip address of all sessions": No (it was stored but always shown as Yes)
+  * Addressbook: Fix upload photo does not work for limited access of own data
+  * Setup: make sure interactive setup does not stall on SQL error when updating from 1.8
+  * Mobile template: Close sidemenu after clicking on items in sidebar
+  * Mobile template: Implement a dedicated delete action for quick removing entries from a list
+  * All apps: Add a counter indicator for selected entries in a list in mobile template
+  * All apps: Fix clicking on favorites in mobile template pops up logout prompt
+  * All apps: attachments were not removed when entry got deleted
+  * Calendar: Fix calendar to-firstname to-lastname place-holders do not get values
+  * Calendar: Fix saving preferences place-holders in all languages except en breaks their values in database
+  * Calendar/CalDAV: update or removal of (managed) attachments via CalDAV failed
+  * Calendar: Fix status field in participants tab does not get translation in print mode
+  * Calendar: Fix some favorites with multi-categories get failed to be shown in calendar
+  * Tracker: fix error when deleting queue in an minimal installation
+  * Tracker: Some tuning for mobile template
+  * Wiki: Fix wiki html editor does not show advanced editor features
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 05 Oct 2016 20:20:33 +0200
+
 egroupware-epl (16.1.20160905) hardy; urgency=low
 
   * All apps: async notifications were not using SMTP only account, but personal one with unavailable session password
