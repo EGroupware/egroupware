@@ -25,7 +25,7 @@ class CkEditorConfig
 	private static $enterMode = null;
 	private static $skin = null;
 
-	// Defaults, defined in phpgwapi/js/ckeditor/plugins/font/plugin.js
+	// Defaults, defined in /vendor/egroupware/ckeditor/plugins/font/plugin.js
 	public static $font_options = array(
 		'arial, helvetica, sans-serif' => 'Arial',
 		'Comic Sans MS, cursive' => 'Comic Sans MS',
@@ -75,7 +75,7 @@ class CkEditorConfig
 		);
 		$skins = array();
 
-		foreach(scandir(EGW_SERVER_ROOT.'/api/js/ckeditor/skins') as $skin)
+		foreach(scandir(EGW_SERVER_ROOT.'/vendor/egroupware/ckeditor/skins') as $skin)
 		{
 			if ($skin[0] == '.') continue;
 
@@ -163,7 +163,7 @@ class CkEditorConfig
 	private static function get_base_path()
 	{
 		//Get the ckeditor base url
-		return $GLOBALS['egw_info']['server']['webserver_url'].'/api/js/ckeditor/';
+		return $GLOBALS['egw_info']['server']['webserver_url'].'/vendor/egroupware/ckeditor/';
 	}
 
 	/**
@@ -231,7 +231,7 @@ class CkEditorConfig
 			}
 
 			//Check whether the skin actually exists, if not, switch to a default
-			if (!file_exists(EGW_SERVER_ROOT.'/api/js/ckeditor/skins/'.$skin))
+			if (!file_exists(EGW_SERVER_ROOT.'/vendor/egroupware/ckeditor/skins/'.$skin))
 			{
 				$skin = "moono"; //this is the basic skin for ckeditor
 			}

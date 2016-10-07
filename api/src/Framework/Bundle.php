@@ -234,8 +234,8 @@ class Bundle
 		// include choosen in api, as old eTemplate uses it and fail if it pulls in half of et2
 		$inc_mgr->include_js_file('/api/js/jquery/chosen/chosen.jquery.js');
 		// include CKEditor in api, as old eTemplate uses it too
-		$inc_mgr->include_js_file('/api/js/ckeditor/ckeditor.js');
-		$inc_mgr->include_js_file('/api/js/ckeditor/config.js');
+		$inc_mgr->include_js_file('/vendor/egroupware/ckeditor/ckeditor.js');
+		$inc_mgr->include_js_file('/vendor/egroupware/ckeditor/config.js');
 		$bundles['api'] = $inc_mgr->get_included_files();
 		self::urls($bundles['api'], $max_mod['api']);
 

@@ -13,9 +13,9 @@
 /*egw:uses
 	jsapi.jsapi; // Needed for egw_seperateJavaScript
 	/vendor/bower-asset/jquery/dist/jquery.js;
-	ckeditor.ckeditor;
-	ckeditor.config;
-	ckeditor.adapters/jquery;
+	/vendor/egroupware/ckeditor/ckeditor.js;
+	/vendor/egroupware/ckeditor/ckeditor.config;
+	/vendor/egroupware/ckeditor/ckeditor.adapters/jquery;
 	et2_core_baseWidget;
 */
 

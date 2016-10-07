@@ -17,16 +17,13 @@ svn_branch = svn cp --parents -m "$2" $(svn info|grep ^URL|cut -f 2 -d ' ') $(sv
 [api/src/Db/ADOdb]
 checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/ADOdb.git
 
-[api/js/ckeditor]
-checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/ckeditor.git
-skip = [ $1 = "tag" -o $1 = "untag" -o $1 = "branch" ]
-
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
 checkout = git clone git@github.com:EGroupware/egroupware.git &&
-	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install
+	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install --no-dev
 update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null || true;
-	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install
+	rm -rf api/js/ckeditor;
+	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install --no-dev
 # uncomment for minified javascript and css, IF you have nodejs and grunt installed: npm install -g grunt-cli
 #post_checkout = /usr/bin/env npm install && /usr/bin/env grunt
 #post_update = /usr/bin/env npm install && /usr/bin/env grunt
