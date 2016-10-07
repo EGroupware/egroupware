@@ -54,7 +54,7 @@ foreach(Bundle::all() as $name => $files)
 		unset($files[$key]);
 	}
 	// ckeditor is loaded separate before the bundle
-	if ($name == 'api' && ($key = array_search('api/js/ckeditor/ckeditor.js', $files)))
+	if ($name == 'api' && ($key = array_search('vendor/egroupware/ckeditor/ckeditor.js', $files)))
 	{
 		unset($files[$key]);
 	}

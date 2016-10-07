@@ -38,7 +38,7 @@ class admin_messages
 			$GLOBALS['egw']->redirect_link('/admin/index.php');
 		}
 
-		Framework::includeJS('ckeditor','ckeditor');
+		Framework::includeJS('vendor/egroupware/ckeditor/ckeditor.js');
 
 		$GLOBALS['egw']->template->set_file(array('message' => 'mainscreen_message.tpl'));
 		$GLOBALS['egw']->template->set_block('message','form','form');

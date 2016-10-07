@@ -99,7 +99,7 @@ module.exports = function (grunt) {
 						"api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js",
 						"api/js/egw_action/egw_menu_dhtmlx.js",
 						"api/js/jquery/chosen/chosen.jquery.js",
-						"api/js/ckeditor/config.js"
+						"vendor/egroupware/ckeditor/config.js"
 					]
 				}
 			},
@@ -172,7 +172,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_extension_nextmatch.js",
 						"api/js/etemplate/et2_widget_favorites.js",
 						"api/js/etemplate/et2_widget_html.js",
-						"api/js/ckeditor/adapters/jquery.js",
+						"vendor/egroupware/ckeditor/adapters/jquery.js",
 						"api/js/etemplate/et2_widget_htmlarea.js",
 						"api/js/etemplate/et2_widget_tabs.js",
 						"api/js/etemplate/et2_widget_toolbar.js",
