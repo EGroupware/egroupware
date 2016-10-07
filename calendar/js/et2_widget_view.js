@@ -619,25 +619,25 @@ jQuery.extend(et2_calendar_view,
 	get_holidays: function(widget,year)
 	{
 		// Loaded in an iframe or something
-		if(!egw.window.et2_calendar_view) return {};
+		var view = egw.window.et2_calendar_view ? egw.window.et2_calendar_view : this;
+		if(!view) return {};
 
-		var cache = egw.window.et2_calendar_view.holiday_cache[year];
+		var cache = view.holiday_cache[year];
 		if (typeof cache == 'undefined')
 		{
 			// Fetch with json instead of jsonq because there may be more than
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
-			egw.window.et2_calendar_view.holiday_cache[year] = egw.json(
-				'calendar_timegrid_etemplate_widget::ajax_get_holidays',
-				[year]
-			).sendRequest(true);
+			view.holiday_cache[year] = jQuery.getJSON(
+				egw.link('/calendar/inc/holidays.php', {year: year})
+			);
 		}
-		cache = egw.window.et2_calendar_view.holiday_cache[year];
+		cache = view.holiday_cache[year];
 		if(typeof cache.done == 'function')
 		{
 			// pending, wait for it
 			cache.done(jQuery.proxy(function(response) {
-				egw.window.et2_calendar_view.holiday_cache[this.year] = response.response[0].data||undefined;
+				view.holiday_cache[this.year] = response||undefined;
 
 				egw.window.setTimeout(jQuery.proxy(function() {
 					// Make sure widget hasn't been destroyed while we wait
