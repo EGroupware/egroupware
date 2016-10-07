@@ -57,7 +57,7 @@ before_script:
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
   # installing phpunit in version suitable for used PHP version
-  - composer update phpunit/phpunit
+  - composer require 'phpunit/phpunit:~4.8|~5.4'
   # create data directory
   - sudo mkdir /var/lib/egroupware
   - sudo chown travis /var/lib/egroupware

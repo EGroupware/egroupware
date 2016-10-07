@@ -38,6 +38,5 @@
 		"egroupware/ckeditor": "^4.5"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~4.8|~5.4"
 	}
 }
