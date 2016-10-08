@@ -5,8 +5,8 @@
  * @link http://www.egroupware.org
  * @package mail
  * @subpackage setup
- * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013-16 by Stylite AG <info-AT-stylite.de>
+ * @author EGroupware GmbH [info@egroupware.org]
+ * @copyright (c) 2013-16 by EGroupware GmbH <info-AT-egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -19,11 +19,11 @@ $setup_info['mail']['enable']    	= 1;
 $setup_info['mail']['index']    	= 'mail.mail_ui.index&ajax=true';
 $setup_info['mail']['autoinstall'] = true;	// install automatically on update
 
-$setup_info['mail']['author']		= 'Stylite AG';
+$setup_info['mail']['author']		= 'EGroupware GmbH';
 $setup_info['mail']['license']		= 'GPL';
 $setup_info['mail']['description']	= 'IMAP client for EGroupware';
-$setup_info['mail']['maintainer'] 	= 'Stylite AG';
-$setup_info['mail']['maintainer_email'] 	= 'info@stylite.de';
+$setup_info['mail']['maintainer'] 	= 'EGroupware GmbH';
+$setup_info['mail']['maintainer_email'] 	= 'info@egroupware.org';
 
 $setup_info['mail']['tables']    = array(); // former felamimail tables are used by mail_sopreferences
 

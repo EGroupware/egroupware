@@ -4,8 +4,8 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013-2016 by Stylite AG <info-AT-stylite.de>
+ * @author EGroupware GmbH [info@egroupware.org]
+ * @copyright (c) 2013-2016 by EGroupware GmbH <info-AT-egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -1175,7 +1175,7 @@ class mail_compose
 			unset($account);
 		}
 
-		//$content['bcc'] = array('kl@stylite.de','kl@leithoff.net');
+		//$content['bcc'] = array('kl@egroupware.org','kl@leithoff.net');
 		// address stuff like from, to, cc, replyto
 		$destinationRows = 0;
 		foreach(self::$destinations as $destination) {

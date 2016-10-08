@@ -4,8 +4,8 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Hadi Nategh [hn@stylite.de]
- * @copyright (c) 2013-16 by Stylite AG <info-AT-stylite.de>
+ * @author Hadi Nategh [hn@egroupware.org]
+ * @copyright (c) 2013-16 by EGroupware GmbH <info-AT-egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */

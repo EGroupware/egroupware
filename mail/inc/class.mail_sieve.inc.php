@@ -4,8 +4,8 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Hadi Nategh [hn@stylite.de]
- * @copyright (c) 2013-16 by Hadi Nategh <hn-AT-stylite.de>
+ * @author Hadi Nategh [hn@egroupware.org]
+ * @copyright (c) 2013-16 by Hadi Nategh <hn-AT-egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -711,7 +711,7 @@ class mail_sieve
 	}
 
 	/**
-	 * Strip personal part from rfc822 addresses: "Ralf Becker <rb@stylite.de>" --> rb@stylite.de
+	 * Strip personal part from rfc822 addresses: "Ralf Becker <rb@egroupware.org>" --> rb@egroupware.org
 	 *
 	 * Sieve only allows email-addresses, without angle brakets and personal parts.
 	 *

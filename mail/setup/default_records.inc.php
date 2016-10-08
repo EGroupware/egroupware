@@ -5,8 +5,8 @@
  * @link http://www.egroupware.org
  * @package mail
  * @subpackage setup
- * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2014-16 by Stylite AG <info-AT-stylite.de>
+ * @author EGroupware GmbH [info@egroupware.org]
+ * @copyright (c) 2014-16 by EGroupware GmbH <info-AT-egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */

@@ -4,8 +4,8 @@
  * mail - static javaScript functions
  *
  * @link http://www.egroupware.org
- * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2013-2014 by Stylite AG <info-AT-stylite.de>
+ * @author EGroupware GmbH [info@egroupware.org]
+ * @copyright (c) 2013-2014 by EGroupware GmbH <info-AT-egroupware.org>
  * @package mail
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -5021,6 +5021,7 @@ app.classes.mail = AppJS.extend(
 	 * and takes care of mail integration modules to popup entry selection
 	 * dialog to give user a choice to which entry of selected app the compose
 	 * should be integereated.
+	 * @param {int|boolean} _integIndex
 	 *
 	 * @returns {Boolean} return true if to_tracker is checked otherwise false
 	 */

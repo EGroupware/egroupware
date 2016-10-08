@@ -2,9 +2,9 @@
 /**
  * EGroupware Mail: Wizard to create mail accounts
  *
- * @link http://www.stylite.de
+ * @link http://www.egroupware.org
  * @package emailadmin
- * @author Ralf Becker <rb@stylite.de>
+ * @author Ralf Becker <rb@egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
