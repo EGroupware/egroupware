@@ -373,8 +373,8 @@ abstract class Framework extends Framework\Extra
 			$var['page_generation_time'] .= '</span></div>';
 		}
 		$var['powered_by'] = '<a href="http://www.egroupware.org/" target="_blank">'.
-			lang('Powered by').' Stylite\'s EGroupware '.
-			$GLOBALS['egw_info']['server']['versions']['phpgwapi'].'</a>';
+			lang('Powered by').' EGroupware '.
+			$GLOBALS['egw_info']['server']['versions']['api'].'</a>';
 
 		return $var;
 	}
