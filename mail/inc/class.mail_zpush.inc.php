@@ -4,10 +4,10 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Stylite AG [info@stylite.de]
- * @author Ralf Becker <rb@stylite.de>
+ * @author EGroupware GmbH [info@egroupware.org]
+ * @author Ralf Becker <rb@egroupware.org>
  * @author Philip Herbert <philip@knauber.de>
- * @copyright (c) 2014-16 by Stylite AG <info-AT-stylite.de>
+ * @copyright (c) 2014-16 by EGroupware GmbH <info-AT-egroupware.org>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */

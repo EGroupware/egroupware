@@ -3,8 +3,8 @@
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Ralf Becker <rb@stylite.de>
- * @copyright (c) 2016 by Ralf Becker <rb@stylite.de>
+ * @author Ralf Becker <rb@egroupware.org>
+ * @copyright (c) 2016 by Ralf Becker <rb@egroupware.org>
  * @version $Id$
  */
 
@@ -45,7 +45,7 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		uglify: {
 			options: {
-				banner: "/*!\n * EGroupware (http://www.egroupware.org/) minified Javascript\n *\n * full sources are available under https://svn.stylite.de/viewvc/egroupware/\n *\n * build <%= grunt.template.today() %>\n */\n",
+				banner: "/*!\n * EGroupware (http://www.egroupware.org/) minified Javascript\n *\n * full sources are available under https://github.com/EGroupware/egroupware/\n *\n * build <%= grunt.template.today() %>\n */\n",
 				mangle: false,
 				sourceMap: true,
 				screwIE8: true

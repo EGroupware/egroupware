@@ -2,8 +2,8 @@
  * mail - handle mailto and other links in preview
  *
  * @link http://www.egroupware.org
- * @author Stylite AG [info@stylite.de]
- * @copyright (c) 2014 by Stylite AG <info-AT-stylite.de>
+ * @author EGroupware GmbH [info@egroupware.org]
+ * @copyright (c) 2014 by EGroupware GmbH <info-AT-egroupware.org>
  * @package mail
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
