@@ -58,6 +58,10 @@ checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed '
 # allows (after configuration!) to selfregister accounts and recover lost passwords
 #checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/registration.git
 
+#[archive]
+# allows to integrate a Benno mail-archive into EGroupware
+#checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/archive.git
+
 ###
 ### Older apps requiring to install phpgwapi and etemplate!
 ###
@@ -97,11 +101,11 @@ checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed '
 ###
 ### EPL apps not publicly available
 ###
+
 #[stylite]
-#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/trunk/stylite
+#checkout = git clone git@github.com:EGroupwareGmbH/epl.git stylite
+#update = test -d .svn && { rm -rf * .svn; git clone git@github.com:EGroupwareGmbH/epl.git .; } || git pull --rebase
 
 #[esyncpro]
-#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/trunk/esyncpro
-
-#[archive]
-#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/trunk/archive
+#checkout = git clone git@github.com:EGroupwareGmbH/esyncpro.git
+#update = test -d .svn && { rm -rf * .svn; git clone git@github.com:EGroupwareGmbH/esyncpro.git .; } || git pull --rebase
