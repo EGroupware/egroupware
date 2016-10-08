@@ -53,7 +53,8 @@ before_script:
        ;;
     esac
   #- php -m
-  - curl https://svn.stylite.de/fix_mrconfig 2>/dev/null | php
+  #- curl https://svn.stylite.de/fix_mrconfig 2>/dev/null | php
+  - sed 's/^update = git stash -q/update = #git stash -q/g' .mrconfig
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
   # installing phpunit in version suitable for used PHP version
