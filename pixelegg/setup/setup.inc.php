@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware: Stylite Pixelegg template
+ * EGroupware: Standard template
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -10,19 +10,19 @@
  */
 
 $GLOBALS['egw_info']['template']['pixelegg']['name']      = 'pixelegg';
-$GLOBALS['egw_info']['template']['pixelegg']['title']     = 'Standard';
+$GLOBALS['egw_info']['template']['pixelegg']['title']     = 'Standard ';
 $GLOBALS['egw_info']['template']['pixelegg']['version']   = '16.1';
 
 $GLOBALS['egw_info']['template']['pixelegg']['author'] = array(
-   array('name' => 'Stylite AG', 'url' => 'http://www.stylite.de/'),
+   array('name' => 'EGroupware GmbH', 'url' => 'http://www.egroupware.org/'),
    array('name' => 'Pixelegg Informationsdesign', 'url' => 'http://www.pixelegg.de/'),
 );
 $GLOBALS['egw_info']['template']['pixelegg']['license'] = 'GPL';
 $GLOBALS['egw_info']['template']['pixelegg']['icon'] = "pixelegg/images/logo.png";
 $GLOBALS['egw_info']['template']['pixelegg']['maintainer'] = array(
-   array('name' => 'Stylite AG', 'url' => 'http://www.stylite.de/')
+   array('name' => 'EGroupware GmbH', 'url' => 'http://www.egroupware.org/')
 );
-$GLOBALS['egw_info']['template']['pixelegg']['description'] = "Pixelegg is the new EGroupware 14.1 template using jQuery.";
+$GLOBALS['egw_info']['template']['pixelegg']['description'] = "Standard template set of EGroupware 14.1+.";
 $GLOBALS['egw_info']['template']['pixelegg']['windowed'] = true;
 
 // specify (different) labels for default themes
