@@ -20,10 +20,10 @@ checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.u
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
 checkout = git clone git@github.com:EGroupware/egroupware.git &&
-	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install --no-dev
+	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install
 update = git stash -q || true ; git pull --rebase ; git stash pop -q 2>/dev/null || true;
 	rm -rf api/js/ckeditor;
-	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install --no-dev
+	/usr/bin/env $(which composer.phar >/dev/null && echo composer.phar || echo composer) install
 # uncomment for minified javascript and css, IF you have nodejs and grunt installed: npm install -g grunt-cli
 #post_checkout = /usr/bin/env npm install && /usr/bin/env grunt
 #post_update = /usr/bin/env npm install && /usr/bin/env grunt
@@ -57,6 +57,10 @@ checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.u
 #[registration]
 # allows (after configuration!) to selfregister accounts and recover lost passwords
 #checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/registration.git
+
+#[archive]
+# allows to integrate a Benno mail-archive into EGroupware
+#checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/archive.git
 
 ###
 ### Older apps requiring to install phpgwapi and etemplate!
@@ -98,10 +102,9 @@ checkout = git clone -b 16.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.u
 ### EPL apps not publicly available
 ###
 #[stylite]
-#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/branches/16.1/stylite
+#checkout = git clone -b 16.1 git@github.com:EGroupwareGmbH/epl.git stylite
+#update = test -d .svn && { rm -rf * .svn; git clone -b 16.1 git@github.com:EGroupwareGmbH/epl.git .; } || git pull --rebase
 
 #[esyncpro]
-#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/branches/16.1/esyncpro
-
-#[archive]		
-#checkout = svn checkout svn+ssh://stylite@svn.stylite.de/stylite/trunk/archive
+#checkout = git clone -b 16.1 git@github.com:EGroupwareGmbH/esyncpro.git
+#update = test -d .svn && { rm -rf * .svn; git clone -b 16.1 git@github.com:EGroupwareGmbH/esyncpro.git .; } || git pull --rebase

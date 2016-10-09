@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9a74cc9727567f9100d4d1311228aede",
-    "content-hash": "d6ed8efbe2b9261641cf2d9ca9f1d01b",
+    "hash": "0fd472e38b5f3216ac30188ee1e50900",
+    "content-hash": "81fc5e942ad428500480b3cd69e6de3c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -160,17 +160,51 @@
             }
         },
         {
-            "name": "fxp/composer-asset-plugin",
-            "version": "v1.2.0",
+            "name": "egroupware/ckeditor",
+            "version": "v4.5.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fxpio/composer-asset-plugin.git",
-                "reference": "8d74bc7c714aadbda54622c216b2e7bf786595cb"
+                "url": "https://github.com/EGroupware/ckeditor.git",
+                "reference": "2a2e7805775b7afdb170566ff0132c6388966d98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fxpio/composer-asset-plugin/zipball/8d74bc7c714aadbda54622c216b2e7bf786595cb",
-                "reference": "8d74bc7c714aadbda54622c216b2e7bf786595cb",
+                "url": "https://api.github.com/repos/EGroupware/ckeditor/zipball/2a2e7805775b7afdb170566ff0132c6388966d98",
+                "reference": "2a2e7805775b7afdb170566ff0132c6388966d98",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+",
+                "LGPL-2.1+",
+                "MPL-1.1+"
+            ],
+            "authors": [
+                {
+                    "name": "CKSource",
+                    "homepage": "http://cksource.com"
+                }
+            ],
+            "description": "Compiled version of CKEditor customized for EGroupware project.",
+            "homepage": "https://github.com/EGroupware/ckeditor",
+            "time": "2016-10-07 08:47:41"
+        },
+        {
+            "name": "fxp/composer-asset-plugin",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fxpio/composer-asset-plugin.git",
+                "reference": "d7d189e8ffac26a2e39e26a9c75e1fc5c2e2b98d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fxpio/composer-asset-plugin/zipball/d7d189e8ffac26a2e39e26a9c75e1fc5c2e2b98d",
+                "reference": "d7d189e8ffac26a2e39e26a9c75e1fc5c2e2b98d",
                 "shasum": ""
             },
             "require": {
@@ -213,7 +247,7 @@
                 "npm",
                 "package"
             ],
-            "time": "2016-07-01 12:04:16"
+            "time": "2016-08-03 07:44:07"
         },
         {
             "name": "npm-asset/as-jqplot",
@@ -366,10 +400,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt_Blowfish",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.1.tgz",
+                "url": "https://pear.horde.org/get/Horde_Crypt_Blowfish-1.1.2.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -379,7 +413,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_crypt_blowfish": "== 1.1.1.0"
+                "pear-horde/horde_crypt_blowfish": "== 1.1.2.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -525,10 +559,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Imap_Client",
-            "version": "2.29.8",
+            "version": "2.29.9",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.8.tgz",
+                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.9.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -547,7 +581,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_imap_client": "== 2.29.8.0"
+                "pear-horde/horde_imap_client": "== 2.29.9.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -696,10 +730,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Mime",
-            "version": "2.10.0",
+            "version": "2.10.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mime-2.10.0.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mime-2.10.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -716,7 +750,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_mime": "== 2.10.0.0"
+                "pear-horde/horde_mime": "== 2.10.1.0"
             },
             "type": "pear-library",
             "autoload": {
