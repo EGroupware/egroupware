@@ -152,6 +152,68 @@
 			}
 
 		});
+
+		// Bind double click for auto-size
+		_elem.dblclick(function(e) {
+			// Find column class - it's usually the first one
+			var col_class = '';
+			for(var i = 0; i < this.classList.length; i++)
+			{
+				if(this.classList[i].indexOf('gridCont') === 0)
+				{
+					col_class = this.classList[i];
+					break;
+				}
+			}
+
+			// Find widest part, including header
+			var column = jQuery(this);
+			column.children().css('width','auto');
+			var max_width = column.children().children().innerWidth();
+			var padding = column.outerWidth(true) - max_width;
+			
+			var resize = jQuery(this).closest('.egwGridView_outer')
+				.find('tbody td.'+col_class+'> div:first-child')
+				.add(column.children())
+			// Set column width to auto to allow space for everything to flow
+				.css('width','auto');
+			resize.children()
+				.css({'white-space':'nowrap'})
+				.each(function()
+					{
+						var col = jQuery(this);
+						// Find visible (text) children and force them to not wrap
+						var children = col.find('span:visible, time:visible, label:visible')
+							.css({'white-space':'nowrap'})
+						this.offsetWidth;
+						children.each(function()
+						{
+							var child = jQuery(this);
+							this.offsetWidth;
+							if(child.outerWidth() > max_width)
+							{
+								max_width = child.outerWidth();
+							}
+							window.getComputedStyle(this).width;
+						});
+						this.offsetWidth;
+						if(col.innerWidth() > max_width)
+						{
+							max_width = col.innerWidth();
+						}
+
+						// Reset children
+						children.css('white-space','');
+						children.css('display','');
+					}
+				)
+				.css({'white-space':''});
+		
+			// Reset column
+			column.children().css('width','');
+			resize.css('width','');
+			_callback.call(_context, max_width+padding);
+		});
 	};
 
 	this.et2_dataview_resetResizeable = function(_elem)
