@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * export plugin of addressbook
  */
@@ -34,7 +36,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		$selection = array();
 
 		if($options['selection'] == 'search') {
-			$query = $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP);
+			$query = Api\Cache::getSession(TIMESHEET_APP, 'index');
 			$query['num_rows'] = -1;	// all records
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$this->ui->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
