@@ -137,7 +137,7 @@ var et2_historylog = (function(){ "use strict"; return et2_valueWidget.extend([e
 		this._filters = {
 			record_id: this.options.value.id,
 			appname: this.options.value.app,
-			get_rows: 'historylog::get_rows'
+			get_rows: 'EGroupware\\Api\\Storage\\History::get_rows'
 		};
 
 		// Create the dynheight component which dynamically scales the inner
