@@ -284,7 +284,7 @@ class resources_ui
 		if ($use_all)
 		{
 			// get the whole selection
-			$query = is_array($session_name) ? $session_name : $GLOBALS['egw']->session->appsession('session_data', $session_name);
+			$query = is_array($session_name) ? $session_name : Api\Cache::getSession($session_name, 'session_data');
 
 			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
 			$query['num_rows'] = -1;        // all
