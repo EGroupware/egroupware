@@ -202,7 +202,7 @@ class notifications_ajax {
 	 * @return boolean true
 	 */
 	private function restore_session_data() {
-		$session_data = $GLOBALS['egw']->session->appsession('session_data',self::_appname);
+		$session_data = Api\Cache::getSession(self::_appname, 'session_data');
 		if(is_array($session_data)) {
 			$this->session_data = $session_data;
 		} else {
@@ -218,7 +218,7 @@ class notifications_ajax {
 	 * @return boolean true
 	 */
 	private function save_session_data() {
-		$GLOBALS['egw']->session->appsession('session_data',self::_appname,$this->session_data);
+		Api\Cache::setSession(self::_appname, 'session_data', $this->session_data);
 		return true;
 	}
 }
