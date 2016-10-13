@@ -853,6 +853,70 @@ class Db
 	}
 
 	/**
+	 * Lock a rows in table
+	 *
+	 * Will escalate and lock the table if row locking not supported.
+	 * Will normally free the lock at the end of the transaction.
+	 *
+	 * @param string $table name of table to lock
+	 * @param string $where ='true' where clause to use, eg: "WHERE row=12". Defaults to lock whole table.
+	 * @param string $col ='1 as adodbignore'
+	 */
+	function row_lock($table, $where='true', $col='1 as adodbignore')
+	{
+		if (!$this->Link_ID && !$this->connect())
+		{
+			return False;
+		}
+		if (self::$tablealiases && isset(self::$tablealiases[$table]))
+		{
+			$table = self::$tablealiases[$table];
+		}
+
+		return $this->Link_ID->RowLock($table, $where, $col);
+	}
+
+	/**
+	 * Commit changed rows in table
+	 *
+	 * @param string $table
+	 * @return boolean
+	 */
+	function commit_lock($table)
+	{
+		if (!$this->Link_ID && !$this->connect())
+		{
+			return False;
+		}
+		if (self::$tablealiases && isset(self::$tablealiases[$table]))
+		{
+			$table = self::$tablealiases[$table];
+		}
+
+		return $this->Link_ID->CommitLock($table);
+	}
+
+	/**
+	 * Unlock rows in table
+	 *
+	 * @param string $table
+	 * @return boolean
+	 */
+	function rollback_lock($table)
+	{
+		if (!$this->Link_ID && !$this->connect())
+		{
+			return False;
+		}
+		if (self::$tablealiases && isset(self::$tablealiases[$table]))
+		{
+			$table = self::$tablealiases[$table];
+		}
+
+		return $this->Link_ID->RollbackLock($table);
+	}
+
+	/**
 	* Find the primary key of the last insertion on the current db connection
 	*
 	* @param string $table name of table the insert was performed on

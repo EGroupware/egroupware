@@ -920,6 +920,9 @@ class Backup
 
 		fwrite($f,"\nschema: ".json_encode($this->schemas)."\n");
 
+		// let apps know that backup is about to start
+		Api\Hooks::process('backup_starts', array(), true);
+
 		foreach($this->schemas as $table => $schema)
 		{
 			if (in_array($table,$this->exclude_tables)) continue;	// dont backup
@@ -932,7 +935,7 @@ class Backup
 
 			if ($lock_table || empty($pk) && is_null($lock_table))
 			{
-				$this->db->Link_ID->RowLock($table, 'true');	// PostgreSQL drive from ADOdb requires 2. param $where!
+				$this->db->Link_ID->row_lock($table);
 			}
 			$total = $max = 0;
 			do {
@@ -959,8 +962,12 @@ class Backup
 			}
 			while((!empty($pk) || $lock_table !== false) && !($total % self::ROW_CHUNK) && $num_rows);
 
-			if (!$pk) $this->db->Link_ID->RollbackLock($table);
+			if (!$pk) $this->db->rollback_lock($table);
 		}
+
+		// let apps know that backup is finished
+		Api\Hooks::process('backup_finished', array(), true);
+
 		if(!$zippresent)  // save without files
 		{
 			if ($this->backup_files)
