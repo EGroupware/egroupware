@@ -935,7 +935,7 @@ class Backup
 
 			if ($lock_table || empty($pk) && is_null($lock_table))
 			{
-				$this->db->Link_ID->row_lock($table);
+				$this->db->row_lock($table);
 			}
 			$total = $max = 0;
 			do {
