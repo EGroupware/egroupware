@@ -1063,6 +1063,8 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 	 */
 	click: function(_ev)
 	{
+		if(this._parent.options.readonly ) return;
+
 		// Drag to create in progress
 		if(this._parent.drag_create.start !== null) return;
 

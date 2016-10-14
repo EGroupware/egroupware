@@ -151,6 +151,8 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		else if(typeof new_date === "string")
 		{
 			this.date_helper.set_year(new_date.substring(0,4));
+			// Avoid overflow into next month, since we re-use date_helper
+			this.date_helper.set_date(1);
 			this.date_helper.set_month(new_date.substring(4,6));
 			this.date_helper.set_date(new_date.substring(6,8));
 		}
@@ -190,6 +192,8 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		else if(typeof new_date === "string")
 		{
 			this.date_helper.set_year(new_date.substring(0,4));
+			// Avoid overflow into next month, since we re-use date_helper
+			this.date_helper.set_date(1);
 			this.date_helper.set_month(new_date.substring(4,6));
 			this.date_helper.set_date(new_date.substring(6,8));
 		}

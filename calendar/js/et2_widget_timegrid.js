@@ -132,7 +132,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	destroy: function() {
 
 		// Stop listening to tab changes
-		if(framework.getApplicationByName('calendar').tab)
+		if(typeof framework !== 'undefined' && framework.getApplicationByName('calendar').tab)
 		{
 			jQuery(framework.getApplicationByName('calendar').tab.contentDiv).off('show.' + this.id);
 		}
@@ -164,7 +164,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		this._super.apply(this, arguments);
 
 		// Listen to tab show to make sure we scroll to the day start, not top
-		if(framework.getApplicationByName('calendar').tab)
+		if(typeof framework !== 'undefined' && framework.getApplicationByName('calendar').tab)
 		{
 			jQuery(framework.getApplicationByName('calendar').tab.contentDiv)
 				.on('show.' + this.id, jQuery.proxy(
@@ -1275,6 +1275,9 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	 * @param {type} actionLinks
 	 */
 	_init_links_dnd: function(mgr,actionLinks) {
+
+		if (this.options.readonly) return;
+		
 		var self = this;
 
 		var drop_link = mgr.getActionById('egw_link_drop');
@@ -1787,6 +1790,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	click: function(_ev)
 	{
 		var result = true;
+		if(this.options.readonly ) return;
 		
 		// Drag to create in progress
 		if(this.drag_create.start !== null) return;
@@ -1877,6 +1881,8 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	_mouse_down: function(event)
 	{
 		if(event.which !== 1) return;
+
+		if (this.options.readonly) return;
 		
 		var start = jQuery.extend({},this.gridHover[0].dataset);
 		if(start.date)
@@ -1953,6 +1959,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 	 */
 	_mouse_up: function(event)
 	{
+		if (this.options.readonly) return;
 		var end = jQuery.extend({}, this.gridHover[0].dataset);
 		if(end.date)
 		{
