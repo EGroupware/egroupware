@@ -422,7 +422,7 @@ class calendar_uiforms extends calendar_ui
 								{
 									if(is_numeric($participant))
 									{
-										$uid = 'u'.$participant;
+										$uid = $participant;
 										$id = $participant;
 										$resource = $this->bo->resources[''];
 									}
