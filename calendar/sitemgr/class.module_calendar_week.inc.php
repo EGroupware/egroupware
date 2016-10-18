@@ -1,14 +1,13 @@
 <?php
-/**
- * eGroupWare - Calendar planner block for sitemgr
- *
- * @link http://www.egroupware.org
- * @package calendar
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010 by RalfBecker-At-outdoor-training.de
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
- */
+/**************************************************************************\
+ * eGroupWare SiteMgr - Web Content Management                              *
+ * http://www.egroupware.org                                                *
+ * --------------------------------------------                             *
+ *  This program is free software; you can redistribute it and/or modify it *
+ *  under the terms of the GNU General Public License as published by the   *
+ *  Free Software Foundation; either version 2 of the License, or (at your  *
+ *  option) any later version.                                              *
+ \**************************************************************************/
 
 use EGroupware\Api;
 use EGroupware\Api\Link;
@@ -16,11 +15,12 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
 
-/**
- * Calendar planner block for sitemgr
- */
-class module_calendar_planner extends Module
+/* $Id$ */
+
+class module_calendar_week extends Module
 {
+
+
 	/**
 	 * Default calendar CSS file
 	 */
@@ -29,70 +29,87 @@ class module_calendar_planner extends Module
 	const ETEMPLATE_CSS = '/api/templates/default/etemplate2.css';
 
 	/**
-	 * Constructor
+	 * Instance of the business object of calendar
+	 *
+	 * @var bo
 	 */
+	var $bo;
+	/**
+	 * Instance of the user interface object of calendar
+	 *
+	 * @var ui
+	 */
+	var $ui;
+	/**
+	 * Instance of the user interface object of calendar
+	 *
+	 * @var ui
+	 */
+	var $uiviews;
+	/**
+	 * Instance of the Api\Accounts object
+	 *
+	 * @var Api\Accounts
+	 */
+	var $accounts;
+	/**
+	 * Default CSS style
+	 *
+	 * @var default_css
+	 */
+	var $default_css = '/calendar/templates/default/app.css';
+
 	function __construct()
 	{
 		parent::__construct();
 
 		$this->arguments = array(
-			'sortby' => array(
-				'type' => 'select',
-				'label' => lang('Type of planner'),
-				'options' => array(
-					0 => lang('Planner by category'),
-					'user' => lang('Planner by user'),
-					'month' => lang('Yearly Planner')
-				),
-			),
 			'cat_id' => array(
 				'type' => 'select',
 				'label' => lang('Choose a category'),
-				'options' => array(),	// done by get_user_interface()
+				'options' => array(),	// specification of options is postponed into the get_user_interface function
 				'multiple' => true,
+			),
+			'numWeeks' => array(
+				'type' => 'textfield',
+				'label' => lang('Number of weeks to show'),
+				'default' => 2,
+				'params' => array('size' => 1)
+			),
+			'search' => array(
+				'type' => 'textfield',
+				'label' => lang('Search string for the events'),
 			),
 			'owner' => array(
 				'type' => 'select',
-				'label' => lang('Group(s) or user(s) to show'),
 				'options' => array(),
+				'label' => lang('Group(s) or user(s) whose calendars to show (if ACL exists)'),
+				// 'multiple' => true, is set in the get_user_interface function.
 			),
 			'resources' => array(
 				'type' => 'select',
 				'label' => lang('Resources'),
 				'options' => array(),
+				'multiple' => true
 			),
-			'filter' => array(
-				'type' => 'select',
-				'label' => lang('Filter'),
-				'options' => array(
-					'default'     => lang('Not rejected'),
-					'accepted'    => lang('Accepted'),
-					'unknown'     => lang('Invitations'),
-					'tentative'   => lang('Tentative'),
-					'rejected'    => lang('Rejected'),
-					'owner'       => lang('Owner too'),
-					'all'         => lang('All incl. rejected'),
-					'hideprivate' => lang('Hide private infos'),
-					'no-enum-groups' => lang('only group-events'),
-				),
-				'default' => 'default',
-			),
-			'date' => array(
+			'css' => array(
 				'type' => 'textfield',
-				'label' => 'Startdate as YYYYmmdd (empty for current date)',
-				'default' => '',
-				'params' => array('size' => 10),
+				'label' => lang('User selectable CSS file for the calendar setup'),
+				'default' => $this->default_css,
+			),
+			'acceptDateParam' => array(
+				'type' => 'checkbox',
+				'label' => lang('Shall the date parameter be accepted (e.g. from calendar module)?'),
+				'default' => false,
 			),
 		);
-		$this->title = lang('Calendar - Planner');
-		$this->description = lang('This module displays a planner calendar.');
+		$this->title = lang('Calendar - Multi-Weekly');
+		$this->description = lang("This module displays a user's calendar as multiple weeks. Don't give calendar application access to the anon user!");
 	}
 
-	/**
-	 * Reimplemented to fetch the cats, users/groups and resources
-	 */
 	function get_user_interface()
 	{
+		// copied from bookmarks module.
 		$cats = new Api\Categories('','calendar');
 		foreach($cats->return_array('all',0,False,'','cat_name','',True) as $cat)
 		{
@@ -103,12 +120,12 @@ class module_calendar_planner extends Module
 			$this->arguments['cat_id']['multiple'] = 5;
 		}
 
-		if (!isset($GLOBALS['egw']->accounts))
+		if (! isset($GLOBALS['egw']->accounts))
 		{
 			$GLOBALS['egw']->accounts = new Api\Accounts();
 		}
 		$this->accounts =& $GLOBALS['egw']->accounts;
-		$search_params = array(
+		$search_params=array(
 			'type' => 'both',
 			'app' => 'calendar',
 		);
@@ -172,6 +189,7 @@ class module_calendar_planner extends Module
 			$this->arguments['owner']['multiple'] = true;
 		}
 
+		// Resources
 		$query = '';
 		$options = array('start' => 0);
 
@@ -196,33 +214,21 @@ class module_calendar_planner extends Module
 				}
 			}
 		}
-		$this->arguments['resources']['options'] = array_unique($this->arguments['resources']['options']);
-		$this->arguments['resources']['multiple'] = count($this->arguments['resources']['options']) ? 4 : 0;
-
 
 		return parent::get_user_interface();
 	}
 
-	/**
-	 * Get block content
-	 *
-	 * @param $arguments
-	 * @param $properties
-	 */
 	function get_content(&$arguments,$properties)
 	{
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
+		Api\Translation::add_app('calendar');
 
 		//error_log(array2string($arguments));
 		if (empty($arguments['date']))
 		{
 			$arguments['date'] = date('Ymd');
 		}
-		if ($arguments['sortby'] == 'yearly')
-		{
-			$arguments['sortby'] = 'month';
-			$arguments['date'] = substr($arguments['date'],0,4).'0101';
-		}
+
 		if (isset($_GET['date'])) $arguments['date'] = $_GET['date'];
 		if (empty($arguments['cat_id'])) $arguments['cat_id'] = '';
 		if(isset($arguments['resources']) && in_array('r0', $arguments['resources']))
@@ -248,13 +254,10 @@ class module_calendar_planner extends Module
 		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].self::ETEMPLATE_CSS.");\n";
 		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].Api\Categories::css(Api\Categories::GLOBAL_APPNAME).");\n";
 		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].Api\Categories::css('calendar').");\n";
-		$html .= '.popupMainDiv #calendar-planner { position: static;}
-		#calendar-planner .calendar_plannerWidget, #calendar-planner div.calendar_plannerRows {
-    height: auto !important;
-}
+		$html .= '.popupMainDiv #calendar-view {position: static; min-height: 250px; height: 99% !important;}
 	</style>'."\n";
-		$html .= Api\Html::image('sitemgr', 'left', lang('Previous'), 'onclick=\'app.calendar.toolbar_action({id:"previous"});\'')
-		. Api\Html::image('sitemgr', 'right', lang('Next'), 'style="float: right;" onclick=\'app.calendar.toolbar_action({id:"next"});\'');
+		$html .= Api\Html::image('sitemgr', 'left', lang('Previous'), 'onclick=\'app.calendar.toolbar_action({id:"previous",data:{state:{view:"weekN"}}});\'')
+		. Api\Html::image('sitemgr', 'right', lang('Next'), 'style="float: right;" onclick=\'app.calendar.toolbar_action({id:"next",data:{state:{view:"weekN"}}});\'');
 
 		if (is_array($params['owner']))
 		{
@@ -265,67 +268,66 @@ class module_calendar_planner extends Module
 			});
 			Framework::$header_done = true;
 			$ui = new calendar_uiviews();
-			$ui->sortby = $arguments['sortby'];
 			$ui->owner = $params['owner'];
 
-			if (!$ui->planner_view || $ui->planner_view == 'month')	// planner monthview
+			$tmpl = new Etemplate('calendar.view');
+
+			$start = new Api\DateTime($arguments['date']);
+			$start->setWeekstart();
+			$ui->first = $start->format('ts');
+			$ui->last = strtotime("+{$params['numWeeks']} weeks",$ui->first) - 1;
+
+			// Calendar uses user preferences for number of weeks, so set it
+			if((int)$params['numWeeks'] != (int)$ui->cal_prefs['multiple_weeks'])
 			{
-				if ($ui->day < 15)	// show one complete month
-				{
-					$ui->_week_align_month($ui->first,$ui->last);
-				}
-				else	// show 2 half month
-				{
-					$ui->_week_align_month($ui->first,$ui->last,15);
-				}
-			}
-			elseif ($ui->planner_view == 'week' || $ui->planner_view == 'weekN')	// weeekview
-			{
-				$start = new Api\DateTime($ui->date);
-				$start->setWeekstart();
-				$ui->first = $start->format('ts');
-				$ui->last = $ui->bo->date2array($this->first);
-				$ui->last['day'] += ($ui->planner_view == 'week' ? 7 : 7 * $ui->cal_prefs['multiple_weeks'])-1;
-				$ui->last['hour'] = 23; $ui->last['minute'] = $ui->last['sec'] = 59;
-				unset($ui->last['raw']);
-				$ui->last = $ui->bo->date2ts($ui->last);
-			}
-			else // dayview
-			{
-				$ui->first = $ui->bo->date2ts($ui->date);
-				$ui->last = $ui->bo->date2array($ui->first);
-				$ui->last['day'] += 0;
-				$ui->last['hour'] = 23; $ui->last['minute'] = $ui->last['sec'] = 59;
-				unset($ui->last['raw']);
-				$ui->last = $ui->bo->date2ts($ui->last);
+				$anon_user = $GLOBALS['egw']->accounts->name2id($GLOBALS['Common_BO']->sites->current_site['anonymous_user'],'account_lid','u');
+				$pref = new Api\Preferences($anon_user);
+				$pref->add('calendar','multiple_weeks',(int)$params['numWeeks']);
+				$pref->save_repository();
 			}
 
-			$search_params = $ui->search_params;
-			$search_params['daywise'] = false;
-			$search_params['start'] = $ui->first;
-			$search_params['end'] = $ui->last;
-			$search_params['owner'] = $ui->owner;
-			$search_params['enum_groups'] = $ui->sortby == 'user';
+			$navHeader = lang('Week').' '.$ui->week_number($ui->first).' - '.$ui->week_number($this->last).': '.
+				$ui->bo->long_date($ui->first,$ui->last);
 
-			$content = array();
+			$granularity = ($ui->cal_prefs['interval'] ? (int)$ui->cal_prefs['interval'] : 30);
+			
+			$content = array('view' => array());
+
 			$sel_options = array();
-			$content['planner'] = $ui->bo->search($search_params);
-			foreach($content['planner'] as &$event)
+
+			$ui->search_params['query'] = $params['search'];
+			$ui->search_params['cat_id'] = $params['cat_id'];
+
+			// Loop through, using Api\DateTime to handle DST
+			$week = 0;
+			$week_start = new EGroupware\Api\DateTime($ui->first);
+			$week_start->setTime(0,0,0);
+			$week_end = new Api\DateTime($week_start);
+			$week_end->add(new DateInterval('P6DT23H59M59S'));
+			$last = new EGroupware\Api\DateTime($ui->last);
+			
+			for ($week_start; $week_start < $last; $week_start->add('1 week'), $week_end->add('1 week'))
 			{
-				$ui->to_client($event);
+				$search_params = $ui->search_params;
+
+				$search_params['start'] = $week_start->format('ts');
+				$search_params['end'] = $week_end->format('ts');
+
+				$content['view'][] = (array)$ui->tagWholeDayOnTop($ui->bo->search($search_params)) +
+				array(
+					'id' => $week_start->format('Ymd')
+				);
+				$tmpl->setElementAttribute("view[$week]",'onchange',false);
+				$tmpl->setElementAttribute("view[$week]",'granularity',$granularity);
+				$tmpl->setElementAttribute("view[$week]",'height','250px');
+				$week++;
 			}
 
-			$tmpl = new Etemplate('calendar.planner');
-
-			$tmpl->setElementAttribute('planner','start_date', Api\DateTime::to($ui->first, Api\DateTime::ET2));
-			$tmpl->setElementAttribute('planner','end_date', Api\DateTime::to($ui->last, Api\DateTime::ET2));
-			$tmpl->setElementAttribute('planner','owner', $search_params['owner']);
-			$tmpl->setElementAttribute('planner','group_by', $ui->sortby);
 
 			// Make sure all used owners are there, faking
 			// calendar_owner_etemplate_widget::beforeSendToClient() since the
 			// rest of the calendar app is probably missing.
-			foreach($search_params['owner'] as $owner)
+			foreach($params['owner'] as $owner)
 			{
 				$sel_options['owner'][] = Array(
 					'id' => $owner,
@@ -335,13 +337,13 @@ class module_calendar_planner extends Module
 			}
 			$tmpl->exec(__METHOD__, $content,$sel_options, array('__ALL__' => true),array(),2);
 			$html .= ob_get_contents();
+			
 			$html .= '<script>'
 			. '	window.egw_LAB.wait(function() {jQuery(function() {'
 			. 'app.calendar.set_state(' . json_encode(array(
-					'owner' => $search_params['owner'],
-					'sortby' => $ui->sortby,
-					'filter' => $arguments['filter']
-				)).');'
+					'owner' => $params['owner'],
+					'date' => $start->format(EGroupware\Api\DateTime::ET2)
+				)).'); '
 			. '});});'
 			. '</script>';
 
