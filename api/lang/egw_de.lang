@@ -1445,6 +1445,7 @@ you need to install mailvelope plugin available for chrome and firefox from www.
 you need to select a file first!	common	de	Sie müssen zuerst eine Datei auswählen!
 you need to select some entries first!	common	de	Sie müssen zuerst einige Datensätze auswählen!
 you need to set enable logging to "%1" to create/update a log.	groupdav	de	Sie müssen logging einschalten auf "%1" setzen damit ein Log angelegt/aktualisiert wird.
+you tried to automatically size a flex column, which always takes the rest of the space	common	de	Sie versuchen die Breite einer Flexiblen Spalte zu ändern, diese nimmt immer den Rest des verfügbaren Platzes ein.
 you will not be able to send or receive encrypted mails before completing that step!	common	de	Sie werden KEINE verschlüsselten Mail sender oder empfangen können, bevor Sie nicht diesen Schritt beendet haben!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
 your code is incorrect !!!	common	de	Ihr Code ist nicht richtig!!!

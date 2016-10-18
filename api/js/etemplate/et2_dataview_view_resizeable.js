@@ -155,6 +155,11 @@
 
 		// Bind double click for auto-size
 		_elem.dblclick(function(e) {
+			// Just show message for relative width columns
+			if(_context && _context.relativeWidth)
+			{
+				return egw.message(egw.lang('You tried to automatically size a flex column, which always takes the rest of the space','info'));
+			}
 			// Find column class - it's usually the first one
 			var col_class = '';
 			for(var i = 0; i < this.classList.length; i++)
