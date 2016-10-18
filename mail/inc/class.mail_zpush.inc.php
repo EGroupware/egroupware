@@ -420,17 +420,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (Api\Translation::detect_encoding($sigTextPlain)!='ascii') $force8bit=true;
 		// initialize the new Api\Mailer object for sending
 		$mailObject = new Api\Mailer(self::$profileID);
-
-		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime,$force8bit);
+		$bccAddresses='';
+		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime,$force8bit,$bccAddresses);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->setFrom($activeMailProfile['ident_email'],Mail::generateIdentityString($activeMailProfile,false));
 		$mailObject->addHeader('X-Mailer', 'mail-Activesync');
 
-
 		// prepare addressee list; moved the adding of addresses to the mailobject down
 		// to
-
 		foreach(Mail::parseAddressList($mailObject->getHeader("To")) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") Header Sentmail To: ".array2string($addressObject) );
@@ -445,7 +443,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$ccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// BCC
-		foreach(Mail::parseAddressList($mailObject->getHeader("Bcc")) as $addressObject) {
+		foreach(Mail::parseAddressList(($bccAddresses?$bccAddresses:$mailObject->getHeader("Bcc"))) as $addressObject) {
 			if (!$addressObject->valid) continue;
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") Header Sentmail BCC: ".array2string($addressObject) );
 			//$mailObject->AddBCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
@@ -786,8 +784,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						$mailAddr[] = array($emailAddress, $addressObject->personal);
 					}
 				}
-				$BCCmail='';
-				if (count($mailAddr)>0) $BCCmail = $mailObject->AddrAppend("Bcc",$mailAddr);
+				//$BCCmail='';
+				if (count($mailAddr)>0) $mailObject->forceBccHeader();
+				//$BCCmail = $mailObject->AddrAppend("Bcc",$mailAddr);
 				foreach($folderArray as $folderName) {
 					if($this->mail->isSentFolder($folderName)) {
 						$flags = '\\Seen';
