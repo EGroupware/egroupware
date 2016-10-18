@@ -173,7 +173,7 @@ class module_calendar_planner extends Module
 		}
 
 		$query = '';
-		$options = array('start' => 0, 'num_rows' => 50);
+		$options = array('start' => 0);
 
 		$acl = new Acl($anon_user);
 		$acl->read_repository();
