@@ -6974,9 +6974,10 @@ class Mail
 	 * @param Mailer $mailer instance of SMTP Mailer object
 	 * @param string|ressource|Horde_Mime_Part $message string or resource containing the RawMessage / object Mail_mimeDecoded message (part))
 	 * @param boolean $force8bitOnPrimaryPart (default false. force transferEncoding and charset to 8bit/utf8 if we have a textpart as primaryPart)
+	 * @param string &$bccAddresses (reference; default empty string; used to transport bcc addresses to the caller)
 	 * @throws Exception\WrongParameter when the required Horde_Mail_Part not found
 	 */
-	function parseRawMessageIntoMailObject(Mailer $mailer, $message, $force8bitOnPrimaryPart=false)
+	function parseRawMessageIntoMailObject(Mailer $mailer, $message, $force8bitOnPrimaryPart=false, &$bccAddresses='')
 	{
 		if (is_string($message) || is_resource($message))
 		{
@@ -7013,7 +7014,9 @@ class Mail
 							break;
 						default:
 							//error_log(__METHOD__.__LINE__.':'.$header.'->'.$val);
+							if (strtolower($header)=='bcc') $bccAddresses .= $val;
 							$mailer->addHeader($header, $val, $overwrite);
+							//error_log(__METHOD__.__LINE__.':'.'getHeader('.$header.')'.array2string($mailer->getHeader($header)).(strtolower($header)=='bcc'?$bccAddresses:''));
 					}
 				}
 			}
