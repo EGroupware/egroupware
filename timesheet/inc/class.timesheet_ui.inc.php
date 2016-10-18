@@ -199,7 +199,9 @@ class timesheet_ui extends timesheet_bo
 					// set ts_title to ts_project if short viewtype (title is not editable)
 					if($this->ts_viewtype == 'short')
 					{
-						$this->data['ts_title'] = $this->data['ts_project'];
+						$this->data['ts_title'] = $this->data['ts_project'] = $this->data['pm_id'] ?
+								Link::title('projectmanager', $this->data['pm_id']) :
+								$this->data['ts_project'];
 					}
 					if (!$this->data['ts_title'])
 					{
