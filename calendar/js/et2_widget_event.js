@@ -958,7 +958,7 @@ et2_calendar_event.owner_check = function owner_check(event, parent, owner_too)
 	{
 		options = parent.getArrayMgr("sel_options").getRoot().getEntry('owner');
 	}
-	if(event.participants && parent.options.owner.length > 0)
+	if(event.participants && typeof parent.options.owner != 'undefined' && parent.options.owner.length > 0)
 	{
 		var parent_owner = jQuery.extend([], typeof parent.options.owner !== 'object' ?
 			[parent.options.owner] :
