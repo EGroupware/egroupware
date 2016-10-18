@@ -70,20 +70,35 @@ app.classes.resources = AppJS.extend(
 	view_calendar: function (_action,_senders)
 	{
 
-		var res_ids =[], matches = [];
+		var res_ids = [];
+		var matches = [];
+		var nm = _action.parent.data.nextmatch;
+		var selection = nm.getSelection();
 
-		for (var i=0;i<_senders.length;i++)
+		var show_calendar = function(res_ids) {
+			egw_message(this.egw.lang('%1 resource(s) View calendar',res_ids.length));
+
+			this.egw.open_link('calendar.calendar_uiviews.index&view=planner&sortby=user&owner=0,r'+res_ids.join(',r')+'&ajax=true');
+		};
+
+		if(selection && selection.all)
 		{
-			res_ids.push(_senders[i].id);
-			matches = res_ids[i].match(/^(?:resources::)?([0-9]+)(:([0-9]+))?$/);
-			if (matches)
-			{
-				res_ids[i] = matches[1];
-			}
+			// Get selected ids from nextmatch - it will ask server if user did 'select all'
+			fetchAll(res_ids, nm, show_calendar)
 		}
-		egw_message(this.egw.lang('%1 resource(s) View calendar',res_ids.length));
-
-		this.egw.open_link('calendar.calendar_uiviews.index&view=planner&sortby=user&owner=0,r'+res_ids.join(',r')+'&ajax=true');
+		else
+		{
+			for (var i=0;i<_senders.length;i++)
+			{
+				res_ids.push(_senders[i].id);
+				matches = res_ids[i].match(/^(?:resources::)?([0-9]+)(:([0-9]+))?$/);
+				if (matches)
+				{
+					res_ids[i] = matches[1];
+				}
+			}
+			show_calendar(res_ids);
+		}
 	},
 
 	/**
