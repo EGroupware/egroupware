@@ -359,7 +359,7 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 								{
 									// Here we could do all sorts of things
 									var extra = {
-										'presets[email]': jQuery(this).attr('title')
+										'presets[email]': jQuery(this).attr('title') ? jQuery(this).attr('title') : jQuery(this).text()
 									};
 
 									return jQuery('<a href="#" class= "et2_url_email_contactPlus" title="'+egw.lang('Add a new contact')+'"><img src="'
