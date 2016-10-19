@@ -420,8 +420,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (Api\Translation::detect_encoding($sigTextPlain)!='ascii') $force8bit=true;
 		// initialize the new Api\Mailer object for sending
 		$mailObject = new Api\Mailer(self::$profileID);
-		$bccAddresses='';
-		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime,$force8bit,$bccAddresses);
+		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime,$force8bit);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
 		$mailObject->setFrom($activeMailProfile['ident_email'],Mail::generateIdentityString($activeMailProfile,false));
@@ -443,7 +442,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$ccMailAddr[] = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
 		}
 		// BCC
-		foreach(Mail::parseAddressList(($bccAddresses?$bccAddresses:$mailObject->getHeader("Bcc"))) as $addressObject) {
+		foreach($mailObject->getAddresses('bcc') as $addressObject) {
 			if (!$addressObject->valid) continue;
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") Header Sentmail BCC: ".array2string($addressObject) );
 			//$mailObject->AddBCC($addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : ''),$addressObject->personal);
