@@ -143,6 +143,7 @@ class Template extends Etemplate\Widget
 	 */
 	public static function relPath($name, $template_set=null, $version='')
 	{
+		static $prefixes = null;
 		unset($version);	// not used currently
 		list($app, $rest) = explode('.', $name, 2);
 
@@ -153,7 +154,17 @@ class Template extends Etemplate\Widget
 		$template_path = '/'.$app.'/templates/'.$template_set.'/'.$rest.'.xet';
 		$default_path = '/'.$app.'/templates/default/'.$rest.'.xet';
 
-		foreach(array(Api\Vfs::PREFIX.self::VFS_TEMPLATE_PATH, EGW_SERVER_ROOT) as $prefix)
+		// check if /etemplates is mounted in VFS and prefer it in that case over phy. file-system
+		if (!isset($prefixes))
+		{
+			$prefixes = array(EGW_SERVER_ROOT);
+			$fs_tab = Api\Vfs::mount();
+			if (isset($fs_tab[self::VFS_TEMPLATE_PATH]))
+			{
+				array_unshift($prefixes, Api\Vfs::PREFIX.self::VFS_TEMPLATE_PATH);
+			}
+		}
+		foreach($prefixes as $prefix)
 		{
 			if (file_exists($prefix.$template_path))
 			{
