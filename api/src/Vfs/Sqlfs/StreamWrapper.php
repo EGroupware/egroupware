@@ -1556,17 +1556,28 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	}
 
 	/**
+	 * Max allowed sub-directory depth, to be able to break infinit recursion by wrongly linked directories
+	 */
+	const MAX_ID2PATH_RECURSION = 100;
+
+	/**
 	 * Return the path of given fs_id(s)
 	 *
 	 * Searches the stat_cache first and then the db.
 	 * Calls itself recursive to to determine the path of the parent/directory
 	 *
 	 * @param int|array $fs_ids integer fs_id or array of them
-	 * @return string|array path or array or pathes indexed by fs_id
+	 * @param int $recursion_count =0 internally used to break infinit recursions
+	 * @return false|string|array path or array or pathes indexed by fs_id, or false on error
 	 */
-	static function id2path($fs_ids)
+	static function id2path($fs_ids, $recursion_count=0)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($fs_ids).')');
+		if ($recursion_count > self::MAX_ID2PATH_RECURSION)
+		{
+			error_log(__METHOD__."(".array2string($fs_ids).", $recursion_count) max recursion depth reached, probably broken filesystem!");
+			return false;
+		}
 		$ids = (array)$fs_ids;
 		$pathes = array();
 		// first check our stat-cache for the ids
@@ -1610,7 +1621,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		}
 		unset($stmt);
 
-		if ($parents && !($parents = self::id2path($parents)))
+		if ($parents && !($parents = self::id2path($parents, $recursion_count+1)))
 		{
 			return false;	// parent not found, should never happen ...
 		}
