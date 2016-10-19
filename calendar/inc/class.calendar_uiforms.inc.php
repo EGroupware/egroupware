@@ -518,7 +518,7 @@ class calendar_uiforms extends calendar_ui
 									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0, false, true, $content['no_notifications']))
 									{
 										// Update main window
-										$d = new Api\DateTime($contet['edit_single'], Api\DateTime::$user_timezone);
+										$d = new Api\DateTime($content['edit_single'], Api\DateTime::$user_timezone);
 										$client_updated = $this->update_client($event['id'], $d);
 
 										// refreshing the calendar-view with the changed participant-status
@@ -2961,7 +2961,6 @@ class calendar_uiforms extends calendar_ui
 	{
 		list($eventId, $date) = explode(':', $_eventId,2);
 
-		$old_event=$event=$this->bo->read($eventId);
 		$event = $this->bo->read($eventId);
 		if($date)
 		{
@@ -3011,6 +3010,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$event['participants'][$participant] = 'U';
 		}
+		$message = null;
 		$conflicts=$this->bo->update($event,false, true, false, true, $message);
 
 		$response = Api\Json\Response::get();
