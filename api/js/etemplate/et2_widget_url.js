@@ -41,12 +41,14 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 	 * - "Becker < Ralf <rb@stylite.de>" (contains <    ----------- " ---------------)
 	 *
 	 * About umlaut or IDN domains: we currently only allow German umlauts in domain part!
+	 * We forbid all non-ascii chars in local part, as Horde does not yet support SMTPUTF8 extension (rfc6531)
+	 * and we get a "SMTP server does not support internationalized header data" error otherwise.
 	 *
 	 * Using \042 instead of " to NOT stall minifyer!
 	 *
 	 * Same preg is in Etemplate\Widget\Url PHP class!
 	 */
-	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i),
+	EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]\x80-\xff]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i),
 	/**
 	 * @memberOf et2_url
 	 */
