@@ -1121,33 +1121,41 @@ var et2_taglist_email = (function(){ "use strict"; return et2_taglist.extend(
 			if (!valid)
 			{
 				var parts = item.id.split(/, */);
+				var items = [], errors = [];
 				if (parts.length > 1)
 				{
-					valid = true;
 					for(var i=0; i < parts.length; ++i)
 					{
 						parts[i] = parts[i].trim();
 						if (!et2_url.prototype.EMAIL_PREG.test(parts[i]))
 						{
-							valid = false;
-							break;
+							errors.push(parts[i]);
+						}
+						else
+						{
+							items.push({id: parts[i], label: parts[i]});
 						}
 					}
-					if (valid)
+					item.id = item.label = errors.length ? errors.join(', ') : items.shift().id;
+					valid = !errors.length;
+					// insert further parts into taglist, after validation first one
+					if (items.length)
 					{
-						item.id = item.label = parts.shift();
-						// insert further parts into taglist, after validation first one
-						var taglist = this.taglist;
-						window.setTimeout(function()
+						// a bit ugly but unavoidable
+						if (valid)
 						{
-							var items = [];
-							for(var i=0; i < parts.length; ++i)
+							// if no error, we need to delay insert, as taglist gets into wired state and shows first item twice
+							var taglist = this.taglist;
+							window.setTimeout(function()
 							{
-								items.push({id: parts[i], label: parts[i]});
-
-							}
-							taglist.addToSelection(items);
-						}, 10);
+								taglist.addToSelection(items);
+							}, 10);
+						}
+						else
+						{
+							// if we have an error, we need to insert items now, to not overwrite the error
+							this.taglist.addToSelection(items);
+						}
 					}
 				}
 			}
