@@ -1906,9 +1906,9 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		{
 			$props = $props[$row['fs_id']] ? $props[$row['fs_id']] : array();	// return empty array for no props
 		}
-		elseif ($props && isset($stat))	// need to map fs_id's to pathes
+		elseif ($props && isset($stat) && ($id2path = self::id2path(array_keys($props))))	// need to map fs_id's to pathes
 		{
-			foreach(self::id2path(array_keys($props)) as $id => $path)
+			foreach($id2path as $id => $path)
 			{
 				$props[$path] =& $props[$id];
 				unset($props[$id]);
