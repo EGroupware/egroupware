@@ -739,11 +739,18 @@ class calendar_so
 		}
 		elseif ($params['query'])
 		{
-			foreach(array('cal_title','cal_description','cal_location') as $col)
+			if(is_numeric($params['query']))
 			{
-				$to_or[] = $col.' '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%'.$params['query'].'%');
+				$where[] = $this->cal_table.'.cal_id = ' . (int)$params['query'];
 			}
-			$where[] = '('.implode(' OR ',$to_or).')';
+			else
+			{
+				foreach(array('cal_title','cal_description','cal_location') as $col)
+				{
+					$to_or[] = $col.' '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%'.$params['query'].'%');
+				}
+				$where[] = '('.implode(' OR ',$to_or).')';
+			}
 
 			// Searching - restrict private to own or private grant
 			if (!isset($params['private_grants']))
