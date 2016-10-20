@@ -34,12 +34,14 @@ class Url extends Etemplate\Widget
 	 * - "Becker < Ralf <rb@stylite.de>" (contains <    ----------- " ---------------)
 	 *
 	 * About umlaut or IDN domains: we currently only allow German umlauts in domain part!
-	 * We forbid all non-ascii chars in local part, as Horde does not yet support SMTPUTF8 extension (rfc6531)
+	 * Client-side forbids all non-ascii chars in local part, as Horde does not yet support SMTPUTF8 extension (rfc6531)
 	 * and we get a "SMTP server does not support internationalized header data" error otherwise.
+	 * We can't do that easily on server-side, as used \x80-\xf0 works in JavaScript to detect non-ascii,
+	 * but gives an invalid utf-8 compilation error in PHP together with /u modifier.
 	 *
 	 * Same preg is in et2_widget_url Javascript class, but no \x00 allowed and /u modifier for utf8!
 	 */
-	const EMAIL_PREG = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x01-\x20()<>@,;:\042\[\]\x80-\xff]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/iu";
+	const EMAIL_PREG = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x01-\x20()<>@,;:\042\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/iu";
 
 	/**
 	 * Validate input
