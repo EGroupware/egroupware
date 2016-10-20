@@ -63,6 +63,12 @@
     -webkit-filter: opacity(0.85);
     border: 1px solid;
   }
+  /* Make times & all day description bold for better visibility */
+  div.calendar_calDayColAllDay div.calendar_calEventBodySmall,
+  div.calendar_calEventHeader,
+  div.calendar_calEventHeaderSmall {
+    font-weight: bold;
+  }
 }
 /**
  * Sidebox
