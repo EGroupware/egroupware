@@ -61,6 +61,7 @@
     opacity: 1;
     filter: opacity(0.85);
     -webkit-filter: opacity(0.85);
+    border: 1px solid;
   }
 }
 /**
