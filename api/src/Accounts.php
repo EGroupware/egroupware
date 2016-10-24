@@ -197,6 +197,15 @@ class Accounts
 		//error_log(__METHOD__.'('.array2string($param).') '.function_backtrace());
 		if (!isset($param['active'])) $param['active'] = true;	// default is true = only return active accounts
 
+		// Check for lang(Group) in search - if there, we search all groups
+		$group_index = array_search(strtolower(lang('Group')), array_map('strtolower', $query = explode(' ',$param['query'])));
+		if($group_index !== FALSE)
+		{
+			$param['type'] = 'groups';
+			// Remove the 'group' from the query, but only one (eg: Group NoGroup -> NoGroup)
+			unset($query[$group_index]);
+			$param['query'] = implode(' ', $query);
+		}
 		self::setup_cache();
 		$account_search = &self::$cache['account_search'];
 		$serial = serialize($param);
