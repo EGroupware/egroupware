@@ -1397,7 +1397,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$cutoffdate = (is_numeric($maximumSyncRangeInDays) ? Api\DateTime::to('now','ts')-(3600*24*$maximumSyncRangeInDays):null);
 			if (is_numeric($maximumSyncRangeInDays)) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.' Client set no truncationdate. Using '.$maximumSyncRangeInDays.' days.'.date("d-M-Y", $cutoffdate));
 		}
-		return $this->fetchMessages($folderid, $cutoffdate);
+		try {
+			return $this->fetchMessages($folderid, $cutoffdate);
+		} catch (Exception $e)
+		{
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' failed for '.$e->getMessage().($e->details?$e->details:''));
+			return array();
+		}
 	}
 
 	/**
