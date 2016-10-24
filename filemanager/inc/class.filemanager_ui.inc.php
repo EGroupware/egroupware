@@ -198,6 +198,14 @@ class filemanager_ui
 				'enabled' => 'javaScript:app.filemanager.paste_enabled',
 				'children' => array()
 			),
+			'copylink' => array(
+				'caption' => lang('Copy link address'),
+				'group' => $group + 0.5,
+				'icon' => 'copy',
+				'allowOnMultiple' => false,
+				'order' => 10,
+				'onExecute' => 'javaScript:app.filemanager.copy_link'
+			),
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
 				++$group, 'Insert in document', 'document_',

@@ -805,7 +805,7 @@ app.classes.filemanager = AppJS.extend(
 	 * @param {egwAction} _action  drop action we're checking
 	 * @param {egwActionObject[]} _senders selected files
 	 * @param {egwActionObject} _target Drop or context menu activated on this one
-	 * 
+	 *
 	 * @returns boolean true if enabled, false otherwise
 	 */
 	paste_enabled: function paste_enabled(_action, _senders, _target)
@@ -838,7 +838,7 @@ app.classes.filemanager = AppJS.extend(
 			enabled: dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 ||
 					!dir && path_widget && !path_widget.options.readonly
 		});
-		
+
 		// Target, if directory
 		target_dir = this.id2path(_target.id);
 		dir = egw.dataGetUIDdata(_target.id);
@@ -1134,6 +1134,65 @@ app.classes.filemanager = AppJS.extend(
 				this.egw.lang('You can use regular upload [+] button to upload files.')+"\n\n"+
 				this.egw.lang('Do you want more information about EPL subscription?'),
 			this.egw.lang('File a file'), undefined, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+		}
+	},
+
+	/**
+	 * This function copies the selected file/folder entry as webdav link into clipboard
+	 *
+	 * @param {object} _action egw actions
+	 * @param {object} _senders selected nm row
+	 * @returns {Boolean} returns false if not successful
+	 */
+	copy_link: function (_action, _senders)
+	{
+		var data = egw.dataGetUIDdata(_senders[0].id);
+		var url = data ? data.data.download_url : '/webdav.php'+this.id2path(_senders[0].id);
+		if (url[0] == '/') url = egw.link(url);
+		if (url.substr(0,4) == 'http'  && url.indexOf('://') <= 5) {
+			// it's already a full url
+		}
+		else
+		{
+			var hostUrl = new URL(window.location.href);
+			url = hostUrl.origin + url;
+		}
+
+		if (url)
+		{
+			var elem = jQuery(document.createElement('div'));
+			var range = [];
+			elem.text(url);
+			elem.appendTo('body');
+			if (document.selection)
+			{
+				range = document.body.createTextRange();
+				range.moveToElementText(elem);
+				range.select();
+			}
+			else if (window.getSelection)
+			{
+				var range = document.createRange();
+				range.selectNode(elem[0]);
+				window.getSelection().removeAllRanges();
+				window.getSelection().addRange(range);
+			}
+
+			var successful = false;
+			try {
+				successful = document.execCommand('copy');
+				if (successful)
+				{
+					egw.message('WebDav link copied into clipboard');
+					window.getSelection().removeAllRanges();
+
+					return true;
+				}
+			}
+			catch (e) {}
+			egw.message('Failed to copy the link!');
+			elem.remove();
+			return false;
 		}
 	},
 
