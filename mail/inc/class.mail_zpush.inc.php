@@ -1783,14 +1783,20 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if ($type != 'mail') return false;
 
 		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
+		if (!$this->mail->folderIsSelectable($folder))
+		{
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": could not select folder $folder returning fake state");
+			$syncstate = "M:".'0'."-R:".'0'."-U:".'0'."-NUID:".'0'."-UIDV:".'0';
+			return array();
+		}
 
-        $this->mail->reopen($folder);
+		$this->mail->reopen($folder);
 
 		if (!($status = $this->mail->getFolderStatus($folder,$ignoreStatusCache=true)))
 		{
-            ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": could not stat folder $folder ");
-            return false;
-        }
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": could not stat folder $folder ");
+			return false;
+		}
 		$syncstate = "M:". $status['messages'] ."-R:". $status['recent'] ."-U:". $status['unseen']."-NUID:".$status['uidnext']."-UIDV:".$status['uidvalidity'];
 
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($folderid, ...) $folder ($account) returning ".array2string($syncstate));
