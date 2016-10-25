@@ -201,6 +201,14 @@ class filemanager_ui
 				'caption' => lang('Link into folder'),
 				'type' => 'drop',
 				'onExecute' => 'javaScript:app.filemanager.drop'
+			),
+			'copylink' => array(
+				'caption' => lang('Copy link address'),
+				'group' => $group + 0.5,
+				'icon' => 'copy',
+				'allowOnMultiple' => false,
+				'order' => 10,
+				'onExecute' => 'javaScript:app.filemanager.copy_link'
 			)
 		);
 		if (!isset($GLOBALS['egw_info']['user']['apps']['mail']))

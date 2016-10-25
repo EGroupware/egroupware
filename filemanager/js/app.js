@@ -979,5 +979,64 @@ app.classes.filemanager = AppJS.extend(
 					};
 			}
 		}
+	},
+
+	/**
+	 * This function copies the selected file/folder entry as webdav link into clipboard
+	 *
+	 * @param {object} _action egw actions
+	 * @param {object} _senders selected nm row
+	 * @returns {Boolean} returns false if not successful
+	 */
+	copy_link: function (_action, _senders)
+	{
+		var data = egw.dataGetUIDdata(_senders[0].id);
+		var url = data ? data.data.download_url : '/webdav.php'+this.id2path(_senders[0].id);
+		if (url[0] == '/') url = egw.link(url);
+		if (url.substr(0,4) == 'http'  && url.indexOf('://') <= 5) {
+			// it's already a full url
+		}
+		else
+		{
+			var hostUrl = new URL(window.location.href);
+			url = hostUrl.origin + url;
+		}
+
+		if (url)
+		{
+			var elem = jQuery(document.createElement('div'));
+			var range = [];
+			elem.text(url);
+			elem.appendTo('body');
+			if (document.selection)
+			{
+				range = document.body.createTextRange();
+				range.moveToElementText(elem);
+				range.select();
+			}
+			else if (window.getSelection)
+			{
+				var range = document.createRange();
+				range.selectNode(elem[0]);
+				window.getSelection().removeAllRanges();
+				window.getSelection().addRange(range);
+			}
+
+			var successful = false;
+			try {
+				successful = document.execCommand('copy');
+				if (successful)
+				{
+					egw.message('WebDav link copied into clipboard');
+					window.getSelection().removeAllRanges();
+
+					return true;
+				}
+			}
+			catch (e) {}
+			egw.message('Failed to copy the link!');
+			elem.remove();
+			return false;
+		}
 	}
 });
