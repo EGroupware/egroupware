@@ -55,25 +55,25 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			cc: match['cc']	|| [],
 			bcc: match['bcc'] || []
 		};
-		var popup; 
+		var popup;
 		// Get open compose windows
 		var compose = egw.getOpenWindows("mail", /(^compose_)||(^mail.compose)/);
-		
+
 		// Encode html entities in the URI, otheerwise server XSS protection wont
 		// allow it to pass, because it may get mistaken for some forbiden tags,
 		// e.g., "Mathias <mathias@example.com>" the first part of email "<mathias"
 		// including "<" would get mistaken for <math> tag, and server will cut it off.
 		uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
-		
+
 		if(compose.length == 0)
 		{
 			// No compose windows, might be no mail app.js
 			// We really want to use mail_compose() here
-			
+
 			// Accoring to microsoft, IE 10/11 can only accept a url with 2083 caharacters
 			// therefore we need to send request to compose window with POST method
 			// instead of GET. We create a temporary <Form> and will post emails.
-			// ** WebServers and other browsers also have url length limit: 
+			// ** WebServers and other browsers also have url length limit:
 			// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
 			if (uri.length > 2083)
 			{
@@ -351,7 +351,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				if (mime_info.mime_popup) _popup = mime_info.mime_popup;
 				if (mime_info.mime_target) _target = mime_info.mime_target;
 			}
-			
+
 			if (_popup)
 			{
 				var w_h = _popup.split('x');
@@ -379,6 +379,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				{
 					_target = egwIsMobile()?'_self':'_blank';
 				}
+				_target = _target == '_phonecall'? '_self':_target;
 				return _wnd.open(url, _target);
 			}
 		},
@@ -435,7 +436,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 */
 		availHeight: function()
 		{
-			return screen.availHeight < screen.height ? 
+			return screen.availHeight < screen.height ?
 				(navigator.userAgent.match(/windows/ig)? screen.availHeight -100:screen.availHeight) // Seems chrome not counting taskbar in available height
 				: screen.height - 100;
 		},
