@@ -872,7 +872,22 @@ class Ldap
 					$order[] = $o;
 				}
 			}
-			$rows = ExecMethod2('phpgwapi.arrayfunctions.arfsort',$rows,$order,$sort);
+			usort($rows, function($a, $b) use ($order, $sort)
+			{
+				foreach($order as $f)
+				{
+					if($sort == 'ASC')
+					{
+						$strc = strcmp($a[$f], $b[$f]);
+					}
+					else
+					{
+						$strc = strcmp($b[$f], $a[$f]);
+					}
+					if ($strc) return $strc;
+				}
+				return 0;
+			});
 		}
 		// if requested ($start !== false) return only limited resultset
 		if (is_array($start))
