@@ -68,12 +68,13 @@ script:
   # install egroupware using MariaDB as domain "default"
   - php doc/rpm-build/post_install.php --domain default
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  # disable PostgreSQL install as it fails in Travis with Fatal error: Call to unimplemented native function pg_set_client_encoding
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
-  - psql -U postgres -c 'create database egroupware';
+  #- psql -U postgres -c 'create database egroupware';
   # disable postgres install for hhvm, as there is no psql extension
-  - test $(phpenv version-name) = 'hhvm' ||
-    php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
-    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  #- test $(phpenv version-name) = 'hhvm' ||
+  #  php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
+  #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # install egroupware with LDAP for account and MySQL as domain "ldap"
   #- php doc/rpm-build/post_install.php --domain ldap --db_name ldap --db_user ldap
   #  --account-auth ldap --ldap_suffix dc=local --ldap_admin 'cn=admin,$suffix' --ldap_admin_pw secret
