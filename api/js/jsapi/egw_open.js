@@ -352,7 +352,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				if (mime_info.mime_target) _target = mime_info.mime_target;
 			}
 
-			if (_popup)
+			if (_popup && _popup.indexOf('x') > 0)
 			{
 				var w_h = _popup.split('x');
 				var popup_window = this.openPopup(url, w_h[0], w_h[1], _target || '_blank', _target_app, true);
@@ -379,7 +379,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				{
 					_target = egwIsMobile()?'_self':'_blank';
 				}
-				_target = _target == '_phonecall'? '_self':_target;
+				_target = _target == '_phonecall' && _popup && _popup.indexOf('x') < 0 ? _popup:_target;
 				return _wnd.open(url, _target);
 			}
 		},
