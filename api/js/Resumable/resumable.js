@@ -799,8 +799,6 @@
 
     return(this);
   };
-  // Avoid confilict with wodocollabtexteditor which uses dojo framework
-  var define;
   // Node.js-style export for Node and Component
   if (typeof module != 'undefined') {
     module.exports = Resumable;
