@@ -353,8 +353,8 @@ app.classes.filemanager = AppJS.extend(
 			if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
 				var buttons = [
-					{text: this.egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true},
-					{text: this.egw.lang("Rename"), id:"rename"},
+					{text: this.egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true, image: 'check',},
+					{text: this.egw.lang("Rename"), id:"rename", image: 'edit',},
 					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
 				if (_data.uploaded[file].confirm === "is_dir")
