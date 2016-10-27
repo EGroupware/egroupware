@@ -14,7 +14,7 @@
 				</row>
 				<row>
 					<description value="URL to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)" label="%s:"/>
-					<textbox id="newsettings[call_link]" size="40"/>
+					<textbox id="newsettings[call_link]" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<description value="Size of popup (WxH, eg.400x300, if a popup should be used)" label="%s:"/>
@@ -131,7 +131,7 @@
 				</row>
 				<row>
 					<description value="LDAP context for contacts" label="%s:"/>
-					<textbox id="newsettings[ldap_contact_context]" size="40"/>
+					<textbox id="newsettings[ldap_contact_context]" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<description value="Additional information about using LDAP as contact repository" class="subHeader"/>
