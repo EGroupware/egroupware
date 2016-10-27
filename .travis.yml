@@ -71,12 +71,17 @@ script:
   # install egroupware using MariaDB as domain "default"
   - php doc/rpm-build/post_install.php --domain default
     --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  # disable PostgreSQL install as it fails in Travis with Fatal error: Call to unimplemented native function pg_set_client_encoding
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
-  - psql -U postgres -c 'create database egroupware';
-  # disable postgres install for 5.4 and hhvm, as there is no psql extension
-  - test $(phpenv version-name) = '5.4' -o $(phpenv version-name) = 'hhvm' ||
-    php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
-    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  #- psql -U postgres -c 'create database egroupware';
+  # disable postgres install for hhvm, as there is no psql extension
+  #- test $(phpenv version-name) = 'hhvm' ||
+  #  php doc/rpm-build/post_install.php --domain pgsql --db_type pgsql --db_port 5432 --db_user postgres --db_pass ''
+  #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  # install egroupware with LDAP for account and MySQL as domain "ldap"
+  #- php doc/rpm-build/post_install.php --domain ldap --db_name ldap --db_user ldap
+  #  --account-auth ldap --ldap_suffix dc=local --ldap_admin 'cn=admin,$suffix' --ldap_admin_pw secret
+  #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
   - php -dapc.enable_cli=1 doc/test-cli.php
   # do not run syntax check for hhvm, as it always fails / get terminated after 10m
