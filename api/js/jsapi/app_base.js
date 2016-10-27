@@ -739,6 +739,7 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 		buttons['save'] = {
 			text: this.egw.lang('save'),
 			default: true,
+			style: 'background-image: url('+this.egw.image('save')+')',
 			click: function() {
 				// Add a new favorite
 				var name = jQuery("#name",this);
@@ -807,14 +808,18 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 				jQuery(this).dialog("close");
 			}
 		};
-		buttons[this.egw.lang("cancel")] = function() {
-			if(typeof self.favorite_popup.group !== 'undefined' && self.favorite_popup.group.set_value)
-			{
-				self.favorite_popup.group.set_value(null);
+		buttons['cancel'] = {
+			text: this.egw.lang("cancel"),
+			style: 'background-image: url('+this.egw.image('cancel')+')',
+			click: function() {
+				if(typeof self.favorite_popup.group !== 'undefined' && self.favorite_popup.group.set_value)
+				{
+					self.favorite_popup.group.set_value(null);
+				}
+				jQuery(this).dialog("close");
 			}
-			jQuery(this).dialog("close");
 		};
-
+		
 		this.favorite_popup.dialog({
 			autoOpen: false,
 			modal: true,

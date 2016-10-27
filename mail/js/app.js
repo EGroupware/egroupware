@@ -2011,7 +2011,7 @@ app.classes.mail = AppJS.extend(
 			if (_confirm)
 			{
 				var buttons = [
-					{text: this.egw.lang("Yes"), id: "all", "class": "ui-priority-primary", "default": true},
+					{text: this.egw.lang("Yes"), id: "all", "class": "ui-priority-primary", "default": true, image: 'check'},
 					{text: this.egw.lang("Cancel"), id:"cancel"}
 				];
 				var messageToDisplay = '';
