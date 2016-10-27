@@ -24,7 +24,7 @@
 
 /*global runtime,core,define,require,document,dijit */
 
-define("webodf/editor/widgets/dialogWidgets/editHyperlinkPane", [
+webodfModule.define("webodf/editor/widgets/dialogWidgets/editHyperlinkPane", [
     "dojo",
     "dijit/layout/ContentPane",
     "webodf/editor/widgets/dialogWidgets/idMangler"],

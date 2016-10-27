@@ -24,7 +24,7 @@
 
 /*global define, require, gui*/
 
-define("webodf/editor/widgets/zoomSlider", [
+webodfModule.define("webodf/editor/widgets/zoomSlider", [
     "dijit/form/HorizontalSlider"],
 
     function (HorizontalSlider) {

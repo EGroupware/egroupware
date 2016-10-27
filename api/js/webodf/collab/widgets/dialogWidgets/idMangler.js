@@ -24,7 +24,7 @@
 
 /*global define, document, dojo, dijit */
 
-define("webodf/editor/widgets/dialogWidgets/idMangler", ["dojo", "dijit"], function (dojo, dijit) {
+webodfModule.define("webodf/editor/widgets/dialogWidgets/idMangler", ["dojo", "dijit"], function (dojo, dijit) {
     "use strict";
     var instanceCount = 0;
 

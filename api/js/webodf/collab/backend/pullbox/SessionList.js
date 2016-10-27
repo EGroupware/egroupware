@@ -24,7 +24,7 @@
 
 /*global define, ops, runtime */
 
-define("webodf/editor/backend/pullbox/SessionList", [], function () {
+webodfModule.define("webodf/editor/backend/pullbox/SessionList", [], function () {
     "use strict";
 
     return function PullBoxSessionList(server) {

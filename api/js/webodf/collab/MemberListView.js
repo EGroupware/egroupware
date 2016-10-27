@@ -24,7 +24,7 @@
 
 /*global define,runtime */
 
-define("webodf/editor/MemberListView",
+webodfModule.define("webodf/editor/MemberListView",
        ["webodf/editor/EditorSession"],
 
     function (EditorSession) {

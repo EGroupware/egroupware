@@ -24,7 +24,7 @@
 
 /*global define, document, window */
 
-define("webodf/editor/FullWindowZoomHelper", [], function () {
+webodfModule.define("webodf/editor/FullWindowZoomHelper", [], function () {
     "use strict";
 
     // fullscreen pinch-zoom adaption

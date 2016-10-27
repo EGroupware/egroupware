@@ -24,7 +24,7 @@
 
 /*global define, require, runtime, gui */
 
-define("webodf/editor/widgets/annotation", [
+webodfModule.define("webodf/editor/widgets/annotation", [
     "dijit/form/Button"],
 
     function (Button) {

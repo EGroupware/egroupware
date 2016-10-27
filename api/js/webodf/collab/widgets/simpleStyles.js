@@ -24,7 +24,7 @@
 
 /*global define, require, runtime, gui, ops */
 
-define("webodf/editor/widgets/simpleStyles", [
+webodfModule.define("webodf/editor/widgets/simpleStyles", [
     "webodf/editor/widgets/fontPicker",
     "dijit/form/ToggleButton",
     "dijit/form/NumberSpinner"],

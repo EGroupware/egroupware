@@ -524,7 +524,7 @@ function BrowserRuntime() {
   };
 }
 function NodeJSRuntime() {
-  var self = this, fs = require("fs"), pathmod = require("path"), currentDirectory = "", parser, domImplementation;
+  var self = this, fs = webodfModule.require("fs"), pathmod = webodfModule.require("path"), currentDirectory = "", parser, domImplementation;
   function bufferToUint8Array(buffer) {
     var l = buffer.length, i, a = new Uint8Array(new ArrayBuffer(l));
     for (i = 0;i < l;i += 1) {
@@ -672,7 +672,7 @@ function NodeJSRuntime() {
     clearTimeout(requestId);
   };
   function init() {
-    var DOMParser = require("xmldom").DOMParser;
+    var DOMParser = webodfModule.require("xmldom").DOMParser;
     parser = new DOMParser;
     domImplementation = self.parseXML("<a/>").implementation;
   }

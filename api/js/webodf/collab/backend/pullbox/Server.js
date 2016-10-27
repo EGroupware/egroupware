@@ -24,7 +24,7 @@
 
 /*global define, runtime, core, XMLHttpRequest*/
 
-define("webodf/editor/backend/pullbox/Server", [], function () {
+webodfModule.define("webodf/editor/backend/pullbox/Server", [], function () {
     "use strict";
 
     runtime.loadClass("core.Base64");

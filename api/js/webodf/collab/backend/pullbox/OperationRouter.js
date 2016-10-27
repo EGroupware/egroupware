@@ -24,7 +24,7 @@
 
 /*global define, runtime, core, ops*/
 
-define("webodf/editor/backend/pullbox/OperationRouter", [], function () {
+webodfModule.define("webodf/editor/backend/pullbox/OperationRouter", [], function () {
     "use strict";
 
     // TODO: these eventid strings should be defined at OperationRouter interface

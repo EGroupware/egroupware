@@ -24,7 +24,7 @@
 
 /*global define, require, runtime, ops */
 
-define("webodf/editor/widgets/paragraphStyles", [
+webodfModule.define("webodf/editor/widgets/paragraphStyles", [
     "dijit/form/Select",
     "dojox/html/entities",
     "webodf/editor/EditorSession"],

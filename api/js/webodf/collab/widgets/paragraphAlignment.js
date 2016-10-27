@@ -24,7 +24,7 @@
 
 /*global define, require, ops, gui, runtime */
 
-define("webodf/editor/widgets/paragraphAlignment", [
+webodfModule.define("webodf/editor/widgets/paragraphAlignment", [
     "dijit/form/ToggleButton",
     "dijit/form/Button",
     "webodf/editor/EditorSession"],

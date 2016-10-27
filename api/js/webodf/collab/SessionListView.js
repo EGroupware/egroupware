@@ -24,7 +24,7 @@
 
 /*global Node, define, runtime */
 
-define("webodf/editor/SessionListView", [], function () {
+webodfModule.define("webodf/editor/SessionListView", [], function () {
     "use strict";
 
     return function SessionListView(sessionList, sessionListDiv, cb) {

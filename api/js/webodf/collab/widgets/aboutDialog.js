@@ -24,7 +24,7 @@
 
 /*global define, dojo, runtime, webodf */
 
-define("webodf/editor/widgets/aboutDialog", ["dijit/Dialog"], function (Dialog) {
+webodfModule.define("webodf/editor/widgets/aboutDialog", ["dijit/Dialog"], function (Dialog) {
     "use strict";
 
     var editorBase = dojo.config && dojo.config.paths && dojo.config.paths["webodf/editor"],

@@ -60,7 +60,7 @@ window.Wodo = window.Wodo || (function () {
      * @return {undefined}
      */
     function initCollabTextEditor() {
-        require([
+        webodfModule.require([
             "dijit/layout/BorderContainer",
             "dijit/layout/ContentPane",
             "webodf/editor/FullWindowZoomHelper",

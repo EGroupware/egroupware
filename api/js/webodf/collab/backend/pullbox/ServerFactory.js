@@ -24,7 +24,7 @@
 
 /*global define, document, require, runtime, ops */
 
-define("webodf/editor/backend/pullbox/ServerFactory", [
+webodfModule.define("webodf/editor/backend/pullbox/ServerFactory", [
     "webodf/editor/backend/pullbox/Server",
     "webodf/editor/backend/pullbox/SessionBackend",
     "webodf/editor/backend/pullbox/SessionList"],

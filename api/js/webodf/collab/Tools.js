@@ -24,7 +24,7 @@
 
 /*global define, document, dijit, dojo, runtime, ops*/
 
-define("webodf/editor/Tools", [
+webodfModule.define("webodf/editor/Tools", [
     "dojo/ready",
     "dijit/MenuItem",
     "dijit/DropDownMenu",

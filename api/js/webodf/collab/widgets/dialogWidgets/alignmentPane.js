@@ -24,7 +24,7 @@
 
 /*global runtime,core,define,require,dijit */
 
-define("webodf/editor/widgets/dialogWidgets/alignmentPane", [
+webodfModule.define("webodf/editor/widgets/dialogWidgets/alignmentPane", [
     "webodf/editor/widgets/dialogWidgets/idMangler"],
 function (IdMangler) {
     "use strict";
@@ -85,7 +85,7 @@ function (IdMangler) {
         };
 
         function init(cb) {
-            require([
+            webodfModule.require([
                 "dojo",
                 "dojo/ready",
                 "dijit/layout/ContentPane"],

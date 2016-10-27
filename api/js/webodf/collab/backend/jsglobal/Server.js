@@ -24,7 +24,7 @@
 
 /*global define, window, runtime, core*/
 
-define("webodf/editor/backend/jsglobal/Server", [], function () {
+webodfModule.define("webodf/editor/backend/jsglobal/Server", [], function () {
     "use strict";
 
     /**

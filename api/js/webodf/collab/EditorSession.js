@@ -24,7 +24,7 @@
 
 /*global runtime, define, document, core, odf, gui, ops*/
 
-define("webodf/editor/EditorSession", [
+webodfModule.define("webodf/editor/EditorSession", [
     "dojo/text!resources/fonts/fonts.css"
 ], function (fontsCSS) { // fontsCSS is retrieved as a string, using dojo's text retrieval AMD plugin
     "use strict";

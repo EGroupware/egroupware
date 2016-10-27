@@ -22,7 +22,7 @@
  * @source: https://github.com/kogmbh/WebODF/
  */
 /*global define,require,document */
-define("webodf/editor/widgets/fontPicker", [
+webodfModule.define("webodf/editor/widgets/fontPicker", [
     "dijit/form/Select",
     "dojox/html/entities"],
 

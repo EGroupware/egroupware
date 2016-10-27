@@ -24,7 +24,7 @@
 
 /*global define, require */
 
-define("webodf/editor/widgets/toolbarWidgets/currentStyle",
+webodfModule.define("webodf/editor/widgets/toolbarWidgets/currentStyle",
        ["webodf/editor/EditorSession"],
 
     function (EditorSession) {
@@ -51,7 +51,7 @@ define("webodf/editor/widgets/toolbarWidgets/currentStyle",
             }
 
             function makeWidget(callback) {
-                require(["webodf/editor/widgets/paragraphStyles"], function (ParagraphStyles) {
+                webodfModule.require(["webodf/editor/widgets/paragraphStyles"], function (ParagraphStyles) {
                     var p = new ParagraphStyles(function (pStyles) {
                         paragraphStyles = pStyles;
 

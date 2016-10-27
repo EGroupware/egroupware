@@ -24,7 +24,7 @@
 
 /*global define, runtime, XMLHttpRequest */
 
-define("webodf/editor/Translator", [], function () {
+webodfModule.define("webodf/editor/Translator", [], function () {
     "use strict";
 
     return function Translator(translationsPath, locale, callback) {

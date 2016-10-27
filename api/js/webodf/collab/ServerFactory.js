@@ -1,4 +1,4 @@
-define("egwCollab/ServerFactory", [
+webodfModule.define("egwCollab/ServerFactory", [
     "webodf/editor/backend/pullbox/Server",
     "webodf/editor/backend/pullbox/SessionBackend",
     "webodf/editor/backend/pullbox/SessionList"],

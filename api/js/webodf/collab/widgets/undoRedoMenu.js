@@ -24,7 +24,7 @@
 
 /*global define, require, runtime*/
 
-define("webodf/editor/widgets/undoRedoMenu",
+webodfModule.define("webodf/editor/widgets/undoRedoMenu",
     ["webodf/editor/EditorSession", "dijit/form/Button"],
 
     function (EditorSession, Button) {

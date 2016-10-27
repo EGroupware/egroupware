@@ -24,7 +24,7 @@
 
 /*global define, require, document, odf, runtime, core, gui */
 
-define("webodf/editor/widgets/editHyperlinks", [
+webodfModule.define("webodf/editor/widgets/editHyperlinks", [
     "webodf/editor/EditorSession",
     "webodf/editor/widgets/dialogWidgets/editHyperlinkPane",
     "dijit/form/Button",

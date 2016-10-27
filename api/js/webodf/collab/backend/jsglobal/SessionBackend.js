@@ -25,7 +25,7 @@
 /*global define, ops*/
 
 
-define("webodf/editor/backend/jsglobal/SessionBackend", [
+webodfModule.define("webodf/editor/backend/jsglobal/SessionBackend", [
     "webodf/editor/backend/jsglobal/OperationRouter"],
     function (JsGlobalOperationRouter) {
         "use strict";

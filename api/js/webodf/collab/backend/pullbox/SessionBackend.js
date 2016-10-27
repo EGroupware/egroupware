@@ -25,7 +25,7 @@
 /*global define, ops*/
 
 
-define("webodf/editor/backend/pullbox/SessionBackend", [
+webodfModule.define("webodf/editor/backend/pullbox/SessionBackend", [
     "webodf/editor/backend/pullbox/OperationRouter"],
     function (PullBoxOperationRouter) {
         "use strict";

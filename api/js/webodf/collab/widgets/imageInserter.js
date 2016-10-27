@@ -24,7 +24,7 @@
 
 /*global define, require, document, Image, FileReader, window, runtime, ops, gui */
 
-define("webodf/editor/widgets/imageInserter", [
+webodfModule.define("webodf/editor/widgets/imageInserter", [
     "dijit/form/Button",
     "webodf/editor/EditorSession"],
 

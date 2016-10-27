@@ -167,7 +167,7 @@ window.Wodo = window.Wodo || (function () {
      * @return {undefined}
      */
     function initTextEditor() {
-        require([
+        webodfModule.require([
             "dijit/layout/BorderContainer",
             "dijit/layout/ContentPane",
             "webodf/editor/FullWindowZoomHelper",

@@ -24,7 +24,7 @@
 
 /*global define, require, dojo, dijit, runtime */
 
-define("webodf/editor/widgets/paragraphStylesDialog", [
+webodfModule.define("webodf/editor/widgets/paragraphStylesDialog", [
     "webodf/editor/widgets/dialogWidgets/idMangler"],
 function (IdMangler) {
     "use strict";
@@ -36,7 +36,7 @@ function (IdMangler) {
             stylePicker, alignmentPane, fontEffectsPane;
 
         function makeWidget(callback) {
-            require([
+            webodfModule.require([
                 "dijit/Dialog",
                 "dijit/TooltipDialog",
                 "dijit/popup",
@@ -272,7 +272,7 @@ function (IdMangler) {
                 dialog.domNode.appendChild(actionBar);
 
 
-                require([
+                webodfModule.require([
                     "webodf/editor/widgets/paragraphStyles",
                     "webodf/editor/widgets/dialogWidgets/alignmentPane",
                     "webodf/editor/widgets/dialogWidgets/fontEffectsPane"

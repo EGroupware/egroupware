@@ -24,7 +24,7 @@
 
 /*global runtime,define,require,document,dijit */
 
-define("webodf/editor/widgets/dialogWidgets/fontEffectsPane", [
+webodfModule.define("webodf/editor/widgets/dialogWidgets/fontEffectsPane", [
     "webodf/editor/widgets/dialogWidgets/idMangler"],
 function (IdMangler) {
     "use strict";
@@ -108,7 +108,7 @@ function (IdMangler) {
 
         /*jslint unparam: true*/
         function init(cb) {
-            require([
+            webodfModule.require([
                 "dojo",
                 "dojo/ready",
                 "dijit/layout/ContentPane",

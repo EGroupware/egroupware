@@ -514,7 +514,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			});
 		};
 
-		require(["egwCollab/ServerFactory"], function (ServerFactory) {
+		webodfModule.require(["egwCollab/ServerFactory"], function (ServerFactory) {
 			serverFactory = new ServerFactory();
 			server = serverFactory.createServer(serverParams);
 			server.connect(8000, function (state) {

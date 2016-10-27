@@ -3,9 +3,9 @@
 //
 //	$ node compile.js
 
-var fs = require('fs'),		// file system access
-	path = require('path'),	// get directory from file name
-	less = require('../../../util/less');	// less processor
+var fs = webodfModule.require('fs'),		// file system access
+	path = webodfModule.require('path'),	// get directory from file name
+	less = webodfModule.require('../../../util/less');	// less processor
 
 var options = {
 	compress: false,
