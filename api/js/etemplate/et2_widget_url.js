@@ -171,7 +171,7 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 						.replace("%u",this.egw().user('account_lid'))
 						.replace("%t",this.egw().user('account_phone'));
 					var popup = this.egw().config("call_popup");
-					value = function() { egw.open_link(link, 'phonecall', popup); };
+					value = function() { egw.open_link(link, '_phonecall', popup); };
 				}
 				else {
 					// Can't make a good handler
