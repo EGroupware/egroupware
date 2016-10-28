@@ -32,7 +32,7 @@ all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
 allow external images	mail	de	Erlaube Bilder von externen Bildquellen
 allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML-E-Mails
-allow users to create further identities	mail	de	Anwender dürfen weitere Identitäten hinzufügen
+allow users to create further identities	mail	de	Anwender dürfen weitere Identitäten anlegen
 allways a new window	mail	de	immer in einem neuen Fenster
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
 an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffskontrollrechte vom Konto %1 zu entfernen!
@@ -102,14 +102,9 @@ deleted!	mail	de	gelöscht!
 deleting %1 folders in progress ...	mail	de	%1 Ordner in Bearbeitung zum Löschen
 deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
-<<<<<<< Updated upstream
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
-=======
 details	mail	de	Mit Kurzvorschau
-directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden
-disable	mail	de	deaktivieren
->>>>>>> Stashed changes
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
 disable use of flowed lines in plain text mails (rfc3676)	mail	de	Variablen Zeilenumbruch in text Mails (RFC3676) abschalten
 disabled!	mail	de	deaktiviert

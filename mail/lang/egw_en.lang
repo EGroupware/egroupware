@@ -173,6 +173,7 @@ error:could not save the acl! because some names are empty!	mail	en	Error:Could 
 esync will fail without a working email configuration!	mail	en	eSync will FAIL without a working eMail configuration!
 event details follow	mail	en	Event Details follow
 everyone	mail	en	Everyone
+examine namespace to retrieve folders in others and shared	mail	en Examine Namespace to retrieve Folders in OTHERS and SHARED
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra sent folders
 failed to delete %1	mail	en	Failed to delete %1
@@ -259,7 +260,7 @@ importance	mail	en	importance
 important	mail	en	important
 in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2, and PartID: %3
 inbox	mail	en	INBOX
-initialization of mail failed. Please use the Wizard to cope with the problem.	mail	en	Initialization of mail failed. Please use the Wizard to cope with the problem.
+initialization of mail failed. please use the wizard to cope with the problem.	mail	en	Initialization of mail failed. Please use the Wizard to cope with the problem.
 inline	mail	en	Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 job	mail	en	job
@@ -296,8 +297,8 @@ move	mail	en	Move
 move folder	mail	en	Move Folder
 move selected mails to archive	mail	en	Move selected mails to archive
 move selected to	mail	en	Move selected to
-move to archive	mail	en	Move to archive folder
 move to	mail	en	Move to
+move to archive	mail	en	Move to archive folder
 move to trash	mail	en	move to trash
 moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
 moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one Mailaccount to another is not supported
@@ -565,4 +566,3 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	en	You need to save the message as draft first before to be able to save it into VFS
 you will loose current message body, unless you save it to your clipboard!	mail	en	You will loose current message body, unless you save it to your clipboard!
 you've got new mail	mail	en	You've got new mail
-examine namespace to retrieve folders in others and shared	mail	en Examine Namespace to retrieve Folders in OTHERS and SHARED

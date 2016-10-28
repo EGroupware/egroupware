@@ -12,29 +12,31 @@
 			<rows>
 				<row>
 					<description for="ident_id" value="Identity"/>
-					<menulist>
-						<menupopup id="ident_id" no_lang="1" onchange="1"/>
-					</menulist>
-					<checkbox label="allow users to create further identities" id="acc_further_identities" class="emailadmin_no_user"/>
+					<select id="ident_id" no_lang="1" onchange="1"/>
+					<select id="acc_further_identities" class="emailadmin_no_user" onchange="1"/>
 				</row>
 				<row>
 					<description for="ident_name" value="Name"/>
-					<textbox id="ident_name" size="80" maxlength="128" span="all" blur="default your name and email"/>
+					<textbox id="ident_name" size="90" maxlength="128" span="all" blur="default your name and email"/>
 				</row>
 				<row>
 					<description for="ident_realname" value="Your name"/>
 					<hbox span="all">
-						<textbox id="ident_realname" size="80" maxlength="128"/>
+						<textbox id="ident_realname" size="90" maxlength="128"/>
 						<buttononly label="Placeholders" id="button[placeholders]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements&amp;nonavbar=1'),'_blank','dependent=yes,width=860,height=620,scrollbars=yes,status=yes'); return false;" options="dialog_help"/>
 					</hbox>
 				</row>
 				<row>
 					<description for="ident_org" value="Organisation"/>
-					<textbox id="ident_org" size="80" maxlength="128" span="all"/>
+					<textbox id="ident_org" size="90" maxlength="128" span="all"/>
 				</row>
-				<row>
+				<row disabled="@acc_further_identities=2">
 					<description for="ident_email" value="EMail address"/>
-					<url-email id="ident_email" options="80,128" span="all"/>
+					<url-email id="ident_email" size="90" maxlength="128" span="all"/>
+				</row>
+				<row disabled="!@acc_further_identities=2">
+					<description for="ident_email_alias" value="EMail address"/>
+					<select id="ident_email_alias" span="all" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<htmlarea expand_toolbar="false" height="125px" id="ident_signature" span="all" width="100%"/>

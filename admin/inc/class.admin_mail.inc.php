@@ -131,6 +131,17 @@ class admin_mail
 	);
 
 	/**
+	 * Options for further identities
+	 *
+	 * @var array
+	 */
+	public static $further_identities = array(
+		0 => 'Forbid users to create identities',
+		1 => 'Allow users to create further identities',
+		2 => 'Allow users to create identities for aliases',
+	);
+
+	/**
 	 * List of domains know to not support Sieve
 	 *
 	 * Used to switch Sieve off by default, thought users can allways try switching it on.
@@ -929,6 +940,11 @@ class admin_mail
 			unset($content['acc_smtp_auth_session']);
 			unset($content['notify_use_default']);
 		}
+		// copy ident_email_alias selectbox back to regular name
+		elseif (isset($content['ident_email_alias']))
+		{
+			$content['ident_email'] = $content['ident_email_alias'];
+		}
 		$edit_access = Mail\Account::check_access(Acl::EDIT, $content);
 
 		// disable notification save-default and use-default, if only one account or no edit-rights
@@ -1179,6 +1195,17 @@ class admin_mail
 		$sel_options['acc_imap_logintype'] = self::$login_types;
 		$sel_options['ident_id'] = $content['identities'];
 		$sel_options['acc_id'] = $content['accounts'];
+		$sel_options['acc_further_identities'] = self::$further_identities;
+
+		// if only aliases are allowed for futher identities, add them as options
+		if ($content['acc_further_identities'] == 2)
+		{
+			$sel_options['ident_email_alias'] = array_merge(
+				array('' => $content['mailLocalAddress'].' ('.lang('Default').')'),
+				array_combine($content['mailAlternateAddress'], $content['mailAlternateAddress']));
+			// copy ident_email to select-box ident_email_alias, as et2 requires unique ids
+			$content['ident_email_alias'] = $content['ident_email'];
+		}
 
 		// user is allowed to create or edit further identities
 		if ($edit_access || $content['acc_further_identities'])
@@ -1227,6 +1254,10 @@ class admin_mail
 		// disable aliases tab for default smtp class EGroupware\Api\Mail\Smtp
 		$readonlys['tabs']['admin.mailaccount.aliases'] = !$content['acc_smtp_type'] ||
 			$content['acc_smtp_type'] == 'EGroupware\\Api\\Mail\\Smtp';
+		if ($readonlys['tabs']['admin.mailaccount.aliases'])
+		{
+			unset($sel_options['acc_further_identities'][2]);	// can limit identities to aliases without aliases ;-)
+		}
 
 		// allow smtp class to disable certain features in alias tab
 		if ($content['acc_smtp_type'] && class_exists($content['acc_smtp_type']) &&

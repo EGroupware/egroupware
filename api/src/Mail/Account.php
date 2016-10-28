@@ -1045,7 +1045,7 @@ class Account implements \ArrayAccess
 	 */
 	protected static function db2data(array $data)
 	{
-		foreach(array('acc_sieve_enabled','acc_further_identities','acc_user_editable','acc_smtp_auth_session','acc_user_forward') as $name)
+		foreach(array('acc_sieve_enabled','acc_user_editable','acc_smtp_auth_session','acc_user_forward') as $name)
 		{
 			if (isset($data[$name]))
 			{

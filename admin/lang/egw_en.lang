@@ -100,6 +100,7 @@ all users	admin	en	All users
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
 allow remote administration from following install id's (comma separated)	admin	en	Allow remote administration from following install ID's, comma separated.
 allow users to change forwards	admin	en	Allow users to change forwards
+allow users to create identities for aliases	admin	en	Allow users to create identities for aliases
 alternate email address	admin	en	Alternate email address
 and logged in	admin	en	and logged in
 anonymous user	admin	en	Anonymous user
@@ -394,6 +395,7 @@ filtered by group	admin	en	Filtered by group
 folder acl	admin	en	Folder ACL
 for the times above	admin	en	For the times above
 for the times below (empty values count as '*', all empty = every minute)	admin	en	For the times below: empty values count as '*', all empty = every minute.
+forbid users to create identities	admin	en	Forbid users to create identities
 force selectbox	admin	en	Force select box
 force users to change their password regularily?(empty for no,number for after that number of days	admin	en	Set recurrent forced password change. Set a number of days. Empty = No
 forward also to	admin	en	Forward also to

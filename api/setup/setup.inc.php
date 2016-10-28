@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['api']['name']      = 'api';
 $setup_info['api']['title']     = 'EGroupware API';
-$setup_info['api']['version']   = '16.1.003';
+$setup_info['api']['version']   = '16.1.004';
 $setup_info['api']['versions']['current_header'] = '1.29';
 $setup_info['api']['enable']    = 3;
 $setup_info['api']['app_order'] = 1;
@@ -44,12 +44,12 @@ $setup_info['api']['tables'][]  = 'egw_locks';
 $setup_info['api']['tables'][]  = 'egw_sqlfs_props';
 $setup_info['api']['tables'][]  = 'egw_customfields';
 $setup_info['api']['tables'][]  = 'egw_sharing';
-$setup_info['api']['tables'][]	= 'egw_mailaccounts';
-$setup_info['api']['tables'][]	= 'egw_ea_accounts';
-$setup_info['api']['tables'][]	= 'egw_ea_credentials';
-$setup_info['api']['tables'][]	= 'egw_ea_identities';
-$setup_info['api']['tables'][]	= 'egw_ea_valid';
-$setup_info['api']['tables'][]	= 'egw_ea_notifications';
+$setup_info['api']['tables'][]  = 'egw_mailaccounts';
+$setup_info['api']['tables'][]  = 'egw_ea_accounts';
+$setup_info['api']['tables'][]  = 'egw_ea_credentials';
+$setup_info['api']['tables'][]  = 'egw_ea_identities';
+$setup_info['api']['tables'][]  = 'egw_ea_valid';
+$setup_info['api']['tables'][]  = 'egw_ea_notifications';
 
 // hooks used by vfs_home_hooks to manage user- and group-directories for the new stream based VFS
 $setup_info['api']['hooks']['addaccount']     = array('EGroupware\\Api\\Vfs\\Hooks::addAccount', 'EGroupware\\Api\\Mail\\Hooks::addaccount');
@@ -128,3 +128,4 @@ $setup_info['groupdav']['author'] = $setup_info['groupdav']['maintainer'] = arra
 $setup_info['groupdav']['license'] = 'GPL';
 $setup_info['groupdav']['hooks']['preferences']	= 'EGroupware\\Api\\CalDAV\\Hooks::menus';
 $setup_info['groupdav']['hooks']['settings']	= 'EGroupware\\Api\\CalDAV\\Hooks::settings';
+
