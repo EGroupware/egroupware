@@ -142,7 +142,7 @@
 
                 input {
                     .Complete_Button_input;
-                    width: 250px;
+                    width: ~"calc(250px - 8px)";
                 }
                 input:hover{
                     .Complete_Button_input_hover;
@@ -157,7 +157,7 @@
                     // Hintergrund in EGW Farbe
                     .color_100_gray;
                     .fontsize_xxl;
-
+					width: 250px;
                     &:hover{.Complete_Button_select_hover; background-color: @color_positive_action !important;}
                     &:focus {.Complete_Button_input_focus;}
                 }
