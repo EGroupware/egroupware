@@ -148,6 +148,7 @@
   }
   .et2_button_icon {
     height: 16px;
+    background-color: transparent;
   }
   /* give the image a button lock and feel*/
   img.et2_button_icon[src*="svg"] {
@@ -1219,7 +1220,7 @@ option:checked {
   border-radius: 2px;
 }
 .ui-icon-close:hover {
-  background-color: #B4B4B4;
+  background-color: transparent;
 }
 .ui-icon-close:active {
   background-color: #fecc44 !important;
