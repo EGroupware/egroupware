@@ -72,6 +72,10 @@
 #calendar-sidebox_cat_id ~ * {
 	vertical-align: top;
 	display: inline-block;
+	background-color: transparent;
+    background-image: url(../../../vendor/bower-asset/jquery-ui/themes/redmond/images/ui-icons_469bdd_256x240.png);
+    border: none;
+    box-shadow: none;
 }
 #calendar-sidebox_buttons tbody {
 	width: 100%;
