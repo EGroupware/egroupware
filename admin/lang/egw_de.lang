@@ -100,6 +100,7 @@ all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
 allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Install IDs
 allow users to change forwards	admin	de	Anwender dürfen Weiterleitung bearbeiten
+allow users to create identities for aliases	admin	de	Anwender dürfen Identitäten für Aliase anlegen
 alternate email address	admin	de	zusätzliche E-Mail-Adressen
 and logged in	admin	de	und eingeloggt
 anonymous user	admin	de	Anonymer Benutzer
@@ -394,6 +395,7 @@ filtered by group	admin	de	Suche nach Gruppenprofilen
 folder acl	admin	de	Zugriffsrechte
 for the times above	admin	de	für die oben angegebenen Zeiten
 for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)
+forbid users to create identities	admin	de	Anwender dürfen keine Identitäten anlegen
 force selectbox	admin	de	Auswahl erzwingen
 force users to change their password regularily?(empty for no,number for after that number of days	admin	de	Erzwinge das ändern von Passwörtern durch den Benutzer nach X Tagen. (leer für nein, eine positive Zahl für alle X Tage)
 forward also to	admin	de	zusätzlich weiterleiten

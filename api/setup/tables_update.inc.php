@@ -117,3 +117,25 @@ function api_upgrade16_1_002()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.003';
 }
+
+/**
+ * Change egw_ea_accounts.acc_further_identities from boolean to int(1)
+ *
+ * @return type
+ */
+function api_upgrade16_1_003()
+{
+	$GLOBALS['egw_setup']->oProc->RenameColumn('egw_ea_accounts', 'acc_further_identities', 'further_bool');
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_further_identities',array(
+		'type' => 'int',
+		'precision' => '1',
+		'nullable' => False,
+		'default' => '1',
+		'comment' => '0=no, 1=yes, 2=only matching aliases'
+	));
+	$GLOBALS['egw_setup']->oProc->query('UPDATE egw_ea_accounts SET acc_further_identities=0 WHERE NOT further_bool', __LINE__, __FILE__);
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_ea_accounts',
+		$GLOBALS['egw_setup']->db->get_table_definitions('api', 'egw_ea_accounts'), 'further_bool');
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.004';
+}

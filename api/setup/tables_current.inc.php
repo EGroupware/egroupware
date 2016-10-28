@@ -440,7 +440,6 @@ $phpgw_baseline = array(
 			'acc_imap_type' => array('type' => 'ascii','precision' => '32','default' => 'emailadmin_imap','comment' => 'imap class to use'),
 			'acc_imap_logintype' => array('type' => 'ascii','precision' => '20','comment' => 'standard, vmailmgr, admin, uidNumber'),
 			'acc_domain' => array('type' => 'varchar','precision' => '100','comment' => 'domain name'),
-			'acc_further_identities' => array('type' => 'bool','nullable' => False,'default' => '1','comment' => '0=no, 1=yes'),
 			'acc_user_editable' => array('type' => 'bool','nullable' => False,'default' => '1','comment' => '0=no, 1=yes'),
 			'acc_sieve_ssl' => array('type' => 'int','precision' => '1','default' => '1','comment' => '0=none, 1=starttls, 2=tls, 3=ssl, &8=validate certificate'),
 			'acc_modified' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
@@ -449,7 +448,8 @@ $phpgw_baseline = array(
 			'acc_folder_junk' => array('type' => 'varchar','precision' => '128','comment' => 'junk folder'),
 			'acc_imap_default_quota' => array('type' => 'int','precision' => '4','comment' => 'default quota, if no user specific one set'),
 			'acc_imap_timeout' => array('type' => 'int','precision' => '2','comment' => 'timeout for imap connection'),
-			'acc_user_forward' => array('type' => 'bool','default' => '0','comment' => 'allow user to define forwards')
+			'acc_user_forward' => array('type' => 'bool','default' => '0','comment' => 'allow user to define forwards'),
+			'acc_further_identities' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '1','comment' => '0=no, 1=yes, 2=only matching aliases')
 		),
 		'pk' => array('acc_id'),
 		'fk' => array(),
@@ -508,5 +508,5 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array(array('account_id','acc_id')),
 		'uc' => array()
-	),
+	)
 );
