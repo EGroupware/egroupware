@@ -1231,12 +1231,12 @@ class admin_mail
 				{
 					$identity = Mail\Account::read_identity($content['ident_id'], false, $content['called_for']);
 					unset($identity['account_id']);
-					$content = array_merge($content, $identity);
+					$content = array_merge($content, $identity, array('ident_email_alias' => $identity['ident_email']));
 				}
 				else
 				{
 					$content['ident_name'] = $content['ident_realname'] = $content['ident_email'] =
-						$content['ident_org'] = $content['ident_signature'] = '';
+						$content['ident_email_alias'] = $content['ident_org'] = $content['ident_signature'] = '';
 				}
 				if (empty($msg) && $edit_access && $content['ident_id'] && $content['ident_id'] != $content['std_ident_id'])
 				{
