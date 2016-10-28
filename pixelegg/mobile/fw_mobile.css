@@ -1817,7 +1817,7 @@ body {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  width: 250px;
+  width: calc(250px - 8px);
 }
 #loginMainDiv div#centerBox form table.divLoginbox input:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -1837,6 +1837,7 @@ body {
   background-color: #ffc200;
   color: #000000;
   font-size: 20px;
+  width: 250px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="submit"]:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
@@ -6978,11 +6979,15 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   div#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
     font-size: large;
+    width: 100%;
   }
   div#loginMainDiv div#centerBox form table.divLoginbox input,
   div#loginMainDiv div#centerBox form table.divLoginbox select {
-    width: 100%;
+    width: calc(100% - 14px);
     height: 50px;
+  }
+  div#loginMainDiv div#centerBox form table.divLoginbox select {
+    width: 100%;
   }
   div#loginMainDiv div#centerBox form table.divLoginbox td {
     font-size: large;
@@ -7012,11 +7017,15 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   body div#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
     font-size: large;
+    width: 100%;
   }
   body div#loginMainDiv div#centerBox form table.divLoginbox input,
   body div#loginMainDiv div#centerBox form table.divLoginbox select {
-    width: 100%;
+    width: calc(100% - 10px);
     height: 50px;
+  }
+  body div#loginMainDiv div#centerBox form table.divLoginbox select {
+    width: 100%;
   }
   body div#loginMainDiv div#centerBox form table.divLoginbox td {
     font-size: large;
