@@ -142,7 +142,7 @@ td.infologTimestamp {
 }
 button#infolog-edit_timestamp {
   position: absolute;
-  right: -35px;
+  right: -25px;
   top: 3px;
 }
 div#infolog-edit_infolog-edit-description {
