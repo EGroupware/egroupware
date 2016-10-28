@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!--
+Egroupware
+@license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+@package calendar
+@subpackage
+@link http://www.egroupware.org
+@author Hadi Nategh <hn-AT-egroupware.org>
+@version $Id$
+-->
+<overlay>
+	<template id="calendar.holiday_report" template="" lang="" group="0" version="16.2">
+		<hbox class="dialogHeader" height="28">
+			<description value="Holiday Report"/>
+		</hbox>
+		<grid width="100%" class="holiday_report_cats">
+			<columns>
+				<column width="10%"/>
+				<column width="90%"/>
+			</columns>
+			<rows>
+
+				<row>
+					<description value="Categories"/>
+					<grid id="grid" width="100%">
+						<columns>
+							<column width="40%"/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Category"/>
+								<description align="center" value="User"/>
+								<description align="center" value="Weekend"/>
+								<description align="center" value="Holidays"/>
+								<description align="center" value="Min days as week"/>
+							</row>
+							<row class="row">
+								<taglist-cat id="${row}[cat_id]" readonly="true" width="500" class="select-cat"/>
+								<checkbox align="center" id="${row}[user]"/>
+								<checkbox align="center" id="${row}[weekend]"/>
+								<checkbox align="center" id="${row}[holidays]"/>
+								<number type="integer" align="center" id="${row}[min_days]"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+		<hbox class="dialogFooterToolbar">
+			<description value="Range"/>
+			<date id="start" label="Start"/>
+			<date id="end" label="End"/>
+			<button id="report" label="Report"/>
+		</hbox>
+	</template>
+</overlay>

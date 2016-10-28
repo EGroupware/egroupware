@@ -524,6 +524,7 @@ class calendar_ui
 			);
 			$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');
 		}
+		display_sidebox('calendar', lang('Utilities'), array('Holiday report' =>  Egw::link('/index.php','menuaction=calendar.calendar_holiday_report.index')));
 	}
 
 	/**
