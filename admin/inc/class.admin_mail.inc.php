@@ -1220,7 +1220,7 @@ class admin_mail
 					'button[save]' => false, 'button[apply]' => false,
 					'button[placeholders]' => false,
 					'ident_name' => false,
-					'ident_realname' => false, 'ident_email' => false,
+					'ident_realname' => false, 'ident_email' => false, 'ident_email_alias' => false,
 					'ident_org' => false, 'ident_signature' => false,
 				);
 			}
