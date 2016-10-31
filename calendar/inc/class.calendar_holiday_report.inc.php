@@ -26,11 +26,11 @@ use EGroupware\Api\Etemplate;
  * days/ or weeks.
  *
  */
-class calendar_holiday_report {
+class calendar_holiday_report extends calendar_ui{
 
 	/**
 	 * Public functions allowed to get called
-	 * 
+	 *
 	 * @var type
 	 */
 	var $public_functions = array(
@@ -42,8 +42,8 @@ class calendar_holiday_report {
 	 */
 	function __construct()
 	{
-		$this->bo = new calendar_bo();
-		$this->tmpl = new Etemplate('calendar.holiday_report');
+		parent::__construct(true);	// call the parent's constructor
+		$this->tmpl = new Api\Etemplate('calendar.holiday_report');
 	}
 
 	/**
@@ -53,9 +53,9 @@ class calendar_holiday_report {
 	 */
 	public function index ($content = null)
 	{
+		$cat = new Api\Categories($GLOBALS['egw_info']['user']['account_id'],'calendar');
 		if (is_null($content))
 		{
-			$cat = new Api\Categories($GLOBALS['egw_info']['user']['account_id'],'calendar');
 			$cats = $cat->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', true, 0, true);
 
 			foreach ($cats as &$value)
@@ -65,15 +65,80 @@ class calendar_holiday_report {
 					'user' => '',
 					'weekend' => '',
 					'holidays' => '',
-					'min_days' => 4
+					'min_days' => 4,
+					'enable' => true
 				);
 			}
 		}
 		else
 		{
+			list($button) = @each($content['button']);
+			$categories = array ();
+			$users_map = $GLOBALS['egw']->accounts->search(array('type'=>'accounts', active=>true));
+			$users = array_keys($users_map);
+			$result = array();
 
+			// report button pressed
+			if (!empty($button))
+			{
+				Api\Preferences::change_preference($content, $name, $value);
+				foreach ($content['grid'] as $row)
+				{
+					if ($row['enable'])
+					{
+						$categories [] = $row['cat_id'];
+					}
+				}
+
+				$params = array(
+					'startdate' => $content['start'],
+					'enddate' => $content['end'],
+					'users' => $users,
+					'cat_id' => $categories
+				);
+				$events = $this->bo->search($params);
+
+				// iterate over found events
+				foreach($events as $event)
+				{
+					$cats = explode(',',$event['category']);
+					if (is_array($cats))
+					{
+						foreach($cats as $val)
+						{
+							if (in_array($val, $categories)) $cat_index = (int)$val;
+						}
+					}
+					$result [$event['owner']]['user_name'] = $users_map[$event['owner']]['account_lid'];
+
+					// number of days of event (in sec)
+					$days = $event['end'] - $event['start'];
+
+					if (isset($result[$event['owner']][$cat->id2name($cat_index)]))
+					{
+						$result[$event['owner']][$cat->id2name($cat_index)] =
+								$result[$event['owner']][$cat->id2name($cat_index)] + $days;
+					}
+					else
+					{
+						$result[$event['owner']][$cat->id2name($cat_index)] = $days;
+					}
+
+				}
+
+				// calculates total days for each user based on cats
+				foreach ($result as &$record)
+				{
+					$total = 0;
+					foreach($record as $c => $value)
+					{
+						if ($c != 'user_name') $total += (int)$value;
+					}
+					$record ['total_days'] = $total;
+				}
+			}
 		}
-
-		$this->tmpl->exec('calendar.holiday_report', $content);
+		$preserv = $content;
+		$this->tmpl->exec('calendar.calendar_holiday_report.index', $content, array(), array(), $preserv, 2);
 	}
 }

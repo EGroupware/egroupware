@@ -30,9 +30,11 @@ Egroupware
 							<column/>
 							<column/>
 							<column/>
+							<column/>
 						</columns>
 						<rows>
 							<row class="th">
+								<description value="Select"/>
 								<description value="Category"/>
 								<description align="center" value="User"/>
 								<description align="center" value="Weekend"/>
@@ -40,8 +42,9 @@ Egroupware
 								<description align="center" value="Min days as week"/>
 							</row>
 							<row class="row">
+								<checkbox id="${row}[enable]" onchange="app.calendar.holiday_report_enable"/>
 								<taglist-cat id="${row}[cat_id]" readonly="true" width="500" class="select-cat"/>
-								<checkbox align="center" id="${row}[user]"/>
+								<checkbox align="center" id="${row}[user]" disable="false"/>
 								<checkbox align="center" id="${row}[weekend]"/>
 								<checkbox align="center" id="${row}[holidays]"/>
 								<number type="integer" align="center" id="${row}[min_days]"/>
@@ -52,10 +55,10 @@ Egroupware
 			</rows>
 		</grid>
 		<hbox class="dialogFooterToolbar">
-			<description value="Range"/>
+			<description value="Date range"/>
 			<date id="start" label="Start"/>
 			<date id="end" label="End"/>
-			<button id="report" label="Report"/>
+			<button id="button[report]" label="Report" background_image="1" image="template" onclick="app.calendar.holiday_report_send" />
 		</hbox>
 	</template>
 </overlay>

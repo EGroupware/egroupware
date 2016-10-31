@@ -247,6 +247,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					this.filter_change();
 				},this),0);
 				break;
+			case 'calendar.holiday_report':
+				this.holiday_report_init();
+				break;
 		}
 
 		// Record the templates for the views so we can switch between them
@@ -3736,6 +3739,49 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			d.setUTCDate(d.getUTCDate() + (7 * delta));
 			return d;
 		}
+	},
+
+	/**
+	 * Initialization function in order to set/unset
+	 * categories status.
+	 *
+	 */
+	holiday_report_init: function ()
+	{
+		var content = this.et2.getArrayMgr('content').data;
+		for (var i=0;i<content.grid.length;i++)
+		{
+			if (content.grid[i] != null) this.holiday_report_enable({name:i+'', checked:content.grid[i]['enable']});
+		}
+	},
+
+	/**
+	 * Set/unset selected category's row
+	 *
+	 * @param {type} _widget
+	 * @returns {undefined}
+	 */
+	holiday_report_enable: function (_widget)
+	{
+		var widgets = ['[user]','[weekend]','[holidays]','[min_days]'];
+		var row_id = _widget.name.match(/\d+/);
+		var w = {};
+		for (var i=0;i<widgets.length;i++)
+		{
+			w = this.et2.getWidgetById(row_id+widgets[i]);
+			if (w) w.set_readonly(!_widget.checked);
+		}
+	},
+	/**
+	 *
+	 * @param {type} _widget
+	 * @returns {undefined}
+	 */
+	holiday_report_send: function (_widget)
+	{
+		var content = this.et2.getArrayMgr('content').data;
+		egw.set_preference('calendar','holiday_report',JSON.stringify(content.grid));
+		this.et2._inst.submit(_widget);
 	}
 });}).call(this);
 
