@@ -136,7 +136,7 @@ class admin_ui
 			$actions['deny'] = array(
 				'caption'   => 'Deny access',
 				'enableId'  => '^/groups/-\\d+',
-				'url'       => 'menuaction=admin.uiaclmanager.list_apps&account_id=$id',
+				'url'       => 'menuaction=admin.admin_denyaccess.list_apps&account_id=$id',
 				'onExecute' => 'javaScript:app.admin.group',
 				'icon'      => 'cancel',
 				'group'     => 2,
