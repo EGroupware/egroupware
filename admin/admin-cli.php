@@ -409,7 +409,7 @@ function do_edit_mail($type, array $arg0s)
 				// check if user allready has an identity created for given aliases
 				foreach(Api\Mail\Account::identities($account, false, 'ident_email', $account_id) as $email)
 				{
-					if (($key = array_search($email, $args)))
+					if (($key = array_search($email, $args)) !== false)
 					{
 						unset($args[$key]);
 					}
