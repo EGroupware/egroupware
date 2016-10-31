@@ -444,10 +444,11 @@ function do_edit_mail($type, array $arg0s)
  * Set, add or remove from array depending on $mod[0][0] being '+', '-' or something else (set)
  *
  * @param array& $arr
- * @param array $mod eg. ["+some-alias@egroupware.org","other-alias@egroupware.org"] will add all given alias to $arr
+ * @param array& $mod eg. ["+some-alias@egroupware.org","other-alias@egroupware.org"] will add all given alias to $arr
+ *  on return optional +/- prefix has been removed
  * @return array
  */
-function array_modify(array &$arr, array $mod)
+function array_modify(array &$arr, array &$mod)
 {
 	switch($mod[0][0])
 	{
