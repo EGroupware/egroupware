@@ -339,6 +339,8 @@ class Account implements \ArrayAccess
 	 */
 	public function saveUserData($user, array $data)
 	{
+		$data += $this->params;	// in case only user-data has been specified
+
 		// store account-information of managed mail server
 		if ($user > 0 && $data['acc_smtp_type'] && $data['acc_smtp_type'] != __NAMESPACE__.'\\Smtp')
 		{
