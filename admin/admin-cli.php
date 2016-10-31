@@ -21,20 +21,20 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling admin-cli 
 {
 	die('<h1>admin-cli.php must NOT be called as web-page --> exiting !!!</h1>');
 }
-elseif ($_SERVER['argc'] > 1)
+elseif ($_SERVER['argc'] <= 1 || $_SERVER['argc'] == 2 && in_array($_SERVER['argv'][1], array('-h', '--help')))
+{
+	usage();
+}
+else
 {
 	$arguments = $_SERVER['argv'];
 	array_shift($arguments);
 	$action = array_shift($arguments);
 }
-else
-{
-	usage();
-}
 
 // allow to specify instance by using a username with appended @domain-name
 $arg0s = explode(',',@array_shift($arguments));
-@list($user,$domain) = explode('@',$arg0s[0]);
+@list($user,$domain) = explode('@',$arg0s[0].'@');
 load_egw($user,$arg0s[1],$domain);
 
 switch($action)
@@ -44,6 +44,11 @@ switch($action)
 
 	case '--add-user':	// like --edit-account, but always runs addaccount hook
 		return do_edit_user($arg0s,true);
+
+	case '--edit-alias':
+	case '--edit-forward':
+	case '--edit-quota':
+		return do_edit_mail(substr($action, 7), $arg0s);
 
 	case '--change-pw':
 		return do_change_pw($arg0s);
@@ -145,7 +150,7 @@ function run_command(admin_cmd $cmd)
 				$skip_checks = true;
 				break;
 
-			case '--dry-run':	// only run checks
+			case '--try-run':	// only run checks
 				$dry_run = true;
 				break;
 
@@ -166,7 +171,7 @@ function run_command(admin_cmd $cmd)
 	}
 	if ($dry_run && $skip_checks)
 	{
-		echo lang('You can NOT use --dry-run together with --skip-checks!')."\n\n";
+		echo lang('You can NOT use --try-run together with --skip-checks!')."\n\n";
 		usage('', 99);
 	}
 	//_debug_array($cmd);
@@ -311,10 +316,10 @@ function usage($action=null,$ret=0)
 {
 	unset($action);
 	$cmd = basename($_SERVER['argv'][0]);
-	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...'] [--remote {id|name}] [--skip-checks] [--dry-run]\n\n";
+	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...'] [--remote {id|name}] [--skip-checks] [--try-run]\n\n";
 
 	echo "\n\t--skip-checks\tdo NOT run checks\n";
-	echo "\t--dry-run\tonly run checks\n";
+	echo "\t--try-run\tonly run checks\n";
 
 	echo "\tAlternativly you can also use a setup user and password by prefixing it with 'root_', eg. 'root_admin' for setup user 'admin'.\n\n";
 
@@ -337,10 +342,101 @@ function usage($action=null,$ret=0)
 	echo "	Deletes ACL entries of not longer existing accounts (make a database backup before! --> setup-cli.php).\n";
 	echo "--admin-cmd-check-cats admin-account[@domain],admin-password\n";
 	echo "	Deletes categories of not longer existing accounts.\n";
+	echo "--edit-alias admin-account[@domain],admin-password,account[=acc_id],create-identity(yes,no/default),alias1,...\n";
+	echo "--edit-forward admin-account[@domain],admin-password,account[=acc_id],mode(forwardOnly),forward1,...\n";
+	echo "--edit-quota admin-account[@domain],admin-password,account[=acc_id],quota(mb)\n";
+	echo "  Edit mail account of EGroupware managed mail-server for a given user and optional acc_id (can't be scheduled or try-run)\n";
 	echo "--exit-codes admin-account[@domain],admin-password\n";
 	echo "	List all exit codes of the command line interface\n";
 
 	exit($ret);
+}
+
+/**
+ * Edit mail account of EGroupware managed mail-server
+ *
+ * @param string $type "alias", "forward", "quota"
+ * @param array $args admin-account[@domain],admin-password,account[=acc_id],...
+ *	- alias:   create-identity(yes,no/default),alias1,...aliasN
+ *	- forward: mode(forwardOnly),forward1,...forwardN
+ *	- quota:   quota(mb)
+ * @return int 0 on success
+ */
+function do_edit_mail($type, array $args)
+{
+	array_shift($args); // admin-account
+	array_shift($args);	// admin-pw
+	list($account, $acc_id) = explode('=', array_shift($args));
+	$account_id = is_numeric($account) ? (int)$account : $GLOBALS['egw']->accounts->name2id($account);
+	if (!$GLOBALS['egw']->accounts->exists($account_id) && !($account_id = $GLOBALS['egw']->accounts->name2id($account)))
+	{
+		echo "Unknown user-account '$account'!\n";
+		exit(1);
+	}
+	$found = 0;
+	foreach($acc_id ? array(Api\Mail\Account::read($acc_id, $account_id)) :
+		Api\Mail\Account::search($account_id, false) as $account)
+	{
+		if (!Api\Mail\Account::is_multiple($account)) continue;	// no need to waste time on personal accounts
+
+		try {
+			if (!($data = $account->getUserData($account_id)))
+			{
+				continue;	// not a managed mail-server
+			}
+			switch($type)
+			{
+				case 'alias':
+					$create_identity = strtolower(array_shift($args)) === 'yes';
+					$data['mailAlternateAddress'] = $args;
+					break;
+				case 'forward':
+					$data['deliveryMode'] = strtolower(array_shift($args)) === 'forwardonly' ? Api\Mail\Smtp::FORWARD_ONLY : '';
+					$data['mailForwardingAddress'] = $args;
+					break;
+				case 'quota':
+					$data['quotaLimit'] = int($args[0]);
+					break;
+			}
+			$account->saveUserData($account_id, $data);
+			echo "Data in mail-account (acc_id=$account->acc_id) updated.\n";
+			++$found;
+
+			// create identities for all aliases
+			if ($type == 'alias' && $create_identity && $args)
+			{
+				// check if user allready has an identity created for given aliases
+				foreach(Api\Mail\Account::identities($account, false, 'ident_email', $account_id) as $email)
+				{
+					if (($key = array_search($email, $args)))
+					{
+						unset($args[$key]);
+					}
+				}
+				// create not existing identities by copying standard identity plus alias as email
+				foreach($args as $email)
+				{
+					$identity = $account->params;
+					unset($identity['ident_id']);
+					unset($identity['ident_name']);
+					$identity['ident_email'] = $email;
+					$identity['account_id'] = $account_id;	// make this a personal identity for $account_id
+					Api\Mail\Account::save_identity($identity);
+				}
+				if ($args) echo "Identity(s) for ".implode(', ', $args)." created.\n";
+			}
+		}
+		catch(\Exception $e) {
+			_egw_log_exception($e);
+			echo $e->getMessage()."\n";
+		}
+	}
+	if (!$found)
+	{
+		echo "No mailserver managed by this EGroupware instance!\n";
+		exit(2);
+	}
+	exit(0);
 }
 
 /**
