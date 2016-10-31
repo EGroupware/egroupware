@@ -342,8 +342,8 @@ function usage($action=null,$ret=0)
 	echo "	Deletes ACL entries of not longer existing accounts (make a database backup before! --> setup-cli.php).\n";
 	echo "--admin-cmd-check-cats admin-account[@domain],admin-password\n";
 	echo "	Deletes categories of not longer existing accounts.\n";
-	echo "--edit-alias admin-account[@domain],admin-password,account[=acc_id],create-identity(yes,no/default),alias1,...\n";
-	echo "--edit-forward admin-account[@domain],admin-password,account[=acc_id],mode(forwardOnly),forward1,...\n";
+	echo "--edit-alias admin-account[@domain],admin-password,account[=acc_id],create-identity(yes,no/default),[+/-]alias1,...\n";
+	echo "--edit-forward admin-account[@domain],admin-password,account[=acc_id],mode(forwardOnly),[+/-]forward1,...\n";
 	echo "--edit-quota admin-account[@domain],admin-password,account[=acc_id],quota(mb)\n";
 	echo "  Edit mail account of EGroupware managed mail-server for a given user and optional acc_id (can't be scheduled or try-run)\n";
 	echo "--exit-codes admin-account[@domain],admin-password\n";
@@ -356,17 +356,17 @@ function usage($action=null,$ret=0)
  * Edit mail account of EGroupware managed mail-server
  *
  * @param string $type "alias", "forward", "quota"
- * @param array $args admin-account[@domain],admin-password,account[=acc_id],...
- *	- alias:   create-identity(yes,no/default),alias1,...aliasN
- *	- forward: mode(forwardOnly),forward1,...forwardN
+ * @param array $arg0s admin-account[@domain],admin-password,account[=acc_id],...
+ *	- alias:   create-identity(yes,no/default),[+/-]alias1,...aliasN
+ *	- forward: mode(forwardOnly),[+/-]forward1,...forwardN
  *	- quota:   quota(mb)
  * @return int 0 on success
  */
-function do_edit_mail($type, array $args)
+function do_edit_mail($type, array $arg0s)
 {
-	array_shift($args); // admin-account
-	array_shift($args);	// admin-pw
-	list($account, $acc_id) = explode('=', array_shift($args));
+	array_shift($arg0s); // admin-account
+	array_shift($arg0s);	// admin-pw
+	list($account, $acc_id) = explode('=', array_shift($arg0s));
 	$account_id = is_numeric($account) ? (int)$account : $GLOBALS['egw']->accounts->name2id($account);
 	if (!$GLOBALS['egw']->accounts->exists($account_id) && !($account_id = $GLOBALS['egw']->accounts->name2id($account)))
 	{
@@ -379,6 +379,7 @@ function do_edit_mail($type, array $args)
 	{
 		if (!Api\Mail\Account::is_multiple($account)) continue;	// no need to waste time on personal accounts
 
+		$args = $arg0s;
 		try {
 			if (!($data = $account->getUserData($account_id)))
 			{
@@ -388,11 +389,11 @@ function do_edit_mail($type, array $args)
 			{
 				case 'alias':
 					$create_identity = strtolower(array_shift($args)) === 'yes';
-					$data['mailAlternateAddress'] = $args;
+					array_modify($data['mailAlternateAddress'], $args);
 					break;
 				case 'forward':
 					$data['deliveryMode'] = strtolower(array_shift($args)) === 'forwardonly' ? Api\Mail\Smtp::FORWARD_ONLY : '';
-					$data['mailForwardingAddress'] = $args;
+					array_modify($data['mailForwardingAddress'], $args);
 					break;
 				case 'quota':
 					$data['quotaLimit'] = int($args[0]);
@@ -437,6 +438,31 @@ function do_edit_mail($type, array $args)
 		exit(2);
 	}
 	exit(0);
+}
+
+/**
+ * Set, add or remove from array depending on $mod[0][0] being '+', '-' or something else (set)
+ *
+ * @param array& $arr
+ * @param array $mod eg. ["+some-alias@egroupware.org","other-alias@egroupware.org"] will add all given alias to $arr
+ * @return array
+ */
+function array_modify(array &$arr, array $mod)
+{
+	switch($mod[0][0])
+	{
+		case '-':
+			$arr = array_unique(array_diff($arr, $mod));
+			break;
+
+		case '+';
+			$arr = array_unique(array_merge($arr, $mod));
+			break;
+
+		default:
+			$arr = array_unique($mod);
+	}
+	return $arr;
 }
 
 /**
