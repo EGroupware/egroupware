@@ -201,7 +201,16 @@ class Accounts
 		$group_index = array_search(strtolower(lang('Group')), array_map('strtolower', $query = explode(' ',$param['query'])));
 		if($group_index !== FALSE)
 		{
-			$param['type'] = 'groups';
+			// do not return any groups for account-selection == "none"
+			if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] === 'none' &&
+				!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+			{
+				$this->total = 0;
+				return array();
+			}
+			// only return own memberships for account-selection == "groupmembers"
+			$param['type'] = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] === 'groupmembers' &&
+				!isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'owngroups' : 'groups';
 			// Remove the 'group' from the query, but only one (eg: Group NoGroup -> NoGroup)
 			unset($query[$group_index]);
 			$param['query'] = implode(' ', $query);
