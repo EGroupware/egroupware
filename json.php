@@ -45,7 +45,7 @@ function login_redirect(&$anon_account)
 function ajax_exception_handler($e)
 {
 	// handle redirects without logging
-	if (is_a($e, 'egw_exception_redirect'))
+	if (is_a($e, 'EGroupware\\Api\\Exception\\Redirect'))
 	{
 		Egw::redirect($e->url, $e->app);
 	}
