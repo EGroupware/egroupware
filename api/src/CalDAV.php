@@ -2218,9 +2218,9 @@ class CalDAV extends HTTP_WebDAV_Server
 	 *
 	 * Does NOT return and get installed in constructor.
 	 *
-	 * @param \Exception $e
+	 * @param \Exception|\Error $e
 	 */
-	public static function exception_handler(\Exception $e)
+	public static function exception_handler($e)
 	{
 		// logging exception as regular egw_execption_hander does
 		$headline = null;
