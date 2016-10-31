@@ -452,10 +452,12 @@ function array_modify(array &$arr, array $mod)
 	switch($mod[0][0])
 	{
 		case '-':
+			$mod[0] = substr($mod[0], 1);
 			$arr = array_unique(array_diff($arr, $mod));
 			break;
 
 		case '+';
+			$mod[0] = substr($mod[0], 1);
 			$arr = array_unique(array_merge($arr, $mod));
 			break;
 
