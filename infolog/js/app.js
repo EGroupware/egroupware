@@ -524,7 +524,7 @@ app.classes.infolog = AppJS.extend(
 	 */
 	infolog_print_preview: function()
 	{
-		this.egw.message('Printing...');
+		this.egw.message(this.egw.lang('Printing...'));
 		this.egw.window.print();
 	},
 

@@ -358,6 +358,7 @@ prefix for sub-entries (default: re:)	infolog	de	Präfix für Untereinträge (Vo
 price	infolog	de	Preis
 pricelist	infolog	de	Preisliste
 primary link	infolog	de	Primäre Verknüpfung
+printing...	infolog	de	Drucke...
 priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
