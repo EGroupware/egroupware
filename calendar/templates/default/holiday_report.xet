@@ -58,7 +58,7 @@ Egroupware
 			<description value="Date range"/>
 			<date id="start" label="Start"/>
 			<date id="end" label="End"/>
-			<button id="button[report]" label="Report" background_image="1" image="template" onclick="app.calendar.holiday_report_send" />
+			<button id="button[report]" label="Report" background_image="1" image="template"/>
 		</hbox>
 	</template>
 </overlay>

@@ -57,7 +57,7 @@ class calendar_holiday_report extends calendar_ui{
 		if (is_null($content))
 		{
 			$cats = $cat->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', true, 0, true);
-
+			$cats_status = $GLOBALS['egw_info']['user']['preferences']['calendar']['holiday_report'];
 			foreach ($cats as &$value)
 			{
 				$content['grid'][] = array(
@@ -68,6 +68,10 @@ class calendar_holiday_report extends calendar_ui{
 					'min_days' => 4,
 					'enable' => true
 				);
+			}
+			if (is_array($cats_status))
+			{
+				$content['grid'] = array_replace_recursive($content['grid'], $cats_status);
 			}
 		}
 		else
@@ -81,7 +85,11 @@ class calendar_holiday_report extends calendar_ui{
 			// report button pressed
 			if (!empty($button))
 			{
-				Api\Preferences::change_preference($content, $name, $value);
+				// shift the grid content by one because of the reserved first row
+				// for the header.
+				array_shift($content['grid']);
+				Api\Framework::ajax_set_preference('calendar', 'holiday_report',$content['grid']);
+
 				foreach ($content['grid'] as $row)
 				{
 					if ($row['enable'])
@@ -138,6 +146,8 @@ class calendar_holiday_report extends calendar_ui{
 				}
 			}
 		}
+		// Add an extra row for the grid header
+		array_unshift($content['grid'],array(''=> ''));
 		$preserv = $content;
 		$this->tmpl->exec('calendar.calendar_holiday_report.index', $content, array(), array(), $preserv, 2);
 	}
