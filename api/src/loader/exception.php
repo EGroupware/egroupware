@@ -92,7 +92,7 @@ function egw_exception_handler($e)
 	// handle redirects without logging
 	if ($e instanceof Api\Exception\Redirect)
 	{
-		egw::redirect($e->url, $e->app);
+		Api\Egw::redirect($e->url, $e->app);
 	}
 	// logging all exceptions to the error_log (if not cli) and get headline
 	$headline = null;
