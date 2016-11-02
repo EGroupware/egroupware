@@ -596,7 +596,6 @@ class Backup
 				{
 					if ($def['type'] === 'bool') $bools[] = $col;
 				}
-				if ($table == 'egw_cal_dates') error_log(__METHOD__."() $table: bools=".array2string($bools).", schema[fd]=".array2string($this->schemas[$table]['fd']));
 
 				if (feof($f)) break;
 				continue;
