@@ -2352,7 +2352,13 @@ WHERE range_end IS NOT NULL", __LINE__, __FILE__, 0, -1, false, Api\Db::FETCH_AS
 	{
 		$event = Api\Db::strip_array_keys($event, 'cal_');
 		$event['recur_enddate'] = $event['range_end'];
-		$rrule = calendar_rrule::event2rrule($event, false);
+		try {
+			$rrule = calendar_rrule::event2rrule($event, false);
+		}
+		catch (\Exception $e) {
+			_egw_log_exception($e);
+			continue;
+		}
 		$rrule->rewind();
 		$enddate = $rrule->current();
 		do
