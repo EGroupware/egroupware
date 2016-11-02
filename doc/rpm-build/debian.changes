@@ -1,3 +1,24 @@
+egroupware-epl (16.1.20161102) hardy; urgency=low
+
+  * Admin/Mail: allow to add aliases, forwards and quota via admin-cli, optional create identities for aliases
+  * Admin/Mail: allow to limit users to only create identities for aliases
+  * Mail: show which email address has a wrong format when pasting multiple ones
+  * Mail: show validation error if local part (before @) of email-address contains non-ascii chars
+  * Mail/eSync: fix problem regarding send with bcc when using esync
+  * CardDAV/Addressbook/PostgreSQL: fix SQL error, remove MySQL only FROM_UNIXTIME with our db abstration version
+  * Admin: fix fatal error when using "Deny Access" from context menu on groups
+  * Addressbook/LDAP: fix error if egroupware-epl-compat (old API) not installed
+  * Filemanager: Implement copy_link action for filemanager contextmenu in order to be able to copy webdav url of a file/folder into clipboard
+  * Filemanager: break infinit recursion stalling eg. login by introducing max. sub-directory depth of 100
+  * Timesheet/ImportExport: fix PHP Fatal Error Call to undefined method EGroupware\Api\Session::appsession() when exporting
+  * All apps/History: fixed history tab shown empty in default (minimal) installation
+  * CKEditor: update to 4.5.11, loaded now as dependency via composer as egroupware/ckeditor
+  * Login Page: Fix some alignment issues in login page - thanks to Stefan Unverricht
+  * Registration: was not working from login page 
+  * All applications: Fix some icons glitches for default template - thanks to Stefan Unverricht.
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 02 Nov 2016 10:08:20 +0100
+
 egroupware-epl (16.1.20161006) hardy; urgency=low
 
   * eSync: merge z-push 2.3.2(beta1+13)
