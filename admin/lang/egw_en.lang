@@ -234,6 +234,7 @@ delete application	admin	en	Delete application
 delete category	admin	en	Delete category
 delete group	admin	en	Delete group
 delete identity	admin	en	Delete identity
+delete including sub-entries	admin	en	Delete including sub-entries
 delete peer server	admin	en	Delete peer server
 delete selected entries	admin	en	Delete selected entries
 delete the category	admin	en	Delete the category

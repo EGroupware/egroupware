@@ -29,6 +29,9 @@ class preferences_categories_ui extends admin_categories {
 		if (false) parent::__construct ();	// parent constructor explicitly not called!
 
 		Framework::includeCSS('/admin/templates/default/app.css');
+
+		// Load translations from admin, category stuff is there
+		\EGroupware\Api\Translation::add_app('admin');
 	}
 
 	public function get_rows(&$query, &$rows, &$readonlys)
