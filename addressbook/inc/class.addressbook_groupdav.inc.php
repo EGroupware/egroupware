@@ -292,7 +292,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				if ($sync_collection_report)
 				{
 					list(,$sync_token) = explode('>', $filter[0]);
-					$where[] = 'list_modified>FROM_UNIXTIME('.(int)$sync_token.')';
+					if ((int)$sync_token) $where[] = 'list_modified>'.$GLOBALS['egw']->db->from_unixtime((int)$sync_token);
 				}
 				if (isset($filter[self::$path_attr]))	// multiget report?
 				{
