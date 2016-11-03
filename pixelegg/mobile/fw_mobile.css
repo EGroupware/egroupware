@@ -1801,6 +1801,7 @@ body {
   cursor: pointer;
   margin: 5px 0em 5px 0px;
   padding-left: 5px;
+  width: 100%;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select:hover {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
