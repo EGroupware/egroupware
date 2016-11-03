@@ -78,6 +78,7 @@ assistent phone	addressbook	en	Assistent phone
 birthday	common	en	Birthday
 birthdays	common	en	Birthdays
 blank	addressbook	en	Blank
+browser location	addressbook	en	Browser location
 business	common	en	Business
 business address	addressbook	en	Business address
 business address line 2	addressbook	en	Business address line 2
@@ -170,6 +171,7 @@ default document to insert contacts	addressbook	en	Default document to insert co
 default file as format	addressbook	en	Default file as format
 default filter	addressbook	en	Default filter
 default format for fileas, eg. for new entries.	addressbook	en	Default format for fileas, eg. for new entries.
+default geolocation source address	addressbook	en	Default GeoLocation source address
 default is to open email addresses in egroupware email application, if user has access to it.	addressbook	en	Default is to open EMail addresses in EGroupware EMail application, if user has access to it.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	en	Which email address is used as preferred one for distribution lists.
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the ID.
@@ -186,6 +188,7 @@ displays a remider for birthdays on the startpage (page you get when you enter e
 distribution list deleted	addressbook	en	Distribution list deleted
 distribution list renamed	addressbook	en	Distribution list renamed
 distribution lists	addressbook	en	Distribution lists
+distribution lists as groups	addressbook	en	Distribution lists as groups
 distribution lists, ...	addressbook	en	Distribution lists, ...
 do you really want to delete this contact?	addressbook	en	Do you really want to delete this contact?
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	en	Do you want another private address book, which can not be viewed by other users, if you grant access to your personal address book?
@@ -261,6 +264,7 @@ general	admin	en	General
 general fields:	addressbook	en	General fields:
 general settings	addressbook	en	General settings
 geo	addressbook	en	GEO
+geolocation	addressbook	en	GeoLocation
 geolocation integration	admin	en	GeoLocation integration
 global categories	addressbook	en	Global categories
 grant addressbook access	common	en	Grant address book access
@@ -389,6 +393,7 @@ preferred phone	addressbook	en	Preferred phone
 preferred type of email address to add for distribution lists	addressbook	en	Preferred type of email address for distribution lists.
 prefix	addressbook	en	Prefix
 prevent deleting of contacts	admin	en	Prevent deleting of contacts
+private address	addressbook	en	Private address
 private custom fields	addressbook	en	Private custom fields
 public key	addressbook	en	Public key
 publish into groups:	addressbook	en	Publish into groups:
@@ -403,6 +408,7 @@ region	addressbook	en	Region
 remove from distribution list	addressbook	en	Remove from distribution list
 remove selected contacts from distribution list	addressbook	en	Remove selected contacts from distribution list.
 removed from distribution list	addressbook	en	Removed from distribution list.
+Rename selected distribution list	addressbook	en	Rename selected distribution list
 repetition	addressbook	en	Repetition
 replacements for inserting contacts into documents	addressbook	en	Replacements for inserting contacts into documents
 required fields *	addressbook	en	Required fields *
