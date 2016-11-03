@@ -3766,7 +3766,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		var widgets = ['[user]','[weekend]','[holidays]','[min_days]'];
 		var row_id = _widget.name.match(/\d+/);
 		var w = {};
-		for (var i=1;i<widgets.length;i++)
+		for (var i=0;i<widgets.length;i++)
 		{
 			w = this.et2.getWidgetById(row_id+widgets[i]);
 			if (w) w.set_readonly(!_widget.checked);
