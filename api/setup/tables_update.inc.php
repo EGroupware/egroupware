@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+use EGroupware\Api;
+
 /**
  * Remove rests of EMailAdmin or install 14.1 tables for update from before 14.1
  *
@@ -121,7 +123,7 @@ function api_upgrade16_1_002()
 /**
  * Change egw_ea_accounts.acc_further_identities from boolean to int(1)
  *
- * @return type
+ * @return string new version
  */
 function api_upgrade16_1_003()
 {
@@ -138,4 +140,55 @@ function api_upgrade16_1_003()
 		$GLOBALS['egw_setup']->db->get_table_definitions('api', 'egw_ea_accounts'), 'further_bool');
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.004';
+}
+
+/**
+ * Fix non-unique multi-column index on egw_sqlfs_props: fs_id, prop_namesape and prop_name
+ *
+ * Index needs to be unique as a WebDAV property can only have one value.
+ *
+ * MySQL REPLACE used in PROPPATCH otherwise inserts further rows instead of updating them,
+ * which we also clean up here (MySQL only).
+ *
+ * @return string new version
+ */
+function api_upgrade16_1_004()
+{
+	// delete doublicate rows for identical attributes by only keeping oldest one / highest prop_id
+	// this is only necessary for MySQL, as other DBs dont have REPLACE
+	if ($GLOBALS['egw_setup']->db->Type == 'mysql')
+	{
+		$junk_size = 100;
+		$total = 0;
+		do {
+			$n = 0;
+			foreach($GLOBALS['egw_setup']->db->query('SELECT fs_id,prop_namespace,prop_name,MAX(prop_id) AS prop_id
+FROM egw_sqlfs_props
+GROUP BY fs_id,prop_namespace,prop_name
+HAVING COUNT(*) > 1', __LINE__, __FILE__, 0, $junk_size, false, Api\Db::FETCH_ASSOC) as $row)
+			{
+				$prop_id = $row['prop_id'];
+				unset($row['prop_id']);
+				$GLOBALS['egw_setup']->db->delete('egw_sqlfs_props', $row+array('prop_id != '.(int)$prop_id), __LINE__, __FILE__);
+				$total += $GLOBALS['egw_setup']->db->affected_rows();
+				$n++;
+			}
+		}
+		while($n == $junk_size);
+
+		if ($total)
+		{
+			echo "Api Update 16.1.005: deleted $total doublicate rows from egw_sqlfs_props table.\n";
+
+			// drop autoincrement (prop_id) and recreate it, in case it got to close to 32 bit limit
+			$GLOBALS['egw_setup']->db->query('ALTER TABLE egw_sqlfs_props DROP prop_id', __LINE__, __FILE__);
+			$GLOBALS['egw_setup']->db->query('ALTER TABLE egw_sqlfs_props ADD prop_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY', __LINE__, __FILE__);
+		}
+	}
+
+	// drop non-unique index and re-create it as unique
+	$GLOBALS['egw_setup']->oProc->DropIndex('egw_sqlfs_props', array('fs_id', 'prop_namespace', 'prop_name'));
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_sqlfs_props', array('fs_id', 'prop_namespace', 'prop_name'), true);
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.005';
 }
