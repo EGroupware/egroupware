@@ -360,8 +360,8 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('prop_id'),
 		'fk' => array(),
-		'ix' => array(array('fs_id','prop_namespace','prop_name')),
-		'uc' => array()
+		'ix' => array(),
+		'uc' => array(array('fs_id','prop_namespace','prop_name'))
 	),
 	'egw_customfields' => array(
 		'fd' => array(
