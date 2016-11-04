@@ -25,29 +25,27 @@ Egroupware
 					<description value="Categories"/>
 					<grid id="grid" width="100%">
 						<columns>
-							<column width="40%"/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
+							<column width="60"/>
+							<column />
+							<column width="5%"/>
+							<column width="10%"/>
+							<column width="10%"/>
+							<column width="5%"/>
 						</columns>
 						<rows>
 							<row class="th">
 								<description value="Select"/>
 								<description value="Category"/>
-								<description align="center" value="User"/>
-								<description align="center" value="Weekend"/>
-								<description align="center" value="Holidays"/>
-								<description align="center" value="Min days as week"/>
+								<description align="center" statustext="Exclude weekend events from counting" value="Exclude Weekend"/>
+								<description align="center" statustext="Include holidays as counting days" value="Holidays"/>
+								<description align="center" statustext="Minimum days to count as a week" value="Min days"/>
 							</row>
 							<row class="row">
 								<checkbox id="${row}[enable]" onchange="app.calendar.holiday_report_enable"/>
 								<taglist-cat id="${row}[cat_id]" readonly="true" width="500" class="select-cat"/>
-								<checkbox align="center" id="${row}[user]" disable="false"/>
 								<checkbox align="center" id="${row}[weekend]"/>
 								<checkbox align="center" id="${row}[holidays]"/>
-								<number type="integer" align="center" id="${row}[min_days]"/>
+								<textbox type="integer" align="center" id="${row}[min_days]"/>
 							</row>
 						</rows>
 					</grid>
