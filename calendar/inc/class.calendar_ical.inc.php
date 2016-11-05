@@ -170,11 +170,11 @@ class calendar_ical extends calendar_boupdate
 
 	/**
 	 * Conflict callback
-	 * If set, conflict checking will be enabled, and the event as well as 
+	 * If set, conflict checking will be enabled, and the event as well as
 	 * conflicts are passed as parameters to this callback
 	 */
 	var $conflict_callback = null;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -1773,7 +1773,7 @@ class calendar_ical extends calendar_boupdate
 
 	/**
 	 * Override parent update function to handle conflict checking callback, if set
-	 * 
+	 *
 	 * @param array &$event event-array, on return some values might be changed due to set defaults
 	 * @param boolean $ignore_conflicts =false just ignore conflicts or do a conflict check and return the conflicting events.
 	 *	Set to false if $this->conflict_callback is set
@@ -1791,7 +1791,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			// calendar_ical overrides search(), which breaks conflict checking
 			// so we make sure to use the original from parent
-			static $bo;
+			static $bo = null;
 			if(!$bo)
 			{
 				$bo = new calendar_boupdate();
@@ -1805,7 +1805,7 @@ class calendar_ical extends calendar_boupdate
 		}
 		return parent::update($event, $ignore_conflicts, $touch_modified, $ignore_acl, $updateTS, $messages, $skip_notification);
 	}
-	
+
 	/**
 	 * Sync alarms of current user: add alarms added on client and remove the ones removed
 	 *
@@ -2478,48 +2478,52 @@ class calendar_ical extends calendar_boupdate
 					$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 					$vcardData['start']	= $dtstart_ts;
 
-					if ($this->tzid)
+					// set event timezone from dtstart, if specified there
+					if (!empty($attributes['params']['TZID']))
 					{
-						$event['tzid'] = $this->tzid;
-					}
-					else
-					{
-						if (!empty($attributes['params']['TZID']))
+						// import TZID, if PHP understands it (we only care about TZID of starttime,
+						// as we store only a TZID for the whole event)
+						try
 						{
-							// import TZID, if PHP understands it (we only care about TZID of starttime,
-							// as we store only a TZID for the whole event)
-							try
+							$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
+							// sometimes we do not get an Api\DateTime object but no exception is thrown
+							// may be php 5.2.x related. occurs when a NokiaE72 tries to open Outlook invitations
+							if ($tz instanceof DateTimeZone)
 							{
-								$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
-								// sometimes we do not get an Api\DateTime object but no exception is thrown
-								// may be php 5.2.x related. occurs when a NokiaE72 tries to open Outlook invitations
-								if ($tz instanceof DateTimeZone)
-								{
-									$event['tzid'] = $tz->getName();
-								}
-								else
-								{
-									error_log(__METHOD__ . '() unknown TZID='
-										. $attributes['params']['TZID'] . ', defaulting to timezone "'
-										. date_default_timezone_get() . '".'.array2string($tz));
-									$event['tzid'] = date_default_timezone_get();	// default to current timezone
-								}
+								$event['tzid'] = $tz->getName();
 							}
-							catch(Exception $e)
+							else
 							{
 								error_log(__METHOD__ . '() unknown TZID='
 									. $attributes['params']['TZID'] . ', defaulting to timezone "'
-									. date_default_timezone_get() . '".'.$e->getMessage());
+									. date_default_timezone_get() . '".'.array2string($tz));
 								$event['tzid'] = date_default_timezone_get();	// default to current timezone
 							}
 						}
-						else
+						catch(Exception $e)
 						{
-							// Horde seems not to distinguish between an explicit UTC time postfixed with Z and one without
-							// assuming for now UTC to pass CalDAVTester tests
-							// ToDo: fix Horde_Icalendar to return UTC for timestamp postfixed with Z
-							$event['tzid'] = 'UTC';
+							error_log(__METHOD__ . '() unknown TZID='
+								. $attributes['params']['TZID'] . ', defaulting to timezone "'
+								. date_default_timezone_get() . '".'.$e->getMessage());
+							$event['tzid'] = date_default_timezone_get();	// default to current timezone
 						}
+					}
+					// if no timezone given and one is specified in class (never the case for CalDAV)
+					elseif ($this->tzid)
+					{
+						$event['tzid'] = $this->tzid;
+					}
+					// Horde seems not to distinguish between an explicit UTC time postfixed with Z and one without
+					// assuming for now UTC to pass CalDAVTester tests
+					// ToDo: fix Horde_Icalendar to return UTC for timestamp postfixed with Z
+					elseif (!$isDate)
+					{
+						$event['tzid'] = 'UTC';
+					}
+					// default to use timezone to better kope with floating time
+					else
+					{
+						$event['tzid'] = Api\DateTime::$user_timezone->getName();
 					}
 					break;
 
@@ -2552,6 +2556,13 @@ class calendar_ical extends calendar_boupdate
 					. "() DTSTART missing!\n",3,$this->logfile);
 			}
 			return false; // not a valid entry
+		}
+		// if neither duration nor dtend specified, default for dtstart as date is 1 day
+		if (!isset($vcardData['end']) && !$isDate)
+		{
+			$end = new Api\DateTime($vcardData['start']);
+			$end->add('1 day');
+			$vcardData['end'] = $end->format('ts');
 		}
 		// lets see what we can get from the vcard
 		foreach ($component->getAllAttributes() as $attributes)
