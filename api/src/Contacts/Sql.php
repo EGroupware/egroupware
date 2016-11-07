@@ -262,9 +262,10 @@ class Sql extends Api\Storage
 	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param boolean $ignore_acl =false true: no acl check
 	 * @return boolean/array of matching rows (the row is an array of the cols) or False
 	 */
-	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
+	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false, $ignore_acl=false)
 	{
 		if ((int) $this->debug >= 4) echo '<p>'.__METHOD__.'('.array2string($criteria).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter).",'$join')</p>\n";
 		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by', ".array2string($extra_cols).",'$wildcard','$empty','$op',$start,".array2string($filter).",'$join')");
@@ -290,7 +291,8 @@ class Sql extends Api\Storage
 		}
 
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
-		if (isset($this->grants) && !(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
+		if (isset($this->grants) && !$ignore_acl &&
+			!(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
 		{
 			// add read ACL for groupmembers (they have no
 			if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
