@@ -278,10 +278,12 @@ class Customfields extends Transformer
 				$type = 'link-to';
 			}
 		}
-		$widget = self::factory($type, '<'.$type.' type="'.$type.'" id="'.self::$prefix.$fname.'"/>', self::$prefix.$fname);
+		$xml = '<'.$type.' type="'.$type.'" id="'.self::$prefix.$fname.'"/>';
+		$widget = self::factory($type, $xml, self::$prefix.$fname);
 		$widget->id = self::$prefix.$fname;
 		$widget->attrs['type'] = $type;
-
+		$widget->set_attrs($xml);
+		
 		// some type-specific (default) attributes
 		switch($type)
 		{
@@ -394,10 +396,6 @@ class Customfields extends Transformer
 				// widget has no validate method, eg. is only displaying stuff --> nothing to validate
 				if (!method_exists($widget, 'validate')) continue;
 				$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
-				if ($field_settings['needed'] && (is_array($value) ? !$value : (string)$value === ''))
-				{
-					self::set_validation_error($field,lang('Field must not be empty !!!'),'');
-				}
 				$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id,1)] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
 				$valid =& self::get_array($validated, $field_name, true);
 
