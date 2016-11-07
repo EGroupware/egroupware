@@ -600,9 +600,10 @@ class Storage
 	 * @param array $filter =null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
 	 *  $filter['cols_to_search'] limit search columns to given columns, otherwise $this->columns_to_search is used
 	 * @param string $join ='' sql to do a join (only used by sql backend!), eg. " RIGHT JOIN egw_accounts USING(account_id)"
+	 * @param boolean $ignore_acl =false true: no acl check
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
-	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
+	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='', $ignore_acl=false)
 	{
 		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',".array2string($start).','.array2string($filter,true).",'$join')");
 
@@ -703,7 +704,7 @@ class Storage
 		}
 		// get the used backend for the search and call it's search method
 		$rows = $backend->search($criteria, $only_keys, $order_by, $extra_cols,
-			$wildcard, $empty, $op, $start, $filter, $join);
+			$wildcard, $empty, $op, $start, $filter, $join, false, $ignore_acl);
 
 		$this->total = $backend->total;
 
