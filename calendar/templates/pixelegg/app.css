@@ -1457,7 +1457,7 @@ input#calendar-edit_location {
 #calendar-edit_role {
   float: left;
 }
-.holiday_report_cats {
+.category_report_cats {
   height: 80%;
   overflow-y: auto;
   display: block;

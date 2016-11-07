@@ -524,7 +524,9 @@ class calendar_ui
 			);
 			$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');
 		}
-		display_sidebox('calendar', lang('Utilities'), array('Holiday report' =>  Egw::link('/index.php','menuaction=calendar.calendar_holiday_report.index&appname=calendar&ajax=true')));
+		display_sidebox('calendar', lang('Utilities'), array('Category report' => "javascript:egw_openWindowCentered2('".
+					Egw::link('/index.php',array('menuaction'=>'calendar.calendar_category_report.index','ajax'=>true),false).
+					"','_blank',870,610,'yes')" ));
 	}
 
 	/**

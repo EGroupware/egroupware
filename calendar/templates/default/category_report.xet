@@ -10,11 +10,11 @@ Egroupware
 @version $Id$
 -->
 <overlay>
-	<template id="calendar.holiday_report" template="" lang="" group="0" version="16.2">
+	<template id="calendar.category_report" template="" lang="" group="0" version="16.2">
 		<hbox class="dialogHeader" height="28">
-			<description value="Holiday Report"/>
+			<description value="Category Report"/>
 		</hbox>
-		<grid width="100%" class="holiday_report_cats">
+		<grid width="100%" class="Category_report_cats">
 			<columns>
 				<column width="10%"/>
 				<column width="90%"/>
@@ -39,13 +39,17 @@ Egroupware
 								<description align="center" statustext="Exclude weekend events from counting" value="Exclude Weekend"/>
 								<description align="center" statustext="Include holidays as counting days" value="Holidays"/>
 								<description align="center" statustext="Minimum days to count as a week" value="Min days"/>
+								<description align="center" statustext="Output unit" value="Output unit"/>
 							</row>
 							<row class="row">
-								<checkbox id="${row}[enable]" onchange="app.calendar.holiday_report_enable"/>
+								<checkbox id="${row}[enable]" onchange="app.calendar.category_report_enable"/>
 								<taglist-cat id="${row}[cat_id]" readonly="true" width="500" class="select-cat"/>
 								<checkbox align="center" id="${row}[weekend]"/>
 								<checkbox align="center" id="${row}[holidays]"/>
 								<textbox type="integer" align="center" id="${row}[min_days]"/>
+								<menulist>
+									<menupopup  align="center" id="${row}[unit]"/>
+								</menulist>
 							</row>
 						</rows>
 					</grid>

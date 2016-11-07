@@ -247,8 +247,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					this.filter_change();
 				},this),0);
 				break;
-			case 'calendar.holiday_report':
-				this.holiday_report_init();
+			case 'calendar.category_report':
+				this.category_report_init();
 				break;
 		}
 
@@ -3746,12 +3746,12 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 * categories status.
 	 *
 	 */
-	holiday_report_init: function ()
+	category_report_init: function ()
 	{
 		var content = this.et2.getArrayMgr('content').data;
 		for (var i=1;i<content.grid.length;i++)
 		{
-			if (content.grid[i] != null) this.holiday_report_enable({name:i+'', checked:content.grid[i]['enable']});
+			if (content.grid[i] != null) this.category_report_enable({name:i+'', checked:content.grid[i]['enable']});
 		}
 	},
 
@@ -3761,7 +3761,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	 * @param {type} _widget
 	 * @returns {undefined}
 	 */
-	holiday_report_enable: function (_widget)
+	category_report_enable: function (_widget)
 	{
 		var widgets = ['[user]','[weekend]','[holidays]','[min_days]'];
 		var row_id = _widget.name.match(/\d+/);
