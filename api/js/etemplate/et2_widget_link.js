@@ -185,7 +185,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 		};
 		// only set server-side callback, if we have a real application-id (not null or array)
 		// otherwise it only gives an error on server-side
-		if (self.options.value.to_id && typeof self.options.value.to_id != 'object') {
+		if (self.options.value && self.options.value.to_id && typeof self.options.value.to_id != 'object') {
 			select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::link_existing';
 			select_attrs.method_id = self.options.value.to_app + ':' + self.options.value.to_id;
 		}
