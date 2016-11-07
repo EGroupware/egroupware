@@ -163,7 +163,7 @@ class calendar_hooks
 			$muliple_weeks[$i] = lang('%1 weeks',$i);
 		}
 
-		for ($i = 2; $i <= 9; $i++)
+		for ($i = 2; $i <= 20; $i++)
 		{
 			$consolidated[$i] = $i;
 		}
