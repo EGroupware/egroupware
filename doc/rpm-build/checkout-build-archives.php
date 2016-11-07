@@ -755,7 +755,7 @@ function do_obs($only_update_changelog=false)
 		if (basename(dirname($path)) == '.osc' ||
 			!preg_match('/\/('.preg_quote($config['packagename']).
 				($config['obs_package_alias'] ? '|'.preg_quote($config['obs_package_alias']) : '').
-				')[a-z-]*-('.preg_quote($config['version']).'|14.2|trunk)/',$path))
+				')[a-z-]*-('.preg_quote($config['version']).'|trunk)/',$path))
 		{
 			continue;
 		}
