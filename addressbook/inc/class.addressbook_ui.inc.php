@@ -2892,6 +2892,7 @@ window.egw_LAB.wait(function() {
 
 		// initialize etemplate arrays
 		$sel_options = $readonlys = array();
+		$this->tmpl->read('addressbook.edit');
 		$content = Api\Cache::getSession('addressbook', 'advanced_search');
 		$content['n_fn'] = $this->fullname($content);
 		// Avoid ID conflict with tree & selectboxes
@@ -2924,6 +2925,8 @@ window.egw_LAB.wait(function() {
 					if (!isset($content['#'.$name])) $content['#'.$name] = '';
 					if(!isset($data['values'][''])) $sel_options['#'.$name][''] = lang('Select one');
 				}
+				// Make them not required, otherwise you can't search
+				$this->tmpl->setElementAttribute('#'.$name, 'needed', FALSE);
 			}
 		}
 		// configure edit template as search dialog
@@ -2946,7 +2949,6 @@ window.egw_LAB.wait(function() {
 
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
-		$this->tmpl->read('addressbook.edit');
 		$this->tmpl->set_cell_attribute('change_org','disabled',true);
 		return $this->tmpl->exec('addressbook.addressbook_ui.search',$content,$sel_options,$readonlys,array(),2);
 	}
