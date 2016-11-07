@@ -1,3 +1,11 @@
+egroupware-epl (16.1.20161107) hardy; urgency=low
+
+  * Calendar: fix holidays are displayed one day off for eg. Austria, Slovakia, Australia (from iCloud)
+  * Calendar: missing backport stalling calendar planner view
+  * Filemanager: DB schema update to remove doublicate rows for WebDAV properties on update, caused eg. excessively by OneNote
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 07 Nov 2016 11:35:15 +0100
+
 egroupware-epl (16.1.20161102) hardy; urgency=low
 
   * Admin/Mail: allow to add aliases, forwards and quota via admin-cli, optional create identities for aliases
