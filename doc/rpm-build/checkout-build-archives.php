@@ -40,7 +40,7 @@ $config = array(
 	'aliasdir' => 'egroupware',             // directory created by the alias
 	'types' => array('tar.bz2','tar.gz','zip','all.tar.bz2'),
 	// add given extra-apps or (uncompressed!) archives to above all.tar.bz2 archive
-	'all-add' => array('contrib', '/home/stylite/epl-trunk/phpfreechat_data_public.tar'),
+	'all-add' => array('contrib', '/home/stylite/epl-16.1/phpfreechat_data_public.tar'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),
 	'tar' => trim(`which tar`),
@@ -58,7 +58,7 @@ $config = array(
 	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs --no-dev' : '',
 	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@stylite.de',
-	'obs' => '/home/stylite/obs/stylite-epl-trunk',
+	'obs' => '/home/stylite/obs/stylite-epl',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
