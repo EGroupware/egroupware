@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!--
+Egroupware
+@license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+@package calendar
+@subpackage
+@link http://www.egroupware.org
+@author Hadi Nategh <hn-AT-egroupware.org>
+@version $Id$
+-->
+<overlay>
+	<template id="calendar.category_report" template="" lang="" group="0" version="16.2">
+		<hbox class="dialogHeader" height="28">
+			<description value="Category Report"/>
+		</hbox>
+		<grid width="100%" class="Category_report_cats">
+			<columns>
+				<column width="10%"/>
+				<column width="90%"/>
+			</columns>
+			<rows>
+
+				<row>
+					<description value="Categories"/>
+					<grid id="grid" width="100%">
+						<columns>
+							<column width="60"/>
+							<column />
+							<column width="5%"/>
+							<column width="10%"/>
+							<column width="10%"/>
+							<column width="5%"/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Select"/>
+								<description value="Category"/>
+								<description align="center" statustext="Exclude weekend events from counting" value="Exclude Weekend"/>
+								<description align="center" statustext="Include holidays as counting days" value="Holidays"/>
+								<description align="center" statustext="Minimum days to count as a week" value="Min days"/>
+								<description align="center" statustext="Output unit" value="Output unit"/>
+							</row>
+							<row class="row">
+								<checkbox id="${row}[enable]" onchange="app.calendar.category_report_enable"/>
+								<taglist-cat id="${row}[cat_id]" readonly="true" width="500" class="select-cat"/>
+								<checkbox align="center" id="${row}[weekend]"/>
+								<checkbox align="center" id="${row}[holidays]"/>
+								<textbox type="integer" align="center" id="${row}[min_days]"/>
+								<menulist>
+									<menupopup  align="center" id="${row}[unit]"/>
+								</menulist>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+		<hbox class="dialogFooterToolbar">
+			<description value="Date range"/>
+			<date id="start" label="Start"/>
+			<date id="end" label="End"/>
+			<button id="button[report]" label="Report" onclick="app.calendar.category_report_submit" background_image="1" image="template"/>
+		</hbox>
+	</template>
+</overlay>

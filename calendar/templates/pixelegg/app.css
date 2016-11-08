@@ -1457,6 +1457,11 @@ input#calendar-edit_location {
 #calendar-edit_role {
   float: left;
 }
+.category_report_cats {
+  height: 80%;
+  overflow-y: auto;
+  display: block;
+}
 /*generell*/
 .egw_fw_content_browser_iframe img[src$="svg"] {
   background-color: #828282 !important;
