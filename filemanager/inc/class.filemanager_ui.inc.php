@@ -1610,7 +1610,7 @@ class filemanager_ui
 			),
 			'discard' => array(
 				'caption' => 'Discard',
-				'icon' => 'delete',
+				'icon' => 'discard',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.filemanager.editor_discard',
 				'allowOnMultiple' => false,
