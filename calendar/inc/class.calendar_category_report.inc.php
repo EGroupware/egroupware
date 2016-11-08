@@ -19,11 +19,11 @@ use EGroupware\Api\Etemplate;
 
 /**
  * This class reports amount of events taken by users based
- * on categories. The report would be based
- * on start and end date and can be specified with several options
- * for each category. The result of the report would be a CSV file
- * consistent of user full name, categories names, and amount of time (hour|minute|second).
- *
+ * on categories. The report would be based on start and end
+ * date and can be specified with several options for each
+ * category. The result of the report would be a CSV file
+ * consistent of user full name, categories names, and amount
+ * of time (hour|minute|second).
  *
  */
 class calendar_category_report extends calendar_ui{
@@ -71,17 +71,19 @@ class calendar_category_report extends calendar_ui{
 	}
 
 	/**
+	 * This function processes given day array and select eligible events
 	 *
-	 * @param type $week_sum
-	 * @param type $day
-	 * @param type $events
-	 * @param type $cat_id
-	 * @param type $holidays
-	 * @param type $weekend
-	 * @param type $min_days
-	 * @param type $unit
+	 * @param array $week_sum array to keep tracking of weeks
+	 * @param array $day array to keep tracking of eligible events of the day
+	 * @param array $events events of the day
+	 * @param int $cat_id category id
+	 * @param int $holidays holiday option
+	 * @param int $weekend weekend option
+	 * @param int $min_days min_days option
+	 * @param int $unit unit option
+	 *
 	 */
-	public function proccess_days(&$week_sum, &$day, $events, $cat_id, $holidays, $weekend, $min_days, $unit)
+	public function process_days(&$week_sum, &$day, $events, $cat_id, $holidays, $weekend, $min_days, $unit)
 	{
 		foreach ($events as &$event)
 		{
@@ -104,6 +106,20 @@ class calendar_category_report extends calendar_ui{
 		}
 	}
 
+	/**
+	 * function to add up days
+	 *
+	 * @param array $days array of days
+	 * @return int returns sum of amount of events
+	 */
+	public static function add_days ($days) {
+		$sum = 0;
+		foreach ($days as $val)
+		{
+			$sum = $sum + $val;
+		}
+		return $sum;
+	}
 
 	/**
 	 * Function to build holiday report index interface and logic
@@ -168,12 +184,11 @@ class calendar_category_report extends calendar_ui{
 				// iterate over found events
 				foreach($events as $day_index => $day_events)
 				{
-
 					if (is_array($day_events))
 					{
 						foreach ($categories as $row_id => $cat_id)
 						{
-							$this->proccess_days(
+							$this->process_days(
 									$weeks_sum,
 									$days_sum[$day_index],
 									$day_events,
@@ -237,21 +252,64 @@ class calendar_category_report extends calendar_ui{
 				//          ]
 				//
 				$result = array_replace_recursive($days_output, $min_days_output);
+				$csv_header = $csv_raw_rows = array ();
 
-				$fp = fopen('php://output', 'w');
-				foreach ($result as $user_id => $cat_ids)
+				// create csv header
+				foreach ($categories as $cat_id)
 				{
-					foreach ($cat_ids as $cat_id => $events)
+					$csv_header [] = $api_cats->id2name($cat_id);
+				}
+				array_unshift($csv_header, 'user_fullname');
+
+				// file pointer
+				$fp = fopen('php://output', 'w');
+
+				// sort out events and categories
+				foreach ($result as $user_id => $userData)
+				{
+					foreach ($userData as $cat_id => $events)
 					{
-						foreach ($events as &$e)
+						foreach ($events as $event_id => $values)
 						{
-							$r ['user_fullname'] = [Api\Accounts::id2name($user_id, 'account_fullname')];
-							$r [$api_cats->id2name($cat_id)] = ceil($e['days'] / (int)$e['unit']);
-							fputcsv($fp, array_keys($r));
-							fputcsv($fp, array_values($r));
+							$eid = $event_id;
+							$r = array();
+							foreach ($userData as $c_id => &$e)
+							{
+								if (!$e) continue;
+								$top = array_shift($e);
+								$r[$eid][$c_id] = ceil($top['days']? $top['days'] / $top['unit']: 0);
+							}
+							if ($r) $csv_raw_rows[$user_id][] = $r;
 						}
 					}
 				}
+
+
+				// printout csv header into file
+				fputcsv($fp, array_values($csv_header));
+
+				// set header to download csv file
+				header('Content-type: text/csv');
+				header('Content-Disposition: attachment; filename="report.csv"');
+				
+				// iterate over csv rows for each user to print them out into csv file
+				foreach ($result as $user_id => $userData)
+				{
+					foreach ($csv_raw_rows[$user_id] as &$raw_row)
+					{
+						$cats_row = array();
+						$raw_row = array_shift($raw_row);
+						foreach ($categories as $cat_id)
+						{
+							$cats_row [$cat_id] = $raw_row[$cat_id]?$raw_row[$cat_id]:0;
+						}
+						// printout each row into file
+						fputcsv($fp, array_values(array(Api\Accounts::id2name($user_id, 'account_fullname')) + $cats_row));
+					}
+				}
+				// echo out csv file
+				fpassthru($fp);
+				exit();
 			}
 		}
 
@@ -265,14 +323,5 @@ class calendar_category_report extends calendar_ui{
 		array_unshift($content['grid'],array(''=> ''));
 		$preserv = $content;
 		$this->tmpl->exec('calendar.calendar_category_report.index', $content, $sel_options, array(), $preserv, 2);
-	}
-
-	public static function add_days ($days) {
-		$sum = 0;
-		foreach ($days as $val)
-		{
-			$sum = $sum + $val;
-		}
-		return $sum;
 	}
 }

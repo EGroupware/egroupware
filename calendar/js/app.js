@@ -3771,6 +3771,14 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			w = this.et2.getWidgetById(row_id+widgets[i]);
 			if (w) w.set_readonly(!_widget.checked);
 		}
+	},
+
+	/**
+	 * submit function for report button
+	 */
+	category_report_submit: function ()
+	{
+		this.et2._inst.postSubmit();
 	}
 });}).call(this);
 
