@@ -264,7 +264,8 @@ class setup
 		$auth_type = strtolower($_auth_type);
 		$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = $GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
 
-		if(!$this->checkip($_SERVER['REMOTE_ADDR']))
+		if(!$this->checkip(isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
+			$_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']))
 		{
 			//error_log(__METHOD__."('$auth_type') invalid IP");
 			return false;
