@@ -299,7 +299,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 					$where['list_'.self::$path_attr] = $filter[self::$path_attr];
 				}
 				//error_log(__METHOD__."() filter=".array2string($filter).", do_groups=".in_array('D',$this->home_set_pref).", where=".array2string($where));
-				if (($lists = $this->bo->read_lists($where,'contact_uid',$where['list_owner'])))	// limit to contacts in same AB!
+				if ($where['id'] && ($lists = $this->bo->read_lists($where,'contact_uid',$where['list_owner'])))	// limit to contacts in same AB!
 				{
 					foreach($lists as $list)
 					{
