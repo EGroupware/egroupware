@@ -572,7 +572,7 @@ class infolog_so
 		$to_write = array();
 		foreach($values as $key => $val)
 		{
-			if (($key != 'info_id' || $force_insert) && isset($table_def['fd'][$key]))
+			if (($key != 'info_id' || $force_insert && $info_id > 0) && isset($table_def['fd'][$key]))
 			{
 				$to_write[$key] = $this->data[$key] = $val;   // update internal data
 			}
