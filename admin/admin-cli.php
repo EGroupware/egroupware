@@ -448,8 +448,10 @@ function do_edit_mail($type, array $arg0s)
  *  on return optional +/- prefix has been removed
  * @return array
  */
-function array_modify(array &$arr, array &$mod)
+function array_modify(&$arr, array &$mod)
 {
+	if (!is_array($arr)) $arr = array();
+
 	switch($mod[0][0])
 	{
 		case '-':
