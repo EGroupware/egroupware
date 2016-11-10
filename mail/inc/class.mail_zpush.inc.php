@@ -434,8 +434,15 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$force8bit=false;
 		if (Api\Translation::detect_encoding($sigTextPlain)!='ascii') $force8bit=true;
+		// beware. the section below might cause trouble regarding bcc and attachments, so maybe this is to be handeled differently
+		if ($force8bit)
+		{
+			$converterObj =  new Api\Mailer('initbasic');
+			$smartdata->mime = $converterObj->convertMessageTextParts($smartdata->mime,false,'utf-8');
+		}
 		// initialize the new Api\Mailer object for sending
 		$mailObject = new Api\Mailer(self::$profileID);
+
 		$this->mail->parseRawMessageIntoMailObject($mailObject,$smartdata->mime,$force8bit);
 		// Horde SMTP Class uses utf-8 by default. as we set charset always to utf-8
 		$mailObject->Sender  = $activeMailProfile['ident_email'];
