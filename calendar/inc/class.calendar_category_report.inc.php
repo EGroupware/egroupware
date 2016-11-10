@@ -291,7 +291,7 @@ class calendar_category_report extends calendar_ui{
 				// set header to download csv file
 				header('Content-type: text/csv');
 				header('Content-Disposition: attachment; filename="report.csv"');
-				
+
 				// iterate over csv rows for each user to print them out into csv file
 				foreach ($result as $user_id => $userData)
 				{
@@ -315,6 +315,7 @@ class calendar_category_report extends calendar_ui{
 
 		// unit selectbox options
 		$sel_options['unit'] = array (
+			86400 => array('label' => lang('day'), 'title'=>'Output value in day'),
 			3600 => array('label' => lang('hour'), 'title'=>'Output value in hour'),
 			60 => array('label' => lang('minute'), 'title'=>'Output value in minute'),
 			1  => array('label' => lang('second'), 'title'=>'Output value in second')
