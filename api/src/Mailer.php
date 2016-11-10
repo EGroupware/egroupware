@@ -65,6 +65,7 @@ class Mailer extends Horde_Mime_Mail
 	 *
 	 * @param int|Mail\Account|boolean $account =null mail account to use, default use Mail\Account::get_default($smtp=true)
 	 *	false: no NOT initialise account and set other EGroupware specific headers, used to parse mails (not sending them!)
+	 *	initbasic: return $this
 	 */
 	function __construct($account=null)
 	{
@@ -72,7 +73,14 @@ class Mailer extends Horde_Mime_Mail
 		Preferences::setlocale(LC_MESSAGES);
 
 		parent::__construct();
-
+		if ($account ==='initbasic')
+		{
+			$this->_headers = new Horde_Mime_Headers();
+			$this->clearAllRecipients();
+			$this->clearReplyTos();
+			error_log(__METHOD__.__LINE__.array2string($this));
+			return $this;
+		}
 		if ($account !== false)
 		{
 			$this->_headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['api']);
@@ -677,6 +685,72 @@ class Mailer extends Horde_Mime_Mail
         return $this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)) .
 			$this->getBasePart()->toString(array('canonical' => true));
     }
+
+	/**
+	 * Convert charset of text-parts of message to utf-8. non static AND include Bcc
+	 *
+	 * @param string|resource $message
+	 * @param boolean $stream =false return stream or string (default)
+	 * @param string $charset ='utf-8' charset to convert to
+	 * @param boolean &$converted =false on return if conversation was necessary
+	 * @return string|stream
+	 */
+	function convertMessageTextParts($message, $stream=false, $charset='utf-8', &$converted=false)
+        {
+		$headers = Horde_Mime_Headers::parseHeaders($message);
+		$this->addHeaders($headers);
+		$base = Horde_Mime_Part::parseMessage($message);
+		foreach($headers->toArray(array('nowrap' => true)) as $header => $value)
+		{
+			foreach((array)$value as $n => $val)
+			{
+				switch($header)
+				{
+					case 'Bcc':
+					case 'bcc':
+						//error_log(__METHOD__.__LINE__.':'.$header.'->'.$val);
+						$this->addBcc($val);
+						break;
+				}
+			}
+		}
+		foreach($base->partIterator() as $part)
+		{
+			if ($part->getPrimaryType()== 'text')
+			{
+				$charset = $part->getContentTypeParameter('charset');
+				if ($charset && $charset != 'utf-8')
+				{
+					$content = Translation::convert($part->toString(array(
+						'encode' => Horde_Mime_Part::ENCODE_BINARY,     // otherwise we cant recode charset
+						)), $charset, 'utf-8');
+					$part->setContents($content, array(
+						'encode' => Horde_Mime_Part::ENCODE_BINARY,     // $content is NOT encoded
+						));
+					$part->setContentTypeParameter('charset', 'utf-8');
+					if ($part === $base)
+					{
+						$this->addHeader('Content-Type', $part->getType(true));
+						// need to set Transfer-Encoding used by base-part, it always seems to be "quoted-printable"
+						$this->addHeader('Content-Transfer-Encoding', 'quoted-printable');
+					}
+					$converted = true;
+				}
+			}
+			elseif ($part->getType() == 'message/rfc822')
+			{
+				$mailerWithIn = new Mailer('initbasic');
+				$part->setContents($mailerWithIn->convertMessageTextParts($part->toString(), $stream, $charset, $converted));
+			}
+		}
+		if ($converted)
+		{
+			$this->setBasePart($base);
+			$this->forceBccHeader();
+			return $this->getRaw($stream);
+		}
+		return $message;
+	}
 
 	/**
 	 * Convert charset of text-parts of message to utf-8
