@@ -101,7 +101,6 @@ deleted!	mail	it	eliminato!
 deleting %1 folders in progress ...	mail	it	Eliminazione di %1 cartelle in corso
 deleting folders	mail	it	Eliminazione cartelle
 deny certain groups access to following features	mail	it	Nega accesso alle seguenti funzioni ad alcuni gruppi
-details	mail	it	piccola anteprima nell'elenco
 directories have to be shared.	mail	it	Le cartelle devono essere condivise
 disable	mail	it	Disabilita
 disable ruler for separation of mailbody and signature	mail	it	disabilita il righello per la separazione del corpo del messaggio dalla firma
@@ -309,7 +308,6 @@ no access	mail	it	nessun accesso
 no action defined!	mail	it	Nessuna azione definita!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	it	Nessun indirizzo A/CC/CCN fornito. Nessuna cartella di salvataggio messaggi specificata.
 no adress, to send this mail to, supplied	mail	it	nessun indirizzo fornito, dove inviare questa mail
-no details	mail	it	nessuna piccola anteprima  nell'elenco
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	it	Non è stata specificata la cartella di destinazione e di salvataggio messaggi o comunque qualche  modo per salvare il messaggio (salvataggio in attività/tracker)
 no folders	mail	it	Nessuna cartella
 no message body supplied	mail	it	nessun corpo del messaggio fornito
