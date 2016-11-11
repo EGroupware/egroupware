@@ -104,7 +104,6 @@ deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
-details	mail	de	Mit Kurzvorschau
 disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
 disable use of flowed lines in plain text mails (rfc3676)	mail	de	Variablen Zeilenumbruch in text Mails (RFC3676) abschalten
 disabled!	mail	de	deaktiviert
