@@ -101,7 +101,6 @@ deleted!	mail	sk	odstránené!
 deleting %1 folders in progress ...	mail	sk	Odstraňuje sa priečinok %1
 deleting folders	mail	sk	Odstraňujú sa priečinky
 deny certain groups access to following features	mail	sk	Zakázať niektorým skupinám prístup k nasledovným funkciám
-details	mail	sk	krátky náhľad v zozname
 directories have to be shared.	mail	sk	Priečinky sa musia zdieľať
 disable	mail	sk	Vypnúť
 disable ruler for separation of mailbody and signature	mail	sk	Vypnúť pravítko oddeľujúce telo správy a podpis
@@ -308,7 +307,6 @@ no access	mail	sk	Bez prístupu
 no action defined!	mail	sk	Žiadna akcia nebola definovaná!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	sk	Nebola zadaná adresa KOMU/KÓPIA/SLEPÁ KÓPIA, ani priečinok pre uloženie správy.
 no adress, to send this mail to, supplied	mail	sk	Nebola zadaná adresa pre doručenie správy
-no details	mail	sk	Bez krátkeho náhľadu v zozname
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	sk	Nebol zadaný cieľový priečinok, ani priečinok pre uloženie správy, ani iné opatrenie pre uloženie správy (uloženie do Záznamníka/Sledovača), avšak vyžaduje sa.
 no folders	mail	sk	žiadne priečinky
 no message body supplied	mail	sk	Nebolo zadané telo správy

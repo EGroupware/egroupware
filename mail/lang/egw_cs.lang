@@ -30,7 +30,6 @@ date(oldest first)	mail	cs	Datum (od nejstaršího)
 default sorting order	mail	cs	Výchozí třídění
 delete folder	mail	cs	Smazat složku
 deleted	mail	cs	smazáno
-details	mail	cs	S krátkým náhledem
 disable	mail	cs	Zakázat
 discard	mail	cs	zahodit
 discard message	mail	cs	zahodit zprávu
@@ -121,7 +120,6 @@ move to trash	mail	cs	Přesunout do koše
 never display html emails	mail	cs	Nikdy nezobrazovat HTML e-maily
 no access	mail	cs	Přístup zakázán
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	cs	Nebyly zadány adresy Komu/Kopie/Skrytá kopie ani složka pro uložení zprávy.
-no details	mail	cs	Bez krátkém náhledu
 no folders	mail	cs	žádné složky
 no plain text part found	mail	cs	nebyla nalezena část ve formě prostého textu
 no recipient address given!	mail	cs	Nebyla zadána adresa příjemce!
