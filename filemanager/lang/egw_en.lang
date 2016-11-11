@@ -59,6 +59,7 @@ copied	filemanager	en	Copied
 copied %1 to %2	filemanager	en	Copied %1 to %2
 copy	filemanager	en	Copy
 copy into folder	filemanager	en	Copy into folder
+copy link address	filemanager	en	Copy link address
 copy to	filemanager	en	Copy to
 copy to clipboard	filemanager	en	Copy to clipboard
 could not copy %1 to %2	filemanager	en	Could not copy %1 to %2
@@ -279,6 +280,7 @@ used space	filemanager	en	Used space
 users and groups	filemanager	en	Users and groups
 versioning	filemanager	en	Versioning
 vfs mounts and versioning	common	en	VFS mounts and versioning
+webdav link copied into clipboard	filemanager	en	WebDAV link copied into clipboard
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	en	Who should be allowed to finally delete deleted files or old versions of a file:
 wrong username or password!	filemanager	en	Wrong username or password!
 you are not allowed to finally delete older versions and deleted files!	filemanager	en	You are NOT allowed to finally delete older versions and deleted files!

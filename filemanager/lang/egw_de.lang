@@ -59,6 +59,7 @@ copied	filemanager	de	kopiert
 copied %1 to %2	filemanager	de	%1 nach %2 kopiert
 copy	filemanager	de	Kopieren
 copy into folder	filemanager	de	Kopieren in Ordner
+copy link address	filemanager	de	Kopiere Link-Adresse
 copy to	filemanager	de	Kopieren nach
 copy to clipboard	filemanager	de	Kopieren in die Zwischenablage
 could not copy %1 to %2	filemanager	de	Konnte %1 nicht nach %2 kopieren
@@ -280,6 +281,7 @@ used space	filemanager	de	Benutzter Platz
 users and groups	filemanager	de	Benutzer und Gruppen
 versioning	filemanager	de	Versionierung
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
+webdav link copied into clipboard	filemanager	de	WebDAV-Link in die Zwischenablage kopiert
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
 you are not allowed to finally delete older versions and deleted files!	filemanager	de	Sie haben nicht die Berechtigung ältere Versionen oder gelöschte Dateien endgültig zu löschen!
