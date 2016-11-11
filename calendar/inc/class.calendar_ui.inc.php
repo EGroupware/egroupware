@@ -518,7 +518,7 @@ class calendar_ui
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Configuration'=>Egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
+				'Site configuration'=>Egw::link('/index.php','menuaction=admin.admin_config.index&appname=calendar&ajax=true'),
 				'Custom Fields'=>Egw::link('/index.php','menuaction=admin.customfields.index&appname=calendar&ajax=true'),
 				'Global Categories' =>Egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar&ajax=true'),
 			);
