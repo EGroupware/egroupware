@@ -3763,7 +3763,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		var content = this.et2.getArrayMgr('content').data;
 		for (var i=1;i<content.grid.length;i++)
 		{
-			if (content.grid[i] != null) this.category_report_enable({name:i+'', checked:content.grid[i]['enable']});
+			if (content.grid[i] != null) this.category_report_enable({id:i+'', checked:content.grid[i]['enable']});
 		}
 	},
 
@@ -3776,7 +3776,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	category_report_enable: function (_widget)
 	{
 		var widgets = ['[user]','[weekend]','[holidays]','[min_days]'];
-		var row_id = _widget.name.match(/\d+/);
+		var row_id = _widget.id.match(/\d+/);
 		var w = {};
 		for (var i=0;i<widgets.length;i++)
 		{
@@ -3791,6 +3791,29 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	category_report_submit: function ()
 	{
 		this.et2._inst.postSubmit();
+	},
+
+	/**
+	 * Function to enable/disable categories
+	 *
+	 * @param {object} _widget select all checkbox
+	 */
+	category_report_selectAll: function (_widget)
+	{
+		var content = this.et2.getArrayMgr('content').data;
+		var checkbox = {};
+		for (var i=1;i<content.grid.length;i++)
+		{
+			if (content.grid[i] != null)
+			{
+				checkbox = this.et2.getWidgetById(i+'[enable]');
+				if (checkbox)
+				{
+					checkbox.set_value(_widget.checked);
+					this.category_report_enable({id:checkbox.id, checked:checkbox.get_value()});
+				}
+			}
+		}
 	}
 });}).call(this);
 

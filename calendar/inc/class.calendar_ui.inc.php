@@ -526,7 +526,7 @@ class calendar_ui
 		}
 		display_sidebox('calendar', lang('Utilities'), array('Category report' => "javascript:egw_openWindowCentered2('".
 					Egw::link('/index.php',array('menuaction'=>'calendar.calendar_category_report.index','ajax'=>true),false).
-					"','_blank',870,610,'yes')" ));
+					"','_blank',870,500,'yes')" ));
 	}
 
 	/**
