@@ -1583,7 +1583,6 @@ class Account implements \ArrayAccess
 			catch(\Exception $e) {
 				_egw_log_exception($e);
 			}
-
 		}
 		if (strlen(trim($account['ident_realname'].$account['ident_org'])))
 		{
@@ -1593,11 +1592,11 @@ class Account implements \ArrayAccess
 		{
 			$name = $account['acc_name'];
 		}
-		if (strpos($account['ident_email'], '@') !== false)
+		if (!empty(trim($account['ident_email'])))
 		{
 			$name .= ' <'.$account['ident_email'].'>';
 		}
-		elseif(strpos($account['acc_imap_username'], '@') !== false)
+		elseif(!empty(trim($account['acc_imap_username'])))
 		{
 			$name .= ' <'.$account['acc_imap_username'].'>';
 		}
