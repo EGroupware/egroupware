@@ -153,7 +153,7 @@ class calendar_category_report extends calendar_ui{
 		else
 		{
 			list($button) = @each($content['button']);
-			$result = $categories = array ();
+			$result = $categories = $content_rows = array ();
 			$users = array_keys($GLOBALS['egw']->accounts->search(array('type'=>'accounts', active=>true)));
 
 			// report button pressed
@@ -168,7 +168,7 @@ class calendar_category_report extends calendar_ui{
 				{
 					if ($row['enable'])
 					{
-						$categories [$key] = $row['cat_id'];
+						$categories [] = $content_rows [$key] = $row['cat_id'];
 					}
 				}
 
@@ -186,7 +186,7 @@ class calendar_category_report extends calendar_ui{
 				{
 					if (is_array($day_events))
 					{
-						foreach ($categories as $row_id => $cat_id)
+						foreach ($content_rows as $row_id => $cat_id)
 						{
 							$this->process_days(
 									$weeks_sum,
