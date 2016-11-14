@@ -389,6 +389,7 @@ function do_edit_mail($type, array $arg0s)
 			{
 				case 'alias':
 					$create_identity = strtolower(array_shift($args)) === 'yes';
+					$delete_identity = $args[0][0] == '-';
 					array_modify($data['mailAlternateAddress'], $args);
 					break;
 				case 'forward':
@@ -407,11 +408,16 @@ function do_edit_mail($type, array $arg0s)
 			if ($type == 'alias' && $create_identity && $args)
 			{
 				// check if user allready has an identity created for given aliases
-				foreach(Api\Mail\Account::identities($account, false, 'ident_email', $account_id) as $email)
+				foreach(Api\Mail\Account::identities($account, false, 'ident_email', $account_id) as $ident_id => $email)
 				{
 					if (($key = array_search($email, $args)) !== false)
 					{
 						unset($args[$key]);
+					}
+					// delete identities, if "-" is used and email of identity matches given ones and is not standard identity
+					elseif ($delete_identity && $ident_id != $account->ident_id)
+					{
+						Api\Mail\Account::delete_identity($ident_id);
 					}
 				}
 				// create not existing identities by copying standard identity plus alias as email
@@ -456,16 +462,16 @@ function array_modify(&$arr, array &$mod)
 	{
 		case '-':
 			$mod[0] = substr($mod[0], 1);
-			$arr = array_unique(array_diff($arr, $mod));
+			$arr = array_values(array_unique(array_diff($arr, $mod)));
 			break;
 
 		case '+';
 			$mod[0] = substr($mod[0], 1);
-			$arr = array_unique(array_merge($arr, $mod));
+			$arr = array_values(array_unique(array_merge($arr, $mod)));
 			break;
 
 		default:
-			$arr = array_unique($mod);
+			$arr = array_values(array_unique($mod));
 	}
 	return $arr;
 }
