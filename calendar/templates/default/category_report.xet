@@ -34,7 +34,7 @@ Egroupware
 						</columns>
 						<rows>
 							<row class="th">
-								<description value="Select"/>
+								<checkbox id="cat_all" label="Select" onchange="app.calendar.category_report_selectAll"/>
 								<description value="Category"/>
 								<description align="center" statustext="Exclude weekend events from counting" value="Exclude Weekend"/>
 								<description align="center" statustext="Include holidays as counting days" value="Holidays"/>

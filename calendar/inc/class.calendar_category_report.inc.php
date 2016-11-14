@@ -214,9 +214,9 @@ class calendar_category_report extends calendar_ui{
 						{
 							foreach ($event as $e)
 							{
-								$days_output[$user_id][$cat_id][$e['event_id']]['days'] =
-										$days_output[$user_id][$cat_id][$e['event_id']]['days'] + (int)$e['amount'];
-								$days_output[$user_id][$cat_id][$e['event_id']]['unit'] = $e['unit'];
+								$days_output[$user_id][$cat_id]['amount'] =
+										$days_output[$user_id][$cat_id]['amount'] + (int)$e['amount'];
+								$days_output[$user_id][$cat_id]['unit'] = $e['unit'];
 							}
 						}
 					}
@@ -233,8 +233,8 @@ class calendar_category_report extends calendar_ui{
 								if ($event_id !== 'min_days')
 								{
 									$days = $weeks_sum[$user_id][$week_id][$cat_id][$event_id];
-									$min_days_output[$user_id][$cat_id][$event_id]['days'] =
-											$min_days_output[$user_id][$cat_id][$event_id]['days'] +
+									$min_days_output[$user_id][$cat_id]['amount'] =
+											$min_days_output[$user_id][$cat_id]['amount'] +
 											(count($days) >= (int)$events['min_days']?self::add_days($days):0);
 								}
 							}
@@ -245,14 +245,13 @@ class calendar_category_report extends calendar_ui{
 				// Replace value of those cats who have min_days set on with regular day calculation
 				// result array structure:
 				// [user_ids] =>
-				//      [cat_ids] =>
-				//          [event_ids] => [
+				//      [cat_ids] => [
 				//             days: amount of event in second,
 				//              unit: unit to be shown as output (in second, eg. 3600)
 				//          ]
 				//
 				$result = array_replace_recursive($days_output, $min_days_output);
-				$csv_header = $csv_raw_rows = array ();
+				$csv_header =  array ();
 
 				// create csv header
 				foreach ($categories as $cat_id)
@@ -264,26 +263,6 @@ class calendar_category_report extends calendar_ui{
 				// file pointer
 				$fp = fopen('php://output', 'w');
 
-				// sort out events and categories
-				foreach ($result as $user_id => $userData)
-				{
-					foreach ($userData as $cat_id => $events)
-					{
-						foreach ($events as $event_id => $values)
-						{
-							$eid = $event_id;
-							$r = array();
-							foreach ($userData as $c_id => &$e)
-							{
-								if (!$e) continue;
-								$top = array_shift($e);
-								$r[$eid][$c_id] = ceil($top['days']? $top['days'] / $top['unit']: 0);
-							}
-							if ($r) $csv_raw_rows[$user_id][] = $r;
-						}
-					}
-				}
-
 
 				// printout csv header into file
 				fputcsv($fp, array_values($csv_header));
@@ -293,19 +272,15 @@ class calendar_category_report extends calendar_ui{
 				header('Content-Disposition: attachment; filename="report.csv"');
 
 				// iterate over csv rows for each user to print them out into csv file
-				foreach ($result as $user_id => $userData)
+				foreach ($result as $user_id => $cats_data)
 				{
-					foreach ($csv_raw_rows[$user_id] as &$raw_row)
+					$cats_row = array();
+					foreach ($categories as $cat_id)
 					{
-						$cats_row = array();
-						$raw_row = array_shift($raw_row);
-						foreach ($categories as $cat_id)
-						{
-							$cats_row [$cat_id] = $raw_row[$cat_id]?$raw_row[$cat_id]:0;
-						}
-						// printout each row into file
-						fputcsv($fp, array_values(array(Api\Accounts::id2name($user_id, 'account_fullname')) + $cats_row));
+						$cats_row [$cat_id] = ceil($cats_data[$cat_id]['amount']? $cats_data[$cat_id]['amount'] / $cats_data[$cat_id]['unit']: 0);
 					}
+					// printout each row into file
+					fputcsv($fp, array_values(array(Api\Accounts::id2name($user_id, 'account_fullname')) + $cats_row));
 				}
 				// echo out csv file
 				fpassthru($fp);
