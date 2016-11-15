@@ -1496,3 +1496,4 @@ input#calendar-edit_location {padding-left: 0;}
 #calendar-edit_quantity, #calendar-edit_role {float:left;}
 
 .category_report_cats {height:80%;overflow-y: auto;display:block;}
+#calendar-category_report_grid {display:block;max-height: 550px;overflow-y: auto;}
