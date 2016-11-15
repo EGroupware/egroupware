@@ -377,7 +377,7 @@ function do_edit_mail($type, array $arg0s)
 	foreach($acc_id ? array(Api\Mail\Account::read($acc_id, $account_id)) :
 		Api\Mail\Account::search($account_id, false) as $account)
 	{
-		if (!Api\Mail\Account::is_multiple($account)) continue;	// no need to waste time on personal accounts
+		if (!isset($acc_id) && !Api\Mail\Account::is_multiple($account)) continue;	// no need to waste time on personal accounts
 
 		$args = $arg0s;
 		try {
@@ -412,12 +412,12 @@ function do_edit_mail($type, array $arg0s)
 				{
 					if (($key = array_search($email, $args)) !== false)
 					{
+						// delete identities, if "-" is used and email of identity matches given ones and is not standard identity
+						if ($delete_identity && $ident_id != $account->ident_id)
+						{
+							Api\Mail\Account::delete_identity($ident_id);
+						}
 						unset($args[$key]);
-					}
-					// delete identities, if "-" is used and email of identity matches given ones and is not standard identity
-					elseif ($delete_identity && $ident_id != $account->ident_id)
-					{
-						Api\Mail\Account::delete_identity($ident_id);
 					}
 				}
 				// create not existing identities by copying standard identity plus alias as email
