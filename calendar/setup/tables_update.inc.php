@@ -1788,7 +1788,7 @@ function calendar_upgrade1_7_002()
 		'uc' => array('tz_tzid')
 	));
 	// import timezone data, throw exception if no PDO sqlite support
-	calendar_timezones::import_sqlite();
+	calendar_timezones::import_zones();
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.003';
 }
