@@ -73,8 +73,10 @@ class calendar_category_report extends calendar_ui{
 	/**
 	 * This function processes given day array and select eligible events
 	 *
+	 * @param array $events_log array to keep multiple days/recurrence event in track
 	 * @param array $week_sum array to keep tracking of weeks
 	 * @param array $day array to keep tracking of eligible events of the day
+	 * @param string $day_index string representation of the processing day
 	 * @param array $events events of the day
 	 * @param int $cat_id category id
 	 * @param int $holidays holiday option
@@ -83,24 +85,72 @@ class calendar_category_report extends calendar_ui{
 	 * @param int $unit unit option
 	 *
 	 */
-	public function process_days(&$week_sum, &$day, $events, $cat_id, $holidays, $weekend, $min_days, $unit)
+	public function process_days(&$events_log, &$week_sum, &$day,$day_index, $events, $cat_id, $holidays, $weekend, $min_days, $unit, $start_range)
 	{
 		foreach ($events as &$event)
 		{
 			$categories = explode(',', $event['category']);
 			if (!in_array($cat_id, $categories) || ($weekend && self::isWeekend($event['start'])) || (!$holidays && $this->isHoliday($event['start']))) continue;
+
+			// processing day as timestamp
+			$day_timestamp = strtotime($day_index);
+			// week number
+			$week_number = date('W', $day_timestamp);
+
+			$previous_week_number = $week_number == 1? 53: $week_number -1;
+			// check if multidays event starts before start range
+			$is_over_range_event = $day_timestamp< $event['end'] && $start_range > $event['start'];
+
+			// Mark multidays event as counted after the first day of event, therefore
+			// we can procced calculating the amount of the event via the first day
+			// and mark as counted for the rest of the days to avoid miscalculation.
+			if ($event['start']< $day_timestamp && $day_timestamp< $event['end'])
+			{
+				$events_log[$week_number][$event['id']]['counted'] = true;
+			}
+			// In case of start range is in middle of multidays event, we need to calculate the
+			// amount base on the part of event on the range and keep track of counting to avoid
+			// miscalculation too.
+			if ($is_over_range_event &&
+					!$events_log[$week_number][$event['id']]['over_range'] &&
+					!$events_log[$previous_week_number][$event['id']]['over_range'])
+			{
+				$events_log[$week_number][$event['id']]['counted'] = false;
+				$events_log[$week_number][$event['id']]['over_range'] = true;
+			}
+
+			// if we already counted the multidays event, set the amount to 0
+			// for the rest of days, to end up with a right calculation.
+			if ($events_log[$week_number][$event['id']]['counted'])
+			{
+				$amount = 0;
+			}
+			else
+			{
+				// over ranged multidays event
+				if ($is_over_range_event)
+				{
+					$amount =  $event['end'] - $start_range;
+				}
+				else
+				{
+					$amount = $event['end'] - $event['start'];
+				}
+			}
+			// store day
 			$day[$event['owner']][$cat_id][$event['id']] = array (
 				'weekN' => date('W', $event['start']),
 				'cat_id' => $cat_id,
 				'event_id' => $event['id'],
-				'amount' => $event['end'] - $event['start'],
+				'amount' => $amount,
 				'min_days' => $min_days,
 				'unit' => $unit
 			);
-
+			// store the week sum for those events which their categories marked as
+			// specified with min_days in their row.
 			if ($min_days)
 			{
-				$week_sum[$event['owner']][date('W', $event['start'])][$cat_id][$event['id']][] = $event['end'] - $event['start'];
+				$week_sum[$event['owner']][date('W', $event['start'])][$cat_id][$event['id']][] = $amount;
 				$week_sum[$event['owner']][date('W', $event['start'])][$cat_id]['min_days'] = $min_days;
 			}
 		}
@@ -180,7 +230,7 @@ class calendar_category_report extends calendar_ui{
 					'cat_id' => $categories,
 					'daywise' => true
 				));
-				$days_sum = $weeks_sum = array ();
+				$days_sum = $weeks_sum = $events_log = array ();
 				// iterate over found events
 				foreach($events as $day_index => $day_events)
 				{
@@ -189,14 +239,17 @@ class calendar_category_report extends calendar_ui{
 						foreach ($content_rows as $row_id => $cat_id)
 						{
 							$this->process_days(
+									$events_log,
 									$weeks_sum,
 									$days_sum[$day_index],
+									$day_index,
 									$day_events,
 									$cat_id,
 									$content['grid'][$row_id]['holidays'],
 									$content['grid'][$row_id]['weekend'],
 									$content['grid'][$row_id]['min_days'],
-									$content['grid'][$row_id]['unit']
+									$content['grid'][$row_id]['unit'],
+									$content['start']
 							);
 						}
 					}
