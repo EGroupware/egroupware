@@ -205,6 +205,13 @@ div.webodfeditor-memberList .webodfeditor-memberListButton img {
 div.webodfeditor-memberList .webodfeditor-memberListLabel {
   color: #1E1E1E;
 }
+div.webodf-caretOverlay div.handle {
+  width: 68px;
+  border-radius: 50%;
+}
+div.webodf-caretOverlay div.handle > img {
+  border-radius: 50%;
+}
 div.editInfoMarker {
   width: 5px;
   border-radius: none;
