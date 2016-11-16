@@ -200,7 +200,7 @@ class Request
 			}
 			else
 			{
-				$index_url = '/index.php';
+				$index_url = Api\Framework::link('/index.php');
 				$global = true;
 				$app = null;
 			}
