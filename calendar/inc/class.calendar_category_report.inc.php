@@ -90,10 +90,11 @@ class calendar_category_report extends calendar_ui{
 		foreach ($events as &$event)
 		{
 			$categories = explode(',', $event['category']);
-			if (!in_array($cat_id, $categories) || ($weekend && self::isWeekend($event['start'])) || (!$holidays && $this->isHoliday($event['start']))) continue;
+			if (!in_array($cat_id, $categories)) continue;
 
 			// processing day as timestamp
 			$day_timestamp = strtotime($day_index);
+
 			// week number
 			$week_number = date('W', $day_timestamp);
 
@@ -101,10 +102,28 @@ class calendar_category_report extends calendar_ui{
 			// check if multidays event starts before start range
 			$is_over_range_event = $day_timestamp< $event['end'] && $start_range > $event['start'];
 
+			$is_multiple_days_event = $event['start']< $day_timestamp && $day_timestamp< $event['end'];
+
+
+			if (($weekend && self::isWeekend($day_timestamp)) || (!$holidays && $this->isHoliday($day_timestamp)))
+			{
+				// calculate reduction of holidays or weekend amounts from
+				// multidays event
+				if ($is_multiple_days_event)
+				{
+					$day_diff_to_end = $event['end'] - $day_timestamp;
+					$reduction_amount = $day_diff_to_end > 86400? 86400: $day_diff_to_end;
+					$events_log['reductions'][$event['owner']][$cat_id] = $events_log['reductions'][$event['owner']][$cat_id] + $reduction_amount;
+				}
+				continue;
+			}
+
 			// Mark multidays event as counted after the first day of event, therefore
 			// we can procced calculating the amount of the event via the first day
 			// and mark as counted for the rest of the days to avoid miscalculation.
-			if ($event['start']< $day_timestamp && $day_timestamp< $event['end'])
+			if ($event['start']< $day_timestamp && $day_timestamp< $event['end'] &&
+					($events_log[$week_number][$event['id']]['counted'] ||
+					$events_log[$previous_week_number][$event['id']]['counted']))
 			{
 				$events_log[$week_number][$event['id']]['counted'] = true;
 			}
@@ -136,6 +155,7 @@ class calendar_category_report extends calendar_ui{
 				{
 					$amount = $event['end'] - $event['start'];
 				}
+				$events_log[$week_number][$event['id']]['counted'] = true;
 			}
 			// store day
 			$day[$event['owner']][$cat_id][$event['id']] = array (
@@ -330,7 +350,9 @@ class calendar_category_report extends calendar_ui{
 					$cats_row = array();
 					foreach ($categories as $cat_id)
 					{
-						$cats_row [$cat_id] = ceil($cats_data[$cat_id]['amount']? $cats_data[$cat_id]['amount'] / $cats_data[$cat_id]['unit']: 0);
+						$cats_row [$cat_id] = ceil($cats_data[$cat_id]['amount']?
+								($cats_data[$cat_id]['amount'] - $events_log['reductions'][$user_id][$cat_id]) /
+								$cats_data[$cat_id]['unit']: 0);
 					}
 					// printout each row into file
 					fputcsv($fp, array_values(array(Api\Accounts::id2name($user_id, 'account_fullname')) + $cats_row));
