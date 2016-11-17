@@ -116,18 +116,6 @@ class Cache extends Etemplate\Request
 	}
 
 	/**
-	 * creates a new unique request-id
-	 *
-	 * @return string
-	 */
-	static function request_id()
-	{
-		// As we replace spaces with + for those account ids which contain spaces, therefore we need to do the same for getting request id too.
-		$userID = str_replace(' ', '+', rawurldecode($GLOBALS['egw_info']['user']['account_lid']));
-		return uniqid($GLOBALS['egw_info']['flags']['currentapp'].'_'.$userID.'_',true);
-	}
-
-	/**
 	 * saves content,readonlys,template-keys, ... via eGW's appsession function
 	 *
 	 * As a user may open several windows with the same content/template wie generate a location-id from microtime

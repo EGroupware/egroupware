@@ -105,19 +105,6 @@ class Session extends Etemplate\Request
 	}
 
 	/**
-	 * creates a new request-id via microtime()
-	 *
-	 * @return string
-	 */
-	static function request_id()
-	{
-		$time = (int) (100 * microtime(true));	// gives precision of 1/100 sec
-		$id = $GLOBALS['egw_info']['flags']['currentapp'] .':'. $time;
-
-		return $id;
-	}
-
-	/**
 	 * saves content,readonlys,template-keys, ... via eGW's appsession function
 	 *
 	 * As a user may open several windows with the same content/template wie generate a location-id from microtime
