@@ -1,23 +1,27 @@
-# EGroupware CalDav or CardDAV support for Apple apps (OS X and iOS)
+# EGroupware CalDav/CardDAV and ActiveSync support via .htaccess
 #
-# $Id$
-#
-# This file can be copyied as .htaccess to your document root
-# to support Mac or iPhone clients to autodetec CalDAV and CardDAV
-# (currently Addressbook does NOT allow to specify our groupdav.php 
-#  URL manually).
-#
-# Please note: 
-# - your Apache web server needs to be setup to read .htaccess files and 
-#   allow use of the RewriteEngine directive (AllowOverride FileInfo). 
+# Please note:
+# - this file needs to be copyied as .htaccess to your document root
+#   to support CalDAV/CardDAV or ActiveSync synchronisation.
+# - your Apache web server needs to be setup to read .htaccess files and
+#   allow use of the RewriteEngine directive (AllowOverride FileInfo).
 # - you need to replace /egroupware with your EGroupware URL path eg. /egw
+# - commented out last directiv can be used to redirect from just the domain to
+#   /egroupware/ to facilitate EGroupware login in default subdirectory.
 
 RewriteEngine On
 RewriteBase /
 
-RewriteRule ^.well-known/(caldav|carddav)$ /egroupware/groupdav.php/ [R]
-RewriteCond %{REQUEST_METHOD}	^(PROPFIND|OPTIONS)$
-RewriteRule ^/$ /egroupware/groupdav.php/ [R]
+# Enable ActiveSync protocol support via eSync app
+RewriteRule ^Microsoft-Server-ActiveSync /egroupware/activesync/index.php [L,QSA]
 
+# CalDAV/CardDAV autodetection
+RewriteRule ^.well-known/(caldav|carddav)$ /egroupware/groupdav.php/ [R]
+# redirect PROPFIND or OPTIONS request on root to EGroupware CalDAV/CardDAV handler
+RewriteCond %{REQUEST_METHOD}	^(PROPFIND|OPTIONS)$
+RewriteRule ^$ /egroupware/groupdav.php/ [R]
 # iOS 4.3+ calendar requires that to autodetect accounts
-RewriteRule ^(/principals/users/.*)$ /egroupware/groupdav.php$1 [R]
+RewriteRule ^(principals/users/.*)$ /egroupware/groupdav.php/$1 [R]
+
+# redirect root to EGroupware under /egroupware
+#RewriteRule ^$ /egroupware/ [R]
