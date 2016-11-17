@@ -3802,7 +3802,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 	{
 		var content = this.et2.getArrayMgr('content').data;
 		var checkbox = {};
-		for (var i=1;i<content.grid.length;i++)
+		var grid_index = typeof content.grid.length !='undefined'? content.grid : Object.keys(content.grid);
+		for (var i=1;i< grid_index.length;i++)
 		{
 			if (content.grid[i] != null)
 			{
