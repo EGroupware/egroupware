@@ -385,6 +385,17 @@ var et2_vfsMime = (function(){ "use strict"; return expose(et2_valueWidget.exten
 				this.image.css("max-width", "100%");
 			}
 			this.image.attr("src", src);
+			// tooltip for mimetypes with available detailed thumbnail
+			if (_value.mime.match(/application\/vnd\.oasis\.opendocument\.(text|presentation|spreadsheet|chart)/))
+			{
+				this.image.parent().parent().parent().tooltip({
+					items:"img",
+					position: {my:"right top", at:"left top", collision:"flipfit"},
+					content: function(){
+						return '<img src="'+this.src+'&thsize=512"/>';
+					}
+				});
+			}
 		}
 		// add/remove link icon, if file is (not) a symlink
 		if ((_value.mode & et2_vfsMode.prototype.types.l) == et2_vfsMode.prototype.types.l)
