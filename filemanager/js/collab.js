@@ -272,6 +272,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 						success: function(data) {
 							egw(window).message(egw.lang('Document %1 successfully has been saved.', file_path));
 							self.editor.setDocumentModified(false);
+							if (_egwAction.id == 'saveas') return;
 							egw.json('filemanager.filemanager_collab.ajax_actions',[{'es_id':self.collab_server.es_id, 'file_path': egw.webserverUrl+'/webdav.php'+file_path}, 'save'], function(){
 								afterSaveCallback.call(self,{});
 							}).sendRequest();
