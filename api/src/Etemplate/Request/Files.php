@@ -129,7 +129,7 @@ class Files extends Etemplate\Request
 	{
 		do
 		{
-			$id = uniqid('etemplate_'.$GLOBALS['egw_info']['flags']['currentapp'].'_',true);
+			$id = parent::request_id();
 		}
 		while (file_exists(self::$directory.'/'.$id));
 

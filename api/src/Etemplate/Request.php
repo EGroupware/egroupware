@@ -351,6 +351,24 @@ class Request
 	}
 
 	/**
+	 * creates a new unique request-id
+	 *
+	 * @return string
+	 */
+	static function request_id()
+	{
+		// As we replace spaces with + for those account ids which contain spaces, therefore we need to do the same for getting request id too.
+		$userID = str_replace(' ', '+', rawurldecode($GLOBALS['egw_info']['user']['account_lid']));
+
+		// generate random token (using oppenssl if available otherwise mt_rand based Auth::randomstring)
+		$token = function_exists('openssl_random_pseudo_bytes') ?
+			base64_encode(openssl_random_pseudo_bytes(32)) :
+			Auth::randomstring(44);
+
+		return $GLOBALS['egw_info']['flags']['currentapp'].'_'.$userID.'_'.$token;
+	}
+
+	/**
 	 * magic function to set all request-vars, used eg. as $request->method = 'app.class.method';
 	 *
 	 * @param string $var
