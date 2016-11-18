@@ -42,15 +42,29 @@ $xml->setIndent(true);
 $xml->startDocument('1.0', 'UTF-8');
 $xml->startElement('signatures');
 
-foreach(Api\Mail\Account::identities(array(), true, 'params') as $identity)
+foreach(Api\Mail\Account::search(true, false) as $acc_id => $account)
 {
-	$xml->startElement('signature');
-	$xml->writeAttribute('name', Api\Mail\Account::identity_name($row, true));
-	$xml->writeAttribute('allow-edit', 'true');
-	$xml->writeAttribute('overwrite', 'true');
-	$xml->writeAttribute('targetMail', $identity['ident_email'].' <mailto:'.$identity['ident_email'].'>');
-	$xml->writeCdata($identity['ident_signature']);
-	$xml->endElement();
+	foreach($account->identities($account, true, 'params') as $ident_id => $identity)
+	{
+		// dont write empty signatures
+		if (strlen(trim(strip_tags($identity['ident_signature']))) < 10) continue;
+
+		// check if we have an non-empty email address
+		foreach(array($identity['ident_email'], $account->ident_email, $account->acc_imap_username,
+			$GLOBALS['egw_info']['user']['account_email']) as $email)
+		{
+			if (strpos($email, '@')) break;
+		}
+		if (!strpos($email, '@')) continue;
+
+		$xml->startElement('signature');
+		$xml->writeAttribute('name', Api\Mail\Account::identity_name($identity+$account->params, true));
+		$xml->writeAttribute('allow-edit', 'true');
+		$xml->writeAttribute('overwrite', 'true');
+		$xml->writeAttribute('targetMail', $email.' <mailto:'.$email.'>');
+		$xml->writeCdata($identity['ident_signature']);
+		$xml->endElement();
+	}
 }
 $xml->endElement();
 $xml->endDocument();
