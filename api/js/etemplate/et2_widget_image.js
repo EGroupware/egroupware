@@ -533,12 +533,29 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 });}).call(this);
 et2_register_widget(et2_avatar, ["avatar"]);
 
+/**
+ * Avatar readonly widget to only display user profile picture or
+ * user letter avatar based on user's firstname lastname.
+ *
+ * @augments et2_baseWidget
+ */
+var et2_avatar_ro = (function(){ "use strict"; return et2_avatar.extend(
+{
+	init: function ()
+	{
+		this._super.apply(this,arguments);
+		this.options.editable = false;
+	}
+
+});}).call(this);
+et2_register_widget(et2_avatar_ro, ["avatar_ro"]);
+
 jQuery.extend(et2_avatar,
 {
 	/**
 	 * Function runs after uplaod in avatar dialog is finished and it tries to
 	 * update image and cropper container.
-	 * 
+	 *
 	 * @param {type} e
 	 * @returns {undefined}
 	 */
