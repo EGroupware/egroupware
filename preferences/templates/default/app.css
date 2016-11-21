@@ -19,9 +19,6 @@ table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
     position: absolute;
     height: 99%;
 }
-tr.prefRow {
-	position: relative;
-}
 tr.prefRow:hover {background-color:#f0f0ff}
 td.prefName {
 	width: 50%;
