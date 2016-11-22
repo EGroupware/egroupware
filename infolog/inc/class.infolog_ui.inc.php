@@ -1218,10 +1218,24 @@ class infolog_ui
 			$actions['timesheet'] = array(	// interactive add for a single event
 				'icon' => 'timesheet/navbar',
 				'caption' => 'Timesheet',
-				'url' => 'menuaction=timesheet.timesheet_ui.edit&link_app[]=infolog&link_id[]=$id',
 				'group' => $group,
 				'allowOnMultiple' => false,
-				'popup' => Link::get_registry('timesheet', 'add_popup'),
+
+				'children' => array(
+					'timesheet_list' => array(
+						'caption' => lang('View linked %1 entries', lang('timesheet')),
+						'icon' => 'infolog/navbar',
+						'onExecute' => 'javaScript:app.infolog.timesheet_list',
+						'allowOnMultiple' => false,
+						'hideOnDisabled' => true,
+					),
+					'timesheet_add' => array(
+						'icon' => 'timesheet/navbar',
+						'caption' => 'Add a new Timesheet',
+						'url' => 'menuaction=timesheet.timesheet_ui.edit&link_app[]=infolog&link_id[]=$id',
+						'popup' => Link::get_registry('timesheet', 'add_popup'),
+					)
+				)
 			);
 		}
 		if ($GLOBALS['egw_info']['user']['apps']['tracker'])

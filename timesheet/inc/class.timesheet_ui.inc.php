@@ -568,7 +568,15 @@ class timesheet_ui extends timesheet_bo
 		// handle linked filter (show only entries linked to a certain other entry)
 		if ($query['col_filter']['linked'])
 		{
-			list($app,$id) = explode(':',$query['col_filter']['linked']);
+			if(!is_array($query['col_filter']['linked']))
+			{
+				list($app,$id) = explode(':',$query['col_filter']['linked']);
+			}
+			else
+			{
+				$app = $query['col_filter']['linked']['app'];
+				$id = $query['col_filter']['linked']['id'];
+			}
 			if (!($links = Link::get_links($app,$id,'timesheet')))
 			{
 				$rows = array();	// no infologs linked to project --> no rows to return
@@ -921,6 +929,13 @@ class timesheet_ui extends timesheet_bo
 		if($_GET['search'])
 		{
 			$content['nm']['search'] = $_GET['search'];
+		}
+		if($_GET['link_app'] && Link::get_registry($_GET['link_app'], 'query') && $_GET['link_id'])
+		{
+			$content['nm']['col_filter']['linked'] = array(
+				'app' => $_GET['link_app'],
+				'id' => $_GET['link_id']
+			);
 		}
 		$read_grants = $this->grant_list(Acl::READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
