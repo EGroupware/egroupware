@@ -21,7 +21,7 @@
 				<row class="select_definition">
 					<description value="Select definition"/>
 					<menulist>
-						<menupopup id="definition" no_lang="1" onchange="1"/>
+						<menupopup id="definition" no_lang="1" onchange="widget.getInstanceManager().postSubmit(); return false;"/>
 					</menulist>
 				</row>
 				<row class="select_plugin">
