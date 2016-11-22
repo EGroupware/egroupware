@@ -635,6 +635,34 @@ app.classes.infolog = AppJS.extend(
 	},
 
 	/**
+	 * View a list of timesheets for the linked infolog entry
+	 *
+	 * Only one infolog entry at a time is allowed, we just pick the first one
+	 *
+	 * @param {egwAction} _action
+	 * @param {egwActionObject[]} _selected
+	 */
+	timesheet_list: function(_action, _selected)
+	{
+		var extras = {
+			link_app: 'infolog',
+			link_id: false
+		};
+		for(var i = 0; i < _selected.length; i++)
+		{
+			// Remove UID prefix for just contact_id
+			var ids = _selected[i].id.split('::');
+			ids.shift();
+			ids = ids.join('::');
+
+			extras.link_id = ids;
+			break;
+		}
+		
+		egw.open("","timesheet","list", extras, 'timesheet');
+	},
+
+	/**
 	 * Go to parent entry
 	 *
 	 * @param {aciton object} _action
