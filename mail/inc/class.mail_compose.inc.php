@@ -1751,7 +1751,7 @@ class mail_compose
 			if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
 				//error_log(__METHOD__.__LINE__.':'.array2string($attachments));
 				foreach($attachments as $attachment) {
-					if (!($attachment['cid'] && preg_match("/image\//",$attachment['mimeType'])))
+					if (!($attachment['cid'] && preg_match("/image\//",$attachment['mimeType'])) || $attachment['disposition'] == 'attachment')
 					{
 						$this->addMessageAttachment($_uid, $attachment['partID'],
 							$_folder,
