@@ -1035,7 +1035,7 @@ class infolog_so
 			'ABS(info_enddate-'.time().')<'.(4*24*60*60).')',		// end_day within 4 days
 		),__LINE__,__FILE__) as $row)
 		{
-			$users[] = $row['info_responsible'];
+			$users[] = $row['info_owner'];
 		}
 		foreach($this->db->select($this->info_table, "DISTINCT $this->users_table.account_id AS account_id",
 			$this->statusFilter('open',false), __LINE__, __FILE__, false, '', 'infolog', 0,
