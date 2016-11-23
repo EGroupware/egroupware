@@ -399,7 +399,9 @@ function hl_email_tag_transform($element, $attribute_array=0)
 			}
 			if (!preg_match('/^cid:.*/',$attribute_array['src']))
 			{
-				if (!$GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs'])
+				$url = preg_replace('/^(http|https):\/\//','',$attribute_array['src']);
+				$url = explode('/', $url);
+				if (!in_array($url[0], $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs']))
 				{
 					//the own webserver url is not external, so it should be allowed
 					if (empty($GLOBALS['egw_info']['server']['webserver_url'])||!preg_match("$^".$GLOBALS['egw_info']['server']['webserver_url'].".*$",$attribute_array['src']))

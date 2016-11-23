@@ -985,9 +985,12 @@ app.classes.mail = AppJS.extend(
 			{
 				this.mail_selectedMails.push(_id);
 			}
-
+			var self = this;
 			// Request email body from server
 			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
+			jQuery(IframeHandle.getDOMNode()).on('load', function(e){
+				self.resolveExternalImages (this.contentWindow.document);
+			});
 		}
 
 		var messages = {};
@@ -1024,6 +1027,126 @@ app.classes.mail = AppJS.extend(
 				messages, buttons);
 			}
 			egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
+		}
+	},
+
+	resolveExternalImages: function (_node)
+	{
+		var external_images = jQuery(_node).find('img[alt*="[blocked external image:"]');
+		if (external_images.length > 0 && jQuery(_node).find('.mail_externalImagesMsg').length == 0)
+		{
+			var container = jQuery(document.createElement('div'))
+					.addClass('mail_externalImagesMsg')
+					.css({
+						"display": 'block',
+						"position": 'fixed',
+						"height": '50px',
+						"width": '100%',
+						"top": '0',
+						"left": '0',
+						"background":'#ffe5a5',
+						"border-top": '1px solid #8f8b8b',
+						"box-shadow": '0px 1px 13px 2px #8f8b8b'
+					});
+			var button_style = {
+				"float": "right",
+				"margin": "15px",
+				"display": "inline-block",
+				"background-color": "transparent",
+				"border": "none",
+				"font-weight": "bold",
+				"color": "#30558c",
+				"cursor": "pointer",
+				"text-decoration": "underline"
+			};
+			var getUrlParts = function (_rawUrl) {
+				var u = _rawUrl.split('[blocked external image:');
+				u = u[1].replace(']','');
+				var url = u;
+				if (u.substr(0,7) == 'http://') u = u.replace ('http://','');
+				if (u.substr(0,8) == 'https://') u = u.replace ('https://','');
+				var url_parts = u.split('/');
+				return {
+					url: url,
+					domain: url_parts[0]
+				};
+			}
+
+			var host = getUrlParts(external_images[0].alt);
+			var showImages = function (_images)
+			{
+				_images.each(function(i, node){
+					var parts = getUrlParts (node.alt);
+					node.src = parts.url;
+				});
+			}
+			var pref = egw.preference('allowExternalIMGs', 'mail');
+			pref = Object.values(pref);
+			if (pref.indexOf(host.domain)>-1)
+			{
+				showImages (external_images);
+				return;
+			}
+
+			var text = jQuery(document.createElement('p'))
+					.css({
+						"display": 'inline-block',
+						"width":'60%',
+						"font-size":'11pt',
+						"margin": '15px',
+						"color": '#1f1f1f'
+					})
+					.text(egw.lang('In order to protect your privacy all external sources within this email are blocked.'))
+					.appendTo(container);
+			var closeBtn = jQuery(document.createElement('button'))
+					.css ({
+						"float":'right',
+						"background-image":'url(pixelegg/images/close.png)',
+						"height": '50px',
+						"width": '50px',
+						"background-repeat": 'no-repeat',
+						"background-position": 'center',
+						"background-size": '22px',
+						"background-color": 'transparent',
+						"border": 'none',
+						"cursor": 'pointer',
+						"display": 'inline-block'
+					})
+					.click (function (){
+						container.remove();
+					})
+					.appendTo(container);
+			var alwaysBtn = jQuery(document.createElement('button'))
+					.css(button_style)
+					.text(egw.lang('Allow'))
+					.attr ('title', egw.lang('Always allow external sources from %1', host.domain))
+					.click (function (){
+
+
+						if (pref && pref.length)
+						{
+							pref.push(host.domain);
+						}
+						else
+						{
+							pref = [host.domain];
+						}
+						egw.set_preference( 'mail', 'allowExternalIMGs', pref);
+						showImages(external_images);
+						container.remove();
+					})
+					.appendTo(container);
+			var alwaysBtn = jQuery(document.createElement('button'))
+					.css(button_style)
+					.text(egw.lang('Show'))
+					.attr ('title', egw.lang('Show them this time only'))
+					.click(function(){
+						showImages(external_images);
+						container.remove();
+					})
+					.appendTo(container);
+			container.appendTo(_node.body);
+
 		}
 	},
 
