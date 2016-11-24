@@ -242,7 +242,6 @@ infolog - import csv-file	infolog	de	InfoLog - Import CSV-Datei
 infolog - new	infolog	de	InfoLog - Anlegen
 infolog - new subproject	infolog	de	InfoLog - Anlegen Teilprojekt
 infolog - subprojects from	infolog	de	InfoLog - Teilprojekte von
-infolog copied - the copy can now be edited	infolog	de	InfoLog Kopie - Diese Kopie kann jetzt bearbeitet werden
 infolog csv export	infolog	de	InfoLog CSV Export
 infolog csv import	infolog	de	InfoLog CSV Import
 infolog entry deleted	infolog	de	InfoLog Eintrag gelöscht

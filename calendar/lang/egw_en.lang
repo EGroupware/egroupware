@@ -197,7 +197,6 @@ error: starttime has to be before the endtime !!!	calendar	en	Error: Start time 
 error: the entry has been updated since you opened it for editing!	calendar	en	Error: The entry has been updated since you opened it for editing!
 error: you can't shift a series from the past!	calendar	en	Error: You can't shift a series from the past!
 event	common	en	Event
-event copied - the copy can now be edited	calendar	en	Event copied - the copy can now be edited.
 event deleted	calendar	en	Event deleted.
 event details follow	calendar	en	Event details follow
 event saved	calendar	en	Event saved.
