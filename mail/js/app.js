@@ -198,7 +198,7 @@ app.classes.mail = AppJS.extend(
 					// encrypt body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
 					self.mail_prepare_print();
-
+					self.resolveExternalImages(this.contentWindow.document);
 					// Trigger print command if the mail oppend for printing porpuse
 					// load event fires twice in IE and the first time the content is not ready
 					// Check if the iframe content is loaded then trigger the print command
@@ -1036,29 +1036,8 @@ app.classes.mail = AppJS.extend(
 		if (external_images.length > 0 && jQuery(_node).find('.mail_externalImagesMsg').length == 0)
 		{
 			var container = jQuery(document.createElement('div'))
-					.addClass('mail_externalImagesMsg')
-					.css({
-						"display": 'block',
-						"position": 'fixed',
-						"height": '50px',
-						"width": '100%',
-						"top": '0',
-						"left": '0',
-						"background":'#ffe5a5',
-						"border-top": '1px solid #8f8b8b',
-						"box-shadow": '0px 1px 13px 2px #8f8b8b'
-					});
-			var button_style = {
-				"float": "right",
-				"margin": "15px",
-				"display": "inline-block",
-				"background-color": "transparent",
-				"border": "none",
-				"font-weight": "bold",
-				"color": "#30558c",
-				"cursor": "pointer",
-				"text-decoration": "underline"
-			};
+					.click(function(){jQuery(this).remove();})
+					.addClass('mail_externalImagesMsg');
 			var getUrlParts = function (_rawUrl) {
 				var u = _rawUrl.split('[blocked external image:');
 				u = u[1].replace(']','');
@@ -1073,10 +1052,27 @@ app.classes.mail = AppJS.extend(
 			}
 
 			var host = getUrlParts(external_images[0].alt);
-			var showImages = function (_images)
+			var showImages = function (_images, _save)
 			{
-				_images.each(function(i, node){
+				var save = _save || false;
+				_images.each(function(i, node) {
 					var parts = getUrlParts (node.alt);
+					if (save)
+					{
+						if (pref && pref.length)
+						{
+							if (pref.indexOf(parts.domain) == -1)
+							{
+								pref.push(parts.domain);
+								egw.set_preference( 'mail', 'allowExternalIMGs', pref);
+							}
+						}
+						else
+						{
+							pref = [parts.domain];
+							egw.set_preference( 'mail', 'allowExternalIMGs', pref);
+						}
+					}
 					node.src = parts.url;
 				});
 			}
@@ -1088,56 +1084,24 @@ app.classes.mail = AppJS.extend(
 				return;
 			}
 
-			var text = jQuery(document.createElement('p'))
-					.css({
-						"display": 'inline-block',
-						"width":'60%',
-						"font-size":'11pt',
-						"margin": '15px',
-						"color": '#1f1f1f'
-					})
+			jQuery(document.createElement('p'))
 					.text(egw.lang('In order to protect your privacy all external sources within this email are blocked.'))
 					.appendTo(container);
-			var closeBtn = jQuery(document.createElement('button'))
-					.css ({
-						"float":'right',
-						"background-image":'url(pixelegg/images/close.png)',
-						"height": '50px',
-						"width": '50px',
-						"background-repeat": 'no-repeat',
-						"background-position": 'center',
-						"background-size": '22px',
-						"background-color": 'transparent',
-						"border": 'none',
-						"cursor": 'pointer',
-						"display": 'inline-block'
-					})
+			jQuery(document.createElement('button'))
+					.addClass ('closeBtn')
 					.click (function (){
 						container.remove();
 					})
 					.appendTo(container);
-			var alwaysBtn = jQuery(document.createElement('button'))
-					.css(button_style)
+			jQuery(document.createElement('button'))
 					.text(egw.lang('Allow'))
 					.attr ('title', egw.lang('Always allow external sources from %1', host.domain))
 					.click (function (){
-
-
-						if (pref && pref.length)
-						{
-							pref.push(host.domain);
-						}
-						else
-						{
-							pref = [host.domain];
-						}
-						egw.set_preference( 'mail', 'allowExternalIMGs', pref);
-						showImages(external_images);
+						showImages(external_images, true);
 						container.remove();
 					})
 					.appendTo(container);
-			var alwaysBtn = jQuery(document.createElement('button'))
-					.css(button_style)
+			jQuery(document.createElement('button'))
 					.text(egw.lang('Show'))
 					.attr ('title', egw.lang('Show them this time only'))
 					.click(function(){
@@ -1145,8 +1109,7 @@ app.classes.mail = AppJS.extend(
 						container.remove();
 					})
 					.appendTo(container);
-			container.appendTo(_node.body);
-
+			container.appendTo(_node.body? _node.body:_node);
 		}
 	},
 
@@ -5527,6 +5490,7 @@ app.classes.mail = AppJS.extend(
 				}
 				else
 				{
+					self.resolveExternalImages(this.contentWindow.document)
 					// Use prepare print function to copy iframe content into div
 					// as we don't want to show content in iframe (scrolling problem).
 					self.mail_prepare_print(jQuery(this));

@@ -399,8 +399,7 @@ function hl_email_tag_transform($element, $attribute_array=0)
 			}
 			if (!preg_match('/^cid:.*/',$attribute_array['src']))
 			{
-				$url = preg_replace('/^(http|https):\/\//','',$attribute_array['src']);
-				$url = explode('/', $url);
+				$url = explode('/', preg_replace('/^(http|https):\/\//','',$attribute_array['src']));
 				if (!in_array($url[0], $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs']))
 				{
 					//the own webserver url is not external, so it should be allowed
