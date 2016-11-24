@@ -97,6 +97,11 @@ class timesheet_ui extends timesheet_bo
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
 				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.infolog_ui.index' : TIMESHEET_APP.'.timesheet_ui.index');
 
+			if($_GET['action'] == 'copy')
+			{
+				$this->create_copy();
+				$msg = lang('%1 copied - the copy can now be edited', lang(Link::get_registry(TIMESHEET_APP,'entry')));
+			}
 			if (!$this->check_statusForEditRights($this->data))
 			{
 				$view = true;  //only admin can edit with this status
@@ -318,7 +323,8 @@ class timesheet_ui extends timesheet_bo
 			'view' => $view,
 			'tabs'  => $content['tabs'],
 			'link_to' => array(
-				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
+				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : 
+					($this->data['link_to']['to_id'] ? $this->data['link_to']['to_id'] : $content['link_to']['to_id']),
 				'to_app' => TIMESHEET_APP,
 			),
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
@@ -1006,8 +1012,21 @@ class timesheet_ui extends timesheet_bo
 */
 			'add' => array(
 				'caption' => 'Add',
-				'onExecute' => 'javaScript:app.timesheet.add_action_handler',
 				'group' => $group,
+				'children' => array(
+					'new' => array(
+						'caption' => 'New',
+						'onExecute' => 'javaScript:app.timesheet.add_action_handler',
+						'icon' => 'new',
+					),
+					'copy' => array(
+						'caption' => 'Copy',
+						'url' => 'menuaction=timesheet.timesheet_ui.edit&action=copy&ts_id=$id',
+						'popup' => Link::get_registry('infolog', 'add_popup'),
+						'allowOnMultiple' => false,
+						'icon' => 'copy',
+					),
+				)
 			),
 			'cat' => Etemplate\Widget\Nextmatch::category_action(
 				'timesheet',++$group,'Change category','cat_'
@@ -1289,5 +1308,40 @@ class timesheet_ui extends timesheet_bo
 			return $pm_ids[0]['pm_id'];
 		}
 		return false;
+	}
+
+	/**
+	 * Create a copy from an entry currently read into $this->data including all
+	 * customfields, attachments and links
+	 */
+	private function create_copy()
+	{
+		$original_id = $this->data['ts_id'];
+		unset($this->data['ts_id']);
+		
+		$this->data['ts_title'] = lang('Copy of:') . ' ' .$this->data['ts_title'];
+		unset($this->data['ts_modified']);
+		unset($this->data['ts_modifier']);
+		$this->data['ts_owner'] = !(int)$this->data['ts_owner'] || !$this->check_acl(Acl::ADD,NULL,$this->data['ts_owner']) ? $this->user : $this->data['ts_owner'];
+
+		// Copy links
+		if(!is_array($this->data['link_to'])) $this->data['link_to'] = array();
+		$this->data['link_to']['to_app'] = 'timesheet';
+		$this->data['link_to']['to_id'] = 0;
+
+		foreach(Link::get_links($this->data['link_to']['to_app'], $original_id) as $link)
+		{
+			if ($link['app'] != Link::VFS_APPNAME)
+			{
+				Link::link('timesheet', $this->data['link_to']['to_id'], $link['app'], $link['id'], $link['remark']);
+			}
+			elseif ($link['app'] == Link::VFS_APPNAME)
+			{
+				Link::link('timesheet', $this->data['link_to']['to_id'], Link::VFS_APPNAME, array(
+					'tmp_name' => Link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
+					'name' => $link['id'],
+				), $link['remark']);
+			}
+		}
 	}
 }
