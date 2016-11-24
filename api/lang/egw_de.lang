@@ -1,5 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	de	%1 (%2 neue) Texte für die Anwendung '%3' und die Sprache '%4' geschrieben
 %1 active file(s) with same name as directory inactivated!	admin	de	%1 aktive Dateien mit dem selben Verzeichnisnamen wurden deaktiviert!
+%1 copied - the copy can now be edited	common	de	%1 Kopie - Diese Kopie kann jetzt bearbeitet werden
 %1 directories %2 found!	admin	de	%1 Verzeichnisse %2 gefunden!
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
 %1 entries found, select one ...	common	de	%1 Einträge gefunden, einen auswählen ...

@@ -2205,7 +2205,7 @@ window.egw_LAB.wait(function() {
 			if($content && $_GET['makecp'])	// copy the contact
 			{
 				$this->copy_contact($content);
-				$content['msg'] = lang('Contact copied');
+				$content['msg'] = lang('%1 copied - the copy can now be edited', lang(Link::get_registry('addressbook','entry')));
 				$view = false;
 			}
 			else

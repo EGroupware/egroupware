@@ -660,7 +660,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			unset($link);
 			$preserv['view'] = $preserv['edit_single'] = false;
-			$msg = lang('Event copied - the copy can now be edited');
+			$msg = lang('%1 copied - the copy can now be edited', lang(Link::get_registry('calendar','entry')));
 			$event['title'] = lang('Copy of:').' '.$event['title'];
 			break;
 

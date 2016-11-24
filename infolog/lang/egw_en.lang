@@ -242,7 +242,6 @@ infolog - import csv-file	infolog	en	InfoLog - Import CSV file
 infolog - new	infolog	en	InfoLog - New
 infolog - new subproject	infolog	en	InfoLog - New sub project
 infolog - subprojects from	infolog	en	InfoLog - Sub projects from
-infolog copied - the copy can now be edited	infolog	en	InfoLog copied - the copy can now be edited
 infolog csv export	infolog	en	InfoLog CSV export
 infolog csv import	infolog	en	InfoLog CSV import
 infolog entry deleted	infolog	en	InfoLog entry deleted

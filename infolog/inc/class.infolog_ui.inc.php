@@ -2379,7 +2379,7 @@ class infolog_ui
 		}
 		if (!$create_sub)
 		{
-			$content['msg'] .= ($content['msg']?"\n":'').lang('Infolog copied - the copy can now be edited');
+			$content['msg'] .= ($content['msg']?"\n":'').lang('%1 copied - the copy can now be edited', lang(Link::get_registry('infolog','entry')));
 		}
 	}
 

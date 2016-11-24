@@ -197,7 +197,6 @@ error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit 
 error: the entry has been updated since you opened it for editing!	calendar	de	Fehler: Der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
 error: you can't shift a series from the past!	calendar	de	Eine abgelaufene Serie kann nicht mehr verschoben werden!
 event	common	de	Termin
-event copied - the copy can now be edited	calendar	de	Termin kopiert - die Kopie kann jetzt bearbeitet werden
 event deleted	calendar	de	Termin gelöscht
 event details follow	calendar	de	Details zum Termin folgen
 event saved	calendar	de	Termin gespeichert
