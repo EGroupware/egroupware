@@ -1231,7 +1231,7 @@ class infolog_ui
 					),
 					'timesheet_add' => array(
 						'icon' => 'timesheet/navbar',
-						'caption' => 'Add a new Timesheet',
+						'caption' => 'Add timesheet entry',
 						'url' => 'menuaction=timesheet.timesheet_ui.edit&link_app[]=infolog&link_id[]=$id',
 						'popup' => Link::get_registry('timesheet', 'add_popup'),
 					)
