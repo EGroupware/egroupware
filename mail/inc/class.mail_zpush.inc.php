@@ -185,16 +185,32 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		);
 
 /*
+		$sigOptions = array(
+				'send'=>'yes, always add EGroupware signatures to outgoing mails',
+				'nosend'=>'no, never add EGroupware signatures to outgoing mails',
+			);
+		if (!isset($hook_data['setup']) && in_array($hook_data['type'], array('user', 'group'))&&$hook_data['account_id'])
+		{
+			$pID=self::$profileID;
+			if ($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-ActiveSyncProfileID']=='G')
+			{
+				$pID=Mail\Account::get_default_acc_id();
+			}
+			$acc = Mail\Account::read($pID);
+			error_log(__METHOD__.__LINE__.':'.$pID.'->'.array2string($acc));
+			$Identities = Mail\Account::identities($pID);
+			foreach($Identities as &$identity)
+			{
+				$Identity = self::identity_name($identity);
+			}
+			error_log(__METHOD__.__LINE__.array2string($Identities));
+		}
 		$settings['mail-useSignature'] = array(
 			'type'   => 'select',
 			'label'  => 'control if and which available signature is added to outgoing mails',
 			'name'   => 'mail-useSignature',
 			'help'   => 'control the use of signatures',
-			'values' => array(
-				'sendifnocalnotif'=>'only send if there is no notification in calendar',
-				'send'=>'yes, always add EGroupware signatures to outgoing mails',
-				'nosend'=>'no, never add EGroupware signatures to outgoing mails',
-			),
+			'values' => $sigOptions,
 			'xmlrpc' => True,
 			'default' => 'nosend',
 			'admin'  => False,
@@ -996,6 +1012,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 							'<body>';
 						if ($output->nativebodytype==2)
 						{
+							if ($css) Api\Mail\Html::replaceTagsCompletley($body,'style');
 							// as we fetch html, and body is HTML, we may not need to handle this
 							$htmlbody .= $body;
 						}
@@ -1904,27 +1921,73 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	 * @param string $displayname => new folder name (to be created, or to be renamed to)
 	 * @param string $type folder type, ignored in IMAP
 	 *
+	 * @throws StatusException              could throw specific SYNC_FSSTATUS_* exceptions
 	 * @return array|boolean stat array or false on error
 	 */
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id', '$oldid', '$displayname', $type) NOT supported!");
-		return false;
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$id', '$oldid', '$displayname', $type)");
+		$account = $parent_id = null;
+		$this->splitID($id, $account, $parentFolder, $app);
+
+		$parent_id = $this->folder2hash($account, $parentFolder);
+		$old_hash = $oldFolder = null;
+
+		if (empty($oldid))
+		{
+			$action = 'create';
+		}
+		else
+		{
+			$action = 'rename';
+			$this->splitID($oldid, $account, $oldFolder, $app);
+			$old_hash = $this->folder2hash($account, $oldFolder);
+		}
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.":{$action}Folder('$id'=>($parentFolder ($parent_id)), '$oldid'".($oldid?"=>($oldFolder ($old_hash))":'').", '$displayname', $type)");
+		$this->_connect($this->account);
+		try
+		{
+			if ($action=='rename')
+			{
+				$newFolderName = $this->mail->renameFolder($oldFolder, $parentFolder, $displayname);
+			}
+			elseif ($action=='create')
+			{
+				$error=null;
+				$newFolderName = $this->mail->createFolder($parentFolder, $displayname, $error);
+			}
+		}
+		catch (\Exception $e)
+		{
+			//throw new Exception(__METHOD__." $action failed for $oldFolder ($action: $displayname) with error:".$e->getMessage());
+			return false;
+		}
+		$newHash = $this->rename_folder_hash($account, $old_hash, $newFolderName);
+		$newID = $this->createID($account, $newHash);
+
+		ZLog::Write(LOGLEVEL_DEBUG,":{$action}Folder('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname' => $newFolderName (ID:$newID))");
+		return $this->StatFolder($newID);
 	}
 
 	/**
 	 * Deletes (really delete) a Folder
 	 *
-	 * @param string $parentid of the folder to delete
 	 * @param string $id of the folder to delete
+	 * @param string $parentid (=false) of the folder to delete, may be false/not set
 	 *
-	 * @return
-	 * @TODO check what is to be returned
+	 * @throws StatusException              could throw specific SYNC_FSSTATUS_* exceptions
+	 * @return boolean true or false on error
 	 */
-	public function DeleteFolder($parentid, $id)
+	public function DeleteFolder($id, $parentid=false)
 	{
-		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$parentid', '$id') NOT supported!");
-		return false;
+		$account = $parent_id = $app = null;
+		$this->splitID($id, $account, $folder, $app);
+		$old_hash = $this->folder2hash($account, $folder);
+		if ($parentid) $this->splitID($parentid, $account, $parentfolder, $app);
+		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."( '$id (-> $folder)','$parentid ".($parentid?'(->'.$parentfolder.')':'')."') called!");
+		$ret = $this->mail->deleteFolder($folder);
+		if ($ret) $newHash = $this->rename_folder_hash($account, $old_hash, "##Dele#edFolder#$folder##");
+		return $ret;
 	}
 
 	/**
@@ -1974,22 +2037,22 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	}
 
 	/**
-	 * Split an ID string into $app, $folder and $id
+	 * Split an ID string into $app, $account $folder and $appid
 	 *
 	 * @param string $str
 	 * @param int &$account mail account id
 	 * @param string &$folder
-	 * @param int &$id=null
+	 * @param int &$appid=null (for mail=mail is to be expected)
 	 * @throws Api\Exception\WrongParameter
 	 */
-	private function splitID($str,&$account,&$folder,&$id=null)
+	private function splitID($str,&$account,&$folder,&$appid=null)
 	{
-		$this->backend->splitID($str, $account, $folder, $id);
+		$this->backend->splitID($str, $account, $folder, $appid);
 
 		// convert numeric folder-id back to folder name
 		$folder = $this->hash2folder($account,$f=$folder);
 
-		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$str','$account','$folder',$id)");
+		if ($this->debugLevel>1) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."('$str','$account','$folder',$appid)");
 	}
 
 	/**
@@ -2034,6 +2097,25 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if(!isset($this->folderHashes)) $this->readFolderHashes();
 
 		return isset($this->folderHashes[$account]) ? $this->folderHashes[$account][$index] : null;
+	}
+
+	/**
+	 * Rename or create a folder in hash table
+	 *
+	 * @param int $account
+	 * @param int $index or null to create
+	 * @param string $new_name
+	 * @return int $index or new hash if $index is not found
+	 */
+	private function rename_folder_hash($account, $index, $new_name)
+	{
+		if ((string)$index === '' || !$this->hash2folder($account, $index))
+		{
+			return $this->folder2hash($account, $new_name);
+		}
+		$this->folderHashes[$account][$index] = $new_name;
+		$this->storeFolderHashes();
+		return $index;
 	}
 
 	private $folderHashes;
