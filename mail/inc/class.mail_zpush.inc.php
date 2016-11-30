@@ -1964,7 +1964,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		}
 		$newHash = $this->rename_folder_hash($account, $old_hash, $newFolderName);
 		$newID = $this->createID($account, $newHash);
-
+		$this->folders = $this->mail->getFolderObjects(true,false,$_alwaysGetDefaultFolders=true,false);
 		ZLog::Write(LOGLEVEL_DEBUG,":{$action}Folder('$id'=>($parentFolder), '$oldid'".($oldid?"=>($oldFolder)":'').", '$displayname' => $newFolderName (ID:$newID))");
 		return $this->StatFolder($newID);
 	}
@@ -1987,6 +1987,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."( '$id (-> $folder)','$parentid ".($parentid?'(->'.$parentfolder.')':'')."') called!");
 		$ret = $this->mail->deleteFolder($folder);
 		if ($ret) $newHash = $this->rename_folder_hash($account, $old_hash, "##Dele#edFolder#$folder##");
+		$this->folders = $this->mail->getFolderObjects(true,false,$_alwaysGetDefaultFolders=true,false);
 		return $ret;
 	}
 
