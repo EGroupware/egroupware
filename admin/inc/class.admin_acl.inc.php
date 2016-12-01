@@ -171,7 +171,7 @@ class admin_acl
 				case 'other':
 					//$query['col_filter'][] = "acl_location!='run'";
 					// remove everything not an account-id in location, like category based acl
-					if ($GLOBALS['egw']->db->Type == 'mysql')
+					if (substr($GLOBALS['egw']->db->Type, 0, 5) == 'mysql')
 					{
 						$query['col_filter'][] = "acl_location REGEXP '^-?[0-9]+$'";
 					}
