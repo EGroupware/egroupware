@@ -170,6 +170,14 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 		{
 			_url = _app.indexUrl;
 		}
+		// If there are query parameters and URL is the same, don't just refresh
+		// because the app's state may have changed since last time
+		else if (_app.browser != null && _url == _app.browser.currentLocation
+			&& !_url.match(/menuaction=[^&]+&ajax=true/))
+		{
+			// Reset current so new url loads fully
+			_app.browser.currentLocation = _app.indexUrl;
+		}
 		else if (_app.browser != null &&
 			// check if app has its own linkHandler
 			!(this.applications[_app.appName].app_refresh) &&
