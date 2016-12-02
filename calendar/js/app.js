@@ -2977,7 +2977,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		var multiple_owner = typeof state.owner != 'string' &&
 			state.owner.length > 1 &&
 			(state.view == 'day' && state.owner.length < parseInt(this.egw.preference('day_consolidate','calendar')) ||
-			state.view == 'week' && state.owner.length < parseInt(this.egw.preference('week_consolidate','calendar')));
+			['week','day4'].indexOf(state.view) !== -1 && state.owner.length < parseInt(this.egw.preference('week_consolidate','calendar')));
 
 
 		for(var i = 0; i < data.length; i++)
