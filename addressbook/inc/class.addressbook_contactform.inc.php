@@ -60,6 +60,11 @@ class addressbook_contactform
 	 */
 	function display_var(array &$content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false,$sel_options=array())
 	{
+		// allow to preset variables via get parameters
+		if ($_SERVER['REQUEST_METHOD'] == 'GET')
+		{
+			$content = array_merge($_GET, (array)$content);
+		}
 		#error_log( "<p>addressbook_contactform::display(".print_r($content,true).",$addressbook,".print_r($fields,true).",$msg,$tpl_name)</p>\n");
 		if (empty($tpl_name) && !empty($content['tpl_form_name'])) $tpl_name =$content['tpl_form_name'];
 		$tpl = new etemplate($tpl_name ? $tpl_name : 'addressbook.contactform');
