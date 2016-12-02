@@ -1032,6 +1032,11 @@ app.classes.mail = AppJS.extend(
 
 	resolveExternalImages: function (_node)
 	{
+		//Do not run resolve images if it's forced already to show them all
+		// or forced to not show them all.
+		var pref_img = egw.preference('allowExternalIMGs', 'mail');
+		if (pref_img == 1 || pref_img == 0) return;
+
 		var external_images = jQuery(_node).find('img[alt*="[blocked external image:"]');
 		if (external_images.length > 0 && jQuery(_node).find('.mail_externalImagesMsg').length == 0)
 		{
@@ -1064,19 +1069,19 @@ app.classes.mail = AppJS.extend(
 							if (pref.indexOf(parts.domain) == -1)
 							{
 								pref.push(parts.domain);
-								egw.set_preference( 'mail', 'allowExternalIMGs', pref);
+								egw.set_preference( 'mail', 'allowExternalDomains', pref);
 							}
 						}
 						else
 						{
 							pref = [parts.domain];
-							egw.set_preference( 'mail', 'allowExternalIMGs', pref);
+							egw.set_preference( 'mail', 'allowExternalDomains', pref);
 						}
 					}
 					node.src = parts.url;
 				});
 			}
-			var pref = egw.preference('allowExternalIMGs', 'mail');
+			var pref = egw.preference('allowExternalDomains', 'mail') || {};
 			pref = Object.values(pref);
 			if (pref.indexOf(host.domain)>-1)
 			{

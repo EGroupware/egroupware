@@ -200,6 +200,21 @@ class mail_hooks
 				'admin'  => False,
 				'forced' => 'always_display',
 			),
+			'allowExternalIMGs' => array(
+				'type'   => 'select',
+				'label'  => 'Allow external images',
+				'help'   => 'allow images from external sources in html emails',
+				'name'   => 'allowExternalIMGs',
+				'values' => array(
+					0 => lang('Never'),
+					1 => lang('Always'),
+					2 => lang('Ask for permission')
+				),
+				'xmlrpc' => True,
+				'admin'  => True,
+				'default' => 2,
+				'forced' => 1,
+			),
 			'message_forwarding' => array(
 				'type'   => 'select',
 				'label'  => 'how to forward messages',
