@@ -890,11 +890,6 @@ class infolog_bo
 			$values['info_owner'] = $this->so->user;
 		}
 
-		if (($info_from_set = ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from']))))
-		{
-			$values['info_from'] = $this->link_id2from($values);
-		}
-
 		$to_write = $values;
 		if ($user2server)
 		{
@@ -949,6 +944,25 @@ class infolog_bo
 				$values['info_responsible'] = $values['info_responsible'] ? explode(',',$values['info_responsible']) : array();
 				$to_write['info_responsible'] = $values['info_responsible'];
 			}
+
+			// writing links for a new entry
+			if (!$old && is_array($to_write['link_to']['to_id']) && count($to_write['link_to']['to_id']))
+			{
+				//echo "<p>writing links for new entry $info_id</p>\n"; _debug_array($content['link_to']['to_id']);
+				Link::link('infolog',$info_id,$to_write['link_to']['to_id']);
+				$values['link_to']['to_id'] = $info_id;
+			}
+			$this->write_check_links($to_write);
+			if(!$values['info_link_id'] && $to_write['info_link_id'])
+			{
+				$values['info_link_id'] = $to_write['info_link_id'];
+			}
+
+			if (($info_from_set = ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from']))))
+			{
+				$values['info_from'] = $to_write['info_from'] = $this->link_id2from($values);
+			}
+			
 			// create (and remove) links in custom fields
 			Api\Storage\Customfields::update_links('infolog',$values,$old,'info_id');
 
@@ -1009,6 +1023,64 @@ class infolog_bo
 			}
 		}
 		return $info_id;
+	}
+
+	/**
+	 * Check links when writing an infolog entry
+	 *
+	 * Checks for info_contact properly linked, project properly linked and
+	 * adds or removes to correct.
+	 *
+	 * @param Array $values
+	 */
+	protected function write_check_links(&$values)
+	{
+		if ($values['info_contact'])
+		{
+			$old_link_id = (int)$values['info_link_id'];
+			if(is_array($values['info_contact']))
+			{
+				// eTemplate2 returns the array all ready
+				$app = $values['info_contact']['app'];
+				$id = $values['info_contact']['id'];
+			}
+			// if project has been removed, but is still info_contact --> also remove it
+			if ($app == 'projectmanager' && $id && $id == $values['old_pm_id'] && !$values['pm_id'])
+			{
+				unset($values['info_link_id'], $id, $values['info_contact']['id']);
+			}
+			elseif ($app && $id)
+			{
+				if(!is_array($values['link_to']))
+				{
+					$values['link_to'] = array();
+				}
+				$values['info_link_id'] = (int)($info_link_id = Link::link(
+						'infolog',
+						$values['info_id'],
+						$app,$id
+				));
+			}
+			else
+			{
+				unset($values['info_link_id']);
+			}
+			if ($old_link_id && $old_link_id != $values['info_link_id'])
+			{
+				$link = Link::get_link($old_link_id);
+				// remove selected project, if removed link is that project
+				if($link['link_app2'] == 'projectmanager' && $link['link_id2'] == $values['old_pm_id'])
+				{
+					unset($values['pm_id'], $values['old_pm_id']);
+				}
+				Link::unlink($old_link_id);
+			}
+			// if added link is a project and no other project selected, also add as project
+			if ($app == 'projectmanager' && $id && !$values['pm_id'])
+			{
+				$values['old_pm_id'] = $values['pm_id'] = $id;
+			}
+		}
 	}
 
 	/**
