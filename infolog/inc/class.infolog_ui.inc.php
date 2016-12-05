@@ -1736,48 +1736,7 @@ class infolog_ui
 				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only || $undelete))
 				{
 					$operation = $info_id ?  'edit' : 'add';
-					if ($content['info_contact'])
-					{
-						$old_link_id = (int)$content['info_link_id'];
-						if(is_array($content['info_contact']))
-						{
-							// eTemplate2 returns the array all ready
-							$app = $content['info_contact']['app'];
-							$id = $content['info_contact']['id'];
-						}
-						// if project has been removed, but is still info_contact --> also remove it
-						if ($app == 'projectmanager' && $id && $id == $content['old_pm_id'] && !$content['pm_id'])
-						{
-							unset($content['info_link_id'], $id, $content['info_contact']['id']);
-						}
-						elseif ($app && $id)
-						{
-							if(!is_array($content['link_to']))
-							{
-								$content['link_to'] = array();
-							}
-							$content['info_link_id'] = (int)($info_link_id = Link::link('infolog',$content['link_to']['to_id'],$app,$id));
-						}
-						else
-						{
-							unset($content['info_link_id']);
-						}
-						if ($old_link_id && $old_link_id != $content['info_link_id'])
-						{
-							$link = Link::get_link($old_link_id);
-							// remove selected project, if removed link is that project
-							if($link['link_app2'] == 'projectmanager' && $link['link_id2'] == $content['old_pm_id'])
-							{
-								unset($content['pm_id'], $content['old_pm_id']);
-							}
-							Link::unlink($old_link_id);
-						}
-						// if added link is a project and no other project selected, also add as project
-						if ($app == 'projectmanager' && $id && !$content['pm_id'])
-						{
-							$content['old_pm_id'] = $content['pm_id'] = $id;
-						}
-					}
+					
 					if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 					{
 						$content['info_link_id'] = 0;	// as field has to be int
@@ -1825,12 +1784,6 @@ class infolog_ui
 							Link::unlink2(0,infolog,$content['link_to']['to_id'],0,'projectmanager',$content['old_pm_id']);
 						}
 						$content['old_pm_id'] = $content['pm_id'];
-					}
-					// writing links for a new entry
-					if ($info_id && is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
-					{
-						//echo "<p>writing links for new entry $info_id</p>\n"; _debug_array($content['link_to']['to_id']);
-						Link::link('infolog',$info_id,$content['link_to']['to_id']);
 					}
 					$content['link_to']['to_id'] = $info_id;
 
