@@ -950,6 +950,10 @@ class infolog_bo
 				$to_write['info_responsible'] = $values['info_responsible'];
 			}
 			// create (and remove) links in custom fields
+			if(!is_array($old))
+			{
+				$old = array();
+			}
 			Api\Storage\Customfields::update_links('infolog',$values,$old,'info_id');
 
 			// Check for restore of deleted entry, restore held links
