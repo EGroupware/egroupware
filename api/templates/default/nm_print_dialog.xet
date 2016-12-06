@@ -4,7 +4,8 @@
 <overlay>
 	<template id="nm_print_dialog" template="" lang="" group="0" version="16.1">
 		<vbox>
-			<select id="columns" label="Columns to print" rows="8" selected_first="false"/>
+			<description value="Columns to print"/>
+			<select id="columns" rows="8" selected_first="false"/>
 			<integer id="row_count" label="How many rows to print"/>
 		</vbox>
 	</template>

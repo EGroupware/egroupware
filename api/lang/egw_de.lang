@@ -284,6 +284,7 @@ collection listing	common	de	Auflistung der Collection
 colombia	common	de	KOLUMBIEN
 column...	common	de	Spalte...
 columnname	common	de	Spaltenname
+columns to print	common	de	Spalten zum Drucken
 command ⌘	common	de	Cmd ⌘
 comment	common	de	Kommentar
 common preferences	common	de	Allgemeine Einstellungen
@@ -629,6 +630,7 @@ how many days to sync in the future (default %1)	groupdav	de	Wie viele Tage soll
 how many days to sync in the past (default %1)	groupdav	de	Wie viele Tage soll in die Vergangenheit gesynced werden (Vorgabe %1)
 how many entries should the list show	common	de	Wie viele Einträge soll die Liste anzeigen
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	de	Wie viele Icons sollen in der Navigation angezeigt werden (die obere Navigation). Weitere Applikationen werden über ein Auswahlmenü angeboten. Das Auswahlmenü kann über das rechte Icon geöffnet werden
+how many rows to print	common	de	Zeilen zum Drucken
 how to show the general egroupware menu ?	common	de	Wie soll das allgemeine EGroupware Menü angezeigt werden?
 html	common	de	HTML
 html link to the current record	common	de	HTML-Link zum aktuellen Eintrag.

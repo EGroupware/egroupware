@@ -384,10 +384,13 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			var header_controls = {
 				check: {
 					icon_class: 'ui-icon-check',
-					label:	'Check all',
+					label:	this.egw().lang('Check all'),
 					click: function(e) {
-						var all_set = jQuery("input[type='checkbox']",e.data).prop("checked");
-						jQuery("input[type='checkbox']",e.data).prop("checked", !all_set);
+						var all_off = false;
+						jQuery("input[type='checkbox']",e.data).each(function() {
+							if(!jQuery(this).prop("checked")) all_off = true;
+						});
+						jQuery("input[type='checkbox']",e.data).prop("checked", all_off);
 					}
 				}
 			};

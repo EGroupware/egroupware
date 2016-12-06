@@ -2249,7 +2249,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
 			callback: callback,	// return false to prevent dialog closing
 			buttons: et2_dialog.BUTTONS_OK_CANCEL,
-			title: 'Print',
+			title: this.egw().lang('Print'),
 			template:this.egw().link(base_url+'/api/templates/default/nm_print_dialog.xet'),
 			value: {
 				content: {
