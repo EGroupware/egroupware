@@ -2332,7 +2332,7 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 		}
 		//error_log(__METHOD__."(".array2string($cal_id).") returning ".array2string($alarms));
-		return $alarms;
+		return $alarms ? $alarms : array();
 	}
 
 	/**
