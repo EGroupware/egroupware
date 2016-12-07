@@ -16,7 +16,6 @@ table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
 	background-image:url(../../../api/templates/default/images/hint.png);
 	background-repeat: no-repeat;
 	background-position: center;
-    position: absolute;
     height: 99%;
 }
 tr.prefRow:hover {background-color:#f0f0ff}
