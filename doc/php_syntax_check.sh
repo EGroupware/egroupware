@@ -23,6 +23,8 @@ find ${@-.} -name '*.php' -exec php -l {} \; 2>&1 | \
 	grep -v 'vendor/composer/autoload_static.php' | \
 	# exclude vendor/phpunit it shows many PHP Parse errors in PHP < 7.0
 	grep -v 'vendor/phpunit' | \
+	# suppress PHP Parse errors in PHP < 7.0 in dependency of phpunit: phpspec/prophecy
+	grep -v 'vendor/phpspec/prophecy' | \
 	# phpFreeChat does not work with PHP7
 	grep -v 'phpfreechat/phpfreechat/' | \
 	perl -pe 'END { exit $status } $status=1 if /^(PHP Fatal|(PHP )?Parse error)/;'  > /dev/null
