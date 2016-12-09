@@ -423,7 +423,7 @@ class infolog_bo
 	 */
 	function link_id2from(&$info,$not_app='',$not_id='')
 	{
-		//echo "<p>boinfolog::link_id2from(subject='$info[info_subject]', link_id='$info[info_link_id]', from='$info[info_from]', not_app='$not_app', not_id='$not_id')";
+		//error_log(__METHOD__ . "(subject='{$info['info_subject']}', link_id='{$info['info_link_id']}', from='{$info['info_from']}', not_app='$not_app', not_id='$not_id')");
 
 		if ($info['info_link_id'] > 0 &&
 			(isset($info['links']) && ($link = $info['links'][$info['info_link_id']]) ||	// use supplied links info
@@ -955,6 +955,8 @@ class infolog_bo
 			$this->write_check_links($to_write);
 			if(!$values['info_link_id'] && $to_write['info_link_id'])
 			{
+				// Just got a link ID, need to save it
+				$this->so->write($to_write);
 				$values['info_link_id'] = $to_write['info_link_id'];
 			}
 

@@ -233,15 +233,22 @@ class infolog_tracking extends Api\Storage\Tracking
 		) as $name => $value)
 		{
 			//error_log(__METHOD__.__LINE__.' Key:'.$name.' val:'.array2string($value));
-			if ($name=='info_from' && empty($value) && !empty($data['info_contact']) && is_array($data['link_to']['to_id']))
-			{
-				$lkeys = array_keys($data['link_to']['to_id']);
-				if (in_array($data['info_contact'],$lkeys))
+			if ($name=='info_from' && empty($value))
+				if(!empty($data['info_contact']) && is_array($data['link_to']['to_id']))
 				{
+					$lkeys = array_keys($data['link_to']['to_id']);
+					if (in_array($data['info_contact'],$lkeys))
+					{
+						list($app,$id) = explode(':',$data['info_contact']);
+						if (!empty($app)&&!empty($id)) $value = Link::title($app,$id);
+					}
+				}
+				else if ($data['info_link_id'])
+				{
+					$this->infolog->link_id2from($data);
 					list($app,$id) = explode(':',$data['info_contact']);
 					if (!empty($app)&&!empty($id)) $value = Link::title($app,$id);
 				}
-			}
 			$details[$name] = array(
 				'label' => lang($this->field2label[$name]),
 				'value' => $value,
