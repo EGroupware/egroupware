@@ -250,6 +250,23 @@
 						<!-- no more dynamic minifying: option value="debug">Debug</option -->
 					</select>
 				</row>
+				<row>
+					<description value="Google recaptcha" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="Google recaptcha secret key" label="%s:"/>
+						<description value="This secret key used for communication between your site and Google. Be sure to keep it a secret."/>
+					</vbox>
+					<textbox id="newsettings[recaptcha_secret]" size="60"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="Google recaptcha site key" label="%s:"/>
+						<description value="This key used in the HTML code your site serves to users." />
+					</vbox>
+					<textbox id="newsettings[recaptcha_site]" size="60"/>
+				</row>
 			</rows>
 		</grid>
 	</template>

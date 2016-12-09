@@ -34,6 +34,20 @@ class module_addressbook_contactform extends sitemgr_module
 		$this->etemplate_method = 'addressbook.addressbook_contactform.display';
 	}
 
+	function get_content (&$arguments,$properties)
+	{
+		$parent = parent::get_content($arguments, $properties);
+
+		//Make sure that recaptcha keys are set before include it
+		if (($recaptcha = sitemgr_module::get_recaptcha()))
+		{
+			$extra .= '<script src="https://www.google.com/recaptcha/api.js" type="text/javascript"></script>'."\n";
+			return $extra.$parent;
+		}
+		// fallback to basic captcha
+		return $parent;
+	}
+
 	/**
 	 * Reimplemented to add the addressbook translations and fetch the addressbooks only if needed for the user-interface
 	 *
