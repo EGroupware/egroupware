@@ -1,3 +1,15 @@
+egroupware-epl (16.1.20161208) hardy; urgency=low
+
+  * Infolog: Add a context menu action to view a list of linked timesheets
+  * InfoLog/PostgreSQL: new entries were created with info_id 0: duplicate key value violates unique constraint
+  * Adressbook/CardDAV/PostgreSQL: fix SQL error stalling sync of eg. eMClient with preference "Distributionlists as groups" enabled
+  * eSync/Mail: change hardcoded timezone from "Europe/Berlin" to user timezone to fix wrong times in synced mails
+  * eSync/Mail: Allow to create, delete or rename folders eg. from Outlook
+  * eSync/Mail: handle charset-problem on sending mails with added EGW-Signature
+  * All apps: Fix wrong redirect to docroot, after being idle for a while
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 08 Dec 2016 15:02:50 +0100
+
 egroupware-epl (16.1.20161107) hardy; urgency=low
 
   * Calendar: fix holidays are displayed one day off for eg. Austria, Slovakia, Australia (from iCloud)
