@@ -69,7 +69,9 @@ class addressbook_contactform
 		// check if submitted
 		if (is_array($content))
 		{
-			if ((isset($content['captcha_result']) && $content['captcha'] != $content['captcha_result']) ||	// no correct captcha OR
+			if (isset($_POST['g-recaptcha-response'])) $recaptcha = sitemgr_module::verify_recaptcha ($_POST['g-recaptcha-response']);
+			$captcha = (isset($content['captcha_result']) && $content['captcha'] != $content['captcha_result']) || ($recaptcha && $recaptcha->success == false);
+			if ($captcha || // no correct captcha OR
 				(time() - $content['start_time'] < 10 &&				// bot indicator (less then 10 sec to fill out the form and
 				!$GLOBALS['egw_info']['etemplate']['java_script']))	// javascript disabled)
 			{
@@ -202,20 +204,28 @@ class addressbook_contactform
 
 		if ($addressbook) $preserv['owner'] = $addressbook;
 		if ($msg) $preserv['msg'] = $msg;
-
-		// a simple calculation captcha
-		$num1 = rand(1,99);
-		$num2 = rand(1,99);
-		if ($num2 > $num1)	// keep the result positive
+		if (!sitemgr_module::get_recaptcha())
 		{
-			$n = $num1; $num1 = $num2; $num2 = $n;
+			// a simple calculation captcha
+			$num1 = rand(1,99);
+			$num2 = rand(1,99);
+			if ($num2 > $num1)	// keep the result positive
+			{
+				$n = $num1; $num1 = $num2; $num2 = $n;
+			}
+			if (in_array('captcha',$fields))
+			{
+				$content['captcha_task'] = sprintf('%d - %d =',$num1,$num2);
+				$preserv['captcha_result'] = $num1-$num2;
+			}
 		}
-		if (in_array('captcha',$fields))
+		else
 		{
-			$content['captcha_task'] = sprintf('%d - %d =',$num1,$num2);
-			$preserv['captcha_result'] = $num1-$num2;
+			$content['show']['captcha'] = false;
+			$content['show']['recaptcha'] = true;
+			$recaptcha = sitemgr_module::get_recaptcha();
+			$content['recaptcha'] = '<div class="g-recaptcha" data-sitekey="'.$recaptcha['site'].'"></div>';
 		}
-
 		// allow to preset variables via get parameters
 		if ($_SERVER['REQUEST_METHOD'] == 'GET')
 		{

@@ -129,6 +129,11 @@
 				<row disabled="!@show[sep5]">
 					<hrule span="all"/>
 				</row>
+				<row disabled="!@show[recaptcha]">
+					<description span="2"/>
+					<html id="recaptcha"/>
+					<description/>
+				</row>
 				<row disabled="!@show[captcha]">
 					<image src="private.png"/>
 					<description value="Verification"/>
