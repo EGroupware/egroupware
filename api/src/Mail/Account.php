@@ -1607,11 +1607,11 @@ class Account implements \ArrayAccess
 		{
 			$name = $account['acc_name'];
 		}
-		if (!trim($account['ident_email']))
+		if (strpos($account['ident_email'], '@') !== false || !trim($account['ident_email']))
 		{
 			$name .= ' <'.$account['ident_email'].'>';
 		}
-		elseif(!trim($account['acc_imap_username']))
+		elseif(strpos($account['acc_imap_username'], '@') !== false || !trim($account['acc_imap_username']))
 		{
 			$name .= ' <'.$account['acc_imap_username'].'>';
 		}
