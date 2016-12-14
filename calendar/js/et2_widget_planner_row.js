@@ -22,7 +22,7 @@
  *
  * @augments et2_valueWidget
  */
-var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDetachedDOM],
+var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget.extend([et2_IResizeable],
 {
 	attributes: {
 		start_date: {
@@ -708,21 +708,21 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		return pos;
 	},
 
+	// Resizable interface
 	/**
-	 * Code for implementing et2_IDetachedDOM
+	 * Resize
 	 *
-	 * @param {array} _attrs array to add further attributes to
+	 * Parent takes care of setting proper width & height for the containing div
+	 * here we just need to adjust the events to fit the new size.
 	 */
-	getDetachedAttributes: function(_attrs) {
+	resize: function ()
+	{
+		if(this.disabled || !this.div.is(':visible') || this._parent.disabled)
+		{
+			return;
+		}
 
-	},
-
-	getDetachedNodes: function() {
-		return [this.getDOMNode()];
-	},
-
-	setDetachedAttributes: function(_nodes, _values) {
-
+		this.position_event();		
 	}
 
 });}).call(this);
