@@ -1497,7 +1497,7 @@ class infolog_bo
 			$query = array(
 				'col_filter' => array('info_id' => $args['infolog']),
 				'subs' => true,
-				'cols' => 'egw_infolog.info_id,info_type,info_status,info_percent,info_id_parent',
+				'cols' => 'main.info_id,info_type,info_status,info_percent,info_id_parent',
 			);
 			$infos = array();
 			foreach($this->search($query) as $row)
