@@ -115,6 +115,7 @@ class infolog_datasource extends datasource
 		{
 			$this->infolog_bo->link_id2from($info);		// unsets info_from and sets info_link_target
 			unset($info['info_link_id']);
+			unset($info['info_contact']);
 		}
 		// we need to unset a view fields, to get a new entry
 		foreach(array('info_id','info_owner','info_modified','info_modifierer') as $key)
@@ -158,7 +159,7 @@ class infolog_datasource extends datasource
 		if(!($info['info_id'] = $this->infolog_bo->write($info))) return false;
 
 		// link the new infolog against the project and setting info_link_id and evtl. info_from
-		$old_link = $info['info_link_id'] ? Link::get_link($info['info_link']) : $info['info_link'];
+		$old_link = $info['info_link_id'] ? Link::get_link($info['info_link_id']) : $info['info_link'];
 		$info['info_link_id'] = Link::link('projectmanager',$target,'infolog',$info['info_id'],$element['pe_remark'],0,0,1);
 		if (!$info['info_from'] || $old_link && $info['info_from'] == $old_link['title'])
 		{

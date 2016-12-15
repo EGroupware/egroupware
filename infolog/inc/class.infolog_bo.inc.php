@@ -1050,6 +1050,10 @@ class infolog_bo
 				$app = $values['info_contact']['app'];
 				$id = $values['info_contact']['id'];
 			}
+			else if ($values['info_contact'])
+			{
+				list($app, $id) = explode(':', $values['info_contact'], 2);
+			}
 			// if project has been removed, but is still info_contact --> also remove it
 			if ($app == 'projectmanager' && $id && $id == $values['old_pm_id'] && !$values['pm_id'])
 			{
@@ -1493,7 +1497,7 @@ class infolog_bo
 			$query = array(
 				'col_filter' => array('info_id' => $args['infolog']),
 				'subs' => true,
-				'cols' => 'info_id,info_type,info_status,info_percent,info_id_parent',
+				'cols' => 'egw_infolog.info_id,info_type,info_status,info_percent,info_id_parent',
 			);
 			$infos = array();
 			foreach($this->search($query) as $row)
