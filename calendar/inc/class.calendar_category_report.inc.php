@@ -91,9 +91,8 @@ class calendar_category_report extends calendar_ui{
 		{
 			foreach ($event['participants'] as $user_id => $status)
 			{
-				// if the participant has not accepted the event or not a chair
-				// skip it.
-				if (!($status == 'A' || $status == 'ACHAIR')) continue;
+				// if the participant has not accepted the event, not a chair or not an user then skip.
+				if (!($status == 'A' || $status == 'ACHAIR') || preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$user_id)) continue;
 
 				$categories = explode(',', $event['category']);
 				if (!in_array($cat_id, $categories)) continue;
