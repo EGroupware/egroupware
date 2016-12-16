@@ -85,93 +85,106 @@ class calendar_category_report extends calendar_ui{
 	 * @param int $unit unit option
 	 *
 	 */
-	public function process_days(&$events_log, &$week_sum, &$day,$day_index, $events, $cat_id, $holidays, $weekend, $min_days, $unit, $start_range)
+	public function process_days(&$events_log, &$week_sum, &$day,$day_index, $events, $cat_id, $holidays, $weekend, $min_days, $unit, $start_range, $end_range)
 	{
 		foreach ($events as &$event)
 		{
-			$categories = explode(',', $event['category']);
-			if (!in_array($cat_id, $categories)) continue;
-
-			// processing day as timestamp
-			$day_timestamp = strtotime($day_index);
-
-			// week number
-			$week_number = date('W', $day_timestamp);
-
-			$previous_week_number = $week_number == 1? 53: $week_number -1;
-			// check if multidays event starts before start range
-			$is_over_range_event = $day_timestamp< $event['end'] && $start_range > $event['start'];
-
-			$is_multiple_days_event = $event['start']< $day_timestamp && $day_timestamp< $event['end'];
-
-
-			if (($weekend && self::isWeekend($day_timestamp)) || (!$holidays && $this->isHoliday($day_timestamp)))
+			foreach ($event['participants'] as $user_id => $status)
 			{
-				// calculate reduction of holidays or weekend amounts from
-				// multidays event
-				if ($is_multiple_days_event)
+				// if the participant has not accepted the event or not a chair
+				// skip it.
+				if (!($status == 'A' || $status == 'ACHAIR')) continue;
+
+				$categories = explode(',', $event['category']);
+				if (!in_array($cat_id, $categories)) continue;
+
+				// processing day as timestamp
+				$day_timestamp = strtotime($day_index);
+
+				// week number
+				$week_number = date('W', $day_timestamp);
+
+				$previous_week_number = $week_number == 1? 53: $week_number -1;
+				// check if multidays event starts before start range
+				$is_over_range_event = $day_timestamp< $event['end'] && $start_range > $event['start'];
+				// check if multidays event ends after end range
+				$is_over_end_range = $day_timestamp< $event['end'] && $end_range < $event['end'];
+
+				$is_multiple_days_event = $event['start']< $day_timestamp && $day_timestamp< $event['end'];
+
+
+				if (($weekend && self::isWeekend($day_timestamp)) || (!$holidays && $this->isHoliday($day_timestamp)))
 				{
-					$day_diff_to_end = $event['end'] - $day_timestamp;
-					$reduction_amount = $day_diff_to_end > 86400? 86400: $day_diff_to_end;
-					$events_log['reductions'][$event['owner']][$cat_id] = $events_log['reductions'][$event['owner']][$cat_id] + $reduction_amount;
+					// calculate reduction of holidays or weekend amounts from
+					// multidays event
+					if ($is_multiple_days_event)
+					{
+						$day_diff_to_end = $event['end'] - $day_timestamp;
+						$reduction_amount = $day_diff_to_end > 86400? 86400: $day_diff_to_end;
+						$events_log['reductions'][$user_id][$cat_id] = $events_log['reductions'][$user_id][$cat_id] + $reduction_amount;
+					}
+					continue;
 				}
-				continue;
-			}
 
-			// Mark multidays event as counted after the first day of event, therefore
-			// we can procced calculating the amount of the event via the first day
-			// and mark as counted for the rest of the days to avoid miscalculation.
-			if ($event['start']< $day_timestamp && $day_timestamp< $event['end'] &&
-					($events_log[$week_number][$event['id']]['counted'] ||
-					$events_log[$previous_week_number][$event['id']]['counted']))
-			{
-				$events_log[$week_number][$event['id']]['counted'] = true;
-			}
-			// In case of start range is in middle of multidays event, we need to calculate the
-			// amount base on the part of event on the range and keep track of counting to avoid
-			// miscalculation too.
-			if ($is_over_range_event &&
-					!$events_log[$week_number][$event['id']]['over_range'] &&
-					!$events_log[$previous_week_number][$event['id']]['over_range'])
-			{
-				$events_log[$week_number][$event['id']]['counted'] = false;
-				$events_log[$week_number][$event['id']]['over_range'] = true;
-			}
-
-			// if we already counted the multidays event, set the amount to 0
-			// for the rest of days, to end up with a right calculation.
-			if ($events_log[$week_number][$event['id']]['counted'])
-			{
-				$amount = 0;
-			}
-			else
-			{
-				// over ranged multidays event
-				if ($is_over_range_event)
+				// Mark multidays event as counted after the first day of event, therefore
+				// we can procced calculating the amount of the event via the first day
+				// and mark as counted for the rest of the days to avoid miscalculation.
+				if ($event['start']< $day_timestamp && $day_timestamp< $event['end'] &&
+						($events_log[$user_id][$week_number][$event['id']]['counted'] ||
+						$events_log[$user_id][$previous_week_number][$event['id']]['counted']))
 				{
-					$amount =  $event['end'] - $start_range;
+					$events_log[$user_id][$week_number][$event['id']]['counted'] = true;
+				}
+				// In case of start range is in middle of multidays event, we need to calculate the
+				// amount base on the part of event on the range and keep track of counting to avoid
+				// miscalculation too.
+				if ($is_over_range_event &&
+						!$events_log[$user_id][$week_number][$event['id']]['over_range'] &&
+						!$events_log[$user_id][$previous_week_number][$event['id']]['over_range'])
+				{
+					$events_log[$user_id][$week_number][$event['id']]['counted'] = false;
+					$events_log[$user_id][$week_number][$event['id']]['over_range'] = true;
+				}
+
+				// if we already counted the multidays event, set the amount to 0
+				// for the rest of days, to end up with a right calculation.
+				if ($events_log[$user_id][$week_number][$event['id']]['counted'] && $is_multiple_days_event)
+				{
+					$amount = 0;
 				}
 				else
 				{
-					$amount = $event['end'] - $event['start'];
+					// over ranged multidays event
+					if ($is_over_range_event)
+					{
+						$amount =  $event['end'] - $start_range;
+					}
+					else if ($is_over_end_range) // over end range multidays event
+					{
+						$amount = $end_range - $event['start'];
+					}
+					else
+					{
+						$amount = $event['end'] - $event['start'];
+					}
+					$events_log[$user_id][$week_number][$event['id']]['counted'] = true;
 				}
-				$events_log[$week_number][$event['id']]['counted'] = true;
-			}
-			// store day
-			$day[$event['owner']][$cat_id][$event['id']] = array (
-				'weekN' => date('W', $event['start']),
-				'cat_id' => $cat_id,
-				'event_id' => $event['id'],
-				'amount' => $amount,
-				'min_days' => $min_days,
-				'unit' => $unit
-			);
-			// store the week sum for those events which their categories marked as
-			// specified with min_days in their row.
-			if ($min_days)
-			{
-				$week_sum[$event['owner']][date('W', $event['start'])][$cat_id][$event['id']][] = $amount;
-				$week_sum[$event['owner']][date('W', $event['start'])][$cat_id]['min_days'] = $min_days;
+				// store day
+				$day[$user_id][$cat_id][$event['id']] = array (
+					'weekN' => date('W', $event['start']),
+					'cat_id' => $cat_id,
+					'event_id' => $event['id'],
+					'amount' => $amount,
+					'min_days' => $min_days,
+					'unit' => $unit
+				);
+				// store the week sum for those events which their categories marked as
+				// specified with min_days in their row.
+				if ($min_days)
+				{
+					$week_sum[$user_id][date('W', $event['start'])][$cat_id][$event['id']][] = $amount;
+					$week_sum[$user_id][date('W', $event['start'])][$cat_id]['min_days'] = $min_days;
+				}
 			}
 		}
 	}
@@ -269,7 +282,8 @@ class calendar_category_report extends calendar_ui{
 									$content['grid'][$row_id]['weekend'],
 									$content['grid'][$row_id]['min_days'],
 									$content['grid'][$row_id]['unit'],
-									$content['start']
+									$content['start'],
+									$content['end']
 							);
 						}
 					}
@@ -331,7 +345,8 @@ class calendar_category_report extends calendar_ui{
 				{
 					$csv_header [] = $api_cats->id2name($cat_id);
 				}
-				array_unshift($csv_header, 'user_fullname');
+				array_unshift($csv_header, 'n_given');
+				array_unshift($csv_header, 'n_family');
 
 				// file pointer
 				$fp = fopen('php://output', 'w');
@@ -354,8 +369,14 @@ class calendar_category_report extends calendar_ui{
 								($cats_data[$cat_id]['amount'] - $events_log['reductions'][$user_id][$cat_id]) /
 								$cats_data[$cat_id]['unit']: 0);
 					}
+					// first name
+					$n_given =  array('n_given' => Api\Accounts::id2name($user_id, 'account_firstname')) ?
+							array('n_given' => Api\Accounts::id2name($user_id, 'account_firstname')) : array();
+					// last name
+					$n_family = array('n_family' => Api\Accounts::id2name($user_id, 'account_lastname')) ?
+							array('n_family' => Api\Accounts::id2name($user_id, 'account_lastname')) : array();
 					// printout each row into file
-					fputcsv($fp, array_values(array(Api\Accounts::id2name($user_id, 'account_fullname')) + $cats_row));
+					fputcsv($fp, array_values($n_family + $n_given+ $cats_row));
 				}
 				// echo out csv file
 				fpassthru($fp);
