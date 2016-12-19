@@ -61,13 +61,19 @@ class calendar_category_report extends calendar_ui{
 	/**
 	 * Function to check if the given date is a holiday date
 	 *
-	 * @param int $date timestamp as date
+	 * @param int $_date timestamp as date
 	 *
 	 * @return boolean returns true if the date is holiday
 	 */
-	public function isHoliday($date)
+	public function isHoliday($_date)
 	{
-		return array_key_exists(date('Ymd', $date), $this->bo->read_holidays(date('Y', $date)));
+		$holidays =  $this->bo->read_holidays(date('Y', $_date));
+		$date = date('Ymd', $_date);
+		foreach ($holidays[$date] as $holiday)
+		{
+			if (is_array($holiday) && !$holiday['birthyear']) return true;
+		}
+		return false;
 	}
 
 	/**
