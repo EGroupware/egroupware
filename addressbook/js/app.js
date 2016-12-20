@@ -556,7 +556,13 @@ app.classes.addressbook = AppJS.extend(
 		}
 	},
 
-	add_new_list: function(owner)
+	/**
+	 * Add a new mailing list.  If any contacts are selected, they will be added.
+	 *
+	 * @param {egwAction} owner
+	 * @param {egwActionObject[]} selected
+	 */
+	add_new_list: function(owner, selected)
 	{
 		if(!owner || typeof owner == 'object')
 		{
@@ -564,11 +570,23 @@ app.classes.addressbook = AppJS.extend(
 			owner = filter.getValue()||egw.preference('add_default','addressbook');
 		}
 		var lists = this.et2.getWidgetById('filter2');
+		var contacts = [];
+		if(selected && selected.length)
+		{
+			for(var i = 0; i < selected.length; i++)
+			{
+				// Remove UID prefix for just contact_id
+				var ids = selected[i].id.split('::');
+				ids.shift();
+				ids = ids.join('::');
+				contacts.push(ids);
+			}
+		}
 		et2_dialog.show_prompt(
 			function(button, name) {
 				if(button == et2_dialog.OK_BUTTON)
 				{
-					egw.json('addressbook.addressbook_ui.ajax_set_list',[0, name, owner],
+					egw.json('addressbook.addressbook_ui.ajax_set_list',[0, name, owner, contacts],
 						function(result)
 						{
 							if(typeof result == 'object') return; // This response not for us

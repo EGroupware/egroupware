@@ -937,9 +937,10 @@ window.egw_LAB.wait(function() {
 	 * @param int $list_id ID of existing list, or 0 for a new one
 	 * @param string $new_name List name
 	 * @param int $_owner List owner, or empty for current user
+	 * @param string[] [$contacts] List of contacts to add to the array
 	 * @return boolean|string
 	 */
-	function ajax_set_list($list_id, $new_name, $_owner = false)
+	function ajax_set_list($list_id, $new_name, $_owner = false, $contacts = array())
 	{
 		// Set owner to current user, if not set
 		$owner = $_owner ? $_owner : $GLOBALS['egw_info']['user']['account_id'];
@@ -974,6 +975,10 @@ window.egw_LAB.wait(function() {
 
 		$new_id = $this->add_list(array('list_id' => (int)$list_id), $list['list_owner'],array(),$list);
 
+		if($contacts)
+		{
+			$this->add2list($contacts,$new_id);
+		}
 		Api\Json\Response::get()->apply('egw.message', array(
 			$new_id == $list_id ? lang('Distribution list renamed') : lang('List created'),
 			'success'
