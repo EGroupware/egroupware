@@ -1741,6 +1741,14 @@ class infolog_ui
 					{
 						$content['info_link_id'] = 0;	// as field has to be int
 					}
+					if (is_array($content['info_contact']) && $content['info_contact']['id'])
+					{
+						$content['info_contact'] = $content['info_contact']['app'] . ':' . $content['info_contact']['id'];
+					}
+					else
+					{
+						$content['info_contact'] = false;
+					}
 					$active_tab = $content['tabs'];
 					if (!($info_id = $this->bo->write($content, true, true, true, $content['no_notifications'])))
 					{
@@ -1785,6 +1793,7 @@ class infolog_ui
 						}
 						$content['old_pm_id'] = $content['pm_id'];
 					}
+					$content['link_to']['to_app'] = 'infolog';
 					$content['link_to']['to_id'] = $info_id;
 
 					if ($info_link_id && strpos($info_link_id,':') !== false)	// updating info_link_id if necessary
