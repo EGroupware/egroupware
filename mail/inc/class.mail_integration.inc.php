@@ -250,7 +250,7 @@ class mail_integration {
 					fclose($tmpfile);
 					$size = filesize($attachment_file);
 					$mailcontent['attachments'][] = array(
-							'name' => trim($subject).'.eml',
+							'name' => Api\Vfs::encodePathComponent(trim($subject)).'.eml',
 							'mimeType' => 'message/rfc822',
 							'type' => 'message/rfc822',
 							'tmp_name' => $attachment_file,
