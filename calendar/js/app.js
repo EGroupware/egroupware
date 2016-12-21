@@ -2306,11 +2306,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			{
 				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile())
 				{
-					view.etemplates[0].widgetContainer.iterateOver(function(w) {
-						w.set_width(jQuery(view.etemplates[0].DOMContainer).width() * 0.69);
-					},this,et2_calendar_timegrid);
-
-					jQuery(view.etemplates[1].DOMContainer).css({"left":"69%", "height":(jQuery(framework.tabsUi.activeTab.contentDiv).height()-30)+'px'});
+					// Set width to 70%, otherwise if a scrollbar is needed for the view, it will conflict with the todo list
+					jQuery(app.classes.calendar.views.day.etemplates[0].DOMContainer).css("width","70%");
+					jQuery(view.etemplates[1].DOMContainer).css({"left":"70%", "height":(jQuery(framework.tabsUi.activeTab.contentDiv).height()-30)+'px'});
 					// TODO: Maybe some caching here
 					this.egw.jsonq('calendar_uiviews::ajax_get_todos', [state.state.date, state.state.owner[0]], function(data) {
 						this.getWidgetById('label').set_value(data.label||'');
