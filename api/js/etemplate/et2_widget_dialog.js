@@ -444,7 +444,7 @@ var et2_dialog = (function(){ "use strict"; return et2_widget.extend(
 		if(template.indexOf('.xet') > 0)
 		{
 			// File name provided, fetch from server
-			this.template.load("",template,this.options.value||{}, jQuery.proxy(function() {
+			this.template.load("",template,this.options.value||{content: {}}, jQuery.proxy(function() {
 				// Set focus to the first input
 				jQuery('input',this.div).first().focus();
 			},this));
