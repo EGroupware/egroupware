@@ -1044,36 +1044,39 @@ class infolog_bo
 	protected function write_check_links(&$values)
 	{
 		$old_link_id = (int)$values['info_link_id'];
-		if(is_array($values['info_contact']))
+		if($values['info_contact'])
 		{
-			// eTemplate2 returns the array all ready
-			$app = $values['info_contact']['app'];
-			$id = $values['info_contact']['id'];
-		}
-		else if ($values['info_contact'])
-		{
-			list($app, $id) = explode(':', $values['info_contact'], 2);
-		}
-		// if project has been removed, but is still info_contact --> also remove it
-		if ($app == 'projectmanager' && $id && $id == $values['old_pm_id'] && !$values['pm_id'])
-		{
-			unset($values['info_link_id'], $id, $values['info_contact']['id']);
-		}
-		elseif ($app && $id)
-		{
-			if(!is_array($values['link_to']))
+			if(is_array($values['info_contact']))
 			{
-				$values['link_to'] = array();
+				// eTemplate2 returns the array all ready
+				$app = $values['info_contact']['app'];
+				$id = $values['info_contact']['id'];
 			}
-			$values['info_link_id'] = (int)($info_link_id = Link::link(
-					'infolog',
-					$values['info_id'],
-					$app,$id
-			));
-		}
-		else
-		{
-			unset($values['info_link_id']);
+			else if ($values['info_contact'])
+			{
+				list($app, $id) = explode(':', $values['info_contact'], 2);
+			}
+			// if project has been removed, but is still info_contact --> also remove it
+			if ($app == 'projectmanager' && $id && $id == $values['old_pm_id'] && !$values['pm_id'])
+			{
+				unset($values['info_link_id'], $id, $values['info_contact']['id']);
+			}
+			elseif ($app && $id)
+			{
+				if(!is_array($values['link_to']))
+				{
+					$values['link_to'] = array();
+				}
+				$values['info_link_id'] = (int)($info_link_id = Link::link(
+						'infolog',
+						$values['info_id'],
+						$app,$id
+				));
+			}
+			else
+			{
+				unset($values['info_link_id']);
+			}
 		}
 		if ($old_link_id && $old_link_id != $values['info_link_id'])
 		{
