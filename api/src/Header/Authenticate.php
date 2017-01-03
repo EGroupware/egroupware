@@ -109,8 +109,12 @@ class Authenticate
 		if (!isset($username) || !($sessionid = $GLOBALS['egw']->session->create($username, $password, 'text', true)))
 		{
 			// if the session class gives a reason why the login failed --> append it to the REALM
-			if ($GLOBALS['egw']->session->reason) $realm .= ': '.$GLOBALS['egw']->session->reason;
-
+			if ($GLOBALS['egw']->session->reason &&
+				// not for bad-login-or-password as it stalls storing the credentials!
+				$GLOBALS['egw']->session->cd_reason != Api\Session::CD_BAD_LOGIN_OR_PASSWORD)
+			{
+				$realm .= ': '.$GLOBALS['egw']->session->reason;
+			}
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');// draft-reschke-basicauth-enc-06 adds, accept-charset="'.translation::charset().'"');
 			self::digest_header($realm);
 			header('HTTP/1.1 401 Unauthorized');
