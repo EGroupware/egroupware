@@ -108,8 +108,8 @@ class calendar_category_report extends calendar_ui{
 
 				// week number
 				$week_number = date('W', $day_timestamp);
-
-				$previous_week_number = $week_number == 1? 53: $week_number -1;
+				
+				$previous_week_number = $week_number == 1? ($events_log[$user_id]['53']? 53: 52): $week_number -1;
 				// check if multidays event starts before start range
 				$is_over_range_event = $day_timestamp< $event['end'] && $start_range > $event['start'];
 				// check if multidays event ends after end range
@@ -160,7 +160,11 @@ class calendar_category_report extends calendar_ui{
 				else
 				{
 					// over ranged multidays event
-					if ($is_over_range_event)
+					if ($is_over_range_event && $is_over_end_range && $is_multiple_days_event)
+					{
+						$amount = $end_range - $start_range;
+					}
+					else if ($is_over_range_event)
 					{
 						$amount =  $event['end'] - $start_range;
 					}
@@ -263,7 +267,7 @@ class calendar_category_report extends calendar_ui{
 				// query calendar for events
 				$events = $this->bo->search(array(
 					'start' => $content['start'],
-					'end' => $content['end'],
+					'end' => $content['end']+86399, // range till midnight of the sele3cted end date
 					'users' => $users,
 					'cat_id' => $categories,
 					'daywise' => true
@@ -288,7 +292,7 @@ class calendar_category_report extends calendar_ui{
 									$content['grid'][$row_id]['min_days'],
 									$content['grid'][$row_id]['unit'],
 									$content['start'],
-									$content['end']
+									$content['end']+86399 // range till midnight of the sele3cted end date
 							);
 						}
 					}
