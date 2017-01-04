@@ -633,7 +633,7 @@ jQuery.extend(et2_calendar_view,
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
 			view.holiday_cache[year] = jQuery.getJSON(
-				egw.link('/calendar/inc/holidays.php', {year: year})
+				egw.link('/calendar/holidays.php', {year: year})
 			);
 		}
 		cache = view.holiday_cache[year];
@@ -650,7 +650,10 @@ jQuery.extend(et2_calendar_view,
 						this.widget.day_class_holiday();
 					}
 				},this),1);
-			},{widget:widget,year:year}));
+			},{widget:widget,year:year}))
+			.fail(jQuery.proxy(function() {
+				view.holiday_cache[this.year] = undefined;
+			}, {widget: widget, year: year}));
 			return {};
 		}
 		else
