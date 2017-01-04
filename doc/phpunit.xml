@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Run tests using phpunit -c doc/phpunit.xml -->
+<phpunit
+    colors="true">
+	<php>
+        <var name="EGW_DOMAIN" value="default" />
+        <var name="EGW_USER" value="demo" />
+        <var name="EGW_PASSWORD" value="guest" />
+    </php>
+    <testsuites>
+        <testsuite name="Api tests">
+            <directory>../api/src/test/</directory>
+        </testsuite>
+		<testsuite name="Apps with test directory">
+			<directory>../*/test/</directory>
+		</testsuite>
+		<testsuite name="Apps with namespace">
+			<directory>../*/src/test/</directory>
+			<directory>../*/src/*/test/</directory>
+		</testsuite>
+    </testsuites>
+</phpunit>
