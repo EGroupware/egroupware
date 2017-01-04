@@ -26,7 +26,7 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 
-include '../../header.inc.php';
+include '../header.inc.php';
 
 $GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
 
