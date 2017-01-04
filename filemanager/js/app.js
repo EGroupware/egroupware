@@ -769,7 +769,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 			egw.open_link(egw.link('/index.php', {
 				menuaction: 'filemanager.filemanager_ui.editor',
-				path: data.data.download_url
+				path: decodeURIComponent(data.data.download_url)
 			}), '', egw.link_get_registry('filemanager','view_popup'));
 		}
 		else

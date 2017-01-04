@@ -628,7 +628,7 @@ function expose (widget)
 			{
 				egw.open_link(egw.link('/index.php', {
 					menuaction: 'filemanager.filemanager_ui.editor',
-					path: _value.download_url
+					path: decodeURIComponent(_value.download_url)
 				}), '', egw.link_get_registry('filemanager','view_popup'));
 			}
 	});
