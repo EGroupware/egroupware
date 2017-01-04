@@ -49,6 +49,12 @@ var et2_iframe = (function(){ "use strict"; return et2_valueWidget.extend(
 			"default": false,
 			description: "Make the iframe compatible to be a fullscreen video player mode",
 			type: "boolean"
+		},
+		src: {
+			name: "Source",
+			"default": "",
+			description: "Specifies URL for the iframe",
+			type: "string"
 		}
 	},
 
