@@ -46,17 +46,17 @@ checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed '
 # projectmanagement and Ganttcharts
 checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/projectmanager.git
 
-#[bookmarks]
+[bookmarks]
 # record and share bookmarks
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/bookmarks.git
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/bookmarks.git
 
-#[news_admin]
+[news_admin]
 # publish and agregate RSS or ATOM feeds
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/news_admin.git
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/news_admin.git
 
-#[registration]
+[registration]
 # allows (after configuration!) to selfregister accounts and recover lost passwords
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/registration.git
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/registration.git
 
 #[archive]
 # allows to integrate a Benno mail-archive into EGroupware
@@ -65,33 +65,33 @@ checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed '
 ###
 ### Older apps requiring to install phpgwapi and etemplate!
 ###
-#[phpgwapi]
+[phpgwapi]
 # old api used by non 16.1 apps
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpgwapi.git
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpgwapi.git
 
-#[jdots]
+[jdots]
 # alternative "Stylite" template set
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/jdots.git
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/jdots.git
 
-#[etemplate]
+[etemplate]
 # old templating system superseeded by eTemplate2 in 16.1+ api
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/etemplate.git
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/etemplate.git
 
-#[phpbrain]
+[phpbrain]
 # knowledge base
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpbrain.git
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/phpbrain.git
 
-#[wiki]
+[wiki]
 # wiki application
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/wiki.git
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/wiki.git
 
 #[sambaadmin]
 # keeps passwords in sync with Samba3 using same LDAP as EGroupware (for Samba4 use Active Directory)
 #checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/sambaadmin.git
 
-#[sitemgr]
+[sitemgr]
 # content managment application
-#checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/sitemgr.git
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/sitemgr.git
 
 #[phpfreechat]
 # chat application
@@ -102,10 +102,14 @@ checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed '
 ### EPL apps not publicly available
 ###
 
-#[stylite]
-#checkout = git clone git@github.com:EGroupwareGmbH/epl.git stylite
-#update = test -d .svn && { rm -rf * .svn; git clone git@github.com:EGroupwareGmbH/epl.git .; } || git pull --rebase
+[stylite]
+checkout = git clone git@github.com:EGroupwareGmbH/epl.git stylite
+update = test -d .svn && { rm -rf * .svn; git clone git@github.com:EGroupwareGmbH/epl.git .; } || git pull --rebase
 
-#[esyncpro]
-#checkout = git clone git@github.com:EGroupwareGmbH/esyncpro.git
-#update = test -d .svn && { rm -rf * .svn; git clone git@github.com:EGroupwareGmbH/esyncpro.git .; } || git pull --rebase
+[esyncpro]
+checkout = git clone git@github.com:EGroupwareGmbH/esyncpro.git
+update = test -d .svn && { rm -rf * .svn; git clone git@github.com:EGroupwareGmbH/esyncpro.git .; } || git pull --rebase
+
+[profitbricks]
+# profitbricks managed servers
+checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/profitbricks.git

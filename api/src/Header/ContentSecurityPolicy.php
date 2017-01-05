@@ -52,7 +52,7 @@ class ContentSecurityPolicy
 			// set frame-src attrs of API and apps via hook
 			if ($source == 'frame-src' && !isset($attrs))
 			{
-				$attrs = array('www.egroupware.org');
+				$attrs = array('*.egroupware.org');
 				if (($app_additional = Api\Hooks::process('csp-frame-src')))
 				{
 					foreach($app_additional as $addtional)
