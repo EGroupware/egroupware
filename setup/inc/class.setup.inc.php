@@ -992,7 +992,7 @@ class setup
 				'account_primary_group' => $primary_group_id,
 				'account_expires'   => -1,
 				'account_email'     => $email,
-				'account_members'   => ''
+				'account_members'   => array()
 			);
 			if (!($accountid = $this->accounts->save($account)))
 			{
