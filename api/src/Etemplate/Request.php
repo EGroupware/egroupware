@@ -363,7 +363,7 @@ class Request
 		// generate random token (using oppenssl if available otherwise mt_rand based Auth::randomstring)
 		$token = function_exists('openssl_random_pseudo_bytes') ?
 			base64_encode(openssl_random_pseudo_bytes(32)) :
-			Auth::randomstring(44);
+			\EGroupware\Api\Auth::randomstring(44);
 
 		return $GLOBALS['egw_info']['flags']['currentapp'].'_'.$userID.'_'.$token;
 	}
