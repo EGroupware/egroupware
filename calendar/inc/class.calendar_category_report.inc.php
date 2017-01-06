@@ -107,8 +107,8 @@ class calendar_category_report extends calendar_ui{
 				$day_timestamp = strtotime($day_index);
 
 				// week number
-				$week_number = date('W', $day_timestamp);
-				
+				$week_number = ltrim(date('W', $day_timestamp), '0');
+
 				$previous_week_number = $week_number == 1? ($events_log[$user_id]['53']? 53: 52): $week_number -1;
 				// check if multidays event starts before start range
 				$is_over_range_event = $day_timestamp< $event['end'] && $start_range > $event['start'];
