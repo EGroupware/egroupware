@@ -43,6 +43,11 @@ abstract class AppTest extends TestCase
 	{
 		// These globals pulled from the test config (phpunit.xml)
 		static::load_egw($GLOBALS['EGW_USER'],$GLOBALS['EGW_PASSWORD'], $GLOBALS['EGW_DOMAIN']);
+
+		// Re-init config, since it doesn't get handled by loading Egw
+		Api\Config::init_static();
+
+		$GLOBALS['egw']->db->connect();
 	}
 
 	/**
@@ -132,7 +137,7 @@ abstract class AppTest extends TestCase
 	{
 		if (!($sessionid = $GLOBALS['egw']->session->create($GLOBALS['egw_login_data'])))
 		{
-			echo lang("Wrong account or password !!!")."\n\n";
+			die("Wrong account or password - run tests with 'phpunit -c doc/phpunit.xml' or 'phpunit <test_dir> -c doc/phpunit.xml'\n\n");
 		}
 		unset($GLOBALS['egw_login_data']);
 		return $sessionid;
