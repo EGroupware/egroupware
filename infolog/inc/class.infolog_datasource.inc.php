@@ -241,9 +241,12 @@ class infolog_datasource extends datasource
 	function change_status($id,$status)
 	{
 		//error_log("datasource_infolog::change_status($id,$status)");
-		if (($info = $this->infolog_bo->read($id)) && $this->infolog_bo->check_access($info,Acl::EDIT))
+		if (($info = $this->infolog_bo->read($id)) && (
+				$this->infolog_bo->check_access($info,Acl::EDIT) ||
+				$info['info_status'] == 'deleted' && $this->infolog_bo->check_access($info, infolog_bo::ACL_UNDELETE)
+		))
 		{
-			if ($status == 'active' && in_array($info['info_status'],array('template','nonactive','archive')))
+			if ($status == 'active' && in_array($info['info_status'],array('template','nonactive','archive','deleted')))
 			{
 				$status = $this->infolog_bo->activate($info);
 			}
