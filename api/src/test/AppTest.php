@@ -11,7 +11,7 @@
  * @version $Id$
  */
 
-namespace EGroupware\Api\Test;
+namespace EGroupware\Api;
 
 require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
 
