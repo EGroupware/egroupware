@@ -60,6 +60,13 @@ Egroupware
 			<description value="Date range"/>
 			<date id="start" label="Start"/>
 			<date id="end" label="End"/>
+			<hbox>
+				<description value="sort by" label="%s:"/>
+				<vbox>
+					<radio id="sort_key" label="Last name" options="n_family"/>
+					<radio id="sort_key" label="First name" options="n_given"/>
+				</vbox>
+			</hbox>
 			<button id="button[report]" label="Report" onclick="app.calendar.category_report_submit" background_image="1" image="template"/>
 		</hbox>
 	</template>
