@@ -347,7 +347,7 @@ class calendar_category_report extends calendar_ui{
 				//          ]
 				//
 				$result = array_replace_recursive($days_output, $min_days_output);
-				$csv_header =  array ();
+				$raw_csv = $csv_header =  array ();
 
 				// create csv header
 				foreach ($categories as $cat_id)
@@ -384,8 +384,20 @@ class calendar_category_report extends calendar_ui{
 					// last name
 					$n_family = array('n_family' => Api\Accounts::id2name($user_id, 'account_lastname')) ?
 							array('n_family' => Api\Accounts::id2name($user_id, 'account_lastname')) : array();
+					$raw_csv[] = $n_family + $n_given+ $cats_row;
+				}
+				// comparision function for usort
+				function compareByFamily ($key='n_family') {
+					return function ($a, $b) use ($key){
+						return strcasecmp($a[$key], $b[$key]);
+					};
+				}
+				usort($raw_csv, compareByFamily($content['sort_key']));
+
+				foreach ($raw_csv as &$row)
+				{
 					// printout each row into file
-					fputcsv($fp, array_values($n_family + $n_given+ $cats_row));
+					fputcsv($fp, array_values($row));
 				}
 				// echo out csv file
 				fpassthru($fp);
