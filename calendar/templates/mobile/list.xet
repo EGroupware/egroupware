@@ -22,11 +22,12 @@
 			</columns>
 			<rows>
 				<row class="th">
-					
+
 				</row>
 				<row class="$row_cont[class]" valign="top">
 					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
 					<vbox class="calendar_fullWidth">
+						<customfields-list id="$row" class="customfields" app="calendar" disabled="true"/>
 						<hbox class="calTitleRow">
 							<description id="${row}[title]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="100%" />
 						</hbox>

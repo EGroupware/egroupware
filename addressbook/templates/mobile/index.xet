@@ -26,6 +26,7 @@
 				<row class="$row_cont[class]" valign="top">
 					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
 					<vbox class="addressbookCol1">
+						<customfields-list id="$row" class="customfields" app="addressbook" disabled="true"/>
 						<vbox id="${row}[id]">
 							<description id="${row}[line2]" no_lang="1" />
 							<description id="${row}[line1]" no_lang="1" />

@@ -20,6 +20,7 @@
 				<row class="$row_cont[class]">
 					<description class="cat_$row_cont[cat_id] mobile_cat_col"/>
 					<vbox>
+						<customfields-list id="$row" class="customfields" app="resources" disabled="true"/>
 						<description id="${row}[name]" no_lang="1"/>
 						<description id="${row}[short_description]" no_lang="1"/>
 						<hbox>
