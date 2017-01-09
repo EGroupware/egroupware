@@ -139,6 +139,7 @@ class calendar_category_report extends calendar_ui{
 						$events_log[$user_id][$previous_week_number][$event['id']]['counted']))
 				{
 					$events_log[$user_id][$week_number][$event['id']]['counted'] = true;
+					$events_log[$user_id][$week_number][$event['id']]['over_range'] = $is_over_range_event? true: false;
 				}
 				// In case of start range is in middle of multidays event, we need to calculate the
 				// amount base on the part of event on the range and keep track of counting to avoid
