@@ -20,23 +20,24 @@
 			</columns>
 			<rows>
 				<row class="th">
-					
+
 				</row>
 				<row class="$row_cont[class]" valign="top">
 					<description class=" cat_$row_cont[info_cat] mobile_cat_col"/>
 					<vbox class="infolog_fullWidth">
+						<customfields-list id="$row" class="customfields" app="infolog" disabled="true"/>
 						<hbox class="infoSubRow">
 							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="100%" />
 						</hbox>
 						<box class="infoDescRow">
 							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>
-							
+
 						</box>
-						
+
 						<hbox class ="infoLinksRow infoDetails" overflow="hidden">
 							<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b" class="infoDetails"/>
 						</hbox>
-						
+
 					</vbox>
 					<vbox class="infolog_CompletedClmn">
 						<time_or_date id="${row}[info_startdate]" readonly="true" options=",8"/>
@@ -44,7 +45,7 @@
 							<hbox class="infoType">
 								<image label="$row_cont[info_type]" src="${row}[info_type]" default_src="infolog/navbar"/>
 							</hbox>
-							
+
 							<hbox class="infoPercent">
 								<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
 							</hbox>

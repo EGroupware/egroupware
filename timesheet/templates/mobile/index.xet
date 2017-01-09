@@ -27,6 +27,7 @@
 				<row class="$row_cont[class] timesheetRow">
 					<description class=" cat_$row_cont[cat_id] mobile_cat_col"/>
 					<vbox>
+						<customfields-list id="$row" class="customfields" app="timesheet" disabled="true"/>
 						<description id="${row}[ts_title]" no_lang="1" class="ts_title $row_cont[titleClass]"/>
 						<description id="${row}[ts_description]" class="ts_description" no_lang="1"/>
 						<link id="${row}[ts_link]" no_lang="1"/>
