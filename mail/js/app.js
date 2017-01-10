@@ -5460,7 +5460,7 @@ app.classes.mail = AppJS.extend(
 
 			if (content.attachmentsBlock.length>0 && content.attachmentsBlock[0].filename)
 			{
-				$attachment.text(content.attachmentsBlock.length+' '+ egw.lang('attachments'));
+				$attachment.text(self.egw.lang('%1 attachments', content.attachmentsBlock.length));
 			}
 			else
 			{

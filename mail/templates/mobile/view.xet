@@ -25,7 +25,7 @@
 				<description id = "toaddressdetails"/>
 			</hbox>
 			<hbox>
-				<details class="details" title="show details" toggle_align="left">
+				<details class="details" title="details" toggle_align="left">
 					<hbox class="mail-d-h2" disabled="!@toaddress" width="100%">
 						<description value="To"/>
 						<grid id="additionaltoaddress">
