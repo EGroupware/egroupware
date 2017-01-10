@@ -177,7 +177,8 @@ var et2_details = (function(){ "use strict"; return et2_box.extend(
 			name: "title",
 			description:"Set a header title for box and shows it next to toggle button, default is no title",
 			type:"string",
-			default: ""
+			default: "",
+			translate: true
 		}
 	},
 
