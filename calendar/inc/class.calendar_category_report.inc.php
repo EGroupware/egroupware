@@ -293,7 +293,7 @@ class calendar_category_report extends calendar_ui{
 									$content['grid'][$row_id]['min_days'],
 									$content['grid'][$row_id]['unit'],
 									$content['start'],
-									$content['end']+86399 // range till midnight of the sele3cted end date
+									$content['end']+86399 // range till midnight of the selected end date
 							);
 						}
 					}
@@ -314,6 +314,7 @@ class calendar_category_report extends calendar_ui{
 								$days_output[$user_id][$cat_id]['amount'] =
 										$days_output[$user_id][$cat_id]['amount'] + (int)$e['amount'];
 								$days_output[$user_id][$cat_id]['unit'] = $e['unit'];
+								$days_output[$user_id][$cat_id]['days'] += 1;
 							}
 						}
 					}
@@ -378,6 +379,7 @@ class calendar_category_report extends calendar_ui{
 						$cats_row [$cat_id] = ceil($cats_data[$cat_id]['amount']?
 								($cats_data[$cat_id]['amount'] - $events_log['reductions'][$user_id][$cat_id]) /
 								$cats_data[$cat_id]['unit']: 0);
+						if ($cats_data[$cat_id]['unit'] == 86400) $cats_row [$cat_id] = $cats_data[$cat_id]['days'];
 					}
 					// first name
 					$n_given =  array('n_given' => Api\Accounts::id2name($user_id, 'account_firstname')) ?
@@ -404,7 +406,7 @@ class calendar_category_report extends calendar_ui{
 					}
 					//check if all values of the row is zero then escape the row
 					if (!$check_row) continue;
-					
+
 					// printout each row into file
 					fputcsv($fp, array_values($row));
 				}
