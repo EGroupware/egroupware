@@ -25,11 +25,11 @@ if ($GLOBALS['egw_info']['user']['apps']['notifications'])
 	echo '
 		<div id="egwpopup" style="display: none; z-index: 999;">
 			<div id="egwpopup_header">'.lang('Notification'). '<span style="float:right;">'.
-				Api\Html::submit_button('egwpopup_close_button', 'X', '', true, 'id="egwpopup_close_button"', 'close.button') .
+				Api\Html::submit_button('egwpopup_close_button', 'X', '', true, 'id="egwpopup_close_button"', 'close') .
 			'</span></div>
 			<div id="egwpopup_message"></div>
 			<div id="egwpopup_footer">
-				<input id="egwpopup_ok_button" type="button" value="'. lang('ok'). '">
+				<input id="egwpopup_ok_button" class="et2_button et2_button_text" type="button" value="'. lang('ok'). '">
 			</div>
 		</div>
 	';

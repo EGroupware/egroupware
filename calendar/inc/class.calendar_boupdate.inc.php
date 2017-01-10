@@ -934,6 +934,10 @@ class calendar_boupdate extends calendar_bo
 					Api\Translation::init();
 					$lang = $part_prefs['common']['lang'];
 				}
+
+				// Since we're running from cron, make sure notifications uses user's theme (for images)
+				$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+				
 				$event_arr = null;
 				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
 					$action, $event_arr, $disinvited);
