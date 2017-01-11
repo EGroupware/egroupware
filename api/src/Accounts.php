@@ -1255,4 +1255,8 @@ class Accounts
 			self::$cache = array();
 		}
 	}
+
+	public function __destruct() {
+		self::$_instance = NULL;
+	}
 }
