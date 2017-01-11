@@ -41,13 +41,29 @@ abstract class AppTest extends TestCase
 	 */
 	public static function setUpBeforeClass()
 	{
-		// These globals pulled from the test config (phpunit.xml)
-		static::load_egw($GLOBALS['EGW_USER'],$GLOBALS['EGW_PASSWORD'], $GLOBALS['EGW_DOMAIN']);
+		try
+		{
+			// These globals pulled from the test config (phpunit.xml)
+			static::load_egw($GLOBALS['EGW_USER'],$GLOBALS['EGW_PASSWORD'], $GLOBALS['EGW_DOMAIN']);
 
-		// Re-init config, since it doesn't get handled by loading Egw
-		Api\Config::init_static();
+			// Re-init config, since it doesn't get handled by loading Egw
+			Api\Config::init_static();
 
-		$GLOBALS['egw']->db->connect();
+			if($GLOBALS['egw']->db)
+			{
+				$GLOBALS['egw']->db->connect();
+			}
+			else
+			{
+				static::markTestSkipped('No $GLOBALS[egw]->db');
+				die();
+			}
+		}
+		catch(Exception $e)
+		{
+			static::markTestSkipped('Unable to connect to Egroupware');
+			die();
+		}
 	}
 
 	/**
@@ -63,6 +79,10 @@ abstract class AppTest extends TestCase
 					$GLOBALS['egw']->session->sessionid,
 					$GLOBALS['egw']->session->kp3
 				);
+			}
+			if($GLOBALS['egw']->accounts)
+			{
+				$GLOBALS['egw']->accounts->backend = null;
 			}
 			unset($GLOBALS['egw']);
 		}
