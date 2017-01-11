@@ -334,6 +334,9 @@ class calendar_category_report extends calendar_ui{
 									$min_days_output[$user_id][$cat_id]['amount'] =
 											$min_days_output[$user_id][$cat_id]['amount'] +
 											(count($days) >= (int)$events['min_days']?self::add_days($days):0);
+									$min_days_output[$user_id][$cat_id]['days'] =
+											$min_days_output[$user_id][$cat_id]['days'] +
+											(count($days) >= (int)$events['min_days']?count($days):0);
 								}
 							}
 						}
