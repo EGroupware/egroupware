@@ -9,6 +9,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
 
 include_once(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.datasource.inc.php');
 
@@ -52,8 +54,20 @@ class timesheet_datasource extends datasource
 		{
 			$data =& $data_id;
 		}
+		$status = null;
+		switch($data['ts_status'])
+		{
+			case timesheet_bo::DELETED_STATUS:
+				$status = 'deleted';
+				break;
+			case '':
+			default:
+				$status = 'ignore';
+				break;
+		}
 		$ds = array(
 			'pe_title'       => $GLOBALS['timesheet_bo']->link_title($data),
+			'pe_status'      => $status,
 			'pe_real_start'  => $data['ts_start'],
 			'pe_resources'   => array($data['ts_owner']),
 			'pe_details'     => $data['ts_description'] ? nl2br($data['ts_description']) : '',
@@ -98,14 +112,49 @@ class timesheet_datasource extends datasource
 	 * @param int $id
 	 * @return boolean true on success, false on error
 	 */
-/* removed deleting, as it might not be always wanted, maybe we make it configurable later on
 	function delete($id)
 	{
 		if (!is_object($GLOBALS['timesheet_bo']))
 		{
-			$GLOBALS['timesheet_bo'] = new timesheet_boo();
+			$GLOBALS['timesheet_bo'] = new timesheet_bo();
+		}
+		// dont delete entries which are linked to elements other than their project
+		if (count(Link::get_links('timesheet',$id)) > 1)
+		{
+			return false;
 		}
 		return $GLOBALS['timesheet_bo']->delete($id);
 	}
-*/
+
+	/**
+	 * Change the status of an entry according to the project status
+	 *
+	 * @param int $id
+	 * @param string $status
+	 * @return boolean true if status changed, false otherwise
+	 */
+	function change_status($id,$status)
+	{
+		if (!is_object($GLOBALS['timesheet_bo']))
+		{
+			$GLOBALS['timesheet_bo'] = new timesheet_bo();
+		}
+		if (($entry = $GLOBALS['timesheet_bo']->read($id)) && (
+				$GLOBALS['timesheet_bo']->check_acl(Acl::EDIT,$entry)
+		))
+		{
+			if (in_array($status, $GLOBALS['timesheet_bo']->status_labels))
+			{
+				$GLOBALS['timesheet_bo']->set_status($id, $status);
+				return true;
+			}
+			// Restore from deleted
+			else if ($status == 'active' && $entry['ts_status'] == timesheet_bo::DELETED_STATUS)
+			{
+				$GLOBALS['timesheet_bo']->set_status($id, '');
+				return true;
+			}
+		}
+		return false;
+	}
 }

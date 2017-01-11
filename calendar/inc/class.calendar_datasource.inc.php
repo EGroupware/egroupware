@@ -10,7 +10,8 @@
  * @version $Id$
  */
 
-use EGroupware\Api;
+use EGroupware\Api\Link;
+use EGroupware\Api\Acl;
 
 include_once(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.datasource.inc.php');
 
@@ -107,6 +108,10 @@ class calendar_datasource extends datasource
 		// if we have multiple participants we have to multiply the time by the number of participants to get the total time
 		$ds['pe_planned_time'] *= count($ds['pe_resources']);
 
+		if($data['deleted'])
+		{
+			$ds['pe_status'] = 'deleted';
+		}
 /*
 		// ToDO: this does not change automatically after the event is over,
 		// maybe we need a flag for that in egw_pm_elements
@@ -121,5 +126,46 @@ class calendar_datasource extends datasource
 			echo "datasource="; _debug_array($ds);
 		}
 		return $ds;
+	}
+
+	/**
+	 * Delete the datasource of a project element
+	 *
+	 * @param int $id
+	 * @return boolean true on success, false on error
+	 */
+	function delete($id)
+	{
+		// dont delete entries which are linked to elements other than their project
+		if (count(Link::get_links('calendar',$id)) > 1)
+		{
+			return false;
+		}
+		$bo = new calendar_boupdate();
+		return $bo->delete($id);
+	}
+
+	/**
+	 * Change the status of an entry according to the project status
+	 *
+	 * @param int $id
+	 * @param string $status
+	 * @return boolean true if status changed, false otherwise
+	 */
+	function change_status($id,$status)
+	{
+		$bo = new calendar_boupdate();
+		if (($entry = $bo->read($id)) && (
+				$bo->check_perms(Acl::EDIT,$entry)
+		))
+		{
+			// Restore from deleted
+			if ($status == 'active' && $entry['deleted'])
+			{
+				$entry['deleted'] = null;
+				return (boolean)$bo->update($entry, true);
+			}
+		}
+		return false;
 	}
 }
