@@ -1690,7 +1690,8 @@ class mail_compose
 						$_folder,
 						$attachment['name'],
 						$attachment['mimeType'],
-						$attachment['size']);
+						$attachment['size'],
+						$attachment['is_winmail']);
 				}
 			}
 		}
@@ -1828,7 +1829,7 @@ class mail_compose
 		}
 	}
 
-	function addMessageAttachment($_uid, $_partID, $_folder, $_name, $_type, $_size)
+	function addMessageAttachment($_uid, $_partID, $_folder, $_name, $_type, $_size, $_is_winmail= null)
 	{
 		$this->sessionData['attachments'][]=array (
 			'uid'		=> $_uid,
@@ -1837,6 +1838,7 @@ class mail_compose
 			'type'		=> $_type,
 			'size'		=> $_size,
 			'folder'	=> $_folder,
+			'winmailFlag' => $_is_winmail,
 			'tmp_name'	=> mail_ui::generateRowID($this->mail_bo->profileID, $_folder, $_uid).'_'.(!empty($_partID)?$_partID:count($this->sessionData['attachments'])+1),
 		);
 	}
