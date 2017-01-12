@@ -215,6 +215,14 @@ class mail_hooks
 				'default' => 2,
 				'forced' => 1,
 			),
+			'allowExternalDomains' => array(
+				'type'   => 'taglist',
+				'label'  => 'Allow external images from listed domains',
+				'help'   => 'allow images from listed domains in html emails',
+				'name'   => 'allowExternalDomains',
+				'values' => $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'],
+				'no_sel_options' => true
+			),
 			'message_forwarding' => array(
 				'type'   => 'select',
 				'label'  => 'how to forward messages',
