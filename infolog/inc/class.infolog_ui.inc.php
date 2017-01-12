@@ -1736,7 +1736,7 @@ class infolog_ui
 				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only || $undelete))
 				{
 					$operation = $info_id ?  'edit' : 'add';
-					
+
 					if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 					{
 						$content['info_link_id'] = 0;	// as field has to be int
@@ -1772,6 +1772,11 @@ class infolog_ui
 						Framework::refresh_opener($content['msg'],'infolog',$info_id,$operation);
 					}
 					$content['tabs'] = $active_tab;
+					//try to keep the project manager link if the intenstion is only to remove contact
+					if ($old['info_link']['app'] == 'projectmanager' && $old['info_link']['id'] = $content['pm_id'])
+					{
+						Link::link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
+					}
 					if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
 					{
 						//echo "<p>pm_id changed: $content[old_pm_id] -> $content[pm_id]</p>\n";
@@ -1813,6 +1818,14 @@ class infolog_ui
 							);
 							//echo "<p>updating info_link_id: ".print_r($to_write,true)."</p>\n";
 							$this->bo->write($to_write,False,true,true,true);	// last true = no notifications, as no real change
+
+							// Do not override info_contact if is already filled with contact
+							if ($content['info_contact'])
+							{
+								unset($to_write['info_contact']);
+								unset($to_write['blur_title']);
+							}
+
 							// we need eg. the new modification date, for further updates
 							$content = array_merge($content,$to_write);
 						}
