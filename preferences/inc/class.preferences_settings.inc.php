@@ -394,6 +394,12 @@ class preferences_settings
 						if ((string)$attrs[$n] !== '') $tpl->setElementAttribute($tab.'['.$setting['name'].']', $name, $attrs[$n]);
 					}
 					break;
+				case 'taglist':
+					if ($setting['no_sel_options'])
+					{
+						$tpl->setElementAttribute ($tab.'['.$setting['name'].']', 'autocomplete_url', '');
+					}
+					break;
 			}
 			// move values/options to sel_options array
 			if (isset($setting['values']) && is_array($setting['values']) && !$setting['no_sel_options'])
