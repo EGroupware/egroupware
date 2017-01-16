@@ -3317,7 +3317,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		if (!is_array($content)) $content = array();
 		if (empty($content['FOLDER'])) $content['FOLDER']=(array)$this->mail_bo->getDraftFolder();
-		if (!empty($content['FOLDER'])) $sel_options['FOLDER']=mail_compose::ajax_searchFolder(0,true);
+		if (!empty($content['FOLDER']))
+		{
+			$compose = new mail_compose();
+			$sel_options['FOLDER'] = $compose->ajax_searchFolder(0,true);
+		}
 
 		$etpl = new Etemplate('mail.importMessage');
 		$etpl->setElementAttribute('uploadForImport','onFinish','app.mail.uploadForImport');
