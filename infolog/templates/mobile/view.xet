@@ -35,7 +35,7 @@
 					<description value="Price"/>
 					<hbox>
 						<textbox type="float" id="info_price" size="10"/>
-						<projectmanager-pricelist id="pl_id"  options="None" />
+						<listbox id="pl_id"  options="None" />
 					</hbox>
 				</row>
 				<row>
