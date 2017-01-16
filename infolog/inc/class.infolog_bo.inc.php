@@ -455,6 +455,11 @@ class infolog_bo
 			{
 				return False;
 			}
+			// if link is a project and no other project selected, also add as project
+			if ($app == 'projectmanager' && $id && !$info['pm_id'])
+			{
+				$info['old_pm_id'] = $info['pm_id'] = $id;
+			}
 			$info['info_link'] = array(
 				'app'   => $app,
 				'id'    => $id,
@@ -610,8 +615,10 @@ class infolog_bo
 		{
 			$data['info_subject'] = '';
 		}
-		if ($run_link_id2from) $this->link_id2from($data);
-
+		if ($run_link_id2from)
+		{
+			$this->link_id2from($data);
+		}
 		// convert server- to user-time
 		if ($date_format == 'ts')
 		{
