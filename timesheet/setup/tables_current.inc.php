@@ -24,6 +24,7 @@ $phpgw_baseline = array(
 			'ts_unitprice' => array('type' => 'float','precision' => '4','comment' => 'unitprice'),
 			'cat_id' => array('type' => 'int','meta' => 'category','precision' => '4','default' => '0','comment' => 'category'),
 			'ts_owner' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'owner of the timesheet'),
+			'ts_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'Creation date of the timesheet'),
 			'ts_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'date modified ot the timesheet'),
 			'ts_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'account id of the last modifier'),
 			'pl_id' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'id of the linked project'),

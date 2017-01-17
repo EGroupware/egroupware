@@ -24,6 +24,7 @@
 				<column width="60" disabled="@no_ts_unitprice"/>
 				<column width="60" disabled="@no_ts_total"/>
 				<column width="130" disabled="@no_owner_col"/>
+				<column width="135"/>
 				<column width="50"/>
 				<column width="10%" disabled="@no_ts_status"/>
 				<column width="15%"/>
@@ -65,6 +66,7 @@
 						<textbox type="float" id="price" readonly="true" precision="2"/>
 					</vbox>
 					<nextmatch-filterheader id="ts_owner" no_lang="1" options="User" class="$cont[ownerClass]"/>
+					<nextmatch-sortheader label="Created" id="ts_created"/>
 					<nextmatch-sortheader label="ID" id="ts_id"/>
 					<nextmatch-filterheader id="ts_status" options="Status"/>
 					<nextmatch-customfields id="customfields"/>
@@ -86,6 +88,7 @@
 					<menulist class="$cont[ownerClass]">
 						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
 					</menulist>
+					<date-time id="${row}[ts_created]" readonly="true"/>
 					<description id="${row}[ts_id]"/>
 					<menulist>
 						<menupopup id="${row}[ts_status]" readonly="true"/>

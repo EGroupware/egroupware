@@ -56,7 +56,7 @@ class timesheet_bo extends Api\Storage
 	 * @var array
 	 */
 	var $timestamps = array(
-		'ts_start','ts_modified'
+		'ts_start','ts_created', 'ts_modified'
 	);
 	/**
 	 * Start of today in user-time
@@ -527,7 +527,7 @@ class timesheet_bo extends Api\Storage
 				parent::search($criteria,array(
 					(string)$sum_ts_id[$type],"''","''","''",'MIN(ts_start)','SUM(ts_duration) AS ts_duration',
 					($this->quantity_sum ? "SUM(ts_quantity) AS ts_quantity" : '0'),
-					'0','NULL','0','0','0','0','0',"SUM($total_sql) AS ts_total"
+					'0','NULL','0','0','0','0','0','0',"SUM($total_sql) AS ts_total"
 				),'GROUP BY '.$sum_sql[$type],$sum_extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
 				$sum_extra_cols[$type]{0} = '0';
 			}
@@ -596,6 +596,10 @@ class timesheet_bo extends Api\Storage
 			{
 				if (isset($new[$name]) && $new[$name] != $value) $changed[] = $name;
 			}
+		}
+		if (!$this->data['ts_created'])
+		{
+			$this->data['ts_created'] = time();
 		}
 		if (isset($old) && !$changed)
 		{

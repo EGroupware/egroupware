@@ -131,3 +131,17 @@ function timesheet_upgrade14_1()
 {
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '16.1';
 }
+
+function timesheet_upgrade16_1()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_timesheet','ts_created',array(
+		'type' => 'int',
+		'meta' => 'timestamp',
+		'precision' => '8',
+		'nullable' => False
+	));
+	// Initialize to start
+	$GLOBALS['egw']->db->query('UPDATE egw_timesheet set ts_created = ts_start');
+	
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '17.1';
+}

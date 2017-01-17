@@ -73,6 +73,10 @@
 						<menupopup id="ts_owner" no_lang="1" class="et2_fullWidth"/>
 					</menulist>
 				</row>
+				<row>
+					<description/>
+					<date-time id="ts_created" readonly="true" align="left"/>
+				</row>
 				<row disabled="!@ts_modified">
 					<description value="Last modified"/>
 					<menulist>

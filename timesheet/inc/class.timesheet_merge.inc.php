@@ -57,10 +57,7 @@ class timesheet_merge extends Api\Storage\Merge
 		$this->parse_html_styles = Api\Storage\Customfields::use_html('timesheet');
 
 		$this->bo = new timesheet_bo();
-		$this->date_fields += array(
-			'ts_start',
-			'ts_modified',
-		);
+		$this->date_fields += timesheet_egw_record::$types['date-time'];
 	}
 
 	/**
@@ -168,7 +165,11 @@ class timesheet_merge extends Api\Storage\Merge
 		echo '<tr><td colspan="4"><h3>'.lang('Timesheet fields:')."</h3></td></tr>";
 
 		$n = 0;
-		$fields = array('ts_id' => lang('Timesheet ID')) + $this->bo->field2label + array('ts_total' => lang('total'));
+		$fields = array('ts_id' => lang('Timesheet ID')) + $this->bo->field2label + array(
+			'ts_total' => lang('total'),
+			'ts_created' => lang('Created'),
+			'ts_modified' => lang('Modified'),
+		);
 		foreach($fields as $name => $label)
 		{
 			if (in_array($name,array('pl_id','customfields'))) continue;	// dont show them
