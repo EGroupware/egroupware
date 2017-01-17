@@ -271,7 +271,8 @@ class admin_customfields
 
 		// Some logic to make sure extending class (if there is one) gets called
 		// when etemplate2 comes back instead of parent class
-		$exec = get_class() == get_called_class() ? 'admin.admin_customfields.index' : $this->appname . '.' . get_called_class() . '.index';
+		$exec = get_class() == get_called_class() || get_called_class() == 'customfields' ?
+			'admin.admin_customfields.index' : $this->appname . '.' . get_called_class() . '.index';
 
 		$this->tmpl->exec($exec,$content,$sel_options,$readonlys,$preserve);
 	}
