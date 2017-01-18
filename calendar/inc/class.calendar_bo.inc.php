@@ -410,7 +410,7 @@ class calendar_bo
 		}
 		return $contact_list;
 	}
-	
+
 	/**
 	 * Add group-members as participants with status 'G'
 	 *
@@ -610,7 +610,7 @@ class calendar_bo
 		}
 		// if we have no grants from the given user(s), we directly return no events / an empty array,
 		// as calling the so-layer without users would give the events of all users (!)
-		if (!count($users))
+		if (!count($users) && !$params['ignore_acl'])
 		{
 			return false;
 		}
@@ -665,7 +665,7 @@ class calendar_bo
 			{
 				$is_private = !$this->check_perms(Acl::READ,$event);
 			}
-			if ($is_private || (!$event['public'] && $filter == 'hideprivate'))
+			if (!$params['ignore_acl'] && ($is_private || (!$event['public'] && $filter == 'hideprivate')))
 			{
 				$this->clear_private_infos($events[$id],$users);
 			}
@@ -970,11 +970,11 @@ class calendar_bo
 					$time->setTime(23, 59, 59);
 					$event['recur_enddate'] = Api\DateTime::to($time, $date_format);
 				}
-				$timestamps = array('modified','created');
+				$timestamps = array('modified','created','deleted');
 			}
 			else
 			{
-				$timestamps = array('start','end','modified','created','recur_enddate','recurrence','recur_date');
+				$timestamps = array('start','end','modified','created','recur_enddate','recurrence','recur_date','deleted');
 			}
 			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
 			foreach ($timestamps as $ts)

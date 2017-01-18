@@ -772,6 +772,7 @@ class calendar_so
 				$where = array_merge($where, $params['sql_filter']);
 			}
 		}
+		$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
 		if ($users)
 		{
 			$users_by_type = array();
@@ -790,7 +791,6 @@ class calendar_so
 			}
 			$to_or = $user_or = array();
 			$owner_or = null;
-			$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
 			$table_def = $this->db->get_table_definitions('calendar',$this->user_table);
 			foreach($users_by_type as $type => $ids)
 			{
@@ -1057,7 +1057,7 @@ class calendar_so
 			foreach($this->db->select($utcal_id_view,'*',array(
 					//'cal_id' => array_unique($ids),
 					'cal_recur_date' => $recur_dates,
-				),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC,'.self::STATUS_SORT,'calendar',$num_rows,$join='',
+				),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC,'.self::STATUS_SORT,'calendar',-1,$join='',
 				$this->db->get_table_definitions('calendar',$this->user_table)) as $row)	// DESC puts users before resources and contacts
 			{
 				$id = $row['cal_id'];
