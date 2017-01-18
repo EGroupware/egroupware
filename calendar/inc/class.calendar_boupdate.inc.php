@@ -247,7 +247,7 @@ class calendar_boupdate extends calendar_bo
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
 
-		if (!($cal_id = $this->save($event, $ignore_acl, $updateTS)))
+		if (!($cal_id = $this->save($event, $ignore_acl)))
 		{
 			return $cal_id;
 		}
@@ -937,7 +937,7 @@ class calendar_boupdate extends calendar_bo
 
 				// Since we're running from cron, make sure notifications uses user's theme (for images)
 				$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
-				
+
 				$event_arr = null;
 				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
 					$action, $event_arr, $disinvited);
@@ -1153,12 +1153,11 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $event
 	 * @param boolean $ignore_acl =false should we ignore the acl
 	 * @param boolean $updateTS =true update the content history of the event
-	 * DEPRECATED: we allways (have to) update timestamp, as they are required for sync!
+	 * Please note: you should ALLWAYS update timestamps, as they are required for sync!
 	 * @return int|boolean $cal_id > 0 or false on error (eg. permission denied)
 	 */
 	function save($event,$ignore_acl=false,$updateTS=true)
 	{
-		unset($updateTS);
 		//error_log(__METHOD__.'('.array2string($event).", $ignore_acl, $updateTS)");
 
 		// check if user has the permission to update / create the event
@@ -1289,9 +1288,12 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 
-		// always update modification time (ctag depends on it!)
-		$event['modified'] = $this->now;
-		$event['modifier'] = $this->user;
+		// you should always update modification time (ctag depends on it!)
+		if ($updateTS)
+		{
+			$event['modified'] = $this->now;
+			$event['modifier'] = $this->user;
+		}
 
 		if (empty($event['id']) && (!isset($event['created']) || $event['created'] > $this->now))
 		{
