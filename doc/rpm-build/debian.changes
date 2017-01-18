@@ -1,3 +1,22 @@
+egroupware-epl (16.1.20170118) hardy; urgency=low
+
+  * Several apps: customfields could not be deleted
+  * Mail: update Horde packages to fix recipients with non-ascii chars (e.g. "Mike Håvard <mike@example.com>") were not displayed
+  * Mail: Fix can not display content of resolved winmail attachments in compose dialog
+  * Mobile template: Fix customfields do not show up in view mode
+  * Calendar/Categrory report: Consider multidays events in over range calculation
+  * Calendar/Categrory report: Add sort option for the report
+  * Calendar/Categrory report: Fix miscalculation of multidays events because of wrong week number
+  * Etemplate: Fix error "Etemplate\Api\Auth not found" happening while trying to login
+  * Setup: Fix error "[] operator not supported for strings" for setup page
+  * CalDAV/CardDAV: send unchange REALM for "bad login or password" to allow storing credentials
+  * Calendar: Some hotfixes for category report
+  * Timesheet: Add Copy context menu action
+  * Mail: Fix accounts selectbox in compose dialog does not include email addresses. Additionally, let local accounts without '@' get explicitly displayed in accounts selectbox.
+  * Wiki: Fix error "Only variables can be passed by reference", which causing edit dialog not working
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 18 Jan 2017 09:56:20 +0100
+
 egroupware-epl (16.1.20161208) hardy; urgency=low
 
   * Infolog: Add a context menu action to view a list of linked timesheets
