@@ -1786,7 +1786,7 @@ class infolog_ui
 						if ($content['pm_id'])
 						{
 							//echo "<p>this->link->link('infolog',{$content['link_to']['to_id']},'projectmanager',{$content['pm_id']});</p>";
-							Link::link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
+							Link::link('infolog',$info_id,'projectmanager',$content['pm_id']);
 							// making the project the selected link, if no other link selected
 							if (!$info_link_id || $info_link_id == 'projectmanager:'.$content['old_pm_id'])
 							{
