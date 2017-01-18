@@ -63,7 +63,6 @@ class mail_integration {
 	 * @param string $_date
 	 * @param string $_rawMail path to file with raw mail
 	 * @param int $_icServerID mail profile id
-	 * @throws Api\Exception\AssertionFailed
 	 */
 	public static function integrate ($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null,$_icServerID=null)
 	{
@@ -73,6 +72,8 @@ class mail_integration {
 		// preset app entry id, selected by user from app_entry_dialog
 		$app_entry_id = $_GET['entry_id'];
 
+		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
+
 		// Set the date
 		if (!$_date)
 		{
@@ -80,13 +81,63 @@ class mail_integration {
 			$_date = Api\DateTime::server2user($time->now,'ts');
 		}
 
+		$data = static::get_integrate_data($_GET['rowid'], $_to_emailAddress, $_subject, $_body, $_attachments, $_date, $_rawMail, $_icServerID);
+
+		// Check if the hook is registered
+		if (Api\Hooks::exists('mail_import',$app) == 0)
+		{
+			// Try to register hook
+			Api\Hooks::read(true);
+		}
+
+		// Get the registered hook method of requested app for integration
+		$hook = Api\Hooks::single(array('location' => 'mail_import'),$app);
+
+		// Load Api\Translation for the app since the original URL
+		// is from mail integration and only loads mail Api\Translation
+		Api\Translation::add_app($app);
+
+		// Execute import mail with provided content
+		ExecMethod($hook['menuaction'],$data);
+	}
+	
+	/**
+	 * Gets requested mail information and sets them as data link
+	 * -with provided content from mail:
+	 *
+	 * -array(	'addresses' => array (
+	 *					'email'=> stirng,
+	 *					'personel' => string),
+	 *			'attachments' => array (
+	 *					'name' => string,		// file name
+	 *					'type' => string,		// mime type
+	 *					'egw_data'=> string,	// hash md5 id of an stored attachment in session (attachment which is in IMAP server)
+	 *											// NOTE: the attachmet either have egw_data OR tmp_name (e.g. raw mail eml file stores in tmp)
+	 *					'tmp_name' => string),	// tmp dir path
+	 *			'message' => string,
+	 *			'date' => string,
+	 *			'subject' => string,
+	 *			'entry_id => string				// Id of the app entry which mail content will append to
+	 *	)
+	 *
+	 * @param string $_rowid
+	 * @param string $_to_emailAddress
+	 * @param string $_subject mail subject
+	 * @param string $_body mail message
+	 * @param array $_attachments attachments
+	 * @param string $_date
+	 * @param string $_rawMail path to file with raw mail
+	 * @param int $_icServerID mail profile id
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public static function get_integrate_data($_rowid=false, $_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false,$_rawMail=null,$_icServerID=null)
+	{
 		// For dealing with multiple files of the same name
 		$dupe_count = $file_list = array();
 
-		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
-		//error_log(__METHOD__.__LINE__.': RowID:'.$_GET['rowid'].': emailAddress:'. array2string($_to_emailAddress).' && '.$app);
+		//error_log(__METHOD__.__LINE__.': RowID:'.$_rowid.': emailAddress:'. array2string($_to_emailAddress));
 		// Integrate not yet saved mail
-		if (empty($_GET['rowid']) && $_to_emailAddress && $app)
+		if (empty($_rowid) && $_to_emailAddress)
 		{
 			$sessionLocation = 'mail';
 			$mailbox = base64_decode($_GET['mailbox']);
@@ -222,7 +273,7 @@ class mail_integration {
 		else
 		{
 			// Initializing mail connection requirements
-			$hA = mail_ui::splitRowID($_GET['rowid']);
+			$hA = mail_ui::splitRowID($_rowid);
 			$sessionLocation = $hA['app']; // THIS is part of the row ID, we may use this for validation
 			// Check the mail app
 			if ($sessionLocation != 'mail') throw new Api\Exception\AssertionFailed(lang('Application mail expected but got: %1',$sessionLocation));
@@ -302,29 +353,14 @@ class mail_integration {
 			}
 		}
 
-		// Check if the hook is registered
-		if (Api\Hooks::exists('mail_import',$app) == 0)
-		{
-			// Try to register hook
-			Api\Hooks::read(true);
-		}
-
-		// Get the registered hook method of requested app for integration
-		$hook = Api\Hooks::single(array('location' => 'mail_import'),$app);
-
-		// Load Api\Translation for the app since the original URL
-		// is from mail integration and only loads mail Api\Translation
-		Api\Translation::add_app($app);
-
-		// Execute import mail with provided content
-		ExecMethod($hook['menuaction'],array (
+		return array (
 			'addresses' => $data_addresses,
 			'attachments' => $data_attachments,
 			'message' => $data_message,
 			'date' => $mailcontent['date'],
 			'subject' => $mailcontent['subject'],
 			'entry_id' => $app_entry_id
-		));
+		);
 	}
 }
 
