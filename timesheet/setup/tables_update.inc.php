@@ -138,10 +138,36 @@ function timesheet_upgrade16_1()
 		'type' => 'int',
 		'meta' => 'timestamp',
 		'precision' => '8',
-		'nullable' => False
+		'nullable' => true
 	));
 	// Initialize to start
 	$GLOBALS['egw']->db->query('UPDATE egw_timesheet set ts_created = ts_start');
-	
+
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_timesheet','ts_created',array(
+		'type' => 'int',
+		'meta' => 'timestamp',
+		'precision' => '8',
+		'nullable' => False
+	));
+
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '17.1';
+}
+
+function timesheet_upgrade17_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_timesheet_extra','ts_extra_name',array(
+		'type' => 'varchar',
+		'meta' => 'cfname',
+		'precision' => '64',
+		'nullable' => False
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_timesheet_extra','ts_extra_value',array(
+		'type' => 'varchar',
+		'meta' => 'cfvalue',
+		'precision' => '16384',
+		'nullable' => False,
+		'default' => ''
+	));
+
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '17.1.001';
 }

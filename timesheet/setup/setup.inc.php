@@ -17,7 +17,7 @@ if (!defined('TIMESHEET_APP'))
 }
 
 $setup_info[TIMESHEET_APP]['name']      = TIMESHEET_APP;
-$setup_info[TIMESHEET_APP]['version']   = '17.1';
+$setup_info[TIMESHEET_APP]['version']   = '17.1.001';
 $setup_info[TIMESHEET_APP]['app_order'] = 5;
 $setup_info[TIMESHEET_APP]['tables']    = array('egw_timesheet','egw_timesheet_extra');
 $setup_info[TIMESHEET_APP]['enable']    = 1;
@@ -52,3 +52,4 @@ $setup_info[TIMESHEET_APP]['depends'][] = array(
 	 'appname' => 'api',
 	 'versions' => Array('16.1')
 );
+
