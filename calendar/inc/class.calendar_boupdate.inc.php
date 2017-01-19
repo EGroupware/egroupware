@@ -1530,14 +1530,14 @@ class calendar_boupdate extends calendar_bo
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 				"($cal_id, $uid, $status, $recur_date)\n",3,$this->logfile);
 		}
-		$old_event = $this->read($cal_id, $recur_date, false, 'server');
+		$old_event = $this->read($cal_id, $recur_date, $ignore_acl, 'server');
 		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],
 				is_numeric($uid)?$uid:substr($uid,1),$status,
 				$recur_date?$this->date2ts($recur_date,true):0,$role)))
 		{
 			if ($status == 'R')	// remove alarms belonging to rejected participants
 			{
-				foreach(isset($event['alarm']) ? $event['alarm'] : $old_event['alarm'] as $id => $alarm)
+				foreach(is_array($event) && isset($event['alarm']) ? $event['alarm'] : $old_event['alarm'] as $id => $alarm)
 				{
 					if ((string)$alarm['owner'] === (string)$uid)
 					{
@@ -1561,7 +1561,7 @@ class calendar_boupdate extends calendar_bo
 			}
 
 			// Update history
-			$event = $this->read($cal_id, $recur_date, false, 'server');
+			$event = $this->read($cal_id, $recur_date, $ignore_acl, 'server');
 			$tracking = new calendar_tracking($this);
 			$tracking->track($event, $old_event);
 
