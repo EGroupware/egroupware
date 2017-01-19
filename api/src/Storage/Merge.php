@@ -1368,6 +1368,18 @@ abstract class Merge
 		preg_match_all('/\${2}(([^\/#]*?\/)?)#([^$\/]+)\/(.*?)[$}]{2}/', $content, $matches);
 		list($placeholders, , , $cf, $sub) = $matches;
 
+		// Collect any used custom fields from entries so you can do
+		// {{#other_app/#other_app_cf/n_fn}}
+		$expand_sub_cfs = [];
+		foreach($sub as $index => $cf_sub)
+		{
+			if(strpos($cf_sub, '#') === 0)
+			{
+				$expand_sub_cfs[$cf[$index]] .= '$$'.$cf_sub . '$$ ';
+			}
+		}
+		$expand_sub_cfs = array_unique($expand_sub_cfs);
+
 		foreach($cf as $index => $field)
 		{
 			if($cfs[$field])
@@ -1398,9 +1410,10 @@ abstract class Merge
 				{
 					$classname = "{$field_app}_merge";
 					$class = new $classname();
-					// If we send the real content, it can result in infinite loop of lookups
-					// This means you can't do {{#other_app/#other_app_cf/n_fn}}
-					$content = '';
+					// If we send the real content it can result in infinite loop of lookups
+					// so we send only the used fields
+					$content = $expand_sub_cfs[$field] ? $expand_sub_cfs[$field] : '';
+
 					$app_replacements[$field] = $class->get_replacements($values['#'.$field], $content);
 				}
 				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$'.$sub[$index].'$$'];
