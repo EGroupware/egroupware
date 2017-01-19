@@ -1546,7 +1546,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (empty($rowsFetched['messages'])) $rowsFetched['messages'] = $rowsFetched['rowsFetched'];
 
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
-		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified','bodypreview');
+		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified','bodypreview', 'security');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $mail_ui->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
@@ -1878,6 +1878,16 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$data["bodypreview"] = $header['bodypreview'];
 			}
+			if (is_array($data['attachmentsBlock']))
+			{
+				foreach ($data['attachmentsBlock'] as &$attch)
+				{
+					if (Mail\Smime::isSmime($attch['mimetype']))
+					{
+						$data['smimeSigUrl'] = $attch['mime_url'];
+					}
+				}
+			}
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($data));
 		}
@@ -1996,6 +2006,22 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		// we do NOT want to see those, that are embedded in the list of attachments
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
+
+		$smimeData = $this->resolveSmimeAttachment ($attachments, $uid, $partID, $mailbox, $rowID);
+		if (is_array($smimeData))
+		{
+			$error_msg[] = $smimeData['msg'];
+			$linkData = array
+			(
+				'menuaction'	=> 'mail.mail_ui.getAttachment',
+				'id'		=> $rowID,
+				'part'		=> $smimeData['partID'],
+				'is_winmail'    => false,
+				'mailbox'   => base64_encode($mailbox)
+			);
+			$content['smimeSigUrl'] = Egw::link('/index.php',$linkData);
+		}
+
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
 		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
 
@@ -2063,6 +2089,47 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
+	}
+
+	/**
+	 * Resolve certificate from smime attachment
+	 *
+	 * @param array &$attachments
+	 * @param int $_uid
+	 * @param int $_partID
+	 * @param string $_mailbox
+	 * @return array
+	 */
+	function resolveSmimeAttachment (&$attachments, $_uid, $_partID, $_mailbox)
+	{
+		$smime = new Mail\Smime;
+
+		foreach ($attachments as $key => $attachment)
+		{
+			if (Mail\Smime::isSmime($attachment['mimeType']))
+			{
+				$message =  $this->mail_bo->getMessageRawBody($_uid,$_partID,$_mailbox);
+				$cert = $smime->verify($message);
+				$data = array (
+					'verify' => $cert->verify,
+					'cert' => $cert->cert,
+					'msg' => $cert->msg,
+					'certHtml' => $smime->certToHTML($cert->cert),
+					'partID' => $attachment['partID']
+				);
+				unset ($attachments[$key]);
+			}
+		}
+
+		return $data;
+	}
+
+	function getSmimeCert ()
+	{
+		if (isset($_GET['id'])) $id = $_GET['id'];
+		if (isset($_GET['partID'])) $partID = $_GET['partid'];
+		$cert = $this->resolveSmimeAttachment($attachments, $id, $partID, $mailbox);
+		echo ($cert);
 	}
 
 	/**
@@ -2499,6 +2566,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					Egw::redirect_link('../index.php',$vars);
 				}
 				//Import failed, download content anyway
+			}
+			// Display smime certificate
+			if (Mail\Smime::isSmime($attachment['type']))
+			{
+				$smimeAttachments = array ( array('mimeType' => $attachment['type']	));
+				$smime = $this->resolveSmimeAttachment($smimeAttachments, $uid, 0, $mailbox);
+				Api\Header\Content::safe($smime['certHtml'], '', $attachment['type'], $size=0, false, true);
+				echo $smime['certHtml'];
+				exit();
 			}
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));

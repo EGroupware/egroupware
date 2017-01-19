@@ -84,6 +84,7 @@
 				<column width="30%"/>
 				<column width="30%"/>
 				<column width="80"/>
+				<column width="80"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -96,6 +97,7 @@
 					<nextmatch-sortheader label="to" id="toaddress"/>
 					<nextmatch-sortheader label="from" id="fromaddress"/>
 					<nextmatch-sortheader align="center" label="size" id="size"/>
+					<nextmatch-header statustext="security" label="Security" id="security"/>
 				</row>
 				<row class="$row_cont[class]">
 					<description span="1" class="status_img"/>
@@ -110,6 +112,9 @@
 					<url-email id="${row}[toaddress]" contact_plus = "true" readonly="true"/>
 					<url-email id="${row}[fromaddress]" contact_plus = "true" readonly="true"/>
 					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
+					<vbox>
+						<buttononly id="smimeSigBtn" image="smimeSignature" disabled="!@$row_cont[smimeSigUrl]"/>
+					</vbox>
 				</row>
 			</rows>
 		</grid>

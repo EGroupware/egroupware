@@ -5504,5 +5504,18 @@ app.classes.mail = AppJS.extend(
 
 			});
 		});
+	},
+
+	/**
+	 * Open smime certificate
+	 * 
+	 * @param {type} egw
+	 * @param {type} widget
+	 * @returns {undefined}
+	 */
+	smimeSigBtn: function (egw, widget)
+	{
+		var url = this.et2.getArrayMgr("content").getEntry('smimeSigUrl');
+		window.egw.openPopup(url,'700','400');
 	}
 });
