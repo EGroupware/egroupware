@@ -256,4 +256,45 @@ class Merge extends Api\Storage\Merge
 
 		$GLOBALS['egw']->framework->render(ob_get_clean());
 	}
+
+	/**
+	 * Get insert-in-document action with optional default document on top
+	 *
+	 * Overridden from parent to change the insert-in-email actions so we can
+	 * have a custom action handler.
+	 *
+	 * @param string $dirs Directory(s comma or space separated) to search
+	 * @param int $group see nextmatch_widget::egw_actions
+	 * @param string $caption ='Insert in document'
+	 * @param string $prefix ='document_'
+	 * @param string $default_doc ='' full path to default document to show on top with action == 'document'!
+	 * @param int|string $export_limit =null export-limit, default $GLOBALS['egw_info']['server']['export_limit']
+	 * @return array see nextmatch_widget::egw_actions
+	 */
+	public static function document_action($dirs, $group=0, $caption='Insert in document', $prefix='document_', $default_doc='',
+		$export_limit=null)
+	{
+		$actions = parent::document_action($dirs, $group, $caption, $prefix, $default_doc, $export_limit);
+
+		// Change merge into email actions so we can customize them
+		static::customise_mail_actions($actions);
+			
+		return $actions;
+	}
+
+	protected static function customise_mail_actions(&$action)
+	{
+		if(strpos($action['egw_open'], 'edit-mail') === 0)
+		{
+			unset($action['confirm_multiple']);
+			$action['onExecute'] = 'javaScript:app.addressbook.merge_mail';
+		}
+		else if ($action['children'])
+		{
+			foreach($action['children'] as &$child)
+			{
+				static::customise_mail_actions($child);
+			}
+		}
+	}
 }

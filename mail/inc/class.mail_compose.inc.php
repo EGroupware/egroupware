@@ -3520,6 +3520,19 @@ class mail_compose
 				array((int)$contact_id, ''),
 				$folder,$merged_mail_id
 			);
+
+			// Also save as infolog
+			if($merged_mail_id && $_REQUEST['to_app'] && isset($GLOBALS['egw_info']['user']['apps'][$_REQUEST['to_app']]))
+			{
+				$rowid = mail_ui::generateRowID($this->mail_bo->profileID, $folder, $merged_mail_id, true);
+				$data = mail_integration::get_integrate_data($rowid);
+				if($data && $_REQUEST['to_app'] == 'infolog')
+				{
+					$bo = new infolog_bo();
+					$entry = $bo->import_mail($data['addresses'],$data['subject'],$data['message'],$data['attachments'],$data['date']);
+					$bo->write($entry);
+				}
+			}
 		}
 		catch (Exception $e)
 		{

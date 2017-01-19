@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.mail_merge_dialog" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Do you want to send the message to all selected entries, WITHOUT further editing?"/>
+				</row>
+				<row>
+					<checkbox id="infolog" label="Save as infolog"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

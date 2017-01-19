@@ -6824,6 +6824,9 @@ class Mail
 						$sendOK = true;
 						try {
 							$mailObject->send();
+							$message_id = $mailObject->getHeader('Message-ID');
+							$id = $this->appendMessage($_folder, $mailObject->getRaw(), '');
+							$importID = $id->current();
 						}
 						catch(Exception $e) {
 							$sendOK = false;

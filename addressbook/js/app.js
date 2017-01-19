@@ -816,6 +816,46 @@ app.classes.addressbook = AppJS.extend(
 	},
 
 	/**
+	 * Merge the selected contacts into the target document.
+	 *
+	 * Normally we let the framework handle this, but in addressbook we want to
+	 * interfere and customize things a little to ask about saving to infolog.
+	 *
+	 * @param {egwAction} action - The document they clicked
+	 * @param {egwActionObject[]} selected - Rows selected
+	 */
+	merge_mail: function merge_mail(action, selected, target)
+	{
+		// Special processing for email documents - ask about infolog
+		if(action && action.data && selected.length > 1)
+		{
+			var callback = function(button, value) {
+				if(button == et2_dialog.OK_BUTTON)
+				{
+					var _action = jQuery.extend(true, {}, action);
+					if(value.infolog)
+					{
+						_action.data.menuaction += '&to_app=infolog';
+					}
+					nm_action(_action, selected, target);
+				}
+			};
+			et2_createWidget("dialog",{
+				callback: callback,
+				title: action.caption,
+				buttons: et2_dialog.BUTTONS_OK_CANCEL,
+				type: et2_dialog.QUESTION_MESSAGE,
+				template: egw.webserverUrl+'/addressbook/templates/default/mail_merge_dialog.xet'
+			});
+		}
+		else
+		{
+			// Normal processing for only one contact selected
+			return nm_action(action, selected, target);
+		}
+	},
+
+	/**
 	 * Retrieve the current state of the application for future restoration
 	 *
 	 * Overridden from parent to handle viewing a contact.  In this case state
