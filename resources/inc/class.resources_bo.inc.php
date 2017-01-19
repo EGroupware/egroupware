@@ -340,7 +340,7 @@ class resources_bo
 					unset($resource['own_file']);
 					break;
 				}
-				elseif(@egw_vfs::stat('/apps/resources/'.$resource['res_id'].'/'.self::PICTURE_NAME))
+				elseif(@Vfs::stat('/apps/resources/'.$resource['res_id'].'/'.self::PICTURE_NAME))
 				{
 					break;
 				}
@@ -368,10 +368,10 @@ class resources_bo
 		}
 
 		// Check for restore of deleted, restore held links
-                if($old && $old['deleted'] && !$resource['deleted'])
-                {
-                        Link::restore('resources', $resource['res_id']);
-                }
+		if($old && $old['deleted'] && !$resource['deleted'])
+		{
+			Link::restore('resources', $resource['res_id']);
+		}
 
 		// delete old pictures
 		if($resource['picture_src'] != 'own_src')
@@ -521,15 +521,15 @@ class resources_bo
 
 	/**
 	 * Search for resources for calendar to select as participants
-	 * 
+	 *
 	 * Search and options match Link::query()
-	 * 
+	 *
 	 * Resources return actual resources as well as categories that match
-	 * 
+	 *
 	 * @param String $search - Search string
 	 * @param Array $options - search options
 	 * @see Link::query()
-	 * 
+	 *
 	 * @return Array List of ID => Title entries matching search string
 	 */
 	public static function calendar_search($search, $options)
@@ -556,7 +556,7 @@ class resources_bo
 					$cat_options['cat_id'] = $cat_id;
 					$resources = $bo->link_query('',$cat_options);
 				}
-				
+
 				// Edit dialog sends exec as an option, don't add categories
 				if(count($resources) && !$options['exec'])
 				{
@@ -636,7 +636,7 @@ class resources_bo
 				)
 			));
 		}
-		
+
 		if(!is_array($res_id) && $res_id < 1) return;
 
 		$data = $this->so->search(array('res_id' => $res_id),self::TITLE_COLS.',useable');
