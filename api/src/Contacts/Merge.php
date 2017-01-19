@@ -61,7 +61,7 @@ class Merge extends Api\Storage\Merge
 		{
 			return false;
 		}
-		if($content && strpos($content, '$$#') !== 0)
+		if($content && strpos($content, '$$#') !== false)
 		{
 			$this->cf_link_to_expand($this->contacts->read($id, $ignore_acl), $content, $replacements,'addressbook');
 		}
