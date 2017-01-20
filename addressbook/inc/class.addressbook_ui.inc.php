@@ -314,6 +314,10 @@ class addressbook_ui extends addressbook_bo
 		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
 		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
 
+		// Merge to email dialog needs the infolog types
+		$infolog = new infolog_bo();
+		$sel_options['info_type'] = $infolog->enums['type'];
+		
 		// dont show tid-selection if we have only one content_type
 		// be a bit more sophisticated about it
 		$availabletypes = array_keys($this->content_types);

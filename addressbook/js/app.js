@@ -835,7 +835,7 @@ app.classes.addressbook = AppJS.extend(
 					var _action = jQuery.extend(true, {}, action);
 					if(value.infolog)
 					{
-						_action.data.menuaction += '&to_app=infolog';
+						_action.data.menuaction += '&to_app=infolog&info_type='+value.info_type;
 					}
 					nm_action(_action, selected, target);
 				}
@@ -845,7 +845,8 @@ app.classes.addressbook = AppJS.extend(
 				title: action.caption,
 				buttons: et2_dialog.BUTTONS_OK_CANCEL,
 				type: et2_dialog.QUESTION_MESSAGE,
-				template: egw.webserverUrl+'/addressbook/templates/default/mail_merge_dialog.xet'
+				template: egw.webserverUrl+'/addressbook/templates/default/mail_merge_dialog.xet',
+				value: {content: {info_type: 'email'}, sel_options: this.et2.getArrayMgr('sel_options').data}
 			});
 		}
 		else

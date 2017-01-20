@@ -13,7 +13,10 @@
 					<description value="Do you want to send the message to all selected entries, WITHOUT further editing?"/>
 				</row>
 				<row>
-					<checkbox id="infolog" label="Save as infolog"/>
+					<hbox>
+						<checkbox id="infolog" label="Save as infolog"/>
+						<listbox id="info_type"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>

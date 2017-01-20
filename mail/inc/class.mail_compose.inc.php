@@ -3530,6 +3530,10 @@ class mail_compose
 				{
 					$bo = new infolog_bo();
 					$entry = $bo->import_mail($data['addresses'],$data['subject'],$data['message'],$data['attachments'],$data['date']);
+					if($_REQUEST['info_type'] && isset($bo->enums['type'][$_REQUEST['info_type']]))
+					{
+						$entry['info_type'] = $_REQUEST['info_type'];
+					}
 					$bo->write($entry);
 				}
 			}
