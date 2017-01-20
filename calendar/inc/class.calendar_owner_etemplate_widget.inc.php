@@ -193,7 +193,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				continue;
 			}
 
-			foreach(array_unique($_results) as $id => $title)
+			foreach(array_unique($_results, SORT_REGULAR) as $id => $title)
 			{
 				if($id && $title)
 				{
