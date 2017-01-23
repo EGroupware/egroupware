@@ -973,6 +973,10 @@ class Ldap
 					$filters .= $this->ids_filter($value);
 					break;
 
+				case 'list':
+					$filter .= $this->membershipFilter($value);
+					break;
+
 				default:
 					$matches = null;
 					if (!is_int($key))
@@ -1007,6 +1011,28 @@ class Ldap
 			}
 		}
 		return $filters;
+	}
+
+	/**
+	 * Return a LDAP filter by group membership
+	 *
+	 * @param int $gid gidNumber (< 0 as used in EGroupware!)
+	 * @return string filter or '' if $gid not < 0
+	 */
+	function membershipFilter($gid)
+	{
+		$filter = '';
+		if ($gid < 0)
+		{
+			$filter .= '(|';
+			// unfortunately we have no group-membership attribute in LDAP, like in AD
+			foreach($GLOBALS['egw']->accounts->members($gid, true) as $account_id)
+			{
+				$filter .= '(uidNumber='.(int)$account_id.')';
+			}
+			$filter .= ')';
+		}
+		return $filter;
 	}
 
 	/**

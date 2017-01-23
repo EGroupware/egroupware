@@ -346,8 +346,16 @@ class Sql extends Api\Storage
 		}
 		if (isset($filter['list']))
 		{
-			$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND ".
-				$this->db->expression($this->ab2list_table, array('list_id' => $filter['list']));
+			if ($filter['list'] < 0)
+			{
+				$join .= " JOIN egw_acl ON $this->table_name.account_id=acl_account AND acl_appname='phpgw_group' AND ".
+					$this->db->expression('egw_acl', array('acl_location' => $filter['list']));
+			}
+			else
+			{
+				$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND ".
+					$this->db->expression($this->ab2list_table, array('list_id' => $filter['list']));
+			}
 			unset($filter['list']);
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
@@ -551,6 +559,28 @@ class Sql extends Api\Storage
 				$lists[$row['list_id']]['members'][] = $row[$member_attr];
 			}
 		}
+		/* groups as list are implemented currently in Contacts\Storage::get_lists() for all backends
+		if ($uid_column == 'list_owner' && in_array(0, (array)$uids) && (!$limit_in_ab || in_array(0, (array)$limit_in_ab)))
+		{
+			foreach($GLOBALS['egw']->accounts->search(array(
+				'type' => 'groups'
+			)) as $account_id => $group)
+			{
+				$list = array(
+					'list_id' => $account_id,
+					'list_name' => Api\Accounts::format_username($group['account_lid'], '', '', $account_id),
+					'list_owner' => 0,
+					'list_uid' => 'group'.$account_id,
+					'list_carddav_name' => 'group'.$account_id.'.vcf',
+					'list_etag' => md5(json_encode($GLOBALS['egw']->accounts->members($account_id, true)))
+				);
+				if ($member_attr)
+				{
+					$list['members'] = array();	// ToDo
+				}
+				$lists[(string)$account_id] = $list;
+			}
+		}*/
 		//error_log(__METHOD__.'('.array2string($uids).", '$uid_column', '$member_attr') returning ".array2string($lists));
 		return $lists;
 	}
