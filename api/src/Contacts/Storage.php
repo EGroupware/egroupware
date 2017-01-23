@@ -1012,26 +1012,40 @@ class Storage
 	 */
 	function get_lists($required=Api\Acl::READ,$extra_labels=null)
 	{
-		if (!method_exists($this->somain,'get_lists')) return false;
-
-		$uids = array();
-		foreach($this->grants as $uid => $rights)
-		{
-			if (($rights & $required) == $required)
-			{
-				$uids[] = $uid;
-			}
-		}
 		$lists = is_array($extra_labels) ? $extra_labels : array();
 
-		foreach($this->somain->get_lists($uids) as $list_id => $data)
+		if (method_exists($this->somain,'get_lists'))
 		{
-			$lists[$list_id] = $data['list_name'];
-			if ($data['list_owner'] != $this->user)
+			$uids = array();
+			foreach($this->grants as $uid => $rights)
 			{
-				$lists[$list_id] .= ' ('.Api\Accounts::username($data['list_owner']).')';
+				// only requests groups / list in accounts addressbook for read
+				if (!$uid && $required != Api\Acl::READ) continue;
+
+				if (($rights & $required) == $required)
+				{
+					$uids[] = $uid;
+				}
+			}
+
+			foreach($this->somain->get_lists($uids) as $list_id => $data)
+			{
+				$lists[$list_id] = $data['list_name'];
+				if ($data['list_owner'] != $this->user)
+				{
+					$lists[$list_id] .= ' ('.Api\Accounts::username($data['list_owner']).')';
+				}
 			}
 		}
+
+		// add groups for all backends
+		foreach($GLOBALS['egw']->accounts->search(array(
+			'type' => 'groups'
+		)) as $account_id => $group)
+		{
+			$lists[(string)$account_id] = Api\Accounts::format_username($group['account_lid'], '', '', $account_id);
+		}
+
 		return $lists;
 	}
 

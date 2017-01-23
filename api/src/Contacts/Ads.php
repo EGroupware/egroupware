@@ -223,4 +223,20 @@ class Ads extends Ldap
 
 		parent::sanitize_update($ldapContact);
 	}
+
+	/**
+	 * Return a LDAP filter by group membership
+	 *
+	 * @param int $gid gidNumber (< 0 as used in EGroupware!)
+	 * @return string filter or '' if $gid not < 0
+	 */
+	function membershipFilter($gid)
+	{
+		$filter = '';
+		if ($gid < 0 && ($dn = $GLOBALS['egw']->accounts->id2name($gid, 'account_dn')))
+		{
+			$filter .= '(memberOf='.$dn.')';
+		}
+		return $filter;
+	}
 }

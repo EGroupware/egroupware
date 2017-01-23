@@ -1508,8 +1508,8 @@ window.egw_LAB.wait(function() {
 		{
 			$query['col_filter']['account_id'] = null;
 		}
-		// enable/disable distribution lists depending on backend
-		$query['no_filter2'] = !$this->lists_available($query['filter']);
+		// all backends allow now at least to use groups as distribution lists
+		$query['no_filter2'] = false;
 
 		if (isset($this->org_views[(string) $query['org_view']]) && !$query['col_filter']['parent_id'])	// we have an org view
 		{
