@@ -95,6 +95,9 @@ class filemanager_admin extends filemanager_ui
 				$url = 'stylite.merge://default/etemplates?merge=.&lang=0&level=1&extension=xet&url=egw';
 				$backup = Vfs::$is_root;
 				Vfs::$is_root = true;
+				Vfs::mkdir($path);
+				Vfs::chgrp($path, 'Admins');
+				Vfs::chown($path, 075);
 				$msg = Vfs::mount($url, $path) ?
 					lang('Successful mounted %1 on %2.',$url,$path) : lang('Error mounting %1 on %2!',$url,$path);
 				Vfs::$is_root = $backup;
