@@ -572,13 +572,13 @@ app.classes.admin = AppJS.extend(
 						}
 					}
 					var rights = 0;
+					var id = [];
 					for(var i in _value.acl)
 					{
 						rights += parseInt(_value.acl[i]);
 					}
 					if(typeof _value.apps != 'undefined' && !_value.acl_appname)
 					{
-						id = [];
 						rights = 1;
 						var removed = [];
 
