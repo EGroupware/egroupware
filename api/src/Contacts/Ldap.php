@@ -974,7 +974,7 @@ class Ldap
 					break;
 
 				case 'list':
-					$filter .= $this->membershipFilter($value);
+					$filters .= $this->membershipFilter($value);
 					break;
 
 				default:
