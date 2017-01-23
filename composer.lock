@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c267eda5d6e10c4221a3760f0389e1e4",
+    "hash": "a2e408b166aef7850ede4580c2f63f2a",
+    "content-hash": "9c0f6143f19905c0c6f101c13a7d4b71",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -54,7 +55,7 @@
                 "ldap",
                 "windows"
             ],
-            "time": "2016-07-14T18:11:24+00:00"
+            "time": "2016-07-14 18:11:24"
         },
         {
             "name": "bower-asset/cropper",
@@ -248,7 +249,7 @@
             ],
             "description": "Compiled version of CKEditor customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/ckeditor",
-            "time": "2016-10-07T08:47:41+00:00"
+            "time": "2016-10-07 08:47:41"
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -304,7 +305,7 @@
                 "npm",
                 "package"
             ],
-            "time": "2016-10-12T08:03:45+00:00"
+            "time": "2016-10-12 08:03:45"
         },
         {
             "name": "npm-asset/as-jqplot",
@@ -456,6 +457,45 @@
             "description": "An API for various compression techniques."
         },
         {
+            "name": "pear-pear.horde.org/Horde_Crypt",
+            "version": "2.7.5",
+            "dist": {
+                "type": "file",
+                "url": "https://pear.horde.org/get/Horde_Crypt-2.7.5.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "ext-hash": "*",
+                "ext-openssl": "*",
+                "pear-pear.horde.org/horde_exception": "<3.0.0.0",
+                "pear-pear.horde.org/horde_http": "<3.0.0.0",
+                "pear-pear.horde.org/horde_mime": "<3.0.0.0",
+                "pear-pear.horde.org/horde_stream": "<2.0.0.0",
+                "pear-pear.horde.org/horde_stream_filter": "<3.0.0.0",
+                "pear-pear.horde.org/horde_translation": "<3.0.0.0",
+                "pear-pear.horde.org/horde_url": "<3.0.0.0",
+                "pear-pear.horde.org/horde_util": "<3.0.0.0",
+                "php": "<8.0.0.0"
+            },
+            "replace": {
+                "pear-horde/horde_crypt": "== 2.7.5.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "The Horde_Crypt package class provides an API for various cryptographic systems."
+        },
+        {
             "name": "pear-pear.horde.org/Horde_Crypt_Blowfish",
             "version": "1.1.2",
             "dist": {
@@ -547,6 +587,37 @@
                 "LGPL-2.1"
             ],
             "description": "This class provides the default exception handlers for the Horde Application Framework."
+        },
+        {
+            "name": "pear-pear.horde.org/Horde_Http",
+            "version": "2.1.7",
+            "dist": {
+                "type": "file",
+                "url": "https://pear.horde.org/get/Horde_Http-2.1.7.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "pear-pear.horde.org/horde_exception": "<3.0.0.0",
+                "pear-pear.horde.org/horde_support": "<3.0.0.0",
+                "php": "<8.0.0.0"
+            },
+            "replace": {
+                "pear-horde/horde_http": "== 2.1.7.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "An API for making HTTP requests."
         },
         {
             "name": "pear-pear.horde.org/Horde_Icalendar",
@@ -1132,6 +1203,36 @@
             "description": "Translation wrappers."
         },
         {
+            "name": "pear-pear.horde.org/Horde_Url",
+            "version": "2.2.5",
+            "dist": {
+                "type": "file",
+                "url": "https://pear.horde.org/get/Horde_Url-2.2.5.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "pear-pear.horde.org/horde_exception": "<3.0.0.0",
+                "php": "<8.0.0.0"
+            },
+            "replace": {
+                "pear-horde/horde_url": "== 2.2.5.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "This class represents a single URL and provides methods for manipulating URLs."
+        },
+        {
             "name": "pear-pear.horde.org/Horde_Util",
             "version": "2.5.8",
             "dist": {
@@ -1469,9 +1570,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "php": 15
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
