@@ -656,12 +656,22 @@ app.classes.addressbook = AppJS.extend(
 		);
 	},
 
+	/**
+	 * OnChange for distribution list selectbox
+	 */
 	filter2_onchange: function()
 	{
+		var filter = this.et2.getWidgetById('filter');
 		var filter2 = this.et2.getWidgetById('filter2');
 		var widget = this.et2.getWidgetById('nm');
+		var filter2_val = filter2.get_value();
 
-		if(filter2.get_value()=='add')
+		// automatic switch to accounts addressbook or all addressbooks depending on distribution list is a group
+		if (filter2_val && (filter2_val < 0) !== (filter.get_value() === '0'))
+		{
+			filter.set_value(filter2_val < 0 ? '0' : '');
+		}
+		if(filter2_val == 'add')
 		{
 			this.add_new_list(typeof widget == 'undefined' ? this.et2.getWidgetById('filter').value : widget.header.filter.get_value());
 			this.value='';
