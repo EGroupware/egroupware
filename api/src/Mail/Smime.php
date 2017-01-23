@@ -69,4 +69,17 @@ class Smime extends Horde_Crypt_Smime
 		}
 		return true;
 	}
+
+	/**
+	 * Extract public key from certificate
+	 *
+	 * @param type $cert
+	 * @return string returns public key
+	 */
+	public function get_publickey ($cert)
+	{
+		$handle = openssl_get_publickey($cert);
+		$keyData = openssl_pkey_get_details($handle);
+		return $keyData['key'];
+	}
 }
