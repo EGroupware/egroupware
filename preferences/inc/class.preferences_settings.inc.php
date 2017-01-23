@@ -184,10 +184,12 @@ class preferences_settings
 	 */
 	function process_array(array &$repository, array $values, array $types, $appname, $type, $only_verify=false)
 	{
-		if (!$this->call_hook($appname, $type, $GLOBALS['egw']->preferences->get_account_id()))
-		{
-			throw new Api\Exception\WrongParameter("Could not find settings for application: ".$appname);
-		}
+		//fetch application specific settings from a hook
+		$settings = Api\Hooks::single(array(
+			'account_id'=>$GLOBALS['egw']->preferences->get_account_id(),
+			'location'=>'settings',
+			'type' => $type), $appname);
+
 		//_debug_array($repository);
 		$prefs = &$repository[$appname];
 
@@ -247,7 +249,7 @@ class preferences_settings
 
 			if (isset($value) && $value !== '' && $value !== '**NULL**' && $value !== array())
 			{
-				if (is_array($value) && !$this->settings[$var]['no_sel_options']) $value = implode(',',$value);	// multiselect
+				if (is_array($value) && !$settings[$var]['no_sel_options']) $value = implode(',',$value);	// multiselect
 
 				$prefs[$var] = $value;
 
