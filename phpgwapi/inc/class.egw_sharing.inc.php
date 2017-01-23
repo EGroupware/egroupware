@@ -591,11 +591,11 @@ class egw_sharing
 			);
 			if (($group_concat = self::$db->group_concat('share_id'))) $cols[] = $group_concat.' AS share_id';
 			// remove expired tmp-files unconditionally
-			$having = 'HAVING share_expires < '.self::$db->quote(self::$db->to_timestamp(time())).' OR '.
+			$having = 'HAVING MAX(share_expires) < '.self::$db->quote(self::$db->to_timestamp(time())).' OR '.
 				// remove without expiration date, when created over 100 days ago AND
-				'share_expires IS NULL AND share_created < '.self::$db->quote(self::$db->to_timestamp(time()-self::TMP_KEEP)). ' AND '.
+				'MAX(share_expires) IS NULL AND MAX(share_created) < '.self::$db->quote(self::$db->to_timestamp(time()-self::TMP_KEEP)). ' AND '.
 					// (last accessed over 100 days ago OR never)
-					'(share_last_accessed IS NULL OR share_last_accessed < '.self::$db->quote(self::$db->to_timestamp(time()-self::TMP_KEEP)).')';
+					'(MAX(share_last_accessed) IS NULL OR MAX(share_last_accessed) < '.self::$db->quote(self::$db->to_timestamp(time()-self::TMP_KEEP)).')';
 
 			foreach(self::$db->select(self::TABLE, $cols, array(
 				"share_path LIKE '/home/%/.tmp/%'",
@@ -624,7 +624,7 @@ class egw_sharing
 			}
 		}
 		catch (Exception $e) {
-			unset($e);
+			_egw_log_exception($e);
 		}
 		egw_vfs::$is_root = false;
 	}
