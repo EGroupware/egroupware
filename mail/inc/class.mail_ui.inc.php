@@ -2124,14 +2124,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		return $data;
 	}
 
-	function getSmimeCert ()
-	{
-		if (isset($_GET['id'])) $id = $_GET['id'];
-		if (isset($_GET['partID'])) $partID = $_GET['partid'];
-		$cert = $this->resolveSmimeAttachment($attachments, $id, $partID, $mailbox);
-		echo ($cert);
-	}
-
 	/**
 	 * Build actions for display toolbar
 	 */

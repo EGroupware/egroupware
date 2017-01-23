@@ -940,6 +940,8 @@ app.classes.mail = AppJS.extend(
 		// Not applied to mobile preview
 		if (!egwIsMobile())
 		{
+			var smimeSigBtn = this.et2.getWidgetById('previewSmimeSigBtn');
+			if (smimeSigBtn) smimeSigBtn.set_disabled(dataElem.data['smimeSigUrl']?false:true);
 
 			// Widget ID:data key map of widgets we can directly set from cached data
 			var data_widgets = {
@@ -5508,14 +5510,23 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * Open smime certificate
-	 * 
+	 *
 	 * @param {type} egw
 	 * @param {type} widget
 	 * @returns {undefined}
 	 */
 	smimeSigBtn: function (egw, widget)
 	{
-		var url = this.et2.getArrayMgr("content").getEntry('smimeSigUrl');
+		var url = '';
+		if (this.mail_isMainWindow)
+		{
+			var content = this.egw.dataGetUIDdata(this.mail_currentlyFocussed);
+			url = content.data.smimeSigUrl;
+		}
+		else
+		{
+			url = this.et2.getArrayMgr("content").getEntry('smimeSigUrl');
+		}
 		window.egw.openPopup(url,'700','400');
 	}
 });

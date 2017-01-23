@@ -17,6 +17,7 @@
 				<hbox id="mailPreviewHeadersDate" class="mailPreviewHeaders">
 					<description value="Date"/>
 					<date-time align="left" id="previewDate" readonly="true"/>
+					<button id="previewSmimeSigBtn" image="smimeSignature" statustext="This message is signed" onclick="app.mail.smimeSigBtn"/>
 				</hbox>
 				<hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
 					<description value="To"/>
@@ -113,7 +114,7 @@
 					<url-email id="${row}[fromaddress]" contact_plus = "true" readonly="true"/>
 					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
 					<vbox>
-						<buttononly id="smimeSigBtn" image="smimeSignature" disabled="!@$row_cont[smimeSigUrl]"/>
+						<buttononly id="${row}[smimeSigBtn]" image="smimeSignature" disabled="!@$row_cont[smimeSigUrl]"/>
 					</vbox>
 				</row>
 			</rows>

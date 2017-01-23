@@ -17,7 +17,7 @@
 				<hbox class="mailDisplayHeaders" align="right" width="30%">
 					<description value="Date"/>
 					<date-time id="mail_displaydate" readonly="true"/>
-					<buttononly id="smimeSigBtn" image="smimeSignature" onclick="app.mail.smimeSigBtn"/>
+					<buttononly id="smimeSigBtn" image="smimeSignature" statustext="This message is signed" onclick="app.mail.smimeSigBtn" disabled="!@smimeSigUrl"/>
 				</hbox>
 			</hbox>
 
