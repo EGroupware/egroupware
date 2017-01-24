@@ -873,10 +873,6 @@ egw_LAB.wait(function() {
 		if (!$color) $color = '#D00000';
 		$title = $_title ? self::htmlspecialchars($_title) : $percent.'%';
 
-		if (self::$netscape4)
-		{
-			return $title;
-		}
 		return '<div class="onlyPrint">'.$title.'</div><div class="noPrint" title="'.$title.'" '.$options.
 			' style="height: '.$height.'; width: '.$width.'; border: 1px solid black; padding: 1px; text-align: left;'.
 			(@stristr($options,'onclick="') ? ' cursor: pointer;' : '').'">'."\n\t".
