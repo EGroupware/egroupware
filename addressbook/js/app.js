@@ -666,16 +666,24 @@ app.classes.addressbook = AppJS.extend(
 		var widget = this.et2.getWidgetById('nm');
 		var filter2_val = filter2.get_value();
 
-		// automatic switch to accounts addressbook or all addressbooks depending on distribution list is a group
-		if (filter2_val && (filter2_val < 0) !== (filter.get_value() === '0'))
-		{
-			filter.set_value(filter2_val < 0 ? '0' : '');
-		}
 		if(filter2_val == 'add')
 		{
 			this.add_new_list(typeof widget == 'undefined' ? this.et2.getWidgetById('filter').value : widget.header.filter.get_value());
 			this.value='';
 		}
+		// automatic switch to accounts addressbook or all addressbooks depending on distribution list is a group
+		else if (filter2_val && (filter2_val < 0) !== (filter.get_value() === '0'))
+		{
+			// Change filter & filter2 at the same time
+			widget.applyFilters({
+				filter: filter2_val < 0 ? '0' : '',
+				filter2: filter2_val
+			});
+			// Don't get rows here, let applyFilters() do it
+			return false;
+		}
+		
+		return true;
 	},
 
 	/**
