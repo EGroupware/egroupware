@@ -225,7 +225,6 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 					// not supported action
 					default :
 						die('condition / action not supported!!!');
-						break;
 				}
 				if ($action['stop']) break;
 			}
