@@ -91,6 +91,7 @@
 					<select id="newsettings[hide_birthdays]">
 						<option value="">Yes</option>
 						<option value="dateonly">Show only the date, not the year</option>
+						<option value="age">Show year and age</option>
 						<option value="yes">No</option>
 					</select>
 				</row>
