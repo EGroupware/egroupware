@@ -88,6 +88,12 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			"type": "any",
 			"default": et2_no_init,
 			"description": "A (js) function called when a file to be uploaded is finished."
+		},
+		accept: {
+			"name": "Acceptable extensions",
+			"type": "string",
+			"default": '',
+			"description": "Define types of files that the server accepts. Multiple types can be seperated by comma and the default is to accept everything."
 		}
 	},
 
@@ -180,6 +186,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 					jQuery(span).removeClass('et2_file_spanActive');
 				}
 			});
+		if (this.options.accept) this.input.attr('accept', this.options.accept);
 		var self = this;
 		// trigger native input upload file
 		if (!this.options.readonly) this.span.click(function(){self.input.click()});
