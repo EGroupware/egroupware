@@ -578,7 +578,7 @@ Hide subsequent headers in week view with non-consolidated owners
 	position: absolute;
 	width: 55px;
 }
-.calendar_TimeGridNoLabel > .calendar_calGridHeader > ul {
+.calendar_TimeGridNoLabel > .calendar_calGridHeader > span.et2_label {
     display: none;
 }
 .calendar_calDayColHeader img {
