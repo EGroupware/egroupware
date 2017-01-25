@@ -59,7 +59,7 @@ class Credentials
 	 */
 	const ADMIN = 8;
 	/**
-	 * Credentials for admin connection
+	 * Credentials for SMIME private key
 	 */
 	const SMIME = 16;
 	/**
@@ -277,7 +277,7 @@ class Credentials
 	 * @param int $acc_id id of account
 	 * @param string $username
 	 * @param string $password cleartext password to write
-	 * @param int $type self::IMAP, self::SMTP or self::ADMIN
+	 * @param int $type self::IMAP, self::SMTP, self::ADMIN or self::SMIME
 	 * @param int $account_id if of user-account for whom credentials are
 	 * @param int $cred_id =null id of existing credentials to update
 	 * @return int cred_id
@@ -338,7 +338,7 @@ class Credentials
 	 *
 	 * @param int $acc_id
 	 * @param int|array $account_id =null
-	 * @param int $type =self::ALL self::IMAP, self::SMTP or self::ADMIN
+	 * @param int $type = self::IMAP, self::SMTP, self::ADMIN or self::SMIME
 	 * @param boolean $exact_type =false true: delete only cred_type=$type, false: delete cred_type&$type
 	 * @return int number of rows deleted
 	 */

@@ -1254,6 +1254,19 @@ class Account implements \ArrayAccess
 		{
 			Credentials::delete($data['acc_id'], $valid_for, Credentials::SMTP, true);
 		}
+
+		//Store or delete smime private key
+		if ($data['acc_smime_password'])
+		{
+			Credentials::write($data['acc_id'], $data['acc_imap_username'],
+			$data['acc_smime_password'], Credentials::SMIME, $data['account_id'][0],
+			$data['acc_smime_cred_id']);
+		}
+		else
+		{
+			Credentials::delete($data['acc_id'], $data['account_id'][0], Credentials::SMIME);
+		}
+		
 		// store or delete admin credentials
 		if ($data['acc_imap_admin_username'] && $data['acc_imap_admin_password'])
 		{
