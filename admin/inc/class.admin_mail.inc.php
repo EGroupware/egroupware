@@ -951,6 +951,21 @@ class admin_mail
 		$tpl->disableElement('notify_save_default', !$is_multiple || !$edit_access);
 		$tpl->disableElement('notify_use_default', !$is_multiple);
 
+		if (isset($content['smimeKeyUpload'])
+				&& ($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
+		{
+			$smime = new Mail\Smime;
+			switch($content['smimeKeyUpload']['type'])
+			{
+				case 'application/x-pkcs12':
+					$cert_info = $smime->extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
+					$content['acc_smime_password'] = $cert_info['pkey'];
+					break;
+				case 'application/x-iwork-keynote-sffkey':
+					$content['acc_smime_password'] = $pkcs12;
+					break;
+			}
+		}
 		if (isset($content['button']))
 		{
 			list($button) = each($content['button']);
