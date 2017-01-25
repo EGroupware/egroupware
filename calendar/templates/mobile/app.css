@@ -69,7 +69,7 @@
   #calendar-view_view.hideDayColHeader tr:not(:first-of-type) .calendar_calGridHeader > span.et2_label {
     overflow: visible !important;
   }
-}
+  }
 /**
  * Sidebox
  */
