@@ -192,3 +192,29 @@ HAVING COUNT(*) > 1', __LINE__, __FILE__, 0, $junk_size, false, Api\Db::FETCH_AS
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.1.005';
 }
+
+/**
+ * Update to 17.1 development as 16.9
+ *
+ * @return string
+ */
+function api_upgrade16_1_005()
+{
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9';
+}
+
+/**
+ * Give egw_ea_credentials.cred_password size 9600 to accomodate private s/mime keys
+ *
+ * @return string
+ */
+function api_upgrade16_9()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_credentials','cred_password',array(
+		'type' => 'varchar',
+		'precision' => '9600',
+		'comment' => 'password encrypted'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.001';
+}

@@ -59,9 +59,13 @@ class Credentials
 	 */
 	const ADMIN = 8;
 	/**
-	 * All credentials IMAP|SMTP|ADMIN
+	 * Credentials for admin connection
 	 */
-	const ALL = 11;
+	const SMIME = 16;
+	/**
+	 * All credentials IMAP|SMTP|ADMIN|SMIME
+	 */
+	const ALL = 27;
 
 	/**
 	 * Password in cleartext
@@ -108,6 +112,7 @@ class Credentials
 		self::IMAP => 'acc_imap_',
 		self::SMTP => 'acc_smtp_',
 		self::ADMIN => 'acc_imap_admin_',
+		self::SMIME => 'acc_smime_',
 	);
 
 	/**
