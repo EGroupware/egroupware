@@ -35,25 +35,35 @@ class Smime extends Horde_Crypt_Smime
 		'application/pkcs7-signature',
 	);
 
+	/**
+	 * SMIME signature only types
+	 * @var type
+	 */
+	static $SMIME_SIGNATURE_ONLY_TYPES = array (
+		'application/x-pkcs7-signature',
+		'application/pkcs7-signature',
+		'multipart/signed'
+	);
+
 	/*
 	 * SMIME public key regular expresion
 	 */
-	static public $pubkey_regexp = '/-----BEGIN PUBLIC KEY-----.*-----END PUBLIC KEY-----\r?\n/s/';
+	static public $pubkey_regexp = '/-----BEGIN PUBLIC KEY-----.*-----END PUBLIC KEY-----\r?\n/s';
 
 	/*
 	 * SMIME encrypted private key regular expresion
 	 */
-	static public $privkey_encrypted_regexp = '/-----BEGIN ENCRYPTED PRIVATE KEY-----.*-----END ENCRYPTED PRIVATE KEY-----\r?\n/s/';
+	static public $privkey_encrypted_regexp = '/-----BEGIN ENCRYPTED PRIVATE KEY-----.*-----END ENCRYPTED PRIVATE KEY-----\r?\n/s';
 
 	/*
 	 * SMIME private key regular expresion
 	 */
-	static public $privkey_regexp = '/-----BEGIN PRIVATE KEY-----.*-----END PRIVATE KEY-----\r?\n/s/';
+	static public $privkey_regexp = '/-----BEGIN PRIVATE KEY-----.*-----END PRIVATE KEY-----\r?\n/s';
 
 	/*
 	 * SMIME certificate regular expresion
 	 */
-	static public $certificate_regexp = '/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----\r?\n/s/';
+	static public $certificate_regexp = '/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----\r?\n/s';
 
 	/**
      * Constructor.
@@ -78,6 +88,18 @@ class Smime extends Horde_Crypt_Smime
 	}
 
 	/**
+	 * Check if a given mime type is smime type of signature only
+	 *
+	 * @param string $_mime mimetype
+	 *
+	 * @return type
+	 */
+	public static function isSmimeSignatureOnly ($_mime)
+	{
+		return in_array($_mime, self::$SMIME_SIGNATURE_ONLY_TYPES);
+	}
+
+	/**
 	 * Check if the openssl is supported
 	 *
 	 * @return boolean returns True if openssl is supported
@@ -96,7 +118,8 @@ class Smime extends Horde_Crypt_Smime
 	/**
 	 * Extract public key from certificate
 	 *
-	 * @param type $cert
+	 * @param string $cert content of certificate in PEM format
+	 *
 	 * @return string returns public key
 	 */
 	public function get_publickey ($cert)
@@ -109,11 +132,12 @@ class Smime extends Horde_Crypt_Smime
 	/**
 	 * Extract certificates info from a p12 file
 	 *
-	 * @param string $pkcs12
-	 * @param string $passphrase
+	 * @param string $pkcs12 content of p12 file in string
+	 * @param string $passphrase = '', passphrase to unlock the p12 file
+	 *
 	 * @return boolean|array returns array of certs info or false if not successful
 	 */
-	public function extractCertPKCS12 ($pkcs12, $passphrase)
+	public function extractCertPKCS12 ($pkcs12, $passphrase = '')
 	{
 		$certs = array ();
 		if (openssl_pkcs12_read($pkcs12, $certs, $passphrase))

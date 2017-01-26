@@ -2011,15 +2011,23 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (is_array($smimeData))
 		{
 			$error_msg[] = $smimeData['msg'];
-			$linkData = array
-			(
-				'menuaction'	=> 'mail.mail_ui.getAttachment',
-				'id'		=> $rowID,
-				'part'		=> $smimeData['partID'],
-				'is_winmail'    => false,
-				'mailbox'   => base64_encode($mailbox)
-			);
-			$content['smimeSigUrl'] = Egw::link('/index.php',$linkData);
+			if ($smimeData['signed'])
+			{
+				$linkData = array
+				(
+					'menuaction'	=> 'mail.mail_ui.getAttachment',
+					'id'		=> $rowID,
+					'part'		=> $smimeData['partID'],
+					'is_winmail'    => false,
+					'mailbox'   => base64_encode($mailbox)
+				);
+				$content['smimeSigUrl'] = Egw::link('/index.php',$linkData);
+			}
+			if ($smimeData['required_password'])
+			{
+				$response = Api\Json\Response::get();
+				$response->call('app.mail.smimeRequestPassphrase');
+			}
 		}
 
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
@@ -2092,6 +2100,35 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * decrypt given smime encrypted message
+	 *
+	 * @param string $_message
+	 * @param string $_passphrase
+	 * @return array|string return
+	 */
+	function decryptSmimeBody ($_message, $_passphrase = '')
+	{
+		$AB_bo   = new addressbook_bo();
+		$credents = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
+		$certkey = $AB_bo->get_smime_keys($GLOBALS['egw_info']['user']['account_email']);
+		if (!$this->smime->verifyPassphrase($credents['acc_smime_password'], $_passphrase))
+		{
+			return array (
+				'password_required' => true,
+				'msg' => 'Authentication failure!'
+			);
+		}
+
+		$params  = array (
+			'type'      => 'message',
+			'pubkey'    => $certkey[$GLOBALS['egw_info']['user']['account_email']],
+			'privkey'   => $credents['acc_smime_password'],
+			'passphrase'=> $_passphrase
+		);
+		return $this->smime->decrypt($_message, $params);
+	}
+
+	/**
 	 * Resolve certificate from smime attachment
 	 *
 	 * @param array &$attachments
@@ -2102,21 +2139,40 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 */
 	function resolveSmimeAttachment (&$attachments, $_uid, $_partID, $_mailbox)
 	{
-		$smime = new Mail\Smime;
+		$this->smime = new Mail\Smime;
 
 		foreach ($attachments as $key => $attachment)
 		{
 			if (Mail\Smime::isSmime($attachment['mimeType']))
 			{
-				$message =  $this->mail_bo->getMessageRawBody($_uid,$_partID,$_mailbox);
-				$cert = $smime->verify($message);
-				$data = array (
-					'verify' => $cert->verify,
-					'cert' => $cert->cert,
-					'msg' => $cert->msg,
-					'certHtml' => $smime->certToHTML($cert->cert),
-					'partID' => $attachment['partID']
-				);
+				$message =  $this->mail_bo->getMessageRawBody($_uid, $_partID, $_mailbox);
+
+				if (!Mail\Smime::isSmimeSignatureOnly($attachment['mimeType']))
+				{
+					try	{
+						$message = $this->decryptSmimeBody($message);
+					} catch (Exception $ex) {
+						return array('msg', $ex->getMessage());
+					}
+				}
+				try {
+					$cert = $this->smime->verify($message);
+					$data = array (
+						'verify'   => $cert->verify,
+						'cert'     => $cert->cert,
+						'msg'      => $cert->msg,
+						'certHtml' => $this->smime->certToHTML($cert->cert),
+						'partID'   => $attachment['partID'],
+						'signed'   => true,
+						'message'  => $message
+					);
+
+				} catch (Exception $ex) {
+					$data = array (
+						'signed' => false,
+						'message' => $message
+					);
+				}
 				unset ($attachments[$key]);
 			}
 		}
@@ -2930,7 +2986,18 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
 		$calendar_part = null;
 		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox, $calendar_part);
+		$mimeType = $structure->getType();
+		if (Mail\Smime::isSmime( $mimeType) && !Mail\Smime::isSmimeSignatureOnly($mimeType))
+		{
+			$smimeAttachments = array ( array('mimeType' => $mimeType));
+			$smime = $this->resolveSmimeAttachment($smimeAttachments, $uid, 0, $mailbox);
 
+			if ($smime['message'])
+			{
+				$bodyParts[0]['body'] = $smime['message'];
+			}
+
+		}
 		// for meeting requests (multipart alternative with text/calendar part) let calendar render it
 		if ($calendar_part && isset($GLOBALS['egw_info']['user']['apps']['calendar']))
 		{
