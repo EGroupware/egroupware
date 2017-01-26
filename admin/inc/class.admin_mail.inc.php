@@ -959,7 +959,21 @@ class admin_mail
 			{
 				case 'application/x-pkcs12':
 					$cert_info = $smime->extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
-					$content['acc_smime_password'] = $cert_info['pkey'];
+					if (is_array($cert_info))
+					{
+						$content['acc_smime_password'] = $cert_info['pkey'];
+						if ($cert_info['cert'])
+						{
+							$AB_bo = new addressbook_bo();
+							$AB_bo->set_smime_keys(array(
+								$content['ident_email'] => $cert_info['cert']
+							));
+						}
+					}
+					else
+					{
+						$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
+					}
 					break;
 				case 'application/x-iwork-keynote-sffkey':
 					$content['acc_smime_password'] = $pkcs12;
