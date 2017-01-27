@@ -46,6 +46,11 @@ class Auth
 	private $backend;
 
 	/**
+	 * Specialchars as considered by crackcheck method
+	 */
+	const SPECIALCHARS = '~!@#$%^&*_-+=`|\(){}[]:;"\'<>,.?/';
+
+	/**
 	 * Constructor
 	 *
 	 * @throws Exception\AssertionFailed if backend is not an Auth\Backend
@@ -272,19 +277,25 @@ class Auth
 	 *
 	 * @param $size int-size of random string to return
 	 */
-	static function randomstring($size)
+	static function randomstring($size, $use_specialchars=false)
 	{
-		static $random_char = array(
+		$random_char = array(
 			'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
 			'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
 			'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
 			'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
 		);
 
-		$s = '';
-		for ($i=0; $i<$size; $i++)
+		// we need special chars
+		if ($use_specialchars)
 		{
-			$s .= $random_char[mt_rand(1,61)];
+			$random_char = array_merge($random_char, str_split(str_replace('\\', '', self::SPECIALCHARS)), $random_char);
+		}
+
+		$s = '';
+		for ($i=0; $i < $size; $i++)
+		{
+			$s .= $random_char[mt_rand(0, count($random_char)-1)];
 		}
 		return $s;
 	}
@@ -680,7 +691,7 @@ class Auth
 			{
 				$missing[] = lang('lowercase letters');
 			}
-			if (!preg_match('/['.preg_quote('~!@#$%^&*_-+=`|\(){}[]:;"\'<>,.?/', '/').']/', $passwd))
+			if (!preg_match('/['.preg_quote(self::SPECIALCHARS, '/').']/', $passwd))
 			{
 				$missing[] = lang('special characters');
 			}
