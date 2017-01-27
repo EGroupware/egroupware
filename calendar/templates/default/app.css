@@ -703,7 +703,7 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 .calendar_calTimeGrid:not(.calendar_calTimeGridList) *:not(.calendar_calDayColAllDay) > .calendar_calEvent::after {
 	width: 100%;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255,255,255,0.8);
     height: 5px;
     content: "\02026";
     left: 0px;
@@ -807,7 +807,7 @@ Hide subsequent headers in week view with non-consolidated owners
  *  background-color: depending on category
  *	color: white || black depending on cat;
  */
-	background-color: rgba(255,255,255,0.9);
+	background-color: rgba(255,255,255,0.8);
 }
 .calendar_calEventHeader .calendar_calEventTitle {
 	display: none;
@@ -838,7 +838,7 @@ Hide subsequent headers in week view with non-consolidated owners
 	right: 2px;
 	height: 99%;
 	white-space: normal;
-	background-color: rgba(255,255,255,0.9);
+	background-color: rgba(255,255,255,0.8);
 }
 .calendar_calEventBody > p, .calendar_calEventBodySmall > p {
 	white-space: pre-wrap;
