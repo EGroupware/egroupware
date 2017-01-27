@@ -115,7 +115,16 @@ class admin_passwordreset
 						//_debug_array($account); //break;
 						if ($content['random_pw'])
 						{
-							$password = Api\Auth::randomstring(8);
+							if (($minlength=$GLOBALS['egw_info']['server']['force_pwd_length']) < 8)
+							{
+								$minlength = 8;
+							}
+							$n = 0;
+							do {
+								$password = Api\Auth::randomstring($minlength,
+									$GLOBALS['egw_info']['server']['force_pwd_strength'] >= 4);
+								error_log(__METHOD__."() minlength=$minlength, n=$n, password=$password");
+							} while (++$n < 100 && Api\Auth::crackcheck($password, null, null, null, $account));
 							$old_password = null;
 						}
 						elseif ($change_pw && !preg_match('/^{plain}/i',$account['account_pwd']) &&
@@ -129,9 +138,15 @@ class admin_passwordreset
 							$old_password = $password = preg_replace('/^{plain}/i','',$account['account_pwd']);
 						}
 						// change password, if requested
-						if ($change_pw && !$GLOBALS['egw']->auth->change_password($old_password,$password,$account_id))
-						{
-							$msg .= lang('Failed to change password for account "%1"!',$account['account_lid'])."\n";
+						try {
+							if ($change_pw && !$GLOBALS['egw']->auth->change_password($old_password,$password,$account_id))
+							{
+								$msg .= lang('Failed to change password for account "%1"!',$account['account_lid'])."\n";
+								continue;
+							}
+						}
+						catch(Exception $e) {
+							$msg .= lang('Failed to change password for account "%1"!',$account['account_lid']).' '.$e->getMessage()."\n";
 							continue;
 						}
 						// force password change on next login
