@@ -2015,15 +2015,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$linkData = array
 				(
-					'menuaction'	=> 'mail.mail_ui.getAttachment',
-					'id'		=> $rowID,
-					'part'		=> $smimeData['partID'],
-					'is_winmail'    => false,
-					'mailbox'   => base64_encode($mailbox)
+					'menuaction' => 'mail.mail_ui.getAttachment',
+					'id'		 => $rowID,
+					'part'		 => $smimeData['partID'],
+					'is_winmail' => false,
+					'mailbox'    => base64_encode($mailbox)
 				);
 				$content['smimeSigUrl'] = Egw::link('/index.php',$linkData);
 			}
-			if ($smimeData['required_password'])
+			if ($smimeData['password_required'])
 			{
 				$response = Api\Json\Response::get();
 				$response->call('app.mail.smimeRequestPassphrase');
@@ -2135,9 +2135,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @param int $_uid
 	 * @param int $_partID
 	 * @param string $_mailbox
+	 * @param string $_passphrase
 	 * @return array
 	 */
-	function resolveSmimeAttachment (&$attachments, $_uid, $_partID, $_mailbox)
+	function resolveSmimeAttachment (&$attachments, $_uid, $_partID, $_mailbox, $_passphrase='')
 	{
 		$this->smime = new Mail\Smime;
 
@@ -2150,7 +2151,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if (!Mail\Smime::isSmimeSignatureOnly($attachment['mimeType']))
 				{
 					try	{
-						$message = $this->decryptSmimeBody($message);
+						$message = $this->decryptSmimeBody($message, $_passphrase);
 					} catch (Exception $ex) {
 						return array('msg', $ex->getMessage());
 					}
@@ -2168,10 +2169,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					);
 
 				} catch (Exception $ex) {
-					$data = array (
-						'signed' => false,
-						'message' => $message
-					);
+					if ($message['password_required'])
+					{
+						$data = $message;
+					}
+					else
+					{
+						$data = array (
+							'signed' => false,
+							'message' => $message
+						);
+					}
 				}
 				unset ($attachments[$key]);
 			}
@@ -2972,7 +2980,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		exit();
 	}
 
-	function get_load_email_data($uid, $partID, $mailbox,$htmlOptions=null)
+	function get_load_email_data($uid, $partID, $mailbox,$htmlOptions=null, $smimePassphrase = '')
 	{
 		// seems to be needed, as if we open a mail from notification popup that is
 		// located in a different folder, we experience: could not parse message
@@ -2990,13 +2998,26 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (Mail\Smime::isSmime( $mimeType) && !Mail\Smime::isSmimeSignatureOnly($mimeType))
 		{
 			$smimeAttachments = array ( array('mimeType' => $mimeType));
-			$smime = $this->resolveSmimeAttachment($smimeAttachments, $uid, 0, $mailbox);
+			$smime = $this->resolveSmimeAttachment($smimeAttachments, $uid, 0, $mailbox, $smimePassphrase);
 
 			if ($smime['message'])
 			{
 				$bodyParts[0]['body'] = $smime['message'];
 			}
-
+			else if ($smime['password_required'])
+			{
+				// do NOT include any default CSS
+				$smimeHtml = $this->get_email_header().
+				'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
+				'<form id="smimePasswordRequest" method="post">'.
+						'<div class="bg-style"></div>'.
+						'<div>'.
+							'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
+							'<input type="submit" value="'.lang("submit").'"/>'.
+						'</div>'.
+					 '</form>';
+				return $smimeHtml;
+			}
 		}
 		// for meeting requests (multipart alternative with text/calendar part) let calendar render it
 		if ($calendar_part && isset($GLOBALS['egw_info']['user']['apps']['calendar']))
@@ -3654,7 +3675,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$this->changeProfile($icServerID);
 		}
 
-		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions);
+		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions, $_POST['smime_passphrase']);
 		Api\Session::cache_control(true);
 		//error_log(array2string($bodyResponse));
 		echo $bodyResponse;

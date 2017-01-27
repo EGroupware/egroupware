@@ -117,3 +117,47 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 .mail_externalImagesMsg button.closeBtn:hover {
 	opacity: 1;
 }
+
+#smimePasswordRequest {
+	background-image:url('../../../pixelegg/images/lock.png');
+	width:100%;
+	height:90%;
+	background-repeat: space;
+}
+#smimePasswordRequest div.bg-style {
+	height: 100%;
+    top: 0;
+    left: 0;
+    text-align: left;
+    opacity: 0.8;
+    background: white;
+}
+#smimePasswordRequest div {
+	position: absolute;
+    width: 100%;
+    top: 40%;
+    text-align: center;
+    background: transparent;
+}
+#smimePasswordRequest div input[type="password"]{
+	padding-left: 10px;
+	height:40px;
+	width:200px;
+	border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+#smimePasswordRequest div input[type="submit"] {
+	border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: none;
+    border: 1px solid silver;
+	cursor: pointer;
+	height: 46px;
+}
+.smime-message {
+	font-weigth:bold;
+	font-size:12pt;
+	padding:5px;
+	text-align:center;
+	color:red;
+}
