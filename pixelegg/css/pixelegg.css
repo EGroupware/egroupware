@@ -2139,7 +2139,6 @@ button[id="calendar-edit_button[delete]"]:hover,
 button[id="timesheet-edit_button[delete]"]:hover,
 button[id="displayToolbar-delete"]:hover,
 button.et2_button_delete:hover {
-  background-image: url('../images/delete-hover.png') !important;
   background-color: #b81f00 !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
@@ -2177,7 +2176,6 @@ button[id="calendar-edit_button[delete]"]:active,
 button[id="timesheet-edit_button[delete]"]:active,
 button[id="displayToolbar-delete"]:active,
 button.et2_button_delete:active {
-  background-image: url('../images/delete-hover.png') !important;
   background-color: #e12500 !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
