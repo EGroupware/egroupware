@@ -78,8 +78,7 @@ Chrome, Firefox and Safari are prefered internet browsers for best EGroupware ex
 <p><EGroupware is platform independent. The server runs on Linux, Mac, Windows and many more other operating systems.
 EGroupware can be integrated easily into existing authentication solutions such as LDAP or Active Directory.</p>
 <p>EGroupware offers CalDAV, CardDAV, WebDAV and Active Sync for synchronising data to your smartphone or desktop client.</p>
-<p>EGroupware is developed by <a href="http://www.egroupware.org" target="_blank">EGroupware GmbH</a> with contributions
-from community developers.</p>
+<p>EGroupware is developed by EGroupware GmbH with contributions from community developers.</p>
 <p><b>For more information visit the <a href="http://www.egroupware.org" target="_blank">EGroupware Website</a></b></p>');
 
 		// get informations about the applications
