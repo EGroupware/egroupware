@@ -214,7 +214,9 @@ app.classes.infolog = AppJS.extend(
 					if (filter && dates)
 					{
 						dates.set_disabled(false);
-						jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
+						window.setTimeout(function() {
+							jQuery(dates.getWidgetById('startdate').getDOMNode()).find('input').focus();
+						},0);
 					}
 					break;
 				default:
