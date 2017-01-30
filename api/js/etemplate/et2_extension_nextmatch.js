@@ -2715,6 +2715,12 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 
 		if (this.nextmatch.options.settings[name+"_onchange"])
 		{
+			// Make sure to get the new value for filtering
+			input.change(this.nextmatch, function(event) {
+				var set = {};
+				set[name] = select.getValue();
+				event.data.applyFilters(set);
+			});
 			// Get the onchange function string
 			var onchange = this.nextmatch.options.settings[name+"_onchange"];
 
