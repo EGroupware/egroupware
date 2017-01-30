@@ -2169,7 +2169,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					);
 
 				} catch (Exception $ex) {
-					if ($message['password_required'])
+					if (isset($message['password_required']))
 					{
 						$data = $message;
 					}
