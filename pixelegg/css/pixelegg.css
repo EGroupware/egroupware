@@ -1335,9 +1335,6 @@ span.ui-icon-search {
 }
 /*###########################################*/
 /*Dialog: calendar edit series*/
-.ui-dialog-buttonpane {
-  background-color: #679FD2;
-}
 .ui-dialog-buttonset button.ui-button-text-only {
   background-color: #CDCDCD;
   background: inherit;
