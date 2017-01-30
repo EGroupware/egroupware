@@ -709,8 +709,21 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				inherit_select_classes: true,
 				search_contains: true,
 				width: _width || size.w + "px"
-			})
-			.change(this.onchange);
+			});
+
+			if(this.options.onchange)
+			{
+				// Unbind change handler of widget's ancestor to stop it from bubbling
+				// chosen has its own onchange
+				jQuery(this.input).unbind('change.et2_inputWidget');
+
+				var self = this;
+				this.input.chosen().change(function(_ev, _change)
+				{
+					// enhance signature of regular et2_selectbox.onchange with 3. parameter from chosen
+					self.change.call(self, self.input, self, _change);
+				});
+			}
 
 			// multi selection with limited show line of single row
 			if (this.options.multiple && this.options.rows == 1 && this.options.height)
