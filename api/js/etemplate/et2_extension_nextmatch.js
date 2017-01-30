@@ -2715,12 +2715,6 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 
 		if (this.nextmatch.options.settings[name+"_onchange"])
 		{
-			// Make sure to get the new value for filtering
-			input.change(this.nextmatch, function(event) {
-				var set = {};
-				set[name] = select.getValue();
-				event.data.applyFilters(set);
-			});
 			// Get the onchange function string
 			var onchange = this.nextmatch.options.settings[name+"_onchange"];
 
@@ -2906,7 +2900,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 	_bindHeaderInput: function(sub_header) {
 		var header = this;
 
-		sub_header.iterateOver(function(_widget){
+		var bind_change = function(_widget){
 			// Previously set change function
 			var widget_change = _widget.change;
 
@@ -2915,7 +2909,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 				var result = widget_change.call(_widget,_node);
 
 				// Update filters, if we're not already doing so
-				if(result && _widget.isDirty() && !header.update_in_progress) {
+				if((result || typeof result === 'undefined') && _widget.isDirty() && !header.update_in_progress) {
 					// Update dirty
 					_widget._oldValue = _widget.getValue();
 
@@ -2955,7 +2949,15 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 			value[_widget.id] = _widget._oldValue = _widget.getValue();
 			var mgr = new et2_arrayMgr(value);
 			jQuery.extend(true, this.nextmatch.activeFilters,mgr.data);
-		}, this, et2_inputWidget);
+		}
+		if(sub_header.instanceOf(et2_inputWidget))
+		{
+			bind_change.call(this, sub_header);
+		}
+		else
+		{
+			sub_header.iterateOver(bind_change, this, et2_inputWidget);
+		}
 	}
 });}).call(this);
 et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
