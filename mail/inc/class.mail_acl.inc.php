@@ -84,7 +84,7 @@ class mail_acl
 		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']): $content['mailbox'][0];
 		if (empty($mailbox))
 		{
-			$mailbox = $this->imap->isAdminConnection ? $this->imap->getUserMailboxString($this->imap->isAdminConnection) : 'INBOX';
+			$mailbox = $this->imap->isAdminConnection ? $this->imap->getUserMailboxString($account_id) : 'INBOX';
 		}
 		if (!$this->imap->isAdminConnection)
 		{
