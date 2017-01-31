@@ -2587,7 +2587,9 @@ function calendar_upgrade14_3()
 		), __LINE__, __FILE__, false, 'ORDER BY cal_status', 'calendar') as $user)	// order A, T, U, X
 		{
 			if (strpos($user['email'], '@') !== false && !$n++) continue;
-			$GLOBALS['egw_setup']->db->delete('egw_cal_user', array_intersect_key($user, array_flip(array('cal_id','cal_recur_date','cal_user_type','cal_user_id','cal_status'))));
+			$GLOBALS['egw_setup']->db->delete('egw_cal_user',
+				array_intersect_key($user, array_flip(array('cal_id','cal_recur_date','cal_user_type','cal_user_id','cal_status'))),
+				__LINE__, __FILE__, 'calendar');
 		}
 	}
 
