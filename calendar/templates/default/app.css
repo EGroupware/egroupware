@@ -1403,7 +1403,6 @@ img.calendar_print_button, img.calendar_print_appicon {
 #calendar-edit_account + .chzn-container .chzn-results {
 	max-height: 195px;
 }
-input#calendar-edit_location {padding-left: 0;}
 #calendar_sidebox_content .ui-datepicker div.ui-datepicker-buttonpane {
 	border-top: 0;
     margin: 0;
