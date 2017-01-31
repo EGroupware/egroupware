@@ -161,7 +161,6 @@ class admin_import_groups_csv implements importexport_iface_import_plugin  {
 						// not supported action
 						default :
 							die('condition / action not supported!!!');
-							break;
 					}
 					if ($action['last']) break;
 				}
