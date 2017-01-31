@@ -315,7 +315,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
  *
  * @param string $str string with serialized array
  * @param boolean $allow_not_serialized =false true: return $str as is, if it is no serialized array
- * @return array|str|false
+ * @return array|str|false false if content can not be unserialized (not null like json_decode!)
  */
 function json_php_unserialize($str, $allow_not_serialized=false)
 {
@@ -324,9 +324,14 @@ function json_php_unserialize($str, $allow_not_serialized=false)
 	{
 		return $arr;
 	}
-	if (!$allow_not_serialized || $str[0] == '[' || $str[0] == '{' || $str[0] == '"' || $str === 'null' || ($val = json_decode($str)) !== null)
+	if (!$allow_not_serialized || $str[0] == '[' || $str[0] == '{' || $str[0] == '"' || $str === 'null' || ($val = json_decode($str, true)) !== null)
 	{
-		return isset($val) ? $val : json_decode($str, true);
+		// json_decode return null, if it cant decode the content
+		if (isset($val) || ($val = json_decode($str, true)) !== null || $str === 'null')
+		{
+			return $val;
+		}
+		return false;
 	}
 	return $str;
 }
