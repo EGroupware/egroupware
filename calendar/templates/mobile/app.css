@@ -548,7 +548,7 @@ Hide subsequent headers in week view with non-consolidated owners
   position: absolute;
   width: 55px;
 }
-.calendar_TimeGridNoLabel > .calendar_calGridHeader > ul {
+.calendar_TimeGridNoLabel > .calendar_calGridHeader > span.et2_label {
   display: none;
 }
 .calendar_calDayColHeader img {
@@ -1334,9 +1334,6 @@ img.calendar_print_appicon {
 #calendar-edit_account + .chzn-container .chzn-results {
   max-height: 195px;
 }
-input#calendar-edit_location {
-  padding-left: 0;
-}
 #calendar_sidebox_content .ui-datepicker div.ui-datepicker-buttonpane {
   border-top: 0;
   margin: 0;
@@ -1366,12 +1363,14 @@ input#calendar-edit_location {
   to see if it still fits.
 */
 @media all and (max-width: 1000px) and (min-width: 481px) {
+  /* styles assigned when width is smaller than 1000px */
   .calendar_calDayColHeader > div[data-date] .long_date {
     display: inline;
   }
   .calendar_calDayColHeader > div[data-date] .short_date {
     display: none;
   }
+  /* 7 day needs short day labels */
   .calendar_calDayColHeader:first-child:nth-last-child(7) > div[data-date] .short_date,
   .calendar_calDayColHeader:first-child:nth-last-child(7) ~ .calendar_calDayColHeader > div[data-date] .short_date {
     display: inline;
@@ -1392,10 +1391,12 @@ input#calendar-edit_location {
   }
 }
 @media all and (max-width: 480px) {
+  /* styles assigned when width is smaller than 480px; */
   .calendar_calDayColHeader > div[data-date] .long_date,
   .calendar_calDayColHeader > div[data-date] .short_date {
     display: none;
   }
+  /* 5 day and less fits short day labels */
   .calendar_calDayColHeader:first-child:nth-last-child(3) > div[data-date] .short_date,
   .calendar_calDayColHeader:first-child:nth-last-child(3) ~ .calendar_calDayColHeader > div[data-date] .short_date,
   .calendar_calDayColHeader:first-child:nth-last-child(4) > div[data-date] .short_date,
@@ -1404,6 +1405,7 @@ input#calendar-edit_location {
   .calendar_calDayColHeader:first-child:nth-last-child(5) ~ .calendar_calDayColHeader > div[data-date] .short_date {
     display: inline;
   }
+  /* 2 day view and less has enough room for full label */
   .calendar_calDayColHeader:first-child:nth-last-child(1) > div[data-date] .long_date,
   .calendar_calDayColHeader:first-child:nth-last-child(1) ~ .calendar_calDayColHeader > div[data-date] .long_date,
   .calendar_calDayColHeader:first-child:nth-last-child(2) > div[data-date] .long_date,
