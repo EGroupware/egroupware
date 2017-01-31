@@ -245,11 +245,12 @@ var et2_grid = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IDeta
 
 		// Add in repeated rows
 		// TODO: It would be nice if we could skip header (thead) & footer (tfoot) or treat them separately
+		var rowIndex = Infinity;
 		if(this.getArrayMgr("content"))
 		{
 			var content = this.getArrayMgr("content");
 			var rowDataEntry = rowData[rowData.length-1];
-			var rowIndex = rowData.length-1;
+			rowIndex = rowData.length-1;
 			// Find out if we have any content rows, and how many
 			var cont = true;
 			while(cont)

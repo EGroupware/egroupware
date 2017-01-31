@@ -261,7 +261,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 */
 		time: function(_input, _callback, _context)
 		{
-			setupTime(this, _input, _callback, _context);
+			setupTime(this, _input);
 		},
 		/**
 		 * transform PHP date/time-format to jQuery date/time-format

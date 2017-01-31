@@ -643,12 +643,12 @@ function egwPopupActionImplementation()
 		var paste_action = mgr.getActionById('egw_paste');
 
 		// Fake UI so we can simulate the position of the drop
+		var ui = {
+			position: {top: 0, left: 0},
+			offset: {top: 0, left: 0}
+		};
 		if(this._context.event)
 		{
-			var ui = {
-				position: {top: 0, left: 0},
-				offset: {top: 0, left: 0}
-			};
 			var event = this._context.event.originalEvent;
 			ui.position = {top: event.pageY, left: event.pageX};
 			ui.offset = {top: event.offsetY, left: event.offsetX};

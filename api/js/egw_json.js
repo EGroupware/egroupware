@@ -87,60 +87,6 @@ function egw_json_encode(input)
 {
 	egw.debug("warn", "Function %s is deprecated, use egw.jsonEncode() instead", arguments.callee.name);
 	return egw.jsonEncode(input);
-	if (input == null || !input && input.length == 0) return 'null';
-
-	var simple_res = _egw_json_encode_simple(input);
-	if (simple_res == null)
-	{
-		switch (input.constructor)
-		{
-			case Array:
-				var buf = [];
-				for (var k in input)
-				{
-					//Filter non numeric entries
-					if (!isNaN(k))
-						buf.push(egw_json_encode(input[k]));
-				}
-				return '[' + buf.join(',') + ']';
-
-			case Object:
-				var buf = [];
-				for (var k in input)
-				{
-					buf.push(_egw_json_encode_simple(k) + ':' + egw_json_encode(input[k]));
-				}
-				return '{' + buf.join(',') + '}';
-
-			default:
-				switch(typeof input)
-				{
-					case 'array':
-						var buf = [];
-						for (var k in input)
-						{
-							//Filter non numeric entries
-							if (!isNaN(k))
-								buf.push(egw_json_encode(input[k]));
-						}
-						return '[' + buf.join(',') + ']';
-
-					case 'object':
-						var buf = [];
-						for (var k in input)
-						{
-							buf.push(_egw_json_encode_simple(k) + ':' + egw_json_encode(input[k]));
-						}
-						return '{' + buf.join(',') + '}';
-
-				}
-				return 'null';
-		}
-	}
-	else
-	{
-		return simple_res;
-	}
 }
 
 
