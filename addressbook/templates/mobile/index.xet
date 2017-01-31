@@ -34,7 +34,7 @@
 					</vbox>
 					<vbox class="addressbookCol3">
 						<hbox class="avatar">
-							<image src="${row}[photo]" height= "62px"/>
+							<image src="${row}[photo]" height="auto" />
 						</hbox>
 					</vbox>
 				</row>

@@ -2202,7 +2202,6 @@ button[id="calendar-edit_button[delete]"]:active,
 button[id="timesheet-edit_button[delete]"]:active,
 button[id="displayToolbar-delete"]:active,
 button.et2_button_delete:active {
-  background-image: url('../images/delete-hover.png') !important;
   background-color: #e12500 !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
@@ -8129,7 +8128,7 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   body .et2_mobile_view div.et2_hbox.avatar img {
     width: 100px;
-    height: 100px;
+    height: auto;
   }
   body .et2_mobile_view .et2_tabbox {
     padding-left: 8px;
