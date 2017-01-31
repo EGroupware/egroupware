@@ -864,6 +864,10 @@ class Select extends Etemplate\Widget
 	public static function ajax_get_options($type, $attributes, $value = null)
 	{
 		$no_lang = false;
+		if(is_array($attributes))
+		{
+			$attributes = implode(',',$attributes);
+		}
 		$options = self::typeOptions($type, $attributes,$no_lang,false,$value);
 		self::fix_encoded_options($options,true);
 		$response = Api\Json\Response::get();
