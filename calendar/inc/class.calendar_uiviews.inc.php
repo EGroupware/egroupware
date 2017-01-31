@@ -760,7 +760,8 @@ class calendar_uiviews extends calendar_ui
 		}
 		//print_debug("get_todos(): label=$label; showall=$showall; max=$maxshow");
 
-		$content = $todo_label = '';
+		$todo_label = '';
+		$todo_list = array();
 		if (is_array($todos_from_hook) && count($todos_from_hook))
 		{
 			foreach($todos_from_hook as $todos)
@@ -782,7 +783,6 @@ class calendar_uiviews extends calendar_ui
 							$icons .= ($icons?' ':'').Api\Html::image('infolog',$name,lang($alt),'border="0" width="15" height="15"');
 						}
 						$todo['icons'] = $icons;
-						$class = $class == 'row_on' ? 'row_off' : 'row_on';
 						if($todo['edit']) {
 							$todo['edit_size'] = $todo['edit']['size'];
 							unset($todo['edit']['size']);
@@ -790,19 +790,12 @@ class calendar_uiviews extends calendar_ui
 							$edit_href = Api\Html::a_href( $todo['title'], $todo['edit'],'',' data-todo="app|750x590" ');
 							$todo['edit'] = Framework::link('/index.php',$todo['edit'],true);
 						}
-						$icon_href = Api\Html::a_href($icons,$todo['view']);
-						$content .= " <tr class=\"$class\">\n  <td valign=\"top\" width=\"15%\" nowrap>".
-							($this->bo->printer_friendly?$icons:($edit_icon_href ? $edit_icon_href : $icon_href)).
-							"</td>\n  <td>".($this->printer_friendly?$todo['title']:
-							$edit_href)."</td>\n </tr>\n";
-						/**
-						 * ToDo: add delete and closing action
-						 */
+						$todo_list[] = $todo;
 					}
 				}
 			}
 		}
-		return $todos;
+		return $todo_list;
 	}
 
 	/**
