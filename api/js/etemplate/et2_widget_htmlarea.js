@@ -49,7 +49,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 			'type':'boolean',
 			'description': 'Have the toolbar expanded (visible)'
 		},
-		'base_href': {
+		'base_href': {	// seems not to be used anymore
 			'name': 'Image base path',
 			'default': et2_no_init,
 			'type': 'string',
@@ -71,7 +71,7 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 		},
 		imageUpload: {
 			name: "imageUpload",
-			description: "Url to upload images dragged in or id of link_to widget to it's vfs upload",
+			description: "Url to upload images dragged in or id of link_to widget to it's vfs upload. Can also be just a name for which content array contains a path to upload the picture.",
 			type: "string",
 			default: null
 		}

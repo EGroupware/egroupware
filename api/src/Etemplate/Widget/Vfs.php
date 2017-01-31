@@ -143,7 +143,8 @@ class Vfs extends File
 		else
 		{
 			$data = self::$request->content[$widget_id];
-			$path = self::store_file($path = self::get_vfs_path($data['to_app'].':'.$data['to_id']).'/', $_FILES['upload']);
+			$path = self::store_file($path = (!is_array($data) && $data[0] == '/' ? $data :
+				self::get_vfs_path($data['to_app'].':'.$data['to_id'])).'/', $_FILES['upload']);
 
 			// store temp. vfs-path like links to be able to move it to correct location after entry is stored
 			if (!$data['to_id'] || is_array($data['to_id']))
