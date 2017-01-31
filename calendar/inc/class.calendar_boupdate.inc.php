@@ -1955,7 +1955,7 @@ class calendar_boupdate extends calendar_bo
 
 		foreach($event['alarm'] as &$alarm)
 		{
-			if($event['recur_type'] != MCAL_RECUR_NONE)
+			if($event['recur_type'] != MCAL_RECUR_NONE && is_object($instance_date))
 			{
 				calendar_so::shift_alarm($event, $alarm, $instance_date->format('ts'));
 			}
