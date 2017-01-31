@@ -1123,7 +1123,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 		}
 
 		$username = $this->getMailBoxUserName($_username);
-		if($this->loginType == 'vmailmgr' || $this->loginType == 'email' || $this->loginType == 'uidNumber') {
+		if($this->loginType == 'vmailmgr' || $this->loginType == 'uidNumber') {
 			$username .= '@'. $this->domainName;
 		}
 
