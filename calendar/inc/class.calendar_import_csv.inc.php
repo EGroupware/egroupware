@@ -71,12 +71,12 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 	 * imports a single entry according to given definition object.
 	 * Handles the conditions and the actions taken.
 	 *
-	 * @param importepport_iface_egw_record record The egw_record object being imported
+	 * @param calendar_egw_record record The egw_record object being imported
 	 * @param importexport_iface_import_record import_csv Import object contains current state
 	 *
 	 * @return boolean success
 	 */
-	public function import_record(\importexport_iface_egw_record &$record, &$import_csv)
+	public function import_record(\calendar_egw_record &$record, &$import_csv)
 	{
 		// set eventOwner
 		$options =& $this->definition->plugin_options;
