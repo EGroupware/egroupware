@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 ==========================================================
@@ -22,7 +22,7 @@
 ==========================================================
 -->
 
-<!ENTITY % Widgets "template|grid|vbox|box|details|hbox|groupbox|caption|split|button|buttononly|colorpicker|description|label|entry|contact-value|contact-account|contact-template|infolog-value|tracker-value|records-value|textbox|passwd|hidden|searchbox|int|integer|float|url|url-email|url-phone|menupopup|listbox|select|select-cat|select-percent|select-priority|select-country|select-state|select-year|select-month|select-day|select-dow|select-hour|select-number|select-app|select-lang|select-bool|select-timezone|menulist|checkbox|radio|radiogroup|date|date-time|date-timeonly|date-duration|date-since|date-time_today|time_or_date|date-range|diff|dropdown_button|styles|link-to|link-apps|link-entry|link|link-string|link-list|link-add|select-account|customfields|customfields-list|favorites|gantt|html|htmlarea|tabbox|taglist|taglist-account|taglist-email|taglist-cat|toolbar|tree|tree-cat|historylog|hrule|image|appicon|iframe|file|progress|portlet|ajax_select|vfs|vfs-name|vfs-mime|vfs-size|vfs-mode|vfs-uid|vfs-gid|vfs-upload|vfs-select|video|barcode|itempicker|script">
+<!ENTITY % Widgets "template|grid|vbox|box|details|hbox|groupbox|caption|split|button|buttononly|colorpicker|description|label|entry|contact-value|contact-account|contact-template|infolog-value|tracker-value|records-value|textbox|passwd|hidden|searchbox|int|integer|float|url|url-email|url-phone|menupopup|listbox|select|select-cat|select-percent|select-priority|select-country|select-state|select-year|select-month|select-day|select-dow|select-hour|select-number|select-app|select-lang|select-bool|select-timezone|menulist|checkbox|radio|radiogroup|date|date-time|date-timeonly|date-duration|date-since|date-time_today|time_or_date|date-range|diff|dropdown_button|styles|link-to|link-apps|link-entry|link|link-string|link-list|link-add|select-account|taglist|taglist-account|taglist-email|taglist-cat|customfields|customfields-list|favorites|html|htmlarea|tabbox|toolbar|tree|tree-cat|historylog|hrule|image|appicon|avatar|iframe|file|progress|portlet|ajax_select|vfs|vfs-name|vfs-mime|vfs-size|vfs-mode|vfs-uid|vfs-gid|vfs-upload|vfs-select|video|barcode|itempicker|script">
 <!ELEMENT overlay (%Widgets;)*>
 <!ELEMENT template (%Widgets;)*>
 <!ATTLIST template
@@ -353,7 +353,6 @@ activate_links (true|false) "false"
 for CDATA #IMPLIED
 extra_link_target CDATA "_browser"
 extra_link_popup CDATA #IMPLIED
-extra_link_title CDATA #IMPLIED
 expose_view (true|false) "false"
 mime CDATA #IMPLIED
 mime_data CDATA #IMPLIED
@@ -387,7 +386,6 @@ activate_links (true|false) "false"
 for CDATA #IMPLIED
 extra_link_target CDATA "_browser"
 extra_link_popup CDATA #IMPLIED
-extra_link_title CDATA #IMPLIED
 expose_view (true|false) "false"
 mime CDATA #IMPLIED
 mime_data CDATA #IMPLIED
@@ -1909,6 +1907,7 @@ percent_allowed (true|false) "false"
 hours_per_day CDATA #IMPLIED
 empty_not_0 (true|false) "false"
 short_labels (true|false) "false"
+step CDATA "any"
 value CDATA #IMPLIED
 type CDATA #IMPLIED
 blur CDATA #IMPLIED
@@ -2384,6 +2383,196 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 >
+<!ELEMENT taglist EMPTY>
+<!ATTLIST taglist
+empty_label CDATA #IMPLIED
+select_options CDATA #IMPLIED
+value CDATA #IMPLIED
+autocomplete_url CDATA "EGroupware\Api\Etemplate\Widget\Taglist::ajax_search"
+autocomplete_params CDATA "[object Object]"
+allowFreeEntries (true|false) "true"
+onchange CDATA #IMPLIED
+onclick CDATA #IMPLIED
+tagRenderer CDATA #IMPLIED
+listRenderer CDATA #IMPLIED
+width CDATA "100%"
+height CDATA #IMPLIED
+maxSelection CDATA #IMPLIED
+multiple CDATA #IMPLIED
+rows CDATA #IMPLIED
+tags (true|false) "false"
+useCommaKey (true|false) "true"
+groupBy CDATA #IMPLIED
+minChars CDATA #IMPLIED
+expand_multiple_rows CDATA #IMPLIED
+selected_first (true|false) "true"
+search (true|false) "false"
+other CDATA #IMPLIED
+needed (true|false) "false"
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+disabled (true|false) "false"
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+>
+<!ELEMENT taglist-account EMPTY>
+<!ATTLIST taglist-account
+autocomplete_url CDATA "EGroupware\Api\Etemplate\Widget\Taglist::ajax_search"
+allowFreeEntries (true|false) "false"
+account_type CDATA "accounts"
+empty_label CDATA #IMPLIED
+select_options CDATA #IMPLIED
+value CDATA #IMPLIED
+autocomplete_params CDATA "[object Object]"
+onchange CDATA #IMPLIED
+onclick CDATA #IMPLIED
+tagRenderer CDATA #IMPLIED
+listRenderer CDATA #IMPLIED
+width CDATA "100%"
+height CDATA #IMPLIED
+maxSelection CDATA #IMPLIED
+multiple CDATA #IMPLIED
+rows CDATA #IMPLIED
+tags (true|false) "false"
+useCommaKey (true|false) "true"
+groupBy CDATA #IMPLIED
+minChars CDATA #IMPLIED
+expand_multiple_rows CDATA #IMPLIED
+selected_first (true|false) "true"
+search (true|false) "false"
+other CDATA #IMPLIED
+needed (true|false) "false"
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+disabled (true|false) "false"
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+>
+<!ELEMENT taglist-email EMPTY>
+<!ATTLIST taglist-email
+autocomplete_url CDATA "EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
+autocomplete_params CDATA #IMPLIED
+allowFreeEntries (true|false) "true"
+include_lists (true|false) "false"
+useCommaKey (true|false) "false"
+empty_label CDATA #IMPLIED
+select_options CDATA #IMPLIED
+value CDATA #IMPLIED
+onchange CDATA #IMPLIED
+onclick CDATA #IMPLIED
+tagRenderer CDATA #IMPLIED
+listRenderer CDATA #IMPLIED
+width CDATA "100%"
+height CDATA #IMPLIED
+maxSelection CDATA #IMPLIED
+multiple CDATA #IMPLIED
+rows CDATA #IMPLIED
+tags (true|false) "false"
+groupBy CDATA #IMPLIED
+minChars CDATA #IMPLIED
+expand_multiple_rows CDATA #IMPLIED
+selected_first (true|false) "true"
+search (true|false) "false"
+other CDATA #IMPLIED
+needed (true|false) "false"
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+disabled (true|false) "false"
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+>
+<!ELEMENT taglist-cat EMPTY>
+<!ATTLIST taglist-cat
+minChars CDATA #IMPLIED
+autocomplete_url CDATA #IMPLIED
+autocomplete_params CDATA #IMPLIED
+allowFreeEntries (true|false) "false"
+empty_label CDATA #IMPLIED
+select_options CDATA #IMPLIED
+value CDATA #IMPLIED
+onchange CDATA #IMPLIED
+onclick CDATA #IMPLIED
+tagRenderer CDATA #IMPLIED
+listRenderer CDATA #IMPLIED
+width CDATA "100%"
+height CDATA #IMPLIED
+maxSelection CDATA #IMPLIED
+multiple CDATA #IMPLIED
+rows CDATA #IMPLIED
+tags (true|false) "false"
+useCommaKey (true|false) "true"
+groupBy CDATA #IMPLIED
+expand_multiple_rows CDATA #IMPLIED
+selected_first (true|false) "true"
+search (true|false) "false"
+other CDATA #IMPLIED
+needed (true|false) "false"
+onfocus CDATA #IMPLIED
+validation_error CDATA #IMPLIED
+tabindex CDATA #IMPLIED
+readonly (true|false) "false"
+label CDATA #IMPLIED
+statustext CDATA #IMPLIED
+align CDATA "left"
+disabled (true|false) "false"
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+>
 <!ELEMENT customfields EMPTY>
 <!ATTLIST customfields
 customfields CDATA #IMPLIED
@@ -2449,7 +2638,7 @@ filters CDATA #IMPLIED
 id CDATA "favorite"
 label CDATA #IMPLIED
 label_updates (true|false) "false"
-image CDATA "etemplate/fav_filter"
+image CDATA "/egroupware/pixelegg/images/fav_filter.png"
 statustext CDATA "Favorite queries"
 ro_image CDATA #IMPLIED
 onclick CDATA #IMPLIED
@@ -2475,39 +2664,6 @@ default_execute CDATA #IMPLIED
 resize_ratio CDATA #IMPLIED
 data CDATA #IMPLIED
 background CDATA #IMPLIED
-no_lang (true|false) "false"
-span CDATA #IMPLIED
-type CDATA #IMPLIED
->
-<!ELEMENT gantt EMPTY>
-<!ATTLIST gantt
-autoload CDATA #IMPLIED
-ajax_update CDATA #IMPLIED
-duration_unit CDATA "minute"
-columns CDATA "[object Object]"
-value CDATA #IMPLIED
-needed (true|false) "false"
-onfocus CDATA #IMPLIED
-tabindex CDATA #IMPLIED
-onchange CDATA #IMPLIED
-validation_error CDATA #IMPLIED
-readonly (true|false) "false"
-label CDATA #IMPLIED
-statustext CDATA #IMPLIED
-align CDATA "left"
-onclick CDATA #IMPLIED
-disabled (true|false) "false"
-width CDATA #IMPLIED
-height CDATA #IMPLIED
-class CDATA #IMPLIED
-overflow CDATA #IMPLIED
-parent_node CDATA #IMPLIED
-actions CDATA #IMPLIED
-default_execute CDATA #IMPLIED
-resize_ratio CDATA #IMPLIED
-data CDATA #IMPLIED
-background CDATA #IMPLIED
-id CDATA #IMPLIED
 no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
@@ -2600,188 +2756,6 @@ no_lang (true|false) "false"
 span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
->
-<!ELEMENT taglist EMPTY>
-<!ATTLIST taglist
-empty_label CDATA #IMPLIED
-select_options CDATA #IMPLIED
-value CDATA #IMPLIED
-autocomplete_url CDATA "home.etemplate_widget_taglist.ajax_search.etemplate"
-autocomplete_params CDATA "[object Object]"
-allowFreeEntries (true|false) "true"
-onchange CDATA #IMPLIED
-onclick CDATA #IMPLIED
-tagRenderer CDATA #IMPLIED
-listRenderer CDATA #IMPLIED
-width CDATA "100%"
-height CDATA #IMPLIED
-maxSelection CDATA #IMPLIED
-multiple CDATA #IMPLIED
-rows CDATA #IMPLIED
-tags (true|false) "false"
-useCommaKey (true|false) "true"
-expand_multiple_rows CDATA #IMPLIED
-selected_first (true|false) "true"
-search (true|false) "false"
-other CDATA #IMPLIED
-needed (true|false) "false"
-onfocus CDATA #IMPLIED
-validation_error CDATA #IMPLIED
-tabindex CDATA #IMPLIED
-readonly (true|false) "false"
-label CDATA #IMPLIED
-statustext CDATA #IMPLIED
-align CDATA "left"
-disabled (true|false) "false"
-class CDATA #IMPLIED
-overflow CDATA #IMPLIED
-parent_node CDATA #IMPLIED
-actions CDATA #IMPLIED
-default_execute CDATA #IMPLIED
-resize_ratio CDATA #IMPLIED
-data CDATA #IMPLIED
-background CDATA #IMPLIED
-id CDATA #IMPLIED
-no_lang (true|false) "false"
-span CDATA #IMPLIED
-type CDATA #IMPLIED
->
-<!ELEMENT taglist-account EMPTY>
-<!ATTLIST taglist-account
-autocomplete_url CDATA "home.etemplate_widget_taglist.ajax_search.etemplate"
-allowFreeEntries (true|false) "false"
-account_type CDATA "accounts"
-empty_label CDATA #IMPLIED
-select_options CDATA #IMPLIED
-value CDATA #IMPLIED
-autocomplete_params CDATA "[object Object]"
-onchange CDATA #IMPLIED
-onclick CDATA #IMPLIED
-tagRenderer CDATA #IMPLIED
-listRenderer CDATA #IMPLIED
-width CDATA "100%"
-height CDATA #IMPLIED
-maxSelection CDATA #IMPLIED
-multiple CDATA #IMPLIED
-rows CDATA #IMPLIED
-tags (true|false) "false"
-useCommaKey (true|false) "true"
-expand_multiple_rows CDATA #IMPLIED
-selected_first (true|false) "true"
-search (true|false) "false"
-other CDATA #IMPLIED
-needed (true|false) "false"
-onfocus CDATA #IMPLIED
-validation_error CDATA #IMPLIED
-tabindex CDATA #IMPLIED
-readonly (true|false) "false"
-label CDATA #IMPLIED
-statustext CDATA #IMPLIED
-align CDATA "left"
-disabled (true|false) "false"
-class CDATA #IMPLIED
-overflow CDATA #IMPLIED
-parent_node CDATA #IMPLIED
-actions CDATA #IMPLIED
-default_execute CDATA #IMPLIED
-resize_ratio CDATA #IMPLIED
-data CDATA #IMPLIED
-background CDATA #IMPLIED
-id CDATA #IMPLIED
-no_lang (true|false) "false"
-span CDATA #IMPLIED
-type CDATA #IMPLIED
->
-<!ELEMENT taglist-email EMPTY>
-<!ATTLIST taglist-email
-autocomplete_url CDATA "home.etemplate_widget_taglist.ajax_email.etemplate"
-autocomplete_params CDATA #IMPLIED
-allowFreeEntries (true|false) "true"
-include_lists (true|false) "false"
-useCommaKey (true|false) "false"
-empty_label CDATA #IMPLIED
-select_options CDATA #IMPLIED
-value CDATA #IMPLIED
-onchange CDATA #IMPLIED
-onclick CDATA #IMPLIED
-tagRenderer CDATA #IMPLIED
-listRenderer CDATA #IMPLIED
-width CDATA "100%"
-height CDATA #IMPLIED
-maxSelection CDATA #IMPLIED
-multiple CDATA #IMPLIED
-rows CDATA #IMPLIED
-tags (true|false) "false"
-expand_multiple_rows CDATA #IMPLIED
-selected_first (true|false) "true"
-search (true|false) "false"
-other CDATA #IMPLIED
-needed (true|false) "false"
-onfocus CDATA #IMPLIED
-validation_error CDATA #IMPLIED
-tabindex CDATA #IMPLIED
-readonly (true|false) "false"
-label CDATA #IMPLIED
-statustext CDATA #IMPLIED
-align CDATA "left"
-disabled (true|false) "false"
-class CDATA #IMPLIED
-overflow CDATA #IMPLIED
-parent_node CDATA #IMPLIED
-actions CDATA #IMPLIED
-default_execute CDATA #IMPLIED
-resize_ratio CDATA #IMPLIED
-data CDATA #IMPLIED
-background CDATA #IMPLIED
-id CDATA #IMPLIED
-no_lang (true|false) "false"
-span CDATA #IMPLIED
-type CDATA #IMPLIED
->
-<!ELEMENT taglist-cat EMPTY>
-<!ATTLIST taglist-cat
-autocomplete_url CDATA #IMPLIED
-autocomplete_params CDATA #IMPLIED
-allowFreeEntries (true|false) "false"
-empty_label CDATA #IMPLIED
-select_options CDATA #IMPLIED
-value CDATA #IMPLIED
-onchange CDATA #IMPLIED
-onclick CDATA #IMPLIED
-tagRenderer CDATA #IMPLIED
-listRenderer CDATA #IMPLIED
-width CDATA "100%"
-height CDATA #IMPLIED
-maxSelection CDATA #IMPLIED
-multiple CDATA #IMPLIED
-rows CDATA #IMPLIED
-tags (true|false) "false"
-useCommaKey (true|false) "true"
-expand_multiple_rows CDATA #IMPLIED
-selected_first (true|false) "true"
-search (true|false) "false"
-other CDATA #IMPLIED
-needed (true|false) "false"
-onfocus CDATA #IMPLIED
-validation_error CDATA #IMPLIED
-tabindex CDATA #IMPLIED
-readonly (true|false) "false"
-label CDATA #IMPLIED
-statustext CDATA #IMPLIED
-align CDATA "left"
-disabled (true|false) "false"
-class CDATA #IMPLIED
-overflow CDATA #IMPLIED
-parent_node CDATA #IMPLIED
-actions CDATA #IMPLIED
-default_execute CDATA #IMPLIED
-resize_ratio CDATA #IMPLIED
-data CDATA #IMPLIED
-background CDATA #IMPLIED
-id CDATA #IMPLIED
-no_lang (true|false) "false"
-span CDATA #IMPLIED
-type CDATA #IMPLIED
 >
 <!ELEMENT toolbar EMPTY>
 <!ATTLIST toolbar
@@ -2991,6 +2965,40 @@ span CDATA #IMPLIED
 type CDATA #IMPLIED
 readonly CDATA #IMPLIED
 >
+<!ELEMENT avatar EMPTY>
+<!ATTLIST avatar
+contact_id CDATA #IMPLIED
+default_src CDATA #IMPLIED
+frame CDATA "circle"
+editable (true|false) "false"
+crop (true|false) "false"
+src CDATA #IMPLIED
+href CDATA #IMPLIED
+extra_link_target CDATA "_self"
+extra_link_popup CDATA #IMPLIED
+imagemap CDATA #IMPLIED
+label CDATA #IMPLIED
+expose_view (true|false) "false"
+statustext CDATA #IMPLIED
+align CDATA "left"
+onclick CDATA #IMPLIED
+disabled (true|false) "false"
+width CDATA #IMPLIED
+height CDATA #IMPLIED
+class CDATA #IMPLIED
+overflow CDATA #IMPLIED
+parent_node CDATA #IMPLIED
+actions CDATA #IMPLIED
+default_execute CDATA #IMPLIED
+resize_ratio CDATA #IMPLIED
+data CDATA #IMPLIED
+background CDATA #IMPLIED
+id CDATA #IMPLIED
+no_lang (true|false) "false"
+span CDATA #IMPLIED
+type CDATA #IMPLIED
+readonly CDATA #IMPLIED
+>
 <!ELEMENT iframe EMPTY>
 <!ATTLIST iframe
 label CDATA #IMPLIED
@@ -2998,6 +3006,7 @@ needed CDATA #IMPLIED
 seamless (true|false) "true"
 name CDATA #IMPLIED
 fullscreen (true|false) "false"
+src CDATA #IMPLIED
 value CDATA #IMPLIED
 statustext CDATA #IMPLIED
 align CDATA "left"
@@ -3032,6 +3041,7 @@ drop_target CDATA #IMPLIED
 label CDATA "Choose file..."
 progress_dropdownlist (true|false) "false"
 onFinishOne CDATA #IMPLIED
+accept CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
@@ -3254,7 +3264,6 @@ activate_links (true|false) "false"
 for CDATA #IMPLIED
 extra_link_target CDATA "_browser"
 extra_link_popup CDATA #IMPLIED
-extra_link_title CDATA #IMPLIED
 expose_view (true|false) "false"
 mime CDATA #IMPLIED
 mime_data CDATA #IMPLIED
@@ -3288,7 +3297,6 @@ activate_links (true|false) "false"
 for CDATA #IMPLIED
 extra_link_target CDATA "_browser"
 extra_link_popup CDATA #IMPLIED
-extra_link_title CDATA #IMPLIED
 expose_view (true|false) "false"
 mime CDATA #IMPLIED
 mime_data CDATA #IMPLIED
@@ -3385,6 +3393,7 @@ drop_target CDATA #IMPLIED
 label CDATA "Choose file..."
 progress_dropdownlist (true|false) "false"
 onFinishOne CDATA #IMPLIED
+accept CDATA #IMPLIED
 needed (true|false) "false"
 onchange CDATA #IMPLIED
 onfocus CDATA #IMPLIED
