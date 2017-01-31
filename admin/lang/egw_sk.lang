@@ -440,6 +440,7 @@ if different from email address	admin	sk	ak sa líši od e-mailovej adresy
 if no acl records for user or any group the user is a member of	admin	sk	Ak pre používateľa alebo akúkoľvek skupinu, ktorej je členom, neexistujú ACL záznamy
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	sk	Ak používate LDAP, chcete spravovať domovský adresár a atribúty login shellu?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	sk	Ak používate SSL alebo TLS, musíte mať nahraté rozšírenie PHP openssl.
+if you ignore that error as admin, you should check "%1"!	admin	sk	Ak túto chybu ignorujete ako správca, mali by ste skontrolovať "%1"!
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	sk	Ak určíte port 5190 pre Sieve, vynútite tým SSL pre Sieve (je potrebná podpora na strane servera)
 imap admin password	admin	sk	Heslo správcu IMAP
 imap admin user	admin	sk	Používateľ pre správu IMAP

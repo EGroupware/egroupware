@@ -442,6 +442,7 @@ if different from email address	admin	it	se diverso dall'indirizzo email
 if no acl records for user or any group the user is a member of	admin	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	it	Nel caso si utilizzi LDAP, vuoi gestire gli attributi di homedirectory e shell di login?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	it	Se stai usando SSL oppure TLS, devi aver caricato l'estensione SSL in PHP
+if you ignore that error as admin, you should check "%1"!	admin	it	Se si ignorerà questo errore come amministratore, si dovrà selezionare "%1"!
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	it	se viene indicata la porta 5190 come porta del server sieve, verrà abilitato SSL per sieve (il serve deve supportarlo)
 imap admin password	admin	it	Password amministratore IMAP
 imap admin user	admin	it	User amministratore IMAP

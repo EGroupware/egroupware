@@ -47,6 +47,7 @@
 80 (http)	admin	sk	80 (http)
 a pattern to be searched for	common	sk	Hľadaný výraz
 a request to the egroupware server returned with an error	common	sk	Dopyt na server EGroupware vrátil chybu
+abort	common	sk	Zrušiť
 about	common	sk	O aplikácii
 about %1	common	sk	O aplikácii %1
 about egroupware	common	sk	Info o balíku EGroupware
