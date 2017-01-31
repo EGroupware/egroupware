@@ -23,6 +23,7 @@ charset for the csv export/import	preferences	sk	Znaková sada
 click to select a color	preferences	sk	Ak chcete vybrať farbu, kliknite sem
 color	preferences	sk	Farba
 country	preferences	sk	Krajina
+currency	preferences	sk	Mena
 custom login box color, defaults to above color darkened	preferences	sk	Vlastná farba pre prihlasovacie okno, predvolený je tmavší odtieň vyššieuvedenej farby
 custom sidebar menu active color, defaults to above color darkened	preferences	sk	Vlastná farba pre bočný panel, predvolený je tmavší odtieň vyššieuvedenej farby
 dark moono theme	preferences	sk	Tmavá Moono téma
@@ -55,6 +56,7 @@ enter your old password	preferences	sk	Zadajte staré heslo
 error	preferences	sk	Chyba
 failed to change password.	preferences	sk	Nepodarilo sa zmeniť heslo.
 features of the editor	preferences	sk	Funkcie editora
+firstname	preferences	sk	Krestné meno
 font size unit	preferences	sk	Jednotka pre veľkosť písma
 forced preferences	preferences	sk	Vynútené nastavenia
 formatting & general settings	preferences	sk	Formátovanie a všeobecné nastavenia
@@ -78,12 +80,14 @@ interface/template selection	preferences	sk	Výber vzhľadu rozhrania / šablón
 just clicking on the line, like a checkbox	preferences	sk	jednoducho kliknutím na riadok, ako začiarkávacie políčko
 kama theme	preferences	sk	Kama téma
 language	preferences	sk	Jazyk
+lastname	preferences	sk	Priezvisko
 look & feel	preferences	sk	Vzhľad a použiteľnosť
 lowercase letters	preferences	sk	malé písmená
 max matches per page	preferences	sk	Maximum záznamov na stránku
 max number of icons in navbar	preferences	sk	Maximálny počet ikoniek v navigačnom paneli
 moono color theme	preferences	sk	Moono farebná téma
 moono theme (default)	preferences	sk	Moono téma (predvolená)
+no	preferences	sk	Nie
 no default	preferences	sk	Bez predvolených nastavení
 no user-selection at all	common	sk	Žiadny výber používateľov
 note: this feature does *not* change your email password. this will	preferences	sk	Poznámka: Týmto *nezmeníte* vaše E-mailové heslo. Spôsobí
@@ -102,6 +106,7 @@ please select timezones, you want to be able to quickly switch between. switch i
 please select your timezone.	preferences	sk	Prosím, vyberte svoje časové pásmo.
 please, select a new theme	preferences	sk	Prosím, vyberte novú farebnú tému
 popup with search	preferences	sk	Vyhľadaním
+preferences	preferences	sk	Predvoľby
 preferences saved.	preferences	sk	Predvoľby boli uložené.
 pt: points (1/72 inch)	preferences	sk	pt: body (1/72 palca)
 px: display pixels	preferences	sk	px: zobrazovacie pixle
@@ -129,8 +134,10 @@ show navigation bar as	preferences	sk	Ako zobraziť navigačný panel
 show number of current users	preferences	sk	Zobraziť počet pripojených používateľov
 show text on navigation icons	preferences	sk	Zobrazovať text na navigačných ikonách
 show_more_apps	common	sk	Zobraziť ďalšie aplikácie
+site configuration	preferences	sk	Nastavenie stránky
 special characters	preferences	sk	špeciálne znaky
 spellchecker language	addressbook	sk	Jazyk kontroly pravopisu
+substitutions and their meanings:	preferences	sk	Náhrady a ich význam:
 text editor settings	preferences	sk	Nastavenia textového editora
 text only	preferences	sk	Iba text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sk	Predvolená aplikácia sa spustí po prihlásení do EGroupware alebo kliknutí na ikonku Domovskej stránky.<br>Naraz môžete mať na hlavnej stránke zobrazených aj viacero aplikácií, ak si tu nevyberiete žiadnu. Musíte si to však ponastavovať v nastaveniach jednotlivých aplikácií.
@@ -144,14 +151,17 @@ theme (colors/fonts) selection	preferences	sk	Výber témy (farby / písma)
 this server is located in the %1 timezone	preferences	sk	Tento server je v časovej zóne %1
 thousands separator is only used for displaying and not for editing numbers.	preferences	sk	Oddeľovač tisícok sa používa len pri zobrazovaní, nie pri úprave čísiel.
 time format	preferences	sk	Formát času
+time zone	preferences	sk	Časové pásmo
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	sk	Jednotka zobrazenia veľkosti písma: buď "px" ako je bežné pri webových stránkach, alebo "pt" ako pri textových editoroch.
 uppercase letters	preferences	sk	Veľké písmená
 use default	preferences	sk	Použiť predvolené
+username	preferences	sk	používateľské meno
 users choice	preferences	sk	Používateľova voľba
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sk	Ak odpoviete [ Áno ], tlačítka [ Domov ] a [ Odhlásiť ] budú vyzerať rovnako ako aplikácie v hlavnom paneli aplikácií navrchu stránky.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	sk	Ktorý symbol alebo názov meny sa má používať v EGroupware.
 write prefs for the specified application.	preferences	sk	Zapísať predvoľby pre vybranú aplikáciu.
+yes	preferences	sk	Áno
 you can show the applications as icons only, icons with app-name or both.	preferences	sk	Aplikácie môžu byť zobrazované ako ikonky, ikonky s názvami alebo obidvoje.
 you can show the linked entries with icons only, icons with app-name or both.	common	sk	Odkazované záznamy sa dajú zobrazovať ako ikony, ikony s názvom aplikácie alebo oboje.
 you do not have permission to set acl's in this mode!	preferences	sk	Nemáte oprávnenia na zmenu ACL v tomto režime!

@@ -100,7 +100,7 @@ compare	infolog	it	Confronta
 completed	infolog	it	Avanzamento
 configuration	infolog	it	Configurazione
 confirm	infolog	it	conferma
-contact	infolog	it	Rubrica
+contact	infolog	it	Collegamento primario
 contact cf	infolog	it	Contatto CF
 contact fields	infolog	it	Campi contatto
 contactfield	infolog	it	Campo contatto
@@ -370,13 +370,13 @@ re-planned time	infolog	it	Tempo ripianificato
 re:	infolog	it	Re:
 read one record by passing its id.	infolog	it	Leggi un record fornendo la sua ID
 read rights (default)	infolog	it	diritti di lettura (default)
-receive notifications about due entries you are responsible for	infolog	it	Ricevi notifiche per le voci delle quali sei responsabile
-receive notifications about due entries you delegated	infolog	it	Ricevi notifiche per le voci delle quali sei delegato
+receive notifications about due entries you are responsible for	infolog	it	Ricevi notifiche per le voci in scadenza delle quali sei responsabile
+receive notifications about due entries you delegated	infolog	it	Ricevi notifiche per le voci in scadenza che hai delegato
 receive notifications about items assigned to you	infolog	it	Ricevi notifiche per le voci a te assegnate
-receive notifications about items of type owned by groups you are part of	infolog	it	Ricevi notifiche per le voci dei gruppi a cui appartieni
+receive notifications about items of type owned by groups you are part of	infolog	it	Ricevi notifiche per le voci di tipologie che appartengono a gruppi di cui fai parte
 receive notifications about own items	infolog	it	Ricevi notifiche per le voci che hai creato tu
-receive notifications about starting entries you are responsible for	infolog	it	Ricevi notifiche per le voci di avvio delle quali sei responsabile
-receive notifications about starting entries you delegated	infolog	it	Ricevi notifiche per le voci di avvio che hai delegato
+receive notifications about starting entries you are responsible for	infolog	it	Ricevi notifiche per le voci che stanno per essere avviate e delle quali sei responsabile
+receive notifications about starting entries you delegated	infolog	it	Ricevi notifiche per le voci che stanno per essere avviate e delle quali delegato
 receive notifications as html-mails	infolog	it	Ricevi le notifiche come HTML
 regular expression	infolog	it	Espressione regolare
 remark	infolog	it	Osservazione
@@ -470,7 +470,7 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	it	il nome usato internamente (<= 20 caratteri), cambiandolo rende i dati esistenti indisponibili
 the text displayed to the user	infolog	it	il testo mostrato all'utente
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	it	Questo è il filtro che Attività applica quando entri nell'applicazione. I filtri limitano le voci visualizzate nella vista attuale. Ci sono filtri per visualizzare solo le voci completate, ancora aperte o future sia tue che degli altri utenti.
-til when should the todo or phonecall be finished	infolog	it	esegue fino a quando il ToDo o la Chiamata Telefonica è finita
+til when should the todo or phonecall be finished	infolog	it	Quando dovrebbe essere completata l'attività
 times	infolog	it	Tempi
 titles of any entries linked to the current record, excluding attached files	infolog	it	Titoli di qualsiasi voce collegata a quella attuale, allegati esclusi
 to many might exceed your execution-time-limit	infolog	it	troppi potrebbero superare il tuo limite di tempo di esecuzione
