@@ -83,9 +83,6 @@ class infolog_egw_record implements importexport_iface_egw_record
 	 *@return string tiltle
 	 */
 	public function get_title() {
-		if (empty($this->record)) {
-			$this->get_record();
-		}
 		return self::$bo->link_title($this->record);
 	}
 

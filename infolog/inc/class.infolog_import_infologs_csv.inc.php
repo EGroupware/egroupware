@@ -16,7 +16,8 @@ use EGroupware\Api\Link;
 /**
  * class import_csv for infolog
  */
-class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
+class infolog_import_infologs_csv implements importexport_iface_import_plugin
+{
 
 	private static $plugin_options = array(
 		'fieldsep', 		// char
@@ -172,7 +173,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		$this->errors = array();
 		$this->warnings = array();
 
-		while ( $record = $import_csv->get_record() ) {
+		while ( $record = $import_csv->get_record() )
+		{
 			$success = false;
 
 			// don't import empty records
@@ -186,12 +188,14 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				if($record['info_type'] && $key = array_search(strtolower($record['info_type']),$types))
 				{
 					$lookups['info_status'] = $this->boinfolog->status[$key];
-					break;
 				}
 			}
 
 			$result = importexport_import_csv::convert($record, infolog_egw_record::$types, 'infolog', $lookups, $_definition->plugin_options['convert']);
-			if($result) $this->warnings[$import_csv->get_current_position()] = $result;
+			if($result)
+			{
+				$this->warnings[$import_csv->get_current_position()] = $result;
+			}
 
 			// Make sure type is valid
 			if(!$record['info_type'] || $record['info_type'] && !$this->boinfolog->enums['type'][$record['info_type']])
@@ -297,10 +301,12 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 			}
 			if($success) $count++;
-			if($this->warnings[$import_csv->get_current_position()]) {
+			if($this->warnings[$import_csv->get_current_position()])
+			{
 				$this->warnings[$import_csv->get_current_position()] .= "\nRecord:\n" .array2string($record);
 			}
-			if($this->errors[$import_csv->get_current_position()]) {
+			if($this->errors[$import_csv->get_current_position()])
+			{
 				$this->errors[$import_csv->get_current_position()] .= "\nRecord:\n" .array2string($record);
 			}
 		}
@@ -314,7 +320,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 	 * @param array $_data contact data for the action
 	 * @return bool success or not
 	 */
-	private function action ( $_action, $_data, $record_num = 0 ) {
+	private function action ( $_action, $_data, $record_num = 0 )
+	{
 		$result = true;
 		switch ($_action) {
 			case 'none' :
@@ -323,7 +330,8 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				// Only update if there are changes
 				$old = $this->boinfolog->read($_data['info_id']);
 
-				if(!$this->definition->plugin_options['change_owner']) {
+				if(!$this->definition->plugin_options['change_owner'])
+				{
 					// Don't change addressbook of an existing contact
 					unset($_data['owner']);
 				}
@@ -331,13 +339,15 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				// Merge to deal with fields not in import record
 				$_data = array_merge($old, $_data);
 				$changed = $this->tracking->changed_fields($_data, $old);
-				if(count($changed) == 0 && !$this->definition->plugin_options['update_timestamp']) {
+				if(count($changed) == 0 && !$this->definition->plugin_options['update_timestamp'])
+				{
 					break;
 				}
 
 				// Fall through
 			case 'insert' :
-				if ( $this->dry_run ) {
+				if ( $this->dry_run )
+				{
 					//print_r($_data);
 
 					// Check for link during dry run
@@ -349,7 +359,9 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 
 					$this->results[$_action]++;
 					break;
-				} else {
+				}
+				else
+				{
 					$result = $this->boinfolog->write(
 						$_data, true, 2,true, 	// 2 = dont touch modification date
 						$this->definition->plugin_options['no_notification']
@@ -379,13 +391,16 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		}
 
 		// Process some additional fields
-		if(!is_numeric($result)) {
+		if(!is_numeric($result))
+		{
 			return $result;
 		}
 		$info_link_id = $_data['info_link_id'];
-		foreach(array_keys(self::$special_fields) as $field) {
+		foreach(array_keys(self::$special_fields) as $field)
+		{
 			if(!$_data[$field]) continue;
-			if(strpos($field, 'link') === 0) {
+			if(strpos($field, 'link') === 0)
+			{
 				list($app, $app_id) = explode(':', $_data[$field],2);
 
 				// Linking to another entry based on matching custom fields
@@ -393,11 +408,14 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 				{
 					$app_id = $this->link_by_cf($record_num, $app, $field, $app_id);
 				}
-			} else {
+			}
+			else
+			{
 				$app = $field;
 				$app_id = $_data[$field];
 			}
-			if ($app && $app_id) {
+			if ($app && $app_id)
+			{
 				$id = $_data['info_id'] ? $_data['info_id'] : (int)$result;
 				//echo "<p>linking infolog:$id with $app:$app_id</p>\n";
 				$link_id = Link::link('infolog',$id,$app,$app_id);
