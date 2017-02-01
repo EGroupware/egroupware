@@ -311,7 +311,7 @@ app.classes.mail = AppJS.extend(
 				}
 				break;
 			case 'mail.folder_management':
-				this.egw.message(this.egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'),'info',true);
+				this.egw.message(this.egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'),'info','mail:folder_management');
 				break;
 			case 'mail.view':
 				// we need to set mail_currentlyFocused var otherwise mail
