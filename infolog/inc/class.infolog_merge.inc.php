@@ -108,13 +108,14 @@ class infolog_merge extends Api\Storage\Merge
 		}
 
 		importexport_export_csv::convert($record, $types, 'infolog', $selects);
+		
+		$array = $record->get_record_array();
 		if($record->info_contact)
 		{
 			$array['info_contact'] = $array['info_link']['title'];
 		}
 
 		// Set any missing custom fields, or the marker will stay
-		$array = $record->get_record_array();
 		foreach($this->bo->customfields as $name => $field)
 		{
 			if(!$array['#'.$name])
