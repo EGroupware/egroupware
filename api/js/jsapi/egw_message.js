@@ -59,9 +59,11 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @param {string} _msg message to show or empty to remove previous message
 		 * @param {string} _type 'help', 'info', 'error', 'warning' or 'success' (default)
-		 * @param {boolean} _discard if true, it will show a checkbox in order to discard the message, default is false
+		 * @param {string} _discardID unique string id (appname:id) in order to register
+		 * the message as discardable. If no appname given, the id will be prefixed with
+		 * current app. The discardID will be stored in local storage.
 		 */
-		message: function(_msg, _type, _discard)
+		message: function(_msg, _type, _discardID)
 		{
 			var jQuery = _wnd.jQuery;
 
@@ -103,22 +105,22 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					.addClass(_type+'_message')
 					.click(function() {
 						//check if the messeage should be discarded forever
-						if (_type == 'info' && _discard
+						if (_type == 'info' && _discardID
 							&& msg_chkbox && msg_chkbox.is(':checked'))
 						{
-							var discarded = egw.getLocalStorageItem(egw.app_name(),'discardedMsgs');
+							var discarded = egw.getLocalStorageItem(discardAppName,'discardedMsgs');
 
-							if (!isDiscarded(_msg))
+							if (!isDiscarded(_discardID))
 							{
 								if (!discarded)
 								{
-									discarded = [_msg];
+									discarded = [_discardID];
 								}
 								else
 								{
-									if (jQuery.isArray(JSON.parse(discarded))) discarded.push(_msg);
+									if (jQuery.isArray(discarded = JSON.parse(discarded))) discarded.push(_discardID);
 								}
-								egw.setLocalStorageItem(egw.app_name(),'discardedMsgs',JSON.stringify(discarded));
+								egw.setLocalStorageItem(discardAppName,'discardedMsgs',JSON.stringify(discarded));
 							}
 						}
 						jQuery(this).remove();
@@ -126,18 +128,27 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					.css('position', 'absolute');
 
 				// discard checkbox implementation
-				if (_discard && _type === 'info')
+				if (_discardID && _type === 'info')
 				{
-					// helper function to check if the messaege is discarded
-					var isDiscarded = function (_msg)
+					var discardID = _discardID.split(':');
+					if (discardID.length<2)
 					{
-						var discarded = JSON.parse(egw.getLocalStorageItem(egw.app_name(),'discardedMsgs'));
+						_discardID = egw.app_name() +":"+_discardID;
+					}
+					var discardAppName = discardID.length>1? discardID[0]: egw.app_name();
+
+
+					// helper function to check if the messaege is discarded
+					var isDiscarded = function (_id)
+					{
+
+						var discarded = JSON.parse(egw.getLocalStorageItem(discardAppName,'discardedMsgs'));
 
 						if (jQuery.isArray(discarded))
 						{
 							for(var i=0; i< discarded.length; i++)
 							{
-								if (discarded[i] === _msg) return true;
+								if (discarded[i] === _id) return true;
 							}
 						}
 						return false;
@@ -158,7 +169,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 								.attr({for:'msgChkbox'})
 								.appendTo(msg_discard);
 
-					if (isDiscarded(_msg)) return;
+					if (isDiscarded(_discardID)) return;
 					msg_div.append(msg_discard);
 				}
 
