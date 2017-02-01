@@ -4,7 +4,7 @@
 ==========================================================
 	EGroupware: DTD
 	AUTHOR: Hadi Nategh <hn[AT]stylite.de>
-	COPYRIGHT: 2014 by Stylite AG
+	COPYRIGHT: 2016 by EGroupware GmbH
 	LICENSE: http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
     PUBLIC ID: "http://www.egroupware.org/etemplate2.dtd"
 	Version: 1.2
@@ -14,7 +14,7 @@
     An example how to use this DTD from your XML document:
 
     <?xml version="1.0"?>
-	<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+	<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 
     <overlay>
     ...

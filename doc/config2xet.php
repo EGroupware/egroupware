@@ -45,7 +45,7 @@ if (php_sapi_name() !== 'cli')
 	EGroupware\Api\Header\Content::type('config.xet', 'text/plain', 0, true, false);
 }
 echo '<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
 	<template id="'.$app.'.config" template="" lang="" group="0" version="16.1">

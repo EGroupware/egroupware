@@ -32,7 +32,7 @@ do
 		grep -q DOCTYPE $f || {
 			echo "$f	DOCTYPE missing"
 			sed -i .bak 's/<?xml version="1.0" encoding="UTF-8"?>/<?xml version="1.0" encoding="UTF-8"?>\
-<!DOCTYPE overlay PUBLIC "-\/\/Stylite AG\/\/eTemplate 2\/\/EN" "http:\/\/www.egroupware.org\/etemplate2.dtd">/' $f
+<!DOCTYPE overlay PUBLIC "-\/\/EGroupware GmbH\/\/eTemplate 2\/\/EN" "http:\/\/www.egroupware.org\/etemplate2.dtd">/' $f
 		}
 	fi
 done

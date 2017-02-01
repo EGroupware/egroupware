@@ -9,7 +9,7 @@ Egroupware
 @version $Id$
 -->
 
-<!DOCTYPE overlay PUBLIC '-//Stylite AG//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
+<!DOCTYPE overlay PUBLIC '-//EGroupware GmbH//eTemplate 2//EN' 'http://www.egroupware.org/etemplate2.dtd'>
 
 <overlay>
     <template id="calendar.planner">
