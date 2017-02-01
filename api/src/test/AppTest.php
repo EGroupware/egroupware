@@ -162,4 +162,38 @@ abstract class AppTest extends TestCase
 		unset($GLOBALS['egw_login_data']);
 		return $sessionid;
 	}
+
+	/**
+	 * Sets the tracking object to a mock object, so we don't try to send real
+	 * notifications while testing.
+	 *
+	 * After calling this to mock the tracking object, you can set expectations
+	 * for tracking:
+	 * <code>
+	 * $this->mockTracking($this->bo, 'app_tracker');
+	 *
+	 * // we do not expect track to get called for a new entry
+	 * $this->bo->tracking->expects($this->never())
+	 *		->method('track');
+	 *
+	 * $this->bo->save($entry);
+	 * </code>
+	 * @param Object $bo_object Instance of the BO object
+	 * @param String $tracker_class The name of the tracker class to mock
+	 */
+	protected function mockTracking(&$bo_object, $tracker_class)
+	{
+		if(!is_object($bo_object))
+		{
+			throw new \BadMethodCallException('Invalid BO object');
+		}
+		if(!property_exists($bo_object, 'tracking'))
+		{
+			throw new \BadMethodCallException('Invalid BO object - needs tracking property');
+		}
+		$bo_object->tracking = $this->getMockBuilder($tracker_class)
+			->disableOriginalConstructor()
+			->setMethods(['track'])
+			->getMock($bo_object);
+	}
 }
