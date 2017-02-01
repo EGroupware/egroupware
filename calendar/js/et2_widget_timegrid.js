@@ -1062,7 +1062,7 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 		// Limit it to 14 days to avoid infinite loops in case something is mis-set,
 		// though the limit is more based on how wide the screen is
-		while(end >= this.date_helper.date.getTime() && i <= 14)
+		while(end >= this.date_helper.date.getTime() && i++ <= 14)
 
 		return day_list;
 	},
