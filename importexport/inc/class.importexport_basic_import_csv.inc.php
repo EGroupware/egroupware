@@ -243,7 +243,6 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 				// not supported action
 					default :
 						die('condition / action not supported!!!');
-						break;
 				}
 				if($result)
 				{
