@@ -29,7 +29,7 @@ class infolog_wizard_import_infologs_csv extends importexport_wizard_basic_impor
 		);
 
 		// Field mapping
-		$tracking = new infolog_tracking();
+		$tracking = new infolog_tracking(new infolog_bo());
 		$this->mapping_fields = array('info_id' => 'Infolog ID') + $tracking->field2label + infolog_import_infologs_csv::$special_fields;
 		// List each custom field
 		unset($this->mapping_fields['custom']);
