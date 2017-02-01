@@ -2469,8 +2469,7 @@ var et2_nextmatch_header_bar = (function(){ "use strict"; return et2_DOMWidget.e
 			this.toggle_header = jQuery(document.createElement('button'))
 					.addClass('nm_toggle_header')
 					.click(function(){
-						jQuery(self.div).slideToggle('fast');
-						jQuery(self.div).removeClass('nm_header_hide');
+						jQuery(self.div).toggleClass('nm_header_hide');
 						jQuery(this).toggleClass('nm_toggle_header_on');
 						window.setTimeout(function(){self.nextmatch.resize();},800);
 					})
