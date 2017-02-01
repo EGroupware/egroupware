@@ -672,7 +672,16 @@ function set_univention_defaults()
 			$config['mailserver'] = "$mailserver,993,$domain,email,tls";
 			if (_ucr_get('mail/dovecot') == 'yes')
 			{
-				$config['imap'] = /*'cyrus,'._ucr_secret('cyrus')*/','.',Imap\\Dovecot';
+				$matches = null;
+				if (file_exists('/etc/dovecot/master-users') &&
+					preg_match('/^([^:]+):{PLAIN}([^:]+):/i', file_get_contents('/etc/dovecot/master-users'), $matches))
+				{
+					$config['imap'] = $matches[1].','.$matches[2].',Imap\\Dovecot';
+				}
+				else
+				{
+					$config['imap'] = ',,Imap\\Dovecot';
+				}
 				// default with sieve port to 4190, as config is only available on host mailserver app is installed
 				if (!($sieve_port = _ucr_get('mail/dovecot/sieve/port'))) $sieve_port = 4190;
 			}
