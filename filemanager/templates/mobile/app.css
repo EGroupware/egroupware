@@ -447,6 +447,13 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
   #filemanager-index_nm #filemanager-index_filemanager-index-header_left {
     height: auto;
   }
+  #filemanager-index_nm .nextmatch_header.nm_header_hide {
+    display: inline-block !important;
+  }
+  #filemanager-index_nm .nextmatch_header.nm_header_hide .header_row_right,
+  #filemanager-index_nm .nextmatch_header.nm_header_hide .filtersContainer {
+    display: none;
+  }
   #filemanager-index_nm .nextmatch_header .filemanager_navigation {
     height: auto;
   }
