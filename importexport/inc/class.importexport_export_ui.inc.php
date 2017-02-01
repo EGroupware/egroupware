@@ -93,7 +93,7 @@ class importexport_export_ui {
 				continue;
 			}
 			if ($title = $definition->get_title()) {
-				$sel_options['definition'][$title] = $title;
+				$sel_options['definition'][$definition->get_identifier()] = $title;
 			}
 			unset($definition);
 		}
