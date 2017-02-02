@@ -1,3 +1,25 @@
+egroupware-epl (16.1.20170203) hardy; urgency=low
+
+  * Addressbook/Mail: allow to use groups as (readonly) distribution lists
+  * All apps: fix random failure in drag-n-drop or pasting images into CKEditor eg. mail compose
+  * Wiki: fix not working links in HTML pages (prevented by our content security policy)
+  * Wiki: ported to 16.1 Api and eTemplate2 allowing now cut-n-paste and drag-n-drop of images stored in VFS upload-directory preference
+  * Mail: Fix forwardinline breaks a mail with winmail.dat attachment
+  * Mobile template: Fix "info message regarding fullscreen" does not respect the discard checkbox
+  * All applications: Set proper default page title if nothing is set
+  * Mail/Admin: fix setting ACL or vaction notice from Admin app, if IMAP auth uses email address from account
+  * Mobile theme: Fix avatar picture does not get the right aspect ratio in addressbook view/list
+  * Setup: Update from before 14.1 did not update mail accounts due to an SQL error
+  * Admin: fix bulk password reset to pick only passwords having required strength
+  * Calendar: give event background a bit more contrast to improve visibility of event duration
+  * Filemanager: open compose for mail files in html mode as links section looks a lot nicer in html
+  * Mail: Fix "Show All Addresses" does not show plus icon (happens only in 16.1-compat because of missing icon)
+  * Filemanager/PostgreSQL: shared files were not cleaned up after expiring of 100 days not accessed under PostgreSQL
+  * Registration: fix broken registration link, if webserver_url is a full URL
+  * SiteMgr: store new content JSON encoded instead of PHP serialized for easier modification in database
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 02 Feb 2017 19:12:41 +0100
+
 egroupware-epl (16.1.20170118) hardy; urgency=low
 
   * Several apps: customfields could not be deleted
