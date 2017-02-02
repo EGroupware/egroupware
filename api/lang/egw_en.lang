@@ -503,7 +503,6 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	en	Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
-example {} - gives a letter prefix without double spaces, if the title is empty for example	preferences	en	Example {} - Gives a letter prefix without double spaces, if the title is empty for example
 exchange this row with the one above	common	en	Exchange this row with the one above
 exchange this two columns	common	en	Exchange these two columns
 expiration	common	en	Expiration
