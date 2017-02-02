@@ -72,6 +72,9 @@ class admin_passwordreset
 		}
 		if (is_array($content))
 		{
+			// Save message for next time
+			Api\Config::save_value('password_reset_message',array('subject' => $content['subject'], 'body' => $content['body']),'admin');
+
 			if ($content['download_csv'] && $content['changed'])
 			{
 				Api\Header\Content::type('changed.csv', 'text/csv');
@@ -257,6 +260,12 @@ class admin_passwordreset
 			sql_passwdhashes($GLOBALS['egw_info']['server'],true) :
 			passwdhashes($GLOBALS['egw_info']['server'],true);
 		$sel_options['activate'] = array('Deactivate','Activate');
+
+		// Start with same message as last time
+		$config = Api\Config::read('admin');
+		$message = $config['password_reset_message'];
+		$content['subject'] = $message['subject'];
+		$content['body'] = $message['body'];
 
 		$content['replacements'] = array();
 		foreach($this->replacements as $name => $label)
