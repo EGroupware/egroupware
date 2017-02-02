@@ -1,0 +1,83 @@
+/* Map of status / percentage changes and their expected result */
+[
+	{
+		"from":     {"status": "not-started", "percent": 0},
+		"to":       {"status": "ongoing"},
+		"expected": {"status": "ongoing", "percent": 10}
+	},
+	{
+		"from":     {"status": "ongoing", "percent": 10},
+		"to":       {"status": "not-started"},
+		"expected": {"status": "not-started", "percent": 0}
+	},
+	{
+		"from":     {"status": "ongoing", "percent": 10},
+		"to":       {"status": "done"},
+		"expected": {"status": "done", "percent": 100}
+	},
+	{
+		"from":     {"status": "ongoing", "percent": 10},
+		"to":       {"status": "billed"},
+		"expected": {"status": "billed", "percent": 100}
+	},
+	{
+		"from":     {"status": "ongoing", "percent": 10},
+		"to":       {"status": "cancelled"},
+		"expected": {"status": "cancelled", "percent": 10}
+	},
+	{
+		"from":     {"status": "ongoing", "percent": 10},
+		"to":       {"status": "custom"},
+		"expected": {"status": "custom", "percent": 10}
+	},
+	{
+		"from":     {"status": "not-started", "percent": 0},
+		"to":       {"status": "custom"},
+		// Custom status does not change percent when selected
+		"expected": {"status": "custom", "percent": 0}
+	},
+	{
+		"from":     {"status": "custom", "percent": 10},
+		"to":       {"status": "done"},
+		"expected": {"status": "done", "percent": 100}
+	},
+	{
+		"from":     {"status": "ongoing", "percent": 20},
+		"to":       {"status": "archived"},
+		// Note: no percent change, though it is 'closed'
+		"expected": {"status": "archived", "percent": 20}
+	},
+	{
+		"from":     {"status": "ongoing", "percent": 10},
+		"to":       {"status": "totally_invalid"},
+		// Not sure this is right.  Should we accept invalid status?
+		"expected": {"status": "totally_invalid", "percent": 10}
+	},
+	{
+		"from":     {"status": "done", "percent": 100},
+		"to":       {"status": "totally_invalid"},
+		"expected": {"status": "done", "percent": 100}
+	},
+	{
+		"from":     {"status": "ongoing", "percent": 10},
+		"to":       {"percent": 20},
+		"expected": {"status": "ongoing", "percent": 20}
+	},
+	// @todo These ones differ between JS on client and BO
+	// Status takes priority over percent?
+	{
+		"from":     {"status": "ongoing", "percent": 10},
+		"to":       {"percent": 0},
+		"expected": {"status": "ongoing", "percent": 10}
+	},
+	{
+		"from":     {"status": "ongoing", "percent": 10},
+		"to":       {"percent": 100},
+		"expected": {"status": "ongoing", "percent": 10}
+	},
+	{
+		"from":     {"status": "not-started", "percent": 0},
+		"to":       {"percent": 10},
+		"expected": {"status": "not-started", "percent": 0}
+	}
+]
