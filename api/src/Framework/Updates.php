@@ -81,12 +81,12 @@ class Updates
 				{
 					return null;
 				}
-				return Html::a_href(Html::image('phpgwapi', 'security-update', lang('EGroupware security update %1 needs to be installed!', $versions['security'])),
+				return Html::a_href(Html::image('api', 'security-update', lang('EGroupware security update %1 needs to be installed!', $versions['security'])),
 					'http://www.egroupware.org/changelog', null, ' target="_blank"');
 			}
 			if ($GLOBALS['egw_info']['user']['apps']['admin'] && version_compare($api, $versions['current'], '<'))
 			{
-				return Html::a_href(Html::image('phpgwapi', 'update', lang('EGroupware maintenance update %1 available', $versions['current'])),
+				return Html::a_href(Html::image('api', 'update', lang('EGroupware maintenance update %1 available', $versions['current'])),
 					'http://www.egroupware.org/changelog', null, ' target="_blank"');
 			}
 		}
@@ -121,7 +121,7 @@ class Updates
 	}
 
 	/**
-	 * Get current API version from changelog or database, whichever is bigger
+	 * Get current API version from api/setup/setup.inc.php "maintenance_release" or database, whichever is bigger
 	 *
 	 * @param string &$changelog on return path to changelog
 	 * @return string
@@ -130,16 +130,20 @@ class Updates
 	{
 		$changelog = EGW_SERVER_ROOT.'/doc/rpm-build/debian.changes';
 
-		return Cache::getTree(__CLASS__, 'api_version', function() use ($changelog)
+		return Cache::getTree(__CLASS__, 'api_version', function()
 		{
-			$version = preg_replace('/[^0-9.]/', '', $GLOBALS['egw_info']['server']['versions']['phpgwapi']);
-			// parse version from changelog
-			$matches = null;
-			if (($f = fopen($changelog, 'r')) && preg_match('/egroupware-epl \(([0-9.]+)/', fread($f, 80), $matches) &&
-				version_compare($version, $matches[1], '<'))
+			$version = preg_replace('/[^0-9.]/', '', $GLOBALS['egw_info']['server']['versions']['api']);
+
+			if (empty($GLOBALS['egw_info']['server']['versions']['maintenance_release']))
 			{
-				$version = $matches[1];
-				fclose($f);
+				$setup_info = null;
+				include (EGW_SERVER_ROOT.'/api/setup/setup.inc.php');
+				$GLOBALS['egw_info']['server']['versions'] += $setup_info['api']['versions'];
+				unset($setup_info);
+			}
+			if (version_compare($version, $GLOBALS['egw_info']['server']['versions']['maintenance_release'], '<'))
+			{
+				$version = $GLOBALS['egw_info']['server']['versions']['maintenance_release'];
 			}
 			return $version;
 		}, array(), 300);

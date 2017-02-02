@@ -52,8 +52,8 @@ $GLOBALS['egw_info']['server']['mcrypt_iv'] = '{MCRYPT_IV}';
 $GLOBALS['egw_info']['flags']['page_start_time'] = microtime(true);
 
 include(EGW_SERVER_ROOT.'/api/setup/setup.inc.php');
+$GLOBALS['egw_info']['server']['versions'] = $setup_info['api']['versions'];
 $GLOBALS['egw_info']['server']['versions']['phpgwapi'] = $GLOBALS['egw_info']['server']['versions']['api'] = $setup_info['api']['version'];
-$GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['api']['versions']['current_header'];
 unset($setup_info);
 $GLOBALS['egw_info']['server']['versions']['header'] = '1.29';
 
