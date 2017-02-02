@@ -292,10 +292,13 @@ class Auth
 			$random_char = array_merge($random_char, str_split(str_replace('\\', '', self::SPECIALCHARS)), $random_char);
 		}
 
+		// use cryptographically secure random_int available in PHP 7+
+		$func = function_exists('random_int') ? 'random_int' : 'mt_rand';
+
 		$s = '';
 		for ($i=0; $i < $size; $i++)
 		{
-			$s .= $random_char[mt_rand(0, count($random_char)-1)];
+			$s .= $random_char[$func(0, count($random_char)-1)];
 		}
 		return $s;
 	}

@@ -550,10 +550,13 @@ function randomstring($len=16)
 		'>','|','[',']','}',	// dont add /\,'"{ as we have problems dealing with them
 	);
 
+	// use cryptographically secure random_int available in PHP 7+
+	$func = function_exists('random_int') ? 'random_int' : 'mt_rand';
+
 	$str = '';
 	for($i=0; $i < $len; $i++)
 	{
-		$str .= $usedchars[mt_rand(0,count($usedchars)-1)];
+		$str .= $usedchars[$func(0,count($usedchars)-1)];
 	}
 	return $str;
 }
