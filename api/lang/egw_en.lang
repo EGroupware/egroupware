@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	en	%1 (%2 new) messages written for application '%3' and languages '%4'
 %1 active file(s) with same name as directory inactivated!	admin	en	%1 active file(s) with same name as directory inactivated!
-%1 copied - the copy can now be edited
+%1 copied - the copy can now be edited	common	en	%1 copied - the copy can now be edited
 %1 directories %2 found!	admin	en	%1 directories %2 found!
 %1 email addresses inserted	common	en	%1 email addresses inserted.
 %1 entries found, select one ...	common	en	%1 entries found, select one ...
