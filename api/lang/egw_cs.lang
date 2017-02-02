@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	cs	%1 (%2 nových) zpráv zapsaných pro aplikaci '%3' a jazyky '%4'
 %1 active file(s) with same name as directory inactivated!	admin	cs	%1 aktivní(ch) soubor(ů) se shodným názvem jako složka bylo vyřazeno!
-%1 copied - the copy can now be edited	api	cs	zkopírováno - nyní můžete upravit
+%1 copied - the copy can now be edited	common	cs	zkopírováno - nyní můžete upravit
 %1 directories %2 found!	admin	cs	%1 složek %2 nenalezeno!
 %1 email addresses inserted	common	cs	%1 e-mailových adres vloženo
 %1 entries found, select one ...	common	cs	Nalezeno %1 záznamů, vyberte jeden ...
@@ -48,6 +48,7 @@
 80 (http)	admin	cs	80 (http)
 a pattern to be searched for	common	cs	hledaný výraz
 a request to the egroupware server returned with an error	common	cs	Požadavek na server eGroupWare se vrátil s chybou
+abort	common	cs	Zrušit
 about	common	cs	O
 about %1	common	cs	O %1
 about egroupware	common	cs	O EGroupware
@@ -499,6 +500,7 @@ ethiopia	common	cs	ETIOPIE
 everything	common	cs	Vše
 exact	common	cs	přesný (výraz)
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	cs	Příklad {{IF n_prefix~Pan~Vážený pane~Vážená paní}} - hledá se výskyt slova "Pan" v poli "n_prefix", pokud je nalezeno, vloží se  text Vážený pane, jinak Vážená paní.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	cs	Příklad {{LETTERPREFIX}} - vloží oslovení a pokud je titul nevyplněn, nevloží se mezery navíc.
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	cs	Příklad {{NELF role}} - pokud pole role není prázdné, bude na nový řádek vypsán obsah pole role.
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	cs	Příklad {{NELFNV role}} - pokud pole role není prázdné, nastaví se pozice na nový řádek ale obsah pole role nebude vypsáno.
 exchange this row with the one above	common	cs	zaměnit tento řádek s řádkem nad ním
@@ -1061,6 +1063,7 @@ restore all application templates, overwriting existing ones with identical vers
 restore failed	common	cs	Obnovení se nezdařilo
 restore key	common	cs	Obnovení klíče
 restore password	common	cs	Obnovení hesla
+retry	common	cs	Opakovat
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	cs	Vrací kompletní seznam účtů v systému. Varování: výpis může být velmi dlouhý.
 returns an array of todo items	common	cs	Vrací pole s položkami úkolů
 returns savely, without deleting	common	cs	vrátí bezpečně zpět, BEZ smazání
@@ -1215,6 +1218,7 @@ simple	common	cs	Jednoduchý
 singapore	common	cs	SINGAPUR
 site configuration	common	cs	Nastavení aplikace
 size	common	cs	Velikost
+skip	common	cs	Přeskočit
 slovakia	common	cs	SLOVENSKO
 slovenia	common	cs	SLOVINSKO
 solomon islands	common	cs	ŠALAMOUNOVY OSTROVY
