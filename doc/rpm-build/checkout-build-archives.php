@@ -595,13 +595,16 @@ function do_editchangelog()
 		throw new Exception("Changelog '$changelog' not found!");
 	}
 	file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
+
+	update_api_setup($api_setup=$config['checkoutdir'].'/api/setup/setup.inc.php');
+
 	if (file_exists($config['checkoutdir'].'/.git'))
 	{
-		$cmd = $config['git']." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+		$cmd = $config['git']." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog.' '.$api_setup;
 	}
 	else
 	{
-		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog.' '.$api_setup;
 	}
 	run_cmd($cmd);
 
@@ -873,6 +876,30 @@ function update_changelog($content)
 		"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
 
 	return $content;
+}
+
+/**
+ * Update content of api/setup/setup.inc.php file with new maintenance version
+ *
+ * @param string $path full path to "api/setup/setup.inc.php"
+ */
+function update_api_setup($path)
+{
+	global $config;
+
+	if (!($content = file_get_contents($path)))
+	{
+		throw new Exception("Could not read file '$path' to update maintenance-version!");
+	}
+
+	$content = preg_replace('/'.preg_quote("\$setup_info['api']['versions']['maintenance_release']", '/').'[^;]+;',
+		"\$setup_info['api']['versions']['maintenance_release'] = '".$config['version'].'.'.$config['packaging']."';",
+		$content);
+
+	if (!file_put_contents($path, $content))
+	{
+		throw new Exception("Could not update file '$path' with maintenance-version!");
+	}
 }
 
 /**
