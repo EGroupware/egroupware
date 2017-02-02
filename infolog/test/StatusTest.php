@@ -27,7 +27,7 @@ use Egroupware\Api;
 class StatusTest extends \EGroupware\Api\AppTest
 {
 
-	private static $map_file = __DIR__.'/status_map.json';
+	private static $map_file = '/status_map.json';
 
 	protected $bo;
 
@@ -72,7 +72,7 @@ class StatusTest extends \EGroupware\Api\AppTest
 	 */
 	public function testStatusChange()
 	{
-		$json = file_get_contents(realpath(static::$map_file));
+		$json = file_get_contents(realpath(__DIR__.static::$map_file));
 		// Strip the comments out of the json file, they're not valid
 		$json = preg_replace("#(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|([\s\t]//.*)|(^//.*)#", '', $json);
 		$map = json_decode($json, true);
