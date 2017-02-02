@@ -1749,7 +1749,7 @@ class mail_compose
 			unset($this->sessionData['in-reply-to']);
 			unset($this->sessionData['to']);
 			unset($this->sessionData['cc']);
-			if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
+			if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID,null,true,false,false))) {
 				//error_log(__METHOD__.__LINE__.':'.array2string($attachments));
 				foreach($attachments as $attachment) {
 					if (!($attachment['cid'] && preg_match("/image\//",$attachment['mimeType'])) || $attachment['disposition'] == 'attachment')
