@@ -211,6 +211,14 @@ class mail_compose
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_saveDraft2fm',
 				'hint' => 'Save the drafted message as eml file into VFS'
+			),
+			'sign' => array (
+				'caption' => 'Sign',
+				'icon' => 'smimeSignature',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.compose_setToggle',
+				'checkbox' => true,
+				'hint' => 'Sign your message with smime certificate'
 			)
 		);
 		foreach (self::$priorities as $key => $priority)
@@ -2244,6 +2252,7 @@ class mail_compose
 		//error_log(__METHOD__."(, formDate[filemode]=$_formData[filemode], _autosaving=".array2string($_autosaving).') '.function_backtrace());
 		$mail_bo	= $this->mail_bo;
 		$activeMailProfile = Mail\Account::read($this->mail_bo->profileID);
+		$identity = $_identity['ident_email'] ? $_identity['ident_email'] : $activeMailProfile['ident_email'];
 
 		// you need to set the sender, if you work with different identities, since most smtp servers, dont allow
 		// sending in the name of someone else
@@ -3557,5 +3566,72 @@ class mail_compose
 		{
 			$response->error(implode(',',$results['failed']));
 		}
+	}
+
+	/**
+	 * Method to do the encryption on given message
+	 *
+	 * @param Horde_Mime_part $message
+	 * @param string $type encryption type
+	 * @param array|string $recipients list of recipients
+	 * @param string $sender email of sender
+	 *
+	 * @return Horde_Mime_Part returns encrypted message
+	 * @throws Api\Exception\WrongUserinput if no certificate found
+	 */
+	function _encrypt(Horde_Mime_part $message, $type, $recipients, $sender)
+	{
+		$AB = new addressbook_bo();
+
+
+		if (isset($sender) && ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
+		{
+			$sender_cert = $AB->get_smime_keys($sender);
+			$smime = new Mail\Smime();
+
+			if ($sender_cert)
+			{
+				$senderPubKey = $smime->get_publickey($sender_cert[$sender]);
+			}
+			else
+			{
+				throw new Api\Exception\WrongUserinput('no certificate found to sign the messase');
+			}
+		}
+
+		if (isset($recipients) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
+		{
+			$recipients_certs = $AB->get_smime_keys($recipients);
+			$recipientsPubKeys = array_Map(array ($smime, 'get_publickey'), $recipients_certs);
+			if (!$recipients_certs) throw new Api\Exception\WrongUserinput('no certificate found from the recipients to sign/encrypt the messase');
+		}
+
+		// parameters to pass on for sign mime part
+		$sign_params =  array(
+			'type'		=> 'signature',
+			'pubkey'	=> $senderPubKey,
+			'prikey'	=> '',
+			'passphrase'=> '',
+			'sigtype'	=> 'detach',
+			'certs'		=> ''
+		);
+		// parameters to pass on for encrypt mime part
+		$encrypt_params = array(
+			'type'		=> 'message',
+			'pubkey'	=> $recipientsPubKeys
+		);
+		switch ($type)
+		{
+			case Mail\Smime::TYPE_SIGN:
+				$message = $smime->signMIMEPart($message, $sign_params);
+				break;
+			case Mail\Smime::TYPE_ENCRYPT:
+				$message = $smime->encryptMIMEPart($message, $encrypt_params);
+				break;
+			case Mail\Smime::TYPE_SIGN_ENCRYPT:
+				$message = $smime->signAndEncryptMIMEPart($message, $sign_params, $encrypt_params);
+				break;
+		}
+		return $message;
 	}
 }

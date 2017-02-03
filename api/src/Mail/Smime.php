@@ -45,25 +45,46 @@ class Smime extends Horde_Crypt_Smime
 		'multipart/signed'
 	);
 
-	/*
-	 * SMIME public key regular expresion
+	/**
+	 * SMIME public key regular expression
 	 */
 	static public $pubkey_regexp = '/-----BEGIN PUBLIC KEY-----.*-----END PUBLIC KEY-----\r?\n/s';
 
-	/*
+	/**
 	 * SMIME encrypted private key regular expresion
 	 */
 	static public $privkey_encrypted_regexp = '/-----BEGIN ENCRYPTED PRIVATE KEY-----.*-----END ENCRYPTED PRIVATE KEY-----\r?\n/s';
 
-	/*
-	 * SMIME private key regular expresion
+	/**
+	 * SMIME private key regular expression
 	 */
 	static public $privkey_regexp = '/-----BEGIN PRIVATE KEY-----.*-----END PRIVATE KEY-----\r?\n/s';
 
-	/*
-	 * SMIME certificate regular expresion
+	/**
+	 * SMIME certificate regular expression
 	 */
 	static public $certificate_regexp = '/-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----\r?\n/s';
+
+	/**
+	* Encryption type of sign
+	*
+	* @var String;
+	*/
+	const TYPE_SIGN = 'smime_sign';
+
+	/**
+	 * Encryption type of encrypt
+	 *
+	 * @var string
+	 */
+	const TYPE_ENCRYPT = 'smime_encrypt';
+
+	/**
+	 * Encryption type of sign and encrypt
+	 *
+	 * @var string
+	 */
+	const TYPE_SIGN_ENCRYPT = 'smime_sign_encrypt';
 
 	/**
      * Constructor.
