@@ -1641,9 +1641,6 @@ body {
  */
 #socialMedia {
   position: relative;
-  bottom: 20px;
-  float: right;
-  right: -10px;
 }
 #socialMedia a {
   margin-left: 10px;
@@ -1658,13 +1655,21 @@ body {
   border: none;
   margin: 0;
   background-color: white;
+  background-image: url(../images/login/fullscreen.jpg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
 }
 #loginMainDiv #divAppIconBar {
-  margin-left: auto;
-  margin-right: auto;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
   background: transparent;
   width: 100%;
   text-align: center;
+  max-width: 250px;
 }
 #loginMainDiv #divAppIconBar #divLogo {
   position: relative;
@@ -1675,32 +1680,41 @@ body {
   max-width: 400px;
 }
 #loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
-  width: 70%;
-  max-width: 2560px;
+  width: 150px;
+  max-width: 150px;
+}
+#loginMainDiv #loginScreenMessage {
+  margin: 1em;
+  color: #0a5ca5;
+  font-size: 12pt;
+}
+#loginMainDiv div#login_footer {
+  position: absolute;
+  bottom: 0;
+  display: inline-block;
+  left: 0;
+  width: 100%;
+}
+#loginMainDiv div#login_footer a.logo_footer {
+  float: right;
+  margin: 10px;
+}
+#loginMainDiv div#login_footer a.logo_footer img {
+  height: 40px;
+  width: 40px;
 }
 #loginMainDiv div#centerBox {
-  margin: 0% auto;
-  width: 57em;
-  background-color: #CDCDCD;
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
   border: none;
   z-index: 100;
-  padding: 25px 10px 10px;
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -webkit-border-top-left-radius: 50px;
-  -moz-border-radius-topright: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  -moz-border-radius-topleft: 50px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 50px;
-  /*.background-clip(padding-box);*/
-}
-#loginMainDiv div#centerBox #loginScreenMessage {
-  margin: 1em;
+  padding: 0;
+  border-radius: 5px;
+  opacity: 0.94;
 }
 #loginMainDiv div#centerBox #loginCdMessage {
   margin: 1em;
@@ -1710,9 +1724,8 @@ body {
   -moz-border-radius-topleft: 10px;
   border-radius: 3px;
   border-top-left-radius: 10px;
-  color: red;
+  color: #0a5ca5;
   text-align: center;
-  padding: 1em;
   white-space: pre-wrap;
 }
 #loginMainDiv div#centerBox #loginCdMessage.error {
@@ -1720,6 +1733,9 @@ body {
 }
 #loginMainDiv div#centerBox form {
   margin: 1em;
+}
+#loginMainDiv div#centerBox form .hiddenCredential {
+  display: none;
 }
 #loginMainDiv div#centerBox form table.divLoginbox {
   background-color: transparent;
@@ -1760,76 +1776,33 @@ body {
   height: 40px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox td {
-  padding: 0.5em;
-  font-weight: bold;
-  color: #26537C;
+  font-size: 12pt;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select {
-  /*.box_shadow_standard_light;*/
-  width: auto;
-  padding: 3px;
-  outline: none;
-  display: inline-block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  margin: 5px 0em 5px 0px;
   padding-left: 5px;
   width: 100%;
-}
-#loginMainDiv div#centerBox form table.divLoginbox select:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  height: 42px;
+  border: none;
+  border-bottom: 1px solid silver;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-color: #B4B4B4;
-  -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-  width: auto;
-  /*margin: 0.5em 0em 0.5em 0;*/
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
   width: calc(250px - 8px);
-}
-#loginMainDiv div#centerBox form table.divLoginbox input:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid silver;
+  padding-left: 5px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #B4B4B4;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  outline: none;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
-  background-color: #ffc200;
-  color: #000000;
+  background-color: #0a5ca5;
+  color: #ffffff;
   font-size: 20px;
   width: 250px;
-}
-#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"]:hover {
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-  background-color: #189800 !important;
-}
-#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"]:focus {
-  outline: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #B4B4B4;
-  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  margin-top: 25px;
 }
 #wrap {
   /*    float: left;
