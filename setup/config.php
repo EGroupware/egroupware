@@ -132,14 +132,8 @@ $GLOBALS['egw_setup']->hook('config','setup');
 foreach($vars as $value)
 {
 	$valarray = explode('_',$value);
-	$type = $valarray[0];
-	$new = $newval = '';
-
-	while($chunk = next($valarray))
-	{
-		$new[] = $chunk;
-	}
-	$newval = implode(' ',$new);
+	$type = array_shift($valarray);
+	$newval = implode(' ',$valarray);
 
 	switch ($type)
 	{
