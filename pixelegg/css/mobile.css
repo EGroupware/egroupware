@@ -1781,9 +1781,10 @@ body {
 }
 #loginMainDiv div#centerBox form table.divLoginbox td {
   font-size: 12pt;
+  position: relative;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select {
-  padding-left: 5px;
+  padding-left: 25px;
   width: 100%;
   height: 42px;
   border: none;
@@ -1791,21 +1792,49 @@ body {
   border-radius: 0px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input {
-  width: calc(250px - 8px);
+  width: calc(250px - 22px);
   height: 40px;
   padding: 0;
   margin: 0;
   border: none;
   border-bottom: 1px solid silver;
-  padding-left: 5px;
+  padding-left: 25px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input:focus {
   outline: none;
+}
+#loginMainDiv div#centerBox form table.divLoginbox span.field_icons {
+  position: absolute;
+  left: 0px;
+  width: 20px;
+  height: 20px;
+  background-size: 16px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  top: 12px;
+  z-index: 100;
+  opacity: 0.5;
+}
+#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.username {
+  background-image: url(../images/personal.png);
+}
+#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.password {
+  background-image: url(../images/password.png);
+}
+#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.remember_me {
+  background-image: url(../images/task.png);
+}
+#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.domain {
+  background-image: url(../images/internet.png);
+}
+#loginMainDiv div#centerBox form table.divLoginbox span.field_icons.language {
+  background-image: url(../images/language.png);
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
   background-color: #0a5ca5;
   color: #ffffff;
   font-size: 20px;
+  padding-left: 0;
   width: 250px;
   margin-top: 25px;
 }

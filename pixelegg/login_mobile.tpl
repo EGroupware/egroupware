@@ -23,35 +23,55 @@
                     </td>
                 </tr>
 				<tr>
-                    <td><input name="login" tabindex="4" value="{login}" size="30" {autofocus_login} placeholder="{lang_username}"/></td>
+                    <td>
+						<span class="field_icons username"></span>
+						<input name="login" tabindex="4" value="{login}" size="30" placeholder="{lang_username}" {autofocus_login}/>
+					</td>
                 </tr>
                 <tr>
-                    <td><input name="passwd" tabindex="5" value="{passwd}" type="password" size="30" placeholder="{lang_password}" /></td>
+                    <td>
+						<span class="field_icons password"></span>
+						<input name="passwd" tabindex="5" value="{passwd}" type="password" size="30" placeholder="{lang_password}"/>
+					</td>
                 </tr>
-               <!-- BEGIN change_password -->
+				<!-- BEGIN remember_me_selection -->
                  <tr>
-                    <td><input name="new_passwd" tabindex="6" type="password" size="30" {autofocus_new_passwd} placeholder="{lang_new_password}"/></td>
+                    <td>
+						<span class="field_icons remember_me"></span>
+						{select_remember_me}
+					</td>
                 </tr>
-                <tr>
-                    <td><input name="new_passwd2" tabindex="7" type="password" size="30" placeholder="{lang_repeat_password}"/></td>
-                </tr>
-               <!-- END change_password -->
+                <!-- END remember_me_selection -->
                 <!-- BEGIN language_select -->
                 <tr>
-                    <td>{select_language}</td>
+                    <td>
+						<span class="field_icons language"></span>
+						{select_language}
+					</td>
                 </tr>
                 <!-- END language_select -->
                 <!-- BEGIN domain_selection -->
                 <tr>
-                    <td>{select_domain}</td>
+                    <td>
+						<span class="field_icons domain"></span>
+						{select_domain}
+					</td>
                 </tr>
                 <!-- END domain_selection -->
-                <!-- BEGIN remember_me_selection -->
+               <!-- BEGIN change_password -->
                 <tr>
-                    <td>{select_remember_me}</td>
+                    <td>
+						<span class="field_icons password"></span>
+						<input name="new_passwd" tabindex="6" type="password" size="30" placeholder="{lang_new_password}" {autofocus_new_passwd}/>
+					</td>
                 </tr>
-                <!-- END remember_me_selection -->
-
+                <tr>
+                    <td>
+						<span class="field_icons password"></span>
+						<input name="new_passwd2" tabindex="7" type="password" plcaseholder="{lang_repeat_password}" size="30" />
+					</td>
+                </tr>
+               <!-- END change_password -->
                 <tr>
                     <td>
                         <input tabindex="8" type="submit" value="  {lang_login}  " name="submitit" />
