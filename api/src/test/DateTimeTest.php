@@ -22,7 +22,7 @@ use PHPUnit_Framework_TestCase as TestCase;
  */
 class DateTimeTest extends TestCase {
 
-	static $usertime;
+	protected static $usertime;
 
 	/**
 	 * Work in server time, so tests match expectations
