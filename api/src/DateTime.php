@@ -693,35 +693,3 @@ class DateTime extends \DateTime
 	}
 }
 DateTime::init();
-
-/*
-if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
-{
-	// test timestamps/dates before 1970
-	foreach(array('19690811',-3600,'-119322000') as $ts)
-	{
-		try {
-			echo "<p>DateTime::to($ts,'Y-m-d H:i:s')=".DateTime::to($ts,'Y-m-d H:i:s')."</p>\n";
-			$et = new DateTime($ts);
-			echo "<p>DateTime($ts)->format('Y-m-d H:i:s')=".$et->format('Y-m-d H:i:s')."</p>\n";
-			$dt = new DateTime($ts);
-			echo "<p>DateTime($ts)->format('Y-m-d H:i:s')=".$dt->format('Y-m-d H:i:s')."</p>\n";
-		} catch(\Exception $e) {
-			echo "<p><b>Exception</b>: ".$e->getMessage()."</p>\n";
-		}
-	}
-	// user time is UTC
-	echo "<p>user timezone = ".($GLOBALS['egw_info']['user']['preferences']['common']['tz'] = 'UTC').", server timezone = ".date_default_timezone_get()."</p>\n";
-
-	$time = time();
-	echo "<p>time=$time=".date('Y-m-d H:i:s',$time)."(server) =".DateTime::server2user($time,'Y-m-d H:i:s')."(user) =".DateTime::server2user($time,'ts')."(user)=".date('Y-m-d H:i:s',DateTime::server2user($time,'ts'))."</p>\n";
-
-	echo "DateTime::to(array('full' => '20091020', 'hour' => 12, 'minute' => 0))='".DateTime::to(array('full' => '20091020', 'hour' => 12, 'minute' => 0))."'</p>\n";
-
-	$ts = DateTime::to(array('full' => '20091027', 'hour' => 10, 'minute' => 0),'ts');
-	echo "<p>2009-10-27 10h UTC timestamp=$ts --> server time = ".DateTime::user2server($ts,'')." --> user time = ".DateTime::server2user(DateTime::user2server($ts),'')."</p>\n";
-
-	$ts = DateTime::to(array('full' => '20090627', 'hour' => 10, 'minute' => 0),'ts');
-	echo "<p>2009-06-27 10h UTC timestamp=$ts --> server time = ".DateTime::user2server($ts,'')." --> user time = ".DateTime::server2user(DateTime::user2server($ts),'')."</p>\n";
-}
-*/
