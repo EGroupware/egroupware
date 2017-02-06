@@ -1675,7 +1675,7 @@ body {
   height: 100%;
   width: 100%;
   border: none;
-  margin: 0;
+  margin: 0 auto 0px;
   background-color: white;
   background-image: url(../images/login/fullscreen.jpg);
   background-repeat: no-repeat;
@@ -1683,19 +1683,17 @@ body {
   background-size: cover;
 }
 #loginMainDiv #divAppIconBar {
-  display: inline-block;
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  transform: translate(-50%, -50%);
   background: transparent;
   width: 100%;
   text-align: center;
-  max-width: 270px;
+  height: 35%;
+  display: block;
+  max-height: 35%;
+  overflow-y: auto;
 }
 #loginMainDiv #divAppIconBar #divLogo {
   position: relative;
-  top: 1px;
+  padding-top: 5%;
 }
 #loginMainDiv #divAppIconBar #divLogo img {
   margin: 0 auto;
@@ -1725,17 +1723,12 @@ body {
   width: 40px;
 }
 #loginMainDiv div#centerBox {
-  display: inline-block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+  margin: 0 auto -20px;
+  background: transparent;
   border: none;
   z-index: 100;
   padding: 0;
-  border-radius: 5px;
-  opacity: 0.94;
+  width: 280px;
 }
 #loginMainDiv div#centerBox #loginCdMessage {
   margin: 1em;
@@ -1753,7 +1746,10 @@ body {
   font-weight: bold;
 }
 #loginMainDiv div#centerBox form {
-  margin: 1em;
+  border-radius: 5px;
+  opacity: 0.94;
+  background-color: white;
+  padding: 1em;
 }
 #loginMainDiv div#centerBox form .hiddenCredential {
   display: none;
@@ -1803,6 +1799,7 @@ body {
   height: 42px;
   border: none;
   border-bottom: 1px solid silver;
+  border-radius: 0px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input {
   width: calc(250px - 8px);
