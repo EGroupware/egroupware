@@ -1038,12 +1038,15 @@ class Storage
 			}
 		}
 
-		// add groups for all backends
-		foreach($GLOBALS['egw']->accounts->search(array(
-			'type' => 'groups'
-		)) as $account_id => $group)
+		// add groups for all backends, if accounts addressbook is not hidden
+		if (empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']))
 		{
-			$lists[(string)$account_id] = Api\Accounts::format_username($group['account_lid'], '', '', $account_id);
+			foreach($GLOBALS['egw']->accounts->search(array(
+				'type' => 'groups'
+			)) as $account_id => $group)
+			{
+				$lists[(string)$account_id] = Api\Accounts::format_username($group['account_lid'], '', '', $account_id);
+			}
 		}
 
 		return $lists;
