@@ -688,16 +688,18 @@ class Accounts
 	}
 
 	/**
-	 * test if an account is expired
+	 * Test if given an account is expired
 	 *
-	 * Can be used static if array with user-data is supplied
-	 *
-	 * @param array $data =null array with account data, not specifying the account is depricated!!!
+	 * @param int|string|array $data account_(l)id or array with account-data
 	 * @return boolean true=expired (no more login possible), false otherwise
 	 */
-	function is_expired($data=null)
+	static function is_expired($data)
 	{
-		if (is_null($data)) $data = $this->data;	// depricated use
+		if (is_null($data))
+		{
+			throw new Exception\WrongParameter('Missing parameter to Accounts::is_active()');
+		}
+		if (!is_array($data)) $data = self::getInstance()->read($data);
 
 		$expires = isset($data['account_expires']) ? $data['account_expires'] : $data['expires'];
 
@@ -707,14 +709,12 @@ class Accounts
 	/**
 	 * Test if an account is active - NOT deactivated or expired
 	 *
-	 * Can be used static if array with user-data is supplied
-	 *
-	 * @param int|array $data account_id or array with account-data
+	 * @param int|string|array $data account_(l)id or array with account-data
 	 * @return boolean false if account does not exist, is expired or decativated, true otherwise
 	 */
-	function is_active($data)
+	static function is_active($data)
 	{
-		if (!is_array($data)) $data = $this->read($data);
+		if (!is_array($data)) $data = self::getInstance()->read($data);
 
 		return $data && !(self::is_expired($data) || $data['account_status'] != 'A');
 	}
