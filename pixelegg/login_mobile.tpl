@@ -37,7 +37,7 @@
 				<!-- BEGIN remember_me_selection -->
                  <tr>
                     <td>
-						<span class="field_icons remember_me"></span>
+						<span class="field_icons remember_me">{lang_remember_me}:</span>
 						{select_remember_me}
 					</td>
                 </tr>

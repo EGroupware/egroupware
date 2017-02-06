@@ -1791,6 +1791,14 @@ body {
   border-bottom: 1px solid silver;
   border-radius: 0px;
 }
+#loginMainDiv div#centerBox form table.divLoginbox select[name="remember_me"] {
+  text-indent: 120px;
+  background-color: transparent;
+}
+#loginMainDiv div#centerBox form table.divLoginbox select:focus,
+#loginMainDiv div#centerBox form table.divLoginbox select:hover {
+  box-shadow: none;
+}
 #loginMainDiv div#centerBox form table.divLoginbox input {
   width: calc(250px - 22px);
   height: 40px;
@@ -1823,6 +1831,9 @@ body {
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.remember_me {
   background-image: url(../images/task.png);
+  z-index: 0;
+  width: 130px;
+  padding-left: 27px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.domain {
   background-image: url(../images/internet.png);
