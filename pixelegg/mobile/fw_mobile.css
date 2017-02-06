@@ -6887,10 +6887,11 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   div#loginMainDiv {
     background-color: #486F93;
-    width: 101%;
+    overflow: auto;
   }
   div#loginMainDiv #divAppIconBar {
-    background: white;
+    max-height: 25%;
+    height: 25%;
   }
   div#loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
     width: 40%;
@@ -6898,10 +6899,6 @@ form[id^="tracker-"] .dialogHeadbar {
     background: white;
   }
   div#loginMainDiv div#centerBox {
-    position: absolute;
-    margin: 0;
-    bottom: 0;
-    width: 100%;
     padding: 0;
     -webkit-border-top-right-radius: 0;
     -webkit-border-bottom-right-radius: 0;
@@ -6926,7 +6923,6 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   div#loginMainDiv div#centerBox form table.divLoginbox {
     width: 100%;
-    float: left;
   }
   div#loginMainDiv div#centerBox form table.divLoginbox tr.hiddenCredential {
     display: none;
@@ -6934,11 +6930,12 @@ form[id^="tracker-"] .dialogHeadbar {
   div#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
     font-size: large;
     width: 100%;
+    padding-left: 0px;
+    border: none;
   }
   div#loginMainDiv div#centerBox form table.divLoginbox input,
   div#loginMainDiv div#centerBox form table.divLoginbox select {
     width: calc(100% - 14px);
-    height: 50px;
   }
   div#loginMainDiv div#centerBox form table.divLoginbox select {
     width: 100%;
@@ -6949,9 +6946,6 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   div#loginMainDiv div#centerBox form table.divLoginbox td.registration {
     font-size: 180%;
-  }
-  div#loginMainDiv div#centerBox form table.divLoginbox td select {
-    background-size: 48px auto;
   }
   div#loginMainDiv div#centerBox #loginCdMessage {
     font-size: 10pt !important;
@@ -6967,7 +6961,6 @@ form[id^="tracker-"] .dialogHeadbar {
   }
   body div#loginMainDiv div#centerBox form table.divLoginbox {
     width: 100%;
-    float: left;
   }
   body div#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
     font-size: large;
@@ -6976,7 +6969,6 @@ form[id^="tracker-"] .dialogHeadbar {
   body div#loginMainDiv div#centerBox form table.divLoginbox input,
   body div#loginMainDiv div#centerBox form table.divLoginbox select {
     width: calc(100% - 10px);
-    height: 50px;
   }
   body div#loginMainDiv div#centerBox form table.divLoginbox select {
     width: 100%;

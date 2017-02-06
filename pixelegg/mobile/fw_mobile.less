@@ -54,9 +54,10 @@
 	}
 	div#loginMainDiv{
 			.mob-bg-login;
-			width:101%;
+			overflow:auto;
 			#divAppIconBar {
-				background:white;
+				max-height:25%;
+				height:25%;
 				#divLogo img[src$="svg"] {
 					width:40%;
 					margin-top: 5px;
@@ -64,10 +65,6 @@
 				}
 			}
 			div#centerBox{
-				position:absolute;
-				margin: 0;
-				bottom:0;
-				width: 100%;
 				padding: 0;
 				-webkit-border-top-right-radius: 0;
 				-webkit-border-bottom-right-radius:0;
@@ -88,21 +85,20 @@
 				border-radius: 0;
 				form {
 					margin-top: 3em;
-
 					table.divLoginbox {
 						width:100%;
-						float:left;
 						tr.hiddenCredential {
 							display:none;
 						}
 						input[type="submit"] {
 							font-size: large;
 							width:100%;
+							padding-left: 0px;
+							border:none;
 
 						}
 						input, select {
 							width:~"calc(100% - 14px)";
-							height:50px;
 						}
 						select {width:100%;}
 						td {
@@ -110,9 +106,6 @@
 							padding:0.8%;
 							&.registration{
 								font-size: 180%;
-							}
-							select {
-								background-size: 48px auto;
 							}
 						}
 					}
@@ -141,14 +134,12 @@
 				form {
 					table.divLoginbox {
 						width:100%;
-						float:left;
 						input[type="submit"] {
 							font-size: large;
 							width:100%;
 						}
 						input, select {
 							width:~"calc(100% - 10px)";
-							height:50px;
 						}
 						select {
 							width:100%;
