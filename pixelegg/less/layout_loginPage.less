@@ -55,20 +55,27 @@
 		#divLogo {
 			position: relative;
 		    padding-top: 5%;
-			img {
+			img.login_logo {
 				margin: 0 auto;
 				max-width: 270px;
 			}
-			img[src$="svg"]{
+			img.login_logo [src$="svg"]{
 				max-width: 270px;
 			}
 		}
 	}
+
+	#loginScreenMessage [class $= "error"] {
+
+	}
 	// Meldung
-	#loginScreenMessage {
+	#loginScreenMessage not([class $= "error"]) {
 		margin: 1em;
 		color: #0a5ca5;
 		font-size: 12pt;
+		img {max-width: 100%;}
+
+
 	}
 	div#login_footer {
 		position: absolute;
@@ -95,15 +102,18 @@
 		width: 280px;
 
 		// Message
-		#loginCdMessage {
-			margin: 1em;
-			.border_radius_button_lefttop;
-			color: #0a5ca5;
-			text-align: center;
-			white-space: pre-wrap;
+		#loginCdMessage:not(.error) {
+			display: none;
 		}
+
 		#loginCdMessage.error {
-			font-weight: bold;
+			margin: 1em;
+			border:none;
+			background: transparent;
+			color: red;
+			text-align: center;
+			font-size: 12pt;
+			white-space: pre-wrap;
 		}
 
 		// Formular
@@ -188,6 +198,16 @@
 					&:hover{}
 					&:focus {}
 					margin-top: 25px;
+				}
+				.registration {
+					font-size: 12px;
+					a:not(:first-child) {
+						&:before {
+							padding-left:5px;
+							padding-right:5px;
+							content: '|';
+						}
+					}
 				}
 			}
 		} // Formular

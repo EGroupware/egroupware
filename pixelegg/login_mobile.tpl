@@ -10,7 +10,7 @@
     </div>
     <div id="centerBox">
 		<div id="loginAvatar">{login_avatar}</div>
-        <div id="loginCdMessage" class="{cd_class}">{cd}</div>
+
         <form name="login_form" method="post" action="{login_url}">
             <table class="divLoginbox divSideboxEntry" cellspacing="0" cellpadding="2" border="0" align="center">
                 <tr class="divLoginboxHeader">
@@ -22,6 +22,11 @@
                         <input type="hidden" name="account_type" value="u" />
                     </td>
                 </tr>
+				<tr>
+					<td>
+						<div id="loginCdMessage" class="{cd_class}">{cd}</div>
+					</td>
+				</tr>
 				<tr>
                     <td>
 						<span class="field_icons username"></span>
@@ -80,9 +85,7 @@
                 <!-- BEGIN registration -->
                 <tr>
                     <td colspan="3" height="20" align="center" class="registration">
-                        {lostpassword_link}
-                        {lostid_link}
-                        {register_link}
+                        {lostpassword_link}{lostid_link}{register_link}
                     </td>
                 </tr>
                 <!-- END registration -->

@@ -56,8 +56,8 @@
 			.mob-bg-login;
 			overflow:auto;
 			#divAppIconBar {
-				max-height:25%;
-				height:25%;
+				max-height:20%;
+				height:20%;
 				#divLogo img[src$="svg"] {
 					width:40%;
 					margin-top: 5px;
@@ -104,18 +104,17 @@
 						td {
 							font-size: large;
 							padding:0.8%;
-							&.registration{
-								font-size: 180%;
-							}
 						}
 					}
 				}
 				#loginCdMessage {
-					.mob-fontsize-n !important;
-					.mob-color-login-message;
+					margin: 8px;
+					.mob-fontsize-l !important;
 					padding:0;
 					border:0;
 					background: none;
+					font-weight: normal !important;
+					word-break: break-all;
 				}
 			}
 		}
@@ -147,14 +146,11 @@
 						td {
 							font-size: large;
 							padding:0.8%;
-							&.registration {
-								font-size: 250%;
-							}
 						}
 					}
 				}
 				#loginCdMessage {
-					font-size:large;
+					.mob-fontsize-l !important;
 					padding:0;
 				}
 			}

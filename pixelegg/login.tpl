@@ -4,7 +4,7 @@
 <div id="loginMainDiv">
     <div id="divAppIconBar" style="position:relative;">
         <div id="divLogo">
-			<a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="{logo_title}" title="{logo_title}" /></a>
+			<a href="{logo_url}" target="_blank"><img src="{logo_file}" class="login_logo" border="0" alt="{logo_title}" title="{logo_title}" /></a>
 			<div id="loginScreenMessage">{lang_message}</div>
 		</div>
     </div>
@@ -20,6 +20,11 @@
                         <input type="hidden" name="account_type" value="u" />
                     </td>
                 </tr>
+				<tr>
+					<td>
+						<div id="loginCdMessage" class="{cd_class}">{cd}</div>
+					</td>
+				</tr>
                 <tr>
                     <td>
 						<span class="field_icons username"></span>
@@ -75,17 +80,15 @@
                         <input tabindex="8" type="submit" value="  {lang_login}  " name="submitit" />
                     </td>
                 </tr>
+
                 <!-- BEGIN registration -->
                 <tr>
                     <td colspan="3" height="20" align="center" class="registration">
-                        {lostpassword_link}
-                        {lostid_link}
-                        {register_link}
+                        {lostpassword_link}{lostid_link}{register_link}
                     </td>
                 </tr>
                 <!-- END registration -->
             </table>
-			<div id="loginCdMessage" class="{cd_class}">{cd}</div>
         </form>
     </div>
 	<div id="login_footer">
