@@ -20,13 +20,12 @@ egw_LAB.wait(function()
 
 		function do_social(_data)
 		{
-			var isPixelegg = jQuery('link[href*="pixelegg.css"]')[0];
 			var social = jQuery(document.createElement('div'))
 				.attr({
 					id: "socialMedia",
 					class: "socialMedia"
 				})
-				 .appendTo(jQuery( isPixelegg? 'form' : '#socialBox'));
+				 .appendTo(jQuery('#socialBox'));
 
 			for(var i=0; i < _data.length; ++i)
 			{

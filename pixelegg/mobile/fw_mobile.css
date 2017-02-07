@@ -1661,11 +1661,15 @@ body {
  * @package pixelegg
  * @version $Id$
  */
-#socialMedia {
-  position: relative;
+#socialBox {
+  float: left;
+  margin-top: 20px;
 }
 #socialMedia a {
   margin-left: 10px;
+}
+#socialMedia a img {
+  width: 24px;
 }
 /* ##################################################################################
  *       login page
