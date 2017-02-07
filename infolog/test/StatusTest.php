@@ -53,6 +53,9 @@ class StatusTest extends \EGroupware\Api\AppTest
 		$bo = new \infolog_bo();
 		unset($bo->status['task']['custom']);
 		Api\Config::save_value('status',$bo->status,'infolog');
+
+		// Have to remove custom status first, before the DB is gone
+		parent::tearDownAfterClass();
 	}
 
 	public function setUp()
