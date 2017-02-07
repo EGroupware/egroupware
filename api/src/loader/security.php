@@ -19,8 +19,9 @@ use EGroupware\Api;
  * @internal
  * @param array &$var reference of array to check
  * @param string $name ='' name of the array
+ * @param boolean $log = true Log the results of checking to the error log
  */
-function _check_script_tag(&$var,$name='')
+function _check_script_tag(&$var,$name='',$log=true)
 {
 	static $preg=null;
 	//old: '/<\/?[^>]*\b(iframe|script|javascript|on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b[^>]*>/i';
@@ -52,14 +53,17 @@ function _check_script_tag(&$var,$name='')
 						$_REQUEST[$key] = $var[$key] = json_encode($json_data);
 						continue;
 					}
-					error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
+					//error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
 					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] = $var[$key];
 					// attempt to clean the thing
 					$var[$key] = $val = Api\Html\HtmLawed::purify($val);
 					// check if we succeeded, if not drop the var anyway, keep the egw_unset_var in any case
 					if (preg_match($preg,$val))
 					{
-						error_log("*** _check_script_tag($name): unset(${name}[$key]) with value $val***");
+						if($log)
+						{
+							error_log("*** _check_script_tag($name): unset(${name}[$key]) with value $val***");
+						}
 						unset($var[$key]);
 					}
 				}
@@ -69,105 +73,6 @@ function _check_script_tag(&$var,$name='')
 		reset($var);
 	}
 }
-
-/* some _check_script_tag tests, should be commented out by default
-if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
-{
-	if (!defined('EGW_INCLUDE_ROOT'))
-	{
-		define(EGW_INCLUDE_ROOT, realpath(dirname(__FILE__).'/../..'));
-		define(EGW_API_INC, realpath(dirname(__FILE__)));
-	}
-
-	$total = $num_failed = 0;
-	$patterns = array(
-		// pattern => true: should fail, false: should not fail
-		'< script >alert(1)< / script >' => true,
-		'<span onMouseOver ="alert(1)">blah</span>' => true,
-		'<a href=          "JaVascript: alert(1)">Click Me</a>' => true,
-		// from https://www.acunetix.com/websitesecurity/cross-site-scripting/
-		'<body onload=alert("XSS")>' => true,
-		'<body background="javascript:alert("XSS")">' => true,
-		'<iframe src=”http://evil.com/xss.html”>' => true,
-		'<input type="image" src="javascript:alert(\'XSS\');">' => true,
-		'<link rel="stylesheet" href="javascript:alert(\'XSS\');">' => true,
-		'<table background="javascript:alert(\'XSS\')">' => true,
-		'<td background="javascript:alert(\'XSS\')">' => true,
-		'<div style="background-image: url(javascript:alert(\'XSS\'))">' => true,
-		'<div style="width: expression(alert(\'XSS\'));">' => true,
-		'<object type="text/x-scriptlet" data="http://hacker.com/xss.html">' => true,
-		// false positiv tests
-		'If 1 < 2, what does that mean for description, if 2 > 1.' => false,
-		'If 1 < 2, what does that mean for a script, if 2 > 1.' => false,
-		'<div>Script and Javascript: not evil ;-)' => false,
-		'<span>style=background-color' => false,
-		'<font face="Script MT Bold" size="4"><span style="font-size:16pt;">Hugo Sonstwas</span></font>' => false,
-		'<mathias@stylite.de>' => false,
-	);
-	foreach($patterns as $pattern => $should_fail)
-	{
-		$test = array($pattern);
-		unset($GLOBALS['egw_unset_vars']);
-		_check_script_tag($test,'test');
-		$failed = isset($GLOBALS['egw_unset_vars']) !== $should_fail;
-		++$total;
-		if ($failed) $num_failed++;
-		echo "<p style='color: ".($failed?'red':'black')."'> ".Api\Html::htmlspecialchars($pattern).' '.
-			(isset($GLOBALS['egw_unset_vars'])?'removed':'passed')."</p>";
-	}
-	$x = 1;
-	// urls with attack vectors
-	$urls = array(
-		// we currently fail 76 of 666 test, thought they seem not to apply to our use case, as we check request data
-		'https://gist.github.com/JohannesHoppe/5612274' => file(
-			'https://gist.githubusercontent.com/JohannesHoppe/5612274/raw/60016bccbfe894dcd61a6be658a4469e403527de/666_lines_of_XSS_vectors.html'),
-		// we currently fail 44 of 140 tests, thought they seem not to apply to our use case, as we check request data
-		'https://html5sec.org/' => call_user_func(function() {
-			$payloads = $items = null;
-			if (!($items_js = file_get_contents('https://html5sec.org/items.js')) ||
-				!preg_match_all("|^\s+'data'\s+:\s+'(.*)',$|m", $items_js, $items, PREG_PATTERN_ORDER) ||
-				!($payload_js = file_get_contents('https://html5sec.org/payloads.js')) ||
-				!preg_match_all("|^\s+'([^']+)'\s+:\s+'(.*)',$|m", $payload_js, $payloads, PREG_PATTERN_ORDER))
-			{
-				return false;
-			}
-			$replace = array(
-				"\\'" => "'",
-				'\\\\'=> '\\,',
-				'\r'  => "\r",
-				'\n'  => "\n",
-			);
-			foreach($payloads[1] as $n => $from) {
-				$replace['%'.$from.'%'] = $payloads[2][$n];
-			}
-			return array_map(function($item) use ($replace) {
-				return strtr($item, $replace);
-			}, $items[1]);
-		}),
-	);
-	foreach($urls as $url => $vectors)
-	{
-		// no all xss attack vectors from http://ha.ckers.org/xssAttacks.xml are relevant here! (needs interpretation)
-		if (!$vectors)
-		{
-			echo "<p style='color:red'>Could NOT download or parse $url with attack vectors!</p>\n";
-			continue;
-		}
-		echo "<p><b>Attacks from <a href='$url' target='_blank'>$url</a> with ".count($vectors)." tests:</b></p>";
-		foreach($vectors as $line => $pattern)
-		{
-			$test = array($pattern);
-			unset($GLOBALS['egw_unset_vars']);
-			_check_script_tag($test, 'line '.(1+$line));
-			$failed = !isset($GLOBALS['egw_unset_vars']);
-			++$total;
-			if ($failed) $num_failed++;
-			echo "<p style='color: ".($failed?'red':'black')."'>".(1+$line).": ".Api\Html::htmlspecialchars($pattern).' '.
-				(isset($GLOBALS['egw_unset_vars'])?'removed':'passed')."</p>";
-		}
-	}
-	die("<p style='color: ".($num_failed?'red':'black')."'>Tests finished: $num_failed / $total failed</p>");
-}*/
 
 foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n => $where)
 {
@@ -250,63 +155,6 @@ function php_safe_unserialize($str)
 	}
 	return unserialize($str);
 }
-
-/* some test for object safe unserialisation
-if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
-{
-	if (php_sapi_name() !== 'cli') echo "<pre>\n";
-	foreach(array(
-		// things unsafe to unserialize
-		"O:34:\"Horde_Kolab_Server_Decorator_Clean\":2:{s:43:\"\x00Horde_Kolab_Server_Decorator_Clean\x00_server\";" => false,
-		"O:20:\"Horde_Prefs_Identity\":2:{s:9:\"\x00*\x00_prefs\";O:11:\"Horde_Prefs\":2:{s:8:\"\x00*\x00_opts\";a:1:{s:12:\"sizecallback\";" => false,
-		"a:2:{i:0;O:12:\"Horde_Config\":1:{s:13:\"\x00*\x00_oldConfig\";s:#{php_injection.length}:\"#{php_injection}\";}i:1;s:13:\"readXMLConfig\";}}" => false,
-		'a:6:{i:0;i:0;i:1;d:2;i:2;s:4:"ABCD";i:3;r:3;i:4;O:8:"my_Class":2:{s:1:"a";r:6;s:1:"b";N;};i:5;C:16:"SplObjectStorage":14:{x:i:0;m:a:0:{}}' => false,
-		serialize(new stdClass()) => false,
-		serialize(array(new stdClass(), new SplObjectStorage())) => false,
-		// string content, safe to unserialize
-		serialize('O:8:"stdClass"') => true,
-		serialize('C:16:"SplObjectStorage"') => true,
-		serialize(array('a' => 'O:8:"stdClass"', 'b' => 'C:16:"SplObjectStorage"')) => true,
-		// false positive: failing our php<7 regular expression, because it has correct delimiter (^|;|{) in front of pattern :-(
-		serialize('O:8:"stdClass";C:16:"SplObjectStorage"') => true,
-	) as $str => $result)
-	{
-		if ((bool)($r=php_safe_unserialize($str)) !== $result)
-		{
-			if (!$result)
-			{
-				if (PHP_VERSION >= 7)
-				{
-					if (preg_match_all('/([^ ]+) Object\(/', array2string($r), $matches))
-					{
-						foreach($matches[1] as $class)
-						{
-							if (!preg_match('/^__PHP_Incomplete_Class(#\d+)?$/', $class))
-							{
-								echo "FAILED: $str\n";
-								continue 2;
-							}
-						}
-					}
-					echo "passed: ".array2string($str)." = ".array2string($r)."\n";
-				}
-				else
-				{
-					echo "FAILED: $str\n";
-				}
-			}
-			else
-			{
-				echo "false positive: $str\n";
-			}
-		}
-		else
-		{
-			echo "passed: $str\n";
-		}
-		//echo "result=".array2string($result).", php_save_unserialize('".htmlspecialchars($str)."') = ".array2string(php_safe_unserialize($str))." --> ".array2string((bool)php_safe_unserialize($str))."\n";
-	}
-}*/
 
 /**
  * Unserialize a json or php serialized array
