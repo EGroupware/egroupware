@@ -22,9 +22,21 @@ use PHPUnit_Framework_TestCase as TestCase;
 
 class SecurityTest extends TestCase {
 
+	public function setUp()
+	{
+		// _check_script_tag uses HtmLawed, which calls GLOBALS['egw']->link()
+		$GLOBALS['egw'] = $this->getMockBuilder('Egw')
+			->disableOriginalConstructor()
+			->setMethods(['link', 'setup'])
+			->getMock();
+	}
+
 	public function tearDown()
 	{
 		unset($GLOBALS['egw_inset_vars']);
+
+		// Must remember to clear this, or other tests may break
+		unset($GLOBALS['egw']);
 	}
 	
 	/**
@@ -105,10 +117,17 @@ class SecurityTest extends TestCase {
 			// we currently fail 44 of 140 tests, thought they seem not to apply to our use case, as we check request data
 			'https://html5sec.org/' => call_user_func(function() {
 				$payloads = $items = null;
-				if (!($items_js = file_get_contents('https://html5sec.org/items.js')) ||
-					!preg_match_all("|^\s+'data'\s+:\s+'(.*)',$|m", $items_js, $items, PREG_PATTERN_ORDER) ||
-					!($payload_js = file_get_contents('https://html5sec.org/payloads.js')) ||
-					!preg_match_all("|^\s+'([^']+)'\s+:\s+'(.*)',$|m", $payload_js, $payloads, PREG_PATTERN_ORDER))
+				try
+				{
+					if (!($items_js = file_get_contents('https://html5sec.org/items.js')) ||
+						!preg_match_all("|^\s+'data'\s+:\s+'(.*)',$|m", $items_js, $items, PREG_PATTERN_ORDER) ||
+						!($payload_js = file_get_contents('https://html5sec.org/payloads.js')) ||
+						!preg_match_all("|^\s+'([^']+)'\s+:\s+'(.*)',$|m", $payload_js, $payloads, PREG_PATTERN_ORDER))
+					{
+						return false;
+					}
+				}
+				catch (Exception $e)
 				{
 					return false;
 				}

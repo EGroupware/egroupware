@@ -40,6 +40,9 @@ class DateTimeTest extends TestCase {
 	{
 		// Reset
 		DateTime::setUserPrefs(static::$usertime->getName());
+
+		unset($GLOBALS['egw']);
+		parent::tearDownAfterClass();
 	}
 
 	/**

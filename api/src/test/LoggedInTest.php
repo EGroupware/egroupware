@@ -45,9 +45,6 @@ abstract class LoggedInTest extends TestCase
 			// These globals pulled from the test config (phpunit.xml)
 			static::load_egw($GLOBALS['EGW_USER'],$GLOBALS['EGW_PASSWORD'], $GLOBALS['EGW_DOMAIN']);
 
-			// Re-init config, since it doesn't get handled by loading Egw
-			Api\Config::init_static();
-
 			if($GLOBALS['egw']->db)
 			{
 				$GLOBALS['egw']->db->connect();
@@ -57,11 +54,14 @@ abstract class LoggedInTest extends TestCase
 				static::markTestSkipped('No $GLOBALS[egw]->db');
 				die();
 			}
+
+			// Re-init config, since it doesn't get handled by loading Egw
+			Api\Config::init_static();
 		}
 		catch(Exception $e)
 		{
-			static::markTestSkipped('Unable to connect to Egroupware');
-			throw $e;
+			static::markTestSkipped('Unable to connect to Egroupware - ' . $e->getMessage());
+			return;
 		}
 
 		// Do some checks to make sure things we expect are there
@@ -101,7 +101,7 @@ abstract class LoggedInTest extends TestCase
 	}
 
 	/**
-	* Start the eGW session, exits on wrong credentials
+	* Start the eGW session, skips the test if there are problems connecting
 	*
 	* @param string $user
 	* @param string $passwd
@@ -125,13 +125,23 @@ abstract class LoggedInTest extends TestCase
 			'flags' => array(
 				'currentapp' => 'api',
 				'noheader' => true,
-				'autocreate_session_callback' => __NAMESPACE__ . '\AppTest::create_session',
+				'autocreate_session_callback' => __CLASS__ .'::create_session',
 				'no_exception_handler' => 'cli',
 				'noapi' => false,
 			)
 		);
 
-		include(realpath(__DIR__ . '/../../../header.inc.php'));
+		try
+		{
+			include(realpath(__DIR__ . '/../../../header.inc.php'));
+		}
+		catch (Exception $e)
+		{
+			// Something went wrong setting up egw environment - don't try
+			// to do the test
+			static::markTestSkipped($e->getMessage());
+			return;
+		}
 
 		require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
 

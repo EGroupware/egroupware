@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Run tests using phpunit -c doc/phpunit.xml -->
 <phpunit
-    colors="true">
+    colors="true"
+	backupGlobals="false"
+>
 	<php>
         <var name="EGW_DOMAIN" value="default" />
         <var name="EGW_USER" value="demo" />
@@ -10,10 +12,7 @@
     <testsuites>
         <testsuite name="Api tests">
             <directory>../api/src/test/</directory>
-			<exclude>
-			<!-- This runs fine on its own, but fails in a group if there's no DB -->
-				<file>../api/src/Mail/test/CredentialsTest.php</file>
-			</exclude>
+			<directory>../api/src/*/test/</directory>
         </testsuite>
 		<testsuite name="Apps with test directory">
 			<directory>../*/test/</directory>

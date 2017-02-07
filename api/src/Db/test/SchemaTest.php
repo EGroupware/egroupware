@@ -302,6 +302,9 @@ class SchemaTest extends LoggedInTest {
 		));
 	}
 
+	/**
+	 * @depends testInsertMoreContent
+	 */
 	public function testDropTable()
 	{
 		foreach(self::$adodb->MetaTables() as $table)
