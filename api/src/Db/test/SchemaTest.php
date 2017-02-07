@@ -390,6 +390,7 @@ class SchemaTest extends LoggedInTest {
 		unset($columns['options']);
 
 		$exist = False;
+		$idx_data = array();
 		foreach($indexes as $idx_data)
 		{
 			if (implode(':',$columns) == strtolower(implode(':',$idx_data['columns'])))
