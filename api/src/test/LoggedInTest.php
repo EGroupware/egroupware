@@ -17,6 +17,7 @@ namespace EGroupware\Api;
 require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
 
 use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit_Framework_ExpectationFailedException as PHPUnitException;
 use EGroupware\Api;
 
 /**
@@ -60,7 +61,13 @@ abstract class LoggedInTest extends TestCase
 		catch(Exception $e)
 		{
 			static::markTestSkipped('Unable to connect to Egroupware');
-			die();
+			throw $e;
+		}
+
+		// Do some checks to make sure things we expect are there
+		if(!static::sanity_check())
+		{
+			throw new PHPUnitException('Unable to connect to Egroupware - failed sanity check');
 		}
 	}
 
@@ -146,6 +153,9 @@ abstract class LoggedInTest extends TestCase
 
 			$GLOBALS['egw'] = new Api\Egw(array_keys($GLOBALS['egw_domain']));
 		}
+		
+		// Disable asyc while we test
+		$GLOBALS['egw_info']['server']['asyncservice'] = 'off';
 	}
 
 
@@ -163,5 +173,25 @@ abstract class LoggedInTest extends TestCase
 		}
 		unset($GLOBALS['egw_login_data']);
 		return $sessionid;
+	}
+
+	/**
+	 * Do some checks to make sure things we expect are there
+	 */
+	protected static function sanity_check()
+	{
+		// Check that the apps are loaded
+		if(!array_key_exists('apps', $GLOBALS['egw_info']) || count($GLOBALS['egw_info']['apps']) == 0)
+		{
+			return false;
+		}
+
+		// Check that the user is loaded
+		if(!array_key_exists('user', $GLOBALS['egw_info']) || !$GLOBALS['egw_info']['user']['account_id'])
+		{
+			return false;
+		}
+
+		return true;
 	}
 }
