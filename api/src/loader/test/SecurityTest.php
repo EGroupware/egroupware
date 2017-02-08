@@ -203,7 +203,7 @@ class SecurityTest extends TestCase {
 	 */
 	public function unserializeProvider()
 	{
-		return array(
+		$tests = array(
 			// Serialized string, expected result
 			// things unsafe to unserialize
 			Array("O:34:\"Horde_Kolab_Server_Decorator_Clean\":2:{s:43:\"\x00Horde_Kolab_Server_Decorator_Clean\x00_server\";", false),
@@ -215,9 +215,13 @@ class SecurityTest extends TestCase {
 			// string content, safe to unserialize
 			Array(serialize('O:8:"stdClass"'), true),
 			Array(serialize('C:16:"SplObjectStorage"'), true),
-			Array(serialize(array('a', 'O:8:"stdClass"', 'b', 'C:16:"SplObjectStorage"')), true),
-			// false positive: failing our php<7 regular expression, because it has correct delimiter (^|;|{) in front of pattern :-(
-			Array(serialize('O:8:"stdClass";C:16:"SplObjectStorage"'), true),
+			Array(serialize(array('a', 'O:8:"stdClass"', 'b', 'C:16:"SplObjectStorage"')), true)
 		);
+		if (PHP_VERSION >= 7)
+		{
+			// Fails our php<7 regular expression, because it has correct delimiter (^|;|{) in front of pattern :-(
+			$tests[] = Array(serialize('O:8:"stdClass";C:16:"SplObjectStorage"'), true);
+		}
+		return $tests;
 	}
 }
