@@ -38,18 +38,18 @@
 			<buttononly label="Paste" id="button[paste]" onclick="app.filemanager.paste('paste');" options="editpaste,editpaste_disabled"/>
 			<buttononly label="Paste link" id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" options="linkpaste,linkpaste_disabled"/>
 			<buttononly label="Mail paste" id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" options="mailpaste,mailpaste_disabled"/>
+			<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"/>
+			<buttononly label="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" options="list_tile"/>
+			<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
 		</hbox>
 	</template>
 	<template id="filemanager.index.header_left" template="" lang="" group="0" version="1.9.002">
-		<vbox span="all" class="filemanager_navigation">
-			<vfs-name id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
-			<hbox class="buttons">
+		<hbox span="all" class="filemanager_navigation">
+			<hbox>
 				<image label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"/>
-				<image label="Go to your home directory" src="gohome" onclick="app.filemanager.change_dir('~',widget);" id="home"/>
-				<buttononly label="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" options="list_tile"/>
-				<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
 			</hbox>
-		</vbox>
+			<vfs-name id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
+		</hbox>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
 		<nextmatch id="nm" template="filemanager.index.rows" header_left="filemanager.index.header_left" header_right="filemanager.index.header_right" />
