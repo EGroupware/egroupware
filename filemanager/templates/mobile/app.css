@@ -435,10 +435,11 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
     overflow: auto;
     width: 100%;
     padding-top: 5px;
+    height: auto;
   }
   #filemanager-index_nm .buttons img {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     padding-left: 15px;
   }
   #filemanager-index_nm #filemanager-index_tarp {
@@ -454,12 +455,27 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
   #filemanager-index_nm .nextmatch_header.nm_header_hide .filtersContainer {
     display: none;
   }
+  #filemanager-index_nm .nextmatch_header .nextmatch_header_row {
+    padding-bottom: 0px;
+  }
   #filemanager-index_nm .nextmatch_header .filemanager_navigation {
     height: auto;
   }
   #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_path {
     height: 50px;
-    width: 99%;
+    width: calc(100% - 90px);
+    display: inline-block;
+    border: none;
+    background: white;
+  }
+  #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_path:focus {
+    outline: none;
+  }
+  #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_up {
+    width: 24px;
+    height: 100%;
+    margin-left: 22px;
+    margin-right: 22px;
   }
   #filemanager-index_nm .nextmatch_header div.filtersContainer {
     margin-top: 0px;
