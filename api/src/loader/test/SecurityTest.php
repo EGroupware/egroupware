@@ -96,7 +96,7 @@ class SecurityTest extends TestCase {
 		// no all xss attack vectors from http://ha.ckers.org/xssAttacks.xml are relevant here! (needs interpretation)
 		if (!$vectors)
 		{
-			$this->markAsSkipped("Could not download or parse $url with attack vectors");
+			$this->markTestSkipped("Could not download or parse $url with attack vectors");
 			return;
 		}
 		foreach($vectors as $line => $pattern)
