@@ -1506,6 +1506,9 @@ abstract class Merge
 				case 'application/xml';
 					$LF ='</w:t></w:r><w:r><w:br w:type="text-wrapping" w:clear="all"/></w:r><w:r><w:t>';
 					break;
+				case 'text/html':
+					$LF = "<br/>";
+					break;
 				default:
 					$LF = "\n";
 			}
