@@ -108,7 +108,7 @@ everyone	filemanager	nl	Iedereen
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	nl	Voorbeeld {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - zoek het veld "n_prefix", for "Mr", als gevonden, schrijf Hello Mr., anders schrijf Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	nl	Voorbeeld {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Voorbeeld: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	nl	Voorbeeld {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	nl	Voorbeeld {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	nl	Voorbeeld {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 executable	filemanager	nl	Uitvoerbaar bestand
 expires	filemanager	nl	Verloopt
 export definition to use for nextmatch export	filemanager	nl	Export definitie om te gebruiken bij volgende export

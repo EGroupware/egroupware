@@ -192,7 +192,7 @@ error: the entry has been updated since you opened it for editing!	infolog	it	Er
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	it	Esempio {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - cerca nel campo "n_prefix" il valore "Mr", se lo trova scrive "Hello Mr.", altrimenti scrive "Hello Ms."
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Esempio: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	it	Esempio {{NELF role}} - se il campo "ruolo" non è vuoto, si otterrà una nuova riga con il valore del campo "ruolo"
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	it	Esempio {{NELFNV role}} - se il campo "ruolo" non è vuoto, inserisce una nuova riga senza il valore del campo
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	it	Esempio {{nenvlf role}} - se il campo "ruolo" non è vuoto, inserisce una nuova riga senza il valore del campo
 execute a further action for this entry	infolog	it	Esegui ancora una azione per questo inserimento
 existing links	infolog	it	Collegamenti esistenti
 exists	infolog	it	Esiste

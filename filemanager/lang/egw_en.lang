@@ -120,7 +120,7 @@ everyone	filemanager	en	Everyone
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	en	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 executable	filemanager	en	Executable
 expires	filemanager	en	Expires
 export definition to use for nextmatch export	filemanager	en	Export definition to use for nextmatch export

@@ -38,7 +38,7 @@ error saving the entry!!!	timesheet	sk	Chyba pri ukladaní položky!!!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	timesheet	sk	Príklad {{nenvlf role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 existing links	timesheet	sk	Existujúce odkazy
 exists	timesheet	sk	Existuje
 export definition to use for nextmatch export	timesheet	sk	Exportná definícia pre použitie v exporte

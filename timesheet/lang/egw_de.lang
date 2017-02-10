@@ -38,7 +38,7 @@ error saving the entry!!!	timesheet	de	Fehler beim Speichern des Eintrags!!!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	de	Beispiel: {{IF n_prefix~Herr~sehr geehrter Herr~sehr geehrte Frau}} - wenn im Feld 'n_prefix' 'Herr' steht wird 'sehr geehrter Herr' geschrieben, ansonsten 'sehr geehrte Frau'.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	de	Beispiel: {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Herr Dr. Müller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	de	Beispiel: {{NELF role}} - wenn das Feld 'role' nicht leer ist wird der Inhalt des Feldes in eine neue Zeile geschrieben
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	de	Beispiel: {{NELFNV role}} - wenn das Feld 'role' nicht leer ist erfolgt ein Zeilenumbruch ohne den Inhalt des Feldes
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	timesheet	de	Beispiel: {{nenvlf role}} - wenn das Feld 'role' nicht leer ist erfolgt ein Zeilenumbruch ohne den Inhalt des Feldes
 existing links	timesheet	de	Bestehende Verknüpfungen
 exists	timesheet	de	vorhanden sein
 export definition to use for nextmatch export	timesheet	de	Exportdefinition für den nextmatch Export

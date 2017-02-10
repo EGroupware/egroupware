@@ -120,7 +120,7 @@ everyone	filemanager	de	Jeder
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	de	Beispiel: {{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}} - Suche im Feld "n_prefix", wenn es "Herr" enthält, dann schreibe "Sehr geehrter", wenn nicht schreibe "Sehr geehrte".
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	de	Beispiel: {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. Hans Müller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	de	Beispiel: {{NELF role}} - Wenn das Feld "role" nicht leer ist, dann wird der Inhalt des Feldes "role" in eine neue Zeile geschrieben.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	de	Beispiel: {{NELFNV role}} - Wenn das Feld "role" nicht leer ist, dann wird eine neue Zeile angelegt ohne den Inhalt des Feldes "role" einzufügen.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	de	Beispiel: {{nenvlf role}} - Wenn das Feld "role" nicht leer ist, dann wird eine neue Zeile angelegt ohne den Inhalt des Feldes "role" einzufügen.
 executable	filemanager	de	Ausführbar
 expires	filemanager	de	Läuft ab
 export definition to use for nextmatch export	filemanager	de	Exportdefinition für den nextmatch Export

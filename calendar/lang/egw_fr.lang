@@ -207,7 +207,7 @@ every user can invite other users and groups	admin	fr	Tous les utilisateur peuve
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	fr	Exemple : {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - pour chercher sur le champ "n_prefix" pour "Mr", si trouvé alors "Hello Mr." sinon, "Hello Ms."
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	fr	Exemple {{LETTERPREFIXCUSTOM n_prefix title n_family}} - exemple : Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	fr	Exemple {{NELF role}} - Si le champ rôle n'est pas vide, vous aurez une nouvelle ligne avec la valeur du champ rôle
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	fr	Exemple : {{NELFNV role}} - Si le champ rôle n'est pas vide, définir un "LF" sans aucune valeur de ce champ
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	fr	Exemple : {{nenvlf role}} - Si le champ rôle n'est pas vide, définir un "LF" sans aucune valeur de ce champ
 exception	calendar	fr	Exception
 exception created - you can now edit or delete it	calendar	fr	Exception créée - vous pouvez maintenant la modifier ou la supprimer.
 exceptions	calendar	fr	Exceptions

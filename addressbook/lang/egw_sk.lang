@@ -221,7 +221,7 @@ error: the entry has been updated since you opened it for editing!	addressbook	s
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	sk	Príklad {{nenvlf role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 existing links	addressbook	sk	Existujúce odkazy
 exists	addressbook	sk	existuje
 export as csv	addressbook	sk	Exportovať ako CSV

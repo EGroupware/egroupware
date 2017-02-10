@@ -186,7 +186,7 @@ error: the entry has been updated since you opened it for editing!	addressbook	f
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	fi	Esimerkki {{LETTERPREFIXCUSTOM n_prefix title n_family}} ---> Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	fi	Esimerkki {{NELF role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	fi	Esimerkki {{NELFNV role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	fi	Esimerkki {{nenvlf role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
 existing links	addressbook	fi	Olemassaolevat linkit
 exists	addressbook	fi	Olemassaoleva
 export as csv	addressbook	fi	Vie CSV -muodossa

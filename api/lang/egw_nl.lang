@@ -1073,7 +1073,7 @@ etemplate reference	common	nl	eTemplate Referentie
 etemplate tutorial	common	nl	eTemplate Tutorial
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	nl	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	nl	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 exchange this row with the one above	common	nl	verwissel deze rij met die erboven
 exchange this two columns	common	nl	verwissel deze twee kolommen
 export the loaded etemplate into a xml-file	common	nl	exporteer de geladen eTemplate in een XML-bestand

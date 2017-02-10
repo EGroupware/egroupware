@@ -187,7 +187,7 @@ every user can invite other users and groups	admin	fi	Jokainen käyttäjä voi k
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	fi	Esimerkki {{LETTERPREFIXCUSTOM n_prefix title n_family}} ---> Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	fi	Esimerkki {{NELF role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	fi	Esimerkki {{NELFNV role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	fi	Esimerkki {{nenvlf role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
 exception	calendar	fi	Poikkeus
 exception created - you can now edit or delete it	calendar	fi	Poikkeus luotu - poikkeusta voidaan nyt muokata tai se voidaan poistaa
 exceptions	calendar	fi	Poikkeukset
