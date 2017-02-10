@@ -63,6 +63,10 @@
 					<textbox id="newsettings[login_logo_title]"/>
 				</row>
 				<row>
+					<description value="Enter the URL or filename (in api/templates/default/images) of your background image" label="%s:"/>
+					<textbox id="newsettings[login_background_file]"/>
+				</row>
+				<row>
 					<description value="Enter the URL or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)" label="%s:"/>
 					<textbox id="newsettings[favicon_file]"/>
 				</row>
