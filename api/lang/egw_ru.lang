@@ -1040,7 +1040,7 @@ etemplate tutorial	common	ru	Обучающийкурс по е-Шаблону
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	ru	Пример {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - ищет в поле "n_prefix" вхождение "Mr", если находит, пишет Hello Mr., иначе пишет Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	ru	Пример {{letter prefix}} - возвращает префикс письма без двойного пробела, например если заголовок пустой
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	ru	Пример {{NELF role}} - если поле Роль не пусто, получите новую строку со значением поля Роль
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	ru	Пример {{NELF role}} - если поле Роль не пусто, устанавливает LF без всякого значения поля
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	ru	Пример {{NELF role}} - если поле Роль не пусто, устанавливает LF без всякого значения поля
 exchange this row with the one above	common	ru	поменять местами это строку со строкой выше
 exchange this two columns	common	ru	пеменять местами эти две колонки
 export the loaded etemplate into a xml-file	common	ru	экспорт загруженного е-Шаблона в файл xml

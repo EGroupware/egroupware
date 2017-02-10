@@ -206,7 +206,7 @@ every user can invite other users and groups	admin	cs	Každý uživatel smí poz
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	cs	Příklad {{IF n_prefix~Pan~Vážený pane~Vážená paní}} - hledá se výskyt slova "Pan" v poli "n_prefix", pokud je nalezeno, vloží se  text Vážený pane, jinak Vážená paní.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	cs	Příklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Příklad: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	cs	Příklad {{NELF role}} - pokud pole role není prázdné, bude na nový řádek vypsán obsah pole role.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	cs	Příklad {{NELFNV role}} - pokud pole role není prázdné, nastaví se pozice na nový řádek ale obsah pole role nebude vypsáno.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	cs	Příklad {{nenvlf role}} - pokud pole role není prázdné, nastaví se pozice na nový řádek ale obsah pole role nebude vypsáno.
 exception	calendar	cs	Výjimka
 exception created - you can now edit or delete it	calendar	cs	Výjimka vytvořena - nyní jí můžete editovat nebo smazat
 exceptions	calendar	cs	Výjimky

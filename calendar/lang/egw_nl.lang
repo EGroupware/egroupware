@@ -146,7 +146,7 @@ event will occupy the whole day	calendar	nl	Gebeurtenis duurt de hele dag
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	nl	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	nl	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	nl	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 exception	calendar	nl	Uitzondering
 exception created - you can now edit or delete it	calendar	nl	Uitzondering aangemaakt - u kunt het nu bewerken of verwijderen
 exceptions	calendar	nl	Uitzonderingen

@@ -194,7 +194,7 @@ every user can invite other users and groups	admin	ru	Каждый пользо�
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	ru	Пример: {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}}— поиск по полю "n_prefix" значения "Mr", если найдено, пишет Hello Mr., иначе пишет Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	ru	Пример: {{LETTERPREFIXCUSTOM n_prefix title n_family}}. Результат: Mr. Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	ru	Пример: {{NELF role}} — если поле «роль» не пусто, получает новую строку со значением поля «роль»
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	ru	Пример: {{NELFNV role}} — если поле «роль» не пусто, устанавливает поле LF пустым
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	ru	Пример: {{nenvlf role}} — если поле «роль» не пусто, устанавливает поле LF пустым
 exception	calendar	ru	Исключение
 exception created - you can now edit or delete it	calendar	ru	Исключение создано - теперь вы можете отредактировать либо удалить его
 exceptions	calendar	ru	Исключения

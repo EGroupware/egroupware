@@ -491,7 +491,7 @@ everything	common	sk	Všetko
 exact	common	sk	Presne
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	sk	Príklad {{nenvlf role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 exchange this row with the one above	common	sk	Zameniť tento riadok s riadkom vyššie
 exchange this two columns	common	sk	Zameniť tieto dva stĺpce
 expiration	common	sk	Expirácia

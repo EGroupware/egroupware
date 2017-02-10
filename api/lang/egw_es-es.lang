@@ -1000,7 +1000,7 @@ etemplate reference	common	es-es	Referencia de plantillas electrónicas
 etemplate tutorial	common	es-es	Tutorial de plantillas electrónicas
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	es-es	Ejemplo {{NELFNV role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	es-es	Ejemplo {{nenvlf role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 exchange this row with the one above	common	es-es	Intercambiar esta fila con la de encima
 exchange this two columns	common	es-es	Intercambiar estas dos columnas
 export the loaded etemplate into a xml-file	common	es-es	Exportar la plantilla cargada en un fichero xml

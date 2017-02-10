@@ -119,7 +119,7 @@ everyone	filemanager	it	Ognuno
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	it	Esempio {{IF n_prefix~Mr~Salve Sig.~Salve Sig.ra}} - ricerca nel campo "n_prefix", per"Mr", se trovato, scrivere Salve Mr., altrimenti scrivi Salve Sig.ra
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Esempio: Sig. Dr. Giorgio Rossi
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, otterrai una nuova riga col valore del campo "Ruolo"
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	it	Example {{NELFNV role}} - se il campo "Ruolo" non è vuoto, imposta un LF senza alcun valore del campo
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	it	Example {{nenvlf role}} - se il campo "Ruolo" non è vuoto, imposta un LF senza alcun valore del campo
 executable	filemanager	it	Eseguibile
 expires	filemanager	it	Scade
 export definition to use for nextmatch export	filemanager	it	Definizione da usare per l'esportazione nextmatch (corrispondenza successiva)

@@ -38,7 +38,7 @@ error saving the entry!!!	timesheet	it	Errore durante salvataggio voce!!!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} Esempio: Sig. Dott. Giorgio Rossi
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, si otterrà una riga con il valore del campo "Ruolo"
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	it	Esempio {{NELFNV role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	timesheet	it	Esempio {{nenvlf role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
 existing links	timesheet	it	Collegamenti esistenti
 exists	timesheet	it	Esiste
 export definition to use for nextmatch export	timesheet	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)

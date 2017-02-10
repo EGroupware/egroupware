@@ -105,7 +105,7 @@ everyone	filemanager	ru	Все
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	ru	Пример {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - поиск по полю "n_prefix" подслова  "Mr". Если найдено, пишет Hello Mr., иначе пишет Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	ru	Пример {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Пример: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ru	Пример {{NELF role}} - если поле Роль не пусто, получите новую строку с величиной поля Роль
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	ru	Пример: {{NELFNV role}} — если поле «роль» не пусто, устанавливает поле LF пустым
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	filemanager	ru	Пример: {{nenvlf role}} — если поле «роль» не пусто, устанавливает поле LF пустым
 executable	filemanager	ru	Выполнимо
 expires	filemanager	ru	Истекает
 export definition to use for nextmatch export	filemanager	ru	Определение экспорта для последующего использования

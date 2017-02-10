@@ -30,7 +30,7 @@ error saving the entry!!!	timesheet	nl	Fout bij opslaan van het item !!!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	nl	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	nl	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	timesheet	nl	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 existing links	timesheet	nl	Bestaande links
 exists	timesheet	nl	Bestaat
 export definition to use for nextmatch export	timesheet	nl	Export definitie om te gebruiken bij nextmatch export

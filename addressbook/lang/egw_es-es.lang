@@ -215,7 +215,7 @@ error: the entry has been updated since you opened it for editing!	addressbook	e
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	es-es	Ejemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Ejemplo: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	es-es	Ejemplo {{NELFNV role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	es-es	Ejemplo {{nenvlf role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 existing links	addressbook	es-es	Enlaces existentes
 exists	addressbook	es-es	Existe
 export as csv	addressbook	es-es	Exportar como CSV

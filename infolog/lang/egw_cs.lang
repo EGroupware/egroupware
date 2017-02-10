@@ -193,7 +193,7 @@ error: the entry has been updated since you opened it for editing!	infolog	cs	Ch
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	cs	Příklad {{IF n_prefix~Pan~Vážený pane~Vážená paní}} - hledá se výskyt slova "Pan" v poli "n_prefix", pokud je nalezeno, vloží se  text Vážený pane, jinak Vážená paní.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	cs	Příklad {{LETTERPREFIX}} - vloží oslovení a pokud je titul nevyplněn, nevloží se mezery navíc.
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	cs	Příklad {{NELF role}} - pokud pole role není prázdné, bude na nový řádek vypsán obsah pole role.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	cs	Příklad {{NELFNV role}} - pokud pole role není prázdné, nastaví se pozice na nový řádek ale obsah pole role nebude vypsáno.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	cs	Příklad {{nenvlf role}} - pokud pole role není prázdné, nastaví se pozice na nový řádek ale obsah pole role nebude vypsáno.
 execute a further action for this entry	infolog	cs	Spustit další akci pro tento záznam
 existing links	infolog	cs	Stávající odkazy
 exists	infolog	cs	Stávající

@@ -499,7 +499,7 @@ everything	common	it	Tutto
 exact	common	it	esatta
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, si otterrà una riga con il valore del campo "Ruolo"
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	it	Esempio {{NELFNV role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	it	Esempio {{nenvlf role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
 example {} - gives a letter prefix without double spaces, if the title is empty for example	preferences	it	Esempio {} -  Darebbe un prefisso senza doppi spazi, se il titolo fosse vuoto per esempio
 exchange this row with the one above	common	it	scambia questa riga con quella superiore
 exchange this two columns	common	it	scambia queste due colonne
