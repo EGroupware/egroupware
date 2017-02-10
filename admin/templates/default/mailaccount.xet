@@ -39,7 +39,7 @@
 					<select id="ident_email_alias" span="all" class="et2_fullWidth"/>
 				</row>
 				<row>
-					<htmlarea expand_toolbar="false" height="125px" id="ident_signature" span="all" width="100%"/>
+					<htmlarea expand_toolbar="false" height="200px" id="ident_signature" span="all" width="100%"/>
 				</row>
 			</rows>
 		</grid>
@@ -317,7 +317,7 @@
 					<description/>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all" tab_height="320">
+					<tabbox id="tabs" span="all" tab_height="420">
 						<tabs>
 							<tab id="admin.mailaccount.identity" label="Identity+Signature" statustext="Identity&amp;Signature"/>
 							<tab id="admin.mailaccount.imap" label="IMAP" statustext="incoming mail"/>
