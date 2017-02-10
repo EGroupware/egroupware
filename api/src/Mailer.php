@@ -17,7 +17,6 @@ use Horde_Mime_Part;
 use Horde_Mail_Rfc822_List;
 use Horde_Mail_Exception;
 use Horde_Mail_Transport;
-use Horde_Mail_Transport_Sendmail;
 use Horde_Mail_Transport_Null;
 use Horde_Mime_Headers_MessageId;
 use Horde_Text_Flowed;
@@ -503,13 +502,6 @@ class Mailer extends Horde_Mime_Mail
 	function send(Horde_Mail_Transport $transport=null, $resend=true, $flowed=null)
 	{
 		unset($resend);	// parameter is not used, but required by function signature
-
-		if ($transport === null &&
-			isset($GLOBALS['egw_info']['server']['sendmail']) &&
-			$GLOBALS['egw_info']['server']['sendmail'])
-		{
-			$transport = new Horde_Mail_Transport_Sendmail();
-		}
 
 		if (!($message_id = $this->getHeader('Message-ID')) &&
 			class_exists('Horde_Mime_Headers_MessageId'))	// since 2.5.0

@@ -18,6 +18,7 @@ use EGroupware\Api;
 
 use Horde_Imap_Client_Exception;
 use Horde_Mail_Transport_Smtphorde;
+use Horde_Mail_Transport_Sendmail;
 
 /**
  * Mail accounts supports 3 types of accounts:
@@ -466,15 +467,22 @@ class Account implements \ArrayAccess
 			// Horde use locale for translation of error messages
 			Api\Preferences::setlocale(LC_MESSAGES);
 
-			$this->smtpTransport = new Horde_Mail_Transport_Smtphorde(array(
-				'username' => $this->acc_smtp_username,
-				'password' => $this->acc_smtp_password,
-				'host' => $this->acc_smtp_host,
-				'port' => $this->acc_smtp_port,
-				'secure' => $secure,
-				'debug' => self::SMTP_DEBUG_LOG,
-				//'timeout' => self::TIMEOUT,
-			));
+			if (!empty($GLOBALS['egw_info']['server']['sendmail']))
+			{
+				$this->smtpTransport = new Horde_Mail_Transport_Sendmail();
+			}
+			else
+			{
+				$this->smtpTransport = new Horde_Mail_Transport_Smtphorde(array(
+					'username' => $this->acc_smtp_username,
+					'password' => $this->acc_smtp_password,
+					'host' => $this->acc_smtp_host,
+					'port' => $this->acc_smtp_port,
+					'secure' => $secure,
+					'debug' => self::SMTP_DEBUG_LOG,
+					//'timeout' => self::TIMEOUT,
+				));
+			}
 		}
 		return $this->smtpTransport;
 	}
