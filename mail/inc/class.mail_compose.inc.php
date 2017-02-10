@@ -596,6 +596,10 @@ class mail_compose
 		unset($_content['mail_plaintext']);
 		$_currentMode = $_content['mimeType'];
 
+		// we have to keep comments to be able to changing signatures
+		// signature is wraped in "<!-- HTMLSIGBEGIN -->$signature<!-- HTMLSIGEND -->"
+		Mail::$htmLawed_config['comment'] = 2;
+
 		// form was submitted either by clicking a button or by changing one of the triggering selectboxes
 		// identity and signatureid; this might trigger that the signature in mail body may have to be altered
 		if ( !empty($content['body']) &&
@@ -664,7 +668,6 @@ class mail_compose
 				//$sigText = Mail::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 				//error_log(__METHOD__.'new+:'.$sigText.'#');
 				$_htmlConfig = Mail::$htmLawed_config;
-				Mail::$htmLawed_config['comment'] = 2;
 				Mail::$htmLawed_config['transform_anchor'] = false;
 				$oldSigTextCleaned = str_replace(array("\r", "\t", "<br />\n", ": "), array("", "", "<br />", ":"),
 					$_currentMode == 'html' ? Api\Html::purify($oldSigText, null, array(), true) : $oldSigText);
