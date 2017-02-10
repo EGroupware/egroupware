@@ -1,10 +1,14 @@
 <script src="./api/js/login.js" type="text/javascript"></script>
 
 
-<div id="loginMainDiv">
+<div id="loginMainDiv" style="background-image:url({background_file})">
     <div id="divAppIconBar" style="position:relative;">
         <div id="divLogo">
-			<a href="{logo_url}" target="_blank"><img src="{logo_file}" class="login_logo" border="0" alt="{logo_title}" title="{logo_title}" /></a>
+			<div class="login_logo_container">
+				<a href="{logo_url}" target="_blank">
+					<div style="background-image:url({logo_file})" class="login_logo" border="0" alt="{logo_title}" title="{logo_title}" ></div>
+				</a>
+			</div>
 			<div id="loginScreenMessage">{lang_message}</div>
 		</div>
     </div>

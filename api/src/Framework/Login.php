@@ -171,7 +171,15 @@ class Login
 
 		$tmpl->set_var('website_title', $GLOBALS['egw_info']['server']['site_title']);
 		$tmpl->set_var('template_set',$this->framework->template);
-
+		if (substr($GLOBALS['egw_info']['server']['login_background_file'], 0, 4) == 'http' ||
+			$GLOBALS['egw_info']['server']['login_background_file'][0] == '/')
+		{
+			$var['background_file'] = $GLOBALS['egw_info']['server']['login_background_file'];
+		}
+		else
+		{
+			$var['background_file'] = Api\Image::find('api',$GLOBALS['egw_info']['server']['login_background_file']?$GLOBALS['egw_info']['server']['login_background_file']:'login_background', '', null);
+		}
 		if (substr($GLOBALS['egw_info']['server']['login_logo_file'], 0, 4) == 'http' ||
 			$GLOBALS['egw_info']['server']['login_logo_file'][0] == '/')
 		{
@@ -179,7 +187,7 @@ class Login
 		}
 		else
 		{
-			$var['logo_file'] = Api\Image::find('api',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo', '', null);	// null=explicit allow svg
+			$var['logo_file'] = Api\Image::find('api',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'login_logo', '', null);	// null=explicit allow svg
 		}
 		$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.egroupware.org';
 		if (substr($var['logo_url'],0,4) != 'http')

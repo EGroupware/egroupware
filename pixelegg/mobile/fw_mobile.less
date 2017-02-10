@@ -58,10 +58,14 @@
 			#divAppIconBar {
 				max-height:20%;
 				height:20%;
-				#divLogo img[src$="svg"] {
-					width:40%;
-					margin-top: 5px;
-					background:white;
+				#divLogo {
+					.login_logo_container {
+						width:200px;
+						height:100px;
+						max-height: 100px;
+						max-width:200px;
+						margin: 0 auto;
+					}
 				}
 			}
 			div#centerBox{
@@ -124,11 +128,6 @@
 {
 	body{
 		div#loginMainDiv{
-			#divAppIconBar {
-				#divLogo img[src$="svg"] {
-					width:70%;
-				}
-			}
 			div#centerBox{
 				form {
 					table.divLoginbox {

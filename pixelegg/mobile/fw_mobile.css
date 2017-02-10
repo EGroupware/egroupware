@@ -1697,21 +1697,28 @@ body {
 }
 #loginMainDiv #divAppIconBar #divLogo {
   position: relative;
-  padding-top: 5%;
+  padding-top: 2%;
 }
-#loginMainDiv #divAppIconBar #divLogo img.login_logo {
+#loginMainDiv #divAppIconBar #divLogo .login_logo_container {
+  width: 250px;
+  height: 150px;
+  max-height: 150px;
+  max-width: 250px;
   margin: 0 auto;
-  max-width: 270px;
 }
-#loginMainDiv #divAppIconBar #divLogo img.login_logo [src$="svg"] {
-  max-width: 270px;
+#loginMainDiv #divAppIconBar #divLogo .login_logo_container .login_logo {
+  width: auto;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-#loginMainDiv #loginScreenMessage not([class $= "error"]) {
+#loginMainDiv #loginScreenMessage:not([class $= "error"]) {
   margin: 1em;
   color: #0a5ca5;
   font-size: 12pt;
 }
-#loginMainDiv #loginScreenMessage not([class $= "error"]) img {
+#loginMainDiv #loginScreenMessage:not([class $= "error"]) img {
   max-width: 100%;
 }
 #loginMainDiv div#login_footer {
@@ -6945,10 +6952,12 @@ form[id^="tracker-"] .dialogHeadbar {
     max-height: 20%;
     height: 20%;
   }
-  div#loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
-    width: 40%;
-    margin-top: 5px;
-    background: white;
+  div#loginMainDiv #divAppIconBar #divLogo .login_logo_container {
+    width: 200px;
+    height: 100px;
+    max-height: 100px;
+    max-width: 200px;
+    margin: 0 auto;
   }
   div#loginMainDiv div#centerBox {
     padding: 0;
@@ -7007,9 +7016,6 @@ form[id^="tracker-"] .dialogHeadbar {
   }
 }
 @media only screen and (max-device-width : 1024px) and (orientation : portrait) {
-  body div#loginMainDiv #divAppIconBar #divLogo img[src$="svg"] {
-    width: 70%;
-  }
   body div#loginMainDiv div#centerBox form table.divLoginbox {
     width: 100%;
   }

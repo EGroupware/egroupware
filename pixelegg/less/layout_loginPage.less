@@ -54,13 +54,20 @@
 		overflow-y: auto;
 		#divLogo {
 			position: relative;
-		    padding-top: 5%;
-			img.login_logo {
+		    padding-top: 2%;
+			.login_logo_container {
+				width:250px;
+				height:150px;
+				max-height: 150px;
+				max-width:250px;
 				margin: 0 auto;
-				max-width: 270px;
-			}
-			img.login_logo [src$="svg"]{
-				max-width: 270px;
+				.login_logo {
+					width: auto;
+					height: 100%;
+					background-size:contain;
+					background-repeat: no-repeat;
+					background-position: center;
+				}
 			}
 		}
 	}
@@ -69,13 +76,11 @@
 
 	}
 	// Meldung
-	#loginScreenMessage not([class $= "error"]) {
+	#loginScreenMessage:not([class $= "error"]) {
 		margin: 1em;
 		color: #0a5ca5;
 		font-size: 12pt;
 		img {max-width: 100%;}
-
-
 	}
 	div#login_footer {
 		position: absolute;
