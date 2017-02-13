@@ -933,7 +933,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		}
 
 		// Add actual events
-		row._update_events(events);
+		window.setTimeout(jQuery.proxy(function() {
+			this.row._update_events(this.events);
+		}, {row: row, events: events} ),0)
 
 		return row;
 	},
