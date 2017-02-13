@@ -194,12 +194,16 @@ class filemanager_select
 					{
 						$download_url = Vfs::download_url(Vfs::concat($content['path'],$content['name']));
 						if ($download_url[0] == '/') $download_url = Egw::link($download_url);
-						$js = "window.opener.CKEDITOR.tools.callFunction(".
-							$content['ckeditorfuncnum'].",'".
-							str_replace("'", "\\'", $download_url)."',".
-							"'');\negw(window).close();";
+
+						$response = Api\Json\Response::get();
+						$response->apply('window.opener.CKEDITOR.tools.callFunction', array(
+							$content['ckeditorfuncnum'],
+							str_replace("'", "\\'", $download_url)
+						));
+						Framework::window_close();
+						exit();
 					}
-					if(Api\Json\Response::isJSONResponse() && !($content['method'] == 'ckeditor_return'))
+					if(Api\Json\Response::isJSONResponse())
 					{
 						$response = Api\Json\Response::get();
 						if($js)
@@ -208,7 +212,8 @@ class filemanager_select
 						}
 						// Ahh!
 						// The vfs-select widget looks for this
-						$response->script('this.selected_files = '.json_encode($files) . '; egw(this).close();');
+						$response->script('this.selected_files = '.json_encode($files) . ';');
+						Framework::window_close();
 					}
 					else
 					{
