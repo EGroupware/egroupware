@@ -427,7 +427,7 @@ class admin_categories
 				}
 			}
 			// Can only edit (via context menu) Categories for the selected app (backend restriction)
-			if($row['appname'] != $query['appname'] || (array_sum($row['owner']) > 0))
+			if($row['appname'] != $query['appname'])
 			{
 				$row['class'] .= ' rowNoEdit ';
 			}
