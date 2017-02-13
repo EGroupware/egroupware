@@ -66,6 +66,8 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		this.set_start_date(this.options.start_date);
 		this.set_end_date(this.options.end_date);
 
+		this._cached_rows = [];
+
 	},
 
 	doLoadingFinished: function() {
@@ -483,6 +485,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		var rows = this._spread_events();
 		var row = jQuery('<div class="calendar_plannerEventRowWidget"></div>').appendTo(this.rows);
 		var height = rows.length * (parseInt(window.getComputedStyle(row[0]).getPropertyValue("height")) || 20);
+		var row_width = this.rows.width();
 		row.remove();
 
 		for(var c = 0; c < rows.length; c++)
@@ -500,7 +503,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 				rows[c][i].div.css('top', top+'%');
 				rows[c][i].div.css('height', (100/rows.length)+'%');
 				rows[c][i].div.css('left', left.toFixed(1)+'%');
-				rows[c][i].div.outerWidth(width/100 *this.rows.width() +'px');
+				rows[c][i].div.outerWidth((width/100 * row_width) +'px');
 			}
 		}
 		if(height)
