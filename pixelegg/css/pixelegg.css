@@ -1850,7 +1850,7 @@ body {
   margin-top: 25px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox .registration {
-  font-size: 12px;
+  font-size: 11px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox .registration a:not(:first-child):before {
   padding-left: 5px;
