@@ -169,6 +169,11 @@ class importexport_helper_functions {
 			{
 				$account_lid = trim(substr(trim($account_lid), 0, -strlen(lang('Group'))));
 			}
+			// Group <name> (no comma)
+			else if(strpos($account_lid, lang('Group')) === 0)
+			{
+				$account_lid = trim(substr(trim($account_lid), strlen(lang('Group'))));
+			}
 
 			if ( $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid )) {
 				$account_ids[] = $account_id;
