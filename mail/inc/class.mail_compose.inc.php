@@ -212,13 +212,21 @@ class mail_compose
 				'onExecute' => 'javaScript:app.mail.compose_saveDraft2fm',
 				'hint' => 'Save the drafted message as eml file into VFS'
 			),
-			'sign' => array (
+			'smime_sign' => array (
 				'caption' => 'Sign',
 				'icon' => 'smimeSignature',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_setToggle',
 				'checkbox' => true,
 				'hint' => 'Sign your message with smime certificate'
+			),
+			'smime_encrypt' => array (
+				'caption' => 'SMIME',
+				'icon' => 'smimeEncryption',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.compose_setToggle',
+				'checkbox' => true,
+				'hint' => 'Encrypt your message with smime certificate'
 			)
 		);
 		foreach (self::$priorities as $key => $priority)
@@ -2346,61 +2354,60 @@ class mail_compose
 		*/
 		if ($_formData['attachments'] && $_formData['filemode'] != Vfs\Sharing::ATTACH && !$_autosaving)
 		{
-			$attachment_links = $this->getAttachmentLinks($_formData['attachments'], $_formData['filemode'],
+			$attachment_links = $this->_getAttachmentLinks($_formData['attachments'], $_formData['filemode'],
 				$_formData['mimeType'] == 'html',
 				array_unique(array_merge((array)$_formData['to'], (array)$_formData['cc'], (array)$_formData['bcc'])),
 				$_formData['expiration'], $_formData['password']);
 		}
-		if($_formData['mimeType'] == 'html')
+		switch ($_formData['mimeType'])
 		{
-			$body = $_formData['body'];
-			if ($attachment_links)
-			{
-				if (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
+			case 'html':
+				$body = $_formData['body'];
+				if ($attachment_links)
 				{
-					$body = str_replace('<!-- HTMLSIGBEGIN -->', $attachment_links.'<!-- HTMLSIGBEGIN -->', $body);
+					if (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
+					{
+						$body = str_replace('<!-- HTMLSIGBEGIN -->', $attachment_links.'<!-- HTMLSIGBEGIN -->', $body);
+					}
+					else
+					{
+						$body .= $attachment_links;
+					}
+				}
+				if(!empty($signature))
+				{
+					$_mailObject->setBody($this->convertHTMLToText($body, true, true).
+						($disableRuler ? "\r\n" : "\r\n-- \r\n").
+						$this->convertHTMLToText($signature, true, true));
+
+					$body .= ($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').$signature;
 				}
 				else
 				{
-					$body .= $attachment_links;
+					$_mailObject->setBody($this->convertHTMLToText($body, true, true));
 				}
-			}
-			if(!empty($signature))
-			{
-				$_mailObject->setBody($this->convertHTMLToText($body, true, true).
-					($disableRuler ? "\r\n" : "\r\n-- \r\n").
-					$this->convertHTMLToText($signature, true, true));
+				// convert URL Images to inline images - if possible
+				if (!$_autosaving) $inline_images = Mail::processURL2InlineImages($_mailObject, $body, $mail_bo);
+				if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
+				{
+					$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
+				}
+				$_mailObject->setHtmlBody($body, null, false);	// false = no automatic alternative, we called setBody()
+				break;
+			case 'openpgp':
+				$_mailObject->setOpenPgpBody($_formData['body']);
+				break;
+			default:
+				$body = $this->convertHTMLToText($_formData['body'],false);
 
-				$body .= ($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').$signature;
-			}
-			else
-			{
-				$_mailObject->setBody($this->convertHTMLToText($body, true, true));
-			}
-			// convert URL Images to inline images - if possible
-			if (!$_autosaving) $inline_images = Mail::processURL2InlineImages($_mailObject, $body, $mail_bo);
-			if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
-			{
-				$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
-			}
-			$_mailObject->setHtmlBody($body, null, false);	// false = no automatic alternative, we called setBody()
-		}
-		elseif ($_formData['mimeType'] == 'openpgp')
-		{
-			$_mailObject->setOpenPgpBody($_formData['body']);
-		}
-		else
-		{
-			$body = $this->convertHTMLToText($_formData['body'],false);
+				if ($attachment_links) $body .= $attachment_links;
 
-			if ($attachment_links) $body .= $attachment_links;
-
-			#$_mailObject->Body = $_formData['body'];
-			if(!empty($signature)) {
-				$body .= ($disableRuler ?"\r\n":"\r\n-- \r\n").
-					$this->convertHTMLToText($signature,true,true);
-			}
-			$_mailObject->setBody($body);
+				#$_mailObject->Body = $_formData['body'];
+				if(!empty($signature)) {
+					$body .= ($disableRuler ?"\r\n":"\r\n-- \r\n").
+						$this->convertHTMLToText($signature,true,true);
+				}
+				$_mailObject->setBody($body);
 		}
 		//error_log(__METHOD__.__LINE__.array2string($_formData['attachments']));
 		// add the attachments
@@ -2499,7 +2506,7 @@ class mail_compose
 	 * @param string $password =null
 	 * @return string might be empty if no file attachments found
 	 */
-	protected function getAttachmentLinks(array $attachments, $filemode, $html, $recipients=array(), $expiration=null, $password=null)
+	protected function _getAttachmentLinks(array $attachments, $filemode, $html, $recipients=array(), $expiration=null, $password=null)
 	{
 		if ($filemode == Vfs\Sharing::ATTACH) return '';
 
@@ -2783,6 +2790,8 @@ class mail_compose
 		$this->sessionData['to_infolog'] = $_formData['to_infolog'];
 		$this->sessionData['to_tracker'] = $_formData['to_tracker'];
 		$this->sessionData['attachments']  = $_formData['attachments'];
+		$this->sessionData['smime_sign']  = $_formData['smime_sign'];
+		$this->sessionData['smime_encrypt']  = $_formData['smime_encrypt'];
 
 		if (isset($_formData['lastDrafted']) && !empty($_formData['lastDrafted']))
 		{
@@ -2965,6 +2974,43 @@ class mail_compose
 			$this->errorInfo = lang("Error: ").lang("No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.").($this->errorInfo?' '.$this->errorInfo:'');
 			#error_log($this->errorInfo);
 			return false;
+		}
+		// SMIME SIGN/ENCRYPTION
+		if ($_formData['smime_sign'] == 'on' || $_formData['smime_encrypt'] == 'on' )
+		{
+			try	{
+				if ($_formData['smime_sign'] == 'on')
+				{
+					$smime_part = $this->_encrypt(
+						'',//TODO
+						$_formData['smime_encrypt'] == 'on'? Mail\Smime::TYPE_SIGN_ENCRYPT: Mail\Smime::TYPE_SIGN,
+						$_formData['to'],
+						$identity['ident_email'],
+						$_formData['smime_passphrase']
+					);
+					if ($smime_part['smime_pass_require'])
+					{
+						$response = Api\Json\Response::get();
+						$response->call('app.mail.smimePassDialog');
+						return false;
+					}
+				}
+				elseif ($_formData['smime_sign'] == 'off' && $_formData['smime_encrypt'] == 'on')
+				{
+					$smime_part = $this->_encrypt(
+						'',//TODO
+						Mail\Smime::TYPE_ENCRYPT,
+						$_formData['to'],
+						$identity['ident_email']
+					);
+				}
+
+				//TODO Set signed or encrypted mime part
+			}
+			catch (Exception $ex)
+			{
+				throw new Api\Exception\WrongUserinput($ex->getMessage());
+			}
 		}
 
 		// set a higher timeout for big messages
@@ -3581,30 +3627,35 @@ class mail_compose
 	 * @return Horde_Mime_Part returns encrypted message
 	 * @throws Api\Exception\WrongUserinput if no certificate found
 	 */
-	function _encrypt(Horde_Mime_part $message, $type, $recipients, $sender)
+	protected function _encrypt(Horde_Mime_part $message, $type, $recipients, $sender, $passphrase='')
 	{
 		$AB = new addressbook_bo();
-
+		$smime = new Mail\Smime();
 
 		if (isset($sender) && ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
 		{
 			$sender_cert = $AB->get_smime_keys($sender);
-			$smime = new Mail\Smime();
 
 			if ($sender_cert)
 			{
-				$senderPubKey = $smime->get_publickey($sender_cert[$sender]);
+				$senderPubKey = $sender_cert[$sender];
 			}
 			else
 			{
 				throw new Api\Exception\WrongUserinput('no certificate found to sign the messase');
+			}
+			$credents = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
+			$privkey = $credents['acc_smime_password'];
+
+			if (!$smime->verifyPassphrase($privkey, $passphrase))
+			{
+				return array('smime_pass_require' => true);
 			}
 		}
 
 		if (isset($recipients) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
 		{
 			$recipients_certs = $AB->get_smime_keys($recipients);
-			$recipientsPubKeys = array_Map(array ($smime, 'get_publickey'), $recipients_certs);
 			if (!$recipients_certs) throw new Api\Exception\WrongUserinput('no certificate found from the recipients to sign/encrypt the messase');
 		}
 
@@ -3612,15 +3663,15 @@ class mail_compose
 		$sign_params =  array(
 			'type'		=> 'signature',
 			'pubkey'	=> $senderPubKey,
-			'prikey'	=> '',
-			'passphrase'=> '',
+			'privkey'	=> $privkey,
+			'passphrase'=> $passphrase,
 			'sigtype'	=> 'detach',
 			'certs'		=> ''
 		);
 		// parameters to pass on for encrypt mime part
 		$encrypt_params = array(
 			'type'		=> 'message',
-			'pubkey'	=> $recipientsPubKeys
+			'pubkey'	=> $recipients_certs
 		);
 		switch ($type)
 		{

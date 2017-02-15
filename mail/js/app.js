@@ -5528,5 +5528,33 @@ app.classes.mail = AppJS.extend(
 			url = this.et2.getArrayMgr("content").getEntry('smimeSigUrl');
 		}
 		window.egw.openPopup(url,'700','400');
+	},
+
+	/**
+	 * smime password dialog
+	 */
+	smimePassDialog: function ()
+	{
+		var self = this;
+		et2_createWidget("dialog",
+		{
+			callback: function(_button_id, _value)
+			{
+				if (_button_id && _value)
+				{
+					var pass = self.et2.getWidgetById('smime_passphrase');
+					pass.set_value(_value.value);
+				}
+			},
+			title: egw.lang('Request for passphrase'),
+			buttons: et2_dialog.BUTTONS_OK_CANCEL,
+			value:{
+				content:{
+					value: '',
+					message: self.egw.lang('Looks like your certificate is password protected. Please enter your passphrase and try to send again.')
+			}},
+			template: egw.webserverUrl+'/api/templates/default/password.xet',
+			resizable: false
+		}, et2_dialog._create_parent('mail'));
 	}
 });
