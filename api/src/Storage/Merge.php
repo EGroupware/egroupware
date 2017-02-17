@@ -1042,7 +1042,7 @@ abstract class Merge
 					}
 				}
 				if(!$this->parse_html_styles || (
-					strpos($value, "\n") !== FALSE && strpos($value,'<br') === FALSE && strpos($value, '<span') === FALSE
+					strpos($value, "\n") !== FALSE && strpos($value,'<br') === FALSE && strpos($value, '<span') === FALSE && strpos($value, '<p') === FALSE
 				))
 				{
 					// Encode special chars so they don't break the file
