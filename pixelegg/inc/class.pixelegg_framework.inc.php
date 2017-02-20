@@ -143,7 +143,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 -sidebar actiuve category :hover
 -popup toolbar
 */
-div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,#loginMainDiv #divAppIconBar #divLogo,
+div#egw_fw_header, div.egw_fw_ui_category:hover,#loginMainDiv,
 .et2_portlet .ui-widget-header{
 	background-color: $color !important;
 }
