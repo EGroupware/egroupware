@@ -213,7 +213,7 @@ class mail_compose
 				'hint' => 'Save the drafted message as eml file into VFS'
 			),
 			'smime_sign' => array (
-				'caption' => 'Sign',
+				'caption' => 'SMIME Sign',
 				'icon' => 'smimeSignature',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_setToggle',
@@ -221,7 +221,7 @@ class mail_compose
 				'hint' => 'Sign your message with smime certificate'
 			),
 			'smime_encrypt' => array (
-				'caption' => 'SMIME',
+				'caption' => 'SMIME Encryption',
 				'icon' => 'smimeEncryption',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_setToggle',
