@@ -4276,7 +4276,9 @@ class Mail
 
 			// remove last space-separated part and retry
 			$parts = explode(' ',$_date);
-			if (count($parts) > 1)
+			// try only 10 times to prevent of causing error by reaching
+			// maximum function nesting level.
+			if (count($parts) > 1 && count($parts)<10)
 			{
 				array_pop($parts);
 				$date2return = self::_strtotime(implode(' ', $parts), $format, $convert2usertime);
