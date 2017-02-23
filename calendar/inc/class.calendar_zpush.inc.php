@@ -1040,7 +1040,12 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 
 		// set timezone
 		try {
-			$as_tz = self::tz2as($event['tzid']);
+			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.':'.$event['tzid']);
+			//$as_tz = self::tz2as($event['tzid']);
+			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.':'. array2string($as_tz ));
+			// Using TimezoneUtil from zpush to transform from name to as_tz array
+			$as_tz = TimezoneUtil::GetFullTZFromTZName($event['tzid']);
+			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' TimeZone:'.$event['tzid'].' transforms to:'. array2string($as_tz ));
 			$message->timezone = base64_encode(self::_getSyncBlobFromTZ($as_tz));
 		}
 		catch(Exception $e) {
