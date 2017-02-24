@@ -778,6 +778,9 @@ abstract class Tracking
 					$notification->set_attachments($attachments);
 				}
 				$notification->send();
+
+				// Notification can (partially) succeed and still generate errors
+				$this->errors += $notification->errors();
 			}
 			catch (Exception $exception)
 			{
