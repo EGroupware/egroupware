@@ -67,7 +67,7 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		this.set_end_date(this.options.end_date);
 
 		this._cached_rows = [];
-
+		this._row_height = 20;
 	},
 
 	doLoadingFinished: function() {
@@ -114,7 +114,6 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		var parent = objectManager.getObjectById(this.id,1) || objectManager.getObjectById(this._parent.id,1) || objectManager;
 		if(!parent)
 		{
-			debugger;
 			egw.debug('error','No parent objectManager found');
 			return;
 		}
@@ -437,6 +436,39 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 	},
 
 	/**
+	 * Callback used when the daywise data changes
+	 *
+	 * Events should update themselves when their data changes, here we are
+	 * dealing with a change in which events are displayed on this row.
+	 *
+	 * @param {String[]} event_ids
+	 * @returns {undefined}
+	 */
+	_data_callback: function(event_ids) {
+		var events = [];
+		if(event_ids == null || typeof event_ids.length == 'undefined') event_ids = [];
+		for(var i = 0; i < event_ids.length; i++)
+		{
+			var event = egw.dataGetUIDdata('calendar::'+event_ids[i]);
+			event = event && event.data || false;
+			if(event && event.date)
+			{
+				events.push(event);
+			}
+			else if (event)
+			{
+				// Got an ID that doesn't belong
+				event_ids.splice(i--,1);
+			}
+		}
+		if(!this._parent.disabled)
+		{
+			this.resize();
+			this._update_events(events);
+		}
+	},
+
+	/**
 	 * Load the event data for this day and create event widgets for each.
 	 *
 	 * If event information is not provided, it will be pulled from the content array.
@@ -446,10 +478,11 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 	_update_events: function(events)
 	{
 		// Remove all events
-		while(this._children.length)
+		while(this._children.length > 0)
 		{
-			this._children[this._children.length-1].free();
-			this.removeChild(this._children[this._children.length-1]);
+			var node = this._children[this._children.length-1];
+			this.removeChild(node);
+			node.free();
 		}
 		this._cached_rows = [];
 
@@ -483,10 +516,8 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 	position_event: function(event)
 	{
 		var rows = this._spread_events();
-		var row = jQuery('<div class="calendar_plannerEventRowWidget"></div>').appendTo(this.rows);
-		var height = rows.length * (parseInt(window.getComputedStyle(row[0]).getPropertyValue("height")) || 20);
+		var height = rows.length * this._row_height;
 		var row_width = this.rows.width();
-		row.remove();
 
 		for(var c = 0; c < rows.length; c++)
 		{
@@ -725,7 +756,9 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 			return;
 		}
 
-		this.position_event();		
+		var row = jQuery('<div class="calendar_plannerEventRowWidget"></div>').appendTo(this.rows);
+		this._row_height = (parseInt(window.getComputedStyle(row[0]).getPropertyValue("height")) || 20);
+		row.remove();
 	}
 
 });}).call(this);

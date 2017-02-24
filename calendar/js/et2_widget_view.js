@@ -246,7 +246,13 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			_owner = jQuery.extend([],_owner);
 		}
 		this.options.owner = _owner;
-		if(old !== this.options.owner && this.isAttached())
+		if(this.isAttached() && (
+			typeof old === "number" && typeof _owner === "number" && old !== this.options.owner ||
+			// Array of ids will not compare as equal
+			((typeof old === 'object' || typeof _owner === 'object') && old.toString() !== _owner.toString()) ||
+			// Strings
+			typeof old === 'string' && ''+old !== ''+this.options.owner
+		))
 		{
 			this.invalidate(true);
 		}

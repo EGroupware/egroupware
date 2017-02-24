@@ -71,6 +71,11 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			.addClass(this.options.class)
 			.css('width',this.options.width)
 			.on('mouseenter', function() {
+				// Bind actions on first mouseover for faster creation
+				if(event._need_actions_linked)
+				{
+					event._copy_parent_actions();
+				}
 				// Tooltip
 				if(!event._tooltipElem)
 				{
@@ -108,6 +113,8 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			.appendTo(this.title);
 
 		this.setDOMNode(this.div[0]);
+
+		this._need_actions_linked = false;
 	},
 
 	doLoadingFinished: function() {
@@ -243,23 +250,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			this._actionObject.id = 'calendar::' + id;
 		}
 
-		// Copy actions set in parent
-		if(!this.options.readonly && !this._parent.options.readonly)
-		{
-			var action_parent = this;
-			while(action_parent != null && !action_parent.options.actions &&
-				!action_parent.instanceOf(et2_container)
-			)
-			{
-				action_parent = action_parent.getParent();
-			}
-			try {
-				this._link_actions(action_parent.options.actions||{});
-			} catch (e) {
-				// something went wrong, but keep quiet about it
-				debugger;
-			}
-		}
+		this._need_actions_linked = true;
 
 		// Make sure category stuff is there
 		// Fake it to use the cache / call - if already there, these will return
@@ -397,6 +388,9 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	_small_size: function() {
 
 		if(this.options.value.whole_day_on_top) return;
+
+		// Skip for planner view, it's always small
+		if(this._parent && this._parent.instanceOf(et2_calendar_planner_row)) return;
 
 		// Pre-calculation reset
 		this.div.removeClass('calendar_calEventSmall');
@@ -861,6 +855,32 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		et2_calendar_event.series_split_prompt(this.options.value,this.options.value.recur_date, callback);
 	},
 
+	/**
+	 * Copy the actions set on the parent, apply them to self
+	 *
+	 * This can take a while to do, so we try to do it only when needed - on mouseover
+	 */
+	_copy_parent_actions: function()
+	{
+		// Copy actions set in parent
+		if(!this.options.readonly && !this._parent.options.readonly)
+		{
+			var action_parent = this;
+			while(action_parent != null && !action_parent.options.actions &&
+				!action_parent.instanceOf(et2_container)
+			)
+			{
+				action_parent = action_parent.getParent();
+			}
+			try {
+				this._link_actions(action_parent.options.actions||{});
+				this._need_actions_linked = false;
+			} catch (e) {
+				// something went wrong, but keep quiet about it
+			}
+		}
+	},
+	
 	/**
 	 * Link the actions to the DOM nodes / widget bits.
 	 *
