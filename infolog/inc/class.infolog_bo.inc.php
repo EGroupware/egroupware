@@ -1499,7 +1499,7 @@ class infolog_bo
 			$query = array(
 				'col_filter' => array('info_id' => $args['infolog']),
 				'subs' => true,
-				'cols' => 'egw_infolog.info_id,info_type,info_status,info_percent,info_id_parent',
+				'cols' => 'main.info_id,info_type,info_status,info_percent,info_id_parent',
 			);
 			$infos = array();
 			foreach($this->search($query) as $row)
@@ -1517,9 +1517,13 @@ class infolog_bo
 					$infos[$row['info_id']]['icon'] = 'infolog/'.$icon;
 				}
 			}
-			foreach($this->anzSubs(array_keys($infos)) as $info_id => $subs)
+			$anzSubs = $this->anzSubs(array_keys($infos));
+			if($anzSubs && is_array($anzSubs))
 			{
-				if ($subs) $infos[$info_id]['class'] .= ' infolog_rowHasSubs';
+				foreach($anzSubs as $info_id => $subs)
+				{
+					if ($subs) $infos[$info_id]['class'] .= ' infolog_rowHasSubs';
+				}
 			}
 		}
 		return $infos;
