@@ -1813,8 +1813,10 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				{
 					var event = egw.dataGetUIDdata('calendar::'+data[i]);
 
+					if(!event) continue;
+
 					// Try to determine rows interested
-					if(event && event.data && this.grouper)
+					if(event.data && this.grouper)
 					{
 						this.grouper.group.call(this, labels, events, event.data);
 					}
@@ -1829,7 +1831,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 							}
 							if(this.cache[id].indexOf(event.data.row_id) === -1 && (
 								event.data.participants[id] && this.options.group_by === 'user' ||
-								event.data.category === id && this.options.group_by === 'category'
+								event.data.category === id && this.options.group_by === 'category' ||
+								this.options.group_by === 'month'
 							))
 							{
 								this.cache[id].push(event.data.row_id);
