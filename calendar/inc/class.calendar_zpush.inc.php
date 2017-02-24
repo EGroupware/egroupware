@@ -1716,7 +1716,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		//echo "<pre>".print_r($ical_arr,true)."</pre>\n";
 		//$as_tz = calendar_zpush::tz2as($tz);
 		// Using TimezoneUtil from zpush to transform from name to as_tz array
-		$as_tz = TimezoneUtil::GetFullTZFromTZName($event['tzid']);
+		$as_tz = TimezoneUtil::GetFullTZFromTZName($tz);
 		//echo "$tz=<pre>".print_r($as_tz,true)."</pre>\n";
 
 		$as_tz_org = calendar_zpush::_getTZFromSyncBlob(base64_decode($sync_blob));
