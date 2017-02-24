@@ -888,6 +888,21 @@ class calendar_so
 				" ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$join;
 		}
 
+		// Check for some special sorting, used by planner views
+		if($params['order'] == 'participants , cal_non_blocking DESC')
+		{
+			$order = ($GLOBALS['egw_info']['user']['preferences']['common']['account_display'] == 'lastname' ? 'n_family' : 'n_fileas');
+			$cols .= ",egw_addressbook.{$order}";
+			$join .= "LEFT JOIN egw_addressbook ON egw_addressbook.account_id = {$this->user_table}.cal_user_id";
+			$params['order'] = "$order, cal_non_blocking DESC";
+		}
+		else if ($params['order'] == 'categories , cal_non_blocking DESC')
+		{
+			$params['order'] = 'cat_name, cal_non_blocking DESC';
+			$cols .= ',egw_categories.cat_name';
+			$join .= "LEFT JOIN egw_categories ON egw_categories.cat_id = {$this->cal_table}.cal_category";
+		}
+
 		//$starttime = microtime(true);
 		if ($useUnionQuery)
 		{

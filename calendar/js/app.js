@@ -2860,6 +2860,15 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			framework.applications.calendar.sidemenuEntry.showAjaxLoader();
 		}
 
+		if(state.view === 'planner' && state.sortby === 'user')
+		{
+			query.order = 'participants';
+		}
+		else if (state.view === 'planner' && state.sortby === 'category')
+		{
+			query.order = 'categories';
+		}
+
 		// Already in progress?
 		var query_string = JSON.stringify(query);
 		if(this._queries_in_progress.indexOf(query_string) != -1)
