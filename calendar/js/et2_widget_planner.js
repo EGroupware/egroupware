@@ -64,6 +64,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		}
 	},
 
+	DEFERRED_ROW_TIME: 100,
+
 	/**
 	 * Constructor
 	 *
@@ -108,6 +110,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		this.setDOMNode(this.div[0]);
 
 		this.registeredCallbacks = [];
+		this.cache = {};
+		this._deferred_row_updates = {};
 	},
 
 	destroy: function() {
@@ -133,6 +137,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		// - no action system -
 		var planner = this;
 
+		this.cache = {};
+		this._deferred_row_updates = {};
+		
 		/**
 		 * If user puts the mouse over an event, then we'll set up resizing so
 		 * they can adjust the length.  Should be a little better on resources
@@ -502,7 +509,20 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			draw_row: function(sort_key, label, events) {
 				if(['user','both'].indexOf(egw.preference('planner_show_empty_rows','calendar')) !== -1 || events.length)
 				{
-					return this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
+					var row = this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
+
+					// Since the daywise cache is by user, we can tap in here
+					var t = new Date(this.options.start_date);
+					var end = new Date(this.options.end_date);
+					do
+					{
+						var cache_id = app.classes.calendar._daywise_cache_id(t, sort_key);
+						egw.dataRegisterUID(cache_id, row._data_callback, row);
+
+						t.setUTCDate(t.getUTCDate() + 1);
+					}
+					while(t < end);
+					return row;
 				}
 			}
 		},
@@ -767,7 +787,10 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			// Show AJAX loader
 			this.widget.loader.show();
 
-			this.widget.value = this.widget._fetch_data();
+			this.widget.cache = {};
+			this._deferred_row_updates = {};
+
+			this.widget._fetch_data();
 
 			this.widget._drawGrid();
 
@@ -849,7 +872,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			.append(this.grid);
 		this.grid.empty();
 
-		var grouper = this.groupers[isNaN(this.options.group_by) ? this.options.group_by : 'category'];
+		var grouper = this.grouper;
 		if(!grouper) return;
 
 		// Headers
@@ -903,6 +926,14 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		{
 			this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().last().width()) + 'px');
 		}
+		// Add actual events
+		for(var key in this._deferred_row_updates)
+		{
+			window.clearTimeout(key);
+		}
+		window.setTimeout(jQuery.proxy(function() {
+			this._deferred_row_update();
+		}, this ),this.DEFERRED_ROW_TIME)
 		this.value = [];
 	},
 
@@ -931,11 +962,6 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		{
 			row.doLoadingFinished();
 		}
-
-		// Add actual events
-		window.setTimeout(jQuery.proxy(function() {
-			this.row._update_events(this.events);
-		}, {row: row, events: events} ),0)
 
 		return row;
 	},
@@ -1720,74 +1746,165 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var end = new Date(this.options.end_date);
 		do
 		{
-			// Cache is by date (and owner, if seperate)
-			var date = t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
-			var cache_id = app.classes.calendar._daywise_cache_id(date, this.options.owner);
-
-			if(egw.dataHasUID(cache_id))
-			{
-				var c = egw.dataGetUIDdata(cache_id);
-				if(c.data && c.data !== null)
-				{
-					// There is data, pass it along now
-					for(var j = 0; j < c.data.length; j++)
-					{
-						if(last_data.indexOf(c.data[j]) === -1 && egw.dataHasUID('calendar::'+c.data[j]))
-						{
-							value.push(egw.dataGetUIDdata('calendar::'+c.data[j]).data);
-						}
-					}
-					last_data = c.data;
-				}
-			}
-			else
-			{
-				fetch = true;
-				// Assume it's empty, if there is data it will be filled later
-				egw.dataStoreUID(cache_id, []);
-			}
-			this.registeredCallbacks.push(cache_id);
-			egw.dataRegisterUID(cache_id, function(data) {
-				if(data && data.length)
-				{
-					// If displaying by category, we need the infolog (or other app) categories too
-					var im = this.getInstanceManager();
-					for(var i = 0; i < data.length && this.options.group_by == 'category'; i++)
-					{
-						var event = egw.dataGetUIDdata('calendar::'+data[i]);
-						if(event && event.data && event.data.app)
-						{
-							// Fake it to use the cache / call
-							et2_selectbox.cat_options({
-								_type:'select-cat',
-								getInstanceManager: function() {return im;}
-							}, {application:event.data.app||'calendar'});
-
-							// Get CSS too
-							egw.includeCSS('/api/categories.php?app='+event.data.app);
-						}
-					}
-
-					this.invalidate(false);
-				}
-			}, this, this.getInstanceManager().execId,this.id);
+			value = value.concat(this._cache_register(t, this.options.owner, last_data));
 
 			t.setUTCDate(t.getUTCDate() + 1);
 		}
 		while(t < end);
-		// Need to get some more from the server
-		if(fetch && app.calendar)
-		{
-			app.calendar._fetch_data({
-				first: this.options.start_date,
-				last: this.options.end_date,
-				owner: this.options.owner,
-				filter: this.options.filter
-			}, this.getInstanceManager());
-		}
 
 		this.doInvalidate = true;
 		return value;
+	},
+
+	/**
+	 * Deal with registering for data cache
+	 *
+	 * @param Date t
+	 * @param String owner Calendar owner
+	 */
+	_cache_register: function _cache_register(t, owner, last_data)
+	{
+		// Cache is by date (and owner, if seperate)
+		var date = t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
+		var cache_id = app.classes.calendar._daywise_cache_id(date, owner);
+		var value = [];
+
+		if(egw.dataHasUID(cache_id))
+		{
+			var c = egw.dataGetUIDdata(cache_id);
+			if(c.data && c.data !== null)
+			{
+				// There is data, pass it along now
+				for(var j = 0; j < c.data.length; j++)
+				{
+					if(last_data.indexOf(c.data[j]) === -1 && egw.dataHasUID('calendar::'+c.data[j]))
+					{
+						value.push(egw.dataGetUIDdata('calendar::'+c.data[j]).data);
+					}
+				}
+				last_data = c.data;
+			}
+		}
+		else
+		{
+			fetch = true;
+			// Assume it's empty, if there is data it will be filled later
+			egw.dataStoreUID(cache_id, []);
+		}
+		this.registeredCallbacks.push(cache_id);
+
+		egw.dataRegisterUID(cache_id, function(data) {
+
+			if(data && data.length)
+			{
+				var invalidate = true;
+
+				// Try to determine rows interested
+				var labels = [];
+				var events = {};
+				if(this.grouper)
+				{
+					labels = this.grouper.row_labels.call(this);
+					invalidate = false;
+				}
+				
+				var im = this.getInstanceManager();
+				for(var i = 0; i < data.length; i++)
+				{
+					var event = egw.dataGetUIDdata('calendar::'+data[i]);
+
+					// Try to determine rows interested
+					if(event && event.data && this.grouper)
+					{
+						this.grouper.group.call(this, labels, events, event.data);
+					}
+					if(Object.keys(events).length > 0 )
+					{
+						for(var label_id in events)
+						{
+							var id = ""+labels[label_id].id;
+							if(typeof this.cache[id] === 'undefined')
+							{
+								this.cache[id] = [];
+							}
+							if(this.cache[id].indexOf(event.data.row_id) === -1 && (
+								event.data.participants[id] && this.options.group_by === 'user' ||
+								event.data.category === id && this.options.group_by === 'category'
+							))
+							{
+								this.cache[id].push(event.data.row_id);
+							}
+							if (this._deferred_row_updates[id])
+							{
+								window.clearTimeout(this._deferred_row_updates[id]);
+							}
+							this._deferred_row_updates[id] = window.setTimeout(jQuery.proxy(this._deferred_row_update,this,id),this.DEFERRED_ROW_TIME);
+						}
+					}
+					else
+					{
+						// Could be an event no row is interested in, could be a problem.
+						// Just redraw everything
+						invalidate = true;
+						break;
+					}
+
+					// If displaying by category, we need the infolog (or other app) categories too
+					if(event && event.data && event.data.app && this.options.group_by == 'category')
+					{
+						// Fake it to use the cache / call
+						et2_selectbox.cat_options({
+							_type:'select-cat',
+							getInstanceManager: function() {return im;}
+						}, {application:event.data.app||'calendar'});
+
+						// Get CSS too
+						egw.includeCSS('/api/categories.php?app='+event.data.app);
+					}
+				}
+
+				if(invalidate)
+				{
+					this.invalidate(false);
+				}
+			}
+		}, this, this.getInstanceManager().execId,this.id);
+		
+		return value;
+	},
+
+	/**
+	 * Because users may be participants in various events and the time it takes
+	 * to create many events, we don't want to update a row too soon - we may have
+	 * to re-draw it if we find the user / category in another event.  Pagination
+	 * makes this worse.  We wait a bit before updating the row to avoid
+	 * having to re-draw it multiple times.
+	 *
+	 * @param {type} id
+	 * @returns {undefined}
+	 */
+	_deferred_row_update: function(id) {
+		// Something's in progress, skip
+		if(!this.doInvalidate) return;
+		
+		var id_list = typeof id === 'undefined' ? Object.keys(this.cache) : [id];
+		for(var i = 0; i < id_list.length; i++)
+		{
+			var cache_id = id_list[i];
+			var row = this.getWidgetById('planner_row_'+cache_id);
+
+			window.clearTimeout(this._deferred_row_updates[cache_id]);
+			delete this._deferred_row_updates[cache_id];
+
+			if(row)
+			{
+				row._data_callback(this.cache[cache_id]);
+			}
+			else
+			{
+				break;
+			}
+		}
 	},
 
 	/**
@@ -1802,7 +1919,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	 *	Days should be in order.
 	 *
 	 */
-	set_value: function(events)
+	set_value: function set_value(events)
 	{
 		if(typeof events !== 'object') return false;
 
@@ -1849,7 +1966,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	 * @param {string|number} group_by 'user', 'month', or an integer category ID
 	 * @returns {undefined}
 	 */
-	set_group_by: function(group_by)
+	set_group_by: function set_group_by(group_by)
 	{
 		if(isNaN(group_by) && typeof this.groupers[group_by] === 'undefined')
 		{
@@ -1858,6 +1975,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		var old = this.options.group_by;
 		this.options.group_by = ''+group_by;
 
+		this.grouper = this.groupers[isNaN(this.options.group_by) ? this.options.group_by : 'category'];
+		
 		if(old !== this.options.group_by && this.isAttached())
 		{
 			this.invalidate(true);
@@ -1869,7 +1988,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	 *
 	 * @param {boolean} weekends
 	 */
-	set_show_weekend: function(weekends)
+	set_show_weekend: function set_show_weekend(weekends)
 	{
 		weekends = weekends ? true : false;
 		if(this.options.show_weekend !== weekends)
