@@ -128,7 +128,7 @@ class Mail
 	 *
 	 * @array
 	 */
-	static $htmLawed_config = array('comment'=>1, //remove comments
+	static $htmLawed_config = array('comment'=>2, //remove comments
 		'make_tag_strict' => 3, // 3 is a new own config value, to indicate that transformation is to be performed, but don't transform font as size transformation of numeric sizes to keywords alters the intended result too much
 		'keep_bad'=>2, //remove tags but keep element content (4 and 6 keep element content only if text (pcdata) is valid in parent element as per specs, this may lead to textloss if balance is switched on)
 		// we switch the balance off because of some broken html mails contents get removed like (td in table), and let browser deal with it
@@ -482,6 +482,8 @@ class Mail
 		{
 			Cache::setCache(Cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),self::$activeFolderCache, 60*60*10);
 		}
+		// no need to block session any longer
+		$GLOBALS['egw']->session->commit_session();
 	}
 
 	/**

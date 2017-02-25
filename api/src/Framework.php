@@ -1372,6 +1372,9 @@ abstract class Framework extends Framework\Extra
 	 */
 	public static function ajax_get_preference($app)
 	{
+		// dont block session, while we read preferences, they are not supposed to change something in the session
+		$GLOBALS['egw']->session->commit_session();
+
 		if (preg_match('/^[a-z0-9_]+$/i', $app))
 		{
 			// send etag header, if we are directly called (not via jsonq!)
