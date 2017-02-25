@@ -704,6 +704,9 @@ abstract class Ajax extends Api\Framework
 	 */
 	public function ajax_sidebox($appname, $md5)
 	{
+		// dont block session, while we read sidebox, they are not supposed to change something in the session
+		$GLOBALS['egw']->session->commit_session();
+
 		$response = Api\Json\Response::get();
 		$sidebox = $this->get_sidebox($appname);
 		$encoded = json_encode($sidebox);
