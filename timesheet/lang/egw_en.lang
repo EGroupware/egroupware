@@ -27,7 +27,7 @@ deletes this field	timesheet	en	Deletes this field
 determines the order the fields are displayed	timesheet	en	Determines the order the fields are displayed
 directory with documents to insert entries	timesheet	en	Directory with documents to insert entries
 each value is a line like <id>[=<label>]	timesheet	en	Each value is a line like <id>[=<label>]
-edit status	timesheet	en	Edit status
+edit status	common	en	Edit status
 edit this entry	timesheet	en	Edit this entry
 empty if identical to duration	timesheet	en	Empty if identical to duration
 end	timesheet	en	End
