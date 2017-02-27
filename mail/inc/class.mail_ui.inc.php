@@ -1354,7 +1354,6 @@ class mail_ui
 
 		$mail_ui->mail_bo->restoreSessionData();
 		if (isset($query['selectedFolder'])) $mail_ui->mail_bo->sessionData['mailbox']=$query['selectedFolder'];
-		$mail_ui->mail_bo->saveSessionData();
 
 		$sRToFetch = null;
 		list($_profileID,$_folderName) = explode(self::$delimiter,$query['selectedFolder'],2);
@@ -2007,7 +2006,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
 
-		$smimeData = $this->resolveSmimeAttachment ($attachments, $uid, $partID, $mailbox, $rowID);
+			$smimeData = $this->resolveSmimeAttachment ($attachments, $uid, $partID, $mailbox, $rowID);
 		if (is_array($smimeData))
 		{
 			$error_msg[] = $smimeData['msg'];
@@ -2030,8 +2029,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 		}
 
-		//error_log(__METHOD__.__LINE__.array2string($attachments));
-		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
+			//error_log(__METHOD__.__LINE__.array2string($attachments));
+			$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
 
 		$nonDisplayAbleCharacters = array('[\016]','[\017]',
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
@@ -3710,6 +3709,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						}
 						catch (Exception $e)
 						{
+							if (Mail::$debug) error_log(__METHOD__,' ()'.$e->getMessage ());
 							continue;
 						}
 						if (in_array($fS['shortDisplayName'],Mail::$autoFolders)) $fS['shortDisplayName']=lang($fS['shortDisplayName']);
