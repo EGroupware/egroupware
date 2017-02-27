@@ -152,7 +152,7 @@
 					<description/>
 				</row>
 				<row class="dialogHeader3">
-					<description value="Usable"/>
+					<description value="Useable"/>
 					<textbox statustext="How many of them are useable?" id="useable" size="5" maxlength="10" class="et2_fullWidth"/>
 					<description/>
 					<description value="Bookable"/>

@@ -398,14 +398,11 @@ save as infolog	mail	sk	Uložiť ako položku Záznamníka
 save as infolog on send	mail	sk	Pri odoslaní uložiť ako položku Záznamníka
 save as ticket	mail	sk	Uložiť ako položku Sledovača
 save as tracker on send	mail	sk	Pri odoslaní uložiť ako položku Sledovača
-save into vfs	mail	sk	Uložiť na VFS
 save message to disk	mail	sk	Uložiť správu na disk
-save message to filemanager	mail	sk	Uložiť správu do Správcu súborov
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	sk	Uloženie správy %1 zlyhalo. Nepodarilo sa uložiť správu do priečinka %2 z dôvodu: %3
 save the drafted message as eml file into vfs	mail	sk	Uložiť návrh správy na VFS ako súbor typu EML
 save to disk	mail	sk	Uložiť na disk
 save to filemanager	mail	sk	Uložiť do Správcu súborov
-save to vfs	mail	sk	Uložiť na VFS
 save:	mail	sk	Uložiť:
 saving of message %1 failed. destination folder %2 does not exist.	mail	sk	Ukladanie správy %1 zlyhalo. Cieľový priečinok %2 neexistuje.
 saving of message %1 succeeded. check folder %2.	mail	sk	Ukladanie správy %1 sa podarilo. Pozrite priečinok %2.

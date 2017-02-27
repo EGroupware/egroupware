@@ -341,7 +341,6 @@ save as infolog on send	mail	nl	Bewaar als Infolog en verstuur
 save as ticket	mail	nl	Bewaar als ticket
 save as tracker on send	mail	nl	Bewaar als tracker en verstuur
 save message to disk	mail	nl	Bewaar bericht op schijf
-save message to filemanager	mail	nl	Bewaar bericht in bestandsbeheer
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	nl	Bewaren van bericht %1 is mislukt. Kon het bericht niet opslaan naar map %2 om de volgende reden %3
 save to disk	mail	nl	Bewaar op schijf
 save to filemanager	mail	nl	Bewaar naar bestandeberheer

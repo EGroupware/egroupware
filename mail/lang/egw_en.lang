@@ -406,14 +406,11 @@ save as infolog	mail	en	Save as Infolog
 save as infolog on send	mail	en	Save as Infolog on send
 save as ticket	mail	en	Save as ticket
 save as tracker on send	mail	en	Save as tracker on send
-save into vfs	mail	en	Save into VFS
 save message to disk	mail	en	Save Message to disk
-save message to filemanager	mail	en	Save message to filemanager
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
 save the drafted message as eml file into vfs	mail	en	Save the drafted message as eml file into VFS
 save to disk	mail	en	Save to disk
 save to filemanager	mail	en	Save to filemanager
-save to vfs	mail	en	Save to VFS
 save:	mail	en	Save:
 saves subscription changes	mail	en	Save subscription changes
 saves this acl	mail	en	Save this ACL
@@ -551,6 +548,7 @@ which folders - in general - should not be automatically created, if not existin
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
 whole message	mail	en	whole message
 with message:	mail	en	With message:
+wizard	mail	en	Wizard
 writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
 write	mail	en	write
 wrote	mail	en	wrote

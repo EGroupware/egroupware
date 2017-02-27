@@ -607,7 +607,7 @@ app.classes.addressbook = AppJS.extend(
 				}
 			},
 			this.egw.lang('Name for the distribution list'),
-			this.egw.lang('Add a new list...')
+			this.egw.lang('Add a new list')
 		);
 	},
 

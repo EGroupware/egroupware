@@ -408,12 +408,10 @@ save as ticket	mail	de	Als Ticket speichern
 save as tracker on send	mail	de	Als Ticket speichern
 save into vfs	mail	de	Im EGroupware Dateimanager speichern
 save message to disk	mail	de	Nachricht speichern
-save message to filemanager	mail	de	Im EGroupware Dateimanager speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	de	Das speichern der Nachricht %1 ist fehlgeschlagen. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
 save the drafted message as eml file into vfs	mail	de	Speichert diesen Entwurf im EGroupware Dateimanager ab.
 save to disk	mail	de	Speichern unter
 save to filemanager	mail	de	Nachricht im Dateimananger speichern
-save to vfs	mail	de	Im EGroupware Dateimanager speichern
 save:	mail	de	Speichern
 saves subscription changes	mail	de	Änderungen speichern
 saves this acl	mail	de	Zugriffsrechte speichern
@@ -551,6 +549,7 @@ which folders - in general - should not be automatically created, if not existin
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten.
 whole message	mail	de	gesamte Nachricht
 with message:	mail	de	mit folgender Nachricht:
+wizard	mail	de	Assistent
 writable sharing requires epl version!	mail	de	Beschreibbare Freigaben benötigen die EPL Version!
 write	mail	de	schreiben
 wrote	mail	de	schrieb

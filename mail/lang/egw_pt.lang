@@ -291,7 +291,6 @@ save as infolog on send	mail	pt	Salvar como Infolog em enviar
 save as ticket	mail	pt	Salvar como bilhete
 save as tracker on send	mail	pt	Salvar como rastreador em send
 save message to disk	mail	pt	Salve Mensagem para o disco
-save message to filemanager	mail	pt	Salvar mensagem ao gerenciador de arquivos
 save to disk	mail	pt	Salvar em disco
 save to filemanager	mail	pt	Guardar no gerenciador de arquivos
 save:	mail	pt	Economiza:

@@ -1126,7 +1126,7 @@ class mail_ui
 					),
 					'save2filemanager' => array(
 						'caption' => 'Filemanager',
-						'hint' => 'Save message to filemanager',
+						'hint' => 'Save to filemanager',
 						'group' => $group,
 						'icon' => 'filemanager/navbar',
 						'onExecute' => 'javaScript:app.mail.mail_save2fm',

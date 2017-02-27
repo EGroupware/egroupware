@@ -113,6 +113,7 @@ resource	resources	en	Resource
 resource %1 deleted!	resources	en	Resource %1 deleted!
 resource %1 faild to be deleted!	resources	en	Resource %1 faild to be deleted!
 resource %1 saved!	resources	en	Resource %1 saved!
+resource / accessories	resources	en	Resource / Accessories
 resource id	resources	en	Resource ID
 resources	common	en	Resources
 resources and accessories	resources	en	Resources and Accessories
@@ -145,8 +146,8 @@ use general resources icon	resources	en	Use general resources icon
 use own picture	resources	en	Use own picture
 use the category's icon	resources	en	Use the category icon
 useable	resources	en	Useable
-useable:	resources	en	Useable:
-view accessories for this resource	resources	en	View accessories
+useable	resources	en	Useable
+view accessories	resources	en	View accessories
 view calendar	resources	en	View calendar
 view this entry	resources	en	View entry
 web-page of resource	resources	en	Web page of resource
