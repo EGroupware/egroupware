@@ -243,7 +243,7 @@ app.classes.infolog = AppJS.extend(
 		if (nm && filter2)
 		{
 			// Show / hide descriptions
-			this.show_details(filter2.value == 'all', nm.getDOMNode(nm));
+			this.show_details(filter2.get_value() === 'all', nm.getDOMNode(nm));
 		}
 
 		// Only change columns for a real user event, to avoid interfering with
@@ -273,9 +273,16 @@ app.classes.infolog = AppJS.extend(
 				nm.dataview.getColumnMgr().columns[i].set_visibility(colData[i].visible);
 			}
 			nm.dataview.getColumnMgr().updated = true;
-			// Update page
+			
+			// Update page - set update_in_progress to true to avoid triggering
+			// the change handler and looping if the user has a custom field
+			// column change
+			var in_progress = nm.update_in_progress;
+			nm.update_in_progress = true;
 			nm.dataview.updateColumns();
+			nm.update_in_progress = in_progress;
 		}
+		return false;
 	},
 
 	/**
