@@ -75,7 +75,7 @@ app.classes.timesheet = AppJS.extend(
 
 		if (filter && dates)
 		{
-			dates.set_disabled(filter.value !== "custom");
+			dates.set_disabled(filter.get_value() !== "custom");
 			if (filter.value == "custom")
 			{				
 				jQuery(this.et2.getWidgetById('startdate').getDOMNode()).find('input').focus();
