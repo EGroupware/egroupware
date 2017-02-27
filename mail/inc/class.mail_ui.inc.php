@@ -1257,7 +1257,6 @@ class mail_ui
 
 		$mail_ui->mail_bo->restoreSessionData();
 		if (isset($query['selectedFolder'])) $mail_ui->mail_bo->sessionData['mailbox']=$query['selectedFolder'];
-		$mail_ui->mail_bo->saveSessionData();
 
 		$sRToFetch = null;
 		list($_profileID,$_folderName) = explode(self::$delimiter,$query['selectedFolder'],2);
@@ -1923,7 +1922,7 @@ class mail_ui
 
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
-	
+
 	/**
 	 * Build actions for display toolbar
 	 */
@@ -1951,7 +1950,7 @@ class mail_ui
 		$actions = array_reverse($actions,true);
 		return $actions;
 	}
-	
+
 	/**
 	 * createAttachmentBlock
 	 * helper function to create the attachment block/table
@@ -2497,7 +2496,7 @@ class mail_ui
 	function vfsSaveAttachment($ids,$path)
 	{
 		//error_log(__METHOD__.__LINE__.'("'.array2string($ids).'","'.$path."\")');");
-		
+
 		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
 		{
 			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); egw(window).close();';
@@ -2505,7 +2504,7 @@ class mail_ui
 		$err=null;
 		$dupe_count = array();
 		$rememberServerID = $this->mail_bo->profileID;
-		
+
 		/**
 		 * Extract all parameteres from the given id
 		 * @param int $id message id ('::' delimited mailbox::uid::part-id::is_winmail::name)
@@ -2526,7 +2525,7 @@ class mail_ui
 				'icServer' => $hA['profileID']
 			);
 		};
-		
+
 		//Examine the first attachment to see if attachment
 		//is winmail.dat embedded attachments.
 		$isMultipleDownload=is_array($ids);
@@ -3719,7 +3718,7 @@ class mail_ui
 		$response->call('app.mail.mail_reloadNode',$refreshData);
 
 	}
-	
+
 	/**
 	 * ResolveWinmail fetches the encoded attachments
 	 * from winmail.dat and will response expected structure back
@@ -3735,11 +3734,11 @@ class mail_ui
 	function ajax_resolveWinmail ($_rowid)
 	{
 		$response = egw_json_response::get();
-		
+
 		$idParts = self::splitRowID($_rowid);
 		$uid = $idParts['msgUID'];
 		$mbox = $idParts['folder'];
-		
+
 		$attachments = $this->mail_bo->getMessageAttachments($uid, null, null, false,true,true,$mbox);
 		if (is_array($attachments))
 		{
@@ -3751,7 +3750,7 @@ class mail_ui
 			$response->call('egw.message', lang('Can not resolve the winmail.dat attachment!'));
 		}
 	}
-	
+
 	/**
 	 * move folder
 	 *
