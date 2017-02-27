@@ -1,6 +1,6 @@
 %1 timesheets(s) %2	timesheet	de	%1 Stundenzettel %2
 %1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	de	%1 Stundenzettel %2, %3 wurde nicht durchgeführt wegen ungenügenden Rechten !!!
---> enter new name	timesheet	de	-> neuer Name eingeben
+--> enter new name	timesheet	de	-> neuen Namen eingeben
 2 month ago	timesheet	de	Vor 2 Monaten
 2 years ago	timesheet	de	Vor 2 Jahren
 3 years ago	timesheet	de	Vor 3 Jahren
@@ -27,7 +27,7 @@ deletes this field	timesheet	de	Dieses Feld löschen
 determines the order the fields are displayed	timesheet	de	verändert die Reihenfolge der angezeigten Felder
 directory with documents to insert entries	timesheet	de	Verzeichnis mit Dokumenten zum Einfügen.
 each value is a line like <id>[=<label>]	timesheet	de	jeder Wert ist eine Zeile in dem Format <id>[=|label>]
-edit status	timesheet	de	Status bearbeiten
+edit status	common	de	Status bearbeiten
 edit this entry	timesheet	de	diesen Eintrag bearbeiten
 empty if identical to duration	timesheet	de	leer lassen wenn gleich Dauer
 end	timesheet	de	Ende
