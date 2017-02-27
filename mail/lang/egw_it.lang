@@ -402,14 +402,12 @@ save as infolog	mail	it	Salva come scheda attività
 save as infolog on send	mail	it	Salva come scheda attività all'invio
 save as ticket	mail	it	Salva come ticket
 save as tracker on send	mail	it	Salva come ticket all'invio
-save into vfs	mail	it	Salva in VFS
 save message to disk	mail	it	Salva messaggio sul disco
 save message to filemanager	mail	it	Salva il messaggio in Filemanager
 save of message %1 failed. could not save message to folder %2 due to: %3	mail	it	Salvataggio del messaggio %1 non riuscito. Non sono riuscito a salvare nella cartella %2. Causa: %3
 save the drafted message as eml file into vfs	mail	it	Salva la bozza come file eml nel VFS
 save to disk	mail	it	Salva su disco
 save to filemanager	mail	it	Salva in filemanager
-save to vfs	mail	it	Salva in VFS
 save:	mail	it	Salva:
 saving of message %1 failed. destination folder %2 does not exist.	mail	it	Salvataggio del messaggio %1 non riuscito. La cartella %2 non esiste.
 saving of message %1 succeeded. check folder %2.	mail	it	Salvataggio del messaggio %1 riuscito. Controlla la cartella %2

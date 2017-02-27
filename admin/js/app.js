@@ -609,7 +609,7 @@ app.classes.admin = AppJS.extend(
 						.sendRequest();
 				}
 			},this),
-			title: egw.lang('Access control'),
+			title: this.egw.lang('Access control'),
 			buttons: et2_dialog.BUTTONS_OK_CANCEL,
 			value: {
 				content: content,

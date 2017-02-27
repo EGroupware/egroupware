@@ -206,7 +206,7 @@ class mail_compose
 				'hint' => 'Select the message priority tag',
 			),
 			'save2vfs' => array (
-				'caption' => 'Save to VFS',
+				'caption' => 'Save to filemanager',
 				'icon' => 'filesave',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_saveDraft2fm',

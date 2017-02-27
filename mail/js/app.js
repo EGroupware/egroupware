@@ -5226,7 +5226,7 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save into VFS','info');
+			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save to filemanager','info');
 		}
 	},
 

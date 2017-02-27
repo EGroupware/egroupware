@@ -113,6 +113,7 @@ resource	resources	de	Ressource
 resource %1 deleted!	resources	de	Ressource %1 wurde gelöscht!
 resource %1 faild to be deleted!	resources	de	Ressource %1 konnte nicht gelöscht werden!
 resource %1 saved!	resources	de	Ressource %1 wurde gespeichert.
+resource / accessories	resources	de	Ressource / Zubehör
 resource id	resources	de	Ressourcen ID
 resources	common	de	Ressourcen
 resources and accessories	resources	de	Ressourcen und Zubehör
@@ -145,8 +146,7 @@ use general resources icon	resources	de	Generelles Bild benutzen
 use own picture	resources	de	Eigenes Bild benutzen
 use the category's icon	resources	de	Bild der Kategorie benutzen
 useable	resources	de	Nutzbar
-useable:	resources	de	Nutzbar:
-view accessories for this resource	resources	de	Zeige das Zubehör der Ressource an
+view accessories	resources	de	Zeige Zubehör
 view calendar	resources	de	Kalender anzeigen
 view this entry	resources	de	Diesen Eintrag anschauen
 web-page of resource	resources	de	Ausführliche Beschreibung der Ressource

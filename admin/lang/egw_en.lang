@@ -270,6 +270,7 @@ description can not exceed 255 characters in length !	admin	en	Description can n
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	en	Destination account #%1 does exist and is NOT renamed itself! Can not merge accounts, it will violate unique contains. Delete with transfer of data instead.
 determines the order the fields are displayed	admin	en	Determines the order the fields are displayed
 disable	admin	en	Disable
+disable all	admin	en	Disable all
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
 disable minifying of javascript and css files	admin	en	Disable minifying of javascript and CSS files
 disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor

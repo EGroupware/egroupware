@@ -304,12 +304,9 @@ save as infolog	mail	fr	Enregistrer comme Infolog
 save as infolog on send	mail	fr	Enregistrer comme Infolog après l'envoi
 save as ticket	mail	fr	Enregistrer comme ticket
 save as tracker on send	mail	fr	Enregistrer comme traqueur après l'envoi
-save into vfs	mail	fr	Enregistrer dans le VFS
 save message to disk	mail	fr	Enregistrer message sur le disque
-save message to filemanager	mail	fr	Enregistrer le message dans le gestionnaire de fichier
 save to disk	mail	fr	Enregistrer sur le disque
 save to filemanager	mail	fr	Enregistrer dans le gestionnaire de fichier
-save to vfs	mail	fr	Enregistrer dans le VFS
 save:	mail	fr	Enregistrer :
 select all	mail	fr	Tout sélectionner
 select file to attach to message	mail	fr	Sélectionner le fichier à joindre au message

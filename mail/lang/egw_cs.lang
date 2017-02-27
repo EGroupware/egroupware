@@ -159,7 +159,6 @@ save as calendar	mail	cs	Termín uložit do kalendáře
 save as draft	mail	cs	Uložit jako rozepsané
 save as infolog	mail	cs	Uložit jako infolog
 save message to disk	mail	cs	Uložit zprávu na disk
-save message to filemanager	mail	cs	Uložení správce souborů EGroupware
 save to disk	mail	cs	Uložit jako ...
 select all	mail	cs	Vybrat vše
 sender	mail	cs	Odesílatel

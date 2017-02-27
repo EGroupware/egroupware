@@ -270,6 +270,7 @@ description can not exceed 255 characters in length !	admin	de	Die Beschreibung 
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	de	Zielkonto #%1 besteht und wurde nicht umbenannt. Konten wurden nicht zusammengeführt, da die eindeutige Kennzeichnung gestört würde. Alternativ sollten Sie löschen mit übertragen des Inhalts anwählen.
 determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge der angezeigten Felder
 disable	admin	de	abschalten
+disable all	admin	de	Alle Videos deaktivieren
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten

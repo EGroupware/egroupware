@@ -567,7 +567,7 @@ app.classes.filemanager = AppJS.extend(
 				self._do_action('createdir', dir, true, path);	// true=synchronous request
 				self.change_dir((path == '/' ? '' : path)+'/'+ dir);
 			}
-		},this.egw.lang('New directory'),this.egw.lang('Create directroy'));
+		},this.egw.lang('New directory'),this.egw.lang('Create directory'));
 	},
 
 	/**
