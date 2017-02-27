@@ -1354,7 +1354,6 @@ class mail_ui
 
 		$mail_ui->mail_bo->restoreSessionData();
 		if (isset($query['selectedFolder'])) $mail_ui->mail_bo->sessionData['mailbox']=$query['selectedFolder'];
-		$mail_ui->mail_bo->saveSessionData();
 
 		$sRToFetch = null;
 		list($_profileID,$_folderName) = explode(self::$delimiter,$query['selectedFolder'],2);
@@ -3550,6 +3549,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						}
 						catch (Exception $e)
 						{
+							if (Mail::$debug) error_log(__METHOD__,' ()'.$e->getMessage ());
 							continue;
 						}
 						if (in_array($fS['shortDisplayName'],Mail::$autoFolders)) $fS['shortDisplayName']=lang($fS['shortDisplayName']);
