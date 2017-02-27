@@ -315,6 +315,7 @@ class infolog_ui
 			unset($query['col_filter']['parent_id']);
 			if(!$query['action'])
 			{
+				unset($query['rows']);
 				egw_cache::setSession('infolog', $query['session_for'].'session_data', $query);
 			}
 			$query['actions'] = $this->get_actions($query);
@@ -850,6 +851,7 @@ class infolog_ui
 			{
 				unset($values['nm']['multi_action']);
 				unset($values['nm']['action_id']);
+				unset($values['nm']['rows']);
 				egw_cache::setSession('infolog', $values['nm']['session_for'].'session_data', $values['nm']);
 				$this->tmpl->location($own_referer);
 			}
