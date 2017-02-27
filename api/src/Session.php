@@ -1553,8 +1553,6 @@ class Session
 	 */
 	public static function init_handler()
 	{
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() session_handler='.self::$session_handler.', egw_info[server][session_handler]='.$GLOBALS['egw_info']['server']['session_handler'].' called from:'.function_backtrace());
-
 		ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
 		session_name(self::EGW_SESSION_NAME);
 		if (($sessionid = self::get_sessionid()))
