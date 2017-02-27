@@ -227,7 +227,8 @@ class History
 
 		// Add in files, if possible
 		if($GLOBALS['egw_info']['user']['apps']['filemanager'] &&
-			$file = Api\Vfs\Sqlfs\StreamWrapper::url_stat("/apps/{$query['appname']}/{$query['record_id']}",STREAM_URL_STAT_LINK))
+			($sqlfs_sw = new Api\Vfs\Sqlfs\StreamWrapper()) &&
+			($file = $sqlfs_sw->url_stat("/apps/{$query['appname']}/{$query['record_id']}",STREAM_URL_STAT_LINK)))
 		{
 			$_query[] = array(
 				'table' => Api\Vfs\Sqlfs\StreamWrapper::TABLE,
