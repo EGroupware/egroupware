@@ -353,9 +353,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		$message = new SyncMeetingRequest();
 		// set timezone
 		try {
-			//$as_tz = self::tz2as($event['tzid']);
-			// Using TimezoneUtil from zpush to transform from name to as_tz array
-			$as_tz = TimezoneUtil::GetFullTZFromTZName($event['tzid']);
+			$as_tz = self::tz2as($event['tzid']);
 			$message->timezone = base64_encode(self::_getSyncBlobFromTZ($as_tz));
 		}
 		catch(Exception $e) {
@@ -1042,12 +1040,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 
 		// set timezone
 		try {
-			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.':'.$event['tzid']);
-			//$as_tz = self::tz2as($event['tzid']);
-			//ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.':'. array2string($as_tz ));
-			// Using TimezoneUtil from zpush to transform from name to as_tz array
-			$as_tz = TimezoneUtil::GetFullTZFromTZName($event['tzid']);
-			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' TimeZone:'.$event['tzid'].' transforms to:'. array2string($as_tz ));
+			$as_tz = self::tz2as($event['tzid']);
 			$message->timezone = base64_encode(self::_getSyncBlobFromTZ($as_tz));
 		}
 		catch(Exception $e) {
@@ -1714,9 +1707,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 		$ical_tz = $ical;
 		$ical_arr = calendar_zpush::ical2array($ical_tz);
 		//echo "<pre>".print_r($ical_arr,true)."</pre>\n";
-		//$as_tz = calendar_zpush::tz2as($tz);
-		// Using TimezoneUtil from zpush to transform from name to as_tz array
-		$as_tz = TimezoneUtil::GetFullTZFromTZName($tz);
+		$as_tz = calendar_zpush::tz2as($tz);
 		//echo "$tz=<pre>".print_r($as_tz,true)."</pre>\n";
 
 		$as_tz_org = calendar_zpush::_getTZFromSyncBlob(base64_decode($sync_blob));
