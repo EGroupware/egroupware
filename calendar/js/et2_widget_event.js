@@ -523,9 +523,41 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' + this.options.value.location+'</p>' : '')+
 				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label +'</p>' : '')+
 				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
-					participants + '</p>'+
+					participants + '</p>'+ this._participant_summary(this.options.value.participants) +
 			'</div>'+
 		'</div>';
+	},
+
+	/**
+	 * Generate participant summary line
+	 *
+	 * @returns {String}
+	 */
+	_participant_summary: function(participants)
+	{
+		if( Object.keys(this.options.value.participants).length < 2)
+		{
+			return '';
+		}
+		
+		var participant_status = {A: 0, R: 0, T: 0, U: 0, D: 0};
+		var status_label = {A: 'accepted', R: 'rejected', T: 'tentative', U: 'unknown'};
+		var participant_summary = Object.keys(this.options.value.participants).length + ' ' + this.egw().lang('Participants')+': ';
+		var status_totals = [];
+
+		for(var id in this.options.value.participants)
+		{
+			var status = this.options.value.participants[id].substr(0,1);
+			participant_status[status]++;
+		}
+		for(var status in participant_status)
+		{
+			if(participant_status[status] > 0)
+			{
+				status_totals.push(participant_status[status] + ' ' + this.egw().lang(status_label[status]));
+			}
+		}
+		return participant_summary + status_totals.join(', ');
 	},
 
 	/**
