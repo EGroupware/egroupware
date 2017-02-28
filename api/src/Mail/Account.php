@@ -316,6 +316,11 @@ class Account implements \ArrayAccess
 				$this->imapServer($this->user) && is_a($this->imapServer, __NAMESPACE__.'\\Imap') &&
 				($data = $this->imapServer->getUserData($GLOBALS['egw']->accounts->id2name($this->user))))
 			{
+				// give quota-limit from SMTP/SQL precedence over (cached) quota from Dovecot
+				if (isset($this->params['quotaLimit']) && is_a($this->imapServer, __NAMESPACE__.'\\Imap\\Dovecot'))
+				{
+					unset($data['quotaLimit']);
+				}
 				$this->params = array_merge($this->params, $data);
 			}
 		}
@@ -1266,7 +1271,7 @@ class Account implements \ArrayAccess
 		{
 			Credentials::delete($data['acc_id'], $data['account_id'][0], Credentials::SMIME);
 		}
-		
+
 		// store or delete admin credentials
 		if ($data['acc_imap_admin_username'] && $data['acc_imap_admin_password'])
 		{
