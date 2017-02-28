@@ -2019,6 +2019,16 @@ class mail_compose
 		$this->sessionData['messageFolder'] = $_folder;
 		$this->sessionData['in-reply-to'] = ($headers['IN-REPLY-TO']?$headers['IN-REPLY-TO']:$headers['MESSAGE_ID']);
 		$this->sessionData['references'] = ($headers['REFERENCES']?$headers['REFERENCES']:$headers['MESSAGE_ID']);
+
+		// break reference into multiple lines if they're greater than 998 chars
+		// and remove comma seperation. Fix error serer does not support binary
+		// data due to long references.
+		if (strlen($this->sessionData['references'])> 998)
+		{
+			$temp_refs = explode(',',$this->sessionData['references']);
+			$this->sessionData['references'] = implode(" ",$temp_refs);
+		}
+
 		// thread-topic is a proprietary microsoft header and deprecated with the current version
 		// horde does not support the encoding of thread-topic, and probably will not no so in the future
 		//if ($headers['THREAD-TOPIC']) $this->sessionData['thread-topic'] = $headers['THREAD-TOPIC'];
@@ -2260,7 +2270,6 @@ class mail_compose
 		{
 			$_formData['mimeType'] = 'openpgp';
 		}
-		//error_log(__METHOD__."(, formDate[filemode]=$_formData[filemode], _autosaving=".array2string($_autosaving).') '.function_backtrace());
 		$mail_bo	= $this->mail_bo;
 		$activeMailProfile = Mail\Account::read($this->mail_bo->profileID);
 
@@ -2277,37 +2286,25 @@ class mail_compose
 		$_mailObject->addHeader('X-Mailer', 'EGroupware-Mail');
 		if(!empty($_formData['in-reply-to'])) {
 			if (stripos($_formData['in-reply-to'],'<')===false) $_formData['in-reply-to']='<'.trim($_formData['in-reply-to']).'>';
-			//error_log(__METHOD__.__LINE__.'$_mailObject->addHeader(In-Reply-To', $_formData['in-reply-to'].")");
 			$_mailObject->addHeader('In-Reply-To', $_formData['in-reply-to']);
 		}
 		if(!empty($_formData['references'])) {
-			if (stripos($_formData['references'],'<')===false) $_formData['references']='<'.trim($_formData['references']).'>';
-			//error_log(__METHOD__.__LINE__.'$_mailObject->addHeader(References', $_formData['references'].")");
+			if (stripos($_formData['references'],'<')===false)
+			{
+				$_formData['references']='<'.trim($_formData['references']).'>';
+			}
 			$_mailObject->addHeader('References', $_formData['references']);
 		}
-		// thread-topic is a proprietary microsoft header and deprecated with the current version
-		// horde does not support the encoding of thread-topic, and probably will not no so in the future
-		//if(!empty($_formData['thread-topic']) && class_exists('Horde_Mime_Headers_ThreadTopic')) {
-		//	//$_mailObject->addHeader('Thread-Topic', Horde_Mime::encode($_formData['thread-topic']));
-		//	$_mailObject->addHeader('Thread-Topic', $_formData['thread-topic']);
-		//}
 
 		if(!empty($_formData['thread-index'])) {
-			//error_log(__METHOD__.__LINE__.'$_mailObject->addHeader(Tread-Index', $_formData['thread-index'].")");
 			$_mailObject->addHeader('Thread-Index', $_formData['thread-index']);
 		}
 		if(!empty($_formData['list-id'])) {
-			//error_log(__METHOD__.__LINE__.'$_mailObject->addHeader(List-Id', $_formData['list-id'].")");
 			$_mailObject->addHeader('List-Id', $_formData['list-id']);
 		}
-		//error_log(__METHOD__.__LINE__.' notify to:'.$_identity['ident_email'].'->'.array2string($_formData));
 		if($_formData['disposition']=='on') {
 			$_mailObject->addHeader('Disposition-Notification-To', $_identity['ident_email']);
 		}
-		//error_log(__METHOD__.__LINE__.' Organization:'.array2string($_identity));
-		//if(!empty($_identity['ident_org'])) {
-		//	$_mailObject->addHeader('Organization', $_identity['ident_org']);
-		//}
 
 		// Expand any mailing lists
 		foreach(array('to', 'cc', 'bcc', 'replyto')  as $field)
@@ -2321,18 +2318,11 @@ class mail_compose
 
 		// this should never happen since we come from the edit dialog
 		if (Mail::detect_qp($_formData['body'])) {
-			//error_log("Error: bocompose::createMessage found QUOTED-PRINTABLE while Composing Message. Charset:$realCharset Message:".print_r($_formData['body'],true));
 			$_formData['body'] = preg_replace('/=\r\n/', '', $_formData['body']);
 			$_formData['body'] = quoted_printable_decode($_formData['body']);
 		}
 		$disableRuler = false;
 		$signature = $_identity['ident_signature'];
-		/*
-			Signature behavior preference changed. New default, if not set -> 0
-					'0' => 'after reply, visible during compose',
-					'1' => 'before reply, visible during compose',
-					'no_belowaftersend'  => 'appended after reply before sending',
-		*/
 		$sigAlreadyThere = $this->mailPreferences['insertSignatureAtTopOfMessage']!='no_belowaftersend'?1:0;
 		if ($sigAlreadyThere)
 		{
@@ -2346,12 +2336,6 @@ class mail_compose
 		{
 			$disableRuler = true;
 		}
-		/* should be handled by identity object itself
-		if($signature)
-		{
-			$signature = Mail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
-		}
-		*/
 		if ($_formData['attachments'] && $_formData['filemode'] != Vfs\Sharing::ATTACH && !$_autosaving)
 		{
 			$attachment_links = $this->_getAttachmentLinks($_formData['attachments'], $_formData['filemode'],
@@ -2409,15 +2393,12 @@ class mail_compose
 				}
 				$_mailObject->setBody($body);
 		}
-		//error_log(__METHOD__.__LINE__.array2string($_formData['attachments']));
 		// add the attachments
 		if (is_array($_formData) && isset($_formData['attachments']))
 		{
 			$connection_opened = false;
-			//error_log(__METHOD__.__LINE__.array2string($_formData['attachments']));
 			$tnfattachments = null;
 			foreach((array)$_formData['attachments'] as $attachment) {
-				//error_log(__METHOD__.__LINE__.array2string($attachment));
 				if(is_array($attachment))
 				{
 					if (!empty($attachment['uid']) && !empty($attachment['folder'])) {
@@ -2459,7 +2440,6 @@ class mail_compose
 										{
 											$tnfpart = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID'],$k['is_winmail']);
 											$attachmentData['attachment'] = $tnfpart['attachment'];
-											//error_log(__METHOD__.__LINE__.$k['name'].'<->'.$attachment['name'].':'.array2string($attachmentData['attachment']));
 											break;
 										}
 									}
