@@ -204,6 +204,23 @@ class Hooks
 	}
 
 	/**
+	 * Disable a hook for this request
+	 *
+	 * @param string $hook
+	 * @return boolean true if hook existed, false otherwise
+	 */
+	static public function disable($hook)
+	{
+		if (!isset(self::$locations)) self::read();
+
+		$ret = isset(self::$locations[$hook]);
+
+		unset(self::$locations[$hook]);
+
+		return $ret;
+	}
+
+	/**
 	 * Read all hooks into self::$locations
 	 *
 	 * @param boolan $force_rescan =false true: do not use instance cache
