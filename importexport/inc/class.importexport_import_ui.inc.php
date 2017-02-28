@@ -74,8 +74,7 @@ use EGroupware\Api\Etemplate;
 					$plugin = new $definition_obj->plugin;
 
 					// Check file encoding matches import
-					$sample = file_get_contents($content['file']['tmp_name']);
-					$sample = mb_substr( $sample, 1024 );
+					$sample = mb_substr(file_get_contents($content['file']['tmp_name'], false, null, 0, 2048), 1024);
 
 					if($appname == 'addressbook' && $definition_obj->plugin == 'addressbook_import_vcard')
 					{
