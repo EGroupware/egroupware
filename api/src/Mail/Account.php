@@ -397,7 +397,7 @@ class Account implements \ArrayAccess
 	 */
 	public function is_imap($try_connect=true)
 	{
-		if (empty($this->acc_imap_host) || empty($this->acc_imap_username) || empty($this->acc_imap_password))
+		if (empty($this->acc_imap_host) || ( empty($this->acc_imap_username) && empty($this->acc_imap_password) ) )
 		{
 			return false;	// no imap host or credentials
 		}
