@@ -357,7 +357,7 @@ class Sql extends Mail\Smtp
 	 */
 	function getMailboxes($return_inactive)
 	{
-		$join = 'JOIN '.accounts_sql::TABLE.' ON '.self::TABLE.'.account_id='.accounts_sql::TABLE.'.account_id';
+		$join = 'JOIN '.Api\Accounts\Sql::TABLE.' ON '.self::TABLE.'.account_id='.Api\Accounts\Sql::TABLE.'.account_id';
 		if (!$return_inactive)
 		{
 			$join .= ' JOIN '.self::TABLE.' active ON active.account_id='.self::TABLE.'.account_id AND active.mail_type='.self::TYPE_ENABLED;
