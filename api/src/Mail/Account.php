@@ -309,6 +309,11 @@ class Account implements \ArrayAccess
 				$this->imapServer($this->user) && is_a($this->imapServer, __NAMESPACE__.'\\Imap') &&
 				($data = $this->imapServer->getUserData($GLOBALS['egw']->accounts->id2name($this->user))))
 			{
+				// give quota-limit from SMTP/SQL precedence over (cached) quota from Dovecot
+				if (isset($this->params['quotaLimit']) && is_a($this->imapServer, __NAMESPACE__.'\\Imap\\Dovecot'))
+				{
+					unset($data['quotaLimit']);
+				}
 				$this->params = array_merge($this->params, $data);
 			}
 		}
