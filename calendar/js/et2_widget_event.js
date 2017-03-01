@@ -321,7 +321,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		this.body.toggleClass('calendar_calEventBodySmall', event.whole_day_on_top || false);
 
 		// Header
-		var title = !event.is_private ? event['title'] : egw.lang('private');
+		var title = !event.is_private ? egw.htmlspecialchars(event['title']) : egw.lang('private');
 
 		this.title
 			.html('<span class="calendar_calTimespan">'+this._get_timespan(event) + '<br /></span>')
@@ -361,7 +361,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			if(this.options.value.description.trim())
 			{
 				this.body
-					.append('<p>'+this.options.value.description+'</p>');
+					.append('<p>'+egw.htmlspecialchars(this.options.value.description)+'</p>');
 			}
 		}
 
@@ -517,10 +517,11 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			'</div>'+
 			'<div class="calendar_calEventBody">'+
 				'<p style="margin: 0px;">'+
-				'<span class="calendar_calEventTitle">'+this.options.value.title+'</span><br>'+
-				this.options.value.description+'</p>'+
+				'<span class="calendar_calEventTitle">'+egw.htmlspecialchars(this.options.value.title)+'</span><br>'+
+				egw.htmlspecialchars(this.options.value.description)+'</p>'+
 				'<p style="margin: 2px 0px;">'+times+'</p>'+
-				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' + this.options.value.location+'</p>' : '')+
+				(this.options.value.location ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Location') + '</span>:' + 
+				egw.htmlspecialchars(this.options.value.location)+'</p>' : '')+
 				(cat_label ? '<p><span class="calendar_calEventLabel">'+this.egw().lang('Category') + '</span>:' + cat_label +'</p>' : '')+
 				'<p><span class="calendar_calEventLabel">'+this.egw().lang('Participants')+'</span>:<br />'+
 					participants + '</p>'+ this._participant_summary(this.options.value.participants) +

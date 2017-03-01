@@ -205,6 +205,20 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		},
 
 		/**
+		 * Escape HTML special chars, just like PHP
+		 *
+		 * @param {string} s String to encode
+		 *
+		 * @return {string}
+		 */
+		htmlspecialchars: function(s) {
+			return s.replace(/&/g, '&amp;')
+				.replace(/"/g, '&quot;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;');
+		},
+
+		/**
 		 * If an element has display: none (or a parent like that), it has no size.
 		 * Use this to get its dimensions anyway.
 		 *
