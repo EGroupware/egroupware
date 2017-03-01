@@ -2787,11 +2787,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$temp_path = $homedir/*Vfs::get_home_dir()*/ . "/.mail_$message_id";
 		if(Vfs::is_dir($temp_path)) Vfs::remove ($temp_path);
 
-		// Add subject to path, so it gets used as the file name
-		$path = $temp_path . '/' . ($header['SUBJECT'] ? Vfs::encodePathComponent($header['SUBJECT']) : lang('mail')) .'/';
+		// Add subject to path, so it gets used as the file name, replacing ':'
+		// as it seems to cause an error
+		$path = $temp_path . '/' . ($header['SUBJECT'] ? Vfs::encodePathComponent(str_replace(':','-', $header['SUBJECT'])) : lang('mail')) .'/';
 		if(!Vfs::mkdir($path, 0700, true))
 		{
-			Framework::message("Unable to open temp directory $path",'error');
+			echo "Unable to open temp directory $path";
 			return;
 		}
 
