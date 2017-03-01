@@ -1419,8 +1419,9 @@ class Session
 			$GLOBALS['egw']->db->update(self::ACCESS_LOG_TABLE,array(
 				'session_dla' => time(),
 				'session_action' => $this->action,
+			) + ($this->action === '/logout.php' ? array() : array(
 				'lo' => null,	// just in case it was (automatic) timed out before
-			),array(
+			)),array(
 				'sessionid' => $this->sessionid_access_log,
 			),__LINE__,__FILE__);
 		}
