@@ -285,7 +285,7 @@ class timesheet_ui extends timesheet_bo
 						}
 						// create a new entry
 						$this->data['ts_start'] += 60 * $this->data['ts_duration'];
-						foreach(array('ts_id','ts_title','ts_description','ts_duration','ts_quantity','ts_modified','ts_modifier') as $name)
+						foreach(array('ts_id','ts_title','ts_description','ts_duration','ts_quantity','ts_modified','ts_modifier','link_to') as $name)
 						{
 							unset($this->data[$name]);
 						}
