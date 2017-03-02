@@ -10,7 +10,6 @@
 
 table.prefTable {
 	width: 100%;
-	position: relative;
 }
 table.prefTable tbody tr.prefRow:first-child > .prefHelpColumn {
 	background-image:url(../../../api/templates/default/images/hint.png);
@@ -35,11 +34,10 @@ tr.prefRow > td {
     display: none;
     width: 255px;
     max-height: 99%;
-    height: 98%;
+    height: calc(99% - 150px);
     background-color: #f0f0ff;
     padding: 5px;
-    margin-top: -4px;
-    top: 0;
+    top: 80px;
 	overflow-y: auto;
     z-index: 1;
 }
