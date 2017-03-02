@@ -418,7 +418,10 @@ var et2_url_ro = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 		{
 			_nodes[0].setAttribute("class", _values["class"]);
 		}
-
+		if(this.options.statustext)
+		{
+			this.span.attr('title',this.options.statustext);
+		}
 	}
 });}).call(this);
 et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
