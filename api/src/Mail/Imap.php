@@ -185,6 +185,9 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 				)),
 			);
 		}
+		// uncomment to enable imap log for a single user
+		//if ($GLOBALS['egw_info']['user']['account_lid'] === 'username') $parent_params['debug'] = '/var/lib/egroupware/'.$_SERVER['HTTP_HOST'].'/imap.log';
+
 		// switch to allow to disable some capabilites known to be troublesome
 		switch (strtolower(trim($this->params['acc_imap_host'])))
 		{
