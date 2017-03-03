@@ -484,6 +484,9 @@ class admin_mail
 		);
 		$content['msg'] = $msg;
 
+		$api_config = Api\Config::read('phpgwapi');
+		$next_step = (empty($GLOBALS['egw_info']['server']['sendmail']) &&
+					  empty($api_config['sendmail'])) ? 'smtp' : 'edit';
 		if (isset($content['button']))
 		{
 			list($button) = each($content['button']);
@@ -496,7 +499,7 @@ class admin_mail
 				case 'continue':
 					if (!$content['acc_sieve_enabled'])
 					{
-						return $this->smtp($content);
+						return $this->$next_step($content);
 					}
 					break;
 			}
@@ -564,7 +567,7 @@ class admin_mail
 						$content['sieve_connected'] = true;
 
 						unset($content['button']);
-						return $this->smtp($content, lang('Successful connected to %1 server%2.', 'Sieve',
+						return $this->$next_step($content, lang('Successful connected to %1 server%2.', 'Sieve',
 							' '.lang('and logged in')));
 					}
 					catch(Horde\ManageSieve\Exception\ConnectionFailed $e) {
@@ -1247,6 +1250,15 @@ class admin_mail
 			}
 		}
 		$content['old_acc_id'] = $content['acc_id'];
+
+		// disable SMTP tab if we configured sendmail only
+		$api_config = Api\Config::read('phpgwapi');
+		if (!empty($api_config['sendmail']) ||
+			!empty($GLOBALS['egw_info']['server']['sendmail']))
+		{
+			$readonlys['tabs']['admin.mailaccount.smtp'] = true;
+			unset($content['acc_smtp_type']);
+		}
 
 		// only allow to delete further identities, not a standard identity
 		$readonlys['button[delete_identity]'] = !($content['ident_id'] > 0 && $content['ident_id'] != $content['std_ident_id']);
