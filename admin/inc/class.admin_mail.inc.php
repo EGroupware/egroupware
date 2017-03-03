@@ -484,9 +484,7 @@ class admin_mail
 		);
 		$content['msg'] = $msg;
 
-		$api_config = Api\Config::read('phpgwapi');
-		$next_step = (empty($GLOBALS['egw_info']['server']['sendmail']) &&
-					  empty($api_config['sendmail'])) ? 'smtp' : 'edit';
+		$next_step = (empty($GLOBALS['egw_info']['server']['sendmail'])) ? 'smtp' : 'edit';
 		if (isset($content['button']))
 		{
 			list($button) = each($content['button']);
@@ -1252,9 +1250,7 @@ class admin_mail
 		$content['old_acc_id'] = $content['acc_id'];
 
 		// disable SMTP tab if we configured sendmail only
-		$api_config = Api\Config::read('phpgwapi');
-		if (!empty($api_config['sendmail']) ||
-			!empty($GLOBALS['egw_info']['server']['sendmail']))
+		if (!empty($GLOBALS['egw_info']['server']['sendmail']))
 		{
 			$readonlys['tabs']['admin.mailaccount.smtp'] = true;
 			unset($content['acc_smtp_type']);

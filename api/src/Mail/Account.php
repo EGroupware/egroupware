@@ -467,10 +467,7 @@ class Account implements \ArrayAccess
 			// Horde use locale for translation of error messages
 			Api\Preferences::setlocale(LC_MESSAGES);
 
-			$api_config = Api\Config::read('phpgwapi');
-
-			if (!empty($GLOBALS['egw_info']['server']['sendmail']) ||
-				!empty($api_config['sendmail']))
+			if (!empty($GLOBALS['egw_info']['server']['sendmail']))
 			{
 				$this->smtpTransport = new Horde_Mail_Transport_Sendmail();
 			}
