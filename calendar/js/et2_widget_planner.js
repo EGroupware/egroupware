@@ -1889,6 +1889,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 	_deferred_row_update: function(id) {
 		// Something's in progress, skip
 		if(!this.doInvalidate) return;
+
+		this.grid.height(0);
 		
 		var id_list = typeof id === 'undefined' ? Object.keys(this.cache) : [id];
 		for(var i = 0; i < id_list.length; i++)
@@ -1908,6 +1910,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				break;
 			}
 		}
+
+		// Updating the row may push things longer, update length
+		// Add 1 to keep the scrollbar, otherwise we need to recalculate the
+		// header widths too.
+		this.grid.height(this.rows[0].scrollHeight+1);
 	},
 
 	/**
@@ -2365,6 +2372,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		this.div.css('height', this.options.height);
 		// Set height for rows
 		this.rows.height(this.div.height() - this.headers.outerHeight());
+		
+		this.grid.height(this.rows[0].scrollHeight);
 	}
 });}).call(this);
 et2_register_widget(et2_calendar_planner, ["calendar-planner"]);
