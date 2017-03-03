@@ -483,7 +483,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		switch(action.id)
 		{
 			case 'add':
-				return egw.open(null,"calendar","add");
+				return egw.open(null,"calendar","add", {start: app.calendar.state.first});
 			case 'weekend':
 				this.update_state({weekend: action.checked});
 				break;
