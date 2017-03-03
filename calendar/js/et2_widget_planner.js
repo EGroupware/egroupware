@@ -1908,6 +1908,9 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				break;
 			}
 		}
+
+		// Updating the row may push things longer, update length
+		this.grid.height(this.rows[0].scrollHeight);
 	},
 
 	/**
@@ -2365,6 +2368,8 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		this.div.css('height', this.options.height);
 		// Set height for rows
 		this.rows.height(this.div.height() - this.headers.outerHeight());
+		
+		this.grid.height(this.rows[0].scrollHeight);
 	}
 });}).call(this);
 et2_register_widget(et2_calendar_planner, ["calendar-planner"]);
