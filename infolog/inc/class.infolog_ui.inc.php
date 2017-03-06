@@ -2123,6 +2123,7 @@ class infolog_ui
 				{
 					$readonlys[$name] = false;
 				}
+				$readonlys['timestamp'] = $readonlys['info_des'];
 				$readonlys['button[edit]'] = $readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['no_notifications'] = false;
 			}
 			$readonlys['action'] = $readonlys['button[cancel]'] = false;	// always allowed
