@@ -29,7 +29,11 @@ function _check_script_tag(&$var,$name='',$log=true)
 		// forbidden tags like iframe or script
 		'/(<(\s*\/)?\s*(iframe|script|object|embed|math|meta)[^a-z0-9]|'.
 		// on* attributes
-		'<[^>]*on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mouse[^=]+|reset|select|submit|unload|resize|propertychange|page[^=]*|scroll|readystatechange|start|popstate|form[^=]+|input)\s*=|'.
+		'<[^>]*on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mouse(out|enter|leave|over|move|up|wheel|down)'.
+		'|cached|beforeunload|online|offline|open|message|close|animation(start|end|iteration)|transition(start|end|run)|reset'.
+		'|beforeprint|afterprint|composition(start|update|end)|fullscreenchange|fullscreenerror|cut|copy|auxclick|contextmenu'.
+		'|wheel|drag(start|end|enter|over|leave)|drop|loadstart|progress|timeout|loadendreset|select|submit|unload|resize'.
+		'|propertychange|page(hide|show)|scroll|readystatechange|start|popstate|form|input)\s*=|'.
 		// ="javascript:*" diverse javascript attribute value
 		'<[^>]+(href|src|dynsrc|lowsrc|background|style|poster|action)\s*=\s*("|\')?[^"\']*javascript|'.
 		// benavior:url and expression in style attribute
