@@ -3335,6 +3335,32 @@ class mail_compose
 		$include_lists = (boolean)$_REQUEST['include_lists'];
 
 		$contacts_obj = new Api\Contacts();
+		$results = array();
+
+		// Add up to 5 matching mailing lists
+		if($include_lists)
+		{
+			$lists = array_filter(
+				$contacts_obj->get_lists(Acl::READ),
+				function($element) use($_searchString) {
+					return (stripos($element, $_searchString) !== false);
+				}
+			);
+			$list_count = 0;
+			foreach($lists as $key => $list_name)
+			{
+				$results[] = array(
+					'id'	=> $key,
+					'name'	=> $list_name,
+					'label'	=> $list_name,
+					'class' => 'mailinglist',
+					'title' => lang('Mailinglist'),
+					'data'	=> $key
+				);
+				if($list_count++ > 5) break;
+			}
+		}
+
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook'] && strlen($_searchString)>=$_searchStringLength)
 		{
 			//error_log(__METHOD__.__LINE__.array2string($_searchString));
@@ -3371,7 +3397,7 @@ class mail_compose
 				unset($accounts);
 			}
 		}
-		$results = array();
+		
 		if(is_array($contacts)) {
 			foreach($contacts as $contact) {
 				foreach(array($contact['email'],$contact['email_home']) as $email) {
@@ -3432,29 +3458,6 @@ class mail_compose
 			);
 		}
 
-		// Add up to 5 matching mailing lists
-		if($include_lists)
-		{
-			$lists = array_filter(
-				$contacts_obj->get_lists(Acl::READ),
-				function($element) use($_searchString) {
-					return (stripos($element, $_searchString) !== false);
-				}
-			);
-			$list_count = 0;
-			foreach($lists as $key => $list_name)
-			{
-				$results[] = array(
-					'id'	=> $key,
-					'name'	=> $list_name,
-					'label'	=> $list_name,
-					'class' => 'mailinglist',
-					'title' => lang('Mailinglist'),
-					'data'	=> $key
-				);
-				if($list_count++ > 5) break;
-			}
-		}
 		 // switch regular JSON response handling off
 		Api\Json\Request::isJSONRequest(false);
 
