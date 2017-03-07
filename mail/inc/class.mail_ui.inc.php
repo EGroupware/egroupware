@@ -3816,7 +3816,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						"click on the account first, then try again.", $new);
 			}
 			$response = Api\Json\Response::get();
-			if ($created===true && $error !='')
+			if ($created===true && $error =='')
 			{
 				$this->mail_bo->resetFolderObjectCache($profileID);
 				if ( $folderStatus['shortDisplayName'])
