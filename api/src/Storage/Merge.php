@@ -178,8 +178,10 @@ abstract class Merge
 				return true;	// open office write xml files
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007 xml format
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+			case 'application/vnd.ms-word.document.macroenabled.12':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':	// ms excel 2007 xml format
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
 				if (!$zip_available) break;
 				return true;	// ms word xml format
 			case 'application/xml':
@@ -617,7 +619,9 @@ abstract class Merge
 				break;
 			case 'application/xmlWord.Document':	// Word 2003*/
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/vnd.ms-word.document.macroenabled.12':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
 				// It seems easier to split the parent tags here
 				$replace_tags = array(
 					// Tables, lists don't go inside <w:p>
@@ -756,7 +760,7 @@ abstract class Merge
 				list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get different parts of document, seperated by pagerepeat
 			}
 		}
-		if ($mimetype == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' && count($ids) > 1)
+		if (in_array($mimetype, array('application/vnd.ms-word.document.macroenabled.12', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) && count($ids) > 1)
 		{
 			//for Word 2007 XML files we have to split the content and add a style for page break to  the style area
 			list($contentstart,$contentrepeat,$contentend) = preg_split('/w:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
@@ -795,7 +799,9 @@ abstract class Merge
 					$joiner = '';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+				case 'application/vnd.ms-word.document.macroenabled.12':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				case 'application/vnd.ms-excel.sheet.macroenabled.12':
 					$joiner = '<w:br w:type="page" />';
 					break;
 				case 'text/plain':
@@ -902,7 +908,9 @@ abstract class Merge
 				case 'application/vnd.oasis.opendocument.spreadsheet':
 					return $contentstart.implode('</text:p><text:p>',$contentrepeatpages).$contentend;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+				case 'application/vnd.ms-word.document.macroenabled.12':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				case 'application/vnd.ms-excel.sheet.macroenabled.12':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrepeatpages).$contentend;
 				case 'text/plain':
 					return $contentstart.implode("\r\n",$contentrep).$contentend;
@@ -939,7 +947,9 @@ abstract class Merge
 			case 'application/vnd.oasis.opendocument.text':		// open office
 			case 'application/vnd.oasis.opendocument.spreadsheet':
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/vnd.ms-word.document.macroenabled.12':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
 			case 'application/xml':
 			case 'text/xml':
 				$is_xml = true;
@@ -1010,7 +1020,9 @@ abstract class Merge
 						break;
 					case 'application/xmlWord.Document':	// Word 2003*/
 					case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+					case 'application/vnd.ms-word.document.macroenabled.12':
 					case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+					case 'application/vnd.ms-excel.sheet.macroenabled.12':
 						$replace_tags = array(
 							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
 							'<table>','<tr>','<td>',
@@ -1118,6 +1130,7 @@ abstract class Merge
 					$break = '</text:p><text:p>';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007
+				case 'application/vnd.ms-word.document.macroenabled.12':
 					$break = '</w:t><w:br/><w:t>';
 					break;
 				case 'application/xmlExcel.Sheet':	// Excel 2003
@@ -1130,6 +1143,7 @@ abstract class Merge
 					$break = '<br/>';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':	// ms excel 2007
+				case 'application/vnd.ms-excel.sheet.macroenabled.12':
 				default:
 					$break = "\r\n";
 					break;
@@ -1299,7 +1313,8 @@ abstract class Merge
 				{
 					$date = new Api\DateTime($values[$key]);
 				}
-				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')//Excel WTF
+				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+					$mimetype == 'application/vnd.ms-excel.sheet.macroenabled.12')//Excel WTF
 				{
 					$interval = $date->diff(new Api\DateTime('1900-01-00 0:00'));
 					$values[$key] = $interval->format('%a')+1;// 1900-02-29 did not exist
@@ -1332,6 +1347,7 @@ abstract class Merge
 
 				break;
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
 				break;
 		}
 		if($format && $names)
@@ -1489,7 +1505,9 @@ abstract class Merge
 			case 'application/vnd.oasis.opendocument.text':		// open office
 			case 'application/vnd.oasis.opendocument.spreadsheet':
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/vnd.ms-word.document.macroenabled.12':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
 			case 'application/xml':
 			case 'text/xml':
 			case 'text/html':
@@ -1513,7 +1531,9 @@ abstract class Merge
 					$LF = '&#10;';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+				case 'application/vnd.ms-word.document.macroenabled.12':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				case 'application/vnd.ms-excel.sheet.macroenabled.12':
 					$LF ='</w:t></w:r></w:p><w:p><w:r><w:t>';
 					break;
 				case 'application/xml';
@@ -1603,6 +1623,7 @@ abstract class Merge
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
 				$mimetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+			case 'application/vnd.ms-word.document.macroenabled.12':
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.docx').'-').'.docx';
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'word/document.xml');
@@ -1627,6 +1648,7 @@ abstract class Merge
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 				$mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/vnd.ms-excel.sheet.macroenabled.12':
 				$fix = array(	// hack to get Excel 2007 to display additional rows in tables
 					'/ss:ExpandedRowCount="\d+"/' => 'ss:ExpandedRowCount="9999"',
 				);
