@@ -3810,7 +3810,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				}
 				if (!empty($new)) $this->mail_bo->reopen($new);
 			}
-			
+
 			$response = Api\Json\Response::get();
 			if ($created===true && $error =='')
 			{
@@ -4726,14 +4726,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						{
 							$filter2toggle['status'][] = $query['filter'];
 						}
-						$rByUid = true;
-						$reverse = 1;
 						$_sRt = $this->mail_bo->getSortedList(
 							$folder,
-							$sort=0,
-							$reverse,
+							$sort = 0,
+							$reverse = 1,
 							$filter2toggle,
-							$rByUid,
+							$rByUid = true,
 							false
 						);
 						$messageListForToggle = $_sRt['match']->ids;
@@ -4742,14 +4740,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						{
 							$filter['status'][] = $query['filter'];
 						}
-						$rByUid=true;
-						$reverse = 1;
 						$_sR = $this->mail_bo->getSortedList(
 							$folder,
-							$sort=0,
-							$reverse,
+							$sort = 0,
+							$reverse = 1,
 							$filter,
-							$rByUid,
+							$rByUid = true,
 							false
 						);
 						$messageList = $_sR['match']->ids;
