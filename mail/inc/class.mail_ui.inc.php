@@ -3736,97 +3736,92 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
-	 * ajax_addFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
-	 * @param string $_parentFolderName folder to add a folder to
-	 * @param string $_newName new foldername
-	 * @return nothing
+	 * This function creates folder/subfolder based on its selected parent
+	 *
+	 * @param string $_parent folder name or profile+folder name to add a folder to
+	 * @param string $_new new folder name to be created
+	 *
 	 */
-	function ajax_addFolder($_parentFolderName, $_newName)
+	function ajax_addFolder($_parent, $_new)
 	{
-		//error_log(__METHOD__.__LINE__.' ParentFolderName:'.array2string($_parentFolderName).' NewName/Folder:'.array2string($_newName));
-		$errorMessage='';
-		if ($_parentFolderName)
+		$error='';
+		$created = false;
+
+		if ($_parent)
 		{
-			$created = false;
-			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_parentFolderName);
+			$parent = $this->mail_bo->decodeEntityFolderName($_parent);
 			//the conversion is handeled by horde, frontend interaction is all utf-8
-			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);
-			list($profileID,$parentFolderName) = explode(self::$delimiter,$decodedFolderName,2);
-			if (is_numeric($profileID))
+			$new = $this->mail_bo->decodeEntityFolderName($_new);
+
+			list($profileID,$p_no_delimiter) = explode(self::$delimiter,$parent,2);
+
+			if (is_numeric($profileID) && $profileID == $this->mail_bo->profileID)
 			{
-				if ($profileID != $this->mail_bo->profileID) return; // only current connection
-				$del = $this->mail_bo->getHierarchyDelimiter(false);
-				//$del = $prefix = '';
-				//$nameSpace = $this->mail_bo->_getNameSpaces();
-				//error_log(__METHOD__.__LINE__.array2string($nameSpace));
-				// we expect something like that: data may differ!
-				//$nameSpace = Array(
-				//	[0] => Array([prefix_present] => [prefix] => [delimiter] => /[type] => personal)
-				//	[1] => Array([prefix_present] => 1[prefix] => Other Users/[delimiter] => /[type] => others)
-				//	[2] => Array([prefix_present] => 1[prefix] => Shared Folders/[delimiter] => /[type] => shared)
-				//)
-				//
-				/*
-				foreach ($nameSpace as $nSp)
-				{
-					error_log(__METHOD__.__LINE__.array2string($nSp));
-					// personal is assumed to be the default
-					if ($nSp['type']=='personal')
-					{
-						$prefix = $nSp['prefix'];
-						$del = $nSp['delimiter'];
-					}
-					if ($parentFolderName && $nSp['prefix_present'] && stripos($parentFolderName,$nSp['prefix'])!==false && stripos($parentFolderName,$nSp['prefix'])<=strlen($nSp['delimiter']))
-					{
-						$prefix = $nSp['prefix'];
-						$del = $nSp['delimiter'];
-						break;
-					}
-					if (empty($parentFolderName) && !$nSp['prefix_present'])
-					{
-						$del = $nSp['delimiter'];
-						break;
-					}
-				}
+				$delimiter = $this->mail_bo->getHierarchyDelimiter(false);
+				$parts = explode($delimiter,$new);
 
-				if (empty($del)) $del = $this->mail_bo->getHierarchyDelimiter(false);
-				*/
-				$nA = explode($del,$_newName);
+				if (!!empty($parent)) $folderStatus = $this->mail_bo->getFolderStatus($parent,false);
 
-				//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
-				if (!!empty($parentFolderName)) $oldFolderInfo = $this->mail_bo->getFolderStatus($parentFolderName,false);
-				//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
-
+				//open the INBOX
 				$this->mail_bo->reopen('INBOX');
-				$parentName = $parentFolderName;
-				// if newName has delimiter ($del) in it, we need to create the subtree
-				if (!empty($nA))
+
+				// if $new has delimiter ($del) in it, we need to create the subtree
+				if (!empty($parts))
 				{
-					$c=0;
-					foreach($nA as $sTName)
+					$counter = 0;
+					foreach($parts as $subTree)
 					{
-						$error=null;
-						if(($parentFolderName = $this->mail_bo->createFolder($parentFolderName, $sTName, $error)))
+						$err = null;
+						if(($new = $this->mail_bo->createFolder($p_no_delimiter, $subTree, $err)))
 						{
-							$c++;
+							$counter++;
+							if (!$p_no_delimiter)
+							{
+								$status = $this->mail_bo->getFolderStatus($new,false, true, true);
+								if (!$status['subscribed'])
+								{
+									try
+									{
+										$this->mail_bo->icServer->subscribeMailbox ('INBOX'.$delimiter.$new);
+									}
+									catch(Horde_Imap_Client_Exception $e)
+									{
+										$error = Lang('Folder %1 has been created successfully,'.
+												' although the subscription failed because of %2', $new, $e->getMessage());
+									}
+								}
+							}
 						}
 						else
 						{
-							$errorMessage .= $error;
+							if (!$p_no_delimiter)
+							{
+								$new = $this->mail_bo->createFolder('INBOX', $subTree, $err);
+								if ($new) $counter++;
+							}
+							else
+							{
+								$error .= $err;
+							}
 						}
 					}
-					if ($c==count($nA)) $created=true;
+					if ($counter == count($parts)) $created=true;
 				}
-				if (!empty($parentName)) $this->mail_bo->reopen($parentName);
+				if (!empty($new)) $this->mail_bo->reopen($new);
 			}
-			//error_log(__METHOD__.__LINE__.array2string($oA));
-			if ($created===true)
+			else
+			{
+				$error = lang("Error on creating folder %1 has occured!".
+						" Because selected account is not active. Please ".
+						"click on the account first, then try again.", $new);
+			}
+			$response = Api\Json\Response::get();
+			if ($created===true && $error !='')
 			{
 				$this->mail_bo->resetFolderObjectCache($profileID);
-				$response = Api\Json\Response::get();
-				if ( $oldFolderInfo['shortDisplayName'])
+				if ( $folderStatus['shortDisplayName'])
 				{
-					$nodeInfo = array($_parentFolderName=>$oldFolderInfo['shortDisplayName']);
+					$nodeInfo = array($parent=>$folderStatus['shortDisplayName']);
 				}
 				else
 				{
@@ -3836,12 +3831,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			else
 			{
-				if ($errorMessage)
+				if ($error)
 				{
-					$response = Api\Json\Response::get();
-					$response->call('egw.message',$errorMessage);
+					$response->call('egw.message',$error);
 				}
 			}
+		}
+		else {
+			error_log(__METHOD__.__LINE__."()"."This function needs a parent folder to work!");
 		}
 	}
 
