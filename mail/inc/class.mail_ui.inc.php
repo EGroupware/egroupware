@@ -3755,8 +3755,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 			list($profileID,$p_no_delimiter) = explode(self::$delimiter,$parent,2);
 
-			if (is_numeric($profileID) && $profileID == $this->mail_bo->profileID)
+			if (is_numeric($profileID))
 			{
+				if ($profileID != $this->mail_bo->profileID) $this->changeProfile ($profileID);
 				$delimiter = $this->mail_bo->getHierarchyDelimiter(false);
 				$parts = explode($delimiter,$new);
 
@@ -3809,12 +3810,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				}
 				if (!empty($new)) $this->mail_bo->reopen($new);
 			}
-			else
-			{
-				$error = lang("Error on creating folder %1 has occured!".
-						" Because selected account is not active. Please ".
-						"click on the account first, then try again.", $new);
-			}
+			
 			$response = Api\Json\Response::get();
 			if ($created===true && $error =='')
 			{
