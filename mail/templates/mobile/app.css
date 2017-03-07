@@ -810,6 +810,18 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     position: static;
     min-width: 860px;
   }
+  .mail_extraEmails > a {
+    display: inline-block;
+  }
+  div.mail_extraEmails + img.et2_button.et2_button_icon.ui-button.et2_clickable {
+    display: none;
+  }
+  .et2_email:after {
+    content: " | ";
+  }
+  .et2_email:last-child:after {
+    content: "";
+  }
 }
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
 /* tablets and smartphones (portrait) ----------- */
