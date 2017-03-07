@@ -146,6 +146,11 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			array_diff_key($_REQUEST, array_flip(array('menuaction','query')));
 		$results = array();
 
+		// Contacts matching accounts the user does not have permission for cause
+		// confusion as user selects the contact and there's nothing there, so
+		// we remove those contacts
+		$remove_contacts = array();
+
 		$resources = array_merge(array('' => $bo->resources['']),$bo->resources);
 		foreach($resources as $type => $data)
 		{
@@ -159,34 +164,52 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				$_results += Api\Accounts::link_query($query, $account_options);
 				if (!empty($_REQUEST['checkgrants']))
 				{
-					$_results = array_intersect_key($_results, $GLOBALS['egw']->acl->get_grants('calendar'));
+					$grants = $GLOBALS['egw']->acl->get_grants('calendar');
+					$remove_contacts = array_diff_key($_results, $grants);
+					$_results = array_intersect_key($_results, $grants);
 				}
 			}
+			// App provides a custom search function
 			else if ($data['app'] && $data['search'])
 			{
 				$_results = call_user_func_array($data['search'], array($query, $options));
 			}
+			// Use standard link registry
 			else if ($data['app'] && Link::get_registry($data['app'], 'query'))
 			{
 				$_results = Link::query($data['app'], $query,$options);
 			}
-			if ($type == 'l')
+
+			// There are always special cases
+			switch ($type)
 			{
-				// Include mailing lists
-				$contacts_obj = new Api\Contacts();
-				$lists = array_filter(
-					$contacts_obj->get_lists(Api\Acl::READ),
-					function($element) use($query) {
-						return (stripos($element, $query) !== false);
+				case 'c':
+					// Remove contacts matching excluded accounts
+					foreach($_results as $key => $title)
+					{
+						if(in_array($title, $remove_contacts) || is_array($title) && in_array($title['label'], $remove_contacts))
+						{
+							unset($_results[$key]);
+						}
 					}
-				);
-				foreach($lists as $list_id => $list)
-				{
-					$_results[$list_id] = array(
-						'label' => $list,
-						'resources' => $bo->enum_mailing_list($type.$list_id)
+					break;
+				case 'l':
+					// Include mailing lists
+					$contacts_obj = new Api\Contacts();
+					$lists = array_filter(
+						$contacts_obj->get_lists(Api\Acl::READ),
+						function($element) use($query) {
+							return (stripos($element, $query) !== false);
+						}
 					);
-				}
+					foreach($lists as $list_id => $list)
+					{
+						$_results[$list_id] = array(
+							'label' => $list,
+							'resources' => $bo->enum_mailing_list($type.$list_id)
+						);
+					}
+					break;
 			}
 			if(!$_results)
 			{
