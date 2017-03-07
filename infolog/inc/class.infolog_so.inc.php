@@ -886,6 +886,7 @@ class infolog_so
 
 			$wildcard = $op = null;
 			$so_sql = new Api\Storage\Base('infolog', $this->info_table, $this->db);
+			$so_sql->table_name = 'main';
 			$search = $so_sql->search2criteria($query['search'], $wildcard, $op, null, $columns);
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
 				implode($op, $search) .')';

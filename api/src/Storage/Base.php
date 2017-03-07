@@ -1190,6 +1190,10 @@ class Base
 	/**
 	 * Return criteria array for a given search pattern
 	 *
+	 * We handle quoted text, wildcards and boolean operators (+/-, AND/OR).  If
+	 * the pattern is '#' followed by an integer, the search is limited to just
+	 * the primary key.
+	 *
 	 * @param string $_pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
 	 * @param string &$wildcard ='' on return wildcard char to use, if pattern does not already contain wildcards!
 	 * @param string &$op ='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
@@ -1218,6 +1222,11 @@ class Base
 		$numeric_types = array('auto', 'int', 'float', 'double', 'decimal');
 		$numeric_columns = array();
 
+		// Special handling for an ID search, #<int>
+		if(strpos($_pattern, '#') === 0 && is_numeric(substr($_pattern, 1)))
+		{
+			return array('(' . $this->table_name.'.'. $this->autoinc_id . '=' . (int)substr($_pattern,1) . ')');
+		}
 		if(!$search_cols)
 		{
 			$search_cols = $this->get_default_search_columns();
