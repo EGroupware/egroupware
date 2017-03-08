@@ -1437,7 +1437,7 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Queues a refreshFolderList request for 10ms. Actually this will just execute the
+	 * Queues a refreshFolderList request for 500ms. Actually this will just execute the
 	 * code after the calling script has finished.
 	 *
 	 * @param {array} _folders description
@@ -1449,7 +1449,7 @@ app.classes.mail = AppJS.extend(
 		// are executed last of the queue
 		window.setTimeout(function() {
 			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlock_tree();});
-		}, 100);
+		}, 500);
 	},
 
 	/**
