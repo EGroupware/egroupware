@@ -118,17 +118,19 @@
 		catch(e) {
 			// ignore SecurityError exception if opener is different security context / cross-origin
 		}
-		if (typeof window.framework != 'undefined')
-		{
-			// set in above try block
+		try {
+			if (typeof window.framework == 'undefined' && window.top && typeof window.top.framework != 'undefined')
+			{
+				window.framework = window.top.framework;
+				if (debug) console.log('found framework object in top');
+			}
 		}
-		else if (window.top && typeof window.top.framework != 'undefined')
-		{
-			window.framework = window.top.framework;
-			if (debug) console.log('found framework object in top');
+		catch(e) {
+			// ignore SecurityError exception if top is different security context / cross-origin
 		}
 		// if framework not found, but requested to check for it, redirect to cd=yes to create it
-		else if (egw_script.getAttribute('data-check-framework') && !window.location.search.match(/[&?]cd=/))
+		if (typeof window.framework == 'undefined' && egw_script.getAttribute('data-check-framework') &&
+			!window.location.search.match(/[&?]cd=/))
 		{
 			window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
 		}
