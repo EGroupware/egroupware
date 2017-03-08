@@ -227,7 +227,7 @@ egw_json_request.prototype.setAppObject = function(_app)
 egw_json_request.prototype._assembleAjaxUrl = function(_menuaction)
 {
 	// Retrieve the webserver url
-	var webserver_url = egw_topWindow().egw_webserverUrl;
+	var webserver_url = window.egw_webserverUrl || egw_topWindow().egw_webserverUrl;
 
 	// Check whether the webserver_url is really set
 	// Don't check for !webserver_url as it might be empty.
