@@ -81,17 +81,19 @@
 		catch(e) {
 			// ignore SecurityError exception if opener is different security context / cross-origin
 		}
-		if (typeof window.egw != 'undefined')
-		{
-			// set in above try block
+		try {
+			// try finding it in top
+			if (typeof window.egw == 'undefined' && window.top && typeof window.top.egw != 'undefined')
+			{
+				window.egw = window.top.egw;
+				if (typeof window.top.framework != 'undefined') window.framework = window.top.framework;
+				if (debug) console.log('found egw object in top');
+			}
 		}
-		else if (window.top && typeof window.top.egw != 'undefined')
-		{
-			window.egw = window.top.egw;
-			if (typeof window.top.framework != 'undefined') window.framework = window.top.framework;
-			if (debug) console.log('found egw object in top');
+		catch(e) {
+			// ignore SecurityError exception if top is different security context / cross-origin
 		}
-		else
+		if (typeof window.egw == 'undefined')
 		{
 			window.egw = {
 				prefsOnly: true,
