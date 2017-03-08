@@ -253,7 +253,17 @@ app.classes.addressbook = AppJS.extend(
 			}
 			else
 			{
-				extras.owner.push('c'+ids);
+				// Check to see if this is a user account, we prefer to use
+				// account ID in calendar
+				var data = this.egw.dataGetUIDdata(_senders[i].id);
+				if(data && data.data && data.data.account_id)
+				{
+					extras.owner.push(data.data.account_id);
+				}
+				else
+				{
+					extras.owner.push('c'+ids);
+				}
 			}
 		}
 
