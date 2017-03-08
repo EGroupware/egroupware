@@ -1644,6 +1644,7 @@ window.egw_LAB.wait(function() {
 			$columsel = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
 			$available_distib_lists=$this->get_lists(Acl::READ);
 			$columselection = $columsel && !$query['csv_export'] ? explode(',',$columsel) : array();
+			$ids = $calendar_participants = array();
 			if (!$id_only && $rows)
 			{
 				$show_custom_fields = (!$columselection || in_array('customfields',$columselection) || $query['csv_export']) && $this->customfields;
@@ -1654,6 +1655,7 @@ window.egw_LAB.wait(function() {
 					foreach($rows as $val)
 					{
 						$ids[] = $val['id'];
+						$calendar_participants[$val['id']] = $val['account_id'] ? $val['account_id'] : 'c'.$val['id'];
 					}
 					if ($show_custom_fields)
 					{
@@ -1663,7 +1665,7 @@ window.egw_LAB.wait(function() {
 						}
 						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
-					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($ids);
+					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);
 					// distributionlist memership for the entrys
 					//_debug_array($this->get_lists(Acl::EDIT));
 					if ($show_distributionlist && $available_distib_lists)
@@ -1770,9 +1772,9 @@ window.egw_LAB.wait(function() {
 					$row['distrib_lists'] = implode("\n",array_values($distributionlist[$row['id']]));
 					//if ($show_distributionlist) $readonlys['distrib_lists'] =true;
 				}
-				if (isset($calendar[$row['id']]))
+				if (isset($calendar[$calendar_participants[$row['id']]]))
 				{
-					foreach($calendar[$row['id']] as $name => $data)
+					foreach($calendar[$calendar_participants[$row['id']]] as $name => $data)
 					{
 						$row[$name] = $data;
 					}
@@ -2238,7 +2240,7 @@ window.egw_LAB.wait(function() {
 		if ($content['id'])
 		{
 			// last and next calendar date
-			list(,$dates) = each($this->read_calendar(array($content['id']),false));
+			list(,$dates) = each($this->read_calendar(array($content['account_id'] ? $content['account_id'] : 'c'.$content['id']),false));
 			if(is_array($dates)) $content += $dates;
 		}
 		// Avoid ID conflict with tree & selectboxes
@@ -2743,7 +2745,7 @@ window.egw_LAB.wait(function() {
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
 		// last and next calendar date
-		if (!empty($content['id'])) list(,$dates) = each($this->read_calendar(array($content['id']),false));
+		if (!empty($content['id'])) list(,$dates) = each($this->read_calendar(array($content['account_id'] ? $content['account_id'] : 'c'.$content['id']),false));
 		if(is_array($dates)) $content += $dates;
 
 		// Disable importexport

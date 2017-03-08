@@ -1601,20 +1601,13 @@ class Contacts extends Contacts\Storage
 	/**
 	 * Read the next and last event of given contacts
 	 *
-	 * @param array $ids contact_id's
+	 * @param array $uids participant IDs.  Contacts should be c<contact_id>, user accounts <account_id>
 	 * @param boolean $extra_title =true if true, use a short date only title and put the full title as extra_title (tooltip)
 	 * @return array
 	 */
-	function read_calendar($ids,$extra_title=true)
+	function read_calendar($uids,$extra_title=true)
 	{
 		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return array();
-
-		$uids = array();
-		foreach($ids as $id)
-		{
-			if (is_numeric($id)) $uids[] = 'c'.$id;
-		}
-		if (!$uids) return array();
 
 		$bocal = new calendar_bo();
 		$events = $bocal->search(array(
@@ -1629,17 +1622,16 @@ class Contacts extends Contacts\Storage
 		{
 			foreach($event['participants'] as $uid => $status)
 			{
-				if ($uid[0] != 'c' || ($status == 'R' && !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected']))
+				if ($status == 'R' && !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected'])
 				{
 					continue;
 				}
-				$id = (int)substr($uid,1);
 
 				if ($event['start'] < $this->now_su)	// past event --> check for last event
 				{
-					if (!isset($calendars[$id]['last_event']) || $event['start'] > $calendars[$id]['last_event'])
+					if (!isset($calendars[$uid]['last_event']) || $event['start'] > $calendars[$uid]['last_event'])
 					{
-						$calendars[$id]['last_event'] = $event['start'];
+						$calendars[$uid]['last_event'] = $event['start'];
 						$link = array(
 							'id' => $event['id'],
 							'app' => 'calendar',
@@ -1653,14 +1645,14 @@ class Contacts extends Contacts\Storage
 							$link['extra_title'] = $link['title'];
 							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
 						}
-						$calendars[$id]['last_link'] = $link;
+						$calendars[$uid]['last_link'] = $link;
 					}
 				}
 				else	// future event --> check for next event
 				{
-					if (!isset($calendars[$id]['next_event']) || $event['start'] < $calendars[$id]['next_event'])
+					if (!isset($calendars[$uid]['next_event']) || $event['start'] < $calendars[$uid]['next_event'])
 					{
-						$calendars[$id]['next_event'] = $event['start'];
+						$calendars[$uid]['next_event'] = $event['start'];
 						$link = array(
 							'id' => $event['id'],
 							'app' => 'calendar',
@@ -1674,7 +1666,7 @@ class Contacts extends Contacts\Storage
 							$link['extra_title'] = $link['title'];
 							$link['title'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']);
 						}
-						$calendars[$id]['next_link'] = $link;
+						$calendars[$uid]['next_link'] = $link;
 					}
 				}
 			}

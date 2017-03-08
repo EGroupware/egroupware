@@ -251,11 +251,11 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			{
 				if(is_array($_contact) && $_contact['id'])
 				{
-					$contact_ids[] = $_contact['id'];
+					$contact_ids[] = $_contact['account_id'] ? $_contact['account_id'] : 'c'.$_contact['id'];
 				}
 				else
 				{
-					$contact_ids[] = $contact;
+					$contact_ids[] = 'c'.$contact;
 				}
 			}
 			$events = $this->ui->read_calendar($contact_ids, false);
