@@ -291,6 +291,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 			.attr('data-owner', event.owner)
 			.attr('data-recur_type', event.recur_type)
 			.attr('data-resize', event.whole_day ? 'WD' : '' + (event.recur_type ? 'S':''))
+			.attr('data-priority', event.priority)
 			// Remove any category classes
 			.removeClass(function(index, css) {
 				return (css.match (/(^|\s)cat_\S+/g) || []).join(' ');
