@@ -112,12 +112,7 @@ $GLOBALS['egw_info']['user']['domain'] = Session::search_instance(
 	Session::get_request('domain'),$GLOBALS['egw_info']['server']['default_domain'],
 	array($_SERVER['HTTP_HOST'], $_SERVER['SERVER_NAME']),$GLOBALS['egw_domain']);
 
-$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_host'];
-$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_port'];
-$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_name'];
-$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_user'];
-$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_pass'];
-$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_type'];
+$GLOBALS['egw_info']['server'] += $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']];
 
 // the egw-object instanciates all sub-classes (eg. $GLOBALS['egw']->db) and the egw_info array
 $GLOBALS['egw'] = new Egw(array_keys($GLOBALS['egw_domain']));
