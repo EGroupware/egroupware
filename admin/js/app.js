@@ -560,9 +560,10 @@ app.classes.admin = AppJS.extend(
 				// Only send the request if they entered everything (or selected no apps)
 				if(_value.acl_account && (_value.acl_appname && _value.acl_location || typeof _value.apps != 'undefined'))
 				{
+					var id = [];
 					if(_value.acl_appname && _value.acl_account && _value.acl_location)
 					{
-						var id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
+						id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
 						if(content && content.id && id != content.id)
 						{
 							// Changed the account or location, remove previous or we
@@ -570,9 +571,9 @@ app.classes.admin = AppJS.extend(
 							this.egw.json(className+'::ajax_change_acl', [content.id, 0], null,this,false,this)
 								.sendRequest();
 						}
+						id = [id];
 					}
 					var rights = 0;
-					var id = [];
 					for(var i in _value.acl)
 					{
 						rights += parseInt(_value.acl[i]);
