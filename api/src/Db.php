@@ -754,7 +754,7 @@ class Db
 		{
 			$num_rows = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 		}
-		if (($this->readonly || $this->log_updates) && !preg_match('/\(?(SELECT|SET|SHOW)/i', $Query_String))
+		if (($this->readonly || $this->log_updates) && !preg_match('/^\(?(SELECT|SET|SHOW)/i', $Query_String))
 		{
 			if ($this->log_updates) error_log($Query_String.': '.function_backtrace());
 			if ($this->readonly) return 0;
