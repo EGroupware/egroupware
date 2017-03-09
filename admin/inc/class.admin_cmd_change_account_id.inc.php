@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -147,7 +147,7 @@ class admin_cmd_change_account_id extends admin_cmd
 
 			$db = clone($GLOBALS['egw']->db);
 			$db->set_app($app);
-			if ($check_only) $db->log_updates = true;
+			if ($check_only) $db->log_updates = $db->readonly = true;
 
 			foreach($data as $table => $columns)
 			{
