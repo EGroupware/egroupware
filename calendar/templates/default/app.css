@@ -816,6 +816,9 @@ Hide subsequent headers in week view with non-consolidated owners
 	font-size: 8pt;
 	line-height: 10pt;
 }
+.calendar_calEvent[data-priority='3'] .calendar_calEventTitle {
+	color: red;
+}
 .calendar_calEventIcons{
 	position: absolute;
 	right: 0px;
