@@ -975,4 +975,92 @@ class Mailer extends Horde_Mime_Mail
 			unset($value);
 		}
 	}
+
+	/**
+	 * Method to do SMIME encryption
+	 *
+	 * @param string $type encryption type
+	 * @param array $params parameters requirements for encryption
+	 *	base on encryption type.
+	 *		TYPE_SIGN:
+	 *			array (
+	 *				senderPubKey	=> // Sender Public key
+	 *				passphrase		=> // passphrase of sender private key
+	 *				senderPrivKey	=> // sender private key
+	 *			)
+	 *		TYPE_ENCRYPT:
+	 *			array (
+	 *				recipientsCerts	=> // Recipients Certificates
+	 *			)
+	 *		TYPE_SIGN_ENCRYPT:
+	 *			array (
+	 *				senderPubKey	=> // Sender Public key
+	 *				passphrase		=> // passphrase of sender private key
+	 *				senderPrivKey	=> // sender private key
+	 *				recipientsCerts	=> // Recipients Certificates
+	 *			)
+	 * @return boolean returns true if successful and false if passphrase required
+	 * @throws Api\Exception\WrongUserinput if no certificate found
+	 */
+	function smimeEncrypt($type, $params)
+	{
+
+		try {
+			$this->getBasePart();
+		}
+		catch(Horde_Mail_Exception $e)
+		{
+			unset($e);
+			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
+			$this->getBasePart();
+		}
+
+		$smime = new Mail\Smime();
+
+		if ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT)
+		{
+			if (!isset($params['senderPubKey']))
+			{
+				throw new Api\Exception\WrongUserinput('no certificate found to sign the messase');
+			}
+
+			if (!$smime->verifyPassphrase($params['senderPrivKey'], $params['passphrase']))
+			{
+				return false;
+			}
+		}
+
+		if (!isset($params['recipientsCerts']) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
+		{
+			throw new Api\Exception\WrongUserinput('no certificate found from the recipients to sign/encrypt the messase');
+		}
+
+		// parameters to pass on for sign mime part
+		$sign_params =  array(
+			'type'		=> 'signature',
+			'pubkey'	=> $params['senderPubKey'],
+			'privkey'	=> $params['senderPrivKey'],
+			'passphrase'=> $params['passphrase'],
+			'sigtype'	=> 'detach',
+			'certs'		=> ''
+		);
+		// parameters to pass on for encrypt mime part
+		$encrypt_params = array(
+			'type'		=> 'message',
+			'pubkey'	=> $params['recipientsCerts']
+		);
+		switch ($type)
+		{
+			case Mail\Smime::TYPE_SIGN:
+				$this->_base = $smime->signMIMEPart($this->_base, $sign_params);
+				break;
+			case Mail\Smime::TYPE_ENCRYPT:
+				$this->_base = $smime->encryptMIMEPart($this->_base, $encrypt_params);
+				break;
+			case Mail\Smime::TYPE_SIGN_ENCRYPT:
+				$this->_base = $smime->signAndEncryptMIMEPart($this->_base, $sign_params, $encrypt_params);
+				break;
+		}
+		return true;
+	}
 }
