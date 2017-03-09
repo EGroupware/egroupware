@@ -7,7 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -102,12 +102,17 @@ class Db
 	var $Password = '';
 
 	/**
+	 * @var boolean $readonly only allow readonly access to database
+	 */
+	var $readonly = false;
+
+	/**
 	* @var int $Debug enable debuging - 0 no, 1 yes
 	*/
 	var $Debug         = 0;
 
 	/**
-	 * Log update querys to error_log, do not run them
+	 * Log update querys to error_log
 	 *
 	 * @var boolean
 	 */
@@ -248,7 +253,7 @@ class Db
 	/**
 	 * Constructor
 	 *
-	 * @param array $db_data =null values for keys 'db_name', 'db_host', 'db_port', 'db_user', 'db_pass', 'db_type'
+	 * @param array $db_data =null values for keys 'db_name', 'db_host', 'db_port', 'db_user', 'db_pass', 'db_type', 'db_readonly'
 	 */
 	function __construct(array $db_data=null)
 	{
@@ -261,6 +266,7 @@ class Db
 				'User'     => 'db_user',
 				'Password' => 'db_pass',
 				'Type'     => 'db_type',
+				'readonly' => 'db_readonly',
 			) as $var => $key)
 			{
 				$this->$var = $db_data[$key];
@@ -609,8 +615,7 @@ class Db
 		if (!empty($this->setupType)) $this->Type = $this->setupType;	// restore Type eg. to mysqli
 
 		$vars = get_object_vars($this);
-		unset($vars['Link_ID']);
-		unset($vars['privat_Link_ID']);
+		unset($vars['Link_ID'], $vars['Query_ID'], $vars['privat_Link_ID']);
 		return array_keys($vars);
 	}
 
@@ -749,10 +754,10 @@ class Db
 		{
 			$num_rows = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 		}
-		if ($this->log_updates && stripos($Query_String, 'SELECT') !== 0)
+		if (($this->readonly || $this->log_updates) && !preg_match('/\(?(SELECT|SET|SHOW)/i', $Query_String))
 		{
-			error_log($Query_String);
-			return 0;
+			if ($this->log_updates) error_log($Query_String.': '.function_backtrace());
+			if ($this->readonly) return 0;
 		}
 		if ($num_rows > 0)
 		{

@@ -140,16 +140,13 @@ class setup_cmd_database extends setup_cmd
 	 */
 	private function connect($user=null,$pass=null,$name=null)
 	{
-		if (is_null($user)) $user = $this->db_user;
-		if (is_null($pass)) $pass = $this->db_pass;
-		if (is_null($name)) $name = $this->db_name;
-
-		$this->test_db = new Api\Db();
+		// propagate all db_* vars
+		$this->test_db = new Api\Db(get_object_vars($this));
 
 		$error_rep = error_reporting();
-		error_reporting($error_rep & ~E_WARNING);	// switch warnings of, in case they are on
+		error_reporting($error_rep & ~E_WARNING);	// switch warnings off, in case they are on
 		try {
-			$this->test_db->connect($name,$this->db_host,$this->db_port,$user,$pass,$this->db_type);
+			$this->test_db->connect($name, null, null, $user, $pass);
 		}
 		catch (Exception $e) {
 			// just give a nicer error, after switching error_reporting on again
