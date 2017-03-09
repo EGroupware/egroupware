@@ -161,11 +161,10 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			if($type == '')
 			{
 				$account_options = $options + array('account_type' => 'both');
-				$_results += Api\Accounts::link_query($query, $account_options);
+				$_results += $remove_contacts = Api\Accounts::link_query($query, $account_options);
 				if (!empty($_REQUEST['checkgrants']))
 				{
 					$grants = $GLOBALS['egw']->acl->get_grants('calendar');
-					$remove_contacts = array_diff_key($_results, $grants);
 					$_results = array_intersect_key($_results, $grants);
 				}
 			}
