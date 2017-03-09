@@ -866,7 +866,7 @@ var et2_calendar_daycol = (function(){ "use strict"; return et2_valueWidget.exte
 			if(!event) continue;
 			if(event.date && event.date != this.options.date &&
 				// Multi-day events date may be different
-				(new Date(event.start) >= this.date || new Date(event.end) <= this.date )
+				(new Date(event.start) >= this.date || new Date(event.end) < this.date )
 			)
 			{
 				// Still have a child event that has changed date (DnD)
