@@ -2961,14 +2961,14 @@ class mail_compose
 			try	{
 				if ($_formData['smime_sign'] == 'on')
 				{
-					$smime_part = $this->_encrypt(
-						'',//TODO
+					$smime_success = $this->_encrypt(
+						$mail,
 						$_formData['smime_encrypt'] == 'on'? Mail\Smime::TYPE_SIGN_ENCRYPT: Mail\Smime::TYPE_SIGN,
 						$_formData['to'],
 						$identity['ident_email'],
 						$_formData['smime_passphrase']
 					);
-					if ($smime_part['smime_pass_require'])
+					if (!$smime_success)
 					{
 						$response = Api\Json\Response::get();
 						$response->call('app.mail.smimePassDialog');
@@ -2977,19 +2977,19 @@ class mail_compose
 				}
 				elseif ($_formData['smime_sign'] == 'off' && $_formData['smime_encrypt'] == 'on')
 				{
-					$smime_part = $this->_encrypt(
-						'',//TODO
+					$smime_success =  $this->_encrypt(
+						$mail,
 						Mail\Smime::TYPE_ENCRYPT,
 						$_formData['to'],
 						$identity['ident_email']
 					);
 				}
-
-				//TODO Set signed or encrypted mime part
 			}
 			catch (Exception $ex)
 			{
-				throw new Api\Exception\WrongUserinput($ex->getMessage());
+				$response = Api\Json\Response::get();
+				$response->call('egw.message', $ex->getMessage());
+				return false;
 			}
 		}
 
@@ -3454,7 +3454,7 @@ class mail_compose
 				unset($accounts);
 			}
 		}
-		
+
 		if(is_array($contacts)) {
 			foreach($contacts as $contact) {
 				foreach(array($contact['email'],$contact['email_home']) as $email) {
@@ -3600,74 +3600,48 @@ class mail_compose
 	}
 
 	/**
-	 * Method to do the encryption on given message
+	 * Method to do encryption on given mail object
 	 *
-	 * @param Horde_Mime_part $message
+	 * @param Horde_MIME_Mail $mail
 	 * @param string $type encryption type
 	 * @param array|string $recipients list of recipients
 	 * @param string $sender email of sender
 	 *
-	 * @return Horde_Mime_Part returns encrypted message
+	 * @return boolean returns true if successful and false if passphrase required
 	 * @throws Api\Exception\WrongUserinput if no certificate found
 	 */
-	protected function _encrypt(Horde_Mime_part $message, $type, $recipients, $sender, $passphrase='')
+	protected function _encrypt($mail, $type, $recipients, $sender, $passphrase='')
 	{
 		$AB = new addressbook_bo();
-		$smime = new Mail\Smime();
-
-		if (isset($sender) && ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
-		{
-			$sender_cert = $AB->get_smime_keys($sender);
-
-			if ($sender_cert)
-			{
-				$senderPubKey = $sender_cert[$sender];
-			}
-			else
-			{
-				throw new Api\Exception\WrongUserinput('no certificate found to sign the messase');
-			}
-			$credents = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-			$privkey = $credents['acc_smime_password'];
-
-			if (!$smime->verifyPassphrase($privkey, $passphrase))
-			{
-				return array('smime_pass_require' => true);
-			}
-		}
-
-		if (isset($recipients) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
-		{
-			$recipients_certs = $AB->get_smime_keys($recipients);
-			if (!$recipients_certs) throw new Api\Exception\WrongUserinput('no certificate found from the recipients to sign/encrypt the messase');
-		}
-
-		// parameters to pass on for sign mime part
-		$sign_params =  array(
-			'type'		=> 'signature',
-			'pubkey'	=> $senderPubKey,
-			'privkey'	=> $privkey,
-			'passphrase'=> $passphrase,
-			'sigtype'	=> 'detach',
-			'certs'		=> ''
+		$params = array (
+			'senderPubKey'		=> '',			// Sender Public key
+			'passphrase'		=> $passphrase, // passphrase of sender private key
+			'senderPrivKey'		=> '',			// sender private key
+			'recipientsCerts'	=> array()		// Recipients Certificates
 		);
-		// parameters to pass on for encrypt mime part
-		$encrypt_params = array(
-			'type'		=> 'message',
-			'pubkey'	=> $recipients_certs
-		);
-		switch ($type)
+
+		try
 		{
-			case Mail\Smime::TYPE_SIGN:
-				$message = $smime->signMIMEPart($message, $sign_params);
-				break;
-			case Mail\Smime::TYPE_ENCRYPT:
-				$message = $smime->encryptMIMEPart($message, $encrypt_params);
-				break;
-			case Mail\Smime::TYPE_SIGN_ENCRYPT:
-				$message = $smime->signAndEncryptMIMEPart($message, $sign_params, $encrypt_params);
-				break;
+			if (isset($sender) && ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
+			{
+				$sender_cert = $AB->get_smime_keys($sender);
+
+				$params['senderPubKey'] = $sender_cert[$sender];
+
+				$credents = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
+				$params['senderPrivKey'] = $credents['acc_smime_password'];
+			}
+
+			if (isset($recipients) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
+			{
+				$params['recipientsCerts'] = $AB->get_smime_keys($recipients);
+			}
+
+			return $mail->smimeEncrypt($type, $params);
 		}
-		return $message;
+		catch(Api\Exception\WrongUserinput $e)
+		{
+			throw new $e;
+		}
 	}
 }
