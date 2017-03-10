@@ -129,6 +129,21 @@ class Egw extends Egw\Base
 		// load up the $GLOBALS['egw_info']['server'] array
 		$GLOBALS['egw_info']['server'] += Config::read('phpgwapi');
 
+		// if webserver_url does not match eg. because of proxying, fix it
+		if (isset($_SERVER['HTTP_X_FORWARDED_URI']) &&
+			($prefix = strpos($_SERVER['HTTP_X_FORWARDED_URI'],
+				$GLOBALS['egw_info']['server']['webserver_url'])))
+		{
+			$GLOBALS['egw_info']['server']['webserver_url'] =
+				substr($_SERVER['HTTP_X_FORWARDED_URI'], 0, $prefix).
+				$GLOBALS['egw_info']['server']['webserver_url'];
+		}
+		if (isset($_SERVER['HTTP_X_FORWARDED_HOST']) && $GLOBALS['egw_info']['server']['webserver_url'][0] != '/')
+		{
+			$GLOBALS['egw_info']['server']['webserver_url'] = ($_SERVER['HTTPS'] ? 'https://' : 'http://').
+				$_SERVER['HTTP_X_FORWARDED_HOST'].parse_url($GLOBALS['egw_info']['server']['webserver_url'], PHP_URL_PATH);
+		}
+
 		// if no server timezone set, use date_default_timezone_get() to determine it once
 		// it fills to log with deprecated warnings under 5.3 otherwise
 		if (empty($GLOBALS['egw_info']['server']['server_timezone']) ||
