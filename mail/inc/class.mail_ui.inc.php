@@ -2330,44 +2330,46 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	/**
 	 * gather Info on how to display the quota info
 	 *
-	 * @param $_usage int
-	 * @param $_limit int
-	 * @return array - info used for quota array(class=>string,text=>string,$percent=>string)
+	 * @param int $_usage
+	 * @param int $_limit
+	 * @return array  returns an array of info used for quota
+	 *		array(
+	 *			class	=> string,
+	 *			text	=> string,
+	 *			$percent=> string
+	 *		)
 	 */
 	function quotaDisplay($_usage, $_limit)
 	{
+		$percent = $_limit == 0 ? 100 : round(($_usage*100)/$_limit);
+		$limit=Mail::show_readable_size($_limit*1024);
+		$usage=Mail::show_readable_size($_usage*1024);
 
-		if($_limit == 0) {
-			$quotaPercent=100;
-		} else {
-			$quotaPercent=round(($_usage*100)/$_limit);
+		if ($_limit > 0)
+		{
+			$text = $usage .'/'.$limit;
+			switch ($percent)
+			{
+				case 90:
+					$class ='mail-index_QuotaRed';
+					break;
+				case 80:
+					$class ='mail-index_QuotaYellow';
+					break;
+				default:
+					$class ='mail-index_QuotaGreen';
+			}
 		}
-
-		$quotaLimit=Mail::show_readable_size($_limit*1024);
-		$quotaUsage=Mail::show_readable_size($_usage*1024);
-
-
-		if($quotaPercent > 90 && $_limit>0) {
-			$quotaBG='mail-index_QuotaRed';
-		} elseif($quotaPercent > 80 && $_limit>0) {
-			$quotaBG='mail-index_QuotaYellow';
-		} else {
-			$quotaBG='mail-index_QuotaGreen';
+		else
+		{
+			$text = $usage;
+			$class ='mail-index_QuotaGreen';
 		}
-
-		if($_limit > 0) {
-			$quotaText = $quotaUsage .'/'.$quotaLimit;
-		} else {
-			$quotaText = $quotaUsage;
-		}
-
-		if($quotaPercent > 50) {
-		} else {
-		}
-		$quota['class'] = $quotaBG;
-		$quota['text'] = lang('Quota: %1',$quotaText);
-		$quota['percent'] = (string)round(($_usage*100)/$_limit);
-		return $quota;
+		return array (
+			'class'		=> $class,
+			'text'		=> lang('Quota: %1',$text),
+			'percent'	=> $percent
+		);
 	}
 
 	/**
@@ -4299,13 +4301,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
-	 * ajax_refreshQuotaDisplay - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 * This function asks quota from IMAP server and makes the
+	 * result as JSON response to send it to mail_sendQuotaDisplay
+	 * function in client side.
 	 *
-	 * @return nothing
+	 * @param string $icServerID = null
+	 *
 	 */
 	function ajax_refreshQuotaDisplay($icServerID=null)
 	{
-		//error_log(__METHOD__.__LINE__.array2string($icServerID));
 		Api\Translation::add_app('mail');
 		if (is_null($icServerID)) $icServerID = $this->mail_bo->profileID;
 		$rememberServerID = $this->mail_bo->profileID;
@@ -4313,7 +4317,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			if ($icServerID && $icServerID != $this->mail_bo->profileID)
 			{
-				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 				$this->changeProfile($icServerID);
 			}
 			$quota = $this->mail_bo->getQuotaRoot();
@@ -4325,23 +4328,28 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		if($quota !== false && $quota['limit'] != 'NOT SET') {
 			$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
-			$content['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
-			$content['quotainpercent'] = $sel_options[self::$nm_index]['quotainpercent'] =  (string)$quotainfo['percent'];
-			$content['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = $quotainfo['class'];
-			$content['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "";
-		} else {
-			$content['quota'] = $sel_options[self::$nm_index]['quota'] = lang("Quota not provided by server");
-			$content['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
-			$content['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
+			$content = array (
+				'quota'				=> $quotainfo['text'],
+				'quotainpercent'	=> '99',//(string)$quotainfo['percent'],
+				'quotaclass'		=> $quotainfo['class'],
+				'quotanotsupported'	=> "",
+				'profileid'			=> $icServerID
+			);
+		}
+		else
+		{
+			$content = array (
+				'quota'				=> lang("Quota not provided by server"),
+				'quotaclass'		=> "mail_DisplayNone",
+				'quotanotsupported'	=> "mail_DisplayNone"
+			);
 		}
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
 			try
 			{
-				//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
 				$this->changeProfile($rememberServerID);
 			} catch (Exception $e) {
-				//error_log(__METHOD__.__LINE__." ".$e->getMessage());
 				unset($e);
 			}
 		}

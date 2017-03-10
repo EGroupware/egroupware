@@ -1139,6 +1139,28 @@ app.classes.mail = AppJS.extend(
 			quotabox.set_class(_data.data.quotaclass);
 			quotabox.set_value(_data.data.quotainpercent);
 			quotabox.set_label(_data.data.quota);
+			if (parseInt(_data.data.quotainpercent) >= 99)
+			{
+				var self = this;
+				var buttons = [
+					{text: this.egw.lang("Empty Trash and Junk"), id: "cleanup", class: "ui-priority-primary", default: true, image:"delete"},
+					{text: this.egw.lang("Cancel"), id:"cancel"}
+				];
+				var server = [{iface:{id: _data.data.profileid+'::'}}];
+				et2_dialog.show_dialog(function(_button_id) {
+					if (_button_id == "cleanup")
+					{
+						self.mail_emptySpam (null, server);
+						self.mail_emptyTrash (null, server);
+					}
+					return;
+				},
+				this.egw.lang("Your mail quota is %%1 full, you may not be able to send/receive further emails.\r\n"+
+						"Although cleaning up emails in trash or junk folder might help you to get some free space back.\r\n"+
+						"If that didn't help, please ask administrator for more quota.", _data.data.quotainpercent),
+				this.egw.lang("Mail cleanup"),
+				'', buttons, et2_dialog.WARNING_MESSAGE);
+			}
 		}
 	},
 
