@@ -141,7 +141,7 @@ class setup_cmd_database extends setup_cmd
 	private function connect($user=null,$pass=null,$name=null)
 	{
 		// propagate all db_* vars
-		$this->test_db = new Api\Db(get_object_vars($this));
+		$this->test_db = new Api\Db($this->data);
 
 		$error_rep = error_reporting();
 		error_reporting($error_rep & ~E_WARNING);	// switch warnings off, in case they are on

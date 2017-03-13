@@ -504,6 +504,8 @@ abstract class admin_cmd
 			case 'accounts':
 				self::_instanciate_accounts();
 				return self::$accounts;
+			case 'data':
+				return $this->data;
 		}
 		return $this->data[$property];
 	}
