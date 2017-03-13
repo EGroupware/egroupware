@@ -3,11 +3,11 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.acl" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
+		<grid width="100%" height="100%">
 			<columns>
 				<column width="10%"/>
 				<column width="90%"/>
-			</columns>	
+			</columns>
 			<rows>
 				<row class="dialogHeader">
 					<description value="Mail ACL"  />
@@ -73,13 +73,21 @@
 					</grid>
 				</row>
 				<row>
-					<hbox class="dialogFooterToolbar">
-						<button statustext="Saves this ACL" label="Save" id="button[save]"/>
-						<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
+					<grid resize_ratio="1">
+						<columns><column/></columns>
+						<rows>
+							<row></row>
+						</rows>
+					</grid>
+				</row>
+				<row class="dialogFooterToolbar">
+					<hbox>
+						<button label="Save" id="button[save]"/>
+						<button label="Apply" id="button[apply]"/>
 						<button label="Cancel" id="button[cancel]"/>
 					</hbox>
 				</row>
 			</rows>
-		</grid>	
+		</grid>
 	</template>
 </overlay>
