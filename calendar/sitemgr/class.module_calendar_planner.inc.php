@@ -338,7 +338,10 @@ class module_calendar_planner extends Module
 			$html .= '<script>'
 			. '	window.egw_LAB.wait(function() {jQuery(function() {'
 			. 'app.calendar.set_state(' . json_encode(array(
-					'owner' => $search_params['owner'],
+					'view'   => 'planner',
+					'planner_view' => 'month',
+					'date'   => Api\DateTime::to($ui->first, Api\DateTime::ET2),
+					'owner'  => $search_params['owner'],
 					'sortby' => $ui->sortby,
 					'filter' => $arguments['filter']
 				)).');'
