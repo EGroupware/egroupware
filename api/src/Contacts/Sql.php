@@ -207,6 +207,7 @@ class Sql extends Api\Storage
 				$filter['org_name'][$row['org_name']] = $row['org_name'];	// use as key too to have every org only once
 			}
 			$org_key = $row['org_name'].($by ? '|||'.($row[$by] || $row[$by.'_count']==1 ? $row[$by] : '|||') : '');
+			$row['group_count'] = $row['org_count'];
 			$orgs[$org_key] = $row;
 		}
 		unset($rows);
@@ -240,6 +241,141 @@ class Sql extends Api\Storage
 			}
 		}
 		return array_values($orgs);
+	}
+
+
+	/**
+	 * Query for duplicate contacts according to given parameters
+	 *
+	 * We join egw_addressbook to itself, and count how many fields match.  If
+	 * enough of the fields we care about match, we count those two records as
+	 * duplicates.
+	 * 
+	 * @var array $param
+	 * @var string $param[grouped_view] 'duplicate', 'duplicate,adr_one_location', 'duplicate,org_name' how to group
+	 * @var int $param[owner] addressbook to search
+	 * @var string $param[search] search pattern for org_name
+	 * @var string $param[searchletter] letter the name need to start with
+	 * @var array $param[col_filter] filter
+	 * @var string $param[search] or'ed search pattern
+	 * @var array $param[advanced_search] indicator that advanced search is active
+	 * @var string $param[op] (operator like AND or OR; will be passed when advanced search is active)
+	 * @var string $param[wildcard] (wildcard like % or empty or not set (for no wildcard); will be passed when advanced search is active)
+	 * @var int $param[start]
+	 * @var int $param[num_rows]
+	 * @var string $param[sort] ASC or DESC
+	 * @return array or arrays with keys org_name,count and evtl. adr_one_location or org_unit
+	 */
+	function duplicates($param)
+	{
+		$join = 'JOIN ' . $this->table_name . ' AS a2 ON ';
+		$filter = array(
+			$this->table_name.'.contact_tid != "D"'
+		);
+		$op = 'OR';
+		if (isset($param['op']) && !empty($param['op'])) $op = $param['op'];
+		$advanced_search = false;
+		if (isset($param['advanced_search']) && !empty($param['advanced_search'])) $advanced_search = true;
+		$wildcard ='%';
+		if ($advanced_search || (isset($param['wildcard']) && !empty($param['wildcard']))) $wildcard = ($param['wildcard']?$param['wildcard']:'');
+
+		// fix cat_id filter to search in comma-separated multiple cats and return subcats
+		if ($param['cat_id'])
+		{
+			$cat_filter = $this->_cat_filter($filter['cat_id']);
+			$filter[] = str_replace('cat_id', $this->table_name . '.cat_id', $cat_filter);
+			$join .= str_replace('cat_id', 'a2.cat_id', $cat_filter) . ' AND ';
+			unset($filter['cat_id']);
+		}
+		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
+		if ($param['owner'] && $param['owner'] == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$filter['owner'] = $param['owner'];
+			$join .= 'a2.owner = ' . $this->db->quote($filter['owner']) . ' AND ';
+		}
+		else
+		{
+			// we have no private grants in addressbook at the moment, they have then to be added here too
+			if ($param['owner'])
+			{
+				if (!$this->grants[(int) $filter['owner']]) return false;	// we have no access to that addressbook
+
+				$filter['owner'] = $param['owner'];
+				$filter['private'] = 0;
+				$join .= 'a2.owner = ' . $this->db->quote($filter['owner']) . ' AND ';
+				$join .= 'a2.private = ' . $this->db->quote($filter['private']) . ' AND ';
+			}
+			else	// search all addressbooks, incl. accounts
+			{
+				if ($this->account_repository != 'sql' && $this->contact_repository != 'sql-ldap')
+				{
+					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
+				}
+				$filter[] = $access = "(".$this->table_name.".contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+					" OR {$this->table_name}.contact_private=0 AND ".$this->table_name.".contact_owner IN (".
+					implode(',',array_keys($this->grants))."))";
+				$join .= str_replace($this->table_name, 'a2', $access) . ' AND ';
+			}
+		}
+		if ($param['searchletter'])
+		{
+			$filter[] = $this->table_name.'.n_fn '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($param['searchletter'].'%');
+		}
+		$sort = $param['sort'] == 'DESC' ? 'DESC' : 'ASC';
+		$group = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields'] ?
+				explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']):
+				array('n_family', 'n_given', 'org_name', 'contact_email');
+		$match_count = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'] ?
+				$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'] : 3;
+		
+		$extra = Array();
+		$order = in_array($param['order'], $group) ? $param['order'] : $group[0];
+		$join .= $this->table_name .'.contact_id != a2.contact_id AND a2.contact_tid != "D" AND (';
+		$join_fields = Array();
+		foreach($group as &$field)
+		{
+			$extra[] = "IF({$this->table_name}.$field = a2.$field, 1, 0)";
+			$join_fields[] = $this->table_name . ".$field = a2.$field";
+			$field = $this->table_name . ".$field AS $field";
+		}
+		$extra = Array(
+			'a2.contact_id AS matched',
+			implode('+', $extra) . ' AS match_count'
+		);
+		$join .= $this->db->column_data_implode(' OR ',$join_fields) . ')';
+
+		$append = " HAVING match_count >= $match_count ORDER BY {$this->table_name}.{$order} $sort, $this->table_name.contact_id";
+		$group[] = $this->table_name.'.contact_id AS contact_id';
+
+		$rows = parent::search($param['search'],$group,
+			$append,$extra,$wildcard,false,$op/*'OR'*/,
+			array($param['start'],$param['num_rows']),$filter, $join);
+
+		// Go through rows and only return one for each pair/triplet/etc. of matches
+		$dupes = array();
+		foreach($rows as $key => &$row)
+		{
+			if(array_key_exists($row['contact_id'], $dupes))
+			{
+				$kept_row =& $rows[$dupes[$row['contact_id']]];
+				$kept_row['group_count']++;
+
+				// Clear not matching fields, or we won't be able to find children
+				foreach($kept_row as $sub_key => $sub_value)
+				{
+					if(in_array($sub_key, array('contact_id','group_count'))) continue;
+					if($row[$sub_key] != $sub_value)
+					{
+						unset($kept_row[$sub_key]);
+					}
+				}
+				unset($rows[$key]);
+				$this->total--;
+			}
+			$dupes[$row['matched']] = $key;
+			$row['group_count'] = 1;
+		}
+		return array_values($rows);
 	}
 
 	/**

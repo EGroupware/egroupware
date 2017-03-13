@@ -160,6 +160,24 @@ class Storage
 	var $content_types = array();
 
 	/**
+	 * These fields are options for checking for duplicate contacts
+	 *
+	 * @var array
+	 */
+	public static $duplicate_fields = array(
+		'n_given'           => 'first name',
+		'n_middle'          => 'middle name',
+		'n_family'          => 'last name',
+		'contact_bday'      => 'birthday',
+		'org_name'          => 'Organisation',
+		'org_unit'          => 'Department',
+		'adr_one_locality'  => 'Location',
+		'contact_title'     => 'title',
+		'contact_email'     => 'business email',
+		'contact_email_home'=> 'email (private)',
+	);
+
+	/**
 	* Special content type to indicate a deleted addressbook
 	*
 	* @var String;
@@ -789,6 +807,80 @@ class Storage
 				else
 				{
 					if (strpos($row[$by],'&')!==false) $row[$by] = str_replace('&','*AND*',$row[$by]);
+					$rows[$n]['id'] .= '|||'.$by.':'.$row[$by];
+				}
+			}
+		}
+		return $rows;
+	}
+
+	/**
+	 * Find contacts that appear to be duplicates
+	 * 
+	 * @param Array $param
+	 * @param string $param[org_view] 'org_name', 'org_name,adr_one_location', 'org_name,org_unit' how to group
+	 * @param int $param[owner] addressbook to search
+	 * @param string $param[search] search pattern for org_name
+	 * @param string $param[searchletter] letter the org_name need to start with
+	 * @param int $param[start]
+	 * @param int $param[num_rows]
+	 * @param string $param[sort] ASC or DESC
+	 * 
+	 * @return array of arrays
+	 */
+	public function duplicates($param)
+	{
+		if (!method_exists($this->somain,'duplicates'))
+		{
+			$this->total = 0;
+			return false;
+		}
+		if ($param['search'] && !is_array($param['search']))
+		{
+			$search = $param['search'];
+			$param['search'] = array();
+			if($this->somain instanceof Sql)
+			{
+				// Keep the string, let the parent deal with it
+				$param['search'] = $search;
+			}
+			else
+			{
+				foreach($this->columns_to_search as $col)
+				{
+					// we don't search the customfields
+					if ($col != 'contact_value') $param['search'][$col] = $search;
+				}
+			}
+		}
+		if (is_array($param['search']) && count($param['search']))
+		{
+			$param['search'] = $this->data2db($param['search']);
+		}
+		if(!array_key_exists('tid', $param['col_filter']) || $param['col_filter']['tid'] === '')
+		{
+			$param['col_filter'][] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+		}
+		elseif(is_null($param['col_filter']['tid']))
+		{
+			// return all entries including deleted
+			unset($param['col_filter']['tid']);
+		}
+
+
+		$rows = $this->somain->duplicates($param);
+		$this->total = $this->somain->total;
+
+		if (!$rows) return array();
+
+		foreach($rows as $n => $row)
+		{
+			$rows[$n]['id'] = 'duplicate:';
+			foreach(static::$duplicate_fields as $by => $by_label)
+			{
+				if (strpos($row[$by],'&')!==false) $row[$by] = str_replace('&','*AND*',$row[$by]);
+				if($row[$by])
+				{
 					$rows[$n]['id'] .= '|||'.$by.':'.$row[$by];
 				}
 			}

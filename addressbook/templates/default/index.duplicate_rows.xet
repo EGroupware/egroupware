@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.index.duplicate_rows" template="" lang="" group="0" version="16.001">
+		<grid width="100%">
+			<columns>
+				<column width="75"/>
+				<column width="25"/>
+				<column width="40%"/>
+				<column width="30%"/>
+				<column width="30%"/>
+				<column width="180"/>
+				<column width="180"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header label="Type" id="type"/>
+					<nextmatch-header label="#" align="center" id="group_count"/>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row disabled="!@order=n_fileas">
+								<nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+							</row>
+							<row disabled="!@order=n_given">
+								<nextmatch-sortheader label="Firstname" id="n_given"/>
+								<nextmatch-sortheader label="Name" id="n_family"/>
+							</row>
+							<row disabled="!@order=n_family">
+								<nextmatch-sortheader label="Name" id="n_family"/>
+								<nextmatch-sortheader label="Firstname" id="n_given"/>
+							</row>
+							<row>
+								<nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
+							</row>
+							<row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
+								<nextmatch-sortheader label="Name" id="n_family"/>
+								<nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
+							</row>
+							<row disabled="@order=n_fileas">
+								<nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+							</row>
+						</rows>
+					</grid>
+					<nextmatch-header label="Business address" id="business"/>
+					<!--
+					<vbox>
+						<nextmatch-header label="Business phone" id="tel_work"/>
+						<nextmatch-header label="Mobile phone" id="tel_cell"/>
+						<nextmatch-header label="Home phone" id="tel_home"/>
+						<description value="Fax"/>
+					</vbox>
+					-->
+					<vbox>
+						<nextmatch-header label="Business email" id="email"/>
+						<nextmatch-header label="Home email" id="email_home"/>
+					</vbox>
+				</row>
+				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">
+					<image label="$row_cont[type_label]" src="${row}[type]" align="center" no_lang="1"/>
+					<int id="${row}[group_count]" readonly="true" align="center"/>
+					<vbox id="${row}[id]">
+						<description id="${row}[line1]" no_lang="1"/>
+						<description id="${row}[line2]" no_lang="1"/>
+						<description id="${row}[org_unit]" no_lang="1"/>
+						<description id="${row}[title]" no_lang="1"/>
+						<description id="${row}[first_org]" no_lang="1"/>
+					</vbox>
+					<vbox>
+						<description value=" " id="${row}[adr_one_locality]" no_lang="1" class="leftPad5"/>
+						<menulist>
+							<menupopup type="select-country" id="${row}[adr_one_countrycode]" readonly="true"/>
+						</menulist>
+					</vbox>
+					<!--
+					<vbox>
+						<url-phone id="${row}[tel_work]" readonly="true" class="telNumbers"/>
+						<url-phone id="${row}[tel_cell]" readonly="true" class="telNumbers"/>
+						<url-phone id="${row}[tel_home]" readonly="true" class="telNumbers"/>
+						<url-phone id="${row}[tel_fax]" readonly="true"/>
+						<description id="${row}[tel_prefered]" no_lang="1" href="$row_cont[tel_prefered_link]" extra_link_target="calling" extra_link_popup="$cont[call_popup]"/>
+					</vbox>
+					-->
+					<vbox>
+						<url-email id="${row}[email]" readonly="true" class="fixedHeight"/>
+						<url-email id="${row}[email_home]" readonly="true" class="fixedHeight"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

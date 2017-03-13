@@ -174,7 +174,7 @@
 	</template>
 	<template id="addressbook.index.row" template="" lang="" group="0" version="1.3.001">
 		<buttononly align="right" statustext="Advanced search" image="advanced-search" background_image="1" id="advanced-search" onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.search'),'870','610','_blank','addressbook',null,true); return false;"/>
-		<select statustext="Select a view" id="org_view" no_lang="1" rows="1" empty_label="All contacts"/>
+		<select statustext="Select a view" id="grouped_view" no_lang="1" rows="1" empty_label="All contacts"/>
 	</template>
 	<template id="addressbook.index.right" template="" lang="" group="0" version="1.7.001">
 		<select align="right" id="col_filter[tid]" empty_label="All types"/>

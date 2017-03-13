@@ -150,6 +150,11 @@ class addressbook_hooks
 		);
 		$contacts = new Api\Contacts();
 		$fileas_options = $contacts->fileas_options();
+		foreach(Api\Contacts\Storage::$duplicate_fields as $key => $label)
+		{
+			$duplicate_options[$key] = lang($label);
+		}
+
 		$settings['link_title'] = array(
 			'type'   => 'select',
 			'label'  => 'Link title for contacts show',
@@ -197,6 +202,26 @@ class addressbook_hooks
 			'admin'  => false,
 			'default'=> 'org_name: n_family, n_given',
 		);
+		$settings['duplicate_fields'] = array(
+			'type'		=> 'multiselect',
+			'label'		=> 'Fields to check for duplicates',
+			'name'		=> 'duplicate_fields',
+			'values'	=> $duplicate_options,
+			'help'		=> 'Fields to consider when looking for duplicate contacts.',
+			'admin'		=> false,
+			'default'	=> 'n_family, n_given, org_name, contact_email'
+		);
+		$settings['duplicate_threshold'] = array(
+			'type'   => 'input',
+			'size'   => 5,
+			'label'  => 'Duplicate threshold',
+			'name'   => 'duplicate_threshold',
+			'help'   => 'How many fields must match for the record to be considered a duplicate.',
+			'xmlrpc' => True,
+			'default'=> 3,
+			'admin'  => False
+		);
+
 		$crm_list_options = array(
 			'~edit~'    => lang('Edit contact'),
 			'infolog' => lang('Open %1 CRM view', lang('infolog')),

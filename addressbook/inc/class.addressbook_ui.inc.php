@@ -85,10 +85,11 @@ class addressbook_ui extends addressbook_bo
 
 		$this->tmpl = new Etemplate();
 
-		$this->org_views = array(
+		$this->grouped_views = array(
 			'org_name'                  => lang('Organisations'),
 			'org_name,adr_one_locality' => lang('Organisations by location'),
 			'org_name,org_unit'         => lang('Organisations by departments'),
+			'duplicates'				=> lang('Duplicates')
 		);
 
 		// make sure the hook for export_limit is registered
@@ -149,9 +150,10 @@ class addressbook_ui extends addressbook_bo
 				{
 					$msg = lang('You need to select some contacts first');
 				}
-				elseif ($_content['nm']['action'] == 'view_org')	// org-view via context menu
+				elseif ($_content['nm']['action'] == 'view_org' || $_content['nm']['action'] == 'view_duplicates')
 				{
-					$_content['nm']['org_view'] = array_shift($_content['nm']['selected']);
+					// grouped view via context menu
+					$_content['nm']['grouped_view'] = array_shift($_content['nm']['selected']);
 				}
 				else
 				{
@@ -177,11 +179,11 @@ class addressbook_ui extends addressbook_bo
 			}
 			if ($_content['nm']['rows']['view'])	// show all contacts of an organisation
 			{
-				list($org_view) = each($_content['nm']['rows']['view']);
+				list($grouped_view) = each($_content['nm']['rows']['view']);
 			}
 			else
 			{
-				$org_view = $_content['nm']['org_view'];
+				$grouped_view = $_content['nm']['grouped_view'];
 			}
 			$typeselection = $_content['nm']['col_filter']['tid'];
 		}
@@ -245,7 +247,7 @@ class addressbook_ui extends addressbook_bo
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
 				'row_modified'   => 'modified',
-				'is_parent'      => 'org_count',
+				'is_parent'      => 'group_count',
 				'parent_id'      => 'parent_id',
 				'favorites'      => true,
 				'placeholder_actions' => array('add')
@@ -338,27 +340,25 @@ class addressbook_ui extends addressbook_bo
 		{
 			$this->tmpl->disableElement('nm[col_filter][tid]');
 		}
-		// get the availible org-views plus the label of the contacts view of one org
-		$sel_options['org_view'] = $this->org_views;
-		if (isset($org_view))
+		// get the availible grouped-views plus the label of the contacts view of one group
+		$sel_options['grouped_view'] = $this->grouped_views;
+		if (isset($grouped_view))
 		{
-			$content['nm']['org_view'] = $org_view;
+			$content['nm']['grouped_view'] = $grouped_view;
 		}
 
-		$content['nm']['actions'] = $this->get_actions($content['nm']['col_filter']['tid'], $content['nm']['org_view']);
+		$content['nm']['actions'] = $this->get_actions($content['nm']['col_filter']['tid']);
 
-		if (!isset($sel_options['org_view'][(string) $content['nm']['org_view']]))
+		if (!isset($sel_options['grouped_view'][(string) $content['nm']['grouped_view']]))
 		{
-			$sel_options['org_view'] += $this->_get_org_name((string)$content['nm']['org_view']);
+			$sel_options['grouped_view'] += $this->_get_grouped_name((string)$content['nm']['grouped_view']);
 		}
-		// unset the filters regarding organisations, when there is no organisation selected
-		if (empty($sel_options['org_view'][(string) $content['nm']['org_view']]) || stripos($org_view,":") === false )
+		// unset the filters regarding grouped views, when there is no group selected
+		if (empty($sel_options['grouped_view'][(string) $content['nm']['grouped_view']]) || stripos($grouped_view,":") === false )
 		{
-			unset($content['nm']['col_filter']['org_name']);
-			unset($content['nm']['col_filter']['org_unit']);
-			unset($content['nm']['col_filter']['adr_one_locality']);
+			$this->unset_grouped_filters($content['nm']);
 		}
-		$content['nm']['org_view_label'] = $sel_options['org_view'][(string) $content['nm']['org_view']];
+		$content['nm']['grouped_view_label'] = $sel_options['grouped_view'][(string) $content['nm']['grouped_view']];
 
 		$this->tmpl->read($do_email ? 'addressbook.email' : 'addressbook.index');
 		return $this->tmpl->exec($do_email ? 'addressbook.addressbook_ui.emailpopup' : 'addressbook.addressbook_ui.index',
@@ -381,7 +381,7 @@ class addressbook_ui extends addressbook_bo
 				'allowOnMultiple' => false,
 				'group' => $group=1,
 				'onExecute' => 'javaScript:app.addressbook.view',
-				'disableClass' => 'contact_organisation',
+				'enableClass' => 'contact_contact',
 				'hideOnDisabled' => true,
 				// Children added below
 				'children' => array(),
@@ -391,7 +391,7 @@ class addressbook_ui extends addressbook_bo
 				'caption' => 'Open',
 				'default' => $GLOBALS['egw_info']['user']['preferences']['addressbook']['crm_list'] == '~edit~',
 				'allowOnMultiple' => false,
-				'disableClass' => 'contact_organisation',
+				'enableClass' => 'contact_contact',
 				'hideOnDisabled' => true,
 				'url' => 'menuaction=addressbook.addressbook_ui.edit&contact_id=$id',
 				'popup' => Link::get_registry('addressbook', 'edit_popup'),
@@ -400,7 +400,7 @@ class addressbook_ui extends addressbook_bo
 			'add' => array(
 				'caption' => 'Add',
 				'group' => $group,
-				'disableClass' => 'contact_organisation',
+				'enableClass' => 'contact_contact',
 				'hideOnDisabled' => true,
 				'children' => array(
 					'new' => array(
@@ -445,18 +445,37 @@ class addressbook_ui extends addressbook_bo
 				'default' => true,
 				'allowOnMultiple' => false,
 				'group' => $group=1,
-				'disableClass' => 'contact_contact',
+				'enableClass' => 'contact_organisation',
 				'hideOnDisabled' => true
 			),
 			'add_org' => array(
 				'caption' => 'Add',
 				'group' => $group,
 				'allowOnMultiple' => false,
-				'disableClass' => 'contact_contact',
+				'enableClass' => 'contact_organisation',
 				'hideOnDisabled' => true,
 				'url' => 'menuaction=addressbook.addressbook_ui.edit&org=$id',
 				'popup' => Link::get_registry('addressbook', 'add_popup'),
 			),
+		);
+
+		// Duplicates view
+		$actions += array(
+			'view_duplicates' => array(
+				'caption' => 'View',
+				'default' => true,
+				'allowOnMultiple' => false,
+				'group' => $group=1,
+				'enableClass' => 'contact_duplicate',
+				'hideOnDisabled' => true
+			),
+			'merge_duplicates' => array(
+				'caption'	=> 'Merge duplicates',
+				'group'		=> $group,
+				'allowOnMultiple'	=> true,
+				'enableClass' => 'contact_duplicate',
+				'hideOnDisabled'	=> true
+			)
 		);
 
 		++$group;	// other AB related stuff group: lists, AB's, categories
@@ -587,6 +606,7 @@ class addressbook_ui extends addressbook_bo
 						'caption' => lang('View linked InfoLog entries'),
 						'icon' => 'infolog/navbar',
 						'onExecute' => 'javaScript:app.addressbook.view_infolog',
+						'enableClass' => 'contact_contact',
 						'allowOnMultiple' => true,
 						'hideOnDisabled' => true,
 					),
@@ -607,6 +627,7 @@ class addressbook_ui extends addressbook_bo
 				'icon' => 'calendar/navbar',
 				'caption' => 'Calendar',
 				'group' => $group,
+				'enableClass' => 'contact_contact',
 				'children' => array(
 					'calendar_view' => array(
 						'caption' => 'Show',
@@ -629,7 +650,7 @@ class addressbook_ui extends addressbook_bo
 		$actions['email'] = array(
 				'caption' => 'Email',
 				'icon'	=> 'mail/navbar',
-				'disableClass' => 'contact_organisation',
+				'enableClass' => 'contact_contact',
 				'hideOnDisabled' => true,
 				'group' => $group,
 				'children' => array(
@@ -681,8 +702,8 @@ class addressbook_ui extends addressbook_bo
 				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/addressbook/$id&ajax=true',
 				'allowOnMultiple' => false,
 				'group' => $group,
-				// disable for for org-views, as it needs contact-ids
-				'disableClass' => 'contact_organisation',
+				// disable for for group-views, as it needs contact-ids
+				'enableClass' => 'contact_contact',
 				'hideOnMobile' => true
 			);
 		}
@@ -691,6 +712,7 @@ class addressbook_ui extends addressbook_bo
 			'caption' => 'GeoLocation',
 			'icon' => 'map',
 			'group' => ++$group,
+			'enableClass' => 'contact_contact',
 			'children' => array (
 				'private' => array(
 					'caption' => 'Private Address',
@@ -713,6 +735,7 @@ class addressbook_ui extends addressbook_bo
 			$actions['export'] = array(
 				'caption' => 'Export',
 				'icon' => 'filesave',
+				'enableClass' => 'contact_contact',
 				'group' => ++$group,
 				'children' => array(
 					'csv'    => array(
@@ -742,7 +765,7 @@ class addressbook_ui extends addressbook_bo
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.addressbook.adb_mail_vcard',
-				'disableClass' => 'contact_organisation',
+				'enableClass' => 'contact_contact',
 				'hideOnDisabled' => true,
 				'hideOnMobile' => true
 			);
@@ -807,22 +830,99 @@ class addressbook_ui extends addressbook_bo
 	}
 
 	/**
-	 * Get the name of an organization from an ID for the org_view filter
+	 * Get a nice name for the given grouped view ID
 	 *
-	 * @param string $org
-	 * @return Array ID => name
+	 * @param String $view_id Some kind of indicator for a specific group, either
+	 *	organisation or duplicate.  It looks like key:value pairs seperated by |||.
+	 *
+	 * @return Array(ID => name), where ID is the $view_id passed in
 	 */
-	private function _get_org_name($org)
+	protected function _get_grouped_name($view_id)
 	{
-		$org_name = array();
-		if (strpos($org,'*AND*')!== false) $org = str_replace('*AND*','&',$org);
-		foreach(explode('|||',$org) as $part)
+		$group_name = array();
+		if (strpos($view_id,'*AND*')!== false) $view_id = str_replace('*AND*','&',$view_id);
+		foreach(explode('|||',$view_id) as $part)
 		{
 			list(,$name) = explode(':',$part,2);
-			if ($name) $org_name[] = $name;
+			if ($name) $group_name[] = $name;
 		}
-		$name = implode(': ',$org_name);
-		return $name ? array($org => $name) : array();
+		$name = implode(': ',$group_name);
+		return $name ? array($view_id => $name) : array();
+	}
+
+	/**
+	 * Unset the relevant column filters to clear a grouped view
+	 * 
+	 * @param Array $query
+	 */
+	protected function unset_grouped_filters(&$query)
+	{
+		unset($query['col_filter']['org_name']);
+		unset($query['col_filter']['org_unit']);
+		unset($query['col_filter']['adr_one_locality']);
+		foreach(static::$duplicate_fields as $field => $label)
+		{
+			unset($query['col_filter'][$field]);
+		}
+	}
+
+	/**
+	 * Adjust the query as needed and get the rows for the grouped views (organisation
+	 * or duplicate contacts)
+	 *
+	 * @param Array $query Nextmatch query
+	 * @return array rows found
+	 */
+	protected function get_grouped_rows(&$query)
+	{
+		// Query doesn't like empties
+		unset($query['col_filter']['parent_id']);
+
+		if($query['actions'] && $query['actions']['open'])
+		{
+			// Just switched from contact view, update actions
+			$query['actions'] = $this->get_actions($query['col_filter']['tid']);
+		}
+		unset($query['col_filter']['list']);	// does not work together
+		$query['no_filter2'] = true;			// switch the distribution list selection off
+
+		$query['template'] = $query['grouped_view'] == 'duplicates' ? 'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
+
+		if ($query['advanced_search'])
+		{
+			$query['op'] = $query['advanced_search']['operator'];
+			unset($query['advanced_search']['operator']);
+			$query['wildcard'] = $query['advanced_search']['meth_select'];
+			unset($query['advanced_search']['meth_select']);
+			$original_search = $query['search'];
+			$query['search'] = $query['advanced_search'];
+		}
+
+		switch ($query['template'])
+		{
+			case 'addressbook.index.org_rows':
+				if ($query['order'] != 'org_name')
+				{
+					$query['sort'] = 'ASC';
+					$query['order'] = 'org_name';
+				}
+				$query['org_view'] = $query['grouped_view'];
+				$rows = parent::organisations($query);
+				break;
+			case 'addressbook.index.duplicate_rows':
+				$rows = parent::duplicates($query);
+				break;
+		}
+
+		if ($query['advanced_search'])
+		{
+			$query['search'] = $original_search;
+			unset($query['wildcard']);
+			unset($query['op']);
+		}
+		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualAddressbookIndexOrga');
+
+		return $rows;
 	}
 
 	/**
@@ -886,7 +986,7 @@ window.egw_LAB.wait(function() {
 		if(!is_array($org)) $org = array($org);
 		foreach($org as $org_name)
 		{
-			$query['org_view'] = $org_name;
+			$query['grouped_view'] = $org_name;
 			$checked = array();
 			$readonlys = null;
 			$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
@@ -907,7 +1007,7 @@ window.egw_LAB.wait(function() {
 	{
 		$query = Api\Cache::getSession('addressbook', 'index');
 		$query['num_rows'] = -1;	// all
-		$query['org_view'] = $org;
+		$query['grouped_view'] = $org;
 		$query['searchletter'] = '';
 		$checked = $readonlys = null;
 		$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
@@ -1047,26 +1147,8 @@ window.egw_LAB.wait(function() {
 			}
 		}
 		// replace org_name:* id's with all id's of that org
-		$org_contacts = array();
-		foreach((array)$checked as $n => $id)
-		{
-			if (substr($id,0,9) == 'org_name:')
-			{
-				if (count($checked) == 1 && !count($org_contacts) && $action == 'infolog')
-				{
-					return $this->infolog_org_view($id);	// uses the org-name, instead of 'selected contacts'
-				}
-				unset($checked[$n]);
-				$query = Api\Cache::getSession('addressbook', $session_name);
-				$query['num_rows'] = -1;	// all
-				$query['org_view'] = $id;
-				unset($query['filter2']);
-				$extra = $readonlys = null;
-				$this->get_rows($query,$extra,$readonlys,true);	// true = only return the id's
-				if ($extra[0]) $org_contacts = array_merge($org_contacts,$extra);
-			}
-		}
-		if ($org_contacts) $checked = array_unique($checked ? array_merge($checked,$org_contacts) : $org_contacts);
+		$grouped_contacts = $this->find_grouped_ids($action, $checked, $use_all, $success,$failed,$action_msg,$session_name);
+		if ($grouped_contacts) $checked = array_unique($checked ? array_merge($checked,$grouped_contacts) : $grouped_contacts);
 		//_debug_array($checked); exit;
 
 		if (substr($action,0,8) == 'move_to_')
@@ -1339,6 +1421,59 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
+	 * Find the individual contact IDs for a list of grouped contacts
+	 *
+	 * Successful lookups are removed from the checked array.
+	 *
+	 * Used for action on organisation and duplicate views
+	 * @param string/int $action 'delete', 'vcard', 'csv' or nummerical account_id to move contacts to that addessbook
+	 * @param array $checked contact id's to use if !$use_all
+	 * @param boolean $use_all if true use all contacts of the current selection (in the session)
+	 * @param int &$success number of succeded actions
+	 * @param int &$failed number of failed actions (not enought permissions)
+	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
+	 * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
+	 *
+	 * @return array List of contact IDs in the provided groups
+	 */
+	protected function find_grouped_ids($action,&$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
+	{
+		$grouped_contacts = array();
+		foreach((array)$checked as $n => $id)
+		{
+			if (substr($id,0,9) == 'org_name:' || substr($id, 0,10) == 'duplicate:')
+			{
+				if (count($checked) == 1 && !count($grouped_contacts) && $action == 'infolog')
+				{
+					return $this->infolog_org_view($id);	// uses the org-name, instead of 'selected contacts'
+				}
+				unset($checked[$n]);
+				$query = Api\Cache::getSession('addressbook', $session_name);
+				$query['num_rows'] = -1;	// all
+				$query['grouped_view'] = $id;
+				unset($query['filter2']);
+				$extra = $readonlys = null;
+				$this->get_rows($query,$extra,$readonlys,true);	// true = only return the id's
+
+				// Merge them here, so we only merge the ones that are duplicates,
+				// not merge all selected together
+				if($action == 'merge_duplicates')
+				{
+					$loop_success = $loop_fail = 0;
+					$this->action('merge', $extra, false, $loop_success, $loop_fail, $action_msg,$session_name,$msg);
+					$success += $loop_success;
+					$failed += $loop_fail;
+				}
+				if ($extra[0]) 
+				{
+					$grouped_contacts = array_merge($grouped_contacts,$extra);
+				}
+			}
+		}
+		return $grouped_contacts;
+	}
+
+	/**
 	 * Copy a given contact (not storing it!)
 	 *
 	 * Taken care only configured fields get copied and certain fields never to copy (uid etc.).
@@ -1400,30 +1535,21 @@ window.egw_LAB.wait(function() {
 		{
 			$old_state = Api\Cache::getSession('addressbook', $what);
 		}
-		if (!isset($this->org_views[(string) $query['org_view']]) || strpos($query['org_view'],':') === false)   // we dont have an org view, unset the according col_filters
+		if (!isset($this->grouped_views[(string) $query['grouped_view']]) || strpos($query['grouped_view'],':') === false)   
 		{
-			if (isset($query['col_filter']['org_name'])) unset($query['col_filter']['org_name']);
-			if (isset($query['col_filter']['adr_one_locality'])) unset($query['col_filter']['adr_one_locality']);
-			if (isset($query['col_filter']['org_unit'])) unset($query['col_filter']['org_unit']);
+			// we don't have a grouped view, unset the according col_filters
+			$this->unset_grouped_filters($query);
 		}
 
-		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view, reset the advanced search
+		if (isset($this->grouped_views[(string) $query['grouped_view']]))
 		{
-			//_debug_array(array('Search'=>$query['search'],
-			//	'AdvancedSearch'=>$query['advanced_search']));
-			//if (is_array($query['search'])) unset($query['search']);
-			//unset($query['advanced_search']);
+			// we have a grouped view, reset the advanced search
 			if(!$query['search'] && $old_state['advanced_search']) $query['advanced_search'] = $old_state['advanced_search'];
 		}
 		elseif(!$query['search'] && array_key_exists('advanced_search',$old_state))	// eg. paging in an advanced search
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
-		/* this cant work anymore, as Framework::set_onload no longer exists
-		if ($do_email && etemplate::$loop)
-		{	// remove previous addEmail() calls, otherwise they will be run again
-			Framework::set_onload(preg_replace('/addEmail\([^)]+\);/','',Framework::set_onload()),true);
-		}*/
 
 		// Make sure old lettersearch filter doesn't stay - current letter filter will be added later
 		foreach($query['col_filter'] as $key => $col_filter)
@@ -1441,7 +1567,7 @@ window.egw_LAB.wait(function() {
 		if (!$id_only)
 		{
 			// check if accounts are stored in ldap, which does NOT yet support the org-views
-			if ($this->so_accounts && $query['filter'] === '0' && $query['org_view'])
+			if ($this->so_accounts && $query['filter'] === '0' && $query['grouped_view'])
 			{
 				if ($old_state['filter'] === '0')	// user changed to org_view
 				{
@@ -1449,21 +1575,21 @@ window.egw_LAB.wait(function() {
 				}
 				else								// user changed to accounts
 				{
-					$query['org_view'] = '';		// --> change to regular contacts view
+					$query['grouped_view'] = '';		// --> change to regular contacts view
 				}
 			}
-			if ($query['org_view'] && isset($this->org_views[$old_state['org_view']]) && !isset($this->org_views[$query['org_view']]))
+			if ($query['grouped_view'] && isset($this->grouped_views[$old_state['grouped_view']]) && !isset($this->grouped_views[$query['grouped_view']]))
 			{
-				$query['searchletter'] = '';		// reset lettersearch if viewing the contacts of one organisation
+				$query['searchletter'] = '';		// reset lettersearch if viewing the contacts of one group (org or duplicates)
 			}
 			// save the state of the index in the user prefs
 			$state = serialize(array(
-				'filter'     => $query['filter'],
-				'cat_id'     => $query['cat_id'],
-				'order'      => $query['order'],
-				'sort'       => $query['sort'],
-				'col_filter' => array('tid' => $query['col_filter']['tid']),
-				'org_view'   => $query['org_view'],
+				'filter'        => $query['filter'],
+				'cat_id'        => $query['cat_id'],
+				'order'         => $query['order'],
+				'sort'		    => $query['sort'],
+				'col_filter'    => array('tid' => $query['col_filter']['tid']),
+				'grouped_view'  => $query['grouped_view'],
 			));
 			if ($state != $this->prefs[$what.'_state'] && !$query['csv_export'])
 			{
@@ -1511,44 +1637,11 @@ window.egw_LAB.wait(function() {
 		// all backends allow now at least to use groups as distribution lists
 		$query['no_filter2'] = false;
 
-		if (isset($this->org_views[(string) $query['org_view']]) && !$query['col_filter']['parent_id'])	// we have an org view
+		// Grouped view
+		if (isset($this->grouped_views[(string) $query['grouped_view']]) && !$query['col_filter']['parent_id'])
 		{
-			// Query doesn't like empties
-			unset($query['col_filter']['parent_id']);
-
-			if($query['actions'] && $query['actions']['open'])
-			{
-				// Just switched from contact view, update actions
-				$query['actions'] = $this->get_actions($query['col_filter']['tid'], $query['org_view']);
-			}
-			unset($query['col_filter']['list']);	// does not work together
-			$query['no_filter2'] = true;			// switch the distribution list selection off
-
-			$query['template'] = 'addressbook.index.org_rows';
-
-			if ($query['order'] != 'org_name')
-			{
-				$query['sort'] = 'ASC';
-				$query['order'] = 'org_name';
-			}
-			if ($query['advanced_search'])
-			{
-				$query['op'] = $query['advanced_search']['operator'];
-				unset($query['advanced_search']['operator']);
-				$query['wildcard'] = $query['advanced_search']['meth_select'];
-				unset($query['advanced_search']['meth_select']);
-				$original_search = $query['search'];
-				$query['search'] = $query['advanced_search'];
-			}
-
-			$rows = parent::organisations($query);
-			if ($query['advanced_search'])
-			{
-				$query['search'] = $original_search;
-				unset($query['wildcard']);
-				unset($query['op']);
-			}
-			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualAddressbookIndexOrga');
+			$query['grouped_view_label'] = '';
+			$rows = $this->get_grouped_rows($query);
 		}
 		else	// contacts view
 		{
@@ -1562,19 +1655,21 @@ window.egw_LAB.wait(function() {
 			}
 			if($query['col_filter']['parent_id'])
 			{
-				$query['org_view'] = $query['col_filter']['parent_id'];
-				$query['template'] = 'addressbook.index.org_rows';
+				$query['grouped_view'] = $query['col_filter']['parent_id'];
+				$query['template'] = strpos($query['grouped_view'], 'duplicate') === 0 ?
+						'addressbook.index.duplicate_rows' : 'addressbook.index.org_rows';
 			}
 			// Query doesn't like parent_id
 			unset($query['col_filter']['parent_id']);
-			if ($query['org_view'])	// view the contacts of one organisation only
+			if ($query['grouped_view'])	// view the contacts of one organisation only
 			{
-				if (strpos($query['org_view'],'*AND*') !== false) $query['org_view'] = str_replace('*AND*','&',$query['org_view']);
-				foreach(explode('|||',$query['org_view']) as $part)
+				if (strpos($query['grouped_view'],'*AND*') !== false) $query['grouped_view'] = str_replace('*AND*','&',$query['grouped_view']);
+				$fields = explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']);
+				foreach(explode('|||',$query['grouped_view']) as $part)
 				{
 					list($name,$value) = explode(':',$part,2);
 					// do NOT set invalid column, as this gives an SQL error ("AND AND" in sql)
-					if (in_array($name, array('org_name','org_unit','adr_one_location')))
+					if (static::$duplicate_fields[$name] && in_array($name, $fields) && $value)
 					{
 						$query['col_filter'][$name] = $value;
 					}
@@ -1582,8 +1677,8 @@ window.egw_LAB.wait(function() {
 			}
 			else if($query['actions'] && !$query['actions']['edit'])
 			{
-				// Just switched from org view, update actions
-				$query['actions'] = $this->get_actions($query['col_filter']['tid'], $query['org_view']);
+				// Just switched from grouped view, update actions
+				$query['actions'] = $this->get_actions($query['col_filter']['tid']);
 			}
 			// translate the select order to the really used over all 3 columns
 			$sort = $query['sort'];
@@ -1712,17 +1807,17 @@ window.egw_LAB.wait(function() {
 					list($row['line1'],$row['line2']) = explode(': ',$row['n_fileas']);
 					break;
 			}
-			if (isset($this->org_views[(string) $query['org_view']]))
+			if (isset($this->grouped_views[(string) $query['grouped_view']]))
 			{
 				$row['type'] = 'home';
-				$row['type_label'] = lang('Organisation');
+				$row['type_label'] = $query['grouped_view'] == 'duplicate' ? lang('Duplicates') : lang('Organisation');
 
 				if ($query['filter'] && !($this->grants[(int)$query['filter']] & Acl::DELETE))
 				{
 					$row['class'] .= 'rowNoDelete ';
 				}
 				$row['class'] .= 'rowNoEdit ';	// no edit in OrgView
-				$row['class'] .= 'contact_organisation ';
+				$row['class'] .= $query['grouped_view'] == 'duplicates' ? 'contact_duplicate' : 'contact_organisation ';
 			}
 			else
 			{
@@ -1802,7 +1897,7 @@ window.egw_LAB.wait(function() {
 
 		// full app-header with all search criteria specially for the print
 		$header = array();
-		if ($query['filter'] !== '' && !isset($this->org_views[$query['org_view']]))
+		if ($query['filter'] !== '' && !isset($this->grouped_views[$query['grouped_view']]))
 		{
 			$header[] = ($query['filter'] == '0' ? lang('accounts') :
 				($GLOBALS['egw']->accounts->get_type($query['filter']) == 'g' ?
@@ -1810,14 +1905,14 @@ window.egw_LAB.wait(function() {
 					Api\Accounts::username((int)$query['filter']).
 						(substr($query['filter'],-1) == 'p' ? ' ('.lang('private').')' : '')));
 		}
-		if ($query['org_view'])
+		if ($query['grouped_view'])
 		{
-			$header[] = $query['org_view_label'];
+			$header[] = $query['grouped_view_label'];
 			// Make sure option is there
-			if(!array_key_exists($query['org_view'], $this->org_views))
+			if(!array_key_exists($query['grouped_view'], $this->grouped_views))
 			{
-				$this->org_views += $this->_get_org_name($query['org_view']);
-				$rows['sel_options']['org_view'] = $this->org_views;
+				$this->grouped_views += $this->_get_grouped_name($query['grouped_view']);
+				$rows['sel_options']['grouped_view'] = $this->grouped_views;
 			}
 		}
 		if($query['advanced_search'])
@@ -2103,9 +2198,9 @@ window.egw_LAB.wait(function() {
 					if ($org[0] == '"') $org = substr($org, 1, -1);
 					$content = $this->read_org($org);
 				}
-				elseif ($state['org_view'] && !isset($this->org_views[$state['org_view']]))
+				elseif ($state['grouped_view'] && !isset($this->grouped_views[$state['grouped_view']]))
 				{
-					$content = $this->read_org($state['org_view']);
+					$content = $this->read_org($state['grouped_view']);
 				}
 				else
 				{
@@ -2491,12 +2586,14 @@ window.egw_LAB.wait(function() {
 	public function ajax_check_values($values, $name, $own_id=0)
 	{
 		$matches = null;
+		$fields = explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']);
+
 		if (preg_match('/^exec\[([^\]]+)\]$/', $name, $matches)) $name = $matches[1];	// remove exec[ ]
 
 		$ret = array('doublicates' => array(), 'msg' => null);
 
 		// if email changed, check for doublicates
-		if (in_array($name, array('email', 'email_home')))
+		if (in_array($name, array('email', 'email_home')) && in_array($name, $fields))
 		{
 			if (preg_match(Etemplate\Widget\Url::EMAIL_PREG, $values[$name]))	// only search for real email addresses, to not return to many contacts
 			{
@@ -2513,12 +2610,19 @@ window.egw_LAB.wait(function() {
 			// Full options for et2
 			$ret['fileas_sel_options'] = $this->fileas_options($values);
 
-			// if name, firstname or org changed and at least 2 are specified, check for doublicates
-			if (in_array($name, array('n_given', 'n_family', 'org_name')) &&
-				!empty($values['n_given'])+!empty($values['n_family'])+!empty($values['org_name']) >= 2)
+			// if name, firstname or org changed and enough are specified, check for doublicates
+			$specified_count = 0;
+			foreach($fields as $field)
+			{
+				if($values[$field])
+				{
+					$specified_count++;
+				}
+			}
+			if (in_array($name,$fields) && $specified_count >= 2)
 			{
 				$filter = array();
-				foreach(array('email', 'n_given', 'n_family', 'org_name') as $n)	// use email too, to exclude obvious false positives
+				foreach($fields as $n)	// use email too, to exclude obvious false positives
 				{
 					if (!empty($values[$n])) $filter[$n] = $values[$n];
 				}
