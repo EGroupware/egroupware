@@ -2453,20 +2453,21 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	/**
 	 * gather Info on how to display the quota info
 	 *
-	 * @param int $_usage
-	 * @param int $_limit
+	 * @param int $_usage amount of usage in Kb
+	 * @param int $_limit amount of limit in Kb
 	 * @return array  returns an array of info used for quota
 	 *		array(
-	 *			class	=> string,
-	 *			text	=> string,
-	 *			$percent=> string
+	 *			class		=> string,
+	 *			text		=> string,
+	 *			percent		=> string,
+	 *			freespace	=> integer
 	 *		)
 	 */
 	function quotaDisplay($_usage, $_limit)
 	{
 		$percent = $_limit == 0 ? 100 : round(($_usage*100)/$_limit);
-		$limit=Mail::show_readable_size($_limit*1024);
-		$usage=Mail::show_readable_size($_usage*1024);
+		$limit = Mail::show_readable_size($_limit*1024);
+		$usage = Mail::show_readable_size($_usage*1024);
 
 		if ($_limit > 0)
 		{
@@ -2491,7 +2492,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		return array (
 			'class'		=> $class,
 			'text'		=> lang('Quota: %1',$text),
-			'percent'	=> $percent
+			'percent'	=> $percent,
+			'freespace'	=> $_limit*1024 - $_usage*1024
 		);
 	}
 
@@ -4483,7 +4485,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				'quotainpercent'	=> (string)$quotainfo['percent'],
 				'quotaclass'		=> $quotainfo['class'],
 				'quotanotsupported'	=> "",
-				'profileid'			=> $icServerID
+				'profileid'			=> $icServerID,
+				'quotawarning'		=> ($quotainfo['freespace']/pow(1024, 2)) < 50 && $quotainfo['percent'] >= 99 ? true : false
 			);
 		}
 		else

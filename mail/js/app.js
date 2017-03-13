@@ -1232,7 +1232,7 @@ app.classes.mail = AppJS.extend(
 			quotabox.set_class(_data.data.quotaclass);
 			quotabox.set_value(_data.data.quotainpercent);
 			quotabox.set_label(_data.data.quota);
-			if (parseInt(_data.data.quotainpercent) >= 99)
+			if (_data.data.quotawarning)
 			{
 				var self = this;
 				var buttons = [
@@ -1248,7 +1248,7 @@ app.classes.mail = AppJS.extend(
 					}
 					return;
 				},
-				this.egw.lang("Your mail quota is %%1 full, you may not be able to send/receive further emails.\r\n"+
+				this.egw.lang("Your mail quota is %1% full, you may not be able to send/receive further emails.\r\n"+
 						"Although cleaning up emails in trash or junk folder might help you to get some free space back.\r\n"+
 						"If that didn't help, please ask administrator for more quota.", _data.data.quotainpercent),
 				this.egw.lang("Mail cleanup"),
