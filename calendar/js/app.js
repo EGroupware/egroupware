@@ -4047,6 +4047,7 @@ jQuery.extend(app.classes.calendar,{
 					return app.classes.calendar.views[app.calendar.state.planner_view].scroll.call(this,delta);
 				}
 				var d = new Date(app.calendar.state.date);
+				var days = 1;
 
 				// Yearly view, grouped by month - scroll 1 month
 				if(app.calendar.state.sortby === 'month')
@@ -4062,7 +4063,7 @@ jQuery.extend(app.classes.calendar,{
 				if(app.calendar.state.first && app.calendar.state.last)
 				{
 					var diff = new Date(app.calendar.state.last)  - new Date(app.calendar.state.first);
-					var days = Math.round(diff / (1000*3600*24));
+					days = Math.round(diff / (1000*3600*24));
 				}
 				d.setUTCDate(d.getUTCDate() + (days*delta));
 				if(days > 8)
