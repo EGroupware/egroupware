@@ -203,8 +203,7 @@ class mail_acl
 		//Make the account owner's fields all readonly as owner has all rights and should not be able to change them
 		foreach($content['grid'] as $key => $fields)
 		{
-			if ($fields['acc_id'] == $this->imap->acc_imap_username ||
-					$fields['acc_id'][0] == $this->imap->acc_imap_username)
+			if (self::_extract_acc_id($fields['acc_id']) == $this->imap->acc_imap_username)
 			{
 				foreach (array_keys($fields) as $index)
 				{
@@ -214,6 +213,12 @@ class mail_acl
 				$readonlys['grid'][$key]['acl_recursive'] = true;
 				$preserv ['grid'][$key] = $fields;
 				$preserv['grid'][$key]['acl_recursive'] = false;
+			}
+			if (count($content['grid']) != $key)
+			{
+				$preserv ['grid'][$key]['acc_id'] = self::_extract_acc_id($fields['acc_id']);
+				$preserv['grid'][$key]['acl_recursive'] = false;
+				$readonlys['grid'][$key]['acc_id'] = true;
 			}
 		}
 		//Make entry row's delete button readonly
@@ -303,8 +308,8 @@ class mail_acl
 					$options['rights'] .=  $right[1];
 				}
 			}
-			$username = $content['grid'][$keys]['acc_id'] == $this->imap->acc_imap_username
-				?$content['grid'][$keys]['acc_id']:$content['grid'][$keys]['acc_id'][0];
+			$username = self::_extract_acc_id($content['grid'][$keys]['acc_id']);
+
 			//error_log(__METHOD__."(".__LINE__.") setACL($content[mailbox], $username, ".array2string($options).", $recursive)");
 			if (is_numeric($username) && ($u = $this->imap->getMailBoxUserName($username)))
 			{
@@ -370,8 +375,8 @@ class mail_acl
 		$row_num = array_keys($content['grid']['delete'],"pressed");
 		if ($row_num) $row_num = $row_num[0];
 		$recursive = $content['grid'][$row_num]['acl_recursive'];
-		$identifier = $content['grid'][$row_num]['acc_id'][0];
-		if (is_array($content['mailbox'])) $content['mailbox'] = $content['mailbox'][0];
+		$identifier = self::_extract_acc_id($content['grid'][$row_num]['acc_id']);
+		$content['mailbox'] = is_array($content['mailbox'])? $content['mailbox'][0] : $content['mailbox'];
 		if (is_numeric($identifier) && ($u = $this->imap->getMailBoxUserName($identifier)))
 		{
 			$identifier = $u;
@@ -512,5 +517,17 @@ class mail_acl
 			error_log(__METHOD__. "Could not get ACL rights from folder " . $mailbox . "." .$e->getMessage());
 			return false;
 		}
+	}
+
+	/**
+	 * Method to get acc_id id value whether if is a flat value or an array
+	 *
+	 * @param type $acc_id acc_id value comming from client-side
+	 *
+	 * @return string returns acc_id in flat format
+	 */
+	private static function _extract_acc_id ($acc_id)
+	{
+		return is_array($acc_id)?$acc_id[0]:$acc_id;
 	}
 }
