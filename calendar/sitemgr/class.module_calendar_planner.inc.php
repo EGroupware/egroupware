@@ -336,8 +336,8 @@ class module_calendar_planner extends Module
 			$tmpl->exec(__METHOD__, $content,$sel_options, array('__ALL__' => true),array(),2);
 			$html .= ob_get_contents();
 			$html .= '<script>'
-			. '	window.egw_LAB.wait(function() {jQuery(function() {'
-			. 'app.calendar.set_state(' . json_encode(array(
+			. '(function() {jQuery("#calendar-planner").on("load",function() {'
+			. 'app.calendar.update_state(' . json_encode(array(
 					'view'   => 'planner',
 					'planner_view' => 'month',
 					'date'   => Api\DateTime::to($ui->first, Api\DateTime::ET2),
@@ -345,7 +345,7 @@ class module_calendar_planner extends Module
 					'sortby' => $ui->sortby,
 					'filter' => $arguments['filter']
 				)).');'
-			. '});});'
+			. '});})();'
 			. '</script>';
 
 			ob_end_clean();
