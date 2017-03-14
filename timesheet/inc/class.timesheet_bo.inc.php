@@ -605,6 +605,11 @@ class timesheet_bo extends Api\Storage
 		{
 			return false;
 		}
+		// Update ts_project to match project
+		if ($this->pm_integration == 'full' && $old && $old['pm_id'] != $new['pm_id'])
+		{
+			$new['ts_title'] = $new['pm_id'] ? Link::title('projectmanager', $new['pm_id']) : '';
+		}
 
 		// Check for restore of deleted contact, restore held links
 		if($old && $old['ts_status'] == self::DELETED_STATUS && $new['ts_status'] != self::DELETED_STATUS)
