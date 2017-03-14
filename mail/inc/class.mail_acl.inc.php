@@ -203,7 +203,8 @@ class mail_acl
 		//Make the account owner's fields all readonly as owner has all rights and should not be able to change them
 		foreach($content['grid'] as $key => $fields)
 		{
-			if (self::_extract_acc_id($fields['acc_id']) == $this->imap->acc_imap_username)
+			if (self::_extract_acc_id($fields['acc_id']) == $this->imap->acc_imap_username ||
+					$this->imap->getMailBoxUserName(self::_extract_acc_id($fields['acc_id'])) == $this->imap->acc_imap_username)
 			{
 				foreach (array_keys($fields) as $index)
 				{
