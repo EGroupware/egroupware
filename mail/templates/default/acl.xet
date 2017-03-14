@@ -14,7 +14,7 @@
 				</row>
 				<row>
 					<description value="Folder"/>
-					<taglist id="mailbox" width="100%" maxSelection="1" autocomplete_params='' allowFreeEntries="false" onchange='app.mail.acl_folderChange'/>
+					<taglist id="mailbox" width="100%" maxSelection="1" allowFreeEntries="false" onchange='app.mail.acl_folderChange'/>
 				</row>
 				<row>
 					<description value="Rights"/>
@@ -84,7 +84,7 @@
 					<hbox>
 						<button label="Save" id="button[save]"/>
 						<button label="Apply" id="button[apply]"/>
-						<button label="Cancel" id="button[cancel]"/>
+						<buttononly label="Cancel" id="button[cancel]" onclick="window.close()"/>
 					</hbox>
 				</row>
 			</rows>
