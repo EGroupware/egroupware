@@ -27,7 +27,7 @@ class mail_acl
 	);
 
 	/**
-	 * static used define abbrevations for common access rights
+	 * static used define abbreviations for common access rights
 	 *
 	 * @array
 	 *
@@ -42,7 +42,7 @@ class mail_acl
 	);
 
 	/**
-	 * imap object instanciated in constructor for account to edit
+	 * imap object instantiated in constructor for account to edit
 	 *
 	 * @var Mail\Imap
 	 */
@@ -81,7 +81,8 @@ class mail_acl
 		$account = Mail\Account::read($acc_id, $account_id);
 		$this->imap = $account->imapServer(isset($account_id) ? (int)$account_id : false);
 
-		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']): $content['mailbox'][0];
+		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']):
+			preg_replace("/^".$acc_id."::/",'',$content['mailbox'][0]);
 		if (empty($mailbox))
 		{
 			$mailbox = $this->imap->isAdminConnection ? $this->imap->getUserMailboxString($account_id) : 'INBOX';
@@ -89,6 +90,7 @@ class mail_acl
 		if (!$this->imap->isAdminConnection)
 		{
 			$tmpl->setElementAttribute('mailbox', 'autocomplete_url', 'mail.mail_compose.ajax_searchFolder');
+			$tmpl->setElementAttribute('mailbox', 'autocomplete_params', array('mailaccount' => $acc_id));
 		}
 		else
 		{
@@ -179,9 +181,6 @@ class mail_acl
 					//Send message
 					Framework::message($msg);
 					if ($button == "apply") break;
-
-				//Fall through
-				case 'cancel':
 					Framework::window_close();
 					exit;
 
@@ -428,7 +427,7 @@ class mail_acl
 			}
 			catch (Exception $e)
 			{
-				error_log(__METHOD__. "Could not delete ACL rights of folder " . $mailbox . " for account ". $identifier ." because of " .$e->getMessage());
+				error_log(__METHOD__. "Could not delete ACL rights of folder " . $mailbox . " for account ". $identifier ."." .$e->getMessage());
 				return false;
 			}
 		}
@@ -490,7 +489,7 @@ class mail_acl
 			catch (Exception $e)
 			{
 				$msg = $e->getMessage();
-				error_log(__METHOD__. "Could not set ACL rights on folder " . $mailbox . " for account ". $identifier . " because of " .$e->getMessage());
+				error_log(__METHOD__. "Could not set ACL rights on folder " . $mailbox . " for account ". $identifier . "." .$e->getMessage());
 				return false;
 			}
 		}
@@ -510,7 +509,7 @@ class mail_acl
 			$acl = $this->imap->getACL($mailbox);
 			return $acl;
 		} catch (Exception $e) {
-			error_log(__METHOD__. "Could not get ACL rights from folder " . $mailbox . " because of " .$e->getMessage());
+			error_log(__METHOD__. "Could not get ACL rights from folder " . $mailbox . "." .$e->getMessage());
 			return false;
 		}
 	}
