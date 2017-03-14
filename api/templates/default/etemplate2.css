@@ -954,6 +954,7 @@ ul.et2_link_string {
   margin: 0px auto -16px auto;
   top: 5px;
 }
+.et2_taglist .ms-input-readonly {display: none;}
 .et2_taglist div.ms-sel-ctn .ms-close-btn {
     width: 10px;
     height: 10px;
