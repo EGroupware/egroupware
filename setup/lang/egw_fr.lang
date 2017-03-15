@@ -58,6 +58,7 @@ allow password migration	setup	fr	Permettre la migration des mots de passe
 allow usernames identical to system users?	setup	fr	Permettre des noms d'utilisateur identiques aux utilisateurs système ?
 allowed migration types (comma-separated)	setup	fr	Permettre les types de migration (séparés par virgules)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	fr	Alternativement, les domaines peuvent être accédés en se connectant avec <i>utilisateur@domaine</i>.
+alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	fr	Alternativement, vous pouvez utiliser %1Composer%2 pour installer toutes les dépendances d'un seul coup. Télécharger et  exécuter :
 and is up to date	setup	fr	et est à jour
 and reload your webserver, so the above changes take effect !!!	setup	fr	ET redémarrez votre serveur Web pour qu'ils soient pris en compte.
 app details	setup	fr	Détails de l'application
@@ -102,7 +103,7 @@ backup housekeeping	setup	fr	Les fichiers de sauvegarde avec un nom standard peu
 backup min count	setup	fr	Nombre minimum de sauvegardes.
 backup now	setup	fr	Sauvegarder maintenant
 backup sets	setup	fr	Jeux de sauvegardes
-backup skipped!	setup	fr	Sauvegarde omise!
+backup skipped!	setup	fr	Sauvegarde omise !
 backup started, this might take a few minutes ...	setup	fr	La sauvegarde a démarré, ceci peut prendre quelques minutes...
 base dn "%1" not found!	setup	fr	Base dn  "%1" non trouvée !
 because an application it depends upon was upgraded	setup	fr	car une application dont laquelle il dépend a été mise à jour
@@ -203,8 +204,8 @@ database is version %1 and up to date.	setup	fr	la base de données est en versi
 database successfully converted from '%1' to '%2'	setup	fr	Base de données convertie de '%1' à '%2' avec succès
 datebase %1 droped.	setup	fr	Base de données %1 supprimée.
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	fr	Port Date/heure.<br />Si vous utilisez le port 13, SVP modifiez les règles du firewall avant de modifier cette page.<br />(Port: 13 / Hôte: 129.6.15.28)
-day	setup	fr	jour
-day of week<br />(0-6, 0=sunday)	setup	fr	jour de la semaine<br />(0-6, 0=dimanche)
+day	setup	fr	Jour
+day of week<br />(0-6, 0=sunday)	setup	fr	Jour de la semaine<br />(0-6, 0=dimanche)
 db backup and restore	setup	fr	Sauvegarde et récupération base de données
 db host	setup	fr	Nom du serveur de base de données
 db name	setup	fr	Nom de la base de données
@@ -297,7 +298,9 @@ filename	setup	fr	nom du fichier
 filesystem	setup	fr	Système de fichiers
 filesystem (default)	setup	fr	Système de fichiers (par défaut)
 force selectbox	setup	fr	Forcer la boîte de sélection
+found, but unknown version	setup	fr	Détecté, mais version inconnue
 give admin access to all installed apps	setup	fr	Donner les droits administrateur à toutes les applications installées
+give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	fr	Indiquer le root et mot de passe DN LDAP, si vous avez besoinde créer un administrateur/utilisateur/groupe spécifique à l'instance
 gives further options	setup	fr	fournit d'autres options
 go back	setup	fr	Retour arrière
 go to	setup	fr	Aller à
@@ -332,6 +335,7 @@ if using ads (active directory)	setup	fr	Si vous utilisez l'authentification ADS
 if using cas (central authentication service):	setup	fr	Si vous utilisez l'authentification CAS (Central Authentication Service) :
 if using ldap	setup	fr	Si vous utilisez LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	fr	Si vous utilisez LDAP, voulez-vous gérer les attributs répertoire d'accueil et shell de connexion?
+if using mail authentication	setup	fr	Si vouutiliser l'authentification Mail
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	fr	Si vous ne pouvez accéder qu'à la racine, choisir <b>Database</b> pour stocker les contenus des fichiers ET utiliser le même chemin que les fichiers temporaires
 if you did not receive any errors, your applications have been	setup	fr	Si vous n'avez pas reçu de messages d'erreur, vos applications ont été
 if you did not receive any errors, your tables have been	setup	fr	Si vous n'avez pas reçu de messages d'erreur, vos tables ont été
@@ -590,8 +594,9 @@ tcp port number of database server	setup	fr	numéro de port du serveur de base d
 text entry	setup	fr	Zone de Texte
 the %1 extension is needed from: %2.	setup	fr	L'extension %1 est requise par : %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	fr	L'extension %1 est nécessaire si vous décidez d'utiliser la base de donnée %2<br />
+the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	fr	L'extension ctype est requise par HTMLpurifier pour vérfier le contenu de FCKeditor contre le Cross-Site Scripting
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fr	Le type de base de données (db_type) des valeurs par défaut (%1) n'est pas supporté sur ce serveur. Utilisation du premier type supporté.
-the file	setup	fr	le fichier
+the file	setup	fr	Le fichier
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fr	La première étape lors de l'installation d'EGroupware est la vérification de votre environnement système.
 the following applications are not installed:	setup	fr	Les applications suivantes ne sont pas installées :
 the following applications are required, but not installed:	setup	fr	Les applications suivantes sont nécessaires mais pas installées :
@@ -611,6 +616,7 @@ the tables	setup	fr	les tables
 the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	fr	L'extension tidy est nécessaire pour les fusions-impressions, pour nettoyer le code html avant l'insertion dans les document office.
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	fr	Les utilisateurs/mots de passe sont: demo/guest, demo2/guest and demo3/guest.
 the xmlreader extension is required by egroupware in several applications.	setup	fr	L'extension xmlreader est nécessaire pour certaines applications eGroupware.
+the zip extension is required for merge-print with office documents.	setup	fr	L'extension "zip" est nécessaire pour les fusions/impressions des documents Office.
 there was a problem trying to connect to your ldap server. <br />	setup	fr	Il y a eu un problème lors de la tentative de connexion à votre serveur LDAP. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	fr	l y a eu un problème lors de la tentative de connexion à votre serveur LDAP. <br />SVP vérifiez la configuration de votre serveur LDAP
 this has to be outside the webservers document-root!!!	setup	fr	Ceci doit figurer à l'extérieur du répertoire racine des documents du serveur Web !
@@ -668,7 +674,7 @@ version mismatch	setup	fr	Différence de Version
 view	setup	fr	Voir
 virtual filesystem	setup	fr	Système de fichiers virtuel (VFS)
 virtual mail manager (login-name includes domain)	setup	fr	Virtual mail manager (le login inclut le domaine)
-warning!	setup	fr	Attention!
+warning!	setup	fr	Attention !
 we can proceed	setup	fr	Nous pouvons continuer
 we could not determine the version of %1, please make sure it is at least %2	setup	fr	Le serveur n'a pu déterminer la version de %1, veuillez vous assurer qu'elle est au moins en %2
 we will automatically update your tables/records to %1	setup	fr	Nous allons automatiquement mettre à jour vos tables/enregistrements vers %1
@@ -676,15 +682,15 @@ we will now run a series of tests, which may take a few minutes.  click the link
 welcome to the egroupware installation	setup	fr	Bienvenue sur l'installateur EGroupware
 where should egroupware store file content	setup	fr	Où eGroupware doit-il stocker les fichiers
 which database type do you want to use with egroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec EGroupware ?
-world readable	setup	fr	visible par tous
-world writable	setup	fr	accès en écriture pour tous
+world readable	setup	fr	Visible par tous
+world writable	setup	fr	Accès en écriture pour tous
 would you like egroupware to cache the phpgw info array ?	setup	fr	Voulez-vous qu'EGroupware mette en cache le tableau d'informations phpgw ?
 would you like egroupware to check for a new version<br />when admins login ?	setup	fr	Voudriez-vous que EGroupware vérifie la disponibilité d'une nouvelle version<br />quand les administrateurs se connectent ?
 would you like to show each application's upgrade status ?	setup	fr	Voulez-vous afficher le statut de mise à jour de chaque application ?
 writable by the webserver	setup	fr	accès en écriture pour le serveur Web
 write	setup	fr	Ecrire
 wrong credentials to access the header.inc.php file!	setup	fr	Mauvais éléments d'identification pour l'accès au fichier  header.inc.php !
-year	setup	fr	année
+year	setup	fr	Année
 yes	setup	fr	Oui
 yes, with lowercase usernames	setup	fr	Oui, avec les utilisateurs en minuscules
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fr	Vous semblez utiliser une version pre-beta de EGroupware.<br />Ces versions ne sont plus supportées, et il n'y a pas de possibilité de mise à jour pour elles dans le setup.<br /> Vous devriez d'abord mettre votre version à jour vers la version 0.9.10 (la dernière version à supporter les mises à jour pre-beta) <br />puis mettre à jour depuis cette version jusqu'à la version actuelle.
@@ -707,7 +713,7 @@ you have not created your header.inc.php yet!<br /> you can create it now.	setup
 you have successfully logged out	setup	fr	Vous vous êtes déconnecté avec succès
 you must enter a username for the admin	setup	fr	Vous devez entrer un nom d'utilisateur pour le compte admin
 you need to add at least one egroupware domain / database instance.	setup	fr	Vous devez ajouter au moins un domaine / instance de base de données EGroupware.
-you need to configure egroupware:	setup	fr	Vous devez configurer EGroupware:
+you need to configure egroupware:	setup	fr	Vous devez configurer EGroupware :
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	fr	Vous devez résoudre les erreurs ci-dessus, avant que le fichier de configuration header.inc.php puisse être écrit!
 you need to select your current charset!	setup	fr	Vous devez sélectionner votre jeu de caractères!
 you need to specify a password!	setup	fr	Vous devez spécifier un mot de passe !
