@@ -470,19 +470,16 @@ class mail_hooks
 		$currentTime = time();
 		if (!empty($lastRun) && $lastRun>$currentTime-3*60)
 		{
-			//error_log(__METHOD__.__LINE__." Job should not run too often; we limit this to once every 3 Minutes :". ($currentTime-$lastRun). " Seconds to go!");
 			return true;
 		}
 		$accountsToSearchObj = Mail\Account::search(true, true);
 
 		foreach($accountsToSearchObj as $acc_id => $identity_name)
 		{
-			//error_log(__METHOD__.__LINE__.' '.$acc_id.':'.$identity_name);
 				$folders2notify[$acc_id] = Mail\Notifications::read($acc_id);// read all, even those set for acc_id 0 (folders for all acounts?)
 			$accountsToSearchArray[$acc_id] = str_replace(array('<','>'),array('[',']'),$identity_name);
 		}
 		$notified_mail_uidsCache = Api\Cache::getCache(Api\Cache::INSTANCE,'email','notified_mail_uids'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*24*2);
-		//error_log(__METHOD__.__LINE__.array2string($notified_mail_uidsCache));
 		if (!is_array($folders2notify)) return true;
 		foreach ($folders2notify as $nFKey =>$notifyfolders)
 		{
@@ -493,9 +490,7 @@ class mail_hooks
 				if(count($notify_folders) == 0) {
 					continue; //no folders configured for notifying
 				}
-				//error_log(__METHOD__.__LINE__.' '.$nFKey.' =>'.array2string($notifyfolders));
 				$activeProfile = $nFKey;
-				//error_log(__METHOD__.__LINE__.' (user: '.$currentRecipient->account_lid.') Active Profile:'.$activeProfile);
 				try
 				{
 					$bomail = Mail::getInstance(false, $activeProfile,false);
@@ -504,7 +499,6 @@ class mail_hooks
 					error_log(__METHOD__.__LINE__.' (user: '.$currentRecipient->account_lid.') notification for Profile:'.$activeProfile.' failed.'.$e->getMessage());
 					continue; //fail silently
 				}
-				//error_log(__METHOD__.__LINE__.' '.$nFKey.' =>'.array2string($bomail->icServer->params));
 				$icServerParams=$bomail->icServer->params;
 				if (empty($icServerParams['acc_imap_host']))
 				{
@@ -522,7 +516,6 @@ class mail_hooks
 					error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
 					return false; // cannot connect to mailbox
 				}
-				//error_log(__METHOD__.__LINE__.array2string($notified_mail_uidsCache[$activeProfile][$notify_folder]));
 				//$notified_mail_uidsCache = array();
 				$recent_messages = array();
 				$folder_status = array();
@@ -534,12 +527,10 @@ class mail_hooks
 					$folder_status[$notify_folder] = $bomail->getFolderStatus($notify_folder);
 					$cutoffdate = time() - (60*60*24*14); // last 14 days
 					$_filter = array('status'=>array('UNSEEN','UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $cutoffdate));
-					//error_log(__METHOD__.__LINE__.' (user: '.$currentRecipient->account_lid.') Mailbox:'.$notify_folder.' filter:'.array2string($_filter));
 					// $_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true
 					$headers = $bomail->getHeaders($notify_folder, 1, 999, 0, true, $_filter,null,false);
 					if(is_array($headers['header']) && count($headers['header']) > 0) {
 						foreach($headers['header'] as $id=>$header) {
-							//error_log(__METHOD__.__LINE__.' Found Message:'.$header['uid'].' Subject:'.$header['subject']);
 							// check if unseen mail has already been notified
 							$headerrowid = mail_ui::generateRowID($activeProfile, $notify_folder, $header['uid'], $_prependApp=false);
 						 	if(!in_array($headerrowid, $notified_mail_uidsCache[$activeProfile][$notify_folder])) {
@@ -552,14 +543,12 @@ class mail_hooks
 						}
 					}
 				}
-				//error_log(__METHOD__.__LINE__.' Found Messages for Profile'.$activeProfile.':'.array2string($recent_messages).'<->'.array2string($notified_mail_uidsCache[$activeProfile]));
 				if(count($recent_messages) > 0) {
 					// create notify message
 					$notification_subject = lang("You've got new mail").':'.$accountsToSearchArray[$activeProfile];
 					$values = array();
 					$values[] = array(); // content array starts at index 1
 					foreach($recent_messages as $id=>$recent_message) {
-						//error_log(__METHOD__.__LINE__.' Found Message for Profile '.$activeProfile.':'.array2string($recent_message));
 						$values[] =	array(
 							'mail_uid'				=> $recent_message['uid'],
 							'mail_folder' 			=> $recent_message['folder_display_name'],
@@ -571,15 +560,20 @@ class mail_hooks
 						// save notification status
 						$notified_mail_uidsCache[$activeProfile][$recent_message['folder']][] = mail_ui::generateRowID($activeProfile, $recent_message['folder'], $recent_message['uid'], $_prependApp=false);
 					}
-					// create etemplate
-					$tpl = new etemplate('mail.checkmailbox');
-					$notification_message = $tpl->exec(false, $values, array(), array(), array(), 1);
-					//error_log(__METHOD__.__LINE__.array2string($notification_message));
+					foreach ($values as &$mail)
+					{
+						if ($mail['mail_from'])
+						{
+							$notification_message .=	"<br/><strong>".lang("From").':</strong>'. $mail["mail_from"].
+														"<br/><strong>".lang("To").':</strong>'. $mail["recieved"].
+														"<br/><strong>".lang ("subject"). ':</strong>' . $mail["mail_subject"].
+														"<br/><br/> -------------------------------------------------------- </br>";
+						}
+					}
 					// send notification
 					$notification = new notifications();
 					$notification->set_receivers(array($currentRecipient->account_id));
 					$notification->set_message($notification_message);
-					//$notification->set_popupmessage($notification_message);
 					$notification->set_sender($currentRecipient->account_id);
 					$notification->set_subject($notification_subject);
 					$notification->set_skip_backends(array('email'));
@@ -592,7 +586,6 @@ class mail_hooks
 			}
 		}
 		Api\Cache::setCache(Api\Cache::INSTANCE,'email','mailNotifyLastRun'.trim($GLOBALS['egw_info']['user']['account_id']),time(), $expiration=60*60*24*2);
-		//error_log(__METHOD__.__LINE__.array2string($notified_mail_uidsCache));
 		return true;
 	}
 
