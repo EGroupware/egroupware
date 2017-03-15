@@ -78,7 +78,6 @@ class Mailer extends Horde_Mime_Mail
 			$this->_headers = new Horde_Mime_Headers();
 			$this->clearAllRecipients();
 			$this->clearReplyTos();
-			error_log(__METHOD__.__LINE__.array2string($this));
 			return $this;
 		}
 		if ($account !== false)
