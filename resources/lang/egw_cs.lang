@@ -127,6 +127,7 @@ resource	resources	cs	Zdroj
 resource %1 deleted!	resources	cs	Zdroj %1 byl smazán!
 resource %1 faild to be deleted!	resources	cs	Zdroj %1 nemohl být smazán!
 resource %1 saved!	resources	cs	Zdroj %1 byl uložen.
+resource / accessories	resources	cs	Zdroj / Příslušenství
 resource id	resources	cs	Identifikce zdroje
 resources	common	cs	Zdroje
 resources and accessories	resources	cs	Zdroje a příslušenství
@@ -162,7 +163,6 @@ use general resources icon	resources	cs	Použít obecnou ikonu zdrojů
 use own picture	resources	cs	Použít vlastní obrázek
 use the category's icon	resources	cs	Použít ikonu kategorie
 useable	resources	cs	Použitelné
-useable:	resources	cs	Použitelné:
 view accessories for this resource	resources	cs	Zobrazit příslušenství k tomtuto zdroji
 view calendar	resources	cs	Zobrazit kalendář
 view this entry	resources	cs	Zobrazit tento záznam
