@@ -1,30 +1,51 @@
-accessories of	resources	cs	příslušenství (čeho)
+%1 accessories now resources	resources	cs	Z %1 příslušenství jsou nyní zdroje
+%1 accessories restored	resources	cs	%1 příslušenství bylo obnoveno
+%1 resource(s) %2	resources	cs	%1 zdroj(ů) %2
+%1 resource(s) %2, %3 failed	resources	cs	%1 zdroj(ů) %2, %3 selhalo
+%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	cs	%1 zdrojů %2, %3 selhalo kvůli nedostatečným právům!
+%1 resource(s) booked	resources	cs	%1 zdroj(ů) bylo zarezervováno
+%1 resource(s) view calendar	resources	cs	Zobrazení kalendáře %1 zdroje(zdrojů)
+access not permitted	resources	cs	Přístup není povolen
+accessories	resources	cs	Příslušenství
+accessories of	resources	cs	Příslušenství (čeho)
 accessories:	resources	cs	Příslušenství:
+accessory of	resources	cs	Příslušenství (čeho)
 actions	resources	cs	Akce
 add accessory	resources	cs	Přidat příslušenství
+add group to event participants	resources	cs	Přidat skupinu jako účastníky události
 add resource	resources	cs	Přidat zdroj
 add resources	resources	cs	Přidat zdroje
+admin	resources	cs	Správce
 administrator	resources	cs	Správce
 all categories	resources	cs	všechny kategorie
+allow ignore conflicts	admin	cs	Povolit ignorování konfliktů
 book	resources	cs	Rezervovat
+book resource	resources	cs	Zarezervovat zdroj
 book selected resources	resources	cs	Rezervovat vybrané zdroje
 book this resource	resources	cs	Rezervovat tento zdroj
 bookable	resources	cs	Rezervovavtelný
+booked	resources	cs	Rezervovaný
 buy this article	resources	cs	Koupit tuto položku
 buy this resource	resources	cs	Koupit tento zdroj
 buyable	resources	cs	Ke koupi
+calendar	resources	cs	Kalendář
 categories admin	resources	cs	Správce kategorií
+category	resources	cs	Kategorie
+category saved.	resources	cs	Kategorie byla uložena
 category:	resources	cs	Kategorie:
 check all	resources	cs	Označit všechny
 choose categories admin	resources	cs	vybrat správce kategorií
 clear selection	resources	cs	zrušit výběr
 configure access permissions	admin	cs	Konfigurovat přístupová práva
+confirmation email text	resources	cs	Text potvrzovacího e-mailu
+confirmed addressbook.	resources	cs	Adresář je potvrzený
 conflict	resources	cs	Konflikt
 create new accessory for this resource	resources	cs	Vytvořit nové příslušenství k tomtuto zdroji
 create new links	resources	cs	Vytvořit nové odkazy
 custom etemplate for the contactform	resources	cs	Uživatelsky definovaná eŠablona pro formulář kontaktu
 custom fields	resources	cs	Uživatelsky definovaná pole
 days	resources	cs	dny
+delete	resources	cs	Smazat
 delete selected resources	resources	cs	Smazat vybrané zdroje
 delete this entry	resources	cs	Smazat záznam
 deleted	resources	cs	smazáno
@@ -32,7 +53,14 @@ description (short)	resources	cs	Popis (stručný)
 direct booking permissions	resources	cs	Práva na přímou rezervaci
 don't use vfs (this will need a symlink --> see readme)	resources	cs	Nepoužívat vfs (bude zapotřebí symbolický odkaz --> přečtěte si README)
 edit this entry	resources	cs	Editovat tento záznam
+event start	resources	cs	Začátek události
 existing links	resources	cs	Stávající odkazy
+exists	resources	cs	Stávající
+expiry	resources	cs	Vyprší
+export definition to use for nextmatch export	resources	cs	Export definic pro použití v dalších exportech
+export definitition to use for nextmatch export	resources	cs	Export definic pro použití v dalších exportech
+exports a list of resources to a csv file.	resources	cs	Export seznamu zdrojů do souboru CSV
+favorites	resources	cs	Oblíbené
 general	resources	cs	Obecné
 general informations about resource	resources	cs	Obecné informace o zdroji
 gernal resource	resources	cs	Obecný zdroj
@@ -43,10 +71,13 @@ how many of the resources are useable?	resources	cs	Kolik ze zdrojů je použite
 how many of them are useable?	resources	cs	Kolik z nich je použitelných?
 how many of this resource are usable	resources	cs	Kolik z tohoto zdroje je použitelných?
 how many of this resource exists	resources	cs	Kolik z tohoto zdroje existuje?
+if you specify an export definition, it will be used when you export	resources	cs	Pokud specifikujete definici pro export, bude při exportu použita.
 implies booking permission	resources	cs	z toho vyplývají rezervační práva
 implies read permission	resources	cs	z toho vyplývají práva pro čtení
+imports a list of resources from a csv file.	resources	cs	Importuje seznam zdrojů ze souboru CSV.
 information about storage	resources	cs	Informace o uskladnění
 informations about the location of resource	resources	cs	Informace o umístění zdroje
+insert	resources	cs	Vložit
 inventory number	resources	cs	Inventární číslo
 inventory number:	resources	cs	Inventární číslo:
 is resource bookable?	resources	cs	Je možné zdroj rezervovat?
@@ -57,54 +88,95 @@ links	resources	cs	Odkazy
 location	resources	cs	Umístění
 location of resource	resources	cs	Umístění zdroje
 location:	resources	cs	Umístění:
+locations / rooms	resources	cs	Umístění / místnost:
+long description	resources	cs	Popis
 manage mapping	resources	cs	Spravovat mapování
+menu	resources	cs	Menu
+name	resources	cs	Název
 name of resource	resources	cs	Název zdroje
 name:	resources	cs	Název:
+new accessory	resources	cs	Nové příslušenství
+new resource	resources	cs	Nový zdroj
 no description available	resources	cs	popis není k dispozici
+no matches	resources	cs	Nesouhlasí
 no resources selected	resources	cs	Žádný zdroj nebyl vybrán
+none	resources	cs	Žádný
 notify your administrator to correct this situation	resources	cs	Požádejte prosím svého administrátora o nápravu situace
+old fixed definition	resources	cs	Stará pevná definice
+permission denied!	resources	cs	Přístup odepřen!
 picture	resources	cs	Obrázek
 picture source	resources	cs	Zdroj obrázku
 picture type is not supported, sorry!	resources	cs	Obrázek tohoto typu není podporován, litujeme !
 pictures or resource	resources	cs	Obrázky zdroje
 planer	resources	cs	Srovnávač
+please choose a different time:	resources	cs	Vyberte prosím jiný čas:
+prevent deleting	admin	cs	Zabránit smazání
+prize	resources	cs	Cena
 prizeing information for booking or buying	resources	cs	Informace o ceně pro rezervaci nebo nákup
 quantity	resources	cs	Množství
 quantity of resource	resources	cs	Množství zdroje
 quantity:	resources	cs	Množství:
 read calendar permissions	resources	cs	Práva ke čtení kalendáře
 read permissions	resources	cs	Práva ke čtění
+registration confirmed %1	resources	cs	Registrace potvrzena %1
 related links	resources	cs	Související odkazy
+remove accessories before changing accessory of	resources	cs	Odebere příslušenství před změnou příslušenství
+require confirmation	resources	cs	Vyžadovat potvrzení
+reserve	resources	cs	Rezervovat
+resource	resources	cs	Zdroj
+resource %1 deleted!	resources	cs	Zdroj %1 byl smazán!
+resource %1 faild to be deleted!	resources	cs	Zdroj %1 nemohl být smazán!
+resource %1 saved!	resources	cs	Zdroj %1 byl uložen.
+resource id	resources	cs	Identifikce zdroje
 resources	common	cs	Zdroje
+resources and accessories	resources	cs	Zdroje a příslušenství
+resources csv export	resources	cs	Export zdrojů do souboru CSV
+resources csv import	resources	cs	Import zdrojů ze souboru CSV
 resources list	resources	cs	Seznam zdrojů
 responsible:	resources	cs	Odpovědný:
+restored	resources	cs	Rezervovaný
 saves entry and exits	resources	cs	Uloží záznam a ukončí
 select a category	resources	cs	Vybrat kategorii
+select one	resources	cs	Vyberte jeden
 select resource	resources	cs	vybrat zdroj
 select resources	common	cs	Vybrat zdroje
 select/deselect all	resources	cs	označit vše/zrušit označení všech
 short description	resources	cs	Stručný popis
 short description of resource	resources	cs	Stručný popis zdroje
 show calendar of resource	resources	cs	Zobrazit kalendář zdroje
+simple reservation of a single item	resources	cs	Jedna rezervace jedné položly
 something went wrong by deleting resource	resources	cs	Během mazání zdroje se něco nezdařilo
 something went wrong by saving resource	resources	cs	Během ukládání zdroje se něco nezdařilo
+storage	resources	cs	Uskladnění
 storage information	resources	cs	Informace o uskladnění
 storage information:	resources	cs	Informace o uskladnění
 the anonymous user needs add rights for it!	resources	cs	Anonymní uživatel potřebuje práva k přidávání záznamů.
 the calendar of this resource	resources	cs	Kalendář tohoto zdroje
 this module displays the resources app	resources	cs	Tento modul zobrazuje aplikaci Zdroje
+too many matches	resources	cs	Příliš mnoho výskytů
+unable to link to %1 "%2"	resources	cs	Není možné vytvořit propojení %1 "%2"
+unable to process confirmation.	resources	cs	Není možné provést potvrzení.
+unwilling to save category with current settings. check for inconsistency:	resources	cs	Nechtěné uložení kategorie s aktuálním nastavením. Zkontrolujte neporušenost dat:
+update	resources	cs	Aktualizovat
 use general resources icon	resources	cs	Použít obecnou ikonu zdrojů
 use own picture	resources	cs	Použít vlastní obrázek
 use the category's icon	resources	cs	Použít ikonu kategorie
 useable	resources	cs	Použitelné
 useable:	resources	cs	Použitelné:
 view accessories for this resource	resources	cs	Zobrazit příslušenství k tomtuto zdroji
+view calendar	resources	cs	Zobrazit kalendář
 view this entry	resources	cs	Zobrazit tento záznam
 web-page of resource	resources	cs	Webová stránka zdroje
 web-site for this resource	resources	cs	Web tohto zdroje
 where to find this resource?	resources	cs	Kde se dá najít tento zdroj?
 which category does this resource belong to?	resources	cs	Do které kategorie patří tento zdroj?
 write permissions	resources	cs	Práva k zápisu
+yes, all users can ignore conflicts	resources	cs	Ano, všichni uživatelé mohou ignorovat konflikty
 yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
+yes, only users with direct booking permission	resources	cs	Ano, pouze uživatelé s právy na přímé rezervování
+yes, users can purge their deleted items	admin	cs	Ano, uživatelé mohou odstanit jejich smazané záznamy
+you are not permitted to delete this resource!	resources	cs	Nemáte oprávnění smazat tento zdroj!
+you are not permitted to edit this resource!	resources	cs	Nemáte oprávnění upravit tento zdroj!
 you are not permitted to get information about this resource!	resources	cs	Nemáte oprávnění získávat informace o tomto zdroji!
 you chose more resources than available	resources	cs	Vybral(a) jste více zdrojů než je k dispozici
+you need to select some entries first!	resources	cs	Nejprve musíte vybrat nějaký záznam

@@ -1,12 +1,29 @@
+(update in sec. %s)	notifications	cs	(Obnovení za %s vteřin)
+account:	notifications	cs	Účet:
 all possible notification backends	notifications	cs	všechny dostupné backendy pro upozornění
+browser	notifications	cs	Prohlížeč
+browser is starting.	notifications	cs	Spouští se prohlížeč.
+cancal settings?	notifications	cs	Zrušit nastavení?
+cancal?	notifications	cs	Zrušit?
+certification-information:	notifications	cs	Informace o certifikátu:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	cs	Zkusit obojí (nejprve aktivní, uživatelem definovaný účet a pokud neexistuje, tak emailadmin profil)
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	cs	Vyberte si posloupnost upozornění. Budete upozorňování na základě backendů zahrnutých v posloupnosti.<br />Poznámka: Pokud je posloupnost upozornění označena jako "zakázaná", znamená to, že Váš Administrátor nepovoluje jeden či více backendů zahrnutých v posloupnosti a tak budete upozorňování jen e-mailem.
 choose from mailsettings used for notification	admin	cs	vyberte nastavení e-mailu pro zasílání upozornění
 common chains	notifications	cs	Společné posloupnosti
+connection error.	notifications	cs	Chyba spojení.
+connection error. please check connection to server.	notifications	cs	Chyba spojení. Zkontrolujte prosím spojení se serverem.
+continue to connect?	notifications	cs	Pokračovat ve spojení?
+cookies are required to login to this site.	notifications	cs	Pro přihlášení jsou vyžadovány soubory cookies.
 disabled chains	notifications	cs	Zakázané posloupnosti
 do not notify me at all	notifications	cs	vůbec mě neupozorňuj
+domain not found, please check serveraddress.	notifications	cs	Doména nebyla nalezena, zkontrolujte adresu serveru.
 e-mail only	notifications	cs	jen e-mail
 egroupware has notifications for you	notifications	cs	eGroupWare má pro Vás upozornění
+egroupware login is starting, please wait.	notifications	cs	Spouští se přihlášení eGroupWare, čekejte prosím.
+egroupware logindomain:	notifications	cs	Doména pro přihlášení eGroupWare:
+egroupware logindomains founds, please select.	notifications	cs	Doména byla nalezena, vyberte prosím:
+egroupware not found by url or connection lost to server.	notifications	cs	eGroupWare nebyl nalezen pomocí URL, nebo bylo přerušeno spojení se serverem.
+egroupware not found by url.	notifications	cs	eGroupWare nebyl nalezen pomocí URL
 egroupware-popup and e-mail	notifications	cs	Překryvná okna v eGroupWaru a e-mail
 egroupware-popup and windows-popup	notifications	cs	Překryvná okna v eGroupWaru a překryvná okna ve Windows
 egroupware-popup backend	admin	cs	Backend Překryvná okna v eGroupWaru
@@ -17,29 +34,61 @@ emailadmin profile only (do not use user defined (active) mail profiles for noti
 enable egroupware-popup backend	admin	cs	Povolit backend Překryvná okna v eGroupWaru
 enable windows-popup backend	admin	cs	Povolit backend Překryvná okna ve Windows
 enabled chains	notifications	cs	Povolené posloupnosti
+error browser can`t start.	notifications	cs	Chyba při spouštění prohlížeče.
+error on loading tray icon	notifications	cs	Chyba při nahrávání ikony pro stavový řádek.
+error ssl	notifications	cs	Chyba zabezpečení SSL
+exit	notifications	cs	Konec
 folder	notifications	cs	Složka
 from	notifications	cs	Od
+host:	notifications	cs	Hostitel:
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	cs	Jak důrazně se mají překryvná okna eGroupWaru chovat, když je uživateli zasláno upozornění:<br />nízká: jen zobrazit zvoneček v horním menu - horní menu musí být povoleno!<br />střední: na popředí zobrazit okno s upozorněním<br />vysoká: na popředí zobrazit okno s upozorněním a nechat prohlížeč, ať na sebe nějak upozorní
 if set, embedded links get rendered special for external clients	notifications	cs	Pokud je nastaveno, vložené odkazy jsou speciálně renderovány pro externí klienty
+info on load config file: create config file.	notifications	cs	Informace o načtení konfiguračního souboru: vytvoření konfiguračního souboru.
+issuer dn:	notifications	cs	Upozornění způsobeno:
+java desktop notification app	preferences	cs	Java aplikace pro upozornění na ploše
 linked entries:	common	cs	Odkazované záznamy:
+login aborted, application exit?	notifications	cs	Přihlášení přerušeno, ukončit aplikaci?
+login in egroupware:	notifications	cs	Přihlášení do eGroupWare
 mail backend	admin	cs	Poštovní backend
 message from	notifications	cs	Zpráva od
 minutes	notifications	cs	minut
 notification	common	cs	Upozornění
+notifier	notifications	cs	Oznamovatel:
 notify me by	notifications	cs	Upozorni mě pomocí
 optimize e-mails for external mail client	notifications	cs	Optimalizovat e-maily pro externí poštovní klienty
+page not found, please check serveraddress.	notifications	cs	Stránka nebyla nalezena, zkontrolujte adresu serveru
+password:	notifications	cs	Heslo:
 permission	notifications	cs	Oprávnění
+permission denied for notifications application.	notifications	cs	Přístup do aplikace pro upozornění byl odepřen.
+placeholders with user/ prefix	admin	cs	Zástupci pro automatizaci
+please contact your egroupware admin.	notifications	cs	Kontaktujte prosím správce eGroupWaru.
+please enter the url of your egroupware.	notifications	cs	Zadejte URL eGroupWare.
+please enter your egroupware username.	notifications	cs	Zadejte vaše uživatelské jméno do eGroupWare
+please enter your password	notifications	cs	Zadejte vaše heslo do eGroupWare
 poll interval	notifications	cs	Interval dotazování (poll)
 preferences for notification	notifications	cs	Předvolby pro upozornění
 received	notifications	cs	Přijato
+repeat login?	notifications	cs	Opakovat přihlášení?
+run application	notifications	cs	Spustit aplikaci
+save password	notifications	cs	Uložit heslo
+setting	notifications	cs	Nastavení
+setting aborted, application exit	notifications	cs	Nastavení bylo přerušeno, aplikace se ukončí
 settings	notifications	cs	Nastavení
 signature	admin	cs	Podpis
+signature added to every change notification	admin	cs	Podpis bude připojen do každého oznámení o změně.
+sorry, your login has expired	notifications	cs	Omlouváme se, ale vašemu přihlašovacímu jménu již vypršela platnost
 step	notifications	cs	Krok
-this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	cs	Toto upozornění od eGroupWaru Vám bylo zasláno e-mailem, protože Vámi zvolená posloupnost upozornění byla zakázána administrátorem. Vyberte si prosím v předvolbách jinou posloupnost upozornění.
+subject dn:	notifications	cs	Předmět upozornění:
+the server certificate is not a valid trust center certificate!	notifications	cs	Certifikát serveru není platným zabezpečeným certifikátem!
+this egroupware notification has been sent to you by mail because your	notifications	cs	Toto upozornění z eGroupWare vám bylo zasláno e-mailem, protože váš
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	cs	Toto upozornění z eGroupWaru Vám bylo zasláno e-mailem, protože Vámi zvolená posloupnost upozornění byla zakázána administrátorem. Vyberte si prosím v předvolbách jinou posloupnost upozornění.
+user:	notifications	cs	Uživatel:
 warning	notifications	cs	Varování
 windows-popup and e-mail	notifications	cs	Překryvná okna ve Windows a e-mail
 windows-popup backend	admin	cs	Backend Překryvná okna ve Windows
 windows-popup first, if that fails notify me by e-mail	notifications	cs	Nejprve překryvná okna ve Windows, pokud se nezdaří, upozorni mě e-mailem
 windows-popup only	notifications	cs	Jen překryvná okna ve Windows
+you can also use	admin	cs	Také můžete použít
+you have been successfully logged out	notifications	cs	Odhlášení proběhlo úspěšně
 you've got new mail	notifications	cs	Přišel Vám nový e-mail
 your session could not be verified.	notifications	cs	Vaše relace nemohla být ověřena.

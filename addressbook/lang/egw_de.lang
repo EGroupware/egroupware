@@ -174,7 +174,7 @@ default geolocation source address	addressbook	de	Startadresse für Routenplaner
 default is to open email addresses in egroupware email application, if user has access to it.	addressbook	de	Vorgabe ist E-Mail Adressen in EGroupware-E-Mail-Anwendung zu öffnen, wenn der Benutzer darauf Zugriff hat.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	de	Legt fest, welche E-Mail-Adresse (geschäftlich oder privat) für Verteilerlisten in E-Mail bevorzugt benutzt werden soll.
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
-delete selected distribution list!	addressbook	de	Löscht die ausgewählten Verteilerliste!
+delete selected distribution list!	addressbook	de	Löscht die ausgewählte Verteilerliste!
 delete this contact	addressbook	de	Diesen Kontakt löschen
 delete this organisation including all its contacts	addressbook	de	Diese Organisation einschließlich ALLER Kontakte löschen
 deleted	addressbook	de	gelöscht

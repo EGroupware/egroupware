@@ -1,13 +1,24 @@
+a quick note	home	cs	Rychlá poznámka
 birthday reminders	home	cs	Připomínka  narozeniny
 color	home	cs	Barva
+configure	home	cs	Nastavení
 displays home	home	cs	Zobrazuje hlavní stranu
 egroupware	home	cs	EGroupware
+entry	home	cs	Záznam
 favorite	home	cs	Oblíbený
+forced	home	cs	Povinný
 home	home	cs	Hlavní strana
 in %1 days (%2) is %3's birthday.	home	cs	Za %1 dní (%2) má %3 narozeniny.
+list of entries	home	cs	Seznam záznamů
 remove	home	cs	odstranit
+remove default %1	home	cs	Odstranit výchozí %1
+removed default	home	cs	Výchozí byl odstraněn
 set as default	home	cs	Nastavit jako výchozí
-single entry	home	cs	Jednorázový vstup
+set default	home	cs	Nastavit výchozí
+show a list of entries	home	cs	Zobrazit seznam záznamů
+show all the entries using a favorite	home	cs	Zobrazit všechny záznamy
+show one entry	home	cs	Zobrazit jeden záznam
+single entry	home	cs	Jeden záznam
 there is a new version of egroupware available	home	cs	Je k dispozici nová verze EGroupware
 today is %1's birthday!	home	cs	Dnes má narozeniny %1!
 tomorrow is %1's birthday.	home	cs	Zítra má narozeniny %1!

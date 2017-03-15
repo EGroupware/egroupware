@@ -10,6 +10,7 @@ acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans eGroupWare affichera ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
 are you sure you want to delete this category ?	preferences	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
 audio effect	preferences	fr	Effet audio
+audio effect enables|disables sound effects used in the theme	preferences	fr	Effets Audio : active|désactive les effets sonores utilisés dans le thème
 automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
 automatically start with this font size	preferences	fr	Démarrer automatiquement avec cette taille de police
 bootstrap theme for ckeditor	preferences	fr	Thème Bootstrap pour le CKEditor
@@ -24,6 +25,8 @@ charset for the csv export/import	preferences	fr	Jeu de caractères
 click to select a color	preferences	fr	Cliquez pour sélectionner une couleur
 color	preferences	fr	Couleur
 country	preferences	fr	Pays
+custom login box color, defaults to above color darkened	preferences	fr	Couleur de la boîte de connexion personnalisée, par défaut, plus sombre
+custom sidebar menu active color, defaults to above color darkened	preferences	fr	Couleur de la sélection active sur le menu latéral, par défaut, plus sombre
 dark moono theme	preferences	fr	Thème Dark Moono
 data exchange settings	preferences	fr	Paramètres d'échange de données
 date format	preferences	fr	Format de date

@@ -41,6 +41,7 @@ admin first name	setup	cs	Křestní jméno administrátora
 admin last name	setup	cs	Příjmení administrátora
 admin password	setup	cs	Heslo administrátora
 admin password to header manager	setup	cs	Heslo administrátora hlaviček
+admin user	setup	cs	Administrátor
 admin user for header manager	setup	cs	Uživatelské jméno administrátora hlaviček
 admin username	setup	cs	Uživatelské jméno administrátora
 admins	setup	cs	Administrátoři
@@ -49,6 +50,7 @@ after retrieving the file, put it into place as the header.inc.php.  then, click
 all applications	setup	cs	všechny aplikace
 all core tables and the admin and preferences applications	setup	cs	všechny hlavní tabulky a aplikace Administrátor a Předvolby
 all exit codes of the command line interface	setup	cs	všechny návratové hodnoty rozhranní příkazového řádku
+all hooks registered	setup	cs	Všechny háčky byly zaregistrovány
 all languages (incl. not listed ones)	setup	cs	všechny jazyky (včetně těch co nejsou v seznamu)
 all users	setup	cs	Všichni uživatelé
 allow authentication via cookie	setup	cs	Povolit autentikaci prostřednictvím cookies
@@ -56,6 +58,7 @@ allow password migration	setup	cs	Povolit migraci hesel
 allow usernames identical to system users?	setup	cs	Povolit uživatelská jména shodná se systémovými uživateli?
 allowed migration types (comma-separated)	setup	cs	Povolené typy migrace (oddělené čárkou)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	cs	Alternativně je možné k doménám přistupovat přes přihlášení ve tvaru <i>uživatel@doména</i>.
+alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	cs	Alternativně můžete použít %1Composer%2 pro instalaci všech potřebných součástí. Stáhněte a spusťte:
 and is up to date	setup	cs	a je aktuální
 and reload your webserver, so the above changes take effect !!!	setup	cs	A zrestartujte webový server, aby se projevily výše uvedené změny !!!
 app details	setup	cs	Detaily aplikace
@@ -92,6 +95,7 @@ backup '%1' deleted	setup	cs	záloha '%1' smazána
 backup '%1' renamed to '%2'	setup	cs	záloha '%1' přejmenována na '%2'
 backup '%1' restored	setup	cs	záloha '%1' obnovena
 backup and restore	setup	cs	Zálohování a obnova
+backup directory %1 mounted as %2	setup	cs	Složka se zálohami %1 přimontována jako %2
 backup failed	setup	cs	Zálohování selhalo
 backup files (needs ziparchive)	setup	cs	zálohovat soubory (vyžaduje ZipArchive)
 backup finished	setup	cs	Zalohování dokončeno
@@ -113,12 +117,15 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	cs	protože příznak pro povolení této aplikace (enable flag) je nastaven na 0, nebo není definován
 bottom	setup	cs	Dolní okraj
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	cs	ale <u>důrazně doporučujeme zazálohování</u> Vašich tabulek pro případ, že skript způsobí poškození Vašich dat.<br /><strong>Tyto automatizované skripty mohou snadno poškodit Vaše data.</strong>
+by redirecting to https	setup	cs	Přesměrováním na https
+by rewriting links to https (allows eg. sitemgr to run on http)	setup	cs	Přepisem odkazů na https (dovoluje např. aby nastavení aplikace běželo na http)
 ca certificate	setup	cs	CA certifikát
 can not connect to %1 database %2 on host %3 using user %4!	setup	cs	Nemohu se připojit k %1 databázi %2 na serveru %3 pod uživatelem %4!
 can not connect to ldap server on host %1 using dn %2!	setup	cs	Nemohu se připojit k LDAP serveru na počítači %1 jako DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	cs	Nemohu vytvořit %1 databázi %2 na %3 pro uživatele %4!
 can not create dn %1!	setup	cs	Nemohu vytvořit DN %1!
 can not instancate accounts object for %1	setup	cs	Nemohu vytvořit instanci účtu pro %1
+can only be change via setup!	setup	cs	Může být nastaveno pouze přes Setup!
 cancel	setup	cs	Storno
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	cs	Není možné vytvořit header.inc.php kvůli omezeným oprávněním.<br />Místo toho můžete soubor %1 nebo %2.
 cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	cs	DNS jméno CAS serveru:<br />příklad: sso-cas.univ-rennes1.fr
@@ -137,6 +144,7 @@ checking extension %1 is loaded or loadable	setup	cs	Kontroluji, zda je rozší�
 checking file-permissions of %1 for %2 %3: %4	setup	cs	Kontroluji souborová oprávnění %1 pro %2 %3: %4
 checking for gd support...	setup	cs	Kontroluji podporu GD...
 checking for jpgraph in %1	setup	cs	Kontroluji přítomnost JPGraph v %1
+checking for tnef application	setup	cs	Kontroluji aplikaci tnef
 checking function %1 exists	setup	cs	Kontroluji existenci funkce %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	cs	Kontroluji zda do umístění nastaveného v php.ini parametrem session.save_path='%1' může zapisovat webový server
 checking pear%1 is installed	setup	cs	Kontroluji, zda je instalaván PEAR%1
@@ -144,6 +152,7 @@ checking php.ini	setup	cs	Kontroluji php.ini
 checking required php version %1 (recommended %2)	setup	cs	Kontroluji požadovanou verzi PHP %1 (doporučeno %2)
 checking the egroupware installation	setup	cs	Kontroluji instalaci EGroupware
 checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	cs	zkontroluje, že je EGroupware nainstalován, jeho verze a potřebné aktualizace (pro návratové hodnoty se podívejte na --exit-codes)
+clear cache and register hooks	setup	cs	Smazat vyrovnávací paměť a zaregistrovat háčky
 click <a href="index.php">here</a> to return to setup.	setup	cs	klikněte <a href="index.php">sem</a> pro návrat do Instalátoru.
 click here	setup	cs	Klikněte sem
 click here to re-run the installation tests	setup	cs	Klikněte sem pro opakované spuštění instalačních testů
@@ -161,6 +170,7 @@ configuration user	setup	cs	Uživatelské jméno administrátora konfigurace
 configure now	setup	cs	Konfigurovat nyní
 confirm to delete this backup?	setup	cs	Potvrdit smazání této zálohy?
 contain	setup	cs	obsahuje
+context to create users	setup	cs	Souvislosti pro vytváření uživatelů
 continue	setup	cs	Pokračovat
 continue to the header admin	setup	cs	Pokračovat k administraci hlaviček
 convert	setup	cs	Konvertovat
@@ -236,9 +246,11 @@ domain-name	setup	cs	název domény
 don't change, if you already stored files! you will loose them!	setup	cs	Neměňte pokud jste již ukládali soubory! Přijdete o ně!
 dont touch my data	setup	cs	Nedotýkej se mých dat
 download	setup	cs	Stáhnout
+easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	cs	Nejjednodušší cesta pod Windows 2008 R2 je přidat roli "Active Directory Certificate Services" a rebootovat.
 edit current configuration	setup	cs	Editovat aktuální konfiguraci
 edit your existing header.inc.php	setup	cs	Editovat Váš stávající header.inc.php
 edit your header.inc.php	setup	cs	Editovat Váš header.inc.php
+eg. "cn=users,dc=domain,dc=com" for ads domain "domain.com"	setup	cs	např. "CN=uživatelé,DC=doména,DC=com" pro ADS doménu "domain.com"
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	cs	např. /egroupware nebo http://domena.cz/egroupware, výchozí: %1
 egroupware administration manual	setup	cs	Manuál pro administraci EGroupware
 egroupware api needs a database (schema) update from version %1 to %2!	setup	cs	EGroupware API vyžaduje aktualizaci (schématu) databáze z verze %1 na %2!
@@ -253,9 +265,12 @@ email (standard maildomain should be set)	setup	cs	e-mail (měla by být nastave
 emailadmin profile updated:	setup	cs	Profil Administrátora pošty aktualizován:
 enable for extra debug-messages	setup	cs	zaškrtněte pro více debugovacích zpráv
 enable mcrypt	setup	cs	Povolit MCrypt
+enforce ssl (allows to specify just a path above)	setup	cs	Vynutit SSL (dovoluje specifikovat cestu výše)
 enter some random text for app session encryption	setup	cs	Vložte nějaký náhodný text pro šifrování aplikační relace
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	cs	Vložte nějaký náhodný text pro šifrování <br />aplikační relace (vyžaduje mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	cs	Zadejte celou cestu k adresáři s dočasnými soubory<br />Například: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	cs	Zadejte plnou cestu ke složce pro dočasné soubory <br />Příklad:  /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	cs	Zadejte plnou cestu ke složce pro dočasné soubory <br />Příklad:  /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	cs	Zadejte plnou cestu ke složce pro soubory uživatelů a skupin <br />Příklad:  /files, E:\FILES
 enter the full path for users and group files.<br />examples: /files, e:files	setup	cs	Zadejte celou cestu k adresáři se soubory uživatelů a skupin.<br />Například: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	cs	Zadejte celou cestu k adresáři se zálohami.<br />Ponecháte-li prázdné, bude jím adresář pro soubory
 enter the hostname of the machine on which this server is running	setup	cs	Zadejte DNS jméno stroje, na kterém tento server běží
@@ -275,6 +290,7 @@ error in group-creation !!!	setup	cs	Chyba při vytváření skupiny !!!
 error listing "dn=%1"!	setup	cs	Chyba při výpisu "dn=%1"!
 error modifying dn=%1: %2='%3'!	setup	cs	Chyba při změně dn=%1: %2='%3'!
 export has been completed!	setup	cs	Export byl dokončen!
+failed to mount backup directory!	setup	cs	Připojení složky se zálohami selhalo!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	cs	Zápis konfiguračního souboru header.inc.php se nezdařil, zkontrolujte oprávnění !!!
 false	setup	cs	Ne
 file	setup	cs	Soubor
@@ -284,12 +300,15 @@ filename	setup	cs	jméno souboru
 filesystem	setup	cs	Souborový systém
 filesystem (default)	setup	cs	Souborový systém (výchozí)
 force selectbox	setup	cs	Vynutit rozbalovací nabídku
+found, but unknown version	setup	cs	Nalezeno, ale není známa verze
 give admin access to all installed apps	setup	cs	Poskytnout admin. přístup ke všem instalovaným aplikacím
+give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	cs	Zadejte LDAP root DN a heslo, pokud potřebujete vytvořit specifický kontext instance pro administrátora, uživatele, nebo skupinu
 gives further options	setup	cs	poskytuje další volby
 go back	setup	cs	Jít zpět
 go to	setup	cs	Jít na
 grant access	setup	cs	Povolit přístup
 group	setup	cs	skupina
+group %1 uses identical id %2 as user %3!	setup	cs	Skupina %1 používá shodnou identifikaci %2 jako uživatel %3!
 group memberships will be migrated too.	setup	cs	Členství ve skupinách bude zmigrováno také.
 has a version mismatch	setup	cs	má nesoulad verzí
 header admin login	setup	cs	Přihlášení administrátora hlaviček (systémový správce)
@@ -318,6 +337,7 @@ if using ads (active directory)	setup	cs	Při použití ADS (Active Directory) a
 if using cas (central authentication service):	setup	cs	Při použití CAS (Central Authentication Service):
 if using ldap	setup	cs	Při použití LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	cs	Chcete při použití LDAP spravovat atributy pro domovský adresář a loginshell?
+if using mail authentication	setup	cs	Při použití autentikace e-mailu
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	cs	Pokud máte přístup jen kořenovému adresáři dokumentů webového serveru, zvolte <b>databázi</b> jako místo pro ukládání obsahu souborů a použijte stejnou cestu jako pro dočasné soubory.
 if you did not receive any errors, your applications have been	setup	cs	Pokud jste neobdrželi žádná chybová hlášení, Vaše aplikace byly
 if you did not receive any errors, your tables have been	setup	cs	Pokud jste neobdrželi žádná chybová hlášení, Vaše tabulky byly
@@ -340,6 +360,7 @@ invalid argument '%1' !!!	setup	cs	Neplatný argument '%1' !!!
 invalid ip address	setup	cs	Neplatná IP adresa
 invalid mcrypt algorithm/mode combination	setup	cs	Neplatná kombinace Mcrypt algoritmu/režimu
 invalid password	setup	cs	Neplatné heslo
+ip or url	setup	cs	IP nebo URL
 is broken	setup	cs	je poškozen
 is disabled	setup	cs	je zakázán
 is in the webservers docroot	setup	cs	je v kořenovém adresáři dokumentů webového serveru
@@ -360,6 +381,7 @@ ldap root password	setup	cs	LDAP root heslo
 ldap rootdn	setup	cs	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	cs	LDAP filtr pro vyhledávání účtů, výchozí: "(uid=%user)", %domain=eGW-domain
 leave empty to keep current.	setup	cs	Ponechte prázdné pro zachování současného.
+leave empty to use default	setup	cs	Ponechte rázdné pro použití výchozího
 limit access	setup	cs	Omezit přístup
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	cs	Omezit přístup k instalátoru na následující adresy, sítě nebo DNS jména (např. 127.0.0.1,10.1.1,myhost.dnydns.org)
 list availible values	setup	cs	Seznam dostupných hodnot
@@ -368,6 +390,7 @@ login as user postgres, eg. by using su as root	setup	cs	Přihlásit se jako už
 login to mysql -	setup	cs	Přihlásit do mysql -
 loginname needed for domain configuration	setup	cs	Přihlašovací jméno potřebné pro konfiguraci domény
 logout	setup	cs	Odhlásit
+mail account of %1 migraged	setup	cs	E-mailový účet %1 byl přenesen
 mail domain (for virtual mail manager)	setup	cs	Poštovní doména (pro Virtuálního správce pošty)
 mail server login type	setup	cs	Typ přihlášení na poštovní server
 mail server protocol	setup	cs	Protokol poštovního serveru
@@ -384,6 +407,7 @@ mcrypt mode (default cbc)	setup	cs	Mcyrpt  režim (výchozí CBC)
 mcrypt settings (requires mcrypt php extension)	setup	cs	Nastavení mcyrpt (vyžaduje PHP rozšíření mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	cs	Parametr memory_limit je nastaven na méně než %1: některé aplikace eGroupWaru vyžadují více paměti než doporučených 8M, můžete proto očekávat, že bude docházet k náhodným chybám.
 migration between egroupware account repositories	setup	cs	Migrace mezi databázemi EGroupware účtů
+migration of group will fail, as sql does not allow identical ids.	setup	cs	Migrace skupiny nebude úspěšná, protože SQL nedovoluje použít shodné ID.
 min backup count	setup	cs	Minimální počet záloh, které by měly zůstat zachovány (nula znamená žádné / bez limitu)
 minimum account id (e.g. 500 or 100, etc.)	setup	cs	Minimální id účtu (např. 500 nebo 100, atp.)
 minute	setup	cs	minuta
@@ -392,9 +416,11 @@ modifications have been completed!	setup	cs	Změny byly dokončeny!
 modified	setup	cs	změněno
 modify	setup	cs	Změnit
 month	setup	cs	měsíc
+mount backup directory to %1	setup	cs	Složka zálohy byla připojena jako %1
 multi-language support setup	setup	cs	Nastavení podpory více jazyků
 name of database	setup	cs	Název databáze
 name of db user egroupware uses to connect	setup	cs	Jméno databaz. uživatele, kterým se EGroupware připojuje
+needs extra configuration on dc and webserver!	setup	cs	Je nutná zvláštní konfigurace v DC a webovém serveru!
 never	setup	cs	nikdy
 new	setup	cs	Nové
 next run	setup	cs	další spuštění
@@ -424,6 +450,7 @@ one month	setup	cs	jeden měsíc
 one week	setup	cs	jeden týden
 only add languages that are not in the database already	setup	cs	Přidat jen jazyky, které ještě nejsou v databázi
 only add new phrases	setup	cs	Jen přidat nové fráze
+optional, if only authentication and anonymous search is enabled	setup	cs	volitelné, pouze pokud je povolena autentikace a anonymní hledání
 or	setup	cs	nebo
 or %1continue to the header admin%2	setup	cs	nebo %1pokračovat k administraci hlaviček%2
 or http://webdav.domain.com (webdav)	setup	cs	nebo http://webdav.domena.cz (WebDAV)
@@ -480,6 +507,8 @@ rejected lines	setup	cs	Zamítnuté řádky
 remove	setup	cs	Odstranit
 remove all	setup	cs	Odstranit vše
 rename	setup	cs	přejmenovat
+required to change passwords	setup	cs	vyžaduje změnu hesla
+requires "reset password" privilege, to change passwords!	setup	cs	Pro změnu hesla je vyžadováno oprávnění "Může změnit heslo"!
 requires reinstall or manual repair	setup	cs	Vyžaduje reinstalaci nebo manuální opravu
 requires upgrade	setup	cs	Vyžaduje aktualizaci
 resolve	setup	cs	Vyřešit
@@ -489,6 +518,8 @@ restore finished	setup	cs	obnovení dokončeno
 restore started, this might take a few minutes ...	setup	cs	obnovení započalo, akce může trvat několik minut
 restoring a backup will delete/replace all content in your database. are you sure?	setup	cs	Obnova zálohy smaže/nahradí veškerý obsah Vaší databáze. Určitě chcete pokračovat?
 return to setup	setup	cs	Návrat do Instalátoru
+root dn	setup	cs	Root DN
+root dn password	setup	cs	Heslo root DN
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	cs	spustit aktualizaci schématu databáze (je-li zapotřebí): doména(vše),[administrátor konfigurace(admin)],heslo
 run installation tests	setup	cs	Spustit instalační testy
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	cs	Parametr safe_mode je zapnutý, což je dobře, jelikož Vaše instalace je tak bezpečnější.
@@ -496,6 +527,7 @@ save	setup	cs	Uložit
 save this text as contents of your header.inc.php	setup	cs	Uložit tento text jako obsah Vašeho header.inc.php
 schedule	setup	cs	Naplánovat
 scheduled backups	setup	cs	naplánované zálohy
+securest	setup	cs	Nejvyšší zabezpečení
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	cs	Vyberte aplikaci, zadejte cílovou verzi a potom potvrďte zpracování na tuto verzi.<br />Pokud nezadáte verzi, budou nainstalovány jen základní tabulky aplikace.<br /><blink>TÍMTO SMAŽETE VŠECHNY TABULKY APLIKACÍ!</blink>
 select one...	setup	cs	vybrat jeden...
 select the default applications to which your users will have access	setup	cs	Vyberte výchozí aplikace, do kterých budou mít uživatelé přístup
@@ -532,6 +564,7 @@ size	setup	cs	velikost
 skip the installation tests (not recommended)	setup	cs	Přeskočit instalační testy (nedoporučuje se)
 smtp server hostname or ip address	setup	cs	DNS jméno nebo IP adresa SMTP serveru
 smtp server port	setup	cs	Port SMTP serveru
+smtp-authentication required	setup	cs	Vyžadované přihlášení na SMTP
 some or all of its tables are missing	setup	cs	Některé nebo všechny jeho tabulky chybí
 sources deleted/missing	setup	cs	Zdrojové kódy jsou smazány (chybí)
 sql encryption type	setup	cs	Typ SQL šifrování pro hesla (výchozí md5)
@@ -539,6 +572,7 @@ ssl validation:	setup	cs	SSL oveřování:
 standard (login-name identical to egroupware user-name)	setup	cs	standardní (přihlašovací jméno se shoduje s uživatelským jménem v eGroupWaru)
 standard mailserver settings (used for mail authentication too)	setup	cs	Nastavení standardního poštovního serveru (používá se také pro poštovní autentikaci)
 standard, as defined above	setup	cs	Standardní, jak je definováno výše
+start installing application %1 ...	setup	cs	Spouští se instalace aplikace %1 ...
 start the postmaster	setup	cs	Spustit postmaster
 start updating languages %1 ...	setup	cs	Začátek aktualizace jazyků %1 ...
 start updating the database ...	setup	cs	Začátek aktualizace databáze ...
@@ -583,7 +617,10 @@ the session extension is needed to use php sessions (db-sessions work without).	
 the session extension is required!	setup	cs	Je vyžadováno rozšíření session.
 the table definition was correct, and the tables were installed	setup	cs	Definice tabulek byla v pořádku, tabulky byly nainstalovány
 the tables	setup	cs	tabulky
+the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	cs	Pro tisk s doplněním je zapotřebí zásuvný modul tidy, aby došlo ke smazání html značek před vložením do dokumentů office.
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	cs	Uživatelská jména/hesla jsou: demo/guest, demo2/guest a demo3/guest.
+the xmlreader extension is required by egroupware in several applications.	setup	cs	Zásuvný modul xmlreader je nutný pro většinu aplikací eGroupWaru.
+the zip extension is required for merge-print with office documents.	setup	cs	Pro tisk s doplněním do dokumentů office je nutný zásuvný modul zip.
 there was a problem trying to connect to your ldap server. <br />	setup	cs	Nastaly problémy při pokusu o připojení k Vašemu LDAP serveru. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	cs	Nastaly problémy při pokusu o připojení k Vašemu LDAP serveru. <br />Zkontrolujte prosím konfiguraci svého LDAP serveru
 this has to be outside the webservers document-root!!!	setup	cs	Cesta musí být mimo kořenový adresář dokumentů webového serveru!!!
@@ -625,6 +662,8 @@ use cookies to pass sessionid	setup	cs	Požívat cookies pro předání id relac
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	cs	použít mcrypt k šifrování dat relace: {off(výchozí) | on},[mcrypt inicializační vektor(výchozí je náhodně vygenerován)],[verze mcrypt]
 use persistent db connections: {on(default) | off}	setup	cs	použít trvalá databázová spojení: {on(výchozí) | off}
 use pure html compliant code (not fully working yet)	setup	cs	Použít čistý, HTML kompatibilní kód (zatím nefunguje zcela)
+use space to separate multiple	setup	cs	pro oddělení jednotlivých záznamů použijte mezeru
+use tls or ssl encryption	setup	cs	Použít TLS nebo SSL šifrování
 user	setup	cs	uživatel
 user account prefix	setup	cs	Prefix uživatelských účtů
 user for smtp-authentication (leave it empty if no auth required)	setup	cs	Uživatel pro SMTP autentikaci (ponechte prázdné, není-li SMTP autentikace vyžadována)
@@ -673,6 +712,7 @@ you didn't enter a header admin password	setup	cs	Nezadal(a) jste heslo administ
 you didn't enter a header admin username	setup	cs	Nezadal(a) jste uživatelské jméno administrátora hlaviček
 you do not have any languages installed. please install one now <br />	setup	cs	Nemáte nainstalované žádné jazyky. Prosím, nainstalujte jeden nyní<br />
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	cs	Nemáte nainstalován JPGraph ve verzi %1 nebo vyšší! Je zapotřebí pro tvorbu Ganttových diagramů ve Správci projektů.
+you dont have tnef or ytnef installed! it is needed to decode winmail.dat attachments in felamimail.	setup	cs	Není nainstalován tnef nebo ytnef. To je vyžadováno pro dekódování příloh winmail.dat v aplikaci E-mail.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	cs	Zatím jste nevytvořil(a) svůj header.inc.php!<br />Můžete ho teď vytvořit.
 you have successfully logged out	setup	cs	Byl(a) jste úspěšně odhlášen(a)
 you must enter a username for the admin	setup	cs	Musíte zadat uživatelské jméno pro administrátora
