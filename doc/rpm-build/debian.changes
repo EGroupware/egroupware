@@ -1,3 +1,21 @@
+egroupware-epl (16.1.20170315) hardy; urgency=low
+
+  * Addressbook - When viewing a user account's calendar or next/previous dates, use the account calendar over the contact calendar
+  * All apps - Add special search case for #<int> to only match the ID, not search the whole entry
+  * Mail- List mailing lists before contacts when searching for email addresses
+  * Timesheet - Fix 'Save & new' does not set project correctly
+  * Mail: Better style for showing emails in print mode, thanks to Michael Scholl
+  * Preferences: Fix hints are not visible for tabs with scrollbar
+  * Mail: fix memory exhaustion caused by e-mails with long string set on DATE field
+  * Admin: Save the bulk password reset notification email for next time
+  * Mail: switching signatures in html mail failed after first time
+  * Filemanager/Mobile theme: Improve navigation bar to be able to navigate through folders with single-touch
+  * Addressbook: only add groups as distribution lists, if accounts addressbook is not hidden
+  * Projectmanager - Fix deleted entries would still count in project time totals
+  * Wiki: fix Fatal Error when searching (Class 'html' not found)
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 14 Mar 2017 23:07:42 +0100
+
 egroupware-epl (16.1.20170203) hardy; urgency=low
 
   * Addressbook/Mail: allow to use groups as (readonly) distribution lists
