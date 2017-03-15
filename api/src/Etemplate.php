@@ -257,9 +257,10 @@ class Etemplate extends Etemplate\Widget\Template
 				$load_array['response'] = Json\Response::get()->returnResult();
 			}
 			// <iframe> and <form> tags added only to get browser autocomplete handling working again
-			echo '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container" data-etemplate="'.
+			$form = '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container" data-etemplate="'.
 				htmlspecialchars(Json\Response::json_encode($load_array), ENT_COMPAT, Translation::charset(), true).'"></form>'."\n".
 				'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
+			echo $form;
 
 			if ($output_mode == 2)
 			{
@@ -267,6 +268,7 @@ class Etemplate extends Etemplate\Widget\Template
 				echo $GLOBALS['egw']->framework->footer();
 			}
 			ob_flush();
+			if ($output_mode == 1)	return $form;
 		}
 		self::$request = null;
 	}
