@@ -2827,13 +2827,16 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					' ('.($dupe_count[$path.$file['filename']] + 1).')' . '.' .
 					pathinfo($file['filename'], PATHINFO_EXTENSION);
 			}
-			if (!($fp = Vfs::fopen($path.$file['filename'],'wb')) ||
+			// Strip special characters to make sure the files are visible for all OS (windows has issues)
+			$target_name = iconv($file['charset'] ? $file['charset'] : $GLOBALS['egw_info']['server']['system_charset'], 'ASCII//IGNORE', $file['filename']);
+			
+			if (!($fp = Vfs::fopen($path.$target_name,'wb')) ||
 				!(!fseek($attachment['attachment'], 0, SEEK_SET) && stream_copy_to_stream($attachment['attachment'], $fp)))
 			{
 				$success=false;
-				Framework::message("Unable to zip {$file['filename']}",'error');
+				Framework::message("Unable to zip {$target_name}",'error');
 			}
-			if ($success) $file_list[] = $path.$file['filename'];
+			if ($success) $file_list[] = $path.$target_name;
 			if ($fp) fclose($fp);
 		}
 		$this->mail_bo->closeConnection();
