@@ -2961,7 +2961,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			// Strip special characters to make sure the files are visible for all OS (windows has issues)
 			$target_name = iconv($file['charset'] ? $file['charset'] : $GLOBALS['egw_info']['server']['system_charset'], 'ASCII//IGNORE', $file['filename']);
-			
+
 			if (!($fp = Vfs::fopen($path.$target_name,'wb')) ||
 				!(!fseek($attachment['attachment'], 0, SEEK_SET) && stream_copy_to_stream($attachment['attachment'], $fp)))
 			{
@@ -4483,13 +4483,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		if($quota !== false && $quota['limit'] != 'NOT SET') {
 			$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
+			$quotaMin = $quotainfo['freespace']/pow(1024, 2);
 			$content = array (
 				'quota'				=> $quotainfo['text'],
 				'quotainpercent'	=> (string)$quotainfo['percent'],
 				'quotaclass'		=> $quotainfo['class'],
 				'quotanotsupported'	=> "",
 				'profileid'			=> $icServerID,
-				'quotawarning'		=> ($quotainfo['freespace']/pow(1024, 2)) < 50 && $quotainfo['percent'] >= 99 ? true : false
+				'quotawarning'		=> $quotaMin < 50 ? true : false
 			);
 		}
 		else
