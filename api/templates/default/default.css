@@ -489,6 +489,7 @@ body {
 	color: red;
 	font-style: italic;
 	margin: 7px 7px 0 0;
+	white-space: pre-wrap;
 }
 .divLoginboxHeader {
 	text-align: center;
