@@ -553,7 +553,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if(!sortable.sortable('instance'))
 		{
 			sortable.sortable({
-				cancel: "#divAppboxHeader, .calendar_calWeekNavHeader, .calendar_calDayColHeader, .calendar_plannerHeader",
+				cancel: "#divAppboxHeader, .calendar_calWeekNavHeader, .calendar_plannerHeader",
 				handle: '.calendar_calGridHeader',
 				//placeholder: "srotable_cal_wk_ph",
 				axis:"y",
@@ -599,7 +599,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 							// If in day view, the days need to be re-ordered, avoiding
 							// the current sort order
 							app.classes.calendar.views.day.etemplates[0].widgetContainer.iterateOver(function(widget) {
-								var idx = sortedArr.indexOf(widget.options.owner);
+								var idx = sortedArr.indexOf(widget.options.owner.toString());
 								// Move the event holding div
 								widget.set_left((parseInt(widget.options.width) * idx) + 'px');
 								// Re-order the children, or it won't stay
