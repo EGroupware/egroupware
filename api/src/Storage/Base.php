@@ -830,84 +830,7 @@ class Base
 		}
 		else
 		{
-			$criteria = $this->data2db($criteria);
-			foreach($criteria as $col => $val)
-			{
-				if (is_int($col))
-				{
-					$query[] = $val;
-				}
-				elseif ($empty || $val != '')
-				{
-					if (!($db_col = array_search($col,$this->db_cols)))
-					{
-						$db_col = $col;
-					}
-					if ($val === '')
-					{
-						if (isset($this->table_def['fd'][$db_col]) &&
-							$this->table_def['fd'][$db_col]['type'] == 'varchar' &&
-							$this->table_def['fd'][$db_col]['nullable'] !== false)
-						{
-							unset($criteria[$col]);
-							$query[] =  '(' . $db_col . ' IS NULL OR ' . $db_col . " = '')";
-						}
-						else
-						{
-							$query[$db_col] = '';
-						}
-					}
-					elseif ($wildcard || $criteria[$col][0] == '!' ||
-						is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
-					{
-						// if search pattern alread contains a wildcard, do NOT add further ones automatic
-						if (is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
-						{
-							$wildcard = '';
-						}
-						$cmp_op = ' '.$this->db->capabilities['case_insensitive_like'].' ';
-						$negate = false;
-						if ($criteria[$col][0] == '!')
-						{
-							$cmp_op = ' NOT'.$cmp_op;
-							$criteria[$col] = substr($criteria[$col],1);
-							$negate = true;
-						}
-						foreach(explode(' ',$criteria[$col]) as $crit)
-						{
-							$query[] = ($negate ? ' ('.$db_col.' IS NULL OR ' : '').$db_col.$cmp_op.
-								$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$crit).$wildcard).
-								($negate ? ') ' : '');
-						}
-					}
-					elseif (strpos($db_col,'.') !== false)	// we have a table-name specified
-					{
-						list($table,$only_col) = explode('.',$db_col);
-						$type = $this->db->get_column_attribute($only_col, $table, true, 'type');
-						if (empty($type))
-						{
-							throw new Api\Db\Exception("Can not determine type of column '$only_col' in table '$table'!");
-						}
-						if (is_array($val) && count($val) > 1)
-						{
-							foreach($val as &$v)
-							{
-								$v = $this->db->quote($v, $type);
-							}
-							$query[] = $sql = $db_col.' IN (' .implode(',',$val).')';
-						}
-						else
-						{
-							$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$type);
-						}
-					}
-					else
-					{
-						$query[$db_col] = $criteria[$col];
-					}
-				}
-			}
-			if (is_array($query) && $op != 'AND') $query = $this->db->column_data_implode(' '.$op.' ',$query);
+			$query = $this->parse_search($criteria, $wildcard, $empty, $op);
 		}
 		if (is_array($filter))
 		{
@@ -1107,6 +1030,100 @@ class Base
 			$n++;
 		}
 		return $n ? $arr : null;
+	}
+
+	/**
+	 * Parse an array of search criteria into something that can be passed on
+	 * to the DB
+	 *
+	 * @param array $criteria
+	 * @param string $wildcard ='' appended befor and after each criteria
+	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @return Array
+	 * @throws Api\Db\Exception
+	 */
+	protected function parse_search(Array $criteria, $wildcard, $empty, $op)
+	{
+		$criteria = $this->data2db($criteria);
+		foreach($criteria as $col => $val)
+		{
+			if (is_int($col))
+			{
+				$query[] = $val;
+			}
+			elseif ($empty || $val != '')
+			{
+				if (!($db_col = array_search($col,$this->db_cols)))
+				{
+					$db_col = $col;
+				}
+				if ($val === '')
+				{
+					if (isset($this->table_def['fd'][$db_col]) &&
+						$this->table_def['fd'][$db_col]['type'] == 'varchar' &&
+						$this->table_def['fd'][$db_col]['nullable'] !== false)
+					{
+						unset($criteria[$col]);
+						$query[] =  '(' . $db_col . ' IS NULL OR ' . $db_col . " = '')";
+					}
+					else
+					{
+						$query[$db_col] = '';
+					}
+				}
+				elseif ($wildcard || $criteria[$col][0] == '!' ||
+					is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
+				{
+					// if search pattern alread contains a wildcard, do NOT add further ones automatic
+					if (is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
+					{
+						$wildcard = '';
+					}
+					$cmp_op = ' '.$this->db->capabilities['case_insensitive_like'].' ';
+					$negate = false;
+					if ($criteria[$col][0] == '!')
+					{
+						$cmp_op = ' NOT'.$cmp_op;
+						$criteria[$col] = substr($criteria[$col],1);
+						$negate = true;
+					}
+					foreach(explode(' ',$criteria[$col]) as $crit)
+					{
+						$query[] = ($negate ? ' ('.$db_col.' IS NULL OR ' : '').$db_col.$cmp_op.
+							$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$crit).$wildcard).
+							($negate ? ') ' : '');
+					}
+				}
+				elseif (strpos($db_col,'.') !== false)	// we have a table-name specified
+				{
+					list($table,$only_col) = explode('.',$db_col);
+					$type = $this->db->get_column_attribute($only_col, $table, true, 'type');
+					if (empty($type))
+					{
+						throw new Api\Db\Exception("Can not determine type of column '$only_col' in table '$table'!");
+					}
+					if (is_array($val) && count($val) > 1)
+					{
+						foreach($val as &$v)
+						{
+							$v = $this->db->quote($v, $type);
+						}
+						$query[] = $sql = $db_col.' IN (' .implode(',',$val).')';
+					}
+					else
+					{
+						$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$type);
+					}
+				}
+				else
+				{
+					$query[$db_col] = $criteria[$col];
+				}
+			}
+		}
+		if (is_array($query) && $op != 'AND') $query = $this->db->column_data_implode(' '.$op.' ',$query);
+		return $query;
 	}
 
 	/**
