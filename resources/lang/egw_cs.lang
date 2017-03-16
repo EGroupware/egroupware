@@ -3,9 +3,9 @@
 %1 resource(s) %2	resources	cs	%1 zdroj(ů) %2
 %1 resource(s) %2, %3 failed	resources	cs	%1 zdroj(ů) %2, %3 selhalo
 %1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	cs	%1 zdrojů %2, %3 selhalo kvůli nedostatečným právům!
-%1 resource(s) booked	resources	cs	%1 zdroj(ů) bylo zarezervováno
-%1 resource(s) view calendar	resources	cs	Zobrazení kalendáře %1 zdroje(zdrojů)
-access not permitted	resources	cs	Přístup není povolen
+%1 resource(s) booked	resources	cs	%1 zdrojů bylo zarezervováno
+%1 resource(s) view calendar	resources	cs	Kalendář pro %1 zdrojů
+access not permitted	resources	cs	Přístup byl odmítnut
 accessories	resources	cs	Příslušenství
 accessories of	resources	cs	Příslušenství (čeho)
 accessories:	resources	cs	Příslušenství:
@@ -45,7 +45,7 @@ create new links	resources	cs	Vytvořit nové odkazy
 custom etemplate for the contactform	resources	cs	Uživatelsky definovaná eŠablona pro formulář kontaktu
 custom fields	resources	cs	Uživatelsky definovaná pole
 days	resources	cs	dny
-delete	resources	cs	Smazat
+delete	resources	cs	Smatat
 delete selected resources	resources	cs	Smazat vybrané zdroje
 delete this entry	resources	cs	Smazat záznam
 deleted	resources	cs	smazáno
@@ -103,7 +103,7 @@ no resources selected	resources	cs	Žádný zdroj nebyl vybrán
 none	resources	cs	Žádný
 notify your administrator to correct this situation	resources	cs	Požádejte prosím svého administrátora o nápravu situace
 old fixed definition	resources	cs	Stará pevná definice
-permission denied!	resources	cs	Přístup odepřen!
+permission denied!	resources	cs	Přístup byl odmítnut!
 picture	resources	cs	Obrázek
 picture source	resources	cs	Zdroj obrázku
 picture type is not supported, sorry!	resources	cs	Obrázek tohoto typu není podporován, litujeme !
@@ -157,13 +157,15 @@ this module displays the resources app	resources	cs	Tento modul zobrazuje aplika
 too many matches	resources	cs	Příliš mnoho výskytů
 unable to link to %1 "%2"	resources	cs	Není možné vytvořit propojení %1 "%2"
 unable to process confirmation.	resources	cs	Není možné provést potvrzení.
-unwilling to save category with current settings. check for inconsistency:	resources	cs	Nechtěné uložení kategorie s aktuálním nastavením. Zkontrolujte neporušenost dat:
+unwilling to save category with current settings. check for inconsistency:	resources	cs	Není možné uložit kategorii s tímto nastavením. Zkontrolujte konzistenci.
 update	resources	cs	Aktualizovat
+usable	resources	cs	Použitelné
 use general resources icon	resources	cs	Použít obecnou ikonu zdrojů
 use own picture	resources	cs	Použít vlastní obrázek
 use the category's icon	resources	cs	Použít ikonu kategorie
 useable	resources	cs	Použitelné
 view accessories for this resource	resources	cs	Zobrazit příslušenství k tomtuto zdroji
+view accessories	resources	cs	Zobrazit příslušenství
 view calendar	resources	cs	Zobrazit kalendář
 view this entry	resources	cs	Zobrazit tento záznam
 web-page of resource	resources	cs	Webová stránka zdroje
@@ -179,4 +181,4 @@ you are not permitted to delete this resource!	resources	cs	Nemáte oprávnění
 you are not permitted to edit this resource!	resources	cs	Nemáte oprávnění upravit tento zdroj!
 you are not permitted to get information about this resource!	resources	cs	Nemáte oprávnění získávat informace o tomto zdroji!
 you chose more resources than available	resources	cs	Vybral(a) jste více zdrojů než je k dispozici
-you need to select some entries first!	resources	cs	Nejprve musíte vybrat nějaký záznam
+you need to select some entries first!	resources	cs	Nejprve musíte vybrat nějaký záznam!
