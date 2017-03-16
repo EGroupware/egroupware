@@ -357,7 +357,12 @@ class Sql extends Api\Storage
 		$criteria = array();
 		if ($param['search'] && !is_array($param['search']))
 		{
-			$search = $this->search2criteria($param['search'],$wildcard,$op);
+			$search_cols = array();
+			foreach($group as $col)
+			{
+				$search_cols[] = $this->table_name . '.' . $col;
+			}
+			$search = $this->search2criteria($param['search'],$wildcard,$op, null, $search_cols);
 			$criteria = array($search);
 		}
 		$query = $this->parse_search(array_merge($criteria, $filter), $wildcard, false, ' AND ');
@@ -378,7 +383,7 @@ class Sql extends Api\Storage
 		$rows = $this->db->query(
 				"SELECT " . $columns. ', COUNT(contact_id) AS group_count' .
 				' FROM (' . $sub_query . ') AS matches GROUP BY ' . implode(',',$group) .
-				' ORDER BY ' . $order,
+				' HAVING group_count > 1 ORDER BY ' . $order,
 				__LINE__, __FILE__, (int)$param['start'],$mysql_calc_rows ? (int)$param['num_rows'] : -1
 		);
 		if ($mysql_calc_rows)
