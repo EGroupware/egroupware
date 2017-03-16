@@ -269,9 +269,7 @@ class Sql extends Api\Storage
 	function duplicates($param)
 	{
 		$join = 'JOIN ' . $this->table_name . ' AS a2 ON ';
-		$filter = array(
-			$this->table_name.'.contact_tid != "D"'
-		);
+		$filter = $param['col_filter'];
 		$op = 'OR';
 		if (isset($param['op']) && !empty($param['op'])) $op = $param['op'];
 		$advanced_search = false;
@@ -287,11 +285,20 @@ class Sql extends Api\Storage
 			$join .= str_replace('cat_id', 'a2.cat_id', $cat_filter) . ' AND ';
 			unset($filter['cat_id']);
 		}
+		if ($param['col_filter']['tid'])
+		{
+			$filter['contact_tid'] = $param['col_filter']['tid'];
+			$join .= 'a2.contact_tid = ' . $this->db->quote($filter['contact_tid']) . ' AND ';
+		}
+		else
+		{
+			$join .= 'a2.contact_tid != \'D\' AND ';
+		}
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
 		if ($param['owner'] && $param['owner'] == $GLOBALS['egw_info']['user']['account_id'])
 		{
 			$filter['owner'] = $param['owner'];
-			$join .= 'a2.owner = ' . $this->db->quote($filter['owner']) . ' AND ';
+			$join .= 'a2.contact_owner = ' . $this->db->quote($filter['owner']) . ' AND ';
 		}
 		else
 		{
@@ -302,8 +309,8 @@ class Sql extends Api\Storage
 
 				$filter['owner'] = $param['owner'];
 				$filter['private'] = 0;
-				$join .= 'a2.owner = ' . $this->db->quote($filter['owner']) . ' AND ';
-				$join .= 'a2.private = ' . $this->db->quote($filter['private']) . ' AND ';
+				$join .= 'a2.contact_owner = ' . $this->db->quote($filter['owner']) . ' AND ';
+				$join .= 'a2.contact_private = ' . $this->db->quote($filter['private']) . ' AND ';
 			}
 			else	// search all addressbooks, incl. accounts
 			{
@@ -327,55 +334,71 @@ class Sql extends Api\Storage
 				array('n_family', 'n_given', 'org_name', 'contact_email');
 		$match_count = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'] ?
 				$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'] : 3;
-		
+
+		$columns = Array();
 		$extra = Array();
 		$order = in_array($param['order'], $group) ? $param['order'] : $group[0];
-		$join .= $this->table_name .'.contact_id != a2.contact_id AND a2.contact_tid != "D" AND (';
+		$join .= $this->table_name .'.contact_id != a2.contact_id AND (';
 		$join_fields = Array();
-		foreach($group as &$field)
+		foreach($group as $field)
 		{
 			$extra[] = "IF({$this->table_name}.$field = a2.$field, 1, 0)";
 			$join_fields[] = $this->table_name . ".$field = a2.$field";
-			$field = $this->table_name . ".$field AS $field";
+			$columns[] = "IF({$this->table_name}.$field = a2.$field, {$this->table_name}.$field, '') AS $field";
 		}
 		$extra = Array(
-			'a2.contact_id AS matched',
 			implode('+', $extra) . ' AS match_count'
 		);
 		$join .= $this->db->column_data_implode(' OR ',$join_fields) . ')';
 
-		$append = " HAVING match_count >= $match_count ORDER BY {$this->table_name}.{$order} $sort, $this->table_name.contact_id";
-		$group[] = $this->table_name.'.contact_id AS contact_id';
+		$append = " HAVING match_count >= $match_count ORDER BY {$order} $sort, $this->table_name.contact_id";
+		$columns[] = $this->table_name.'.contact_id AS contact_id';
 
-		$rows = parent::search($param['search'],$group,
-			$append,$extra,$wildcard,false,$op/*'OR'*/,
-			array($param['start'],$param['num_rows']),$filter, $join);
+		$criteria = array();
+		if ($param['search'] && !is_array($param['search']))
+		{
+			$search = $this->search2criteria($param['search'],$wildcard,$op);
+			$criteria = array($search);
+		}
+		$query = $this->parse_search(array_merge($criteria, $filter), $wildcard, false, ' AND ');
+
+		$sub_query = $this->db->select($this->table_name, 
+			'DISTINCT ' . implode(', ',array_merge($columns, $extra)),
+			$query,
+			False, False, 0, $append, False, -1,
+			$join
+		);
+
+		$columns = implode(', ', $group);
+		if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
+		{
+			$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
+		}
+		
+		$rows = $this->db->query(
+				"SELECT " . $columns. ', COUNT(contact_id) AS group_count' .
+				' FROM (' . $sub_query . ') AS matches GROUP BY ' . implode(',',$group) .
+				' ORDER BY ' . $order,
+				__LINE__, __FILE__, (int)$param['start'],$mysql_calc_rows ? (int)$param['num_rows'] : -1
+		);
+		if ($mysql_calc_rows)
+		{
+			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchColumn();
+		}
+		else
+		{
+			$this->total = $rows->NumRows();
+		}
 
 		// Go through rows and only return one for each pair/triplet/etc. of matches
 		$dupes = array();
-		foreach($rows as $key => &$row)
+		foreach($rows as $key => $row)
 		{
-			if(array_key_exists($row['contact_id'], $dupes))
-			{
-				$kept_row =& $rows[$dupes[$row['contact_id']]];
-				$kept_row['group_count']++;
-
-				// Clear not matching fields, or we won't be able to find children
-				foreach($kept_row as $sub_key => $sub_value)
-				{
-					if(in_array($sub_key, array('contact_id','group_count'))) continue;
-					if($row[$sub_key] != $sub_value)
-					{
-						unset($kept_row[$sub_key]);
-					}
-				}
-				unset($rows[$key]);
-				$this->total--;
-			}
-			$dupes[$row['matched']] = $key;
-			$row['group_count'] = 1;
+			$row['email'] = $row['contact_email'];
+			$row['email_home'] = $row['contact_email_home'];
+			$dupes[] = $this->db2data($row);
 		}
-		return array_values($rows);
+		return $dupes;
 	}
 
 	/**

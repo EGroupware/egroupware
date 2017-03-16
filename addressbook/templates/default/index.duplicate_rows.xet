@@ -10,8 +10,6 @@
 				<column width="40%"/>
 				<column width="30%"/>
 				<column width="30%"/>
-				<column width="180"/>
-				<column width="180"/>
 			</columns>
 			<rows>
 				<row class="th">

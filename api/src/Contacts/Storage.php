@@ -859,12 +859,17 @@ class Storage
 		}
 		if(!array_key_exists('tid', $param['col_filter']) || $param['col_filter']['tid'] === '')
 		{
-			$param['col_filter'][] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+			$param['col_filter'][] = $this->somain->table_name.'.contact_tid != \'' . self::DELETED_TYPE . '\'';
 		}
 		elseif(is_null($param['col_filter']['tid']))
 		{
 			// return all entries including deleted
 			unset($param['col_filter']['tid']);
+		}
+		if($param['col_filter']['owner'])
+		{
+			$param['owner'] = $param['col_filter']['owner'];
+			unset($param['col_filter']['owner']);
 		}
 
 
