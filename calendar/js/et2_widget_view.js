@@ -580,10 +580,13 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		this.drag_create.parent = null;
 		if(this.drag_create.event)
 		{
-			if(this.drag_create.event.destroy)
+			try
 			{
-				this.drag_create.event.destroy();
-			}
+				if(this.drag_create.event.destroy)
+				{
+					this.drag_create.event.destroy();
+				}
+			} catch(e) {}
 			this.drag_create.event = null;
 		}
 		return true;
