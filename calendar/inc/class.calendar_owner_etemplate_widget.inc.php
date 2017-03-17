@@ -142,7 +142,9 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		$query = $_REQUEST['query'];
 
 		// Arbitrarily limited to 50 / resource
-		$options = array('start' => 0, 'num_rows' => 50) +
+		$options = array('start' => 0, 'num_rows' => 50,
+			// Filter accounts out of addressbook
+			'filter' => array('account_id' => null)) +
 			array_diff_key($_REQUEST, array_flip(array('menuaction','query')));
 		$results = array();
 
@@ -182,14 +184,6 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			// There are always special cases
 			switch ($type)
 			{
-				case 'c':
-					// Remove contacts matching excluded accounts
-					foreach($remove_contacts as $key => $title)
-					{
-						$contact_id = Api\Accounts::id2name($key, 'person_id');
-						unset($_results[$contact_id]);
-					}
-					break;
 				case 'l':
 					// Include mailing lists
 					$contacts_obj = new Api\Contacts();
