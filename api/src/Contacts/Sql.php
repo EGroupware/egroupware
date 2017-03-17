@@ -285,10 +285,11 @@ class Sql extends Api\Storage
 			$join .= str_replace('cat_id', 'a2.cat_id', $cat_filter) . ' AND ';
 			unset($filter['cat_id']);
 		}
-		if ($param['col_filter']['tid'])
+		if ($filter['tid'])
 		{
-			$filter['contact_tid'] = $param['col_filter']['tid'];
-			$join .= 'a2.contact_tid = ' . $this->db->quote($filter['contact_tid']) . ' AND ';
+			$filter[$this->table_name . '.contact_tid'] = $param['col_filter']['tid'];
+			$join .= 'a2.contact_tid = ' . $this->db->quote($filter['tid']) . ' AND ';
+			unset($filter['tid']);
 		}
 		else
 		{
@@ -331,7 +332,7 @@ class Sql extends Api\Storage
 		$sort = $param['sort'] == 'DESC' ? 'DESC' : 'ASC';
 		$group = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields'] ?
 				explode(',',$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields']):
-				array('n_family', 'n_given', 'org_name', 'contact_email');
+				array('n_family', 'org_name', 'contact_email');
 		$match_count = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'] ?
 				$GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_threshold'] : 3;
 
@@ -373,6 +374,8 @@ class Sql extends Api\Storage
 			False, False, 0, $append, False, -1,
 			$join
 		);
+
+		error_log(__METHOD__ . ':'.__LINE__ . ' Subquery: ' . $sub_query);
 
 		$columns = implode(', ', $group);
 		if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
