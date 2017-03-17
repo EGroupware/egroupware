@@ -184,12 +184,10 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			{
 				case 'c':
 					// Remove contacts matching excluded accounts
-					foreach($_results as $key => $title)
+					foreach($remove_contacts as $key => $title)
 					{
-						if(in_array($title, $remove_contacts) || is_array($title) && in_array($title['label'], $remove_contacts))
-						{
-							unset($_results[$key]);
-						}
+						$contact_id = Api\Accounts::id2name($key, 'person_id');
+						unset($_results[$contact_id]);
 					}
 					break;
 				case 'l':
