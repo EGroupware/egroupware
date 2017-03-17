@@ -291,6 +291,10 @@ class timesheet_ui extends timesheet_bo
 						}
 						// save the selected project, to delete the project-link, if the user changes the project
 						$this->data['old_pm_id'] = $this->data['pm_id'];
+						if($this->pm_integration == 'none')
+						{
+							unset($this->data['pm_id']);
+						}
 						break;
 					}
 					// fall-through for save

@@ -606,9 +606,15 @@ class timesheet_bo extends Api\Storage
 			return false;
 		}
 		// Update ts_project to match project
-		if ($this->pm_integration == 'full' && $old && $old['pm_id'] != $new['pm_id'])
+		if ($this->pm_integration == 'full' && (
+				!$old && $this->data['pm_id'] != $this->data['old_pm_id'] || $old && $old['pm_id'] != $new['pm_id']
+		))
 		{
-			$new['ts_title'] = $new['pm_id'] ? Link::title('projectmanager', $new['pm_id']) : '';
+			$this->data['ts_project'] = $this->data['pm_id'] ? Link::title('projectmanager', $this->data['pm_id']) : '';
+			if($this->data['ts_title'] == Link::title('projectmanager', $old['pm_id']))
+			{
+				$this->data['ts_title'] = $this->data['ts_project'];
+			}
 		}
 
 		// Check for restore of deleted contact, restore held links
