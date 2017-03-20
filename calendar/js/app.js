@@ -4052,6 +4052,10 @@ jQuery.extend(app.classes.calendar,{
 				}
 				return d;
 			},
+			hide_empty: function(state) {
+				var check = state.sortby == 'user' ? ['user','both'] : ['cat','both'];
+				return (check.indexOf(egw.preference('planner_show_empty_rows','calendar')) === -1);
+			},
 			scroll: function(delta)
 			{
 				if(app.calendar.state.planner_view)
