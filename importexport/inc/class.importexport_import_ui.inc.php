@@ -186,6 +186,8 @@ use EGroupware\Api\Etemplate;
 						unset($dst_file);
 					}
 
+				} catch (Api\Db\Exception $db_ex) {
+					$this->message .= lang('Database error');
 				} catch (Exception $e) {
 					$this->message .= $e->getMessage();
 				}
