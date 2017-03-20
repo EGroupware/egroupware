@@ -90,7 +90,7 @@ app.classes.addressbook = AppJS.extend(
 		});
 	},
 
-/**
+	/**
 	 * Observer method receives update notifications from all applications
 	 *
 	 * App is responsible for only reacting to "messages" it is interested in!
@@ -579,9 +579,17 @@ app.classes.addressbook = AppJS.extend(
 			var filter = this.et2.getWidgetById('filter');
 			owner = filter.getValue()||egw.preference('add_default','addressbook');
 		}
-		var lists = this.et2.getWidgetById('filter2');
 		var contacts = [];
-		if(selected && selected.length)
+		if(selected && selected[0] && selected[0].getAllSelected())
+		{
+			// All contacts selected, better ask the server for _all_ the IDs
+			fetchAll(selected, this.et2.getWidgetById('nm'), jQuery.proxy(
+				function(contacts) {
+					this._add_new_list_prompt(owner, contacts);
+				}, this));
+			return;
+		}
+		else if(selected && selected.length)
 		{
 			for(var i = 0; i < selected.length; i++)
 			{
@@ -592,6 +600,19 @@ app.classes.addressbook = AppJS.extend(
 				contacts.push(ids);
 			}
 		}
+		this._add_new_list_prompt(owner, contacts);
+	},
+
+	/**
+	 * Ask the user for a name, then create a new list with the provided contacts
+	 * in it.
+	 *
+	 * @param {int} owner
+	 * @param {String[]} contacts
+	 */
+	_add_new_list_prompt: function(owner, contacts)
+	{
+		var lists = this.et2.getWidgetById('filter2');
 		et2_dialog.show_prompt(
 			function(button, name) {
 				if(button == et2_dialog.OK_BUTTON)
