@@ -897,7 +897,9 @@ class calendar_so
 		{
 			$order = ($GLOBALS['egw_info']['user']['preferences']['common']['account_display'] == 'lastname' ? 'n_family' : 'n_fileas');
 			$cols .= ",egw_addressbook.{$order}";
-			$join .= "LEFT JOIN egw_addressbook ON egw_addressbook.account_id = {$this->user_table}.cal_user_id";
+			$join .= "LEFT JOIN egw_addressbook ON ".
+					($this->db->Type == 'pgsql'? "egw_addressbook.account_id::varchar = ":"egw_addressbook.account_id = ").
+					"{$this->user_table}.cal_user_id";
 			$params['order'] = "$order, cal_non_blocking DESC";
 		}
 		else if ($params['order'] == 'categories , cal_non_blocking DESC')
