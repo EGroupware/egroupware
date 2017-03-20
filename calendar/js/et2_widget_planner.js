@@ -46,6 +46,12 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			default: egw.preference('days_in_weekview','calendar') != 5,
 			description: "Display weekends.  The date range should still include them for proper scrolling, but they just won't be shown."
 		},
+		hide_empty: {
+			name: "Hide empty rows",
+			type: "boolean",
+			default: false,
+			description: "Hide rows with no events."
+		},
 		value: {
 			type: "any",
 			description: "A list of events, optionally you can set start_date, end_date and group_by as keys and events will be fetched"
@@ -507,23 +513,23 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			},
 			// Draw a single row
 			draw_row: function(sort_key, label, events) {
-				if(['user','both'].indexOf(egw.preference('planner_show_empty_rows','calendar')) !== -1 || events.length)
+				var row = this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
+				if(this.options.hide_empty && !events.length)
 				{
-					var row = this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
-
-					// Since the daywise cache is by user, we can tap in here
-					var t = new Date(this.options.start_date);
-					var end = new Date(this.options.end_date);
-					do
-					{
-						var cache_id = app.classes.calendar._daywise_cache_id(t, sort_key);
-						egw.dataRegisterUID(cache_id, row._data_callback, row);
-
-						t.setUTCDate(t.getUTCDate() + 1);
-					}
-					while(t < end);
-					return row;
+					row.set_disabled(true);
 				}
+				// Since the daywise cache is by user, we can tap in here
+				var t = new Date(this.options.start_date);
+				var end = new Date(this.options.end_date);
+				do
+				{
+					var cache_id = app.classes.calendar._daywise_cache_id(t, sort_key);
+					egw.dataRegisterUID(cache_id, row._data_callback, row);
+
+					t.setUTCDate(t.getUTCDate() + 1);
+				}
+				while(t < end);
+				return row;
 			}
 		},
 
@@ -752,10 +758,12 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				}
 			},
 			draw_row: function(sort_key, label, events) {
-				if(['cat','both'].indexOf(egw.preference('planner_show_empty_rows','calendar')) !== -1 || events.length)
+				var row = this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
+				if(this.options.hide_empty && !events.length)
 				{
-					return this._drawRow(sort_key, label,events,this.options.start_date, this.options.end_date);
+					row.set_disabled(true);
 				}
+				return row;
 			}
 		}
 	},
@@ -1904,6 +1912,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			if(row)
 			{
 				row._data_callback(this.cache[cache_id]);
+				row.set_disabled(this.options.hide_empty && this.cache[cache_id].length === 0);
 			}
 			else
 			{
@@ -2009,6 +2018,16 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				this.invalidate();
 			}
 		}
+	},
+
+	/**
+	 * Turn on or off the visibility of hidden (empty) rows
+	 *
+	 * @param {boolean} hidden
+	 */
+	set_hide_empty: function set_hide_empty(hidden)
+	{
+		this.options.hide_empty = hidden;
 	},
 
 	/**
