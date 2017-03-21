@@ -543,7 +543,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		}
 		
 		var participant_status = {A: 0, R: 0, T: 0, U: 0, D: 0};
-		var status_label = {A: 'accepted', R: 'rejected', T: 'tentative', U: 'unknown', D: 'declined'};
+		var status_label = {A: 'accepted', R: 'rejected', T: 'tentative', U: 'unknown', D: 'delegated'};
 		var participant_summary = Object.keys(this.options.value.participants).length + ' ' + this.egw().lang('Participants')+': ';
 		var status_totals = [];
 
