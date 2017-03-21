@@ -606,6 +606,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 								parent = widget._parent;
 								children.splice(idx,0,widget);
 							},this,et2_calendar_daycol);
+							parent.day_widgets.sort(function(a,b) {
+								return children.indexOf(a) - children.indexOf(b);
+							});
 						}
 						else
 						{
@@ -623,6 +626,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						// Directly update, since there is no other changes needed,
 						// and we don't want the current sort order applied
 						app.calendar.state.owner = sortedArr;
+						parent.options.owner = sortedArr;
 					}
 				}
 			});
