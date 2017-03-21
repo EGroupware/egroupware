@@ -465,7 +465,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 	 * @return {String}
 	 */
 	_tooltip: function() {
-		if(!this.div) return '';
+		if(!this.div || !this.options.value || !this.options.value.app_id) return '';
 
 		var border = this.div.css('borderTopColor');
 		var bg_color = this.div.css('background-color');
