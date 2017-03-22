@@ -468,13 +468,6 @@ class addressbook_ui extends addressbook_bo
 				'group' => $group=1,
 				'enableClass' => 'contact_duplicate',
 				'hideOnDisabled' => true
-			),
-			'merge_duplicates' => array(
-				'caption'	=> 'Merge duplicates',
-				'group'		=> $group,
-				'allowOnMultiple'	=> true,
-				'enableClass' => 'contact_duplicate',
-				'hideOnDisabled'	=> true
 			)
 		);
 
@@ -592,6 +585,14 @@ class addressbook_ui extends addressbook_bo
 			'allowOnMultiple' => 'only',
 			'group' => $group,
 			'hideOnMobile' => true
+		);
+		// Duplicates view
+		$actions['merge_duplicates'] = array(
+			'caption'	=> 'Merge duplicates',
+			'group'		=> $group,
+			'allowOnMultiple'	=> true,
+			'enableClass' => 'contact_duplicate',
+			'hideOnDisabled'	=> true
 		);
 
 		++$group;	// integration with other apps: infolog, calendar, filemanager
