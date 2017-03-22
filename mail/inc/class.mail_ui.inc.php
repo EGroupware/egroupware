@@ -4344,7 +4344,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				'quotaclass'		=> $quotainfo['class'],
 				'quotanotsupported'	=> "",
 				'profileid'			=> $icServerID,
-				'quotawarning'		=> $quotaMin < 50 ? true : false
+				'quotawarning'		=> $quotaMin < 30 ? true : false
 			);
 		}
 		else
