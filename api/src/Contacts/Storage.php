@@ -866,7 +866,12 @@ class Storage
 			// return all entries including deleted
 			unset($param['col_filter']['tid']);
 		}
-		if($param['col_filter']['owner'])
+		if(array_key_exists('filter', $param) && $param['filter'] != '')
+		{
+			$param['owner'] = $param['filter'];
+			unset($param['filter']);
+		}
+		if(array_key_exists('owner', $param['col_filter']) && $param['col_filter']['owner'] != '')
 		{
 			$param['owner'] = $param['col_filter']['owner'];
 			unset($param['col_filter']['owner']);

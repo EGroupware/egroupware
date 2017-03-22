@@ -296,21 +296,21 @@ class Sql extends Api\Storage
 			$join .= 'a2.contact_tid != \'D\' AND ';
 		}
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
-		if ($param['owner'] && $param['owner'] == $GLOBALS['egw_info']['user']['account_id'])
+		if (array_key_exists('owner',$param) && $param['owner'] == $GLOBALS['egw_info']['user']['account_id'])
 		{
-			$filter['owner'] = $param['owner'];
-			$join .= 'a2.contact_owner = ' . $this->db->quote($filter['owner']) . ' AND ';
+			$filter[$this->table_name.'.contact_owner'] = $param['owner'];
+			$join .= 'a2.contact_owner = ' . $this->db->quote($param['owner']) . ' AND ';
 		}
 		else
 		{
 			// we have no private grants in addressbook at the moment, they have then to be added here too
-			if ($param['owner'])
+			if (array_key_exists('owner', $param))
 			{
-				if (!$this->grants[(int) $filter['owner']]) return false;	// we have no access to that addressbook
+				if (!$this->grants[(int) $param['owner']]) return false;	// we have no access to that addressbook
 
-				$filter['owner'] = $param['owner'];
-				$filter['private'] = 0;
-				$join .= 'a2.contact_owner = ' . $this->db->quote($filter['owner']) . ' AND ';
+				$filter[$this->table_name.'.contact_owner'] = $param['owner'];
+				$filter[$this->table_name.'.private'] = 0;
+				$join .= 'a2.contact_owner = ' . $this->db->quote($param['owner']) . ' AND ';
 				$join .= 'a2.contact_private = ' . $this->db->quote($filter['private']) . ' AND ';
 			}
 			else	// search all addressbooks, incl. accounts
