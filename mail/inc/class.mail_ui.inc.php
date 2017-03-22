@@ -1378,7 +1378,6 @@ class mail_ui
 				$query['selectedFolder']=$mail_ui->mail_bo->sessionData['mailbox']=$_folderName='INBOX';
 			}
 		}
-		$mail_ui->mail_bo->saveSessionData();
 		$rowsFetched['messages'] = null;
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];
@@ -1548,7 +1547,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','additionaltoaddress','date','size','modified','bodypreview');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $mail_ui->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema);
-		//error_log(__METHOD__.__LINE__.array2string($rows));
+
+		// Save the session (since we are committing session) at the end
+		// to make sure all necessary data are stored in session.
+		// e.g.: Link:: get_data which is used to read attachments data.
+		$mail_ui->mail_bo->saveSessionData();
 
 		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows'],__METHOD__.__LINE__);
 		return $rowsFetched['messages'];
