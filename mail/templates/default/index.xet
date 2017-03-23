@@ -6,6 +6,10 @@
 		<split dock_side="bottomDock" id="mailSplitter" orientation="h">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right"/>
 			<vbox id="mailPreview" width="100%">
+				<box id="blank" disabled="false">
+					<image src="mail"/>
+					<description value="Select an item to read"/>
+				</box>
 				<hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
 					<description value="From"/>
 					<url-email id="previewFromAddress" contact_plus = "true" readonly="true"/>

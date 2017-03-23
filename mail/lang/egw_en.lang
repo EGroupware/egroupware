@@ -421,6 +421,7 @@ saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 su
 saving the rule failed:	mail	en	Saving the rule failed:
 see attachments for content of the orignial mail	mail	en	See Attachments for Content of the Orignial Mail
 select all	mail	en	Select all
+select an item to read	mail	en	Select an item to read
 select an existing entry in order to append mail content to it	mail	en	Select an existing entry in order to append mail content to it
 select file to attach to message	mail	en	Select file to attach to message
 select file to import into folder	mail	en	Select file to import into Folder
@@ -444,6 +445,8 @@ set it as default:	mail	en	set it as default:
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.
 show	mail	en	show
+show & expand	mail	en	Show & expand
+show fixed	mail	en	Show fixed
 show all addresses	mail	en	Show all Addresses
 show all attachments	mail	en	Show all attachments
 show all folders	mail	en	show all Folders

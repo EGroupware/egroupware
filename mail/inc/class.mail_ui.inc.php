@@ -589,8 +589,11 @@ class mail_ui
 			self::callWizard($e->getMessage().($e->details?', '.$e->details:''),(isset($this->mail_bo)?false:true), 'error',false);
 			//return false;
 		}
-		// Check preview pane is enabled, then show splitter
-		if ($this->mail_bo->mailPreferences['previewPane']) $etpl->setElementAttribute('splitter', 'template', 'mail.index.nosplitter');
+		// Check preview pane is enabled, then show splitter - preference used to be '1', now 'hide'
+		if ($this->mail_bo->mailPreferences['previewPane'] == '1' || $this->mail_bo->mailPreferences['previewPane'] == 'hide')
+		{
+			$etpl->setElementAttribute('splitter', 'template', 'mail.index.nosplitter');
+		}
 
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
