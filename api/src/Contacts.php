@@ -1611,6 +1611,8 @@ class Contacts extends Contacts\Storage
 
 		$bocal = new calendar_bo();
 		$events = $bocal->search(array(
+			'start' => strtotime('2 years ago'),
+			'end'	=> strtotime('2 years from now'),
 			'users' => $uids,
 			'enum_recuring' => true,
 		));
