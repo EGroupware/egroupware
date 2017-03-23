@@ -375,8 +375,6 @@ class Sql extends Api\Storage
 			$join
 		);
 
-		error_log(__METHOD__ . ':'.__LINE__ . ' Subquery: ' . $sub_query);
-
 		$columns = implode(', ', $group);
 		if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
 		{
@@ -384,19 +382,11 @@ class Sql extends Api\Storage
 		}
 		
 		$rows = $this->db->query(
-				"SELECT " . $columns. ', COUNT(contact_id) AS group_count' .
+				"SELECT $mysql_calc_rows " . $columns. ', COUNT(contact_id) AS group_count' .
 				' FROM (' . $sub_query . ') AS matches GROUP BY ' . implode(',',$group) .
 				' HAVING group_count > 1 ORDER BY ' . $order,
 				__LINE__, __FILE__, (int)$param['start'],$mysql_calc_rows ? (int)$param['num_rows'] : -1
 		);
-		if ($mysql_calc_rows)
-		{
-			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchColumn();
-		}
-		else
-		{
-			$this->total = $rows->NumRows();
-		}
 
 		// Go through rows and only return one for each pair/triplet/etc. of matches
 		$dupes = array();
@@ -405,6 +395,15 @@ class Sql extends Api\Storage
 			$row['email'] = $row['contact_email'];
 			$row['email_home'] = $row['contact_email_home'];
 			$dupes[] = $this->db2data($row);
+		}
+		
+		if ($mysql_calc_rows)
+		{
+			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchColumn();
+		}
+		else
+		{
+			$this->total = $rows->NumRows();
 		}
 		return $dupes;
 	}
