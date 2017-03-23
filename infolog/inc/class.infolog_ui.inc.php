@@ -687,6 +687,28 @@ class infolog_ui
 	}
 
 	/**
+	 * hook called be calendar to include events or todos in the cal-dayview
+	 * Since the hook has no idea about infolog or preferences, we add the user's
+	 * current sorting for infolog here so they're in the expected order
+	 *
+	 * @param int $args[year], $args[month], $args[day] date of the events
+	 * @param int $args[owner] owner of the events
+	 * @param string $args[location] calendar_include_{events|todos}
+	 * @return array of events (array with keys starttime, endtime, title, view, icon, content)
+	 */
+	public function cal_to_include($args)
+	{
+		$nm = Api\Cache::getSession('infolog', 'session_data');
+		if($nm)
+		{
+			$args['order'] = $nm['order'];
+			$args['sort'] = $nm['sort'];
+		}
+
+		return $this->bo->cal_to_include($args);
+	}
+
+	/**
 	 * Shows the infolog list
 	 *
 	 * @param array/string $values etemplate content or 'reset_action_view' if called by index.php to reset an action-view
