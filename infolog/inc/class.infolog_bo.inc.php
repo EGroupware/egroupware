@@ -1430,8 +1430,8 @@ class infolog_bo
 		$to_include = array();
 		$date_wanted = sprintf('%04d/%02d/%02d',$args['year'],$args['month'],$args['day']);
 		$query = array(
-			'order' => 'info_startdate',
-			'sort'  => $do_events ? 'ASC' : 'DESC',
+			'order' => $args['order'] ? $args['order'] : 'info_startdate',
+			'sort'  => $args['sort'] ? $args['sort'] : ($do_events ? 'ASC' : 'DESC'),
 			'filter'=> "user$user".($do_events ? 'date' : 'opentoday').$date_wanted,
 			'start' => 0,
 		);
