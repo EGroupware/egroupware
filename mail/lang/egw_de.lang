@@ -422,6 +422,7 @@ saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht
 saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
 see attachments for content of the orignial mail	mail	de	Die Original Nachricht wurde als Anhang an diese e-Mail angehängt
 select all	mail	de	Alle Auswählen
+select an item to read	mail	de	Wählen Sie ein zu lesendes Element aus
 select an existing entry in order to append mail content to it	mail	de	Bestehendes Ticket auswählen, zu dem die Mail als Kommentar hinzugefügt werden soll.
 select file to attach to message	mail	de	Wählen Sie die Dateien aus, die Sie an diese Nachricht anhängen möchten.
 select file to import into folder	mail	de	Wählen Sie ein E-Mail als Datei aus, damit Sie in ein Ordner importiert werden kann.
@@ -445,6 +446,8 @@ set it as default:	mail	de	als Vorgabe speichern
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	de	Soll die Signatur nach (Standard) oder vor dem zitierten Text eingefügt werden und diese bearbeitbar sein?
 show	mail	de	anzeigen
+show & expand	mail	de	Anzeigen & erweitern
+show fixed	mail	de	Feste anzeigen
 show all addresses	mail	de	alle Adressaten anzeigen
 show all attachments	mail	de	alle Anhänge anzeigen
 show all folders	mail	de	Anzeige aller Ordner

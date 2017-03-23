@@ -167,7 +167,7 @@ app.classes.mail = AppJS.extend(
 				});
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
-				this.mail_disablePreviewArea(true);
+				this.mail_disablePreviewArea(this.egw.preference('previewPane', 'mail') !== 'fixed');
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
 
@@ -918,10 +918,25 @@ app.classes.mail = AppJS.extend(
 			}, 50);
 		};
 
+		// Show / hide 'Select something' in preview
+		var blank = this.et2.getWidgetById('blank');
+		if(blank)
+		{
+			blank.set_disabled(true);
+		}
 		if (attachmentArea && typeof _id != 'undefined' && _id !='' && typeof dataElem !== 'undefined')
 		{
 			// If there is content to show recalculate the size
 			set_prev_iframe_top();
+		}
+		else if (this.egw.preference('previewPane', 'mail') == 'fixed')
+		{
+			if(blank)
+			{
+				blank.set_disabled(false);
+			}
+			this.mail_disablePreviewArea(false);
+			if (!egwIsMobile())return;
 		}
 		else
 		{

@@ -291,6 +291,18 @@ pre {
 .mail-index_vacation > div > span {
   color: red;
 }
+#mail-index_blank {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: white;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 200%;
+}
 .mail_DisplayNone {
   display: none !important;
 }
@@ -802,7 +814,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     display: inline-block;
   }
   div.mail_extraEmails + img.et2_button.et2_button_icon.ui-button.et2_clickable {
-    display: none;
+    display: none !important;
   }
   .et2_email:after {
     content: " | ";

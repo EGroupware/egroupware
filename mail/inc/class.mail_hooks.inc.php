@@ -361,10 +361,11 @@ class mail_hooks
 				'help' => 'Show/Hide preview pane in mail list view',
 				'name' => 'previewPane',
 				'values' => array(
-					'0' => lang('show'),
-					'1' => lang('hide')
+					'expand' => lang('show & expand'),
+					'fixed' => lang('show fixed'),
+					'hide' => lang('hide')
 				),
-				'default' => '0'
+				'default' => 'expand'
 			),
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
