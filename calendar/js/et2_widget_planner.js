@@ -1134,8 +1134,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			if(!this.options.show_weekend && [0,6].indexOf(t.getDay()) !== -1 ) continue;
 			var holidays = [];
 			var tempDate = new Date(t);
-			tempDate.setMinutes(tempDate.getMinutes()-start.getTimezoneOffset());
-			var day_class = this.day_class_holiday(tempDate,holidays);
+			tempDate.setMinutes(tempDate.getMinutes()-tempDate.getTimezoneOffset());
 			var title = '';
 			var state = '';
 
@@ -1151,10 +1150,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 			{
 				title = this.egw().lang(date('D',t)).substr(0,2)+'<br />'+date('j',t);
 			}
-			state = new Date(t.valueOf() - start.getTimezoneOffset() * 60 * 1000).toJSON();
+			state = new Date(t.valueOf() - t.getTimezoneOffset() * 60 * 1000);
+			var day_class = this.day_class_holiday(state,holidays);
 
 			content += '<div class="calendar_plannerDayScale et2_clickable et2_link '+ day_class+
-				'" data-date=\'' + state +'\''+
+				'" data-date=\'' + state.toJSON() +'\''+
 				(holidays ? ' title="'+holidays.join(',')+'"' : '')+'>'+title+"</div>\n";
 		}
 		content += "</div>";		// end of plannerScale
