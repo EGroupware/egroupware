@@ -521,6 +521,8 @@ div.mail-compose_fileselector {
 
 #mail-display {
 	min-height: 768px;
+	margin: 0;
+    padding: 5px;
 }
 .mailDisplayContainer, .mailDisplayAttachments {
 	display: block;
@@ -542,7 +544,7 @@ div.mail-compose_fileselector {
 	overflow: hidden;
 }
 .mailDisplayContainerFullHeight {
-	bottom: .1em;
+	bottom: 108px;
 }
 .mailDisplayBody {
 	height:100%;
@@ -552,13 +554,14 @@ div.mail-compose_fileselector {
 	margin:0px;
 }
 .mailDisplayAttachments {
-	height: 121px;
+	height: 114px;
 	position: fixed;
-	bottom: .1em;
+	bottom: 8px;
 	border-top: 1px solid grey;
 	opacity: 1;
 	-moz-opacity:1;
 	filter: Alpha(opacity=100);
+	overflow-y: auto;
 }
 #mail-display_mailDisplayBodySrc {
 	height:100%;
