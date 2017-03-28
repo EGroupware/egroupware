@@ -1254,12 +1254,10 @@ class calendar_uiforms extends calendar_ui
 			{
 				if (!($email = $GLOBALS['egw']->accounts->id2name($status['uid'],'account_email'))) continue;
 
-				$lid = $firstname = $lastname = null;
-				$GLOBALS['egw']->accounts->get_account_name($status['uid'],$lid,$firstname,$lastname);
+				$toadd = $GLOBALS['egw']->accounts->id2name($status['uid'], 'account_firstname').' '.
+					$GLOBALS['egw']->accounts->id2name($status['uid'], 'account_lastname').' <'.$email.'>';
 
-				$toadd = $firstname.' '.$lastname.' <'.$email.'>';
 				if (!in_array($toadd,$to)) $to[] = $toadd;
-				//error_log(__METHOD__.__LINE__.array2string($to));
 			}
 			elseif ($uid < 0)
 			{
@@ -1267,12 +1265,11 @@ class calendar_uiforms extends calendar_ui
 				{
 					if (!($email = $GLOBALS['egw']->accounts->id2name($uid,'account_email'))) continue;
 
-					$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
+					$toadd = $GLOBALS['egw']->accounts->id2name($uid, 'account_firstname').' '.
+						$GLOBALS['egw']->accounts->id2name($uid, 'account_lastname').' <'.$email.'>';
 
-					$toadd = $firstname.' '.$lastname.' <'.$email.'>';
 					// dont add groupmembers if they already rejected the event, or are the current user
 					if (!in_array($toadd,$to) && ($event['participants'][$uid] !== 'R' && $uid != $this->user)) $to[] = $toadd;
-					//error_log(__METHOD__.__LINE__.array2string($to));
 				}
 			}
 			elseif(!empty($status['uid'])&& !is_numeric(substr($status['uid'],0,1)) && ($info = $this->bo->resource_info($status['uid'])))
