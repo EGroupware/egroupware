@@ -1179,6 +1179,23 @@ class calendar_boupdate extends calendar_bo
 			$old_event = null;
 		}
 
+		// set recur-enddate/range-end to real end-date of last recurrence
+		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'])
+		{
+			$rrule = calendar_rrule::event2rrule($event, false);
+			$rrule->rewind();
+			$enddate = $rrule->current();
+			do
+			{
+				$rrule->next_no_exception();
+				$occurrence = $rrule->current();
+			}
+			while ($rrule->valid(true) && ($enddate = $occurrence));
+			$enddate->modify(($event['end'] - $event['start']).' second');
+			$event['recur_enddate'] = $enddate->format('ts');
+			//error_log(__METHOD__."($event[title]) start=".Api\DateTime::to($event['start'],'string').', end='.Api\DateTime::to($event['end'],'string').', range_end='.Api\DateTime::to($event['recur_enddate'],'string'));
+		}
+
 		if (!isset($event['whole_day'])) $event['whole_day'] = $this->isWholeDay($event);
 		$save_event = $event;
 		if ($event['whole_day'])
@@ -1204,6 +1221,7 @@ class calendar_boupdate extends calendar_bo
 			if (!empty($event['recur_enddate']))
 			{
 				$time = $this->so->startOfDay(new Api\DateTime($event['recur_enddate'], Api\DateTime::$user_timezone));
+				$time->modify(($event['end'] - $event['start'] + 1).' seconds');
 				$event['recur_enddate'] = Api\DateTime::to($time, 'ts');
 				$time->setUser();
 				$save_event['recur_enddate'] = Api\DateTime::to($time, 'ts');

@@ -636,8 +636,16 @@ class calendar_ical extends calendar_boupdate
 								{
 									self::$tz_cache['UTC'] = calendar_timezones::DateTimeZone('UTC');
 								}
-								$rrule['UNTIL']->setTimezone(self::$tz_cache['UTC']);
-								$rrule['UNTIL'] = $rrule['UNTIL']->format('Ymd\THis\Z');
+								if (empty($event['whole_day']))
+								{
+									$rrule['UNTIL']->setTimezone(self::$tz_cache['UTC']);
+									$rrule['UNTIL'] = $rrule['UNTIL']->format('Ymd\THis\Z');
+								}
+								// for whole-day events UNTIL must be just the inclusive date
+								else
+								{
+									$rrule['UNTIL'] = $rrule['UNTIL']->format('Ymd');
+								}
 							}
 						}
 						if ($version == '1.0')
@@ -2617,6 +2625,11 @@ class calendar_ical extends calendar_boupdate
 						{
 							unset($vcardData['recur_enddate']);
 						}
+						else
+						{
+							// iCal defines enddate to be a time and eg. Apple sends 1s less then next recurance, if they split events
+							self::check_fix_endate($vcardData);
+						}
 					}
 					elseif (preg_match('/COUNT=([0-9]+)/',$recurence,$matches))
 					{
@@ -3260,6 +3273,27 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 		return array();
+	}
+
+	/**
+	 * iCal defines enddate to be a time and eg. Apple sends 1s less then next recurance, if they split events
+	 *
+	 * We need to fix that situation by moving end one day back.
+	 *
+	 * @param array& $vcardData values for keys "start" and "recur_enddate", later get's modified if neccessary
+	 */
+	static function check_fix_endate(array &$vcardData)
+	{
+		$end = new Api\DateTime($vcardData['recur_enddate']);
+		$start = new Api\DateTime($vcardData['start']);
+		$start->setDate($end->format('Y'), $end->format('m'), $end->format('d'));
+
+		if ($end->format('ts') < $start->format('ts'))
+		{
+			$end->modify('-1day');
+			$vcardData['recur_enddate'] = $end->format('ts');
+			//error_log(__METHOD__."($vcardData[event_title]) fix recure_enddate to ".$end->format('Y-m-d H:i:s'));
+		}
 	}
 
 	/**

@@ -351,7 +351,7 @@ class calendar_so
 		{
 			$cols .= ',range_start AS cal_start,(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id) AS cal_end';
 		}
-		$cols .= ',range_end AS recur_enddate';
+		$cols .= ',range_end-1 AS recur_enddate';
 
 		$events =& $this->get_events($this->db->select($this->cal_table, $cols, $where, __LINE__, __FILE__, false, $group_by, 'calendar', 0, $join), $recur_date);
 
@@ -1362,23 +1362,6 @@ ORDER BY cal_user_type, cal_usre_id
 			!(int)$event['recur_interval'])
 		{
 			$event['recur_interval'] = 1;
-		}
-
-		// set recur-enddate/range-end to real end-date of last recurrence
-		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'])
-		{
-			$rrule = calendar_rrule::event2rrule($event, false);
-			$rrule->rewind();
-			$enddate = $rrule->current();
-			do
-			{
-				$rrule->next_no_exception();
-				$occurrence = $rrule->current();
-			}
-			while ($rrule->valid() && ($enddate = $occurrence));
-			$enddate->modify(($event['end'] - $event['start']).' second');
-			$event['recur_enddate'] = $enddate->format('server');
-			//error_log(__METHOD__."($event[title]) start=".Api\DateTime::to($event['start'],'string').', end='.Api\DateTime::to($event['end'],'string').', range_end='.Api\DateTime::to($event['recur_enddate'],'string'));
 		}
 
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
