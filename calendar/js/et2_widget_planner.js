@@ -1924,6 +1924,14 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		// Add 1 to keep the scrollbar, otherwise we need to recalculate the
 		// header widths too.
 		this.grid.height(this.rows[0].scrollHeight+1);
+		
+		// Adjust header if there's a scrollbar - Firefox needs this re-calculated,
+		// otherwise the header will be missing the margin space for the scrollbar
+		// in some cases
+		if(this.rows.children().last().length)
+		{
+			this.gridHeader.css('margin-right', (this.rows.width() - this.rows.children().last().width()) + 'px');
+		}
 	},
 
 	/**
