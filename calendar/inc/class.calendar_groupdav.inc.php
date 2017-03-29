@@ -347,7 +347,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					unset($requested_multiget_ids[$k]);
 				}
 				// sync-collection report: deleted entries need to be reported without properties, same for rejected or deleted invitations
-				if ($sync_collection && ($event['deleted'] || in_array($event['participants'][$filter['users']][0], array('R','X'))))
+				if ($sync_collection && ($event['deleted'] && !$event['cal_reference'] || in_array($event['participants'][$filter['users']][0], array('R','X'))))
 				{
 					$files[] = array('path' => $path.urldecode($this->get_path($event)));
 					continue;
