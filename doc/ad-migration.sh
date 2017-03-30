@@ -14,6 +14,9 @@ while IFS=, read account_lid account_id ad_user SID RID rest
 do
 	if [ -n "$account_id" -a -n "$RID" ]
 	then
+		[ -z "$account_lid" -o -z "$ad_user" -o "$account_lid" = "$ad_user" ] && {
+			echo -n "#"
+		}
 		if [ $account_id -gt 0 ]
 		then
 			echo "admin/admin-cli.php --edit-user '$ADMIN,$PASSWD,$account_lid=$ad_user'"
