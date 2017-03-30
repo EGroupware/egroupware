@@ -941,7 +941,7 @@ class admin_mail
 			unset($content['notify_use_default']);
 		}
 		// copy ident_email_alias selectbox back to regular name
-		elseif (isset($content['ident_email_alias']))
+		elseif (isset($content['ident_email_alias']) && !empty ($content['ident_email_alias']))
 		{
 			$content['ident_email'] = $content['ident_email_alias'];
 		}
