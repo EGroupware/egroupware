@@ -535,6 +535,10 @@ class calendar_rrule implements Iterator
 	 */
 	public function valid($use_just_date=false)
 	{
+		if (!$this->enddate)
+		{
+			return true;
+		}
 		if ($use_just_date)
 		{
 			return $this->current->format('Ymd') <= $this->enddate->format('Ymd');
