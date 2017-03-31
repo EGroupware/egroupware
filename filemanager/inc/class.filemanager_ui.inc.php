@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -1137,7 +1137,7 @@ class filemanager_ui
 						else
 						{
 							static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
-							$cmd = array('egw_vfs',$name2cmd[$name]);
+							$cmd = array('EGroupware\\Api\\Vfs',$name2cmd[$name]);
 							$value = $name == 'perms' ? static::perms2mode($content['perms']) : $content[$name];
 							if ($content['modify_subs'])
 							{
