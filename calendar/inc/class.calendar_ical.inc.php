@@ -1829,6 +1829,7 @@ class calendar_ical extends calendar_boupdate
 		foreach($event['alarm'] as &$alarm)
 		{
 			// check if alarm is already stored or from other users
+			$found = false;
 			foreach($old_alarms as $id => $old_alarm)
 			{
 				// not current users alarm --> ignore
@@ -1840,12 +1841,19 @@ class calendar_ical extends calendar_boupdate
 				// alarm found --> stop
 				if (empty($alarm['uid']) && $alarm['offset'] == $old_alarm['offset'] || $alarm['uid'] && $alarm['uid'] == $old_alarm['uid'])
 				{
+					$found = true;
 					unset($old_alarms[$id]);
 					break;
 				}
 			}
+			if ($this->debug) error_log(__METHOD__."($event[title] (#$event[id]), ..., $user) processing ".($found?'existing':'new')." alarm ".array2string($alarm));
+			if (!empty($alarm['attrs']['X-LIC-ERROR']))
+			{
+				if ($this->debug) error_log(__METHOD__."($event[title] (#$event[id]), ..., $user) ignored X-LIC-ERROR=".array2string($alarm['X-LIC-ERROR']));
+				unset($alarm['attrs']['X-LIC-ERROR']);
+			}
 			// alarm not found --> add it
-			if ($alarm['offset'] != $old_alarm['offset'] || $old_alarm['owner'] != $user && !$alarm['all'])
+			if (!$found)
 			{
 				$alarm['owner'] = $user;
 				if (!isset($alarm['time'])) $alarm['time'] = $event['start'] - $alarm['offset'];
@@ -1855,7 +1863,7 @@ class calendar_ical extends calendar_boupdate
 				++$modified;
 			}
 			// existing alarm --> update it
-			elseif ($alarm['offset'] == $old_alarm['offset'] && ($old_alarm['owner'] == $user || $old_alarm['all']))
+			else
 			{
 				if (!isset($alarm['time'])) $alarm['time'] = $event['start'] - $alarm['offset'];
 				if ($alarm['time'] < time()) calendar_so::shift_alarm($event, $alarm);
