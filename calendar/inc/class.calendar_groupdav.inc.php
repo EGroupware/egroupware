@@ -758,14 +758,10 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				}
 				continue;	// nothing to change
 			}
-			// alarms are reported on recurrences --> move them to master
-			if ($master)
+			// add alarms from master to recurrences, as clients otherwise have no alarms on virtual exceptions
+			if ($master && $master['alarm'])
 			{
-				foreach($recurrence['alarm'] as $alarm)
-				{
-					$master['alarm'][] = $alarm;
-				}
-				$recurrence['alarm'] = array();
+				$recurrence['alarm'] = $master['alarm'];
 			}
 			// now we need to check if this recurrence is an exception
 			if (!$expand && $master && $master['participants'] == $recurrence['participants'])
