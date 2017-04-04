@@ -23,6 +23,13 @@ use calendar_bo;	// to_do: do NOT require it, just use if there
  */
 class Contacts extends Contacts\Storage
 {
+
+	/**
+	 * Birthdays are read into the cache, cache is expired when a
+	 * birthday changes, or after 10 days.
+	 */
+	const BIRTHDAY_CACHE_TIME = 864000; /* 10 days*/
+
 	/**
 	 * @var int $now_su actual user (!) time
 	 */
@@ -1743,7 +1750,7 @@ class Contacts extends Contacts\Storage
 				);
 			}
 		}
-		Cache::setInstance(__CLASS__,"birthday-$year-$addressbook", $birthdays, 864000 /* 10 days*/);
+		Cache::setInstance(__CLASS__,"birthday-$year-$addressbook", $birthdays, self::BIRTHDAY_CACHE_TIME);
 		return $birthdays;
 	}
 
