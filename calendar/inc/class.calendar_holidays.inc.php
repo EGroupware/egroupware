@@ -30,7 +30,7 @@ class calendar_holidays
 	const URL_FAIL_CACHE_TIME = 300;
 	const EGW_HOLIDAY_URL = 'https://community.egroupware.org/egw';
 	const HOLIDAY_PATH = '/calendar/setup/ical_holiday_urls.json';
-	const HOLIDAY_CACHE_TIME = 864000; // 1 day
+	const HOLIDAY_CACHE_TIME = 864000; // 10 days
 
 	/**
 	 * Read holidays for given country/url and year
@@ -204,70 +204,6 @@ class calendar_holidays
 			Api\Cache::setTree(__CLASS__, 'ical_holiday_urls', $urls, $urls ? self::URL_CACHE_TIME : self::URL_FAIL_CACHE_TIME);
 		}
 		return $urls[$country];
-	}
-
-
-	/**
-	 * Read the holidays (birthdays) from the given addressbook, either from the
-	 * instance cache, or read them & cache for next time.  Cached for HOLIDAY_CACHE_TIME.
-	 *
-	 * @param int $year
-	 * @param int $addressbook - Addressbook to search.  We cache them separately in the instance.
-	 */
-	public static function read_addressbook($year, $addressbook)
-	{
-		$birthdays = Api\Cache::getInstance(__CLASS__,"contacts-$year-$addressbook");
-		if($birthdays !== null)
-		{
-			return $birthdays;
-		}
-
-		$birthdays = array();
-		$contacts = new Api\Contacts();
-		$filter = array(
-			'owner' => (int)$addressbook,
-			'n_family' => "!''",
-			'bday' => "!''",
-		);
-		$bdays =& $contacts->search('',array('id','n_family','n_given','n_prefix','n_middle','bday'),
-			'contact_bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter);
-
-		if ($bdays)
-		{
-			// sort by month and day only
-			usort($bdays, function($a, $b)
-			{
-				return (int) $a['bday'] == (int) $b['bday'] ?
-					strcmp($a['bday'], $b['bday']) :
-					(int) $a['bday'] - (int) $b['bday'];
-			});
-			foreach($bdays as $pers)
-			{
-				if (empty($pers['bday']) || $pers['bday']=='0000-00-00 0' || $pers['bday']=='0000-00-00' || $pers['bday']=='0.0.00')
-				{
-					//error_log(__METHOD__.__LINE__.' Skipping entry for invalid birthday:'.array2string($pers));
-					continue;
-				}
-				list($y,$m,$d) = explode('-',$pers['bday']);
-				if ($y > $year)
-				{
-					// not yet born
-					continue;
-				}
-				$birthdays[sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
-					'day'       => $d,
-					'month'     => $m,
-					'occurence' => 0,
-					'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
-						$pers['n_family'].
-						($GLOBALS['egw_info']['server']['hide_birthdays'] == 'age' ? ' '.($year - $y): '').
-						($y && in_array($GLOBALS['egw_info']['server']['hide_birthdays'], array('','age')) ? ' ('.$y.')' : ''),
-					'birthyear' => $y,	// this can be used to identify birthdays from holidays
-				);
-			}
-		}
-		Api\Cache::setInstance(__CLASS__,"contacts-$year-$addressbook", $birthdays, self::HOLIDAY_CACHE_TIME);
-		return $birthdays;
 	}
 
 }

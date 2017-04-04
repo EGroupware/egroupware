@@ -1884,7 +1884,7 @@ class calendar_bo
 			$contacts = new Api\Contacts();
 			foreach($contacts->get_addressbooks() as $owner => $name)
 			{
-				$holidays += calendar_holidays::read_addressbook($year, $owner);
+				$holidays += $contacts->read_birthdays($owner, $year);
 			}
 		}
 
