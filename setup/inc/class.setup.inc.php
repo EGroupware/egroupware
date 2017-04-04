@@ -502,7 +502,7 @@ class setup
 					'app_icon_app'  => $setup_info[$appname]['icon_app'],
 				),False,__LINE__,__FILE__);
 
-			$this->clear_session_cache();
+			Api\Egw\Applications::invalidate();
 		}
 	}
 
@@ -582,6 +582,8 @@ class setup
 					'app_icon'      => $setup_info[$appname]['icon'],
 					'app_icon_app'  => $setup_info[$appname]['icon_app'],
 				),array('app_name'=>$appname),__LINE__,__FILE__);
+
+			Api\Egw\Applications::invalidate();
 		}
 	}
 
@@ -608,6 +610,8 @@ class setup
 			$this->db->update($this->applications_table,array(
 					'app_version'	=> $setup_info[$appname]['currentver'],
 				),array('app_name'=>$appname),__LINE__,__FILE__);
+
+			Api\Egw\Applications::invalidate();
 		}
 		return $setup_info;
 	}
@@ -636,10 +640,10 @@ class setup
 		//echo 'DELETING application: ' . $appname;
 		$this->db->delete($this->applications_table,array('app_name'=>$appname),__LINE__,__FILE__);
 
+		Api\Egw\Applications::invalidate();
+
 		// Remove links to the app
 		Link::unlink(0, $appname);
-
-		$this->clear_session_cache();
 	}
 
 	/**

@@ -959,8 +959,17 @@ class Session
 		}
 		else
 		{
-			// update prefs, which might be changed by an other session
+			// set prefs, they are no longer stored in session
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+
+			// restore apps to $GLOBALS['egw_info']['apps']
+			$GLOBALS['egw']->applications->read_installed_apps();
+
+			// session only stores app-names, restore apps from egw_info[apps]
+			if (!is_array($GLOBALS['egw_info']['user']['apps']['api']))
+			{
+				$GLOBALS['egw_info']['user']['apps'] = array_intersect_key($GLOBALS['egw_info']['apps'], array_flip($GLOBALS['egw_info']['user']['apps']));
+			}
 		}
 
 		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))

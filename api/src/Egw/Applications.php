@@ -12,6 +12,7 @@
  */
 
 namespace EGroupware\Api\Egw;
+use EGroupware\Api;
 
 /**
  * Application (sub-)object of Egw-object used to load $GLOBALS['egw_info'](['user'])['apps']
@@ -19,7 +20,6 @@ namespace EGroupware\Api\Egw;
 class Applications
 {
 	var $account_id;
-	var $data = Array();
 	/**
 	 * Reference to the global db class
 	 *
@@ -62,20 +62,12 @@ class Applications
 		{
 			$this->read_installed_apps();
 		}
-		$this->data = Array();
 		if(!$this->account_id)
 		{
 			return False;
 		}
-		$apps = $GLOBALS['egw']->acl->get_user_applications($this->account_id);
-		foreach(array_keys($GLOBALS['egw_info']['apps']) as $app)
-		{
-			if (isset($apps[$app]) && $apps[$app])
-			{
-				$this->data[$app] =& $GLOBALS['egw_info']['apps'][$app];
-			}
-		}
-		return $this->data;
+		return array_intersect_key($GLOBALS['egw_info']['apps'],
+			$GLOBALS['egw']->acl->get_user_applications($this->account_id));
 	}
 
 	/**
@@ -84,26 +76,39 @@ class Applications
 	 */
 	function read_installed_apps()
 	{
-		foreach($this->db->select($this->table_name,'*',false,__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
+		$GLOBALS['egw_info']['apps'] = Api\Cache::getInstance(__CLASS__, 'apps', function()
 		{
-			$title = $app_name = $row['app_name'];
-
-			if (@is_array($GLOBALS['egw_info']['user']['preferences']) && ($t = lang($app_name)) != $app_name.'*')
+			$apps = array();
+			foreach($this->db->select($this->table_name,'*',false,__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
 			{
-				$title = $t;
+				$title = $app_name = $row['app_name'];
+
+				if (@is_array($GLOBALS['egw_info']['user']['preferences']) && ($t = lang($app_name)) != $app_name.'*')
+				{
+					$title = $t;
+				}
+				$apps[$app_name] = Array(
+					'title'   => $title,
+					'name'    => $app_name,
+					'enabled' => True,
+					'status'  => $row['app_enabled'],
+					'id'      => (int)$row['app_id'],
+					'order'   => (int)$row['app_order'],
+					'version' => $row['app_version'],
+					'index'   => $row['app_index'],
+					'icon'    => $row['app_icon'],
+					'icon_app'=> $row['app_icon_app'],
+				);
 			}
-			$GLOBALS['egw_info']['apps'][$app_name] = Array(
-				'title'   => $title,
-				'name'    => $app_name,
-				'enabled' => True,
-				'status'  => $row['app_enabled'],
-				'id'      => (int)$row['app_id'],
-				'order'   => (int)$row['app_order'],
-				'version' => $row['app_version'],
-				'index'   => $row['app_index'],
-				'icon'    => $row['app_icon'],
-				'icon_app'=> $row['app_icon_app'],
-			);
-		}
+			return $apps;
+		});
+	}
+
+	/**
+	 * Invalidate cached apps
+	 */
+	public static function invalidate()
+	{
+		Api\Cache::unsetInstance(__CLASS__, 'apps');
 	}
 }
