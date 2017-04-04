@@ -180,10 +180,7 @@ class calendar_bo
 	protected static $cached_event = array();
 	protected static $cached_event_date_format = false;
 	protected static $cached_event_date = 0;
-	/**
-	 * @var array $cached_holidays holidays plus birthdays (gets cached in the session for performance reasons)
-	 */
-	var $cached_holidays;
+	
 	/**
 	 * Instance of the socal class
 	 *
@@ -1871,74 +1868,26 @@ class calendar_bo
 	{
 		if (!$year) $year = (int) date('Y',$this->now_su);
 
-		if (!$this->cached_holidays)	// try reading the holidays from the session
-		{
-			$this->cached_holidays = Api\Cache::getSession('calendar', 'holidays');
-		}
-		if (!isset($this->cached_holidays[$year]))
-		{
-			$this->cached_holidays[$year] = calendar_holidays::read(
+		$holidays = calendar_holidays::read(
 				!empty($GLOBALS['egw_info']['server']['ical_holiday_url']) ?
 				$GLOBALS['egw_info']['server']['ical_holiday_url'] :
 				$GLOBALS['egw_info']['user']['preferences']['common']['country'], $year);
 
-			// search for birthdays
-			if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
+		// search for birthdays
+		if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
+		{
+			$contacts = new Api\Contacts();
+			foreach($contacts->get_addressbooks() as $owner => $name)
 			{
-				$contacts = new Api\Contacts();
-				$filter = array(
-					'n_family' => "!''",
-					'bday' => "!''",
-				);
-				$bdays =& $contacts->search('',array('id','n_family','n_given','n_prefix','n_middle','bday'),
-					'contact_bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter);
-				// search accounts too, if not stored in contacts repository
-				$extra_accounts_search = $contacts->account_repository == 'ldap' && !is_null($contacts->so_accounts) &&
-					!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'];
-				if ($extra_accounts_search && ($bdays2 =& $contacts->search('',array('id','n_family','n_given','n_prefix','n_middle','bday'),
-					'contact_bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter+array('owner' => 0))))
-				{
-					$bdays = !$bdays ? $bdays2 : array_merge($bdays,$bdays2);
-				}
-				if ($bdays)
-				{
-					// sort by month and day only
-					usort($bdays, function($a, $b)
-					{
-						return (int) $a['bday'] == (int) $b['bday'] ?
-							strcmp($a['bday'], $b['bday']) :
-							(int) $a['bday'] - (int) $b['bday'];
-					});
-					foreach($bdays as $pers)
-					{
-						if (empty($pers['bday']) || $pers['bday']=='0000-00-00 0' || $pers['bday']=='0000-00-00' || $pers['bday']=='0.0.00')
-						{
-							//error_log(__METHOD__.__LINE__.' Skipping entry for invalid birthday:'.array2string($pers));
-							continue;
-						}
-						list($y,$m,$d) = explode('-',$pers['bday']);
-						if ($y > $year) continue; 	// not yet born
-						$this->cached_holidays[$year][sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
-							'day'       => $d,
-							'month'     => $m,
-							'occurence' => 0,
-							'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
-								$pers['n_family'].
-								($GLOBALS['egw_info']['server']['hide_birthdays'] == 'age' ? ' '.($year - $y): '').
-								($y && in_array($GLOBALS['egw_info']['server']['hide_birthdays'], array('','age')) ? ' ('.$y.')' : ''),
-							'birthyear' => $y,	// this can be used to identify birthdays from holidays
-						);
-					}
-				}
+				$holidays += calendar_holidays::read_addressbook($year, $owner);
 			}
-			// store holidays and birthdays in the session
-			Api\Cache::setSession('calendar', 'holidays', $this->cached_holidays);
 		}
+
 		if ((int) $this->debug >= 2 || $this->debug == 'read_holidays')
 		{
-			$this->debug_message('calendar_bo::read_holidays(%1)=%2',true,$year,$this->cached_holidays[$year]);
+			$this->debug_message('calendar_bo::read_holidays(%1)=%2',true,$year,$holidays);
 		}
-		return $this->cached_holidays[$year];
+		return $holidays;
 	}
 
 	/**
