@@ -599,6 +599,7 @@ abstract class Ajax extends Api\Framework
 		}
 
 		$data = array();
+		$sendToBottom = array();
 		foreach($this->sideboxes[$appname] as $menu_name => &$file)
 		{
 			$current_menu = array(
@@ -609,7 +610,7 @@ abstract class Ajax extends Api\Framework
 			);
 			foreach($file as $item_text => $item_link)
 			{
-				if ($item_text === 'menuOpened' ||	// flag, not menu entry
+				if ($item_text === 'menuOpened' || $item_text === 'sendToBottom' ||// flag, not menu entry
 					$item_text === '_NewLine_' || $item_link === '_NewLine_')
 				{
 					continue;
@@ -648,9 +649,17 @@ abstract class Ajax extends Api\Framework
 				}
 				$current_menu['entries'][] = $var;
 			}
-			$data[] = $current_menu;
+
+			if ($file['sendToBottom'])
+			{
+				$sendToBottom[] = $current_menu;
+			}
+			else
+			{
+				$data[] = $current_menu;
+			}
 		}
-		return $data;
+		return array_merge($data, $sendToBottom);
 	}
 
 	/**
