@@ -316,8 +316,8 @@ class infolog_ui
 			unset($query['col_filter']['parent_id']);
 			if(!$query['action'])
 			{
-				unset($query['rows']);
-				Api\Cache::setSession('infolog', $query['session_for'].'session_data', $query);
+				Api\Cache::setSession('infolog', $query['session_for'].'session_data',
+					array_diff_key ($query, array_flip('rows','actions','action_links','placeholder_actions')));
 			}
 			$query['actions'] = $this->get_actions($query);
 			$query['row_id'] = 'info_id';

@@ -808,6 +808,10 @@ class Nextmatch extends Etemplate\Widget
 
 		foreach((array)$actions as $id => $action)
 		{
+			if (!empty($action['hideOnMobile']) && Api\Header\UserAgent::mobile())
+			{
+				continue;	// no need to send this action to client, specially document actions can be huge
+			}
 			// in case it's only selectbox  id => label pairs
 			if (!is_array($action)) $action = array('caption' => $action);
 			if ($default_attrs) $action += $default_attrs;

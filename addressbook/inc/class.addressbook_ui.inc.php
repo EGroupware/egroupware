@@ -1385,7 +1385,7 @@ window.egw_LAB.wait(function() {
 		{
 			$store_query = $query;
 			// Do not store these
-			foreach(array('options-cat_id','actions') as $key)
+			foreach(array('options-cat_id','actions','action_links','placeholder_actions') as $key)
 			{
 				unset($store_query[$key]);
 			}

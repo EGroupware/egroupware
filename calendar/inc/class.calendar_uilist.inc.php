@@ -274,8 +274,12 @@ class calendar_uilist extends calendar_ui
 				$this->filter = $params['filter'];
 			}
 		}
-		if (!$params['csv_export']) Api\Cache::setSession('calendar', 'calendar_list', $params);
 
+		if (!$params['csv_export'])
+		{
+			Api\Cache::setSession('calendar', 'calendar_list',
+				array_diff_key ($params, array_flip('rows', 'actions', 'action_links', 'placeholder_actions')));
+		}
 		// do we need to query custom fields and which
 		// Check stored preference if selectcols isn't available (ie: first call)
 		$select_cols = $params['selectcols'] ? $params['selectcols'] : $GLOBALS['egw_info']['user']['preferences']['calendar']['nextmatch-calendar.list.rows'];
