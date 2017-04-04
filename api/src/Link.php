@@ -167,6 +167,11 @@ class Link extends Link\Storage
 			),
 		),
 	);
+
+	/**
+	 * Max. number of titles stored in session (older once get removed)
+	 */
+	const TITLE_CACHE_SIZE = 500;
 	/**
 	 * Caches link titles for a better performance
 	 *
@@ -174,6 +179,10 @@ class Link extends Link\Storage
 	 */
 	private static $title_cache = array();
 
+	/**
+	 * Max. number of titles stored in session (older once get removed)
+	 */
+	const FILE_ACCESS_CACHE_SIZE = 1000;
 	/**
 	 * Cache file access permissions
 	 *
@@ -301,7 +310,17 @@ class Link extends Link\Storage
 		if (isset($GLOBALS['egw']->session))	// eg. cron-jobs use it too, without any session
 		{
 			//error_log(__METHOD__.'() items in title-cache: '.count(self::$title_cache).' file-access-cache: '.count(self::$file_access_cache));
+
+			if (count(self::$title_cache > self::TITLE_CACHE_SIZE))
+			{
+				self::$title_cache = array_slice(self::$title_cache, -self::TITLE_CACHE_SIZE);
+			}
 			Cache::setSession(__CLASS__, 'link_title_cache', self::$title_cache);
+
+			if (count(self::$file_access_cache > self::FILE_ACCESS_CACHE_SIZE))
+			{
+				self::$file_access_cache = array_slice(self::$file_access_cache, -self::FILE_ACCESS_CACHE_SIZE);
+			}
 			Cache::setSession(__CLASS__, 'link_file_access_cache', self::$file_access_cache);
 		}
 	}
@@ -1538,6 +1557,10 @@ class Link extends Link\Storage
 		switch($type)
 		{
 			case 'title':
+				if ($app == self::VFS_APPNAME)
+				{
+					return null;	// do not cache file titles, they are just the names
+				}
 				return self::$title_cache[$app.':'.$id];
 			case 'file_access':
 				return self::$file_access_cache[$app.':'.$id];
@@ -1561,7 +1584,8 @@ class Link extends Link\Storage
 	public static function set_cache($app,$id,$title,$file_access=null)
 	{
 		//error_log(__METHOD__."($app,$id,$title,$file_access)");
-		if (!is_null($title))
+		// do not cache file titles, they are just the names
+		if (!is_null($title) && $app != self::VFS_APPNAME)
 		{
 			self::$title_cache[$app.':'.$id] = $title;
 		}
