@@ -280,6 +280,7 @@ class Hooks
 		// PGP Encryption (Mailvelope plugin) restore/backup menu
 		$file = Array(
 			'Backup/Restore ...' => 'javascript:app.'.$appname.'.mailvelopeCreateBackupRestoreDialog();',
+			'sendToBottom' => true
 		);
 		display_sidebox($appname, lang('PGP Encryption'), $file);
 	}
