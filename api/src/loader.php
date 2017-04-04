@@ -134,5 +134,14 @@ if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login')
 	$_SESSION[Session::EGW_INFO_CACHE] = $GLOBALS['egw_info'];
 	unset($_SESSION[Session::EGW_INFO_CACHE]['flags']);	// dont save the flags, they change on each request
 
+	// dont save preferences, as Session::verify restores them from instance cache anyway
+	unset($_SESSION[Session::EGW_INFO_CACHE]['user']['preferences']);
+
+	// dont save apps, as Session::verify restores them from instance cache anyway
+	unset($_SESSION[Session::EGW_INFO_CACHE]['apps']);
+
+	// store only which apps user has, Session::verify restores it from egw_info[apps]
+	$_SESSION[Session::EGW_INFO_CACHE]['user']['apps'] = array_keys($_SESSION[Session::EGW_INFO_CACHE]['user']['apps']);
+
 	$_SESSION[Session::EGW_OBJECT_CACHE] = serialize($GLOBALS['egw']);
 }
