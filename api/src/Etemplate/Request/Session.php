@@ -121,6 +121,8 @@ class Session extends Etemplate\Request
 		}
 		elseif (!$this->destroyed && $this->data_modified)
 		{
+			$this->cleanup();
+
 			Api\Cache::setSession('etemplate', $this->id, $this->data);
 		}
 		if (!$this->garbage_collection_done)

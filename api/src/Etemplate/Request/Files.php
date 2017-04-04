@@ -151,10 +151,14 @@ class Files extends Etemplate\Request
 			//error_log(__METHOD__."() destroying $this->id");
 			@unlink(self::$directory.'/'.$this->id);
 		}
-		elseif (!$this->destroyed && $this->data_modified &&
-			!file_put_contents($filename = self::$directory.'/'.$this->id,serialize($this->data)))
+		elseif (!$this->destroyed && $this->data_modified)
 		{
-			error_log("Error opening '$filename' to store the etemplate request data!");
+			$this->cleanup();
+
+			if (!file_put_contents($filename = self::$directory.'/'.$this->id,serialize($this->data)))
+			{
+				error_log("Error opening '$filename' to store the etemplate request data!");
+			}
 		}
 	}
 }
