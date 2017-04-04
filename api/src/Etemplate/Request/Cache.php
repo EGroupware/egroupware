@@ -135,6 +135,7 @@ class Cache extends Etemplate\Request
 			isset($this->data['last_saved']) && (time()-$this->data['last_saved']) > self::EXPIRATION/2))
 		{
 			//error_log(__METHOD__."() saving $this->id".($this->data_modified?'':' data NOT modified, just keeping session alife'));
+			$this->cleanup();
 			$this->data['last_saved'] = time();
 			if (!Api\Cache::setTree($GLOBALS['egw_info']['server']['install_id'].'_etemplate', $this->id, $this->data,
 				// use bigger one of our own self::EXPIRATION=4h and session lifetime (session.gc_maxlifetime) as expiration time

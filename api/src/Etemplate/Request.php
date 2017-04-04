@@ -242,6 +242,7 @@ class Request
 	 */
 	public function &id()
 	{
+		$this->cleanup();
 		$data = serialize($this->data);
 
 		// compress the data if available
@@ -264,6 +265,24 @@ class Request
 		//error_log(__METHOD__."() #$this->id: size of request = ".bytes($id));//.", id='$id'");
 		//self::debug();
 		return $id;
+	}
+
+	/**
+	 * Clean up data before storing it: currently only removes "real" nextmatch rows
+	 */
+	protected function cleanup()
+	{
+		if (isset($this->data['content']['nm']) && is_array($this->data['content']['nm']['rows']))
+		{
+			foreach(array_keys($this->data['content']['nm']['rows']) as $n)
+			{
+				if (is_int($n))
+				{
+					unset($this->data['content']['nm']['rows'][$n]);
+				}
+			}
+			//error_log(__METHOD__."() content[nm][rows]=".array2string($this->data['content']['nm']['rows']));
+		}
 	}
 
 	/**
