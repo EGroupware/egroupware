@@ -1022,6 +1022,15 @@ class Contacts extends Contacts\Storage
 				if (!isset($this->tracking)) $this->tracking = new Contacts\Tracking($this);
 				$this->tracking->track($to_write, $old ? $old : null, null, $deleted);
 			}
+
+			// Expire birthday cache for this year and next if birthday changed
+			if($isUpdate && $old['bday'] !== $to_write['bday'] || !$isUpdate && $to_write['bday'])
+			{
+				$year = (int) date('Y',time());
+				Cache::unsetInstance(__CLASS__,"birthday-$year-{$to_write['owner']}");
+				$year++;
+				Cache::unsetInstance(__CLASS__,"birthday-$year-{$to_write['owner']}");
+			}
 		}
 
 		return $this->error ? false : $contact['id'];
@@ -1674,6 +1683,68 @@ class Contacts extends Contacts\Storage
 			}
 		}
 		return $calendars;
+	}
+
+	/**
+	 * Read the holidays (birthdays) from the given addressbook, either from the
+	 * instance cache, or read them & cache for next time.  Cached for HOLIDAY_CACHE_TIME.
+	 *
+	 * @param int $addressbook - Addressbook to search.  We cache them separately in the instance.
+	 * @param int $year
+	 */
+	public function read_birthdays($addressbook, $year)
+	{
+		$birthdays = Cache::getInstance(__CLASS__,"birthday-$year-$addressbook");
+		if($birthdays !== null)
+		{
+			return $birthdays;
+		}
+
+		$birthdays = array();
+		$filter = array(
+			'owner' => (int)$addressbook,
+			'n_family' => "!''",
+			'bday' => "!''",
+		);
+		$bdays =& $this->search('',array('id','n_family','n_given','n_prefix','n_middle','bday'),
+			'contact_bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter);
+
+		if ($bdays)
+		{
+			// sort by month and day only
+			usort($bdays, function($a, $b)
+			{
+				return (int) $a['bday'] == (int) $b['bday'] ?
+					strcmp($a['bday'], $b['bday']) :
+					(int) $a['bday'] - (int) $b['bday'];
+			});
+			foreach($bdays as $pers)
+			{
+				if (empty($pers['bday']) || $pers['bday']=='0000-00-00 0' || $pers['bday']=='0000-00-00' || $pers['bday']=='0.0.00')
+				{
+					//error_log(__METHOD__.__LINE__.' Skipping entry for invalid birthday:'.array2string($pers));
+					continue;
+				}
+				list($y,$m,$d) = explode('-',$pers['bday']);
+				if ($y > $year)
+				{
+					// not yet born
+					continue;
+				}
+				$birthdays[sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
+					'day'       => $d,
+					'month'     => $m,
+					'occurence' => 0,
+					'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
+						$pers['n_family'].
+						($GLOBALS['egw_info']['server']['hide_birthdays'] == 'age' ? ' '.($year - $y): '').
+						($y && in_array($GLOBALS['egw_info']['server']['hide_birthdays'], array('','age')) ? ' ('.$y.')' : ''),
+					'birthyear' => $y,	// this can be used to identify birthdays from holidays
+				);
+			}
+		}
+		Cache::setInstance(__CLASS__,"birthday-$year-$addressbook", $birthdays, 864000 /* 10 days*/);
+		return $birthdays;
 	}
 
 	/**
