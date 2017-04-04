@@ -85,9 +85,13 @@ abstract class LoggedInTest extends TestCase
 					$GLOBALS['egw']->session->kp3
 				);
 			}
+			if($GLOBALS['egw']->acl)
+			{
+				$GLOBALS['egw']->acl = null;
+			}
 			if($GLOBALS['egw']->accounts)
 			{
-				$GLOBALS['egw']->accounts->backend = null;
+				$GLOBALS['egw']->accounts = null;
 			}
 			if($GLOBALS['egw']->applications)
 			{

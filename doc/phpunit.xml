@@ -3,6 +3,7 @@
 <phpunit
     colors="true"
 	backupGlobals="false"
+	bootstrap="phpunit_bootstrap.php"
 >
 	<php>
         <var name="EGW_DOMAIN" value="default" />

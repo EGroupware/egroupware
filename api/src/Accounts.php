@@ -1257,6 +1257,9 @@ class Accounts
 	}
 
 	public function __destruct() {
-		self::$_instance = NULL;
+		if (self::$_instance === $this)
+		{
+			self::$_instance = NULL;
+		}
 	}
 }

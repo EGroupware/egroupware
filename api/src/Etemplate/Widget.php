@@ -143,6 +143,7 @@ class Widget
 			{
 				throw new Api\Exception\WrongParameter("Can't parse xml:\n$xml");
 			}
+			$reader->read();
 		}
 		return $reader;
 	}
@@ -309,6 +310,10 @@ class Widget
 		{
 			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(__DIR__.'/Widget')) as $path)
 			{
+				if(strpos($path, 'test/') !== FALSE)
+				{
+					continue;
+				}
 				if(substr($path, -4) == '.php')
 				{
 					try
@@ -411,7 +416,7 @@ class Widget
 		if(!$xml)
 		{
 			if (empty($type)) $type = 'widget';
-			$xml = "<$type id='$id'/>";
+			$xml = "<$type id=\"$id\"/>";
 		}
 		//error_log(__METHOD__."('$type', ..., '$id') using $class_name");
 
