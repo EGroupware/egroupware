@@ -349,7 +349,6 @@ class filemanager_ui
 					'default_cols'   => '!comment,ctime',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
-					'actions'        => static::get_actions(),
 					'row_id'         => 'path',
 					'row_modified'   => 'mtime',
 					'parent_id'      => 'dir',
@@ -359,6 +358,7 @@ class filemanager_ui
 				);
 				$content['nm']['path'] = static::get_home_dir();
 			}
+			$content['nm']['actions'] = static::get_actions();
 			$content['nm']['home_dir'] = static::get_home_dir();
 			$content['nm']['view'] = $GLOBALS['egw_info']['user']['preferences']['filemanager']['nm_view'];
 
@@ -832,7 +832,8 @@ class filemanager_ui
 		// do NOT store query, if hierarchical data / children are requested
 		if (!$query['csv_export'])
 		{
-			Api\Cache::setSession('filemanager', 'index',$query);
+			Api\Cache::setSession('filemanager', 'index',
+				array_diff_key ($query, array_flip('rows','actions','action_links','placeholder_actions')));
 		}
 		if(!$query['path']) $query['path'] = static::get_home_dir();
 

@@ -319,7 +319,7 @@ class addressbook_ui extends addressbook_bo
 		// Merge to email dialog needs the infolog types
 		$infolog = new infolog_bo();
 		$sel_options['info_type'] = $infolog->enums['type'];
-		
+
 		// dont show tid-selection if we have only one content_type
 		// be a bit more sophisticated about it
 		$availabletypes = array_keys($this->content_types);
@@ -853,7 +853,7 @@ class addressbook_ui extends addressbook_bo
 
 	/**
 	 * Unset the relevant column filters to clear a grouped view
-	 * 
+	 *
 	 * @param Array $query
 	 */
 	protected function unset_grouped_filters(&$query)
@@ -1465,7 +1465,7 @@ window.egw_LAB.wait(function() {
 					$success += $loop_success;
 					$failed += $loop_fail;
 				}
-				if ($extra[0]) 
+				if ($extra[0])
 				{
 					$grouped_contacts = array_merge($grouped_contacts,$extra);
 				}
@@ -1525,7 +1525,7 @@ window.egw_LAB.wait(function() {
 		{
 			$store_query = $query;
 			// Do not store these
-			foreach(array('options-cat_id','actions') as $key)
+			foreach(array('options-cat_id','actions','action_links','placeholder_actions') as $key)
 			{
 				unset($store_query[$key]);
 			}
@@ -1536,7 +1536,7 @@ window.egw_LAB.wait(function() {
 		{
 			$old_state = Api\Cache::getSession('addressbook', $what);
 		}
-		if (!isset($this->grouped_views[(string) $query['grouped_view']]) || strpos($query['grouped_view'],':') === false)   
+		if (!isset($this->grouped_views[(string) $query['grouped_view']]) || strpos($query['grouped_view'],':') === false)
 		{
 			// we don't have a grouped view, unset the according col_filters
 			$this->unset_grouped_filters($query);

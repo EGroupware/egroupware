@@ -327,7 +327,7 @@ class timesheet_ui extends timesheet_bo
 			'view' => $view,
 			'tabs'  => $content['tabs'],
 			'link_to' => array(
-				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : 
+				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] :
 					($this->data['link_to']['to_id'] ? $this->data['link_to']['to_id'] : $content['link_to']['to_id']),
 				'to_app' => TIMESHEET_APP,
 			),
@@ -934,7 +934,6 @@ class timesheet_ui extends timesheet_bo
 				'placeholder_actions' => array('add')
 			);
 		}
-		$content['nm']['actions'] = $this->get_actions($content['nm']);
 
 		if($_GET['search'])
 		{
@@ -1322,7 +1321,7 @@ class timesheet_ui extends timesheet_bo
 	{
 		$original_id = $this->data['ts_id'];
 		unset($this->data['ts_id']);
-		
+
 		$this->data['ts_title'] = lang('Copy of:') . ' ' .$this->data['ts_title'];
 		unset($this->data['ts_modified']);
 		unset($this->data['ts_modifier']);

@@ -272,16 +272,21 @@ class Request
 	 */
 	protected function cleanup()
 	{
-		if (isset($this->data['content']['nm']) && is_array($this->data['content']['nm']['rows']))
+		if (isset($this->data['content']['nm']))
 		{
-			foreach(array_keys($this->data['content']['nm']['rows']) as $n)
+			if (is_array($this->data['content']['nm']['rows']))
 			{
-				if (is_int($n))
+				foreach(array_keys($this->data['content']['nm']['rows']) as $n)
 				{
-					unset($this->data['content']['nm']['rows'][$n]);
+					if (is_int($n))
+					{
+						unset($this->data['content']['nm']['rows'][$n]);
+					}
 				}
+				//error_log(__METHOD__."() content[nm][rows]=".array2string($this->data['content']['nm']['rows']));
 			}
-			//error_log(__METHOD__."() content[nm][rows]=".array2string($this->data['content']['nm']['rows']));
+			// do not store actions
+			unset($this->data['content']['nm']['actions'], $this->data['content']['nm']['action_links']);
 		}
 	}
 
