@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  *
@@ -305,7 +305,7 @@ switch($cmd)
 				case 'rm':
 					if ($recursive)
 					{
-						if (!class_exists('egw_vfs'))
+						if (!class_exists('EGroupware\\Api\\Vfs'))
 						{
 							die("rm -r only implemented for eGW streams!");	// dont want to repeat the code here
 						}
@@ -353,7 +353,7 @@ switch($cmd)
 							{
 								$set = 0;
 							}
-							if (!class_exists('egw_vfs'))
+							if (!class_exists('EGroupware\\Api\\Vfs'))
 							{
 								die("chmod only implemented for eGW streams!");	// dont want to repeat the code here
 							}
@@ -397,11 +397,11 @@ switch($cmd)
 					{
 						load_wrapper($url);
 					}
-					if ($recursive && class_exists('egw_vfs'))
+					if ($recursive && class_exists('EGroupware\\Api\\Vfs'))
 					{
 						array_unshift($argv,$url);
 						$params = array($argv,null,$cmd,$params[1]);
-						$cmd = array('egw_vfs','find');
+						$cmd = array('EGroupware\\Api\\Vfs','find');
 						$argv = array();	// we processed all url's
 					}
 					//echo "calling cmd=".print_r($cmd,true).", params=".print_r($params,true)."\n";
@@ -412,7 +412,7 @@ switch($cmd)
 				case 'ls':
 				default:
 					// recursive ls atm only for vfs://
-					if ($cmd != 'cat' && $recursive && class_exists('egw_vfs'))
+					if ($cmd != 'cat' && $recursive && class_exists('EGroupware\\Api\\Vfs'))
 					{
 						load_wrapper($url);
 						array_unshift($argv,$url);
@@ -580,7 +580,7 @@ function do_eacl(array $argv)
 		usage('Wrong number of parameters!');
 	}
 	load_wrapper($url = $argv[0]);
-	if (!class_exists('egw_vfs'))
+	if (!class_exists('EGroupware\\Api\\Vfs'))
 	{
 		die('eacl only implemented for eGW streams!');
 	}
@@ -645,7 +645,7 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false,$inode=false)
 	{
 		//echo $url; print_r($stat);
 
-		if (class_exists('egw_vfs'))
+		if (class_exists('EGroupware\\Api\\Vfs'))
 		{
 			$perms = Vfs::int2mode($stat['mode']);
 		}
@@ -682,7 +682,7 @@ function do_stat($url,$long=false,$numeric=false,$full_path=false,$inode=false)
 		$nlink = $stat['nlink'];
 		if (($stat['mode'] & 0xA000) == 0xA000)
 		{
-			$symlink = " -> ".(class_exists('egw_vfs') ? Vfs::readlink($url) : readlink($url));
+			$symlink = " -> ".(class_exists('EGroupware\\Api\\Vfs') ? Vfs::readlink($url) : readlink($url));
 		}
 		if ($inode)
 		{
@@ -718,7 +718,7 @@ function do_cp($argv,$recursive=false,$perms=false)
 	$anz_dirs = $anz_files = 0;
 	foreach($argv as $from)
 	{
-		if (is_dir($from) && (!file_exists($to) || is_dir($to)) && $recursive && class_exists('egw_vfs'))
+		if (is_dir($from) && (!file_exists($to) || is_dir($to)) && $recursive && class_exists('EGroupware\\Api\\Vfs'))
 		{
 			foreach(Vfs::find($from,array('url' => true)) as $f)
 			{
@@ -792,8 +792,8 @@ function _cp_perms($from,$to)
 		{
 			if ($from_stat[$perm] != $to_stat[$perm])
 			{
-				//echo "egw_vfs::$cmd($to,{$from_stat[$perm]}\n";
-				call_user_func(array('egw_vfs',$cmd),$to,$from_stat[$perm]);
+				//echo "Vfs::$cmd($to,{$from_stat[$perm]}\n";
+				call_user_func(array('EGroupware\\Api\\Vfs',$cmd),$to,$from_stat[$perm]);
 			}
 		}
 	}
