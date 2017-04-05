@@ -518,6 +518,12 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		var rows = this._spread_events();
 		var height = rows.length * this._row_height;
 		var row_width = this.rows.width();
+		if(row_width == 0)
+		{
+			// Not rendered yet or something
+			row_width = this.getParent().gridHeader.width() - this.title.width()
+		}
+		row_width -= 15;
 
 		for(var c = 0; c < rows.length; c++)
 		{
