@@ -959,9 +959,6 @@ class Session
 		}
 		else
 		{
-			// set prefs, they are no longer stored in session
-			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
-
 			// restore apps to $GLOBALS['egw_info']['apps']
 			$GLOBALS['egw']->applications->read_installed_apps();
 
@@ -970,6 +967,9 @@ class Session
 			{
 				$GLOBALS['egw_info']['user']['apps'] = array_intersect_key($GLOBALS['egw_info']['apps'], array_flip($GLOBALS['egw_info']['user']['apps']));
 			}
+
+			// set prefs, they are no longer stored in session
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		}
 
 		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))

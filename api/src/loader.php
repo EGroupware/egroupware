@@ -135,7 +135,10 @@ if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login')
 	unset($_SESSION[Session::EGW_INFO_CACHE]['flags']);	// dont save the flags, they change on each request
 
 	// dont save preferences, as Session::verify restores them from instance cache anyway
-	unset($_SESSION[Session::EGW_INFO_CACHE]['user']['preferences']);
+	$_SESSION[Session::EGW_INFO_CACHE]['user']['preferences'] = array(
+		// we need user language as it is used before preferences get restored!
+		'common' => array('lang' => $GLOBALS['egw_info']['user']['preferences']['common']['lang']),
+	);
 
 	// dont save apps, as Session::verify restores them from instance cache anyway
 	unset($_SESSION[Session::EGW_INFO_CACHE]['apps']);
