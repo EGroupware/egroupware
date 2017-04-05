@@ -1827,6 +1827,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 					var event = egw.dataGetUIDdata('calendar::'+data[i]);
 
 					if(!event) continue;
+					events = {};
 
 					// Try to determine rows interested
 					if(event.data && this.grouper)
@@ -1842,11 +1843,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 							{
 								this.cache[id] = [];
 							}
-							if(this.cache[id].indexOf(event.data.row_id) === -1 && (
-								event.data.participants[id] && this.options.group_by === 'user' ||
-								event.data.category === id && this.options.group_by === 'category' ||
-								this.options.group_by === 'month'
-							))
+							if(this.cache[id].indexOf(event.data.row_id) === -1)
 							{
 								this.cache[id].push(event.data.row_id);
 							}
@@ -1862,7 +1859,7 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 						// Could be an event no row is interested in, could be a problem.
 						// Just redraw everything
 						invalidate = true;
-						break;
+						continue;
 					}
 
 					// If displaying by category, we need the infolog (or other app) categories too
