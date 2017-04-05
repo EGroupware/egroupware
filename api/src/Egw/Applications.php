@@ -81,15 +81,9 @@ class Applications
 			$apps = array();
 			foreach($this->db->select($this->table_name,'*',false,__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
 			{
-				$title = $app_name = $row['app_name'];
-
-				if (@is_array($GLOBALS['egw_info']['user']['preferences']) && ($t = lang($app_name)) != $app_name.'*')
-				{
-					$title = $t;
-				}
-				$apps[$app_name] = Array(
-					'title'   => $title,
-					'name'    => $app_name,
+				$apps[$row['app_name']] = Array(
+					'title'   => $row['app_name'],
+					'name'    => $row['app_name'],
 					'enabled' => True,
 					'status'  => $row['app_enabled'],
 					'id'      => (int)$row['app_id'],
@@ -102,6 +96,14 @@ class Applications
 			}
 			return $apps;
 		});
+
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['lang']))
+		{
+			foreach($GLOBALS['egw_info']['apps'] as &$app)
+			{
+				$app['title'] = lang($app['title']);
+			}
+		}
 	}
 
 	/**
