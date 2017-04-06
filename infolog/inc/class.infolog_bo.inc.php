@@ -973,7 +973,7 @@ class infolog_bo
 			{
 				$values['info_from'] = $to_write['info_from'] = $this->link_id2from($values);
 			}
-			
+
 			// create (and remove) links in custom fields
 			if(!is_array($old))
 			{
@@ -1677,7 +1677,6 @@ class infolog_bo
 			$GLOBALS['egw']->preferences->__construct($user);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 			$GLOBALS['egw']->acl->__construct($user);
-			$GLOBALS['egw']->acl->read_repository();
 			$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
 			$this->so = new infolog_so($this->grants);	// so caches it's filters
 
