@@ -518,6 +518,11 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 				{
 					row.set_disabled(true);
 				}
+				// Highlight current user, sort_key is account_id
+				if(sort_key === egw.user('account_id'))
+				{
+					row.set_class('current_user')
+				}
 				// Since the daywise cache is by user, we can tap in here
 				var t = new Date(this.options.start_date);
 				var end = new Date(this.options.end_date);

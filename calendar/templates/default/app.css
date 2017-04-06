@@ -1113,6 +1113,9 @@ Hide subsequent headers in week view with non-consolidated owners
     top: 2px;
 }
 
+.calendar_plannerRowWidget.current_user {
+	background-color: rgba(0,0,0,0.05);
+}
 .calendar_plannerRowWidget:hover {
 	background-color: rgba(103, 159, 210, 0.2);
 }
