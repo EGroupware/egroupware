@@ -111,6 +111,11 @@ class Applications
 	 */
 	public static function invalidate()
 	{
-		Api\Cache::unsetInstance(__CLASS__, 'apps');
+		try {
+			Api\Cache::unsetInstance(__CLASS__, 'apps');
+		}
+		catch (\Exception $e) {
+			// ignore exceptions caused by not existing install_id during installation
+		}
 	}
 }
