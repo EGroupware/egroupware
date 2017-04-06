@@ -91,17 +91,7 @@ class Acl
 	 */
 	function __sleep()
 	{
-		return array('account_id');
-	}
-
-	/**
-	 * Magic method called after object get unserialized
-	 *
-	 * We call __construct to get reference to db again and initialize data emtpy
-	 */
-	function __wakeup()
-	{
-		$this->__construct($this->account_id);
+		return array('account_id','db');
 	}
 
 	/**************************************************************************\
