@@ -1728,7 +1728,7 @@ body {
 }
 #loginMainDiv #divAppIconBar #divLogo {
   position: relative;
-  padding-top: 2%;
+  padding-top: 20px;
 }
 #loginMainDiv #divAppIconBar #divLogo .login_logo_container {
   width: 250px;
