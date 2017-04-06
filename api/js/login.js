@@ -17,7 +17,9 @@ egw_LAB.wait(function()
 	{
 		// lock the device orientation in portrait view
 		if (screen.orientation && typeof screen.orientation.lock == 'function') screen.orientation.lock('portrait');
-
+		jQuery('.closeBtn').click(function (){
+			setTimeout(function(){jQuery('.loginMessageBox').slideUp("slow")},100);
+		});
 		function do_social(_data)
 		{
 			var social = jQuery(document.createElement('div'))

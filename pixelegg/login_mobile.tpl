@@ -2,6 +2,10 @@
 
 
 <div id="loginMainDiv" style="background-image:url({background_file})">
+	<div class="loginMessageBox">
+		<div id="loginCdMessage" class="{cd_class}">{cd}</div>
+		<span class="closeBtn">X</span>
+	</div>
     <div id="divAppIconBar" style="position:relative;">
         <div id="divLogo">
 			<div class="login_logo_container">
@@ -28,11 +32,6 @@
                 </tr>
 				<tr>
 					<td>
-						<div id="loginCdMessage" class="{cd_class}">{cd}</div>
-					</td>
-				</tr>
-				<tr>
-                    <td>
 						<span class="field_icons username"></span>
 						<input name="login" tabindex="4" value="{login}" size="30" placeholder="{lang_username}" {autofocus_login}/>
 					</td>
@@ -86,6 +85,7 @@
                         <input tabindex="8" type="submit" value="  {lang_login}  " name="submitit" />
                     </td>
                 </tr>
+
                 <!-- BEGIN registration -->
                 <tr>
                     <td colspan="3" height="20" align="center" class="registration">
