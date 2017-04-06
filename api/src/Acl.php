@@ -30,15 +30,11 @@ class Acl
 	 */
 	var $account_id = 0;
 	/**
-	 * @var $account_type
-	 */
-	var $account_type;
-	/**
 	 * @var array $data internal repository with acl rows for the given app and account-id (incl. memberships)
 	 */
 	var $data = Array();
 	/**
-	 * internal copy of the db-object
+	 * internal reference to global db-object
 	 *
 	 * @var Db
 	 */
@@ -84,6 +80,28 @@ class Acl
 		{
 			$this->account_id = get_account_id((int)$account_id,@$GLOBALS['egw_info']['user']['account_id']);
 		}
+		$this->data = array();
+	}
+
+	/**
+	 * Magic method called before object get serialized
+	 *
+	 * We only store account_id class is constructed for (not data, which can be huge!) and
+	 * get_rights calls read_repository automatic, if data is empty.
+	 */
+	function __sleep()
+	{
+		return array('account_id');
+	}
+
+	/**
+	 * Magic method called after object get unserialized
+	 *
+	 * We call __construct to get reference to db again and initialize data emtpy
+	 */
+	function __wakeup()
+	{
+		$this->__construct($this->account_id);
 	}
 
 	/**************************************************************************\
