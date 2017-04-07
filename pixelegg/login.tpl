@@ -3,8 +3,8 @@
 
 <div id="loginMainDiv" style="background-image:url({background_file})">
 	<div class="loginMessageBox">
-		<div id="loginCdMessage" class="{cd_class}">{cd}</div>
-		<span class="closeBtn">X</span>
+		<div id="loginCdMessage" class="{cd_class}">{cd}
+		<span class="closeBtn">X</span></div>
 	</div>
     <div id="divAppIconBar" style="position:relative;">
         <div id="divLogo">

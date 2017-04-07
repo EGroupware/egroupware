@@ -1699,6 +1699,7 @@ body {
   font-size: 13pt;
   font-weight: bold;
   top: 30px;
+  color: black;
 }
 #loginMainDiv .loginMessageBox .closeBtn:hover {
   color: white;
