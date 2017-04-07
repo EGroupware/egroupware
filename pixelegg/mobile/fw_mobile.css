@@ -1695,7 +1695,7 @@ body {
   display: none;
 }
 #loginMainDiv .loginMessageBox #loginCdMessage.error {
-  border: 3px solid #d2a453;
+  border: 3px solid #7ab7ec;
   color: red;
   text-align: center;
   font-size: 12pt;
@@ -1706,15 +1706,13 @@ body {
   margin-left: 20px;
   border-radius: 5px;
   margin-right: 20px;
-  border-top-left-radius: 0;
-  border-top: none;
-  border-top-right-radius: 0;
-  padding-bottom: 20px;
+  padding: 20px;
+  margin-top: 20px;
 }
 #loginMainDiv .loginMessageBox .closeBtn {
   position: absolute;
   right: 30px;
-  border: 2px solid #d2a453;
+  border: 2px solid #7ab7ec;
   border-radius: 100%;
   width: 20px;
   height: 20px;
@@ -1722,7 +1720,7 @@ body {
   line-height: 20px;
   font-size: 13pt;
   font-weight: bold;
-  bottom: 10px;
+  top: 30px;
 }
 #loginMainDiv .loginMessageBox .closeBtn:hover {
   color: white;
@@ -1733,9 +1731,9 @@ body {
   background: transparent;
   width: 100%;
   text-align: center;
-  height: 45%;
+  height: 40%;
   display: block;
-  max-height: 45%;
+  max-height: 40%;
 }
 #loginMainDiv #divAppIconBar #divLogo {
   position: relative;
@@ -1758,6 +1756,7 @@ body {
 #loginMainDiv #loginScreenMessage:not([class $= "error"]) {
   margin: 1em;
   font-size: 12pt;
+  color: #0a5ca5;
 }
 #loginMainDiv #loginScreenMessage:not([class $= "error"]) img {
   max-width: 100%;
@@ -6986,7 +6985,7 @@ form[id^="tracker-"] .dialogHeadbar {
     display: none;
   }
   div#loginMainDiv .loginMessageBox #loginCdMessage.error {
-    border: 3px solid #d2a453;
+    border: 3px solid #7ab7ec;
     color: red;
     text-align: center;
     font-size: 12pt;
@@ -6997,15 +6996,13 @@ form[id^="tracker-"] .dialogHeadbar {
     margin-left: 20px;
     border-radius: 5px;
     margin-right: 20px;
-    border-top-left-radius: 0;
-    border-top: none;
-    border-top-right-radius: 0;
-    padding-bottom: 20px;
+    padding: 20px;
+    margin-top: 20px;
   }
   div#loginMainDiv .loginMessageBox .closeBtn {
     position: absolute;
     right: 30px;
-    border: 2px solid #d2a453;
+    border: 2px solid #7ab7ec;
     border-radius: 100%;
     width: 20px;
     height: 20px;
@@ -7013,7 +7010,7 @@ form[id^="tracker-"] .dialogHeadbar {
     line-height: 20px;
     font-size: 13pt;
     font-weight: bold;
-    bottom: 10px;
+    top: 30px;
   }
   div#loginMainDiv .loginMessageBox .closeBtn:hover {
     color: white;
