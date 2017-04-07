@@ -1374,7 +1374,7 @@ class Ldap
 	{
 		if ($data['c'])
 		{
-			$contact['adr_one_countryname'] = ExecMethod('phpgwapi.country.get_full_name',$data['c'][0]);
+			$contact['adr_one_countryname'] = Api\Country::get_full_name($data['c'][0]);
 		}
 	}
 
@@ -1396,7 +1396,7 @@ class Ldap
 		}
 		elseif ($data['adr_one_countryname'])
 		{
-			$ldapContact['c'] = ExecMethod('phpgwapi.country.country_code',$data['adr_one_countryname']);
+			$ldapContact['c'] = Api\Country::country_code($data['adr_one_countryname']);
 			if ($ldapContact['c'] && strlen($ldapContact['c']) > 2)	// Bad countryname when "custom" selected!
 			{
 				$ldapContact['c'] = array(); // should return error...
@@ -1442,7 +1442,7 @@ class Ldap
 		}
 		elseif ($data['adr_one_countryname'])
 		{
-			$ldapContact['c'] = ExecMethod('phpgwapi.country.country_code',$data['adr_one_countryname']);
+			$ldapContact['c'] = Api\Country::country_code($data['adr_one_countryname']);
 			if ($ldapContact['c'] && strlen($ldapContact['c']) > 2)	// Bad countryname when "custom" selected!
 			{
 				$ldapContact['c'] = array(); // should return error...
