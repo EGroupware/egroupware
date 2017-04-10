@@ -104,13 +104,14 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 	 *
 	 * @memberOf et2_file
 	 */
-	init: function() {
+	init: function(_parent, attrs) {
 		this._super.apply(this, arguments);
 
 		this.node = null;
 		this.input = null;
 		this.progress = null;
 		this.span = null;
+		if(!this.options.value) this.options.value = {};
 
 		if(!this.options.id) {
 			console.warn("File widget needs an ID.  Used 'file_widget'.");
@@ -121,6 +122,12 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		if(this.options.id.substr(-2) == "[]")
 		{
 			this.options.multiple = true;
+		}
+		// If ID ends in /, it's a directory - allow multiple
+		else if (this.options.id.substr(-1) === "/")
+		{
+			this.options.multiple = true;
+			attrs.multiple = true;
 		}
 
 		// Set up the URL to have the request ID & the widget ID
@@ -579,7 +586,10 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		if(typeof response == 'string') response = jQuery.parseJSON(response);
 		if(response.response[0] && typeof response.response[0].data.length == 'undefined') {
-			if(typeof this.options.value != 'object') this.options.value = {};
+			if(typeof this.options.value !== 'object' || !this.options.multiple)
+			{
+				this.set_value({});
+			}
 			for(var key in response.response[0].data) {
 				if(typeof response.response[0].data[key] == "string")
 				{

@@ -216,14 +216,18 @@ class Storage extends Storage\Base
 	* @param array $extra_cols =array() extra-data to be saved
 	* @return bool false on success, errornumber on failure
 	*/
-	function save_customfields($data, array $extra_cols=array())
+	function save_customfields(&$data, array $extra_cols=array())
 	{
+		$id = isset($data[$this->autoinc_id]) ? $data[$this->autoinc_id] : $data[$this->db_key_cols[$this->autoinc_id]];
+
+		\EGroupware\Api\Etemplate\Widget\Customfields::handle_files($this->app, $id, $data, $this->customfields);
+		
 		foreach (array_keys((array)$this->customfields) as $name)
 		{
 			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
 
 			$where = array(
-				$this->extra_id    => isset($data[$this->autoinc_id]) ? $data[$this->autoinc_id] : $data[$this->db_key_cols[$this->autoinc_id]],
+				$this->extra_id    => $id,
 				$this->extra_key   => $name,
 			);
 			$is_multiple = $this->is_multiple($name);

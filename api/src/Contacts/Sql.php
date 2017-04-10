@@ -885,7 +885,7 @@ class Sql extends Api\Storage
 	 * @param array $extra_cols =array() extra-data to be saved
 	 * @return bool false on success, errornumber on failure
 	 */
-	function save_customfields($data, array $extra_cols=array())
+	function save_customfields(&$data, array $extra_cols=array())
 	{
 		return parent::save_customfields($data, array('contact_owner' => $data['owner'])+$extra_cols);
 	}
