@@ -2339,6 +2339,10 @@ window.egw_LAB.wait(function() {
 			list(,$dates) = each($this->read_calendar(array($content['account_id'] ? $content['account_id'] : 'c'.$content['id']),false));
 			if(is_array($dates)) $content += $dates;
 		}
+
+		// Registry has view_id as contact_id, so set it (custom fields uses it)
+		$content['contact_id'] = $content['id'];
+		
 		// Avoid ID conflict with tree & selectboxes
 		$content['cat_id_tree'] = $content['cat_id'];
 
