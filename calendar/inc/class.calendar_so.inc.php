@@ -1342,7 +1342,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param int &$etag etag=null etag to check or null, on return new etag
 	 * @return boolean|int false on error, 0 if etag does not match, cal_id otherwise
 	 */
-	function save($event,&$set_recurrences,&$set_recurrences_start=0,$change_since=0,&$etag=null)
+	function save(&$event,&$set_recurrences,&$set_recurrences_start=0,$change_since=0,&$etag=null)
 	{
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
@@ -1632,6 +1632,8 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->participants($cal_id,$event['cal_participants'],!$cal_id ? false : $change_since);
 		}
 		// Custom fields
+		Api\Etemplate\Widget\Customfields::handle_files('calendar', $cal_id, $event);
+		
 		foreach($event as $name => $value)
 		{
 			if ($name[0] == '#')
