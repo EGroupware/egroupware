@@ -14,7 +14,7 @@ namespace EGroupware\Api\Mail;
 
 use EGroupware\Api;
 use Horde_Crypt_Smime;
-
+use Horde_Crypt;
 /**
  * EMailAdmin generic base class for SMTP
  */
@@ -187,7 +187,7 @@ class Smime extends Horde_Crypt_Smime
      * </pre>
      * @throws Horde_Crypt_Exception
 	 *
-	 * 
+	 *
 	 * @TODO: This method is overridden in order to extract content
 	 * from the signed message. There's a pull request opened for this
 	 * modification on horde github, https://github.com/horde/horde/pull/218
@@ -217,7 +217,7 @@ class Smime extends Horde_Crypt_Smime
             }
         }
 
-        $ob = new stdClass;
+		$ob = new \stdClass();
 
         if (!empty($root_certs) &&
             (openssl_pkcs7_verify($input, 0, $output) === true)) {
@@ -229,12 +229,12 @@ class Smime extends Horde_Crypt_Smime
             $result = openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $output);
 
             if ($result === -1) {
-                throw new Horde_Crypt_Exception(Horde_Crypt_Translation::t("Verification failed - an unknown error has occurred."));
+                throw new \Horde_Crypt_Exception(\Horde_Crypt_Translation::t("Verification failed - an unknown error has occurred."));
             } elseif ($result === false) {
-                throw new Horde_Crypt_Exception(Horde_Crypt_Translation::t("Verification failed - this message may have been tampered with."));
+                throw new \Horde_Crypt_Exception(\Horde_Crypt_Translation::t("Verification failed - this message may have been tampered with."));
             }
 
-            $ob->msg = Horde_Crypt_Translation::t("Message verified successfully but the signer's certificate could not be verified.");
+            $ob->msg = \Horde_Crypt_Translation::t("Message verified successfully but the signer's certificate could not be verified.");
             $ob->verify = false;
         }
 		if (openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $output, array(), $output, $content))
