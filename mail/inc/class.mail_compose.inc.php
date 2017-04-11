@@ -3625,7 +3625,7 @@ class mail_compose
 			if (isset($sender) && ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
 			{
 				$sender_cert = $AB->get_smime_keys($sender);
-
+				if (!$sender_cert)	throw new Exception("Encryption failed because no certificate has been found for sender address: " . $sender);
 				$params['senderPubKey'] = $sender_cert[$sender];
 
 				$credents = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
@@ -3635,6 +3635,11 @@ class mail_compose
 			if (isset($recipients) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
 			{
 				$params['recipientsCerts'] = $AB->get_smime_keys($recipients);
+				foreach ($recipients as &$recipient)
+				{
+					if (!$params['recipientsCerts'][$recipient]) $missingCerts []= $recipient;
+				}
+				if (is_array($missingCerts)) throw new Exception ('Encryption failed because no certificate has been found for following addresses: '. implode ('|', $missingCerts));
 			}
 
 			return $mail->smimeEncrypt($type, $params);
