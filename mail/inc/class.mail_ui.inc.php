@@ -2012,7 +2012,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
 
-			$smimeData = $this->resolveSmimeAttachment ($attachments, $uid, $partID, $mailbox, $rowID);
+		$smimeData = $this->resolveSmimeAttachment ($attachments, $uid, $partID, $mailbox, '', $rowID);
 		if (is_array($smimeData))
 		{
 			$error_msg[] = $smimeData['msg'];
@@ -2105,6 +2105,22 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * Parse SMIME signed message
+	 *
+	 * @param string $_message signed message
+	 * @param type $_mailbox mailbox
+	 * @return array
+	 */
+	function parseSmimeSignedMessage ($_message, $_mailbox)
+	{
+		$structure = Horde_Mime_Part::parseMessage($_message, array('forcemime'=>true));
+		return array (
+			'attachments' => $this->mail_bo->getMessageAttachments('',null,$structure,true, false,true,$_mailbox),
+			'body' => $this->mail_bo->getMessageBody('', '', null, $structure, false, $_mailbox, $calendar_part = null)
+		);
+	}
+
+	/**
 	 * decrypt given smime encrypted message
 	 *
 	 * @param string $_message
@@ -2143,7 +2159,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @param string $_passphrase
 	 * @return array
 	 */
-	function resolveSmimeAttachment (&$attachments, $_uid, $_partID, $_mailbox, $_passphrase='')
+	function resolveSmimeAttachment (&$attachments, $_uid, $_partID, $_mailbox, $_passphrase='', $_rowID)
 	{
 		$this->smime = new Mail\Smime;
 
@@ -2170,7 +2186,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						'certHtml' => $this->smime->certToHTML($cert->cert),
 						'partID'   => $attachment['partID'],
 						'signed'   => true,
-						'message'  => $message
+						'message'  => $cert->content != "" ? $cert->content : $message
 					);
 
 				} catch (Exception $ex) {

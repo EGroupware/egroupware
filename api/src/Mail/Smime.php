@@ -170,4 +170,80 @@ class Smime extends Horde_Crypt_Smime
 			return false;
 		}
 	}
+
+	/**
+     * Verify a signature using via S/MIME.
+     *
+     * @param string $text  The multipart/signed data to be verified.
+     * @param mixed $certs  Either a single or array of root certificates.
+     *
+     * @return stdClass  Object with the following elements:
+     * <pre>
+     * cert - (string) The certificate of the signer stored in the message (in
+     *        PEM format).
+     * email - (string) The email of the signing person.
+     * msg - (string) Status string.
+     * verify - (boolean) True if certificate was verified.
+     * </pre>
+     * @throws Horde_Crypt_Exception
+	 *
+	 * 
+	 * @TODO: This method is overridden in order to extract content
+	 * from the signed message. There's a pull request opened for this
+	 * modification on horde github, https://github.com/horde/horde/pull/218
+	 * which in case that gets merged we need to remove this implementation.
+     */
+    public function verify($text, $certs)
+    {
+        /* Check for availability of OpenSSL PHP extension. */
+        $this->checkForOpenSSL();
+
+        /* Create temp files for input/output. */
+        $input = $this->_createTempFile('horde-smime');
+        $output = $this->_createTempFile('horde-smime');
+		$content = $this->_createTempFile('horde-smime');
+
+        /* Write text to file */
+        file_put_contents($input, $text);
+        unset($text);
+
+        $root_certs = array();
+        if (!is_array($certs)) {
+            $certs = array($certs);
+        }
+        foreach ($certs as $file) {
+            if (file_exists($file)) {
+                $root_certs[] = $file;
+            }
+        }
+
+        $ob = new stdClass;
+
+        if (!empty($root_certs) &&
+            (openssl_pkcs7_verify($input, 0, $output) === true)) {
+            /* Message verified */
+            $ob->msg = Horde_Crypt_Translation::t("Message verified successfully.");
+            $ob->verify = true;
+        } else {
+            /* Try again without verfying the signer's cert */
+            $result = openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $output);
+
+            if ($result === -1) {
+                throw new Horde_Crypt_Exception(Horde_Crypt_Translation::t("Verification failed - an unknown error has occurred."));
+            } elseif ($result === false) {
+                throw new Horde_Crypt_Exception(Horde_Crypt_Translation::t("Verification failed - this message may have been tampered with."));
+            }
+
+            $ob->msg = Horde_Crypt_Translation::t("Message verified successfully but the signer's certificate could not be verified.");
+            $ob->verify = false;
+        }
+		if (openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $output, array(), $output, $content))
+		{
+			$ob->content = file_get_contents($content);
+		}
+        $ob->cert = file_get_contents($output);
+        $ob->email = $this->getEmailFromKey($ob->cert);
+
+        return $ob;
+    }
 }
