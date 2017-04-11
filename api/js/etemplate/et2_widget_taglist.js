@@ -401,6 +401,11 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		// Do size limit checks
 		this.resize();
 
+		// Make sure magicsuggest loses focus class to prevent issues with
+		// multiple on the page
+		this.div.on('blur', 'input', function() {
+			jQuery('.ms-ctn-focus', widget.div).removeClass('ms-ctn-focus');
+		})
 		return true;
 	},
 
