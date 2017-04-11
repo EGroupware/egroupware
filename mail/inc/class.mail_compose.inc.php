@@ -2964,7 +2964,7 @@ class mail_compose
 					$smime_success = $this->_encrypt(
 						$mail,
 						$_formData['smime_encrypt'] == 'on'? Mail\Smime::TYPE_SIGN_ENCRYPT: Mail\Smime::TYPE_SIGN,
-						$_formData['to'],
+						Mail::stripRFC822Addresses($_formData['to']),
 						$identity['ident_email'],
 						$_formData['smime_passphrase']
 					);
@@ -2980,7 +2980,7 @@ class mail_compose
 					$smime_success =  $this->_encrypt(
 						$mail,
 						Mail\Smime::TYPE_ENCRYPT,
-						$_formData['to'],
+						Mail::stripRFC822Addresses($_formData['to']),
 						$identity['ident_email']
 					);
 				}

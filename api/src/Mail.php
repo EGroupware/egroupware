@@ -7171,4 +7171,21 @@ class Mail
 		error_log(__METHOD__.' ('.__LINE__.') '.' NOT DONE YET!' . ' hookValue = '. $_hookValues);
 
 	}
+
+	/**
+	 * This function gets array of email addresses in RFC822 format
+	 * and tries to normalize the addresses into only email addresses.
+	 *
+	 * @param array $_addresses Addresses
+	 */
+	static function stripRFC822Addresses ($_addresses)
+	{
+		$matches = array();
+		foreach ($_addresses as &$address)
+		{
+			preg_match("/<([^\'\" <>]+)>$/", $address, $matches);
+			if ($matches[1]) $address = $matches[1];
+		}
+		return $_addresses;
+	}
 }
