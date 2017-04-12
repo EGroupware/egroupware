@@ -1585,7 +1585,7 @@ app.classes.mail = AppJS.extend(
 		var inbox = _senders[0].id.split('::')[0]+'::INBOX';
 		var node = ftree ? ftree.getNode(inbox) : null;
 
-		return node && node.data.acl && this.mail_CheckFolderNoSelect(_action,_senders,_currentNode);
+		return node && node.data && node.data.acl && this.mail_CheckFolderNoSelect(_action,_senders,_currentNode);
 	},
 
 	/**
