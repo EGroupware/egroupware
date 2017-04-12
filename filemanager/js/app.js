@@ -1124,7 +1124,7 @@ app.classes.filemanager = AppJS.extend(
 	{
 		if (this.egw.user('apps').stylite)
 		{
-			this.egw.open_link('stylite.stylite_filemanager.upload', '_blank', '670x320');
+			this.egw.open_link('/index.php?menuaction=stylite.stylite_filemanager.upload&path='+this.get_path(), '_blank', '670x320');
 		}
 		else
 		{
