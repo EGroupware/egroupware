@@ -4210,7 +4210,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			Api\Translation::add_app('mail');
 
 			$refreshData = array(
-				$icServerID => $mail_ui->mail_tree->getTree(null,$icServerID,1,false,!$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
+				$icServerID => $mail_ui->mail_tree->getTree($icServerID,$icServerID,1,false,!$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
 			);
 			$response->call('app.mail.mail_reloadNode',$refreshData);
 		}

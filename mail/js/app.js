@@ -1575,12 +1575,9 @@ app.classes.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
 			{
-				if (typeof _status[i].parent !== 'undefined')
-				{
-					this.egw.message(this.egw.lang("Reloaded Folder %1",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
-				} else {
-					this.egw.message(this.egw.lang("Reloaded Account %1",typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') : _status[i].text.replace(this._unseen_regexp, '')));
-				}
+					this.egw.message(this.egw.lang((typeof _status[i].parent !== 'undefined'? "Reloaded Folder %1" : "Reloaded Account %1") ,
+					(typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') :
+							(_status[i].text ? _status[i].text.replace(this._unseen_regexp, '') : _status[i].id))));
 			}
 			ftree.refreshItem(i,typeof _status[i] == "object" ? _status[i] : null);
 			if (typeof _status[i] == "string") ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
