@@ -825,8 +825,8 @@ class mail_ui
 	 *
 	 * We currently load all folders of a given profile, tree can also load parts of a tree.
 	 *
-	 * @param string $_nodeID if of node whos children are requested
-	 * @param boolean $_subscribedOnly flag to tell wether to fetch all or only subscribed (default)
+	 * @param string $_nodeID if of node whose children are requested
+	 * @param boolean $_subscribedOnly flag to tell whether to fetch all or only subscribed (default)
 	 */
 	public function ajax_foldertree($_nodeID = null,$_subscribedOnly=null)
 	{
@@ -4202,17 +4202,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		else
 		{
 			$mail_ui = new mail_ui(true);	// run constructor
-		}
-
-		// Send full info back in the response
-		if($getFolders)
-		{
-			Api\Translation::add_app('mail');
-
-			$refreshData = array(
-				$icServerID => $mail_ui->mail_tree->getTree($icServerID,$icServerID,1,false,!$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$mail_ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'])
-			);
-			$response->call('app.mail.mail_reloadNode',$refreshData);
 		}
 	}
 
