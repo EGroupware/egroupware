@@ -602,6 +602,11 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 				else
 				{
 					this.options.value[key] = response.response[0].data[key];
+					// If not multiple, we already destroyed the status, so re-create it
+					if(!this.options.multiple)
+					{
+						this.createStatus({}, file);
+					}
 					if(this.progress)
 					{
 						jQuery("[data-file='"+name+"']",this.progress).addClass("message success");
