@@ -467,7 +467,7 @@ class Widget
 			{
 				$elements[] = $child;
 			}
-			$elements += $child->getElementsByType($type);
+			$elements = array_merge($elements, $child->getElementsByType($type));
 		}
 		return $elements;
 	}
