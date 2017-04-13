@@ -3722,7 +3722,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$hasChildren = false;
 			if (is_numeric($profileID))
 			{
-				if ($profileID != $this->mail_bo->profileID) return; // only current connection
+				if ($profileID != $this->mail_bo->profileID) $this->changeProfile ($profileID);
 				$pA = explode($del,$folderName);
 				array_pop($pA);
 				$parentFolder = implode($del,$pA);
@@ -3853,18 +3853,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		Api\Translation::add_app('mail');
 		$oldPrefForSubscribedOnly = !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'];
-
-		// prefs are plain prefs; we discussed an approach to have user only prefs, and
-		// set them on rightclick action on foldertree
-		//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
-
 		$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
-		$this->mail_bo->getHierarchyDelimiter(false);
 		list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+		if ($profileID != $this->mail_bo->profileID) $this->changeProfile($profileID);
+
 		// if pref and required mode dont match -> reset the folderObject cache to ensure
 		// that we get what we request
 		if ($_subscribedOnly != $oldPrefForSubscribedOnly) $this->mail_bo->resetFolderObjectCache($profileID);
-		if ($profileID != $this->mail_bo->profileID) return; // only current connection
+
 		if (!empty($folderName))
 		{
 			$parentFolder=(!empty($folderName)?$folderName:'INBOX');
@@ -3944,13 +3940,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 			$_newLocation2 = $this->mail_bo->decodeEntityFolderName($_target);
-			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
 			list($newProfileID,$_newLocation) = explode(self::$delimiter,$_newLocation2,2);
+			if ($profileID != $this->mail_bo->profileID || $profileID != $newProfileID) $this->changeProfile($profileID);
+			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			$hasChildren = false;
 			if (is_numeric($profileID))
 			{
-				if ($profileID != $this->mail_bo->profileID || $profileID != $newProfileID) return; // only current connection
 				$pA = explode($del,$folderName);
 				$namePart = array_pop($pA);
 				$_newName = $namePart;
@@ -4078,13 +4074,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if ($_folderName)
 		{
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
-			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			$oA = array();
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+			if (is_numeric($profileID) && $profileID != $this->mail_bo->profileID) $this->changeProfile ($profileID);
+			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			$hasChildren = false;
 			if (is_numeric($profileID))
 			{
-				if ($profileID != $this->mail_bo->profileID) return; // only current connection
 				$pA = explode($del,$folderName);
 				array_pop($pA);
 				if (strtoupper($folderName)!= 'INBOX')
