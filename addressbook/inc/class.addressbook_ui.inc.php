@@ -2247,17 +2247,19 @@ window.egw_LAB.wait(function() {
 		$content['cat_id_tree'] = $content['cat_id'];
 
 		// Avoid setting conflicts with private custom fields
-		if ($this->config['private_cf_tab'])
+		$content['private_cfs'] = array();
+		foreach(Api\Storage\Customfields::get('addressbook', true) as $name => $cf)
 		{
-			$content['private_cfs'] = array();
-			foreach(Api\Storage\Customfields::get('addressbook', true) as $name => $cf)
+			if ($this->config['private_cf_tab'] && $cf['private'] && isset($content['#'.$name]))
 			{
-				if ($cf['private'] && isset($content['#'.$name]))
-				{
-					$content['private_cfs']['#'.$name] = $content['#'.$name];
-				}
+				$content['private_cfs']['#'.$name] = $content['#'.$name];
+			}
+			else if ($cf['private'])
+			{
+				$readonlys['private_cfs']['#'.$name] = true;
 			}
 		}
+		
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
@@ -2314,7 +2316,7 @@ window.egw_LAB.wait(function() {
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys['tabs']['custom'] = !$this->customfields || $this->get_backend($content['id'],$content['owner']) == $this->so_accounts;
-		$readonlys['tabs']['custom_private'] = $readonlys['tabs']['custom'] || !$this->config['private_cf_tab'];
+		$readonlys['tabs']['custom_private'] = $readonlys['tabs']['custom'] || !$this->config['private_cf_tab'] ? '__ALL__' : false;
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['tabs']['history'] = $this->contact_repository != 'sql' || !$content['id'] ||
 			$this->account_repository != 'sql' && $content['account_id'];
