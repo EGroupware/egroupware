@@ -12,8 +12,7 @@
 
 namespace EGroupware\Api\Etemplate;
 
-// test base providing Egw environment, since we need the DB
-require_once realpath(__DIR__.'/../../test/LoggedInTest.php');
+require_once realpath(__DIR__.'/WidgetBaseTest.php');
 
 /**
  * Tests for the base widget class
@@ -21,7 +20,7 @@ require_once realpath(__DIR__.'/../../test/LoggedInTest.php');
  * Widget scans the apps for widgets, which needs the app list, pulled from the
  * database, so we need to log in.
  */
-class WidgetTest extends \EGroupware\Api\LoggedInTest {
+class WidgetTest extends WidgetBaseTest {
 	
 	/**
 	 * @var Array Used as a common content for expansion
@@ -39,11 +38,11 @@ class WidgetTest extends \EGroupware\Api\LoggedInTest {
 	);
 
 	/**
-	 * Test that setting and retrieving widget attributes is sane
+	 * Test that setting and retrieving widget attributes is working as expected
 	 */
 	public function testAttributes()
 	{
-		$xml = "<widget id=\"test\" attribute=\"set\" />";
+		$xml = '<widget id="test" attribute="set" />';
 		$widget = new Widget($xml);
 		
 
@@ -55,10 +54,16 @@ class WidgetTest extends \EGroupware\Api\LoggedInTest {
 		// get/setElementAttribute do not include xml
 		$this->assertNull($widget->getElementAttribute('test','attribute'));
 
+		// Calling setElementAttribute without a request will give an error when
+		// it tries to set the header.
+		ob_start();
+
 		// XML does not include get/setElementAttribute
 		$widget->setElementAttribute('test', 'other_attribute', 'set');
 		$this->assertEquals('set', $widget->getElementAttribute('test','other_attribute'));
 		$this->assertNull($widget->attrs['other_attribute']);
+		
+		ob_end_clean();
 	}
 
 	/**
@@ -113,5 +118,37 @@ class WidgetTest extends \EGroupware\Api\LoggedInTest {
 			['container', 'input[@expand_me]', 'container[input][@expand_me]'],
 			['container', '@expand_2[@expand_me]', 'container[]']
 		);
+	}
+
+	/**
+	 * Test that the widget loads the xml and gets all children
+	 */
+	public function testSimpleLoad()
+	{
+		$test_template = <<<EOT
+<widget id="main_parent">
+	<widget id="first_child"/>
+	<widget id="second_child">
+		<widget id="sub_widget"/>
+	</widget>
+	<widget id="third_child">
+		<widget id="@expand_me"/>
+	</widget>
+</widget>
+EOT;
+		
+		$widget = new Widget($test_template);
+
+		// getElementsByType does not include the widget itself
+		$this->assertEquals(5, count($widget->getElementsByType('widget')), 'Missing children');
+
+		// Check that it can find the sub
+		$this->assertNotNull($widget->getElementById('sub_widget'), 'Could not find sub_widget');
+
+		// Check that it can find the un-expanded - expansion doesn't happen on load
+		$this->assertNotNull($widget->getElementById('@expand_me'), 'Could not find @expand_me');
+
+		// Check failure
+		$this->assertNull($widget->getElementById('totally_invalid'), 'Found widget that is not there');
 	}
 }

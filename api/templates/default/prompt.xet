@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.prompt" template="" lang="" group="0" version="1.9.001">
+	<template id="api.prompt" template="" lang="" group="0" version="1.9.001">
 		<hbox class="et2_prompt">
 			<image src="dialog_help" class="dialog_icon"/>
 			<vbox class="ui-dialog-content">

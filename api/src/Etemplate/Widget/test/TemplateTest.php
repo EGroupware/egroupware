@@ -12,12 +12,14 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
+require_once realpath(__DIR__.'/../../test/WidgetBaseTest.php');
+
 /**
  * Description of TemplateTest
  *
  * @author nathan
  */
-class TemplateTest extends WidgetBaseTest {
+class TemplateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 
 	/**
 	 * Test instanciation of a template
