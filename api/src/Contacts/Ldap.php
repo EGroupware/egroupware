@@ -933,8 +933,12 @@ class Ldap
 					}
 					elseif ($value)
 					{
-						$filters .= '(uidNumber='.Api\Ldap::quote($value).')';
-
+						if (is_array($value)) $filters .= '(|';
+						foreach((array)$value as $value)
+						{
+							$filters .= '(uidNumber='.(int)$value.')';
+						}
+						if (is_array($value)) $filters .= ')';
 					}
 					break;
 
