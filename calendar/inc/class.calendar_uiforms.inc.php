@@ -1586,7 +1586,6 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 		$content = array_merge($event,array(
-			'cal_id'  => $event['id'],
 			'link_to' => array(
 				'to_id'  => $link_to_id,
 				'to_app' => 'calendar',
