@@ -85,13 +85,13 @@ class File extends Etemplate\Widget
 				}
 				foreach($file_list as $file)
 				{
-					static::process_uploaded_file($field, $file, $mime, $file_data);
+					self::process_uploaded_file($field, $file, $mime, $file_data);
 				}
 			}
 			else
 			{
 				// Just one file
-				static::process_uploaded_file($field, $files, $mime, $file_data);
+				self::process_uploaded_file($field, $files, $mime, $file_data);
 			}
 		}
 

@@ -56,14 +56,10 @@ class Vfs extends File
 				if(!is_numeric($id))
 				{
 					$_id = self::expand_name($id,0,0,0,0,self::$request->content);
-					if($_id != $id && $_id)
+					if($_id != $id)
 					{
 						$id = $_id;
 						$form_name = "$app:$id:$relpath";
-					}
-					else
-					{
-						return;
 					}
 				}
 				$value =& self::get_array(self::$request->content, $form_name, true);
@@ -117,23 +113,9 @@ class Vfs extends File
 	public static function ajax_upload()
 	{
 		parent::ajax_upload();
-	}
-
-	/**
-	 * Process one uploaded file.  There should only be one per request...
-	 *
-	 * Overriden from the parent to see if we can safely show the thumbnail immediately
-	 */
-	protected static function process_uploaded_file($field, Array &$file, $mime, Array &$file_data)
-	{
-		parent::process_uploaded_file($field, $file, $mime, $file_data);
-		$path = self::store_file($_REQUEST['path'] ? $_REQUEST['path'] : $_REQUEST['widget_id'], $file);
-		if($path)
+		foreach($_FILES as $file)
 		{
-			$file_data[basename($file['tmp_name'])]['name'] = $file['name'];
-			$file_data[basename($file['tmp_name'])]['path'] = $path;
-			$file_data[basename($file['tmp_name'])]['mime'] = $file['type'];
-			$file_data[basename($file['tmp_name'])]['mtime'] = time();
+			self::store_file($_REQUEST['path'] ? $_REQUEST['path'] : $_REQUEST['widget_id'], $file);
 		}
 	}
 
@@ -250,7 +232,7 @@ class Vfs extends File
 	* When the form is submitted, the information for all files uploaded is available in the returned
 	* $content array and the application should deal with the file.
 	*/
-	public static function store_file($path, &$file)
+	public static function store_file($path, $file)
 	{
 		$name = $_REQUEST['widget_id'];
 
@@ -260,17 +242,16 @@ class Vfs extends File
 			$path = self::get_vfs_path($path);
 		}
 		$filename = $file['name'];
-		if ($path && substr($path,-1) != '/')
+		if (substr($path,-1) != '/')
 		{
 			// add extension to path
 			$parts = explode('.',$filename);
 			if (($extension = array_pop($parts)) && Api\MimeMagic::ext2mime($extension))       // really an extension --> add it to path
 			{
 				$path .= '.'.$extension;
-				$file['name'] = Api\Vfs::basename($path);
 			}
 		}
-		else if ($path)   // multiple upload with dir given (trailing slash)
+		else    // multiple upload with dir given (trailing slash)
 		{
 			$path .= Api\Vfs::encodePathComponent($filename);
 		}
@@ -347,19 +328,6 @@ class Vfs extends File
 		}
 		else
 		{
-			if(!is_numeric($id))
-			{
-				$_id = self::expand_name($id,0,0,0,0,self::$request->content);
-				if($_id != $id && $_id)
-				{
-					$id = $_id;
-				}
-				else
-				{
-					// ID didn't resolve, try again without it as a 'new record'
-					return static::get_vfs_path("$app::$relpath");
-				}
-			}
 			$path = Api\Link::vfs_path($app,$id,'',true);
 		}
 		if (!empty($relpath)) $path .= '/'.$relpath;

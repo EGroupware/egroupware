@@ -995,16 +995,6 @@ class Contacts extends Contacts\Storage
 			$contact['uid'] = $to_write['uid'];
 			$contact['etag'] = $to_write['etag'];
 
-			// Clear any files saved with new entries
-			// They've been dealt with already and they cause errors with linking
-			foreach(array_keys($this->customfields) as $field)
-			{
-				if(is_array($to_write[Storage::CF_PREFIX.$field]))
-				{
-					unset($to_write[Storage::CF_PREFIX.$field]);
-				}
-			}
-
 			// if contact is an account and account-relevant data got updated, handle it like account got updated
 			if ($contact['account_id'] && $isUpdate &&
 				($old['email'] != $contact['email'] || $old['n_family'] != $contact['n_family'] || $old['n_given'] != $contact['n_given']))

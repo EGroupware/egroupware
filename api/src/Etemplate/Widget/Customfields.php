@@ -399,10 +399,7 @@ class Customfields extends Transformer
 				$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id,1)] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
 				$valid =& self::get_array($validated, $field_name, true);
 
-				// Arrays are not valid, but leave filemanager alone, we'll catch it
-				// when saving.  This allows files for new entries.
-				if (is_array($valid) && $field_settings['type'] !== 'filemanager') $valid = implode(',', $valid);
-				
+				if (is_array($valid)) $valid = implode(',', $valid);
 				// NULL is valid for most fields, but not custom fields due to backend handling
 				// See so_sql_cf->save()
 				if (is_null($valid)) $valid = false;
@@ -415,60 +412,6 @@ class Customfields extends Transformer
 			$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 			if (true) $valid = $value_in;
 			//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
-		}
-	}
-
-	/**
-	 * Handle any uploaded files that weren't dealt with immediately when uploaded.
-	 * This usually happens for new entries, where we don't have the entry's ID
-	 * to properly file it in the VFS.  Files are stored temporarily until we
-	 * have the ID, then here we move the files to their proper location.
-	 *
-	 * @staticvar array $_customfields List of custom field data, kept to avoid
-	 *	loading it multiple times if called again.
-	 *
-	 * @param string $app Current application
-	 * @param string $entry_id Application ID of the new entry
-	 * @param Array $values Array of entry data, including custom fields.
-	 *	File information from the VFS widget (via self::validate()) will be found &
-	 *	dealt with.  Successful or not, the value is cleared to avoid trying to insert it into
-	 *	the database, which would generate errors.
-	 * @param Array $customfields Pass the custom field list if you have it to avoid loading it again
-	 */
-	public static function handle_files($app, $entry_id, &$values, &$customfields = array())
-	{
-		if(!is_array($values) || !$entry_id) return;
-
-		if(!$customfields)
-		{
-			static $_customfields = array();
-			if(!$_customfields[$app])
-			{
-				$_customfields[$app] = Api\Storage\Customfields::get($app);
-			}
-			$customfields = $_customfields[$app];
-		}
-		foreach ($customfields as $field_name => $field)
-		{
-			if($field['type'] == 'filemanager')
-			{
-				$value =& $values[static::$prefix.$field_name];
-				static::handle_file($entry_id, $field, $value);
-				unset($values[static::$prefix.$field_name]);
-			}
-		}
-	}
-
-	protected static function handle_file($entry_id, $field, $value)
-	{
-		$path = Vfs::get_vfs_path($field['app'].":$entry_id:".$field['label']);
-		if($path)
-		{
-			foreach($value as $file)
-			{
-				$file['tmp_name'] = Api\Vfs::PREFIX.$file['path'];
-				Vfs::store_file($path, $file);
-			}
 		}
 	}
 }

@@ -707,6 +707,15 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 		}
 	},
 
+	/**
+	 * Value is determined by what's at the location specified by path
+	 *
+	 * @returns {null}
+	 */
+	getValue: function() {
+		return null;
+	},
+
 	getDOMNode: function(sender) {
 		if(sender !== this && sender._type.indexOf('vfs') >= 0 )
 		{
@@ -741,26 +750,6 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 		return extra;
 	},
 
-	/**
-	 * A file upload is finished, update the UI
-	 */
-	finishUpload: function(file, response) {
-		var result = this._super.apply(this, arguments);
-
-		if(typeof response == 'string') response = jQuery.parseJSON(response);
-		if(response.response[0] && typeof response.response[0].data.length == 'undefined') {
-			for(var key in response.response[0].data) {
-				var value = response.response[0].data[key];
-				if(value && value.path)
-				{
-					this._addFile(value);
-					jQuery("[data-file='"+file.fileName+"']",this.progress).hide();
-				}
-			}
-		}
-		return result;
-	},
-
 	_addFile: function(file_data) {
 		var row = jQuery(document.createElement("tr"))
 			.attr("data-path", file_data.path)
@@ -775,15 +764,6 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 			.appendTo(row);
 		var mime = et2_createWidget('vfs-mime',{value: file_data},this);
 		var vfs = et2_createWidget('vfs', {value: file_data}, this);
-
-		// If already attached, need to do this explicitly
-		if(this.isAttached())
-		{
-			mime.set_value(file_data);
-			vfs.set_value(file_data);
-			mime.doLoadingFinished();
-			vfs.doLoadingFinished();
-		}
 
 		// Add in delete button
 		if (!this.options.readonly)
