@@ -1,3 +1,26 @@
+egroupware-epl (16.1.20170415) hardy; urgency=low
+
+  * Mail: Add a new preference for preview pane to stay there, even when no mail is selected for previewing
+  * Mail: Support tree actions from none-selected account
+  * Mail: Fix edit account does not refresh folder tree
+  * Mail: Fix contextmenu does not popup for brocken folder tree
+  * Mail: Fix create new identity can not save email address
+  * Mail: Fix attachments in preview mode do not get opened properly
+  * Mail: Implement quota limit warning dialog
+  * Calendar: Fix bug where planner by user would not show events with group invitation, planner by category would not show events with sub-categories
+  * Calendar: Highlight current user in planner by user
+  * Calendar/CalDAV: fix server did not send alarms for virtual exceptions of recurring events
+  * Calendar/CalDAV: fix changes on clients creating multiple alarms on server
+  * Calendar/CalDAV: fix wrong end-date of recurring events incl. whole-day events
+  * Filemanager: File a file dialog now opens in current directory instead of home directory
+  * Filemanager: Fix change folder permissions and cli.php in minimal install
+  * Calendar: Fix error in mail all participants on minimal install
+  * LDAP: fix fatal error in minimal install
+  * Addressbook: fix bug where private required custom fields could block saving the entry if they were not on their own tab
+  * Api: Keep session small / quick to load by limiting number of cached link-titles
+
+ -- Ralf Becker <rb@stylite.de>  Sat, 15 Apr 2017 18:31:23 +0200
+
 egroupware-epl (16.1.20170315) hardy; urgency=low
 
   * Addressbook - When viewing a user account's calendar or next/previous dates, use the account calendar over the contact calendar
