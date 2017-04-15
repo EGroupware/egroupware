@@ -131,6 +131,24 @@ class calendar_rrule implements Iterator
 	 */
 	public $enddate;
 
+	/**
+	 * Enddate of recurring event, as Ymd integer (eg. 20091111)
+	 *
+	 * Or 5 years in future, if no enddate. So iterator is always limited.
+	 *
+	 * @var int
+	 */
+	public $enddate_ymd;
+
+	/**
+	 * Enddate of recurring event, as timestamp
+	 *
+	 * Or 5 years in future, if no enddate. So iterator is always limited.
+	 *
+	 * @var int
+	 */
+	public $enddate_ts;
+
 	const SUNDAY    = 1;
 	const MONDAY    = 2;
 	const TUESDAY   = 4;
@@ -289,6 +307,8 @@ class calendar_rrule implements Iterator
 		{
 			$enddate->setTimezone($this->time->getTimezone());
 		}
+		$this->enddate_ymd = (int)$enddate->format('Ymd');
+		$this->enddate_ts = $enddate->format('ts');
 
 		// if no valid weekdays are given for weekly repeating, we use just the current weekday
 		if (!($this->weekdays = (int)$weekdays) && ($type == self::WEEKLY || $type == self::MONTHLY_WDAY))
@@ -535,15 +555,11 @@ class calendar_rrule implements Iterator
 	 */
 	public function valid($use_just_date=false)
 	{
-		if (!$this->enddate)
-		{
-			return true;
-		}
 		if ($use_just_date)
 		{
-			return $this->current->format('Ymd') <= $this->enddate->format('Ymd');
+			return $this->current->format('Ymd') <= $this->enddate_ymd;
 		}
-		return $this->current->format('ts') < $this->enddate->format('ts');
+		return $this->current->format('ts') < $this->enddate_ts;
 	}
 
 	/**
