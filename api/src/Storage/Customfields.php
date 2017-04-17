@@ -544,6 +544,59 @@ class Customfields implements \IteratorAggregate
 			self::$db = $GLOBALS['egw_setup']->db;
 		}
 	}
+	
+	/**
+	 * Handle any uploaded files that weren't dealt with immediately when uploaded.
+	 * This usually happens for new entries, where we don't have the entry's ID
+	 * to properly file it in the VFS.  Files are stored temporarily until we
+	 * have the ID, then here we move the files to their proper location.
+	 *
+	 * @staticvar array $_customfields List of custom field data, kept to avoid
+	 *	loading it multiple times if called again.
+	 *
+	 * @param string $app Current application
+	 * @param string $entry_id Application ID of the new entry
+	 * @param Array $values Array of entry data, including custom fields.
+	 *	File information from the VFS widget (via self::validate()) will be found &
+	 *	dealt with.  Successful or not, the value is cleared to avoid trying to insert it into
+	 *	the database, which would generate errors.
+	 * @param Array $customfields Pass the custom field list if you have it to avoid loading it again
+	 */
+	public static function handle_files($app, $entry_id, &$values, &$customfields = array())
+	{
+		if(!is_array($values) || !$entry_id) return;
+
+		if(!$customfields)
+		{
+			static $_customfields = array();
+			if(!$_customfields[$app])
+			{
+				$_customfields[$app] = Api\Storage\Customfields::get($app);
+			}
+			$customfields = $_customfields[$app];
+		}
+		foreach ($customfields as $field_name => $field)
+		{
+			if($field['type'] == 'filemanager' && $value =& $values[Api\Storage::CF_PREFIX.$field_name])
+			{
+				static::handle_file($entry_id, $field, $value);
+				unset($values[Api\Storage::CF_PREFIX.$field_name]);
+			}
+		}
+	}
+
+	protected static function handle_file($entry_id, $field, $value)
+	{
+		$path = Api\Etemplate\Widget\Vfs::get_vfs_path($field['app'].":$entry_id:".$field['label']);
+		if($path)
+		{
+			foreach($value as $file)
+			{
+				$file['tmp_name'] = Api\Vfs::PREFIX.$file['path'];
+				Api\Etemplate\Widget\Vfs::store_file($path, $file);
+			}
+		}
+	}
 }
 
 Customfields::init_static();

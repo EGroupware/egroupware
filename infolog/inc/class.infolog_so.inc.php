@@ -594,6 +594,10 @@ class infolog_so
 			$this->db->delete($this->extra_table,$where,__LINE__,__FILE__);
 		}
 		$to_delete = array();
+
+		// Deal with files in new entries
+		Api\Storage\Customfields::handle_files('infolog',$info_id,$values);
+
 		foreach($values as $key => $val)
 		{
 			if ($key[0] != '#')

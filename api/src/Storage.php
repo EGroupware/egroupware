@@ -218,6 +218,10 @@ class Storage extends Storage\Base
 	*/
 	function save_customfields($data, array $extra_cols=array())
 	{
+		$id = isset($data[$this->autoinc_id]) ? $data[$this->autoinc_id] : $data[$this->db_key_cols[$this->autoinc_id]];
+
+		\EGroupware\Api\Storage\Customfields::handle_files($this->app, $id, $data, $this->customfields);
+		
 		foreach (array_keys((array)$this->customfields) as $name)
 		{
 			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
