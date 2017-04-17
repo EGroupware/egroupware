@@ -632,7 +632,7 @@ class infolog_so
 		$to_delete = array();
 
 		// Deal with files in new entries
-		Api\Etemplate\Widget\Customfields::handle_files('infolog',$info_id,$values);
+		Api\Storage\Customfields::handle_files('infolog',$info_id,$values);
 
 		foreach($values as $key => $val)
 		{

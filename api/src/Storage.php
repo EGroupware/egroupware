@@ -220,7 +220,7 @@ class Storage extends Storage\Base
 	{
 		$id = isset($data[$this->autoinc_id]) ? $data[$this->autoinc_id] : $data[$this->db_key_cols[$this->autoinc_id]];
 
-		\EGroupware\Api\Etemplate\Widget\Customfields::handle_files($this->app, $id, $data, $this->customfields);
+		\EGroupware\Api\Storage\Customfields::handle_files($this->app, $id, $data, $this->customfields);
 		
 		foreach (array_keys((array)$this->customfields) as $name)
 		{

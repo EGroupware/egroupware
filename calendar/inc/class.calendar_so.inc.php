@@ -1632,7 +1632,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->participants($cal_id,$event['cal_participants'],!$cal_id ? false : $change_since);
 		}
 		// Custom fields
-		Api\Etemplate\Widget\Customfields::handle_files('calendar', $cal_id, $event);
+		Api\Storage\Customfields::handle_files('calendar', $cal_id, $event);
 		
 		foreach($event as $name => $value)
 		{
