@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 16.1.20160801
+Version: 16.1.20170415
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -37,11 +37,12 @@ Prefix: /usr/share
         # sles 10, 11 does NOT contain libtidy, 11sp3 does not contain php5-posix
     	%define     extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom
     %else
-        # SLES 12 no longer sets sles_version, but suse_version == 1315: does contain broken php5-tidy, because no libtidy
+        # SLES 12 and openSUSE Leap no longer sets sles_version, but suse_version == 1315: contains now php7 packages, but no php7-xml
         %if 0%{?suse_version} == 1315
-    	    %define extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix
+        	%define php php7
+    	    %define extra_requires apache2 apache2-mod_%{php} %{php}-opcache php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix
         %else
-    	    %define extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix %{php}-tidy
+      	    %define extra_requires apache2 apache2-mod_php5 %{php}-opcache php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix
         %endif
     %endif
 
@@ -50,12 +51,13 @@ Prefix: /usr/share
 	%define apache_group www
 
 # try fixing zypper does not require secondary dependency to egropware-epl-compat of following packages
+Suggests: %{name}-wiki            = %{version}
 Suggests: %{name}-jdots           = %{version}
 Suggests: %{name}-phpbrain        = %{version}
 Suggests: %{name}-phpfreechat     = %{version}
 Suggests: %{name}-sambaadmin      = %{version}
 Suggests: %{name}-sitemgr         = %{version}
-Suggests: %{name}-wiki            = %{version}
+Recommends: %{php}-APCu
 
 %else
 	%define php php
@@ -66,7 +68,7 @@ Suggests: %{name}-wiki            = %{version}
 %endif
 
 %define install_log /root/%{name}-install.log
-%define post_install /usr/bin/%{php} %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
+%define post_install /usr/bin/php %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
 	%define distribution Fedora Core %{?fedora_version}
@@ -188,8 +190,11 @@ Obsoletes: %{name}-developer_tools
     fi
 %endif
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
-	chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
-	setsebool -P httpd_can_network_connect=1
+    if [ $(getenforce) != "Disabled" ]
+    then
+	   chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
+	   setsebool -P httpd_can_network_connect=1
+    fi
 %endif
 /bin/date >> %{install_log}
 %{post_install} 2>&1 | tee -a %{install_log}
@@ -198,8 +203,8 @@ echo "EGroupware install log saved to %{install_log}"
 %description
 EGroupware is a web-based groupware suite written in PHP.
 
-EGroupware EPL combines Stylite's actual EGroupware enhancements and the recent development of the EGroupware open source project in one software package.
-- Brand new Stylite features, which are not available publicly in the community edition of EGroupware
+EGroupware EPL combines EGroupware GmbH actual EGroupware enhancements and the recent development of the EGroupware open source project in one software package.
+- Brand new EPL features, which are not available publicly in the community edition of EGroupware
 - The latest possible state of open source community features.
 
 This package automatically requires the EGroupware default applications:
@@ -497,7 +502,7 @@ Version: %{version}
 Summary: The EGroupware wiki application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-compat >= %{version},
+Requires: egw-core >= %{version},
 Obsoletes: %{egw_packagename}-wiki
 %description wiki
 This is the wiki app for EGroupware.
