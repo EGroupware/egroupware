@@ -237,6 +237,7 @@ four days view	calendar	en	Four days view
 freebusy	common	en	Free/Busy
 freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	en	Free/Busy: Unknown user '%1', or not available for unauthenticated users!
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	Free/Busy: Unknown user '%1', wrong password or not available to not logged in users!
+freetime	calendar	en	Freetime
 freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
 full description	calendar	en	Full description
