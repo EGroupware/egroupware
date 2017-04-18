@@ -1263,7 +1263,7 @@ app.classes.mail = AppJS.extend(
 					}
 					return;
 				},
-				this.egw.lang("Your mail quota is %1% full, you may not be able to send/receive further emails.\n Although cleaning up emails in trash or junk folder might help you to get some free space back.\n If that didn't help, please ask administrator for more quota.", _data.data.quotainpercent),
+				this.egw.lang("Your remaining quota %1 is too low, you may not be able to send/receive further emails.\n Although cleaning up emails in trash or junk folder might help you to get some free space back.\n If that didn't help, please ask your administrator for more quota.", _data.data.quotafreespace),
 				this.egw.lang("Mail cleanup"),
 				'', buttons, et2_dialog.WARNING_MESSAGE);
 			}

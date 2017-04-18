@@ -81,6 +81,10 @@
 						<option value="True">Yes</option>
 					</select>
 				</row>
+				<row>
+					<description value="Quota limit warning in MegaByte (recommended value is 30 MB)."/>
+					<textbox id="newsettings[quota_limit_warning]"/>
+				</row>
 			</rows>
 		</grid>
 	</template>

@@ -4490,14 +4490,16 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		if($quota !== false && $quota['limit'] != 'NOT SET') {
 			$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
-			$quotaMin = $quotainfo['freespace']/pow(1024, 2);
+			$quotaMin = ceil($quotainfo['freespace']/pow(1024, 2));
+			$quota_limit_warning = isset(mail::$mailConfig['quota_limit_warning']) ? mail::$mailConfig['quota_limit_warning'] : 30;
 			$content = array (
 				'quota'				=> $quotainfo['text'],
 				'quotainpercent'	=> (string)$quotainfo['percent'],
 				'quotaclass'		=> $quotainfo['class'],
 				'quotanotsupported'	=> "",
 				'profileid'			=> $icServerID,
-				'quotawarning'		=> $quotaMin < 30 ? true : false
+				'quotawarning'		=> $quotaMin <  $quota_limit_warning ? true : false,
+				'quotafreespace'	=> Mail::show_readable_size($quotainfo['freespace'])
 			);
 		}
 		else
