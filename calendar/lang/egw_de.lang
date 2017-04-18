@@ -237,6 +237,7 @@ four days view	calendar	de	Vier-Tagesansicht
 freebusy	common	de	frei / belegt
 freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	de	Free/Busy: Unbekannter Benutzer '%1', oder Daten ohne Authentisierung nicht verfügbar!
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	de	Free/Busy: Unbekannter Benutzer '%1', falsches Passwort oder Daten ohne Authentisierung nicht verfügbar!
+freetime	calendar	de	Terminsuche
 freetime search	calendar	de	Terminsuche
 fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
