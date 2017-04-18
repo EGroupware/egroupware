@@ -79,3 +79,7 @@ tr.prefRow:hover .prefHelp {
 .et2_selectbox.readonly.prefType {
 	padding-right: 50px;
 }
+
+.prefValueColumn select.prefValue {
+	white-space: pre-line;
+}
