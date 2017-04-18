@@ -133,13 +133,13 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 					case 'prefs':
 						query.menuaction ='preferences.preferences_settings.index';
 						if (jQuery.inArray(current_app, apps) != -1) query.appname=current_app;
-						egw.open_link(egw.link(url, query), '_blank', '900x450');
+						egw.open_link(egw.link(url, query), '_blank', '1200x600');
 						break;
 
 					case 'acl':
 						query.menuaction='preferences.preferences_acl.index';
 						if (jQuery.inArray(current_app, apps) != -1) query.acl_app=current_app;
-						egw.open_link(egw.link(url, query), '_blank', '900x450');
+						egw.open_link(egw.link(url, query), '_blank', '1200x600');
 						break;
 
 					case 'cats':

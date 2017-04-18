@@ -441,7 +441,7 @@ class preferences_hooks
 			'description'   => 'Preferences',
 			'url'           => '/index.php',
 			'extradata'     => 'menuaction=preferences.preferences_settings.index',
-			'popup'         => '900x450',
+			'popup'         => '1200x600',
 		);
 	}
 
