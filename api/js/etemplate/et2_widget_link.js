@@ -293,7 +293,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 					id: file,
 					name: self.file_upload.options.value[file].name,
 					type: self.file_upload.options.value[file].type,
-					remark: jQuery("li[file='"+self.file_upload.options.value[file].name+"'] > input", self.file_upload.progress)
+					remark: jQuery("li[file='"+self.file_upload.options.value[file].name.replace(/'/g, '&quot')+"'] > input", self.file_upload.progress)
 						.filter(function() { return jQuery(this).attr("placeholder") != jQuery(this).val();}).val()
 				});
 			}

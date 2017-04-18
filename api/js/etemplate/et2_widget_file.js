@@ -551,7 +551,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		if(this.progress)
 		{
 			var fileName = file.fileName || 'file';
-			var status = jQuery("<li data-file='"+fileName+"'>"+fileName
+			var status = jQuery("<li data-file='"+fileName.replace(/'/g, '&quot')+"'>"+fileName
 					+"<div class='remove'/><span class='progressBar'><p/></span></li>")
 				.appendTo(this.progress);
 			jQuery("div.remove",status).on('click', file, jQuery.proxy(this.cancel,this));
@@ -568,7 +568,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 	_fileProgress: function(file) {
 		if(this.progress)
 		{
-			jQuery("li[data-file='"+file.fileName+"'] > span.progressBar > p").css("width", Math.ceil(file.progress()*100)+"%");
+			jQuery("li[data-file='"+file.fileName.replace(/'/g, '&quot')+"'] > span.progressBar > p").css("width", Math.ceil(file.progress()*100)+"%");
 
 		}
 		return true;
@@ -594,7 +594,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 				if(typeof response.response[0].data[key] == "string")
 				{
 					// Message from server - probably error
-					jQuery("[data-file='"+name+"']",this.progress)
+					jQuery("[data-file='"+name.replace(/'/g, '&quot')+"']",this.progress)
 						.addClass("error")
 						.css("display", "block")
 						.text(response.response[0].data[key]);
@@ -609,14 +609,14 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 					}
 					if(this.progress)
 					{
-						jQuery("[data-file='"+name+"']",this.progress).addClass("message success");
+						jQuery("[data-file='"+name.replace(/'/g, '&quot')+"']",this.progress).addClass("message success");
 					}
 				}
 			}
 		}
 		else if (this.progress)
 		{
-			jQuery("[data-file='"+name+"']",this.progress)
+			jQuery("[data-file='"+name.replace(/'/g, '&quot')+"']",this.progress)
 				.addClass("ui-state-error")
 				.css("display", "block")
 				.text(this.egw().lang("Server error"));
@@ -650,7 +650,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 			if(this.options.value[key].name == file.fileName)
 			{
 				delete this.options.value[key];
-				jQuery('[data-file="'+file.fileName+'"]',this.node).remove();
+				jQuery('[data-file="'+file.fileName.replace(/'/g, '&quot')+'"]',this.node).remove();
 				return;
 			}
 		}
