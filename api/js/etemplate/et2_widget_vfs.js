@@ -720,7 +720,7 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 		if(sender !== this && sender._type.indexOf('vfs') >= 0 )
 		{
 			var value = sender.getValue && sender.getValue() || sender.options.value || {};
-			var row =  jQuery('[data-path="'+(value.path)+'"]',this.list);
+			var row =  jQuery("[data-path='"+(value.path.replace(/'/g, '&quot'))+"']",this.list);
 			if(sender._type === 'vfs-mime')
 			{
 				return jQuery('.icon',row).get(0) || null;
@@ -750,9 +750,41 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 		return extra;
 	},
 
+	/**
+	 * A file upload is finished, update the UI
+	 */
+	finishUpload: function(file, response) {
+		var result = this._super.apply(this, arguments);
+
+		if(typeof response == 'string') response = jQuery.parseJSON(response);
+		if(response.response[0] && typeof response.response[0].data.length == 'undefined') {
+			for(var key in response.response[0].data) {
+				var value = response.response[0].data[key];
+				if(value && value.path)
+				{
+					this._addFile(value);
+					jQuery("[data-file='"+file.fileName.replace(/'/g, '&quot')+"']",this.progress).hide();
+				}
+			}
+		}
+		return result;
+	},
+
 	_addFile: function(file_data) {
+		if(jQuery("[data-path='"+file_data.path.replace(/'/g, '&quot')+"']").remove().length)
+		{
+			for(var child_index = this._children.length-1; child_index >= 0; child_index--)
+			{
+				var child = this._children[child_index];
+				if(child.options.value.path === file_data.path)
+				{
+					this.removeChild(child);
+					child.free();
+				}
+			}
+		}
 		var row = jQuery(document.createElement("tr"))
-			.attr("data-path", file_data.path)
+			.attr("data-path", file_data.path.replace(/'/g, '&quot'))
 			.attr("draggable", "true")
 			.appendTo(this.list);
 		var mime = jQuery(document.createElement("td"))
@@ -782,7 +814,7 @@ var et2_vfsUpload = (function(){ "use strict"; return et2_file.extend(
 							{
 								egw.json("filemanager_ui::ajax_action", [
 										'delete',
-										[row.attr('data-path')],
+										[row.attr('data-path').replace(/&quot/g, "'")],
 										''
 									],
 									function(data) {
