@@ -2250,10 +2250,6 @@ window.egw_LAB.wait(function() {
 			{
 				$content['private_cfs']['#'.$name] = $content['#'.$name];
 			}
-			else if ($cf['private'])
-			{
-				$readonlys['private_cfs']['#'.$name] = true;
-			}
 		}
 		
 		// how to display addresses
@@ -2312,7 +2308,7 @@ window.egw_LAB.wait(function() {
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys['tabs']['custom'] = !$this->customfields || $this->get_backend($content['id'],$content['owner']) == $this->so_accounts;
-		$readonlys['tabs']['custom_private'] = $readonlys['tabs']['custom'] || !$this->config['private_cf_tab'] ? '__ALL__' : false;
+		$readonlys['tabs']['custom_private'] = $readonlys['tabs']['custom'] || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['tabs']['history'] = $this->contact_repository != 'sql' || !$content['id'] ||
 			$this->account_repository != 'sql' && $content['account_id'];
