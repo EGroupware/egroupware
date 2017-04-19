@@ -283,6 +283,8 @@ var et2_tabbox = (function(){ "use strict"; return et2_valueWidget.extend([et2_I
 			if(tabData.hidden)
 			{
 				// Set hidden tab to readonly, so widgets aren't active
+				// Do not modify the XMLNode, or the change will be cached for all
+				tabData.XMLNode = tabData.XMLNode.cloneNode();
 				tabData.XMLNode.setAttribute('readonly', true);
 			}
 			tabData.widget = this.createElementFromNode(tabData.XMLNode,tabData.XMLNode.nodeName.toLowerCase());
