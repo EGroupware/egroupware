@@ -24,6 +24,14 @@ use mail_compose;
  */
 class Taglist extends Etemplate\Widget
 {
+
+	/**
+	 * Regexp for validating email alias considering domain part be optional
+	 * this should be used regarding the domainOptional attribute defined in
+	 * taglist-email.
+	 */
+	const EMAIL_PREG_NO_DOMAIN = "/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x01-\x20()<>@,;:\042\[\]]+(@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,})?>?$/iu";
+
 	/**
 	 * Constructor
 	 *
@@ -131,6 +139,7 @@ class Taglist extends Etemplate\Widget
 					}
 				}
 				else if($this->type == 'taglist-email' && !preg_match(Url::EMAIL_PREG, $val) &&
+						!($this->attrs['domainOptional'] && preg_match (Taglist::EMAIL_PREG_NO_DOMAIN, $val)) &&
 					// Allow merge placeholders.  Might be a better way to do this though.
 					!preg_match('/{{.+}}|\$\$.+\$\$/',$val)
 				)
