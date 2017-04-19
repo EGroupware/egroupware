@@ -1080,6 +1080,12 @@ var et2_taglist_email = (function(){ "use strict"; return et2_taglist.extend(
 			type: "boolean",
 			"default": false,
 			description: "Set to false to allow comma in entered content"
+		},
+		domainOptional: {
+			name: "Domain optional",
+			description:"Allows domain part of an email address to be optional",
+			default: false,
+			type: "boolean"
 		}
 	},
 	lib_options: {
@@ -1094,11 +1100,19 @@ var et2_taglist_email = (function(){ "use strict"; return et2_taglist.extend(
 		{
 			this.options.autocomplete_params.include_lists = true;
 		}
+
+		// Make domain name optional for EMAIL_PREG if it's requested
+		if (this.options.domainOptional)
+		{
+			et2_url.prototype.EMAIL_PREG = new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]\x80-\xff]+(@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,})?>?$/i);
+		}
 	},
 
 	// PREG for validation comes from et2_url
-	//EMAIL_PREG: new RegExp(/^[^\x00-\x20()<>@,;:\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/),
-
+	//EMAIL_PREG: new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]\x80-\xff]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,}>?$/i),
+	//
+	// REGEXP with domain part to be optional
+	// new RegExp(/^(([^\042',<][^,<]+|\042[^\042]+\042|\'[^\']+\'|)\s?<)?[^\x00-\x20()<>@,;:\042\[\]\x80-\xff]+(@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,})?>?$/i)
 	selectionRenderer: function(item)
 	{
 		// Trim
