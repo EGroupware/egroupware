@@ -114,7 +114,7 @@ class Hooks
 			return false;
 		}
 
-		$ret = array();
+		$ret = $redirects = array();
 		foreach((array)self::$locations[$location][$appname] as $hook)
 		{
 			try {
@@ -143,9 +143,22 @@ class Hooks
 					$ret[] = ExecMethod2($hook, $args);
 				}
 			}
+			catch (Exception\Redirect $e)
+			{
+				$redirects[] = $e;
+			}
 			catch (\Exception $e) {
 				_egw_log_exception($e);
 			}
+		}
+
+		if ($redirects)
+		{
+			if (count($redirects) > 1)
+			{
+				error_log("Multiple redirects for location '$location', only first one gets executed!");
+			}
+			throw $redirects[0];
 		}
 
 		// hooks only existing in filesystem used by setup
