@@ -317,7 +317,7 @@ class infolog_ui
 			if(!$query['action'])
 			{
 				Api\Cache::setSession('infolog', $query['session_for'].'session_data',
-					array_diff_key ($query, array_flip('rows','actions','action_links','placeholder_actions')));
+					array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
 			}
 			$query['actions'] = $this->get_actions($query);
 			$query['row_id'] = 'info_id';
