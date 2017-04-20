@@ -138,8 +138,6 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		$export_object->set_mapping($options['mapping']);
 		$convert_fields = calendar_egw_record::$types;
 
-		$recurrence = $this->bo->recur_types;
-
 		$record = new calendar_egw_record();
 		foreach ($events as $event)
 		{
@@ -154,10 +152,10 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			if (is_array($event))
 			{
 				$record->set_record($event);
-				if($options['mapping']['recurrence'] && is_array($recurrence))
+				if($options['mapping']['recurrence'])
 				{
-					$record->recurrence = $recurrence[$record->recur_type];
-					if($record->recur_type != MCAL_RECUR_NONE) $record->recurrence .= ' / '. $record->recur_interval;
+					$rrule = calendar_rrule::event2rrule($event);
+					$record->recurrence = $rrule->__toString();
 				}
 
 				// Standard stuff

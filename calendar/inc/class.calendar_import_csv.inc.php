@@ -181,9 +181,23 @@ class calendar_import_csv extends importexport_basic_import_csv  {
 
 		if($record->recurrence)
 		{
-			list($record->recur_type, $record->recur_interval) = explode('/',$record->recurrence,2);
-			$record->recur_interval = trim($record->recur_interval);
-			$record->recur_type = array_search(strtolower(trim($record->recur_type)), array_map('strtolower',$this->lookups['recurrence']));
+			$start = new Api\DateTime($record->start);
+			try
+			{
+				$rrule = calendar_rrule::from_string($record->recurrence, $start);
+				$record->recur_type = $rrule->type;
+				$record->recur_interval = $rrule->interval;
+				$record->recur_enddate = $rrule->enddate;
+				$record->recur_data = $rrule->weekdays;
+				$record->recur_exception = $rrule->exceptions;
+			}
+			catch (Exception $e)
+			{
+				// Try old way from export using just recur_type / interval
+				list($record->recur_type, $record->recur_interval) = explode('/',$record->recurrence,2);
+				$record->recur_interval = trim($record->recur_interval);
+				$record->recur_type = array_search(strtolower(trim($record->recur_type)), array_map('strtolower',$this->lookups['recurrence']));
+			}
 			unset($record->recurrence);
 		}
 		$record->tzid = calendar_timezones::id2tz($record->tz_id);
