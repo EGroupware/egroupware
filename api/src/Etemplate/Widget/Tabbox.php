@@ -78,6 +78,20 @@ class Tabbox extends Etemplate\Widget
 
 		// Check for disabled tabs set via readonly, and set them as disabled
 		$readonlys = self::get_array(self::$request->readonlys, $form_name);
+
+		// Set children of readonly tabs to readonly
+		// to avoid checking for server side validation
+		if ($form_name == 'tabs' && is_array($readonlys))
+		{
+			foreach($this->children[1]->children as $tab)
+			{
+				if($readonlys[$tab->id])
+				{
+					$tab->attrs['disabled'] = $readonlys[$tab->id];
+				}
+			}
+		}
+		
 		if($respect_disabled && $readonlys)
 		{
 			foreach($this->children[1]->children as $tab)
