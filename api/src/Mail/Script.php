@@ -442,12 +442,17 @@ class Script
 						$newscriptbody .= "if header :contains ".'"X-Spam-Status" '.'"YES"'."{\n\tstop;\n}\n"; //stop vacation reply if it is spam
 					}
 				}
-				$newscriptbody .= "vacation :days " . $vacation['days'] . " :addresses [";
+				$newscriptbody .= "vacation :days " . $vacation['days'];
 				$first = 1;
-				foreach ($vacation['addresses'] as $vaddress) {
-						if (!$first) $newscriptbody .= ", ";
-						$newscriptbody .= "\"" . trim($vaddress) . "\"";
-						$first = 0;
+				if (!empty($vacation['addresses'][0]))
+				{
+					$newscriptbody .=  " :addresses [";
+					foreach ($vacation['addresses'] as $vaddress) {
+							if (!$first) $newscriptbody .= ", ";
+							$newscriptbody .= "\"" . trim($vaddress) . "\"";
+							$first = 0;
+					}
+					$newscriptbody .=  "] ";
 				}
 				$message = $vacation['text'];
 				if ($vacation['start_date'] || $vacation['end_date'])
@@ -459,7 +464,7 @@ class Script
 							date($format_date,$vacation['end_date']),
 						),$message);
 				}
-				$newscriptbody .= "] text:\n" . $message . "\n.\n;\n\n";
+				$newscriptbody .= " text:\n" . $message . "\n.\n;\n\n";
 			}
 
 			// update with any changes.
