@@ -118,6 +118,7 @@ div.et2_hbox > div {
 .splitter-bar-horizontal {
   cursor: ns-resize;
   height: 5px;
+  width:100% !important;
 }
 /* Hide iframes so moving works */
 .splitter-iframe-hide {
