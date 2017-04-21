@@ -29,7 +29,7 @@ class TemplateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		static $name = 'api.prompt';
 
 		$template = Template::instance($name);
-		$this->assertInstanceOf(Template::class, $template);
+		$this->assertInstanceOf('EGroupware\Api\Etemplate\Widget\Template', $template);
 	}
 
 	/**
