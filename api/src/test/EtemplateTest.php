@@ -31,6 +31,10 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 	 */
 	const TEST_TEMPLATE = 'api.prompt';
 
+	protected $content = array('value' => 'test content');
+	protected $sel_options = array(array('value' => 0, 'label' => 'label'));
+	protected $readonlys = array('value' => true);
+	
 	/**
 	 * Test reading xml files
 	 *
@@ -48,7 +52,7 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 		$this->assertEquals(true, $etemplate->read(static::TEST_TEMPLATE));
 
 		// This loads and parses
-		$result = $this->mockedExec($etemplate, '',array());
+		$result = $this->mockedExec($etemplate, array());
 
 		// Look for the load and match the template name
 		foreach($result as $command)
@@ -74,7 +78,7 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 		// Change the target DOM ID
 		$etemplate->set_dom_id('test_id');
 
-		$result = $this->mockedExec($etemplate, '',array());
+		$result = $this->mockedExec($etemplate, array());
 
 		// Check for the load
 		foreach($result as $command)
@@ -92,10 +96,6 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 	 */
 	public function testExec()
 	{
-		$content = array('id' => 'value');
-		$sel_options = array(array('value' => 0, 'label' => 'label'));
-		$readonlys = array('id' => true);
-
 		// Templates must be in the correct templates directory - use one from API
 		$etemplate = new Etemplate();
 		$etemplate->read(static::TEST_TEMPLATE);
@@ -103,7 +103,7 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 		// Change the target DOM ID
 		$etemplate->set_dom_id('test_id');
 
-		$result = $this->mockedExec($etemplate, '',$content, $sel_options, $readonlys);
+		$result = $this->mockedExec($etemplate, $this->content, $this->sel_options, $this->readonlys);
 
 		// Check for the load
 		$data = array();
@@ -116,8 +116,103 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 			}
 		}
 
-		$this->assertArraySubset($content, $data['data']['content'], false, 'Content does not match');
-		$this->assertArraySubset($sel_options, $data['data']['sel_options'], false, 'Select options do not match');
-		$this->assertArraySubset($readonlys, $data['data']['readonlys'], false, 'Readonlys does not match');
+		$this->assertArraySubset($this->content, $data['data']['content'], false, 'Content does not match');
+		$this->assertArraySubset($this->sel_options, $data['data']['sel_options'], false, 'Select options do not match');
+		$this->assertArraySubset($this->readonlys, $data['data']['readonlys'], false, 'Readonlys does not match');
+	}
+
+	/**
+	 * Test that data passed in is passed back
+	 *
+	 * In this case, since there's one input widget and we're passing it's value, and
+	 * we're not passing anything extra and no preserve, it should be the same.
+	 *
+	 * @depends testExec
+	 */
+	public function testRoundTrip()
+	{
+		// Templates must be in the correct templates directory - use one from API
+		$etemplate = new Etemplate();
+		$etemplate->read(static::TEST_TEMPLATE);
+
+		$this->readonlys['value'] = false;
+		
+		$result = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys);
+
+		$this->assertEquals($this->content, $result);
+	}
+
+	/**
+	 * Simple test of a read-only widget
+	 *
+	 * The value is passed in, but does not come back
+	 *
+	 * @depends testExec
+	 */
+	public function testSimpleReadonly()
+	{
+		// Templates must be in the correct templates directory - use one from API
+		$etemplate = new Etemplate();
+		$etemplate->read(static::TEST_TEMPLATE);
+
+		$this->readonlys['value'] = true;
+
+		$result = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys);
+
+		// The only input widget is readonly, expect an empty array
+		$this->assertEquals(array(), $result);
+	}
+
+	/**
+	 * Simple test of preserve
+	 *
+	 * The value is passed in, and comes back, even if the widget is readonly,
+	 * or if there is no matching widget.
+	 *
+	 * @depends testExec
+	 */
+	public function testArbitraryPreserve()
+	{
+		// Templates must be in the correct templates directory - use one from API
+		$etemplate = new Etemplate();
+		$etemplate->read(static::TEST_TEMPLATE);
+
+		$this->readonlys['value'] = true;
+
+		$preserve = array('arbitrary' => 'value');
+		$result = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys, $preserve);
+
+		// The only input widget is readonly, expect preserve back
+		$this->assertEquals($preserve, $result);
+
+		// Now try with widget
+		$this->readonlys['value'] = false;
+
+		$result = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys, $preserve);
+
+		// The only input widget is readonly, expect preserve + content back
+		$this->assertArraySubset($this->content, $result);
+		$this->assertArraySubset($preserve, $result);
+	}
+
+	public function testReadonlyPreserve()
+	{
+		$etemplate = new Etemplate();
+		$etemplate->read(static::TEST_TEMPLATE);
+		
+		$this->readonlys['value'] = true;
+		$preserve['value'] = 'preserved_value';
+
+		$result = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys, $preserve);
+
+		// The only input widget is readonly, expect preserve back, not content
+		$this->assertEquals($preserve['value'], $result['value']);
+
+		$this->readonlys['value'] = false;
+		$result = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys, $preserve);
+
+		// The only input widget is editable, expect content back, not preserve
+		$this->assertEquals($this->content['value'], $result['value']);
+
 	}
 }

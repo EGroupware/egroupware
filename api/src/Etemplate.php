@@ -368,7 +368,15 @@ class Etemplate extends Etemplate\Widget\Template
 
 		//error_log(__METHOD__."(,".array2string($content).')');
 		//error_log(' validated='.array2string($validated));
-		$content = ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
+		if(is_callable(self::$request->method))
+		{
+			call_user_func(self::$request->method,self::complete_array_merge(self::$request->preserv, $validated));
+		}
+		else
+		{
+			// Deprecated, but may still be needed
+			$content = ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
+		}
 
 		$tcontent = is_array($content) ? $content :
 			self::complete_array_merge(self::$request->preserv, $validated);

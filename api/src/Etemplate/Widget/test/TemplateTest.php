@@ -22,12 +22,53 @@ require_once realpath(__DIR__.'/../../test/WidgetBaseTest.php');
 class TemplateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 
 	/**
-	 * Test instanciation of a template
+	 * Test instanciation of template from a file
 	 */
-	public function testInstance()
+	public function testSimpleInstance()
 	{
-		$this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+		static $name = 'api.prompt';
+
+		$template = Template::instance($name);
+		$this->assertInstanceOf(Template::class, $template);
 	}
+
+	/**
+	 * Test instanciating nested template
+	 *
+	 */
+	public function testNestedInstanciation()
+	{
+		static $template = 'api.nested';
+
+		$template = Template::instance($template, 'test');
+		$this->assertInstanceOf(Template::class, $template);
+
+		// Check for the sub-child to see if the nested template was loaded
+		$this->assertInstanceOf(\EGroupware\Api\Etemplate\Widget::class, $template->getElementById('sub_child'));
+
+		// Check that it's not just making things up
+		$this->assertNull($template->getElementById('not_existing'));
+	}
+
+
+	/**
+	 * Test that we can instanciate a sub-template from a file, once the file
+	 * is in the cache
+	 *
+	 * @depends testNestedInstanciation
+	 */
+	public function testSubTemplate()
+	{
+		// No file matches this, but it was loaded and cached in the previous test
+		static $template = 'api.nested.sub_template';
+		$template = Template::instance($template, 'test');
+		$this->assertInstanceOf(Template::class, $template);
+		
+		// Check for the sub-child to see if the template was loaded
+		$this->assertInstanceOf(\EGroupware\Api\Etemplate\Widget::class, $template->getElementById('sub_child'));
+
+		// Check that it's not just making things up
+		$this->assertNull($template->getElementById('not_existing'));
+	}
+
 }

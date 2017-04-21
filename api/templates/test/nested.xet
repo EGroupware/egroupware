@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- This template is used in automated testing -->
+<overlay>
+	<template id="api.nested.sub_template" template="" lang="" group="0" version="16.1">
+		<widget id="sub_child"/>
+	</template>
+	<template id="api.nested" template="" lang="" group="0" version="16.1">
+		<widget id="only_child"/>
+		<template id="api.nested.sub_template"/>
+	</template>
+</overlay>
