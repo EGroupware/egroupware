@@ -447,18 +447,41 @@ class mail_sieve
 
 		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(Api\Accounts::id2name($accountID));
 		$allAliases = $this->account->ident_email !=''? array($this->account->ident_email): array();
-		foreach ($accAllIdentities as &$arrVal)
+		foreach ($accAllIdentities as &$val)
 		{
-			if ($arrVal['type'] !='default')
+			if ($val['type'] !='default')
 			{
-				$allAliases[] =  $arrVal['address'];
+				// if the alias has no domain part set try to add
+				// default domain extracted from ident_email address
+				$allAliases[] =  self::fixInvalidAliasAddress($this->account->ident_email, $val['address']);
 			}
+		}
+		// try to fix already stored aliases
+		foreach ($vacation['addresses'] as &$address)
+		{
+			$address = self::fixInvalidAliasAddress($this->account->ident_email, $address);
 		}
 		asort($allAliases);
 		return array(
 			'vacation' =>$vacation,
 			'aliases' => array_values($allAliases),
 		);
+	}
+
+	/**
+	 * This method tries to fix alias address lacking domain part
+	 * by trying to add domain extracted from given reference address
+	 *
+	 * @param string $refrence email address to be used for domain extraction
+	 * @param string $address alias address
+	 *
+	 * @return string returns alias address with appended default domain
+	 */
+	static function fixInvalidAliasAddress($refrence, $address)
+	{
+		$parts = explode('@', $refrence);
+		if (!strpos($address,'@') && !empty($parts[1])) $address .= '@'.$parts[1];
+		return $address;
 	}
 
 	/**
