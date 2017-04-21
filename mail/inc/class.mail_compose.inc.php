@@ -248,6 +248,12 @@ class mail_compose
 			}
 			unset($actions['pgp']);
 		}
+		// remove vfs actions if the user has no run access to filemanager
+		if (!$GLOBALS['egw_info']['user']['apps']['filemanager'])
+		{
+			unset($actions['save2vfs']);
+			unset($actions['selectFromVFSForCompose']);
+		}
 		return $actions;
 	}
 

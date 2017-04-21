@@ -1300,6 +1300,11 @@ class mail_ui
 		{
 			unset($actions['calendar']);
 		}
+		// remove vfs actions if the user has no run access to filemanager
+		if (!$GLOBALS['egw_info']['user']['apps']['filemanager'])
+		{
+			unset($actions['save']['children']['save2filemanager']);
+		}
 		return $actions;
 	}
 
