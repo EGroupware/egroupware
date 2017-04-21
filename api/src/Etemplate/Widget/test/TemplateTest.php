@@ -41,10 +41,10 @@ class TemplateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		static $template = 'api.nested';
 
 		$template = Template::instance($template, 'test');
-		$this->assertInstanceOf(Template::class, $template);
+		$this->assertInstanceOf('EGroupware\Api\Etemplate\Widget\Template', $template);
 
 		// Check for the sub-child to see if the nested template was loaded
-		$this->assertInstanceOf(\EGroupware\Api\Etemplate\Widget::class, $template->getElementById('sub_child'));
+		$this->assertInstanceOf('EGroupware\Api\Etemplate\Widget', $template->getElementById('sub_child'));
 
 		// Check that it's not just making things up
 		$this->assertNull($template->getElementById('not_existing'));
@@ -62,10 +62,10 @@ class TemplateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		// No file matches this, but it was loaded and cached in the previous test
 		static $template = 'api.nested.sub_template';
 		$template = Template::instance($template, 'test');
-		$this->assertInstanceOf(Template::class, $template);
+		$this->assertInstanceOf('EGroupware\Api\Etemplate\Widget\Template', $template);
 		
 		// Check for the sub-child to see if the template was loaded
-		$this->assertInstanceOf(\EGroupware\Api\Etemplate\Widget::class, $template->getElementById('sub_child'));
+		$this->assertInstanceOf('EGroupware\Api\Etemplate\Widget', $template->getElementById('sub_child'));
 
 		// Check that it's not just making things up
 		$this->assertNull($template->getElementById('not_existing'));
