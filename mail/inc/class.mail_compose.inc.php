@@ -2266,7 +2266,9 @@ class mail_compose
 		{
 			error_log(__METHOD__.__LINE__.' Faking From/SenderInfo for '.$activeMailProfile['ident_email'].' with ID:'.$activeMailProfile['ident_id'].'. Identitiy to use for sending:'.array2string($_identity));
 		}
-		$_mailObject->setFrom($_identity['ident_email'] ? $_identity['ident_email'] : $activeMailProfile['ident_email'],
+		$email_From =  $_identity['ident_email'] ? $_identity['ident_email'] : $activeMailProfile['ident_email'];
+		// Try to fix identity email with no domain part set
+		$_mailObject->setFrom(Mail::fixInvalidAliasAddress(Api\Accounts::id2name($_identity['account_id'], 'account_email'), $email_From),
 			Mail::generateIdentityString($_identity,false));
 
 		$_mailObject->addHeader('X-Priority', $_formData['priority']);
