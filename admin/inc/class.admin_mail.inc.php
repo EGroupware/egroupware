@@ -1098,7 +1098,7 @@ class admin_mail
 								// load default ones
 								$content = array_merge($content, Mail\Notifications::read($content['acc_id'], 0));
 							}
-							if (!$content['notify_use_default'])
+							if (!$content['notify_use_default'] && is_array($content['notify_folders']))
 							{
 								$content['notify_account_id'] = $content['called_for'] ?
 									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
