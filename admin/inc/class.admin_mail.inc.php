@@ -1307,6 +1307,12 @@ class admin_mail
 		}
 		$content['admin_actions'] = (bool)$admin_actions;
 
+		//try to fix identities with no domain part set e.g. alias as identity
+		if (!strpos($content['ident_email'], '@'))
+		{
+			$content['ident_email'] = Mail::fixInvalidAliasAddress (Api\Accounts::id2name($content['acc_imap_account_id'], 'account_email'), $content['ident_email']);
+		}
+
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}
 

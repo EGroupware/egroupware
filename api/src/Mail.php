@@ -297,6 +297,22 @@ class Mail
 	}
 
 	/**
+	 * This method tries to fix alias address lacking domain part
+	 * by trying to add domain part extracted from given reference address
+	 *
+	 * @param string $refrence email address to be used for domain extraction
+	 * @param string $address alias address
+	 *
+	 * @return string returns alias address with appended default domain
+	 */
+	public static function fixInvalidAliasAddress($refrence, $address)
+	{
+		$parts = explode('@', $refrence);
+		if (!strpos($address,'@') && !empty($parts[1])) $address .= '@'.$parts[1];
+		return $address;
+	}
+
+	/**
 	 * store given ProfileID to Session and pref
 	 *
 	 * @param int $_profileID = 0

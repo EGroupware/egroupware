@@ -418,7 +418,7 @@ class mail_sieve
 	 *
 	 * @param string $accountID
 	 *
-	 * @return array return multi-dimentional array of vacation and aliases
+	 * @return array return multi-dimensional array of vacation and aliases
 	 */
 	function getVacation($accountID = null)
 	{
@@ -445,43 +445,31 @@ class mail_sieve
 		}
 		if (is_null($accountID)) $accountID = $GLOBALS['egw_info']['user']['account_id'];
 
+		$account_email =  Api\Accounts::id2name($accountID, 'account_email');
 		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(Api\Accounts::id2name($accountID));
-		$allAliases = $this->account->ident_email !=''? array($this->account->ident_email): array();
+		$allAliases = $this->account->ident_email !=''?
+				// Fix ident_email with no domain part set
+				array(Mail::fixInvalidAliasAddress($account_email, $this->account->ident_email))
+				: array();
 		foreach ($accAllIdentities as &$val)
 		{
 			if ($val['type'] !='default')
 			{
 				// if the alias has no domain part set try to add
 				// default domain extracted from ident_email address
-				$allAliases[] =  self::fixInvalidAliasAddress($this->account->ident_email, $val['address']);
+				$allAliases[] =  Mail::fixInvalidAliasAddress($account_email, $val['address']);
 			}
 		}
 		// try to fix already stored aliases
 		foreach ($vacation['addresses'] as &$address)
 		{
-			$address = self::fixInvalidAliasAddress($this->account->ident_email, $address);
+			$address = Mail::fixInvalidAliasAddress($account_email, $address);
 		}
 		asort($allAliases);
 		return array(
 			'vacation' =>$vacation,
 			'aliases' => array_values($allAliases),
 		);
-	}
-
-	/**
-	 * This method tries to fix alias address lacking domain part
-	 * by trying to add domain extracted from given reference address
-	 *
-	 * @param string $refrence email address to be used for domain extraction
-	 * @param string $address alias address
-	 *
-	 * @return string returns alias address with appended default domain
-	 */
-	static function fixInvalidAliasAddress($refrence, $address)
-	{
-		$parts = explode('@', $refrence);
-		if (!strpos($address,'@') && !empty($parts[1])) $address .= '@'.$parts[1];
-		return $address;
 	}
 
 	/**
