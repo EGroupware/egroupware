@@ -524,6 +524,16 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 		try {
 			links = typeof this._widget.options.settings.placeholder_actions != 'undefined' ?
 				this._widget.options.settings.placeholder_actions : (this._widget.options.add ? ["add"] : []);
+			// Make sure that placeholder actions are defined and existed in client-side,
+			// otherwise do not set them as placeholder. for instance actions with
+			// attribute hideOnMobile do not get sent to client-side.
+			if (links.length > 0)
+			{
+				for (var i=links.length-1; i >= 0; i--)
+				{
+					if (typeof this._widget.options.actions[links[i]] == 'undefined') links.splice(i,1);
+				}
+			}
 		} catch (e) {
 		}
 
@@ -664,7 +674,7 @@ var et2_nextmatch_controller = (function(){ "use strict"; return et2_dataview_co
 
 		// inform mobile framework about nm selections, need to update status of header objects on selection
 		if (egwIsMobile()) framework.nm_onselect_ctrl(this._widget, action, senders);
-		
+
 		this._widget.onselect.call(this._widget, action,senders);
 	},
 
