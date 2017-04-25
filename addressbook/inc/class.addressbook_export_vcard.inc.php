@@ -72,11 +72,13 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 			}
 		}
 
-		// vCard opens & closes the resource itself, but this doesn't seem to matter
-		$meta = stream_get_meta_data($_stream);
+		// vCard opens & closes the file itself, so we can't just pass in the stream
+		$fp = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'egw');
 
 		$vcard = new addressbook_vcal('addressbook','text/vcard');
-		$vcard->export($this->selection, $meta['uri']);
+		$vcard->export($this->selection, $fp);
+
+		fwrite($_stream, file_get_contents($fp));
 	}
 
 	/**
