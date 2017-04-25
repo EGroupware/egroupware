@@ -814,7 +814,7 @@ class filemanager_ui
 		if (!$query['csv_export'])
 		{
 			Api\Cache::setSession('filemanager', 'index',
-				array_diff_key ($query, array_flip('rows','actions','action_links','placeholder_actions')));
+				array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
 		}
 		if(!$query['path']) $query['path'] = static::get_home_dir();
 
