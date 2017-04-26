@@ -68,6 +68,11 @@ catch (Api\Exception\NoPermission\App $e)
 	{
 		$GLOBALS['egw_info']['currentapp'] = 'sitemgr-link';
 	}
+	// allow access to mounted eTemplates, if there are no filemanager or sitemgr-link app rights
+	elseif (preg_match('|/webdav.php/etemplates/|', $_SERVER['REQUEST_URI']))
+	{
+		$GLOBALS['egw_info']['currentapp'] = 'api';
+	}
 	else
 	{
 		throw $e;
