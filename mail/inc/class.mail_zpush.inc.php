@@ -704,8 +704,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				}
 				// get all the attachments and add them too.
 				// start handle Attachments
-				//												$_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folderName=''
-				$attachments = $this->mail->getMessageAttachments($uid, null,          null,								true,						false,				 true			, $folder);
+				$attachments = $this->mail->getMessageAttachments($uid,null,null,true,false,true,$folder);
 				$attachmentNames = false;
 				if (is_array($attachments) && count($attachments)>0)
 				{

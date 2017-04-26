@@ -816,7 +816,7 @@ class Mailer extends Horde_Mime_Mail
 			if (!($part_id = $base->findBody($subtype))) return null;
 			return $base->getPart($part_id);
 		}
-		catch (Exception $e) {
+		catch (Horde_Mail_Exception $e) {
 			unset($e);
 			return $subtype == 'html' ? $this->_htmlBody : $this->_body;
 		}
