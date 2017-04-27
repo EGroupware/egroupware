@@ -52,23 +52,29 @@
 				</row>
 				<row>
 					<description value="Enter the URL or filename (in api/templates/default/images) of your logo" label="%s:"/>
-					<textbox id="newsettings[login_logo_file]"/>
+					<hbox>
+						<textbox id="newsettings[login_logo_file]" width="70%"/>
+						<file onchange="egw.json('admin.admin_config.ajax_upload',[widget.get_value()], function(_data){widget._parent._children[0].set_value(_data.path)}).sendRequest()" width="30%" label="upload"/>
+					</hbox>
 				</row>
 				<row>
 					<description value="Enter the url where your logo should link to" label="%s:"/>
-					<textbox id="newsettings[login_logo_url]"/>
+					<textbox id="newsettings[login_logo_url]" width="100%"/>
 				</row>
 				<row>
 					<description value="Enter the title of your logo" label="%s:"/>
-					<textbox id="newsettings[login_logo_title]"/>
+					<textbox id="newsettings[login_logo_title]" width="100%"/>
 				</row>
 				<row>
 					<description value="Enter the URL or filename (in api/templates/default/images) of your background image" label="%s:"/>
-					<textbox id="newsettings[login_background_file]"/>
+					<hbox>
+						<textbox id="newsettings[login_background_file]" width="70%"/>
+						<file width="30%" label="upload" onchange="egw.json('admin.admin_config.ajax_upload',[widget.get_value()], function(_data){widget._parent._children[0].set_value(_data.path)}).sendRequest()"/>
+					</hbox>
 				</row>
 				<row>
 					<description value="Enter the URL or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)" label="%s:"/>
-					<textbox id="newsettings[favicon_file]"/>
+					<textbox id="newsettings[favicon_file]" class="et2_fullWidth"/>
 				</row>
 				<row>
 					<description value="How big should thumbnails for linked images be (maximum in pixels) ?" label="%s:"/>

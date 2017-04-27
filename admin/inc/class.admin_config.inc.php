@@ -19,6 +19,37 @@ class admin_config
 {
 	var $public_functions = array('index' => True);
 
+	/**
+	 * Upload function to store files into instance files_dir
+	 *
+	 * @param type $file file info array
+	 * @param type $dir directory to store file
+	 *
+	 */
+	function ajax_upload ($file, $dir = null)
+	{
+		$files_dir = $dir ? $dir : $GLOBALS['egw_info']['server']['files_dir'].'/images';
+		$success = false;
+		$response = Api\Json\Response::get();
+		if (is_array($file) && is_writable(dirname($files_dir)))
+		{
+			if (!is_dir($files_dir)) mkdir ($files_dir);
+			$tmp_file = array_keys($file);
+			$destination = $files_dir.'/'.$file[$tmp_file[0]]['name'];
+			$success = rename($GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp_file[0],$destination);
+		}
+		if ($success)
+		{
+			$response->data(array(
+				'path' => $destination
+			));
+		}
+		else
+		{
+			$response->error(lang('Failed to upload %1',$destination));
+		}
+	}
+
 	function index($_content=null)
 	{
 		if (is_array($_content))
