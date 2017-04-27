@@ -144,7 +144,7 @@ if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login')
 	unset($_SESSION[Session::EGW_INFO_CACHE]['apps']);
 
 	// store only which apps user has, Session::verify restores it from egw_info[apps]
-	$_SESSION[Session::EGW_INFO_CACHE]['user']['apps'] = array_keys($_SESSION[Session::EGW_INFO_CACHE]['user']['apps']);
+	$_SESSION[Session::EGW_INFO_CACHE]['user']['apps'] = array_keys((array)$_SESSION[Session::EGW_INFO_CACHE]['user']['apps']);
 
 	$_SESSION[Session::EGW_OBJECT_CACHE] = serialize($GLOBALS['egw']);
 }
