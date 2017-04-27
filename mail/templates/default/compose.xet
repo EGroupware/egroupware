@@ -48,7 +48,7 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryReplyto">
 						<description value="Reply to"/>
-						<taglist-email id="replyto" width="100%" maxSelection="1" onclick="app.mail.address_click"/>
+						<taglist-email id="replyto" width="100%" onclick="app.mail.address_click"/>
 						<description/>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryFolder">
