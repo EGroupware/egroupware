@@ -20,28 +20,28 @@ class admin_config
 	var $public_functions = array('index' => True);
 
 	/**
-	 * Upload function to store files into instance files_dir
+	 * Upload function to store anonymous images into instance files_dir/anon_images
 	 *
 	 * @param type $file file info array
 	 * @param type $dir directory to store file
 	 *
 	 */
-	function ajax_upload ($file, $dir = null)
+	function ajax_upload_anon_images ($file)
 	{
-		$files_dir = $dir ? $dir : $GLOBALS['egw_info']['server']['files_dir'].'/unknown_images';
+		$path = $GLOBALS['egw_info']['server']['files_dir'].'/anon-images';
 		$success = false;
 		$response = Api\Json\Response::get();
-		if (is_array($file) && is_writable(dirname($files_dir)))
+		if (is_array($file) && is_writable(dirname($path)))
 		{
-			if (!is_dir($files_dir)) mkdir ($files_dir);
+			if (!is_dir($path)) mkdir ($path);
 			$tmp_file = array_keys($file);
-			$destination = $files_dir.'/'.$file[$tmp_file[0]]['name'];
+			$destination = $path.'/'.$file[$tmp_file[0]]['name'];
 			$success = rename($GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp_file[0],$destination);
 		}
 		if ($success)
 		{
 			$response->data(array(
-				'path' => $destination
+				'path' => $GLOBALS['egw_info']['server']['webserver_url'].'/api/anon_images.php?src='.$file[$tmp_file[0]]['name']
 			));
 		}
 		else
