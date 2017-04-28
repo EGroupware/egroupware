@@ -41,7 +41,7 @@ class admin_config
 		if ($success)
 		{
 			$response->data(array(
-				'path' => $GLOBALS['egw_info']['server']['webserver_url'].'/api/anon_images.php?src='.$file[$tmp_file[0]]['name']
+				'path' => $GLOBALS['egw_info']['server']['webserver_url'].'/api/anon_images.php?src='.urlencode($file[$tmp_file[0]]['name'])
 			));
 		}
 		else
