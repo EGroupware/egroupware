@@ -25,7 +25,7 @@ $path = $GLOBALS['egw_info']['server']['files_dir'].'/anon-images';
 
 if (!file_exists($path) || empty($_GET['src']) ||
 	basename($_GET['src']) !== $_GET['src'] ||	// make sure no directory traversal
-	!preg_match('/^[a-z 0-9._-]+\.(jpe?g|png|gif|svg)$/i', $_GET['src']) ||	// only allow images, not eg. Javascript!
+	!preg_match('/^[a-z 0-9._-]+\.(jpe?g|png|gif|svg|ico)$/i', $_GET['src']) ||	// only allow images, not eg. Javascript!
 	!file_exists($path .= '/'.$_GET['src']) ||
 	!($fp = fopen($path, 'r')))
 {
@@ -34,8 +34,11 @@ if (!file_exists($path) || empty($_GET['src']) ||
 }
 else
 {
+	Api\Session::cache_control(864000);	// 10 days
+	$size = filesize($path);
+	header('ETag: "'.md5($_GET['src'].$size.filemtime($path)).'"');
 	header('Content-Type: '.Api\MimeMagic::filename2mime($_GET['src']));
-	header('Content-Length: '.filesize($path));
+	header('Content-Length: '.$size);
 	fpassthru($fp);
 	fclose($fp);
 }
