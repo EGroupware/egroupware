@@ -28,7 +28,7 @@ class admin_config
 	 */
 	function ajax_upload ($file, $dir = null)
 	{
-		$files_dir = $dir ? $dir : $GLOBALS['egw_info']['server']['files_dir'].'/images';
+		$files_dir = $dir ? $dir : $GLOBALS['egw_info']['server']['files_dir'].'/unknown_images';
 		$success = false;
 		$response = Api\Json\Response::get();
 		if (is_array($file) && is_writable(dirname($files_dir)))
