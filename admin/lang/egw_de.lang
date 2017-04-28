@@ -270,8 +270,8 @@ description can not exceed 255 characters in length !	admin	de	Die Beschreibung 
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	de	Zielkonto #%1 besteht und wurde nicht umbenannt. Konten wurden nicht zusammengeführt, da die eindeutige Kennzeichnung gestört würde. Alternativ sollten Sie löschen mit übertragen des Inhalts anwählen.
 determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge der angezeigten Felder
 disable	admin	de	abschalten
-disable all	admin	de	Alle Videos deaktivieren
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
+disable all	admin	de	Alle Videos deaktivieren
 disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
@@ -347,8 +347,6 @@ enter the site password for peer servers	admin	de	Site-Passwort für Peer-Server
 enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Server
 enter the title for your site	admin	de	Titel der EGroupware-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
-enter the url or filename (in api/templates/default/images) of your logo	admin	de	URL oder Dateiname (in api/templates/default/images) Ihres Logos
-enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	de	Geben Sie eine URL oder einen Dateinamen (in Ihrem Templates Bilder Verzeichnis) für Ihrem Favoriten (das kleine Icon oben links im Browserfenster) an.
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Icons abgelegt und von EGroupware Applikationen verwendet werden können. Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein.
 enter your default ftp server	admin	de	Standard-FTP-Server
@@ -820,6 +818,9 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	de	hoch
 update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
 updated	admin	de	aktualisiert
+upload your background image or enter the url	admin	de	Laden Sei ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
+upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein
+upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, kleine Buchstaben, Zahlen, Sonderzeichen
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. http://domain.com/egroupware
 usage	admin	de	Einsatz

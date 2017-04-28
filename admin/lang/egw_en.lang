@@ -347,8 +347,6 @@ enter the site password for peer servers	admin	en	Enter the site password for pe
 enter the site username for peer servers	admin	en	Enter the site username for peer servers
 enter the title for your site	admin	en	Enter the title for site
 enter the title of your logo	admin	en	Enter the title of logo
-enter the url or filename (in api/templates/default/images) of your logo	admin	en	Enter the URL or file name of your logo
-enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	en	Enter the URL or file name of your favicon
 enter the url where your logo should link to	admin	en	Enter the URL where the logo should link to
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.<br>The path MUST start with / and be readable by all users
 enter your default ftp server	admin	en	Enter your default FTP server
@@ -820,6 +818,9 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	en	Up
 update current email address:	admin	en	Update current email address:
 updated	admin	en	Updated
+upload your background image or enter the URL	admin	en	Upload your background image or enter the URL
+upload your favicon or enter the URL	admin	en	Upload your favicon or enter the URL
+upload your logo or enter the URL	admin	en	Upload your logo or enter the URL
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware
 usage	admin	en	Usage
