@@ -582,14 +582,14 @@ app.classes.addressbook = AppJS.extend(
 		var contacts = [];
 		if(selected && selected[0] && selected[0].getAllSelected())
 		{
-			// All contacts selected, better ask the server for _all_ the IDs
-			fetchAll(selected, this.et2.getWidgetById('nm'), jQuery.proxy(
+			// Action says all contacts selected, better ask the server for _all_ the IDs
+			var fetching = fetchAll(selected, this.et2.getWidgetById('nm'), jQuery.proxy(
 				function(contacts) {
 					this._add_new_list_prompt(owner, contacts);
 				}, this));
-			return;
+			if (fetching) return;
 		}
-		else if(selected && selected.length)
+		if(selected && selected.length)
 		{
 			for(var i = 0; i < selected.length; i++)
 			{
