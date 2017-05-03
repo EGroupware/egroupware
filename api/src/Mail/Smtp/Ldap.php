@@ -372,7 +372,7 @@ class Ldap extends Mail\Smtp
 				{
 					$to_or[] = '('.static::ALIAS_ATTR.'='.static::ALIAS_PREFIX.Api\Ldap::quote($user).')';
 				}
-				$filter = count($to_or) > 1 ? '(|'.explode('', $to_or).')' : $to_or[0];
+				$filter = count($to_or) > 1 ? '(|'.implode('', $to_or).')' : $to_or[0];
 
 				// if an enable attribute is set, only return enabled accounts
 				if (static::MAIL_ENABLE_ATTR)
