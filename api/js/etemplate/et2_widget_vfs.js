@@ -916,6 +916,11 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			.addClass("et2_button et2_vfs_btn")
 			.css("background-image","url("+this.egw().image("filemanager/navbar")+")");
 
+		if(this.options.readonly)
+		{
+			this.button.hide();
+		}
+		
 		if (this.options.button_caption != "")
 		{
 			this.button.text(this.options.button_caption);
@@ -1023,6 +1028,19 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 	 */
 	set_method_id: function(id) {
 		this.options.method_id = id;
+	},
+
+	set_readonly: function(readonly) {
+		this.options.readonly = Boolean(readonly);
+		debugger;
+		if(this.options.readonly)
+		{
+			this.button.hide();
+		}
+		else
+		{
+			this.button.show();
+		}
 	},
 
 	getValue: function() {

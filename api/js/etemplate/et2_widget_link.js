@@ -174,14 +174,16 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 			application_list: this.options.application_list,
 			blur: this.options.search_label ? this.options.search_label : this.egw().lang('Search...'),
 			query: function() { self.link_button.hide(); return true;},
-			select: function() {self.link_button.show(); return true;}
+			select: function() {self.link_button.show(); return true;},
+			readonly: this.options.readonly
 		};
 		this.link_entry = et2_createWidget("link-entry", link_entry_attrs,this);
 
 		// Filemanager select
 		var select_attrs = {
 			button_label: egw.lang('Link'),
-			button_caption: ''
+			button_caption: '',
+			readonly: this.options.readonly
 		};
 		// only set server-side callback, if we have a real application-id (not null or array)
 		// otherwise it only gives an error on server-side
@@ -190,6 +192,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 			select_attrs.method_id = self.options.value.to_app + ':' + self.options.value.to_id;
 		}
 		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
+		this.vfs_select.set_readonly(this.options.readonly);
 		jQuery(this.vfs_select.getDOMNode()).change( function() {
 			var values = true;
 			// If entry not yet saved, store for linking on server
@@ -197,16 +200,19 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 			{
 				values = self.options.value.to_id || {};
 				var files = self.vfs_select.getValue();
-				for(var i = 0; i < files.length; i++)
+				if(typeof files !== 'undefined')
 				{
-					values['link:'+files[i]] = {
-						app: 'link',
-						id: files[i],
-						type: 'unknown',
-						icon: 'link',
-						remark: '',
-						title: files[i]
-					};
+					for(var i = 0; i < files.length; i++)
+					{
+						values['link:'+files[i]] = {
+							app: 'link',
+							id: files[i],
+							type: 'unknown',
+							icon: 'link',
+							remark: '',
+							title: files[i]
+						};
+					}
 				}
 			}
 			self._link_result(values);
@@ -219,6 +225,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 			label: '',
 			// Make the whole template a drop target
 			drop_target: this.getInstanceManager().DOMContainer.getAttribute("id"),
+			readonly: this.options.readonly,
 
 			// Change to this tab when they drop
 			onStart: function(event, file_count) {
@@ -252,6 +259,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 		};
 
 		this.file_upload = et2_createWidget("file", file_attrs,this);
+		this.file_upload.set_readonly(this.options.readonly);
 		return true;
 	},
 
