@@ -10,9 +10,8 @@
 (select mails by clicking on the line, like a checkbox)	mail	sk	(správy označíte kliknutím na riadok, ako zaškrtávacie políčko)
 (with checkbox enforced)	mail	sk	(s vynútením zaškrtávacieho políčka)
 account editable by user	mail	sk	používateľ môže upraviť účet
-acl rights retrive failed, seems there are no rights set!	mail	sk	Zlyhalo prevzatie ACL práv, zdá sa že žiadne práva nie sú nastavené!
-acl rights retrived successfully	mail	sk	ACL práva boli úspešne prevzaté
-acl rights retrived successfully!	mail	sk	ACL práva boli úspešne prevzaté!
+acl rights retrieve failed, seems there are no rights set!	mail	sk	Zlyhalo prevzatie ACL práv, zdá sa že žiadne práva nie sú nastavené!
+acl rights retrieved successfully	mail	sk	ACL práva boli úspešne prevzaté
 action	mail	sk	Akcia
 activating by date requires a start- and end-date!	mail	sk	Aktivácia dátumom vyžaduje dátum začiatku AJ konca!
 add a new folder to %1:	mail	sk	Pridať nový priečinok do %1:

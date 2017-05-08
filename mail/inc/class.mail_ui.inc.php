@@ -2699,7 +2699,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$this->changeProfile($p['icServer']);
 			}
 			$this->mail_bo->reopen($p['mailbox']);
-			// Retrive all embedded attachments at once
+			// retrieve all embedded attachments at once
 			// avoids to fetch heavy winmail.dat content
 			// for each file.
 			$attachments = $this->mail_bo->getTnefAttachments($p['uid'],$p['part']);

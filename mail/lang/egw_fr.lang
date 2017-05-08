@@ -2,9 +2,9 @@
 %1 is not writable by you!	mail	fr	%1 n'est pas accessible en écriture !
 %1 mails selected	mail	fr	% mails sélectionnés
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	fr	(*) Veuillez considérer que le fait d'envoyer à plusieurs destinataires peut ne pas fonctionner selon la limite définie par le serveur. Veuillez contacter votre administrateur pour plus d'informations.
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	fr	(*) des caractères de remplacement (*,?) peuvent être utilisés. 
+(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions.	mail	fr	(*) des caractères de remplacement (*,?) peuvent être utilisés.
 Si vous recherchez les caractères * ou ?, vous devrez les protéger par un antislah (\). Si vous cochez "utiliser les expressions régulières" alors vous devez utiliser des expressions régulières valides.
-(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	fr	(*) des caractères de remplacement (*,?) peuvent être utilisés. 
+(*) wildcards (*,?) may be used. if you are trying to match * or ? itself, you must escape them with a backslash (\). if you check "use regular expressions" you must use valid regular expressions. in order to escape of exclamation mark (!) at the begining not being used as "not", use regex and backslash (\) (e.g. \!)	mail	fr	(*) des caractères de remplacement (*,?) peuvent être utilisés.
 Si vous recherchez les caractères * ou ?, vous devrez les protéger par un antislah (\). Si vous cochez "utiliser les expressions régulières" alors vous devez utiliser des expressions régulières valides.  Si vous cherchez à protéger le point d'exclamation (!) au début et ne pas l'utiliser comme "SAUF", alors utiliser les regex et l'antislash (ex : \!)
 (leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
 (no subject)	mail	fr	Pas de sujet
@@ -12,8 +12,7 @@ Si vous recherchez les caractères * ou ?, vous devrez les protéger par un anti
 (select mails by clicking on the line, like a checkbox)	mail	fr	(sélectionner des emails en cliquant sur la ligne, comme pour une case à cocher)
 (with checkbox enforced)	mail	fr	avec les cases à cocher forcées
 account editable by user	mail	fr	compte modifiable par l'utilisateur
-acl rights retrived successfully	mail	fr	Droits ACL récupérés avec succès
-acl rights retrived successfully!	mail	fr	Droits ACL récupérés avec succès
+acl rights retrieved successfully	mail	fr	Droits ACL récupérés avec succès
 action	mail	fr	Action
 activating by date requires a start- and end-date!	mail	fr	Activation par date nécessite une date de début ET de fin !
 add a new folder to %1:	mail	fr	Ajouter un nouveau dossier à %1:

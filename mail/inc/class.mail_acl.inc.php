@@ -104,7 +104,7 @@ class mail_acl
 			if (!empty($mailbox))
 			{
 				$content['mailbox'] = $mailbox;
-				$acl = (array)$this->retrive_acl($mailbox, $msg);
+				$acl = (array)$this->retrieve_acl($mailbox, $msg);
 				$n = 1;
 				foreach ($acl as $key => $value)
 				{
@@ -345,14 +345,14 @@ class mail_acl
 	}
 
 	/**
-	 * Retrive Folder ACL rights
+	 * Retrieve Folder ACL rights
 	 * @todo rights 'c' and 'd' should be fixed
 	 */
-	function retrive_acl ($mailbox, &$msg)
+	function retrieve_acl ($mailbox, &$msg)
 	{
 		if (($acl = $this->getACL($mailbox)))
 		 {
-			$msg = lang('ACL rights retrived successfully');
+			$msg = lang('ACL rights retrieved successfully');
 			return $acl;
 		 }
 		 else

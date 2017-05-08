@@ -10,9 +10,8 @@
 (select mails by clicking on the line, like a checkbox)	mail	cs	(vyberte e-maily kliknutím na řádek)
 (with checkbox enforced)	mail	cs	(se zaškrtávacími rámečky)
 account editable by user	mail	cs	Účet může být upraven uživatelem
-acl rights retrive failed, seems there are no rights set!	mail	cs	Získání ACL práv selhalo, zdá se, že práva nejsou nastavena!
-acl rights retrived successfully	mail	cs	ACL práva byla získána úspěšně.
-acl rights retrived successfully!	mail	cs	ACL práva byla získána úspěšně.
+acl rights retrieve failed, seems there are no rights set!	mail	cs	Získání ACL práv selhalo, zdá se, že práva nejsou nastavena!
+acl rights retrieved successfully	mail	cs	ACL práva byla získána úspěšně.
 action	mail	cs	Akce
 activating by date requires a start- and end-date!	mail	cs	Aktivace datumem vyžaduje nastavení počátečního A koncového data!
 add a new folder to %1:	mail	cs	Přidat novou složku do %1:

@@ -10,9 +10,8 @@
 (select mails by clicking on the line, like a checkbox)	mail	de	(Auswählen von E-Mails durch anklicken der Zeile)
 (with checkbox enforced)	mail	de	(mit Checkbox)
 account editable by user	mail	de	Anwender darf dieses Konto bearbeiten
-acl rights retrive failed, seems there are no rights set!	mail	de	Die Zugriffskontrollrechte konnten nicht gelesen werden!
-acl rights retrived successfully	mail	de	Zugriffskontrollrechte erfolgreich gelesen
-acl rights retrived successfully!	mail	de	Zugriffskontrollrechte erfolgreich gelesen!
+acl rights retrieve failed, seems there are no rights set!	mail	de	Die Zugriffskontrollrechte konnten nicht gelesen werden!
+acl rights retrieved successfully	mail	de	Zugriffskontrollrechte erfolgreich gelesen
 action	mail	de	Aktion
 activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach Datum erfordert ein Start- UND Enddatum!
 add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1

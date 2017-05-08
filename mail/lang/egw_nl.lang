@@ -9,8 +9,8 @@
 (select mails by clicking on the line, like a checkbox)	mail	nl	(selecteer berichten door op te klikken op de regel, zoals bij een checkbox)
 (with checkbox enforced)	mail	nl	(met checkbox geforceerd)
 account editable by user	mail	nl	Account door gebruiker te wijzigen
-acl rights retrive failed, seems there are no rights set!	mail	nl	ACL rechten ophalen mislukt, lijkt er op of er geen rechten zijn toegekend !
-acl rights retrived successfully!	mail	nl	ACL rechten succesvol opgehaald
+acl rights retrieve failed, seems there are no rights set!	mail	nl	ACL rechten ophalen mislukt, lijkt er op of er geen rechten zijn toegekend !
+acl rights retrieved successfully	mail	nl	ACL rechten succesvol opgehaald
 action	mail	nl	Actie
 activating by date requires a start- and end-date!	mail	nl	Activering op datum vereist een begin- EN einddatum!
 add a new folder to %1:	mail	nl	Voeg een neiuwe map toe %1:

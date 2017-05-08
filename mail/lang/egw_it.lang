@@ -10,9 +10,8 @@
 (select mails by clicking on the line, like a checkbox)	mail	it	(seleziona i messaggi cliccando sulla riga, come se fosse una casella da spuntare)
 (with checkbox enforced)	mail	it	(con checkbox forzato)
 account editable by user	mail	it	account modificabile dall'utente
-acl rights retrive failed, seems there are no rights set!	mail	it	I permessi non sono stati rilevati. Sembra non siano ancora stati impostati!
-acl rights retrived successfully	mail	it	Diritti ACL recuperati con successo
-acl rights retrived successfully!	mail	it	Permessi rilevati correttamente!
+acl rights retrieve failed, seems there are no rights set!	mail	it	I permessi non sono stati rilevati. Sembra non siano ancora stati impostati!
+acl rights retrieved successfully	mail	it	Diritti ACL recuperati con successo
 action	mail	it	Azione
 activating by date requires a start- and end-date!	mail	it	L'attivazione per data richiede una data di inizio e una di fine!
 add a new folder to %1:	mail	it	Aggiungi cartella a %1
