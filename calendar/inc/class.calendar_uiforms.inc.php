@@ -743,6 +743,12 @@ class calendar_uiforms extends calendar_ui
 					unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 					$this->bo->update($recur_event,true);	// no conflict check here
 
+					// Save links
+					if($content['links'])
+					{
+						Link::link('calendar', $event['id'], $content['links']['to_id']);
+					}
+
 					if(Api\Json\Response::isJSONResponse())
 					{
 						// Sending null will trigger a removal of the original
@@ -1105,6 +1111,30 @@ class calendar_uiforms extends calendar_ui
 		{
 			unset($alarm['uid'], $alarm['id'], $alarm['time']);
 		}
+
+		// Copy links
+		if(!is_array($event['link_to'])) $event['link_to'] = array();
+		$event['link_to']['to_app'] = 'calendar';
+		$event['link_to']['to_id'] = 0;
+		
+		foreach(Link::get_links($event['link_to']['to_app'], $event['id']) as $link)
+		{
+			if(!$link['id']) continue;
+			if ($link['app'] != Link::VFS_APPNAME)
+			{
+				Link::link('calendar', $event['link_to']['to_id'], $link['app'], $link['id'], $link['remark']);
+			}
+			elseif ($link['app'] == Link::VFS_APPNAME)
+			{
+				Link::link('calendar', $event['link_to']['to_id'], Link::VFS_APPNAME, array(
+					'tmp_name' => Link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
+					'name' => $link['id'],
+				), $link['remark']);
+			}
+		}
+
+		$event['links'] = $event['link_to'];
+
 		if($this->bo->check_perms(Acl::EDIT,$event))
 		{
 			return lang('Save event as exception - Delete single occurrence - Edit status or alarms for this particular day');
@@ -2738,6 +2768,7 @@ class calendar_uiforms extends calendar_ui
 			$preserv = null;
 			$this->_create_exception($event,$preserv);
 			unset($event['id']);
+			$links = $event['link_to']['to_id'];
 
 			$messages = null;
 			$conflicts = $this->bo->update($event,false,true,false,true,$messages);
@@ -2825,6 +2856,12 @@ class calendar_uiforms extends calendar_ui
 
 		$message = false;
 		$conflicts=$this->bo->update($event,$ignore_conflicts, true, false, true, $message);
+
+		// Save links
+		if($links)
+		{
+			Link::link('calendar', $event['id'], $links);
+		}
 
 		$this->update_client($event['id'],$d);
 		$response = Api\Json\Response::get();
