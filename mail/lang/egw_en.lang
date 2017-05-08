@@ -10,9 +10,8 @@
 (select mails by clicking on the line, like a checkbox)	mail	en	(select mails by clicking on the line, like a checkbox)
 (with checkbox enforced)	mail	en	(with checkbox enforced)
 account editable by user	mail	en	account editable by user
-acl rights retrive failed, seems there are no rights set!	mail	en	ACL rights retrive failed, seems there are no rights set!
-acl rights retrived successfully	mail	en	ACL rights retrived successfully
-acl rights retrived successfully!	mail	en	ACL rights retrived successfully!
+acl rights retrieve failed, seems there are no rights set!	mail	en	ACL rights retrieve failed, seems there are no rights set!
+acl rights retrieved successfully	mail	en	ACL rights retrieved successfully
 action	mail	en	Action
 activating by date requires a start- and end-date!	mail	en	Activating by date requires a start- AND end-date!
 add a new folder to %1:	mail	en	Add a new Folder to %1:

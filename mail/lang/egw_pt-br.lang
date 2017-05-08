@@ -6,7 +6,7 @@
 (not connected)	mail	pt-br	(não conectado)
 (with checkbox enforced)	mail	pt-br	(com caixa reforçado)
 account editable by user	mail	pt-br	conta editável pelo usuário
-acl rights retrived successfully!	mail	pt-br	Direitos ACL retrived com sucesso!
+acl rights retrieved successfully	mail	pt-br	Direitos ACL retrieved com sucesso
 action	mail	pt-br	ação
 activating by date requires a start- and end-date!	mail	pt-br	Ativação por data requer uma data inicial e final!
 add a new folder to %1:	mail	pt-br	Adicionar uma nova pasta para% 1:
