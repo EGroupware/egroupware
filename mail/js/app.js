@@ -2614,12 +2614,23 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		//alert('mail_save('+_elems[0].id+')');
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
-		url += '&id='+_elems[0].id;
-		//window.open(url,'_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes');
-		this.et2._inst.download(url);
+
+		for (var i in _elems)
+		{
+			//alert('mail_save('+_elems[0].id+')');
+			var url = window.egw_webserverUrl+'/index.php?';
+			url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
+			url += '&id='+_elems[i].id;
+			var a = document.createElement('a');
+			a = jQuery(a)
+				.prop('href', url)
+				.prop('download',"")
+				.appendTo(this.et2.getDOMNode());
+			var evt = document.createEvent('MouseEvent');
+			evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+			a[0].dispatchEvent(evt);
+			a.remove();
+		}
 	},
 
 	/**
@@ -2966,20 +2977,32 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		var _id = _elems[0].id;
-		var dataElem = egw.dataGetUIDdata(_id);
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode=saveas';
-		var subject = dataElem? dataElem.data.subject: _elems[0].subject;
-		var filename = subject.replace(/[\f\n\t\v]/g,"_")|| 'unknown';
-		url += '&name='+encodeURIComponent(filename+'.eml');
+		url += '&mode='+ (_elems.length>1?'select-dir':'saveas');
 		url += '&mime=message'+encodeURIComponent('/')+'rfc822';
 		url += '&method=mail.mail_ui.vfsSaveMessage';
-		url += '&id='+_elems[0].id;
-		url += '&label=Save';
-		egw_openWindowCentered(url,'vfs_save_message_'+_elems[0].id,'680','400',window.outerWidth/2,window.outerHeight/2);
+		url += '&label='+(_elems.length>1?egw.lang('Save all'):egw.lang('save'));
 
+		for (var i in _elems)
+		{
+			var _id = _elems[i].id;
+			var dataElem = egw.dataGetUIDdata(_id);
+			var subject = dataElem? dataElem.data.subject: _elems[i].subject;
+			var filename = subject.replace(/[\f\n\t\v]/g,"_")|| 'unknown';
+			if (_elems.length>1)
+			{
+				url += '&id['+i+']='+_id;
+				url += '&name['+i+']='+encodeURIComponent(filename+'.eml');
+			}
+			else
+			{
+				url += '&id='+_id;
+				url += '&name='+encodeURIComponent(filename+'.eml');
+			}
+
+		}
+		egw.openPopup(url,'680','400','vfs_save_messages', 'filemanager');
 	},
 
 	/**

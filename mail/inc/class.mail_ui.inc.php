@@ -1124,7 +1124,7 @@ class mail_ui
 						'group' => $group,
 						'icon' => 'fileexport',
 						'onExecute' => 'javaScript:app.mail.mail_save',
-						'allowOnMultiple' => false,
+						'allowOnMultiple' => true,
 						'hideOnMobile' => true
 					),
 					'save2filemanager' => array(
@@ -1133,7 +1133,7 @@ class mail_ui
 						'group' => $group,
 						'icon' => 'filemanager/navbar',
 						'onExecute' => 'javaScript:app.mail.mail_save2fm',
-						'allowOnMultiple' => false,
+						'allowOnMultiple' => true,
 					),
 				),
 				'hideOnMobile' => true
