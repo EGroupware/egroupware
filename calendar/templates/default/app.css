@@ -1418,8 +1418,10 @@ img.calendar_print_button, img.calendar_print_appicon {
 /*weekend slideSwitch in toolbar*/
 
 #calendar-toolbar_app_header {
-	font-weight: bold;
 	color: #616161;
+	font-size: 14px;
+    margin: auto;
+    height: 20px;
 }
 #calendar-toolbar_toolbar .et2_toolbar_more {
 	margin-top: 0;
