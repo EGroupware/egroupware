@@ -6947,6 +6947,19 @@ form[id^="tracker-"] .dialogHeadbar {
 #tracker_sidebox_header {
   border-left: 6px solid #006666 !important;
 }
+div[id^="wiki-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+form[id^="wiki-"] .nm_favorites_div .et2_dropdown button:nth-child(2),
+div[id^="wiki-"] .plus_button,
+form[id^="wiki-"] .plus_button,
+div[id^="wiki-"] .search.nm-mob-header,
+form[id^="wiki-"] .search.nm-mob-header,
+div[id^="wiki-"] .dialogHeadbar,
+form[id^="wiki-"] .dialogHeadbar {
+  background-color: #797979;
+}
+#wiki_sidebox_header {
+  border-left: 6px solid #797979 !important;
+}
 /********************************/
 /*								*/
 /*		MEDIA DEFINITION		*/
