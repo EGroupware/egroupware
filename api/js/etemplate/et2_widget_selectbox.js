@@ -1363,6 +1363,19 @@ jQuery.extend(et2_selectbox, //(function(){ "use strict"; return
 					delete cache_owner[cache_id];
 					return this.cached_server_side_options(widget, options_string, attrs);
 				}
+				else
+				{
+					if(attrs.value && widget && widget.get_value() !== attrs.value)
+					{
+						egw.window.setTimeout(jQuery.proxy(function() {
+							// Avoid errors if widget is destroyed before the timeout
+							if(this.widget && typeof this.widget.id !== 'undefined')
+							{
+								this.widget.set_value(this.widget.options.value);
+							}
+						},{widget: widget}),1);
+					}
+				}
 			}
 			return cache;
 		}
