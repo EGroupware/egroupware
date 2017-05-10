@@ -1032,7 +1032,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 
 	set_readonly: function(readonly) {
 		this.options.readonly = Boolean(readonly);
-		debugger;
+		
 		if(this.options.readonly)
 		{
 			this.button.hide();
