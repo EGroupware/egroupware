@@ -33,21 +33,29 @@
 							<column/>
 							<column/>
 							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
 						</columns>
 						<rows>
 							<row class="th">
 								<description value="Name"/>
 								<description value="Common ACL"/>
-								<description align="center" value="L"/>
-								<description align="center" value="R"/>
-								<description align="center" value="S"/>
-								<description align="center" value="W"/>
-								<description align="center" value="I"/>
-								<description align="center" value="P"/>
-								<description align="center" value="C"/>
-								<description align="center" value="D"/>
-								<description align="center" value="A"/>
-								<description align="center" value="Recursively"/>
+								<description align="center" statustext="Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)" value="L"/>
+								<description align="center" statustext="Read (SELECT the mailbox, perform STATUS)" value="R"/>
+								<description align="center" statustext="Keep seen/unseen information across sessions (set or clear \SEEN flag via STORE, also set \SEEN during APPEND/COPY/ FETCH BODY[...])" value="S"/>
+								<description align="center" statustext="Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)" value="W"/>
+								<description align="center" statustext="Insert (perform APPEND, COPY into mailbox)" value="I"/>
+								<description align="center" statustext="Post (send mail to submission address for mailbox, not enforced by IMAP4 itself)" value="P"/>
+								<description align="center" statustext="Obsolet create right, combination rights of K and X" value="C"/>
+								<description align="center" statustext="Obsolete delete right, combination rights of E, T and X" value="D"/>
+								<description align="center" statustext="Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb" value="K"/>
+								<description align="center" statustext="Delete mailbox (DELETE mailbox, old mailbox name in RENAME)" value="X"/>
+								<description align="center" statustext="Delete messages (set or clear \DELETED flag via STORE, set \DELETED flag during APPEND/COPY)" value="T"/>
+								<description align="center" statustext="Perform EXPUNGE and expunge as a part of CLOSE" value="E"/>
+								<description align="center" statustext="Administer (perform SETACL/DELETEACL/GETACL/LISTRIGHTS)" value="A"/>
+								<description align="center" statustext="Apply rights recursively to sub-folders" value="Recursively"/>
 								<description value="Action"/>
 							</row>
 							<row class="row">
@@ -63,6 +71,10 @@
 								<checkbox align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights"/>
 								<checkbox align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights"/>
 								<checkbox align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_k]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_x]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_t]" onchange="app.mail.acl_common_rights"/>
+								<checkbox align="center" id="${row}[acl_e]" onchange="app.mail.acl_common_rights"/>
 								<checkbox align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights"/>
 								<checkbox align="center" id="${row}[acl_recursive]"/>
 								<hbox orient=",0,0">

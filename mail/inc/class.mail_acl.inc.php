@@ -10,6 +10,56 @@
  * @version $Id$
  */
 
+/*
+ * Reference: RFC 4314 DOCUMENTATION - RIGHTS (https://tools.ietf.org/html/rfc4314)
+ *
+ * Standard Rights:
+ *
+ * The currently defined standard rights are (note that the list below
+ * doesn't list all commands that use a particular right):
+ *
+ * l - lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)
+ * r - read (SELECT the mailbox, perform STATUS)
+ * s - keep seen/unseen information across sessions (set or clear \SEEN flag
+ *     via STORE, also set \SEEN during APPEND/COPY/ FETCH BODY[...])
+ * w - write (set or clear flags other than \SEEN and \DELETED via
+ *     STORE, also set them during APPEND/COPY)
+ * i - insert (perform APPEND, COPY into mailbox)
+ * p - post (send mail to submission address for mailbox,
+ *     not enforced by IMAP4 itself)
+ * k - create mailboxes (CREATE new sub-mailboxes in any
+ *     implementation-defined hierarchy, parent mailbox for the new
+ *     mailbox name in RENAME)
+ * x - delete mailbox (DELETE mailbox, old mailbox name in RENAME)
+ * t - delete messages (set or clear \DELETED flag via STORE, set
+ *     \DELETED flag during APPEND/COPY)
+ * e - perform EXPUNGE and expunge as a part of CLOSE
+ * a - administer (perform SETACL/DELETEACL/GETACL/LISTRIGHTS)
+ *
+ *
+ *
+ * Obsolete Rights:
+ *
+ * Due to ambiguity in RFC 2086, some existing RFC 2086 server
+ * implementations use the "c" right to control the DELETE command.
+ * Others chose to use the "d" right to control the DELETE command.  For
+ * the former group, let's define the "create" right as union of the "k"
+ * and "x" rights, and the "delete" right as union of the "e" and "t"
+ * rights.  For the latter group, let's define the "create" rights as a
+ * synonym to the "k" right, and the "delete" right as union of the "e",
+ * "t", and "x" rights.
+ * For compatibility with RFC 2086, this section defines two virtual
+ * rights "d" and "c".
+ * If a client includes the "d" right in a rights list, then it MUST be
+ * treated as if the client had included every member of the "delete"
+ * right.  (It is not an error for a client to specify both the "d"
+ * right and one or more members of the "delete" right, but the effect
+ * is no different than if just the "d" right or all members of the
+ * "delete" right had been specified.)
+ *
+ */
+
+
 use EGroupware\Api;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;

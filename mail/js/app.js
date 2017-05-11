@@ -62,7 +62,7 @@ app.classes.mail = AppJS.extend(
 	 * @array
 	 *
 	 */
-	aclRights:['l','r','s','w','i','p','c','d','a'],
+	aclRights:['l','r','s','w','i','p','c','d','k','x','t','e','a'],
 
 	/**
 	 * In order to store Intervals assigned to window
@@ -3920,6 +3920,11 @@ app.classes.mail = AppJS.extend(
 			{
 				var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
 				rightsWidget.set_value((jQuery.inArray(this.aclRights[i],rights) != -1 )?true:false);
+				if ((rights.indexOf('c') == -1 && ['k','x'].indexOf(this.aclRights[i]) > -1)
+						|| (rights.indexOf('d') == -1 && ['e','x','t'].indexOf(this.aclRights[i]) > -1 ))
+				{
+					rightsWidget.set_readonly(false);
+				}
 			}
 		}
 	},
@@ -3934,35 +3939,47 @@ app.classes.mail = AppJS.extend(
 	 */
 	acl_common_rights: function(event, widget)
 	{
-	   var rowId = widget.id.replace(/[^0-9.]+/g, '');
-	   var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
-	   var rights = '';
+		var rowId = widget.id.replace(/[^0-9.]+/g, '');
+		var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
+		var rights = '';
+		var selectedBox = widget.id;
+		var virtualDelete = ['e','t','x'];
+		var virtualCreate = ['k','x'];
 
-	   for (var i=0;i<this.aclRights.length;i++)
-	   {
-		   var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
-		   if (rightsWidget.get_value() == "true")
-			   rights += this.aclRights[i];
+		for (var i=0;i<this.aclRights.length;i++)
+		{
+			var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
+			if (selectedBox == rowId+'[acl_c]' && virtualCreate.indexOf(this.aclRights[i])>-1)
+			{
+				rightsWidget.set_value(false);
+				rightsWidget.set_readonly(widget.get_value() == "true" ? true:false);
+			}
+			if (selectedBox == rowId+'[acl_d]' && virtualDelete.indexOf(this.aclRights[i])>-1)
+			{
+				rightsWidget.set_value(false);
+				rightsWidget.set_readonly(widget.get_value() == "true" ? true:false);
+			}
+			if (rightsWidget.get_value() == "true")
+				rights += this.aclRights[i];
+		}
 
-	   }
-
-	   for (var i=0;i<this.aclCommonRights.length;i++)
-	   {
-		   if (rights.split("").sort().toString() == this.aclCommonRights[i].split("").sort().toString())
-			   rights = this.aclCommonRights[i];
-	   }
-	   if (jQuery.inArray(rights,this.aclCommonRights ) == -1 && rights !='lrswipcda')
-	   {
-		   aclCommonWidget.set_value('custom');
-	   }
-	   else if (rights =='lrswipcda')
-	   {
-           aclCommonWidget.set_value('aeiklprstwx');
-	   }
-	   else
-	   {
-		   aclCommonWidget.set_value(rights);
-	   }
+		for (var i=0;i<this.aclCommonRights.length;i++)
+		{
+			if (rights.split("").sort().toString() == this.aclCommonRights[i].split("").sort().toString())
+				rights = this.aclCommonRights[i];
+		}
+		if (jQuery.inArray(rights,this.aclCommonRights ) == -1 && rights !='lrswipcda')
+		{
+			aclCommonWidget.set_value('custom');
+		}
+		else if (rights =='lrswipcda')
+		{
+			aclCommonWidget.set_value('aeiklprstwx');
+		}
+		else
+		{
+			aclCommonWidget.set_value(rights);
+		}
 	},
 
 	/**
