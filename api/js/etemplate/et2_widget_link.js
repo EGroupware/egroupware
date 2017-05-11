@@ -1642,7 +1642,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 
 			// Download ZIP
 			window.location = self.egw().link('/index.php',{
-				menuaction: 'EGroupware\\Api\\Etemplate\\Widget\\Link::download_zip',
+				menuaction: 'api.etemplate_widget_link.download_zip',
 				app: self.value.to_app,
 				id: self.value.to_id
 			});
