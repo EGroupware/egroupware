@@ -895,8 +895,6 @@ class calendar_bo
 			}
 		}
 		if (!$start) $start = $event['start'];
-		$start_obj = new Api\DateTime($start);
-		$read_start = new Api\DateTime($event_read['start']);
 
 		$events = array();
 		$this->insert_all_recurrences($event,$start,$this->date2usertime($this->config['horizont']),$events);

@@ -1182,7 +1182,7 @@ class calendar_boupdate extends calendar_bo
 		// set recur-enddate/range-end to real end-date of last recurrence
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'])
 		{
-			$rrule = calendar_rrule::event2rrule($event, false);
+			$rrule = calendar_rrule::event2rrule($event);
 			$rrule->rewind();
 			$enddate = $rrule->current();
 			do
