@@ -1397,8 +1397,9 @@ img.calendar_print_appicon {
 #calendar-toolbar_app_header {
   color: #616161;
   font-size: 14px;
-  margin: auto;
   height: 16px;
+  position: absolute;
+  left: 44%;
 }
 #calendar-toolbar_toolbar .et2_toolbar_more {
   margin-top: 0;
