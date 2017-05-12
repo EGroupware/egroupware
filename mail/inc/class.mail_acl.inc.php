@@ -86,7 +86,8 @@ class mail_acl
 		'lrs'		=> array('label'=>'readable','title'=>'Allows a user to read the contents of the mailbox.'),
 		'lprs'		=> array('label'=>'post','title'=>'Allows a user to read the mailbox and post to it through the delivery system by sending mail to the submission address of the mailbox.'),
 		'ilprs'		=> array('label'=>'append','title'=>'Allows a user to read the mailbox and append messages to it, either via IMAP or through the delivery system.'),
-		'ilprsw'	=> array('label'=>'write','title'=>'Allows a user to read the maibox, post to it, append messages to it, and delete messages or the mailbox itself. The only right not given is the right to change the ACL of the mailbox.'),
+		'ilprsw'	=> array('label'=>'write','title'=>'Allows a user to read and write the maibox, post to it, append messages to it.'),
+		'eilprswtk'	=> array('label'=>'write & delete','title'=>'Allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.'),
 		'aeiklprstwx'=> array('label'=>'all','title'=>'The user has all possible rights on the mailbox. This is usually granted to users only on the mailboxes they own.'),
 		'custom'	=> array('label'=>'custom','title'=>'User defined combination of rights for the ACL'),
 	);
@@ -155,6 +156,10 @@ class mail_acl
 			{
 				$content['mailbox'] = $mailbox;
 				$acl = (array)$this->retrieve_acl($mailbox, $msg);
+				if ($acl[0] === FALSE)
+				{
+					Api\Framework::window_close($msg);
+				}
 				$n = 1;
 				foreach ($acl as $key => $value)
 				{
@@ -408,6 +413,7 @@ class mail_acl
 		 else
 		 {
 			$msg = lang('Get ACL rights failed from IMAP server!');
+			return false;
 		 }
 	}
 
