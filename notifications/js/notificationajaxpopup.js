@@ -25,7 +25,7 @@
 		var popup_poll_interval = notification_script && notification_script.getAttribute('data-poll-interval');
 		this.setTimeout(popup_poll_interval || 60);
 		jQuery('#egwpopup_ok_button').click(jQuery.proxy(this.button_ok, this));
-		jQuery('#egwpopup_close_button').click(jQuery.proxy(this.button_close, this));
+
 		jQuery('#notificationbell').click(jQuery.proxy(this.display, this));
 		// query notifictions now
 		this.get_notifications();
@@ -39,7 +39,7 @@
 		egw.json(
 			"notifications.notifications_ajax.get_notifications",
 			this.check_browser_notify()
-		).sendRequest();
+		).sendRequest(true);
 	};
 
 	/**
@@ -65,45 +65,39 @@
 	 * Display notifications window
 	 */
 	notifications.prototype.display = function() {
-		var egwpopup;
-		var egwpopup_message;
-		var Browserwidth;
-		var Browserheight;
-		var egwpopup_ok_button;
-		egwpopup = document.getElementById("egwpopup");
-		egwpopup_message = document.getElementById("egwpopup_message");
-		egwpopup_ok_button = document.getElementById("egwpopup_ok_button");
-		egwpopup.style.display = "block";
-		egwpopup.style.position = "absolute";
-		egwpopup.style.width = "500px";
-		Browserwidth = (window.innerWidth || document.body.clientWidth || 640);
-		Browserheight = (window.innerHeight || document.body.clientHeight || 480);
-		egwpopup.style.left = (Browserwidth/2 - 250) + "px";
-		egwpopup.style.top = (Browserheight/4) + "px";
-		egwpopup_message.style.maxHeight = (Browserheight/2) + "px";
-		for(var show in notifymessages) break;
-		egwpopup_message.innerHTML = notifymessages[show]['message'];
+		var $egwpopup,$egwpopup_list,
+		egwpopup_ok_button, $message,
+		$close;
 
-		// Activate links
-		jQuery('div[data-id],div[data-url]', egwpopup_message).on('click',
-			function() {
-				if(this.dataset.id)
-				{
-					egw.open(this.dataset.id,this.dataset.app);
+		$egwpopup = jQuery(document.getElementById("egwpopup"));
+		$egwpopup_list = jQuery(document.getElementById("egwpopup_list"));
+		egwpopup_ok_button = document.getElementById("egwpopup_ok_button");
+		for(var show in notifymessages)
+		{
+			$message = jQuery(document.createElement('div'))
+					.addClass('egwpopup_message')
+					.attr('id', 'egwpopup_message_'+show);
+			$message[0].innerHTML = notifymessages[show]['message'];
+			$close = jQuery(document.createElement('span'))
+					.addClass('egwpopup_close')
+					.click(jQuery.proxy(this.button_close, this))
+					.prependTo($message);
+			// Activate links
+			jQuery('div[data-id],div[data-url]', $message).on('click',
+				function() {
+					if(this.dataset.id)
+					{
+						egw.open(this.dataset.id,this.dataset.app);
+					}
+					else
+					{
+						egw.open_link(this.dataset.url,'_blank',this.dataset.popup);
+					}
 				}
-				else
-				{
-					egw.open_link(this.dataset.url,'_blank',this.dataset.popup);
-				}
-			}
-		).addClass('et2_link');
-		var num = 0;
-		for(var id in notifymessages) ++num;
-		if(num-1 > 0 ) {
-			egwpopup_ok_button.value = "OK (" + (num-1) + ")";
-		} else {
-			egwpopup_ok_button.value = "OK";
+			).addClass('et2_link');
+			$egwpopup_list.append($message);
 		}
+		this.counterUpdate();
 		if(window.webkitNotifications && window.webkitNotifications.checkPermission() != EGW_BROWSER_NOTIFY_ALLOWED &&
 			jQuery('#desktop_perms').length == 0)
 		{
@@ -163,19 +157,15 @@
 	/**
 	 * Callback for close button: close and mark all as read
 	 */
-	notifications.prototype.button_close = function() {
-		var ids = new Array();
-		for(var id in notifymessages) {
-			ids.push(id);
-		}
-		var request = egw.json("notifications.notifications_ajax.confirm_message", [ids]);
+	notifications.prototype.button_close = function(_event) {
+		var egwpopup_message = _event.target.parentNode;
+		var id = egwpopup_message.id.replace(/egwpopup_message_/ig,'');
+		var request = egw.json("notifications.notifications_ajax.confirm_message", [id]);
 		request.sendRequest();
-		notifymessages = {};
-		var egwpopup = document.getElementById("egwpopup");
-		var egwpopup_message = document.getElementById("egwpopup_message");
-		egwpopup.style.display = "none";
-		egwpopup_message.innerHTML = "";
+		delete (notifymessages[id]);
+		egwpopup_message.style.display = 'none';
 		this.bell("inactive");
+		this.counterUpdate();
 	};
 
 	/**
@@ -254,10 +244,40 @@
 		return typeof data == 'object'? data: {};
 	};
 
+	/**
+	 * toggle notifications container
+	 */
+	notifications.prototype.toggle = function ()
+	{
+		var $egwpopup = jQuery('#egwpopup');
+		if ($egwpopup.length>0) $egwpopup.slideToggle('fast');
+	};
+
+	/**
+	 * Set new state of notifications counter
+	 */
+	notifications.prototype.counterUpdate = function ()
+	{
+		var $egwpopup_fw_notifications = jQuery('#egwpopup_fw_notifications');
+		if (Object.entries(notifymessages))
+		{
+			$egwpopup_fw_notifications.addClass('egwpopup_notify');
+			$egwpopup_fw_notifications.text(Object.entries(notifymessages).length);
+		}
+		else
+		{
+			$egwpopup_fw_notifications.text(0);
+			$egwpopup_fw_notifications.removeClass('egwpopup_notify');
+		}
+	};
+
 	var lab = egw_LAB || $LAB;
 	var self = notifications;
 	lab.wait(function(){
 		if (typeof window.app == 'undefined') window.app = {};
 		window.app.notifications = new self();
+		// toggle notifications bar
+		jQuery('.egwpopup_toggle').click(function(){window.app.notifications.toggle();});
+		jQuery('#egwpopup_fw_notifications').click(function(){window.app.notifications.toggle();});
 	});
 })();

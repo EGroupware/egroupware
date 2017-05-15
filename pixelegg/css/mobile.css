@@ -3477,20 +3477,16 @@ td.lettersearch {
  * @version $Id$
  */
 #egwpopup {
-  background-color: #fafafa;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-right-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topright: 20px;
-  border-radius: 3px;
-  border-top-right-radius: 20px;
-  border-width: 9px 0px 0px 0px;
-  border-style: solid;
-  border-color: #B4B4B4;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  top: 43px !important;
+  right: 0px !important;
+  left: auto !important;
+  height: calc(100% - 85px);
+  width: 300px !important;
+  position: absolute;
+  background: white;
+  box-shadow: -2px 1px 18px 1px silver;
   padding: 1em;
+  overflow-y: auto;
   /*Button*/
 }
 #egwpopup input#egwpopup_ok_button,
@@ -3526,6 +3522,96 @@ td.lettersearch {
 #egwpopup input#egwpopup_ok_button:active,
 #egwpopup button#desktop_perms:active {
   background-color: #1aa200 !important;
+}
+#egwpopup #egwpopup_list span.egwpopup_close {
+  display: block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/close.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+#egwpopup #egwpopup_list .egwpopup_message {
+  padding: 10px;
+  background-color: #fafafa;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+#egwpopup #egwpopup_list .egwpopup_message:hover {
+  background-color: rgba(103, 159, 210, 0.2);
+}
+#egwpopup div#egwpopup_header {
+  font-size: 16px;
+  color: silver;
+  text-align: center;
+  padding: 15px;
+}
+#egwpopup div#egwpopup_header .egwpopup_toggle {
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+  position: relative;
+  margin-top: -2px;
+  margin-left: -20px;
+  float: left;
+}
+#egwpopup div#egwpopup_header .egwpopup_toggle:after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 5px;
+  width: 10px;
+  height: 2px;
+  background-color: silver;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  transform: rotate(145deg) translate(8px, -1px);
+  -ms-transform: rotate(145deg) translate(8px, -1px);
+  -moz-transform: rotate(145deg) translate(8px, -1px);
+  -webkit-transform: rotate(145deg) translate(8px, -1px);
+}
+#egwpopup div#egwpopup_header .egwpopup_toggle:before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 10px;
+  height: 2px;
+  background-color: silver;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  transform: rotate(45deg) translate(8px, -2px);
+  -ms-transform: rotate(45deg) translate(8px, -2px);
+  -moz-transform: rotate(45deg) translate(8px, -2px);
+  -webkit-transform: rotate(45deg) translate(8px, -2px);
+}
+#egwpopup div#egwpopup_header .egwpopup_toggle:hover:before,
+#egwpopup div#egwpopup_header .egwpopup_toggle:hover:after {
+  background-color: gray;
+}
+#egwpopup_fw_notifications {
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+  margin-right: 1em;
+  margin-top: 0px;
+  z-index: 200;
+  width: 26px;
+  height: 16px;
+  top: 9px;
+  position: fixed;
+  right: 109px;
+  border: 2px solid #656565;
+  border-radius: 3px;
+  text-align: center;
+  color: #646464;
+  font-weight: bold;
+}
+#egwpopup_fw_notifications.egwpopup_notify {
+  color: white;
+  background: #b9436c;
 }
 /*popup Messsage*/
 div#egwpopup_message {
