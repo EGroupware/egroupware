@@ -940,7 +940,7 @@ class infolog_ui
 		$values['nm']['filter_onchange'] = "app.infolog.filter_change();";
 
 		//apply infolog_filter2_change javascript method (show/hide details each rows) over onchange filter2
-		$values['nm']['filter2_onchange'] = "app.infolog.filter2_change";
+		$values['nm']['filter2_onchange'] = "return app.infolog.filter2_change(event, widget)";
 
 		// disable favories dropdown button, if not running as infolog
 		if ($called_as && $called_as != 'infolog')
