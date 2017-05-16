@@ -908,7 +908,7 @@ class StreamWrapper implements StreamWrapperIface
 		while (($rel_path = Vfs::basename($url).($rel_path ? '/'.$rel_path : '')) &&
 		       ($url = Vfs::dirname($url)))
 		{
-			if (($stat = $this->url_stat($url,0,false,false)))
+			if (($stat = $this->url_stat($url,0,true,false)))
 			{
 				if (is_link($url) && ($lpath = Vfs::readlink($url)))
 				{
