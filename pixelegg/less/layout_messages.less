@@ -49,12 +49,15 @@
 		}
 		.egwpopup_message {
 			padding: 10px;
-			background-color: #fafafa;
+			background-color: #d9d9d9;
 			border-radius: 3px;
 			margin-bottom: 10px;
 			&:hover {
 				background-color: rgba(103, 159, 210, 0.2);
 			}
+		}
+		.egwpopup_message_seen {
+			background-color: #fafafa;
 		}
 	}
 	div#egwpopup_header {
@@ -67,7 +70,7 @@
 			width: 32px;
 			cursor: pointer;
 			position:relative;
-			margin-top: -2px;
+			margin-top: 1px;
 			margin-left: -20px;
 			float:left;
 			&:after {
@@ -102,6 +105,36 @@
 			}
 			&:hover:before, &:hover:after {
 				background-color: gray;
+			}
+		}
+		.egwpopup_seenall {
+			float: right;
+			width: 10px;
+			height: 10px;
+			border: 1px solid silver;
+			border-radius: 50%;
+			cursor: pointer;
+			margin: 4px 0px 0px 0px;
+			&:hover {
+				border-color: gray;
+				background: rgba(103, 159, 210, 0.2);
+			}
+		}
+		.egwpopup_deleteall {
+			background-image: url(../images/delete.png);
+			width: 12px;
+			height: 12px;
+			background-position: center;
+			background-size: 12px;
+			float: right;
+			background-repeat: no-repeat;
+			margin-right: 15px;
+			margin-top: 4px;
+			cursor: pointer;
+			display: inline-block;
+			opacity: 0.5;
+			&:hover {
+				opacity: 1;
 			}
 		}
 	}

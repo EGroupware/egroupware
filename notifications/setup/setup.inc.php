@@ -15,7 +15,7 @@ if (!defined('NOTIFICATION_APP'))
 }
 
 $setup_info[NOTIFICATION_APP]['name']      = NOTIFICATION_APP;
-$setup_info[NOTIFICATION_APP]['version']   = '16.1';
+$setup_info[NOTIFICATION_APP]['version']   = '17.1';
 $setup_info[NOTIFICATION_APP]['app_order'] = 1;
 $setup_info[NOTIFICATION_APP]['tables']    = array('egw_notificationpopup');
 $setup_info[NOTIFICATION_APP]['enable']    = 2;

@@ -131,17 +131,39 @@ class notifications_ajax {
 	}
 
 	/**
-	 * Let the user confirm that they have seen the message.
-	 * After they've seen it, remove it from the database
+	 * Remove given notification id(s) from the table
 	 *
-	 * @param int|array $notify_id one or more notify_id's
+	 * @param array|int $notify_ids one or multiple notify_id(s)
 	 */
-	public function confirm_message($notify_id)
+	public function delete_message($notify_ids)
 	{
-		if ($notify_id)
+		if ($notify_ids)
 		{
 			$this->db->delete(self::_notification_table,array(
-				'notify_id' => $notify_id,
+				'notify_id' => $notify_ids,
+				'account_id' => $this->recipient->account_id,
+				'notify_type' => self::_type
+			),__LINE__,__FILE__,self::_appname);
+		}
+	}
+
+	/**
+	 * Method to update message(s) status
+	 *
+	 * @param int|array $notify_ids one or more notify_id(s)
+	 * @param string $status = SEEN, status of message:
+	 *  - SEEN: message has been seen
+	 *	- UNSEEN: message has not been seen
+	 *	- DISPLAYED: message has been shown but no further status applied yet
+	 *				 this status has been used more specifically for browser type
+	 *				 of notifications.
+	 */
+	public function update_status($notify_ids,$status = "SEEN")
+	{
+		if ($notify_ids)
+		{
+			$this->db->update(self::_notification_table,array('notify_status' => $status),array(
+				'notify_id' => $notify_ids,
 				'account_id' => $this->recipient->account_id,
 				'notify_type' => self::_type
 			),__LINE__,__FILE__,self::_appname);
@@ -176,7 +198,7 @@ class notifications_ajax {
 
 					$message3 = 'data:text/html;charset=' . Api\Translation::charset() .';base64,'.base64_encode($message2);
 				}
-				$this->response->apply('app.notifications.append',array($notification['notify_id'],$notification['notify_message'],$message3));
+				$this->response->apply('app.notifications.append',array($notification['notify_id'],$notification['notify_message'],$message3, $notification['notify_status']));
 			}
 
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {

@@ -24,8 +24,6 @@
 		var notification_script = document.getElementById('notifications_script_id');
 		var popup_poll_interval = notification_script && notification_script.getAttribute('data-poll-interval');
 		this.setTimeout(popup_poll_interval || 60);
-		jQuery('#egwpopup_ok_button').click(jQuery.proxy(this.button_ok, this));
-
 		jQuery('#notificationbell').click(jQuery.proxy(this.display, this));
 		// query notifictions now
 		this.get_notifications();
@@ -65,21 +63,26 @@
 	 * Display notifications window
 	 */
 	notifications.prototype.display = function() {
-		var $egwpopup,$egwpopup_list,
-		egwpopup_ok_button, $message,
-		$close;
+		var $egwpopup,$egwpopup_list, $message,	$close, $delete_all, $mark_all;
+		$egwpopup = jQuery("#egwpopup");
+		$egwpopup_list = jQuery("#egwpopup_list");
 
-		$egwpopup = jQuery(document.getElementById("egwpopup"));
-		$egwpopup_list = jQuery(document.getElementById("egwpopup_list"));
-		egwpopup_ok_button = document.getElementById("egwpopup_ok_button");
 		for(var show in notifymessages)
 		{
+			var message_id = 'egwpopup_message_'+show;
+			if (jQuery('#'+message_id,$egwpopup_list).length > 0)
+			{
+				this.update_message_status(show, notifymessages[show]['status']);
+				continue;
+			}
 			$message = jQuery(document.createElement('div'))
 					.addClass('egwpopup_message')
-					.attr('id', 'egwpopup_message_'+show);
+					.click(jQuery.proxy(this.message_seen, this))
+					.attr('id', message_id);
 			$message[0].innerHTML = notifymessages[show]['message'];
 			$close = jQuery(document.createElement('span'))
 					.addClass('egwpopup_close')
+					.attr('title',egw.lang('delete message'))
 					.click(jQuery.proxy(this.button_close, this))
 					.prependTo($message);
 			// Activate links
@@ -96,6 +99,7 @@
 				}
 			).addClass('et2_link');
 			$egwpopup_list.append($message);
+			this.update_message_status(show, notifymessages[show]['status']);
 		}
 		this.counterUpdate();
 		if(window.webkitNotifications && window.webkitNotifications.checkPermission() != EGW_BROWSER_NOTIFY_ALLOWED &&
@@ -132,36 +136,61 @@
 	/**
 	 * Callback for OK button: confirms message on server and hides display
 	 */
-	notifications.prototype.button_ok = function() {
-		var egwpopup;
-		var egwpopup_message;
-		egwpopup = document.getElementById("egwpopup");
-		egwpopup_message = document.getElementById("egwpopup_message");
-		egwpopup_message.scrollTop = 0;
+	notifications.prototype.message_seen = function(_event) {
+		var egwpopup_message = _event.target;
+		var id = egwpopup_message.id.replace(/egwpopup_message_/ig,'');
+		var request = egw.json("notifications.notifications_ajax.update_status", [id, "SEEN"]);
+		request.sendRequest(true);
+		this.update_message_status(id, "SEEN");
+	};
 
-		for(var confirmed in notifymessages) break;
-		var request = egw.json("notifications.notifications_ajax.confirm_message", [confirmed]);
-		request.sendRequest();
-		delete notifymessages[confirmed];
-
-		for(var id in notifymessages) break;
-		if (id == undefined) {
-			egwpopup.style.display = "none";
-			egwpopup_message.innerHTML = "";
-			this.bell("inactive");
-		} else {
-			this.display();
+	notifications.prototype.mark_all_seen = function()
+	{
+		if (!notifymessages || Object.keys(notifymessages).length == 0) return false;
+		egw.json("notifications.notifications_ajax.update_status", [Object.keys(notifymessages), "SEEN"]).sendRequest(true);
+		for (var id in notifymessages)
+		{
+			this.update_message_status(id, "SEEN");
 		}
+	};
+
+	notifications.prototype.update_message_status = function (_id, _status)
+	{
+		var $egwpopup_message = jQuery('#egwpopup_message_'+_id);
+		notifymessages[_id]['status'] = _status;
+		if ($egwpopup_message.length>0)
+		{
+			switch (_status)
+			{
+				case 'SEEN':
+					$egwpopup_message.addClass('egwpopup_message_seen');
+					break;
+				case 'UNSEEN':
+				case 'DISPLAYED':
+					$egwpopup_message.removeClass('egwpopup_message_seen');
+					break;
+			}
+		}
+		this.counterUpdate();
+	};
+
+	notifications.prototype.delete_all = function () {
+		if (!notifymessages || Object.entries(notifymessages).length == 0) return false;
+		egw.json("notifications.notifications_ajax.delete_message", [Object.keys(notifymessages)]).sendRequest(true);
+		delete(notifymessages);
+		jQuery("#egwpopup_list").empty();
+		this.counterUpdate();
 	};
 
 	/**
 	 * Callback for close button: close and mark all as read
 	 */
 	notifications.prototype.button_close = function(_event) {
+		_event.stopPropagation();
 		var egwpopup_message = _event.target.parentNode;
 		var id = egwpopup_message.id.replace(/egwpopup_message_/ig,'');
-		var request = egw.json("notifications.notifications_ajax.confirm_message", [id]);
-		request.sendRequest();
+		var request = egw.json("notifications.notifications_ajax.delete_message", [id]);
+		request.sendRequest(true);
 		delete (notifymessages[id]);
 		egwpopup_message.style.display = 'none';
 		this.bell("inactive");
@@ -175,18 +204,18 @@
 	 * @param _message
 	 * @param _browser_notify
 	 */
-	notifications.prototype.append = function(_id, _message, _browser_notify) {
+	notifications.prototype.append = function(_id, _message, _browser_notify, _status) {
 		if(!this.check_browser_notify() || typeof notifymessages[_id] != 'undefined')
 		{
-			notifymessages[_id] = {message:_message};
+			notifymessages[_id] = {message:_message, status:_status};
 			return;
 		}
 
 		var data = this.getData(_message);
 		// Prevent the same thing popping up multiple times
-		notifymessages[_id] = {message:_message, data: data};
+		notifymessages[_id] = {message:_message, data: data, status: _status};
 		// Notification API
-		if(_browser_notify)
+		if(_browser_notify && !_status)
 		{
 			egw.notification(data.title, {
 				tag: data.app+":"+_id,
@@ -195,8 +224,8 @@
 				onclose:function(e){
 					// notification id
 					var id = this.tag.split(":");
-					// confirm the message
-					var request = egw.json("notifications.notifications_ajax.confirm_message", [id[1]]);
+					// delete the message
+					var request = egw.json("notifications.notifications_ajax.update_status", [id[1], 'DISPLAYED']);
 					request.sendRequest();
 				},
 				onclick:function(e){
@@ -216,10 +245,6 @@
 					{
 						egw.open_link(notify.data.url,'_blank',notify.data.popup);
 					}
-
-					var request = egw.json("notifications.notifications_ajax.confirm_message", [id[1]]);
-					request.sendRequest();
-					delete notifymessages[id[1]];
 					this.close();
 				}
 			});
@@ -259,10 +284,15 @@
 	notifications.prototype.counterUpdate = function ()
 	{
 		var $egwpopup_fw_notifications = jQuery('#egwpopup_fw_notifications');
-		if (Object.entries(notifymessages))
+		var counter = 0;
+		for (var id in notifymessages)
+		{
+			if (notifymessages[id]['status'] != 'SEEN') counter++;
+		}
+		if (counter > 0)
 		{
 			$egwpopup_fw_notifications.addClass('egwpopup_notify');
-			$egwpopup_fw_notifications.text(Object.entries(notifymessages).length);
+			$egwpopup_fw_notifications.text(counter);
 		}
 		else
 		{
@@ -279,5 +309,7 @@
 		// toggle notifications bar
 		jQuery('.egwpopup_toggle').click(function(){window.app.notifications.toggle();});
 		jQuery('#egwpopup_fw_notifications').click(function(){window.app.notifications.toggle();});
+		jQuery(".egwpopup_deleteall", '#egwpopup').click(function(){window.app.notifications.delete_all()});
+		jQuery(".egwpopup_seenall", '#egwpopup').click(function(){window.app.notifications.mark_all_seen()});
 	});
 })();

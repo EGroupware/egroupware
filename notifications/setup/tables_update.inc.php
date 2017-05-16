@@ -127,3 +127,14 @@ function notifications_upgrade14_3()
 {
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '16.1';
 }
+
+function notifications_upgrade16_1()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_notificationpopup','notify_status',array(
+		'type' => 'varchar',
+		'precision' => '32',
+		'comment' => 'notification status'
+	));
+
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '17.1';
+}

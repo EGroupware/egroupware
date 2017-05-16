@@ -24,7 +24,9 @@ if ($GLOBALS['egw_info']['user']['apps']['notifications'])
 		filemtime(EGW_SERVER_ROOT.'/notifications/js/notificationajaxpopup.js'). '" type="text/javascript" id="notifications_script_id" data-poll-interval="'.$popup_poll_interval.'"></script>';
 	echo '
 		<div id="egwpopup" style="display: none; z-index: 999;">
-			<div id="egwpopup_header">'.lang('Notifications').'<span class="egwpopup_toggle"></span></div>
+			<div id="egwpopup_header">'.lang('Notifications').
+			'<span class="egwpopup_toggle"></span><span class="egwpopup_seenall" title='. lang('mark all as seen').'></span>'.
+			'<span class="egwpopup_deleteall" title='.lang('delete all messages').'></span></div>
 			<div id="egwpopup_list"></div>
 		</div>
 	';

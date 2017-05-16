@@ -3546,12 +3546,15 @@ td.lettersearch {
 }
 #egwpopup #egwpopup_list .egwpopup_message {
   padding: 10px;
-  background-color: #fafafa;
+  background-color: #d9d9d9;
   border-radius: 3px;
   margin-bottom: 10px;
 }
 #egwpopup #egwpopup_list .egwpopup_message:hover {
   background-color: rgba(103, 159, 210, 0.2);
+}
+#egwpopup #egwpopup_list .egwpopup_message_seen {
+  background-color: #fafafa;
 }
 #egwpopup div#egwpopup_header {
   font-size: 16px;
@@ -3564,7 +3567,7 @@ td.lettersearch {
   width: 32px;
   cursor: pointer;
   position: relative;
-  margin-top: -2px;
+  margin-top: 1px;
   margin-left: -20px;
   float: left;
 }
@@ -3601,6 +3604,36 @@ td.lettersearch {
 #egwpopup div#egwpopup_header .egwpopup_toggle:hover:before,
 #egwpopup div#egwpopup_header .egwpopup_toggle:hover:after {
   background-color: gray;
+}
+#egwpopup div#egwpopup_header .egwpopup_seenall {
+  float: right;
+  width: 10px;
+  height: 10px;
+  border: 1px solid silver;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 4px 0px 0px 0px;
+}
+#egwpopup div#egwpopup_header .egwpopup_seenall:hover {
+  border-color: gray;
+  background: rgba(103, 159, 210, 0.2);
+}
+#egwpopup div#egwpopup_header .egwpopup_deleteall {
+  background-image: url(../images/delete.png);
+  width: 12px;
+  height: 12px;
+  background-position: center;
+  background-size: 12px;
+  float: right;
+  background-repeat: no-repeat;
+  margin-right: 15px;
+  margin-top: 4px;
+  cursor: pointer;
+  display: inline-block;
+  opacity: 0.5;
+}
+#egwpopup div#egwpopup_header .egwpopup_deleteall:hover {
+  opacity: 1;
 }
 #egwpopup_fw_notifications {
   cursor: pointer;
