@@ -1841,6 +1841,11 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 					_ev.target.dataset
 			));
 		}
+		else if (this.options.owner.length === 1 && jQuery(this.owner.getDOMNode()).is(_ev.target))
+		{
+			// Click on the owner in header, show just that owner
+			app.calendar.update_state({owner: this.options.owner});
+		}
 		else if (this.dayHeader.has(_ev.target).length)
 		{
 			// Click on a day header - let day deal with it
