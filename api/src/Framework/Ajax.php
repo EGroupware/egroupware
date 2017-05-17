@@ -546,8 +546,13 @@ abstract class Ajax extends Api\Framework
 		// fix app admin menus to use admin.admin_ui.index loader
 		if (($type == 'admin' || $menu_title == lang('Admin')) && $appname != 'admin')
 		{
-			$file = preg_replace("/^(javascript:egw_link_handler\(')(.*)menuaction=([^&]+)(.*)(','[^']+'\))$/",
-				'$1$2menuaction=admin.admin_ui.index&load=$3$4&ajax=true\',\'admin\')', $file_was=$file);
+			foreach($file as &$link)
+			{
+				preg_match('/ajax=(true|false)/', $link, $ajax);
+				$link = preg_replace("/^(javascript:egw_link_handler\(')(.*)menuaction=([^&]+)(.*)(','[^']+'\))$/",
+					'$1$2menuaction=admin.admin_ui.index&load=$3$4&ajax=' . ($ajax[1] ? $ajax[1] : 'true') .'\',\'admin\')', $file_was=$link);
+			}
+			 
 		}
 
 		$this->sideboxes[$appname][$menu_title] = $file;
