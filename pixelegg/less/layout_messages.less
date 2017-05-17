@@ -20,13 +20,13 @@
 	top: 43px !important;
 	right:0px !important;
 	left: auto !important;
-	height: ~"calc(100% - 85px)";
+	height: ~"calc(100% - 115px)";
 	width: 300px !important;
 	position: absolute;
 	background: white;
 	box-shadow: -2px 1px 18px 1px silver;
     padding: 1em;
-	overflow-y: auto;
+
     /*Button*/
     input#egwpopup_ok_button,
     button#desktop_perms{
@@ -36,20 +36,51 @@
         &:hover {.Complete_Button_hover;}
         &:active {background-color: @color_positive_action_active !important;}
     }
+	#egwpopup_list::-webkit-scrollbar-track
+	{
+		-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+		background-color: #fafafa;
+	}
+
+	#egwpopup_list::-webkit-scrollbar
+	{
+		width: 4px;
+		background-color: #fafafa;
+	}
+
+	#egwpopup_list::-webkit-scrollbar-thumb
+	{
+		background-color: #6a6f71;
+	}
 	#egwpopup_list {
-		span.egwpopup_close {
-			display: block;
+		overflow-y: auto;
+		height: ~"calc(100% - 52px)";
+
+		span.egwpopup_delete {
+			display: inline-block;
 			float: right;
 			width: 24px;
 			height: 24px;
-			background-image: url(../images/close.png);
+			background-image: url(../images/delete.png);
 			background-repeat: no-repeat;
 			background-position: center;
+			background-size: 12px;
+			cursor: pointer;
+		}
+		.egwpopup_mark {
+			display: inline-block;
+			float: right;
+			width: 10px;
+			height: 10px;
+			border: 1px solid #666c6e;
+			border-radius: 50%;
+			margin: 7px;
+			background:#b9436c;
 			cursor: pointer;
 		}
 		.egwpopup_message {
 			padding: 10px;
-			background-color: #d9d9d9;
+			background-color: #fafafa;
 			border-radius: 3px;
 			margin-bottom: 10px;
 			&:hover {
@@ -57,7 +88,7 @@
 			}
 		}
 		.egwpopup_message_seen {
-			background-color: #fafafa;
+			.egwpopup_mark {cursor: auto;background:none;}
 		}
 	}
 	div#egwpopup_header {
@@ -153,7 +184,7 @@
     top: 9px;
     position: fixed;
     right: 109px;
-    border: 2px solid #656565;
+    border: 1px solid #656565;
     border-radius: 3px;
     text-align: center;
     color: #646464;
@@ -162,6 +193,7 @@
 #egwpopup_fw_notifications.egwpopup_notify {
 	color: white;
 	background: #b9436c;
+	border-color:#b9436c;
 }
 /*popup Messsage*/
  div#egwpopup_message {

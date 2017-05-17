@@ -63,7 +63,7 @@
 	 * Display notifications window
 	 */
 	notifications.prototype.display = function() {
-		var $egwpopup,$egwpopup_list, $message,	$close, $delete_all, $mark_all;
+		var $egwpopup,$egwpopup_list,$message,$mark,$delete,$delete_all,$mark_all;
 		$egwpopup = jQuery("#egwpopup");
 		$egwpopup_list = jQuery("#egwpopup_list");
 
@@ -77,14 +77,22 @@
 			}
 			$message = jQuery(document.createElement('div'))
 					.addClass('egwpopup_message')
-					.click(jQuery.proxy(this.message_seen, this))
 					.attr('id', message_id);
 			$message[0].innerHTML = notifymessages[show]['message'];
-			$close = jQuery(document.createElement('span'))
-					.addClass('egwpopup_close')
-					.attr('title',egw.lang('delete message'))
-					.click(jQuery.proxy(this.button_close, this))
+			$delete = jQuery(document.createElement('span'))
+					.addClass('egwpopup_delete')
+					.attr('title',egw.lang('delete this message'))
+					.click(jQuery.proxy(this.button_delete, this,[$message]))
 					.prependTo($message);
+			$mark = jQuery(document.createElement('span'))
+					.addClass('egwpopup_mark')
+					.prependTo($message);
+			if (notifymessages[show]['status'] != 'SEEN')
+			{
+
+				$mark.click(jQuery.proxy(this.message_seen, this,[$message]))
+					.attr('title',egw.lang('mark as read'));
+			}
 			// Activate links
 			jQuery('div[data-id],div[data-url]', $message).on('click',
 				function() {
@@ -99,6 +107,8 @@
 				}
 			).addClass('et2_link');
 			$egwpopup_list.append($message);
+			// bind click handler after the message container is attached
+			$message.click(jQuery.proxy(this.message_seen, this,[$message]));
 			this.update_message_status(show, notifymessages[show]['status']);
 		}
 		this.counterUpdate();
@@ -136,9 +146,10 @@
 	/**
 	 * Callback for OK button: confirms message on server and hides display
 	 */
-	notifications.prototype.message_seen = function(_event) {
-		var egwpopup_message = _event.target;
-		var id = egwpopup_message.id.replace(/egwpopup_message_/ig,'');
+	notifications.prototype.message_seen = function(_node, _event) {
+		_event.stopPropagation();
+		var egwpopup_message = _node[0];
+		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
 		var request = egw.json("notifications.notifications_ajax.update_status", [id, "SEEN"]);
 		request.sendRequest(true);
 		this.update_message_status(id, "SEEN");
@@ -185,14 +196,14 @@
 	/**
 	 * Callback for close button: close and mark all as read
 	 */
-	notifications.prototype.button_close = function(_event) {
+	notifications.prototype.button_delete = function(_node, _event) {
 		_event.stopPropagation();
-		var egwpopup_message = _event.target.parentNode;
-		var id = egwpopup_message.id.replace(/egwpopup_message_/ig,'');
+		var egwpopup_message = _node[0];
+		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
 		var request = egw.json("notifications.notifications_ajax.delete_message", [id]);
 		request.sendRequest(true);
 		delete (notifymessages[id]);
-		egwpopup_message.style.display = 'none';
+		egwpopup_message.hide();
 		this.bell("inactive");
 		this.counterUpdate();
 	};
