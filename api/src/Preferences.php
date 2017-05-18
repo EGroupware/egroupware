@@ -984,6 +984,8 @@ class Preferences
 		foreach(array(
 			$lang.'_'.$country,
 			$lang.'_'.$country_from_lang,
+			$lang.'_'.$country.'.utf8',
+			$lang.'_'.$country_from_lang.'utf8',
 			$lang,
 			'en_US',
 			'C',
