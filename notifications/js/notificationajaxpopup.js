@@ -39,7 +39,7 @@
 		egw.json(
 			"notifications.notifications_ajax.get_notifications",
 			this.check_browser_notify()
-		).sendRequest();
+		).sendRequest(true);
 	};
 
 	/**
@@ -147,7 +147,7 @@
 
 		for(var confirmed in notifymessages) break;
 		var request = egw.json("notifications.notifications_ajax.confirm_message", [confirmed]);
-		request.sendRequest();
+		request.sendRequest(true);
 		delete notifymessages[confirmed];
 
 		for(var id in notifymessages) break;
@@ -169,7 +169,7 @@
 			ids.push(id);
 		}
 		var request = egw.json("notifications.notifications_ajax.confirm_message", [ids]);
-		request.sendRequest();
+		request.sendRequest(true);
 		notifymessages = {};
 		var egwpopup = document.getElementById("egwpopup");
 		var egwpopup_message = document.getElementById("egwpopup_message");
@@ -230,7 +230,7 @@
 					// Wait a bit to let it load first, or it might not be there when requested.
 					window.setTimeout( function() {
 						var request = egw.json("notifications.notifications_ajax.confirm_message", _id);
-						request.sendRequest();
+						request.sendRequest(true);
 					}, 2000);
 				};
 				notice.show();
