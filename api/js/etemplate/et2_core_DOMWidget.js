@@ -258,7 +258,13 @@ var et2_DOMWidget = (function(){ "use strict"; return et2_widget.extend(et2_IDOM
 		if(typeof _node == "string")
 		{
 			var parent = jQuery('#'+_node);
-			if(parent.length == 0 )
+			if(parent.length === 0 && window.parent)
+			{
+				// Could not find it, try again with wider context
+				// (in case there's an iframe in admin, for example)
+				parent = jQuery('#'+_node, window.parent.document);
+			}
+			if(parent.length === 0)
 			{
 				this.egw().debug('warn','Unable to find DOM parent node with ID "%s" for widget %o.',_node,this);
 			}
