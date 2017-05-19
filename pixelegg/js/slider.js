@@ -52,7 +52,7 @@ function hide_pixelegg_header(_toggle, _delay)
 
         jQuery(".egw_fw_ui_tabs_header").css("height", "34px")
 			// Padding to adjust for icons left & right of the tabs
-			.css("padding", "1px 110px 0px 20px");
+			.css("padding", "1px 150px 0px 20px");
 
 
         //Tab
