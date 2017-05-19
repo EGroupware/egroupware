@@ -1885,6 +1885,12 @@ class Mail
 			{
 				$sortResult = $this->icServer->search($_folderName, $filter, array(
 					'sort' => $sortOrder,));
+
+				// Attempt another search without sorting filter if first try failed with
+				// no result, as may some servers do not coupe well with sort option
+				// eventhough they claim to support SORT capability.
+				if (!isset($sortResult['count'])) $sortResult = $this->icServer->search($_folderName, $filter);
+
 			// if there is an Error, we assume that the server is not capable of sorting
 			}
 			catch(\Exception $e)
