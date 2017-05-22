@@ -108,7 +108,7 @@
 			).addClass('et2_link');
 			$egwpopup_list.append($message);
 			// bind click handler after the message container is attached
-			$message.click(jQuery.proxy(this.message_seen, this,[$message]));
+			$message.click(jQuery.proxy(this.clickOnMessage, this,[$message]));
 			this.update_message_status(show, notifymessages[show]['status']);
 		}
 		this.counterUpdate();
@@ -125,6 +125,25 @@
 					jQuery(this).hide();
 				});
 			desktop_button.appendTo(jQuery(egwpopup_ok_button).parent());
+		}
+	};
+
+	notifications.prototype.clickOnMessage = function (_node, _event){
+		_event.stopPropagation();
+		this.message_seen(_node, _event);
+		if (_event.target.classList.contains('link')) return;
+		var egwpopup_message = _node[0];
+		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
+		if (notifymessages[id]['data'])
+		{
+			if (notifymessages[id]['data']['id'])
+			{
+				egw.open(notifymessages[id]['data']['id'], notifymessages[id]['data']['app']);
+			}
+			else
+			{
+				egw.open_link(notifymessages[id]['data']['url'],'_blank',notifymessages[id]['data']['popup']);
+			}
 		}
 	};
 
@@ -150,9 +169,12 @@
 		_event.stopPropagation();
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
-		var request = egw.json("notifications.notifications_ajax.update_status", [id, "SEEN"]);
-		request.sendRequest(true);
-		this.update_message_status(id, "SEEN");
+		if (notifymessages[id]['status'] !='SEEN')
+		{
+			var request = egw.json("notifications.notifications_ajax.update_status", [id, "SEEN"]);
+			request.sendRequest(true);
+			this.update_message_status(id, "SEEN");
+		}
 	};
 
 	notifications.prototype.mark_all_seen = function()
