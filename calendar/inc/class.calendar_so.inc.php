@@ -730,7 +730,7 @@ class calendar_so
 		{
 			$all_cols = self::get_columns('calendar', $this->cal_table);
 			$all_cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
-			$cols = "$this->repeats_table.recur_type,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,range_end AS recur_enddate,".implode(',',$all_cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
+			$cols = "$this->repeats_table.recur_type,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,range_end - 1 AS recur_enddate,".implode(',',$all_cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
 		}
 		$where = array();
 		if (is_array($params['query']))
