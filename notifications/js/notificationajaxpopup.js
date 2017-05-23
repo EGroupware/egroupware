@@ -106,6 +106,21 @@
 					}
 				}
 			).addClass('et2_link');
+			if (notifymessages[show]['data'] && notifymessages[show]['data']['actions'])
+			{
+				var $actions_container = jQuery(document.createElement('div')).addClass('egwpopup_actions_container');
+				for(var action in notifymessages[show].data.actions)
+				{
+					var func = new Function(notifymessages[show].data.actions[action].onExecute);
+					jQuery(document.createElement('button'))
+							.addClass('et2_button')
+							.css({'background-image':'url('+egw.image(notifymessages[show].data.actions[action].icon,notifymessages[show].data.app)+')'})
+							.text(notifymessages[show].data.actions[action].caption)
+							.click(jQuery.proxy(func,this))
+							.prependTo($actions_container);
+				}
+				$actions_container.prependTo($message);
+			}
 			$egwpopup_list.append($message);
 			// bind click handler after the message container is attached
 			$message.click(jQuery.proxy(this.clickOnMessage, this,[$message]));
@@ -131,7 +146,7 @@
 	notifications.prototype.clickOnMessage = function (_node, _event){
 		_event.stopPropagation();
 		this.message_seen(_node, _event);
-		if (_event.target.classList.contains('link')) return;
+		if (_node[0][0] !=_event.target) return;
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
 		if (notifymessages[id]['data'])
@@ -293,12 +308,14 @@
 	notifications.prototype.getData = function (_message) {
 		var dom = jQuery(document.createElement('div')).html(_message);;
 		var link = dom.find('div[data-id],div[data-url]');
+		var actions = dom.find('div[data-actions]');
 		var data = {
 			message: dom.text(),
 			title: link.text(),
 			icon: link.find('img').attr('src')
 		};
 		jQuery.extend(data,link.data());
+		if (actions.data()) jQuery.extend(data,actions.data());
 		return typeof data == 'object'? data: {};
 	};
 
