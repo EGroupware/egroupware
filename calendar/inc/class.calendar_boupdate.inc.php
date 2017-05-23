@@ -1220,11 +1220,15 @@ class calendar_boupdate extends calendar_bo
 			}
 			if (!empty($event['recur_enddate']))
 			{
-				$time = $this->so->startOfDay(new Api\DateTime($event['recur_enddate'], Api\DateTime::$user_timezone));
+				// all-day events are handled in server time
+				$time = $this->so->startOfDay(
+						new Api\DateTime($event['recur_enddate'], Api\DateTime::$user_timezone),
+						Api\DateTime::$server_timezone->getName()
+				);
 				$time->modify(($event['end'] - $event['start'] + 1).' seconds');
-				$event['recur_enddate'] = Api\DateTime::to($time, 'ts');
+				$event['recur_enddate'] = Api\DateTime::to($time, 'ts') - 1;
 				$time->setUser();
-				$save_event['recur_enddate'] = Api\DateTime::to($time, 'ts');
+				$save_event['recur_enddate'] = Api\DateTime::to($time, 'ts') - 1;
 			}
 			$timestamps = array('modified','created');
 			// all-day events are handled in server time
