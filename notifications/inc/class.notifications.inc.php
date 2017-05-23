@@ -155,6 +155,12 @@ final class notifications {
 	private $popup_links = array();
 
 	/**
+	 * array with objects of actions
+	 * @var array
+	 */
+	private $popup_actions = array();
+
+	/**
 	 * array with objects of attachments
 	 * @var array
 	 */
@@ -315,6 +321,7 @@ final class notifications {
 	public function set_popupmessage($_message) {
 		//popup requires html
 		if(strlen($_message) == strlen(strip_tags($_message))) $_message = self::plain2html($_message);
+		if ($this->popup_actions) $_message .= '<div data-actions='. json_encode($this->popup_actions).'></div>';
 		$this->message_popup = $_message;
 		return true;
 	}
@@ -343,7 +350,7 @@ final class notifications {
 		$this->popup_links = array(); // clear array if set
 		foreach($_links as $link) {
 			if(is_array($link)) {
-				$this->add_popuplink($link['text'], $link['view'], $link['popup']);
+				$this->add_popuplink($link['text'], $link['view'], $link['popup'], $link['app']);
 			}
 		}
 		return true;
@@ -376,12 +383,15 @@ final class notifications {
 	 * @param string $_text a descriptive text for the link
 	 * @param array $_view all params needed to view the link (name => value pairs)
 	 * @param string $_popup if link can be viewed in a popup something like '300x200' otherwise false
+	 * @param string $_app application name
 	 */
-	public function add_popuplink($_text, $_view, $_popup = false) {
+	public function add_popuplink($_text, $_view, $_popup = false, $_app = '') {
 		if(!$_view || !$_text) { return false; }
-		$this->popup_links[] = (object)array(	'text'	=> $_text,
+		$this->popup_links[] = (object)array(
+										'text'	=> $_text,
 										'view'	=> $_view,
 										'popup'	=> $_popup,
+										'app'	=> $_app
 										);
 		return true;
 	}
@@ -766,5 +776,33 @@ final class notifications {
 				call_user_func($backend_hook,$settings);
 			}
 		}
+	}
+
+	/**
+	 * Add action button to popup message
+	 * @param array $_action
+	 *
+	 * @return boolean
+	 */
+	public function add_popupaction($_action) {
+		if(!is_array($_action)) { return false; }
+		$this->popup_actions[] = (object)$_action;
+		return true;
+	}
+
+	/**
+	 * Set popup actions
+	 *
+	 * @param array $_actions
+	 * @return boolean
+	 */
+	public function set_popupactions($_actions) {
+		$this->popup_actions = array();
+		foreach($_actions as $action) {
+			if(is_array($action)) {
+				$this->add_popupaction($action);
+			}
+		}
+		return true;
 	}
 }

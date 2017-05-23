@@ -1045,8 +1045,33 @@ class calendar_boupdate extends calendar_bo
 						}
 						// popup notifiactions: set subject, different message (without separator) and (always) links
 						$notification->set_popupsubject($subject);
-						$notification->set_popupmessage($notify_body."\n\n".$details['description']."\n\n".$details_body);
-						$notification->set_popuplinks(array($details['link_arr']));
+
+						if ($method =='REQUEST')
+						{
+							// Add ACCEPT|REHECT|TENTATIVE actions
+							$notification->set_popupactions(array(
+								array(
+									'id' => 'A',
+									'caption' => lang('Accept'),
+									'icon' => 'accepted',
+									'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$event['id'].','.$userid.','.'"A"'.']).sendRequest(true);'
+								),
+								array(
+									'id' => 'R',
+									'caption' => lang('Reject'),
+									'icon' => 'rejected',
+									'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$event['id'].','.$userid.','.'"R"'.']).sendRequest(true);'
+								),
+								array(
+									'id' => 'T',
+									'caption' => lang('Tentative'),
+									'icon' => 'tentative',
+									'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$event['id'].','.$userid.','.'"T"'.']).sendRequest(true);'
+								)
+							));
+						}
+						$notification->set_popupmessage($response."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
+						$notification->set_popuplinks(array($details['link_arr']+array('app'=>'calendar')));
 
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
 						$notification->send();
