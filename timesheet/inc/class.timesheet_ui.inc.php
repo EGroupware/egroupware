@@ -496,11 +496,12 @@ class timesheet_ui extends timesheet_bo
 	function get_rows(&$query_in,&$rows,&$readonlys,$id_only=false)
 	{
 		$this->show_sums = false;
+		$end_date = false;
 
 		// Date filter
-		$end_date = $query_in['enddate'] ? $query_in['enddate'] : false;
-		if($end_date || $query_in['filter'] === 'custom')
+		if($query_in['filter'] === 'custom')
 		{
+			$end_date = $query_in['enddate'] ? $query_in['enddate'] : false;
 			$query_in['startdate'] = $query_in['startdate'] ? $query_in['startdate'] : 1;
 		}
 		$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$end_date);
@@ -530,14 +531,14 @@ class timesheet_ui extends timesheet_bo
 				case 'Saturday': $week_end_day = 'Friday'; break;
 			}
 			$filter_start_day = date('l',$query_in['startdate']+12*60*60);
-			$filter_end_day   = $query_in['enddate'] ? date('l',$query_in['enddate']+12*60*60) : false;
+			$filter_end_day   = $end_date ? date('l',$end_date+12*60*60) : false;
 			//echo "<p align=right>prefs: $week_start_day - $week_end_day, filter: $filter_start_day - $filter_end_day</p>\n";
 			if ($filter_start_day == $week_start_day && (!$filter_end_day || $filter_end_day == $week_end_day))
 			{
 				$this->show_sums[] = 'week';
 			}
 			// show day-sums, if range <= 5 weeks
-			if (!$query_in['enddate'] || $query_in['enddate'] - $query_in['startdate'] < 36*24*60*60)
+			if (!$end_date || $end_date - $query_in['startdate'] < 36*24*60*60)
 			{
 				$this->show_sums[] = 'day';
 			}
