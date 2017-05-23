@@ -235,7 +235,7 @@ class Favorites
 				'group' => $group ? $group : false,
 				'state' => $filters
 			);
-			$pref_name = "favorite_".preg_replace('/[^A-Za-z0-9-_]/','_',$name);
+			$pref_name = "favorite_".preg_replace('/[^A-Za-z0-9-_]/u','_',$name);
 			$result = $prefs->add($app,$pref_name,$filters,$type);
 			$pref = $prefs->save_repository(false,$type);
 
