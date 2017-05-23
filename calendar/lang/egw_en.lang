@@ -152,12 +152,12 @@ deleted	calendar	en	Deleted.
 deny ressources reservation for private events	calendar	en	Deny resources reservation for private events
 directory with documents to insert entries	calendar	en	Directory with documents to insert entries
 disinvited	calendar	en	Disinvited.
-distribution list	calendar	en	Distribution list
 display holidays or birthdays as events in dayview	calendar	en	Display holidays or birthdays as events in dayview
 display in header	calendar	en	Display in header
 display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	en	Displays this calendar view on the home page, the page you get when you enter EGroupware or click on the home page icon?
+distribution list	calendar	en	Distribution list
 do not include events of group members	calendar	en	Do not include events of group members
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	en	Do you really want to change the start of this series? If you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
@@ -228,6 +228,7 @@ find free timeslots where the selected participants are availible for the given 
 firstname of person to notify	calendar	en	First name of a person to notify
 for	calendar	en	for
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
+for which views should calendar just a list of events instead of distinct lines with a fixed time interval.	calendar	en	For which views should calendar just a list of events instead of distinct lines with a fixed time interval.
 for which views should calendar show distinct lines with a fixed time interval.	calendar	en	For which views should calendar show distinct lines with a fixed time interval.
 format of event updates	calendar	en	Format of event updates
 forward half a month	calendar	en	Forward half a month
@@ -267,8 +268,12 @@ holidays only	calendar	en	Holidays only
 hours	calendar	en	hours
 how far to search (from startdate)	calendar	en	How far to search (from start date)
 how many appointments should non-admins be able to export	admin	en	How many appointments should non-admins be able to export.
+how many days to sync in the future (default %1)	calendar	en	How many days to sync in the future (default %1)
+how many days to sync in the past (default %1)	calendar	en	How many days to sync in the past (default %1)
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	en	How many lines of all day events should be directly visible. Further lines are available via a mouseover.
 how many minutes should each interval last?	calendar	en	How many minutes should each interval last?
+how many seperate calendars to show before merging them together	calendar	en	How many seperate calendars to show before merging them together
 how many weeks should the multiple week view show?	calendar	en	How many weeks should the multiple week view show?
 how much entries to skip	calendar	en	How much entries to skip?
 html link to the current record	calendar	en	HTML link to the current record
@@ -298,6 +303,7 @@ invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calen
 invitations	calendar	en	Invitations
 invite	calendar	en	Invite
 it can not read timezones from sqlite database %1!	calendar	en	It can NOT read timezones from sqlite database %1!
+just me	calendar	en	Just me
 keep exceptions	calendar	en	Keep exceptions
 keep the series unchanged.	calendar	en	Keep the series unchanged.
 last	calendar	en	Last
@@ -305,6 +311,7 @@ last changed	calendar	en	Last changed
 lastname of person to notify	calendar	en	Last name of a person to notify
 length of the time interval	calendar	en	Length of the time interval
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	en	Limit number of description lines in list view. Default is 5, 0 for no limit.
+limit number of lines for all day events	calendar	en	Limit number of lines for all day events
 limit search for conflicts in recurrences to given number of recurrences	calendar	en	Limit search for conflicts in recurrences to given number of recurrences
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	en	Limit search for conflicts in recurrences to given time in seconds (default 3)
 link title for events to show	calendar	en	Link title for events to show
@@ -328,6 +335,8 @@ meeting request	calendar	en	Meeting request
 meetingrequest to all participants	calendar	en	Meetingrequest to all participants
 merge document...	calendar	en	Merge document...
 midnight	calendar	en	Midnight
+minimum number of users for showing day view as consolidated.	calendar	en	Minimum number of users for showing day view as consolidated.
+minimum number of users for showing week view as consolidated.	calendar	en	Minimum number of users for showing week view as consolidated.
 minutes	calendar	en	Minutes
 modified	calendar	en	Modified
 modifier	calendar	en	Modifier
@@ -342,6 +351,7 @@ name of current user, all other contact fields are valid too	calendar	en	Name of
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Name of the week, eg: Monday, available for the first entry inside each day of week or daily table inside the selected range.
 needs action	calendar	en	Needs action
 new	calendar	en	New
+new event participants	calendar	en	New event participants
 new search with the above parameters	calendar	en	New search with the above parameters
 no automatic purging	admin	en	No automatic purging
 no events found	calendar	en	No events found.
@@ -398,9 +408,9 @@ people holiday	calendar	en	People holiday
 permission denied	calendar	en	Permission denied.
 planner by category	calendar	en	Planner by category
 planner by user	calendar	en	Planner by user
+please first select participants on the left and then use plus button to add them	calendar	en	Please first select participants on the left and then use plus button to add them
 please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	en	Please note: conflict check is never done in the past and always limited by above recurrence horizont.
 please note: you can configure the field assignments after you uploaded the file.	calendar	en	Note: You can configure the field assignments AFTER you uploaded the file.
-please first select participants on the left and then use plus button to add them	calendar	en	Please first select participants on the left and then use plus button to add them
 preselected group for entering the planner	calendar	en	Pre-selected group for entering the planner
 prevent deleting of entries	admin	en	Prevent deleting of entries
 previous	calendar	en	Previous
@@ -460,6 +470,7 @@ select resources	calendar	en	Select resources
 select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	en	Select whether you want the participant status reset to unknown, if an event is shifted later on.
 select who should get the alarm	calendar	en	Select who should get the alarm
 selected range	calendar	en	Selected range
+selected users/groups	calendar	en	Selected users/groups
 send meetingrequest to all participants after the event is saved	calendar	en	Send meetingrequest to all participants after the event is saved
 series deleted	calendar	en	Series deleted
 set new events to private	calendar	en	Set new events to private
@@ -584,6 +595,7 @@ view exception	calendar	en	View exception
 view series	calendar	en	View series
 view settings	calendar	en	View settings
 view this event	calendar	en	View this event
+views showing a list of events	calendar	en	Views showing a list of events
 views with fixed time intervals	calendar	en	Views with fixed time intervals
 wed	calendar	en	Wed
 week	calendar	en	Week

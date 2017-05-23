@@ -152,12 +152,12 @@ deleted	calendar	de	Gelöscht
 deny ressources reservation for private events	calendar	de	Verbiete die Reservierung von Ressourcen für private Termine
 directory with documents to insert entries	calendar	de	Verzeichnis mit Dokumenten zum Einfügen von Kalendereinträgen
 disinvited	calendar	de	Ausgeladen
-distribution list	calendar	de	Verteilerliste
 display holidays or birthdays as events in dayview	calendar	de	Zeige Feier- oder Geburtstage in der Tagesansicht als Termine
 display in header	calendar	de	Im Titel anzeigen
 display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	de	Zeigt diese Ansicht auf der Startseite (Seite die Sie bekommen wenn Sie EGroupware starten oder das Home Icon anklicken)?
+distribution list	calendar	de	Verteilerliste
 do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	de	Wollen Sie wirklich den Beginn dieses Serientermins ändern? Wenn Sie das tun, so wird die bestehende Serie %1 beendet und für die Zukunft ein neuer Wiederholungstermin mit Ihren Änderungen erzeugt.
 do you want a weekview with or without weekend?	calendar	de	Möchten Sie eine Wochenansicht mit oder ohne Wochenende?
@@ -228,6 +228,7 @@ find free timeslots where the selected participants are availible for the given 
 firstname of person to notify	calendar	de	Vorname der zu benachrichtigenden Person
 for	calendar	de	für
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	de	Für den Seriendruck wählen Sie diesen Platzhalter. Fügen die den Inhalt zwischen zwei Platzhaltern ein.
+for which views should calendar just a list of events instead of distinct lines with a fixed time interval.	calendar	de	Für welche Ansichten soll der Kalender einzelne Zeilen mit festen Zeitintervallen anzeigen, anstatt der Darstellung mit den Uhrzeiten?
 for which views should calendar show distinct lines with a fixed time interval.	calendar	de	Für welche Ansichten soll der Kalender einzelne Zeilen mit festen Zeitintervallen anzeigen.
 format of event updates	calendar	de	Format der Benachrichtigungen
 forward half a month	calendar	de	einen halben Monat weiter
@@ -267,8 +268,12 @@ holidays only	calendar	de	Nur Feiertage
 hours	calendar	de	Stunden
 how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
 how many appointments should non-admins be able to export	admin	de	Wie viele Termine sollen Nicht-Administratoren exportieren können?
+how many days to sync in the future (default %1)	calendar	de	Wieviele Tage in die Zukunft sollen gesynct werden (Vorgabe %1)
+how many days to sync in the past (default %1)	calendar	de	Wieviele Tage in die Vergangenheit sollen gesynct werden (Vorgabe %1)
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	de	Wie viele Zeilen der Beschreibung sollen direkt sichtbar sein (Rest über die Scrollbalken)?
+how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	de	Wie viele Zeilen ganztägiger Termine sollen direkt sichtbar sein? Der Rest wird als Tooltip angezeigt.
 how many minutes should each interval last?	calendar	de	Wie viele Minuten soll jedes Intervall dauern?
+how many seperate calendars to show before merging them together	calendar	de	Wie viele getrennte Kalender sollen angezeigt werden, bevor alles zusammen gefügt wird in einer ansicht für alle ausgewählten Teilnehmer.
 how many weeks should the multiple week view show?	calendar	de	Wie viele Wochen soll die Mehrwochenansicht zeigen?
 how much entries to skip	calendar	de	Wie viele Einträge sollen übersprungen werden
 html link to the current record	calendar	de	HTML-Link zum aktuellen Datensatz
@@ -298,6 +303,7 @@ invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calen
 invitations	calendar	de	Einladungen
 invite	calendar	de	Einladen
 it can not read timezones from sqlite database %1!	calendar	de	Es ist NICHT möglich die Zeitzonen der sqlite Datenbank %1 zu lesen!
+just me	calendar	de	Nur ich
 keep exceptions	calendar	de	Ausnahmen behalten
 keep the series unchanged.	calendar	de	Terminserie unverändert lassen
 last	calendar	de	letzte
@@ -305,6 +311,7 @@ last changed	calendar	de	letzte Änderung
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length of the time interval	calendar	de	Länge des Zeitintervalls
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	de	Anzahl Zeilen der Beschreibung in der Listenansicht (voreingestellt 5, 0 für alle)
+limit number of lines for all day events	calendar	de	Anzahl ganztägige Termine begrenzen
 limit search for conflicts in recurrences to given number of recurrences	calendar	de	Begrenze Suche nach Terminkonflikten auf die angegebene Anzahl Wiederholungen
 limit search for conflicts in recurrences to given time in seconds (default 3)	calendar	de	Begrenze Suche nach Terminkonflikten auf die angegebene Zeit in Sekunden (Vorgabe 3)
 link title for events to show	calendar	de	Erweiterung des Link-Titels für Kalender-Einträge
@@ -328,6 +335,8 @@ meeting request	calendar	de	Terminanfrage
 meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer
 merge document...	calendar	de	Dokument einfügen...
 midnight	calendar	de	Mitternacht
+minimum number of users for showing day view as consolidated.	calendar	de	Minimale Anzahl ausgewählten Benutzer, die dann in der Tagesansicht zusammengefasst angezeigt werden (keine einzelnen Kalender mehr)
+minimum number of users for showing week view as consolidated.	calendar	de	Minimale Anzahl ausgewählten Benutzer, die dann in der Wochenansicht zusammengefasst angezeigt werden (keine einzelnen Kalender mehr)
 minutes	calendar	de	Minuten
 modified	calendar	de	Geändert
 modifier	calendar	de	Geändert von
@@ -342,6 +351,7 @@ name of current user, all other contact fields are valid too	calendar	de	Name de
 name of the week (ex: monday), available for the first entry inside each day of week or daily table inside the selected range.	calendar	de	Name der Woche (ab Montag), verfügbar für den ersten Eintrag für jeden Tag der Woche oder für die tägliche Tabelle innerhalb des ausgewählten Zeitraums.
 needs action	calendar	de	Zu erledigen
 new	calendar	de	Neu
+new event participants	calendar	de	Teilnehmerauswahl für neue Termine
 new search with the above parameters	calendar	de	neue Suche mit den obigen Parametern
 no automatic purging	admin	de	Keine automatische Bereinigung alter Termine
 no events found	calendar	de	Keine Termine gefunden
@@ -398,9 +408,9 @@ people holiday	calendar	de	Feiertag
 permission denied	calendar	de	Zugriff verweigert
 planner by category	calendar	de	Planer nach Kategorien
 planner by user	calendar	de	Planer nach Benutzern
+please first select participants on the left and then use plus button to add them	calendar	de	Bitte erst links Teilnehmer auswählen um dann mit dem +-Knopf hinzufügen
 please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	de	Bitte beachten: Konfliktprüfung findet nie in der Vergangenheit statt und ist immer durch den obigen Wiederholungs-Bereich beschränkt.
 please note: you can configure the field assignments after you uploaded the file.	calendar	de	Bitte beachten: Die Feldzuordnung kann NACH dem Hochladen der Datei konfiguriert werden.
-please first select participants on the left and then use plus button to add them	calendar	de	Bitte erst links Teilnehmer auswählen um dann mit dem +-Knopf hinzufügen
 preselected group for entering the planner	calendar	de	Vorausgewählte Gruppe beim Planer-Aufruf
 prevent deleting of entries	admin	de	Das Löschen von Einträgen verhindern
 previous	calendar	de	vorherig
@@ -460,6 +470,7 @@ select resources	calendar	de	Ressourcen auswählen
 select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
 selected range	calendar	de	Ausgewählter Zeitraum
+selected users/groups	calendar	de	Ausgewählte Benutzer/Gruppen
 send meetingrequest to all participants after the event is saved	calendar	de	Terminanforderung an alle Teilnehmer senden nachdem der Termin gespeichert wurde
 series deleted	calendar	de	Serientermin wurde gelöscht
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
@@ -584,6 +595,7 @@ view exception	calendar	de	Ausnahme anzeigen
 view series	calendar	de	Terminserie anzeigen
 view settings	calendar	de	Einträge anzeigen
 view this event	calendar	de	Diesen Termin anzeigen
+views showing a list of events	calendar	de	Ansichten als Listenansicht analog Monatsansicht
 views with fixed time intervals	calendar	de	Ansichten mit festen Zeitintervallen
 wed	calendar	de	Mi
 week	calendar	de	Woche
