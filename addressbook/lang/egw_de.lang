@@ -198,7 +198,9 @@ don't hide empty columns	addressbook	de	Leere Spalten nicht ausblenden
 download	addressbook	de	Herunterladen
 download export file (uncheck to debug output in browser)	addressbook	de	Download Export-Datei (zur Vorschau im Browser Ankreuzfeld frei lassen)
 download this contact as vcard file	addressbook	de	Diese Adresse als vCard Datei herunterladen
+duplicate threshold	addressbook	de	Treffer für Anzeige als Duplikat
 duplicate warning	addressbook	de	Duplikat-Warnung
+duplicates	addressbook	de	Duplikate
 duration	addressbook	de	Dauer
 each category in its own field	addressbook	de	Jede Kategorie in einem eigenen Feld
 each option in its own field	addressbook	de	Jede Option in einem eigenen Feld
@@ -252,6 +254,8 @@ field %1 has been updated !	addressbook	de	Feld %1 wurde aktualisiert !
 field name	addressbook	de	Feldname
 fields for the csv export	addressbook	de	Felder für den CSV Export
 fields the user is allowed to edit himself	admin	de	Felder, die der Benutzer selbst bearbeiten darf
+fields to check for duplicates	addressbook	de	Felder zur Prüfung auf Duplikate
+fields to consider when looking for duplicate contacts.	addressbook	de	Welche Felder sollen für die Prüfung als Duplikat berücksichtigt werden
 fields to copy when copying an address?	admin	de	Welche Felder sollen beim Kopieren berücksichtigt werden?
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
@@ -283,6 +287,7 @@ home state	addressbook	de	Bundesland privat
 home street	addressbook	de	Straße privat
 home zip code	addressbook	de	PLZ privat
 how many contacts should non-admins be able to export	admin	de	Wie viele Kontakte sollen Nicht-Adminstratoren exportieren können?
+how many fields must match for the record to be considered a duplicate.	addressbook	de	Wie viele Felder müssen mindestens übereinstimmen, damit Kontakte als Duplikate angezeigt werden
 html link to the current record	addressbook	de	HTML-Link zum aktuellen Datensatz
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
@@ -335,6 +340,7 @@ main categories in their own field	addressbook	de	Haupkategorien in einem eigene
 manage mapping	addressbook	de	Feldzuordnungen verwalten
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 merge contacts	addressbook	de	Kontakte vereinigen
+merge duplicates	addressbook	de	Duplikate vereinigen
 merge into first or account, deletes all other!	addressbook	de	Vereinige im ersten oder Benutzerkonto, löscht alle anderen !
 merged	addressbook	de	vereinigt
 message after submitting the form	addressbook	de	Nachricht nach dem Versenden des Formulars

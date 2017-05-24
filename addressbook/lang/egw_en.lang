@@ -198,7 +198,9 @@ don't hide empty columns	addressbook	en	Hide empty columns
 download	addressbook	en	Download
 download export file (uncheck to debug output in browser)	addressbook	en	Download export file. Un-check to debug output in browser.
 download this contact as vcard file	addressbook	en	Download this contact as vCard file
+duplicate threshold	addressbook	en	Duplicate threshold
 duplicate warning	addressbook	en	Duplicate warning
+duplicates	addressbook	en	Duplicates
 duration	addressbook	en	Duration
 each category in its own field	addressbook	en	Each category in its own field
 each option in its own field	addressbook	en	Each option in its own field
@@ -252,6 +254,8 @@ field %1 has been updated !	addressbook	en	Field %1 has been updated!
 field name	addressbook	en	Field name
 fields for the csv export	addressbook	en	Fields for the CSV export
 fields the user is allowed to edit himself	admin	en	Fields the user is allowed to edit himself
+fields to check for duplicates	addressbook	en	Fields to check for duplicates
+fields to consider when looking for duplicate contacts.	addressbook	en	Fields to consider when looking for duplicate contacts.
 fields to copy when copying an address?	admin	en	Fields to copy when copying an address
 fields to show in address list	addressbook	en	Fields to show in address list
 fieldseparator	addressbook	en	Fieldseparator
@@ -283,6 +287,7 @@ home state	addressbook	en	Home state
 home street	addressbook	en	Home street
 home zip code	addressbook	en	Home ZIP code
 how many contacts should non-admins be able to export	admin	en	How many contacts should non-admins be able to export.
+how many fields must match for the record to be considered a duplicate.	addressbook	en	How many fields must match for the record to be considered a duplicate.
 html link to the current record	addressbook	en	HTML link to the current record
 icon	addressbook	en	Icon
 if accounts are already in ldap	admin	en	If accounts are already in LDAP
@@ -335,6 +340,7 @@ main categories in their own field	addressbook	en	Main categories in their own f
 manage mapping	addressbook	en	Manage mapping
 mark records as private	addressbook	en	Mark records as private
 merge contacts	addressbook	en	Merge contacts
+merge duplicates	addressbook	en	Merge duplicates
 merge into first or account, deletes all other!	addressbook	en	Merge into first or account, deletes all other!
 merged	addressbook	en	Merged
 message after submitting the form	addressbook	en	Message after submitting the form
@@ -407,7 +413,7 @@ region	addressbook	en	Region
 remove from distribution list	addressbook	en	Remove from distribution list
 remove selected contacts from distribution list	addressbook	en	Remove selected contacts from distribution list.
 removed from distribution list	addressbook	en	Removed from distribution list.
-Rename selected distribution list	addressbook	en	Rename selected distribution list
+rename selected distribution list	addressbook	en	Rename selected distribution list
 repetition	addressbook	en	Repetition
 replacements for inserting contacts into documents	addressbook	en	Replacements for inserting contacts into documents
 required fields *	addressbook	en	Required fields *
