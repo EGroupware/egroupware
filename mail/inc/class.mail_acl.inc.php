@@ -389,7 +389,7 @@ class mail_acl
 				if($keys !== count($content['grid']))
 				{
 					array_push($validator, $keys);
-					$msg = lang("Error:Could not save the ACL! Because some names are empty!");
+					$msg = lang("Could not save the ACL because some names are empty");
 				}
 			}
 		}

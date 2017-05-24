@@ -255,7 +255,7 @@ class mail_hooks
 			),
 			'disableRulerForSignatureSeparation' => array(
 				'type'   => 'select',
-				'label'  => 'disable Ruler for separation of mailbody and signature',
+				'label'  => 'disable horizontal rule for separation of mail body from signature',
 				'help'   => 'Turn off horizontal line between signature and composed message (this is not according to RFC).<br>If you use templates, this option is only applied to the text part of the message.',
 				'name'   => 'disableRulerForSignatureSeparation',
 				'values' => $no_yes,

@@ -1928,7 +1928,7 @@ app.classes.mail = AppJS.extend(
 		}
 		else
 		{
-			this.egw.message(this.egw.lang('canceled deletion due to userinteraction'));
+			this.egw.message(this.egw.lang('canceled deletion due to user interaction'));
 			this.mail_removeRowClass(messageList,'deleted');
 		}
 		this.mail_refreshMessageGrid();

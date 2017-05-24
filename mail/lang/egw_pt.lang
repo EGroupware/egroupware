@@ -38,7 +38,7 @@ can not open imap connection	mail	pt	Não é possível abrir conexão IMAP
 changed profile	mail	pt	perfil alterado
 check message against next rule also	mail	pt	Verifique mensagem contra seguinte regra também
 check to save as infolog on send	mail	pt	verificar para salvar como infolog em enviar
-check to save as trackerentry on send	mail	pt	verificar para salvar como trackerentry em enviar
+check to save as tracker entry on send	mail	pt	verificar para salvar como trackerentry em enviar
 common acl	mail	pt	ACL comum
 compose	mail	pt	Compor
 compose as new	mail	pt	Compor como novo
@@ -259,7 +259,7 @@ read	mail	pt	ler
 read / unread	mail	pt	Lido / não lido
 readable	mail	pt	legível
 reason!	mail	pt	razão!
-recieve notification	mail	pt	Receber notificação
+receive notification	mail	pt	Receber notificação
 recursively	mail	pt	Recursively
 refresh time in minutes	mail	pt	Actualizar (em minutos)
 refused to delete folder inbox	mail	pt	Recursively

@@ -45,9 +45,9 @@ by date	mail	nl	op datum
 can not open imap connection	mail	nl	Kan IMAP verbinding niet openen
 changed profile	mail	nl	Veranderd Profiel
 check message against next rule also	mail	nl	Controleer het bercicht ook met de volgende regel
-check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	nl	Selecteer dit vakje, als u een melding wilt ontvangen als het bericht is gelezen (Let op : niet alle mail programma's ondersteunen of je een bevestiging kunt krijgen van de ontvanger dat hij of zij het bericht heeft gelezen)
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	nl	Selecteer dit vakje, als u een melding wilt ontvangen als het bericht is gelezen (Let op : niet alle mail programma's ondersteunen of je een bevestiging kunt krijgen van de ontvanger dat hij of zij het bericht heeft gelezen)
 check to save as infolog on send	mail	nl	selecteer om ook als infolog te bewaren
-check to save as trackerentry on send	mail	nl	selecteer om ook als invoer voor tracker te bewaren
+check to save as tracker entry on send	mail	nl	selecteer om ook als invoer voor tracker te bewaren
 choose file	mail	nl	Kies bestand
 common acl	mail	nl	ACL Standaard
 compose	mail	nl	Schrijf nieuw bericht
@@ -67,7 +67,7 @@ convert only mail to item (ignore possible attachments)	mail	nl	Converteer allee
 copied %1 message(s) from %2 to %3	mail	nl	Kopieer %1 bericht(en) van %2 naar %3
 copy to	mail	nl	Kopieer naar
 could not append message:	mail	nl	Kon niet aan bericht toevoegen:
-could not save the acl! because some names are empty!	mail	nl	Kon niet naar ACL opslaan ! Omdat sommige namen leeg zijn !
+could not save the acl because some names are empty	mail	nl	Kon niet naar ACL opslaan ! Omdat sommige namen leeg zijn !
 create new account	mail	nl	Maak een nieuwe gebruiker aan
 currently:	mail	nl	Momenteel:
 date(newest first)	mail	nl	Datum (meest recente eerst)
@@ -82,7 +82,7 @@ deleted %1 messages in %2	mail	nl	verwijder %1 bericht(en) in %2
 deleted!	mail	nl	verwijdert!
 deny certain groups access to following features	mail	nl	Weiger bepaalde groepen toegang tot de volgende eigenschappen
 disable	mail	nl	Zet uit
-disable ruler for separation of mailbody and signature	mail	nl	Zet liniaal uit voor het scheiden in berichten van hoofdtekst en handtekening
+disable horizontal rule for separation of mail body from signature	mail	nl	Zet liniaal uit voor het scheiden in berichten van hoofdtekst en handtekening
 disabled!	mail	nl	Niet actief!
 discard	mail	nl	negeer
 discard message	mail	nl	Negeer bericht
@@ -137,7 +137,7 @@ error: could not save message as draft	mail	nl	Fout: Bericht kon niet worden opg
 error: could not save rule	mail	nl	Fout: Kon regel niet bewaren
 error: could not send message.	mail	nl	Fout: Kon bericht niet verzenden
 error: message could not be displayed.	mail	nl	Fout: Bericht kan niet worden getoond
-error:could not save the acl! because some names are empty!	mail	nl	Fout: Kan de ACL niet bewaren! Sommige namen zijn leeg !
+error:could not save the acl because some names are empty	mail	nl	Fout: Kan de ACL niet bewaren! Sommige namen zijn leeg !
 esync will fail without a working email configuration!	mail	nl	eSync zal NIET WERKEN zonder een eMail configuratie
 event details follow	mail	nl	Afspraak details volgen
 everyone	mail	nl	Iedereen
@@ -308,7 +308,7 @@ read	mail	nl	Lezen
 read / unread	mail	nl	Lezen / Niet gelezen
 readable	mail	nl	Beschrijfbaar
 reason!	mail	nl	reden !
-recieve notification	mail	nl	Ontvangst bevestiging
+receive notification	mail	nl	Ontvangst bevestiging
 recursively	mail	nl	Recursief
 refresh time in minutes	mail	nl	Ververstijd in minuten
 refused to delete folder inbox	mail	nl	Het verwiijderen van INBOX is geweigerd

@@ -178,7 +178,7 @@ class mail_compose
 				'icon' => 'to_tracker',
 				'group' => $group,
 				'checkbox' => true,
-				'hint' => 'check to save as trackerentry on send',
+				'hint' => 'check to save as tracker entry on send',
 				'onExecute' => 'javaScript:app.mail.compose_setToggle',
 				'mail_import' => Api\Hooks::single(array('location' => 'mail_import'),'tracker'),
 			),
@@ -195,7 +195,7 @@ class mail_compose
 				'icon' => 'high',
 				'group' => ++$group,
 				'checkbox' => true,
-				'hint' => 'check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)',
+				'hint' => 'check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)',
 				'onExecute' => 'javaScript:app.mail.compose_setToggle'
 			),
 			'prty' => array(

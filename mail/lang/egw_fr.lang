@@ -56,14 +56,14 @@ before reply, visible during compose	mail	fr	Avant la réponse, visible pendant 
 but check shared folders	mail	fr	sauf les dossiers partagés sélectionnés
 by date	mail	fr	Par date
 can not open imap connection	mail	fr	Ne peut pas ouvrir de connexion IMAP
-canceled deletion due to userinteraction	mail	fr	Suppression annulée par une interaction utilisateur
+canceled deletion due to user interaction	mail	fr	Suppression annulée par une interaction utilisateur
 change editor type	mail	fr	changer l'éditeur vers le mode HTML
 changed profile	mail	fr	Profil changé
 check message against next rule also	mail	fr	vérifiez le message avec la prochaine règle également
-check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	fr	cocher pour recevoir une notification lorsque le message est lu (note : tous les clients de messagerie ne supportent pas cette fonction et tous les destinataires n'autorisent pas la notification)
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	fr	cocher pour recevoir une notification lorsque le message est lu (note : tous les clients de messagerie ne supportent pas cette fonction et tous les destinataires n'autorisent pas la notification)
 check to save as calendar event on send	mail	fr	cocher pour sauvegarder comme Evénement après l'envoi
 check to save as infolog on send	mail	fr	cocher pour sauvegarder comme Infolog après l'envoi
-check to save as trackerentry on send	mail	fr	cocher pour sauvegarder comme Traqueur après l'envoi
+check to save as tracker entry on send	mail	fr	cocher pour sauvegarder comme Traqueur après l'envoi
 choose file	mail	fr	Sélectionner un fichier
 common acl	mail	fr	ACL communs
 compose	mail	fr	Composer
@@ -84,7 +84,7 @@ convert only mail to item (ignore possible attachments)	mail	fr	ne convertir que
 copied %1 message(s) from %2 to %3	mail	fr	%1 message(s) copié(s) de %2 vers %3
 copy to	mail	fr	Copier vers
 could not append message:	mail	fr	Impossible d'ajouter au message:
-could not save the acl! because some names are empty!	mail	fr	Echec à l'enregistrement de l'ACL ! Certains noms sont vides !
+could not save the acl because some names are empty	mail	fr	Echec à l'enregistrement de l'ACL ! Certains noms sont vides !
 create new account	mail	fr	Créer un nouveau compte
 current folder	mail	fr	Dossier actif
 currently:	mail	fr	Actuellement :
@@ -104,7 +104,7 @@ deleting folders	mail	fr	Suppression de dossier
 deny certain groups access to following features	mail	fr	Refuser à certains groupes l'accès aux fonctions suivantes
 directories have to be shared.	mail	fr	Les dossiers doivent être partagés.
 disable	mail	fr	Désactiver
-disable ruler for separation of mailbody and signature	mail	fr	Désactiver la barre de séparation entre le corps et la signature
+disable horizontal rule for separation of mail body from signature	mail	fr	Désactiver la barre de séparation entre le corps et la signature
 disable use of flowed lines in plain text mails (rfc3676)	mail	fr	Désactiver l'utilisation de "flowed lines" dans le mails en texte brut (RFC3676)
 disabled!	mail	fr	désactivé !
 discard	mail	fr	annuler
@@ -122,7 +122,7 @@ do you really want to delete folder %1 ?	mail	fr	Voulez-vous vraiment supprimer 
 do you really want to delete this rule	mail	fr	Voulez-vous vraiment supprimer cette règle ?
 do you really want to mark all messages as read in the current folder?	mail	fr	Voulez-vous vraiment marquer TOUS les messages de ce dossier comme "lus" ?
 do you really want to remove all labels from all messages in the current folder?	mail	fr	Voulez-vous vraiment supprimer TOUS les labels de TOUS le message du dossier actif ?
-do you really want to remove all rights from this account	mail	fr	Voulez-vous vraiment supprimer tous les droits de ce compte ?
+do you really want to remove all rights from this account?	mail	fr	Voulez-vous vraiment supprimer tous les droits de ce compte ?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	fr	Voulez-vous recevoir une notification de confirmation avant de déplacer les messages sélectionnés dans un autre dossier ?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	fr	Voulez-vous prévenir l'édition/configuration des règles de filtrages (même si SIEVE est activé) ?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	fr	Voulez-vous prévenir l'édition/configuration de la notification par email à d'autres adresses emails si des emails arrivent (même si SIEVE est activé) ?
@@ -166,7 +166,6 @@ error: could not save message as draft	mail	fr	Erreur : impossible d'enregistrer
 error: could not save rule	mail	fr	Erreur : impossible d'enregistrer la règle.
 error: could not send message.	mail	fr	Erreur : impossible d'envoyer le message
 error: message could not be displayed.	mail	fr	ERREUR : Impossible d'afficher le message.
-error:could not save the acl! because some names are empty!	mail	fr	Erreur : impossible d'enregister l'ACL ! Certains noms sont vides !
 esync will fail without a working email configuration!	mail	fr	eSync ne peut fonctionner sans une configuration email fonctionnelle !
 event details follow	mail	fr	Les détails de l'événement suivent
 everyone	mail	fr	Tout le monde
@@ -343,7 +342,7 @@ read	mail	fr	Lu
 read / unread	mail	fr	Lu / Non lu
 readable	mail	fr	lisible
 reason!	mail	fr	motif !
-recieve notification	mail	fr	Recevoir une notification
+receive notification	mail	fr	Recevoir une notification
 recursively	mail	fr	Récursivement
 refresh time in minutes	mail	fr	Temps de rafraîchissement en minutes
 refused to delete folder inbox	mail	fr	Impossible de supprimer le dossier "boîte de réception"

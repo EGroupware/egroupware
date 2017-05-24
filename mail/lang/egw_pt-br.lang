@@ -38,7 +38,7 @@ can not open imap connection	mail	pt-br	Não é possível abrir conexão IMAP
 changed profile	mail	pt-br	perfil alterado
 check message against next rule also	mail	pt-br	Verifique mensagem contra seguinte regra também
 check to save as infolog on send	mail	pt-br	verificar para salvar como infolog em enviar
-check to save as trackerentry on send	mail	pt-br	verificar para salvar como trackerentry em enviar
+check to save as tracker entry on send	mail	pt-br	verificar para salvar como trackerentry em enviar
 common acl	mail	pt-br	ACL comum
 compose	mail	pt-br	Compor
 compose as new	mail	pt-br	Compor como novo

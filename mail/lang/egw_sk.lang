@@ -55,14 +55,14 @@ before reply, visible during compose	mail	sk	Pred odpoveď, viditeľné počas p
 but check shared folders	mail	sk	ale skontrolovať zdieľané priečinky
 by date	mail	sk	podľa dátumu
 can not open imap connection	mail	sk	Nedá sa otvoriť spojenie IMAP
-canceled deletion due to userinteraction	mail	sk	odstraňovanie zrušené kvôli aktivite používateľa
+canceled deletion due to user interaction	mail	sk	odstraňovanie zrušené kvôli aktivite používateľa
 change editor type	mail	sk	prepnúť editor do režimu HTML
 changed profile	mail	sk	zmenený profil
 check message against next rule also	mail	sk	skontrolovať správu aj voči ďalšiemu pravidlu
-check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	sk	Zaškrtnite, ak chcete dostať potvrdenie o prečítaní správy (poznámka: nepodporujú to všetci poštoví klienti a adresát nemusí povoliť odoslanie ptvrdenia)
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	sk	Zaškrtnite, ak chcete dostať potvrdenie o prečítaní správy (poznámka: nepodporujú to všetci poštoví klienti a adresát nemusí povoliť odoslanie ptvrdenia)
 check to save as calendar event on send	mail	sk	zaškrtnite, ak chcete pri odoslaní uložiť ako udalosť
 check to save as infolog on send	mail	sk	zaškrtnite, ak to chcete pri odoslaní uložiť ako položku Záznamníka
-check to save as trackerentry on send	mail	sk	zaškrtnite, ak to chcete pri odoslaní uložiť ako položku Sledovača
+check to save as tracker entry on send	mail	sk	zaškrtnite, ak to chcete pri odoslaní uložiť ako položku Sledovača
 choose file	mail	sk	Vyberte súbor
 common acl	mail	sk	Bežné ACL
 compose	mail	sk	Nová správa
@@ -83,7 +83,7 @@ convert only mail to item (ignore possible attachments)	mail	sk	Konvertovať iba
 copied %1 message(s) from %2 to %3	mail	sk	skopírovaných %1 správ z %2 do %3
 copy to	mail	sk	Kopírovať do
 could not append message:	mail	sk	Nepodarilo sa pripojiť správu:
-could not save the acl! because some names are empty!	mail	sk	Nepodarilo sa uložiť ACL! Pretože niektoré mená sú prázdne!
+could not save the acl because some names are empty	mail	sk	Nepodarilo sa uložiť ACL! Pretože niektoré mená sú prázdne!
 create new account	mail	sk	Vytvoriť nový účet
 current folder	mail	sk	Aktuálny priečinok
 currently:	mail	sk	Aktuálne:
@@ -102,7 +102,7 @@ deleting folders	mail	sk	Odstraňujú sa priečinky
 deny certain groups access to following features	mail	sk	Zakázať niektorým skupinám prístup k nasledovným funkciám
 directories have to be shared.	mail	sk	Priečinky sa musia zdieľať
 disable	mail	sk	Vypnúť
-disable ruler for separation of mailbody and signature	mail	sk	Vypnúť pravítko oddeľujúce telo správy a podpis
+disable horizontal rule for separation of mail body from signature	mail	sk	Vypnúť pravítko oddeľujúce telo správy a podpis
 disable use of flowed lines in plain text mails (rfc3676)	mail	sk	Zakázať používanie plávajúcich riadkov v plaintextových správach (RFC3676)
 disabled!	mail	sk	vypnuté!
 discard	mail	sk	Zahodiť
@@ -120,7 +120,7 @@ do you really want to delete folder %1 ?	mail	sk	Naozaj chcete ODSTRÁNIŤ prie�
 do you really want to delete this rule	mail	sk	Naozaj chcete ODSTRÁNIŤ toto pravidlo?
 do you really want to mark all messages as read in the current folder?	mail	sk	Naozaj chcete označiť VŠETKY správy v súčasnom priečinku ako prečítané?
 do you really want to remove all labels from all messages in the current folder?	mail	sk	Naozaj chcete odstrániť VŠETKY menovky zo VŠETKÝCH správ v súčasnom priečinku?
-do you really want to remove all rights from this account	mail	sk	Naozaj chcete odstrániť všetky práva z tohto účtu?
+do you really want to remove all rights from this account?	mail	sk	Naozaj chcete odstrániť všetky práva z tohto účtu?
 do you really want to toggle flag %1 for all messages in the current view?	mail	sk	Naozaj chcete nastaviť značku %1 pre VŠETKY správy v súčasnom zobrazení?
 do you really want to toggle label %1 for all messages in the current view?	mail	sk	Naozaj chcete nastaviť menovku %1 pre VŠETKY správy v súčasnom zobrazení?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	sk	Vyžadovať potvrdenie pred priložením vybraných správ k e-mailu?
@@ -167,7 +167,6 @@ error: could not save message as draft	mail	sk	Chyba: Nepodarilo sa uložiť spr
 error: could not save rule	mail	sk	Chyba: Nepodarilo sa uložiť pravidlo.
 error: could not send message.	mail	sk	Chyba: Nepodarilo sa odoslať správu.
 error: message could not be displayed.	mail	sk	CHYBA: Správa sa nedá zobraziť.
-error:could not save the acl! because some names are empty!	mail	sk	Chyba: Nepodarilo sa uložiť ACL pretože niektoré mená sú prázdne!
 esync will fail without a working email configuration!	mail	sk	eSync NEBUDE fungovať bez funkčnej konfigurácie E-mailu!
 event details follow	mail	sk	Podrobnosti o udalosti:
 everyone	mail	sk	Všetkých
@@ -358,7 +357,7 @@ read	mail	sk	prečítané
 read / unread	mail	sk	Prečítané / Neprečítané
 readable	mail	sk	Čitateľné
 reason!	mail	sk	dôvod!
-recieve notification	mail	sk	Vyžiadať potvrdenie o prečítaní
+receive notification	mail	sk	Vyžiadať potvrdenie o prečítaní
 recursively	mail	sk	Vrátane podpriečinkov
 refresh time in minutes	mail	sk	Čas obnovovania (v minútach)
 refused to delete folder inbox	mail	sk	Odmietol odstrániť priečinok INBOX

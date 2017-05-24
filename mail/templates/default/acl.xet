@@ -78,7 +78,7 @@
 								<checkbox align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights"/>
 								<checkbox align="center" id="${row}[acl_recursive]"/>
 								<hbox orient=",0,0">
-									<button align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account','Remove')"/>
+									<button align="right" statustext="Delete this ACL" label="Delete" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"/>
 								</hbox>
 							</row>
 						</rows>

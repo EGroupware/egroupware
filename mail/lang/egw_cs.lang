@@ -55,14 +55,14 @@ before reply, visible during compose	mail	cs	Před odpovědí, viditelně během
 but check shared folders	mail	cs	ale zkontrolovat sdílené složky
 by date	mail	cs	datumem
 can not open imap connection	mail	cs	Není možné otevřít spojení se serverem IMAP.
-canceled deletion due to userinteraction	mail	cs	Mazání bylo přerušeno uživatelem
+canceled deletion due to user interaction	mail	cs	Mazání bylo přerušeno uživatelem
 change editor type	mail	cs	Přepnout editor do HTML režimu
 changed profile	mail	cs	Změněný profil
 check message against next rule also	mail	cs	zkontrolovat zprávu také proti následujícímu pravidlu
-check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	cs	Zaškrtněte pro obdržení zprávy, že e-mail byl přečten (Poznámka: ne všichni e-mailoví klienti podporují tuto funkci a/nebo příjemce nemusí toto ověření povolit).
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	cs	Zaškrtněte pro obdržení zprávy, že e-mail byl přečten (Poznámka: ne všichni e-mailoví klienti podporují tuto funkci a/nebo příjemce nemusí toto ověření povolit).
 check to save as calendar event on send	mail	cs	Zaškrtněte pro uložení jako události po odeslání
 check to save as infolog on send	mail	cs	Zaškrtněte pro uložení jako záznamu v InfoLogu po odeslání
-check to save as trackerentry on send	mail	cs	Zaškrtněte pro uložení jako záznamu sledovacího systému po odeslání
+check to save as tracker entry on send	mail	cs	Zaškrtněte pro uložení jako záznamu sledovacího systému po odeslání
 choose file	mail	cs	vyberte soubor
 common acl	mail	cs	Běžná práva ACL
 compose	mail	cs	Nová zpráva
@@ -83,7 +83,7 @@ convert only mail to item (ignore possible attachments)	mail	cs	Pouze změnit e-
 copied %1 message(s) from %2 to %3	mail	cs	%1 zpráv(a/y) byla(y) zkopírovány z %2 do %3
 copy to	mail	cs	Kopírovat do
 could not append message:	mail	cs	Není možné připojit zprávu:
-could not save the acl! because some names are empty!	mail	cs	Není možné uložit ACL, protože některá ze jmen jsou prázdná!
+could not save the acl because some names are empty	mail	cs	Není možné uložit ACL, protože některá ze jmen jsou prázdná!
 create new account	mail	cs	Přidat účet
 current folder	mail	cs	Aktuální složka
 currently:	mail	cs	Aktuálně:
@@ -103,7 +103,7 @@ deleting folders	mail	cs	Smazání složek
 deny certain groups access to following features	mail	cs	Zakázání přístupu konkrétním skupinám k následujícím funkcím
 directories have to be shared.	mail	cs	Adersáře musí být sdílené
 disable	mail	cs	Zakázat
-disable ruler for separation of mailbody and signature	mail	cs	Zakázat oddělovač mezi textem zprávy a podpisem
+disable horizontal rule for separation of mail body from signature	mail	cs	Zakázat oddělovač mezi textem zprávy a podpisem
 disable use of flowed lines in plain text mails (rfc3676)	mail	cs	Zakázat použití plovoucích řádků v čistě textových e-mailech (RFC3676)
 disabled!	mail	cs	Zakázáno!
 discard	mail	cs	zahodit
@@ -121,7 +121,7 @@ do you really want to delete folder %1 ?	mail	cs	Opravdu chcete smazat složku %
 do you really want to delete this rule	mail	cs	Opravdu chcete smazat toto pravidlo?
 do you really want to mark all messages as read in the current folder?	mail	cs	Opravdu chcete označit všechny zprávy v této složce jako přečtené?
 do you really want to remove all labels from all messages in the current folder?	mail	cs	Opravdu chcete odebrat všechny štítky u všech zpráv v této složce?
-do you really want to remove all rights from this account	mail	cs	Opravdu chcete odebrat všechna práva z tohoto účtu?
+do you really want to remove all rights from this account?	mail	cs	Opravdu chcete odebrat všechna práva z tohoto účtu?
 do you really want to toggle flag %1 for all messages in the current view?	mail	cs	Opravdu chcete přidělit příznak %1 pro všechny zprávy v aktuálním pohledu?
 do you really want to toggle label %1 for all messages in the current view?	mail	cs	Opravdu chcete přidělit štítek %1 pro všechny zprávy v aktuálním pohledu?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	cs	Chcete být před přidáním vybraných e-mailů do nové zprávy požádáni o potvrzení?
@@ -168,7 +168,7 @@ error: could not save message as draft	mail	cs	Chyba: Zprávu nebylo možné ulo
 error: could not save rule	mail	cs	Chyba:  Nelze uložit pravidlo
 error: could not send message.	mail	cs	Chyba: Zprávu není možné odeslat
 error: message could not be displayed.	mail	cs	Chyba: Zprávu nelze zobrazit.
-error:could not save the acl! because some names are empty!	mail	cs	Chyba: Není možné uložit ACL, protože některá jména jsou prázdná!
+error:could not save the acl because some names are empty	mail	cs	Chyba: Není možné uložit ACL, protože některá jména jsou prázdná!
 esync will fail without a working email configuration!	mail	cs	Synchronizace eSync nebude bez správné konfigurace eMailu funkční!
 event details follow	mail	cs	Následují detaily události
 everyone	mail	cs	všichni
@@ -365,7 +365,7 @@ read	mail	cs	Přečtené
 read / unread	mail	cs	Přečtené / nepřečtené
 readable	mail	cs	Čitelné
 reason!	mail	cs	Důvod!
-recieve notification	mail	cs	Přijaté oznámení
+receive notification	mail	cs	Přijaté oznámení
 recursively	mail	cs	Opakovatelně
 refresh time in minutes	mail	cs	Čas obnovování v minutách
 refused to delete folder inbox	mail	cs	Smazání složky pro doručenou poštu bylo odmítnuto

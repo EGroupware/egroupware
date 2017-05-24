@@ -55,14 +55,14 @@ before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar w�
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
-canceled deletion due to userinteraction	mail	de	Löschen durch Benutzer abgebrochen
+canceled deletion due to user interaction	mail	de	Löschen durch Benutzer abgebrochen
 change editor type	mail	de	Als HTML-Mail verfassen
 changed profile	mail	de	Profil geändert
 check message against next rule also	mail	de	Nachricht auch gegen nächste Regel prüfen
-check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. manche Empfänger keine Bestätigung senden möchten.)
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	de	Markieren Sie diese Option, damit Sie eine Empfangsbestätigung erhalten, wenn der Empfänger diese E-Mail gelesen hat. (Beachten Sie bitte, das nicht alle Programme diese Option unterstützen bzw. manche Empfänger keine Bestätigung senden möchten.)
 check to save as calendar event on send	mail	de	Nach dem Versenden als Termin erstellen
 check to save as infolog on send	mail	de	Nach dem Versenden als Infolog erstellen
-check to save as trackerentry on send	mail	de	Nach dem Versenden als Ticket erstellen
+check to save as tracker entry on send	mail	de	Nach dem Versenden als Ticket erstellen
 choose file	mail	de	Datei
 common acl	mail	de	Berechtigung
 compose	mail	de	verfassen
@@ -83,7 +83,7 @@ convert only mail to item (ignore possible attachments)	mail	de	konvertiere nur 
 copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert
 copy to	mail	de	kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
-could not save the acl! because some names are empty!	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
+could not save the acl because some names are empty	mail	de	Konnte die Zugriffskontrollrechte nicht speichern! Grund: einige Bezeichnungen waren leer!
 create new account	mail	de	Konto hinzufügen
 current folder	mail	de	Aktueller Ordner
 currently:	mail	de	Aktuell:
@@ -103,7 +103,7 @@ deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail Modul einschränken.
 directories have to be shared.	mail	de	Verzeichnisse müssen freigegeben werden.
 disable	mail	de	Deaktivieren
-disable ruler for separation of mailbody and signature	mail	de	Signatur-Trennzeichen ausblenden
+disable horizontal rule for separation of mail body from signature	mail	de	Signatur-Trennzeichen ausblenden
 disable use of flowed lines in plain text mails (rfc3676)	mail	de	Variablen Zeilenumbruch in text Mails (RFC3676) abschalten
 disabled!	mail	de	deaktiviert
 discard	mail	de	verwerfen
@@ -121,7 +121,7 @@ do you really want to delete folder %1 ?	mail	de	Wollen Sie den Ordner %1 wirkli
 do you really want to delete this rule	mail	de	Wollen Sie diese Regel wirklich löschen?
 do you really want to mark all messages as read in the current folder?	mail	de	Wollen Sie wirklich alle E-Mails im aktuellen Ordner als gelesen markieren?
 do you really want to remove all labels from all messages in the current folder?	mail	de	Wollen Sie wirklich alle Schlagworte von allen Nachrichten in dieser Ansicht entfernen?
-do you really want to remove all rights from this account	mail	de	Wollen Sie wirklich alle Rechte von diesem Benutzer löschen
+do you really want to remove all rights from this account?	mail	de	Wollen Sie wirklich alle Rechte von diesem Benutzer löschen
 do you really want to toggle flag %1 for all messages in the current view?	mail	de	Wollen Sie wirklich den Wert für %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
 do you really want to toggle label %1 for all messages in the current view?	mail	de	Wollen Sie wirklich den Wert für das Schlagwort %1 für alle Nachrichten in der aktuellen Ansicht umschalten?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	de	Möchten Sie vor dem Anhängen von einer oder mehreren (ausgewählten) E-Mails an eine neue E-Mail gefragt werden?
@@ -169,7 +169,6 @@ error: could not save message as draft	mail	de	FEHLER: Die Nachricht konnte nich
 error: could not save rule	mail	de	FEHLER: Die Regel konnte nicht gespeichert werden.
 error: could not send message.	mail	de	FEHLER: Die Nachricht konnte nicht versendet werden.
 error: message could not be displayed.	mail	de	FEHLER: Die Nachricht kann nicht angezeigt werden.
-error:could not save the acl! because some names are empty!	mail	de	Fehler: Zugriffskontrolle konnte nicht gespeichert werden! Einige Namen sind leer!
 esync will fail without a working email configuration!	mail	de	eSync steht Ihnen nicht zur Verfügung, weil kein gültiges Mailkonto eingestellt wurde!
 event details follow	mail	de	Details zum Termin folgen
 everyone	mail	de	Alle Anwender
@@ -367,7 +366,7 @@ read	mail	de	gelesen
 read / unread	mail	de	Gelesen / Ungelesen
 readable	mail	de	lesen
 reason!	mail	de	Grund!
-recieve notification	mail	de	Empfangsbestätigung
+receive notification	mail	de	Empfangsbestätigung
 recursively	mail	de	Rekursiv
 refresh time in minutes	mail	de	Aktualisierungsintervall in Minuten
 refused to delete folder inbox	mail	de	Die Löschung des Ordners Posteingang wird verweigert

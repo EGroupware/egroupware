@@ -35,7 +35,7 @@
 											<menupopup id="${row}[acl]" label="Rights" onchange="app.mail.acl_common_rights_selector"/>
 										</menulist>
 										<checkbox align="center" label="Recursively" id="${row}[acl_recursive]"/>
-										<button align="right" statustext="Delete this ACL" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account','Remove')"/>
+										<button align="right" statustext="Delete this ACL" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"/>
 									</hbox>
 
 									<hbox class="aclDetails">

@@ -55,14 +55,14 @@ before reply, visible during compose	mail	en	Before reply, visible during compos
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
 can not open imap connection	mail	en	Can not open IMAP connection
-canceled deletion due to userinteraction	mail	en	canceled deletion due to userinteraction
+canceled deletion due to user interaction	mail	en	canceled deletion due to user interaction
 change editor type	mail	en	switch editor to HTML mode
 changed profile	mail	en	changed profile
 check message against next rule also	mail	en	Check message against next rule also
-check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)	mail	en	check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	en	 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)
 check to save as calendar event on send	mail	en	check to save as event on send
 check to save as infolog on send	mail	en	check to save as infolog on send
-check to save as trackerentry on send	mail	en	check to save as trackerentry on send
+check to save as tracker entry on send	mail	en	check to save as tracker entry on send
 choose file	mail	en	Choose file
 common acl	mail	en	Common ACL
 compose	mail	en	compose
@@ -83,7 +83,7 @@ convert only mail to item (ignore possible attachments)	mail	en	convert only Mai
 copied %1 message(s) from %2 to %3	mail	en	copied %1 message(s) from %2 to %3
 copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
-could not save the acl! because some names are empty!	mail	en	Could not save the ACL! Because some names are empty!
+could not save the acl because some names are empty	mail	en	Could not save the ACL because some names are empty
 create new account	mail	en	create new account
 current folder	mail	en	current Folder
 currently:	mail	en	Currently:
@@ -103,7 +103,7 @@ deleting folders	mail	en	Deleting folders
 deny certain groups access to following features	mail	en	Deny certain groups access to following features
 directories have to be shared.	mail	en	Directories have to be shared.
 disable	mail	en	Disable
-disable ruler for separation of mailbody and signature	mail	en	disable Ruler for separation of mailbody and signature
+disable horizontal rule for separation of mail body from signature	mail	en	disable horizontal rule for separation of mail body from signature
 disable use of flowed lines in plain text mails (rfc3676)	mail	en	Disable use of flowed lines in plain text mails (RFC3676)
 disabled!	mail	en	disabled!
 discard	mail	en	discard
@@ -121,7 +121,7 @@ do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE Fo
 do you really want to delete this rule	mail	en	Do you really want to DELETE this Rule
 do you really want to mark all messages as read in the current folder?	mail	en	Do you really want to mark ALL messages as read in the current folder?
 do you really want to remove all labels from all messages in the current folder?	mail	en	Do you really want to remove ALL labels from ALL messages in the current folder?
-do you really want to remove all rights from this account	mail	en	Do you really want to remove all rights from this account
+do you really want to remove all rights from this account?	mail	en	Do you really want to remove all rights from this account?
 do you really want to toggle flag %1 for all messages in the current view?	mail	en	Do you really want to toggle flag %1 for ALL messages in the current view?
 do you really want to toggle label %1 for all messages in the current view?	mail	en	Do you really want to toggle the label %1 for ALL messages in the current view?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	en	Do you want to be asked for confirmation before attaching selected messages to new mail?
@@ -169,7 +169,6 @@ error: could not save message as draft	mail	en	Error: Could not save Message as 
 error: could not save rule	mail	en	Error: Could not save rule
 error: could not send message.	mail	en	Error: Could not send Message.
 error: message could not be displayed.	mail	en	ERROR: Message could not be displayed.
-error:could not save the acl! because some names are empty!	mail	en	Error:Could not save the ACL! Because some names are empty!
 esync will fail without a working email configuration!	mail	en	eSync will FAIL without a working eMail configuration!
 event details follow	mail	en	Event Details follow
 everyone	mail	en	Everyone
@@ -276,7 +275,7 @@ mail filter	mail	en	Mail filter
 mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
-mailaccount	mail	en	Mailaccount
+mailaccount	mail	en	Mail account
 mailinglist	mail	en	Mailinglist
 mails	common	en	Mails
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	en	Mailserver reported:\n%1 \nDo you want to proceed by deleting the selected messages immediately (click ok)?\nIf not, please try to empty your trashfolder before continuing. (click cancel)
@@ -301,7 +300,7 @@ move to	mail	en	Move to
 move to archive	mail	en	Move to archive folder
 move to trash	mail	en	move to trash
 moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
-moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one Mailaccount to another is not supported
+moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one mail account to another is not supported
 name of account	mail	en	Name of account
 never display html emails	mail	en	never display html emails
 new mail notification	mail	en	New mail notification
@@ -367,7 +366,7 @@ read	mail	en	read
 read / unread	mail	en	Read / Unread
 readable	mail	en	readable
 reason!	mail	en	reason!
-recieve notification	mail	en	Recieve notification
+receive notification	mail	en	Receive notification
 recursively	mail	en	Recursively
 refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder INBOX
