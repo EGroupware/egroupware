@@ -992,6 +992,33 @@ app.classes.addressbook = AppJS.extend(
 			},this).sendRequest(true);
 			return false;
 		}
+		else if (state.state.grouped_view)
+		{
+			// Deal with grouped views that are not valid (not in list of options)
+			// by faking viewing that organisation
+			var index = etemplate2.getById('addressbook-index');
+			if(index && index.widgetContainer)
+			{
+				var grouped = index.widgetContainer.getWidgetById('grouped_view');
+				var options = false;
+				if(grouped && grouped.options && grouped.options.select_options)
+				{
+					options = grouped.options.select_options;
+				}
+
+				// Check to see if it's not there
+				if(options && (options.find && 
+					!grouped.options.select_options.find(function(e) {console.log(e); return e.value === state.state.grouped_view;}) ||
+					!options[state.state.grouped_view]
+				))
+				{
+					var nm = index.widgetContainer.getWidgetById('nm');
+					var action = nm.controller._actionManager.getActionById('view_org');
+					var senders = [{_context: {_widget: nm}}];
+					return nm_action(action, senders, {}, {ids:[state.state.grouped_view]});
+				}
+			}
+		}
 		return this._super.apply(this, arguments);
 	},
 
