@@ -1035,7 +1035,18 @@ var et2_taglist_account = (function(){ "use strict"; return et2_taglist.extend(
 					this.deferred_loading++;
 					this.egw().link_title('api-accounts', v, function(label) {
 						this.deferred_loading--;
-						if (label) this.set_value(values);
+						if (label)
+						{
+							// Seems the magic suggest can not deal with broken taglist value
+							// like selected value with no label set and maxSelection set. This
+							// trys to first unset maxSelection and set value to magix suggest taglist
+							// object then calls set_value of the widget taglist, and at the end
+							// re-set the maxSelection option again.
+							if (this.options.maxSelection) this.taglist.setMaxSelection(null);
+							this.taglist.setValue([{id:v,label:label}]);
+							this.set_value(values);
+							this.taglist.setMaxSelection(this.options.maxSelection);
+						}
 					}, this);
 				}
 			}
