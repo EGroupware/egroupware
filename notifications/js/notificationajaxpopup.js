@@ -64,7 +64,6 @@
 	 */
 	notifications.prototype.display = function() {
 		var $egwpopup,$egwpopup_list,$message,$mark,$delete,$delete_all,$mark_all;
-		$egwpopup = jQuery("#egwpopup");
 		$egwpopup_list = jQuery("#egwpopup_list");
 
 		for(var show in notifymessages)
@@ -324,6 +323,9 @@
 	 */
 	notifications.prototype.toggle = function ()
 	{
+		// Remove popup_note as soon as message list is toggled
+		jQuery('.popup_note', '#egwpopup_fw_notifications').remove();
+
 		var $egwpopup = jQuery('#egwpopup');
 		if ($egwpopup.length>0) $egwpopup.slideToggle('fast');
 	};
@@ -334,6 +336,7 @@
 	notifications.prototype.counterUpdate = function ()
 	{
 		var $egwpopup_fw_notifications = jQuery('#egwpopup_fw_notifications');
+		var $popup_note = jQuery(document.createElement('div')).addClass('popup_note');
 		var counter = 0;
 		for (var id in notifymessages)
 		{
@@ -343,6 +346,9 @@
 		{
 			$egwpopup_fw_notifications.addClass('egwpopup_notify');
 			$egwpopup_fw_notifications.text(counter);
+			$egwpopup_fw_notifications.append($popup_note);
+			$popup_note.text(egw.lang('You have '+counter+' unread notifications'));
+			setTimeout(function (){$popup_note.remove();}, 5000);
 		}
 		else
 		{

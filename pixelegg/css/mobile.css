@@ -3685,6 +3685,43 @@ td.lettersearch {
   color: #646464;
   font-weight: bold;
 }
+#egwpopup_fw_notifications .popup_note {
+  position: absolute;
+  width: 260px;
+  height: 30px;
+  left: -273px;
+  top: -8px;
+  border: 1px solid silver;
+  background: #ffffff;
+  text-align: center;
+  font-size: 10pt;
+  line-height: 22pt;
+  color: #b9436c;
+}
+#egwpopup_fw_notifications .popup_note:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid #C2C2C2;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+#egwpopup_fw_notifications .popup_note:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -8px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid #FFFFFF;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
 #egwpopup_fw_notifications.egwpopup_notify {
   color: white;
   background: #b9436c;
