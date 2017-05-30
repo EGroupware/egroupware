@@ -1305,6 +1305,16 @@ class mail_ui
 		{
 			unset($actions['save']['children']['save2filemanager']);
 		}
+		if ($GLOBALS['egw_info']['apps']['stylite'])
+		{
+			$spamtitan_actions = stylite_mail_spamtitan::getActions();
+			$group++;
+			foreach ($spamtitan_actions as &$action)
+			{
+				$action['group'] = $group;
+			}
+			$actions = array_merge($actions, $spamtitan_actions);
+		}
 		return $actions;
 	}
 
