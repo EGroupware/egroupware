@@ -5368,6 +5368,19 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Actions handler
+	 *
+	 * @param {object} _action egw action
+	 * @param {object} _sender nm row
+	 */
+	spamtitan_actions: function (_action, _sender)
+	{
+		var id = _sender[0].id;
+		var data = egw.dataGetUIDdata(id);
+		this.egw.json('stylite.stylite_mail_spamtitan.ajax_action', [_action.id, {}]).sendRequest(true);
+	},
+
+	/**
 	 * Implement mobile view
 	 *
 	 * @param {type} _action
