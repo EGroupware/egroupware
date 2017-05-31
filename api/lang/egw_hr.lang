@@ -1,6 +1,6 @@
 %1 email addresses inserted	common	hr	unešeno %1 e-mail adresa
 %1 is not executable by the webserver !!!	common	hr	%1 webserver ne može izvršiti!!!
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	hr	%1eGroupWare%2 je višekorisnički, web-bazirani groupware suite pisan u %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	hr	%1EGroupware%2 je višekorisnički, web-bazirani groupware suite pisan u %3PHP%4.
 00 (disable)	admin	hr	00 (disable)
 13 (ntp)	admin	hr	13 (ntp)
 80 (http)	admin	hr	80 (http)
@@ -165,7 +165,7 @@ edit	common	hr	Uredi
 edit %1 category for	common	hr	Uredi %1 kategoriju za
 edit categories	common	hr	Uredi Kategorije
 edit category	common	hr	Uredi kategoriju
-egroupware: login blocked for user '%1', ip %2	common	hr	eGroupWare: login blokiran za korisnika '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	hr	EGroupware: login blokiran za korisnika '%1', IP %2
 egypt	common	hr	EGYPT
 el salvador	common	hr	EL SALVADOR
 email	common	hr	E-Mail
@@ -173,7 +173,7 @@ email-address of the user, eg. "%1"	common	hr	email-address of the user, eg. "%1
 enabled	common	hr	Omogućeno
 end date	common	hr	End date
 end time	common	hr	End time
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
 entry has been deleted sucessfully	common	hr	Entry has been deleted sucessfully
 entry updated sucessfully	common	hr	Entry updated sucessfully
 equatorial guinea	common	hr	EQUATORIAL GUINEA

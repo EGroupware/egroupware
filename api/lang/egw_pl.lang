@@ -2,7 +2,7 @@
 %1 file	common	pl	%1 plik
 %1 is not executable by the webserver !!!	common	pl	%1 nie może być wykonany przez webserver !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pl	%1Wybierz inny katalog%2<br />lub uczyń %3 dostępny do zapisu dla serwera WWW
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pl	%1eGroupWare%2 jest pakietem oprogramowania do pracy grupowej dla wielu użytkowników, działającym w środowisku internetowym / intranetowym i napisanym w PHP4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pl	%1EGroupware%2 jest pakietem oprogramowania do pracy grupowej dla wielu użytkowników, działającym w środowisku internetowym / intranetowym i napisanym w PHP4.
 '%1' is no php file in the egw server root (%2)!	common	pl	'%1' to nie plik php w katalogu głównym serwera (%2)
 (session restored in %1 seconds)	common	pl	(sesja będzie przywrócona po upływie %1 sekund)
 00 (disable)	admin	pl	00 (wyłączony)
@@ -14,7 +14,7 @@
 80 (http)	admin	pl	80 (http)
 about	common	pl	O aplikacji
 about %1	common	pl	O aplikacji %1
-about egroupware	common	pl	O eGroupWare
+about egroupware	common	pl	O EGroupware
 access	common	pl	Dostęp
 access not permitted	common	pl	Dostęp zabroniony
 account has been created	common	pl	Konto zostało utworzone
@@ -139,7 +139,7 @@ christmas island	common	pl	WYSPA BOŻEGO NARODZENIA
 clear	common	pl	Wyczyść
 clear form	common	pl	Wyczyść formularz
 click	common	pl	Kliknij
-click here to resume your egroupware session.	common	pl	Kliknij tutaj aby powrócić do sesji eGroupWare.
+click here to resume your egroupware session.	common	pl	Kliknij tutaj aby powrócić do sesji EGroupware.
 click or mouse over to show menus	common	pl	Kliknij  lub najedź myszką, aby wyświetlić menu
 click or mouse over to show menus?	common	pl	Kliknij  lub najedź myszką, aby wyświetlić menu?
 click this image on the navbar: %1	common	pl	Kliknij ten obraz na pasku zadań: %1
@@ -216,10 +216,10 @@ edit	common	pl	Edytuj
 edit %1 category for	common	pl	Edytuj kategorię %1 dla
 edit categories	common	pl	Edytuj kategorie
 edit category	common	pl	Edytuj kategorię
-egroupware	common	pl	eGroupWare
-egroupware api version	common	pl	eGroupWare wersja API
+egroupware	common	pl	EGroupware
+egroupware api version	common	pl	EGroupware wersja API
 egroupware version	common	pl	Wersja EGroupware
-egroupware: login blocked for user '%1', ip %2	common	pl	eGroupWare: zablokowane logowanie dla użytkownika '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	pl	EGroupware: zablokowane logowanie dla użytkownika '%1', IP %2
 egypt	common	pl	EGIPT
 el salvador	common	pl	SALWADOR
 email	common	pl	E-mail
@@ -227,7 +227,7 @@ email-address of the user, eg. "%1"	common	pl	email użytkownika, np. "%1"
 enabled	common	pl	Aktywny
 end date	common	pl	Data końcowa
 end time	common	pl	Czas końcowy
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj adres URL pakietu eGroupWare.<br>Przykład: http://www.twojadomena.pl/egroupware   lub   /egroupware<br><b>Bez końcowego ciacha</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj adres URL pakietu EGroupware.<br>Przykład: http://www.twojadomena.pl/egroupware   lub   /egroupware<br><b>Bez końcowego ciacha</b>
 entry has been deleted sucessfully	common	pl	Dane zostały usunięte
 entry not found!	common	pl	Nie znaleziono danych!
 entry updated sucessfully	common	pl	Dane zostały uaktualnione
@@ -518,7 +518,7 @@ personal	common	pl	Osobisty
 peru	common	pl	PERU
 philippines	common	pl	FILIPINY
 phone number	common	pl	numer  telefonu
-api	common	pl	eGroupWare API
+api	common	pl	EGroupware API
 pitcairn	common	pl	PITCAIRN
 please %1 by hand	common	pl	Proszę %1 ręcznie
 please enter a name	common	pl	Proszę podać nazwę
@@ -626,7 +626,7 @@ show menu	common	pl	pokaż menu
 show page generation time	common	pl	Wyświetl czas generowania strony
 show page generation time on the bottom of the page?	common	pl	Wyświetlać czas generowania strony w jej stopce?
 show page generation time?	common	pl	Czy pokazywać czas generowania strony?
-show the logo's of egroupware and x-desktop on the desktop.	common	pl	Pokazuj logo eGroupware oraz x-desktop na pulpicie.
+show the logo's of egroupware and x-desktop on the desktop.	common	pl	Pokazuj logo EGroupware oraz x-desktop na pulpicie.
 show_more_apps	common	pl	show_more_apps
 showing %1	common	pl	Wyświetlono %1
 showing %1 - %2 of %3	common	pl	Wyświetlanie %1 - %2 z %3

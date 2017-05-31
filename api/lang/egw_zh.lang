@@ -1,7 +1,7 @@
 %1 email addresses inserted	common	zh	已插入%1个电子邮件地址
 %1 is not executable by the webserver !!!	common	zh	Web 服务器无法执行%1！
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	zh	%1选择另一个目录%2<br />或使得 Web 服务器可以写入%3
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1eGroupWare%2 是一个多用户、基于 Web 的以 %3PHP%4 为基础开发的工作组套件。
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1EGroupware%2 是一个多用户、基于 Web 的以 %3PHP%4 为基础开发的工作组套件。
 00 (disable)	admin	zh	00 (禁用)
 1 day	common	zh	1 天
 1 hour	common	zh	1 小时
@@ -11,7 +11,7 @@
 80 (http)	admin	zh	80 (http)
 about	common	zh	关于
 about %1	common	zh	关于%1
-about egroupware	common	zh	关于 eGroupWare
+about egroupware	common	zh	关于 EGroupware
 access	common	zh	访问
 access not permitted	common	zh	禁止访问
 account has been created	common	zh	账户创建成功
@@ -133,7 +133,7 @@ christmas island	common	zh	圣诞岛
 clear	common	zh	清除
 clear form	common	zh	清除表单
 click	common	zh	点击
-click here to resume your egroupware session.	common	zh	点击这里恢复您的 eGroupWare 会话。
+click here to resume your egroupware session.	common	zh	点击这里恢复您的 EGroupware 会话。
 click or mouse over to show menus	common	zh	点击或鼠标经过时显示菜单栏
 click or mouse over to show menus?	common	zh	点击或鼠标经过时显示菜单栏？
 click this image on the navbar: %1	common	zh	在导航条：%1上点击该图片
@@ -205,9 +205,9 @@ edit	common	zh	编辑
 edit %1 category for	common	zh	编辑类别%1为
 edit categories	common	zh	类别编辑
 edit category	common	zh	类别编辑
-egroupware	common	zh	eGroupWare
-egroupware api version	common	zh	eGroupWare API 版本
-egroupware: login blocked for user '%1', ip %2	common	zh	eGroupWare：用户'%1'，IP地址%2已被禁止登录
+egroupware	common	zh	EGroupware
+egroupware api version	common	zh	EGroupware API 版本
+egroupware: login blocked for user '%1', ip %2	common	zh	EGroupware：用户'%1'，IP地址%2已被禁止登录
 egypt	common	zh	埃及
 el salvador	common	zh	萨尔瓦多
 email	common	zh	电子邮件
@@ -215,7 +215,7 @@ email-address of the user, eg. "%1"	common	zh	用户的电子邮件地址，例�
 enabled	common	zh	已启用
 end date	common	zh	终止日期
 end time	common	zh	终止时间
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	输入eGroupWare 网址。<br>例如：http://www.domain.com/egroupware 或 /egroupware<br><b>结尾无斜线</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	输入EGroupware 网址。<br>例如：http://www.domain.com/egroupware 或 /egroupware<br><b>结尾无斜线</b>
 entry has been deleted sucessfully	common	zh	条目已删除
 entry not found!	common	zh	条目没找到！
 entry updated sucessfully	common	zh	条目已更新
@@ -299,7 +299,7 @@ home email	common	zh	家庭 EMail
 honduras	common	zh	洪都拉斯
 hong kong	common	zh	香港
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zh	将在导航栏(页面顶部)显示多少个图标。其它图标会放入一个下拉菜单中，通过点击导航栏最右侧的下拉图标可显示下拉菜单及其中的这些图标。
-how to show the general egroupware menu ?	common	zh	如何显示通用 eGroupWare 菜单
+how to show the general egroupware menu ?	common	zh	如何显示通用 EGroupware 菜单
 hungary	common	zh	匈牙利
 iceland	common	zh	冰岛
 iespell not detected. click ok to go to download page.	common	zh	ieSpell 未找到，点击确认前往下载页面。
@@ -599,7 +599,7 @@ show menu	common	zh	显示菜单
 show page generation time	common	zh	显示页面的生成耗时
 show page generation time on the bottom of the page?	common	zh	是否在页面底部显示该页面生成所耗时间？
 show page generation time?	common	zh	显示页面的生成耗时？
-show the logo's of egroupware and x-desktop on the desktop.	common	zh	在桌面显示 eGroupware 和 x-desktop 的 logo。
+show the logo's of egroupware and x-desktop on the desktop.	common	zh	在桌面显示 EGroupware 和 x-desktop 的 logo。
 show_more_apps	common	zh	show_more_apps
 showing %1	common	zh	共有%1项
 showing %1 - %2 of %3	common	zh	显示%3的%1 - %2
@@ -710,7 +710,7 @@ western sahara	common	zh	西撒哈拉
 what color should all the blank space on the desktop have	common	zh	桌面空白区域的颜色
 what style would you like the image to have?	common	zh	您喜欢什么样的图片风格？
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	zh	如果选择“是”，“首页”和“注销”图标将显示在应用程序工具条中。
-where and how will the egroupware links like preferences, about and logout be displayed.	common	zh	将在什么位置和如何以喜欢偏好显示 eGroupWare、关于及注销的链接。
+where and how will the egroupware links like preferences, about and logout be displayed.	common	zh	将在什么位置和如何以喜欢偏好显示 EGroupware、关于及注销的链接。
 which groups	common	zh	哪一个组
 whole query	common	zh	完整查询
 width	common	zh	宽度
@@ -733,8 +733,8 @@ you have selected an invalid date	common	zh	选定的日期无效！
 you have selected an invalid main category	common	zh	选定的主类别无效！
 you have successfully logged out	common	zh	注销成功
 you need to add the webserver user '%1' to the group '%2'.	common	zh	您必须将Web服务器的用户'%1'添加到用户组'%2'。
-you need to be an egroupware administrator to access this functionality!	common	zh	您必须具备eGroupWare管理员身份才能访问此功能！
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	zh	你试图打开eGroupWare应用程序：%1，但您没有访问该应用程序的权限。
+you need to be an egroupware administrator to access this functionality!	common	zh	您必须具备EGroupware管理员身份才能访问此功能！
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	zh	你试图打开EGroupware应用程序：%1，但您没有访问该应用程序的权限。
 your message could <b>not</b> be sent!<br>	common	zh	您的邮件<b>无法</b>发送！<br>
 your message has been sent	common	zh	您的邮件已发送
 your search returned %1 matchs	common	zh	您的搜索返回%1个匹配结果

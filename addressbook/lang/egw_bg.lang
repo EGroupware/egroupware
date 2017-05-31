@@ -132,7 +132,7 @@ department	common	bg	Отдел
 departments	addressbook	bg	отдели
 directory with documents to insert contacts	addressbook	bg	Директория с докумнти за вмъкване на контактите
 display contact	addressbook	bg	Показване на контакт
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	bg	Напомняне за рождените дни на началната страница (при влизане в eGroupWare или чрез натискане на бутон Home)
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	bg	Напомняне за рождените дни на началната страница (при влизане в EGroupware или чрез натискане на бутон Home)
 distribution list deleted	addressbook	bg	Пощенският списък е изтрит
 distribution lists	addressbook	bg	Пощенски списъци
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	bg	Желаете ли личен (private) адресен указател, който не е досъпен за потребителите, на които позволите достъп до собствения си (personal) адресен указател?
@@ -357,7 +357,7 @@ what should links to the addressbook display in other applications. empty values
 where to add the email address	addressbook	bg	къде да се добави E-Mail адрес
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	bg	Какъв формат за адреса да се използва за държавите, за които не е зададен формат по подразбиране? Ако за дадена държава форматът е известен, той се използва, независимо от тази настройка.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	bg	Кой адресен указател да се използва при добавяне на контакт АКО нямате право да добавяте в текущия?
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	bg	Кой символен набор (charset) да се използва за експорт в CSV? По подразбиране - символният набор на инсталацията на eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	bg	Кой символен набор (charset) да се използва за експорт в CSV? По подразбиране - символният набор на инсталацията на EGroupware.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	bg	Кои полета да бъдат експортирани? Всички означава всички полета на адресния указател, вкл. и тези по избор. Служебния или личния адрес означават име, организация и съответно избрания адрес.
 whole query	addressbook	bg	всички резултати
 work email if given, else home email	addressbook	bg	Служебен e-mail, ако е посочен, иначе - личен e-mail

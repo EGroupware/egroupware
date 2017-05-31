@@ -1,7 +1,7 @@
 %1 email addresses inserted	common	et	%1 email aadress sisestatud
 %1 is not executable by the webserver !!!	common	et	%1 pole veebiserverijaoks käivitatav !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2<br />või tee %3 veebiserverijaoks kirjutatavaks
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	et	%1eGroupWare%2 on multi-kasutaja, veebipõhine grupitöö vahend mis on kirjutatud %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	et	%1EGroupware%2 on multi-kasutaja, veebipõhine grupitöö vahend mis on kirjutatud %3PHP%4.
 00 (disable)	admin	et	00 (keela)
 1 day	common	et	1 Päev
 1 hour	common	et	1 Tund
@@ -11,7 +11,7 @@
 80 (http)	admin	et	80 (http)
 about	common	et	Üldiselt
 about %1	common	et	Üldiselt %1
-about egroupware	common	et	Üldiselt eGroupware
+about egroupware	common	et	Üldiselt EGroupware
 access	common	et	Ligipääs
 access not permitted	common	et	Ligipääs keelatud
 account has been created	common	et	Konto tehtud
@@ -178,9 +178,9 @@ edit	common	et	Muuda
 edit %1 category for	common	et	Muuda %1 kategooriat
 edit categories	common	et	Muuda Kategooriaid
 edit category	common	et	Muuda katekooria
-egroupware	common	et	eGroupWare
-egroupware api version	common	et	eGroupWare API versioon
-egroupware: login blocked for user '%1', ip %2	common	et	eGroupWare: logimine blokeeritud kasutajale '%1', IP %2
+egroupware	common	et	EGroupware
+egroupware api version	common	et	EGroupware API versioon
+egroupware: login blocked for user '%1', ip %2	common	et	EGroupware: logimine blokeeritud kasutajale '%1', IP %2
 egypt	common	et	EGIPTUS
 el salvador	common	et	EL SALVADOR
 email	common	et	E-Mail

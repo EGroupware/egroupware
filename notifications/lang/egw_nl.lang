@@ -1,10 +1,10 @@
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	nl	Kies een notificatie-lijst. U wordt geinformeerd over de backends die in de lijst voorkomen.<br />Let op: Indien een notificatie-lijst is gemarkeerd als "uitgeschakeld", dan heeft uw beheerder ingesteld dat een of meer van de backends niet in de lijst mogen voorkomen. Notificatie valt dan terug op "E-mail" tijdens het aanmaken van de melding naar u.
 common chains	notifications	nl	Gebruikelijke lijsten
 disabled chains	notifications	nl	Uitgeschakelde lijsten
-egroupware has notifications for you	notifications	nl	eGroupWare heeft meldingen voor u.
-egroupware-popup backend	admin	nl	eGroupWare popup backend
-egroupware-popup verbosity	notifications	nl	eGroupWare popup zichtbaarheid
-enable egroupware-popup backend	admin	nl	eGroupWare popup backend inschakelen
+egroupware has notifications for you	notifications	nl	EGroupware heeft meldingen voor u.
+egroupware-popup backend	admin	nl	EGroupware popup backend
+egroupware-popup verbosity	notifications	nl	EGroupware popup zichtbaarheid
+enable egroupware-popup backend	admin	nl	EGroupware popup backend inschakelen
 enable windows-popup backend	admin	nl	Windows popup backend inschakelen
 enabled chains	notifications	nl	Ingeschakelde lijsten
 folder	notifications	nl	folder

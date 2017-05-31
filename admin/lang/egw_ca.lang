@@ -174,7 +174,7 @@ edit this group	admin	ca	editar aquest grup
 edit this user	admin	ca	editar aquest usuari
 edit user	admin	ca	editar usuari
 edit user account	admin	ca	Editar compte de l'usuari
-egroupware directory	admin	ca	directori eGroupWare
+egroupware directory	admin	ca	directori EGroupware
 email account active	admin	ca	compte de correu actiu
 email address	admin	ca	adreça de correu
 enable	admin	ca	Habilitar
@@ -190,7 +190,7 @@ enter the background color for the site title	admin	ca	Introduïu el color de fo
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ca	Introduïu el camí complet per als fitxers temporals.<br>Exemples: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	ca	Introduïu el camí complet per als fitxers d'usuaris i grups.<br>Exemples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	ca	Introduïu el nom complet de l'ordinador on s'executa aquest servidor
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Introduïu la URL del vostre eGroupware.<br>Exemple: http://www.domini.com/egroupware   o   /egroupware<br><b>Sense barra al final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Introduïu la URL del vostre EGroupware.<br>Exemple: http://www.domini.com/egroupware   o   /egroupware<br><b>Sense barra al final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	ca	Introduïu la cadena de recerca. Per a mostrar totes les entrades, deixeu buit aquest camp i premeu el botó ENVIAR altra vegada.
 enter the site password for peer servers	admin	ca	Introduïu la contrasenya del lloc per a servidors parells
 enter the site username for peer servers	admin	ca	Introduïu el nom d'usuari del lloc per a servidors parells
@@ -452,9 +452,9 @@ view sessions	admin	ca	Veure sessions
 view this user	admin	ca	Veure aquest usuari
 view user account	admin	ca	Veure compte d'usuari
 who would you like to transfer all records owned by the deleted user to?	admin	ca	A qui voleu transferir TOTS els registres que pertanyen a l'usuari esborrat?
-would you like egroupware to cache the egw info array ?	admin	ca	Voleu que eGroupWare desi en memòria cau la taula d'informació d'egw ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	ca	Voleu que eGroupWare comprovi si hi ha una nova versió<br> quan un administrador es connecti ?
-would you like egroupware to check for new application versions when admins login ?	admin	ca	Voleu que eGroupWare comprovi si hi ha noves versions de les aplicacions<br> quan un administrador es connecti ?
+would you like egroupware to cache the egw info array ?	admin	ca	Voleu que EGroupware desi en memòria cau la taula d'informació d'egw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	ca	Voleu que EGroupware comprovi si hi ha una nova versió<br> quan un administrador es connecti ?
+would you like egroupware to check for new application versions when admins login ?	admin	ca	Voleu que EGroupware comprovi si hi ha noves versions de les aplicacions<br> quan un administrador es connecti ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	ca	Voleu carregar automàticament nous arxius d'idioma (en iniciar la sessió)?
 would you like to show each application's upgrade status ?	admin	ca	Voleu mostrar l'estat d'actualització de cada aplicació ?
 xml-rpc	admin	ca	XML-RPC

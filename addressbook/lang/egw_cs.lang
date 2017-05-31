@@ -183,7 +183,7 @@ department	common	cs	Oddělení
 departments	addressbook	cs	oddělení
 directory with documents to insert contacts	addressbook	cs	Adresář s dokumenty pro vložení kontaktů
 display contact	addressbook	cs	Zobrazit kontakt
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	cs	Zobrazuje připomínku narozenin na úvodní straně (stránka, na kterou se dostanete když se přihlásíte do eGroupWare a kliknete na ikonu Hlavní strana).
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	cs	Zobrazuje připomínku narozenin na úvodní straně (stránka, na kterou se dostanete když se přihlásíte do EGroupware a kliknete na ikonu Hlavní strana).
 distribution list deleted	addressbook	cs	Rozesílací seznam byl smazán
 distribution list renamed	addressbook	cs	Rozesílací seznam byl přejmenován
 distribution lists	addressbook	cs	Rozesílací seznamy
@@ -511,7 +511,7 @@ when viewing a contact, show linked entries from the selected application	addres
 where to add the email address	addressbook	cs	kam přidat e-mailovou adresu
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	cs	Jaký formát adres má adresář používat u zemí, jejichž adresní formát nezná. Pokud je formát znám, je použit bez ohledu na toto nastavení.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	cs	Který adresář má být vybrán v případě, že přidáváte kontakt a pro aktuální adresář nemáte dostatečná práva.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Která znaková sada má být použita pro CSV export? Výchozí znakovou sadou je znaková sada použitá pro instalaci eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Která znaková sada má být použita pro CSV export? Výchozí znakovou sadou je znaková sada použitá pro instalaci EGroupware.
 which charset should be used for the vcard export.	addressbook	cs	Jaká znaková sada má být použita při exportu do souboru vCard
 which charset should be used for the vcard import and export.	addressbook	cs	Jaká znaková sada má být použita při exportu a importu ze souboru vCard
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	cs	Které položky budou exportovány. Všechny znamená každou položku včetně uživatelsky definovaných. Firemní nebo domácí obsahuje jen jméno, firmu a vybranou adresu.

@@ -1,7 +1,7 @@
 %1 email addresses inserted	common	bg	Вмъкнати %1 e-mail адреса
 %1 is not executable by the webserver !!!	common	bg	%1 не е изпълним за WEB сървъра!!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	bg	%1Изберете друга директория%2<br />или позволете в %3 запис на WEB сървъра
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	bg	%1eGroupWare%2 е многопотребителска, web-базирана система за работа в екип, написана на %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	bg	%1EGroupware%2 е многопотребителска, web-базирана система за работа в екип, написана на %3PHP%4.
 (session restored in %1 seconds)	common	bg	(сесията възстановена за %1 секунди)
 00 (disable)	admin	bg	00 (забранен)
 1 day	common	bg	1 ден
@@ -12,7 +12,7 @@
 80 (http)	admin	bg	80 (http)
 about	common	bg	За
 about %1	common	bg	За %1
-about egroupware	common	bg	За eGroupware
+about egroupware	common	bg	За EGroupware
 access	common	bg	Достъп
 access not permitted	common	bg	Достъпът не е позволен
 account has been created	common	bg	Акаунтът е създаден
@@ -133,7 +133,7 @@ christmas island	common	bg	Великденски острови
 clear	common	bg	Изчистване
 clear form	common	bg	Изчистване на формата
 click	common	bg	Кликнете
-click here to resume your egroupware session.	common	bg	Кликнете за възстановяване на сесията Ви в eGroupWare
+click here to resume your egroupware session.	common	bg	Кликнете за възстановяване на сесията Ви в EGroupware
 click or mouse over to show menus	common	bg	Кликнете или доближете мишката за показване на менюта
 click or mouse over to show menus?	common	bg	Клик или доближaване с мишката за показване на менюта?
 click this image on the navbar: %1	common	bg	Кликнете това изображение на лентата за навигация: %1
@@ -205,9 +205,9 @@ edit	common	bg	Редактиране
 edit %1 category for	common	bg	Редактиране на %1 категория за
 edit categories	common	bg	Редактиране на категориите
 edit category	common	bg	Редактиране на категория
-egroupware	common	bg	eGroupWare
-egroupware api version	common	bg	версия на eGroupWare API
-egroupware: login blocked for user '%1', ip %2	common	bg	eGroupWare: влизането блокирано за потребител '%1' от IP-адрес %2
+egroupware	common	bg	EGroupware
+egroupware api version	common	bg	версия на EGroupware API
+egroupware: login blocked for user '%1', ip %2	common	bg	EGroupware: влизането блокирано за потребител '%1' от IP-адрес %2
 egypt	common	bg	Египет
 el salvador	common	bg	Ел Салвадор
 email	common	bg	E-Mail
@@ -215,7 +215,7 @@ email-address of the user, eg. "%1"	common	bg	e-mail адрес на потре�
 enabled	common	bg	Разрешено
 end date	common	bg	Крайна дата
 end time	common	bg	Краен час
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	bg	Въведете URL на eGroupWare.<br>Пример: http://www.domain.com/egroupware  или   /egroupware<br><b>Да не завършва с "/"!!!</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	bg	Въведете URL на EGroupware.<br>Пример: http://www.domain.com/egroupware  или   /egroupware<br><b>Да не завършва с "/"!!!</b>
 entry has been deleted sucessfully	common	bg	Записът беше изтрит успешно
 entry not found!	common	bg	Записът не е намерен!
 entry updated sucessfully	common	bg	Записът беше обновен успешно
@@ -298,7 +298,7 @@ home email	common	bg	домашен e-mail
 honduras	common	bg	Хондурас
 hong kong	common	bg	Хонг-Конг
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	bg	Колко икони да се покажат в лентата за навигация (горе на страницата)? Останалите икони се показват чрез падащо меню, активирано чрез иконата в крайната дясна част на лентата.
-how to show the general egroupware menu ?	common	bg	Как да се покаже общото меню на eGroupWare ?
+how to show the general egroupware menu ?	common	bg	Как да се покаже общото меню на EGroupware ?
 hungary	common	bg	Унгария
 iceland	common	bg	Исландия
 iespell not detected. click ok to go to download page.	common	bg	Не е открит   ieSpell. Кликнете OK за пренасочване към страницата за изтеглянето му.
@@ -595,7 +595,7 @@ show menu	common	bg	Показване на меню
 show page generation time	common	bg	Показване на времето за създаване на страниците
 show page generation time on the bottom of the page?	common	bg	Да се показва ли най-отдолу времето за създаване на страниците?
 show page generation time?	common	bg	Да се показва ли времето за генериране на страниците?
-show the logo's of egroupware and x-desktop on the desktop.	common	bg	Показване на логото на eGroupware и x-desktop на desktop-а.
+show the logo's of egroupware and x-desktop on the desktop.	common	bg	Показване на логото на EGroupware и x-desktop на desktop-а.
 showing %1	common	bg	показване на %1
 showing %1 - %2 of %3	common	bg	показване на %1 до %2 от %3
 sierra leone	common	bg	Сиера Леоне
@@ -703,7 +703,7 @@ western sahara	common	bg	Западна Сахара
 what color should all the blank space on the desktop have	common	bg	С какъв цвят да бъде запълнено празното пространство на desktop-а
 what style would you like the image to have?	common	bg	Какъв стил да бъде назначен на изображението?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	bg	Ако отговорите ДА бутоните Home и Logout ще се появят като приложения в горната главна лента на приложенията
-where and how will the egroupware links like preferences, about and logout be displayed.	common	bg	Къде и как да се изобразяват връзките на eGroupWare като настройки, "относно" и Logout.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	bg	Къде и как да се изобразяват връзките на EGroupware като настройки, "относно" и Logout.
 which groups	common	bg	Кои групи
 whole query	common	bg	всички резултати
 width	common	bg	Ширина
@@ -727,8 +727,8 @@ you have selected an invalid date	common	bg	Избрали сте невалид
 you have selected an invalid main category	common	bg	Избрали сте невалидна основна категория!
 you have successfully logged out	common	bg	Излязохте успешно
 you need to add the webserver user '%1' to the group '%2'.	common	bg	Необходимо е да добавите потребителя на WEB сървъра '%1' към групата '%2'
-you need to be an egroupware administrator to access this functionality!	common	bg	Необходимо е да сте администратор в eGroupWare за достъп до тези функции!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	bg	Опитахте да отворите приложение на eGroupWare: %1, но нямате права за достъп до него.
+you need to be an egroupware administrator to access this functionality!	common	bg	Необходимо е да сте администратор в EGroupware за достъп до тези функции!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	bg	Опитахте да отворите приложение на EGroupware: %1, но нямате права за достъп до него.
 your message could <b>not</b> be sent!<br>	common	bg	Писмото ви <b>не може</b> да бъде изпратено!<br>
 your message has been sent	common	bg	Писмото ви беше изпратено
 your search returned %1 matchs	common	bg	търсенето ви върна %1 съвпадения

@@ -159,7 +159,7 @@ enter the background color for the site title	admin	ko	사이트 제목의 배�
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ko	임시 파일의 완전경로 입력<br>예:/tmp,C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	ko	사용자와 그룹 파일의 완전경로 입력<br>예:/files ,E:\FILES
 enter the hostname of the machine on which this server is running	admin	ko	이 서버의 호스트이름 입력
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	eGroupWare의 URL의 위치를 입력.<br>예: http://www.domain.com/egroupware &nbsp; 이나 &nbsp; /egroupware<br><b>마지막에는 /(슬래쉬)</b>를 붙히지 말것
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	EGroupware의 URL의 위치를 입력.<br>예: http://www.domain.com/egroupware &nbsp; 이나 &nbsp; /egroupware<br><b>마지막에는 /(슬래쉬)</b>를 붙히지 말것
 enter the search string. to show all entries, empty this field and press the submit button again	admin	ko	검색할 문자열을 입력. 모든 항목을 보기위해선, 이 필드를 비우고 보내기(Submit) 버튼을 다시 누르세요
 enter the site password for peer servers	admin	ko	피어서버의 사이트 암호 입력
 enter the site username for peer servers	admin	ko	피어서버의 사이트 사용자이름 입력
@@ -388,9 +388,9 @@ view sessions	admin	ko	세션 보기
 view this user	admin	ko	이 사용자를보기
 view user account	admin	ko	사용자 계정 보기
 who would you like to transfer all records owned by the deleted user to?	admin	ko	** 누구에게 삭제된 사용자 소유의 모든 레코드를 전송 하시겠습니까?
-would you like egroupware to cache the egw info array ?	admin	ko	eGroupWare가 egw info 배열을 캐쉬하도록 하겠습니까?
-would you like egroupware to check for a new version<br>when admins login ?	admin	ko	관리자가 접속 할때<br>eGroupWare가 새버전을 확인하겠습니까?
-would you like egroupware to check for new application versions when admins login ?	admin	ko	관리자가 접속 할때 eGroupWare가 새 응용프로그램 버전을 확인하시겠습니까?
+would you like egroupware to cache the egw info array ?	admin	ko	EGroupware가 egw info 배열을 캐쉬하도록 하겠습니까?
+would you like egroupware to check for a new version<br>when admins login ?	admin	ko	관리자가 접속 할때<br>EGroupware가 새버전을 확인하겠습니까?
+would you like egroupware to check for new application versions when admins login ?	admin	ko	관리자가 접속 할때 EGroupware가 새 응용프로그램 버전을 확인하시겠습니까?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	ko	새로운 언어 파일을 자동적으로 읽겠습니까? (접속 할때)
 would you like to show each application's upgrade status ?	admin	ko	각 응용프로그램의 업그레이드 상태를 보시겠습니까?
 xml-rpc	admin	ko	XML-RPC

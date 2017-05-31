@@ -1,11 +1,11 @@
 color	home	hu	Szín
 displays home	home	hu	Kezdőlap megjelenítése
-egroupware	home	hu	eGroupWare
+egroupware	home	hu	EGroupware
 home	home	hu	Kezdőlap
 in %1 days (%2) is %3's birthday.	home	hu	%3 születésnapja %1 napon belül eljön (%2).
 remove	home	hu	eltávolítás
 set as default	home	hu	Beállítás alapértelmezettként
-there is a new version of egroupware available	home	hu	Elérhető egy újabb eGroupWare verzió
+there is a new version of egroupware available	home	hu	Elérhető egy újabb EGroupware verzió
 today is %1's birthday!	home	hu	Ma van %1 születésnapja!
 tomorrow is %1's birthday.	home	hu	Holnap van %1 születésnapja.
 yes, for the next three days	home	hu	Igen, a következő három napra

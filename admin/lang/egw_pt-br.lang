@@ -197,7 +197,7 @@ edit this group	admin	pt-br	editar este grupo
 edit this user	admin	pt-br	editar este usuário
 edit user	admin	pt-br	editar usuário
 edit user account	admin	pt-br	Editar conta de usuário
-egroupware directory	admin	pt-br	Diretório eGroupWare
+egroupware directory	admin	pt-br	Diretório EGroupware
 either install id and config password needed or the remote hash!	admin	pt-br	Necessário ID de instalação E senha de configuração OU o hash remoto!
 email account active	admin	pt-br	conta de e-mail ativa
 email address	admin	pt-br	e-mail
@@ -217,7 +217,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pt-br	D
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the hostname of the machine on which this server is running	admin	pt-br	Digite o nome da máquina em que este servidor está sendo executado
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware   ou   /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do EGroupware.<br>Exemplo: http://www.domain.com/egroupware   ou   /egroupware<br><b>Sem a barra final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pt-br	Entre com a expressão de busca. Para mostrar todas as entradas, deixe este campo em branco e pressione ENVIAR novamente
 enter the site password for peer servers	admin	pt-br	Digite a senha do servidor para comunicação com servidores parceiros
 enter the site username for peer servers	admin	pt-br	Digite o usuário do servidor para comunicação com servidores parceiros
@@ -423,7 +423,7 @@ server url	admin	pt-br	URL do servidor
 server username	admin	pt-br	Usuário do servidor
 set preference values.	admin	pt-br	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt-br	A tela de conexão deve incluír uma caixa de seleção de idioma? (útil para sites de demonstração)
-show 'powered by' logo on	admin	pt-br	Área para exibição de 'powered by eGroupWare'
+show 'powered by' logo on	admin	pt-br	Área para exibição de 'powered by EGroupware'
 show access log	admin	pt-br	Exibir registros de acessos
 show current action	admin	pt-br	Exibir ação corrente
 show error log	admin	pt-br	Exibir registro de erros
@@ -453,8 +453,8 @@ that application order must be a number.	admin	pt-br	O campo ordem de aplicativo
 that loginid has already been taken	admin	pt-br	Este código de usuário já existe
 that name has been used already	admin	pt-br	Este nome já está em uso
 that server name has been used already !	admin	pt-br	Este nome de servidor já está em uso!
-the api is current	admin	pt-br	A base (API) do eGroupWare está atualizada
-the api requires an upgrade	admin	pt-br	A base (API) do eGroupWare precisa ser atualizada
+the api is current	admin	pt-br	A base (API) do EGroupware está atualizada
+the api requires an upgrade	admin	pt-br	A base (API) do EGroupware precisa ser atualizada
 the groups must include the primary group	admin	pt-br	Os grupos devem incluír o grupo primário
 the login and password can not be the same	admin	pt-br	O login e a senha não podem ser iguais
 the loginid can not be more then 8 characters	admin	pt-br	O código de usuário não pode ter mais de 8 caracteres
@@ -506,9 +506,9 @@ view sessions	admin	pt-br	Exibir sessões
 view this user	admin	pt-br	exibir este usuário
 view user account	admin	pt-br	exibir conta de usuário
 who would you like to transfer all records owned by the deleted user to?	admin	pt-br	Para quem você deseja transferir todas as entradas do usuário removido?
-would you like egroupware to cache the egw info array ?	admin	pt-br	Deseja que o eGroupWare faça cache do vetor de informações egw ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o eGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
-would you like egroupware to check for new application versions when admins login ?	admin	pt-br	Deseja que o eGroupware verifique automaticamente novas versões de aplicativos quando administradores estiverem conectados?
+would you like egroupware to cache the egw info array ?	admin	pt-br	Deseja que o EGroupware faça cache do vetor de informações egw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o EGroupware verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
+would you like egroupware to check for new application versions when admins login ?	admin	pt-br	Deseja que o EGroupware verifique automaticamente novas versões de aplicativos quando administradores estiverem conectados?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	pt-br	Deseja que novos arquivos de localização sejam carragados automaticamente (ao entrar)
 would you like to show each application's upgrade status ?	admin	pt-br	Deseja exibir se cada aplicação está atualizada ?
 wrong account type: %1 is no %2 !!!	admin	pt-br	Tipo de conta errado: %1 NÃO é %2 !!!

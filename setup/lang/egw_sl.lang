@@ -225,7 +225,7 @@ edit current configuration	setup	sl	Upravljaj trenutno konfiguracijo
 edit your existing header.inc.php	setup	sl	Uredi obstoječo datoteko header.inc.php
 edit your header.inc.php	setup	sl	Uredi datoteko header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	sl	npr. /egroupware ali http://domena.si/egroupware, privzeto: %1
-egroupware administration manual	setup	sl	eGroupware upravljalski priročnik
+egroupware administration manual	setup	sl	EGroupware upravljalski priročnik
 egroupware api needs a database (schema) update from version %1 to %2!	setup	sl	EGroupware API mora posodobiti zbirko podatkov (shemo) z različice %1 na različico %2!
 egroupware api version %1 found.	setup	sl	Najdena je različica %1 EGroupware API
 egroupware configuration file (header.inc.php) does not exist.	setup	sl	Konfiguracijska datoteka (header.inc.php) ne obstaja.
@@ -417,7 +417,7 @@ path of egroupware install directory (default auto-detected)	setup	sl	Pot do nam
 path to user and group files has to be outside of the webservers document-root!!!	setup	sl	Pot do uporabnikovih in skupinskih datotek <b>mora biti zunaj</b> strežnikovega spletnega področja!
 path to various directories: have to exist and be writeable by the webserver	setup	sl	Pot do več map: morajo obstojati in biti zapisljive s strani spletnega strežnika.
 pear (%1) is a php repository and is usually in a package called %2.	setup	sl	PEAR (%1) je v repozitoriju PHP in je ponavadi del paketa %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	sl	Razširitve PEAR so zahtevane za več aplikacij eGroupware, PEAR je zahtevana osnova za vse razširitve.
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	sl	Razširitve PEAR so zahtevane za več aplikacij EGroupware, PEAR je zahtevana osnova za vse razširitve.
 pear%1 is needed by: %2.	setup	sl	EAR%1 je potreben za: %2.
 pem certificate	setup	sl	Certifikat PEM
 persistent connections	setup	sl	Trajne povezave
@@ -426,7 +426,7 @@ php proxy	setup	sl	Vmesnik PHP
 php session handler enabled in php.ini	setup	sl	Upravljalec sej PHP je omogočen v php.ini
 please check for sql scripts within the application's directory	setup	sl	Prosim, preverite za SQL skripte znotraj direktorijev aplikacij
 please check read/write permissions on directories, or back up and use another option.	setup	sl	Prosim, preverite pravice dostopa do direktorijev, ali pa se vrnite in uporabite drugo možnost.
-please configure egroupware for your environment	setup	sl	Prosim, prilagodite eGroupware za vaše okolje.
+please configure egroupware for your environment	setup	sl	Prosim, prilagodite EGroupware za vaše okolje.
 please consult the %1.	setup	sl	Prosim, posvetujte se z %1.
 please fix the above errors (%1) and warnings(%2)	setup	sl	Prosim, popravite zgornje napake (%1) in opozorila (%2)
 please install	setup	sl	Prosim, namestite
@@ -616,7 +616,7 @@ we could not determine the version of %1, please make sure it is at least %2	set
 we will automatically update your tables/records to %1	setup	sl	Vaše tabele/zapise bom avtomatično nadgradil na %1.
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	sl	Sedaj bom pognal nekaj testov, ki lahko trajajo nekaj minut. Kliknite na povezavo za nadaljevanje.
 welcome to the egroupware installation	setup	sl	Dobrodošli v namestitvi EGroupwarea
-where should egroupware store file content	setup	sl	Kam naj eGroupware shranjuje vsebino datotek
+where should egroupware store file content	setup	sl	Kam naj EGroupware shranjuje vsebino datotek
 which database type do you want to use with egroupware?	setup	sl	Kater tip podatkovne baze želite uporabljati za EGroupware?
 world readable	setup	sl	Berljivo za vse
 world writable	setup	sl	Zapisljivo za vse

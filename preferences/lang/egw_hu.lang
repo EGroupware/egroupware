@@ -2,10 +2,10 @@
 %1 hours	preferences	hu	%1 órák
 12 hour	preferences	hu	12 óra
 24 hour	preferences	hu	24 óra
-a template defines the layout of egroupware and it contains icons for each application.	preferences	hu	A sablon meghatároz egy elrendezést az eGroupWare számára, ami tartalmazza az alkalmazások ikonjait is.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	hu	A sablon meghatároz egy elrendezést az EGroupware számára, ami tartalmazza az alkalmazások ikonjait is.
 a theme defines the colors and fonts used by the template.	preferences	hu	Egy téma definiálja a színeket és betűtípusokat amiket a sablon használ.
 acl grants have been updated	preferences	hu	ACL engedélyek frissítése megtörtént
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Bármilyen lista az eGroupWare-ben ennyi bejegyzést vagy sort fog oldalanként megmutatni.<br>A túl nagy szám lelassítja a megjelenítést, a túl kevés az átláthatóságot csökkenti. Ön dönt.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Bármilyen lista az EGroupware-ben ennyi bejegyzést vagy sort fog oldalanként megmutatni.<br>A túl nagy szám lelassítja a megjelenítést, a túl kevés az átláthatóságot csökkenti. Ön dönt.
 are you sure you want to delete this category ?	preferences	hu	Biztosan törölni kívánja ezt a kategóriát?
 change your password	preferences	hu	Jelszó megváltoztatása
 change your profile	preferences	hu	Profil megváltoztatása
@@ -38,7 +38,7 @@ how do you like to display accounts	preferences	hu	Hogyan szeretné megjeleníte
 how do you like to select accounts	preferences	hu	Hogyan szeretné kiválasztani a hozzáféréseket
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	hu	Hány órával van előrébb vagy hátrébb a szerver időzónájánál.<br>Ha ugyanabban az időzónában van mint a szerver, válasszon 0 órát, egyébként válassza a helyi dátumot és időt.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	hu	Hány darab ikon jelenjen meg a navigációs panelen a lap tetején. További ikonok a legördülő menübe kerülnek és a navigációs panel jobb oldalán érhetők el.
-how should egroupware display dates for you.	preferences	hu	Az eGroupWare hogyan jelenítse meg a dátumokat?
+how should egroupware display dates for you.	preferences	hu	Az EGroupware hogyan jelenítse meg a dátumokat?
 icon	preferences	hu	Ikon
 icons and text	preferences	hu	Ikonok és képek
 icons only	preferences	hu	csak ikonok
@@ -73,14 +73,14 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	hu	Az aktív kapcsolatok számának állandó megjelenítése (egyszerre hányan használják a rendszert).
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	hu	A segítség üzenetek állandóan megjelenítésre kerülnek, amikor változtatja a tulajdonságokat, vagy csak akkor jelennek meg, ha kifejezetten kéri a megjelenítést.
 show helpmessages by default	preferences	hu	Segítség megjelenítése alapértelmezésben
-show links between egroupware aps as	common	hu	Az eGroupWare alkalmazások közötti linkeket mutassa
+show links between egroupware aps as	common	hu	Az EGroupware alkalmazások közötti linkeket mutassa
 show navigation bar as	preferences	hu	Mutassa a navigációs panelt mint
 show number of current users	preferences	hu	Aktuálisan bejelentkezett felhasználók számának mutatása
 show text on navigation icons	preferences	hu	Szöveg megjelenítése a navigációs ikonokon
 show_more_apps	common	hu	Több program megjelenítése
 spellchecker language	addressbook	hu	Helyesírás-ellenörző nyelve
 text only	preferences	hu	Csak szöveg
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	hu	Az alapértelmezett alkalmazás fog elindulni, amikor belép az eGroupWare-be vagy a Kezdőlap ikonra kattint.<br>Több alkalmazást is megjeleníthet a Kezdőlapon(Főképernyőn), ha nem jelöl meg itt alapértelmezett alkalmazást. Ezeket az egyes alkalmazások beállításai között kell beállítani (pl. Felamimail, Infolog, Hírszerkesztő stb.).
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	hu	Az alapértelmezett alkalmazás fog elindulni, amikor belép az EGroupware-be vagy a Kezdőlap ikonra kattint.<br>Több alkalmazást is megjeleníthet a Kezdőlapon(Főképernyőn), ha nem jelöl meg itt alapértelmezett alkalmazást. Ezeket az egyes alkalmazások beállításai között kell beállítani (pl. Felamimail, Infolog, Hírszerkesztő stb.).
 the old password is not correct	preferences	hu	A régi jelszó hibás
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	hu	A kiválasztó doboz megjeleníti az összes elérhető felhasználót (nagyon lelassulhat sok felhasználó esetén). A felugró ablakban meg lehet keresni a felhasználókat név vagy csoport alapján.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	hu	Az előbbi két opció korlátozza más felhasználók megtekintését. Ezért ezt meg kell követelni és nem engedélyezni adminisztrátoroknak.
@@ -91,7 +91,7 @@ time format	preferences	hu	Időformátum
 use default	preferences	hu	Használja az alapértelmezettet
 users choice	preferences	hu	Felhasználó választása
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	hu	Kezdőlap és Kilépés gombok megjelennek a navigációs panelen az alkalmazások között. Tipikusan a legelső és utolsó ikonok lesznek azok.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	hu	Milyen karakterkódolást alkalmazzunk CSV exportnál? Az alapértelmezett karakterkódolás az eGroupWare rendszer alapértelmezett karakterkódolásával egyezik meg.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	hu	Milyen karakterkódolást alkalmazzunk CSV exportnál? Az alapértelmezett karakterkódolás az EGroupware rendszer alapértelmezett karakterkódolásával egyezik meg.
 which currency symbol or name should be used in egroupware.	preferences	hu	Melyik pénznemet használja a rendszer.
 you can show the applications as icons only, icons with app-name or both.	preferences	hu	Az alkalmazások gombja a navigációs panelen megjeleníthetőek mint ikonok, ikonok az alkalmazás nevével, vagy csak az alkalmazás nevével.
 you can show the linked entries with icons only, icons with app-name or both.	common	hu	Csatolt elemeket ikonként, szövegként vagy mindkettőt feltüntetve lehet megjeleníteni.

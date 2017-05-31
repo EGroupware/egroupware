@@ -148,7 +148,7 @@ enter the background color for the site title	admin	uk	Введіть колір
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	uk	Введіть повний шлях для тимчасових файлів. <br>Наприклад: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	uk	Введіть повний шлях для файлів користувачів та груп. <br>Наприклад: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	uk	Введіть hostname машини, на якій працює цей сервер.
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL eGroupWare.<br>наприклад: http://www.domain.com/egroupware &nbsp; або &nbsp; /egroupware<br><b>Без / в кінці</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL EGroupware.<br>наприклад: http://www.domain.com/egroupware &nbsp; або &nbsp; /egroupware<br><b>Без / в кінці</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	uk	Введіть зразок пошуку. Для показу всіх записів залиште це поле порожнім та знову натисніть кнопку ВІДІСЛАТИ.
 enter the site password for peer servers	admin	uk	Введіть пароль сайту для peer серверів
 enter the site username for peer servers	admin	uk	Введіть ім'я користувача сайту для peer серверів
@@ -354,7 +354,7 @@ view sessions	admin	uk	Перегляд сесій
 view this user	admin	uk	переглянути цього користувача
 view user account	admin	uk	Перегляд рахунку користувача
 who would you like to transfer all records owned by the deleted user to?	admin	uk	Кому передати ВСІ записи користувача, що видаляється ?
-would you like egroupware to cache the egw info array ?	admin	uk	Чи хотіли б Ви, щоб eGroupWare утримувало в кеші інформаційний масив egw?
+would you like egroupware to cache the egw info array ?	admin	uk	Чи хотіли б Ви, щоб EGroupware утримувало в кеші інформаційний масив egw?
 would you like egroupware to check for a new version<br>when admins login ?	admin	uk	Чи перевіряти на нові версіі при вході адміністратора ?
 would you like egroupware to check for new application versions when admins login ?	admin	uk	Чи перевіряти на нові версіі приложень при вході адміністратора ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	uk	Чи потрібно автоматично загружати нові мовні файли під час входу?

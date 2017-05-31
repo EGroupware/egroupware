@@ -1,12 +1,12 @@
 %1 email addresses inserted	common	eu	%1 helbide elektronikoak txertatuak
 %1 is not executable by the webserver !!!	common	eu	%1-ek ez du baimenik web zerbitzaria exekutatzeko!!!
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	eu	%1eGroupWare%2 web-ean oinarritutako talde lanerako tresna erabiltzaile anitza da
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	eu	%1EGroupware%2 web-ean oinarritutako talde lanerako tresna erabiltzaile anitza da
 00 (disable)	admin	eu	00 (desaktibatu)
 13 (ntp)	admin	eu	13 (ntp)
 80 (http)	admin	eu	80 (http)
 about	common	eu	Honi buruzkoak
 about %1	common	eu	%1 honi buruzkoak
-about egroupware	common	eu	eGroupwareri buruzkoak
+about egroupware	common	eu	EGroupwareri buruzkoak
 access	common	eu	Sarbide
 access not permitted	common	eu	Sarrera ez onartua
 account has been created	common	eu	Kontu bat sortu da
@@ -428,7 +428,7 @@ personal	common	eu	Pertsonala
 peru	common	eu	PERU
 philippines	common	eu	FILIPINAK
 phone number	common	eu	Telefono zenbakia
-api	common	eu	eGroupWare API
+api	common	eu	EGroupware API
 pitcairn	common	eu	PITCAIRN
 please enter a name	common	eu	Mesedez izen bat sartu
 please run setup to become current	common	eu	Mesedez setup exekutatu eguneratzeko

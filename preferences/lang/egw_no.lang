@@ -2,10 +2,10 @@
 %1 hours	preferences	no	%1 timer
 12 hour	preferences	no	12 timer
 24 hour	preferences	no	24 timer
-a template defines the layout of egroupware and it contains icons for each application.	preferences	no	En mal definerer utseende på eGroupWare og inneholder ikoner for hver applikasjon.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	no	En mal definerer utseende på EGroupware og inneholder ikoner for hver applikasjon.
 a theme defines the colors and fonts used by the template.	preferences	no	Et tema bestemmer farger og skrifttype som brukes av malen.
 acl grants have been updated	preferences	no	ACL tilganger ble oppdatert
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	no	Alle utlistinger i eGroupWare vil vise dette antall innslag eller linjer per side.<br>For mange fører til sen sideoppdatering, for få reduserer oversiktsbildet.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	no	Alle utlistinger i EGroupware vil vise dette antall innslag eller linjer per side.<br>For mange fører til sen sideoppdatering, for få reduserer oversiktsbildet.
 are you sure you want to delete this category ?	preferences	no	Er du sikker på at du vil slette denne kategorien?
 change your password	preferences	no	Endre passord
 change your profile	preferences	no	Endre din profil
@@ -33,7 +33,7 @@ how do you like to display accounts	preferences	no	Hvordan ønsker du kontoene s
 how do you like to select accounts	preferences	no	Hvordan ønsker du å velge kontoer
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	no	Hvor mange timer ligger du foran eller etter tidssonen på tjeneren.<b> Hvis du er i samme tidssone som tjeneren velger du 0 timer, hvis ikke setter du lokal dato og tid.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	no	Hvor mange ikoner skal vises på navigasjonslinjen på toppen av sidene. Ekstra ikoner plasseres i en rullegardinmeny helt til høyre på navigasjonslinjen.
-how should egroupware display dates for you.	preferences	no	Hvordan skal eGroupWare vise datoer?
+how should egroupware display dates for you.	preferences	no	Hvordan skal EGroupware vise datoer?
 icon	preferences	no	Ikon
 icons and text	preferences	no	Ikoner og tekst
 icons only	preferences	no	kun ikoner
@@ -61,7 +61,7 @@ show number of current users	preferences	no	Vis antall pålogget brukere
 show text on navigation icons	preferences	no	Vis tekst på navigasjonsikoner
 show_more_apps	common	no	Vis flere programmer
 text only	preferences	no	Kun tekst
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	no	Standard programmet startes når du starter eGroupWare eller klikker på hjemmeside ikonet.<b>Du kan ellers vise flere programmer på hjemmesiden så lenge du ikke velger spesifikt program her (må konfigureres i preferansene til det enkelte program).
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	no	Standard programmet startes når du starter EGroupware eller klikker på hjemmeside ikonet.<b>Du kan ellers vise flere programmer på hjemmesiden så lenge du ikke velger spesifikt program her (må konfigureres i preferansene til det enkelte program).
 the old password is not correct	preferences	no	Det gamle passordet er ikke korrekt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	no	Valgboksen viser alle tilgjengelige brukere (kan være veldig treg på store installasjoner med mange brukere). I pop-up vinduet kan du søke etter brukere vha. navn eller gruppe.
 the two passwords are not the same	preferences	no	Passordene stemmer ikke overens
@@ -71,7 +71,7 @@ time format	preferences	no	Tidsformat
 use default	preferences	no	Bruk standard
 users choice	preferences	no	Brukers valg
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	no	Når du svarer ja vil hjem- og avloggingsknappene prsenteres som valg i topp av hovedbildet.
-which currency symbol or name should be used in egroupware.	preferences	no	Hvilket valuta symbol eller navn skal brukes i eGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	no	Hvilket valuta symbol eller navn skal brukes i EGroupware.
 you can show the applications as icons only, icons with app-name or both.	preferences	no	Du kan vises programmene som kun ikoner, ikoner med programnavn eller begge.
 you do not have permission to set acl's in this mode!	preferences	no	Du har ikke rettigheter til å endre en ACL i denne modus!
 you must enter a password	preferences	no	Du må skrive inn et passord

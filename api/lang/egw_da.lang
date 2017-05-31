@@ -1,13 +1,13 @@
 %1 email addresses inserted	common	da	%1 e-mail adresser insat
 %1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af Web server
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br/>eller gør %3 skrivbar for Web server
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1eGroupWare%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1EGroupware%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
 00 (disable)	admin	da	00 (deaktiveret)
 13 (ntp)	admin	da	13 (ntp)
 80 (http)	admin	da	80 (http)
 about	common	da	Om
 about %1	common	da	Om %1
-about egroupware	common	da	Om eGroupWare
+about egroupware	common	da	Om EGroupware
 access	common	da	Adgang
 access not permitted	common	da	Ingen adgang
 account has been created	common	da	Kontoen er oprettet
@@ -188,7 +188,7 @@ edit	common	da	Redigér
 edit %1 category for	common	da	Redigér kategorien %1 for
 edit categories	common	da	Redigér Kategorier
 edit category	common	da	Redigér kategori
-egroupware: login blocked for user '%1', ip %2	common	da	eGroupWare: login blokeret for bruger '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	da	EGroupware: login blokeret for bruger '%1', IP %2
 egypt	common	da	Egypten
 el salvador	common	da	El Salvador
 email	common	da	E-mail
@@ -196,7 +196,7 @@ email-address of the user, eg. "%1"	common	da	email-adresse for brugeren, f.eks.
 enabled	common	da	Slået til
 end date	common	da	Slutdato
 end time	common	da	Sluttid
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware   eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for EGroupware's URL.<br>Eksempel: http://www.domæne.dk/egroupware   eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
 entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
 entry updated sucessfully	common	da	Emnet er succesrigt opdateret
 equatorial guinea	common	da	Equatorial Guinea

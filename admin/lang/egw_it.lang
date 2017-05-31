@@ -338,7 +338,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	it	Inse
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	it	Inserisci l'hostname della macchina su cui sta girando questo server
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci la locazione dell'URL di eGroupWare.<br>Esempio: http://www.domain.com/egroupware   o   /egroupware<br><b>senza slash finale</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci la locazione dell'URL di EGroupware.<br>Esempio: http://www.domain.com/egroupware   o   /egroupware<br><b>senza slash finale</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	it	Inserisci la stringa di ricerca. Per vedere tutta la lista, svuota il campo e premi ancora il pulsante INVIA
 enter the site password for peer servers	admin	it	Inserisci la password per i peer server
 enter the site username for peer servers	admin	it	Inserisci il nome utente per i peer server
@@ -865,9 +865,9 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	it	Le informazioni inviate servono soltanto per avere una panoramica dell'utilizzo si Egroupware nel mondo
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	it	Non registriamo dati identificativi.
 who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTI i dati di questo utente?
-would you like egroupware to cache the egw info array ?	admin	it	Vuoi che eGroupWare utilizzi la cache per l'array egw info?
-would you like egroupware to check for a new version<br>when admins login ?	admin	it	Vuoi che eGroupWare controlli se c'è una nuova versione<br>quando un amministratore effettua il login ?
-would you like egroupware to check for new application versions when admins login ?	admin	it	Vuoi che eGroupWare controlli se ci sono nuove versioni delle applicazioni<br>quando un amministratore effettua il login ?
+would you like egroupware to cache the egw info array ?	admin	it	Vuoi che EGroupware utilizzi la cache per l'array egw info?
+would you like egroupware to check for a new version<br>when admins login ?	admin	it	Vuoi che EGroupware controlli se c'è una nuova versione<br>quando un amministratore effettua il login ?
+would you like egroupware to check for new application versions when admins login ?	admin	it	Vuoi che EGroupware controlli se ci sono nuove versioni delle applicazioni<br>quando un amministratore effettua il login ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	it	Vuoi caricare automaticamente i nuovi file di traduzione (al momento del login) ?
 would you like to show each application's upgrade status ?	admin	it	Vuoi che venga mostrato lo stato di aggiornamento di ogni applicazione?
 wrong account type: %1 is no %2 !!!	admin	it	Tipo di account errato: %1 non è %2 !

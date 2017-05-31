@@ -239,7 +239,7 @@ edit current configuration	setup	pl	Edytuj bieżącą konfigurację
 edit your existing header.inc.php	setup	pl	Edytuj obecny plik header.inc.php
 edit your header.inc.php	setup	pl	Edytuj header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	pl	np. /egroupware or http://domain.com/egroupware, domyślnie: %1
-egroupware administration manual	setup	pl	Pomoc administratora eGroupware
+egroupware administration manual	setup	pl	Pomoc administratora EGroupware
 egroupware api needs a database (schema) update from version %1 to %2!	setup	pl	EGroupware API wymaga aktualizacji (schematu) z wersji %1 do %2
 egroupware api version %1 found.	setup	pl	Wersja EGroupware API %1 znaleziona.
 egroupware configuration file (header.inc.php) does not exist.	setup	pl	Plik konfiguracyjny EGroupware (header.inc.php ) nie istnieje.
@@ -381,7 +381,7 @@ mcrypt initialization vector	setup	pl	Wektor inicjalizujący MCrypt
 mcrypt mode (default cbc)	setup	pl	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pl	Ustawienia Mcrypt (wymaga rozszerzenia PHP: mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pl	memory_limit jest ustawiony na mniej niż 5!: niektóre aplikacje eGW wymagają więcej niż zalecane 8M - mogą powstać błędy.
-migration between egroupware account repositories	setup	pl	Migracja międzu repozytoriami kont eGroupware
+migration between egroupware account repositories	setup	pl	Migracja międzu repozytoriami kont EGroupware
 min backup count	setup	pl	Liczba kopi bezpieczeństwa do przechowywania (zero: wszystkie/ bez limitu)
 minimum account id (e.g. 500 or 100, etc.)	setup	pl	Minimalny ID konta (np. 500 lub 100, itd.)
 missing or uncomplete mailserver configuration	setup	pl	Konfiguracja serwera mail nieobecna lub niekompletna
@@ -430,12 +430,12 @@ password for smtp-authentication	setup	pl	Hasło do autentyfikacji SMTP
 password needed for domain configuration.	setup	pl	Wymagane hasło konfiguracji domeny.
 password of db user	setup	pl	Hasło użytkownika bazy danych
 passwords did not match, please re-enter	setup	pl	Hasła nie są identyczne, proszę wpisać je jeszcze raz
-path (not url!) to your egroupware installation.	setup	pl	Ścieżka (nie URL!) do instalacji eGroupware.
+path (not url!) to your egroupware installation.	setup	pl	Ścieżka (nie URL!) do instalacji EGroupware.
 path information	setup	pl	Ścieżki
-path of egroupware install directory (default auto-detected)	setup	pl	ścieżka do katalogu instalacji eGroupware (domyślnie auto wykrywanie)
+path of egroupware install directory (default auto-detected)	setup	pl	ścieżka do katalogu instalacji EGroupware (domyślnie auto wykrywanie)
 path to various directories: have to exist and be writeable by the webserver	setup	pl	ścieżka do różnych katalogów: musi istnieć i mieć prawa zapisu dla serwera WEB
 pear (%1) is a php repository and is usually in a package called %2.	setup	pl	Pear (%1) jest repozytorium PHP i zawiera się w pakiecie %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	pl	Rozszerzenia PEAR są wymagane przez wiele różnych aplikacji eGroupware, PEAR sam w sobie jest podstawą wymogów dla każdego rozszerzenia!
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	pl	Rozszerzenia PEAR są wymagane przez wiele różnych aplikacji EGroupware, PEAR sam w sobie jest podstawą wymogów dla każdego rozszerzenia!
 pear%1 is needed by: %2.	setup	pl	PEAR %1 jest wymagany przez: %2.
 pem certificate	setup	pl	Certyfikat PEM
 persistent connections	setup	pl	Stałe połączenie
@@ -469,7 +469,7 @@ read translations from	setup	pl	Czytaj tłumaczenie z
 readable by the webserver	setup	pl	do odczytu przez serwer WEB
 really uninstall all applications	setup	pl	NA PEWNO usunąć WSZYSTKIE aplikacje
 refusing to delete dn "%1"!	setup	pl	Usuwanie dn "%1" odrzucone!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pl	register_globals jest włączone, eGroupware tego nie wymaga jak również jest bezpieczniej gdy opcja ta jest wyłączona
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pl	register_globals jest włączone, EGroupware tego nie wymaga jak również jest bezpieczniej gdy opcja ta jest wyłączona
 registered	setup	pl	Zarejestrowano
 rejected lines	setup	pl	Odrzucone linie
 remove	setup	pl	Usuń
@@ -559,7 +559,7 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	pl	Rozszerze
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	pl	Rozszerzenie ctype wymagane przez HTMLpurifier do sprawdzenia zawartości FCKeditor w stosunku co do Cross Site Skripting.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	pl	Domyślnie db_type (%1) nie jest wspierane na tym serwerze z użyciem pierwszego wspieranego typu.
 the file	setup	pl	plik
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pl	Pierwszy krok instalacji eGroupware wymaga zapewnienia poprawnie skonfigurowanego środowiska by poprawnie wystartować aplikację.
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pl	Pierwszy krok instalacji EGroupware wymaga zapewnienia poprawnie skonfigurowanego środowiska by poprawnie wystartować aplikację.
 the following applications are not installed:	setup	pl	Następujące aplikacje nie są zainstalowane:
 the following applications are required, but not installed:	setup	pl	Następujące aplikacje są wymagane, jednak nie zainstalowane:
 the following applications need to be upgraded:	setup	pl	Następujące aplikacje powinny być aktualizowane:
@@ -595,7 +595,7 @@ translations added	setup	pl	Dodano tłumaczenia
 translations removed	setup	pl	Usunięto tłumaczenia
 translations upgraded	setup	pl	Zaktualizowano tłumaczenia
 true	setup	pl	Prawda
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	pl	Spróbuj skonfigurować php by zapewnić wsparcie dla wspomnianego powyżej DBMS lub zainstaluj eGroupware ręcznie.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	pl	Spróbuj skonfigurować php by zapewnić wsparcie dla wspomnianego powyżej DBMS lub zainstaluj EGroupware ręcznie.
 two weeks	setup	pl	Dwa tygodnie
 uninstall	setup	pl	odinstaluj
 uninstall all applications	setup	pl	Odinstaluj wszystkie aplikacje
@@ -633,9 +633,9 @@ we can proceed	setup	pl	Można kontynuować
 we could not determine the version of %1, please make sure it is at least %2	setup	pl	Nie można ustalić wersji dla %1, sprawdź czy jest to przynajmniej wersja %2
 we will automatically update your tables/records to %1	setup	pl	We will automatically update your tables/records to %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pl	Zostaną przeprowadzone testy -- to może zająć kilka minut -- Wybierz poniższy link by zatwierdzić.
-welcome to the egroupware installation	setup	pl	Witamy w instalacji systemu eGroupware
+welcome to the egroupware installation	setup	pl	Witamy w instalacji systemu EGroupware
 where should egroupware store file content	setup	pl	Gdzie eGW powinien przechowywać zawartość plików
-which database type do you want to use with egroupware?	setup	pl	Którą bazę danych chcesz używać z eGroupware
+which database type do you want to use with egroupware?	setup	pl	Którą bazę danych chcesz używać z EGroupware
 world readable	setup	pl	do odczytu
 world writable	setup	pl	do zapisu
 would you like egroupware to cache the phpgw info array ?	setup	pl	Would you like EGroupware to cache the phpgw info array ?
@@ -647,12 +647,12 @@ wrong credentials to access the header.inc.php file!	setup	pl	Błędne uprawnien
 yes	setup	pl	Tak
 yes, with lowercase usernames	setup	pl	Tak, nazwa użytkownika pisana małymi literami
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of EGroupware.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pl	Prawdopodobnie używasz starszej wersji PHP<br/> Zalecana jest aktualizacja do nowej wersji. <br/> eGroupware może nie działać ze starszymi wersjami PHP, jeśli w ogóle. <br/><br/> Wykonaj aktualizację przynajmniej do wersji %1.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pl	Prawdopodobnie używasz starszej wersji PHP<br/> Zalecana jest aktualizacja do nowej wersji. <br/> EGroupware może nie działać ze starszymi wersjami PHP, jeśli w ogóle. <br/><br/> Wykonaj aktualizację przynajmniej do wersji %1.
 you appear to be running version %1 of egroupware	setup	pl	You appear to be running version %1 of EGroupware
 you appear to have %1 support.	setup	pl	Wygląda na to że masz wsparcie dla %1
 you appear to have xml support enabled	setup	pl	Wygląda na to, że jest dostępne wsparcie dla XML.
 you are ready for this stage, but this stage is not yet written.<br />	setup	pl	You are ready for this stage, but this stage is not yet written.<br />
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pl	Używana wersja PHP %1. eGroupware wymaga teraz wersji %2 lub wcześniejszej, polecana wersja PHP - %3.
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pl	Używana wersja PHP %1. EGroupware wymaga teraz wersji %2 lub wcześniejszej, polecana wersja PHP - %3.
 you can install it by running:	setup	pl	Można zainstalować to wydając polecenie:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pl	Możesz teraz używać użytkownika i hasła z HEADER do wszystkich domen. Jeśli to hasło nie jest ustawione przez linię poleceń, to jest pobierane ze zmiennych systemowych EGW_CLI_PASSWORD lub oczekuje podania przez użytkownika.
 you didn't enter a config password for domain %1	setup	pl	Nie podano hasła administratora dla domeny '%1'.
@@ -672,7 +672,7 @@ you need to specify a password!	setup	pl	Musisz podać hasło!
 you should %1log out%2 and in again, to update your current session!	setup	pl	Powinieneś %1 wylogować się %2 i ponownie zalogować, by odświeżyć obecną sesję!
 you should either install the sources or uninstall it, to get rid of the tables	setup	pl	Zainstaluj najpierw źródło lub odinstaluj by pozbyć się tabel
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pl	Możesz odinstalować ją i zainstalować ponownie lub podjąć próbę ręcznej naprawy.
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pl	Nie można zalogować się do eGroupware używając sesji PHP: "sesja nie może być zweryfikowana" !!!
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pl	Nie można zalogować się do EGroupware używając sesji PHP: "sesja nie może być zweryfikowana" !!!
 you're using an old configuration file format...	setup	pl	Używasz starego formatu pliku konfiguracyjnego
 your applications are current	setup	pl	Aplikacje są w najnowszych wersjach
 your backup directory '%1' %2	setup	pl	Katalog kopii zapasowych '%1' %2

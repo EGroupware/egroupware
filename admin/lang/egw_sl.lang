@@ -179,7 +179,7 @@ edit this group	admin	sl	Uredi to skupino
 edit this user	admin	sl	Uredi tega uporabnika
 edit user	admin	sl	Uredi uporabnika
 edit user account	admin	sl	Uredi uporabniški račun
-egroupware directory	admin	sl	Mapa eGroupWare
+egroupware directory	admin	sl	Mapa EGroupware
 email account active	admin	sl	E-poštni račun je aktiven
 email address	admin	sl	E-poštni naslov
 enable	admin	sl	Omogoči
@@ -197,7 +197,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sl	Vnes
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sl	Vnesite ime računalnika, na katerem teče strežnik.
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL eGroupware strežnika.<br>Primer: http://www.domena.si/egw   ali   /egw<br><b>Brez končne poševnice.</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL EGroupware strežnika.<br>Primer: http://www.domena.si/egw   ali   /egw<br><b>Brez končne poševnice.</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sl	Vnesite niz za iskanje. Za prikaz vseh vnosov izpraznite to polje in kliknite gumb Pošlji.
 enter the site password for peer servers	admin	sl	Vnesite geslo vzporednega strežnika
 enter the site username for peer servers	admin	sl	Vnesite uporabniško ime vzporednega strežnika
@@ -465,9 +465,9 @@ view sessions	admin	sl	Preglej seje
 view this user	admin	sl	preglej tega uporabnika
 view user account	admin	sl	Preglej uporabnikov račun
 who would you like to transfer all records owned by the deleted user to?	admin	sl	Komu se dodelijo <b>vsi</b> zapisi v lasti izbrisanega uporabnika?
-would you like egroupware to cache the egw info array ?	admin	sl	Želite, da eGroupWare shrani informacije v predpomnilnik kot niz egw_info?
-would you like egroupware to check for a new version<br>when admins login ?	admin	sl	Ali želite, da eGroupWare preveri veljavnost različice ob oskrbnikovi prijavi?
-would you like egroupware to check for new application versions when admins login ?	admin	sl	Ali želite, da eGroupWare preveri veljavnost različice aplikacij ob oskrbnikovi prijavi?
+would you like egroupware to cache the egw info array ?	admin	sl	Želite, da EGroupware shrani informacije v predpomnilnik kot niz egw_info?
+would you like egroupware to check for a new version<br>when admins login ?	admin	sl	Ali želite, da EGroupware preveri veljavnost različice ob oskrbnikovi prijavi?
+would you like egroupware to check for new application versions when admins login ?	admin	sl	Ali želite, da EGroupware preveri veljavnost različice aplikacij ob oskrbnikovi prijavi?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sl	Ali želite samodejno naložiti nove jezike (ob prijavi)?
 would you like to show each application's upgrade status ?	admin	sl	Ali želite prikazati status različice vsake aplikacije?
 xml-rpc	admin	sl	XML-RPC

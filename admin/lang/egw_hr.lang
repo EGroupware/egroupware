@@ -170,7 +170,7 @@ enter the background color for the site title	admin	hr	Unesite pozadinsku boju n
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	hr	Unesite punu stazu za privremene datoteke.<br>Primjeri: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	hr	Unesite punu stazu za korisnike i datoteke grupa.<br>Primjeri: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	hr	Unesite hostname poslužitelja na kojem se ova apiljacija izvršava
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Unesite lokaciju eGroupWare-ovog URL-a: http://www.domain.com/egroupware &nbsp; ili &nbsp; /egroupware<br><b>Bez kose crte</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Unesite lokaciju EGroupware-ovog URL-a: http://www.domain.com/egroupware &nbsp; ili &nbsp; /egroupware<br><b>Bez kose crte</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	hr	Unesite niz znakova za pretraživanje. Radi prikazivanja svih zapisa, ispraznite ovo polje i ponovo kliknite na POŠALJI.
 enter the site password for peer servers	admin	hr	Unesite zaporku za peer poslužitelje
 enter the site username for peer servers	admin	hr	Unesite korisničko ime za peer poslužitelje
@@ -414,9 +414,9 @@ view sessions	admin	hr	View sessions
 view this user	admin	hr	Prikaži ovog korisnika
 view user account	admin	hr	Prikaži korisničke račune
 who would you like to transfer all records owned by the deleted user to?	admin	hr	Kome bi željeli prenjeti SVE zapise koje je imao obrisani korisnik?
-would you like egroupware to cache the egw info array ?	admin	hr	Would you like eGroupWare to cache the egw info array ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	hr	Da li želite da eGroupWare provijeri postojanje nove verzije<br>kada se administrator prijavi ?
-would you like egroupware to check for new application versions when admins login ?	admin	hr	Da li želite da eGroupWare provijeri postojanje nove verzije aplikacije kada se administrator prijavi ?
+would you like egroupware to cache the egw info array ?	admin	hr	Would you like EGroupware to cache the egw info array ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	hr	Da li želite da EGroupware provijeri postojanje nove verzije<br>kada se administrator prijavi ?
+would you like egroupware to check for new application versions when admins login ?	admin	hr	Da li želite da EGroupware provijeri postojanje nove verzije aplikacije kada se administrator prijavi ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	hr	Would you like to automatically load new langfiles (at login-time) ?
 would you like to show each application's upgrade status ?	admin	hr	Would you like to show each application's upgrade status ?
 xml-rpc	admin	hr	XML-RPC

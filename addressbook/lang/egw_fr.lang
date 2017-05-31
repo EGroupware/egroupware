@@ -171,7 +171,7 @@ default file as format	addressbook	fr	Format de fichier par défaut
 default filter	addressbook	fr	Filtre par défaut
 default format for fileas, eg. for new entries.	addressbook	fr	Format par défaut pour le nom complet (pour les nouvelles entrées)
 default geolocation source address	addressbook	fr	Adresse de géolocalisation par défaut
-default is to open email addresses in egroupware email application, if user has access to it.	addressbook	fr	Le comportement par défaut est d'ouvrir les adresses email dans l'application email eGroupware, si l'utilisateur y a accès.
+default is to open email addresses in egroupware email application, if user has access to it.	addressbook	fr	Le comportement par défaut est d'ouvrir les adresses email dans l'application email EGroupware, si l'utilisateur y a accès.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	fr	Quelle adresse email est utilisée par défaut pour les listes de diffusion.
 delete a single entry by passing the id.	addressbook	fr	Effacer une seule entrée en passant l'ID.
 delete selected distribution list!	addressbook	fr	Effacer la liste de diffusion sélectionnée !
@@ -183,7 +183,7 @@ department	common	fr	Département
 departments	addressbook	fr	départements
 directory with documents to insert contacts	addressbook	fr	Répertoire avec les documments des contacts
 display contact	addressbook	fr	Afficher le contact
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	fr	Affiche un rappel pour les anniversaires sur la page d'accueil (page qui s'affiche quand vous entrez dans eGroupWare ou quand vous cliquez sur l'icône Accueil)
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	fr	Affiche un rappel pour les anniversaires sur la page d'accueil (page qui s'affiche quand vous entrez dans EGroupware ou quand vous cliquez sur l'icône Accueil)
 distribution list deleted	addressbook	fr	La liste de diffusion est supprimée
 distribution list renamed	addressbook	fr	La liste de diffusion est renommée
 distribution lists	addressbook	fr	Listes de diffusion
@@ -507,7 +507,7 @@ when viewing a contact, show linked entries from the selected application	addres
 where to add the email address	addressbook	fr	Où ajouter des adresses email
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	fr	Sélectionner quel format doit être utilisée pour les pays avec un format d'adresse inconnu.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	fr	Quel carnet d'adresses devra être sélectionné quand vous ajoutez un contact ET que vous n'avez pas d'autorisation pour le carnet d'adresses en cours.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'EGroupware.
 which charset should be used for the vcard export.	addressbook	fr	Quel jeu de caractère utilisé pour les exports vCard
 which charset should be used for the vcard import and export.	addressbook	fr	Quel jeu de caractère utilisé pour les exports et imports vCard
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	fr	Quels champs doivent être exportés. Tous signifie que les champs personnalisés du carnet d'adresses sont inclus. Les adresses personnelles et professionelles contiennent seulement le nom la société et les adresses sélectionnées.

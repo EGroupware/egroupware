@@ -16,17 +16,17 @@ disabled chains	notifications	pt-br	Séries desabilitadas
 do not notify me at all	notifications	pt-br	Não me notificar a todos
 domain not found, please check serveraddress.	notifications	pt-br	Domínio não encontrado, por favor verifique ServerAddress.
 e-mail only	notifications	pt-br	Email só
-egroupware has notifications for you	notifications	pt-br	O eGroupWare possui notificações para você
+egroupware has notifications for you	notifications	pt-br	O EGroupware possui notificações para você
 egroupware login is starting, please wait.	notifications	pt-br	EGroupware de login está começando, aguarde.
 egroupware logindomain:	notifications	pt-br	EGroupware Logindomain:
 egroupware logindomains founds, please select.	notifications	pt-br	EGroupware Logindomains funda, por favor selecione.
 egroupware not found by url.	notifications	pt-br	EGroupware não foi encontrado pela URL.
 egroupware-popup and e-mail	notifications	pt-br	EGroupware pop-up e e-mail
 egroupware-popup and windows-popup	notifications	pt-br	EGroupware pop-up e pop-up do Windows
-egroupware-popup backend	admin	pt-br	Método eGroupWare-Popup
+egroupware-popup backend	admin	pt-br	Método EGroupware-Popup
 egroupware-popup only	notifications	pt-br	EGroupware pop-up só
-egroupware-popup verbosity	notifications	pt-br	Nível de detalhe do eGroupWare-Popup
-enable egroupware-popup backend	admin	pt-br	Habilitar método eGroupWare-Popup
+egroupware-popup verbosity	notifications	pt-br	Nível de detalhe do EGroupware-Popup
+enable egroupware-popup backend	admin	pt-br	Habilitar método EGroupware-Popup
 enable windows-popup backend	admin	pt-br	Habilitar método Windows-Popup
 enabled chains	notifications	pt-br	Séries habilitadas
 error browser can`t start.	notifications	pt-br	Erro navegador pode `t começar.

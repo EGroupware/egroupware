@@ -5,7 +5,7 @@
 %1 proxy of %2	common	pt-br	% 1% 2 de procuração
 %1 to sync	groupdav	pt-br	1% para sincronizar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br/> ou dê ao servidor web permissão de escrita em %3
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1eGroupWare%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1EGroupware%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	pt-br	'%1' não é um arquivo php na pasta raiz do servidor eGW (%2)!
 (session restored in %1 seconds)	common	pt-br	(sessão restaurada em %1 segundos)
 00 (disable)	admin	pt-br	00 (desabilitado)
@@ -17,7 +17,7 @@
 80 (http)	admin	pt-br	80 (http)
 about	common	pt-br	Sobre
 about %1	common	pt-br	Sobre %1
-about egroupware	common	pt-br	Sobre eGroupWare
+about egroupware	common	pt-br	Sobre EGroupware
 access	common	pt-br	Acesso
 access not permitted	common	pt-br	Acesso não permitido
 account has been created	common	pt-br	A conta foi criada
@@ -156,7 +156,7 @@ clear	common	pt-br	Limpar
 clear form	common	pt-br	Limpar Formulário
 clear window	common	pt-br	Limpar janela
 click	common	pt-br	Clique
-click here to resume your egroupware session.	common	pt-br	Clique aqui para restaurar sua sessão eGroupWare
+click here to resume your egroupware session.	common	pt-br	Clique aqui para restaurar sua sessão EGroupware
 click or mouse over to show menus	common	pt-br	Clique ou passe o mouse sobre os menús
 click or mouse over to show menus?	common	pt-br	Clicar ou passar o mouse sobre os menús?
 click this image on the navbar: %1	common	pt-br	Clique nesta imagem na barra de navegação: %1
@@ -243,8 +243,8 @@ edit	common	pt-br	Editar
 edit %1 category for	common	pt-br	Editar para categoria %1
 edit categories	common	pt-br	Editar categorias
 edit category	common	pt-br	Editar categoria
-egroupware	common	pt-br	eGroupWare
-egroupware api version	common	pt-br	Versão da API eGroupWare
+egroupware	common	pt-br	EGroupware
+egroupware api version	common	pt-br	Versão da API EGroupware
 egroupware: login blocked for user '%1', ip %2	common	pt-br	Extranet: login bloqueado para o usuário '%1', endereço IP %2
 egypt	common	pt-br	EGITO
 el salvador	common	pt-br	EL SALVADOR
@@ -349,7 +349,7 @@ hong kong	common	pt-br	HONG KONG
 how many days to sync in the future (default %1)	groupdav	pt-br	Quantos dias para sincronizar no futuro (o padrão% 1)
 how many days to sync in the past (default %1)	groupdav	pt-br	Quantos dias para sincronizar no passado (padrão% 1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt-br	Quantos ícones devem ser mostrados na barra de navegação (ao topo da página). Ícones adicionais serão colocados em um recurso adicional em forma de menú suspenso à direita da barra de navegação.
-how to show the general egroupware menu ?	common	pt-br	Como exibir o menu geral do eGroupWare ?
+how to show the general egroupware menu ?	common	pt-br	Como exibir o menu geral do EGroupware ?
 hungary	common	pt-br	HUNGRIA
 iceland	common	pt-br	ISLÂNDIA
 iespell not detected. click ok to go to download page.	common	pt-br	ieSpell não detectado. Clique Ok para ir para a página de download.
@@ -566,7 +566,7 @@ pg down	common	pt-br	Pg baixo
 pg up	common	pt-br	PG-se
 philippines	common	pt-br	FILIPINAS
 phone number	common	pt-br	Número de Telefone
-api	common	pt-br	API eGroupWare
+api	common	pt-br	API EGroupware
 pitcairn	common	pt-br	PITCAIRN
 placeholders	common	pt-br	Espaços reservados
 please %1 by hand	common	pt-br	%1 pela mão
@@ -691,7 +691,7 @@ show menu	common	pt-br	Mostrar menu
 show page generation time	common	pt-br	Mostrar tempo de criação da página
 show page generation time on the bottom of the page?	common	pt-br	O tempo de criação da página deve ser mostrado no rodapé?
 show page generation time?	common	pt-br	Exibir tempo de geração da página?
-show the logo's of egroupware and x-desktop on the desktop.	common	pt-br	Exibir o logotipo do eGroupWare and X-Desktop na tela.
+show the logo's of egroupware and x-desktop on the desktop.	common	pt-br	Exibir o logotipo do EGroupware and X-Desktop na tela.
 show_more_apps	common	pt-br	Mostrar mais aplicativos
 showing %1	common	pt-br	Exibindo %1
 showing %1 - %2 of %3	common	pt-br	Exibindo %1 - %2 de %3
@@ -837,7 +837,7 @@ you have selected an invalid main category	common	pt-br	Você selecionou uma cat
 you have successfully logged out	common	pt-br	Você encerrou a sessão corretamente.
 you need to %1set your timezone preference%2.	common	pt-br	Você precisa% 1set sua preferência fuso horário% 2.
 you need to add the webserver user '%1' to the group '%2'.	common	pt-br	Você precisa adicionar o usuário webserver '%1' ao grupo '%2'.
-you need to be an egroupware administrator to access this functionality!	common	pt-br	Você precisa ser um administrador do eGroupWare para acessar esta funcionalidade!
+you need to be an egroupware administrator to access this functionality!	common	pt-br	Você precisa ser um administrador do EGroupware para acessar esta funcionalidade!
 you need to select some entries first!	common	pt-br	Você precisa selecionar algumas entradas em primeiro lugar!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pt-br	Você tentou abrir a aplicação: %1, mas você não possui permissão para acessá-la.
 your message could <b>not</b> be sent!<br>	common	pt-br	<b>Não</b> foi possível enviar sua mensagem!<br>

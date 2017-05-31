@@ -1,7 +1,7 @@
 %1 email addresses inserted	common	zh-tw	已匯入 %1 筆電子郵件位址
 %1 is not executable by the webserver !!!	common	zh-tw	網頁伺服器無法執行 %1 ！
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	zh-tw	%1選擇一個其他資料夾%2<br />或是讓網頁伺服器可以寫入 %3 。
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh-tw	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh-tw	%1EGroupware%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
 00 (disable)	admin	zh-tw	00 (關閉)
 1 day	common	zh-tw	1 天
 1 hour	common	zh-tw	1 小時
@@ -11,7 +11,7 @@
 80 (http)	admin	zh-tw	80 (http)
 about	common	zh-tw	關於
 about %1	common	zh-tw	關於 %1
-about egroupware	common	zh-tw	關於 eGroupware
+about egroupware	common	zh-tw	關於 EGroupware
 access	common	zh-tw	存取權限
 access not permitted	common	zh-tw	存取遭拒
 account has been created	common	zh-tw	帳號已經建立
@@ -200,8 +200,8 @@ edit	common	zh-tw	編輯
 edit %1 category for	common	zh-tw	編輯分類 %1 給
 edit categories	common	zh-tw	編輯分類
 edit category	common	zh-tw	編輯分類
-egroupware	common	zh-tw	eGroupWare
-egroupware: login blocked for user '%1', ip %2	common	zh-tw	eGroupWare: 使用者鎖定 '%1', IP %2
+egroupware	common	zh-tw	EGroupware
+egroupware: login blocked for user '%1', ip %2	common	zh-tw	EGroupware: 使用者鎖定 '%1', IP %2
 egypt	common	zh-tw	埃及
 el salvador	common	zh-tw	EL SALVADOR
 email	common	zh-tw	電子郵件
@@ -209,7 +209,7 @@ email-address of the user, eg. "%1"	common	zh-tw	使用者的電子郵件, 例�
 enabled	common	zh-tw	啟用
 end date	common	zh-tw	結束日期
 end time	common	zh-tw	結束時間
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh-tw	輸入eGroupWare的網址<br>例如：http://www.domain.com/egroupware   或   /egroupware<br><b>最後面不要有斜線</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh-tw	輸入EGroupware的網址<br>例如：http://www.domain.com/egroupware   或   /egroupware<br><b>最後面不要有斜線</b>
 entry has been deleted sucessfully	common	zh-tw	資料已成功移除
 entry updated sucessfully	common	zh-tw	資料已成功更新
 equatorial guinea	common	zh-tw	EQUATORIAL GUINEA
@@ -486,7 +486,7 @@ personal	common	zh-tw	個人
 peru	common	zh-tw	祕魯
 philippines	common	zh-tw	菲律賓
 phone number	common	zh-tw	電話
-api	common	zh-tw	eGroupWare 核心
+api	common	zh-tw	EGroupware 核心
 pitcairn	common	zh-tw	PITCAIRN
 please %1 by hand	common	zh-tw	請手動 %1
 please enter a name	common	zh-tw	請輸入名稱！
@@ -585,7 +585,7 @@ show menu	common	zh-tw	顯示選單
 show page generation time	common	zh-tw	顯示網頁產生時間
 show page generation time on the bottom of the page?	common	zh-tw	將網頁產生時間顯示在頁尾？
 show page generation time?	common	zh-tw	顯示頁面產生時間？
-show the logo's of egroupware and x-desktop on the desktop.	common	zh-tw	在桌面顯示 eGroupware 與 x-desktop 的 logo
+show the logo's of egroupware and x-desktop on the desktop.	common	zh-tw	在桌面顯示 EGroupware 與 x-desktop 的 logo
 show_more_apps	common	zh-tw	show_more_apps
 showing %1	common	zh-tw	顯示 %1
 showing %1 - %2 of %3	common	zh-tw	顯示 %1 - %2 之 %3

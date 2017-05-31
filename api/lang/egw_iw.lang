@@ -1,6 +1,6 @@
 %1 email addresses inserted	common	iw	נקלטו %1 כתובות דואר אלקטרוני
 %1 is not executable by the webserver !!!	common	iw	!%1 אינו ניתן להרצה על יד שרת הווב
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	iw	%4PHP%3-הנו סוויטת תוכנה קבוצתית, רב-משתמשים, מבוססת ווב, התכובה ב %2 eGroupWare%1
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	iw	%4PHP%3-הנו סוויטת תוכנה קבוצתית, רב-משתמשים, מבוססת ווב, התכובה ב %2 EGroupware%1
 00 (disable)	admin	iw	00 (בטל)
 about	common	iw	אודות
 about %1	common	iw	אודות %1
@@ -107,13 +107,13 @@ edit %1 category for	common	iw	ערוך קטגוריה %1 עבור
 edit categories	common	iw	ערוך קטגוריות
 edit category	common	iw	ערוך קטגוריה
 egroupware	common	iw	sdg
-egroupware: login blocked for user '%1', ip %2	common	iw	eGroupWare: הכניסה נחסמה למשתמש '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	iw	EGroupware: הכניסה נחסמה למשתמש '%1', IP %2
 email	common	iw	דואר אלקטרוני
 email-address of the user, eg. "%1"	common	iw	כתובת דוא"ל של המשתמש, לדוגמא "%1"
 enabled	common	iw	מאופשר
 end date	common	iw	תאריך סיום
 end time	common	iw	שעת סיום
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	eGroupWare של URL-הקלד את ה<br>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	EGroupware של URL-הקלד את ה<br>
 entry has been deleted sucessfully	common	iw	הרשומה נמחקה בהצלחה
 entry updated sucessfully	common	iw	הרשומה עודכנה בהצלחה
 error	common	iw	שגיאה

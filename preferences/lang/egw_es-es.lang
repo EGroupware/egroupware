@@ -2,7 +2,7 @@
 %1 hours	preferences	es-es	%1 horas
 12 hour	preferences	es-es	12 horas
 24 hour	preferences	es-es	24 horas
-a template defines the layout of egroupware and it contains icons for each application.	preferences	es-es	Una plantilla define el formato de eGroupWare y contiene iconos para cada aplicación.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	es-es	Una plantilla define el formato de EGroupware y contiene iconos para cada aplicación.
 a theme defines the colors and fonts used by the template.	preferences	es-es	Un tema define los colores y los tipos de letra usados en la plantilla
 acl grants have been updated	preferences	es-es	Los permisos de la LCA se han actualizado
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-es	Cualquier listado en eGW le mostrará este número de entradas o líneas por página.<br>Demasiadas ralentizan la página, demasiado pocas pueden ser malo.
@@ -71,7 +71,7 @@ rich text editor theme	preferences	es-es	Tema del editor de texto enriquecido
 select different theme	preferences	es-es	Seleccione un tema diferente
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	es-es	Seleccionar cómo el editor de texto enriquecido generará la etiqueta de enter (salto de línea).
 select one	preferences	es-es	Seleccione uno
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-es	Seleccione el idioma de los textos y los mensajes en eGroupWare.<br>Algunos idiomas puede que no tengan todos los mensajes, en cuyo caso verá el mensaje en inglés.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-es	Seleccione el idioma de los textos y los mensajes en EGroupware.<br>Algunos idiomas puede que no tengan todos los mensajes, en cuyo caso verá el mensaje en inglés.
 select the language of the spellchecker integrated into the rich text editor.	preferences	es-es	Seleccionar el idioma del corrector ortográfico en el editor de texto enriquecido.
 select the theme (visualization) of the rich text editor.	preferences	es-es	Seleccionar el tema (visualización) del editor de texto enriquecido.
 selectbox	preferences	es-es	Cuadro de selección
@@ -81,14 +81,14 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	es-es	¿Mostrar el número de sesiones activas todo el tiempo?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	es-es	¿Mostrar estos mensajes de ayuda al modificar preferencias, o sólo cuando lo solicite?
 show helpmessages by default	preferences	es-es	Mostrar mensajes de ayuda por defecto
-show links between egroupware aps as	common	es-es	Mostrar los enlaces entre aplicaciones de eGroupWare como
+show links between egroupware aps as	common	es-es	Mostrar los enlaces entre aplicaciones de EGroupware como
 show navigation bar as	preferences	es-es	Mostrar la barra de navegación como
 show number of current users	preferences	es-es	Mostrar el número actual de usuarios
 show text on navigation icons	preferences	es-es	Mostrar descripción sobre los iconos
 show_more_apps	common	es-es	Mostrar más aplicaciones
 spellchecker language	addressbook	es-es	Idioma del corrector ortográfico
 text only	preferences	es-es	Sólo texto
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-es	La aplicación predeterminada se mostará al iniciar la sesión en eGroupWare o pulsar en el icono de la página de inicio.<br>También puede tener más de una aplicación en la página de inicio, si no elige una aplicación específica aquí, configurándolo en las preferencias de cada aplicación.
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-es	La aplicación predeterminada se mostará al iniciar la sesión en EGroupware o pulsar en el icono de la página de inicio.<br>También puede tener más de una aplicación en la página de inicio, si no elige una aplicación específica aquí, configurándolo en las preferencias de cada aplicación.
 the old password is not correct	preferences	es-es	La contraseña anterior no es correcta
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	es-es	La caja de selección muestra todos los usuarios disponibles (puede ser muy lento en grandes instalaciones con muchos usuarios). La ventana emergente puede buscar usuarios por nombre o grupo.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	es-es	El cuadro de selección muestra todos los usuarios disponibles (puede ser muy lento en instalaciones grandes con muchos usuarios). La ventana emergente puede buscar usuarios por nombre o por grupo. Las dos últimas opciones limitan la visibilidad de otros usuarios. Por tanto, deben ser forzadas y aplicar NO a los administradores.
@@ -101,8 +101,8 @@ time format	preferences	es-es	Formato de la hora
 use default	preferences	es-es	Usar predeterminado
 users choice	preferences	es-es	Elegido por el usuario
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	es-es	Si se indica Sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra de aplicaciones principal.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.
-which currency symbol or name should be used in egroupware.	preferences	es-es	Símbolo de moneda o nombre que debe usar eGroupWare
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de EGroupware.
+which currency symbol or name should be used in egroupware.	preferences	es-es	Símbolo de moneda o nombre que debe usar EGroupware
 write prefs for the specified application.	preferences	es-es	Escribir las preferencias para la aplicación especificada.
 you can show the applications as icons only, icons with app-name or both.	preferences	es-es	Puede ver las aplicaciones como iconos sólo, iconos con el nombre, o ambos.
 you can show the linked entries with icons only, icons with app-name or both.	common	es-es	Puede mostrar las entradas vinculadas sólo con iconos, iconos con el nombre de la aplicación, o ambos.

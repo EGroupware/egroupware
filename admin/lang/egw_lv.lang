@@ -171,7 +171,7 @@ enter the background color for the site title	admin	lv	Ievadi fona krāsu lapas 
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	lv	Norādi pilno ceļu uz īslaicīgajām datnēm.<br>Piemēri:/tmp,C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	lv	Ievadi pilno ceļu lietotāju un grupu datnēm.<br>Piemēri: /files,E:\FILES
 enter the hostname of the machine on which this server is running	admin	lv	Ievadi hostdatora vārdu uz kura ir palaists šis serveris
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi eGroupWare URL atrašanos<b>Piemērs: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	lv	Ievadi meklēšanas stringu. Lai parādītu visus ierakstus, atbrīvo šo lauku un nospied SUBMIT pogu vēlreiz
 enter the site password for peer servers	admin	lv	Ievadi vietnes paroli vienādranga serveriem
 enter the site username for peer servers	admin	lv	Ievadi vietnes lietotājvārdu vienādranga serveriem
@@ -402,9 +402,9 @@ view sessions	admin	lv	Parādīt sesijas
 view this user	admin	lv	parādīt šo lietotāju
 view user account	admin	lv	Parādīt lietotāja kontu
 who would you like to transfer all records owned by the deleted user to?	admin	lv	Kam tu vēlies pārsūtīt izdzēstā lietotāja AAL ierakstus?
-would you like egroupware to cache the egw info array ?	admin	lv	Vai vēlies, lai eGroupWare atceras <i>egw</i> informācijas masīvu?
-would you like egroupware to check for a new version<br>when admins login ?	admin	lv	Vai vēlies, lai eGroupWare pārbauda jaunu versiju<br>kad admins autorizējas?
-would you like egroupware to check for new application versions when admins login ?	admin	lv	Vai vēlies lai eGroupWare pārbauda jaunu programmatūras versiju, kad admins autorizējas?
+would you like egroupware to cache the egw info array ?	admin	lv	Vai vēlies, lai EGroupware atceras <i>egw</i> informācijas masīvu?
+would you like egroupware to check for a new version<br>when admins login ?	admin	lv	Vai vēlies, lai EGroupware pārbauda jaunu versiju<br>kad admins autorizējas?
+would you like egroupware to check for new application versions when admins login ?	admin	lv	Vai vēlies lai EGroupware pārbauda jaunu programmatūras versiju, kad admins autorizējas?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	lv	Vai tu vēlies lai automātiski ielādējas jauni langfaili (pie autorizācijas)?
 would you like to show each application's upgrade status ?	admin	lv	Vai vēlies, lai tiktu parādīts katras aplikācijas atjaunošanas statuss?
 xml-rpc	admin	lv	XML-RPC

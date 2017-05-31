@@ -70,7 +70,7 @@ how do you like to select accounts	preferences	cs	Výběr účtů
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	cs	O kolik hodin dopředu nebo dozadu je posunuto Vaše časové pásmo vůči časovému pásmu serveru?<br>Pokud jste ve stejném časovém pásmu, vyberte 0 hodin, v opačném případě zvolte Váše lokální datum a čas.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	cs	Kolik ikon se má zobrazovat v navigační liště (v záhlaví stránky). Další ikony se přesunou do roletového menu, které zobrazíte kliknutím na symbol na pravé straně lišty.
 how many toolbar buttons are available	preferences	cs	Kolik bude viditelných tlačítek v nástrojové liště
-how should egroupware display dates for you.	preferences	cs	Jak má eGroupWare zobrazovat datumy.
+how should egroupware display dates for you.	preferences	cs	Jak má EGroupware zobrazovat datumy.
 icon	preferences	cs	Ikona
 icons and text	preferences	cs	Ikony a text
 icons only	preferences	cs	Jen ikony
@@ -127,7 +127,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	cs	Chcete neustále zobrazovat počet aktivních relací?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	cs	Mají být tyto pomocné texty zobrazeny vždy při úpravě předvoleb nebo jen na vyžádání.
 show helpmessages by default	preferences	cs	Standardně zobrazovat pomocné texty
-show links between egroupware aps as	common	cs	Zobrazovat odkazy mezi eGroupWare aplikacemi jako
+show links between egroupware aps as	common	cs	Zobrazovat odkazy mezi EGroupware aplikacemi jako
 show navigation bar as	preferences	cs	Zobrazovat navigační lištu jako
 show number of current users	preferences	cs	Zobrazovat počet připojených uživatelů
 show text on navigation icons	preferences	cs	Zobrazovat text u navigačních ikon
@@ -153,7 +153,7 @@ use default	preferences	cs	Použít výchozí
 users choice	preferences	cs	Uživatelská volba
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	cs	Pokud odpovíte kladně, tlačítka pro hlavní stranu a odhlášení budou zobrazena stejně jako aplikace v navigační liště.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Jaká znaková sada má být použita pro export do CSV souboru. Výchozí znakovou sadou systému je ta, která byla použita při instalaci eGroupWaru.
-which currency symbol or name should be used in egroupware.	preferences	cs	Jaký název nebo symbol měny má eGroupWare používat.
+which currency symbol or name should be used in egroupware.	preferences	cs	Jaký název nebo symbol měny má EGroupware používat.
 write prefs for the specified application.	preferences	cs	Uložit předvolby pro vybranou aplikaci.
 you can show the applications as icons only, icons with app-name or both.	preferences	cs	Můžete aplikace zobrazovat jen jako ikony, ikony s názvem aplikace nebo obojí.
 you can show the linked entries with icons only, icons with app-name or both.	common	cs	Můžete zobrazovat odkazované záznamy jen ikonami, ikonami s názvem aplikace nebo jen názvem aplikace.

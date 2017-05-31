@@ -74,4 +74,4 @@ upload fields	filemanager	eu	kargatu eremuak
 upload files	filemanager	eu	Kargatu fitxategiak
 used space	filemanager	eu	Erabilitako lekua
 you do not have access to %1	filemanager	eu	%1 ra sartzeko baimenik ez duzu
-your home dir did not exist, egroupware created a new one.	filemanager	eu	Zure Hasierako Direktorioa ez zen existitzen, eta eGroupwarek berri bat sortu du.
+your home dir did not exist, egroupware created a new one.	filemanager	eu	Zure Hasierako Direktorioa ez zen existitzen, eta EGroupwarek berri bat sortu du.

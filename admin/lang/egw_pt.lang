@@ -75,7 +75,7 @@ asynchronous timed services	admin	pt	Serviços assíncronos agendados
 asyncservices not yet installed or other error (%1) !!!	admin	pt	serviços assíncronos por instalar ou outro erro (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt	Tentativa de utilizar o mimetype correcto para FTP em vez da 'aplicação/octet-stream' por omissão
 attribute accountstatus explained	admin	pt	Isto gere o atributo <b><i>-accountStatus-</i></b> a partir do QMAIL schema.
-attribute mail explained	admin	pt	Isto gere o atributo <b><i>-mail-</i></b> a partir do QMAIL schema e nunca deve estar vazio. É também o campo do correio electrónico interno do eGroupWare
+attribute mail explained	admin	pt	Isto gere o atributo <b><i>-mail-</i></b> a partir do QMAIL schema e nunca deve estar vazio. É também o campo do correio electrónico interno do EGroupware
 attribute mailalternateaddress explained	admin	pt	Isto gere o atrabitu <b><i>-mailAlternateAddress-</i></b> a partir do QMAIL schema e pode ser gerido como um mapa virtual ou aliases.
 attribute mailforwardingaddress explained	admin	pt	Isto gere o atributo <b><i>-mailForwardingAddress-</i></b> a partir do QMAIL schema e não pode estar vazio se subscrito.
 authentication / accounts	admin	pt	Autenticação / Contas
@@ -186,7 +186,7 @@ enter the background color for the site title	admin	pt	Escolha uma cor de fundo 
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pt	Insira o caminho completo para ficheiros temporários.<br>Exemplos: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt	Insira o caminho completo para ficheiros de utilizadores e grupos.<br>Exemplos: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	pt	Insira o nome da máquina em que este servidor está a ser executado
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware ou   /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a URL do EGroupware.<br>Exemplo: http://www.domain.com/egroupware ou   /egroupware<br><b>Sem a barra final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pt	Inserir o termo de pesquisa. Para exibir todos os registos, limpe este campo e clique novamente no botão Enviar.
 enter the site password for peer servers	admin	pt	Insira a senha do sítio para servidores remotos
 enter the site username for peer servers	admin	pt	Insira o nome de utilizador do sítio para servidores remotos
@@ -371,7 +371,7 @@ server url	admin	pt	URL do servidor
 server username	admin	pt	Utilizador do servidor
 set preference values.	admin	pt	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt	A página de acesso deve incluir uma caixa de selecção de idioma (útil para sítios de demonstração) ?
-show 'powered by' logo on	admin	pt	Área para exibição da logomarca do eGroupWare
+show 'powered by' logo on	admin	pt	Área para exibição da logomarca do EGroupware
 show access log	admin	pt	Exibir registo de acesso
 show current action	admin	pt	Exibir acção actual
 show error log	admin	pt	Exibir registo de erro
@@ -400,8 +400,8 @@ that application order must be a number.	admin	pt	O campo ordem da aplicação t
 that loginid has already been taken	admin	pt	Esse nome de utilizador já existe
 that name has been used already	admin	pt	Esse nome já existe
 that server name has been used already !	admin	pt	Esse nome de servidor já existe !
-the api is current	admin	pt	A base (API) do eGroupWare está actualizada
-the api requires an upgrade	admin	pt	A base (API) do eGroupWare precisa ser actualizada
+the api is current	admin	pt	A base (API) do EGroupware está actualizada
+the api requires an upgrade	admin	pt	A base (API) do EGroupware precisa ser actualizada
 the groups must include the primary group	admin	pt	Os grupos têm de incluir o grupo primário
 the login and password can not be the same	admin	pt	O nome de utilizador e a senha não podem ser iguais
 the loginid can not be more then 8 characters	admin	pt	O nome de utilizador não pode ter mais de 8 caracteres
@@ -447,9 +447,9 @@ view sessions	admin	pt	Ver sessões
 view this user	admin	pt	ver este utilizador
 view user account	admin	pt	Ver conta do utilizador
 who would you like to transfer all records owned by the deleted user to?	admin	pt	Para quem deseja transferir TODOS os registos do utilizador eliminado ?
-would you like egroupware to cache the egw info array ?	admin	pt	Deseja que o eGroupWare faça cache do vector de informações egw ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	pt	Deseja que o eGroupWare verifique a existência de uma nova versão<br>quando os administradores acederem ?
-would you like egroupware to check for new application versions when admins login ?	admin	pt	Deseja que o eGroupWare verifique a existência de novas versões de aplicações quando os administradores acederem ?
+would you like egroupware to cache the egw info array ?	admin	pt	Deseja que o EGroupware faça cache do vector de informações egw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	pt	Deseja que o EGroupware verifique a existência de uma nova versão<br>quando os administradores acederem ?
+would you like egroupware to check for new application versions when admins login ?	admin	pt	Deseja que o EGroupware verifique a existência de novas versões de aplicações quando os administradores acederem ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	pt	Deseja carregar os novos ficheiros de idioma automaticamente (quando aceder) ?
 would you like to show each application's upgrade status ?	admin	pt	Deseja exibir o estado da actualização de cada aplicação ?
 xml-rpc	admin	pt	XML-RPC

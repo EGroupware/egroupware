@@ -15,4 +15,4 @@ icons only	preferences	el	Μόνο εικόνες
 selectbox	preferences	el	Κουτί επιλογής
 text only	preferences	el	Μόνο κείμενο
 the two passwords are not the same	preferences	el	Τα δυο συνθηματικά δέν είναι ίδια
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ποια κωδικοσελίδα θα πρέπει να χρησιμοποιέιται για την CSV εξαγωγή.Το προκαθορισμένο σύστημα ειναι η κωδικοσελίδα της εγκατάστασης του eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ποια κωδικοσελίδα θα πρέπει να χρησιμοποιέιται για την CSV εξαγωγή.Το προκαθορισμένο σύστημα ειναι η κωδικοσελίδα της εγκατάστασης του EGroupware.

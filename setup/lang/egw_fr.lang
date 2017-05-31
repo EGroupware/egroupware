@@ -396,7 +396,7 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	fr	Gérer les applications
 manage languages	setup	fr	Gérer les langues
 manual / help	setup	fr	Manuel / Aide
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fr	L'option «max_execution_time» est positionnée en dessous des 30 secondes : <br />Parfois, eGroupware aura besoin de plus de temps.
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fr	L'option «max_execution_time» est positionnée en dessous des 30 secondes : <br />Parfois, EGroupware aura besoin de plus de temps.
 maximum account id (e.g. 65535 or 1000000)	setup	fr	ID de compte maximum (p.e. 65535 ou 1000000)
 may be broken	setup	fr	pourrait être inconsistant
 mcrypt algorithm (default tripledes)	setup	fr	Algorithme Mcrypt (par défaut TRIPLEDES)
@@ -464,7 +464,7 @@ path of egroupware install directory (default auto-detected)	setup	fr	chemin ver
 path to user and group files has to be outside of the webservers document-root!!!	setup	fr	Le chemin vers les fichiers utilisateur et groupe DOIT ETRE EN DEHORS du répertoire racine des serveurs web!!!
 path to various directories: have to exist and be writeable by the webserver	setup	fr	le chemin vers divers répertoires: doivent exister et le serveur web doit pouvoir y écrire
 pear (%1) is a php repository and is usually in a package called %2.	setup	fr	PEAR (%1) est un dépôt PHP et est généralement fourni par un paquetge appelé %2.
-pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	fr	Les extensions PEAR sont nécessaires pour beaucoup d'applications eGroupware, PEAR est lui-même requis pour chaque extension !
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	fr	Les extensions PEAR sont nécessaires pour beaucoup d'applications EGroupware, PEAR est lui-même requis pour chaque extension !
 pear%1 is needed by: %2.	setup	fr	PEAR%1 est requis par: %2.
 pem certificate	setup	fr	Certificat PEM
 persistent connections	setup	fr	Connexions persistantes
@@ -603,7 +603,7 @@ the following applications are required, but not installed:	setup	fr	Les applica
 the following applications need to be upgraded:	setup	fr	L'application suivante a besoin d'une mise à jour :
 the function %1 is needed from: %2.	setup	fr	La fonction %1 est requise par : %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	fr	La fonction imagecreatefromjpeg est fournie par l'extension gd (conformément au support jpeg). Il est nécessaire de déposer des photos pour les contacts.
-the json extension is required by egroupware for ajax.	setup	fr	L'extension json est requise par eGroupware pour l'AJAX
+the json extension is required by egroupware for ajax.	setup	fr	L'extension json est requise par EGroupware pour l'AJAX
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	fr	L'extention ldap est nécessaire si vous utilisez ldap pour le stockage des comptes ou contacts, pour vous authentifier sur un annuaire ldap ou active directory. Cela n'est pas nécessaire pour une installation SQL standard.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fr	L'extension mbstring est nécessaire pour le support complet d'unicode (utf-8) ou des autres jeux de caractères multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fr	Le paramètre mbstring.func_overload = 7 est requis pour supporter pleinement unicode (utf-8) ou d'autres jeux de caractères multibyte.
@@ -615,7 +615,7 @@ the table definition was correct, and the tables were installed	setup	fr	La déf
 the tables	setup	fr	les tables
 the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	fr	L'extension tidy est nécessaire pour les fusions-impressions, pour nettoyer le code html avant l'insertion dans les document office.
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	fr	Les utilisateurs/mots de passe sont: demo/guest, demo2/guest and demo3/guest.
-the xmlreader extension is required by egroupware in several applications.	setup	fr	L'extension xmlreader est nécessaire pour certaines applications eGroupware.
+the xmlreader extension is required by egroupware in several applications.	setup	fr	L'extension xmlreader est nécessaire pour certaines applications EGroupware.
 the zip extension is required for merge-print with office documents.	setup	fr	L'extension "zip" est nécessaire pour les fusions/impressions des documents Office.
 there was a problem trying to connect to your ldap server. <br />	setup	fr	Il y a eu un problème lors de la tentative de connexion à votre serveur LDAP. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	fr	l y a eu un problème lors de la tentative de connexion à votre serveur LDAP. <br />SVP vérifiez la configuration de votre serveur LDAP
@@ -680,7 +680,7 @@ we could not determine the version of %1, please make sure it is at least %2	set
 we will automatically update your tables/records to %1	setup	fr	Nous allons automatiquement mettre à jour vos tables/enregistrements vers %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	fr	Nous allons démarrer une série de tests qui vont prendre quelques minutes. Cliquez sur le lien ci-dessous pour commencer.
 welcome to the egroupware installation	setup	fr	Bienvenue sur l'installateur EGroupware
-where should egroupware store file content	setup	fr	Où eGroupware doit-il stocker les fichiers
+where should egroupware store file content	setup	fr	Où EGroupware doit-il stocker les fichiers
 which database type do you want to use with egroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec EGroupware ?
 world readable	setup	fr	Visible par tous
 world writable	setup	fr	Accès en écriture pour tous

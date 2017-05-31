@@ -2,10 +2,10 @@
 %1 hours	preferences	zh	%1小时
 12 hour	preferences	zh	12小时
 24 hour	preferences	zh	24小时
-a template defines the layout of egroupware and it contains icons for each application.	preferences	zh	模板定义了eGroupWare 的布局并包含了每个应用程序的图标。
+a template defines the layout of egroupware and it contains icons for each application.	preferences	zh	模板定义了EGroupware 的布局并包含了每个应用程序的图标。
 a theme defines the colors and fonts used by the template.	preferences	zh	界面主题由模板定义了所使用的颜色和字体。
 acl grants have been updated	preferences	zh	ACL 授权已更新
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zh	任何 eGroupWare 里的列表将告诉您条目数或每页行数。<br>太多会使页面浏览速度变慢, 太少将不利于整体效果。
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zh	任何 EGroupware 里的列表将告诉您条目数或每页行数。<br>太多会使页面浏览速度变慢, 太少将不利于整体效果。
 are you sure you want to delete this category ?	preferences	zh	您确定要删除该类别吗?
 br	preferences	zh	<br> 换行
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	zh	以现有旧密码和一个新密码更改用户密码，如果成功将返回 TRUE，否则返回 FALSE。
@@ -63,7 +63,7 @@ rich text editor theme	preferences	zh	FCKeditor 文本编辑器主题
 select different theme	preferences	zh	选择不同的主题
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	zh	选择何种方式 FCKeditor 文本编辑器将生成输入(换行) Tag 标签。
 select one	preferences	zh	选择一个
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh	选择 eGroupWare 内部文本和讯息的语言。<br>有些语言不可能包含所有讯息, 在这种情况下您会看到一条英文讯息。
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh	选择 EGroupware 内部文本和讯息的语言。<br>有些语言不可能包含所有讯息, 在这种情况下您会看到一条英文讯息。
 select the language of the spellchecker integrated into the rich text editor.	preferences	zh	选择整合到 FCKeditor 文本编辑器的拼写检查语言。
 select the theme (visualization) of the rich text editor.	preferences	zh	选择 FCKeditor 文本编辑器的主题(外观)。
 selectbox	preferences	zh	选择框
@@ -73,7 +73,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	zh	选择是否总是显示活动会话的数目。
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	zh	进行用户参数配置时总是显示这些帮助消息，或只应要求时显示。
 show helpmessages by default	preferences	zh	默认情况下显示帮助消息
-show links between egroupware aps as	common	zh	显示 eGroupWare 应用程序之间的链接
+show links between egroupware aps as	common	zh	显示 EGroupware 应用程序之间的链接
 show navigation bar as	preferences	zh	导航栏显示模式为
 show number of current users	preferences	zh	显示当前用户数
 show text on navigation icons	preferences	zh	在导航栏图标上显示文字说明
@@ -89,8 +89,8 @@ time format	preferences	zh	时间格式
 use default	preferences	zh	使用默认值
 users choice	preferences	zh	用户选择
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	zh	如您选择'是'，'主页'和'注销'按钮将作为应用程序显示在顶部应用程序栏上。
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh	其字符集将用于 CSV 输出。系统默认是 eGroupWare 安装的字符集。
-which currency symbol or name should be used in egroupware.	preferences	zh	在 eGroupWare 中应使用何种货币符号或名称。
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh	其字符集将用于 CSV 输出。系统默认是 EGroupware 安装的字符集。
+which currency symbol or name should be used in egroupware.	preferences	zh	在 EGroupware 中应使用何种货币符号或名称。
 write prefs for the specified application.	preferences	zh	为指定应用程序写入配置文件。
 you can show the applications as icons only, icons with app-name or both.	preferences	zh	您可以让工具栏上的应用程序只显示图标、文字, 或是两者都显示。
 you can show the linked entries with icons only, icons with app-name or both.	common	zh	你可以让链接的条目只显示图标、应用程序名称或两者都显示。

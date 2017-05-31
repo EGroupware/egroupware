@@ -110,7 +110,7 @@ deleted	addressbook	ca	eliminat
 deletes the photo	addressbook	ca	Elimina la foto
 department	common	ca	Departament
 departments	addressbook	ca	departaments
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	ca	Mostra un recordatori per aniversaris a la pàgina d'inici (pàgina que pots veure quan entres a eGroupWare o clicant a la icona de pàgina d'inici).
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	ca	Mostra un recordatori per aniversaris a la pàgina d'inici (pàgina que pots veure quan entres a EGroupware o clicant a la icona de pàgina d'inici).
 distribution list deleted	addressbook	ca	Llista de distribució eliminada
 distribution lists	addressbook	ca	Llistes de distribució
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	ca	Voleu una llista adreces privada, que els usuaris no poden veure, concediu accés a la vostra llibreta adreces personal?
@@ -315,7 +315,7 @@ warning: all contacts found will be deleted!	addressbook	ca	ATENCIÓ: Tots els c
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	ca	Què han de mostrar els enllaços a la llibreta d'adreces en altres aplicacions. Els valors buits no es tindran en compte. Necessiteu iniciar la sessió de nou, si canvieu aquest paràmetre!
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	ca	Quin format d'adreça hauria d'utilitzar la llibreta d'adreces per països dels que no sap el format d'adreça. Si el format d'adreça d'un país és conegut, l'utilitza independentment d'aquest paràmetre.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	ca	Quina llista d'adreces ha de ser seleccionada quan s'afegeix un contacte I no teniu drets afegits a la llibreta d'adreces actual.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ca	Quin joc de caràcters ha de ser utilitzat per l'exportació CSV. El sistema per defecte és el joc de caràcters de la instal·lació d'aquest eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ca	Quin joc de caràcters ha de ser utilitzat per l'exportació CSV. El sistema per defecte és el joc de caràcters de la instal·lació d'aquest EGroupware.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	ca	Quins camps han de ser exportats. Tot significa cada camp guardat en la llista d'adreces incloent els camps personalitzats. Les adreces de la feina o el domicili només contenen nom, empresa i l'adreça seleccionada.
 whole query	addressbook	ca	consulta sencera
 work phone	addressbook	ca	Telèfon del treball

@@ -1,4 +1,4 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	zh	%1 '%2'不存在，Web服务器无法读取或是不包含 eGroupWare 程序！
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	zh	%1 '%2'不存在，Web服务器无法读取或是不包含 EGroupware 程序！
 %1 already exists in %2.	setup	zh	%1 已经存在于 %2。
 %1 created in %2.	setup	zh	%1 创建于 %2。
 %1 does not exist !!!	setup	zh	%1 不存在！
@@ -8,7 +8,7 @@
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	zh	'%1'不允许为 %2，选项的参数 %3！
 (searching accounts and changing passwords)	setup	zh	(搜索帐户并修改密码)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	zh	***请不要通过安装程序更新您的数据库，因为执行过程可能超过系统默认允许的时间而遭到中断，这可能会造成数据的丢失！
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	zh	***您必须手动对修改 php.ini 以确保 eGroupWare 能完全运行！
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	zh	***您必须手动对修改 php.ini 以确保 EGroupware 能完全运行！
 00 (disable)	setup	zh	00 (禁用 / 推荐)
 13 (ntp)	setup	zh	13 (ntp)
 80 (http)	setup	zh	80 (http)
@@ -23,7 +23,7 @@ activate safe password check	setup	zh	启用安全密码校验
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh	自动添加用户到该组 (如果留空则'默认'添加。)
 add new database instance (egw domain)	setup	zh	添加数据库实例 (eGW 域)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	zh	添加或编辑域：[域名(默认)],[数据库名(egroupware)],[数据库帐号(egroupware)],数据库密码,[数据库类型(mysql)],[数据库主机(localhost)],[数据库端口(据 db 而定)],[用户名(同 header)],[密码(同 header)]
-adding, editing or deleting an egroupware domain / database instance:	setup	zh	添加、编辑或删除一个 eGroupWare 域/数据库实例：
+adding, editing or deleting an egroupware domain / database instance:	setup	zh	添加、编辑或删除一个 EGroupware 域/数据库实例：
 additional options and there defaults (in brackets)	setup	zh	附加选项及其默认设置 (括号内)
 additional settings	setup	zh	附加设置
 admin account successful created.	setup	zh	管理员帐户创建成功。
@@ -114,8 +114,8 @@ checking if php.ini setting session.save_path='%1' is writable by the webserver	
 checking pear%1 is installed	setup	zh	检查 PEAR %1 安装
 checking php.ini	setup	zh	检查 php.ini
 checking required php version %1 (recommended %2)	setup	zh	检查 PHP 版本 %1(建议 %2)
-checking the egroupware installation	setup	zh	检查 eGroupWare 安装
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	zh	检查已安装的 eGroupWare，包括版本与必要更新 (返回的数值参考 --exit-codes）
+checking the egroupware installation	setup	zh	检查 EGroupware 安装
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	zh	检查已安装的 EGroupware，包括版本与必要更新 (返回的数值参考 --exit-codes）
 click <a href="index.php">here</a> to return to setup.	setup	zh	点击<a href="index.php">此处</a>返回安装.
 click here	setup	zh	点击此处
 click here to re-run the installation tests	setup	zh	点击返回安装测试
@@ -145,7 +145,7 @@ create admin account	setup	zh	创建管理员帐户
 create database	setup	zh	创建数据库
 create demo accounts	setup	zh	创建演示帐户
 create one now	setup	zh	立即创建
-create or edit the egroupware configuration file: header.inc.php:	setup	zh	建立或编辑 eGroupWare 设置文件：header.inc.php：
+create or edit the egroupware configuration file: header.inc.php:	setup	zh	建立或编辑 EGroupware 设置文件：header.inc.php：
 create the empty database -	setup	zh	创建空数据库 -
 create the empty database and grant user permissions -	setup	zh	创建空数据库并授权 -
 create your header.inc.php	setup	zh	创建您的 header.inc.php
@@ -208,15 +208,15 @@ edit current configuration	setup	zh	编辑当前配置
 edit your existing header.inc.php	setup	zh	编辑你已现有的 header.inc.php
 edit your header.inc.php	setup	zh	编辑你的 header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	zh	例如：/egroupware 或 http://domain.com/egroupware，默认：%1
-egroupware administration manual	setup	zh	eGroupWare  管理手册
-egroupware api needs a database (schema) update from version %1 to %2!	setup	zh	eGroupWare 核心需要更新数据库，从 %1 到 %2 ！
-egroupware api version %1 found.	setup	zh	找到 eGroupWare 核心版本 %1。
-egroupware configuration file (header.inc.php) does not exist.	setup	zh	eGroupWare 配置文件 (header.inc.php) 不存在。
-egroupware configuration file (header.inc.php) version %1 exists%2	setup	zh	eGroupWare 配置文件 (header.inc.php) 版本 %1 存在 %2
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	zh	eGroupWare 配置文件 (header.inc.php) 您必须使用 --edit-header 或是先将它删除！
-egroupware domain/instance %1(%2):	setup	zh	eGroupWare 域/实例 %1(%2)：
-egroupware is already installed!	setup	zh	eGroupWare 已经安装！
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	zh	eGroupWare 在 '%1' 的来源的来源未完成，'%2' 遗失！
+egroupware administration manual	setup	zh	EGroupware  管理手册
+egroupware api needs a database (schema) update from version %1 to %2!	setup	zh	EGroupware 核心需要更新数据库，从 %1 到 %2 ！
+egroupware api version %1 found.	setup	zh	找到 EGroupware 核心版本 %1。
+egroupware configuration file (header.inc.php) does not exist.	setup	zh	EGroupware 配置文件 (header.inc.php) 不存在。
+egroupware configuration file (header.inc.php) version %1 exists%2	setup	zh	EGroupware 配置文件 (header.inc.php) 版本 %1 存在 %2
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	zh	EGroupware 配置文件 (header.inc.php) 您必须使用 --edit-header 或是先将它删除！
+egroupware domain/instance %1(%2):	setup	zh	EGroupware 域/实例 %1(%2)：
+egroupware is already installed!	setup	zh	EGroupware 已经安装！
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	zh	EGroupware 在 '%1' 的来源的来源未完成，'%2' 遗失！
 emailadmin profile updated:	setup	zh	EMailAdmin profile 更新：
 enable for extra debug-messages	setup	zh	显示额外的调试信息
 enable mcrypt	setup	zh	启用加密功能
@@ -228,7 +228,7 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	zh	存放用户和组文件的目录的完整路径。<br />例如: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	zh	输入存放备份文件的完整路径：<br />如果空白：一般文件目录
 enter the hostname of the machine on which this server is running	setup	zh	运行该服务器的机器主机名
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	zh	输入eGroupWare的网址。<br />例如: http://www.domain.com/egroupware 或 /egroupware<br /><b>末尾不加"/"</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	zh	输入EGroupware的网址。<br />例如: http://www.domain.com/egroupware 或 /egroupware<br /><b>末尾不加"/"</b>
 enter the site password for peer servers	setup	zh	对等服务器的站点密码
 enter the site username for peer servers	setup	zh	对等服务器的站点用户名
 enter the title for your site	setup	zh	站点标题
@@ -274,7 +274,7 @@ however the tables are still in the database	setup	zh	可是表仍然在数据�
 however, the application is otherwise installed	setup	zh	但是此应用程序已经安装过
 however, the application may still work	setup	zh	但是此应用程序仍然可以工作
 if no acl records for user or any group the user is a member of	setup	zh	如果用户没有 ACL 记录或者是不属于任何组，则将该用户视为
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	zh	如果已经开启安全模式，eGroupWare 不能在运行时改变某些设置，也不能加载任何尚未加载的模块。
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	zh	如果已经开启安全模式，EGroupware 不能在运行时改变某些设置，也不能加载任何尚未加载的模块。
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	zh	如果应用程序没定义任何表, 可使用"升级"功能修正此问题
 if using ldap	setup	zh	如果使用 LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	zh	如果您使用LDAP, 您希望能管理主目录和登录shell的属性吗？
@@ -332,15 +332,15 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	zh	管理应用程序
 manage languages	setup	zh	管理语言
 manual / help	setup	zh	手册 / 帮助
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	zh	max_execution_time(最大执行时间)设为小于30(秒)：eGroupWare有时需要更多的执行时间，特别是无法预期的错误。
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	zh	max_execution_time(最大执行时间)设为小于30(秒)：EGroupware有时需要更多的执行时间，特别是无法预期的错误。
 maximum account id (e.g. 65535 or 1000000)	setup	zh	帐户 ID 最大值 (如： 65535 or 1000000)
 may be broken	setup	zh	可能被中断
 mcrypt algorithm (default tripledes)	setup	zh	Mcrypt 加密算法 (默认是 TRIPLEDES)
 mcrypt initialization vector	setup	zh	MCrypt 初始化向量
 mcrypt mode (default cbc)	setup	zh	Mcrypt 模式 (默认是 CBC)
 mcrypt settings (requires mcrypt php extension)	setup	zh	Mcrypt 配置 (要求 mcrypt 以 PHP 为扩展名)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	zh	memory_limit(最大可用内存)设为小于%1：eGroupWare有部分应用程序会使用超过默认值8M的内存，特别是无法预期的错误。
-migration between egroupware account repositories	setup	zh	在 eGroupWare 帐户储存库之间迁移
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	zh	memory_limit(最大可用内存)设为小于%1：EGroupware有部分应用程序会使用超过默认值8M的内存，特别是无法预期的错误。
+migration between egroupware account repositories	setup	zh	在 EGroupware 帐户储存库之间迁移
 minimum account id (e.g. 500 or 100, etc.)	setup	zh	帐户 ID 最小值 (如：500 or 100，等)
 minute	setup	zh	分
 missing or uncomplete mailserver configuration	setup	zh	缺少或未完成邮件服务器设置
@@ -350,7 +350,7 @@ modify	setup	zh	修改
 month	setup	zh	月
 multi-language support setup	setup	zh	多语言安装支持
 name of database	setup	zh	数据库名
-name of db user egroupware uses to connect	setup	zh	eGroupWare 连接的数据库用户名
+name of db user egroupware uses to connect	setup	zh	EGroupware 连接的数据库用户名
 never	setup	zh	永不
 new	setup	zh	新建
 next run	setup	zh	下次执行
@@ -358,13 +358,13 @@ no	setup	zh	否
 no %1 support found. disabling	setup	zh	系统不支持 %1，禁用
 no accounts existing	setup	zh	没有任何帐户
 no algorithms available	setup	zh	无可用算法
-no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	zh	没有 eGroupWare 域/数据库存在！使用 --edit-header --domain 来添加 (--使用方法 会提供更多选项)。
+no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	zh	没有 EGroupware 域/数据库存在！使用 --edit-header --domain 来添加 (--使用方法 会提供更多选项)。
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	zh	没有设置 header 管理密码！使用--edit-header <密码>[，<账户>] 来设置 (--使用方法 会提供更多选项)。
 no modes available	setup	zh	无可用模式
 no update necessary, domain %1(%2) is up to date.	setup	zh	不需要更新，域 %1(%2) 已经是最新状态。
 no xml support found. disabling	setup	zh	XML支持。禁用
 not	setup	zh	非
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	zh	eGroupWare 无法使用所有的加密模式和算法。如果您遇到问题，请关闭该选项。
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	zh	EGroupware 无法使用所有的加密模式和算法。如果您遇到问题，请关闭该选项。
 not complete	setup	zh	尚未完成
 not completed	setup	zh	尚未完成
 not ready for this stage yet	setup	zh	这一步还未准备好
@@ -387,9 +387,9 @@ password for smtp-authentication	setup	zh	SMTP 密码认证
 password needed for domain configuration.	setup	zh	用于更改域配置的密码。
 password of db user	setup	zh	数据库用户的密码
 passwords did not match, please re-enter	setup	zh	密码不符，请重新输入
-path (not url!) to your egroupware installation.	setup	zh	eGroupWare 安装路径 (不是网址！)。
+path (not url!) to your egroupware installation.	setup	zh	EGroupware 安装路径 (不是网址！)。
 path information	setup	zh	路径信息
-path of egroupware install directory (default auto-detected)	setup	zh	eGroupWare 安装路径(默认会自动检测)
+path of egroupware install directory (default auto-detected)	setup	zh	EGroupware 安装路径(默认会自动检测)
 path to user and group files has to be outside of the webservers document-root!!!	setup	zh	用户与群组的文件存储路径必须在网络服务器根目录以外！
 path to various directories: have to exist and be writeable by the webserver	setup	zh	几个文件夹的路径：必须存在且网络服务器能够写入。
 pear (%1) is a php repository and is usually in a package called %2.	setup	zh	PEAR(%1)是一个 php 库，通常 PEAR 包被称为%2。
@@ -397,12 +397,12 @@ pear%1 is needed by: %2.	setup	zh	PEAR%1 需要由：%2。
 persistent connections	setup	zh	持续连接
 please check for sql scripts within the application's directory	setup	zh	请在应用程序所在目录中检查 SQL 脚本
 please check read/write permissions on directories, or back up and use another option.	setup	zh	请检查对目录的读/写权限，或者备份后采取其它措施。
-please configure egroupware for your environment	setup	zh	请根据您的运行环境设置eGroupWare
+please configure egroupware for your environment	setup	zh	请根据您的运行环境设置EGroupware
 please consult the %1.	setup	zh	详情请查阅%1。
 please fix the above errors (%1) and warnings(%2)	setup	zh	请修复上述错误 (%1) 和警告 (%2)
 please install	setup	zh	请安装
 please login	setup	zh	请登录
-please login to egroupware and run the admin application for additional site configuration	setup	zh	请登录 eGroupWare，运行管理应用程序以进行站点的附加配置
+please login to egroupware and run the admin application for additional site configuration	setup	zh	请登录 EGroupware，运行管理应用程序以进行站点的附加配置
 please make the following change in your php.ini	setup	zh	请将您的php.ini座以下修改
 please wait...	setup	zh	请稍候...
 pop/imap mail server hostname or ip address	setup	zh	POP/IMAP 邮件服务器主机名或IP地址
@@ -421,7 +421,7 @@ re-enter password	setup	zh	重新输入密码
 read translations from	setup	zh	读取转换信息
 readable by the webserver	setup	zh	网络服务器可读取
 really uninstall all applications	setup	zh	确实卸载所有应用程序
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zh	register_globals 开启中，eGroupWare 不需要这个设定，而且关闭它通常比较安全
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zh	register_globals 开启中，EGroupware 不需要这个设定，而且关闭它通常比较安全
 registered	setup	zh	注册
 rejected lines	setup	zh	拒绝的行
 remove	setup	zh	删除
@@ -479,7 +479,7 @@ smtp server port	setup	zh	SMTP 服务器端口
 some or all of its tables are missing	setup	zh	一些或全部数据表丢失
 sources deleted/missing	setup	zh	Sources deleted/missing
 sql encryption type	setup	zh	SQL 密码加密的方式 (默认 md5)
-standard (login-name identical to egroupware user-name)	setup	zh	标准(登录名和 eGroupWare 登录名一致)
+standard (login-name identical to egroupware user-name)	setup	zh	标准(登录名和 EGroupware 登录名一致)
 standard mailserver settings (used for mail authentication too)	setup	zh	标准邮件服务器设置(也用于邮件认证)
 start the postmaster	setup	zh	启动 postmaster 守护进程
 start updating languages %1 ...	setup	zh	开始更新语言 %1 ...
@@ -503,7 +503,7 @@ the %1 extension is needed from: %2.	setup	zh	%1 扩展需要从：%2。
 the %1 extension is needed, if you plan to use a %2 database.	setup	zh	The %1 extension is needed, if you plan to use a %2 database.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	zh	这台服务器上不支持默认的(%1)。使用能支持的第一种类型的数据库。
 the file	setup	zh	文件
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	zh	安装eGroupWare的第一步，确定您的安装环境是否需要进一步设置来执行应用程序。
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	zh	安装EGroupware的第一步，确定您的安装环境是否需要进一步设置来执行应用程序。
 the following applications need to be upgraded:	setup	zh	以下这些应用程序需要升级：
 the function %1 is needed from: %2.	setup	zh	功能 %1 需要从：%2。
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	zh	从 jpeg 创建图片功能是由 gd 扩展提供的(依从 jpeg 支持！)。它需要为联系人上传照片。
@@ -520,10 +520,10 @@ this has to be outside the webservers document-root!!!	setup	zh	该目录不能�
 this might take a while, please wait ...	setup	zh	这也许需要几分钟时间，请稍后...
 this program lets you backup your database, schedule a backup or restore it.	setup	zh	这个程序能够让您备份、安排备份计划任务或还原数据库。
 this program will convert your database to a new system-charset.	setup	zh	该程序将转换您的数据库，使之符合新的系统编码。
-this program will help you upgrade or install different languages for egroupware	setup	zh	该程序将帮助您升级 eGroupWare 的语言或安装其他语言。
+this program will help you upgrade or install different languages for egroupware	setup	zh	该程序将帮助您升级 EGroupware 的语言或安装其他语言。
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	zh	长度应该在30字节左右。<br />注意: 默认值已经随机生成。
 this stage is completed<br />	setup	zh	本阶段配置已完成<br />
-this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	zh	这将创建第一个 eGroupWare 用户或重设密码以及存在用户的管理权限
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	zh	这将创建第一个 EGroupware 用户或重设密码以及存在用户的管理权限
 to a version it does not know about	setup	zh	未知版本
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	zh	要允许密码认证，请添加以下几行到 pg_hba.conf(在文件的最上方)并重新启动postgres：
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	zh	<br />修改编码：先备份您的数据库、移除所有应用程序并在重新安装备份时勾选“转换备份资料到选择的文字编码”项目。
@@ -533,7 +533,7 @@ translations added	setup	zh	转换已添加
 translations removed	setup	zh	转换已删除
 translations upgraded	setup	zh	转换已升级
 true	setup	zh	True
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	zh	请将您的 php 设置成支持上述的关系数据库, 或者手动安装 eGroupWare。
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	zh	请将您的 php 设置成支持上述的关系数据库, 或者手动安装 EGroupware。
 two weeks	setup	zh	两周
 uninstall	setup	zh	卸载
 uninstall all applications	setup	zh	卸载所有应用程序
@@ -549,7 +549,7 @@ uploads a backup and installs it on your db	setup	zh	上传备份并安装数据
 uploads a backup to the backup-dir, from where you can restore it	setup	zh	上传一个备份到备份目录，您可以从那里进行还原
 usage: %1 command [additional options]	setup	zh	用法： %1 指令 [其它选项]
 use --create-header to create the configuration file (--usage gives more options).	setup	zh	使用 --create-header 来创建配置文件(--usage 会提供更多选项)。
-use --install to install egroupware.	setup	zh	使用 --install 来安装 eGroupWare
+use --install to install egroupware.	setup	zh	使用 --install 来安装 EGroupware
 use --update to do so.	setup	zh	使用 --update 来更新
 use cookies to pass sessionid	setup	zh	使用cookies来传递会话id
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	zh	使用 mcrypt 来加密连接讯息：{关闭(默认) | 启用},[mcrypt-init-vector(默认为自动产生)],[mcrypt-版本]
@@ -572,25 +572,25 @@ we can proceed	setup	zh	可以继续
 we could not determine the version of %1, please make sure it is at least %2	setup	zh	我们不可能确定版本的%1，请确定它是至少%2
 we will automatically update your tables/records to %1	setup	zh	将自动将您的数据表/纪录自动升级到%1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	zh	我们现在将进行一系列的测试，这可能需要几分钟时间。点击以下链接继续。
-welcome to the egroupware installation	setup	zh	欢迎使用 eGroupWare
-which database type do you want to use with egroupware?	setup	zh	你想选择哪一种数据库类型用于eGroupWare？
+welcome to the egroupware installation	setup	zh	欢迎使用 EGroupware
+which database type do you want to use with egroupware?	setup	zh	你想选择哪一种数据库类型用于EGroupware？
 world readable	setup	zh	所有人可读
 world writable	setup	zh	所有人可写
-would you like egroupware to cache the phpgw info array ?	setup	zh	是否让eGroupWare缓存系统信息？
-would you like egroupware to check for a new version<br />when admins login ?	setup	zh	管理员登录时，是否检查eGroupWare的更新版本？
+would you like egroupware to cache the phpgw info array ?	setup	zh	是否让EGroupware缓存系统信息？
+would you like egroupware to check for a new version<br />when admins login ?	setup	zh	管理员登录时，是否检查EGroupware的更新版本？
 would you like to show each application's upgrade status ?	setup	zh	您希望显示每个应用程序的升级状态吗？
 writable by the webserver	setup	zh	Web服务器可写
 write	setup	zh	写入
 year	setup	zh	年
 yes	setup	zh	是的
 yes, with lowercase usernames	setup	zh	是，使用英文小写帐户
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	zh	您目前运行的是测试版本的 eGroupWare。<br />目前已经不再支持这个版本，建议您先升级到 0.9.10 版(最后一个测试版)<br />再升级到现在的版本。
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	zh	您目前运行的PHP版本太旧<br />建议您升级到较新版本。<br />因为老版本的 PHP 可能会造成 eGroupWare 运行不正常。<br /><br />建议您升级到至少 %1
-you appear to be running version %1 of egroupware	setup	zh	您目前运行的eGroupWare版本为 %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	zh	您目前运行的是测试版本的 EGroupware。<br />目前已经不再支持这个版本，建议您先升级到 0.9.10 版(最后一个测试版)<br />再升级到现在的版本。
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	zh	您目前运行的PHP版本太旧<br />建议您升级到较新版本。<br />因为老版本的 PHP 可能会造成 EGroupware 运行不正常。<br /><br />建议您升级到至少 %1
+you appear to be running version %1 of egroupware	setup	zh	您目前运行的EGroupware版本为 %1
 you appear to have %1 support.	setup	zh	您的系统支持 %1 。
 you appear to have xml support enabled	setup	zh	您的系统支持XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	zh	您已经选择好要使用这个步骤，但这个步骤尚未完成开发。<br />
-you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	zh	您使用的 PHP 版本为 %1，eGroupWare 现在需要 %2 或更新版本，建议使用PHP %3。
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	zh	您使用的 PHP 版本为 %1，EGroupware 现在需要 %2 或更新版本，建议使用PHP %3。
 you can install it by running:	setup	zh	您可以执行下面的指令安装：
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	zh	您可以在每个域使用一样的 header 管理员帐户与密码，如果密码是通过指令模式设定，它会从环境变量EGW_CLI_PASSWORD读取或是向用户查询。
 you didn't enter a config password for domain %1	setup	zh	您没有为域 %1 输入一个配置密码
@@ -601,20 +601,20 @@ you do not have any languages installed. please install one now <br />	setup	zh	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	zh	您尚未创建header.inc.php! 请立刻创建。
 you have successfully logged out	setup	zh	注销成功
 you must enter a username for the admin	setup	zh	您必须为管理员输入一个用户名
-you need to add at least one egroupware domain / database instance.	setup	zh	您必须至少添加一个 eGroupWare 域/数据库实例。
-you need to configure egroupware:	setup	zh	您需要配置 eGroupWare：
+you need to add at least one egroupware domain / database instance.	setup	zh	您必须至少添加一个 EGroupware 域/数据库实例。
+you need to configure egroupware:	setup	zh	您需要配置 EGroupware：
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	zh	您必须先修复上面的错误以便配置文件 header.inc.php 能够写入！
 you need to select your current charset!	setup	zh	您必须选择当前系统编码！
 you should either install the sources or uninstall it, to get rid of the tables	setup	zh	You should either install the sources or uninstall it, to get rid of the tables
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	zh	您应该卸载后重新安装，或者尝试手动修复
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	zh	您将不能使用 PHP sessions 登录到 eGroupWare："会话无法验证"！
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	zh	您将不能使用 PHP sessions 登录到 EGroupware："会话无法验证"！
 you're using an old configuration file format...	setup	zh	您使用的是旧的配置文件格式...
 your applications are current	setup	zh	您的应用程序是当前应用程序
 your backup directory '%1' %2	setup	zh	您的备份文件夹 '%1' %2
 your database does not exist	setup	zh	您的数据库不存在
 your database is not working!	setup	zh	您的数据库未在运行！
 your database is working, but you dont have any applications installed	setup	zh	您的数据库运行正常，但是没有安装任何应用程序
-your egroupware api is current	setup	zh	您的 eGroupWare 是当前最新版本
+your egroupware api is current	setup	zh	您的 EGroupware 是当前最新版本
 your files directory '%1' %2	setup	zh	您的文件目录 '%1' %2
 your header admin password is not set. please set it now!	setup	zh	您的主管理员密码没有设置。请立刻设置！
 your header.inc.php needs upgrading.	setup	zh	您的 header.inc.php 需要升级。

@@ -4,10 +4,10 @@
 %1 is no existing vfs file!	preferences	fr	%1 n'est pas un fichier VFS existant !
 12 hour	preferences	fr	12 heures
 24 hour	preferences	fr	24 heures
-a template defines the layout of egroupware and it contains icons for each application.	preferences	fr	Un modèle définit la disposition d'eGroupWare et contient les icônes pour chaque application.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	fr	Un modèle définit la disposition d'EGroupware et contient les icônes pour chaque application.
 a theme defines the colors and fonts used by the template.	preferences	fr	Un thème définit les couleurs et polices utilisées par le modèle.
 acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans eGroupWare affichera ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans EGroupware affichera ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
 are you sure you want to delete this category ?	preferences	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
 audio effect	preferences	fr	Effet audio
 audio effect enables|disables sound effects used in the theme	preferences	fr	Effets Audio : active|désactive les effets sonores utilisés dans le thème
@@ -116,7 +116,7 @@ select additional lines in lists by	preferences	fr	Sélectionner des lignes supp
 select different theme	preferences	fr	Choisissez un thème différent
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	fr	Sélectionner comment l'éditeur de texte avancé va générer une balise de retour à la ligne.
 select one	preferences	fr	Choisissez un(e)
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans eGroupWare.<br>Certaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans EGroupware.<br>Certaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
 select the language of the spellchecker integrated into the rich text editor.	preferences	fr	Sélectionner la langue du correcteur orthographique intégré à l'éditeur de texte.
 select the theme (visualization) of the rich text editor.	preferences	fr	Sélectionner le thème de l'éditeur de texte.
 selectbox	preferences	fr	Boîte de sélection
@@ -136,7 +136,7 @@ special characters	preferences	fr	caractères spéciaux
 spellchecker language	addressbook	fr	Language de correcteur orthographique
 text editor settings	preferences	fr	Paramètre de l'éditeur de texte
 text only	preferences	fr	Texte seulement
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fr	L'application par défaut sera exécutée quand vous entrez dans eGroupWare ou cliquez sur l'icône de la page d'accueil.<br>Vous pouvez aussi avoir plus d'une application s'affichant sur la page d'accueil, si vous ne choisissez pas d'application spécifique ici (ceci doit être configuré dans les préférences de chaque application).
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fr	L'application par défaut sera exécutée quand vous entrez dans EGroupware ou cliquez sur l'icône de la page d'accueil.<br>Vous pouvez aussi avoir plus d'une application s'affichant sur la page d'accueil, si vous ne choisissez pas d'application spécifique ici (ceci doit être configuré dans les préférences de chaque application).
 the old password is not correct	preferences	fr	L'ancien mon de passe est erroné
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fr	La boîte de sélection montre tous les utilisateurs disponibles (ceci peut être très lent lors d'installations importantes avec beaucoup d'utilisateurs). La fenêtre Popup peut rechercher les utilisateurs par nom ou groupe.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fr	La boîte de sélection va afficher tous les utilisateurs (cela peut être très long pour les installations avec beaucoup d'utilisateurs).  Le popup permet de recherche sur le nom et le groupe. Les deux dernières options limite la visibilité pour les autres utilisateurs. Ainsi, elle peuvent être forcées et non appliquées pour les administrateurs.
@@ -152,8 +152,8 @@ uppercase letters	preferences	fr	lettres majuscules
 use default	preferences	fr	Utiliser le défaut
 users choice	preferences	fr	Choix des utilisateurs
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fr	Si vous dites Oui, les boutons Accueil et Déconnexion sont présentés comme des applications dans la barre de navigation.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'eGroupWare.
-which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'EGroupware.
+which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans EGroupware.
 write prefs for the specified application.	preferences	fr	Ecrire les préférences pour l'apllication spécifiée.
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
 you can show the linked entries with icons only, icons with app-name or both.	common	fr	Monter les applications avec des icônes seulement, icônes avec des noms d'application ou les deux.

@@ -18,7 +18,7 @@
 %1 to sync	groupdav	en	%1 to sync
 %1, duplicate id	common	en	%1, duplicate ID
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other directory%2<br />or make %3 writable by web server.
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 %s disabled	common	en	%s disabled
 %s needed	common	en	%s needed
 %s notranslation	common	en	%s NoTranslation

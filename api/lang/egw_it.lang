@@ -17,7 +17,7 @@
 %1 to sync	groupdav	it	% per sincronizzare
 %1, duplicate id	common	it	%1, ID duplicato
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	it	%1Scegli un'altra directory%2<br />o rendi %3 scrivibile dal webserver
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite di collaborazione multiutente, web-based scritta in %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1EGroupware%2 è una suite di collaborazione multiutente, web-based scritta in %3PHP%4.
 %s disabled	common	it	%s disabilitato
 %s needed	common	it	%s necessario
 %s notranslation	common	it	%s NoTranslation
@@ -50,7 +50,7 @@ a request to the egroupware server returned with an error	common	it	Una richiest
 abort	common	it	Interrompi
 about	common	it	Info
 about %1	common	it	Info su %1
-about egroupware	common	it	Info su eGroupware
+about egroupware	common	it	Info su EGroupware
 access	common	it	Accesso
 access not permitted	common	it	Accesso non permesso
 accesskey	common	it	Chiave d'accesso
@@ -124,7 +124,7 @@ angola	common	it	ANGOLA
 anguilla	common	it	ANGUILLA
 antarctica	common	it	ANTARTIDE
 antigua and barbuda	common	it	ANTIGUA E BARBUDA
-api	common	it	API eGroupWare
+api	common	it	API EGroupware
 api-accounts	common	it	Account utenti
 application	common	it	Applicazione
 application has no etemplates (no file %1) to restore!	common	it	L'applicazione non ha eTemplate (nessun file %1) da ripristinare!
@@ -446,7 +446,7 @@ egroupware api version	common	it	Versione API EGroupware
 egroupware maintenance update %1 available	common	it	Aggiornamento di manutenzione %1 EPL disponibile
 egroupware security update %1 needs to be installed!	common	it	E' necessario installare l'aggiornamento di sicurezza %1!
 egroupware version	common	it	Versione EGroupware
-egroupware: login blocked for user '%1', ip %2	common	it	eGroupWare: login bloccato per l'utente '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	it	EGroupware: login bloccato per l'utente '%1', IP %2
 egypt	common	it	EGITTO
 el salvador	common	it	EL SALVADOR
 element role title	common	it	Titolo ruolo elemento
@@ -463,7 +463,7 @@ end time	common	it	Ora Fine
 enter '' for an empty default, nothing mean no default	common	it	inserisci '' per un predefinito vuoto, niente significa nessun predefinito
 enter a search pattern	common	it	Inserisci una stringa di ricerca
 enter filename to upload and attach, use [browse...] to search for it	common	it	Enter filename to upload and attach, use [Browse...] to search for it
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di eGroupWare.<br>Esempio: http://www.domain.com/egroupware   or   /egroupware<br><b>Senza la barra finale</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di EGroupware.<br>Esempio: http://www.domain.com/egroupware   or   /egroupware<br><b>Senza la barra finale</b>
 enter the new version number here (> old_version), empty for no update-file	common	it	enter the new version number here (> old_version), empty for no update-file
 enter the new version number here (has to be > old_version)	common	it	inserisci il numero della nuova versione qui (deve essere > old_version)
 entry has been deleted sucessfully	common	it	La voce è stata cancellata correttamente
@@ -1201,7 +1201,7 @@ show now	common	it	Mostra adesso
 show page generation time	common	it	Visualizza il tempo di generazione della pagina
 show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina?
 show page generation time?	common	it	Mostrare tempo generazione pagina?
-show the logo's of egroupware and x-desktop on the desktop.	common	it	Mostra il logo di eGroupware e di x-desktop sul desktop.
+show the logo's of egroupware and x-desktop on the desktop.	common	it	Mostra il logo di EGroupware e di x-desktop sul desktop.
 show values	common	it	Mostra Valori
 show_more_apps	common	it	show_more_apps
 showing	common	it	showing

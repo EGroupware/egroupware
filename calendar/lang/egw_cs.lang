@@ -156,7 +156,7 @@ display holidays or birthdays as events in dayview	calendar	cs	Zobrazit svátky 
 display in header	calendar	cs	Zobrazit v hlavičce
 display status of events	calendar	cs	Zobrazit stav událostí
 displayed view	calendar	cs	zobrazený pohled
-displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	cs	Zobrazit tento pohled do kalendáře na hlavní stránce (stránka, která se zobrazí po spuštění eGroupWare, nebo po kliknutí na ikonu domovské stránky?
+displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	cs	Zobrazit tento pohled do kalendáře na hlavní stránce (stránka, která se zobrazí po spuštění EGroupware, nebo po kliknutí na ikonu domovské stránky?
 do not include events of group members	calendar	cs	Nezahrnovat události členů skupiny
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	cs	Opravdu chcete změnit začátek pravidelného opakování? V takovém případě bude pravidelné opakování zrušena jako %1 a bude vytvořeno nové pravidelné  opakování s těmito změnami.
 do you want a weekview with or without weekend?	calendar	cs	Chcete týdenní pohled včetně víkendu nebo bez něj?
@@ -362,7 +362,7 @@ notification messages for modified events	calendar	cs	Tvar zprávy s upozorněn�
 notification messages for your alarms	calendar	cs	Tvar zprávy pro Vaše připomínky
 notification messages for your responses	calendar	cs	Tvar zprávy pro Vaše odpovědi
 notification settings	calendar	cs	Nastavení připomínek
-notify non-egroupware users about event updates	calendar	cs	Upozornit uživatele mimo eGroupWare o úpravě události
+notify non-egroupware users about event updates	calendar	cs	Upozornit uživatele mimo EGroupware o úpravě události
 number of records to read (%1)	calendar	cs	Počet záznamů k načtení (%1)
 number of weeks to show	calendar	cs	Kolik se má zobrazovat týdnů
 observance rule	calendar	cs	Pravidlo zachování

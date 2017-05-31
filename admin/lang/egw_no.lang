@@ -177,7 +177,7 @@ enter the background color for the site title	admin	no	Angi bakgrunnsfarge for s
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	no	Angi full sti for midlertidige filer. <br>Eksempler: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	no	Angi full sti for bruker- og gruppefiler. <br>Eksempler: /filer, E:\FILER
 enter the hostname of the machine on which this server is running	admin	no	Angi maskinnavnet til maskinen denne serveren kjører på
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Angi URL'en for eGroupWare. <br>Eksempel: http://www.domene.com/egroupware   eller   /egroupware<br><b>Ingen avsluttende skråstrek</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Angi URL'en for EGroupware. <br>Eksempel: http://www.domene.com/egroupware   eller   /egroupware<br><b>Ingen avsluttende skråstrek</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	no	Skriv inn søkestrengen. For å vise alle innlegg, tøm dette feltet og trykk på SEND knappen igjen
 enter the site password for peer servers	admin	no	Skriv inn site passord for peer tjenere
 enter the site username for peer servers	admin	no	Skriv inn sitens brukernavn for peer tjenere
@@ -426,9 +426,9 @@ view sessions	admin	no	Vis sessions
 view this user	admin	no	Vis denne bruker
 view user account	admin	no	Vis brukerkonto
 who would you like to transfer all records owned by the deleted user to?	admin	no	Til hvem ønsker du å overføre alle poster tilhørende den slettede bruker?
-would you like egroupware to cache the egw info array ?	admin	no	Ønsker du at eGroupWare skal mellomlagre egw infostreng ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	no	Ønsker du at eGroupWare skal kontrollere for en ny versjon<br>når admin logges på?
-would you like egroupware to check for new application versions when admins login ?	admin	no	Ønsker du at eGroupWare skal kontrollere for nye program når admin logger inn?
+would you like egroupware to cache the egw info array ?	admin	no	Ønsker du at EGroupware skal mellomlagre egw infostreng ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	no	Ønsker du at EGroupware skal kontrollere for en ny versjon<br>når admin logges på?
+would you like egroupware to check for new application versions when admins login ?	admin	no	Ønsker du at EGroupware skal kontrollere for nye program når admin logger inn?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	no	Ønsker du automatisk å laste inn nye språkfiler (ved pålogging)?
 would you like to show each application's upgrade status ?	admin	no	Ønsker du å se hvert programs oppdateringsstatus?
 xml-rpc	admin	no	XML-RPC

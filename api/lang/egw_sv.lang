@@ -1,13 +1,13 @@
 %1 email addresses inserted	common	sv	%1 e-postadresser tillagda
 %1 is not executable by the webserver !!!	common	sv	%1 är inte exekverbar av webbservern!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br/> eller gör %3 skrivbar för webbservern
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1eGroupWare%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1EGroupware%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
 00 (disable)	admin	sv	00 (inaktivera)
 13 (ntp)	admin	sv	13 (ntp)
 80 (http)	admin	sv	80 (http)
 about	common	sv	Om
 about %1	common	sv	Om %1
-about egroupware	common	sv	Om eGroupware
+about egroupware	common	sv	Om EGroupware
 access	common	sv	Åtkomst
 access not permitted	common	sv	Åtkomst nekad
 account has been created	common	sv	Kontot skapat
@@ -194,8 +194,8 @@ edit	common	sv	Ändra
 edit %1 category for	common	sv	Ändra %1 kategori för
 edit categories	common	sv	Ändra kategorier
 edit category	common	sv	Ändra kategori
-egroupware	common	sv	eGroupWare
-egroupware: login blocked for user '%1', ip %2	common	sv	eGroupWare: inloggning spärrad för '%1', IP %2
+egroupware	common	sv	EGroupware
+egroupware: login blocked for user '%1', ip %2	common	sv	EGroupware: inloggning spärrad för '%1', IP %2
 egypt	common	sv	EGYPTEN
 el salvador	common	sv	EL SALVADOR
 email	common	sv	E-post
@@ -203,7 +203,7 @@ email-address of the user, eg. "%1"	common	sv	Användarens e-postadress, ex. "%1
 enabled	common	sv	Aktiverad
 end date	common	sv	Slutdatum
 end time	common	sv	Sluttid
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till eGroupWare's URL.<br>Example: http://www.domain.com/egroupware   eller   /egroupware<br><b>Utan efterföljande snedstreck</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till EGroupware's URL.<br>Example: http://www.domain.com/egroupware   eller   /egroupware<br><b>Utan efterföljande snedstreck</b>
 entry has been deleted sucessfully	common	sv	Post raderad
 entry updated sucessfully	common	sv	Post uppdaterad
 equatorial guinea	common	sv	EKVATORIALGUINEA
@@ -475,7 +475,7 @@ personal	common	sv	Personligt
 peru	common	sv	PERU
 philippines	common	sv	FILIPINERNA
 phone number	common	sv	Telefonnummer
-api	common	sv	eGroupWare API
+api	common	sv	EGroupware API
 pitcairn	common	sv	PITCAIRNÖARNA
 please %1 by hand	common	sv	Var god och %1 för hand
 please enter a name	common	sv	Ange ett namn
@@ -572,7 +572,7 @@ show menu	common	sv	Visa meny
 show page generation time	common	sv	Visa sidans genereringstid
 show page generation time on the bottom of the page?	common	sv	Visa sidans genererings tid längst ner på sidan?
 show page generation time?	common	sv	Visa sidans genereringstid?
-show the logo's of egroupware and x-desktop on the desktop.	common	sv	Visa eGroupware och x-desktop logotypen på skrivbordet
+show the logo's of egroupware and x-desktop on the desktop.	common	sv	Visa EGroupware och x-desktop logotypen på skrivbordet
 show_more_apps	common	sv	Visa fler applikationer
 showing %1	common	sv	Visar %1
 showing %1 - %2 of %3	common	sv	Visar %1 - %2 av %3

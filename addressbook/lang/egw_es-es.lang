@@ -176,7 +176,7 @@ department	common	es-es	Departamento
 departments	addressbook	es-es	departamentos
 directory with documents to insert contacts	addressbook	es-es	Directorio con documentos para insertar contactos
 display contact	addressbook	es-es	Mostrar contacto
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	es-es	Muestra un recordatorio para los cumpleaños en la página de inicio (la página que se ve al entrar en eGroupWare o pulsar en el icono de inicio).
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	es-es	Muestra un recordatorio para los cumpleaños en la página de inicio (la página que se ve al entrar en EGroupware o pulsar en el icono de inicio).
 distribution list deleted	addressbook	es-es	Lista de distribución borrada
 distribution list renamed	addressbook	es-es	Lista de distribución renombrada
 distribution lists	addressbook	es-es	Listas de distribución
@@ -465,7 +465,7 @@ what should links to the addressbook display in other applications. empty values
 where to add the email address	addressbook	es-es	dónde añadir la dirección de correo electrónico
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	es-es	Qué formato de dirección debe usar la libreta de direcciones para países de los que no conoce el formato de las direcciones. Si se conoce el formato de las direcciones, se usa independientemente de lo indicado en esta opción
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	es-es	Qué libreta de direcciones debe seleccionarse al añadir un contacto Y cuando no haya permiso de añadir en la libreta de direcciones actual.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de EGroupware.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	es-es	Qué campos deben exportarse. Indicar todos significa que cada campo almacenado en la libreta de direcciones, incluyendo los personalizados. La dirección del trabajo o particular sólo contiene el nombre, la empresa y la dirección seleccionada.
 whole query	addressbook	es-es	la consulta completa
 work email if given, else home email	addressbook	es-es	Correo del trabajo si se indica. Si no, correo particular

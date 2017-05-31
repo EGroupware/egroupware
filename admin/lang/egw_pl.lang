@@ -207,7 +207,7 @@ edit this user	admin	pl	edytuj tego użytkownika
 edit user	admin	pl	edytuj użytkownika
 edit user account	admin	pl	Edycja konta użytkownika
 educational: universities, schools, ...	admin	pl	Edykacyjne: Uniwersytety, szkoły, ...
-egroupware directory	admin	pl	Katalog eGroupWare
+egroupware directory	admin	pl	Katalog EGroupware
 egroupware version	admin	pl	Wersja EGroupware
 either install id and config password needed or the remote hash!	admin	pl	ID instalacji i hasło konfiguracji LUB hash zdalny!
 email account active	admin	pl	konto poczty aktywne
@@ -226,7 +226,7 @@ enter the background color for the site title	admin	pl	Wpisz kolor tła tytułu 
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pl	Podaj pełną ścieżkę do plików tymczasowych.<br />Przykłady: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	pl	Podaj pełną ścieżkę do plików użytkowników i grup.<br />Przykłady: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	pl	Podaj nazwę komputera, na którym jest uruchomiony serwer
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj URL do twojego portalu eGroupWare.<br>Na przykad: http://www.twojadomena.com.pl/egroupware   or  /egroupware<br><b>Bez kończącego slash-a (,,/'')</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj URL do twojego portalu EGroupware.<br>Na przykad: http://www.twojadomena.com.pl/egroupware   or  /egroupware<br><b>Bez kończącego slash-a (,,/'')</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pl	Wpisz szukany ciąg znaków. Aby pokazać wszystkie wpisy, wyczyść to pole i kliknij ponownie  przycisk SZUKAJ.
 enter the site password for peer servers	admin	pl	Wprowadź hasło serwisu dla  serwerów równorzędnych (peer servers)
 enter the site username for peer servers	admin	pl	Wprowadź nazwę użytkownika serwisu dla serwerów równorzdnych (peer servers)
@@ -364,7 +364,7 @@ modified	admin	pl	Zmodyfikowany
 month	admin	pl	Miesiąc
 more secure	admin	pl	bardziej bezpieczne
 name must not be empty !!!	admin	pl	Nie może być puste !!!
-name of the egroupware instance, eg. default	admin	pl	Nazwa instancji eGroupware, np. default
+name of the egroupware instance, eg. default	admin	pl	Nazwa instancji EGroupware, np. default
 new group name	admin	pl	Nowa nazwa grupy
 new name	admin	pl	nowa nazwa
 new password [ leave blank for no change ]	admin	pl	Nowe hasło (zostaw puste jeżeli bez zmian)
@@ -542,7 +542,7 @@ unknown command %1!	admin	pl	Nieznane polecenie %1 !!!
 unknown option %1	admin	pl	Nieznana opcja %1
 up	admin	pl	w górę
 updated	admin	pl	Uaktualniony
-url of the egroupware installation, eg. http://domain.com/egroupware	admin	pl	URL instalacji eGroupware, np. http://domena.pl/egroupware
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	pl	URL instalacji EGroupware, np. http://domena.pl/egroupware
 usage	admin	pl	Użytkowanie
 use cookies to pass sessionid	admin	pl	Używaj ciasteczek do przekazywania identyfikatora sesji
 use pure html compliant code (not fully working yet)	admin	pl	Używaj kodu zgodnego z czystym HTML (nie działa w pełni)
@@ -564,9 +564,9 @@ view user account	admin	pl	Wyświetl konto użytkownika
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	pl	Prosimy o te dane, aby poprawić nasz profil w prasie oraz lepiej zrozumieć bazę użytkowników egroupware i jej potrzeby.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	pl	Mamy nadzieję, że rozumiesz potrzebę wprowadzenia tej dobrowolnej statystyki i nie wyłączysz jej jeśli nie musisz.
 who would you like to transfer all records owned by the deleted user to?	admin	pl	Kto powinien przejąć wszystkie rekordy usuwanego użytkownika?
-would you like egroupware to cache the egw info array ?	admin	pl	Czy przechowywać tablicę informacyjną eGroupWare w pamięci ?
+would you like egroupware to cache the egw info array ?	admin	pl	Czy przechowywać tablicę informacyjną EGroupware w pamięci ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	pl	Chcesz sprawdza czy s nowe wersje<br>gdy zaloguje si administrator?
-would you like egroupware to check for new application versions when admins login ?	admin	pl	Czy eGroupWare powinien sprawdzać czy pojawiły się nowe wersję aplikacji<br>przy każdym logowaniu administratorów ?
+would you like egroupware to check for new application versions when admins login ?	admin	pl	Czy EGroupware powinien sprawdzać czy pojawiły się nowe wersję aplikacji<br>przy każdym logowaniu administratorów ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	pl	Czy przy logowaniu automatycznie ładować nowe wersje plików językowych do bazy ?
 would you like to show each application's upgrade status ?	admin	pl	Chcesz wyświetlać status aktualizacji dla każdej aplikacji?
 wrong account type: %1 is no %2 !!!	admin	pl	Zły typ konta: %1 to nie %2 !

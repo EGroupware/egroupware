@@ -176,7 +176,7 @@ department	common	nl	Afdeling
 departments	addressbook	nl	afdelingen
 directory with documents to insert contacts	addressbook	nl	Directory met documenten om contacten in te voegen
 display contact	addressbook	nl	Contact weergeven
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	nl	Toont een herinnering voor verjaardagen op de voorpagina (de pagina die je te zien krijgt als je eGroupWare start of wanneer je op het voorpagina ikoon klikt)
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	nl	Toont een herinnering voor verjaardagen op de voorpagina (de pagina die je te zien krijgt als je EGroupware start of wanneer je op het voorpagina ikoon klikt)
 distribution list deleted	addressbook	nl	Distributielijst verwijderd
 distribution lists	addressbook	nl	Distributielijsten
 distribution lists, ...	addressbook	nl	Distributielijsten, ....
@@ -489,7 +489,7 @@ when viewing a contact, show linked entries from the selected application	addres
 where to add the email address	addressbook	nl	waar moet het emailadres toegevoegd worden
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	nl	Welk adresformaat moet het adresboek gebruiken voor landen waarvan het adresformaat nog niet bekend is. Indien het adresformaat van een land bekend is wordt het ongeacht deze instelling gebruikt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	nl	Welke adresboek moet geselecteerd worden wanneer een contact wordt bijgevoegd EN wanneer u geen toevoegingsrecht heb bij het huidige adresboek.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	nl	Welke karakterset moet gebruikt worden voor de CSV export. De systeem standaard is de karakterset van deze eGroupWare installatie.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	nl	Welke karakterset moet gebruikt worden voor de CSV export. De systeem standaard is de karakterset van deze EGroupware installatie.
 which charset should be used for the vcard export.	addressbook	nl	Welke karakterset moet gebruikt worden voor de vCard export
 which charset should be used for the vcard import and export.	addressbook	nl	Welke karakterset moet gebruikt worden voor de vCard im - export.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	nl	Welke velden moeten geexporteerd worden. "Alles" betekent elke veld dat in het adresboek is opgeslagen, inclusief de aangepaste velden. "Alleen bedrijf adres of privé adres" betekent dat alleen naam, organisatie en het gekozen adres wordt geexporteerd.

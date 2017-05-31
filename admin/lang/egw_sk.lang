@@ -861,7 +861,7 @@ we hope you understand the importance for this voluntary statistic and not deny 
 who would you like to transfer all records owned by the deleted user to?	admin	sk	Na koho by ste chceli preniesť VŠETKY záznamy odstráneného používateľa?
 would you like egroupware to cache the egw info array ?	admin	sk	Chcete, aby EGroupware kešoval egw info pole?
 would you like egroupware to check for a new version<br>when admins login ?	admin	sk	Chcete, aby EGroupware kontroloval aktuálnosť svojej verzie <br>po prihlásení správcu?
-would you like egroupware to check for new application versions when admins login ?	admin	sk	Chcete, abyEeGroupware kontroloval aktuálnosť verzie aplikácií po prihlásení správcu?
+would you like egroupware to check for new application versions when admins login ?	admin	sk	Chcete, abyEEGroupware kontroloval aktuálnosť verzie aplikácií po prihlásení správcu?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sk	Chcete, aby sa nové jazykové súbory uplatnili počas prihlasovania?
 would you like to show each application's upgrade status ?	admin	sk	Chcete, aby sa zobrazoval stav aktualizácie každej aplikácie?
 wrong account type: %1 is no %2 !!!	admin	sk	Nesprávny typ účtu: %1 NIE je %2!!!

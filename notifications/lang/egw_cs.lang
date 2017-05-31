@@ -18,12 +18,12 @@ disabled chains	notifications	cs	Zakázané posloupnosti
 do not notify me at all	notifications	cs	vůbec mě neupozorňuj
 domain not found, please check serveraddress.	notifications	cs	Doména nebyla nalezena, zkontrolujte adresu serveru.
 e-mail only	notifications	cs	jen e-mail
-egroupware has notifications for you	notifications	cs	eGroupWare má pro Vás upozornění
-egroupware login is starting, please wait.	notifications	cs	Spouští se přihlášení eGroupWare, čekejte prosím.
-egroupware logindomain:	notifications	cs	Doména pro přihlášení eGroupWare:
+egroupware has notifications for you	notifications	cs	EGroupware má pro Vás upozornění
+egroupware login is starting, please wait.	notifications	cs	Spouští se přihlášení EGroupware, čekejte prosím.
+egroupware logindomain:	notifications	cs	Doména pro přihlášení EGroupware:
 egroupware logindomains founds, please select.	notifications	cs	Doména byla nalezena, vyberte prosím:
-egroupware not found by url or connection lost to server.	notifications	cs	eGroupWare nebyl nalezen pomocí URL, nebo bylo přerušeno spojení se serverem.
-egroupware not found by url.	notifications	cs	eGroupWare nebyl nalezen pomocí URL
+egroupware not found by url or connection lost to server.	notifications	cs	EGroupware nebyl nalezen pomocí URL, nebo bylo přerušeno spojení se serverem.
+egroupware not found by url.	notifications	cs	EGroupware nebyl nalezen pomocí URL
 egroupware-popup and e-mail	notifications	cs	Překryvná okna v eGroupWaru a e-mail
 egroupware-popup and windows-popup	notifications	cs	Překryvná okna v eGroupWaru a překryvná okna ve Windows
 egroupware-popup backend	admin	cs	Backend Překryvná okna v eGroupWaru
@@ -48,7 +48,7 @@ issuer dn:	notifications	cs	Upozornění způsobeno:
 java desktop notification app	preferences	cs	Java aplikace pro upozornění na ploše
 linked entries:	common	cs	Odkazované záznamy:
 login aborted, application exit?	notifications	cs	Přihlášení přerušeno, ukončit aplikaci?
-login in egroupware:	notifications	cs	Přihlášení do eGroupWare
+login in egroupware:	notifications	cs	Přihlášení do EGroupware
 mail backend	admin	cs	Poštovní backend
 message from	notifications	cs	Zpráva od
 minutes	notifications	cs	minut
@@ -62,9 +62,9 @@ permission	notifications	cs	Oprávnění
 permission denied for notifications application.	notifications	cs	Přístup do aplikace pro upozornění byl odepřen.
 placeholders with user/ prefix	admin	cs	Zástupci pro automatizaci
 please contact your egroupware admin.	notifications	cs	Kontaktujte prosím správce eGroupWaru.
-please enter the url of your egroupware.	notifications	cs	Zadejte URL eGroupWare.
-please enter your egroupware username.	notifications	cs	Zadejte vaše uživatelské jméno do eGroupWare
-please enter your password	notifications	cs	Zadejte vaše heslo do eGroupWare
+please enter the url of your egroupware.	notifications	cs	Zadejte URL EGroupware.
+please enter your egroupware username.	notifications	cs	Zadejte vaše uživatelské jméno do EGroupware
+please enter your password	notifications	cs	Zadejte vaše heslo do EGroupware
 poll interval	notifications	cs	Interval dotazování (poll)
 preferences for notification	notifications	cs	Předvolby pro upozornění
 received	notifications	cs	Přijato
@@ -80,7 +80,7 @@ sorry, your login has expired	notifications	cs	Omlouváme se, ale vašemu přihl
 step	notifications	cs	Krok
 subject dn:	notifications	cs	Předmět upozornění:
 the server certificate is not a valid trust center certificate!	notifications	cs	Certifikát serveru není platným zabezpečeným certifikátem!
-this egroupware notification has been sent to you by mail because your	notifications	cs	Toto upozornění z eGroupWare vám bylo zasláno e-mailem, protože váš
+this egroupware notification has been sent to you by mail because your	notifications	cs	Toto upozornění z EGroupware vám bylo zasláno e-mailem, protože váš
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	cs	Toto upozornění z eGroupWaru Vám bylo zasláno e-mailem, protože Vámi zvolená posloupnost upozornění byla zakázána administrátorem. Vyberte si prosím v předvolbách jinou posloupnost upozornění.
 user:	notifications	cs	Uživatel:
 warning	notifications	cs	Varování
