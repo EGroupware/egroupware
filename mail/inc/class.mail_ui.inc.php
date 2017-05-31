@@ -877,6 +877,70 @@ class mail_ui
 		}
 	}
 
+	/**
+	 * Method to execute spam actions
+	 *
+	 * @param type $_action action id
+	 * @param type $_params
+	 */
+	public function ajax_spamAction($_action, $_params)
+	{
+		$msg = array();
+		$response = Api\Json\Response::get();
+		if ($GLOBALS['egw_info']['apps']['stylite'])
+		{
+			$data = array_merge($_params, array(
+				'userpwd'	=> $this->mail_bo->icServer['params']['acc_imap_password'],
+				'user'		=> $this->mail_bo->icServer['params']['acc_imap_username'],
+				'api_url'	=> $this->mail_bo->icServer['params']['acc_spam_api']
+			));
+			$msg[] = stylite_mail_spamtitan::execSpamTitanAction($_action, $_params, $data);
+		}
+		switch ($_action)
+		{
+			case 'spam':
+				// Move to spam from Inbox
+				break;
+			case 'ham':
+				// copy to Ham and move from Spam to Inbox
+				break;
+		}
+		$response->apply('egw.message',[implode('\n',$msg)]);
+	}
+
+	/**
+	 * Build spam actions
+	 *
+	 * @return array actions
+	 */
+	public function getSpamActions ()
+	{
+		$actions = array (
+			'spamfilter' => array (
+				'caption'	=> 'spam',
+				'icon'		=> 'dhtmlxtree/MailFolderJunk',
+				'children'	=> array (
+					'spam' => array (
+						'caption'	=> 'Report as Spam',
+						'icon'		=> 'dhtmlxtree/MailFolderJunk',
+						'onExecute' => 'javaScript:app.mail.spam_actions',
+					),
+					'ham' => array (
+						'caption'	=> 'Not a Spam',
+						'icon'		=> 'ham',
+						'onExecute' => 'javaScript:app.mail.spam_actions',
+					)
+				)
+			)
+		);
+		$account = Mail\Account::read($this->mail_bo->profileID);
+		// spamTitan actions
+		if ($GLOBALS['egw_info']['apps']['stylite'] && $account['params']['acc_spam_api'])
+		{
+			$actions['spamfilter']['children'] = array_merge($actions['spamfilter']['children'], stylite_mail_spamtitan::getActions());
+		}
+		return $actions;
+	}
 
 	/**
 	 * Get actions / context menu for index
@@ -1305,17 +1369,14 @@ class mail_ui
 		{
 			unset($actions['save']['children']['save2filemanager']);
 		}
-		if ($GLOBALS['egw_info']['apps']['stylite'])
+
+		$spam_actions = $this->getSpamActions();
+		$group++;
+		foreach ($spam_actions as &$action)
 		{
-			$spamtitan_actions = stylite_mail_spamtitan::getActions();
-			$group++;
-			foreach ($spamtitan_actions as &$action)
-			{
-				$action['group'] = $group;
-			}
-			$actions = array_merge($actions, $spamtitan_actions);
+			$action['group'] = $group;
 		}
-		return $actions;
+		return array_merge($actions, $spam_actions);
 	}
 
 	/**
