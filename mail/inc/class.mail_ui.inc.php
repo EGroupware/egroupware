@@ -889,12 +889,17 @@ class mail_ui
 		$response = Api\Json\Response::get();
 		if ($GLOBALS['egw_info']['apps']['stylite'])
 		{
-			$data = array_merge($_params, array(
-				'userpwd'	=> $this->mail_bo->icServer['params']['acc_imap_password'],
-				'user'		=> $this->mail_bo->icServer['params']['acc_imap_username'],
-				'api_url'	=> $this->mail_bo->icServer['params']['acc_spam_api']
+			$id_parts = self::splitRowID($_params['data']['row_id']);
+			if ($id_parts['profileID'] && $id_parts['profileID'] != $this->mail_bo->profileID)
+			{
+				$this->changeProfile($id_parts['profileID']);
+			}
+			$_params['mailbody'] = $this->get_load_email_data($_params['data']['uid'], null, $id_parts['folder']);
+			$msg[] = stylite_mail_spamtitan::execSpamTitanAction($_action, $_params, array(
+				'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
+				'user'		=> $this->mail_bo->icServer->acc_imap_username,
+				'api_url'	=> $this->mail_bo->icServer->acc_spam_api
 			));
-			$msg[] = stylite_mail_spamtitan::execSpamTitanAction($_action, $_params, $data);
 		}
 		switch ($_action)
 		{
