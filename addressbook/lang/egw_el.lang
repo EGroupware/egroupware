@@ -118,7 +118,7 @@ deleted	addressbook	el	διεγράφη
 deletes the photo	addressbook	el	Διαγραφή φωτογραφίας
 department	common	el	Τμήμα
 departments	addressbook	el	τμήματα
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	el	Δείχνει μία υπενθύμιση γενεθλίων στην αρχική σελίδα (η σελίδα που εμφανίζεται όταν εισέρχεστε στο eGroupWare ή όταν κάνετε κλικ στο εικονίδιο αρχικής σελίδας).
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	el	Δείχνει μία υπενθύμιση γενεθλίων στην αρχική σελίδα (η σελίδα που εμφανίζεται όταν εισέρχεστε στο EGroupware ή όταν κάνετε κλικ στο εικονίδιο αρχικής σελίδας).
 distribution list deleted	addressbook	el	Λίστα διανομής διεγράφη
 distribution lists	addressbook	el	Λίστες διανομής
 do your really want to delete this contact?	addressbook	el	Θέλετε πραγματικά να διαγράψετε αυτήν την επαφή;
@@ -330,7 +330,7 @@ warning!! ldap is valid only if you are not using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	el	ΠΡΟΣΟΧΗ: Όλες οι επαφές που βρέθηκαν θα διαγραφούν!
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	el	Ποια μορφή διεύθυνσης θα έπρεπε το βιβλίο διευθύνσεων να χρησιμοποιεί για τις χώρες που δεν γνωρίζει τη μορφή διεύθυνσής τους. Αν η μορφή διεύθυνσης μιας χώρας είναι γνωστή, χρησιμοποιεί την ανεξάρτητη αυτής της διάταξης.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	el	Ποιο βιβλίο διευθύνσεων πρέπει να επιλέγεται όταν προσθέτετε επαφή χωρίς να έχετε δικαιώματα στο συγκεκριμένο βιβλίο διευθύνσεων.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ποια κωδικοσελίδα θα πρέπει να χρησιμοποιέιται για την CSV εξαγωγή.Το προκαθορισμένο σύστημα ειναι η κωδικοσελίδα της εγκατάστασης του eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ποια κωδικοσελίδα θα πρέπει να χρησιμοποιέιται για την CSV εξαγωγή.Το προκαθορισμένο σύστημα ειναι η κωδικοσελίδα της εγκατάστασης του EGroupware.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	el	Ποια πεδία θα πρέπει να εξάγωνται.Όλα σημαίνει κάθε πεδίο που είναι αποθηκευμένο στο βιβλίο διευθύνσεων συμπεριλαμβανομένου και των προσαρμοσμένων πεδίων.Η διεύθυνση εργασίας ή οικίας περιέχει μόνο το όνομα, την εταιρεία και την επιλεγμένη διεύθυνση.
 whole query	addressbook	el	ολόκληρη απορία
 work phone	addressbook	el	Τηλέφωνο Εργασίας

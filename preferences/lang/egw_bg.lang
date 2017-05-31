@@ -25,7 +25,7 @@ enter your new password	preferences	bg	Въведете нова парола
 hours	preferences	bg	часа
 how do you like to display accounts	preferences	bg	Как искате да се изобразяват акаунтите
 how do you like to select accounts	preferences	bg	Как искате да се избират акаунтите
-how should egroupware display dates for you.	preferences	bg	Как eGroupWare да показва датите
+how should egroupware display dates for you.	preferences	bg	Как EGroupware да показва датите
 icon	preferences	bg	Картинки
 icons and text	preferences	bg	Картинки и текст
 icons only	preferences	bg	само картинки
@@ -46,7 +46,7 @@ theme (colors/fonts) selection	preferences	bg	Избор на тема (цвет
 time format	preferences	bg	Формат на часа
 use default	preferences	bg	Използване на стойност по подразбиране
 users choice	preferences	bg	По избор на потребителя
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	bg	Кой символен набор (charset) да се използва за експорт в CSV? По подразбиране - символният набор на инсталацията на eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	bg	Кой символен набор (charset) да се използва за експорт в CSV? По подразбиране - символният набор на инсталацията на EGroupware.
 you must enter a password	preferences	bg	Трябва да въведете парола
 your current theme is: %1	preferences	bg	текущата ви тема е %1
 your preferences	preferences	bg	Вашите настройки

@@ -562,8 +562,8 @@ view user account	admin	cs	Zobrazit uživatelský účet
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	cs	Tyto údaje poptáváme jen pro statistické účely, abychom získali obecný přehled o používání eGroupWaru ve světě.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	cs	Neuchováváme žádné údaje o Vaší identitě.
 who would you like to transfer all records owned by the deleted user to?	admin	cs	Komu chcete přesunout VŠECHNY záznamy vlastněné smazaným uživatelem?
-would you like egroupware to cache the egw info array ?	admin	cs	Chcete aby eGroupWare použil vyrovnávací paměť pro pole egw info?
-would you like egroupware to check for a new version<br>when admins login ?	admin	cs	Chcete aby eGroupWare kontroloval dostupnost nové verze<br>při přihlášení administrátora ?
+would you like egroupware to cache the egw info array ?	admin	cs	Chcete aby EGroupware použil vyrovnávací paměť pro pole egw info?
+would you like egroupware to check for a new version<br>when admins login ?	admin	cs	Chcete aby EGroupware kontroloval dostupnost nové verze<br>při přihlášení administrátora ?
 would you like egroupware to check for new application versions when admins login ?	admin	cs	Chcete aby eGrooupWare kontroloval dostupnost nových verzí aplikace při přihlášení administrátora?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	cs	Chcete (během přihlášení) automaticky nahrávat nové jazykové soubory ?
 would you like to show each application's upgrade status ?	admin	cs	Chcete ukazovat stav aktualizace každé z aplikací ?

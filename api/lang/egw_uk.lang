@@ -1,5 +1,5 @@
 %1 email addresses inserted	common	uk	Додано %1 email адрес
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	uk	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	uk	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 00 (disable)	admin	uk	00 (disable)
 13 (ntp)	admin	uk	13 (ntp)
 80 (http)	admin	uk	80 (http)
@@ -122,14 +122,14 @@ edit	common	uk	Редагувати
 edit %1 category for	common	uk	Редагувати категорію %1 для
 edit categories	common	uk	Редагувати категорії
 edit category	common	uk	Редагувати категорію
-egroupware: login blocked for user '%1', ip %2	common	uk	eGroupWare: вхід заборонено для '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	uk	EGroupware: вхід заборонено для '%1', IP %2
 egypt	common	uk	ЄГИПЕТ
 email	common	uk	E-Mail
 email-address of the user, eg. "%1"	common	uk	email адреса користувача, наприклад "%1".
 enabled	common	uk	Ввімкнено
 end date	common	uk	Кінцева дата
 end time	common	uk	Кінцевий час
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL eGroupWare.<br>наприклад: http://www.domain.com/egroupware   або   /egroupware<br><b>Без / в кінці</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL EGroupware.<br>наприклад: http://www.domain.com/egroupware   або   /egroupware<br><b>Без / в кінці</b>
 entry has been deleted sucessfully	common	uk	Запис видалено успішно
 entry updated sucessfully	common	uk	Запис змінено успішно
 error	common	uk	Помилка

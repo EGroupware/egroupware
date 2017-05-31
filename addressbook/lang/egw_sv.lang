@@ -103,7 +103,7 @@ deleted	addressbook	sv	Raderad
 deletes the photo	addressbook	sv	Raderar foto
 department	common	sv	Avdelning
 departments	addressbook	sv	Avdelningar
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sv	Visa en födelsedagspåminelse på Startsidan (sidan som först visas när du kommer till eGroupWare eller klickar på Hem ikonen).
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sv	Visa en födelsedagspåminelse på Startsidan (sidan som först visas när du kommer till EGroupware eller klickar på Hem ikonen).
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	sv	Vill du ha en privat adressbok som ingen annan kan se, som du kan tilldela åtkomst till?
 do your really want to delete this contact?	addressbook	sv	Är du säker på att du vill radera kontakten?
 doesn't matter	addressbook	sv	Oviktigt
@@ -293,7 +293,7 @@ warning: all contacts found will be deleted!	addressbook	sv	VARNING: Alla hittad
 weekday	addressbook	sv	Veckodag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sv	Vad ska länkar till adressboken visa i andra applikationer? Tomma värden ignoreras. Do måste logga in återigen för att se förändringar.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sv	Vilken adressbok ska väljas när konstakter skapas men du saknar behörighet till aktuell?
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av EGroupware.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	sv	Vilka fält ska exporteras? Alla betyder alla fält, inklusive anpassade, i adressboken. Företag eller Hem adresserna innehåller endast namn, företag och vald adress.
 whole query	addressbook	sv	Hela frågan
 work phone	addressbook	sv	Arbetstelefon

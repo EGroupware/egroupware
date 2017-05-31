@@ -47,7 +47,7 @@
 5 minutes	common	cs	5 minut
 80 (http)	admin	cs	80 (http)
 a pattern to be searched for	common	cs	hledaný výraz
-a request to the egroupware server returned with an error	common	cs	Požadavek na server eGroupWare se vrátil s chybou
+a request to the egroupware server returned with an error	common	cs	Požadavek na server EGroupware se vrátil s chybou
 abort	common	cs	Zrušit
 about	common	cs	O
 about %1	common	cs	O %1
@@ -125,7 +125,7 @@ angola	common	cs	ANGOLA
 anguilla	common	cs	ANGUILLA
 antarctica	common	cs	ANTARKTIDA
 antigua and barbuda	common	cs	ANTIGUA A BARBUDA
-api	common	cs	eGroupWare API
+api	common	cs	EGroupware API
 api-accounts	common	cs	Uživatelské účty
 application	common	cs	Aplikace
 application has no etemplates (no file %1) to restore!	common	cs	Aplikace nemá žádnou eŠablonu (žádný soubor %1) k obnovení!
@@ -172,7 +172,7 @@ bangladesh	common	cs	BANGLADÉŠ
 barbados	common	cs	BARBADOS
 baseline	common	cs	Základna
 bcc	common	cs	Skrytá kopie
-before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	cs	Před tím, než budete pokračovat, důrazně doporučujeme, abyste se podívali na toto krátké video, které ukazuje, jak zásuvný modul mailvelope pracuje s eGroupWarem.
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	cs	Před tím, než budete pokračovat, důrazně doporučujeme, abyste se podívali na toto krátké video, které ukazuje, jak zásuvný modul mailvelope pracuje s EGroupwarem.
 belarus	common	cs	BĚLORUSKO
 belgium	common	cs	BELGIE
 belize	common	cs	BELIZE
@@ -266,7 +266,7 @@ clear window	common	cs	Smazat okno
 click	common	cs	Kliknout
 click here to attach the file	common	cs	klikněte sem pro připojení souboru
 click here to create the link	common	cs	klikněte sem pro vytvoření odkazu
-click here to resume your egroupware session.	common	cs	Klikněte sem pro obnovení Vaší eGroupWare relace.
+click here to resume your egroupware session.	common	cs	Klikněte sem pro obnovení Vaší EGroupware relace.
 click here to start the search	common	cs	Klikněte sem pro zahájení hledání
 click here to upload the file	common	cs	Klikněte sem pro upload souboru
 click or mouse over to show menus	common	cs	Klikněte nebo přejeďte myší pro zobrazení menu
@@ -440,7 +440,7 @@ editable templates - delete template	common	cs	Editovatelné šablony - Smazat �
 editable templates - editor	common	cs	Editovatelné šablony - Editor
 editable templates - search	common	cs	Editovatelné šablony - Hledat
 editable templates - show template	common	cs	Editovatelné šablony - Zobrazit šablonu
-egroupware	common	cs	eGroupWare
+egroupware	common	cs	EGroupware
 egroupware administrators group, do not delete	common	cs	Skupina pro správce eGroupWaru, NEmažte
 egroupware all users group, do not delete	common	cs	Skupina pro všechny uživatele eGroupWaru, NEmažte
 egroupware anonymous users group, do not delete	common	cs	Skupina pro anonymní uživatele eGroupWaru, NEmažte
@@ -448,7 +448,7 @@ egroupware api version	common	cs	verze EGroupware API
 egroupware maintenance update %1 available	common	cs	Je k dispozici nová verze eGroupWaru %1
 egroupware security update %1 needs to be installed!	common	cs	Je potřeba nainstalovat bezpečnostní aktualizaci eGroupWaru %1 !
 egroupware version	common	cs	Verze eGroupWaru
-egroupware: login blocked for user '%1', ip %2	common	cs	eGroupWare: zablokováno přihlášení uživatele '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	cs	EGroupware: zablokováno přihlášení uživatele '%1', IP %2
 egypt	common	cs	EGYPT
 el salvador	common	cs	EL SALVADOR
 element role title	common	cs	Základní název funkce
@@ -632,7 +632,7 @@ how many days to sync in the past (default %1)	groupdav	cs	Kolik dní se má syn
 how many entries should the list show	common	cs	Kolik záznamů má seznam zobrazovat
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	cs	Kolik ikon se má zobrazovat v navigační liště (v záhlaví stránky). Další ikony se přesunou do roletového menu, které zobrazíte kliknutím na symbol na pravé straně navigační lišty.
 how many rows to print	common	cs	Kolik řádků se má vytisknout
-how to show the general egroupware menu ?	common	cs	Jak zobrazovat hlavní menu eGroupWare?
+how to show the general egroupware menu ?	common	cs	Jak zobrazovat hlavní menu EGroupware?
 html	common	cs	HTML
 html link to the current record	common	cs	HTML odkaz na současný záznam
 hungary	common	cs	MAĎARSKO
@@ -653,7 +653,7 @@ import	common	cs	Importovat
 import an etemplate from a xml-file	common	cs	importovat eŠablonu z XML souboru
 import table-definitions from existing db-table	common	cs	Importovat definice tabulky ze stavající databázové tabulky
 import xml	common	cs	Importovat XML
-in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	cs	Aby bylo možné provést kopírování do schránky, je nutné povolit Flash player kliknutím na oranžový rámeček.\nFlash player můžete trvale povolit pro eGroupWare v nastavení vašeho internetového prohlížeče.
+in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	cs	Aby bylo možné provést kopírování do schránky, je nutné povolit Flash player kliknutím na oranžový rámeček.\nFlash player můžete trvale povolit pro EGroupware v nastavení vašeho internetového prohlížeče.
 increment version to not overwrite the existing template	common	cs	zvyšte číslo verze, aby nedošlo k přepsání stávající šablony
 index/name of returned content (name of the template, link / method for image)	common	cs	index/název vráceného obsahu (název šablony, odkaz/metoda pro obrázek)
 indexed	common	cs	Indexovaný
@@ -990,7 +990,7 @@ placeholders	common	cs	Zástupci pro automatizaci
 please %1 by hand	common	cs	Prosím %1 ručně
 please enter a name	common	cs	Zadejte prosím jméno!
 please enter table-name first !!!	common	cs	Zadejte prosím nejprve název tabulky !!!
-please reload the egroupware desktop (f5 / cmd+r).	common	cs	Obnovte prosím stránku s eGroupWarem (klávesou F5 nebo Ctrl+r)
+please reload the egroupware desktop (f5 / cmd+r).	common	cs	Obnovte prosím stránku s EGroupwarem (klávesou F5 nebo Ctrl+r)
 please run setup to become current	common	cs	Spusťte prosím setup pro aktualizaci
 please select	common	cs	Prosím zvolte
 please set your global preferences	common	cs	Upravte prosím své všeobecné předvolby!
@@ -1205,7 +1205,7 @@ show now	common	cs	Zobrazit nyní
 show page generation time	common	cs	Zobrazit časy generování stránek
 show page generation time on the bottom of the page?	common	cs	Přejete si zobrazit čas generování stránky na jejím zápatí?
 show page generation time?	common	cs	Zobrazit čas generovaní stránky?
-show the logo's of egroupware and x-desktop on the desktop.	common	cs	Zobrazit logo eGroupWare a x-desktopu na pracovní ploše.
+show the logo's of egroupware and x-desktop on the desktop.	common	cs	Zobrazit logo EGroupware a x-desktopu na pracovní ploše.
 show values	common	cs	Zobrazit hodnoty
 show_more_apps	common	cs	zobrazit_více_aplikací
 showing	common	cs	zobrazuji
@@ -1391,7 +1391,7 @@ virgin islands, u.s.	common	cs	AMERICKÉ PANENSKÉ OSTROVY
 wallis and futuna	common	cs	WALLIS A FUTUNA
 was not able to delete the backup key because %1	common	cs	Nebylo možné smazat zálohu klíče protože %1
 we	common	cs	St
-we would like to introduce you to egroupware by showing a short introduction video.	common	cs	Rádi bychom vám představili eGroupWare pomocí krátkého instruktážního videa.
+we would like to introduce you to egroupware by showing a short introduction video.	common	cs	Rádi bychom vám představili EGroupware pomocí krátkého instruktážního videa.
 wednesday	common	cs	Středa
 weekend	common	cs	víkend
 welcome	common	cs	Vítejte

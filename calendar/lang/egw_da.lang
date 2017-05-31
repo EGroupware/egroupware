@@ -268,7 +268,7 @@ startdate and -time of the search	calendar	da	Søgningens startdato og tid
 startdate of the export	calendar	da	Startdato for exporten
 startrecord	calendar	da	Startpostering
 status changed	calendar	da	Status ændret
-submit to repository	calendar	da	Indsend til eGroupWare.org
+submit to repository	calendar	da	Indsend til EGroupware.org
 sun	calendar	da	Søn
 tentative	calendar	da	Prøve
 test import (show importable records <u>only</u> in browser)	calendar	da	Test inportering (vis importerbare date <u>kun</u> i browseren)

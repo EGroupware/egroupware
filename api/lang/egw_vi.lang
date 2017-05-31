@@ -1,6 +1,6 @@
 %1 email addresses inserted	common	vi	Có %1 &#273;&#7883;a ch&#7881; email &#273;&#432;&#7907;c thêm vào
 %1 is not executable by the webserver !!!	common	vi	%1 không th&#7875; th&#7921;c thi b&#7903;i máy ch&#7911; web !!!
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	vi	%1eGroupWare%2 là b&#7897; ph&#7847;n m&#7873;m nhóm d&#7841;ng Web h&#7895; tr&#7907; &#273;a ng&#432;&#7901;i dùng vi&#7871;t b&#7857;ng %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	vi	%1EGroupware%2 là b&#7897; ph&#7847;n m&#7873;m nhóm d&#7841;ng Web h&#7895; tr&#7907; &#273;a ng&#432;&#7901;i dùng vi&#7871;t b&#7857;ng %3PHP%4.
 00 (disable)	admin	vi	00 (t&#7855;t)
 13 (ntp)	admin	vi	13 (ntp)
 80 (http)	admin	vi	80 (http)
@@ -160,7 +160,7 @@ edit	common	vi	Hi&#7879;u ch&#7881;nh
 edit %1 category for	common	vi	Hi&#7879;u ch&#7881;nh %1 nhóm cho
 edit categories	common	vi	Hi&#7879;u ch&#7881;nh các nhóm
 edit category	common	vi	Hi&#7879;u ch&#7881;nh nhóm
-egroupware: login blocked for user '%1', ip %2	common	vi	eGroupWare: &#273;&#259;ng nh&#7853;p b&#7883; khóa &#273;&#7889;i v&#7899;i ng&#432;&#7901;i s&#7917; d&#7909;ng '%1', có &#273;&#7883;a ch&#7881; IP %2
+egroupware: login blocked for user '%1', ip %2	common	vi	EGroupware: &#273;&#259;ng nh&#7853;p b&#7883; khóa &#273;&#7889;i v&#7899;i ng&#432;&#7901;i s&#7917; d&#7909;ng '%1', có &#273;&#7883;a ch&#7881; IP %2
 egypt	common	vi	EGYPT
 el salvador	common	vi	EL SALVADOR
 email	common	vi	E-Mail
@@ -168,7 +168,7 @@ email-address of the user, eg. "%1"	common	vi	&#273;&#7883;a ch&#7881; email c&#
 enabled	common	vi	&#272;&#432;&#7907;c b&#7853;t
 end date	common	vi	Ngày k&#7871;t thúc
 end time	common	vi	Gi&#7901; k&#7871;t thúc
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	vi	Nh&#7853;p vào URL c&#7911;a eGroupWare.<br>Ví d&#7909;: http://www.domain.com/egroupware   ho&#7863;c   /egroupware<br><b>Không có d&#7845;u slash &#7903; phía sau</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	vi	Nh&#7853;p vào URL c&#7911;a EGroupware.<br>Ví d&#7909;: http://www.domain.com/egroupware   ho&#7863;c   /egroupware<br><b>Không có d&#7845;u slash &#7903; phía sau</b>
 entry has been deleted sucessfully	common	vi	&#272;ã xóa xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
 entry updated sucessfully	common	vi	C&#7853;p nh&#7853;t xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
 equatorial guinea	common	vi	EQUATORIAL GUINEA

@@ -1,7 +1,7 @@
 %1 email addresses inserted	common	sl	Vnesenih %1 E-naslovov
 %1 is not executable by the webserver !!!	common	sl	Spletni strežnik ne more zagnati %1!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sl	%1Izberite drugo mapo%2<br /> ali nastavite, da bo %3 zapisljiva za spletni strežnik
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sl	%1eGroupWare%2 je večuporabniški, spletno osnovani paket za skupinsko delo, napisan v %3PHP%4-ju.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sl	%1EGroupware%2 je večuporabniški, spletno osnovani paket za skupinsko delo, napisan v %3PHP%4-ju.
 (session restored in %1 seconds)	common	sl	(seja je bila vzpostavljena v % sekundah)
 00 (disable)	admin	sl	00 (izklopi)
 1 day	common	sl	1 dan
@@ -12,7 +12,7 @@
 80 (http)	admin	sl	80 (http)
 about	common	sl	Vizitka
 about %1	common	sl	Vizitka aplikacije %1
-about egroupware	common	sl	O programu eGroupware
+about egroupware	common	sl	O programu EGroupware
 access	common	sl	Dostop
 access not permitted	common	sl	Zavrnjen dostop
 account has been created	common	sl	Uporabniški račun je bil ustvarjen
@@ -134,7 +134,7 @@ christmas island	common	sl	BOŽIČNI OTOK
 clear	common	sl	Izprazni
 clear form	common	sl	Izprazni formo
 click	common	sl	Klikni
-click here to resume your egroupware session.	common	sl	Kliknite tukaj za vrnitev seje eGroupWare
+click here to resume your egroupware session.	common	sl	Kliknite tukaj za vrnitev seje EGroupware
 click or mouse over to show menus	common	sl	Klik ali prehod z mišjo za prikaz menijev
 click or mouse over to show menus?	common	sl	Klik ali prehod z mišjo za prikaz menijev?
 click this image on the navbar: %1	common	sl	Kliknite sliko v navbar: %1
@@ -207,9 +207,9 @@ edit	common	sl	Popravi
 edit %1 category for	common	sl	Popravi kategorijo %1 za
 edit categories	common	sl	Popravi kategorije
 edit category	common	sl	Popravi kategorijo
-egroupware	common	sl	eGroupWare
-egroupware api version	common	sl	Različica API eGroupWare
-egroupware: login blocked for user '%1', ip %2	common	sl	eGroupWare: prijava uporabnika '%1' na IPju '%2' onemogočena.
+egroupware	common	sl	EGroupware
+egroupware api version	common	sl	Različica API EGroupware
+egroupware: login blocked for user '%1', ip %2	common	sl	EGroupware: prijava uporabnika '%1' na IPju '%2' onemogočena.
 egypt	common	sl	EGIPT
 el salvador	common	sl	SALVADOR
 email	common	sl	E-pošta
@@ -217,7 +217,7 @@ email-address of the user, eg. "%1"	common	sl	E-naslov uporabnika, npr. "%1"
 enabled	common	sl	Omogočeno
 end date	common	sl	Končni datum
 end time	common	sl	Končni čas
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL eGroupWare. Primer: http://www.domain.com/egroupware   ali   /egroupware<br><b>Brez zaključne poševnice!</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL EGroupware. Primer: http://www.domain.com/egroupware   ali   /egroupware<br><b>Brez zaključne poševnice!</b>
 entry has been deleted sucessfully	common	sl	Vnos je bil uspešno izbrisan
 entry not found!	common	sl	Ne najdem vnosa!
 entry updated sucessfully	common	sl	Vnos je bil uspešno osvežen
@@ -302,7 +302,7 @@ home email	common	sl	Domači E-naslov
 honduras	common	sl	HONDURAS
 hong kong	common	sl	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sl	Koliko ikon naj se pokaže na orodni vrstici na vrhu strani? Preostale ikone gredo v dodaten meni, ki ga je moč priklicati s pomočjo ikone na desni strani orodne vrstice.
-how to show the general egroupware menu ?	common	sl	Kako naj bo prikazan splošni meni eGroupWare?
+how to show the general egroupware menu ?	common	sl	Kako naj bo prikazan splošni meni EGroupware?
 hungary	common	sl	MADŽARSKA
 iceland	common	sl	ISLANDIJA
 iespell not detected. click ok to go to download page.	common	sl	ieSpell ni bil zaznan. Kliknite V redu za obisk spletne strani za prenos.
@@ -502,7 +502,7 @@ personal	common	sl	Zasebno
 peru	common	sl	PERU
 philippines	common	sl	FILIPINI
 phone number	common	sl	Telefonska številka
-api	common	sl	eGroupWare API
+api	common	sl	EGroupware API
 pitcairn	common	sl	PITCAIRN
 please %1 by hand	common	sl	Prosim, ročno %1
 please enter a name	common	sl	Vnesite ime!
@@ -607,7 +607,7 @@ show menu	common	sl	Prikaži meni
 show page generation time	common	sl	Prikaži čas generiranja strani
 show page generation time on the bottom of the page?	common	sl	Pokažem čas generiranja strani na dnu?
 show page generation time?	common	sl	Prikažem čas ustvarjanja strani?
-show the logo's of egroupware and x-desktop on the desktop.	common	sl	Prikaži logotipa eGroupware in x-desktop na namizju.
+show the logo's of egroupware and x-desktop on the desktop.	common	sl	Prikaži logotipa EGroupware in x-desktop na namizju.
 show_more_apps	common	sl	Prikaži več aplikacij
 showing %1	common	sl	Prikazanih %1
 showing %1 - %2 of %3	common	sl	Prikazani %1 - %2 od %3

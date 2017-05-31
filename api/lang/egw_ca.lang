@@ -1,7 +1,7 @@
 %1 email addresses inserted	common	ca	%1 adreces de correu afegides
 %1 is not executable by the webserver !!!	common	ca	%1 no es pot executar en el servidor web !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ca	%1Tria un altre directori%2<br />o fes que %3 sigui modificable pel webserver
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ca	%1eGroupWare%2 és una eina de treball en grup, multiusuari i basada en web escrita en %3PHP%4
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ca	%1EGroupware%2 és una eina de treball en grup, multiusuari i basada en web escrita en %3PHP%4
 00 (disable)	admin	ca	00 (desactiva)
 1 day	common	ca	1 Dia
 1 hour	common	ca	1 Hora
@@ -11,7 +11,7 @@
 80 (http)	admin	ca	80 (http)
 about	common	ca	Sobre
 about %1	common	ca	Sobre %1
-about egroupware	common	ca	Sobre eGroupware
+about egroupware	common	ca	Sobre EGroupware
 access	common	ca	Accés
 access not permitted	common	ca	Accés no permès
 account has been created	common	ca	Compte creat
@@ -201,8 +201,8 @@ edit	common	ca	Editar
 edit %1 category for	common	ca	Editar %1 categoria per
 edit categories	common	ca	Editar categories
 edit category	common	ca	Editar categoria
-egroupware api version	common	ca	Versió eGroupWare API
-egroupware: login blocked for user '%1', ip %2	common	ca	eGroupWare: inici de sessió bloquejat per a l'usuari '%1', IP %2
+egroupware api version	common	ca	Versió EGroupware API
+egroupware: login blocked for user '%1', ip %2	common	ca	EGroupware: inici de sessió bloquejat per a l'usuari '%1', IP %2
 egypt	common	ca	EGIPTE
 el salvador	common	ca	EL SALVADOR
 email	common	ca	Correu electrònic
@@ -210,7 +210,7 @@ email-address of the user, eg. "%1"	common	ca	Adreces de correu electrònic del 
 enabled	common	ca	Activat
 end date	common	ca	Data de finalització
 end time	common	ca	Hora de finalització
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Entreu l'adreça URL d'eGroupWare.<br>Exemple: http://www.domini.com/egroupware   o bé   /egroupware<br><b>Sense barra final!!</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Entreu l'adreça URL d'EGroupware.<br>Exemple: http://www.domini.com/egroupware   o bé   /egroupware<br><b>Sense barra final!!</b>
 entry has been deleted sucessfully	common	ca	Entrada esborrada correctament
 entry updated sucessfully	common	ca	Entrada actualitzada correctament
 equatorial guinea	common	ca	GUINEA EQUATORIAL
@@ -293,7 +293,7 @@ home email	common	ca	correu electrònic privat
 honduras	common	ca	HONDURAS
 hong kong	common	ca	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ca	Quantitat d'icones que es mostren a la barra de navegació (a la part superior de la plana). Les icones addicionals apareixen en una mena de menú emergent, activable clicant a la darrera icona, a la dreta de la barra.
-how to show the general egroupware menu ?	common	ca	Com mostrar el menú general eGroupWare?
+how to show the general egroupware menu ?	common	ca	Com mostrar el menú general EGroupware?
 hungary	common	ca	HUNGRIA
 iceland	common	ca	ISLÀNDIA
 iespell not detected. click ok to go to download page.	common	ca	No s'ha detectat ieSpell. Pitja OK per anar a la pàgina de descàrrega.
@@ -488,7 +488,7 @@ personal	common	ca	Personal
 peru	common	ca	PERU
 philippines	common	ca	FILIPINES
 phone number	common	ca	Número de telèfon
-api	common	ca	API eGroupware
+api	common	ca	API EGroupware
 pitcairn	common	ca	PITCAIRN
 please %1 by hand	common	ca	Si us plau, %1 manualment
 please enter a name	common	ca	Si us plau, introduïu un nom !
@@ -592,7 +592,7 @@ show menu	common	ca	mostrar menu
 show page generation time	common	ca	Mostrar temps de generació de la plana
 show page generation time on the bottom of the page?	common	ca	Mostrar el temps de generació de la plana a la part inferior?
 show page generation time?	common	ca	Mostra el temps de generació de la pàgina?
-show the logo's of egroupware and x-desktop on the desktop.	common	ca	Mostra el logo d'eGroupware i x-desktop a l'escriptori.
+show the logo's of egroupware and x-desktop on the desktop.	common	ca	Mostra el logo d'EGroupware i x-desktop a l'escriptori.
 show_more_apps	common	ca	mostrar més aplicacions
 showing %1	common	ca	mostrant %1
 showing %1 - %2 of %3	common	ca	mostrant %1 - %2 de %3
@@ -727,7 +727,7 @@ you have selected an invalid date	common	ca	Heu triat una data incorrecta !
 you have selected an invalid main category	common	ca	Heu triat una categoria principal incorrecta !
 you have successfully logged out	common	ca	Desconnexió correcta
 you need to add the webserver user '%1' to the group '%2'.	common	ca	Necessiteu afegir l'usuari '%1' del servidor web al grup '%2'.
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	ca	Heu triat obrir l'aplicació eGroupWare: 1%, però no teniu permís per accedir a aquesta aplicació.
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	ca	Heu triat obrir l'aplicació EGroupware: 1%, però no teniu permís per accedir a aquesta aplicació.
 your message could <b>not</b> be sent!<br>	common	ca	El missatge <b>no</b> s'ha pogut enviar!<br>
 your message has been sent	common	ca	Missatge enviat
 your search returned %1 matchs	common	ca	la recerca ha tornat %1 resultats

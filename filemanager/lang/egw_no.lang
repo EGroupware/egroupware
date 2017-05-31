@@ -78,4 +78,4 @@ upload fields	filemanager	no	last opp felter
 upload files	filemanager	no	Last opp filer
 used space	filemanager	no	Brukt område
 you do not have access to %1	filemanager	no	Du har ikke adgang til %1
-your home dir did not exist, egroupware created a new one.	filemanager	no	Din hjemmemappe fantes ikke, eGroupWare opprettet en ny.
+your home dir did not exist, egroupware created a new one.	filemanager	no	Din hjemmemappe fantes ikke, EGroupware opprettet en ny.

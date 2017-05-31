@@ -171,7 +171,7 @@ enter the background color for the site title	admin	iw	ציין את תבע הר
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	iw	הקלד את המסלול המלא אל הקבצים הזמניים<br>
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	iw	הקלד את המסלול המלא אל קבצי משתמשים וקבוצות<br>
 enter the hostname of the machine on which this server is running	admin	iw	הקלד את שם המחשב בו שרת זה רץ
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	eGroupWare של URL-הקלד את ה<br>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	EGroupware של URL-הקלד את ה<br>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	iw	ציין את צחרוזת החיפוש. להציג את כל הרשומות, רוקן שדה זה ולחץ שוב על כפתור הגש
 enter the site password for peer servers	admin	iw	הקלד את סיסמת האתר עבור שרתי חבר
 enter the site username for peer servers	admin	iw	הקלד את שם המשתמש האתר עבור שרתי חבר
@@ -409,9 +409,9 @@ view sessions	admin	iw	הצג מושבים
 view this user	admin	iw	הצג משתמש זה
 view user account	admin	iw	הצג חשבון משתמש
 who would you like to transfer all records owned by the deleted user to?	admin	iw	?אל מי ברצונך להעביר את כל הרשומות של המשתמש הנמחק
-would you like egroupware to cache the egw info array ?	admin	iw	?egw יטמין את מערך המידע של eGroupWare-ברצונך ש
-would you like egroupware to check for a new version<br>when admins login ?	admin	iw	יבדוק אם יש גירסא חדשה eGroupWare-תרצה ש<br>
-would you like egroupware to check for new application versions when admins login ?	admin	iw	יבדוק אם יש גירסת יישומים חדשה eGroupWare-תרצה ש<br>
+would you like egroupware to cache the egw info array ?	admin	iw	?egw יטמין את מערך המידע של EGroupware-ברצונך ש
+would you like egroupware to check for a new version<br>when admins login ?	admin	iw	יבדוק אם יש גירסא חדשה EGroupware-תרצה ש<br>
+would you like egroupware to check for new application versions when admins login ?	admin	iw	יבדוק אם יש גירסת יישומים חדשה EGroupware-תרצה ש<br>
 would you like to automaticaly load new langfiles (at login-time) ?	admin	iw	(האם להטעין קבצי שפה חדשים אוטומטית (שבשעת הכניסה למערכת
 would you like to show each application's upgrade status ?	admin	iw	תרצה להציג את סטאטוס העדכון של כל יישום
 you have entered an invalid expiration date	admin	iw	ציינת תאריך פוגה לא חוקי

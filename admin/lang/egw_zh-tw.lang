@@ -174,7 +174,7 @@ edit this group	admin	zh-tw	編輯這個群組
 edit this user	admin	zh-tw	編輯這個使用者
 edit user	admin	zh-tw	編輯使用者
 edit user account	admin	zh-tw	編輯使用者帳號
-egroupware directory	admin	zh-tw	eGroupWare 資料夾
+egroupware directory	admin	zh-tw	EGroupware 資料夾
 email account active	admin	zh-tw	郵件帳號啟用
 email address	admin	zh-tw	郵件位址
 enable	admin	zh-tw	啟用
@@ -456,7 +456,7 @@ view sessions	admin	zh-tw	列出連線
 view this user	admin	zh-tw	查看該使用者
 view user account	admin	zh-tw	瀏覽使用者帳號
 who would you like to transfer all records owned by the deleted user to?	admin	zh-tw	您希望將被移除使用者的資料轉移給誰？
-would you like egroupware to cache the egw info array ?	admin	zh-tw	您希望 eGroupWare 暫存 egw 資訊嗎？
+would you like egroupware to cache the egw info array ?	admin	zh-tw	您希望 EGroupware 暫存 egw 資訊嗎？
 would you like egroupware to check for a new version<br>when admins login ?	admin	zh-tw	您希望 egroupWare 自動於管理者登入時檢查是否有最新版本？
 would you like egroupware to check for new application versions when admins login ?	admin	zh-tw	您希望egroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh-tw	您想要自動讀取新的語言檔案嗎(登入時)？

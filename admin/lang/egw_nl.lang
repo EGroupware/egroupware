@@ -200,7 +200,7 @@ edit this group	admin	nl	deze groep bewerken
 edit this user	admin	nl	deze gebruiker bewerken
 edit user	admin	nl	gebruiker bewerken
 edit user account	admin	nl	Gebruikersaccount bewerken
-egroupware directory	admin	nl	eGroupWare directory
+egroupware directory	admin	nl	EGroupware directory
 either install id and config password needed or the remote hash!	admin	nl	Of installatie ID met configuratie wachtwoord is nodig of het remote hash!
 email account active	admin	nl	emailaccount actief
 email address	admin	nl	emailadres
@@ -220,7 +220,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	nl	Voer
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br />Bijv.: /files of D:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br />Bijv.: /files of D:\FILES
 enter the hostname of the machine on which this server is running	admin	nl	Voer de hostnaam van de machine in waar deze server op draait
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van eGroupWare's URL.<br />Bijv.: http://www.domein.com/egroupware of /egroupware<br /><b>Gebruik geen afsluitend slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van EGroupware's URL.<br />Bijv.: http://www.domein.com/egroupware of /egroupware<br /><b>Gebruik geen afsluitend slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	nl	Voer de zoekstring in. Laat dit veld leeg om alles weer te geven en druk opnieuw op de VERZENDKNOP
 enter the site password for peer servers	admin	nl	Voer het websitewachtwoord in voor peer-servers
 enter the site username for peer servers	admin	nl	Voer het websitegebruikersnaam in voor peer-servers
@@ -514,9 +514,9 @@ view sessions	admin	nl	Sessies weergeven
 view this user	admin	nl	Deze gebruiker weergeven
 view user account	admin	nl	Gebruikersaccount weergeven
 who would you like to transfer all records owned by the deleted user to?	admin	nl	Wie wilt u ALLE records in eigendom van de verwijderde gebruiker laten verplaatsen?
-would you like egroupware to cache the egw info array ?	admin	nl	Wilt u eGroupWare de egw infolijst laten cachen ? (EXTREEM GEVAARLIJK!)
-would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u eGroupWare laten controleren op een nieuwe eGroupWare versie<br />wanneer beheerders inloggen?
-would you like egroupware to check for new application versions when admins login ?	admin	nl	Wilt u eGroupWare laten controleren op nieuwe toepassingensversies wanneer beheerders inloggen?
+would you like egroupware to cache the egw info array ?	admin	nl	Wilt u EGroupware de egw infolijst laten cachen ? (EXTREEM GEVAARLIJK!)
+would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u EGroupware laten controleren op een nieuwe EGroupware versie<br />wanneer beheerders inloggen?
+would you like egroupware to check for new application versions when admins login ?	admin	nl	Wilt u EGroupware laten controleren op nieuwe toepassingensversies wanneer beheerders inloggen?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	Wilt u automatisch (bij inloggen) nieuwe taalbestanden laden?
 would you like to show each application's upgrade status ?	admin	nl	Wilt u bij de elke toepassing de upgradestatus weergeven?
 wrong account type: %1 is no %2 !!!	admin	nl	Verkeerde account type: %1 is GEEN %2 !!!

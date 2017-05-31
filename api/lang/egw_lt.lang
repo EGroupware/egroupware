@@ -4,7 +4,7 @@
 80 (http)	admin	lt	80 (http)
 about	common	lt	Apie
 about %1	common	lt	% - apie
-about egroupware	common	lt	Apie eGroupware
+about egroupware	common	lt	Apie EGroupware
 access	common	lt	Prieiga
 access not permitted	common	lt	Prieiga negalima
 addressbook	common	lt	Adresų knyga
@@ -147,7 +147,7 @@ paraguay	common	lt	PARAGVAJUS
 password	common	lt	Slaptažodis
 peru	common	lt	PERU
 phone number	common	lt	telefono numeris
-api	common	lt	eGroupWare API
+api	common	lt	EGroupware API
 poland	common	lt	LENKIJA
 portugal	common	lt	PORTUGALIJA
 postal	common	lt	Pašto kodas

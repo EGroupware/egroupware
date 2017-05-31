@@ -10,7 +10,7 @@
 80 (http)	admin	id	80 (http)
 about	common	id	Tentang
 about %1	common	id	Tentang %1
-about egroupware	common	id	Tentang eGroupware
+about egroupware	common	id	Tentang EGroupware
 access	common	id	Akses
 access not permitted	common	id	Akses tidak diijinkan
 account has been created	common	id	Akoun telah dibuat
@@ -175,8 +175,8 @@ edit	common	id	Edit
 edit %1 category for	common	id	Edit kategori %1 untuk
 edit categories	common	id	Edit Kategori
 edit category	common	id	Edit kategori
-egroupware	common	id	eGroupWare
-egroupware api version	common	id	Versi API eGroupWare
+egroupware	common	id	EGroupware
+egroupware api version	common	id	Versi API EGroupware
 egroupware version	common	id	Versi EGroupware
 egypt	common	id	MESIR
 el salvador	common	id	EL SALVADOR
@@ -431,7 +431,7 @@ personal	common	id	Pribadi
 peru	common	id	PERU
 philippines	common	id	FILIPINA
 phone number	common	id	nomor telepon
-api	common	id	eGroupWare API
+api	common	id	EGroupware API
 pitcairn	common	id	PITCAIRN
 please enter a name	common	id	Mohon masukan nama
 please select	common	id	Pilihlah
@@ -617,7 +617,7 @@ yemen	common	id	YAMAN
 yes	common	id	Ya
 yes - delete	common	id	Ya - Hapus
 yes - delete including sub-entries	common	id	Ya - Hapus berikut sub-entrinya
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	id	Anda mencoba Aplikasi eGroupWare: %1, namun anda tidak memiliki ijin untuk mengakses aplikasi ini.
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	id	Anda mencoba Aplikasi EGroupware: %1, namun anda tidak memiliki ijin untuk mengakses aplikasi ini.
 your message could <b>not</b> be sent!<br>	common	id	Pesan anda <b>tidak</b> dapat dikirimkan!<br>
 your message has been sent	common	id	Pesan telah terkirim
 zambia	common	id	ZAMBIA

@@ -188,7 +188,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sv	Ange
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sv	Ange fullständig sökväg för användar- och gruppfiler <br> t ex: /files, D:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	sv	Ange fullständig sökväg för användar- och gruppfiler <br> t ex: /files, D:\FILES
 enter the hostname of the machine on which this server is running	admin	sv	Ange värdnamn för datorn som kör denna tjänst
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange URL för eGroupWare<br> t ex: http://www.domain.com/egroupware eller /egroupware<br><b>ingen avslutande slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange URL för EGroupware<br> t ex: http://www.domain.com/egroupware eller /egroupware<br><b>ingen avslutande slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sv	Ange söksträng. För att visa alla poster, töm fältet och tryck på Skicka
 enter the site password for peer servers	admin	sv	Ange lösenord för peer servers
 enter the site username for peer servers	admin	sv	Ange användarnamn för peer servers
@@ -450,9 +450,9 @@ view sessions	admin	sv	Visa sessioner
 view this user	admin	sv	Visa användaren
 view user account	admin	sv	Visa användarkontot
 who would you like to transfer all records owned by the deleted user to?	admin	sv	Till vem vill du föra över SAMTLIGA poster som ägs av den raderade användaren?
-would you like egroupware to cache the egw info array ?	admin	sv	Vill du att eGroupWare skall buffra egw info array?
-would you like egroupware to check for a new version<br>when admins login ?	admin	sv	Vill du att eGroupWare skall kontrollera om det finns en ny version när administratörer loggar in?
-would you like egroupware to check for new application versions when admins login ?	admin	sv	Vill du att eGroupWare skall kontrollera om applikationerna finns i ny version när administratörer loggar in?
+would you like egroupware to cache the egw info array ?	admin	sv	Vill du att EGroupware skall buffra egw info array?
+would you like egroupware to check for a new version<br>when admins login ?	admin	sv	Vill du att EGroupware skall kontrollera om det finns en ny version när administratörer loggar in?
+would you like egroupware to check for new application versions when admins login ?	admin	sv	Vill du att EGroupware skall kontrollera om applikationerna finns i ny version när administratörer loggar in?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sv	Vill du automatiskt ladda nya språkfiler (vid inloggning)?
 would you like to show each application's upgrade status ?	admin	sv	Vill du visa uppgraderings status för alla applikationer?
 xml-rpc	admin	sv	XML-RPC

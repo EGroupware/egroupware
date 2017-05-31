@@ -2,7 +2,7 @@
 %1 hours	preferences	sl	%1 ur
 12 hour	preferences	sl	12 ur
 24 hour	preferences	sl	24 ur
-a template defines the layout of egroupware and it contains icons for each application.	preferences	sl	Predloga določa videz eGroupWare-a in vsebuje ikone aplikacij.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	sl	Predloga določa videz EGroupware-a in vsebuje ikone aplikacij.
 a theme defines the colors and fonts used by the template.	preferences	sl	Tema definira barve in pisave, ki so uporabljene v predlogah.
 acl grants have been updated	preferences	sl	Pravice ACL so bile spremenjene
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sl	Vsak seznam v eGW prikaže število vnosov oz. vrstic na stran.<br>Preveliko število upočasni vpogled strani, premajhno pa omeji vpogled na seznam.
@@ -40,7 +40,7 @@ how do you like to display accounts	preferences	sl	Kako želite prikazati račun
 how do you like to select accounts	preferences	sl	Kako želite izbirati med računi
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sl	Kolikšna je razlika ur v časovnem pasu v katerem se nahajate?.<br>Če ste v istem časovnem pasu kot strežnik, izberite 0.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	sl	Koliko ikon naj bo vidnih v navigacijski vrstici? Dodatne ikone bodo na voljo v povlečnem meniju na skrajnem desnem vrhu.
-how should egroupware display dates for you.	preferences	sl	Kako naj eGroupWare pokaže datume.
+how should egroupware display dates for you.	preferences	sl	Kako naj EGroupware pokaže datume.
 icon	preferences	sl	Ikona
 icons and text	preferences	sl	Ikone in besedilo
 icons only	preferences	sl	Samo ikone
@@ -74,7 +74,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	sl	Ali naj bo število aktivnih sej prikazano ves čas?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	sl	Naj bo pomoč vidna vedno ali samo na zahtevo?
 show helpmessages by default	preferences	sl	Privzeto prikaži sporočila s pomočjo
-show links between egroupware aps as	common	sl	Prikaži povezave med aplikacijami eGroupWare kot
+show links between egroupware aps as	common	sl	Prikaži povezave med aplikacijami EGroupware kot
 show navigation bar as	preferences	sl	Prikaži navigacijsko vrstico kot
 show number of current users	preferences	sl	Prikaži število prijavljenih uporabnikov
 show text on navigation icons	preferences	sl	Prikaži besedilo na navigacijski ikoni
@@ -92,7 +92,7 @@ time format	preferences	sl	Oblika izpisa časa
 use default	preferences	sl	Uporabi privzeto
 users choice	preferences	sl	Uporabnikova izbira
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sl	Če želite, sta lahko gumba za domačo stran in odjavo na voljo na vrhu aplikacije.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sl	Kateri nabor znakov naj se uporabi pri izvozu CSV. Privzeto se uporabi nabor znakov, ki je nastavljen v eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sl	Kateri nabor znakov naj se uporabi pri izvozu CSV. Privzeto se uporabi nabor znakov, ki je nastavljen v EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	sl	Kateri valutni simbol ali ime bo uporabno v EGW.
 write prefs for the specified application.	preferences	sl	Napišite lastnosti izbrane aplikacije.
 you can show the applications as icons only, icons with app-name or both.	preferences	sl	Lahko pokažem aplikacije kot ikone, ikone z imenom aplikacije ali oboje.

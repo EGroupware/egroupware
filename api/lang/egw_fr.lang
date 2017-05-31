@@ -18,7 +18,7 @@
 %1 to sync	groupdav	fr	%1 à synchroniser
 %1, duplicate id	common	fr	%1, ID en doublon
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	fr	%1Choisissez un autre répertoire%2<br />ou faites en sorte que le serveur web puisse écrire dans %3
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fr	%1eGroupWare%2 est un progiciel de collaboration multi-utilisateur basé sur le web et écrit en %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fr	%1EGroupware%2 est un progiciel de collaboration multi-utilisateur basé sur le web et écrit en %3PHP%4.
 %s disabled	common	fr	%s désactivé
 %s needed	common	fr	%s nécessaire
 %s notranslation	common	fr	%s PasDeTraduction
@@ -47,11 +47,11 @@
 5 minutes	common	fr	5 minutes
 80 (http)	admin	fr	80 (http)
 a pattern to be searched for	common	fr	Chaine de caractères à rechercher
-a request to the egroupware server returned with an error	common	fr	Une requête au serveur eGroupware a retourné une erreur
+a request to the egroupware server returned with an error	common	fr	Une requête au serveur EGroupware a retourné une erreur
 abort	common	fr	Annuler
 about	common	fr	A propos de
 about %1	common	fr	A propos de %1
-about egroupware	common	fr	A propos d'eGroupware
+about egroupware	common	fr	A propos d'EGroupware
 access	common	fr	Accès
 access not permitted	common	fr	Accès non permis
 accesskey	common	fr	Clé d'accès
@@ -124,7 +124,7 @@ angola	common	fr	ANGOLA
 anguilla	common	fr	ANGUILLA
 antarctica	common	fr	ANTARCTIQUE
 antigua and barbuda	common	fr	ANTIGUE ET BARBADE
-api	common	fr	API eGroupWare
+api	common	fr	API EGroupware
 api-accounts	common	fr	Comptes utilisateurs
 application	common	fr	Application
 application has no etemplates (no file %1) to restore!	common	fr	L'application n'a pas d'eTemplates à restaurer (pas de fichier %1)
@@ -171,7 +171,7 @@ bangladesh	common	fr	BANGLADESH
 barbados	common	fr	BARBADE
 baseline	common	fr	Baseline
 bcc	common	fr	Bcc
-before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	fr	Avancer de continuer, nous recommandons fortement de visionner cette courte vidéo, pour voir comment le plugin mailvelope fonctionne avec eGroupware
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	fr	Avancer de continuer, nous recommandons fortement de visionner cette courte vidéo, pour voir comment le plugin mailvelope fonctionne avec EGroupware
 belarus	common	fr	BIELORUSSIE
 belgium	common	fr	BELGIQUE
 belize	common	fr	BELIZE
@@ -265,7 +265,7 @@ clear window	common	fr	Fermer la fenêtre
 click	common	fr	Cliquer
 click here to attach the file	common	fr	Cliquer ici pour joindre le fichier
 click here to create the link	common	fr	Cliquer ici pour créer le lien
-click here to resume your egroupware session.	common	fr	Cliquer pour relancer votre session eGroupware
+click here to resume your egroupware session.	common	fr	Cliquer pour relancer votre session EGroupware
 click here to start the search	common	fr	Cliquer ici pour démarrer la recherche
 click here to upload the file	common	fr	Cliquer ici pour déposer le fichier
 click or mouse over to show menus	common	fr	Cliquer ou passer la souris dessus pour voir les menus
@@ -439,15 +439,15 @@ editable templates - delete template	common	fr	Templates modifiables - effacer l
 editable templates - editor	common	fr	Templates modifiables - éditeur
 editable templates - search	common	fr	Templates modifiables - rechercher
 editable templates - show template	common	fr	Templates modifiables - montrer le template
-egroupware	common	fr	eGroupWare
-egroupware administrators group, do not delete	common	fr	Groupe des administrateurs eGroupware, NE PAS SUPPRIMER
+egroupware	common	fr	EGroupware
+egroupware administrators group, do not delete	common	fr	Groupe des administrateurs EGroupware, NE PAS SUPPRIMER
 egroupware all users group, do not delete	common	fr	Groupe de tous les utilisateurs, NE PAS SUPPRIMER
 egroupware anonymous users group, do not delete	common	fr	Groupe des utilisateurs anonyme, NE PAS SUPPRIMER
-egroupware api version	common	fr	Version de l'API eGroupware
-egroupware maintenance update %1 available	common	fr	Mise à jour de maintenance eGroupware %1 disponible
+egroupware api version	common	fr	Version de l'API EGroupware
+egroupware maintenance update %1 available	common	fr	Mise à jour de maintenance EGroupware %1 disponible
 egroupware security update %1 needs to be installed!	common	fr	La mise à jour de sécurité %1 doit être installée !
 egroupware version	common	fr	Version d'EGroupware
-egroupware: login blocked for user '%1', ip %2	common	fr	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	fr	EGroupware: login bloqué pour l´utilisateur '%1', IP %2
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
 element role title	common	fr	Titre du rôle
@@ -464,7 +464,7 @@ end time	common	fr	Heure de fin
 enter '' for an empty default, nothing mean no default	common	fr	Entrez '' pour une valeur par défaut vide, rien signifie pas de valeur par défaut
 enter a search pattern	common	fr	Entrez une chaîne de recherche
 enter filename to upload and attach, use [browse...] to search for it	common	fr	Entrez un nom de fichier à uploader et attacher, utilisez [naviguer...] pour le rechercher
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´eGroupWare.<br>Exemple: http://www.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´EGroupware.<br>Exemple: http://www.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
 enter the new version number here (> old_version), empty for no update-file	common	fr	Entrez le nouveau numéro de version ici (> ancienne_version), vide pour aucun fichier de mise à jour
 enter the new version number here (has to be > old_version)	common	fr	Entrez le nouveau numéro de version ici (doit être > à la vieille_version)
 entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
@@ -625,7 +625,7 @@ how many days to sync in the past (default %1)	groupdav	fr	Combien de jours à s
 how many entries should the list show	common	fr	combien d'entrées la liste doit-elle afficher
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fr	Combien d'icônes devraient être affichées sur la barre de navigation (haut de page). Les icônes suplémentaires seront placées dans une liste que l'on appellera via une icône à droite de la barre de navigation.
 how many rows to print	common	fr	Combien de lignes sont à imprimer
-how to show the general egroupware menu ?	common	fr	Comment afficher le menu général d'eGroupWare ?
+how to show the general egroupware menu ?	common	fr	Comment afficher le menu général d'EGroupware ?
 html	common	fr	Html
 html link to the current record	common	fr	Lien HTML vers l'enregistrement courant
 hungary	common	fr	HONGRIE
@@ -977,7 +977,7 @@ placeholders	common	fr	Balises
 please %1 by hand	common	fr	Veuillez %1 à la main
 please enter a name	common	fr	Veuillez saisir un nom !
 please enter table-name first !!!	common	fr	SVP entrez le nom de la table d'abord !
-please reload the egroupware desktop (f5 / cmd+r).	common	fr	Veuillez recharger eGroupware (F5 / Cmd+R)
+please reload the egroupware desktop (f5 / cmd+r).	common	fr	Veuillez recharger EGroupware (F5 / Cmd+R)
 please run setup to become current	common	fr	Veuillez exécuter le setup pour vous mettre à jour
 please select	common	fr	Veuillez sélectionner
 please set your global preferences	common	fr	Veuillez définir vos préférences globales !
@@ -1191,7 +1191,7 @@ show now	common	fr	Afficher maintenant
 show page generation time	common	fr	Afficher le temps de génération de la page
 show page generation time on the bottom of the page?	common	fr	Afficher le temps de génération de page au fond de la page?
 show page generation time?	common	fr	Afficher le temps de génération de la page?
-show the logo's of egroupware and x-desktop on the desktop.	common	fr	Afficher les logos d'eGroupware et x-desktop sur le bureau?
+show the logo's of egroupware and x-desktop on the desktop.	common	fr	Afficher les logos d'EGroupware et x-desktop sur le bureau?
 show values	common	fr	Montrer les valeurs
 show_more_apps	common	fr	Voir plus d'applications
 showing	common	fr	montre
@@ -1222,7 +1222,7 @@ sri lanka	common	fr	SRI LANKA
 stack	common	fr	Pile
 start a new search, cancel this link	common	fr	Démarre une nouvelle recherche, annule ce lien
 start date	common	fr	Date de début
-start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	fr	Répertoire de début pour la navigation d'image dans l'éditeur riche dans le File Manager eGroupware
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	fr	Répertoire de début pour la navigation d'image dans l'éditeur riche dans le File Manager EGroupware
 start new search for the above pattern	common	fr	Démarre une nouvelle recherche pour la chaîne de caractères ci-dessus
 start time	common	fr	Heure de début
 start with	common	fr	commence par
@@ -1426,13 +1426,13 @@ you have selected an invalid main category	common	fr	Vous avez sélectionné une
 you have successfully logged out	common	fr	Vous vous êtes correctement déconnecté
 you need to %1set your timezone preference%2.	common	fr	Vous devez %1 définir votre préférence de fuseau horaire %2.
 you need to add the webserver user '%1' to the group '%2'.	common	fr	Vous devez ajouter l'utilisateur du serveur web '%1' au groupe '%2'.
-you need to be an egroupware administrator to access this functionality!	common	fr	Vous devez être administrateur d'eGroupware pour accéder à cette fonction !
+you need to be an egroupware administrator to access this functionality!	common	fr	Vous devez être administrateur d'EGroupware pour accéder à cette fonction !
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	fr	Vous devez installer le plugin Mailvelope à Chrome ou Firefox depuis www.mailvelope.com ou en cliquant sur le bouton d'installation.
 you need to select a file first!	common	fr	Sélectionner d'abord un fichier !
 you need to select some entries first!	common	fr	Vous d'abord devez sélectionner des entrées !
 you need to set enable logging to "%1" to create/update a log.	groupdav	fr	Vous devez activer la journalisation pour "%1" pour créer et mettre à jour un log.
 you will not be able to send or receive encrypted mails before completing that step!	common	fr	Vous ne pourrez pas envoyer ou recevoir des mails crypté avant de remplir cette étape !
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fr	Vous avez tenté d'ouvrir l'application eGroupWare: %1, mais vous n'avez aucune permission d'y accéder.
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fr	Vous avez tenté d'ouvrir l'application EGroupware: %1, mais vous n'avez aucune permission d'y accéder.
 your code is incorrect !!!	common	fr	Ce code est incorrect !
 your key has been restored successfully.	common	fr	Votre clé a été restaurée avec succès.
 your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé!<br>

@@ -2,10 +2,10 @@
 %1 hours	preferences	sv	%1 timmar
 12 hour	preferences	sv	12 timmar
 24 hour	preferences	sv	24 timmar
-a template defines the layout of egroupware and it contains icons for each application.	preferences	sv	En mall specificerar utformningen av eGroupWare och dess ikoner
+a template defines the layout of egroupware and it contains icons for each application.	preferences	sv	En mall specificerar utformningen av EGroupware och dess ikoner
 a theme defines the colors and fonts used by the template.	preferences	sv	Ett tema specificerar färger och fonter som används av en mall.
 acl grants have been updated	preferences	sv	Behörighetslistan (ACL) har uppdaterats
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sv	Alla listor i eGroupWare kommer att visa såhär många rader.<br>För många rader gör att det blir långsamt, för få och du förlorar överblicken.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sv	Alla listor i EGroupware kommer att visa såhär många rader.<br>För många rader gör att det blir långsamt, för få och du förlorar överblicken.
 are you sure you want to delete this category ?	preferences	sv	Vill du verkligen radera kategorin?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sv	Ändra lösenord genom att ange det gamla och ett nytt lösenord. Returnerar TRUE vid lyckat och FALSE om misslyckas.
 change your password	preferences	sv	Ändra lösenord
@@ -35,7 +35,7 @@ how do you like to display accounts	preferences	sv	Hur vill du se konton
 how do you like to select accounts	preferences	sv	Hur vill du välja konton
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sv	Hur många timmar för eller efter är du den tidzon där servern befinner sig?<br>Om du är i samma tidzon välj 0 timmar eller välj lokalt datum och tid.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	sv	Antal ikoner som visas i navigerings listen? Ikoner utöver dessa visas i en rullgardins lista som hämtas via ikonen längst till höger.
-how should egroupware display dates for you.	preferences	sv	Hur skall eGroupWare visa datum
+how should egroupware display dates for you.	preferences	sv	Hur skall EGroupware visa datum
 icon	preferences	sv	Ikon
 icons and text	preferences	sv	Ikon och text
 icons only	preferences	sv	Ikon endast
@@ -67,7 +67,7 @@ show number of current users	preferences	sv	Visa antal aktiva användare
 show text on navigation icons	preferences	sv	Visa text på navigeringsikoner
 show_more_apps	common	sv	Visa fler applikationer
 text only	preferences	sv	Endast text
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sv	Standard applikationen kommer att visas vid inloggning och när du klickar på eGroupWare-ikonen överst på sidan.<br>Du kan också visa fler än en applikation på startsidan, om du inte väljer en här.<br>Detta konfigureras under alternativ på respektive applikation.
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sv	Standard applikationen kommer att visas vid inloggning och när du klickar på EGroupware-ikonen överst på sidan.<br>Du kan också visa fler än en applikation på startsidan, om du inte väljer en här.<br>Detta konfigureras under alternativ på respektive applikation.
 the old password is not correct	preferences	sv	Gamla lösenordet är inte rätt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sv	Valrutan visar tillgängliga användare (kan vara långsam med många samtidiga användare). I popup fönstret kan man söka användare efter namn eller grupp.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	sv	De sista två valen begränsar synligheten av andra användare. Därför bör de vara tvingande men INTE ges administratörer.
@@ -78,8 +78,8 @@ time format	preferences	sv	Tidformat
 use default	preferences	sv	Använd standard
 users choice	preferences	sv	Användarnas val
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sv	Om du väljer Ja, kommer hem och utloggnings knappar att visas i navigerings listen.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av eGroupWare.
-which currency symbol or name should be used in egroupware.	preferences	sv	Vilken valutasymbol skall användas i eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av EGroupware.
+which currency symbol or name should be used in egroupware.	preferences	sv	Vilken valutasymbol skall användas i EGroupware.
 write prefs for the specified application.	preferences	sv	Skrivrättigheter för vald applikation
 you can show the applications as icons only, icons with app-name or both.	preferences	sv	Du kan se applikationerna som bara ikon, ikon med text eller bara text.
 you do not have permission to set acl's in this mode!	preferences	sv	Du saknar rättighet att ändra ACL i detta läge!

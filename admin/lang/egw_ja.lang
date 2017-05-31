@@ -76,7 +76,7 @@ edit peer server	admin	ja	対等サーバ訂正
 edit table format	admin	ja	テーブルフォーマット訂正
 edit user account	admin	ja	アカウント訂正
 enabled - hidden from navbar	admin	ja	可能 - ナビゲーション非表示
-enter the hostname of the machine on which this server is running	admin	ja	eGroupWare が動作するホスト名
+enter the hostname of the machine on which this server is running	admin	ja	EGroupware が動作するホスト名
 enter the site password for peer servers	admin	ja	同等サーバのパスワード
 enter the site username for peer servers	admin	ja	同等サーバのユーザ名
 enter the title for your site	admin	ja	タイトル名
@@ -204,8 +204,8 @@ view error log	admin	ja	エラーログ参照
 view sessions	admin	ja	セッション参照
 view user account	admin	ja	ユーザアカウント表示
 who would you like to transfer all records owned by the deleted user to?	admin	ja	削除ユーザの記録を転送するユーザを選択してください。
-would you like egroupware to cache the egw info array ?	admin	ja	eGroupWare のキャッシュにegw info 配列を利用する
-would you like egroupware to check for a new version<br>when admins login ?	admin	ja	管理者でログイン時、eGroupWareのバージョンチェックを行う
+would you like egroupware to cache the egw info array ?	admin	ja	EGroupware のキャッシュにegw info 配列を利用する
+would you like egroupware to check for a new version<br>when admins login ?	admin	ja	管理者でログイン時、EGroupwareのバージョンチェックを行う
 would you like to show each application's upgrade status ?	admin	ja	アプリケーションのアップグレード状況表示
 xml-rpc	admin	ja	XML-RPC
 you must add at least 1 permission or group to this account	admin	ja	少なくとも１つの権限かグループを指定してください。

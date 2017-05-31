@@ -182,7 +182,7 @@ edit this group	admin	hu	csoport szerkesztése
 edit this user	admin	hu	felhasználó szerkesztése
 edit user	admin	hu	felhasználó szerkesztése
 edit user account	admin	hu	Felhasználói azonosító szerkesztése
-egroupware directory	admin	hu	eGroupWare könyvtár
+egroupware directory	admin	hu	EGroupware könyvtár
 email account active	admin	hu	email azonosító aktív
 email address	admin	hu	email cím
 enable	admin	hu	engedélyez
@@ -200,7 +200,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	hu	Adja
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	hu	Adja meg a felhasználók és csoportok fájljainak teljes elérési útvonalát.<br>Például /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	hu	Adja meg a felhasználók és csoportok fájljainak teljes elérési útvonalát.<br>Például /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	hu	Adja meg a gazdagép nevét, ahol az egw szerver fut.
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hu	Adja meg az eGroupWare elérhetőségének az URL-jét.<br>Például: http://www.domain.com/egroupware vagy /egroupware<br><b>Lezáró 'per' jel nélkül!!!</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hu	Adja meg az EGroupware elérhetőségének az URL-jét.<br>Például: http://www.domain.com/egroupware vagy /egroupware<br><b>Lezáró 'per' jel nélkül!!!</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	hu	Keresési szöveg megadása. Az összes bejegyzés megjelenítéséhez hagyja üreset és ismét nyomja meg az ELKÜLD gombot.
 enter the site password for peer servers	admin	hu	Adja meg a site jelszót a peer szerverhez
 enter the site username for peer servers	admin	hu	Adja meg a site felhasználót a peer szerverhez

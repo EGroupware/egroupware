@@ -1,4 +1,4 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	pt-br	%1 '%2' não existe, o servidor web não tem permissão de leitura ou não contém uma instalação do eGroupware!
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	pt-br	%1 '%2' não existe, o servidor web não tem permissão de leitura ou não contém uma instalação do EGroupware!
 %1 already exists in %2.	setup	pt-br	%1 já existe em %2.
 %1 created in %2.	setup	pt-br	%1 criado em %2.
 %1 database %2 on %3 already contains the following tables:	setup	pt-br	%1 banco de dados %2 em %3 já possui as seguintes tabelas:
@@ -27,7 +27,7 @@ activate safe password check	setup	pt-br	Ativar salvamento de senhas
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pt-br	Adicionar usuários criados automaticamente para este grupo (o grupo 'Padrão' será utilizado se este campo estiver vazio.)
 add new database instance (egw domain)	setup	pt-br	Adicionar nova base de dados (domínio eGW )
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	pt-br	adicionar ou editar um domínio:
-adding, editing or deleting an egroupware domain / database instance:	setup	pt-br	Adicionando, editando ou removendo um domínio / base de dados do eGroupware:
+adding, editing or deleting an egroupware domain / database instance:	setup	pt-br	Adicionando, editando ou removendo um domínio / base de dados do EGroupware:
 additional options and there defaults (in brackets)	setup	pt-br	Opções adicionais e valores padrões (entre parênteses)
 additional settings	setup	pt-br	Configurações Adicionais
 admin account successful created.	setup	pt-br	Conta administrativa criada com sucesso.
@@ -124,7 +124,7 @@ checking pear%1 is installed	setup	pt-br	Verificando se PEAR %1 está instalado
 checking php.ini	setup	pt-br	Verificando php.ini
 checking required php version %1 (recommended %2)	setup	pt-br	Verificando versão do PHP requerida %1 (recomandada %2)
 checking the egroupware installation	setup	pt-br	Verificando a instalação do EGroupware
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	pt-br	Verifica se o eGroupware está instalado, suas versões e atualizações necessárias (retona valores... veja --exit-codes)
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	pt-br	Verifica se o EGroupware está instalado, suas versões e atualizações necessárias (retona valores... veja --exit-codes)
 click <a href="index.php">here</a> to return to setup.	setup	pt-br	Clique <a href="index.php">aqui</a> para voltar ao configurador
 click here	setup	pt-br	Clique aqui
 click here to re-run the installation tests	setup	pt-br	Clique aqui para re-executar os testes de instalação
@@ -154,7 +154,7 @@ create admin account	setup	pt-br	Criar conta de administrador
 create database	setup	pt-br	Criar base de dados
 create demo accounts	setup	pt-br	Criar contas de Demonstração
 create one now	setup	pt-br	Criar uma agora
-create or edit the egroupware configuration file: header.inc.php:	setup	pt-br	Criar ou editar o arquivo de configuração do eGroupware: header.inc.php:
+create or edit the egroupware configuration file: header.inc.php:	setup	pt-br	Criar ou editar o arquivo de configuração do EGroupware: header.inc.php:
 create the empty database -	setup	pt-br	Criar uma base de dados vazia -
 create the empty database and grant user permissions -	setup	pt-br	Criar uma base de dados vazia e garantir as permissões do usuário
 create your header.inc.php	setup	pt-br	criar o arquivo header.ini.php
@@ -220,7 +220,7 @@ edit your existing header.inc.php	setup	pt-br	Editar o seu arquivo header.inc.ph
 edit your header.inc.php	setup	pt-br	Editar o seu arquivo header.inc.php
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	pt-br	exemplo: /egroupware ou http://dominio.com/egroupware, padrão: %1
 egroupware administration manual	setup	pt-br	Manual de  Administração do EGroupware
-egroupware api needs a database (schema) update from version %1 to %2!	setup	pt-br	A API do eGroupware precisa atualizar a base de dados (esquema) da versão %1 para %2!
+egroupware api needs a database (schema) update from version %1 to %2!	setup	pt-br	A API do EGroupware precisa atualizar a base de dados (esquema) da versão %1 para %2!
 egroupware api version %1 found.	setup	pt-br	API do EGroupware versão %1 encontrada.
 egroupware configuration file (header.inc.php) does not exist.	setup	pt-br	Arquivo de configuração do EGroupware (header.inc.php) não existe.
 egroupware configuration file (header.inc.php) version %1 exists%2	setup	pt-br	Arquivo de configuração do EGroupware (header.inc.php) versão %1 existe %2
@@ -287,7 +287,7 @@ however, the application is otherwise installed	setup	pt-br	No entanto, a aplica
 however, the application may still work	setup	pt-br	No entanto, a aplicação ainda pode funcionar
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	pt-br	Tipos de autenticação HTTP (separados por vírgulas) para uso sem a página de login, exemplo: "NTLM"
 if no acl records for user or any group the user is a member of	setup	pt-br	Caso não exista registro de permissões ou grupo para o usuário ele é membro do
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pt-br	Se o modo de segurança estiver ligado, o eGroupware não será capaz de modificar automáticamente determinados valores de configuração, não será possível carregar módulos que ainda não estejam carregados.
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pt-br	Se o modo de segurança estiver ligado, o EGroupware não será capaz de modificar automáticamente determinados valores de configuração, não será possível carregar módulos que ainda não estejam carregados.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	pt-br	Se o aplicativo não têm tabelas definidas, selecionar atualizar deve resolver o problema
 if using ads (active directory)	setup	pt-br	Se estiver usando autenticação por ADS (Active Directory)
 if using ldap	setup	pt-br	Se estiver usando LDAP
@@ -354,7 +354,7 @@ mcrypt algorithm (default tripledes)	setup	pt-br	Algoritmo Mcrypt (padrão TRIPL
 mcrypt initialization vector	setup	pt-br	Vetor de iniciação do MCrypt
 mcrypt mode (default cbc)	setup	pt-br	Modo Mcrypt (padrão CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pt-br	Configurações para Mcrypt (requer extensão mcrypt do PHP)
-memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt-br	O Valor de limite de memória está menor que %1. Alguns aplicativos do eGroupware necessitam mais que os 8M recomendados. É possível que ocorram problemas.
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt-br	O Valor de limite de memória está menor que %1. Alguns aplicativos do EGroupware necessitam mais que os 8M recomendados. É possível que ocorram problemas.
 migration between egroupware account repositories	setup	pt-br	Migração entre respositórios de contas do EGroupware
 minimum account id (e.g. 500 or 100, etc.)	setup	pt-br	Id mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	setup	pt-br	minuto
@@ -379,7 +379,7 @@ no modes available	setup	pt-br	nenhum modo disponível
 no update necessary, domain %1(%2) is up to date.	setup	pt-br	Nenhuma atualização é necessária. Domínio %1 (%2) está atualizado.
 no xml support found. disabling	setup	pt-br	Não foi encontrado suporte para XML. Desablilitando
 not	setup	pt-br	Não
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pt-br	Nem todos os algorítmos de criptografia do MCrypt funcionan com o eGroupware. Se você encontrar algum problema tente desligar essa opção.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pt-br	Nem todos os algorítmos de criptografia do MCrypt funcionan com o EGroupware. Se você encontrar algum problema tente desligar essa opção.
 not complete	setup	pt-br	incompleto
 not completed	setup	pt-br	Incompleto
 not ready for this stage yet	setup	pt-br	Não está pronto para este passo ainda

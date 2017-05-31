@@ -249,7 +249,7 @@ edit this user	admin	es-es	editar este usuario
 edit user	admin	es-es	editar usuario
 edit user account	admin	es-es	Editar cuenta de usuario
 educational: universities, schools, ...	admin	es-es	Educación: Universiddes, Colegios, ...
-egroupware directory	admin	es-es	Directorio de eGroupWare
+egroupware directory	admin	es-es	Directorio de EGroupware
 egroupware version	admin	es-es	Versión de EGroupware
 either install id and config password needed or the remote hash!	admin	es-es	¡Tanto el ID de la instalación como la contraseña de configuración necesitan el hash remoto!
 email account active	admin	es-es	cuenta de correo activa
@@ -271,7 +271,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	es-es	I
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	es-es	Introduzca el nombre de la máquina sobre la cual se está ejecutando este servidor
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de eGroupWare.<br>Ejemplo: http://www.dominio.com/egroupware o /egroupware.<br><b>Sin barra al final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de EGroupware.<br>Ejemplo: http://www.dominio.com/egroupware o /egroupware.<br><b>Sin barra al final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	es-es	Introduzca la cadena de búsqueda. Para mostrar todas las entradas, vacíe este campo y pulse de nuevo el botón ENVIAR.
 enter the site password for peer servers	admin	es-es	Introduzca la contraseña del sitio para servidores 'peer'
 enter the site username for peer servers	admin	es-es	Introduzca el usuario del sitio para servidores 'peer'
@@ -280,7 +280,7 @@ enter the title of your logo	admin	es-es	Introduzca el título de su logo
 enter the url or filename (in api/templates/default/images) of your logo	admin	es-es	Introduzca la URL o nombre de archivo (en api/templates/default/images) de su logo
 enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	es-es	Introduzca la URL o nombre del fichero (en el directorio images de las plantillas) de su favicon (el icono pequeño que aparece en las pestañas de los navegadores).
 enter the url where your logo should link to	admin	es-es	Introduzca la url a donde apunte el logo
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	es-es	Introduzca la ruta VGS donde están las imágenes, iconos o logos adicionales (encontrados por las aplicaciones eGroupWare). La ruta DEBE comenzar con / y tener permiso de lectura para todos los usuarios.
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	es-es	Introduzca la ruta VGS donde están las imágenes, iconos o logos adicionales (encontrados por las aplicaciones EGroupware). La ruta DEBE comenzar con / y tener permiso de lectura para todos los usuarios.
 enter your default ftp server	admin	es-es	Introduzca su servidor FTP predeterminado
 enter your default mail domain ( from: user@domain )	admin	es-es	Introduzca su dominio de correo predeterminado ( De: usuario@dominio )
 enter your http proxy server	admin	es-es	Introduzca su servidor proxy HTTP
@@ -429,7 +429,7 @@ more secure	admin	es-es	más seguro
 mount backup directory to %1	admin	es-es	Montar el directorio de la copia de seguridad en %1
 must change password upon next login	admin	es-es	Debe cambiar la contraseña la próxima vez que inicie la sesión
 name must not be empty !!!	admin	es-es	El nombre no debe estar vacío
-name of the egroupware instance, eg. default	admin	es-es	Nombre de la instancia de eGroupWare, p. ej., default
+name of the egroupware instance, eg. default	admin	es-es	Nombre de la instancia de EGroupware, p. ej., default
 new group name	admin	es-es	Nuevo nombre de grupo
 new name	admin	es-es	nuevo nombre
 new password	admin	es-es	Contraseña nueva
@@ -632,7 +632,7 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	es-es	Arriba
 updated	admin	es-es	actualizado
 uppercase, lowercase, number, special char	admin	es-es	Mayúsculas, minúsculas, números, caracteres especiales
-url of the egroupware installation, eg. http://domain.com/egroupware	admin	es-es	La URL de la instalación de eGroupWare, p. ej. http://dominio.com/egroupware
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	es-es	La URL de la instalación de EGroupware, p. ej. http://dominio.com/egroupware
 usage	admin	es-es	Uso
 use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
 use pure html compliant code (not fully working yet)	admin	es-es	Usar codigo HTML puro (todavía no funciona completamente)
@@ -659,9 +659,9 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	es-es	Solicitamos los datos para mejorar nuestro perfil en la prensa y para obtener una mejor comprensión del usuario base de EGroupware y sus necesidades
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	es-es	Esperamos que comprenda la importancia de esta estadística voluntaria y no denegarla a la ligera.
 who would you like to transfer all records owned by the deleted user to?	admin	es-es	¿A quién desea transferirle todos los registros del usuario eliminado?
-would you like egroupware to cache the egw info array ?	admin	es-es	¿Desea que eGroupWare almacene en memoria el array egw info?
-would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que eGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
-would you like egroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
+would you like egroupware to cache the egw info array ?	admin	es-es	¿Desea que EGroupware almacene en memoria el array egw info?
+would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que EGroupware revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
+would you like egroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que EGroupware compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	es-es	¿Desea cargar automáticamente nuevos ficheros de idioma (al iniciar la sesión)?
 would you like to show each application's upgrade status ?	admin	es-es	¿Desea mostrar el estado de actualización de cada aplicación?
 wrong account type: %1 is no %2 !!!	admin	es-es	Tipo de cuenta incorrecta: ¡%1 no es %2!

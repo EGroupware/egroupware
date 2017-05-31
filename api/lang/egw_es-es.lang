@@ -5,8 +5,8 @@
 %1 proxy of %2	common	es-es	%1 proxy de %2
 %1 to sync	groupdav	es-es	%1 para sincronizar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	es-es	%1Elegir otro directorio%2<br />o dar a %3 permiso de escritura para el servidor web
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
-'%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un fichero php en el directorio raíz de eGroupWare (%2)!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1EGroupware%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
+'%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un fichero php en el directorio raíz de EGroupware (%2)!
 (session restored in %1 seconds)	common	es-es	(la sesión se ha restaurado en %1 segundos)
 00 (disable)	admin	es-es	00 (desactivar)
 1 day	common	es-es	1 día
@@ -17,7 +17,7 @@
 80 (http)	admin	es-es	80 (http)
 about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
-about egroupware	common	es-es	Acerca de eGroupware
+about egroupware	common	es-es	Acerca de EGroupware
 access	common	es-es	Acceso
 access not permitted	common	es-es	Acceso no permitido
 account has been created	common	es-es	Se ha creado la cuenta
@@ -161,7 +161,7 @@ clear	common	es-es	Limpiar
 clear form	common	es-es	Limpiar formulario
 clear window	common	es-es	Limpiar la ventana
 click	common	es-es	Al pulsar
-click here to resume your egroupware session.	common	es-es	Pulse aquí para continuar su sesión de eGroupWare.
+click here to resume your egroupware session.	common	es-es	Pulse aquí para continuar su sesión de EGroupware.
 click or mouse over to show menus	common	es-es	Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima
 click or mouse over to show menus?	common	es-es	¿Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima?
 click this image on the navbar: %1	common	es-es	Pulse esta imagen en la barra de navegación: %1
@@ -249,10 +249,10 @@ edit	common	es-es	Editar
 edit %1 category for	common	es-es	Editar %1 categoría para
 edit categories	common	es-es	Editar categorías
 edit category	common	es-es	Editar categoría
-egroupware	common	es-es	eGroupWare
-egroupware api version	common	es-es	Versión de la API eGroupWare
+egroupware	common	es-es	EGroupware
+egroupware api version	common	es-es	Versión de la API EGroupware
 egroupware version	common	es-es	Versión de EGroupware
-egroupware: login blocked for user '%1', ip %2	common	es-es	eGroupWare: inicio de sesión bloqueado para el usuario '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	es-es	EGroupware: inicio de sesión bloqueado para el usuario '%1', IP %2
 egypt	common	es-es	EGIPTO
 el salvador	common	es-es	EL SALVADOR
 email	common	es-es	Correo electrónico
@@ -263,7 +263,7 @@ enabled	common	es-es	Habilitado
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	es-es	Activa el registro de tráfico CalDAV/CardDAV para diagnosticar problemas con los dispositivos.
 end date	common	es-es	Fecha de finalización
 end time	common	es-es	Hora de finalización
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de eGroupWare. <br>Ejemplo: http://www.dominio.com/egroupware   o   /egroupware<br><b>Sin barra al final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de EGroupware. <br>Ejemplo: http://www.dominio.com/egroupware   o   /egroupware<br><b>Sin barra al final</b>
 entry has been deleted sucessfully	common	es-es	La entrada ha sido eliminada correctamente
 entry not found!	common	es-es	¡No se encontró la entrada!
 entry updated sucessfully	common	es-es	La entrada ha sido actualizada correctamente
@@ -360,7 +360,7 @@ home email	common	es-es	correo electrónico particular
 honduras	common	es-es	HONDURAS
 hong kong	common	es-es	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	es-es	Cuántos iconos se muestran en la barra de navegación (en la parte superior de la página). Los iconos adicionales van en una especie de menú desplegable, que se activa pulsando en el icono que hay en el extremo derecho de la barra.
-how to show the general egroupware menu ?	common	es-es	¿Cómo mostrar el menú general de eGroupWare?
+how to show the general egroupware menu ?	common	es-es	¿Cómo mostrar el menú general de EGroupware?
 hungary	common	es-es	HUNGRÍA
 iceland	common	es-es	ISLANDIA
 iespell not detected. click ok to go to download page.	common	es-es	No se detectó ieSpell. Pulse Aceptar para ir a la página de descargas.
@@ -563,7 +563,7 @@ personal	common	es-es	Personal
 peru	common	es-es	PERU
 philippines	common	es-es	FILIPINAS
 phone number	common	es-es	Número de teléfono
-api	common	es-es	API de eGroupWare
+api	common	es-es	API de EGroupware
 pitcairn	common	es-es	PITCAIRN
 please %1 by hand	common	es-es	Por favor %1 manualmente
 please enter a name	common	es-es	Por favor, introduzca un nombre
@@ -673,7 +673,7 @@ show menu	common	es-es	mostrar menú
 show page generation time	common	es-es	Mostrar el tiempo que tarda en generarse la página
 show page generation time on the bottom of the page?	common	es-es	¿Mostrar el tiempo que tarda en generarse la página en la parte inferior de la página?
 show page generation time?	common	es-es	¿Mostrar el tiempo que tarda en generarse la página?
-show the logo's of egroupware and x-desktop on the desktop.	common	es-es	Mostrar el logo de eGroupware y x-desktop en el escritorio.
+show the logo's of egroupware and x-desktop on the desktop.	common	es-es	Mostrar el logo de EGroupware y x-desktop en el escritorio.
 show_more_apps	common	es-es	mostrar más aplicaciones
 showing %1	common	es-es	mostrando %1
 showing %1 - %2 of %3	common	es-es	mostrando %1 - %2 de %3
@@ -814,8 +814,8 @@ you have selected an invalid main category	common	es-es	La categoría principal 
 you have successfully logged out	common	es-es	Ha terminado la sesión correctamente
 you need to %1set your timezone preference%2.	common	es-es	Necesita %1 establecer su preferencia de zona horaria%2.
 you need to add the webserver user '%1' to the group '%2'.	common	es-es	Necesita añadir el usuario del servidor web '%1' al grupo '%2'.
-you need to be an egroupware administrator to access this functionality!	common	es-es	¡Necesita ser administrador de eGroupWare para acceder a esta funcionalidad!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	Ha intentado abrir la aplicación de eGroupWare %1, pero no tiene permiso para acceder a esta aplicación.
+you need to be an egroupware administrator to access this functionality!	common	es-es	¡Necesita ser administrador de EGroupware para acceder a esta funcionalidad!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	Ha intentado abrir la aplicación de EGroupware %1, pero no tiene permiso para acceder a esta aplicación.
 your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se pudo enviar<br>
 your message has been sent	common	es-es	Su mensaje ha sido enviado
 your search returned %1 matchs	common	es-es	su búsqueda devolvió %1 resultados
@@ -840,7 +840,7 @@ search for '%1'	common	es-es	Buscar '%1'
 %s onchange	common	es-es	%s al cambiar
 %s readonly	common	es-es	%s de sólo lectura
 '%1' has an invalid format !!!	common	es-es	¡¡¡'%1' no tiene un formato válido!!!
-'%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un fichero php en el directorio raíz de eGroupWare (%2)!
+'%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un fichero php en el directorio raíz de EGroupware (%2)!
 '%1' is not a valid date !!!	common	es-es	¡¡'%1'  no es una fecha válida!!
 '%1' is not a valid floatingpoint number !!!	common	es-es	¡¡¡'%1' no es un número válido de coma flotante!!!
 '%1' is not a valid integer !!!	common	es-es	¡¡¡'%1' no es un entero válido!!!

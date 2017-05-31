@@ -1,13 +1,13 @@
 %1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
 %1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br />ή κάντε %3 εγγράψιμο από τον webserver
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1eGroupWare%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1EGroupware%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
 00 (disable)	admin	el	00 (Απενεργοποίηση)
 13 (ntp)	admin	el	13 (ntp)
 80 (http)	admin	el	80 (http)
 about	common	el	Πληροφορίες
 about %1	common	el	Πληροφορίες %1
-about egroupware	common	el	Πληροφορίες για το eGroupware
+about egroupware	common	el	Πληροφορίες για το EGroupware
 access	common	el	Πρόσβαση
 access not permitted	common	el	Απαγορεύεται η πρόσβαση
 account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί
@@ -193,7 +193,7 @@ edit	common	el	Επεξεργασία
 edit %1 category for	common	el	Επεξεργασία της κατηγορίας 1% για
 edit categories	common	el	Επεξεργασία Κατηγοριών
 edit category	common	el	Επεξεργασία Κατηγορίας
-egroupware: login blocked for user '%1', ip %2	common	el	eGroupWare: Είσοδος μπλοκαρισμένη για το χρήστη '%1', με ip %2
+egroupware: login blocked for user '%1', ip %2	common	el	EGroupware: Είσοδος μπλοκαρισμένη για το χρήστη '%1', με ip %2
 egypt	common	el	ΑΙΓΥΠΤΟΣ
 el salvador	common	el	ΕΛ ΣΑΛΒΑΔΟΡ
 email	common	el	Ε-Μail
@@ -201,7 +201,7 @@ email-address of the user, eg. "%1"	common	el	e-mail του χρήστη π.χ. 
 enabled	common	el	Ενεργοποιημένο
 end date	common	el	Ημερομηνία παράδοσης
 end time	common	el	Ώρα παράδοσης
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του eGroupWare URL.<br>Παράδειγμα: http://www.domain.com/egroupware   or  /egroupware<br><b>Χωρίς δεξιά παύλα στο τέλος</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του EGroupware URL.<br>Παράδειγμα: http://www.domain.com/egroupware   or  /egroupware<br><b>Χωρίς δεξιά παύλα στο τέλος</b>
 entry has been deleted sucessfully	common	el	Η καταχώρηση διαγράφηκε επιτυχώς
 entry updated sucessfully	common	el	Η καταχώρηση ενημερώθηκε επιτυχώς
 equatorial guinea	common	el	ΙΣΗΜΕΡΙΝΗ ΓΟΥΪΝΕΑ
@@ -469,7 +469,7 @@ personal	common	el	Προσωπικό
 peru	common	el	ΠΕΡΟΥ
 philippines	common	el	ΦΙΛΙΠΠΙΝΕΣ
 phone number	common	el	Αριθμός τηλεφώνου
-api	common	el	eGroupWare API
+api	common	el	EGroupware API
 pitcairn	common	el	ΠΙΤΚΕΡΝ
 please %1 by hand	common	el	Παρακαλώ %1 με το χέρι
 please enter a name	common	el	Παρακαλώ εισάγετε όνομα
@@ -564,7 +564,7 @@ show menu	common	el	Εμφάνιση του μενού
 show page generation time	common	el	Εμφάνιση χρόνου δημιουργίας σελίδας
 show page generation time on the bottom of the page?	common	el	Να εμφανισθεί ο χρόνος δημιουργίας της σελίδας στο τέλος της σελίδας;
 show page generation time?	common	el	Εμφάνιση σελίδας δημιουργίας ώρας;
-show the logo's of egroupware and x-desktop on the desktop.	common	el	Εμφάνιση των λογότυπων του eGroupware και της "πρώην" επιφάνειας εργασίας στην επιφάνεια εργασίας
+show the logo's of egroupware and x-desktop on the desktop.	common	el	Εμφάνιση των λογότυπων του EGroupware και της "πρώην" επιφάνειας εργασίας στην επιφάνεια εργασίας
 show_more_apps	common	el	show_more_apps
 showing %1	common	el	εμφάνιση %1
 showing %1 - %2 of %3	common	el	εμφάνιση %1 - %2 από %3

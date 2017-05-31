@@ -6,7 +6,7 @@
 %1 proxy of %2	common	ru	%1 прокси из %2
 %1 to sync	groupdav	ru	%1 синхронизировать
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br />или дайте веб-серверу права на запись в %3
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1eGroupWare%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1EGroupware%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	ru	'%1' нет файла php в корневом каталоге eGW (%2)!
 (session restored in %1 seconds)	common	ru	(сессия восстановлена за %1 секунд)
 00 (disable)	admin	ru	00 (выкл)
@@ -18,7 +18,7 @@
 80 (http)	admin	ru	80 (http)
 about	common	ru	О программе
 about %1	common	ru	О %1
-about egroupware	common	ru	Об eGroupware
+about egroupware	common	ru	Об EGroupware
 access	common	ru	Доступ
 access not permitted	common	ru	Доступ запрещен
 account has been created	common	ru	Учетная запись создана
@@ -159,7 +159,7 @@ clear	common	ru	Очистить
 clear form	common	ru	Очистить Форму
 clear window	common	ru	Очистить окно
 click	common	ru	Щелкнуть
-click here to resume your egroupware session.	common	ru	Щелкните здесь для восстановления вашей сессии в eGroupWare
+click here to resume your egroupware session.	common	ru	Щелкните здесь для восстановления вашей сессии в EGroupware
 click or mouse over to show menus	common	ru	Кликните, или наведите мышь для показа меню
 click or mouse over to show menus?	common	ru	Кликнуть или навести мышь для показа меню?
 click this image on the navbar: %1	common	ru	Кликните это изображение на панели навигации: %1
@@ -246,10 +246,10 @@ edit	common	ru	Редактировать
 edit %1 category for	common	ru	Редактировать %1 категорию для
 edit categories	common	ru	Редактировать Категории
 edit category	common	ru	Редактировать категорию
-egroupware	common	ru	eGroupWare
-egroupware api version	common	ru	Версия API eGroupWare
+egroupware	common	ru	EGroupware
+egroupware api version	common	ru	Версия API EGroupware
 egroupware version	common	ru	Версия EGroupware
-egroupware: login blocked for user '%1', ip %2	common	ru	eGroupWare: вход для пользователя '%1', IP %2 заблокирован
+egroupware: login blocked for user '%1', ip %2	common	ru	EGroupware: вход для пользователя '%1', IP %2 заблокирован
 egypt	common	ru	Египет
 el salvador	common	ru	Сальвадор
 email	common	ru	Эл.почта
@@ -260,7 +260,7 @@ enabled	common	ru	Включено
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	ru	Включить ведение журнала траффика CalDAV/CardDAV для диагностики проблем с устройствами.
 end date	common	ru	Дата окончания
 end time	common	ru	Время окончания
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Введите адрес Вашего сервера eGroupWare.<br>Например: http://www.domain.com/egroupware   или   /egroupware<br><b>Без слэша на конце</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Введите адрес Вашего сервера EGroupware.<br>Например: http://www.domain.com/egroupware   или   /egroupware<br><b>Без слэша на конце</b>
 entry has been deleted sucessfully	common	ru	Запись успешно удалена
 entry not found!	common	ru	Запись не найдена!
 entry updated sucessfully	common	ru	Запись успешно обновлена
@@ -355,7 +355,7 @@ hong kong	common	ru	Гонконг
 how many days to sync in the future (default %1)	groupdav	ru	В течение скольких дней в будущем проводить синхронизацию (по умолчанию – %1)
 how many days to sync in the past (default %1)	groupdav	ru	За сколько прошедших дней проводить синхронизацию (по умолчанию – %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ru	Сколько иконок будет показываться на верхней панели. Дополнительные иконки будут объединены в выпадающее меню, вызываемое пиктограммой в правом углу панели навигации.
-how to show the general egroupware menu ?	common	ru	Как показывать главное меню eGroupWare?
+how to show the general egroupware menu ?	common	ru	Как показывать главное меню EGroupware?
 hungary	common	ru	Венгрия
 iceland	common	ru	Исландия
 iespell not detected. click ok to go to download page.	common	ru	Словарь ieSpell не найден. Нажмите ОК для перехода на страницу загрузки.
@@ -572,7 +572,7 @@ pg down	common	ru	На страницу вниз
 pg up	common	ru	На страницу вверх
 philippines	common	ru	Филиппины
 phone number	common	ru	номер телефона
-api	common	ru	eGroupWare API
+api	common	ru	EGroupware API
 pitcairn	common	ru	О-в Питкэрн
 please %1 by hand	common	ru	Пожалуйста %1 вручную
 please enter a name	common	ru	введите имя !
@@ -695,7 +695,7 @@ show menu	common	ru	показать меню
 show page generation time	common	ru	Показать время генерации страницы
 show page generation time on the bottom of the page?	common	ru	Показать время генерации страницы внизу страницы?
 show page generation time?	common	ru	Отображать время генерации страницы?
-show the logo's of egroupware and x-desktop on the desktop.	common	ru	Показать логотипы eGroupware и Х-desktop на рабочем столе.
+show the logo's of egroupware and x-desktop on the desktop.	common	ru	Показать логотипы EGroupware и Х-desktop на рабочем столе.
 show_more_apps	common	ru	показать_больше_приложений
 showing %1	common	ru	показываем %1
 showing %1 - %2 of %3	common	ru	показываем %1 - %2 из %3
@@ -818,7 +818,7 @@ western sahara	common	ru	Западная Сахара
 what color should all the blank space on the desktop have	common	ru	Какого цвета должно быть свободное место рабочего стола
 what style would you like the image to have?	common	ru	Выберите стиль отображения
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ru	Если Вы ответите "да", кнопки "Домой" и "Выход" будут представлены в виде иконок на верхней панели.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	ru	Где и как eGroupWare будет показывать такие ссылки как Настройки, О Нас и Выход.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	ru	Где и как EGroupware будет показывать такие ссылки как Настройки, О Нас и Выход.
 which groups	common	ru	Какие группы
 whole query	common	ru	Всего запросов
 width	common	ru	Ширина
@@ -843,10 +843,10 @@ you have selected an invalid main category	common	ru	Вы выбрали неп�
 you have successfully logged out	common	ru	Вы успешно вышли
 you need to %1set your timezone preference%2.	common	ru	вы должны %1 выбрать настройки часового пояса%2.
 you need to add the webserver user '%1' to the group '%2'.	common	ru	Вам необходимо добавить пользователя Веб-сервера '%1' в группу '%2'.
-you need to be an egroupware administrator to access this functionality!	common	ru	Для доступа к этим функциям вы должны быть администратором eGroupWare!
+you need to be an egroupware administrator to access this functionality!	common	ru	Для доступа к этим функциям вы должны быть администратором EGroupware!
 you need to select some entries first!	common	ru	Сначала вы должны выбрать записи
 you need to set enable logging to "%1" to create/update a log.	groupdav	ru	вам нужно включить журналирование "%1" для создания/обновления журнала.
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	ru	Вы попытались открыть приложение eGroupWare: %1, но у вас нет прав на доступ к нему.
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	ru	Вы попытались открыть приложение EGroupware: %1, но у вас нет прав на доступ к нему.
 your message could <b>not</b> be sent!<br>	common	ru	Ваше сообщение <b>не может</b> быть отправлено !<br>
 your message has been sent	common	ru	Ваше сообщение отправлено
 your password is about to expire in %1 days, you may change your password now	common	ru	Ваш пароль заканчивается через %1 дней, вы можете изменить его сейчас.

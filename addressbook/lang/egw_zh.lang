@@ -125,7 +125,7 @@ deletes the photo	addressbook	zh	删除照片
 department	common	zh	部门
 departments	addressbook	zh	部门
 directory with documents to insert contacts	addressbook	zh	插入联系人的文件目录
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	zh	在首页显示生日提醒(也就是当您登录 eGroupWare 或是点击首页图示时显示的页面)。
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	zh	在首页显示生日提醒(也就是当您登录 EGroupware 或是点击首页图示时显示的页面)。
 distribution list deleted	addressbook	zh	分发列表已删除
 distribution lists	addressbook	zh	分发列表
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	zh	您是否需要私有通讯簿，其他用户无法查看，只有您能够访问的个人通讯簿？
@@ -205,7 +205,7 @@ import from ldif, csv, or vcard	addressbook	zh	从 Ldif、CSV 或 vCard 导入�
 import from outlook	addressbook	zh	从 Outlook 导入
 import multiple vcard	addressbook	zh	导入多重 vCard
 import next set	addressbook	zh	导入下一个集合
-import_instructions	addressbook	zh	请按照下列方法从其他应用程序导出通讯簿, 以便导入 eGroupWare 中：<p>在 Netscape 中，打开通讯簿，选定<b>文件</b>菜单的<b>导出</b>项，导出的文件将以 LDIF 格式存放。<p>在 Outlook 中，选定将要导出的联系人文件夹，选定<b>文件菜单</b>的<b>导入和导出</b>项，导出的文件将以 CSV 格式存放。<p>在 Palm  Desktop 4.0 或更高版本中，打开通讯簿，选定<b>文件</b>菜单的<b>导出</b>项，导出的文件将以 VCard 格式存放。<p>Palm Desktop 4.0 或是更新的版本，在浏览通讯簿资料时在<b>文件</b>功能选择<b>导出</b>，导出的资料是 vCard 格式。
+import_instructions	addressbook	zh	请按照下列方法从其他应用程序导出通讯簿, 以便导入 EGroupware 中：<p>在 Netscape 中，打开通讯簿，选定<b>文件</b>菜单的<b>导出</b>项，导出的文件将以 LDIF 格式存放。<p>在 Outlook 中，选定将要导出的联系人文件夹，选定<b>文件菜单</b>的<b>导入和导出</b>项，导出的文件将以 CSV 格式存放。<p>在 Palm  Desktop 4.0 或更高版本中，打开通讯簿，选定<b>文件</b>菜单的<b>导出</b>项，导出的文件将以 VCard 格式存放。<p>Palm Desktop 4.0 或是更新的版本，在浏览通讯簿资料时在<b>文件</b>功能选择<b>导出</b>，导出的资料是 vCard 格式。
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从 CSV 文件导入联系人资料到通讯簿，CSV 是'逗号分隔'方式，不过您可以在选项标签指定其他的分隔符。
 in %1 days (%2) is %3's birthday.	addressbook	zh	在%1 天 (%2) 就是%3的生日。
 income	addressbook	zh	收入
@@ -355,7 +355,7 @@ what should links to the addressbook display in other applications. empty values
 where to add the email address	addressbook	zh	在哪里添加邮件地址
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	zh	通讯簿在不清楚地址格式的国家要使用的地址格式，如果已经知道，它会使用独立的设定。
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	zh	添加联系人时要选择哪个通讯簿，您没有添加到当前通讯簿的权限。
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh	CSV 格式文件输出使用的字符集，系统缺省为 eGroupWare 安装的字符集。
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh	CSV 格式文件输出使用的字符集，系统缺省为 EGroupware 安装的字符集。
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	zh	哪些字段将被导出，一切各种方式储存在通讯簿里的每个字段及包含的自定义字段。商务或家庭地址只包含名称、公司和选择的地址。
 whole query	addressbook	zh	完整查询
 work email if given, else home email	addressbook	zh	如果给定工作邮箱，否则家庭邮箱

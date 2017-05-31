@@ -195,7 +195,7 @@ edit this group	admin	zh	编辑该群组
 edit this user	admin	zh	编辑该用户
 edit user	admin	zh	编辑用户
 edit user account	admin	zh	编辑用户账户
-egroupware directory	admin	zh	eGroupWare 目录
+egroupware directory	admin	zh	EGroupware 目录
 either install id and config password needed or the remote hash!	admin	zh	必须输入安装ID和设置密码或远程散列标记 (hash)！
 email account active	admin	zh	邮件账户激活
 email address	admin	zh	邮件地址
@@ -214,7 +214,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	zh	请�
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh	请输入用户和组文件的完整路径。<br>例如: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	zh	请输入用户和组文件的完整路径。<br>例如: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	zh	请输入服务器所在主机的名称
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	请输入eGroupWare的网址。<br>例如：http://www.domain.com/egroupware   或者   /egroupware<br><b>不能以/结尾</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	请输入EGroupware的网址。<br>例如：http://www.domain.com/egroupware   或者   /egroupware<br><b>不能以/结尾</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	zh	请输入要查找的字符串。要显示所有条目，此处留空并点击提交按钮
 enter the site password for peer servers	admin	zh	请输入对等服务器的站点密码
 enter the site username for peer servers	admin	zh	请输入对等服务器的站点用户名
@@ -503,9 +503,9 @@ view sessions	admin	zh	查看会话
 view this user	admin	zh	查看该用户
 view user account	admin	zh	查看用户帐户
 who would you like to transfer all records owned by the deleted user to?	admin	zh	需要把被删除用户的所有记录转移给谁？
-would you like egroupware to cache the egw info array ?	admin	zh	需要 eGroupWare 缓存 egw info 数组吗？
-would you like egroupware to check for a new version<br>when admins login ?	admin	zh	您要不要 eGroupWare 在管理员登录时自动检查新版本？
-would you like egroupware to check for new application versions when admins login ?	admin	zh	当管理员登录时，您要不要 eGroupWare 检查新应用程序版本？
+would you like egroupware to cache the egw info array ?	admin	zh	需要 EGroupware 缓存 egw info 数组吗？
+would you like egroupware to check for a new version<br>when admins login ?	admin	zh	您要不要 EGroupware 在管理员登录时自动检查新版本？
+would you like egroupware to check for new application versions when admins login ?	admin	zh	当管理员登录时，您要不要 EGroupware 检查新应用程序版本？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh	您想要自动加载新的语言文件 (在登录时)？
 would you like to show each application's upgrade status ?	admin	zh	是否显示每个应用程序的升级情况？
 wrong account type: %1 is no %2 !!!	admin	zh	错误的帐户类型：%1没有%2！

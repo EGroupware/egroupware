@@ -202,7 +202,7 @@ enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ca	I
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	ca	Introdueix el camí complet per a fitxers d'usuaris i grups.<br />Exemples: /fitxers, E:\FITXERS
 enter the full path to the backup directory.<br />if empty: files directory	setup	ca	Introdueix el camí complet del directori de còpies de seguretat.<br />si buit: directori de fitxers
 enter the hostname of the machine on which this server is running	setup	ca	Introduïu el nom de l'ordinador on s'executa aquest servidor
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ca	Introdueix la URL de eGroupware.<br />Exemple: http://www.domini.com/egroupware o /egroupware<br />
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ca	Introdueix la URL de EGroupware.<br />Exemple: http://www.domini.com/egroupware o /egroupware<br />
 enter the site password for peer servers	setup	ca	Introduïu la contrasenya del lloc per a servidors parells
 enter the site username for peer servers	setup	ca	Introduïu el nom d'usuari del lloc per a servidors parells
 enter the title for your site	setup	ca	Introduïu el títol per al vostre lloc
@@ -441,7 +441,7 @@ smtp server port	setup	ca	Port del servidor SMTP
 some or all of its tables are missing	setup	ca	No es troben totes o unes quantes taules
 sources deleted/missing	setup	ca	Fonts eliminats/falten
 sql encryption type	setup	ca	Tipus de xifrat per contrasenyes SQL (predeterminat - md5)
-standard (login-name identical to egroupware user-name)	setup	ca	standard (nom d'entrada idèntic al nom d'usuari d'eGroupware)
+standard (login-name identical to egroupware user-name)	setup	ca	standard (nom d'entrada idèntic al nom d'usuari d'EGroupware)
 standard mailserver settings (used for mail authentication too)	setup	ca	Preferències del servidor de correu standard (usat també per atutentificació de Correu)
 start the postmaster	setup	ca	Iniciar el postmaster
 start updating languages %1 ...	setup	ca	Comença actualització idiomes %1 ...
@@ -528,15 +528,15 @@ which database type do you want to use with egroupware?	setup	ca	Quin tipus de b
 world readable	setup	ca	pot ser llegit per tothom
 world writable	setup	ca	pot ser modificat per tothom
 would you like egroupware to cache the phpgw info array ?	setup	ca	Voleu que EGroupware desi en memòria cau la matriu d'informació phpgw?
-would you like egroupware to check for a new version<br />when admins login ?	setup	ca	Vols que eGroupware comprovi si hi ha una nova versió<br />quan l'administrador entri?
+would you like egroupware to check for a new version<br />when admins login ?	setup	ca	Vols que EGroupware comprovi si hi ha una nova versió<br />quan l'administrador entri?
 would you like to show each application's upgrade status ?	setup	ca	Voleu mostrar l'estat de l'actualització de cada aplicació?
 writable by the webserver	setup	ca	pot ser modificat pel servidor web
 write	setup	ca	Escriure
 year	setup	ca	any
 yes	setup	ca	Sí
 yes, with lowercase usernames	setup	ca	Sí, amb nom d'usuaris en minúscules
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ca	Pareix que executes una versió pre-beta d'eGroupware.<br />Aquestes versions ja no tenen suport i no hi ha cap ruta per actualitzar-les a la instal·lació.<br /> Potser t'estimes més actualitzar primer a la versió 0.9.10 (la darrera versió que suporta actualitzacions pre-beta) <br /> i després actualitzar a partir de la versió actual.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ca	Pareix que executes una versió pre-beta d'eGroupware.<br />És recomanable que actualitzis a una versió nova. <br />Les versions antigues de PHP poden fer que eGroupware no funcioni correctament, o gens ni mica. <br /><br />Per favor, actualitza a la darrera versió %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	ca	Pareix que executes una versió pre-beta d'EGroupware.<br />Aquestes versions ja no tenen suport i no hi ha cap ruta per actualitzar-les a la instal·lació.<br /> Potser t'estimes més actualitzar primer a la versió 0.9.10 (la darrera versió que suporta actualitzacions pre-beta) <br /> i després actualitzar a partir de la versió actual.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ca	Pareix que executes una versió pre-beta d'EGroupware.<br />És recomanable que actualitzis a una versió nova. <br />Les versions antigues de PHP poden fer que EGroupware no funcioni correctament, o gens ni mica. <br /><br />Per favor, actualitza a la darrera versió %1
 you appear to be running version %1 of egroupware	setup	ca	Sembla que esteu executant la versió %1 d'EGroupware
 you appear to have %1 support.	setup	ca	Pareix que tens suport %1.
 you appear to have xml support enabled	setup	ca	Sembla que teniu activat el suport de XML
@@ -559,7 +559,7 @@ your backup directory '%1' %2	setup	ca	El vostre directori de còopies de segure
 your database does not exist	setup	ca	La vostra base de dades no existeix
 your database is not working!	setup	ca	La vostra base de dades no funciona!!
 your database is working, but you dont have any applications installed	setup	ca	La vostra base de dades està funcionant, però no té aplicacions instal·lades
-your egroupware api is current	setup	ca	La teva API eGroupware està actualitzada
+your egroupware api is current	setup	ca	La teva API EGroupware està actualitzada
 your files directory '%1' %2	setup	ca	El vostre directori de fitxers '%1' %2
 your header admin password is not set. please set it now!	setup	ca	La contrasenya d'administrador de capceleres NO està configurada. Si us plau, entreu-ne una ara.
 your header.inc.php needs upgrading.	setup	ca	El vostre header.inc.php necessita actualització

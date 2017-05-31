@@ -236,7 +236,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fi	Anna
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	fi	Anna palvelimen isäntänimi (hostname)
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna eGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/egroupware   tai   /egroupware<br><b>Ei kauttaviivaa loppuun</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna EGroupware:n URL.<br>Esimerkiksi: http://www.domain.com/egroupware   tai   /egroupware<br><b>Ei kauttaviivaa loppuun</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	fi	Anna haettava merkkijono. Nähdäksesi kaikki kohteet, tyhjennä kenttä ja napsauta hakupainiketta uudelleen
 enter the site password for peer servers	admin	fi	Anna salasana rinnakkaispalvelimille
 enter the site username for peer servers	admin	fi	Anna käyttäjätunnus rinnakkaispalvelimille
@@ -561,7 +561,7 @@ two months	admin	fi	Kaksi kuukautta
 two weeks	admin	fi	Kaksi viikkoa
 type '%1' already exists !!!	admin	fi	Tyyppi '%1' on jo olemassa !!!
 type of customfield	admin	fi	Lisäkentän tyyppi
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fi	Windows -ympäristössä ylläpitäjän on asennettava asyncservice %1käsin%2 tai käytettävä fallback -tilaa. Tällöin töiden suoritustarve tarkistetaan vain kun eGroupwarea käytetään.
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fi	Windows -ympäristössä ylläpitäjän on asennettava asyncservice %1käsin%2 tai käytettävä fallback -tilaa. Tällöin töiden suoritustarve tarkistetaan vain kun EGroupwarea käytetään.
 unknown account: %1 !!!	admin	fi	Tuntematon käyttäjätili: %1!!!
 unknown command %1!	admin	fi	Tuntematon komento: %1!!!
 unknown option %1	admin	fi	Tuntematon optio: %1!!!

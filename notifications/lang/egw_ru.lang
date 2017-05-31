@@ -18,7 +18,7 @@ disabled chains	notifications	ru	Отключенные цепочки
 do not notify me at all	notifications	ru	Не уведомлять меня вообще
 domain not found, please check serveraddress.	notifications	ru	Домен не найден, проверьте адрес сервера
 e-mail only	notifications	ru	Только по почте
-egroupware has notifications for you	notifications	ru	в eGroupWare для вас есть сообщения
+egroupware has notifications for you	notifications	ru	в EGroupware для вас есть сообщения
 egroupware login is starting, please wait.	notifications	ru	Подключение к EGroupware запущено, пожалуйста, подождите
 egroupware logindomain:	notifications	ru	Домен подключения к EGroupware
 egroupware logindomains founds, please select.	notifications	ru	Домены, подключённые к EGroupware найдены, выберите требуемый
@@ -26,10 +26,10 @@ egroupware not found by url or connection lost to server.	notifications	ru	EGrou
 egroupware not found by url.	notifications	ru	EGroupware не найдена по URL
 egroupware-popup and e-mail	notifications	ru	Всплывающие уведомления EGroupware и почта
 egroupware-popup and windows-popup	notifications	ru	Всплывающие уведомления EGroupware и Windows
-egroupware-popup backend	admin	ru	Обработчик всплавающих окон eGroupware
+egroupware-popup backend	admin	ru	Обработчик всплавающих окон EGroupware
 egroupware-popup first, if that fails notify me by e-mail	notifications	ru	Сначала всплывающие уведомления EGroupware, если это невозможно, уведомляйте по почте
 egroupware-popup only	notifications	ru	Только всплывающие уведомления EGroupware
-egroupware-popup verbosity	notifications	ru	Многословие всплавающих окон eGroupware
+egroupware-popup verbosity	notifications	ru	Многословие всплавающих окон EGroupware
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	ru	Только профиль администратора почты. НЕ использовать для уведомлений определенный пользователем активный профиль почты.
 enable egroupware-popup backend	admin	ru	Включить
 enable windows-popup backend	admin	ru	Включить обработчик всплывающих окон
@@ -77,7 +77,7 @@ signature	admin	ru	Подпись
 step	notifications	ru	Шаг
 subject dn:	notifications	ru	Идентификатор стороны назначения
 the server certificate is not a valid trust center certificate!	notifications	ru	Сертификат сервера не имеет подтверждения центра сертификации!
-this egroupware notification has been sent to you by mail because your	notifications	ru	Это извещение от eGroupWare было вам послано по почте так-как ваш
+this egroupware notification has been sent to you by mail because your	notifications	ru	Это извещение от EGroupware было вам послано по почте так-как ваш
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	ru	Это уведомление Egroupware было послано Вам по почте потому, что выбранный Вами способ уведомлений был отклонен администратором. Выберите другой способ уведомлений в настройках!
 user:	notifications	ru	Пользователь:
 warning	notifications	ru	Предупреждение

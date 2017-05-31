@@ -106,7 +106,7 @@ edit this group	admin	et	muuda seda gruppi
 edit this user	admin	et	muuda seda kasutajat
 edit user	admin	et	muuda kasutajat
 edit user account	admin	et	Muuda kasutaja kontot
-egroupware directory	admin	et	eGroupWare kaust
+egroupware directory	admin	et	EGroupware kaust
 email account active	admin	et	email konto aktiivne
 email address	admin	et	email aadress
 enable	admin	et	luba
@@ -227,7 +227,7 @@ view error log	admin	et	Vaata vigade logi
 view sessions	admin	et	Vaata aktiivseid sessioone
 view this user	admin	et	vaata seda kasutajat
 view user account	admin	et	Vaata kasutaja kontot
-would you like egroupware to check for a new version<br>when admins login ?	admin	et	Kas soovid, et eGroupWare kontrollib uusi versioone<br>kui adminnid sisselogivad ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	et	Kas soovid, et EGroupware kontrollib uusi versioone<br>kui adminnid sisselogivad ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	et	Kas soovid automaatselt sisselugeda uued keelefailid (sisselogimisel) ?
 you have to enter a name, to create a new field!!!	admin	et	Pead sisestama mime uuele väljale !!!
 you must enter a group name.	admin	et	Pead sisestama grupi nime.

@@ -6,7 +6,7 @@
 %1 proxy of %2	common	nl	%1 proxy van %2
 %1 to sync	groupdav	nl	%1 om te synchroniseren
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	nl	%1Kies een andere map%2<br />of maak %3 schrijfbaar voor de webserver
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1eGroupWare%2 is een multi-user, web-gebaseerde groupware suite, geschreven in %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1EGroupware%2 is een multi-user, web-gebaseerde groupware suite, geschreven in %3PHP%4.
 '%1' is no php file in the egw server root (%2)!	common	nl	'%1' is geen php bestand in de eGW server rootdirectory (%2)
 (session restored in %1 seconds)	common	nl	(sessie hersteld in %1 seconden)
 00 (disable)	admin	nl	00 (uitschakelen)
@@ -18,7 +18,7 @@
 80 (http)	admin	nl	80 (http)
 about	common	nl	Over
 about %1	common	nl	Over %1
-about egroupware	common	nl	Over eGroupWare
+about egroupware	common	nl	Over EGroupware
 access	common	nl	Toegang
 access not permitted	common	nl	Toegang geweigerd
 account has been created	common	nl	Account is aangemaakt
@@ -166,7 +166,7 @@ clear	common	nl	Wissen
 clear form	common	nl	Formulier wissen
 clear window	common	nl	Wis Scherm
 click	common	nl	Klik
-click here to resume your egroupware session.	common	nl	Klik hier om je eGroupWare sessie voort te zetten.
+click here to resume your egroupware session.	common	nl	Klik hier om je EGroupware sessie voort te zetten.
 click or mouse over to show menus	common	nl	Klik or Mouse Over om menus weer te geven
 click or mouse over to show menus?	common	nl	Klik or Mouse Over om menus weer te geven?
 click this image on the navbar: %1	common	nl	Klik deze afbeelding op de navigatiebalk: %1
@@ -256,11 +256,11 @@ edit	common	nl	Bewerken
 edit %1 category for	common	nl	Bewerk %1 categorie voor
 edit categories	common	nl	Categorieën bewerken
 edit category	common	nl	Bewerk categorie
-egroupware	common	nl	eGroupWare
-egroupware api version	common	nl	eGroupWare API versie
+egroupware	common	nl	EGroupware
+egroupware api version	common	nl	EGroupware API versie
 egroupware maintenance update %1 available	common	nl	EGroupware onderhoud update %1 is beschikbaar
 egroupware security update %1 needs to be installed!	common	nl	EGroupware beveiliging update %1 moet worden geïnstalleerd
-egroupware: login blocked for user '%1', ip %2	common	nl	eGroupWare: login geblokkeerd voor gebruiker '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	nl	EGroupware: login geblokkeerd voor gebruiker '%1', IP %2
 egypt	common	nl	EGYPTE
 el salvador	common	nl	EL SALVADOR
 email	common	nl	Email
@@ -271,7 +271,7 @@ enabled	common	nl	Geactiveerd
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	nl	Activeerd logging van CalDav/CardDav verkeer om problemen met apparaten weer te geven
 end date	common	nl	Einddatum
 end time	common	nl	Eindtijd
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Vul de lokatie van de eGroupWare URL in.<br />Voorbeeld: http://www.domeinnaam.nl/egroupware of /egroupware.<br /><b>Geen afsluitende slash toevoegen</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Vul de lokatie van de EGroupware URL in.<br />Voorbeeld: http://www.domeinnaam.nl/egroupware of /egroupware.<br /><b>Geen afsluitende slash toevoegen</b>
 entry has been deleted sucessfully	common	nl	Item succesvol verwijderd
 entry not found!	common	nl	Item niet gevonden!
 entry updated sucessfully	common	nl	Item succesvol bijgewerkt
@@ -372,7 +372,7 @@ hong kong	common	nl	HONG KONG
 how many days to sync in the future (default %1)	groupdav	nl	Hoeveel dagen om te synchroniseren in de toekomst (Standaard %1)
 how many days to sync in the past (default %1)	groupdav	nl	Hoeveel dagen om te synchroniseren vanuit het verleden (Standaard %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	nl	Hoe veel programma-iconen moeten worden weergegeven in de navigatiebalk. Extra iconen worden weergegeven in een uitklapmenu.
-how to show the general egroupware menu ?	common	nl	Hoe moet het algemene eGroupWare menu weergegeven worden?
+how to show the general egroupware menu ?	common	nl	Hoe moet het algemene EGroupware menu weergegeven worden?
 hungary	common	nl	HONGARIJË
 iceland	common	nl	IJSLAND
 iespell not detected. click ok to go to download page.	common	nl	ieSpell is niet gevonden. Klik OK om naar de download pagina te gaan.
@@ -597,7 +597,7 @@ pg down	common	nl	Pagina naar benenden
 pg up	common	nl	Pagina omhoog
 philippines	common	nl	FILIPIJNEN
 phone number	common	nl	telefoonnummer
-api	common	nl	eGroupWare API
+api	common	nl	EGroupware API
 pitcairn	common	nl	PITCAIRN (EILAND)
 placeholders	common	nl	Tijdelijke aanduiding
 please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
@@ -730,7 +730,7 @@ show menu	common	nl	toon menu
 show page generation time	common	nl	Verlooptijd van de pagina's weergeven?
 show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina?
 show page generation time?	common	nl	Verlooptijd pagina weergeven?
-show the logo's of egroupware and x-desktop on the desktop.	common	nl	Toont de logo's van eGroupWare en x-desktop op het bureaublad.
+show the logo's of egroupware and x-desktop on the desktop.	common	nl	Toont de logo's van EGroupware en x-desktop op het bureaublad.
 show_more_apps	common	nl	Meer applicaties weergeven
 showing %1	common	nl	weergegeven: %1
 showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
@@ -858,7 +858,7 @@ western sahara	common	nl	WESTELIJK SAHARA
 what color should all the blank space on the desktop have	common	nl	Welke kleur moet de blanko ruimte op het bureaublad hebben
 what style would you like the image to have?	common	nl	Welke stijl wilt u dat de afbeelding heeft?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	nl	Indien u ja antwoord worden de home en loguit knop gepresenteerd als toepassingen in de toepassingenbalk.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	nl	Waar en op welke manier moeten de eGroupWare links zoals voorkeuren, informatie en uitloggen getoond worden.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	nl	Waar en op welke manier moeten de EGroupware links zoals voorkeuren, informatie en uitloggen getoond worden.
 which groups	common	nl	Welke groepen
 which infolog types should be synced with the device, default only tasks.	common	nl	Welke Infolog typen zouden met dit apparaat moeten worden gesynchroniseerd, standaard is het alleen taken
 whole query	common	nl	gehele query
@@ -884,10 +884,10 @@ you have selected an invalid main category	common	nl	U heeft een ongeldige hoofd
 you have successfully logged out	common	nl	U bent succesvol afgemeld
 you need to %1set your timezone preference%2.	common	nl	U moet %1 instellen uw voorkeur voor tijdzone %2.
 you need to add the webserver user '%1' to the group '%2'.	common	nl	Je moet de webserver user '%1' aan groep '%2' toevoegen.
-you need to be an egroupware administrator to access this functionality!	common	nl	U moet een eGroupWare beheerder zijn om deze functionaliteit te kunnen benaderen!
+you need to be an egroupware administrator to access this functionality!	common	nl	U moet een EGroupware beheerder zijn om deze functionaliteit te kunnen benaderen!
 you need to select some entries first!	common	nl	U moet eerst enige gegevens selecteren !
 you need to set enable logging to "%1" to create/update a log.	groupdav	nl	U moet logging naar "%1" aanzetten om een log te maken en bij te houden
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	nl	U heeft geprobeerd om de eGroupWare toepassing %1 te openen maar u heeft geen toestemming om deze toepassing te gebruiken.
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	nl	U heeft geprobeerd om de EGroupware toepassing %1 te openen maar u heeft geen toestemming om deze toepassing te gebruiken.
 your message could <b>not</b> be sent!<br>	common	nl	Uw bericht kon <b>niet</b> worden verzonden!<br />
 your message has been sent	common	nl	Uw bericht is verzonden
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	nl	Uw wachtwoord heeft niet de juiste sterkte van %1 van de karakter klassen en een minimum lengte van %2 karakters

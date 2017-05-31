@@ -4,10 +4,10 @@
 %1 is no existing vfs file!	preferences	ru	%1 не существует файла по указанному пути!
 12 hour	preferences	ru	12 часов
 24 hour	preferences	ru	24 часа
-a template defines the layout of egroupware and it contains icons for each application.	preferences	ru	Шаблон определяет расклад eGroupWare и содержит значки для каждого приложения
+a template defines the layout of egroupware and it contains icons for each application.	preferences	ru	Шаблон определяет расклад EGroupware и содержит значки для каждого приложения
 a theme defines the colors and fonts used by the template.	preferences	ru	Тема определяет цвета и фоны,используемые в шаблонах
 acl grants have been updated	preferences	ru	разрешения ACL обновлены
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ru	Любой список eGroupWare будет показывать вам это количество записей или строк на  странице.<br> Слишком большое количество может замедлить обновление страницы, слишком малое приведет к увеличенным затратам всего списка.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ru	Любой список EGroupware будет показывать вам это количество записей или строк на  странице.<br> Слишком большое количество может замедлить обновление страницы, слишком малое приведет к увеличенным затратам всего списка.
 are you sure you want to delete this category ?	preferences	ru	Вы уверены, что хотите удалить данную категорию?
 automatically start with this font	preferences	ru	Автоматически загружать данный шрифт при старте
 automatically start with this font size	preferences	ru	Автоматически устанавливать данный размер шрифта при старте
@@ -58,7 +58,7 @@ how do you like to select accounts	preferences	ru	Как выхотите выб
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	ru	На сколько часов отстоит ваша временная зона от временной зоны сервера.<br>Если Вы находитесь в той же временной зоне, что и сервер, выберите 0 часов, иначе - выберите Ваши местные дату и время.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	ru	Как много значков должно быть показано в панели навигации в верхней части страницы. Дополнительные значки войдут в ниспадающее меню, вызываемое значком в крайней правой позиции панели навигации.
 how many toolbar buttons are available	preferences	ru	Сколько кнопок-пиктограмм доступно на панели команд
-how should egroupware display dates for you.	preferences	ru	Как eGroupWare  должен показывать для вас даты
+how should egroupware display dates for you.	preferences	ru	Как EGroupware  должен показывать для вас даты
 icon	preferences	ru	Значок
 icons and text	preferences	ru	Значки и текст
 icons only	preferences	ru	только значки
@@ -94,7 +94,7 @@ select additional lines in lists by	preferences	ru	Выберите дополн
 select different theme	preferences	ru	Выберите другую тему
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	ru	Выберите - как расширенный редактор текста будет генерировать тэг перевода строки.
 select one	preferences	ru	Выберите одно
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ru	Выбирите язык текстов и сообщений в eGroupWare. Некоторые языки могут не содержать все сообщения, в этом случае вы увидите сообщение на английском языке.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ru	Выбирите язык текстов и сообщений в EGroupware. Некоторые языки могут не содержать все сообщения, в этом случае вы увидите сообщение на английском языке.
 select the language of the spellchecker integrated into the rich text editor.	preferences	ru	Выберите язык проверки орфографии, втроенной в расширенный редактор текста.
 select the theme (visualization) of the rich text editor.	preferences	ru	Выберите тему (визуализацию) расширенного редактора текста.
 selectbox	preferences	ru	Выбор
@@ -104,7 +104,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	ru	Показывать число активных сессий все время.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	ru	Сообщения должны быть показаны, когда происходит изменение параметров, или только по запросу
 show helpmessages by default	preferences	ru	Показывать сообщения-подсказки по умолчанию
-show links between egroupware aps as	common	ru	Показывать связи между приложениями eGroupWare как
+show links between egroupware aps as	common	ru	Показывать связи между приложениями EGroupware как
 show navigation bar as	preferences	ru	Отображать строку навигации как
 show number of current users	preferences	ru	Показывать число текущих пользователей
 show text on navigation icons	preferences	ru	Показывать текст на значках навигации
@@ -112,7 +112,7 @@ show_more_apps	common	ru	Показывать больше приложений
 spellchecker language	addressbook	ru	Язык проверки орфографии
 text editor settings	preferences	ru	Установки редактора текста
 text only	preferences	ru	Только текст
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ru	Приложение по умолчанию будет запущено когда вы входите в eGroupWare или кликните на значок Домой.<br>Также вы можете иметь не одно приложение на домашней странице (Домой), если вы не выбрали здесь определенного приложения (может быть настроено в свойствах каждого приложения).
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ru	Приложение по умолчанию будет запущено когда вы входите в EGroupware или кликните на значок Домой.<br>Также вы можете иметь не одно приложение на домашней странице (Домой), если вы не выбрали здесь определенного приложения (может быть настроено в свойствах каждого приложения).
 the old password is not correct	preferences	ru	Старый пароль неверен
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ru	Показывает всех доступных пользователей (может быть довольно медленно при большом числе пользователей) . Можно искать пользователей по имени или группе.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	ru	Меню показывает всех доступных пользователей (может быть очень медленным при большом количестве пользователей). В меню можно искать пользователей по имени или группе. Две последние возможности ограничивают видимость других пользователей. Таким образом они должны быть ускорены и применяться не к администраторам.
@@ -127,8 +127,8 @@ unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as u
 use default	preferences	ru	использовать по умолчанию
 users choice	preferences	ru	Выбор Пользователей
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	ru	Если Вы ответите "да" кнопки Домой ии Выйти будут присутствовать как приложения в главно верхней панели приложений
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ru	Какой набор символов (кодировку) следует использовать при экспорте в CSV. По умолчанию используется системный набор символов выбранный во время установки eGroupWare.
-which currency symbol or name should be used in egroupware.	preferences	ru	Какой символ валюты или название должны использоваться в eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ru	Какой набор символов (кодировку) следует использовать при экспорте в CSV. По умолчанию используется системный набор символов выбранный во время установки EGroupware.
+which currency symbol or name should be used in egroupware.	preferences	ru	Какой символ валюты или название должны использоваться в EGroupware.
 write prefs for the specified application.	preferences	ru	Введите настройки для указанного приложения.
 you can show the applications as icons only, icons with app-name or both.	preferences	ru	Вы можете показывать приложения в как виде одних значков, так и в виде значков с названиями приложений.
 you can show the linked entries with icons only, icons with app-name or both.	common	ru	Вы можете показать связанные записи как только пиктограммами, пиктограммами с названиями приложений или оба.

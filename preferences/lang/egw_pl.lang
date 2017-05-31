@@ -2,10 +2,10 @@
 %1 hours	preferences	pl	%1 godzin
 12 hour	preferences	pl	12 godzinny
 24 hour	preferences	pl	24 godzinny
-a template defines the layout of egroupware and it contains icons for each application.	preferences	pl	Szablony określają wygląd eGroupWare i zawierają ikonki dla wszystkich aplikacji
+a template defines the layout of egroupware and it contains icons for each application.	preferences	pl	Szablony określają wygląd EGroupware i zawierają ikonki dla wszystkich aplikacji
 a theme defines the colors and fonts used by the template.	preferences	pl	Tematy służą do określenia kolorów i czcionek używanych w szablonie
 acl grants have been updated	preferences	pl	Uprawniena dostępu (ACL) zostały odnowione
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pl	Wszelkie listy w eGroupWare będą wyświetlać tutaj ustawioną liczbę wierszy na stronę.<br />Za wiele spowolni dość znacznie wyświetlanie stron, za mało spowoduje utratę przejrzystości informacji.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pl	Wszelkie listy w EGroupware będą wyświetlać tutaj ustawioną liczbę wierszy na stronę.<br />Za wiele spowolni dość znacznie wyświetlanie stron, za mało spowoduje utratę przejrzystości informacji.
 are you sure you want to delete this category ?	preferences	pl	Napewno skasować tę kategorie ?
 br	preferences	pl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pl	Zmień hasło użytkownika podając stare i nowe hasło. Odpowiedź TRUE oznacza poprawną zmianę, podczas gdy FALSE związane jest z błędem.
@@ -41,14 +41,14 @@ help off	preferences	pl	Wyłącz wyświetlanie pomocy
 hours	preferences	pl	godzin
 how do you like to display accounts	preferences	pl	Jak mają być wyświetlane konta użytkowników
 how do you like to select accounts	preferences	pl	Jak chciałbyś wybierać/zaznaczać konta użytkowników
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	pl	Jaka jest różnica czasowa między Twoją strefą czasową a strefą serwera eGroupWare?<br />Jeżeli znajdujesz się w tej samej strefie czasowej co serwer, ustaw 0 godzin, w innym wypadku ustaw według Twojego lokalnego czasu i daty.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	pl	Jaka jest różnica czasowa między Twoją strefą czasową a strefą serwera EGroupware?<br />Jeżeli znajdujesz się w tej samej strefie czasowej co serwer, ustaw 0 godzin, w innym wypadku ustaw według Twojego lokalnego czasu i daty.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	pl	Ile ikon aplikacji wyświetlać w głównym pasku na górze ekranu? Dodatkowe aplikacje będą dostępne z menu rozwijalnego, które wywołuje się klikając ikonę strzałki znajdującą się na prawym końcu menu.
-how should egroupware display dates for you.	preferences	pl	W jaki spsób eGroupWare powinien wyświetlać datę
+how should egroupware display dates for you.	preferences	pl	W jaki spsób EGroupware powinien wyświetlać datę
 icon	preferences	pl	Ikona
 icons and text	preferences	pl	Ikony i tekst
 icons only	preferences	pl	Tylko ikony
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	pl	Obrazy podłączone do wpisu będą wyświetlane jako miniatury. Możesz to wyłączyć aby przyspieszyć wyświetlanie strony.
-in which country are you. this is used to set certain defaults for you.	preferences	pl	W jakim państwie się znajdujesz? eGroupWare użyje tego ustawienia do wyboru pewnych konfiguracji domyślnych.
+in which country are you. this is used to set certain defaults for you.	preferences	pl	W jakim państwie się znajdujesz? EGroupware użyje tego ustawienia do wyboru pewnych konfiguracji domyślnych.
 interface/template selection	preferences	pl	Wybór interfejsu/szablonu
 language	preferences	pl	Język
 max matches per page	preferences	pl	Maksymalna liczba trafień na stronie
@@ -71,7 +71,7 @@ rich text editor theme	preferences	pl	Kompozycja edytora zaawansowanego
 select different theme	preferences	pl	Wybierz inny temat
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	pl	Wybierz w jaki sposób zaawansowany edytor wygeneruje znak nowej linii.
 select one	preferences	pl	Wybierz jeden
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pl	Wybierz język tekstów i komunikatów wewnątrz eGroupWare.<br />Niektóre języki nie zawierają wszelkich komunikatów. W takich wypadkach wyświetlane będą komunikaty w języku angielskim.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pl	Wybierz język tekstów i komunikatów wewnątrz EGroupware.<br />Niektóre języki nie zawierają wszelkich komunikatów. W takich wypadkach wyświetlane będą komunikaty w języku angielskim.
 select the language of the spellchecker integrated into the rich text editor.	preferences	pl	Wybierz język sprawdzania pisowni.
 select the theme (visualization) of the rich text editor.	preferences	pl	Wybierz kompozycje (wizualizację) edytora zaawansowanego.
 selectbox	preferences	pl	Lista rozwijana
@@ -81,14 +81,14 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	pl	Czy wyświetlać liczbę aktywnych sesji?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	pl	Czy wyświetlać komunikaty i teksty pomocy przy każdym wywołaniu ustawień domyślnie czy wyłącznie na żądanie.
 show helpmessages by default	preferences	pl	Wyświetlaj pomoc domyślnie
-show links between egroupware aps as	common	pl	Pokaż linki pomiędzy aplikacjami eGroupware jako
+show links between egroupware aps as	common	pl	Pokaż linki pomiędzy aplikacjami EGroupware jako
 show navigation bar as	preferences	pl	Wyświetlaj pasek nawigacji jako
 show number of current users	preferences	pl	Wyświetlaj liczbe zalogowanych użytkowników
 show text on navigation icons	preferences	pl	Wyświetlaj tekst na ikonach nawigacji
 show_more_apps	common	pl	Wyświetl wiecej aplikacji
 spellchecker language	addressbook	pl	Język sprawdzania pisowni
 text only	preferences	pl	Tylko tekst
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pl	Aplikacja domyślna będzie wywoływana za każdym razem kiedy będziesz się rejestrował do eGroupWare lub wybierzesz ikonę strony głównej.<br>Możesz także wyświetlać dane z kilku aplikacji na stronie głównej jeżeli nie wybierzesz żadnej domyślnej aplikacji w tym polu (wyświetlanie na stronie głównej jest ustawiane dla każdej aplikacji w jej menu ustawień oddzielnie).
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pl	Aplikacja domyślna będzie wywoływana za każdym razem kiedy będziesz się rejestrował do EGroupware lub wybierzesz ikonę strony głównej.<br>Możesz także wyświetlać dane z kilku aplikacji na stronie głównej jeżeli nie wybierzesz żadnej domyślnej aplikacji w tym polu (wyświetlanie na stronie głównej jest ustawiane dla każdej aplikacji w jej menu ustawień oddzielnie).
 the old password is not correct	preferences	pl	Wprowadzone stare hasło nie jest poprawne
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub adresu poczty elektronicznej.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub grupie. Ostatnie dwie opcje ograniczają widoczność innych użytkowników więc powinny być wymuszone i dotyczyć NIE-administratorów. Pomimo tego ich ustawienie nie powinno być wymuszane i stosowane dla ADMINISTRATORÓW.
@@ -100,8 +100,8 @@ thousands separator is only used for displaying and not for editing numbers.	pre
 time format	preferences	pl	Format czasu
 use default	preferences	pl	Domyślne
 users choice	preferences	pl	Wybierają użytkownicy
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków użyć przy eksporcie do CSV? Zestaw 'systemowy domyślny' jest zestawem wybrany w tej instalacji eGroupWare.
-which currency symbol or name should be used in egroupware.	preferences	pl	Który symbol waluty powinien być użyty w eGroupWare
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków użyć przy eksporcie do CSV? Zestaw 'systemowy domyślny' jest zestawem wybrany w tej instalacji EGroupware.
+which currency symbol or name should be used in egroupware.	preferences	pl	Który symbol waluty powinien być użyty w EGroupware
 write prefs for the specified application.	preferences	pl	Zapisz ustawienia wybranej aplikacji.
 you can show the applications as icons only, icons with app-name or both.	preferences	pl	Możesz wybrać wyświetlanie aplikacji w formie ikon, tekstów lub obydwojga.
 you can show the linked entries with icons only, icons with app-name or both.	common	pl	Możesz pokazać podlinkowane wpisy jako ikony lub ikony z nazwą aplikacji.

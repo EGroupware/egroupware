@@ -1,6 +1,6 @@
 %1 email addresses inserted	common	lv	%1 e-pasta adreses pievienotas
 %1 is not executable by the webserver !!!	common	lv	%1 : Šo webserveris nevar palaist !!!
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	lv	%1eGroupWare%2 ir daudzlietotāju, caur tīmekļa pārlūkprogrammu lietojama GrupuWare ,kas programmēta %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	lv	%1EGroupware%2 ir daudzlietotāju, caur tīmekļa pārlūkprogrammu lietojama GrupuWare ,kas programmēta %3PHP%4.
 00 (disable)	admin	lv	00 (disable)
 13 (ntp)	admin	lv	3 (ntp)
 80 (http)	admin	lv	80 (http)
@@ -163,7 +163,7 @@ edit	common	lv	Rediģēt
 edit %1 category for	common	lv	Rediģēt %1 kategoriju par
 edit categories	common	lv	Rediģēt Kategorijas
 edit category	common	lv	Rediģēt kategoriju
-egroupware: login blocked for user '%1', ip %2	common	lv	eGroupWare: bloķēts lietotājvārds '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	lv	EGroupware: bloķēts lietotājvārds '%1', IP %2
 egypt	common	lv	ĒĢIPTE
 el salvador	common	lv	SALVADORA
 email	common	lv	E-Pasts
@@ -171,7 +171,7 @@ email-address of the user, eg. "%1"	common	lv	lietotāja e-pasta adrese, piemēr
 enabled	common	lv	Aktivizēts
 end date	common	lv	Beigu datums
 end time	common	lv	Beigu laiks
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi eGroupWare URL atrašanos<b>Piemērs: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lv	Ievadi EGroupware URL atrašanos<b>Piemērs: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
 entry has been deleted sucessfully	common	lv	Ieraksts tika veiksmīgi izdzēsts
 entry updated sucessfully	common	lv	Ieraksts veiksmīgi tika atjaunināts
 equatorial guinea	common	lv	EKVATORIĀLĀ GVINEJA

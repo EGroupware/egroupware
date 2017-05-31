@@ -1,6 +1,6 @@
 %1 email addresses inserted	common	no	%1 email adresser lagt til
 %1 is not executable by the webserver !!!	common	no	%1 er ikke eksekverbar på webtjener !!!
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	no	%1eGroupWare%2 er en flerbruker, web-basert gruppevare skrevet i %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	no	%1EGroupware%2 er en flerbruker, web-basert gruppevare skrevet i %3PHP%4.
 00 (disable)	admin	no	00 (frakoblet)
 1 day	common	no	1 dag
 1 hour	common	no	1 time
@@ -177,7 +177,7 @@ edit %1 category for	common	no	Endre %1 kategori for
 edit categories	common	no	Endre kategorier
 edit category	common	no	Endre kategori
 egroupware	common	no	egroupware
-egroupware: login blocked for user '%1', ip %2	common	no	eGroupWare: pålogging blokkert for bruker '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	no	EGroupware: pålogging blokkert for bruker '%1', IP %2
 egypt	common	no	EGYPT
 el salvador	common	no	EL SALVADOR
 email	common	no	Epost
@@ -185,7 +185,7 @@ email-address of the user, eg. "%1"	common	no	brukerens epost-adresse, f.eks: "%
 enabled	common	no	Påslått
 end date	common	no	Sluttdato
 end time	common	no	Slutt tidspunkt
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Skriv inn eGroupWares Internett adresse (URL).<br> F.eks: http://www.domain.com/egroupware   or   /egroupware<br><b>Ingen avsluttende skråstrek</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Skriv inn EGroupwares Internett adresse (URL).<br> F.eks: http://www.domain.com/egroupware   or   /egroupware<br><b>Ingen avsluttende skråstrek</b>
 entry has been deleted sucessfully	common	no	Innslaget ble slettet
 entry updated sucessfully	common	no	Innslaget ble oppdatert
 equatorial guinea	common	no	EKVATORIAL-GUINEA

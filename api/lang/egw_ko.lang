@@ -93,12 +93,12 @@ e-mail	common	ko	E-Mail
 edit	common	ko	수정
 edit categories	common	ko	분류 수정
 edit category	common	ko	분류 수정
-egroupware: login blocked for user '%1', ip %2	common	ko	eGroupWare: 사용자 %1 및 IP %2에 대한 로그인이 차단되었습니다.
+egroupware: login blocked for user '%1', ip %2	common	ko	EGroupware: 사용자 %1 및 IP %2에 대한 로그인이 차단되었습니다.
 email	common	ko	E-Mail
 enabled	common	ko	활성화됨
 end date	common	ko	종료일
 end time	common	ko	종료시간
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	eGroupWare의 URL 위치를 입력해주세요<BR>예제: http://www.domain.com/egroupware 혹은 /egroupware<br><b>마지막에 / (슬래시)를 붙이지 마세요</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	EGroupware의 URL 위치를 입력해주세요<BR>예제: http://www.domain.com/egroupware 혹은 /egroupware<br><b>마지막에 / (슬래시)를 붙이지 마세요</b>
 entry has been deleted sucessfully	common	ko	데이터가 성공적으로 삭제되었습니다.
 entry updated sucessfully	common	ko	데이터가 성공적으로 수정되었습니다.
 error	common	ko	오류

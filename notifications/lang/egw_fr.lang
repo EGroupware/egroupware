@@ -15,20 +15,20 @@ disabled chains	notifications	fr	Chaînes désactivées
 do not notify me at all	notifications	fr	Ne pas me notifier du tout.
 domain not found, please check serveraddress.	notifications	fr	Domaine non trouvé, veuillez vérifier l'adresse du serveur
 e-mail only	notifications	fr	Email seulement
-egroupware has notifications for you	notifications	fr	eGroupware a des notifications pour vous
-egroupware login is starting, please wait.	notifications	fr	La connexion à eGroupware se lance, veuillez patienter.
-egroupware logindomain:	notifications	fr	Domaine de connexion à eGroupware
-egroupware logindomains founds, please select.	notifications	fr	Domaines de connexion à eGroupware trouvés, veuillez choisir.
-egroupware not found by url or connection lost to server.	notifications	fr	eGroupware non trouvé à cette URL ou connexion au serveur perdue
-egroupware not found by url.	notifications	fr	eGroupware non trouvé à cette URL
-egroupware-popup and e-mail	notifications	fr	Popup et email eGroupware
-egroupware-popup and windows-popup	notifications	fr	Popup eGroupware et popup Windows
-egroupware-popup backend	admin	fr	Backend de popup eGroupware
-egroupware-popup first, if that fails notify me by e-mail	notifications	fr	Popup eGroupware d'abord, si cela échoue, notifier par email
-egroupware-popup only	notifications	fr	Popup eGroupware seulement
-egroupware-popup verbosity	notifications	fr	Verbosité des Popup eGroupware
+egroupware has notifications for you	notifications	fr	EGroupware a des notifications pour vous
+egroupware login is starting, please wait.	notifications	fr	La connexion à EGroupware se lance, veuillez patienter.
+egroupware logindomain:	notifications	fr	Domaine de connexion à EGroupware
+egroupware logindomains founds, please select.	notifications	fr	Domaines de connexion à EGroupware trouvés, veuillez choisir.
+egroupware not found by url or connection lost to server.	notifications	fr	EGroupware non trouvé à cette URL ou connexion au serveur perdue
+egroupware not found by url.	notifications	fr	EGroupware non trouvé à cette URL
+egroupware-popup and e-mail	notifications	fr	Popup et email EGroupware
+egroupware-popup and windows-popup	notifications	fr	Popup EGroupware et popup Windows
+egroupware-popup backend	admin	fr	Backend de popup EGroupware
+egroupware-popup first, if that fails notify me by e-mail	notifications	fr	Popup EGroupware d'abord, si cela échoue, notifier par email
+egroupware-popup only	notifications	fr	Popup EGroupware seulement
+egroupware-popup verbosity	notifications	fr	Verbosité des Popup EGroupware
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	fr	Profil eMailAdmin seulement. Ne pas utiliser les profils mail des utilisateurs pour les notifications.
-enable egroupware-popup backend	admin	fr	Activer le backend des popup eGroupware
+enable egroupware-popup backend	admin	fr	Activer le backend des popup EGroupware
 enable windows-popup backend	admin	fr	Activer le backend de popup Windows
 enabled chains	notifications	fr	Chaînes autorisées
 error browser can`t start.	notifications	fr	Erreur : le navigateur ne se lance pas
@@ -41,7 +41,7 @@ host:	notifications	fr	Hôte :
 if set, embedded links get rendered special for external clients	notifications	fr	Si coché, les liens sont spécialement adaptés aux clients externes
 java desktop notification app	preferences	fr	Application java de notification
 linked entries:	common	fr	Entrées liées :
-login in egroupware:	notifications	fr	login eGroupware
+login in egroupware:	notifications	fr	login EGroupware
 mail backend	admin	fr	Backend email
 message from	notifications	fr	Message de
 minutes	notifications	fr	Minutes
@@ -53,9 +53,9 @@ page not found, please check serveraddress.	notifications	fr	Page non trouvée, 
 password:	notifications	fr	Mot de passe :
 permission	notifications	fr	permission
 permission denied for notifications application.	notifications	fr	Permission refusée pour l'applications de notification
-please contact your egroupware admin.	notifications	fr	Veuillez contacter votre admin eGroupware
-please enter the url of your egroupware.	notifications	fr	Veuillez entrer l'URL de votre eGroupware
-please enter your egroupware username.	notifications	fr	Veuillez entrer votre nom d'utilisateur eGroupware
+please contact your egroupware admin.	notifications	fr	Veuillez contacter votre admin EGroupware
+please enter the url of your egroupware.	notifications	fr	Veuillez entrer l'URL de votre EGroupware
+please enter your egroupware username.	notifications	fr	Veuillez entrer votre nom d'utilisateur EGroupware
 please enter your password	notifications	fr	Veuillez entrer votre mot de passe
 preferences for notification	notifications	fr	Préférences de notification
 received	notifications	fr	Reçu
@@ -71,8 +71,8 @@ sorry, your login has expired	notifications	fr	Désolé, votre login a expiré
 step	notifications	fr	Etape
 subject dn:	notifications	fr	Sujet DN :
 the server certificate is not a valid trust center certificate!	notifications	fr	Ce certificat n'est pas un certificat de confiance valide !
-this egroupware notification has been sent to you by mail because your	notifications	fr	Cette notification eGroupware vous a été envoyée par email parce que votre
-this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	fr	Cette notification eGroupware vous êtes envoyée par email parce que la chaîne de notification choisie a été désactivé par l'administrateur.  Veuillez sélectionner une autre chaîne de notification dans vos préférences !
+this egroupware notification has been sent to you by mail because your	notifications	fr	Cette notification EGroupware vous a été envoyée par email parce que votre
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	fr	Cette notification EGroupware vous êtes envoyée par email parce que la chaîne de notification choisie a été désactivé par l'administrateur.  Veuillez sélectionner une autre chaîne de notification dans vos préférences !
 user:	notifications	fr	Utilisateur :
 warning	notifications	fr	Attention
 windows-popup and e-mail	notifications	fr	Popup et email Windows

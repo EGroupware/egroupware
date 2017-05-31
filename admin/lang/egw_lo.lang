@@ -200,7 +200,7 @@ edit this user	admin	lo	ແກ້ໄຂຜູ້ໃຊ້ນີ້
 edit user	admin	lo	ແກ້ໄຂຜູ້ໃຊ້
 edit user account	admin	lo	ແກ້ໄຂບັນຊີຜູ້ໃຊ້
 educational: universities, schools, ...	admin	lo	ການສຶກສາ: ມະຫາວິທະຍາໄລ, ໂຮງຮຽນ, ...
-egroupware directory	admin	lo	eGroupWare directory
+egroupware directory	admin	lo	EGroupware directory
 egroupware version	admin	lo	Egroupware Version
 either install id and config password needed or the remote hash!	admin	lo	ບໍ່ວ່າຈະຢູ່ໃນຫຼືເຂົ້າມາຈາກຂ້າງນອກ(ລີໂມດ)ຕ້ອງມີລະຫັດປະຈໍາຕົວແລະລະຫັດຜ່ານ
 email account active	admin	lo	email ບັນຊີທີ່ໃຊ້ຢູ່
@@ -218,7 +218,7 @@ enter the background color for the site title	admin	lo	ພິມສີພື້�
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	lo	ພິມພາດເກັບຟາຍຊົ່ວຄາວສໍາລັບ. <br> ຕົວຢ່າງ: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	lo	ຕື່ມພາດເກັບຟາຍສໍາລັບຜູ້ໃຊ້ ແລະ ກຸ່ມ. <br> ຕົວຢ່າງ: /files, E:\FILE
 enter the hostname of the machine on which this server is running	admin	lo	ພິມ ຊື່ໂຮສ ຂອງເຄື່ອງ ເຊີບເວີ້ ທີ່ກໍາລັງໃຊ້ຢູ່
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lo	ພິມບ່ອນທີ່ຈັດເກັບຂອງ eGroupWare's URL.<br> ຕົວຢ່າງ: http://www.domain.com/egroupware   ຫຼື   /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	lo	ພິມບ່ອນທີ່ຈັດເກັບຂອງ EGroupware's URL.<br> ຕົວຢ່າງ: http://www.domain.com/egroupware   ຫຼື   /egroupware<br><b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	lo	ພິມຂໍ້ຄວາມຄົ້ນຫາ. ເພື່ອສະແດງທຸ່ກລາຍການທີ່ມີ,ພື້ນທີ່ນີ້ເປົ່າວ່າງໃຫ້ກົດປຸ່ມນໍາສະເໜີອີກຄັ້ງ
 enter the site password for peer servers	admin	lo	ພິມລະຫັດຜ່ານສໍາລັບ peer servers
 enter the site username for peer servers	admin	lo	ພິມຊື່ສໍາລັບ peer ເຊີບເວີ້
@@ -526,7 +526,7 @@ unknown command %1!	admin	lo	ຄໍາສັ່ງທີ່ບໍ່ຮູ້ຈ
 unknown option %1	admin	lo	ຕົວເລືອກທີ່ບໍ່ຮູ້ຈັກ: %1
 up	admin	lo	ຂຶ້ນ
 updated	admin	lo	ປັບປຸງແລ້ວ
-url of the egroupware installation, eg. http://domain.com/egroupware	admin	lo	URL ຂອງການຕິດຕັ້ງລະບົບຕາຕະລາງ(eGroupware) ເຊັ່ນ.http://domain.com/egroupware
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	lo	URL ຂອງການຕິດຕັ້ງລະບົບຕາຕະລາງ(EGroupware) ເຊັ່ນ.http://domain.com/egroupware
 usage	admin	lo	ການໃຊ້
 use cookies to pass sessionid	admin	lo	ໃຊ້ cookies ເພື່ອຜ່ານ sessionid
 use pure html compliant code (not fully working yet)	admin	lo	ໃຊ້ HTML code (ຍັງເຮັດວຽກບໍ່ເຕັມທີ່)
@@ -548,9 +548,9 @@ view user account	admin	lo	ສະແດງບັນຊີຜູ້ໃຊ້
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	lo	ພວກເຮົາຂໍໃຫ້ຂໍ້ມູນເຫຼົ່ານັ້ນເພື່ອວັດຖຸປະສົງສະເພາະທາງສະຖິຕິເພື່ອໃຫ້ໄດ້ພາບລວມທົ່ວໄປກ່ຽວກັບການໃຊ້ ລະບົບຕາຕະລາງ (Egroupware) ໃນທົ່ວໂລກ
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	lo	ພວກເຮົາບໍ່ສາມາດບັນທຶກຂໍ້ມູນໃດໆກ່ຽວກັບຕົວທ່ານ
 who would you like to transfer all records owned by the deleted user to?	admin	lo	ແມ່ນຜູ້ໃດທີ່ຕ້ອງການເອົາຂໍ້ມູນຂອງຜູ້ທີ່ຖືກລຶບໄປ ?
-would you like egroupware to cache the egw info array ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (eGroupWare) ໃຫ້ເກັບເປັນຊຸດຂໍ້ມູນ egw?
-would you like egroupware to check for a new version<br>when admins login ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (eGroupWare) ເພື່ອກວດສອບ <br> ສໍາລັບເວີເຊິ້ນໃໝ່ເມື່ອ admins ເຂົ້າສູ່ລະບົບ ?
-would you like egroupware to check for new application versions when admins login ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (eGroupWare) ເພື່ອກວດສອບ ແອັບພຼິເຄຊັນໃໝ່ເມື່ອຜູ້ຄຸ້ມຄອງລະບົບ ເຂົ້າສູ່ລະບົບ ?
+would you like egroupware to cache the egw info array ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (EGroupware) ໃຫ້ເກັບເປັນຊຸດຂໍ້ມູນ egw?
+would you like egroupware to check for a new version<br>when admins login ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (EGroupware) ເພື່ອກວດສອບ <br> ສໍາລັບເວີເຊິ້ນໃໝ່ເມື່ອ admins ເຂົ້າສູ່ລະບົບ ?
+would you like egroupware to check for new application versions when admins login ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (EGroupware) ເພື່ອກວດສອບ ແອັບພຼິເຄຊັນໃໝ່ເມື່ອຜູ້ຄຸ້ມຄອງລະບົບ ເຂົ້າສູ່ລະບົບ ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	lo	ທ່ານຕ້ອງການທີ່ຈະໂຫຼດອັດຕະໂນມັດໄຟລພາສາໃໝ່ (ເວລາລ໋ອກອິນ) ?
 would you like to show each application's upgrade status ?	admin	lo	ທ່ານຕ້ອງການສະແດງສະຖານະການປັບປຸງຂອງແຕ່ລະແອັບພຼິເຄຊັນ ບໍ?
 wrong account type: %1 is no %2 !!!	admin	lo	ປະເພດບັນຊີຜິດພາດ: %1 ບໍ່ແມ່ນ %2!

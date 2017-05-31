@@ -1,7 +1,7 @@
 %1 email addresses inserted	common	pt	%1 endereço(s) de correio electrónico inserido(s)
 %1 is not executable by the webserver !!!	common	pt	%1 não é executável pelo servidor Web !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt	%1Escolha outra directoria%2<br />ou torne %3 editável pelo servidor Web
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt	O %1eGroupWare%2 é uma ferramenta Web groupware criada em %3PHP%4, para ser utilizada por vários utilizadores em simultâneo.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt	O %1EGroupware%2 é uma ferramenta Web groupware criada em %3PHP%4, para ser utilizada por vários utilizadores em simultâneo.
 '%1' is no php file in the egw server root (%2)!	common	pt	'% 1' não é arquivo php na raiz do servidor eGW (% 2)!
 00 (disable)	admin	pt	00 (desactivado)
 1 day	common	pt	1 Dia
@@ -12,7 +12,7 @@
 80 (http)	admin	pt	80 (http)
 about	common	pt	Sobre
 about %1	common	pt	Sobre a aplicação %1
-about egroupware	common	pt	Sobre o eGroupware
+about egroupware	common	pt	Sobre o EGroupware
 access	common	pt	Acesso
 access not permitted	common	pt	Acesso negado
 account has been created	common	pt	A conta foi criada
@@ -202,7 +202,7 @@ edit	common	pt	Editar
 edit %1 category for	common	pt	Editar categoria %1 para
 edit categories	common	pt	Editar categorias
 edit category	common	pt	Editar categorias
-egroupware: login blocked for user '%1', ip %2	common	pt	eGroupWare: entrada bloqueada para o utilizador '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	pt	EGroupware: entrada bloqueada para o utilizador '%1', IP %2
 egypt	common	pt	Egipto
 el salvador	common	pt	Salvador
 email	common	pt	Correio Electrónico
@@ -210,7 +210,7 @@ email-address of the user, eg. "%1"	common	pt	endereço de correio electrónico 
 enabled	common	pt	Activado
 end date	common	pt	Data de fim
 end time	common	pt	Hora de fim
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a localização da URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware ou /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a localização da URL do EGroupware.<br>Exemplo: http://www.domain.com/egroupware ou /egroupware<br><b>Sem a barra final</b>
 entry has been deleted sucessfully	common	pt	O registo foi eliminado com sucesso
 entry updated sucessfully	common	pt	O registo foi actualizado com sucesso
 equatorial guinea	common	pt	Guiné Equatorial
@@ -484,7 +484,7 @@ personal	common	pt	Pessoal
 peru	common	pt	Peru
 philippines	common	pt	Filipinas
 phone number	common	pt	número de telefone
-api	common	pt	API eGroupWare
+api	common	pt	API EGroupware
 pitcairn	common	pt	Ilha Pitcairn
 please %1 by hand	common	pt	Por favor, %1 manualmente
 please enter a name	common	pt	Por favor, insira um nome !
@@ -583,7 +583,7 @@ show menu	common	pt	exibir menu
 show page generation time	common	pt	Exibir tempo de geração da página
 show page generation time on the bottom of the page?	common	pt	Exibir tempo de geração da página no final da página?
 show page generation time?	common	pt	Exibir tempo de geração da página?
-show the logo's of egroupware and x-desktop on the desktop.	common	pt	Exibir o logótipo da eGroupware e da x-desktop no ambiente de trabalho.
+show the logo's of egroupware and x-desktop on the desktop.	common	pt	Exibir o logótipo da EGroupware e da x-desktop no ambiente de trabalho.
 show_more_apps	common	pt	Exibir mais aplicações
 showing %1	common	pt	A exibir %1
 showing %1 - %2 of %3	common	pt	A exibir %1 - %2 de %3
@@ -972,7 +972,7 @@ key	common	pt	Chave
 label	common	pt	Etiqueta
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	pt	Etiqueta:[bold][italic] Texto:[len][,max] Números:[min][,[max][,len]] Área de texto:[rows][,cols] Botão de selecção única.:valor de regra horizontal:[width] Modelo:[IndexInContent] Selecção:[multiselect] Data:[values: ex. 'a-m-d']
 lang	common	pt	Idioma
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	pt	Abreviatura de idioma (ex. 'pt' para português) para o modelo dependente de um idioma e ('' lêem as preferências do seu idioma ou o definido por omissão; o eGroupWare lê 'por omissão' o modelo por omissão '')
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	pt	Abreviatura de idioma (ex. 'pt' para português) para o modelo dependente de um idioma e ('' lêem as preferências do seu idioma ou o definido por omissão; o EGroupware lê 'por omissão' o modelo por omissão '')
 last	common	pt	Último/a
 left	common	pt	Esquerda
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	pt	Largura por char+varchar, precisions int: 2, 4, 8 e float: 4, 8
@@ -1003,7 +1003,7 @@ more than 1 match for '%1'	common	pt	Mais do que um jogo para '% 1'
 multicolumn indices	common	pt	Índices de várias colunas
 name	common	pt	Nome
 name of other table where column is a key from	common	pt	Nome de outra tabela onde uma coluna é a chave.
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	pt	Nome do conjunto phpgw-template (ex: verdilak): '' = por omissão (irá ler as preferências do modelo; o eGroupWare lê 'por omissão' o modelo por omissão '')
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	pt	Nome do conjunto phpgw-template (ex: verdilak): '' = por omissão (irá ler as preferências do modelo; o EGroupware lê 'por omissão' o modelo por omissão '')
 name of table to add	common	pt	Nome da tabela a adicionar
 name of the etemplate, should be in form application.function[.subtemplate]	common	pt	Nome do modelo Web, deve surgir no formulário application.function[.subTemplate].
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	pt	É necessário ser único na tabela e sem palavra reservada do SQL. É melhor definir todos os prefixos com dois digitos para a aplicação. Ex: 'et_'.
