@@ -43,6 +43,18 @@
 						<menupopup id="acc_folder_junk" options="Select one ..."/>
 					</menulist>
 				</row>
+				<row>
+					<description value="Ham folder" for="acc_folder_ham"/>
+					<menulist>
+						<menupopup id="acc_folder_ham" options="Select one ..."/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Archive folder" for="acc_folder_archive"/>
+					<menulist>
+						<menupopup id="acc_folder_archive" options="Select one ..."/>
+					</menulist>
+				</row>
 				<row class="dialogFooterToolbar">
 					<hbox span="all">
 						<button label="Continue" id="button[continue]" image="continue" background_image="1"/>

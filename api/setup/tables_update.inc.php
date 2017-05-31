@@ -218,3 +218,20 @@ function api_upgrade16_9()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.001';
 }
+
+function api_upgrade16_9_001()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_folder_ham',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'comment' => 'ham folder'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_spam_api',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'comment' => 'SpamTitan API URL'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.002';
+}
+
