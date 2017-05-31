@@ -1178,11 +1178,14 @@ class calendar_boupdate extends calendar_bo
 		{
 			$old_event = null;
 		}
+		if (!isset($event['whole_day'])) $event['whole_day'] = $this->isWholeDay($event);
 
 		// set recur-enddate/range-end to real end-date of last recurrence
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'])
 		{
-			$rrule = calendar_rrule::event2rrule($event);
+			$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
+			$event['recur_enddate']->setTime(23,59,59);
+			$rrule = calendar_rrule::event2rrule($event, true, Api\DateTime::$server_timezone->getName());
 			$rrule->rewind();
 			$enddate = $rrule->current();
 			do
@@ -1190,13 +1193,13 @@ class calendar_boupdate extends calendar_bo
 				$rrule->next_no_exception();
 				$occurrence = $rrule->current();
 			}
-			while ($rrule->valid(true) && ($enddate = $occurrence));
+			while ($rrule->valid() && ($enddate = $occurrence));
 			$enddate->modify(($event['end'] - $event['start']).' second');
-			$event['recur_enddate'] = $enddate->format('ts');
+			//$enddate->setTimezone();
+			//$event['recur_enddate'] = $enddate->format('ts');
 			//error_log(__METHOD__."($event[title]) start=".Api\DateTime::to($event['start'],'string').', end='.Api\DateTime::to($event['end'],'string').', range_end='.Api\DateTime::to($event['recur_enddate'],'string'));
 		}
 
-		if (!isset($event['whole_day'])) $event['whole_day'] = $this->isWholeDay($event);
 		$save_event = $event;
 		if ($event['whole_day'])
 		{
@@ -1222,17 +1225,15 @@ class calendar_boupdate extends calendar_bo
 			{
 				// all-day events are handled in server time
 				$time = $this->so->startOfDay(
-						new Api\DateTime($event['recur_enddate'], Api\DateTime::$user_timezone),
+						new Api\DateTime($event['recur_enddate'], Api\DateTime::$server_timezone),
 						Api\DateTime::$server_timezone->getName()
 				);
-				$time->modify(($event['end'] - $event['start'] + 1).' seconds');
-				$event['recur_enddate'] = Api\DateTime::to($time, 'ts') - 1;
-				$time->setUser();
-				$save_event['recur_enddate'] = Api\DateTime::to($time, 'ts') - 1;
+				$time->modify(($event['end'] - $event['start']).' seconds');
+				//$event['recur_enddate'] = $save_event['recur_enddate'] = Api\DateTime::to($time, 'ts');
 			}
 			$timestamps = array('modified','created');
 			// all-day events are handled in server time
-			$event['tzid'] = $save_event['tzid'] = Api\DateTime::$server_timezone->getName();
+		//	$event['tzid'] = $save_event['tzid'] = Api\DateTime::$server_timezone->getName();
 		}
 		else
 		{
