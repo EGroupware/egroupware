@@ -449,7 +449,9 @@ $phpgw_baseline = array(
 			'acc_imap_default_quota' => array('type' => 'int','precision' => '4','comment' => 'default quota, if no user specific one set'),
 			'acc_imap_timeout' => array('type' => 'int','precision' => '2','comment' => 'timeout for imap connection'),
 			'acc_user_forward' => array('type' => 'bool','default' => '0','comment' => 'allow user to define forwards'),
-			'acc_further_identities' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '1','comment' => '0=no, 1=yes, 2=only matching aliases')
+			'acc_further_identities' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '1','comment' => '0=no, 1=yes, 2=only matching aliases'),
+			'acc_folder_ham' => array('type' => 'varchar','precision' => '128','comment' => 'ham folder'),
+			'acc_spam_api' => array('type' => 'varchar','precision' => '128','comment' => 'SpamTitan API URL')
 		),
 		'pk' => array('acc_id'),
 		'fk' => array(),

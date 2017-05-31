@@ -148,6 +148,10 @@
 					<taglist id="acc_folder_junk" empty_label="Select one ..." maxSelection="1" autocomplete_url=""/>
 				</row>
 				<row>
+					<description for="acc_folder_ham" value="Ham folder"/>
+					<taglist id="acc_folder_ham" empty_label="Mails can be copied to that folder via context menu, if folder is configured." maxSelection="1" autocomplete_url=""/>
+				</row>
+				<row>
 					<description for="acc_folder_archive" value="Archive folder"/>
 					<taglist id="acc_folder_archive" empty_label="Select one ..." maxSelection="1" autocomplete_url=""/>
 				</row>
@@ -237,9 +241,9 @@
 						<textbox type="integer" label="Port" id="acc_smtp_port" needed="1" class="emailadmin_port"/>
 					</hbox>
 				</row>
-				<row height="50">
-					<description/>
-					<description/>
+				<row>
+					<description for="acc_spam_api" value="SpamTitan API URL"/>
+					<url id="acc_spam_api" blur="SpamTitian integration requires EPL version" width="95%" maxlength="128"/>
 				</row>
 			</rows>
 		</grid>
