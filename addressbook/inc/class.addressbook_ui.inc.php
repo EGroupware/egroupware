@@ -1670,7 +1670,10 @@ window.egw_LAB.wait(function() {
 				{
 					list($name,$value) = explode(':',$part,2);
 					// do NOT set invalid column, as this gives an SQL error ("AND AND" in sql)
-					if (static::$duplicate_fields[$name] && in_array($name, $fields) && $value)
+					if (static::$duplicate_fields[$name] && $value && (
+							strpos($query['grouped_view'], 'duplicate:') === 0 && in_array($name, $fields) ||
+							strpos($query['grouped_view'], 'duplicate:') !== 0
+					))
 					{
 						$query['col_filter'][$name] = $value;
 					}
