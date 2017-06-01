@@ -3029,7 +3029,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					start: typeof record.data.start === 'string' ? record.data.start : record.data.start.toJSON(),
 					end: typeof record.data.end === 'string' ? record.data.end : record.data.end.toJSON()
 				};
-				if(dates.start.substr(0,10) !== dates.end.substr(0,10))
+				if(dates.start.substr(0,10) !== dates.end.substr(0,10) && 
+						// Avoid events ending at midnight having a 0 length event the next day
+						dates.end.substr(11,8) !== '00:00:00')
 				{
 					var end = new Date(Math.min(new Date(record.data.end), new Date(state.last)));
 					end.setUTCHours(23);
