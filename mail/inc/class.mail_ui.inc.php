@@ -895,7 +895,7 @@ class mail_ui
 				$this->changeProfile($id_parts['profileID']);
 			}
 			$_params['mailbody'] = $this->get_load_email_data($_params['data']['uid'], null, $id_parts['folder']);
-			$msg[] = stylite_mail_spamtitan::execSpamTitanAction($_action, $_params, array(
+			$msg[] = stylite_mail_spamtitan::execAction($_action, $_params, array(
 				'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
 				'user'		=> $this->mail_bo->icServer->acc_imap_username,
 				'api_url'	=> $this->mail_bo->icServer->acc_spam_api
@@ -940,7 +940,7 @@ class mail_ui
 		);
 		$account = Mail\Account::read($this->mail_bo->profileID);
 		// spamTitan actions
-		if ($GLOBALS['egw_info']['apps']['stylite'] && $account['params']['acc_spam_api'])
+		if ($GLOBALS['egw_info']['apps']['stylite'] && $account->acc_spam_api)
 		{
 			$actions['spamfilter']['children'] = array_merge($actions['spamfilter']['children'], stylite_mail_spamtitan::getActions());
 		}
