@@ -760,7 +760,13 @@ class calendar_rrule implements Iterator
 		if ($event['recur_enddate'])
 		{
 			$enddate = is_a($event['recur_enddate'],'DateTime') ? $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'],$timestamp_tz);
-		//	$enddate->setTime(23,59,59);
+			$end = is_a($event['end'],'DateTime') ? $event['end'] : new Api\DateTime($event['end'],$timestamp_tz);
+			$end->setTimezone($enddate->getTimezone());
+			$enddate->setTime($end->format('H'),$end->format('i'),59);
+			if($event['whole_day'])
+			{
+				$enddate->setTime(23,59,59);
+			}
 			$enddate->setTimezone(self::$tz_cache[$to_tz]);
 		}
 		if (is_array($event['recur_exception']))

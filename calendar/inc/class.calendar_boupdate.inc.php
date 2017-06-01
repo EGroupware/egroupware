@@ -1209,7 +1209,7 @@ class calendar_boupdate extends calendar_bo
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'])
 		{
 			$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
-			$event['recur_enddate']->setTime(23,59,59);
+			//$event['recur_enddate']->setTime(23,59,59);
 			$rrule = calendar_rrule::event2rrule($event, true, Api\DateTime::$server_timezone->getName());
 			$rrule->rewind();
 			$enddate = $rrule->current();
@@ -1221,7 +1221,7 @@ class calendar_boupdate extends calendar_bo
 			while ($rrule->valid() && ($enddate = $occurrence));
 			$enddate->modify(($event['end'] - $event['start']).' second');
 			//$enddate->setTimezone();
-			//$event['recur_enddate'] = $enddate->format('ts');
+			$event['recur_enddate'] = $enddate->format('ts');
 			//error_log(__METHOD__."($event[title]) start=".Api\DateTime::to($event['start'],'string').', end='.Api\DateTime::to($event['end'],'string').', range_end='.Api\DateTime::to($event['recur_enddate'],'string'));
 		}
 
@@ -1255,6 +1255,7 @@ class calendar_boupdate extends calendar_bo
 				);
 				$time->modify(($event['end'] - $event['start']).' seconds');
 				//$event['recur_enddate'] = $save_event['recur_enddate'] = Api\DateTime::to($time, 'ts');
+				$event['recur_enddate'] = $save_event['recur_enddate'] = $time;
 			}
 			$timestamps = array('modified','created');
 			// all-day events are handled in server time
