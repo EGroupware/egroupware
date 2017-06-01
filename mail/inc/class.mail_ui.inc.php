@@ -887,14 +887,25 @@ class mail_ui
 	{
 		$msg = array();
 		$response = Api\Json\Response::get();
+
+		$id_parts = self::splitRowID($_params['data']['row_id']);
+		if ($id_parts['profileID'] && $id_parts['profileID'] != $this->mail_bo->profileID)
+		{
+			$this->changeProfile($id_parts['profileID']);
+		}
+		$delimiter = $this->mail_bo->getHierarchyDelimiter();
+		// Ham folder
+		$ham = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->icServer->acc_folder_ham;
+		// Junk folder
+		$junk = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->getJunkFolder();
+		// Inbox folder
+		$inbox = $this->mail_bo->profileID.self::$delimiter.'INBOX';
+		// Current Mailbox
+		$mailbox = $id_parts['folder'];
+
 		if ($GLOBALS['egw_info']['apps']['stylite'])
 		{
-			$id_parts = self::splitRowID($_params['data']['row_id']);
-			if ($id_parts['profileID'] && $id_parts['profileID'] != $this->mail_bo->profileID)
-			{
-				$this->changeProfile($id_parts['profileID']);
-			}
-			$_params['mailbody'] = $this->get_load_email_data($_params['data']['uid'], null, $id_parts['folder']);
+			$_params['mailbody'] = $this->get_load_email_data($_params['data']['uid'], null, $mailbox);
 			$msg[] = stylite_mail_spamtitan::execAction($_action, $_params, array(
 				'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
 				'user'		=> $this->mail_bo->icServer->acc_imap_username,
@@ -904,10 +915,28 @@ class mail_ui
 		switch ($_action)
 		{
 			case 'spam':
-				// Move to spam from Inbox
+				$this->ajax_copyMessages($junk, array(
+					'all' => false,
+					'msg' => array($_params['data']['row_id'])
+					), 'move');
+				$response->apply('app.mail.spam_refreshAction');
 				break;
 			case 'ham':
-				// copy to Ham and move from Spam to Inbox
+				if ($ham)
+				{
+					$this->ajax_copyMessages($ham, array(
+						'all' => false,
+						'msg' => array($_params['data']['row_id'])
+						), 'copy');
+				}
+				// Move mails to Inbox if they are in Junk folder
+				if ($junk == $this->mail_bo->profileID.self::$delimiter.$mailbox)
+				{
+					$this->ajax_copyMessages($inbox, array(
+						'all' => false,
+						'msg' => array($_params['data']['row_id'])
+					), 'move');
+				}
 				break;
 		}
 		$response->apply('egw.message',[implode('\n',$msg)]);
