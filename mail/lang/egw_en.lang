@@ -14,6 +14,10 @@ acl rights retrieve failed, seems there are no rights set!	mail	en	ACL rights re
 acl rights retrieved successfully	mail	en	ACL rights retrieved successfully
 action	mail	en	Action
 activating by date requires a start- and end-date!	mail	en	Activating by date requires a start- AND end-date!
+add "%1" into blacklisted domains	mail	en	Add "%1" into blacklisted domains
+add "%1" into blacklisted emails	mail	en	Add "%1" into blacklisted emails
+add "%1" into whiltelisted domains	mail	en	Add "%1" into whiltelisted domains
+add "%1" into whitelisted emails	mail	en	Add "%1" into whitelisted emails
 add a new folder to %1:	mail	en	Add a new Folder to %1:
 add all my aliases	mail	en	Add all my aliases
 add folder	mail	en	Add Folder
@@ -30,9 +34,13 @@ all my email addresses	mail	en	all my email addresses
 all of	mail	en	all of
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	en	All subfolders will be deleted too, and all messages in all affected folders will be lost
 allow external images	mail	en	Allow external images
+allow external images from listed domains	mail	en	Allow external images from listed domains
 allow images from external sources in html emails	mail	en	allow images from external sources in html emails
+allow images from listed domains in html emails	mail	en	allow images from listed domains in html emails
 allow users to create further identities	mail	en	allow users to create further identities
 allways a new window	mail	en	allways a new window
+always	mail	en	Always
+always allow external sources from %1	mail	en	Always allow external sources from %1
 always show html emails	mail	en	always show html emails
 an error happend while trying to remove acl rights from the account %1!	mail	en	An error happend while trying to remove ACL rights from the account %1!
 and the rule with priority %1, now got the priority %2	mail	en	And the rule with priority %1, now got the priority %2
@@ -45,6 +53,7 @@ archive folder	mail	en	Archive folder
 are you sure you want to delete all selected folders?	mail	en	Are you sure you want to delete all selected folders?
 are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you want to move folder %1 to folder %2?
 arrival	mail	en	Recieved
+ask for permission	mail	en	Ask for permission
 attach users vcard at compose to every new mail	mail	en	attach users VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
 attachment	mail	en	Attachment
@@ -52,10 +61,12 @@ attachments	mail	en	Attachments
 authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
 before reply, visible during compose	mail	en	Before reply, visible during compose
+blacklisted mails are marked as spam	mail	en	Blacklisted mails are marked as spam
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
 can not open imap connection	mail	en	Can not open IMAP connection
-canceled deletion due to userinteraction	mail	en	canceled deletion due to userinteraction
+can not resolve the winmail.dat attachment!	mail	en	Can not resolve the winmail.dat attachment!
+canceled deletion due to user interaction	mail	en	canceled deletion due to user interaction
 change editor type	mail	en	switch editor to HTML mode
 changed profile	mail	en	changed profile
 check message against next rule also	mail	en	Check message against next rule also
@@ -153,6 +164,8 @@ email notification update failed	mail	en	email notification update failed
 email notification update failed! you need to set an email address!	mail	en	email notification update failed! You need to set an email address!
 emailaddress	admin	en	emailaddress
 emailadmin: profilemanagement	mail	en	eMailAdmin: Profilemanagement
+emails in blacklisted domains are marked as spam	mail	en	Emails in blacklisted domains are marked as spam
+emails in whitelisted domains are not marked as spam	mail	en	Emails in whitelisted domains are not marked as spam
 empty junk	mail	en	empty junk/spam folder
 empty trash	mail	en	empty trash
 empty trash and junk	mail	en	Empty Trash and Junk
@@ -259,6 +272,7 @@ import of message %1 failed. no contacts to merge and send to specified.	mail	en
 importance	mail	en	importance
 important	mail	en	important
 in mailbox: %1, with id: %2, and partid: %3	mail	en	In Mailbox: %1, with ID: %2, and PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	en	In order to protect your privacy all external sources within this email are blocked.
 inbox	mail	en	INBOX
 initialization of mail failed. please use the wizard to cope with the problem.	mail	en	Initialization of mail failed. Please use the Wizard to cope with the problem.
 inline	mail	en	Inline
@@ -376,6 +390,10 @@ refused to delete folder with subfolders	mail	en	refused to delete folder with s
 reject with	mail	en	reject with
 reloaded account %1	mail	en	Reloaded Account %1
 reloaded folder %1	mail	en	Reloaded Folder %1
+remove "%1" from blacklisted domains	mail	en	Remove "%1" from blacklisted domains
+remove "%1" from blacklisted emails	mail	en	Remove "%1" from blacklisted emails
+remove "%1" from whiltelisted domains	mail	en	Remove "%1" from whiltelisted domains
+remove "%1" from whiltelisted emails	mail	en	Remove "%1" from whiltelisted emails
 remove all	mail	en	Remove All
 remove immediately	mail	en	remove immediately
 removed folder %1	mail	en	Removed Folder %1
@@ -389,6 +407,10 @@ reply all	mail	en	Reply All
 reply message type	mail	en	Reply message type
 reply to	mail	en	Reply to
 replyto	mail	en	replyto
+report as ham	mail	en	Report as Ham
+report as spam	mail	en	Report as Spam
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	en	Report this email content as Ham (not spam) - spam solutions like spamTitan will learn
+report this email content as spam - spam solutions like spamtitan will learn	mail	en	Report this email content as Spam - spam solutions like spamTitan will learn
 required pear class mail/mimedecode.php not found.	mail	en	Required PEAR class Mail/mimeDecode.php not found.
 resend after how many days?	mail	en	Resend after how many days?
 respond to mail sent to:	mail	en	Respond to mail sent to:
@@ -552,6 +574,7 @@ when sending messages	mail	en	when sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder View Schema
 which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
+whitelisted mails are not marked as spam	mail	en	Whitelisted mails are not marked as spam
 whole message	mail	en	whole message
 with message:	mail	en	With message:
 wizard	mail	en	Wizard

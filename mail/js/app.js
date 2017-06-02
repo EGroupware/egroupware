@@ -5375,11 +5375,69 @@ app.classes.mail = AppJS.extend(
 	 */
 	spam_actions: function (_action, _sender)
 	{
-		var id = _sender[0].id;
+		var id = '';
+		if (_sender.length == 0)
+		{
+			var nm = this.et2.getWidgetById(this.nm_index);
+			id = nm.getSelection().ids[0];
+		}
+		else
+		{
+			id = _sender[0].id;
+		}
 		var data = egw.dataGetUIDdata(id);
-		this.egw.json('mail.mail_ui.ajax_spamAction', [_action.id, {'acc_id':id.split('::')[2], data:data.data}]).sendRequest(true);
+		var fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
+		var email = fromaddress[1]?fromaddress[1]:fromaddress;
+		var domain = '@'+email.split('@')[1];
+		this.egw.json('mail.mail_ui.ajax_spamAction', [
+			_action.id,
+			{
+				'acc_id':id.split('::')[2],
+				'row_id':data.data.row_id,
+				'uid': data.data.uid,
+				'sender': _action.id.match(/domain/)? domain : email
+			}
+		]).sendRequest(true);
 	},
 
+	spamTitan_setActionTitle: function (_action, _sender)
+	{
+		var id = _sender[0].id;
+		var data = egw.dataGetUIDdata(id);
+		var fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
+		var email = fromaddress[1]?fromaddress[1]:fromaddress;
+		var domain = email.split('@')[1];
+		switch (_action.id)
+		{
+			case 'whitelist_email_add':
+				_action.set_caption(this.egw.lang('Add "%1" into whitelisted emails', email));
+				break;
+			case 'whitelist_email_remove':
+				_action.set_caption(this.egw.lang('Remove "%1" from whiltelisted emails', email));
+				break;
+			case 'whitelist_domain_add':
+				_action.set_caption(this.egw.lang('Add "%1" into whiltelisted domains', domain));
+				break;
+			case 'whitelist_domain_remove':
+				_action.set_caption(this.egw.lang('Remove "%1" from whiltelisted domains', domain));
+				break;
+			case 'blacklist_email_add':
+				_action.set_caption(this.egw.lang('Add "%1" into blacklisted emails', email));
+				break;
+			case 'blacklist_email_remove':
+				_action.set_caption(this.egw.lang('Remove "%1" from blacklisted emails', email));
+				break;
+			case 'blacklist_domain_add':
+				_action.set_caption(this.egw.lang('Add "%1" into blacklisted domains', domain));
+				break;
+			case 'blacklist_domain_remove':
+				_action.set_caption(this.egw.lang('Remove "%1" from blacklisted domains', domain));
+				break;
+
+		}
+
+		return true;
+	},
 	/**
 	 * Implement mobile view
 	 *
