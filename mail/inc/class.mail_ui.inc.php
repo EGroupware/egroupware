@@ -888,7 +888,7 @@ class mail_ui
 		$msg = array();
 		$response = Api\Json\Response::get();
 
-		$id_parts = self::splitRowID($_params['data']['row_id']);
+		$id_parts = self::splitRowID($_params['row_id']);
 		if ($id_parts['profileID'] && $id_parts['profileID'] != $this->mail_bo->profileID)
 		{
 			$this->changeProfile($id_parts['profileID']);
@@ -905,7 +905,7 @@ class mail_ui
 
 		if ($GLOBALS['egw_info']['apps']['stylite'])
 		{
-			$_params['mailbody'] = $this->get_load_email_data($_params['data']['uid'], null, $mailbox);
+			$_params['mailbody'] = $this->get_load_email_data($_params['uid'], null, $mailbox);
 			$msg[] = stylite_mail_spamtitan::execAction($_action, $_params, array(
 				'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
 				'user'		=> $this->mail_bo->icServer->acc_imap_username,
@@ -917,16 +917,15 @@ class mail_ui
 			case 'spam':
 				$this->ajax_copyMessages($junk, array(
 					'all' => false,
-					'msg' => array($_params['data']['row_id'])
+					'msg' => array($_params['row_id'])
 					), 'move');
-				$response->apply('app.mail.spam_refreshAction');
 				break;
 			case 'ham':
 				if ($ham)
 				{
 					$this->ajax_copyMessages($ham, array(
 						'all' => false,
-						'msg' => array($_params['data']['row_id'])
+						'msg' => array($_params['row_id'])
 						), 'copy');
 				}
 				// Move mails to Inbox if they are in Junk folder
@@ -934,7 +933,7 @@ class mail_ui
 				{
 					$this->ajax_copyMessages($inbox, array(
 						'all' => false,
-						'msg' => array($_params['data']['row_id'])
+						'msg' => array($_params['row_id'])
 					), 'move');
 				}
 				break;
@@ -951,18 +950,22 @@ class mail_ui
 	{
 		$actions = array (
 			'spamfilter' => array (
-				'caption'	=> 'spam',
+				'caption'	=> 'Spam',
 				'icon'		=> 'dhtmlxtree/MailFolderJunk',
 				'children'	=> array (
 					'spam' => array (
 						'caption'	=> 'Report as Spam',
 						'icon'		=> 'dhtmlxtree/MailFolderJunk',
 						'onExecute' => 'javaScript:app.mail.spam_actions',
+						'hint'		=> 'Report this email content as Spam - spam solutions like spamTitan will learn',
+						'allowOnMultiple' => false
 					),
 					'ham' => array (
-						'caption'	=> 'Not a Spam',
+						'caption'	=> 'Report as Ham',
 						'icon'		=> 'ham',
 						'onExecute' => 'javaScript:app.mail.spam_actions',
+						'hint'		=> 'Report this email content as Ham (not spam) - spam solutions like spamTitan will learn',
+						'allowOnMultiple' => false
 					)
 				)
 			)
@@ -1158,7 +1161,12 @@ class mail_ui
 		} else {
 			$group++;
 		}
-
+		$spam_actions = $this->getSpamActions();
+		$group++;
+		foreach ($spam_actions as &$action)
+		{
+			$action['group'] = $group;
+		}
 		//error_log(__METHOD__.__LINE__.$archiveFolder);
 		$actions['move2'.$this->mail_bo->profileID.self::$delimiter.$archiveFolder] = array( //toarchive
 			'caption' => 'Move to archive',
@@ -1402,13 +1410,6 @@ class mail_ui
 		if (!$GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
 			unset($actions['save']['children']['save2filemanager']);
-		}
-
-		$spam_actions = $this->getSpamActions();
-		$group++;
-		foreach ($spam_actions as &$action)
-		{
-			$action['group'] = $group;
 		}
 		return array_merge($actions, $spam_actions);
 	}
@@ -1725,7 +1726,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$actions = $this->get_actions();
 		$arrActions = array('composeasnew', 'reply', 'reply_all', 'forward', 'flagged', 'delete', 'print',
-			'infolog', 'tracker', 'calendar', 'save', 'view', 'read', 'label1',	'label2', 'label3',	'label4', 'label5');
+			'infolog', 'tracker', 'calendar', 'save', 'view', 'read', 'label1',	'label2', 'label3',	'label4', 'label5','spam', 'ham');
 		foreach( $arrActions as &$act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
@@ -1766,6 +1767,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				case 'label5':
 					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('later');
 					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'ham':
+				case 'spam':
+					$actionsenabled[$act]= $actions['spamfilter']['children'][$act];
 					break;
 				default:
 					if (isset($actions[$act])) $actionsenabled[$act]=$actions[$act];
