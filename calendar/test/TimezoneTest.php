@@ -21,6 +21,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 
 	protected $bo;
 
+	// TODO: Do this at different times, at least 12 hours apart
 	const START_TIME = 9;
 	const END_TIME = 10;
 	const RECUR_DAYS = 5;
@@ -44,7 +45,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		//$this->mockTracking($this->bo, 'calendar_tracking');
 
 		$this->recur_end = new Api\DateTime(mktime(0,0,0,date('m'), date('d') + static::RECUR_DAYS, date('Y')));
-		echo "End date: " . $this->recur_end;
+		echo "End date: " . $this->recur_end->format('Y-m-d') . '(Event time)';
 	}
 
 	public function tearDown()
@@ -95,7 +96,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 *
 	 * @dataProvider eventProvider
 	 */
-	public function testTimezonesAllDay($timezones)
+	public function notestTimezonesAllDay($timezones)
 	{
 		echo $this->tzString($timezones)."\n";
 
@@ -114,7 +115,9 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	protected function checkEvent($timezones, $cal_id)
 	{
 		// Load the event
-		$loaded = $this->bo->read($cal_id);
+		// BO does caching, need array to avoid it
+		$loaded = $this->bo->read(Array($cal_id));
+		$loaded = $loaded[$cal_id];
 
 		$message = $this->makeMessage($timezones, $loaded);
 
@@ -172,11 +175,11 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	{
 		// Timezone list
 		$tz_list = Array(
-		//	'Pacific/Tahiti',	// -10
+			'Pacific/Tahiti',	// -10
 			'America/Edmonton',	//  -8
 			'Europe/Berlin',	//  +2
-		//	'Pacific/Auckland',	// +12
-		//	'UTC'
+			'Pacific/Auckland',	// +12
+			'UTC'
 		);
 		$tz_combos = Array();
 
@@ -203,9 +206,9 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 
 		/* one specific test
 		$tz_combos = array(array(
-			'client'	=> 'America/Edmonton',
-			'server'	=> 'Europe/Berlin',
-			'event'		=> 'America/Edmonton'
+			'client'	=> 'Europe/Berlin',
+			'server'	=> 'Pacific/Tahiti',
+			'event'		=> 'Pacific/Tahiti'
 		));
 		// */
 		return $tz_combos;

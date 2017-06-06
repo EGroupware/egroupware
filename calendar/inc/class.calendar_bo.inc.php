@@ -1122,7 +1122,7 @@ class calendar_bo
 		// unset exceptions, as we need to add them as recurrence too, but marked as exception
 		unset($event['recur_exception']);
 		// loop over all recurrences and insert them, if they are after $start
-		$rrule = calendar_rrule::event2rrule($event, true);	// true = we operate in usertime, like the rest of calendar_bo
+ 		$rrule = calendar_rrule::event2rrule($event, true);	// true = we operate in usertime, like the rest of calendar_bo
 		foreach($rrule as $time)
 		{
 			$time->setUser();	// $time is in timezone of event, convert it to usertime used here
