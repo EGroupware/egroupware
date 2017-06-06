@@ -759,15 +759,21 @@ class calendar_rrule implements Iterator
 
 		if ($event['recur_enddate'])
 		{
-			$enddate = is_a($event['recur_enddate'],'DateTime') ? $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'],$timestamp_tz);
-			$end = is_a($event['end'],'DateTime') ? $event['end'] : new Api\DateTime($event['end'],$timestamp_tz);
+			$enddate = is_a($event['recur_enddate'],'DateTime') ? clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'],$timestamp_tz);
+
+			// Check to see if switching timezones changes the date, we'll need to adjust for that
+			$enddate_event_timezone = clone $enddate;
+			$enddate->setTimezone($timestamp_tz);
+			$delta = (int)$enddate_event_timezone->format('z') - (int)$enddate->format('z');
+			$enddate->add("$delta days");
+
+			$end = is_a($event['end'],'DateTime') ? clone $event['end'] : new Api\DateTime($event['end'],$timestamp_tz);
 			$end->setTimezone($enddate->getTimezone());
-			$enddate->setTime($end->format('H'),$end->format('i'),59);
+			$enddate->setTime($end->format('H'),$end->format('i'),0);
 			if($event['whole_day'])
 			{
 				$enddate->setTime(23,59,59);
 			}
-			$enddate->setTimezone(self::$tz_cache[$to_tz]);
 		}
 		if (is_array($event['recur_exception']))
 		{
