@@ -1,4 +1,8 @@
 %1 attachments	mail	de	%1 Anhänge
+%1 has been added to blacklisted email addresses	mail	de	%1 wurde als E-Mailadresse zur Blackliste hinzugefügt
+%1 has been added to whiltelisted email addresses	mail	de	%1 wurde als E-Mailadresse zur Whiteliste hinzugefügt
+%1 has been removed from blacklisted email addresses	mail	de	%1 wurde als E-Mailadresse von der Blackliste entfernt
+%1 has been removed from whiltelisted email addresses	mail	de	%1 wurde als E-Mailadresse von der Whiteliste entfernt
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie
 %1 mails selected	mail	de	%1 E-Mail(s)  ausgewählt
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*)  Achtung: Weiterleitung an mehr als 4 E-Mail-Adressen, funktioniert bei den meisten Mailservern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie Ihren Administrator.
@@ -14,11 +18,17 @@ acl rights retrieve failed, seems there are no rights set!	mail	de	Die Zugriffsk
 acl rights retrieved successfully	mail	de	Zugriffskontrollrechte erfolgreich gelesen
 action	mail	de	Aktion
 activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach Datum erfordert ein Start- UND Enddatum!
+add "%1" into blacklisted domains	mail	de	Domain "%1" als Blacklist hinzufügen
+add "%1" into blacklisted emails	mail	de	E-Mailadresse "%1" zu Blacklist hinzufügen
+add "%1" into whiltelisted domains	mail	de	Domain "%1" als Whitelist hinzufügen
+add "%1" into whitelisted emails	mail	de	E-Mailadresse "%1" zu Whitelist hinzufügen
 add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
 add all my aliases	mail	de	Alle Alias Adressen hinzufügen
 add folder	mail	de	Ordner hinzufügen
 add to addressbook	mail	de	zum Adressbuch hinzufügen
 add your domain as "%1" in options to list of email providers and enable api.	mail	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
+adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als Emailadresse zur Blackliste ist fehlgeschlagen, da %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als Emailadresse zur Whiteliste ist fehlgeschlagen, da %2
 after reply, visible during compose	mail	de	Nach dem zitierten Text, sichtbar während der Bearbeitung
 aliases+forwards	mail	de	Aliase+Weiterleitungen
 all	mail	de	alle
@@ -30,9 +40,13 @@ all my email addresses	mail	de	alle meine E-Mail-Adressen
 all of	mail	de	alle
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	de	Alle Unterordner und Nachrichten in den betroffenen Ordnern werden unwiederruflich gelöscht.
 allow external images	mail	de	Erlaube Bilder von externen Bildquellen
+allow external images from listed domains	mail	de	Erlaube Bilder der folgenden Domains
 allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML-E-Mails
+allow images from listed domains in html emails	mail	de	Erlaube Bilder von externen Bildquellen der folgenden Domains in HTML-E-Mails
 allow users to create further identities	mail	de	Anwender dürfen weitere Identitäten anlegen
 allways a new window	mail	de	immer in einem neuen Fenster
+always	mail	de	Immer
+always allow external sources from %1	mail	de	Erlaube externe Bildquellen von %1
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
 an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffskontrollrechte vom Konto %1 zu entfernen!
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
@@ -45,6 +59,7 @@ archive folder	mail	de	Archivordner
 are you sure you want to delete all selected folders?	mail	de	Sollen alle selektierten Ordner gelöcht werden?
 are you sure you want to move folder %1 to folder %2?	mail	de	Soll der Ordner %1 in den Ordner %2 verschoben werden?
 arrival	mail	de	Empfangsdatum
+ask for permission	mail	de	Immer nachfragen
 attach users vcard at compose to every new mail	mail	de	Füge die vCard des aktiven Benutzers an jede neue E-Mail an
 attach vcard	mail	de	vCard hinzufügen
 attachment	mail	de	Anhang
@@ -52,9 +67,11 @@ attachments	mail	de	Dateien
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
 before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar während der Bearbeitung
+blacklisted mails are marked as spam	mail	de	Emailadressen die in die Blacklist eingetragen werden, werden als Spam markiert
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
+can not resolve the winmail.dat attachment!	mail	de	Der winmail.dat Anhang kann nicht geöffnet weden!
 canceled deletion due to user interaction	mail	de	Löschen durch Benutzer abgebrochen
 change editor type	mail	de	Als HTML-Mail verfassen
 changed profile	mail	de	Profil geändert
@@ -153,6 +170,8 @@ email notification update failed	mail	de	Die Benachrichtigung über den Gelesen-
 email notification update failed! you need to set an email address!	mail	de	Aktualisierung der E-Mail Benachrichtigungen fehlgeschlagen! Es muss eine E-Mail-Adresse ausgewählt sein!
 emailaddress	admin	de	E-Mail
 emailadmin: profilemanagement	mail	de	E-Mail-Admin: Profilmanagement
+emails in blacklisted domains are marked as spam	mail	de	Emailadressen aus der Domain-Blackliste, werden als Spam markiert
+emails in whitelisted domains are not marked as spam	mail	de	Emailadressen aus der Domain-Whiteliste, werden nicht als Spam markiert
 empty junk	mail	de	Spam-Ordner leeren
 empty trash	mail	de	Papierkorb leeren
 empty trash and junk	mail	de	Papierkorb und Spam-Ordner leeren
@@ -258,6 +277,7 @@ import of message %1 failed. no contacts to merge and send to specified.	mail	de
 importance	mail	de	Wichtigkeit
 important	mail	de	wichtig
 in mailbox: %1, with id: %2, and partid: %3	mail	de	Im Mailordner: %1, mit der ID: %2 und der PartID: %3
+in order to protect your privacy all external sources within this email are blocked.	mail	de	Um Ihre Privatspäre zu schützen, werden alle externen Bildquellen blockiert.
 inbox	mail	de	Posteingang
 initialization of mail failed. please use the wizard to cope with the problem.	mail	de	Die Initializierung des Mail-Moduls ist fehlgeschlagen. Bitte benutzen Sie den Konfigurationshilfeassistenten um die Situation zu bereinigen.
 inline	mail	de	Weiterleiten Inline
@@ -268,6 +288,8 @@ junk folder	mail	de	Ordner für SPAM Nachrichten
 keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht in der INBOX behalten
 kilobytes	mail	de	Kilobytes
 later	mail	de	später
+learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein Spam) lernen fehlgeschlagen, da %1
+learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
 less than	mail	de	kleiner als
 mail	common	de	Mail
 mail acl	mail	de	Zugriffsrechte
@@ -288,6 +310,8 @@ matches	mail	de	stimmt überein (*, ? erlaubt)
 matches regexp	mail	de	stimmt überein mit regulärem Ausdruck
 mbstring.func_overload=0 is required for correct mail processing!	mail	de	mbstring.func_overload=0 wird von der Anwendung Mail zwingend benötigt!
 message body	mail	de	Nachricht
+message learned as ham (not spam) and moved back to inbox	mail	de	Nachricht wurde als "gute E-Mail" (kein Spam) gelernt und in den Posteingang verschoben - funktioniert nur mit "lernenden" Spam-Lösungen wie SpamTitan
+message learned as spam and moved to spam folder	mail	de	Nachricht wurde als Spam gelernt und in den Spam-Ordner verschoben - funktioniert nur mit "lernenden" Spam-Lösungen wie SpamTitan
 message preview area	mail	de	Vorschaubereich
 message saved successfully.	mail	de	Nachricht wurde erfolgreich gespeichert.
 message send failed: %1	mail	de	Nachricht konnte nicht versendet werden: %1
@@ -375,9 +399,15 @@ refused to delete folder with subfolders	mail	de	Die Löschung eines Ordners mit
 reject with	mail	de	zurückweisen mit
 reloaded account %1	mail	de	Lade das Konto %1 neu
 reloaded folder %1	mail	de	Ordner %1 neu geladen
+remove "%1" from blacklisted domains	mail	de	Lösche "%1" aus der Blacklist Domainliste
+remove "%1" from blacklisted emails	mail	de	Lösche "%1" aus der E-Mail Blackliste
+remove "%1" from whiltelisted domains	mail	de	Lösche "%1" aus der Whitelist Domainliste
+remove "%1" from whiltelisted emails	mail	de	Lösche "%1" aus der E-Mail Whiteliste
 remove all	mail	de	Alle Entfernen
 remove immediately	mail	de	sofort löschen
 removed folder %1	mail	de	Ordner %1 gelöscht
+removing %1 from blacklisted email addresses failed because of %2	mail	de	Löschen von %1 als Emailadresse von der Blackliste fehlgeschlagen, da %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	de	Löschen von %1 als Emailadresse von der Whiteliste fehlgeschlagen, da %2
 rename folder	mail	de	Umbenennen
 rename folder %1 ?	mail	de	Ordner %1 umbenennen?
 rename folder %1 to:	mail	de	Ordner %1 umbenennen in:
@@ -388,6 +418,10 @@ reply all	mail	de	Allen Antworten
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
 reply to	mail	de	Antworten an
 replyto	mail	de	Antwort an
+report as ham	mail	de	Als "gute Email" kennzeichnen
+report as spam	mail	de	Als Spam kennzeichnen
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als "gute Email" (kein Spam) - Spam-Lösungen wie SpamTitan lernen entsprechend
+report this email content as spam - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als Spam - Spam-Lösungen wie SpamTitan lernen entsprechend
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 resend after how many days?	mail	de	Nach wie vielen Tagen erneut senden?
 respond to mail sent to:	mail	de	Benachrichtigung für
@@ -551,6 +585,7 @@ when sending messages	mail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse).
 which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen.
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten.
+whitelisted mails are not marked as spam	mail	de	Emailadressen aus der Domain-Whitekliste, werden nicht als Spam markiert
 whole message	mail	de	gesamte Nachricht
 with message:	mail	de	mit folgender Nachricht:
 wizard	mail	de	Assistent
