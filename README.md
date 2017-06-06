@@ -15,14 +15,14 @@
 * cd /path/to/your/docroot
 * git clone https://github.com/EGroupware/egroupware.git # or git@github.com:EGroupware/egroupware.git for ssh
 * cd egroupware
-* # install composer.phar from https://getcomposer.org/download/
-* # install myrepos (mr) from https://myrepos.branchable.com/ or your distribution package manager
-* # add a line /path/to/egroupware/.mrconfig to your ~/.mrtrust, to allow running composer.phar and git clone -b 16.1
+* install composer.phar from https://getcomposer.org/download/
+* install myrepos (mr) from https://myrepos.branchable.com/ or your distribution package manager
+* add a line /path/to/egroupware/.mrconfig to your ~/.mrtrust, to allow running composer.phar and git clone -b 16.1
 * mr up
-* # enable further / non-default EGroupware apps by uncommenting them in .mrconfig and run mr up
-* # continue installation at http://localhost/egroupware/setup/
-* # to get minified JavaScript and CSS you need to install nodejs and grunt, if you have not already done so
-* # install nodejs from your distribution package manager
+* enable further / non-default EGroupware apps by uncommenting them in .mrconfig and run mr up
+* continue installation at http://localhost/egroupware/setup/
+* to get minified JavaScript and CSS you need to install nodejs and grunt, if you have not already done so
+* install nodejs from your distribution package manager
 * npm install -g grunt-cli # installs grunt command globally, if you have not already done so
 * npm install # installs required npm/grunt modules into node_modules/ dir
-* # run grunt manually after every update, or better uncomment grunt steps in .mrconfig
+* run grunt manually after every update, or better uncomment grunt steps in .mrconfig
