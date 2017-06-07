@@ -21,9 +21,6 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 
 	protected $bo;
 
-	// TODO: Do this at different times, at least 12 hours apart
-	const START_TIME = 9;
-	const END_TIME = 10;
 	const RECUR_DAYS = 5;
 
 	protected $recur_end;
@@ -45,7 +42,6 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		//$this->mockTracking($this->bo, 'calendar_tracking');
 
 		$this->recur_end = new Api\DateTime(mktime(0,0,0,date('m'), date('d') + static::RECUR_DAYS, date('Y')));
-		echo "End date: " . $this->recur_end->format('Y-m-d') . '(Event time)';
 	}
 
 	public function tearDown()
@@ -66,25 +62,22 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 * event to make sure it has the correct number of days, and its timezone
 	 * stays as set.
 	 * 
-	 * @param type $timezones
+	 * @param Array $timezones Timezone settings for event, client & server
+	 * @param Array $times Start & end hours
 	 * 
 	 * @dataProvider eventProvider
 	 */
-	public function testTimezones($timezones)
+	public function testTimezones($timezones, $times)
 	{
-
-		echo $this->tzString($timezones)."\n";
-
 		$this->setTimezones($timezones);
 
-		$event = $this->makeEvent($timezones);
-
+		$event = $this->makeEvent($timezones, $times);
 
 		// Save the event
 		$this->cal_id = $this->bo->save($event);
 
 		// Check
-		$this->checkEvent($timezones, $this->cal_id);
+		$this->checkEvent($timezones, $this->cal_id, $times);
 	}
 
 	/**
@@ -92,38 +85,45 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 * all day event to make sure it has the correct number of days, and its timezone
 	 * stays as set.
 	 *
-	 * @param type $timezones
+	 * @param Array $timezones Timezone settings for event, client & server
+	 * @param Array $times Start & end hours
 	 *
 	 * @dataProvider eventProvider
 	 */
-	public function notestTimezonesAllDay($timezones)
+	public function testTimezonesAllDay($timezones, $times)
 	{
-		echo $this->tzString($timezones)."\n";
-
 		$this->setTimezones($timezones);
 
-		$event = $this->makeEvent($timezones, true);
-
+		$event = $this->makeEvent($timezones, $times, true);
 
 		// Save the event
 		$this->cal_id = $this->bo->save($event);
 
 		// Check
-		$this->checkEvent($timezones, $this->cal_id);
+		$this->checkEvent($timezones, $this->cal_id, $times);
 	}
 
-	protected function checkEvent($timezones, $cal_id)
+	/**
+	 * Load the event and check that it matches expectations
+	 *
+	 * @param Array $timezones List of timezones (event, client, server)
+	 * @param int $cal_id
+	 * @param Array $times start and end times (just hours)
+	 */
+	protected function checkEvent($timezones, $cal_id, $times)
 	{
 		// Load the event
-		// BO does caching, need array to avoid it
+		// BO does caching, pass ID as array to avoid it
 		$loaded = $this->bo->read(Array($cal_id));
 		$loaded = $loaded[$cal_id];
 
 		$message = $this->makeMessage($timezones, $loaded);
 
+		$start_time = \mktime($loaded['whole_day'] ? 0 : $times['start'], 0, 0, date('m'), date('d')+1, date('Y'));
+
 		// Check that the start date is the same (user time)
 		$this->assertEquals(
-			Api\DateTime::to(\mktime($loaded['whole_day'] ? 0 : static::START_TIME, 0, 0, date('m'), date('d')+1, date('Y')), Api\DateTime::DATABASE),
+			Api\DateTime::to($start_time, Api\DateTime::DATABASE),
 			Api\DateTime::to($loaded['start'], Api\DateTime::DATABASE),
 			'Start date'. $message
 		);
@@ -132,7 +132,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		$this->assertEquals(
 			Api\DateTime::to(
 					$loaded['whole_day'] ? \mktime(0, 0, 0, date('m'), date('d')+2, date('Y'))-1 :
-					\mktime(static::END_TIME, 0, 0, date('m'), date('d')+1, date('Y')
+					\mktime($times['end'], 0, 0, date('m'), date('d')+1, date('Y')
 			), Api\DateTime::DATABASE),
 			Api\DateTime::to($loaded['end'], Api\DateTime::DATABASE),
 			'End date'. $message
@@ -148,7 +148,16 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		// Recurrences
 		$so = new \calendar_so();
 		$recurrences = $so->get_recurrences($cal_id);
-		$this->assertEquals(static::RECUR_DAYS, count($recurrences)-1, 'Recurrence count' . $message);
+		unset($recurrences[0]);
+		$this->assertEquals(static::RECUR_DAYS, count($recurrences), 'Recurrence count' . $message);
+		foreach($recurrences as $recur_start_time => $participant)
+		{
+			$this->assertEquals(
+					Api\DateTime::to($start_time, 'H:i:s'),
+					$loaded['whole_day'] ? '00:00:00' : Api\DateTime::to(Api\DateTime::server2user($recur_start_time), 'H:i:s'),
+					'Recurrence start time' . $message
+			);
+		}
 	}
 
 	/**
@@ -157,11 +166,22 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	public function eventProvider()
 	{
 		$tests = array();
-		$tz_combos = $this->makeCombos();
+		$tz_combos = $this->makeTZCombos();
 
+		// Start times to test, 1 chosen to cross days
+		$times = array(1, 9);
+		
 		foreach($tz_combos as $timezones)
 		{
-			$tests[] = Array($timezones);
+			foreach($times as $start_time)
+			{
+				$tests[] = Array($timezones,
+					Array(
+						'start' => $start_time,
+						'end' => $start_time + 1
+					)
+				);
+			}
 		}
 
 		return $tests;
@@ -171,15 +191,16 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 * Make a map of all the different client / server / event combinations
 	 * that we'll use.
 	 */
-	protected function makeCombos()
+	protected function makeTZCombos()
 	{
 		// Timezone list
 		$tz_list = Array(
 			'Pacific/Tahiti',	// -10
-			'America/Edmonton',	//  -8
 			'Europe/Berlin',	//  +2
-			'Pacific/Auckland',	// +12
-			'UTC'
+			// The first 2 are usually sufficient
+			//'America/Edmonton',	//  -8
+			//'Pacific/Auckland',	// +12
+			//'UTC'
 		);
 		$tz_combos = Array();
 
@@ -218,16 +239,16 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 * Make the array of event information
 	 *
 	 * @param Array $timezones
-	 * @param boolean $whole_day
 	 * @return Array Event array, unsaved.
+	 * @param boolean $whole_day
 	 */
-	protected function makeEvent($timezones, $whole_day = false)
+	protected function makeEvent($timezones, $times, $whole_day = false)
 	{
 		$event = array(
 			'title' => ($whole_day ? 'Whole day ' : '')."Test for " . $this->tzString($timezones),
 			'des'   => ($whole_day ? 'Whole day ' : '').'Test for test ' . $this->getName() . ' ' . $this->tzString($timezones),
-			'start' => \mktime(static::START_TIME, 0, 0, date('m'), date('d')+1, date('Y')),
-			'end'   => \mktime(static::END_TIME, 0, 0, date('m'), date('d')+1, date('Y')),
+			'start' => \mktime($whole_day ? 0 : $times['start'], 0, 0, date('m'), date('d')+1, date('Y')),
+			'end'   => $whole_day ? \mktime(23, 59, 59, date('m'), date('d')+1, date('Y')) : \mktime($times['end'], 0, 0, date('m'), date('d')+1, date('Y')),
 			'tzid'	=> $timezones['event'],
 			'recur_type'	=> 1, // MCAL_RECUR_DAILY
 			'recur_enddate'	=> $this->recur_end->format('ts'),
@@ -241,7 +262,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 
 	protected function makeMessage($timezones, $event)
 	{
-		return ' ' . Api\DateTime::to($event['recur_enddate'], Api\DateTime::DATABASE) . ' '.
+		return ' ' . ($event['id'] ? '[#'.$event['id'] .'] ' : '') . Api\DateTime::to($event['recur_enddate'], Api\DateTime::DATABASE) . ' '.
 				($event['whole_day'] ? '(whole day) ' : '') . $this->tzString($timezones);
 	}
 

@@ -756,7 +756,7 @@ class calendar_rrule implements Iterator
 		self::rrule2tz($event, $time, $to_tz);
 
 		$time->setTimezone(self::$tz_cache[$to_tz]);
-
+		
 		if ($event['recur_enddate'])
 		{
 			$enddate = is_a($event['recur_enddate'],'DateTime') ? clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'],$timestamp_tz);

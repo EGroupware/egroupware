@@ -1236,6 +1236,13 @@ class calendar_boupdate extends calendar_bo
 			if (!empty($event['end']))
 			{
 				$time = new Api\DateTime($event['end'], Api\DateTime::$user_timezone);
+
+				// Check to see if switching timezones changes the date, we'll need to adjust for that
+				$end_event_timezone = clone $time;
+				$time->setServer();
+				$delta = (int)$end_event_timezone->format('z') - (int)$time->format('z');
+				$time->add("$delta days");
+
 				$time->setTime(23, 59, 59);
 				$event['end'] = Api\DateTime::to($time, 'ts');
 				$save_event['end'] = $time;
@@ -1247,13 +1254,18 @@ class calendar_boupdate extends calendar_bo
 			}
 			if (!empty($event['recur_enddate']))
 			{
-				// all-day events are handled in server time
-				$time = $this->so->startOfDay(
-						new Api\DateTime($event['recur_enddate'], Api\DateTime::$server_timezone),
-						Api\DateTime::$server_timezone->getName()
-				);
-				$time->modify(($event['end'] - $event['start']).' seconds');
-				//$event['recur_enddate'] = $save_event['recur_enddate'] = Api\DateTime::to($time, 'ts');
+				// all-day events are handled in server time, but here (BO) it's in user time
+				$time = new Api\DateTime($event['recur_enddate'], Api\DateTime::$user_timezone);
+				$time->setTime(23, 59, 59);
+				// Check to see if switching timezones changes the date, we'll need to adjust for that
+				$enddate_event_timezone = clone $time;
+				$time->setServer();
+				$delta = (int)$enddate_event_timezone->format('z') - (int)$time->format('z');
+				$time->add("$delta days");
+
+				//$time->setServer();
+				$time->setTime(23, 59, 59);
+				
 				$event['recur_enddate'] = $save_event['recur_enddate'] = $time;
 			}
 			$timestamps = array('modified','created');
