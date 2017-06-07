@@ -106,7 +106,7 @@
 							</row>
 							<row class="row" valign="top">
 								<description value="Responsible" for="info_responsible"/>
-								<taglist-account statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" multiple="true" no_lang="1" class="et2_fullWidth" account_type="both" empty_label="User or group" onchange="app.infolog.onchangeResponsible"/>
+								<taglist-account statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" multiple="true" no_lang="1" class="et2_fullWidth" account_type="both" empty_label="Select users or groups" onchange="app.infolog.onchangeResponsible"/>
 							</row>
 						</rows>
 					</grid>

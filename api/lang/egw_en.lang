@@ -883,6 +883,7 @@ no filters	common	en	No filters
 no history for this record	common	en	No history for this record
 no key for recipient:	common	en	No key for recipient:
 no matches found	common	en	No matches found.
+no results match	common	en	No results match
 no rights to export more than %1 entries!	common	en	No rights to export more than %1 entries!
 no row to swap with !!!	common	en	No row to swap with!
 no savant2 template directories were found in:	common	en	No Savant2 template directories were found in:
@@ -995,6 +996,8 @@ please run setup to become current	common	en	Run setup to become current
 please select	common	en	Please select
 please set your global preferences	common	en	Set your global preferences!
 please set your preferences for this application	common	en	Set your preferences for this application!
+please type 1 more character	common	en	Please type 1 more character
+please type %1 more characters	common	en	Please type %1 more characters
 please wait...	common	en	please wait...
 please, check back with us shortly.	common	en	Please, check back with us shortly.
 pm	common	en	pm

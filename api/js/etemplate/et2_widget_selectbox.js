@@ -708,7 +708,8 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			this.input.chosen({
 				inherit_select_classes: true,
 				search_contains: true,
-				width: _width || size.w + "px"
+				width: _width || size.w + "px",
+				no_results_text: this.egw().lang('No results match')
 			});
 
 			if(this.options.onchange)
