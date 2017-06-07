@@ -126,6 +126,7 @@ class Customfields extends Transformer
 		if(!$app)
 		{
 			$app =& $this->setElementAttribute(self::GLOBAL_VALS, 'app', $GLOBALS['egw_info']['flags']['currentapp']);
+			if ($this->attrs['sub-app']) $app .= '-'.$this->attrs['sub-app'];
 			$customfields =& $this->setElementAttribute(self::GLOBAL_VALS, 'customfields', Api\Storage\Customfields::get($app));
 		}
 
@@ -283,7 +284,7 @@ class Customfields extends Transformer
 		$widget->id = self::$prefix.$fname;
 		$widget->attrs['type'] = $type;
 		$widget->set_attrs($xml);
-		
+
 		// some type-specific (default) attributes
 		switch($type)
 		{
@@ -402,7 +403,7 @@ class Customfields extends Transformer
 				// Arrays are not valid, but leave filemanager alone, we'll catch it
 				// when saving.  This allows files for new entries.
 				if (is_array($valid) && $field_settings['type'] !== 'filemanager') $valid = implode(',', $valid);
-				
+
 				// NULL is valid for most fields, but not custom fields due to backend handling
 				// See so_sql_cf->save()
 				if (is_null($valid)) $valid = false;
