@@ -178,6 +178,7 @@ edit status	infolog	en	Edit status
 edit the entry	infolog	en	Edit the entry
 edit this entry	infolog	en	Edit this entry
 empty for all	infolog	en	Empty for all
+encrypt description	infolog	en	Encrypt description
 end	infolog	en	End
 enddate	infolog	en	Due date
 enddate can not be before startdate	infolog	en	Due date can not be before start date
@@ -257,6 +258,7 @@ infolog preferences	common	en	InfoLog preferences
 infolog-fieldname	infolog	en	InfoLog field name
 insert	infolog	en	Insert
 insert in document	infolog	en	Insert in document
+insert timestamp into description field	infolog	en	Insert timestamp into description field
 invalid filename	infolog	en	Invalid file name.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	en	Invalid owner ID: %1. Used %2 instead.
 invalid status for entry type %1.	infolog	en	Invalid status for entry type %1.

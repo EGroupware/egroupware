@@ -236,6 +236,9 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			renderer: jQuery.proxy(this.options.listRenderer || this.selectionRenderer,this),
 			maxSelection: this.options.multiple ? this.options.maxSelection : 1,
 			maxSelectionRenderer: jQuery.proxy(function(v) { this.egw().lang('You can not choose more then %1 item(s)!', v); }, this),
+			minCharsRenderer: jQuery.proxy(function(v){ 
+				this.egw().lang(v == 1 ? 'Please type 1 more character' : 'Please type %1 more characters',v);
+			}, this),
 			width: this.options.width,	// propagate width
 			highlight: false,	// otherwise renderer have to return strings
 			selectFirst: true,

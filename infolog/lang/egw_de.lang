@@ -178,6 +178,7 @@ edit status	infolog	de	Status ändern
 edit the entry	infolog	de	Eintrag bearbeiten
 edit this entry	infolog	de	diesen Eintrag bearbeiten
 empty for all	infolog	de	leer für alle
+encrypt description	infolog	de	Beschreibung verschlüsseln
 end	infolog	de	Ende
 enddate	infolog	de	Fällig am
 enddate can not be before startdate	infolog	de	Das Fälligkeitsdatum kann nicht vor dem Startdatum liegen
@@ -256,6 +257,7 @@ infolog list	infolog	de	InfoLog Liste
 infolog preferences	common	de	InfoLog Einstellungen
 infolog-fieldname	infolog	de	InfoLog-Feldname
 insert	infolog	de	einfügen
+insert timestamp into description field	infolog	de	Zeitstempel in das Beschreibungs-Feld einfügen
 insert in document	infolog	de	In ein Dokument einfügen
 invalid filename	infolog	de	Ungültiger Dateiname
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	de	Ungültige Eigentümer ID: %1. Ist möglicher Weise eine falsche Feld Übersetzung. Es wird %2 anstatt dem ursprünglichen Wert verwendet.

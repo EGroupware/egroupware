@@ -884,6 +884,7 @@ no filters	common	de	Keine Filter
 no history for this record	common	de	Keine Historie für diesen Datensatz
 no key for recipient:	common	de	Keinen Schlüssel für Empfänger:
 no matches found	common	de	Keine Treffer gefunden
+no results match	common	de	Kein Fund für
 no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no row to swap with !!!	common	de	Keine Zeile um damit zu tauschen !!!
 no savant2 template directories were found in:	common	de	Kein Savant2 Vorlagen Verzeichnis gefunden in:
@@ -996,6 +997,8 @@ please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu akt
 please select	common	de	Bitte wählen
 please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
 please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Anwendung !
+please type 1 more character	common	de	Bitte 1 weiteres Zeichen eingeben
+please type %1 more characters	common	de	Bitte %1 weiteres Zeichen eingeben
 please wait...	common	de	bitte warten ...
 please, check back with us shortly.	common	de	Bitte schauen Sie bald wieder vorbei.
 pm	common	de	Nachmittag
