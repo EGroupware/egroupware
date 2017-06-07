@@ -94,6 +94,11 @@ while(!is_null($option = array_shift($args)))
 {
 	if ($option == '-' || $option[0] != '-')	// no option --> argument
 	{
+		// remove quotes from arguments
+		if (in_array($option[0], array('"', "'")) && $option[0] == substr($option, -1))
+		{
+			$option = substr($option, 1, -1);
+		}
 		$argv[] = $option;
 		continue;
 	}
@@ -297,8 +302,8 @@ switch($cmd)
 		{
 			$url = array_shift($argv);
 
-			load_wrapper($url);
-			echo "$cmd $url (long=".(int)$long.", numeric=".(int)$numeric.", recursive=".(int)$recursive.")\n";
+			if (strpos($url, '://')) load_wrapper($url);
+			echo "$cmd $url (long=".(int)$long.", numeric=".(int)$numeric.", recursive=".(int)$recursive.") ".implode(' ', $argv)."\n";
 
 			switch($cmd)
 			{
@@ -341,8 +346,8 @@ switch($cmd)
 							{
 								$mode = $url;	// first param is mode
 								$url = array_shift($argv);
+								load_wrapper($url);	// not loaded because mode was in url
 							}
-							if (Vfs::parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// cant use stat or Vfs::mode2int otherwise!
 
 							if (strpos($mode,'+') !== false || strpos($mode,'-') !== false)
 							{
@@ -367,7 +372,7 @@ switch($cmd)
 							{
 								$owner = $url;	// first param is owner/group
 								$url = array_shift($argv);
-								if (Vfs::parse_url($url,PHP_URL_SCHEME)) load_wrapper($url);	// we need the header loaded
+								load_wrapper($url);	// not loaded because owner/group was in url
 								if ($owner == 'root')
 								{
 									$owner = 0;
@@ -559,7 +564,7 @@ function load_egw($user,$passwd,$domain='default')
 	}
 
 	$cmd = $GLOBALS['cmd'];
-	if (!in_array($cmd,array('ls','find','mount','umount','eacl')) && $GLOBALS['egw_info']['server']['files_dir'] && !is_writable($GLOBALS['egw_info']['server']['files_dir']))
+	if (!in_array($cmd,array('ls','find','mount','umount','eacl','touch','chmod','chown','chgrp')) && $GLOBALS['egw_info']['server']['files_dir'] && !is_writable($GLOBALS['egw_info']['server']['files_dir']))
 	{
 		echo "\nError: eGroupWare's files directory {$GLOBALS['egw_info']['server']['files_dir']} is NOT writable by the user running ".basename(__FILE__)."!\n".
 			"--> Please run it as the same user the webserver uses or root, otherwise the $cmd command will fail!\n\n";
