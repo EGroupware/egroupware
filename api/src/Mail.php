@@ -6995,6 +6995,54 @@ class Mail
 	}
 
 	/**
+	 * Check and fix headers of raw message for headers with line width
+	 * more than 998 chars per line, as none folding long headers might
+	 * break the mail content. RFC 2822 (2.2.3 Long Header fields)
+	 * https://www.ietf.org/rfc/rfc2822.txt
+	 *
+	 * @param string|resource $message
+	 * @return string
+	 */
+	static private function _checkAndfixLongHeaderFields($message)
+	{
+		$eol = Horde_Mime_Part::RFC_EOL.Horde_Mime_Part::RFC_EOL;
+		$needsFix = false;
+		if (is_resource($message))
+		{
+			fseek($message, 0, SEEK_SET);
+			$m = '';
+			while (!feof($message)) {
+				$m .= fread($message, 8192);
+			}
+			$message = $m;
+		}
+
+		if (is_string($message))
+		{
+			$start = substr($message,0, strpos($message, $eol));
+			$body = substr($message, strlen($start));
+			$hlength = strpos($start, $eol) ? strpos($start, $eol) : strlen($start);
+			$headers = Horde_Mime_Headers::parseHeaders(substr($start, 0,$hlength));
+			foreach($headers->toArray() as $header => $value)
+			{
+				$needsReplacement = false;
+				foreach((array)$value as &$val)
+				{
+					if (strlen($val) > 998)
+					{
+						$needsReplacement = $needsFix = true;
+					}
+				}
+				if ($needsReplacement) {
+					$headers->removeHeader($header);
+					$headers->addHeader($header, $value);
+				}
+			}
+		}
+		return $needsFix ? ($headers->toString(array('canonical'=>true)).$body) : $message;
+	}
+
+	/**
 	 * Parses a message/rfc mail from file to the mailobject
 	 *
 	 * @param Mailer $mailer instance of SMTP Mailer object
@@ -7006,6 +7054,9 @@ class Mail
 	{
 		if (is_string($message) || is_resource($message))
 		{
+			// Check and fix long header fields
+			$message = self::_checkAndfixLongHeaderFields($message);
+
 			$structure = Horde_Mime_Part::parseMessage($message);
 			//error_log(__METHOD__.__LINE__.'#'.$structure->getPrimaryType().'#');
 			if ($force8bitOnPrimaryPart&&$structure->getPrimaryType()=='text')
