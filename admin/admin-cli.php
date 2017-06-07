@@ -1,4 +1,4 @@
-#!/usr/bin/php -qC
+#!/usr/bin/env php
 <?php
 /**
  * Admin - Command line interface

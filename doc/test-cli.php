@@ -1,4 +1,4 @@
-#!/usr/bin/env php -dapc.enable_cli=1
+#!/usr/bin/env php
 <?php
 /**
  * EGroupware Test Runner
@@ -12,7 +12,9 @@ if (php_sapi_name() !== 'cli')	// security precaution: forbit calling as web-pag
 	die('<h1>test-cli.php must NOT be called as web-page --> exiting !!!</h1>');
 }
 
-require_once './api/src/loader/common.php';
+ini_set('apc.enable_cli', true);
+
+require_once dirname(__DIR__).'/api/src/loader/common.php';
 
 $_SERVER['argv'][] = '--verbose';
 $_SERVER['argv'][] = 'EgroupwareTestRunner';
