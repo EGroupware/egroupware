@@ -5498,7 +5498,7 @@ app.classes.mail = AppJS.extend(
 		}
 		var data = egw.dataGetUIDdata(id);
 		var fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
-		var email = fromaddress[1]?fromaddress[1]:fromaddress;
+		var email = (fromaddress && fromaddress[1])?fromaddress[1]:data.data.fromaddress;
 		var domain = '@'+email.split('@')[1];
 		this.egw.json('mail.mail_ui.ajax_spamAction', [
 			_action.id,
@@ -5516,7 +5516,7 @@ app.classes.mail = AppJS.extend(
 		var id = _sender[0].id;
 		var data = egw.dataGetUIDdata(id);
 		var fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
-		var email = fromaddress[1]?fromaddress[1]:fromaddress;
+		var email = (fromaddress && fromaddress[1]) ?fromaddress[1]:data.data.fromaddress;
 		var domain = email.split('@')[1];
 		switch (_action.id)
 		{

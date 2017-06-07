@@ -921,7 +921,7 @@ class mail_ui
 					), 'move');
 				break;
 			case 'ham':
-				if ($ham)
+				if (isset($this->mail_bo->icServer->acc_folder_ham) && !isset($this->mail_bo->icServer->acc_spam_api))
 				{
 					$this->ajax_copyMessages($ham, array(
 						'all' => false,
