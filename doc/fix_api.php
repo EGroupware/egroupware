@@ -1,4 +1,4 @@
-#!/usr/bin/env php -qC
+#!/usr/bin/env php
 <?php
 /**
  * EGroupware - check namespace usage in converted code

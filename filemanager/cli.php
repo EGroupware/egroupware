@@ -1,4 +1,4 @@
-#!/usr/bin/env php -qC
+#!/usr/bin/env php
 <?php
 /**
  * EGroupware Filemanager - Command line interface
