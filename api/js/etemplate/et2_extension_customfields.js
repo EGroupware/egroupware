@@ -48,6 +48,11 @@ var et2_customfields_list = (function(){ "use strict"; return et2_valueWidget.ex
 		'private': {
 			ignore: true,
 			type: 'boolean'
+		},
+		'sub_app': {
+			'name': 'sub app name',
+			'type': "string",
+			'description': "Name of sub application"
 		}
 	},
 

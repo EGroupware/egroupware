@@ -127,7 +127,7 @@ class admin_customfields
 	{
 		// determine appname
 		$this->appname = $this->appname ? $this->appname : ($_GET['appname'] ? $_GET['appname'] : ($content['appname'] ? $content['appname'] : false));
-		if(!$this->appname) die(lang('Error! No appname found'));
+		if(!$this->appname || !Api\Link::get_registry($this->appname, 'title')) die(lang('Error! No appname found'));
 
 		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || $content['use_private'];
 
