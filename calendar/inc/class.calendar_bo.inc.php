@@ -915,6 +915,9 @@ class calendar_bo
 			$start = $this->date2ts($event['start'],true);
 			if ($event['whole_day'])
 			{
+				$start = new Api\DateTime($event['start'], Api\DateTime::$server_timezone);
+				$start->setTime(0,0,0);
+				$start = $start->format('ts');
 				$time = $this->so->startOfDay(new Api\DateTime($event['end'], Api\DateTime::$user_timezone));
 				$time->setTime(23, 59, 59);
 				$end = $this->date2ts($time,true);
@@ -1127,10 +1130,16 @@ class calendar_bo
 		// unset exceptions, as we need to add them as recurrence too, but marked as exception
 		unset($event['recur_exception']);
 		// loop over all recurrences and insert them, if they are after $start
- 		$rrule = calendar_rrule::event2rrule($event, true);	// true = we operate in usertime, like the rest of calendar_bo
+ 		$rrule = calendar_rrule::event2rrule($event, !$event['whole_day'], Api\DateTime::$user_timezone->getName());	// true = we operate in usertime, like the rest of calendar_bo
 		foreach($rrule as $time)
 		{
 			$time->setUser();	// $time is in timezone of event, convert it to usertime used here
+			if($event['whole_day'])
+			{
+				// All day events are processed in server timezone
+				$time->setServer();
+				$time->setTime(0,0,0);
+			}
 			if (($ts = $this->date2ts($time)) < $start-$event_length)
 			{
 				//echo "<p>".$time." --> ignored as $ts < $start-$event_length</p>\n";
