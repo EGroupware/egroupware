@@ -886,6 +886,7 @@ class mail_ui
 	public function ajax_spamAction($_action, $_params)
 	{
 		$msg = array();
+		$refresh = false;
 		$response = Api\Json\Response::get();
 
 		$id_parts = self::splitRowID($_params['row_id']);
@@ -919,6 +920,7 @@ class mail_ui
 					'all' => false,
 					'msg' => array($_params['row_id'])
 					), 'move');
+				$refresh = true;
 				break;
 			case 'ham':
 				if (isset($this->mail_bo->icServer->acc_folder_ham) && !isset($this->mail_bo->icServer->acc_spam_api))
@@ -935,10 +937,18 @@ class mail_ui
 						'all' => false,
 						'msg' => array($_params['row_id'])
 					), 'move');
+					$refresh = true;
 				}
 				break;
 		}
-		$response->apply('egw.message',[implode('\n',$msg)]);
+		if ($refresh)
+		{
+			$response->apply('egw.refresh',[implode('\n',$msg),'mail',$_params['row_id'],'delete']);
+		}
+		else
+		{
+			$response->apply('egw.message',[implode('\n',$msg)]);
+		}
 	}
 
 	/**
