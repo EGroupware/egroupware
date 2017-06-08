@@ -59,6 +59,13 @@ class calendar_hooks
 					'mime_popup' => '850x590',
 					'mime_target' => '_blank'
 				),
+				'application/ics' => array(
+					'menuaction' => 'calendar.calendar_uiforms.edit',
+					'mime_data' => 'ical_data',
+					'mime_url' => 'ical_url',
+					'mime_popup' => '850x590',
+					'mime_target' => '_blank'
+				),
 			),
 			'merge' => true,
 			'entry' => 'Event',
