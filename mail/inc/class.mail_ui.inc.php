@@ -972,7 +972,7 @@ class mail_ui
 					),
 					'ham' => array (
 						'caption'	=> 'Report as Ham',
-						'icon'		=> 'ham',
+						'icon'		=> 'dhtmlxtree/MailFolderHam',
 						'onExecute' => 'javaScript:app.mail.spam_actions',
 						'hint'		=> 'Report this email content as Ham (not spam) - spam solutions like spamTitan will learn',
 						'allowOnMultiple' => false

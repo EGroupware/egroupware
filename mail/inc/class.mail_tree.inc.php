@@ -237,6 +237,7 @@ class mail_tree
 					'Sent'      => $this->ui->mail_bo->getSentFolder(false),
 					'Junk'      => $this->ui->mail_bo->getJunkFolder(false),
 					'Outbox'    => $this->ui->mail_bo->getOutboxFolder(false),
+					'Ham'		=> $this->ui->mail_bo->icServer->acc_folder_ham
 				);
 				foreach ($foldersList as &$folder)
 				{
