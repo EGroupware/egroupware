@@ -2417,6 +2417,13 @@ class calendar_ical extends calendar_boupdate
 			// No reference or RECURRENCE-ID for the series master
 			$event['reference'] = $event['recurrence'] = 0;
 		}
+		if (Api\DateTime::to($event['start'], 'H:i:s') == '00:00:00' && Api\DateTime::to($event['end'], 'H:i:s') == '00:00:00'
+				&& $event['end'] - $event['start'] == 86400
+		)
+		{
+			// 'All day' event that ends at midnight the next day, avoid that
+			$event['end']--;
+		}
 
 		// handle the alarms
 		$alarms = $event['alarm'];
