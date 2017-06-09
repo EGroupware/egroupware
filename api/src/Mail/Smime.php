@@ -172,28 +172,14 @@ class Smime extends Horde_Crypt_Smime
 	}
 
 	/**
-     * Verify a signature using via S/MIME.
+     * Extract the contents from signed S/MIME data.
      *
-     * @param string $text  The multipart/signed data to be verified.
-     * @param mixed $certs  Either a single or array of root certificates.
+     * @param string $data     The signed S/MIME data.
      *
-     * @return stdClass  Object with the following elements:
-     * <pre>
-     * cert - (string) The certificate of the signer stored in the message (in
-     *        PEM format).
-     * email - (string) The email of the signing person.
-     * msg - (string) Status string.
-     * verify - (boolean) True if certificate was verified.
-     * </pre>
+     * @return string  The contents embedded in the signed data.
      * @throws Horde_Crypt_Exception
-	 *
-	 *
-	 * @TODO: This method is overridden in order to extract content
-	 * from the signed message. There's a pull request opened for this
-	 * modification on horde github, https://github.com/horde/horde/pull/218
-	 * which in case that gets merged we need to remove this implementation.
      */
-    public function verify($text, $certs)
+    public function extractSignedContents($data)
     {
         /* Check for availability of OpenSSL PHP extension. */
         $this->checkForOpenSSL();
@@ -201,49 +187,22 @@ class Smime extends Horde_Crypt_Smime
         /* Create temp files for input/output. */
         $input = $this->_createTempFile('horde-smime');
         $output = $this->_createTempFile('horde-smime');
-		$content = $this->_createTempFile('horde-smime');
+		$certs = $this->_createTempFile('horde-smime');
 
-        /* Write text to file */
-        file_put_contents($input, $text);
-        unset($text);
 
-        $root_certs = array();
-        if (!is_array($certs)) {
-            $certs = array($certs);
-        }
-        foreach ($certs as $file) {
-            if (file_exists($file)) {
-                $root_certs[] = $file;
+        /* Write text to file. */
+        file_put_contents($input, $data);
+        unset($data);
+
+		if (openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $certs) === true &&
+                openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $certs, array(), $certs, $output) === true) {
+            $ret = file_get_contents($output);
+            if ($ret) {
+               return $ret;
             }
-        }
-
-		$ob = new \stdClass();
-
-        if (!empty($root_certs) &&
-            (openssl_pkcs7_verify($input, 0, $output) === true)) {
-            /* Message verified */
-            $ob->msg = Horde_Crypt_Translation::t("Message verified successfully.");
-            $ob->verify = true;
-        } else {
-            /* Try again without verfying the signer's cert */
-            $result = openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $output);
-
-            if ($result === -1) {
-                throw new \Horde_Crypt_Exception(\Horde_Crypt_Translation::t("Verification failed - an unknown error has occurred."));
-            } elseif ($result === false) {
-                throw new \Horde_Crypt_Exception(\Horde_Crypt_Translation::t("Verification failed - this message may have been tampered with."));
-            }
-
-            $ob->msg = \Horde_Crypt_Translation::t("Message verified successfully but the signer's certificate could not be verified.");
-            $ob->verify = false;
-        }
-		if (openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $output, array(), $output, $content))
-		{
-			$ob->content = file_get_contents($content);
 		}
-        $ob->cert = file_get_contents($output);
-        $ob->email = $this->getEmailFromKey($ob->cert);
 
-        return $ob;
+        throw new Horde_Crypt_Exception(Horde_Crypt_Translation::t("Could not extract data from signed S/MIME part."));
     }
+
 }

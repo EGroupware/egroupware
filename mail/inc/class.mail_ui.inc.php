@@ -2311,7 +2311,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						'certHtml' => $this->smime->certToHTML($cert->cert),
 						'partID'   => $attachment['partID'],
 						'signed'   => true,
-						'message'  => $cert->content != "" ? $cert->content : $message
+						'message'  => $this->smime->extractSignedContents($message)
 					);
 
 				} catch (Exception $ex) {
