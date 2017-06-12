@@ -41,7 +41,10 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		$form_name = self::form_name($cname, $this->id, $expand);
 
 		$value =& self::get_array(self::$request->content, $form_name);
-		if(!is_array($value)) $value = array();
+		if(!is_array($value))
+		{
+			$value = explode(',', $value);
+		}
 		if (!is_array(self::$request->sel_options[$form_name]))
 		{
 			self::$request->sel_options[$form_name] = array();
