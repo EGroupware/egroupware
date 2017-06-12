@@ -605,7 +605,7 @@ class calendar_ical extends calendar_boupdate
 							if ($tzid == 'UTC' && $event['end'] - $event['start'] <= 86400)
 								$attributes['duration'] = $event['end'] - $event['start'];
 							else
-							$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
+								$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
 						}
 						else
 						{
@@ -2417,9 +2417,7 @@ class calendar_ical extends calendar_boupdate
 			// No reference or RECURRENCE-ID for the series master
 			$event['reference'] = $event['recurrence'] = 0;
 		}
-		if (Api\DateTime::to($event['start'], 'H:i:s') == '00:00:00' && Api\DateTime::to($event['end'], 'H:i:s') == '00:00:00'
-				&& $event['end'] - $event['start'] == 86400
-		)
+		if (Api\DateTime::to($event['start'], 'H:i:s') == '00:00:00' && Api\DateTime::to($event['end'], 'H:i:s') == '00:00:00')
 		{
 			// 'All day' event that ends at midnight the next day, avoid that
 			$event['end']--;
