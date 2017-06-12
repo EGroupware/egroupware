@@ -4579,10 +4579,11 @@ class Mail
 	 * @param Horde_Mime_Part $_structure = '' if given use structure for parsing
 	 * @param string $_htmlMode how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
-	 * @param array	&$skipParts - passed by reference to have control/knowledge which parts are already fetched
+	 * @param array& $skipParts - passed by reference to have control/knowledge which parts are already fetched
+	 * @param Horde_Mime_Part& $partCalendar =null on return text/calendar part, if one was contained or false
 	 * @return array containing the desired part
 	 */
-	function getMultipartMixed($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false, &$skipParts=array())
+	function getMultipartMixed($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false, &$skipParts=array(), &$partCalendar=null)
 	{
 		if (self::$debug) echo __METHOD__."$_uid, $_htmlMode<br>";
 		$bodyPart = array();
@@ -4616,11 +4617,11 @@ class Mail
 					switch($part->getSubType())
 					{
 						case 'alternative':
-							return array($this->getMultipartAlternative($_uid, $part, $_htmlMode, $_preserveSeen));
+							return array($this->getMultipartAlternative($_uid, $part, $_htmlMode, $_preserveSeen, $partCalendar));
 
 						case 'mixed':
 						case 'signed':
-							$bodyPart = array_merge($bodyPart, $this->getMultipartMixed($_uid, $part, $_htmlMode, $_preserveSeen, $skipParts));
+							$bodyPart = array_merge($bodyPart, $this->getMultipartMixed($_uid, $part, $_htmlMode, $_preserveSeen, $skipParts, $partCalendar));
 							break;
 
 						case 'related':
@@ -4890,7 +4891,8 @@ class Mail
 					case 'report':
 					case 'signed':
 					case 'encrypted':
-						$bodyParts = $this->getMultipartMixed($_uid, $_structure, $this->htmlOptions, $_preserveSeen);
+						$skipParts = array();
+						$bodyParts = $this->getMultipartMixed($_uid, $_structure, $this->htmlOptions, $_preserveSeen, $skipParts, $calendar_part);
 						break;
 
 					case 'related':
