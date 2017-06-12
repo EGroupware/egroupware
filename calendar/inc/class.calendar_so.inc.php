@@ -1633,7 +1633,7 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		// Custom fields
 		Api\Storage\Customfields::handle_files('calendar', $cal_id, $event);
-		
+
 		foreach($event as $name => $value)
 		{
 			if ($name[0] == '#')
@@ -2245,7 +2245,7 @@ ORDER BY cal_user_type, cal_usre_id
 			),array(
 				'sync_appname' => 'calendar',
 				'sync_contentid' => $row['cal_id'],	// sync_contentid is varchar(60)!
-			), __LINE__, __FILE__);
+			), __LINE__, __FILE__, 'calendar');
 			// handle links
 			Link::unlink('', 'calendar', $row['cal_id']);
 		}
