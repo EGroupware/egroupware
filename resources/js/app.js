@@ -77,8 +77,12 @@ app.classes.resources = AppJS.extend(
 
 		var show_calendar = function(res_ids) {
 			egw_message(this.egw.lang('%1 resource(s) View calendar',res_ids.length));
-
-			this.egw.open_link('calendar.calendar_uiviews.index&view=planner&sortby=user&owner=0,r'+res_ids.join(',r')+'&ajax=true');
+			var current_owners = (app.calendar ? app.calendar.state.owner || [] : []).join(',');
+			if(current_owners)
+			{
+				current_owners += ',';
+			}
+			this.egw.open_link('calendar.calendar_uiviews.index&view=planner&sortby=user&owner='+current_owners+'r'+res_ids.join(',r')+'&ajax=true');
 		};
 
 		if(selection && selection.all)
