@@ -144,6 +144,7 @@ class calendar_uiviews extends calendar_ui
 			'start'   => $this->date,
 			'cat_id'  => $this->cat_id ? (is_array($this->cat_id)?$this->cat_id:explode(',',$this->cat_id)) : 0,
 			'users'   => explode(',',$this->owner),
+			'owner'   => explode(',',$this->owner),
 			'filter'  => $this->filter,
 			'daywise' => True,
 			'use_so_events' => $this->test === 'true',

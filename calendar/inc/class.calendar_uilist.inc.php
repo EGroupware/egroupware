@@ -159,6 +159,10 @@ class calendar_uilist extends calendar_ui
 		{
 			$content['nm']['search'] = $_GET['search'];
 		}
+		if($this->owner)
+		{
+			$content['nm']['col_filter']['participant'] = is_array($this->owner) ? $this->owner : explode(',',$this->owner);
+		}
 		// search via jdots ajax_exec uses $_REQUEST['json_data'] instead of regular GET parameters
 		if (isset($_REQUEST['json_data']) && ($json_data = json_decode($_REQUEST['json_data'], true)) &&
 			!empty($json_data['request']['parameters'][0]))
