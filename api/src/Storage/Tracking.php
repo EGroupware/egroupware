@@ -851,7 +851,7 @@ abstract class Tracking
 		}
 		elseif(!$sender)
 		{
-			$sender = 'eGroupWare '.lang($this->app).' <noreply@'.$GLOBALS['egw_info']['server']['mail_suffix'].'>';
+			$sender = 'EGroupware '.lang($this->app).' <noreply@'.$GLOBALS['egw_info']['server']['mail_suffix'].'>';
 		}
 		//echo "<p>".__METHOD__."()='".htmlspecialchars($sender)."'</p>\n";
 		return $sender;
