@@ -4918,7 +4918,8 @@ class Mail
 					switch($_structure->getSubType())
 					{
 						case 'calendar':
-							// this is handeled in getTextPart
+							$calendar_part = $_structure;
+							// fall through in case user has no calendar rights
 						case 'html':
 						case 'plain':
 						default:
