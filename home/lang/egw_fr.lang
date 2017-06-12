@@ -1,8 +1,11 @@
 a quick note	home	fr	Une note rapide
+add	home	fr	ajouter
+all	home	fr	Tout
 birthday reminders	home	fr	Rappel des anniversaires
 color	home	fr	Couleur
 configure	home	fr	Configurer
 displays home	home	fr	Afficher l'écran d'accueil
+edit	home	fr	modifier
 egroupware	home	fr	EGroupware
 entry	home	fr	Entrée
 favorite	home	fr	Favoris
@@ -10,7 +13,11 @@ forced	home	fr	Forcé
 home	home	fr	Accueil
 in %1 days (%2) is %3's birthday.	home	fr	L'anniversaire de %3 est dans %1 jours (%2)
 list of entries	home	fr	Liste des entrées
+location	home	fr	Emplacement
+note	home	fr	Note
+open	home	fr	Ouvrir
 remove	home	fr	Supprimer
+remove as default for %1	home	fr	Supprimer %1 comme valeur par défaut
 remove default %1	home	fr	Supprimer %1 par défaut
 removed default	home	fr	Supprimer le défaut
 set as default	home	fr	Définir par défaut
@@ -20,8 +27,11 @@ show all the entries using a favorite	home	fr	Afficher toutes les entrées via u
 show one entry	home	fr	Montrer une entrée
 single entry	home	fr	Entrée seule
 there is a new version of egroupware available	home	fr	Une nouvelle version de EGroupware est disponible
+title	home	fr	Titre
 today is %1's birthday!	home	fr	Aujourd'hui, c'est l'anniversaire de %1 !
 tomorrow is %1's birthday.	home	fr	Demain, c'est l'anniversaire de %1 !
+weather	home	fr	Météo
+weekview	home	fr	Vue hebdomadaire
 yes, for the next three days	home	fr	Oui, pour les trois prochains jours
 yes, for the next two weeks	home	fr	Oui, pour les deux prochaines semaines
 yes, for the next week	home	fr	Oui, pour la semaine prochaine

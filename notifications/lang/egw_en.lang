@@ -22,7 +22,7 @@ egroupware has notifications for you	notifications	en	EGroupware has notificatio
 egroupware login is starting, please wait.	notifications	en	EGroupware login is starting, please wait.
 egroupware logindomain:	notifications	en	EGroupware Logindomain:
 egroupware logindomains founds, please select.	notifications	en	EGroupware Logindomains founds, please select.
-egroupware not found by url or connection lost to server.	notifications	en	Egroupware not found by URL or connection lost to server.
+egroupware not found by url or connection lost to server.	notifications	en	EGroupware not found by URL or connection lost to server.
 egroupware not found by url.	notifications	en	EGroupware not found by URL.
 egroupware-popup and e-mail	notifications	en	EGroupware popup and email
 egroupware-popup and windows-popup	notifications	en	EGroupware popup and Windows popup
@@ -62,8 +62,8 @@ permission	notifications	en	Permission
 permission denied for notifications application.	notifications	en	Permission denied for notifications application.
 placeholders with user/ prefix	admin	en	placeholders with user/ prefix
 please contact your egroupware admin.	notifications	en	Please contact your EGroupware admin.
-please enter the url of your egroupware.	notifications	en	Please enter the URL of your Egroupware.
-please enter your egroupware username.	notifications	en	Please enter your Egroupware username.
+please enter the url of your egroupware.	notifications	en	Please enter the URL of your EGroupware.
+please enter your egroupware username.	notifications	en	Please enter your EGroupware username.
 please enter your password	notifications	en	Please enter your password
 poll interval	notifications	en	Poll interval
 preferences for notification	notifications	en	Preferences for notification
