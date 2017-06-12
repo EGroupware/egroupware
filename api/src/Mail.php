@@ -7028,7 +7028,7 @@ class Mail
 				$needsReplacement = false;
 				foreach((array)$value as &$val)
 				{
-					if (strlen($val) > 998)
+					if (strlen($val)+ strlen($header) > 900)
 					{
 						$needsReplacement = $needsFix = true;
 					}
