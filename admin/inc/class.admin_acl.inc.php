@@ -425,6 +425,10 @@ class admin_acl
 			)
 		);
 
+		// Set this so if loaded via preferences, js is still properly
+		// loaded into global app.admin
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
+		
 		$tpl->exec('admin.admin_acl.index', $content, $sel_options, array(), array(), 2);
 	}
 
