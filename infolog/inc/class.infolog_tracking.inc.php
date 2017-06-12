@@ -102,7 +102,7 @@ class infolog_tracking extends Api\Storage\Tracking
 		'info_datemodified' => 'Last changed',
 		'info_location'  => 'Location',
 		'info_startdate' => 'Start date',
-		'info_enddate'   => 'Due date',
+		'info_enddate'   => 'Enddate',
 		'info_responsible' => 'Responsible',
 		'info_cc'        => 'Cc',
 		// PM fields
