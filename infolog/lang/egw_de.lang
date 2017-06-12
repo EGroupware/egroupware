@@ -168,6 +168,7 @@ done	infolog	de	geschlossen
 download	infolog	de	Datei laden
 download url for links	infolog	de	Download Link für Verknüpfungen
 due %1	infolog	de	%1 fällig
+due date	infolog	de	Fälligkeitsdatum
 duration	infolog	de	Dauer
 e-mail:	infolog	de	E-Mail
 each value is a line like <id>[=<label>]	infolog	de	jeder Wert ist eine Zeile im Format id=[angezeigter Wert]
