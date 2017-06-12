@@ -5373,31 +5373,46 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _action egw action
 	 * @param {object} _sender nm row
 	 */
-	spam_actions: function (_action, _sender)
+	spam_actions: function (_action, _senders)
 	{
-		var id = '';
-		if (_sender.length == 0)
+		var id,fromaddress,domain, email = '';
+		var data = {};
+		var items = [];
+
+		// called action for a single row from toolbar
+		if (_senders.length == 0)
 		{
 			var nm = this.et2.getWidgetById(this.nm_index);
-			id = nm.getSelection().ids[0];
+			_senders[0]['id'] = nm.getSelection().ids[0];
 		}
-		else
+
+		for (var i in _senders)
 		{
-			id = _sender[0].id;
-		}
-		var data = egw.dataGetUIDdata(id);
-		var fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
-		var email = (fromaddress && fromaddress[1])?fromaddress[1]:data.data.fromaddress;
-		var domain = '@'+email.split('@')[1];
-		this.egw.json('mail.mail_ui.ajax_spamAction', [
-			_action.id,
-			{
+			id = _senders[i].id;
+			data = egw.dataGetUIDdata(id);
+			fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
+			email = (fromaddress && fromaddress[1])?fromaddress[1]:data.data.fromaddress;
+			domain = '@'+email.split('@')[1];
+			items[i] = {
 				'acc_id':id.split('::')[2],
 				'row_id':data.data.row_id,
 				'uid': data.data.uid,
 				'sender': _action.id.match(/domain/)? domain : email
+			};
+		}
+
+		this.egw.json('mail.mail_ui.ajax_spamAction', [
+			_action.id,items
+		], function(_data){
+			if (_data[1] && _data[1].length > 0)
+			{
+				egw.refresh(_data[0],'mail',_data[1],'delete');
 			}
-		]).sendRequest(true);
+			else
+			{
+				egw.message(_data[0]);
+			}
+		}).sendRequest(true);
 	},
 
 	spamTitan_setActionTitle: function (_action, _sender)
@@ -5405,8 +5420,8 @@ app.classes.mail = AppJS.extend(
 		var id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
 		var data = egw.dataGetUIDdata(id);
 		var fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
-		var email = (fromaddress && fromaddress[1]) ?fromaddress[1]:data.data.fromaddress;
-		var domain = email.split('@')[1];
+		var email = _sender.length>1? this.egw.lang('emails'):(fromaddress && fromaddress[1]) ?fromaddress[1]:data.data.fromaddress;
+		var domain = _sender.length>1? this.egw.lang('domains'):email.split('@')[1];
 		switch (_action.id)
 		{
 			case 'whitelist_email_add':

@@ -881,19 +881,23 @@ class mail_ui
 	 * Method to execute spam actions
 	 *
 	 * @param type $_action action id
-	 * @param type $_params
+	 * @param type $_items
 	 */
-	public function ajax_spamAction($_action, $_params)
+	public function ajax_spamAction($_action, $_items)
 	{
 		$msg = array();
 		$refresh = false;
 		$response = Api\Json\Response::get();
-
-		$id_parts = self::splitRowID($_params['row_id']);
-		if ($id_parts['profileID'] && $id_parts['profileID'] != $this->mail_bo->profileID)
+		// Check active profile and change it if it's neccessary
+		if (is_array($_items[0]))
 		{
-			$this->changeProfile($id_parts['profileID']);
+			$id_parts = self::splitRowID($_items[0]['row_id']);
+			if ($id_parts['profileID'] && $id_parts['profileID'] != $this->mail_bo->profileID)
+			{
+				$this->changeProfile($id_parts['profileID']);
+			}
 		}
+
 		$delimiter = $this->mail_bo->getHierarchyDelimiter();
 		// Ham folder
 		$ham = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->icServer->acc_folder_ham;
@@ -901,49 +905,60 @@ class mail_ui
 		$junk = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->getJunkFolder();
 		// Inbox folder
 		$inbox = $this->mail_bo->profileID.self::$delimiter.'INBOX';
-		// Current Mailbox
-		$mailbox = $id_parts['folder'];
 
-		if ($GLOBALS['egw_info']['apps']['stylite'])
+		$messages = array();
+
+		foreach ($_items as &$params)
 		{
-			$_params['mailbody'] = $this->get_load_email_data($_params['uid'], null, $mailbox);
-			$msg[] = stylite_mail_spamtitan::execAction($_action, $_params, array(
-				'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
-				'user'		=> $this->mail_bo->icServer->acc_imap_username,
-				'api_url'	=> $this->mail_bo->icServer->acc_spam_api
-			));
+			$id_parts = self::splitRowID($params['row_id']);
+			// Current Mailbox
+			$mailbox = $id_parts['folder'];
+			$messages[] = $params['row_id'];
+			if ($GLOBALS['egw_info']['apps']['stylite'])
+			{
+				$params['mailbody'] = $this->get_load_email_data($params['uid'], null, $mailbox);
+			}
 		}
 		switch ($_action)
 		{
 			case 'spam':
-				$this->ajax_copyMessages($junk, array(
+				$msg[] = $this->ajax_copyMessages($junk, array(
 					'all' => false,
-					'msg' => array($_params['row_id'])
-					), 'move');
+					'msg' => $messages
+					), 'move', null, true);
 				$refresh = true;
 				break;
 			case 'ham':
 				if (isset($this->mail_bo->icServer->acc_folder_ham) && !isset($this->mail_bo->icServer->acc_spam_api))
 				{
-					$this->ajax_copyMessages($ham, array(
+					$msg[] = $this->ajax_copyMessages($ham, array(
 						'all' => false,
-						'msg' => array($_params['row_id'])
-						), 'copy');
+						'msg' => $messages
+						), 'copy', null, true);
 				}
 				// Move mails to Inbox if they are in Junk folder
 				if ($junk == $this->mail_bo->profileID.self::$delimiter.$mailbox)
 				{
-					$this->ajax_copyMessages($inbox, array(
+					$msg[] = $this->ajax_copyMessages($inbox, array(
 						'all' => false,
-						'msg' => array($_params['row_id'])
-					), 'move');
+						'msg' => $messages
+					), 'move', null, true);
 					$refresh = true;
 				}
 				break;
 		}
+		if ($GLOBALS['egw_info']['apps']['stylite'])
+		{
+			stylite_mail_spamtitan::setActionItems($_action, $_items, array(
+				'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
+				'user'		=> $this->mail_bo->icServer->acc_imap_username,
+				'api_url'	=> $this->mail_bo->icServer->acc_spam_api
+			));
+		}
+
 		if ($refresh)
 		{
-			$response->apply('egw.refresh',[implode('\n',$msg),'mail',$_params['row_id'],'delete']);
+			$response->data([implode('\n',$msg),$messages]);
 		}
 		else
 		{
@@ -962,20 +977,21 @@ class mail_ui
 			'spamfilter' => array (
 				'caption'	=> 'Spam',
 				'icon'		=> 'dhtmlxtree/MailFolderJunk',
+				'allowOnMultiple' => true,
 				'children'	=> array (
 					'spam' => array (
 						'caption'	=> 'Report as Spam',
 						'icon'		=> 'dhtmlxtree/MailFolderJunk',
 						'onExecute' => 'javaScript:app.mail.spam_actions',
 						'hint'		=> 'Report this email content as Spam - spam solutions like spamTitan will learn',
-						'allowOnMultiple' => false
+						'allowOnMultiple' => true
 					),
 					'ham' => array (
 						'caption'	=> 'Report as Ham',
 						'icon'		=> 'dhtmlxtree/MailFolderHam',
 						'onExecute' => 'javaScript:app.mail.spam_actions',
 						'hint'		=> 'Report this email content as Ham (not spam) - spam solutions like spamTitan will learn',
-						'allowOnMultiple' => false
+						'allowOnMultiple' => true
 					)
 				)
 			)
@@ -4959,10 +4975,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @param array _messageList list of UID's
 	 * @param string _copyOrMove method to use copy or move allowed
 	 * @param string _move2ArchiveMarker marker to indicate if a move 2 archive was triggered
+	 * @param boolean _return if true the function will return the result instead of
+	 * responding to client
 	 *
 	 * @return xajax response
 	 */
-	function ajax_copyMessages($_folderName, $_messageList, $_copyOrMove='copy', $_move2ArchiveMarker='_')
+	function ajax_copyMessages($_folderName, $_messageList, $_copyOrMove='copy', $_move2ArchiveMarker='_', $_return = false)
 	{
 		if(Mail::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove.' ArchiveMarker:'.$_move2ArchiveMarker);
 		Api\Translation::add_app('mail');
@@ -5129,17 +5147,22 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					unset($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]);
 					$changeFolderActions = true;
 				}
+				if ($_return) return $error;
 				$response->call('egw.message',$error,"error");
 			}
 			else
 			{
 				if ($_copyOrMove=='copy')
 				{
-					$response->call('egw.message',lang('copied %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),$folder,$targetFolder));
+					$msg = lang('copied %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),$folder,$targetFolder);
+					if ($_return) return $msg;
+					$response->call('egw.message',$msg);
 				}
 				else
 				{
-					$response->call('egw.refresh',lang('moved %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),$folder,$targetFolder),'mail',$messageListForRefresh,'delete');
+					$msg = lang('moved %1 message(s) from %2 to %3',($messageList=='all'||$_messageList['all']?($filtered?lang('all filtered'):lang('all')):count($messageList)),$folder,$targetFolder);
+					if ($_return) return $msg;
+					$response->call('egw.refresh',$msg,'mail',$messageListForRefresh,'delete');
 				}
 			}
 			if ($changeFolderActions == true)
