@@ -1148,7 +1148,7 @@ window.egw_LAB.wait(function() {
 			}
 		}
 		// replace org_name:* id's with all id's of that org
-		$grouped_contacts = $this->find_grouped_ids($action, $checked, $use_all, $success,$failed,$action_msg,$session_name);
+		$grouped_contacts = $this->find_grouped_ids($action, $checked, $use_all, $success,$failed,$action_msg,$session_name, $msg);
 		if ($grouped_contacts) $checked = array_unique($checked ? array_merge($checked,$grouped_contacts) : $grouped_contacts);
 		//_debug_array($checked); exit;
 
