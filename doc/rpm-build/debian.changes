@@ -1,3 +1,24 @@
+egroupware-epl (16.1.20170612) hardy; urgency=low
+
+  * Mail: Implement Spam filtering feature including SpamTitan integration
+  * Mail: display event-invitation, if mail contains just that and not the usualy alternatives
+  * Mail: display event-invitation if it contains an attachment (eg. agenda)
+  * Mail: skip identities from SMTP only accounts in compose
+  * Mail: Fix contents of emails with long header fields get disturbed while importing them into mail app
+  * Mail: Fix Disposition Notification confirmation message always come in english regardless of locale settings
+  * Mail: Make multiple mail selection available for both "save to disk" and "save to filemanager" actions
+  * Mail: Fix error saving mail account while Notify mail folders is empty and Use Default option is not set.
+  * Mail: Fix vacation notice can not deal with aliases, which have no domain set
+  * Calendar: fix SQL error when automatic purge of older events is configured
+  * Calendar: avoid events ending at midnight (00:00) causing a 0 length event the next morning
+  * Calendar: In week view with multiple users, clicking on the name will now change to just that user
+  * Calendar: creating an exception to a recurring event now copies the links over to the exception
+  * ActiveSync: Fix error body part not set, while trying to forward an email
+  * Addressbook: Fix broken addressbook list in mobile view
+  * Bookmarks: fix fatal error in minimal install
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 12 Jun 2017 15:40:31 +0200
+
 egroupware-epl (16.1.20170415) hardy; urgency=low
 
   * Mail: Add a new preference for preview pane to stay there, even when no mail is selected for previewing
