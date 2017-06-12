@@ -302,19 +302,9 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 		}
 		if($fields) {
 			foreach((array)$fields['select'] as $name) {
-				if($record[$name] != null && is_array($selects) && $selects[$name]) {
-					$key = array_search(strtolower($record[$name]), array_map('strtolower',$selects[$name]));
-					if($key !== false)
-					{
-						$record[$name] = $key;
-					}
-					else
-					{
-						$key = array_search(strtolower($record[$name]), array_map('strtolower',array_map('lang',$selects[$name])));
-						if($key !== false) $record[$name] = $key;
-					}
-				}
+				$record[$name] = static::find_select_key($record[$name], $selects[$name]);
 			}
+			
 			foreach((array)$fields['links'] as $name) {
 				if($record[$name] && $links[$name])
 				{
@@ -511,6 +501,53 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 		}
 
 		return implode("\n",$warnings);
+	}
+
+	/**
+	 * Find the key to match the label for a select box field, translating
+	 * what we imported into a key we can save.
+	 *
+	 * @param String $record_value
+	 * @param Array $selects Select box options in key => value pairs
+	 * @return Select box key(s) that match the given record value, or the unchanged value
+	 *	if no matches found.
+	 */
+	protected static function find_select_key($record_value, $selects)
+	{
+		if($record_value != null && is_array($selects)) {
+			if(is_array($record_value) || is_string($record_value) && strpos($record_value, ',') !== FALSE)
+			{
+				// Array, or CSV
+				$key = array();
+				$subs = explode(',',$record_value);
+				for($sub_index = 0; $sub_index < count($subs); $sub_index++)
+				{
+					$sub_key = static::find_select_key($subs[$sub_index], $selects);
+					if(!$sub_key)
+					{
+						$sub_key = static::find_select_key($subs[$sub_index].','.$subs[$sub_index+1], $selects);
+						if($sub_key) $sub_index++;
+					}
+					if($sub_key)
+					{
+						$key[] = $sub_key;
+					}
+				}
+				return $key;
+			}
+			$key = array_search(strtolower($record_value), array_map('strtolower',$selects));
+			if($key !== false)
+			{
+				$record_value = $key;
+			}
+			else
+			{
+				$key = array_search(strtolower($record_value), array_map('strtolower',array_map('lang',$selects)));
+				if($key !== false) $record_value = $key;
+			}
+		}
+
+		return $record_value;
 	}
 } // end of import_csv
 ?>
