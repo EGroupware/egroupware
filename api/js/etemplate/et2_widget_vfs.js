@@ -74,9 +74,10 @@ var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDet
 		// calculate path as parent of name, which can contain slashes
 		// eg. _value.path=/home/ralf/sub/file, _value.name=sub/file --> path=/home/ralf
 		// --> generate clickable fields for sub/ + file
-		if(_value.path.indexOf(_value.name) >= 0)
+		var sub_path = path.substr(0, _value.path.length-_value.name.length-1);
+		if(_value.path.indexOf(_value.name) >= 0 && sub_path[sub_path.length-1] === '/')
 		{
-			path = path.substr(0, _value.path.length-_value.name.length-1);
+			path = sub_path;
 			var path_offset = path.split('/').length;
 			var path_parts = _value.path.split('/');
 		}
