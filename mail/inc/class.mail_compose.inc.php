@@ -1180,6 +1180,9 @@ class mail_compose
 		$sel_options['mailaccount'] = $identities = array();
 		foreach(Mail\Account::search(true,false) as $acc_id => $account)
 		{
+			// do NOT add SMTP only accounts as identities
+			if (!$account->is_imap(false)) continue;
+
 			foreach($account->identities($acc_id) as $ident_id => $identity)
 			{
 				$sel_options['mailaccount'][$acc_id.':'.$ident_id] = $identity;
