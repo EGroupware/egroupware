@@ -1216,6 +1216,7 @@ app.classes.filemanager = AppJS.extend(
 	 * @returns {boolean} returns true if is editable otherwise false
 	 */
 	isEditable: function (_egwAction, _senders) {
+		if (_senders.length>1) return false;
 		var data = egw.dataGetUIDdata(_senders[0].id),
 			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 
