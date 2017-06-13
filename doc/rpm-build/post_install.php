@@ -695,7 +695,7 @@ function set_univention_defaults()
 				if (!($sieve_port = _ucr_get('mail/cyrus/sieve/port'))) $sieve_port = 4190;
 			}
 			// set folders so mail creates them on first login, UCS does not automatic
-			$config['folder'] = 'INBOX/Sent,INBOX/Trash,INBOX/Drafts,INBOX/Templates,INBOX/Spam';
+			$config['folder'] = 'INBOX/Sent,INBOX/Trash,INBOX/Drafts,INBOX/Templates,Spam,,Ham';
 			$config['sieve'] = "$mailserver,$sieve_port,starttls";
 			// set an email address for sysop user so mail works right away
 			$config['admin_email'] = '$admin_user@'.$domain;
