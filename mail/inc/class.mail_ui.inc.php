@@ -2482,10 +2482,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$text = $usage .'/'.$limit;
 			switch ($percent)
 			{
-				case 90:
+				case ($percent > 90):
 					$class ='mail-index_QuotaRed';
 					break;
-				case 80:
+				case ($percent > 80):
 					$class ='mail-index_QuotaYellow';
 					break;
 				default:
