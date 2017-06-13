@@ -1,3 +1,9 @@
+egroupware-epl (16.1.20170613) hardy; urgency=low
+
+  * Mail: fix PHP Fatal error under PHP 5.4
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 13 Jun 2017 11:54:46 +0200
+
 egroupware-epl (16.1.20170612) hardy; urgency=low
 
   * Mail: Implement Spam filtering feature including SpamTitan integration
