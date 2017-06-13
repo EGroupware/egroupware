@@ -5402,7 +5402,7 @@ app.classes.mail = AppJS.extend(
 
 	spamTitan_setActionTitle: function (_action, _sender)
 	{
-		var id = _sender[0].id;
+		var id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
 		var data = egw.dataGetUIDdata(id);
 		var fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
 		var email = (fromaddress && fromaddress[1]) ?fromaddress[1]:data.data.fromaddress;
