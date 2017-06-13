@@ -7032,7 +7032,7 @@ class Mail
 			foreach($headers->toArray() as $header => $value)
 			{
 				$needsReplacement = false;
-				foreach((array)$value as &$val)
+				foreach((array)$value as $val)
 				{
 					if (strlen($val)+ strlen($header) > 900)
 					{
