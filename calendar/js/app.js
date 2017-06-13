@@ -2240,8 +2240,10 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 
 				// Set rows that need it
 				grid.iterateOver(function(widget) {
+					var was_disabled = false;
 					if(row_index < value.length)
 					{
+						was_disabled = widget.options.disabled;
 						widget.set_disabled(false);
 					}
 					else
@@ -2269,6 +2271,15 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 						widget.resizeTimes();
 						window.setTimeout(jQuery.proxy(widget.set_header_classes, widget),0);
 
+						// If disabled while the daycols were loaded, they won't load their events
+						for(var day = 0; was_disabled && day < widget.day_widgets.length; day++)
+						{
+							egw.dataStoreUID(
+									widget.day_widgets[day].registeredUID,
+								egw.dataGetUIDdata(widget.day_widgets[day].registeredUID).data
+							);
+						}
+						
 						// Hide loader
 						widget.loader.hide();
 						row_index++;
