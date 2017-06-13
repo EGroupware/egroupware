@@ -646,11 +646,6 @@ var et2_calendar_timegrid = (function(){ "use strict"; return et2_calendar_view.
 		}
 		else if (old_value !== disabled)
 		{
-			// If disabled while the daycols are loaded, they won't load their events
-			for(var day = 0; day < this.day_widgets.length; day++)
-			{
-				egw.dataStoreUID(this.day_widgets[day].registeredUID, egw.dataGetUIDdata(this.day_widgets[day].registeredUID).data);
-			}
 			// Scroll to start of day - stops jumping in FF
 			// For some reason on Chrome & FF this doesn't quite get the day start
 			// to the top, so add 2px;
