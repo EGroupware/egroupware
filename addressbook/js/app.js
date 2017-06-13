@@ -978,6 +978,13 @@ app.classes.addressbook = AppJS.extend(
 				}
 			}
 		}
+
+		// Make sure advanced search is false if not set, this clears any
+		// currently set advanced search
+		if(typeof state.state.advanced_search === 'undefined')
+		{
+			state.state.advanced_search = false;
+		}
 		return this._super.apply(this, arguments);
 	},
 
