@@ -173,7 +173,7 @@ class setup_cmd_config extends setup_cmd
 			'acc_imap_type',
 		),
 		'--folder' => array(
-			'acc_folder_sent','acc_folder_trash','acc_folder_draft','acc_folder_template','acc_folder_junk','acc_folder_archive'
+			'acc_folder_sent','acc_folder_trash','acc_folder_draft','acc_folder_template','acc_folder_junk','acc_folder_archive','acc_folder_ham'
 		),
 		'--sieve' => array(
 			array('name' => 'acc_sieve_host'),
