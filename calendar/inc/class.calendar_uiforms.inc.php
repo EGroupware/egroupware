@@ -1936,13 +1936,6 @@ class calendar_uiforms extends calendar_ui
 			}
 			$event = array_shift($events);
 
-			/* Encode html specialchars (eg. < to &lt;) because client-side core
-			 * widget runs decoding for the value causes elimination of none
-			 * encoded html chars. This will help included links inside description
-			 * get displayed if activate_links = ture for description widget is set.
-			 */
-			if ($event['description'] != '') $event['description'] = htmlspecialchars($event['description']);
-
 			// convert event from servertime returned by calendar_ical to user-time
 			$this->bo->server2usertime($event);
 
