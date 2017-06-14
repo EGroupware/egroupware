@@ -109,7 +109,7 @@ class mail_acl
 	 * Edit folder ACLs of account(s)
 	 *
 	 * @param string $content = null
-	 * @param array $msg = ''
+	 * @param string $msg = ''
 	 *
 	 */
 	function edit(array $content=null ,$msg='')
