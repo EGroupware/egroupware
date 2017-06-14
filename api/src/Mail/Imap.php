@@ -159,6 +159,8 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 		if (is_null($_timeout)) $_timeout = $this->params['acc_imap_timeout']?$this->params['acc_imap_timeout']:self::getTimeOut ();
 
 		// Horde use locale for translation of error messages
+		// need to set LC_CTYPE for charachter classification (eg. Umlauts)
+		Api\Preferences::setlocale(LC_CTYPE);
 		Api\Preferences::setlocale(LC_MESSAGES);
 
 		// some plugins need extra measures to switch to an admin connection (eg. Dovecot constructs a special admin user name)
