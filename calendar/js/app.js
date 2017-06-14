@@ -3886,8 +3886,7 @@ jQuery.extend(app.classes.calendar,{
 			},
 			show_weekend: function(state) {
 				state.days = '1';
-				state.weekend = 'true';
-				return app.calendar.View.show_weekend.call(this,state);
+				return true;
 			},
 			scroll: function(delta)
 			{
