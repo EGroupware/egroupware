@@ -867,7 +867,7 @@ class Backup
 	/**
 	 * Number of rows to select per chunk, to not run into memory limit on huge tables
 	 */
-	const ROW_CHUNK = 10000;
+	const ROW_CHUNK = 5000;
 
 	/**
 	 * Backup all data in the form of a (compressed) csv file
