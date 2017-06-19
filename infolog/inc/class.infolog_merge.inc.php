@@ -149,7 +149,12 @@ class infolog_merge extends Api\Storage\Merge
 			$array['project'] = Link::title('projectmanager', $app_id);
 			break;
 		}
-
+		if (strpos($content, '$$project/') !== false && $array['pm_id'] && class_exists('projectmanager_merge'))
+		{
+			$pm_merge = new projectmanager_merge($array['pm_id']);
+			$info += $pm_merge->projectmanager_replacements($array['pm_id'],'project',$content);
+		}
+		
 		// Add markers
 		foreach($array as $key => &$value)
 		{
