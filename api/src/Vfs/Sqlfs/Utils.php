@@ -55,7 +55,7 @@ class Utils extends StreamWrapper
 					$content = fopen('php://temp', 'wb');
 					fwrite($content, $fs_content);
 					fseek($content, 0, SEEK_SET);
-					unset($fs_content);
+					$fs_content = '';	// can NOT unset it, at least in PHP 7 it looses bind to column!
 				}
 				else
 				{
