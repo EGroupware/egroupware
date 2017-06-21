@@ -13,7 +13,7 @@
 				</row>
 				<row>
 					<box scrolling="auto">
-						<tree id="foldertree" multiple="true" autoloading="mail_ui::ajax_tree_autoloading" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"/>
+						<tree id="foldertree" multiple="true" autoloading="mail_ui::ajax_tree_autoloading" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd" multimarking="strict" highlighting="true" oncheck="app.mail.folderMgmt_onCheck" onselect="app.mail.folderMgmt_onSelect"/>
 					</box>
 				</row>
 			</rows>
