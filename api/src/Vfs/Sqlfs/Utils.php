@@ -44,8 +44,9 @@ class Utils extends StreamWrapper
 		$stmt->bindColumn(4,$fs_content,\PDO::PARAM_LOB);
 		$stmt->bindValue(':offset', $n, \PDO::PARAM_INT);
 
-		while ($stmt->execute())
+		while ($stmt->execute())	// && $stmt->rowCount() does not work for all dbs :(
 		{
+			$start = $n;
 			foreach($stmt as $row)
 			{
 				// hack to work around a current php bug (http://bugs.php.net/bug.php?id=40913)
@@ -84,7 +85,7 @@ class Utils extends StreamWrapper
 
 				++$n;
 			}
-			if (!$n) break;	// just in case nothing is found, statement will execute just fine
+			if (!$n || $n == $start) break;	// just in case nothing is found, statement will execute just fine
 
 			$stmt->bindValue(':offset', $n, \PDO::PARAM_INT);
 		}
