@@ -7,8 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id$
+ * @copyright (c) 2008-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  */
 
 namespace EGroupware\Api\Vfs\Sqlfs;
@@ -32,7 +31,6 @@ class Utils extends StreamWrapper
 		{
 			self::_pdo();
 		}
-		$query = 'SELECT fs_id,fs_name,fs_size,fs_content'.
 		$query = 'SELECT fs_id,fs_name,fs_size,fs_content'.
 			' FROM '.self::TABLE.' WHERE fs_content IS NOT NULL'.
 			' ORDER BY fs_id LIMIT 5 OFFSET :offset';
