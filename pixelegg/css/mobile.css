@@ -6074,8 +6074,8 @@ span.egw_tutorial_title {
     background-repeat: no-repeat;
     z-index: 1000;
     padding-right: 5px;
-    top: -7px;
-    left: 10px;
+    top: 1px;
+    left: 15px;
     background-position: 3px 7px;
     position: fixed;
   }
@@ -6708,13 +6708,16 @@ span.egw_tutorial_title {
     position: absolute;
     display: none;
     z-index: 999;
+    background: rgba(192, 192, 192, 0.47);
   }
   body .egw_fw_mobile_popup_container .egw_fw_mobile_popupFrame {
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 70%;
     visibility: hidden;
     display: block;
-    background: white;
+    background: #fff;
+    margin: 8% auto;
+    border: 1px solid silver;
   }
   body .dialogHeadbar {
     height: 50px;
