@@ -194,9 +194,12 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				jQuery(_et2.DOMContainer).hide();
 
 				// Set client side holiday cache for this year
-				egw.window.et2_calendar_view.holiday_cache[content.data.year] = content.data.holidays;
-				delete content.data.holidays;
-				delete content.data.year;
+				if(egw.window.et2_calendar_view)
+				{
+					egw.window.et2_calendar_view.holiday_cache[content.data.year] = content.data.holidays;
+					delete content.data.holidays;
+					delete content.data.year;
+				}
 
 				this._setup_sidebox_filters();
 
@@ -236,6 +239,9 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 				{
 					this.et2.getWidgetById('title').input.select();
 				}
+
+				// Disable loading prompt (if loaded nopopup)
+				egw.loading_prompt(this.appname,false);
 				break;
 
 			case 'calendar.freetimesearch':
