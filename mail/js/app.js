@@ -5494,7 +5494,7 @@ app.classes.mail = AppJS.extend(
 		if (_senders.length == 0)
 		{
 			var nm = this.et2.getWidgetById(this.nm_index);
-			_senders[0]['id'] = nm.getSelection().ids[0];
+			_senders = [{id:nm.getSelection().ids[0]}];
 		}
 
 		for (var i in _senders)
