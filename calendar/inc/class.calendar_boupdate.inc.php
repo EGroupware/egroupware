@@ -1780,7 +1780,7 @@ class calendar_boupdate extends calendar_bo
 
 		$event_arr['link']['field'] = lang('URL');
 		$eventStart_arr = $this->date2array($event['start']); // give this as 'date' to the link to pick the right recurrence for the participants state
-		$link = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit&cal_id='.$event['id'].'&date='.$eventStart_arr['full'].'&no_popup=1';
+		$link = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit&cal_id='.$event['id'].'&date='.$eventStart_arr['full'].'&no_popup=1&ajax=true';
 		// if url is only a path, try guessing the rest ;-)
 		if ($link[0] == '/')
 		{
