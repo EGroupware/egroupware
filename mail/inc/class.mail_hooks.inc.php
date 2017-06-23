@@ -367,6 +367,17 @@ class mail_hooks
 				),
 				'default' => 'expand'
 			),
+			'splitterOrientation' => array(
+				'type' => 'select',
+				'label' => 'Preview pan orientation',
+				'help' => 'Switch preview pane between vertical and horizontal views',
+				'name' => 'splitterOrientation',
+				'values' => array(
+					'h' => lang('Horizontal'),
+					'v' => lang('Vertical')
+				),
+				'default' => 'h'
+			)
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
 		return $settingsArray;

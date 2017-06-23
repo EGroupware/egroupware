@@ -594,6 +594,10 @@ class mail_ui
 		{
 			$etpl->setElementAttribute('splitter', 'template', 'mail.index.nosplitter');
 		}
+		elseif ($this->mail_bo->mailPreferences['splitterOrientation'])
+		{
+			$etpl->setElementAttribute('mailSplitter', 'orientation', $this->mail_bo->mailPreferences['splitterOrientation']);
+		}
 
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
