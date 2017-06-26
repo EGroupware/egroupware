@@ -208,7 +208,7 @@ class importexport_export_ui {
 			if(!$content['plugin_selectors_html'] && !$content['plugin_selectors_template']) {
 				$readonlys[$tabs]['selection_tab'] = true;
 			}
-			$content['filter'] = $definition->filter;
+			$content['filter'] = (Array)$definition->filter;
 			$content['filter']['fields'] = importexport_helper_functions::get_filter_fields($_appname, $selected_plugin);
 			if(!$content['filter']['fields'])
 			{
