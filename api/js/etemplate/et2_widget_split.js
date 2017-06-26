@@ -353,7 +353,7 @@ var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IRes
 						}
 					}
 				}
-				if(w != old.w || h != old.h)
+				if(w != old.w || h != old.h || this.left.width() + this.right.width() != this.div.width())
 				{
 					this.div.trigger('resize.et2_split.'+this.id, this.prefSize);
 				}
