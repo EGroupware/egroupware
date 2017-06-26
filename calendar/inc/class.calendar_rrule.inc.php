@@ -573,8 +573,8 @@ class calendar_rrule implements Iterator
 		// Repeated Events
 		if($this->type != self::NONE)
 		{
-			list($str) = explode(' (',lang(self::$types[$this->type]));	// remove (by day/date) from Monthly
-
+			$str = lang(self::$types[$this->type]);
+			
 			$str_extra = array();
 			switch ($this->type)
 			{
@@ -799,12 +799,20 @@ class calendar_rrule implements Iterator
 		$weekdays = 0;
 		$exceptions = array();
 
-		list($type, $conditions) = explode(' (', $rrule);
+		list($type, $sub, $conditions) = explode(' (', $rrule);
+		if(!$conditions)
+		{
+			$conditions = $sub;
+		}
+		else
+		{
+			$type .= " ($sub";
+		}
 		$conditions = explode(', ', substr($conditions, 0, -1));
 
 		foreach(static::$types as $id => $type_name)
 		{
-			list($str) = explode(' (',lang($type_name));
+			$str = lang($type_name);
 			if($str == $type)
 			{
 				$type_id = $id;
