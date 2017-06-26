@@ -41,10 +41,7 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		$form_name = self::form_name($cname, $this->id, $expand);
 
 		$value =& self::get_array(self::$request->content, $form_name);
-		if(!is_array($value))
-		{
-			$value = explode(',', $value);
-		}
+
 		if (!is_array(self::$request->sel_options[$form_name]))
 		{
 			self::$request->sel_options[$form_name] = array();
@@ -76,7 +73,14 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 			array_keys($accounts), $accounts
 		);
 
-
+		if(!is_array($value))
+		{
+			// set value with an empty string only if sel options are not
+			// loaded, for example: setting calendar owner via URL when
+			// calendar app is not yet loaded.
+			$value = !empty($sel_options) ? array(): explode(',', $value);
+		}
+		
 		// Add external owners that a select account widget will not find
 		foreach($value as &$owner)
 		{
