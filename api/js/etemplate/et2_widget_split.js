@@ -335,6 +335,9 @@ var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IRes
 				{
 					this.left.height(h);
 					this.right.height(h);
+					if(this.left.width() + this.right.width() + this.div.find('.splitter-bar').outerWidth() < this.div.width() ||
+						this.left.width() + this.right.width()- this.div.find('.splitter-bar').outerWidth() > this.div.width())
+						this.div.trigger('resize.et2_split.'+this.id, this.prefSize);
 				}
 				if(this.orientation == "h")
 				{
@@ -353,7 +356,7 @@ var et2_split = (function(){ "use strict"; return et2_DOMWidget.extend([et2_IRes
 						}
 					}
 				}
-				if(w != old.w || h != old.h || this.left.width() + this.right.width() != this.div.width())
+				if(w != old.w || h != old.h)
 				{
 					this.div.trigger('resize.et2_split.'+this.id, this.prefSize);
 				}
