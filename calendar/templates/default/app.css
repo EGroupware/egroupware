@@ -21,6 +21,7 @@
 	}
 	.calendar_plannerWidget .calendar_plannerRows {
 		height: auto !important;
+		overflow: visible !important;
 	}
 	.calendar_plannerWidget .verticalBar {
 		display: none;

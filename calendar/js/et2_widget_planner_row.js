@@ -765,6 +765,9 @@ var et2_calendar_planner_row = (function(){ "use strict"; return et2_valueWidget
 		var row = jQuery('<div class="calendar_plannerEventRowWidget"></div>').appendTo(this.rows);
 		this._row_height = (parseInt(window.getComputedStyle(row[0]).getPropertyValue("height")) || 20);
 		row.remove();
+
+		// Resize & position all events
+		this.position_event();
 	}
 
 });}).call(this);

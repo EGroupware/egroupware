@@ -23,7 +23,7 @@
  *
  * @augments et2_calendar_view
  */
-var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable],
+var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.extend([et2_IDetachedDOM, et2_IResizeable, et2_IPrint],
 {
 	createNamespace: true,
 
@@ -2403,6 +2403,37 @@ var et2_calendar_planner = (function(){ "use strict"; return et2_calendar_view.e
 		this.rows.height(this.div.height() - this.headers.outerHeight());
 		
 		this.grid.height(this.rows[0].scrollHeight);
+	},
+
+	/**
+	 * Set up for printing
+	 *
+	 * @return {undefined|Deferred} Return a jQuery Deferred object if not done setting up
+	 *  (waiting for data)
+	 */
+	beforePrint: function() {
+
+		if(this.disabled || !this.div.is(':visible'))
+		{
+			return;
+		}
+		this.rows.css('overflow-y', 'visible');
+
+		var rows = jQuery('.calendar_eventRows');
+		var width = rows.width();
+		var events = jQuery('.calendar_calEvent', rows)
+				.each(function() {
+					var event = jQuery(this);
+					event.width((event.width() / width) * 100 + '%')
+				});
+
+	},
+
+	/**
+	 * Reset after printing
+	 */
+	afterPrint: function() {
+		this.rows.css('overflow-y', 'auto');
 	}
 });}).call(this);
 et2_register_widget(et2_calendar_planner, ["calendar-planner"]);
