@@ -559,7 +559,7 @@ class calendar_ui
 		if (!is_array($cont)) $cont = array();
 		$cont['view'] = $this->view ? $this->view : 'week';
 		$cont['date'] = $this->date ? $this->date : new Api\DateTime();
-		$cont['owner'] = $this->owner ? $this->owner : $cont['owner'];
+		$cont['owner'] = $this->owner ? (is_array($this->owner) ? $this->owner : explode(',',$this->owner) ) : $cont['owner'];
 
 		$cont['year'] = (int)Api\DateTime::to($cont['date'],'Y');
 		$cont['holidays'] = $this->bo->read_holidays($cont['year']);
