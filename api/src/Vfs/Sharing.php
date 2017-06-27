@@ -159,8 +159,8 @@ class Sharing
 	{
 		self::$db = $GLOBALS['egw']->db;
 
-		$token = self::get_token();
-
+		$token = static::get_token();
+		
 		// are we called from header include, because session did not verify
 		// --> check if it verifys for our token
 		if ($token && !$keep_session)
