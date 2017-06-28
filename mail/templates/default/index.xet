@@ -83,9 +83,9 @@
 				<column width="20"/>
 				<column width="20"/>
 				<column width="40%"/>
+				<column minWidth="42" width="95"/>
 				<column width="95"/>
 				<column width="95"/>
-				<column width="30%"/>
 				<column width="30%"/>
 				<column width="30%"/>
 				<column width="80"/>
@@ -111,7 +111,9 @@
 						<description id="${row}[subject]" no_lang="1"/>
 						<description id="${row}[bodypreview]" no_lang="1" class='et2_label bodypreview'/>
 					</vbox>
-					<date-time_today align="center" id="${row}[date]" readonly="true"/>
+					<hbox>
+						<date-time_today align="center" id="${row}[date]" readonly="true"/>
+					</hbox>
 					<date-time_today align="center" id="${row}[modified]" readonly="true"/>
 					<url-email id="${row}[address]" contact_plus = "true" readonly="true"/>
 					<url-email id="${row}[toaddress]" contact_plus = "true" readonly="true"/>
