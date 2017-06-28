@@ -1,4 +1,8 @@
 %1 attachments	mail	en	%1 attachments
+%1 has been added to blacklisted email addresses	mail	de	%1 has been added to blacklisted email addresses
+%1 has been added to whiltelisted email addresses	mail	de	%1 has been added to whiltelisted email addresses
+%1 has been removed from blacklisted email addresses	mail	de	%1 has been removed from blacklisted email addresses
+%1 has been removed from whiltelisted email addresses	mail	de	%1 has been removed from whiltelisted email addresses
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
 %1 mails selected	mail	en	%1 Mails selected
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	en	(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail Servers the limit is 4 by default, please contact your mail server administrator for further info.
@@ -23,6 +27,8 @@ add all my aliases	mail	en	Add all my aliases
 add folder	mail	en	Add Folder
 add to addressbook	mail	en	add to addressbook
 add your domain as "%1" in options to list of email providers and enable api.	mail	en	Add your domain as "%1" in options to list of email providers and enable API.
+adding %1 to blacklisted email addresses failed because of %2	mail	de	Adding %1 to blacklisted email addresses failed because of %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	de	Adding %1 to whiltelisted email addresses failed because of %2
 after reply, visible during compose	mail	en	After reply, visible during compose
 aliases+forwards	mail	en	Aliases+Forwards
 all	mail	en	all
@@ -234,7 +240,6 @@ greater than	mail	en	greater than
 ham folder	mail	en	Ham folder
 header	mail	en	Header
 header lines	mail	en	Header lines
-hide	mail	en	hide
 hold %1 to drag files to your computer	mail	en	Hold %1 to drag files to your computer
 home page folders	mail	en	home page folders
 hostname or ip	mail	en	Hostname or IP
@@ -282,6 +287,8 @@ junk folder	mail	en	Junk folder
 keep a copy of the message in your inbox	mail	en	Keep a copy of the message in your inbox
 kilobytes	mail	en	kilobytes
 later	mail	en	later
+learning as ham (not spam) failed because of %1	mail	de	Learning as ham (not spam) failed because of %1
+learning as spam failed because of %1	mail	de	Learning as spam failed because of %1
 less than	mail	en	less than
 mail	common	en	Mail
 mail acl	mail	en	Mail ACL
@@ -302,6 +309,8 @@ matches	mail	en	matches
 matches regexp	mail	en	matches regexp
 mbstring.func_overload=0 is required for correct mail processing!	mail	en	mbstring.func_overload=0 is required for correct mail processing!
 message body	mail	en	message body
+message learned as ham (not spam) and moved back to inbox	mail	de	Message learned as ham (not spam) and moved back to inbox
+message learned as spam and moved to spam folder	mail	de	Message learned as spam and moved to spam folder
 message preview area	mail	en	Message preview area
 message saved successfully.	mail	en	Message saved successfully.
 message send failed: %1	mail	en	Message send failed: %1
@@ -318,6 +327,7 @@ moved %1 message(s) from %2 to %3	mail	en	moved %1 message(s) from %2 to %3
 moving folders from one mailaccount to another is not supported	mail	en	Moving Folders from one mail account to another is not supported
 name of account	mail	en	Name of account
 never display html emails	mail	en	never display html emails
+never show	mail	en	never show
 new mail notification	mail	en	New mail notification
 new message type	mail	en	New message type
 no (valid) send folder set in preferences	mail	en	No (valid) Send Folder set in preferences
@@ -389,6 +399,8 @@ refused to delete folder with subfolders	mail	en	refused to delete folder with s
 reject with	mail	en	reject with
 reloaded account %1	mail	en	Reloaded Account %1
 reloaded folder %1	mail	en	Reloaded Folder %1
+removing %1 from blacklisted email addresses failed because of %2	mail	de	Removing %1 from blacklisted email addresses failed because of %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	de	Removing %1 from whiltelisted email addresses failed because of %2
 remove "%1" from blacklisted domains	mail	en	Remove "%1" from blacklisted domains
 remove "%1" from blacklisted emails	mail	en	Remove "%1" from blacklisted emails
 remove "%1" from whiltelisted domains	mail	en	Remove "%1" from whiltelisted domains
@@ -466,15 +478,16 @@ set it as default:	mail	en	set it as default:
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.
 show	mail	en	show
-show & expand	mail	en	Show & expand
 show all addresses	mail	en	Show all Addresses
 show all attachments	mail	en	Show all attachments
 show all folders	mail	en	show all Folders
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	en	show all folders, (subscribed AND unsubscribed) in Main Screen Folder Pane
-show fixed	mail	en	Show fixed
+show horizontal	mail	en	show horizontal
+show horizontal, hide if none selected	mail	en	show horizontal, hide if none selected
 show new messages on home page	mail	en	show new messages on home page
 show test connection section and control the level of info displayed?	mail	en	Show Test Connection section and control the level of info displayed?
 show test connection section and control the level of info displayed??	mail	en	Show Test Connection section and control the level of info displayed??
+show vertical	mail	en	show vertical
 show/hide preview pane in mail list view	mail	en	Show/Hide preview pane in mail list view
 sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status

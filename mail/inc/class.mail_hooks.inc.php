@@ -361,23 +361,13 @@ class mail_hooks
 				'help' => 'Show/Hide preview pane in mail list view',
 				'name' => 'previewPane',
 				'values' => array(
-					'expand' => lang('show & expand'),
-					'fixed' => lang('show fixed'),
-					'hide' => lang('hide')
+					'vertical' => lang('show vertical'),
+					'fixed' => lang('show horizontal'),
+					'expand' => lang('show horizontal, hide if none selected'),
+					'hide' => lang('never show'),
 				),
-				'default' => 'expand'
+				'default' => 'vertical'
 			),
-			'splitterOrientation' => array(
-				'type' => 'select',
-				'label' => 'Preview pan orientation',
-				'help' => 'Switch preview pane between vertical and horizontal views',
-				'name' => 'splitterOrientation',
-				'values' => array(
-					'h' => lang('Horizontal'),
-					'v' => lang('Vertical')
-				),
-				'default' => 'h'
-			)
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
 		return $settingsArray;

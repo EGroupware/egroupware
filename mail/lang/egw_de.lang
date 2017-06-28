@@ -240,7 +240,6 @@ greater than	mail	de	größer als
 ham folder	mail	de	Ordner für nicht SPAM Nachrichten
 header	mail	de	Kopfzeilen
 header lines	mail	de	Kopfzeilen anzeigen
-hide	mail	de	ausblenden
 hold %1 to drag files to your computer	mail	de	%1 halten um Dateien auf Ihren Computer zu ziehen
 home page folders	mail	de	Darstellung von E-Mails auf der Startseite
 hostname or ip	mail	de	Hostname oder IP
@@ -328,6 +327,7 @@ moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 v
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt
 name of account	mail	de	Konten-Bezeichnung
 never display html emails	mail	de	niemals anzeigen
+never show	mail	de	Nie anzeigen
 new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
 new message type	mail	de	Neue E-Mails verfassen als
 no (valid) send folder set in preferences	mail	de	Es ist kein gültiger Gesendet-Ordner hinterlegt.
@@ -478,15 +478,16 @@ set it as default:	mail	de	als Vorgabe speichern
 should new messages show up on the home page	mail	de	Wie sollen Nachrichten auf der Startseite angezeigt werden?
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	de	Soll die Signatur nach (Standard) oder vor dem zitierten Text eingefügt werden und diese bearbeitbar sein?
 show	mail	de	anzeigen
-show & expand	mail	de	Anzeigen & erweitern
 show all addresses	mail	de	alle Adressaten anzeigen
 show all attachments	mail	de	alle Anhänge anzeigen
 show all folders	mail	de	Anzeige aller Ordner
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	de	Zeige alle Ordner, die in Ihrem Postfach eingerichtet sind (auch nicht abonnierte Ordner!). Dies kann sich negativ auf die Performance Ihrer EGroupware auswirken.
-show fixed	mail	de	Immer anzeigen
+show horizontal	mail	de	Horizontal anzeigen
+show horizontal, hide if none selected	mail	de	Horizontal anzeigen, ausblenden wenn nichts ausgewählt
 show new messages on home page	mail	de	Anzeigen von neuen E-Mails auf der Startseite
 show test connection section and control the level of info displayed?	mail	de	Zeige Verbindungstest Link an und spezifiziere das Ausmaß der angezeigten Information?
 show test connection section and control the level of info displayed??	mail	de	Soll der Verbindungstest und die dazugehörigen Informationen angezeigt werden?
+show vertical	mail	de	Vertikal anzeigen
 show/hide preview pane in mail list view	mail	de	Mailvorschau anzeigen oder ausblenden
 sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
