@@ -933,7 +933,7 @@ class mail_ui
 				$refresh = true;
 				break;
 			case 'ham':
-				if (isset($this->mail_bo->icServer->acc_folder_ham) && !isset($this->mail_bo->icServer->acc_spam_api))
+				if (isset($this->mail_bo->icServer->acc_folder_ham) && empty($this->mail_bo->icServer->acc_spam_api))
 				{
 					$msg[] = $this->ajax_copyMessages($ham, array(
 						'all' => false,
@@ -951,7 +951,7 @@ class mail_ui
 				}
 				break;
 		}
-		if ($GLOBALS['egw_info']['apps']['stylite'])
+		if ($GLOBALS['egw_info']['apps']['stylite'] && $this->mail_bo->icServer->acc_spam_api)
 		{
 			stylite_mail_spamtitan::setActionItems($_action, $_items, array(
 				'userpwd'	=> $this->mail_bo->icServer->acc_imap_password,
@@ -2180,8 +2180,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 		}
 
-			//error_log(__METHOD__.__LINE__.array2string($attachments));
-			$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
+		//error_log(__METHOD__.__LINE__.array2string($attachments));
+		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
 
 		$nonDisplayAbleCharacters = array('[\016]','[\017]',
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
