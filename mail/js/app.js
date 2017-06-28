@@ -167,7 +167,8 @@ app.classes.mail = AppJS.extend(
 				});
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
-				this.mail_disablePreviewArea(this.egw.preference('previewPane', 'mail') !== 'fixed');
+				var previewPane = this.egw.preference('previewPane', 'mail');
+				this.mail_disablePreviewArea(previewPane !== 'fixed' && previewPane !== 'vertical');
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
 
@@ -917,7 +918,7 @@ app.classes.mail = AppJS.extend(
 				$preview_iframe.css ('top', $preview_iframe.position().top - offset + 10);
 			}, 50);
 		};
-
+		var previewPane = this.egw.preference('previewPane', 'mail');
 		// Show / hide 'Select something' in preview
 		var blank = this.et2.getWidgetById('blank');
 		if(blank)
@@ -929,7 +930,7 @@ app.classes.mail = AppJS.extend(
 			// If there is content to show recalculate the size
 			set_prev_iframe_top();
 		}
-		else if (this.egw.preference('previewPane', 'mail') == 'fixed')
+		else if (previewPane == 'fixed' || previewPane == 'vertical')
 		{
 			if(blank)
 			{
