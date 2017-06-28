@@ -506,11 +506,10 @@ div.mail-compose_fileselector {
 }
 #mail-index_mailPreviewContainer {
 	position: absolute;
-	border: 1px solid silver;
 	top: 9em;
 	bottom: 0;
-	left: 3px;
-	right: 0;
+	left: 0px;
+	right: 5px;
 }
 #mail-index_previewAttachmentArea {
 	background-color:#f0f0f0;

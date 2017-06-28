@@ -92,18 +92,20 @@ body {
 
 		tr.mail div span {.box_shadow_none;}
 	} // Ende: Box mit Header und Liste
-
-	// Splitterbar
-	div.splitter-bar,
+	div.splitter-bar {
+		background-color: rgba(179, 39, 39, 0);
+		border-right: 0;
+		border-top: 0;
+		border-bottom: 0;
+	}
 	div.splitter-bar-horizontal {
-		background-color: @color_splitter_bar;
+		border-top:1px solid #B4B4B4;
+		border-left:0;
 	}
 
 // Ansicht der Emails
 	div#mail-index_mailPreview {
 		margin: 0;
-		.background_color_5_gray;
-
 		// From
 		div#mail-index_mailPreviewHeadersFrom {
 			width: 50%;
@@ -116,7 +118,7 @@ body {
 
 		// Date
 		div#mail-index_mailPreviewHeadersDate {
-							position: absolute;
+			position: absolute;
 			right: 0px;
 			margin: 3px 5px 0 0;
 		}
@@ -1060,11 +1062,10 @@ input[type=button] {
 // Headerbereich grau hinterlegt
 #mail-index_mailPreviewContainer {
 	position: absolute;
-	border: 1px solid .color_10_gray;
-	top: 113px;
+	border-top: 1px solid silver;
 	bottom: 0;
-	left: 3px;
-	right: 0;
+	left: 0px;
+	right: 5px;
 }
 
 /*#######################################################*/
@@ -1087,19 +1088,12 @@ input[type=button] {
 
 // Button Toolbar - always visible
 #mail-index_toolbar {
-    /*padding: 0px;*/
     background: none;
-    /*margin: 5px 5px 0 0;*/
-    /*border: none;*/
-
-
+	height:35px;
     // alle Buttons / drag + drop
     #toolbar-actionlist{
-
         margin-top: 3px;
-
     }
-
     /* Elemente */
 	button {
 		height: 24px !important;

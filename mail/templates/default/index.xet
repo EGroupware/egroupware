@@ -4,8 +4,9 @@
 <overlay>
 	<template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
 		<split dock_side="bottomDock" id="mailSplitter">
-			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right"/>
+			<nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows" header_left="mail.index.add" header_right="mail.index.header_right"/>
 			<vbox id="mailPreview" width="100%">
+				<toolbar id="toolbar"/>
 				<box id="blank" disabled="false">
 					<image src="mail"/>
 					<description value="Select an item to read"/>
@@ -67,10 +68,9 @@
 					</grid>
 					<buttononly class="et2_button ui-button" label="Show all attachments" image="foldertree_nolines_plus"  width="16px" height="16px" onclick="app.mail.showAllHeader"/>
 				</hbox>
-				<toolbar id="toolbar" class="mailPreviewIcons"/>
-					<box id="mailPreviewContainer">
-						<iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
-					</box>
+				<box id="mailPreviewContainer">
+					<iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
+				</box>
 			</vbox>
 		</split>
 	</template>

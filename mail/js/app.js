@@ -905,7 +905,7 @@ app.classes.mail = AppJS.extend(
 		{
 			// Need to make sure that the iframe is fullyLoad before calculation
 			window.setTimeout(function(){
-				var lastEl = $preview_iframe.prev().prev();
+				var lastEl = $preview_iframe.prev();
 				// Top offset of preview iframe calculated from top level
 				var iframeTop = $preview_iframe.offset().top;
 				while (lastEl.css('display') === "none")
