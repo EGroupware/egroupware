@@ -281,6 +281,10 @@ pre {
 #mail-index {
 	position: relative
 }
+/*Keeps the scrollbar in the window in Firefox*/
+#mail-index	table.egwGridView_outer {
+	-moz-margin-end: 10px;
+}
 .mail-index_quotabox {
 	display: inline-block;
 }
@@ -492,6 +496,7 @@ div.mail-compose_fileselector {
 }
 #mail-index_toolbar {
 	padding: 0px;
+	height: 35px;
 }
 #mail-index_toolbar > button > span {
 	padding: .2em .4em;
