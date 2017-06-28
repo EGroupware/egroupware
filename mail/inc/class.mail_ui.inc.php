@@ -933,7 +933,7 @@ class mail_ui
 				$refresh = true;
 				break;
 			case 'ham':
-				if (isset($this->mail_bo->icServer->acc_folder_ham) && empty($this->mail_bo->icServer->acc_spam_api))
+				if ($this->mail_bo->icServer->acc_folder_ham && empty($this->mail_bo->icServer->acc_spam_api))
 				{
 					$msg[] = $this->ajax_copyMessages($ham, array(
 						'all' => false,
