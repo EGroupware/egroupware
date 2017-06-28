@@ -4900,7 +4900,9 @@ td.message span.message {
   background-position: center;
 }
 .egw_fw_ui_scrollarea_button_up {
+  height: 37px;
   top: 0px;
+  border-bottom: 1px solid silver;
 }
 .egw_fw_ui_scrollarea_button_down {
   bottom: 0px;
