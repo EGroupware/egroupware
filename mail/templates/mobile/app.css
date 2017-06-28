@@ -890,6 +890,12 @@ div.mailComposeHeaderSection > table {
 #mail-compose_mailaccount {
   max-width: 100% !important;
 }
+.header_row_right.vertical_splitter {
+  float: left;
+}
+.header_row_right.vertical_splitter div#mail-index_mail-index-vacationnotice .et2_vbox {
+  margin-right: 0;
+}
 #popupMainDiv {
   padding: 5px;
 }

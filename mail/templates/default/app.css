@@ -904,3 +904,6 @@ div.mailComposeHeaderSection>table {
 #mail-index_nm.et2_nextmatch .egwGridView_outer thead tr {border-left: 12px solid transparent;}
 
 #mail-compose_mailaccount {max-width: 100% !important;}
+
+.header_row_right.vertical_splitter {float:left;}
+.header_row_right.vertical_splitter div#mail-index_mail-index-vacationnotice .et2_vbox {margin-right: 0;}
