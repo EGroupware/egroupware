@@ -922,7 +922,7 @@ class mail_ui
 			// Current Mailbox
 			$mailbox = $id_parts['folder'];
 			$messages[] = $params['row_id'];
-			if ($GLOBALS['egw_info']['apps']['stylite'])
+			if ($GLOBALS['egw_info']['apps']['stylite'] && $this->mail_bo->icServer->acc_spam_api)
 			{
 				$params['mailbody'] = $this->get_load_email_data($params['uid'], null, $mailbox);
 			}
