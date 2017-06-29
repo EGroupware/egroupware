@@ -180,7 +180,7 @@ class filemanager_ui
 				'onExecute' => 'javaScript:app.filemanager.createdir'
 			),
 			'mail' => array(
-				'caption' => lang('Mail files'),
+				'caption' => lang('Share files'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
 				'children' => array(),
@@ -265,6 +265,10 @@ class filemanager_ui
 					'hint' => $data['title'],
 					'onExecute' => 'javaScript:app.filemanager.mail',
 				);
+				if ($mode == Vfs\Sharing::ATTACH || $mode == Vfs\Sharing::LINK)
+				{
+					$actions['mail']['children']['mail_'.$mode]['disableClass'] = 'isDir';
+				}
 			}
 		}
 		// This would be done automatically, but we're overriding
