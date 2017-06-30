@@ -55,12 +55,21 @@ class Univention extends Ldap
 	/**
 	 * Attribute for forwards OR false if not possible
 	 */
-	const FORWARD_ATTR = false;
+	const FORWARD_ATTR = 'mailforwardaddress';
+
+	/**
+	 * Check if server really supports FORWARD_ATTR and dont write it if not
+	 *
+	 * true as UCS supports it only from 4.2 on !
+	 */
+	const CHECK_FORWARD_ATTR = true;
 
 	/**
 	 * Attribute to only forward mail, OR false if not available
+	 *
+	 * if FORWARD_ONLY_ATTR attribute is identical to FORWARD_ATTR, value of MAIL_ATTR must be added to FORWARD_ONLY_ATTR for local delivery!
 	 */
-	const FORWARD_ONLY_ATTR = false;
+	const FORWARD_ONLY_ATTR = 'mailforwardaddress';
 	/**
 	 * Attribute value to only forward mail
 	 */
