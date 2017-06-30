@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
+	<template id="addressbook.edit.upload" template="" lang="" group="0" version="1.3.004" >
+		<grid class="uploadphoto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@jpegphoto">
+					<checkbox statustext="Deletes the photo" label="delete" id="delete_photo"/>
+				</row>
+				<row>
+					<file statustext="Select a portrait format jpeg photo. It will be resized to 60 pixel width." id="upload_photo" class="photo"/>
+				</row>
+				<row>
+					<button readonly="false" align="center" label="Ok" onclick="jQuery('table.uploadphoto').css('display','none'); return false;" image="check" background_image="1"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="addressbook.editname" template="" lang="" group="0" version="1.9.001">
 		<grid class="editname">
 			<columns>
@@ -100,32 +118,32 @@
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description for="tel_assistent" value="Assistent phone"/>
-					<url-phone id="tel_assistent" class="et2_fullWidth"/>
+					<url-phone id="tel_assistent" tabindex="23" class="et2_fullWidth"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
 					<description value="City"/>
 					<hbox>
-						<textbox statustext="City" id="adr_one_locality" size="30" maxlength="64" autocomplete="address-level2"/>
-						<textbox statustext="State" id="adr_one_region" size="3" maxlength="64" autocomplete="address-level1"/>
-						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" autocomplete="postal-code"/>
+						<textbox statustext="City" id="adr_one_locality" size="30" maxlength="64" tabindex="13" autocomplete="address-level2"/>
+						<textbox statustext="State" id="adr_one_region" size="3" maxlength="64" tabindex="14" autocomplete="address-level1"/>
+						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64" tabindex="15" autocomplete="postal-code"/>
 					</hbox>
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description for="tel_fax" value="fax"/>
-					<url-phone id="tel_fax" class="et2_fullWidth" autocomplete="fax" />
+					<url-phone id="tel_fax" tabindex="24" class="et2_fullWidth" autocomplete="fax" />
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 					<description for="adr_one_countryname" value="country"/>
-					<vbox width="100%">
-						<menulist>
-							<menupopup type="select-country" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
+					<vbox width="100%" tabindex="16">
+						<menulist tabindex="16">
+							<menupopup type="select-country" tabindex="16" class="countrySelect et2_fullWidth" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" options="Select one,0,1" autocomplete="country"/>
 						</menulist>
-						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" autocomplete="country-name"/>
+						<textbox id="adr_one_countryname" class="custom_country et2_fullWidth" tabindex="16" autocomplete="country-name"/>
 					</vbox>
 					<description/>
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description for="tel_other" value=" Other Phone"/>
-					<url-phone id="tel_other" class="et2_fullWidth" autocomplete="tel"/>
+					<url-phone id="tel_other" tabindex="25" class="et2_fullWidth" autocomplete="tel"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 					<description/>
 					<description/>
@@ -341,7 +359,8 @@
 				<row class="dialogHeader">
 					<box align="center">
 						<hbox disabled="@hidebuttons" class="avatar">
-							<avatar contact_id="$cont[id]" crop="false" editable="true"/>
+							<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
+							<template id="addressbook.edit.upload"/>
 						</hbox>
 					</box>
 					<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name"/>
