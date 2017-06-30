@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//Stylite AG//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-	<template id="addressbook.edit.upload" template="" lang="" group="0" version="1.3.004" >
-		<grid class="uploadphoto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row disabled="!@jpegphoto">
-					<checkbox statustext="Deletes the photo" label="delete" id="delete_photo"/>
-				</row>
-				<row>
-					<file statustext="Select a portrait format jpeg photo. It will be resized to 60 pixel width." id="upload_photo" class="photo"/>
-				</row>
-				<row>
-					<button readonly="false" align="center" label="Ok" onclick="jQuery('table.uploadphoto').css('display','none'); return false;" image="check" background_image="1"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
 	<template id="addressbook.editname" template="" lang="" group="0" version="1.9.001">
 		<grid class="editname">
 			<columns>
@@ -359,8 +341,7 @@
 				<row class="dialogHeader">
 					<box align="center">
 						<hbox disabled="@hidebuttons" class="avatar">
-							<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
-							<template id="addressbook.edit.upload"/>
+							<avatar contact_id="$cont[id]" crop="false" editable="true"/>
 						</hbox>
 					</box>
 					<textbox id="n_fn" blur="Name" no_lang="1" tabindex="-1" class="cursorHand et2_fullWidth" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" autocomplete="name"/>
