@@ -85,12 +85,19 @@ class Ldap extends Mail\Smtp
 	const FORWARD_ATTR = false;
 
 	/**
+	 * Check if server really supports FORWARD_ATTR and dont write it if not
+	 */
+	const CHECK_FORWARD_ATTR = false;
+
+	/**
 	 * Caseinsensitive prefix for forwards (eg. "forward:"), forwards get added with it and only forwards with it are reported
 	 */
 	const FORWARD_PREFIX = '';
 
 	/**
 	 * Attribute to only forward mail, OR false if not available
+	 *
+	 * if FORWARD_ONLY_ATTR attribute is identical to FORWARD_ATTR, value of MAIL_ATTR must be added to FORWARD_ONLY_ATTR for local delivery!
 	 */
 	const FORWARD_ONLY_ATTR = false;
 
@@ -421,7 +428,24 @@ class Ldap extends Mail\Smtp
 					}
 					if (static::FORWARD_ONLY_ATTR)
 					{
-						if (static::FORWARD_ONLY)	// check caseinsensitiv for existence of that value
+						// Univention has no extra forward-only attr, but requires primary mail to be in forwards, to have also local delivery
+						if (static::FORWARD_ONLY_ATTR === static::FORWARD_ATTR)
+						{
+							$deliveryMode = '';
+							if ($values[static::FORWARD_ATTR])
+							{
+								if (($k = array_search($values[static::MAIL_ATTR][0], $values[static::FORWARD_ATTR])) !== false)
+								{
+									unset($values[static::FORWARD_ATTR][$k]);
+									$values[static::FORWARD_ATTR]['count']--;
+								}
+								else
+								{
+									$deliveryMode = Mail\Smtp::FORWARD_ONLY;
+								}
+							}
+						}
+						elseif (static::FORWARD_ONLY)	// check caseinsensitiv for existence of that value
 						{
 							$deliveryMode = self::getAttributePrefix($values[static::FORWARD_ONLY_ATTR], static::FORWARD_ONLY) ?
 								Mail\Smtp::FORWARD_ONLY : '';
@@ -477,6 +501,9 @@ class Ldap extends Mail\Smtp
 
 				if (static::FORWARD_ATTR)
 				{
+					// remember if server returned forward-attribute
+					$this->forward_attr_returned = isset($values[static::FORWARD_ATTR]);
+
 					$userData['mailForwardingAddress']	= self::getAttributePrefix($values[static::FORWARD_ATTR], static::FORWARD_PREFIX);
 				}
 
@@ -575,10 +602,15 @@ class Ldap extends Mail\Smtp
 		// does schema support to store forwards
 		if (static::FORWARD_ATTR)
 		{
+			// Univention enabled extra local delivery, by adding primary address to forwards
+			if (static::FORWARD_ATTR === static::FORWARD_ONLY_ATTR && $_mailForwardingAddress && !$_deliveryMode)
+			{
+				$_mailForwardingAddress[] = $_mailLocalAddress;
+			}
 			self::setAttributePrefix($newData[static::FORWARD_ATTR], $_mailForwardingAddress, static::FORWARD_PREFIX);
 		}
 		// does schema support only forwarding incomming mail
-		if (static::FORWARD_ONLY_ATTR)
+		if (static::FORWARD_ONLY_ATTR && static::FORWARD_ATTR !== static::FORWARD_ONLY_ATTR)
 		{
 			self::setAttributePrefix($newData[static::FORWARD_ONLY_ATTR],
 				$_deliveryMode ? (static::FORWARD_ONLY ? static::FORWARD_ONLY : 'forwardOnly') : array());
@@ -619,7 +651,13 @@ class Ldap extends Mail\Smtp
 
 		if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 
-		return ldap_mod_replace($ldap, $accountDN, $newData);
+		if (!($ret = @ldap_mod_replace($ldap, $accountDN, $newData)) && static::CHECK_FORWARD_ATTR)
+		{
+			unset($newData[static::FORWARD_ATTR]);
+
+			$ret = @ldap_mod_replace($ldap, $accountDN, $newData);
+		}
+		return $ret;
 	}
 
 	/**
@@ -642,7 +680,7 @@ class Ldap extends Mail\Smtp
 			$uid = $GLOBALS['egw']->accounts->id2name($_accountID);
 			$filter = '(&'.static::USER_FILTER.'('.static::USER_ATTR.'='.Api\Ldap::quote($uid).'))';
 		}
-		$attributes	= array('dn', static::FORWARD_ATTR, 'objectclass');
+		$attributes	= array('dn', static::MAIL_ATTR, static::FORWARD_ATTR, 'objectclass');
 		if (static::FORWARD_ONLY_ATTR)
 		{
 			$attributes[] = static::FORWARD_ONLY_ATTR;
@@ -689,8 +727,19 @@ class Ldap extends Mail\Smtp
 					}
 					if (static::FORWARD_ONLY_ATTR)
 					{
-						self::setAttributePrefix($newData[static::FORWARD_ONLY_ATTR],
-							$_keepLocalCopy == 'yes' ? array() : static::FORWARD_ONLY);
+						// Univention adds primary email to forwards to signal local delivery too
+						if (static::FORWARD_ONLY_ATTR === static::FORWARD_ATTR)
+						{
+							if ($_keepLocalCopy == 'yes')
+							{
+								$forwards[] = $allValues[static::MAIL_ATTR][0];
+							}
+						}
+						else
+						{
+							self::setAttributePrefix($newData[static::FORWARD_ONLY_ATTR],
+								$_keepLocalCopy == 'yes' ? array() : static::FORWARD_ONLY);
+						}
 					}
 				}
 				else
