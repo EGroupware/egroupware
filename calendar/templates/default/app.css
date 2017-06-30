@@ -344,7 +344,7 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 #calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader .calendar_calDayColHeader_spacer
 {
-	height:calc(1.5em + 5px);
+	height:calc(1.5em + 32px);
 }
 #calendar-view_view.hideDayColHeader tr .calendar_calGridHeader  > span.et2_label {
 	white-space:nowrap;
@@ -452,6 +452,12 @@ Hide subsequent headers in week view with non-consolidated owners
 	border-bottom: 1px solid silver;
 	white-space: nowrap;
 	overflow: hidden;
+}
+.hideDayColHeader .calendar_calDayColHeader > div[data-date] {
+	position:fixed;
+    background: white;
+    width: inherit;
+	z-index: 100;
 }
 
 /* Seperate long and short day names */
