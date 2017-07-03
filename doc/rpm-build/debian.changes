@@ -1,3 +1,21 @@
+egroupware-epl (16.1.20170703) hardy; urgency=low
+
+  * Univention: forwarding mails to external addresses added in UCS 4.2
+  * Univention/Setup: allow to set Ham folder and automatically do so for Univention installation
+  * Calendar: improve planner view printing if your screensize doesn't match page size
+  * Calendar: Include monthly type (by weekday or by date) in recurrence rule strings
+  * Calendar: Fix selected owner goes missing on logout
+  * Calendar: Fix weekend setting got lost when you go from week to day view
+  * Addressbook: fix wrong tab order for contact fields for US format
+  * Infolog: make project fields available for merge
+  * Mail: try not talking to not configured (empty) SpamTitan URL
+  * Mail: Activate multi-selection of folders in subscription dialog
+  * Mail: Fix links get removed from description content of calendar appointment email
+  * Mail: Fix broken quota indicator
+  * Mail: Fix contextmenu does not work on select all
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 03 Jul 2017 10:33:07 +0200
+
 egroupware-epl (16.1.20170613) hardy; urgency=low
 
   * Mail: fix PHP Fatal error under PHP 5.4
