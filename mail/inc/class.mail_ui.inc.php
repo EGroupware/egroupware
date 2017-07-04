@@ -2401,6 +2401,18 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$attachmentHTMLBlock='';
 		$attachmentHTML = array();
+
+		// skip message/delivery-status and set a title for original eml file
+		if (($attachments[0]['mimeType'] === 'message/delivery-status'))
+		{
+			unset($attachments[0]);
+			if (is_array($attachments))
+			{
+				$attachments = array_values($attachments);
+				$attachments[0]['name'] = lang('Original Email Content');
+			}
+		}
+
 		if (is_array($attachments) && count($attachments) > 0) {
 			$url_img_vfs = Api\Html::image('filemanager','navbar', lang('Filemanager'), ' height="16"');
 			$url_img_vfs_save_all = Api\Html::image('mail','save_all', lang('Save all'));
