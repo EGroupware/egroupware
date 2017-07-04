@@ -1080,7 +1080,7 @@ app.classes.mail = AppJS.extend(
 					url: url,
 					domain: url_parts[0]
 				};
-			}
+			};
 
 			var host = getUrlParts(external_images[0].alt);
 			var showImages = function (_images, _save)
@@ -1106,7 +1106,7 @@ app.classes.mail = AppJS.extend(
 					}
 					node.src = parts.url;
 				});
-			}
+			};
 			var pref = egw.preference('allowExternalDomains', 'mail') || {};
 			pref = Object.values(pref);
 			if (pref.indexOf(host.domain)>-1)
@@ -5491,7 +5491,7 @@ app.classes.mail = AppJS.extend(
 	 * Spam Actions handler
 	 *
 	 * @param {object} _action egw action
-	 * @param {object} _sender nm row
+	 * @param {object} _senders nm row
 	 */
 	spam_actions: function (_action, _senders)
 	{
@@ -5664,7 +5664,7 @@ app.classes.mail = AppJS.extend(
 				}
 				else
 				{
-					self.resolveExternalImages(this.contentWindow.document)
+					self.resolveExternalImages(this.contentWindow.document);
 					// Use prepare print function to copy iframe content into div
 					// as we don't want to show content in iframe (scrolling problem).
 					self.mail_prepare_print(jQuery(this));
