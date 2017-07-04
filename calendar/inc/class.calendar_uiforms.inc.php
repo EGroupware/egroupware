@@ -828,6 +828,12 @@ class calendar_uiforms extends calendar_ui
 						}
 					}
 				}
+				// Update alarm (default alarm or set alarm before change start date)
+				// for new event.
+				elseif (is_array($event['alarm']) && ($event['alarm'][1]['time'] + $event['alarm'][1]['offset'] != $event['start']))
+				{
+					$this->bo->check_move_alarms($event);
+				}
 				// Adding participants needs to be done as an edit, in case we
 				// have participants visible in seperate calendars
 				if(is_array($old_event['participants']) && count(array_diff_key($event['participants'], $old_event['participants'])))
