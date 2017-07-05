@@ -1351,7 +1351,21 @@ class mail_compose
 		$etpl->setElementAttribute('folder','autocomplete_params',array('mailaccount'=>$content['mailaccount']));
 		// join again mailaccount and identity
 		$content['mailaccount'] .= ':'.$content['mailidentity'];
+		//Try to set the initial selected account to the first identity match found
+		// which fixes the issue of prefered identity never get selected.
+		if (!in_array($content['mailaccount'], array_keys($sel_options['mailaccount'])))
+		{
+			foreach ($sel_options['mailaccount'] as $ident => $value)
+			{
+				$idnt_acc_parts = explode(':', $ident);
 
+				if ($content['mailidentity'] == $idnt_acc_parts[1])
+				{
+					$content['mailaccount'] = $ident;
+					break;
+				}
+			}
+		}
 		// Resolve distribution list before send content to client
 		foreach(array('to', 'cc', 'bcc', 'replyto')  as $f)
 		{
