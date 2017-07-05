@@ -429,7 +429,7 @@ class Ldap extends Mail\Smtp
 					if (static::FORWARD_ONLY_ATTR)
 					{
 						// Univention has no extra forward-only attr, but requires primary mail to be in forwards, to have also local delivery
-						if (static::FORWARD_ONLY_ATTR === static::FORWARD_ATTR)
+						if (static::FORWARD_ONLY_ATTR === static::FORWARD_ATTR && !static::FORWARD_PREFIX)
 						{
 							$deliveryMode = '';
 							if ($values[static::FORWARD_ATTR])
@@ -516,6 +516,7 @@ class Ldap extends Mail\Smtp
 					($k = array_search($userData['mailLocalAddress'],$userData['mailAlternateAddress'])) !== false)
 				{
 					unset($userData['mailAlternateAddress'][$k]);
+					$userData['mailAlternateAddress'] = array_values($userData['mailAlternateAddress']);
 				}
 
 				if (static::QUOTA_ATTR && isset($values[static::QUOTA_ATTR]))
