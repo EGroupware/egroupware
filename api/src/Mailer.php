@@ -545,7 +545,7 @@ class Mailer extends Horde_Mime_Mail
 
 		try {
 			// no flowed for encrypted messages
-			if (!isset($flowed)) $flowed = $this->_body && $this->_body->getType() != 'multipart/encrypted';
+			if (!isset($flowed)) $flowed = $this->_body && !in_array($this->_body->getType(), array('multipart/encrypted', 'multipart/signed'));
 
 			// check if flowed is disabled in mail site configuration
 			if (($config = Config::read('mail')) && $config['disable_rfc3676_flowed'])
@@ -1014,6 +1014,11 @@ class Mailer extends Horde_Mime_Mail
 			$this->getBasePart();
 		}
 
+		//It is essential to remove content-type header as later on
+		//horde setHeaderOb would not replace it with correct one if
+		//there's something set.
+		$this->removeHeader('content-type');
+		
 		$smime = new Mail\Smime();
 
 		if ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT)
