@@ -114,7 +114,7 @@ class Hooks
 			return false;
 		}
 
-		$ret = $redirects = array();
+		$ret = array();
 		foreach((array)self::$locations[$location][$appname] as $hook)
 		{
 			try {
@@ -143,22 +143,17 @@ class Hooks
 					$ret[] = ExecMethod2($hook, $args);
 				}
 			}
-			catch (Exception\Redirect $e)
+			catch (Api\Exception\AssertionFailed $e)
 			{
-				$redirects[] = $e;
+				if (preg_match('/ file .+ not found!$/', $e->getMessage()))
+				{
+					// ignore not found hook
+				}
+				else
+				{
+					throw $e;
+				}
 			}
-			catch (\Exception $e) {
-				_egw_log_exception($e);
-			}
-		}
-
-		if ($redirects)
-		{
-			if (count($redirects) > 1)
-			{
-				error_log("Multiple redirects for location '$location', only first one gets executed!");
-			}
-			throw $redirects[0];
 		}
 
 		// hooks only existing in filesystem used by setup
