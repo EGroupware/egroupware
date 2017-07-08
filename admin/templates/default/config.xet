@@ -267,6 +267,16 @@
 					</vbox>
 					<textbox id="newsettings[recaptcha_site]" size="60"/>
 				</row>
+				<row>
+					<description value="Emails" span="all" class="subHeader"/>
+				</row>
+				<row>
+					<description value="Force sending email via Sendmail transport (local mail)" label="%s:"/>
+					<select id="newsettings[sendmail]">
+						<option value="">{No} - {Default}</option>
+						<option value="True">Yes</option>
+					</select>
+				</row>
 			</rows>
 		</grid>
 	</template>
