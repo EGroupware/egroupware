@@ -2996,7 +2996,10 @@ class mail_compose
 					if (!$smime_success)
 					{
 						$response = Api\Json\Response::get();
-						$response->call('app.mail.smimePassDialog');
+						$this->errorInfo = $_formData['smime_passphrase'] == ''?
+								lang('You need to enter your S/MIME passphrase to send this message.'):
+								lang('The entered passphrase is not correct! Please try again.');
+						$response->call('app.mail.smimePassDialog', $this->errorInfo);
 						return false;
 					}
 				}
@@ -3627,11 +3630,12 @@ class mail_compose
 	/**
 	 * Method to do encryption on given mail object
 	 *
-	 * @param Horde_MIME_Mail $mail
+	 * @param Api\Mailer $mail
 	 * @param string $type encryption type
 	 * @param array|string $recipients list of recipients
 	 * @param string $sender email of sender
-	 *
+	 * @param string $passphrase = '', SMIME Private key passphrase
+	 * 
 	 * @return boolean returns true if successful and false if passphrase required
 	 * @throws Api\Exception\WrongUserinput if no certificate found
 	 */

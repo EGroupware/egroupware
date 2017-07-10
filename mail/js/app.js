@@ -5699,26 +5699,34 @@ app.classes.mail = AppJS.extend(
 
 	/**
 	 * smime password dialog
-	 */
-	smimePassDialog: function ()
+	 *
+	 * @param {string} _msg message
+ 	 */
+	smimePassDialog: function (_msg)
 	{
 		var self = this;
 		et2_createWidget("dialog",
 		{
 			callback: function(_button_id, _value)
 			{
-				if (_button_id && _value)
+				if (_button_id == 'send' && _value)
 				{
 					var pass = self.et2.getWidgetById('smime_passphrase');
 					pass.set_value(_value.value);
+					var toolbar = self.et2.getWidgetById('composeToolbar');
+					toolbar.value = 'send';
+					self.compose_submitAction(false);
 				}
 			},
 			title: egw.lang('Request for passphrase'),
-			buttons: et2_dialog.BUTTONS_OK_CANCEL,
+			buttons: [
+				{text: this.egw.lang("Send"), id: "send", "class": "ui-priority-primary", "default": true},
+				{text: this.egw.lang("Cancel"), id:"cancel"}
+			],
 			value:{
 				content:{
 					value: '',
-					message: self.egw.lang('Looks like your certificate is password protected. Please enter your passphrase and try to send again.')
+					message: _msg
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
