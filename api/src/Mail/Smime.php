@@ -176,33 +176,11 @@ class Smime extends Horde_Crypt_Smime
      *
      * @param string $data     The signed S/MIME data.
      *
-     * @return string  The contents embedded in the signed data.
-     * @throws Horde_Crypt_Exception
+     * @return Horde_Mime_Part returns content of signed message as mime part object
      */
     public function extractSignedContents($data)
     {
-        /* Check for availability of OpenSSL PHP extension. */
-        $this->checkForOpenSSL();
-
-        /* Create temp files for input/output. */
-        $input = $this->_createTempFile('horde-smime');
-        $output = $this->_createTempFile('horde-smime');
-		$certs = $this->_createTempFile('horde-smime');
-
-
-        /* Write text to file. */
-        file_put_contents($input, $data);
-        unset($data);
-
-		if (openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $certs) === true &&
-                openssl_pkcs7_verify($input, PKCS7_NOVERIFY, $certs, array(), $certs, $output) === true) {
-            $ret = file_get_contents($output);
-            if ($ret) {
-               return $ret;
-            }
-		}
-
-        throw new Horde_Crypt_Exception(Horde_Crypt_Translation::t("Could not extract data from signed S/MIME part."));
+        return \Horde_Mime_Part::parseMessage(parent::extractSignedContents($data));
     }
 
 }
