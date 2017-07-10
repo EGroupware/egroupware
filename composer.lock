@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a2e408b166aef7850ede4580c2f63f2a",
-    "content-hash": "9c0f6143f19905c0c6f101c13a7d4b71",
+    "hash": "62a8b80e21e0ee193f7acd7f6894e63b",
+    "content-hash": "e811ff98774d404f92391e04889d0ac0",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -425,10 +425,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Compress",
-            "version": "2.1.6",
+            "version": "2.2.0",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Compress-2.1.6.tgz",
+                "url": "https://pear.horde.org/get/Horde_Compress-2.2.0.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -440,7 +440,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_compress": "== 2.1.6.0"
+                "pear-horde/horde_compress": "== 2.2.0.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -458,10 +458,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt",
-            "version": "2.7.5",
+            "version": "2.7.9",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Crypt-2.7.5.tgz",
+                "url": "https://pear.horde.org/get/Horde_Crypt-2.7.9.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -479,7 +479,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_crypt": "== 2.7.5.0"
+                "pear-horde/horde_crypt": "== 2.7.9.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -528,10 +528,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Date",
-            "version": "2.3.2",
+            "version": "2.4.0",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Date-2.3.2.tgz",
+                "url": "https://pear.horde.org/get/Horde_Date-2.4.0.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -542,7 +542,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_date": "== 2.3.2.0"
+                "pear-horde/horde_date": "== 2.4.0.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -621,10 +621,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Icalendar",
-            "version": "2.1.4",
+            "version": "2.1.7",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Icalendar-2.1.4.tgz",
+                "url": "https://pear.horde.org/get/Horde_Icalendar-2.1.7.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -638,7 +638,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_icalendar": "== 2.1.4.0"
+                "pear-horde/horde_icalendar": "== 2.1.7.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -656,10 +656,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Idna",
-            "version": "1.0.4",
+            "version": "1.1.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Idna-1.0.4.tgz",
+                "url": "https://pear.horde.org/get/Horde_Idna-1.1.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -669,7 +669,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_idna": "== 1.0.4.0"
+                "pear-horde/horde_idna": "== 1.1.1.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -687,10 +687,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Imap_Client",
-            "version": "2.29.12",
+            "version": "2.29.13",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.12.tgz",
+                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.13.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -709,7 +709,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_imap_client": "== 2.29.12.0"
+                "pear-horde/horde_imap_client": "== 2.29.13.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -727,10 +727,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_ListHeaders",
-            "version": "1.2.4",
+            "version": "1.2.5",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_ListHeaders-1.2.4.tgz",
+                "url": "https://pear.horde.org/get/Horde_ListHeaders-1.2.5.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -741,7 +741,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_listheaders": "== 1.2.4.0"
+                "pear-horde/horde_listheaders": "== 1.2.5.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -759,10 +759,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Mail",
-            "version": "2.6.3",
+            "version": "2.6.4",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mail-2.6.3.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mail-2.6.4.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -776,7 +776,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_mail": "== 2.6.3.0"
+                "pear-horde/horde_mail": "== 2.6.4.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -858,10 +858,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Mime",
-            "version": "2.10.2",
+            "version": "2.10.3",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Mime-2.10.2.tgz",
+                "url": "https://pear.horde.org/get/Horde_Mime-2.10.3.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -878,7 +878,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_mime": "== 2.10.2.0"
+                "pear-horde/horde_mime": "== 2.10.3.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -960,10 +960,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Smtp",
-            "version": "1.9.4",
+            "version": "1.9.5",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Smtp-1.9.4.tgz",
+                "url": "https://pear.horde.org/get/Horde_Smtp-1.9.5.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -977,7 +977,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_smtp": "== 1.9.4.0"
+                "pear-horde/horde_smtp": "== 1.9.5.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1113,10 +1113,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Support",
-            "version": "2.1.5",
+            "version": "2.2.0",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Support-2.1.5.tgz",
+                "url": "https://pear.horde.org/get/Horde_Support-2.2.0.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -1127,7 +1127,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_support": "== 2.1.5.0"
+                "pear-horde/horde_support": "== 2.2.0.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1175,10 +1175,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Translation",
-            "version": "2.2.1",
+            "version": "2.2.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Translation-2.2.1.tgz",
+                "url": "https://pear.horde.org/get/Horde_Translation-2.2.2.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -1186,7 +1186,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_translation": "== 2.2.1.0"
+                "pear-horde/horde_translation": "== 2.2.2.0"
             },
             "type": "pear-library",
             "autoload": {

@@ -13,7 +13,7 @@
 	},
 	"require": {
 		"php": ">=5.4,<=8.0.0alpha1",
-		"fxp/composer-asset-plugin":"^1.1",
+		"fxp/composer-asset-plugin":"1.2.2",
 		"pear-pear.horde.org/Horde_Imap_Client": "^2.29.7",
 		"pear-pear.horde.org/Horde_Nls": "^2.0.3",
 		"pear-pear.horde.org/Horde_Mail": "^2.1.2",
@@ -22,7 +22,7 @@
 		"pear-pear.horde.org/Horde_Icalendar": "^2.1.1",
 		"pear-pear.horde.org/Horde_Mapi": "^1.0.0",
 		"pear-pear.horde.org/Horde_ManageSieve": "^1.0.2",
-		"pear-pear.horde.org/Horde_Crypt": "^2.7.5",
+		"pear-pear.horde.org/Horde_Crypt": "^2.7.9",
 		"pear-pear.php.net/PEAR": "*",
 		"pear-pear.php.net/Auth_SASL": "*",
 		"pear-pear.php.net/XML_Feed_Parser": "*",
