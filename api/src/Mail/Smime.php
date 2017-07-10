@@ -11,10 +11,8 @@
  */
 
 namespace EGroupware\Api\Mail;
-
-use EGroupware\Api;
+use Horde_Mime_Part;
 use Horde_Crypt_Smime;
-use Horde_Crypt;
 /**
  * EMailAdmin generic base class for SMTP
  */
@@ -89,7 +87,7 @@ class Smime extends Horde_Crypt_Smime
 	/**
      * Constructor.
      *
-     * @param Horde_Crypt_Smime $smime  S/MIME object.
+     * @param Horde_Crypt_Smime $params  S/MIME object.
      */
     public function __construct($params = array())
     {
@@ -131,6 +129,7 @@ class Smime extends Horde_Crypt_Smime
 		{
 			$this->checkForOpenSSL();
 		} catch (Exception $ex) {
+			error_log(__METHOD__."() openssl extension is not enabled! $ex");
 			return false;
 		}
 		return true;
@@ -180,7 +179,7 @@ class Smime extends Horde_Crypt_Smime
      */
     public function extractSignedContents($data)
     {
-        return \Horde_Mime_Part::parseMessage(parent::extractSignedContents($data));
+        return Horde_Mime_Part::parseMessage(parent::extractSignedContents($data));
     }
 
 }
