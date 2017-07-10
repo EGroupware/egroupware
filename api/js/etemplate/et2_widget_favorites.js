@@ -363,6 +363,11 @@ var et2_favorites = (function(){ "use strict"; return et2_dropdown_button.extend
 			// Reset value
 			this.set_value(this.preferred,true);
 		}
+		else if (this.value == 'blank')
+		{
+			// Reset filters when select no filters
+			this.set_nm_filters({});
+		}
 	},
 
 	set_value: function(filter_name, parent) {
