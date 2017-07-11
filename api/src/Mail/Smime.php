@@ -26,7 +26,6 @@ class Smime extends Horde_Crypt_Smime
 		'application/pkcs7',
 		'application/pkcs10',
 		'application/pkcs8',
-		'multipart/signed',
 		'application/x-pkcs7-signature',
 		'application/x-pkcs7-mime',
 		'application/pkcs7-mime',
@@ -40,7 +39,6 @@ class Smime extends Horde_Crypt_Smime
 	static $SMIME_SIGNATURE_ONLY_TYPES = array (
 		'application/x-pkcs7-signature',
 		'application/pkcs7-signature',
-		'multipart/signed'
 	);
 
 	/**
