@@ -228,6 +228,7 @@ class infolog_ical extends infolog_bo
 			'RELATED-TO'  => $taskData['info_id_parent'],
 			'UID'		  => $taskData['info_uid'],
 			'CATEGORIES'  => $taskData['info_cat'],
+			'X-INFOLOG-TYPE' => $taskData['info_type'],
 		) as $field => $value)
 		{
 			if (isset($this->clientProperties[$field]['Size']))
@@ -861,6 +862,13 @@ class infolog_ical extends infolog_bo
 						if (($uid = Api\CalDAV\Principals::url2uid($attribute['value'])) && is_numeric($uid))
 						{
 							$taskData['info_owner'] = $uid;
+						}
+						break;
+
+					case 'X-INFOLOG-TYPE':
+						if (isset($this->enums['type'][$attribute['value']]))
+						{
+							$taskData['info_type'] = $attribute['value'];
 						}
 						break;
 
