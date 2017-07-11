@@ -3016,7 +3016,7 @@ class mail_compose
 			catch (Exception $ex)
 			{
 				$response = Api\Json\Response::get();
-				$response->call('egw.message', $ex->getMessage());
+				$this->errorInfo = $ex->getMessage();
 				return false;
 			}
 		}
@@ -3635,7 +3635,7 @@ class mail_compose
 	 * @param array|string $recipients list of recipients
 	 * @param string $sender email of sender
 	 * @param string $passphrase = '', SMIME Private key passphrase
-	 * 
+	 *
 	 * @return boolean returns true if successful and false if passphrase required
 	 * @throws Api\Exception\WrongUserinput if no certificate found
 	 */
