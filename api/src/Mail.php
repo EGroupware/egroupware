@@ -482,9 +482,13 @@ class Mail
 	 */
 	function restoreSessionData()
 	{
-		$this->sessionData = array();//Cache::getCache(Cache::SESSION,'mail','session_data',$callback=null,$callback_params=array(),$expiration=60*60*1);
+		$this->sessionData = array();
 		self::$activeFolderCache = Cache::getCache(Cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*10);
-		if (!empty(self::$activeFolderCache[$this->profileID])) $this->sessionData['mailbox'] = self::$activeFolderCache[$this->profileID];
+
+		foreach (self::$activeFolderCache[$this->profileID] as $key => $value)
+		{
+			$this->sessionData[$key] = $value;
+		}
 	}
 
 	/**
@@ -493,7 +497,22 @@ class Mail
 	function saveSessionData()
 	{
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string(array_keys($this->sessionData)));
-		if (!empty($this->sessionData['mailbox'])) self::$activeFolderCache[$this->profileID]=$this->sessionData['mailbox'];
+		foreach ($this->sessionData as $key => $value)
+		{
+			if (!is_array(self::$activeFolderCache) && empty(self::$activeFolderCache[$this->profileID]))
+			{
+				self::$activeFolderCache = array($this->profileID => array($key => $value));
+			}
+			else if(empty(self::$activeFolderCache[$this->profileID]))
+			{
+				self::$activeFolderCache += array($this->profileID => array($key => $value));
+			}
+			else
+			{
+				self::$activeFolderCache[$this->profileID] =  array_merge(self::$activeFolderCache[$this->profileID], array($key => $value));
+			}
+		}
+
 		if (isset(self::$activeFolderCache) && is_array(self::$activeFolderCache))
 		{
 			Cache::setCache(Cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),self::$activeFolderCache, 60*60*10);
