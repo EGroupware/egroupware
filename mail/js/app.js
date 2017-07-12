@@ -218,6 +218,7 @@ app.classes.mail = AppJS.extend(
 					this.et2.getArrayMgr("content").getEntry('mail_id'),
 					this.et2.getArrayMgr("content").getEntry('mail_displayattachments')
 				);
+				this.smimeAttachmentsCheckerInterval();
 				break;
 			case 'mail.compose':
 				// Set password field of file sharing to empty in
@@ -1017,6 +1018,7 @@ app.classes.mail = AppJS.extend(
 			jQuery(IframeHandle.getDOMNode()).on('load', function(e){
 				self.resolveExternalImages (this.contentWindow.document);
 			});
+			if (dataElem.data['smimeSigUrl']) this.smimeAttachmentsCheckerInterval();
 		}
 
 		var messages = {};
@@ -5731,5 +5733,35 @@ app.classes.mail = AppJS.extend(
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
 		}, et2_dialog._create_parent('mail'));
+	},
+
+	/**
+	 * Set attachments of smime message
+	 *
+	 * @param {object} _attachments
+	 */
+	set_smimeAttachments:function (_attachments)
+	{
+		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'previewAttachmentArea');
+		if (attachmentArea && _attachments && _attachments.length > 0)
+		{
+			attachmentArea.set_value({content:_attachments});
+		}
+	},
+	/**
+	 * This function helps to trigger the Push notification immidiately.
+	 * @todo: Must be removed after socket push notification is implemented
+	 */
+	smimeAttachmentsCheckerInterval:function ()
+	{
+		var self = this;
+		var interval = window.setInterval(function(){
+			self.egw.json('mail.mail_ui.ajax_smimeAttachmentsChecker',null,function(_stop){
+				if (_stop)
+				{
+					window.clearInterval(interval);
+				}
+			}).sendRequest(true);
+		},1000);
 	}
 });
