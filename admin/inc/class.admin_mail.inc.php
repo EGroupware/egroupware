@@ -1236,6 +1236,11 @@ class admin_mail
 			$sel_options['ident_email_alias'] = array_merge(
 				array('' => $content['mailLocalAddress'].' ('.lang('Default').')'),
 				array_combine($content['mailAlternateAddress'], $content['mailAlternateAddress']));
+			// if admin explicitly set a non-alias, we need to add it to aliases to keep it after storing signature by user
+			if ($content['ident_email'] !== $content['mailLocalAddress'] && !isset($sel_options['ident_email_alias'][$content['ident_email']]))
+			{
+				$sel_options['ident_email_alias'][$content['ident_email']] = $content['ident_email'];
+			}
 			// copy ident_email to select-box ident_email_alias, as et2 requires unique ids
 			$content['ident_email_alias'] = $content['ident_email'];
 			$content['select_ident_mail'] = true;
