@@ -1230,13 +1230,15 @@ class admin_mail
 		$sel_options['acc_further_identities'] = self::$further_identities;
 
 		// if only aliases are allowed for futher identities, add them as options
-		if ($content['acc_further_identities'] == 2)
+		// allow admins to always add arbitrary aliases
+		if ($content['acc_further_identities'] == 2 && !$this->is_admin)
 		{
 			$sel_options['ident_email_alias'] = array_merge(
 				array('' => $content['mailLocalAddress'].' ('.lang('Default').')'),
 				array_combine($content['mailAlternateAddress'], $content['mailAlternateAddress']));
 			// copy ident_email to select-box ident_email_alias, as et2 requires unique ids
 			$content['ident_email_alias'] = $content['ident_email'];
+			$content['select_ident_mail'] = true;
 		}
 
 		// user is allowed to create or edit further identities
