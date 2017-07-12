@@ -30,11 +30,11 @@
 					<description for="ident_org" value="Organisation"/>
 					<textbox id="ident_org" size="90" maxlength="128" span="all"/>
 				</row>
-				<row disabled="@acc_further_identities=2">
+				<row disabled="@select_ident_mail">
 					<description for="ident_email" value="EMail address"/>
 					<url-email id="ident_email" size="90" maxlength="128" span="all"/>
 				</row>
-				<row disabled="!@acc_further_identities=2">
+				<row disabled="!@select_ident_mail">
 					<description for="ident_email_alias" value="EMail address"/>
 					<select id="ident_email_alias" span="all" class="et2_fullWidth"/>
 				</row>

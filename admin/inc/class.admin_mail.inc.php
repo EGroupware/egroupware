@@ -1200,16 +1200,6 @@ class admin_mail
 		$sel_options['acc_id'] = $content['accounts'];
 		$sel_options['acc_further_identities'] = self::$further_identities;
 
-		// if only aliases are allowed for futher identities, add them as options
-		if ($content['acc_further_identities'] == 2)
-		{
-			$sel_options['ident_email_alias'] = array_merge(
-				array('' => $content['mailLocalAddress'].' ('.lang('Default').')'),
-				array_combine($content['mailAlternateAddress'], $content['mailAlternateAddress']));
-			// copy ident_email to select-box ident_email_alias, as et2 requires unique ids
-			$content['ident_email_alias'] = $content['ident_email'];
-		}
-
 		// user is allowed to create or edit further identities
 		if ($edit_access || $content['acc_further_identities'])
 		{
@@ -1250,6 +1240,23 @@ class admin_mail
 			}
 		}
 		$content['old_acc_id'] = $content['acc_id'];
+
+		// if only aliases are allowed for futher identities, add them as options
+		// allow admins to always add arbitrary aliases
+		if ($content['acc_further_identities'] == 2 && !$this->is_admin)
+		{
+			$sel_options['ident_email_alias'] = array_merge(
+				array('' => $content['mailLocalAddress'].' ('.lang('Default').')'),
+				array_combine($content['mailAlternateAddress'], $content['mailAlternateAddress']));
+			// if admin explicitly set a non-alias, we need to add it to aliases to keep it after storing signature by user
+			if ($content['ident_email'] !== $content['mailLocalAddress'] && !isset($sel_options['ident_email_alias'][$content['ident_email']]))
+			{
+				$sel_options['ident_email_alias'][$content['ident_email']] = $content['ident_email'];
+			}
+			// copy ident_email to select-box ident_email_alias, as et2 requires unique ids
+			$content['ident_email_alias'] = $content['ident_email'];
+			$content['select_ident_mail'] = true;
+		}
 
 		// only allow to delete further identities, not a standard identity
 		$readonlys['button[delete_identity]'] = !($content['ident_id'] > 0 && $content['ident_id'] != $content['std_ident_id']);
