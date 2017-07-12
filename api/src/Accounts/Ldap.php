@@ -1199,7 +1199,8 @@ class Ldap
 			$this->frontend->exists(-1 * $sign * $account_id) ||
 			// if sambaadmin is installed, call it to check there's not yet a relative id (last part of SID) with that number
 			// to ease migration to AD or Samba4
-			$GLOBALS['egw_info']['apps']['sambaadmin'] && ExecMethod2('sambaadmin.sosambaadmin.sidExists', $account_id)));
+			file_exists(EGW_SERVER_ROOT.'/sambaadmin') && $GLOBALS['egw_info']['apps']['sambaadmin'] &&
+				ExecMethod2('sambaadmin.sosambaadmin.sidExists', $account_id)));
 
 		if	(!$account_id || $max && $account_id > $max)
 		{
