@@ -177,7 +177,7 @@ class Smime extends Horde_Crypt_Smime
      */
     public function extractSignedContents($data)
     {
-        return Horde_Mime_Part::parseMessage(parent::extractSignedContents($data));
+        return Horde_Mime_Part::parseMessage(parent::extractSignedContents($data), array('forcemime' => true));
     }
 
 }
