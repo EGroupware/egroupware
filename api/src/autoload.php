@@ -34,6 +34,7 @@ if (!defined('EGW_SERVER_ROOT'))
  * class_exists('\\EGroupware\\Calendar\\Ui');                       // /calendar/src/Ui.php
  * class_exists('\\EGroupware\\Calendar\\Ui\\Lists');                // /calendar/src/Ui/Lists.php
  * class_exists('\\EGroupware\\Calendar\\Ui\\Views');                // /calendar/src/Ui/Views.php
+ * class_exists('\\EGroupware\\Calendar\\Lib\\Dir\\AClass');		 // /calendar/vendor/Lib/Dir/AClass.php
  */
 spl_autoload_register(function($class)
 {
@@ -48,6 +49,15 @@ spl_autoload_register(function($class)
 	{
 		require_once $path;
 		//error_log("PSR4_autoload('$class') --> require_once($path) --> class_exists('$class')=".array2string(class_exists($class,false)));
+	}
+	elseif (file_exists($al= EGW_INCLUDE_ROOT.'/'.$app.'/vendor/autoload.php'))
+	{
+		require_once($al);
+
+		if (class_exists($partclass = implode('\\', $parts), true))
+		{
+			class_alias($partclass, $class);
+		}
 	}
 });
 
