@@ -5748,11 +5748,22 @@ app.classes.mail = AppJS.extend(
 	{
 		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'previewAttachmentArea');
 		var content = this.et2.getArrayMgr('content');
+		var mailPreview = this.et2.getWidgetById('mailPreviewContainer');
 		if (attachmentArea && _attachments && _attachments.length > 0)
 		{
 			content.data[attachmentArea.id] = _attachments;
 			this.et2.setArrayMgr('contnet', content);
 			attachmentArea.set_value({content:_attachments});
+			if (attachmentArea.id == 'previewAttachmentArea')
+			{
+				var a_node = attachmentArea.getDOMNode();
+				var m_node = mailPreview.getDOMNode();
+				var offset = m_node.offsetTop - a_node.offsetTop;
+				if (a_node.offsetTop + a_node.offsetHeight > m_node.offsetTop)
+				{
+					m_node.style.setProperty('top', m_node.offsetTop + offset+"px");
+				}
+			}
 		}
 	},
 	/**
