@@ -2878,6 +2878,7 @@ app.classes.mail = AppJS.extend(
 		url += '&id='+mailid;
 		url += '&part='+attgrid.partID;
 		url += '&is_winmail='+attgrid.winmailFlag;
+		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
 		this.et2._inst.download(url);
 	},
 
@@ -2890,7 +2891,7 @@ app.classes.mail = AppJS.extend(
 			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
 			var p = widget.getParent();
 			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[save\]/,'')];
+			attgrid = cont[widget.id.replace(/\[save_zip\]/,'')];
 		}
 		else
 		{
@@ -2901,6 +2902,7 @@ app.classes.mail = AppJS.extend(
 		url += 'menuaction=mail.mail_ui.download_zip';	// todo compose for Draft folder
 		url += '&mode=save';
 		url += '&id='+mailid;
+		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
 		this.et2._inst.download(url);
 	},
 
@@ -2931,6 +2933,7 @@ app.classes.mail = AppJS.extend(
 		url += '&type='+attgrid.type.toLowerCase();
 		url += '&method=mail.mail_ui.vfsSaveAttachment';
 		url += '&label='+egw.lang('Save');
+		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
 		egw_openWindowCentered(url,windowName,width,height);
 	},
 
@@ -2957,6 +2960,7 @@ app.classes.mail = AppJS.extend(
 		url += '&mode=select-dir';
 		url += '&method=mail.mail_ui.vfsSaveAttachment';
 		url += '&label='+egw.lang('Save all');
+		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
 		for (var i=0;i<attgrid.length;i++)
 		{
 			if (attgrid[i] != null) url += '&id['+i+']='+mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename;
@@ -5743,8 +5747,11 @@ app.classes.mail = AppJS.extend(
 	set_smimeAttachments:function (_attachments)
 	{
 		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'previewAttachmentArea');
+		var content = this.et2.getArrayMgr('content');
 		if (attachmentArea && _attachments && _attachments.length > 0)
 		{
+			content.data[attachmentArea.id] = _attachments;
+			this.et2.setArrayMgr('contnet', content);
 			attachmentArea.set_value({content:_attachments});
 		}
 	},

@@ -2328,6 +2328,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 *			mailbox				=> (string) // the mailbox where message is stored
 	 *			passphrase			=> (string) // smime private key passphrase
 	 *			certAttachedPartID	=> (int) // partID of attached smime certificate
+	 *			fetchAttachmentWithPartID => (int) // PartID of requested attachment to be fetched
 	 *		)
 	 *
 	 * @return array
@@ -2365,8 +2366,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			// passphrase is required to decrypt the message
 			if (isset($_message['password_required']))
 			{
-				$data = $_message;
-				return $data;
+				return $_message;
 			}
 		}
 
@@ -2390,6 +2390,21 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (!Mail\Smime::isSmimeSignatureOnly($params['mimeType']))
 		{
 			$dec_attachments = $this->mail_bo->getMessageAttachments($params['uid'],$params['partID'],$message_parts,true,false,true,$params['mailbox']);
+			// mark attachments as smime encrypted
+			array_walk ($dec_attachments,function (&$_attachment, $_index, $_mimeType){
+				$_attachment['smime_type'] = $_mimeType;
+			},$params['mimeType']);
+
+			// fetch requested attachment's content
+			if (!empty($params['fetchAttachmentWithPartID']) && is_array($dec_attachments))
+			{
+				return array(
+					'type'			=> $message_parts[$params['fetchAttachmentWithPartID']]->getType(),
+					'charset'		=> $message_parts[$params['fetchAttachmentWithPartID']]->getContentTypeParameter('charset'),
+					'filename'		=> $message_parts[$params['fetchAttachmentWithPartID']]->getName(),
+					'attachment'	=> $message_parts[$params['fetchAttachmentWithPartID']]->getContents()
+				);
+			}
 		}
 
 		$result = array(
@@ -2495,6 +2510,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachmentHTML[$key]['mail_id'] = $rowID;
 				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
 				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
+				$attachmentHTML[$key]['smime_type'] = $value['smime_type'];
 				// reset mode array as it should be considered differently for
 				// each attachment
 				$mode = array();
@@ -2544,8 +2560,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							'menuaction'	=> 'mail.mail_ui.getAttachment',
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
-							'is_winmail'    => $value['is_winmail'],
+							'is_winmail'=> $value['is_winmail'],
 							'mailbox'   => base64_encode($mailbox),
+							'smime_type' => $value['smime_type']
 						) , $mode);
 						$windowName = 'displayAttachment_'. $uid;
 						$reg = '800x600';
@@ -2574,6 +2591,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							'part'		=> $value['partID'],
 							'is_winmail'    => $value['is_winmail'],
 							'mailbox'   => base64_encode($mailbox),
+							'smime_type' => $value['smime_type']
 						);
 						$linkView = "window.location.href = '".Egw::link('/index.php',$linkData)."';";
 						break;
@@ -2599,6 +2617,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'part'		=> $value['partID'],
 					'is_winmail'    => $value['is_winmail'],
 					'mailbox'   => base64_encode($mailbox),
+					'smime_type' => $value['smime_type']
 				);
 				$attachmentHTML[$key]['link_save'] ="<a href='".Egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".Api\Html::image('mail','fileexport')."</a>";
 
@@ -2783,6 +2802,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 		$icServerID = $hA['profileID'];
+		$smime_type = $_GET['smime_type'];
 		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
@@ -2793,7 +2813,24 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
 
 		$this->mail_bo->reopen($mailbox);
-		$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
+		if ($smime_type)
+		{
+			$attachment = $this->resolveSmimeMessage(
+					$this->mail_bo->getMessageRawBody($uid, null, $mailbox),
+					array(
+						'mimeType'	=> $smime_type,
+						'uid'		=> $uid,
+						'partID'	=> 0,
+						'mailbox'	=> $mailbox,
+						'fetchAttachmentWithPartID' => $part
+					)
+			);
+
+		}
+		else
+		{
+			$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
+		}
 		$this->mail_bo->closeConnection();
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
