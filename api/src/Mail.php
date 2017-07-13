@@ -484,10 +484,12 @@ class Mail
 	{
 		$this->sessionData = array();
 		self::$activeFolderCache = Cache::getCache(Cache::INSTANCE,'email','activeMailbox'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*10);
-
-		foreach (self::$activeFolderCache[$this->profileID] as $key => $value)
+		if (is_array(self::$activeFolderCache[$this->profileID]))
 		{
-			$this->sessionData[$key] = $value;
+			foreach (self::$activeFolderCache[$this->profileID] as $key => $value)
+			{
+				$this->sessionData[$key] = $value;
+			}
 		}
 	}
 
