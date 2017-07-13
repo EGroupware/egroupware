@@ -2384,7 +2384,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		else // only encrypted message
 		{
-			$message_parts = Horde_Mime_Part::parseMessage($_message);
+			$message_parts = Horde_Mime_Part::parseMessage($_message, array('forcemime' => true));
 		}
 
 		if (!Mail\Smime::isSmimeSignatureOnly($params['mimeType']))
