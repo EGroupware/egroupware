@@ -49,6 +49,15 @@ spl_autoload_register(function($class)
 		require_once $path;
 		//error_log("PSR4_autoload('$class') --> require_once($path) --> class_exists('$class')=".array2string(class_exists($class,false)));
 	}
+	elseif (file_exists($al= EGW_INCLUDE_ROOT.'/'.$app.'/vendor/autoload.php'))
+	{
+		require_once($al);
+
+		if (class_exists($partclass = implode('\\', $parts), true))
+		{
+			class_alias($partclass, $class);
+		}
+	}
 });
 
 /**
