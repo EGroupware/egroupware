@@ -34,7 +34,7 @@ if (!defined('EGW_SERVER_ROOT'))
  * class_exists('\\EGroupware\\Calendar\\Ui');                       // /calendar/src/Ui.php
  * class_exists('\\EGroupware\\Calendar\\Ui\\Lists');                // /calendar/src/Ui/Lists.php
  * class_exists('\\EGroupware\\Calendar\\Ui\\Views');                // /calendar/src/Ui/Views.php
- * class_exists('\\EGroupware\\Calendar\\Dir1\\Dir2\\AClass');       // /calendar/vendor/Dir1/Dir2/AClass.php
+ * class_exists('\\EGroupware\\Calendar\\Lib\\Dir\\AClass');		 // /calendar/vendor/Lib/Dir/AClass.php
  */
 spl_autoload_register(function($class)
 {
