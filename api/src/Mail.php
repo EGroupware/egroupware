@@ -4827,7 +4827,9 @@ class Mail
 		{
 			// some Servers append PropertyFile___ ; strip that here for display
 			// RB: not sure what this is: preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding, $this->getMimePartCharset($_structure))),
-			$this->fetchPartContents($_uid, $_structure, $_stream, $_preserveSeen);
+
+			// Should not try to fetch if the content is already there (e.g. Smime encrypted message)
+			if (empty($_structure->getContents())) $this->fetchPartContents($_uid, $_structure, $_stream, $_preserveSeen);
 
 			$bodyPart = array(
 				'body'		=> $_structure->getContents(array(
