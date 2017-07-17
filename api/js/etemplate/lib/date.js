@@ -41,7 +41,7 @@ function date (format, timestamp) {
     // *     returns 2: 'September 2, 2003, 2:26 am'
     // *     example 3: date('Y W o', 1062462400);
     // *     returns 3: '2003 36 2003'
-    // *     example 4: x = date('Y m d', (new Date()).getTime()/1000); 
+    // *     example 4: x = date('Y m d', (new Date()).getTime()/1000);
     // *     example 4: (x+'').length == 10 // 2009 01 09
     // *     returns 4: true
     // *     example 5: date('W', 1104534000);
@@ -251,7 +251,7 @@ function date (format, timestamp) {
     };
     this.date = function (format, timestamp) {
         that = this;
-        jsdate = ((typeof timestamp === 'undefined') ? new Date() : // Not provided
+        jsdate = ((typeof timestamp === 'undefined' ||isNaN(timestamp.valueOf())) ? new Date() : // Not provided
         (timestamp instanceof Date) ? new Date(timestamp) : // JS Date()
         new Date(timestamp * 1000) // UNIX timestamp (auto-convert to int)
         );
