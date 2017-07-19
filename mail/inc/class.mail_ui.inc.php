@@ -2038,7 +2038,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				{
 					if (Mail\Smime::isSmime($attch['type']))
 					{
-						$data['smimeSigUrl'] = $attch['mime_url'];
+						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['type']) ? 'smimeSignature' : 'smimeEncryption';
 					}
 				}
 			}
@@ -2159,46 +2159,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		// if we are in HTML so its likely that we should show the embedded images; as a result
 		// we do NOT want to see those, that are embedded in the list of attachments
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
-		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
-
-		foreach ($attachments as &$attachment)
-		{
-			if (Mail\Smime::isSmime($attachment['mimeType']))
-			{
-				$smimeData = $this->resolveSmimeMessage (
-						$this->mail_bo->getMessageRawBody($uid, $partID, $mailbox),
-						array(
-							'mimeType'				=> $attachment['mimeType'],
-							'uid'					=> $uid,
-							'partID'				=> $partID,
-							'rowID'					=> $rowID,
-							'mailbox'				=> $mailbox,
-							'certAttachedPartID'	=> $attachment['partID'],
-						)
-				);
-			}
+		try{
+			$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
 		}
-
-		if (is_array($smimeData))
+		catch(Mail\Smime\PassphraseMissing $e)
 		{
-			$error_msg[] = $smimeData['msg'];
-			if ($smimeData['signed'])
-			{
-				$linkData = array
-				(
-					'menuaction' => 'mail.mail_ui.getAttachment',
-					'id'		 => $rowID,
-					'part'		 => $smimeData['partID'],
-					'is_winmail' => false,
-					'mailbox'    => base64_encode($mailbox)
-				);
-				$content['smimeSigUrl'] = Egw::link('/index.php',$linkData);
-			}
-			if ($smimeData['password_required'])
-			{
-				$response = Api\Json\Response::get();
-				$response->call('app.mail.smimeRequestPassphrase');
-			}
+			//continue
 		}
 
 		//error_log(__METHOD__.__LINE__.array2string($attachments));
@@ -2268,152 +2234,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
-	}
-
-	/**
-	 * Parse SMIME signed message
-	 *
-	 * @param string $_message signed message
-	 * @param type $_mailbox mailbox
-	 * @return array
-	 */
-	function parseSmimeSignedMessage ($_message, $_mailbox)
-	{
-		$structure = Horde_Mime_Part::parseMessage($_message, array('forcemime'=>true));
-		return array (
-			'attachments' => $this->mail_bo->getMessageAttachments('',null,$structure,true, false,true,$_mailbox),
-			'body' => $this->mail_bo->getMessageBody('', '', null, $structure, false, $_mailbox, $calendar_part = null)
-		);
-	}
-
-	/**
-	 * decrypt given smime encrypted message
-	 *
-	 * @param string $_message
-	 * @param string $_passphrase
-	 * @return array|string return
-	 */
-	function decryptSmimeBody ($_message, $_passphrase = '')
-	{
-		$AB_bo   = new addressbook_bo();
-		$credents = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-		$certkey = $AB_bo->get_smime_keys($GLOBALS['egw_info']['user']['account_email']);
-		if (!$this->smime->verifyPassphrase($credents['acc_smime_password'], $_passphrase))
-		{
-			return array (
-				'password_required' => true,
-				'msg' => 'Authentication failure!'
-			);
-		}
-
-		$params  = array (
-			'type'      => 'message',
-			'pubkey'    => $certkey[$GLOBALS['egw_info']['user']['account_email']],
-			'privkey'   => $credents['acc_smime_password'],
-			'passphrase'=> $_passphrase
-		);
-		return $this->smime->decrypt($_message, $params);
-	}
-
-	/**
-	 * Resolve certificate and encrypted message from smime attachment
-	 *
-	 * @param string $_message
-	 * @param array $_params
-	 *		params = array (
-	 *			mimeType			=> (string) // message mime type
-	 *			uid					=> (string) // message uid
-	 *			partID				=> (int) // message part id
-	 *			rowID				=> (string) // row id (mail nm)
-	 *			mailbox				=> (string) // the mailbox where message is stored
-	 *			passphrase			=> (string) // smime private key passphrase
-	 *			certAttachedPartID	=> (int) // partID of attached smime certificate
-	 *			fetchAttachmentWithPartID => (int) // PartID of requested attachment to be fetched
-	 *		)
-	 *
-	 * @return array
-	 * @throws Exception
-	 */
-	function resolveSmimeMessage ($_message, $_params)
-	{
-		// default params
-		$params = array_merge(array(
-			'partID'				=> 0,
- 			'passphrase'			=> '',
- 			'certAttachedPartID'	=> 0
-		), $_params);
-
-		if (!$_message || empty($_params['uid']) || empty($_params['mailbox']))
-		{
-			throw new Exception(__METHOD__.__LINE__.' (): Seems crucial parameter(s) is missing!');
-		}
-
-		$this->smime = new Mail\Smime;
-
-		if (!Mail\Smime::isSmimeSignatureOnly($params['mimeType']))
-		{
-			try	{
-				$this->mail_bo->restoreSessionData();
-				$_message = $this->decryptSmimeBody($_message, $params['passphrase'] !='' ?
-						$params['passphrase'] : $this->mail_bo->sessionData['smime_passphrase']);
-			} catch (Exception $ex) {
-				return array('msg', $ex->getMessage());
-			}
-		}
-		try {
-			$cert = $this->smime->verify($_message);
-		} catch (Exception $ex) {
-			// passphrase is required to decrypt the message
-			if (isset($_message['password_required']))
-			{
-				return $_message;
-			}
-		}
-
-		if ($cert) // signed message, it might be encrypted too
-		{
-			$message_parts = $this->smime->extractSignedContents($_message);
-			$cert_data = array (
-				'verify'		=> $cert->verify,
-				'cert'			=> $cert->cert,
-				'msg'			=> $cert->msg,
-				'certHtml'		=> $this->smime->certToHTML($cert->cert),
-				'partID'		=> $params['certAttachedPartID'],
-				'signed'		=> true,
-			);
-		}
-		else // only encrypted message
-		{
-			$message_parts = Horde_Mime_Part::parseMessage($_message, array('forcemime' => true));
-		}
-
-		if (!Mail\Smime::isSmimeSignatureOnly($params['mimeType']))
-		{
-			$dec_attachments = $this->mail_bo->getMessageAttachments($params['uid'],$params['partID'],$message_parts,true,false,true,$params['mailbox']);
-			// mark attachments as smime encrypted
-			array_walk ($dec_attachments,function (&$_attachment, $_index, $_mimeType){
-				$_attachment['smime_type'] = $_mimeType;
-			},$params['mimeType']);
-
-			// fetch requested attachment's content
-			if (!empty($params['fetchAttachmentWithPartID']) && is_array($dec_attachments))
-			{
-				return array(
-					'type'			=> $message_parts[$params['fetchAttachmentWithPartID']]->getType(),
-					'charset'		=> $message_parts[$params['fetchAttachmentWithPartID']]->getContentTypeParameter('charset'),
-					'filename'		=> $message_parts[$params['fetchAttachmentWithPartID']]->getName(),
-					'attachment'	=> $message_parts[$params['fetchAttachmentWithPartID']]->getContents()
-				);
-			}
-		}
-
-		$result = array(
-			'signed'		=> false,
-			'attachments'	=> is_array($dec_attachments) ? $this->createAttachmentBlock($dec_attachments,$params['rowID'],$params['uid'],$params['mailbox']) : '',
-			'message'		=> $this->mail_bo->getMessageBody($params['uid'], '', null, $message_parts)
-		);
-
-		return is_array($cert_data) ? array_merge($result, $cert_data): $result;
 	}
 
 	/**
@@ -2802,7 +2622,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 		$icServerID = $hA['profileID'];
-		$smime_type = $_GET['smime_type'];
 		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
 		{
@@ -2813,24 +2632,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
 
 		$this->mail_bo->reopen($mailbox);
-		if ($smime_type)
-		{
-			$attachment = $this->resolveSmimeMessage(
-					$this->mail_bo->getMessageRawBody($uid, null, $mailbox),
-					array(
-						'mimeType'	=> $smime_type,
-						'uid'		=> $uid,
-						'partID'	=> 0,
-						'mailbox'	=> $mailbox,
-						'fetchAttachmentWithPartID' => $part
-					)
-			);
-
-		}
-		else
-		{
-			$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
-		}
+		$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail,false);
 		$this->mail_bo->closeConnection();
 		if ($rememberServerID != $this->mail_bo->profileID)
 		{
@@ -2900,22 +2702,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					Egw::redirect_link('../index.php',$vars);
 				}
 				//Import failed, download content anyway
-			}
-			// Display smime certificate
-			if (Mail\Smime::isSmime($attachment['type']))
-			{
-				$smime = $this->resolveSmimeMessage(
-						$this->mail_bo->getMessageRawBody($uid, null, $mailbox),
-						array(
-							'mimeType'	=> $attachment['type'],
-							'uid'		=> $uid,
-							'partID'	=> 0,
-							'mailbox'	=> $mailbox
-						)
-				);
-				Api\Header\Content::safe($smime['certHtml'], '', $attachment['type'], $size=0, false, true);
-				echo $smime['certHtml'];
-				exit();
 			}
 		}
 		//error_log(__METHOD__.__LINE__.'->'.array2string($attachment));
@@ -3280,56 +3066,42 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$bufferHtmlOptions = $this->mail_bo->htmlOptions;
 		if (empty($htmlOptions)) $htmlOptions = $this->mail_bo->htmlOptions;
 		// fetching structure now, to supply it to getMessageBody and getMessageAttachment, so it does not get fetched twice
-		$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
+		try
+		{
+			if ($smimePassphrase)
+			{
+				Api\Cache::setSession('mail', 'smime_passphrase', $smimePassphrase);
+			}
+			$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
+			if (($smime = $structure->getMetadata('X-EGroupware-Smime')))
+			{
+
+				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,false,true, $mailbox);
+				$push = new Api\Json\Push();
+				if (is_array($attachments))
+				{
+					$push->call('app.mail.set_smimeAttachments', $this->createAttachmentBlock($attachments, $_GET['_messageID'], $uid, $mailbox));
+				}
+				$push->call('app.mail.set_smimeFlags', $smime);
+			}
+		}
+		catch(Mail\Smime\PassphraseMissing $e)
+		{
+			// do NOT include any default CSS
+			$smimeHtml = $this->get_email_header().
+			'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
+			'<form id="smimePasswordRequest" method="post">'.
+					'<div class="bg-style"></div>'.
+					'<div>'.
+						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
+						'<input type="submit" value="'.lang("submit").'"/>'.
+					'</div>'.
+				 '</form>';
+			return $smimeHtml;
+		}
 		$calendar_part = null;
 		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox, $calendar_part);
-		$mimeType = $structure->getType();
-		if ($mimeType == 'multipart/signed')
-		{
-			$param = $structure->getAllContentTypeParameters();
-			$mimeType = $param['protocol'];
-		}
-		if (Mail\Smime::isSmime($mimeType))
-		{
-			$smime = $this->resolveSmimeMessage(
-					$this->mail_bo->getMessageRawBody($uid, $partID, $mailbox),
-					array(
-						'mimeType'	=> $mimeType,
-						'uid'		=> $uid,
-						'partID'	=> $partID,
-						'rowID'		=> $_GET['_messageID'],
-						'mailbox'	=> $mailbox,
-						'passphrase'=> $smimePassphrase
-					)
-			);
-
-			if ($smime['message'] || $smime['attachments'])
-			{
-				if ($smimePassphrase)
-				{
-					$this->mail_bo->sessionData['smime_passphrase'] =  $smimePassphrase;
-					$this->mail_bo->saveSessionData();
-				}
-				$bodyParts = $smime['message'];
-				$push = new Api\Json\Push();
-				if (!empty($smime['attachments'])) $push->call('app.mail.set_smimeAttachments', $smime['attachments']);
-			}
-			else if ($smime['password_required'])
-			{
-				// do NOT include any default CSS
-				$smimeHtml = $this->get_email_header().
-				'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
-				'<form id="smimePasswordRequest" method="post">'.
-						'<div class="bg-style"></div>'.
-						'<div>'.
-							'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
-							'<input type="submit" value="'.lang("submit").'"/>'.
-						'</div>'.
-					 '</form>';
-				return $smimeHtml;
-			}
-		}
-		else
+		if (!$smime)
 		{
 			Api\Session::cache_control(true);
 		}

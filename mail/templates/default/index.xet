@@ -22,7 +22,6 @@
 				<hbox id="mailPreviewHeadersDate" class="mailPreviewHeaders">
 					<description value="Date"/>
 					<date-time align="left" id="previewDate" readonly="true"/>
-					<button id="previewSmimeSigBtn" image="smimeSignature" statustext="This message is signed" onclick="app.mail.smimeSigBtn"/>
 				</hbox>
 				<hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
 					<description value="To"/>
@@ -67,7 +66,12 @@
 						</rows>
 					</grid>
 					<buttononly class="et2_button ui-button" label="Show all attachments" image="foldertree_nolines_plus"  width="16px" height="16px" onclick="app.mail.showAllHeader"/>
+					<hbox class="mailPreviewHeaders">
+						<image id="smime_signature" src="smimeSignature" statustext="Smime signed message" disabled="true" align="right" width="24"/>
+						<image id="smime_encryption" src="smimeEncryption" statustext="Smime encrypted message" disabled="true" align="right" width="24"/>
+					</hbox>
 				</hbox>
+
 				<box id="mailPreviewContainer">
 					<iframe frameborder="1" id="messageIFRAME" scrolling="auto"/>
 				</box>
@@ -119,9 +123,7 @@
 					<url-email id="${row}[toaddress]" contact_plus = "true" readonly="true"/>
 					<url-email id="${row}[fromaddress]" contact_plus = "true" readonly="true"/>
 					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
-					<vbox>
-						<buttononly id="${row}[smimeSigBtn]" image="smimeSignature" disabled="!@$row_cont[smimeSigUrl]"/>
-					</vbox>
+					<image src="$row_cont[smime]" />
 				</row>
 			</rows>
 		</grid>

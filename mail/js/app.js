@@ -982,7 +982,21 @@ app.classes.mail = AppJS.extend(
 				if(widget == null) continue;
 				widget.set_value(dataElem.data[data_widgets[id]] || "");
 			}
-
+			['smime_signature', 'smime_encryption'].forEach(id =>
+			{
+				var widget = this.et2.getWidgetById(id);
+				switch (id)
+				{
+					case 'smime_signature':
+						widget.set_disabled(!(dataElem.data.smime == 'smimeSignature'));
+						break;
+					case 'smime_encryption':
+						widget.set_disabled(!(dataElem.data.smime == 'smimeEncryption'));
+						break;
+					default:
+						widget.set_disabled(true);
+				}
+			});
 			// Blank first, so we don't show previous email while loading
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src('about:blank');
@@ -1018,7 +1032,7 @@ app.classes.mail = AppJS.extend(
 			jQuery(IframeHandle.getDOMNode()).on('load', function(e){
 				self.resolveExternalImages (this.contentWindow.document);
 			});
-			if (dataElem.data['smimeSigUrl']) this.smimeAttachmentsCheckerInterval();
+			if (dataElem.data['smime']) this.smimeAttachmentsCheckerInterval();
 		}
 
 		var messages = {};
@@ -5753,6 +5767,7 @@ app.classes.mail = AppJS.extend(
 		{
 			content.data[attachmentArea.id] = _attachments;
 			this.et2.setArrayMgr('contnet', content);
+			attachmentArea.getDOMNode().classList.remove('loading');
 			attachmentArea.set_value({content:_attachments});
 			if (attachmentArea.id == 'previewAttachmentArea')
 			{
@@ -5773,6 +5788,8 @@ app.classes.mail = AppJS.extend(
 	smimeAttachmentsCheckerInterval:function ()
 	{
 		var self = this;
+		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		if (attachmentArea) attachmentArea.getDOMNode().classList.add('loading');
 		var interval = window.setInterval(function(){
 			self.egw.json('mail.mail_ui.ajax_smimeAttachmentsChecker',null,function(_stop){
 				if (_stop)
@@ -5781,5 +5798,26 @@ app.classes.mail = AppJS.extend(
 				}
 			}).sendRequest(true);
 		},1000);
+	},
+
+	/**
+	 *
+	 * @param {object} _data smime resolved certificate data
+	 * @returns {undefined}
+	 */
+	set_smimeFlags: function (_data)
+	{
+		if (!_data) return;
+		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
+		var smime_signature = this.et2.getWidgetById('smime_signature');
+		var smime_encryption = this.et2.getWidgetById('smime_encryption');
+
+			smime_signature.set_disabled(!_data.signed);
+			smime_encryption.set_disabled(!_data.encrypted);
+			if (!_data.verify)
+			{
+				smime_signature.set_statustext(_data.msg);
+			}
 	}
 });
