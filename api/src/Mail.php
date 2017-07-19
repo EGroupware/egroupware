@@ -27,6 +27,7 @@ use Horde_Mime_Magic;
 use Horde_Mail_Rfc822;
 use Horde_Mail_Rfc822_List;
 use Horde_Mime_Mdn;
+use EGroupware\Api;
 
 use tidy;
 
@@ -5593,8 +5594,8 @@ class Mail
 			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		}
 		$uidsToFetch = new Horde_Imap_Client_Ids();
-		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
-		$uidsToFetch->add($_uid);
+		if (!(is_object($_uid) || is_array($_uid))) $uid = (array)$_uid;
+		$uidsToFetch->add($uid);
 		try
 		{
 			$_fquery = new Horde_Imap_Client_Fetch_Query();
@@ -5607,10 +5608,30 @@ class Mail
 			$mail = $this->icServer->fetch($_folder, $_fquery, array(
 				'ids' => $uidsToFetch,
 			))->first();
-
-			return is_object($mail)?$mail->getStructure():null;
+			if (is_object($mail))
+			{
+				$structure = $mail->getStructure();
+				$isSmime = Mail\Smime::isSmime($structure->getType());
+				if ($isSmime)
+				{
+					return $this->resolveSmimeMessage($structure, array(
+						'uid' => $_uid,
+						'mailbox' => $_folder
+					));
+				}
+				return $mail->getStructure();
+			}
+			else
+			{
+				return null;
+			}
 		}
-		catch (\Exception $e)
+		catch (Mail\Smime\PassphraseMissing $e)
+		{
+			// re-throw the exception to be caught on UI
+			throw $e;
+		}
+		catch (Exception $e)
 		{
 			error_log(__METHOD__.' ('.__LINE__.') '.' Could not fetch structure on mail:'.$_uid.' Serverprofile->'.$this->icServer->ImapServerId.' Message:'.$e->getMessage().' Stack:'.function_backtrace());
 			return null;
@@ -5906,6 +5927,13 @@ class Mail
 				if ($_partID != '')
 				{
 					$mailStructureObject = $_headerObject->getStructure();
+					if (Mail\Smime::isSmime(($smime_type = $mailStructureObject->getType())))
+					{
+						$mailStructureObject = $this->resolveSmimeMessage($mailStructureObject, array(
+							'uid' => $_uid,
+							'mailbox' => $_folder
+						));
+					}
 					$mailStructureObject->contentTypeMap();
 					$part = $mailStructureObject->getPart($_partID);
 					$partDisposition = ($part?$part->getDisposition():'failed');
@@ -5923,7 +5951,7 @@ class Mail
 						$filename = $part->getName();
 						$charset = $part->getContentTypeParameter('charset');
 						//$structure_bytes = $part->getBytes(); $structure_partID=$part->getMimeId(); error_log(__METHOD__.__LINE__." fetchPartContents(".array2string($_uid).", $structure_partID, $_stream, $_preserveSeen,$structure_mime)" );
-						$this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true,$structure_mime);
+						if (empty($part->getContents())) $this->fetchPartContents($_uid, $part, $_stream, $_preserveSeen=true,$structure_mime);
 						if ($_returnPart) return $part;
 					}
 				}
@@ -7286,5 +7314,99 @@ class Mail
 			if ($matches[1]) $address = $matches[1];
 		}
 		return $_addresses;
+	}
+
+
+
+	/**
+	 * Resolve certificate and encrypted message from smime attachment
+	 *
+	 * @param Horde_Mime_Part $_mime_part
+	 * @param array $_params
+	 *		params = array (
+	 *			mimeType			=> (string) // message mime type
+	 *			uid					=> (string) // message uid
+	 *			mailbox				=> (string) // the mailbox where message is stored
+	 *			passphrase			=> (string) // smime private key passphrase
+	 *		)
+	 *
+	 * @return Horde_Mime_Part returns a resolved mime part
+	 * @throws PassphraseMissing if private key passphrase is not provided
+	 * @throws Horde_Crypt_Exception if decryption fails
+	 */
+	function resolveSmimeMessage(Horde_Mime_Part $_mime_part, $_params)
+	{
+		// default params
+		$params = array_merge(array(
+ 			'passphrase'	=> '',
+			'mimeType'		=> $_mime_part->getType()
+		), $_params);
+
+		$this->smime = new Mail\Smime;
+		$message = $this->getMessageRawBody($params['uid'], null, $params['mailbox']);
+		if (!Mail\Smime::isSmimeSignatureOnly($params['mimeType']))
+		{
+			$message = $this->_decryptSmimeBody($message, $params['passphrase'] !='' ?
+					$params['passphrase'] : Api\Cache::getSession('mail', 'smime_passphrase'));
+		}
+
+		try {
+			$cert = $this->smime->verify($message);
+		} catch (\Exception $ex) {
+			// passphrase is required to decrypt the message
+			if (isset($message['password_required']))
+			{
+				throw new Mail\Smime\PassphraseMissing($message['msg']);
+			}
+		}
+
+		if ($cert) // signed message, it might be encrypted too
+		{
+			$message_parts = $this->smime->extractSignedContents($message);
+			$metadata = array (
+				'verify'		=> $cert->verify,
+				'cert'			=> $cert->cert,
+				'msg'			=> $cert->msg,
+				'certHtml'		=> $this->smime->certToHTML($cert->cert),
+				'signed'		=> true,
+			);
+		}
+		else // only encrypted message
+		{
+			$message_parts = Horde_Mime_Part::parseMessage($message, array('forcemime' => true));
+		}
+		$metadata['mimeType'] = $params['mimeType'];
+		$message_parts->setMetadata('X-EGroupware-Smime', $metadata);
+		return $message_parts;
+	}
+
+	/**
+	 * decrypt given smime encrypted message
+	 *
+	 * @param string $_message
+	 * @param string $_passphrase
+	 * @return array|string return
+	 * @throws Horde_Crypt_Exception
+	 */
+	private function _decryptSmimeBody ($_message, $_passphrase = '')
+	{
+		$AB_bo   = new \addressbook_bo();
+		$credents = Mail\Credentials::read($this->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
+		$certkey = $AB_bo->get_smime_keys($GLOBALS['egw_info']['user']['account_email']);
+		if (!$this->smime->verifyPassphrase($credents['acc_smime_password'], $_passphrase))
+		{
+			return array (
+				'password_required' => true,
+				'msg' => 'Authentication failure!'
+			);
+		}
+
+		$params  = array (
+			'type'      => 'message',
+			'pubkey'    => $certkey[$GLOBALS['egw_info']['user']['account_email']],
+			'privkey'   => $credents['acc_smime_password'],
+			'passphrase'=> $_passphrase
+		);
+		return $this->smime->decrypt($_message, $params);
 	}
 }
