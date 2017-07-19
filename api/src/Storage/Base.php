@@ -549,6 +549,11 @@ class Base
 				unset($query[$col]);
 			}
 		}
+		// copy direct SQL parts from $keys
+		for($i = 0; is_array($keys) && isset($keys[$i]); ++$i)
+		{
+			$query[] = $keys[$i];
+		}
 		foreach($this->db->select($this->table_name,'*'.($extra_cols?','.(is_array($extra_cols)?implode(',',$extra_cols):$extra_cols):''),
 			$query,__LINE__,__FILE__,False,'',$this->app,0,$join) as $row)
 		{
