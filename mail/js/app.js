@@ -982,10 +982,12 @@ app.classes.mail = AppJS.extend(
 				if(widget == null) continue;
 				widget.set_value(dataElem.data[data_widgets[id]] || "");
 			}
-			['smime_signature', 'smime_encryption'].forEach(id =>
+			var smime_widgets = ['smime_signature', 'smime_encryption'];
+
+			for (var i in smime_widgets)
 			{
-				var widget = this.et2.getWidgetById(id);
-				switch (id)
+				var widget = this.et2.getWidgetById(smime_widgets[i]);
+				switch (smime_widgets[i])
 				{
 					case 'smime_signature':
 						widget.set_disabled(!(dataElem.data.smime == 'smimeSignature'));
@@ -996,7 +998,8 @@ app.classes.mail = AppJS.extend(
 					default:
 						widget.set_disabled(true);
 				}
-			});
+			}
+			
 			// Blank first, so we don't show previous email while loading
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src('about:blank');
