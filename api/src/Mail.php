@@ -7342,12 +7342,16 @@ class Mail
 			'mimeType'		=> $_mime_part->getType()
 		), $_params);
 
+		$metadata = array (
+			 'mimeType' => $params['mimeType']
+		);
 		$this->smime = new Mail\Smime;
 		$message = $this->getMessageRawBody($params['uid'], null, $params['mailbox']);
 		if (!Mail\Smime::isSmimeSignatureOnly($params['mimeType']))
 		{
 			$message = $this->_decryptSmimeBody($message, $params['passphrase'] !='' ?
 					$params['passphrase'] : Api\Cache::getSession('mail', 'smime_passphrase'));
+			$metadata['encrypted'] = true;
 		}
 
 		try {
@@ -7363,19 +7367,18 @@ class Mail
 		if ($cert) // signed message, it might be encrypted too
 		{
 			$message_parts = $this->smime->extractSignedContents($message);
-			$metadata = array (
+			$metadata = array_merge ($metadata, array (
 				'verify'		=> $cert->verify,
 				'cert'			=> $cert->cert,
 				'msg'			=> $cert->msg,
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
 				'signed'		=> true,
-			);
+			));
 		}
 		else // only encrypted message
 		{
 			$message_parts = Horde_Mime_Part::parseMessage($message, array('forcemime' => true));
 		}
-		$metadata['mimeType'] = $params['mimeType'];
 		$message_parts->setMetadata('X-EGroupware-Smime', $metadata);
 		return $message_parts;
 	}
