@@ -67,6 +67,8 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		{
 			// need to make body rock solid to avoid extra scrollbars
 			jQuery('body').css({overflow:'hidden'});
+			// Remove app header to be able to see the toolbar in compact template
+			jQuery('#divAppboxHeader').remove();
 			var self = this;
 			jQuery(window).on('unload', function(){self.editor_leaveSession();});
 			jQuery(window).on('beforeunload', function(){
