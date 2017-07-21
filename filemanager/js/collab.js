@@ -144,11 +144,13 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	 * and as result it will call client-side and server leave session.
 	 *
 	 * @param {function} _successCallback function to gets called after leave session is successful
+	 * @param {boolean} _checkLastActive flag to set for checking if the user is the last
+	 * one in the open sessions.
 	 */
 	editor_leaveSession: function (_successCallback,_checkLastActive)
 	{
 		var self = this;
-		var successCallback = _successCallback  || function(){window.close();}
+		var successCallback = _successCallback  || function(){window.close();};
 		var leave = function ()
 		{
 			self.editor.leaveSession(function(){});
@@ -201,12 +203,9 @@ app.classes.filemanager = app.classes.filemanager.extend({
 
 	/**
 	 * Method to close an opened document
-	 *
-	 * @param {object} _egwAction egw action object
 	 */
-	editor_close: function (_egwAction) {
+	editor_close: function () {
 		var self = this,
-			action = _egwAction.id,
 			file_path = this.et2.getWidgetById('file_path');
 
 		if (this.editor)
@@ -245,6 +244,9 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	 * Method call for saving edited document
 	 *
 	 * @param {object} _egwAction egw action object
+	 * @param {function} _afterSaveCallback callback function to be called after
+	 * save action happens.
+	 *
 	 */
 	editor_save: function (_egwAction, _afterSaveCallback) {
 		var self = this,
