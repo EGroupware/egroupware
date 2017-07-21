@@ -212,23 +212,29 @@ class mail_compose
 				'onExecute' => 'javaScript:app.mail.compose_saveDraft2fm',
 				'hint' => 'Save the drafted message as eml file into VFS'
 			),
-			'smime_sign' => array (
-				'caption' => 'SMIME Sign',
-				'icon' => 'smimeSignature',
-				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.compose_setToggle',
-				'checkbox' => true,
-				'hint' => 'Sign your message with smime certificate'
-			),
-			'smime_encrypt' => array (
-				'caption' => 'SMIME Encryption',
-				'icon' => 'smimeEncryption',
-				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.compose_setToggle',
-				'checkbox' => true,
-				'hint' => 'Encrypt your message with smime certificate'
-			)
+
 		);
+		$credentials = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
+		if ($credentials['acc_smime_password'])
+		{
+			$actions = array_merge($actions, array(
+				'smime_sign' => array (
+					'caption' => 'SMIME Sign',
+					'icon' => 'smimeSignature',
+					'group' => ++$group,
+					'onExecute' => 'javaScript:app.mail.compose_setToggle',
+					'checkbox' => true,
+					'hint' => 'Sign your message with smime certificate'
+				),
+				'smime_encrypt' => array (
+					'caption' => 'SMIME Encryption',
+					'icon' => 'smimeEncryption',
+					'group' => ++$group,
+					'onExecute' => 'javaScript:app.mail.compose_setToggle',
+					'checkbox' => true,
+					'hint' => 'Encrypt your message with smime certificate'
+			)));
+		}
 		foreach (self::$priorities as $key => $priority)
 		{
 			$actions['prty']['children'][$key] = array(

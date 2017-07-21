@@ -3087,6 +3087,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		catch(Mail\Smime\PassphraseMissing $e)
 		{
+			$credentials = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
+			if (empty($credentials['acc_smime_password']))
+			{
+				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME private key in Encryption tab.'));
+			}
+
 			// do NOT include any default CSS
 			$smimeHtml = $this->get_email_header().
 			'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
