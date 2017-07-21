@@ -161,9 +161,8 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			if (_isLastMember)
 			{
 				var buttons = [
-					{"button_id": 3,"text": 'save and close', id: 'save', image: 'check' },
-					{"button_id": 2,"text": 'keep unsaved changes and leave', id: 'leave', image: 'close' },
-					{"button_id": 1,"text": 'discard all unsaved changes', id: 'discard', image: 'delete' },
+					{"button_id": 2,"text": 'save and close', id: 'save', image: 'check' },
+					{"button_id": 1,"text": 'discard unsaved changes', id: 'discard', image: 'discard' },
 					{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancel', "default":true}
 				];
 				et2_dialog.show_dialog(
@@ -176,9 +175,6 @@ app.classes.filemanager = app.classes.filemanager.extend({
 									leave();
 								});
 								break;
-							case 'leave':
-								leave();
-								break;
 							case 'discard':
 								self.editor_discard();
 								break;
@@ -186,7 +182,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 
 						}
 					},
-					egw.lang('You are the last one on this session. What would you like to do with all changes in this document?'),
+					egw.lang('You are the last one on this session. What would you like to do with all unsaved changes in this document?'),
 					'Closing session',
 					null,
 					buttons,
@@ -558,7 +554,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	{
 		var self = this;
 		var buttons = [
-			{"button_id": 1,"text": 'discard', id: 'discard', image: 'check' },
+			{"button_id": 1,"text": 'discard', id: 'discard', image: 'discard' },
 			{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancel', "default":true}
 		];
 		et2_dialog.show_dialog(
@@ -572,7 +568,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 					}).sendRequest();
 				}
 			},
-			egw.lang('You are about to discard all modifications applied to this document by you and other participants. Be aware this will affect all participants and their changes on this document too.'),
+			egw.lang('Are you sure that you want to discard all modifications applied to this document by you and other participants?'),
 			'Discard all changes',
 			null,
 			buttons,
