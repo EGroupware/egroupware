@@ -3090,7 +3090,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$credentials = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
 			if (empty($credentials['acc_smime_password']))
 			{
-				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME private key in Encryption tab.'));
+				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME private key in Encryption tab located at Edit Account dialog.'));
 			}
 
 			// do NOT include any default CSS
