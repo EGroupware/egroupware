@@ -31,7 +31,7 @@ namespace EGroupware\Api;
  *    and it's value is stored in the cache AND retured
  * 4. parameters to pass to the callback as array, see call_user_func_array
  * 5. an expiration time in seconds to specify how long data should be cached,
- *    default 0 means infinit (this time is not garantied and not supported for all levels!)
+ *    default 0 means infinit (this time is not supported for request level!)
  *
  * Data is stored under an application name and a location, like egw_session::appsession().
  * In fact data stored at cache level Api\Cache::SESSION, is stored in the same way as
@@ -358,6 +358,11 @@ class Cache
 	}
 
 	/**
+	 * Prefix for appname to store expiration time in session cache
+	 */
+	const SESSION_EXPIRATION_PREFIX = '*expiration*';
+
+	/**
 	 * Set some data in the cache for the whole source tree (all instances)
 	 *
 	 * @param string $app application storing data
@@ -368,13 +373,17 @@ class Cache
 	 */
 	static public function setSession($app,$location,$data,$expiration=0)
 	{
-		unset($expiration);	// not used, but required by function signature
 		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
 			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			return false;	// can no longer store something in the session, eg. because commit_session() was called
 		}
 		$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = $data;
+
+		if ($expiration > 0)
+		{
+			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] = time()+$expiration;
+		}
 
 		return true;
 	}
@@ -393,11 +402,17 @@ class Cache
 	 */
 	static public function &getSession($app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
-		unset($expiration);	// not used, but required by function signature
 		if (isset($_SESSION[Session::EGW_SESSION_ENCRYPTED]))
 		{
 			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			return null;	// can no longer store something in the session, eg. because commit_session() was called
+		}
+		// check if entry is expired and clean it up in that case
+		if (isset($_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]) &&
+			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] < time())
+		{
+			unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location],
+				$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]);
 		}
 		if (!isset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]) && !is_null($callback))
 		{
@@ -419,6 +434,13 @@ class Cache
 		{
 			if (Session::ERROR_LOG_DEBUG) error_log(__METHOD__.' called after session was encrypted --> ignored!');
 			return false;	// can no longer store something in the session, eg. because commit_session() was called
+		}
+		// check if entry is expired and clean it up in that case
+		if (isset($_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]) &&
+			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] < time())
+		{
+			unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location],
+				$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]);
 		}
 		if (!isset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]))
 		{
