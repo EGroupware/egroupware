@@ -3070,7 +3070,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			if ($smimePassphrase)
 			{
-				Api\Cache::setSession('mail', 'smime_passphrase', $smimePassphrase);
+				if ($this->mail_bo->mailPreferences['smime_pass_exp'] != $_POST['smime_pass_exp'])
+				{
+					$GLOBALS['egw']->preferences->add('mail', 'smime_pass_exp', $_POST['smime_pass_exp']);
+					$GLOBALS['egw']->preferences->save_repository();
+				}
+				Api\Cache::setSession('mail', 'smime_passphrase', $smimePassphrase, $_POST['smime_pass_exp'] * 60);
 			}
 			$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
 			if (($smime = $structure->getMetadata('X-EGroupware-Smime')))
@@ -3092,7 +3097,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME private key in Encryption tab located at Edit Account dialog.'));
 			}
-
+			Framework::message($e->getMessage());
 			// do NOT include any default CSS
 			$smimeHtml = $this->get_email_header().
 			'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
@@ -3102,7 +3107,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
 						'<input type="submit" value="'.lang("submit").'"/>'.
 					'</div>'.
-				 '</form>';
+					'<div style="top:47%;margin-left:-15px;">'.
+						lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+					'</div>'.
+			'</form>';
 			return $smimeHtml;
 		}
 		$calendar_part = null;

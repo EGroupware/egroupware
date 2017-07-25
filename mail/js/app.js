@@ -998,8 +998,10 @@ app.classes.mail = AppJS.extend(
 					default:
 						widget.set_disabled(true);
 				}
+
+				this.smime_clear_flags([jQuery(widget.getDOMNode())]);
 			}
-			
+			this.smime_clear_flags([jQuery('#mail-index_mailPreviewContainer')]);
 			// Blank first, so we don't show previous email while loading
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src('about:blank');
@@ -5815,12 +5817,36 @@ app.classes.mail = AppJS.extend(
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
 		var smime_signature = this.et2.getWidgetById('smime_signature');
 		var smime_encryption = this.et2.getWidgetById('smime_encryption');
+		var $mail_container = egw(window).is_popup() ?
+								jQuery('.mailDisplayContainer'):
+								jQuery(this.et2.getWidgetById('mailPreviewContainer').getDOMNode());
 
-			smime_signature.set_disabled(!_data.signed);
-			smime_encryption.set_disabled(!_data.encrypted);
-			if (!_data.verify)
-			{
-				smime_signature.set_statustext(_data.msg);
-			}
+		smime_signature.set_disabled(!_data.signed);
+		smime_encryption.set_disabled(!_data.encrypted);
+		if (!_data.signed)
+		{
+			this.smime_clear_flags([$mail_container]);
+		}
+		else if (_data.verify)
+		{
+			$mail_container.addClass('smime_cert_verified');
+			smime_signature.set_class('smime_cert_verified');
+		}
+		else if (!_data.verify)
+		{
+			$mail_container.addClass('smime_cert_notverified');
+			smime_signature.set_class('smime_cert_notverified');
+			smime_signature.set_statustext(_data.msg);
+		}
+	},
+
+	smime_clear_flags: function (_nodes)
+	{
+		for(var i=0;i<_nodes.length;i++)
+		{
+			var smime_classes = 'smime_cert_verified smime_cert_notverified';
+			_nodes[i].removeClass(smime_classes);
+		}
+
 	}
 });
