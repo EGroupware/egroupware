@@ -7413,7 +7413,7 @@ class Mail
 	{
 		$AB_bo   = new \addressbook_bo();
 		$credents = Mail\Credentials::read($this->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-		$certkey = $AB_bo->get_smime_keys($GLOBALS['egw_info']['user']['account_email']);
+		$certkey = $AB_bo->get_smime_keys($this->icServer->ident_email);
 		if (!$this->smime->verifyPassphrase($credents['acc_smime_password'], $_passphrase))
 		{
 			return array (
@@ -7424,7 +7424,7 @@ class Mail
 
 		$params  = array (
 			'type'      => 'message',
-			'pubkey'    => $certkey[$GLOBALS['egw_info']['user']['account_email']],
+			'pubkey'    => $certkey[$this->icServer->ident_email],
 			'privkey'   => $credents['acc_smime_password'],
 			'passphrase'=> $_passphrase
 		);
