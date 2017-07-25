@@ -67,6 +67,8 @@ app.classes.filemanager = app.classes.filemanager.extend({
 		{
 			// need to make body rock solid to avoid extra scrollbars
 			jQuery('body').css({overflow:'hidden'});
+			// Remove app header to be able to see the toolbar in compact template
+			jQuery('#divAppboxHeader').remove();
 			var self = this;
 			jQuery(window).on('unload', function(){self.editor_leaveSession();});
 			jQuery(window).on('beforeunload', function(){
@@ -142,11 +144,13 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	 * and as result it will call client-side and server leave session.
 	 *
 	 * @param {function} _successCallback function to gets called after leave session is successful
+	 * @param {boolean} _checkLastActive flag to set for checking if the user is the last
+	 * one in the open sessions.
 	 */
 	editor_leaveSession: function (_successCallback,_checkLastActive)
 	{
 		var self = this;
-		var successCallback = _successCallback  || function(){window.close();}
+		var successCallback = _successCallback  || function(){window.close();};
 		var leave = function ()
 		{
 			self.editor.leaveSession(function(){});
@@ -161,9 +165,8 @@ app.classes.filemanager = app.classes.filemanager.extend({
 			if (_isLastMember)
 			{
 				var buttons = [
-					{"button_id": 3,"text": 'save and close', id: 'save', image: 'check' },
-					{"button_id": 2,"text": 'keep unsaved changes and leave', id: 'leave', image: 'close' },
-					{"button_id": 1,"text": 'discard all unsaved changes', id: 'discard', image: 'delete' },
+					{"button_id": 2,"text": 'save and close', id: 'save', image: 'check' },
+					{"button_id": 1,"text": 'discard unsaved changes', id: 'discard', image: 'discard' },
 					{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancel', "default":true}
 				];
 				et2_dialog.show_dialog(
@@ -176,9 +179,6 @@ app.classes.filemanager = app.classes.filemanager.extend({
 									leave();
 								});
 								break;
-							case 'leave':
-								leave();
-								break;
 							case 'discard':
 								self.editor_discard();
 								break;
@@ -186,7 +186,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 
 						}
 					},
-					egw.lang('You are the last one on this session. What would you like to do with all changes in this document?'),
+					egw.lang('You are the last one on this session. What would you like to do with all unsaved changes in this document?'),
 					'Closing session',
 					null,
 					buttons,
@@ -203,12 +203,9 @@ app.classes.filemanager = app.classes.filemanager.extend({
 
 	/**
 	 * Method to close an opened document
-	 *
-	 * @param {object} _egwAction egw action object
 	 */
-	editor_close: function (_egwAction) {
+	editor_close: function () {
 		var self = this,
-			action = _egwAction.id,
 			file_path = this.et2.getWidgetById('file_path');
 
 		if (this.editor)
@@ -247,6 +244,9 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	 * Method call for saving edited document
 	 *
 	 * @param {object} _egwAction egw action object
+	 * @param {function} _afterSaveCallback callback function to be called after
+	 * save action happens.
+	 *
 	 */
 	editor_save: function (_egwAction, _afterSaveCallback) {
 		var self = this,
@@ -558,7 +558,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 	{
 		var self = this;
 		var buttons = [
-			{"button_id": 1,"text": 'discard', id: 'discard', image: 'check' },
+			{"button_id": 1,"text": 'discard', id: 'discard', image: 'discard' },
 			{"button_id": 0,"text": 'cancel', id: 'cancel', image: 'cancel', "default":true}
 		];
 		et2_dialog.show_dialog(
@@ -572,7 +572,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 					}).sendRequest();
 				}
 			},
-			egw.lang('You are about to discard all modifications applied to this document by you and other participants. Be aware this will affect all participants and their changes on this document too.'),
+			egw.lang('Are you sure that you want to discard all modifications applied to this document by you and other participants?'),
 			'Discard all changes',
 			null,
 			buttons,
