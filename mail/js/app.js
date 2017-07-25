@@ -5832,10 +5832,16 @@ app.classes.mail = AppJS.extend(
 			$mail_container.addClass('smime_cert_verified');
 			smime_signature.set_class('smime_cert_verified');
 		}
-		else if (!_data.verify)
+		else if (!_data.verify && _data.cert)
 		{
 			$mail_container.addClass('smime_cert_notverified');
 			smime_signature.set_class('smime_cert_notverified');
+			smime_signature.set_statustext(_data.msg);
+		}
+		else if (!_data.verify && !_data.cert)
+		{
+			$mail_container.addClass('smime_cert_notvalid');
+			smime_signature.set_class('smime_cert_notvalid');
 			smime_signature.set_statustext(_data.msg);
 		}
 	},
@@ -5844,7 +5850,7 @@ app.classes.mail = AppJS.extend(
 	{
 		for(var i=0;i<_nodes.length;i++)
 		{
-			var smime_classes = 'smime_cert_verified smime_cert_notverified';
+			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid';
 			_nodes[i].removeClass(smime_classes);
 		}
 

@@ -7368,6 +7368,15 @@ class Mail
 			{
 				throw new Mail\Smime\PassphraseMissing($message['msg']);
 			}
+			// verifivation failure either message has been tempered,
+			// signature is not valid or message has not ben signed
+			// but encrypted only.
+			else
+			{
+				$metadata['verify'] = false;
+				$metadata['signed'] = true;
+				$metadata['msg'] = $ex->getMessage();
+			}
 		}
 
 		if ($cert) // signed message, it might be encrypted too
@@ -7380,6 +7389,9 @@ class Mail
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
 				'signed'		=> true,
 			));
+			$AB_bo   = new \addressbook_bo();
+			$certkey = $AB_bo->get_smime_keys($cert->email);
+			if (!is_array($certkey) || $certkey[$cert->email] != $cert->cert) $metadata['addtocontact'] = true;
 		}
 		else // only encrypted message
 		{
