@@ -1008,10 +1008,13 @@ app.classes.addressbook = AppJS.extend(
 
 				// Check to see if it's not there
 				if(options && (options.find && 
-					!grouped.options.select_options.find(function(e) {console.log(e); return e.value === state.state.grouped_view;}) ||
-					!options[state.state.grouped_view]
+					!options.find(function(e) {console.log(e); return e.value === state.state.grouped_view;}) ||
+					typeof options.find === 'undefined' && !options[state.state.grouped_view]
 				))
 				{
+					window.setTimeout(function() {
+						app.addressbook.setState(state);
+					}, 500);
 					var nm = index.widgetContainer.getWidgetById('nm');
 					var action = nm.controller._actionManager.getActionById('view_org');
 					var senders = [{_context: {_widget: nm}}];
