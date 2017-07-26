@@ -1845,7 +1845,8 @@ class calendar_uiforms extends calendar_ui
 		}
 		if ($preserved['no_popup'])
 		{
-			$etpl->set_cell_attribute('button[cancel]','onclick','');
+			// If not a popup, load the normal calendar interface on cancel
+			$etpl->set_cell_attribute('button[cancel]','onclick','app.calendar.linkHandler(\'index.php?menuaction=calendar.calendar_uiviews.index\')');
 		}
 
 		// Allow admins to restore deleted events
