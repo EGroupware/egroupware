@@ -112,6 +112,8 @@ class Types
 
 			$types[$class_name] = $extended ? $type : $type['description'];
 		}
+		// Add EWS
+		$types[__NAMESPACE__.'\\Mail_EWS'] = 'Microsoft Exchange (EWS)';
 		//error_log(__METHOD__."(".array2string($data).") returning ".array2string($types));
 		return $types;
 	}

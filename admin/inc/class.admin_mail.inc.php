@@ -196,6 +196,14 @@ class admin_mail
 			'acc_imap_port' => 993,
 			'manual_class' => 'emailadmin_manual',
 		);
+        // Select Options
+        $sel_options['acc_imap_ssl'] = self::$ssl_types;
+        // Not listing other server types, since this could be single account
+        // EGroupware only allows different types for multiple accounts
+        $sel_options['acc_imap_type'] = array(
+            'EGroupware\\Api\\Mail\\Imap' => Mail\Imap::description(),
+            'EGroupware\\Api\\Mail_EWS' => 'Microsoft Exchange (EWS)',
+        );
 		Framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
 
 		if (!empty($content['acc_imap_host']) || !empty($content['acc_imap_username']))
@@ -203,9 +211,7 @@ class admin_mail
 			$readonlys['button[manual]'] = true;
 			unset($content['manual_class']);
 		}
-		$tpl->exec(static::APP_CLASS.'autoconfig', $content, array(
-			'acc_imap_ssl' => self::$ssl_types,
-		), $readonlys, $content, 2);
+		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys, $content, 2);
 	}
 
 	/**
@@ -288,16 +294,22 @@ class admin_mail
 					$content['output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying $ssl connection to $host:$port ...\n";
 					$content['acc_imap_port'] = $port;
 
-					$imap = self::imap_client($content, self::TIMEOUT);
+                    if ( $content['acc_imap_type'] == 'EGroupware\\Api\\Mail_EWS' ) {
+                        // TODO verify connection with EWS library
+                        $imap = null;
+                    }
+                    else {
+                        $imap = self::imap_client($content, self::TIMEOUT);
 
-					//$content['output'] .= array2string($imap->capability());
-					$imap->login();
-					$content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in'))."\n";
-					if (!$imap->isSecureConnection())
-					{
-						$content['output'] .= lang('Connection is NOT secure! Everyone can read eg. your credentials.')."\n";
-						$content['acc_imap_ssl'] = 'no';
-					}
+                        //$content['output'] .= array2string($imap->capability());
+                        $imap->login();
+                        $content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in'))."\n";
+                        if (!$imap->isSecureConnection())
+                        {
+                            $content['output'] .= lang('Connection is NOT secure! Everyone can read eg. your credentials.')."\n";
+                            $content['acc_imap_ssl'] = 'no';
+                        }
+                    }
 					//$content['output'] .= "\n\n".array2string($imap->capability());
 					$content['connected'] = $connected = true;
 					break 2;
@@ -331,8 +343,12 @@ class admin_mail
 		if ($connected)	// continue with next wizard step: define folders
 		{
 			unset($content['button']);
-			return $this->folder($content, lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in')).
-				($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
+            // Skip steps if EWS
+            if ( $content['acc_imap_type'] == 'EGroupware\\Api\\Mail_EWS' ) 
+                return $this->smtp($content, lang('Successful connected to %1 server%2.', 'EWS', ' '.lang('and logged in')));
+            else
+                return $this->folder($content, lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in')).
+                    ($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
 		}
 		// add validation error, if we can identify a field
 		if (!$connected && $e instanceof Horde_Imap_Client_Exception)
@@ -352,6 +368,12 @@ class admin_mail
 		$readonlys['button[manual]'] = true;
 		unset($content['manual_class']);
 		$sel_options['acc_imap_ssl'] = self::$ssl_types;
+        // Not listing other server types, since this could be single account
+        // EGroupware only allows different types for multiple accounts
+        $sel_options['acc_imap_type'] = array(
+            'EGroupware\\Api\\Mail\\Imap' => Mail\Imap::description(),
+            'EGroupware\\Api\\Mail_EWS' => 'Microsoft Exchange (EWS)',
+        );
 		$tpl = new Etemplate('admin.mailwizard');
 		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys, $content, 2);
 	}
@@ -824,6 +846,7 @@ class admin_mail
 	 */
 	public function edit(array $content=null, $msg='', $msg_type='success')
 	{
+			unset($content['manual_class']);
 		// app is trying to tell something, while redirecting to wizard
 		if (empty($content) && $_GET['acc_id'] && empty($msg) && !empty( $_GET['msg']))
 		{
@@ -934,7 +957,7 @@ class admin_mail
 			);
 		}
 		// ensure correct values for single user mail accounts (we only hide them client-side)
-		if (!($is_multiple = Mail\Account::is_multiple($content)))
+		if (!($is_multiple = Mail\Account::is_multiple($content)) && $content['acc_imap_type'] != 'EGroupware\\Api\\Mail\\Imap' && $content['acc_imap_type'] != 'EGroupware\\Api\\Mail_EWS' )
 		{
 			$content['acc_imap_type'] = 'EGroupware\\Api\\Mail\\Imap';
 			unset($content['acc_imap_login_type']);
@@ -1200,6 +1223,14 @@ class admin_mail
 				$tpl->setElementAttribute($folder, 'allowFreeEntries', true);
 			}
 		}
+        elseif ( $content['acc_imap_type'] == 'EGroupware\\Api\\Mail_EWS' ) 
+        {
+            // EWS cannot get mailboxes yet
+			foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
+			{
+				$tpl->setElementAttribute($folder, 'allowFreeEntries', true);
+			}
+        }
 		else
 		{
 			try {

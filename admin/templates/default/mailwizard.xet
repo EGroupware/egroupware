@@ -26,6 +26,12 @@
 					<passwd id="acc_imap_password" needed="1"  size="32" maxlength="128" autocomplete="off"/>
 				</row>
 				<row class="@manual_class">
+					<description value="Account Type" for="acc_imap_type"/>
+                    <menulist>
+                        <menupopup id="acc_imap_type" />
+                    </menulist>
+				</row>
+				<row class="@manual_class">
 					<description value="IMAP server" for="acc_imap_host"/>
 					<textbox blur="Hostname or IP" id="acc_imap_host" size="32" maxlength="128"/>
 				</row>
