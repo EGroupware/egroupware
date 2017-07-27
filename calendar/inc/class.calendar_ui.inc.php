@@ -553,6 +553,7 @@ class calendar_ui
 			$this->merge();
 			return;
 		}
+		Etemplate::reset_request();
 		$sidebox = new Etemplate('calendar.sidebox');
 
 		$cont = $this->cal_prefs['saved_states'];
