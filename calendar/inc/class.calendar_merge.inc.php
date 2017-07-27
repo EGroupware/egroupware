@@ -409,6 +409,11 @@ class calendar_merge extends Api\Storage\Merge
 				}
 				$days[date('Ymd',$_date)][date('l',strtotime($day))][0] += $date_marker;
 			}
+			// Add in birthdays
+			if(strpos($repeat, 'day/birthdays') !== false)
+			{
+				$days[date('Ymd', $_date)][date('l',strtotime($day))][0]['$$day/birthdays$$'] = $this->get_birthdays($_date);
+			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
 	}
@@ -510,6 +515,11 @@ class calendar_merge extends Api\Storage\Merge
 				}
 				$days[date('Ymd',$_date)][$plugin][0] += $date_marker;
 			}
+			// Add in birthdays
+			if(strpos($repeat, 'day/birthdays') !== false)
+			{
+				$days[date('Ymd', $_date)][date('l',strtotime($day))][0]['$$day/birthdays$$'] = $this->get_birthdays($_date);
+			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
 	}
@@ -598,6 +608,22 @@ class calendar_merge extends Api\Storage\Merge
 			$replacements['$$'.$name.'$$'] = $value;
 		}
 		return $replacements;
+	}
+
+	/**
+	 * Get replacement for birthdays placeholder
+	 * @param int|DateTime $_date
+	 */
+	protected function get_birthdays($_date)
+	{
+		$day = date('Ymd', $_date);
+		$contacts = new Api\Contacts();
+		$birthdays = Array();
+		foreach($contacts->get_addressbooks() as $owner => $name)
+		{
+			$birthdays += $contacts->read_birthdays($owner, date('Y',$_date));
+		}
+		return $birthdays[$day] ? implode(', ', array_column($birthdays[$day], 'name')) : '';
 	}
 
 	/**
