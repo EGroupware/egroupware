@@ -409,6 +409,11 @@ class calendar_merge extends Api\Storage\Merge
 				}
 				$days[date('Ymd',$_date)][date('l',strtotime($day))][0] += $date_marker;
 			}
+			// Add in birthdays
+			if(strpos($repeat, 'day/birthdays') !== false)
+			{
+				$days[date('Ymd', $_date)][date('l',strtotime($day))][0]['$$day/birthdays$$'] = $this->get_birthdays($day);
+			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
 	}
@@ -510,6 +515,11 @@ class calendar_merge extends Api\Storage\Merge
 				}
 				$days[date('Ymd',$_date)][$plugin][0] += $date_marker;
 			}
+			// Add in birthdays
+			if(strpos($repeat, 'day/birthdays') !== false)
+			{
+				$days[date('Ymd', $_date)][date('l',strtotime($day))][0]['$$day/birthdays$$'] = $this->get_birthdays($day);
+			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
 	}
@@ -598,6 +608,21 @@ class calendar_merge extends Api\Storage\Merge
 			$replacements['$$'.$name.'$$'] = $value;
 		}
 		return $replacements;
+	}
+
+	/**
+	 * Get replacement for birthdays placeholder
+	 * @param String $day Date in Ymd format
+	 */
+	protected function get_birthdays($day)
+	{
+		$contacts = new Api\Contacts();
+		$birthdays = Array();
+		foreach($contacts->get_addressbooks() as $owner => $name)
+		{
+			$birthdays += $contacts->read_birthdays($owner, substr($day, 0, 4));
+		}
+		return $birthdays[$day] ? implode(', ', array_column($birthdays[$day], 'name')) : '';
 	}
 
 	/**
@@ -701,8 +726,10 @@ class calendar_merge extends Api\Storage\Merge
 		}
 		echo '<tr><td>{{table/day_n}} ... {{endtable}}</td><td>1 <= n <= 31</td></tr>';
 		echo '</table></td></tr>';
-		echo '<tr><td>{{day/date}}</td><td colspan="3">'.lang('Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.').'</td></tr>';
-		echo '<tr><td>{{day/name}}</td><td colspan="3">'.lang('Name of the week (ex: Monday), available for the first entry inside each day of week or daily table inside the selected range.').'</td></tr>';
+		echo '<tr><td colspan="2">Available for the first entry inside each day of week or daily table inside the selected range:</td></tr>';
+		echo '<tr><td>{{day/date}}</td><td colspan="3">'.lang('Date for the day of the week').'</td></tr>';
+		echo '<tr><td>{{day/name}}</td><td colspan="3">'.lang('Name of the week (ex: Monday)').'</td></tr>';
+		echo '<tr><td>{{day/birthdays}}</td><td colspan="3">'.lang('Birthdays').'</td></tr>';
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
