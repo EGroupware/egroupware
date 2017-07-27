@@ -83,6 +83,11 @@ var et2_vfs = (function(){ "use strict"; return et2_valueWidget.extend([et2_IDet
 		}
 		else
 		{
+			if(_value.path.indexOf(_value.name) >= 0)
+			{
+				// Remove name from end, so we can add it again later
+				path = sub_path;
+			}
 			var path_offset = 0;
 			var path_parts = [_value.name];
 		}

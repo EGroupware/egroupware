@@ -889,6 +889,24 @@ div.mailComposeHeaderSection > table {
 .header_row_right.vertical_splitter div#mail-index_mail-index-vacationnotice .et2_vbox {
   margin-right: 0;
 }
+div.smime_cert_notverified {
+  border-top: 4px solid lightgreen !important;
+}
+img.smime_cert_notverified {
+  background: lightgreen;
+}
+div.smime_cert_verified {
+  border-top: 4px solid green !important;
+}
+img.smime_cert_verified {
+  background: green;
+}
+div.smime_cert_notvalid {
+  border-top: 4px solid red !important;
+}
+img.smime_cert_notvalid {
+  background: red;
+}
 #popupMainDiv {
   padding: 5px;
 }

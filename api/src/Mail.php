@@ -5611,7 +5611,7 @@ class Mail
 			if (is_object($mail))
 			{
 				$structure = $mail->getStructure();
-				$isSmime = Mail\Smime::isSmime($structure->getType());
+				$isSmime = Mail\Smime::isSmime($structure->getType()) || Mail\Smime::isSmimeSignatureOnly($structure->getType());
 				if ($isSmime)
 				{
 					return $this->resolveSmimeMessage($structure, array(
@@ -7349,18 +7349,33 @@ class Mail
 		$message = $this->getMessageRawBody($params['uid'], null, $params['mailbox']);
 		if (!Mail\Smime::isSmimeSignatureOnly($params['mimeType']))
 		{
-			$message = $this->_decryptSmimeBody($message, $params['passphrase'] !='' ?
-					$params['passphrase'] : Api\Cache::getSession('mail', 'smime_passphrase'));
+			try{
+				$message = $this->_decryptSmimeBody($message, $params['passphrase'] !='' ?
+						$params['passphrase'] : Api\Cache::getSession('mail', 'smime_passphrase'));
+			}
+			catch(\Horde_Crypt_Exception $e)
+			{
+				throw new Mail\Smime\PassphraseMissing(lang('Could not decrypt S/MIME data. This message may not be encrypted by your public key.'));
+			}
 			$metadata['encrypted'] = true;
 		}
 
 		try {
-			$cert = $this->smime->verify($message);
+			$cert = $this->smime->verifySignature($message);
 		} catch (\Exception $ex) {
 			// passphrase is required to decrypt the message
 			if (isset($message['password_required']))
 			{
 				throw new Mail\Smime\PassphraseMissing($message['msg']);
+			}
+			// verifivation failure either message has been tempered,
+			// signature is not valid or message has not ben signed
+			// but encrypted only.
+			else
+			{
+				$metadata['verify'] = false;
+				$metadata['signed'] = true;
+				$metadata['msg'] = $ex->getMessage();
 			}
 		}
 
@@ -7374,6 +7389,9 @@ class Mail
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
 				'signed'		=> true,
 			));
+			$AB_bo   = new \addressbook_bo();
+			$certkey = $AB_bo->get_smime_keys($cert->email);
+			if (!is_array($certkey) || $certkey[$cert->email] != $cert->cert) $metadata['addtocontact'] = true;
 		}
 		else // only encrypted message
 		{
