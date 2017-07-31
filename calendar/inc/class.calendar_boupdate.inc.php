@@ -1206,7 +1206,7 @@ class calendar_boupdate extends calendar_bo
 		if (!isset($event['whole_day'])) $event['whole_day'] = $this->isWholeDay($event);
 
 		// set recur-enddate/range-end to real end-date of last recurrence
-		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'])
+		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'] && $event['start'])
 		{
 			$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
 			$event['recur_enddate']->setTime(23,59,59);
