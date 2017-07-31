@@ -99,6 +99,7 @@ class importexport_export_ui {
 		}
 		if(count($sel_options['definition']) == 2 && !$content['definition']) {
 			$content['definition'] = end($sel_options['definition']);
+			unset($sel_options['definition']['']);
 		}
 		unset($definitions);
 		//$sel_options['definition']['expert'] = lang('Expert options');
