@@ -1066,7 +1066,7 @@ class Account implements \ArrayAccess
 		// convert old plugin names and readd namespace
 		if ($data['acc_imap_type'])
 		{
-			if (substr($data['acc_imap_type'], 0, 4) == 'Imap')
+			if (substr($data['acc_imap_type'], 0, 4) == 'Imap' || $data['acc_imap_type'] == 'EWS' )
 			{
 				$data['acc_imap_type'] = __NAMESPACE__.'\\'.$data['acc_imap_type'];
 			}

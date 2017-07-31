@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "62a8b80e21e0ee193f7acd7f6894e63b",
-    "content-hash": "e811ff98774d404f92391e04889d0ac0",
+    "content-hash": "c1724b523234391691e926711c6cc102",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -55,7 +54,7 @@
                 "ldap",
                 "windows"
             ],
-            "time": "2016-07-14 18:11:24"
+            "time": "2016-07-14T18:11:24+00:00"
         },
         {
             "name": "bower-asset/cropper",
@@ -249,7 +248,7 @@
             ],
             "description": "Compiled version of CKEditor customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/ckeditor",
-            "time": "2016-10-07 08:47:41"
+            "time": "2016-10-07T08:47:41+00:00"
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -305,7 +304,7 @@
                 "npm",
                 "package"
             ],
-            "time": "2016-10-12 08:03:45"
+            "time": "2016-10-12T08:03:45+00:00"
         },
         {
             "name": "npm-asset/as-jqplot",
@@ -1565,12 +1564,56 @@
                 "BSD License"
             ],
             "description": "Selection of methods that are often needed when working with XML documents.  Functionality includes creating of attribute lists from arrays, creation of tags, validation of XML names and more."
+        },
+        {
+            "name": "php-ews/php-ews",
+            "version": "dev-composer",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jamesiarmes/php-ews.git",
+                "reference": "b373c3804364aa6f31ef77d1561cc4edddc870c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jamesiarmes/php-ews/zipball/b373c3804364aa6f31ef77d1561cc4edddc870c8",
+                "reference": "b373c3804364aa6f31ef77d1561cc4edddc870c8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-soap": "*",
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2",
+                "symfony/console": "~2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Elsodaney",
+                    "email": "adam.elso@gmail.com"
+                }
+            ],
+            "description": "The PHP Exchange Web Services library (php-ews) is intended to make communication with Microsoft Exchange servers using Exchange Web Services easier. It handles the NTLM authentication required to use the SOAP services and provides an object-oriented interface to the complex types required to form a request.",
+            "time": "2016-04-03 15:23:19"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "php": 15,
+        "php-ews/php-ews": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

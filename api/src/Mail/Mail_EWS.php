@@ -11,7 +11,7 @@
  * @version $Id$
  */
 
-namespace EGroupware\Api;
+namespace EGroupware\Api\Mail;
 
 use Horde_Imap_Client;
 use Horde_Imap_Client_Ids;
@@ -38,7 +38,7 @@ use tidy;
  *
  * @link https://github.com/horde/horde/blob/master/imp/lib/Contents.php
  */
-class Mail
+class Mail_EWS
 {
 	/**
 	 * the current selected user profile
