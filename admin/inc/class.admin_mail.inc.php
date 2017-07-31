@@ -903,11 +903,7 @@ class admin_mail
 					$account = Mail\Account::read($content['acc_id'], $this->is_admin && $content['called_for'] ?
 						$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
 					$account->getUserData();	// quota, aliases, forwards etc.
-                    error_log( print_r( $account, true ) );
-                    error_log( print_r( $account->params, true ) );
-                    error_log( print_r( $content , true ) );
 					$content += $account->params;
-                    error_log( print_r( $content , true ) );
 					$content['acc_sieve_enabled'] = (string)($content['acc_sieve_enabled']);
 					$content['notify_use_default'] = !$content['notify_account_id'];
 					self::fix_account_id_0($content['account_id']);
@@ -962,7 +958,6 @@ class admin_mail
 			);
 		}
 
-        error_log( print_r( $content['acc_imap_type'], true ) );
 		// ensure correct values for single user mail accounts (we only hide them client-side)
 		if (!($is_multiple = Mail\Account::is_multiple($content)) && $content['acc_imap_type'] != 'EGroupware\Api\Mail\Imap' && $content['acc_imap_type'] != 'EGroupware\Api\Mail\EWS' )
 		{
@@ -1221,11 +1216,9 @@ class admin_mail
 		$sel_options['acc_imap_ssl'] = $sel_options['acc_sieve_ssl'] =
 			$sel_options['acc_smtp_ssl'] = self::$ssl_types;
 
-        error_log( print_r( $content['acc_imap_type'], true ) );
 		// admin access to account with no credentials available
 		if ($this->is_admin && (empty($content['acc_imap_username']) || empty($content['acc_imap_host']) || $content['called_for']))
 		{
-            error_log('what');
 			// cant connection to imap --> allow free entries in taglists
 			foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
 			{
@@ -1234,7 +1227,6 @@ class admin_mail
 		}
         elseif ( $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' || $content['acc_imap_type'] == 'EWS' ) 
         {
-            error_log('yes');
             // EWS cannot get mailboxes yet
 			foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
 			{
@@ -1244,7 +1236,6 @@ class admin_mail
 		else
 		{
 			try {
-            error_log('whyyyyyyyyyyyyyyyyy');
 				$sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
 					$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
 					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =

@@ -6,6 +6,7 @@
  */
 
 namespace EGroupware\Api\Mail\EWS;
+use EGroupware\Api\Mail;
 use PhpEws\EwsConnection;
 use PhpEws\DataType as DT;
 
@@ -26,16 +27,16 @@ class Lib
 
         // Load credentials from db if needed
         if ( !isset( self::$info ) ) {
+            $account = Mail\Account::read( $profile );
 
-            if ( strpos($profile, 'exchange') !== FALSE )
-                $profile = substr($profile, 8);
+            $info = array(
+                'exchange_user' => $account->params['acc_imap_username'],
+                'exchange_host' => $account->params['acc_imap_host'],
+                'exchange_password' => $account->params['acc_imap_password'],
+                'exchange_version' => 'Exchange2007_SP1',
+            );
+            error_log( print_r( $info , true ) );
 
-            $user = $GLOBALS['egw_info']['user']['account_id'];
-            $db = clone($GLOBALS['egw']->db);
-            $sql = "SELECT exchange_user, exchange_password, exchange_host, exchange_version FROM ac_exchange_profiles WHERE profile_id = $profile";
-            $db->query($sql);
-            $info = $db->row(true);
-            $info['exchange_password'] = openssl_decrypt( $info['exchange_password'], 'aes128', $info['exchange_user'] );
             self::$info = $info;
         }
 
@@ -330,19 +331,14 @@ class Lib
 
         $folders = array();
 
-        $info = self::get_inbox_info( $profile );
+        /* $info = self::get_inbox_info( $profile ); */
+        $account = Mail\Account::read( $profile );
 
-        if ( $info['is_inbox']) {
+        // TODO INBOX
+        if ( true ) {
             // Get Inbox Folders
 
-            $account = $info['exchange_user'];
-
-            if ( $info['inbox_account'] ) {
-                if ( $info['inbox_account'] == 'dynamic' ) 
-                    $account = $GLOBALS['egw_info']['user']['account_lid'];        		
-                else 
-                    $account = $info['inbox_account'];        		
-            }
+            $account = $account->params['acc_imap_username'];
 
             $array = self::getInboxFolders( $profile, $account );
             foreach ( $array as $folder ) {	            
@@ -365,6 +361,7 @@ class Lib
             }
         }
 
+        error_log( print_r( $folders, true ) );
         return $folders;
     }
 
@@ -601,8 +598,6 @@ class Lib
     }
 
     static function get_inbox_info( $profile ) {		
-        if ( strpos($profile, 'exchange') !== FALSE )
-            $profile = substr($profile, 8);
 
         $table = new achelper_base( 'acadmin', 'ac_exchange_profiles' );
         $columns = array( 'is_inbox', 'inbox_account', 'exchange_user', 'inbox_backup_folder' );

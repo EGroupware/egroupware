@@ -24,10 +24,12 @@ use EGroupware\Api\Mail;
 class EWS 
 {
 	const DESCRIPTION = 'Microsoft Exchange (EWS)';
+	var $ImapServerId;
     var $params;
 
 	function __construct(array $params, $_timeout=null)
 	{
+		$this->ImapServerId = $params['acc_id'];
         $this->params['username'] = $params['acc_imap_username'];
         $this->params['password'] = $params['acc_imap_password'];
         $this->params['host'] = $params['acc_imap_host'];
@@ -83,6 +85,78 @@ class EWS
 				return $ret;
 		}
 		throw new Api\Exception\WrongParameter("No method '$name' implemented!");
+	}
+	function getCurrentMailbox()
+	{
+        return 'INBOX';
+	}
+	function examineMailbox($mailbox, $flags=null)
+	{
+		return false;
+	}
+	function getDelimiter($_type=1)
+	{
+		return "/";
+	}
+	function hasCapability($capability)
+	{
+        return true;
+        //TEMPORARY
+		if ($capability=='SUPPORTS_KEYWORDS')
+		{
+			// if pseudo-flag is not set, call examineMailbox now to set it (no STATUS_ALL = counters necessary)
+			if (!isset(self::$supports_keywords[$this->ImapServerId]))
+			{
+				try
+				{
+					$this->examineMailbox('INBOX', Horde_Imap_Client::STATUS_FLAGS|Horde_Imap_Client::STATUS_PERMFLAGS);
+				}
+				catch (\Exception $e)
+				{
+					error_log(__METHOD__.__LINE__.' (examineServer for detection) '.$capability.'->'.array2string(self::$supports_keywords).' failed '.function_backtrace());
+					self::$supports_keywords[$this->ImapServerId]=false;
+				}
+			}
+			//error_log(__METHOD__.__LINE__.' '.$capability.'->'.array2string(self::$supports_keywords).' '.function_backtrace());
+			return self::$supports_keywords[$this->ImapServerId];
+		}
+		try
+		{
+			$cap = $this->capability();
+		}
+		catch (\Exception $e)
+		{
+			if ($this->debug) error_log(__METHOD__.__LINE__.' error querying for capability:'.$capability.' ->'.$e->getMessage());
+			return false;
+		}
+		if (!is_array($cap))
+		{
+			error_log(__METHOD__.__LINE__.' error querying for capability:'.$capability.' Expected array but got->'.array2string($cap));
+			return false;
+		}
+		foreach ($cap as $c => $v)
+		{
+			if (is_array($v))
+			{
+				foreach ($v as $v)
+				{
+					$cap[$c.'='.$v] = true;
+				}
+			}
+		}
+		//error_log(__METHOD__.__LINE__.$capability.'->'.array2string($cap));
+		if (isset($cap[$capability]) && $cap[$capability])
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	function getNameSpaceArray()
+	{
+        return array();
 	}
 
 }
