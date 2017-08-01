@@ -35,7 +35,6 @@ class Lib
                 'exchange_password' => $account->params['acc_imap_password'],
                 'exchange_version' => 'Exchange2007_SP1',
             );
-            error_log( print_r( $info , true ) );
 
             self::$info = $info;
         }
@@ -361,7 +360,6 @@ class Lib
             }
         }
 
-        error_log( print_r( $folders, true ) );
         return $folders;
     }
 

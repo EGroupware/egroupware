@@ -1505,7 +1505,7 @@ class mail_ui
 
 		$sRToFetch = null;
 		list($_profileID,$_folderName) = explode(self::$delimiter,$query['selectedFolder'],2);
-		if (strpos($_folderName,self::$delimiter)!==false)
+		if (strpos($_folderName,self::$delimiter)!==false && !is_a( $mail_ui->mail_bo, 'EGroupware\Api\Mail_EWS') )
 		{
 			list($app,$_profileID,$_folderName) = explode(self::$delimiter,$_folderName,3);
 			unset($app);

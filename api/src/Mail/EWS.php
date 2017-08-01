@@ -158,5 +158,51 @@ class EWS
 	{
         return array();
 	}
+	function mailboxExist($mailbox)
+	{
+        //TODO
+        return true;
+		try
+		{
+			//error_log(__METHOD__.__LINE__.':'.$mailbox);
+			$currentMailbox = $this->currentMailbox();
+		}
+		catch(\Exception $e)
+		{
+			//error_log(__METHOD__.__LINE__.' failed detecting currentMailbox:'.$currentMailbox.':'.$e->getMessage());
+			$currentMailbox=null;
+			unset($e);
+		}
+		try
+		{
+			//error_log(__METHOD__.__LINE__.':'.$mailbox);
+			$this->openMailbox($mailbox);
+			$returnvalue=true;
+		}
+		catch(\Exception $e)
+		{
+			//error_log(__METHOD__.__LINE__.' failed opening:'.$mailbox.':'.$e->getMessage().' Called by:'.function_backtrace());
+			unset($e);
+			$returnvalue=false;
+		}
+		if (!empty($currentMailbox) && $currentMailbox['mailbox'] != $mailbox)
+		{
+			try
+			{
+				//error_log(__METHOD__.__LINE__.':'.$currentMailbox .'<->'.$mailbox);
+				$this->openMailbox($currentMailbox['mailbox']);
+			}
+			catch(\Exception $e)
+			{
+				//error_log(__METHOD__.__LINE__.' failed reopening:'.$currentMailbox.':'.$e->getMessage());
+				unset($e);
+			}
+		}
+		return $returnvalue;
+	}
+	function getStorageQuotaRoot($mailboxName)
+	{
+		return false;
+	}
 
 }
