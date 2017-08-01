@@ -206,6 +206,14 @@ class filemanager_ui
 				'order' => 10,
 				'onExecute' => 'javaScript:app.filemanager.copy_link'
 			),
+			'sharelink' => array(
+				'caption' => lang('Share link'),
+				'group' => $group + 0.5,
+				'icon' => 'share',
+				'allowOnMultiple' => false,
+				'order' => 11,
+				'onExecute' => 'javaScript:app.filemanager.share_link'
+			),
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
 				++$group, 'Insert in document', 'document_',
@@ -836,8 +844,8 @@ class filemanager_ui
 		// do NOT store query, if hierarchical data / children are requested
 		if (!$query['csv_export'])
 		{
-			Api\Cache::setSession('filemanager', 'index',
-				array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
+                        Api\Cache::setSession('filemanager', 'index',
+                                array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
 		}
 		if(!$query['path']) $query['path'] = static::get_home_dir();
 
@@ -1474,6 +1482,14 @@ class filemanager_ui
 				$arr['uploaded'] = $selected;
 				$arr['path'] = $dir;
 				$arr['props'] = $props;
+				break;
+
+
+                        case 'sharelink':
+
+				$share = Vfs\Sharing::create($selected, Vfs\Sharing::READONLY, basename($selected), array() );
+				$arr["share_link"] = $link = Vfs\Sharing::share2link($share);
+				$arr["template"] = Api\Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet');
 				break;
 
 			// Upload, then link
