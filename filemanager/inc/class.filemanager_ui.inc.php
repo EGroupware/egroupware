@@ -164,7 +164,15 @@ class filemanager_ui
 				'caption' => lang('Mail files'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
-				'children' => array(),
+				'children' => array(
+					'sharelink' => array(
+						'caption' => lang('Share link'),
+						'group' => 1,
+						'icon' => 'share',
+						'allowOnMultiple' => false,
+						'order' => 11,
+						'onExecute' => 'javaScript:app.filemanager.share_link'
+					)),
 			),
 			'egw_paste' => array(
 				'enabled' => false,
@@ -244,6 +252,7 @@ class filemanager_ui
 				$actions['mail']['children']['mail_'.$mode] = array(
 					'caption' => $data['label'],
 					'hint' => $data['title'],
+					'group' => 2,
 					'onExecute' => 'javaScript:app.filemanager.mail',
 				);
 			}
