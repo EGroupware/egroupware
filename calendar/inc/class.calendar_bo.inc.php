@@ -377,7 +377,7 @@ class calendar_bo
 	{
 		$contact_list = array();
 		$contacts = new Api\Contacts();
-		if($contacts->check_list((int)substr($id,1), ACL::READ))
+		if($contacts->check_list((int)substr($id,1), ACL::READ) || (int)substr($id,1) < 0)
 		{
 			$options = array('list' => substr($id,1));
 			$lists = $contacts->search('',true,'','','',false,'AND',false,$options);
