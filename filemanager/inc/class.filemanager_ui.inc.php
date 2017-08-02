@@ -183,7 +183,15 @@ class filemanager_ui
 				'caption' => lang('Share files'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
-				'children' => array(),
+				'children' => array(
+					'sharelink' => array(
+						'caption' => lang('Share link'),
+						'group' => 1,
+						'icon' => 'share',
+						'allowOnMultiple' => false,
+						'order' => 11,
+						'onExecute' => 'javaScript:app.filemanager.share_link'
+					)),
 			),
 			'egw_paste' => array(
 				'enabled' => false,
@@ -205,14 +213,6 @@ class filemanager_ui
 				'allowOnMultiple' => false,
 				'order' => 10,
 				'onExecute' => 'javaScript:app.filemanager.copy_link'
-			),
-			'sharelink' => array(
-				'caption' => lang('Share link'),
-				'group' => $group + 0.5,
-				'icon' => 'share',
-				'allowOnMultiple' => false,
-				'order' => 11,
-				'onExecute' => 'javaScript:app.filemanager.share_link'
 			),
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
@@ -271,6 +271,7 @@ class filemanager_ui
 				$actions['mail']['children']['mail_'.$mode] = array(
 					'caption' => $data['label'],
 					'hint' => $data['title'],
+					'group' => 2,
 					'onExecute' => 'javaScript:app.filemanager.mail',
 				);
 				if ($mode == Vfs\Sharing::ATTACH || $mode == Vfs\Sharing::LINK)
