@@ -150,6 +150,7 @@ class Mail_EWS extends Mail
         /* } */
 
         list( $folderName, $folderID ) = explode( '::', $_folderName );
+        $folderID  = str_replace(' ','+', $folderID );
 
         $sort_map = array(
             'subject'		=> 'item:Subject',
@@ -227,7 +228,8 @@ class Mail_EWS extends Mail
 
         return array( 'header' => $emails, 'info' => array( 'total' => $array['count'] ) );
     }
-    public function getAttachments( $mailID ) {
+    function getAttachments( $mailID ) {
+        $mailID  = str_replace(' ','+', $mailID );
         $email = Lib::getMailBody( $this->profileID, $mailID );
 
         // Format data (one or many)
@@ -255,4 +257,161 @@ class Mail_EWS extends Mail
         }
         return $attachments;
     }
+    function reopen($_foldername)
+    {
+        return true;
+    }
+    function closeConnection()
+    {
+        return true;
+    }
+    function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false, $_folder = '', &$calendar_part=null)
+    {
+        $_uid = str_replace(' ','+', $_uid );
+        list($mailID,) = explode('||', $_uid);
+
+        $email = Lib::getMailBody( $this->profileID, $mailID );
+        return array( array(
+            'body'		=> $email->Body->_,
+            // 'mimeType'		=> 'text/html',
+            'mimeType'	=> ($email->Body->BodyType == 'HTML' ? 'text/html' : 'text/plain'),
+            'charSet'	=> 'utf-8',
+        ));
+    }
+    function getStructure($_uid, $_partID=null, $_folder=null, $_preserveSeen=false)
+    {
+        return new Horde_Mime_Part();
+    }
+    function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false, $_folder='')
+    {
+        return array();
+    }
+	function getMessageEnvelope($_uid, $_partID = '',$decode=false, $_folder='', $_useHeaderInsteadOfEnvelope=false)
+	{
+        $_uid = str_replace(' ','+', $_uid );
+        list($mailID,) = explode('||', $_uid);
+
+		$email = Lib::getMailBody( $this->profileID, $mailID );
+		$arrays = array( 'From', 'ToRecipients', 'CcRecipients', 'Sender' );
+        $addresses = array();
+		foreach ( $arrays as $property ) {
+			$mailboxes = ( is_array( $email->$property->Mailbox ) ? $email->$property->Mailbox : array( $email->$property->Mailbox ) );
+
+            $tmp = array();
+            foreach ( $mailboxes as $mailbox ) {
+                $tmp[] = $mailbox->Name .' <'. $mailbox->EmailAddress .'>';
+            }
+            $addresses[ $property ] = $tmp;
+		}
+
+		// Convert datetimes
+		$properties = array( 'DateTimeReceived' );
+    	$zone = new \DateTimeZone( $GLOBALS['egw_info']['server']['server_timezone'] );
+		foreach ( $properties as $property ) {
+    		$date = new \DateTime($email->$property);    		
+    		$date->setTimezone($zone);
+    		$email->$property = $date->format('c');	
+    	}
+
+		return array(
+		    'SENDER' => $addresses['Sender'],
+		    'TO' => $addresses['ToRecipients'],
+		    'FROM' => $addresses['From'],
+		    'CC' => $addresses['CcRecipients'],
+		    'BCC' => Array(),
+		    'REPLY-TO' => Array(),
+		    'DATE' => $email->DateTimeReceived,
+		    'MESSAGE-ID' => $email->InternetMessageId,
+		    'IN-REPLY-TO' => '',
+		    'REFERENCES' => '',
+		    'SUBJECT' => $email->Subject,
+		    'CONTENT-MD5' => '',
+		    'MIME-VERSION' => '',
+		    'CONTENT-TYPE' => '',
+		    'CONTENT-TRANSFER-ENCODING' => '',
+		    'CONTENT-ID' => '',
+		    'CONTENT-DESCRIPTION' => '',
+		    'CONTENT-BASE' => '',
+		    'CONTENT-DISPOSITION' => '',
+		    'CONTENT-DURATION' => '',
+		    'CONTENT-LOCATION' => '',
+		    'CONTENT-FEATURES' => '',
+		    'CONTENT-LANGUAGE' => '',
+		    'CONTENT-ALTERNATIVE' => '',
+		    'IMPORTANCE' => $email->Importance,
+		    'X-PRIORITY' => '',
+		    'LIST-HELP' => '',
+		    'LIST-UNSUBSCRIBE' => '',
+		    'LIST-SUBSCRIBE' => '',
+		    'LIST-OWNER' => '',
+		    'LIST-POST' => '',
+		    'LIST-ARCHIVE' => '',
+		    'LIST-ID' => '',
+		    'BODY' => $email->Body->_,
+		);
+	}
+	function getFlags ($_messageUID) {
+        return null;
+	}
+	function getMessageRawHeader($_uid, $_partID = '', $_folder = '')
+	{
+        return '';
+	}
+	function getMessageAttachments($_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folder='')
+	{
+        $_uid = str_replace(' ','+', $_uid );
+        list($mailID,) = explode('||', $_uid);
+		$email = Lib::getMailBody( $this->profileID, $mailID );
+
+		// Format data (one or many)
+        $files = array();
+        $items = array();
+        if ( $email->Attachments->FileAttachment )
+            $files = ( is_array( $email->Attachments->FileAttachment ) ? $email->Attachments->FileAttachment : array( $email->Attachments->FileAttachment ) );
+        if ( $email->Attachments->ItemAttachment )
+            $items = ( is_array( $email->Attachments->ItemAttachment ) ? $email->Attachments->ItemAttachment : array( $email->Attachments->ItemAttachment ) );
+        $data = array_merge( $files, $items );
+
+        // Format for use in header
+        $attachments = array();
+        foreach ( $data as $attachment ) {
+        	$attachments[] = array(
+	            'size' => '0',
+	            'filename' => $attachment->Name,
+	            'type' => $attachment->ContentType,
+	            'mimeType' => $attachment->ContentType,
+	            'uid' => $attachment->AttachmentId->Id,
+	            'cid' => '',
+	            'partID' => $attachment->AttachmentId->Id,
+	            'name' => $attachment->Name,
+	        );
+        }
+        return $attachments;
+	}
+	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
+	{
+        $_partID = str_replace(' ','+', $_partID );
+		$attachment = Lib::getAttachment( $this->profileID, $_partID );
+
+        if ( $_stream ) {
+            $tmp = fopen('php://temp', 'w+');
+
+            if (!is_null($attachment->Content)) {
+                fwrite($tmp, $attachment->Content);
+                rewind($tmp);
+            }
+            $content = $tmp;
+        }
+        else {
+            $content = $attachment->Content;
+        }
+
+		return array(
+            'type' => $attachment->ContentType,
+            'charset' => '',
+            'filename' => $attachment->Name,
+            'attachment' => $content,
+        );		
+	}
 }
+
