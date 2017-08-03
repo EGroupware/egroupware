@@ -127,7 +127,10 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 						}
 
 						// We don't want the 'All' or 'Select...' if it's there
-						unset($field['values']['']);
+						if(is_array($field['values']) && $field['values'][''])
+						{
+							unset($field['values']['']);
+						}
 						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'empty_label', '');
 						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'tags', TRUE);
 						$this->setElementAttribute($form_name.'['.self::$prefix.$lname.']', 'multiple', TRUE);

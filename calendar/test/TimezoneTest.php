@@ -46,7 +46,8 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 
 	public function tearDown()
 	{
-		//$this->bo->delete($this->cal_id);
+		$this->bo->delete($this->cal_id);
+		$this->bo->delete($this->cal_id);
 		$this->bo = null;
 
 		// need to call preferences constructor and read_repository, to set user timezone again
@@ -100,6 +101,67 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		$this->cal_id = $this->bo->save($event);
 
 		// Check
+		$this->checkEvent($timezones, $this->cal_id, $times);
+	}
+
+	/**
+	 * Test that making an exception works correctly, and does not modify the
+	 * original series
+	 *
+	 * @param \EGroupware\calendar\Array $timezones
+	 * @param \EGroupware\calendar\Array $times
+	 *
+	 * @dataProvider eventProvider
+	 */
+
+	public function testException($timezones, $times)
+	{
+		$this->setTimezones($timezones);
+
+		$event = $this->makeEvent($timezones, $times);
+
+		// Save the event
+		$this->cal_id = $this->bo->save($event);
+
+		// Make an exception for the second day
+		$start = new Api\DateTime($event['start']);
+		$start->modify('+1 day');
+		$exception = $event;
+		$preserve = array('actual_date', $start->format('ts'));
+		
+		$ui = new \calendar_uiforms();
+		$ui->_create_exception($exception, $preserve);
+
+		// Move exception 1 hour later
+		$exception_start = new Api\DateTime($exception['start']);
+		$exception_start->modify('+1 hour');
+		$exception['start'] = $exception_start->format('ts');
+		$exception['end'] += 3600;
+		
+		$exception_id = $this->bo->save($exception);
+
+		// now we need to add the original start as recur-execption to the series
+		$recur_event = $this->bo->read($event['reference']);
+		$recur_event['recur_exception'][] = $content['edit_single'];
+		unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
+		unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
+		$this->bo->update($recur_event,true);	// no conflict check here
+
+		
+		// Load the event
+		// BO does caching, pass ID as array to avoid it
+		$loaded = $this->bo->read(Array($exception_id));
+		$loaded = $loaded[$exception_id];
+
+		$message = $this->makeMessage($timezones, $loaded);
+		// Check exception times
+		$this->assertEquals(
+			Api\DateTime::to($exception_start, Api\DateTime::DATABASE),
+			Api\DateTime::to($loaded['start'], Api\DateTime::DATABASE),
+			'Start date'. $message
+		);
+		
+		// Check original event
 		$this->checkEvent($timezones, $this->cal_id, $times);
 	}
 

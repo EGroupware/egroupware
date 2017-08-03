@@ -514,6 +514,17 @@ class Etemplate extends Etemplate\Widget\Template
 	{
 		$this->dom_id = $new_id;
 	}
+	
+	/**
+	 * Make sure there's a new request, in case of multiple Etemplates in one call.
+	 * Normally this isn't a problem, but if you've got an etemplate in the sidebox,
+	 * and are seeing problems submitting another etemplate, try this before executing
+	 * the sidebox etemplate.
+	 */
+	public static function reset_request()
+	{
+		self::$request = Etemplate\Request::read();
+	}
 	/**
 	 * Get template data as array
 	 *

@@ -449,7 +449,8 @@ class calendar_uiforms extends calendar_ui
 									// Expand mailing lists
 									if($type == 'l')
 									{
-										foreach($this->bo->enum_mailing_list($participant) as $contact)
+										// Ignore ACL here, allow inviting anyone in the list
+										foreach($this->bo->enum_mailing_list($participant, true) as $contact)
 										{
 											// Mailing lists can contain users, so allow for that possibility
 											$_type = is_numeric($contact) ? '' : $contact[0];

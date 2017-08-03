@@ -183,7 +183,15 @@ class filemanager_ui
 				'caption' => lang('Share files'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
-				'children' => array(),
+				'children' => array(
+					'sharelink' => array(
+						'caption' => lang('Share link'),
+						'group' => 1,
+						'icon' => 'share',
+						'allowOnMultiple' => false,
+						'order' => 11,
+						'onExecute' => 'javaScript:app.filemanager.share_link'
+					)),
 			),
 			'egw_paste' => array(
 				'enabled' => false,
@@ -263,6 +271,7 @@ class filemanager_ui
 				$actions['mail']['children']['mail_'.$mode] = array(
 					'caption' => $data['label'],
 					'hint' => $data['title'],
+					'group' => 2,
 					'onExecute' => 'javaScript:app.filemanager.mail',
 				);
 				if ($mode == Vfs\Sharing::ATTACH || $mode == Vfs\Sharing::LINK)
@@ -836,8 +845,8 @@ class filemanager_ui
 		// do NOT store query, if hierarchical data / children are requested
 		if (!$query['csv_export'])
 		{
-			Api\Cache::setSession('filemanager', 'index',
-				array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
+                        Api\Cache::setSession('filemanager', 'index',
+                                array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
 		}
 		if(!$query['path']) $query['path'] = static::get_home_dir();
 
@@ -1474,6 +1483,14 @@ class filemanager_ui
 				$arr['uploaded'] = $selected;
 				$arr['path'] = $dir;
 				$arr['props'] = $props;
+				break;
+
+
+                        case 'sharelink':
+
+				$share = Vfs\Sharing::create($selected, Vfs\Sharing::READONLY, basename($selected), array() );
+				$arr["share_link"] = $link = Vfs\Sharing::share2link($share);
+				$arr["template"] = Api\Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet');
 				break;
 
 			// Upload, then link
