@@ -856,8 +856,9 @@ abstract class Ajax extends Api\Framework
 		}
 
 		// check if user called a specific url --> open it as active tab
+		$active_tab = $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'];
 		$last_direct_url =& Api\Cache::getSession(__CLASS__, 'last_direct_url');
-		if ($url !== $last_direct_url)
+		if ($url)
 		{
 			$active_tab = $url_tab = self::app_from_url($url);
 			$last_direct_url = $url;
@@ -878,7 +879,6 @@ abstract class Ajax extends Api\Framework
 		}
 		else
 		{
-			$active_tab = $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'];
 			if (!$active_tab) $active_tab = $default_app;
 		}
 		// if we have the open tabs in the session, use it instead the maybe forced common prefs open_tabs
