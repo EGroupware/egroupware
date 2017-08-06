@@ -318,7 +318,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 		foreach((array)$fields['select'] as $name) {
 			if($record->$name != null && is_array($selects) && $selects[$name]) {
-				$record->$name = explode(',', $record->$name);
+				$record->$name = is_string($record->$name) ? explode(',', $record->$name) : $record->$name;
 				if(is_array($record->$name)) {
 					$names = array();
 					foreach($record->$name as $_name) {
