@@ -334,12 +334,12 @@ class Lib
         $account = Mail\Account::read( $profile );
 
         // TODO INBOX
-        if ( true ) {
+        if ( $account->params['acc_ews_type'] == 'inbox' ) {
             // Get Inbox Folders
 
-            $account = $account->params['acc_imap_username'];
+            $username = $account->params['acc_imap_username'];
 
-            $array = self::getInboxFolders( $profile, $account );
+            $array = self::getInboxFolders( $profile, $username );
             foreach ( $array as $folder ) {	            
                 $folders[] = array(
                     'id' => $folder->FolderId->Id,
@@ -350,14 +350,24 @@ class Lib
         }
         else {
             // For public folders, No need to call server, arrays already in DB
-            $db = self::get_folders_info( $profile );
-            while( $row = $db->row(true) ) {
+            /* $db = self::get_folders_info( $profile ); */
+            /* while( $row = $db->row(true) ) { */
+            /*     $folders[] = array( */
+            /*         'id' => $row['folder_id'], */
+            /*         'name' => $row['folder_name'], */
+            /*         'delete' => $row['delete_permission'] */
+            /*     ); */
+            /* } */
+            $ews = self::init( $profile );
+            $array = self::getAllFolders( $ews );
+            foreach ( $array as $id => $folder ) {	            
                 $folders[] = array(
-                    'id' => $row['folder_id'],
-                    'name' => $row['folder_name'],
-                    'delete' => $row['delete_permission']
+                    'id' => $id,
+                    'name' => $folder,
+                    'delete' => 1,
                 );
             }
+
         }
 
         return $folders;

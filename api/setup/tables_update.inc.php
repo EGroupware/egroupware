@@ -235,3 +235,16 @@ function api_upgrade16_9_001()
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.002';
 }
 
+
+function api_upgrade16_9_002()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_ews_type',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'default' => 'inbox',
+		'comment' => 'inbox/public_folders'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.003';
+}
+

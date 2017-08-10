@@ -1261,6 +1261,10 @@ class admin_mail
 		$sel_options['ident_id'] = $content['identities'];
 		$sel_options['acc_id'] = $content['accounts'];
 		$sel_options['acc_further_identities'] = self::$further_identities;
+        $sel_options['acc_ews_type'] = array(
+            'inbox' => 'Inbox',
+            'public_folders' => 'Public Folders'
+        );
 
 		// user is allowed to create or edit further identities
 		if ($edit_access || $content['acc_further_identities'])
@@ -1341,6 +1345,12 @@ class admin_mail
 				$readonlys['deliveryMode'] = true;
 			}
 		}
+
+        // Disable EWS tab for other types
+        if ( $content['acc_imap_type'] && $content['acc_imap_type'] != 'EGroupware\Api\Mail\EWS' ) 
+        {
+            $readonlys['tabs']['admin.mailaccount.ews'] = true;
+        }
 
 		// account allows users to change forwards
 		if (!$edit_access && !$readonlys['tabs']['admin.mailaccount.aliases'] && $content['acc_user_forward'])
