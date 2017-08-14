@@ -65,7 +65,7 @@ var et2_radiobox = (function(){ "use strict"; return et2_inputWidget.extend(
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
 		var readonly = this.getArrayMgr('readonlys').getEntry(this.id);
-		if(readonly && readonly[_attrs.set_value])
+		if(readonly && readonly.hasOwnProperty(_attrs.set_value))
 		{
 			_attrs.readonly = readonly[_attrs.set_value];
 		}
