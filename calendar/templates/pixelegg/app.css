@@ -346,7 +346,7 @@ Hide subsequent headers in week view with non-consolidated owners
   top: 2em;
 }
 #calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader .calendar_calDayColHeader_spacer {
-  height: calc(6.5em);
+  height: calc(33.5em);
 }
 #calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > span.et2_label {
   white-space: nowrap;
@@ -2675,7 +2675,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   margin: 9px 0 0 0;
 }
 #calendar-view_view.hideDayColHeader tr:first-of-type .calendar_calGridHeader .calendar_calDayColHeader_spacer {
-  height: calc(1.5em + 5px);
+  height: calc(1.5em + 32px);
 }
 #calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > span.et2_label {
   width: calc(100% - 58px);
