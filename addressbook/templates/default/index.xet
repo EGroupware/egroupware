@@ -142,7 +142,7 @@
 						<url-phone id="${row}[tel_cell]" readonly="true" class="telNumbers" statustext="Mobile phone"/>
 						<url-phone id="${row}[tel_home]" readonly="true" class="telNumbers" statustext="Home phone"/>
 						<url-phone id="${row}[tel_fax]" readonly="true" statustext="Fax"/>
-						<url-phone id="${row}[tel_prefered]" readonly="true" class="telNumbers" statustext="$row_cont[tel_prefer]"/>
+						<url-phone id="${row}[tel_prefered]" readonly="true" class="telNumbers" statustext="$row_cont[tel_prefer_label]"/>
 					</vbox>
 					<vbox>
 						<url id="${row}[url]" readonly="true" class="fixedHeight"/>
