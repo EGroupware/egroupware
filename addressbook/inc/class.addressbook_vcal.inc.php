@@ -203,7 +203,7 @@ class addressbook_vcal extends Api\Contacts
 	function getVCard($_id,$_charset='UTF-8',$extra_charset_attribute=true)
 	{
 		$vCard = new Horde_Icalendar_Vcard($this->version);
-		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['phpgwapi']['version'].'//'.
+		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['api']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
 		$sysCharSet = Api\Translation::charset();
@@ -1069,7 +1069,7 @@ class addressbook_vcal extends Api\Contacts
 	function getGroupVCard(array $list,$version='3.0')
 	{
 		$vCard = new Horde_Icalendar_Vcard($version);
-		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['phpgwapi']['version'].'//'.
+		$vCard->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['api']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 
 		$vCard->setAttribute('N',$list['list_name'],array(),true,array($list['list_name'],'','','',''));

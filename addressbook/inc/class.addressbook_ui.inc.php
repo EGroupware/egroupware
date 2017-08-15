@@ -1843,6 +1843,11 @@ window.egw_LAB.wait(function() {
 				{
 					$row['tel_prefered'] = $row[$row['tel_prefer']].$prefer_marker;
 				}
+				// Show nice name as status text
+				if($row['tel_prefer'])
+				{
+					$row['tel_prefer_label'] = $this->contact_fields[$row['tel_prefer']];
+				}
 				if (!$row['owner'] && $row['account_id'] > 0)
 				{
 					$row['class'] .= 'rowAccount rowNoDelete ';
