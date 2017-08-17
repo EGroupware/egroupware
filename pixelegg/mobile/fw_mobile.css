@@ -7638,6 +7638,7 @@ form[id^="wiki-"] .dialogHeadbar {
     box-shadow: 0px 4px 5px 2px silver;
     width: 100%;
     z-index: 1;
+    background: #0c5da5;
   }
   body .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
     float: right;
