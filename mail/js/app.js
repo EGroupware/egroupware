@@ -2021,9 +2021,9 @@ app.classes.mail = AppJS.extend(
 		this.mail_refreshFolderStatus(_folder,'forced',false,false);
 		this.mail_refreshQuotaDisplay(server[0]);
 		this.mail_preview();
+		this.mail_callRefreshVacationNotice(server[0]);
 		if (server[0]!=previousServer[0])
 		{
-			this.mail_callRefreshVacationNotice(server[0]);
 			egw.jsonq('mail.mail_ui.ajax_refreshFilters',[server[0]]);
 		}
 	},
