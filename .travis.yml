@@ -1,9 +1,8 @@
 language: php
 php:
-  - 5.4
-  - 5.5
   - 5.6
-  - 7
+  - 7.0
+  - 7.1
   - hhvm
 
 matrix:
@@ -28,23 +27,14 @@ before_script:
   - sudo apt-get update -qq
   - sudo apt-get install -y myrepos libpcre3-dev
   - case $(phpenv version-name) in
-    "5.4")
-       php -m;
-       yes "" | pecl install memcache;
-       yes "" | pecl install apcu-4.0.11;
-       yes "" | pecl install igbinary;
-       echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
-       phpenv config-rm xdebug.ini;
-       php -m;
-       ;;
-    "5.5"|"5.6")
+    "5.6")
        yes "" | pecl install memcache;
        yes "" | pecl install apcu-4.0.11;
        yes "" | pecl install igbinary;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
        ;;
-    "7")
+    "7.0"|"7.1")
        yes "" | pecl install apcu;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
