@@ -70,7 +70,7 @@ script:
   #  --account-auth ldap --ldap_suffix dc=local --ldap_admin 'cn=admin,$suffix' --ldap_admin_pw secret
   #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # Ubuntu has problems with #!/usr/bin/env php -dapc.enable=1, it stalls forever
-  - phpunit -c doc -dapc.enable_cli=1
+  - vendor/bin/phpunit -c doc -dapc.enable_cli=1
   # do not run syntax check for hhvm, as it always fails / get terminated after 10m
   - test $(phpenv version-name) = 'hhvm' || ./doc/php_syntax_check.sh
 
