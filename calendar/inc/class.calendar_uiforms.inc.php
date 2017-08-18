@@ -2369,7 +2369,10 @@ class calendar_uiforms extends calendar_ui
 			$non_rejected_found = false;
 			foreach($participants as $uid)
 			{
-				if ($event['participants'][$uid] == 'R') continue;
+				$status = $event['participants'][$uid];
+				$quantity = $role = null;
+				calendar_so::split_status($status, $quantity, $role);
+				if ($status == 'R' || $role == 'NON-PARTICIPANT') continue;
 
 				if (isset($event['participants'][$uid]) ||
 					$uid > 0 && array_intersect(array_keys((array)$event['participants']),
