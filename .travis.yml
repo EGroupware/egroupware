@@ -42,7 +42,7 @@ before_script:
        composer require 'phpunit/phpunit:~6.3';
       ;;
     "hhvm")
-       composer require 'phpunit/phpunit:~6.3';
+       composer require 'phpunit/phpunit:~5.7';
        ;;
     esac
   #- php -m
