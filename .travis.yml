@@ -33,22 +33,21 @@ before_script:
        yes "" | pecl install igbinary;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
+       composer require 'phpunit/phpunit:~5.7';
        ;;
     "7.0"|"7.1")
        yes "" | pecl install apcu;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
-       ;;
+       composer require 'phpunit/phpunit';
+      ;;
     "hhvm")
        ;;
     esac
   #- php -m
-  #- curl https://svn.stylite.de/fix_mrconfig 2>/dev/null | php
   - sed 's/^update = git stash -q/update = \#git stash -q/g' .mrconfig
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
-  # installing phpunit in version suitable for used PHP version
-  - composer require 'phpunit/phpunit:~4.8|~5.4'
   # create data directory
   - sudo mkdir /var/lib/egroupware
   - sudo chown travis /var/lib/egroupware
