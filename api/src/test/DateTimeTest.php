@@ -80,7 +80,7 @@ class DateTimeTest extends TestCase {
 		$this->assertEquals(DateTime::user2server($ts,''), DateTime::server2user(DateTime::user2server($ts),''));
 
 		$ts2 = DateTime::to(array('full' => '20090627', 'hour' => 10, 'minute' => 0),'ts');
-		$this->assertEquals(DateTime::user2server($ts2,''), DateTime::server2user(DateTime::user2server($ts),''));
+		$this->assertEquals(DateTime::user2server($ts2,''), DateTime::server2user(DateTime::user2server($ts2),''));
 	}
 
 	/**
