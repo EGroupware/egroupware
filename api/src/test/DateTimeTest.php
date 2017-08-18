@@ -13,8 +13,7 @@ namespace EGroupware\Api;
 
 require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
 
-use EGroupware\Api;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase as TestCase;
 
 /**
  * Testing the Egroupware extension of DateTime
@@ -80,8 +79,8 @@ class DateTimeTest extends TestCase {
 		$ts = DateTime::to(array('full' => '20091027', 'hour' => 10, 'minute' => 0),'ts');
 		$this->assertEquals(DateTime::user2server($ts,''), DateTime::server2user(DateTime::user2server($ts),''));
 
-		$ts = DateTime::to(array('full' => '20090627', 'hour' => 10, 'minute' => 0),'ts');
-		$this->assertEquals(DateTime::user2server($ts,''), DateTime::server2user(DateTime::user2server($ts),''));
+		$ts2 = DateTime::to(array('full' => '20090627', 'hour' => 10, 'minute' => 0),'ts');
+		$this->assertEquals(DateTime::user2server($ts2,''), DateTime::server2user(DateTime::user2server($ts),''));
 	}
 
 	/**
@@ -100,8 +99,8 @@ class DateTimeTest extends TestCase {
 
 		// Set user to Cape Verde (UTC+1)
 		DateTime::setUserPrefs('Atlantic/Cape_Verde');
-		$ts = DateTime::to(array('full' => '20091027', 'hour' => 10, 'minute' => 0),'ts');
-		$this->assertEquals('2009-10-27 11:00:00', DateTime::user2server($ts,'Y-m-d H:i:s'));
+		$ts2 = DateTime::to(array('full' => '20091027', 'hour' => 10, 'minute' => 0),'ts');
+		$this->assertEquals('2009-10-27 11:00:00', DateTime::user2server($ts2,'Y-m-d H:i:s'));
 
 		date_default_timezone_set($server_tz);
 	}

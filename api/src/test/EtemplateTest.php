@@ -14,9 +14,6 @@ namespace EGroupware\Api;
 
 require_once realpath(__DIR__.'/../Etemplate/test/WidgetBaseTest.php');
 
-use EGroupware\Api;
-use PHPUnit_Framework_TestCase as TestCase;
-
 /**
  * Test the main class of Etemplate
  *
@@ -34,11 +31,11 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 	protected $content = array('value' => 'test content');
 	protected $sel_options = array(array('value' => 0, 'label' => 'label'));
 	protected $readonlys = array('value' => true);
-	
+
 	/**
 	 * Test reading xml files
 	 *
-	 * This really just tests that the files can be found and executed.  
+	 * This really just tests that the files can be found and executed.
 	 */
 	public function testRead()
 	{
@@ -136,7 +133,7 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 		$etemplate->read(static::TEST_TEMPLATE);
 
 		$this->readonlys['value'] = false;
-		
+
 		$result = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys);
 
 		$this->assertEquals($this->content, $result);
@@ -188,18 +185,18 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 		// Now try with widget
 		$this->readonlys['value'] = false;
 
-		$result = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys, $preserve);
+		$result2 = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys, $preserve);
 
 		// The only input widget is readonly, expect preserve + content back
-		$this->assertArraySubset($this->content, $result);
-		$this->assertArraySubset($preserve, $result);
+		$this->assertArraySubset($this->content, $result2);
+		$this->assertArraySubset($preserve, $result2);
 	}
 
 	public function testReadonlyPreserve()
 	{
 		$etemplate = new Etemplate();
 		$etemplate->read(static::TEST_TEMPLATE);
-		
+
 		$this->readonlys['value'] = true;
 		$preserve['value'] = 'preserved_value';
 
@@ -209,10 +206,9 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 		$this->assertEquals($preserve['value'], $result['value']);
 
 		$this->readonlys['value'] = false;
-		$result = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys, $preserve);
+		$result2 = $this->mockedRoundTrip($etemplate, $this->content, $this->sel_options, $this->readonlys, $preserve);
 
 		// The only input widget is editable, expect content back, not preserve
-		$this->assertEquals($this->content['value'], $result['value']);
-
+		$this->assertEquals($this->content['value'], $result2['value']);
 	}
 }

@@ -16,8 +16,8 @@ namespace EGroupware\Api;
 
 require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
 
-use PHPUnit_Framework_TestCase as TestCase;
-use PHPUnit_Framework_ExpectationFailedException as PHPUnitException;
+use PHPUnit\Framework\TestCase as TestCase;
+use PHPUnit\Framework\ExpectationFailedException as PHPUnitException;
 use EGroupware\Api;
 
 /**
@@ -167,7 +167,7 @@ abstract class LoggedInTest extends TestCase
 
 			$GLOBALS['egw'] = new Api\Egw(array_keys($GLOBALS['egw_domain']));
 		}
-		
+
 		// Disable asyc while we test
 		$GLOBALS['egw_info']['server']['asyncservice'] = 'off';
 	}

@@ -39,7 +39,7 @@ before_script:
        yes "" | pecl install apcu;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
-       composer require 'phpunit/phpunit';
+       composer require 'phpunit/phpunit:~6.3';
       ;;
     "hhvm")
        ;;

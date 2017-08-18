@@ -16,8 +16,7 @@ require_once realpath(__DIR__.'/../common.php');	// autoloader & check_load_exte
 // We're testing security.php
 require_once realpath(__DIR__.'/../security.php');
 
-use EGroupware\Api;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase as TestCase;
 
 
 class SecurityTest extends TestCase {
@@ -38,13 +37,13 @@ class SecurityTest extends TestCase {
 		// Must remember to clear this, or other tests may break
 		unset($GLOBALS['egw']);
 	}
-	
+
 	/**
 	 * Test some strings for bad stuff
-	 * 
+	 *
 	 * @param String $pattern String to check
 	 * @param boolean $should_fail If we expect this string to fail
-	 * 
+	 *
 	 * @dataProvider patternProvider
 	 */
 	public function testPatterns($pattern, $should_fail)
@@ -129,6 +128,7 @@ class SecurityTest extends TestCase {
 				}
 				catch (Exception $e)
 				{
+					unset($e);
 					return false;
 				}
 				$replace = array(
@@ -175,6 +175,7 @@ class SecurityTest extends TestCase {
 			{
 				if (PHP_VERSION >= 7)
 				{
+					$matches = null;
 					if (preg_match_all('/([^ ]+) Object\(/', array2string($r), $matches))
 					{
 						foreach($matches[1] as $class)
