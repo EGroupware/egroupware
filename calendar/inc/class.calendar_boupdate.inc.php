@@ -99,7 +99,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param boolean $ignore_conflicts =false just ignore conflicts or do a conflict check and return the conflicting events
 	 * @param boolean $touch_modified =true NOT USED ANYMORE (was only used in old csv-import), modified&modifier is always updated!
 	 * @param boolean $ignore_acl =false should we ignore the acl
-	 * @param boolean $updateTS =true update the content history of the event
+	 * @param boolean $updateTS =true update the content history of the event (ignored, as updating timestamps is required for sync!)
 	 * @param array &$messages=null messages about because of missing ACL removed participants or categories
 	 * @param boolean $skip_notification =false true: send NO notifications, default false = send them
 	 * @return mixed on success: int $cal_id > 0, on error false or array with conflicting events (only if $check_conflicts)
@@ -118,6 +118,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null, $skip_notification=false)
 	{
+		unset($updateTS);	// ignored, as updating timestamps is required for sync!
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 		if (!is_array($messages)) $messages = $messages ? (array)$messages : array();
 
@@ -310,9 +311,9 @@ class calendar_boupdate extends calendar_bo
 		$quantity = $users = array();
 		foreach($event['participants'] as $uid => $status)
 		{
-			$q = $r = null;
-			calendar_so::split_status($status,$q,$r);
-			if ($status[0] == 'R') continue;	// ignore rejected participants
+			$q = $role = null;
+			calendar_so::split_status($status, $q, $role);
+			if ($status == 'R' || $role == 'NON-PARTICIPANT') continue;	// ignore rejected or non-participants
 
 			if ($uid < 0)	// group, check it's members too
 			{
@@ -396,8 +397,8 @@ class calendar_boupdate extends calendar_bo
 				foreach($common_parts as $n => $uid)
 				{
 					$status = $overlap['participants'][$uid];
-					calendar_so::split_status($status, $q, $r);
-					if ($status == 'R')
+					calendar_so::split_status($status, $q, $role);
+					if ($status == 'R' || $role == 'NON-PARTICIPANT')
 					{
 						unset($common_parts[$n]);
 						continue;
@@ -1070,7 +1071,7 @@ class calendar_boupdate extends calendar_bo
 								)
 							));
 						}
-						$notification->set_popupmessage($response."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
+						$notification->set_popupmessage($subject."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
 						$notification->set_popuplinks(array($details['link_arr']+array('app'=>'calendar')));
 
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
@@ -1265,7 +1266,7 @@ class calendar_boupdate extends calendar_bo
 
 				//$time->setServer();
 				$time->setTime(23, 59, 59);
-				
+
 				$event['recur_enddate'] = $save_event['recur_enddate'] = $time;
 			}
 			$timestamps = array('modified','created');
