@@ -486,7 +486,7 @@ class mail_ui
 					$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
 					$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
 				}
-			
+
 				//$zstarttime = microtime (true);
 				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 				//$zendtime = microtime(true) - $zstarttime;
@@ -2234,6 +2234,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * Adds certificate to relevant contact
+	 * @param array $_metadata data of sender's certificate
+	 */
+	function ajax_smimeAddCertToContact ($_metadata)
+	{
+		$response = Api\Json\Response::get();
+		$ab = new addressbook_bo();
+		$response->data($ab->set_smime_keys(array($_metadata['email'] => $_metadata['cert'])));
+	}
+
+	/**
 	 * Build actions for display toolbar
 	 */
 	function getDisplayToolbarActions ()
@@ -3065,9 +3076,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
 			if (($smime = $structure->getMetadata('X-EGroupware-Smime')))
 			{
-
 				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,false,true, $mailbox);
 				$push = new Api\Json\Push();
+				if (!empty($smime['addtocontact'])) $push->call('app.mail.smime_certAddToContact', $smime);
 				if (is_array($attachments))
 				{
 					$push->call('app.mail.set_smimeAttachments', $this->createAttachmentBlock($attachments, $_GET['_messageID'], $uid, $mailbox));
