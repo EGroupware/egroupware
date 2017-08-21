@@ -3077,7 +3077,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (($smime = $structure->getMetadata('X-EGroupware-Smime')))
 			{
 				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,false,true, $mailbox);
-				$push = new Api\Json\Push();
+				$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
 				if (!empty($smime['addtocontact'])) $push->call('app.mail.smime_certAddToContact', $smime);
 				if (is_array($attachments))
 				{
