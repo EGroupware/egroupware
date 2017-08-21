@@ -7387,6 +7387,7 @@ class Mail
 				'cert'			=> $cert->cert,
 				'msg'			=> $cert->msg,
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
+				'email'			=> $cert->email,
 				'signed'		=> true,
 			));
 			$AB_bo   = new \addressbook_bo();
