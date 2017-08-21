@@ -192,6 +192,10 @@ class EtemplateTest extends Etemplate\WidgetBaseTest {
 		$this->assertArraySubset($preserve, $result2);
 	}
 
+	/**
+	 * Test of editable widget value overriding preserved value but a readonly
+	 * widget does not override preserved value.
+	 */
 	public function testReadonlyPreserve()
 	{
 		$etemplate = new Etemplate();
