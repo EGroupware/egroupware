@@ -253,6 +253,8 @@ var et2_baseWidget = (function(){ "use strict"; return et2_DOMWidget.extend(et2_
 	},
 
 	set_statustext: function(_value) {
+		// Tooltip should not be shown in mobile view
+		if (egwIsMobile()) return;
 		// Don't execute the code below, if no tooltip will be attached/detached
 		if (_value == "" && !this._tooltipElem)
 		{
