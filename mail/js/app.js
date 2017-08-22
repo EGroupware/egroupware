@@ -233,6 +233,10 @@ app.classes.mail = AppJS.extend(
 					this.mailvelopeAvailable(this.mailvelopeCompose);
 				}
 				var that = this;
+				var plainText = this.et2.getWidgetById('mail_plaintext');
+				// set cursor to the begining of the textarea only for first focus
+				if (plainText) plainText.getDOMNode().setSelectionRange(0,0);
+
 				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();
