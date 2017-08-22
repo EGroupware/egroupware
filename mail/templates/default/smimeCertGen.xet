@@ -19,6 +19,7 @@
 							<textbox id="organizationalUnitName" class="et2_fullWidth" blur="Organizational unit name"/>
 							<textbox id="commonName" class="et2_fullWidth" blur="Common name"/>
 							<textbox id="emailAddress" class="et2_fullWidth" blur="Email address"/>
+							<textbox id="validation" type="integer" label="Certificate validation in days" blur="365"/>
 						</vbox>
 					</groupbox>
 				</row>

@@ -298,10 +298,19 @@
 			<rows>
 				<row>
 					<description value="SMIME"/>
+					<hbox>
+						<buttononly label="Generate Certificate" onclick="app.admin.smime_genCertificate"/>
+						<buttononly label="export private key" onclick="app.admin.smime_exportKey('privkey')" disabled="!@acc_smime_password"/>
+						<buttononly label="export certificate" onclick="app.admin.smime_exportKey('cert')" disabled="!@smime_cert"/>
+					</hbox>
 				</row>
 				<row>
 					<description value="Paste your private key as text here or upload your .key/.p12 file"/>
 					<textbox multiline="true" id="acc_smime_password" height="150" width="70%"/>
+				</row>
+				<row>
+					<description value="Certificate"/>
+					<textbox multiline="true" id="smime_cert" height="150" width="70%"/>
 				</row>
 				<row>
 					<description/>

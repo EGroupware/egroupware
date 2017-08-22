@@ -197,4 +197,37 @@ class Smime extends Horde_Crypt_Smime
 		}
 		return $this->verify($message, $certs);
 	}
+
+	/**
+	 * Generate certificate, private and public key pair
+	 *
+	 * @param array $_dn distinguished name to be used in certificate
+	 * @param mixed $_cacert certificate will be signed by cacert (CA). Null means
+	 * self-signed certificate.
+	 * @param string $passphrase = null, protect private key by passphrase
+	 *
+	 * @return mixed returns signed certificate, private key and pubkey or False on failure.
+	 */
+	public function generate_certificate ($_dn, $_cacert = null, $passphrase = null)
+	{
+		$config = array(
+			'digest_alg' => 'sha1',
+			'private_key_bits' => 2048,
+			'private_key_type' => OPENSSL_KEYTYPE_RSA,
+		);
+		$result = array();
+		$csrsout = '';
+		if (!!($pkey = openssl_pkey_new($config)))
+		{
+			if(openssl_pkey_export($pkey, $result['privkey'], $passphrase))
+			{
+				$pubkey = openssl_pkey_get_details($pkey);
+				$result['pubkey'] = $pubkey['key'];
+			}
+			$csr = openssl_csr_new($_dn, $pkey, $config);
+			$csrs = openssl_csr_sign($csr, $_cacert, $pkey, $_dn['validation']?$_dn['validation']:365);
+			if (openssl_x509_export($csrs, $csrsout)) $result['cert'] = $csrsout;
+		}
+		return $result;
+	}
 }

@@ -5858,7 +5858,7 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * Inform user about sender's certificate and offers to add it into
 	 * relevant contact in addressbook.
-	 * 
+	 *
 	 * @param {type} _metadata
 	 */
 	smime_certAddToContact: function (_metadata)
@@ -5869,7 +5869,7 @@ app.classes.mail = AppJS.extend(
 			if (_button == 2)
 			{
 				self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
-				_metadata,null,function(_message){egw.message(_message);}).sendRequest(true);
+				_metadata,function(_message){egw.message(_message);}).sendRequest(true);
 			}
 		},
 		this.egw.lang("There's a new certificate information for email %1. Would you like to update/add this certificate?\n %2",_metadata.email,_metadata.certHtml),

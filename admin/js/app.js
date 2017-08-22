@@ -1159,5 +1159,108 @@ app.classes.admin = AppJS.extend(
 		{
 			this.egw.json('admin.admin_hooks.ajax_clear_cache&errored=1').sendRequest(true);
 		}, this));
+	},
+
+	/**
+	 * Export content of given field into relevant file
+	 * @param string _field
+	 */
+	smime_exportKey: function (_field)
+	{
+		var $a = jQuery(document.createElement('a')).appendTo('body').hide();
+		var widget = {};
+		switch (_field)
+		{
+			case 'privkey':
+				widget = this.et2.getWidgetById('acc_smime_password');
+				$a.attr({
+					download: 'private_key.key',
+					href: 'data:application/x-iwork-keynote-sffkey;charset=utf-8,' + encodeURI(widget.getValue())
+				});
+				break;
+			case 'cert':
+				widget = this.et2.getWidgetById('smime_cert');
+				$a.attr({
+					download: 'cert.crt',
+					href: 'data:application/pkix-cert;charset=utf-8,' + encodeURI(widget.getValue())
+				});
+				break;
+		}
+		$a[0].click();
+		$a.remove();
+	},
+
+	/**
+	 * Create certificate generator dialog
+	 */
+	smime_genCertificate: function ()
+	{
+		var self = this;
+		et2_createWidget("dialog",
+		{
+			callback: function(_button_id, _value)
+			{
+				if (_button_id == 'create' && _value)
+				{
+					var isValid = true;
+					var required = ['countryName', 'emailAddress'];
+					var widget = {};
+					// check the required fields
+					for (var i=0;i<required.length;i++)
+					{
+						if (_value[required[i]]) continue;
+						widget = this.template.widgetContainer.getWidgetById(required[i]);
+						widget.set_validation_error('This field is required!');
+						isValid = false;
+					}
+					// check mismatch passphrase
+					if (_value.passphrase && _value.passphrase !== _value.passphraseConf)
+					{
+						var passphraseConf = this.template.widgetContainer.getWidgetById('passphrase');
+						passphraseConf.set_validation_error('Confirm passphrase is not match!');
+						isValid = false;
+					}
+
+					if (isValid)
+					{
+						egw.json('mail.mail_ui.ajax_smimeGenCertificate', _value, function(_cert){
+							if (_cert)
+							{
+								for (var key in _cert)
+								{
+									if (!_cert[key]) continue;
+									switch (key)
+									{
+										case 'cert':
+											self.et2.getWidgetById('smime_cert').set_value(_cert[key]);
+											break;
+										case 'privkey':
+											self.et2.getWidgetById('acc_smime_password').set_value(_cert[key]);
+											break;
+									}
+								}
+								self.egw.message('New certificate information has been generated, please save your account if you want to store it.');
+							}
+						}).sendRequest(true);
+					}
+					else
+					{
+						return false;
+					}
+				}
+			},
+			title: egw.lang('Generate Certificate'),
+			buttons: [
+				{text: this.egw.lang("Create"), id: "create", "class": "ui-priority-primary", "default": true},
+				{text: this.egw.lang("Cancel"), id:"cancel"}
+			],
+			value:{
+				content:{
+					value: ''
+			}},
+			template: egw.webserverUrl+'/mail/templates/default/smimeCertGen.xet',
+			resizable: false,
+			position: 'left top'
+		}, et2_dialog._create_parent('mail'));
 	}
 });

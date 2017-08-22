@@ -2243,6 +2243,27 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$ab = new addressbook_bo();
 		$response->data($ab->set_smime_keys(array($_metadata['email'] => $_metadata['cert'])));
 	}
+	
+	/**
+	 * Generates certificate base on given data and send
+	 * private key, pubkey and certificate back to client callback.
+	 *
+	 * @param array $_data
+	 */
+	function ajax_smimeGenCertificate ($_data)
+	{
+		$smime = new Mail\Smime();
+		$response = Api\Json\Response::get();
+		// fields need to be excluded from data
+		$discards = array ('passphrase', 'passphraseConf', 'ca');
+		$ca = $_data['ca'];
+		$passphrase = $_data['passphrase'];
+		foreach ($_data as $key => $val)
+		{
+			if (empty($_data[$key]) || in_array($key, $discards)) unset($_data[$key]);
+		}
+		$response->data($smime->generate_certificate($_data, $ca, $passphrase));
+	}
 
 	/**
 	 * Build actions for display toolbar
