@@ -17,7 +17,7 @@ namespace EGroupware\Api\Mail;
 require_once realpath(__DIR__.'/../../loader/common.php');	// autoloader & check_load_extension
 
 use EGroupware\Api;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use EGroupware\Api\Mail\Credentials;
 
@@ -27,7 +27,7 @@ use EGroupware\Api\Mail\Credentials;
  * Only testing en&decryption of mail passwords so far.
  * Further tests would need database.
  */
-class CredentialsTest extends PHPUnit_Framework_TestCase
+class CredentialsTest extends TestCase
 {
 	/**
 	 * Test new 16.1 AES password encryption with OpenSSL

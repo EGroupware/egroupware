@@ -486,22 +486,7 @@ class mail_ui
 					$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
 					$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
 				}
-				// call gatherVacation asynchronously in getRows by initiating a client Server roundtrip
-				$vacation = false;//$this->gatherVacation();
-				//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
-				if($vacation) {
-					if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date' && $vacation['end_date'] > time()))
-					{
-						$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
-						$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = lang('Vacation notice is active');
-						$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = ($vacation['status']=='by_date'? Api\DateTime::server2user($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.Api\DateTime::server2user($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
-					}
-				}
-				if ($vacation==false)
-				{
-					$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = '';
-					$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
-				}
+
 				//$zstarttime = microtime (true);
 				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
 				//$zendtime = microtime(true) - $zstarttime;
@@ -2249,6 +2234,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * Adds certificate to relevant contact
+	 * @param array $_metadata data of sender's certificate
+	 */
+	function ajax_smimeAddCertToContact ($_metadata)
+	{
+		$response = Api\Json\Response::get();
+		$ab = new addressbook_bo();
+		$response->data($ab->set_smime_keys(array($_metadata['email'] => $_metadata['cert'])));
+	}
+
+	/**
 	 * Build actions for display toolbar
 	 */
 	function getDisplayToolbarActions ()
@@ -3080,9 +3076,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$structure = $this->mail_bo->getStructure($uid, $partID, $mailbox, false);
 			if (($smime = $structure->getMetadata('X-EGroupware-Smime')))
 			{
-
 				$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, $structure,true,false,true, $mailbox);
-				$push = new Api\Json\Push();
+				$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
+				if (!empty($smime['addtocontact'])) $push->call('app.mail.smime_certAddToContact', $smime);
 				if (is_array($attachments))
 				{
 					$push->call('app.mail.set_smimeAttachments', $this->createAttachmentBlock($attachments, $_GET['_messageID'], $uid, $mailbox));

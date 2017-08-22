@@ -17,7 +17,7 @@ namespace EGroupware\Api;
 require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
 
 use EGroupware\Api;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase as TestCase;
 use ReflectionClass;
 
 /**

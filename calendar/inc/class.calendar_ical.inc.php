@@ -3367,9 +3367,12 @@ class calendar_ical extends calendar_boupdate
 			{
 				if ($event['non_blocking']) continue;
 				if ($event['uid'] === $extra['X-CALENDARSERVER-MASK-UID']) continue;
-				if ($event['participants'][$user] == 'R') continue;
+				$status = $event['participants'][$user];
+				$quantity = $role = null;
+				calendar_so::split_status($status, $quantity, $role);
+				if ($status == 'R' || $role == 'NON-PARTICIPANT') continue;
 
-				$fbtype = $event['participants'][$user] == 'T' ? 'BUSY-TENTATIVE' : 'BUSY';
+				$fbtype = $status == 'T' ? 'BUSY-TENTATIVE' : 'BUSY';
 
 				if ($utc)
 				{

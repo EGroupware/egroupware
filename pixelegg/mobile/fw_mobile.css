@@ -7638,11 +7638,14 @@ form[id^="wiki-"] .dialogHeadbar {
     box-shadow: 0px 4px 5px 2px silver;
     width: 100%;
     z-index: 1;
+    background: #0c5da5;
   }
   body .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
     float: right;
+    height: 50px;
   }
   body .ui-dialog .ui-dialog-buttonpane button {
+    height: 35px;
     -webkit-filter: brightness(0) invert(1) !important;
     filter: brightness(0) invert(1) !important;
     background-color: transparent !important;
@@ -7942,6 +7945,26 @@ form[id^="wiki-"] .dialogHeadbar {
     box-shadow: 0px 4px 5px 2px silver;
     border: 1px solid silver;
     overflow-y: auto !important;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item[data-id="blank"]:before {
+    content: '';
+    background-image: url(../images/trash.png);
+    background-size: 12px;
+    background-repeat: no-repeat;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-left: 4px;
+  }
+  body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item:not([data-id="add"]):not([data-id="blank"]):before {
+    content: '';
+    background-image: url(../images/fav_filter.png);
+    background-size: 12px;
+    background-repeat: no-repeat;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-left: 4px;
   }
   body .et2_nextmatch .nm-mob-header div.nm_favorites_div div[name="favorite"] ul.favorites li.ui-menu-item {
     white-space: nowrap;

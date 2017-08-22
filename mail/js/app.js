@@ -2138,9 +2138,9 @@ app.classes.mail = AppJS.extend(
 		this.mail_refreshFolderStatus(_folder,'forced',false,false);
 		this.mail_refreshQuotaDisplay(server[0]);
 		this.mail_preview();
+		this.mail_callRefreshVacationNotice(server[0]);
 		if (server[0]!=previousServer[0])
 		{
-			this.mail_callRefreshVacationNotice(server[0]);
 			egw.jsonq('mail.mail_ui.ajax_refreshFilters',[server[0]]);
 		}
 	},
@@ -5853,6 +5853,26 @@ app.classes.mail = AppJS.extend(
 			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid';
 			_nodes[i].removeClass(smime_classes);
 		}
+	},
 
+	/**
+	 * Inform user about sender's certificate and offers to add it into
+	 * relevant contact in addressbook.
+	 * 
+	 * @param {type} _metadata
+	 */
+	smime_certAddToContact: function (_metadata)
+	{
+		if (!_metadata || _metadata.length < 1) return;
+		var self = this;
+		et2_dialog.show_dialog(function(_button){
+			if (_button == 2)
+			{
+				self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
+				_metadata,null,function(_message){egw.message(_message);}).sendRequest(true);
+			}
+		},
+		this.egw.lang("There's a new certificate information for email %1. Would you like to update/add this certificate?\n %2",_metadata.email,_metadata.certHtml),
+		this.egw.lang('Update cert for user %1', _metadata.email),{},et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
 	}
 });
