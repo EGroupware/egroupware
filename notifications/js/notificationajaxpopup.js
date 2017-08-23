@@ -365,7 +365,10 @@
 		// toggle notifications bar
 		jQuery('.egwpopup_toggle').click(function(){window.app.notifications.toggle();});
 		jQuery('#egwpopup_fw_notifications').click(function(){window.app.notifications.toggle();});
-		jQuery(".egwpopup_deleteall", '#egwpopup').click(function(){window.app.notifications.delete_all()});
+		jQuery(".egwpopup_deleteall", '#egwpopup').click(function(){
+	        if ( confirm(egw.lang('Are you sure you want to delete all notifications?')) )
+			window.app.notifications.delete_all()
+		});
 		jQuery(".egwpopup_seenall", '#egwpopup').click(function(){window.app.notifications.mark_all_seen()});
 	});
 })();
