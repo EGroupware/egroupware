@@ -289,27 +289,38 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.mailaccount.encryption" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
+	<template id="admin.mailaccount.encryption" template="" lang="" group="0" version="17.1">
+		<grid width="100%" resize_ratio="0">
 			<columns>
-				<column width="115"/>
-				<column/>
+				<column width="120"/>
+				<column width="500"/>
 			</columns>
 			<rows>
 				<row>
 					<description value="SMIME"/>
 				</row>
 				<row>
+					<description value="Certificate"/>
+					<hbox>
+						<buttononly label="Generate Certificate" onclick="app.admin.smime_genCertificate" image="add" background_image="1"/>
+						<buttononly label="export private key" onclick="app.admin.smime_exportKey('privkey')" disabled="!@acc_smime_password" image="export" background_image="1"/>
+						<buttononly label="export certificate" onclick="app.admin.smime_exportKey('cert')" disabled="!@smime_cert" image="export" background_image="1"/>
+					</hbox>
+				</row>
+				<row>
+					<description value="Certificate file in p12 format"/>
+					<vbox>
+						<file id="smimeKeyUpload" accept=".key,.p12" onchange="app.admin.et2.getWidgetById('smime_pkcs12_password').set_disabled(false);"/>
+						<passwd id="smime_pkcs12_password" size="32" maxlength="128" autocomplete="off" blur="Password to unlock encrypted p12" disabled="true"/>
+					</vbox>
+				</row>
+				<row>
 					<description value="Paste your private key as text here or upload your .key/.p12 file"/>
-					<textbox multiline="true" id="acc_smime_password" height="150" width="70%"/>
+					<textbox multiline="true" id="acc_smime_password" height="130" resize_ratio="0" class="et2_fullWidth"/>
 				</row>
 				<row>
-					<description/>
-					<file id="smimeKeyUpload" accept=".key,.p12"/>
-				</row>
-				<row>
-					<description for="smime_pkcs12_password" value="Password to unlock encrypted p12"/>
-					<passwd id="smime_pkcs12_password" size="32" maxlength="128" autocomplete="off"/>s
+					<description value="Certificate"/>
+					<textbox multiline="true" id="smime_cert" height="130" resize_ratio="0" class="et2_fullWidth"/>
 				</row>
 			</rows>
 		</grid>
