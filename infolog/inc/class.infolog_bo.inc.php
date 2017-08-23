@@ -27,7 +27,18 @@ class infolog_bo
 	const ACL_UNDELETE = Acl::CUSTOM1;
 
 	var $enums;
+	/**
+	 * Status by type including custom status
+	 *
+	 * @var array type => name => label
+	 */
 	var $status;
+	/**
+	 * Status by type excluding custom status
+	 *
+	 * @var array type => name => label
+	 */
+	var $stock_status;
 	/**
 	 * Instance of our so class
 	 *
