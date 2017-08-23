@@ -17,11 +17,6 @@ require_once realpath(__DIR__.'/../../test/WidgetBaseTest.php');
 
 use EGroupware\Api\Etemplate;
 
-/**
- * Description of TextboxTest
- *
- * @author nathan
- */
 class TextboxTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 {
 
@@ -29,6 +24,7 @@ class TextboxTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	
 	/**
 	 * Test the widget's basic functionallity - we put data in, it comes back
+	 * unchanged.
 	 */
 	public function testBasic()
 	{
@@ -116,5 +112,61 @@ class TextboxTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		static::$mocked_exec_result = array();
 
 		$this->assertEquals(array(), $content);
+	}
+
+	/**
+	 * Test regex validation
+	 *
+	 * @dataProvider regexProvider
+	 */
+	public function testRegex($value, $error)
+	{
+		// Instanciate the template
+		$etemplate = new Etemplate();
+		$etemplate->read(static::TEST_TEMPLATE, 'test');
+
+		// Content - doesn't really matter, we're changing it
+		$content = array(
+			'widget'            =>	'Hello',
+			'widget_readonly'   =>	'World'
+		);
+		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
+		
+		// Only lowercase
+		$etemplate->getElementById('widget')->attrs['validator'] = '/[a-z]*$/';
+
+		// Check for the load
+		$data = array();
+		foreach($result as $command)
+		{
+			if($command['type'] == 'et2_load')
+			{
+				$data = $command['data'];
+				break;
+			}
+		}
+
+		// 'Edit' the data client side
+		$data['data']['content'] = array('widget' => $value);
+
+		// Let it validate
+		Etemplate::ajax_process_content($data['data']['etemplate_exec_id'], $data['data']['content'], false);
+
+		$content = static::$mocked_exec_result;
+		static::$mocked_exec_result = array();
+		
+		return $this->validateTest($content, array('widget' => $value), $error ? array('widget' => $error) : array());
+	}
+
+	public function regexProvider()
+	{
+		return array(
+			// Value       Errors
+			array('',      FALSE),
+			array('Hello', TRUE),
+			array('hello', FALSE),
+			array(1234,    TRUE),
+			array('hi1234',TRUE)
+		);
 	}
 }

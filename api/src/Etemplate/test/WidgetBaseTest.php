@@ -145,4 +145,66 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 			});
 		return $response;
 	}
+
+	/**
+	 * Exec the template with the provided content, change the values according to
+	 * $set_values, then validate against $expected_values
+	 * 
+	 * @param \EGroupware\Api\Etemplate $etemplate
+	 * @param array $content
+	 * @param array $set_values
+	 * @param array $expected_values
+	 * @param array $validation_errors
+	 */
+	protected function validateRoundTrip(\EGroupware\Api\Etemplate $etemplate, Array $content, Array $set_values, Array $expected_values = null, Array $validation_errors = array())
+	{
+		if(is_null($expected_values))
+		{
+			$expected_values = $set_values;
+		}
+		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
+
+		// Check for the load
+		$data = array();
+		foreach($result as $command)
+		{
+			if($command['type'] == 'et2_load')
+			{
+				$data = $command['data'];
+				break;
+			}
+		}
+
+		// 'Edit' the data client side
+		$data['data']['content'] = $set_values;
+
+		// Let it validate
+		Etemplate::ajax_process_content($data['data']['etemplate_exec_id'], $data['data']['content'], false);
+
+		$content = static::$mocked_exec_result;
+		static::$mocked_exec_result = array();
+
+		return $this->validateTest($content, $expected_values, $validation_errors);
+	}
+
+	protected function validateTest($content, $expected_values, $validation_errors)
+	{
+		// Make validation errors accessible
+		$ref = new \ReflectionProperty('\\EGroupware\\Api\\Etemplate\\Widget', 'validation_errors');
+		$ref->setAccessible(true);
+		$errors = $ref->getValue();
+
+		// Test values
+		foreach($expected_values as $widget_id => $value)
+		{
+			$this->assertEquals($value, $content[$widget_id], 'Widget "' . $widget_id . '" did not get expected value');
+		}
+
+		// Check validation errors
+		foreach($validation_errors as $widget_id => $errored)
+		{
+			$this->assertTrue(array_key_exists($widget_id, $validation_errors), "Widget $widget_id caused a validation error");
+		}
+		$ref->setValue(array());
+	}
 }

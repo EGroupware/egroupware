@@ -344,7 +344,7 @@ class Etemplate extends Etemplate\Widget\Template
 		{
 			error_log(__METHOD__."(,".array2string($_content).') validation_errors='.array2string(self::$validation_errors));
 			self::$response->generic('et2_validation_error', self::$validation_errors);
-			exit;
+			return;
 		}
 
 		// tell request call to remove request, if it is not modified eg. by call to exec in callback
