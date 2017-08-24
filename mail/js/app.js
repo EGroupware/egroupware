@@ -5835,6 +5835,7 @@ app.classes.mail = AppJS.extend(
 		{
 			$mail_container.addClass('smime_cert_verified');
 			smime_signature.set_class('smime_cert_verified');
+			smime_signature.set_statustext(_data.msg);
 		}
 		else if (!_data.verify && _data.cert)
 		{
