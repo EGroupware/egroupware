@@ -701,7 +701,7 @@ class Mailer extends Horde_Mime_Mail
 		$base = Horde_Mime_Part::parseMessage($message);
 		foreach($headers->toArray(array('nowrap' => true)) as $header => $value)
 		{
-			foreach((array)$value as $n => $val)
+			foreach((array)$value as $val)
 			{
 				switch($header)
 				{
@@ -999,7 +999,7 @@ class Mailer extends Horde_Mime_Mail
 	 *				recipientsCerts	=> // Recipients Certificates
 	 *			)
 	 * @return boolean returns true if successful and false if passphrase required
-	 * @throws Api\Exception\WrongUserinput if no certificate found
+	 * @throws Exception\WrongUserinput if no certificate found
 	 */
 	function smimeEncrypt($type, $params)
 	{
@@ -1018,14 +1018,14 @@ class Mailer extends Horde_Mime_Mail
 		//horde setHeaderOb would not replace it with correct one if
 		//there's something set.
 		$this->removeHeader('content-type');
-		
+
 		$smime = new Mail\Smime();
 
 		if ($type == Mail\Smime::TYPE_SIGN || $type == Mail\Smime::TYPE_SIGN_ENCRYPT)
 		{
 			if (!isset($params['senderPubKey']))
 			{
-				throw new Api\Exception\WrongUserinput('no certificate found to sign the messase');
+				throw new Exception\WrongUserinput('no certificate found to sign the messase');
 			}
 
 			if (!$smime->verifyPassphrase($params['senderPrivKey'], $params['passphrase']))
@@ -1036,7 +1036,7 @@ class Mailer extends Horde_Mime_Mail
 
 		if (!isset($params['recipientsCerts']) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
 		{
-			throw new Api\Exception\WrongUserinput('no certificate found from the recipients to sign/encrypt the messase');
+			throw new Exception\WrongUserinput('no certificate found from the recipients to sign/encrypt the messase');
 		}
 
 		// parameters to pass on for sign mime part
