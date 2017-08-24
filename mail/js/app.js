@@ -943,7 +943,7 @@ app.classes.mail = AppJS.extend(
 			// If there is content to show recalculate the size
 			set_prev_iframe_top();
 		}
-		else if (previewPane == 'fixed' || previewPane == 'vertical')
+		else if (previewPane == 'fixed' || previewPane == 'vertical' || previewPane != true)
 		{
 			if(blank)
 			{
