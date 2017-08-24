@@ -168,8 +168,8 @@ app.classes.mail = AppJS.extend(
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
 				var previewPane = this.egw.preference('previewPane', 'mail');
-				this.mail_disablePreviewArea(previewPane !== 'fixed' && previewPane !== 'vertical');
-				if (previewPane == 'vertical') nm.header.right_div.addClass('vertical_splitter');
+				this.mail_disablePreviewArea(previewPane !== 'fixed' && previewPane !== 'vertical' && previewPane == true);
+				if (previewPane == 'vertical' || previewPane != true) nm.header.right_div.addClass('vertical_splitter');
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
 

@@ -587,6 +587,8 @@ class mail_ui
 			case "fixed":
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'h');
 				break;
+			default:
+				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
 		}
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -2243,7 +2245,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$ab = new addressbook_bo();
 		$response->data($ab->set_smime_keys(array($_metadata['email'] => $_metadata['cert'])));
 	}
-	
+
 	/**
 	 * Generates certificate base on given data and send
 	 * private key, pubkey and certificate back to client callback.
@@ -2262,7 +2264,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			if (empty($_data[$key]) || in_array($key, $discards)) unset($_data[$key]);
 		}
-		$response->data($smime->generate_certificate($_data, $ca, $passphrase));
+		$response->data($smime->generate_certificate($_data, $ca, null, $passphrase));
 	}
 
 	/**
