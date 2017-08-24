@@ -158,9 +158,11 @@ class Smime extends Horde_Crypt_Smime
 	 */
 	public function extractCertPKCS12 ($pkcs12, $passphrase = '')
 	{
-		$certs = array ();
+		$certs = $out = array ();
 		if (openssl_pkcs12_read($pkcs12, $certs, $passphrase))
 		{
+			openssl_pkey_export($certs['pkey'], $out, $passphrase);
+			$certs['pkey'] = $out;
 			return $certs;
 		}
 		else
