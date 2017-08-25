@@ -38,6 +38,8 @@ select {
   margin: 1px;
   padding: 0px;
 }
+/*Hide element*/
+.hideme {display:none !important;}
 /**
  * VBox widget
  */
