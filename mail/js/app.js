@@ -5859,10 +5859,10 @@ app.classes.mail = AppJS.extend(
 		}
 		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).on('click',function(){
 			self.smime_certAddToContact(data,true);
-		});
+		}).addClass('et2_clickable');
 		jQuery(smime_encryption.getDOMNode()).on('click',function(){
 			self.smime_certAddToContact(data, true);
-		});
+		}).addClass('et2_clickable');
 	},
 
 	/**
