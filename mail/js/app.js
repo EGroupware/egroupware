@@ -5837,20 +5837,25 @@ app.classes.mail = AppJS.extend(
 		else if (data.verify)
 		{
 			$mail_container.addClass((data.class='smime_cert_verified'));
-			smime_signature.set_class('smime_cert_verified');
+			smime_signature.set_class(data.class);
 			smime_signature.set_statustext(data.msg);
 		}
 		else if (!data.verify && data.cert)
 		{
 			$mail_container.addClass((data.class='smime_cert_notverified'));
-			smime_signature.set_class('smime_cert_notverified');
+			smime_signature.set_class(data.class);
 			smime_signature.set_statustext(data.msg);
 		}
 		else if (!data.verify && !data.cert)
 		{
 			$mail_container.addClass((data.class='smime_cert_notvalid'));
-			smime_signature.set_class('smime_cert_notvalid');
+			smime_signature.set_class(data.class);
 			smime_signature.set_statustext(data.msg);
+		}
+		if (data.unknownemail)
+		{
+			$mail_container.addClass((data.class='smime_cert_unknownemail'));
+			smime_signature.set_class(data.class);
 		}
 		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).on('click',function(){
 			self.smime_certAddToContact(data,true);
@@ -5869,7 +5874,7 @@ app.classes.mail = AppJS.extend(
 	{
 		for(var i=0;i<_nodes.length;i++)
 		{
-			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid';
+			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid smime_cert_unknownemail';
 			_nodes[i].removeClass(smime_classes);
 			_nodes[i].off('click');
 		}

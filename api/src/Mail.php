@@ -7381,15 +7381,26 @@ class Mail
 
 		if ($cert) // signed message, it might be encrypted too
 		{
+			$envelope = $this->getMessageEnvelope($params['uid'], '', false, $params['mailbox']);
+			$from = $this->stripRFC822Addresses($envelope['FROM']);
 			$message_parts = $this->smime->extractSignedContents($message);
+			//$f = $message_parts->_headers->getHeader('from');
 			$metadata = array_merge ($metadata, array (
 				'verify'		=> $cert->verify,
 				'cert'			=> $cert->cert,
 				'msg'			=> $cert->msg,
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
 				'email'			=> $cert->email,
-				'signed'		=> true,
+				'signed'		=> true
 			));
+			// check for email address if both signer email address and
+			// email address of sender are the same.
+			if (is_array($from) && $from[0] != $cert->email)
+			{
+				$metadata['unknownemail'] = true;
+				$metadata['msg'] .= ' '.lang('Email address of signer is different from the email address of sender!');
+			}
+
 			$AB_bo   = new \addressbook_bo();
 			$certkey = $AB_bo->get_smime_keys($cert->email);
 			if (!is_array($certkey) || $certkey[$cert->email] != $cert->cert) $metadata['addtocontact'] = true;
