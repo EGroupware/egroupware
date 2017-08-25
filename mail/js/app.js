@@ -5817,6 +5817,8 @@ app.classes.mail = AppJS.extend(
 	set_smimeFlags: function (_data)
 	{
 		if (!_data) return;
+		var self = this;
+		var data = _data;
 		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
 		var smime_signature = this.et2.getWidgetById('smime_signature');
@@ -5825,38 +5827,51 @@ app.classes.mail = AppJS.extend(
 								jQuery('.mailDisplayContainer'):
 								jQuery(this.et2.getWidgetById('mailPreviewContainer').getDOMNode());
 
-		smime_signature.set_disabled(!_data.signed);
-		smime_encryption.set_disabled(!_data.encrypted);
-		if (!_data.signed)
+		smime_signature.set_disabled(!data.signed);
+		smime_encryption.set_disabled(!data.encrypted);
+		if (!data.signed)
 		{
 			this.smime_clear_flags([$mail_container]);
+			return;
 		}
-		else if (_data.verify)
+		else if (data.verify)
 		{
-			$mail_container.addClass('smime_cert_verified');
+			$mail_container.addClass((data.class='smime_cert_verified'));
 			smime_signature.set_class('smime_cert_verified');
-			smime_signature.set_statustext(_data.msg);
+			smime_signature.set_statustext(data.msg);
 		}
-		else if (!_data.verify && _data.cert)
+		else if (!data.verify && data.cert)
 		{
-			$mail_container.addClass('smime_cert_notverified');
+			$mail_container.addClass((data.class='smime_cert_notverified'));
 			smime_signature.set_class('smime_cert_notverified');
-			smime_signature.set_statustext(_data.msg);
+			smime_signature.set_statustext(data.msg);
 		}
-		else if (!_data.verify && !_data.cert)
+		else if (!data.verify && !data.cert)
 		{
-			$mail_container.addClass('smime_cert_notvalid');
+			$mail_container.addClass((data.class='smime_cert_notvalid'));
 			smime_signature.set_class('smime_cert_notvalid');
-			smime_signature.set_statustext(_data.msg);
+			smime_signature.set_statustext(data.msg);
 		}
+		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).on('click',function(){
+			self.smime_certAddToContact(data,true);
+		});
+		jQuery(smime_encryption.getDOMNode()).on('click',function(){
+			self.smime_certAddToContact(data, true);
+		});
 	},
 
+	/**
+	 * Reset flags classes and click handler
+	 *
+	 * @param {jQuery Object} _nodes
+	 */
 	smime_clear_flags: function (_nodes)
 	{
 		for(var i=0;i<_nodes.length;i++)
 		{
 			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid';
 			_nodes[i].removeClass(smime_classes);
+			_nodes[i].off('click');
 		}
 	},
 
@@ -5865,19 +5880,43 @@ app.classes.mail = AppJS.extend(
 	 * relevant contact in addressbook.
 	 *
 	 * @param {type} _metadata
+	 * @param {boolean} _display if set to true will only show close button
 	 */
-	smime_certAddToContact: function (_metadata)
+	smime_certAddToContact: function (_metadata, _display)
 	{
 		if (!_metadata || _metadata.length < 1) return;
 		var self = this;
-		et2_dialog.show_dialog(function(_button){
-			if (_button == 2)
+		var content = jQuery.extend(true, {message:_metadata.msg}, _metadata);
+		var buttons = [
+
+			{text: this.egw.lang("Close"), id:"close"}
+		];
+		if (!_display)
+		{
+			buttons[1] = {
+				text: this.egw.lang("Add this certificate into contact"),
+				id: "contact",
+				image:"add",
+				"class": "ui-priority-primary",
+				"default": true
+			};
+			content.message2 = egw.lang('You may add this certificate into your contact, if you trust this signature.');
+		}
+		et2_createWidget("dialog",
+		{
+			callback: function(_button_id, _value)
 			{
-				self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
-				_metadata,function(_message){egw.message(_message);}).sendRequest(true);
-			}
-		},
-		this.egw.lang("There's a new certificate information for email %1. Would you like to update/add this certificate?\n %2",_metadata.email,_metadata.certHtml),
-		this.egw.lang('Update cert for user %1', _metadata.email),{},et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+				if (_button_id == 'contact' && _value)
+				{
+					self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
+					_metadata,function(_message){egw.message(_message);}).sendRequest(true);
+				}
+			},
+			title: egw.lang('Certificate info for email %1', _metadata.email),
+			buttons: buttons,
+			value:{content:content},
+			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet',
+			resizable: false
+		}, et2_dialog._create_parent('mail'));
 	}
 });

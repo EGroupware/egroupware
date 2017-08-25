@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.smimeCertAddToContact" template="" lang="" group="0" version="17.1">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="300"/>
+				<column width="20"/>
+			</columns>
+			<rows>
+				<row class="dialogHeader">
+					<description span="2" id="message"/>
+					<image src="smimeSignature" class="@class"/>
+				</row>
+				<row>
+					<description id="message2"/>
+				</row>
+				<row>
+					<description value="Certificate Info" label="%s:"/>
+				</row>
+				<row>
+					<description value="Signer's email" label="%s:"/>
+					<description id="email"/>
+				</row>
+				<row>
+					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="200" align_tabs="v">
+						<tabs>
+							<tab id="brief" class="hideme"/>
+							<tab id="details" label="Certificate Details"/>
+							<tab id="certificate" label="Certificate in text"/>
+						</tabs>
+						<tabpanels>
+							<description/>
+							<description id="certHtml"/>
+							<description id="cert"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
