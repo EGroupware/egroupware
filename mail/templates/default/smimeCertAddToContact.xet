@@ -33,7 +33,7 @@
 						</tabs>
 						<tabpanels>
 							<description/>
-							<description id="certHtml"/>
+							<html multiline="true" id="certHtml" readonly="true"/>
 							<description id="cert"/>
 						</tabpanels>
 					</tabbox>
