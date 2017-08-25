@@ -492,7 +492,7 @@ class setup_cmd_config extends setup_cmd
 			foreach(scandir(EGW_INCLUDE_ROOT.'/api/src/Accounts') as $file)
 			{
 				$matches = null;
-				if (preg_match('/^([a-z0-9]+)\.php$/', $file, $matches) &&
+				if (preg_match('/^([a-z0-9]+)\.php$/i', $file, $matches) &&
 					!isset($account_repositories[strtolower($matches[1])]) &&
 					class_exists($class='EGroupware\\Api\\Accounts\\'.$matches[1]) &&
 					(strtolower($matches[1]) == $current || !is_callable($callable=$class.'::available') || call_user_func($callable)))
