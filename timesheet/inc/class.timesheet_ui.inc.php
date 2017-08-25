@@ -187,13 +187,13 @@ class timesheet_ui extends timesheet_bo
 				case 'save':
 				case 'save_new':
 				case 'apply':
-					if ((!$this->data['ts_quantity'] || $this->ts_viewtype == 'short') && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
+					if (($this->data['ts_quantity'] === '' || $this->ts_viewtype == 'short') && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
 					{
 						// We need to keep the actual value of ts_quantity when we are storing it, as it is used in price calculation
 						// and rounding it causes miscalculation on prices
 						$this->data['ts_quantity'] = $this->data['ts_duration'] / 60.0;
 					}
-					if (!$this->data['ts_quantity'])
+					if ($this->data['ts_quantity'] === '')
 					{
 						$etpl->set_validation_error('ts_quantity',lang('Field must not be empty !!!'));
 					}
