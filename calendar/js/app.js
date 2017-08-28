@@ -3987,10 +3987,6 @@ jQuery.extend(app.classes.calendar,{
 				d.setUTCSeconds(d.getUTCSeconds()-1);
 				return app.calendar.date.end_of_week(d);
 			},
-			granularity: function(state) {
-				// Always a list, not a grid
-				return 0;
-			},
 			scroll: function(delta)
 			{
 				var d = new Date(app.calendar.state.date);

@@ -118,6 +118,7 @@ class calendar_hooks
 		);
 		$list_views = array(
 			0 => lang('None'),
+			'month' => lang('Month view'),
 			'weekN' => lang('Multiple week view'),
 			'week' => lang('Weekview'),
 			'day4' => lang('Four days view'),
@@ -353,7 +354,7 @@ class calendar_hooks
 				'help'   => 'For which views should calendar just a list of events instead of distinct lines with a fixed time interval.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => ['weekN'],
+				'default' => ['weekN', 'month'],
 			),
 			'link_title' => array(
 				'type'   => 'multiselect',
