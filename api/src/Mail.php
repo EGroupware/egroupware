@@ -7425,7 +7425,7 @@ class Mail
 	{
 		$AB_bo   = new \addressbook_bo();
 		$credents = Mail\Credentials::read($this->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-		$certkey = $AB_bo->get_smime_keys($this->icServer->ident_email);
+		$certkey = $AB_bo->get_smime_keys($credents['acc_smime_username']);
 		if (!$this->smime->verifyPassphrase($credents['acc_smime_password'], $_passphrase))
 		{
 			return array (
