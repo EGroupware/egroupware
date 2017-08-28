@@ -326,6 +326,47 @@
 					<menulist>
 						<menupopup id="acc_ews_type" class="et2_fullWidth"/>
 					</menulist>
+                </row>
+                <row>
+                        <grid id="ews_permissions" span="2">
+                            <columns>
+                                <column width="5%" />
+                                <column width="5%" />
+                                <column width="20%" />
+                                <column width="2%" />
+                                <column width="2%" />
+                                <column width="2%" />
+                                <column width="5%" />
+                                <column width="20%" />
+                                <column width="1" />
+                            </columns>
+                            <rows>
+                                <row class="th">
+                                    <description value="Default Folder" />
+                                    <description value="Order" />
+                                    <description value="Name" />
+                                    <description value="Read" />
+                                    <description value="Write" />
+                                    <description value="Delete" />
+                                    <description value="Move Anywhere" />
+                                    <description value="Allow moving to" />
+                                    <description value="" />
+                                </row>
+                                <row>            
+                                    <checkbox id="${row}[ews_is_default]" />
+                                    <textbox size="4" type="int" id="${row}[ews_order]" />
+                                    <description id="${row}[ews_name]" />
+                                    <checkbox id="${row}[ews_read_permission]" />
+                                    <checkbox id="${row}[ews_write_permission]" />
+                                    <checkbox id="${row}[ews_delete_permission]" />
+                                    <checkbox id="${row}[ews_move_anywhere]" />
+                                    <vbox>
+                                        <listbox id="${row}[ews_move_to]" rows="2" />
+                                    </vbox>
+                                    <description type="hidden" id="${row}[ews_folder]" />
+                                </row>
+                            </rows>
+                        </grid>
 				</row>
 				<row>
 				</row>

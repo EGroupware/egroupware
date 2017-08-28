@@ -917,6 +917,10 @@ class admin_mail
 					{
 						if (!$content['acc_'.$type.'_ssl']) $content['acc_'.$type.'_ssl'] = 'no';
 					}
+
+                    if ( $content['acc_imap_type'] && $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' ) {
+                        $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
+                    }
 				}
 				catch(Api\Exception\NotFound $e) {
 					if (self::$debug) _egw_log_exception($e);
@@ -1111,6 +1115,9 @@ class admin_mail
 								}
 								$content['accounts'][$content['acc_id']] = Mail\Account::identity_name($content, false);
 							}
+                            if ( $content['acc_imap_type'] && $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' ) {
+                                Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
+                            }
 						}
 						else
 						{
@@ -1227,6 +1234,7 @@ class admin_mail
 		}
         elseif ( $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' || $content['acc_imap_type'] == 'EWS' ) 
         {
+            $sel_options['ews_permissions'] = Api\Mail_EWS::getFolderPermissionsSelOptions( $content['acc_id'] );
             // EWS cannot get mailboxes yet
 			foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
 			{

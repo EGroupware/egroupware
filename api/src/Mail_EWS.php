@@ -413,5 +413,59 @@ class Mail_EWS extends Mail
             'attachment' => $content,
         );		
 	}
+    static function getFolderPermissions( $profile_id ) {
+        // From Lib
+        $folders = Lib::getTreeFolders( $profile_id );
+
+        // From Db
+        $db = clone( $GLOBALS['egw']->db );
+        $db->query("SELECT * FROM egw_ea_ews WHERE ews_profile=$profile_id ORDER BY ews_order");
+        $final = array('');
+        $used = array();
+        while ( $row = $db->row(true) ) {
+            $final[] = $row;
+            $used[] = $row['ews_folder'];
+        }
+
+        // Consolidate
+        foreach( $folders as $folder ) {
+            if ( !in_array( $folder['id'], $used ) ) 
+                $final[] = array(
+                    'ews_folder' => $folder['id'],
+                    'ews_name' => $folder['name'],
+                );
+        }
+        
+        return $final;
+    }
+    static function getFolderPermissionsSelOptions( $profile_id ) {
+        // From Lib
+        $folders = Lib::getTreeFolders( $profile_id );
+
+        $normalize = array();
+        foreach( $folders as $folder )
+            $normalize[ $folder['id'] ] = $folder['name'];
+
+        $sel_options = array('');
+        foreach( $folders as $folder )
+            $sel_options[]['ews_move_to'] = $normalize;
+
+        return $sel_options;
+    }
+    static function storeFolderPermissions( $content, $profile_id ) {
+        $db = clone( $GLOBALS['egw']->db );
+        $sql = "DELETE FROM egw_ea_ews WHERE ews_profile=$profile_id";
+        $db->query($sql);    
+
+        foreach ( $content as $folder ) {
+            if (!$folder) continue;
+            if (!$folder['ews_read_permission'] && !$folder['ews_write_permission']) continue;
+
+            $obj = new Api\Storage\Base('api','egw_ea_ews',null);
+            $folder['ews_profile'] = $profile_id;
+            $folder['ews_move_to'] = implode(',', $folder['ews_move_to'] );
+            $obj->save( $folder );
+        }
+    }
 }
 

@@ -511,5 +511,23 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array(array('account_id','acc_id')),
 		'uc' => array()
+	),
+	'egw_ea_ews' => array(
+		'fd' => array(
+			'ews_profile' => array('type' => 'int','precision' => '11','nullable' => False,'comment' => 'ewg_ea_account, acc_id'),
+			'ews_folder' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'Exchange Folder ID'),
+			'ews_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'comment' => 'Exchange Folder Name'),
+			'ews_read_permission' => array('type' => 'bool','comment' => 'Permission to read folder'),
+			'ews_write_permission' => array('type' => 'bool','comment' => 'Permission to write to folder'),
+			'ews_delete_permission' => array('type' => 'bool','comment' => 'Permission to delete from folder'),
+			'ews_is_default' => array('type' => 'bool','comment' => 'Default folder'),
+			'ews_order' => array('type' => 'int','precision' => '5','comment' => 'Order to display in tree'),
+			'ews_move_anywhere' => array('type' => 'bool','comment' => 'Permission to move emails between folders'),
+			'ews_move_to' => array('type' => 'text','comment' => 'Array with only folders allowed to move emails to')
+		),
+		'pk' => array('ews_profile','ews_folder'),
+		'fk' => array('ews_profile' => 'egw_ea_account.acc_id'),
+		'ix' => array(),
+		'uc' => array()
 	)
 );

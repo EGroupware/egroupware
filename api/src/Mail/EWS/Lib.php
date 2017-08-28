@@ -333,7 +333,7 @@ class Lib
         /* $info = self::get_inbox_info( $profile ); */
         $account = Mail\Account::read( $profile );
 
-        // TODO INBOX
+        // INBOX
         if ( $account->params['acc_ews_type'] == 'inbox' ) {
             // Get Inbox Folders
 
