@@ -7436,7 +7436,7 @@ class Mail
 
 		$params  = array (
 			'type'      => 'message',
-			'pubkey'    => $certkey[$this->icServer->ident_email],
+			'pubkey'    => $certkey[$credents['acc_smime_username']],
 			'privkey'   => $credents['acc_smime_password'],
 			'passphrase'=> $_passphrase
 		);
