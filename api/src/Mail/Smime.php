@@ -193,9 +193,10 @@ class Smime extends Horde_Crypt_Smime
 	{
 		$cert_locations = openssl_get_cert_locations();
 		$certs = array();
-		foreach (scandir($cert_locations['default_cert_dir']) as &$file)
+		foreach (scandir($cert_locations['default_cert_dir']) as $file)
 		{
-			if (!is_dir($cert_locations['default_cert_dir'].'/'.$file)) $certs[]= $cert_locations['default_cert_dir'].'/'.$file;
+			if ($file !== '..' && $file !=='.'
+					&& !is_dir($cert_locations['default_cert_dir'].'/'.$file)) $certs[]= $cert_locations['default_cert_dir'].'/'.$file;
 		}
 		return $this->verify($message, $certs);
 	}
