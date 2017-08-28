@@ -5734,6 +5734,7 @@ app.classes.mail = AppJS.extend(
 	smimePassDialog: function (_msg)
 	{
 		var self = this;
+		var pass_exp = egw.preference('smime_pass_exp', 'mail');
 		et2_createWidget("dialog",
 		{
 			callback: function(_button_id, _value)
@@ -5744,6 +5745,7 @@ app.classes.mail = AppJS.extend(
 					pass.set_value(_value.value);
 					var toolbar = self.et2.getWidgetById('composeToolbar');
 					toolbar.value = 'send';
+					egw.set_preference('mail', 'smime_pass_exp', _value.pass_exp);
 					self.compose_submitAction(false);
 				}
 			},
@@ -5755,7 +5757,8 @@ app.classes.mail = AppJS.extend(
 			value:{
 				content:{
 					value: '',
-					message: _msg
+					message: _msg,
+					'exp_min': pass_exp
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false

@@ -1027,7 +1027,7 @@ class Mailer extends Horde_Mime_Mail
 			{
 				throw new Exception\WrongUserinput('no certificate found to sign the messase');
 			}
-
+			if (Cache::getSession('mail', 'smime_passphrase')) $params['passphrase'] = Cache::getSession('mail', 'smime_passphrase');
 			if (!$smime->verifyPassphrase($params['senderPrivKey'], $params['passphrase']))
 			{
 				return false;

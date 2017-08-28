@@ -2992,6 +2992,14 @@ class mail_compose
 			try	{
 				if ($_formData['smime_sign'] == 'on')
 				{
+					if ($_formData['smime_passphrase'] != '') {
+						Api\Cache::setSession(
+							'mail',
+							'smime_passphrase',
+							$_formData['smime_passphrase'],
+							$GLOBALS['egw_info']['user']['preferences']['mail']['smime_pass_exp'] * 60
+						);
+					}
 					$smime_success = $this->_encrypt(
 						$mail,
 						$_formData['smime_encrypt'] == 'on'? Mail\Smime::TYPE_SIGN_ENCRYPT: Mail\Smime::TYPE_SIGN,
