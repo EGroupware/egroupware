@@ -1263,7 +1263,7 @@ class Account implements \ArrayAccess
 		//Store or delete smime private key
 		if ($data['acc_smime_password'])
 		{
-			Credentials::write($data['acc_id'], $data['acc_imap_username'],
+			Credentials::write($data['acc_id'], $data['acc_smime_username'],
 			$data['acc_smime_password'], Credentials::SMIME, $data['account_id'][0],
 			$data['acc_smime_cred_id']);
 		}

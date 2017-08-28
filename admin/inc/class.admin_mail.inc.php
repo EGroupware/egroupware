@@ -897,8 +897,8 @@ class admin_mail
 					if (!empty($content['acc_smime_password']))
 					{
 						$AB_bo = new addressbook_bo();
-						$smime_cert = $AB_bo->get_smime_keys($content['ident_email']);
-						$content['smime_cert'] = $smime_cert[$content['ident_email']];
+						$smime_cert = $AB_bo->get_smime_keys($content['acc_smime_username']);
+						$content['smime_cert'] = $smime_cert[$content['acc_smime_username']];
 					}
 				}
 				catch(Api\Exception\NotFound $e) {
@@ -1035,6 +1035,39 @@ class admin_mail
 								$content['notify_account_id'] = $content['called_for'] ?
 									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
 							}
+							// SMIME SAVE
+							if (isset($content['smimeKeyUpload']) || $content['smime_cert'] && $content['acc_smime_password'])
+							{
+								$smime = new Mail\Smime;
+								$content['acc_smime_username'] = $smime->getEmailFromKey($content['smime_cert']);
+								$AB_bo = new addressbook_bo();
+								if (($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])) &&
+										$content['smimeKeyUpload']['type'] == 'application/x-pkcs12')
+								{
+									$cert_info = $smime->extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
+									if (is_array($cert_info))
+									{
+										$content['acc_smime_password'] = $cert_info['pkey'];
+										$content['smime_cert'] = $cert_info['cert'];
+										if ($content['smime_cert'])
+										{
+											$content['acc_smime_username'] = $smime->getEmailFromKey($content['smime_cert']);
+											$AB_bo = new addressbook_bo();
+											$AB_bo->set_smime_keys(array(
+												$content['acc_smime_username'] => $content['smime_cert']
+											));
+										}
+									}
+									else
+									{
+										$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
+									}
+								}
+								elseif ($content['smime_cert'] && $content['acc_smime_password'])
+								{
+									$AB_bo->set_smime_keys(array($content['acc_smime_username'] => $content['smime_cert']));
+								}
+							}
 							self::fix_account_id_0($content['account_id'], true);
 							$content = Mail\Account::write($content, $content['called_for'] || !$this->is_admin ?
 								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
@@ -1063,40 +1096,6 @@ class admin_mail
 									$content['accounts'] = array($content['acc_id'] => '') + $content['accounts'];
 								}
 								$content['accounts'][$content['acc_id']] = Mail\Account::identity_name($content, false);
-							}
-							if (isset($content['smimeKeyUpload'])
-									&& ($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
-							{
-								$smime = new Mail\Smime;
-								switch($content['smimeKeyUpload']['type'])
-								{
-									case 'application/x-pkcs12':
-										$cert_info = $smime->extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
-										if (is_array($cert_info))
-										{
-											$content['acc_smime_password'] = $cert_info['pkey'];
-											if ($cert_info['cert'])
-											{
-												$AB_bo = new addressbook_bo();
-												$AB_bo->set_smime_keys(array(
-													$content['ident_email'] => $cert_info['cert']
-												));
-											}
-										}
-										else
-										{
-											$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
-										}
-										break;
-									case 'application/x-iwork-keynote-sffkey':
-										$content['acc_smime_password'] = $pkcs12;
-										break;
-								}
-							}
-							elseif ($content['smime_cert'] && $content['acc_smime_password'])
-							{
-								$AB_bo = new addressbook_bo();
-								$AB_bo->set_smime_keys(array($content['ident_email'] => $content['smime_cert']));
 							}
 						}
 						else
