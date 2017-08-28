@@ -1264,7 +1264,7 @@ class Account implements \ArrayAccess
 		if ($data['acc_smime_password'])
 		{
 			Credentials::write($data['acc_id'], $data['acc_smime_username'],
-			$data['acc_smime_password'], Credentials::SMIME, $data['account_id'][0],
+			$data['acc_smime_password'], Credentials::SMIME, $valid_for,
 			$data['acc_smime_cred_id']);
 		}
 		else
