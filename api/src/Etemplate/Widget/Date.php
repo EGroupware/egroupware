@@ -164,7 +164,15 @@ class Date extends Transformer
 			}
 			if($value)
 			{
-				$date = new Api\DateTime($value);
+				try
+				{
+					$date = new Api\DateTime($value);
+				}
+				catch(\Exception $e)
+				{
+					$date = null;
+					$value = '';
+				}
 			}
 			if (!empty($this->attrs['min']))
 			{
