@@ -89,10 +89,10 @@ class Mail_EWS extends Mail
         if (is_null(self::$mailConfig)) self::$mailConfig = Config::read('mail');
     }
     function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no') {
-        if ( $_folder ) {
-            list($foldername,$folderID) = explode( '::', $_folder);
-            $folderID  = str_replace(' ','+', $folderID );
-        }
+        if ( !$_folder ) return;
+
+        list($foldername,$folderID) = explode( '::', $_folder);
+        $folderID  = str_replace(' ','+', $folderID );
         $methodMap = array(
             'no' => 'MoveToDeletedItems',
             'mark_as_deleted' => 'SoftDelete',
@@ -102,6 +102,9 @@ class Mail_EWS extends Mail
 
         foreach( $_messageUID as $message ) {
             list($mailID, $changeKey) = explode( '||', $message );
+            if ( !Lib::can_delete( $this->profileID, $folderID ) )
+				throw new Exception("Deleting Mail failed! No permissions");
+
             try {
                 Lib::DeleteMail( $this->profileID, $mailID, $methodMap[ $_forceDeleteMethod ]);
             }

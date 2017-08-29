@@ -680,4 +680,12 @@ class Lib
 
         return $restriction;
     }
+
+    static function can_delete( $profile, $folder ) {
+        $db = clone($GLOBALS['egw']->db);
+        $sql = "SELECT 'X' FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$folder' and ews_delete_permission = 1";
+        $db->query($sql);
+        return ( $db->row(true) );
+
+    }
 }
