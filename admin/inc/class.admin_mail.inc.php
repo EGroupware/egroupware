@@ -918,9 +918,6 @@ class admin_mail
 						if (!$content['acc_'.$type.'_ssl']) $content['acc_'.$type.'_ssl'] = 'no';
 					}
 
-                    if ( $content['acc_imap_type'] && $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' ) {
-                        $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
-                    }
 				}
 				catch(Api\Exception\NotFound $e) {
 					if (self::$debug) _egw_log_exception($e);
@@ -1116,6 +1113,10 @@ class admin_mail
 								$content['accounts'][$content['acc_id']] = Mail\Account::identity_name($content, false);
 							}
                             if ( $content['acc_imap_type'] && $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' ) {
+                                if ( $content['clear_grid'] ) {
+                                    $content['ews_permissions'] = array();
+                                    $content['clear_grid'] = false;
+                                }
                                 Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
                             }
 						}
@@ -1396,6 +1397,10 @@ class admin_mail
 			if ($admin_actions) $tpl->setElementAttribute('admin_actions', 'actions', $admin_actions);
 		}
 		$content['admin_actions'] = (bool)$admin_actions;
+
+        if ( $content['acc_imap_type'] && $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' ) {
+            $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
+        }
 
 		//try to fix identities with no domain part set e.g. alias as identity
 		if (!strpos($content['ident_email'], '@'))

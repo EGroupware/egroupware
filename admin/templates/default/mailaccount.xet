@@ -315,6 +315,7 @@
 		</grid>
 	</template>
 	<template id="admin.mailaccount.ews" template="" lang="" group="0" version="1.9.001">
+        <textbox type="hidden" id="clear_grid" />
 		<grid width="100%">
 			<columns>
 				<column width="115"/>
@@ -324,7 +325,7 @@
 				<row>
 					<description value="Account Type"/>
 					<menulist>
-						<menupopup id="acc_ews_type" class="et2_fullWidth"/>
+                        <menupopup id="acc_ews_type" class="et2_fullWidth" onchange="app.admin.ews_switch_type" />
 					</menulist>
                 </row>
                 <row>
@@ -386,7 +387,6 @@
 					<menulist>
 						<menupopup id="acc_id" onchange="app.admin.change_account" class="et2_fullWidth"/>
 					</menulist>
-					<description/>
 				</row>
 				<row class="dialogHeader">
 					<description for="acc_name" value="Name of account"/>

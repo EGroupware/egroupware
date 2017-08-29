@@ -463,7 +463,8 @@ class Mail_EWS extends Mail
 
             $obj = new Api\Storage\Base('api','egw_ea_ews',null);
             $folder['ews_profile'] = $profile_id;
-            $folder['ews_move_to'] = implode(',', $folder['ews_move_to'] );
+            if ( $folder['ews_move_to'] )
+                $folder['ews_move_to'] = implode(',', $folder['ews_move_to'] );
             $obj->save( $folder );
         }
     }

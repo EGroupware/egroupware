@@ -1159,5 +1159,34 @@ app.classes.admin = AppJS.extend(
 		{
 			this.egw.json('admin.admin_hooks.ajax_clear_cache&errored=1').sendRequest(true);
 		}, this));
-	}
+	},
+
+    /**
+     * Switch EWS Type
+     *
+     * When switching, we want to immediately save and change the array that's being loaded
+     *
+     */
+    ews_switch_type: function( _element, _widget )
+    {
+        var option1 = 'inbox';
+        var option2 = 'public_folders';
+        var grid = this.et2.getWidgetById('ews_permissions');
+        var clear = this.et2.getWidgetById('clear_grid');
+        var apply = this.et2.getWidgetById('button[apply]');
+        et2_dialog.show_dialog(function(_button){
+            if (_button == 2) {
+                grid.set_value({ content:[], readonlys:[], sel_options:[] });
+                clear.set_value( true );
+                apply.getInstanceManager().submit(apply, false, apply.options.novalidate); 
+            }
+            else {
+                if ( _widget.getValue() == option1 )
+                    _widget.set_value( option2 );
+                else
+                    _widget.set_value( option1 );
+            }
+        }, egw.lang('Changing Account Type will delete all your current settings. Are you sure you want to continue?'), 
+        egw.lang('Change Type'), null, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+    }
 });
