@@ -329,7 +329,6 @@ class Lib
     static function getTreeFolders( $profile ) {		
 
         $folders = array();
-        $account = Mail\Account::read( $profile );
 
         // Get Folders from DB settings
         $db = self::get_folders_info( $profile );
@@ -341,33 +340,8 @@ class Lib
             );
         }
 
-        // If no settings: get all
-        if ( !$folders ) {
-            // INBOX
-            if ( $account->params['acc_ews_type'] == 'inbox' ) {
-
-                $username = $account->params['acc_imap_username'];
-                $array = self::getInboxFolders( $profile, $username );
-                foreach ( $array as $folder ) {	            
-                    $folders[] = array(
-                        'id' => $folder->FolderId->Id,
-                        'name' => $folder->DisplayName,
-                        'delete' => 1,
-                    );
-                }
-            }
-            else {
-                $ews = self::init( $profile );
-                $array = self::getAllFolders( $ews );
-                foreach ( $array as $id => $folder ) {	            
-                    $folders[] = array(
-                        'id' => $id,
-                        'name' => $folder,
-                        'delete' => 1,
-                    );
-                }
-            }
-        }
+        if ( !$folders )
+            self::getSettingsFolders( $profile );
 
         return $folders;
     }
@@ -421,6 +395,37 @@ class Lib
             $folders[ $folder->FolderId->Id ] = $folder->DisplayName;
         }
 
+        return $folders;
+    }
+
+    static function getSettingsFolders( $profile ) {
+        $folders = array();
+        $account = Mail\Account::read( $profile );
+
+        // INBOX
+        if ( $account->params['acc_ews_type'] == 'inbox' ) {
+
+            $username = $account->params['acc_imap_username'];
+            $array = self::getInboxFolders( $profile, $username );
+            foreach ( $array as $folder ) {	            
+                $folders[] = array(
+                    'id' => $folder->FolderId->Id,
+                    'name' => $folder->DisplayName,
+                    'delete' => 1,
+                );
+            }
+        }
+        else {
+            $ews = self::init( $profile );
+            $array = self::getAllFolders( $ews );
+            foreach ( $array as $id => $folder ) {	            
+                $folders[] = array(
+                    'id' => $id,
+                    'name' => $folder,
+                    'delete' => 1,
+                );
+            }
+        }
         return $folders;
     }
 
@@ -524,28 +529,7 @@ class Lib
         return $folders;
     }
 
-    static function CopyMail( $profile, $Id, $toFolder ) {
-        $ews = self::init( $profile );
-
-        $request = new DT\BaseMoveCopyItemType();
-        $request->ToFolderId = new DT\TargetFolderIdType();
-        $request->ToFolderId->FolderId = new DT\FolderIdType();
-        $request->ToFolderId->FolderId->Id =$toFolder;
-        $request->ItemIds = new DT\NonEmptyArrayOfBaseItemIdsType();
-        $request->ItemIds->ItemId = array();
-        $message_item = new DT\ItemIdType();
-        $message_item->Id = $Id;
-        $request->ItemIds->ItemId[] = $message_item;
-        $response = $ews->CopyItem($request);
-
-        $msg = '';
-        $status = ( $response->ResponseMessages->CopyItemResponseMessage->ResponseClass == 'Success' );
-        if ( !$status )
-            $msg = 'Exchange:'.$response->ResponseMessages->CopyItemResponseMessage->MessageText; 
-        return array( 'status' => $status, 'msg' => $msg );
-    }
-
-    static function MoveMail( $profile, $Id, $ChangeKey, $toFolder ) {
+    static function moveMail( $profile, $Id, $ChangeKey, $toFolder, $move = true ) {
         $ews = self::init( $profile );
 
         $request = new DT\BaseMoveCopyItemType();
@@ -558,13 +542,18 @@ class Lib
         $message_item->Id = $Id;
         $message_item->ChangeKey = $ChangeKey;
         $request->ItemIds->ItemId[] = $message_item;
-        $response = $ews->MoveItem($request);
+        if ( $move )
+            $response = $ews->MoveItem($request);
+        else
+            $response = $ews->CopyItem($request);
 
-        $msg = '';
         $status = ( $response->ResponseMessages->MoveItemResponseMessage->ResponseClass == 'Success' );
+        $msg = 'Exchange:'.$response->ResponseMessages->MoveItemResponseMessage->MessageText; 
         if ( !$status )
-            $msg = 'Exchange:'.$response->ResponseMessages->MoveItemResponseMessage->MessageText; 
-        return array( 'status' => $status, 'msg' => $msg );
+            throw new \Exception( $msg );
+
+
+        return $msg;
     }
 
     static function DeleteMail( $profile, $Id, $deleteType ) {
@@ -579,11 +568,13 @@ class Lib
         $request->ItemIds->ItemId[] = $message_item;
         $response = $ews->DeleteItem($request);
 
-        $msg = '';
+        $msg = 'Exchange:'.$response->ResponseMessages->DeleteItemResponseMessage->MessageText; 
         $status = ( $response->ResponseMessages->DeleteItemResponseMessage->ResponseClass == 'Success' );
         if ( !$status )
-            $msg = 'Exchange:'.$response->ResponseMessages->DeleteItemResponseMessage->MessageText; 
-        return array( 'status' => $status, 'msg' => $msg );
+            throw new \Exception( $msg );
+
+
+        return $msg;
     }
 
     static function getInboxId( $profile ) {

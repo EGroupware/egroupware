@@ -83,10 +83,102 @@ class Mail_EWS extends Mail
         $this->htmlOptions  = $this->mailPreferences['htmlOptions'];
         if (isset($this->icServer->ImapServerId) && !empty($this->icServer->ImapServerId))
         {
-            $_profileID = $this->profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->icServer->ImapServerId;
+            $_profileID = $this->profileID = $this->icServer->ImapServerId;
         }
 
         if (is_null(self::$mailConfig)) self::$mailConfig = Config::read('mail');
+    }
+    function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no') {
+        if ( $_folder ) {
+            list($foldername,$folderID) = explode( '::', $_folder);
+            $folderID  = str_replace(' ','+', $folderID );
+        }
+        $methodMap = array(
+            'no' => 'MoveToDeletedItems',
+            'mark_as_deleted' => 'SoftDelete',
+            'remove_immediately' => 'HardDelete',
+            'move_to_trash' => 'MoveToDeletedItems',
+        );
+
+        foreach( $_messageUID as $message ) {
+            list($mailID, $changeKey) = explode( '||', $message );
+            try {
+                Lib::DeleteMail( $this->profileID, $mailID, $methodMap[ $_forceDeleteMethod ]);
+            }
+            catch (\Exception $e ) {
+				throw new Exception("Deleting Mail failed! Error:".$e->getMessage());
+            }
+        }
+
+        return true;
+
+    }
+    function flagMessages($_flag, $_messageUID,$_folder=NULL) {
+        foreach( $_messageUID as $message ) {
+            list($mailID, $changeKey) = explode( '||', $message );
+            if ( $_flag == 'read' ) 
+                return Lib::setRead( $this->profileID, $mailID, $changeKey, true );
+            else if ( $_flag == 'unread' ) 
+                return Lib::setRead( $this->profileID, $mailID, $changeKey, false );
+            /* else */
+            /*     throw new Exception("Operation '$_flag' not supported for EWS"); */
+        }
+
+        return false;
+    }
+	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
+	{
+        $_partID = str_replace(' ','+', $_partID );
+		$attachment = Lib::getAttachment( $this->profileID, $_partID );
+
+        if ( $_stream ) {
+            $tmp = fopen('php://temp', 'w+');
+
+            if (!is_null($attachment->Content)) {
+                fwrite($tmp, $attachment->Content);
+                rewind($tmp);
+            }
+            $content = $tmp;
+        }
+        else {
+            $content = $attachment->Content;
+        }
+
+		return array(
+            'type' => $attachment->ContentType,
+            'charset' => '',
+            'filename' => $attachment->Name,
+            'attachment' => $content,
+        );		
+	}
+    function getAttachments( $mailID ) {
+        $mailID  = str_replace(' ','+', $mailID );
+        $email = Lib::getMailBody( $this->profileID, $mailID );
+
+        // Format data (one or many)
+        $files = array();
+        $items = array();
+        if ( $email->Attachments->FileAttachment )
+            $files = ( is_array( $email->Attachments->FileAttachment ) ? $email->Attachments->FileAttachment : array( $email->Attachments->FileAttachment ) );
+        if ( $email->Attachments->ItemAttachment )
+            $items = ( is_array( $email->Attachments->ItemAttachment ) ? $email->Attachments->ItemAttachment : array( $email->Attachments->ItemAttachment ) );
+        $data = array_merge( $files, $items );
+
+        // Format for use in header
+        $attachments = array();
+        foreach ( $data as $attachment ) {
+            $attachments[] = array(
+                'size' => '0',
+                'filename' => $attachment->Name,
+                'type' => $attachment->ContentType,
+                'mimeType' => $attachment->ContentType,
+                'uid' => $attachment->AttachmentId->Id,
+                'cid' => '',
+                'partID' => $attachment->AttachmentId->Id,
+                'name' => $attachment->Name,
+            );
+        }
+        return $attachments;
     }
     function getFolderArrays ($_nodePath = null, $_onlyTopLevel = false, $_search= 2, $_subscribedOnly = false, $_getCounter = false) {
         $efolders = Lib::getTreeFolders( $this->profileID );
@@ -113,33 +205,22 @@ class Mail_EWS extends Mail
         //error_log(__METHOD__."(".print_r($foldersList, true).")");
         return $foldersList;
     }	
-    function getJunkFolder($_checkexistance=TRUE)
-    {
-        return false;
-    }
-    function getDraftFolder($_checkexistance=TRUE)
-    {
-        return false;
-    }
-    function getTemplateFolder($_checkexistance=TRUE)
-    {
-        return false;
-    }
-    function getTrashFolder($_checkexistance=TRUE)
-    {
-        return false;
-    }
-    function getSentFolder($_checkexistance=TRUE)
-    {
-        return false;
-    }
-    function getOutboxFolder($_checkexistance=TRUE)
-    {
-        return false;
-    }
-    function getArchiveFolder($_checkexistance=TRUE)
-    {
-        return false;
+    function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true) {
+        list(,$folderID) = explode('::', $_folderName);
+        $folder = Lib::getFolder( $this->profileID, $folderID );
+
+        return array(
+            'displayName' => $folder->DisplayName,
+            'shortName' => $folder->DisplayName,
+            'shortDisplayName' => $folder->DisplayName,
+            'messages' => $folder->TotalCount,
+            'unseen' => $folder->UnreadCount,
+            /* 'uidnext' => 129, */
+            /* 'uidvalidity' => 1, */
+            /* 'recent' => 0, */
+            /* 'subscribed' => '', */
+            /* 'delimiter' => '/', */
+        );
     }
     function getHeaders($_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true, $_fetchPreviews=false) 
     {
@@ -228,43 +309,6 @@ class Mail_EWS extends Mail
 
         return array( 'header' => $emails, 'info' => array( 'total' => $array['count'] ) );
     }
-    function getAttachments( $mailID ) {
-        $mailID  = str_replace(' ','+', $mailID );
-        $email = Lib::getMailBody( $this->profileID, $mailID );
-
-        // Format data (one or many)
-        $files = array();
-        $items = array();
-        if ( $email->Attachments->FileAttachment )
-            $files = ( is_array( $email->Attachments->FileAttachment ) ? $email->Attachments->FileAttachment : array( $email->Attachments->FileAttachment ) );
-        if ( $email->Attachments->ItemAttachment )
-            $items = ( is_array( $email->Attachments->ItemAttachment ) ? $email->Attachments->ItemAttachment : array( $email->Attachments->ItemAttachment ) );
-        $data = array_merge( $files, $items );
-
-        // Format for use in header
-        $attachments = array();
-        foreach ( $data as $attachment ) {
-            $attachments[] = array(
-                'size' => '0',
-                'filename' => $attachment->Name,
-                'type' => $attachment->ContentType,
-                'mimeType' => $attachment->ContentType,
-                'uid' => $attachment->AttachmentId->Id,
-                'cid' => '',
-                'partID' => $attachment->AttachmentId->Id,
-                'name' => $attachment->Name,
-            );
-        }
-        return $attachments;
-    }
-    function reopen($_foldername)
-    {
-        return true;
-    }
-    function closeConnection()
-    {
-        return true;
-    }
     function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false, $_folder = '', &$calendar_part=null)
     {
         $_uid = str_replace(' ','+', $_uid );
@@ -277,14 +321,6 @@ class Mail_EWS extends Mail
             'mimeType'	=> ($email->Body->BodyType == 'HTML' ? 'text/html' : 'text/plain'),
             'charSet'	=> 'utf-8',
         ));
-    }
-    function getStructure($_uid, $_partID=null, $_folder=null, $_preserveSeen=false)
-    {
-        return new Horde_Mime_Part();
-    }
-    function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false, $_folder='')
-    {
-        return array();
     }
 	function getMessageEnvelope($_uid, $_partID = '',$decode=false, $_folder='', $_useHeaderInsteadOfEnvelope=false)
 	{
@@ -350,13 +386,6 @@ class Mail_EWS extends Mail
 		    'BODY' => $email->Body->_,
 		);
 	}
-	function getFlags ($_messageUID) {
-        return null;
-	}
-	function getMessageRawHeader($_uid, $_partID = '', $_folder = '')
-	{
-        return '';
-	}
 	function getMessageAttachments($_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folder='')
 	{
         $_uid = str_replace(' ','+', $_uid );
@@ -388,35 +417,26 @@ class Mail_EWS extends Mail
         }
         return $attachments;
 	}
-	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
+	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
 	{
-        $_partID = str_replace(' ','+', $_partID );
-		$attachment = Lib::getAttachment( $this->profileID, $_partID );
-
-        if ( $_stream ) {
-            $tmp = fopen('php://temp', 'w+');
-
-            if (!is_null($attachment->Content)) {
-                fwrite($tmp, $attachment->Content);
-                rewind($tmp);
+        list($foldername,$folderID) = explode( '::', $_foldername );
+        $folderID  = str_replace(' ','+', $folderID );
+        foreach( $_messageUID as $message ) {
+            list($mailID, $changeKey) = explode( '||', $message );
+            try {
+                Lib::moveMail( $this->profileID, $mailID, $changeKey, $folderID, $deleteAfterMove );
             }
-            $content = $tmp;
-        }
-        else {
-            $content = $attachment->Content;
+            catch (\Exception $e ) {
+                $operation = ( $deleteAfterMove ? 'Moving' : 'Copying' );
+				throw new Exception("$operation to Folder $foldername failed! Error:".$e->getMessage());
+            }
         }
 
-		return array(
-            'type' => $attachment->ContentType,
-            'charset' => '',
-            'filename' => $attachment->Name,
-            'attachment' => $content,
-        );		
+        return true;
 	}
     static function getFolderPermissions( $profile_id ) {
         // From Lib
-        $ews = Lib::init( $profile_id );
-        $folders = Lib::getAllFolders( $ews );
+        $folders = Lib::getSettingsFolders( $profile_id );
 
         // From Db
         $db = clone( $GLOBALS['egw']->db );
@@ -441,7 +461,7 @@ class Mail_EWS extends Mail
     }
     static function getFolderPermissionsSelOptions( $profile_id ) {
         // From Lib
-        $folders = Lib::getTreeFolders( $profile_id );
+        $folders = Lib::getSettingsFolders( $profile_id );
 
         $normalize = array();
         foreach( $folders as $folder )
@@ -468,6 +488,59 @@ class Mail_EWS extends Mail
                 $folder['ews_move_to'] = implode(',', $folder['ews_move_to'] );
             $obj->save( $folder );
         }
+    }
+    
+    function reopen($_foldername)
+    {
+        return true;
+    }
+    function closeConnection()
+    {
+        return true;
+    }
+    function getStructure($_uid, $_partID=null, $_folder=null, $_preserveSeen=false)
+    {
+        return new Horde_Mime_Part();
+    }
+    function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false, $_folder='')
+    {
+        return array();
+    }
+    function getFlags ($_messageUID) 
+    {
+        return null;
+    }
+    function getMessageRawHeader($_uid, $_partID = '', $_folder = '')
+    {
+        return '';
+    }
+    function getJunkFolder($_checkexistance=TRUE)
+    {
+        return false;
+    }
+    function getDraftFolder($_checkexistance=TRUE)
+    {
+        return false;
+    }
+    function getTemplateFolder($_checkexistance=TRUE)
+    {
+        return false;
+    }
+    function getTrashFolder($_checkexistance=TRUE)
+    {
+        return false;
+    }
+    function getSentFolder($_checkexistance=TRUE)
+    {
+        return false;
+    }
+    function getOutboxFolder($_checkexistance=TRUE)
+    {
+        return false;
+    }
+    function getArchiveFolder($_checkexistance=TRUE)
+    {
+        return false;
     }
 }
 
