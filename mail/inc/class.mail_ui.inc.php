@@ -3125,9 +3125,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'<div>'.
 						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
 						'<input type="submit" value="'.lang("submit").'"/>'.
-					'</div>'.
-					'<div style="top:47%;margin-left:-15px;">'.
-						lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+						'<div style="margin-top:10px;position:relative;text-align:center;margin-left:-15px;">'.
+							lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+						'</div>'.
 					'</div>'.
 			'</form>';
 			return $smimeHtml;
