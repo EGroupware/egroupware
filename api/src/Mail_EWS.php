@@ -415,7 +415,8 @@ class Mail_EWS extends Mail
 	}
     static function getFolderPermissions( $profile_id ) {
         // From Lib
-        $folders = Lib::getTreeFolders( $profile_id );
+        $ews = Lib::init( $profile_id );
+        $folders = Lib::getAllFolders( $ews );
 
         // From Db
         $db = clone( $GLOBALS['egw']->db );

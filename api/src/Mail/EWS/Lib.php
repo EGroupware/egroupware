@@ -329,45 +329,44 @@ class Lib
     static function getTreeFolders( $profile ) {		
 
         $folders = array();
-
-        /* $info = self::get_inbox_info( $profile ); */
         $account = Mail\Account::read( $profile );
 
-        // INBOX
-        if ( $account->params['acc_ews_type'] == 'inbox' ) {
-            // Get Inbox Folders
-
-            $username = $account->params['acc_imap_username'];
-
-            $array = self::getInboxFolders( $profile, $username );
-            foreach ( $array as $folder ) {	            
-                $folders[] = array(
-                    'id' => $folder->FolderId->Id,
-                    'name' => $folder->DisplayName,
-                    'delete' => 1,
-                );
-            }
+        // Get Folders from DB settings
+        $db = self::get_folders_info( $profile );
+        while( $row = $db->row(true) ) {
+            $folders[] = array(
+                'id' => $row['ews_folder'],
+                'name' => $row['ews_name'],
+                'delete' => $row['ews_delete_permission']
+            );
         }
-        else {
-            // For public folders, No need to call server, arrays already in DB
-            /* $db = self::get_folders_info( $profile ); */
-            /* while( $row = $db->row(true) ) { */
-            /*     $folders[] = array( */
-            /*         'id' => $row['folder_id'], */
-            /*         'name' => $row['folder_name'], */
-            /*         'delete' => $row['delete_permission'] */
-            /*     ); */
-            /* } */
-            $ews = self::init( $profile );
-            $array = self::getAllFolders( $ews );
-            foreach ( $array as $id => $folder ) {	            
-                $folders[] = array(
-                    'id' => $id,
-                    'name' => $folder,
-                    'delete' => 1,
-                );
-            }
 
+        // If no settings: get all
+        if ( !$folders ) {
+            // INBOX
+            if ( $account->params['acc_ews_type'] == 'inbox' ) {
+
+                $username = $account->params['acc_imap_username'];
+                $array = self::getInboxFolders( $profile, $username );
+                foreach ( $array as $folder ) {	            
+                    $folders[] = array(
+                        'id' => $folder->FolderId->Id,
+                        'name' => $folder->DisplayName,
+                        'delete' => 1,
+                    );
+                }
+            }
+            else {
+                $ews = self::init( $profile );
+                $array = self::getAllFolders( $ews );
+                foreach ( $array as $id => $folder ) {	            
+                    $folders[] = array(
+                        'id' => $id,
+                        'name' => $folder,
+                        'delete' => 1,
+                    );
+                }
+            }
         }
 
         return $folders;
@@ -614,11 +613,8 @@ class Lib
     }
 
     static function get_folders_info( $profile ) {
-        if ( strpos($profile, 'exchange') !== FALSE )
-            $profile = substr($profile, 8);
-
         $db = clone($GLOBALS['egw']->db);
-        $sql = "SELECT * FROM ac_exchange_permissions WHERE profile_id = $profile and read_permission=1 ORDER BY folder_order";
+        $sql = "SELECT * FROM egw_ea_ews WHERE ews_profile= $profile and ews_read_permission=1 ORDER BY ews_order";
         $db->query($sql);
         return $db;
     }
