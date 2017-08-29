@@ -23,7 +23,9 @@ use Horde_Text_Flowed;
 use Horde_Stream;
 use Horde_Stream_Wrapper_Combine;
 use Horde_Mime_Headers;
-
+use Horde_Mime_Headers_UserAgent;
+use Horde_Mime_Headers_Date;
+use Horde_Mime_Translation;
 /**
  * Sending mail via Horde_Mime_Mail
  *
@@ -522,7 +524,7 @@ class Mailer extends Horde_Mime_Mail
 		$body_sha1 = null;	// skip sha1, it requires whole mail in memory, which we traing to avoid now
 
 		// Smime sign needs to be 7bit encoded to avoid any changes during the transportation
-		if ($this->_base->getMetadata('X-EGroupware-Smime-signed')) $opts['encode'] = Horde_Mime_Part::ENCODE_7BIT;
+		if ($this->_base && $this->_base->getMetadata('X-EGroupware-Smime-signed')) $opts['encode'] = Horde_Mime_Part::ENCODE_7BIT;
 
 		$mail_id = Hooks::process(array(
 			'location' => 'send_mail',
@@ -666,83 +668,83 @@ class Mailer extends Horde_Mime_Mail
      */
     public function _send($mailer, $resend = false, $flowed = true, array $opts = array())
     {
-        /* Add mandatory headers if missing. */
-        if (!$resend || !isset($this->_headers['Message-ID'])) {
-            $this->_headers->addHeaderOb(
+		/* Add mandatory headers if missing. */
+		if (!$resend || !isset($this->_headers['Message-ID'])) {
+			$this->_headers->addHeaderOb(
                 Horde_Mime_Headers_MessageId::create()
-            );
-        }
-        if (!isset($this->_headers['User-Agent'])) {
-            $this->_headers->addHeaderOb(
+			);
+		}
+		if (!isset($this->_headers['User-Agent'])) {
+			$this->_headers->addHeaderOb(
                 Horde_Mime_Headers_UserAgent::create()
-            );
-        }
-        if (!$resend || !isset($this->_headers['Date'])) {
+			);
+		}
+		if (!$resend || !isset($this->_headers['Date'])) {
             $this->_headers->addHeaderOb(Horde_Mime_Headers_Date::create());
-        }
+		}
 
-        if (isset($this->_base)) {
-            $basepart = $this->_base;
-        } else {
-            /* Send in flowed format. */
-            if ($flowed && !empty($this->_body)) {
-                $flowed = new Horde_Text_Flowed($this->_body->getContents(), $this->_body->getCharset());
-                $flowed->setDelSp(true);
-                $this->_body->setContentTypeParameter('format', 'flowed');
-                $this->_body->setContentTypeParameter('DelSp', 'Yes');
-                $this->_body->setContents($flowed->toFlowed());
-            }
+		if (isset($this->_base)) {
+			$basepart = $this->_base;
+		} else {
+			/* Send in flowed format. */
+			if ($flowed && !empty($this->_body)) {
+				$flowed = new Horde_Text_Flowed($this->_body->getContents(), $this->_body->getCharset());
+				$flowed->setDelSp(true);
+				$this->_body->setContentTypeParameter('format', 'flowed');
+				$this->_body->setContentTypeParameter('DelSp', 'Yes');
+				$this->_body->setContents($flowed->toFlowed());
+			}
 
-            /* Build mime message. */
-            $body = new Horde_Mime_Part();
-            if (!empty($this->_body) && !empty($this->_htmlBody)) {
-                $body->setType('multipart/alternative');
+			/* Build mime message. */
+			$body = new Horde_Mime_Part();
+			if (!empty($this->_body) && !empty($this->_htmlBody)) {
+				$body->setType('multipart/alternative');
                 $this->_body->setDescription(Horde_Mime_Translation::t("Plaintext Version of Message"));
-                $body[] = $this->_body;
+				$body[] = $this->_body;
                 $this->_htmlBody->setDescription(Horde_Mime_Translation::t("HTML Version of Message"));
-                $body[] = $this->_htmlBody;
-            } elseif (!empty($this->_htmlBody)) {
-                $body = $this->_htmlBody;
-            } elseif (!empty($this->_body)) {
-                $body = $this->_body;
-            }
-            if (count($this->_parts)) {
-                $basepart = new Horde_Mime_Part();
-                $basepart->setType('multipart/mixed');
-                $basepart->isBasePart(true);
-                if ($body) {
-                    $basepart[] = $body;
-                }
-                foreach ($this->_parts as $mime_part) {
-                    $basepart[] = $mime_part;
-                }
-            } else {
-                $basepart = $body;
-                $basepart->isBasePart(true);
-            }
-        }
-        $basepart->setHeaderCharset($this->_charset);
+				$body[] = $this->_htmlBody;
+			} elseif (!empty($this->_htmlBody)) {
+				$body = $this->_htmlBody;
+			} elseif (!empty($this->_body)) {
+				$body = $this->_body;
+			}
+			if (count($this->_parts)) {
+				$basepart = new Horde_Mime_Part();
+				$basepart->setType('multipart/mixed');
+				$basepart->isBasePart(true);
+				if ($body) {
+					$basepart[] = $body;
+				}
+				foreach ($this->_parts as $mime_part) {
+					$basepart[] = $mime_part;
+				}
+			} else {
+				$basepart = $body;
+				$basepart->isBasePart(true);
+			}
+		}
+		$basepart->setHeaderCharset($this->_charset);
 
-        /* Build recipients. */
-        $recipients = clone $this->_recipients;
-        foreach (array('to', 'cc') as $header) {
-            if ($h = $this->_headers[$header]) {
-                $recipients->add($h->getAddressList());
-            }
-        }
-        if ($this->_bcc) {
-            $recipients->add($this->_bcc);
-        }
+		/* Build recipients. */
+		$recipients = clone $this->_recipients;
+		foreach (array('to', 'cc') as $header) {
+			if ($h = $this->_headers[$header]) {
+				$recipients->add($h->getAddressList());
+			}
+		}
+		if ($this->_bcc) {
+			$recipients->add($this->_bcc);
+		}
 
-        /* Trick Horde_Mime_Part into re-generating the message headers. */
-        $this->_headers->removeHeader('MIME-Version');
+		/* Trick Horde_Mime_Part into re-generating the message headers. */
+		$this->_headers->removeHeader('MIME-Version');
 
-        /* Send message. */
-        $recipients->unique();
-        $basepart->send($recipients->writeAddress(), $this->_headers, $mailer, $opts);
+		/* Send message. */
+		$recipients->unique();
+		$basepart->send($recipients->writeAddress(), $this->_headers, $mailer, $opts);
 
-        /* Remember the basepart */
-        $this->_base = $basepart;
+		/* Remember the basepart */
+		$this->_base = $basepart;
     }
 
 	/**
