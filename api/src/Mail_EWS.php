@@ -29,6 +29,7 @@ use Horde_Mail_Rfc822_List;
 use Horde_Mime_Mdn;
 use EGroupware\Api;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\EWS;
 use EGroupware\Api\Mail\EWS\Lib;
 
 use tidy;
@@ -50,7 +51,6 @@ class Mail_EWS extends Mail
         if (!is_numeric($_profileID)) return true;
         if ($_restoreSession)
         {
-            //error_log(__METHOD__." Session restore ".function_backtrace());
             $this->restoreSessionData();
             $lv_mailbox = $this->sessionData['mailbox'];
             $firstMessage = $this->sessionData['previewMessage'];
@@ -68,14 +68,12 @@ class Mail_EWS extends Mail
             $this->profileID = self::validateProfileID($_profileID);
             $this->accountid	= $GLOBALS['egw_info']['user']['account_id'];
 
-            //error_log(__METHOD__.' ('.__LINE__.') '." ProfileID ".$this->profileID.' called from:'.function_backtrace());
             $acc = Mail\Account::read($this->profileID);
         }
         catch (\Exception $e)
         {
             throw new Exception(__METHOD__." failed to instanciate Mail for $_profileID / ".$this->profileID." with error:".$e->getMessage());
         }
-        //error_log(__METHOD__.' ('.__LINE__.') '.array2string($acc->imapServer()));
         $this->icServer = ($_oldImapServerObject?$acc->oldImapServer():$acc->imapServer());
         $this->ogServer = $acc->smtpServer();
         // TODO: merge mailprefs into userprefs, for easy treatment
@@ -176,12 +174,27 @@ class Mail_EWS extends Mail
                 'type' => $attachment->ContentType,
                 'mimeType' => $attachment->ContentType,
                 'uid' => $attachment->AttachmentId->Id,
-                'cid' => '',
+                'cid' => $attachment->ContentId,
                 'partID' => $attachment->AttachmentId->Id,
                 'name' => $attachment->Name,
             );
         }
         return $attachments;
+    }
+    function getAttachmentByCID($_uid, $_cid, $_part, $_stream=null) {
+        list($mailID,$changeKey) = explode( '||', $_uid );
+        $mailID  = str_replace(' ','+', $mailID );
+        $attachments = self::getAttachments( $mailID );
+
+        $final = new EWS\Attachment();
+        foreach( $attachments as $attachment ) {
+            if ( $attachment['cid'] == $_cid ) {
+                $full_attach = self::getAttachment( $_uid, $attachment['partID'], 0, true, $_stream );
+                $final->loadAttachment( $full_attach );
+            }
+        }
+
+        return $final;
     }
     function getFolderArrays ($_nodePath = null, $_onlyTopLevel = false, $_search= 2, $_subscribedOnly = false, $_getCounter = false) {
         $efolders = Lib::getTreeFolders( $this->profileID );
@@ -205,7 +218,6 @@ class Mail_EWS extends Mail
                 )
             );				
         }
-        //error_log(__METHOD__."(".print_r($foldersList, true).")");
         return $foldersList;
     }	
     function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true) {
