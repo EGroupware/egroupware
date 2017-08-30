@@ -330,9 +330,12 @@ class Mail_EWS extends Mail
                 'label4' => '',
                 'label5' => '',
                 'sender_address' => $email->From->Mailbox->Name,
-                'to_address' => $email->DisplayTo,
+                'to_address' => $email->DisplayTo .' <@>',
                 'cc_addresses' => array( $email->DisplayCc ),
             );
+            // We add '@', since without it the Name is not displayed
+            // We don't have the actual email address because EWS fetches that only when it fetches the actual email
+            // EGW fetches the email headers altogether in get_rows, even though in preview you just see the current mail
         }
 
         return array( 'header' => $emails, 'info' => array( 'total' => $array['count'] ) );
