@@ -1164,7 +1164,7 @@ class Mailer extends Horde_Mime_Mail
 			'privkey'	=> $params['senderPrivKey'],
 			'passphrase'=> $params['passphrase'],
 			'sigtype'	=> 'detach',
-			'certs'		=> ''
+			'certs'		=> $params['extracerts']
 		);
 		// parameters to pass on for encrypt mime part
 		$encrypt_params = array(

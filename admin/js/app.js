@@ -1163,29 +1163,16 @@ app.classes.admin = AppJS.extend(
 
 	/**
 	 * Export content of given field into relevant file
-	 * @param string _field
 	 */
-	smime_exportKey: function (_field)
+	smime_exportCert: function ()
 	{
 		var $a = jQuery(document.createElement('a')).appendTo('body').hide();
-		var widget = {};
-		switch (_field)
-		{
-			case 'privkey':
-				widget = this.et2.getWidgetById('acc_smime_password');
-				$a.attr({
-					download: 'private_key.key',
-					href: 'data:application/x-iwork-keynote-sffkey;charset=utf-8,' + encodeURI(widget.getValue())
-				});
-				break;
-			case 'cert':
-				widget = this.et2.getWidgetById('smime_cert');
-				$a.attr({
-					download: 'cert.crt',
-					href: 'data:application/pkix-cert;charset=utf-8,' + encodeURI(widget.getValue())
-				});
-				break;
-		}
+		var acc_id = this.et2.getArrayMgr("content").getEntry('acc_id');
+		var url = window.egw_webserverUrl+'/index.php?';
+			url += 'menuaction=mail.mail_ui.smimeExportCert';
+			url += '&acc_id='+acc_id;
+		$a.prop('href',url);
+		$a.prop('download',"");
 		$a[0].click();
 		$a.remove();
 	},

@@ -7424,9 +7424,9 @@ class Mail
 	private function _decryptSmimeBody ($_message, $_passphrase = '')
 	{
 		$AB_bo   = new \addressbook_bo();
-		$credents = Mail\Credentials::read($this->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-		$certkey = $AB_bo->get_smime_keys($credents['acc_smime_username']);
-		if (!$this->smime->verifyPassphrase($credents['acc_smime_password'], $_passphrase))
+		$acc_smime = Mail\Smime::get_acc_smime($this->profileID, $_passphrase);
+		$certkey = $AB_bo->get_smime_keys($acc_smime['acc_smime_username']);
+		if (!$this->smime->verifyPassphrase($acc_smime['pkey'], $_passphrase))
 		{
 			return array (
 				'password_required' => true,
@@ -7436,8 +7436,8 @@ class Mail
 
 		$params  = array (
 			'type'      => 'message',
-			'pubkey'    => $certkey[$credents['acc_smime_username']],
-			'privkey'   => $credents['acc_smime_password'],
+			'pubkey'    => $certkey[$acc_smime['acc_smime_username']],
+			'privkey'   => $acc_smime['pkey'],
 			'passphrase'=> $_passphrase
 		);
 		return $this->smime->decrypt($_message, $params);

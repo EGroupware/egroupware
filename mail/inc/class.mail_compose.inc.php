@@ -214,8 +214,8 @@ class mail_compose
 			),
 
 		);
-		$credentials = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-		if ($credentials['acc_smime_password'])
+		$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
+		if ($acc_smime['acc_smime_password'])
 		{
 			$actions = array_merge($actions, array(
 				'smime_sign' => array (
@@ -3656,12 +3656,8 @@ class mail_compose
 	protected function _encrypt($mail, $type, $recipients, $sender, $passphrase='')
 	{
 		$AB = new addressbook_bo();
-		$params = array (
-			'senderPubKey'		=> '',			// Sender Public key
-			'passphrase'		=> $passphrase, // passphrase of sender private key
-			'senderPrivKey'		=> '',			// sender private key
-			'recipientsCerts'	=> array()		// Recipients Certificates
-		);
+		 // passphrase of sender private key
+		$params['passphrase'] = $passphrase;
 
 		try
 		{
@@ -3670,9 +3666,9 @@ class mail_compose
 				$sender_cert = $AB->get_smime_keys($sender);
 				if (!$sender_cert)	throw new Exception("Encryption failed because no certificate has been found for sender address: " . $sender);
 				$params['senderPubKey'] = $sender_cert[$sender];
-
-				$credents = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-				$params['senderPrivKey'] = $credents['acc_smime_password'];
+				$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID, $params['passphrase']);
+				$params['senderPrivKey'] = $acc_smime['pkey'];
+				$params['extracerts'] = $acc_smime['extracerts'];
 			}
 
 			if (isset($recipients) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))

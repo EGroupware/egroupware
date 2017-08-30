@@ -13,6 +13,7 @@
 namespace EGroupware\Api\Mail;
 use Horde_Mime_Part;
 use Horde_Crypt_Smime;
+use EGroupware\Api;
 /**
  * EMailAdmin generic base class for SMTP
  */
@@ -156,7 +157,7 @@ class Smime extends Horde_Crypt_Smime
 	 *
 	 * @return boolean|array returns array of certs info or false if not successful
 	 */
-	public function extractCertPKCS12 ($pkcs12, $passphrase = '')
+	public static function extractCertPKCS12 ($pkcs12, $passphrase = '')
 	{
 		$certs = $out = array ();
 		if (openssl_pkcs12_read($pkcs12, $certs, $passphrase))
@@ -232,5 +233,39 @@ class Smime extends Horde_Crypt_Smime
 			if (openssl_x509_export($csrs, $csrsout)) $result['cert'] = $csrsout;
 		}
 		return $result;
+	}
+
+	/**
+	 * Method to extract smime related info from credential table
+	 *
+	 * @param type $acc_id acc id of mail account
+	 * @param type $passphrase = '' protect private key by passphrase
+	 * @return mixed return array of smime info or false if fails
+	 */
+	public static function get_acc_smime($acc_id, $passphrase = '')
+	{
+		if (Api\Cache::getSession('mail', 'smime_passphrase'))
+		{
+			$passphrase = Api\Cache::getSession('mail', 'smime_passphrase');
+		}
+		$acc_smime = Credentials::read(
+				$acc_id,
+				Credentials::SMIME,
+				$GLOBALS['egw_info']['user']['account_id']
+		);
+		foreach ($acc_smime as $key => $val)
+		{
+			// remove other imap stuffs but smime
+			if (!preg_match("/acc_smime/", $key)) unset($acc_smime[$key]);
+		}
+		if ($acc_smime['acc_smime_password'])
+		{
+			$extracted = self::extractCertPKCS12(
+					$acc_smime['acc_smime_password'],
+					$passphrase
+			);
+			return array_merge($acc_smime, is_array($extracted) ? $extracted : array());
+		}
+		return false;
 	}
 }

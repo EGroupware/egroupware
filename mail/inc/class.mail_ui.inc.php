@@ -56,6 +56,7 @@ class mail_ui
 		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'subscription'	=> True,
 		'folderManagement' => true,
+		'smimeExportCert' => true
 	);
 
 	/**
@@ -2268,6 +2269,21 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * Export stored smime certificate in database
+	 * @return boolean return false if not successful
+	 */
+	function smimeExportCert()
+	{
+		if (empty($_GET['acc_id'])) return false;
+		$acc_smime = Mail\Credentials::read($_GET['acc_id'], Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
+		$length = 0;
+		$mime = 'application/x-pkcs12';
+		Api\Header\Content::safe($acc_smime['acc_smime_password'], "certificate.p12", $mime, $length, true, true);
+		echo $acc_smime['acc_smime_password'];
+		exit();
+	}
+
+	/**
 	 * Build actions for display toolbar
 	 */
 	function getDisplayToolbarActions ()
@@ -3111,10 +3127,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		catch(Mail\Smime\PassphraseMissing $e)
 		{
-			$credentials = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-			if (empty($credentials['acc_smime_password']))
+			$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
+			if (empty($acc_smime))
 			{
-				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME private key in Encryption tab located at Edit Account dialog.'));
+				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'));
 			}
 			Framework::message($e->getMessage());
 			// do NOT include any default CSS
