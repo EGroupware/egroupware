@@ -115,18 +115,28 @@ class Mail_EWS extends Mail
 
     }
     function flagMessages($_flag, $_messageUID,$_folder=NULL) {
+        $messages = '';
         foreach( $_messageUID as $message ) {
             list($mailID, $changeKey) = explode( '||', $message );
             if ( $_flag == 'read' ) 
-                return Lib::setRead( $this->profileID, $mailID, $changeKey, true );
+                $messages .= Lib::setRead( $this->profileID, $mailID, $changeKey, true );
             else if ( $_flag == 'unread' ) 
-                return Lib::setRead( $this->profileID, $mailID, $changeKey, false );
+                $messages .= Lib::setRead( $this->profileID, $mailID, $changeKey, false );
             /* else */
             /*     throw new Exception("Operation '$_flag' not supported for EWS"); */
         }
 
-        return false;
+        return $messages;
     }
+	function getAttachments($mailID )
+	{
+        $attachments = $this->getAllAttachments( $mailID );
+        $only = array();
+        foreach ( $attachments as $attachment )
+            if ( !$attachment['cid'] ) $only[] = $attachment;
+
+        return $only;
+	}
     function getAllAttachments( $mailID ) {
         $mailID  = str_replace(' ','+', $mailID );
         $email = Lib::getMailBody( $this->profileID, $mailID );
