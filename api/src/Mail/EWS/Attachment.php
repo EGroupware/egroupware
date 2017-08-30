@@ -48,5 +48,15 @@ class Attachment
 
         return $out;
     }
+    public function getBytes($approx = false)
+    {
+        $bytes = 0;
+        if ($this->contents) {
+            fseek($this->_contents, 0, SEEK_END);
+            $bytes = ftell($this->_contents);
+        } 
+
+        return intval($bytes);
+    }
 
 }

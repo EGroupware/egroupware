@@ -127,6 +127,40 @@ class Mail_EWS extends Mail
 
         return false;
     }
+    function getAllAttachments( $mailID ) {
+        $mailID  = str_replace(' ','+', $mailID );
+        $email = Lib::getMailBody( $this->profileID, $mailID );
+
+        // Format data (one or many)
+        $files = array();
+        $items = array();
+        if ( $email->Attachments->FileAttachment )
+            $files = ( is_array( $email->Attachments->FileAttachment ) ? $email->Attachments->FileAttachment : array( $email->Attachments->FileAttachment ) );
+        if ( $email->Attachments->ItemAttachment )
+            $items = ( is_array( $email->Attachments->ItemAttachment ) ? $email->Attachments->ItemAttachment : array( $email->Attachments->ItemAttachment ) );
+        $data = array_merge( $files, $items );
+
+        // Format for use in header
+        $attachments = array();
+        foreach ( $data as $attachment ) {
+            // Double check: search email for CID in case ContentId is set, but doesn't exist in body
+            $cid = '';
+            if ( $attachment->ContentId && strpos($email->Body->_, $attachment->ContentId) !== FALSE ) 
+                $cid = $attachment->ContentId;
+
+            $attachments[] = array(
+                'size' => '0',
+                'filename' => $attachment->Name,
+                'type' => $attachment->ContentType,
+                'mimeType' => $attachment->ContentType,
+                'uid' => $attachment->AttachmentId->Id,
+                'cid' => $cid,
+                'partID' => $attachment->AttachmentId->Id,
+                'name' => $attachment->Name,
+            );
+        }
+        return $attachments;
+    }
 	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
 	{
         $_partID = str_replace(' ','+', $_partID );
@@ -152,39 +186,10 @@ class Mail_EWS extends Mail
             'attachment' => $content,
         );		
 	}
-    function getAttachments( $mailID ) {
-        $mailID  = str_replace(' ','+', $mailID );
-        $email = Lib::getMailBody( $this->profileID, $mailID );
-
-        // Format data (one or many)
-        $files = array();
-        $items = array();
-        if ( $email->Attachments->FileAttachment )
-            $files = ( is_array( $email->Attachments->FileAttachment ) ? $email->Attachments->FileAttachment : array( $email->Attachments->FileAttachment ) );
-        if ( $email->Attachments->ItemAttachment )
-            $items = ( is_array( $email->Attachments->ItemAttachment ) ? $email->Attachments->ItemAttachment : array( $email->Attachments->ItemAttachment ) );
-        $data = array_merge( $files, $items );
-
-        // Format for use in header
-        $attachments = array();
-        foreach ( $data as $attachment ) {
-            $attachments[] = array(
-                'size' => '0',
-                'filename' => $attachment->Name,
-                'type' => $attachment->ContentType,
-                'mimeType' => $attachment->ContentType,
-                'uid' => $attachment->AttachmentId->Id,
-                'cid' => $attachment->ContentId,
-                'partID' => $attachment->AttachmentId->Id,
-                'name' => $attachment->Name,
-            );
-        }
-        return $attachments;
-    }
     function getAttachmentByCID($_uid, $_cid, $_part, $_stream=null) {
         list($mailID,$changeKey) = explode( '||', $_uid );
         $mailID  = str_replace(' ','+', $mailID );
-        $attachments = self::getAttachments( $mailID );
+        $attachments = self::getAllAttachments( $mailID );
 
         $final = new EWS\Attachment();
         foreach( $attachments as $attachment ) {
@@ -403,32 +408,12 @@ class Mail_EWS extends Mail
 	{
         $_uid = str_replace(' ','+', $_uid );
         list($mailID,) = explode('||', $_uid);
-		$email = Lib::getMailBody( $this->profileID, $mailID );
+        $attachments = $this->getAllAttachments( $mailID );
+        $only = array();
+        foreach ( $attachments as $attachment )
+            if ( !$attachment['cid'] ) $only[] = $attachment;
 
-		// Format data (one or many)
-        $files = array();
-        $items = array();
-        if ( $email->Attachments->FileAttachment )
-            $files = ( is_array( $email->Attachments->FileAttachment ) ? $email->Attachments->FileAttachment : array( $email->Attachments->FileAttachment ) );
-        if ( $email->Attachments->ItemAttachment )
-            $items = ( is_array( $email->Attachments->ItemAttachment ) ? $email->Attachments->ItemAttachment : array( $email->Attachments->ItemAttachment ) );
-        $data = array_merge( $files, $items );
-
-        // Format for use in header
-        $attachments = array();
-        foreach ( $data as $attachment ) {
-        	$attachments[] = array(
-	            'size' => '0',
-	            'filename' => $attachment->Name,
-	            'type' => $attachment->ContentType,
-	            'mimeType' => $attachment->ContentType,
-	            'uid' => $attachment->AttachmentId->Id,
-	            'cid' => '',
-	            'partID' => $attachment->AttachmentId->Id,
-	            'name' => $attachment->Name,
-	        );
-        }
-        return $attachments;
+        return $only;
 	}
 	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
 	{
