@@ -2075,11 +2075,10 @@ app.classes.mail = AppJS.extend(
 		_widget.openItem(folder, true);
 
 		this.lock_tree();
-		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
+		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function( defaultFolder ) {
 			// Profile changed, select inbox
-			var inbox = folder + '::INBOX';
-			_widget.reSelectItem(inbox);
-			this.mail_changeFolder(inbox,_widget,'');
+			_widget.reSelectItem( defaultFolder );
+			this.mail_changeFolder( defaultFolder,_widget,'');
 			this.unlock_tree();
 		},this))
 			.sendRequest(true);

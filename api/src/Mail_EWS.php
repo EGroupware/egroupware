@@ -228,10 +228,8 @@ class Mail_EWS extends Mail
     function getHeaders($_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true, $_fetchPreviews=false) 
     {
         // Get default folder if none
-        /* if ( !$folder ) { */
-        /* 	list($fullprofile, $fullfolder) = mail_bo::getProfileDefaultFolder( $profile ); */
-        /* 	$folder = explode('::', $fullfolder)[1]; */
-        /* } */
+        if ( !$_folderName ) 
+        	$_folderName = Lib::getDefaultFolder( $this->profileID );
 
         list( $folderName, $folderID ) = explode( '::', $_folderName );
         $folderID  = str_replace(' ','+', $folderID );
@@ -424,6 +422,13 @@ class Mail_EWS extends Mail
 	{
         list($foldername,$folderID) = explode( '::', $_foldername );
         $folderID  = str_replace(' ','+', $folderID );
+        list($curfoldername,$curfolderID) = explode( '::', $currentFolder );
+        $curfolderID  = str_replace(' ','+', $curfolderID );
+
+        // Check permissions 
+        if ( !Lib::can_move( $this->profileID, $curfolderID, $folderID ) )
+            throw new Exception("Operation not allowed, not enough permissions.");
+
         foreach( $_messageUID as $message ) {
             list($mailID, $changeKey) = explode( '||', $message );
             try {
@@ -437,6 +442,9 @@ class Mail_EWS extends Mail
 
         return true;
 	}
+    function getDefaultFolder() {
+        return $this->profileID.self::DELIMITER.Lib::getDefaultFolder( $this->profileID );
+    }
     static function getFolderPermissions( $profile_id ) {
         // From Lib
         $folders = Lib::getSettingsFolders( $profile_id );

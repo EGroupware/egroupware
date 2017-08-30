@@ -341,7 +341,7 @@ class Lib
         }
 
         if ( !$folders )
-            self::getSettingsFolders( $profile );
+            $folders = self::getSettingsFolders( $profile );
 
         return $folders;
     }
@@ -595,12 +595,19 @@ class Lib
 
     }
 
-    static function get_inbox_info( $profile ) {		
+    static function getDefaultFolder( $profile ) {
+        // Get From Db
+        $db = clone($GLOBALS['egw']->db);
+        $sql = "SELECT * FROM egw_ea_ews WHERE ews_profile= $profile and ews_is_default=1";
+        $db->query($sql);
+        $row = $db->row( true );
+        if ( $row )
+            return $row['ews_name'].'::'.$row['ews_folder'];
 
-        $table = new achelper_base( 'acadmin', 'ac_exchange_profiles' );
-        $columns = array( 'is_inbox', 'inbox_account', 'exchange_user', 'inbox_backup_folder' );
-        $result = $table->read( $profile, $columns );
-        return $result;
+        $folders = self::getTreeFolders( $profile );
+        $id = $folders[0]['name'].'::'.$folders[0]['id'];
+
+        return $id;
     }
 
     static function get_folders_info( $profile ) {
@@ -686,6 +693,21 @@ class Lib
         $sql = "SELECT 'X' FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$folder' and ews_delete_permission = 1";
         $db->query($sql);
         return ( $db->row(true) );
+    }
+    static function can_move( $profile, $from, $to ) {
+        $db = clone($GLOBALS['egw']->db);
 
+        // Can move FROM->TO folder
+        $sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$from' and ews_read_permission = 1";
+        $db->query($sql);
+        $row = $db->row( true );
+        $allow_from = ( $row['ews_move_anywhere'] || in_array( $to, explode(',', $row['ews_move_to'] )));
+
+        // Can write in TO folder
+        $sql = "SELECT 'X' FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$to' and ews_write_permission = 1";
+        $db->query($sql);
+        $allow_to = ( $db->row('true') );
+
+        return $allow_from && $allow_to;
     }
 }

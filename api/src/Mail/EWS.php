@@ -13,6 +13,7 @@
 
 namespace EGroupware\Api\Mail;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\EWS\Lib;
 
 /**
  * This class holds all information about the imap connection.
@@ -35,30 +36,9 @@ class EWS
         $this->params['host'] = $params['acc_imap_host'];
         $this->params['version'] = 'Exchange2007_SP1'; 
 	}
-
-    static function description() {
-        return self::DESCRIPTION;
-    }
-
-    function isSecureConnection() {
-        return false;
-    }
-
-    function login() {
-        EWS\Lib::login( $this->params );
-        return true;
-    }
-	function setUserData($_username, $_quota)
+	function getCurrentMailbox()
 	{
-		unset($_username, $_quota);	// not used
-		return true;
-	}
-    static function getUIreadonlys() {
-        return array();
-    }
-	public function runOnLogin($func, array $params=array())
-	{
-		$this->run_on_login[] = array($func, $params);
+        return Lib::getDefaultFolder( $this->ImapServerId );
 	}
 	public function __call($name,array $params=null)
 	{
@@ -85,18 +65,6 @@ class EWS
 				return $ret;
 		}
 		throw new Api\Exception\WrongParameter("No method '$name' implemented!");
-	}
-	function getCurrentMailbox()
-	{
-        return 'INBOX';
-	}
-	function examineMailbox($mailbox, $flags=null)
-	{
-		return false;
-	}
-	function getDelimiter($_type=1)
-	{
-		return "/";
 	}
 	function hasCapability($capability)
 	{
@@ -154,10 +122,6 @@ class EWS
 			return false;
 		}
 	}
-	function getNameSpaceArray()
-	{
-        return array();
-	}
 	function mailboxExist($mailbox)
 	{
         //TODO
@@ -199,6 +163,41 @@ class EWS
 			}
 		}
 		return $returnvalue;
+	}
+
+    static function description() {
+        return self::DESCRIPTION;
+    }
+    function isSecureConnection() {
+        return false;
+    }
+    function login() {
+        EWS\Lib::login( $this->params );
+        return true;
+    }
+	function setUserData($_username, $_quota)
+	{
+		unset($_username, $_quota);	// not used
+		return true;
+	}
+    static function getUIreadonlys() {
+        return array();
+    }
+	public function runOnLogin($func, array $params=array())
+	{
+		$this->run_on_login[] = array($func, $params);
+	}
+	function examineMailbox($mailbox, $flags=null)
+	{
+		return false;
+	}
+	function getDelimiter($_type=1)
+	{
+		return "/";
+	}
+	function getNameSpaceArray()
+	{
+        return array();
 	}
 	function getStorageQuotaRoot($mailboxName)
 	{

@@ -802,6 +802,10 @@ class Mail
 		}
 	}
 
+    function getDefaultFolder() {
+        return $this->profileID . self::DELIMITER . 'INBOX';
+    }
+
 	/**
 	 * getIdentitiesWithAccounts
 	 *

@@ -1478,7 +1478,7 @@ class mail_ui
 					$rows=array();
 					return 0;
 				}
-				if (empty($folderName)) $query['selectedFolder'] = $_profileID.self::$delimiter.'INBOX';
+				if (empty($folderName)) $query['selectedFolder'] = $mail_ui->mail_bo->getDefaultFolder();
 			}
 		}
 		if (!isset($mail_ui))
@@ -1493,8 +1493,8 @@ class mail_ui
 				$rows=array();
 				return 0;
 			}
-			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->profileID.self::$delimiter.'INBOX';
-		}
+            if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->getDefaultFolder();		
+        }
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
 		//Mail::$debugTimes=true;
 		if (Mail::$debugTimes) $starttime = microtime(true);
@@ -4434,6 +4434,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$mail_ui = new mail_ui(true);	// run constructor
 		}
+        // Return Default Folder to select
+        $defaultFolder = $mail_ui->mail_bo->getDefaultFolder();
+        Api\Json\Response::get()->data( $defaultFolder );	
 	}
 
 	/**
