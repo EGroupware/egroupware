@@ -2275,7 +2275,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function smimeExportCert()
 	{
 		if (empty($_GET['acc_id'])) return false;
-		$acc_smime = Mail\Credentials::read($_GET['acc_id'], Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
+		$acc_smime = Mail\Smime::get_acc_smime($_GET['acc_id']);
 		$length = 0;
 		$mime = 'application/x-pkcs12';
 		Api\Header\Content::safe($acc_smime['acc_smime_password'], "certificate.p12", $mime, $length, true, true);
