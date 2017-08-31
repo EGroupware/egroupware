@@ -5777,6 +5777,7 @@ app.classes.mail = AppJS.extend(
 		var mailPreview = this.et2.getWidgetById('mailPreviewContainer');
 		if (attachmentArea && _attachments && _attachments.length > 0)
 		{
+			attachmentArea.getParent().set_disabled(false);
 			content.data[attachmentArea.id] = _attachments;
 			this.et2.setArrayMgr('contnet', content);
 			attachmentArea.getDOMNode().classList.remove('loading');
@@ -5791,6 +5792,10 @@ app.classes.mail = AppJS.extend(
 					m_node.style.setProperty('top', m_node.offsetTop + offset+"px");
 				}
 			}
+		}
+		else
+		{
+			attachmentArea.getParent().set_disabled(true);
 		}
 	},
 	/**

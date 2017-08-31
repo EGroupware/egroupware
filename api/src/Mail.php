@@ -5611,12 +5611,13 @@ class Mail
 			if (is_object($mail))
 			{
 				$structure = $mail->getStructure();
-				$isSmime = Mail\Smime::isSmime($structure->getType()) || Mail\Smime::isSmimeSignatureOnly($structure->getType());
+				$isSmime = Mail\Smime::isSmime(($mimeType = $structure->getType())) || Mail\Smime::isSmimeSignatureOnly(($protocol=$structure->getContentTypeParameter('protocol')));
 				if ($isSmime)
 				{
 					return $this->resolveSmimeMessage($structure, array(
 						'uid' => $_uid,
-						'mailbox' => $_folder
+						'mailbox' => $_folder,
+						'mimeType' => Mail\Smime::isSmime($protocol) ? $protocol: $mimeType
 					));
 				}
 				return $mail->getStructure();
@@ -5927,11 +5928,14 @@ class Mail
 				if ($_partID != '')
 				{
 					$mailStructureObject = $_headerObject->getStructure();
-					if (Mail\Smime::isSmime(($smime_type = $mailStructureObject->getType())))
+					if (Mail\Smime::isSmime(($mimeType = $mailStructureObject->getType())) ||
+							Mail\Smime::isSmimeSignatureOnly(($protocol=$mailStructureObject->getContentTypeParameter('protocol'))))
 					{
 						$mailStructureObject = $this->resolveSmimeMessage($mailStructureObject, array(
 							'uid' => $_uid,
-							'mailbox' => $_folder
+							'mailbox' => $_folder,
+							'mimeType' => Mail\Smime::isSmime($protocol) ? $protocol : $mimeType
+
 						));
 					}
 					$mailStructureObject->contentTypeMap();
@@ -7338,8 +7342,7 @@ class Mail
 	{
 		// default params
 		$params = array_merge(array(
- 			'passphrase'	=> '',
-			'mimeType'		=> $_mime_part->getType()
+ 			'passphrase'	=> ''
 		), $_params);
 
 		$metadata = array (

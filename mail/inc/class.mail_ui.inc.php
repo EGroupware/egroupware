@@ -1829,6 +1829,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$data['uid'] = $message_uid;
 			$data['row_id']=$this->createRowID($_folderName,$message_uid);
 
+			if (is_array($header['attachments']))
+			{
+				foreach ($header['attachments'] as $attch)
+				{
+					if (Mail\Smime::isSmime($attch['mimeType']))
+					{
+						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['mimeType']) ? 'smimeSignature' : 'smimeEncryption';
+					}
+				}
+			}
+
 			$flags = "";
 			if(!empty($header['recent'])) $flags .= "R";
 			if(!empty($header['flagged'])) $flags .= "F";
@@ -2019,16 +2030,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (in_array("bodypreview", $cols)&&$header['bodypreview'])
 			{
 				$data["bodypreview"] = $header['bodypreview'];
-			}
-			if (is_array($data['attachmentsBlock']))
-			{
-				foreach ($data['attachmentsBlock'] as &$attch)
-				{
-					if (Mail\Smime::isSmime($attch['type']))
-					{
-						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['type']) ? 'smimeSignature' : 'smimeEncryption';
-					}
-				}
 			}
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($data));
@@ -2344,6 +2345,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 			foreach ($attachments as $key => $value)
 			{
+				if (Mail\Smime::isSmime($value['mimeType'])) continue;
 				$attachmentHTML[$key]['filename']= ($value['name'] ? ( $value['filename'] ? $value['filename'] : $value['name'] ) : lang('(no subject)'));
 				$attachmentHTML[$key]['filename'] = Api\Translation::convert_jsonsafe($attachmentHTML[$key]['filename'],'utf-8');
 				//error_log(array2string($value));

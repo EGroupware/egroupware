@@ -938,3 +938,4 @@ img.smime_cert_notvalid {
 img.smime_cert_unknownemail {
 	background: #a28cff;
 }
+.smimeIcons {position: absolute;right: 0;}
