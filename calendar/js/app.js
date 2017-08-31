@@ -4006,6 +4006,9 @@ jQuery.extend(app.classes.calendar,{
 			scroll: function(delta)
 			{
 				var d = new Date(app.calendar.state.date);
+				// Set day to 15 so we don't get overflow on short months
+				// eg. Aug 31 + 1 month = Sept 31 -> Oct 1
+				d.setUTCDate(15);
 				d.setUTCMonth(d.getUTCMonth() + delta);
 				return d;
 			}
