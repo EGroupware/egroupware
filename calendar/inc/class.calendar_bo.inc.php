@@ -226,7 +226,7 @@ class calendar_bo
 		// run 16.1.002 --> .003 update automatic, to not show user time-grid in month-view, if admin did not run the update
 		if ($GLOBALS['egw_info']['apps']['calendar']['version'] == '16.1.002')
 		{
-			include(EGW_SERVER_ROOT.'/calendar/setup/tables_update.inc.php');
+			include_once(EGW_SERVER_ROOT.'/calendar/setup/tables_update.inc.php');
 			if (function_exists('calendar_upgrade16_1_002'))
 			{
 
