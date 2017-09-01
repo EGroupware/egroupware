@@ -36,8 +36,8 @@
 					<buttononly class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader"/>
 				</hbox>
 				<hbox class="mailPreviewHeaders smimeIcons">
-					<image id="smime_signature" src="smimeSignature" statustext="Smime signed message" disabled="true" align="right" width="24"/>
-					<image id="smime_encryption" src="smimeEncryption" statustext="Smime encrypted message" disabled="true" align="right" width="24"/>
+					<image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true" align="right" width="24"/>
+					<image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" disabled="true" align="right" width="24"/>
 				</hbox>
 				<hbox id="mailPreviewHeadersAttachments" class="mailPreviewHeaders">
 					<description value="Attachments"/>

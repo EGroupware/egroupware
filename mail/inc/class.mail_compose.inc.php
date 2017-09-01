@@ -220,7 +220,7 @@ class mail_compose
 			$actions = array_merge($actions, array(
 				'smime_sign' => array (
 					'caption' => 'SMIME Sign',
-					'icon' => 'smimeSignature',
+					'icon' => 'smime_sign',
 					'group' => ++$group,
 					'onExecute' => 'javaScript:app.mail.compose_setToggle',
 					'checkbox' => true,
@@ -228,7 +228,7 @@ class mail_compose
 				),
 				'smime_encrypt' => array (
 					'caption' => 'SMIME Encryption',
-					'icon' => 'smimeEncryption',
+					'icon' => 'smime_encrypt',
 					'group' => ++$group,
 					'onExecute' => 'javaScript:app.mail.compose_setToggle',
 					'checkbox' => true,
@@ -324,6 +324,13 @@ class mail_compose
 				// Additionally may be changed
 				$_focusElement, $suppressSigOnTop, $isReply
 			));
+			if (isset($_GET['smime_type'])) $smime_type = $_GET['smime_type'];
+			// pre set smime_sign and smime_encrypt actions if the original
+			// message is smime.
+			$_content['smime_sign'] = $smime_type == (Mail\Smime::TYPE_SIGN ||
+					$smime_type == Mail\Smime::TYPE_SIGN_ENCRYPT) ? 'on' : 'off';
+			$_content['smime_encrypt'] = ($smime_type == Mail\Smime::TYPE_ENCRYPT) ? 'on' : 'off';
+
 			$actionToProcess = $_GET['from'];
 			unset($_GET['from']);
 			unset($_GET['reply_id']);

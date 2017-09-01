@@ -927,7 +927,7 @@ img.smime_cert_unknownemail {
 }
 .smimeIcons {
   position: absolute;
-  right: 0;
+  right: 10px;
 }
 #popupMainDiv {
   padding: 5px;

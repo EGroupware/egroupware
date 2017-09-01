@@ -12,7 +12,7 @@
 			<rows>
 				<row class="dialogHeader">
 					<description span="2" id="message"/>
-					<image src="smimeSignature" class="@class"/>
+					<image src="smime_sign" class="@class"/>
 				</row>
 				<row>
 					<description id="message2"/>

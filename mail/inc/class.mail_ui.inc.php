@@ -1835,7 +1835,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				{
 					if (Mail\Smime::isSmime($attch['mimeType']))
 					{
-						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['mimeType']) ? 'smimeSignature' : 'smimeEncryption';
+						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['mimeType'])?
+								Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
 					}
 				}
 			}

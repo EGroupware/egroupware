@@ -227,9 +227,9 @@ app.classes.mail = AppJS.extend(
 				// removed once the issue is solved.
 				var password = this.et2.getWidgetById('password');
 				if (password) password.set_value('');
-
-				if (this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp') &&
-					this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').checked ||
+				var composeToolbar = this.et2.getWidgetById('composeToolbar');
+				if (composeToolbar._actionManager.getActionById('pgp') &&
+					composeToolbar._actionManager.getActionById('pgp').checked ||
 					this.et2.getArrayMgr('content').data.mail_plaintext &&
 						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
 				{
@@ -312,6 +312,15 @@ app.classes.mail = AppJS.extend(
 				else if(to)
 				{
 					jQuery('input',to.node).focus();
+				}
+				var smime_sign = this.et2.getWidgetById('smime_sign');
+				var smime_encrypt = this.et2.getWidgetById('smime_encrypt');
+
+				if (composeToolbar._actionManager.getActionById('smime_sign') &&
+						composeToolbar._actionManager.getActionById('smime_encrypt'))
+				{
+					if (smime_sign.getValue() == 'on') composeToolbar.checkbox('smime_sign', true);
+					if (smime_encrypt.getValue() == 'on') composeToolbar.checkbox('smime_encrypt', true);
 				}
 				break;
 			case 'mail.subscribe':
@@ -594,7 +603,8 @@ app.classes.mail = AppJS.extend(
 
 		// We only handle one for everything but forward
 		settings.id = (typeof _elems == 'undefined'?'':_elems[0].id);
-
+		var content = egw.dataGetUIDdata(settings.id);
+		if (content) settings.smime_type = content.data['smime'];
 		switch(_action.id)
 		{
 			case 'compose':
@@ -994,10 +1004,10 @@ app.classes.mail = AppJS.extend(
 				switch (smime_widgets[i])
 				{
 					case 'smime_signature':
-						widget.set_disabled(!(dataElem.data.smime == 'smimeSignature'));
+						widget.set_disabled(!(dataElem.data.smime == 'smime_sign'));
 						break;
 					case 'smime_encryption':
-						widget.set_disabled(!(dataElem.data.smime == 'smimeEncryption'));
+						widget.set_disabled(!(dataElem.data.smime == 'smime_encrypt'));
 						break;
 					default:
 						widget.set_disabled(true);
