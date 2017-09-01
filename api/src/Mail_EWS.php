@@ -86,6 +86,57 @@ class Mail_EWS extends Mail
 
         if (is_null(self::$mailConfig)) self::$mailConfig = Config::read('mail');
     }
+	function appendMessage($_folderName, $_header, $_body, $_flags='\\Recent')
+	{
+        // TODO create mail and put it inside folder (sent folder)
+        return 0;
+		if (!is_resource($_header))
+		{
+			if (stripos($_header,'message-id:')===false)
+			{
+				$_header = 'Message-ID: <'.self::getRandomString().'@localhost>'."\n".$_header;
+			}
+			//error_log(__METHOD__.' ('.__LINE__.') '."$_folderName, $_header, $_body, $_flags");
+			$_header = ltrim(str_replace("\n","\r\n",$_header));
+			$_header .= str_replace("\n","\r\n",$_body);
+		}
+		// the recent flag is the default enforced here ; as we assume the _flags is always set,
+		// we default it to hordes default (Recent) (, other wise we should not pass the parameter
+		// for flags at all)
+		if (empty($_flags)) $_flags = '\\Recent';
+		//if (!is_array($_flags) && stripos($_flags,',')!==false) $_flags=explode(',',$_flags);
+		//if (!is_array($_flags)) $_flags = (array) $_flags;
+		try
+		{
+			$dataNflags = array();
+			// both methods below are valid for appending a message to a mailbox.
+			// the commented version fails in retrieving the uid of the created message if the server
+			// is not returning the uid upon creation, as the method in append for detecting the uid
+			// expects data to be a string. this string is parsed for message-id, and the mailbox
+			// searched for the message-id then returning the uid found
+			//$dataNflags[] = array('data'=>array(array('t'=>'text','v'=>"$header"."$body")), 'flags'=>array($_flags));
+			$dataNflags[] = array('data' => $_header, 'flags'=>array($_flags));
+			$messageid = $this->icServer->append($_folderName,$dataNflags);
+		}
+		catch (\Exception $e)
+		{
+			if (self::$debug) error_log("Could not append Message: ".$e->getMessage());
+			throw new Exception\WrongUserinput(lang("Could not append Message:").' '.$e->getMessage().': '.$e->details);
+			//return false;
+		}
+		//error_log(__METHOD__.' ('.__LINE__.') '.' appended UID:'.$messageid);
+		//$messageid = true; // for debug reasons only
+		if ($messageid === true || empty($messageid)) // try to figure out the message uid
+		{
+			$list = $this->getHeaders($_folderName, $_startMessage=1, 1, 'INTERNALDATE', true, array(),null, false);
+			if ($list)
+			{
+				if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '.' MessageUid:'.$messageid.' but found:'.array2string($list));
+				$messageid = $list['header'][0]['uid'];
+			}
+		}
+		return $messageid;
+	}
     function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no') {
         if ( !$_folder ) return;
 
@@ -428,6 +479,9 @@ class Mail_EWS extends Mail
 
         return $only;
 	}
+    function getDefaultFolder() {
+        return $this->profileID.self::DELIMITER.Lib::getDefaultFolder( $this->profileID );
+    }
 	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
 	{
         list($foldername,$folderID) = explode( '::', $_foldername );
@@ -452,9 +506,6 @@ class Mail_EWS extends Mail
 
         return true;
 	}
-    function getDefaultFolder() {
-        return $this->profileID.self::DELIMITER.Lib::getDefaultFolder( $this->profileID );
-    }
     static function getFolderPermissions( $profile_id ) {
         // From Lib
         $folders = Lib::getSettingsFolders( $profile_id );
@@ -537,31 +588,35 @@ class Mail_EWS extends Mail
     }
     function getJunkFolder($_checkexistance=TRUE)
     {
-        return false;
+        return $this->getSpecialFolder('acc_folder_trash');
     }
     function getDraftFolder($_checkexistance=TRUE)
     {
-        return false;
+        return $this->getSpecialFolder('acc_folder_draft');
     }
     function getTemplateFolder($_checkexistance=TRUE)
     {
-        return false;
+        return $this->getSpecialFolder('acc_folder_template');
     }
     function getTrashFolder($_checkexistance=TRUE)
     {
-        return false;
+        return $this->getSpecialFolder('acc_folder_trash');
     }
     function getSentFolder($_checkexistance=TRUE)
     {
-        return false;
+        return $this->getSpecialFolder('acc_folder_sent');
     }
     function getOutboxFolder($_checkexistance=TRUE)
     {
-        return false;
+        return $this->getSpecialFolder('acc_folder_sent');
     }
     function getArchiveFolder($_checkexistance=TRUE)
     {
-        return false;
+        return $this->getSpecialFolder('acc_folder_archive');
+    }
+    function getSpecialFolder( $folder ) {
+        $acc = Mail\Account::read($this->profileID);
+        return $acc->params[ $folder ];
     }
 }
 

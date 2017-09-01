@@ -1236,11 +1236,12 @@ class admin_mail
         elseif ( $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' || $content['acc_imap_type'] == 'EWS' ) 
         {
             $sel_options['ews_permissions'] = Api\Mail_EWS::getFolderPermissionsSelOptions( $content['acc_id'] );
-            // EWS cannot get mailboxes yet
-			foreach(array('acc_folder_sent', 'acc_folder_trash', 'acc_folder_draft', 'acc_folder_template', 'acc_folder_junk') as $folder)
-			{
-				$tpl->setElementAttribute($folder, 'allowFreeEntries', true);
-			}
+
+            $sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
+                $sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
+                $sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
+                $sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
+                    Api\Mail\EWS\Lib::getFoldersSelOptions( $content['acc_id'] );
         }
 		else
 		{
@@ -1264,6 +1265,7 @@ class admin_mail
 			}
 		}
 
+        error_log( print_r( $sel_options, true ) );
 		$sel_options['acc_imap_type'] = Mail\Types::getIMAPServerTypes(false);
 		$sel_options['acc_smtp_type'] = Mail\Types::getSMTPServerTypes(false);
 		$sel_options['acc_imap_logintype'] = self::$login_types;

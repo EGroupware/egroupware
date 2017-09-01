@@ -2940,6 +2940,7 @@ class mail_compose
 		}
 
 
+        error_log( print_r( $sentFolder , true ) );
 		if(isset($sentFolder) && $sentFolder && $sentFolder != 'none' &&
 			$this->mailPreferences['sendOptions'] != 'send_only' &&
 			$messageIsDraft == false)
