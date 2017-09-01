@@ -7391,6 +7391,7 @@ class Mail
 			$metadata = array_merge ($metadata, array (
 				'verify'		=> $cert->verify,
 				'cert'			=> $cert->cert,
+				'certDetails'	=> $this->smime->parseCert($cert->cert),
 				'msg'			=> $cert->msg,
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
 				'email'			=> $cert->email,

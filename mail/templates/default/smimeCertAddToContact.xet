@@ -18,11 +18,20 @@
 					<description id="message2"/>
 				</row>
 				<row>
-					<description value="Certificate Info" label="%s:"/>
+					<description value="Signed by" label="%s:"/>
+					<description id="certDetails[subject][commonName]"/>
 				</row>
 				<row>
-					<description value="Signer's email" label="%s:"/>
-					<description id="email"/>
+					<description value="Email address" label="%s:"/>
+					<description id="certDetails[subject][emailAddress]"/>
+				</row>
+				<row>
+					<description value="Country" label="%s:"/>
+					<description id="certDetails[subject][countryName]"/>
+				</row>
+				<row>
+					<description value="Certificate issued by" label="%s:"/>
+					<description id="certDetails[issuer][commonName]"/>
 				</row>
 				<row>
 					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="200" align_tabs="v">
