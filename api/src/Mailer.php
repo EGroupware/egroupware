@@ -1169,7 +1169,10 @@ class Mailer extends Horde_Mime_Mail
 		// parameters to pass on for encrypt mime part
 		$encrypt_params = array(
 			'type'		=> 'message',
-			'pubkey'	=> $params['recipientsCerts']
+			'pubkey'	=> array_merge(
+				$params['recipientsCerts'],
+				array($this->account->acc_smime_username => $params['senderPubKey'])
+			)
 		);
 		switch ($type)
 		{
