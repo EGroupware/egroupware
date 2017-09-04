@@ -789,12 +789,16 @@ class Mailer extends Horde_Mime_Mail
 		// code copied from Horde_Mime_Mail::getRaw(), as there is no way to inject charset in
 		// _headers->toString(), which is required to encode headers containing non-ascii chars correct
         if ($stream) {
+			// Smime sign needs to be 7bit encoded to avoid any changes
+			$encode = $this->_base && $this->_base->getMetadata('X-EGroupware-Smime-signed')?
+					Horde_Mime_Part::ENCODE_7BIT :
+					(Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY);
             $hdr = new Horde_Stream();
             $hdr->add($this->_headers->toString(array('charset' => 'utf-8', 'canonical' => true)), true);
             return Horde_Stream_Wrapper_Combine::getStream(
                 array($hdr->stream,
                       $this->getBasePart()->toString(
-                        array('stream' => true, 'canonical' => true, 'encode' => Horde_Mime_Part::ENCODE_7BIT | Horde_Mime_Part::ENCODE_8BIT | Horde_Mime_Part::ENCODE_BINARY))
+                        array('stream' => true, 'canonical' => true, 'encode' => $encode))
                 )
             );
         }
