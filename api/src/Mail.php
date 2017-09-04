@@ -7346,7 +7346,7 @@ class Mail
 		), $_params);
 
 		$metadata = array (
-			 'mimeType' => $params['mimeType']
+			 'mimeType' => $params['mimeType']?$params['mimeType']:$_mime_part->getType()
 		);
 		$this->smime = new Mail\Smime;
 		$message = $this->getMessageRawBody($params['uid'], null, $params['mailbox']);
@@ -7358,7 +7358,9 @@ class Mail
 			}
 			catch(\Horde_Crypt_Exception $e)
 			{
-				throw new Mail\Smime\PassphraseMissing(lang('Could not decrypt S/MIME data. This message may not be encrypted by your public key.'));
+				throw new Mail\Smime\PassphraseMissing(lang('Could not decrypt '.
+						'S/MIME data. This message may not be encrypted by your '.
+						'public key and not being able to find corresponding private key.'));
 			}
 			$metadata['encrypted'] = true;
 		}
