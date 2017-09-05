@@ -560,6 +560,8 @@ class calendar_bo
 	 *		otherwise the original recuring event (with the first start- + enddate) is returned
 	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
 	 *  order column-names plus optional DESC|ASC separted by comma
+	 *  private_allowed array Array of user IDs that are allowed when clearing private
+	 *		info, defaults to users
 	 *  ignore_acl if set and true no check_perms for a general Acl::READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
 	 *  cols string|array columns to select, if set an iterator will be returned
@@ -669,7 +671,7 @@ class calendar_bo
 			}
 			if (!$params['ignore_acl'] && ($is_private || (!$event['public'] && $filter == 'hideprivate')))
 			{
-				$this->clear_private_infos($events[$id],$users);
+				$this->clear_private_infos($events[$id],$params['private_allowed'] ? $params['private_allowed'] : $users);
 			}
 		}
 

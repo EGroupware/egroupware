@@ -383,6 +383,9 @@ class calendar_uilist extends calendar_ui
 		{
 			$search_params['users'] = $params['owner'] ? $params['owner'] : explode(',',$this->owner);
 		}
+		// Allow private to stay for all viewed owners, even if in separate calendars
+		$search_params['private_allowed'] = (array)$params['selected_owners'] + (array)$search_params['users'];
+		
 		if ($params['col_filter'])
 		{
 			$col_filter = array();
