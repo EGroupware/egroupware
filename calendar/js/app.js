@@ -2813,7 +2813,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			if(need_data && seperate_owners)
 			{
 				this._fetch_data(
-					jQuery.extend({}, state, {owner: value[i].owner}),
+					jQuery.extend({}, state, {owner: value[i].owner, selected_owners: state.owner}),
 					this.sidebox_et2 ? null : this.et2.getInstanceManager()
 				);
 				need_data = false;
@@ -2875,7 +2875,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			filter:'custom', // Must be custom to get start & end dates
 			status_filter: state.status_filter,
 			cat_id: cat_id,
-			csv_export: false
+			csv_export: false,
+			selected_owners: state.selected_owners
 		});
 		// Show ajax loader
 		if(typeof framework !== 'undefined')
