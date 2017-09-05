@@ -433,8 +433,9 @@ class timesheet_ui extends timesheet_bo
 		{
 			$readonlys['ts_owner'] = true;
 		}
-		// in view mode, we need to add the owner, if it does not exist, otherwise it's displayed empty
-		if ($view && $content['ts_owner'] && !isset($edit_grants[$content['ts_owner']]))
+		// in view mode or when editing existing entries, we need to add the owner
+		// if it does not exist, otherwise it's displayed empty or missing
+		if (($view || $content['ts_id']) && $content['ts_owner'] && !isset($edit_grants[$content['ts_owner']]))
 		{
 			$edit_grants[$content['ts_owner']] = Api\Accounts::username($content['ts_owner']);
 		}
