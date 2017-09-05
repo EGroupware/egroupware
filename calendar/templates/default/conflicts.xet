@@ -14,10 +14,10 @@
 				</columns>
 				<rows>
 					<row valign="top">
-						<image src="conflicts[$row][icon_participants]" statustext="@conflicts[$row][tooltip_participants]" no_lang="1"/>
+						<image src="conflicts[$row][icon_participants]" statustext_html="true" statustext="@conflicts[$row][tooltip_participants]" no_lang="1"/>
 						<image src="conflicts[$row][icon_recur]" label="@conflicts[$row][text_recur]" no_lang="1"/>
 						<description id="conflicts[$row][time]" no_lang="1"/>
-						<vbox statustext="conflict[$row][tooltip]" orient=",0,0">
+						<vbox statustext="conflict[$row][tooltip]" statustext_html="true" orient=",0,0">
 							<description id="conflicts[$row][title]" no_lang="1" options="b"/>
 							<description id="conflicts[$row][conflicting_participants]" no_lang="1"/>
 						</vbox>
