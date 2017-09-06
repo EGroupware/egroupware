@@ -2222,9 +2222,20 @@ class mail_compose
 				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$newBody = mail_ui::resolve_inline_images($newBody2, $_folder, $_uid, $_partID, 'plain');
 				$this->sessionData['body'] .= "\r\n";
+				$hasSignature = false;
 				// create body new, with good line breaks and indention
 				foreach(explode("\n",$newBody) as $value) {
 					// the explode is removing the character
+					//$value .= 'ee';
+
+					// Try to remove signatures from qouted parts to avoid multiple
+					// signatures problem in reply (rfc3676#section-4.3).
+					if ($hasSignature || ($hasSignature = preg_match("/\G--(\s|\s[\r\n])$/",$value)))
+					{
+						continue;
+					}
+
+					if ($hasSignature)	continue;
 					if (trim($value) != '') {
 						#if ($value != "\r") $value .= "\n";
 					}
