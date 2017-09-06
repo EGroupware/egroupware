@@ -1103,7 +1103,9 @@ class mail_compose
 		}
 		if ((isset($this->mailPreferences['disableRulerForSignatureSeparation']) &&
 			$this->mailPreferences['disableRulerForSignatureSeparation']) ||
-			empty($signature['ident_signature']) || trim($this->convertHTMLToText($signature['ident_signature'],true,true)) =='')
+			empty($signature['ident_signature']) ||
+			trim($this->convertHTMLToText($signature['ident_signature'],true,true)) =='' ||
+			$this->mailPreferences['insertSignatureAtTopOfMessage'] == '1')
 		{
 			$disableRuler = true;
 		}
