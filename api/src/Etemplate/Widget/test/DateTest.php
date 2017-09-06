@@ -63,7 +63,10 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$etemplate = new Etemplate();
 		$etemplate->read(static::TEST_TEMPLATE, 'test');
 
+		// Send it around
 		$result = $this->mockedRoundTrip($etemplate, $content);
+
+		// Test it
 		$this->validateTest($result, $expected ? $expected : $content);
 	}
 
