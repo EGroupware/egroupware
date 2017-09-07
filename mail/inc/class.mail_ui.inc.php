@@ -1426,6 +1426,16 @@ class mail_ui
 				//'onExecute' => 'javaScript:app.mail.mail_dragStart',
 			)
 		);
+		$extra_actions = Api\Hooks::process(array(
+            'location' => 'mail_extra_actions',
+            'group' => $group,
+            'profileID' => $this->mail_bo->profileID,
+        ), array(), true);
+        if ( $extra_actions ) {
+            foreach ( $extra_actions as $app => $extra) 
+                $actions += $extra;
+        }
+
 		//error_log(__METHOD__.__LINE__.array2string(array_keys($actions)));
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
 		if (!isset($GLOBALS['egw_info']['user']['apps']['infolog']))
@@ -2739,7 +2749,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$this->mail_bo->reopen($mailbox);
 
 		$message = $this->mail_bo->getMessageRawBody($uid, $partID, $mailbox);
-        error_log( print_r( $message , true ) );
 
 		$this->mail_bo->closeConnection();
 		if ($rememberServerID != $this->mail_bo->profileID)
