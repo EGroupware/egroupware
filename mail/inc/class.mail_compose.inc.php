@@ -2235,10 +2235,6 @@ class mail_compose
 						continue;
 					}
 
-					if ($hasSignature)	continue;
-					if (trim($value) != '') {
-						#if ($value != "\r") $value .= "\n";
-					}
 					$numberOfChars = strspn(trim($value), ">");
 					$appendString = str_repeat('>', $numberOfChars + 1);
 
