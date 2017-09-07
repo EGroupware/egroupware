@@ -393,6 +393,17 @@ class Mail_EWS extends Mail
 
 		return $message;
 	}
+    function getMessageRawHeader($_uid, $_partID = '', $_folder = '')
+    {
+        $body = $this->getMessageRawBody( $_uid, $_partID, $_folder );
+
+        // Show only First part of raw message, before line break
+        $br = strpos( $body, "\r\n\r\n" );
+        if ( $br )
+            $body = substr( $body, 0, $br );
+
+        return $body;
+    }
 	function getMessageEnvelope($_uid, $_partID = '',$decode=false, $_folder='', $_useHeaderInsteadOfEnvelope=false)
 	{
         $_uid = str_replace(' ','+', $_uid );
@@ -559,10 +570,6 @@ class Mail_EWS extends Mail
     function getFlags ($_messageUID) 
     {
         return null;
-    }
-    function getMessageRawHeader($_uid, $_partID = '', $_folder = '')
-    {
-        return '';
     }
     function getJunkFolder($_checkexistance=TRUE)
     {

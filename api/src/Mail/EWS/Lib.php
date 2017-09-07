@@ -350,7 +350,6 @@ class Lib
     static function getFoldersSelOptions( $profile ) {		
 
         $folders = self::getSettingsFolders( $profile );
-        error_log( print_r( $folders , true ) );
         $final = array();
         foreach ( $folders as $folder ) 
             $final[ $folder['id'] ] = $folder['name'];

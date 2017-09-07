@@ -1265,7 +1265,6 @@ class admin_mail
 			}
 		}
 
-        error_log( print_r( $sel_options, true ) );
 		$sel_options['acc_imap_type'] = Mail\Types::getIMAPServerTypes(false);
 		$sel_options['acc_smtp_type'] = Mail\Types::getSMTPServerTypes(false);
 		$sel_options['acc_imap_logintype'] = self::$login_types;
