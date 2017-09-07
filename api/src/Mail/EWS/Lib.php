@@ -78,6 +78,27 @@ class Lib
         return $response->ResponseMessages->UpdateItemResponseMessage->ResponseClass == 'Success';
     }
 
+    static function createMail( $profile, $folderID, $mime ) {
+        $ews = self::init( $profile );
+
+        $request = new DT\CreateItemType();
+        $request->MessageDisposition = 'SaveOnly';
+
+        $request->SavedItemFolderId = new DT\TargetFolderIdType();
+        $request->SavedItemFolderId->FolderId = new DT\FolderIdType();
+        $request->SavedItemFolderId->FolderId->Id = $folderID;
+
+        $message = new DT\MessageType();
+        $message->MimeContent = $mime;
+
+        $request->Items = new DT\NonEmptyArrayOfAllItemsType();
+        $request->Items->Message[] = $message;
+
+        $response = $ews->CreateItem($request);
+
+        return $response->ResponseMessages->CreateItemResponseMessage->ResponseClass == 'Success';
+    }
+
     static function getAttachment( $profile, $attachmentID ) {
         $ews = self::init( $profile );
 
@@ -161,7 +182,7 @@ class Lib
         $response = $response->ResponseMessages->GetItemResponseMessage;
         if ($response->ResponseCode == 'NoError' &&
             $response->ResponseClass == 'Success') {
-            return $response->Items->Message->MimeContent->_;
+            return base64_decode( $response->Items->Message->MimeContent->_ );
         }
         else
             return '';

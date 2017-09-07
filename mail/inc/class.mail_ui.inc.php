@@ -2739,6 +2739,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$this->mail_bo->reopen($mailbox);
 
 		$message = $this->mail_bo->getMessageRawBody($uid, $partID, $mailbox);
+        error_log( print_r( $message , true ) );
 
 		$this->mail_bo->closeConnection();
 		if ($rememberServerID != $this->mail_bo->profileID)
