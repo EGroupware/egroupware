@@ -41,7 +41,7 @@ foreach($categories as $cat)
 	{
 		// Use slightly more specific selector that just class, to allow defaults
 		// if the category has no color
-		$content .= ".egwGridView_scrollarea tr.cat_{$cat['id']} > td:first-child, .select-cat li.cat_{$cat['id']}, .nextmatch_header_row .et2_selectbox.select-cat.cat_{$cat['id']} a.chzn-single {border-left-color: {$cat['data']['color']};} div.cat_{$cat['id']}, span.cat_{$cat['id']} { background-color: {$cat['data']['color']};} /*{$cat['name']}*/\n";
+		$content .= ".egwGridView_scrollarea tr.cat_{$cat['id']} > td:first-child, .select-cat li.cat_{$cat['id']}, .nextmatch_header_row .et2_selectbox.select-cat.cat_{$cat['id']} a.chzn-single {border-left-color: {$cat['data']['color']};} .cat_{$cat['id']}.fullline_cat_bg, div.cat_{$cat['id']}, span.cat_{$cat['id']} { background-color: {$cat['data']['color']};} /*{$cat['name']}*/\n";
 	}
 	if (!empty($cat['data']['icon']))
 	{
