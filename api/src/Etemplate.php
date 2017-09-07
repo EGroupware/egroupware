@@ -342,7 +342,7 @@ class Etemplate extends Etemplate\Widget\Template
 		}
 		elseif (self::validation_errors(self::$request->ignore_validation))
 		{
-			error_log(__METHOD__."(,".array2string($_content).') validation_errors='.array2string(self::$validation_errors));
+			//error_log(__METHOD__."(,".array2string($_content).') validation_errors='.array2string(self::$validation_errors));
 			self::$response->generic('et2_validation_error', self::$validation_errors);
 			return;
 		}
