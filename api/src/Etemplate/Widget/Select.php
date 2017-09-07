@@ -198,6 +198,10 @@ class Select extends Etemplate\Widget
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
+			if (!$this->attrs['multiple'] && is_array($value) && count($value) > 1)
+			{
+				$value = array_shift($value);
+			}
 			// some widgets sub-types need some post-processing
 			// ToDo: move it together with preprocessing to clientside
 			switch ($widget_type)
