@@ -88,16 +88,17 @@ class Mail_EWS extends Mail
     }
 	function appendMessage($_folderId, $_header, $_body, $_flags='\\Recent')
 	{
+        // After Message is Sent, store mail (contained as stream in _header) to 'Sent Folder' (from config) _folderId
         $raw = stream_get_contents( $_header );
         $mime = base64_encode( $raw );
 
         return Lib::createMail( $this->profileID, $_folderId, $mime );
 	}
     function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no') {
+        // Delete messages after checking for specitic folder permissions
         if ( !$_folder ) return;
 
-        list($foldername,$folderID) = explode( '::', $_folder);
-        $folderID  = str_replace(' ','+', $folderID );
+        $folderID = $this->getFolderId( $_folder );
         $methodMap = array(
             'no' => 'MoveToDeletedItems',
             'mark_as_deleted' => 'SoftDelete',
@@ -122,6 +123,7 @@ class Mail_EWS extends Mail
 
     }
     function flagMessages($_flag, $_messageUID,$_folder=NULL) {
+        // Flag messages as read/unread. Other flags are not implemented
         $messages = '';
         if ( !is_array( $_messageUID ) ) $_messageUID = array( $_messageUID );
         foreach( $_messageUID as $message ) {
@@ -138,6 +140,7 @@ class Mail_EWS extends Mail
     }
 	function getAttachments($mailID )
 	{
+        // Get attachments for mailID excluding Embedded images
         $attachments = $this->getAllAttachments( $mailID );
         $only = array();
         foreach ( $attachments as $attachment )
@@ -146,6 +149,7 @@ class Mail_EWS extends Mail
         return $only;
 	}
     function getAllAttachments( $mailID ) {
+        // Get All attachments for mailID, including Embedded images
         $mailID  = str_replace(' ','+', $mailID );
         $email = Lib::getMailBody( $this->profileID, $mailID );
 
@@ -181,6 +185,7 @@ class Mail_EWS extends Mail
     }
 	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
 	{
+        // Get attachment and its contents, return as data or stream
         $_partID = str_replace(' ','+', $_partID );
 		$attachment = Lib::getAttachment( $this->profileID, $_partID );
 
@@ -205,6 +210,7 @@ class Mail_EWS extends Mail
         );		
 	}
     function getAttachmentByCID($_uid, $_cid, $_part, $_stream=null) {
+        // Get embedded
         list($mailID,$changeKey) = explode( '||', $_uid );
         $mailID  = str_replace(' ','+', $mailID );
         $attachments = self::getAllAttachments( $mailID );
@@ -220,6 +226,7 @@ class Mail_EWS extends Mail
         return $final;
     }
     function getFolderArrays ($_nodePath = null, $_onlyTopLevel = false, $_search= 2, $_subscribedOnly = false, $_getCounter = false) {
+        // Get Folder Tree to display. Used in mail_tree    
         $efolders = Lib::getTreeFolders( $this->profileID );
         $foldersList = array();
         $ids = array();
@@ -228,7 +235,7 @@ class Mail_EWS extends Mail
             $foldersList[ $folder['name'] ] = array(
                 'MAILBOX'	=>	$folder['name'] ,
                 'ATTRIBUTES'	=>	array(
-                    '\\hashchildren', '\\subscribed', 
+                    '\\hasChildren', '\\subscribed', 
                 ),
                 'CAN_DELETE' => $folder['delete'],
                 'delimiter'	=> '/',
@@ -246,8 +253,9 @@ class Mail_EWS extends Mail
         return $foldersList;
     }	
     function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true) {
+        // Get Folder status (read/unread)
         $folderId = $this->getFolderId( $_folderName );
-        $folder = Lib::getFolder( $this->profileID, $folderID );
+        $folder = Lib::getFolder( $this->profileID, $folderId );
 
         return array(
             'displayName' => $folder->DisplayName,
@@ -264,6 +272,8 @@ class Mail_EWS extends Mail
     }
     function getHeaders($_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true, $_fetchPreviews=false) 
     {
+        // Get All mails in specific folder
+
         // Get default folder if none
         if ( !$_folderName ) 
         	$_folderName = Lib::getDefaultFolder( $this->profileID );
@@ -351,6 +361,8 @@ class Mail_EWS extends Mail
     }
 	function getMessageAttachments($_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folder='')
 	{
+        // Get all attachments for message 
+
         $_uid = str_replace(' ','+', $_uid );
         list($mailID,) = explode('||', $_uid);
         $attachments = $this->getAllAttachments( $mailID );
@@ -362,6 +374,8 @@ class Mail_EWS extends Mail
 	}
     function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false, $_folder = '', &$calendar_part=null)
     {
+        // Get Message Body
+
         $_uid = str_replace(' ','+', $_uid );
         list($mailID,) = explode('||', $_uid);
 
@@ -375,6 +389,7 @@ class Mail_EWS extends Mail
     }
 	function getMessageRawBody($_uid, $_partID = '', $_folder='', $_stream=false)
 	{
+        // Get Raw message (eml)
         $_uid = str_replace(' ','+', $_uid );
         list($mailID,) = explode('||', $_uid);
 
@@ -396,9 +411,9 @@ class Mail_EWS extends Mail
 	}
     function getMessageRawHeader($_uid, $_partID = '', $_folder = '')
     {
+        // Show only First part of raw message, before line break
         $body = $this->getMessageRawBody( $_uid, $_partID, $_folder );
 
-        // Show only First part of raw message, before line break
         $br = strpos( $body, "\r\n\r\n" );
         if ( $br )
             $body = substr( $body, 0, $br );
@@ -407,6 +422,8 @@ class Mail_EWS extends Mail
     }
 	function getMessageEnvelope($_uid, $_partID = '',$decode=false, $_folder='', $_useHeaderInsteadOfEnvelope=false)
 	{
+        // Get Mail and Headers
+
         $_uid = str_replace(' ','+', $_uid );
         list($mailID,) = explode('||', $_uid);
 
@@ -474,10 +491,8 @@ class Mail_EWS extends Mail
     }
 	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
 	{
-        list($foldername,$folderID) = explode( '::', $_foldername );
-        $folderID  = str_replace(' ','+', $folderID );
-        list($curfoldername,$curfolderID) = explode( '::', $currentFolder );
-        $curfolderID  = str_replace(' ','+', $curfolderID );
+        $folderID = $this->getFolderId( $_foldername );
+        $curfolderID = $this->getFolderId( $currentFolder );
 
         // Check permissions 
         if ( !Lib::can_move( $this->profileID, $curfolderID, $folderID ) )
@@ -551,33 +566,13 @@ class Mail_EWS extends Mail
             $obj->save( $folder );
         }
     }
+    
     function getFolderId( $_folderName ) {
         $ids = Api\Cache::getSession('mail', 'ews_folder_ids' );
         $folderID = $ids[ $_folderName ];
         $folderID  = str_replace(' ','+', $folderID );
 
         return $folderID;
-    }
-    
-    function reopen($_foldername)
-    {
-        return true;
-    }
-    function closeConnection()
-    {
-        return true;
-    }
-    function getStructure($_uid, $_partID=null, $_folder=null, $_preserveSeen=false)
-    {
-        return new Horde_Mime_Part();
-    }
-    function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false, $_folder='')
-    {
-        return array();
-    }
-    function getFlags ($_messageUID) 
-    {
-        return null;
     }
     function getJunkFolder($_checkexistance=TRUE)
     {
@@ -610,6 +605,28 @@ class Mail_EWS extends Mail
     function getSpecialFolder( $folder ) {
         $acc = Mail\Account::read($this->profileID);
         return $acc->params[ $folder ];
+    }
+
+    // Empty functions to comply with Api\Mail
+    function reopen($_foldername)
+    {
+        return true;
+    }
+    function closeConnection()
+    {
+        return true;
+    }
+    function getStructure($_uid, $_partID=null, $_folder=null, $_preserveSeen=false)
+    {
+        return new Horde_Mime_Part();
+    }
+    function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false, $_folder='')
+    {
+        return array();
+    }
+    function getFlags ($_messageUID) 
+    {
+        return null;
     }
 }
 

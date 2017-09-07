@@ -645,12 +645,10 @@ class Lib
         $db->query($sql);
         $row = $db->row( true );
         if ( $row )
-            return $row['ews_name'].'::'.$row['ews_folder'];
+            return $row['ews_name'];
 
         $folders = self::getTreeFolders( $profile );
-        $id = $folders[0]['name'].'::'.$folders[0]['id'];
-
-        return $id;
+        return $folders[0]['name'];
     }
 
     static function get_folders_info( $profile ) {
