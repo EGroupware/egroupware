@@ -711,11 +711,13 @@ var et2_tree = (function(){ "use strict"; return et2_inputWidget.extend(
 	 *
 	 * @param _id ID of the node
 	 * @param _label label to set
+	 * @param _tooltip new tooltip, default is previous set tooltip
 	 * @return void
 	 */
-	setLabel: function(_id, _label) {
+	setLabel: function(_id, _label, _tooltip) {
 		if(this.input == null) return null;
-		this.input.setItemText(_id, this._htmlencode(_label));
+		var tooltip = _tooltip || this.getNode(_id).tooltip;
+		this.input.setItemText(_id, this._htmlencode(_label), tooltip);
 	},
 
 	/**
