@@ -402,7 +402,7 @@ class Lib
         return $array;
     }
 
-    static function getAllFolders( $ews) {
+    static function getAllFolders( $ews, $root = null, $root_name = null) {
 
         $request = new DT\FindFolderType();
         $request->Traversal = DT\FolderQueryTraversalType::SHALLOW; 
@@ -414,15 +414,28 @@ class Lib
         $request->IndexedPageFolderView->Offset = 0;
         $request->ParentFolderIds = new DT\NonEmptyArrayOfBaseFolderIdsType();
 
-        $request->ParentFolderIds->DistinguishedFolderId = new DT\DistinguishedFolderIdType();
-        $request->ParentFolderIds->DistinguishedFolderId->Id = DT\DistinguishedFolderIdNameType::PUBLIC_FOLDERS_ROOT; 			
+        if ( !$root ) {
+            $request->ParentFolderIds->DistinguishedFolderId = new DT\DistinguishedFolderIdType();
+            $request->ParentFolderIds->DistinguishedFolderId->Id = DT\DistinguishedFolderIdNameType::PUBLIC_FOLDERS_ROOT; 			
+        }
+        else {
+            $request->ParentFolderIds->FolderId = new DT\FolderIdType();
+            $request->ParentFolderIds->FolderId->Id = $root;
+        }
 
         $response = $ews->FindFolder($request);
 
         $folders = array();
         $array = $response->ResponseMessages->FindFolderResponseMessage->RootFolder->Folders->Folder;
+        if ( !is_array( $array ) ) $array = array( $array );
         foreach ( $array as $folder ) {
-            $folders[ $folder->FolderId->Id ] = $folder->DisplayName;
+            $name = $folder->DisplayName;
+            if ( $root_name )
+                $name = "$root_name/$name";
+            $folders[ $folder->FolderId->Id ] = $name;
+
+            if ( $folder->ChildFolderCount ) 
+                $folders += self::getAllFolders( $ews, $folder->FolderId->Id, $name );
         }
 
         return $folders;

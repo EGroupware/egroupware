@@ -1431,9 +1431,10 @@ class mail_ui
             'group' => $group,
             'profileID' => $this->mail_bo->profileID,
         ), array(), true);
-        if ( $extra_actions ) {
+        if ( is_array( $extra_actions ) ) {
             foreach ( $extra_actions as $app => $extra) 
-                $actions += $extra;
+                if ( is_array( $extra ) )
+                    $actions += $extra;
         }
 
 		//error_log(__METHOD__.__LINE__.array2string(array_keys($actions)));
@@ -1515,7 +1516,7 @@ class mail_ui
 
 		$sRToFetch = null;
 		list($_profileID,$_folderName) = explode(self::$delimiter,$query['selectedFolder'],2);
-		if (strpos($_folderName,self::$delimiter)!==false && !is_a( $mail_ui->mail_bo, 'EGroupware\Api\Mail_EWS') )
+		if (strpos($_folderName,self::$delimiter)!==false )
 		{
 			list($app,$_profileID,$_folderName) = explode(self::$delimiter,$_folderName,3);
 			unset($app);

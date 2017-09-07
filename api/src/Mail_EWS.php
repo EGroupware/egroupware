@@ -86,12 +86,12 @@ class Mail_EWS extends Mail
 
         if (is_null(self::$mailConfig)) self::$mailConfig = Config::read('mail');
     }
-	function appendMessage($_folderName, $_header, $_body, $_flags='\\Recent')
+	function appendMessage($_folderId, $_header, $_body, $_flags='\\Recent')
 	{
         $raw = stream_get_contents( $_header );
         $mime = base64_encode( $raw );
 
-        return Lib::createMail( $this->profileID, $_folderName, $mime );
+        return Lib::createMail( $this->profileID, $_folderId, $mime );
 	}
     function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no') {
         if ( !$_folder ) return;
@@ -222,13 +222,14 @@ class Mail_EWS extends Mail
     function getFolderArrays ($_nodePath = null, $_onlyTopLevel = false, $_search= 2, $_subscribedOnly = false, $_getCounter = false) {
         $efolders = Lib::getTreeFolders( $this->profileID );
         $foldersList = array();
+        $ids = array();
         foreach ( $efolders as $folder ) {
+            $ids[ $folder['name'] ] = $folder['id'];
             $foldersList[ $folder['name'] ] = array(
                 'MAILBOX'	=>	$folder['name'] ,
                 'ATTRIBUTES'	=>	array(
-                    '\\hasChildren', '\\subscribed', 
+                    '\\hashchildren', '\\subscribed', 
                 ),
-                'ID' => $folder['id'],
                 'CAN_DELETE' => $folder['delete'],
                 'delimiter'	=> '/',
                 'SUBSCRIBED' =>	1,
@@ -241,10 +242,11 @@ class Mail_EWS extends Mail
                 )
             );				
         }
+        Api\Cache::setSession('mail', 'ews_folder_ids', $ids );
         return $foldersList;
     }	
     function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true) {
-        list(,$folderID) = explode('::', $_folderName);
+        $folderId = $this->getFolderId( $_folderName );
         $folder = Lib::getFolder( $this->profileID, $folderID );
 
         return array(
@@ -266,8 +268,7 @@ class Mail_EWS extends Mail
         if ( !$_folderName ) 
         	$_folderName = Lib::getDefaultFolder( $this->profileID );
 
-        list( $folderName, $folderID ) = explode( '::', $_folderName );
-        $folderID  = str_replace(' ','+', $folderID );
+        $folderID = $this->getFolderId( $_folderName );
 
         $sort_map = array(
             'subject'		=> 'item:Subject',
@@ -549,6 +550,13 @@ class Mail_EWS extends Mail
                 $folder['ews_move_to'] = implode(',', $folder['ews_move_to'] );
             $obj->save( $folder );
         }
+    }
+    function getFolderId( $_folderName ) {
+        $ids = Api\Cache::getSession('mail', 'ews_folder_ids' );
+        $folderID = $ids[ $_folderName ];
+        $folderID  = str_replace(' ','+', $folderID );
+
+        return $folderID;
     }
     
     function reopen($_foldername)
