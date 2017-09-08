@@ -734,7 +734,7 @@ class Contacts extends Contacts\Storage
 				$data[$name] = DateTime::server2user($data[$name], $date_format);
 			}
 		}
-		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto'],'',$data['etag']);
+		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto'] || $data['files'] & self::FILES_PHOTO,'',$data['etag']);
 
 		// set freebusy_uri for accounts
 		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
@@ -1711,8 +1711,7 @@ class Contacts extends Contacts\Storage
 	 */
 	public function read_birthdays($addressbook, $year)
 	{
-		$birthdays = Cache::getInstance(__CLASS__,"birthday-$year-$addressbook");
-		if($birthdays !== null)
+		if (($birthdays = Cache::getInstance(__CLASS__,"birthday-$year-$addressbook")) !== null)
 		{
 			return $birthdays;
 		}
@@ -1724,7 +1723,7 @@ class Contacts extends Contacts\Storage
 			'bday' => "!''",
 		);
 		$bdays =& $this->search('',array('id','n_family','n_given','n_prefix','n_middle','bday'),
-			'contact_bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter);
+			'contact_bday ASC', '', '', false, 'AND', false, $filter);
 
 		if ($bdays)
 		{
