@@ -102,6 +102,7 @@ class UrlTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 			array('http://userid:password@example.com/'),
 			array('http://142.42.1.1/'),
 			array('http://142.42.1.1:8080/'),
+			array('foo.com'),                                         // We prepend http in this case
 
 			// We use filter_var, and it can't handle these
 			/*
@@ -151,29 +152,20 @@ class UrlTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 			array('///a'),
 			array('///'),
 			array('http:///a'),
-			array('foo.com'),
-			array('rdar://1234'),
-			array('h://test'),
+			// We don't check protocol
+			//array('rdar://1234'),
+			//array('h://test'),
+			//array('ftps://foo.bar/'),
 			array('http:// shouldfail.com'),
 			array(':// should fail'),
 			array('http://foo.bar/foo(bar)baz quux'),
-			array('ftps://foo.bar/'),
 			array('http://-error-.invalid/'),
-			array('http://a.b--c.de/'),
 			array('http://-a.b.co'),
 			array('http://a.b-.co'),
-			array('http://0.0.0.0'),
-			array('http://10.1.1.0'),
-			array('http://10.1.1.255'),
-			array('http://224.1.1.1'),
-			array('http://1.1.1.1.1'),
-			array('http://123.123.123'),
 			array('http://3628126748'),
 			array('http://.www.foo.bar/'),
 			array('http://www.foo.bar./'),
 			array('http://.www.foo.bar./'),
-			array('http://10.1.1.1'),
-			array('http://10.1.1.254'),
 		);
 	}
 }
