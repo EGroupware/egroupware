@@ -82,8 +82,9 @@ class IntegerTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
 
-		// Only lowercase
+		// Set limits
 		$etemplate->getElementById('widget')->attrs['min'] = $min;
+		$etemplate->getElementById('widget')->attrs['max'] = null;
 
 		// Check for the load
 		$data = array();
@@ -147,7 +148,8 @@ class IntegerTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
 
-		// Only lowercase
+		// Set limits
+		$etemplate->getElementById('widget')->attrs['min'] = null;
 		$etemplate->getElementById('widget')->attrs['max'] = $max;
 
 		// Check for the load
