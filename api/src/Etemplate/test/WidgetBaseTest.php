@@ -231,7 +231,7 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 		// Check validation errors
 		foreach($validation_errors as $widget_id => $errored)
 		{
-			$this->assertTrue(array_key_exists($widget_id, $validation_errors), "Widget $widget_id did not cause a validation error");
+			$this->assertTrue(array_key_exists($widget_id, $errors), "Widget $widget_id did not cause a validation error");
 		}
 		$ref->setValue(array());
 	}
