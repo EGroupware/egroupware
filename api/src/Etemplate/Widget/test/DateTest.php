@@ -117,9 +117,6 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 			array(array('date' => 'Invalid')),
 			array(array('date_time' => 'Invalid')),
 			array(array('date_timeonly' => 'Invalid')),
-			array(array('date' => -1000)),
-			array(array('date_time' => -1000)),
-			array(array('date_timeonly' => -1000)),
 		);
 	}
 
@@ -144,8 +141,9 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		// Need to exec the template so the widget is there to modify
 		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
 
-		// Set limit
+		// Set limits
 		$etemplate->getElementById('date')->attrs['min'] = $min;
+		$etemplate->getElementById('date')->attrs['max'] = null;
 
 		// Check for the load
 		$data = array();
@@ -167,7 +165,7 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$content = static::$mocked_exec_result;
 		static::$mocked_exec_result = array();
 
-		return $this->validateTest($content,
+		$this->validateTest($content,
 				$error ? array() : array('date' => is_string($value) ? strtotime($value) : $value),
 				$error ? array('date' => $error) : array()
 		);
@@ -185,7 +183,7 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 			array('two days from now', 2,           FALSE),
 			array(time(),              2,           TRUE),
 			array(time(),              -1,          FALSE),
-			array('yesterday',         0,           TRUE),
+			array('yesterday',         'today',     TRUE),
 			// Different periods
 			array('yesterday',        '+2d',        TRUE),
 			array('yesterday',        '-2d',        FALSE),
@@ -219,8 +217,9 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		// Need to exec the template so the widget is there to modify
 		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
 
-		// Set limit
-		$etemplate->getElementById('date')->attrs['min'] = $max;
+		// Set limits
+		$etemplate->getElementById('date')->attrs['min'] = null;
+		$etemplate->getElementById('date')->attrs['max'] = $max;
 
 		// Check for the load
 		$data = array();

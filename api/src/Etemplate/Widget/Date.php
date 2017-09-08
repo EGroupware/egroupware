@@ -150,6 +150,21 @@ class Date extends Transformer
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 
+			if($value)
+			{
+				try
+				{
+					$date = new Api\DateTime($value);
+				}
+				catch(\Exception $e)
+				{
+					$date = null;
+					$value = '';
+					// this is not really a user error, but one of the clientside engine
+					self::set_validation_error($form_name,lang("'%1' is not a valid date !!!", $value).' '.$this->dataformat);
+				}
+			}
+
 			if ((string)$value === '' && $this->attrs['needed'])
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'));
@@ -162,29 +177,23 @@ class Date extends Transformer
 			{
 				$valid = (string)$value === '' ? '' : (int)$value;
 			}
-			if($value)
-			{
-				try
-				{
-					$date = new Api\DateTime($value);
-				}
-				catch(\Exception $e)
-				{
-					$date = null;
-					$value = '';
-				}
-			}
+			
 			if (!empty($this->attrs['min']))
 			{
 				if(is_numeric($this->attrs['min']))
 				{
 					$min = new Api\DateTime(strtotime( $this->attrs['min'] . 'days'));
 				}
+				elseif (preg_match('/[+-][[:digit:]]+[ymwd]/',$this->attrs['min']))
+				{
+					// Relative date with periods
+					$min = new Api\DateTime(strtotime(str_replace(array('y','m','w','d'), array('years','months','weeks','days'), $this->attrs['min'])));
+				}
 				else
 				{
 					$min = new Api\DateTime(strtotime($this->attrs['min']));
 				}
-				if($value < $min)
+				if($date < $min)
 				{
 					self::set_validation_error($form_name,lang(
 						"Value has to be at least '%1' !!!",
@@ -199,11 +208,16 @@ class Date extends Transformer
 				{
 					$max = new Api\DateTime(strtotime( $this->attrs['max'] . 'days'));
 				}
+				elseif (preg_match('/[+-][[:digit:]]+[ymwd]/',$this->attrs['max']))
+				{
+					// Relative date with periods
+					$max = new Api\DateTime(strtotime(str_replace(array('y','m','w','d'), array('years','months','weeks','days'), $this->attrs['max'])));
+				}
 				else
 				{
 					$max = new Api\DateTime(strtotime($this->attrs['max']));
 				}
-				if($value < $max)
+				if($date > $max)
 				{
 					self::set_validation_error($form_name,lang(
 						"Value has to be at maximum '%1' !!!",
@@ -217,7 +231,7 @@ class Date extends Transformer
 				// Not null, blank
 				$value = '';
 			}
-			elseif (empty($this->attrs['dataformat']))	// integer timestamp
+			elseif ($date && empty($this->attrs['dataformat']))	// integer timestamp
 			{
 				$valid = $date->format('ts');
 			}
