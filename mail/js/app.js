@@ -4605,7 +4605,9 @@ app.classes.mail = AppJS.extend(
 
 		if ($mainIframe)
 		{
-			tmpPrintDiv[0].innerHTML = $mainIframe.contents().find('body').html();
+			window.setTimeout(function(){
+				tmpPrintDiv[0].innerHTML = $mainIframe.contents().find('body').html();
+			}, 600);
 		}
 		// Attach the element to the DOM after maniupulation
 		if (notAttached) $mainIframe.after(tmpPrintDiv);
@@ -4623,7 +4625,7 @@ app.classes.mail = AppJS.extend(
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
 		setTimeout(function(){
 			egw(window).window.print();
-		},100);
+		},1000);
 	},
 
 	/**
