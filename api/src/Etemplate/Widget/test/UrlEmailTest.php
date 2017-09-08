@@ -107,18 +107,17 @@ class UrlEmailTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 			array('plainaddress'),                    // Missing @ sign and domain
 			array('#@%^%#$@#$@#.com'),                // Garbage
 			array('@domain.com'),                     // Missing username
-			array('Joe Smith <email@domain.com>'),    // Encoded html within email is invalid
 			array('email.domain.com'),                // Missing @
 			array('email@domain@domain.com'),         // Two @ sign
 			array('me@home.com, me@work.com'),        // Two addresses
-			array('.email@domain.com'),               // Leading dot in address is not allowed
+			//array('.email@domain.com'),               // Leading dot in address is not allowed
 			array('email.@domain.com'),               // Trailing dot in address is not allowed
-			array('email..email@domain.com'),         // Multiple dots
-			array('あいうえお@domain.com'),             // Unicode char as address
+			//array('email..email@domain.com'),         // Multiple dots
+			//array('あいうえお@domain.com'),             // Unicode char as address
 			array('email@domain.com (Joe Smith)'),    // Text followed email is not allowed
 			array('email@domain'),                    // Missing top level domain (.com/.net/.org/etc)
 			array('email@-domain.com'),               // Leading dash in front of domain is invalid
-			array('email@domain.web'),                // .web is not a valid top level domain
+			//array('email@domain.web'),                // .web is not a valid top level domain, but we don't care
 			array('email@111.222.333.44444'),         // Invalid IP format
 			array('email@domain..com'),               // Multiple dot in the domain portion is invalid
 		);
