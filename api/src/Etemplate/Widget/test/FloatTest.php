@@ -82,8 +82,8 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
 
-		// Only lowercase
 		$etemplate->getElementById('widget')->attrs['min'] = $min;
+		$etemplate->getElementById('widget')->attrs['max'] = null;
 
 		// Check for the load
 		$data = array();
@@ -114,16 +114,16 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	public function minProvider()
 	{
 		return Array(
-			// User value, Min,      Error
+			// User value, Min,        Error
 			array('',      0,          FALSE),
 			array(1.0,     0,          FALSE),
 			array(0.0,     0,          FALSE),
 			array(-1.0,    0,          TRUE),
 			array(1.5,     0,          FALSE),
-			array(1,      10,          FALSE),
+			array(1,      10,          TRUE),
 			array(10,     10,          FALSE),
 			array(1.5,   1.5,          FALSE),
-			array(2,     1.5,          TRUE),
+			array(0.5,   1.5,          TRUE),
 		);
 	}
 
@@ -149,7 +149,7 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
 
-		// Only lowercase
+		$etemplate->getElementById('widget')->attrs['min'] = null;
 		$etemplate->getElementById('widget')->attrs['max'] = $max;
 
 		// Check for the load
@@ -191,7 +191,7 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 			array(10,       10,      FALSE),
 			array(2.5,       2,      TRUE),
 			array(1.5,     2.5,      FALSE),
-			array(3,       2.5,      FALSE),
+			array(3,       2.5,      TRUE),
 		);
 	}
 }
