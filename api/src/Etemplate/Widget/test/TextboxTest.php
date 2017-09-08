@@ -133,7 +133,7 @@ class TextboxTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
 		
 		// Only lowercase
-		$etemplate->getElementById('widget')->attrs['validator'] = '/[a-z]*$/';
+		$etemplate->getElementById('widget')->attrs['validator'] = '/^[a-z]*$/';
 
 		// Check for the load
 		$data = array();
@@ -155,7 +155,7 @@ class TextboxTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		$content = static::$mocked_exec_result;
 		static::$mocked_exec_result = array();
 		
-		return $this->validateTest($content, array('widget' => $value), $error ? array('widget' => $error) : array());
+		return $this->validateTest($content, $error ? array() : array('widget' => $value), $error ? array('widget' => $error) : array());
 	}
 
 	public function regexProvider()
