@@ -17,7 +17,7 @@ class Lib
     static function login( $params ) {
         $ews = new EwsConnection( $params['host'], $params['username'], $params['password'], $params['version'] );
         try {
-            $folders = self::getAllFolders( $ews );
+            $folders = self::getInbox( $ews );
         }
         catch (\SoapFault $e) {
             throw new \Exception('Authentication Failed');
@@ -103,8 +103,8 @@ class Lib
         $ews = self::init( $profile );
 
         $request = new DT\GetAttachmentType();
-        $request -> AttachmentIds = new DT\NonEmptyArrayOfRequestAttachmentIdsType();
-        $request -> AttachmentIds -> AttachmentId = new DT\RequestAttachmentIdType();
+        $request->AttachmentIds = new DT\NonEmptyArrayOfRequestAttachmentIdsType();
+        $request->AttachmentIds->AttachmentId = new DT\RequestAttachmentIdType();
         $request->AttachmentIds->AttachmentId->Id = $attachmentID;
         $response = $ews->GetAttachment($request); 
 
@@ -329,12 +329,14 @@ class Lib
 
     }
 
-    static function getFolder( $profile, $folderID ) {
+    static function getFolder( $profile, $folderID, $id_only = false ) {
         $ews = self::init( $profile );
 
         $request = new DT\GetFolderType();
         $request->FolderShape = new DT\FolderResponseShapeType();
         $request->FolderShape->BaseShape = DT\DefaultShapeNamesType::DEFAULT_PROPERTIES;
+        if ( $id_only )
+            $request->FolderShape->BaseShape = DT\DefaultShapeNamesType::ID_ONLY;
 
         $request->FolderIds = new DT\NonEmptyArrayOfBaseFolderIdsType();
         $request->FolderIds->FolderId = new DT\FolderIdType();
@@ -366,7 +368,6 @@ class Lib
             $folders[] = array(
                 'id' => $row['ews_folder'],
                 'name' => $row['ews_name'],
-                'delete' => $row['ews_delete_permission']
             );
         }
 
@@ -376,33 +377,8 @@ class Lib
         return $folders;
     }
 
-    static function getInboxFolders( $profile, $account ) {
+    static function getFolders( $profile, $node = null, $node_name = null) {
         $ews = self::init( $profile );
-
-        $request = new DT\FindFolderType();
-        $request->Traversal = DT\FolderQueryTraversalType::SHALLOW; 
-        $request->FolderShape = new DT\FolderResponseShapeType();
-        $request->FolderShape->BaseShape = DT\DefaultShapeNamesType::ALL_PROPERTIES;
-
-        $request->IndexedPageFolderView = new DT\IndexedPageViewType();
-        $request->IndexedPageFolderView->BasePoint = 'Beginning';
-        $request->IndexedPageFolderView->Offset = 0;
-
-        $request->ParentFolderIds = new DT\NonEmptyArrayOfBaseFolderIdsType();
-
-        $request->ParentFolderIds->DistinguishedFolderId = new DT\DistinguishedFolderIdType();
-        $request->ParentFolderIds->DistinguishedFolderId->Id = DT\DistinguishedFolderIdNameType::MESSAGE_FOLDER_ROOT;    		
-        $request->ParentFolderIds->DistinguishedFolderId->Mailbox = new DT\EmailAddressType();
-        $request->ParentFolderIds->DistinguishedFolderId->Mailbox->EmailAddress = "$account@sigalas.eu";
-
-
-        $response = $ews->FindFolder($request);
-        $array = $response->ResponseMessages->FindFolderResponseMessage->RootFolder->Folders->Folder;
-
-        return $array;
-    }
-
-    static function getAllFolders( $ews, $root = null, $root_name = null) {
 
         $request = new DT\FindFolderType();
         $request->Traversal = DT\FolderQueryTraversalType::SHALLOW; 
@@ -414,13 +390,13 @@ class Lib
         $request->IndexedPageFolderView->Offset = 0;
         $request->ParentFolderIds = new DT\NonEmptyArrayOfBaseFolderIdsType();
 
-        if ( !$root ) {
-            $request->ParentFolderIds->DistinguishedFolderId = new DT\DistinguishedFolderIdType();
-            $request->ParentFolderIds->DistinguishedFolderId->Id = DT\DistinguishedFolderIdNameType::PUBLIC_FOLDERS_ROOT; 			
+        if ( $node ) {
+            $request->ParentFolderIds->FolderId = new DT\FolderIdType();
+            $request->ParentFolderIds->FolderId->Id = $node;
         }
         else {
-            $request->ParentFolderIds->FolderId = new DT\FolderIdType();
-            $request->ParentFolderIds->FolderId->Id = $root;
+            $request->ParentFolderIds->DistinguishedFolderId = new DT\DistinguishedFolderIdType();
+            $request->ParentFolderIds->DistinguishedFolderId->Id = self::getRootFolder( $profile );
         }
 
         $response = $ews->FindFolder($request);
@@ -430,12 +406,12 @@ class Lib
         if ( !is_array( $array ) ) $array = array( $array );
         foreach ( $array as $folder ) {
             $name = $folder->DisplayName;
-            if ( $root_name )
-                $name = "$root_name/$name";
+            if ( $node_name )
+                $name = "$node_name/$name";
             $folders[ $folder->FolderId->Id ] = $name;
 
             if ( $folder->ChildFolderCount ) 
-                $folders += self::getAllFolders( $ews, $folder->FolderId->Id, $name );
+                $folders += self::getFolders( $profile, $folder->FolderId->Id, $name );
         }
 
         return $folders;
@@ -443,130 +419,14 @@ class Lib
 
     static function getSettingsFolders( $profile ) {
         $folders = array();
-        $account = Mail\Account::read( $profile );
 
-        // INBOX
-        if ( $account->params['acc_ews_type'] == 'inbox' ) {
+        $array = self::getFolders( $profile );
 
-            $username = $account->params['acc_imap_username'];
-            $array = self::getInboxFolders( $profile, $username );
-            foreach ( $array as $folder ) {	            
-                $folders[] = array(
-                    'id' => $folder->FolderId->Id,
-                    'name' => $folder->DisplayName,
-                    'delete' => 1,
-                );
-            }
-        }
-        else {
-            $ews = self::init( $profile );
-            $array = self::getAllFolders( $ews );
-            foreach ( $array as $id => $folder ) {	            
-                $folders[] = array(
-                    'id' => $id,
-                    'name' => $folder,
-                    'delete' => 1,
-                );
-            }
-        }
-        return $folders;
-    }
-
-    static function getWriteFolders( $profile, $folder_id ){
-
-        $sql = "SELECT profile_name,exchange_user,is_inbox,inbox_account FROM ac_exchange_profiles WHERE profile_id=$profile";
-        $db = clone($GLOBALS['egw']->db);
-        $db->query($sql);
-        $row = $db->row(true);
-        $folders = array();
-        if ( $row['is_inbox'] ) {
-
-            $account = $row['exchange_user'];
-            if ( $row['inbox_account'] ) {
-                if ( $row['inbox_account'] == 'dynamic' ) 
-                    $account = $GLOBALS['egw_info']['user']['account_lid'];        		
-                else 
-                    $account = $row['inbox_account'];        		
-            }
-            $array = self::getInboxFolders( $profile, $account );
-            foreach ( $array as $item ) {
-                $folders[] = array(
-                    'value' => "exchange$profile::".$item->FolderId->Id,
-                    'label' => $item->DisplayName,
-                );
-            }
-        }
-        else {
-            // Get all write folders
-            $sql = "SELECT folder_id, folder_name FROM ac_exchange_permissions WHERE profile_id=$profile and write_permission=1 ORDER BY folder_order";
-            $db->query($sql);
-            $all = array();
-            while ( $row = $db->row(true) ) {
-                if ( $row['folder_id'] == $folder_id ) continue;
-                $all[] = array( 
-                    'value' => "exchange$profile::".$row['folder_id'],
-                    'label' => $row['folder_name'],
-                );
-            }        	
-            // Get allowed write folders
-            $sql = "SELECT folders_allowed FROM ac_exchange_permissions WHERE profile_id=$profile and folder_id='$folder_id'";
-            $db->query($sql);
-            $row = $db->row(true);
-            $allowed = unserialize( $row['folders_allowed'] );
-            foreach ( $all as $item ) {
-                list(,$item_id) = explode('::',$item['value']);
-                if ( in_array( $item_id, $allowed ) )
-                    $folders[] = $item;
-            }
-        }
-
-        return $folders;
-    }
-
-    static function getAllWriteFolders( $folder_id ) {
-
-        // Get User info
-        $user = $GLOBALS['egw_info']['user']['account_id'];
-        $db = clone($GLOBALS['egw']->db);
-        $sql = "SELECT ac_exchange_profiles FROM ac_user_setting WHERE user_id=$user";
-        $db->query($sql);
-        $row = $db->row(true);
-        $profiles = explode( ',', $row['ac_exchange_profiles'] );
-        $folders = array();
-
-        foreach ($profiles as $profile) {
-            if ( empty($profile) ) continue;
-            $sql = "SELECT profile_name,exchange_user,is_inbox,inbox_account FROM ac_exchange_profiles WHERE profile_id=$profile";
-            $db->query($sql);
-            $row = $db->row(true);
-            if ( $row['is_inbox'] ) {
-
-                $account = $row['exchange_user'];
-                if ( $row['inbox_account'] ) {
-                    if ( $row['inbox_account'] == 'dynamic' ) 
-                        $account = $GLOBALS['egw_info']['user']['account_lid'];        		
-                    else 
-                        $account = $row['inbox_account'];        		
-                }
-                $array = self::getInboxFolders( $profile, $account );
-                foreach ( $array as $item ) {
-                    $folders[] = array(
-                        'value' => "exchange$profile::".$item->FolderId->Id,
-                        'label' => $row['profile_name'].' - '.$item->DisplayName,
-                    );
-                }
-            }
-            else {
-                $sql = "SELECT folder_id, folder_name FROM ac_exchange_permissions WHERE profile_id=$profile and write_permission=1 ORDER BY folder_order";
-                $db->query($sql);
-                while ( $crow = $db->row(true) ) {
-                    if ( $crow['folder_id'] == $folder_id ) continue;
-                    $folders[] = array( 
-                        'value' => "exchange$profile::".$crow['folder_id'],
-                        'label' => $row['profile_name'].' - '.$crow['folder_name'],
-                    );
-                }        	
-            }
+        foreach ( $array as $id => $folder ) {	            
+            $folders[] = array(
+                'id' => $id,
+                'name' => $folder,
+            );
         }
 
         return $folders;
@@ -620,8 +480,7 @@ class Lib
         return $msg;
     }
 
-    static function getInboxId( $profile ) {
-        $ews = self::init( $profile );
+    static function getInbox( $ews ) {
 
         $request = new DT\GetFolderType();
         $request->FolderShape = new DT\FolderResponseShapeType();
@@ -629,12 +488,14 @@ class Lib
 
         $request->FolderIds = new DT\NonEmptyArrayOfBaseFolderIdsType();
         $request->FolderIds->DistinguishedFolderId = new DT\DistinguishedFolderIdType();
-        $request->FolderIds->DistinguishedFolderId->Id = DT\DistinguishedFolderIdNameType::INBOX; 			
+        $request->FolderIds->DistinguishedFolderId->Id = DT\DistinguishedFolderIdNameType::MESSAGE_FOLDER_ROOT; 			
 
         $response = $ews->GetFolder($request);
 
-        $folder = $response->ResponseMessages->GetFolderResponseMessage->Folders->Folder;
-        return $folder->FolderId->Id;
+        if ( $response->ResponseMessages->GetFolderResponseMessage->ResponseClass == 'Error' )
+            throw new \Exception( $response->ResponseMessages->GetFolderResponseMessage->MessageText  );
+
+        return true;
 
     }
 
@@ -656,6 +517,106 @@ class Lib
         $sql = "SELECT * FROM egw_ea_ews WHERE ews_profile= $profile and ews_read_permission=1 ORDER BY ews_order";
         $db->query($sql);
         return $db;
+    }
+
+    static function createFolder( $profile, $parentID, $name ) {
+        $ews = self::init( $profile );
+
+        // Build the request object.
+        $request = new DT\CreateFolderType();
+        $request->Folders = new DT\ArrayOfFoldersType();
+
+        $parent = new DT\TargetFolderIdType();
+        if ( !$parentID ) {
+            $parent->DistinguishedFolderId = new DT\DistinguishedFolderIdType();
+            $parent->DistinguishedFolderId->Id = self::getRootFolder( $profile );
+        }
+        else {
+            $parent->FolderId = new DT\FolderIdType();
+            $parent->FolderId->Id = $parentID;
+        }
+
+        $request->ParentFolderId = $parent;
+
+        $folder = new DT\FolderType();
+        $folder->DisplayName = $name;
+        $request->Folders->Folder = array( $folder );
+        $response = $ews->CreateFolder($request);
+
+        if ( $response->ResponseMessages->CreateFolderResponseMessage->ResponseClass == 'Error' ) 
+            throw new \Exception( $response->ResponseMessages->CreateFolderResponseMessage->MessageText  );
+
+        return true;
+    }
+    static function deleteFolder( $profile, $folderID ) {
+        $ews = self::init( $profile );
+
+        // Build the request object.
+        $request = new DT\DeleteFolderType();
+        $request->DeleteType = 'HardDelete';
+        $request->FolderIds = new DT\NonEmptyArrayOfBaseFolderIdsType();
+
+        $request->FolderIds = new DT\NonEmptyArrayOfBaseFolderIdsType();
+        $request->FolderIds->FolderId = new DT\FolderIdType();
+        $request->FolderIds->FolderId->Id = $folderID;
+
+        $response = $ews->DeleteFolder($request);
+
+        if ( $response->ResponseMessages->DeleteFolderResponseMessage->ResponseClass == 'Error' ) 
+            throw new \Exception( $response->ResponseMessages->DeleteFolderResponseMessage->MessageText  );
+
+        return true;
+    }
+    static function moveFolder( $profile, $folder, $parent ) {
+        $ews = self::init( $profile );
+
+        // Build the request object.
+        $request = new DT\BaseMoveCopyFolderType();
+
+        $request->ToFolderId = new DT\TargetFolderIdType();
+        $request->ToFolderId->FolderId = new DT\FolderIdType();
+        $request->ToFolderId->FolderId->Id = $parent;
+
+        // Set the parent folder for the newly DT\created folder.
+        $request->FolderIds = new DT\NonEmptyArrayOfBaseFolderIdsType();
+        $request->FolderIds->FolderId = new DT\FolderIdType();
+        $request->FolderIds->FolderId->Id = $folder;
+
+        $response = $ews->MoveFolder($request);
+        if ( $response->ResponseMessages->MoveFolderResponseMessage->ResponseClass == 'Error' ) 
+            throw new \Exception( $response->ResponseMessages->MoveFolderResponseMessage->MessageText  );
+
+        return true;
+    }
+
+    static function renameFolder( $profile, $folder, $changeKey, $name ) {
+        $ews = self::init( $profile );
+
+        // Build the request object.
+        $request = new DT\UpdateFolderType();
+
+        $set = new DT\SetFolderFieldType();
+        $set->FieldURI = new DT\PathToUnindexedFieldType;
+        $set->FieldURI->FieldURI = 'folder:DisplayName';
+        $set->Folder = new DT\FolderType();
+        $set->Folder->DisplayName = $name;
+
+        $change = new DT\FolderChangeType();
+        $change->FolderId = new DT\FolderIdType();
+        $change->FolderId->Id = $folder;
+        $change->FolderId->ChangeKey = $changeKey;
+        $change->Updates = new DT\NonEmptyArrayOfFolderChangeDescriptionsType();
+        $change->Updates->SetFolderField = array( $set );
+
+        $request->FolderChanges = new DT\NonEmptyArrayOfFolderChangesType();
+        $request->FolderChanges->FolderChange = array( $change );
+
+        $response = $ews->UpdateFolder($request);
+
+        if ( $response->ResponseMessages->UpdateFolderResponseMessage->ResponseClass == 'Error' ) 
+            throw new \Exception( $response->ResponseMessages->UpdateFolderResponseMessage->MessageText  );
+
+        return true;
     }
 
     static function setRestriction( $filter ) {
@@ -750,5 +711,21 @@ class Lib
         $allow_to = ( $db->row('true') );
 
         return $allow_from && $allow_to;
+    }
+    static function getRootFolder( $profile ) {
+        if ( $profile )
+            $account = Mail\Account::read( $profile );
+
+        if ( !$profile || $account->params['acc_ews_type'] == 'inbox' ) 
+            return DT\DistinguishedFolderIdNameType::MESSAGE_FOLDER_ROOT;    		
+        else 
+            return DT\DistinguishedFolderIdNameType::PUBLIC_FOLDERS_ROOT; 			
+    }
+
+    static function renameFolderDB( $profile, $folderID, $name ) {
+        $db = clone($GLOBALS['egw']->db);
+        $sql = "UPDATE egw_ea_ews set ews_name='$name' WHERE ews_profile= $profile and ews_folder='$folderID'";
+        $db->query($sql);
+        return true;
     }
 }

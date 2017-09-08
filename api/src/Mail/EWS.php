@@ -63,6 +63,10 @@ class EWS
 				$ret = call_user_func_array(array($this->sieve,$name),$params);
 				//error_log(__CLASS__.'->'.$name.'('.array2string($params).') returns '.array2string($ret));
 				return $ret;
+                break;
+			case 'subscribeMailbox':
+                return;
+                break;
 		}
 		throw new Api\Exception\WrongParameter("No method '$name' implemented!");
 	}

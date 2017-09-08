@@ -171,7 +171,7 @@ class Mail_EWS extends Mail
                 $cid = $attachment->ContentId;
 
             $attachments[] = array(
-                'size' => '0',
+                'size' => ( $attachment->Size ? $attachment->Size : 0 ),
                 'filename' => $attachment->Name,
                 'type' => $attachment->ContentType,
                 'mimeType' => $attachment->ContentType,
@@ -510,6 +510,86 @@ class Mail_EWS extends Mail
         }
 
         return true;
+	}
+	function createFolder($_parent, $_folderName, &$_error)
+	{
+        $parentID = $this->getFolderId( $_parent );
+        try{
+            Lib::createFolder( $this->profileID, $parentID, $_folderName );
+        }
+        catch (\Exception $e ) {
+            throw new Exception( $e->getMessage() );
+        }
+
+		return $_folderName;
+	}
+	function deleteFolder($_folderName)
+	{
+        $folderID = $this->getFolderId( $_folderName );
+        if ( $folderID ) {
+            try{
+                Lib::deleteFolder( $this->profileID, $folderID );
+            }
+            catch (\Exception $e ) {
+				throw new Exception( $e->getMessage() );
+            }
+        }
+
+		return true;
+	}
+	function renameFolder($_oldFolderName, $_parent, $_folderName)
+	{
+        // renameFolder gets called both for moving and renaming 
+
+        // Check which operation we need to perform
+        $oldParent = null;
+        $oldName = $_oldFolderName;
+        if ( strpos( $_oldFolderName, '/' ) !== FALSE ) {
+            $path = explode('/', $_oldFolderName);
+            $oldName = array_pop( $path );
+            $oldParent = implode('/', $path );
+        }
+
+        if ( $oldParent != $_parent ) {
+            // Move
+            try {
+                $folderID = $this->getFolderId( $_oldFolderName );
+                $parentID = $this->getFolderId( $_parent );
+                Lib::moveFolder( $this->profileID, $folderID, $parentID );
+            }
+            catch (\Exception $e ) {
+				throw new Exception( $e->getMessage() );
+            }
+        }
+        else if ( $oldName != $_folderName ) {
+            // Rename
+
+            // Get Folder to find its changeKey
+            $folderID = $this->getFolderId( $_oldFolderName );
+            $folder = Lib::getFolder( $this->profileID, $folderID, true );
+            $changeKey = $folder->FolderId->ChangeKey;
+
+            // Rename Folder
+            try {
+                Lib::renameFolder( $this->profileID, $folderID, $changeKey, $_folderName );
+            }
+            catch (\Exception $e ) {
+				throw new Exception( $e->getMessage() );
+            }
+        }
+        
+        $newFolderName = ( $_parent ? "$_parent/$_folderName" : $_folderName );
+
+        // Update Session
+        $ids = Api\Cache::getSession('mail', 'ews_folder_ids' );
+        unset( $ids[ $_oldFolderName ] );
+        $ids[ $newFolderName ] = $folderID;
+        Api\Cache::setSession('mail', 'ews_folder_ids', $ids );
+
+        // Update DB
+        Lib::renameFolderDB( $this->profileID, $folderID, $newFolderName );
+
+		return $newFolderName;
 	}
     static function getFolderPermissions( $profile_id ) {
         // From Lib
