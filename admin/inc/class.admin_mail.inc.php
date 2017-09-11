@@ -1401,6 +1401,7 @@ class admin_mail
 
         if ( $content['acc_imap_type'] && $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' ) {
             $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
+            $content['acc_ews_apply_permissions'] = (int) $content['acc_ews_apply_permissions'];
         }
 
 		//try to fix identities with no domain part set e.g. alias as identity

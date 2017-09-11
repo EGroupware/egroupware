@@ -106,11 +106,31 @@ class Mail_EWS extends Mail
             'move_to_trash' => 'MoveToDeletedItems',
         );
 
+        $messages = '';
         foreach( $_messageUID as $message ) {
             list($mailID, $changeKey) = explode( '||', $message );
-            if ( !Lib::can_delete( $this->profileID, $folderID ) )
-				throw new Exception("Deleting Mail failed! No permissions");
+            $allowed = Lib::can_delete( $this->profileID, $folderID );
+            if ( !$allowed )
+                $messages .= "No Permissions";
 
+
+            // Check for external actions before deleting email
+            $validations = Api\Hooks::process(array(
+                'location' => 'mail_before_delete',
+                'profile' => $this->mail_bo->profileID,
+                'folder' => $folderID,
+                'message' => $mailID,
+            ), array(), true);
+            if ( is_array( $validations ) ) {
+                foreach ( $validations as $app => $validation) {
+                    $allowed = $allowed && $validation['allowed'];
+                    if ( !$allowed )
+                        $messaged .= $validation['messages'];
+                }
+            }
+
+            if ( !$allowed )
+				throw new Exception("Deleting Mail failed! $messages");
             try {
                 Lib::DeleteMail( $this->profileID, $mailID, $methodMap[ $_forceDeleteMethod ]);
             }
@@ -644,7 +664,7 @@ class Mail_EWS extends Mail
 
         $fields = array( 'read', 'write', 'delete' );
         foreach ( $content as $folder ) {
-            if (!$folder) continue;
+            if (!$folder['ews_folder']) continue;
 
             $permissions = array();
             foreach( $fields as $field ) 

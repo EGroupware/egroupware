@@ -709,7 +709,7 @@ class Lib
         $allowed = false;
 
         $db = clone($GLOBALS['egw']->db);
-        $sql = "SELECT ews_apply_permissions, ews_permissions FROM egw_ea_ews WHERE ews_profile=$profile AND ews_folder='$folder' ORDER BY ews_order";
+        $sql = "SELECT ews_apply_permissions, ews_permissions FROM egw_ea_ews WHERE ews_profile=$profile AND ews_folder= BINARY '$folder' ORDER BY ews_order";
         $db->query($sql);
         $row = $db->row( true );
 
@@ -731,7 +731,7 @@ class Lib
         $db = clone($GLOBALS['egw']->db);
 
         // Can move FROM->TO folder
-        $sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$from'";
+        $sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder= BINARY '$from'";
         $db->query($sql);
         $row = $db->row( true );
         $acc = Mail\Account::read( $profile );
@@ -758,7 +758,7 @@ class Lib
 
     static function renameFolderDB( $profile, $folderID, $name ) {
         $db = clone($GLOBALS['egw']->db);
-        $sql = "UPDATE egw_ea_ews set ews_name='$name' WHERE ews_profile= $profile and ews_folder='$folderID'";
+        $sql = "UPDATE egw_ea_ews set ews_name='$name' WHERE ews_profile= $profile and ews_folder= BINARY '$folderID'";
         $db->query($sql);
         return true;
     }
