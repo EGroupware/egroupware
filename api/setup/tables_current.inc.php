@@ -452,7 +452,8 @@ $phpgw_baseline = array(
 			'acc_further_identities' => array('type' => 'int','precision' => '1','nullable' => False,'default' => '1','comment' => '0=no, 1=yes, 2=only matching aliases'),
 			'acc_folder_ham' => array('type' => 'varchar','precision' => '128','comment' => 'ham folder'),
 			'acc_spam_api' => array('type' => 'varchar','precision' => '128','comment' => 'SpamTitan API URL'),
-			'acc_ews_type' => array('type' => 'varchar','precision' => '128','default' => 'inbox','comment' => 'inbox/public_folders')
+			'acc_ews_type' => array('type' => 'varchar','precision' => '128','default' => 'inbox','comment' => 'inbox/public_folders'),
+			'acc_ews_apply_permissions' => array('type' => 'bool','comment' => 'Always apply permissions ')
 		),
 		'pk' => array('acc_id'),
 		'fk' => array(),

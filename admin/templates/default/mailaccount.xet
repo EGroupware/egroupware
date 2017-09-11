@@ -328,6 +328,10 @@
                         <menupopup id="acc_ews_type" class="et2_fullWidth" onchange="app.admin.ews_switch_type" />
 					</menulist>
                 </row>
+				<row>
+					<description value="Always Apply Permissions"/>
+                    <checkbox id="acc_ews_apply_permissions" />
+                </row>
                 <row>
                         <grid id="ews_permissions" span="2">
                             <columns>

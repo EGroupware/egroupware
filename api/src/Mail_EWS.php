@@ -597,11 +597,10 @@ class Mail_EWS extends Mail
         $folders = Lib::getSettingsFolders( $profile_id );
 
         // From Db
-        $db = clone( $GLOBALS['egw']->db );
-        $db->query("SELECT * FROM egw_ea_ews WHERE ews_profile=$profile_id ORDER BY ews_order");
+        $rows = Lib::getDBFolders( $profile_id );
         $final = array('');
         $used = array();
-        while ( $row = $db->row(true) ) {
+        foreach( $rows as $row) {
             if ( $row['ews_permissions'] ) {
                 $permissions = unserialize( $row['ews_permissions'] );
                 foreach( $permissions as $permission => $value )
@@ -646,7 +645,6 @@ class Mail_EWS extends Mail
         $fields = array( 'read', 'write', 'delete' );
         foreach ( $content as $folder ) {
             if (!$folder) continue;
-            if (!$folder['ews_order']) continue;
 
             $permissions = array();
             foreach( $fields as $field ) 

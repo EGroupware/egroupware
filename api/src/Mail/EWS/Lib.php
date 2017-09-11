@@ -362,12 +362,11 @@ class Lib
     static function getTreeFolders( $profile ) {		
 
         // From Db
-        $db = clone( $GLOBALS['egw']->db );
-        $db->query("SELECT * FROM egw_ea_ews WHERE ews_profile=$profile ORDER BY ews_order");
         $used = array();
         $forbidden = array();
         $final = array();
-        while ( $row = $db->row(true) ) {
+        $rows = self::getDBFolders( $profile );
+        foreach( $rows as $row ) {
             if ( !self::is_allowed( $profile, $row['ews_folder'], 'read' ) ) {
                 $forbidden[] = $row['ews_folder'];
                 continue;
@@ -697,6 +696,15 @@ class Lib
         return $restriction;
     }
 
+    static function getDBFolders( $profile ) {
+        $db = clone( $GLOBALS['egw']->db );
+        $db->query("SELECT * FROM egw_ea_ews WHERE ews_profile=$profile ORDER BY ifnull(ews_order,99)");
+        $rows = array();
+        while( $row = $db->row( true ) )
+            $rows[] = $row;
+
+        return $rows;
+    }
     static function is_allowed( $profile, $folder, $action ) {
         $allowed = false;
 
@@ -705,7 +713,9 @@ class Lib
         $db->query($sql);
         $row = $db->row( true );
 
-        if ( $row['ews_apply_permissions'] ) {
+        $acc = Mail\Account::read( $profile );
+
+        if ( $row['ews_apply_permissions'] || $acc['acc_ews_apply_permissions']) {
             $permissions = unserialize( $row['ews_permissions'] );
             $allow = ( $permissions[ $action ] );
         }
@@ -724,7 +734,8 @@ class Lib
         $sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$from'";
         $db->query($sql);
         $row = $db->row( true );
-        if ( $row['apply_permissions'] ) {
+        $acc = Mail\Account::read( $profile );
+        if ( $row['ews_apply_permissions'] || $acc['acc_ews_apply_permissions']) {
             $allow_from = ( $row['ews_move_anywhere'] || in_array( $to, explode(',', $row['ews_move_to'] )));
         }
         else 

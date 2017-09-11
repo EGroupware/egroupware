@@ -343,3 +343,14 @@ function api_upgrade16_9_005()
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.006';
 }
 
+
+function api_upgrade16_9_006()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_ea_accounts','acc_ews_apply_permissions',array(
+		'type' => 'bool',
+		'comment' => 'Always apply permissions '
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.007';
+}
+
