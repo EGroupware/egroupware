@@ -346,6 +346,7 @@
                                     <description value="Default Folder" />
                                     <description value="Order" />
                                     <description value="Name" />
+                                    <description value="Apply Permissions" />
                                     <description value="Read" />
                                     <description value="Write" />
                                     <description value="Delete" />
@@ -357,9 +358,10 @@
                                     <checkbox id="${row}[ews_is_default]" />
                                     <textbox size="4" type="int" id="${row}[ews_order]" />
                                     <description id="${row}[ews_name]" />
-                                    <checkbox id="${row}[ews_read_permission]" />
-                                    <checkbox id="${row}[ews_write_permission]" />
-                                    <checkbox id="${row}[ews_delete_permission]" />
+                                    <checkbox id="${row}[ews_apply_permissions]" />
+                                    <checkbox id="${row}[read]" />
+                                    <checkbox id="${row}[write]" />
+                                    <checkbox id="${row}[delete]" />
                                     <checkbox id="${row}[ews_move_anywhere]" />
                                     <vbox>
                                         <listbox id="${row}[ews_move_to]" rows="2" />

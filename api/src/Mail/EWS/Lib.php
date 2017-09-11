@@ -350,6 +350,7 @@ class Lib
     }
 
     static function getFoldersSelOptions( $profile ) {		
+        if ( !$profile ) return array();
 
         $folders = self::getSettingsFolders( $profile );
         $final = array();
@@ -360,21 +361,34 @@ class Lib
     }
     static function getTreeFolders( $profile ) {		
 
-        $folders = array();
+        // From Db
+        $db = clone( $GLOBALS['egw']->db );
+        $db->query("SELECT * FROM egw_ea_ews WHERE ews_profile=$profile ORDER BY ews_order");
+        $used = array();
+        $forbidden = array();
+        $final = array();
+        while ( $row = $db->row(true) ) {
+            if ( !self::is_allowed( $profile, $row['ews_folder'], 'read' ) ) {
+                $forbidden[] = $row['ews_folder'];
+                continue;
+            }
 
-        // Get Folders from DB settings
-        $db = self::get_folders_info( $profile );
-        while( $row = $db->row(true) ) {
-            $folders[] = array(
+            $final[] = array(
                 'id' => $row['ews_folder'],
                 'name' => $row['ews_name'],
             );
+            $used[] = $row['ews_folder'];
         }
 
-        if ( !$folders )
-            $folders = self::getSettingsFolders( $profile );
+        // Fill in the rest
+        $folders = self::getSettingsFolders( $profile );
 
-        return $folders;
+        foreach ( $folders as $idx => $folder ) {
+            if  ( !in_array( $folder['id'], $used ) && !in_array( $folder['id'], $forbidden ) )
+                $final[] = $folder;
+        }
+
+        return $final;
     }
 
     static function getFolders( $profile, $node = null, $node_name = null) {
@@ -510,13 +524,6 @@ class Lib
 
         $folders = self::getTreeFolders( $profile );
         return $folders[0]['name'];
-    }
-
-    static function get_folders_info( $profile ) {
-        $db = clone($GLOBALS['egw']->db);
-        $sql = "SELECT * FROM egw_ea_ews WHERE ews_profile= $profile and ews_read_permission=1 ORDER BY ews_order";
-        $db->query($sql);
-        return $db;
     }
 
     static function createFolder( $profile, $parentID, $name ) {
@@ -690,25 +697,41 @@ class Lib
         return $restriction;
     }
 
-    static function can_delete( $profile, $folder ) {
+    static function is_allowed( $profile, $folder, $action ) {
+        $allowed = false;
+
         $db = clone($GLOBALS['egw']->db);
-        $sql = "SELECT 'X' FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$folder' and ews_delete_permission = 1";
+        $sql = "SELECT ews_apply_permissions, ews_permissions FROM egw_ea_ews WHERE ews_profile=$profile AND ews_folder='$folder' ORDER BY ews_order";
         $db->query($sql);
-        return ( $db->row(true) );
+        $row = $db->row( true );
+
+        if ( $row['ews_apply_permissions'] ) {
+            $permissions = unserialize( $row['ews_permissions'] );
+            $allow = ( $permissions[ $action ] );
+        }
+        else
+            $allow = true;
+
+        return $allow;
+    }
+    static function can_delete( $profile, $folder ) {
+        return self::is_allowed( $profile, $folder, 'delete' );
     }
     static function can_move( $profile, $from, $to ) {
         $db = clone($GLOBALS['egw']->db);
 
         // Can move FROM->TO folder
-        $sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$from' and ews_read_permission = 1";
+        $sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$from'";
         $db->query($sql);
         $row = $db->row( true );
-        $allow_from = ( $row['ews_move_anywhere'] || in_array( $to, explode(',', $row['ews_move_to'] )));
+        if ( $row['apply_permissions'] ) {
+            $allow_from = ( $row['ews_move_anywhere'] || in_array( $to, explode(',', $row['ews_move_to'] )));
+        }
+        else 
+            $allow_from = true;
 
         // Can write in TO folder
-        $sql = "SELECT 'X' FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$to' and ews_write_permission = 1";
-        $db->query($sql);
-        $allow_to = ( $db->row('true') );
+        $allowed_to = self::is_allowed( $profile, $to, 'write' );
 
         return $allow_from && $allow_to;
     }

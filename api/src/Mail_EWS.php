@@ -593,6 +593,7 @@ class Mail_EWS extends Mail
 	}
     static function getFolderPermissions( $profile_id ) {
         // From Lib
+        if ( !$profile_id ) return array();
         $folders = Lib::getSettingsFolders( $profile_id );
 
         // From Db
@@ -601,6 +602,11 @@ class Mail_EWS extends Mail
         $final = array('');
         $used = array();
         while ( $row = $db->row(true) ) {
+            if ( $row['ews_permissions'] ) {
+                $permissions = unserialize( $row['ews_permissions'] );
+                foreach( $permissions as $permission => $value )
+                    $row[ $permission ] = $value;
+            }
             $final[] = $row;
             $used[] = $row['ews_folder'];
         }
@@ -618,6 +624,7 @@ class Mail_EWS extends Mail
     }
     static function getFolderPermissionsSelOptions( $profile_id ) {
         // From Lib
+        if ( !$profile_id ) return array();
         $folders = Lib::getSettingsFolders( $profile_id );
 
         $normalize = array();
@@ -631,16 +638,24 @@ class Mail_EWS extends Mail
         return $sel_options;
     }
     static function storeFolderPermissions( $content, $profile_id ) {
+        if ( !$profile_id ) return ;
         $db = clone( $GLOBALS['egw']->db );
         $sql = "DELETE FROM egw_ea_ews WHERE ews_profile=$profile_id";
         $db->query($sql);    
 
+        $fields = array( 'read', 'write', 'delete' );
         foreach ( $content as $folder ) {
             if (!$folder) continue;
-            if (!$folder['ews_read_permission'] && !$folder['ews_write_permission']) continue;
+            if (!$folder['ews_order']) continue;
+
+            $permissions = array();
+            foreach( $fields as $field ) 
+                $permissions[ $field ] = $folder[ $field ];
+
 
             $obj = new Api\Storage\Base('api','egw_ea_ews',null);
             $folder['ews_profile'] = $profile_id;
+            $folder['ews_permissions'] = serialize( $permissions );
             if ( $folder['ews_move_to'] )
                 $folder['ews_move_to'] = implode(',', $folder['ews_move_to'] );
             $obj->save( $folder );
