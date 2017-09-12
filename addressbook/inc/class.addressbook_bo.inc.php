@@ -230,7 +230,7 @@ class addressbook_bo extends Api\Contacts
 		}
 		else
 		{
-			$message = lang('%1 public keys added.', $updated);
+			$message = !$updated ? false: lang('%1 public keys added.', $updated);
 		}
 		return $message;
 	}

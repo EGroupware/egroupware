@@ -5927,6 +5927,13 @@ app.classes.mail = AppJS.extend(
 			};
 			content.message2 = egw.lang('You may add this certificate into your contact, if you trust this signature.');
 		}
+		var extra = {
+			'presets[email]': _metadata.email,
+			'presets[n_given]': _metadata.certDetails.subject.commonName,
+			'presets[pubkey]': _metadata.cert,
+			'presets[org_name]': _metadata.certDetails.subject.organizationName,
+			'presets[org_unit]': _metadata.certDetails.subject.organizationUnitName
+		};
 		et2_createWidget("dialog",
 		{
 			callback: function(_button_id, _value)
@@ -5934,7 +5941,13 @@ app.classes.mail = AppJS.extend(
 				if (_button_id == 'contact' && _value)
 				{
 					self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
-					_metadata,function(_message){egw.message(_message);}).sendRequest(true);
+					_metadata,function(_result){
+						if (!_result)
+						{
+							egw.open('','addressbook','add',extra);
+						}
+						egw.message(_result);
+					}).sendRequest(true);
 				}
 			},
 			title: egw.lang('Certificate info for email %1', _metadata.email),
