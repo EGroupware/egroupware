@@ -48,7 +48,14 @@ function nm_action(_action, _senders, _target, _ids)
 		}
 	}
 	// row ids
-	var row_ids = _ids.ids.slice(0);
+	var row_ids = "";
+	for (var i = 0; i < _ids.ids.length; i++)
+	{
+		var row_id = _ids.ids[i];
+		row_ids += (row_id.indexOf(',') >= 0 ? '"'+row_id.replace(/"/g,'""')+'"' : row_id) +
+			((i < _ids.ids.length - 1) ? "," : "");
+	}
+
 	// Translate the internal uids back to server uids
 	var idsArr = _ids.ids;
 	for (var i = 0; i < idsArr.length; i++)
@@ -77,13 +84,12 @@ function nm_action(_action, _senders, _target, _ids)
 	var url = '#';
 	if (typeof _action.data.url != 'undefined')
 	{
-		if (_senders.length == 1 )
 		// Add selected IDs to url
 		url = _action.data.url.replace(/(\$|%24)id/,encodeURIComponent(ids))
 			// Include select all flag too
 			.replace(/(\$|%24)select_all/,_ids.all)
 			// Add row_ids to url
-			.replace(/(\$|%24)row_id/,row_ids);
+			.replace(/(\$|%24)row_id/,encodeURIComponent(row_ids));
 	}
 
 	var target = null;
