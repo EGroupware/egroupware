@@ -1051,9 +1051,9 @@ app.classes.mail = AppJS.extend(
 			jQuery(IframeHandle.getDOMNode()).on('load', function(e){
 				self.resolveExternalImages (this.contentWindow.document);
 			});
-			if (dataElem.data['smime']) this.smimeAttachmentsCheckerInterval();
-		}
 
+		}
+		if (dataElem.data['smime']) this.smimeAttachmentsCheckerInterval();
 		var messages = {};
 		messages['msg'] = [_id];
 
@@ -5778,12 +5778,32 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * set attachments of smime message for mobile view
+	 * @param {type} _attachments
+	 */
+	set_smimeAttachmentsMobile: function (_attachments)
+	{
+		var attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
+		var $attachment = jQuery('.et2_details.attachments');
+		if (attachmentsBlock && _attachments.length > 0)
+		{
+			attachmentsBlock.set_value({content:_attachments});
+			$attachment.show();
+		}
+	},
+
+	/**
 	 * Set attachments of smime message
 	 *
 	 * @param {object} _attachments
 	 */
 	set_smimeAttachments:function (_attachments)
 	{
+		if (egwIsMobile())
+		{
+			this.set_smimeAttachmentsMobile(_attachments);
+			return;
+		}
 		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'previewAttachmentArea');
 		var content = this.et2.getArrayMgr('content');
 		var mailPreview = this.et2.getWidgetById('mailPreviewContainer');
