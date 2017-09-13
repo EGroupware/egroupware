@@ -893,11 +893,6 @@ class admin_mail
 					{
 						if (!$content['acc_'.$type.'_ssl']) $content['acc_'.$type.'_ssl'] = 'no';
 					}
-
-					if (!empty($content['acc_smime_password']))
-					{
-						$readonlys['smime_export_p12'] = false;
-					}
 				}
 				catch(Api\Exception\NotFound $e) {
 					if (self::$debug) _egw_log_exception($e);
@@ -1171,6 +1166,25 @@ class admin_mail
 					}
 			}
 		}
+		// SMIME UPLOAD/DELETE/EXPORT control
+		$content['hide_smime_upload'] = false;
+		if (!empty($content['acc_smime_password']))
+		{
+			if (!empty($content['smime_delete_p12']) &&
+					Mail\Credentials::delete (
+						$content['acc_id'],
+						$content['called_for'] ? $content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
+						Mail\Credentials::SMIME
+				))
+			{
+				unset($content['acc_smime_password'], $content['smimeKeyUpload'], $content['smime_delete_p12']);
+				$content['hide_smime_upload'] = false;
+			}
+			else
+			{
+				$content['hide_smime_upload'] = true;
+			}
+		}
 
 		// disable delete button for new, not yet saved entries, if no delete rights or a non-standard identity selected
 		$readonlys['button[delete]'] = empty($content['acc_id']) ||
@@ -1190,7 +1204,8 @@ class admin_mail
 			$readonlys['button[cancel]'] = false;
 			// allow to edit notification-folders
 			$readonlys['button[save]'] = $readonlys['button[apply]'] =
-				$readonlys['notify_folders'] = $readonlys['notify_use_default'] = false;
+			$readonlys['notify_folders'] = $readonlys['notify_use_default'] =
+			$readonlys['smimeKeyUpload'] = $readonlys['smime_pkcs12_password']= false;
 		}
 
 		$sel_options['acc_imap_ssl'] = $sel_options['acc_sieve_ssl'] =
