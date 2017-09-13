@@ -5953,7 +5953,7 @@ app.classes.mail = AppJS.extend(
 			title: egw.lang('Certificate info for email %1', _metadata.email),
 			buttons: buttons,
 			value:{content:content},
-			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet',
+			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false
 		}, et2_dialog._create_parent('mail'));
 	}

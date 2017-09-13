@@ -34,16 +34,14 @@
 					<description id="certDetails[issuer][commonName]"/>
 				</row>
 				<row>
-					<tabbox id="tabs" class="et2_nowrap" width="100%" span="all" tab_height="200" align_tabs="v">
+					<tabbox id="tabs" class="et2_nowrap" tab_height="250" width="100%" align_tabs="h">
 						<tabs>
-							<tab id="brief" class="hideme"/>
 							<tab id="details" label="Certificate Details"/>
 							<tab id="certificate" label="Certificate in text"/>
 						</tabs>
 						<tabpanels>
-							<description/>
 							<html multiline="true" id="certHtml" readonly="true"/>
-							<description id="cert"/>
+							<textbox id="cert" readonly="true" multiline="true" class="et2_fullWidth" />
 						</tabpanels>
 					</tabbox>
 				</row>
