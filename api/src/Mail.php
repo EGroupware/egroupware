@@ -27,6 +27,8 @@ use Horde_Mime_Magic;
 use Horde_Mail_Rfc822;
 use Horde_Mail_Rfc822_List;
 use Horde_Mime_Mdn;
+use Horde_Translation;
+use Horde_Translation_Handler_Gettext;
 use EGroupware\Api;
 
 use tidy;
@@ -7247,6 +7249,10 @@ class Mail
 		$identity = Mail\Account::read_identity($acc['ident_id'], true, null, $acc);
 		if (self::$debug) error_log(__METHOD__.__LINE__.array2string($identity));
 		$headers = $this->getMessageHeader($uid, '', 'object', true, $_folder);
+
+		// Override Horde's translation with our own
+		Horde_Translation::setHandler('Horde_Mime', new Horde_Translation_Handler_Gettext('Horde_Mime', EGW_SERVER_ROOT.'/api/lang/locale'));
+		Preferences::setlocale();
 
 		$mdn = new Horde_Mime_Mdn($headers);
 		$mdn->generate(true, true, 'displayed', php_uname('n'), $acc->smtpTransport(), array(
