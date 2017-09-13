@@ -17,7 +17,6 @@ $phpgw_baseline = array(
 			'info_id' => array('type' => 'auto','nullable' => False,'comment' => 'id of the infolog-entry'),
 			'info_type' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => 'task','comment' => 'infolog-type e.g. task, phone, email or note'),
 			'info_from' => array('type' => 'varchar','precision' => '255','comment' => 'text of the primary link'),
-			'info_addr' => array('type' => 'varchar','precision' => '255','comment' => 'textfield for phone-number or email of the primary contact'),
 			'info_subject' => array('type' => 'varchar','precision' => '255','comment' => 'title of the infolog-entry'),
 			'info_des' => array('type' => 'longtext','comment' => 'desciption of the infolog-entry'),
 			'info_owner' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'comment' => 'owner of the entry, can be account or group'),

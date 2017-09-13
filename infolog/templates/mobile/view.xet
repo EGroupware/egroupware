@@ -113,12 +113,6 @@
 					<description value="Contact" for="info_from"/>
 					<textbox blur="@blur_title" class="et2_fullWidth" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="60" maxlength="255"/>
 				</row>
-				<row>
-					<description value="Phone/Email" for="info_addr"/>
-					<hbox>
-							<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="60" maxlength="255" class="et2_fullWidth _inputFullWidth"/>
-					</hbox>
-				</row>
 			</rows>
 		</grid>
 	</template>

@@ -460,17 +460,16 @@ class infolog_bo
 			{
 				$info['old_pm_id'] = $info['pm_id'] = $id;
 			}
-			$info['info_link'] = array(
+			$info['info_link'] = $info['info_contact'] = array(
 				'app'   => $app,
 				'id'    => $id,
 				'title' => (!empty($info['info_from']) ? $info['info_from'] : $title),
 			);
-			$info['info_contact'] = $app.':'.$id;
 
 			//echo " title='$title'</p>\n";
 			return $info['blur_title'] = $title;
 		}
-		$info['info_link'] = array('title' => $info['info_from']);
+		$info['info_link'] = $info['info_contact'] = array('id' => 'none', 'title' => $info['info_from']);
 		$info['info_link_id'] = 0;	// link might have been deleted
 		$info['info_custom_from'] = (int)!!$info['info_from'];
 
@@ -959,13 +958,14 @@ class infolog_bo
 				Link::link('infolog',$info_id,$to_write['link_to']['to_id']);
 				$values['link_to']['to_id'] = $info_id;
 			}
-			$this->write_check_links($to_write);
+				$this->write_check_links($to_write);
 			if(!$values['info_link_id'] || $values['info_link_id'] != $to_write['info_link_id'])
 			{
 				// Just got a link ID, need to save it
 				$this->so->write($to_write);
 				$values['info_link_id'] = $to_write['info_link_id'];
 				$values['info_contact'] = $to_write['info_contact'];
+				$values['info_from'] = $to_write['info_from'];
 				$this->link_id2from($values);
 			}
 
@@ -1057,7 +1057,8 @@ class infolog_bo
 			{
 				// eTemplate2 returns the array all ready
 				$app = $values['info_contact']['app'];
-				$id = $values['info_contact']['id'];
+				$id = (int)$values['info_contact']['id'];
+				$from = $values['info_contact']['search'];
 			}
 			else if ($values['info_contact'])
 			{
@@ -1068,7 +1069,7 @@ class infolog_bo
 			{
 				unset($values['info_link_id'], $id, $values['info_contact']);
 			}
-			elseif ($app && $id)
+			else if ($app && $id)
 			{
 				if(!is_array($values['link_to']))
 				{
@@ -1079,10 +1080,16 @@ class infolog_bo
 						$values['info_id'],
 						$app,$id
 				));
+				$values['info_from'] = Link::title($app, $id);
+			}
+			else if ($from)
+			{
+				$values['info_from'] = $from;
 			}
 			else
 			{
 				unset($values['info_link_id']);
+				$values['info_from'] = null;
 			}
 		}
 		else if ($values['pm_id'] && $values['info_id'] && !$values['old_pm_id'])
@@ -1269,8 +1276,7 @@ class infolog_bo
 		$info = array(
 			'info_id' => 0,
 			'info_type' => $type,
-			'info_from' => implode(', ',$names),
-			'info_addr' => implode(', ',$emails),
+			'info_from' => implode(', ',$names) . implode(', ', $emails),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
 			'info_startdate' => Api\DateTime::server2user($_date),
@@ -1297,7 +1303,7 @@ class infolog_bo
 		}
 		if (!$contacts || !is_array($contacts) || !is_array($contacts[0]))
 		{
-			$info['msg'] = lang('Attention: No Contact with address %1 found.',$info['info_addr']);
+			$info['msg'] = lang('Attention: No Contact with address %1 found.',$info['info_from']);
 			$info['info_custom_from'] = true;	// show the info_from line and NOT only the link
 		}
 		else

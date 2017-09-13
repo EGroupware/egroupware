@@ -109,7 +109,6 @@ class infolog_widget extends Etemplate\Widget\Entry
 				'info_des' => lang('Description'),
 				'info_cat' => lang('Category'),
 				'info_from' => lang('Contact'),
-				'info_addr' => lang('Phone/Email'),
 				'info_responsible' => lang('Responsible'),
 				'info_startdate' => lang('Startdate'),
 				'info_enddate' => lang('Enddate'),

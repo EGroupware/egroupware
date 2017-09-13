@@ -21,7 +21,6 @@
           <entry type="string" name="info_from">Contact</entry>
           <entry type="string" name="info_subject">Subject</entry>
           <entry type="string" name="info_des">Description</entry>
-          <entry type="string" name="info_addr">Phone/Email</entry>
           <entry type="string" name="info_link_id">primary link</entry>
           <entry type="string" name="info_cat">Category</entry>
           <entry type="string" name="info_priority">Priority</entry>
@@ -95,7 +94,6 @@
           <entry type="string" name="2">info_from</entry>
           <entry type="string" name="3">info_subject</entry>
           <entry type="string" name="4">info_des</entry>
-          <entry type="string" name="5">info_addr</entry>
           <entry type="string" name="6">info_link_id</entry>
           <entry type="string" name="7">info_cat</entry>
           <entry type="string" name="8">info_priority</entry>

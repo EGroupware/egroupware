@@ -39,7 +39,7 @@
 }
 .normal,
 .normal_done {
-  color: black;
+  color: #000000;
 }
 .high {
   color: #cc0000;
@@ -198,7 +198,7 @@ div#infolog-edit_infolog-edit-description {
   height: auto;
 }
 div#infolog-edit_info_contact input.ui-autocomplete-input span.ui-icon-close {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   background-size: contain;
   background-position: 5px 5px;
   top: 9px !important;
