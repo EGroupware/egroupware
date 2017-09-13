@@ -698,9 +698,40 @@ div.et2_link_entry:after {
 .et2_nextmatch .et2_link_entry:after {
   margin: -12px;
 }
-div.et2_link_entry select {
+div.et2_link_entry select, div.et2_link_entry {
   width: 40%;
   margin-right: 10px;
+}
+/* Icons in app selection */
+div.et2_link_entry span[role="combobox"] {
+  width: 100px;
+  height: 3ex;
+  border: 1px solid #e6e6e6;
+  position: relative;
+  top: 5px;
+  background: transparent;
+}
+div.et2_link_entry span[role="combobox"] .ui-selectmenu-text, .et2_link_entry_app_option div span {
+  background: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding: 0px 5px;
+  right: auto;
+  height:100%;
+}
+div.et2_link_entry.app_icons:not(.no_app) input {
+  width: calc(100% - 58px);
+}
+.et2_link_entry_app_option.ui-state-focus {
+  border: none;
+  transition: width 0s;
+}
+.et2_link_entry_app_option {
+  line-height: 34px;
+}
+.et2_link_entry_app_option > div {
+  padding-left: 34px;
+  font-weight: normal;
 }
 div.et2_link_entry input.ui-autocomplete-input {
   padding-bottom: 1px;

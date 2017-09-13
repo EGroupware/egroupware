@@ -343,6 +343,9 @@
     background-color: transparent;
     left: 0px;
   }
+  .et2_link_to .et2_link_entry .ui-icon-triangle-1-s {
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+  }
   .et2_link_to .et2_file span {
     background-position: center;
     background-size: 16px 16px;
@@ -350,6 +353,10 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+  }
+  .et2_link_entry .ui-icon-triangle-1-s {
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+    background-size: contain;
   }
   .et2_link {
     color: #0C5DA5;
