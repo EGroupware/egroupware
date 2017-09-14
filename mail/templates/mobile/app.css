@@ -2520,6 +2520,7 @@ div.mailComposeHeaderSection > table {
     background-color: none;
   }
   body #popupMainDiv .mail-d-h1 {
+    position: relative;
     padding-bottom: 15px;
     border-bottom: 1px solid silver;
     font-size: 12pt;
@@ -2573,9 +2574,6 @@ div.mailComposeHeaderSection > table {
     position: initial;
     margin-top: 20px;
   }
-  body #popupMainDiv #mail-view_iframe {
-    display: none;
-  }
   body #popupMainDiv div#mail-view > div {
     height: 100%;
   }
@@ -2584,6 +2582,7 @@ div.mailComposeHeaderSection > table {
   }
   body #popupMainDiv #mail-view_toaddressdetails {
     color: #26537c;
+    float: right;
   }
   body #popupMainDiv #tempPrintDiv {
     display: block;

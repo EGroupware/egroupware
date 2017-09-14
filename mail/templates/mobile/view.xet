@@ -12,6 +12,10 @@
 			</hbox>
 			<hbox  class="mail-d-h1" width="100%">
 				<description align="left" id="subject" no_lang="1" readonly="true"/>
+				<hbox class="smimeIcons">
+					<image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true" align="right" width="24"/>
+					<image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" disabled="true" align="right" width="24"/>
+				</hbox>
 			</hbox>
 			<hbox class="mail-d-h2" disabled="!@fromaddress" width="100%">
 				<url-email id="fromaddress" readonly="true"/>

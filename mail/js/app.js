@@ -5708,10 +5708,12 @@ app.classes.mail = AppJS.extend(
 					self.resolveExternalImages(this.contentWindow.document);
 					// Use prepare print function to copy iframe content into div
 					// as we don't want to show content in iframe (scrolling problem).
-					self.mail_prepare_print(jQuery(this));
+					if (jQuery(this.contentWindow.document.body).find('#smimePasswordRequest').length == 0)
+					{
+						iframe.set_disabled(true);
+						self.mail_prepare_print(jQuery(this));
+					}
 				}
-
-
 			});
 		});
 	},
@@ -5858,15 +5860,15 @@ app.classes.mail = AppJS.extend(
 	{
 		if (!_data) return;
 		var self = this;
+		var et2_object = egwIsMobile()? this.et2_view.widgetContainer: this.et2;
 		var data = _data;
-		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		var attachmentArea = et2_object.getWidgetById('previewAttachmentArea');
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
-		var smime_signature = this.et2.getWidgetById('smime_signature');
-		var smime_encryption = this.et2.getWidgetById('smime_encryption');
-		var $mail_container = egw(window).is_popup() ?
-								jQuery('.mailDisplayContainer'):
-								jQuery(this.et2.getWidgetById('mailPreviewContainer').getDOMNode());
-
+		var smime_signature = et2_object.getWidgetById('smime_signature');
+		var smime_encryption = et2_object.getWidgetById('smime_encryption');
+		var $mail_container = egwIsMobile()? jQuery('.mail-d-h1').next() :
+				egw(window).is_popup() ? jQuery('.mailDisplayContainer'):
+				jQuery(et2_object.getWidgetById('mailPreviewContainer').getDOMNode());
 		smime_signature.set_disabled(!data.signed);
 		smime_encryption.set_disabled(!data.encrypted);
 		if (!data.signed)
