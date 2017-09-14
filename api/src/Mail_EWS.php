@@ -96,7 +96,8 @@ class Mail_EWS extends Mail
 	}
     function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no') {
         // Delete messages after checking for specitic folder permissions
-        if ( !$_folder ) return;
+        if ( !$_folder || !$_messageUID ) return;
+        
 
         $folderID = $this->getFolderId( $_folder );
         $methodMap = array(
@@ -105,6 +106,9 @@ class Mail_EWS extends Mail
             'remove_immediately' => 'HardDelete',
             'move_to_trash' => 'MoveToDeletedItems',
         );
+
+        if ( $_messageUID == 'all' ) 
+            $_messageUID = Lib::getMailIds( $this->profileID, $folderID );
 
         $messages = '';
         foreach( $_messageUID as $message ) {
@@ -117,15 +121,15 @@ class Mail_EWS extends Mail
             // Check for external actions before deleting email
             $validations = Api\Hooks::process(array(
                 'location' => 'mail_before_delete',
-                'profile' => $this->mail_bo->profileID,
+                'profile' => $this->profileID,
                 'folder' => $folderID,
                 'message' => $mailID,
-            ), array(), true);
+            ));
             if ( is_array( $validations ) ) {
                 foreach ( $validations as $app => $validation) {
                     $allowed = $allowed && $validation['allowed'];
                     if ( !$allowed )
-                        $messaged .= $validation['messages'];
+                        $messages .= $validation['messages'];
                 }
             }
 
@@ -506,6 +510,43 @@ class Mail_EWS extends Mail
 		    'BODY' => $email->Body->_,
 		);
 	}
+	function getSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
+    {
+        // Get All mails in specific folder
+        $folderID = $this->getFolderId( $_folderName );
+
+        $sort_map = array(
+            'subject'		=> 'item:Subject',
+            'size'			=> 'item:Size',
+            'date'			=> 'item:DateTimeSent',
+            'arrival'	    => 'item:DateTimeCreated',
+            'uid'			=> 'item:ItemId',
+            'attachments'	=> 'item:HasAttachments',
+            'seen'			=> 'item:IsRead',
+            'toaddress'	    => 'item:DisplayTo',
+            'fromaddress'	=> 'message:From',
+            'address'	    => 'message:From',
+        );
+        $sort = array(
+            'order' => $sort_map[ $_sort ],
+            'sort' => 'Descending',
+        );
+        if ( !$sort['order'] )
+            $sort['order'] = 'item:DateTimeCreated';
+
+        $_startMessage--;
+
+        $array = Lib::getMails( $this->profileID, $folderID, 0, 999999, $sort, $_filter, true );
+
+        if ( empty( $array['rows'] ) )
+            return array();
+
+        $emails = array();
+        foreach ( $array['rows'] as $email ) 
+            $emails[] = $email->ItemId->Id;
+
+        return array( 'match' => $emails, 'header' => $emails, 'info' => array( 'total' => $array['count'] ) );
+    }
     function getDefaultFolder() {
         return $this->profileID.self::DELIMITER.Lib::getDefaultFolder( $this->profileID );
     }

@@ -6,6 +6,7 @@
  */
 
 namespace EGroupware\Api\Mail\EWS;
+use EGroupware\Api;
 use EGroupware\Api\Mail;
 use PhpEws\EwsConnection;
 use PhpEws\DataType as DT;
@@ -96,7 +97,11 @@ class Lib
 
         $response = $ews->CreateItem($request);
 
-        return $response->ResponseMessages->CreateItemResponseMessage->ResponseClass == 'Success';
+        $result = false;
+        if ( $response->ResponseMessages->CreateItemResponseMessage->ResponseClass == 'Success' )
+            $result = $response->ResponseMessages->CreateItemResponseMessage->Items->Message->ItemId->Id;
+
+        return $result;
     }
 
     static function getAttachment( $profile, $attachmentID ) {
@@ -188,12 +193,15 @@ class Lib
             return '';
     }
 
-    static function getMails( $profile, $folderID, $start, $num_rows, $sort, $filter ) {
+    static function getMails( $profile, $folderID, $start, $num_rows, $sort, $filter, $id_only = false ) {
         $ews = self::init( $profile );		
 
         $request = new DT\FindItemType();
         $request->ItemShape = new DT\ItemResponseShapeType();
-        $request->ItemShape->BaseShape = DT\DefaultShapeNamesType::ALL_PROPERTIES;
+        if ( $id_only )
+            $request->ItemShape->BaseShape = DT\DefaultShapeNamesType::ID_ONLY;
+        else
+            $request->ItemShape->BaseShape = DT\DefaultShapeNamesType::ALL_PROPERTIES;
         $request->Traversal = DT\ItemQueryTraversalType::SHALLOW;
 
         /* $offset = $limit * ($page - 1); */
@@ -215,9 +223,8 @@ class Lib
         $order->Order = $sort['sort']; 
         $request->SortOrder->FieldOrder[] = $order;
 
-        if ( $filter['string'] ) {
-            $request->Restriction = self::setRestriction( $filter );
-        }
+        if ( $res = self::setRestriction( $filter ) ) 
+            $request->Restriction = $res;
 
         $response = $ews->FindItem($request);
 
@@ -232,7 +239,38 @@ class Lib
     }
 
     // Get all mail ids inside a specific folder
-    static function getMailIds( $profile, $folderID, $page, $limit) {
+    static function getMailIds( $profile, $folderID ) {
+        $ews = self::init( $profile );		
+
+        $request = new DT\FindItemType();
+        $request->ItemShape = new DT\ItemResponseShapeType();
+        $request->ItemShape->BaseShape = DT\DefaultShapeNamesType::ID_ONLY;
+        $request->Traversal = DT\ItemQueryTraversalType::SHALLOW;
+
+        $request->ParentFolderIds = new DT\NonEmptyArrayOfBaseFolderIdsType();
+        $request->ParentFolderIds->FolderId = new DT\FolderIdType();
+        $request->ParentFolderIds->FolderId->Id = $folderID;
+
+        $response = $ews->FindItem($request);
+
+        //Format
+        $emails = $response->ResponseMessages->FindItemResponseMessage->RootFolder->Items->Message;
+        if ( is_array($emails) === FALSE ) {
+            $array = array( $emails );
+        }
+        else {
+            $array = $emails;
+        }
+        $ids = array();
+        foreach ( $array as $email ) {
+            $ids[] = $email->ItemId->Id;
+        }
+
+        return $ids;
+
+    }
+
+    static function getMailIdsPaginated( $profile, $folderID, $page, $limit) {
         $ews = self::init( $profile );		
 
         $request = new DT\FindItemType();
@@ -277,7 +315,6 @@ class Lib
         return $ids;
 
     }
-
     static function getMailIdsAfterDate( $profile, $folderID, $date ) {
         $ews = self::init( $profile );		
 
@@ -624,8 +661,53 @@ class Lib
 
         return true;
     }
-
+    static function getType( $object ) {
+        $type = get_class( $object );
+        list(,,$datatype) = explode('\\', $type);
+        return str_replace('Type','', $datatype );
+    }
     static function setRestriction( $filter ) {
+
+        $restrictions = array();
+        if ( $tmp = self::buildSearchRestrictions( $filter ) )
+            $restrictions[] = $tmp;
+        if ( $tmp = self::buildDateRestrictions( $filter ) )
+            $restrictions[] = $tmp;
+        if ( $tmp = self::buildStatusRestrictions( $filter ) )
+            $restrictions[] = $tmp;
+
+        if ( !$restrictions ) return null;
+
+        if ( count( $restrictions ) > 1 ) {
+            // Concatenate Ands
+            $and = new DT\AndType();
+            $one = array_pop( $restrictions );
+            $two = array_pop( $restrictions );
+            $type1 = self::getType( $one );
+            $type2 = self::getType( $two );
+            $and->$type1 = $one;
+            $and->$type2 = $two;
+            while( $curr = array_pop( $restrictions ) ) {
+                $new = new DT\AndType();
+                $type = self::getType( $curr );
+                $new->$type = $curr;
+                $new->And = $and;
+                $and = $new;
+            }
+
+            $final = $and;
+        }
+        else 
+            $final = $restrictions[0];
+
+        $restriction = new DT\RestrictionType();
+        $type = self::getType( $final );
+        $restriction->$type = $final;
+
+        return $restriction;
+    }
+    static function buildSearchRestrictions( $filter ) {
+        if ( !$filter['string'] ) return null;
 
         $fields = array(
             'cc' => 'message:CcRecipients',
@@ -672,9 +754,7 @@ class Lib
             break;
         }
 
-        // Build the restriction.
-        $restriction = new DT\RestrictionType();
-
+        $restriction = null;
         if ( count( $ors ) > 1 ) {
             // Concatenate ORs
             $or = new DT\OrType();
@@ -688,12 +768,67 @@ class Lib
                 $or = $new;
             }
 
-            $restriction->Or = $or;
+            $restriction = $or;
         }
         else 
-            $restriction->Contains = $ors[0];
+            $restriction = $ors[0];
 
         return $restriction;
+    }
+    static function buildDateRestrictions( $filter ) {
+        if ( !$filter['range'] ) return null;
+
+        $greater = null;
+        if ( $filter['range'] == 'SINCE' || $filter['range'] == 'BETWEEN' ) {
+            $date = ( $filter['range'] == 'SINCE' ? $filter['date'] : $filter['since'] );
+            $tz = new \DateTimeZone('UTC');
+            $dt = \DateTime::createFromFormat( 'd-M-Y H:i:s', "$date 00:00:00", $tz );
+            $greater = new DT\IsGreaterThanOrEqualToType();
+            $greater->FieldURI = new DT\PathToUnindexedFieldType();
+            $greater->FieldURI->FieldURI = 'item:DateTimeReceived';
+            $greater->FieldURIOrConstant = new DT\FieldURIOrConstantType();
+            $greater->FieldURIOrConstant->Constant = new DT\ConstantValueType();
+            $greater->FieldURIOrConstant->Constant->Value = $dt->format("Y-m-d\TH:i:s\Z");
+        }
+
+        $less = null;
+        if ( $filter['range'] == 'BEFORE' || $filter['range'] == 'BETWEEN' ) {
+            $date = ( $filter['range'] == 'BEFORE' ? $filter['date'] : $filter['before'] );
+            $tz = new \DateTimeZone('UTC');
+            $dt = \DateTime::createFromFormat( 'd-M-Y H:i:s', "$date 23:59:59", $tz );
+            $less = new DT\IsLessThanOrEqualToType();
+            $less->FieldURI = new DT\PathToUnindexedFieldType();
+            $less->FieldURI->FieldURI = 'item:DateTimeReceived';
+            $less->FieldURIOrConstant = new DT\FieldURIOrConstantType();
+            $less->FieldURIOrConstant->Constant = new DT\ConstantValueType();
+            $less->FieldURIOrConstant->Constant->Value = $dt->format("Y-m-d\TH:i:s\Z");
+        }
+
+        $restriction = null;
+        if ( $greater && $less ) {
+            $restriction = new DT\AndType();
+            $restriction->IsGreaterThanOrEqualTo = $greater;
+            $restriction->IsLessThanOrEqualTo = $less;
+        }
+        else if ( $greater )
+            $restriction = $greater;
+        else
+            $restriction = $less;
+
+        return $restriction;
+    }
+    static function buildStatusRestrictions( $filter ) {
+        if ( !$filter['status'] ) return null;
+        if ( $filter['status'] != 'unseen' && $filter['status'] != 'seen' ) return null;
+
+        $equal = new DT\IsEqualToType();
+        $equal->FieldURI = new DT\PathToUnindexedFieldType();
+        $equal->FieldURI->FieldURI = 'message:IsRead';
+        $equal->FieldURIOrConstant = new DT\FieldURIOrConstantType();
+        $equal->FieldURIOrConstant->Constant = new DT\ConstantValueType();
+        $equal->FieldURIOrConstant->Constant->Value = ( $filter['status'] == 'seen' ? 1: 0);
+
+        return $equal;
     }
 
     static function getDBFolders( $profile ) {
@@ -735,16 +870,15 @@ class Lib
         $db->query($sql);
         $row = $db->row( true );
         $acc = Mail\Account::read( $profile );
-        if ( $row['ews_apply_permissions'] || $acc['acc_ews_apply_permissions']) {
-            $allow_from = ( $row['ews_move_anywhere'] || in_array( $to, explode(',', $row['ews_move_to'] )));
-        }
+        if ( $row['ews_apply_permissions'] || $acc['acc_ews_apply_permissions']) 
+            $allowed_from = ( $row['ews_move_anywhere'] || in_array( $to, explode(',', $row['ews_move_to'] )));
         else 
-            $allow_from = true;
+            $allowed_from = true;
 
         // Can write in TO folder
         $allowed_to = self::is_allowed( $profile, $to, 'write' );
 
-        return $allow_from && $allow_to;
+        return $allowed_from && $allowed_to;
     }
     static function getRootFolder( $profile ) {
         if ( $profile )
@@ -758,7 +892,7 @@ class Lib
 
     static function renameFolderDB( $profile, $folderID, $name ) {
         $db = clone($GLOBALS['egw']->db);
-        $sql = "UPDATE egw_ea_ews set ews_name='$name' WHERE ews_profile= $profile and ews_folder= BINARY '$folderID'";
+        $sql = "UPDATE egw_ea_ews set ews_name='$name' WHERE ews_profile= $profile and ews_folder='$folderID'";
         $db->query($sql);
         return true;
     }

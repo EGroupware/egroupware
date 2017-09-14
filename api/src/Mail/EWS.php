@@ -65,6 +65,7 @@ class EWS
 				return $ret;
                 break;
 			case 'subscribeMailbox':
+			case 'search':
                 return;
                 break;
 		}
