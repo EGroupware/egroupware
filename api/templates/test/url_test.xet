@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- This template is used in automated testing -->
+<overlay>
+	<template id="api.url_test" template="test" lang="" group="0" version="16.1">
+		<url id="widget"/>
+	</template>
+</overlay>

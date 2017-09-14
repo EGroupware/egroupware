@@ -405,7 +405,7 @@ class mail_tree
 			elseif (($key = array_search($data['folderarray']['MAILBOX'], $definedFolders, true)) !== false)
 			{
 				$data[Tree::LABEL] = lang($key);
-				$data[Tree::TOOLTIP] = lang($key);
+				$data[Tree::TOOLTIP] = $key;
 				//User defined folders icons
 				$data[Tree::IMAGE_LEAF] =
 					$data[Tree::IMAGE_FOLDER_OPEN] =

@@ -585,7 +585,7 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 			}
 			else if (btn.length > 0)
 			{
-				btn.toggleClass('toolbar_toggled'+ (typeof action_event.data.toggledClass != 'undefined'?" "+action_event.data.toggledClass:''));
+				btn.toggleClass('toolbar_toggled'+ (typeof action_event.data.toggledClass != 'undefined'?" "+action_event.data.toggledClass:''), _value);
 			}
 		}
 		else if (action_event)

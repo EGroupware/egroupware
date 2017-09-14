@@ -56,6 +56,7 @@ class mail_ui
 		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'subscription'	=> True,
 		'folderManagement' => true,
+		'smimeExportCert' => true
 	);
 
 	/**
@@ -587,6 +588,8 @@ class mail_ui
 			case "fixed":
 				$etpl->setElementAttribute('mailSplitter', 'orientation', 'h');
 				break;
+			default:
+				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
 		}
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -1826,6 +1829,18 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$data['uid'] = $message_uid;
 			$data['row_id']=$this->createRowID($_folderName,$message_uid);
 
+			if (is_array($header['attachments']))
+			{
+				foreach ($header['attachments'] as $attch)
+				{
+					if (Mail\Smime::isSmime($attch['mimeType']))
+					{
+						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['mimeType'])?
+								Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
+					}
+				}
+			}
+
 			$flags = "";
 			if(!empty($header['recent'])) $flags .= "R";
 			if(!empty($header['flagged'])) $flags .= "F";
@@ -2016,16 +2031,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (in_array("bodypreview", $cols)&&$header['bodypreview'])
 			{
 				$data["bodypreview"] = $header['bodypreview'];
-			}
-			if (is_array($data['attachmentsBlock']))
-			{
-				foreach ($data['attachmentsBlock'] as &$attch)
-				{
-					if (Mail\Smime::isSmime($attch['type']))
-					{
-						$data['smime'] = Mail\Smime::isSmimeSignatureOnly($attch['type']) ? 'smimeSignature' : 'smimeEncryption';
-					}
-				}
 			}
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($data));
@@ -2243,7 +2248,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$ab = new addressbook_bo();
 		$response->data($ab->set_smime_keys(array($_metadata['email'] => $_metadata['cert'])));
 	}
-	
+
 	/**
 	 * Generates certificate base on given data and send
 	 * private key, pubkey and certificate back to client callback.
@@ -2262,7 +2267,22 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			if (empty($_data[$key]) || in_array($key, $discards)) unset($_data[$key]);
 		}
-		$response->data($smime->generate_certificate($_data, $ca, $passphrase));
+		$response->data($smime->generate_certificate($_data, $ca, null, $passphrase));
+	}
+
+	/**
+	 * Export stored smime certificate in database
+	 * @return boolean return false if not successful
+	 */
+	function smimeExportCert()
+	{
+		if (empty($_GET['acc_id'])) return false;
+		$acc_smime = Mail\Smime::get_acc_smime($_GET['acc_id']);
+		$length = 0;
+		$mime = 'application/x-pkcs12';
+		Api\Header\Content::safe($acc_smime['acc_smime_password'], "certificate.p12", $mime, $length, true, true);
+		echo $acc_smime['acc_smime_password'];
+		exit();
 	}
 
 	/**
@@ -2326,6 +2346,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 			foreach ($attachments as $key => $value)
 			{
+				if (Mail\Smime::isSmime($value['mimeType'])) continue;
 				$attachmentHTML[$key]['filename']= ($value['name'] ? ( $value['filename'] ? $value['filename'] : $value['name'] ) : lang('(no subject)'));
 				$attachmentHTML[$key]['filename'] = Api\Translation::convert_jsonsafe($attachmentHTML[$key]['filename'],'utf-8');
 				//error_log(array2string($value));
@@ -3109,10 +3130,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 		catch(Mail\Smime\PassphraseMissing $e)
 		{
-			$credentials = Mail\Credentials::read($this->mail_bo->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-			if (empty($credentials['acc_smime_password']))
+			$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
+			if (empty($acc_smime))
 			{
-				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME private key in Encryption tab located at Edit Account dialog.'));
+				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'));
 			}
 			Framework::message($e->getMessage());
 			// do NOT include any default CSS
@@ -3123,9 +3144,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'<div>'.
 						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
 						'<input type="submit" value="'.lang("submit").'"/>'.
-					'</div>'.
-					'<div style="top:47%;margin-left:-15px;">'.
-						lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+						'<div style="margin-top:10px;position:relative;text-align:center;margin-left:-15px;">'.
+							lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+						'</div>'.
 					'</div>'.
 			'</form>';
 			return $smimeHtml;

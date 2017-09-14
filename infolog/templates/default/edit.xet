@@ -142,16 +142,6 @@
 								<textbox id="info_location" size="60" maxlength="255" class="et2_fullWidth"/>
 							</row>
 							<row>
-								<description value="Contact" for="info_from"/>
-								<textbox blur="@blur_title" class="et2_fullWidth" statustext="Custom contact-information, leave emtpy to use information from most recent link" id="info_from" size="60" maxlength="255"/>
-							</row>
-							<row>
-								<description value="Phone/Email" for="info_addr"/>
-								<hbox>
-									<textbox statustext="Custom contact-address, leave empty to use information from most recent link" id="info_addr" size="60" maxlength="255" class="et2_fullWidth _inputFullWidth"/>
-								</hbox>
-							</row>
-							<row>
 								<description value="Private" for="info_access"/>
 								<checkbox statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" options="private,public"/>
 							</row>
@@ -190,7 +180,7 @@
 				</row>
 				<row class="dialogHeader3">
 					<description value="Contact"/>
-					<link-entry id="info_contact"/>
+					<link-entry id="info_contact" app_icons="true"/>
 					<description/>
 					<description value="Enddate" for="info_enddate"/>
 					<date-time statustext="til when should the ToDo or Phonecall be finished" id="info_enddate" class="et2_fullWidth" span="4"/>

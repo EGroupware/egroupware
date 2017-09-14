@@ -480,7 +480,6 @@ class infolog_ui
 		// Check to see if we need to remove description
 		foreach($infos as $id => $info)
 		{
-			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
 			if (!$query['csv_export'] || !is_array($query['csv_export']))
 			{
 				$info['links'] =& $links[$id];
@@ -1765,14 +1764,6 @@ class infolog_ui
 					{
 						$content['info_link_id'] = 0;	// as field has to be int
 					}
-					if (is_array($content['info_contact']) && $content['info_contact']['id'])
-					{
-						$content['info_contact'] = $content['info_contact']['app'] . ':' . $content['info_contact']['id'];
-					}
-					else
-					{
-						$content['info_contact'] = false;
-					}
 					$active_tab = $content['tabs'];
 					if (!($info_id = $this->bo->write($content, true, true, true, $content['no_notifications'])))
 					{
@@ -1921,7 +1912,6 @@ class infolog_ui
 			{
 				Framework::window_close(lang('Permission denied!'));
 			}
-			if (!(strpos($content['info_addr'],',')===false) && strpos($content['info_addr'],', ')===false) $content['info_addr'] = str_replace(',',', ',$content['info_addr']);
 			foreach(array('info_subject', 'info_des') as $key)
 			{
 				if(!isset($content[$key]) || strlen($content[$key]) < 75)
@@ -2041,7 +2031,7 @@ class infolog_ui
 					$action_ids = explode(',',$action_id);
 					if(count($action_ids) == 1)
 					{
-						$content['info_contact'] = $action.':'.$action_id;
+						$content['info_contact'] = array('app' => $action, 'id' => $action_id);
 					}
 					foreach ($action_ids as $n => $id)
 					{
@@ -2357,8 +2347,13 @@ class infolog_ui
 			if (!isset($content['info_contact']) || empty($content['info_contact']) || $content['info_contact'] === 'copy:')
 			{
 				$linkinfos = Link::get_link($info_link_id);
-				$content['info_contact'] = $linkinfos['link_app1']=='infolog'? $linkinfos['link_app2'].':'.$linkinfos['link_id2']:$linkinfos['link_app1'].':'.$linkinfos['link_id1'];
-				if (stripos($content['info_contact'],'projectmanager')!==false) $content['pm_id'] = $linkinfos['link_app1']=='projectmanager'? $linkinfos['link_id1']:$linkinfos['link_id2'];
+				$content['info_contact'] = $linkinfos['link_app1']=='infolog'? 
+						array('app' => $linkinfos['link_app2'], 'id' => $linkinfos['link_id2']):
+						array('app' => $linkinfos['link_app1'], 'id' => $linkinfos['link_id1']);
+				if ($content['info_contact']['app'] == 'projectmanager')
+				{
+					$content['pm_id'] = $linkinfos['link_app1']=='projectmanager'? $linkinfos['link_id1']:$linkinfos['link_id2'];
+				}
 			}
 			unset($content['info_link_id']);
 		}
@@ -2412,7 +2407,6 @@ class infolog_ui
 		$fields = array(
 			'info_cat'      => 'Category',
 			'info_from'     => 'Contact',
-			'info_addr'     => 'Phone/Email',
 			'info_subject'  => 'Subject',
 			'info_des'      => 'Description',
 			'link_to'       => 'Links',
@@ -2424,7 +2418,6 @@ class infolog_ui
 		$excludefields = array(
 			'info_cat'      => 'Category',
 			'info_from'     => 'Contact',
-			'info_addr'     => 'Phone/Email',
 			'info_subject'  => 'Subject',
 			'info_des'      => 'Description',
 			'link_to'       => 'Links',
@@ -2633,7 +2626,6 @@ class infolog_ui
 		$fields = array(
 			'info_type'          => lang('Type'),
 			'info_from'          => lang('Contact'),
-			'info_addr'          => lang('Phone/Email'),
 //			'info_link_id'       => lang('primary link'),
 			'info_cat'           => array('label' => lang('Category'),'type' => 'select-cat'),
 			'info_priority'      => lang('Priority'),

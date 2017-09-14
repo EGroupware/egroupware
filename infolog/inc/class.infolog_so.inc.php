@@ -884,7 +884,7 @@ class infolog_so
 		if ($query['query']) $query['search'] = $query['query'];	// allow both names
 		if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
 		{
-			$columns = array('info_from','info_addr','info_location','info_subject','info_extra_value');
+			$columns = array('info_from','info_location','info_subject','info_extra_value');
 			// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
 			if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 

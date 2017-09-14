@@ -168,8 +168,8 @@ app.classes.mail = AppJS.extend(
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
 				var previewPane = this.egw.preference('previewPane', 'mail');
-				this.mail_disablePreviewArea(previewPane !== 'fixed' && previewPane !== 'vertical');
-				if (previewPane == 'vertical') nm.header.right_div.addClass('vertical_splitter');
+				this.mail_disablePreviewArea(previewPane !== 'fixed' && previewPane !== 'vertical' && previewPane == true);
+				if (previewPane == 'vertical' || previewPane != true) nm.header.right_div.addClass('vertical_splitter');
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
 
@@ -227,9 +227,9 @@ app.classes.mail = AppJS.extend(
 				// removed once the issue is solved.
 				var password = this.et2.getWidgetById('password');
 				if (password) password.set_value('');
-
-				if (this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp') &&
-					this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').checked ||
+				var composeToolbar = this.et2.getWidgetById('composeToolbar');
+				if (composeToolbar._actionManager.getActionById('pgp') &&
+					composeToolbar._actionManager.getActionById('pgp').checked ||
 					this.et2.getArrayMgr('content').data.mail_plaintext &&
 						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
 				{
@@ -312,6 +312,15 @@ app.classes.mail = AppJS.extend(
 				else if(to)
 				{
 					jQuery('input',to.node).focus();
+				}
+				var smime_sign = this.et2.getWidgetById('smime_sign');
+				var smime_encrypt = this.et2.getWidgetById('smime_encrypt');
+
+				if (composeToolbar._actionManager.getActionById('smime_sign') &&
+						composeToolbar._actionManager.getActionById('smime_encrypt'))
+				{
+					if (smime_sign.getValue() == 'on') composeToolbar.checkbox('smime_sign', true);
+					if (smime_encrypt.getValue() == 'on') composeToolbar.checkbox('smime_encrypt', true);
 				}
 				break;
 			case 'mail.subscribe':
@@ -594,7 +603,8 @@ app.classes.mail = AppJS.extend(
 
 		// We only handle one for everything but forward
 		settings.id = (typeof _elems == 'undefined'?'':_elems[0].id);
-
+		var content = egw.dataGetUIDdata(settings.id);
+		if (content) settings.smime_type = content.data['smime'];
 		switch(_action.id)
 		{
 			case 'compose':
@@ -943,7 +953,7 @@ app.classes.mail = AppJS.extend(
 			// If there is content to show recalculate the size
 			set_prev_iframe_top();
 		}
-		else if (previewPane == 'fixed' || previewPane == 'vertical')
+		else if (previewPane == 'fixed' || previewPane == 'vertical' || previewPane != true)
 		{
 			if(blank)
 			{
@@ -994,10 +1004,10 @@ app.classes.mail = AppJS.extend(
 				switch (smime_widgets[i])
 				{
 					case 'smime_signature':
-						widget.set_disabled(!(dataElem.data.smime == 'smimeSignature'));
+						widget.set_disabled(!(dataElem.data.smime == 'smime_sign'));
 						break;
 					case 'smime_encryption':
-						widget.set_disabled(!(dataElem.data.smime == 'smimeEncryption'));
+						widget.set_disabled(!(dataElem.data.smime == 'smime_encrypt'));
 						break;
 					default:
 						widget.set_disabled(true);
@@ -1041,9 +1051,9 @@ app.classes.mail = AppJS.extend(
 			jQuery(IframeHandle.getDOMNode()).on('load', function(e){
 				self.resolveExternalImages (this.contentWindow.document);
 			});
-			if (dataElem.data['smime']) this.smimeAttachmentsCheckerInterval();
-		}
 
+		}
+		if (dataElem.data['smime']) this.smimeAttachmentsCheckerInterval();
 		var messages = {};
 		messages['msg'] = [_id];
 
@@ -4595,7 +4605,9 @@ app.classes.mail = AppJS.extend(
 
 		if ($mainIframe)
 		{
-			tmpPrintDiv[0].innerHTML = $mainIframe.contents().find('body').html();
+			window.setTimeout(function(){
+				tmpPrintDiv[0].innerHTML = $mainIframe.contents().find('body').html();
+			}, 600);
 		}
 		// Attach the element to the DOM after maniupulation
 		if (notAttached) $mainIframe.after(tmpPrintDiv);
@@ -4613,7 +4625,7 @@ app.classes.mail = AppJS.extend(
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
 		setTimeout(function(){
 			egw(window).window.print();
-		},100);
+		},1000);
 	},
 
 	/**
@@ -5696,10 +5708,12 @@ app.classes.mail = AppJS.extend(
 					self.resolveExternalImages(this.contentWindow.document);
 					// Use prepare print function to copy iframe content into div
 					// as we don't want to show content in iframe (scrolling problem).
-					self.mail_prepare_print(jQuery(this));
+					if (jQuery(this.contentWindow.document.body).find('#smimePasswordRequest').length == 0)
+					{
+						iframe.set_disabled(true);
+						self.mail_prepare_print(jQuery(this));
+					}
 				}
-
-
 			});
 		});
 	},
@@ -5734,6 +5748,7 @@ app.classes.mail = AppJS.extend(
 	smimePassDialog: function (_msg)
 	{
 		var self = this;
+		var pass_exp = egw.preference('smime_pass_exp', 'mail');
 		et2_createWidget("dialog",
 		{
 			callback: function(_button_id, _value)
@@ -5744,6 +5759,7 @@ app.classes.mail = AppJS.extend(
 					pass.set_value(_value.value);
 					var toolbar = self.et2.getWidgetById('composeToolbar');
 					toolbar.value = 'send';
+					egw.set_preference('mail', 'smime_pass_exp', _value.pass_exp);
 					self.compose_submitAction(false);
 				}
 			},
@@ -5755,11 +5771,27 @@ app.classes.mail = AppJS.extend(
 			value:{
 				content:{
 					value: '',
-					message: _msg
+					message: _msg,
+					'exp_min': pass_exp
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
 		}, et2_dialog._create_parent('mail'));
+	},
+
+	/**
+	 * set attachments of smime message for mobile view
+	 * @param {type} _attachments
+	 */
+	set_smimeAttachmentsMobile: function (_attachments)
+	{
+		var attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
+		var $attachment = jQuery('.et2_details.attachments');
+		if (attachmentsBlock && _attachments.length > 0)
+		{
+			attachmentsBlock.set_value({content:_attachments});
+			$attachment.show();
+		}
 	},
 
 	/**
@@ -5769,11 +5801,17 @@ app.classes.mail = AppJS.extend(
 	 */
 	set_smimeAttachments:function (_attachments)
 	{
+		if (egwIsMobile())
+		{
+			this.set_smimeAttachmentsMobile(_attachments);
+			return;
+		}
 		var attachmentArea = this.et2.getWidgetById(egw(window).is_popup()?'mail_displayattachments':'previewAttachmentArea');
 		var content = this.et2.getArrayMgr('content');
 		var mailPreview = this.et2.getWidgetById('mailPreviewContainer');
 		if (attachmentArea && _attachments && _attachments.length > 0)
 		{
+			attachmentArea.getParent().set_disabled(false);
 			content.data[attachmentArea.id] = _attachments;
 			this.et2.setArrayMgr('contnet', content);
 			attachmentArea.getDOMNode().classList.remove('loading');
@@ -5788,6 +5826,10 @@ app.classes.mail = AppJS.extend(
 					m_node.style.setProperty('top', m_node.offsetTop + offset+"px");
 				}
 			}
+		}
+		else
+		{
+			attachmentArea.getParent().set_disabled(true);
 		}
 	},
 	/**
@@ -5817,45 +5859,66 @@ app.classes.mail = AppJS.extend(
 	set_smimeFlags: function (_data)
 	{
 		if (!_data) return;
-		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		var self = this;
+		var et2_object = egwIsMobile()? this.et2_view.widgetContainer: this.et2;
+		var data = _data;
+		var attachmentArea = et2_object.getWidgetById('previewAttachmentArea');
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
-		var smime_signature = this.et2.getWidgetById('smime_signature');
-		var smime_encryption = this.et2.getWidgetById('smime_encryption');
-		var $mail_container = egw(window).is_popup() ?
-								jQuery('.mailDisplayContainer'):
-								jQuery(this.et2.getWidgetById('mailPreviewContainer').getDOMNode());
-
-		smime_signature.set_disabled(!_data.signed);
-		smime_encryption.set_disabled(!_data.encrypted);
-		if (!_data.signed)
+		var smime_signature = et2_object.getWidgetById('smime_signature');
+		var smime_encryption = et2_object.getWidgetById('smime_encryption');
+		var $mail_container = egwIsMobile()? jQuery('.mail-d-h1').next() :
+				egw(window).is_popup() ? jQuery('.mailDisplayContainer'):
+				jQuery(et2_object.getWidgetById('mailPreviewContainer').getDOMNode());
+		smime_signature.set_disabled(!data.signed);
+		smime_encryption.set_disabled(!data.encrypted);
+		if (!data.signed)
 		{
 			this.smime_clear_flags([$mail_container]);
+			return;
 		}
-		else if (_data.verify)
+		else if (data.verify)
 		{
-			$mail_container.addClass('smime_cert_verified');
-			smime_signature.set_class('smime_cert_verified');
+			$mail_container.addClass((data.class='smime_cert_verified'));
+			smime_signature.set_class(data.class);
+			smime_signature.set_statustext(data.msg);
 		}
-		else if (!_data.verify && _data.cert)
+		else if (!data.verify && data.cert)
 		{
-			$mail_container.addClass('smime_cert_notverified');
-			smime_signature.set_class('smime_cert_notverified');
-			smime_signature.set_statustext(_data.msg);
+			$mail_container.addClass((data.class='smime_cert_notverified'));
+			smime_signature.set_class(data.class);
+			smime_signature.set_statustext(data.msg);
 		}
-		else if (!_data.verify && !_data.cert)
+		else if (!data.verify && !data.cert)
 		{
-			$mail_container.addClass('smime_cert_notvalid');
-			smime_signature.set_class('smime_cert_notvalid');
-			smime_signature.set_statustext(_data.msg);
+			$mail_container.addClass((data.class='smime_cert_notvalid'));
+			smime_signature.set_class(data.class);
+			smime_signature.set_statustext(data.msg);
 		}
+		if (data.unknownemail)
+		{
+			$mail_container.addClass((data.class='smime_cert_unknownemail'));
+			smime_signature.set_class(data.class);
+		}
+		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).on('click',function(){
+			self.smime_certAddToContact(data,true);
+		}).addClass('et2_clickable');
+		jQuery(smime_encryption.getDOMNode()).on('click',function(){
+			self.smime_certAddToContact(data, true);
+		}).addClass('et2_clickable');
 	},
 
+	/**
+	 * Reset flags classes and click handler
+	 *
+	 * @param {jQuery Object} _nodes
+	 */
 	smime_clear_flags: function (_nodes)
 	{
 		for(var i=0;i<_nodes.length;i++)
 		{
-			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid';
+			var smime_classes = 'smime_cert_verified smime_cert_notverified smime_cert_notvalid smime_cert_unknownemail';
 			_nodes[i].removeClass(smime_classes);
+			_nodes[i].off('click');
 		}
 	},
 
@@ -5864,19 +5927,56 @@ app.classes.mail = AppJS.extend(
 	 * relevant contact in addressbook.
 	 *
 	 * @param {type} _metadata
+	 * @param {boolean} _display if set to true will only show close button
 	 */
-	smime_certAddToContact: function (_metadata)
+	smime_certAddToContact: function (_metadata, _display)
 	{
 		if (!_metadata || _metadata.length < 1) return;
 		var self = this;
-		et2_dialog.show_dialog(function(_button){
-			if (_button == 2)
+		var content = jQuery.extend(true, {message:_metadata.msg}, _metadata);
+		var buttons = [
+
+			{text: this.egw.lang("Close"), id:"close"}
+		];
+		if (!_display)
+		{
+			buttons[1] = {
+				text: this.egw.lang("Add this certificate into contact"),
+				id: "contact",
+				image:"add",
+				"class": "ui-priority-primary",
+				"default": true
+			};
+			content.message2 = egw.lang('You may add this certificate into your contact, if you trust this signature.');
+		}
+		var extra = {
+			'presets[email]': _metadata.email,
+			'presets[n_given]': _metadata.certDetails.subject.commonName,
+			'presets[pubkey]': _metadata.cert,
+			'presets[org_name]': _metadata.certDetails.subject.organizationName,
+			'presets[org_unit]': _metadata.certDetails.subject.organizationUnitName
+		};
+		et2_createWidget("dialog",
+		{
+			callback: function(_button_id, _value)
 			{
-				self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
-				_metadata,function(_message){egw.message(_message);}).sendRequest(true);
-			}
-		},
-		this.egw.lang("There's a new certificate information for email %1. Would you like to update/add this certificate?\n %2",_metadata.email,_metadata.certHtml),
-		this.egw.lang('Update cert for user %1', _metadata.email),{},et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+				if (_button_id == 'contact' && _value)
+				{
+					self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
+					_metadata,function(_result){
+						if (!_result)
+						{
+							egw.open('','addressbook','add',extra);
+						}
+						egw.message(_result);
+					}).sendRequest(true);
+				}
+			},
+			title: egw.lang('Certificate info for email %1', _metadata.email),
+			buttons: buttons,
+			value:{content:content},
+			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
+			resizable: false
+		}, et2_dialog._create_parent('mail'));
 	}
 });

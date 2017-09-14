@@ -236,7 +236,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 			renderer: jQuery.proxy(this.options.listRenderer || this.selectionRenderer,this),
 			maxSelection: this.options.multiple ? this.options.maxSelection : 1,
 			maxSelectionRenderer: jQuery.proxy(function(v) { this.egw().lang('You can not choose more then %1 item(s)!', v); }, this),
-			minCharsRenderer: jQuery.proxy(function(v){ 
+			minCharsRenderer: jQuery.proxy(function(v){
 				this.egw().lang(v == 1 ? 'Please type 1 more character' : 'Please type %1 more characters',v);
 			}, this),
 			width: this.options.width,	// propagate width
@@ -356,7 +356,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 						if(document.activeElement === document.body ||
 							widget.div.has(document.activeElement).length > 0)
 						{
+							if (widget.options.allowFreeEntries) taglist.container.blur();
 							taglist.input.focus();
+						}
+						else if (widget.options.allowFreeEntries)
+						{
+							taglist.container.blur();
 						}
 					});},100
 				);
@@ -408,7 +413,7 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		// multiple on the page
 		this.div.on('blur', 'input', function() {
 			jQuery('.ms-ctn-focus', widget.div).removeClass('ms-ctn-focus');
-		})
+		});
 		return true;
 	},
 

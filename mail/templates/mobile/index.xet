@@ -28,6 +28,7 @@
 							<time_or_date align="center"  class="$row_cont[class]" id="${row}[date]" readonly="true"/>
 						</hbox>
 						<hbox>
+							<image src="$row_cont[smime]" height="16px"/>
 							<html id="${row}[attachments]"/>
 						</hbox>
 					</vbox>

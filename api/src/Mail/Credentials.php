@@ -200,6 +200,9 @@ class Credentials
 			}
 			$password = self::decrypt($row);
 
+			// Remove special x char added to the end for \0 trimming escape.
+			if ($type == self::SMIME && substr($password, -1) === 'x') $password = substr($password, 0, -1);
+
 			foreach(self::$type2prefix as $pattern => $prefix)
 			{
 				if ($row['cred_type'] & $pattern)
@@ -290,6 +293,11 @@ class Credentials
 			//error_log(__METHOD__."($acc_id, '$username', \$password, $type, $account_id, ".array2string($cred_id).") not storing session credentials!");
 			return;	// do NOT store credentials from session of current user!
 		}
+		
+		// Add arbitary char to the ending to make sure the Smime binary content
+		// with \0 at the end not getting trimmed of while trying to decrypt.
+		if ($type == self::SMIME) $password .= 'x';
+
 		// no need to write empty usernames, but delete existing row
 		if ((string)$username === '')
 		{

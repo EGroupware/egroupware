@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- This template is used in automated testing -->
+<overlay>
+	<template id="api.textbox_test" template="" lang="" group="0" version="16.1">
+		<textbox id="widget"/>
+		<textbox id="widget_readonly" readonly="true"/>
+	</template>
+</overlay>

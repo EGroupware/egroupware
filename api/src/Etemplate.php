@@ -159,6 +159,7 @@ class Etemplate extends Etemplate\Widget\Template
 		// not sure if we want to handle it this way, thought otherwise we will have a few ajax request for each dialog fetching predefined selectboxes
 		$template = self::instance($this->name, $this->template_set, $this->version, $this->laod_via);
 		if (!$template) throw new Exception\AssertionFailed("Template $this->name not instanciable! Maybe you forgot to rename template id.");
+		$this->children = array($template);
 		$template->run('beforeSendToClient', array('', array('cont'=>$content)));
 
 		// some apps (eg. InfoLog) set app_header only in get_rows depending on filter settings
@@ -342,9 +343,9 @@ class Etemplate extends Etemplate\Widget\Template
 		}
 		elseif (self::validation_errors(self::$request->ignore_validation))
 		{
-			error_log(__METHOD__."(,".array2string($_content).') validation_errors='.array2string(self::$validation_errors));
+			//error_log(__METHOD__."(,".array2string($_content).') validation_errors='.array2string(self::$validation_errors));
 			self::$response->generic('et2_validation_error', self::$validation_errors);
-			exit;
+			return;
 		}
 
 		// tell request call to remove request, if it is not modified eg. by call to exec in callback

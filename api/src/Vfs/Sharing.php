@@ -160,7 +160,7 @@ class Sharing
 		self::$db = $GLOBALS['egw']->db;
 
 		$token = static::get_token();
-		
+
 		// are we called from header include, because session did not verify
 		// --> check if it verifys for our token
 		if ($token && !$keep_session)
@@ -371,7 +371,7 @@ class Sharing
 				base64_encode(openssl_random_pseudo_bytes(3*self::TOKEN_LENGTH/4)) :
 				Api\Auth::randomstring(self::TOKEN_LENGTH);
 			// base64 can contain chars not allowed in our vfs-urls eg. / or #
-		} while ($token != Vfs::encodePathComponent($token));
+		} while ($token != urlencode($token));
 
 		return $token;
 	}

@@ -47,8 +47,8 @@
 				<description align="left" id="mail_displaysubject" no_lang="1" readonly="true"/>
 			</hbox>
 			<hbox>
-				<image id="smime_signature" src="smimeSignature" statustext="Smime signed message" disabled="true" align="right" width="24"/>
-				<image id="smime_encryption" src="smimeEncryption" statustext="Smime encrypted message" disabled="true" align="right" width="24"/>
+				<image id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="true" align="right" width="24"/>
+				<image id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" disabled="true" align="right" width="24"/>
 			</hbox>
 		</vbox>
 		<vbox class="mailDisplay">

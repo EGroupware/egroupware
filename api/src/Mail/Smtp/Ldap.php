@@ -248,7 +248,7 @@ class Ldap extends Mail\Smtp
 		if (static::MAIL_ENABLE_ATTR)
 		{
 			$newData[static::MAIL_ENABLE_ATTR] = static::MAIL_ENABLED == self::MAIL_ENABLED_USE_MAIL ?
-				$mailLocalAddress : static::MAIL_ENABLE_ATTR;
+				$mailLocalAddress : static::MAIL_ENABLED;
 		}
 		// does schema support an explicit mailbox name --> set it
 		if (static::MAILBOX_ATTR)

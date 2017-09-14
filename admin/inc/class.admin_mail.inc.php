@@ -893,13 +893,6 @@ class admin_mail
 					{
 						if (!$content['acc_'.$type.'_ssl']) $content['acc_'.$type.'_ssl'] = 'no';
 					}
-
-					if (!empty($content['acc_smime_password']))
-					{
-						$AB_bo = new addressbook_bo();
-						$smime_cert = $AB_bo->get_smime_keys($content['ident_email']);
-						$content['smime_cert'] = $smime_cert[$content['ident_email']];
-					}
 				}
 				catch(Api\Exception\NotFound $e) {
 					if (self::$debug) _egw_log_exception($e);
@@ -1035,6 +1028,35 @@ class admin_mail
 								$content['notify_account_id'] = $content['called_for'] ?
 									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
 							}
+							// SMIME SAVE
+							if (isset($content['smimeKeyUpload']))
+							{
+								$smime = new Mail\Smime;
+								$content['acc_smime_username'] = $smime->getEmailFromKey($content['smime_cert']);
+								$AB_bo = new addressbook_bo();
+								if (($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])) &&
+										$content['smimeKeyUpload']['type'] == 'application/x-pkcs12')
+								{
+									$cert_info = Mail\Smime::extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
+									if (is_array($cert_info))
+									{
+										$content['acc_smime_password'] = $pkcs12;
+										$content['smime_cert'] = $cert_info['cert'];
+										if ($content['smime_cert'])
+										{
+											$content['acc_smime_username'] = $smime->getEmailFromKey($content['smime_cert']);
+											$AB_bo = new addressbook_bo();
+											$AB_bo->set_smime_keys(array(
+												$content['acc_smime_username'] => $content['smime_cert']
+											));
+										}
+									}
+									else
+									{
+										$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
+									}
+								}
+							}
 							self::fix_account_id_0($content['account_id'], true);
 							$content = Mail\Account::write($content, $content['called_for'] || !$this->is_admin ?
 								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
@@ -1063,40 +1085,6 @@ class admin_mail
 									$content['accounts'] = array($content['acc_id'] => '') + $content['accounts'];
 								}
 								$content['accounts'][$content['acc_id']] = Mail\Account::identity_name($content, false);
-							}
-							if (isset($content['smimeKeyUpload'])
-									&& ($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
-							{
-								$smime = new Mail\Smime;
-								switch($content['smimeKeyUpload']['type'])
-								{
-									case 'application/x-pkcs12':
-										$cert_info = $smime->extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
-										if (is_array($cert_info))
-										{
-											$content['acc_smime_password'] = $cert_info['pkey'];
-											if ($cert_info['cert'])
-											{
-												$AB_bo = new addressbook_bo();
-												$AB_bo->set_smime_keys(array(
-													$content['ident_email'] => $cert_info['cert']
-												));
-											}
-										}
-										else
-										{
-											$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
-										}
-										break;
-									case 'application/x-iwork-keynote-sffkey':
-										$content['acc_smime_password'] = $pkcs12;
-										break;
-								}
-							}
-							elseif ($content['smime_cert'] && $content['acc_smime_password'])
-							{
-								$AB_bo = new addressbook_bo();
-								$AB_bo->set_smime_keys(array($content['ident_email'] => $content['smime_cert']));
 							}
 						}
 						else
@@ -1178,6 +1166,25 @@ class admin_mail
 					}
 			}
 		}
+		// SMIME UPLOAD/DELETE/EXPORT control
+		$content['hide_smime_upload'] = false;
+		if (!empty($content['acc_smime_password']))
+		{
+			if (!empty($content['smime_delete_p12']) &&
+					Mail\Credentials::delete (
+						$content['acc_id'],
+						$content['called_for'] ? $content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
+						Mail\Credentials::SMIME
+				))
+			{
+				unset($content['acc_smime_password'], $content['smimeKeyUpload'], $content['smime_delete_p12']);
+				$content['hide_smime_upload'] = false;
+			}
+			else
+			{
+				$content['hide_smime_upload'] = true;
+			}
+		}
 
 		// disable delete button for new, not yet saved entries, if no delete rights or a non-standard identity selected
 		$readonlys['button[delete]'] = empty($content['acc_id']) ||
@@ -1197,7 +1204,8 @@ class admin_mail
 			$readonlys['button[cancel]'] = false;
 			// allow to edit notification-folders
 			$readonlys['button[save]'] = $readonlys['button[apply]'] =
-				$readonlys['notify_folders'] = $readonlys['notify_use_default'] = false;
+			$readonlys['notify_folders'] = $readonlys['notify_use_default'] =
+			$readonlys['smimeKeyUpload'] = $readonlys['smime_pkcs12_password']= false;
 		}
 
 		$sel_options['acc_imap_ssl'] = $sel_options['acc_sieve_ssl'] =

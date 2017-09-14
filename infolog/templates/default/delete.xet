@@ -65,7 +65,7 @@
 						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
 					<vbox options="0,0" class="infolog_fullWidth">
-						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
+						<link label="%s $row_cont[info_from]" id="${row}[info_link]" options="b"/>
 						<hbox options="0,0">
 							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
 							<description no_lang="1" align="right" id="{$row}[info_number]" class="infolog_infoId"/>
@@ -190,7 +190,7 @@
 						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
 					<vbox options="0,0" class="infolog_fullWidth">
-						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
+						<link label="%s $row_cont[info_from]" id="${row}[info_link]" options="b"/>
 						<hbox options="0,0">
 							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
 							<description no_lang="1" align="right" id="{$row}[info_number]" class="infolog_infoId"/>

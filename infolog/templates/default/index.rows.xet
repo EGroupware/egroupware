@@ -72,7 +72,6 @@
 						<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
 					</hbox>
 					<vbox class="infolog_fullWidth">
-						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
 						<hbox>
 							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class]"/>
 							<description align="right" id="{$row}[info_number]" no_lang="1" class="infolog_infoId"/>

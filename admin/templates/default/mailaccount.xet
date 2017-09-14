@@ -303,24 +303,21 @@
 					<description value="Certificate"/>
 					<hbox>
 						<buttononly label="Generate Certificate" onclick="app.admin.smime_genCertificate" image="add" background_image="1"/>
-						<buttononly label="export private key" onclick="app.admin.smime_exportKey('privkey')" disabled="!@acc_smime_password" image="export" background_image="1"/>
-						<buttononly label="export certificate" onclick="app.admin.smime_exportKey('cert')" disabled="!@smime_cert" image="export" background_image="1"/>
 					</hbox>
 				</row>
-				<row>
-					<description value="Certificate file in p12 format"/>
+				<row disabled="@hide_smime_upload">
+					<description value="Upload your certificate .p12/.pfx file"/>
 					<vbox>
-						<file id="smimeKeyUpload" accept=".key,.p12" onchange="app.admin.et2.getWidgetById('smime_pkcs12_password').set_disabled(false);"/>
-						<passwd id="smime_pkcs12_password" size="32" maxlength="128" autocomplete="off" blur="Password to unlock encrypted p12" disabled="true"/>
+						<file id="smimeKeyUpload" accept=".p12,.pfx"/>
+						<passwd id="smime_pkcs12_password" size="32" maxlength="128"  blur="Password to unlock encrypted p12" autocomplete="off"/>
 					</vbox>
 				</row>
-				<row>
-					<description value="Paste your private key as text here or upload your .key/.p12 file"/>
-					<textbox multiline="true" id="acc_smime_password" height="130" resize_ratio="0" class="et2_fullWidth"/>
-				</row>
-				<row>
-					<description value="Certificate"/>
-					<textbox multiline="true" id="smime_cert" height="130" resize_ratio="0" class="et2_fullWidth"/>
+				<row disabled="!@hide_smime_upload">
+					<description value="Current certificate"/>
+					<hbox>
+						<buttononly id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" background_image="1"/>
+						<buttononly id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete" background_image="1"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>

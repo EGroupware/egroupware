@@ -27,6 +27,8 @@ use Horde_Mime_Magic;
 use Horde_Mail_Rfc822;
 use Horde_Mail_Rfc822_List;
 use Horde_Mime_Mdn;
+use Horde_Translation;
+use Horde_Translation_Handler_Gettext;
 use EGroupware\Api;
 
 use tidy;
@@ -5611,12 +5613,13 @@ class Mail
 			if (is_object($mail))
 			{
 				$structure = $mail->getStructure();
-				$isSmime = Mail\Smime::isSmime($structure->getType()) || Mail\Smime::isSmimeSignatureOnly($structure->getType());
+				$isSmime = Mail\Smime::isSmime(($mimeType = $structure->getType())) || Mail\Smime::isSmimeSignatureOnly(($protocol=$structure->getContentTypeParameter('protocol')));
 				if ($isSmime)
 				{
 					return $this->resolveSmimeMessage($structure, array(
 						'uid' => $_uid,
-						'mailbox' => $_folder
+						'mailbox' => $_folder,
+						'mimeType' => Mail\Smime::isSmime($protocol) ? $protocol: $mimeType
 					));
 				}
 				return $mail->getStructure();
@@ -5927,11 +5930,14 @@ class Mail
 				if ($_partID != '')
 				{
 					$mailStructureObject = $_headerObject->getStructure();
-					if (Mail\Smime::isSmime(($smime_type = $mailStructureObject->getType())))
+					if (Mail\Smime::isSmime(($mimeType = $mailStructureObject->getType())) ||
+							Mail\Smime::isSmimeSignatureOnly(($protocol=$mailStructureObject->getContentTypeParameter('protocol'))))
 					{
 						$mailStructureObject = $this->resolveSmimeMessage($mailStructureObject, array(
 							'uid' => $_uid,
-							'mailbox' => $_folder
+							'mailbox' => $_folder,
+							'mimeType' => Mail\Smime::isSmime($protocol) ? $protocol : $mimeType
+
 						));
 					}
 					$mailStructureObject->contentTypeMap();
@@ -7244,6 +7250,10 @@ class Mail
 		if (self::$debug) error_log(__METHOD__.__LINE__.array2string($identity));
 		$headers = $this->getMessageHeader($uid, '', 'object', true, $_folder);
 
+		// Override Horde's translation with our own
+		Horde_Translation::setHandler('Horde_Mime', new Horde_Translation_Handler_Gettext('Horde_Mime', EGW_SERVER_ROOT.'/api/lang/locale'));
+		Preferences::setlocale();
+
 		$mdn = new Horde_Mime_Mdn($headers);
 		$mdn->generate(true, true, 'displayed', php_uname('n'), $acc->smtpTransport(), array(
 			'charset' => 'utf-8',
@@ -7338,12 +7348,11 @@ class Mail
 	{
 		// default params
 		$params = array_merge(array(
- 			'passphrase'	=> '',
-			'mimeType'		=> $_mime_part->getType()
+ 			'passphrase'	=> ''
 		), $_params);
 
 		$metadata = array (
-			 'mimeType' => $params['mimeType']
+			 'mimeType' => $params['mimeType']?$params['mimeType']:$_mime_part->getType()
 		);
 		$this->smime = new Mail\Smime;
 		$message = $this->getMessageRawBody($params['uid'], null, $params['mailbox']);
@@ -7355,7 +7364,9 @@ class Mail
 			}
 			catch(\Horde_Crypt_Exception $e)
 			{
-				throw new Mail\Smime\PassphraseMissing(lang('Could not decrypt S/MIME data. This message may not be encrypted by your public key.'));
+				throw new Mail\Smime\PassphraseMissing(lang('Could not decrypt '.
+						'S/MIME data. This message may not be encrypted by your '.
+						'public key and not being able to find corresponding private key.'));
 			}
 			$metadata['encrypted'] = true;
 		}
@@ -7381,15 +7392,27 @@ class Mail
 
 		if ($cert) // signed message, it might be encrypted too
 		{
+			$envelope = $this->getMessageEnvelope($params['uid'], '', false, $params['mailbox']);
+			$from = $this->stripRFC822Addresses($envelope['FROM']);
 			$message_parts = $this->smime->extractSignedContents($message);
+			//$f = $message_parts->_headers->getHeader('from');
 			$metadata = array_merge ($metadata, array (
 				'verify'		=> $cert->verify,
 				'cert'			=> $cert->cert,
+				'certDetails'	=> $this->smime->parseCert($cert->cert),
 				'msg'			=> $cert->msg,
 				'certHtml'		=> $this->smime->certToHTML($cert->cert),
 				'email'			=> $cert->email,
-				'signed'		=> true,
+				'signed'		=> true
 			));
+			// check for email address if both signer email address and
+			// email address of sender are the same.
+			if (is_array($from) && $from[0] != $cert->email)
+			{
+				$metadata['unknownemail'] = true;
+				$metadata['msg'] .= ' '.lang('Email address of signer is different from the email address of sender!');
+			}
+
 			$AB_bo   = new \addressbook_bo();
 			$certkey = $AB_bo->get_smime_keys($cert->email);
 			if (!is_array($certkey) || $certkey[$cert->email] != $cert->cert) $metadata['addtocontact'] = true;
@@ -7413,9 +7436,9 @@ class Mail
 	private function _decryptSmimeBody ($_message, $_passphrase = '')
 	{
 		$AB_bo   = new \addressbook_bo();
-		$credents = Mail\Credentials::read($this->profileID, Mail\Credentials::SMIME, $GLOBALS['egw_info']['user']['account_id']);
-		$certkey = $AB_bo->get_smime_keys($this->icServer->ident_email);
-		if (!$this->smime->verifyPassphrase($credents['acc_smime_password'], $_passphrase))
+		$acc_smime = Mail\Smime::get_acc_smime($this->profileID, $_passphrase);
+		$certkey = $AB_bo->get_smime_keys($acc_smime['acc_smime_username']);
+		if (!$this->smime->verifyPassphrase($acc_smime['pkey'], $_passphrase))
 		{
 			return array (
 				'password_required' => true,
@@ -7425,8 +7448,8 @@ class Mail
 
 		$params  = array (
 			'type'      => 'message',
-			'pubkey'    => $certkey[$this->icServer->ident_email],
-			'privkey'   => $credents['acc_smime_password'],
+			'pubkey'    => $certkey[$acc_smime['acc_smime_username']],
+			'privkey'   => $acc_smime['pkey'],
 			'passphrase'=> $_passphrase
 		);
 		return $this->smime->decrypt($_message, $params);

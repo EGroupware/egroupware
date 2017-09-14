@@ -30,7 +30,7 @@ class resources_acl_ui
 		'index' => true,
 		'edit'  => true,
 	);
-	
+
 	public static $acl_map = array(
 		'read' => Acl::READ,
 		'write' => Acl::ADD,
@@ -73,7 +73,7 @@ class resources_acl_ui
 
 		$template->exec(__METHOD__, $content, $sel_options, $readonlys);
 	}
-	
+
 	protected static function get_actions($appname='resources') {
 
 		$actions = array(
@@ -136,7 +136,7 @@ class resources_acl_ui
 			{
 				$row['icon_url'] = $GLOBALS['egw_info']['server']['webserver_url'].  resources_bo::ICON_PATH.'/'.$row['data']['icon'];
 			}
-			
+
 			$row['subs'] = count($row['children']);
 
 			$row['class'] = 'level'.$row['level'];
@@ -148,7 +148,7 @@ class resources_acl_ui
 
 		}
 		$rows = $count <= $query['num_rows'] ? array_values($rows) : array_slice($rows, $query['start'], $query['num_rows']);
-		
+
 		return $count;
 	}
 
@@ -209,7 +209,7 @@ class resources_acl_ui
 							{
 								unset($location_cats[$key]);
 							}
-							config::save_value('location_cats', implode(',', $location_cats), 'resources');
+							Api\Config::save_value('location_cats', implode(',', $location_cats), 'resources');
 							$msg = lang('Category saved.');
 						}
 						catch (Api\Exception\WrongUserinput $e)

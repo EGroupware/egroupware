@@ -33,11 +33,6 @@
 							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>
 
 						</box>
-
-						<hbox class ="infoLinksRow infoDetails" overflow="hidden">
-							<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b" class="infoDetails"/>
-						</hbox>
-
 					</vbox>
 					<vbox class="infolog_CompletedClmn">
 						<time_or_date id="${row}[info_startdate]" readonly="true" options=",8"/>

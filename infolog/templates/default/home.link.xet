@@ -18,7 +18,7 @@
 			</columns>
 			<rows>
 				<row>
-					<link label="%s $cont[info_addr]" id="info_link" options="b" span="all"/>
+					<link label="%s $cont[info_from]" id="info_link" options="b" span="all"/>
 				</row>
 				<row>
 					<description id="info_des" no_lang="1" span="all"/>

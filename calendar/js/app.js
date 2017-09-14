@@ -2813,7 +2813,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			if(need_data && seperate_owners)
 			{
 				this._fetch_data(
-					jQuery.extend({}, state, {owner: value[i].owner}),
+					jQuery.extend({}, state, {owner: value[i].owner, selected_owners: state.owner}),
 					this.sidebox_et2 ? null : this.et2.getInstanceManager()
 				);
 				need_data = false;
@@ -2875,7 +2875,8 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 			filter:'custom', // Must be custom to get start & end dates
 			status_filter: state.status_filter,
 			cat_id: cat_id,
-			csv_export: false
+			csv_export: false,
+			selected_owners: state.selected_owners
 		});
 		// Show ajax loader
 		if(typeof framework !== 'undefined')
@@ -3987,13 +3988,12 @@ jQuery.extend(app.classes.calendar,{
 				d.setUTCSeconds(d.getUTCSeconds()-1);
 				return app.calendar.date.end_of_week(d);
 			},
-			granularity: function(state) {
-				// Always a list, not a grid
-				return 0;
-			},
 			scroll: function(delta)
 			{
 				var d = new Date(app.calendar.state.date);
+				// Set day to 15 so we don't get overflow on short months
+				// eg. Aug 31 + 1 month = Sept 31 -> Oct 1
+				d.setUTCDate(15);
 				d.setUTCMonth(d.getUTCMonth() + delta);
 				return d;
 			}

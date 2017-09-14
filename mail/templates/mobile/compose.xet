@@ -17,6 +17,9 @@
 				<checkbox statustext="check to save as tracker entry on send" id="to_tracker" options="on,off"/>
 				<checkbox statustext="check to save as calendar event on send" id="to_calendar" options="on,off"/>
 				<checkbox statustext="check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)" id="disposition" options="on,off"/>
+				<checkbox statustext="check to sign the message on send" id="smime_sign" options="on,off"/>
+				<checkbox statustext="check to encrypt the message on send" id="smime_encrypt" options="on,off"/>
+				<passwd id="smime_passphrase"/>
 				<menulist>
 					<menupopup id="priority"/>
 				</menulist>

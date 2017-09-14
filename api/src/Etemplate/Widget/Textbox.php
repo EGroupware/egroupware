@@ -120,7 +120,7 @@ class Textbox extends Etemplate\Widget
 		{
 			if (!isset($this->attrs['validator']))
 			{
-				switch($this->type)
+				switch($this->attrs['type'])
 				{
 					case 'int':
 					case 'integer':
@@ -158,7 +158,7 @@ class Textbox extends Etemplate\Widget
 			}
 			if ($this->attrs['validator'] && !preg_match($this->attrs['validator'],$value))
 			{
-				switch($this->type)
+				switch($this->attrs['type'])
 				{
 					case 'integer':
 						self::set_validation_error($form_name,lang("'%1' is not a valid integer !!!",$value),'');
@@ -171,21 +171,21 @@ class Textbox extends Etemplate\Widget
 						break;
 				}
 			}
-			elseif ($this->type == 'integer' || $this->type == 'float')	// cast int and float and check range
+			elseif ($this->attrs['type'] == 'integer' || $this->attrs['type'] == 'float')	// cast int and float and check range
 			{
 				if ((string)$value !== '' || $this->attrs['needed'])	// empty values are Ok if needed is not set
 				{
-					$value = $this->type == 'integer' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
+					$value = $this->attrs['type'] == 'integer' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
 
-					if (!empty($this->attrs['min']) && $value < $this->attrs['min'])
+					if (!(empty($this->attrs['min']) && $this->attrs['min'] !== 0) && $value < $this->attrs['min'])
 					{
 						self::set_validation_error($form_name,lang("Value has to be at least '%1' !!!",$this->attrs['min']),'');
-						$value = $this->type == 'integer' ? (int) $this->attrs['min'] : (float) $this->attrs['min'];
+						$value = $this->attrs['type'] == 'integer' ? (int) $this->attrs['min'] : (float) $this->attrs['min'];
 					}
-					if (!empty($this->attrs['max']) && $value > $this->attrs['max'])
+					if (!(empty($this->attrs['max'])&& $this->attrs['max'] !== 0) && $value > $this->attrs['max'])
 					{
 						self::set_validation_error($form_name,lang("Value has to be at maximum '%1' !!!",$this->attrs['max']),'');
-						$value = $this->type == 'integer' ? (int) $this->attrs['max'] : (float) $this->attrs['max'];
+						$value = $this->attrs['type'] == 'integer' ? (int) $this->attrs['max'] : (float) $this->attrs['max'];
 					}
 				}
 			}

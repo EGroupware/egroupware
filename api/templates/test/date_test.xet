@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- This template is used in automated testing -->
+<overlay>
+	<template id="api.date_test" template="" lang="" group="0" version="16.1">
+		<date id="date"/>
+		<date-time id="date_time"/>
+		<date-timeonly id="date_timeonly"/>
+	</template>
+</overlay>
