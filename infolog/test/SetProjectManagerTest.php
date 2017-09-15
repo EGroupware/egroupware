@@ -190,12 +190,48 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->checkElements();
 	}
 
+	/**
+	 * Test free text in the contact field
+	 */
+	public function testFreeContact()
+	{
+		$info = $this->getTestInfolog();
+
+		// Set up the test - just set info_contact
+		$info['info_contact'] = array(
+			'app'     =>	null,
+			'id'      =>	null,
+			'search'  =>	'Free text'
+		);
+		// Set project by pm_id
+		$info['pm_id'] = $this->pm_id;
+
+		$this->info_id = $this->bo->write($info);
+		$this->assertArrayHasKey('info_id', $info, 'Could not make test infolog');
+		$this->assertThat($this->info_id,
+			$this->logicalAnd(
+				$this->isType('integer'),
+				$this->greaterThan(0)
+			)
+		);
+
+		// Check infolog has pm_id properly set
+		$this->assertEquals($this->pm_id, $info['pm_id']);
+
+		// Force links to run notification now so we get valid testing - it
+		// usually waits until Egw::on_shutdown();
+		Api\Link::run_notifies();
+
+		// Check project
+		$this->checkElements();
+	}
+
 	public function testLoadWithProject()
 	{
 		// Saving the infolog should try to send a notification
 		$this->bo->tracking->expects($this->once())
                 ->method('track')
-				->with($this->callback(function($subject) { return $subject['pm_id'] == $this->pm_id;}));
+				->will($this->returnCallback(function($subject) { return $subject['pm_id'] == $this->pm_id;}));
 
 		$info = $this->getTestInfolog();
 
@@ -209,7 +245,7 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 				$this->greaterThan(0)
 			)
 		);
-		
+
 		// Check infolog has pm_id properly set
 		$this->assertEquals($this->pm_id, $info['pm_id']);
 
@@ -268,7 +304,7 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		// Check pm_id is gone
 		$this->assertNull($info['pm_id'], 'Project was not removed');
-		
+
 		// Force links to run notification now so we get valid testing - it
 		// usually waits until Egw::on_shutdown();
 		Api\Link::run_notifies();
@@ -322,7 +358,7 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		// Check contact was cleared
 		$this->assertNull($info['info_contact'], 'Contact was not cleared');
-		
+
 		// Check pm_id is gone
 		$this->assertNull($info['pm_id'], 'Project was not removed');
 
@@ -393,7 +429,7 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		$this->assertEquals($expected_count, $element_count, "Incorrect number of elements");
 	}
-	
+
 	/**
 	 * Fully delete a project and its elements, no matter what state or settings
 	 */

@@ -2347,7 +2347,7 @@ class infolog_ui
 			if (!isset($content['info_contact']) || empty($content['info_contact']) || $content['info_contact'] === 'copy:')
 			{
 				$linkinfos = Link::get_link($info_link_id);
-				$content['info_contact'] = $linkinfos['link_app1']=='infolog'? 
+				$content['info_contact'] = $linkinfos['link_app1']=='infolog'?
 						array('app' => $linkinfos['link_app2'], 'id' => $linkinfos['link_id2']):
 						array('app' => $linkinfos['link_app1'], 'id' => $linkinfos['link_id1']);
 				if ($content['info_contact']['app'] == 'projectmanager')

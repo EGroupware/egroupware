@@ -63,15 +63,15 @@ class ContactTest extends \EGroupware\Api\AppTest
 				'search'=>	'Free text'
 			)
 		);
-		
+
 		$info = $this->getTestInfolog($content);
 
 		// Skipping notifications - save initial state
 		$this->info_id = $this->bo->write($info, true, true, true, true);
-		
+
 		// Read it back to check
 		$saved = $this->bo->read($this->info_id);
-		
+
 		$this->assertEquals($content['contact']['search'], $saved['info_from']);
 		$this->assertEquals(0, $saved['info_link_id']);
 
