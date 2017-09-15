@@ -269,6 +269,7 @@ function api_upgrade16_9_003()
 		'ix' => array(),
 		'uc' => array()
 	));
+	$GLOBALS['egw_setup']->db->query( 'alter table egw_ea_ews modify ews_folder varchar(255) collate utf8_bin' );
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.004';
 }

@@ -667,6 +667,9 @@ class Mail_EWS extends Mail
                 foreach( $permissions as $permission => $value )
                     $row[ $permission ] = $value;
             }
+            $row['ews_is_default'] = (int) $row['ews_is_default'];
+            $row['ews_apply_permissions'] = (int) $row['ews_apply_permissions'];
+            $row['ews_move_anywhere'] = (int) $row['ews_move_anywhere'];
             $final[] = $row;
             $used[] = $row['ews_folder'];
         }
@@ -705,7 +708,7 @@ class Mail_EWS extends Mail
 
         $fields = array( 'read', 'write', 'delete' );
         foreach ( $content as $folder ) {
-            if (!$folder['ews_folder']) continue;
+            if (!$folder || !$folder['ews_folder']) continue;
 
             $permissions = array();
             foreach( $fields as $field ) 
@@ -717,7 +720,7 @@ class Mail_EWS extends Mail
             $folder['ews_permissions'] = serialize( $permissions );
             if ( $folder['ews_move_to'] )
                 $folder['ews_move_to'] = implode(',', $folder['ews_move_to'] );
-            $obj->save( $folder );
+            $db->insert( 'egw_ea_ews', $folder, false, __LINE__, __FILE__ );
         }
     }
     
