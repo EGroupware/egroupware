@@ -79,6 +79,8 @@
 			cursor: pointer;
 		}
 		.egwpopup_message {
+            height: 140px;
+            overflow: scroll;
 			padding: 10px;
 			background-color: #fafafa;
 			border-radius: 3px;
@@ -101,10 +103,32 @@
 				background-repeat: no-repeat;
 				padding-left: 26px;
 			}
+            .notification_expanded {
+                position: fixed;
+                top: 5vh;
+                height: 90vh;
+                left: 20vw;
+                width: 60vw;
+                box-shadow: 0 0 40px #666;
+                &:hover {
+                    background-color: #fafafa;
+                }
+            }
 		}
 		.egwpopup_message_seen {
 			.egwpopup_mark {cursor: auto;background:none;border-color: #666c6e;}
 		}
+        .egwpopup_expand {
+          display: inline-block;
+          float: right;
+          width: 24px;
+          height: 24px;
+          background-image: url(../images/search.png);
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 12px;
+          cursor: pointer;
+        }
 	}
 	div#egwpopup_header {
 		font-size: 16px;
