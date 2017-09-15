@@ -63,7 +63,10 @@
 	 * Display notifications window
 	 */
 	notifications.prototype.display = function() {
-		var $egwpopup,$egwpopup_list,$message,$mark,$delete,$delete_all,$mark_all;
+		var $egwpopup_list, $message, $mark, $delete, $inner_container,
+		$more_info, $top_toolbar, $open_entry, $date, $collapse;
+
+		// list container
 		$egwpopup_list = jQuery("#egwpopup_list");
 
 		for(var show in notifymessages)
@@ -74,24 +77,57 @@
 				this.update_message_status(show, notifymessages[show]['status']);
 				continue;
 			}
+			// message container
 			$message = jQuery(document.createElement('div'))
 					.addClass('egwpopup_message')
 					.attr('id', message_id);
-			$message[0].innerHTML = notifymessages[show]['message'];
+			// wrapper for message content
+			$inner_container =  jQuery(document.createElement('div'))
+					.addClass('egwpopup_message_inner_container')
+					.appendTo($message);
+			$inner_container[0].innerHTML = notifymessages[show]['message'];
+
+			$more_info = jQuery(document.createElement('div'))
+					.addClass('egwpopup_message_more_info')
+					.text(egw.lang('More info')+'...')
+					.appendTo($message);
+			// top toolbar NODE
+			$top_toolbar = jQuery(document.createElement('div'))
+					.addClass('egwpopup_message_top_toolbar');
+			// Date indicator NODE
+			$date = jQuery(document.createElement('span'))
+					.addClass('egwpopup_message_date')
+					.prependTo($top_toolbar)
+					.text(notifymessages[show]['data']['date']);
+			// OPEN entry button
+			$open_entry = jQuery(document.createElement('span'))
+					.addClass('egwpopup_message_open')
+					.attr('title',egw.lang('open notified entry'))
+					.click(jQuery.proxy(this.open_entry, this,[$message]))
+					.prependTo($top_toolbar);
+			// Delete button
 			$delete = jQuery(document.createElement('span'))
 					.addClass('egwpopup_delete')
 					.attr('title',egw.lang('delete this message'))
 					.click(jQuery.proxy(this.button_delete, this,[$message]))
-					.prependTo($message);
+					.prependTo($top_toolbar);
+			// Mark as read button
 			$mark = jQuery(document.createElement('span'))
 					.addClass('egwpopup_mark')
-					.prependTo($message);
+					.prependTo($top_toolbar);
+			// Collapse button (close icon)
+			$collapse = jQuery(document.createElement('span'))
+					.addClass('egwpopup_collapse')
+					.click(jQuery.proxy(this.collapseMessage, this, [$message]))
+					.prependTo($top_toolbar);
+
 			if (notifymessages[show]['status'] != 'SEEN')
 			{
 
 				$mark.click(jQuery.proxy(this.message_seen, this,[$message]))
 					.attr('title',egw.lang('mark as read'));
 			}
+
 			// Activate links
 			jQuery('div[data-id],div[data-url]', $message).on('click',
 				function() {
@@ -118,11 +154,12 @@
 							.click(jQuery.proxy(func,this))
 							.prependTo($actions_container);
 				}
-				$actions_container.prependTo($message);
+				$actions_container.appendTo($message);
 			}
+			$top_toolbar.prependTo($message);
 			$egwpopup_list.append($message);
 			// bind click handler after the message container is attached
-			$message.click(jQuery.proxy(this.clickOnMessage, this,[$message]));
+			$inner_container.click(jQuery.proxy(this.clickOnMessage, this,[$message]));
 			this.update_message_status(show, notifymessages[show]['status']);
 		}
 		this.counterUpdate();
@@ -141,11 +178,16 @@
 			desktop_button.appendTo(jQuery(egwpopup_ok_button).parent());
 		}
 	};
-
-	notifications.prototype.clickOnMessage = function (_node, _event){
+	
+	/**
+	 * Opens the relavant entry from clicked message
+	 *
+	 * @param {jquery object} _node
+	 * @param {object} _event
+	 */
+	notifications.prototype.open_entry = function (_node, _event){
 		_event.stopPropagation();
 		this.message_seen(_node, _event);
-		if (_node[0][0] !=_event.target) return;
 		var egwpopup_message = _node[0];
 		var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
 		if (notifymessages[id]['data'])
@@ -159,6 +201,35 @@
 				egw.open_link(notifymessages[id]['data']['url'],'_blank',notifymessages[id]['data']['popup']);
 			}
 		}
+	};
+
+	/**
+	 * Reposition the expanded message back in the list & removes the clone node
+	 * @param {jquery object} _node
+	 */
+	notifications.prototype.collapseMessage = function (_node){
+		var cloned = _node[0].prev();
+		if (cloned.length > 0 && cloned[0].id == _node[0].attr('id')+'_expanded')
+			cloned.remove();
+		_node[0].removeClass('egwpopup_expanded');
+	};
+
+	/**
+	 * Expand a clicked message into bigger view
+	 * @param {jquery object} _node
+	 * @param {object} _event
+	 */
+	notifications.prototype.clickOnMessage = function (_node, _event){
+		_event.stopPropagation();
+		this.message_seen(_node, _event);
+		var $node = jQuery(_node[0][0].cloneNode());
+		if ($node)
+		{
+			$node.attr('id', _node[0].attr('id')+'_expanded')
+					.addClass('egwpopup_message_clone')
+					.insertBefore(_node[0]);
+		}
+		_node[0].addClass('egwpopup_expanded');
 	};
 
 	/**
@@ -368,9 +439,9 @@
 		jQuery(".egwpopup_deleteall", '#egwpopup').click(function(){
 			et2_dialog.show_dialog( function(_button){
 					if (_button == 2) window.app.notifications.delete_all();
-				}, 
-				egw.lang('Are you sure you want to delete all notifications?'), 
-				egw.lang('Delete notifications'), 
+				},
+				egw.lang('Are you sure you want to delete all notifications?'),
+				egw.lang('Delete notifications'),
 				null, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw
 			);
 		});

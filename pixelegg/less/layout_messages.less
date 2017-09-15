@@ -75,14 +75,37 @@
 			cursor: pointer;
 		}
 		.egwpopup_message {
-            height: 140px;
-            overflow: scroll;
+            height: 130px;
+            overflow: hidden;
 			padding: 10px;
 			background-color: #fafafa;
 			border-radius: 3px;
 			margin-bottom: 10px;
 			&:hover {
 				background-color: rgba(103, 159, 210, 0.2);
+			}
+			.egwpopup_message_inner_container {
+				height: 63px;
+				overflow: hidden;
+			}
+			.egwpopup_message_top_toolbar {
+				display: inline-block;
+				width: 100%;
+				.egwpopup_message_date {
+					float: left;
+				}
+				.egwpopup_message_open {
+					display: inline-block;
+					float: right;
+					width: 24px;
+					height: 24px;
+					background-image: url(../images/search.png);
+					background-repeat: no-repeat;
+					background-position: center;
+					background-size: 12px;
+					cursor: pointer;
+				}
+				.egwpopup_collapse {display: none;}
 			}
 			.egwpopup_actions_container {
 				border-bottom: 1px solid silver;
@@ -99,31 +122,39 @@
 				background-repeat: no-repeat;
 				padding-left: 26px;
 			}
-			.notification_expanded {
-				position: fixed;
-				top: 5vh;
-				height: 90vh;
-				left: 20vw;
-				width: 60vw;
-				box-shadow: 0 0 40px #666;
-				&:hover {
-					background-color: #fafafa;
-				}
+		}
+		.egwpopup_message.egwpopup_expanded {
+			position: fixed;
+			top: 4vh;
+			height: 90vh;
+			left: 20vw;
+			width: 60vw;
+			box-shadow: 0 0 40px #666;
+			overflow: auto;
+			&:hover {
+				background-color: #fafafa;
+			}
+			.egwpopup_message_inner_container {
+				height: auto;
+				overflow: auto;
+			}
+			.egwpopup_collapse {
+				float: right;
+				width: 24px;
+				height: 24px;
+				background-image: url(../images/close.png);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 12px;
+				cursor: pointer;display: inline-block
 			}
 		}
 		.egwpopup_message_seen {
 			.egwpopup_mark {cursor: auto;background:none;border-color: #666c6e;}
 		}
-		.egwpopup_expand {
-			display: inline-block;
-			float: right;
-			width: 24px;
-			height: 24px;
-			background-image: url(../images/search.png);
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: 12px;
-			cursor: pointer;
+		.egwpopup_message_clone {
+			border:2px dashed silver;
+			opacity: 0.3;
 		}
 	}
 	div#egwpopup_header {
