@@ -10,7 +10,7 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<description value="Step 1: IMAP - incoming mail" span="all" class="emailadmin_header"/>
+					<description value="Step 1: Incoming Server - incoming mail" span="all" class="emailadmin_header"/>
 					<description/>
 				</row>
 				<row>
@@ -32,7 +32,7 @@
                     </menulist>
 				</row>
 				<row class="@manual_class">
-					<description value="IMAP server" for="acc_imap_host"/>
+					<description value="Server" for="acc_imap_host"/>
 					<textbox blur="Hostname or IP" id="acc_imap_host" size="32" maxlength="128"/>
 				</row>
 				<row class="@manual_class">
