@@ -354,6 +354,9 @@
     background-color: transparent;
     left: 0px;
   }
+  .et2_link_to .et2_link_entry .ui-icon-triangle-1-s {
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+  }
   .et2_link_to .et2_file span {
     background-position: center;
     background-size: 16px 16px;
@@ -361,6 +364,10 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+  }
+  .et2_link_entry .ui-icon-triangle-1-s {
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+    background-size: contain;
   }
   .et2_link {
     color: #0C5DA5;
@@ -3557,6 +3564,8 @@ td.lettersearch {
   cursor: pointer;
 }
 #egwpopup #egwpopup_list .egwpopup_message {
+  height: 140px;
+  overflow: scroll;
   padding: 10px;
   background-color: #fafafa;
   border-radius: 3px;
@@ -3580,10 +3589,32 @@ td.lettersearch {
   background-repeat: no-repeat;
   padding-left: 26px;
 }
+#egwpopup #egwpopup_list .egwpopup_message .notification_expanded {
+  position: fixed;
+  top: 5vh;
+  height: 90vh;
+  left: 20vw;
+  width: 60vw;
+  box-shadow: 0 0 40px #666;
+}
+#egwpopup #egwpopup_list .egwpopup_message .notification_expanded:hover {
+  background-color: #fafafa;
+}
 #egwpopup #egwpopup_list .egwpopup_message_seen .egwpopup_mark {
   cursor: auto;
   background: none;
   border-color: #666c6e;
+}
+#egwpopup #egwpopup_list .egwpopup_expand {
+  display: inline-block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/search.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  cursor: pointer;
 }
 #egwpopup div#egwpopup_header {
   font-size: 16px;

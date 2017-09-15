@@ -16,7 +16,7 @@
 //##############################################################################################################
 
 
-#egwpopup{
+#egwpopup {
 	top: 43px !important;
 	right:0px !important;
 	left: auto !important;
@@ -29,33 +29,29 @@
 
     /*Button*/
     input#egwpopup_ok_button,
-    button#desktop_perms{
+    button#desktop_perms {
         .Complete_Button_normal;
         .dimension_height_m;
         padding: 0 5px;
         &:hover {.Complete_Button_hover;}
         &:active {background-color: @color_positive_action_active !important;}
     }
-	#egwpopup_list::-webkit-scrollbar-track
-	{
+	#egwpopup_list::-webkit-scrollbar-track	{
 		-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 		background-color: #fafafa;
 	}
 
-	#egwpopup_list::-webkit-scrollbar
-	{
+	#egwpopup_list::-webkit-scrollbar {
 		width: 4px;
 		background-color: #fafafa;
 	}
 
-	#egwpopup_list::-webkit-scrollbar-thumb
-	{
+	#egwpopup_list::-webkit-scrollbar-thumb	{
 		background-color: #6a6f71;
 	}
 	#egwpopup_list {
 		overflow-y: auto;
 		height: ~"calc(100% - 52px)";
-
 		span.egwpopup_delete {
 			display: inline-block;
 			float: right;
@@ -103,32 +99,32 @@
 				background-repeat: no-repeat;
 				padding-left: 26px;
 			}
-            .notification_expanded {
-                position: fixed;
-                top: 5vh;
-                height: 90vh;
-                left: 20vw;
-                width: 60vw;
-                box-shadow: 0 0 40px #666;
-                &:hover {
-                    background-color: #fafafa;
-                }
-            }
+			.notification_expanded {
+				position: fixed;
+				top: 5vh;
+				height: 90vh;
+				left: 20vw;
+				width: 60vw;
+				box-shadow: 0 0 40px #666;
+				&:hover {
+					background-color: #fafafa;
+				}
+			}
 		}
 		.egwpopup_message_seen {
 			.egwpopup_mark {cursor: auto;background:none;border-color: #666c6e;}
 		}
-        .egwpopup_expand {
-          display: inline-block;
-          float: right;
-          width: 24px;
-          height: 24px;
-          background-image: url(../images/search.png);
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: 12px;
-          cursor: pointer;
-        }
+		.egwpopup_expand {
+			display: inline-block;
+			float: right;
+			width: 24px;
+			height: 24px;
+			background-image: url(../images/search.png);
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 12px;
+			cursor: pointer;
+		}
 	}
 	div#egwpopup_header {
 		font-size: 16px;
@@ -208,26 +204,25 @@
 			}
 		}
 	}
-
 }
 
 #egwpopup_fw_notifications {
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    margin-right: 1em;
-    margin-top: 0px;
-    z-index: 200;
-    width: 26px;
-    height: 16px;
-    top: 9px;
-    position: fixed;
-    right: 109px;
-    border: 1px solid #656565;
-    border-radius: 3px;
-    text-align: center;
-    color: #646464;
-    font-weight: bold;
+	cursor: pointer;
+	display: inline-block;
+	float: right;
+	margin-right: 1em;
+	margin-top: 0px;
+	z-index: 200;
+	width: 26px;
+	height: 16px;
+	top: 9px;
+	position: fixed;
+	right: 109px;
+	border: 1px solid #656565;
+	border-radius: 3px;
+	text-align: center;
+	color: #646464;
+	font-weight: bold;
 	.popup_note {
 		position: absolute;
 		position: absolute;
@@ -271,23 +266,17 @@
 	border-color:#b9436c;
 }
 /*popup Messsage*/
- div#egwpopup_message {
-
-     background-color: .color_gray_0;
-     padding: 1em;
-     overflow-y: auto;
-
-
- }
-
-
-#msg,.message {
-            color: red;
-            font-style: italic;
-            background: @gray_0;
+div#egwpopup_message {
+	background-color: .color_gray_0;
+	padding: 1em;
+	overflow-y: auto;
 }
 
-
+#msg,.message {
+	color: red;
+	font-style: italic;
+	background: @gray_0;
+}
 
 // Container für Meldungen / Message Container
 .egw_fw_ui_app_header_container {
@@ -307,32 +296,19 @@
 		}
 }
 
- .colselection.ui-widget-content {
-			 width: 33%;
-//			 margin-left: 49%;
-
-
-		}
-
+.colselection.ui-widget-content {width: 33%;}
 
  /*Calendar ##############*/
-
- td.message {
-        background-color: @gray_10 !important;
-        height: 0px;
-        padding: 0px;
-
-        span.message {
-                 height: 35px;
-                border-bottom: 2px solid @gray_10;
-                 color: red;
-                 background: @gray_10;
-                 height: auto;
-                 width: 100%;
-     }
-
- }
-
-
-
- //
+td.message {
+	background-color: @gray_10 !important;
+	height: 0px;
+	padding: 0px;
+	span.message {
+			height: 35px;
+			border-bottom: 2px solid @gray_10;
+			color: red;
+			background: @gray_10;
+			height: auto;
+			width: 100%;
+	}
+}
