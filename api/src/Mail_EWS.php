@@ -304,6 +304,9 @@ class Mail_EWS extends Mail
 
         $folderID = $this->getFolderId( $_folderName );
 
+        if ( !$_sort )
+            $_sort = 'date';
+
         $sort_map = array(
             'subject'		=> 'item:Subject',
             'size'			=> 'item:Size',
@@ -726,7 +729,7 @@ class Mail_EWS extends Mail
     
     function getFolderId( $_folderName ) {
         $ids = Api\Cache::getSession('mail', 'ews_folder_ids' );
-        $folderID = $ids[ $_folderName ];
+        $folderID = ( $ids[ $_folderName ] ? $ids[ $_folderName ] : $_folderName );
         $folderID  = str_replace(' ','+', $folderID );
 
         return $folderID;

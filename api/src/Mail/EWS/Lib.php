@@ -16,7 +16,7 @@ class Lib
     static $info;
 
     static function login( $params ) {
-        $ews = new EwsConnection( $params['host'], $params['username'], $params['password'], $params['version'] );
+        $ews = new EwsConnection( $params['acc_imap_host'], $params['acc_imap_username'], $params['acc_imap_password'], $params['version'] );
         try {
             $folders = self::getInbox( $ews );
         }
@@ -827,16 +827,44 @@ class Lib
     }
     static function buildStatusRestrictions( $filter ) {
         if ( !$filter['status'] ) return null;
-        if ( $filter['status'] != 'unseen' && $filter['status'] != 'seen' ) return null;
+        $status = ( is_array( $filter['status'] ) ? $filter['status'] : array( $filter['status'] ) );
+        $ands = array();
+        foreach( $status as $current ) {
+            $stat = strtolower( $current );
+            switch( $stat ) {
+            case 'seen':
+            case 'unseen':
+                $equal = new DT\IsEqualToType();
+                $equal->FieldURI = new DT\PathToUnindexedFieldType();
+                $equal->FieldURI->FieldURI = 'message:IsRead';
+                $equal->FieldURIOrConstant = new DT\FieldURIOrConstantType();
+                $equal->FieldURIOrConstant->Constant = new DT\ConstantValueType();
+                $equal->FieldURIOrConstant->Constant->Value = ( $stat == 'seen' ? 1: 0);
+                $ands[] = $equal;
+                break;
+            }
+        }
+        if ( !$ands ) return null;
 
-        $equal = new DT\IsEqualToType();
-        $equal->FieldURI = new DT\PathToUnindexedFieldType();
-        $equal->FieldURI->FieldURI = 'message:IsRead';
-        $equal->FieldURIOrConstant = new DT\FieldURIOrConstantType();
-        $equal->FieldURIOrConstant->Constant = new DT\ConstantValueType();
-        $equal->FieldURIOrConstant->Constant->Value = ( $filter['status'] == 'seen' ? 1: 0);
+        if ( count( $ands ) > 1 ) {
+            // Concatenate ORs
+            $and = new DT\AndType();
+            $one = array_pop( $ands );
+            $two = array_pop( $ands );
+            $and->IsEqualTo = array( $one, $two );
+            while( $curr = array_pop( $ands ) ) {
+                $new = new DT\AndType();
+                $new->IsEqualTo = $curr;
+                $new->And = $and;
+                $and = $new;
+            }
 
-        return $equal;
+            $restriction = $or;
+        }
+        else 
+            $restriction = $ands[0];
+
+        return $restriction;
     }
 
     static function getDBFolders( $profile ) {

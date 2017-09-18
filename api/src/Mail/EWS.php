@@ -32,9 +32,9 @@ class EWS
 	function __construct(array $params, $_timeout=null)
 	{
 		$this->ImapServerId = $params['acc_id'];
-        $this->params['username'] = $params['acc_imap_username'];
-        $this->params['password'] = $params['acc_imap_password'];
-        $this->params['host'] = $params['acc_imap_host'];
+        $this->params['acc_imap_username'] = $params['acc_imap_username'];
+        $this->params['acc_imap_password'] = $params['acc_imap_password'];
+        $this->params['acc_imap_host'] = $params['acc_imap_host'];
         $this->params['version'] = static::VERSION;
 	}
 	function getCurrentMailbox()

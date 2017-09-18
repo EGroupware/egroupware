@@ -1351,7 +1351,7 @@ class admin_mail
 		}
 
         // Disable EWS tab for other types
-        if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
+        if ( $content['acc_imap_type'] && !Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
         {
             $readonlys['tabs']['admin.mailaccount.ews'] = true;
         }
