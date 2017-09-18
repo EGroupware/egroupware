@@ -269,7 +269,6 @@ function api_upgrade16_9_003()
 		'ix' => array(),
 		'uc' => array()
 	));
-	$GLOBALS['egw_setup']->db->query( 'alter table egw_ea_ews modify ews_folder varchar(255) collate utf8_bin' );
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.004';
 }
@@ -353,5 +352,14 @@ function api_upgrade16_9_006()
 	));
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.007';
+}
+
+function api_upgrade16_9_007()
+{
+    // Modify column 'ews_folder' to be utf8_bin because we need it to be case sensitive
+    // TODO Check if this works for databases other than MySQL
+	$GLOBALS['egw_setup']->db->query( 'alter table egw_ea_ews modify ews_folder varchar(255) collate utf8_bin' );
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.008';
 }
 
