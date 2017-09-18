@@ -25,6 +25,7 @@ use EGroupware\Api\Mail\EWS\Lib;
 class EWS 
 {
 	const DESCRIPTION = 'Microsoft Exchange (EWS)';
+    const VERSION = 'Exchange_2007';
 	var $ImapServerId;
     var $params;
 
@@ -34,7 +35,7 @@ class EWS
         $this->params['username'] = $params['acc_imap_username'];
         $this->params['password'] = $params['acc_imap_password'];
         $this->params['host'] = $params['acc_imap_host'];
-        $this->params['version'] = 'Exchange2007_SP1'; 
+        $this->params['version'] = static::VERSION;
 	}
 	function getCurrentMailbox()
 	{
@@ -171,7 +172,7 @@ class EWS
 	}
 
     static function description() {
-        return self::DESCRIPTION;
+        return static::DESCRIPTION;
     }
     function isSecureConnection() {
         return false;

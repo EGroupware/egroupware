@@ -262,7 +262,7 @@ class Mail
 		if ($_profileID && (!isset(self::$instances[$_profileID]) || $_restoreSession===false))
 		{
             $account = Mail\Account::read($_profileID);
-            if ( $account->params['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' )
+            if ( $account->is_ews() )
                 self::$instances[$_profileID] = new Mail_EWS('utf-8',$_restoreSession,$_profileID,false,$_reuseCache);
             else
                 self::$instances[$_profileID] = new Mail('utf-8',$_restoreSession,$_profileID,false,$_reuseCache);

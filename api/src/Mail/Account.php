@@ -392,6 +392,30 @@ class Account implements \ArrayAccess
 	}
 
 	/**
+	 * Check if account is an ews account
+	 *
+	 * @return boolean
+	 */
+	public function is_ews()
+	{
+		if (empty($this->acc_imap_host) || ( empty($this->acc_imap_username) && empty($this->acc_imap_password) ) )
+		{
+			return false;	// no host or credentials
+		}
+
+        if ( strpos( $this->acc_imap_type, __NAMESPACE__.'\EWS' ) !== FALSE )
+            return true;
+
+        return false;
+	}
+	static function is_ews_type( $type )
+	{
+        $full = (strpos( $type, __NAMESPACE__.'\EWS' ) !== FALSE );
+        $short = (substr( $type, 0, 3 ) == 'EWS' );
+        return $full || $short;
+	}
+
+	/**
 	 * Check if account is an imap account
 	 *
 	 * Checks if an imap host, username and for managaged mail-servers accountStatus="active" and NOT deliveryMode="forwardOnly" is set
@@ -1066,7 +1090,7 @@ class Account implements \ArrayAccess
 		// convert old plugin names and readd namespace
 		if ($data['acc_imap_type'])
 		{
-			if (substr($data['acc_imap_type'], 0, 4) == 'Imap' || $data['acc_imap_type'] == 'EWS' )
+			if (substr($data['acc_imap_type'], 0, 4) == 'Imap' || substr($data['acc_imap_type'], 0, 3) == 'EWS' )
 			{
 				$data['acc_imap_type'] = __NAMESPACE__.'\\'.$data['acc_imap_type'];
 			}

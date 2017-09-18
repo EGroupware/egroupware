@@ -113,7 +113,21 @@ class Types
 			$types[$class_name] = $extended ? $type : $type['description'];
 		}
 		// Add EWS
-		$types[__NAMESPACE__.'\\EWS'] = is_callable($function=__NAMESPACE__.'\\EWS::description') ? call_user_func($function) : $class_name;
+        if ( $imap ) {
+            foreach( scandir($dir=__DIR__.'/EWS') as $file )
+            {
+                if (substr($file, -4) == '.php' && substr($file,0,3) == 'EWS') {
+                    $class_name = __NAMESPACE__.'\\EWS\\'.substr($file, 0, -4);
+                    $type = array(
+                        'classname' => $class_name,
+                        'description' => is_callable($function=$class_name.'::description') ? call_user_func($function) : $class_name,
+                    );
+                    $type['protocol'] = 'imap';
+
+                    $types[$class_name] = $extended ? $type : $type['description'];
+                }
+            }
+        }
 		return $types;
 	}
 }

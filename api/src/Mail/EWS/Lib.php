@@ -30,11 +30,18 @@ class Lib
         if ( !isset( self::$info ) ) {
             $account = Mail\Account::read( $profile );
 
+            $type = $account->params['acc_imap_type'];
+            $version = 'Exchange_2007';
+            if ( class_exists( $type ) ) {
+                $obj = new $type( $account->params );
+                $version = $obj::VERSION;
+            }
+
             $info = array(
                 'exchange_user' => $account->params['acc_imap_username'],
                 'exchange_host' => $account->params['acc_imap_host'],
                 'exchange_password' => $account->params['acc_imap_password'],
-                'exchange_version' => 'Exchange2007_SP1',
+                'exchange_version' => $version,
             );
 
             self::$info = $info;
@@ -96,6 +103,7 @@ class Lib
         $request->Items->Message[] = $message;
 
         $response = $ews->CreateItem($request);
+        error_log( print_r( $response , true ) );
 
         $result = false;
         if ( $response->ResponseMessages->CreateItemResponseMessage->ResponseClass == 'Success' )
@@ -844,7 +852,7 @@ class Lib
         $allowed = false;
 
         $db = clone($GLOBALS['egw']->db);
-        $sql = "SELECT ews_apply_permissions, ews_permissions FROM egw_ea_ews WHERE ews_profile=$profile AND ews_folder= BINARY '$folder' ORDER BY ews_order";
+        $sql = "SELECT ews_apply_permissions, ews_permissions FROM egw_ea_ews WHERE ews_profile=$profile AND ews_folder='$folder' ORDER BY ews_order";
         $db->query($sql);
         $row = $db->row( true );
 
@@ -866,7 +874,7 @@ class Lib
         $db = clone($GLOBALS['egw']->db);
 
         // Can move FROM->TO folder
-        $sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder= BINARY '$from'";
+        $sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$from'";
         $db->query($sql);
         $row = $db->row( true );
         $acc = Mail\Account::read( $profile );

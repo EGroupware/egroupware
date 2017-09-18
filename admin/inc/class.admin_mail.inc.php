@@ -200,10 +200,7 @@ class admin_mail
         $sel_options['acc_imap_ssl'] = self::$ssl_types;
         // Not listing other server types, since this could be single account
         // EGroupware only allows different types for multiple accounts
-        $sel_options['acc_imap_type'] = array(
-            'EGroupware\\Api\\Mail\\Imap' => Mail\Imap::description(),
-            'EGroupware\\Api\\Mail\\EWS' => Mail\EWS::description(),
-        );
+		$sel_options['acc_imap_type'] = Mail\Types::getIMAPServerTypes(false);
 		Framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
 
 		if (!empty($content['acc_imap_host']) || !empty($content['acc_imap_username']))
@@ -283,7 +280,7 @@ class admin_mail
 			// by default we check SSL, STARTTLS and at last an insecure connection
 			if (!is_array($data)) $data = array('TLS' => 993, 'SSL' => 993, 'STARTTLS' => 143, 'insecure' => 143);
             //EWS
-            if ( $content['acc_imap_type'] == 'EGroupware\\Api\\Mail\\EWS' ) 
+            if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
                 $data = array('SSL' => 443);
 
 			foreach($data as $ssl => $port)
@@ -341,7 +338,7 @@ class admin_mail
 		{
 			unset($content['button']);
             //EWS: skip steps
-            if ( $content['acc_imap_type'] == 'EGroupware\\Api\\Mail\\EWS' ) 
+            if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
                 return $this->smtp($content, lang('Successful connected to %1 server%2.', 'EWS', ' '.lang('and logged in')).
                     ($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
             else
@@ -368,10 +365,7 @@ class admin_mail
 		$sel_options['acc_imap_ssl'] = self::$ssl_types;
         // Not listing other server types, since this could be single account
         // EGroupware only allows different types for multiple accounts
-        $sel_options['acc_imap_type'] = array(
-            'EGroupware\\Api\\Mail\\Imap' => Mail\Imap::description(),
-            'EGroupware\\Api\\Mail\\EWS' => Mail\EWS::description(),
-        );
+		$sel_options['acc_imap_type'] = Mail\Types::getIMAPServerTypes(false);
 		$tpl = new Etemplate('admin.mailwizard');
 		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys, $content, 2);
 	}
@@ -650,7 +644,7 @@ class admin_mail
 			switch($button)
 			{
 				case 'back':
-                    if ( $content['acc_imap_type'] == 'EGroupware\\Api\\Mail\\EWS' ) 
+                    if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
                         return $this->add($content);
                     else
                         return $this->sieve($content);
@@ -960,7 +954,7 @@ class admin_mail
 		}
 
 		// ensure correct values for single user mail accounts (we only hide them client-side)
-		if (!($is_multiple = Mail\Account::is_multiple($content)) && $content['acc_imap_type'] != 'EGroupware\Api\Mail\Imap' && $content['acc_imap_type'] != 'EGroupware\Api\Mail\EWS' )
+		if (!($is_multiple = Mail\Account::is_multiple($content)) && $content['acc_imap_type'] != 'EGroupware\Api\Mail\Imap' && !Mail\Account::is_ews_type( $content['acc_imap_type'] ) )
 		{
 			$content['acc_imap_type'] = 'EGroupware\\Api\\Mail\\Imap';
 			unset($content['acc_imap_login_type']);
@@ -1112,7 +1106,7 @@ class admin_mail
 								}
 								$content['accounts'][$content['acc_id']] = Mail\Account::identity_name($content, false);
 							}
-                            if ( $content['acc_imap_type'] && $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' ) {
+                            if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
                                 if ( $content['clear_grid'] ) {
                                     $content['ews_permissions'] = array();
                                     $content['clear_grid'] = false;
@@ -1233,7 +1227,7 @@ class admin_mail
 				$tpl->setElementAttribute($folder, 'allowFreeEntries', true);
 			}
 		}
-        elseif ( $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' || $content['acc_imap_type'] == 'EWS' ) 
+        elseif ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
         {
             $sel_options['ews_permissions'] = Api\Mail_EWS::getFolderPermissionsSelOptions( $content['acc_id'] );
 
@@ -1357,7 +1351,7 @@ class admin_mail
 		}
 
         // Disable EWS tab for other types
-        if ( $content['acc_imap_type'] && $content['acc_imap_type'] != 'EGroupware\Api\Mail\EWS' ) 
+        if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
         {
             $readonlys['tabs']['admin.mailaccount.ews'] = true;
         }
@@ -1399,7 +1393,7 @@ class admin_mail
 		}
 		$content['admin_actions'] = (bool)$admin_actions;
 
-        if ( $content['acc_imap_type'] && $content['acc_imap_type'] == 'EGroupware\Api\Mail\EWS' ) {
+        if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
             $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
             $content['acc_ews_apply_permissions'] = (int) $content['acc_ews_apply_permissions'];
         }
@@ -1443,7 +1437,7 @@ class admin_mail
 	protected static function imap_client(array $content, $timeout=null)
 	{
         //EWS: Instantiate different object
-        if ( $content['acc_imap_type'] == 'EGroupware\\Api\\Mail\\EWS' ) {
+        if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
             return new Mail\EWS($content);
         }
         else {
