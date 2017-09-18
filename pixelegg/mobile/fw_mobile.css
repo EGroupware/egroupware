@@ -3552,6 +3552,16 @@ td.lettersearch {
   overflow-y: auto;
   height: calc(100% - 52px);
 }
+#egwpopup #egwpopup_list .egwpopup_time_label {
+  width: 100%;
+  color: #fafafa;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.5;
+  font-size: 10pt;
+  background: #255ea5;
+  font-weight: bold;
+}
 #egwpopup #egwpopup_list span.egwpopup_delete {
   display: inline-block;
   float: right;
@@ -3575,7 +3585,7 @@ td.lettersearch {
   cursor: pointer;
 }
 #egwpopup #egwpopup_list .egwpopup_message {
-  height: 130px;
+  height: 140px;
   overflow: hidden;
   padding: 10px;
   background-color: #fafafa;
@@ -3595,6 +3605,7 @@ td.lettersearch {
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_date {
   float: left;
+  color: #767676;
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_open {
   display: inline-block;
@@ -3625,6 +3636,11 @@ td.lettersearch {
   background-repeat: no-repeat;
   padding-left: 26px;
 }
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_more_info {
+  color: #767676;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 #egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded {
   position: fixed;
   top: 4vh;
@@ -3651,6 +3667,9 @@ td.lettersearch {
   background-size: 12px;
   cursor: pointer;
   display: inline-block;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_more_info {
+  display: none;
 }
 #egwpopup #egwpopup_list .egwpopup_message_seen .egwpopup_mark {
   cursor: auto;
