@@ -103,7 +103,6 @@ class Lib
         $request->Items->Message[] = $message;
 
         $response = $ews->CreateItem($request);
-        error_log( print_r( $response , true ) );
 
         $result = false;
         if ( $response->ResponseMessages->CreateItemResponseMessage->ResponseClass == 'Success' )
@@ -503,16 +502,19 @@ class Lib
         $message_item->Id = $Id;
         $message_item->ChangeKey = $ChangeKey;
         $request->ItemIds->ItemId[] = $message_item;
-        if ( $move )
+        if ( $move ) {
             $response = $ews->MoveItem($request);
-        else
+            $status = ( $response->ResponseMessages->MoveItemResponseMessage->ResponseClass == 'Success' );
+            $msg = 'Exchange: '.$response->ResponseMessages->MoveItemResponseMessage->MessageText; 
+        }
+        else {
             $response = $ews->CopyItem($request);
+            $status = ( $response->ResponseMessages->CopyItemResponseMessage->ResponseClass == 'Success' );
+            $msg = 'Exchange: '.$response->ResponseMessages->CopyItemResponseMessage->MessageText; 
+        }
 
-        $status = ( $response->ResponseMessages->MoveItemResponseMessage->ResponseClass == 'Success' );
-        $msg = 'Exchange:'.$response->ResponseMessages->MoveItemResponseMessage->MessageText; 
         if ( !$status )
             throw new \Exception( $msg );
-
 
         return $msg;
     }
@@ -869,10 +871,43 @@ class Lib
 
     static function getDBFolders( $profile ) {
         $db = clone( $GLOBALS['egw']->db );
-        $db->query("SELECT * FROM egw_ea_ews WHERE ews_profile=$profile ORDER BY ifnull(ews_order,99)");
+        $db->query("SELECT * FROM egw_ea_ews WHERE ews_profile=$profile ORDER BY ews_order,ews_name");
         $rows = array();
         while( $row = $db->row( true ) )
             $rows[] = $row;
+
+        return $rows;
+    }
+    static function getWriteFolders( $profile, $from ) {
+        $db = clone( $GLOBALS['egw']->db );
+
+        // Can move FROM folder
+        $sql = "SELECT ifnull(ews_move_to,0) as ews_move_to, ews_move_anywhere FROM egw_ea_ews WHERE ews_profile= $profile and ews_folder='$from'";
+        $db->query($sql);
+        $row = $db->row( true );
+        $acc = Mail\Account::read( $profile );
+        $move_anywhere = $row['ews_move_anywhere'];
+        $move_to = explode(',', $row['ews_move_to'] );
+
+        $db->query("SELECT * FROM egw_ea_ews WHERE ews_profile=$profile ORDER BY ews_order,ews_name");
+        $rows = array();
+
+        while( $row = $db->row( true ) ) {
+            if ( !$move_anywhere ) 
+                $allow_from = in_array( $row['ews_folder'], $move_to );
+            else
+                $allow_from = true;
+
+            if ( $row['ews_apply_permissions'] || $acc['acc_ews_apply_permissions']) {
+                $permissions = unserialize( $row['ews_permissions'] );
+                $allow_to = ( $permissions['write'] );
+            }
+            else
+                $allow_to = true;
+
+            if ( $allow_to && $allow_from )
+                $rows[ $row['ews_folder'] ] = $row['ews_name'];
+        }
 
         return $rows;
     }
@@ -880,7 +915,7 @@ class Lib
         $allowed = false;
 
         $db = clone($GLOBALS['egw']->db);
-        $sql = "SELECT ews_apply_permissions, ews_permissions FROM egw_ea_ews WHERE ews_profile=$profile AND ews_folder='$folder' ORDER BY ews_order";
+        $sql = "SELECT ews_apply_permissions, ews_permissions FROM egw_ea_ews WHERE ews_profile=$profile AND ews_folder='$folder' ORDER BY ews_order,ews_name";
         $db->query($sql);
         $row = $db->row( true );
 
@@ -915,6 +950,9 @@ class Lib
         $allowed_to = self::is_allowed( $profile, $to, 'write' );
 
         return $allowed_from && $allowed_to;
+    }
+    static function can_manage_folder( $profile, $folder ) {
+        return self::is_allowed( $profile, $folder, 'manage_folder' );
     }
     static function getRootFolder( $profile ) {
         if ( $profile )

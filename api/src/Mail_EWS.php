@@ -447,73 +447,73 @@ class Mail_EWS extends Mail
 
         return $body;
     }
-	function getMessageEnvelope($_uid, $_partID = '',$decode=false, $_folder='', $_useHeaderInsteadOfEnvelope=false)
-	{
+    function getMessageEnvelope($_uid, $_partID = '',$decode=false, $_folder='', $_useHeaderInsteadOfEnvelope=false)
+    {
         // Get Mail and Headers
 
         $_uid = str_replace(' ','+', $_uid );
         list($mailID,) = explode('||', $_uid);
 
-		$email = Lib::getMailBody( $this->profileID, $mailID );
-		$arrays = array( 'From', 'ToRecipients', 'CcRecipients', 'Sender' );
+        $email = Lib::getMailBody( $this->profileID, $mailID );
+        $arrays = array( 'From', 'ToRecipients', 'CcRecipients', 'Sender' );
         $addresses = array();
-		foreach ( $arrays as $property ) {
-			$mailboxes = ( is_array( $email->$property->Mailbox ) ? $email->$property->Mailbox : array( $email->$property->Mailbox ) );
+        foreach ( $arrays as $property ) {
+            $mailboxes = ( is_array( $email->$property->Mailbox ) ? $email->$property->Mailbox : array( $email->$property->Mailbox ) );
 
             $tmp = array();
             foreach ( $mailboxes as $mailbox ) {
                 $tmp[] = $mailbox->Name .' <'. $mailbox->EmailAddress .'>';
             }
             $addresses[ $property ] = $tmp;
-		}
+        }
 
-		// Convert datetimes
-		$properties = array( 'DateTimeReceived' );
-    	$zone = new \DateTimeZone( $GLOBALS['egw_info']['server']['server_timezone'] );
-		foreach ( $properties as $property ) {
-    		$date = new \DateTime($email->$property);    		
-    		$date->setTimezone($zone);
-    		$email->$property = $date->format('c');	
-    	}
+        // Convert datetimes
+        $properties = array( 'DateTimeReceived' );
+        $zone = new \DateTimeZone( $GLOBALS['egw_info']['server']['server_timezone'] );
+        foreach ( $properties as $property ) {
+            $date = new \DateTime($email->$property);    		
+            $date->setTimezone($zone);
+            $email->$property = $date->format('c');	
+        }
 
-		return array(
-		    'SENDER' => $addresses['Sender'],
-		    'TO' => $addresses['ToRecipients'],
-		    'FROM' => $addresses['From'],
-		    'CC' => $addresses['CcRecipients'],
-		    'BCC' => Array(),
-		    'REPLY-TO' => Array(),
-		    'DATE' => $email->DateTimeReceived,
-		    'MESSAGE-ID' => $email->InternetMessageId,
-		    'IN-REPLY-TO' => '',
-		    'REFERENCES' => '',
-		    'SUBJECT' => $email->Subject,
-		    'CONTENT-MD5' => '',
-		    'MIME-VERSION' => '',
-		    'CONTENT-TYPE' => '',
-		    'CONTENT-TRANSFER-ENCODING' => '',
-		    'CONTENT-ID' => '',
-		    'CONTENT-DESCRIPTION' => '',
-		    'CONTENT-BASE' => '',
-		    'CONTENT-DISPOSITION' => '',
-		    'CONTENT-DURATION' => '',
-		    'CONTENT-LOCATION' => '',
-		    'CONTENT-FEATURES' => '',
-		    'CONTENT-LANGUAGE' => '',
-		    'CONTENT-ALTERNATIVE' => '',
-		    'IMPORTANCE' => $email->Importance,
-		    'X-PRIORITY' => '',
-		    'LIST-HELP' => '',
-		    'LIST-UNSUBSCRIBE' => '',
-		    'LIST-SUBSCRIBE' => '',
-		    'LIST-OWNER' => '',
-		    'LIST-POST' => '',
-		    'LIST-ARCHIVE' => '',
-		    'LIST-ID' => '',
-		    'BODY' => $email->Body->_,
-		);
-	}
-	function getSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
+        return array(
+            'SENDER' => $addresses['Sender'],
+            'TO' => $addresses['ToRecipients'],
+            'FROM' => $addresses['From'],
+            'CC' => $addresses['CcRecipients'],
+            'BCC' => Array(),
+            'REPLY-TO' => Array(),
+            'DATE' => $email->DateTimeReceived,
+            'MESSAGE-ID' => $email->InternetMessageId,
+            'IN-REPLY-TO' => '',
+            'REFERENCES' => '',
+            'SUBJECT' => $email->Subject,
+            'CONTENT-MD5' => '',
+            'MIME-VERSION' => '',
+            'CONTENT-TYPE' => '',
+            'CONTENT-TRANSFER-ENCODING' => '',
+            'CONTENT-ID' => '',
+            'CONTENT-DESCRIPTION' => '',
+            'CONTENT-BASE' => '',
+            'CONTENT-DISPOSITION' => '',
+            'CONTENT-DURATION' => '',
+            'CONTENT-LOCATION' => '',
+            'CONTENT-FEATURES' => '',
+            'CONTENT-LANGUAGE' => '',
+            'CONTENT-ALTERNATIVE' => '',
+            'IMPORTANCE' => $email->Importance,
+            'X-PRIORITY' => '',
+            'LIST-HELP' => '',
+            'LIST-UNSUBSCRIBE' => '',
+            'LIST-SUBSCRIBE' => '',
+            'LIST-OWNER' => '',
+            'LIST-POST' => '',
+            'LIST-ARCHIVE' => '',
+            'LIST-ID' => '',
+            'BODY' => $email->Body->_,
+        );
+    }
+    function getSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
     {
         // Get All mails in specific folder
         $folderID = $this->getFolderId( $_folderName );
@@ -553,8 +553,8 @@ class Mail_EWS extends Mail
     function getDefaultFolder() {
         return $this->profileID.self::DELIMITER.Lib::getDefaultFolder( $this->profileID );
     }
-	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
-	{
+    function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
+    {
         $folderID = $this->getFolderId( $_foldername );
         $curfolderID = $this->getFolderId( $currentFolder );
 
@@ -569,15 +569,19 @@ class Mail_EWS extends Mail
             }
             catch (\Exception $e ) {
                 $operation = ( $deleteAfterMove ? 'Moving' : 'Copying' );
-				throw new Exception("$operation to Folder $foldername failed! Error:".$e->getMessage());
+                throw new Exception("$operation to Folder $foldername failed! Error:".$e->getMessage());
             }
         }
 
         return true;
-	}
+    }
 	function createFolder($_parent, $_folderName, &$_error)
 	{
         $parentID = $this->getFolderId( $_parent );
+
+        if ( $parentID && !Lib::can_manage_folder( $this->profileID, $parentID ) )
+            throw new Exception("Operation not allowed, not enough permissions.");
+
         try{
             Lib::createFolder( $this->profileID, $parentID, $_folderName );
         }
@@ -590,6 +594,9 @@ class Mail_EWS extends Mail
 	function deleteFolder($_folderName)
 	{
         $folderID = $this->getFolderId( $_folderName );
+        if ( $folderID && !Lib::can_manage_folder( $this->profileID, $folderID ) )
+            throw new Exception("Operation not allowed, not enough permissions.");
+
         if ( $folderID ) {
             try{
                 Lib::deleteFolder( $this->profileID, $folderID );
@@ -619,6 +626,10 @@ class Mail_EWS extends Mail
             try {
                 $folderID = $this->getFolderId( $_oldFolderName );
                 $parentID = $this->getFolderId( $_parent );
+
+                if ( !Lib::can_manage_folder( $this->profileID, $folderID ) || !Lib::can_manage_folder( $this->profileID, $parentID ) )
+                    throw new Exception("Operation not allowed, not enough permissions.");
+
                 Lib::moveFolder( $this->profileID, $folderID, $parentID );
             }
             catch (\Exception $e ) {
@@ -632,6 +643,9 @@ class Mail_EWS extends Mail
             $folderID = $this->getFolderId( $_oldFolderName );
             $folder = Lib::getFolder( $this->profileID, $folderID, true );
             $changeKey = $folder->FolderId->ChangeKey;
+
+                if ( !Lib::can_manage_folder( $this->profileID, $folderID ) )
+                    throw new Exception("Operation not allowed, not enough permissions.");
 
             // Rename Folder
             try {
@@ -709,7 +723,7 @@ class Mail_EWS extends Mail
         $sql = "DELETE FROM egw_ea_ews WHERE ews_profile=$profile_id";
         $db->query($sql);    
 
-        $fields = array( 'read', 'write', 'delete' );
+        $fields = array( 'read', 'write', 'delete', 'manage_folder' );
         foreach ( $content as $folder ) {
             if (!$folder || !$folder['ews_folder']) continue;
 

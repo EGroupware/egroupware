@@ -1229,6 +1229,7 @@ class admin_mail
 		}
         elseif ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
         {
+			try {
             $sel_options['ews_permissions'] = Api\Mail_EWS::getFolderPermissionsSelOptions( $content['acc_id'] );
 
             $sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
@@ -1236,7 +1237,14 @@ class admin_mail
                 $sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
                 $sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
                     Api\Mail\EWS\Lib::getFoldersSelOptions( $content['acc_id'] );
-        }
+			}
+			catch(Exception $e) {
+				if (self::$debug) _egw_log_exception($e);
+				// let user know what the problem is and that he can fix it using wizard or deleting
+				$msg = lang($e->getMessage())."\n\n".lang('You can use wizard to fix account settings or delete account.');
+				$msg_type = 'error';
+			}
+	}
 		else
 		{
 			try {
@@ -1394,8 +1402,16 @@ class admin_mail
 		$content['admin_actions'] = (bool)$admin_actions;
 
         if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
+			try {
             $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
             $content['acc_ews_apply_permissions'] = (int) $content['acc_ews_apply_permissions'];
+			}
+			catch(Exception $e) {
+				if (self::$debug) _egw_log_exception($e);
+				// let user know what the problem is and that he can fix it using wizard or deleting
+				$msg = lang($e->getMessage())."\n\n".lang('You can use wizard to fix account settings or delete account.');
+				$msg_type = 'error';
+			}
         }
 
 		//try to fix identities with no domain part set e.g. alias as identity

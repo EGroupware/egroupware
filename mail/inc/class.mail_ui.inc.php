@@ -56,6 +56,7 @@ class mail_ui
 		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'subscription'	=> True,
 		'folderManagement' => true,
+		'moveEWS' => true,
 	);
 
 	/**
@@ -1195,6 +1196,18 @@ class mail_ui
 		} else {
 			$group++;
 		}
+        // Move in Exchange 
+        $actions['exchange_move'] = array(
+            'caption' => 'Move to EWS folder',
+            'icon' => 'move',
+            'group' => $group,
+            'allowOnMultiple' => true,
+            'nm_action' => 'popup',
+            'popup' => '400x600',
+            'url' => 'menuaction=mail.mail_ui.moveEWS&id=$row_id',
+            'enableClass' => 'is_ews',
+            'hideOnDisabled' => true,
+        );
 		$spam_actions = $this->getSpamActions();
 		$group++;
 		foreach ($spam_actions as &$action)
@@ -1429,8 +1442,7 @@ class mail_ui
 		$extra_actions = Api\Hooks::process(array(
             'location' => 'mail_extra_actions',
             'group' => $group,
-            'profileID' => $this->mail_bo->profileID,
-        ), array(), true);
+        ));
         if ( is_array( $extra_actions ) ) {
             foreach ( $extra_actions as $app => $extra) 
                 if ( is_array( $extra ) )
@@ -1623,7 +1635,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$rByUid
 				);
 				$rowsFetched['messages'] = $_sR['count'];
-				$ids = $_sR['match']->ids;
+				$ids = ( is_array( $_sR['match'] ) ? $_sR['match'] : $_sR['match']->ids );
 				// if $sR is false, something failed fundamentally
 				if($reverse === true) $ids = ($ids===false?array():array_reverse((array)$ids));
 				$sR = array_slice((array)$ids,($offset==0?0:$offset-1),$maxMessages); // we need only $maxMessages of uids
@@ -1843,6 +1855,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (Mail::$debugTimes) $starttime = microtime(true);
 		$rv = array();
 		$i=0;
+		$account = Mail\Account::read($this->mail_bo->profileID);
 		foreach((array)$_headers as $header)
 		{
 			$i++;
@@ -1878,7 +1891,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$css_styles[] = 'recent';
 				$is_recent=true;
 			}
-			if ($header['priority'] < 3) {
+			if ( $header['priority'] < 3) {
 				$css_styles[] = 'prio_high';
 			}
 			if ($header['flagged']) {
@@ -1908,6 +1921,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if ($header['label5']) {
 				$css_styles[] = 'labelfive';
 			}
+            if ( $account->is_ews() ){
+				$css_styles[] = 'is_ews';
+            }
 
 			//error_log(__METHOD__.array2string($css_styles));
 
@@ -2288,6 +2304,45 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		return array_reverse($actions2,true);
 	}
 
+	/**
+	 * Move mails between EWS folders
+	 */
+	function moveEWS (array $content = null)
+	{
+		$dtmpl = new Etemplate('mail.move_ews');
+		$ids = $_GET['id']? $_GET['id']: $content['id'];
+        $content['id'] = $ids;
+        $ids = explode(',', $ids );
+        list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $ids[0]);
+        $folderName = base64_decode( $folder64 );
+        $folderID = $this->mail_bo->getFolderId( $folderName );
+        $sel_options['folder'] = Mail\EWS\Lib::getWriteFolders( $profile, $folderID );
+
+        if ( !$content['folder'] )
+            $content['msg'] = lang('No Folder Selected');
+
+        if ( $content['folder'] && ($content['move'] || $content['copy'] ) ) {
+            $move == ( $content['move'] ? true : false );
+            $messageUIDs = array();
+            foreach( $ids as $uid ) {
+                list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $ids[0]);
+                $messageUIDs[] = $message_uid;
+            }
+            $res = $this->mail_bo->moveMessages( $content['folder'], $messageUIDs, $move, $folderName );
+            if ( $res ) {
+                $msg = 'Operation Successful';
+                Framework::message( $msg );
+                Framework::window_close();
+            }
+        }
+
+		$readonlys = array();
+		// Preserv
+		$preserv = array(
+			'id' => $content['id']
+		);
+		$dtmpl->exec('mail.mail_ui.moveEWS', $content,$sel_options,$readonlys,$preserv);
+	}
 	/**
 	 * helper function to create the attachment block/table
 	 *
@@ -4843,7 +4898,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid = true,
 							false
 						);
-						$messageListForToggle = $_sRt['match']->ids;
+                        $messageListForToggle = ( !is_array( $_sRt['match'] ) ? $_sRt['match']->ids : $_sRt['match'] );
 						$filter['status'] = array($_flag);
 						if ($query['filter'] && $query['filter'] !='any')
 						{
@@ -4857,7 +4912,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid = true,
 							false
 						);
-						$messageList = $_sR['match']->ids;
+                        $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 						if (count($messageListForToggle)>0)
 						{
 							$flag2set = (strtolower($_flag));
@@ -4894,7 +4949,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid,
 							false
 						);
-						$messageList = $_sR['match']->ids;
+                        $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 						unset($_messageList['all']);
 						$_messageList['msg'] = array();
 					}
@@ -5023,7 +5078,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$rByUid,
 						false
 					);
-					$messageList = $_sR['match']->ids;
+                    $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 				}
 				else
 				{
@@ -5184,7 +5239,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$rByUid=true,
 						false
 					);
-					$messageList = $_sR['match']->ids;
+                    $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 					foreach($messageList as $uID)
 					{
 						//error_log(__METHOD__.__LINE__.$uID);

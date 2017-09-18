@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="mail.move_ews" template="" lang="" group="0" version="1.9.001">
+        <vbox>
+            <description value="Move in exchange" class="promptheader" />
+            <listbox id="folder" rows="1" tags="true" multiple="false" class="tracker_queue" empty_label="Select Folder" height="24" />
+            <hbox>
+                <button label="Move" id="move" />
+                <button label="Copy" id="copy" />
+                <buttononly label="Cancel" onclick="window.close();" />
+            </hbox>
+        </vbox>
+    </template>
+</overlay>
