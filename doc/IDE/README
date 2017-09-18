@@ -1,0 +1,15 @@
+/**
+ * How setup an IDE for developing EGroupware
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Hadi Nategh <hn@egroupware.org>
+ * @version $Id$
+ */
+
+========================================================
+
+Please download and import a relative formatting settings package for your IDE.
+
+Formatting package will help you to get started coding with EGroupware and will
+take all formatting and code conventions used in EGroupware project into account.

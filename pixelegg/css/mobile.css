@@ -354,6 +354,9 @@
     background-color: transparent;
     left: 0px;
   }
+  .et2_link_to .et2_link_entry .ui-icon-triangle-1-s {
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+  }
   .et2_link_to .et2_file span {
     background-position: center;
     background-size: 16px 16px;
@@ -361,6 +364,10 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+  }
+  .et2_link_entry .ui-icon-triangle-1-s {
+    background: #ffffff url(../images/selectarrowdown.png) no-repeat center right;
+    background-size: contain;
   }
   .et2_link {
     color: #0C5DA5;
@@ -3534,6 +3541,16 @@ td.lettersearch {
   overflow-y: auto;
   height: calc(100% - 52px);
 }
+#egwpopup #egwpopup_list .egwpopup_time_label {
+  width: 100%;
+  color: #fafafa;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.5;
+  font-size: 10pt;
+  background: #255ea5;
+  font-weight: bold;
+}
 #egwpopup #egwpopup_list span.egwpopup_delete {
   display: inline-block;
   float: right;
@@ -3557,6 +3574,8 @@ td.lettersearch {
   cursor: pointer;
 }
 #egwpopup #egwpopup_list .egwpopup_message {
+  height: 140px;
+  overflow: hidden;
   padding: 10px;
   background-color: #fafafa;
   border-radius: 3px;
@@ -3564,6 +3583,32 @@ td.lettersearch {
 }
 #egwpopup #egwpopup_list .egwpopup_message:hover {
   background-color: rgba(103, 159, 210, 0.2);
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container {
+  height: 63px;
+  overflow: hidden;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar {
+  display: inline-block;
+  width: 100%;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_date {
+  float: left;
+  color: #767676;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_message_open {
+  display: inline-block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/search.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  cursor: pointer;
+}
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_top_toolbar .egwpopup_collapse {
+  display: none;
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_actions_container {
   border-bottom: 1px solid silver;
@@ -3580,10 +3625,49 @@ td.lettersearch {
   background-repeat: no-repeat;
   padding-left: 26px;
 }
+#egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_more_info {
+  color: #767676;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded {
+  position: fixed;
+  top: 4vh;
+  height: 90vh;
+  left: 20vw;
+  width: 60vw;
+  box-shadow: 0 0 40px #666;
+  overflow: auto;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded:hover {
+  background-color: #fafafa;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_inner_container {
+  height: auto;
+  overflow: auto;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_collapse {
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/close.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  cursor: pointer;
+  display: inline-block;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_more_info {
+  display: none;
+}
 #egwpopup #egwpopup_list .egwpopup_message_seen .egwpopup_mark {
   cursor: auto;
   background: none;
   border-color: #666c6e;
+}
+#egwpopup #egwpopup_list .egwpopup_message_clone {
+  border: 2px dashed silver;
+  opacity: 0.3;
 }
 #egwpopup div#egwpopup_header {
   font-size: 16px;

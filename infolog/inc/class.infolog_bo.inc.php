@@ -460,6 +460,11 @@ class infolog_bo
 			{
 				$info['old_pm_id'] = $info['pm_id'] = $id;
 			}
+			else
+			{
+				// Link might be contact, check others
+				$this->get_pm_id($info);
+			}
 			$info['info_link'] = $info['info_contact'] = array(
 				'app'   => $app,
 				'id'    => $id,
@@ -469,11 +474,26 @@ class infolog_bo
 			//echo " title='$title'</p>\n";
 			return $info['blur_title'] = $title;
 		}
-		$info['info_link'] = $info['info_contact'] = array('id' => 'none', 'title' => $info['info_from']);
+
+		// Set ID to 'none' instead of unset to make it seem like there's a value
+		$info['info_link'] = $info['info_contact'] = $info['info_from'] ? array('id' => 'none', 'title' => $info['info_from']) : null;
 		$info['info_link_id'] = 0;	// link might have been deleted
 		$info['info_custom_from'] = (int)!!$info['info_from'];
 
 		return False;
+	}
+
+	/**
+	 * Find projectmanager ID from linked project(s)
+	 *
+	 * @param Array $info
+	 */
+	public function get_pm_id(&$info)
+	{
+		$pm_links = Link::get_links('infolog',$info['info_id'],'projectmanager');
+
+		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $info['old_pm_id'];
+		if (!isset($info['pm_id']) && $old_pm_id) $info['pm_id'] = $old_pm_id;
 	}
 
 	/**
@@ -1051,7 +1071,12 @@ class infolog_bo
 	protected function write_check_links(&$values)
 	{
 		$old_link_id = (int)$values['info_link_id'];
-		if($values['info_contact'])
+		if($values['info_contact'] && !(
+				is_array($values['info_contact']) && $values['info_contact']['id'] == 'none'
+			) || (
+				is_array($values['info_contact']) && $values['info_contact']['id'] == 'none' &&
+				array_key_exists('search', $values['info_contact'])
+		))
 		{
 			if(is_array($values['info_contact']))
 			{
@@ -1106,6 +1131,19 @@ class infolog_bo
 		else
 		{
 			unset($values['info_link_id']);
+			$values['info_from'] = null;
+		}
+		if($values['info_id'] && $values['old_pm_id'] !== $values['pm_id'])
+		{
+			// Project has changed, but link is not to project
+			if($values['pm_id'])
+			{
+				$link_id = Link::link('infolog', $values['info_id'], 'projectmanager', $values['pm_id']);
+				if(!$values['info_link_id'])
+				{
+					$values['info_link_id'] = $link_id;
+				}
+			}
 		}
 		if ($old_link_id && $old_link_id != $values['info_link_id'])
 		{

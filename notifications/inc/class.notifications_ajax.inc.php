@@ -198,7 +198,14 @@ class notifications_ajax {
 
 					$message3 = 'data:text/html;charset=' . Api\Translation::charset() .';base64,'.base64_encode($message2);
 				}
-				$this->response->apply('app.notifications.append',array($notification['notify_id'],$notification['notify_message'],$message3, $notification['notify_status']));
+				$this->response->apply('app.notifications.append',array(
+					$notification['notify_id'],
+					$notification['notify_message'],
+					$message3,
+					$notification['notify_status'],
+					$notification['notify_created'],
+					new DateTime())
+				);
 			}
 
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {

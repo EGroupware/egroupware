@@ -223,23 +223,6 @@ class calendar_bo
 
 		$this->so = new calendar_so();
 
-		// run 16.1.002 --> .003 update automatic, to not show user time-grid in month-view, if admin did not run the update
-		if ($GLOBALS['egw_info']['apps']['calendar']['version'] == '16.1.002')
-		{
-			include_once(EGW_SERVER_ROOT.'/calendar/setup/tables_update.inc.php');
-			if (function_exists('calendar_upgrade16_1_002'))
-			{
-
-				$GLOBALS['egw']->db->update('egw_applications', array(
-					'app_version' => calendar_upgrade16_1_002(),
-				),
-				array(
-					'app_name' => 'calendar',
-					'app_version' => '16.1.002',
-				), __LINE__, __FILE__);
-			}
-			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
-		}
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
 

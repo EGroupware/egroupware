@@ -1,4 +1,4 @@
-/**
+	/**
  * EGroupware eTemplate2 - JS Link object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -712,7 +712,8 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 					self.app_select.show();
 				}
 			}})
-			.blur(function() {
+			.blur(function(e) {
+				if(self.div.has(e.relatedTarget).length) return;
 				if(self.options.app_icons)
 				{
 					// Adjust width, leave room for app select & link button
@@ -886,10 +887,18 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 
 		if(this.options.app_icons)
 		{
+			var self = this;
 			this.div.addClass('app_icons');
-			this.app_select.iconselectmenu({width:  50})
+			this.app_select.iconselectmenu({
+					width:  50,
+					change: function() {
+						window.setTimeout(function()
+						{
+							self.app_select.trigger("change");
+						}, 0);
+					}
+				})
 				.iconselectmenu( "menuWidget" );
-
 			this.app_select.iconselectmenu('widget').hide();
 		}
 		return this._super.apply(this,arguments);

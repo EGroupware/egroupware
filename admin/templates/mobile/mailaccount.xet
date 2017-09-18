@@ -316,11 +316,11 @@
 			<rows>
 				<row disabled="@hidebuttons" class="dialogHeadbar" >
 					<hbox span="all">
-						<button label="Save" id="button[save]"/>
-						<button label="Apply" id="button[apply]" />
-						<button statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magicwand" background_image="1"/>
-						<button align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"/>
-						<button align="right" label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')"  image="delete" background_image="1"/>
+						<button id="button[save]"/>
+						<button id="button[apply]" />
+						<button statustext="Use wizard to detect or verify configuration" id="button[wizard]" image="magicwand" background_image="1"/>
+						<button id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')"/>
+						<button label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')"  image="delete" background_image="1"/>
 					</hbox>
 				</row>
 				<row disabled="!@accounts" class="dialogHeader">
