@@ -53,7 +53,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="emailadmin_no_single">
+				<row>
 					<description for="acc_imap_logintype" value="Type"/>
 					<menulist>
 						<menupopup id="acc_imap_type"/>
@@ -314,47 +314,6 @@
 			</rows>
 		</grid>
 	</template>
-    <template id="admin.mailaccount.ews.permissions" template="" lang="" group="0" version="1.9.001">
-        <grid id="ews_permissions" span="2">
-            <columns>
-                <column width="5%" />
-                <column width="5%" />
-                <column width="20%" />
-                <column width="2%" />
-                <column width="2%" />
-                <column width="2%" />
-                <column width="5%" />
-                <column width="20%" />
-                <column width="1" />
-            </columns>
-            <rows>
-                <row class="th">
-                    <description value="Default Folder" />
-                    <description value="Order" />
-                    <description value="Name" />
-                    <description value="Apply Permissions" />
-                    <description value="Read" />
-                    <description value="Write" />
-                    <description value="Delete" />
-                    <description value="Move Anywhere" />
-                    <description value="Allow moving to" />
-                    <description value="" />
-                </row>
-                <row>            
-                    <checkbox id="${row}[ews_is_default]" />
-                    <textbox size="4" type="int" id="${row}[ews_order]" />
-                    <description id="${row}[ews_name]" />
-                    <checkbox id="${row}[ews_apply_permissions]" />
-                    <checkbox id="${row}[read]" />
-                    <checkbox id="${row}[write]" />
-                    <checkbox id="${row}[delete]" />
-                    <checkbox id="${row}[ews_move_anywhere]" />
-                    <listbox id="${row}[ews_move_to]" rows="1" tags="true" multiple="true" class="tracker_queue" empty_label="Select Folders" height="24" />
-                    <description type="hidden" id="${row}[ews_folder]" />
-                </row>
-            </rows>
-        </grid>
-    </template>
     <template id="admin.mailaccount.ews" template="" lang="" group="0" version="1.9.001">
         <textbox type="hidden" id="clear_grid" />
         <grid width="100%">
@@ -370,46 +329,11 @@
                     </menulist>
                 </row>
                 <row>
-                    <description value="Always Apply Permissions"/>
+                    <description value="Always Apply Custom Permissions"/>
                     <checkbox id="acc_ews_apply_permissions" />
                 </row>
                 <row>
-                    <grid id="ews_permissions_header" span="2">
-                        <columns>
-                            <column width="5%" />
-                            <column width="5%" />
-                            <column width="20%" />
-                            <column width="2%" />
-                            <column width="2%" />
-                            <column width="2%" />
-                            <column width="5%" />
-                            <column width="20%" />
-                            <column width="1" />
-                        </columns>
-                        <rows>
-                            <row class="th">
-                                <description value="Default Folder" />
-                                <description value="Order" />
-                                <description value="Name" />
-                                <description value="Apply Permissions" />
-                                <description value="Read" />
-                                <description value="Write" />
-                                <description value="Delete" />
-                                <description value="Move Anywhere" />
-                                <description value="Allow moving to" />
-                                <description value="" />
-                            </row>
-                        </rows>
-                </grid>           </row>
-                <row>
-					<tabbox id="ews_tabs" span="all" tab_height="420">
-						<tabs>
-							<tab id="admin.mailaccount.ews.permisssions" label="Identity+Signature" statustext="Identity&amp;Signature"/>
-						</tabs>
-						<tabpanels>
-							<template id="admin.mailaccount.ews.permissions"/>
-						</tabpanels>
-					</tabbox>
+                    <button label="Edit Custom Permissions" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_mail.custom_permissions&amp;acc_id=$cont[acc_id]'),'roles','dependent=yes,width=760,height=500,scrollbars=no,status=yes'); return false;" />
                 </row>
                 <row>
                 </row>

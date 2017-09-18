@@ -170,13 +170,13 @@ select#admin-mailaccount_ident_id {
 }
 #admin-acl {width:99%;}
 
-#admin-mailaccount_admin-mailaccount-ews .th {
+#admin-mailaccount-permissions_ews_tabs .th {
     border-bottom: none;
 }
-#admin-mailaccount_admin-mailaccount-ews .et2_tabheader {
+#admin-mailaccount-permissions_ews_tabs  .et2_tabheader {
     display:none;
 }
-#admin-mailaccount_admin-mailaccount-ews #admin-mailaccount_ews_permissions .th {
+#admin-mailaccount-permissions_ews_tabs  #admin-mailaccount-permissions_ews_permissions .th {
     visibility: collapse;
 }
 

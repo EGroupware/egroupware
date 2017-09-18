@@ -80,7 +80,8 @@ class admin_mail
 	public $public_functions = array(
 		'add' => true,
 		'edit' => true,
-		'ajax_activeAccounts' => true
+		'ajax_activeAccounts' => true,
+		'custom_permissions' => true
 	);
 
 	/**
@@ -1110,8 +1111,8 @@ class admin_mail
                                 if ( $content['clear_grid'] ) {
                                     $content['ews_permissions'] = array();
                                     $content['clear_grid'] = false;
+                                    Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
                                 }
-                                Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
                             }
 						}
 						else
@@ -1230,7 +1231,6 @@ class admin_mail
         elseif ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
         {
 			try {
-            $sel_options['ews_permissions'] = Api\Mail_EWS::getFolderPermissionsSelOptions( $content['acc_id'] );
 
             $sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
                 $sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
@@ -1403,7 +1403,6 @@ class admin_mail
 
         if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
 			try {
-            $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
             $content['acc_ews_apply_permissions'] = (int) $content['acc_ews_apply_permissions'];
 			}
 			catch(Exception $e) {
@@ -1422,6 +1421,28 @@ class admin_mail
 
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}
+
+    public function custom_permissions( $content = array() ) 
+	{
+		$dtmpl = new Etemplate('admin.mailaccount.permissions');
+		$acc_id = $_GET['acc_id']? $_GET['acc_id']: $content['acc_id'];
+        $content['acc_id'] = $acc_id;
+
+        $sel_options['ews_permissions'] = Api\Mail_EWS::getFolderPermissionsSelOptions( $content['acc_id'] );
+
+        if ( $content['save'] || $content['apply'] ) {
+            $res = Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
+            if ( $res ) {
+                $msg = lang('Operation Successful');
+                Framework::message( $msg );
+                Framework::window_close();
+            }
+        }
+
+        $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
+		$readonlys = array();
+		$dtmpl->exec('admin.admin_mail.custom_permissions', $content,$sel_options,$readonlys,$content);
+    }
 
 	/**
 	 * Replace 0 with '' or back

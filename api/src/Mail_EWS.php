@@ -739,6 +739,7 @@ class Mail_EWS extends Mail
                 $folder['ews_move_to'] = implode(',', $folder['ews_move_to'] );
             $db->insert( 'egw_ea_ews', $folder, false, __LINE__, __FILE__ );
         }
+        return true;
     }
     
     function getFolderId( $_folderName ) {
