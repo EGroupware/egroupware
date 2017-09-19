@@ -2322,7 +2322,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
             $content['msg'] = lang('No Folder Selected');
 
         if ( $content['folder'] && ($content['move'] || $content['copy'] ) ) {
-            $move == ( $content['move'] ? true : false );
+            $move = ( $content['move'] ? true : false );
             $messageUIDs = array();
             foreach( $ids as $uid ) {
                 list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $ids[0]);
@@ -2331,7 +2331,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
             $res = $this->mail_bo->moveMessages( $content['folder'], $messageUIDs, $move, $folderName );
             if ( $res ) {
                 $msg = 'Operation Successful';
-                Framework::message( $msg );
+                $to_update = implode(',', $messageUIDs );
+                Framework::refresh_opener( $msg, 'mail', $to_update, 'update' );
                 Framework::window_close();
             }
         }
