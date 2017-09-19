@@ -558,6 +558,7 @@ class mail_hooks
 							'mail_subject'			=> Mail::adaptSubjectForImport($recent_message['subject']),
 							'mail_from'				=> !empty($recent_message['sender_name']) ? $recent_message['sender_name'] : $recent_message['sender_address'],
 							'mail_received'			=> $recent_message['date'],
+							'mail_to'			=> $recent_message['to_address'],
 						);
 						// save notification status
 						$notified_mail_uidsCache[$activeProfile][$recent_message['folder']][] = mail_ui::generateRowID($activeProfile, $recent_message['folder'], $recent_message['uid'], $_prependApp=false);
@@ -567,7 +568,7 @@ class mail_hooks
 						if ($mail['mail_from'])
 						{
 							$notification_message .=	"<br/><strong>".lang("From").':</strong>'. $mail["mail_from"].
-														"<br/><strong>".lang("To").':</strong>'. $mail["recieved"].
+														"<br/><strong>".lang("To").':</strong>'. $mail["mail_to"].
 														"<br/><strong>".lang ("subject"). ':</strong>' . $mail["mail_subject"].
 														"<br/><br/> -------------------------------------------------------- </br>";
 						}
