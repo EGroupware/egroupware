@@ -1176,7 +1176,6 @@ app.classes.admin = AppJS.extend(
     {
         var option1 = 'inbox';
         var option2 = 'public_folders';
-        var grid = this.et2.getWidgetById('ews_permissions');
         var clear = this.et2.getWidgetById('clear_grid');
         var apply = this.et2.getWidgetById('button[apply]');
         var that = this;
@@ -1184,7 +1183,6 @@ app.classes.admin = AppJS.extend(
             that.widget_active = true;
             et2_dialog.show_dialog(function(_button){
                 if (_button == 2) {
-                    grid.set_value({ content:[], readonlys:[], sel_options:[] });
                     clear.set_value( true );
                     apply.getInstanceManager().submit(apply, false, apply.options.novalidate); 
                 }

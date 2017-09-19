@@ -88,10 +88,10 @@
                 <row>
 					<tabbox id="ews_tabs" span="all" >
 						<tabs>
-							<tab id="admin.mailaccount.permissions.tab" label="" statustext=""/>
+							<tab id="admin.mailaccount.permissions.tab" label="" statustext="" tab_height="400" />
 						</tabs>
 						<tabpanels>
-							<template id="admin.mailaccount.permissions.tab"/>
+							<template id="admin.mailaccount.permissions.tab" height="400" />
 						</tabpanels>
 					</tabbox>
                 </row>

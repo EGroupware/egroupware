@@ -81,7 +81,7 @@ class admin_mail
 		'add' => true,
 		'edit' => true,
 		'ajax_activeAccounts' => true,
-		'custom_permissions' => true
+		'ews_custom_permissions' => true
 	);
 
 	/**
@@ -1422,7 +1422,7 @@ class admin_mail
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}
 
-    public function custom_permissions( $content = array() ) 
+    public function ews_custom_permissions( $content = array() ) 
 	{
 		$dtmpl = new Etemplate('admin.mailaccount.permissions');
 		$acc_id = $_GET['acc_id']? $_GET['acc_id']: $content['acc_id'];
@@ -1441,7 +1441,7 @@ class admin_mail
 
         $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
 		$readonlys = array();
-		$dtmpl->exec('admin.admin_mail.custom_permissions', $content,$sel_options,$readonlys,$content);
+		$dtmpl->exec('admin.admin_mail.ews_custom_permissions', $content,$sel_options,$readonlys,$content,2);
     }
 
 	/**
