@@ -11,7 +11,9 @@
                 <column width="2%" />
                 <column width="2%" />
                 <column width="2%" />
-                <column width="5%" />
+                <column width="2%" />
+                <column width="2%" />
+                <column width="2%" />
                 <column width="20%" />
                 <column width="1" />
             </columns>
@@ -62,6 +64,8 @@
                             <column width="5%" />
                             <column width="5%" />
                             <column width="20%" />
+                            <column width="2%" />
+                            <column width="2%" />
                             <column width="2%" />
                             <column width="2%" />
                             <column width="2%" />

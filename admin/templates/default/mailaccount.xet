@@ -333,7 +333,7 @@
                     <checkbox id="acc_ews_apply_permissions" />
                 </row>
                 <row>
-                    <button label="Edit Custom Permissions" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_mail.custom_permissions&amp;acc_id=$cont[acc_id]'),'roles','dependent=yes,width=760,height=500,scrollbars=no,status=yes'); return false;" />
+                    <button label="Edit Custom Permissions" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_mail.ews_custom_permissions&amp;acc_id=$cont[acc_id]'),'roles','dependent=yes,width=900,height=600,scrollbars=no,status=yes'); return false;" />
                 </row>
                 <row>
                 </row>
