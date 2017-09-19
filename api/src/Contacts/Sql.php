@@ -250,7 +250,7 @@ class Sql extends Api\Storage
 	 * We join egw_addressbook to itself, and count how many fields match.  If
 	 * enough of the fields we care about match, we count those two records as
 	 * duplicates.
-	 * 
+	 *
 	 * @var array $param
 	 * @var string $param[grouped_view] 'duplicate', 'duplicate,adr_one_location', 'duplicate,org_name' how to group
 	 * @var int $param[owner] addressbook to search
@@ -368,7 +368,7 @@ class Sql extends Api\Storage
 		}
 		$query = $this->parse_search(array_merge($criteria, $filter), $wildcard, false, ' AND ');
 
-		$sub_query = $this->db->select($this->table_name, 
+		$sub_query = $this->db->select($this->table_name,
 			'DISTINCT ' . implode(', ',array_merge($columns, $extra)),
 			$query,
 			False, False, 0, $append, False, -1,
@@ -380,7 +380,7 @@ class Sql extends Api\Storage
 		{
 			$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
 		}
-		
+
 		$rows = $this->db->query(
 				"SELECT $mysql_calc_rows " . $columns. ', COUNT(contact_id) AS group_count' .
 				' FROM (' . $sub_query . ') AS matches GROUP BY ' . implode(',',$group) .
@@ -396,7 +396,7 @@ class Sql extends Api\Storage
 			$row['email_home'] = $row['contact_email_home'];
 			$dupes[] = $this->db2data($row);
 		}
-		
+
 		if ($mysql_calc_rows)
 		{
 			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchColumn();
@@ -1021,6 +1021,30 @@ class Sql extends Api\Storage
 		if (empty($this->data['carddav_name']))
 		{
 			$update['carddav_name'] = $this->data['id'].'.vcf';
+		}
+		// update photo in entry-directory, unless hinted it is unchanged
+		if (!$err && $this->data['photo_unchanged'] !== true)
+		{
+			// in case files bit-field is not available read it from DB
+			if (!isset($this->data['files']))
+			{
+				$this->data['files'] = (int)$this->db->select($this->table_name, 'contact_files', array(
+					'contact_id' => $this->data['id'],
+				), __LINE__, __FILE__)->fetchColumn();
+			}
+			$path =  Api\Link::vfs_path('addressbook', $this->data['id'], Api\Contacts::FILES_PHOTO);
+			$backup = Api\Vfs::$is_root; Api\Vfs::$is_root = true;
+			if (empty($this->data['jpegphoto']))
+			{
+				unlink($path);
+				$update['files'] = $this->data['files'] & ~Api\Contacts::FILES_BIT_PHOTO;
+			}
+			else
+			{
+				file_put_contents($path, $this->data['jpegphoto']);
+				$update['files'] = $this->data['files'] | Api\Contacts::FILES_BIT_PHOTO;
+			}
+			Api\Vfs::$is_root = $backup;
 		}
 		if (!$err && $update)
 		{

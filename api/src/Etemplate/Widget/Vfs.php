@@ -84,10 +84,10 @@ class Vfs extends File
 				// Single file, missing extension in path
 				else if (substr($path, -1) != '/' && !Api\Vfs::file_exists($path) && $relpath && substr($relpath,-4,1) !== '.')
 				{
-					$find = Api\Vfs::find(substr($path,0, - strlen($relpath)), array(
+					$find = Api\Vfs::find(Api\Vfs::dirname($path), array(
 						'type' => 'f',
 						'maxdepth' => 1,
-						'name' => $relpath . '*'
+						'name' => Api\Vfs::basename($path).'.*',
 					));
 					foreach($find as $file)
 					{
@@ -264,11 +264,14 @@ class Vfs extends File
 		{
 			// add extension to path
 			$parts = explode('.',$filename);
-			if (($extension = array_pop($parts)) && Api\MimeMagic::ext2mime($extension))       // really an extension --> add it to path
+			// check if path already contains a valid extension --> dont add an other one
+			$path_parts = explode('.', $path);
+			if (count($path_parts) > 2 && (!($extension = array_pop($path_parts)) || !Api\MimeMagic::ext2mime($extension)) &&
+				($extension = array_pop($parts)) && Api\MimeMagic::ext2mime($extension))       // really an extension --> add it to path
 			{
 				$path .= '.'.$extension;
-				$file['name'] = Api\Vfs::basename($path);
 			}
+			$file['name'] = Api\Vfs::basename($path);
 		}
 		else if ($path)   // multiple upload with dir given (trailing slash)
 		{

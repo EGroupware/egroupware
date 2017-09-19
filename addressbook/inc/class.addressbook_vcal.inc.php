@@ -72,6 +72,7 @@ class addressbook_vcal extends Api\Contacts
 			'X-ASSISTANT-TEL'		=> array('tel_assistent'),
 			'UID'				=> array('uid'),
 			'REV'				=> array('modified'),
+			//'KEY' multivalued with mime-type to export PGP and S/Mime public keys
 			//set for Apple: 'X-ABSHOWAS'	=> array('fileas_type'),	// Horde vCard class uses uppercase prop-names!
 		);
 

@@ -2534,6 +2534,34 @@ class Vfs
 	{
 		return Vfs\StreamWrapper::load_wrapper($scheme);
 	}
+
+	/**
+	 * Return stream with given string as content
+	 *
+	 * @param string $string
+	 * @return boolean|resource stream or false on error
+	 */
+	static function string_stream($string)
+	{
+		if (!($fp = fopen('php://temp', 'rw')))
+		{
+			return false;
+		}
+		$pos = 0;
+		$len = strlen($string);
+		do {
+			if (!($written = fwrite($fp, substr($string, $pos))))
+			{
+				return false;
+			}
+			$pos += $written;
+		}
+		while ($len < $pos);
+
+		rewind($fp);
+
+		return $fp;
+	}
 }
 
 Vfs::init_static();

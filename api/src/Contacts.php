@@ -734,7 +734,7 @@ class Contacts extends Contacts\Storage
 				$data[$name] = DateTime::server2user($data[$name], $date_format);
 			}
 		}
-		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto'] || $data['files'] & self::FILES_PHOTO,'',$data['etag']);
+		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto'] || ($data['files'] & self::FILES_BIT_PHOTO), '', $data['etag']);
 
 		// set freebusy_uri for accounts
 		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
@@ -1054,13 +1054,15 @@ class Contacts extends Contacts\Storage
 	}
 
 	/**
-	 * Resizes photo to 60*80 pixel and returns it
+	 * Resize photo down to 240pixel width and returns it
+	 *
+	 * Also makes sures photo is a JPEG.
 	 *
 	 * @param string|FILE $photo string with image or open filedescribtor
 	 * @param int $dst_w =240 max width to resize to
 	 * @return string with resized jpeg photo, null on error
 	 */
-	public static function resize_photo($photo,$dst_w=240)
+	public static function resize_photo($photo, $dst_w=240)
 	{
 		if (is_resource($photo))
 		{
