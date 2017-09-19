@@ -89,6 +89,8 @@ app.classes.admin = AppJS.extend(
 			case 'admin.index':
 				var iframe = this.iframe = this.et2.getWidgetById('iframe');
 				this.nm = this.et2.getWidgetById('nm');
+				this.groups = this.et2.getWidgetById('groups');
+				this.groups.set_disabled(true);
 				this.ajax_target = this.et2.getWidgetById('ajax_target');
 				if (iframe)
 				{
@@ -176,6 +178,7 @@ app.classes.admin = AppJS.extend(
 		}
 		this.iframe.set_disabled(!_url || ajax);
 		this.nm.set_disabled(!!_url || ajax);
+		this.groups.set_disabled(true);
 		this.ajax_target.set_disabled(!ajax);
 	},
 
@@ -343,11 +346,19 @@ app.classes.admin = AppJS.extend(
 	{
 		var link = _widget.getUserData(_id, 'link');
 
+		this.groups.set_disabled(true);
+		this.nm.set_disabled(false);
+
 		if (_id == '/accounts' || _id.substr(0, 8) == '/groups/')
 		{
 			this.load();
 			var parts = _id.split('/');
 			this.et2.getWidgetById('nm').applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
+		}
+		else if (_id === '/groups')
+		{
+			this.load();
+			this.group_list();
 		}
 		else if (typeof link == 'undefined')
 		{
@@ -365,6 +376,16 @@ app.classes.admin = AppJS.extend(
 	},
 
 	/**
+	 * Show the group list in the main window
+	 */
+	group_list: function group_list()
+	{
+		this.nm.set_disabled(true);
+		this.groups.set_disabled(false);
+	},
+
+
+	/**
 	 * View, edit or delete a group callback for tree
 	 *
 	 * @param {object} _action egwAction
@@ -372,14 +393,17 @@ app.classes.admin = AppJS.extend(
 	 */
 	group: function(_action, _senders)
 	{
+		// Tree IDs look like /groups/ID, nm uses admin::ID
+		var from_nm = _senders[0].id.indexOf('::') > 0;
+		var account_id = _senders[0].id.split(from_nm ? '::' : '/')[from_nm ? 1 : 2];
+
 		switch(_action.id)
 		{
 			case 'view':
-				this.run(_senders[0].id, this.et2.getWidgetById('tree'));
+				this.run(from_nm ? '/groups/'+account_id : _senders[0].id, this.et2.getWidgetById('tree'));
 				break;
 
 			case 'delete':
-				var account_id = _senders[0].id.split('/')[2];
 				this.egw.json('admin_account::ajax_delete_group', [account_id]).sendRequest();
 				break;
 
@@ -389,14 +413,14 @@ app.classes.admin = AppJS.extend(
 					alert('Missing url in action '+_action.id+'!');
 					break;
 				}
-				var url = _action.data.url.replace('$id', _senders[0].id.split('/')[2]);
+				var url = unescape(_action.data.url).replace('$id', account_id);
 				if (url[0] != '/' && url.substr(0, 4) != 'http')
 				{
 					url = this.egw.link('/index.php', url);
 				}
-				if (_action.data.popup)
+				if (_action.data.popup || _action.data.width && _action.data.height)
 				{
-					this.egw.open_link(url, '_blank', _action.data.popup);
+					this.egw.open_link(url, '_blank', _action.data.popup ? _action.data.popup : _action.data.width + 'x' + _action.data.height);
 				}
 				else
 				{
