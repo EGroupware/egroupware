@@ -199,15 +199,13 @@ class addressbook_bo extends Api\Contacts
 		$key_regexp = $pgp ? self::$pgp_key_regexp : Api\Mail\Smime::$certificate_regexp;
 		$file = $pgp ? Api\Contacts::FILES_PGP_PUBKEY : Api\Contacts::FILES_SMIME_PUBKEY;
 
-		if (!preg_match($key_regexp, $key))
-		{
-			return lang('File is not a %1 public key!', $pgp ? lang('PGP') : lang('S/MIME'));
-		}
-
 		$criteria = array();
 		foreach($keys as $recipient => $key)
 		{
-			if (!preg_match($key_regexp, $key)) continue;
+			if (!preg_match($key_regexp, $key))
+			{
+				return lang('File is not a %1 public key!', $pgp ? lang('PGP') : lang('S/MIME'));
+			}
 
 			if (is_numeric($recipient))
 			{
@@ -237,7 +235,7 @@ class addressbook_bo extends Api\Contacts
 			if ($contact['id'] && $this->pubkey_use_file($pgp, $contact))
 			{
 				$path =  Api\Link::vfs_path('addressbook', $contact['id'], $file);
-				$contact['contact_files'] |= $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
+				$contact['files'] |= $pgp ? self::FILES_BIT_PGP_PUBKEY : self::FILES_BIT_SMIME_PUBKEY;
 				// remove evtl. existing old pubkey
 				if (preg_match($key_regexp, $contact['pubkey']))
 				{
@@ -319,12 +317,12 @@ class addressbook_bo extends Api\Contacts
 				$criteria['contact_email'][] = $recipient = strtolower($recipient);
 			}
 		}
-		foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_pubkey'),
+		foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_pubkey', 'contact_id'),
 			'', '', '', false, 'OR', false, null) as $contact)
 		{
 			$matches = null;
 			// first check for file and second for pubkey field (LDAP, AD or old SQL)
-			if (($content = @file_get_contents(vfs_path('addressbook', $contact['id'], $file))) &&
+			if (($content = @file_get_contents(Api\Link::vfs_path('addressbook', $contact['id'], $file))) &&
 				preg_match($key_regexp, $content, $matches) ||
 				preg_match($key_regexp, $contact['pubkey'], $matches))
 			{

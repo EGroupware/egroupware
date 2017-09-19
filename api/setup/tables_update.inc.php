@@ -278,7 +278,7 @@ WHERE contact_jpegphoto IS NOT NULL OR contact_pubkey IS NOT NULL AND contact_pu
 			}
 			foreach(array(
 				array(addressbook_bo::$pgp_key_regexp, Api\Contacts::FILES_PGP_PUBKEY, Api\Contacts::FILES_BIT_PGP_PUBKEY, 'application/pgp-keys'),
-				array(Api\Mail\Smime::$pubkey_regexp, Api\Contacts::FILES_SMIME_PUBKEY, Api\Contacts::FILES_BIT_SMIME_PUBKEY, 'application/x-pem-file'),
+				array(Api\Mail\Smime::$certificate_regexp, Api\Contacts::FILES_SMIME_PUBKEY, Api\Contacts::FILES_BIT_SMIME_PUBKEY, 'application/x-pem-file'),
 			) as $data)
 			{
 				list($regexp, $file, $bit, $mime) = $data;
