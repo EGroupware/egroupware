@@ -251,6 +251,7 @@ class addressbook_bo extends Api\Contacts
 			{
 				$contact['pubkey'] = preg_replace($key_regexp, $key, $contact['pubkey']);
 			}
+			$contact['photo_unchanged'] = true;	// otherwise photo will be lost, because $contact['jpegphoto'] is not set
 			if ($this->check_perms(Acl::EDIT, $contact) && $this->save($contact))
 			{
 				if ($path)
@@ -283,7 +284,7 @@ class addressbook_bo extends Api\Contacts
 	 *
 	 * EMail addresses are lowercased to make search case-insensitive
 	 *
-	 * @param string|int|array $recipients (array of) email addresses or numeric account-ids
+	 * @param string|int|array $recipients (array of) email addresses or numeric account-ids or "contact:$id" for contacts by id
 	 * @param boolean $pgp true: PGP, false: S/Mime public keys
 	 * @return array email|account_id => key pairs
 	 */
@@ -293,18 +294,6 @@ class addressbook_bo extends Api\Contacts
 
 		if (!is_array($recipients)) $recipients = array($recipients);
 
-		if ($pgp)
-		{
-			$key_regexp = self::$pgp_key_regexp;
-			$criteria_filter = '%-----BEGIN PGP PUBLIC KEY BLOCK-----%';
-			$file = Api\Contacts::FILES_PGP_PUBKEY;
-		}
-		else
-		{
-			$key_regexp = Api\Mail\Smime::$certificate_regexp;
-			$criteria_filter = '%-----BEGIN CERTIFICATE-----%';
-			$file = Api\Contacts::FILES_SMIME_PUBKEY;
-		}
 		$criteria = $result = array();
 		foreach($recipients as &$recipient)
 		{
@@ -320,24 +309,50 @@ class addressbook_bo extends Api\Contacts
 		foreach($this->search($criteria, array('account_id', 'contact_email', 'contact_pubkey', 'contact_id'),
 			'', '', '', false, 'OR', false, null) as $contact)
 		{
-			$matches = null;
 			// first check for file and second for pubkey field (LDAP, AD or old SQL)
-			if (($content = @file_get_contents(Api\Link::vfs_path('addressbook', $contact['id'], $file))) &&
-				preg_match($key_regexp, $content, $matches) ||
-				preg_match($key_regexp, $contact['pubkey'], $matches))
+			if (($content = $this->get_key($contact, $pgp)))
 			{
 				$contact['email'] = strtolower($contact['email']);
 				if (empty($criteria['account_id']) || in_array($contact['email'], $recipients))
 				{
-					$result[$contact['email']] = $matches[0];
+					$result[$contact['email']] = $content;
 				}
 				else
 				{
-					$result[$contact['account_id']] = $matches[0];
+					$result[$contact['account_id']] = $content;
 				}
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * Extract PGP or S/Mime pubkey from contact array
+	 *
+	 * @param array $contact
+	 * @param boolean $pgp
+	 * @return string pubkey or NULL
+	 */
+	function get_key(array $contact, $pgp)
+	{
+		if ($pgp)
+		{
+			$key_regexp = self::$pgp_key_regexp;
+			$file = Api\Contacts::FILES_PGP_PUBKEY;
+		}
+		else
+		{
+			$key_regexp = Api\Mail\Smime::$certificate_regexp;
+			$file = Api\Contacts::FILES_SMIME_PUBKEY;
+		}
+		$matches = null;
+		if (($content = @file_get_contents(Api\Link::vfs_path('addressbook', $contact['id'], $file))) &&
+			preg_match($key_regexp, $content, $matches) ||
+			preg_match($key_regexp, $contact['pubkey'], $matches))
+		{
+			return $matches[0];
+		}
+		return null;
 	}
 
 	/**

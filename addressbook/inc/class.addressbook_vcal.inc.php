@@ -18,7 +18,7 @@ use EGroupware\Api\Link;
 /**
  * Addressbook - vCard parser
  */
-class addressbook_vcal extends Api\Contacts
+class addressbook_vcal extends addressbook_bo
 {
 	/**
 	 * product manufacturer from setSupportedFields (lowercase!)
@@ -73,6 +73,7 @@ class addressbook_vcal extends Api\Contacts
 			'UID'				=> array('uid'),
 			'REV'				=> array('modified'),
 			//'KEY' multivalued with mime-type to export PGP and S/Mime public keys
+			'KEY'               => array('pubkey'),
 			//set for Apple: 'X-ABSHOWAS'	=> array('fileas_type'),	// Horde vCard class uses uppercase prop-names!
 		);
 
@@ -310,6 +311,10 @@ class addressbook_vcal extends Api\Contacts
 						break;
 
 					case 'jpegphoto':
+						if (empty($value) && ($entry['files'] & Api\Contacts::FILES_BIT_PHOTO))
+						{
+							$value = file_get_contents(Api\Link::vfs_path('addressbook', $entry['id'], Api\Contacts::FILES_PHOTO));
+						}
 						if (!empty($value) &&
 								(($size < 0) || (strlen($value) < $size)))
 						{
@@ -328,6 +333,18 @@ class addressbook_vcal extends Api\Contacts
 						else
 						{
 							$value = '';
+						}
+						break;
+
+					case 'pubkey':	// for now we only export S/Mime publik key, as no device supports PGP
+						// https://en.wikipedia.org/wiki/VCard (search for "KEY")
+						if (($value = $this->get_key($entry, false)))
+						{
+							$options['TYPE'] = 'SMIME';
+							$options['MEDIATYPE'] = 'application/x-x509-user-cert';
+							$options['ENCODING'] = $this->version == '3.0' ? 'b' : 'BASE64';
+							$value = base64_encode($value);
+							$hasdata++;
 						}
 						break;
 
@@ -967,6 +984,19 @@ class addressbook_vcal extends Api\Contacts
 								if(in_array($vcardValues[$vcardKey]['params']['ENCODING'],array('b','B','BASE64')))
 								{
 									$contact[$fieldName] = base64_decode($contact[$fieldName]);
+								}
+								break;
+
+							case 'pubkey':
+								$content = $vcardValues[$vcardKey]['value'];
+								if(in_array($vcardValues[$vcardKey]['params']['ENCODING'],array('b','B','BASE64')))
+								{
+									$content = base64_decode($content);
+								}
+								if ($vcardValues[$vcardKey]['params']['ENCODING'] === 'SMIME')
+								{
+									// ignore re-importing of S/Mime pubkey for now, as we might be called for a new contact
+									continue;
 								}
 								break;
 
