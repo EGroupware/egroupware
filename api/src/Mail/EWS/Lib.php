@@ -893,8 +893,12 @@ class Lib
         $rows = array();
 
         while( $row = $db->row( true ) ) {
-            if ( !$move_anywhere ) 
-                $allow_from = in_array( $row['ews_folder'], $move_to );
+            if ( $row['ews_apply_permissions'] || $acc['acc_ews_apply_permissions']) {
+                if ( !$move_anywhere ) 
+                    $allow_from = in_array( $row['ews_folder'], $move_to );
+                else
+                    $allow_from = true;
+            }
             else
                 $allow_from = true;
 

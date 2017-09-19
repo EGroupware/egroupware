@@ -5,7 +5,7 @@
     <template id="mail.move_ews" template="" lang="" group="0" version="1.9.001">
         <vbox>
             <description value="Move in exchange" class="promptheader" />
-            <listbox id="folder" rows="1" tags="true" multiple="false" class="tracker_queue" empty_label="Select Folder" height="24" />
+            <listbox id="folder" rows="1" tags="true" multiple="false" class="tracker_queue" empty_label="Select Folder" height="24" width="200"/>
             <hbox>
                 <button label="Move" id="move" />
                 <button label="Copy" id="copy" />
