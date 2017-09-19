@@ -62,6 +62,16 @@ class admin_ui
 			'actions' => self::user_actions(),
 			'placeholder_actions' => array('add')
 		);
+		$content['groups'] = array(
+			'get_rows'   => 'admin_ui::get_groups',
+			'no_cat'     => true,
+			'no_filter'  => true,
+			'no_filter2' => true,
+			'row_id'     => 'account_id',
+			'actions'    => self::group_actions(),
+			'placeholder_actions' => array('add')
+		);
+
 		//$content['msg'] = 'Hi Ralf ;-)';
 		$sel_options['tree'] = $this->tree_data();
 		$sel_options['filter'] = array('' => lang('All groups'));
@@ -108,80 +118,16 @@ class admin_ui
 	 */
 	public static function tree_actions()
 	{
-		$user_actions = self::user_actions();
+		$actions = static::group_actions();
 
-		$actions = array(
-			'view' => array(
-				'onExecute' => 'javaScript:app.admin.group',
-				'caption' => 'Show members',
-				'enableId' => '^/groups/-\\d+',
-				'default' => true,
-				'group' => $group=1,
-			),
-			'add' => array(
-				'group' => $group,
-			)+$user_actions['add'],
-			'acl' => array(
-				'onExecute' => 'javaScript:app.admin.group',
-				'caption' => 'Access control',
-				'enableId' => '^/groups/-\\d+',
-				'url' => 'menuaction=admin.admin_acl.index&account_id=$id',
-				'popup' => '900x450',
-				'icon' => 'lock',
-				'group' => 2,
-			),
-		);
-		if (!$GLOBALS['egw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
+		foreach($actions as $action_id =>  &$action)
 		{
-			$actions['deny'] = array(
-				'caption'   => 'Deny access',
-				'enableId'  => '^/groups/-\\d+',
-				'url'       => 'menuaction=admin.admin_denyaccess.list_apps&account_id=$id',
-				'onExecute' => 'javaScript:app.admin.group',
-				'icon'      => 'cancel',
-				'group'     => 2,
-			);
-		}
-		$group = 5;	// allow to place actions in different groups by hook, this is the default
-		// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
-		$apps = array_unique(array_merge(array('admin'), Api\Hooks::implemented('edit_group')));
-		foreach($apps as $app)
-		{
-			$GLOBALS['menuData'] = $data = array();
-			$data = Api\Hooks::single('edit_group', $app);
-			if (!is_array($data)) $data = $GLOBALS['menuData'];
-			//error_log(__METHOD__."() app $app returned ".array2string($data));
-			foreach($data as $item)
+			if (!isset($action['enableId']) && !in_array($action_id, array('add')))
 			{
-				// allow hook to return "real" actions, but still support legacy: description, url, extradata, options
-				if (empty($item['caption']))
-				{
-					$item['caption'] = $item['description'];
-					unset($item['description']);
-				}
-				if (isset($item['url']) && isset($item['extradata']))
-				{
-					$item['url'] = $item['extradata'].'&account_id=$id';
-					$item['id'] = substr($item['extradata'], 11);
-					unset($item['extradata']);
-					$matches = null;
-					if ($item['options'] && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
-					{
-						$item['popup'] = $matches[2].'x'.$matches[3];
-						$item['onExecute'] = 'javaScript:nm_action';
-						if (isset($matches[5])) $item['tooltip'] = $matches[5];
-						unset($item['options']);
-					}
-				}
-				if (empty($item['icon'])) $item['icon'] = $app.'/navbar';
-				if (empty($item['group'])) $item['group'] = $group;
-				if (empty($item['onExecute'])) $item['onExecute'] = 'javaScript:app.admin.group';
-				if (!isset($item['allowOnMultiple'])) $item['allowOnMultiple'] = false;
-				if (!isset($item['enableId'])) $item['enableId'] = '^/groups/-\\d+';
-
-				$actions[$item['id']] = $item;
+				$action['enableId'] = '^/groups/-\\d+';
 			}
 		}
+
 		return $actions;
 	}
 
@@ -274,6 +220,90 @@ class admin_ui
 	}
 
 	/**
+	 * Actions on groups
+	 *
+	 * @return array
+	 */
+	public static function group_actions()
+	{
+		$user_actions = self::user_actions();
+		$actions = array(
+			'view' => array(
+				'onExecute' => 'javaScript:app.admin.group',
+				'caption' => 'Show members',
+				'default' => true,
+				'group' => $group=1,
+				'allowOnMultiple' => false
+			),
+			'add' => array(
+				'group' => $group,
+			)+$user_actions['add'],
+			'acl' => array(
+				'onExecute' => 'javaScript:app.admin.group',
+				'caption' => 'Access control',
+				'url' => 'menuaction=admin.admin_acl.index&account_id=$id',
+				'popup' => '900x450',
+				'icon' => 'lock',
+				'group' => 2,
+				'allowOnMultiple' => false
+			),
+		);
+		if (!$GLOBALS['egw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
+		{
+			$actions['deny'] = array(
+				'caption'   => 'Deny access',
+				'url'       => 'menuaction=admin.admin_denyaccess.list_apps&account_id=$id',
+				'onExecute' => 'javaScript:app.admin.group',
+				'icon'      => 'cancel',
+				'group'     => 2,
+				'allowOnMultiple' => false
+			);
+		}
+
+		$group = 5;	// allow to place actions in different groups by hook, this is the default
+
+		// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
+		$apps = array_unique(array_merge(array('admin'), Api\Hooks::implemented('edit_group')));
+		foreach($apps as $app)
+		{
+			$GLOBALS['menuData'] = $data = array();
+			$data = Api\Hooks::single('edit_group', $app);
+			if (!is_array($data)) $data = $GLOBALS['menuData'];
+
+			foreach($data as $item)
+			{
+				// allow hook to return "real" actions, but still support legacy: description, url, extradata, options
+				if (empty($item['caption']))
+				{
+					$item['caption'] = $item['description'];
+					unset($item['description']);
+				}
+				if (isset($item['url']) && isset($item['extradata']))
+				{
+					$item['url'] = $item['extradata'].'&account_id=$id';
+					$item['id'] = substr($item['extradata'], 11);
+					unset($item['extradata']);
+					$matches = null;
+					if ($item['options'] && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
+					{
+						$item['popup'] = $matches[2].'x'.$matches[3];
+						$item['onExecute'] = 'javaScript:nm_action';
+						if (isset($matches[5])) $item['tooltip'] = $matches[5];
+						unset($item['options']);
+					}
+				}
+				if (empty($item['icon'])) $item['icon'] = $app.'/navbar';
+				if (empty($item['group'])) $item['group'] = $group;
+				if (empty($item['onExecute'])) $item['onExecute'] = 'javaScript:app.admin.group';
+				if (!isset($item['allowOnMultiple'])) $item['allowOnMultiple'] = false;
+
+				$actions[$item['id']] = $item;
+			}
+		}
+		return $actions;
+	}
+
+	/**
 	 * Callback for nextmatch to fetch users
 	 *
 	 * @param array $query
@@ -316,6 +346,49 @@ class admin_ui
 		}
 
 		return self::$accounts->total;
+	}
+
+	/**
+	 * Callback for the nextmatch to get groups
+	 */
+	public static function get_groups(&$query, &$rows)
+	{
+		$groups = $GLOBALS['egw']->accounts->search(array(
+				'type'  => 'groups',
+				'order' => $query['order'],
+				'sort'  => $query['sort'],
+				'start' => (int)$query['start'],
+				'num_rows' => (int)$query['num_rows']
+			));
+
+		$apps = array();
+		foreach($GLOBALS['egw_info']['apps'] as $app => $data)
+		{
+			if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
+			{
+				continue;	// do NOT show disabled apps, or our API (status = 3)
+			}
+
+			$apps[] = $app;
+		}
+
+		$rows = array();
+		foreach($groups as &$group)
+		{
+			$run_rights = $GLOBALS['egw']->acl->get_user_applications($group['account_id'], false, false);
+			foreach($apps as $app)
+			{
+				if((boolean)$run_rights[$app])
+				{
+					$group['apps'][] = $app;
+				}
+			}
+
+			$group['members'] = $GLOBALS['egw']->accounts->members($group['account_id'],true);
+			$rows[] = $group;
+		}
+
+		return $GLOBALS['egw']->accounts->total;
 	}
 
 	/**

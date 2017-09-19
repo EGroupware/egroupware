@@ -235,3 +235,164 @@ function api_upgrade16_9_001()
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.002';
 }
 
+
+/**
+ * Add contact_files bit-field and strip jpeg photo, PGP & S/Mime pubkeys from table
+ *
+ * @return string
+ */
+function api_upgrade16_9_002()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook','contact_files',array(
+		'type' => 'int',
+		'precision' => '1',
+		'default' => '0',
+		'comment' => '&1: photo, &2: pgp, &4: smime'
+	));
+
+	$junk_size = 100;
+	$total = 0;
+	Api\Vfs::$is_root = true;
+	do {
+		$n = 0;
+		foreach($GLOBALS['egw_setup']->db->query("SELECT contact_id,contact_jpegphoto,contact_pubkey
+FROM egw_addressbook
+WHERE contact_jpegphoto IS NOT NULL OR contact_pubkey IS NOT NULL AND contact_pubkey LIKE '%-----%'",
+			__LINE__, __FILE__, 0, $junk_size, false, Api\Db::FETCH_ASSOC) as $row)
+		{
+			$row['contact_files'] = 0;
+			$contact_id = $row['contact_id'];
+			unset($row['contact_id']);
+			if ($row['contact_jpegphoto'] && ($fp = Api\Vfs::string_stream($row['contact_jpegphoto'])))
+			{
+				if (Api\Link::attach_file('addressbook', $contact_id, array(
+					'name' => Api\Contacts::FILES_PHOTO,
+					'type' => 'image/jpeg',
+					'tmp_name' => $fp,
+				)))
+				{
+					$row['contact_files'] |= Api\Contacts::FILES_BIT_PHOTO;
+					$row['contact_jpegphoto'] = null;
+				}
+				fclose($fp);
+			}
+			foreach(array(
+				array(addressbook_bo::$pgp_key_regexp, Api\Contacts::FILES_PGP_PUBKEY, Api\Contacts::FILES_BIT_PGP_PUBKEY, 'application/pgp-keys'),
+				array(Api\Mail\Smime::$certificate_regexp, Api\Contacts::FILES_SMIME_PUBKEY, Api\Contacts::FILES_BIT_SMIME_PUBKEY, 'application/x-pem-file'),
+			) as $data)
+			{
+				list($regexp, $file, $bit, $mime) = $data;
+				$matches = null;
+				if ($row['contact_pubkey'] && preg_match($regexp, $row['contact_pubkey'], $matches) &&
+					($fp = Api\Vfs::string_stream($matches[0])))
+				{
+					if (Api\Link::attach_file('addressbook', $contact_id, array(
+						'name' => $file,
+						'type' => $mime,
+						'tmp_name' => $fp,
+					)))
+					{
+						$row['contact_files'] |= $bit;
+						$row['contact_pubkey'] = str_replace($matches[0], '', $row['contact_pubkey']);
+					}
+					fclose($fp);
+				}
+			}
+			if (!trim($row['contact_pubkey'])) $row['contact_pubkey'] = null;
+
+			if ($row['contact_files'])
+			{
+				$GLOBALS['egw_setup']->db->update('egw_addressbook', $row, array('contact_id' => $contact_id), __LINE__, __FILE__);
+				$total++;
+			}
+			$n++;
+		}
+	}
+	while($n == $junk_size);
+	Api\Vfs::$is_root = false;
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.003';
+}
+
+/**
+ * Drop contact_jpegphoto column
+ *
+ * @return string
+ */
+function api_upgrade16_9_003()
+{
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_addressbook',array(
+		'fd' => array(
+			'contact_id' => array('type' => 'auto','nullable' => False),
+			'contact_tid' => array('type' => 'char','precision' => '1','default' => 'n'),
+			'contact_owner' => array('type' => 'int','meta' => 'account','precision' => '8','nullable' => False,'comment' => 'account or group id of the adressbook'),
+			'contact_private' => array('type' => 'int','precision' => '1','default' => '0','comment' => 'privat or personal'),
+			'cat_id' => array('type' => 'ascii','meta' => 'category','precision' => '255','comment' => 'Category(s)'),
+			'n_family' => array('type' => 'varchar','precision' => '64','comment' => 'Family name'),
+			'n_given' => array('type' => 'varchar','precision' => '64','comment' => 'Given Name'),
+			'n_middle' => array('type' => 'varchar','precision' => '64'),
+			'n_prefix' => array('type' => 'varchar','precision' => '64','comment' => 'Prefix'),
+			'n_suffix' => array('type' => 'varchar','precision' => '64','comment' => 'Suffix'),
+			'n_fn' => array('type' => 'varchar','precision' => '128','comment' => 'Full name'),
+			'n_fileas' => array('type' => 'varchar','precision' => '255','comment' => 'sort as'),
+			'contact_bday' => array('type' => 'varchar','precision' => '12','comment' => 'Birtday'),
+			'org_name' => array('type' => 'varchar','precision' => '128','comment' => 'Organisation'),
+			'org_unit' => array('type' => 'varchar','precision' => '64','comment' => 'Department'),
+			'contact_title' => array('type' => 'varchar','precision' => '64','comment' => 'jobtittle'),
+			'contact_role' => array('type' => 'varchar','precision' => '64','comment' => 'role'),
+			'contact_assistent' => array('type' => 'varchar','precision' => '64','comment' => 'Name of the Assistent (for phone number)'),
+			'contact_room' => array('type' => 'varchar','precision' => '64','comment' => 'room'),
+			'adr_one_street' => array('type' => 'varchar','precision' => '64','comment' => 'street (business)'),
+			'adr_one_street2' => array('type' => 'varchar','precision' => '64','comment' => 'street (business) - 2. line'),
+			'adr_one_locality' => array('type' => 'varchar','precision' => '64','comment' => 'city (business)'),
+			'adr_one_region' => array('type' => 'varchar','precision' => '64','comment' => 'region (business)'),
+			'adr_one_postalcode' => array('type' => 'varchar','precision' => '64','comment' => 'postalcode (business)'),
+			'adr_one_countryname' => array('type' => 'varchar','precision' => '64','comment' => 'countryname (business)'),
+			'contact_label' => array('type' => 'text','comment' => 'currently not used'),
+			'adr_two_street' => array('type' => 'varchar','precision' => '64','comment' => 'street (private)'),
+			'adr_two_street2' => array('type' => 'varchar','precision' => '64','comment' => 'street (private) - 2. line'),
+			'adr_two_locality' => array('type' => 'varchar','precision' => '64','comment' => 'city (private)'),
+			'adr_two_region' => array('type' => 'varchar','precision' => '64','comment' => 'region (private)'),
+			'adr_two_postalcode' => array('type' => 'varchar','precision' => '64','comment' => 'postalcode (private)'),
+			'adr_two_countryname' => array('type' => 'varchar','precision' => '64','comment' => 'countryname (private)'),
+			'tel_work' => array('type' => 'varchar','precision' => '40','comment' => 'phone-number (business)'),
+			'tel_cell' => array('type' => 'varchar','precision' => '40','comment' => 'mobil phone (business)'),
+			'tel_fax' => array('type' => 'varchar','precision' => '40','comment' => 'fax-number (business)'),
+			'tel_assistent' => array('type' => 'varchar','precision' => '40','comment' => 'phone-number assistent'),
+			'tel_car' => array('type' => 'varchar','precision' => '40'),
+			'tel_pager' => array('type' => 'varchar','precision' => '40','comment' => 'pager'),
+			'tel_home' => array('type' => 'varchar','precision' => '40','comment' => 'phone-number (private)'),
+			'tel_fax_home' => array('type' => 'varchar','precision' => '40','comment' => 'fax-number (private)'),
+			'tel_cell_private' => array('type' => 'varchar','precision' => '40','comment' => 'mobil phone (private)'),
+			'tel_other' => array('type' => 'varchar','precision' => '40','comment' => 'other phone'),
+			'tel_prefer' => array('type' => 'varchar','precision' => '32','comment' => 'prefered phone-number'),
+			'contact_email' => array('type' => 'varchar','precision' => '128','comment' => 'email address (business)'),
+			'contact_email_home' => array('type' => 'varchar','precision' => '128','comment' => 'email address (private)'),
+			'contact_url' => array('type' => 'varchar','precision' => '128','comment' => 'website (business)'),
+			'contact_url_home' => array('type' => 'varchar','precision' => '128','comment' => 'website (private)'),
+			'contact_freebusy_uri' => array('type' => 'ascii','precision' => '128','comment' => 'freebusy-url for calendar of the contact'),
+			'contact_calendar_uri' => array('type' => 'ascii','precision' => '128','comment' => 'url for users calendar - currently not used'),
+			'contact_note' => array('type' => 'varchar','precision' => '8192','comment' => 'notes field'),
+			'contact_tz' => array('type' => 'varchar','precision' => '8','comment' => 'timezone difference'),
+			'contact_geo' => array('type' => 'ascii','precision' => '32','comment' => 'currently not used'),
+			'contact_pubkey' => array('type' => 'ascii','precision' => '16384','comment' => 'public key'),
+			'contact_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of the creation'),
+			'contact_creator' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'account id of the creator'),
+			'contact_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'timestamp of the last modified'),
+			'contact_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'account id of the last modified'),
+			'account_id' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'account id'),
+			'contact_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag of the changes'),
+			'contact_uid' => array('type' => 'ascii','precision' => '128','comment' => 'unique id of the contact'),
+			'adr_one_countrycode' => array('type' => 'ascii','precision' => '2','comment' => 'countrycode (business)'),
+			'adr_two_countrycode' => array('type' => 'ascii','precision' => '2','comment' => 'countrycode (private)'),
+			'carddav_name' => array('type' => 'ascii','precision' => '128','comment' => 'name part of CardDAV URL, if specified by client'),
+			'contact_files' => array('type' => 'int','precision' => '1','default' => '0','comment' => '&1: photo, &2: pgp, &4: smime')
+		),
+		'pk' => array('contact_id'),
+		'fk' => array(),
+		'ix' => array('contact_owner','cat_id','n_fileas','contact_modified','contact_uid','carddav_name',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
+		'uc' => array('account_id')
+	),'contact_jpegphoto');
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.004';
+}
