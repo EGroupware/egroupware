@@ -687,6 +687,7 @@ class Mail_EWS extends Mail
             $row['ews_is_default'] = (int) $row['ews_is_default'];
             $row['ews_apply_permissions'] = (int) $row['ews_apply_permissions'];
             $row['ews_move_anywhere'] = (int) $row['ews_move_anywhere'];
+            $row['ews_move_to'] = explode(',', $row['ews_move_to'] );
             $final[] = $row;
             $used[] = $row['ews_folder'];
         }

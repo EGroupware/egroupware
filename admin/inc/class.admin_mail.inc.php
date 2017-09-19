@@ -1432,11 +1432,12 @@ class admin_mail
 
         if ( $content['save'] || $content['apply'] ) {
             $res = Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
-            if ( $res ) {
-                $msg = lang('Operation Successful');
+            $msg = lang('Operation Successful');
+            if ( $res && $content['save'] ) {
                 Framework::message( $msg );
                 Framework::window_close();
             }
+            $content['msg'] = $msg;
         }
 
         $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
