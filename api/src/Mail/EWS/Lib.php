@@ -147,7 +147,7 @@ class Lib
         try {
             $response = $ews->GetItem($request);	
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             // Unknown error with some newsletters. Fall back to text
             if ( $e->getMessage() == 'looks like we got no XML document') {
                 $request->ItemShape->BodyType = DT\BodyTypeResponseType::TEXT;	    		
