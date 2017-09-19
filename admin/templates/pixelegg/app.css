@@ -36,6 +36,11 @@ body {
 #admin_iframe {
   background-color: white;
 }
+/** Group list */
+#admin-index_groups div.innerContainer {
+  overflow: auto;
+  max-height: 5em;
+}
 tr.adminAccountInactive .adminStatus {
   color: red;
 }
