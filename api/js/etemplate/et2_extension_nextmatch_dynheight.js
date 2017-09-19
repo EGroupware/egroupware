@@ -81,6 +81,9 @@ var et2_dynheight = (function(){ "use strict"; return Class.extend(
 					);
 					continue;
 				}
+				// Ignore other hidden nodes
+				if(!this.bottomNodes[i].is(':visible')) continue;
+
 				// Get height, top and bottom and calculate the maximum/minimum
 				var bh = this.bottomNodes[i].outerHeight(true);
 				var bt = this.bottomNodes[i].offset().top;
