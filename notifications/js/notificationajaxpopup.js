@@ -126,6 +126,8 @@
 	notifications.prototype.display = function() {
 		// list container
 		var $egwpopup_list = jQuery("#egwpopup_list");
+		// clear the list
+		$egwpopup_list.empty();
 		// define time label deviders
 		var $today = jQuery(document.createElement('div'))
 					.addClass('egwpopup_time_label')
