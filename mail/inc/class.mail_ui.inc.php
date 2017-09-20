@@ -1203,7 +1203,7 @@ class mail_ui
             'group' => $group,
             'allowOnMultiple' => true,
             'nm_action' => 'popup',
-            'popup' => '400x600',
+            'popup' => '500x600',
             'url' => 'menuaction=mail.mail_ui.moveEWS&id=$row_id',
             'enableClass' => 'is_ews',
             'hideOnDisabled' => true,
@@ -2325,7 +2325,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
             $move = ( $content['move'] ? true : false );
             $messageUIDs = array();
             foreach( $ids as $uid ) {
-                list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $ids[0]);
+                list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $uid);
                 $messageUIDs[] = $message_uid;
             }
             $res = $this->mail_bo->moveMessages( $content['folder'], $messageUIDs, $move, $folderName );

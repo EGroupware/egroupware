@@ -569,7 +569,7 @@ class Mail_EWS extends Mail
             }
             catch (\Exception $e ) {
                 $operation = ( $deleteAfterMove ? 'Moving' : 'Copying' );
-                throw new Exception("$operation to Folder $foldername failed! Error:".$e->getMessage());
+                throw new Exception("$operation to Folder $_foldername failed! Error:".$e->getMessage());
             }
         }
 
