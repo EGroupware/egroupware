@@ -32,9 +32,7 @@ class EWS
 	function __construct(array $params, $_timeout=null)
 	{
 		$this->ImapServerId = $params['acc_id'];
-        $this->params['acc_imap_username'] = $params['acc_imap_username'];
-        $this->params['acc_imap_password'] = $params['acc_imap_password'];
-        $this->params['acc_imap_host'] = $params['acc_imap_host'];
+        $this->params = $params;
         $this->params['version'] = static::VERSION;
 	}
 	function getCurrentMailbox()
@@ -175,7 +173,8 @@ class EWS
         return static::DESCRIPTION;
     }
     function isSecureConnection() {
-        return false;
+        // if ssl=0, then connection insecure
+        return ( $this->params['acc_imap_ssl'] );
     }
     function login() {
         EWS\Lib::login( $this->params );

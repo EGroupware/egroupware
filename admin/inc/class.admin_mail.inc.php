@@ -280,9 +280,6 @@ class admin_mail
 			$content['acc_imap_host'] = $host;
 			// by default we check SSL, STARTTLS and at last an insecure connection
 			if (!is_array($data)) $data = array('TLS' => 993, 'SSL' => 993, 'STARTTLS' => 143, 'insecure' => 143);
-            //EWS
-            if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
-                $data = array('SSL' => 443);
 
 			foreach($data as $ssl => $port)
 			{
@@ -1476,7 +1473,8 @@ class admin_mail
 	{
         //EWS: Instantiate different object
         if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
-            return new Mail\EWS($content);
+            $class = $content['acc_imap_type'];
+            return new $class($content);
         }
         else {
             return new Horde_Imap_Client_Socket(array(
