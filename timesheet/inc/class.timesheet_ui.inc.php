@@ -823,7 +823,14 @@ class timesheet_ui extends timesheet_bo
 		$rows['no_cat_id'] = (!$have_cats || $query['cat_id']);
 		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
 		$rows['no_owner_col'] = $query['no_owner_col'];
-		if (!$rows['no_owner_col'] && $query['selectcols'] && !strpos($query['selectcols'],'ts_owner')) $rows['no_owner_col'] = 1;
+		if(is_string($query['selectcols']))
+		{
+			$query['selectcols'] = explode(',', $query['selectcols']);
+		}
+		if (!$rows['no_owner_col'] && $query['selectcols'] && !in_array('ts_owner', $query['selectcols']))
+		{
+			$rows['no_owner_col'] = 1;
+		}
 
 		$rows += $this->summary;
 
