@@ -88,11 +88,12 @@ class Mail_EWS extends Mail
     }
 	function appendMessage($_folderId, $_header, $_body, $_flags='\\Recent')
 	{
+        $folderId = $this->getFolderId( $_folderId );
         // After Message is Sent, store mail (contained as stream in _header) to 'Sent Folder' (from config) _folderId
         $raw = stream_get_contents( $_header );
         $mime = base64_encode( $raw );
 
-        return Lib::createMail( $this->profileID, $_folderId, $mime );
+        return Lib::createMail( $this->profileID, $folderId, $mime );
 	}
     function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no') {
         // Delete messages after checking for specitic folder permissions

@@ -1233,7 +1233,7 @@ class admin_mail
                 $sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
                 $sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
                 $sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
-                    Api\Mail\EWS\Lib::getFoldersSelOptions( $content['acc_id'] );
+                    Api\Mail\EWS\Lib::getFoldersSelOptions( $content['acc_id'], true );
 			}
 			catch(Exception $e) {
 				if (self::$debug) _egw_log_exception($e);

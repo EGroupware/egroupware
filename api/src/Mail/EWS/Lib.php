@@ -393,13 +393,17 @@ class Lib
         return $folder;
     }
 
-    static function getFoldersSelOptions( $profile ) {		
+    static function getFoldersSelOptions( $profile, $names_only = false ) {		
         if ( !$profile ) return array();
 
         $folders = self::getSettingsFolders( $profile );
         $final = array();
-        foreach ( $folders as $folder ) 
-            $final[ $folder['id'] ] = $folder['name'];
+        foreach ( $folders as $folder )  {
+            if ( !$names_only )
+                $final[ $folder['id'] ] = $folder['name'];
+            else
+                $final[ $folder['name'] ] = $folder['name'];
+        }
 
         return $final;
     }
@@ -491,6 +495,15 @@ class Lib
 
     static function moveMail( $profile, $Id, $ChangeKey, $toFolder, $move = true ) {
         $ews = self::init( $profile );
+
+        // Translate folder ID if needed
+        if ( strlen( $toFolder != 120 ) ) {
+            $folderName = $toFolder;
+            $folders = self::getFolders( $profile );
+            $toFolder = array_search( $folders, $folderName );
+            if ( !$toFolder )
+                throw new \Exception( "Specified folder $folderName was not found in your profile" );
+        }
 
         $request = new DT\BaseMoveCopyItemType();
         $request->ToFolderId = new DT\TargetFolderIdType();
