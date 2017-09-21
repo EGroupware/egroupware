@@ -204,6 +204,7 @@ class Mail_EWS extends Mail
                 'cid' => $cid,
                 'partID' => $attachment->AttachmentId->Id,
                 'name' => $attachment->Name,
+                'folder' => 'foo',
             );
         }
         return $attachments;
