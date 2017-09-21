@@ -273,7 +273,7 @@ app.classes.infolog = AppJS.extend(
 				nm.dataview.getColumnMgr().columns[i].set_visibility(colData[i].visible);
 			}
 			nm.dataview.getColumnMgr().updated = true;
-			
+
 			// Update page - set update_in_progress to true to avoid triggering
 			// the change handler and looping if the user has a custom field
 			// column change
@@ -667,7 +667,7 @@ app.classes.infolog = AppJS.extend(
 			extras.link_id = ids;
 			break;
 		}
-		
+
 		egw.open("","timesheet","list", extras, 'timesheet');
 	},
 
@@ -695,89 +695,6 @@ app.classes.infolog = AppJS.extend(
 	submit_if_not_empty: function(_node, _widget)
 	{
 		if (_widget.get_value()) this.et2._inst.submit();
-	},
-
-	/**
-	 * Insert text at the cursor position (or end) of a text field
-	 *
-	 * @param {et2_inputWidget|string} widget Either a widget object or it's ID
-	 * @param {string} text [text=timestamp username] Text to insert
-	 */
-	insert_text: function(widget, text)
-	{
-		if(typeof widget == 'string')
-		{
-			et2 = etemplate2.getById('infolog-edit');
-			if(et2)
-			{
-				widget = et2.widgetContainer.getWidgetById(widget);
-			}
-		}
-		if(!widget || !widget.input)
-		{
-			return;
-		}
-
-		if(!text)
-		{
-			var now = new Date();
-			text = date(egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i")+' ',now);
-
-			// Get properly formatted user name
-			var user = parseInt(egw.user('account_id'));
-			var accounts = egw.accounts('accounts');
-			for(var j = 0; j < accounts.length; j++)
-			{
-				if(accounts[j].value === user)
-				{
-					text += accounts[j].label;
-					break;
-				}
-			}
-			text += ': ';
-		}
-
-		var input = widget.input[0];
-		var scrollPos = input.scrollTop;
-		var browser = ((input.selectionStart || input.selectionStart == "0") ?
-			"standards" : (document.selection ? "ie" : false ) );
-
-		var pos = 0;
-
-		// Find cursor or selection
-		if (browser == "ie")
-		{
-			input.focus();
-			var range = document.selection.createRange();
-			range.moveStart ("character", -input.value.length);
-			pos = range.text.length;
-		}
-		else if (browser == "standards")
-		{
-			pos = input.selectionStart;
-		};
-
-		// Insert the text
-		var front = (input.value).substring(0, pos);
-		var back = (input.value).substring(pos, input.value.length);
-		input.value = front+text+back;
-
-		// Clean up a little
-		pos = pos + text.length;
-		if (browser == "ie") {
-			input.focus();
-			var range = document.selection.createRange();
-			range.moveStart ("character", -input.value.length);
-			range.moveStart ("character", pos);
-			range.moveEnd ("character", 0);
-			range.select();
-		}
-		else if (browser == "standards") {
-			input.selectionStart = pos;
-			input.selectionEnd = pos;
-			input.focus();
-		}
-		input.scrollTop = scrollPos;
 	},
 
 	/**
@@ -876,7 +793,7 @@ app.classes.infolog = AppJS.extend(
 				responsible.set_value(data.data.info_responsible);
 			}
 		}
-		
+
 		nm_open_popup(_action, _selected);
 	},
 
