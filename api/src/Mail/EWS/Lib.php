@@ -497,11 +497,11 @@ class Lib
         $ews = self::init( $profile );
 
         // Translate folder ID if needed
-        if ( strlen( $toFolder != 120 ) ) {
+        if ( strlen( $toFolder ) < 50 ) {
             $folderName = $toFolder;
             $folders = self::getFolders( $profile );
-            $toFolder = array_search( $folders, $folderName );
-            if ( !$toFolder )
+            $toFolder = array_search( $folderName, $folders);
+            if ( $toFolder === FALSE)
                 throw new \Exception( "Specified folder $folderName was not found in your profile" );
         }
 
