@@ -2781,11 +2781,8 @@ class calendar_ical extends calendar_boupdate
 							break;
 					}
 					break;
-				case 'EXDATE':
-					if (!$attributes['value']) break;
-					if ((isset($attributes['params']['VALUE'])
-							&& $attributes['params']['VALUE'] == 'DATE') ||
-						(!isset($attributes['params']['VALUE']) && $isDate))
+				case 'EXDATE':	// current Horde_Icalendar returns dates, no timestamps
+					if ($attributes['values'])
 					{
 						$days = array();
 						$hour = date('H', $vcardData['start']);
@@ -2802,10 +2799,6 @@ class calendar_ical extends calendar_boupdate
 								$day['year']);
 						}
 						$vcardData['recur_exception'] = array_merge($vcardData['recur_exception'], $days);
-					}
-					else
-					{
-						$vcardData['recur_exception'] = array_merge($vcardData['recur_exception'], $attributes['values']);
 					}
 					break;
 				case 'SUMMARY':
