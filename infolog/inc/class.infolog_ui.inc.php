@@ -1787,32 +1787,9 @@ class infolog_ui
 						Framework::refresh_opener($content['msg'],'infolog',$info_id,$operation);
 					}
 					$content['tabs'] = $active_tab;
-					//try to keep the project manager link if the intenstion is only to remove contact
-					if ($old['info_link']['app'] == 'projectmanager' && $old['info_link']['id'] = $content['pm_id'])
-					{
-						Link::link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
-					}
-					if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
-					{
-						//echo "<p>pm_id changed: $content[old_pm_id] -> $content[pm_id]</p>\n";
-						// update links accordingly, if selected project changed
-						if ($content['pm_id'])
-						{
-							//echo "<p>this->link->link('infolog',{$content['link_to']['to_id']},'projectmanager',{$content['pm_id']});</p>";
-							Link::link('infolog',$info_id,'projectmanager',$content['pm_id']);
-							// making the project the selected link, if no other link selected
-							if (!$info_link_id || $info_link_id == 'projectmanager:'.$content['old_pm_id'])
-							{
-								$info_link_id = 'projectmanager:'.$content['pm_id'];
-							}
-						}
-						if ($content['old_pm_id'])
-						{
-							//echo "<p>this->link->unlink2(0,infolog,{$content['link_to']['to_id']},0,'projectmanager',{$content['old_pm_id']});</p>\n";
-							Link::unlink2(0,infolog,$content['link_to']['to_id'],0,'projectmanager',$content['old_pm_id']);
-						}
-						$content['old_pm_id'] = $content['pm_id'];
-					}
+
+					$pm_links = Link::get_links('infolog',$content['info_id'],'projectmanager');
+
 					$content['link_to']['to_app'] = 'infolog';
 					$content['link_to']['to_id'] = $info_id;
 
@@ -2182,7 +2159,7 @@ class infolog_ui
 		$content['info_anz_subs'] = (int)$content['info_anz_subs'];	// gives javascript error if empty!
 
 		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
-		if (!isset($content['pm_id']) && $old_pm_id) $content['pm_id'] = $old_pm_id;
+		unset($content['old_pm_id']);
 
 		if ($info_id && $this->bo->history)
 		{
@@ -2256,14 +2233,15 @@ class infolog_ui
 		//echo "<p>infolog_ui.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 		//$content['info_cc'] is expected (by the widget) to be an array of emailaddresses, but is stored as comma separated string
 		if (!empty($content['info_cc'])&&!is_array($content['info_cc']))$content['info_cc'] = explode(',',$content['info_cc']);
-		$this->tmpl->exec('infolog.infolog_ui.edit',$content,$sel_options,$readonlys,$preserv+array(	// preserved values
+		$preserve = array_merge( $preserv, array(	// preserved values
 			'info_id'       => $info_id,
 			'action'        => $action,
 			'action_id'     => $action_id,
 			'referer'       => $referer,
 			'no_popup'      => $no_popup,
 			'old_pm_id'     => $old_pm_id,
-		),$no_popup ? 0 : 2);
+		));
+		$this->tmpl->exec('infolog.infolog_ui.edit',$content,$sel_options,$readonlys,$preserve,$no_popup ? 0 : 2);
 	}
 
 	/**
