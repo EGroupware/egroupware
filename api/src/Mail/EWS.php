@@ -200,6 +200,10 @@ class EWS
 	{
 		return "/";
 	}
+	function openMailbox($mailbox)
+	{
+		return true;
+	}
 	function getNameSpaceArray()
 	{
         return array();

@@ -133,11 +133,16 @@ class Mail_EWS extends Mail
                         $messages .= $validation['messages'];
                 }
             }
+            $method = $methodMap[ $_forceDeleteMethod ];
+
+            // If in Trash folder, hard Delete
+            if ( $_folder == $this->getTrashFolder() )
+                $method = 'HardDelete'; 
 
             if ( !$allowed )
 				throw new Exception("Deleting Mail failed! $messages");
             try {
-                Lib::DeleteMail( $this->profileID, $mailID, $methodMap[ $_forceDeleteMethod ]);
+                Lib::DeleteMail( $this->profileID, $mailID, $method );
             }
             catch (\Exception $e ) {
 				throw new Exception("Deleting Mail failed! Error:".$e->getMessage());
@@ -754,7 +759,7 @@ class Mail_EWS extends Mail
     }
     function getJunkFolder($_checkexistance=TRUE)
     {
-        return $this->getSpecialFolder('acc_folder_trash');
+        return $this->getSpecialFolder('acc_folder_junk');
     }
     function getDraftFolder($_checkexistance=TRUE)
     {
