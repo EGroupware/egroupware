@@ -3116,6 +3116,36 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
+	 * Callback for vfs-upload widgets for PGP and S/Mime pubkey
+	 *
+	 * @param array $file
+	 * @param string $widget_id
+	 * @param Api\Etemplate\Request $request eT2 request eg. to access attribute $content
+	 * @param Api\Json\Response $response
+	 */
+	public function pubkey_uploaded(array $file, $widget_id, Api\Etemplate\Request $request, Api\Json\Response $response)
+	{
+		//error_log(__METHOD__."(".array2string($file).", ...) widget_id=$widget_id, id=".$request->content['id'].", files=".$request->content['files']);
+		unset($file, $response);	// not used, but required by function signature
+		list(,,$path) = explode(':', $widget_id);
+		$bit = $path === Api\Contacts::FILES_PGP_PUBKEY ? Api\Contacts::FILES_BIT_PGP_PUBKEY : Api\Contacts::FILES_BIT_SMIME_PUBKEY;
+		if (!($request->content['files'] & $bit) && $this->check_perms(Acl::EDIT, $request->content))
+		{
+			$content = $request->content;
+			$content['files'] |= $bit;
+			$content['photo_unchanged'] = true;	// hint no need to store photo
+			if ($this->save($content))
+			{
+				$changed = array_diff_assoc($content, $request->content);
+				//error_log(__METHOD__."() changed=".array2string($changed));
+				$request->content = $content;
+				// need to update preserv, as edit stores content there too and we would get eg. an contact modified error when trying to store
+				$request->preserv = array_merge($request->preserv, $changed);
+			}
+		}
+	}
+
+	/**
 	 * download photo of the given ($_GET['contact_id'] or $_GET['account_id']) contact
 	 */
 	function photo()
