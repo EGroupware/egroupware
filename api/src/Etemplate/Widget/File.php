@@ -18,7 +18,20 @@ use EGroupware\Api;
 
 /**
  * eTemplate file upload widget
+ *
  * Uses AJAX to send file(s) to server, and stores for submit
+ *
+ * There is an attribute "callback" for a server-side callback in acm notification with the following signature:
+ *
+ * 	/**
+ *	 * Callback for file or vfs-upload widgets
+ *	 *
+ *	 * @param array $file
+ *	 * @param string $widget_id
+ *	 * @param Api\Etemplate\Request $request eT2 request eg. to access attribute $content
+ *	 * @param Api\Json\Response $response
+ *	 *|
+ *  function upload_callback(array $file, $widget_id, Api\Etemplate\Request $request, Api\Json\Response $response)
  */
 class File extends Etemplate\Widget
 {
@@ -48,11 +61,13 @@ class File extends Etemplate\Widget
 	 *
 	 * @note Currently, no attempt is made to clean up files automatically.
 	 */
-	public static function ajax_upload() {
+	public static function ajax_upload()
+	{
 		$response = Api\Json\Response::get();
 		$request_id = str_replace(' ', '+', rawurldecode($_REQUEST['request_id']));
 		$widget_id = $_REQUEST['widget_id'];
-		if(!self::$request = Etemplate\Request::read($request_id)) {
+		if(!self::$request = Etemplate\Request::read($request_id))
+		{
 			$response->error("Could not read session");
 			return;
 		}
@@ -70,12 +85,20 @@ class File extends Etemplate\Widget
 		foreach ($_FILES as $field => &$files)
 		{
 			$widget = $template->getElementById($widget_id ? $widget_id : $field);
-			if($widget && $widget->attrs['mime']) {
+			$matches = null;
+			// vfs-upload widget used id "app:$cont[id]:path", with $cont[id] replaces by actual id
+			if (!$widget && preg_match('/^([^:]+):(\d+):(.*)$/', $widget_id, $matches))
+			{
+				$widget = $template->getElementById($matches[1].':$cont[id]:'.$matches[3]);
+			}
+			if($widget && $widget->attrs['mime'])
+			{
 				$mime = $widget->attrs['mime'];
 			}
 
 			// Check for legacy [] in id to indicate multiple - it changes format
-			if(is_array($files['name'])) {
+			if(is_array($files['name']))
+			{
 				$file_list = array();
 				foreach($files as $f_field => $values)
 				{
@@ -93,24 +116,20 @@ class File extends Etemplate\Widget
 				// Just one file
 				static::process_uploaded_file($field, $files, $mime, $file_data);
 			}
+			// Check for a callback, call it if there is one
+			if ($widget)
+			{
+				$callback = $widget->attrs['callback'];
+				if(!$callback) $callback = $template->getElementAttribute($field, 'callback');
+				if($callback)
+				{
+					ExecMethod2($callback, $_FILES[$field], $widget_id, self::$request, $response);
+				}
+			}
 		}
 
 		// Set up response
 		$response->data($file_data);
-
-		// Check for a callback, call it if there is one
-		foreach($_FILES as $field => $file)
-		{
-			if(($element = $template->getElementById($field)))
-			{
-				$callback = $element->attrs['callback'];
-				if(!$callback) $callback = $template->getElementAttribute($field, 'callback');
-				if($callback)
-				{
-					ExecMethod($callback, $_FILES[$field]);
-				}
-			}
-		}
 	}
 
 	/**
