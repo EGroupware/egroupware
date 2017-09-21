@@ -141,12 +141,17 @@ class Mail_EWS extends Mail
 
             if ( !$allowed )
 				throw new Exception("Deleting Mail failed! $messages");
+
             try {
-                Lib::DeleteMail( $this->profileID, $mailID, $method );
+                if ( $method == 'MoveToDeletedItems' && $this->getTrashFolder() )
+                    Lib::moveMail( $this->profileID, $mailID, $changeKey, $this->getTrashFolder() );
+                else
+                    Lib::DeleteMail( $this->profileID, $mailID, $method );
             }
             catch (\Exception $e ) {
 				throw new Exception("Deleting Mail failed! Error:".$e->getMessage());
             }
+
         }
 
         return true;
