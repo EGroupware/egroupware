@@ -89,6 +89,7 @@ class Mail_EWS extends Mail
 	function appendMessage($_folderId, $_header, $_body, $_flags='\\Recent')
 	{
         $folderId = $this->getFolderId( $_folderId );
+
         // After Message is Sent, store mail (contained as stream in _header) to 'Sent Folder' (from config) _folderId
         $raw = stream_get_contents( $_header );
         $mime = base64_encode( $raw );
@@ -265,9 +266,7 @@ class Mail_EWS extends Mail
         // Get Folder Tree to display. Used in mail_tree    
         $efolders = Lib::getTreeFolders( $this->profileID );
         $foldersList = array();
-        $ids = array();
         foreach ( $efolders as $folder ) {
-            $ids[ $folder['name'] ] = $folder['id'];
             $foldersList[ $folder['name'] ] = array(
                 'MAILBOX'	=>	$folder['name'] ,
                 'ATTRIBUTES'	=>	array(
@@ -285,6 +284,12 @@ class Mail_EWS extends Mail
                 )
             );				
         }
+
+        $ids = array();
+        $all = Lib::getSettingsFolders( $this->profileID );
+        foreach( $all as $folder )
+            $ids[ $folder['name'] ] = $folder['id'];
+
         Api\Cache::setSession('mail', $this->profileID.'::ews_folder_ids', $ids );
         return $foldersList;
     }	

@@ -89,6 +89,8 @@ class Lib
     static function createMail( $profile, $folderID, $mime ) {
         $ews = self::init( $profile );
 
+        $folderID = self::getActualFolderId( $profile, $folderID );
+
         $request = new DT\CreateItemType();
         $request->MessageDisposition = 'SaveOnly';
 
@@ -496,14 +498,7 @@ class Lib
     static function moveMail( $profile, $Id, $ChangeKey, $toFolder, $move = true ) {
         $ews = self::init( $profile );
 
-        // Translate folder ID if needed
-        if ( strlen( $toFolder ) < 50 ) {
-            $folderName = $toFolder;
-            $folders = self::getFolders( $profile );
-            $toFolder = array_search( $folderName, $folders);
-            if ( $toFolder === FALSE)
-                throw new \Exception( "Specified folder $folderName was not found in your profile" );
-        }
+        $toFolder = self::getActualFolderId( $profile, $toFolder );
 
         $request = new DT\BaseMoveCopyItemType();
         $request->ToFolderId = new DT\TargetFolderIdType();
@@ -550,7 +545,7 @@ class Lib
             throw new \Exception( $msg );
 
 
-        return $msg;
+        return array('status' => $status, 'msg' => $msg);
     }
 
     static function getInbox( $ews ) {
@@ -979,6 +974,17 @@ class Lib
             return DT\DistinguishedFolderIdNameType::MESSAGE_FOLDER_ROOT;    		
         else 
             return DT\DistinguishedFolderIdNameType::PUBLIC_FOLDERS_ROOT; 			
+    }
+
+    static function getActualFolderId( $profile, $folder ) {
+        if ( strlen( $folder ) < 50 ) {
+            $folderName = $folder;
+            $folders = self::getFolders( $profile );
+            $folder = array_search( $folderName, $folders);
+            if ( $folder === FALSE)
+                throw new \Exception( "Specified folder $folderName was not found in your profile" );
+        }
+        return $folder;
     }
 
     static function renameFolderDB( $profile, $folderID, $name ) {
