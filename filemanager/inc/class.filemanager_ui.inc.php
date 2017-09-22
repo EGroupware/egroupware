@@ -161,7 +161,7 @@ class filemanager_ui
 				'onExecute' => 'javaScript:app.filemanager.createdir'
 			),
 			'mail' => array(
-				'caption' => lang('Mail files'),
+				'caption' => lang('Share files'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
 				'children' => array(
@@ -1460,6 +1460,12 @@ class filemanager_ui
 				$arr['uploaded'] = $selected;
 				$arr['path'] = $dir;
 				$arr['props'] = $props;
+				break;
+
+			case 'sharelink':
+				$share = Vfs\Sharing::create($selected, Vfs\Sharing::READONLY, basename($selected), array() );
+				$arr["share_link"] = $link = Vfs\Sharing::share2link($share);
+				$arr["template"] = Api\Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet');
 				break;
 
 			// Upload, then link
