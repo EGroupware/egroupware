@@ -1,5 +1,6 @@
 egroupware-epl (16.1.20170922) hardy; urgency=low
 
+  * IMPORTANT: repository signing key changed to new build@egroupware.org key to support Debian 9 (you need to import it!)
   * Filemanager: added share-link feature to filemanager context menu
   * Calendar: Week view with multiple users now keeps date heading at the top
   * Calendar: Add preference to view month as a time grid, same as other views
