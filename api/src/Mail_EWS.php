@@ -285,7 +285,7 @@ class Mail_EWS extends Mail
                 )
             );				
         }
-        Api\Cache::setSession('mail', 'ews_folder_ids', $ids );
+        Api\Cache::setSession('mail', $this->profileID.'::ews_folder_ids', $ids );
         return $foldersList;
     }	
     function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true) {
@@ -671,10 +671,10 @@ class Mail_EWS extends Mail
         $newFolderName = ( $_parent ? "$_parent/$_folderName" : $_folderName );
 
         // Update Session
-        $ids = Api\Cache::getSession('mail', 'ews_folder_ids' );
+        $ids = Api\Cache::getSession('mail', $this->profileID.'::ews_folder_ids' );
         unset( $ids[ $_oldFolderName ] );
         $ids[ $newFolderName ] = $folderID;
-        Api\Cache::setSession('mail', 'ews_folder_ids', $ids );
+        Api\Cache::setSession('mail', $this->profileID.'::ews_folder_ids' , $ids );
 
         // Update DB
         Lib::renameFolderDB( $this->profileID, $folderID, $newFolderName );
@@ -756,7 +756,7 @@ class Mail_EWS extends Mail
     }
     
     function getFolderId( $_folderName ) {
-        $ids = Api\Cache::getSession('mail', 'ews_folder_ids' );
+        $ids = Api\Cache::getSession('mail', $this->profileID.'::ews_folder_ids' );
         $folderID = ( $ids[ $_folderName ] ? $ids[ $_folderName ] : $_folderName );
         $folderID  = str_replace(' ','+', $folderID );
 
