@@ -112,6 +112,9 @@ class Mail_EWS extends Mail
         if ( $_messageUID == 'all' ) 
             $_messageUID = Lib::getMailIds( $this->profileID, $folderID );
 
+        if ( !is_array( $_messageUID ) )
+            $_messageUID = array( $_messageUID );
+
         $messages = '';
         foreach( $_messageUID as $message ) {
             list($mailID, $changeKey) = explode( '||', $message );
