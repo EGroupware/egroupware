@@ -1145,23 +1145,38 @@ class Link extends Link\Storage
 
 		if ($app)
 		{
-			if( isset(self::$app_register[$app]) ) {
+			if( isset(self::$app_register[$app]) ) 
+			{
 				$reg = self::$app_register[$app];
 
-				if( isset($reg['file_dir']) ) {
+				if( isset($reg['file_dir']) ) 
+				{
 					$app = $reg['file_dir'];
 				}
 			}
 
-			$path .= '/'.$app;
-
-			if ($id)
+			if ( Hooks::exists( 'vfs_create_structure', $app ) ) 
 			{
-				$path .= '/'.$id;
-
-				if ($file)
+				$hook = Hooks::process( array(
+					'location' => 'vfs_create_structure', 
+					'app' => $app,
+					'path' => $path,
+					'id' => $id,
+					'file' => $file,
+				));
+				$path = $hook[ $app ];
+			}
+			else 
+			{
+				$path .= '/'.$app;
+				if ($id) 
 				{
-					$path .= '/'.$file;
+					$path .= '/'.$id;
+
+					if ($file) 
+					{
+						$path .= '/'.$file;
+					}
 				}
 			}
 		}

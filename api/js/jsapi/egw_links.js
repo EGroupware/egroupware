@@ -146,7 +146,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			{
 				if (typeof _path.path == 'undefined')
 				{
-					path = '/apps/'+_path.app2+'/'+_path.id2+'/'+_path.id;
+					path = app[ this.getAppName() ].getVfsPath( _path );
 				}
 				else
 				{

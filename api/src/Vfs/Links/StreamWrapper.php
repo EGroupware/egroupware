@@ -86,6 +86,18 @@ class StreamWrapper extends LinksParent
 
 		list(,$apps,$app,$id,$rel_path) = explode('/',$path,5);
 
+		if ( Api\Hooks::exists( 'vfs_read_structure', $app ) ) 
+		{
+			$hook = Api\Hooks::process( array(
+				'location' => 'vfs_read_structure', 
+				'url' => $url,
+				'app' => $app,
+				'id' => $id,
+				'rel_path' => $rel_path,
+			));
+			$id = $hook[ $app ];
+		}
+
 		if ($apps != 'apps')
 		{
 			$access = false;							// no access to anything, but /apps

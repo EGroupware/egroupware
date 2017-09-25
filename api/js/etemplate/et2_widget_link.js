@@ -1701,7 +1701,12 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 			if(link_data.app == 'file')
 			{
 				// File info is always the same
-				var url = '/apps/'+link_data.app2+'/'+link_data.id2+'/'+decodeURIComponent(link_data.id);
+				var path = {
+					id: decodeURIComponent(link_data.id),
+					id2: link_data.id2,
+					app2: link_data.app2,
+				}
+				var url = app[ path.app2 ].getVfsPath( path );
 				if(typeof url == 'string' && url.indexOf('webdav.php'))
 				{
 					// URL is url to file in webdav, so get rid of that part
