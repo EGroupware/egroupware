@@ -300,7 +300,7 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 
-	
+
 
 
 	/**
@@ -771,7 +771,7 @@ app.classes.filemanager = AppJS.extend(
 		{
 			mime_dom.click();
 		}
-		else if (_action.id == 'modify' && mime && data.data.mime.match(mime.mime_odf_regex))
+		else if (mime && this.isEditable(_action, _senders))
 		{
 			egw.open_link(egw.link('/index.php', {
 				menuaction: 'filemanager.filemanager_ui.editor',
@@ -1161,7 +1161,7 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 
-	/** 
+	/**
   	 * share-link callback
 	 */
 
@@ -1171,10 +1171,10 @@ app.classes.filemanager = AppJS.extend(
 
 		var copy_link_to_clipboard = null;
 
-		var copy_link_to_clipboard = function(evt){ 
+		var copy_link_to_clipboard = function(evt){
 			var $target = jQuery(evt.target);
 			$target.select();
-			
+
 			console.log("share_link click");
 
 			try {
@@ -1192,9 +1192,9 @@ app.classes.filemanager = AppJS.extend(
 		jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
 
                 var dialog = et2_createWidget("dialog",{
-                        callback: function( button_id, value){ 
+                        callback: function( button_id, value){
 			 	jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
-				return true; 
+				return true;
 			},
                         title: "Share",
                         template: _data.template,
