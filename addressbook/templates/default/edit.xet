@@ -178,11 +178,11 @@
 							</row>
 							<row valign="top">
 								<description value="SMIME key"/>
-								<vfs-upload id="addressbook:$cont[id]:.files/smime-pubkey.crt" accept=".crt,.pem,application/x-x509-ca-cert,application/x-x509-user-cert" mime="/application\/x-x509-(ca|user)-cert/"/>
+								<vfs-upload id="addressbook:$cont[id]:.files/smime-pubkey.crt" accept=".crt,.pem,application/x-x509-ca-cert,application/x-x509-user-cert" mime="/application\/x-x509-(ca|user)-cert/" callback="addressbook.addressbook_ui.pubkey_uploaded"/>
 							</row>
 							<row valign="top">
 								<description value="PGP key"/>
-								<vfs-upload id="addressbook:$cont[id]:.files/pgp-pubkey.asc" accept=".asc,application/pgp-keys" mime="application/pgp-keys"/>
+								<vfs-upload id="addressbook:$cont[id]:.files/pgp-pubkey.asc" accept=".asc,application/pgp-keys" mime="application/pgp-keys" callback="addressbook.addressbook_ui.pubkey_uploaded"/>
 							</row>
 							<row valign="top">
 								<description for="pubkey" value="Public key"/>

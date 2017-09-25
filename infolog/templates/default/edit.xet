@@ -187,7 +187,7 @@
 				</row>
 				<row class="et2_toolbar">
 					<description id="spacer" span="5"/>
-					<buttononly statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" background_image="1" image="timestamp" onclick="app.infolog.insert_text('info_des');"/>
+					<timestamper statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"/>
 					<buttononly statustext="Encrypt description" id="encrypt" class="infologExtraButton infologEncrypt" background_image="1" image="lock" onclick="app.infolog.toggleEncrypt"/>
 				</row>
 				<row>

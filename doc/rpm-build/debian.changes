@@ -1,3 +1,34 @@
+egroupware-epl (16.1.20170922) hardy; urgency=low
+
+  * IMPORTANT: repository signing key changed to new build@egroupware.org key to support Debian 9 (you need to import it!)
+  * Filemanager: added share-link feature to filemanager context menu
+  * Calendar: Week view with multiple users now keeps date heading at the top
+  * Calendar: Add preference to view month as a time grid, same as other views
+  * Calendar: Fix bug where recurring events were moved to server time when adding a recurrence exception
+  * Calendar: Add placeholder for birthdays {{day/birthdays}} for day table
+  * Calendar: Fix events were not displayed if you clicked 'today' in sidebox, then month view
+  * Calendar: Fix edit via emailed notification link did not work properly
+  * Calendar: Fix default alarm does not get changed relatively to the selected start time when creating new event
+  * Calendar: Fix month overflow bug when scrolling prev / next
+  * Calendar/CalDAV: do not report non-participants as busy or conflict
+  * CalDAV: Alarms on recurring events are lost when snoozing alarm or reloading event after 1. recurrence of alarm
+  * CalDAV: Fix not parsed recurrence exceptions
+  * LDAP/Mail: Fix new accounts did not automatic enable mail account
+  * Mail/ActiveDirectory: Fix empty identity in mail compose and account not active in AD controled mail-server
+  * Univention: Fix setup configuration does not allow to store Univention as account backend
+  * Admin/EMail: allow admins to always add arbitrary aliases, even if not allowed for regular user
+  * Timesheet: Fix bug where user column dissapears if you have custom fields and resize a column
+  * Timesheet: Fix bug where editing entries from disabled users changed the user
+  * Mail: fix cursor jumping at the end of textarea in compose while switching from subject
+  * Mail: Fix preferred identity in compose dialog never get selected
+  * Mail: Fix vacation notice disappears when switching folders
+  * Addressbook: Fix tel_prefer statustext to be translated field label instead of field name
+  * Addressbook: Fix favorites that included a selected organisation did not get correctly applied
+  * Addressbook: Fix broken tel_prefered link
+  * KnowledgeBase: fix links to other articles reload whole framework
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 22 Sep 2017 08:56:09 +0200
+
 egroupware-epl (16.1.20170703) hardy; urgency=low
 
   * Univention: forwarding mails to external addresses added in UCS 4.2

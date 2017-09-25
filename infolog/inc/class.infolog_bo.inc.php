@@ -494,6 +494,7 @@ class infolog_bo
 
 		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $info['old_pm_id'];
 		if (!isset($info['pm_id']) && $old_pm_id) $info['pm_id'] = $old_pm_id;
+		return $old_pm_id;
 	}
 
 	/**
@@ -978,7 +979,7 @@ class infolog_bo
 				Link::link('infolog',$info_id,$to_write['link_to']['to_id']);
 				$values['link_to']['to_id'] = $info_id;
 			}
-				$this->write_check_links($to_write);
+			$this->write_check_links($to_write);
 			if(!$values['info_link_id'] || $values['info_link_id'] != $to_write['info_link_id'])
 			{
 				// Just got a link ID, need to save it
@@ -988,6 +989,7 @@ class infolog_bo
 				$values['info_from'] = $to_write['info_from'];
 				$this->link_id2from($values);
 			}
+			$values['pm_id'] = $to_write['pm_id'];
 
 			if (($info_from_set = ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from']))))
 			{
@@ -1143,6 +1145,12 @@ class infolog_bo
 				{
 					$values['info_link_id'] = $link_id;
 				}
+			}
+			else
+			{
+				// Project removed, but primary link is not to project
+				Link::unlink(0,'infolog',$values['info_id'],0,'projectmanager',$values['old_pm_id']);
+				$values['pm_id'] = null;
 			}
 		}
 		if ($old_link_id && $old_link_id != $values['info_link_id'])

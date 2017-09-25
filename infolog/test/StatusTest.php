@@ -106,7 +106,7 @@ class StatusTest extends \EGroupware\Api\AppTest
 		{
 			$info["info_{$field}"] = $value;
 		}
-		
+
 		// Skipping notifications
 		$this->bo->write($info, true, true, true, true);
 
@@ -120,10 +120,11 @@ class StatusTest extends \EGroupware\Api\AppTest
 			$this->assertEquals($value, $saved["info_{$field}"],
 					"$test_name failed on '$field' field");
 		}
-		
+
 		// Remove infolog under test
 		if($this->info_id)
 		{
+			$this->bo->delete($this->info_id, False, False, True);
 			$this->bo->delete($this->info_id, False, False, True);
 		}
 	}
@@ -172,7 +173,7 @@ class StatusTest extends \EGroupware\Api\AppTest
 	 */
 	public function testCustomStatus()
 	{
-		
+
 		$this->checkOne(
 				array('status' => 'custom', 'percent' => 10),
 				array('status' => 'ongoing'),

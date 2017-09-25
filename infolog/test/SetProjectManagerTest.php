@@ -56,6 +56,8 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		if($this->info_id)
 		{
 			$this->bo->delete($this->info_id, False, False, True);
+			// One more time for history
+			$this->bo->delete($this->info_id, False, False, True);
 		}
 
 		// Remove the test project
@@ -181,6 +183,57 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		// Check infolog has pm_id properly set
 		$this->assertEquals($this->pm_id, $info['pm_id']);
+
+		// Force links to run notification now so we get valid testing - it
+		// usually waits until Egw::on_shutdown();
+		Api\Link::run_notifies();
+
+		// Check project
+		$this->checkElements();
+	}
+
+	/**
+	 * Test adding a project to an infolog that has a contact (link to addressbook) set
+	 */
+	public function testLinkContact()
+	{
+		// Saving the infolog should try to send a notification
+		$this->bo->tracking->expects($this->once())
+                ->method('track')
+				->with($this->callback(function($subject) { return $subject['pm_id'] == $this->pm_id;}));
+
+		$info = $this->getTestInfolog();
+
+		// Set up the test - just set info_contact
+		$info['info_contact'] = array(
+			'app'    =>	'addressbook',
+			// Linking to current user's contact
+			'id'     =>	$GLOBALS['egw_info']['user']['person_id'],
+		);
+
+		// Set project by pm_id
+		$info['pm_id'] = $this->pm_id;
+
+		$this->info_id = $this->bo->write($info);
+		$this->assertArrayHasKey('info_id', $info, 'Could not make test entry');
+		$this->assertThat($this->info_id,
+			$this->logicalAnd(
+				$this->isType('integer'),
+				$this->greaterThan(0)
+			)
+		);
+
+		// Now load it again
+		$info = $this->bo->read($this->info_id);
+
+		// Check infolog still has pm_id
+		$this->assertEquals($this->pm_id, $info['pm_id'], 'Project went missing');
+
+		// Check that infolog still has contact
+		$this->assertArraySubset(
+				array('app' => 'addressbook', 'id' =>$GLOBALS['egw_info']['user']['person_id']),
+				$info['info_contact']
+		);
 
 		// Force links to run notification now so we get valid testing - it
 		// usually waits until Egw::on_shutdown();

@@ -1419,7 +1419,7 @@ ORDER BY cal_user_type, cal_usre_id
 			if (!is_null($etag)) $where['cal_etag'] = $etag;
 
 			unset($event['cal_etag']);
-			$event[] = 'cal_etag=cal_etag+1';	// always update the etag, even if none given to check
+			$event[] = 'cal_etag=COALESCE(cal_etag,0)+1';	// always update the etag, even if none given to check
 
 			$this->db->update($this->cal_table,$event,$where,__LINE__,__FILE__,'calendar');
 
@@ -1436,12 +1436,12 @@ ORDER BY cal_user_type, cal_usre_id
 
 			if (!$event['cal_id'] && !isset($event['cal_uid'])) $event['cal_uid'] = '';	// uid is NOT NULL!
 
+			$event['cal_etag'] = $etag = 0;
 			$this->db->insert($this->cal_table,$event,false,__LINE__,__FILE__,'calendar');
 			if (!($cal_id = $this->db->get_last_insert_id($this->cal_table,'cal_id')))
 			{
 				return false;
 			}
-			$etag = 0;
 		}
 		$update = array();
 		// event without uid or not strong enough uid
