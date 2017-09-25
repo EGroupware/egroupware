@@ -1115,6 +1115,7 @@ class mail_ui
 				'group' => $group,
 				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
+				'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 65, 'caption' => 'Ctrl + Shift + A'),
 			),
 			'forward' => array(
 				'caption' => 'Forward',
@@ -1128,6 +1129,7 @@ class mail_ui
 						'hint' => 'forward inline',
 						'onExecute' => 'javaScript:app.mail.mail_compose',
 						'allowOnMultiple' => false,
+						'shortcut' => array('ctrl' => true, 'keyCode' => 70, 'caption' => 'Ctrl + F'),
 						'toolbarDefault' => true
 					),
 					'forwardasattach' => array(
