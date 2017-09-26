@@ -243,6 +243,7 @@ class addressbook_ui extends addressbook_bo
 				/* old negative list
 				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner,room',*/
 				'filter2_onchange' => "return app.addressbook.filter2_onchange();",
+				'filter2_tags'	=> true,
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
