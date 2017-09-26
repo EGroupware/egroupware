@@ -668,10 +668,11 @@ class HTTP_WebDAV_Server
         }
 
         // analyze request payload
-        $propinfo = new _parse_propfind("php://input", $this->store_request);
+        $propinfo = new _parse_propfind("php://input", $this->store_request, $handler);
         if ($this->store_request) $this->request = $propinfo->request;
-        if (!$propinfo->success) {
-            $this->http_status("400 Error");
+        if ($propinfo->error) {
+            $this->http_status("400 Bad Request");
+			if (method_exists($this, 'log')) $this->log('Error parsing propfind: '.$propinfo->error);
             return;
         }
 		$options['root'] = $propinfo->root;
