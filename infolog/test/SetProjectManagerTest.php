@@ -316,6 +316,84 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->checkElements();
 	}
 
+	public function testChangeProject()
+	{
+		// Saving the infolog should try to send a notification
+		$this->bo->tracking->expects($this->exactly(2))
+                ->method('track')
+				->will($this->returnCallback(function($subject) { return $subject['pm_id'] == $this->pm_id;}));
+
+		$info = $this->getTestInfolog();
+
+		// Set up the test - set info_contact
+		$info['info_contact'] = array(
+			'app'    =>	'addressbook',
+			// Linking to current user's contact
+			'id'     =>	$GLOBALS['egw_info']['user']['person_id'],
+		);
+		// Set up the test - set pm_id
+		$info['pm_id'] = $this->pm_id;
+
+		$this->info_id = $this->bo->write($info);
+		$this->assertThat($this->info_id,
+			$this->logicalAnd(
+				$this->isType('integer'),
+				$this->greaterThan(0)
+			)
+		);
+
+		// Check infolog has pm_id properly set
+		$this->assertEquals($this->pm_id, $info['pm_id']);
+
+		// Force links to run notification now so we get valid testing - it
+		// usually waits until Egw::on_shutdown();
+		Api\Link::run_notifies();
+
+		// Now load it again
+		$info = $this->bo->read($this->info_id);
+
+		// Check infolog still has pm_id
+		$this->assertEquals($this->pm_id, $info['pm_id'], 'Project went missing');
+
+		// Now create a new project
+		$first_pm_id = $this->pm_id;
+		$this->pm_bo->data = array();
+		$this->makeProject('2');
+		$info['old_pm_id'] = $first_pm_id;
+		$info['pm_id'] = $this->pm_id;
+		$this->bo->write($info);
+
+		// Check infolog has pm_id properly set
+		$this->assertEquals($this->pm_id, $info['pm_id']);
+
+		// Force links to run notification now so we get valid testing - it
+		// usually waits until Egw::on_shutdown();
+		Api\Link::run_notifies();
+
+		// Now load it again
+		$info = $this->bo->read($this->info_id);
+
+		try {
+			// Check infolog has pm_id properly set
+			$this->assertEquals($this->pm_id, $info['pm_id'], 'Project did not change');
+
+			// Check project
+			$this->checkElements();
+
+			// Check links (should be only 1)
+			$pm_links = Api\Link::get_links('infolog',$this->info_id,'projectmanager');
+			$this->assertEquals(1, count($pm_links));
+		}
+		finally
+		{
+			// Delete new
+			$this->deleteProject();
+
+			// Reset for cleanup
+			$this->pm_id = $first_pm_id;
+		}
+	}
+
 	public function testClearProject()
 	{
 		// Saving the infolog should try to send a notification
@@ -433,10 +511,10 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	/**
 	 * Make a project so we can test deleting it
 	 */
-	protected function makeProject()
+	protected function makeProject($pm_number = '')
 	{
 		$project = array(
-			'pm_number'         =>	'TEST',
+			'pm_number'         =>	'TEST' . ($pm_number ? " $pm_number" : ''),
 			'pm_title'          =>	'Auto-test for ' . $this->getName(),
 			'pm_status'         =>	'active',
 			'pm_description'    =>	'Test project for ' . $this->getName()
