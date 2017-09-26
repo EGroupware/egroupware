@@ -277,6 +277,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 	 * @returns {Boolean}
 	 */
 	click: function(_ev) {
+		if (this.clicked) return;
 		this.clicked = true;
 
 		if (!this._super.apply(this, arguments))
@@ -285,12 +286,6 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 			return false;
 		}
 
-		// Submit the form
-		if (this._type != "buttononly")
-		{
-			this.getInstanceManager().submit(this); //TODO: this only needs to be passed if it's in a datagrid
-		}
-		this.clicked = false;
 		return true;
 	},
 
