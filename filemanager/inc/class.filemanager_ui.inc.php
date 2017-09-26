@@ -116,6 +116,24 @@ class filemanager_ui
 	}
 
 	/**
+	 * Method to build select options out of actions
+	 * @param type $actions
+	 * @return type
+	 */
+	public static function convertActionsToselOptions ($actions)
+	{
+		$sel_options = array ();
+		foreach ($actions as $action => $value)
+		{
+			$sel_options[$action] = array (
+				'label' => $value['caption'],
+				'icon'	=> $value['icon']
+			);
+		}
+		return $sel_options;
+	}
+
+	/**
 	 * Context menu
 	 *
 	 * @return array
@@ -138,32 +156,9 @@ class filemanager_ui
 					'document' => array (
 						'caption' => 'Document',
 						'icon' => 'new',
-						'onExecute' => 'javaScript:app.filemanager.editor_new',
+						'onExecute' => 'javaScript:app.filemanager.create_new',
 					)
 				)
-			),
-			'saveas' => array(
-				'caption' => lang('Save as'),
-				'group' => $group,
-				'allowOnMultiple' => true,
-				'icon' => 'filesave',
-				'onExecute' => 'javaScript:app.filemanager.force_download',
-				'disableClass' => 'isDir',
-				'enabled' => 'javaScript:app.filemanager.is_multiple_allowed'
-			),
-			'saveaszip' => array(
-				'caption' => lang('Save as ZIP'),
-				'group' => $group,
-				'allowOnMultiple' => true,
-				'icon' => 'save_zip',
-				'postSubmit' => true
-			),
-			'edit' => array(
-				'caption' => lang('Edit settings'),
-				'group' => $group,
-				'allowOnMultiple' => false,
-				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
-				'mobileViewTemplate' => 'file?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/filemanager/templates/mobile/file.xet'))
 			),
 			'mkdir' => array(
 				'caption' => lang('Create directory'),
@@ -171,6 +166,13 @@ class filemanager_ui
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'onExecute' => 'javaScript:app.filemanager.createdir'
+			),
+			'edit' => array(
+				'caption' => lang('Edit settings'),
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.filemanager.viewEntry':'javaScript:app.filemanager.editprefs',
+				'mobileViewTemplate' => 'file?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/filemanager/templates/mobile/file.xet'))
 			),
 			'mail' => array(
 				'caption' => lang('Share files'),
@@ -185,6 +187,24 @@ class filemanager_ui
 						'order' => 11,
 						'onExecute' => 'javaScript:app.filemanager.share_link'
 					)),
+			),
+			'saveas' => array(
+				'caption' => lang('Save as'),
+				'group' => $group,
+				'allowOnMultiple' => true,
+				'icon' => 'filesave',
+				'onExecute' => 'javaScript:app.filemanager.force_download',
+				'disableClass' => 'isDir',
+				'enabled' => 'javaScript:app.filemanager.is_multiple_allowed',
+				'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 83, 'caption' => 'Ctrl + Shift + S'),
+			),
+			'saveaszip' => array(
+				'caption' => lang('Save as ZIP'),
+				'group' => $group,
+				'allowOnMultiple' => true,
+				'icon' => 'save_zip',
+				'postSubmit' => true,
+				'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 90, 'caption' => 'Ctrl + Shift + Z'),
 			),
 			'egw_paste' => array(
 				'enabled' => false,
@@ -546,6 +566,9 @@ class filemanager_ui
 			'5' => 'Files from links',
 			'0'  => 'Files from subdirectories',
 		);
+
+		$sel_options['new'] = self::convertActionsToselOptions($content['nm']['actions']['new']['children']);
+
 		// sharing has no divAppbox, we need to set popupMainDiv instead, to be able to drop files everywhere
 		if (substr($_SERVER['SCRIPT_FILENAME'], -10) == '/share.php')
 		{

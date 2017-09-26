@@ -102,6 +102,13 @@ app.classes.filemanager = AppJS.extend(
 			this.set_readonly.apply(this, this.readonly);
 			delete this.readonly;
 		}
+
+		if (name == 'filemanager.index')
+		{
+			var new_options = this.et2.getArrayMgr('sel_options').getEntry('new');
+			var new_widget =  this.et2.getWidgetById('new');
+			new_widget.set_select_options(new_options);
+		}
 	},
 
 	/**
@@ -1263,15 +1270,6 @@ app.classes.filemanager = AppJS.extend(
 	},
 
 	/**
-	 * Method to create a new document
-	 */
-	editor_new: function () {
-		egw.open_link(egw.link('/index.php', {
-			menuaction: 'filemanager.filemanager_ui.editor'
-		}), '', egw.link_get_registry('filemanager','view_popup'));
-	},
-
-	/**
 	 * Function to check wheter selected file is editable. ATM only .odt is supported.
 	 *
 	 * @param {object} _egwAction egw action object
@@ -1285,5 +1283,19 @@ app.classes.filemanager = AppJS.extend(
 			mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 
 		return data.data.mime.match(mime.mime_odf_regex)?true:false;
+	},
+
+	/**
+	 * Method to create a new document
+	 * @param {object} _action either action or node
+	 * @param {object} _selected either widget or selected row
+	 *
+	 * @return {boolean} returns true
+	 */
+	create_new: function (_action, _selected) {
+		egw.open_link(egw.link('/index.php', {
+			menuaction: 'filemanager.filemanager_ui.editor'
+		}), '', egw.link_get_registry('filemanager','view_popup'));
+		return true;
 	}
 });

@@ -109,10 +109,6 @@ table.egwGridView_grid .tile .file_tile {
   font-weight: bold;
   width: 98%;
 }
-.selectPathContainer {
-  width: 470px;
-  overflow: auto;
-}
 .selectName input {
   width: 100%;
 }
@@ -219,6 +215,13 @@ div.editInfoMarker {
 #filemanager-index_nm .et2_file div.progress {
   position: absolute;
 }
+#filemanager-index_new_wrapper {
+  float: left;
+  margin-right: 6px;
+}
+#filemanager-index_new_wrapper .ui-icon-triangle-1-s {
+  background-position: 0px -192px;
+}
 /*/*****************************************************************
 // sidebar
 
@@ -250,15 +253,6 @@ table.egwGridView_grid img {
   background-color: #FFFFFF;
   height: auto;
   width: 24px;
-}
-#filemanager-select .dialogHeader .selectPathContainer {
-  overflow: auto;
-  width: 470px;
-  margin-top: 0px;
-  height: 32px;
-}
-#filemanager-select .dialogHeader .selectPathContainer input {
-  height: 20px;
 }
 #filemanager-select #filemanager-select_apps {
   background-color: #d9d9d9;
@@ -407,6 +401,12 @@ div#stylite-filemanager-upload .dialogFooterToolbar button:active {
   -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+#filemanager-index_new_wrapper .ui-icon-triangle-1-s {
+  background-image: url(../../../pixelegg/images/add.png);
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 /* tablets and smartphones  */
 @media all {
