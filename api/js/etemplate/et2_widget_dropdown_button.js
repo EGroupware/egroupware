@@ -277,7 +277,6 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 	 * @returns {Boolean}
 	 */
 	click: function(_ev) {
-		if (this.clicked) return;
 		this.clicked = true;
 
 		if (!this._super.apply(this, arguments))
@@ -285,7 +284,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 			this.clicked = false;
 			return false;
 		}
-
+		this.clicked = false;
 		return true;
 	},
 
@@ -299,7 +298,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 
 		// Move the parent's handler to the button, or we can't tell the difference between the clicks
 		jQuery(this.node).unbind("click.et2_baseWidget");
-		this.button.bind("click.et2_baseWidget", this, function(e) {
+		this.button.off().bind("click.et2_baseWidget", this, function(e) {
 			return e.data.click.call(e.data, this);
 		});
 	},
