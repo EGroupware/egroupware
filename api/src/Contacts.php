@@ -1882,7 +1882,7 @@ class Contacts extends Contacts\Storage
 
 			// Merge distribution lists
 			$lists = $this->read_distributionlist(array($contact['id']));
-			foreach($lists as $list_id => $list_name)
+			foreach($lists[$contact['id']] as $list_id => $list_name)
 			{
 				parent::add2list($target['id'], $list_id);
 			}
