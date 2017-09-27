@@ -68,6 +68,16 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		$contact_owner = isset( $_definition->plugin_options['contact_owner'] ) ?
 			$_definition->plugin_options['contact_owner'] : $this->user;
 
+		// Check to make sure target addressbook is valid
+		if(!in_array($contact_owner, array_keys($this->bocontacts->get_addressbooks(Api\Acl::ADD))))
+		{
+			$this->warnings[0] = lang("Unable to import into %1, using %2",
+				$contact_owner . ' ('.Api\Accounts::username($record->owner) . ')',
+				Api\Accounts::username($this->user)
+			);
+			$contact_owner = 'personal';
+		}
+
 		// Import into importer's personal addressbook
 		if($contact_owner == 'personal')
 		{

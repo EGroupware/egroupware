@@ -120,6 +120,10 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 
 			$bocontacts = new Api\Contacts();
 			$sel_options['contact_owner'] = array('personal' => lang("Importer's personal")) + $bocontacts->get_addressbooks(Acl::ADD);
+			if(!in_array($content['contact_owner'], $sel_options['contact_owner']))
+			{
+				$sel_options['contact_owner'][$content['contact_owner']] = lang("'%1' is not allowed ('%2')!", $content['contact_owner'], implode(',',array_keys($sel_options['contact_owner'])));
+			}
 			if(!in_array('owner', $content['field_mapping'])) {
 				$content['no_owner_map'] = true;
 			}
