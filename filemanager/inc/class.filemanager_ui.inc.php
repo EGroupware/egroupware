@@ -1618,7 +1618,7 @@ class filemanager_ui
 				'caption' => 'New',
 				'icon' => 'add',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.filemanager.editor_new',
+				'onExecute' => 'javaScript:app.filemanager.create_new',
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
 			),
