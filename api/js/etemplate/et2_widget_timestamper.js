@@ -68,7 +68,7 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 	},
 
 	_insert_text: function() {
-		var text = "";
+		var text = "\n";
 		var now = new Date();
 		text += date(egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i")+' ',now);
 
@@ -91,6 +91,7 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 			"standards" : (document.selection ? "ie" : false ) );
 
 		var pos = 0;
+		var CK = CKEDITOR && CKEDITOR.instances[input.id] || false;
 
 		// Find cursor or selection
 		if (browser == "ie")
@@ -105,36 +106,37 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 			pos = input.selectionStart;
 		};
 
-		// Insert the text
-		var front = (input.value).substring(0, pos);
-		var back = (input.value).substring(pos, input.value.length);
-		input.value = front+text+back;
-
 		// If CKEDitor, update it
 		if(CKEDITOR && CKEDITOR.instances[input.id])
 		{
+			CKEDITOR.instances[input.id].insertText(text);
 			window.setTimeout(function() {
 				CKEDITOR.instances[input.id].focus();
 			}, 10);
 		}
 		else
 		{
-		// Clean up a little
-		pos = pos + text.length;
-		if (browser == "ie") {
-			input.focus();
-			var range = document.selection.createRange();
-			range.moveStart ("character", -input.value.length);
-			range.moveStart ("character", pos);
-			range.moveEnd ("character", 0);
-			range.select();
-		}
-		else if (browser == "standards") {
-			input.selectionStart = pos;
-			input.selectionEnd = pos;
-			input.focus();
-		}
-		input.scrollTop = scrollPos;
+			// Insert the text
+			var front = (input.value).substring(0, pos);
+			var back = (input.value).substring(pos, input.value.length);
+			input.value = front+text+back;
+
+			// Clean up a little
+			pos = pos + text.length;
+			if (browser == "ie") {
+				input.focus();
+				var range = document.selection.createRange();
+				range.moveStart ("character", -input.value.length);
+				range.moveStart ("character", pos);
+				range.moveEnd ("character", 0);
+				range.select();
+			}
+			else if (browser == "standards") {
+				input.selectionStart = pos;
+				input.selectionEnd = pos;
+				input.focus();
+			}
+			input.scrollTop = scrollPos;
 		}
 	},
 
