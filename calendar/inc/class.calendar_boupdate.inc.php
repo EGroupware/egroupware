@@ -1826,6 +1826,7 @@ class calendar_boupdate extends calendar_bo
 		$link_arr['view'] = array(	'menuaction' => 'calendar.calendar_uiforms.edit',
 									'cal_id' => $event['id'],
 									'date' => $eventStart_arr['full'],
+									'ajax' => true
 									);
 		$link_arr['popup'] = '750x400';
 		$details['link_arr'] = $link_arr;
