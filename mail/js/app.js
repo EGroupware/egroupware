@@ -234,9 +234,6 @@ app.classes.mail = AppJS.extend(
 				}
 				var that = this;
 				var plainText = this.et2.getWidgetById('mail_plaintext');
-				// set cursor to the begining of the textarea only for first focus
-				if (plainText) plainText.getDOMNode().setSelectionRange(0,0);
-
 				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();
@@ -288,12 +285,11 @@ app.classes.mail = AppJS.extend(
 				// Set focus on To/body field
 				// depending on To field value
 				var to = this.et2.getWidgetById('to');
+				var content = this.et2.getArrayMgr('content').data;
 				if (to && to.get_value() && to.get_value() != '')
 				{
-					var content = this.et2.getArrayMgr('content').data;
 					if (content.is_plain)
 					{
-						var plainText = this.et2.getWidgetById('mail_plaintext');
 						// focus
 						jQuery(plainText.node).focus();
 						// get the cursor to the top of the textarea
@@ -309,6 +305,12 @@ app.classes.mail = AppJS.extend(
 				else if(to)
 				{
 					jQuery('input',to.node).focus();
+					// set cursor to the begining of the textarea only for first focus
+					if (content.is_plain
+						&& typeof plainText.node.setSelectionRange !='undefined')
+					{
+						plainText.node.setSelectionRange(0,0);
+					}
 				}
 				break;
 			case 'mail.subscribe':
