@@ -271,10 +271,31 @@ span.ui-icon-search {
 
 /*###########################################*/
 /*Dialog: edit row*/
-
+.ui-widget-overlay {
+	background: @gray_20;
+}
+.ui-dialog {
+	box-shadow: -2px 1px 9px 3px @gray_30;
+	.ui-dialog-buttonpane {
+		padding-left: .8em;
+		padding-right: .8em;
+		padding-top: 0.7em;
+	}
+	.ui-dialog-titlebar {
+		padding-left: .8em;
+		padding-right: .8em;
+		font-size: 12pt;
+		border: none;
+		font-weight: normal;
+		background: white;
+	}
+	.ui-dialog-titlebar-close {
+		right: .8em;
+	}
+}
 .ui-widget-content {
 
-	border: 1px solid @egw_color_2_a;
+	border: 1px solid @gray_30;
 
 	.et2_selectbox {
 		button.et2_button_text,
@@ -285,11 +306,21 @@ span.ui-icon-search {
 		}
 	}
 }
-
+button.ui-button {
+	.Complete_Button_text_icon_before;
+	border-color: @gray_30;
+	outline: none;
+	&:hover{ background-color: @gray_30; color: @gray_90;}
+	.ui-button-icon-primary {
+		&:hover{
+			background-color: @gray_30;
+			color: @gray_90;
+			box-shadow: none;
+		}
+	}
+}
 /*###########################################*/
 /*Dialog: calendar edit series*/
-.ui-dialog-buttonpane {}
-
 .ui-dialog-buttonset{
 	button.ui-button-text-only {
 		background-color: @gray_20;
