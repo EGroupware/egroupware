@@ -1143,6 +1143,10 @@ option:checked {
   background: #189800;
   background-image: none;
   color: #FFFFFF;
+  font-weight: normal;
+}
+.ui-state-focus.ui-menu-item a {
+  color: #E6E6E6;
 }
 .ui-state-hover,
 .ui-widget-content .ui-state-hover,
