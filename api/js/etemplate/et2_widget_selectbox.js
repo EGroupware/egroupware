@@ -800,7 +800,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 					if(_options[key]["label"]) _options[key]["label"] = this.egw().lang(_options[key]["label"]);
 					if(_options[key]["title"]) _options[key]["title"] = this.egw().lang(_options[key]["title"]);
 				}
-				else
+				else if(_options.lenght>0 || typeof _options === 'object')
 				{
 					_options[key] = this.egw().lang(_options[key]);
 				}
