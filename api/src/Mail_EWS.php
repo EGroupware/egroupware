@@ -764,9 +764,14 @@ class Mail_EWS extends Mail
     }
     
     function getFolderId( $_folderName ) {
+		$_folderName = str_replace('+',' ', $_folderName );
         $ids = Api\Cache::getSession('mail', $this->profileID.'::ews_folder_ids' );
-        $folderID = ( $ids[ $_folderName ] ? $ids[ $_folderName ] : $_folderName );
-        $folderID  = str_replace(' ','+', $folderID );
+		if ( $ids[ $_folderName ] ) {
+			$folderID = $ids[ $_folderName ];
+			$folderID = str_replace(' ','+', $folderID );
+		}
+		else
+			$folderID = $_folderName;
 
         return $folderID;
     }

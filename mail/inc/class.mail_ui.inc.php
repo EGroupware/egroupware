@@ -1200,7 +1200,7 @@ class mail_ui
         $actions['exchange_move'] = array(
             'caption' => 'Move to EWS folder',
             'icon' => 'move',
-            'group' => $group,
+            'group' => 2,
             'allowOnMultiple' => true,
             'nm_action' => 'popup',
             'popup' => '500x600',
@@ -2331,8 +2331,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
             $res = $this->mail_bo->moveMessages( $content['folder'], $messageUIDs, $move, $folderName );
             if ( $res ) {
                 $msg = 'Operation Successful';
-                $to_update = implode(',', $messageUIDs );
-                Framework::refresh_opener( $msg, 'mail', $to_update, 'update' );
+				if ( $move )
+					Framework::refresh_opener( $msg, 'mail', $ids, 'delete' );
                 Framework::window_close();
             }
         }

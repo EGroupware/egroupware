@@ -395,51 +395,45 @@ class Lib
         return $folder;
     }
 
-    static function getFoldersSelOptions( $profile, $names_only = false ) {		
-        if ( !$profile ) return array();
+	static function getTreeFolders( $profile ) {		
 
-        $folders = self::getSettingsFolders( $profile );
-        $final = array();
-        foreach ( $folders as $folder )  {
-            if ( !$names_only )
-                $final[ $folder['id'] ] = $folder['name'];
-            else
-                $final[ $folder['name'] ] = $folder['name'];
-        }
+		// From Db
+		$used = array();
+		$forbidden = array();
+		$final = array();
+		$rows = self::getDBFolders( $profile );
+		foreach( $rows as $row ) {
+			if ( !self::is_allowed( $profile, $row['ews_folder'], 'read' ) ) {
+				$forbidden[] = $row['ews_folder'];
+				continue;
+			}
 
-        return $final;
-    }
-    static function getTreeFolders( $profile ) {		
+			$final[] = array(
+				'id' => $row['ews_folder'],
+				'name' => $row['ews_name'],
+			);
+			$used[] = $row['ews_folder'];
+		}
 
-        // From Db
-        $used = array();
-        $forbidden = array();
-        $final = array();
-        $rows = self::getDBFolders( $profile );
-        foreach( $rows as $row ) {
-            if ( !self::is_allowed( $profile, $row['ews_folder'], 'read' ) ) {
-                $forbidden[] = $row['ews_folder'];
-                continue;
-            }
+		// Fill in the rest
+		$folders = self::getSettingsFolders( $profile );
 
-            $final[] = array(
-                'id' => $row['ews_folder'],
-                'name' => $row['ews_name'],
-            );
-            $used[] = $row['ews_folder'];
-        }
+		foreach ( $folders as $idx => $folder ) {
+			if  ( !in_array( $folder['id'], $used ) && !in_array( $folder['id'], $forbidden ) )
+				$final[] = $folder;
+		}
 
-        // Fill in the rest
-        $folders = self::getSettingsFolders( $profile );
+		return $final;
+	}
 
-        foreach ( $folders as $idx => $folder ) {
-            if  ( !in_array( $folder['id'], $used ) && !in_array( $folder['id'], $forbidden ) )
-                $final[] = $folder;
-        }
-
-        return $final;
-    }
-
+    /**
+     * getFolders: Recursive function that gets all folders for a profile from EWS
+     * 
+     * @param string $profile 
+     * @param string $node 
+     * @param string $node_name 
+     * @return array folder_id => folder_name
+     */
     static function getFolders( $profile, $node = null, $node_name = null) {
         $ews = self::init( $profile );
 
@@ -480,6 +474,12 @@ class Lib
         return $folders;
     }
 
+    /**
+     * getSettingsFolders: Get all folders for a profile from exchange 
+     * 
+     * @param string $profile 
+     * @return array id => folder_id, name => folder_name
+     */
     static function getSettingsFolders( $profile ) {
         $folders = array();
 
@@ -493,6 +493,20 @@ class Lib
         }
 
         return $folders;
+    }
+    static function getFoldersSelOptions( $profile, $names_only = false ) {		
+        if ( !$profile ) return array();
+
+        $folders = self::getSettingsFolders( $profile );
+        $final = array();
+        foreach ( $folders as $folder )  {
+            if ( !$names_only )
+                $final[ $folder['id'] ] = $folder['name'];
+            else
+                $final[ $folder['name'] ] = $folder['name'];
+        }
+
+        return $final;
     }
 
     static function moveMail( $profile, $Id, $ChangeKey, $toFolder, $move = true ) {
