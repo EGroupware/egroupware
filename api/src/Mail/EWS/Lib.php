@@ -278,7 +278,6 @@ class Lib
         return $ids;
 
     }
-
     static function getMailIdsPaginated( $profile, $folderID, $page, $limit) {
         $ews = self::init( $profile );		
 
@@ -395,7 +394,13 @@ class Lib
         return $folder;
     }
 
-	static function getTreeFolders( $profile ) {		
+	/**
+	 * getTreeFolders: Return only folders allowed by permissions
+	 * 
+	 * @param string $profile 
+	 * @return array id => folder_id, name => folder_name
+	 */
+	static function getTreeFolders( $profile ) {
 
 		// From Db
 		$used = array();
@@ -494,7 +499,7 @@ class Lib
 
         return $folders;
     }
-    static function getFoldersSelOptions( $profile, $names_only = false ) {		
+    static function getFoldersSelOptions( $profile, $names_only = false ) {
         if ( !$profile ) return array();
 
         $folders = self::getSettingsFolders( $profile );
@@ -891,6 +896,12 @@ class Lib
         return $restriction;
     }
 
+    /**
+     * getDBFolders 
+     * 
+     * @param mixed $profile 
+     * @return void
+     */
     static function getDBFolders( $profile ) {
         $db = clone( $GLOBALS['egw']->db );
         $db->query("SELECT * FROM egw_ea_ews WHERE ews_profile=$profile ORDER BY ews_order,ews_name");

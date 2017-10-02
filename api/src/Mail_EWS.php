@@ -687,6 +687,14 @@ class Mail_EWS extends Mail
         // Update DB
         Lib::renameFolderDB( $this->profileID, $folderID, $newFolderName );
 
+		// Hook for other actions
+		Api\Hooks::process(array(
+			'location' => 'mail_after_folder_rename',
+			'profile' => $this->profileID,
+			'folder' => $_oldFolderName,
+			'new_folder' => $newFolderName,
+		));
+
 		return $newFolderName;
 	}
     static function getFolderPermissions( $profile_id ) {
