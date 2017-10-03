@@ -127,18 +127,84 @@ class Lib
         return $attachment;
     }
 
-    static function getMailBody( $profile, $emailID ) {
+    static function getMail( $profile, $emailID ) {
         $ews = self::init( $profile );
 
         $request = new DT\GetItemType();
         $request->ItemShape = new DT\ItemResponseShapeType();
         $request->ItemShape->BaseShape = DT\DefaultShapeNamesType::ALL_PROPERTIES;
-        // $request->ItemShape->BodyType = BodyTypeResponseType::TEXT;
+        $request->ItemIds = new DT\NonEmptyArrayOfBaseItemIdsType();
+        $request->ItemIds->ItemId = array();
 
-        $body_property = new DT\PathToUnindexedFieldType();
-        $body_property->FieldURI = 'item:Body';
-        $request->ItemShape->AdditionalProperties = new DT\NonEmptyArrayOfPathsToElementType();
-        $request->ItemShape->AdditionalProperties->FieldURI = array($body_property);
+        $message_item = new DT\ItemIdType();
+        $message_item->Id = $emailID;
+        $request->ItemIds->ItemId[] = $message_item;
+
+        try {
+            $response = $ews->GetItem($request);	
+        }
+        catch (\Exception $e) {
+            // Unknown error with some newsletters. Fall back to text
+            if ( $e->getMessage() == 'looks like we got no XML document') {
+                $request->ItemShape->BodyType = DT\BodyTypeResponseType::TEXT;	    		
+                try {
+                    $response = $ews->GetItem($request);	
+                }
+                catch (Exception $e) {
+                    error_log( $e->getMessage() );
+                    error_log( "Error caused by Mail Id: $emailID" );
+                    return false;
+                }
+            }
+        }
+
+
+        $msg = $response->ResponseMessages->GetItemResponseMessage->Items->Message;
+
+        return $msg;
+    }
+    /**
+     * getMailPart: Getting only selected parts of the email
+     * 
+     * @param string $profile 
+     * @param string $emailID 
+     * @param string $part comma-separated fields to include
+     * @return object
+     */
+    static function getMailPart( $profile, $emailID, $part) {
+        $ews = self::init( $profile );
+
+        $request = new DT\GetItemType();
+        $request->ItemShape = new DT\ItemResponseShapeType();
+        $request->ItemShape->BaseShape = DT\DefaultShapeNamesType::ID_ONLY;
+
+		$properties = array();
+		$parts = explode( ',', $part );
+		foreach( $parts as $prop ) {
+			switch( $prop ) {
+			case 'addresses':
+				$properties[] = 'message:From';
+				$properties[] = 'message:ToRecipients';
+				$properties[] = 'message:CcRecipients';
+				break;
+			case 'attachments':
+				$properties[] = 'item:Attachments';
+				break;
+			case 'body':
+				$properties[] = 'item:Body';
+				break;
+			}
+		}
+		if ( $properties ) {
+			$request->ItemShape->AdditionalProperties = new DT\NonEmptyArrayOfPathsToElementType();
+			$additional = array();
+			foreach ( $properties as $fieldURI ) {
+				$body_property = new DT\PathToUnindexedFieldType();
+				$body_property->FieldURI = $fieldURI;
+				$additional[] = $body_property;
+			}
+			$request->ItemShape->AdditionalProperties->FieldURI = $additional;
+		}
         $request->ItemIds = new DT\NonEmptyArrayOfBaseItemIdsType();
         $request->ItemIds->ItemId = array();
 
@@ -701,7 +767,10 @@ class Lib
     static function getType( $object ) {
         $type = get_class( $object );
         list(,,$datatype) = explode('\\', $type);
-        return str_replace('Type','', $datatype );
+		$final = str_replace('Type','', $datatype ); 
+		if ( $final == 'ContainsExpression' )
+			$final = 'Contains';
+        return $final;
     }
     static function setRestriction( $filter ) {
 
@@ -1000,6 +1069,22 @@ class Lib
         else 
             return DT\DistinguishedFolderIdNameType::PUBLIC_FOLDERS_ROOT; 			
     }
+
+	static function formatAddresses( $obj ) {
+		if ( !$obj || !$obj->Mailbox ) return '';
+		$mailbox = $obj->Mailbox;
+        $mailboxes = (is_array( $mailbox ) ? $mailbox : array( $mailbox ));
+
+        $addresses = array();
+        foreach( $mailboxes as $mail) {
+			if ( $mail->Name && $mail->Name != $mail->EmailAddress )
+				$addresses[] = $mail->Name.' <'.$mail->EmailAddress.'>';
+			else
+				$addresses[] = $mail->EmailAddress;
+		}
+
+		return implode(',',$addresses );
+	}
 
     static function getActualFolderId( $profile, $folder ) {
         if ( strlen( $folder ) < 50 ) {

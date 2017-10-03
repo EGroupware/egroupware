@@ -190,38 +190,9 @@ class Mail_EWS extends Mail
     function getAllAttachments( $mailID ) {
         // Get All attachments for mailID, including Embedded images
         $mailID  = str_replace(' ','+', $mailID );
-        $email = Lib::getMailBody( $this->profileID, $mailID );
+        $email = Lib::getMailPart( $this->profileID, $mailID, 'attachments,body' );
 
-        // Format data (one or many)
-        $files = array();
-        $items = array();
-        if ( $email->Attachments->FileAttachment )
-            $files = ( is_array( $email->Attachments->FileAttachment ) ? $email->Attachments->FileAttachment : array( $email->Attachments->FileAttachment ) );
-        if ( $email->Attachments->ItemAttachment )
-            $items = ( is_array( $email->Attachments->ItemAttachment ) ? $email->Attachments->ItemAttachment : array( $email->Attachments->ItemAttachment ) );
-        $data = array_merge( $files, $items );
-
-        // Format for use in header
-        $attachments = array();
-        foreach ( $data as $attachment ) {
-            // Double check: search email for CID in case ContentId is set, but doesn't exist in body
-            $cid = '';
-            if ( $attachment->ContentId && strpos($email->Body->_, $attachment->ContentId) !== FALSE ) 
-                $cid = $attachment->ContentId;
-
-            $attachments[] = array(
-                'size' => ( $attachment->Size ? $attachment->Size : 0 ),
-                'filename' => $attachment->Name,
-                'type' => $attachment->ContentType,
-                'mimeType' => $attachment->ContentType,
-                'uid' => $attachment->AttachmentId->Id,
-                'cid' => $cid,
-                'partID' => $attachment->AttachmentId->Id,
-                'name' => $attachment->Name,
-                'folder' => 'foo',
-            );
-        }
-        return $attachments;
+		return $this->formatAttachments( $email );
     }
 	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
 	{
@@ -351,13 +322,6 @@ class Mail_EWS extends Mail
 
         $emails = array();
         foreach ( $array['rows'] as $index => &$email ) {
-            if ( !$email->HasAttachments ) {
-                $attachments = array();
-            }
-            else {
-                // For emails with attachment, do extra request to get attachment info
-                $attachments = $this->getAttachments( $email->ItemId->Id );
-            }
             // Set fields
             // Appended ChangeKey to ID with default delimiter. This means that uid is still recognized since array is exploded,
             // and in specific cases ChangeKey is available for use (eg. set read/unread )
@@ -370,6 +334,16 @@ class Mail_EWS extends Mail
                 $date->setTimezone($zone);
                 $email->$property = $date->format('c');	
             }			
+
+			$parts = 'addresses';
+
+			// Call each mail individually to get extra data, like addresses and attachment list
+			if ( $email->HasAttachments ) $parts .= ',attachments,body';
+			$email_extra = Lib::getMailPart($this->profileID, $email->ItemId->Id, $parts);
+			$attachments = ( $email->HasAttachments ? $this->formatAttachments( $email_extra, true) : array() );
+			$from = Lib::formatAddresses( $email_extra->From );
+			$to = Lib::formatAddresses( $email_extra->ToRecipients );
+			$cc = Lib::formatAddresses( $email_extra->CcRecipients );
 
             $emails[] = array(
                 'subject' => $email->Subject,
@@ -395,9 +369,9 @@ class Mail_EWS extends Mail
                 'label3' => '',
                 'label4' => '',
                 'label5' => '',
-                'sender_address' => $email->From->Mailbox->Name,
-                'to_address' => $email->DisplayTo .' <@>',
-                'cc_addresses' => array( $email->DisplayCc ),
+                'sender_address' => $from,
+                'to_address' => $to,
+                'cc_addresses' => explode(',', $cc ),
             );
             // We add '@', since without it the Name is not displayed
             // We don't have the actual email address because EWS fetches that only when it fetches the actual email
@@ -426,7 +400,7 @@ class Mail_EWS extends Mail
         $_uid = str_replace(' ','+', $_uid );
         list($mailID,) = explode('||', $_uid);
 
-        $email = Lib::getMailBody( $this->profileID, $mailID );
+        $email = Lib::getMail( $this->profileID, $mailID );
         return array( array(
             'body'		=> $email->Body->_,
             // 'mimeType'		=> 'text/html',
@@ -474,7 +448,7 @@ class Mail_EWS extends Mail
         $_uid = str_replace(' ','+', $_uid );
         list($mailID,) = explode('||', $_uid);
 
-        $email = Lib::getMailBody( $this->profileID, $mailID );
+        $email = Lib::getMail( $this->profileID, $mailID );
         $arrays = array( 'From', 'ToRecipients', 'CcRecipients', 'Sender' );
         $addresses = array();
         foreach ( $arrays as $property ) {
@@ -573,6 +547,49 @@ class Mail_EWS extends Mail
     function getDefaultFolder() {
         return $this->profileID.self::DELIMITER.Lib::getDefaultFolder( $this->profileID );
     }
+	/**
+	 * formatAttachments: Normalize attachments array
+	 * 
+	 * @param object $email Must have Attachments and Body property (to check for embedded)
+	 * @param boolean $skip_embedded 
+	 * @param boolean $details 
+	 * @return array
+	 */
+	function formatAttachments( $email, $skip_embedded = false ) {
+        // Format data (one or many)
+        $files = array();
+        $items = array();
+        if ( $email->Attachments->FileAttachment )
+            $files = ( is_array( $email->Attachments->FileAttachment ) ? $email->Attachments->FileAttachment : array( $email->Attachments->FileAttachment ) );
+        if ( $email->Attachments->ItemAttachment )
+            $items = ( is_array( $email->Attachments->ItemAttachment ) ? $email->Attachments->ItemAttachment : array( $email->Attachments->ItemAttachment ) );
+        $data = array_merge( $files, $items );
+
+        // Format for use in header
+        $attachments = array();
+        foreach ( $data as $attachment ) {
+            // Double check: search email for CID in case ContentId is set, but doesn't exist in body
+            $cid = '';
+            if ( $attachment->ContentId && strpos($email->Body->_, $attachment->ContentId) !== FALSE ) 
+                $cid = $attachment->ContentId;
+
+			if ( $cid && $skip_embedded ) continue;
+
+            $attachments[] = array(
+				'size' => ( $attachment->Size ? $attachment->Size : ''),
+                'filename' => $attachment->Name,
+                'type' => $attachment->ContentType,
+                'mimeType' => $attachment->ContentType,
+                'uid' => $attachment->AttachmentId->Id,
+                'cid' => $cid,
+                'partID' => $attachment->AttachmentId->Id,
+                'name' => $attachment->Name,
+                'folder' => 'foo',
+            );
+        }
+
+		return $attachments;
+	}
     function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
     {
         $folderID = $this->getFolderId( $_foldername );
