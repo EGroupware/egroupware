@@ -58,7 +58,8 @@
 	 * Check to see if browser supports / allows desktop notifications
 	 */
 	notifications.prototype.check_browser_notify = function() {
-		return window.webkitNotifications && window.webkitNotifications.checkPermission() == EGW_BROWSER_NOTIFY_ALLOWED;
+		
+		return (window.webkitNotifications && window.webkitNotifications.checkPermission() == EGW_BROWSER_NOTIFY_ALLOWED) || (window.Notification && window.Notification.permission!="denied");
 	};
 
 	/**
@@ -118,6 +119,23 @@
 				});
 			desktop_button.appendTo(jQuery(egwpopup_ok_button).parent());
 		}
+
+                if(window.Notification && window.Notification.permission != "granted" &
+                        jQuery('#desktop_perms').length == 0)
+                {
+                        var label = 'Desktop notifications';
+                        try {
+                                if(egw) label = egw.lang(label);
+                        } catch(err) {}
+                        var desktop_button = jQuery('<button id="desktop_perms">' + label + '</button>')
+                                .click(function() {
+                                        window.Notification.requestPermission();
+                                        jQuery(this).hide();
+                                });
+                        desktop_button.appendTo(jQuery(egwpopup_ok_button).parent());
+                }
+
+
 	};
 
 	/**
@@ -178,6 +196,9 @@
 		this.bell("inactive");
 	};
 
+	
+
+
 	/**
 	 * Add message to internal display-queue
 	 *
@@ -198,42 +219,74 @@
 		if(_browser_notify)
 		{
 			var notice = null;
-			if(webkitNotifications.createHTMLNotification)
+			var _body, need_click_handler;
+
+			// Pull the subject of the messasge, if possible
+		 	var message = /<b>(.*?)<\/b>/.exec(_message);
+
+			if (message && message[1])
+			{
+				_body = message[1];
+			}
+			else
+			{
+				_body = _message.replace(/<(?:.|\n)*?>/gm, '');
+			}
+	
+
+			if("webkitNotifications" in window && webkitNotifications.createHTMLNotification)
 			{
 				notice = webkitNotifications.createHTMLNotification(_browser_notify);
 			}
-			else if (webkitNotifications.createNotification)
+			else if ("webkitNotifications" in window && webkitNotifications.createNotification)
 			{
-				// Pull the subject of the messasge, if possible
-				var message = /<b>(.*?)<\/b>/.exec(_message);
-				if(message && message[1])
-				{
-					_message = message[1];
-				}
-				else
-				{
-					_message = _message.replace(/<(?:.|\n)*?>/gm, '');
-				}
-				notice = webkitNotifications.createNotification('', "Egroupware",_message);
+				notice = webkitNotifications.createNotification('', "Egroupware",_body);
 
-				// When they click, bring up the popup for full info
-				notice.onclick = function() {
-					window.focus();
-					window.app.notifications.display();
-					this.close();
-				};
+				need_click_handler = true;
+			}
+
+			if ("Notification" in window) {
+				
+				options = { 
+					body: _body,
+					requireInteraction: true
+				}
+				notice = new Notification("Egroupware", options);
+				need_click_handler = true;
+
 			}
 			if(notice)
 			{
-				notice.ondisplay = function() {
-					// Confirm when user gets to see it - no close needed
-					// Wait a bit to let it load first, or it might not be there when requested.
-					window.setTimeout( function() {
-						var request = egw.json("notifications.notifications_ajax.confirm_message", _id);
-						request.sendRequest(true);
-					}, 2000);
-				};
-				notice.show();
+
+				var on_show_handler = function() {
+                                                // Confirm when user gets to see it - no close needed
+                                                // Wait a bit to let it load first, or it might not be there when requested.
+                                                window.setTimeout( function() {
+                                                        var request = egw.json("notifications.notifications_ajax.confirm_message", _id);
+                                                        request.sendRequest(true);
+                                                }, 2000);
+                                        };
+
+				if ("webkitNotifications" in window){
+					notice.ondisplay = on_show_handler; 
+				}
+
+				if ("Notification" in window) {
+					notice.onshow = on_show_handler;
+				}
+
+				if (need_click_handler)
+				{
+	                                // When they click, bring up the popup for full info
+        	                        notice.onclick = function() {
+                	                        window.focus();
+                        	                window.app.notifications.display();
+                                	        this.close();
+	                                };
+				}
+
+				if (notice.show)
+					notice.show();
 			}
 		}
 	};
