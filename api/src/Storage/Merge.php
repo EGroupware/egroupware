@@ -1583,6 +1583,32 @@ abstract class Merge
 	 */
 	public function download($document, $ids, $name='', $dirs='')
 	{
+		$result = $this->merge_file($document, $ids, $name, $dirs, $header);
+
+		if(is_file($result) && is_readable($result))
+		{
+			Api\Header\Content::type($header['name'],$header['mime'],$header['filesize']);
+			readfile($result,'r');
+			exit;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Merge the IDs into the document, puts the document into the output buffer
+	 *
+	 * @param string $document vfs-path of document
+	 * @param array $ids array with contact id(s)
+	 * @param string $name ='' name to use for downloaded document
+	 * @param string $dirs comma or whitespace separated directories, used if $document is a relative path
+	 * @param Array $header File name, mime & filesize if you want to send a header
+	 *
+	 * @return string with error-message on error
+	 * @throws Api\Exception
+	 */
+	public function merge_file($document, $ids, &$name='', $dirs='', &$header)
+	{
 		//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs') ->".function_backtrace());
 		if (($error = $this->check_document($document, $dirs)))
 		{
@@ -1700,6 +1726,7 @@ abstract class Merge
 		{
 			$name = basename($document);
 		}
+		$header = array('name' => $name, 'mime' => $mimetype);
 		if (isset($archive))
 		{
 			$zip = new ZipArchive;
@@ -1718,26 +1745,27 @@ abstract class Merge
 				exec('/usr/bin/zip -F '.escapeshellarg($archive));
 			}
 			if ($this->report_memory_usage) error_log(__METHOD__."() after ZIP processing ".Api\Vfs::hsize(memory_get_peak_usage(true)));
-			Api\Header\Content::type($name,$mimetype,filesize($archive));
-			readfile($archive,'r');
+			$header['filesize'] = filesize($archive);
 		}
 		else
 		{
+			$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.'.$ext).'-').'.'.$ext;
 			if ($mimetype == 'application/xml')
 			{
 				if (strpos($merged,'<?mso-application progid="Word.Document"?>') !== false)
 				{
-					$mimetype = 'application/msword';	// to open it automatically in word or oowriter
+					$header['mimetype'] = 'application/msword';	// to open it automatically in word or oowriter
 				}
 				elseif (strpos($merged,'<?mso-application progid="Excel.Sheet"?>') !== false)
 				{
-					$mimetype = 'application/vnd.ms-excel';	// to open it automatically in excel or oocalc
+					$header['mimetype'] = 'application/vnd.ms-excel';	// to open it automatically in excel or oocalc
 				}
 			}
-			Api\Header\Content::type($name, $mimetype);
-			echo $merged;
+			$handle = fopen($archive, 'w');
+			fwrite($handle, $merged);
+			fclose($handle);
 		}
-		exit;
+		return $archive;
 	}
 
 	/**
@@ -1837,7 +1865,12 @@ abstract class Merge
 		$export_limit=null)
 	{
 		$documents = array();
+		$editable_mimes = array();
 		if ($export_limit == null) $export_limit = self::getExportLimit(); // check if there is a globalsetting
+		if (class_exists('EGroupware\\collabora\\Bo') && $discovery = \EGroupware\collabora\Bo::discover())
+		{
+			$editable_mimes = $discovery;
+		}
 		if ($default_doc && ($file = Api\Vfs::stat($default_doc)))	// put default document on top
 		{
 			if(!$file['mime'])
@@ -1854,6 +1887,10 @@ abstract class Merge
 			if ($file['mime'] == 'message/rfc822')
 			{
 				self::document_mail_action($documents['document'], $file);
+			}
+			else if ($editable_mimes[$file['mime']])
+			{
+				self::document_editable_action($documents['document'], $file);
 			}
 		}
 
@@ -1932,6 +1969,10 @@ abstract class Merge
 							{
 								self::document_mail_action($current_level[$prefix.$file['name']], $file);
 							}
+							else if ($editable_mimes[$file['mime']])
+							{
+								self::document_editable_action($current_level[$prefix.$file['name']], $file);
+							}
 							break;
 
 						default:
@@ -1968,6 +2009,10 @@ abstract class Merge
 				{
 					self::document_mail_action($documents[$file['mime']]['children'][$prefix.$file['name']], $file);
 				}
+				else if ($editable_mimes[$file['mime']])
+				{
+					self::document_editable_action($documents[$file['mime']]['children'][$prefix.$file['name']], $file);
+				}
 			}
 			else
 			{
@@ -1980,6 +2025,10 @@ abstract class Merge
 				if ($file['mime'] == 'message/rfc822')
 				{
 					self::document_mail_action($documents[$prefix.$file['name']], $file);
+				}
+				else if ($editable_mimes[$file['mime']])
+				{
+					self::document_editable_action($documents[$prefix.$file['name']], $file);
 				}
 			}
 		}
@@ -2029,6 +2078,27 @@ abstract class Merge
 		$action['popup'] = Api\Link::get_registry('mail', 'edit_popup');
 		$action['message'] = lang('insert in %1',Api\Vfs::decodePath($file['name']));
 		$action['menuaction'] = 'mail.mail_compose.ajax_merge&document='.$file['path'].'&merge='. get_called_class();
+	}
+
+	/**
+	 * Set up a document action so the generated file is saved and opened in
+	 * the collabora editor (if collabora is available)
+	 *
+	 * @param Array &$action Action to be modified for editor
+	 * @param Array $file Array of information about the document from Api\Vfs::find
+	 * @return void
+	 */
+	private static function document_editable_action(Array &$action, $file)
+	{
+		unset($action['postSubmit']);
+		$action['nm_action'] = 'location';
+		$action['url'] = urldecode(http_build_query(array(
+				'menuaction' => 'collabora.EGroupware\\collabora\\Ui.merge_edit',
+				'document'   => $file['path'],
+				'merge'      => get_called_class(),
+				'id'         => '$id'
+		)));
+		$action['target'] = '_blank';
 	}
 
 	/**
