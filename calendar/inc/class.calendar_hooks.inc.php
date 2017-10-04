@@ -118,7 +118,7 @@ class calendar_hooks
 		);
 		$list_views = array(
 			0 => lang('None'),
-			'month' => lang('Month view'),
+			'month' => lang('Monthview'),
 			'weekN' => lang('Multiple week view'),
 			'week' => lang('Weekview'),
 			'day4' => lang('Four days view'),
