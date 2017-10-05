@@ -454,6 +454,7 @@ class calendar_uiviews extends calendar_ui
 			Egw::redirect_link('/index.php',array(
 				'menuaction' => 'calendar.calendar_uiviews.index',
 				'msg'        => $merge,
+				'ajax'       => 'true'
 			));
 		}
 
