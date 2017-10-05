@@ -311,7 +311,6 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST).function_backtrace());
 		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
 		$_contentHasSigID = $_content?array_key_exists('mailidentity',(array)$_content):false;
-		$_contentHasMimeType = $_content? array_key_exists('mimeType',(array)$_content):false;
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
 
@@ -572,19 +571,32 @@ class mail_compose
 		if ($activeProfile != $composeProfile) $this->changeProfile($activeProfile);
 		$insertSigOnTop = false;
 		$content = (is_array($_content)?$_content:array());
-		if ($_contentHasMimeType)
-		{
-			// mimeType is now a checkbox; convert it here to match expectations
-			// ToDo: match Code to meet checkbox value
-			if ($content['mimeType']==1)
-			{
-				$_content['mimeType'] = $content['mimeType']='html';
-			}
-			else
-			{
-				$_content['mimeType'] = $content['mimeType']='plain';
-			}
 
+        if ( Api\Hooks::count( 'mail_compose_index' ) ) {
+            $hooks= Api\Hooks::process( array(
+                'location' => 'mail_compose_index', 
+                'get' => $_GET,
+                'replyID' => $replyID,
+                'content' => $content,
+                'sel_options' => $sel_options,
+                'preserv' => $preserv,
+                'mail_bo' => $this->mail_bo,
+            ));
+			foreach( $hooks as $app => $hook ) {
+				list( $hook_content, $hook_preserve ) = $hook;
+				$content = array_merge( $content, $hook_content );
+				$preserv = array_merge( $preserv, $hook_preserve );
+			}
+        }
+		// mimeType is now a checkbox; convert it here to match expectations
+		// ToDo: match Code to meet checkbox value
+		if ($content['mimeType']==1)
+		{
+			$_content['mimeType'] = $content['mimeType']='html';
+		}
+		elseif ($content['mimeType']===0)
+		{
+			$_content['mimeType'] = $content['mimeType']='plain';
 		}
 		// user might have switched desired mimetype, so we should convert
 		if ($content['is_html'] && $content['mimeType']=='plain')
@@ -1386,23 +1398,6 @@ class mail_compose
 		}
 
 		$content['to'] = self::resolveEmailAddressList($content['to']);
-
-        if ( Api\Hooks::count( 'mail_compose_index' ) ) {
-            $hooks= Api\Hooks::process( array(
-                'location' => 'mail_compose_index', 
-                'get' => $_GET,
-                'replyID' => $replyID,
-                'content' => $content,
-                'sel_options' => $sel_options,
-                'preserv' => $preserv,
-                'mail_bo' => $this->mail_bo,
-            ));
-			foreach( $hooks as $app => $hook ) {
-				list( $hook_content, $hook_preserve ) = $hook;
-				$content = array_merge( $content, $hook_content );
-				$preserv = array_merge( $preserv, $hook_preserve );
-			}
-        }
         
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
