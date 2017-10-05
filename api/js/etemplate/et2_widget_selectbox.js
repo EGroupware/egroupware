@@ -78,6 +78,12 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			"default": false,
 			"description": "For multi-selects, displays selected as a list of tags instead of a big list"
 		},
+		"allow_single_deselect": {
+			"name": "Allow Single Deselect",
+			"type": "boolean",
+			"default": true,
+			"description": "Allow user to unset current selected value"
+		},
 
 		// Value can be string or integer
 		"value": {
@@ -709,6 +715,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 				inherit_select_classes: true,
 				search_contains: true,
 				width: _width || size.w + "px",
+				allow_single_deselect: this.options.allow_single_deselect,
 				no_results_text: this.egw().lang('No results match')
 			});
 
