@@ -1069,6 +1069,7 @@ class calendar_uiforms extends calendar_ui
 				Egw::redirect_link('/index.php',array(
 					'menuaction' => 'calendar.calendar_uiviews.index',
 					'msg'        => $msg,
+					'ajax'       => 'true'
 				));
 			}
 			if (in_array($button,array('delete_exceptions','delete_keep_exceptions')) || $content['recur_type'] && $button == 'delete')
@@ -1847,7 +1848,7 @@ class calendar_uiforms extends calendar_ui
 		if ($preserved['no_popup'])
 		{
 			// If not a popup, load the normal calendar interface on cancel
-			$etpl->set_cell_attribute('button[cancel]','onclick','app.calendar.linkHandler(\'index.php?menuaction=calendar.calendar_uiviews.index\')');
+			$etpl->set_cell_attribute('button[cancel]','onclick','app.calendar.linkHandler(\'index.php?menuaction=calendar.calendar_uiviews.index&ajax=true\')');
 		}
 
 		// Allow admins to restore deleted events
