@@ -1867,9 +1867,15 @@ abstract class Merge
 		$documents = array();
 		$editable_mimes = array();
 		if ($export_limit == null) $export_limit = self::getExportLimit(); // check if there is a globalsetting
-		if (class_exists('EGroupware\\collabora\\Bo') && $discovery = \EGroupware\collabora\Bo::discover())
-		{
-			$editable_mimes = $discovery;
+		try {
+			if (class_exists('EGroupware\\collabora\\Bo') && $discovery = \EGroupware\collabora\Bo::discover())
+			{
+				$editable_mimes = $discovery;
+			}
+		}
+		catch (\Exception $e) {
+			unset($e);
+			// ignore failed discovery
 		}
 		if ($default_doc && ($file = Api\Vfs::stat($default_doc)))	// put default document on top
 		{
