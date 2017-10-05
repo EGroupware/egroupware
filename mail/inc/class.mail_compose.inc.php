@@ -571,6 +571,7 @@ class mail_compose
 		if ($activeProfile != $composeProfile) $this->changeProfile($activeProfile);
 		$insertSigOnTop = false;
 		$content = (is_array($_content)?$_content:array());
+		$preserv = array();
 
         if ( Api\Hooks::count( 'mail_compose_index' ) ) {
             $hooks= Api\Hooks::process( array(
