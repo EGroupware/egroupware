@@ -215,7 +215,7 @@ var fw_browser = (function(){ "use strict"; return Class.extend(
 				{
 					// Clear all etemplates on this tab, regardless of application, by using DOM nodes
 					var content = this.iframe.contentWindow;
-					jQuery('.et2_container',this.iframe.contentWindow).each(function() {
+					jQuery('.et2_container',this.iframe.contentDocument).each(function() {
 						var et = content.etemplate2.getById(this.id);
 						if(et !== null)
 						{
