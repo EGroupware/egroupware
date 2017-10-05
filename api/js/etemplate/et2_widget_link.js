@@ -1515,10 +1515,18 @@ var et2_link_string = (function(){ "use strict"; return expose(et2_valueWidget.e
 			.appendTo(this.list)
 			.addClass("et2_link loading")
 			.click( function(e){
+				var fe = egw.link_get_registry('filemanager-editor');
 				if (self.options.expose_view && typeof _link_data.type !='undefined'
 					&& _link_data.type.match(self.mime_regexp,'ig'))
 				{
 					self._init_blueimp_gallery(e, _link_data);
+				}
+				else if(typeof _link_data.type !='undefined' && fe && fe.mime && fe.mime[_link_data.type])
+				{
+					egw.open_link(egw.link('/index.php', {
+						menuaction: fe.edit.menuaction,
+						path: egw().mime_open(_link_data).url.replace('/webdav.php','')
+					}), '', fe.edit_popup);
 				}
 				else
 				{
