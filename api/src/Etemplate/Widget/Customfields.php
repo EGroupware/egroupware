@@ -170,6 +170,14 @@ class Customfields extends Transformer
 			{
 				unset($fields[$key]);
 			}
+
+			// Rmove fields for none private cutomfields when name refers to a single custom field
+			$matches = null;
+			if (($pos=strpos($form_name,self::$prefix)) !== false &&
+			preg_match($preg = '/'.self::$prefix.'([^\]]+)/',$form_name,$matches) && !isset($fields[$name=$matches[1]]))
+			{
+				unset($fields[$key]);
+			}
 		}
 		// check if name refers to a single custom field --> show only that
 		$matches = null;
