@@ -167,7 +167,9 @@ var et2_url = (function(){ "use strict"; return et2_textbox.extend(
 				else if (this.egw().config("call_link"))
 				{
 					var link = this.egw().config("call_link")
-						.replace("%1", encodeURIComponent(value))
+						// tel: links use no URL encoding according to rfc3966 section-5.1.4
+						.replace("%1", this.egw().config("call_link").substr(0, 4) == 'tel:' ?
+							value : encodeURIComponent(value))
 						.replace("%u",this.egw().user('account_lid'))
 						.replace("%t",this.egw().user('account_phone'));
 					var popup = this.egw().config("call_popup");
