@@ -1318,7 +1318,7 @@ class calendar_boupdate extends calendar_bo
 					{
 						unset($event['alarm'][$id]);
 						$this->so->delete_alarm($id);
-						error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+						//error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
 					}
 				}
 			}
@@ -1338,12 +1338,12 @@ class calendar_boupdate extends calendar_bo
 					if (!$alarm['owner'] || isset($status) && calendar_so::split_status($status) !== 'R')
 					{
 						$this->so->save_alarm($event['id'], $alarm);
-						error_log(__LINE__.': '.__METHOD__."() so->save_alarm($event[id], ".array2string($alarm).")");
+						//error_log(__LINE__.': '.__METHOD__."() so->save_alarm($event[id], ".array2string($alarm).")");
 					}
 					else
 					{
 						$this->so->delete_alarm($id);
-						error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+						//error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
 					}
 				}
 			}
