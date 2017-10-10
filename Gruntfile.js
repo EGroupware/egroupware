@@ -176,6 +176,7 @@ module.exports = function (grunt) {
 						"api/js/etemplate/et2_widget_htmlarea.js",
 						"api/js/etemplate/et2_widget_tabs.js",
 						"api/js/etemplate/et2_widget_toolbar.js",
+						"api/js/etemplate/et2_widget_timestamper.js",
 						"api/js/etemplate/et2_widget_tree.js",
 						"api/js/etemplate/et2_widget_historylog.js",
 						"api/js/etemplate/et2_widget_hrule.js",
