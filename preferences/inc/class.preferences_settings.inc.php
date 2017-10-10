@@ -449,7 +449,7 @@ class preferences_settings
 				'type' => $setting['type'],
 				'label' => preg_replace('|<br[ /]*>|i', "\n", $setting['label']),
 				'help' => lang($setting['help']),	// is html
-				'default' => !empty($default) ? lang('Default').': '.$default : null,
+				'default' => (string)$default !== '' ? lang('Default').': '.$default : null,
 				'onchange' => $setting['onchange'],
 			);
 			//error_log("appname=$appname, attribute=$attribute, setting=".array2string($setting));
