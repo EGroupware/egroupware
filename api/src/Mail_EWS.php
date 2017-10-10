@@ -212,9 +212,13 @@ class Mail_EWS extends Mail
         else {
             $content = $attachment->Content;
         }
+		$type = $attachment->ContentType;
+		if ( !$type )
+			$type = Api\MimeMagic::ext2mime( pathinfo( $attachment->Name, PATHINFO_EXTENSION ) );
 
 		return array(
-            'type' => $attachment->ContentType,
+            'type' => $type,
+			'mimeType' => $type,
             'charset' => '',
             'filename' => $attachment->Name,
             'attachment' => $content,
@@ -575,11 +579,15 @@ class Mail_EWS extends Mail
 
 			if ( $cid && $skip_embedded ) continue;
 
+			$type = $attachment->ContentType;
+			if ( !$type )
+				$type = Api\MimeMagic::ext2mime( pathinfo( $attachment->Name, PATHINFO_EXTENSION ) );
+
             $attachments[] = array(
 				'size' => ( $attachment->Size ? $attachment->Size : ''),
                 'filename' => $attachment->Name,
-                'type' => $attachment->ContentType,
-                'mimeType' => $attachment->ContentType,
+                'type' => $type,
+                'mimeType' => $type,
                 'uid' => $attachment->AttachmentId->Id,
                 'cid' => $cid,
                 'partID' => $attachment->AttachmentId->Id,

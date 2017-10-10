@@ -114,6 +114,7 @@ class Lib
     }
 
     static function getAttachment( $profile, $attachmentID ) {
+		$attachmentID = urldecode( $attachmentID );
         $ews = self::init( $profile );
 
         $request = new DT\GetAttachmentType();
