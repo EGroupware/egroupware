@@ -1614,6 +1614,9 @@ class calendar_boupdate extends calendar_bo
 				'A' => MSG_ACCEPTED,
 				'D' => MSG_DELEGATED,
 			);
+			// Reset cached event
+			static::$cached_event = array();
+			
 			if (isset($status2msg[$status]) && !$skip_notification)
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
