@@ -183,40 +183,40 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 		var select_attrs = {
 			button_label: egw.lang('Link'),
 			button_caption: '',
-			readonly: this.options.readonly
+			readonly: this.options.readonly,
+			onchange: function() {
+				var values = true;
+				// If entry not yet saved, store for linking on server
+				if(!self.options.value.to_id || typeof self.options.value.to_id == 'object')
+				{
+					values = self.options.value.to_id || {};
+					var files = self.vfs_select.getValue();
+					if(typeof files !== 'undefined')
+					{
+						for(var i = 0; i < files.length; i++)
+						{
+							values['link:'+files[i]] = {
+								app: 'link',
+								id: files[i],
+								type: 'unknown',
+								icon: 'link',
+								remark: '',
+								title: files[i]
+							};
+						}
+					}
+				}
+				self._link_result(values);
+			}
 		};
 		// only set server-side callback, if we have a real application-id (not null or array)
 		// otherwise it only gives an error on server-side
 		if (self.options.value && self.options.value.to_id && typeof self.options.value.to_id != 'object') {
-			select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::link_existing';
+			select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
 			select_attrs.method_id = self.options.value.to_app + ':' + self.options.value.to_id;
 		}
 		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
 		this.vfs_select.set_readonly(this.options.readonly);
-		jQuery(this.vfs_select.getDOMNode()).change( function() {
-			var values = true;
-			// If entry not yet saved, store for linking on server
-			if(!self.options.value.to_id || typeof self.options.value.to_id == 'object')
-			{
-				values = self.options.value.to_id || {};
-				var files = self.vfs_select.getValue();
-				if(typeof files !== 'undefined')
-				{
-					for(var i = 0; i < files.length; i++)
-					{
-						values['link:'+files[i]] = {
-							app: 'link',
-							id: files[i],
-							type: 'unknown',
-							icon: 'link',
-							remark: '',
-							title: files[i]
-						};
-					}
-				}
-			}
-			self._link_result(values);
-		});
 
 		// File upload
 		var file_attrs = {
@@ -633,7 +633,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 				var buttonItem = jQuery( "<span>", {
 					"class": "ui-selectmenu-text",
 					title: value
-				})
+				});
 
 				jQuery('.ui-selectmenu-text', this.button).replaceWith(buttonItem);
 				buttonItem.css('background-image', 'url('+url+')');
@@ -786,7 +786,7 @@ var et2_link_entry = (function(){ "use strict"; return et2_inputWidget.extend(
 			// Normal stuff
 			li.append(jQuery( "<a></a>" ).text( item.label ))
 				.appendTo(ul);
-			window.setTimeout(function(){ul.css('max-width', jQuery('.et2_container').width()-ul.offset().left)}, 300);
+			window.setTimeout(function(){ul.css('max-width', jQuery('.et2_container').width()-ul.offset().left);}, 300);
 			return li;
 		};
 

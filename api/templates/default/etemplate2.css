@@ -1286,7 +1286,7 @@ button.et2_vfs_btn {
     background-position:  4px center;
 	background-size: 20px auto;
 }
-img.vfsMimeIcon, #filemanager-select img.vfsMimeIcon {
+img.vfsMimeIcon, #api\.vfsSelectUI img.vfsMimeIcon {
 	max-height: 16px;
 	height: auto;
 }
@@ -1945,7 +1945,9 @@ div.ui-dialog div.ui-dialog-content > div[id] {
 	padding-left: 3px;
 	background-image: none;
 }
-.et2_toolbar button, .nextmatch_header_row button, .et2_toolbar div.et2_progress, .nextmatch_header_row div.et2_progress {
+.et2_toolbar button, .nextmatch_header_row button,
+.et2_toolbar div.et2_progress,
+.nextmatch_header_row div.et2_progress {
 	margin: 1px 4px 1px 0;
 	height: 24px;
 	border-radius: 3px;
@@ -2828,3 +2830,39 @@ div.eml div.emlDelete:hover, div.eml div.emlEdit:hover  {
 	opacity:1;
 	filter:contrast(9);
 }
+
+.vfs-select-container .et2_toolbar *{
+	float: left;
+}
+.vfs-select-toggle {display:none;}
+.vfs-select-app {
+	display: inline-block;
+    padding: 5px;
+}
+.vfs-select-container .selectFiles {
+	height: 250px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.vfs-select-container div.et2_file span {
+	width: 22px !important;
+    height: 22px !important;
+    padding: 0;
+    background-position-x: 3px !important;
+    background-image: url(../../../pixelegg/images/add.png);
+    overflow: hidden !important;
+    text-indent: 100px !important;
+}
+.vfs-select-container div.et2_file {
+	width: 24px;
+}
+.vfs-select-container div.et2_file .progress {
+	width: 252px;
+    max-height: 12em;
+    overflow: auto;
+    padding: 0px;
+    float: right !important;
+    margin-left: 0;
+}
+#api\.vfsSelectUI_app {width:205px}
+#api\.vfsSelectUI_name {padding-right: 4px;}
