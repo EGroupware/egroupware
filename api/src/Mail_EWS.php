@@ -197,20 +197,24 @@ class Mail_EWS extends Mail
 	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
 	{
         // Get attachment and its contents, return as data or stream
-        $_partID = str_replace(' ','+', $_partID );
 		$attachment = Lib::getAttachment( $this->profileID, $_partID );
+		$att_content = $attachment->Content;
+
+		// If attachment fetched is email, get raw content
+		if ( !$att_content && $attachment->Message ) 
+			$att_content = base64_decode( $attachment->Message->MimeContent->_ );
 
         if ( $_stream ) {
             $tmp = fopen('php://temp', 'w+');
 
-            if (!is_null($attachment->Content)) {
-                fwrite($tmp, $attachment->Content);
+            if (!is_null($att_content)) {
+                fwrite($tmp, $att_content);
                 rewind($tmp);
             }
             $content = $tmp;
         }
         else {
-            $content = $attachment->Content;
+            $content = $att_content;
         }
 		$type = $attachment->ContentType;
 		if ( !$type )

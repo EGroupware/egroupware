@@ -115,15 +115,29 @@ class Lib
 
     static function getAttachment( $profile, $attachmentID ) {
 		$attachmentID = urldecode( $attachmentID );
+        $attachmentID = str_replace(' ','+', $attachmentID );
         $ews = self::init( $profile );
 
         $request = new DT\GetAttachmentType();
         $request->AttachmentIds = new DT\NonEmptyArrayOfRequestAttachmentIdsType();
         $request->AttachmentIds->AttachmentId = new DT\RequestAttachmentIdType();
         $request->AttachmentIds->AttachmentId->Id = $attachmentID;
+
+		// Include MimeContent (raw) in case attachment is email
+        $request->AttachmentShape = new DT\AttachmentResponseShapeType();
+		$request->AttachmentShape->AdditionalProperties = new DT\NonEmptyArrayOfPathsToElementType();
+		$prop = new DT\PathToUnindexedFieldType();
+		$prop->FieldURI = 'item:MimeContent';
+		$request->AttachmentShape->AdditionalProperties->FieldURI = array( $prop );
+
         $response = $ews->GetAttachment($request); 
 
+        if ( $response->ResponseMessages->GetAttachmentResponseMessage->ResponseClass == 'Error' )
+            throw new \Exception( $response->ResponseMessages->GetAttachmentResponseMessage->MessageText  );
+
         $attachment = $response->ResponseMessages->GetAttachmentResponseMessage->Attachments->FileAttachment;
+		if ( !$attachment ) 
+			$attachment = $response->ResponseMessages->GetAttachmentResponseMessage->Attachments->ItemAttachment;
 
         return $attachment;
     }
