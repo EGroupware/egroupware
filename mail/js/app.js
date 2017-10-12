@@ -2959,19 +2959,15 @@ app.classes.mail = AppJS.extend(
 			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
 			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[saveAsVFS\]/,'')];
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		var width=640;
-		var height=570;
-		var windowName ='mail';
-		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode=saveas';
-		url += '&id='+mailid+'::'+attgrid.partID+'::'+attgrid.winmailFlag;
-		url += '&name='+attgrid.filename;
-		url += '&type='+attgrid.type.toLowerCase();
-		url += '&method=mail.mail_ui.vfsSaveAttachment';
-		url += '&label='+egw.lang('Save');
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		egw_openWindowCentered(url,windowName,width,height);
+		var vfs_select = et2_createWidget('vfs-select', {
+			mode: 'saveas',
+			method: 'mail.mail_ui.ajax_vfsSaveAttachment',
+			button_label: egw.lang('Save'),
+			dialog_title: "Save attchment",
+			method_id: mailid+'::'+attgrid.partID+'::'+attgrid.winmailFlag,
+			name: attgrid.filename
+		});
+		vfs_select.click();
 	},
 
 	saveAllAttachmentsToVFS: function(tag_info, widget)
@@ -2989,20 +2985,21 @@ app.classes.mail = AppJS.extend(
 			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
 			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		var width=640;
-		var height=570;
-		var windowName ='mail';
-		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode=select-dir';
-		url += '&method=mail.mail_ui.vfsSaveAttachment';
-		url += '&label='+egw.lang('Save all');
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
+
+		var ids = [];
 		for (var i=0;i<attgrid.length;i++)
 		{
-			if (attgrid[i] != null) url += '&id['+i+']='+mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename;
+			if (attgrid[i] != null) ids.push(mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename);
 		}
-		egw_openWindowCentered(url,windowName,width,height);
+
+		var vfs_select = et2_createWidget('vfs-select', {
+			mode: 'select-dir',
+			method: 'mail.mail_ui.ajax_vfsSaveAttachment',
+			button_label: egw.lang('Save all'),
+			dialog_title: "Save attchments",
+			method_id: ids.length > 1 ? ids: ids[0]
+		});
+		vfs_select.click();
 	},
 
 	/**
@@ -3029,32 +3026,26 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode='+ (_elems.length>1?'select-dir':'saveas');
-		url += '&mime=message'+encodeURIComponent('/')+'rfc822';
-		url += '&method=mail.mail_ui.vfsSaveMessage';
-		url += '&label='+(_elems.length>1?egw.lang('Save all'):egw.lang('save'));
-
+		var ids = [], names = [];
 		for (var i in _elems)
 		{
 			var _id = _elems[i].id;
 			var dataElem = egw.dataGetUIDdata(_id);
 			var subject = dataElem? dataElem.data.subject: _elems[i].subject;
 			var filename = subject.replace(/[\f\n\t\v]/g,"_")|| 'unknown';
-			if (_elems.length>1)
-			{
-				url += '&id['+i+']='+_id;
-				url += '&name['+i+']='+encodeURIComponent(filename+'.eml');
-			}
-			else
-			{
-				url += '&id='+_id;
-				url += '&name='+encodeURIComponent(filename+'.eml');
-			}
-
+			ids.push(_id);
+			names.push(encodeURIComponent(filename+'.eml'));
 		}
-		egw.openPopup(url,'680','400','vfs_save_messages', 'filemanager');
+		var vfs_select = et2_createWidget('vfs-select', {
+			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
+			mime: 'message'+encodeURIComponent('/')+'rfc822',
+			method: 'mail.mail_ui.ajax_vfsSaveMessage',
+			button_label: _elems.length>1 ? egw.lang('Save all') : egw.lang('save'),
+			dialog_title: "Save email",
+			method_id: _elems.length > 1 ? ids: ids[0],
+			name: _elems.length > 1 ? names : names[0],
+		});
+		vfs_select.click();
 	},
 
 	/**
@@ -6003,6 +5994,8 @@ app.classes.mail = AppJS.extend(
 			},
 			title: egw.lang('Certificate info for email %1', _metadata.email),
 			buttons: buttons,
+			minWidth: 500,
+			minHeight: 500,
 			value:{content:content},
 			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false
