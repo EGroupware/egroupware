@@ -2480,39 +2480,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'smime_type' => $value['smime_type']
 				);
 				$attachmentHTML[$key]['link_save'] ="<a href='".Egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".Api\Html::image('mail','fileexport')."</a>";
-
-				if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
-				{
-					$link_vfs_save = Egw::link('/index.php',array(
-						'menuaction' => 'filemanager.filemanager_select.select',
-						'mode' => 'saveas',
-						'name' => $value['name'],
-						'mime' => strtolower($value['mimeType']),
-						'method' => 'mail.mail_ui.vfsSaveAttachment',
-						'id' => $rowID.'::'.$value['partID'].'::'.$value['is_winmail'],
-						'label' => lang('Save'),
-					));
-					$vfs_save = "<a href='#' onclick=\"egw_openWindowCentered('$link_vfs_save','vfs_save_attachment','640','570',window.outerWidth/2,window.outerHeight/2); return false;\">$url_img_vfs</a>";
-					// add save-all icon for first attachment
-					if (!$key && count($attachments) > 1)
-					{
-						$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "";
-						foreach ($attachments as $ikey => $value)
-						{
-							//$rowID
-							$ids["id[$ikey]"] = $rowID.'::'.$value['partID'].'::'.$value['is_winmail'].'::'.$value['name'];
-						}
-						$link_vfs_save = Egw::link('/index.php',array(
-							'menuaction' => 'filemanager.filemanager_select.select',
-							'mode' => 'select-dir',
-							'method' => 'mail.mail_ui.vfsSaveAttachment',
-							'label' => lang('Save all'),
-						)+$ids);
-						$vfs_save .= "<a href='#' onclick=\"egw_openWindowCentered('$link_vfs_save','vfs_save_attachment','640','530',window.outerWidth/2,window.outerHeight/2); return false;\">$url_img_vfs_save_all</a>";
-					}
-					$attachmentHTML[$key]['link_save'] .= $vfs_save;
-					//error_log(__METHOD__.__LINE__.$attachmentHTML[$key]['link_save']);
-				}
 			}
 			$attachmentHTMLBlock="<table width='100%'>";
 			foreach ((array)$attachmentHTML as $row)
@@ -2803,14 +2770,26 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * Ajax function to save message(s) in the vfs
+	 *
+	 * @param array $ids array of mail ids
+	 * @param string $path path to save the emails
+	 */
+	function ajax_vfsSaveMessage ($ids,$path)
+	{
+		$result = $this->vfsSaveMessage($ids, $path);
+		$response = Api\Json\Response::get();
+		$response->data($result);
+	}
+
+	/**
 	 * Save an Message in the vfs
 	 *
 	 * @param string|array $ids use splitRowID, to separate values
 	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
-	 * @param boolean $close Return javascript to close the window
 	 * @return string|boolean javascript eg. to close the selector window if $close is true, or success/fail if $close is false
 	 */
-	function vfsSaveMessage($ids,$path, $close = true)
+	function vfsSaveMessage($ids,$path)
 	{
 		//error_log(__METHOD__.' IDs:'.array2string($ids).' SaveToPath:'.$path);
 
@@ -2867,14 +2846,19 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$this->changeProfile($rememberServerID);
 		}
 
-		if($close)
-		{
-			Framework::window_close(($err?$err:null));
-		}
-		else
-		{
-			return $succeeded;
-		}
+		return $succeeded;
+	}
+
+	/**
+	 * Ajax function to store attachments in the vfs
+	 * @param string|array $ids '::' delimited mailbox::uid::part-id::is_winmail::name (::name for multiple id's)
+	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
+	 */
+	function ajax_vfsSaveAttachment($ids,$path)
+	{
+		$result = $this->vfsSaveAttachment($ids, $path);
+		$response = Api\Json\Response::get();
+		$response->data($result);
 	}
 
 	/**

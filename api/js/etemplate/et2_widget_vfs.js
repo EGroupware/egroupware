@@ -895,14 +895,27 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			default: "open"
 		},
 		"value": {
-			"type": "any", // Object
-			"description": "Array of paths (strings)"
+			type: "any", // Object
+			description: "Array of paths (strings)"
 		},
 		"button_caption":{
 			name: "button caption",
 			type: "string",
 			default: "Select files from Filemanager ...",
 			description: "Caption for vfs-select button.",
+			translate:true
+		},
+		"name": {
+			name:"File name",
+			type: "any", // Object
+			description: "file name",
+			default: ""
+		},
+		"dialog_title":{
+			name: "dialog title",
+			type: "string",
+			default: "Save as",
+			description: "Title of dialog",
 			translate:true
 		}
 	},
@@ -951,7 +964,8 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			mode: this.options.mode,
 			label: this.options.button_label,
 			path: this.options.path || null,
-			mime: this.options.mime || null
+			mime: this.options.mime || null,
+			name: this.options.name
 		};
 		var callback = _callback || this._buildDialog;
 		egw(window).json(
@@ -1031,7 +1045,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 					delete app.vfsSelectUI;
 				}
 			},
-			title: egw.lang('Save File'),
+			title: this.options.dialog_title,
 			buttons: buttons,
 			minWidth: 500,
 			minHeight: 400,

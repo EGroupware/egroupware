@@ -641,7 +641,7 @@ class filemanager_ui
 					if (strpos($path, 'mail::') === 0 && $path = substr($path, 6))
 					{
 						// Support for dropping mail in filemanager - Pass mail back to mail app
-						if(ExecMethod2('mail.mail_ui.vfsSaveMessage', $path, $dir, false))
+						if(ExecMethod2('mail.mail_ui.vfsSaveMessage', $path, $dir))
 						{
 							++$files;
 						}

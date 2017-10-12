@@ -377,12 +377,12 @@ class Vfs extends File
 	 *
 	 * There are the following ($params) parameters:
 	 *
-	 * - mode=(open|open-multiple|saveas|select-dir) (required)
-	 * - method=app.class.method                     (optional callback, gets called with id and selected file(s))
-	 * - id=...                                      (optional parameter passed to callback)
-	 * - path=...                                    (optional start path in VFS)
-	 * - mime=...                                    (optional mime-type to limit display to given type)
-	 * - label=...                                   (optional label for submit button, default "Open")
+	 * - mode=(open|open-multiple|saveas|select-dir)(required)
+	 * - method=app.class.method					(optional callback, gets called with id and selected file(s))
+	 * - method_id= array()|string					(optional parameter passed to callback)
+	 * - path=string								(optional path in VFS)
+	 * - mime=string								(optional mime-type to limit display to given type)
+	 * - name=array|string							(optional name value to preset name field)
 	 *
 	 * @param array $content
 	 * @param array $params
@@ -395,7 +395,6 @@ class Vfs extends File
 		if (!is_array($content))
 		{
 			$content = array_merge($params, array(
-				'label'	=> isset($params['label']) ? $params['label'] : lang('Open'),
 				'name'	=> (string)$params['name'],
 				'path'	=> empty($params['path']) ?
 				Api\Cache::getSession('filemanger', 'select_path'): $params['path'],
