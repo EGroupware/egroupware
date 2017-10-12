@@ -351,7 +351,7 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 					if(item && options[key].icon)
 					{
 						// we supply a applicable class for item images
-						jQuery('a',item).prepend('<img class="et2_button_icon" src="' + options[key].icon +'"/>');
+						jQuery('a',item).prepend('<img class="et2_button_icon" src="' + egw.image(options[key].icon) +'"/>');
 					}
 				}
 			}
