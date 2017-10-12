@@ -3683,51 +3683,75 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param {egwAction} _egw_action
 	 * @param {array|string} _action string "autosaving", if that triggered the action
+	 *
+	 * @return Promise
 	 */
 	saveAsDraft: function(_egw_action, _action)
 	{
-		//this.et2_obj.submit();
-		var content = this.et2.getArrayMgr('content').data;
-		var action = _action;
-		if (_egw_action && _action !== 'autosaving')
-		{
-			action = _egw_action.id;
-		}
-
-		var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount',
-			'mail_htmltext', 'mail_plaintext', 'lastDrafted', 'filemode', 'expiration', 'password'];
-		var widget = {};
-		for (var index in widgets)
-		{
-			widget = this.et2.getWidgetById(widgets[index]);
-			if (widget)
-			{
-				content[widgets[index]] = widget.get_value();
-			}
-		}
 		var self = this;
-		if (content)
-		{
-			// if we compose an encrypted message, we have to get the encrypted content
-			if (this.mailvelope_editor)
+		return new Promise(function(_resolve, _reject){
+			var content = self.et2.getArrayMgr('content').data;
+			var action = _action;
+			if (_egw_action && _action !== 'autosaving')
 			{
-				this.mailvelope_editor.encrypt([]).then(function(_armored)
-				{
-					content['mail_plaintext'] = _armored;
-					self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
-						self.savingDraft_response(_data,action);
-					}).sendRequest(true);
-				}, function(_err)
-				{
-					self.egw.message(_err.message, 'error');
-				});
-				return false;
+				action = _egw_action.id;
 			}
 
-			this.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
-				self.savingDraft_response(_data,action);
-			}).sendRequest(true);
-		}
+			var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount',
+				'mail_htmltext', 'mail_plaintext', 'lastDrafted', 'filemode', 'expiration', 'password'];
+			var widget = {};
+			for (var index in widgets)
+			{
+				widget = self.et2.getWidgetById(widgets[index]);
+				if (widget)
+				{
+					content[widgets[index]] = widget.get_value();
+				}
+			}
+
+			if (content)
+			{
+				// if we compose an encrypted message, we have to get the encrypted content
+				if (self.mailvelope_editor)
+				{
+					self.mailvelope_editor.encrypt([]).then(function(_armored)
+					{
+						content['mail_plaintext'] = _armored;
+						self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
+							var res = self.savingDraft_response(_data,action);
+							if (res)
+							{
+								_resolve();
+							}
+							else
+							{
+								_reject();
+							}
+						}).sendRequest(true);
+					}, function(_err)
+					{
+						self.egw.message(_err.message, 'error');
+						_reject();
+					});
+					return false;
+				}
+				else
+				{
+
+					self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
+						var res = self.savingDraft_response(_data,action);
+						if (res)
+						{
+							_resolve();
+						}
+						else
+						{
+							_reject();
+						}
+					}).sendRequest(true);
+				}
+			}
+		});
 	},
 
 	/**
@@ -3745,6 +3769,8 @@ app.classes.mail = AppJS.extend(
 	 *  -button[saveAsDraft]
 	 *  -button[saveAsDraftAndPrint]
 	 *  -autosaving
+	 *
+	 *  @return boolean return true if successful otherwise false
 	 */
 	savingDraft_response: function(_responseData, _action)
 	{
@@ -3791,10 +3817,12 @@ app.classes.mail = AppJS.extend(
 						this.egw.message(_responseData.message);
 				}
 			}
+			return true;
 		}
 		else
 		{
 			this.egw.message(_responseData.message, 'error');
+			return false;
 		}
 	},
 
@@ -5360,15 +5388,20 @@ app.classes.mail = AppJS.extend(
 		var content = this.et2.getArrayMgr('content').data;
 		var subject = this.et2.getWidgetById('subject');
 		var elem = {0:{id:"", subject:""}};
+		var self = this;
 		if (typeof content != 'undefined' && content.lastDrafted && subject)
 		{
 			elem[0].id = content.lastDrafted;
 			elem[0].subject = subject.get_value();
 			this.mail_save2fm(_action, elem);
 		}
-		else
+		else // need to save as draft first
 		{
-			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save to filemanager','info');
+			this.saveAsDraft(null, 'autosaving').then(function(){
+				self.compose_saveDraft2fm(_action);
+			}, function(){
+				et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save to filemanager','info');
+			});
 		}
 	},
 
