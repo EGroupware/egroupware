@@ -997,9 +997,13 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 						case 'open-multiple':
 							if (_value.dir && _value.dir.selected)
 							{
-								Object.keys(_value.dir.selected)
-									.forEach((key) => (_value.dir.selected[key] != "")
-									&& files.push(_value.path+'/'+_value.dir.selected[key]));
+								for(var key in Object.keys(_value.dir.selected))
+								{
+									if (_value.dir.selected[key] != "")
+									{
+										files.push(_value.path+'/'+_value.dir.selected[key]);
+									}
+								}
 							}
 							break;
 						case 'select-dir':
