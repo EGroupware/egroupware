@@ -280,6 +280,7 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 			case 'path': field = 'path'; value = widget.getValue(); break;
 			case 'home': field = 'action'; value = 'home'; break;
 			case 'app': field = 'app'; value = widget.getValue(); break;
+			case 'mime': field = 'mime'; value = widget.getValue(); break;
 		}
 		this.submit(field, value);
 	},
@@ -295,7 +296,6 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 	{
 		var arrMgrs = this.et2.getArrayMgrs();
 		arrMgrs.content.data[_field] = _val;
-		if (_field == 'dir') arrMgrs.content.data['button'] = 'ok';
 		jQuery.extend(arrMgrs.content.data, arrMgrs.modifications.data);
 		this.et2.setArrayMgrs(arrMgrs);
 		this.vfsSelectWidget._content(arrMgrs.content.data, _callback);

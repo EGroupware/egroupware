@@ -392,32 +392,37 @@ class Vfs extends File
 	{
 		$response = Json\Response::get();
 		$readonlys = $sel_options = array();
+
+		if (isset($params['mime']))
+		{
+			foreach((array)$params['mime'] as $key => $value)
+			{
+				if (is_numeric($key))
+				{
+					$sel_options['mime'][$value] = lang('%1 files',strtoupper(Api\MimeMagic::mime2ext($value))).' ('.$value.')';
+				}
+				else
+				{
+					$sel_options['mime'][$key] = lang('%1 files',strtoupper($value)).' ('.$key.')';
+				}
+			}
+		}
+
 		if (!is_array($content))
 		{
 			$content = array_merge($params, array(
 				'name'	=> (string)$params['name'],
 				'path'	=> empty($params['path']) ?
-				Api\Cache::getSession('filemanger', 'select_path'): $params['path'],
+				Api\Cache::getSession('filemanger', 'select_path'): $params['path']
 			));
-
+			unset($content['mime']);
 			if (!in_array($content['mode'],array('open','open-multiple','saveas','select-dir')))
 			{
 				throw new Api\Exception\WrongParameter("Wrong or unset required mode parameter!");
 			}
-			if (isset($content['options-mime']))
+			if (isset($params['mime']))
 			{
-				$sel_options['mime'] = array();
-				foreach((array)$params['mime'] as $key => $value)
-				{
-					if (is_numeric($key))
-					{
-						$sel_options['mime'][$value] = lang('%1 files',strtoupper(Api\MimeMagic::mime2ext($value))).' ('.$value.')';
-					}
-					else
-					{
-						$sel_options['mime'][$key] = lang('%1 files',strtoupper($value)).' ('.$key.')';
-					}
-				}
+				$content['showmime'] = true;
 				list($content['mime']) = each($sel_options['mime']);
 			}
 		}
@@ -528,8 +533,7 @@ class Vfs extends File
 				'method' => $content['method'],
 				'id'     => $content['id'],
 				'label'  => $content['label'],
-				'mime'   => $content['mime'],
-				'options-mime' => $sel_options['mime'],
+				'showmime' => $content['showmime'],
 				'old_path' => $content['path'],
 				'old_app' => $content['app']
 			)

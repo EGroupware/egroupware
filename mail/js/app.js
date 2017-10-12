@@ -3034,11 +3034,11 @@ app.classes.mail = AppJS.extend(
 			var subject = dataElem? dataElem.data.subject: _elems[i].subject;
 			var filename = subject.replace(/[\f\n\t\v]/g,"_")|| 'unknown';
 			ids.push(_id);
-			names.push(encodeURIComponent(filename+'.eml'));
+			names.push(filename+'.eml');
 		}
 		var vfs_select = et2_createWidget('vfs-select', {
 			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
-			mime: 'message'+encodeURIComponent('/')+'rfc822',
+			mime: 'message/rfc822',
 			method: 'mail.mail_ui.ajax_vfsSaveMessage',
 			button_label: _elems.length>1 ? egw.lang('Save all') : egw.lang('save'),
 			dialog_title: "Save email",

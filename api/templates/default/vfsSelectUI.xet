@@ -5,13 +5,11 @@
 	<template id="api.vfsSelectUI" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" class="vfs-select-container" resize_ratio="0">
 			<columns>
-				<column width="80"/>
-				<column width="200"/>
+				<column width="280"/>
 			</columns>
 			<rows >
 				<row class="et2_toolbar" disabled="@mode=/(open-multiple|select-dir)/">
-					<description value="File Name" label="%s:"/>
-					<textbox id="name" width="200"/>
+					<textbox id="name" class="et2_fullWidth" blur="enter your file name"/>
 				</row>
 				<row class="nextmatch_header_row">
 					<box class="et2_toolbar">
@@ -23,7 +21,7 @@
 						<vfs-name id="path" width="280" class="selectPath" align="left" onchange="app.vfsSelectUI.do_action('path', widget)"/>
 					</box>
 				</row>
-				<row >
+				<row>
 					<hbox class="selectFiles">
 						<grid width="100%" id="dir">
 							<columns>
@@ -41,10 +39,8 @@
 						</grid>
 					</hbox>
 				</row>
-				<row disabled="!@options-mime">
-					<menulist class="selectMime">
-						<menupopup id="mime" onchange="1" options="All files"/>
-					</menulist>
+				<row disabled="!@showmime">
+					<select id="mime" onchange="app.vfsSelectUI.do_action('mime', widget)" options="All files" class="et2_fullWidth"/>
 				</row>
 			</rows>
 		</grid>
