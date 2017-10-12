@@ -11,7 +11,7 @@
 			<rows >
 				<row class="et2_toolbar" disabled="@mode=/(open-multiple|select-dir)/">
 					<description value="File Name" label="%s:"/>
-					<textbox label="File Name" id="name" width="200"/>
+					<textbox id="name" width="200"/>
 				</row>
 				<row class="nextmatch_header_row">
 					<box class="et2_toolbar">

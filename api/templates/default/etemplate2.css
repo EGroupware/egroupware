@@ -894,7 +894,7 @@ ul.et2_link_string {
   background-color: #FDF9DB;
   max-width: 300px;
   color: black;
-  z-index: 100;
+  z-index: 102;
   -webkit-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
   box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.75);
