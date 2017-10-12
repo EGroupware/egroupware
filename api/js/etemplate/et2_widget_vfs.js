@@ -935,7 +935,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			this.button.text(this.options.button_caption);
 		}
-		this.setDOMNode(egw.app('filemanager') ? this.button[0]:document.createElement('span'));
+		this.setDOMNode(this.button[0]);
 	},
 
 	_content: function (_content, _callback)
