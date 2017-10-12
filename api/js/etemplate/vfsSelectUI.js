@@ -9,14 +9,13 @@
  * @version $Id$
  */
 
-"use strict";
 /**
  * UI for VFS Select widget
  *
  * @augments AppJS
  */
-app.classes.vfsSelectUI = AppJS.extend({
-
+app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
+{
 	vfsSelectWidget: {},
 	path_widget: {},
 	/**
@@ -301,7 +300,7 @@ app.classes.vfsSelectUI = AppJS.extend({
 		this.et2.setArrayMgrs(arrMgrs);
 		this.vfsSelectWidget._content(arrMgrs.content.data, _callback);
 	},
-	
+
 	/**
 	 *
 	 * @param {type} _widget
@@ -312,4 +311,4 @@ app.classes.vfsSelectUI = AppJS.extend({
 	{
 
 	}
-});
+});}).call(this);
