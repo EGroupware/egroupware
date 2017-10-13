@@ -19,7 +19,7 @@
 				</row>
 				<row>
 					<description value="Category admin" for="admin"/>
-					<select-account id="admin" account_type="both" tags="true" empty_label="Choose categories admin"/>
+					<select-account id="admin" account_type="accounts" tags="true" empty_label="Choose categories admin"/>
 				</row>
 				<row class="nmr" disabled="@no_private">
 					<description value="Locations / rooms"/>
