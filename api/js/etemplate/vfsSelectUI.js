@@ -89,38 +89,35 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 	},
 
 	/**
-	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
+	 * Send names of uploaded files (again) to server,
+	 * to process them: either copy to vfs or ask overwrite/rename
 	 *
 	 * @param {event} _event
-	 * @param {number} _file_count
-	 * @param {string=} _path where the file is uploaded to, default current directory
 	 */
-	upload: function(_event, _file_count, _path)
+	storeFile: function(_event)
 	{
-		if(typeof _path == 'undefined')
-		{
-			_path = this.get_path();
-		}
-		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
+		var path = this.get_path();
+
+		if (!jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
-			egw(window).json('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path],
-				this._upload_callback, this, true, this
+			egw(window).json('EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_vfsSelect_storeFile', [widget.getValue(), path],
+				this._storeFile_callback, this, true, this
 			).sendRequest(true);
 			widget.set_value('');
 		}
 	},
 
 	/**
-	 * Callback for server response to upload request:
+	 * Callback for server response to storeFile request:
 	 * - display message and refresh list
 	 * - ask use to confirm overwritting existing files or rename upload
 	 *
 	 * @param {object} _data values for attributes msg, files, ...
 	 */
-	_upload_callback: function(_data)
+	_storeFile_callback: function(_data)
 	{
-		if (_data.msg || _data.uploaded) window.egw_refresh(_data.msg, this.appname);
+		if (_data.msg || _data.uploaded) egw(window).message(_data.msg);
 
 		var that = this;
 		for(var file in _data.uploaded)
@@ -146,8 +143,8 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 							uploaded[this.my_data.file].name = _value;
 							delete uploaded[this.my_data.file].confirm;
 							// send overwrite-confirmation and/or rename request to server
-							egw.json('filemanager_ui::ajax_action', [this.my_data.action, uploaded, this.my_data.path, this.my_data.props],
-								that._upload_callback, that, true, that
+							egw.json('EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_vfsSelect_storeFile', [uploaded, this.my_data.path],
+								that._storeFile_callback, that, true, that
 							).sendRequest();
 							return;
 						case "cancel":
@@ -164,12 +161,14 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 				_data.uploaded[file].name, buttons, file);
 				// setting required data for callback in as my_data
 				dialog.my_data = {
-					action: _data.action,
 					file: file,
 					path: _data.path,
 					data: _data.uploaded[file],
-					props: _data.props
 				};
+			}
+			else
+			{
+				this.submit();
 			}
 		}
 	},
@@ -295,20 +294,12 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 	submit: function(_field, _val, _callback)
 	{
 		var arrMgrs = this.et2.getArrayMgrs();
-		arrMgrs.content.data[_field] = _val;
-		jQuery.extend(arrMgrs.content.data, arrMgrs.modifications.data);
-		this.et2.setArrayMgrs(arrMgrs);
+		if (_field && _val)
+		{
+			arrMgrs.content.data[_field] = _val;
+			jQuery.extend(arrMgrs.content.data, arrMgrs.modifications.data);
+			this.et2.setArrayMgrs(arrMgrs);
+		}
 		this.vfsSelectWidget._content(arrMgrs.content.data, _callback);
-	},
-
-	/**
-	 *
-	 * @param {type} _widget
-	 * @returns {undefined}
-	 * @todo: implementation of upload file
-	 */
-	uploaded: function (_widget)
-	{
-
 	}
 });}).call(this);

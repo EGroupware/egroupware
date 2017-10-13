@@ -563,6 +563,79 @@ class Vfs extends File
 	}
 
 	/**
+	 * Store uploaded temp file into VFS
+	 *
+	 * @param array $files temp files
+	 * @param string $dir vfs path to store the file
+	 */
+	static function ajax_vfsSelect_storeFile ($files, $dir)
+	{
+		$response = Api\Json\Response::get();
+		$result = array (
+			'errs' => 0,
+			'msg' => '',
+			'files' => 0,
+		);
+		$script_error = 0;
+		foreach($files as $tmp_name => &$data)
+		{
+			$path = \EGroupware\Api\Vfs::concat($dir, \EGroupware\Api\Vfs::encodePathComponent($data['name']));
+
+			if(\EGroupware\Api\Vfs::deny_script($path))
+			{
+				if (!isset($script_error))
+				{
+					$result['msg'] .= ($result['msg'] ? "\n" : '').lang('You are NOT allowed to upload a script!');
+				}
+				++$script_error;
+				++$result['errs'];
+				unset($files[$tmp_name]);
+			}
+			elseif (\EGroupware\Api\Vfs::is_dir($path))
+			{
+				$data['confirm'] = 'is_dir';
+			}
+			elseif (!$data['confirmed'] && \EGroupware\Api\Vfs::stat($path))
+			{
+				$data['confirm'] = true;
+			}
+			else
+			{
+				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+				{
+					$tmp_path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . basename($tmp_name);
+				}
+				else
+				{
+					$tmp_path = ini_get('upload_tmp_dir').'/'.basename($tmp_name);
+				}
+
+				if (\EGroupware\Api\Vfs::copy_uploaded($tmp_path, $path, null, false))
+				{
+					++$result['files'];
+					$uploaded[] = $data['name'];
+				}
+				else
+				{
+					++$result['errs'];
+				}
+			}
+		}
+		if ($result['errs'] > $script_error)
+		{
+			$result['msg'] .= ($result['msg'] ? "\n" : '').lang('Error uploading file!');
+		}
+		if ($result['files'])
+		{
+			$result['msg'] .= ($result['msg'] ? "\n" : '').lang('%1 successful uploaded.', implode(', ', $uploaded));
+		}
+		$result['uploaded'] = $files;
+		$result['path'] = $dir;
+
+		$response->data($result);
+	}
+
+	/**
 	 * Get a list off all apps having an application directory in VFS
 	 *
 	 * @return array
