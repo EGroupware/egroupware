@@ -522,10 +522,10 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				$subs = explode(',',$record_value);
 				for($sub_index = 0; $sub_index < count($subs); $sub_index++)
 				{
-					$sub_key = static::find_select_key($subs[$sub_index], $selects);
+					$sub_key = static::find_select_key(trim($subs[$sub_index]), $selects);
 					if(!$sub_key)
 					{
-						$sub_key = static::find_select_key($subs[$sub_index].','.$subs[$sub_index+1], $selects);
+						$sub_key = static::find_select_key(trim($subs[$sub_index]).','.trim($subs[$sub_index+1]), $selects);
 						if($sub_key) $sub_index++;
 					}
 					if($sub_key)
