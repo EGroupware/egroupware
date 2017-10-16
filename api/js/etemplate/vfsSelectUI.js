@@ -294,7 +294,7 @@ app.classes.vfsSelectUI = (function(){ "use strict"; return AppJS.extend(
 	submit: function(_field, _val, _callback)
 	{
 		var arrMgrs = this.et2.getArrayMgrs();
-		if (_field && _val)
+		if (_field)
 		{
 			arrMgrs.content.data[_field] = _val;
 			jQuery.extend(arrMgrs.content.data, arrMgrs.modifications.data);
