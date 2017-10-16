@@ -1058,7 +1058,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		// we need an etemplate_exec_id for better handling serverside parts of
 		// widgets and since we can not have a etemplate_exec_id specifically
 		// for dialog template our best shot is to inherit its parent etemplate_exec_id.
-		this.dialog.template.etemplate_exec_id = this.getInstanceManager().etemplate_exec_id;
+		this.dialog.template.etemplate_exec_id = etemplate2.getByApplication(egw.app_name())[0].etemplate_exec_id;
 		app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
 		app.vfsSelectUI.vfsSelectWidget = this;
 		this.dialog.div.on('load', function(e) {
