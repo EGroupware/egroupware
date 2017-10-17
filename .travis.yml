@@ -56,8 +56,8 @@ before_script:
 script:
   # install egroupware using MariaDB as domain "default"
   # disable MariaDB install as it fails after some changes in Travis environment
-  #- php doc/rpm-build/post_install.php --domain default
-  #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  - php doc/rpm-build/post_install.php --domain default
+    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
   # disable PostgreSQL install as it fails in Travis with Fatal error: Call to unimplemented native function pg_set_client_encoding
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
   #- psql -U postgres -c 'create database egroupware';
