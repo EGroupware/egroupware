@@ -19,6 +19,8 @@ use Egroupware\Api;
 
 class TimezoneTest extends \EGroupware\Api\AppTest {
 
+	protected static $server_tz;
+
 	protected $bo;
 
 	const RECUR_DAYS = 5;
@@ -29,12 +31,16 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	public static function setUpBeforeClass()
 	{
 		parent::setUpBeforeClass();
+
+		static::$server_tz = date_default_timezone_get();
 	}
 	public static function tearDownAfterClass()
 	{
+		date_default_timezone_set(static::$server_tz);
+
 		parent::tearDownAfterClass();
 	}
-	
+
 	public function setUp()
 	{
 		$this->bo = new \calendar_boupdate();
@@ -62,10 +68,10 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 * Test one combination of event / client / server timezone on a daily recurring
 	 * event to make sure it has the correct number of days, and its timezone
 	 * stays as set.
-	 * 
+	 *
 	 * @param Array $timezones Timezone settings for event, client & server
 	 * @param Array $times Start & end hours
-	 * 
+	 *
 	 * @dataProvider eventProvider
 	 */
 	public function testTimezones($timezones, $times)
@@ -128,7 +134,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		$start->modify('+1 day');
 		$exception = $event;
 		$preserve = array('actual_date', $start->format('ts'));
-		
+
 		$ui = new \calendar_uiforms();
 		$ui->_create_exception($exception, $preserve);
 
@@ -137,7 +143,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		$exception_start->modify('+1 hour');
 		$exception['start'] = $exception_start->format('ts');
 		$exception['end'] += 3600;
-		
+
 		$exception_id = $this->bo->save($exception);
 
 		// now we need to add the original start as recur-execption to the series
@@ -147,7 +153,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		unset($recur_event['alarm']);	// unsetting alarms too, as they cant be updated without start!
 		$this->bo->update($recur_event,true);	// no conflict check here
 
-		
+
 		// Load the event
 		// BO does caching, pass ID as array to avoid it
 		$loaded = $this->bo->read(Array($exception_id));
@@ -160,7 +166,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 			Api\DateTime::to($loaded['start'], Api\DateTime::DATABASE),
 			'Start date'. $message
 		);
-		
+
 		// Check original event
 		$this->checkEvent($timezones, $this->cal_id, $times);
 	}
@@ -199,7 +205,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 			Api\DateTime::to($loaded['end'], Api\DateTime::DATABASE),
 			'End date'. $message
 		);
-		
+
 		// Check event recurring timezone is unchanged
 		$this->assertEquals($timezones['event'], $loaded['tzid'], 'Timezone' . $message);
 
@@ -232,7 +238,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 
 		// Start times to test, 1 chosen to cross days
 		$times = array(1, 9);
-		
+
 		foreach($tz_combos as $timezones)
 		{
 			foreach($times as $start_time)
@@ -330,12 +336,13 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 
 	/**
 	 * Set the current client & server timezones as given
-	 * 
+	 *
 	 * @param Array $timezones
 	 */
 	protected function setTimezones($timezones)
 	{
 		// Set the client preference & server preference
+		date_default_timezone_set($timezones['server']);
 		$GLOBALS['egw_info']['server']['server_timezone'] = $timezones['server'];
 		$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = $timezones['client'];
 
