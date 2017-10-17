@@ -843,10 +843,7 @@ class Nextmatch extends Etemplate\Widget
 					'caption' => 'More',
 					'prefix' => $prefix,
 					// display rest of actions incl. current one as children
-					'children' => self::egw_actions(
-						array_slice($actions, $max_length-1, count($actions)-$max_length+1, true),
-						$template_name, $prefix, $action_links, $max_length,$default_attrs
-					)
+					'children' => array_slice($actions, $max_length-1, count($actions)-$max_length+1, true),
 				);
 				//echo "*** Inserting id=$prefix$id"; _debug_array($action);
 				// we break at end of foreach loop, as rest of actions is already dealt with
@@ -878,10 +875,7 @@ class Nextmatch extends Etemplate\Widget
 			// link or popup action
 			if ($action['url'])
 			{
-				if(strpos($action['url'], 'http') === false)
-				{
-					$action['url'] = Api\Framework::link('/index.php',str_replace('$action',$id,$action['url']));
-				}
+				$action['url'] = Api\Framework::link('/index.php',str_replace('$action',$id,$action['url']));
 				if ($action['popup'])
 				{
 					list($action['data']['width'],$action['data']['height']) = explode('x',$action['popup']);
