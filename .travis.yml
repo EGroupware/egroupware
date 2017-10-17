@@ -34,15 +34,12 @@ before_script:
        phpenv config-rm xdebug.ini;
        composer require 'phpunit/phpunit:~5.7';
        ;;
-    "7"|"7.0"|"7.1")
+    "7"|"7.0"|"7.1"|"7.2"|"7.3")
        yes "" | pecl install apcu;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
        composer require 'phpunit/phpunit:~6.3';
       ;;
-    "hhvm")
-       composer require 'phpunit/phpunit:~5.7';
-       ;;
     esac
   #- php -m
   - sed 's/^update = git stash -q/update = \#git stash -q/g' .mrconfig
