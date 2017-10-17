@@ -170,7 +170,7 @@ class SecurityTest extends TestCase {
 	{
 		$r=@php_safe_unserialize($str);
 
-		$this->assertSame($result, $r, 'Save unserialize failed');
+		$this->assertSame($result, (bool)$r, 'Save unserialize failed');
 	}
 
 	/**
