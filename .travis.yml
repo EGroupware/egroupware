@@ -3,12 +3,11 @@ php:
   - 5.6
   - 7.0
   - 7.1
-  - hhvm
+  - 7.2
+  - master
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: hhvm
 
 services:
   - memcached
