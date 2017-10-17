@@ -184,6 +184,7 @@ var et2_link_to = (function(){ "use strict"; return et2_inputWidget.extend(
 			button_label: egw.lang('Link'),
 			button_caption: '',
 			readonly: this.options.readonly,
+			dialog_title: egw.lang('Link'),
 			onchange: function() {
 				var values = true;
 				// If entry not yet saved, store for linking on server
