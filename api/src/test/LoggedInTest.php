@@ -17,7 +17,6 @@ namespace EGroupware\Api;
 require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
 
 use PHPUnit\Framework\TestCase as TestCase;
-use PHPUnit\Framework\ExpectationFailedException as PHPUnitException;
 use EGroupware\Api;
 
 /**
@@ -63,16 +62,16 @@ abstract class LoggedInTest extends TestCase
 			static::markTestSkipped('Unable to connect to Egroupware - ' . $e->getMessage());
 			return;
 		}
+	}
 
+	public function assertPreConditions()
+	{
 		// Do some checks to make sure things we expect are there
-		if(!static::sanity_check())
-		{
-			throw new PHPUnitException('Unable to connect to Egroupware - failed sanity check');
-		}
+		$this->assertTrue(static::sanity_check(), 'Unable to connect to Egroupware - failed sanity check');
 	}
 
 	/**
-	 * End session when done - every test case gets its own session
+	 * End session when done - every test class gets its own session
 	 */
 	public static function tearDownAfterClass()
 	{
