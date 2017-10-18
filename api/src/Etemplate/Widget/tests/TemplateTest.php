@@ -13,7 +13,7 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
-require_once realpath(__DIR__.'/../../test/WidgetBaseTest.php');
+require_once realpath(__DIR__.'/../../tests/WidgetBaseTest.php');
 
 /**
  * Description of TemplateTest
@@ -64,7 +64,7 @@ class TemplateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		static $template = 'api.nested.sub_template';
 		$template = Template::instance($template, 'test');
 		$this->assertInstanceOf('EGroupware\Api\Etemplate\Widget\Template', $template);
-		
+
 		// Check for the sub-child to see if the template was loaded
 		$this->assertInstanceOf('EGroupware\Api\Etemplate\Widget', $template->getElementById('sub_child'));
 

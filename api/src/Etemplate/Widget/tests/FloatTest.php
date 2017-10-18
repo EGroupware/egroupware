@@ -12,7 +12,7 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
-require_once realpath(__DIR__.'/../../test/WidgetBaseTest.php');
+require_once realpath(__DIR__.'/../../tests/WidgetBaseTest.php');
 
 use EGroupware\Api\Etemplate;
 
@@ -172,7 +172,7 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		$content = static::$mocked_exec_result;
 		static::$mocked_exec_result = array();
 
-		return $this->validateTest($content, 
+		return $this->validateTest($content,
 				$error ? array() : array('widget' => $value),
 				$error ? array('widget' => $error) : array()
 		);

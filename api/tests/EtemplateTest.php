@@ -12,7 +12,7 @@
 
 namespace EGroupware\Api;
 
-require_once realpath(__DIR__.'/../Etemplate/test/WidgetBaseTest.php');
+require_once realpath(__DIR__.'/../src/Etemplate/tests/WidgetBaseTest.php');
 
 /**
  * Test the main class of Etemplate

@@ -14,8 +14,6 @@
 
 namespace EGroupware\Api;
 
-require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
-
 use PHPUnit\Framework\TestCase as TestCase;
 use EGroupware\Api;
 
@@ -136,7 +134,7 @@ abstract class LoggedInTest extends TestCase
 
 		try
 		{
-			include(realpath(__DIR__ . '/../../../header.inc.php'));
+			include(realpath(__DIR__ . '/../../header.inc.php'));
 		}
 		catch (Exception $e)
 		{
@@ -146,7 +144,7 @@ abstract class LoggedInTest extends TestCase
 			return;
 		}
 
-		require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
+		require_once realpath(__DIR__.'/../src/loader/common.php');	// autoloader & check_load_extension
 
 		// egw is normally created when a file is loaded using require_once
 		if(empty($GLOBALS['egw']) || !is_a($GLOBALS['egw'], 'EGroupware\Api\Egw\Base'))

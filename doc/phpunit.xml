@@ -12,21 +12,17 @@
     </php>
     <testsuites>
         <testsuite name="Api">
+            <directory>../api/tests</directory>
             <directory>../api/src/test/</directory>
 			<directory>../api/src/*/test/</directory>
-            <directory>../api/tests</directory>
         </testsuite>
         <testsuite name="Etemplate">
-            <file>../api/src/test/EtemplateTest.php</file>
-            <directory>../api/src/Etemplate/test/</directory>
-            <directory>../api/src/Etemplate/Widget/test/</directory>
+            <file>../api/src/tests/EtemplateTest.php</file>
+            <directory>../api/src/Etemplate/tests/</directory>
+            <directory>../api/src/Etemplate/Widget/tests/</directory>
         </testsuite>
 		<testsuite name="Apps">
 			<!-- Apps with test directory -->
-			<directory>../*/test/</directory>
-			<!-- Apps with namespace -->
-			<directory>../*/src/test/</directory>
-			<directory>../*/src/*/test/</directory>
             <directory>../*/tests/</directory>
 
 			<exclude>../api</exclude>

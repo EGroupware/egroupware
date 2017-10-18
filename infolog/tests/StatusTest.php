@@ -20,7 +20,7 @@
 
 namespace EGroupware\Infolog;
 
-require_once realpath(__DIR__.'/../../api/src/test/AppTest.php');	// Application test base
+require_once realpath(__DIR__.'/../../api/tests/AppTest.php');	// Application test base
 
 use Egroupware\Api;
 

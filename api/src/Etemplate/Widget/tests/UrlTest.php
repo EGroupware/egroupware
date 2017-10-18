@@ -13,7 +13,7 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
-require_once realpath(__DIR__.'/../../test/WidgetBaseTest.php');
+require_once realpath(__DIR__.'/../../tests/WidgetBaseTest.php');
 
 use EGroupware\Api\Etemplate;
 
@@ -125,7 +125,7 @@ class UrlTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 			array('http://1337.net'),
 			array('http://a.b-c.de'),
 			array('http://223.255.255.254'),
-			 * 
+			 *
 			 */
 		);
 	}

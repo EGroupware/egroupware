@@ -13,7 +13,7 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
-require_once realpath(__DIR__.'/../../test/WidgetBaseTest.php');
+require_once realpath(__DIR__.'/../../tests/WidgetBaseTest.php');
 
 use EGroupware\Api\Etemplate;
 
