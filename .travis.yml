@@ -21,9 +21,6 @@ addons:
   mariadb: '10.0'
 
 sudo: required
-dist: trusty
-# this fixes hhvm builds according to https://docs.travis-ci.com/user/languages/php#HHVM-versions-on-Trusty
-group: edge
 
 before_script:
   - sudo apt-get update -qq
