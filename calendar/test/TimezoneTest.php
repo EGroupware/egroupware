@@ -169,6 +169,9 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 
 		// Check original event
 		$this->checkEvent($timezones, $this->cal_id, $times);
+
+		// Clean up exception
+		$this->bo->delete($exception_id);
 	}
 
 	/**
@@ -314,7 +317,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	{
 		$event = array(
 			'title' => ($whole_day ? 'Whole day ' : '')."Test for " . $this->tzString($timezones),
-			'des'   => ($whole_day ? 'Whole day ' : '').'Test for test ' . $this->getName() . ' ' . $this->tzString($timezones),
+			'description'   => ($whole_day ? 'Whole day ' : '').'Test for test ' . $this->getName() . ' ' . $this->tzString($timezones),
 			'start' => \mktime($whole_day ? 0 : $times['start'], 0, 0, date('m'), date('d')+1, date('Y')),
 			'end'   => $whole_day ? \mktime(23, 59, 59, date('m'), date('d')+1, date('Y')) : \mktime($times['end'], 0, 0, date('m'), date('d')+1, date('Y')),
 			'tzid'	=> $timezones['event'],
@@ -342,7 +345,6 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	protected function setTimezones($timezones)
 	{
 		// Set the client preference & server preference
-		date_default_timezone_set($timezones['server']);
 		$GLOBALS['egw_info']['server']['server_timezone'] = $timezones['server'];
 		$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = $timezones['client'];
 
