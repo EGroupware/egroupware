@@ -150,7 +150,7 @@ abstract class LoggedInTest extends TestCase
 		require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
 
 		// egw is normally created when a file is loaded using require_once
-		if(!$GLOBALS['egw'])
+		if(empty($GLOBALS['egw']) || !is_a($GLOBALS['egw'], 'EGroupware\Api\Egw\Base'))
 		{
 			// From Api/src/loader.php
 			$GLOBALS['egw_info']['user']['domain'] = Api\Session::search_instance(
