@@ -6,6 +6,7 @@ namespace EGroupware\Infolog;
 require_once realpath(__DIR__.'/../../api/tests/AppTest.php');	// Application test base
 
 use Egroupware\Api;
+use Egroupware\Api\Etemplate;
 
 /**
  * Test setting a project manager project on an infolog entry
@@ -36,11 +37,7 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	{
 		$this->ui = new \infolog_ui();
 
-
-		$this->ui->tmpl = $this->getMockBuilder('\\Egroupware\\Api\\Etemplate')
-			->disableOriginalConstructor()
-			->setMethods(array('exec', 'read'))
-			->getMock($this->ui);
+		$this->ui->tmpl = $this->createPartialMock(Etemplate::class, array('exec', 'read'));
 
 		$this->bo = $this->ui->bo;
 		$this->pm_bo = new \projectmanager_bo();
@@ -125,12 +122,8 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$info = $this->getTestInfolog();
 
 		$this->info_id = $this->bo->write($info);
-		$this->assertThat($this->info_id,
-			$this->logicalAnd(
-				$this->isType('integer'),
-				$this->greaterThan(0)
-			)
-		);
+		$this->assertInternalType('integer', $this->info_id);
+		$this->assertGreaterThan(0, $this->info_id);
 
 		// Force links to run notification now so we get valid testing - it
 		// usually waits until Egw::on_shutdown();
