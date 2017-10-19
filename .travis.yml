@@ -42,6 +42,7 @@ before_script:
       ;;
     esac
   #- php -m
+  - php -i
   - sed 's/^update = git stash -q/update = \#git stash -q/g' .mrconfig
   - mr --trust-all --stats up
   - (cd activesync; mr --trust-all --stats up)
