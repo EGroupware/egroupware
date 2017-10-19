@@ -239,7 +239,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		$tests = array();
 		$tz_combos = $this->makeTZCombos();
 
-		// Start times to test, 1 chosen to cross days
+		// Start times to test (hour of the day), 1 chosen to cross days
 		$times = array(1, 9);
 
 		foreach($tz_combos as $timezones)
