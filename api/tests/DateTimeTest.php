@@ -11,8 +11,6 @@
  */
 namespace EGroupware\Api;
 
-require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
-
 use PHPUnit\Framework\TestCase as TestCase;
 
 /**
@@ -22,6 +20,7 @@ use PHPUnit\Framework\TestCase as TestCase;
 class DateTimeTest extends TestCase {
 
 	protected static $usertime;
+	protected static $server_tz;
 
 	/**
 	 * Work in server time, so tests match expectations
@@ -32,6 +31,13 @@ class DateTimeTest extends TestCase {
 
 		static::$usertime = DateTime::$user_timezone;
 
+		static::$server_tz = date_default_timezone_get();
+
+		// Set time to UTC time for consistency
+		DateTime::setUserPrefs('UTC');
+		date_default_timezone_set('UTC');
+		DateTime::$server_timezone = new \DateTimeZone('UTC');
+
 		// Set user time to server time for consistency
 		DateTime::setUserPrefs(date_default_timezone_get());
 	}
@@ -39,6 +45,7 @@ class DateTimeTest extends TestCase {
 	{
 		// Reset
 		DateTime::setUserPrefs(static::$usertime->getName());
+		date_default_timezone_set(static::$server_tz);
 
 		unset($GLOBALS['egw']);
 		parent::tearDownAfterClass();

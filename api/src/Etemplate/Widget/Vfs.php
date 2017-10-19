@@ -14,6 +14,8 @@
 namespace EGroupware\Api\Etemplate\Widget;
 
 use EGroupware\Api\Etemplate;
+use EGroupware\Api\Framework;
+use EGroupware\Api\Json;
 use EGroupware\Api;
 
 /**
@@ -367,5 +369,285 @@ class Vfs extends File
 		}
 		if (!empty($relpath)) $path .= '/'.$relpath;
 		return $path;
+	}
+
+	/**
+	 * This function behaves like etemplate app function for set/get content of
+	 * VFS Select Widget UI
+	 *
+	 * There are the following ($params) parameters:
+	 *
+	 * - mode=(open|open-multiple|saveas|select-dir)(required)
+	 * - method=app.class.method					(optional callback, gets called with id and selected file(s))
+	 * - method_id= array()|string					(optional parameter passed to callback)
+	 * - path=string								(optional path in VFS)
+	 * - mime=string								(optional mime-type to limit display to given type)
+	 * - name=array|string							(optional name value to preset name field)
+	 *
+	 * @param array $content
+	 * @param array $params
+	 * @throws Api\Exception\WrongParameter
+	 */
+	public static function ajax_vfsSelect_content (array $content=null, $params = null)
+	{
+		$response = Json\Response::get();
+		$readonlys = $sel_options = array();
+
+		if (isset($params['mime']))
+		{
+			foreach((array)$params['mime'] as $key => $value)
+			{
+				if (is_numeric($key))
+				{
+					$sel_options['mime'][$value] = lang('%1 files',strtoupper(Api\MimeMagic::mime2ext($value))).' ('.$value.')';
+				}
+				else
+				{
+					$sel_options['mime'][$key] = lang('%1 files',strtoupper($value)).' ('.$key.')';
+				}
+			}
+		}
+
+		if (!is_array($content))
+		{
+			$content = array_merge($params, array(
+				'name'	=> (string)$params['name'],
+				'path'	=> empty($params['path']) ?
+				Api\Cache::getSession('filemanger', 'select_path'): $params['path']
+			));
+			unset($content['mime']);
+			if (!in_array($content['mode'],array('open','open-multiple','saveas','select-dir')))
+			{
+				throw new Api\Exception\WrongParameter("Wrong or unset required mode parameter!");
+			}
+			if (isset($params['mime']))
+			{
+				$content['showmime'] = true;
+				list($content['mime']) = each($sel_options['mime']);
+			}
+		}
+		elseif(isset($content['action']))
+		{
+			$action = $content['action'];
+			unset($content['action']);
+			switch($action)
+			{
+				case 'home':
+					$content['path'] = \EGroupware\Api\Vfs::get_home_dir();
+					break;
+			}
+		}
+		if (!empty($content['app']) && $content['old_app'] != $content['app'])
+		{
+			$content['path'] = $content['app'] == 'home'? \EGroupware\Api\Vfs::get_home_dir():
+				'/apps/'.$content['app'];
+		}
+
+		$favorites_flag = substr($content['path'],0,strlen('/apps/favorites')) == '/apps/favorites';
+		if (!$favorites_flag && (!$content['path'] || !\EGroupware\Api\Vfs::is_dir($content['path'])))
+		{
+			$content['path'] = \EGroupware\Api\Vfs::get_home_dir();
+		}
+		elseif ($favorites_flag)
+		{
+			// Display favorites as if they were folders
+			$files = array();
+			$favorites = \EGroupware\Api\Framework\Favorites::get_favorites('filemanager');
+			$n = 0;
+			foreach($favorites as $favorite)
+			{
+				$path = $favorite['state']['path'];
+				// Just directories
+				if(!$path) continue;
+				if ($path == $content['path']) continue;	// remove directory itself
+
+				$mime = \EGroupware\Api\Vfs::mime_content_type($path);
+				$content['dir'][$n] = array(
+					'name' => $favorite['name'],
+					'path' => $path,
+					'mime' => $mime,
+					'is_dir' => true
+				);
+				if ($content['mode'] == 'open-multiple')
+				{
+					$readonlys['selected['.$favorite['name'].']'] = true;
+				}
+				++$n;
+			}
+		}
+		else if (!($files = \EGroupware\Api\Vfs::find($content['path'],array(
+			'dirsontop' => true,
+			'order' => 'name',
+			'sort' => 'ASC',
+			'maxdepth' => 1,
+		))))
+		{
+			$content['msg'] = lang("Can't open directory %1!",$content['path']);
+		}
+		else
+		{
+			$n = 0;
+			$content['dir'] = array('mode' => $content['mode']);
+			foreach($files as $path)
+			{
+				if ($path == $content['path']) continue;	// remove directory itself
+
+				$name = \EGroupware\Api\Vfs::basename($path);
+				$is_dir = \EGroupware\Api\Vfs::is_dir($path);
+				$mime = \EGroupware\Api\Vfs::mime_content_type($path);
+				if ($content['mime'] && !$is_dir && $mime != $content['mime'])
+				{
+					continue;	// does not match mime-filter --> ignore
+				}
+				$content['dir'][$n] = array(
+					'name' => $name,
+					'path' => $path,
+					'mime' => $mime,
+					'is_dir' => $is_dir
+				);
+				if ($is_dir && $content['mode'] == 'open-multiple')
+				{
+					$readonlys['selected['.$name.']'] = true;
+				}
+				++$n;
+			}
+			if (!$n) $readonlys['selected[]'] = true;	// remove checkbox from empty line
+		}
+		$readonlys = array_merge($readonlys, array(
+			'createdir' => !\EGroupware\Api\Vfs::is_writable($content['path']),
+			'upload_file' => !\EGroupware\Api\Vfs::is_writable($content['path']) ||
+			!in_array($content['mode'],array('open', 'open-multiple')),
+		));
+
+		$sel_options = array_merge($sel_options, array(
+			'app' => self::get_apps()
+		));
+		Api\Cache::setSession('filemanger', 'select_path', $content['path']);
+		// Response
+		$response->data(array(
+			'content'		=> $content,
+			'sel_options'	=> $sel_options,
+			'readonlys'		=> $readonlys,
+			'modifications'	=> array (
+				'mode'   => $content['mode'],
+				'method' => $content['method'],
+				'id'     => $content['id'],
+				'label'  => $content['label'],
+				'showmime' => $content['showmime'],
+				'old_path' => $content['path'],
+				'old_app' => $content['app']
+			)
+		));
+	}
+
+	/**
+	 * function to create directory in the given path
+	 *
+	 * @param type $dir name of the directory
+	 * @param type $path path to create directory in it
+	 */
+	public static function ajax_create_dir ($dir, $path)
+	{
+		$response = Json\Response::get();
+		$msg = '';
+		if (!empty($dir) && !empty($path))
+		{
+			$dst = \EGroupware\Api\Vfs::concat($path, $dir);
+			if (\EGroupware\Api\Vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
+			{
+				$msg = lang("Directory successfully created.");
+			}
+			$msg = lang("Error while creating directory.");
+		}
+		$response->data($msg);
+	}
+
+	/**
+	 * Store uploaded temp file into VFS
+	 *
+	 * @param array $files temp files
+	 * @param string $dir vfs path to store the file
+	 */
+	static function ajax_vfsSelect_storeFile ($files, $dir)
+	{
+		$response = Api\Json\Response::get();
+		$result = array (
+			'errs' => 0,
+			'msg' => '',
+			'files' => 0,
+		);
+		$script_error = 0;
+		foreach($files as $tmp_name => &$data)
+		{
+			$path = \EGroupware\Api\Vfs::concat($dir, \EGroupware\Api\Vfs::encodePathComponent($data['name']));
+
+			if(\EGroupware\Api\Vfs::deny_script($path))
+			{
+				if (!isset($script_error))
+				{
+					$result['msg'] .= ($result['msg'] ? "\n" : '').lang('You are NOT allowed to upload a script!');
+				}
+				++$script_error;
+				++$result['errs'];
+				unset($files[$tmp_name]);
+			}
+			elseif (\EGroupware\Api\Vfs::is_dir($path))
+			{
+				$data['confirm'] = 'is_dir';
+			}
+			elseif (!$data['confirmed'] && \EGroupware\Api\Vfs::stat($path))
+			{
+				$data['confirm'] = true;
+			}
+			else
+			{
+				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+				{
+					$tmp_path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . basename($tmp_name);
+				}
+				else
+				{
+					$tmp_path = ini_get('upload_tmp_dir').'/'.basename($tmp_name);
+				}
+
+				if (\EGroupware\Api\Vfs::copy_uploaded($tmp_path, $path, null, false))
+				{
+					++$result['files'];
+					$uploaded[] = $data['name'];
+				}
+				else
+				{
+					++$result['errs'];
+				}
+			}
+		}
+		if ($result['errs'] > $script_error)
+		{
+			$result['msg'] .= ($result['msg'] ? "\n" : '').lang('Error uploading file!');
+		}
+		if ($result['files'])
+		{
+			$result['msg'] .= ($result['msg'] ? "\n" : '').lang('%1 successful uploaded.', implode(', ', $uploaded));
+		}
+		$result['uploaded'] = $files;
+		$result['path'] = $dir;
+
+		$response->data($result);
+	}
+
+	/**
+	 * Get a list off all apps having an application directory in VFS
+	 *
+	 * @return array
+	 */
+	static function get_apps()
+	{
+		$apps = array(false);	// index starting from 1
+		if (isset($GLOBALS['egw_info']['apps']['stylite'])) $apps = array('favorites' => lang('Favorites'));
+		$apps += \EGroupware\Api\Link::app_list('query');
+		// they do NOT support adding files to VFS
+		unset($apps['addressbook-email'], $apps['mydms'], $apps['wiki'],
+				$apps['api-accounts']);
+		return $apps;
 	}
 }

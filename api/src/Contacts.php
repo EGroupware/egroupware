@@ -1890,6 +1890,13 @@ class Contacts extends Contacts\Storage
 						break;
 				}
 			}
+
+			// Merge distribution lists
+			$lists = $this->read_distributionlist(array($contact['id']));
+			foreach($lists[$contact['id']] as $list_id => $list_name)
+			{
+				parent::add2list($target['id'], $list_id);
+			}
 		}
 		if (!$this->save($target)) return 0;
 
@@ -1921,9 +1928,40 @@ class Contacts extends Contacts\Storage
 					unset($newlinkID);
 				}
 			}
+			// Update calendar
+			$this->merge_calendar($contact['id'], $target['id']);
+
 			if ($this->delete($contact['id'])) $success++;
 		}
 		return $success;
+	}
+
+	/**
+	 * Change the contact ID in any calendar events from the old contact ID
+	 * to the new merged ID
+	 *
+	 * @param int $old_id
+	 * @param int $new_id
+	 */
+	protected function merge_calendar($old_id, $new_id)
+	{
+		static $bo;
+		if(!is_object($bo))
+		{
+			$bo = new \calendar_boupdate();
+		}
+
+		// Find all events with this contact
+		$events = $bo->search(array('users' => "c$old_id", 'ignore_acl' => true));
+
+		foreach($events as $event)
+		{
+			$event['participants']["c$new_id"] = $event['participants']["c$old_id"];
+			unset($event['participants']["c$old_id"]);
+
+			// Quietly update, ignoring ACL & no notifications
+			$bo->update($event, true, true, true, true, $messages, true);
+		}
 	}
 
 	/**

@@ -5,14 +5,14 @@
  *
  * @link http://www.egroupware.org
  * @author Nathan Gray
- * @package 
+ * @package
  * @copyright (c) 2017  Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
 namespace EGroupware\Api\Etemplate\Widget;
 
-require_once realpath(__DIR__.'/../../test/WidgetBaseTest.php');
+require_once realpath(__DIR__.'/../../tests/WidgetBaseTest.php');
 
 use EGroupware\Api\Etemplate;
 
@@ -52,7 +52,7 @@ class SelectTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		'Ψ'=>	'ψ	Psi',
 		'Ω'=>	'ω	Omega',
 	);
-	
+
 	/**
 	 * Test the widget's basic functionality - we put data in, it comes back
 	 * unchanged.

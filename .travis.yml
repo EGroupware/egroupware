@@ -3,12 +3,14 @@ php:
   - 5.6
   - 7.0
   - 7.1
-  - hhvm
+  - 7.2
+  - master
 
 matrix:
   fast_finish: true
   allow_failures:
-    - php: hhvm
+    - php: 7.2
+    - php: master
 
 services:
   - memcached
@@ -19,9 +21,6 @@ addons:
   mariadb: '10.0'
 
 sudo: required
-dist: trusty
-# this fixes hhvm builds according to https://docs.travis-ci.com/user/languages/php#HHVM-versions-on-Trusty
-group: edge
 
 before_script:
   - sudo apt-get update -qq
@@ -35,15 +34,12 @@ before_script:
        phpenv config-rm xdebug.ini;
        composer require 'phpunit/phpunit:~5.7';
        ;;
-    "7"|"7.0"|"7.1")
+    "7"|"7.0"|"7.1"|"7.2"|"7.3")
        yes "" | pecl install apcu;
        echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
        phpenv config-rm xdebug.ini;
        composer require 'phpunit/phpunit:~6.3';
       ;;
-    "hhvm")
-       composer require 'phpunit/phpunit:~5.7';
-       ;;
     esac
   #- php -m
   - sed 's/^update = git stash -q/update = \#git stash -q/g' .mrconfig
@@ -56,9 +52,10 @@ before_script:
 
 script:
   # install egroupware using MariaDB as domain "default"
-  # disable MariaDB install as it fails after some changes in Travis environment
-  #- php doc/rpm-build/post_install.php --domain default
-  #  --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+  # and add an admin user "demo" with password "guest"
+  - php doc/rpm-build/post_install.php --domain default
+    --source_dir `pwd` --start_db '' --autostart_db '' --start_webserver '' --webserver_user ''
+    --admin_user demo --admin_passwd guest
   # disable PostgreSQL install as it fails in Travis with Fatal error: Call to unimplemented native function pg_set_client_encoding
   # install egroupware using PostgreSQL as domain "pgsql", need some specific handling we can not create users via sql
   #- psql -U postgres -c 'create database egroupware';

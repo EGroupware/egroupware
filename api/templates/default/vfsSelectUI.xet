@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="api.vfsSelectUI" template="" lang="" group="0" version="1.9.002">
+		<grid width="100%" class="vfs-select-container" resize_ratio="0">
+			<columns>
+				<column/>
+			</columns>
+			<rows >
+				<row class="et2_toolbar" disabled="@mode=/(open-multiple|select-dir)/">
+					<textbox id="name" class="et2_fullWidth" blur="enter your file name"/>
+				</row>
+				<row class="nextmatch_header_row">
+					<box class="et2_toolbar et2_fullWidth">
+						<buttononly statustext="Go to your home directory" id="home" onclick="app.vfsSelectUI.do_action('home', widget)" image="gohome" background_image="1"/>
+						<buttononly statustext="Up" id="up" onclick="app.vfsSelectUI.change_dir('..', widget);" image="goup" background_image="1"/>
+						<select width="175" id="app" empty_label="Applications" no_lang="1" onchange="app.vfsSelectUI.do_action('app', widget)"/>
+						<buttononly statustext="Create directory" id="createdir" class="createDir" onclick="app.vfsSelectUI.createdir" image="button_createdir" ro_image="createdir_disabled" background_image="1"/>
+						<file id='upload_file' statustext="upload file" progress_dropdownlist = "true" multiple="true" onFinish="app.vfsSelectUI.storeFile"/>
+						<vfs-name id="path" class="et2_fullWidth selectPath" align="left" onchange="app.vfsSelectUI.do_action('path', widget)"/>
+					</box>
+				</row>
+				<row>
+					<hbox class="selectFiles">
+						<grid width="100%" id="dir">
+							<columns>
+								<column width="20"/>
+								<column/>
+								<column width="1%" disabled="!@mode=open-multiple"/>
+							</columns>
+							<rows>
+								<row class="row">
+									<vfs-mime align="center" id="$row" options="16" class="selectIcon"/>
+									<vfs id="$row" onclick="app.vfsSelectUI.select_clicked"/>
+									<checkbox align="right" id="selected[]" options="&quot;$row_cont[name]&quot;"/>
+								</row>
+							</rows>
+						</grid>
+					</hbox>
+				</row>
+				<row disabled="!@showmime">
+					<select id="mime" onchange="app.vfsSelectUI.do_action('mime', widget)" options="All files" class="et2_fullWidth"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

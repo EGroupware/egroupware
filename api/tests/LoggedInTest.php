@@ -14,10 +14,7 @@
 
 namespace EGroupware\Api;
 
-require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
-
 use PHPUnit\Framework\TestCase as TestCase;
-use PHPUnit\Framework\ExpectationFailedException as PHPUnitException;
 use EGroupware\Api;
 
 /**
@@ -63,16 +60,16 @@ abstract class LoggedInTest extends TestCase
 			static::markTestSkipped('Unable to connect to Egroupware - ' . $e->getMessage());
 			return;
 		}
+	}
 
+	public function assertPreConditions()
+	{
 		// Do some checks to make sure things we expect are there
-		if(!static::sanity_check())
-		{
-			throw new PHPUnitException('Unable to connect to Egroupware - failed sanity check');
-		}
+		$this->assertTrue(static::sanity_check(), 'Unable to connect to Egroupware - failed sanity check');
 	}
 
 	/**
-	 * End session when done - every test case gets its own session
+	 * End session when done - every test class gets its own session
 	 */
 	public static function tearDownAfterClass()
 	{
@@ -137,7 +134,7 @@ abstract class LoggedInTest extends TestCase
 
 		try
 		{
-			include(realpath(__DIR__ . '/../../../header.inc.php'));
+			include(realpath(__DIR__ . '/../../header.inc.php'));
 		}
 		catch (Exception $e)
 		{
@@ -147,10 +144,10 @@ abstract class LoggedInTest extends TestCase
 			return;
 		}
 
-		require_once realpath(__DIR__.'/../loader/common.php');	// autoloader & check_load_extension
+		require_once realpath(__DIR__.'/../src/loader/common.php');	// autoloader & check_load_extension
 
 		// egw is normally created when a file is loaded using require_once
-		if(!$GLOBALS['egw'])
+		if(empty($GLOBALS['egw']) || !is_a($GLOBALS['egw'], 'EGroupware\Api\Egw\Base'))
 		{
 			// From Api/src/loader.php
 			$GLOBALS['egw_info']['user']['domain'] = Api\Session::search_instance(

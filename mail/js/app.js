@@ -237,9 +237,6 @@ app.classes.mail = AppJS.extend(
 				}
 				var that = this;
 				var plainText = this.et2.getWidgetById('mail_plaintext');
-				// set cursor to the begining of the textarea only for first focus
-				if (plainText) plainText.getDOMNode().setSelectionRange(0,0);
-
 				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 				this.mail_isMainWindow = false;
 				this.compose_fieldExpander_init();
@@ -284,6 +281,8 @@ app.classes.mail = AppJS.extend(
 					}
 					that.compose_resizeHandler();
 				});
+				// Init key handler
+				this.init_keyHandler();
 
 				//Call drag_n_drop initialization for emails on compose
 				this.init_dndCompose();
@@ -291,16 +290,15 @@ app.classes.mail = AppJS.extend(
 				// Set focus on To/body field
 				// depending on To field value
 				var to = this.et2.getWidgetById('to');
+				var content = this.et2.getArrayMgr('content').data;
 				if (to && to.get_value() && to.get_value() != '')
 				{
-					var content = this.et2.getArrayMgr('content').data;
 					if (content.is_plain)
 					{
-						var plainText = this.et2.getWidgetById('mail_plaintext');
 						// focus
 						jQuery(plainText.node).focus();
 						// get the cursor to the top of the textarea
-						if (typeof plainText.node.setSelectionRange !='undefined') plainText.node.setSelectionRange(0,0);
+						if (typeof plainText.node.setSelectionRange !='undefined' && !plainText.node.is(":hidden")) plainText.node.setSelectionRange(0,0);
 					}
 					else
 					{
@@ -312,6 +310,12 @@ app.classes.mail = AppJS.extend(
 				else if(to)
 				{
 					jQuery('input',to.node).focus();
+					// set cursor to the begining of the textarea only for first focus
+					if (content.is_plain
+						&& typeof plainText.node.setSelectionRange !='undefined')
+					{
+						plainText.node.setSelectionRange(0,0);
+					}
 				}
 				var smime_sign = this.et2.getWidgetById('smime_sign');
 				var smime_encrypt = this.et2.getWidgetById('smime_encrypt');
@@ -2955,19 +2959,15 @@ app.classes.mail = AppJS.extend(
 			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
 			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[saveAsVFS\]/,'')];
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		var width=640;
-		var height=570;
-		var windowName ='mail';
-		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode=saveas';
-		url += '&id='+mailid+'::'+attgrid.partID+'::'+attgrid.winmailFlag;
-		url += '&name='+attgrid.filename;
-		url += '&type='+attgrid.type.toLowerCase();
-		url += '&method=mail.mail_ui.vfsSaveAttachment';
-		url += '&label='+egw.lang('Save');
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		egw_openWindowCentered(url,windowName,width,height);
+		var vfs_select = et2_createWidget('vfs-select', {
+			mode: 'saveas',
+			method: 'mail.mail_ui.ajax_vfsSaveAttachment',
+			button_label: egw.lang('Save'),
+			dialog_title: "Save attchment",
+			method_id: mailid+'::'+attgrid.partID+'::'+attgrid.winmailFlag,
+			name: attgrid.filename
+		});
+		vfs_select.click();
 	},
 
 	saveAllAttachmentsToVFS: function(tag_info, widget)
@@ -2985,20 +2985,21 @@ app.classes.mail = AppJS.extend(
 			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
 			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		var width=640;
-		var height=570;
-		var windowName ='mail';
-		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode=select-dir';
-		url += '&method=mail.mail_ui.vfsSaveAttachment';
-		url += '&label='+egw.lang('Save all');
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
+
+		var ids = [];
 		for (var i=0;i<attgrid.length;i++)
 		{
-			if (attgrid[i] != null) url += '&id['+i+']='+mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename;
+			if (attgrid[i] != null) ids.push(mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename);
 		}
-		egw_openWindowCentered(url,windowName,width,height);
+
+		var vfs_select = et2_createWidget('vfs-select', {
+			mode: 'select-dir',
+			method: 'mail.mail_ui.ajax_vfsSaveAttachment',
+			button_label: egw.lang('Save all'),
+			dialog_title: "Save attchments",
+			method_id: ids.length > 1 ? ids: ids[0]
+		});
+		vfs_select.click();
 	},
 
 	/**
@@ -3025,32 +3026,26 @@ app.classes.mail = AppJS.extend(
 				}
 			}
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
-		url += '&mode='+ (_elems.length>1?'select-dir':'saveas');
-		url += '&mime=message'+encodeURIComponent('/')+'rfc822';
-		url += '&method=mail.mail_ui.vfsSaveMessage';
-		url += '&label='+(_elems.length>1?egw.lang('Save all'):egw.lang('save'));
-
+		var ids = [], names = [];
 		for (var i in _elems)
 		{
 			var _id = _elems[i].id;
 			var dataElem = egw.dataGetUIDdata(_id);
 			var subject = dataElem? dataElem.data.subject: _elems[i].subject;
 			var filename = subject.replace(/[\f\n\t\v]/g,"_")|| 'unknown';
-			if (_elems.length>1)
-			{
-				url += '&id['+i+']='+_id;
-				url += '&name['+i+']='+encodeURIComponent(filename+'.eml');
-			}
-			else
-			{
-				url += '&id='+_id;
-				url += '&name='+encodeURIComponent(filename+'.eml');
-			}
-
+			ids.push(_id);
+			names.push(filename+'.eml');
 		}
-		egw.openPopup(url,'680','400','vfs_save_messages', 'filemanager');
+		var vfs_select = et2_createWidget('vfs-select', {
+			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
+			mime: 'message/rfc822',
+			method: 'mail.mail_ui.ajax_vfsSaveMessage',
+			button_label: _elems.length>1 ? egw.lang('Save all') : egw.lang('save'),
+			dialog_title: "Save email",
+			method_id: _elems.length > 1 ? ids: ids[0],
+			name: _elems.length > 1 ? names : names[0],
+		});
+		vfs_select.click();
 	},
 
 	/**
@@ -3688,51 +3683,75 @@ app.classes.mail = AppJS.extend(
 	 *
 	 * @param {egwAction} _egw_action
 	 * @param {array|string} _action string "autosaving", if that triggered the action
+	 *
+	 * @return Promise
 	 */
 	saveAsDraft: function(_egw_action, _action)
 	{
-		//this.et2_obj.submit();
-		var content = this.et2.getArrayMgr('content').data;
-		var action = _action;
-		if (_egw_action && _action !== 'autosaving')
-		{
-			action = _egw_action.id;
-		}
-
-		var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount',
-			'mail_htmltext', 'mail_plaintext', 'lastDrafted', 'filemode', 'expiration', 'password'];
-		var widget = {};
-		for (var index in widgets)
-		{
-			widget = this.et2.getWidgetById(widgets[index]);
-			if (widget)
-			{
-				content[widgets[index]] = widget.get_value();
-			}
-		}
 		var self = this;
-		if (content)
-		{
-			// if we compose an encrypted message, we have to get the encrypted content
-			if (this.mailvelope_editor)
+		return new Promise(function(_resolve, _reject){
+			var content = self.et2.getArrayMgr('content').data;
+			var action = _action;
+			if (_egw_action && _action !== 'autosaving')
 			{
-				this.mailvelope_editor.encrypt([]).then(function(_armored)
-				{
-					content['mail_plaintext'] = _armored;
-					self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
-						self.savingDraft_response(_data,action);
-					}).sendRequest(true);
-				}, function(_err)
-				{
-					self.egw.message(_err.message, 'error');
-				});
-				return false;
+				action = _egw_action.id;
 			}
 
-			this.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
-				self.savingDraft_response(_data,action);
-			}).sendRequest(true);
-		}
+			var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount',
+				'mail_htmltext', 'mail_plaintext', 'lastDrafted', 'filemode', 'expiration', 'password'];
+			var widget = {};
+			for (var index in widgets)
+			{
+				widget = self.et2.getWidgetById(widgets[index]);
+				if (widget)
+				{
+					content[widgets[index]] = widget.get_value();
+				}
+			}
+
+			if (content)
+			{
+				// if we compose an encrypted message, we have to get the encrypted content
+				if (self.mailvelope_editor)
+				{
+					self.mailvelope_editor.encrypt([]).then(function(_armored)
+					{
+						content['mail_plaintext'] = _armored;
+						self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
+							var res = self.savingDraft_response(_data,action);
+							if (res)
+							{
+								_resolve();
+							}
+							else
+							{
+								_reject();
+							}
+						}).sendRequest(true);
+					}, function(_err)
+					{
+						self.egw.message(_err.message, 'error');
+						_reject();
+					});
+					return false;
+				}
+				else
+				{
+
+					self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
+						var res = self.savingDraft_response(_data,action);
+						if (res)
+						{
+							_resolve();
+						}
+						else
+						{
+							_reject();
+						}
+					}).sendRequest(true);
+				}
+			}
+		});
 	},
 
 	/**
@@ -3750,6 +3769,8 @@ app.classes.mail = AppJS.extend(
 	 *  -button[saveAsDraft]
 	 *  -button[saveAsDraftAndPrint]
 	 *  -autosaving
+	 *
+	 *  @return boolean return true if successful otherwise false
 	 */
 	savingDraft_response: function(_responseData, _action)
 	{
@@ -3796,10 +3817,12 @@ app.classes.mail = AppJS.extend(
 						this.egw.message(_responseData.message);
 				}
 			}
+			return true;
 		}
 		else
 		{
 			this.egw.message(_responseData.message, 'error');
+			return false;
 		}
 	},
 
@@ -4744,6 +4767,31 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Keyhandler for compose window
+	 * Use this one so we can handle keys even on inputs
+	 */
+	init_keyHandler: function()
+	{
+		jQuery(document).on('keydown', function(e) {
+			// Translate the given key code and make it valid
+			var keyCode = e.which;
+			keyCode = egw_keycode_translation_function(keyCode);
+			keyCode = egw_keycode_makeValid(keyCode);
+
+			// Only go on if this is a valid key code - call the key handler
+			if (keyCode != -1)
+			{
+				if (egw_keyHandler(keyCode, e.shiftKey, e.ctrlKey || e.metaKey, e.altKey))
+				{
+					// If the key handler successfully passed the key event to some
+					// sub component, prevent the default action
+					e.preventDefault();
+				}
+			}
+		});
+	},
+
+	/**
 	 * Initialize dropping targets for draggable emails
 	 * -
 	 */
@@ -5340,15 +5388,20 @@ app.classes.mail = AppJS.extend(
 		var content = this.et2.getArrayMgr('content').data;
 		var subject = this.et2.getWidgetById('subject');
 		var elem = {0:{id:"", subject:""}};
+		var self = this;
 		if (typeof content != 'undefined' && content.lastDrafted && subject)
 		{
 			elem[0].id = content.lastDrafted;
 			elem[0].subject = subject.get_value();
 			this.mail_save2fm(_action, elem);
 		}
-		else
+		else // need to save as draft first
 		{
-			et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save to filemanager','info');
+			this.saveAsDraft(null, 'autosaving').then(function(){
+				self.compose_saveDraft2fm(_action);
+			}, function(){
+				et2_dialog.alert('You need to save the message as draft first before to be able to save it into VFS','Save to filemanager','info');
+			});
 		}
 	},
 
@@ -5974,6 +6027,8 @@ app.classes.mail = AppJS.extend(
 			},
 			title: egw.lang('Certificate info for email %1', _metadata.email),
 			buttons: buttons,
+			minWidth: 500,
+			minHeight: 500,
 			value:{content:content},
 			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false

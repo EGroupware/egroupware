@@ -122,6 +122,7 @@ class mail_compose
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.compose_submitAction',
 				'hint' => 'Send',
+				'shortcut' => array('ctrl' => true, 'keyCode' => 83, 'caption' => 'Ctrl + S'),
 				'toolbarDefault' => true
 			),
 			'pgp' => array(

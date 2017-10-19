@@ -1228,6 +1228,11 @@ class admin_mail
 					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
 					$sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
 						self::mailboxes(self::imap_client ($content));
+				// Allow folder notification on INBOX for popup_only
+				if ($GLOBALS['egw_info']['user']['preferences']['notifications']['notification_chain'] == 'popup_only')
+				{
+					$sel_options['notify_folders']['INBOX'] = lang('INBOX');
+				}
 			}
 			catch(Exception $e) {
 				if (self::$debug) _egw_log_exception($e);

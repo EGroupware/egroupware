@@ -15,7 +15,7 @@ namespace EGroupware\Api\Etemplate;
 use Egroupware\Api\Etemplate;
 
 // test base providing Egw environment, since we need the DB
-require_once realpath(__DIR__.'/../../test/LoggedInTest.php');
+require_once realpath(__DIR__.'/../../../tests/LoggedInTest.php');
 
 // Store request in the session, file access probably won't work due to permissions
 \EGroupware\Api\Etemplate\Request::$request_class = 'EGroupware\Api\Etemplate\Request\Session';
@@ -92,7 +92,7 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 
 		// Store & clean the request
 		//$etemplate->destroy_request();
-		
+
 		ob_end_clean();
 
 		return $result;
@@ -165,7 +165,7 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 	 * against $expected_values.  Optionally, it can check that validation errors
 	 * are created by particular widgets.
 	 *
-	 * 
+	 *
 	 * @param \EGroupware\Api\Etemplate $etemplate
 	 * @param array $content
 	 * @param array $set_values
@@ -210,7 +210,7 @@ abstract class WidgetBaseTest extends \EGroupware\Api\LoggedInTest {
 	 * $validation_errors actually did raise a validation error.
 	 *
 	 * Note that in most (all?) cases, a validation error will clear the value.
-	 * 
+	 *
 	 * @param array $content
 	 * @param array $expected_values
 	 * @param array $validation_errors

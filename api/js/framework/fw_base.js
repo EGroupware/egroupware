@@ -1000,7 +1000,7 @@ var fw_base = (function(){ "use strict"; return Class.extend(
 				// et2 available, let its widgets prepare
 				var deferred = [];
 				var et2_list = [];
-				jQuery('.et2_container',this.activeApp.tab.contDiv).each(function() {
+				jQuery('.et2_container',this.activeApp.tab.contentDiv).each(function() {
 					var et2 = etemplate2.getById(this.id);
 					if(et2 && jQuery(et2.DOMContainer).filter(':visible').length)
 					{

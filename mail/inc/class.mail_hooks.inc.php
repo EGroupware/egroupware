@@ -522,7 +522,10 @@ class mail_hooks
 				$recent_messages = array();
 				$folder_status = array();
 				foreach($notify_folders as $id=>$notify_folder) {
-					if (empty($notify_folder)) continue;
+					// Allow folder notification on INBOX for popup_only chain
+					if (empty($notify_folder) ||
+							($notify_folder == 'INBOX' &&
+							$GLOBALS['egw_info']['user']['preferences']['notifications']['notification_chain'] != 'popup_only')) continue;
 					if(!is_array($notified_mail_uidsCache[$activeProfile][$notify_folder])) {
 						$notified_mail_uidsCache[$activeProfile][$notify_folder] = array();
 					}

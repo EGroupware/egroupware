@@ -11,16 +11,21 @@
         <var name="EGW_PASSWORD" value="guest" />
     </php>
     <testsuites>
-        <testsuite name="Api tests">
+        <testsuite name="Api">
+            <directory>../api/tests</directory>
             <directory>../api/src/test/</directory>
 			<directory>../api/src/*/test/</directory>
         </testsuite>
-		<testsuite name="Apps with test directory">
-			<directory>../*/test/</directory>
-		</testsuite>
-		<testsuite name="Apps with namespace">
-			<directory>../*/src/test/</directory>
-			<directory>../*/src/*/test/</directory>
+        <testsuite name="Etemplate">
+            <file>../api/src/tests/EtemplateTest.php</file>
+            <directory>../api/src/Etemplate/tests/</directory>
+            <directory>../api/src/Etemplate/Widget/tests/</directory>
+        </testsuite>
+		<testsuite name="Apps">
+			<!-- Apps with test directory -->
+            <directory>../*/tests/</directory>
+
+			<exclude>../api</exclude>
 		</testsuite>
     </testsuites>
 </phpunit>

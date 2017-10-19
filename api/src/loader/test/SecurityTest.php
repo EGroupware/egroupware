@@ -164,8 +164,25 @@ class SecurityTest extends TestCase {
 	 * @param boolean $result If we expect the string to fail or not
 	 *
 	 * @dataProvider unserializeProvider
+	 * @requires PHP < 7
 	 */
-	public function testUnserialize($str, $result)
+	public function testObjectsCannotBeUnserializedInPhp5($str, $result)
+	{
+		$r=@php_safe_unserialize($str);
+
+		$this->assertSame($result, (bool)$r, 'Save unserialize failed');
+	}
+
+	/**
+	 * Test safe unserialization
+	 *
+	 * @param String $str Serialized string to be checked
+	 * @param boolean $result If we expect the string to fail or not
+	 *
+	 * @dataProvider unserializeProvider
+	 * @requires PHP 7
+	 */
+	public function testObjectsCannotBeUnserializedInPhp7($str, $result)
 	{
 		$r=@php_safe_unserialize($str);
 
@@ -173,23 +190,16 @@ class SecurityTest extends TestCase {
 		{
 			if (!$result)
 			{
-				if (PHP_VERSION >= 7)
+				$matches = null;
+				if (preg_match_all('/([^ ]+) Object\(/', array2string($r), $matches))
 				{
-					$matches = null;
-					if (preg_match_all('/([^ ]+) Object\(/', array2string($r), $matches))
+					foreach($matches[1] as $class)
 					{
-						foreach($matches[1] as $class)
+						if (!preg_match('/^__PHP_Incomplete_Class(#\d+)?$/', $class))
 						{
-							if (!preg_match('/^__PHP_Incomplete_Class(#\d+)?$/', $class))
-							{
-								$this->fail($str);
-							}
+							$this->fail($str);
 						}
 					}
-				}
-				else
-				{
-					$this->fail($str);
 				}
 			}
 			else
@@ -197,6 +207,9 @@ class SecurityTest extends TestCase {
 				$this->fail("false positive: $str");
 			}
 		}
+		// Avoid this test getting reported as no assertions, we do the testing
+		// in the foreach loop
+		$this->assertTrue(true);
 	}
 
 	/**

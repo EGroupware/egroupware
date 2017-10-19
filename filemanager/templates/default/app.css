@@ -85,7 +85,7 @@ table.egwGridView_grid .tile .file_tile {
  * Select file dialog
  */
 .selectPath { font-weight: bold; width: 98% }
-.selectPathContainer { width: 470px; overflow: auto; }
+
 .selectName input { width: 100%; }
 .selectMime select { width: 100%; }
 .displayNone input, input.displayNone { display: none; }
@@ -178,3 +178,12 @@ div.editInfoMarker {
 	border-radius: none;
 }
 #filemanager-index_nm .et2_file div.progress {position:absolute;}
+
+#filemanager-index_new_wrapper {
+	float: left;
+	margin-right: 6px;
+}
+
+#filemanager-index_new_wrapper .ui-icon-triangle-1-s {
+	background-position: 0px -192px;
+}

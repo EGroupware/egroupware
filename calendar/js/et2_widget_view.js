@@ -431,7 +431,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			this.drag_create.start = null;
 		}
 		this.drag_create.end = start;
-		
+
 		// Clear some stuff, if last time did not complete
 		if(this.drag_create.event)
 		{
@@ -485,7 +485,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 			this.drag_create.event._values_check(value);
 			this.drag_create.event.doLoadingFinished();
 		}
-		
+
 	},
 
 	_drag_update_event: function()
@@ -516,7 +516,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 		{
 			end = {};
 		}
-		
+
 		if(this.drag_create.start && end.date &&
 			JSON.stringify(this.drag_create.start.date) !== JSON.stringify(end.date))
 		{
@@ -533,7 +533,7 @@ var et2_calendar_view = (function(){ "use strict"; return et2_valueWidget.extend
 				start.setUTCHours(0);
 				start.setUTCMinutes(0);
 				options.start = start.toJSON();
-				
+
 				var end = new Date(options.end);
 				end.setUTCHours(23);
 				end.setUTCMinutes(59);
@@ -633,7 +633,9 @@ jQuery.extend(et2_calendar_view,
 	{
 		// Loaded in an iframe or something
 		var view = egw.window.et2_calendar_view ? egw.window.et2_calendar_view : this;
-		if(!view) return {};
+
+		// No country selected causes error, so skip if it's missing
+		if(!view || !egw.preference('country','common')) return {};
 
 		var cache = view.holiday_cache[year];
 		if (typeof cache == 'undefined')

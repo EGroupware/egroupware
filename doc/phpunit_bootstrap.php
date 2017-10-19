@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Run before PHPUnit starts - common stuff for _all_ tests, like getting
  * the autoloader.
@@ -25,3 +24,16 @@ if (!class_exists('\PHPUnit\Framework\TestCase') && class_exists('\PHPUnit_Frame
 // Needed to let Cache work
 $GLOBALS['egw_info']['server']['temp_dir'] = '/tmp';
 $GLOBALS['egw_info']['server']['install_id'] = 'PHPUnit test';
+
+// Symlink api/src/fixtures/apps/* to root
+foreach(scandir($path=__DIR__.'/../api/tests/fixtures/apps') as $app)
+{
+	if (is_dir($path.'/'.$app) && @file_exists($path.'/'.$app.'/setup/setup.inc.php')/* &&
+		readlink(__DIR__.'/../'.$app) !== 'api/tests/fixtures/apps/'.$app*/)
+	{
+		@unlink(__DIR__.'/../'.$app);
+		symlink('api/tests/fixtures/apps/'.$app, __DIR__.'/../'.$app);
+		// install fixture app
+		shell_exec(PHP_BINARY.' '.__DIR__.'/rpm-build/post_install.php --install-update-app '.$app);
+	}
+}

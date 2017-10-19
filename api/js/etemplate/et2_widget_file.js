@@ -159,6 +159,7 @@ var et2_file = (function(){ "use strict"; return et2_inputWidget.extend(
 		},this.asyncOptions);
 		this.asyncOptions.fieldName = this.options.id;
 		this.createInputWidget();
+		this.set_readonly(this.options.readonly);
 	},
 
 	destroy: function() {

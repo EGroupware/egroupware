@@ -479,7 +479,7 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 		var button = jQuery(document.createElement('button'))
 			.addClass("et2_button et2_button_text et2_button_with_image")
 			.attr('id', this.id+'-'+action.id)
-			.attr('title', (action.hint ? action.hint : action.caption))
+			.attr('title', (action.hint ? action.hint : action.caption) + (action.shortcut ? ' ('+action.shortcut.caption+')' : ''))
 			.attr('type', 'button')
 			.appendTo(this.preference[action.id]?this.actionbox.children()[1]:jQuery('[data-group='+action.group+']',this.actionlist));
 
@@ -558,6 +558,35 @@ var et2_toolbar = (function(){ "use strict"; return et2_DOMWidget.extend([et2_II
 	_link_actions: function(actions)
 	{
 		this._build_menu(actions);
+
+		var self = this;
+		var gom = egw_getObjectManager(this.egw().appName,true,1);
+		if(this._objectManager == null)
+		{
+			this._objectManager = gom.addObject(
+				new egwActionObjectManager(this.id, this._actionManager));
+
+			this._objectManager.handleKeyPress = function(_keyCode, _shift, _ctrl, _alt) {
+				for(var i = 0; i < self._actionManager.children.length; i++)
+				{
+					var action = self._actionManager.children[i];
+					if(typeof action.shortcut === 'object' &&
+						action.shortcut &&
+						_keyCode == action.shortcut.keyCode &&
+						_ctrl == action.shortcut.ctrl &&
+						_alt == action.shortcut.alt &&
+						_shift == action.shortcut.shift
+						)
+					{
+						self.value = action.id;
+						action.execute([]);
+						return true;
+					}
+				}
+				return egwActionObject.prototype.handleKeyPress.call(this, _keyCode,_shift,_ctrl,_alt);
+			}
+		}
+		this._objectManager.parent.updateFocusedChild(this._objectManager, true);
 	},
 
 	/**
