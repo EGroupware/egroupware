@@ -53,6 +53,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	public function tearDown()
 	{
 		$this->bo->delete($this->cal_id);
+		// Delete again to remove from delete history
 		$this->bo->delete($this->cal_id);
 		$this->bo = null;
 
