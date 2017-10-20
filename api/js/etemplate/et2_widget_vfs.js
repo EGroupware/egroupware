@@ -870,7 +870,9 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			type: "string",
 			description: "Server side callback to process selected value(s) in \n\
 			app.class.method or class::method format.  The first parameter will \n\
-			be Method ID, the second the file list."
+			be Method ID, the second the file list. 'ckeditor' is reserved and it \n\
+			means it should use download_baseUrl instead of path in value (no method\n\
+			 will be actually executed)."
 		},
 		"method_id": {
 			name: "Method ID",
@@ -965,7 +967,8 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			label: this.options.button_label,
 			path: this.options.path || null,
 			mime: this.options.mime || null,
-			name: this.options.name
+			name: this.options.name,
+			method: this.options.method
 		};
 		var callback = _callback || this._buildDialog;
 		egw(window).json(
@@ -1024,11 +1027,12 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 							files = _value.path;
 							break;
 						default:
+							if (self.options.method === 'ckeditor') _value.path = _data.content.download_baseUrl;
 							files = _value.path+'/'+_value.name;
 							break;
 					}
 					self.value = files;
-					if (self.options.method)
+					if (self.options.method && self.options.method !== 'ckeditor')
 					{
 						egw(window).json(
 							self.options.method,
@@ -1060,6 +1064,9 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		// for dialog template our best shot is to inherit its parent etemplate_exec_id.
 		this.dialog.template.etemplate_exec_id = etemplate2.getByApplication(egw(window).app_name())[0].etemplate_exec_id;
 		app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
+		// Keep the dialog always at the top, seems CKEDITOR dialogs have very
+		// high z-index set.
+		this.dialog.div.parent().css({"z-index": 100000});
 		app.vfsSelectUI.vfsSelectWidget = this;
 		this.dialog.div.on('load', function(e) {
 			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');

@@ -522,6 +522,14 @@ class Vfs extends File
 		$sel_options = array_merge($sel_options, array(
 			'app' => self::get_apps()
 		));
+
+		if ($content['method'] === 'ckeditor')
+		{
+			$download_baseUrl = \EGroupware\Api\Vfs::download_url($content['path']);
+			if ($download_baseUrl[0] == '/') $download_baseUrl = \EGroupware\Api\Egw::link($download_baseUrl);
+			$content['download_baseUrl'] = $download_baseUrl;
+		}
+		
 		Api\Cache::setSession('filemanger', 'select_path', $content['path']);
 		// Response
 		$response->data(array(
