@@ -57,7 +57,7 @@ class BaseTest extends TestCase
 	protected function assertPreConditions()
 	{
 		$tables = self::$db->table_names(true);
-		$this->assertContains('egw_test', $tables);
+		$this->assertContains('egw_test', $tables, 'Could not find DB table "egw_test", make sure test app is installed');
 	}
 
 	public function testSaveInternalState()
