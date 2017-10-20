@@ -72,13 +72,18 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 
 	public function basicProvider()
 	{
-		$now = new DateTime(time());
+		// Reset server timezone here, as it tends to go back to php.ini value
+		DateTime::$server_timezone = new \DateTimeZone('UTC');
+
+		$now = new DateTime(time(),DateTime::$server_timezone);
 		$now->setTime(22, 13, 20); // Just because 80000 seconds after epoch is 22:13:20
 
 		$today = clone $now;
 		$today->setTime(0,0);
 
-		$time = new DateTime(80000); // 22:13:20
+		$time = new DateTime('1970-01-01',new \DateTimeZone('UTC'));
+		$time->setTime(22, 13, 20); // Just because 80000 seconds after epoch is 22:13:20
+		
 		$data = array(
 			array(
 				array('date' => $today->getTimestamp(), 'date_time' => $today->getTimestamp()),
