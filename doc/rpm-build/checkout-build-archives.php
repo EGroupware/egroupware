@@ -200,6 +200,7 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
 	//echo __FUNCTION__."('$branch_url','$log_pattern','$revision','$prefix')\n";
 	global $config;
 
+	$changelog = '';
 	$path = str_replace($config['aliasdir'], $config['checkoutdir'], $_path);
 	if (!file_exists($path) || !is_dir($path) || !file_exists($path.'/.git'))
 	{
@@ -209,18 +210,19 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
 	{
 		$last_tag = get_last_git_tag();
 	}
-
-	$cmd = $config['git'].' log '.escapeshellarg($last_tag.'..HEAD');
-	if (getcwd() != $path) $cmd = 'cd '.$path.'; '.$cmd;
-	$output = null;
-	run_cmd($cmd, $output);
-
-	$changelog = '';
-	foreach($output as $line)
+	if (!empty($last_tag))
 	{
-		if (substr($line, 0, 4) == "    " && ($msg = _match_log_pattern(substr($line, 4), $log_pattern, $prefix)))
+		$cmd = $config['git'].' log '.escapeshellarg($last_tag.'..HEAD');
+		if (getcwd() != $path) $cmd = 'cd '.$path.'; '.$cmd;
+		$output = null;
+		run_cmd($cmd, $output);
+
+		foreach($output as $line)
 		{
-			$changelog .= $msg."\n";
+			if (substr($line, 0, 4) == "    " && ($msg = _match_log_pattern(substr($line, 4), $log_pattern, $prefix)))
+			{
+				$changelog .= $msg."\n";
+			}
 		}
 	}
 	return $changelog;
@@ -300,6 +302,7 @@ function get_last_git_tag()
 	$cmd = $config['git'].' tag -l '.escapeshellarg($config['version'].'.*');
 	$output = null;
 	run_cmd($cmd, $output);
+	array_shift($output);
 
 	return trim(array_pop($output));
 }
@@ -572,6 +575,10 @@ function do_editchangelog()
 		{
 			$changelog .= get_changelog_from_svn($branch_url, $config['editchangelog'], $revision);
 		}
+	}
+	if (empty($changelog))
+	{
+		$changelog = "Could not query changelog for $config[version], eg. no last tag found!\n";
 	}
 	$logfile = tempnam('/tmp','checkout-build-archives');
 	file_put_contents($logfile,$changelog);
