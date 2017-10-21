@@ -899,7 +899,7 @@ function update_api_setup($path)
 		throw new Exception("Could not read file '$path' to update maintenance-version!");
 	}
 
-	$content = preg_replace('/'.preg_quote("\$setup_info['api']['versions']['maintenance_release']", '/').'[^;]+;',
+	$content = preg_replace('/'.preg_quote("\$setup_info['api']['versions']['maintenance_release']", '/').'[^;]+;/',
 		"\$setup_info['api']['versions']['maintenance_release'] = '".$config['version'].'.'.$config['packaging']."';",
 		$content);
 
