@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker@outdoor-training.de
- * @copyright (c) 2009-16 by Ralf Becker <rb@stylite.de>
+ * @copyright (c) 2009-17 by Ralf Becker <rb@egroupware.org>
  * @version $Id$
  */
 
@@ -19,13 +19,13 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 $verbose = 0;
 $config = array(
 	'packagename' => 'egroupware-epl',
-	'version' => '16.1',        // '14.3'
+	'version' => '17.1',        // '17.1'
 	'packaging' => date('Ymd'), // '20160520'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
 	'checkoutdir' => realpath(__DIR__.'/../..'),
-	'egw_buildroot' => '/tmp/build_root/epl_16.1_buildroot',
-	'sourcedir' => '/home/download/stylite-epl/egroupware-epl-16.1',
+	'egw_buildroot' => '/tmp/build_root/epl_17.1_buildroot',
+	'sourcedir' => '/home/download/stylite-epl/egroupware-epl-17.1',
 	/* svn-config currently not used, as we use .mrconfig to define modules and urls
 	'svntag' => 'tags/$version.$packaging',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
@@ -57,11 +57,11 @@ $config = array(
 	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
 	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs --no-dev' : '',
 	'after-checkout' => 'rm -rf */source */templates/*/source',
-	'packager' => 'build@stylite.de',
+	'packager' => 'build@egroupware.org',
 	'obs' => '/home/stylite/obs/stylite-epl-trunk',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
-	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
+	'changelog_packager' => 'Ralf Becker <rb@egroupware.org>',
 	'editchangelog' => '* ',
 	//'sfuser' => 'ralfbecker',
 	//'release' => '$sfuser,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
@@ -1069,7 +1069,7 @@ function do_copy()
 	global $config;
 
 	// copy everything, but .svn dirs from checkoutdir to egw_buildroot
-	echo "Copying non-svn/git dirs to buildroot\n";
+	echo "Copying non-svn/git/tests dirs to buildroot\n";
 
 	if (!file_exists($config['egw_buildroot']))
 	{
@@ -1080,7 +1080,7 @@ function do_copy()
 	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("cd $config[checkoutdir]; git stash");
 
 	try {
-		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude .mrconfig --exclude node_modules/ '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
+		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude .mrconfig --exclude node_modules/ --exclude tests '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
 		run_cmd($cmd);
 	}
 	catch (Exception $e) {
