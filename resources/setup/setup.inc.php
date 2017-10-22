@@ -8,12 +8,11 @@
  * @subpackage setup
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
- * @version $Id$
  */
 
 $setup_info['resources']['name']	= 'resources';
 $setup_info['resources']['title']	= 'Resources';
-$setup_info['resources']['version']	= '16.1';
+$setup_info['resources']['version']	= '17.1';
 $setup_info['resources']['app_order']	= 5;
 $setup_info['resources']['tables']	= array('egw_resources','egw_resources_extra');
 $setup_info['resources']['enable']	= 1;
@@ -24,8 +23,8 @@ $setup_info['resources']['license']	= 'GPL';
 $setup_info['resources']['description'] = 'A resource management and booking system, which integrates into eGroupWare\'s calendar.';
 $setup_info['resources']['note']	= '';
 $setup_info['resources']['maintainer']	= array(
-	'name' => 'eGroupware coreteam',
-	'email' => 'egroupware-developers@lists.sf.net'
+	'name' => 'EGroupware GmbH',
+	'email' => 'info@egroupware.org'
 );
 
 $setup_info['resources']['hooks']['categories']	= 'resources_hooks::categories';
@@ -38,7 +37,5 @@ $setup_info['resources']['hooks']['settings'] = 'resources_hooks::settings';
 
 $setup_info['resources']['depends'][]	= array(
 	 'appname' => 'api',
-	 'versions' => Array('16.1')
+	 'versions' => Array('17.1')
 );
-
-

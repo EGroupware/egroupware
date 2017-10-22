@@ -8,7 +8,6 @@
  * @package api
  * @subpackage setup
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -395,4 +394,14 @@ function api_upgrade16_9_003()
 	),'contact_jpegphoto');
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.004';
+}
+
+/**
+ * Bump version to 17.1
+ *
+ * @return string
+ */
+function api_upgrade16_9_004()
+{
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1';
 }

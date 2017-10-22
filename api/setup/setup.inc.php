@@ -6,13 +6,12 @@
  * @package api
  * @subpackage setup
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 /* Basic information about this app */
 $setup_info['api']['name']      = 'api';
 $setup_info['api']['title']     = 'EGroupware API';
-$setup_info['api']['version']   = '16.9.004';
+$setup_info['api']['version']   = '17.1';
 $setup_info['api']['versions']['current_header'] = '1.29';
 // maintenance release in sync with changelog in doc/rpm-build/debian.changes
 $setup_info['api']['versions']['maintenance_release'] = $setup_info['api']['version'];
@@ -20,8 +19,9 @@ $setup_info['api']['enable']    = 3;
 $setup_info['api']['app_order'] = 1;
 $setup_info['api']['license'] = 'GPL';
 $setup_info['api']['maintainer']	= $setup_info['api']['author']	= array(
-	'name'  => 'EGroupware coreteam',
-	'email' => 'egroupware-developers@lists.sourceforge.net',
+	'name'  => 'EGroupware GmbH',
+	'email' => 'info@egroupware.org',
+	'url'   => 'http://www.egroupware.org',
 );
 
 // The tables this app creates
@@ -118,7 +118,7 @@ $setup_info['api']['check_install'] = array(
 
 // CalDAV / CardDAV Sync
 $setup_info['groupdav']['name']      = 'groupdav';
-$setup_info['groupdav']['version']   = '16.1';
+$setup_info['groupdav']['version']   = '17.1';
 $setup_info['groupdav']['enable']    = 2;
 $setup_info['groupdav']['app_order'] = 1;
 $setup_info['groupdav']['icon']      = 'groupdav';

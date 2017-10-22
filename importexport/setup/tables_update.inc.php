@@ -8,7 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package importexport
  * @subpackage setup
- * @version $Id$
  */
 
 function importexport_upgrade0_002()
@@ -126,7 +125,13 @@ function importexport_upgrade1_9_004()
 {
 	return $GLOBALS['setup_info']['importexport']['currentver'] = '14.1';
 }
+
 function importexport_upgrade14_1()
 {
 	return $GLOBALS['setup_info']['importexport']['currentver'] = '16.1';
+}
+
+function importexport_upgrade16_1()
+{
+	return $GLOBALS['setup_info']['importexport']['currentver'] = '17.1';
 }

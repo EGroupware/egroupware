@@ -6,12 +6,11 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package preferences
  * @subpackage setup
- * @version $Id$
  */
 
 $setup_info['preferences']['name']      = 'preferences';
 $setup_info['preferences']['title']     = 'Preferences';
-$setup_info['preferences']['version']   = '16.1';
+$setup_info['preferences']['version']   = '17.1';
 $setup_info['preferences']['app_order'] = 1;
 $setup_info['preferences']['tables']    = '';
 $setup_info['preferences']['enable']    = 2;
@@ -34,5 +33,5 @@ $setup_info['preferences']['hooks']['deny_cats']     = 'preferences_hooks::deny_
 /* Dependencies for this app to work */
 $setup_info['preferences']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('16.1')
+	'versions' => Array('17.1')
 );

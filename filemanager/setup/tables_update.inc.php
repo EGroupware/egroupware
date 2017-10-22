@@ -5,7 +5,6 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 /**
@@ -59,5 +58,10 @@ function filemanager_upgrade16_1()
 		'uc' => array()
 	));
 
-	return $GLOBALS['setup_info']['activesync']['currentver'] = '16.2';
+	return $GLOBALS['setup_info']['filemanager']['currentver'] = '16.2';
+}
+
+function filemanager_upgrade16_2()
+{
+	return $GLOBALS['setup_info']['filemanager']['currentver'] = '17.1';
 }

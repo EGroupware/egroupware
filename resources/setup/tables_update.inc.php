@@ -8,7 +8,6 @@
  * @package resources
  * @subpackage setup
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -382,12 +381,17 @@ function resources_upgrade1_9_003()
 	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.004';
 }
 
-
 function resources_upgrade1_9_004()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '14.1';
 }
+
 function resources_upgrade14_1()
 {
 	return $GLOBALS['setup_info']['resources']['currentver'] = '16.1';
+}
+
+function resources_upgrade16_1()
+{
+	return $GLOBALS['setup_info']['resources']['currentver'] = '17.1';
 }

@@ -61,5 +61,5 @@ $setup_info['infolog']['hooks']['mail_import'] = 'infolog_hooks::mail_import';
 // Dependencies for this app to work
 $setup_info['infolog']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('16.1')
+	'versions' => Array('17.1')
 );
