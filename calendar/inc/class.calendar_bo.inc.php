@@ -1114,6 +1114,7 @@ class calendar_bo
 		$event_start_ts = $this->date2ts($event['start']);
 		$event_length = $this->date2ts($event['end']) - $event_start_ts;	// we use a constant event-length, NOT a constant end-time!
 
+		error_log(__METHOD__ . ':'.__LINE__ ." Event end date: " . Api\DateTime::to($event['recur_enddate'], Api\DateTime::DATABASE));
 		// if $end is before recur_enddate, use it instead
 		if (!$event['recur_enddate'] || $this->date2ts($event['recur_enddate']) > $this->date2ts($end))
 		{
@@ -1124,6 +1125,7 @@ class calendar_bo
 		$event['recur_enddate'] = is_a($event['recur_enddate'],'DateTime') ?
 				$event['recur_enddate'] :
 				new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
+		error_log(__METHOD__ . ':'.__LINE__ ." Event end date: " . Api\DateTime::to($event['recur_enddate'], Api\DateTime::DATABASE));
 		// unset exceptions, as we need to add them as recurrence too, but marked as exception
 		unset($event['recur_exception']);
 		// loop over all recurrences and insert them, if they are after $start
