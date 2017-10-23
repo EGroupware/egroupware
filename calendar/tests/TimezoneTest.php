@@ -48,6 +48,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		//$this->mockTracking($this->bo, 'calendar_tracking');
 
 		$this->recur_end = new Api\DateTime(mktime(0,0,0,date('m'), date('d') + static::RECUR_DAYS, date('Y')));
+		error_log("Recurrence end date: " . $this->recur_end . " (" . new Api\DateTime() . ' + ' . static::RECUR_DAYS . ' days)');
 	}
 
 	public function tearDown()
