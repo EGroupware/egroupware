@@ -1128,6 +1128,10 @@ class calendar_bo
 		unset($event['recur_exception']);
 		// loop over all recurrences and insert them, if they are after $start
  		$rrule = calendar_rrule::event2rrule($event, !$event['whole_day'], Api\DateTime::$user_timezone->getName());	// true = we operate in usertime, like the rest of calendar_bo
+		$rrule->rewind();
+		error_log(__METHOD__ . ' rrule: ' . $rrule . ' current: ' . $rrule->current());
+		foreach($rrule as $time) {error_log($time);};
+		$rrule->rewind();
 		foreach($rrule as $time)
 		{
 			$time->setUser();	// $time is in timezone of event, convert it to usertime used here
