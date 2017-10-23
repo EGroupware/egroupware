@@ -545,7 +545,7 @@ class mail_compose
 					// we need a message only, when account ids (composeProfile vs. activeProfile) differ
 					$response->call('opener.egw_message',lang('Message send successfully.'));
 				}
-				elseif ($activeProfile == $composeProfile && ($workingFolder==$activeFolder && $mode != 'compose') || ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder)))
+				elseif ($activeProfile == $composeProfile && ($workingFolder==$activeFolder['mailbox'] && $mode != 'compose') || ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder)))
 				{
 					if ($this->mail_bo->isSentFolder($workingFolder)||$this->mail_bo->isDraftFolder($workingFolder))
 					{
