@@ -13,7 +13,7 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
-require_once realpath(__DIR__.'/../../tests/WidgetBaseTest.php');
+require_once realpath(__DIR__.'/../WidgetBaseTest.php');
 
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\DateTime;
@@ -83,7 +83,7 @@ class DateTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 
 		$time = new DateTime('1970-01-01',new \DateTimeZone('UTC'));
 		$time->setTime(22, 13, 20); // Just because 80000 seconds after epoch is 22:13:20
-		
+
 		$data = array(
 			array(
 				array('date' => $today->getTimestamp(), 'date_time' => $today->getTimestamp()),

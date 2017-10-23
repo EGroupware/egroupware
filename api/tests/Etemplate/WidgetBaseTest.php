@@ -15,7 +15,7 @@ namespace EGroupware\Api\Etemplate;
 use Egroupware\Api\Etemplate;
 
 // test base providing Egw environment, since we need the DB
-require_once realpath(__DIR__.'/../../../tests/LoggedInTest.php');
+require_once realpath(__DIR__.'/../LoggedInTest.php');
 
 // Store request in the session, file access probably won't work due to permissions
 \EGroupware\Api\Etemplate\Request::$request_class = 'EGroupware\Api\Etemplate\Request\Session';

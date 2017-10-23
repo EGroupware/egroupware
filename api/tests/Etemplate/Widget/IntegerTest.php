@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Test for float textboxes
+ * Test for integer textboxes
  *
  * @link http://www.egroupware.org
  * @author Nathan Gray
@@ -12,21 +12,21 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
-require_once realpath(__DIR__.'/../../tests/WidgetBaseTest.php');
+require_once realpath(__DIR__.'/../WidgetBaseTest.php');
 
 use EGroupware\Api\Etemplate;
 
-class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
+class IntegerTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 
-	const TEST_TEMPLATE = 'api.float_test';
+	const TEST_TEMPLATE = 'api.integer_test';
 
 	/**
-	 * Test for validation - floats
+	 * Test for validation - integers
 	 *
 	 *
-	 * @dataProvider floatProvider
+	 * @dataProvider integerProvider
 	 */
-	public function testFloat($value, $expected, $error)
+	public function testInteger($value, $error)
 	{
 		// Instanciate the template
 		$etemplate = new Etemplate();
@@ -34,37 +34,37 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 
 		// Content - doesn't really matter, we're changing it
 		$content = array(
-			'widget'            =>	'Hello'
+			'widget'            =>	'Hello',
+			'widget_readonly'   =>	'World'
 		);
 
 		$this->validateRoundTrip($etemplate, $content, array('widget' => $value),
-				$error ? array() : array('widget' => $expected),
+				$error ? array() : array('widget' => $value),
 				$error ? array('widget' => $error) : array()
 		);
 	}
 
 	/**
-	 * Data provider for float tests
+	 * Data provider for integer tests
 	 */
-	public function floatProvider()
+	public function integerProvider()
 	{
 		return array(
-			// User value,    Expected     Error
-			array('',         '',          false),
-			array(1,          1,           false),
-			array(0,          0,           false),
-			array(-1,         -1,          false),
-			array(1.5,        1.5,         false),
-			array('1,5',      1.5,         false), // Comma as separator is handled
-			array('one',      '',          true)
+			// User value,    Error
+			array('',         false),
+			array(1,          false),
+			array(0,          false),
+			array(-1,         false),
+			array(1.5,        true),
+			array('one',      true)
 		);
 	}
 
 	/**
-	 * Test for float minimum attribute
+	 * Test for integer minimum attribute
 	 *
 	 * @param String|numeric $value
-	 * @param float $min Minimum allowed value
+	 * @param int $min Minimum allowed value
 	 * @param boolean $error
 	 *
 	 * @dataProvider minProvider
@@ -82,6 +82,7 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
 
+		// Set limits
 		$etemplate->getElementById('widget')->attrs['min'] = $min;
 		$etemplate->getElementById('widget')->attrs['max'] = null;
 
@@ -114,24 +115,22 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 	public function minProvider()
 	{
 		return Array(
-			// User value, Min,        Error
-			array('',      0,          FALSE),
-			array(1.0,     0,          FALSE),
-			array(0.0,     0,          FALSE),
-			array(-1.0,    0,          TRUE),
-			array(1.5,     0,          FALSE),
-			array(1,      10,          TRUE),
-			array(10,     10,          FALSE),
-			array(1.5,   1.5,          FALSE),
-			array(0.5,   1.5,          TRUE),
+			// User value, Min,      Error
+			array('',    0,          FALSE),
+			array(1,     0,          FALSE),
+			array(0,     0,          FALSE),
+			array(-1,    0,          TRUE),
+			array(1.5,   0,          TRUE), // Errors because it's not an int
+			array(1,    10,          TRUE),
+			array(10,   10,          FALSE),
 		);
 	}
 
 	/**
-	 * Test for float maximum attribute
+	 * Test for integer maximum attribute
 	 *
 	 * @param String|numeric $value
-	 * @param float $max Maximum allowed value
+	 * @param int $max Maximum allowed value
 	 * @param boolean $error
 	 *
 	 * @dataProvider maxProvider
@@ -149,6 +148,7 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		);
 		$result = $this->mockedExec($etemplate, $content, array(), array(), array());
 
+		// Set limits
 		$etemplate->getElementById('widget')->attrs['min'] = null;
 		$etemplate->getElementById('widget')->attrs['max'] = $max;
 
@@ -183,15 +183,12 @@ class FloatTest extends \EGroupware\Api\Etemplate\WidgetBaseTest {
 		return Array(
 			// User value, Max,      Error
 			array('',        0,      FALSE),
-			array(1.0,       0,      TRUE),
+			array(1,         0,      TRUE),
 			array(0,         0,      FALSE),
-			array(-1.0,      0,      FALSE),
-			array(1.5,       2,      FALSE),
+			array(-1,        0,      FALSE),
+			array(1.5,       2,      TRUE), // Errors because it's not an int
 			array(1,        10,      FALSE),
 			array(10,       10,      FALSE),
-			array(2.5,       2,      TRUE),
-			array(1.5,     2.5,      FALSE),
-			array(3,       2.5,      TRUE),
 		);
 	}
 }

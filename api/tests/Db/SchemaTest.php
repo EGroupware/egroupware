@@ -18,7 +18,7 @@ use EGroupware\Api\Db;
 use EGroupware\Api\Db\Schema;
 
 // test base providing Egw environment
-require_once realpath(__DIR__.'/../../../tests/LoggedInTest.php');
+require_once realpath(__DIR__.'/../LoggedInTest.php');
 
 // For security reasons we exit by default if called via the webserver
 if (php_sapi_name() !== 'cli')
