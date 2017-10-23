@@ -48,7 +48,6 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		//$this->mockTracking($this->bo, 'calendar_tracking');
 
 		$this->recur_end = new Api\DateTime(mktime(0,0,0,date('m'), date('d') + static::RECUR_DAYS, date('Y')));
-		error_log("Recurrence end date: " . $this->recur_end . " (" . new Api\DateTime() . ' + ' . static::RECUR_DAYS . ' days)');
 	}
 
 	public function tearDown()
@@ -298,7 +297,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 			}
 		} while ($event_index < count($tz_list));
 
-		/* one specific test */
+		/* one specific test 
 		$tz_combos = array(array(
 			'client'	=> 'Europe/Berlin',
 			'server'	=> 'Pacific/Tahiti',
@@ -317,7 +316,6 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	 */
 	protected function makeEvent($timezones, $times, $whole_day = false)
 	{
-		error_log($this->tzString($timezones));
 		$event = array(
 			'title' => ($whole_day ? 'Whole day ' : '')."Test for " . $this->tzString($timezones),
 			'description'   => ($whole_day ? 'Whole day ' : '').'Test for test ' . $this->getName() . ' ' . $this->tzString($timezones),
@@ -331,8 +329,6 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 				$GLOBALS['egw_info']['user']['account_id'] => 'A'
 			)
 		);
-		error_log(__METHOD__ . ':'.__LINE__ ." Event end date: " . Api\DateTime::to($event['end'], Api\DateTime::DATABASE));
-		error_log(__METHOD__ . ':'.__LINE__ ." Recurrence end date: " . Api\DateTime::to($event['recur_enddate'], Api\DateTime::DATABASE));
 		return $event;
 	}
 
