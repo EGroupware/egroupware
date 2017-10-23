@@ -525,12 +525,19 @@ abstract class Framework extends Framework\Extra
 		if (substr($GLOBALS['egw_info']['server']['login_logo_file'],0,4) == 'http' ||
 			$GLOBALS['egw_info']['server']['login_logo_file'][0] == '/')
 		{
-			$var['logo_file'] = $GLOBALS['egw_info']['server']['login_logo_file'];
+			$var['logo_header'] = $var['logo_file'] = $GLOBALS['egw_info']['server']['login_logo_file'];
 		}
 		else
 		{
-			$var['logo_file'] = Image::find('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo', '', null);	// null=explicit allow svg
+			$var['logo_header'] = $var['logo_file'] = Image::find('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo', '', null);	// null=explicit allow svg
 		}
+
+		if (substr($GLOBALS['egw_info']['server']['login_logo_header'],0,4) == 'http' ||
+			$GLOBALS['egw_info']['server']['login_logo_header'][0] == '/')
+		{
+			$var['logo_header'] = $GLOBALS['egw_info']['server']['login_logo_header'];
+		}
+
 		$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
 
 		if (substr($var['logo_url'],0,4) != 'http')
