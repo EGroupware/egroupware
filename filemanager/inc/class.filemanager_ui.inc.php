@@ -152,6 +152,7 @@ class filemanager_ui
 			'new' => array(
 				'caption' => 'New',
 				'group' => $group,
+				'disableClass' => 'noEdit',
 				'children' => array (
 					'document' => array (
 						'caption' => 'Document',
@@ -165,6 +166,7 @@ class filemanager_ui
 				'icon' => 'filemanager/button_createdir',
 				'group' => $group,
 				'allowOnMultiple' => false,
+				'disableClass' => 'noEdit',
 				'onExecute' => 'javaScript:app.filemanager.createdir'
 			),
 			'edit' => array(

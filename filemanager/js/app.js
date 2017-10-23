@@ -1034,7 +1034,7 @@ app.classes.filemanager = AppJS.extend(
 
 			if (_path == path)
 			{
-				var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload'];
+				var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload', 'new'];
 				for(var i=0; i < ids.length; ++i)
 				{
 					var widget = etemplate2.getById(id).widgetContainer.getWidgetById(ids[i]);
