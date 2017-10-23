@@ -95,7 +95,7 @@ class infolog_ui
 	 *
 	 * @return infolog_ui
 	 */
-	function __construct()
+	function __construct(Etemplate $etemplate = null)
 	{
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'infolog') Api\Translation::add_app('infolog');
 
@@ -107,7 +107,11 @@ class infolog_ui
 
 		$this->bo = new infolog_bo();
 
-		$this->tmpl = new Etemplate();
+		if($etemplate === null)
+		{
+			$etemplate = new Etemplate();
+		}
+		$this->tmpl = $etemplate;
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
