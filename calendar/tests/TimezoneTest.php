@@ -331,7 +331,8 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 				$GLOBALS['egw_info']['user']['account_id'] => 'A'
 			)
 		);
-		error_log(__METHOD__ . ':'.__LINE__ ." Event end date: " . Api\DateTime::to($event['recur_enddate'], Api\DateTime::DATABASE));
+		error_log(__METHOD__ . ':'.__LINE__ ." Event end date: " . Api\DateTime::to($event['end'], Api\DateTime::DATABASE));
+		error_log(__METHOD__ . ':'.__LINE__ ." Recurrence end date: " . Api\DateTime::to($event['recur_enddate'], Api\DateTime::DATABASE));
 		return $event;
 	}
 
