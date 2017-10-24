@@ -165,10 +165,8 @@ class Lib
                 try {
                     $response = $ews->GetItem($request);	
                 }
-                catch (Exception $e) {
-                    error_log( $e->getMessage() );
-                    error_log( "Error caused by Mail Id: $emailID" );
-                    return false;
+                catch (\Exception $e) {
+                    return self::getMailPart( $profile, $emailID, 'nobody' );
                 }
             }
         }
@@ -208,6 +206,16 @@ class Lib
 			case 'body':
 				$properties[] = 'item:Body';
 				break;
+			case 'nobody':
+				$properties[] = 'message:From';
+				$properties[] = 'message:Sender';
+				$properties[] = 'message:ToRecipients';
+				$properties[] = 'message:CcRecipients';
+				$properties[] = 'message:InternetMessageId';
+				$properties[] = 'item:DateTimeReceived';
+				$properties[] = 'item:Subject';
+				$properties[] = 'item:Importance';
+				break;
 			}
 		}
 		if ( $properties ) {
@@ -237,7 +245,7 @@ class Lib
                 try {
                     $response = $ews->GetItem($request);	
                 }
-                catch (Exception $e) {
+                catch (\Exception $e) {
                     error_log( $e->getMessage() );
                     error_log( "Error caused by Mail Id: $emailID" );
                     return false;
@@ -266,11 +274,15 @@ class Lib
         try {
             $response = $ews->GetItem($request);	
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             // Unknown error with some newsletters. Fall back to text
             if ( $e->getMessage() == 'looks like we got no XML document') {
                 $request->ItemShape->BodyType = DT\BodyTypeResponseType::TEXT;	    		
-                $response = $ews->GetItem($request);	
+                try {
+                    $response = $ews->GetItem($request);	
+                }
+                catch (\Exception $e) {
+                }
             }
         }
 
