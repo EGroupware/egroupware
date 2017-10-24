@@ -146,7 +146,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			{
 				if (typeof _path.path == 'undefined')
 				{
-					path = app[ this.getAppName() ].getVfsPath( _path );
+					path = this.getVfsPath( _path );
 				}
 				else
 				{
@@ -492,6 +492,17 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					select.append(option);
 				}
 			});
-		}
+		},+               
+		/** 
+		 * Get Vfs Path
+		 *
+		 * @param object _path
+		 * @returns string vfs path
+		 */
+		getVfsPath: function( _path ) 
+		{
+			var req = this.json('EGroupware\\Api\\Link::ajax_vfs_path',[_path],null,this,false).sendRequest(); 
+			return req.responseJSON.response[0].data; 
+		},
 	};
 });

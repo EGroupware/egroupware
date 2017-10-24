@@ -382,18 +382,6 @@ var AppJS = (function(){ "use strict"; return Class.extend(
 	},
 
 	/**
-	 * Get default Vfs path structure 
-	 *
-	 * This way there is a degree of flexibility, since each app can define its own structure
-	 *
-	 * @param {app2: string, id2: string, id: string} _path Object 
-	 * @return {string} path structure 
-	 */
-	getVfsPath: function( _path ) {
-		return '/apps/'+_path.app2+'/'+_path.id2+'/'+_path.id;
-	},
-
-	/**
 	 * Function to load selected row from nm into a template view
 	 *
 	 * @param {object} _action

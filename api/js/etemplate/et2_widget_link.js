@@ -1715,7 +1715,7 @@ var et2_link_list = (function(){ "use strict"; return et2_link_string.extend(
 					id2: link_data.id2,
 					app2: link_data.app2,
 				}
-				var url = app[ path.app2 ].getVfsPath( path );
+				var url = self.egw().getVfsPath( path );
 				if(typeof url == 'string' && url.indexOf('webdav.php'))
 				{
 					// URL is url to file in webdav, so get rid of that part

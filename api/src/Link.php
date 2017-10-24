@@ -1129,6 +1129,19 @@ class Link extends Link\Storage
 	}
 
 	/**
+	 * Ajax function to access vfs_path
+	 *
+	 * @param array $_path 
+	 * @return string path 
+	 */
+	public static function ajax_vfs_path( $_path )
+	{
+		$path = self::vfs_path( $_path['app2'], $_path['id2'], $_path['id'], true );
+		$response = Json\Response::get();
+		$response->data( $path );
+	}
+
+	/**
 	 * path to the attached files of $app/$ip or the directory for $app if no $id,$file given
 	 *
 	 * All link-files are based in the vfs-subdir '/apps/'.$app
