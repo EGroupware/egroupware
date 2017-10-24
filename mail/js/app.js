@@ -2933,7 +2933,7 @@ app.classes.mail = AppJS.extend(
 		else
 		{
 			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
+			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save_zip\]/,'')];
 		}
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=mail.mail_ui.download_zip';	// todo compose for Draft folder
