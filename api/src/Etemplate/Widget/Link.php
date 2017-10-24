@@ -247,7 +247,7 @@ class Link extends Etemplate\Widget
 	/**
 	 * Symlink an existing file in filemanager
 	 */
-	public static function link_existing($app_id, $files)
+	public static function ajax_link_existing($app_id, $files)
 	{
 		list($app, $id, $dest_file) = explode(':', $app_id);
 

@@ -2488,6 +2488,7 @@ class calendar_ical extends calendar_boupdate
 			$component->getAllAttributes('DTEND'),
 			$component->getAllAttributes('DURATION')) as $attributes)
 		{
+error_log(__METHOD__."() attribute=".array2string($attributes));
 			switch ($attributes['name'])
 			{
 				case 'DTSTART':
@@ -3347,16 +3348,18 @@ class calendar_ical extends calendar_boupdate
 		{
 			$vfreebusy->setAttribute($attr, $value);
 		}
-		$fbdata = parent::search(array(
+		$events = parent::search(array(
 			'start' => $start,
 			'end'   => $end,
 			'users' => $user,
 			'date_format' => 'server',
 			'show_rejected' => false,
 		));
-		if (is_array($fbdata))
+		if (is_array($events))
 		{
-			foreach ($fbdata as $event)
+			$fbdata = array();
+
+			foreach ($events as $event)
 			{
 				if ($event['non_blocking']) continue;
 				if ($event['uid'] === $extra['X-CALENDARSERVER-MASK-UID']) continue;
@@ -3367,24 +3370,92 @@ class calendar_ical extends calendar_boupdate
 
 				$fbtype = $status == 'T' ? 'BUSY-TENTATIVE' : 'BUSY';
 
-				if ($utc)
+				// hack to fix end-time to be non-inclusive
+				// all-day events end in our data-model at 23:59:59 (of given TZ)
+				if (date('is', $event['end']) == '5959') ++$event['end'];
+
+				$fbdata[$fbtype][] = $event;
+			}
+			foreach($fbdata as $fbtype => $events)
+			{
+				foreach($this->aggregate_periods($events, $start, $end) as $event)
 				{
-					$vfreebusy->setAttribute('FREEBUSY',array(array(
-						'start' => $event['start'],
-						'end' => $event['end'],
-					)), array('FBTYPE' => $fbtype));
-				}
-				else
-				{
-					$vfreebusy->setAttribute('FREEBUSY',array(array(
-						'start' => date('Ymd\THis',$event['start']),
-						'end' => date('Ymd\THis',$event['end']),
-					)), array('FBTYPE' => $fbtype));
+					if ($utc)
+					{
+						$vfreebusy->setAttribute('FREEBUSY',array(array(
+							'start' => $event['start'],
+							'end' => $event['end'],
+						)), array('FBTYPE' => $fbtype));
+					}
+					else
+					{
+						$vfreebusy->setAttribute('FREEBUSY',array(array(
+							'start' => date('Ymd\THis',$event['start']),
+							'end' => date('Ymd\THis',$event['end']),
+						)), array('FBTYPE' => $fbtype));
+					}
 				}
 			}
 		}
 		$vcal->addComponent($vfreebusy);
 
 		return $vcal->exportvCalendar($charset);
+	}
+
+	/**
+	 * Aggregate multiple, possibly overlapping events cliped by $start and $end
+	 *
+	 * @param array $events array with values for keys "start" and "end"
+	 * @param int $start
+	 * @param int $end
+	 * @return array of array with values for keys "start" and "end"
+	 */
+	public function aggregate_periods(array $events, $start, $end)
+	{
+		// sort by start datetime
+		uasort($events, function($a, $b)
+		{
+			$diff = $a['start'] < $b['start'];
+
+			return !$diff ? 0 : ($diff < 0 ? -1 : 1);
+		});
+
+		$fbdata = array();
+		foreach($events as $event)
+		{
+			error_log(__METHOD__."(..., $start, $end) event[start]=$event[start], event[end]=$event[end], fbdata=".array2string($fbdata));
+			if ($event['end'] <= $start || $event['start'] >= $end) continue;
+
+			if (!$fbdata)
+			{
+				$fbdata[] = array(
+					'start' => $event['start'] < $start ? $start : $event['start'],
+					'end' => $event['end'],
+				);
+				continue;
+			}
+			$last =& $fbdata[count($fbdata)-1];
+
+			if ($last['end'] >= $event['start'])
+			{
+				if ($last['end'] < $event['end'])
+				{
+					$last['end'] = $event['end'];
+				}
+			}
+			else
+			{
+				$fbdata[] = array(
+					'start' => $event['start'],
+					'end' => $event['end'],
+				);
+			}
+		}
+		$last =& $fbdata[count($fbdata)-1];
+
+		if ($last['end'] > $end) $last['end'] = $end;
+
+		error_log(__METHOD__."(..., $start, $end) returning ".array2string($fbdata));
+		return $fbdata;
 	}
 }

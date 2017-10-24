@@ -310,7 +310,7 @@ class Widget
 		{
 			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(__DIR__.'/Widget')) as $path)
 			{
-				if(strpos($path, 'test/') !== FALSE)
+				if(strpos($path, 'tests/') !== FALSE)
 				{
 					continue;
 				}

@@ -20,7 +20,7 @@ if (!defined('EGW_SERVER_ROOT'))
 	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
 	define('EGW_INCLUDE_ROOT', EGW_SERVER_ROOT);
 	define('EGW_API_INC', EGW_SERVER_ROOT.'/phpgwapi/inc');
-	error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+	error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 }
 
 /**
@@ -114,4 +114,10 @@ spl_autoload_register(function($class)
 if (file_exists(EGW_SERVER_ROOT.'/vendor'))
 {
 	require_once EGW_SERVER_ROOT.'/vendor/autoload.php';
+}
+
+if (!empty($GLOBALS['egw_info']['currentapp']) && isset($GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['currentapp']]) &&
+	file_exists(EGW_SERVER_ROOT.'/'.$GLOBALS['egw_info']['currentapp'].'/vendor/autoload.php'))
+{
+	require_once EGW_SERVER_ROOT.'/'.$GLOBALS['egw_info']['currentapp'].'/vendor/autoload.php';
 }

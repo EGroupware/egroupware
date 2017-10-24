@@ -393,10 +393,11 @@ function expose (widget)
 					return;
 				}
 
-
+				var fe = egw.link_get_registry('filemanager-editor');
 				var self=this;
 				// If the media type is not supported do not bind the click handler
-				if (!_value || typeof _value.mime != 'string' || (!_value.mime.match(mime_regex,'ig') && !_value.mime.match(mime_odf_regex,'ig')) || typeof _value.download_url == 'undefined')
+				if (!_value || typeof _value.mime != 'string' || (!_value.mime.match(mime_regex,'ig')
+						&& (!fe || fe.mime && !fe.mime[_value.mime])) || typeof _value.download_url == 'undefined')
 				{
 					return;
 				}
@@ -410,9 +411,12 @@ function expose (widget)
 							{
 								self._init_blueimp_gallery(event, _value);
 							}
-							else if(_value.mime.match(mime_odf_regex,'ig'))
+							else if(fe && fe.mime && fe.edit && fe.mime[_value.mime])
 							{
-								self._init_odf_editor (event, _value);
+								egw.open_link(egw.link('/index.php', {
+									menuaction: fe.edit.menuaction,
+									path: _value.path
+								}), '', fe.edit_popup);
 							}
 						}
 						event.stopImmediatePropagation();
@@ -616,20 +620,5 @@ function expose (widget)
 				}
 			},
 			expose_onclosed: function (event){},
-
-			/**
-			 * Initialise odf editor handler for expose mime type handling
-			 *
-			 * @param {type} _event
-			 * @param {type} _value
-			 * @returns {undefined}
-			 */
-			_init_odf_editor: function (_event, _value)
-			{
-				egw.open_link(egw.link('/index.php', {
-					menuaction: 'filemanager.filemanager_ui.editor',
-					path: decodeURIComponent(_value.download_url)
-				}), '', egw.link_get_registry('filemanager','view_popup'));
-			}
 	});
 }

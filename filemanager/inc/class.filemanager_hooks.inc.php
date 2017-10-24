@@ -280,10 +280,41 @@ class filemanager_hooks
 					'mime_url' => ''
 				),
 			),
+			'additional' => array(
+				'filemanager-editor' => self::getEditorLink()
+			),
 			'merge' => true,
 			'entry' => 'File',
 			'entries' => 'Files',
 			'view_popup' => '980x750'
 		);
+	}
+
+	/**
+	 * Gets registered links for VFS file editor
+	 *
+	 * @return array links
+	 */
+	static function getEditorLink()
+	{
+		$implemented = Api\Hooks::implemented('filemanager-editor-link');
+		// default is CollabEditor
+		// TODO: CollabEditor needs to be migrated into an individual app, so its link
+		$link = array (
+			'edit' => array(
+				'menuaction' => 'filemanager.filemanager_ui.editor',
+			),
+			'edit_popup' => '980x750',
+			'mime' => array (
+				'application/vnd.oasis.opendocument.text' => true,
+			)
+		);
+		foreach ($implemented as $app)
+		{
+			$link = Api\Hooks::process('filemanager-editor-link', $app);
+			$link = $link[$app];
+			if ($app == 'collabora') break; // collabora is default
+		}
+		return $link;
 	}
 }

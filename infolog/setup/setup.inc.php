@@ -6,13 +6,12 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 $setup_info['infolog']['name']      = 'infolog';
-$setup_info['infolog']['version']   = '16.1.004';
+$setup_info['infolog']['version']   = '17.1';
 $setup_info['infolog']['app_order'] = 5;
 $setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra','egw_infolog_users');
 $setup_info['infolog']['enable']    = 1;
@@ -26,7 +25,7 @@ $setup_info['infolog']['maintainer'] = array(
 $setup_info['infolog']['license']  = 'GPL';
 $setup_info['infolog']['description'] =
 	'<p><b>CRM</b> (customer-relation-management) type app using Addressbook providing
-	Todo List, Notes and Phonelog. <b>InfoLog</b> is orininaly based on eGroupWare\'s
+	Todo List, Notes and Phonelog. <b>InfoLog</b> is orininaly based on EGroupware\'s
 	old ToDo-List and has the features of all 3 mentioned applications plus fully working ACL
 	(including Add+Private attributes, add for to addreplys/subtasks).</p>
 	<p>Responsibility for a task (ToDo) or a phonecall can be <b>delegated</b> to an other
@@ -36,13 +35,7 @@ $setup_info['infolog']['description'] =
 	the contact/address, project or calendar view.</p>
 	<p>Other documents / files can be linked to InfoLog entries and are store in the VFS
 	(eGroupWare\'s virtual file system).</p>';
-$setup_info['infolog']['note'] =
-	'<p>There is a <b>CSV import</b> (in the admin-section) to import existing data.
-	It allows to interactivly assign fields, customize the values with regular
-	expressions and direct calls to php-functions (e.g. to link the phone calls
-	(again) to the addressbook entrys).</p>
-	<p><b>More information</b> about InfoLog and the current development-status can be found on the
-	<a href="http://www.egroupware.org/wiki/infolog" target="_blank">InfoLog page on our Website</a>.</p>';
+$setup_info['infolog']['note'] = '';
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['infolog']['hooks']['settings'] = 'infolog_hooks::settings';
@@ -68,7 +61,5 @@ $setup_info['infolog']['hooks']['mail_import'] = 'infolog_hooks::mail_import';
 // Dependencies for this app to work
 $setup_info['infolog']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('16.1')
+	'versions' => Array('17.1')
 );
-
-

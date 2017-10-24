@@ -899,6 +899,7 @@ class calendar_bo
 		if (!$start) $start = $event['start'];
 
 		$events = array();
+
 		$this->insert_all_recurrences($event,$start,$this->date2usertime($this->config['horizont']),$events);
 
 		$exceptions = array();
@@ -1124,6 +1125,7 @@ class calendar_bo
 		$event['recur_enddate'] = is_a($event['recur_enddate'],'DateTime') ?
 				$event['recur_enddate'] :
 				new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
+
 		// unset exceptions, as we need to add them as recurrence too, but marked as exception
 		unset($event['recur_exception']);
 		// loop over all recurrences and insert them, if they are after $start

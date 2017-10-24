@@ -995,6 +995,10 @@ etemplate2.prototype.print = function()
 	this.widgetContainer.iterateOver(function(_widget) {
 		// Skip widgets from a different etemplate (home)
 		if(_widget.getInstanceManager() != this) return;
+		
+		// Skip hidden widgets
+		if(jQuery(_widget.getDOMNode()).filter(':visible').length === 0) return;
+
 		var result = _widget.beforePrint();
 		if (typeof result == "object" && result.done)
 		{

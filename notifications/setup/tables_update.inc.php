@@ -7,7 +7,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package notifications
  * @subpackage setup
- * @version $Id$
  */
 
 function notifications_upgrade0_5()

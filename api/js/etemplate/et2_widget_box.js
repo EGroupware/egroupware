@@ -18,6 +18,9 @@
 /**
  * Class which implements box and vbox tag
  *
+ * Auto-repeat: In order to get box auto repeat to work we need to have another
+ * box as a wrapper with an id set.
+ *
  * @augments et2_baseWidget
  */
 var et2_box = (function(){ "use strict"; return et2_baseWidget.extend([et2_IDetachedDOM],

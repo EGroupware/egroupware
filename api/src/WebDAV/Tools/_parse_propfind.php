@@ -43,12 +43,12 @@
 class _parse_propfind
 {
     /**
-     * success state flag
+     * Error message or null on success
      *
-     * @var bool
+     * @var string
      * @access public
      */
-    var $success = false;
+    var $error;
 
     /**
      * found properties are collected here
@@ -104,17 +104,24 @@ class _parse_propfind
      */
     var $request;
 
-    /**
+	/**
+	 * HTTP method "PROPFIND" or eg. "REPORT" in CalDAV
+	 *
+	 * @var string
+	 */
+	var $method;
+
+	/**
      * constructor
      *
      * @access public
      * @param string $path
      * @param boolean $store_request =false if true whole request data will be made available in $this->request
+	 * @param string $method ='PROPFIND' HTTP method to enable certain checks
      */
-    function __construct($path, $store_request=false)
+    function __construct($path, $store_request=false, $method='PROPFIND')
     {
-        // success state flag
-        $this->success = true;
+		$this->method = $method;
 
         // property storage array
         $this->props = array();
@@ -128,7 +135,7 @@ class _parse_propfind
         // open input stream
         $f_in = fopen($path, "r");
         if (!$f_in) {
-            $this->success = false;
+            $this->error = "Can't open $path!";
             return;
         }
 
@@ -148,20 +155,28 @@ class _parse_propfind
         xml_parser_set_option($xml_parser,
                               XML_OPTION_CASE_FOLDING, false);
 
-        // parse input
-        while ($this->success && !feof($f_in)) {
-            $line = fgets($f_in);
-            if ($store_request) $this->request .= $line;
-            if (is_string($line)) {
-                $had_input = true;
-                $this->success &= xml_parse($xml_parser, $line, false);
-            }
-        }
+		try {
+			// parse input
+			while (!$this->error && !feof($f_in)) {
+				$line = fgets($f_in);
+				if ($store_request) $this->request .= $line;
+				if (is_string($line)) {
+					$had_input = true;
+					if (!xml_parse($xml_parser, $line, false))
+					{
+						$this->error = 'XML parsing';
+					}
+				}
+			}
 
-        // finish parsing
-        if ($had_input) {
-            $this->success &= xml_parse($xml_parser, "", true);
-        }
+			// finish parsing
+			if ($had_input && !xml_parse($xml_parser, "", true)) {
+				$this->error = 'XML parsing';
+			}
+		}
+		catch(Exception $e) {
+			$this->error = $e->getMessage();
+		}
 
         // free parser
         xml_parser_free($xml_parser);
@@ -201,6 +216,22 @@ class _parse_propfind
         // special tags at level 1: <allprop> and <propname>
         if ($this->depth == 1) {
          	$this->use = 'props';
+
+			if ($this->method == 'PROPFIND' && (!in_array($tag, array('allprop', 'prop', 'propname')) || $this->props))
+			{
+				$err = "$tag not allowed in propfind";
+				if ($this->props)
+				{
+					$err .= ' together with ';
+					switch($this->props)
+					{
+						case 'Array': $err .= 'prop'; break;
+						case 'all': $err .= 'allprop'; break;
+						case 'names': $err .= 'propname'; break;
+					}
+				}
+				throw new Exception($err);
+			}
             switch ($tag)
             {
             	case "allprop":

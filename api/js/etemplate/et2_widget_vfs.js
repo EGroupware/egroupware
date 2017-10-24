@@ -12,6 +12,7 @@
 
 /*egw:uses
 	/vendor/bower-asset/jquery/dist/jquery.js;
+	vfsSelectUI;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
 	et2_widget_description;
@@ -867,12 +868,17 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		"method": {
 			name: "Server side callback",
 			type: "string",
-			description: "Server side callback to process selected value(s) in app.class.method or class::method format.  The first parameter will be Method ID, the second the file list."
+			description: "Server side callback to process selected value(s) in \n\
+			app.class.method or class::method format.  The first parameter will \n\
+			be Method ID, the second the file list. 'ckeditor' is reserved and it \n\
+			means it should use download_baseUrl instead of path in value (no method\n\
+			 will be actually executed)."
 		},
 		"method_id": {
 			name: "Method ID",
 			type: "any",
-			description: "optional parameter passed to server side callback.  Can be a string or a function.",
+			description: "optional parameter passed to server side callback.\n\
+			Can be a string or a function.",
 			default: ""
 		},
 		"path": {
@@ -891,14 +897,27 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 			default: "open"
 		},
 		"value": {
-			"type": "any", // Object
-			"description": "Array of paths (strings)"
+			type: "any", // Object
+			description: "Array of paths (strings)"
 		},
 		"button_caption":{
 			name: "button caption",
 			type: "string",
 			default: "Select files from Filemanager ...",
 			description: "Caption for vfs-select button.",
+			translate:true
+		},
+		"name": {
+			name:"File name",
+			type: "any", // Object
+			description: "file name",
+			default: ""
+		},
+		"dialog_title":{
+			name: "dialog title",
+			type: "string",
+			default: "Save as",
+			description: "Title of dialog",
 			translate:true
 		}
 	},
@@ -926,69 +945,140 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		{
 			this.button.hide();
 		}
-		
+
 		if (this.options.button_caption != "")
 		{
 			this.button.text(this.options.button_caption);
 		}
-		this.setDOMNode(egw.app('filemanager') ? this.button[0]:document.createElement('span'));
+		this.setDOMNode(this.button[0]);
 	},
 
-	click: function(e) {
-
-	    // No permission
-	    if(!egw.app('filemanager')) return;
-
+	_content: function (_content, _callback)
+	{
+		egw(window).loading_prompt('vfs-select', true, '', 'body');
 		var self = this;
-
-		var attrs = {
-			menuaction: 'filemanager.filemanager_select.select',
-			mode: this.options.mode,
-			method: this.options.method,
-			label: this.options.button_label,
-			id: typeof this.options.method_id == "function" ? this.options.method_id.call(): this.options.method_id
-		};
-		if(this.options.path)
+		if (typeof app.vfsSelectUI !="undefined")
 		{
-			attrs.path = this.options.path;
+			if (this.dialog && this.dialog.div) this.dialog.div.dialog('close');
+			delete app.vfsSelectUI;
 		}
-		if(this.options.mime)
-		{
-			attrs.mime = this.options.mime;
+		var attrs = {
+			mode: this.options.mode,
+			label: this.options.button_label,
+			path: this.options.path || null,
+			mime: this.options.mime || null,
+			name: this.options.name,
+			method: this.options.method
 		};
+		var callback = _callback || this._buildDialog;
+		egw(window).json(
+			'EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_vfsSelect_content',
+			[_content, attrs],
+			function(_content){
+				egw(window).loading_prompt('vfs-select', false);
+				callback.apply(self, arguments);
+			}
+		).sendRequest(true);
+	},
 
-		// Open the filemanager select in a popup
-		var popup = this.egw(window).open_link(
-			this.egw().link('/index.php', attrs),
-			'link_existing',
-			'680x400'
-		);
-		if(popup)
+	/**
+	 * Builds file navigator dialog
+	 *
+	 * @param {object} _data content
+	 */
+	_buildDialog: function (_data)
+	{
+		if (!_data.content.mode.match(/open|open-multiple|saveas|select-dir/)) {
+			egw.debug('Mode is not matched!');
+			return;
+		}
+		var self = this;
+		var buttons = [
+			{text: egw.lang(_data.content.label), id:"submit"},
+			{text: egw.lang("Close"), id:"close"}
+		];
+		var data = jQuery.extend(_data, {'currentapp': egw.app_name()});
+
+		// define a mini app object for vfs select UI
+		app.vfsSelectUI = new app.classes.vfsSelectUI;
+
+		this.dialog = et2_createWidget("dialog",
 		{
-			// Safari and IE lose reference to global variables after window close
-			// Try to get updated data before window is closed then later we trigger
-			// change event on widget
-			self.egw().window.setTimeout(function(){
-				jQuery(popup).bind('unload',function(){
-					// Set selected files to widget
-					self.value = this.selected_files;
-
-					// Update path to where the user wound up]
-					if (typeof this.etemplate2 !='undefined') self.options.path = this.etemplate2.getByApplication('filemanager')[0].widgetContainer.getArrayMgr("content").getEntry('path');
-				});
-			},1000);
-
-			// Update on close doesn't always (ever, in chrome) work, so poll
-			var poll = self.egw().window.setInterval(
-				function() {
-					if(popup.closed) {
-						self.egw().window.clearInterval(poll);
-						// Fire a change event so any handlers run
+			callback: function(_button_id, _value)
+			{
+				if (_button_id == 'submit' && _value)
+				{
+					var files = [];
+					switch(_data.content.mode)
+					{
+						case 'open-multiple':
+							if (_value.dir && _value.dir.selected)
+							{
+								for(var key in Object.keys(_value.dir.selected))
+								{
+									if (_value.dir.selected[key] != "")
+									{
+										files.push(_value.path+'/'+_value.dir.selected[key]);
+									}
+								}
+							}
+							break;
+						case 'select-dir':
+							files = _value.path;
+							break;
+						default:
+							if (self.options.method === 'ckeditor') _value.path = _data.content.download_baseUrl;
+							files = _value.path+'/'+_value.name;
+							break;
+					}
+					self.value = files;
+					if (self.options.method && self.options.method !== 'ckeditor')
+					{
+						egw(window).json(
+							self.options.method,
+							[self.options.method_id, files],
+							function(){
+								jQuery(self.node).change();
+							}
+						).sendRequest(true);
+					}
+					else
+					{
 						jQuery(self.node).change();
 					}
-				},1000
-			);
-		}
+					delete app.vfsSelectUI;
+				}
+			},
+			title: this.options.dialog_title,
+			buttons: buttons,
+			minWidth: 500,
+			minHeight: 400,
+			width:400,
+			value: data,
+			template: egw.webserverUrl+'/api/templates/default/vfsSelectUI.xet?1',
+			resizable: false
+		}, et2_dialog._create_parent('api'));
+		this.dialog.template.uniqueId = 'api.vfsSelectUI';
+		// we need an etemplate_exec_id for better handling serverside parts of
+		// widgets and since we can not have a etemplate_exec_id specifically
+		// for dialog template our best shot is to inherit its parent etemplate_exec_id.
+		this.dialog.template.etemplate_exec_id = etemplate2.getByApplication(egw(window).app_name())[0].etemplate_exec_id;
+		app.vfsSelectUI.et2 = this.dialog.template.widgetContainer;
+		// Keep the dialog always at the top, seems CKEDITOR dialogs have very
+		// high z-index set.
+		this.dialog.div.parent().css({"z-index": 100000});
+		app.vfsSelectUI.vfsSelectWidget = this;
+		this.dialog.div.on('load', function(e) {
+			app.vfsSelectUI.et2_ready(app.vfsSelectUI.et2, 'api.vfsSelectUI');
+		});
+	},
+
+	/**
+	 * click handler
+	 * @param {event object} e
+	 */
+	click: function(e) {
+		this._content.call(this, null);
 	},
 
 	/**
@@ -1038,7 +1128,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 
 	set_readonly: function(readonly) {
 		this.options.readonly = Boolean(readonly);
-		
+
 		if(this.options.readonly)
 		{
 			this.button.hide();

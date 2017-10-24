@@ -10,7 +10,7 @@
 /* Basic information about this app */
 $setup_info['addressbook']['name']      = 'addressbook';
 $setup_info['addressbook']['title']     = 'Addressbook';
-$setup_info['addressbook']['version']   = '16.1';
+$setup_info['addressbook']['version']   = '17.1';
 $setup_info['addressbook']['app_order'] = 4;
 $setup_info['addressbook']['enable']    = 1;
 $setup_info['addressbook']['index']    = 'addressbook.addressbook_ui.index&ajax=true';
@@ -52,7 +52,7 @@ $setup_info['addressbook']['hooks']['groupdav_root_props'] = 'addressbook_groupd
 /* Dependencies for this app to work */
 $setup_info['addressbook']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('16.1')
+	'versions' => Array('17.1')
 );
 
 // installation checks for addresbook

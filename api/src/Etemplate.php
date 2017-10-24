@@ -129,6 +129,11 @@ class Etemplate extends Etemplate\Widget\Template
 				{
 					$readonlys = array_merge($readonlys, $extra['readonlys']);
 				}
+
+				if ($extra['sel_options'] && is_array($extra['sel_options']))
+				{
+					$sel_options = array_merge($sel_options, $extra['sel_options']);
+				}
 			}
 		}
 		unset($hook_data);
@@ -515,7 +520,7 @@ class Etemplate extends Etemplate\Widget\Template
 	{
 		$this->dom_id = $new_id;
 	}
-	
+
 	/**
 	 * Make sure there's a new request, in case of multiple Etemplates in one call.
 	 * Normally this isn't a problem, but if you've got an etemplate in the sidebox,

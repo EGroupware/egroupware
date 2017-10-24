@@ -1318,7 +1318,7 @@ class calendar_boupdate extends calendar_bo
 					{
 						unset($event['alarm'][$id]);
 						$this->so->delete_alarm($id);
-						error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+						//error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
 					}
 				}
 			}
@@ -1338,12 +1338,12 @@ class calendar_boupdate extends calendar_bo
 					if (!$alarm['owner'] || isset($status) && calendar_so::split_status($status) !== 'R')
 					{
 						$this->so->save_alarm($event['id'], $alarm);
-						error_log(__LINE__.': '.__METHOD__."() so->save_alarm($event[id], ".array2string($alarm).")");
+						//error_log(__LINE__.': '.__METHOD__."() so->save_alarm($event[id], ".array2string($alarm).")");
 					}
 					else
 					{
 						$this->so->delete_alarm($id);
-						error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+						//error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
 					}
 				}
 			}
@@ -1614,6 +1614,9 @@ class calendar_boupdate extends calendar_bo
 				'A' => MSG_ACCEPTED,
 				'D' => MSG_DELEGATED,
 			);
+			// Reset cached event
+			static::$cached_event = array();
+			
 			if (isset($status2msg[$status]) && !$skip_notification)
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
@@ -1826,6 +1829,7 @@ class calendar_boupdate extends calendar_bo
 		$link_arr['view'] = array(	'menuaction' => 'calendar.calendar_uiforms.edit',
 									'cal_id' => $event['id'],
 									'date' => $eventStart_arr['full'],
+									'ajax' => true
 									);
 		$link_arr['popup'] = '750x400';
 		$details['link_arr'] = $link_arr;

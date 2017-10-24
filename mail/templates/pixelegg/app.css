@@ -2335,6 +2335,7 @@ div.mailPreviewHeaders div.mail_extraEmails {
   max-width: 50%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 div.mailPreviewHeaders div.mail_extraEmails img.et2_button_icon {
   width: 24px;

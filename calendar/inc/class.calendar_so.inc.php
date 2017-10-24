@@ -1369,11 +1369,11 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
-		foreach($event as $col => $val)
+		foreach(array_keys($event) as $col)
 		{
 			if ($col[0] != '#' && substr($col,0,6) != 'recur_' && substr($col,0,6) != 'range_' && $col != 'alarm' && $col != 'tz_id' && $col != 'caldav_name')
 			{
-				$event['cal_'.$col] = $val;
+				$event['cal_'.$col] = $event[$col];
 				unset($event[$col]);
 			}
 		}

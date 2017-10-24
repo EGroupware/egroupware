@@ -426,7 +426,7 @@ use EGroupware\Api\Etemplate;
 				$config = Api\Config::read('importexport');
 				if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['users_create_definitions'])
 				{
-					$actions = '';
+					$actions = [];
 					// New definition
 					$add_link = Egw::link('/index.php',array(
 						'menuaction' => 'importexport.importexport_definitions_ui.edit',

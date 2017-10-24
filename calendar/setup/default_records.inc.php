@@ -23,6 +23,10 @@ foreach(array(
 	),__FILE__,__LINE__);
 }
 
+// Start with at a month, gets updated later
+// Without this, recurrences fail until it's set
+EGroupware\Api\Config::save_value('horizont', time()+31*24*60*60,'calendar');
+
 // import timezone data
 calendar_timezones::import_zones();
 calendar_timezones::import_tz_aliases();

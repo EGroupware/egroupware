@@ -6,9 +6,8 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package infolog
- * @copyright (c) 2003-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -1137,6 +1136,7 @@ class infolog_bo
 		}
 		if($values['info_id'] && $values['old_pm_id'] !== $values['pm_id'])
 		{
+			Link::unlink(0,'infolog',$values['info_id'],0,'projectmanager',$values['old_pm_id']);
 			// Project has changed, but link is not to project
 			if($values['pm_id'])
 			{
@@ -1149,7 +1149,6 @@ class infolog_bo
 			else
 			{
 				// Project removed, but primary link is not to project
-				Link::unlink(0,'infolog',$values['info_id'],0,'projectmanager',$values['old_pm_id']);
 				$values['pm_id'] = null;
 			}
 		}
