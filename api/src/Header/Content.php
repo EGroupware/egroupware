@@ -50,7 +50,8 @@ class Content
 			in_array($subtype, array('javascript', 'x-javascript', 'ecmascript', 'jscript', 'vbscript', 'css')))
 		{
 			// unfortunatly only Chrome and IE >= 8 allow to switch content-sniffing off with X-Content-Type-Options: nosniff
-			if (UserAgent::type() == 'chrome' || UserAgent::type() == 'msie' && UserAgent::version() >= 8)
+			if (UserAgent::type() == 'chrome' || UserAgent::type() == 'msie' && UserAgent::version() >= 8 ||
+				UserAgent::type() == 'firefox' && UserAgent::version() >= 50)
 			{
 				$mime = 'text/plain';
 				header('X-Content-Type-Options: nosniff');	// stop IE & Chrome from content-type sniffing
@@ -65,7 +66,7 @@ class Content
 				{
 					$data = fread($content, $length);
 					fclose($content);
-					$content =& $data;
+					$content = $data;
 					unset($data);
 				}
 				$content = '<pre>'.$content;
@@ -94,6 +95,9 @@ class Content
 				$force_download = true;
 			}
 		}
+		// always tell browser to do not sniffing / use our content-type
+		header('X-Content-Type-Options: nosniff');
+
 		if ($no_content_type)
 		{
 			if ($force_download) self::disposition(Api\Vfs::basename($path), $force_download);
