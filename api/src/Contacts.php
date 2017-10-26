@@ -1929,7 +1929,7 @@ class Contacts extends Contacts\Storage
 				}
 			}
 			// Update calendar
-			$this->merge_calendar($contact['id'], $target['id']);
+			$this->merge_calendar('c'.$contact['id'], $target['account_id'] ? 'u'.$target['account_id'] : 'c'.$target['id']);
 
 			if ($this->delete($contact['id'])) $success++;
 		}
@@ -1952,12 +1952,12 @@ class Contacts extends Contacts\Storage
 		}
 
 		// Find all events with this contact
-		$events = $bo->search(array('users' => "c$old_id", 'ignore_acl' => true));
+		$events = $bo->search(array('users' => $old_id, 'ignore_acl' => true));
 
 		foreach($events as $event)
 		{
-			$event['participants']["c$new_id"] = $event['participants']["c$old_id"];
-			unset($event['participants']["c$old_id"]);
+			$event['participants'][$new_id] = $event['participants'][$old_id];
+			unset($event['participants'][$old_id]);
 
 			// Quietly update, ignoring ACL & no notifications
 			$bo->update($event, true, true, true, true, $messages, true);
