@@ -74,6 +74,9 @@ class Tail
 
 		if ($filename)
 		{
+			// do NOT allow path-traversal
+			$filename = str_replace('../', '', $filename);
+
 			$this->filename = $filename;
 
 			if (!$this->filenames || !in_array($filename,$this->filenames)) $this->filenames[] = $filename;
@@ -176,7 +179,7 @@ class Tail
 		'filename' => $this->filename,
 	)).'
 </div>
-<pre class="tail" id="log" data-filename="'.$this->filename.'" style="clear: both; width: 99.5%; border: 2px groove silver; margin-bottom: 0; overflow: auto;"></pre>';
+<pre class="tail" id="log" data-filename="'.htmlspecialchars($this->filename).'" style="clear: both; width: 99.5%; border: 2px groove silver; margin-bottom: 0; overflow: auto;"></pre>';
 	}
 
 	/**
