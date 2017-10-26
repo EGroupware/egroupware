@@ -382,7 +382,7 @@
 	notifications.prototype.delete_all = function () {
 		if (!notifymessages || Object.entries(notifymessages).length == 0) return false;
 		egw.json("notifications.notifications_ajax.delete_message", [Object.keys(notifymessages)]).sendRequest(true);
-		delete(notifymessages);
+		notifymessages = {};
 		jQuery("#egwpopup_list").empty();
 		this.counterUpdate();
 	};
