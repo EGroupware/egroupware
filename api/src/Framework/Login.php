@@ -164,7 +164,7 @@ class Login
 
 		$tmpl->set_var('login_url', $GLOBALS['egw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
 		$tmpl->set_var('version', $GLOBALS['egw_info']['server']['versions']['phpgwapi']);
-		$tmpl->set_var('login', $last_loginid);
+		$tmpl->set_var('login', htmlspecialchars($last_loginid));
 
 		$tmpl->set_var('lang_username',lang('username'));
 		$tmpl->set_var('lang_login',lang('login'));
