@@ -485,7 +485,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		{
 			if ($data['currentver'] && $data['version'] && $data['version'] != $data['currentver'])
 			{
-				$to_upgrade[] = $app;
+				$to_upgrade[] = lang(!empty($data['title']) ? $data['title'] : $app);
 				$setup_tpl->set_var('apps_status_img',$incomplete);
 			}
 		}
@@ -494,7 +494,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		{
 			if (!isset($setup_info[$app]) || empty($setup_info[$app]['currentver']))
 			{
-				$to_install[] = $app;
+				$to_install[] = lang($app);
 				$setup_tpl->set_var('apps_status_img',$incomplete);
 			}
 		}
