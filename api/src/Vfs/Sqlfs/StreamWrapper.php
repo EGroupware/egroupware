@@ -1568,8 +1568,8 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$fs_id = (int)$stat['ino'];
 
 		$query = 'SELECT MIN(B.fs_id)
-FROM egroupware.egw_sqlfs as A
-JOIN egroupware.egw_sqlfs AS B ON
+FROM '.self::TABLE.' as A
+JOIN '.self::TABLE.' AS B ON
 	A.fs_name = B.fs_name AND A.fs_dir = B.fs_dir AND A.fs_active = 1 && B.fs_active = 0
 WHERE A.fs_id=?
 GROUP BY A.fs_id';
