@@ -2562,6 +2562,22 @@ class Vfs
 
 		return $fp;
 	}
+
+	/**
+	 * Get the lowest fs_id for a given path
+	 *
+	 * @param string $path
+	 *
+	 * @return integer|boolean Lowest fs_id for that path, or false
+	 */
+	static function get_minimum_file_id($path)
+	{
+		if(!self::file_exists($path))
+		{
+			return false;
+		}
+		return self::_call_on_backend('get_minimum_file_id', array($path));
+	}
 }
 
 Vfs::init_static();

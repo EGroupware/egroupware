@@ -1556,6 +1556,36 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	}
 
 	/**
+	 * Get the lowest file id (fs_id) for a given path
+	 *
+	 * @param string $path
+	 * @return integer
+	 */
+	static function get_minimum_file_id($path)
+	{
+		$vfs = new self();
+		$stat = $vfs->url_stat($path,0);
+		$fs_id = (int)$stat['ino'];
+
+		$query = 'SELECT MIN(B.fs_id)
+FROM egroupware.egw_sqlfs as A
+JOIN egroupware.egw_sqlfs AS B ON
+	A.fs_name = B.fs_name AND A.fs_dir = B.fs_dir AND A.fs_active = 1 && B.fs_active = 0
+WHERE A.fs_id=?
+GROUP BY A.fs_id';
+		if (self::LOG_LEVEL > 2)
+		{
+			$query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
+		}
+		$stmt = self::$pdo->prepare($query);
+
+		$stmt->execute($fs_id);
+		$min = $stmt->fetchColumn();
+
+		return $min ? $min : $fs_id;
+	}
+
+	/**
 	 * Max allowed sub-directory depth, to be able to break infinit recursion by wrongly linked directories
 	 */
 	const MAX_ID2PATH_RECURSION = 100;
