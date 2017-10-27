@@ -157,6 +157,13 @@
 	var include = JSON.parse(egw_script.getAttribute('data-include'));
 	window.egw_LAB.script(include).wait(function()
 	{
+		// We need to override the globalEval to mitigate potential execution of
+		// script tag. This issue is relevant to jQuery 1.12.4, we need to check
+		// if we still need this after upgrading jQuery.
+		jQuery.extend({
+			globalEval:function(data){}
+		});
+
 		// call egw.link_handler, if attr specified
 		var egw_redirect = egw_script.getAttribute('data-egw-redirect');
 		if (egw_redirect)
