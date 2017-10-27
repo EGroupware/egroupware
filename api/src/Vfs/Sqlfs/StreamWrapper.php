@@ -1579,7 +1579,7 @@ GROUP BY A.fs_id';
 		}
 		$stmt = self::$pdo->prepare($query);
 
-		$stmt->execute($fs_id);
+		$stmt->execute(array($fs_id));
 		$min = $stmt->fetchColumn();
 
 		return $min ? $min : $fs_id;
