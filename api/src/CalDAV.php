@@ -2053,6 +2053,17 @@ class CalDAV extends HTTP_WebDAV_Server
 	}
 
 	/**
+	 * Sanitizing filename to gard agains path traversal and / eg. in UserAgent string
+	 *
+	 * @param string $filename
+	 * @return string
+	 */
+	public static function sanitize_filename($filename)
+	{
+		return str_replace(array('../', '/'), array('', '!'), $filename);
+	}
+
+	/**
 	 * Log the request
 	 *
 	 * @param string $extra ='' extra text to add below request-log, eg. exception thrown
@@ -2065,12 +2076,12 @@ class CalDAV extends HTTP_WebDAV_Server
 			{
 				$msg_file = $GLOBALS['egw_info']['server']['files_dir'];
 				$msg_file .= '/groupdav';
-				if (!file_exists($msg_file) && !mkdir($msg_file,0700))
+				$msg_file .= '/'.self::sanitize_filename($GLOBALS['egw_info']['user']['account_lid']).'/';
+				if (!file_exists($msg_file) && !mkdir($msg_file, 0700, true))
 				{
 					error_log(__METHOD__."() Could NOT create directory '$msg_file'!");
 					return;
 				}
-				$msg_file .= '/'.$GLOBALS['egw_info']['user']['account_lid'].'-';
 				// stop CalDAVTester from creating one log per test-step
 				if (substr($_SERVER['HTTP_USER_AGENT'], 0, 14) == 'scripts/tests/')
 				{
@@ -2078,7 +2089,7 @@ class CalDAV extends HTTP_WebDAV_Server
 				}
 				else
 				{
-					$msg_file .= str_replace('/','!',$_SERVER['HTTP_USER_AGENT']).'.log';
+					$msg_file .= self::sanitize_filename($_SERVER['HTTP_USER_AGENT']).'.log';
 				}
 				$content = '*** '.$_SERVER['REMOTE_ADDR'].' '.date('c')."\n";
 			}

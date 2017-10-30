@@ -105,17 +105,16 @@ class Hooks
 			if ($GLOBALS['type'] === 'user')
 			{
 				$logs = array();
-				if (file_exists($log_dir=$GLOBALS['egw_info']['server']['files_dir'].'/groupdav') && ($files = scandir($log_dir)))
+				$relativ_log_dir .= 'groupdav/'.Api\CalDAV::sanitize_filename(Api\Accounts::id2name($hook_data['account_id']));
+				$log_dir = $GLOBALS['egw_info']['server']['files_dir'].'/'.$relativ_log_dir;
+				if (file_exists($log_dir) && ($files = scandir($log_dir)))
 				{
-					$account_lid = Api\Accounts::id2name($hook_data['account_id']);
-					$account_lid_len = strlen($account_lid);
 					foreach($files as $log)
 					{
-						if (substr($log,0,$account_lid_len+1) == $account_lid.'-' &&
-							substr($log,-4) == '.log')
+						if (substr($log, -4) == '.log')
 						{
-							$logs['groupdav/'.$log] = Api\DateTime::to(filemtime($log_dir.'/'.$log)).': '.
-								str_replace('!','/',substr($log,$account_lid_len+1,-4));
+							$logs[$relativ_log_dir.'/'.$log] = Api\DateTime::to(filemtime($log_dir.'/'.$log)).': '.
+								str_replace('!', '/', $log);
 						}
 					}
 				}
@@ -155,8 +154,8 @@ class Hooks
 	{
 		$filename = $_GET['filename'];
 		$matches = null;
-		if (!preg_match('|^groupdav/'.($GLOBALS['egw_info']['user']['apps']['admin'] ? '[^-]+' :
-			preg_quote($GLOBALS['egw_info']['user']['account_lid'], '|')).'-(.*)\.log$|', $filename, $matches))
+		if (!preg_match('|^groupdav/'.($GLOBALS['egw_info']['user']['apps']['admin'] ? '[^/]+/' :
+			preg_quote(Api\CalDAV::sanitize_filename($GLOBALS['egw_info']['user']['account_lid']), '|')).'(.*)\.log$|', $filename, $matches))
 		{
 			throw new Api\Exception\WrongParameter("Access denied to file '$filename'!");
 		}
