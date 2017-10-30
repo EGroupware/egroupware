@@ -308,6 +308,12 @@ class filemanager_ui
 				$actions['paste']['children']["{$action_id}_paste"] = $action;
 			}
 		}
+
+		// Anonymous users have limited actions
+		if(self::is_anonymous($GLOBALS['egw_info']['user']['account_id']))
+		{
+			self::restrict_anonymous_actions($actions);
+		}
 		return $actions;
 	}
 
@@ -957,12 +963,13 @@ class filemanager_ui
 				{
 					$dir_is_writable[$path] = Vfs::is_writable($path);
 				}
-				if(!$dir_is_writable[$path])
-				{
-					$row['class'] .= 'noEdit ';
-				}
+
 				$row['class'] .= 'isDir ';
 				$row['is_dir'] = 1;
+			}
+			if(!$dir_is_writable[$path])
+			{
+				$row['class'] .= 'noEdit ';
 			}
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
@@ -1412,7 +1419,38 @@ class filemanager_ui
 		Framework::window_focus();
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.Vfs::decodePath($path);
 
+		// Anonymous users cannot do anything
+		if(self::is_anonymous($GLOBALS['egw_info']['user']['account_id']))
+		{
+			$readonlys['__ALL__'] = true;
+			$readonlys['gid'] = true;
+		}
+
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
+	}
+
+	/**
+	 * Check if the user is anonymous user
+	 * @param type $user_id
+	 */
+	protected static function is_anonymous($user_id)
+	{
+		return in_array($user_id, $GLOBALS['egw']->accounts->members('NoGroup', true));
+	}
+
+	/**
+	 * Remove some more dangerous actions
+	 * @param Array $actions
+	 */
+	protected static function restrict_anonymous_actions(&$actions)
+	{
+		$remove = array(
+			'delete'
+		);
+		foreach($remove as $key)
+		{
+			unset($actions[$key]);
+		}
 	}
 
 	/**
