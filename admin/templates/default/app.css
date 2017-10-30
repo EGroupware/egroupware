@@ -27,9 +27,11 @@ body {
 }
 
 /** Group list */
-#admin-index_groups div.innerContainer {
-	overflow: auto;
-	max-height: 7em;
+@media screen {
+	#admin-index_groups div.innerContainer {
+		overflow: auto;
+		max-height: 7em;
+	}
 }
 
 tr.adminAccountInactive .adminStatus {

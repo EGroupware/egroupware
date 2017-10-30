@@ -37,9 +37,11 @@ body {
   background-color: white;
 }
 /** Group list */
-#admin-index_groups div.innerContainer {
-  overflow: auto;
-  max-height: 5em;
+@media screen {
+  #admin-index_groups div.innerContainer {
+    overflow: auto;
+    max-height: 7em;
+  }
 }
 tr.adminAccountInactive .adminStatus {
   color: red;
@@ -184,8 +186,8 @@ select#admin-mailaccount_ident_id {
 }
 @media all {
   div.dhtmlxTree td.standartTreeRow span.selectedTreeRow {
-    background-color: #FFDD73;
-    color: #1E1E1E;
+    background-color: #ffdd73;
+    color: #1e1e1e;
   }
   /* #############################################################################
 	// iframe
