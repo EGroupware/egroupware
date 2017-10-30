@@ -354,6 +354,11 @@ app.classes.mail = AppJS.extend(
 	{
 		switch(_app)
 		{
+			//fkara
+			case 'infolog':
+				// If new infolog is created, store its id. It will be fetched by popup windows
+				this.latest_infolog = _id;
+				break;
 			case 'mail':
 				if (_id === 'sieve')
 				{
@@ -1539,6 +1544,27 @@ app.classes.mail = AppJS.extend(
 		{
 			//ftree.reSelectItem(_previous);
 			return false;
+		}
+
+		var actions = ['add','edit','delete','subscribe','unsubscribe'];
+		if ( actions.indexOf( action.id ) !== -1 ) {
+			var row_id = node.id.split('::');
+			var id = row_id[0];
+			var is_root = ( row_id.length == 1 );
+			var req = egw.json('mail.mail_ui.ajax_isEws',[ id ],null,this,false).sendRequest(); 
+			var is_ews = req.responseJSON.response[0].data;
+
+			switch( action.id ) {
+				case 'subscribe':
+				case 'unsubscribe':
+					if ( is_ews ) return false;
+					break;
+				case 'add':
+				case 'edit':
+				case 'delete':
+					if ( is_ews && is_root ) return false;
+					break;
+			}
 		}
 
 		return true;

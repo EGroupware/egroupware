@@ -5404,4 +5404,16 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$response->data($res);
 		}
 	}
+
+	/**
+	 * Function check whether profile is ews
+	 *
+	 * @param string $profile
+	 * @return boolean 
+	 */
+	function ajax_isEws( $profile )
+	{
+		$account = Mail\Account::read( $profile );
+		Api\Json\Response::get()->data( $account->is_ews() );
+	}
 }
