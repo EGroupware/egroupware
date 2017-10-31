@@ -1234,7 +1234,8 @@ class filemanager_ui
 		if (($readonlys['uid'] = !Vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';
 		// only owner can change group & perms
 		if (($readonlys['gid'] = !$content['is_owner'] ||
-			Vfs::parse_url(Vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs'))	// no uid, gid or perms in oldvfs
+			Vfs::parse_url(Vfs::resolve_url($content['path']),PHP_URL_SCHEME) == 'oldvfs') ||// no uid, gid or perms in oldvfs
+				 !Vfs::is_writable($path))
 		{
 			if (!$content['gid']) $content['ro_gid_root'] = 'root';
 			foreach($content['perms'] as $name => $value)
@@ -1242,6 +1243,7 @@ class filemanager_ui
 				$readonlys['perms['.$name.']'] = true;
 			}
 		}
+		$readonlys['gid'] = $readonlys['gid'] || !Vfs::is_writable($path);
 		$readonlys['name'] = $path == '/' || !($dir = Vfs::dirname($path)) || !Vfs::is_writable($dir);
 		$readonlys['comment'] = !Vfs::is_writable($path);
 		$readonlys['tabs']['filemanager.file.preview'] = $readonlys['tabs']['filemanager.file.perms'] = $content['is_link'];
@@ -1347,6 +1349,11 @@ class filemanager_ui
 			$tpl->setElementAttribute('sudouser', 'help','Enter setup user and password to get root rights');
 			$tpl->setElementAttribute('sudouser', 'onclick','app.filemanager.set_sudoButton(widget,"logout")');
 		}
+		else if (self::is_anonymous($GLOBALS['egw_info']['user']['account_id']))
+		{
+			// Just hide sudo for anonymous users
+			$readonlys['sudouser'] = true;
+		}
 		if (($extra_tabs = Vfs::getExtraInfo($path,$content)))
 		{
 			// add to existing tabs in template
@@ -1378,23 +1385,18 @@ class filemanager_ui
 		Framework::window_focus();
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.Vfs::decodePath($path);
 
-		// Anonymous users cannot do anything
-		if(self::is_anonymous($GLOBALS['egw_info']['user']['account_id']))
-		{
-			$readonlys['__ALL__'] = true;
-			$readonlys['gid'] = true;
-		}
-
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
 	}
 
 	/**
 	 * Check if the user is anonymous user
-	 * @param type $user_id
+	 * @param integer $account_id
 	 */
-	protected static function is_anonymous($user_id)
+	protected static function is_anonymous($account_id)
 	{
-		return in_array($user_id, $GLOBALS['egw']->accounts->members('NoGroup', true));
+		$acl = new Api\Acl($account_id);
+		$acl->read_repository();
+		return $acl->check('anonymous', 1, 'phpgwapi');
 	}
 
 	/**
