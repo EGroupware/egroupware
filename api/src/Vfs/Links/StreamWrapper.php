@@ -96,7 +96,7 @@ class StreamWrapper extends LinksParent
 			$access = !($check & Vfs::WRITABLE);	// always grant read access to /apps
 			$what = '!$app';
 		}
-		elseif(!isset($GLOBALS['egw_info']['user']['apps'][$app]))
+		elseif (!self::check_app_rights($app))
 		{
 			$access = false;							// user has no access to the $app application
 			$what = 'no app-rights';
@@ -118,6 +118,26 @@ class StreamWrapper extends LinksParent
 		}
 		if (self::DEBUG) error_log(__METHOD__."($url,$check) user=".Vfs::$user." ($what) ".($access?"access granted ($app:$id:$rel_path)":'no access!!!'));
 		return $access;
+	}
+
+	/**
+	 * Check app-rights for current Vfs::$user
+	 *
+	 * @param string $app
+	 * @return boolean
+	 */
+	protected static function check_app_rights($app)
+	{
+		if ($GLOBALS['egw_info']['user']['account_id'] == Vfs::$user)
+		{
+			return isset($GLOBALS['egw_info']['user']['apps'][$app]);
+		}
+		static $user_apps = array();
+		if (!isset($user_apps[Vfs::$user]))
+		{
+			$user_apps[Vfs::$user] = $GLOBALS['egw']->acl->get_user_applications(Vfs::$user);
+		}
+		return !empty($user_apps[Vfs::$user][$app]);
 	}
 
 	/**

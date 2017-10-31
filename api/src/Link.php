@@ -201,8 +201,10 @@ class Link extends Link\Storage
 
 	/**
 	 * initialize our static vars
+	 *
+	 * @param boolean $clear_all do not use session AND not permission check for app-registry
 	 */
-	static function init_static( )
+	static function init_static($clear_all=false)
 	{
 		// FireFox 36 can not display pdf with it's internal viewer in an iframe used by mobile theme/template for popups
 		// same is true for all mobile devices
@@ -214,9 +216,9 @@ class Link extends Link\Storage
 		// other apps can participate in the linking by implementing a search_link hook, which
 		// has to return an array in the format of an app_register entry
 		// for performance reasons, we do it only once / cache it in the session
-		if (!($search_link_hooks = Cache::getSession(__CLASS__, 'search_link_hooks')))
+		if ($clear_all || !($search_link_hooks = Cache::getSession(__CLASS__, 'search_link_hooks')))
 		{
-			$search_link_hooks = Hooks::process('search_link',array(), (bool)$GLOBALS['egw_info']['flags']['async-service']);
+			$search_link_hooks = Hooks::process('search_link',array(), $clear_all || (bool)$GLOBALS['egw_info']['flags']['async-service']);
 			Cache::setSession(__CLASS__, 'search_link_hooks', $search_link_hooks);
 		}
 		if (is_array($search_link_hooks))

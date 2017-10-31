@@ -254,6 +254,8 @@ class Sharing
 		}
 		Vfs::$is_root = false;
 		Vfs::clearstatcache();
+		// clear link-cache and load link registry without permission check to access /apps
+		Api\Link::init_static(true);
 
 		// update accessed timestamp
 		self::$db->update(self::TABLE, array(
