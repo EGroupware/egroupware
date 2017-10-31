@@ -36,4 +36,22 @@ class admin_wizard_export_acl_csv extends importexport_wizard_basic_export_csv
 		// Custom fields - not possible for ACL
 		unset($this->export_fields['customfields']);
 	}
+
+	/**
+	 * Choose fields to export - overridden from parent to remove 'All custom fields',
+	 * which does not apply here
+	 */
+	function wizard_step30(&$content, &$sel_options, &$readonlys, &$preserv)
+	{
+		$result = parent::wizard_step30($content, $sel_options, $readonlys, $preserv);
+		unset($this->export_fields['all_custom_fields']);
+		foreach($content['fields'] as $field_id => $field)
+		{
+			if($field['field'] == 'all_custom_fields')
+			{
+				unset($content['fields'][$field_id]);
+			}
+		}
+		return $result;
+	}
 }

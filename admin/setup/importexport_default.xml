@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entry type="array" name="importExportDefinitions">
+  <entry type="array" name="metainfo">
+    <entry type="string" name="type">importexport definitions</entry>
+    <entry type="string" name="charset">utf-8</entry>
+    <entry type="integer" name="entries">1</entry>
+  </entry>
+  <entry type="array" name="definitions">
+    <entry type="array" name="export-ACL">
+      <entry type="string" name="name">export-ACL</entry>
+      <entry type="string" name="application">admin</entry>
+      <entry type="string" name="plugin">admin_export_acl_csv</entry>
+      <entry type="string" name="type">export</entry>
+      <entry type="NULL" name="allowed_users"/>
+      <entry type="array" name="plugin_options">
+        <entry type="array" name="mapping">
+          <entry type="string" name="acl_account">acl_account</entry>
+          <entry type="string" name="acl_appname">acl_appname</entry>
+          <entry type="string" name="acl_location">acl_location</entry>
+          <entry type="string" name="acl1">acl1</entry>
+          <entry type="string" name="acl2">acl2</entry>
+          <entry type="string" name="acl4">acl4</entry>
+          <entry type="string" name="acl8">acl8</entry>
+          <entry type="string" name="acl16">acl16</entry>
+          <entry type="string" name="acl64">acl64</entry>
+          <entry type="string" name="acl128">acl128</entry>
+          <entry type="string" name="acl256">acl256</entry>
+        </entry>
+        <entry type="string" name="delimiter">;</entry>
+        <entry type="string" name="charset">utf-8</entry>
+        <entry type="string" name="begin_with_fieldnames">label</entry>
+        <entry type="string" name="convert">1</entry>
+      </entry>
+      <entry type="string" name="modified">2017-10-31 11:20:14</entry>
+      <entry type="string" name="filter"/>
+    </entry>
+  </entry>
+</entry>
