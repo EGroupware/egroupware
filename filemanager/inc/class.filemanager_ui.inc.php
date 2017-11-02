@@ -869,8 +869,8 @@ class filemanager_ui
 		// do NOT store query, if hierarchical data / children are requested
 		if (!$query['csv_export'])
 		{
-                        Api\Cache::setSession('filemanager', 'index',
-                                array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
+			Api\Cache::setSession('filemanager', 'index',
+				array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
 		}
 		if(!$query['path']) $query['path'] = static::get_home_dir();
 
@@ -1543,9 +1543,7 @@ class filemanager_ui
 				$arr['props'] = $props;
 				break;
 
-
-                        case 'sharelink':
-
+			case 'sharelink':
 				$share = Vfs\Sharing::create($selected, Vfs\Sharing::READONLY, basename($selected), array() );
 				$arr["share_link"] = $link = Vfs\Sharing::share2link($share);
 				$arr["template"] = Api\Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet');
