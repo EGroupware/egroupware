@@ -933,7 +933,7 @@ app.classes.filemanager = AppJS.extend(
 		// Target will be missing ID if directory is empty
 		// so start with the current directory
 		var parent = _action;
-		var nm = _target.manager.data.nextmatch;
+		var nm = _target ? _target.manager.data.nextmatch : null;
 		while(!nm && parent.parent)
 		{
 			parent = parent.parent;
