@@ -505,19 +505,8 @@ class CkEditorConfig
 	 */
 	public static function set_csp_script_src_attrs()
 	{
-		$attrs = array('unsafe-eval', 'unsafe-inline');
-		$url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').self::WEBSPELLCHECK_HOST;
-
-		// if webspellchecker is enabled in EGroupware config, allow access to it's url
-		if (in_array($GLOBALS['egw_info']['server']['enabled_spellcheck'], array('True', 'YesUseWebSpellCheck')))
-		{
-			$attrs[] = $url;
-
-			ContentSecurityPolicy::add('style-src', $url);
-		}
-		//error_log(__METHOD__."() egw_info[server][enabled_spellcheck]='{$GLOBALS['egw_info']['server']['enabled_spellcheck']}' --> attrs=".array2string($attrs));
 		// tell framework CK Editor needs eval and inline javascript :(
-		ContentSecurityPolicy::add('script-src', $attrs);
+		ContentSecurityPolicy::add('script-src', 'unsafe-inline');
 	}
 
 	/**
