@@ -63,7 +63,7 @@ function get_app()
 	}
 	elseif (isset($_GET['path']))
 	{
-		list(, $apps, $app) = explode('/', $_GET['path']);
+		@list(, $apps, $app) = explode('/', $_GET['path']);
 		if ($apps !== 'apps' || !isset($GLOBALS['egw_info']['user']['apps'][$app]))
 		{
 			$app = 'filemanager';
