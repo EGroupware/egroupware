@@ -23,6 +23,7 @@ class admin_wizard_export_acl_csv extends importexport_wizard_basic_export_csv
 			'acl_appname'		=> lang('Application'),
 			'acl_location'      => lang('Data from'),
 			'all_acls'          => lang('All ACLs'),
+			'acl_run'			=> lang('Run'),
 			'acl1'              => lang('Read'),
 			'acl2'              => lang('Add'),
 			'acl4'              => lang('Edit'),

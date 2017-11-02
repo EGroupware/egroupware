@@ -17,6 +17,7 @@
           <entry type="string" name="acl_account">acl_account</entry>
           <entry type="string" name="acl_appname">acl_appname</entry>
           <entry type="string" name="acl_location">acl_location</entry>
+          <entry type="string" name="acl1">acl_run</entry>
           <entry type="string" name="acl1">acl1</entry>
           <entry type="string" name="acl2">acl2</entry>
           <entry type="string" name="acl4">acl4</entry>
