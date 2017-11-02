@@ -683,5 +683,38 @@ if (file_exists(__DIR__.'/../../../filemanager/inc/class.filemanager_ui.inc.php'
 		{
 			return $GLOBALS['egw']->sharing->get_root();
 		}
+
+		/**
+		 * Context menu
+		 *
+		 * @return array
+		 */
+		public static function get_actions()
+		{
+			$actions = parent::get_actions();
+			$group = 1;
+			if(Vfs::is_writable($GLOBALS['egw']->sharing->get_root()))
+			{
+				return $actions;
+			}
+			$actions+= array(
+				'egw_copy' => array(
+					'enabled' => false,
+					'group' => $group + 0.5,
+					'hideOnDisabled' => true
+				),
+				'egw_copy_add' => array(
+					'enabled' => false,
+					'group' => $group + 0.5,
+					'hideOnDisabled' => true
+				),
+				'paste' => array(
+					'enabled' => false,
+					'group' => $group + 0.5,
+					'hideOnDisabled' => true
+				),
+			);
+			return $actions;
+		}
 	}
 }
