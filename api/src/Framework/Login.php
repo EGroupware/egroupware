@@ -132,17 +132,18 @@ class Login
 
 		if($config_reg['enable_registration'])
 		{
+			$lang = $_GET['lang'] ? $_GET['lang'] : $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 			if ($config_reg['register_link'])
 			{
-				$reg_link='&nbsp;<a href="'. $this->framework->link('/registration/index.php','lang_code='.$_GET['lang']). '">'.lang('Sigup').'</a>';
+				$reg_link='&nbsp;<a href="'. $this->framework->link('/registration/index.php','lang_code='.$lang). '">'.lang('Sigup').'</a>';
 			}
 			if ($config_reg['lostpassword_link'])
 			{
-				$lostpw_link='&nbsp;<a href="'. $this->framework->link('/registration/index.php','menuaction=registration.registration_ui.lost_password&lang_code='.$_GET['lang']). '">'.lang('Lost password').'</a>';
+				$lostpw_link='&nbsp;<a href="'. $this->framework->link('/registration/index.php','menuaction=registration.registration_ui.lost_password&lang_code='.$lang). '">'.lang('Lost password').'</a>';
 			}
 			if ($config_reg['lostid_link'])
 			{
-				$lostid_link='&nbsp;<a href="'. $this->framework->link('/registration/index.php','menuaction=registration.registration_ui.lost_username&lang_code='.$_GET['lang']). '">'.lang('Lost Login Id').'</a>';
+				$lostid_link='&nbsp;<a href="'. $this->framework->link('/registration/index.php','menuaction=registration.registration_ui.lost_username&lang_code='.$lang). '">'.lang('Lost Login Id').'</a>';
 			}
 
 			/* if at least one option of "registration" is activated display the registration section */
