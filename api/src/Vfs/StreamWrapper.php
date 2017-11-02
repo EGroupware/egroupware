@@ -584,6 +584,11 @@ class StreamWrapper implements StreamWrapperIface
 		{
 			return false;
 		}
+		// refuse to modify readonly target (eg. readonly share)
+		if (self::url_is_readonly($url_to))
+		{
+			return false;
+		}
 		// if file is moved from one filesystem / wrapper to an other --> copy it (rename fails cross wrappers)
 		if (Vfs::parse_url($url_from,PHP_URL_SCHEME) == Vfs::parse_url($url_to,PHP_URL_SCHEME))
 		{
@@ -633,6 +638,11 @@ class StreamWrapper implements StreamWrapperIface
 	function mkdir ( $path, $mode, $options )
 	{
 		if (!($url = $this->resolve_url_symlinks($path,false)))	// false = directory does not need to exists
+		{
+			return false;
+		}
+		// refuse to modify readonly target (eg. readonly share)
+		if (self::url_is_readonly($url))
 		{
 			return false;
 		}
@@ -908,7 +918,7 @@ class StreamWrapper implements StreamWrapperIface
 		while (($rel_path = Vfs::basename($url).($rel_path ? '/'.$rel_path : '')) &&
 		       ($url = Vfs::dirname($url)))
 		{
-			if (($stat = $this->url_stat($url,0,true,false)))
+			if (($stat = $this->url_stat($url, 0, false, false)))
 			{
 				if (is_link($url) && ($lpath = Vfs::readlink($url)))
 				{
