@@ -1072,7 +1072,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if(widget)
 		{
 			var recur_end = widget.getRoot().getWidgetById('recur_enddate');
-			if(recur_end && !recur_end.getValue())
+			if(recur_end && recur_end.getValue && !recur_end.getValue())
 			{
 				recur_end.set_min(widget.getValue());
 			}
@@ -1121,6 +1121,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		if(typeof widget === 'undefined') widget = input;
 		var content = widget.getInstanceManager().getValues(widget.getRoot());
 		var participant = widget.getRoot().getWidgetById('participant');
+		if(!participant) return;
 
 		participant.set_autocomplete_params({exec:{
 			start: content.start,
@@ -2281,7 +2282,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 								egw.dataGetUIDdata(widget.day_widgets[day].registeredUID).data
 							);
 						}
-						
+
 						// Hide loader
 						widget.loader.hide();
 						row_index++;
@@ -3035,7 +3036,7 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 					start: typeof record.data.start === 'string' ? record.data.start : record.data.start.toJSON(),
 					end: typeof record.data.end === 'string' ? record.data.end : record.data.end.toJSON()
 				};
-				if(dates.start.substr(0,10) !== dates.end.substr(0,10) && 
+				if(dates.start.substr(0,10) !== dates.end.substr(0,10) &&
 						// Avoid events ending at midnight having a 0 length event the next day
 						dates.end.substr(11,8) !== '00:00:00')
 				{
