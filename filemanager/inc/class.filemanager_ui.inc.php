@@ -158,7 +158,8 @@ class filemanager_ui
 				'icon' => 'filemanager/button_createdir',
 				'group' => $group,
 				'allowOnMultiple' => false,
-				'onExecute' => 'javaScript:app.filemanager.createdir'
+				'onExecute' => 'javaScript:app.filemanager.createdir',
+				'disableClass' => 'noEdit'
 			),
 			'mail' => array(
 				'caption' => lang('Share files'),
