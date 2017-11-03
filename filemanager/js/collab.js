@@ -316,7 +316,7 @@ app.classes.filemanager = app.classes.filemanager.extend({
 				// create file selector
 				var vfs_select = et2_createWidget('vfs-select', vfs_attrs, this.et2);
 				// start the file selector dialog
-				jQuery(vfs_select.getDOMNode()).click();
+				vfs_select.click();
 			}
 		}
 	},
