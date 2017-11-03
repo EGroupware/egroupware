@@ -1974,6 +1974,11 @@ class Vfs
 	 */
 	static public function get_home_dir()
 	{
+		// with sharing active we have no home, use /
+		if ($GLOBALS['egw_info']['user']['account_id'] != self::$user)
+		{
+			return '/';
+		}
 		$start = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
 
 		// check if user specified a valid startpath in his prefs --> use it
@@ -2561,6 +2566,22 @@ class Vfs
 		rewind($fp);
 
 		return $fp;
+	}
+
+	/**
+	 * Get the lowest fs_id for a given path
+	 *
+	 * @param string $path
+	 *
+	 * @return integer|boolean Lowest fs_id for that path, or false
+	 */
+	static function get_minimum_file_id($path)
+	{
+		if(!self::file_exists($path))
+		{
+			return false;
+		}
+		return self::_call_on_backend('get_minimum_file_id', array($path));
 	}
 }
 

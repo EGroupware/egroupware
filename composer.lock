@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "62a8b80e21e0ee193f7acd7f6894e63b",
-    "content-hash": "e811ff98774d404f92391e04889d0ac0",
+    "content-hash": "881022c01663ee3c186a83514fabe1c2",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -55,7 +54,7 @@
                 "ldap",
                 "windows"
             ],
-            "time": "2016-07-14 18:11:24"
+            "time": "2016-07-14T18:11:24+00:00"
         },
         {
             "name": "bower-asset/cropper",
@@ -219,16 +218,16 @@
         },
         {
             "name": "egroupware/ckeditor",
-            "version": "v4.5.11",
+            "version": "v4.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ckeditor.git",
-                "reference": "2a2e7805775b7afdb170566ff0132c6388966d98"
+                "reference": "067f5e7ec7a73d449454755d7ae1ef884f409f9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/ckeditor/zipball/2a2e7805775b7afdb170566ff0132c6388966d98",
-                "reference": "2a2e7805775b7afdb170566ff0132c6388966d98",
+                "url": "https://api.github.com/repos/EGroupware/ckeditor/zipball/067f5e7ec7a73d449454755d7ae1ef884f409f9b",
+                "reference": "067f5e7ec7a73d449454755d7ae1ef884f409f9b",
                 "shasum": ""
             },
             "require": {
@@ -249,7 +248,7 @@
             ],
             "description": "Compiled version of CKEditor customized for EGroupware project.",
             "homepage": "https://github.com/EGroupware/ckeditor",
-            "time": "2016-10-07 08:47:41"
+            "time": "2017-10-30T17:59:45+00:00"
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -305,7 +304,7 @@
                 "npm",
                 "package"
             ],
-            "time": "2016-10-12 08:03:45"
+            "time": "2016-10-12T08:03:45+00:00"
         },
         {
             "name": "npm-asset/as-jqplot",
@@ -425,10 +424,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Compress",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Compress-2.2.0.tgz",
+                "url": "https://pear.horde.org/get/Horde_Compress-2.2.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -440,7 +439,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_compress": "== 2.2.0.0"
+                "pear-horde/horde_compress": "== 2.2.1.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -458,10 +457,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Crypt",
-            "version": "2.7.9",
+            "version": "2.7.11",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Crypt-2.7.9.tgz",
+                "url": "https://pear.horde.org/get/Horde_Crypt-2.7.11.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -479,7 +478,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_crypt": "== 2.7.9.0"
+                "pear-horde/horde_crypt": "== 2.7.11.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -528,10 +527,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Date",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Date-2.4.0.tgz",
+                "url": "https://pear.horde.org/get/Horde_Date-2.4.1.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -542,7 +541,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_date": "== 2.4.0.0"
+                "pear-horde/horde_date": "== 2.4.1.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -687,10 +686,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Imap_Client",
-            "version": "2.29.13",
+            "version": "2.29.15",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.13.tgz",
+                "url": "https://pear.horde.org/get/Horde_Imap_Client-2.29.15.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -709,7 +708,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_imap_client": "== 2.29.13.0"
+                "pear-horde/horde_imap_client": "== 2.29.15.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1204,10 +1203,10 @@
         },
         {
             "name": "pear-pear.horde.org/Horde_Url",
-            "version": "2.2.5",
+            "version": "2.2.6",
             "dist": {
                 "type": "file",
-                "url": "https://pear.horde.org/get/Horde_Url-2.2.5.tgz",
+                "url": "https://pear.horde.org/get/Horde_Url-2.2.6.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -1216,7 +1215,7 @@
                 "php": "<8.0.0.0"
             },
             "replace": {
-                "pear-horde/horde_url": "== 2.2.5.0"
+                "pear-horde/horde_url": "== 2.2.6.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1264,10 +1263,10 @@
         },
         {
             "name": "pear-pear.php.net/Archive_Tar",
-            "version": "1.4.2",
+            "version": "1.4.3",
             "dist": {
                 "type": "file",
-                "url": "https://pear.php.net/get/Archive_Tar-1.4.2.tgz",
+                "url": "https://pear.php.net/get/Archive_Tar-1.4.3.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -1275,7 +1274,7 @@
                 "php": ">=5.2.0.0"
             },
             "replace": {
-                "pear-pear/archive_tar": "== 1.4.2.0"
+                "pear-pear/archive_tar": "== 1.4.3.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1293,18 +1292,18 @@
         },
         {
             "name": "pear-pear.php.net/Auth_SASL",
-            "version": "1.0.6",
+            "version": "1.1.0",
             "dist": {
                 "type": "file",
-                "url": "https://pear.php.net/get/Auth_SASL-1.0.6.tgz",
+                "url": "https://pear.php.net/get/Auth_SASL-1.1.0.tgz",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "php": ">=4.2.0.0"
+                "php": ">=5.4.0.0"
             },
             "replace": {
-                "pear-pear/auth_sasl": "== 1.0.6.0"
+                "pear-pear/auth_sasl": "== 1.1.0.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1410,10 +1409,10 @@
         },
         {
             "name": "pear-pear.php.net/PEAR",
-            "version": "1.10.1",
+            "version": "1.10.5",
             "dist": {
                 "type": "file",
-                "url": "https://pear.php.net/get/PEAR-1.10.1.tgz",
+                "url": "https://pear.php.net/get/PEAR-1.10.5.tgz",
                 "reference": null,
                 "shasum": null
             },
@@ -1431,7 +1430,7 @@
                 "pear-pear.php.net/pear_frontend_web": "<=0.4.0.0"
             },
             "replace": {
-                "pear-pear/pear": "== 1.10.1.0"
+                "pear-pear/pear": "== 1.10.5.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1478,18 +1477,18 @@
         },
         {
             "name": "pear-pear.php.net/Text_Diff",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "dist": {
                 "type": "file",
-                "url": "https://pear.php.net/get/Text_Diff-1.2.1.tgz",
+                "url": "https://pear.php.net/get/Text_Diff-1.2.2.tgz",
                 "reference": null,
                 "shasum": null
             },
             "require": {
-                "php": ">=5.2.0.0"
+                "php": ">=5.3.0.0"
             },
             "replace": {
-                "pear-pear/text_diff": "== 1.2.1.0"
+                "pear-pear/text_diff": "== 1.2.2.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1538,19 +1537,19 @@
         },
         {
             "name": "pear-pear.php.net/XML_Util",
-            "version": "1.3.0",
+            "version": "1.4.3",
             "dist": {
                 "type": "file",
-                "url": "https://pear.php.net/get/XML_Util-1.3.0.tgz",
+                "url": "https://pear.php.net/get/XML_Util-1.4.3.tgz",
                 "reference": null,
                 "shasum": null
             },
             "require": {
                 "ext-pcre": "*",
-                "php": ">=5.3.0.0"
+                "php": ">=5.4.0.0"
             },
             "replace": {
-                "pear-pear/xml_util": "== 1.3.0.0"
+                "pear-pear/xml_util": "== 1.4.3.0"
             },
             "type": "pear-library",
             "autoload": {
@@ -1570,7 +1569,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "php": 15
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -56,10 +56,7 @@ class admin_export_acl_csv implements importexport_iface_export_plugin
 		}
 		foreach($accounts as $account_id => $account_data)
 		{
-			$query['account_id'] = $account_id;
-			$account_acl = array();
-			admin_acl::get_rows($query, $account_acl);
-			$selection = array_merge($selection, $account_acl);
+			$this->get_account_acl($account_id, $options['mapping']['acl_run'], $query, $selection);
 		}
 
 		$options['begin_with_fieldnames'] = true;
@@ -108,6 +105,38 @@ class admin_export_acl_csv implements importexport_iface_export_plugin
 			unset($record);
 		}
 		return $export_object;
+	}
+
+	/**
+	 * Get the acl data for one account & format it as needed
+	 *
+	 * @param int $account_id
+	 * @param boolean $run_rights Include run rights
+	 * @param array $query
+	 * @param array $selection
+	 */
+	protected function get_account_acl($account_id, $run_rights, $query, &$selection)
+	{
+		$query['account_id'] = $account_id;
+		$query['filter'] = 'other';
+		$account_acl = array();
+		admin_acl::get_rows($query, $account_acl);
+		$selection = array_merge($selection, $account_acl);
+
+		$run = array();
+		if($run_rights)
+		{
+			$query['filter'] = 'run';
+			admin_acl::get_rows($query, $run);
+			foreach($run as &$run_row)
+			{
+				$run_row['acl_run'] = true;
+				unset($run_row['acl_location']);
+				unset($run_row['acl1']);
+			}
+			$selection = array_merge($selection, $run);
+		}
+
 	}
 
 	/**

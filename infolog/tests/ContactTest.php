@@ -17,7 +17,7 @@ namespace EGroupware\Infolog;
 
 require_once realpath(__DIR__.'/../../api/tests/AppTest.php');	// Application test base
 
-use Egroupware\Api\Contacts;
+use Egroupware\Api\Etemplate;
 
 class ContactTest extends \EGroupware\Api\AppTest
 {
@@ -32,10 +32,8 @@ class ContactTest extends \EGroupware\Api\AppTest
 	{
 		$this->ui = new \infolog_ui();
 
-		$this->ui->tmpl = $this->getMockBuilder('\\Egroupware\\Api\\Etemplate')
-			->disableOriginalConstructor()
-			->setMethods(array('exec', 'read'))
-			->getMock($this->ui);
+		$this->ui->tmpl = $this->createPartialMock(Etemplate::class, array('exec', 'read'));
+
 		$this->bo = $this->ui->bo;
 
 		$this->mockTracking($this->bo, 'infolog_tracking');

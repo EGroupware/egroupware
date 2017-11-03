@@ -26,7 +26,7 @@ class admin_egw_acl_record implements importexport_iface_egw_record
 	static $types = array(
 		'select' => array('acl_appname'),
 		'select-account' => array('acl_account', 'acl_location'),
-		'select-bool' => array('acl1', 'acl2','acl4','acl8','acl16','acl64','acl128','acl256'),
+		'select-bool' => array('acl_run', 'acl1', 'acl2','acl4','acl8','acl16','acl64','acl128','acl256'),
 	);
 
 	/**

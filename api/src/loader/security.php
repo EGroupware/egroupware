@@ -78,7 +78,7 @@ function _check_script_tag(&$var,$name='',$log=true)
 	}
 }
 
-foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n => $where)
+foreach(array('_COOKIE','_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n => $where)
 {
 	$pregs = array(
 		'order' => '/^[a-zA-Z0-9_,]*$/',
@@ -93,7 +93,7 @@ foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n 
 	}
 	// do the check for script-tags only for _GET and _POST or if we found something in _GET and _POST
 	// speeds up the execusion a bit
-	if (isset($GLOBALS[$where]) && is_array($GLOBALS[$where]) && ($n < 2 || isset($GLOBALS['egw_unset_vars'])))
+	if (isset($GLOBALS[$where]) && is_array($GLOBALS[$where]) && ($n < 3 || isset($GLOBALS['egw_unset_vars'])))
 	{
 		_check_script_tag($GLOBALS[$where],$where);
 	}

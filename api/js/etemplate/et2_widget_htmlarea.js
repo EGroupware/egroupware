@@ -312,3 +312,31 @@ var et2_htmlarea = (function(){ "use strict"; return et2_inputWidget.extend([et2
 });}).call(this);
 et2_register_widget(et2_htmlarea, ["htmlarea"]);
 
+jQuery.extend(et2_htmlarea,
+{
+	/**
+	 * Build VfsSelect widget for CKEditor Browse Server button
+	 * @param {array} _data
+	 */
+	buildVfsSelectForCKEditor: function(_data)
+	{
+		if (!_data) return;
+		var et2 = app[egw(window).app_name()].et2;
+
+		var vfsSelect = et2_createWidget('vfs-select', {
+			id:'upload',
+			mode: 'open',
+			name: '',
+			button_caption:"Link",
+			button_label:"Link",
+			dialog_title: "Link file",
+			method: "ckeditor"
+		}, et2);
+		jQuery(vfsSelect.getDOMNode()).on('change', function (){
+			CKEDITOR.tools.callFunction(_data.funcNum, vfsSelect.get_value());
+		});
+
+		// start the file selector dialog
+		vfsSelect.click();
+	}
+});

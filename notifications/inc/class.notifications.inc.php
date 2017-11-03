@@ -24,7 +24,7 @@ use EGroupware\Api;
  * called from this class. The backend's job is to deliver ONE message to ONE recipient.
  *
  */
-final class notifications {
+class notifications {
 
 	/**
 	 * Appname
@@ -45,14 +45,14 @@ final class notifications {
 	 * registered backends
 	 * @var array
 	 */
-	private $backends = array('popup', 'winpopup', 'email', 'jpopup');
+	protected $backends = array('popup', 'winpopup', 'email', 'jpopup');
 
 	/**
 	 * backends to skip even if the user has chosen it
 	 * this could be set by the calling application
 	 * @var array
 	 */
-	private $skip_backends = array();
+	protected $skip_backends = array();
 
 	/**
 	 * pre-defined notificaton chains
@@ -66,7 +66,7 @@ final class notifications {
 	 *
 	 * @var array
 	 */
-	private $notification_chains = array(
+	protected $notification_chains = array(
 		'disable' 				=> false, // will be created by $this->get_available_chains
 		'email_only' 			=> false, // will be created by $this->get_available_chains
 		'all' 					=> false, // will be created by $this->get_available_chains
@@ -85,7 +85,7 @@ final class notifications {
 	 * human readable descriptions for the notification chains
 	 * @var array
 	 */
-	private $chains_descriptions = array(
+	protected $chains_descriptions = array(
 		'disable' 				=> 'do not notify me at all',
 		'email_only' 			=> 'E-Mail only',
 		'all' 					=> 'all possible notification backends',
@@ -104,81 +104,81 @@ final class notifications {
 	 * array with objects of receivers
 	 * @var array
 	 */
-	private $receivers = array();
+	protected $receivers = array();
 
 	/**
 	 * object of sender
 	 * @var object
 	 */
-	private $sender;
+	protected $sender;
 
 	/**
 	 * holds notification subject
 	 * @var string
 	 */
-	private $subject = '';
+	protected $subject = '';
 
 	/**
 	 * holds notification subject for popup
 	 * @var string
 	 */
-	private $popupsubject = '';
+	protected $popupsubject = '';
 
 	/**
 	 * holds notification message in plaintext
 	 * @var string
 	 */
-	private $message_plain = '';
+	protected $message_plain = '';
 
 	/**
 	 * holds notification message in html
 	 * @var string
 	 */
-	private $message_html = '';
+	protected $message_html = '';
 
 	/**
 	 * holds notification message for popup
 	 * @var string
 	 */
-	private $message_popup = '';
+	protected $message_popup = '';
 
 	/**
 	 * array with objects of links
 	 * @var array
 	 */
-	private $links = array();
+	protected $links = array();
 
 	/**
 	 * array with objects of links
 	 * @var array
 	 */
-	private $popup_links = array();
+	protected $popup_links = array();
 
 	/**
 	 * array with objects of actions
 	 * @var array
 	 */
-	private $popup_actions = array();
+	protected $popup_actions = array();
 
 	/**
 	 * array with objects of attachments
 	 * @var array
 	 */
-	private $attachments = array();
+	protected $attachments = array();
 
 	/**
 	 * holds config object (sitewide configuration of app)
 	 *
 	 * @var object
 	 */
-	private $config;
+	protected $config;
 
 	/**
 	 * Error-message cat be read and reset via notifications::errors($reset=false)
 	 *
 	 * @var array
 	 */
-	private static $errors = array();
+	protected static $errors = array();
 
 	/**
 	 * constructor of notifications
@@ -297,12 +297,18 @@ final class notifications {
 	 * NOTE: There is no XSS prevention in notifications framework!
 	 * You have to filter userinputs yourselve (e.g. htmlspechialchars() )
 	 * If you want to set plain AND html messages, just call this function
-	 * two times, it autodetects the type of your input
+	 * two times, it autodetects the type of your input, or pass $type to be
+	 * explicit.
 	 *
 	 * @param string $_message
+	 * @param string $_type Type of message, 'plain' or 'html'
 	 */
-	public function set_message($_message) {
-		if(strlen($_message) == strlen(strip_tags($_message))) {
+	public function set_message($_message, $_type = false) {
+		if(!$_type)
+		{
+			$_type = strlen($_message) == strlen(strip_tags($_message)) ? 'plain' : 'html';
+		}
+		if($_type == 'plain') {
 			$this->message_plain = $_message;
 		} else {
 			$this->message_html = $_message;

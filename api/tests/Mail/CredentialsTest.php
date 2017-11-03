@@ -14,8 +14,6 @@
 
 namespace EGroupware\Api\Mail;
 
-require_once realpath(__DIR__.'/../../loader/common.php');	// autoloader & check_load_extension
-
 use EGroupware\Api;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;

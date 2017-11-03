@@ -53,6 +53,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	public function tearDown()
 	{
 		$this->bo->delete($this->cal_id);
+		// Delete again to remove from delete history
 		$this->bo->delete($this->cal_id);
 		$this->bo = null;
 
@@ -239,7 +240,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		$tests = array();
 		$tz_combos = $this->makeTZCombos();
 
-		// Start times to test, 1 chosen to cross days
+		// Start times to test (hour of the day), 1 chosen to cross days
 		$times = array(1, 9);
 
 		foreach($tz_combos as $timezones)
@@ -296,7 +297,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 			}
 		} while ($event_index < count($tz_list));
 
-		/* one specific test
+		/* one specific test 
 		$tz_combos = array(array(
 			'client'	=> 'Europe/Berlin',
 			'server'	=> 'Pacific/Tahiti',

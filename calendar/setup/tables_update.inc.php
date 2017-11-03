@@ -6,7 +6,6 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -2749,4 +2748,9 @@ function calendar_upgrade16_1_002()
 	};
 	Api\Preferences::change_preference('calendar', 'use_time_grid', $change);
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '16.1.003';
+}
+
+function calendar_upgrade16_1_003()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '17.1';
 }

@@ -933,7 +933,7 @@ app.classes.filemanager = AppJS.extend(
 		// Target will be missing ID if directory is empty
 		// so start with the current directory
 		var parent = _action;
-		var nm = _target.manager.data.nextmatch;
+		var nm = _target ? _target.manager.data.nextmatch : null;
 		while(!nm && parent.parent)
 		{
 			parent = parent.parent;
@@ -1034,7 +1034,7 @@ app.classes.filemanager = AppJS.extend(
 
 			if (_path == path)
 			{
-				var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload'];
+				var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload', 'new'];
 				for(var i=0; i < ids.length; ++i)
 				{
 					var widget = etemplate2.getById(id).widgetContainer.getWidgetById(ids[i]);
@@ -1152,26 +1152,21 @@ app.classes.filemanager = AppJS.extend(
 
 	/**
 	 * create a share-link for the given file or directory
-         * @param {object} _action egw actions
-         * @param {object} _senders selected nm row
-         * @returns {Boolean} returns false if not successful
+	 * @param {object} _action egw actions
+	 * @param {object} _senders selected nm row
+	 * @returns {Boolean} returns false if not successful
 	 */
-
 	share_link: function(_action, _senders){
-		var data = egw.dataGetUIDdata(_senders[0].id)
 		var path = this.id2path(_senders[0].id);
-
-                var request = egw.json('filemanager_ui::ajax_action', ['sharelink', path],
-                            this._share_link_callback, this, true, this
-                ).sendRequest();
+		egw.json('filemanager_ui::ajax_action', [_action.id, path],
+			this._share_link_callback, this, true, this).sendRequest();
 		return true;
 	},
 
-
 	/**
-  	 * share-link callback
+	 * Share-link callback
+	 * @param {object} _data
 	 */
-
 	_share_link_callback: function(_data) {
 		if (_data.msg || _data.share_link) window.egw_refresh(_data.msg, this.appname);
 		console.log("_data", _data);
@@ -1181,33 +1176,28 @@ app.classes.filemanager = AppJS.extend(
 		var copy_link_to_clipboard = function(evt){
 			var $target = jQuery(evt.target);
 			$target.select();
-
-			console.log("share_link click");
-
 			try {
-                                successful = document.execCommand('copy');
-                                if (successful)
-                                {
-                                        egw.message('Share link copied into clipboard');
-                                        return true;
-                                }
-                        }
-                        catch (e) {}
-                        egw.message('Failed to copy the link!');
-
+				var successful = document.execCommand('copy');
+				if (successful)
+				{
+					egw.message('Share link copied into clipboard');
+					return true;
+				}
+			}
+			catch (e) {}
+			egw.message('Failed to copy the link!');
 		};
 		jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
-
-                var dialog = et2_createWidget("dialog",{
-                        callback: function( button_id, value){
-			 	jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
+		et2_createWidget("dialog", {
+			callback: function( button_id, value) {
+				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
 				return true;
 			},
-                        title: "Share",
-                        template: _data.template,
-                        value: { content:{ "share_link": _data.share_link } }
-                });
-
+			title: egw.lang("%1 Share Link", _data.action ==='shareWritableLink'? "Writable": "Readonly"),
+			template: _data.template,
+			width: 450,
+			value: {content:{ "share_link": _data.share_link }}
+		});
 	},
 
 	/**

@@ -153,6 +153,8 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 			.addClass("ui-widget ui-corner-right").removeClass("ui-corner-all")
 			.attr("type", "button")
 			.click(function() {
+				// ignore click on readonly button
+				if (self.options.readonly) return false;
 				// Clicking it again hides menu
 				if(self.menu.is(":visible"))
 				{
@@ -277,6 +279,9 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 	 * @returns {Boolean}
 	 */
 	click: function(_ev) {
+		// ignore click on readonly button
+		if (this.options.readonly) return false;
+
 		this.clicked = true;
 
 		if (!this._super.apply(this, arguments))
@@ -389,6 +394,28 @@ var et2_dropdown_button = (function(){ "use strict"; return et2_inputWidget.exte
 
 	getValue: function() {
 		return this.value;
+	},
+
+	/**
+	 * Set options.readonly
+	 *
+	 * @param {boolean} _ro
+	 */
+	set_readonly: function(_ro)
+	{
+		if (_ro != this.options.readonly)
+		{
+			this.options.readonly = _ro;
+
+			// don't make readonly dropdown buttons clickable
+			if (this.buttons)
+			{
+				this.buttons.find('button')
+					.toggleClass('et2_clickable', !_ro)
+					.toggleClass('et2_button_ro', _ro)
+					.css('cursor', _ro ? 'default' : 'pointer');
+			}
+		}
 	}
 });}).call(this);
 et2_register_widget(et2_dropdown_button, ["dropdown_button"]);

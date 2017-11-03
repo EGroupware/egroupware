@@ -6,9 +6,8 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
  * @subpackage setup
- * @copyright (c) 2005-16 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 if (!defined('TIMESHEET_APP'))
@@ -32,7 +31,7 @@ $setup_info[TIMESHEET_APP]['license']  = 'GPL';
 $setup_info[TIMESHEET_APP]['description'] =
 'Tracking times and other activities for the Projectmanager.';
 $setup_info[TIMESHEET_APP]['note'] =
-'The TimeSheet application is sponsored by:<ul>
+'The TimeSheet application was sponsored by:<ul>
 <li> <a href="http://www.stylite.de" target="_blank">Stylite AG</a></li>
 <li> <a href="http://www.outdoor-training.de" target="_blank">Outdoor Unlimited Training GmbH</a></li>
 </ul>';
@@ -50,6 +49,5 @@ $setup_info[TIMESHEET_APP]['hooks']['acl_rights'] = 'timesheet_hooks::acl_rights
 /* Dependencies for this app to work */
 $setup_info[TIMESHEET_APP]['depends'][] = array(
 	 'appname' => 'api',
-	 'versions' => Array('16.1')
+	 'versions' => Array('17.1')
 );
-

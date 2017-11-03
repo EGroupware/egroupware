@@ -6,12 +6,11 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
  */
 
 $GLOBALS['egw_info']['template']['pixelegg']['name']      = 'pixelegg';
 $GLOBALS['egw_info']['template']['pixelegg']['title']     = 'Standard ';
-$GLOBALS['egw_info']['template']['pixelegg']['version']   = '16.1';
+$GLOBALS['egw_info']['template']['pixelegg']['version']   = '17.1';
 
 $GLOBALS['egw_info']['template']['pixelegg']['author'] = array(
    array('name' => 'EGroupware GmbH', 'url' => 'http://www.egroupware.org/'),
@@ -34,5 +33,5 @@ $GLOBALS['egw_info']['template']['pixelegg']['themes'] = array(
 // Dependencies for this template to work
 $GLOBALS['egw_info']['template']['pixelegg']['depends'][] = array(
 	'appname' => 'api',
-	'versions' => Array('16.1')
+	'versions' => Array('17.1')
 );

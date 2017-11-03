@@ -13,17 +13,15 @@
     <testsuites>
         <testsuite name="Api">
             <directory>../api/tests</directory>
-            <directory>../api/src/test/</directory>
-			<directory>../api/src/*/test/</directory>
         </testsuite>
         <testsuite name="Etemplate">
-            <file>../api/src/tests/EtemplateTest.php</file>
-            <directory>../api/src/Etemplate/tests/</directory>
-            <directory>../api/src/Etemplate/Widget/tests/</directory>
+            <file>../api/tests/EtemplateTest.php</file>
+            <directory>../api/Etemplate/tests/</directory>
+            <directory>../api/Etemplate/Widget/tests/</directory>
         </testsuite>
 		<testsuite name="Apps">
 			<!-- Apps with test directory -->
-            <directory>../*/tests/</directory>
+			<directory>../*/tests/</directory>
 
 			<exclude>../api</exclude>
 		</testsuite>

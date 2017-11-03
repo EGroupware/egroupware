@@ -8,7 +8,6 @@
  * @subpackage setup
  * @copyright (c) 2014 Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 function home_upgrade1_0_0()
@@ -109,4 +108,9 @@ function home_upgrade14_1_001()
 	}
 
 	return $GLOBALS['setup_info']['home']['currentver'] = '16.1';
+}
+
+function home_upgrade16_1()
+{
+	return $GLOBALS['setup_info']['home']['currentver'] = '17.1';
 }

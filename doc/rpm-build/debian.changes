@@ -1,3 +1,19 @@
+egroupware-epl (17.1.20171023) hardy; urgency=low
+
+  * first release candidate for upcomming 17.1 release
+  * Collabora: integration of Collabora Libre Office Online allowing to edit office document in browser
+  * Collabora: free of charge trial via EGroupware GmbH Collabora server farm
+  * All apps: merge print now also opens merged documents in Collabora app
+  * All apps: new notification system showing notifications in, by default hidden, sidebar
+  * Mail: server-side S/Mime support (does not require browser plugins)
+  * Mail: SpamTitian integration: white- and black-listing of addresses, ham/spam marking of mails
+  * Mail: improved privacy allowing to not automatic load external images
+  * ProjectManager: role-based notifications
+  * Admin: new group-list and export of all ACL rights
+  * many improvments in all applications
+
+ -- Ralf Becker <rb@egroupware.org>  Sat, 21 Oct 2017 14:41:17 +0200
+
 egroupware-epl (16.1.20170922) hardy; urgency=low
 
   * IMPORTANT: repository signing key changed to new build@egroupware.org key to support Debian 9 (you need to import it!)

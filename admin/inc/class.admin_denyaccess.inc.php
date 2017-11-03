@@ -108,6 +108,11 @@ class admin_denyaccess
 	{
 		$location = $_GET['location'];
 
+		// for POST (not GET or cli call via setup_cmd_admin) validate CSRF token
+		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		{
+			Api\Csrf::validate($_POST['csrf_token'], __FILE__);
+		}
 		if ($_POST['submit'] || $_POST['cancel'])
 		{
 			if ($_POST['submit'])
@@ -137,6 +142,7 @@ class admin_denyaccess
 
 		$this->common_header();
 		$this->template->set_file('form','acl_manager_form.tpl');
+		$this->template->set_var('csrf_token', Api\Csrf::token(__FILE__));
 
 		$afn = Api\Accounts::username($this->account_id);
 

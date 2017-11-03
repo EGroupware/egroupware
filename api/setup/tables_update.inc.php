@@ -8,7 +8,6 @@
  * @package api
  * @subpackage setup
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 use EGroupware\Api;
@@ -260,7 +259,7 @@ FROM egw_addressbook
 WHERE contact_jpegphoto IS NOT NULL OR contact_pubkey IS NOT NULL AND contact_pubkey LIKE '%-----%'",
 			__LINE__, __FILE__, 0, $junk_size, false, Api\Db::FETCH_ASSOC) as $row)
 		{
-			$row['contact_files'] = 0;
+			$files = 0;
 			$contact_id = $row['contact_id'];
 			unset($row['contact_id']);
 			if ($row['contact_jpegphoto'] && ($fp = Api\Vfs::string_stream($row['contact_jpegphoto'])))
@@ -271,7 +270,7 @@ WHERE contact_jpegphoto IS NOT NULL OR contact_pubkey IS NOT NULL AND contact_pu
 					'tmp_name' => $fp,
 				)))
 				{
-					$row['contact_files'] |= Api\Contacts::FILES_BIT_PHOTO;
+					$files |= Api\Contacts::FILES_BIT_PHOTO;
 					$row['contact_jpegphoto'] = null;
 				}
 				fclose($fp);
@@ -292,7 +291,7 @@ WHERE contact_jpegphoto IS NOT NULL OR contact_pubkey IS NOT NULL AND contact_pu
 						'tmp_name' => $fp,
 					)))
 					{
-						$row['contact_files'] |= $bit;
+						$files |= $bit;
 						$row['contact_pubkey'] = str_replace($matches[0], '', $row['contact_pubkey']);
 					}
 					fclose($fp);
@@ -300,9 +299,11 @@ WHERE contact_jpegphoto IS NOT NULL OR contact_pubkey IS NOT NULL AND contact_pu
 			}
 			if (!trim($row['contact_pubkey'])) $row['contact_pubkey'] = null;
 
-			if ($row['contact_files'])
+			if ($files)
 			{
-				$GLOBALS['egw_setup']->db->update('egw_addressbook', $row, array('contact_id' => $contact_id), __LINE__, __FILE__);
+				$GLOBALS['egw_setup']->db->query('UPDATE egw_addressbook SET '.
+					$GLOBALS['egw_setup']->db->column_data_implode(',', $row, true).
+					',contact_files='.$files.' WHERE contact_id='.$contact_id, __LINE__, __FILE__);
 				$total++;
 			}
 			$n++;
@@ -395,4 +396,14 @@ function api_upgrade16_9_003()
 	),'contact_jpegphoto');
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '16.9.004';
+}
+
+/**
+ * Bump version to 17.1
+ *
+ * @return string
+ */
+function api_upgrade16_9_004()
+{
+	return $GLOBALS['setup_info']['api']['currentver'] = '17.1';
 }

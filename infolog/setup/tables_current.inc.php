@@ -6,9 +6,8 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-17 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
 $phpgw_baseline = array(
@@ -41,7 +40,6 @@ $phpgw_baseline = array(
 			'info_location' => array('type' => 'varchar','precision' => '255','comment' => 'textfield location'),
 			'info_custom_from' => array('type' => 'int','precision' => '1','comment' => 'tick-box to show infolog_from'),
 			'info_uid' => array('type' => 'ascii','precision' => '128','comment' => 'unique id of the infolog-entry'),
-			'info_cc' => array('type' => 'varchar','precision' => '255','comment' => 'textfield for email-adress to be notified via email of changes'),
 			'caldav_name' => array('type' => 'ascii','precision' => '128','comment' => 'name part of CalDAV URL, if specified by client'),
 			'info_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag, not yet used'),
 			'info_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'timestamp of the creation date'),
@@ -67,7 +65,7 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'info_res_id' => array('type' => 'auto','nullable' => False,'comment' => 'auto id'),
 			'info_id' => array('type' => 'int','precision' => '4','nullable' => False),
-			'account_id' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'comment' => 'attendee'),
+			'account_id' => array('type' => 'ascii','meta' => 'account','precision' => '32','nullable' => False,'comment' => 'account_id or md5 of lowercased email'),
 			'info_res_deleted' => array('type' => 'bool','comment' => 'NULL or true, not false!'),
 			'info_res_modified' => array('type' => 'timestamp','meta' => 'timestamp','default' => 'current_timestamp','comment' => 'last modification time'),
 			'info_res_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','comment' => 'modifying user'),

@@ -22,7 +22,7 @@ use EGroupware\Api;
  * Base class for application tests, loads the egroupware environment and provides
  * some handy helpers.
  *
- * Extend this class into <appname>/test/ or <appname>/src/test/ to test one
+ * Extend this class into <appname>/tests/ to test one
  * small aspect of an application.  For more basic (actual unit) tests that deal
  * with a single function, consider extending TestCase directly instead of this
  * class to avoid the overhead of creating the session.

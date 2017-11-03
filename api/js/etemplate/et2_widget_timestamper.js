@@ -59,16 +59,11 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 
 		this._insert_text();
 
-		if (!this._super.apply(this, arguments))
-		{
-			return false;
-		}
-
-		return true;
+		return false;
 	},
 
 	_insert_text: function() {
-		var text = "\n";
+		var text = "";
 		var now = new Date();
 		text += date(egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i")+' ',now);
 
@@ -137,6 +132,7 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 				input.focus();
 			}
 			input.scrollTop = scrollPos;
+				input.focus();
 		}
 	},
 

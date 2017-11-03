@@ -197,7 +197,7 @@ class DateTime extends \DateTime
 			case 'Saturday':
 				$wstart =  -(6-$wday);
 				break;
-			case 'Moday':
+			case 'Monday':
 			default:
 				$wstart = -($wday ? $wday-1 : 6);
 				break;

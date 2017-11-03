@@ -11,10 +11,10 @@
  */
 namespace EGroupware\Api;
 
-require_once realpath(__DIR__.'/../common.php');	// autoloader & check_load_extension
+require_once realpath(__DIR__.'/../../src/loader/common.php');	// autoloader & check_load_extension
 //
 // We're testing security.php
-require_once realpath(__DIR__.'/../security.php');
+require_once realpath(__DIR__.'/../../src/loader/security.php');
 
 use PHPUnit\Framework\TestCase as TestCase;
 

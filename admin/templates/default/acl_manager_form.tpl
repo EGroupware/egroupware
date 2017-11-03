@@ -1,5 +1,6 @@
 <!-- BEGIN form -->
 <form method="POST" action="{form_action}">
+ <input type="hidden" name="csrf_token" value="{csrf_token}"/>
  <div align="left">
   <p>{lang_message}</p>
   <p>{select_values}</p>
