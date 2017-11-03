@@ -474,6 +474,12 @@ var et2_taglist = (function(){ "use strict"; return et2_selectbox.extend([et2_IR
 		}
 		this._query_server = false;
 
+		// Make sure we don't give an empty string, that fails when we try to query
+		if(return_value == this.options.autocomplete_url && !return_value)
+		{
+			return_value = [];
+		}
+		
 		// Turn on local filtering, or trust server to do it
 		cfg.mode = typeof return_value === 'string' ? 'remote' : 'local';
 
