@@ -311,8 +311,10 @@ class filemanager_hooks
 		);
 		foreach ($implemented as $app)
 		{
-			$link = Api\Hooks::process('filemanager-editor-link', $app);
-			$link = $link[$app];
+			if (($l = Api\Hooks::process('filemanager-editor-link')) && $l[$app])
+			{
+				$link = $l[$app];
+			}
 			if ($app == 'collabora') break; // collabora is default
 		}
 		return $link;
