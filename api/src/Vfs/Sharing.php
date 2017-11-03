@@ -343,6 +343,15 @@ class Sharing
 
 			return $GLOBALS['egw']->sharing->ServeRequest();
 		}
+
+		// No extended ACL for readonly shares, disable eacl by setting session cache
+		if(!$this->share['share_writable'])
+		{
+			Api\Cache::setSession(Api\Vfs\Sqlfs\StreamWrapper::EACL_APPNAME, 'extended_acl', array(
+				'/' => 1,
+				$this->share['share_path'] => 1
+			));
+		}
 		// use pure WebDAV for everything but GET requests to directories
 		if (!$this->use_filemanager())
 		{
