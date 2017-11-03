@@ -181,8 +181,16 @@ class filemanager_ui
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
 				'children' => array(
-					'sharelink' => array(
-						'caption' => lang('Share link'),
+					'shareReadonlyLink' => array(
+						'caption' => lang('Readonly Share link'),
+						'group' => 1,
+						'icon' => 'share',
+						'allowOnMultiple' => false,
+						'order' => 11,
+						'onExecute' => 'javaScript:app.filemanager.share_link'
+					),
+					'shareWritableLink' => array(
+						'caption' => lang('Writable Share link'),
 						'group' => 1,
 						'icon' => 'share',
 						'allowOnMultiple' => false,
@@ -1542,9 +1550,27 @@ class filemanager_ui
 				$arr['path'] = $dir;
 				$arr['props'] = $props;
 				break;
-
-			case 'sharelink':
-				$share = Vfs\Sharing::create($selected, Vfs\Sharing::READONLY, basename($selected), array() );
+			case 'shareWritableLink':
+			case 'shareReadonlyLink':
+				if ($action === 'shareWritableLink')
+				{
+					$share = Vfs\Sharing::create(
+						$selected,
+						Vfs\Sharing::WRITABLE,
+						basename($selected),
+						array(),
+						array('share_writable' => true)
+					);
+				}
+				else
+				{
+					$share = Vfs\Sharing::create(
+						$selected,
+						Vfs\Sharing::READONLY,
+						basename($selected),
+						array()
+					);
+				}
 				$arr["share_link"] = $link = Vfs\Sharing::share2link($share);
 				$arr["template"] = Api\Etemplate\Widget\Template::rel2url('/filemanager/templates/default/share_dialog.xet');
 				break;
