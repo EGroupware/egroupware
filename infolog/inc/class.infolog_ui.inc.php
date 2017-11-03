@@ -765,7 +765,7 @@ class infolog_ui
 				// Some processing to add values in for links and cats
 				$multi_action = $values['nm']['multi_action'];
 				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
-				if(in_array($multi_action, array('link', 'responsible')))
+				if(in_array($multi_action, array('link', 'responsible', 'startdate', 'enddate')))
 				{
 					// eTemplate ignores the _popup namespace, but et2 doesn't
 					if($values[$multi_action.'_popup'])
@@ -1178,6 +1178,16 @@ class infolog_ui
 					'cat' =>  Etemplate\Widget\Nextmatch::category_action(
 						'infolog',$group,'Change category','cat_'
 					),
+					'startdate' => array(
+						'caption' => 'Start date',
+						'group' => $group,
+						'nm_action' => 'open_popup',
+					),
+					'enddate' => array(
+						'caption' => 'End date',
+						'group' => $group,
+						'nm_action' => 'open_popup',
+					),
 					'responsible' => array(
 						'caption' => 'Delegation',
 						'group' => $group,
@@ -1555,6 +1565,21 @@ class infolog_ui
 						$function = $add_remove == 'add' ? 'array_merge' : 'array_diff';
 						$entry['info_responsible'] = array_unique($function($entry['info_responsible'], (array)$users));
 					}
+					if($this->bo->write($entry, true,true,true,$skip_notifications))
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+					break;
+				case 'startdate':
+				case 'enddate':
+					$field = $action == 'startdate' ? 'info_startdate' : 'info_enddate';
+					list($ok, $date) = explode('_', $settings, 2);
+					$entry[$field] = $date ? Api\DateTime::to($date, 'ts') : null;
+					$action_msg = lang('changed');
 					if($this->bo->write($entry, true,true,true,$skip_notifications))
 					{
 						$success++;
