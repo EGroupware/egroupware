@@ -888,7 +888,7 @@ var et2_vfsSelect = (function(){ "use strict"; return et2_inputWidget.extend(
 		},
 		"mime": {
 			name: "Mime type",
-			type: "string",
+			type: "any",
 			description: "Limit display to the given mime-type"
 		},
 		"button_label": {
