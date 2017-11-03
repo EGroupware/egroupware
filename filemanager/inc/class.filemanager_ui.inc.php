@@ -194,6 +194,7 @@ class filemanager_ui
 						'group' => 1,
 						'icon' => 'share',
 						'allowOnMultiple' => false,
+						'enableClass' => 'isDir',
 						'order' => 11,
 						'onExecute' => 'javaScript:app.filemanager.share_link'
 					)),
