@@ -1974,6 +1974,11 @@ class Vfs
 	 */
 	static public function get_home_dir()
 	{
+		// with sharing active we have no home, use /
+		if ($GLOBALS['egw_info']['user']['account_id'] != self::$user)
+		{
+			return '/';
+		}
 		$start = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
 
 		// check if user specified a valid startpath in his prefs --> use it

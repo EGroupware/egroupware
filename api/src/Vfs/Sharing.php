@@ -286,6 +286,12 @@ class Sharing
 			$GLOBALS['egw_info']['user']['apps'] = array(
 				'filemanager' => $GLOBALS['egw_info']['apps']['filemanager']
 			);
+			// check if sharee has Collabora run rights --> give is to share too
+			$apps = $GLOBALS['egw']->acl->get_user_applications($share['share_owner']);
+			if (!empty($apps['collabora']))
+			{
+				$GLOBALS['egw_info']['user']['apps']['collabora'] = $GLOBALS['egw_info']['apps']['collabora'];
+			}
 		}
 		// we have a session we want to keep, but share owner is different from current user and we dont need filemanager UI
 		// --> we dont need session and close it, to not modifiy it
@@ -412,9 +418,11 @@ class Sharing
 			{
 				$path = 'vfs://default'.($path[0] == '/' ? '' : '/').$path;
 			}
-			$stat = Vfs::stat($path);
-			$vfs_path = Vfs::parse_url($stat['url'], PHP_URL_PATH);
-			$exists = Vfs::file_exists($vfs_path) && Vfs::is_readable($vfs_path);
+
+			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
+			{
+				$vfs_path = Vfs::parse_url($stat['url'], PHP_URL_PATH);
+			}
 		}
 		// check if file exists and is readable
 		if (!$exists)
@@ -425,7 +433,7 @@ class Sharing
 		if (($mode != self::LINK || isset($path2tmp[$path])) &&
 			($share = self::$db->select(self::TABLE, '*', $extra+array(
 				'share_path' => $mode == 'link' ? $path2tmp[$path] : $vfs_path,
-				'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
+				'share_owner' => Vfs::$user,
 				'share_expires' => null,
 				'share_passwd'  => null,
 				'share_writable'=> false,
@@ -501,8 +509,8 @@ class Sharing
 				try {
 					self::$db->insert(self::TABLE, $share = array(
 						'share_token' => self::token(),
-						'share_path' => Vfs::parse_url($path, PHP_URL_PATH),
-						'share_owner' => $GLOBALS['egw_info']['user']['account_id'],
+						'share_path' => $vfs_path,
+						'share_owner' => Vfs::$user,
 						'share_with' => implode(',', (array)$recipients),
 						'share_created' => time(),
 					)+$extra, false, __LINE__, __FILE__);
