@@ -7,6 +7,7 @@
 %1 category(s) %2	admin	es-es	%1 categorías %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	es-es	%1 categorías %2, %3 fallaron por permisos insuficiente
 %1 class not instanciated	admin	es-es	La clase %1 no está instanciada
+%1 entries deleted.	admin	es-es	%1 entradas suprimidas.
 %1 group %2	admin	es-es	%1 grupo %2
 %1 is no command!	admin	es-es	¡%1 no es un comando!
 %1 log entries deleted.	admin	es-es	Se han borrado %1 entradas del log.
@@ -17,6 +18,7 @@
 %1 sessions killed	admin	es-es	Se han matado %1 sesiones
 %1 user %2	admin	es-es	%1 usuario %2
 (default no, leave it off if you dont use it)	admin	es-es	(por defecto, No, desactivar si no se usa)
+(no subject)	admin	es-es	(Sin asunto)
 (stored password will not be shown here)	admin	es-es	(las claves guardadas no se mostrarán aquí)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, utilice <br><a href="setup/" target="setup">Instalación</a> [Administrar Aplicaciones])
 -  type	admin	es-es	- tipo
@@ -24,18 +26,23 @@ access by	admin	es-es	Acceso por
 access control	admin	es-es	Control de acceso
 access to %1 data by others	admin	es-es	Acceso a datos %1 por otros
 accesslog and bruteforce defense	admin	es-es	Defensa de acceso al registro y fuerza bruta
+account	admin	es-es	Cuenta
 account "%1" has no email address --> not notified!	admin	es-es	La cuenta "%1" no tiene correo --> ¡no se notifica!
 account "%1" has no plaintext password!	admin	es-es	¡La cuenta "%1" NO tiene la contraseña en texto claro!
 account %1 %2	admin	es-es	Cuenta %1 %2
 account '%1' deleted.	admin	es-es	Se ha borrado la cuenta '%1'.
+account '%1' not found !!!	admin	es-es	¡No se encontró la cuenta '%1'!
 account active	admin	es-es	Cuenta activa
+account deleted.	admin	es-es	Cuenta suprimida.
 account has been created	common	es-es	La cuenta ha sido creada
 account has been deleted	common	es-es	La cuenta ha sido borrada
 account has been updated	common	es-es	La cuenta ha sido actualizada
 account id	admin	es-es	ID de la cuenta
 account list	admin	es-es	Lista de cuentas
+account not found!	common	es-es	¡Cuenta no encontrada!
 account permissions	admin	es-es	Permisos de la cuenta
 account preferences	admin	es-es	Preferencias de la cuenta
+account saved.	admin	es-es	Cuenta grabada.
 account-id's have to be integers!	admin	es-es	¡Los identificadores de cuenta tienen que ser enteros!
 acl added.	admin	es-es	Se ha añadido la ACL.
 acl deleted.	admin	es-es	Se ha borrado la ACL.
@@ -48,13 +55,14 @@ acl updated.	admin	es-es	Se ha actualizado la ACL.
 action	admin	es-es	Acción
 actions	admin	es-es	Acciones
 activate	admin	es-es	Activar
-activate wysiwyg-editor	admin	es-es	activar editor WYSIWYG
+activate wysiwyg-editor	admin	es-es	Activar editor WYSIWYG
+active templates	admin	es-es	Plantillas activas
 add a category	admin	es-es	añadir una categoría
 add a group	admin	es-es	añadir un grupo
 add a new account.	admin	es-es	Añadir una nueva cuenta.
 add a new remote instance	admin	es-es	Añadir una instancia remota nueva
-add a subcategory	admin	es-es	añadir una subcategoría
-add a user	admin	es-es	añadir un usuario
+add a subcategory	admin	es-es	Añadir una subcategoría
+add a user	admin	es-es	Añadir un usuario
 add account	admin	es-es	Añadir una cuenta
 add application	admin	es-es	Añadir aplicación
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	es-es	Añadir usuarios creados automáticamente a este grupo (se usara 'Default' si no especifica ninguno).
@@ -63,13 +71,19 @@ add global category for %1	admin	es-es	Añadir categoría global para %1
 add group	admin	es-es	Añadir grupo
 add new account	admin	es-es	Añadir nueva cuenta
 add new application	admin	es-es	Añadir nueva aplicación
+add new email address:	admin	es-es	Añadir nueva dirección de correo
 add peer server	admin	es-es	Añadir servidor 'peer'
+add profile	admin	es-es	Añadir perfil
 add sub-category	admin	es-es	Añadir subcategoría
 add user	admin	es-es	Añadir usuario
+add user or group	admin	es-es	Añadir usuario o grupo
+admin dn	admin	es-es	dn del administrador
 admin email	admin	es-es	Correo electrónico del administrador
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	es-es	Direcciones de correo de Administración (separadas por comas) para notificar los bloqueos (en blanco para no notificar)
 admin name	admin	es-es	Nombre del administrador
+admin password	admin	es-es	contraseña del administrador
 admin queue and history	admin	es-es	Cola de administración e historial
+admin username	admin	es-es	usuario del administrador
 administration	admin	es-es	Administración
 admins	admin	es-es	Administradores
 advanced options	admin	es-es	opciones avanzadas
@@ -78,21 +92,29 @@ after how many unsuccessful attempts to login, an ip should be blocked (default 
 aliases	admin	es-es	Alias
 all applications	admin	es-es	Todas las aplicaciones
 all categories	admin	es-es	Todas las categorías
+all groups	admin	es-es	Todos los grupos
 all records and account information will be lost!	admin	es-es	¡Se perderán todos los registros y la información de las cuentas!
 all users	admin	es-es	Todos los usuarios
 allow anonymous access to this app	admin	es-es	Permitir acceso anónimo a esta aplicación
 allow remote administration from following install id's (comma separated)	admin	es-es	Permitir la administración remota desde los siguientes ID de instalación (separados por comas)
-alternate email address	admin	es-es	dirección de correo alternativa
+allow users to change forwards	admin	es-es	Permitir a los usuarios cambiar reenvíos
+allow users to create identities for aliases	admin	es-es	Permitir a los usuarios crear identidades para alias
+alternate email address	admin	es-es	Dirección de correo-e alterna
+and logged in	admin	es-es	y conectado
 anonymous user	admin	es-es	Usuario anónimo
 anonymous user (not shown in list sessions)	admin	es-es	Usuario anónimo (no se muestra en la lista de sesiones)
 anonymous user does not exist!	admin	es-es	¡El usuario anónimo no existe!
 anonymous user has no run-rights for the application!	admin	es-es	¡El usuario anónimo NO tiene derecho de ejecución para la aplicación!
+any application	admin	es-es	Cualquier aplicación
+any group	admin	es-es	Cualquier grupo
+any user	admin	es-es	Calquier usuario
 appearance	admin	es-es	Apariencia
 application	admin	es-es	Aplicación
 application '%1' not found (maybe not installed or misspelled)!	admin	es-es	No se encontró la aplicación '%1' (quizás no está instalada o mal escrita)
 application name	admin	es-es	Nombre de la aplicación
 application title	admin	es-es	Título de la aplicación
 applications	admin	es-es	Aplicaciones
+applications available on mobile devices	admin	es-es	Aplicaciones disponibles en dispositivos móviles
 applications list	admin	es-es	Lista de aplicaciones
 applications run rights updated.	admin	es-es	Se han actualizado los derechos de ejecución.
 applies the changes	admin	es-es	aplica los cambios
@@ -114,17 +136,26 @@ attribute accountstatus explained	admin	es-es	Esto maneja el atributo <b><i>-acc
 attribute mail explained	admin	es-es	Esto maneja el atributo <b><i>-mail-</i></b> del esquema de QMAIL y no debe estar vacío. También es el campo para correo electrónico interno de eGW.
 attribute mailalternateaddress explained	admin	es-es	Esto maneja el atributo <b><i>-mailAlternateAddress-</i></b> del esquema de QMAIL y puede manejarse como mapas virtuales o alias.
 attribute mailforwardingaddress explained	admin	es-es	Esto maneja el atributo <b><i>-mailForwardingAddress-</i></b> del esquema de QMAIL y no debe estar vacío si está asignado.
+attributes	admin	es-es	Atributos Atributos
 authentication / accounts	admin	es-es	Identificación / Cuentas
 auto create account records for authenticated users	admin	es-es	Crear cuentas automáticamente para usuarios identificados
 available placeholders	admin	es-es	Marcadores disponibles
+back to admin/grouplist	admin	es-es	Volver a Administración/Lista de grupos
+back to admin/userlist	admin	es-es	Volver a Administración/Lista de usuarios
 back to the list	admin	es-es	volver a la lista
 backup directory %1 mounted as %2	admin	es-es	El directorio de copias de seguridad %1 está montado como %2
+bad login name or password.	admin	es-es	Nombre de usuario o contraseña incorrectos
+bad or malformed request. server responded: %s	admin	es-es	Petición errónea o mal formado. El servidor respondió: %s
+bad request: %s	admin	es-es	Petición errónea: %s
 bi-dir passthrough	admin	es-es	bidireccional passthrough
 bi-directional	admin	es-es	bidireccional
 bottom	admin	es-es	parte inferior
 bulk password reset	admin	es-es	Restablecimiento de contraseña en bruto
 calculate next run	admin	es-es	Calcular la siguiente ejecución
 calendar recurrence horizont in days (default 1000)	admin	es-es	Horizonte de recurrencia del calendario en días (predeterminado: 1000)
+can be used by application	admin	es-es	puede usarse por la aplicación
+can be used by group	admin	es-es	puede usarse por el grupo
+can be used by user	admin	es-es	puede usarse por el usuario
 can change password	admin	es-es	Puede cambiar la contraseña
 can not change users into groups, same sign required!	admin	es-es	¡NO se pueden cambiar los usuarios en grupos, se requiere el mismo signo!
 cancel testjob!	admin	es-es	Cancelar trabajo de prueba
@@ -154,12 +185,20 @@ color	admin	es-es	Color
 command scheduled to run at %1	admin	es-es	El comando se ha planificado para ejecutarse a %1
 commercial: all sorts of companies	admin	es-es	Comercial: todo tipo de empresas
 config password or md5 hash from the header.inc.php	admin	es-es	Configurar contraseña o hash md5 del fichero header.inc.php
+configuration saved.	admin	es-es	Configuración guardada.
+connection dropped by imap server.	admin	es-es	El servidor IMAP ha interrumpido la conexión
+continue	admin	es-es	Continuar
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	es-es	Dominio de la cookie (vacío significa usar el nombre del dominio completo, para el Administrador de sitios web, p. ej. "dominio.com" permite usar la misma cookie para egw.dominio.com y www.dominio.com)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	es-es	Ruta de la cookie (permite múltiples sesiones de egw con distintos directorios, pero ¡tiene problemas con el Administrador de sitios web!)
+could not complete request. reason given: %s	admin	es-es	No se pudo completar la solicitud. Motivo: %s
+could not open secure connection to the imap server. %s : %s.	admin	es-es	No se pudo abrir una conexión segura con el servidor IMAP. %s: %s.
 could not remote execute the command	admin	es-es	No se pudo ejecutar el comando remoto
 country	admin	es-es	País
 country selection	admin	es-es	Selección de país
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	es-es	CRAM-MD5 o DIGEST-MD5 necesitan el paquete Auth_SASL para estar instalado.
 create group	admin	es-es	Crear grupo
+create new account	admin	es-es	Crear cuenta nueva
+create new identity	admin	es-es	Crear identidad nueva
 created	admin	es-es	Creado
 created with id #%1	admin	es-es	Creado con id nº %1
 creates / updates user accounts from csv file	admin	es-es	Crea o actualiza las cuentas de usuario desde un fichero CSV
@@ -170,33 +209,37 @@ current hash	admin	es-es	Hash actual
 custom fields	admin	es-es	Campos personalizados
 custom translation	admin	es-es	Traducción personalizada
 cyrus imap server	admin	es-es	Servidor IMAP Cyrus
+cyrus imap server administration	admin	es-es	Administración del servidor IMAP Cyrus
 data	admin	es-es	Datos
 data from	admin	es-es	Datos de
 day	admin	es-es	Día
 day of week<br>(0-6, 0=sun)	admin	es-es	Día de la semana<br>(0-6, 0=Dom)
 db backup and restore	admin	es-es	Copia de seguridad y restauración de la base de datos
 deactivate	admin	es-es	Desactivar
-default	admin	es-es	Predeterminado
+default	admin	es-es	predeterminada
 default file system space per user	admin	es-es	Espacio predetermiado en el sistema de archivos por usuario
 default file system space per user/group ?	admin	es-es	Espacio predetermiado en el sistema de archivos por usuario/grupo
 deinstall crontab	admin	es-es	Desinstalar crontab
-delete account	admin	es-es	Borrar cuenta
-delete account %s	admin	es-es	Borrar la cuenta %s
-delete all records	admin	es-es	Borrar todos los registros
-delete application	admin	es-es	Borrar aplicación
-delete category	admin	es-es	Borrar categoría
-delete group	admin	es-es	Borrar grupo
+delete account	admin	es-es	Suprimir cuenta
+delete account %s	admin	es-es	Suprimir la cuenta %s
+delete all records	admin	es-es	Suprimir todos los registros
+delete application	admin	es-es	Suprimir aplicación
+delete category	admin	es-es	Suprimir categoría
+delete group	admin	es-es	Suprimir grupo
+delete identity	admin	es-es	Suprimir identidad
+delete including sub-entries	admin	es-es	Suprimir incluyendo sub-entradas
 delete peer server	admin	es-es	Borrar servidor 'peer'
-delete selected entries	admin	es-es	Borrar las entradas seleccionadas
-delete the category	admin	es-es	borrar la categoría
-delete the group	admin	es-es	borrar el grupo
-delete the selected entries	admin	es-es	Borrar las entradas seleccionadas
-delete this category	admin	es-es	borrar esta categoría
-delete this group	admin	es-es	borrar este grupo
-delete this log entry	admin	es-es	Borrar esta entrada del log
-delete this user	admin	es-es	borrar este usuario
-deleted	admin	es-es	borradas
-deletes this field	admin	es-es	borra este campo
+delete selected entries	admin	es-es	Suprimir las entradas seleccionadas
+delete the category	admin	es-es	Suprimir la categoría
+delete the group	admin	es-es	Suprimir el grupo
+delete the selected entries	admin	es-es	Suprimir las entradas seleccionadas
+delete this account	admin	es-es	Suprimir esta cuenta
+delete this category	admin	es-es	Suprimir esta categoría
+delete this group	admin	es-es	Suprimir este grupo
+delete this log entry	admin	es-es	Suprimir esta entrada del log
+delete this user	admin	es-es	Suprimir este usuario
+deleted	admin	es-es	Suprimidas
+deletes this field	admin	es-es	Suprime este campo
 deliver extern	admin	es-es	entrega externa
 deny access	admin	es-es	Denegar acceso
 deny access to access log	admin	es-es	Denegar acceso al registro de accesos
@@ -221,20 +264,27 @@ destination account #%1 does exist and is not renamed itself! can not merge acco
 determines the order the fields are displayed	admin	es-es	determina el orden en que se muestran los campos
 disable	admin	es-es	Desactivar
 disable "auto completion" of the login form	admin	es-es	Desactivar completado automático en el formulario de inicio de sesión
+disable all	admin	es-es	Desactivar todo
 disable minifying of javascript and css files	admin	es-es	Deshabilitar minimizar javascript y ficheros CSS
 disable wysiwyg-editor	admin	es-es	desactivar editor WYSIWYG
 disabled (not recomended)	admin	es-es	desactivado (no se recomienda)
 display	admin	es-es	Mostrar
+displaying html messages is disabled	admin	es-es	Mostrar los mensajes en HTML está desactivado
 do not delete the category and return back to the list	admin	es-es	NO borrar la categoría y regresar a la lista
+do not offer introduction video	admin	es-es	No ofrecer video introductorio
+do not validate certificate	admin	es-es	No validar el certificado
 do you also want to delete all global subcategories ?	admin	es-es	¿Desea eliminar también todas las subcategorías globales?
+do you really want to delete this profile	admin	es-es	¿Realmente desea borrar este perfil?
+do you really want to reset the filter for the profile listing	admin	es-es	Realmente desea restablecer el filtro para la lista de perfiles
 do you want to delete all global subcategories ?	admin	es-es	¿Desea borrar todas las subcategorías globales?
 do you want to move all global subcategories one level down ?	admin	es-es	¿Desea mover todas las subcategorías globales un nivel hacia abajo?
 document root (default)	admin	es-es	Raíz de los documentos (Document root) (predeterminado)
+domainname	admin	es-es	nombre del dominio
 down	admin	es-es	Abajo
 download csv	admin	es-es	Descargar CSV
 edit account	admin	es-es	Editar cuenta
 edit application	admin	es-es	Editar aplicación
-edit email settings	admin	es-es	editar configuración de correo
+edit email settings	admin	es-es	Editar configuración de correo-e
 edit global category	admin	es-es	Editar categoría global
 edit global category for %1	admin	es-es	Editar categoría global para %1
 edit group	admin	es-es	Editar grupo
@@ -243,25 +293,34 @@ edit login screen message	admin	es-es	Editar mensaje de la pantalla de inicio de
 edit main screen message	admin	es-es	Editar mensaje de la pantalla principal
 edit peer server	admin	es-es	Editar servidor 'peer'
 edit table format	admin	es-es	Editar formato de tabla
-edit this category	admin	es-es	editar esta categoría
-edit this group	admin	es-es	editar este grupo
-edit this user	admin	es-es	editar este usuario
-edit user	admin	es-es	editar usuario
+edit this category	admin	es-es	Editar esta categoría
+edit this group	admin	es-es	Editar este grupo
+edit this user	admin	es-es	Editar este usuario
+edit user	admin	es-es	Editar usuario
 edit user account	admin	es-es	Editar cuenta de usuario
 educational: universities, schools, ...	admin	es-es	Educación: Universiddes, Colegios, ...
 egroupware directory	admin	es-es	Directorio de EGroupware
+egroupware tutorial	admin	es-es	Tutorial de EGroupware
 egroupware version	admin	es-es	Versión de EGroupware
 either install id and config password needed or the remote hash!	admin	es-es	¡Tanto el ID de la instalación como la contraseña de configuración necesitan el hash remoto!
-email account active	admin	es-es	cuenta de correo activa
+email account active	admin	es-es	cuenta de correo electrónico activa
 email address	admin	es-es	dirección de correo electrónico
+email settings	common	es-es	Configuración del correo electrónico
+emailadmin	admin	es-es	Administración del correo electrónico
+emailadmin: group assigned profile	common	es-es	eMailAdmin: perfil asignado al grupo
+emailadmin: user assigned profile	common	es-es	eMailAdmin: perfil asignado al usuario
 empty to not change	admin	es-es	en blanco para NO cambiar
 enable	admin	es-es	Activar
+enable cyrus imap server administration	admin	es-es	activar administración del servidor Cyrus IMAP
 enable debug-messages	admin	es-es	Activar mensajes de depuración
+enable sieve	admin	es-es	activar Sieve
 enable spellcheck in rich text editor	admin	es-es	¿Activar la corrección ortográfica en el editor de texto enriquecido?
 enable the soap service	admin	es-es	Activar el servicio soap
 enable the xmlrpc service	admin	es-es	Activar el servicio xmlrpc
 enabled - hidden from navbar	admin	es-es	Habilitado - Esconder de la barra de navegación
 enabled - popup window	admin	es-es	Habilitado - Ventana emergente
+encrypted connection	admin	es-es	conexión cifrada
+encryption settings	admin	es-es	configuración del cifrado
 enter a description for the category	admin	es-es	introduzca una descripción para esta categoría
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	es-es	Introduzca un texto aleatorio para el cifrado <br> de la sesión (requiere mcrypt)
 enter the background color for the login page	admin	es-es	Introduzca el color de fondo para la página de inicio de sesión
@@ -277,26 +336,31 @@ enter the site password for peer servers	admin	es-es	Introduzca la contraseña d
 enter the site username for peer servers	admin	es-es	Introduzca el usuario del sitio para servidores 'peer'
 enter the title for your site	admin	es-es	Introduzca el título para su sitio
 enter the title of your logo	admin	es-es	Introduzca el título de su logo
-enter the url or filename (in api/templates/default/images) of your logo	admin	es-es	Introduzca la URL o nombre de archivo (en api/templates/default/images) de su logo
-enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	es-es	Introduzca la URL o nombre del fichero (en el directorio images de las plantillas) de su favicon (el icono pequeño que aparece en las pestañas de los navegadores).
 enter the url where your logo should link to	admin	es-es	Introduzca la url a donde apunte el logo
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	es-es	Introduzca la ruta VGS donde están las imágenes, iconos o logos adicionales (encontrados por las aplicaciones EGroupware). La ruta DEBE comenzar con / y tener permiso de lectura para todos los usuarios.
 enter your default ftp server	admin	es-es	Introduzca su servidor FTP predeterminado
 enter your default mail domain ( from: user@domain )	admin	es-es	Introduzca su dominio de correo predeterminado ( De: usuario@dominio )
+enter your default mail domain (from: user@domain)	admin	es-es	introduzca el dominio predeterminado (de usuario@dominio)
 enter your http proxy server	admin	es-es	Introduzca su servidor proxy HTTP
 enter your http proxy server port	admin	es-es	Introduzca el puerto de su servidor proxy HTTP
 enter your smtp server hostname or ip address	admin	es-es	Introduzca su servidor SMTP (nombre o IP)
 enter your smtp server port	admin	es-es	Introduzca el puerto del servidor SMTP
+entry saved	admin	es-es	La entrada ha sido guardada
 error canceling timer, maybe there's none set !!!	admin	es-es	Error al cancelar el temporizador ¡Puede que no haya ninguno!
 error changing the password for %1 !!!	admin	es-es	¡Error al cambiar la contraseña para %1!
+error connecting to imap server. %s : %s.	admin	es-es	Error al conectar con el servidor IMAP. %s: %s.
+error connecting to imap server: [%s] %s.	admin	es-es	Error al conectar con el servidor IMAP: [%s] %s.
+error deleting entry!	admin	es-es	¡Error al suprimir la entrada!
 error deleting log entry!	admin	es-es	¡Error al borrar la entrada del log!
 error saving	admin	es-es	Error al guardar
 error saving account!	admin	es-es	¡Error al guardar la cuenta!
 error saving the command!	admin	es-es	¡Error al guardar el comando!
+error saving the entry!!!	admin	es-es	Error guardando el elemento!!!
 error saving to db:	admin	es-es	Error al guardar a la base de datos:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	es-es	Error al configurar el temporizador. La sintaxis es incorrecta o puede que haya uno que ya se esté ejecutándo.
 error! no appname found	admin	es-es	¡Error! No se encontró el nombre de la aplicación
 error: %1 not found or other error !!!	admin	es-es	Error: no se encontró %1 u otro error
+event details follow	admin	es-es	A continuación, los detalles del evento
 exists	admin	es-es	Existe
 expired	admin	es-es	Expirado
 expires	admin	es-es	Expira
@@ -304,7 +368,7 @@ explanation of ldapman	admin	es-es	Este módulo ha sido probado en POSTFIX, LDAP
 exports groups into a csv file.	admin	es-es	Exportar los grupos en un fichero CSV.
 exports users into a csv file.	admin	es-es	Exporta los usuarios en un fichero CSV.
 failed to change password for account "%1"!	admin	es-es	¡Fallo al cambiar la contraseña para la cuenta "%1"!
-failed to change password.	admin	es-es	Fallo al cambiar la contraseña.
+failed to change password.	admin	es-es	Falló al cambiar la contraseña.
 failed to mount backup directory!	admin	es-es	Fallo el montar el directorio de backup
 failed to save user!	admin	es-es	Fallo al guardar el usuario
 fallback (after each pageview)	admin	es-es	retardo (después de ver cada página)
@@ -312,16 +376,20 @@ false	admin	es-es	falso
 field '%1' already exists !!!	admin	es-es	¡El campo '%1' ya existe!
 file space	admin	es-es	Espacio del fichero
 file space must be an integer	admin	es-es	El espacio del fichero debe ser un entero
+filtered by account	admin	es-es	filtrado por cuenta
+filtered by group	admin	es-es	filtrado por grupo
 for the times above	admin	es-es	durante las horas indicadas arriba
 for the times below (empty values count as '*', all empty = every minute)	admin	es-es	para las horas indicadas debajo (los valores vacíos cuentan como '*', todos vacío = cada minuto)
 force selectbox	admin	es-es	Forzar cuadro de selección
 force users to change their password regularily?(empty for no,number for after that number of days	admin	es-es	¿Forzar a que los usuarios cambien su contraseña regularmente (en blanco es no, o un número para ese número de días)?
 forward also to	admin	es-es	reenviar también a
+forward email's to	admin	es-es	reenviar correos a
 forward emails to	admin	es-es	reenviar correos a
-forward only	admin	es-es	reenviar solamente
+forward only	admin	es-es	sólo reenviar
 full name	admin	es-es	Nombre completo
 general	admin	es-es	General
 global categories	common	es-es	Categorías globales
+global options	admin	es-es	opciones globales
 go directly to admin menu, returning here the next time you click on administration.	admin	es-es	Ir directamente al menú de administración, volviendo aquí la próxima vez que pulse en administración.
 governmental: incl. state or municipal authorities or services	admin	es-es	Gubernamental: incluye estado o autoridades municipales o servicios
 grant	admin	es-es	Conceder acceso
@@ -347,10 +415,26 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 30) ?	admin	es-es	¿Cuántos minutos debe permanecer bloqueada una cuenta o una IP? (por defecto, 30)
 how should email addresses for new users be constructed?	admin	es-es	¿Cómo deben construirse las direcciones para los usuarios nuevos?
 icon	admin	es-es	Icono
+identity deleted	admin	es-es	Identidad suprimida
+identity saved.	admin	es-es	Identidad grabada.
 idle	admin	es-es	inactivo
 if no acl records for user or any group the user is a member of	admin	es-es	Si no se encuentran registros ACL del usuario y grupo, entonces el usuario es miembro de
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	es-es	Si se usa LDAP, ¿desea manejar los atributos del directorio de inicio y la cuenta?
-in mbyte	admin	es-es	en Mbytes
+if using ssl or tls, you must have the php openssl extension loaded.	admin	es-es	Si usa SSL o TLS, debe tener cargada la extensión openssl de PHP.
+imap admin password	admin	es-es	contraseña del administrador IMAP
+imap admin user	admin	es-es	usuario administrador IMAP
+imap c-client version < 2001	admin	es-es	Versión C-Cliente IMAP < 2001
+imap server	admin	es-es	Servidor IMAP
+imap server closed the connection.	admin	es-es	El servidor IMAP cerró la conexión.
+imap server closed the connection. server responded: %s	admin	es-es	El servidor IMAP cerró la conexión. El servidor respondió: %s
+imap server hostname or ip address	admin	es-es	Servidor IMAP o dirección IP
+imap server logintyp	admin	es-es	Tipo de sesión del servidor IMAP
+imap server name	admin	es-es	Nombre del servidor IMAP
+imap server port	admin	es-es	Puerto del servidor IMAP
+imap/pop3 server name	admin	es-es	Nombre del servidor POP/IMAP
+importance	admin	es-es	Importancia
+in mbyte	admin	es-es	en MBytes
+inactive	admin	es-es	inactivo
 inbound	admin	es-es	entrantes
 initial	admin	es-es	Inicial
 install crontab	admin	es-es	Instalar crontab
@@ -370,6 +454,7 @@ ip	admin	es-es	IP
 jobs	admin	es-es	Trabajos
 kill	admin	es-es	Matar
 kill session	admin	es-es	Matar sesión
+languages	admin	es-es	Idiomas
 last %1 logins	admin	es-es	Ultimos %1 inicios de sesión
 last %1 logins for %2	admin	es-es	Ultimos %1 inicios de sesión de %2
 last action	admin	es-es	Última acción
@@ -379,6 +464,7 @@ last password change	admin	es-es	Último cambio de contraseña
 last submission:	admin	es-es	Último envío:
 last time read	admin	es-es	Ultima lectura
 ldap accounts context	admin	es-es	Contexto de las cuentas LDAP
+ldap basedn	admin	es-es	basedn para LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	es-es	Prefijo del directorio de inicio LDAP predeterminado (p. ej. /directorio para /directorio/usuario)
 ldap default shell (e.g. /bin/bash)	admin	es-es	Shell LDAP por defecto (ej. /bin/bash)
 ldap encryption type	admin	es-es	Tipo de cifrado LDAP
@@ -386,12 +472,19 @@ ldap groups context	admin	es-es	Contexto de grupos LDAP
 ldap host	admin	es-es	Servidor LDAP
 ldap root password	admin	es-es	Clave de superusuario LDAP
 ldap rootdn	admin	es-es	rootdn LDAP
-leave empty for no quota	admin	es-es	dejar en blanco si no hay cuota
+ldap server	admin	es-es	servidor LDAP
+ldap server accounts dn	admin	es-es	DN para cuentas del servidor LDAP
+ldap server admin dn	admin	es-es	DN del administrador del servidor LDAP
+ldap server admin password	admin	es-es	contraseña del administrador del servidor LDAP
+ldap server hostname or ip address	admin	es-es	Nombre del servidor LDAP o dirección IP
+ldap settings	admin	es-es	Configuración LDAP
+leave empty for no quota	admin	es-es	Dejar en blanco para no poner cuota
 leave the category untouched and return back to the list	admin	es-es	dejar la categoría intacta y volver a la lista
 leave the group untouched and return back to the list	admin	es-es	Dejar el grupo intacto y volver a la lista
 leave unchanged	admin	es-es	Dejar sin cambios
 leave without saveing the entry	admin	es-es	salir sin guardar la entrada
 leaves without saveing	admin	es-es	sale sin guardar
+length	admin	es-es	Longitud
 length<br>rows	admin	es-es	Longitud<br>Filas
 limit global category to members of a certain group	admin	es-es	Limitar la categoría global a los miembros de cierto grupo
 limit to members of	admin	es-es	Limitar a los miembros de
@@ -410,13 +503,16 @@ loginid	admin	es-es	LoginID
 logintime	admin	es-es	Hora de inicio de sesión
 logoutime	admin	es-es	Hora de fin de sesión
 mail account	admin	es-es	Cuenta de correo
-mail settings	admin	es-es	Configuración del correo electrónico
+mail settings	admin	es-es	Configuración del correo.
 main email-address	admin	es-es	Dirección de correo principal
 main screen message	admin	es-es	Mensaje de la pantalla principal
 manage mapping	admin	es-es	Gestión de mapeos
+manage stationery templates	admin	es-es	Gestionar plantillas preimpresas
 manager	admin	es-es	Administrador
+manual entry	admin	es-es	Entrada manual
 maximum account id (e.g. 65535 or 1000000)	admin	es-es	Id máximo de cuenta (ej. 65535 o 1000000)
 maximum entries in click path history	admin	es-es	Número máximo de entradas en la ruta del historial de pulsar con el ratón
+mb used	admin	es-es	MB usados
 members	admin	es-es	Miembros
 message has been updated	admin	es-es	el mensaje ha sido actualizado
 method	admin	es-es	Método
@@ -429,6 +525,7 @@ more secure	admin	es-es	más seguro
 mount backup directory to %1	admin	es-es	Montar el directorio de la copia de seguridad en %1
 must change password upon next login	admin	es-es	Debe cambiar la contraseña la próxima vez que inicie la sesión
 name must not be empty !!!	admin	es-es	El nombre no debe estar vacío
+name of organisation	admin	es-es	Nombre de la organización
 name of the egroupware instance, eg. default	admin	es-es	Nombre de la instancia de EGroupware, p. ej., default
 new group name	admin	es-es	Nuevo nombre de grupo
 new name	admin	es-es	nuevo nombre
@@ -436,15 +533,21 @@ new password	admin	es-es	Contraseña nueva
 new password [ leave blank for no change ]	admin	es-es	Nueva contraseña [ Dejar en blanco para no cambiar ]
 next run	admin	es-es	Siguiente ejecución
 no algorithms available	admin	es-es	no hay algoritmos disponibles
-no alternate email address	admin	es-es	no hay dirección de correo alternativa
+no alternate email address	admin	es-es	Sin dirección de correo alternativa
+no default account found!	admin	es-es	¡No se encontró ninguna cuenta predeterminada!
+no encryption	admin	es-es	Sin cifrar
+no forwarding email address	admin	es-es	Sin dirección de correo para reenviar
 no jobs in the database !!!	admin	es-es	¡No hay trabajos en la base de datos!
 no login history exists for this user	admin	es-es	No existen registros de acceso para este usuario
 no matches found	admin	es-es	No se encontraron resultados
+no message returned.	admin	es-es	No se devolvió ningún mensaje.
 no modes available	admin	es-es	no hay modos disponibles
 no permission to add groups	admin	es-es	no tiene permiso para añadir grupos
 no permission to add users	admin	es-es	no tiene permiso para añadir usuarios
 no permission to create groups	admin	es-es	no tiene permiso para crear grupos
+no plain text part found	admin	es-es	No se encontró ninguna parte con texto sencillo
 no profile defined for user %1	admin	es-es	No se ha definido un perfil para el usuario %1
+no supported imap authentication method could be found.	admin	es-es	No se pudo encontrar ningún método soportado de identificación IMAP.
 non profit: clubs, associations, ...	admin	es-es	Sin ánimo de lucro: clubs, asociaciones...
 note: ssl available only if php is compiled with curl support	admin	es-es	Nota: SSL está disponible sólo si PHP está compilado con soporte curl
 notification mail	admin	es-es	Correo de notificación
@@ -464,9 +567,11 @@ one month	admin	es-es	un mes
 one week	admin	es-es	una semana
 only below displayed information is directly submitted to %s.	admin	es-es	Sólo la información mostrada debajo se envía directamente a %s.
 operating system	admin	es-es	Sistema operativo
-order	admin	es-es	Orden
+order	admin	es-es	orden
+organisation	admin	es-es	organización
 outbound	admin	es-es	De salida
 own categories	admin	es-es	Categorías propias
+own install id	admin	es-es	ID de instalación propio
 own install id:	admin	es-es	ID de instalación propio:
 owner "%1" removed, please select group-owner	admin	es-es	Se ha eliminado el propietario "%1", por favor, seleccione el propietario del grupo
 passthrough	admin	es-es	pasage
@@ -494,12 +599,24 @@ please enter a name	admin	es-es	Por favor introduzca un nombre
 please enter a name for that server !	admin	es-es	Por favor, introduzca un nombre para  ese sevidor
 please run setup to become current	admin	es-es	Por favor ejecute setup para estar al día
 please select	admin	es-es	Por favor, seleccione
+plesk can't rename users --> request ignored	admin	es-es	Plesk no puede renombrar usuarios --> Se ignora la solicitud
+plesk imap server (courier)	admin	es-es	Servidor IMAP Plesk (Courier)
+plesk mail script '%1' not found !!!	admin	es-es	¡No se encontró el script de correo de Plesk '%1'!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	es-es	Plesk requiere que las contraseñas tengan al menos 5 caracteres y no contengan el nombre de la cuenta --> NO se establece la contraseña
+plesk smtp-server (qmail)	admin	es-es	Servidor SMTP de Plesk (Qmail)
+pop3 server hostname or ip address	admin	es-es	Nombre del servidor POP3 o dirección IP
+pop3 server port	admin	es-es	Puerto del servidor POP3
+port	admin	es-es	puerto
 postfix with ldap	admin	es-es	Postfix con LDAP
 postpone for	admin	es-es	Posponer durante
 preferences	admin	es-es	Preferencias
 primary group	admin	es-es	Grupo principal
-qmaildotmode	admin	es-es	qmaildotmode
-quota settings	admin	es-es	configuración de la cuota
+profile access rights	admin	es-es	Derechos de acceso del perfil
+profile is active	admin	es-es	el perfil está activo
+profile list	admin	es-es	Lista de perfiles
+profile name	admin	es-es	Nombre del perfil
+qmaildotmode	admin	es-es	Modo de punto de qmail
+quota settings	admin	es-es	Configuración de las cuotas
 quota size in mbyte	admin	es-es	tamaño de la cuota en MBytes
 re-enter password	admin	es-es	Confirmar contraseña
 read this list of methods.	admin	es-es	Leer esta lista de métodos
@@ -513,6 +630,7 @@ remove all users from this group	admin	es-es	Borrar todos los usuarios de este g
 remove all users from this group ?	admin	es-es	¿Borrar todos los usuarios de este grupo?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	es-es	Eliminar el acceso a grupos puede causar problemas para los datos en esta categoría. ¿Está seguro? Los usuarios de estos grupos puede que ya no tengan acceso:
 requested	admin	es-es	Requerido
+reset filter	admin	es-es	restablecer filtro
 return to admin mainscreen	admin	es-es	volver a la pantalla principal de administración
 return to view account	admin	es-es	Volver a ver cuenta
 rights	admin	es-es	Derechos
@@ -530,20 +648,26 @@ search accounts	admin	es-es	Buscar cuentas
 search categories	admin	es-es	Buscar categorías
 search groups	admin	es-es	Buscar grupos
 search peer servers	admin	es-es	Buscar servidores 'peer'
+secure connection	admin	es-es	Conexión segura
 security	admin	es-es	Seguridad
 select accounts for which the custom field should be visible	admin	es-es	Seleccionar las cuentas para las que el campo personalizado debe estar visible
 select group managers	admin	es-es	Seleccionar administradores de grupo
 select permissions this group will have	admin	es-es	Seleccione los permisos que tendrá este grupo
 select the parent category. if this is a main category select no category	admin	es-es	Seleccione la categoría superior. Si ésta es una categoría principal seleccione SIN CATEGORIA
+select type of imap server	admin	es-es	Seleccione el tipo de servidor IMAP
+select type of imap/pop3 server	admin	es-es	Seleccione el tipo de servidor IMAP/POP3
+select type of smtp server	admin	es-es	Seleccione el tipo de servidor SMTP
 select users	admin	es-es	Seleccionar usuarios
 select users for inclusion	admin	es-es	Seleccionar usuarios para inclusión
 select where you want to store/retrieve filesystem information	admin	es-es	Seleccione dónde desea almacenar la informacion del sistema de archivos
 select where you want to store/retrieve user accounts	admin	es-es	Seleccione dónde desea almacenar la información de las cuentas de usuario
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	es-es	Seleccione el lugar que desea que la aplicación ocupe en la barra, de abajo (izquierda) a arriba (derecha)
 selectbox	admin	es-es	Cuadro de selección
+send using this email-address	admin	es-es	enviar usando esta dirección de correo electrónico
 server %1 has been updated	admin	es-es	El servidor %1 ha sido actualizado
 server list	admin	es-es	Listado de servidores
 server password	admin	es-es	Contraseña del servidor
+server settings	admin	es-es	configuración del servidor
 server type(mode)	admin	es-es	Tipo (modo) del servidor
 server url	admin	es-es	URL del servidor
 server username	admin	es-es	Usuario del servidor
@@ -559,7 +683,17 @@ show error log	admin	es-es	Mostrar registro de errores
 show members	admin	es-es	Mostrar miembros
 show phpinfo()	admin	es-es	Mostrar phpinfo()
 show session ip address	admin	es-es	Mostar la dirección IP de la sesión
+sieve server hostname or ip address	admin	es-es	Nombre del servidor Sieve o dirección IP
+sieve server port	admin	es-es	Puerto del servidor Sieve
+sieve settings	admin	es-es	Configuración de Sieve
 site	admin	es-es	Sitio
+smtp authentication	admin	es-es	identificación SMTP
+smtp options	admin	es-es	opciones SMTP
+smtp server	admin	es-es	servidor SMTP
+smtp server name	admin	es-es	nombre del servidor SMTP
+smtp settings	admin	es-es	configuración SMTP
+smtp-server hostname or ip address	admin	es-es	Nombre del servidor SMTP o dirección IP
+smtp-server port	admin	es-es	Puerto del servidor SMTP
 soap	admin	es-es	SOAP
 sorry, that group name has already been taken.	admin	es-es	Este nombre de grupo ya está en uso.
 sorry, the above users are still a member of the group %1	admin	es-es	Lo siento, los usuarios de encima todavía son miembros del grupo %1
@@ -567,12 +701,13 @@ sorry, the follow users are still a member of the group %1	admin	es-es	Los sigui
 sort the entries	admin	es-es	ordenar las entradas
 source account #%1 does not exist!	admin	es-es	¡La cuenta de origen nº %1 NO existe!
 ssl	admin	es-es	ssl
-standard	admin	es-es	estándar
-standard imap server	admin	es-es	servidor IMAP estándar
-standard pop3 server	admin	es-es	servidor POP3 estándar
-standard smtp-server	admin	es-es	servidor SMTP estándar
+standard	admin	es-es	Estándar
+standard imap server	admin	es-es	Servidor IMAP estándar
+standard pop3 server	admin	es-es	Servidor POP3 estándar
+standard smtp-server	admin	es-es	Servidor SMTP estándar
 start	admin	es-es	Inicio
 start testjob!	admin	es-es	Iniciar el trabajo de prueba
+stationery	admin	es-es	material preimpreso
 submit changes	admin	es-es	Enviar cambios
 submit displayed information?	admin	es-es	¿Enviar la información mostrada?
 submit statistic information	admin	es-es	Enviar información estadística
@@ -583,6 +718,7 @@ subversion checkout	admin	es-es	Checkout de subversion
 success	admin	es-es	correcto
 switch it off, if users are randomly thrown out	admin	es-es	Desactivarlo si a los usuarios se les cierra la sesión aleatoriamente
 template selection	admin	es-es	Selección de plantilla
+templates	admin	es-es	Plantillas
 text entry	admin	es-es	Entrada de texto
 that application name already exists.	admin	es-es	Ese nombre de aplicación ya existe.
 that application order must be a number.	admin	es-es	El orden de la aplicación debe ser un número.
@@ -593,9 +729,11 @@ the api is current	admin	es-es	La API está al día
 the api requires an upgrade	admin	es-es	La API requiere ser actualizada
 the cumulated and anonymised data will be publically available:	admin	es-es	Los datos acumulados y anónimos estarán disponibles públicamente:
 the groups must include the primary group	admin	es-es	Los grupos deben incluir el grupo principal
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	es-es	El servidor IMAP no parece soportar el método de identificación seleccionado. Por favor, póngase en contacto el administrador de su sistema.
 the install id of an instance can be found under admin > site configuration	admin	es-es	El ID de instalación de una instancia se puede encontrar en Administración -> Configuración del sitio
 the login and password can not be the same	admin	es-es	El usuario y la contraseña NO pueden ser iguales
 the loginid can not be more then 8 characters	admin	es-es	El nombre de usuario no puede superar 8 caracteres
+the mimeparser can not parse this message.	admin	es-es	El intérprete mime no puede interpretar este mensaje
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	es-es	el nombre usado internamente (<= 20 caracteres). Si se cambia, los datos ya no están disponibles.
 the testjob sends you a mail everytime it is called.	admin	es-es	El trabajo de prueba le envía un correo cada vez que se ejecuta
 the text displayed to the user	admin	es-es	el texto mostrado al usuario
@@ -607,10 +745,12 @@ this application is current	admin	es-es	Esta aplicación está al día
 this application requires an upgrade	admin	es-es	Esta aplicación necesita ser actualizada
 this category is currently being used by applications as a parent category	admin	es-es	Esta categoría está siendo usada por aplicaciones como categoría padre.
 this controls exports and merging.	admin	es-es	Esto controla las impresiones de exportar y mezclar.
+this php has no imap support compiled in!!	admin	es-es	¡¡Esta instalación de PHP no tiene soporte IMAP!!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	es-es	Tiempo límite para los datos de la sesión de la aplicación en segundos (por defecto 86400 = 1 día)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	es-es	Tiempo límite para las sesiones en segundos (por defecto 14400 = 4 horas)
 times	admin	es-es	Horas
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	es-es	Para permitirnos seguir el crecimiento de su instalación individual use este ID de envío. Si no, bórrelo:
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	es-es	Para usar una conexión TLS, debe ejecutar una versión de PHP 5.1.0 o superior.
 top	admin	es-es	Superior
 total of %1 id's changed.	admin	es-es	Se han cambiado en total %1 ids
 total records	admin	es-es	Total de registros
@@ -625,27 +765,48 @@ two weeks	admin	es-es	dos semanas
 type '%1' already exists !!!	admin	es-es	¡El tipo '%1' ya existe!
 type of customfield	admin	es-es	Tipo de campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	es-es	En windows, se necesita instalar asyncservice %1manualmente%2 o usar el modo de fallos. El modo de fallos sólo comprueba los trabajos después de ver cada página. ¡Cuidado!
+unexpected response from server to authenticate command.	admin	es-es	Respuesta inesperada del servidor al comando AUTHENTICATE.
+unexpected response from server to digest-md5 response.	admin	es-es	Respuesta inesperada del servidor a la respuesta Digest-MD5.
+unexpected response from server to login command.	admin	es-es	Respuesta inesperada del servidor al comando LOGIN.
 unknown account: %1 !!!	admin	es-es	¡¡La cuenta es desconocida: %1!!
 unknown command %1!	admin	es-es	Comando desconocido: %1
+unknown imap response from the server. server responded: %s	admin	es-es	Respuesta IMAP desconocida del servidor. El servidor respondió: %s
 unknown option %1	admin	es-es	Opción desconocida: %1
+unsupported action '%1' !!!	admin	es-es	¡La acción '%1' no está soportada!
 unwilling to save category with current settings. check for inconsistency:	admin	es-es	No se pudo guardar la categoría con la configuración actual. Compruebe la inconsistencia:
 up	admin	es-es	Arriba
+update current email address:	admin	es-es	Actualizar la dirección de correo actual:
 updated	admin	es-es	actualizado
 uppercase, lowercase, number, special char	admin	es-es	Mayúsculas, minúsculas, números, caracteres especiales
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	es-es	La URL de la instalación de EGroupware, p. ej. http://dominio.com/egroupware
 usage	admin	es-es	Uso
 use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
+use default	admin	es-es	Usar predeterminado
+use ldap defaults	admin	es-es	usar las opciones predeterminadas para LDAP
+use predefined username and password defined below	admin	es-es	Usar el usuario predefinido y las contraseñas definidas debajo
 use pure html compliant code (not fully working yet)	admin	es-es	Usar codigo HTML puro (todavía no funciona completamente)
 use secure cookies (transmitted only via https)	admin	es-es	Usar cookies seguras (se transmiten sólo via https)
+use smtp auth	admin	es-es	Usar identificación SMTP
 use theme	admin	es-es	Usar tema
+use tls authentication	admin	es-es	Usar identificación TLS
+use tls encryption	admin	es-es	Usar cifrado TLS
 user accounts	admin	es-es	Cuentas de usuario
+user can edit forwarding address	admin	es-es	El usuario puede editar la dirección de reenvío
 user csv export	admin	es-es	Exportación CSV de usuarios
 user csv import	admin	es-es	Importación CSV de usuarios
 user data	common	es-es	Datos del usuario
 user for smtp-authentication (leave it empty if no auth required)	admin	es-es	Usuario para identificación SMTP (dejar en blanco si no se necesita)
 user groups	admin	es-es	Grupos de usuarios
 userdata	admin	es-es	Datos del usuario
+username (standard)	admin	es-es	usuario (estándar)
+username/password defined by admin	admin	es-es	Usuario/contraseña definida por el administrador
+username@domainname (virtual mail manager)	admin	es-es	usuario@dominio (Gestor de correo virtual)
+users can define their own emailaccounts	admin	es-es	Los usuarios pueden definir sus propias cuentas de correo
+users can define their own identities	admin	es-es	Los usuarios pueden definir sus propias identidades
+users can define their own signatures	admin	es-es	Los usuarios pueden definir sus propias firmas
+users can utilize these stationery templates	admin	es-es	Los usuarios pueden utilizar estas plantillas preimpresas
 users choice	admin	es-es	A elegir por el usuario
+vacation notice	admin	es-es	Aviso de vacaciones
 value for column %1 is not unique!	admin	es-es	¡El valor para la columna %1 no es única!
 vfs directory "%1" not found!	admin	es-es	¡No se ha encontrado el directorio VFS "%1"!
 view access log	admin	es-es	Ver registro de acceso
@@ -655,6 +816,7 @@ view error log	admin	es-es	Ver registro de errores
 view sessions	admin	es-es	Ver sesiones
 view this user	admin	es-es	ver este usuario
 view user account	admin	es-es	Ver cuenta de usuario
+virtual mail manager	admin	es-es	Gestor de correo virtual
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	es-es	Establecer el número de días para informar a los usuarios por adelantado sobre el próximo cambio forzado de contraseña. Vacío = sin información
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	es-es	Solicitamos los datos para mejorar nuestro perfil en la prensa y para obtener una mejor comprensión del usuario base de EGroupware y sus necesidades
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	es-es	Esperamos que comprenda la importancia de esta estadística voluntaria y no denegarla a la ligera.
@@ -674,6 +836,7 @@ you can not use --dry-run together with --skip-checks!	admin	es-es	¡NO puede us
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	es-es	¡Sólo puede cambiar el hash si establece una contraseña aleatoria o está usando contraseñas en texto claro!
 you have entered an invalid expiration date	admin	es-es	Ha introducido una fecha de expiración que no es válida
 you have no email address for your user set !!!	admin	es-es	¡No se ha establecido todavía una dirección de correo para su usuario!
+you have received a new message on the	admin	es-es	Ha recibido un mensaje nuevo en la
 you have to enter a name, to create a new field!!!	admin	es-es	Tiene que introducir un nombre para crear un nuevo campo
 you have to enter a name, to create a new type!!!	admin	es-es	¡Tiene que introducir un nombre para crear un tipo nuevo!
 you must add at least 1 permission or group to this account	admin	es-es	Debe añadir al menos 1 permiso o grupo para esta cuenta
@@ -690,162 +853,5 @@ you need to select as least one action!	admin	es-es	¡Necesita seleccionar al me
 you need to select some users first!	admin	es-es	¡Necesita seleccionar antes algunos usuarios!
 you will need to remove the subcategories before you can delete this category	admin	es-es	Deberá eliminar las subcategorías antes de poder borrar esta categoría
 your last submission was less then %1 days ago!	admin	es-es	¡Su último envío fue hace menos de %1 días!
-your session could not be verified.	admin	es-es	Su sesión no pudo ser verificada.
-(no subject)	admin	es-es	(Sin asunto)
-account '%1' not found !!!	admin	es-es	¡No se encontró la cuenta '%1'!
-active templates	admin	es-es	Plantillas activas
-add new email address:	admin	es-es	Añadir nueva dirección de correo
-add profile	admin	es-es	Añadir perfil
-admin dn	admin	es-es	dn del administrador
-admin password	admin	es-es	contraseña del administrador
-admin username	admin	es-es	usuario del administrador
-advanced options	admin	es-es	opciones avanzadas
-alternate email address	admin	es-es	dirección de correo alternativa
-any application	admin	es-es	cualquier aplicación
-any group	admin	es-es	cualquier grupo
-any user	admin	es-es	cualquier usuario
-back to admin/grouplist	admin	es-es	Volver a Administración/Lista de grupos
-back to admin/userlist	admin	es-es	Volver a Administración/Lista de usuarios
-bad login name or password.	admin	es-es	Nombre de usuario o contraseña incorrectos
-bad or malformed request. server responded: %s	admin	es-es	Petición errónea o mal formado. El servidor respondió: %s
-bad request: %s	admin	es-es	Petición errónea: %s
-can be used by application	admin	es-es	puede usarse por la aplicación
-can be used by group	admin	es-es	puede usarse por el grupo
-can be used by user	admin	es-es	puede usarse por el usuario
-connection dropped by imap server.	admin	es-es	El servidor IMAP ha interrumpido la conexión
-continue	admin	es-es	Continuar
-could not complete request. reason given: %s	admin	es-es	No se pudo completar la solicitud. Motivo: %s
-could not open secure connection to the imap server. %s : %s.	admin	es-es	No se pudo abrir una conexión segura con el servidor IMAP. %s: %s.
-cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	es-es	CRAM-MD5 o DIGEST-MD5 necesitan el paquete Auth_SASL para estar instalado.
-cyrus imap server	admin	es-es	Servidor IMAP Cyrus
-cyrus imap server administration	admin	es-es	Administración del servidor IMAP Cyrus
-default	admin	es-es	predeterminada
-deliver extern	admin	es-es	entrega externa
-displaying html messages is disabled	admin	es-es	Mostrar los mensajes en HTML está desactivado
-do not validate certificate	admin	es-es	No validar el certificado
-do you really want to delete this profile	admin	es-es	¿Realmente desea borrar este perfil?
-do you really want to reset the filter for the profile listing	admin	es-es	Realmente desea restablecer el filtro para la lista de perfiles
-domainname	admin	es-es	nombre del dominio
-edit email settings	admin	es-es	editar configuración de la cuenta
-email account active	admin	es-es	cuenta de correo electrónico activa
-email address	admin	es-es	dirección de correo electrónico
-email settings	common	es-es	Configuración del correo electrónico
-emailadmin	admin	es-es	Administración del correo electrónico
-emailadmin: group assigned profile	common	es-es	eMailAdmin: perfil asignado al grupo
-emailadmin: user assigned profile	common	es-es	eMailAdmin: perfil asignado al usuario
-enable cyrus imap server administration	admin	es-es	activar administración del servidor Cyrus IMAP
-enable sieve	admin	es-es	activar Sieve
-encrypted connection	admin	es-es	conexión cifrada
-encryption settings	admin	es-es	configuración del cifrado
-enter your default mail domain (from: user@domain)	admin	es-es	introduzca el dominio predeterminado (de usuario@dominio)
-entry saved	admin	es-es	La entrada ha sido guardada
-error connecting to imap server. %s : %s.	admin	es-es	Error al conectar con el servidor IMAP. %s: %s.
-error connecting to imap server: [%s] %s.	admin	es-es	Error al conectar con el servidor IMAP: [%s] %s.
-error saving account!	admin	es-es	¡Error al guardar la cuenta!
-error saving the entry!!!	admin	es-es	Error guardando el elemento!!!
-event details follow	admin	es-es	A continuación, los detalles del evento
-filtered by account	admin	es-es	filtrado por cuenta
-filtered by group	admin	es-es	filtrado por grupo
-forward also to	admin	es-es	reenviar también a
-forward email's to	admin	es-es	reenviar correos a
-forward only	admin	es-es	sólo reenviar
-global options	admin	es-es	opciones globales
-if using ssl or tls, you must have the php openssl extension loaded.	admin	es-es	Si usa SSL o TLS, debe tener cargada la extensión openssl de PHP.
-imap admin password	admin	es-es	contraseña del administrador IMAP
-imap admin user	admin	es-es	usuario administrador IMAP
-imap c-client version < 2001	admin	es-es	Versión C-Cliente IMAP < 2001
-imap server	admin	es-es	Servidor IMAP
-imap server closed the connection.	admin	es-es	El servidor IMAP cerró la conexión.
-imap server closed the connection. server responded: %s	admin	es-es	El servidor IMAP cerró la conexión. El servidor respondió: %s
-imap server hostname or ip address	admin	es-es	Servidor IMAP o dirección IP
-imap server logintyp	admin	es-es	Tipo de sesión del servidor IMAP
-imap server name	admin	es-es	Nombre del servidor IMAP
-imap server port	admin	es-es	Puerto del servidor IMAP
-imap/pop3 server name	admin	es-es	Nombre del servidor POP/IMAP
-importance	admin	es-es	Importancia
-in mbyte	admin	es-es	en MBytes
-inactive	admin	es-es	inactivo
-ldap basedn	admin	es-es	basedn para LDAP
-ldap server	admin	es-es	servidor LDAP
-ldap server accounts dn	admin	es-es	DN para cuentas del servidor LDAP
-ldap server admin dn	admin	es-es	DN del administrador del servidor LDAP
-ldap server admin password	admin	es-es	contraseña del administrador del servidor LDAP
-ldap server hostname or ip address	admin	es-es	Nombre del servidor LDAP o dirección IP
-ldap settings	admin	es-es	Configuración LDAP
-leave empty for no quota	admin	es-es	Dejar en blanco para no poner cuota
-mail settings	admin	es-es	Configuración del correo.
-manage stationery templates	admin	es-es	Gestionar plantillas preimpresas
-name of organisation	admin	es-es	Nombre de la organización
-no alternate email address	admin	es-es	Sin dirección de correo alternativa
-no encryption	admin	es-es	Sin cifrar
-no forwarding email address	admin	es-es	Sin dirección de correo para reenviar
-no message returned.	admin	es-es	No se devolvió ningún mensaje.
-no plain text part found	admin	es-es	No se encontró ninguna parte con texto sencillo
-no supported imap authentication method could be found.	admin	es-es	No se pudo encontrar ningún método soportado de identificación IMAP.
-order	admin	es-es	orden
-organisation	admin	es-es	organización
-plesk can't rename users --> request ignored	admin	es-es	Plesk no puede renombrar usuarios --> Se ignora la solicitud
-plesk imap server (courier)	admin	es-es	Servidor IMAP Plesk (Courier)
-plesk mail script '%1' not found !!!	admin	es-es	¡No se encontró el script de correo de Plesk '%1'!
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	es-es	Plesk requiere que las contraseñas tengan al menos 5 caracteres y no contengan el nombre de la cuenta --> NO se establece la contraseña
-plesk smtp-server (qmail)	admin	es-es	Servidor SMTP de Plesk (Qmail)
-pop3 server hostname or ip address	admin	es-es	Nombre del servidor POP3 o dirección IP
-pop3 server port	admin	es-es	Puerto del servidor POP3
-port	admin	es-es	puerto
-postfix with ldap	admin	es-es	Postfix con LDAP
-profile access rights	admin	es-es	Derechos de acceso del perfil
-profile is active	admin	es-es	el perfil está activo
-profile list	admin	es-es	Lista de perfiles
-profile name	admin	es-es	Nombre del perfil
-qmaildotmode	admin	es-es	Modo de punto de qmail
-quota settings	admin	es-es	Configuración de las cuotas
-quota size in mbyte	admin	es-es	tamaño de la cuota en MBytes
-remove	admin	es-es	borrar
-reset filter	admin	es-es	restablecer filtro
-select type of imap server	admin	es-es	Seleccione el tipo de servidor IMAP
-select type of imap/pop3 server	admin	es-es	Seleccione el tipo de servidor IMAP/POP3
-select type of smtp server	admin	es-es	Seleccione el tipo de servidor SMTP
-send using this email-address	admin	es-es	enviar usando esta dirección de correo electrónico
-server settings	admin	es-es	configuración del servidor
-sieve server hostname or ip address	admin	es-es	Nombre del servidor Sieve o dirección IP
-sieve server port	admin	es-es	Puerto del servidor Sieve
-sieve settings	admin	es-es	Configuración de Sieve
-smtp authentication	admin	es-es	identificación SMTP
-smtp options	admin	es-es	opciones SMTP
-smtp server name	admin	es-es	Nombre del servidor SMTP
-smtp settings	admin	es-es	configuración SMTP
-smtp-server hostname or ip address	admin	es-es	Nombre del servidor SMTP o dirección IP
-smtp-server port	admin	es-es	Puerto del servidor SMTP
-standard	admin	es-es	Estándar
-standard imap server	admin	es-es	Servidor IMAP estándar
-standard pop3 server	admin	es-es	Servidor POP3 estándar
-standard smtp-server	admin	es-es	Servidor SMTP estándar
-stationery	admin	es-es	material preimpreso
-templates	admin	es-es	Plantillas
-the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	es-es	El servidor IMAP no parece soportar el método de identificación seleccionado. Por favor, póngase en contacto el administrador de su sistema.
-the mimeparser can not parse this message.	admin	es-es	El intérprete mime no puede interpretar este mensaje
-this php has no imap support compiled in!!	admin	es-es	¡¡Esta instalación de PHP no tiene soporte IMAP!!
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	es-es	Para usar una conexión TLS, debe ejecutar una versión de PHP 5.1.0 o superior.
-unexpected response from server to authenticate command.	admin	es-es	Respuesta inesperada del servidor al comando AUTHENTICATE.
-unexpected response from server to digest-md5 response.	admin	es-es	Respuesta inesperada del servidor a la respuesta Digest-MD5.
-unexpected response from server to login command.	admin	es-es	Respuesta inesperada del servidor al comando LOGIN.
-unknown imap response from the server. server responded: %s	admin	es-es	Respuesta IMAP desconocida del servidor. El servidor respondió: %s
-unsupported action '%1' !!!	admin	es-es	¡La acción '%1' no está soportada!
-update current email address:	admin	es-es	Actualizar la dirección de correo actual:
-use default	admin	es-es	Usar predeterminado
-use ldap defaults	admin	es-es	usar las opciones predeterminadas para LDAP
-use predefined username and password defined below	admin	es-es	Usar el usuario predefinido y las contraseñas definidas debajo
-use smtp auth	admin	es-es	Usar identificación SMTP
-use tls authentication	admin	es-es	Usar identificación TLS
-use tls encryption	admin	es-es	Usar cifrado TLS
-user can edit forwarding address	admin	es-es	El usuario puede editar la dirección de reenvío
-username (standard)	admin	es-es	usuario (estándar)
-username/password defined by admin	admin	es-es	Usuario/contraseña definida por el administrador
-username@domainname (virtual mail manager)	admin	es-es	usuario@dominio (Gestor de correo virtual)
-users can define their own emailaccounts	admin	es-es	Los usuarios pueden definir sus propias cuentas de correo
-users can define their own identities	admin	es-es	Los usuarios pueden definir sus propias identidades
-users can define their own signatures	admin	es-es	Los usuarios pueden definir sus propias firmas
-users can utilize these stationery templates	admin	es-es	Los usuarios pueden utilizar estas plantillas preimpresas
-virtual mail manager	admin	es-es	Gestor de correo virtual
-you have received a new message on the	admin	es-es	Ha recibido un mensaje nuevo en la
 your name	admin	es-es	Su nombre
+your session could not be verified.	admin	es-es	Su sesión no pudo ser verificada.

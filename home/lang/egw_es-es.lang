@@ -1,10 +1,24 @@
+a quick note	home	es-es	Una nota rápida
+birthday reminders	home	es-es	Recordatorios de cumpleaños
 color	home	es-es	Color
-displays home	home	es-es	Muestra el inicioOOOOO
+configure	home	es-es	Configurar
+displays home	home	es-es	Muestrar inicio
 egroupware	home	es-es	EGroupware
+entry	home	es-es	Entrada
+favorite	home	es-es	Favorito
+forced	home	es-es	Forzado
 home	home	es-es	Inicio
 in %1 days (%2) is %3's birthday.	home	es-es	En %1 días (%2) es el cumpleaños de %3.
-remove	home	es-es	borrar
+list of entries	home	es-es	Lista de entradas
+remove	home	es-es	Suprimir
+remove default %1	home	es-es	Suprimir predeterminado %1
+removed default	home	es-es	Predeterminado eliminado
 set as default	home	es-es	Establecer como predeterminado
+set default	home	es-es	Establecer predeterminado
+show a list of entries	home	es-es	Mostrar una lista de entradas
+show all the entries using a favorite	home	es-es	Mostrar todas las entradas usando un favorito
+show one entry	home	es-es	Mostrar una entrada
+single entry	home	es-es	Entrada sola
 there is a new version of egroupware available	home	es-es	Hay disponible una nueva versión de EGroupware
 today is %1's birthday!	home	es-es	¡Hoy es el cumpleaños de %1!
 tomorrow is %1's birthday.	home	es-es	¡Mañana es el cumpleaños de %1!
