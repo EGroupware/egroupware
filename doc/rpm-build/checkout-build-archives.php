@@ -57,7 +57,7 @@ $config = array(
 	'rsync' => trim(`which rsync`).' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*"',
 	'composer' => ($composer=trim(`which composer.phar`)) ? $composer.' install --ignore-platform-reqs --no-dev' : '',
 	'after-checkout' => 'rm -rf */source */templates/*/source',
-	'packager' => 'build@stylite.de',
+	'packager' => 'build@egroupware.org',
 	'obs' => '/home/stylite/obs/stylite-epl',
 	'obs_package_alias' => '',	// name used in obs package, if different from packagename
 	'changelog' => false,   // eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
