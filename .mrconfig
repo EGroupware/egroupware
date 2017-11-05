@@ -15,7 +15,7 @@ svn_untag = svn rm -m "remove tag" $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "
 svn_branch = svn cp --parents -m "$2" $(svn info|grep ^URL|cut -f 2 -d ' ') $(svn info|grep ^URL|cut -f 2 -d ' '|sed -E "s:/(branches/[0-9.]+|trunk)/:/branches/$1/:"); svn switch ^/branches/$1/$(svn info|grep ^URL|cut -f 2 -d ' '|sed 's/^.*\///') .
 
 [api/src/Db/ADOdb]
-checkout = git clone ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/ADOdb.git
+checkout = git clone -b 17.1 ${EGW_REPO_BASE:-$(git config --get remote.origin.url|sed 's|/egroupware.git||')}/ADOdb.git
 
 []
 # to run composer.phar automatic, this .mrconfig need to be trusted by adding it to ~/.mrtrust
