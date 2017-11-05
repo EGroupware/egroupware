@@ -1,10 +1,10 @@
 Source: egroupware-epl
 Section: web
 Priority: optional
-Maintainer: Lars Volker <lv@stylite.de>
+Maintainer: Ralf Becker <rb@egroupware.org>
 Build-Depends: debhelper (>= 5), po-debconf
 Standards-Version: 3.8.0
-Homepage: http://www.stylite.de/EPL
+Homepage: http://www.egroupware.org/EPL
 
 Package: egroupware-epl
 Architecture: all
@@ -14,6 +14,7 @@ Depends:
  egroupware-epl-esync (= ${binary:Version}),
  egroupware-epl-bookmarks (= ${binary:Version}),
  egroupware-epl-calendar (= ${binary:Version}),
+ egroupware-epl-collabora (= ${binary:Version}),
  egroupware-epl-mail (= ${binary:Version}),
  egroupware-epl-filemanager (= ${binary:Version}),
  egroupware-epl-infolog (= ${binary:Version}),
@@ -23,7 +24,7 @@ Depends:
  egroupware-epl-projectmanager (= ${binary:Version}),
  egroupware-epl-registration (= ${binary:Version}),
  egroupware-epl-resources (= ${binary:Version}),
- egroupware-epl-stylite (= ${binary:Version}),
+ egroupware-epl-functions (= ${binary:Version}),
  egroupware-epl-timesheet (= ${binary:Version}),
  egroupware-epl-tracker (= ${binary:Version}),
  ${misc:Depends}
@@ -46,18 +47,17 @@ Description: web-based groupware suite - metapackage
 Package: egroupware-epl-core
 Architecture: all
 Depends: apache2,
- php5 (>= 5.4.0) | libapache2-mod-php (>=7.0),
+ php5 (>= 5.6.0) | libapache2-mod-php (>=7.0),
  php5-cli | php-cli,
  php5-mysql | php5-pgsql | php-mysql | php-pgsql,
  php5-json | php-json,
  php5-gd | php-gd,
  php5-xsl | php-xsl,
- php5-bz2 | php-bz2,
+ php-bz2 | php5-common,
  ${misc:Depends}
 Recommends: mariadb-server | mysql-server, php-opcache | php-apc, php-apcu, php5-pecl-smb, php5-tidy | php-tidy, php5-zip | php-zip,
  mariadb-client | mysql-client | postgresql-client, php5-bcmath | php-bcmath,
- php5-ldap | php-ldap,
- php5-mhash | php-mhash
+ php5-ldap | php-ldap, php-mbstring, php5-mhash | php-mhash, php-xml
 Suggests: egroupware-epl
 Provides: egroupware-epl-addressbook, egroupware-epl-pear
 Replaces: egroupware-core, egroupware-addressbook, egroupware-epl-addressbook,
@@ -113,9 +113,19 @@ Description: web-based groupware suite - calendar management application
  This EGroupware application provides a powerful calendar with a meeting
  request system, alarms, iCal and e-Mail support, and ACL security.
 
+Package: egroupware-epl-collabora
+Architecture: all
+Depends: egroupware-epl-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - Collabora integration
+ ${commondesc}
+ .
+ This EGroupware application integrates Collabora Libre Office Online.
+
 Package: egroupware-epl-esync
 Architecture: all
 Depends: egroupware-epl-core (>= ${binary:Version}),
+ php5 | php-mbstring,
  ${misc:Depends}
 Conflicts: egroupware-esync
 Replaces: egroupware-esync
@@ -319,8 +329,7 @@ Description: web-based groupware suite - external dependencies
 
 Package: egroupware-epl-wiki
 Architecture: all
-Depends: egroupware-epl-core (>= ${binary:Version}), egroupware-epl-compat (>= ${binary:Version}),
- ${misc:Depends}
+Depends: egroupware-epl-core (>= ${binary:Version}), ${misc:Depends}
 Conflicts: egroupware-wiki
 Replaces: egroupware-wiki
 Description: web-based groupware suite - wiki application

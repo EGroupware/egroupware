@@ -1,3 +1,4 @@
 #addFilter("eGroupware-gallery* wrong-script-interpreter")
 setBadness('wrong-script-interpreter', 0)
+setBadness('files-duplicated-waste', 0)
 
