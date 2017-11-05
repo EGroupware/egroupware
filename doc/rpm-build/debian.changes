@@ -1,3 +1,19 @@
+egroupware-epl (17.1.20171106) hardy; urgency=low
+
+  * SECURITY RELEASE and 2nd RC for 17.1: everyone should update ASAP
+  * Filemanager/Sharing: deny rename, move and mkdir on readonly shares
+  * All apps: fix two cross site scripting vectors
+  * All apps: remove /usr/bin/ from open_basedir and other hardening measures
+  * Sharing/Collabora: allow to use Collabora on writable shares (EPL only)
+  * All apps: get sharing working with files attached to application entries
+  * Update: fix not finishing update for more then 100 photos in addressbook
+  * Collabora: do NOT set random password for an existing anonymous user (screws up SiteMgr)
+  * All apps: update CKeditor to 4.7.3 and other dependencies like Horde
+  * Infolog: Add context menu actions to set start & end date
+  * Tracker: Admins can allow users to set their own default categories for new entries
+
+ -- Ralf Becker <rb@egroupware.org>  Sun, 05 Nov 2017 10:16:19 +0100
+
 egroupware-epl (17.1.20171023) hardy; urgency=low
 
   * first release candidate for upcomming 17.1 release
