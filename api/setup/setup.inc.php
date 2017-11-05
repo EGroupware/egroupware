@@ -15,7 +15,7 @@ $setup_info['api']['title']     = 'EGroupware API';
 $setup_info['api']['version']   = '16.9.002';
 $setup_info['api']['versions']['current_header'] = '1.29';
 // maintenance release in sync with changelog in doc/rpm-build/debian.changes
-$setup_info['api']['versions']['maintenance_release'] = '16.1.20170922';
+$setup_info['api']['versions']['maintenance_release'] = '16.1.20171106';
 $setup_info['api']['enable']    = 3;
 $setup_info['api']['app_order'] = 1;
 $setup_info['api']['license'] = 'GPL';

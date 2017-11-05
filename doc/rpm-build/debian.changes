@@ -1,3 +1,17 @@
+egroupware-epl (16.1.20171106) hardy; urgency=low
+
+  * SECURITY RELEASE: everyone should update to this or 17.1.20171106 ASAP
+  * Filemanager/Sharing: deny rename, move and mkdir on readonly shares
+  * All apps: fix two cross site scripting vectors
+  * All apps: remove /usr/bin/ from open_basedir and other hardening measures
+  * Calendar: fix bug where private events for multiple users in week view only showed for one user
+  * Import/Export: Automatically remove import conditions from definition if there is no field selected
+  * Mail: Fix bug all fields in compose dialog always stay opened (happens in FF ESR)
+  * Addressbook: Merging contacts now keeps all distribution lists
+  * Projectmanager: Add check when saving for project edited by another user
+
+ -- Ralf Becker <rb@egroupware.org>  Sun, 05 Nov 2017 09:55:02 +0100
+
 egroupware-epl (16.1.20170922) hardy; urgency=low
 
   * IMPORTANT: repository signing key changed to new build@egroupware.org key to support Debian 9 (you need to import it!)
