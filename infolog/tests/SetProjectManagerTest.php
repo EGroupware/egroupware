@@ -481,7 +481,10 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$info = $this->bo->read($this->info_id);
 
 		// Check contact was cleared
-		$this->assertNull($info['info_contact'], 'Contact was not cleared');
+		$this->assertTrue(is_null($info['info_contact']) || (
+				$info['info_contact']['id'] == 'none' && !$info['info_contact']['search']),
+				'Contact was not cleared'
+		);
 
 		// Check pm_id is gone
 		$this->assertNull($info['pm_id'], 'Project was not removed');

@@ -207,7 +207,7 @@
 						</box>
 						<box id="enddate_popup" class="action_popup prompt">
 							<vbox>
-								<description value="End date" class="promptheader"/>
+								<description value="Due date" class="promptheader"/>
 								<description id="enddate_action[title]"/>
 								<date-time id="enddate" class="action_popup-content"/>
 								<hbox>
