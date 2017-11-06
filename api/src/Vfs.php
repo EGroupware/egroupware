@@ -1383,7 +1383,9 @@ class Vfs
 			$vfs = new Vfs\StreamWrapper();
 			$stat = $vfs->url_stat($path,0);
 		}
-		return $stat['uid'] == self::$user ||	// user is the owner
+		return $stat['uid'] == self::$user &&	// (current) user is the owner
+				// in sharing current user != self::$user and should NOT have owner rights
+				$GLOBALS['egw_info']['user']['account_id'] == self::$user ||
 			self::$is_root ||					// class runs with root rights
 			!$stat['uid'] && $stat['gid'] && self::$is_admin;	// group directory and user is an eGW admin
 	}
