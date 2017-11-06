@@ -776,13 +776,17 @@ class Base
 			$data = $keys; $keys = array();
 			foreach($this->db_cols as $db_col => $col)
 			{
-				if (is_int($db_col))
-				{
-					$keys[] = $col;
-				}
-				elseif (isset($data[$col]))
+				if (isset($data[$col]))
 				{
 					$keys[$db_col] = $col;
+				}
+			}
+			// keep sql fragments (with integer key)
+			foreach($data as $key => $val)
+			{
+				if (is_int($key))
+				{
+					$keys[] = $val;
 				}
 			}
 		}
