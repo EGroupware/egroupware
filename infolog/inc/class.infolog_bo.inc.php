@@ -1054,7 +1054,7 @@ class infolog_bo
 			// Update modified timestamp of parent
 			if($values['info_id_parent'] && $touch_modified)
 			{
-				$parent = $this->read($values['info_id_parent'], false, 'server', true);
+				$parent = $this->read($values['info_id_parent'], true, 'server', true);
 				$this->write($parent, false, true, false, true, false, null, $ignore_acl);
 			}
 		}
@@ -1072,6 +1072,8 @@ class infolog_bo
 	protected function write_check_links(&$values)
 	{
 		$old_link_id = (int)$values['info_link_id'];
+		$from = $values['info_from'];
+
 		if($values['info_contact'] && !(
 				is_array($values['info_contact']) && $values['info_contact']['id'] == 'none'
 			) || (
@@ -1132,7 +1134,8 @@ class infolog_bo
 		else
 		{
 			unset($values['info_link_id']);
-			$values['info_from'] = null;
+			unset($values['info_contact']);
+			$values['info_from'] = $from ? $from : null;
 		}
 		if($values['info_id'] && $values['old_pm_id'] !== $values['pm_id'])
 		{
