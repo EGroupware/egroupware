@@ -189,7 +189,7 @@ ends	calendar	en	Ends
 error adding the alarm	calendar	en	Error adding the alarm
 error saving the event!	calendar	en	Error saving the event!
 error: can't delete original series!	calendar	en	Error: Can't delete original series!
-error: duration of event longer then recurrence interval!	calendar	en	Error: Duration of event longer then recurrence interval!
+error: duration of event longer then recurrence interval!	calendar	en	Error: Duration of event longer than recurrence interval!
 error: importing the ical	calendar	en	Error: importing the iCal!
 error: no participants selected !!!	calendar	en	Error: no participants selected!
 error: ressources reservation in private events is not allowed!!!	calendar	en	Error: Resources reservation in private events is not allowed!
@@ -273,7 +273,7 @@ how many days to sync in the past (default %1)	calendar	en	How many days to sync
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
 how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	en	How many lines of all day events should be directly visible. Further lines are available via a mouseover.
 how many minutes should each interval last?	calendar	en	How many minutes should each interval last?
-how many seperate calendars to show before merging them together	calendar	en	How many seperate calendars to show before merging them together
+how many seperate calendars to show before merging them together	calendar	en	Minimum number of users for showing a consolidated calendar view, if less user are selected the calendar is displayed separately for week or day view.
 how many weeks should the multiple week view show?	calendar	en	How many weeks should the multiple week view show?
 how much entries to skip	calendar	en	How much entries to skip?
 html link to the current record	calendar	en	HTML link to the current record

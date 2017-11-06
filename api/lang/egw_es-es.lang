@@ -1,25 +1,54 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	es-es	%1 mensajes(%2 nuevos) escritos para la aplicación '%3' e idiomas '%4'
 %1 active file(s) with same name as directory inactivated!	admin	es-es	¡%1 ficheros activos con el mismo nombre como directorio inactivos!
 %1 email addresses inserted	common	es-es	Se han insertado %1 direcciones de correo
+%1 entries found, select one ...	common	es-es	Se han encontrado %1 entradas. Seleccione una...
+%1 etemplates deleted	common	es-es	%1 plantillas borradas
+%1 etemplates for application '%2' dumped to '%3'	common	es-es	%1 plantillas para la aplicación '%2' volcadas a '%3'
+%1 etemplates found	common	es-es	%1 plantillas encontradas
 %1 file	common	es-es	fichero %1
 %1 is not executable by the webserver !!!	common	es-es	%1 no tiene permiso de ejecución para el servidor web
+%1 matches on search criteria	common	es-es	%1 coincidencias para la búsqueda solicitada
+%1 more...	common	es-es	%1 más...
+%1 new etemplates imported for application '%2'	common	es-es	%1 nuevas plantillas importadas para la aplicación '%2'
+%1 not implemented for %2!	common	es-es	%1 no está implementado para %2!
 %1 proxy of %2	common	es-es	%1 proxy de %2
 %1 to sync	groupdav	es-es	%1 para sincronizar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	es-es	%1Elegir otro directorio%2<br />o dar a %3 permiso de escritura para el servidor web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1EGroupware%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
+%s disabled	common	es-es	%s desactivado
+%s needed	common	es-es	%s es necesario
+%s notranslation	common	es-es	%s sin traducción
+%s onchange	common	es-es	%s al cambiar
+%s readonly	common	es-es	%s de sólo lectura
+'%1' has an invalid format !!!	common	es-es	¡¡¡'%1' no tiene un formato válido!!!
 '%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un fichero php en el directorio raíz de EGroupware (%2)!
+'%1' is not a valid date !!!	common	es-es	¡¡'%1'  no es una fecha válida!!
+'%1' is not a valid floatingpoint number !!!	common	es-es	¡¡¡'%1' no es un número válido de coma flotante!!!
+'%1' is not a valid integer !!!	common	es-es	¡¡¡'%1' no es un entero válido!!!
+'%1' is not allowed ('%2')!	common	es-es	¡'%1' NO está permitido ('%2')!
 (session restored in %1 seconds)	common	es-es	(la sesión se ha restaurado en %1 segundos)
 00 (disable)	admin	es-es	00 (desactivar)
 1 day	common	es-es	1 día
 1 hour	common	es-es	1 hora
+1 minute	common	es-es	1 minuto
 1 month	common	es-es	1 mes
 1 week	common	es-es	1 semana
 13 (ntp)	admin	es-es	13 (ntp)
+15 minutes	common	es-es	15 minutos
+30 minutes	common	es-es	30 minutos
+30 seconds	common	es-es	30 segundos
+5 minutes	common	es-es	5 minutos
 80 (http)	admin	es-es	80 (http)
+a pattern to be searched for	common	es-es	un patrón de búsqueda
+abort	common	es-es	Abortar
 about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
 about egroupware	common	es-es	Acerca de EGroupware
 access	common	es-es	Acceso
 access not permitted	common	es-es	Acceso no permitido
+accesskey	common	es-es	Tecla rápida
+accesskeys can also be specified with an & in the label (eg. &name)	common	es-es	Las teclas rápidas se pueden especificar también poniendo & en la etiqueta (p. ej. &Nombre)
+account contactdata	common	es-es	Datos de contacto de la cuenta
 account has been created	common	es-es	Se ha creado la cuenta
 account has been deleted	common	es-es	La cuenta ha sido borrada
 account has been updated	common	es-es	La cuenta ha sido actualizada
@@ -29,44 +58,71 @@ acl	common	es-es	LCA
 action	common	es-es	Acción
 action when category is an email address	groupdav	es-es	Acción cuando la categoría es una dirección de correo electrónico
 actions	common	es-es	Acciones
+actions...	common	es-es	Acciones...
 active	common	es-es	Activo
 active directory requires ssl or tls to change passwords!	common	es-es	¡El directorio activo requiere SSL o TLS para cambiar las contraseñas!
-add	common	es-es	Añadir
+add	common	es-es	añadir
+add %1	common	es-es	añadir %1
 add %1 category for	common	es-es	Añadir %1 categoría para
+add a new column (after the existing ones)	common	es-es	Añadir una columna nueva (detrás de las existentes)
 add a new contact	common	es-es	Añadir un contacto nuevo
+add a new entry of the selected application	common	es-es	Añadir una entrada nueva de la aplicación seleccionada
+add a new multi-column index	common	es-es	Añadir un nuevo índice multicolumna
 add category	common	es-es	Añadir categoría
+add column	common	es-es	Añadir columna
 add current	common	es-es	Añadir actual
+add index	common	es-es	Añadir índice
+add new	common	es-es	Añadir nueva
 add shortcut	common	es-es	Añadir acceso directo
 add sub	common	es-es	Añadir sub
+add table	common	es-es	Añadir tabla
+add to clipboard	common	es-es	Añadir al portapapeles
 add user to responsibles	groupdav	es-es	Añadir usuario a los responsables
 add user to responsibles, removing evtl. previous category user	groupdav	es-es	Añadir usuario a los responsables, eliminando al usuario de la categoría anterior
 addressbook	common	es-es	Libreta de direcciones
 addressbooks to sync in addition to personal addressbook	groupdav	es-es	Libretas de direcciones a sincronizar además de la libreta personal
 admin	common	es-es	Administración
 administration	common	es-es	Administración
+advanced search	common	es-es	Búsqueda avanzada
 afghanistan	common	es-es	AFGHANISTAN
 albania	common	es-es	ALBANIA
 algeria	common	es-es	ARGELIA
+align	common	es-es	Alinear
+alignment of label and input-field in table-cell	common	es-es	posición de la etiqueta y campo de entrada en la celda de la tabla
+alignment of the v/hbox containing table-cell	common	es-es	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
 all	common	es-es	Todos
 all addressbooks	groupdav	es-es	Todas las libretas de direcciones
-all fields	common	es-es	todos los campos
+all categories	common	es-es	Todas las categorías
+all days	common	es-es	Todos los días
+all fields	common	es-es	Todos los campos
 all in one	groupdav	es-es	Todo en uno
-all languages	common	es-es	todos los idiomas
+all languages	common	es-es	Todos los idiomas
+all operations save the template!	common	es-es	¡Todas las operaciones guardan la plantilla!
+all users	common	es-es	Todos los usuarios
+allowed file type: %1	common	es-es	Tipo de fichero permitido: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	es-es	Permite modificar usuarios responsables de dispositivos que no los soportan, poniendo el correo electrónico de un usuario como categoría
 alphabet	common	es-es	a,b,c,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
 alt	common	es-es	Alt
 alternate style-sheet:	common	es-es	Hola de estilo alternativa:
+am	common	es-es	am
 american samoa	common	es-es	AMERICAN SAMOA
 an admin required that you must change your password upon login.	common	es-es	un administrador le ha solicitado que cambie su contraseña al iniciar la sesión.
 an error happened	common	es-es	Ha ocurrido un error
 an existing and by the webserver readable directory enables the image browser and upload.	common	es-es	Un directorio existente Y donde el servidor web pueda leer activa el navegar por imágenes, y también subirlas al servidor.
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	es-es	una columna indexada acelera las consultas que usen esa columna (a costa de espacio en el disco)
 and	common	es-es	y
 andorra	common	es-es	ANDORRA
 angola	common	es-es	ANGOLA
 anguilla	common	es-es	ANGUILLA
 antarctica	common	es-es	ANTARCTICA
 antigua and barbuda	common	es-es	ANTIGUA AND BARBUDA
+api	common	es-es	API de EGroupware
+api-accounts	common	es-es	Cuentas de usuario
 application	common	es-es	Aplicación
+application name needed to write a langfile or dump the etemplates !!!	common	es-es	Se necesita el nombre de la aplicación para escribir un fichero de idioma o volcar las plantillas
+applications	common	es-es	Aplicaciones
+applies the changes made	common	es-es	aplica los cambios realizados
+applies the changes to the given version of the template	common	es-es	aplica los cambios a la versión dada de la plantilla
 apply	common	es-es	Aplicar
 apply the action on the whole query, not only the shown entries	common	es-es	Aplicar la acción a toda la consulta, NO solo a las entradas mostradas
 april	common	es-es	Abril
@@ -75,6 +131,10 @@ are you sure you want to delete this entry ?	common	es-es	¿Está seguro de quer
 argentina	common	es-es	ARGENTINA
 armenia	common	es-es	ARMENIA
 aruba	common	es-es	ARUBA
+as default	common	es-es	como predeterminado
+attach	common	es-es	Adjuntar
+attach file	common	es-es	Adjuntar fichero
+attachment	common	es-es	Adjunto
 august	common	es-es	Agosto
 australia	common	es-es	AUSTRALIA
 austria	common	es-es	AUSTRIA
@@ -94,6 +154,7 @@ bahamas	common	es-es	BAHAMAS
 bahrain	common	es-es	BAHRAIN
 bangladesh	common	es-es	BANGLADESH
 barbados	common	es-es	BARBADOS
+baseline	common	es-es	Línea base
 bcc	common	es-es	Cco
 belarus	common	es-es	BELARUS
 belgium	common	es-es	BELGICA
@@ -102,15 +163,20 @@ benin	common	es-es	BENIN
 bermuda	common	es-es	BERMUDAS
 bhutan	common	es-es	BHUTAN
 blocked, too many attempts	common	es-es	Bloqueado, demasiados intentos
+blurtext	common	es-es	Texto poco claro
 bold	common	es-es	Negrita
 bolivia	common	es-es	BOLIVIA
 border	common	es-es	Borde
+border-line-thickness for the table-tag	common	es-es	Grosor de la línea del borde de la etiqueta de la tabla
 bosnia and herzegovina	common	es-es	BOSNIA AND HERZEGOVINA
 botswana	common	es-es	BOTSWANA
-bottom	common	es-es	Bottom
+bottom	common	es-es	Parte inferior
 bouvet island	common	es-es	BOUVET ISLAND
+box	common	es-es	Caja
+box...	common	es-es	Caja...
 brazil	common	es-es	BRASIL
 british indian ocean territory	common	es-es	BRITISH INDIAN OCEAN TERRITORY
+broken link	common	es-es	Enlace roto
 brunei darussalam	common	es-es	BRUNEI DARUSSALAM
 bulgaria	common	es-es	BULGARIA
 bulgarian	common	es-es	Búlgaro
@@ -118,14 +184,18 @@ burkina faso	common	es-es	BURKINA FASO
 burundi	common	es-es	BURUNDI
 calendar	common	es-es	Calendario
 calendars to sync in addition to personal calendar	groupdav	es-es	Calendarios a sincronizar además del calendario personal
-cambodia	common	es-es	CAMBODIA
-cameroon	common	es-es	Camerún
+cambodia	common	es-es	CAMBOYA
+cameroon	common	es-es	CAMERÚN
+can not have special sql-value null	common	es-es	no puede tener el valor especial de SQL NULL
 can't create directory %1 to connect found unconnected nodes to it!	admin	es-es	¡No se puede crear el directorio %1 para conectarle los nodos encontrados sin conectar!
-canada	common	es-es	Canadá
+canada	common	es-es	CANADÁ
 cancel	common	es-es	Cancelar
 cannot replace %1 because it is a directory	common	es-es	No se puede sustituir %1 porque es un directorio
 cannot set a category as parent, which is part of this categorys subtree!	common	es-es	¡No se puede establecar una categoría como superior que es parte del subárbol de la misma categoría!
 cannot set this cat as its own parent!	common	es-es	¡No se puede poner una categoría como superior de sí misma!
+cant delete a single widget from a grid !!!	common	es-es	¡No se puede borrar un único control de una rejilla!
+cant delete the only column of a grid !!!	common	es-es	¡No se puede borrar la única columna de una rejilla!
+cant delete the only row in a grid !!!	common	es-es	¡No se puede borrar la única fila de una rejilla!
 cant open %1, needs ziparchive	common	es-es	No se puede abrir %1, se necesita ZipArchive
 cant open '%1' for %2	common	es-es	No se puede abrir '%1' para '%2'
 cape verde	common	es-es	Cabo Verde
@@ -135,16 +205,26 @@ categories for	common	es-es	categorías para
 category	common	es-es	Categoría
 category %1 has been added !	common	es-es	¡Se ha añadido la categoría %1!
 category %1 has been updated !	common	es-es	¡Se ha actualizado la categoría %1!
+category tree	common	es-es	Arbol de categorías
 cayman islands	common	es-es	Islas Caimán
 cc	common	es-es	CC
+cellpadding for the table-tag	common	es-es	Distancia de la etiqueta de la tabla la celda
+cells	common	es-es	Celdas
+cellspacing for the table-tag	common	es-es	Espaciado en la celda para la etiqueta de la tabla
+center	common	es-es	Centrar
 centered	common	es-es	centrado
 central african republic	common	es-es	CENTRAL AFRICAN REPUBLIC
 chad	common	es-es	CHAD
 change	common	es-es	Cambiar
 change owner	common	es-es	Cambiar el propietario
+changed	common	es-es	Modificado
 charset	common	es-es	utf-8
+check all	common	es-es	Marcar todo
+check if content should only be displayed but not altered (the content is not send back then!)	common	es-es	marcar si desea mostrar el contenido sin modificar (el contenido no es devuelto)
+check if field has to be filled by user	common	es-es	marcar si el campo tiene que rellenarlo el usuario
 check installation	common	es-es	Comprobar la instalación
 check now	common	es-es	Comprobar ahora
+checkbox	common	es-es	Casilla
 chile	common	es-es	CHILE
 china	common	es-es	CHINA
 choose a background color	common	es-es	Elegir un color de fondo
@@ -152,66 +232,129 @@ choose a background color for the icons	common	es-es	Elegir un color de fondo pa
 choose a background image.	common	es-es	Elegir una image de fondo
 choose a background style.	common	es-es	Elegir un estilo para el fondo
 choose a text color for the icons	common	es-es	Elegir un color del texto para los iconos
+choose file...	common	es-es	Elija el archivo...
 choose the category	common	es-es	Elija la categoría
 choose the parent category	common	es-es	Elija la categoría superior
 choose time	common	es-es	Elegir hora
 chosen parent category no longer exists	common	es-es	La categoría superior elegida ya no existe
 christmas island	common	es-es	CHRISTMAS ISLAND
+class	common	es-es	Clase
+class, valign	common	es-es	clase, posición vertical
 clear	common	es-es	Limpiar
 clear form	common	es-es	Limpiar formulario
 clear window	common	es-es	Limpiar la ventana
 click	common	es-es	Al pulsar
+click here to attach the file	common	es-es	pulse aquí para adjuntar el fichero
+click here to create the link	common	es-es	pulse aquí para crear el enlace
 click here to resume your egroupware session.	common	es-es	Pulse aquí para continuar su sesión de EGroupware.
+click here to start the search	common	es-es	Pulse aquí para iniciar la búsqueda
+click here to upload the file	common	es-es	Pulse aquí para subir el fichero al servidor
 click or mouse over to show menus	common	es-es	Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima
 click or mouse over to show menus?	common	es-es	¿Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima?
 click this image on the navbar: %1	common	es-es	Pulse esta imagen en la barra de navegación: %1
+click to order after that criteria	common	es-es	pulse para ordenar después de ese criterio
+clickable path	common	es-es	ruta pulsable
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	es-es	Los clientes que no indiquen explícitamente un quedan limitados a esta cantidad de días. Un límite demasiado alto puede causar problemas con algunos clientes.
 close	common	es-es	Cerrar
 close sidebox	common	es-es	Cerrar caja lateral
+closes the window without saving the changes	common	es-es	cierra la ventana sin guardar los cambios
 cocos (keeling) islands	common	es-es	COCOS (KEELING) ISLANDS
 collection empty.	common	es-es	La colección está vacía
 collection listing	common	es-es	Listado de colecciones
 colombia	common	es-es	COLOMBIA
+column...	common	es-es	Columna...
+columnname	common	es-es	Nombre de la columna
+columns to print	common	es-es	Columnas a imprimir
+command ⌘	common	es-es	Comando ⌘
+comment	common	es-es	Comentario
 common preferences	common	es-es	Preferencias comunes
 comoros	common	es-es	COMOROS
 company	common	es-es	Compañía
+confirm	common	es-es	confirmar
+confirmation message or custom javascript (returning true or false)	common	es-es	mensaje de confirmación o javascript personalizado (devolviendo 'true' o 'false')
+confirmation necesary or custom java-script	common	es-es	confirmación necesaria o javascript personalizado
 confirmation required	common	es-es	Se necesita confirmación
 congo	common	es-es	CONGO
 congo, the democratic republic of the	common	es-es	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+contact	common	es-es	Contacto
+contact field to show	common	es-es	Campo del contacto a mostrar
+contact fields	common	es-es	Campos de contacto
 contacting server...	common	es-es	Conectando con el servidor...
+contains	common	es-es	contiene
 content type	common	es-es	Tipo de contenido
 cook islands	common	es-es	COOK ISLANDS
 copy	common	es-es	Copiar
+copy to clipboard	common	es-es	Copiar al portapapeles
 costa rica	common	es-es	COSTA RICA
 cote d ivoire	common	es-es	COSTA DE MARFIL
 could not contact server. operation timed out!	common	es-es	No se pudo conectar con el servidor. La operación superó el tiempo límite de espera
 create	common	es-es	Crear
+create a new table for the application	common	es-es	Crear una tabla nueva para la aplicación
+create link	common	es-es	Crear enlace
 created by	common	es-es	Creado por
+created by %1	common	es-es	Creado por %1
+creates an english ('en') langfile from label and helptexts (for application in name)	common	es-es	Crea un fichero de idioma en inglés ('en') a partir de la etiqueta y textos de ayuda (para la aplicación indicada en Nombre)
+creator	preferences	es-es	Creador
 croatia	common	es-es	CROACIA
+css class for the table-tag	common	es-es	clase CSS para la etiqueta de la tabla
+css properties	common	es-es	Propiedades CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	es-es	Nombre de la clase CSS para esta fila. Predefinidos: 'nmh' (NextMatch header), 'nmr' (Alternating NM row), 'nmr0'+'nmr1' filas NM
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	es-es	El nombre de la clase CSS para esta fila, preestablecido: 'th' = cabecera, 'row' = fila alternando filas 'row_off' y 'row_on'.
+css-styles	common	es-es	Estilos CSS
 ctrl	common	es-es	Ctrl
 cuba	common	es-es	CUBA
 currency	common	es-es	Cambio
 current	common	es-es	Actual
 current users	common	es-es	Usuarios actuales
+custom	common	es-es	personalizado
+custom fields	common	es-es	campos personalizados
+custom javascript for onchange	common	es-es	javascript personalizado para onChange
+cut	common	es-es	Cortar
 cyprus	common	es-es	CHIPRE
 czech republic	common	es-es	REPUBLICA CHECA
 database error	common	es-es	Error en la base de datos
 database error!	common	es-es	¡Error en la base de datos!
 date	common	es-es	Fecha
 date due	common	es-es	Fecha límite
+date+time	common	es-es	Fecha + hora
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-es	Puerto de fecha.<br>Si usa el puerto 13, por favor, configure adecuadamente las reglas del cortafuegos antes de enviar esta página.<br>
+day	common	es-es	Día
+days	common	es-es	días
+db ensures that every row has a unique value in that column	common	es-es	La base de datos se asegura de que cada fila tiene un valor único en esa columna
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	es-es	Opciones de índice específicas de la base de datos (separadas por comas), por ej. mysql(FULLTEXT) o mysql(100) para la longitud indexada de una columna
+db-tools	common	es-es	Herramientas de la base de datos
 december	common	es-es	Diciembre
+deck	common	es-es	Cubierta (interna)
+default	common	es-es	Predeterminado
 default category	common	es-es	Categoría predeterminada
 default height for the windows	common	es-es	Altura predeterminada para las ventanas
 default width for the windows	common	es-es	Ancho predeterminado para las ventanas
 del	common	es-es	Supr
 delete	common	es-es	Eliminar
-delete category	common	es-es	Borrar categoría
-delete file	common	es-es	Borrar fichero
-delete row	common	es-es	Eliminar una fila
+delete a single entry by passing the id.	common	es-es	Borrar una entrada simple pasando el id.
+delete all selected etemplates, without further inquiry	common	es-es	Borrar TODAS las plantillas seleccionadas, SIN preguntar
+delete and cut save the template!	common	es-es	¡borrar y cortar guardan la plantilla!
+delete backup	common	es-es	Suprimir copia de seguridad
+delete category	common	es-es	Suprimir categoría
+delete column	common	es-es	Suprimir columna
+delete file	common	es-es	Suprimir fichero
+delete index	common	es-es	Suprimir índice
+delete link	common	es-es	Suprimir enlace
+delete link?	common	es-es	¿Suprimir enlace?
+delete row	common	es-es	Suprimir fila
 delete selected entries?	common	es-es	¿Borrar las entradas seleccionadas?
+delete the spezified etemplate	common	es-es	Borrar la plantilla específica
 delete these entries	common	es-es	Borrar estas entradas
+delete this column	common	es-es	borrar esta columna
 delete this entry	common	es-es	eliminar esta entrada
+delete this etemplate	common	es-es	Borrar esta plantilla
+delete this file	common	es-es	Borrar este fichero
+delete this row	common	es-es	borrar esta fila
+delete whole column (can not be undone!!!)	common	es-es	Borra la columna completa (NO se puede deshacer)
+deletes the above spez. etemplate from the database, can not be undone	common	es-es	Borra la plantilla especificada de la base de datos. NO se puede deshacer.
+deletes the etemplate spez. above	common	es-es	Borra la plantilla especificada arriba
+deletes this column	common	es-es	Borra esta columna
+deletes this index	common	es-es	Borra este índice
 denmark	common	es-es	DINAMARCA
 description	common	es-es	Descripción
 detail	common	es-es	Detalle
@@ -225,14 +368,22 @@ disable slider effects	common	es-es	Desactivar efectos deslizantes
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	es-es	¿Desactivar los efectos deslizantes animados al mostrar u ocultar menús en la página? Los usuarios de Opera y Konqueror probablemente querrán esto.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-es	¿Desactivar la ejecución del parche para Internet Explorer 5.5 y superiores para mostrar transparencia en imágenes PNG?
 disabled	common	es-es	Deshabilitado
+discard changes	common	es-es	Descartar cambios
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	es-es	Se muestra delante de la entrada o la entrada se inserta para un '%s' en la etiqueta (la del botón de enviar o el nombre del fichero de la imagen)
+displayed in statusline of browser if input-field gets focus	common	es-es	Se muestra en la línea de estado del navegador cuando el cuadro de texto tiene el foco
+displayed in the top line of the groupbox (legend)	common	es-es	mostrada en la línea superior del recuadro de grupo (leyenda)
 distribution lists as groups	groupdav	es-es	Listas de distribución como grupos
 djibouti	common	es-es	DJIBOUTI
 do not notify	common	es-es	No notificar
 do not notify of these changes	common	es-es	No notificar estos cambios
 do you also want to delete all subcategories ?	common	es-es	¿Desea eliminar también todas las subcategorías?
+do you want to save the changes you made in table %s?	common	es-es	¿Desea guardar los cambios que ha realizado en la tabla %s?
 doctype:	common	es-es	DOCTYPE:
+document '%1' does not exist or is not readable for you!	preferences	es-es	El documento '%1' no existe o usted no tiene permiso para leerlo
 document properties	common	es-es	Propiedades del documento
 document title:	common	es-es	Título del documento
+documentation	common	es-es	Documentación
+doesn't matter	common	es-es	no importa
 domain	common	es-es	Dominio
 domain name for mail-address, eg. "%1"	common	es-es	Nombre del dominio para la dirección de correo, ej. "%1"
 domestic	common	es-es	Doméstico
@@ -241,6 +392,10 @@ dominican republic	common	es-es	REPUBLICA DOMINICANA
 done	common	es-es	Hecho
 dos international	common	es-es	DOS internacional
 download	common	es-es	Descargar
+drop a table - this can not be undone	common	es-es	Borrar una tabla - NO se puede deshacer
+drop table	common	es-es	Borrar tabla
+dump4setup	common	es-es	Volcar para instalación
+duration	common	es-es	Duración
 e-mail	common	es-es	Correo electrónico
 east timor	common	es-es	EAST TIMOR
 eastern european	common	es-es	Europeo del este
@@ -249,35 +404,74 @@ edit	common	es-es	Editar
 edit %1 category for	common	es-es	Editar %1 categoría para
 edit categories	common	es-es	Editar categorías
 edit category	common	es-es	Editar categoría
+edit embeded css styles or of the applications app.css file	common	es-es	editar estilos CSS incrustados o el fichero app.css de las aplicaciones
+edit the etemplate spez. above	common	es-es	editar las especificaciones de la plantilla indicada arriba
+edit...	common	es-es	Editar...
+editable templates - db-tools	common	es-es	Plantillas editables - Herramientas de la base de datos
+editable templates - delete template	common	es-es	Plantillas editables - Borrar plantilla
+editable templates - editor	common	es-es	Plantillas editables - Editor
+editable templates - search	common	es-es	Plantillas editables - Buscar
+editable templates - show template	common	es-es	Plantillas editables - Mostrar plantilla
 egroupware	common	es-es	EGroupware
 egroupware api version	common	es-es	Versión de la API EGroupware
 egroupware version	common	es-es	Versión de EGroupware
 egroupware: login blocked for user '%1', ip %2	common	es-es	EGroupware: inicio de sesión bloqueado para el usuario '%1', IP %2
 egypt	common	es-es	EGIPTO
 el salvador	common	es-es	EL SALVADOR
+element role title	common	es-es	Título del rol del elemento
 email	common	es-es	Correo electrónico
 email-address of the user, eg. "%1"	common	es-es	Dirección de correo electrónico del usuario, ej. '%1'
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	es-es	Estilos incrustados CSS, por ej. '.red { background: red; }' (ver el '.' delante del nombre de la clase) o '@import url(...)' (los nombres de las clases son globales para toda la página)
 empty file	common	es-es	Fichero vacío
+enable javascript onchange submit	common	es-es	activar enviar JavaScript onChange
 enable logging	groupdav	es-es	Activar registro
 enabled	common	es-es	Habilitado
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	es-es	Activa el registro de tráfico CalDAV/CardDAV para diagnosticar problemas con los dispositivos.
 end date	common	es-es	Fecha de finalización
 end time	common	es-es	Hora de finalización
+enter '' for an empty default, nothing mean no default	common	es-es	Introduzca '' para un valor predeterminado vacío. Si se deja en blanco, no hay valor predeterminado
+enter a search pattern	common	es-es	Introduzca un patrón de búsqueda
+enter filename to upload and attach, use [browse...] to search for it	common	es-es	Introduzca el nombre del fichero para subir y adjuntar. Use [Examinar...] Para buscarlo
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de EGroupware. <br>Ejemplo: http://www.dominio.com/egroupware   o   /egroupware<br><b>Sin barra al final</b>
+enter the new version number here (> old_version), empty for no update-file	common	es-es	Introduzca el nuevo número de versión aquí (mayor que versión anterior), vacío para no usar fichero de actualización
+enter the new version number here (has to be > old_version)	common	es-es	Introduzca el nuevo número de versión aquí (tiene que ser mayor que la versión anterior)
 entry has been deleted sucessfully	common	es-es	La entrada ha sido eliminada correctamente
 entry not found!	common	es-es	¡No se encontró la entrada!
+entry saved	common	es-es	La entrada ha sido guardada
 entry updated sucessfully	common	es-es	La entrada ha sido actualizada correctamente
 equatorial guinea	common	es-es	GUINEA ECUATORIAL
 eritrea	common	es-es	ERITREA
 error	common	es-es	Error
+error copying uploaded file to vfs!	common	es-es	¡Error al copiar el fichero subido al vfs!
+error create parent directory %1!	common	es-es	¡Error al crear el directorio superior %1!
 error creating %1 %2 directory	common	es-es	Error creando el directorio %1 %2
 error deleting %1 %2 directory	common	es-es	Error eliminando el directorio %1 %2
+error deleting %1!	common	es-es	¡Error al borrar %1!
 error renaming %1 %2 directory	common	es-es	Error renombrando el directorio %1 %2
+error uploading file!	filemanager	es-es	¡Error al subir el fichero!
+error: template not found !!!	common	es-es	Error: no se encontró la plantilla
+error: webserver is not allowed to write into '%1' !!!	common	es-es	Error: ¡El servidor no puede escribir en '%1'!
+error: while saving !!!	common	es-es	¡¡Error al guardar!!
+error: writing file (no write-permission for the webserver) !!!	common	es-es	Error: el servidor web no tiene permiso de escritura
 estonia	common	es-es	ESTONIA
 etag	common	es-es	ETag
+etemplate	common	es-es	Plantilla electrónica
+etemplate '%1' imported, use save to put it in the database	common	es-es	Se ha importado la plantilla electrónica '%1'. Use Guardar para ponerla en la base de datos
+etemplate '%1' written to '%2'	common	es-es	La plantilla electrónica '%1' se ha guardado en '%2'
+etemplate editor	common	es-es	Editor de plantillas electrónicas
+etemplate reference	common	es-es	Referencia de plantillas electrónicas
+etemplate tutorial	common	es-es	Tutorial de plantillas electrónicas
 ethiopia	common	es-es	ETIOPIA
 everything	common	es-es	Todo
 exact	common	es-es	exacto
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	es-es	Ejemplo {{nenvlf role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
+exchange this row with the one above	common	es-es	Intercambiar esta fila con la de encima
+exchange this two columns	common	es-es	Intercambiar estas dos columnas
+export the loaded etemplate into a xml-file	common	es-es	Exportar la plantilla cargada en un fichero xml
+export xml	common	es-es	Exportar XML
+extensions loaded:	common	es-es	Extensiones cargadas:
 failed to change mode of required directory "%1" to %2!	admin	es-es	¡Fallo al cambiar el modo del directorio requerido "%1" a "%2"!
 failed to change password.	common	es-es	Fallo al cambiar la contraseña.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	es-es	No se pudo conectar con el servidor, o se obtuvo una respuesta no válida. Intente volver a iniciar la sesión. Póngase en contacto con el administrador en caso de fallo.
@@ -290,24 +484,37 @@ favorites	common	es-es	Favoritos
 fax number	common	es-es	Fax
 features of the editor?	common	es-es	¿Características del editor?
 february	common	es-es	Febrero
+field	common	es-es	Campo
+field must not be empty !!!	common	es-es	¡¡¡El campo no debe estar vacío!!!
 fields	common	es-es	Campos
 fiji	common	es-es	FIJI
+file	common	es-es	Fichero
 file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	es-es	El fichero %1 no tiene contenido en el filesystem físico %2 -> ¡Fallo al renombrar el fichero!
 file %1 has no content in physical filesystem %2 --> file removed!	admin	es-es	El fichero %1 no tiene contenidos en el filesystem físico %2 ¡Se ha eliminado el fichero!
 file %1 has no content in physical filesystem %2!	admin	es-es	¡El fichero %1 no tiene contenidos en el filesystem físico %2!
+file '%1' not found!	common	es-es	¡No se ha encontrado el fichero '%1'!
+file contains more than one etemplate, last one is shown !!!	common	es-es	El fichero contiene más de una plantilla. Sólo se mostrará la última.
+file is of wrong type (%1 != %2)!	common	es-es	El fichero es de un tipo incorrecto (%1 != %2)
+file writen	common	es-es	Fichero guardado
 files	common	es-es	Ficheros:
 files without content in physical filesystem will be removed.	admin	es-es	Los ficheros sin contenido en el filesystem físico se eliminarán.
+fileupload	common	es-es	Subir fichero
 filter	common	es-es	Filtro
 finland	common	es-es	FINLANDIA
+first	common	es-es	Primero
 first name	common	es-es	Nombre de pila
 first name of the user, eg. "%1"	common	es-es	Nombre de pila del usuario, ej "%1"
 first page	common	es-es	Primera página
 firstname	common	es-es	Nombre de pila
 fixme!	common	es-es	¡Corríjame!
+floating point	common	es-es	Coma flotante
 folder already exists.	common	es-es	La carpeta ya existe
 force selectbox	common	es-es	Forzar cuadro de selección
+foreign key	common	es-es	Clave ajena
 forever	common	es-es	Para siempre
+formatted text (html)	common	es-es	Texto con formato (HTML)
 found unconnected %1 %2!	admin	es-es	¡Se encontró desconexión %1 %2!
+fr	common	es-es	Fr
 france	common	es-es	FRANCIA
 french guiana	common	es-es	GUAYANA FRANCESA
 french polynesia	common	es-es	FRENCH POLYNESIA
@@ -318,6 +525,7 @@ fullname	common	es-es	Nombre completo
 fullscreen mode	common	es-es	Modo de pantalla completa
 gabon	common	es-es	GABON
 gambia	common	es-es	GAMBIA
+general fields:	preferences	es-es	Campos generales:
 general menu	common	es-es	Menú general
 georgia	common	es-es	GEORGIA
 german	common	es-es	Alemán
@@ -326,11 +534,18 @@ ghana	common	es-es	GHANA
 gibraltar	common	es-es	GIBRALTAR
 global	common	es-es	Global
 global public	common	es-es	Publico Global
+go to the first entry	common	es-es	Ir a la primera entrada
+go to the last entry	common	es-es	Ir a la última entrada
+go to the next page of entries	common	es-es	Ir a la página siguiente de entradas
+go to the previous page of entries	common	es-es	Ir a la página anterior de entradas
 grant access	common	es-es	Conceder acceso
 greece	common	es-es	GRECIA
 greek	common	es-es	Griego
 greenland	common	es-es	GREENLAND
 grenada	common	es-es	GRANADA
+grid	common	es-es	Rejilla
+grid column attributes	common	es-es	Atributos de la columna de la rejilla
+grid row attributes	common	es-es	Atributos de la fila de la rejilla
 group	common	es-es	Grupo
 group access	common	es-es	Acceso del grupo
 group has been added	common	es-es	El grupo se ha añadido
@@ -338,6 +553,7 @@ group has been deleted	common	es-es	El grupo se ha borrado
 group has been updated	common	es-es	El grupo ha sido actualizado
 group name	common	es-es	nombre del grupo
 group public	common	es-es	Grupo público
+groupbox	common	es-es	Recuadro de grupo
 groupdav	common	es-es	Servidor para CalDAV, CarDAV y GroupDAV
 groups	common	es-es	Grupos
 groups with permission for %1	common	es-es	Grupos con permiso para %1
@@ -348,34 +564,72 @@ guatemala	common	es-es	GUATEMALA
 guinea	common	es-es	GUINEA
 guinea-bissau	common	es-es	GUINEA-BISSAU
 guyana	common	es-es	GUYANA
+h	common	es-es	h
 haiti	common	es-es	HAITI
+hbox	common	es-es	Cuadro horizontal
 heard island and mcdonald islands	common	es-es	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	es-es	Altura
+height of row (in % or pixel)	common	es-es	altura de la fila (en % o pixels)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	es-es	Altura de la fila (en % o píxeles), desactivar fila: [!= no]<valor>[=<check>]. Ejemplo: '!@data' desactiva la fila si el contenido de los datos está vacío.
+height of the table in % or pixels for the table-tag and (optional) div	common	es-es	Altura de la tabla en % o píxeles para la etiqueta de la tabla y, opcionalmente, div.
+height, disabled	common	es-es	Altura, desactivada
 help	common	es-es	Ayuda
 high	common	es-es	Alta
 highest	common	es-es	La más alta
+history log	common	es-es	Registro histórico
 holy see (vatican city state)	common	es-es	HOLY SEE (VATICANO)
 home	common	es-es	Inicio
 home email	common	es-es	correo electrónico particular
 honduras	common	es-es	HONDURAS
 hong kong	common	es-es	HONG KONG
+horizontal rule	common	es-es	Línea horizontal
+hour	common	es-es	Hora (del día)
+hours	common	es-es	horas
+how many entries should the list show	common	es-es	¿Cuántas entradas se muestran en la lista?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	es-es	Cuántos iconos se muestran en la barra de navegación (en la parte superior de la página). Los iconos adicionales van en una especie de menú desplegable, que se activa pulsando en el icono que hay en el extremo derecho de la barra.
 how to show the general egroupware menu ?	common	es-es	¿Cómo mostrar el menú general de EGroupware?
+html	common	es-es	Html
+html link to the current record	common	es-es	Enlace HTML al registro actual
 hungary	common	es-es	HUNGRÍA
 iceland	common	es-es	ISLANDIA
+id	common	es-es	Id
 iespell not detected. click ok to go to download page.	common	es-es	No se detectó ieSpell. Pulse Aceptar para ir a la página de descargas.
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	es-es	Si el campo está desactivado, se muestra la celda de la tabla vacía, para borrar temporalmente un campo o celda.
 if the clock is enabled would you like it to update it every second or every minute?	common	es-es	Si el reloj está activado, ¿desea actualizarlo cada segundo o cada minuto?
 if there are some images in the background folder you can choose the one you would like to see.	common	es-es	Si hay algunas imágenes en la carpeta de fondo, puede elegir la que desea ver.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
+image	common	es-es	Imagen
 image directory relative to document root (use / !), example:	common	es-es	Directorio de imágenes relativo a la raíz de los documentos (use / !). Ejemplo:
 image url	common	es-es	URL de la imagen
+import	common	es-es	Importar
+import an etemplate from a xml-file	common	es-es	Importar una plantilla de un fichero xml
+import table-definitions from existing db-table	common	es-es	Importar definiciones de tabla de una tabla de una base de datos existente
+import xml	common	es-es	Importar XML
+increment version to not overwrite the existing template	common	es-es	Incrementar la versión para no sobreescribir la plantilla existente
+index/name of returned content (name of the template, link / method for image)	common	es-es	Nombre o índice del nombre del contenido devuelto (nombre de la plantilla, enlace o método para una imagen)
+indexed	common	es-es	Indexado
+indexoptions	common	es-es	Opciones de indexar
 india	common	es-es	INDIA
 indonesia	common	es-es	INDONESIA
+insert a column before	common	es-es	insertar una columna delante
+insert a column behind	common	es-es	insertar una columna detrás
+insert a row above	common	es-es	insertar una fila encima
+insert a row below	common	es-es	insertar una fila debajo
+insert a widget before	common	es-es	insertar un control delante
+insert a widget behind	common	es-es	insertar un control detrás
 insert all %1 addresses of the %2 contacts in %3	common	es-es	Inserte todas las direcciones %1 de los contactos de %2 en %3
 insert column after	common	es-es	Insertar columna after
 insert column before	common	es-es	Insertar una columna before
+insert in document	common	es-es	Insertar en el documento
+insert new column behind this one	common	es-es	Insertar nueva columna detrás de ésta
+insert new column in front of all	common	es-es	Insertar nueva columna al principio de todas
+insert new row after this one	common	es-es	Insertar una nueva fila después de ésta
+insert new row in front of first line	common	es-es	Insertar una nueva fila delante de la primera línea
 insert row after	common	es-es	Insertar una fila despues
 insert row before	common	es-es	Insertar una fila antes
+integer	common	es-es	Entero
 international	common	es-es	Internacional
+introduction	common	es-es	Introducción
 invalid filename	common	es-es	El nombre de fichero no es válido
 invalid ip address	common	es-es	La dirección IP no es válida
 invalid password	common	es-es	La contraseña no es válida
@@ -401,6 +655,7 @@ justify left	common	es-es	Alinear a la izquierda
 justify right	common	es-es	Alinear a la derecha
 kazakstan	common	es-es	KAZAKSTAN
 kenya	common	es-es	KENIA
+key	common	es-es	Clave
 keywords	common	es-es	Palabras clave
 kiribati	common	es-es	KIRIBATI
 korea, democratic peoples republic of	common	es-es	COREA, DEMOCRATIC PEOPLES REPUBLIC OF
@@ -408,9 +663,14 @@ korea, republic of	common	es-es	COREA, REPUBLICA DE
 korean	common	es-es	Coreano
 kuwait	common	es-es	KUWAIT
 kyrgyzstan	common	es-es	KYRGYZSTAN
+label	common	es-es	Etiqueta
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	es-es	Etiqueta:[bold][italic] Texto:[len][,max] Números:[min][,[max][,len]] Área de texto:[rows][,cols] BotónRadio:valor Línea hor.:[width] Plantilla:[IndexInContent] Selec.:[multiselect] Fecha:[valores: ej. 'A-m-d']
+lang	common	es-es	Idioma
 language	common	es-es	Idioma
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	es-es	Abreviatura del idioma (ej. 'en' para inglés) para plantillas que dependen del idioma ('' lee las preferencias del idioma o el predeterminado. Use 'default' para la plantilla predeterminada.
 language_direction_rtl	common	es-es	Idioma de derecha a izquierda
 lao peoples democratic republic	common	es-es	LAO PEOPLES DEMOCRATIC REPUBLIC
+last	common	es-es	Última
 last modified	common	es-es	Última modificación
 last name	common	es-es	Apellido
 last name of the user, eg. "%1"	common	es-es	Apellido del usuario, p.ej. "%1"
@@ -420,6 +680,7 @@ latvia	common	es-es	LATVIA
 ldap-mgr	common	es-es	Administrador LDAP
 lebanon	common	es-es	LIBANO
 left	common	es-es	Izquierda
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	es-es	longitud para char+varchar. Precisiones int: 2, 4, y float: 4, 8
 lesotho	common	es-es	LESOTHO
 liberia	common	es-es	LIBERIA
 libyan arab jamahiriya	common	es-es	LIBYAN ARAB JAMAHIRIYA
@@ -427,10 +688,21 @@ license	common	es-es	Licencia
 liechtenstein	common	es-es	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'<br><b>los datos csv contienen ##last-check-run## de la tabla %3 ==> ignorado</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'<br><b>los datos csv no coinciden con el número de columnas de la tabla %3 ==> ignorado</b>
+link	common	es-es	Enlace
+link target %1 not found!	common	es-es	¡No se ha encontrado el enlace de destino %1!
+linkapps	common	es-es	Enlace a aplicaciones
+linkentry	common	es-es	Entrada de enlace
+linklist	common	es-es	Lista de enlaces
+links and attached files	preferences	es-es	Enlaces y ficheros adjuntos
+linkstring	common	es-es	Cadena de enlace
+linkto	common	es-es	Enlace a
 list	common	es-es	Lista
 list members	common	es-es	Lista de miembros
+list of files linked to the current record	preferences	es-es	Lista de ficheros vinculados al registro actual
 lithuania	common	es-es	LITUANIA
 load	common	es-es	Cargar
+load this template into the editor	common	es-es	cargar esta plantilla en el editor
+loading	common	es-es	cargando
 local	common	es-es	Local
 locations	common	es-es	ubicaciones
 login	common	es-es	Entrar
@@ -459,51 +731,83 @@ martinique	common	es-es	MARTINICA
 mauritania	common	es-es	MAURITANIA
 mauritius	common	es-es	MAURICIO
 max number of icons in navbar	common	es-es	Número máximo de iconos en la barra de navegación
+maximum size for uploads	filemanager	es-es	Tamaño máximo para subida de ficheros
 may	common	es-es	Mayo
+maybe	common	es-es	Tal vez
 mayotte	common	es-es	MAYOTTE
 medium	common	es-es	Medio
 menu	common	es-es	Menú
 message	common	es-es	Mensaje
+message ...	common	es-es	Mensaje...
 mexico	common	es-es	MEXICO
 micronesia, federated states of	common	es-es	MICRONESIA, FEDERATED STATES OF
-minute	common	es-es	minuto
+middle	common	es-es	Medio
+minute	common	es-es	Minuto
+minutes	common	es-es	MInutos
+modifier	preferences	es-es	Modificador
 moldova, republic of	common	es-es	MOLDOVA, REPUBLIC OF
 monaco	common	es-es	MONACO
 monday	common	es-es	Lunes
 mongolia	common	es-es	MONGOLIA
 montenegro	common	es-es	Montenegro
+month	common	es-es	Mes
 montserrat	common	es-es	MONTSERRAT
+more	common	es-es	Más
+more than 1 match for '%1'	common	es-es	Más de 1 coincidencia para '%1'
 morocco	common	es-es	MARRUECOS
 mozambique	common	es-es	MOZAMBIQUE
+multicolumn indices	common	es-es	Indices multicolumna
 multiple	common	es-es	múltiple
 myanmar	common	es-es	MYANMAR
 name	common	es-es	Nombre
+name of other table where column is a key from	common	es-es	Nombre de la otra tabla donde la columna es una clave
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	es-es	nombre del conjunto de plantillas (p. ej. verdiak): " = predeterminada (leerá la plantila de preferencias. Use 'default' para leer la plantilla predeterminada ")
+name of table to add	common	es-es	Nombre de la tabla a añadir
+name of the etemplate, should be in form application.function[.subtemplate]	common	es-es	Nombre de la plantilla. Debe estar en el formato aplicación.función[.subplantilla]
 name of the user, eg. "%1"	common	es-es	Nombre del usuario, p.ej. "%1"
 namespace	common	es-es	Espacio de nombres
 namibia	common	es-es	NAMIBIA
 nauru	common	es-es	NAURU
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	es-es	Necesita ser única en la tabla y no ser palabra reservada SQL. Intente poner un prefijo común de dos caracteres para la aplicación, por ejemplo 'et_'
 nepal	common	es-es	NEPAL
 netherlands	common	es-es	HOLANDA
 netherlands antilles	common	es-es	ANTILLAS HOLANDESAS
 never	common	es-es	Nunca
+new	common	es-es	Nuevo
 new caledonia	common	es-es	NUEVA CALEDONIA
 new entry added sucessfully	common	es-es	La nueva entrada se ha añadido correctamente
+new favorite	common	es-es	Nuevo favorito
 new main category	common	es-es	Nueva categoría principal
+new search	common	es-es	Nueva búsqueda
+new table created	common	es-es	Se ha creado una tabla nueva
 new value	common	es-es	Nuevo valor
 new zealand	common	es-es	NUEVA ZELANDA
+newer version '%1' exists !!!	common	es-es	¡Existe una versión '%1' más reciente!
 next	common	es-es	Siguiente
 next page	common	es-es	Página siguiente
+nextmatch	common	es-es	Control 'Nextmach' (Siguiente coincidencia)
+nextmatch accountfilter	common	es-es	Nextmatch con filtro de cuentas
+nextmatch custom filterheader	common	es-es	Filtro de cabecera personalizado para nextmatch
+nextmatch filterheader	common	es-es	Nextmatch con filtro de cabeceras
+nextmatch header	common	es-es	Encabezado de control Nextmatch
+nextmatch sortheader	common	es-es	Cabecera de orden de siguiente coincidencia
 nicaragua	common	es-es	NICARAGUA
 niger	common	es-es	NIGER
 nigeria	common	es-es	NIGERIA
 niue	common	es-es	NIUE
 no	common	es-es	No
 no - cancel	common	es-es	No - Cancelar
+no column to swap with !!!	common	es-es	¡No hay columna con la que intercambiar!
 no entries found, try again ...	common	es-es	No se encontraron entradas, inténtelo de nuevo
+no file	common	es-es	sin fichero
+no filename given or selected via browse...	common	es-es	no se indicó un nombre de fichero ni se seleccióno mediante Examinar...
 no history for this record	common	es-es	No hay historial para este registro
+no matches found	common	es-es	No se han encontrado resultados
+no row to swap with !!!	common	es-es	¡No hay fila con la que intercambiar!
 no savant2 template directories were found in:	common	es-es	No se encontraron directorios para plantillas Savant2 en:
 no subject	common	es-es	Sin asunto
 none	common	es-es	Ninguno
+none of %1	common	es-es	Ninguno de %1
 norfolk island	common	es-es	NORFOLK ISLAND
 normal	common	es-es	Normal
 northern mariana islands	common	es-es	NORTHERN MARIANA ISLANDS
@@ -511,19 +815,32 @@ norway	common	es-es	NORUEGA
 not	common	es-es	no
 not a user yet? register now	common	es-es	¿Todavía no es usuario? Regístrese ahora
 not assigned	common	es-es	sin asignar
+not null	common	es-es	NOT NULL
 not readable %1 entry of user %2	common	es-es	No se puede leer la entrada %1 del usuario %2
 note	common	es-es	Nota
 notes	common	es-es	Notas
+nothing	common	es-es	nada
+nothing found - try again !!!	common	es-es	No se encontró nada. Inténtelo de nuevo.
+nothing in clipboard to paste !!!	common	es-es	¡¡No hay nada en el portapapeles para pegar!!
+nothing matched search criteria !!!	common	es-es	No se encontró nada con ese criterio.
 notifications	common	es-es	notificaciones
 notify window	common	es-es	Ventana de notificación
 notify your administrator to correct this situation	common	es-es	Notifíquelo a su administrador para corregir esta situación
 november	common	es-es	Noviembre
+now	common	es-es	Ahora
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	es-es	número de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	es-es	número de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
+numbers	common	es-es	números
 october	common	es-es	Octubre
+of	common	es-es	de
 ok	common	es-es	Aceptar
 old value	common	es-es	Valor anterior
 oman	common	es-es	OMAN
 on *nix systems please type: %1	common	es-es	En sistemas *nix, por favor, escriba: %1
 on mouse over	common	es-es	Al mover el ratón por encima
+onchange	common	es-es	onChange
+onclick	common	es-es	onClick
+only an other version found !!!	common	es-es	sólo se encontró otra versión
 only private	common	es-es	sólo los privados
 only yours	common	es-es	sólo los suyos
 oops! you caught us in the middle of system maintainance.	common	es-es	¡Ups! Nos ha pillado en mitad del mantenimiento del sistema
@@ -531,12 +848,19 @@ open	common	es-es	Abrir
 open notify window	common	es-es	Abrir ventana de notificación
 open popup window	common	es-es	Abrir ventana emergente
 open sidebox	common	es-es	Abrir caja lateral
+open the online help.	common	es-es	Abrir la ayuda en línea
+operator	common	es-es	Operador
+optional note about the link	common	es-es	nota opcional sobre el enlace
+options	common	es-es	Opciones
 or	common	es-es	o
+order to navigating by tab key through the form	common	es-es	Orden al ir navegando pulsando el tabulador en el formulario
 ordered list	common	es-es	Lista ordenada
 original	common	es-es	Original
 other	common	es-es	Otros
+overflow	common	es-es	Desbordamiento
 overview	common	es-es	Resumen
 owner	common	es-es	Propietario
+padding	common	es-es	Distancia del texto a la celda
 page	common	es-es	Página
 page was generated in %1 seconds	common	es-es	La página se generó en %1 segundos
 pakistan	common	es-es	PAKISTAN
@@ -547,6 +871,7 @@ papua new guinea	common	es-es	PAPUA NEW GUINEA
 paraguay	common	es-es	PARAGUAY
 parcel	common	es-es	Paquete
 parent category	common	es-es	Categoría superior
+parent is a '%1' !!!	common	es-es	superior es un '%1'
 password	common	es-es	Contraseña
 password could not be changed	common	es-es	No se pudo cambiar la contraseña
 password has been updated	common	es-es	Su contraseña ha sido actualizada
@@ -555,6 +880,8 @@ password must contain at least %1 numbers	common	es-es	La contraseña debe conte
 password must contain at least %1 special characters	common	es-es	La contraseña debe contener al menos %1 caracteres especiales
 password must contain at least %1 uppercase letters	common	es-es	La contraseña debe contener al menos %1 letras mayúsculas
 password must have at least %1 characters	common	es-es	La contraseña debe tener al menos %1 caracteres
+paste	common	es-es	Pegar
+path	common	es-es	Ruta
 path to user and group files has to be outside of the webservers document-root!!!	common	es-es	¡¡La ruta a los ficheros de usuario y grupos DEBE ESTAR FUERA de la raíz de los documentos del servidor web!!
 permission denied!	common	es-es	¡Permiso denegado!
 permissions to the files/users directory	common	es-es	permisos a los directorios de archivos/usuarios
@@ -563,25 +890,30 @@ personal	common	es-es	Personal
 peru	common	es-es	PERU
 philippines	common	es-es	FILIPINAS
 phone number	common	es-es	Número de teléfono
-api	common	es-es	API de EGroupware
 pitcairn	common	es-es	PITCAIRN
 please %1 by hand	common	es-es	Por favor %1 manualmente
 please enter a name	common	es-es	Por favor, introduzca un nombre
+please enter table-name first !!!	common	es-es	Por favor, introduzca el nombre de la tabla primero
 please run setup to become current	common	es-es	Por favor ejecute la instalación para actualizar
 please select	common	es-es	Por favor, seleccione
 please set your global preferences	common	es-es	Por favor, ponga sus preferencias globales
 please set your preferences for this application	common	es-es	Por favor, elija sus preferencias para esta aplicación
 please wait...	common	es-es	Por favor, espere...
 please, check back with us shortly.	common	es-es	Por favor, vuelva a comprobar dentro de un rato.
+pm	common	es-es	pm
 poland	common	es-es	POLONIA
+popup	common	es-es	Ventama emergente
 popup with search	common	es-es	Ventana emergente con búsqueda
 portugal	common	es-es	PORTUGAL
 postal	common	es-es	Postal
 powered by	common	es-es	Proporcionado por
+precision	common	es-es	Precisión
 preferences	common	es-es	Preferencias
 preferences for the %1 template set	preferences	es-es	Se han establecido las preferencias para la plantilla %1
 previous page	common	es-es	Página anterior
 primary group	common	es-es	Grupo principal
+primary key	common	es-es	Clave primaria
+primary key for the table, gets automaticaly indexed	common	es-es	Clave primaria para la tabla, se indexa automáticamente
 primary style-sheet:	common	es-es	Hoja de estilo principal:
 print	common	es-es	Imprimir
 priority	common	es-es	Prioridad
@@ -592,27 +924,39 @@ properties	common	es-es	Propiedades
 public	common	es-es	público
 puerto rico	common	es-es	PUERTO RICO
 qatar	common	es-es	QATAR
+radiobutton	common	es-es	Botón tipo radio
 read	common	es-es	Leer
+read a list of entries.	common	es-es	Leer una lista de entradas
+read a single entry by passing the id and fieldlist.	common	es-es	Leer una sola entrada pasando el id y la lista de campos
+read etemplate from database (for the keys above)	common	es-es	leer plantilla de la base de datos (para las claves de arriba)
 read this list of methods.	common	es-es	Leer esta lista de métodos
 reading	common	es-es	leyendo
+readonly	common	es-es	sólo lectura
+refresh	common	es-es	Refrescar
 register	common	es-es	Registrar
 regular	common	es-es	Regular
 reject	common	es-es	Rechazar
 remember me	common	es-es	Recordarme
+remove row (can not be undone!!!)	common	es-es	Eliminar fila (¡NO se puede deshacer!)
 remove selected accounts	common	es-es	borrar las cuentas seleccionadas
 remove shortcut	common	es-es	Eliminar acceso directo
+remove this link (not the entry itself)	common	es-es	Borrar este enlace (no la entrada en sí)
 rename	common	es-es	Renombrar
 replace	common	es-es	Sustituir
 replace with	common	es-es	Sustituir por
+required	common	es-es	Requerido
+reset	common	es-es	Restablecer
 resource type	common	es-es	Tipo de recurso
 resources	common	es-es	Recursos
 restore failed	common	es-es	Fallo al restaurar
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	es-es	Devuelve una lista completa de las cuentas del sistema. Aviso: puede ser bastante largo
 returns an array of todo items	common	es-es	Devuelve un array de elementos pendientes
+returns savely, without deleting	common	es-es	Vuelve de forma segura, SIN borrar
 returns struct of users application access	common	es-es	Devuelve la estructura del acceso de los usuarios a la aplicación
 reunion	common	es-es	REUNION
 right	common	es-es	Derecha
 romania	common	es-es	RUMANIA
+row...	common	es-es	Fila...
 russian	common	es-es	Ruso
 russian federation	common	es-es	FEDERACION RUSA
 rwanda	common	es-es	RUANDA
@@ -628,27 +972,70 @@ saturday	common	es-es	Sábado
 saudi arabia	common	es-es	ARABIA SAUDI
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	es-es	La versión de Savant2 difiere del wrapper Savant2. <br/>Esta versión: %1 <br>Versión de Savant: %2
 save	common	es-es	Grabar
+save all	common	es-es	Guardar todo
 save as	common	es-es	Guardar como
+save selected columns as default preference for all users.	common	es-es	Guardar las columnas seleccionadas como preferencia predeterminada para todos los usuarios.
+save the changes made and close the window	common	es-es	Guardar los cambios realizados y cerrar la ventana
+save the etemplate under the above keys (name, ...), change them for a saveas	common	es-es	Guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
+saves changes to tables_current.inc.php	common	es-es	Guarda los cambios en el fichero tables_current.inc.php
+saves the template with given version number and closes the window	common	es-es	Guarda la plantilla con el número de versión indicado y cierra la ventana
+scale	common	es-es	Escala
+scale for float	common	es-es	escala para flotante
 search	common	es-es	Buscar
 search %1 '%2'	common	es-es	Buscar %1 '%2'
 search accounts	common	es-es	Buscar cuentas
+search for '%1'	common	es-es	Buscar '%1'
 search or select accounts	common	es-es	buscar o seleccionar cuentas
 second	common	es-es	segundo
 section	common	es-es	Sección
 select	common	es-es	Seleccionar
+select a category	common	es-es	seleccionar una categoría
+select a primary contact, to show in the list	common	es-es	Seleccionar un contacto primario, para mostrar en la lista
+select access	common	es-es	Seleccionar acceso
+select account	common	es-es	Seleccionar cuenta
 select action	common	es-es	Seleccionar acción
 select all	common	es-es	Seleccionar todo
 select all %1 %2 for %3	common	es-es	Seleccionar todos los %1 %2 para %3
+select an app first !!!	common	es-es	Seleccione una aplicación primero
+select an app to search in	common	es-es	Seleccionar una aplicación en la que buscar
+select an application	common	es-es	Seleccionar una aplicación
+select an application, (*) = uninstalled	common	es-es	Seleccionar una aplicación. (*) = sin instalar
+select an entry to link with	common	es-es	Seleccionar una entrada para enlazar
+select an table of the application	common	es-es	Seleccione una tabla de la aplicación
+select application	common	es-es	Seleccionar aplicación
+select application to search	common	es-es	Seleccionar aplicación para buscar
 select category	common	es-es	Seleccionar categoría
+select columns	common	es-es	Seleccionar columnas
+select country	common	es-es	Seleccionar país
 select date	common	es-es	Seleccionar fecha
+select day	common	es-es	Seleccionar día
+select day of week	common	es-es	Seleccionar día de la semana
+select entry	common	es-es	Seleccionar entrada
+select file(s) from vfs	common	es-es	Seleccionar ficheros desde VFS
 select group	common	es-es	Seleccionar grupo
 select home email address	common	es-es	Seleccionar dirección de correo inicial
+select hour	common	es-es	Seleccionar hora del día
+select if content of field should not be translated (label gets always translated)	common	es-es	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
+select language	common	es-es	Seleccionar idioma
+select month	common	es-es	Seleccionar mes
 select multiple accounts	common	es-es	seleccionar múltiples cuentas
+select number	common	es-es	Seleccionar número
 select one	common	es-es	Seleccionar uno
+select one ...	common	es-es	Seleccionar uno...
+select percentage	common	es-es	Seleccionar porcentaje
+select priority	common	es-es	Seleccionar prioridad
+select state	common	es-es	Seleccionar estado
+select the columns to display in the list	common	es-es	Seleccionar columnas a mostrar en la lista
 select the default height for the application windows	common	es-es	Seleccione la altura predeterminada para las ventanas de la aplicación
 select the default width for the application windows	common	es-es	Seleccione el ancho predeterminado para las ventanas de la aplicación
+select the indexed columns in their desired order	common	es-es	Seleccionar las columnas indexadas en su orden deseado
+select this etemplate to delete it	common	es-es	Seleccionar esta plantilla para borrarla
 select user	common	es-es	Seleccionar usuario
+select which accounts to show	common	es-es	seleccionar las cuentas a mostrar
+select which values to show	common	es-es	Seleccionar qué valores mostrar
 select work email address	common	es-es	Seleccionar dirección de correo del trabajo
+select year	common	es-es	Seleccionar año
+selectbox	common	es-es	Cuadro de selección
 selection	common	es-es	Selección
 send	common	es-es	Enviar
 senegal	common	es-es	SENEGAL
@@ -659,10 +1046,16 @@ server answered. processing response...	common	es-es	El servidor ha respondido. 
 server contacted. waiting for response...	common	es-es	Se ha conectado con el servidor. Esperando la respuesta...
 server name	common	es-es	Nombre del servidor
 session has been killed	common	es-es	La sesión ha sido eliminada
+set as default	common	es-es	Establecer como predeterminado
+sets today as date	common	es-es	pone hoy como fecha
 setup	common	es-es	Instalación
 setup main menu	common	es-es	Menú principal de instalación
 seychelles	common	es-es	SEYCHELLES
+should the form be submitted or any custom javascript be executed	common	es-es	Se debe enviar el formulario o ejecutar cualquier javascript personalizado
+show	common	es-es	Mostrar
+show (no save)	common	es-es	Mostrar (sin guardar)
 show all	common	es-es	mostrar todo
+show all / cancel filter	common	es-es	Mostrar todo / cancelar filtro
 show all categorys	common	es-es	Mostrar todas las categorías
 show as topmenu	common	es-es	Mostrar como menú superior
 show clock?	common	es-es	¿Mostrar el reloj?
@@ -674,9 +1067,13 @@ show page generation time	common	es-es	Mostrar el tiempo que tarda en generarse 
 show page generation time on the bottom of the page?	common	es-es	¿Mostrar el tiempo que tarda en generarse la página en la parte inferior de la página?
 show page generation time?	common	es-es	¿Mostrar el tiempo que tarda en generarse la página?
 show the logo's of egroupware and x-desktop on the desktop.	common	es-es	Mostrar el logo de EGroupware y x-desktop en el escritorio.
+show values	common	es-es	Mostar valores
 show_more_apps	common	es-es	mostrar más aplicaciones
+showing	common	es-es	mostrando
 showing %1	common	es-es	mostrando %1
 showing %1 - %2 of %3	common	es-es	mostrando %1 - %2 de %3
+shows / allows you to enter values into the etemplate for testing	common	es-es	muestra / permite introducir valores en la plantilla para probar
+shows/displays etemplate for testing, does not save it before	common	es-es	Muestra la plantilla para pruebas. NO la guarda antes
 sierra leone	common	es-es	SIERRA LEONA
 simple	common	es-es	Simple
 singapore	common	es-es	SINGAPUR
@@ -689,10 +1086,16 @@ somalia	common	es-es	SOMALIA
 sorry, your login has expired	login	es-es	Lo siento, su sesión ha expirado
 south africa	common	es-es	SUDAFRICA
 south georgia and the south sandwich islands	common	es-es	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spacing	common	es-es	Espaciado
 spain	common	es-es	ESPAÑA
+span	common	es-es	Span
+span, class	common	es-es	span, clase
 sri lanka	common	es-es	SRI LANKA
+stack	common	es-es	Pila
+start a new search, cancel this link	common	es-es	comienzar una nueva búsqueda, cancelar este enlace
 start date	common	es-es	Fecha de inicio
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	es-es	Directorio inicial para el navegador de imágenes del editor de texto enriquecido en EGroupware VFS (administrador de ficheros).
+start new search for the above pattern	common	es-es	comenzar una nueva búsqueda para el patrón de arriba
 start time	common	es-es	Hora de inicio
 start with	common	es-es	empieza por
 starting up...	common	es-es	Iniciando...
@@ -700,44 +1103,70 @@ status	common	es-es	Estado
 stretched	common	es-es	ajustado
 subject	common	es-es	Asunto
 submit	common	es-es	Enviar
+submit form	common	es-es	Enviar formulario
+submitbutton	common	es-es	Botón de enviar
 substitutions and their meanings:	common	es-es	Sustituciones y sus significados:
 sudan	common	es-es	SUDÁN
 sunday	common	es-es	Domingo
 suriname	common	es-es	SURINAM
 svalbard and jan mayen	common	es-es	SVALBARD AND JAN MAYEN
+swap	common	es-es	intercambiar
+swap widget with next one	common	es-es	intercambiar control con el siguiente
+swap with next column	common	es-es	intercambiar con la siguiente columna
+swap with next row	common	es-es	intercambiar con la fila siguiente
 swaziland	common	es-es	SWAZILAND
 sweden	common	es-es	SUECIA
+switch to a parent widget	common	es-es	Cambiar a un control superior
+switch to an other widgets of that container	common	es-es	Cambiar a otros controles de ese contenedor
 switzerland	common	es-es	SUIZA
 syrian arab republic	common	es-es	SYRIAN ARAB REPUBLIC
+tabindex	common	es-es	Índice de tabulación
 table %1 is excluded from backup and restore. data will not be restored.	common	es-es	La tabla %1 se ha excluido de la copia de seguridad y la restauración. Los datos no se restaurarán.
 table properties	common	es-es	Propiedades de la tabla
+table unchanged, no write necessary !!!	common	es-es	La tabla no se ha modificado, no es necesario guardarla
+tablename	common	es-es	Nombre de la tabla
+tabs	common	es-es	Pestañas
 taiwan	common	es-es	TAIWAN/TAIPEI
 tajikistan	common	es-es	TAJIKISTAN
 tanzania, united republic of	common	es-es	TANZANIA, UNITED REPUBLIC OF
+template	common	es-es	Plantilla
+template deleted	common	es-es	Plantilla borrada
+template saved	common	es-es	Plantilla guardada
+text	common	es-es	Texto
 text color:	common	es-es	Color del texto:
+textarea	common	es-es	Area de texto
 thailand	common	es-es	TAILANDIA
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
 the following applications require upgrades	common	es-es	Las siguientes aplicaciones requieren actualizaciones
+the following document-types are supported:	preferences	es-es	Los siguientes tipos de documentos están soportados:
 the mail server returned	common	es-es	El servidor de correo devolvió
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	es-es	Ya hay un usuario de sistema con este nombre. Los usuarios no deben tener el mismo nombre que un usuario de sistema.
 this name has been used already	common	es-es	¡Este nombre ya ha sido usado!
+this text gets displayed if the input-field is empty and has no focus (blur)	common	es-es	este texto se muestra si el campo de entrada está vacío y no tiene foco (borroso)
 thursday	common	es-es	Jueves
 tiled	common	es-es	mosaico
-time	common	es-es	Hora
+time	common	es-es	Hora (completa)
 time zone	common	es-es	Zona horaria
 time zone offset	common	es-es	Diferencia de zona horaria
 title	common	es-es	Título
+titles of any entries linked to the current record, excluding attached files	preferences	es-es	Títulos de cualquier entrada vinculada al registro actual, excluyendo los ficheros adjuntos
 to	common	es-es	Para
 to correct this error for the future you will need to properly set the	common	es-es	Para corregir este error para el futuro necesitará configurar adecuadamente el
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	es-es	para desactivar: [! = no]<valor>[=<comprobar>] p.ej: '!@data' desactiva si el contenido de 'data' está vacío
 to go back to the msg list, click <a href= %1 >here</a>	common	es-es	Psra volver a la lista de mensajes, pulse <a href="%1">aquí</a>
+to start the db-tools	common	es-es	para iniciar las Herramientas de la base de datos
+to start the etemplate editor	common	es-es	para iniciar el editor de plantillas
+to start the search	common	es-es	para iniciar la búsqueda
 today	common	es-es	Hoy
 todays date, eg. "%1"	common	es-es	fecha de hoy, p.ej. "%1"
 togo	common	es-es	TOGO
 tokelau	common	es-es	TOKELAU
 tonga	common	es-es	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	es-es	Demasiados intentos fallidos de inicio de sesión: %1 para el usuario '%2', %3 para la IP %4
-top	common	es-es	Top
+top	common	es-es	Superior
 total	common	es-es	Total
 transparant bg for the icons?	common	es-es	¿Fondo transparente para los iconos?
+tree	common	es-es	Arbol
 trinidad and tobago	common	es-es	TRINIDAD AND TOBAGO
 tuesday	common	es-es	Martes
 tunisia	common	es-es	TUNEZ
@@ -746,15 +1175,23 @@ turkmenistan	common	es-es	TURKMENISTAN
 turks and caicos islands	common	es-es	TURKS AND CAICOS ISLANDS
 tuvalu	common	es-es	TUVALU
 type	common	es-es	Tipo
+type of the column	common	es-es	tipo de la columna
+type of the field (select label if field should be empty)	common	es-es	tipo del campo (seleccionar la etiqueta si el campo tiene que estar vacío)
 uganda	common	es-es	UGANDA
 ukraine	common	es-es	UCRANIA
+uncheck all	common	es-es	Desmarcar todo
+undefined	common	es-es	indefinido
 underline	common	es-es	Subrayado
+unique	common	es-es	Único
 united arab emirates	common	es-es	EMIRATOS ARABES UNIDOS
 united kingdom	common	es-es	REINO UNIDO
 united states	common	es-es	ESTADOS UNIDOS
 united states minor outlying islands	common	es-es	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	es-es	Desconocido
+unlink	common	es-es	Desvincular
 update	common	es-es	Insertar
+update a single entry by passing the fields.	common	es-es	Actualizar una única entrada pasando los campos
+update from version '%s' to	common	es-es	Actualizar de la versión '%s' a
 update the clock per minute or per second	common	es-es	Actualizar el reloj por minuto o por segundo
 upload	common	es-es	Subir a un servidor
 upload directory does not exist, or is not writeable by webserver	common	es-es	El directorio para subir archivos no existe o no tiene permisos de escritura para el servidor web
@@ -767,43 +1204,68 @@ use button to search for calendarevent	common	es-es	use el botón para buscar po
 use button to search for project	common	es-es	use el botón para buscar por proyecto
 user	common	es-es	Usuario
 user accounts	common	es-es	Cuentas de usuario
-user groups	common	es-es	Grupos de usuario
+user groups	common	es-es	Grupos de usuarios
 username	common	es-es	Nombre de usuario
-users	common	es-es	usuarios
+users	common	es-es	Usuarios
 users choice	common	es-es	A elegir por el usuario
 uzbekistan	common	es-es	UZBEKISTAN
+valign	common	es-es	Alineación vertical
 value	common	es-es	Valor
+value has to be at least '%1' !!!	common	es-es	¡¡¡El valor tiene que ser al menos '%1'!!!
+value has to be at maximum '%1' !!!	common	es-es	¡¡¡El valor tiene que ser como máximo '%1'!!!
 vanuatu	common	es-es	VANUATU
+vbox	common	es-es	VBox
 venezuela	common	es-es	VENEZUELA
 version	common	es-es	Versión
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	es-es	número de la versión, en formato mayor.menor.revisión.número (por ej. 0.9.13.001, con todos los números rellenos con ceros)
+vertical alignment of row	common	es-es	alineación vertical de la fila
 vfs upload directory	common	es-es	Directorio de subida de ficheros VFS
 viet nam	common	es-es	VIETNAM
 view	common	es-es	Ver
+view this etemplate	common	es-es	ver esta plantilla
+view this linked entry in its application	common	es-es	ver esta entrada enlazada en su aplicación
 virgin islands, british	common	es-es	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	es-es	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	es-es	WALLIS AND FUTUNA
 wednesday	common	es-es	Miércoles
+weekend	common	es-es	fin de semana
 welcome	common	es-es	Página principal
 western european	common	es-es	Europeo occidental
 western sahara	common	es-es	SAHARA OCCIDENTAL
 what color should all the blank space on the desktop have	common	es-es	¿Qué color debe tener todo el espacio en blanco en el escritorio?
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	es-es	Qué hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, automático (decide el navegador)
 what style would you like the image to have?	common	es-es	¿Qué estilo desea que tenga la imagen?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	es-es	Si dice que sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra principal de aplicaciones.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	es-es	Dónde y cómo mostrar los enlaces de egroupware com las preferencias, acerca de y salir.
 which groups	common	es-es	Qué grupos
 whole query	common	es-es	la consulta completa
-width	common	es-es	Anchura
+widget copied into clipboard	common	es-es	control copiado en el portapapeles
+width	common	es-es	Ancho
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	es-es	ancho de la columna (en % o píxeles), desactivar columna: [!= no]<valor>[=<comprobar>] ej: '!@data' desactiva la columna si el contenido de los datos está vacío
+width of column (in % or pixel)	common	es-es	ancho de la columna (en % o pixel)
+width of the table in % or pixels for the table-tag and (optional) div	common	es-es	Ancho de la tabla en % o píxeles para la etiqueta y, opcionalmente, elemento div
+width, disabled	common	es-es	Ancho, desactivado
+wk	common	es-es	Semana
 work email	common	es-es	correo del trabajo
+working days	common	es-es	días laborales
 would you like to display the page generation time at the bottom of every window?	common	es-es	¿Desea mostrar el tiempo que tarda en generarse la página en la parte inferior de cada ventana?
+write <app>/setup/tables_current.inc.php	common	es-es	Escribir <app>/setup/tables_current.inc.php
+write langfile	common	es-es	Escribir fichero de idioma
+write tables	common	es-es	Escribir tablas
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	es-es	escribe un fichero 'etemplates.inc.php' (para la aplicación en Nombre) en el directorio de instalación de la aplicación
 writing	common	es-es	escribiendo
 written by:	common	es-es	Escrito por:
+xml-file to import	common	es-es	fichero xml a importar
+xslt template	common	es-es	Plantilla XSLT
 year	common	es-es	Año
 yemen	common	es-es	YEMEN
 yes	common	es-es	Sí
 yes - delete	common	es-es	Sí - Eliminar
 yes - delete including sub-entries	common	es-es	Sí - Eliminar incluso las subentradas
+you are not allowed to export more than %1 entries!	common	es-es	¡No se le permite exportar más de %1 entradas!
 you are required to change your password during your first login	common	es-es	Es necesario que cambie la contraseña durante su primer inicio de sesión.
 you can customize how many icons and toolbars the editor shows.	common	es-es	Puede personalizar el número de iconos y barras de herramientas que muestra el editor.
+you can respond by visiting:	common	es-es	Puede responder visitando:
 you have been successfully logged out	login	es-es	Usted ha salido correctamente
 you have not entered a title	common	es-es	No ha introducido un título
 you have not entered a valid date	common	es-es	No ha introducido una fecha válida
@@ -815,473 +1277,16 @@ you have successfully logged out	common	es-es	Ha terminado la sesión correctame
 you need to %1set your timezone preference%2.	common	es-es	Necesita %1 establecer su preferencia de zona horaria%2.
 you need to add the webserver user '%1' to the group '%2'.	common	es-es	Necesita añadir el usuario del servidor web '%1' al grupo '%2'.
 you need to be an egroupware administrator to access this functionality!	common	es-es	¡Necesita ser administrador de EGroupware para acceder a esta funcionalidad!
+you need to select a file first!	common	es-es	¡Necesita seleccionar un fichero antes!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	Ha intentado abrir la aplicación de EGroupware %1, pero no tiene permiso para acceder a esta aplicación.
 your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se pudo enviar<br>
 your message has been sent	common	es-es	Su mensaje ha sido enviado
+your password does not have required strength:	common	es-es	Su contraseña no tiene la fortaleza necesaria:
+your password failed the following criteria:	common	es-es	Su contraseña no cumplió los criterios siguientes:
+your password might not match the password policy.	common	es-es	Su contraseña puede que no cumpla con la política de contraseñas.
 your search returned %1 matchs	common	es-es	su búsqueda devolvió %1 resultados
 your search returned 1 match	common	es-es	su búsqueda devolvió 1 resultado
 your settings have been updated	common	es-es	Sus preferencias fueron actualizadas
 zambia	common	es-es	ZAMBIA
 zimbabwe	common	es-es	ZIMBAWE
 zoom	common	es-es	Escala
-search for '%1'	common	es-es	Buscar '%1'
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	es-es	%1 mensajes(%2 nuevos) escritos para la aplicación '%3' e idiomas '%4'
-%1 entries found, select one ...	common	es-es	Se han encontrado %1 entradas. Seleccione una...
-%1 etemplates deleted	common	es-es	%1 plantillas borradas
-%1 etemplates for application '%2' dumped to '%3'	common	es-es	%1 plantillas para la aplicación '%2' volcadas a '%3'
-%1 etemplates found	common	es-es	%1 plantillas encontradas
-%1 matches on search criteria	common	es-es	%1 coincidencias para la búsqueda solicitada
-%1 more...	common	es-es	%1 más...
-%1 new etemplates imported for application '%2'	common	es-es	%1 nuevas plantillas importadas para la aplicación '%2'
-%1 not implemented for %2!	common	es-es	%1 no está implementado para %2!
-%s disabled	common	es-es	%s desactivado
-%s needed	common	es-es	%s es necesario
-%s notranslation	common	es-es	%s sin traducción
-%s onchange	common	es-es	%s al cambiar
-%s readonly	common	es-es	%s de sólo lectura
-'%1' has an invalid format !!!	common	es-es	¡¡¡'%1' no tiene un formato válido!!!
-'%1' is no php file in the egw server root (%2)!	common	es-es	¡'%1' no es un fichero php en el directorio raíz de EGroupware (%2)!
-'%1' is not a valid date !!!	common	es-es	¡¡'%1'  no es una fecha válida!!
-'%1' is not a valid floatingpoint number !!!	common	es-es	¡¡¡'%1' no es un número válido de coma flotante!!!
-'%1' is not a valid integer !!!	common	es-es	¡¡¡'%1' no es un entero válido!!!
-'%1' is not allowed ('%2')!	common	es-es	¡'%1' NO está permitido ('%2')!
-a pattern to be searched for	common	es-es	un patrón de búsqueda
-accesskey	common	es-es	Tecla rápida
-accesskeys can also be specified with an & in the label (eg. &name)	common	es-es	Las teclas rápidas se pueden especificar también poniendo & en la etiqueta (p. ej. &Nombre)
-account contactdata	common	es-es	Datos de contacto de la cuenta
-actions...	common	es-es	Acciones...
-add a new column (after the existing ones)	common	es-es	Añadir una columna nueva (detrás de las existentes)
-add a new entry of the selected application	common	es-es	Añadir una entrada nueva de la aplicación seleccionada
-add a new multi-column index	common	es-es	Añadir un nuevo índice multicolumna
-add column	common	es-es	Añadir columna
-add index	common	es-es	Añadir índice
-add new	common	es-es	Añadir nueva
-add table	common	es-es	Añadir tabla
-add to clipboard	common	es-es	Añadir al portapapeles
-advanced search	common	es-es	Búsqueda avanzada
-align	common	es-es	Alinear
-alignment of label and input-field in table-cell	common	es-es	posición de la etiqueta y campo de entrada en la celda de la tabla
-alignment of the v/hbox containing table-cell	common	es-es	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
-all days	common	es-es	todos los días
-all operations save the template!	common	es-es	¡Todas las operaciones guardan la plantilla!
-all users	common	es-es	Todos los usuarios
-allowed file type: %1	common	es-es	Tipo de fichero permitido: %1
-am	common	es-es	am
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	es-es	una columna indexada acelera las consultas que usen esa columna (a costa de espacio en el disco)
-application	common	es-es	Aplicación
-application name needed to write a langfile or dump the etemplates !!!	common	es-es	Se necesita el nombre de la aplicación para escribir un fichero de idioma o volcar las plantillas
-applications	common	es-es	Aplicaciones
-applies the changes made	common	es-es	aplica los cambios realizados
-applies the changes to the given version of the template	common	es-es	aplica los cambios a la versión dada de la plantilla
-as default	common	es-es	como predeterminado
-attach	common	es-es	Adjuntar
-attach file	common	es-es	Adjuntar fichero
-baseline	common	es-es	Línea base
-blurtext	common	es-es	Texto poco claro
-border	common	es-es	Borde
-border-line-thickness for the table-tag	common	es-es	Grosor de la línea del borde de la etiqueta de la tabla
-bottom	common	es-es	Parte inferior
-box	common	es-es	Caja
-box...	common	es-es	Caja...
-can not have special sql-value null	common	es-es	no puede tener el valor especial de SQL NULL
-cancel	common	es-es	Cancelar
-cant delete a single widget from a grid !!!	common	es-es	¡No se puede borrar un único control de una rejilla!
-cant delete the only column of a grid !!!	common	es-es	¡No se puede borrar la única columna de una rejilla!
-cant delete the only row in a grid !!!	common	es-es	¡No se puede borrar la única fila de una rejilla!
-category	common	es-es	Categoría
-category tree	common	es-es	Arbol de categorías
-cellpadding for the table-tag	common	es-es	Distancia de la etiqueta de la tabla la celda
-cells	common	es-es	Celdas
-cellspacing for the table-tag	common	es-es	Espaciado en la celda para la etiqueta de la tabla
-center	common	es-es	Centrar
-changed	common	es-es	Modificado
-check all	common	es-es	Marcar todo
-check if content should only be displayed but not altered (the content is not send back then!)	common	es-es	marcar si desea mostrar el contenido sin modificar (el contenido no es devuelto)
-check if field has to be filled by user	common	es-es	marcar si el campo tiene que rellenarlo el usuario
-checkbox	common	es-es	Casilla
-class	common	es-es	Clase
-class, valign	common	es-es	clase, posición vertical
-click here to attach the file	common	es-es	pulse aquí para adjuntar el fichero
-click here to create the link	common	es-es	pulse aquí para crear el enlace
-click here to start the search	common	es-es	Pulse aquí para iniciar la búsqueda
-click here to upload the file	common	es-es	Pulse aquí para subir el fichero al servidor
-click to order after that criteria	common	es-es	pulse para ordenar después de ese criterio
-clickable path	common	es-es	ruta pulsable
-closes the window without saving the changes	common	es-es	cierra la ventana sin guardar los cambios
-column...	common	es-es	Columna...
-columnname	common	es-es	Nombre de la columna
-comment	common	es-es	Comentario
-confirm	common	es-es	confirmar
-confirmation message or custom javascript (returning true or false)	common	es-es	mensaje de confirmación o javascript personalizado (devolviendo 'true' o 'false')
-confirmation necesary or custom java-script	common	es-es	confirmación necesaria o javascript personalizado
-contact	common	es-es	Contacto
-contact field to show	common	es-es	Campo del contacto a mostrar
-contact fields	common	es-es	Campos de contacto
-contains	common	es-es	contiene
-copy to clipboard	common	es-es	Copiar al portapapeles
-create a new table for the application	common	es-es	Crear una tabla nueva para la aplicación
-creates an english ('en') langfile from label and helptexts (for application in name)	common	es-es	Crea un fichero de idioma en inglés ('en') a partir de la etiqueta y textos de ayuda (para la aplicación indicada en Nombre)
-creator	preferences	es-es	Creador
-css class for the table-tag	common	es-es	clase CSS para la etiqueta de la tabla
-css properties	common	es-es	Propiedades CSS
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	es-es	Nombre de la clase CSS para esta fila. Predefinidos: 'nmh' (NextMatch header), 'nmr' (Alternating NM row), 'nmr0'+'nmr1' filas NM
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	es-es	El nombre de la clase CSS para esta fila, preestablecido: 'th' = cabecera, 'row' = fila alternando filas 'row_off' y 'row_on'.
-css-styles	common	es-es	Estilos CSS
-custom	common	es-es	personalizado
-custom fields	common	es-es	campos personalizados
-custom javascript for onchange	common	es-es	javascript personalizado para onChange
-cut	common	es-es	Cortar
-date+time	common	es-es	Fecha + hora
-day	common	es-es	Día
-days	common	es-es	días
-db ensures that every row has a unique value in that column	common	es-es	La base de datos se asegura de que cada fila tiene un valor único en esa columna
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	es-es	Opciones de índice específicas de la base de datos (separadas por comas), por ej. mysql(FULLTEXT) o mysql(100) para la longitud indexada de una columna
-db-tools	common	es-es	Herramientas de la base de datos
-deck	common	es-es	Cubierta (interna)
-default	common	es-es	Predeterminado
-delete a single entry by passing the id.	common	es-es	Borrar una entrada simple pasando el id.
-delete all selected etemplates, without further inquiry	common	es-es	Borrar TODAS las plantillas seleccionadas, SIN preguntar
-delete and cut save the template!	common	es-es	¡borrar y cortar guardan la plantilla!
-delete column	common	es-es	Borrar columna
-delete index	common	es-es	Borrar índice
-delete the spezified etemplate	common	es-es	Borrar la plantilla específica
-delete this column	common	es-es	borrar esta columna
-delete this etemplate	common	es-es	Borrar esta plantilla
-delete this file	common	es-es	Borrar este fichero
-delete this row	common	es-es	borrar esta fila
-delete whole column (can not be undone!!!)	common	es-es	Borra la columna completa (NO se puede deshacer)
-deletes the above spez. etemplate from the database, can not be undone	common	es-es	Borra la plantilla especificada de la base de datos. NO se puede deshacer.
-deletes the etemplate spez. above	common	es-es	Borra la plantilla especificada arriba
-deletes this column	common	es-es	Borra esta columna
-deletes this index	common	es-es	Borra este índice
-discard changes	common	es-es	Descartar cambios
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	es-es	Se muestra delante de la entrada o la entrada se inserta para un '%s' en la etiqueta (la del botón de enviar o el nombre del fichero de la imagen)
-displayed in statusline of browser if input-field gets focus	common	es-es	Se muestra en la línea de estado del navegador cuando el cuadro de texto tiene el foco
-displayed in the top line of the groupbox (legend)	common	es-es	mostrada en la línea superior del recuadro de grupo (leyenda)
-do you want to save the changes you made in table %s?	common	es-es	¿Desea guardar los cambios que ha realizado en la tabla %s?
-document '%1' does not exist or is not readable for you!	preferences	es-es	El documento '%1' no existe o usted no tiene permiso para leerlo
-documentation	common	es-es	Documentación
-doesn't matter	common	es-es	no importa
-drop a table - this can not be undone	common	es-es	Borrar una tabla - NO se puede deshacer
-drop table	common	es-es	Borrar tabla
-dump4setup	common	es-es	Volcar para instalación
-duration	common	es-es	Duración
-edit	common	es-es	Editar
-edit embeded css styles or of the applications app.css file	common	es-es	editar estilos CSS incrustados o el fichero app.css de las aplicaciones
-edit the etemplate spez. above	common	es-es	editar las especificaciones de la plantilla indicada arriba
-edit...	common	es-es	Editar...
-editable templates - db-tools	common	es-es	Plantillas editables - Herramientas de la base de datos
-editable templates - delete template	common	es-es	Plantillas editables - Borrar plantilla
-editable templates - editor	common	es-es	Plantillas editables - Editor
-editable templates - search	common	es-es	Plantillas editables - Buscar
-editable templates - show template	common	es-es	Plantillas editables - Mostrar plantilla
-element role title	common	es-es	Título del rol del elemento
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	es-es	Estilos incrustados CSS, por ej. '.red { background: red; }' (ver el '.' delante del nombre de la clase) o '@import url(...)' (los nombres de las clases son globales para toda la página)
-enable javascript onchange submit	common	es-es	activar enviar JavaScript onChange
-enter '' for an empty default, nothing mean no default	common	es-es	Introduzca '' para un valor predeterminado vacío. Si se deja en blanco, no hay valor predeterminado
-enter a search pattern	common	es-es	Introduzca un patrón de búsqueda
-enter filename to upload and attach, use [browse...] to search for it	common	es-es	Introduzca el nombre del fichero para subir y adjuntar. Use [Examinar...] Para buscarlo
-enter the new version number here (> old_version), empty for no update-file	common	es-es	Introduzca el nuevo número de versión aquí (mayor que versión anterior), vacío para no usar fichero de actualización
-enter the new version number here (has to be > old_version)	common	es-es	Introduzca el nuevo número de versión aquí (tiene que ser mayor que la versión anterior)
-entry saved	common	es-es	La entrada ha sido guardada
-error copying uploaded file to vfs!	common	es-es	¡Error al copiar el fichero subido al vfs!
-error create parent directory %1!	common	es-es	¡Error al crear el directorio superior %1!
-error deleting %1!	common	es-es	¡Error al borrar %1!
-error uploading file!	filemanager	es-es	¡Error al subir el fichero!
-error: template not found !!!	common	es-es	Error: no se encontró la plantilla
-error: webserver is not allowed to write into '%1' !!!	common	es-es	Error: ¡El servidor no puede escribir en '%1'!
-error: while saving !!!	common	es-es	¡¡Error al guardar!!
-error: writing file (no write-permission for the webserver) !!!	common	es-es	Error: el servidor web no tiene permiso de escritura
-etemplate	common	es-es	Plantilla electrónica
-etemplate '%1' imported, use save to put it in the database	common	es-es	Se ha importado la plantilla electrónica '%1'. Use Guardar para ponerla en la base de datos
-etemplate '%1' written to '%2'	common	es-es	La plantilla electrónica '%1' se ha guardado en '%2'
-etemplate editor	common	es-es	Editor de plantillas electrónicas
-etemplate reference	common	es-es	Referencia de plantillas electrónicas
-etemplate tutorial	common	es-es	Tutorial de plantillas electrónicas
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
-example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	es-es	Ejemplo {{nenvlf role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
-exchange this row with the one above	common	es-es	Intercambiar esta fila con la de encima
-exchange this two columns	common	es-es	Intercambiar estas dos columnas
-export the loaded etemplate into a xml-file	common	es-es	Exportar la plantilla cargada en un fichero xml
-export xml	common	es-es	Exportar XML
-extensions loaded:	common	es-es	Extensiones cargadas:
-field	common	es-es	Campo
-field must not be empty !!!	common	es-es	¡¡¡El campo no debe estar vacío!!!
-file	common	es-es	Fichero
-file '%1' not found!	common	es-es	¡No se ha encontrado el fichero '%1'!
-file contains more than one etemplate, last one is shown !!!	common	es-es	El fichero contiene más de una plantilla. Sólo se mostrará la última.
-file is of wrong type (%1 != %2)!	common	es-es	El fichero es de un tipo incorrecto (%1 != %2)
-file writen	common	es-es	Fichero guardado
-fileupload	common	es-es	Subir fichero
-first	common	es-es	Primero
-floating point	common	es-es	Coma flotante
-foreign key	common	es-es	Clave ajena
-formatted text (html)	common	es-es	Texto con formato (HTML)
-general fields:	preferences	es-es	Campos generales:
-go to the first entry	common	es-es	Ir a la primera entrada
-go to the last entry	common	es-es	Ir a la última entrada
-go to the next page of entries	common	es-es	Ir a la página siguiente de entradas
-go to the previous page of entries	common	es-es	Ir a la página anterior de entradas
-grid	common	es-es	Rejilla
-grid column attributes	common	es-es	Atributos de la columna de la rejilla
-grid row attributes	common	es-es	Atributos de la fila de la rejilla
-groupbox	common	es-es	Recuadro de grupo
-h	common	es-es	h
-hbox	common	es-es	Cuadro horizontal
-height	common	es-es	Altura
-height of row (in % or pixel)	common	es-es	altura de la fila (en % o pixels)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	es-es	Altura de la fila (en % o píxeles), desactivar fila: [!= no]<valor>[=<check>]. Ejemplo: '!@data' desactiva la fila si el contenido de los datos está vacío.
-height of the table in % or pixels for the table-tag and (optional) div	common	es-es	Altura de la tabla en % o píxeles para la etiqueta de la tabla y, opcionalmente, div.
-height, disabled	common	es-es	Altura, desactivada
-help	common	es-es	Ayuda
-history log	common	es-es	Registro histórico
-horizontal rule	common	es-es	Línea horizontal
-hour	common	es-es	Hora (del día)
-hours	common	es-es	horas
-how many entries should the list show	common	es-es	¿Cuántas entradas se muestran en la lista?
-html	common	es-es	Html
-html link to the current record	common	es-es	Enlace HTML al registro actual
-id	common	es-es	Id
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	es-es	Si el campo está desactivado, se muestra la celda de la tabla vacía, para borrar temporalmente un campo o celda.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
-image	common	es-es	Imagen
-import	common	es-es	Importar
-import an etemplate from a xml-file	common	es-es	Importar una plantilla de un fichero xml
-import table-definitions from existing db-table	common	es-es	Importar definiciones de tabla de una tabla de una base de datos existente
-import xml	common	es-es	Importar XML
-increment version to not overwrite the existing template	common	es-es	Incrementar la versión para no sobreescribir la plantilla existente
-index/name of returned content (name of the template, link / method for image)	common	es-es	Nombre o índice del nombre del contenido devuelto (nombre de la plantilla, enlace o método para una imagen)
-indexed	common	es-es	Indexado
-indexoptions	common	es-es	Opciones de indexar
-insert a column before	common	es-es	insertar una columna delante
-insert a column behind	common	es-es	insertar una columna detrás
-insert a row above	common	es-es	insertar una fila encima
-insert a row below	common	es-es	insertar una fila debajo
-insert a widget before	common	es-es	insertar un control delante
-insert a widget behind	common	es-es	insertar un control detrás
-insert in document	common	es-es	Insertar en el documento
-insert new column behind this one	common	es-es	Insertar nueva columna detrás de ésta
-insert new column in front of all	common	es-es	Insertar nueva columna al principio de todas
-insert new row after this one	common	es-es	Insertar una nueva fila después de ésta
-insert new row in front of first line	common	es-es	Insertar una nueva fila delante de la primera línea
-integer	common	es-es	Entero
-key	common	es-es	Clave
-label	common	es-es	Etiqueta
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	es-es	Etiqueta:[bold][italic] Texto:[len][,max] Números:[min][,[max][,len]] Área de texto:[rows][,cols] BotónRadio:valor Línea hor.:[width] Plantilla:[IndexInContent] Selec.:[multiselect] Fecha:[valores: ej. 'A-m-d']
-lang	common	es-es	Idioma
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	es-es	Abreviatura del idioma (ej. 'en' para inglés) para plantillas que dependen del idioma ('' lee las preferencias del idioma o el predeterminado. Use 'default' para la plantilla predeterminada.
-last	common	es-es	Última
-left	common	es-es	Izquierda
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	es-es	longitud para char+varchar. Precisiones int: 2, 4, y float: 4, 8
-link	common	es-es	Enlace
-link target %1 not found!	common	es-es	¡No se ha encontrado el enlace de destino %1!
-linkapps	common	es-es	Enlace a aplicaciones
-linkentry	common	es-es	Entrada de enlace
-linklist	common	es-es	Lista de enlaces
-links and attached files	preferences	es-es	Enlaces y ficheros adjuntos
-linkstring	common	es-es	Cadena de enlace
-linkto	common	es-es	Enlace a
-list of files linked to the current record	preferences	es-es	Lista de ficheros vinculados al registro actual
-load this template into the editor	common	es-es	cargar esta plantilla en el editor
-loading	common	es-es	cargando
-maximum size for uploads	filemanager	es-es	Tamaño máximo para subida de ficheros
-message ...	common	es-es	Mensaje...
-middle	common	es-es	Medio
-minute	common	es-es	Minuto
-minutes	common	es-es	MInutos
-modifier	preferences	es-es	Modificador
-month	common	es-es	Mes
-more	common	es-es	Más
-more than 1 match for '%1'	common	es-es	Más de 1 coincidencia para '%1'
-multicolumn indices	common	es-es	Indices multicolumna
-name	common	es-es	Nombre
-name of other table where column is a key from	common	es-es	Nombre de la otra tabla donde la columna es una clave
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	es-es	nombre del conjunto de plantillas (p. ej. verdiak): " = predeterminada (leerá la plantila de preferencias. Use 'default' para leer la plantilla predeterminada ")
-name of table to add	common	es-es	Nombre de la tabla a añadir
-name of the etemplate, should be in form application.function[.subtemplate]	common	es-es	Nombre de la plantilla. Debe estar en el formato aplicación.función[.subplantilla]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	es-es	Necesita ser única en la tabla y no ser palabra reservada SQL. Intente poner un prefijo común de dos caracteres para la aplicación, por ejemplo 'et_'
-new	common	es-es	Nuevo
-new search	common	es-es	Nueva búsqueda
-new table created	common	es-es	Se ha creado una tabla nueva
-newer version '%1' exists !!!	common	es-es	¡Existe una versión '%1' más reciente!
-nextmatch	common	es-es	Control 'Nextmach' (Siguiente coincidencia)
-nextmatch accountfilter	common	es-es	Nextmatch con filtro de cuentas
-nextmatch custom filterheader	common	es-es	Filtro de cabecera personalizado para nextmatch
-nextmatch filterheader	common	es-es	Nextmatch con filtro de cabeceras
-nextmatch header	common	es-es	Encabezado de control Nextmatch
-nextmatch sortheader	common	es-es	Cabecera de orden de siguiente coincidencia
-no column to swap with !!!	common	es-es	¡No hay columna con la que intercambiar!
-no file	common	es-es	sin fichero
-no filename given or selected via browse...	common	es-es	no se indicó un nombre de fichero ni se seleccióno mediante Examinar...
-no matches found	common	es-es	No se han encontrado resultados
-no row to swap with !!!	common	es-es	¡No hay fila con la que intercambiar!
-not null	common	es-es	NOT NULL
-nothing	common	es-es	nada
-nothing found - try again !!!	common	es-es	No se encontró nada. Inténtelo de nuevo.
-nothing in clipboard to paste !!!	common	es-es	¡¡No hay nada en el portapapeles para pegar!!
-nothing matched search criteria !!!	common	es-es	No se encontró nada con ese criterio.
-now	common	es-es	Ahora
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	es-es	número de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	es-es	número de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
-of	common	es-es	de
-onchange	common	es-es	onChange
-onclick	common	es-es	onClick
-only an other version found !!!	common	es-es	sólo se encontró otra versión
-open the online help.	common	es-es	Abrir la ayuda en línea
-operator	common	es-es	Operador
-optional note about the link	common	es-es	nota opcional sobre el enlace
-options	common	es-es	Opciones
-order to navigating by tab key through the form	common	es-es	Orden al ir navegando pulsando el tabulador en el formulario
-overflow	common	es-es	Desbordamiento
-padding	common	es-es	Distancia del texto a la celda
-parent is a '%1' !!!	common	es-es	superior es un '%1'
-paste	common	es-es	Pegar
-path	common	es-es	Ruta
-please enter table-name first !!!	common	es-es	Por favor, introduzca el nombre de la tabla primero
-pm	common	es-es	pm
-popup	common	es-es	Ventama emergente
-precision	common	es-es	Precisión
-primary key	common	es-es	Clave primaria
-primary key for the table, gets automaticaly indexed	common	es-es	Clave primaria para la tabla, se indexa automáticamente
-radiobutton	common	es-es	Botón tipo radio
-read	common	es-es	Leer
-read a list of entries.	common	es-es	Leer una lista de entradas
-read a single entry by passing the id and fieldlist.	common	es-es	Leer una sola entrada pasando el id y la lista de campos
-read etemplate from database (for the keys above)	common	es-es	leer plantilla de la base de datos (para las claves de arriba)
-readonly	common	es-es	sólo lectura
-refresh	common	es-es	Refrescar
-remove row (can not be undone!!!)	common	es-es	Eliminar fila (¡NO se puede deshacer!)
-remove this link (not the entry itself)	common	es-es	Borrar este enlace (no la entrada en sí)
-required	common	es-es	Requerido
-reset	common	es-es	Restablecer
-returns savely, without deleting	common	es-es	Vuelve de forma segura, SIN borrar
-right	common	es-es	Derecha
-row...	common	es-es	Fila...
-save all	common	es-es	Guardar todo
-save selected columns as default preference for all users.	common	es-es	Guardar las columnas seleccionadas como preferencia predeterminada para todos los usuarios.
-save the changes made and close the window	common	es-es	Guardar los cambios realizados y cerrar la ventana
-save the etemplate under the above keys (name, ...), change them for a saveas	common	es-es	Guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
-saves changes to tables_current.inc.php	common	es-es	Guarda los cambios en el fichero tables_current.inc.php
-saves the template with given version number and closes the window	common	es-es	Guarda la plantilla con el número de versión indicado y cierra la ventana
-scale	common	es-es	Escala
-scale for float	common	es-es	escala para flotante
-search	common	es-es	Buscar
-select a category	common	es-es	seleccionar una categoría
-select a primary contact, to show in the list	common	es-es	Seleccionar un contacto primario, para mostrar en la lista
-select access	common	es-es	Seleccionar acceso
-select account	common	es-es	Seleccionar cuenta
-select an app first !!!	common	es-es	Seleccione una aplicación primero
-select an app to search in	common	es-es	Seleccionar una aplicación en la que buscar
-select an application	common	es-es	Seleccionar una aplicación
-select an application, (*) = uninstalled	common	es-es	Seleccionar una aplicación. (*) = sin instalar
-select an entry to link with	common	es-es	Seleccionar una entrada para enlazar
-select an table of the application	common	es-es	Seleccione una tabla de la aplicación
-select application	common	es-es	Seleccionar aplicación
-select application to search	common	es-es	Seleccionar aplicación para buscar
-select category	common	es-es	Seleccionar categoría
-select columns	common	es-es	Seleccionar columnas
-select country	common	es-es	Seleccionar país
-select day	common	es-es	Seleccionar día
-select day of week	common	es-es	Seleccionar día de la semana
-select entry	common	es-es	Seleccionar entrada
-select file(s) from vfs	common	es-es	Seleccionar ficheros desde VFS
-select hour	common	es-es	Seleccionar hora del día
-select if content of field should not be translated (label gets always translated)	common	es-es	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
-select language	common	es-es	Seleccionar idioma
-select month	common	es-es	Seleccionar mes
-select number	common	es-es	Seleccionar número
-select one ...	common	es-es	Seleccionar uno...
-select percentage	common	es-es	Seleccionar porcentaje
-select priority	common	es-es	Seleccionar prioridad
-select state	common	es-es	Seleccionar estado
-select the columns to display in the list	common	es-es	Seleccionar columnas a mostrar en la lista
-select the indexed columns in their desired order	common	es-es	Seleccionar las columnas indexadas en su orden deseado
-select this etemplate to delete it	common	es-es	Seleccionar esta plantilla para borrarla
-select which accounts to show	common	es-es	seleccionar las cuentas a mostrar
-select which values to show	common	es-es	Seleccionar qué valores mostrar
-select year	common	es-es	Seleccionar año
-selectbox	common	es-es	Cuadro de selección
-set as default	common	es-es	Establecer como predeterminado
-sets today as date	common	es-es	pone hoy como fecha
-should the form be submitted or any custom javascript be executed	common	es-es	Se debe enviar el formulario o ejecutar cualquier javascript personalizado
-show	common	es-es	Mostrar
-show (no save)	common	es-es	Mostrar (sin guardar)
-show all / cancel filter	common	es-es	Mostrar todo / cancelar filtro
-show values	common	es-es	Mostar valores
-showing	common	es-es	mostrando
-shows / allows you to enter values into the etemplate for testing	common	es-es	muestra / permite introducir valores en la plantilla para probar
-shows/displays etemplate for testing, does not save it before	common	es-es	Muestra la plantilla para pruebas. NO la guarda antes
-spacing	common	es-es	Espaciado
-span	common	es-es	Span
-span, class	common	es-es	span, clase
-stack	common	es-es	Pila
-start a new search, cancel this link	common	es-es	comienzar una nueva búsqueda, cancelar este enlace
-start new search for the above pattern	common	es-es	comenzar una nueva búsqueda para el patrón de arriba
-submit form	common	es-es	Enviar formulario
-submitbutton	common	es-es	Botón de enviar
-swap	common	es-es	intercambiar
-swap widget with next one	common	es-es	intercambiar control con el siguiente
-swap with next column	common	es-es	intercambiar con la siguiente columna
-swap with next row	common	es-es	intercambiar con la fila siguiente
-switch to a parent widget	common	es-es	Cambiar a un control superior
-switch to an other widgets of that container	common	es-es	Cambiar a otros controles de ese contenedor
-tabindex	common	es-es	Índice de tabulación
-table unchanged, no write necessary !!!	common	es-es	La tabla no se ha modificado, no es necesario guardarla
-tablename	common	es-es	Nombre de la tabla
-tabs	common	es-es	Pestañas
-template	common	es-es	Plantilla
-template deleted	common	es-es	Plantilla borrada
-template saved	common	es-es	Plantilla guardada
-text	common	es-es	Texto
-textarea	common	es-es	Area de texto
-the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
-the following document-types are supported:	preferences	es-es	Los siguientes tipos de documentos están soportados:
-this text gets displayed if the input-field is empty and has no focus (blur)	common	es-es	este texto se muestra si el campo de entrada está vacío y no tiene foco (borroso)
-time	common	es-es	Hora (completa)
-titles of any entries linked to the current record, excluding attached files	preferences	es-es	Títulos de cualquier entrada vinculada al registro actual, excluyendo los ficheros adjuntos
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	es-es	para desactivar: [! = no]<valor>[=<comprobar>] p.ej: '!@data' desactiva si el contenido de 'data' está vacío
-to start the db-tools	common	es-es	para iniciar las Herramientas de la base de datos
-to start the etemplate editor	common	es-es	para iniciar el editor de plantillas
-to start the search	common	es-es	para iniciar la búsqueda
-today	common	es-es	Hoy
-top	common	es-es	Superior
-tree	common	es-es	Arbol
-type	common	es-es	Tipo
-type of the column	common	es-es	tipo de la columna
-type of the field (select label if field should be empty)	common	es-es	tipo del campo (seleccionar la etiqueta si el campo tiene que estar vacío)
-unique	common	es-es	Único
-unlink	common	es-es	Desvincular
-update a single entry by passing the fields.	common	es-es	Actualizar una única entrada pasando los campos
-update from version '%s' to	common	es-es	Actualizar de la versión '%s' a
-upload	common	es-es	Subir a un servidor
-valign	common	es-es	Alineación vertical
-value	common	es-es	Valor
-value has to be at least '%1' !!!	common	es-es	¡¡¡El valor tiene que ser al menos '%1'!!!
-value has to be at maximum '%1' !!!	common	es-es	¡¡¡El valor tiene que ser como máximo '%1'!!!
-vbox	common	es-es	VBox
-version	common	es-es	Versión
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	es-es	número de la versión, en formato mayor.menor.revisión.número (por ej. 0.9.13.001, con todos los números rellenos con ceros)
-vertical alignment of row	common	es-es	alineación vertical de la fila
-view this etemplate	common	es-es	ver esta plantilla
-view this linked entry in its application	common	es-es	ver esta entrada enlazada en su aplicación
-weekend	common	es-es	fin de semana
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	es-es	Qué hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, automático (decide el navegador)
-widget copied into clipboard	common	es-es	control copiado en el portapapeles
-width	common	es-es	Ancho
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	es-es	ancho de la columna (en % o píxeles), desactivar columna: [!= no]<valor>[=<comprobar>] ej: '!@data' desactiva la columna si el contenido de los datos está vacío
-width of column (in % or pixel)	common	es-es	ancho de la columna (en % o pixel)
-width of the table in % or pixels for the table-tag and (optional) div	common	es-es	Ancho de la tabla en % o píxeles para la etiqueta y, opcionalmente, elemento div
-width, disabled	common	es-es	Ancho, desactivado
-wk	common	es-es	Semana
-working days	common	es-es	días laborales
-write <app>/setup/tables_current.inc.php	common	es-es	Escribir <app>/setup/tables_current.inc.php
-write langfile	common	es-es	Escribir fichero de idioma
-write tables	common	es-es	Escribir tablas
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	es-es	escribe un fichero 'etemplates.inc.php' (para la aplicación en Nombre) en el directorio de instalación de la aplicación
-xml-file to import	common	es-es	fichero xml a importar
-xslt template	common	es-es	Plantilla XSLT
-year	common	es-es	Año
-you are not allowed to export more than %1 entries!	common	es-es	¡No se le permite exportar más de %1 entradas!
-you can respond by visiting:	common	es-es	Puede responder visitando:
-you need to select a file first!	common	es-es	¡Necesita seleccionar un fichero antes!

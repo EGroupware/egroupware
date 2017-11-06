@@ -395,7 +395,12 @@ var et2_vfsMime = (function(){ "use strict"; return expose(et2_valueWidget.exten
 			// tooltip for mimetypes with available detailed thumbnail
 			if (_value.mime.match(/application\/vnd\.oasis\.opendocument\.(text|presentation|spreadsheet|chart)/))
 			{
-				this.image.parent().parent().parent().tooltip({
+				var tooltip_target = this.image.parent().parent().parent().length > 0 ?
+					// Nextmatch row
+					this.image.parent().parent().parent() :
+					// Not in nextmatch
+					this.image.parent();
+				tooltip_target.tooltip({
 					items:"img",
 					position: {my:"right top", at:"left top", collision:"flipfit"},
 					content: function(){

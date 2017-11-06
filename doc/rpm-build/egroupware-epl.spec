@@ -1,12 +1,12 @@
 Name: egroupware-epl
-Version: 16.1.20160801
+Version: 17.1.20171023
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
-License: GPLv2 with exception of stylite and esyncpro module, which is proprietary
-URL: http://www.stylite.de/EPL
-Vendor: Stylite GmbH, http://www.stylite.de/
-Packager: Ralf Becker <rb@stylite.de>
+License: GPLv2 with exception of functions and esyncpro module, which is proprietary
+URL: http://www.egroupware.org/EPL
+Vendor: EGroupware GmbH, http://www.egroupware.org/
+Packager: Ralf Becker <rb@egroupware.org>
 Prefix: /usr/share
 %define egwdir %{prefix}/egroupware
 %define egwdatadir /var/lib/egroupware
@@ -37,11 +37,12 @@ Prefix: /usr/share
         # sles 10, 11 does NOT contain libtidy, 11sp3 does not contain php5-posix
     	%define     extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom
     %else
-        # SLES 12 no longer sets sles_version, but suse_version == 1315: does contain broken php5-tidy, because no libtidy
+        # SLES 12 and openSUSE Leap no longer sets sles_version, but suse_version == 1315: contains now php7 packages, but no php7-xml
         %if 0%{?suse_version} == 1315
-    	    %define extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix
+        	%define php php7
+    	    %define extra_requires apache2 apache2-mod_%{php} %{php}-opcache php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix
         %else
-    	    %define extra_requires apache2 apache2-mod_php5 php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix %{php}-tidy
+      	    %define extra_requires apache2 apache2-mod_php5 %{php}-opcache php_any_db %{php}-dom %{php}-bz2 %{php}-openssl %{php}-zip %{php}-ctype %{php}-sqlite %{php}-xml %{php}-xmlreader %{php}-xmlwriter %{php}-dom %{php}-posix
         %endif
     %endif
 
@@ -50,12 +51,13 @@ Prefix: /usr/share
 	%define apache_group www
 
 # try fixing zypper does not require secondary dependency to egropware-epl-compat of following packages
+#Suggests: %{name}-wiki            = %{version}
 Suggests: %{name}-jdots           = %{version}
 Suggests: %{name}-phpbrain        = %{version}
 Suggests: %{name}-phpfreechat     = %{version}
 Suggests: %{name}-sambaadmin      = %{version}
 Suggests: %{name}-sitemgr         = %{version}
-Suggests: %{name}-wiki            = %{version}
+Recommends: %{php}-APCu
 
 %else
 	%define php php
@@ -66,7 +68,7 @@ Suggests: %{name}-wiki            = %{version}
 %endif
 
 %define install_log /root/%{name}-install.log
-%define post_install /usr/bin/%{php} %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
+%define post_install /usr/bin/php %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
 %if 0%{?fedora_version}
 	%define osversion %{?fedora_version}
 	%define distribution Fedora Core %{?fedora_version}
@@ -94,7 +96,7 @@ Suggests: %{name}-wiki            = %{version}
 Distribution: %{distribution}
 
 Source0: %{name}-all-%{version}.tar.bz2
-Source2: %{name}-stylite-%{version}.tar.bz2
+Source2: %{name}-functions-%{version}.tar.bz2
 Source3: %{name}-archive-%{version}.tar.bz2
 Source4: %{name}-esyncpro-%{version}.tar.bz2
 #Source5: %{name}-contrib-%{version}.tar.gz
@@ -113,10 +115,11 @@ Buildarch: noarch
 AutoReqProv: no
 
 Requires: %{name}-core            = %{version}
-Requires: %{name}-stylite         = %{version}
+Requires: %{name}-functions       = %{version}
 Requires: %{name}-esync           = %{version}
 Requires: %{name}-bookmarks       = %{version}
 Requires: %{name}-calendar        = %{version}
+Requires: %{name}-collabora       = %{version}
 Requires: %{name}-filemanager     = %{version}
 Requires: %{name}-infolog         = %{version}
 Requires: %{name}-importexport    = %{version}
@@ -188,8 +191,11 @@ Obsoletes: %{name}-developer_tools
     fi
 %endif
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
-	chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
-	setsebool -P httpd_can_network_connect=1
+    if [ $(getenforce) != "Disabled" ]
+    then
+	   chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
+	   setsebool -P httpd_can_network_connect=1
+    fi
 %endif
 /bin/date >> %{install_log}
 %{post_install} 2>&1 | tee -a %{install_log}
@@ -198,8 +204,8 @@ echo "EGroupware install log saved to %{install_log}"
 %description
 EGroupware is a web-based groupware suite written in PHP.
 
-EGroupware EPL combines Stylite's actual EGroupware enhancements and the recent development of the EGroupware open source project in one software package.
-- Brand new Stylite features, which are not available publicly in the community edition of EGroupware
+EGroupware EPL combines EGroupware GmbH actual EGroupware enhancements and the recent development of the EGroupware open source project in one software package.
+- Brand new EPL features, which are not available publicly in the community edition of EGroupware
 - The latest possible state of open source community features.
 
 This package automatically requires the EGroupware default applications:
@@ -216,7 +222,7 @@ Further contributed applications are available as separate packages.
 %package core
 Summary: The EGroupware core
 Group: Web/Database
-Requires: %{php} >= 5.4.0
+Requires: %{php} >= 5.6.0
 Requires: %{php}-mbstring %{php}-gd %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
 Provides: egw-core %{version}
 Provides: egw-addressbook %{version}
@@ -294,6 +300,16 @@ Obsoletes: %{egw_packagename}-calendar
 %description calendar
 Powerful calendar with meeting request system, Alarms, ICal and E-Mail support,
 and ACL security.
+
+%package collabora
+Version: %{version}
+Summary: The EGroupware Collabora integration
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core >= %{version}
+Obsoletes: %{egw_packagename}-collabora
+%description collabora
+Integrates Collabora Libre Office Online into EGroupware.
 
 %package mail
 Version: %{version}
@@ -457,17 +473,17 @@ This is the Sitemanager CMS app for EGroupware.
 # update/install sitemgr, as no longer installed by default
 %{post_install} --install-update-app sitemgr 2>&1 | tee -a %{install_log}
 
-%package stylite
+%package functions
 Version: %{version}
-Summary: Stylite EPL enhancements
-License: proprietary, see http://www.stylite.de/EPL
+Summary: EGroupware EPL functions
+License: proprietary, see http://www.egroupware.org/EPL
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}
-Obsoletes: %{name}-groups
-%description stylite
-The package contains Stylite proprietary EPL enhancements:
-- stylite.links stream wrapper allows browsing of app directories
+Obsoletes: %{name}-groups %{name}-stylite
+%description functions
+The package contains EGroupware GmbH's proprietary EPL enhancements:
+- enhanced links stream wrapper allows browsing of app directories
 - filemanger favorites
 
 %package timesheet
@@ -497,7 +513,7 @@ Version: %{version}
 Summary: The EGroupware wiki application
 Group: Web/Database
 AutoReqProv: no
-Requires: egw-compat >= %{version},
+Requires: egw-core >= %{version},
 Obsoletes: %{egw_packagename}-wiki
 %description wiki
 This is the wiki app for EGroupware.
@@ -520,13 +536,13 @@ Dependencies include:
 
 %package esyncpro
 Version: %{version}
-Summary: Stylite eSync Provisioning
+Summary: EGroupware EPL eSync Provisioning
 License: proprietary
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version}, %{name}-esync >= %{version}
 %description esyncpro
-Stylite's eSync Provisioning app allows to edit and assign
+EGroupware's eSync Provisioning app allows to edit and assign
 policies to devices and keeps a central list of syncing devices.
 It also allows to remote wipe or view sync logs of all devices.
 
@@ -607,6 +623,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/pixelegg
 %{egwdir}/preferences
 %{egwdir}/setup
+%{egwdir}/ViewerJS
 %config(noreplace) %attr(0644,root,root) /etc/cron.d/egroupware
 %config(noreplace) %attr(0644,root,root) %{httpdconfd}/egroupware.conf
 %if 0%{?suse_version}
@@ -640,9 +657,13 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %{egwdir}/esyncpro
 
-%%files calendar
+%files calendar
 %defattr(-,root,root)
 %{egwdir}/calendar
+
+%files collabora
+%defattr(-,root,root)
+%{egwdir}/collabora
 
 %files filemanager
 %defattr(-,root,root)
@@ -700,7 +721,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %defattr(-,root,root)
 %{egwdir}/sitemgr
 
-%files stylite
+%files functions
 %defattr(-,root,root)
 %{egwdir}/stylite
 

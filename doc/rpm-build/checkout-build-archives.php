@@ -34,7 +34,7 @@ $config = array(
 	'svnalias' => 'aliases/default-ssh',    // default alias
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro', '$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	*/
-	'extra' => array('stylite', 'esyncpro', 'archive',	// create an extra archive for given apps
+	'extra' => array('functions' => array('stylite'), 'esyncpro', 'archive',	// create an extra archive for given apps
 		// these apps are placed in egroupware-epl-contrib archive
 		'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sambaadmin', 'sitemgr', 'phpfreechat')),
 	'aliasdir' => 'egroupware',             // directory created by the alias

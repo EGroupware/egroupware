@@ -194,6 +194,7 @@ class filemanager_ui
 						'group' => 1,
 						'icon' => 'share',
 						'allowOnMultiple' => false,
+						'enableClass' => 'isDir',
 						'order' => 11,
 						'onExecute' => 'javaScript:app.filemanager.share_link'
 					)),
@@ -1320,7 +1321,8 @@ class filemanager_ui
 				5 => lang('Display of content'),
 				0 => lang('No access'),
 			);
-			if(($content['eacl'] = Vfs::get_eacl($content['path'])) !== false)	// backend supports eacl
+			if(($content['eacl'] = Vfs::get_eacl($content['path'])) !== false &&	// backend supports eacl
+				$GLOBALS['egw_info']['user']['account_id'] == Vfs::$user)	// leave eACL tab disabled for sharing
 			{
 				unset($readonlys['tabs']['filemanager.file.eacl']);	// --> switch the tab on again
 				foreach($content['eacl'] as &$eacl)

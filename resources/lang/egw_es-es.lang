@@ -1,15 +1,23 @@
+%1 accessories now resources	resources	es-es	%1 accesorios ahora son recursos
+%1 accessories restored	resources	es-es	%1 accesorios restaurados
+accessories	resources	es-es	Accesorios
 accessories of	resources	es-es	accesorios de
 accessories:	resources	es-es	Accesorios:
+accessory of	resources	es-es	Accesorio de
 actions	resources	es-es	Acciones
 add accessory	resources	es-es	Añadir accesorio
-add resource	resources	es-es	añadir recurso
+add group to event participants	resources	es-es	Añadir grupo a los participantes del evento
+add resource	resources	es-es	Añadir recurso
 add resources	resources	es-es	Añadir recursos
 administrator	resources	es-es	Administrador
-all categories	resources	es-es	todas las categorías
+all categories	resources	es-es	Todas las categorías
+allow ignore conflicts	admin	es-es	Permitir ignorar conflictos
 book	resources	es-es	Reservar
+book resource	resources	es-es	Reservar recurso
 book selected resources	resources	es-es	reservar los recursos seleccionados
 book this resource	resources	es-es	Reservar este recurso
 bookable	resources	es-es	Reservable
+booked	resources	es-es	reservado
 buy this article	resources	es-es	Comprar este artículo
 buy this resource	resources	es-es	Adquirir este recurso
 buyable	resources	es-es	Adquirible
@@ -19,6 +27,8 @@ check all	resources	es-es	Marcar todo
 choose categories admin	resources	es-es	Elegir administrador de categorías
 clear selection	resources	es-es	Limpiar selección
 configure access permissions	admin	es-es	Configurar permisos de acceso
+confirmation email text	resources	es-es	Texto del correo-e de confirmación
+confirmed addressbook.	resources	es-es	Libreta de direcciones confirmada.
 conflict	resources	es-es	Conflicto
 create new accessory for this resource	resources	es-es	Crear nuevo accesorio para este recurso
 create new links	resources	es-es	Crear nuevos enlaces
@@ -32,8 +42,10 @@ description (short)	resources	es-es	Descripción (corta)
 direct booking permissions	resources	es-es	Permisos de reserva directa
 don't use vfs (this will need a symlink --> see readme)	resources	es-es	No usar vfs (esto necesitaría un enlace simbólico --> ver README)
 edit this entry	resources	es-es	Editar esta entrada
+event start	resources	es-es	Inicio del evento
 existing links	resources	es-es	Enlaces existentes
 exists	resources	es-es	Existe
+expiry	resources	es-es	expiración
 export definition to use for nextmatch export	resources	es-es	Exportar la definición a usar para exportar nextmatch
 export definitition to use for nextmatch export	resources	es-es	Exportar la definición a usar para exportar nextmatch
 exports a list of resources to a csv file.	resources	es-es	Exportar una lista de recursos a un fichero CSV
@@ -69,6 +81,8 @@ long description	resources	es-es	Descripción larga
 manage mapping	resources	es-es	Administrar los mapeos
 name of resource	resources	es-es	Nombre del recurso
 name:	resources	es-es	Nombre:
+new accessory	resources	es-es	Nuevo accesorio
+new resource	resources	es-es	Nuevo recurso
 no description available	resources	es-es	no hay descripción disponible
 no resources selected	resources	es-es	No se seleccionaron recursos
 notify your administrator to correct this situation	resources	es-es	Notifíquelo a su administrador para corregir esta situación
@@ -77,6 +91,8 @@ picture source	resources	es-es	origen de la imagen
 picture type is not supported, sorry!	resources	es-es	Lo sentimos, el tipo de imagen no está soportado
 pictures or resource	resources	es-es	Imángenes o recurso
 planer	resources	es-es	planificador
+please choose a different time:	resources	es-es	Por favor, elija una hora diferente:
+prevent deleting	admin	es-es	Evitar suprimir
 prize	resources	es-es	Premio
 prizeing information for booking or buying	resources	es-es	Poniendo precio a la información de reservar o comprar
 quantity	resources	es-es	Cantidad
@@ -84,13 +100,24 @@ quantity of resource	resources	es-es	Cantidad del recurso
 quantity:	resources	es-es	Cantidad:
 read calendar permissions	resources	es-es	Leer permisos del calendario
 read permissions	resources	es-es	Permiso de lectura
+registration confirmed %1	resources	es-es	Registro confirmado %1
 related links	resources	es-es	Enlaces relacionados
+remove accessories before changing accessory of	resources	es-es	Quitar los accesorios antes de cambiar Accesorios de
+require confirmation	resources	es-es	Requerir confirmación
+reserve	resources	es-es	Reserva
+resource	resources	es-es	Recurso
+resource %1 deleted!	resources	es-es	¡Recurso %1 suprimido!
+resource %1 faild to be deleted!	resources	es-es	¡No se pudo eliminar el recurso %1!
+resource %1 saved!	resources	es-es	¡Recurso %1 grabado!
+resource / accessories	resources	es-es	Recurso / Accesorios
 resource id	resources	es-es	ID del recurso
 resources	common	es-es	Recursos
+resources and accessories	resources	es-es	Recursos y accesorios
 resources csv export	resources	es-es	Exportación CSV de recursos
 resources csv import	resources	es-es	Importación CSV de recursos
 resources list	resources	es-es	lista de recursos
 responsible:	resources	es-es	Responsable:
+restored	resources	es-es	restaurado
 saves entry and exits	resources	es-es	Guarda la entra y sale
 select a category	resources	es-es	Seleccionar una categoría
 select resource	resources	es-es	seleccionar recurso
@@ -99,6 +126,7 @@ select/deselect all	resources	es-es	seleccionar/deseleccionar todo
 short description	resources	es-es	Descripción corta
 short description of resource	resources	es-es	Descripción corta del recurso
 show calendar of resource	resources	es-es	Mostrar el calendario del recurso
+simple reservation of a single item	resources	es-es	Reserva simple de un solo rubro
 something went wrong by deleting resource	resources	es-es	Ocurrió algo extraño al borrar el recurso
 something went wrong by saving resource	resources	es-es	Ocurrió algo extraño al guardar el recurso
 storage	resources	es-es	Almacenamiento
@@ -107,19 +135,22 @@ storage information:	resources	es-es	Información del almacenamiento:
 the anonymous user needs add rights for it!	resources	es-es	¡El usuario anónimo necesita derechos de añadir para esto!
 the calendar of this resource	resources	es-es	El calendario de este recurso
 this module displays the resources app	resources	es-es	Este módulo muestra la aplicación de recursos
+unable to process confirmation.	resources	es-es	No se puede procesar la confirmación.
 use general resources icon	resources	es-es	Usar icono de recursos generales
 use own picture	resources	es-es	Usar imagen propia
 use the category's icon	resources	es-es	Usar el icono de la categoría
 useable	resources	es-es	usable
-useable:	resources	es-es	Usable:
-view accessories for this resource	resources	es-es	Ver accesorios para este recurso
+view accessories	resources	es-es	Ver accesorios
+view calendar	resources	es-es	Ver calendario
 view this entry	resources	es-es	Ver esta entrada
 web-page of resource	resources	es-es	Página web del recurso
 web-site for this resource	resources	es-es	Sitio web para este recurso
 where to find this resource?	resources	es-es	¿Dónde encontrar este recurso?
 which category does this resource belong to?	resources	es-es	¿A qué categoría pertenece este recurso?
 write permissions	resources	es-es	Permiso de escritura
+yes, all users can ignore conflicts	resources	es-es	Sí, todos los usuarios pueden ignorar los conflictos
 yes, only admins can purge deleted items	admin	es-es	Sí, sólo los administradores pueden purgar los elementos borrados
+yes, only users with direct booking permission	resources	es-es	Sí, sólo los usuarios con permiso de reserva directa
 yes, users can purge their deleted items	admin	es-es	Sí, los usuarios pueden purgar sus elementos borrados
 you are not permitted to delete this resource!	resources	es-es	¡No tiene permiso para borrar este recurso!
 you are not permitted to edit this resource!	resources	es-es	¡No tiene permiso para editar este recurso!
