@@ -52,8 +52,24 @@ div#filemanager-index_buttons div.et2_file {
 div.et2_nextmatch div.nextmatch_header_row {
 	padding-bottom: 0px;
 }
-
+div.et2_nextmatch  thead{
+	display: none;
+}
 div.nextmatch_header {
-	padding-bottom: 0 !important;
+	padding-bottom: 10px !important;
 	padding-top: 10px !important;
+}
+
+div.search {
+  position: relative;
+  width: 40%;
+  right: 30px;
+  max-width: 98%;
+  top: 0;
+  float: right !important;
+}
+div.search .et2_searchbox .flex {
+  width: 100%;
+  float: right;
+  padding-right: 0;
 }

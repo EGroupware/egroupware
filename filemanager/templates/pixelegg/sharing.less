@@ -21,8 +21,20 @@ div.filemanager_navigation {
 }
 
 div.search {
-	top: 8px;
-	right: 215px;
+    position: relative;
+    width: 40%;
+    right: 30px;
+    max-width: 98%;
+    top: 0;
+	float:right !important;
+	.et2_searchbox {
+		.flex {
+			width: 100%;
+			float: right;
+			padding-right: 0;
+
+		}
+	}
 }
 
 div#filemanager-index_buttons div.et2_file {
@@ -31,4 +43,36 @@ div#filemanager-index_buttons div.et2_file {
 
 div.filemanager_navigation > label {
   right: 485px !important;
+}
+div#popupMainDiv {
+	&:before {
+		content: ' ';
+		width: 100%;
+		background-image: url(../../../api/templates/default/images/logo64x64.png);
+		background-repeat: no-repeat;
+		background-position: 15px;
+		background-size: 40px;
+		height: 45px;
+		background-color: #0c5da5;
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}
+form#filemanager-index {
+	&:after {
+		content: ' ';
+		width: 100%;
+		height: 45px;
+		background: #0c5da5;
+		display: inline-block;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}
+
+	margin-left: 200px !important;
+	margin-right: 200px !important;
+
 }
