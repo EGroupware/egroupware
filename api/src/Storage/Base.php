@@ -776,7 +776,11 @@ class Base
 			$data = $keys; $keys = array();
 			foreach($this->db_cols as $db_col => $col)
 			{
-				if (isset($data[$col]))
+				if (is_int($db_col))
+				{
+					$keys[] = $col;
+				}
+				elseif (isset($data[$col]))
 				{
 					$keys[$db_col] = $col;
 				}
@@ -786,7 +790,14 @@ class Base
 
 		foreach($keys as $db_col => $col)
 		{
-			$query[$db_col] = $data[$col];
+			if (is_int($db_col))
+			{
+				$query[] = $col;
+			}
+			else
+			{
+				$query[$db_col] = $data[$col];
+			}
 		}
 		if ($only_return_query) return $query;
 
