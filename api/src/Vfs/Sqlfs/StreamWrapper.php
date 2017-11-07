@@ -1497,7 +1497,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			{
 				self::$extended_acl = null;	// force new read of eACL, as there could be multiple eACL for that path
 			}
-			$ret = $GLOBALS['egw']->acl->delete_repository(self::EACL_APPNAME,$fs_id,(int)$owner);
+			$ret = $GLOBALS['egw']->acl->delete_repository(self::EACL_APPNAME, $fs_id, (int)$owner, false);
 		}
 		else
 		{
@@ -1507,7 +1507,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 				// set rights for this class, if applicable
 				self::$extended_acl[$path] |= $rights;
 			}
-			$ret = $GLOBALS['egw']->acl->add_repository(self::EACL_APPNAME,$fs_id,$owner,$rights);
+			$ret = $GLOBALS['egw']->acl->add_repository(self::EACL_APPNAME, $fs_id, $owner, $rights, false);
 		}
 		if ($ret)
 		{
