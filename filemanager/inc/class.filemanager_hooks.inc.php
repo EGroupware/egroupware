@@ -311,7 +311,7 @@ class filemanager_hooks
 		);
 		foreach ($implemented as $app)
 		{
-			if (($l = Api\Hooks::process('filemanager-editor-link')) && $l[$app])
+			if (($l = Api\Hooks::process('filemanager-editor-link','collabora', true)) && $l[$app])
 			{
 				$link = $l[$app];
 			}
