@@ -790,12 +790,13 @@ function check_fix_php_apc_ini()
 
 /**
  * Convert a size with unit eg. 32M to a number
- * @param int $size
+ * @param int|string $_size
  * @return int
  */
-function _size_with_unit($size)
+function _size_with_unit($_size)
 {
-	switch(strtoupper(substr($size, -1)))
+	$size = (int)$_size;
+	switch(strtoupper(substr($_size, -1)))
 	{
 		case 'G':
 			$size *= 1024;
