@@ -415,7 +415,8 @@ function expose (widget)
 							{
 								egw.open_link(egw.link('/index.php', {
 									menuaction: fe.edit.menuaction,
-									path: _value.path
+									path: _value.path,
+									cd: 'no'	// needed to not reload framework in sharing
 								}), '', fe.edit_popup);
 							}
 						}
