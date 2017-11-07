@@ -60,15 +60,19 @@ function _check_script_tag(&$var,$name='',$log=true)
 					//error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
 					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] = $var[$key];
 					// attempt to clean the thing
-					$var[$key] = $val = Api\Html\HtmLawed::purify($val);
+					$var[$key] = Api\Html\HtmLawed::purify($val);
 					// check if we succeeded, if not drop the var anyway, keep the egw_unset_var in any case
-					if (preg_match($preg,$val))
+					if (preg_match($preg, $var[$key]))
 					{
 						if($log)
 						{
-							error_log("*** _check_script_tag($name): unset(${name}[$key]) with value $val***");
+							error_log("*** _check_script_tag($name): unset(${name}[$key]) with value '$val'");
 						}
 						unset($var[$key]);
+					}
+					elseif($log)
+					{
+						error_log("*** _check_script_tag($name): HtmlLawed::purify(${name}[$key]) succeeded '$val' --> '{$var[$key]}'");
 					}
 				}
 			}
