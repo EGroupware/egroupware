@@ -248,6 +248,7 @@ class filemanager_ui
 				'group' => ++$group,
 				'confirm' => 'Delete these files or directories?',
 				'onExecute' => 'javaScript:app.filemanager.action',
+				'disableClass' => 'noDelete'
 			),
 			// DRAG and DROP events
 			'file_drag' => array(
@@ -316,12 +317,6 @@ class filemanager_ui
 				}
 				$actions['paste']['children']["{$action_id}_paste"] = $action;
 			}
-		}
-
-		// Anonymous users have limited actions
-		if(self::is_anonymous($GLOBALS['egw_info']['user']['account_id']))
-		{
-			self::restrict_anonymous_actions($actions);
 		}
 		return $actions;
 	}
@@ -980,6 +975,7 @@ class filemanager_ui
 			{
 				$row['class'] .= 'noEdit ';
 			}
+			$row['class'] .= !$dir_is_writable[$dir] ? 'noDelete' : '';
 			$row['download_url'] = Vfs::download_url($path);
 			$row['gid'] = -abs($row['gid']);	// gid are positive, but we use negagive account_id for groups internal
 
@@ -1448,21 +1444,6 @@ class filemanager_ui
 		$acl = new Api\Acl($account_id);
 		$acl->read_repository();
 		return $acl->check('anonymous', 1, 'phpgwapi');
-	}
-
-	/**
-	 * Remove some more dangerous actions
-	 * @param Array $actions
-	 */
-	protected static function restrict_anonymous_actions(&$actions)
-	{
-		$remove = array(
-			'delete'
-		);
-		foreach($remove as $key)
-		{
-			unset($actions[$key]);
-		}
 	}
 
 	/**
