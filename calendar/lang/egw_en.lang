@@ -116,6 +116,8 @@ csv	calendar	en	CSV
 csv-fieldname	calendar	en	CSV field name
 csv-filename	calendar	en	CSV file name
 custom	calendar	en	Custom
+custom event color	calendar	en	Custom event color
+custom color for events without category color	calendar	en	Custom color for events without category color
 custom fields	common	en	Custom fields
 custom url for ical with holidays for all users	calendar	en	Custom URL for iCal with holidays for all users
 custom_2	common	en	Free/Busy
