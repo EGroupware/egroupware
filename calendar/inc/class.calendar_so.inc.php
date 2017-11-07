@@ -739,18 +739,11 @@ class calendar_so
 		}
 		elseif ($params['query'])
 		{
-			if(is_numeric($params['query']))
-			{
-				$where[] = $this->cal_table.'.cal_id = ' . (int)$params['query'];
-			}
-			else
-			{
-				foreach(array('cal_title','cal_description','cal_location') as $col)
-				{
-					$to_or[] = $col.' '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%'.$params['query'].'%');
-				}
-				$where[] = '('.implode(' OR ',$to_or).')';
-			}
+			$columns = array('cal_title','cal_description','cal_location');
+
+			$wildcard = $op = null;
+			$so_sql = new Api\Storage\Base('calendar', $this->cal_table, $this->db);
+			$where = $so_sql->search2criteria($params['query'], $wildcard, $op, null, $columns);
 
 			// Searching - restrict private to own or private grant
 			if (!isset($params['private_grants']))
