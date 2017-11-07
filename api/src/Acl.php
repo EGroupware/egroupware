@@ -347,9 +347,10 @@ class Acl
 	 * @param string $location location
 	 * @param int $account_id account id
 	 * @param int $rights rights
+	 * @param boolean $invalidate_session =true false: do NOT invalidate session
 	 * @return boolean allways true
 	 */
-	function add_repository($app, $location, $account_id, $rights)
+	function add_repository($app, $location, $account_id, $rights, $invalidate_session=true)
 	{
 		//echo "<p>self::add_repository('$app','$location',$account_id,$rights);</p>\n";
 		$this->db->insert(self::TABLE,array(
@@ -360,7 +361,7 @@ class Acl
 			'acl_account'  => $account_id,
 		),__LINE__,__FILE__);
 
-		if ($account_id == $GLOBALS['egw_info']['user']['account_id'] &&
+		if ($invalidate_session && $account_id == $GLOBALS['egw_info']['user']['account_id'] &&
 			method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 		{
 			$GLOBALS['egw']->invalidate_session_cache();
@@ -373,10 +374,11 @@ class Acl
 	 *
 	 * @param string $app appname
 	 * @param string $location location
-	 * @param int/boolean $accountid = '' account id, default 0=$this->account_id, or false to delete all entries for $app/$location
+	 * @param int|boolean $accountid = '' account id, default 0=$this->account_id, or false to delete all entries for $app/$location
+	 * @param boolean $invalidate_session =true false: do NOT invalidate session
 	 * @return int number of rows deleted
 	 */
-	function delete_repository($app, $location, $accountid='')
+	function delete_repository($app, $location, $accountid='', $invalidate_session=true)
 	{
 		static $cache_accountid = array();
 
@@ -395,15 +397,17 @@ class Acl
 				$where['acl_account'] = $cache_accountid[$accountid] = get_account_id($accountid,$this->account_id);
 			}
 		}
-		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
-		{
-			$GLOBALS['egw']->invalidate_session_cache();
-		}
 		if ($app == '%' || $app == '%%') unset($where['acl_appname']);
 
 		$this->db->delete(self::TABLE,$where,__LINE__,__FILE__);
 
-		return $this->db->affected_rows();
+		$deleted = $this->db->affected_rows();
+
+		if ($invalidate_session && $deleted && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		{
+			$GLOBALS['egw']->invalidate_session_cache();
+		}
+		return $deleted;
 	}
 
 	/**

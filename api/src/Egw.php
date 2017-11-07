@@ -449,8 +449,12 @@ class Egw extends Egw\Base
 	 */
 	static function invalidate_session_cache()
 	{
-		unset($_SESSION['egw_info_cache']);
-		unset($_SESSION['egw_object_cache']);
+		// if sharing is active, we must not invalidate the session, as it can not be regenerated
+		if (empty($GLOBALS['egw']->sharing))
+		{
+			unset($_SESSION['egw_info_cache']);
+			unset($_SESSION['egw_object_cache']);
+		}
 	}
 
 	/**
