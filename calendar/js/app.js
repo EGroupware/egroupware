@@ -121,6 +121,15 @@ app.classes.calendar = (function(){ "use strict"; return AppJS.extend(
 		// Scroll
 		jQuery(jQuery.proxy(this._scroll,this));
 		jQuery.extend(this.state, this.egw.preference('saved_states','calendar'));
+
+		// Set custom color for events without category
+		if(this.egw.preference('no_category_custom_color','calendar'))
+		{
+			this.egw.css(
+				'.calendar_calEvent:not([class*="cat_"])',
+				'background-color: '+this.egw.preference('no_category_custom_color','calendar')+' !important'
+			);
+		}
 	},
 
 	/**
