@@ -19,7 +19,8 @@ div#popupMainDiv {
  * simplify NM UI for sharing
  */
 div#filemanager-index_buttons img, div#filemanager-index_favorite_wrapper,
-div.header_row_right, span.header_count, select#filemanager-index_filter, span.selectcols {
+span.header_count, #filemanager-index_button\[edit\], #filemanager-index_button\[symlink\],
+select#filemanager-index_filter, span.selectcols, #filemanager-index_filemanager-index-header_right > button:last-child {
 	display: none !important;
 }
 div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
@@ -62,8 +63,8 @@ div.nextmatch_header {
 
 div.search {
   position: relative;
-  width: 40%;
-  right: 30px;
+  width: 35%;
+  right: 6px;
   max-width: 98%;
   top: 0;
   float: right !important;

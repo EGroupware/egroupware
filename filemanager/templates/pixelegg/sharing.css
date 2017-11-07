@@ -18,10 +18,12 @@ div#popupMainDiv {
  */
 div#filemanager-index_buttons img,
 div#filemanager-index_favorite_wrapper,
-div.header_row_right,
 span.header_count,
+#filemanager-index_button\[edit\],
+#filemanager-index_button\[symlink\],
 select#filemanager-index_filter,
-span.selectcols {
+span.selectcols,
+#filemanager-index_filemanager-index-header_right > button:last-child {
   display: none !important;
 }
 div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
@@ -58,8 +60,8 @@ div.nextmatch_header {
 }
 div.search {
   position: relative;
-  width: 40%;
-  right: 30px;
+  width: 35%;
+  right: 6px;
   max-width: 98%;
   top: 0;
   float: right !important;
@@ -79,31 +81,8 @@ div.search .et2_searchbox .flex {
  * @copyright (c) 2014/15 by Ralf Becker <rb@stylite.de>
  * @version $Id$
  */
-div#filemanager-index_buttons img#filemanager-index_button\[change_view\] {
-  right: 418px;
-  top: 10px;
-}
-div.filemanager_navigation {
-  margin: 0px !important;
-}
-div.search {
-  position: relative;
-  width: 40%;
-  right: 30px;
-  max-width: 98%;
-  top: 0;
-  float: right !important;
-}
-div.search .et2_searchbox .flex {
-  width: 100%;
-  float: right;
-  padding-right: 0;
-}
 div#filemanager-index_buttons div.et2_file {
   margin-top: 6px;
-}
-div.filemanager_navigation > label {
-  right: 485px !important;
 }
 div#popupMainDiv:before {
   content: ' ';
