@@ -1997,7 +1997,7 @@ var et2_nextmatch = (function(){ "use strict"; return et2_DOMWidget.extend([et2_
 	},
 
 	getDOMNode: function(_sender) {
-		if (_sender == this)
+		if (_sender == this || typeof _sender === 'undefined')
 		{
 			return this.div[0];
 		}
