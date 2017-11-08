@@ -2343,9 +2343,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 
 		if (is_array($attachments) && count($attachments) > 0) {
-			$url_img_vfs = Api\Html::image('filemanager','navbar', lang('Filemanager'), ' height="16"');
-			$url_img_vfs_save_all = Api\Html::image('mail','save_all', lang('Save all'));
-
 			foreach ($attachments as $key => $value)
 			{
 				if (Mail\Smime::isSmime($value['mimeType'])) continue;
@@ -2770,36 +2767,62 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
-	 * Ajax function to save message(s) in the vfs
+	 * Ajax function to save message(s)/attachment(s) in the vfs
 	 *
-	 * @param array $ids array of mail ids
+	 * @param array $params array of mail ids and action name
+	 *			params = array (
+	 *				ids => array of string
+	 *				action => string
+	 *			)
 	 * @param string $path path to save the emails
 	 */
-	function ajax_vfsSaveMessage ($ids,$path)
+	function ajax_vfsSave ($params,$path)
 	{
-		$result = $this->vfsSaveMessage($ids, $path);
 		$response = Api\Json\Response::get();
-		$response->data($result);
+
+		switch ($params['action'])
+		{
+			case 'message':
+				$result = $this->vfsSaveMessages($params['ids'], $path);
+				break;
+			case 'attachment':
+				$result = $this->vfsSaveAttachments($params['ids'], $path);
+				break;
+		}
+		$response->call('app.mail.vfsSaveCallback', $result);
 	}
 
 	/**
-	 * Save an Message in the vfs
+	 * Save Message(s) in the vfs
 	 *
 	 * @param string|array $ids use splitRowID, to separate values
 	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
-	 * @return string|boolean javascript eg. to close the selector window if $close is true, or success/fail if $close is false
+	 *
+	 * @return array returns an array including message and success result
+	 *		array (
+	 *			'msg' => STRING,
+	 *			'success' => BOOLEAN
+	 *		)
 	 */
-	function vfsSaveMessage($ids,$path)
+	function vfsSaveMessages($ids,$path)
 	{
-		//error_log(__METHOD__.' IDs:'.array2string($ids).' SaveToPath:'.$path);
-
-		if (is_array($ids) && !Vfs::is_writable($path) || !is_array($ids) && !Vfs::is_writable(dirname($path)))
-		{
-			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); Egw(window).close();';
-		}
+		// add mail translation
 		Api\Translation::add_app('mail');
+		$res = array ();
 
-		$rememberServerID = $this->mail_bo->profileID;
+		// extract dir from the path
+		$dir = Vfs::is_dir($path) ? $path : Vfs::dirname($path);
+
+		// exit if user has no right to the dir
+		if (!Vfs::is_writable($dir))
+		{
+			return array (
+				'msg' => lang('%1 is NOT writable by you!',$path),
+				'success' => false
+			);
+		}
+
+		$preservedServerID = $this->mail_bo->profileID;
 		foreach((array)$ids as $id)
 		{
 			$hA = self::splitRowID($id);
@@ -2808,31 +2831,44 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$icServerID = $hA['profileID'];
 			if ($icServerID && $icServerID != $this->mail_bo->profileID)
 			{
-				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 				$this->changeProfile($icServerID);
 			}
 			$message = $this->mail_bo->getMessageRawBody($uid, $partID='', $mailbox);
-			$err=null;
-			if(Vfs::is_dir($path))
+
+			// is multiple messages
+			if (Vfs::is_dir($path))
 			{
 				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true,false,$mailbox);
-				$file = $path . '/'.preg_replace('/[\f\n\t\v\\:*#?<>\|]/',"_",$headers['SUBJECT']).'.eml';
+				$file = $dir . '/'.preg_replace('/[\f\n\t\v\\:*#?<>\|]/',"_",$headers['SUBJECT']).'.eml';
 			}
 			else
 			{
 				$file = $path;
 			}
+
+			// Check if file already exists, then try to assign a none existance filename
+			$counter = 1;
+			$tmp_file = $file;
+			while (Vfs::file_exists($tmp_file))
+			{
+				$tmp_file = $file;
+				$pathinfo = pathinfo(Vfs::basename($tmp_file));
+				$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
+				$counter++;
+			}
+			$file = $tmp_file;
+
 			if (!($fp = Vfs::fopen($file,'wb')) || !fwrite($fp,$message))
 			{
-				$err .= lang('Error saving %1!',$file);
-				$succeeded = false;
+				$res['msg'] = lang('Error saving %1!',$file);
+				$res['success'] = false;
 			}
 			else
 			{
-				$succeeded = true;
+				$res['success'] = true;
 			}
 			if ($fp) fclose($fp);
-			if ($succeeded)
+			if ($res['success'])
 			{
 				unset($headers['SUBJECT']);//already in filename
 				$infoSection = Mail::createHeaderInfoSection($headers, 'SUPPRESS', false);
@@ -2840,45 +2876,44 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				Vfs::proppatch($file,$props);
 			}
 		}
-		if ($rememberServerID != $this->mail_bo->profileID)
+		if ($preservedServerID != $this->mail_bo->profileID)
 		{
-			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
-			$this->changeProfile($rememberServerID);
+			//change Profile back to where we came from
+			$this->changeProfile($preservedServerID);
 		}
-
-		return $succeeded;
+		return $res;
 	}
 
 	/**
-	 * Ajax function to store attachments in the vfs
-	 * @param string|array $ids '::' delimited mailbox::uid::part-id::is_winmail::name (::name for multiple id's)
-	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
-	 */
-	function ajax_vfsSaveAttachment($ids,$path)
-	{
-		$result = $this->vfsSaveAttachment($ids, $path);
-		$response = Api\Json\Response::get();
-		$response->data($result);
-	}
-
-	/**
-	 * Save an attachment in the vfs
+	 * Save attachment(s) in the vfs
 	 *
 	 * @param string|array $ids '::' delimited mailbox::uid::part-id::is_winmail::name (::name for multiple id's)
 	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
-	 * @return string javascript eg. to close the selector window
+	 *
+	 * @return array returns an array including message and success result
+	 *		array (
+	 *			'msg' => STRING,
+	 *			'success' => BOOLEAN
+	 *		)
 	 */
-	function vfsSaveAttachment($ids,$path)
+	function vfsSaveAttachments($ids,$path)
 	{
-		//error_log(__METHOD__.__LINE__.'("'.array2string($ids).'","'.$path."\")');");
+		$res = array (
+			'msg' => 'Attachment has been saved successfully.',
+			'success' => true
+		);
 
-		if (is_array($ids) && !Vfs::is_writable($path) || !is_array($ids) && !Vfs::is_writable(dirname($path)))
+		$dir = Vfs::is_dir($path) ? $path : Vfs::dirname($path);
+
+		if (!Vfs::is_writable($dir))
 		{
-			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); Egw(window).close();';
+			return array (
+				'msg' => lang('%1 is NOT writable by you!',$path),
+				'success' => false
+			);
 		}
-		$err=null;
-		$dupe_count = array();
-		$rememberServerID = $this->mail_bo->profileID;
+
+		$preservedServerID = $this->mail_bo->profileID;
 
 		/**
 		 * Extract all parameteres from the given id
@@ -2903,7 +2938,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		//Examine the first attachment to see if attachment
 		//is winmail.dat embedded attachments.
-		$isMultipleDownload=is_array($ids);
 		$p = $getParams((is_array($ids)?$ids[0]:$ids));
 		if ($p['is_winmail'])
 		{
@@ -2921,21 +2955,27 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		foreach((array)$ids as $id)
 		{
 			$params = $getParams($id);
-			// when downloading a single file, name is not set
-			if (!$params['name']&&isset($_GET['name'])&&!$isMultipleDownload) $params['name'] = $_GET['name'];
+
 			if ($params['icServer'] && $params['icServer'] != $this->mail_bo->profileID)
 			{
-				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 				$this->changeProfile($params['icServer']);
 			}
-			//error_log(__METHOD__.__LINE__.array2string($hA));
 			$this->mail_bo->reopen($params['mailbox']);
-			if ($params['is_winmail'])
+
+			// is multiple attachments
+			if (Vfs::is_dir($path) || $params['is_winmail'])
 			{
-				// Try to find the right content for file id
-				foreach ($attachments as $key => $val)
+				if ($params['is_winmail'])
 				{
-					if ($key == $params['is_winmail']) $attachment = $val;
+					// Try to find the right content for file id
+					foreach ($attachments as $key => $val)
+					{
+						if ($key == $params['is_winmail']) $attachment = $val;
+					}
+				}
+				else
+				{
+					$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 				}
 			}
 			else
@@ -2943,35 +2983,39 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 			}
 
-			$file = $params['name'];
-			// when $isMultipleDownload the path holds no filename
-			while(Vfs::file_exists($path.($file && $isMultipleDownload ? '/'.$file : '')))
+			$file = $dir. '/' . $attachment['filename'];
+
+			$counter = 1;
+			$tmp_file = $file;
+			while (Vfs::file_exists($tmp_file))
 			{
-				$dupe_count[$params['name']]++;
-				$file = pathinfo($params['name'], PATHINFO_FILENAME) .
-					' ('.($dupe_count[$params['name']] + 1).')' . '.' .
-					pathinfo($params['name'], PATHINFO_EXTENSION);
+				$tmp_file = $file;
+				$pathinfo = pathinfo(Vfs::basename($tmp_file));
+				$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
+				$counter++;
 			}
-			$params['name'] = $file;
-			//error_log(__METHOD__.__LINE__.array2string($attachment));
-			// when $isMultipleDownload the path holds no filename
-			if (!($fp = Vfs::fopen($file=$path.($params['name'] && $isMultipleDownload ? '/'.$params['name'] : ''),'wb')) ||
+			$file = $tmp_file;
+
+			if (!($fp = Vfs::fopen($file,'wb')) ||
 				!fwrite($fp,$attachment['attachment']))
 			{
-				$err .= lang('Error saving %1!',$file);
+				$res['msg'] = lang('Error saving %1!',$file);
+				$res['success'] = false;
 			}
 			if ($fp)
 			{
 				fclose($fp);
 			}
 		}
+
 		$this->mail_bo->closeConnection();
-		if ($rememberServerID != $this->mail_bo->profileID)
+
+		if ($preservedServerID != $this->mail_bo->profileID)
 		{
-			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
-			$this->changeProfile($rememberServerID);
+			//change Profile back to where we came from
+			$this->changeProfile($preservedServerID);
 		}
-		Framework::window_close(($err?$err:null));
+		return $res;
 	}
 
 	/**
