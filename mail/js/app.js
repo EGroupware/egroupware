@@ -2893,113 +2893,79 @@ app.classes.mail = AppJS.extend(
 		egw.openPopup(egw.link('/index.php', get_param), width, height, windowName);
 	},
 
-	saveAttachment: function(tag_info, widget)
+	/**
+	 * Callback function to handle vfsSave response messages
+	 *
+	 * @param {type} _data
+	 */
+	vfsSaveCallback: function (_data)
 	{
-		var mailid;
-		var attgrid;
-		if (this.mail_isMainWindow)
-		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[save\]/,'')];
-		}
-		else
-		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
-		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
-		url += '&mode=save';
-		url += '&id='+mailid;
-		url += '&part='+attgrid.partID;
-		url += '&is_winmail='+attgrid.winmailFlag;
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		this.et2._inst.download(url);
+		egw.message(_data.msg, _data.success ? "success": "error");
 	},
 
-	saveAllAttachmentsToZip: function(tag_info, widget)
+	/**
+	 * A handler for saving to VFS/downloading attachments
+	 *
+	 * @param {type} widget
+	 * @param {type} action
+	 * @param {type} row_id
+	 */
+	saveAttachmentHandler: function (widget, action, row_id)
 	{
-		var mailid;
-		var attgrid;
+		var mail_id, attachments;
+
 		if (this.mail_isMainWindow)
 		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+			mail_id = this.mail_currentlyFocussed;
 			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[save_zip\]/,'')];
+			attachments = p.getArrayMgr("content").data;
 		}
 		else
 		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
-		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.download_zip';	// todo compose for Draft folder
-		url += '&mode=save';
-		url += '&id='+mailid;
-		url += '&smime_type='+ (attgrid.smime_type?attgrid.smime_type:'');
-		this.et2._inst.download(url);
-	},
-
-	saveAttachmentToVFS: function(tag_info, widget)
-	{
-		var mailid;
-		var attgrid;
-		if (this.mail_isMainWindow)
-		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			var cont = p.getArrayMgr("content").data;
-			attgrid = cont[widget.id.replace(/\[saveAsVFS\]/,'')];
-		}
-		else
-		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[saveAsVFS\]/,'')];
-		}
-		var vfs_select = et2_createWidget('vfs-select', {
-			mode: 'saveas',
-			method: 'mail.mail_ui.ajax_vfsSaveAttachment',
-			button_label: egw.lang('Save'),
-			dialog_title: "Save attchment",
-			method_id: mailid+'::'+attgrid.partID+'::'+attgrid.winmailFlag,
-			name: attgrid.filename
-		});
-		vfs_select.click();
-	},
-
-	saveAllAttachmentsToVFS: function(tag_info, widget)
-	{
-		var mailid;
-		var attgrid;
-		if (this.mail_isMainWindow)
-		{
-			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-			var p = widget.getParent();
-			attgrid = p.getArrayMgr("content").data;
-		}
-		else
-		{
-			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
+			mail_id = this.et2.getArrayMgr("content").getEntry('mail_id');
+			attachments = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
 		}
 
-		var ids = [];
-		for (var i=0;i<attgrid.length;i++)
+		switch (action)
 		{
-			if (attgrid[i] != null) ids.push(mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename);
-		}
+			case 'saveOneToVfs':
+			case 'saveAllToVfs':
+				var ids = [];
+				attachments = action === 'saveOneToVfs' ? [attachments[row_id]] : attachments;
+				for (var i=0;i<attachments.length;i++)
+				{
+					if (attachments[i] != null)
+					{
+						ids.push(mail_id+'::'+attachments[i].partID+'::'+attachments[i].winmailFlag+'::'+attachments[i].filename);
+					}
+				}
+				var vfs_select = et2_createWidget('vfs-select', {
+					mode: action === 'saveOneToVfs' ? 'saveas' : 'select-dir',
+					method: 'mail.mail_ui.ajax_vfsSave',
+					button_label: egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
+					dialog_title: egw.lang(action === 'saveOneToVfs' ? 'Save attchment' : 'Save attchments'),
+					method_id: ids.length > 1 ?	{ids:ids, action:'attachment'} : {ids: ids[0], action: 'attachment'},
+					name: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
+				});
+				vfs_select.click();
+				break;
 
-		var vfs_select = et2_createWidget('vfs-select', {
-			mode: 'select-dir',
-			method: 'mail.mail_ui.ajax_vfsSaveAttachment',
-			button_label: egw.lang('Save all'),
-			dialog_title: "Save attchments",
-			method_id: ids.length > 1 ? ids: ids[0]
-		});
-		vfs_select.click();
+			case 'downloadOneAsFile':
+			case 'downloadAllToZip':
+				var attachment = attachments[row_id];
+				var url = window.egw_webserverUrl+'/index.php?';
+				url += jQuery.param({
+					menuaction: action === 'downloadOneAsFile' ?
+						'mail.mail_ui.getAttachment' : 'mail.mail_ui.download_zip',
+					mode: 'save',
+					id: mail_id,
+					part: attachment.partID,
+					is_winmail: attachment.winmailFlag,
+					smime_type: (attachment.smime_type ? attachment.smime_type : '')
+				});
+				this.et2._inst.download(url);
+				break;
+		}
 	},
 
 	/**
@@ -3039,10 +3005,10 @@ app.classes.mail = AppJS.extend(
 		var vfs_select = et2_createWidget('vfs-select', {
 			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
 			mime: 'message/rfc822',
-			method: 'mail.mail_ui.ajax_vfsSaveMessage',
+			method: 'mail.mail_ui.ajax_vfsSave',
 			button_label: _elems.length>1 ? egw.lang('Save all') : egw.lang('save'),
 			dialog_title: "Save email",
-			method_id: _elems.length > 1 ? ids: ids[0],
+			method_id: _elems.length > 1 ? {ids:ids, action:'message'}: {ids: ids[0], action: 'message'},
 			name: _elems.length > 1 ? names : names[0],
 		});
 		vfs_select.click();
