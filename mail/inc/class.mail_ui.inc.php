@@ -3483,10 +3483,30 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @param type $_partID part id
 	 * @param type $_type = 'src' type of inline image that needs to be resolved and replaced
 	 *	- types: {plain|src|url|background}
+	 * @param callback $_link_callback Function to generate the link to the image.  If
+	 *	not provided, a default (using mail) will be used.
 	 * @return string returns body content including all CID replacements
 	 */
-	public static function resolve_inline_image_byType ($_body,$_mailbox, $_uid, $_partID, $_type ='src')
+	public static function resolve_inline_image_byType ($_body,$_mailbox, $_uid, $_partID, $_type ='src', callable $_link_callback = null)
 	{
+		/**
+		 * Callback to generate the link
+		 */
+		if(is_null($_link_callback))
+		{
+			$_link_callback = function($_cid) use ($_mailbox, $_uid, $_partID)
+			{
+				$linkData = array (
+					'menuaction'    => 'mail.mail_ui.displayImage',
+					'uid'		=> $_uid,
+					'mailbox'	=> base64_encode($_mailbox),
+					'cid'		=> base64_encode($CID),
+					'partID'	=> $_partID,
+				);
+				return Egw::link('/index.php', $linkData);
+			};
+		}
+
 		/**
 		 * Callback for preg_replace_callback function
 		 * returns matched CID replacement string based on given type
@@ -3497,7 +3517,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		 * @param string $_type
 		 * @return string|boolean returns the replace
 		*/
-		$replace_callback = function ($matches) use ($_mailbox,$_uid, $_partID,  $_type)
+		$replace_callback = function ($matches) use ($_mailbox,$_uid, $_partID,  $_type, $_link_callback)
 		{
 			if (!$_type)	return false;
 			$CID = '';
@@ -3523,14 +3543,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 			if (is_array($matches) && $CID)
 			{
-				$linkData = array (
-					'menuaction'    => 'mail.mail_ui.displayImage',
-					'uid'		=> $_uid,
-					'mailbox'	=> base64_encode($_mailbox),
-					'cid'		=> base64_encode($CID),
-					'partID'	=> $_partID,
-				);
-				$imageURL = Egw::link('/index.php', $linkData);
+				$imageURL = call_user_func($_link_callback, $CID);
 				// to test without data uris, comment the if close incl. it's body
 				if (Api\Header\UserAgent::type() != 'msie' || Api\Header\UserAgent::version() >= 8)
 				{
