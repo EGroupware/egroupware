@@ -448,7 +448,8 @@ class Vfs extends File
 		{
 			$content['path'] = \EGroupware\Api\Vfs::get_home_dir();
 		}
-		elseif ($favorites_flag)
+
+		if ($favorites_flag)
 		{
 			// Display favorites as if they were folders
 			$files = array();
@@ -529,7 +530,7 @@ class Vfs extends File
 			if ($download_baseUrl[0] == '/') $download_baseUrl = \EGroupware\Api\Egw::link($download_baseUrl);
 			$content['download_baseUrl'] = $download_baseUrl;
 		}
-		
+
 		Api\Cache::setSession('filemanger', 'select_path', $content['path']);
 		// Response
 		$response->data(array(
