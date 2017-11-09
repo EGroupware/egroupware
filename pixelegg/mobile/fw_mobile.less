@@ -521,8 +521,16 @@
 			}
 			background: #0c5da5;
 		}
-		.ui-dialog-titlebar {
-			display: none;
+		.ui-dialog .ui-dialog-titlebar {
+			position: fixed;
+			color: white;
+			z-index: 100;
+			background: #0c5da5;
+			width: 30%;
+			padding-top: 10px;
+			.ui-dialog-titlebar-close {
+				display: none;
+			}
 		}
 		button.plus_button {
 			position: absolute !important;

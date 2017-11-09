@@ -7802,7 +7802,15 @@ form[id^="wiki-"] .dialogHeadbar {
   body .ui-dialog .ui-dialog-buttonpane button span {
     padding-left: 20px;
   }
-  body .ui-dialog-titlebar {
+  body .ui-dialog .ui-dialog-titlebar {
+    position: fixed;
+    color: white;
+    z-index: 100;
+    background: #0c5da5;
+    width: 30%;
+    padding-top: 10px;
+  }
+  body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-close {
     display: none;
   }
   body button.plus_button {

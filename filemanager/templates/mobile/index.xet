@@ -42,6 +42,7 @@
 			<buttononly label="Tile view" id="button[change_view]" onclick="app.filemanager.change_view" options="list_tile"/>
 			<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
 		</hbox>
+		<dropdown_button id="new" onchange="app.filemanager.create_new" label="New" onclick="app.filemanager.create_new"/>
 	</template>
 	<template id="filemanager.index.header_left" template="" lang="" group="0" version="1.9.002">
 		<hbox span="all" class="filemanager_navigation">
