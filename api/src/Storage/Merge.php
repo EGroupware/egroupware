@@ -798,6 +798,7 @@ abstract class Merge
 				case 'application/vnd.oasis.opendocument.spreadsheet':
 				case 'application/xml':
 				case 'text/html':
+				case 'text/csv':
 					$joiner = '';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
