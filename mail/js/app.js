@@ -167,9 +167,10 @@ app.classes.mail = AppJS.extend(
 				});
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
-				var previewPane = this.egw.preference('previewPane', 'mail');
-				this.mail_disablePreviewArea(previewPane !== 'fixed' && previewPane !== 'vertical' && previewPane == true);
-				if (previewPane == 'vertical' || previewPane != true) nm.header.right_div.addClass('vertical_splitter');
+
+				// Set preview pane state
+				this.mail_disablePreviewArea(!this.getPreviewPaneState());
+				
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
 
@@ -945,7 +946,7 @@ app.classes.mail = AppJS.extend(
 				$preview_iframe.css ('top', $preview_iframe.position().top - offset + 10);
 			}, 50);
 		};
-		var previewPane = this.egw.preference('previewPane', 'mail');
+
 		// Show / hide 'Select something' in preview
 		var blank = this.et2.getWidgetById('blank');
 		if(blank)
@@ -957,7 +958,7 @@ app.classes.mail = AppJS.extend(
 			// If there is content to show recalculate the size
 			set_prev_iframe_top();
 		}
-		else if (previewPane == 'fixed' || previewPane == 'vertical' || previewPane != true)
+		else if (this.getPreviewPaneState())
 		{
 			if(blank)
 			{
@@ -5999,5 +6000,35 @@ app.classes.mail = AppJS.extend(
 			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false
 		}, et2_dialog._create_parent('mail'));
+	},
+
+	/**
+	 * get preview pane state base on selected preference.
+	 *
+	 * It also set a right css class for vertical state.
+	 *
+	 * @returns {Boolean} returns true for visible Pane and false for hiding
+	 */
+	getPreviewPaneState: function ()
+	{
+		var previewPane = this.egw.preference('previewPane', 'mail');
+		var nm = this.et2.getWidgetById(this.nm_index);
+		var state = false;
+		switch (previewPane)
+		{
+			case true:
+			case '1':
+			case 'hide':
+			case 'expand':
+				state = false;
+				break;
+			case 'fixed':
+				state = true;
+				break;
+			default: // default is vertical
+				state = true;
+				nm.header.right_div.addClass('vertical_splitter');
+		}
+		return state;
 	}
 });
