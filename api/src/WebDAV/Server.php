@@ -1003,7 +1003,7 @@ class HTTP_WebDAV_Server
                             } elseif (isset($prop['raw'])) {
                             	$val = $this->_prop_encode('<![CDATA['.$prop['val'].']]>');
                             } else {
-	                    		$val = $this->_prop_encode(htmlspecialchars($prop['val'], ENT_NOQUOTES, 'utf-8'));
+	                    		$val = $this->_prop_encode(htmlspecialchars($prop['val'], ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8'));
                             }
 	                        echo '     <'.($this->crrnd?'':'D:')."$prop[name]$ns_defs>$val".
 	                        	'</'.($this->crrnd?'':'D:')."$prop[name]>\n";
@@ -1049,7 +1049,7 @@ class HTTP_WebDAV_Server
 	                    			{
 			                    		foreach($subprop['val'] as $attr => $val)
 										{
-				                    		$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES, 'utf-8').'"';
+				                    		$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8').'"';
 										}
 			                    		$vals .= '/>';
 	                    			}
@@ -1061,7 +1061,7 @@ class HTTP_WebDAV_Server
 	                    				$vals .= '<![CDATA['.$subprop['val'].']]>';
 	                    			} else {
 	                    				if($subprop['name'] == 'href') $subprop['val'] = $this->_urlencode($subprop['val']);
-		                    			$vals .= htmlspecialchars($subprop['val'], ENT_NOQUOTES, 'utf-8');
+		                    			$vals .= htmlspecialchars($subprop['val'], ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8');
 	                    			}
 	                    			$vals .= "</$ns_name$subprop[name]>";
 	                    		}
@@ -1072,7 +1072,7 @@ class HTTP_WebDAV_Server
                         	{
                         		$val = '<![CDATA['.$prop['val'].']]>';
                         	} else {
-                        		$val = htmlspecialchars($prop['val'], ENT_NOQUOTES, 'utf-8');
+                        		$val = htmlspecialchars($prop['val'], ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8');
                         	}
                         	$val = $this->_prop_encode($val);
 	                        // properties from namespaces != "DAV:" or without any namespace
@@ -1199,7 +1199,7 @@ class HTTP_WebDAV_Server
 
             if ($responsedescr) {
                 echo '  <'.($this->crrnd?'':'D:')."responsedescription>".
-                    $this->_prop_encode(htmlspecialchars($responsedescr, ENT_NOQUOTES, 'utf-8')).
+                    $this->_prop_encode(htmlspecialchars($responsedescr, ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8')).
                     '</'.($this->crrnd?'':'D:')."responsedescription>\n";
             }
 
@@ -2794,7 +2794,7 @@ class HTTP_WebDAV_Server
 
 			    	foreach($subprop as $attr => $val)
 					{
-				    	$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES, 'utf-8').'"';
+				    	$vals .= ' '.$attr.'="'.htmlspecialchars($val, ENT_NOQUOTES|ENT_XML1|ENT_DISALLOWED, 'utf-8').'"';
 					}
 
 		             $ret .= '<'.($prop['ns'] == $ns ? ($this->crrnd ? '' : $ns_hash[$ns].':') : $ns_hash[$prop['ns']].':').$prop['name'].
