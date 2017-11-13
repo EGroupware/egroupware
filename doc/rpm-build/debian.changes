@@ -1,3 +1,15 @@
+egroupware-epl (17.1.20171115) hardy; urgency=low
+
+  * Final 17.1 release: see previous changlog for major features
+  * Nginx: support for Debian and Ubuntu packages: apt install nginx php-fpm egroupware-epl
+  * Mail: Fix missing SaveAll and DownloadAsZip actions of attachments
+  * Addressbook: Fix avatar icon is doubled if contact has no avatar set
+  * CalDAV/CardDAV: fix encoding of control chars stalling iOS sync
+  * Filemanager/EPL: fix exception on upload in folder with a subscription
+  * Collabora: set user language from common preferences
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 13 Nov 2017 18:34:23 +0100
+
 egroupware-epl (17.1.20171106) hardy; urgency=low
 
   * SECURITY RELEASE and 2nd RC for 17.1: everyone should update ASAP
