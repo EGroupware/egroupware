@@ -2477,6 +2477,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'smime_type' => $value['smime_type']
 				);
 				$attachmentHTML[$key]['link_save'] ="<a href='".Egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".Api\Html::image('mail','fileexport')."</a>";
+				// add save-all and download zip icon for first attachment only
+				// if more than one attachments.
+				if ($key == 0 && count($attachments) > 1)
+				{
+					$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "";
+				}
 			}
 			$attachmentHTMLBlock="<table width='100%'>";
 			foreach ((array)$attachmentHTML as $row)
