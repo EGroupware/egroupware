@@ -39,9 +39,10 @@ install: build
 	# apply the patch
 	cat ./doc/rpm-build/asyncservice.patch | patch -p1
 
-	# customize apache config
+	# customize Apache/Nginx config
 	mkdir -p $(CURDIR)/debian/egroupware-epl-core/etc/egroupware
 	cp $(CURDIR)/doc/rpm-build/apache.conf $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/apache.conf
+	cp $(CURDIR)/doc/rpm-build/nginx.conf $(CURDIR)/debian/egroupware-epl-core/etc/egroupware/nginx.conf
 
 	# install core modules
 
