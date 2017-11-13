@@ -3087,6 +3087,20 @@ window.egw_LAB.wait(function() {
 	}
 
 	/**
+	 * Check if there's a photo for given contact id. This is used for avatar widget
+	 * to set or unset delete button. If there's no uploaded photo it responses true.
+	 *
+	 * @param type $contact_id
+	 */
+	function ajax_noPhotoExists ($contact_id)
+	{
+		$response = Api\Json\Response::get();
+		$response->data((!($contact = $this->read($contact_id)) ||
+			empty($contact['jpegphoto']) &&	!(($contact['files'] & Api\Contacts::FILES_BIT_PHOTO) &&
+				($size = filesize($url=Api\Link::vfs_path('addressbook', $contact_id, Api\Contacts::FILES_PHOTO))))));
+	}
+
+	/**
 	 * Ajax method to update edited avatar photo via avatar widget
 	 *
 	 * @param int $contact_id

@@ -429,8 +429,9 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 	/**
 	 * Build Editable Mask Layer (EML) in order to show edit/delete actions
 	 * on top of profile picture.
+	 * @param {boolean} disable delete button in initialization
 	 */
-	_buildEditableLayer: function ()
+	_buildEditableLayer: function (_noDelete)
 	{
 		var self = this;
 		// editable mask layer (eml)
@@ -457,7 +458,11 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 									var canvas = jQuery('#_cropper_image').cropper('getCroppedCanvas');
 									self.image.attr('src', canvas.toDataURL("image/jpeg", 1.0));
 									egw.json('addressbook.addressbook_ui.ajax_update_photo', [self.options.contact_id, canvas.toDataURL('image/jpeg',1.0)], function(res){
-										if (res) egw.refresh('Avatar updated.', egw.app_name());
+										if (res)
+										{
+											del.show();
+											egw.refresh('Avatar updated.', egw.app_name());
+										}
 									}).sendRequest();
 								}
 							},
@@ -489,6 +494,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 								if (res)
 								{
 									self.image.attr('src','');
+									del.hide();
 									egw.refresh('Avatar Deleted.', egw.app_name());
 								}
 							}).sendRequest();
@@ -496,6 +502,7 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 					}, egw.lang('Delete this photo?'), 'Delete', null, et2_dialog.BUTTONS_YES_NO);
 				})
 				.appendTo(eml);
+		if (_noDelete) del.hide();
 		// invisible the mask
 		eml.css('opacity','0');
 
@@ -514,9 +521,18 @@ var et2_avatar = (function(){ "use strict"; return et2_image.extend(
 	doLoadingFinished: function ()
 	{
 		this._super.apply(this,arguments);
+		var self = this;
 		if (this.options.editable)
 		{
-			this._buildEditableLayer();
+			egw(window).json(
+				'addressbook.addressbook_ui.ajax_noPhotoExists',
+				[this.options.contact_id],
+				function(noPhotoExists)
+				{
+					if (noPhotoExists) self.image.attr('src','');
+					self._buildEditableLayer(noPhotoExists);
+				}
+			).sendRequest(true);
 		}
 		if (this.options.crop)
 		{
