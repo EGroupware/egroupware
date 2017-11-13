@@ -46,8 +46,8 @@ Description: web-based groupware suite - metapackage
 
 Package: egroupware-epl-core
 Architecture: all
-Depends: apache2,
- php5 (>= 5.6.0) | libapache2-mod-php (>=7.0),
+Depends: apache2 | nginx,
+ php5 (>= 5.6.0) | libapache2-mod-php (>=7.0) | php-fpm (>=7.0),
  php5-cli | php-cli,
  php5-mysql | php5-pgsql | php-mysql | php-pgsql,
  php5-json | php-json,
