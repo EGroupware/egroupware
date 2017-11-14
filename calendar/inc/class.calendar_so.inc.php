@@ -733,6 +733,7 @@ class calendar_so
 			$cols = "$this->repeats_table.recur_type,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,range_end - 1 AS recur_enddate,".implode(',',$all_cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
 		}
 		$where = array();
+		$join = '';
 		if (is_array($params['query']))
 		{
 			$where = $params['query'];
@@ -742,6 +743,15 @@ class calendar_so
 			$columns = array('cal_title','cal_description','cal_location');
 
 			$wildcard = $op = null;
+			if(!is_null($params['cfs']))
+			{
+				$custom = Api\Storage\Customfields::get('calendar');
+				if($custom)
+				{
+					$columns[] = 'cal_extra_value';
+					$join .= " LEFT JOIN {$this->extra_table} ON {$this->extra_table}.cal_id = {$this->cal_table}.cal_id ";
+				}
+			}
 			$so_sql = new Api\Storage\Base('calendar', $this->cal_table, $this->db);
 			$where = $so_sql->search2criteria($params['query'], $wildcard, $op, null, $columns);
 
@@ -874,15 +884,19 @@ class calendar_so
 		$cal_table = $this->cal_range_view($start, $end, null, $filter == 'everything' ? null : $filter != 'deleted');
 		$cal_table_def = $this->db->get_table_definitions('calendar', $this->cal_table);
 
-		$join = "JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id ".
+		$u_join = "JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id ".
 			"LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id ".
 			$rejected_by_user_join;
 		// dates table join only needed to enum recuring events, we use a time-range limited view here too
 		if ($params['enum_recuring'])
 		{
-			$join = "JOIN ".$this->dates_table.	// using dates_table direct seems quicker then an other view
+			$join .= "JOIN ".$this->dates_table.	// using dates_table direct seems quicker then an other view
 				//$this->dates_range_view($start, $end, null, $filter == 'everything' ? null : $filter == 'deleted').
-				" ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$join;
+				" ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$u_join;
+		}
+		else
+		{
+			$join .= $u_join;
 		}
 
 		// Check for some special sorting, used by planner views
