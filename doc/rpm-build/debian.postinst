@@ -48,7 +48,7 @@ then
 			fi
 		else
 			# for non-interactive install let post_install generate passwords
-			if [ "$DEBIAN_FRONTEND"="noninteractive" ]
+			if [ "$DEBIAN_FRONTEND" = "noninteractive" ]
 			then
 				/usr/share/egroupware/doc/rpm-build/post_install.php 2>&1 | /usr/bin/tee -a $install_log
 			else
