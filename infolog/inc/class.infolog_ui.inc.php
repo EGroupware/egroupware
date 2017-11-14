@@ -1187,7 +1187,7 @@ class infolog_ui
 						'nm_action' => 'open_popup',
 					),
 					'enddate' => array(
-						'caption' => 'End date',
+						'caption' => 'Due date',
 						'group' => $group,
 						'nm_action' => 'open_popup',
 					),
