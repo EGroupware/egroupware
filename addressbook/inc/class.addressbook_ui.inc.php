@@ -1633,10 +1633,15 @@ window.egw_LAB.wait(function() {
 		{
 			unset($query['col_filter']['list']);
 		}
-		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1')
 		{
 			$query['col_filter']['account_id'] = null;
 		}
+		else
+		{
+			unset($query['col_filter']['account_id']);
+		}
+
 		// all backends allow now at least to use groups as distribution lists
 		$query['no_filter2'] = false;
 
