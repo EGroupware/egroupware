@@ -6972,40 +6972,43 @@ class Mail
 					}
 					if ($sendOK || $openAsDraft)
 					{
-						if ($this->folderExists($_folder,true))
+						if ($openAsDraft)
 						{
-						    if($this->isSentFolder($_folder))
+							if($this->folderExists($_folder,true))
 							{
-						        $flags = '\\Seen';
-						    } elseif($this->isDraftFolder($_folder)) {
-						        $flags = '\\Draft';
-						    } else {
-						        $flags = '';
-						    }
-							$savefailed = false;
-							try
-							{
-								$messageUid =$this->appendMessage($_folder,
-									$mailObject->getRaw(),
-									null,
-									$flags);
+								if($this->isSentFolder($_folder))
+								{
+									$flags = '\\Seen';
+								} elseif($this->isDraftFolder($_folder)) {
+									$flags = '\\Draft';
+								} else {
+									$flags = '';
+								}
+								$savefailed = false;
+								try
+								{
+									$messageUid =$this->appendMessage($_folder,
+										$mailObject->getRaw(),
+										null,
+										$flags);
+								}
+								catch (\Exception\WrongUserinput $e)
+								{
+									$savefailed = true;
+									$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
+								}
+								// no send, save successful, and message_uid present
+								if ($savefailed===false && $messageUid && is_null($sendOK))
+								{
+									$importID = $messageUid;
+									$openComposeWindow = true;
+								}
 							}
-							catch (\Exception\WrongUserinput $e)
+							else
 							{
 								$savefailed = true;
-								$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
+								$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
 							}
-							// no send, save successful, and message_uid present
-							if ($savefailed===false && $messageUid && is_null($sendOK))
-							{
-								$importID = $messageUid;
-								$openComposeWindow = true;
-							}
-						}
-						else
-						{
-							$savefailed = true;
-							$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
 						}
 						if ($sendOK)
 						{
