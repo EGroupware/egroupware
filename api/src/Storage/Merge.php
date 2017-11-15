@@ -1426,13 +1426,7 @@ abstract class Merge
 				// Get replacements for that application
 				if(!$app_replacements[$field])
 				{
-					$classname = "{$field_app}_merge";
-					$class = new $classname();
-					// If we send the real content it can result in infinite loop of lookups
-					// so we send only the used fields
-					$content = $expand_sub_cfs[$field] ? $expand_sub_cfs[$field] : '';
-
-					$app_replacements[$field] = $class->get_replacements($values['#'.$field], $content);
+					$app_replacements[$field] = $this->get_app_replacements($field_app, $values['#'.$field], $content);
 				}
 				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$'.$sub[$index].'$$'];
 			}
@@ -1441,6 +1435,44 @@ abstract class Merge
 				if ($cfs[$field]['type'] == 'date' || $cfs[$field]['type'] == 'date-time') $this->date_fields[] = '#'.$field;
 			}
 		}
+	}
+
+	/**
+	 * Get the replacements for any entry specified by app & id
+	 *
+	 * @param stribg $app
+	 * @param string $id
+	 * @param string $content
+	 * @return array
+	 */
+	protected function get_app_replacements($app, $id, $content, $prefix)
+	{
+		$replacements = array();
+		if($app == 'addressbook')
+		{
+			return $this->contact_replacements($id, $prefix);
+		}
+
+		try
+		{
+			$classname = "{$app}_merge";
+			$class = new $classname();
+			$method = $app.'_replacements';
+			if(method_exists($class,$method))
+			{
+				$replacements = $class->$method($id, $prefix, $content);
+			}
+			else
+			{
+				$replacements = $class->get_replacements($id, $content);
+			}
+		}
+		catch (\Exception $e)
+		{
+			// Don't break merge, just log it
+			error_log($e->getMessage());
+		}
+		return $replacements;
 	}
 
 	/**
