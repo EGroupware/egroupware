@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 17.1.20171023
+Version: 17.1.20171115
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -199,6 +199,8 @@ Obsoletes: %{name}-developer_tools
 %endif
 /bin/date >> %{install_log}
 %{post_install} 2>&1 | tee -a %{install_log}
+# fix ownership of files created during update
+/bin/chown -R %{apache_user} /var/lib/egroupware
 echo "EGroupware install log saved to %{install_log}"
 
 %description

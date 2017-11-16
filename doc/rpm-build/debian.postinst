@@ -31,6 +31,8 @@ then
 	if [ "$2" ]
 	then
 		/usr/share/egroupware/doc/rpm-build/post_install.php 2>&1 | /usr/bin/tee -a $install_log
+        # fix ownership of files created during update
+        chown -R www-data /var/lib/egroupware
 	else
 		# Debian 9 has no more /etc/lsb-release and gives an error
 		if test -f /etc/lsb-release && grep -q '^DISTRIB_ID="*Univention"*$' /etc/lsb-release
