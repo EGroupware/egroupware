@@ -1613,8 +1613,17 @@ class filemanager_ui
 	function editor($content=null)
 	{
 		$tmpl = new Etemplate('filemanager.editor');
-		$file_path = $_GET['path'];
-		$paths = explode('/webdav.php', $file_path);
+		$path = $_GET['path'];
+		if (!preg_match("/\/webdav.php\//", $path))
+		{
+			$download_url = Vfs::download_url($path);
+		}
+		else
+		{
+			$download_url = $path;
+			$paths = explode('/webdav.php', $path);
+			$path = $paths[1];
+		}
 		// Include css files used by wodocollabeditor
 		Api\Framework::includeCSS('/api/js/webodf/collab/app/resources/app.css');
 		Api\Framework::includeCSS('/api/js/webodf/collab/wodocollabpane.css');
@@ -1623,10 +1632,10 @@ class filemanager_ui
 
 		if (!$content)
 		{
-			if ($file_path)
+			if ($download_url)
 			{
-				$content['es_id'] = md5 ($file_path);
-				$content['file_path'] = $paths[1];
+				$content['es_id'] = md5 ($download_url);
+				$content['file_path'] = $path;
 			}
 			else
 			{
@@ -1635,7 +1644,7 @@ class filemanager_ui
 		}
 
 		$actions = self::getActions_edit();
-		if (!Api\Vfs::check_access($paths[1], Api\Vfs::WRITABLE))
+		if (!Api\Vfs::check_access($path, Api\Vfs::WRITABLE))
 		{
 			unset ($actions['save']);
 			unset ($actions['discard']);
