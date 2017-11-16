@@ -180,7 +180,7 @@ et2_register_widget(et2_checkbox, ["checkbox"]);
  * et2_checkbox_ro is the dummy readonly implementation of the checkbox
  * @augments et2_checkbox
  */
-var et2_checkbox_ro = (function(){ "use strict"; return et2_checkbox.extend(
+var et2_checkbox_ro = (function(){ "use strict"; return et2_checkbox.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Ignore unset value
@@ -219,6 +219,36 @@ var et2_checkbox_ro = (function(){ "use strict"; return et2_checkbox.extend(
 			this.value = _value;
 		} else {
 			this.span.text(this.options.ro_false);
+		}
+	},
+
+	/**
+	 * Code for implementing et2_IDetachedDOM
+	 *
+	 * @param {array} _attrs
+	 */
+	getDetachedAttributes: function(_attrs)
+	{
+		_attrs.push("value", "class");
+	},
+
+	getDetachedNodes: function()
+	{
+		return [this.span[0]];
+	},
+
+	setDetachedAttributes: function(_nodes, _values)
+	{
+		// Update the properties
+		if (typeof _values["value"] != "undefined")
+		{
+			this.span = jQuery(_nodes[0]);
+			this.set_value(_values["value"]);
+		}
+
+		if (typeof _values["class"] != "undefined")
+		{
+			_nodes[0].setAttribute("class", _values["class"]);
 		}
 	}
 });}).call(this);
