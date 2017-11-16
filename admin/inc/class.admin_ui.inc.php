@@ -358,7 +358,7 @@ class admin_ui
 				'order' => $query['order'],
 				'sort'  => $query['sort'],
 				'start' => (int)$query['start'],
-				'num_rows' => (int)$query['num_rows']
+				'offset' => (int)$query['num_rows']
 			));
 
 		$apps = array();
