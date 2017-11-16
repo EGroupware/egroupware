@@ -126,7 +126,7 @@ class StreamWrapper extends LinksParent
 	 * @param string $app
 	 * @return boolean
 	 */
-	protected static function check_app_rights($app)
+	public static function check_app_rights($app)
 	{
 		if ($GLOBALS['egw_info']['user']['account_id'] == Vfs::$user)
 		{
