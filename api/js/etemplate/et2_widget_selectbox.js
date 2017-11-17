@@ -800,7 +800,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 					if(_options[key]["label"]) _options[key]["label"] = this.egw().lang(_options[key]["label"]);
 					if(_options[key]["title"]) _options[key]["title"] = this.egw().lang(_options[key]["title"]);
 				}
-				else if(_options.lenght>0 || typeof _options === 'object')
+				else if(_options.length>0 || typeof _options === 'object')
 				{
 					_options[key] = this.egw().lang(_options[key]);
 				}
@@ -865,7 +865,7 @@ var et2_selectbox = (function(){ "use strict"; return et2_inputWidget.extend(
 			this.input.trigger("liszt:updated");
 		}
 		// Sometimes value gets set before options
-		if(this.value || this.options.empty_label)
+		if(this.value || this.options.empty_label || this.value === ''  && this.input.children('[value=""]').length === 1)
 		{
 			this.set_value(this.value, true);	// true = dont try to set_options, to avoid an infinit recursion
 		}
