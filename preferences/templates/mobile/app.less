@@ -1,0 +1,37 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * PREFERENCES
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package preferences
+ * @version $Id$
+ */
+
+@import (reference) "../../../pixelegg/less/def_buttons.less";
+@import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
+@import (less) "../default/app.css";
+.prefHelp {
+	width: 100%;
+    height: 60px;
+    bottom: 0;
+	top: auto;
+    position: fixed;
+}
+table.prefTable {
+	width: 100%;
+}
+td.prefName {
+	width: 50%;
+}
+tr.prefRow > td {
+	vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
+	textarea.prefValue {height:90px !important;}
+}
+div#preferences-settings_tabs {
+    margin-bottom: 65px;
+}
