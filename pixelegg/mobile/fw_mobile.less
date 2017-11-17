@@ -288,30 +288,66 @@
 			top: 0 !important;
 			bottom: 0 !important;
 			left: 0 !important;
-			right: 5px !important;
+			right: 0 !important;
 			border: none;
 			box-shadow: none;
 			padding: 0;
 			border-radius: 0;
+			position:fixed;
+			z-index: 10 !important;
+			#egwpopup_list {
+				.egwpopup_message.egwpopup_expanded {
+					position: fixed;
+					top: 0;
+					height: 100%;
+					left: 0;
+					width: ~"calc(100% - 20px)";
+					overflow: auto;
+					margin: 0;
+				}
+			}
 			#egwpopup_header {
 				text-align: center;
 				height: 50px;
 				z-index: 1;
 				background-color: #5180AC;
-				line-height: 40px;
+				line-height: 50px;
 				width:100%;
 				.mob-fontsize-n;
 				color:white;
+				padding: 0px;
 				span {
 					.white-svg;
-					height: 50px;
-					position: absolute;
-					left:10px;
+				}
+				.egwpopup_toggle {
 					background-image: url(../images/cancelled.svg);
-					background-repeat:no-repeat;
-					background-position:center;
-					button {width:50px;height:50px;}
-					img {display: none;}
+					background-repeat: no-repeat;
+					background-position: center;
+					height: 50px;
+					width: 50px;
+					cursor: pointer;
+					position: relative;
+					float: left;
+					margin: 0;
+					&:before {display: none;}
+					&:after {display: none;}
+				}
+				.egwpopup_deleteall {
+					width: 30px;
+					height: 30px;
+					background-position: center;
+					position: relative;
+					margin-top: 10px;
+					margin-right: 30px;
+					opacity: 1;
+				}
+				.egwpopup_seenall {
+					width: 20px;
+					height: 20px;
+					padding: 0px;
+					margin-right: 20px;
+					margin-top: 15px;
+					opacity: 1;
 				}
 			}
 			#egwpopup_footer {
@@ -348,6 +384,7 @@
 		}
 		#egw_fw_basecontainer.sidebar-toggle {
 			#egw_fw_top_toolbar {
+				#egwpopup_fw_notifications {display: none !important;}
 				div#egw_fw_menu {
 					background-image: url(../images/topmenu_items/mobile/menu.svg);
 					width: 50px;
@@ -370,6 +407,9 @@
 			#egw_fw_top_toolbar {
 				position:absolute;
 				width:300px;
+				.egw_fw_logout {
+					margin-left: 30px;
+				}
 				#egw_fw_userinfo {
 					float: right;
 				}
@@ -387,6 +427,20 @@
 				}
 				#egw_fw_appsToggle.toggled {
 					background-image:url(../images/sidebar.svg);
+				}
+				#egwpopup_fw_notifications {
+					height: 25px;
+					width: 25px;
+					z-index: 1000;
+					right: 0px;
+					display: inline-block;
+					float: left;
+					position: relative;
+					top: 12px;
+					line-height: 27px;
+					margin: 0;
+					margin-left: 15px;
+					.popup_note {display: none;}
 				}
 				div#egw_fw_topmenu_items {
 					ul {
