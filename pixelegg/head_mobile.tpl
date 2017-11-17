@@ -37,6 +37,7 @@
 				<div id="egw_fw_appsToggle">
 					<img></img>
 				</div>
+				<div id="egwpopup_fw_notifications" title="">0</div>
 				<div class="egw_fw_logout">
 					<a id="topmenu_logout" href="logout.php"></a>
 				</div>
