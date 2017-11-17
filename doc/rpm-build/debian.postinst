@@ -34,9 +34,11 @@ then
         # fix ownership of files created during update
         chown -R www-data /var/lib/egroupware
 	else
+		apache_conf=apache.conf
 		# Debian 9 has no more /etc/lsb-release and gives an error
 		if test -f /etc/lsb-release && grep -q '^DISTRIB_ID="*Univention"*$' /etc/lsb-release
 		then
+			apache_conf=apache-univention.conf
 			if [ -n "$DOCKER_HOST_NAME" -a -n "$DB_HOST" ]
 			then
 				# docker UCS setup, use appcenter join script
@@ -109,11 +111,15 @@ then
 		fi
 		nginx -s reload
 	else
+		# use either apache.conf or apache-univention.conf for extra open_basedir
+		apache_conf=apache.conf
+		test -f /etc/lsb-release && grep -q '^DISTRIB_ID="*Univention"*$' && apache_conf=apache-univention.conf
+
 		if [ -d /etc/apache2/conf.d ] ; then
-			ln -fs ../../egroupware/apache.conf /etc/apache2/conf.d/egroupware
+			ln -fs ../../egroupware/$apache_conf /etc/apache2/conf.d/egroupware
 		else
 			if [ -d /etc/apache2/sites-available ] ; then
-				ln -fs ../../egroupware/apache.conf /etc/apache2/sites-available/egroupware.conf
+				ln -fs ../../egroupware/$apache_conf /etc/apache2/sites-available/egroupware.conf
 				a2ensite egroupware
 			fi
 		fi
