@@ -4,7 +4,16 @@
 #
 # STDIN is csv with: <account_lid>,<account_id>,<AD-user>,<SID>,<RID>
 #
-# change following 2 lines to EGroupware user with admin rights and his password
+# <account_id> has to be negative number for groups (eg. -123 for account_id=123)!
+#
+# Following command should be used as startpoint for the list:
+# mysql -B -e "select account_lid,CASE account_type WHEN 'u' THEN account_id ELSE -account_id END,account_lid FROM egw_accounts ORDER BY account_type!='u',account_lid" egroupware | sed 's/  /,/g'
+# Change <AD-user> if not equal to <account_lid> and append ,,<RID> to each line.
+#
+# If migration to LDAP instead of AD use uidNumber (gidNumber for groups) as <RID>.
+# <SID> is NOT used and can be empty.
+#
+# Change following 2 lines to an EGroupware user with admin rights and his password
 #
 ADMIN=sysop
 PASSWD=PW
