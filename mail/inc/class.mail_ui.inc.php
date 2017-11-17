@@ -50,7 +50,7 @@ class mail_ui
 		'download_zip'		=> True,
 		'saveMessage'	=> True,
 		'vfsSaveAttachment' => True,
-		'vfsSaveMessage' => True,
+		'vfsSaveMessages' => True,
 		'loadEmailBody'	=> True,
 		'importMessage'	=> True,
 		'importMessageFromVFS2DraftAndDisplay'=>True,
