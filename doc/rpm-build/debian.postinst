@@ -113,7 +113,7 @@ then
 	else
 		# use either apache.conf or apache-univention.conf for extra open_basedir
 		apache_conf=apache.conf
-		test -f /etc/lsb-release && grep -q '^DISTRIB_ID="*Univention"*$' && apache_conf=apache-univention.conf
+		test -f /etc/lsb-release && grep -q '^DISTRIB_ID="*Univention"*$' /etc/lsb-release && apache_conf=apache-univention.conf
 
 		if [ -d /etc/apache2/conf.d ] ; then
 			ln -fs ../../egroupware/$apache_conf /etc/apache2/conf.d/egroupware
