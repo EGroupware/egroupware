@@ -314,7 +314,7 @@ class filemanager_hooks
 		foreach ($implemented as $app)
 		{
 
-			if ( \EGroupware\Stylite\Vfs\Links\StreamWrapper::check_app_rights($app) &&
+			if ( \EGroupware\Api\Vfs\Links\StreamWrapper::check_app_rights($app) &&
 					($l = Api\Hooks::process('filemanager-editor-link',$app, true)) && $l[$app])
 			{
 				$link = $l[$app];
