@@ -57,7 +57,8 @@ class preferences_hooks
 			'Y.m.d' => 'Y.m.d',
 			'd/m/Y' => 'd/m/Y',
 			'd-m-Y' => 'd-m-Y',
-			'd-M-Y' => 'd-M-Y'
+			'd-M-Y' => 'd-M-Y',
+			'l, d.m.Y' => 'l, d.m.Y'
 		);
 
 		$time_formats = array(
