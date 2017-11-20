@@ -518,6 +518,7 @@ class Vfs extends File
 			'createdir' => !\EGroupware\Api\Vfs::is_writable($content['path']),
 			'upload_file' => !\EGroupware\Api\Vfs::is_writable($content['path']) ||
 			!in_array($content['mode'],array('open', 'open-multiple')),
+			'favorites' => !isset($GLOBALS['egw_info']['apps']['stylite'])
 		));
 
 		$sel_options = array_merge($sel_options, array(
@@ -651,8 +652,7 @@ class Vfs extends File
 	 */
 	static function get_apps()
 	{
-		$apps = array(false);	// index starting from 1
-		if (isset($GLOBALS['egw_info']['apps']['stylite'])) $apps = array('favorites' => lang('Favorites'));
+		$apps = array();
 		$apps += \EGroupware\Api\Link::app_list('query');
 		// they do NOT support adding files to VFS
 		unset($apps['addressbook-email'], $apps['mydms'], $apps['wiki'],
