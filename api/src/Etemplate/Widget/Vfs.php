@@ -455,6 +455,7 @@ class Vfs extends File
 			$files = array();
 			$favorites = \EGroupware\Api\Framework\Favorites::get_favorites('filemanager');
 			$n = 0;
+			$content['dir'] = array();
 			foreach($favorites as $favorite)
 			{
 				$path = $favorite['state']['path'];
