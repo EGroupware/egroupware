@@ -149,10 +149,10 @@ class Sql extends Api\Storage
 					" OR contact_private=0 AND ".$this->table_name.".contact_owner IN (".
 					implode(',',array_keys($this->grants))."))";
 			}
-			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
 			{
 				$join .= self::ACCOUNT_ACTIVE_JOIN;
-				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === 'deactivated')
+				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
 				{
 					$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
 				}
@@ -364,9 +364,9 @@ class Sql extends Api\Storage
 			implode('+', $extra) . ' AS match_count'
 		);
 		$join .= $this->db->column_data_implode(' OR ',$join_fields) . ')';
-		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
 		{
-			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === 'deactivated')
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
 			{
 				$join .=' LEFT JOIN egw_accounts AS account_1 ON egw_addressbook.account_id=account_1.account_id ';
 				$join .=' LEFT JOIN egw_accounts AS account_2 ON egw_addressbook.account_id=account_2.account_id ';
@@ -553,10 +553,10 @@ class Sql extends Api\Storage
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
 		if ((is_array($owner) ? in_array(0, $owner) : !$owner) && substr($this->account_repository,0,3) == 'sql' &&
 			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter) &&
-			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+			$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
 		{
 			$join .= self::ACCOUNT_ACTIVE_JOIN;
-			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === 'deactivated')
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
 			{
 				$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
 			}

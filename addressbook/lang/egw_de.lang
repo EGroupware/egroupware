@@ -274,6 +274,7 @@ grant addressbook access	common	de	Berechtigungen
 group %1	addressbook	de	Gruppe %1
 h	addressbook	de	h
 hide accounts from addressbook	addressbook	de	Benutzer im Adressbuch ausblenden
+hide all accounts	addressbook	de	Zeigt keine Benutzer an
 hides accounts completly from the adressbook.	addressbook	de	Entfernt die Benutzer komplett aus dem Adressbuch.
 history logging	admin	de	Verfolgung der Änderungen
 home address	addressbook	de	Privatadresse
@@ -441,6 +442,8 @@ set full name and file as field in contacts of all users (either all or only emp
 set only full name	addressbook	de	Nur vollen Namen setzen
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	de	Sollen die Spalten Foto und Privatadresse immer angezeigt werden, auch wenn sie leer sind?
 show	addressbook	de	Anzeigen
+show active accounts	addressbook	de	Zeigt nur aktive Benutzer an
+show all accounts	addressbook	de	Zeigt alle Benutzer an
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
 show infolog entries for this organisation	addressbook	de	InfoLog Einträge dieser Organisation anzeigen
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen

@@ -379,7 +379,7 @@ class Contacts extends Contacts\Storage
 			$addressbooks += $to_sort;
 		}
 		if ($required != Acl::ADD &&	// do NOT allow to set accounts as default addressbook (AB can add accounts)
-			!$preferences['addressbook']['hide_accounts'] && (
+			$preferences['addressbook']['hide_accounts'] !== '1' && (
 				($grants[0] & $required) == $required ||
 				$preferences['common']['account_selection'] == 'groupmembers' &&
 				$this->account_repository != 'ldap' && ($required & Acl::READ)))
