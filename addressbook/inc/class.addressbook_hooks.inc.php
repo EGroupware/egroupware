@@ -142,7 +142,7 @@ class addressbook_hooks
 		}
 		$settings['hide_accounts'] = array(
 			'type'   => 'select',
-			'values' => array('1' => lang('Hide all accounts'), 'deactivated' => lang('Show active accounts'), '0' => lang('Show all accounts')),
+			'values' => array('1' => lang('Hide all accounts'), '0' => lang('Show active accounts'), 'none' => lang('Show all accounts')),
 			'label'  => 'Hide accounts from addressbook',
 			'name'   => 'hide_accounts',
 			'help'   => 'Hides accounts completly from the adressbook.',
