@@ -30,6 +30,12 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 			default: et2_no_init,
 			description: "Which field to place the timestamp in"
 		},
+		format: {
+			name: "Time format",
+			type: "string",
+			default: et2_no_init,
+			description: "Format for the timestamp.  User is always after."
+		},
 		image: {
 			default: "timestamp"
 		},
@@ -65,7 +71,11 @@ var et2_timestamper = (function(){ "use strict"; return et2_button.extend([],
 	_insert_text: function() {
 		var text = "";
 		var now = new Date();
-		text += date(egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i")+' ',now);
+		var format = (this.options.format ?
+			this.options.format :
+			egw.preference('dateformat') + ' ' + (egw.preference("timeformat") === "12" ? "h:ia" : "H:i"))+' ';
+
+		text += date(format, now);
 
 		// Get properly formatted user name
 		var user = parseInt(egw.user('account_id'));
