@@ -88,6 +88,7 @@ class mail_integration {
 		}
 
 		$data = static::get_integrate_data($_GET['rowid'], $_to_emailAddress, $_subject, $_body, $_attachments, $_date, $_rawMail, $_icServerID);
+		$data['entry_id'] = $app_entry_id;
 
 		// Check if the hook is registered
 		if (Api\Hooks::exists('mail_import',$app) == 0)
@@ -122,8 +123,7 @@ class mail_integration {
 	 *					'tmp_name' => string),	// tmp dir path
 	 *			'message' => string,
 	 *			'date' => string,
-	 *			'subject' => string,
-	 *			'entry_id => string				// Id of the app entry which mail content will append to
+	 *			'subject' => string
 	 *	)
 	 *
 	 * @param string $_rowid
