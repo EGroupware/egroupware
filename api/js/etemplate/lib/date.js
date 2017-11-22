@@ -109,7 +109,7 @@ function date (format, timestamp) {
 
         // Month
         F: function () { // Full month name; January...December
-            return txt_words[6 + f.n()];
+            return egw && egw.lang ? egw.lang(txt_words[6 + f.n()]) : txt_words[6 + f.n()];
         },
         m: function () { // Month w/leading 0; 01...12
             return _pad(f.n(), 2);
