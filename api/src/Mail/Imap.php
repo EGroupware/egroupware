@@ -876,6 +876,9 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\Iface
 	 */
 	function hasCapability($capability)
 	{
+		if ($capability=='SUPPORTS_FLAGS')
+			return true;
+
 		if ($capability=='SUPPORTS_KEYWORDS')
 		{
 			// if pseudo-flag is not set, call examineMailbox now to set it (no STATUS_ALL = counters necessary)

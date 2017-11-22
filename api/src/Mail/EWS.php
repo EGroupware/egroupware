@@ -65,6 +65,7 @@ class EWS
                 break;
 			case 'subscribeMailbox':
 			case 'search':
+            case 'listSubscribedMailboxes':
                 return;
                 break;
 		}
@@ -72,101 +73,20 @@ class EWS
 	}
 	function hasCapability($capability)
 	{
-        return true;
-        //TEMPORARY
-		if ($capability=='SUPPORTS_KEYWORDS')
-		{
-			// if pseudo-flag is not set, call examineMailbox now to set it (no STATUS_ALL = counters necessary)
-			if (!isset(self::$supports_keywords[$this->ImapServerId]))
-			{
-				try
-				{
-					$this->examineMailbox('INBOX', Horde_Imap_Client::STATUS_FLAGS|Horde_Imap_Client::STATUS_PERMFLAGS);
-				}
-				catch (\Exception $e)
-				{
-					error_log(__METHOD__.__LINE__.' (examineServer for detection) '.$capability.'->'.array2string(self::$supports_keywords).' failed '.function_backtrace());
-					self::$supports_keywords[$this->ImapServerId]=false;
-				}
-			}
-			//error_log(__METHOD__.__LINE__.' '.$capability.'->'.array2string(self::$supports_keywords).' '.function_backtrace());
-			return self::$supports_keywords[$this->ImapServerId];
-		}
-		try
-		{
-			$cap = $this->capability();
-		}
-		catch (\Exception $e)
-		{
-			if ($this->debug) error_log(__METHOD__.__LINE__.' error querying for capability:'.$capability.' ->'.$e->getMessage());
+		switch( $capability ) {
+		case 'SUPPORTS_FLAGS':
+		case 'SUPPORTS_KEYWORDS':
 			return false;
-		}
-		if (!is_array($cap))
-		{
-			error_log(__METHOD__.__LINE__.' error querying for capability:'.$capability.' Expected array but got->'.array2string($cap));
-			return false;
-		}
-		foreach ($cap as $c => $v)
-		{
-			if (is_array($v))
-			{
-				foreach ($v as $v)
-				{
-					$cap[$c.'='.$v] = true;
-				}
-			}
-		}
-		//error_log(__METHOD__.__LINE__.$capability.'->'.array2string($cap));
-		if (isset($cap[$capability]) && $cap[$capability])
-		{
+			break;
+		default:
 			return true;
+			break;
 		}
-		else
-		{
-			return false;
-		}
+		return true;
 	}
 	function mailboxExist($mailbox)
 	{
-        //TODO
         return true;
-		try
-		{
-			//error_log(__METHOD__.__LINE__.':'.$mailbox);
-			$currentMailbox = $this->currentMailbox();
-		}
-		catch(\Exception $e)
-		{
-			//error_log(__METHOD__.__LINE__.' failed detecting currentMailbox:'.$currentMailbox.':'.$e->getMessage());
-			$currentMailbox=null;
-			unset($e);
-		}
-		try
-		{
-			//error_log(__METHOD__.__LINE__.':'.$mailbox);
-			$this->openMailbox($mailbox);
-			$returnvalue=true;
-		}
-		catch(\Exception $e)
-		{
-			//error_log(__METHOD__.__LINE__.' failed opening:'.$mailbox.':'.$e->getMessage().' Called by:'.function_backtrace());
-			unset($e);
-			$returnvalue=false;
-		}
-		if (!empty($currentMailbox) && $currentMailbox['mailbox'] != $mailbox)
-		{
-			try
-			{
-				//error_log(__METHOD__.__LINE__.':'.$currentMailbox .'<->'.$mailbox);
-				$this->openMailbox($currentMailbox['mailbox']);
-			}
-			catch(\Exception $e)
-			{
-				//error_log(__METHOD__.__LINE__.' failed reopening:'.$currentMailbox.':'.$e->getMessage());
-				unset($e);
-			}
-		}
-		return $returnvalue;
 	}
 
     static function description() {

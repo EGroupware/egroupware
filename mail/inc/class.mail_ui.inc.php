@@ -41,23 +41,23 @@ class mail_ui
 	 * @var array
 	 */
 	var $public_functions = array
-		(
-			'index' => True,
-			'displayHeader'	=> True,
-			'displayMessage'	=> True,
-			'displayImage'		=> True,
-			'getAttachment'		=> True,
-			'download_zip'		=> True,
-			'saveMessage'	=> True,
-			'vfsSaveAttachment' => True,
-			'vfsSaveMessage' => True,
-			'loadEmailBody'	=> True,
-			'importMessage'	=> True,
-			'importMessageFromVFS2DraftAndDisplay'=>True,
-			'subscription'	=> True,
-			'folderManagement' => true,
-			'moveEWS' => true,
-		);
+	(
+		'index' => True,
+		'displayHeader'	=> True,
+		'displayMessage'	=> True,
+		'displayImage'		=> True,
+		'getAttachment'		=> True,
+		'download_zip'		=> True,
+		'saveMessage'	=> True,
+		'vfsSaveAttachment' => True,
+		'vfsSaveMessage' => True,
+		'loadEmailBody'	=> True,
+		'importMessage'	=> True,
+		'importMessageFromVFS2DraftAndDisplay'=>True,
+		'subscription'	=> True,
+		'folderManagement' => true,
+		'moveEWS' => true,
+	);
 
 	/**
 	 * current icServerID
@@ -184,14 +184,14 @@ class mail_ui
 	{
 		//error_log(__METHOD__."('$message', $exit) ".function_backtrace());
 		$linkData=(self::$icServerID ? array(
-			'menuaction' => 'mail.mail_wizard.edit',
-			'acc_id' => self::$icServerID,
-		) : array(
-			'menuaction' => 'mail.mail_wizard.add',
-		)) + array(
-			'msg' => $message,
-			'msg_type' => $msg_type
-		);
+				'menuaction' => 'mail.mail_wizard.edit',
+				'acc_id' => self::$icServerID,
+			) : array(
+				'menuaction' => 'mail.mail_wizard.add',
+			)) + array(
+				'msg' => $message,
+				'msg_type' => $msg_type
+			);
 
 		if (Api\Json\Response::isJSONResponse())
 		{
@@ -316,91 +316,91 @@ class mail_ui
 			list($button) = @each($content['button']);
 			switch ($button)
 			{
-			case 'save':
-			case 'apply':
-			{
-				// do not let user (un)subscribe namespace roots eg. "other", "user" or "INBOX", same for tree-root/account itself
-				$namespace_roots = array($profileId);
-				foreach($this->mail_bo->_getNameSpaces() as $namespace)
+				case 'save':
+				case 'apply':
 				{
-					$namespace_roots[] = $profileId . self::$delimiter . str_replace($namespace['delimiter'], '', $namespace['prefix']);
-				}
-				$to_unsubscribe = $to_subscribe = array();
-				foreach ($content['foldertree'] as $path => $value)
-				{
-					list(,$node) = explode($profileId.self::$delimiter, $path);
-					if ($node)
+					// do not let user (un)subscribe namespace roots eg. "other", "user" or "INBOX", same for tree-root/account itself
+					$namespace_roots = array($profileId);
+					foreach($this->mail_bo->_getNameSpaces() as $namespace)
 					{
-						if (is_array($subscribed) && $subscribed[$node] && !$value['value']) $to_unsubscribe []= $node;
-						if (is_array($subscribed) && !$subscribed[$node] && $value['value']) $to_subscribe [] = $node;
-						if ($value['value']) $cont[] = $path;
+						$namespace_roots[] = $profileId . self::$delimiter . str_replace($namespace['delimiter'], '', $namespace['prefix']);
 					}
-
-				}
-				$content['foldertree'] = $cont;
-				// set foldertree options to basic node in order to avoid initial autoloading
-				// from client side, as no options would trigger that.
-				$sel_options['foldertree'] = array('id' => '0', 'item'=> array());
-				foreach(array_merge($to_subscribe, $to_unsubscribe) as $mailbox)
-				{
-					if (in_array($profileId.self::$delimiter.$mailbox, $namespace_roots, true))
+					$to_unsubscribe = $to_subscribe = array();
+					foreach ($content['foldertree'] as $path => $value)
 					{
-						continue;
-					}
-					$subscribe = in_array($mailbox, $to_subscribe);
-					try {
-						$this->mail_bo->icServer->subscribeMailbox($mailbox, $subscribe);
-					}
-					catch (Exception $ex)
-					{
-						$msg_type = 'error';
-						if ($subscribe)
+						list(,$node) = explode($profileId.self::$delimiter, $path);
+						if ($node)
 						{
-							$msg .= lang('Failed to subscribe folder %1!', $mailbox).' '.$ex->getMessage();
+							if (is_array($subscribed) && $subscribed[$node] && !$value['value']) $to_unsubscribe []= $node;
+							if (is_array($subscribed) && !$subscribed[$node] && $value['value']) $to_subscribe [] = $node;
+							if ($value['value']) $cont[] = $path;
+						}
+
+					}
+					$content['foldertree'] = $cont;
+					// set foldertree options to basic node in order to avoid initial autoloading
+					// from client side, as no options would trigger that.
+					$sel_options['foldertree'] = array('id' => '0', 'item'=> array());
+					foreach(array_merge($to_subscribe, $to_unsubscribe) as $mailbox)
+					{
+						if (in_array($profileId.self::$delimiter.$mailbox, $namespace_roots, true))
+						{
+							continue;
+						}
+						$subscribe = in_array($mailbox, $to_subscribe);
+						try {
+							$this->mail_bo->icServer->subscribeMailbox($mailbox, $subscribe);
+						}
+						catch (Exception $ex)
+						{
+							$msg_type = 'error';
+							if ($subscribe)
+							{
+								$msg .= lang('Failed to subscribe folder %1!', $mailbox).' '.$ex->getMessage();
+							}
+							else
+							{
+								$msg .= lang('Failed to unsubscribe folder %1!', $mailbox).' '.$ex->getMessage();
+							}
+						}
+					}
+					if (!isset($msg))
+					{
+						$msg_type = 'success';
+						if ($to_subscribe || $to_unsubscribe)
+						{
+							$msg = lang('Subscription successfully saved.');
 						}
 						else
 						{
-							$msg .= lang('Failed to unsubscribe folder %1!', $mailbox).' '.$ex->getMessage();
+							$msg = lang('Nothing to change.');
 						}
 					}
-				}
-				if (!isset($msg))
-				{
-					$msg_type = 'success';
-					if ($to_subscribe || $to_unsubscribe)
+					// update foldertree in main window
+					$parentFolder='INBOX';
+					$refreshData = array(
+						$profileId => lang($parentFolder),
+					);
+					$response = Api\Json\Response::get();
+					foreach($refreshData as $folder => &$name)
 					{
-						$msg = lang('Subscription successfully saved.');
+						$name = $this->mail_tree->getTree($folder, $profileId,1,true,true,true);
 					}
-					else
-					{
-						$msg = lang('Nothing to change.');
-					}
-				}
-				// update foldertree in main window
-				$parentFolder='INBOX';
-				$refreshData = array(
-					$profileId => lang($parentFolder),
-				);
-				$response = Api\Json\Response::get();
-				foreach($refreshData as $folder => &$name)
-				{
-					$name = $this->mail_tree->getTree($folder, $profileId,1,true,true,true);
-				}
-				// give success/error message to opener and popup itself
-				//$response->call('opener.app.mail.subscription_refresh',$refreshData);
-				$response->call('opener.app.mail.mail_reloadNode',$refreshData);
+					// give success/error message to opener and popup itself
+					//$response->call('opener.app.mail.subscription_refresh',$refreshData);
+					$response->call('opener.app.mail.mail_reloadNode',$refreshData);
 
-				Framework::refresh_opener($msg, 'mail', null, null, null, null, null, $msg_type);
-				if ($button == 'apply')
-				{
-					Framework::message($msg, $msg_type);
-					break;
+					Framework::refresh_opener($msg, 'mail', null, null, null, null, null, $msg_type);
+					if ($button == 'apply')
+					{
+						Framework::message($msg, $msg_type);
+						break;
+					}
 				}
-			}
-			case 'cancel':
-			{
-				Framework::window_close();
-			}
+				case 'cancel':
+				{
+					Framework::window_close();
+				}
 			}
 		}
 
@@ -421,155 +421,155 @@ class mail_ui
 	{
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		try	{
-			if (!isset($this->mail_bo)) throw new Api\Exception\WrongUserinput(lang('Initialization of mail failed. Please use the Wizard to cope with the problem.'));
-			//error_log(__METHOD__.__LINE__.function_backtrace());
-			if (Mail::$debugTimes) $starttime = microtime (true);
-			$this->mail_bo->restoreSessionData();
-			$sessionFolder = $this->mail_bo->sessionData['mailbox'];
-			if ($this->mail_bo->folderExists($sessionFolder))
-			{
-				$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
-			}
-			else
-			{
-				$sessionFolder = $this->mail_bo->sessionData['mailbox'] = 'INBOX';
-			}
-			//error_log(__METHOD__.__LINE__.' SessionFolder:'.$sessionFolder.' isToSchema:'.$toSchema);
-			if (!is_array($content))
-			{
-				$content = array(
-					self::$nm_index => Api\Cache::getSession('mail', 'index'),
-				);
-				if (!is_array($content[self::$nm_index]))
+				if (!isset($this->mail_bo)) throw new Api\Exception\WrongUserinput(lang('Initialization of mail failed. Please use the Wizard to cope with the problem.'));
+				//error_log(__METHOD__.__LINE__.function_backtrace());
+				if (Mail::$debugTimes) $starttime = microtime (true);
+				$this->mail_bo->restoreSessionData();
+				$sessionFolder = $this->mail_bo->sessionData['mailbox'];
+				if ($this->mail_bo->folderExists($sessionFolder))
 				{
-					// These only set on first load
-					$content[self::$nm_index] = array(
-						'filter'         => 'any',	// filter is used to choose the mailbox
-						'lettersearch'   => false,	// I  show a lettersearch
-						'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
-						'start'          =>	0,		// IO position in list
-						'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
-						'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
+					$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
+				}
+				else
+				{
+					$sessionFolder = $this->mail_bo->sessionData['mailbox'] = 'INBOX';
+				}
+				//error_log(__METHOD__.__LINE__.' SessionFolder:'.$sessionFolder.' isToSchema:'.$toSchema);
+				if (!is_array($content))
+				{
+					$content = array(
+						self::$nm_index => Api\Cache::getSession('mail', 'index'),
 					);
+					if (!is_array($content[self::$nm_index]))
+					{
+						// These only set on first load
+						$content[self::$nm_index] = array(
+							'filter'         => 'any',	// filter is used to choose the mailbox
+							'lettersearch'   => false,	// I  show a lettersearch
+							'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
+							'start'          =>	0,		// IO position in list
+							'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
+							'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
+						);
+					}
+					if (Api\Header\UserAgent::mobile()) $content[self::$nm_index]['header_row'] = 'mail.index.header_right';
 				}
-				if (Api\Header\UserAgent::mobile()) $content[self::$nm_index]['header_row'] = 'mail.index.header_right';
-			}
 
-			// These must always be set, even if $content is an array
-			$content[self::$nm_index]['cat_is_select'] = true;    // Category select is just a normal selectbox
-			$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
-			$content[self::$nm_index]['actions'] = self::get_actions();
-			$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
-			$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
-			$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
-			$content[self::$nm_index]['num_rows'] = 0;      // Do not send any rows with initial request
-			$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
-			$content[self::$nm_index]['csv_fields'] = false;
-			if ($msg)
-			{
-				$content['msg'] = $msg;
-			}
-			else
-			{
-				unset($msg);
-				unset($content['msg']);
-			}
-			// call getQuotaRoot asynchronously in getRows by initiating a client Server roundtrip
-			$quota = false;//$this->mail_bo->getQuotaRoot();
-			if($quota !== false && $quota['limit'] != 'NOT SET') {
-				$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
-				$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
-				$content[self::$nm_index]['quotainpercent'] = $sel_options[self::$nm_index]['quotainpercent'] =  (string)$quotainfo['percent'];
-				$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = $quotainfo['class'];
-				$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "";
-			} else {
-				$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = lang("Quota not provided by server");
-				$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
-				$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
-			}
-			// call gatherVacation asynchronously in getRows by initiating a client Server roundtrip
-			$vacation = false;//$this->gatherVacation();
-			//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
-			if($vacation) {
-				if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date' && $vacation['end_date'] > time()))
+				// These must always be set, even if $content is an array
+				$content[self::$nm_index]['cat_is_select'] = true;    // Category select is just a normal selectbox
+				$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
+				$content[self::$nm_index]['actions'] = self::get_actions();
+				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
+				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
+				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
+				$content[self::$nm_index]['num_rows'] = 0;      // Do not send any rows with initial request
+				$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+				$content[self::$nm_index]['csv_fields'] = false;
+				if ($msg)
 				{
-					$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
-					$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = lang('Vacation notice is active');
-					$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = ($vacation['status']=='by_date'? Api\DateTime::server2user($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.Api\DateTime::server2user($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
+					$content['msg'] = $msg;
 				}
-			}
-			if ($vacation==false)
-			{
-				$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = '';
-				$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
-			}
-			//$zstarttime = microtime (true);
-			$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
-			//$zendtime = microtime(true) - $zstarttime;
-			//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
-			$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
-			// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
-			if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
-			{
-				$this->statusTypes = array_merge($this->statusTypes,array(
-					'keyword1'	=> 'important',//lang('important'),
-					'keyword2'	=> 'job',	//lang('job'),
-					'keyword3'	=> 'personal',//lang('personal'),
-					'keyword4'	=> 'to do',	//lang('to do'),
-					'keyword5'	=> 'later',	//lang('later'),
-				));
-			}
-			else
-			{
-				$keywords = array('keyword1','keyword2','keyword3','keyword4','keyword5');
-				foreach($keywords as &$k)
+				else
 				{
-					if (array_key_exists($k,$this->statusTypes)) unset($this->statusTypes[$k]);
+					unset($msg);
+					unset($content['msg']);
 				}
-			}
+				// call getQuotaRoot asynchronously in getRows by initiating a client Server roundtrip
+				$quota = false;//$this->mail_bo->getQuotaRoot();
+				if($quota !== false && $quota['limit'] != 'NOT SET') {
+					$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
+					$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
+					$content[self::$nm_index]['quotainpercent'] = $sel_options[self::$nm_index]['quotainpercent'] =  (string)$quotainfo['percent'];
+					$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = $quotainfo['class'];
+					$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "";
+				} else {
+					$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = lang("Quota not provided by server");
+					$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
+					$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
+				}
+				// call gatherVacation asynchronously in getRows by initiating a client Server roundtrip
+				$vacation = false;//$this->gatherVacation();
+				//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Sieve Enabled:'.array2string($vacation));
+				if($vacation) {
+					if (is_array($vacation) && ($vacation['status'] == 'on' || $vacation['status']=='by_date' && $vacation['end_date'] > time()))
+					{
+						$dtfrmt = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat']/*.' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']!='24'?'h:i a':'H:i')*/;
+						$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = lang('Vacation notice is active');
+						$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = ($vacation['status']=='by_date'? Api\DateTime::server2user($vacation['start_date'],$dtfrmt,true).($vacation['end_date']>$vacation['start_date']?'->'.Api\DateTime::server2user($vacation['end_date']+ 24*3600-1,$dtfrmt,true):''):'');
+					}
+				}
+				if ($vacation==false)
+				{
+					$content[self::$nm_index]['vacationnotice'] = $sel_options[self::$nm_index]['vacationnotice'] = '';
+					$content[self::$nm_index]['vacationrange'] = $sel_options[self::$nm_index]['vacationrange'] = '';
+				}
+				//$zstarttime = microtime (true);
+				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+				//$zendtime = microtime(true) - $zstarttime;
+				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
+				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
+				// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
+				if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
+				{
+					$this->statusTypes = array_merge($this->statusTypes,array(
+						'keyword1'	=> 'important',//lang('important'),
+						'keyword2'	=> 'job',	//lang('job'),
+						'keyword3'	=> 'personal',//lang('personal'),
+						'keyword4'	=> 'to do',	//lang('to do'),
+						'keyword5'	=> 'later',	//lang('later'),
+					));
+				}
+				else
+				{
+					$keywords = array('keyword1','keyword2','keyword3','keyword4','keyword5');
+					foreach($keywords as &$k)
+					{
+						if (array_key_exists($k,$this->statusTypes)) unset($this->statusTypes[$k]);
+					}
+				}
 
-			if (!isset($content[self::$nm_index]['foldertree'])) $content[self::$nm_index]['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
-			if (!isset($content[self::$nm_index]['selectedFolder'])) $content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
+				if (!isset($content[self::$nm_index]['foldertree'])) $content[self::$nm_index]['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
+				if (!isset($content[self::$nm_index]['selectedFolder'])) $content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
 
-			$content[self::$nm_index]['foldertree'] = $content[self::$nm_index]['selectedFolder'];
+				$content[self::$nm_index]['foldertree'] = $content[self::$nm_index]['selectedFolder'];
 
-			if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
-			{
-				Mail::$supportsORinQuery = Api\Cache::getCache(Api\Cache::INSTANCE, 'email', 'supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-				if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
-			}
-			if (!Mail::$supportsORinQuery[$this->mail_bo->profileID])
-			{
-				unset($this->searchTypes['quick']);
-				unset($this->searchTypes['quickwithcc']);
-			}
-			$sel_options['cat_id'] = $this->searchTypes;
-			//error_log(__METHOD__.__LINE__.array2string($sel_options['cat_id']));
-			//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']));
-			$content[self::$nm_index]['cat_id'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType'];
-			$sel_options['filter'] = $this->statusTypes;
-			$sel_options['filter2'] = array(''=>lang('No Sneak Preview in list'),1=>lang('Sneak Preview in list'));
-			$content[self::$nm_index]['filter2'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails'];
+				if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->mail_bo->profileID]))
+				{
+					Mail::$supportsORinQuery = Api\Cache::getCache(Api\Cache::INSTANCE, 'email', 'supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
+					if (!isset(Mail::$supportsORinQuery[$this->mail_bo->profileID])) Mail::$supportsORinQuery[$this->mail_bo->profileID]=true;
+				}
+				if (!Mail::$supportsORinQuery[$this->mail_bo->profileID])
+				{
+					unset($this->searchTypes['quick']);
+					unset($this->searchTypes['quickwithcc']);
+				}
+				$sel_options['cat_id'] = $this->searchTypes;
+				//error_log(__METHOD__.__LINE__.array2string($sel_options['cat_id']));
+				//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']));
+				$content[self::$nm_index]['cat_id'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType'];
+				$sel_options['filter'] = $this->statusTypes;
+				$sel_options['filter2'] = array(''=>lang('No Sneak Preview in list'),1=>lang('Sneak Preview in list'));
+				$content[self::$nm_index]['filter2'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails'];
 
-			$etpl = new Etemplate('mail.index');
-			//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
-			$content[self::$nm_index]['cat_id_onchange'] = "app.mail.mail_searchtype_change()";
-			// set the actions on tree
-			$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions());
+				$etpl = new Etemplate('mail.index');
+				//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
+				$content[self::$nm_index]['cat_id_onchange'] = "app.mail.mail_searchtype_change()";
+				// set the actions on tree
+				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions());
 
-			// sending preview toolbar actions
-			if ($content['mailSplitter']) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
+				// sending preview toolbar actions
+				if ($content['mailSplitter']) $etpl->setElementAttribute('mailPreview[toolbar]', 'actions', $this->get_toolbar_actions());
 
-			// We need to send toolbar actions to client-side because view template needs them
-			if (Api\Header\UserAgent::mobile()) $sel_options['toolbar'] = $this->get_toolbar_actions();
+				// We need to send toolbar actions to client-side because view template needs them
+				if (Api\Header\UserAgent::mobile()) $sel_options['toolbar'] = $this->get_toolbar_actions();
 
-			//we use the category "filter" option as specifier where we want to search (quick, subject, from, to, etc. ....)
-			if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search']))
-			{
-				$content[self::$nm_index]['cat_id']=($content[self::$nm_index]['cat_id']?(!Mail::$supportsORinQuery[$this->mail_bo->profileID]&&($content[self::$nm_index]['cat_id']=='quick'||$content[self::$nm_index]['cat_id']=='quickwithcc')?'subject':$content[self::$nm_index]['cat_id']):(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject'));
-			}
-			$readonlys = $preserv = array();
-			if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
+				//we use the category "filter" option as specifier where we want to search (quick, subject, from, to, etc. ....)
+				if (empty($content[self::$nm_index]['cat_id']) || empty($content[self::$nm_index]['search']))
+				{
+					$content[self::$nm_index]['cat_id']=($content[self::$nm_index]['cat_id']?(!Mail::$supportsORinQuery[$this->mail_bo->profileID]&&($content[self::$nm_index]['cat_id']=='quick'||$content[self::$nm_index]['cat_id']=='quickwithcc')?'subject':$content[self::$nm_index]['cat_id']):(Mail::$supportsORinQuery[$this->mail_bo->profileID]?'quick':'subject'));
+				}
+				$readonlys = $preserv = array();
+				if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
 		}
 		catch (Exception $e)
 		{
@@ -592,17 +592,17 @@ class mail_ui
 		}
 		switch ($this->mail_bo->mailPreferences['previewPane'])
 		{
-		case "1"://preference used to be '1', now 'hide'
-		case "hide":
-			$etpl->setElementAttribute('splitter', 'template', 'mail.index.nosplitter');
-			break;
-		case "vertical":
-			$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
-			break;
-		case "expand":
-		case "fixed":
-			$etpl->setElementAttribute('mailSplitter', 'orientation', 'h');
-			break;
+			case "1"://preference used to be '1', now 'hide'
+			case "hide":
+				$etpl->setElementAttribute('splitter', 'template', 'mail.index.nosplitter');
+				break;
+			case "vertical":
+				$etpl->setElementAttribute('mailSplitter', 'orientation', 'v');
+				break;
+			case "expand":
+			case "fixed":
+				$etpl->setElementAttribute('mailSplitter', 'orientation', 'h');
+				break;
 		}
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -729,15 +729,15 @@ class mail_ui
 		{
 			switch ($this->mail_bo->mailPreferences['prefaskformove'])
 			{
-			case 0:
-				unset($tree_actions['drop_copy_mail']);
-				unset($tree_actions['drop_cancel']);
-				break;
-			case 1:
-				unset($tree_actions['drop_copy_mail']);
-				break;
-			default:
-				// everything is fine
+				case 0:
+					unset($tree_actions['drop_copy_mail']);
+					unset($tree_actions['drop_cancel']);
+					break;
+				case 1:
+					unset($tree_actions['drop_copy_mail']);
+					break;
+				default:
+					// everything is fine
 			}
 		}
 		//error_log(__METHOD__.__LINE__.' showAllFoldersInFolderPane:'.$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'].'/'.$GLOBALS['egw_info']['user']['preferences']['mail']['showAllFoldersInFolderPane']);
@@ -749,22 +749,22 @@ class mail_ui
 		++$group;	// put delete in own group
 		switch($GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'])
 		{
-		case 'move_to_trash':
-			$tree_actions['empty_trash'] = array(
-				'caption' => 'empty trash',
-				'icon' => 'dhtmlxtree/MailFolderTrash',
-				'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
-				'group'	=> $group,
-			);
-			break;
-		case 'mark_as_deleted':
-			$tree_actions['compress_folder'] = array(
-				'caption' => 'compress folder',
-				'icon' => 'dhtmlxtree/MailFolderTrash',
-				'onExecute' => 'javaScript:app.mail.mail_compressFolder',
-				'group'	=> $group,
-			);
-			break;
+			case 'move_to_trash':
+				$tree_actions['empty_trash'] = array(
+					'caption' => 'empty trash',
+					'icon' => 'dhtmlxtree/MailFolderTrash',
+					'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
+					'group'	=> $group,
+				);
+				break;
+			case 'mark_as_deleted':
+				$tree_actions['compress_folder'] = array(
+					'caption' => 'compress folder',
+					'icon' => 'dhtmlxtree/MailFolderTrash',
+					'onExecute' => 'javaScript:app.mail.mail_compressFolder',
+					'group'	=> $group,
+				);
+				break;
 		}
 		$junkFolder = ($imap_actions?$this->mail_bo->getJunkFolder():null);
 
@@ -930,31 +930,31 @@ class mail_ui
 		}
 		switch ($_action)
 		{
-		case 'spam':
-			$msg[] = $this->ajax_copyMessages($junk, array(
-				'all' => false,
-				'msg' => $messages
-			), 'move', null, true);
-			$refresh = true;
-			break;
-		case 'ham':
-			if ($this->mail_bo->icServer->acc_folder_ham && empty($this->mail_bo->icServer->acc_spam_api))
-			{
-				$msg[] = $this->ajax_copyMessages($ham, array(
+			case 'spam':
+				$msg[] = $this->ajax_copyMessages($junk, array(
 					'all' => false,
 					'msg' => $messages
-				), 'copy', null, true);
-			}
-			// Move mails to Inbox if they are in Junk folder
-			if ($junk == $this->mail_bo->profileID.self::$delimiter.$mailbox)
-			{
-				$msg[] = $this->ajax_copyMessages($inbox, array(
-					'all' => false,
-					'msg' => $messages
-				), 'move', null, true);
+					), 'move', null, true);
 				$refresh = true;
-			}
-			break;
+				break;
+			case 'ham':
+				if ($this->mail_bo->icServer->acc_folder_ham && empty($this->mail_bo->icServer->acc_spam_api))
+				{
+					$msg[] = $this->ajax_copyMessages($ham, array(
+						'all' => false,
+						'msg' => $messages
+						), 'copy', null, true);
+				}
+				// Move mails to Inbox if they are in Junk folder
+				if ($junk == $this->mail_bo->profileID.self::$delimiter.$mailbox)
+				{
+					$msg[] = $this->ajax_copyMessages($inbox, array(
+						'all' => false,
+						'msg' => $messages
+					), 'move', null, true);
+					$refresh = true;
+				}
+				break;
 		}
 		if ($GLOBALS['egw_info']['apps']['stylite'] && $this->mail_bo->icServer->acc_spam_api)
 		{
@@ -1196,18 +1196,18 @@ class mail_ui
 		} else {
 			$group++;
 		}
-		// Move in Exchange 
-		$actions['exchange_move'] = array(
-			'caption' => 'Move to EWS folder',
-			'icon' => 'move',
-			'group' => 2,
-			'allowOnMultiple' => true,
-			'nm_action' => 'popup',
-			'popup' => '500x600',
-			'url' => 'menuaction=mail.mail_ui.moveEWS&id=$row_id',
-			'enableClass' => 'is_ews',
-			'hideOnDisabled' => true,
-		);
+        // Move in Exchange 
+        $actions['exchange_move'] = array(
+            'caption' => 'Move to EWS folder',
+            'icon' => 'move',
+            'group' => 2,
+            'allowOnMultiple' => true,
+            'nm_action' => 'popup',
+            'popup' => '500x600',
+            'url' => 'menuaction=mail.mail_ui.moveEWS&id=$row_id',
+            'enableClass' => 'is_ews',
+            'hideOnDisabled' => true,
+        );
 		$spam_actions = $this->getSpamActions();
 		$group++;
 		foreach ($spam_actions as &$action)
@@ -1345,7 +1345,7 @@ class mail_ui
 						'icon' => 'tag_message',
 						'group' => ++$group,
 						// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
-						'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+						'enabled' => 'javaScript:app.mail.capability_enabled',
 						'hideOnDisabled' => true,
 						'children' => array(
 							'unlabel' => array(
@@ -1400,6 +1400,7 @@ class mail_ui
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 						'hint' => 'Flag or Unflag a mail',
 						'shortcut' => KeyManager::shortcut(KeyManager::F, true, true),
+						'enabled' => 'javaScript:app.mail.capability_enabled',
 						'toolbarDefault' => true
 					),
 					'read' => array(
@@ -1440,14 +1441,14 @@ class mail_ui
 			)
 		);
 		$extra_actions = Api\Hooks::process(array(
-			'location' => 'mail_extra_actions',
-			'group' => $group,
-		));
-		if ( is_array( $extra_actions ) ) {
-			foreach ( $extra_actions as $app => $extra) 
-				if ( is_array( $extra ) )
-					$actions += $extra;
-		}
+            'location' => 'mail_extra_actions',
+            'group' => $group,
+        ));
+        if ( is_array( $extra_actions ) ) {
+            foreach ( $extra_actions as $app => $extra) 
+                if ( is_array( $extra ) )
+                    $actions += $extra;
+        }
 
 		//error_log(__METHOD__.__LINE__.array2string(array_keys($actions)));
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
@@ -1516,8 +1517,8 @@ class mail_ui
 				$rows=array();
 				return 0;
 			}
-			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->getDefaultFolder();		
-		}
+            if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->getDefaultFolder();		
+        }
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
 		//Mail::$debugTimes=true;
 		if (Mail::$debugTimes) $starttime = microtime(true);
@@ -1621,7 +1622,7 @@ $cutoffdate2 = Api\DateTime::to('now','ts')-(3600*24*3);//BEFORE, startdate
 $filter['range'] = "BETWEEN";// we support SINCE, BEFORE, BETWEEN and ON
 $filter['since'] = date("d-M-Y", $cutoffdate);
 $filter['before']= date("d-M-Y", $cutoffdate2);
- */
+*/
 		try
 		{
 			if ($maxMessages > 75)
@@ -1789,48 +1790,48 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
 			switch ($act)
 			{
-			case 'forward':
-				$actionsenabled[$act]=$actions[$act];
-				break;
-			case 'save':
-				$actionsenabled[$act]=$actions[$act];
+				case 'forward':
+					$actionsenabled[$act]=$actions[$act];
+					break;
+				case 'save':
+					$actionsenabled[$act]=$actions[$act];
 
-				break;
-			case 'view':
-				$actionsenabled[$act]=$actions[$act];
-				break;
-			case 'flagged':
-				$actionsenabled[$act]= $actions['mark']['children'][$act];
-				break;
-			case 'read':
-				$actionsenabled[$act]= $actions['mark']['children'][$act];
-				break;
-			case 'label1':
-				$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('important');
-				$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
-				break;
-			case 'label2':
-				$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('job');
-				$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
-				break;
-			case 'label3':
-				$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('personal');
-				$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
-				break;
-			case 'label4':
-				$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('to do');
-				$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
-				break;
-			case 'label5':
-				$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('later');
-				$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
-				break;
-			case 'ham':
-			case 'spam':
-				$actionsenabled[$act]= $actions['spamfilter']['children'][$act];
-				break;
-			default:
-				if (isset($actions[$act])) $actionsenabled[$act]=$actions[$act];
+					break;
+				case 'view':
+					$actionsenabled[$act]=$actions[$act];
+					break;
+				case 'flagged':
+					$actionsenabled[$act]= $actions['mark']['children'][$act];
+					break;
+				case 'read':
+					$actionsenabled[$act]= $actions['mark']['children'][$act];
+					break;
+				case 'label1':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('important');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'label2':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('job');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'label3':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('personal');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'label4':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('to do');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'label5':
+					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('later');
+					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'ham':
+				case 'spam':
+					$actionsenabled[$act]= $actions['spamfilter']['children'][$act];
+					break;
+				default:
+					if (isset($actions[$act])) $actionsenabled[$act]=$actions[$act];
 			}
 		}
 		unset($actionsenabled['drag_mail']);
@@ -1921,9 +1922,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if ($header['label5']) {
 				$css_styles[] = 'labelfive';
 			}
-			if ( $account->is_ews() ){
+            if ( $account->is_ews() ){
 				$css_styles[] = 'is_ews';
-			}
+            }
 
 			//error_log(__METHOD__.array2string($css_styles));
 
@@ -1988,7 +1989,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				}
 				// show priority flag
 				if ($header['priority'] < 3) {
-					$image = Api\Html::image('mail','prio_high');
+					 $image = Api\Html::image('mail','prio_high');
 				} elseif ($header['priority'] > 3) {
 					$image = Api\Html::image('mail','prio_low');
 				} else {
@@ -2198,8 +2199,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
 
 		$nonDisplayAbleCharacters = array('[\016]','[\017]',
-			'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
-			'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
+				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
+				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
 
 		//error_log(__METHOD__.__LINE__.$mailBody);
 		$this->mail_bo->closeConnection();
@@ -2311,31 +2312,31 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$dtmpl = new Etemplate('mail.move_ews');
 		$ids = $_GET['id']? $_GET['id']: $content['id'];
-		$content['id'] = $ids;
-		$ids = explode(',', $ids );
-		list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $ids[0]);
-		$folderName = base64_decode( $folder64 );
-		$folderID = $this->mail_bo->getFolderId( $folderName );
-		$sel_options['folder'] = Mail\EWS\Lib::getWriteFolders( $profile, $folderID );
+        $content['id'] = $ids;
+        $ids = explode(',', $ids );
+        list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $ids[0]);
+        $folderName = base64_decode( $folder64 );
+        $folderID = $this->mail_bo->getFolderId( $folderName );
+        $sel_options['folder'] = Mail\EWS\Lib::getWriteFolders( $profile, $folderID );
 
-		if ( !$content['folder'] )
-			$content['msg'] = lang('No Folder Selected');
+        if ( !$content['folder'] )
+            $content['msg'] = lang('No Folder Selected');
 
-		if ( $content['folder'] && ($content['move'] || $content['copy'] ) ) {
-			$move = ( $content['move'] ? true : false );
-			$messageUIDs = array();
-			foreach( $ids as $uid ) {
-				list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $uid);
-				$messageUIDs[] = $message_uid;
-			}
-			$res = $this->mail_bo->moveMessages( $content['folder'], $messageUIDs, $move, $folderName );
-			if ( $res ) {
-				$msg = 'Operation Successful';
+        if ( $content['folder'] && ($content['move'] || $content['copy'] ) ) {
+            $move = ( $content['move'] ? true : false );
+            $messageUIDs = array();
+            foreach( $ids as $uid ) {
+                list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $uid);
+                $messageUIDs[] = $message_uid;
+            }
+            $res = $this->mail_bo->moveMessages( $content['folder'], $messageUIDs, $move, $folderName );
+            if ( $res ) {
+                $msg = 'Operation Successful';
 				if ( $move )
 					Framework::refresh_opener( $msg, 'mail', $ids, 'delete' );
-				Framework::window_close();
-			}
-		}
+                Framework::window_close();
+            }
+        }
 
 		$readonlys = array();
 		// Preserv
@@ -2403,8 +2404,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$mode = array();
 				switch(strtoupper($value['mimeType']))
 				{
-				case 'MESSAGE/RFC822':
-					$linkData = array
+					case 'MESSAGE/RFC822':
+						$linkData = array
 						(
 							'menuaction'	=> 'mail.mail_ui.displayMessage',
 							'mode'		=> 'display', //message/rfc822 attachments should be opened in display mode
@@ -2412,37 +2413,37 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							'part'		=> $value['partID'],
 							'is_winmail'    => $value['is_winmail']
 						);
-					$windowName = 'displayMessage_'. $rowID.'_'.$value['partID'];
-					$linkView = "egw_openWindowCentered('".Egw::link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());";
-					break;
-				case 'IMAGE/JPEG':
-				case 'IMAGE/PNG':
-				case 'IMAGE/GIF':
-				case 'IMAGE/BMP':
-					// set mode for media mimetypes because we need
-					// to structure a download url to be used maybe in expose.
-					$mode = array(
-						'mode' => 'save'
-					);
-				case 'APPLICATION/PDF':
-				case 'TEXT/PLAIN':
-				case 'TEXT/HTML':
-				case 'TEXT/DIRECTORY':
-					$sfxMimeType = $value['mimeType'];
-					$buff = explode('.',$value['name']);
-					$suffix = '';
-					if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
-					if (!empty($suffix)) $sfxMimeType = Api\MimeMagic::ext2mime($suffix);
-					if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
-					{
-						$attachments[$key]['mimeType'] = $sfxMimeType;
-						$value['mimeType'] = strtoupper($sfxMimeType);
-					}
-				case 'TEXT/X-VCARD':
-				case 'TEXT/VCARD':
-				case 'TEXT/CALENDAR':
-				case 'TEXT/X-VCALENDAR':
-					$linkData = array_merge(array
+						$windowName = 'displayMessage_'. $rowID.'_'.$value['partID'];
+						$linkView = "egw_openWindowCentered('".Egw::link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());";
+						break;
+					case 'IMAGE/JPEG':
+					case 'IMAGE/PNG':
+					case 'IMAGE/GIF':
+					case 'IMAGE/BMP':
+						// set mode for media mimetypes because we need
+						// to structure a download url to be used maybe in expose.
+						$mode = array(
+							'mode' => 'save'
+						);
+					case 'APPLICATION/PDF':
+					case 'TEXT/PLAIN':
+					case 'TEXT/HTML':
+					case 'TEXT/DIRECTORY':
+						$sfxMimeType = $value['mimeType'];
+						$buff = explode('.',$value['name']);
+						$suffix = '';
+						if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+						if (!empty($suffix)) $sfxMimeType = Api\MimeMagic::ext2mime($suffix);
+						if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
+						{
+							$attachments[$key]['mimeType'] = $sfxMimeType;
+							$value['mimeType'] = strtoupper($sfxMimeType);
+						}
+					case 'TEXT/X-VCARD':
+					case 'TEXT/VCARD':
+					case 'TEXT/CALENDAR':
+					case 'TEXT/X-VCALENDAR':
+						$linkData = array_merge(array
 						(
 							'menuaction'	=> 'mail.mail_ui.getAttachment',
 							'id'		=> $rowID,
@@ -2451,27 +2452,27 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							'mailbox'   => base64_encode($mailbox),
 							'smime_type' => $value['smime_type']
 						) , $mode);
-					$windowName = 'displayAttachment_'. $uid;
-					$reg = '800x600';
-					// handle calendar/vcard
-					if (strtoupper($value['mimeType'])=='TEXT/CALENDAR')
-					{
-						$windowName = 'displayEvent_'. $rowID;
-						$reg2 = Link::get_registry('calendar','view_popup');
-						$attachmentHTML[$key]['popup']=(!empty($reg2) ? $reg2 : $reg);
-					}
-					if (strtoupper($value['mimeType'])=='TEXT/X-VCARD' || strtoupper($value['mimeType'])=='TEXT/VCARD')
-					{
-						$windowName = 'displayContact_'. $rowID;
-						$reg2 = Link::get_registry('addressbook','add_popup');
-						$attachmentHTML[$key]['popup']=(!empty($reg2) ? $reg2 : $reg);
-					}
-					// apply to action
-					list($width,$height) = explode('x',(!empty($reg2) ? $reg2 : $reg));
-					$linkView = "egw_openWindowCentered('".Egw::link('/index.php',$linkData)."','$windowName',$width,$height);";
-					break;
-				default:
-					$linkData = array
+						$windowName = 'displayAttachment_'. $uid;
+						$reg = '800x600';
+						// handle calendar/vcard
+						if (strtoupper($value['mimeType'])=='TEXT/CALENDAR')
+						{
+							$windowName = 'displayEvent_'. $rowID;
+							$reg2 = Link::get_registry('calendar','view_popup');
+							$attachmentHTML[$key]['popup']=(!empty($reg2) ? $reg2 : $reg);
+						}
+						if (strtoupper($value['mimeType'])=='TEXT/X-VCARD' || strtoupper($value['mimeType'])=='TEXT/VCARD')
+						{
+							$windowName = 'displayContact_'. $rowID;
+							$reg2 = Link::get_registry('addressbook','add_popup');
+							$attachmentHTML[$key]['popup']=(!empty($reg2) ? $reg2 : $reg);
+						}
+						// apply to action
+						list($width,$height) = explode('x',(!empty($reg2) ? $reg2 : $reg));
+						$linkView = "egw_openWindowCentered('".Egw::link('/index.php',$linkData)."','$windowName',$width,$height);";
+						break;
+					default:
+						$linkData = array
 						(
 							'menuaction'	=> 'mail.mail_ui.getAttachment',
 							'id'		=> $rowID,
@@ -2480,8 +2481,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							'mailbox'   => base64_encode($mailbox),
 							'smime_type' => $value['smime_type']
 						);
-					$linkView = "window.location.href = '".Egw::link('/index.php',$linkData)."';";
-					break;
+						$linkView = "window.location.href = '".Egw::link('/index.php',$linkData)."';";
+						break;
 				}
 				// we either use mime_data for server-side supported mime-types or mime_url for client-side or download
 				if (empty($attachmentHTML[$key]['mime_data']))
@@ -2497,15 +2498,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'</b></a>';
 
 				$linkData = array
-					(
-						'menuaction'	=> 'mail.mail_ui.getAttachment',
-						'mode'		=> 'save',
-						'id'		=> $rowID,
-						'part'		=> $value['partID'],
-						'is_winmail'    => $value['is_winmail'],
-						'mailbox'   => base64_encode($mailbox),
-						'smime_type' => $value['smime_type']
-					);
+				(
+					'menuaction'	=> 'mail.mail_ui.getAttachment',
+					'mode'		=> 'save',
+					'id'		=> $rowID,
+					'part'		=> $value['partID'],
+					'is_winmail'    => $value['is_winmail'],
+					'mailbox'   => base64_encode($mailbox),
+					'smime_type' => $value['smime_type']
+				);
 				$attachmentHTML[$key]['link_save'] ="<a href='".Egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".Api\Html::image('mail','fileexport')."</a>";
 
 				if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
@@ -2618,14 +2619,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$text = $usage .'/'.$limit;
 			switch ($percent)
 			{
-			case ($percent > 90):
-				$class ='mail-index_QuotaRed';
-				break;
-			case ($percent > 80):
-				$class ='mail-index_QuotaYellow';
-				break;
-			default:
-				$class ='mail-index_QuotaGreen';
+				case ($percent > 90):
+					$class ='mail-index_QuotaRed';
+					break;
+				case ($percent > 80):
+					$class ='mail-index_QuotaYellow';
+					break;
+				default:
+					$class ='mail-index_QuotaGreen';
 			}
 		}
 		else
@@ -3167,17 +3168,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			Framework::message($e->getMessage());
 			// do NOT include any default CSS
 			$smimeHtml = $this->get_email_header().
-				'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
-				'<form id="smimePasswordRequest" method="post">'.
-				'<div class="bg-style"></div>'.
-				'<div>'.
-				'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
-				'<input type="submit" value="'.lang("submit").'"/>'.
-				'</div>'.
-				'<div style="top:47%;margin-left:-15px;">'.
-				lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
-				'</div>'.
-				'</form>';
+			'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
+			'<form id="smimePasswordRequest" method="post">'.
+					'<div class="bg-style"></div>'.
+					'<div>'.
+						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
+						'<input type="submit" value="'.lang("submit").'"/>'.
+					'</div>'.
+					'<div style="top:47%;margin-left:-15px;">'.
+						lang("Remember the password for ").'<input name="smime_pass_exp" type="number" max="60" min="1" placeholder="10" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+					'</div>'.
+			'</form>';
 			return $smimeHtml;
 		}
 		$calendar_part = null;
@@ -3232,7 +3233,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function showBody(&$body, $print=true,$fullPageTags=true)
 	{
 		$BeginBody = '<div class="mailDisplayBody">
-			<table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
+<table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
 
 		$EndBody = '</td></tr></table></div>';
 		if ($fullPageTags) $EndBody .= "</body></html>";
@@ -3248,8 +3249,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$bodyParts	= $_bodyParts;
 
 		$nonDisplayAbleCharacters = array('[\016]','[\017]',
-			'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
-			'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
+				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
+				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
 
 		$body = '';
 
@@ -3408,7 +3409,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						Mail::$htmLawed_config['tidy'] = $tv;
 					}
 				}
- */
+*/
 				// removes stuff between http and ?http
 				$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
 				$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
@@ -3419,7 +3420,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 				// redirect links for websites if you use no cookies
 				#if (!($GLOBALS['egw_info']['server']['usecookies'])) { //do it all the time, since it does mask the mailadresses in urls
-				//TODO:if ($modifyURI) $this->parseHREF($newBody);
+					//TODO:if ($modifyURI) $this->parseHREF($newBody);
 				#}
 				// create links for inline images
 				if ($modifyURI)
@@ -3489,7 +3490,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		 * @param string $_partID
 		 * @param string $_type
 		 * @return string|boolean returns the replace
-		 */
+		*/
 		$replace_callback = function ($matches) use ($_mailbox,$_uid, $_partID,  $_type)
 		{
 			if (!$_type)	return false;
@@ -3497,19 +3498,19 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			// Build up matches according to selected type
 			switch ($_type)
 			{
-			case "plain":
-				$CID = $matches[1];
-				break;
-			case "src":
-				// as src:cid contains some kind of url, it is likely to be urlencoded
-				$CID = urldecode($matches[2]);
-				break;
-			case "url":
-				$CID = $matches[1];
-				break;
-			case "background":
-				$CID = $matches[2];
-				break;
+				case "plain":
+					$CID = $matches[1];
+					break;
+				case "src":
+					// as src:cid contains some kind of url, it is likely to be urlencoded
+					$CID = urldecode($matches[2]);
+					break;
+				case "url":
+					$CID = $matches[1];
+					break;
+				case "background":
+					$CID = $matches[2];
+					break;
 			}
 
 			static $cache = array();	// some caching, if mails containing the same image multiple times
@@ -3556,14 +3557,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				// Decides the final result of replacement according to the type
 				switch ($_type)
 				{
-				case "plain":
-					return '<img src="'.$imageURL.'" />';
-				case "src":
-					return 'src="'.$imageURL.'"';
-				case "url":
-					return 'url('.$imageURL.');';
-				case "background":
-					return 'background="'.$imageURL.'"';
+					case "plain":
+						return '<img src="'.$imageURL.'" />';
+					case "src":
+						return 'src="'.$imageURL.'"';
+					case "url":
+						return 'url('.$imageURL.');';
+					case "background":
+						return 'background="'.$imageURL.'"';
 				}
 			}
 			return false;
@@ -3572,14 +3573,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		// return new body content base on chosen type
 		switch($_type)
 		{
-		case"plain":
-			return preg_replace_callback("/\[cid:(.*)\]/iU",$replace_callback,$_body);
-		case "src":
-			return preg_replace_callback("/src=(\"|\')cid:(.*)(\"|\')/iU",$replace_callback,$_body);
-		case "url":
-			return preg_replace_callback("/url\(cid:(.*)\);/iU",$replace_callback,$_body);
-		case "background":
-			return preg_replace_callback("/background=(\"|\')cid:(.*)(\"|\')/iU",$replace_callback,$_body);
+			case"plain":
+				return preg_replace_callback("/\[cid:(.*)\]/iU",$replace_callback,$_body);
+			case "src":
+				return preg_replace_callback("/src=(\"|\')cid:(.*)(\"|\')/iU",$replace_callback,$_body);
+			case "url":
+				return preg_replace_callback("/url\(cid:(.*)\);/iU",$replace_callback,$_body);
+			case "background":
+				return preg_replace_callback("/background=(\"|\')cid:(.*)(\"|\')/iU",$replace_callback,$_body);
 		}
 	}
 
@@ -3621,15 +3622,15 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			try
 			{
 				$messageUid = $this->importMessageToFolder($file,$destination,$importID);
-				$linkData = array
-					(
-						'id' => $this->createRowID($destination, $messageUid, true),
-					);
+			    $linkData = array
+			    (
+					'id' => $this->createRowID($destination, $messageUid, true),
+			    );
 			}
 			catch (Api\Exception\WrongUserinput $e)
 			{
-				$importFailed=true;
-				$content['msg']		= $e->getMessage();
+					$importFailed=true;
+					$content['msg']		= $e->getMessage();
 			}
 			if (!$importFailed)
 			{
@@ -3793,11 +3794,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$messageUid = $this->importMessageToFolder($formData,$draftFolder,$importID);
 			$linkData = array
-				(
-					'menuaction'    => ($mode=='display'?'mail.mail_ui.displayMessage':'mail.mail_compose.composeFromDraft'),
-					'id'		=> $this->createRowID($draftFolder,$messageUid,true),
-					'deleteDraftOnClose' => 1,
-				);
+			(
+		        'menuaction'    => ($mode=='display'?'mail.mail_ui.displayMessage':'mail.mail_compose.composeFromDraft'),
+				'id'		=> $this->createRowID($draftFolder,$messageUid,true),
+				'deleteDraftOnClose' => 1,
+			);
 			if ($mode!='display')
 			{
 				unset($linkData['deleteDraftOnClose']);
@@ -3954,7 +3955,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 									catch(Horde_Imap_Client_Exception $e)
 									{
 										$error = Lang('Folder %1 has been created successfully,'.
-											' although the subscription failed because of %2', $new, $e->getMessage());
+												' although the subscription failed because of %2', $new, $e->getMessage());
 									}
 								}
 							}
@@ -4015,7 +4016,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (Mail::$debug) error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
 		if ($_folderName)
 		{
-			$fragments = array();
+            $fragments = array();
 			Api\Translation::add_app('mail');
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);
@@ -4502,9 +4503,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$mail_ui = new mail_ui(true);	// run constructor
 		}
-		// Return Default Folder to select
-		$defaultFolder = $mail_ui->mail_bo->getDefaultFolder();
-		Api\Json\Response::get()->data( $defaultFolder );	
+        // Return Default Folder to select
+        $defaultFolder = $mail_ui->mail_bo->getDefaultFolder();
+        Api\Json\Response::get()->data( $defaultFolder );	
 	}
 
 	/**
@@ -4899,7 +4900,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid = true,
 							false
 						);
-						$messageListForToggle = ( !is_array( $_sRt['match'] ) ? $_sRt['match']->ids : $_sRt['match'] );
+                        $messageListForToggle = ( !is_array( $_sRt['match'] ) ? $_sRt['match']->ids : $_sRt['match'] );
 						$filter['status'] = array($_flag);
 						if ($query['filter'] && $query['filter'] !='any')
 						{
@@ -4913,7 +4914,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid = true,
 							false
 						);
-						$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
+                        $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 						if (count($messageListForToggle)>0)
 						{
 							$flag2set = (strtolower($_flag));
@@ -4950,7 +4951,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid,
 							false
 						);
-						$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
+                        $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 						unset($_messageList['all']);
 						$_messageList['msg'] = array();
 					}
@@ -5079,7 +5080,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$rByUid,
 						false
 					);
-					$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
+                    $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 				}
 				else
 				{
@@ -5240,7 +5241,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$rByUid=true,
 						false
 					);
-					$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
+                    $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 					foreach($messageList as $uID)
 					{
 						//error_log(__METHOD__.__LINE__.$uID);
@@ -5405,6 +5406,17 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		}
 	}
 
+	/**
+	 * Check whether capability is enabled
+	 *
+	 * @param string $profile
+	 * @return boolean 
+	 */
+	function ajax_checkCapability( $capability )
+	{
+		$res = $this->mail_bo->icServer->hasCapability( $capability );
+		Api\Json\Response::get()->data( $res );
+	}
 	/**
 	 * Function check whether profile is ews
 	 *

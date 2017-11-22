@@ -1626,6 +1626,28 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Check if capability is enabled on that account
+	 *
+	 * @param {object} _action
+	 * @param {object} _senders the representation of the tree leaf to be manipulated
+	 * @param {object} _currentNode
+	 */
+	capability_enabled: function( _action, _senders, _currentNode )
+	{
+		var capability;
+		switch ( _action.id ) {
+			case 'setLabel':
+				capability = 'SUPPORTS_KEYWORDS';
+				break;
+			case 'flagged':
+				capability = 'SUPPORTS_FLAGS';
+				break;
+		}
+		var req = egw.json('mail.mail_ui.ajax_checkCapability',[ capability ],null,this,false).sendRequest(); 
+		return req.responseJSON.response[0].data; 		
+	},
+
+	/**
 	 * Check if ACL is enabled on that account
 	 *
 	 * ACL enabled is stored as data { acl: true/false } on INBOX node.
