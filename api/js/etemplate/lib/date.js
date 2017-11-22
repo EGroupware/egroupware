@@ -82,7 +82,7 @@ function date (format, timestamp) {
             return jsdate.getDate();
         },
         l: function () { // Full day name; Monday...Sunday
-            return txt_words[f.w()] + 'day';
+            return egw && egw.lang ? egw.lang(txt_words[f.w()] + 'day') : txt_words[f.w()] + 'day';
         },
         N: function () { // ISO-8601 day of week; 1[Mon]..7[Sun]
             return f.w() || 7;
