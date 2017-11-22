@@ -6342,6 +6342,34 @@ span.egw_tutorial_title {
   white-space: nowrap;
   overflow-x: hidden;
 }
+/* Modify notification height. */
+#egwpopup #egwpopup_list .egwpopup_message {
+    height: 140px;
+    overflow: scroll;
+}
+/* Make Notifications Expandable */
+#egwpopup #egwpopup_list .egwpopup_message.notification_expanded {
+    position: fixed;
+    top: 5vh;
+    height: 90vh;
+    left: 20vw;
+    width: 60vw;
+    box-shadow: 0 0 40px #666;
+}
+#egwpopup #egwpopup_list .egwpopup_message.notification_expanded:hover {
+    background-color: #fafafa;
+}
+#egwpopup #egwpopup_list span.egwpopup_expand {
+  display: inline-block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/search.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  cursor: pointer;
+}
 /*@import "../less/layout_buttons_global.less";*/
 /*@import "../less/layout_chosen.less";*/
 /*@import "../less/layout_messages.less";*/

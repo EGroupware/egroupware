@@ -209,6 +209,11 @@
 					.prependTo($top_toolbar);
 			// Delete button
 			$delete = jQuery(document.createElement('span'))
+					.addClass('egwpopup_expand')
+					.attr('title',egw.lang('expand/collapse notification'))
+					.click(jQuery.proxy(this.button_expand, this,[$message]))
+					.prependTo($message);
+			$delete = jQuery(document.createElement('span'))
 					.addClass('egwpopup_delete')
 					.attr('title',egw.lang('delete this message'))
 					.click(jQuery.proxy(this.button_delete, this,[$message]))
@@ -418,6 +423,15 @@
 		egwpopup_message.hide();
 		this.bell("inactive");
 		this.counterUpdate();
+	};
+
+	/**
+	 * Callback for expand button: Expand notification
+	 */
+	notifications.prototype.button_expand = function(_node, _event) {
+		_event.stopPropagation();
+		var egwpopup_message = _node[0];
+        egwpopup_message.toggleClass('notification_expanded');
 	};
 
 	/**
