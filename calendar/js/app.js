@@ -3895,7 +3895,7 @@ jQuery.extend(app.classes.calendar,{
 			header: function(state) {
 				var formatDate = new Date(state.date);
 				formatDate = new Date(formatDate.valueOf() + formatDate.getTimezoneOffset() * 60 * 1000);
-				return date('l, ',formatDate) + app.calendar.View.header.call(this, state);
+				return egw.lang(date('l',formatDate)) + ', ' + app.calendar.View.header.call(this, state);
 			},
 			etemplates: ['calendar.view','calendar.todo'],
 			start_date: function(state) {
