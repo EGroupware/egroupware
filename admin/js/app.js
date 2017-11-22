@@ -120,6 +120,9 @@ app.classes.admin = AppJS.extend(
 			case 'admin.mailaccount':
 				this.account_hide_not_applying();
 				break;
+			case 'admin.mailaccount.permissions':
+				this.ews_switch_folder();
+				break;
 		}
 	},
 
@@ -1196,5 +1199,21 @@ app.classes.admin = AppJS.extend(
             }, egw.lang('Changing Account Type will delete all your current settings. Are you sure you want to continue?'), 
             egw.lang('Change Type'), null, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
         }
+	},
+
+    /**
+     * Switch Folder in ews permissions
+     *
+     */
+    ews_switch_folder: function()
+    {
+        var folder = this.et2.getWidgetById('mailbox');
+		jQuery('#admin-mailaccount-permissions_ews_permissions tr').each( function() {
+			if ( jQuery( this ).hasClass('th') ) return;
+			if ( jQuery( this ).find('input[name*=ews_name]').val() == folder.getValue() )
+				jQuery( this ).show();
+			else
+				jQuery( this ).hide();
+		});
     }
 });

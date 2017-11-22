@@ -2,109 +2,81 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
 <!-- $Id$ -->
 <overlay>
-    <template id="admin.mailaccount.permissions.tab" template="" lang="" group="0" version="1.9.001">
-        <grid id="ews_permissions" span="2">
-            <columns>
-                <column width="5%" />
-                <column width="5%" />
-                <column width="20%" />
-                <column width="2%" />
-                <column width="2%" />
-                <column width="2%" />
-                <column width="2%" />
-                <column width="2%" />
-                <column width="2%" />
-                <column width="20%" />
-                <column width="1" />
-            </columns>
-            <rows>
-                <row class="th">
-                    <description value="Default Folder" />
-                    <description value="Order" />
-                    <description value="Name" />
-                    <description value="Apply Permissions" />
-                    <description value="Read" />
-                    <description value="Write" />
-                    <description value="Delete" />
-                    <description value="Manage Folder" />
-                    <description value="Move Anywhere" />
-                    <description value="Allow moving to" />
-                    <description value="" />
-                </row>
-                <row>            
-                    <checkbox id="${row}[ews_is_default]" />
-                    <textbox size="4" type="int" id="${row}[ews_order]" />
-                    <description id="${row}[ews_name]" />
-                    <checkbox id="${row}[ews_apply_permissions]" />
-                    <checkbox id="${row}[read]" />
-                    <checkbox id="${row}[write]" />
-                    <checkbox id="${row}[delete]" />
-                    <checkbox id="${row}[manage_folder]" />
-                    <checkbox id="${row}[ews_move_anywhere]" />
-                    <listbox id="${row}[ews_move_to]" rows="1" tags="true" multiple="true" class="tracker_queue" empty_label="Select Folders" height="24" />
-                    <description type="hidden" id="${row}[ews_folder]" />
-                </row>
-            </rows>
-        </grid>
-    </template>
-    <template id="admin.mailaccount.permissions" template="" lang="" group="0" version="1.9.001">
+	<template id="admin.mailaccount.permissions" template="" lang="" group="0" version="1.9.001">
         <textbox type="hidden" id="acc_id" />
-        <grid width="100%">
-            <columns>
-                <column width="115"/>
-                <column/>
-            </columns>
-            <rows>
+		<grid width="100%" height="100%">
+			<columns>
+				<column width="10%"/>
+				<column width="90%"/>
+			</columns>
+			<rows>
 				<row class="dialogHeader">
-                    <description value="Custom Permissions" />
-                </row>
-                <row>
-                    <grid id="ews_permissions_header" span="2">
-                        <columns>
-                            <column width="5%" />
-                            <column width="5%" />
-                            <column width="20%" />
-                            <column width="2%" />
-                            <column width="2%" />
-                            <column width="2%" />
-                            <column width="2%" />
-                            <column width="2%" />
-                            <column width="5%" />
-                            <column width="20%" />
-                            <column width="1" />
-                        </columns>
-                        <rows>
-                            <row class="th">
-                                <description value="Default Folder" />
-                                <description value="Order" />
-                                <description value="Name" />
-                                <description value="Apply Permissions" />
-                                <description value="Read" />
-                                <description value="Write" />
-                                <description value="Delete" />
-                                <description value="Manage Folder" />
-                                <description value="Move Anywhere" />
-                                <description value="Allow moving to" />
-                                <description value="" />
-                            </row>
-                        </rows>
-                </grid>           </row>
-                <row>
-					<tabbox id="ews_tabs" span="all" >
-						<tabs>
-							<tab id="admin.mailaccount.permissions.tab" label="" statustext="" tab_height="400" />
-						</tabs>
-						<tabpanels>
-							<template id="admin.mailaccount.permissions.tab" height="400" />
-						</tabpanels>
-					</tabbox>
-                </row>
-            </rows>
-        </grid>
-		<hbox class="dialogFooterToolbar">
-            <button label="Save" id="save"/>
-            <button label="Apply" id="apply" />
-            <button label="Cancel" id="cancel" onclick="window.close();"/>
-        </hbox>
-    </template>
+					<description value="Custom Permissions"  />
+				</row>
+				<row>
+					<description value="Folder"/>
+					<listbox id="mailbox" width="100%" rows="1" height="150" multiple="false" search="true" onchange='app.admin.ews_switch_folder'/>
+				</row>
+				<row>
+					<description value="Rights"/>
+					<grid id="ews_permissions" width="100%">
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Order"/>
+								<description align="center" statustext="Apply Permissions (Custom Permissions Apply)" value="A"/>
+								<description align="center" statustext="Default Folder" value="F"/>
+								<description align="center" statustext="Read" value="R"/>
+								<description align="center" statustext="Write" value="W"/>
+								<description align="center" statustext="Delete" value="D"/>
+								<description align="center" statustext="Manage Folder" value="M"/>
+								<description align="center" statustext="Move Anywhere" value="V"/>
+								<description align="center" statustext="Allow Moving mails to specific folders only" value="Move To"/>
+								<description value=""/>
+								<description value=""/>
+							</row>
+							<row class="row">
+								<textbox size="4" type="int" id="${row}[ews_order]" />
+								<checkbox id="${row}[ews_apply_permissions]" />
+								<checkbox id="${row}[ews_is_default]" />
+								<checkbox id="${row}[read]" />
+								<checkbox id="${row}[write]" />
+								<checkbox id="${row}[delete]" />
+								<checkbox id="${row}[manage_folder]" />
+								<checkbox id="${row}[ews_move_anywhere]" />
+								<listbox id="${row}[ews_move_to]" rows="1" tags="true" multiple="true" class="tracker_queue" empty_label="Select Folders" height="24" />
+								<description type="hidden" id="${row}[ews_folder]" />
+								<textbox id="${row}[ews_name]" type="hidden"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<grid resize_ratio="1">
+						<columns><column/></columns>
+						<rows> <row></row> </rows>
+					</grid>
+				</row>
+				<row class="dialogFooterToolbar">
+					<hbox>
+						<button label="Save" id="save"/>
+						<button label="Apply" id="apply"/>
+						<buttononly label="Cancel" id="cancel" onclick="window.close()"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
 </overlay>
