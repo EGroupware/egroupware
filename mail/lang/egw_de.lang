@@ -24,6 +24,7 @@ add "%1" into whiltelisted domains	mail	de	Domain "%1" als Whitelist hinzufügen
 add "%1" into whitelisted emails	mail	de	E-Mailadresse "%1" zu Whitelist hinzufügen
 add a new folder to %1:	mail	de	Einen neuen Ordner erstellen unter:  %1
 add all my aliases	mail	de	Alle Alias Adressen hinzufügen
+add as new	mail	de	Neues Ticket erstellen
 add folder	mail	de	Ordner hinzufügen
 add to addressbook	mail	de	zum Adressbuch hinzufügen
 add your domain as "%1" in options to list of email providers and enable api.	mail	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
