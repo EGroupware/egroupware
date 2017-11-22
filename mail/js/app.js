@@ -170,7 +170,7 @@ app.classes.mail = AppJS.extend(
 
 				// Set preview pane state
 				this.mail_disablePreviewArea(!this.getPreviewPaneState());
-				
+
 				//Get initial folder status
 				this.mail_refreshFolderStatus(undefined,undefined,false);
 
@@ -3054,8 +3054,9 @@ app.classes.mail = AppJS.extend(
 		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
 		{
 			var data = egw.dataGetUIDdata(_elems[0].id);
+			var title = egw.lang('Select') + ' ' + egw.lang(app) + ' ' + (egw.link_get_registry(app, 'entry') ? egw.link_get_registry(app, 'entry') : egw.lang('entry'));
 			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
-			this.integrate_checkAppEntry('Select '+ app + ' entry', app, subject, url,  mail_import_hook.app_entry_method, function (args){
+			this.integrate_checkAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, function (args){
 				egw_openWindowCentered(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''),'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 			});
 		}
@@ -3089,9 +3090,9 @@ app.classes.mail = AppJS.extend(
 		   if (!_entryId)
 		   {
 			   var buttons = [
-				   {text: 'Append', id: 'append', image: 'check', default:true},
-				   {text: 'Add as new', id: 'new', image: 'check'},
-				   {text: 'Cancel', id: 'cancel', image: 'check'}
+				   {text: app.mail.egw.lang('Append'), id: 'append', image: 'check', default:true},
+				   {text: app.mail.egw.lang('Add as new'), id: 'new', image: 'check'},
+				   {text: app.mail.egw.lang('Cancel'), id: 'cancel', image: 'check'}
 			   ];
 			   et2_createWidget("dialog",
 			   {
@@ -5275,7 +5276,8 @@ app.classes.mail = AppJS.extend(
 			var mail_import_hook = toolbar.options.actions[integApps[index]]['mail_import']['app_entry_method'];
 			if (integWidget.get_value() == 'on')
 			{
-				this.integrate_checkAppEntry(egw.lang('Select %1 entry',integApps[index]), integApps[index].substr(3), subject.get_value(), '', mail_import_hook , function (args){
+				var title = egw.lang('Select') + ' ' + egw.lang(integApps[index]) + ' ' + (egw.link_get_registry(integApps[index], 'entry') ? egw.link_get_registry(integApps[index], 'entry') : egw.lang('entry'));
+				this.integrate_checkAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook , function (args){
 					var value = {};
 					value[integApps[index]] = args.entryid;
 					var oldValue = to_integrate_ids.get_value()[0];
