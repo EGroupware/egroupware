@@ -197,10 +197,10 @@ class admin_mail
 			'acc_imap_port' => 993,
 			'manual_class' => 'emailadmin_manual',
 		);
-        // Select Options
-        $sel_options['acc_imap_ssl'] = self::$ssl_types;
-        // Not listing other server types, since this could be single account
-        // EGroupware only allows different types for multiple accounts
+		// Select Options
+		$sel_options['acc_imap_ssl'] = self::$ssl_types;
+		// Not listing other server types, since this could be single account
+		// EGroupware only allows different types for multiple accounts
 		$sel_options['acc_imap_type'] = Mail\Types::getIMAPServerTypes(false);
 		Framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
 
@@ -292,16 +292,16 @@ class admin_mail
 					$content['output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying $ssl connection to $host:$port ...\n";
 					$content['acc_imap_port'] = $port;
 
-                    $imap = self::imap_client($content, self::TIMEOUT);
+					$imap = self::imap_client($content, self::TIMEOUT);
 
-                    //$content['output'] .= array2string($imap->capability());
-                    $imap->login();
-                    $content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in'))."\n";
-                    if (!$imap->isSecureConnection())
-                    {
-                        $content['output'] .= lang('Connection is NOT secure! Everyone can read eg. your credentials.')."\n";
-                        $content['acc_imap_ssl'] = 'no';
-                    }
+					//$content['output'] .= array2string($imap->capability());
+					$imap->login();
+					$content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in'))."\n";
+					if (!$imap->isSecureConnection())
+					{
+						$content['output'] .= lang('Connection is NOT secure! Everyone can read eg. your credentials.')."\n";
+						$content['acc_imap_ssl'] = 'no';
+					}
 					//$content['output'] .= "\n\n".array2string($imap->capability());
 					$content['connected'] = $connected = true;
 					break 2;
@@ -310,18 +310,18 @@ class admin_mail
 				{
 					switch($e->getCode())
 					{
-						case Horde_Imap_Client_Exception::LOGIN_AUTHENTICATIONFAILED:
-							$content['output'] .= "\n".$e->getMessage()."\n";
-							break 3;	// no need to try other SSL or non-SSL connections, if auth failed
+					case Horde_Imap_Client_Exception::LOGIN_AUTHENTICATIONFAILED:
+						$content['output'] .= "\n".$e->getMessage()."\n";
+						break 3;	// no need to try other SSL or non-SSL connections, if auth failed
 
-						case Horde_Imap_Client_Exception::SERVER_CONNECT:
-							$content['output'] .= "\n".$e->getMessage()."\n";
-							if ($ssl == 'STARTTLS') break 2;	// no need to try insecure connection on same port
-							break;
+					case Horde_Imap_Client_Exception::SERVER_CONNECT:
+						$content['output'] .= "\n".$e->getMessage()."\n";
+						if ($ssl == 'STARTTLS') break 2;	// no need to try insecure connection on same port
+						break;
 
-						default:
-							$content['output'] .= "\n".get_class($e).': '.$e->getMessage().' ('.$e->getCode().')'."\n";
-							//$content['output'] .= $e->getTraceAsString()."\n";
+					default:
+						$content['output'] .= "\n".get_class($e).': '.$e->getMessage().' ('.$e->getCode().')'."\n";
+						//$content['output'] .= $e->getTraceAsString()."\n";
 					}
 					if (self::$debug) _egw_log_exception($e);
 				}
@@ -335,34 +335,34 @@ class admin_mail
 		if ($connected)	// continue with next wizard step: define folders
 		{
 			unset($content['button']);
-            //EWS: skip steps
-            if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
-                return $this->smtp($content, lang('Successful connected to %1 server%2.', 'EWS', ' '.lang('and logged in')).
-                    ($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
-            else
-                return $this->folder($content, lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in')).
-                    ($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
+			//EWS: skip steps
+			if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
+				return $this->smtp($content, lang('Successful connected to %1 server%2.', 'EWS', ' '.lang('and logged in')).
+				($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
+			else
+				return $this->folder($content, lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in')).
+				($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
 		}
 		// add validation error, if we can identify a field
 		if (!$connected && $e instanceof Horde_Imap_Client_Exception)
 		{
 			switch($e->getCode())
 			{
-				case Horde_Imap_Client_Exception::LOGIN_AUTHENTICATIONFAILED:
-					Etemplate::set_validation_error('acc_imap_username', lang($e->getMessage()));
-					Etemplate::set_validation_error('acc_imap_password', lang($e->getMessage()));
-					break;
+			case Horde_Imap_Client_Exception::LOGIN_AUTHENTICATIONFAILED:
+				Etemplate::set_validation_error('acc_imap_username', lang($e->getMessage()));
+				Etemplate::set_validation_error('acc_imap_password', lang($e->getMessage()));
+				break;
 
-				case Horde_Imap_Client_Exception::SERVER_CONNECT:
-					Etemplate::set_validation_error('acc_imap_host', lang($e->getMessage()));
-					break;
+			case Horde_Imap_Client_Exception::SERVER_CONNECT:
+				Etemplate::set_validation_error('acc_imap_host', lang($e->getMessage()));
+				break;
 			}
 		}
 		$readonlys['button[manual]'] = true;
 		unset($content['manual_class']);
 		$sel_options['acc_imap_ssl'] = self::$ssl_types;
-        // Not listing other server types, since this could be single account
-        // EGroupware only allows different types for multiple accounts
+		// Not listing other server types, since this could be single account
+		// EGroupware only allows different types for multiple accounts
 		$sel_options['acc_imap_type'] = Mail\Types::getIMAPServerTypes(false);
 		$tpl = new Etemplate('admin.mailwizard');
 		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys, $content, 2);
@@ -383,11 +383,11 @@ class admin_mail
 			unset($content['button']);
 			switch($button)
 			{
-				case 'back':
-					return $this->add($content);
+			case 'back':
+				return $this->add($content);
 
-				case 'continue':
-					return $this->sieve($content);
+			case 'continue':
+				return $this->sieve($content);
 			}
 		}
 		$content['msg'] = $msg;
@@ -397,8 +397,8 @@ class admin_mail
 			//_debug_array($content);
 			$sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
 				$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
-					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
-						$sel_options['acc_folder_ham'] = self::mailboxes($imap, $content);
+				$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
+				$sel_options['acc_folder_ham'] = self::mailboxes($imap, $content);
 		}
 		catch(Exception $e) {
 			$content['msg'] = $e->getMessage();
@@ -504,15 +504,15 @@ class admin_mail
 			unset($content['button']);
 			switch($button)
 			{
-				case 'back':
-					return $this->folder($content);
+			case 'back':
+				return $this->folder($content);
 
-				case 'continue':
-					if (!$content['acc_sieve_enabled'])
-					{
-						return $this->smtp($content);
-					}
-					break;
+			case 'continue':
+				if (!$content['acc_sieve_enabled'])
+				{
+					return $this->smtp($content);
+				}
+				break;
 			}
 		}
 		// first try: hide manual config
@@ -604,12 +604,12 @@ class admin_mail
 		{
 			switch($e->getCode())
 			{
-				case 61:	// connection refused
-				case 60:	// connection timed out (imap.googlemail.com returns that for none-ssl/4190/2000)
-				case 65:	// no route ot host (imap.googlemail.com returns that for ssl/5190)
-					Etemplate::set_validation_error('acc_sieve_host', lang($e->getMessage()));
-					Etemplate::set_validation_error('acc_sieve_port', lang($e->getMessage()));
-					break;
+			case 61:	// connection refused
+			case 60:	// connection timed out (imap.googlemail.com returns that for none-ssl/4190/2000)
+			case 65:	// no route ot host (imap.googlemail.com returns that for ssl/5190)
+				Etemplate::set_validation_error('acc_sieve_host', lang($e->getMessage()));
+				Etemplate::set_validation_error('acc_sieve_port', lang($e->getMessage()));
+				break;
 			}
 			$content['msg'] = lang('No sieve support detected, either fix configuration manually or leave it switched off.');
 			$content['acc_sieve_enabled'] = 0;
@@ -641,11 +641,11 @@ class admin_mail
 			unset($content['button']);
 			switch($button)
 			{
-				case 'back':
-                    if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
-                        return $this->add($content);
-                    else
-                        return $this->sieve($content);
+			case 'back':
+				if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
+					return $this->add($content);
+				else
+					return $this->sieve($content);
 			}
 		}
 		// first try: hide manual config
@@ -771,17 +771,17 @@ class admin_mail
 					{
 						switch($e->getCode())
 						{
-							case Horde_Smtp_Exception::LOGIN_AUTHENTICATIONFAILED:
-							case Horde_Smtp_Exception::LOGIN_REQUIREAUTHENTICATION:
-							case Horde_Smtp_Exception::UNSPECIFIED:
-								$content['smtp_output'] .= "\n".$e->getMessage()."\n";
-								break;
-							case Horde_Smtp_Exception::SERVER_CONNECT:
-								$content['smtp_output'] .= "\n".$e->getMessage()."\n";
-								break;
-							default:
-								$content['smtp_output'] .= "\n".$e->getMessage().' ('.$e->getCode().')'."\n";
-								break;
+						case Horde_Smtp_Exception::LOGIN_AUTHENTICATIONFAILED:
+						case Horde_Smtp_Exception::LOGIN_REQUIREAUTHENTICATION:
+						case Horde_Smtp_Exception::UNSPECIFIED:
+							$content['smtp_output'] .= "\n".$e->getMessage()."\n";
+							break;
+						case Horde_Smtp_Exception::SERVER_CONNECT:
+							$content['smtp_output'] .= "\n".$e->getMessage()."\n";
+							break;
+						default:
+							$content['smtp_output'] .= "\n".$e->getMessage().' ('.$e->getCode().')'."\n";
+							break;
 						}
 						if (self::$debug) _egw_log_exception($e);
 					}
@@ -805,17 +805,17 @@ class admin_mail
 		{
 			switch($e->getCode())
 			{
-				case Horde_Smtp_Exception::LOGIN_AUTHENTICATIONFAILED:
-				case Horde_Smtp_Exception::LOGIN_REQUIREAUTHENTICATION:
-				case Horde_Smtp_Exception::UNSPECIFIED:
-					Etemplate::set_validation_error('acc_smtp_username', lang($e->getMessage()));
-					Etemplate::set_validation_error('acc_smtp_password', lang($e->getMessage()));
-					break;
+			case Horde_Smtp_Exception::LOGIN_AUTHENTICATIONFAILED:
+			case Horde_Smtp_Exception::LOGIN_REQUIREAUTHENTICATION:
+			case Horde_Smtp_Exception::UNSPECIFIED:
+				Etemplate::set_validation_error('acc_smtp_username', lang($e->getMessage()));
+				Etemplate::set_validation_error('acc_smtp_password', lang($e->getMessage()));
+				break;
 
-				case Horde_Smtp_Exception::SERVER_CONNECT:
-					Etemplate::set_validation_error('acc_smtp_host', lang($e->getMessage()));
-					Etemplate::set_validation_error('acc_smtp_port', lang($e->getMessage()));
-					break;
+			case Horde_Smtp_Exception::SERVER_CONNECT:
+				Etemplate::set_validation_error('acc_smtp_host', lang($e->getMessage()));
+				Etemplate::set_validation_error('acc_smtp_port', lang($e->getMessage()));
+				break;
 			}
 		}
 		$sel_options['acc_smtp_ssl'] = self::$ssl_types;
@@ -839,7 +839,7 @@ class admin_mail
 	 */
 	public function edit(array $content=null, $msg='', $msg_type='success')
 	{
-			unset($content['manual_class']);
+		unset($content['manual_class']);
 		// app is trying to tell something, while redirecting to wizard
 		if (empty($content) && $_GET['acc_id'] && empty($msg) && !empty( $_GET['msg']))
 		{
@@ -972,32 +972,32 @@ class admin_mail
 		$tpl->disableElement('notify_use_default', !$is_multiple);
 
 		if (isset($content['smimeKeyUpload'])
-				&& ($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
+			&& ($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
 		{
 			$smime = new Mail\Smime;
 			switch($content['smimeKeyUpload']['type'])
 			{
-				case 'application/x-pkcs12':
-					$cert_info = $smime->extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
-					if (is_array($cert_info))
+			case 'application/x-pkcs12':
+				$cert_info = $smime->extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
+				if (is_array($cert_info))
+				{
+					$content['acc_smime_password'] = $cert_info['pkey'];
+					if ($cert_info['cert'])
 					{
-						$content['acc_smime_password'] = $cert_info['pkey'];
-						if ($cert_info['cert'])
-						{
-							$AB_bo = new addressbook_bo();
-							$AB_bo->set_smime_keys(array(
-								$content['ident_email'] => $cert_info['cert']
-							));
-						}
+						$AB_bo = new addressbook_bo();
+						$AB_bo->set_smime_keys(array(
+							$content['ident_email'] => $cert_info['cert']
+						));
 					}
-					else
-					{
-						$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
-					}
-					break;
-				case 'application/x-iwork-keynote-sffkey':
-					$content['acc_smime_password'] = $pkcs12;
-					break;
+				}
+				else
+				{
+					$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
+				}
+				break;
+			case 'application/x-iwork-keynote-sffkey':
+				$content['acc_smime_password'] = $pkcs12;
+				break;
 			}
 		}
 		if (isset($content['button']))
@@ -1006,189 +1006,189 @@ class admin_mail
 			unset($content['button']);
 			switch($button)
 			{
-				case 'wizard':
-					// if we just came from wizard, go back to last page/step
-					if (isset($content['smtp_connected']))
-					{
-						return $this->smtp($content);
-					}
-					// otherwise start with first step
-					return $this->autoconfig($content);
+			case 'wizard':
+				// if we just came from wizard, go back to last page/step
+				if (isset($content['smtp_connected']))
+				{
+					return $this->smtp($content);
+				}
+				// otherwise start with first step
+				return $this->autoconfig($content);
 
-				case 'delete_identity':
-					// delete none-standard identity of current user
-					if (($this->is_admin || $content['acc_further_identities']) &&
-						$content['ident_id'] > 0 && $content['std_ident_id'] != $content['ident_id'])
-					{
-						Mail\Account::delete_identity($content['ident_id']);
-						$msg = lang('Identity deleted');
-						unset($content['identities'][$content['ident_id']]);
-						$content['ident_id'] = $content['std_ident_id'];
-					}
-					break;
+			case 'delete_identity':
+				// delete none-standard identity of current user
+				if (($this->is_admin || $content['acc_further_identities']) &&
+					$content['ident_id'] > 0 && $content['std_ident_id'] != $content['ident_id'])
+				{
+					Mail\Account::delete_identity($content['ident_id']);
+					$msg = lang('Identity deleted');
+					unset($content['identities'][$content['ident_id']]);
+					$content['ident_id'] = $content['std_ident_id'];
+				}
+				break;
 
-				case 'save':
-				case 'apply':
-					try {
-						// save none-standard identity for current user
-						if ($content['acc_id'] && $content['acc_id'] !== 'new' &&
-							($this->is_admin || $content['acc_further_identities']) &&
-							$content['std_ident_id'] != $content['ident_id'])
+			case 'save':
+			case 'apply':
+				try {
+					// save none-standard identity for current user
+					if ($content['acc_id'] && $content['acc_id'] !== 'new' &&
+						($this->is_admin || $content['acc_further_identities']) &&
+						$content['std_ident_id'] != $content['ident_id'])
+					{
+						$content['ident_id'] = Mail\Account::save_identity(array(
+							'account_id' => $content['called_for'] ? $content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
+						)+$content);
+						$content['identities'][$content['ident_id']] = Mail\Account::identity_name($content);
+						$msg = lang('Identity saved.');
+						if ($edit_access) $msg .= ' '.lang('Switch back to standard identity to save account.');
+					}
+					elseif ($edit_access)
+					{
+						// if admin username/password given, check if it is valid
+						$account = new Mail\Account($content);
+						if ($account->acc_imap_administration)
 						{
-							$content['ident_id'] = Mail\Account::save_identity(array(
-								'account_id' => $content['called_for'] ? $content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
-							)+$content);
-							$content['identities'][$content['ident_id']] = Mail\Account::identity_name($content);
-							$msg = lang('Identity saved.');
-							if ($edit_access) $msg .= ' '.lang('Switch back to standard identity to save account.');
+							$imap = $account->imapServer(true);
+							if ($imap) $imap->checkAdminConnection();
 						}
-						elseif ($edit_access)
+						// test sieve connection, if not called for other user, enabled and credentials available
+						if (!$content['called_for'] && $account->acc_sieve_enabled && $account->acc_imap_username)
 						{
-							// if admin username/password given, check if it is valid
-							$account = new Mail\Account($content);
-							if ($account->acc_imap_administration)
-							{
-								$imap = $account->imapServer(true);
-								if ($imap) $imap->checkAdminConnection();
-							}
-							// test sieve connection, if not called for other user, enabled and credentials available
-							if (!$content['called_for'] && $account->acc_sieve_enabled && $account->acc_imap_username)
-							{
-								$account->imapServer()->retrieveRules();
-							}
-							$new_account = !($content['acc_id'] > 0);
-							// check for deliveryMode="forwardOnly", if a forwarding-address is given
-							if ($content['acc_smtp_type'] != 'EGroupware\\Api\\Mail\\Smtp' &&
-								$content['deliveryMode'] == Mail\Smtp::FORWARD_ONLY &&
-								empty($content['mailForwardingAddress']))
-							{
-								Etemplate::set_validation_error('mailForwardingAddress', lang('Field must not be empty !!!'));
-								throw new Api\Exception\WrongUserinput(lang('You need to specify a forwarding address, when checking "%1"!', lang('Forward only')));
-							}
-							// set notifications to store according to checkboxes
-							if ($content['notify_save_default'])
-							{
-								$content['notify_account_id'] = 0;
-							}
-							elseif (!$content['notify_use_default'])
-							{
-								$content['notify_account_id'] = $content['called_for'] ?
-									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
-							}
-							self::fix_account_id_0($content['account_id'], true);
-							$content = Mail\Account::write($content, $content['called_for'] || !$this->is_admin ?
+							$account->imapServer()->retrieveRules();
+						}
+						$new_account = !($content['acc_id'] > 0);
+						// check for deliveryMode="forwardOnly", if a forwarding-address is given
+						if ($content['acc_smtp_type'] != 'EGroupware\\Api\\Mail\\Smtp' &&
+							$content['deliveryMode'] == Mail\Smtp::FORWARD_ONLY &&
+							empty($content['mailForwardingAddress']))
+						{
+							Etemplate::set_validation_error('mailForwardingAddress', lang('Field must not be empty !!!'));
+							throw new Api\Exception\WrongUserinput(lang('You need to specify a forwarding address, when checking "%1"!', lang('Forward only')));
+						}
+						// set notifications to store according to checkboxes
+						if ($content['notify_save_default'])
+						{
+							$content['notify_account_id'] = 0;
+						}
+						elseif (!$content['notify_use_default'])
+						{
+							$content['notify_account_id'] = $content['called_for'] ?
+								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
+						}
+						self::fix_account_id_0($content['account_id'], true);
+						$content = Mail\Account::write($content, $content['called_for'] || !$this->is_admin ?
+							$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
+						self::fix_account_id_0($content['account_id']);
+						$msg = lang('Account saved.');
+						// user wants default notifications
+						if ($content['acc_id'] && $content['notify_use_default'])
+						{
+							// delete own ones
+							Mail\Notifications::delete($content['acc_id'], $content['called_for'] ?
 								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
-							self::fix_account_id_0($content['account_id']);
-							$msg = lang('Account saved.');
-							// user wants default notifications
-							if ($content['acc_id'] && $content['notify_use_default'])
-							{
-								// delete own ones
-								Mail\Notifications::delete($content['acc_id'], $content['called_for'] ?
-									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
-								// load default ones
-								$content = array_merge($content, Mail\Notifications::read($content['acc_id'], 0));
-							}
-							// add new std identity entry
-							if ($new_account)
-							{
-								$content['std_ident_id'] = $content['ident_id'];
-								$content['identities'] = array(
-									$content['std_ident_id'] => lang('Standard identity'));
-							}
-							if (isset($content['accounts']))
-							{
-								if (!isset($content['accounts'][$content['acc_id']]))	// insert new account as top, not bottom
-								{
-									$content['accounts'] = array($content['acc_id'] => '') + $content['accounts'];
-								}
-								$content['accounts'][$content['acc_id']] = Mail\Account::identity_name($content, false);
-							}
-                            if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
-                                if ( $content['clear_grid'] ) {
-                                    $content['ews_permissions'] = array();
-                                    $content['clear_grid'] = false;
-                                    Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
-                                }
-                            }
+							// load default ones
+							$content = array_merge($content, Mail\Notifications::read($content['acc_id'], 0));
 						}
-						else
+						// add new std identity entry
+						if ($new_account)
 						{
-							if ($content['notify_use_default'] && $content['notify_account_id'])
+							$content['std_ident_id'] = $content['ident_id'];
+							$content['identities'] = array(
+								$content['std_ident_id'] => lang('Standard identity'));
+						}
+						if (isset($content['accounts']))
+						{
+							if (!isset($content['accounts'][$content['acc_id']]))	// insert new account as top, not bottom
 							{
-								// delete own ones
-								if (Mail\Notifications::delete($content['acc_id'], $content['called_for'] ?
-									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']))
-								{
-									$msg = lang('Notification folders updated.');
-								}
-								// load default ones
-								$content = array_merge($content, Mail\Notifications::read($content['acc_id'], 0));
+								$content['accounts'] = array($content['acc_id'] => '') + $content['accounts'];
 							}
-							if (!$content['notify_use_default'] && is_array($content['notify_folders']))
-							{
-								$content['notify_account_id'] = $content['called_for'] ?
-									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
-								if (Mail\Notifications::write($content['acc_id'], $content['notify_account_id'],
-									$content['notify_folders']))
-								{
-									$msg = lang('Notification folders updated.');
-								}
-							}
-							if ($content['acc_user_forward'] && !empty($content['acc_smtp_type']) && $content['acc_smtp_type'] != 'EGroupware\\Api\\Mail\\Smtp')
-							{
-								$account = new Mail\Account($content);
-								$account->smtpServer()->saveSMTPForwarding($content['called_for'] ?
-									$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
-									$content['mailForwardingAddress'],
-									$content['forwardOnly'] ? null : 'yes');
+							$content['accounts'][$content['acc_id']] = Mail\Account::identity_name($content, false);
+						}
+						if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
+							if ( $content['clear_grid'] ) {
+								$content['ews_permissions'] = array();
+								$content['clear_grid'] = false;
+								Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
 							}
 						}
-					}
-					catch (Horde_Imap_Client_Exception $e)
-					{
-						_egw_log_exception($e);
-						$tpl->set_validation_error('acc_imap_admin_username', $msg=lang($e->getMessage()).($e->details?', '.lang($e->details):''));
-						$msg_type = 'error';
-						$content['tabs'] = 'admin.mailaccount.imap';	// should happen automatic
-						break;
-					}
-					catch (Horde\ManageSieve\Exception\ConnectionFailed $e)
-					{
-						_egw_log_exception($e);
-						$tpl->set_validation_error('acc_sieve_port', $msg=lang($e->getMessage()));
-						$msg_type = 'error';
-						$content['tabs'] = 'admin.mailaccount.sieve';	// should happen automatic
-						break;
-					}
-					catch (Exception $e) {
-						$msg = lang('Error saving account!')."\n".$e->getMessage();
-						$button = 'apply';
-						$msg_type = 'error';
-					}
-					if ($content['acc_id']) Mail::unsetCachedObjects($content['acc_id']);
-					if (stripos($msg,'fatal error:')!==false) $msg_type = 'error';
-					Framework::refresh_opener($msg, 'emailadmin', $content['acc_id'], $new_account ? 'add' : 'update', null, null, null, $msg_type);
-					if ($button == 'save') Framework::window_close();
-					break;
-
-				case 'delete':
-					if (!Mail\Account::check_access(Acl::DELETE, $content))
-					{
-						$msg = lang('Permission denied!');
-						$msg_type = 'error';
-					}
-					elseif (Mail\Account::delete($content['acc_id']) > 0)
-					{
-						if ($content['acc_id']) Mail::unsetCachedObjects($content['acc_id']);
-						Framework::refresh_opener(lang('Account deleted.'), 'emailadmin', $content['acc_id'], 'delete');
-						Framework::window_close();
 					}
 					else
 					{
-						$msg = lang('Failed to delete account!');
-						$msg_type = 'error';
+						if ($content['notify_use_default'] && $content['notify_account_id'])
+						{
+							// delete own ones
+							if (Mail\Notifications::delete($content['acc_id'], $content['called_for'] ?
+								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']))
+							{
+								$msg = lang('Notification folders updated.');
+							}
+							// load default ones
+							$content = array_merge($content, Mail\Notifications::read($content['acc_id'], 0));
+						}
+						if (!$content['notify_use_default'] && is_array($content['notify_folders']))
+						{
+							$content['notify_account_id'] = $content['called_for'] ?
+								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
+							if (Mail\Notifications::write($content['acc_id'], $content['notify_account_id'],
+								$content['notify_folders']))
+							{
+								$msg = lang('Notification folders updated.');
+							}
+						}
+						if ($content['acc_user_forward'] && !empty($content['acc_smtp_type']) && $content['acc_smtp_type'] != 'EGroupware\\Api\\Mail\\Smtp')
+						{
+							$account = new Mail\Account($content);
+							$account->smtpServer()->saveSMTPForwarding($content['called_for'] ?
+								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
+								$content['mailForwardingAddress'],
+								$content['forwardOnly'] ? null : 'yes');
+						}
 					}
+				}
+				catch (Horde_Imap_Client_Exception $e)
+				{
+					_egw_log_exception($e);
+					$tpl->set_validation_error('acc_imap_admin_username', $msg=lang($e->getMessage()).($e->details?', '.lang($e->details):''));
+					$msg_type = 'error';
+					$content['tabs'] = 'admin.mailaccount.imap';	// should happen automatic
+					break;
+				}
+				catch (Horde\ManageSieve\Exception\ConnectionFailed $e)
+				{
+					_egw_log_exception($e);
+					$tpl->set_validation_error('acc_sieve_port', $msg=lang($e->getMessage()));
+					$msg_type = 'error';
+					$content['tabs'] = 'admin.mailaccount.sieve';	// should happen automatic
+					break;
+				}
+				catch (Exception $e) {
+					$msg = lang('Error saving account!')."\n".$e->getMessage();
+					$button = 'apply';
+					$msg_type = 'error';
+				}
+				if ($content['acc_id']) Mail::unsetCachedObjects($content['acc_id']);
+				if (stripos($msg,'fatal error:')!==false) $msg_type = 'error';
+				Framework::refresh_opener($msg, 'emailadmin', $content['acc_id'], $new_account ? 'add' : 'update', null, null, null, $msg_type);
+				if ($button == 'save') Framework::window_close();
+				break;
+
+			case 'delete':
+				if (!Mail\Account::check_access(Acl::DELETE, $content))
+				{
+					$msg = lang('Permission denied!');
+					$msg_type = 'error';
+				}
+				elseif (Mail\Account::delete($content['acc_id']) > 0)
+				{
+					if ($content['acc_id']) Mail::unsetCachedObjects($content['acc_id']);
+					Framework::refresh_opener(lang('Account deleted.'), 'emailadmin', $content['acc_id'], 'delete');
+					Framework::window_close();
+				}
+				else
+				{
+					$msg = lang('Failed to delete account!');
+					$msg_type = 'error';
+				}
 			}
 		}
 
@@ -1225,15 +1225,15 @@ class admin_mail
 				$tpl->setElementAttribute($folder, 'allowFreeEntries', true);
 			}
 		}
-        elseif ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
-        {
+		elseif ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
+		{
 			try {
 
-            $sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
-                $sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
-                $sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
-                $sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
-                    Api\Mail\EWS\Lib::getFoldersSelOptions( $content['acc_id'], true );
+				$sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
+					$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
+					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
+					$sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
+					Api\Mail\EWS\Lib::getFoldersSelOptions( $content['acc_id'], true );
 			}
 			catch(Exception $e) {
 				if (self::$debug) _egw_log_exception($e);
@@ -1241,7 +1241,7 @@ class admin_mail
 				$msg = lang($e->getMessage())."\n\n".lang('You can use wizard to fix account settings or delete account.');
 				$msg_type = 'error';
 			}
-	}
+		}
 		else
 		{
 			try {
@@ -1249,7 +1249,7 @@ class admin_mail
 					$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
 					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
 					$sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
-						self::mailboxes(self::imap_client ($content));
+					self::mailboxes(self::imap_client ($content));
 			}
 			catch(Exception $e) {
 				if (self::$debug) _egw_log_exception($e);
@@ -1270,10 +1270,10 @@ class admin_mail
 		$sel_options['ident_id'] = $content['identities'];
 		$sel_options['acc_id'] = $content['accounts'];
 		$sel_options['acc_further_identities'] = self::$further_identities;
-        $sel_options['acc_ews_type'] = array(
-            'inbox' => 'Inbox',
-            'public_folders' => 'Public Folders'
-        );
+		$sel_options['acc_ews_type'] = array(
+			'inbox' => 'Inbox',
+			'public_folders' => 'Public Folders'
+		);
 
 		// user is allowed to create or edit further identities
 		if ($edit_access || $content['acc_further_identities'])
@@ -1355,11 +1355,11 @@ class admin_mail
 			}
 		}
 
-        // Disable EWS tab for other types
-        if ( $content['acc_imap_type'] && !Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
-        {
-            $readonlys['tabs']['admin.mailaccount.ews'] = true;
-        }
+		// Disable EWS tab for other types
+		if ( $content['acc_imap_type'] && !Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
+		{
+			$readonlys['tabs']['admin.mailaccount.ews'] = true;
+		}
 
 		// account allows users to change forwards
 		if (!$edit_access && !$readonlys['tabs']['admin.mailaccount.aliases'] && $content['acc_user_forward'])
@@ -1398,9 +1398,9 @@ class admin_mail
 		}
 		$content['admin_actions'] = (bool)$admin_actions;
 
-        if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
+		if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
 			try {
-            $content['acc_ews_apply_permissions'] = (int) $content['acc_ews_apply_permissions'];
+				$content['acc_ews_apply_permissions'] = (int) $content['acc_ews_apply_permissions'];
 			}
 			catch(Exception $e) {
 				if (self::$debug) _egw_log_exception($e);
@@ -1408,7 +1408,7 @@ class admin_mail
 				$msg = lang($e->getMessage())."\n\n".lang('You can use wizard to fix account settings or delete account.');
 				$msg_type = 'error';
 			}
-        }
+		}
 
 		//try to fix identities with no domain part set e.g. alias as identity
 		if (!strpos($content['ident_email'], '@'))
@@ -1419,28 +1419,28 @@ class admin_mail
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}
 
-    public function ews_custom_permissions( $content = array() ) 
+	public function ews_custom_permissions( $content = array() ) 
 	{
 		$dtmpl = new Etemplate('admin.mailaccount.permissions');
 		$acc_id = $_GET['acc_id']? $_GET['acc_id']: $content['acc_id'];
-        $content['acc_id'] = $acc_id;
+		$content['acc_id'] = $acc_id;
 
-        $sel_options['ews_permissions'] = Api\Mail_EWS::getFolderPermissionsSelOptions( $content['acc_id'] );
+		$sel_options['ews_permissions'] = Api\Mail_EWS::getFolderPermissionsSelOptions( $content['acc_id'] );
 
-        if ( $content['save'] || $content['apply'] ) {
-            $res = Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
-            $msg = lang('Operation Successful');
-            if ( $res && $content['save'] ) {
-                Framework::message( $msg );
-                Framework::window_close();
-            }
-            $content['msg'] = $msg;
-        }
+		if ( $content['save'] || $content['apply'] ) {
+			$res = Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
+			$msg = lang('Operation Successful');
+			if ( $res && $content['save'] ) {
+				Framework::message( $msg );
+				Framework::window_close();
+			}
+			$content['msg'] = $msg;
+		}
 
-        $content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
+		$content['ews_permissions'] = Api\Mail_EWS::getFolderPermissions( $content['acc_id'] );
 		$readonlys = array();
 		$dtmpl->exec('admin.admin_mail.ews_custom_permissions', $content,$sel_options,$readonlys,$content,2);
-    }
+	}
 
 	/**
 	 * Replace 0 with '' or back
@@ -1471,22 +1471,22 @@ class admin_mail
 	 */
 	protected static function imap_client(array $content, $timeout=null)
 	{
-        //EWS: Instantiate different object
-        if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
-            $class = $content['acc_imap_type'];
-            return new $class($content);
-        }
-        else {
-            return new Horde_Imap_Client_Socket(array(
-                'username' => $content['acc_imap_username'],
-                'password' => $content['acc_imap_password'],
-                'hostspec' => $content['acc_imap_host'],
-                'port' => $content['acc_imap_port'],
-                'secure' => self::$ssl2secure[(string)array_search($content['acc_imap_ssl'], self::$ssl2type)],
-                'timeout' => $timeout > 0 ? $timeout : Mail\Imap::getTimeOut(),
-                'debug' => self::DEBUG_LOG,
-            ));
-        }
+		//EWS: Instantiate different object
+		if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
+			$class = $content['acc_imap_type'];
+			return new $class($content);
+		}
+		else {
+			return new Horde_Imap_Client_Socket(array(
+				'username' => $content['acc_imap_username'],
+				'password' => $content['acc_imap_password'],
+				'hostspec' => $content['acc_imap_host'],
+				'port' => $content['acc_imap_port'],
+				'secure' => self::$ssl2secure[(string)array_search($content['acc_imap_ssl'], self::$ssl2type)],
+				'timeout' => $timeout > 0 ? $timeout : Mail\Imap::getTimeOut(),
+				'debug' => self::DEBUG_LOG,
+			));
+		}
 	}
 
 	/**
