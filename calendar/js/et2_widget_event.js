@@ -333,7 +333,7 @@ var et2_calendar_event = (function(){ "use strict"; return et2_valueWidget.exten
 		if(jQuery.Color("rgba(0,0,0,0)").toRgbaString() != jQuery.Color(this.div,'background-color').toRgbaString())
 		{
 			// Most statuses use colored borders
-			this.div.css('border-color',status_class === 'calendar_calEventAllAccepted' ? this.div.css('background-color') : '');
+			this.div.css('border-color',this.div.css('background-color') );
 		}
 
 		this.icons.appendTo(this.title)
