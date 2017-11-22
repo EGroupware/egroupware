@@ -26,10 +26,10 @@ use EGroupware\Api\Mail\EWS\Lib;
 class mail_compose
 {
 	var $public_functions = array
-	(
-		'compose'		=> True,
-		'getAttachment'		=> True,
-	);
+		(
+			'compose'		=> True,
+			'getAttachment'		=> True,
+		);
 
 	/**
 	 * class vars for destination, priorities, mimeTypes
@@ -234,26 +234,26 @@ class mail_compose
 					'onExecute' => 'javaScript:app.mail.compose_setToggle',
 					'checkbox' => true,
 					'hint' => 'Encrypt your message with smime certificate'
-			)));
+				)));
 		}
 		foreach (self::$priorities as $key => $priority)
 		{
 			$actions['prty']['children'][$key] = array(
-						'caption' => $priority,
-						'icon' => 'prio_high',
-						'default' => false,
-						'onExecute' => 'javaScript:app.mail.compose_priorityChange'
+				'caption' => $priority,
+				'icon' => 'prio_high',
+				'default' => false,
+				'onExecute' => 'javaScript:app.mail.compose_priorityChange'
 			);
 			switch ($priority)
 			{
-				case 'high':
-					$actions['prty']['children'][$key]['icon'] = 'prio_high';
-					break;
-				case 'normal':
-					$actions['prty']['children'][$key]['icon'] = 'prio_normal';
-					break;
-				case 'low':
-					$actions['prty']['children'][$key]['icon'] = 'prio_low';
+			case 'high':
+				$actions['prty']['children'][$key]['icon'] = 'prio_high';
+				break;
+			case 'normal':
+				$actions['prty']['children'][$key]['icon'] = 'prio_normal';
+				break;
+			case 'low':
+				$actions['prty']['children'][$key]['icon'] = 'prio_low';
 			}
 		}
 		// Set the priority action its current state
@@ -449,7 +449,7 @@ class mail_compose
 			$_content['to'];$_content['cc'];$_content['bcc'];
 			trim($_content['subject']);
 			trim(strip_tags(str_replace('&nbsp;','',$_content['body'])));
-			*/
+			 */
 			if (strlen(trim(strip_tags(str_replace('&nbsp;','',$_content['body']))))==0 && count($_content['attachments'])==0)
 			{
 				$sendOK = false;
@@ -573,22 +573,22 @@ class mail_compose
 		$content = (is_array($_content)?$_content:array());
 		$preserv = array();
 
-        if ( Api\Hooks::count( 'mail_compose_index' ) ) {
-            $hooks= Api\Hooks::process( array(
-                'location' => 'mail_compose_index', 
-                'get' => $_GET,
-                'replyID' => $replyID,
-                'content' => $content,
-                'sel_options' => $sel_options,
-                'preserv' => $preserv,
-                'mail_bo' => $this->mail_bo,
-            ));
+		if ( Api\Hooks::count( 'mail_compose_index' ) ) {
+			$hooks= Api\Hooks::process( array(
+				'location' => 'mail_compose_index', 
+				'get' => $_GET,
+				'replyID' => $replyID,
+				'content' => $content,
+				'sel_options' => $sel_options,
+				'preserv' => $preserv,
+				'mail_bo' => $this->mail_bo,
+			));
 			foreach( $hooks as $app => $hook ) {
 				list( $hook_content, $hook_preserve ) = $hook;
 				$content = array_merge( $content, $hook_content );
 				$preserv = array_merge( $preserv, $hook_preserve );
 			}
-        }
+		}
 		// mimeType is now a checkbox; convert it here to match expectations
 		// ToDo: match Code to meet checkbox value
 		if ($content['mimeType']==1)
@@ -785,7 +785,7 @@ class mail_compose
 		}
 		/*run the purify on compose body unconditional*/
 		$content['body'] = str_replace(array("\r", "\t", "<br />\n", ": "), array("", "", "<br />", ":"),
-		$_currentMode == 'html' ? Api\Html::purify($content['body'], Mail::$htmLawed_config, array(), true) : $content['body']);
+			$_currentMode == 'html' ? Api\Html::purify($content['body'], Mail::$htmLawed_config, array(), true) : $content['body']);
 
 		// do not double insert a signature on a server roundtrip
 		if ($buttonClicked) $suppressSigOnTop = true;
@@ -951,7 +951,7 @@ class mail_compose
 				{
 					$content['filemode'] = !empty($_REQUEST['preset']['filemode']) &&
 						isset(Vfs\Sharing::$modes[$_REQUEST['preset']['filemode']]) ?
-							$_REQUEST['preset']['filemode'] : Vfs\Sharing::ATTACH;
+						$_REQUEST['preset']['filemode'] : Vfs\Sharing::ATTACH;
 
 					$names = (array)$_REQUEST['preset']['name'];
 					$types = (array)$_REQUEST['preset']['type'];
@@ -1177,7 +1177,7 @@ class mail_compose
 						'0' => 'after reply, visible during compose',
 						'1' => 'before reply, visible during compose',
 						'no_belowaftersend'  => 'appended after reply before sending',
-			*/
+			 */
 			$insertSigOnTop = ($insertSigOnTop?$insertSigOnTop:($this->mailPreferences['insertSignatureAtTopOfMessage']?$this->mailPreferences['insertSignatureAtTopOfMessage']:'below'));
 			$sigText = Mail::merge($signature['ident_signature'],array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 			if ($content['mimeType'] == 'html')
@@ -1399,7 +1399,7 @@ class mail_compose
 		}
 
 		$content['to'] = self::resolveEmailAddressList($content['to']);
-        
+
 		//error_log(__METHOD__.__LINE__.array2string($content));
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,array(),$preserv,2);
 	}
@@ -1441,43 +1441,43 @@ class mail_compose
 			// this fill the session data with the values from the original email
 			switch($from)
 			{
-				case 'composefromdraft':
-				case 'composeasnew':
-					$content = $this->getDraftData($icServer, $folder, $msgUID, $part_id);
-					if ($from =='composefromdraft') $content['mode'] = 'composefromdraft';
-					$content['processedmail_id'] = $mail_id;
+			case 'composefromdraft':
+			case 'composeasnew':
+				$content = $this->getDraftData($icServer, $folder, $msgUID, $part_id);
+				if ($from =='composefromdraft') $content['mode'] = 'composefromdraft';
+				$content['processedmail_id'] = $mail_id;
 
-					$_focusElement = 'body';
-					$suppressSigOnTop = true;
-					break;
-				case 'reply':
-				case 'reply_all':
-					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
-					$content['processedmail_id'] = $mail_id;
-					$content['mode'] = 'reply';
-					$_focusElement = 'body';
-					$suppressSigOnTop = false;
-					$isReply = true;
-					break;
-				case 'forward':
-					$mode  = ($_GET['mode']=='forwardinline'?'inline':'asmail');
-					// this fill the session data with the values from the original email
-					foreach ($replyIds as &$mail_id)
-					{
-						//error_log(__METHOD__.__LINE__.' ID:'.$mail_id.' Mode:'.$mode);
-						$hA = mail_ui::splitRowID($mail_id);
-						$msgUID = $hA['msgUID'];
-						$folder = $hA['folder'];
-						$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, $mode);
-					}
-					$content['processedmail_id'] = implode(',',$replyIds);
-					$content['mode'] = 'forward';
-					$isReply = ($mode?$mode=='inline':$this->mailPreferences['message_forwarding'] == 'inline');
-					$suppressSigOnTop = false;// ($mode && $mode=='inline'?true:false);// may be a better solution
-					$_focusElement = 'to';
-					break;
-				default:
-					error_log('Unhandled compose source: ' . $from);
+				$_focusElement = 'body';
+				$suppressSigOnTop = true;
+				break;
+			case 'reply':
+			case 'reply_all':
+				$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
+				$content['processedmail_id'] = $mail_id;
+				$content['mode'] = 'reply';
+				$_focusElement = 'body';
+				$suppressSigOnTop = false;
+				$isReply = true;
+				break;
+			case 'forward':
+				$mode  = ($_GET['mode']=='forwardinline'?'inline':'asmail');
+				// this fill the session data with the values from the original email
+				foreach ($replyIds as &$mail_id)
+				{
+					//error_log(__METHOD__.__LINE__.' ID:'.$mail_id.' Mode:'.$mode);
+					$hA = mail_ui::splitRowID($mail_id);
+					$msgUID = $hA['msgUID'];
+					$folder = $hA['folder'];
+					$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, $mode);
+				}
+				$content['processedmail_id'] = implode(',',$replyIds);
+				$content['mode'] = 'forward';
+				$isReply = ($mode?$mode=='inline':$this->mailPreferences['message_forwarding'] == 'inline');
+				$suppressSigOnTop = false;// ($mode && $mode=='inline'?true:false);// may be a better solution
+				$_focusElement = 'to';
+				break;
+			default:
+				error_log('Unhandled compose source: ' . $from);
 			}
 		}
 		else if ($from == 'merge' && $_REQUEST['document'])
@@ -1623,7 +1623,7 @@ class mail_compose
 		if (!empty($addHeadInfo['X-STATIONERY'])) {
 			$this->sessionData['stationeryID'] = $addHeadInfo['X-STATIONERY'];
 		}
-		*/
+		 */
 		if (!empty($addHeadInfo['X-MAILACCOUNT'])) {
 			// with the new system it would the identity is the account id
 			try
@@ -2111,41 +2111,41 @@ class mail_compose
 		if($_mode == 'all') {
 			// reply to any address which is cc, but not to my self
 			#if($headers->cc) {
-				foreach($headers['CC'] as $val) {
-					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
-						continue;
-					}
-					if(!$foundAddresses[$val]) {
-						$this->sessionData['cc'][] = $val;
-						$foundAddresses[$val] = true;
-					}
+			foreach($headers['CC'] as $val) {
+				if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
+					continue;
 				}
+				if(!$foundAddresses[$val]) {
+					$this->sessionData['cc'][] = $val;
+					$foundAddresses[$val] = true;
+				}
+			}
 			#}
 
 			// reply to any address which is to, but not to my self
 			#if($headers->to) {
-				foreach($headers['TO'] as $val) {
-					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
-						continue;
-					}
-					if(!$foundAddresses[$val]) {
-						$this->sessionData['to'][] = $val;
-						$foundAddresses[$val] = true;
-					}
+			foreach($headers['TO'] as $val) {
+				if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
+					continue;
 				}
+				if(!$foundAddresses[$val]) {
+					$this->sessionData['to'][] = $val;
+					$foundAddresses[$val] = true;
+				}
+			}
 			#}
 
 			#if($headers->from) {
-				foreach($headers['FROM'] as $val) {
-					if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
-						continue;
-					}
-					//error_log(__METHOD__.__LINE__.' '.$val);
-					if(!$foundAddresses[$val]) {
-						$this->sessionData['to'][] = $val;
-						$foundAddresses[$val] = true;
-					}
+			foreach($headers['FROM'] as $val) {
+				if($this->testIfOneKeyInArrayDoesExistInString($userEMailAddresses,$val)) {
+					continue;
 				}
+				//error_log(__METHOD__.__LINE__.' '.$val);
+				if(!$foundAddresses[$val]) {
+					$this->sessionData['to'][] = $val;
+					$foundAddresses[$val] = true;
+				}
+			}
 			#}
 		}
 
@@ -2217,11 +2217,11 @@ class mail_compose
 		} else {
 			//$this->sessionData['body']	= @htmlspecialchars(lang("on")." ".$headers['DATE']." ".$mail_bo->decode_header($fromAddress), ENT_QUOTES) . " ".lang("wrote").":\r\n";
 			// take care the way the ReplyHeader is created here, is used later on in uicompose::compose, in case you force replys to be HTML (prefs)
-            $this->sessionData['body']  = " \r\n \r\n".'----------------'.lang("original message").'-----------------'."\r\n".
-                @htmlspecialchars(lang("from")).": ".$fromAddress."\r\n".
+			$this->sessionData['body']  = " \r\n \r\n".'----------------'.lang("original message").'-----------------'."\r\n".
+				@htmlspecialchars(lang("from")).": ".$fromAddress."\r\n".
 				$toAddress.$ccAddress.
 				@htmlspecialchars(lang("date").": ".$headers['DATE'], ENT_QUOTES | ENT_IGNORE,Mail::$displayCharset, false)."\r\n".
-                '-------------------------------------------------'."\r\n \r\n ";
+				'-------------------------------------------------'."\r\n \r\n ";
 			$this->sessionData['mimeType']	= 'plain';
 
 			for($i=0; $i<count($bodyParts); $i++) {
@@ -2272,8 +2272,8 @@ class mail_compose
 	static function _getCleanHTML($_body, $_useTidy = false)
 	{
 		static $nonDisplayAbleCharacters = array('[\016]','[\017]',
-				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
-				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
+			'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
+			'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
 
 		if ($_useTidy && extension_loaded('tidy') )
 		{
@@ -2397,53 +2397,53 @@ class mail_compose
 		}
 		switch ($_formData['mimeType'])
 		{
-			case 'html':
-				$body = $_formData['body'];
-				if ($attachment_links)
+		case 'html':
+			$body = $_formData['body'];
+			if ($attachment_links)
+			{
+				if (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
 				{
-					if (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
-					{
-						$body = str_replace('<!-- HTMLSIGBEGIN -->', $attachment_links.'<!-- HTMLSIGBEGIN -->', $body);
-					}
-					else
-					{
-						$body .= $attachment_links;
-					}
-				}
-				if(!empty($signature))
-				{
-					$_mailObject->setBody($this->convertHTMLToText($body, true, true).
-						($disableRuler ? "\r\n" : "\r\n-- \r\n").
-						$this->convertHTMLToText($signature, true, true));
-
-					$body .= ($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').$signature;
+					$body = str_replace('<!-- HTMLSIGBEGIN -->', $attachment_links.'<!-- HTMLSIGBEGIN -->', $body);
 				}
 				else
 				{
-					$_mailObject->setBody($this->convertHTMLToText($body, true, true));
+					$body .= $attachment_links;
 				}
-				// convert URL Images to inline images - if possible
-				if (!$_autosaving) $inline_images = Mail::processURL2InlineImages($_mailObject, $body, $mail_bo);
-				if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
-				{
-					$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
-				}
-				$_mailObject->setHtmlBody($body, null, false);	// false = no automatic alternative, we called setBody()
-				break;
-			case 'openpgp':
-				$_mailObject->setOpenPgpBody($_formData['body']);
-				break;
-			default:
-				$body = $this->convertHTMLToText($_formData['body'],false);
+			}
+			if(!empty($signature))
+			{
+				$_mailObject->setBody($this->convertHTMLToText($body, true, true).
+					($disableRuler ? "\r\n" : "\r\n-- \r\n").
+					$this->convertHTMLToText($signature, true, true));
 
-				if ($attachment_links) $body .= $attachment_links;
+				$body .= ($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').$signature;
+			}
+			else
+			{
+				$_mailObject->setBody($this->convertHTMLToText($body, true, true));
+			}
+			// convert URL Images to inline images - if possible
+			if (!$_autosaving) $inline_images = Mail::processURL2InlineImages($_mailObject, $body, $mail_bo);
+			if (strpos($body,"<!-- HTMLSIGBEGIN -->")!==false)
+			{
+				$body = str_replace(array('<!-- HTMLSIGBEGIN -->','<!-- HTMLSIGEND -->'),'',$body);
+			}
+			$_mailObject->setHtmlBody($body, null, false);	// false = no automatic alternative, we called setBody()
+			break;
+		case 'openpgp':
+			$_mailObject->setOpenPgpBody($_formData['body']);
+			break;
+		default:
+			$body = $this->convertHTMLToText($_formData['body'],false);
 
-				#$_mailObject->Body = $_formData['body'];
-				if(!empty($signature)) {
-					$body .= ($disableRuler ?"\r\n":"\r\n-- \r\n").
-						$this->convertHTMLToText($signature,true,true);
-				}
-				$_mailObject->setBody($body);
+			if ($attachment_links) $body .= $attachment_links;
+
+			#$_mailObject->Body = $_formData['body'];
+			if(!empty($signature)) {
+				$body .= ($disableRuler ?"\r\n":"\r\n-- \r\n").
+					$this->convertHTMLToText($signature,true,true);
+			}
+			$_mailObject->setBody($body);
 		}
 		// add the attachments
 		if (is_array($_formData) && isset($_formData['attachments']))
@@ -2462,7 +2462,7 @@ class mail_compose
 						[type] => application/pdf
 						[size] => 622379
 						[folder] => INBOX))
-						*/
+						 */
 						if (!$connection_opened)
 						{
 							$mail_bo->openConnection($mail_bo->profileID);
@@ -2470,34 +2470,34 @@ class mail_compose
 						}
 						$mail_bo->reopen($attachment['folder']);
 						switch(strtoupper($attachment['type'])) {
-							case 'MESSAGE/RFC':
-							case 'MESSAGE/RFC822':
-								$rawBody='';
-								if (isset($attachment['partID'])) {
-									$eml = $mail_bo->getAttachment($attachment['uid'],$attachment['partID'],0,false,true,$attachment['folder']);
-									$rawBody=$eml['attachment'];
-								} else {
-									$rawBody        = $mail_bo->getMessageRawBody($attachment['uid'], $attachment['partID'],$attachment['folder']);
-								}
-								$_mailObject->addStringAttachment($rawBody, $attachment['name'], 'message/rfc822');
-								break;
-							default:
-								$attachmentData	= $mail_bo->getAttachment($attachment['uid'], $attachment['partID'],0,false);
-								if ($attachmentData['type'] == 'APPLICATION/MS-TNEF')
+						case 'MESSAGE/RFC':
+						case 'MESSAGE/RFC822':
+							$rawBody='';
+							if (isset($attachment['partID'])) {
+								$eml = $mail_bo->getAttachment($attachment['uid'],$attachment['partID'],0,false,true,$attachment['folder']);
+								$rawBody=$eml['attachment'];
+							} else {
+								$rawBody        = $mail_bo->getMessageRawBody($attachment['uid'], $attachment['partID'],$attachment['folder']);
+							}
+							$_mailObject->addStringAttachment($rawBody, $attachment['name'], 'message/rfc822');
+							break;
+						default:
+							$attachmentData	= $mail_bo->getAttachment($attachment['uid'], $attachment['partID'],0,false);
+							if ($attachmentData['type'] == 'APPLICATION/MS-TNEF')
+							{
+								if (!is_array($tnfattachments)) $tnfattachments = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID']);
+								foreach ($tnfattachments as $k)
 								{
-									if (!is_array($tnfattachments)) $tnfattachments = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID']);
-									foreach ($tnfattachments as $k)
+									if ($k['name'] == $attachment['name'])
 									{
-										if ($k['name'] == $attachment['name'])
-										{
-											$tnfpart = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID'],$k['is_winmail']);
-											$attachmentData['attachment'] = $tnfpart['attachment'];
-											break;
-										}
+										$tnfpart = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID'],$k['is_winmail']);
+										$attachmentData['attachment'] = $tnfpart['attachment'];
+										break;
 									}
 								}
-								$_mailObject->addStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['type']);
-								break;
+							}
+							$_mailObject->addStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['type']);
+							break;
 						}
 					}
 					// attach files not for autosaving
@@ -2874,8 +2874,8 @@ class mail_compose
 			#error_log($this->sessionData['body']);
 		}
 		if(empty($this->sessionData['to']) && empty($this->sessionData['cc']) &&
-		   empty($this->sessionData['bcc']) && empty($this->sessionData['folder'])) {
-		   	$messageIsDraft = true;
+			empty($this->sessionData['bcc']) && empty($this->sessionData['folder'])) {
+			$messageIsDraft = true;
 		}
 		try
 		{
@@ -3024,8 +3024,8 @@ class mail_compose
 					{
 						$response = Api\Json\Response::get();
 						$this->errorInfo = $_formData['smime_passphrase'] == ''?
-								lang('You need to enter your S/MIME passphrase to send this message.'):
-								lang('The entered passphrase is not correct! Please try again.');
+							lang('You need to enter your S/MIME passphrase to send this message.'):
+							lang('The entered passphrase is not correct! Please try again.');
 						$response->call('app.mail.smimePassDialog', $this->errorInfo);
 						return false;
 					}
@@ -3075,7 +3075,7 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__."Number of Folders to move copy the message to:".count($folder));
 		//error_log(__METHOD__.__LINE__.array2string($folder));
 		if ((count($folder) > 0) || (isset($this->sessionData['uid']) && isset($this->sessionData['messageFolder']))
-            || (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
+			|| (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
 			$mail_bo = $this->mail_bo;
 			$mail_bo->openConnection();
 			//$mail_bo->reopen($this->sessionData['messageFolder']);
@@ -3546,7 +3546,7 @@ class mail_compose
 							// Add just name for nice display, with title for hover
 							'name' => $contact['n_fn'],
 							'title' => $email
-						 );
+						);
 					}
 				}
 			}
@@ -3570,7 +3570,7 @@ class mail_compose
 			);
 		}
 
-		 // switch regular JSON response handling off
+		// switch regular JSON response handling off
 		Api\Json\Request::isJSONRequest(false);
 
 		//error_log(__METHOD__.__LINE__.array2string($jsArray));
