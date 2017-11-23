@@ -937,11 +937,8 @@ function infolog_upgrade16_1_002()
  */
 function infolog_upgrade16_1_003()
 {
-	$GLOBALS['egw_setup']->db->query("UPDATE egw_infolog SET info_from = CONCAT(info_from, ', ', info_addr)".
-		" WHERE info_from IS NOT NULL AND info_addr IS NOT NULL", __LINE__, __FILE__);
-
-	$GLOBALS['egw_setup']->db->query("UPDATE egw_infolog SET info_from = info_addr".
-		" WHERE info_from IS NULL AND info_addr IS NOT NULL", __LINE__, __FILE__);
+	$GLOBALS['egw_setup']->db->query("UPDATE egw_infolog SET info_from = CASE WHEN info_from != '' THEN CONCAT(info_from, ', ', info_addr) ELSE info_addr END".
+		" WHERE info_addr != ''", __LINE__, __FILE__);
 
 	$GLOBALS['egw_setup']->oProc->DropColumn('egw_infolog',array(
 		'fd' => array(
