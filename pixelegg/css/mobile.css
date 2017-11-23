@@ -1897,6 +1897,7 @@ body {
   border: none;
   border-bottom: 1px solid silver;
   border-radius: 0px;
+  background-color: transparent;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select[name="remember_me"] {
   text-indent: 120px;
@@ -1914,6 +1915,7 @@ body {
   border: none;
   border-bottom: 1px solid silver;
   padding-left: 25px;
+  background-color: transparent;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input:focus {
   outline: none;
