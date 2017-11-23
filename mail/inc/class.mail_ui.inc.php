@@ -49,7 +49,6 @@ class mail_ui
 		'getAttachment'		=> True,
 		'download_zip'		=> True,
 		'saveMessage'	=> True,
-		'vfsSaveAttachment' => True,
 		'vfsSaveMessages' => True,
 		'loadEmailBody'	=> True,
 		'importMessage'	=> True,
