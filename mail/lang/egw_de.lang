@@ -53,7 +53,7 @@ an error happend while trying to remove acl rights from the account %1!	mail	de	
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
 any of	mail	de	mit einem
 any status	mail	de	Alle Status
-append	mail	de	hinzufügen
+append	mail	de	Hinzufügen
 appended after reply before sending	mail	de	Einfügen nach dem zitierten Text im Zuge des Versendens
 application mail expected but got: %1	mail	de	Anwendung Mail erwarted, aber %1 erhalten!
 archive folder	mail	de	Archivordner
