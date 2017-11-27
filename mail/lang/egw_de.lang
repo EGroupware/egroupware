@@ -28,8 +28,8 @@ add as new	mail	de	Neues Ticket erstellen
 add folder	mail	de	Ordner hinzufügen
 add to addressbook	mail	de	zum Adressbuch hinzufügen
 add your domain as "%1" in options to list of email providers and enable api.	mail	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
-adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als Emailadresse zur Blackliste ist fehlgeschlagen, da %2
-adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als Emailadresse zur Whiteliste ist fehlgeschlagen, da %2
+adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mailadresse zur Blackliste ist fehlgeschlagen, da %2
+adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mailadresse zur Whiteliste ist fehlgeschlagen, da %2
 after reply, visible during compose	mail	de	Nach dem zitierten Text, sichtbar während der Bearbeitung
 aliases+forwards	mail	de	Aliase+Weiterleitungen
 all	mail	de	alle
@@ -68,7 +68,7 @@ attachments	mail	de	Dateien
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
 before reply, visible during compose	mail	de	Vor dem zitierten Text, sichtbar während der Bearbeitung
-blacklisted mails are marked as spam	mail	de	Emailadressen die in die Blacklist eingetragen werden, werden als Spam markiert
+blacklisted mails are marked as spam	mail	de	E-Mailadressen die in die Blacklist eingetragen werden, werden als Spam markiert
 but check shared folders	mail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	mail	de	nach Datum
 can not open imap connection	mail	de	Keine Verbindung zum Mailserver möglich
@@ -171,8 +171,8 @@ email notification update failed	mail	de	Die Benachrichtigung über den Gelesen-
 email notification update failed! you need to set an email address!	mail	de	Aktualisierung der E-Mail Benachrichtigungen fehlgeschlagen! Es muss eine E-Mail-Adresse ausgewählt sein!
 emailaddress	admin	de	E-Mail
 emailadmin: profilemanagement	mail	de	E-Mail-Admin: Profilmanagement
-emails in blacklisted domains are marked as spam	mail	de	Emailadressen aus der Domain-Blackliste, werden als Spam markiert
-emails in whitelisted domains are not marked as spam	mail	de	Emailadressen aus der Domain-Whiteliste, werden nicht als Spam markiert
+emails in blacklisted domains are marked as spam	mail	de	E-Mailadressen aus der Domain-Blackliste, werden als Spam markiert
+emails in whitelisted domains are not marked as spam	mail	de	E-Mailadressen aus der Domain-Whiteliste, werden nicht als Spam markiert
 empty junk	mail	de	Spam-Ordner leeren
 empty trash	mail	de	Papierkorb leeren
 empty trash and junk	mail	de	Papierkorb und Spam-Ordner leeren
@@ -238,7 +238,7 @@ general	admin	de	Allgemein
 general settings	mail	de	Allgemeine Einstellungen
 get acl rights failed from imap server!	mail	de	Die Zugriffskontrollrechte konnten auf dem IMAP Server nicht gelesen werden!
 greater than	mail	de	größer als
-ham folder	mail	de	Ordner für nicht SPAM Nachrichten
+ham folder	mail	de	Ordner für nicht Spam-Nachrichten
 header	mail	de	Kopfzeilen
 header lines	mail	de	Kopfzeilen anzeigen
 hold %1 to drag files to your computer	mail	de	%1 halten um Dateien auf Ihren Computer zu ziehen
@@ -253,7 +253,7 @@ identity	mail	de	Identität
 identity+signature	mail	de	Identität+Signatur
 if	mail	de	Wenn
 if authentication required	mail	de	wenn Benutzeranmeldung erforderlich ist
-if different from email address	mail	de	falls abweichend zur E-Mail
+if different from email address	mail	de	falls abweichend zur E-Mailadresse
 if from contains:(*)	mail	de	wenn Von enthält:(*)
 if mail body content / attachment type	mail	de	wenn E-Mail Text enthält /Anhang Type
 if mail body message type	mail	de	wenn E-Mail Text
@@ -284,7 +284,7 @@ inline	mail	de	Weiterleiten Inline
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
 job	mail	de	dienstlich
 junk	mail	de	Spam
-junk folder	mail	de	Ordner für SPAM Nachrichten
+junk folder	mail	de	Ordner für Spam-Nachrichten
 keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht in der INBOX behalten
 kilobytes	mail	de	Kilobytes
 later	mail	de	später
@@ -385,7 +385,7 @@ printview	mail	de	Druckansicht
 processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Verarbeiten der Datei %1 ist fehlgeschlagen. Grundlegende Voraussetzungen wurden nicht erfüllt.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
 quicksearch	mail	de	Schnellsuche
-quicksearch (with cc)	mail	de	Schnellsuche (auch in Kopie)
+quicksearch (with cc)	mail	de	Schnellsuche (+ Kopie)
 quota not provided by server	mail	de	Quota wird vom Mailserver nicht unterstützt
 quota: %1	mail	de	Quota: %1
 read	mail	de	gelesen
@@ -407,8 +407,8 @@ remove "%1" from whiltelisted emails	mail	de	Lösche "%1" aus der E-Mail Whiteli
 remove all	mail	de	Alle Entfernen
 remove immediately	mail	de	sofort löschen
 removed folder %1	mail	de	Ordner %1 gelöscht
-removing %1 from blacklisted email addresses failed because of %2	mail	de	Löschen von %1 als Emailadresse von der Blackliste fehlgeschlagen, da %2
-removing %1 from whiltelisted email addresses failed because of %2	mail	de	Löschen von %1 als Emailadresse von der Whiteliste fehlgeschlagen, da %2
+removing %1 from blacklisted email addresses failed because of %2	mail	de	Löschen von %1 als E-Mailadresse von der Blackliste fehlgeschlagen, da %2
+removing %1 from whiltelisted email addresses failed because of %2	mail	de	Löschen von %1 als E-Mailadresse von der Whiteliste fehlgeschlagen, da %2
 rename folder	mail	de	Umbenennen
 rename folder %1 ?	mail	de	Ordner %1 umbenennen?
 rename folder %1 to:	mail	de	Ordner %1 umbenennen in:
@@ -419,9 +419,9 @@ reply all	mail	de	Allen Antworten
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
 reply to	mail	de	Antworten an
 replyto	mail	de	Antwort an
-report as ham	mail	de	Als "gute Email" kennzeichnen
+report as ham	mail	de	Als "gute E-Mail" kennzeichnen
 report as spam	mail	de	Als Spam kennzeichnen
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als "gute Email" (kein Spam) - Spam-Lösungen wie SpamTitan lernen entsprechend
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als "gute E-Mail" (kein Spam) - Spam-Lösungen wie SpamTitan lernen entsprechend
 report this email content as spam - spam solutions like spamtitan will learn	mail	de	Markiert die Nachricht als Spam - Spam-Lösungen wie SpamTitan lernen entsprechend
 required pear class mail/mimedecode.php not found.	mail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 resend after how many days?	mail	de	Nach wie vielen Tagen erneut senden?
@@ -587,7 +587,7 @@ when sending messages	mail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse).
 which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen.
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten.
-whitelisted mails are not marked as spam	mail	de	Emailadressen aus der Domain-Whitekliste, werden nicht als Spam markiert
+whitelisted mails are not marked as spam	mail	de	E-Mailadressen aus der Domain-Whitekliste, werden nicht als Spam markiert
 whole message	mail	de	gesamte Nachricht
 with message:	mail	de	mit folgender Nachricht:
 wizard	mail	de	Assistent
@@ -606,4 +606,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail im EGroupware Dateimanager speichern können.
 you will loose current message body, unless you save it to your clipboard!	mail	de	Sie werden Ihren aktuellen Nachrichtentext verlieren, sofern Sie ihn nicht in der Zwischenablage speichern!
 you've got new mail	mail	de	Sie haben neue E-Mails
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	de	Ihre restliche Quota %1 ist zu niedrig. damit können Sie u.U. weder Mails senden noch empfangen!\n  Bitte ggf. Papierkorb und Spam Ordner leeren, um Platz zu schaffen.\n Wenn das nicht ausreicht, fragen Sie bitte Ihren Administrator nach einer höheren Quota für ihr Postfach.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	de	Ihre restliche Quota %1 ist zu niedrig. damit können Sie u.U. weder Mails senden noch empfangen!\n  Bitte ggf. Papierkorb und Spam-Ordner leeren, um Platz zu schaffen.\n Wenn das nicht ausreicht, fragen Sie bitte Ihren Administrator nach einer höheren Quota für ihr Postfach.
