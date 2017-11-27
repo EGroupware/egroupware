@@ -3499,7 +3499,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'menuaction'    => 'mail.mail_ui.displayImage',
 					'uid'		=> $_uid,
 					'mailbox'	=> base64_encode($_mailbox),
-					'cid'		=> base64_encode($CID),
+					'cid'		=> base64_encode($_cid),
 					'partID'	=> $_partID,
 				);
 				return Egw::link('/index.php', $linkData);
