@@ -115,7 +115,7 @@ class Date extends Transformer
 		{
 			$date = new Api\DateTime($value);
 		}
-		if($this->type == 'date-timeonly')
+		if($this->type == 'date-timeonly' && $date)
 		{
 			$date->setDate(1970, 1, 1);
 		}
