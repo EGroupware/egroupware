@@ -62,7 +62,7 @@ class timesheet_datasource extends datasource
 				break;
 			case '':
 			default:
-				$status = 'ignore';
+				$status = 'active';
 				break;
 		}
 		$ds = array(
