@@ -299,7 +299,7 @@ app.classes.mail = AppJS.extend(
 						// focus
 						jQuery(plainText.node).focus();
 						// get the cursor to the top of the textarea
-						if (typeof plainText.node.setSelectionRange !='undefined' && !plainText.node.is(":hidden")) plainText.node.setSelectionRange(0,0);
+						if (typeof plainText.node.setSelectionRange !='undefined' && !jQuery(plainText.node).is(":hidden")) plainText.node.setSelectionRange(0,0);
 					}
 					else
 					{
