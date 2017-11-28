@@ -2031,7 +2031,7 @@ class infolog_ui
 					));
 					break;
 				case 'projectmanager':
-					$pm_links = array($action_id);
+					$content['pm_id'] = $action_id;
 				default:	// to allow other apps to participate
 					$content['info_subject'] = Link::title($action, $id);
 					$action_ids = explode(',',$action_id);
