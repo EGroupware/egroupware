@@ -179,12 +179,12 @@ select#admin-mailaccount_ident_id {
 #admin-acl {width:99%;}
 
 #admin-mailaccount-permissions_ews_tabs .th {
-    border-bottom: none;
+	border-bottom: none;
 }
 #admin-mailaccount-permissions_ews_tabs  .et2_tabheader {
-    display:none;
+	display:none;
 }
 #admin-mailaccount-permissions_ews_tabs  #admin-mailaccount-permissions_ews_permissions .th {
-    visibility: collapse;
+	visibility: collapse;
 }
 

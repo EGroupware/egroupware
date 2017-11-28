@@ -322,32 +322,32 @@
 			</rows>
 		</grid>
 	</template>
-    <template id="admin.mailaccount.ews" template="" lang="" group="0" version="1.9.001">
-        <textbox type="hidden" id="clear_grid" />
-        <grid width="100%">
-            <columns>
-                <column width="115"/>
-                <column/>
-            </columns>
-            <rows>
-                <row>
-                    <description value="Account Type"/>
-                    <menulist>
-                        <menupopup id="acc_ews_type" class="et2_fullWidth" onchange="app.admin.ews_switch_type" />
-                    </menulist>
-                </row>
-                <row>
-                    <description value="Always Apply Custom Permissions"/>
-                    <checkbox id="acc_ews_apply_permissions" />
-                </row>
-                <row>
-                    <button label="Edit Custom Permissions" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_mail.ews_custom_permissions&amp;acc_id=$cont[acc_id]'),'roles','dependent=yes,width=900,height=600,scrollbars=no,status=yes'); return false;" />
-                </row>
-                <row>
-                </row>
-            </rows>
-        </grid>
-    </template>
+	<template id="admin.mailaccount.ews" template="" lang="" group="0" version="1.9.001">
+		<textbox type="hidden" id="clear_grid" />
+		<grid width="100%">
+			<columns>
+				<column width="115"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Account Type"/>
+					<menulist>
+						<menupopup id="acc_ews_type" class="et2_fullWidth" onchange="app.admin.ews_switch_type" />
+					</menulist>
+				</row>
+				<row>
+					<description value="Always Apply Custom Permissions"/>
+					<checkbox id="acc_ews_apply_permissions" />
+				</row>
+				<row>
+					<button label="Edit Custom Permissions" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_mail.ews_custom_permissions&amp;acc_id=$cont[acc_id]'),'roles','dependent=yes,width=900,height=600,scrollbars=no,status=yes'); return false;" />
+				</row>
+				<row>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="admin.mailaccount" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>

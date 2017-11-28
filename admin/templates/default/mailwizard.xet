@@ -27,9 +27,9 @@
 				</row>
 				<row class="@manual_class">
 					<description value="Account Type" for="acc_imap_type"/>
-                    <menulist>
-                        <menupopup id="acc_imap_type" />
-                    </menulist>
+					<menulist>
+						<menupopup id="acc_imap_type" />
+					</menulist>
 				</row>
 				<row class="@manual_class">
 					<description value="Server" for="acc_imap_host"/>

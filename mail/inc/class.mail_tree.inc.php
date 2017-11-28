@@ -246,7 +246,7 @@ class mail_tree
 
 					array_unshift($path, $_profileID);
 
-                    $nodeId = $_profileID.self::DELIMITER.$folder['MAILBOX'];
+					$nodeId = $_profileID.self::DELIMITER.$folder['MAILBOX'];
 
 					$data = array(
 						Tree::ID=>$nodeId,

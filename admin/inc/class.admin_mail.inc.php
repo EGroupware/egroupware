@@ -197,10 +197,10 @@ class admin_mail
 			'acc_imap_port' => 993,
 			'manual_class' => 'emailadmin_manual',
 		);
-        // Select Options
-        $sel_options['acc_imap_ssl'] = self::$ssl_types;
-        // Not listing other server types, since this could be single account
-        // EGroupware only allows different types for multiple accounts
+		// Select Options
+		$sel_options['acc_imap_ssl'] = self::$ssl_types;
+		// Not listing other server types, since this could be single account
+		// EGroupware only allows different types for multiple accounts
 		$sel_options['acc_imap_type'] = Mail\Types::getIMAPServerTypes(false);
 		Framework::message($msg ? $msg : (string)$_GET['msg'], $msg_type);
 
@@ -289,19 +289,19 @@ class admin_mail
 
 				$e = null;
 				try {
-					$content['output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying $ssl connection to $host:$port ...\n";
+					$content['output'] .= "\n" . Api\DateTime::to('now', 'H:i:s') . ": Trying $ssl connection to $host:$port ...\n";
 					$content['acc_imap_port'] = $port;
 
-                    $imap = self::imap_client($content, self::TIMEOUT);
+					$imap = self::imap_client($content, self::TIMEOUT);
 
-                    //$content['output'] .= array2string($imap->capability());
-                    $imap->login();
-                    $content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in'))."\n";
-                    if (!$imap->isSecureConnection())
-                    {
-                        $content['output'] .= lang('Connection is NOT secure! Everyone can read eg. your credentials.')."\n";
-                        $content['acc_imap_ssl'] = 'no';
-                    }
+					//$content['output'] .= array2string($imap->capability());
+					$imap->login();
+					$content['output'] .= "\n" . lang('Successful connected to %1 server%2.', 'IMAP', ' ' . lang('and logged in')) . "\n";
+					if (!$imap->isSecureConnection())
+					{
+						$content['output'] .= lang('Connection is NOT secure! Everyone can read eg. your credentials.') . "\n";
+						$content['acc_imap_ssl'] = 'no';
+					}
 					//$content['output'] .= "\n\n".array2string($imap->capability());
 					$content['connected'] = $connected = true;
 					break 2;
@@ -335,13 +335,13 @@ class admin_mail
 		if ($connected)	// continue with next wizard step: define folders
 		{
 			unset($content['button']);
-            //EWS: skip steps
-            if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
-                return $this->smtp($content, lang('Successful connected to %1 server%2.', 'EWS', ' '.lang('and logged in')).
-                    ($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
-            else
-                return $this->folder($content, lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in')).
-                    ($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
+			//EWS: skip steps
+			if (Mail\Account::is_ews_type($content['acc_imap_type']))
+				return $this->smtp($content, lang('Successful connected to %1 server%2.', 'EWS', ' ' . lang('and logged in')) .
+					($imap->isSecureConnection() ? '' : "\n" . lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
+			else
+				return $this->folder($content, lang('Successful connected to %1 server%2.', 'IMAP', ' ' . lang('and logged in')) .
+					($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
 		}
 		// add validation error, if we can identify a field
 		if (!$connected && $e instanceof Horde_Imap_Client_Exception)
@@ -361,8 +361,8 @@ class admin_mail
 		$readonlys['button[manual]'] = true;
 		unset($content['manual_class']);
 		$sel_options['acc_imap_ssl'] = self::$ssl_types;
-        // Not listing other server types, since this could be single account
-        // EGroupware only allows different types for multiple accounts
+		// Not listing other server types, since this could be single account
+		// EGroupware only allows different types for multiple accounts
 		$sel_options['acc_imap_type'] = Mail\Types::getIMAPServerTypes(false);
 		$tpl = new Etemplate('admin.mailwizard');
 		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys, $content, 2);
@@ -642,10 +642,10 @@ class admin_mail
 			switch($button)
 			{
 				case 'back':
-                    if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
-                        return $this->add($content);
-                    else
-                        return $this->sieve($content);
+					if (Mail\Account::is_ews_type($content['acc_imap_type']))
+						return $this->add($content);
+					else
+						return $this->sieve($content);
 			}
 		}
 		// first try: hide manual config
@@ -839,7 +839,7 @@ class admin_mail
 	 */
 	public function edit(array $content=null, $msg='', $msg_type='success')
 	{
-			unset($content['manual_class']);
+		unset($content['manual_class']);
 		// app is trying to tell something, while redirecting to wizard
 		if (empty($content) && $_GET['acc_id'] && empty($msg) && !empty( $_GET['msg']))
 		{
@@ -1104,13 +1104,15 @@ class admin_mail
 								}
 								$content['accounts'][$content['acc_id']] = Mail\Account::identity_name($content, false);
 							}
-                            if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
-                                if ( $content['clear_grid'] ) {
-                                    $content['ews_permissions'] = array();
-                                    $content['clear_grid'] = false;
-                                    Api\Mail_EWS::storeFolderPermissions( $content['ews_permissions'], $content['acc_id'] );
-                                }
-                            }
+							if ($content['acc_imap_type'] && Mail\Account::is_ews_type($content['acc_imap_type']))
+							{
+								if ($content['clear_grid'])
+								{
+									$content['ews_permissions'] = array();
+									$content['clear_grid'] = false;
+									Api\Mail_EWS::storeFolderPermissions($content['ews_permissions'], $content['acc_id']);
+								}
+							}
 						}
 						else
 						{
@@ -1245,23 +1247,24 @@ class admin_mail
 				$tpl->setElementAttribute($folder, 'allowFreeEntries', true);
 			}
 		}
-        elseif ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
-        {
+		elseif (Mail\Account::is_ews_type($content['acc_imap_type']))
+		{
 			try {
 
-            $sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
-                $sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
-                $sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
-                $sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
-                    Api\Mail\EWS\Lib::getFoldersSelOptions( $content['acc_id'], true );
+				$sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
+					$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
+					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
+					$sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
+						Api\Mail\EWS\Lib::getFoldersSelOptions($content['acc_id'], true);
 			}
-			catch(Exception $e) {
+			catch (Exception $e)
+			{
 				if (self::$debug) _egw_log_exception($e);
 				// let user know what the problem is and that he can fix it using wizard or deleting
-				$msg = lang($e->getMessage())."\n\n".lang('You can use wizard to fix account settings or delete account.');
+				$msg = lang($e->getMessage()) . "\n\n" . lang('You can use wizard to fix account settings or delete account.');
 				$msg_type = 'error';
 			}
-	}
+		}
 		else
 		{
 			try {
@@ -1295,10 +1298,10 @@ class admin_mail
 		$sel_options['ident_id'] = $content['identities'];
 		$sel_options['acc_id'] = $content['accounts'];
 		$sel_options['acc_further_identities'] = self::$further_identities;
-        $sel_options['acc_ews_type'] = array(
-            'inbox' => 'Inbox',
-            'public_folders' => 'Public Folders'
-        );
+		$sel_options['acc_ews_type'] = array(
+			'inbox' => 'Inbox',
+			'public_folders' => 'Public Folders'
+		);
 
 		// user is allowed to create or edit further identities
 		if ($edit_access || $content['acc_further_identities'])
@@ -1380,11 +1383,11 @@ class admin_mail
 			}
 		}
 
-        // Disable EWS tab for other types
-        if ( $content['acc_imap_type'] && !Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) 
-        {
-            $readonlys['tabs']['admin.mailaccount.ews'] = true;
-        }
+		// Disable EWS tab for other types
+		if ($content['acc_imap_type'] && !Mail\Account::is_ews_type($content['acc_imap_type']))
+			{
+			$readonlys['tabs']['admin.mailaccount.ews'] = true;
+		}
 
 		// account allows users to change forwards
 		if (!$edit_access && !$readonlys['tabs']['admin.mailaccount.aliases'] && $content['acc_user_forward'])
@@ -1423,17 +1426,22 @@ class admin_mail
 		}
 		$content['admin_actions'] = (bool)$admin_actions;
 
-        if ( $content['acc_imap_type'] &&  Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
-			try {
-            $content['acc_ews_apply_permissions'] = (int) $content['acc_ews_apply_permissions'];
-			}
-			catch(Exception $e) {
-				if (self::$debug) _egw_log_exception($e);
+		if ($content['acc_imap_type'] && Mail\Account::is_ews_type($content['acc_imap_type']))
+			{
+			try
+			{
+				$content['acc_ews_apply_permissions'] = (int) $content['acc_ews_apply_permissions'];
+			} catch (Exception $e)
+			{
+				if (self::$debug)
+				{
+					_egw_log_exception($e);
+				}
 				// let user know what the problem is and that he can fix it using wizard or deleting
-				$msg = lang($e->getMessage())."\n\n".lang('You can use wizard to fix account settings or delete account.');
+				$msg = lang($e->getMessage()) . "\n\n" . lang('You can use wizard to fix account settings or delete account.');
 				$msg_type = 'error';
 			}
-        }
+		}
 
 		//try to fix identities with no domain part set e.g. alias as identity
 		if (!strpos($content['ident_email'], '@'))
@@ -1444,7 +1452,7 @@ class admin_mail
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}
 
-	public function ews_custom_permissions( $content = array() ) 
+	public function ews_custom_permissions( $content = array() )
 	{
 		$dtmpl = new Etemplate('admin.mailaccount.permissions');
 		$acc_id = $_GET['acc_id']? $_GET['acc_id']: $content['acc_id'];
@@ -1496,24 +1504,25 @@ class admin_mail
 	 * @param int $timeout =null default use value returned by Mail\Imap::getTimeOut()
 	 * @return Horde_Imap_Client_Socket
 	 */
-	protected static function imap_client(array $content, $timeout=null)
-	{
-        //EWS: Instantiate different object
-        if ( Mail\Account::is_ews_type( $content['acc_imap_type'] ) ) {
-            $class = $content['acc_imap_type'];
-            return new $class($content);
-        }
-        else {
-            return new Horde_Imap_Client_Socket(array(
-                'username' => $content['acc_imap_username'],
-                'password' => $content['acc_imap_password'],
-                'hostspec' => $content['acc_imap_host'],
-                'port' => $content['acc_imap_port'],
-                'secure' => self::$ssl2secure[(string)array_search($content['acc_imap_ssl'], self::$ssl2type)],
-                'timeout' => $timeout > 0 ? $timeout : Mail\Imap::getTimeOut(),
-                'debug' => self::DEBUG_LOG,
-            ));
-        }
+	protected static function imap_client(array $content, $timeout = null) {
+		//EWS: Instantiate different object
+		if (Mail\Account::is_ews_type($content['acc_imap_type']))
+		{
+			$class = $content['acc_imap_type'];
+			return new $class($content);
+		}
+		else
+		{
+			return new Horde_Imap_Client_Socket(array(
+				'username' => $content['acc_imap_username'],
+				'password' => $content['acc_imap_password'],
+				'hostspec' => $content['acc_imap_host'],
+				'port' => $content['acc_imap_port'],
+				'secure' => self::$ssl2secure[(string) array_search($content['acc_imap_ssl'], self::$ssl2type)],
+				'timeout' => $timeout > 0 ? $timeout : Mail\Imap::getTimeOut(),
+				'debug' => self::DEBUG_LOG,
+			));
+		}
 	}
 
 	/**

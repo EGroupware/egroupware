@@ -3,7 +3,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.mailaccount.permissions" template="" lang="" group="0" version="1.9.001">
-        <textbox type="hidden" id="acc_id" />
+		<textbox type="hidden" id="acc_id" />
 		<grid width="100%" height="100%">
 			<columns>
 				<column width="10%"/>

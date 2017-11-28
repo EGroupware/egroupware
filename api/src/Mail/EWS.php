@@ -25,19 +25,19 @@ use EGroupware\Api\Mail\EWS\Lib;
 class EWS 
 {
 	const DESCRIPTION = 'Microsoft Exchange (EWS)';
-    const VERSION = 'Exchange_2007';
+	const VERSION = 'Exchange_2007';
 	var $ImapServerId;
-    var $params;
+	var $params;
 
 	function __construct(array $params, $_timeout=null)
 	{
 		$this->ImapServerId = $params['acc_id'];
-        $this->params = $params;
-        $this->params['version'] = static::VERSION;
+		$this->params = $params;
+		$this->params['version'] = static::VERSION;
 	}
 	function getCurrentMailbox()
 	{
-        return Lib::getDefaultFolder( $this->ImapServerId );
+		return Lib::getDefaultFolder( $this->ImapServerId );
 	}
 	public function __call($name,array $params=null)
 	{
@@ -62,12 +62,12 @@ class EWS
 				$ret = call_user_func_array(array($this->sieve,$name),$params);
 				//error_log(__CLASS__.'->'.$name.'('.array2string($params).') returns '.array2string($ret));
 				return $ret;
-                break;
+				break;
 			case 'subscribeMailbox':
 			case 'search':
-            case 'listSubscribedMailboxes':
-                return;
-                break;
+			case 'listSubscribedMailboxes':
+				return;
+				break;
 		}
 		throw new Api\Exception\WrongParameter("No method '$name' implemented!");
 	}
@@ -86,28 +86,28 @@ class EWS
 	}
 	function mailboxExist($mailbox)
 	{
-        return true;
+		return true;
 	}
 
-    static function description() {
-        return static::DESCRIPTION;
-    }
-    function isSecureConnection() {
-        // if ssl=0, then connection insecure
-        return ( $this->params['acc_imap_ssl'] );
-    }
-    function login() {
-        EWS\Lib::login( $this->params );
-        return true;
-    }
+	static function description() {
+		return static::DESCRIPTION;
+	}
+	function isSecureConnection() {
+		// if ssl=0, then connection insecure
+		return ( $this->params['acc_imap_ssl'] );
+	}
+	function login() {
+		EWS\Lib::login( $this->params );
+		return true;
+	}
 	function setUserData($_username, $_quota)
 	{
 		unset($_username, $_quota);	// not used
 		return true;
 	}
-    static function getUIreadonlys() {
-        return array();
-    }
+	static function getUIreadonlys() {
+		return array();
+	}
 	public function runOnLogin($func, array $params=array())
 	{
 		$this->run_on_login[] = array($func, $params);
@@ -126,7 +126,7 @@ class EWS
 	}
 	function getNameSpaceArray()
 	{
-        return array();
+		return array();
 	}
 	function getStorageQuotaRoot($mailboxName)
 	{

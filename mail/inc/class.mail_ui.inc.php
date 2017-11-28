@@ -104,7 +104,7 @@ class mail_ui
 		'text'		=> 'whole message',	// lang('whole message')
 		'larger'		=> 'greater than',	// lang('greater than')
 		'smaller'		=> 'less than',	// lang('less than')
-		'bydate' 	=> 'Selected date range (with quicksearch)',// lang('Selected date range (with quicksearch)')
+		'bydate'	=> 'Selected date range (with quicksearch)',// lang('Selected date range (with quicksearch)')
 	);
 
 	/**
@@ -445,25 +445,25 @@ class mail_ui
 					{
 						// These only set on first load
 						$content[self::$nm_index] = array(
-							'filter'         => 'any',	// filter is used to choose the mailbox
-							'lettersearch'   => false,	// I  show a lettersearch
-							'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
-							'start'          =>	0,		// IO position in list
-							'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
-							'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
+							'filter'		 => 'any',	// filter is used to choose the mailbox
+							'lettersearch'	 => false,	// I  show a lettersearch
+							'searchletter'	 =>	false,	// I0 active letter of the lettersearch or false for [all]
+							'start'			 =>	0,		// IO position in list
+							'order'			 =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
+							'sort'			 =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
 						);
 					}
 					if (Api\Header\UserAgent::mobile()) $content[self::$nm_index]['header_row'] = 'mail.index.header_right';
 				}
 
 				// These must always be set, even if $content is an array
-				$content[self::$nm_index]['cat_is_select'] = true;    // Category select is just a normal selectbox
-				$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
+				$content[self::$nm_index]['cat_is_select'] = true;	  // Category select is just a normal selectbox
+				$content[self::$nm_index]['no_filter2'] = false;	   // Disable second filter
 				$content[self::$nm_index]['actions'] = self::get_actions();
-				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
+				$content[self::$nm_index]['row_id'] = 'row_id';		 // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
 				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
-				$content[self::$nm_index]['num_rows'] = 0;      // Do not send any rows with initial request
+				$content[self::$nm_index]['num_rows'] = 0;		// Do not send any rows with initial request
 				$content[self::$nm_index]['default_cols'] = 'status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 				$content[self::$nm_index]['csv_fields'] = false;
 				if ($msg)
@@ -1092,7 +1092,7 @@ class mail_ui
 		}
 		Api\Cache::setCache(Api\Cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFoldersUsedForMoveCont, $expiration=60*60*1);
 		$group = 0;
-		$actions =  array(
+		$actions =	array(
 			'open' => array(
 				'caption' => lang('Open'),
 				'icon' => 'view',
@@ -1186,18 +1186,18 @@ class mail_ui
 		} else {
 			$group++;
 		}
-        // Move in Exchange 
-        $actions['exchange_move'] = array(
-            'caption' => 'Move to EWS folder',
-            'icon' => 'move',
-            'group' => 2,
-            'allowOnMultiple' => true,
-            'nm_action' => 'popup',
-            'popup' => '500x600',
-            'url' => 'menuaction=mail.mail_ui.moveEWS&id=$row_id',
-            'enableClass' => 'is_ews',
-            'hideOnDisabled' => true,
-        );
+		// Move in Exchange 
+		$actions['exchange_move'] = array(
+			'caption' => 'Move to EWS folder',
+			'icon' => 'move',
+			'group' => 2,
+			'allowOnMultiple' => true,
+			'nm_action' => 'popup',
+			'popup' => '500x600',
+			'url' => 'menuaction=mail.mail_ui.moveEWS&id=$row_id',
+			'enableClass' => 'is_ews',
+			'hideOnDisabled' => true,
+		);
 		$spam_actions = $this->getSpamActions();
 		$group++;
 		foreach ($spam_actions as &$action)
@@ -1431,14 +1431,14 @@ class mail_ui
 			)
 		);
 		$extra_actions = Api\Hooks::process(array(
-            'location' => 'mail_extra_actions',
-            'group' => $group,
-        ));
-        if ( is_array( $extra_actions ) ) {
-            foreach ( $extra_actions as $app => $extra) 
-                if ( is_array( $extra ) )
-                    $actions += $extra;
-        }
+			'location' => 'mail_extra_actions',
+			'group' => $group,
+		));
+		if ( is_array( $extra_actions ) ) {
+			foreach ( $extra_actions as $app => $extra) 
+				if ( is_array( $extra ) )
+					$actions += $extra;
+		}
 
 		//error_log(__METHOD__.__LINE__.array2string(array_keys($actions)));
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
@@ -1507,8 +1507,8 @@ class mail_ui
 				$rows=array();
 				return 0;
 			}
-            if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->getDefaultFolder();		
-        }
+			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->getDefaultFolder();		
+		}
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
 		//Mail::$debugTimes=true;
 		if (Mail::$debugTimes) $starttime = microtime(true);
@@ -1924,9 +1924,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if ($header['label5']) {
 				$css_styles[] = 'labelfive';
 			}
-            if ( $account->is_ews() ){
+			if ( $account->is_ews() ){
 				$css_styles[] = 'is_ews';
-            }
+			}
 
 			//error_log(__METHOD__.array2string($css_styles));
 
@@ -2102,11 +2102,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		reset($newRawHeaders);
 
 		// reset $rawheaders
-		$rawheaders 	= "";
+		$rawheaders		= "";
 		// create it new, with good line breaks
 		reset($newRawHeaders);
 		while(list($key,$value) = @each($newRawHeaders)) {
-			$rawheaders .= wordwrap($value, 90, "\n     ");
+			$rawheaders .= wordwrap($value, 90, "\n		");
 		}
 
 		$this->mail_bo->closeConnection();
@@ -2146,8 +2146,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$this->changeProfile($icServerID);
 		}
 		$htmlOptions = $this->mail_bo->htmlOptions;
-		if (!empty($_requesteddata['tryastext'])) $htmlOptions  = "only_if_no_text";
-		if (!empty($_requesteddata['tryashtml'])) $htmlOptions  = "always_display";
+		if (!empty($_requesteddata['tryastext'])) $htmlOptions	= "only_if_no_text";
+		if (!empty($_requesteddata['tryashtml'])) $htmlOptions	= "always_display";
 
 		//error_log(__METHOD__.__LINE__.array2string($hA));
 		if (($this->mail_bo->isDraftFolder($mailbox)) && $_requesteddata['mode'] == 'print')
@@ -2351,31 +2351,31 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$dtmpl = new Etemplate('mail.move_ews');
 		$ids = $_GET['id']? $_GET['id']: $content['id'];
-        $content['id'] = $ids;
-        $ids = explode(',', $ids );
-        list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $ids[0]);
-        $folderName = base64_decode( $folder64 );
-        $folderID = $this->mail_bo->getFolderId( $folderName );
-        $sel_options['folder'] = Mail\EWS\Lib::getWriteFolders( $profile, $folderID );
+		$content['id'] = $ids;
+		$ids = explode(',', $ids );
+		list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $ids[0]);
+		$folderName = base64_decode( $folder64 );
+		$folderID = $this->mail_bo->getFolderId( $folderName );
+		$sel_options['folder'] = Mail\EWS\Lib::getWriteFolders( $profile, $folderID );
 
-        if ( !$content['folder'] )
-            $content['msg'] = lang('No Folder Selected');
+		if ( !$content['folder'] )
+			$content['msg'] = lang('No Folder Selected');
 
-        if ( $content['folder'] && ($content['move'] || $content['copy'] ) ) {
-            $move = ( $content['move'] ? true : false );
-            $messageUIDs = array();
-            foreach( $ids as $uid ) {
-                list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $uid);
-                $messageUIDs[] = $message_uid;
-            }
-            $res = $this->mail_bo->moveMessages( $content['folder'], $messageUIDs, $move, $folderName );
-            if ( $res ) {
-                $msg = 'Operation Successful';
+		if ( $content['folder'] && ($content['move'] || $content['copy'] ) ) {
+			$move = ( $content['move'] ? true : false );
+			$messageUIDs = array();
+			foreach( $ids as $uid ) {
+				list($app, $user, $profile, $folder64, $message_uid ) = explode('::', $uid);
+				$messageUIDs[] = $message_uid;
+			}
+			$res = $this->mail_bo->moveMessages( $content['folder'], $messageUIDs, $move, $folderName );
+			if ( $res ) {
+				$msg = 'Operation Successful';
 				if ( $move )
 					Framework::refresh_opener( $msg, 'mail', $ids, 'delete' );
-                Framework::window_close();
-            }
-        }
+				Framework::window_close();
+			}
+		}
 
 		$readonlys = array();
 		// Preserv
@@ -2448,7 +2448,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							'mode'		=> 'display', //message/rfc822 attachments should be opened in display mode
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
-							'is_winmail'    => $value['is_winmail']
+							'is_winmail'	=> $value['is_winmail']
 						);
 						$windowName = 'displayMessage_'. $rowID.'_'.$value['partID'];
 						$linkView = "egw_openWindowCentered('".Egw::link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());";
@@ -2486,7 +2486,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
 							'is_winmail'=> $value['is_winmail'],
-							'mailbox'   => base64_encode($mailbox),
+							'mailbox'	=> base64_encode($mailbox),
 							'smime_type' => $value['smime_type']
 						) , $mode);
 						$windowName = 'displayAttachment_'. $uid;
@@ -2514,8 +2514,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							'menuaction'	=> 'mail.mail_ui.getAttachment',
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
-							'is_winmail'    => $value['is_winmail'],
-							'mailbox'   => base64_encode($mailbox),
+							'is_winmail'	=> $value['is_winmail'],
+							'mailbox'	=> base64_encode($mailbox),
 							'smime_type' => $value['smime_type']
 						);
 						$linkView = "window.location.href = '".Egw::link('/index.php',$linkData)."';";
@@ -2540,8 +2540,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					'mode'		=> 'save',
 					'id'		=> $rowID,
 					'part'		=> $value['partID'],
-					'is_winmail'    => $value['is_winmail'],
-					'mailbox'   => base64_encode($mailbox),
+					'is_winmail'	=> $value['is_winmail'],
+					'mailbox'	=> base64_encode($mailbox),
 					'smime_type' => $value['smime_type']
 				);
 				$attachmentHTML[$key]['link_save'] ="<a href='".Egw::link('/index.php',$linkData)."' title='".$attachmentHTML[$key]['filename']."'>".Api\Html::image('mail','fileexport')."</a>";
@@ -2662,7 +2662,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$uid	= $_GET['uid'];
 		$cid	= base64_decode($_GET['cid']);
 		$partID = urldecode($_GET['partID']);
-		if (!empty($_GET['mailbox'])) $mailbox  = base64_decode($_GET['mailbox']);
+		if (!empty($_GET['mailbox'])) $mailbox	= base64_decode($_GET['mailbox']);
 
 		//error_log(__METHOD__.__LINE__.":$uid, $cid, $partID");
 		$this->mail_bo->reopen($mailbox);
@@ -2745,8 +2745,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if ((int)$event > 0)
 				{
 					$vars = array(
-						'menuaction'      => 'calendar.calendar_uiforms.edit',
-						'cal_id'      => $event,
+						'menuaction'	  => 'calendar.calendar_uiforms.edit',
+						'cal_id'	  => $event,
 					);
 					Egw::redirect_link('../index.php',$vars);
 				}
@@ -3388,7 +3388,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				// if empty and charset is utf8 try sanitizing the string in question
 				if (empty($newBody) && strtolower($singleBodyPart['charSet'])=='utf-8') $newBody = @htmlentities(iconv('utf-8', 'utf-8', $singleBodyPart['body']),ENT_QUOTES, strtoupper(Mail::$displayCharset));
 				// if the conversion to htmlentities fails somehow, try without specifying the charset, which defaults to iso-
-				if (empty($newBody)) $newBody    = htmlentities($singleBodyPart['body'],ENT_QUOTES);
+				if (empty($newBody)) $newBody	 = htmlentities($singleBodyPart['body'],ENT_QUOTES);
 
 				// search http[s] links and make them as links available again
 				// to understand what's going on here, have a look at
@@ -3485,7 +3485,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				}
 */
 				// removes stuff between http and ?http
-				$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
+				$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
 				$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
 				// TRANSFORM MAILTO LINKS TO EMAILADDRESS ONLY, WILL BE SUBSTITUTED BY parseEmail TO CLICKABLE LINK
 				$newBody = preg_replace('/(?<!"|href=|href\s=\s|href=\s|href\s=)'.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
@@ -3551,7 +3551,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @param type $_partID part id
 	 * @param type $_type = 'src' type of inline image that needs to be resolved and replaced
 	 *	- types: {plain|src|url|background}
-	 * @param callback $_link_callback Function to generate the link to the image.  If
+	 * @param callback $_link_callback Function to generate the link to the image.	If
 	 *	not provided, a default (using mail) will be used.
 	 * @return string returns body content including all CID replacements
 	 */
@@ -3565,7 +3565,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$_link_callback = function($_cid) use ($_mailbox, $_uid, $_partID)
 			{
 				$linkData = array (
-					'menuaction'    => 'mail.mail_ui.displayImage',
+					'menuaction'	=> 'mail.mail_ui.displayImage',
 					'uid'		=> $_uid,
 					'mailbox'	=> base64_encode($_mailbox),
 					'cid'		=> base64_encode($_cid),
@@ -3709,10 +3709,10 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			try
 			{
 				$messageUid = $this->importMessageToFolder($file,$destination,$importID);
-			    $linkData = array
-			    (
+				$linkData = array
+				(
 					'id' => $this->createRowID($destination, $messageUid, true),
-			    );
+				);
 			}
 			catch (Api\Exception\WrongUserinput $e)
 			{
@@ -3822,7 +3822,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * importMessageFromVFS2DraftAndEdit
 	 *
 	 * @param array $formData Array with information of name, type, file and size; file is required,
-	 *                               name, type and size may be set here to meet the requirements
+	 *								 name, type and size may be set here to meet the requirements
 	 *						Example: $formData['name']	= 'a_email.eml';
 	 *								 $formData['type']	= 'message/rfc822';
 	 *								 $formData['file']	= 'vfs://default/home/leithoff/a_email.eml';
@@ -3838,7 +3838,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * importMessageFromVFS2DraftAndDisplay
 	 *
 	 * @param array $formData Array with information of name, type, file and size; file is required,
-	 *                               name, type and size may be set here to meet the requirements
+	 *								 name, type and size may be set here to meet the requirements
 	 *						Example: $formData['name']	= 'a_email.eml';
 	 *								 $formData['type']	= 'message/rfc822';
 	 *								 $formData['file']	= 'vfs://default/home/leithoff/a_email.eml';
@@ -3882,7 +3882,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$messageUid = $this->importMessageToFolder($formData,$draftFolder,$importID);
 			$linkData = array
 			(
-		        'menuaction'    => ($mode=='display'?'mail.mail_ui.displayMessage':'mail.mail_compose.composeFromDraft'),
+				'menuaction'	=> ($mode=='display'?'mail.mail_ui.displayMessage':'mail.mail_compose.composeFromDraft'),
 				'id'		=> $this->createRowID($draftFolder,$messageUid,true),
 				'deleteDraftOnClose' => 1,
 			);
@@ -4103,7 +4103,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (Mail::$debug) error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
 		if ($_folderName)
 		{
-            $fragments = array();
+			$fragments = array();
 			Api\Translation::add_app('mail');
 			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);
@@ -4590,9 +4590,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			$mail_ui = new mail_ui(true);	// run constructor
 		}
-        // Return Default Folder to select
-        $defaultFolder = $mail_ui->mail_bo->getDefaultFolder();
-        Api\Json\Response::get()->data( $defaultFolder );	
+		// Return Default Folder to select
+		$defaultFolder = $mail_ui->mail_bo->getDefaultFolder();
+		Api\Json\Response::get()->data( $defaultFolder );	
 	}
 
 	/**
@@ -4727,7 +4727,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				'quotaclass'		=> $quotainfo['class'],
 				'quotanotsupported'	=> "",
 				'profileid'			=> $icServerID,
-				'quotawarning'		=> $quotaMin <  $quota_limit_warning ? true : false,
+				'quotawarning'		=> $quotaMin <	$quota_limit_warning ? true : false,
 				'quotafreespace'	=> Mail::show_readable_size($quotainfo['freespace'])
 			);
 		}
@@ -4987,7 +4987,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid = true,
 							false
 						);
-                        $messageListForToggle = ( !is_array( $_sRt['match'] ) ? $_sRt['match']->ids : $_sRt['match'] );
+						$messageListForToggle = ( !is_array( $_sRt['match'] ) ? $_sRt['match']->ids : $_sRt['match'] );
 						$filter['status'] = array($_flag);
 						if ($query['filter'] && $query['filter'] !='any')
 						{
@@ -5001,7 +5001,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid = true,
 							false
 						);
-                        $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
+						$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 						if (count($messageListForToggle)>0)
 						{
 							$flag2set = (strtolower($_flag));
@@ -5038,7 +5038,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							$rByUid,
 							false
 						);
-                        $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
+						$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 						unset($_messageList['all']);
 						$_messageList['msg'] = array();
 					}
@@ -5167,7 +5167,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$rByUid,
 						false
 					);
-                    $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
+					$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 				}
 				else
 				{
@@ -5328,7 +5328,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$rByUid=true,
 						false
 					);
-                    $messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
+					$messageList = ( !is_array( $_sR['match'] ) ? $_sR['match']->ids : $_sR['match'] );
 					foreach($messageList as $uID)
 					{
 						//error_log(__METHOD__.__LINE__.$uID);

@@ -46,11 +46,11 @@ app.classes.admin = AppJS.extend(
 	 * Reference to ACL edit dialog (not the list)
 	 */
 	acl_dialog: null,
-    
-    /**
-     * Keep widgets from triggering again
-     */
-    widget_active: false,
+
+	/**
+	 * Keep widgets from triggering again
+	 */
+	widget_active: false,
 
 	/**
 	 * Constructor
@@ -1282,45 +1282,44 @@ app.classes.admin = AppJS.extend(
 			position: 'left top'
 		}, et2_dialog._create_parent('mail'));
 	},
-    /**
-     * Switch EWS Type
-     *
-     * When switching, we want to immediately save and change the array that's being loaded
-     *
-     */
-    ews_switch_type: function( _element, _widget )
-    {
-        var option1 = 'inbox';
-        var option2 = 'public_folders';
-        var clear = this.et2.getWidgetById('clear_grid');
-        var apply = this.et2.getWidgetById('button[apply]');
-        var that = this;
-        if ( !that.widget_active ) {
-            that.widget_active = true;
-            et2_dialog.show_dialog(function(_button){
-                if (_button == 2) {
-                    clear.set_value( true );
-                    apply.getInstanceManager().submit(apply, false, apply.options.novalidate); 
-                }
-                else {
-                    if ( _widget.getValue() == option1 )
-                        _widget.set_value( option2 );
-                    else
-                        _widget.set_value( option1 );
-                    that.widget_active = false;
-                }
-            }, egw.lang('Changing Account Type will delete all your current settings. Are you sure you want to continue?'), 
-            egw.lang('Change Type'), null, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
-        }
+	/**
+	 * Switch EWS Type
+	 *
+	 * When switching, we want to immediately save and change the array that's being loaded
+	 *
+	 */
+	ews_switch_type: function (_element, _widget)
+	{
+		var option1 = 'inbox';
+		var option2 = 'public_folders';
+		var clear = this.et2.getWidgetById('clear_grid');
+		var apply = this.et2.getWidgetById('button[apply]');
+		var that = this;
+		if (!that.widget_active) {
+			that.widget_active = true;
+			et2_dialog.show_dialog(function (_button) {
+				if (_button == 2) {
+					clear.set_value(true);
+					apply.getInstanceManager().submit(apply, false, apply.options.novalidate);
+				} else {
+					if (_widget.getValue() == option1)
+						_widget.set_value(option2);
+					else
+						_widget.set_value(option1);
+					that.widget_active = false;
+				}
+			}, egw.lang('Changing Account Type will delete all your current settings. Are you sure you want to continue?'),
+					egw.lang('Change Type'), null, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw);
+		}
 	},
 
-    /**
-     * Switch Folder in ews permissions
-     *
-     */
-    ews_switch_folder: function()
-    {
-        var folder = this.et2.getWidgetById('mailbox');
+	/**
+	 * Switch Folder in ews permissions
+	 *
+	 */
+	ews_switch_folder: function()
+	{
+		var folder = this.et2.getWidgetById('mailbox');
 		jQuery('#admin-mailaccount-permissions_ews_permissions tr').each( function() {
 			if ( jQuery( this ).hasClass('th') ) return;
 			if ( jQuery( this ).find('input[name*=ews_name]').val() == folder.getValue() )
@@ -1328,5 +1327,5 @@ app.classes.admin = AppJS.extend(
 			else
 				jQuery( this ).hide();
 		});
-    }
+	}
 });
