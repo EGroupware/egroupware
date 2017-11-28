@@ -1074,8 +1074,8 @@ app.classes.mail = AppJS.extend(
 				typeof dataElem.data.flags.mdnsent == 'undefined' && typeof dataElem.data.flags.mdnnotsent == 'undefined')
 			{
 				var buttons = [
-					{text: this.egw.lang("Yes"), id: "mdnsent"},
-					{text: this.egw.lang("No"), id:"mdnnotsent"}
+					{text: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
+					{text: this.egw.lang("No"), id:"mdnnotsent", image: "cancelled"}
 				];
 				et2_dialog.show_dialog(function(_button_id, _value) {
 					switch (_button_id)

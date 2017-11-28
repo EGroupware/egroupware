@@ -165,10 +165,10 @@
 									<taglist-account id="responsible" rows="5" account_type="both" class=" et2_fullWidth" empty_label="Delegation"/>
 								</vbox>
 								<hbox>
-									<button label="Ok" id="responsible_action[ok]" onclick="nm_submit_popup(this); return false;"/>
+									<button label="Ok" id="responsible_action[ok]" onclick="nm_submit_popup(this); return false;" image="check" background_image="true"/>
 									<button label="Add" id="responsible_action[add]" onclick="nm_submit_popup(this); return false;"/>
 									<button label="Delete" id="responsible_action[delete]" onclick="nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'responsible_popup');"/>
+									<button label="Cancel" id="responsible_cancel" onclick="nm_hide_popup(this,'responsible_popup');" image="cancelled" background_image="true"/>
 								</hbox>
 							</vbox>
 						</box>
@@ -177,9 +177,9 @@
 								<description value="Delete" class="promptheader"/>
 								<description value="Delete selected entries?" id="delete_prompt"/>
 								<hbox>
-									<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"/>
-									<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;"/>
-									<buttononly label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
+									<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;" image="check" background_image="true"/>
+									<button label="Yes - Delete including sub-entries" id="delete_sub" onclick="nm_popup_action.id = 'delete_sub'; nm_submit_popup(this); return false;" image="check" background_image="true"/>
+									<button label="No - Cancel" id="delete_cancel" onclick="nm_hide_popup(this,'delete_popup');" image="cancelled" background_image="true"/>
 								</hbox>
 							</vbox>
 						</box>
@@ -190,7 +190,7 @@
 								<hbox>
 									<button label="Add" id="link_action[add]" onclick="nm_submit_popup(this); return false;"/>
 									<button label="Delete" id="link_action[delete]" onclick="nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
+									<button label="Cancel" id="link_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled" background_image="true"/>
 								</hbox>
 							</vbox>
 						</box>
@@ -200,8 +200,8 @@
 								<description id="startdate_action[title]"/>
 								<date-time id="startdate" class="action_popup-content"/>
 								<hbox>
-									<button label="Ok" id="startdate_action[ok]" onclick="nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
+									<button label="Ok" id="startdate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check" background_image="true"/>
+									<button label="Cancel" id="startdate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled" background_image="true"/>
 								</hbox>
 							</vbox>
 						</box>
@@ -211,8 +211,8 @@
 								<description id="enddate_action[title]"/>
 								<date-time id="enddate" class="action_popup-content"/>
 								<hbox>
-									<button label="Ok" id="enddate_action[ok]" onclick="nm_submit_popup(this); return false;"/>
-									<buttononly label="Cancel" onclick="nm_hide_popup(this,'link_popup');"/>
+									<button label="Ok" id="enddate_action[ok]" onclick="nm_submit_popup(this); return false;" image="check" background_image="true"/>
+									<button label="Cancel" id="enddate_cancel" onclick="nm_hide_popup(this,'link_popup');" image="cancelled" background_image="true"/>
 								</hbox>
 							</vbox>
 						</box>

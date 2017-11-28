@@ -193,8 +193,7 @@
   .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
     /*visibility: hidden;*/
     background-image: url(../images/close.png);
-    background: #FFFFFF;
-    margin: 2px;
+    margin: -2px -3px;
     padding: 0px;
   }
   /**

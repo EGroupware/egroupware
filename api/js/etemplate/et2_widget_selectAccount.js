@@ -435,23 +435,24 @@ var et2_selectAccount = (function(){ "use strict"; return et2_selectbox.extend(
 	 */
 	_create_dialog: function(widgets, update_function) {
 		this.dialog = widgets;
-		widgets.dialog({
-			title: this.options.label ? this.options.label : this.egw().lang('Select'),
-			modal: true,
-			// Static size for easier layout
-			width: "500",
-			height: "350",
-			buttons: [{
+		var dialog = et2_dialog.show_dialog(false,
+			'',
+			this.options.label ? this.options.label : this.egw().lang('Select'),
+			{},
+			[{
 				text: this.egw().lang("ok"),
+				image: 'check',
 				click: update_function
-				},{
+			},{
 				text: this.egw().lang("cancel"),
-				click: function() {
-					jQuery(this).dialog("close");
-					jQuery(this).dialog("destroy");
-				}}
-			]
-		});
+				image: 'cancel'
+			}]
+		);
+		dialog.set_dialog_type('');
+		// Static size for easier layout
+		dialog.div.dialog({width: "500", height: "370"});
+
+		dialog.div.append(widgets.width('100%'));
 		return widgets;
 	},
 
