@@ -699,7 +699,7 @@ div.et2_link_entry:after {
   margin: -12px;
 }
 div.et2_link_entry select, div.et2_link_entry {
-  width: 40%;
+  /*width: 40%;*/
   margin-right: 10px;
 }
 /* Icons in app selection */
